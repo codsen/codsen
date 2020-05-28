@@ -6012,7 +6012,10 @@
     return Object.prototype.hasOwnProperty.call(obj, prop);
   }
 
-  var isArr$1 = Array.isArray;
+  function isLatinLetter(char) {
+    // we mean Latin letters A-Z, a-z
+    return typeof char === "string" && char.length === 1 && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
+  }
 
   function comb(str, opts) {
     var start = Date.now();
@@ -6037,11 +6040,6 @@
         valueStart: null,
         nameStart: null
       }, initObj);
-    }
-
-    function isLatinLetter(char) {
-      // we mean Latin letters A-Z, a-z
-      return typeof char === "string" && char.length === 1 && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
     }
 
     var i;
@@ -6197,7 +6195,7 @@
     } // throws:
 
 
-    if (!isArr$1(opts.whitelist)) {
+    if (!Array.isArray(opts.whitelist)) {
       throw new TypeError("email-remove-unused-css: [THROW_ID_03] opts.whitelist should be an array, but it was customised to a wrong thing, ".concat(JSON.stringify(opts.whitelist, null, 4)));
     }
 
@@ -6207,7 +6205,7 @@
       throw new TypeError("email-remove-unused-css: [THROW_ID_04] opts.whitelist array should contain only string-type elements. Currently we\x0Be got:\n".concat(JSON.stringify(opts.whitelist, null, 4)));
     }
 
-    if (!isArr$1(opts.backend)) {
+    if (!Array.isArray(opts.backend)) {
       throw new TypeError("email-remove-unused-css: [THROW_ID_05] opts.backend should be an array, but it was customised to a wrong thing, ".concat(JSON.stringify(opts.backend, null, 4)));
     }
 
@@ -6238,7 +6236,7 @@
     var allHeads = null;
     var allTails = null;
 
-    if (isArr$1(opts.backend) && opts.backend.length) {
+    if (Array.isArray(opts.backend) && opts.backend.length) {
       allHeads = opts.backend.map(function (headsAndTailsObj) {
         return headsAndTailsObj.heads;
       });
@@ -6744,7 +6742,7 @@
                 onlyDeletedChunksFollow = true;
               } else if (round === 2 && !selectorChunkCanBeDeleted) {
                 // 1. uglify part
-                if (opts.uglify && (!isArr$1(opts.whitelist) || !opts.whitelist.length || !matcher([singleSelector], opts.whitelist).length)) {
+                if (opts.uglify && (!Array.isArray(opts.whitelist) || !opts.whitelist.length || !matcher([singleSelector], opts.whitelist).length)) {
                   currentChunksMinifiedSelectors.push(singleSelectorStartedAt, i, allClassesAndIdsWithinHeadFinalUglified[allClassesAndIdsWithinHeadFinal.indexOf(singleSelector)]);
                 } // 2. tend trailing comma issue (lastKeptChunksCommaAt and
                 // onlyDeletedChunksFollow):
@@ -7283,7 +7281,7 @@
                 // 1. turn off the bodyClassOrIdCanBeDeleted
                 bodyClassOrIdCanBeDeleted = false; // 2. uglify?
 
-                if (opts.uglify && !(isArr$1(opts.whitelist) && opts.whitelist.length && matcher([".".concat(carvedClass)], opts.whitelist).length)) {
+                if (opts.uglify && !(Array.isArray(opts.whitelist) && opts.whitelist.length && matcher([".".concat(carvedClass)], opts.whitelist).length)) {
                   finalIndexesToDelete.push(bodyClass.valueStart, i, allClassesAndIdsWithinHeadFinalUglified[allClassesAndIdsWithinHeadFinal.indexOf(".".concat(carvedClass))].slice(1));
                 }
               }
@@ -7326,7 +7324,7 @@
               // 1. turn off the bodyClassOrIdCanBeDeleted
               bodyClassOrIdCanBeDeleted = false; // 2. uglify?
 
-              if (opts.uglify && !(isArr$1(opts.whitelist) && opts.whitelist.length && matcher(["#".concat(carvedId)], opts.whitelist).length)) {
+              if (opts.uglify && !(Array.isArray(opts.whitelist) && opts.whitelist.length && matcher(["#".concat(carvedId)], opts.whitelist).length)) {
                 finalIndexesToDelete.push(bodyId.valueStart, i, allClassesAndIdsWithinHeadFinalUglified[allClassesAndIdsWithinHeadFinal.indexOf("#".concat(carvedId))].slice(1));
               }
             }
@@ -7506,7 +7504,7 @@
           // opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains)
           // ==================================
           if (commentStartedAt !== null && commentStartedAt < i && str[i] === ">" && !usedOnce) {
-            if (opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains && isArr$1(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some(function (val) {
+            if (opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains && Array.isArray(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some(function (val) {
               return val.trim() && str.slice(commentStartedAt, i).toLowerCase().includes(val);
             })) {
               canDelete = false;
@@ -7562,13 +7560,13 @@
 
 
           if (opts.removeHTMLComments && commentStartedAt === null && str[i] === "<" && str[i + 1] === "!") {
-            if ((!allHeads || isArr$1(allHeads) && allHeads.length && !allHeads.includes("<!")) && (!allTails || isArr$1(allTails) && allTails.length && !allTails.includes("<!"))) {
+            if ((!allHeads || Array.isArray(allHeads) && allHeads.length && !allHeads.includes("<!")) && (!allTails || Array.isArray(allTails) && allTails.length && !allTails.includes("<!"))) {
               // 3.1. if there's no DOCTYPE on the right, mark the comment's start,
               // except in cases when it's been whitelisted (Outlook conditionals for example):
               if (!matchRight(str, i + 1, "doctype", {
                 i: true,
                 trimBeforeMatching: true
-              }) && !(str[i + 2] === "-" && str[i + 3] === "-" && isArr$1(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length && matchRight(str, i + 3, opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains, {
+              }) && !(str[i + 2] === "-" && str[i + 3] === "-" && Array.isArray(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length && matchRight(str, i + 3, opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains, {
                 trimBeforeMatching: true
               }))) {
                 commentStartedAt = i;
@@ -7651,7 +7649,7 @@
         // in round 1.
 
 
-        if (!doNothing && round === 2 && isArr$1(round1RangesClone) && round1RangesClone.length && i === round1RangesClone[0][0]) {
+        if (!doNothing && round === 2 && Array.isArray(round1RangesClone) && round1RangesClone.length && i === round1RangesClone[0][0]) {
           // offset index, essentially "jumping over" what was submitted for deletion in round 1
           var _temp = round1RangesClone.shift();
 
@@ -7688,7 +7686,7 @@
 
           var _temp2 = void 0;
 
-          if (opts.removeHTMLComments && isArr$1(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length && (opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some(function (val) {
+          if (opts.removeHTMLComments && Array.isArray(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length && (opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some(function (val) {
             return val.includes("if");
           }) || opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some(function (val) {
             return val.includes("mso");
@@ -7851,7 +7849,7 @@
         }))).sort();
         allClassesAndIdsWithinHeadFinal = lodash_pullall(lodash_pullall(Array.from(allClassesAndIdsWithinHead), bodyCssToDelete), headCssToDelete);
 
-        if (isArr$1(allClassesAndIdsWithinBodyThatWereWhitelisted) && allClassesAndIdsWithinBodyThatWereWhitelisted.length) {
+        if (Array.isArray(allClassesAndIdsWithinBodyThatWereWhitelisted) && allClassesAndIdsWithinBodyThatWereWhitelisted.length) {
           allClassesAndIdsWithinBodyThatWereWhitelisted.forEach(function (classOrId) {
             if (!allClassesAndIdsWithinHeadFinal.includes(classOrId)) {
               allClassesAndIdsWithinHeadFinal.push(classOrId);

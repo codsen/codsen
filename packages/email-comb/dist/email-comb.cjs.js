@@ -148,8 +148,10 @@ function isObj(something) {
 function hasOwnProp(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 }
+function isLatinLetter(char) {
+  return typeof char === "string" && char.length === 1 && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
+}
 
-var isArr = Array.isArray;
 function comb(str, opts) {
   var start = Date.now();
   var finalIndexesToDelete = new Ranges({
@@ -170,9 +172,6 @@ function comb(str, opts) {
       valueStart: null,
       nameStart: null
     }, initObj);
-  }
-  function isLatinLetter(char) {
-    return typeof char === "string" && char.length === 1 && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
   }
   var i;
   var prevailingEOL;
@@ -238,7 +237,7 @@ function comb(str, opts) {
   if (isStr(opts.whitelist)) {
     opts.whitelist = [opts.whitelist];
   }
-  if (!isArr(opts.whitelist)) {
+  if (!Array.isArray(opts.whitelist)) {
     throw new TypeError("email-remove-unused-css: [THROW_ID_03] opts.whitelist should be an array, but it was customised to a wrong thing, ".concat(JSON.stringify(opts.whitelist, null, 4)));
   }
   if (opts.whitelist.length > 0 && !opts.whitelist.every(function (el) {
@@ -246,7 +245,7 @@ function comb(str, opts) {
   })) {
     throw new TypeError("email-remove-unused-css: [THROW_ID_04] opts.whitelist array should contain only string-type elements. Currently we\x0Be got:\n".concat(JSON.stringify(opts.whitelist, null, 4)));
   }
-  if (!isArr(opts.backend)) {
+  if (!Array.isArray(opts.backend)) {
     throw new TypeError("email-remove-unused-css: [THROW_ID_05] opts.backend should be an array, but it was customised to a wrong thing, ".concat(JSON.stringify(opts.backend, null, 4)));
   }
   if (opts.backend.length > 0 && opts.backend.some(function (val) {
@@ -271,7 +270,7 @@ function comb(str, opts) {
   }
   var allHeads = null;
   var allTails = null;
-  if (isArr(opts.backend) && opts.backend.length) {
+  if (Array.isArray(opts.backend) && opts.backend.length) {
     allHeads = opts.backend.map(function (headsAndTailsObj) {
       return headsAndTailsObj.heads;
     });
@@ -574,7 +573,7 @@ function comb(str, opts) {
               selectorChunkCanBeDeleted = true;
               onlyDeletedChunksFollow = true;
             } else if (round === 2 && !selectorChunkCanBeDeleted) {
-              if (opts.uglify && (!isArr(opts.whitelist) || !opts.whitelist.length || !matcher([singleSelector], opts.whitelist).length)) {
+              if (opts.uglify && (!Array.isArray(opts.whitelist) || !opts.whitelist.length || !matcher([singleSelector], opts.whitelist).length)) {
                 currentChunksMinifiedSelectors.push(singleSelectorStartedAt, i, allClassesAndIdsWithinHeadFinalUglified[allClassesAndIdsWithinHeadFinal.indexOf(singleSelector)]);
               }
               if (chr === ",") {
@@ -926,7 +925,7 @@ function comb(str, opts) {
               finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(expandedRange).concat([whatToInsert]));
             } else {
               bodyClassOrIdCanBeDeleted = false;
-              if (opts.uglify && !(isArr(opts.whitelist) && opts.whitelist.length && matcher([".".concat(carvedClass)], opts.whitelist).length)) {
+              if (opts.uglify && !(Array.isArray(opts.whitelist) && opts.whitelist.length && matcher([".".concat(carvedClass)], opts.whitelist).length)) {
                 finalIndexesToDelete.push(bodyClass.valueStart, i, allClassesAndIdsWithinHeadFinalUglified[allClassesAndIdsWithinHeadFinal.indexOf(".".concat(carvedClass))].slice(1));
               }
             }
@@ -957,7 +956,7 @@ function comb(str, opts) {
             finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_expandedRange));
           } else {
             bodyClassOrIdCanBeDeleted = false;
-            if (opts.uglify && !(isArr(opts.whitelist) && opts.whitelist.length && matcher(["#".concat(carvedId)], opts.whitelist).length)) {
+            if (opts.uglify && !(Array.isArray(opts.whitelist) && opts.whitelist.length && matcher(["#".concat(carvedId)], opts.whitelist).length)) {
               finalIndexesToDelete.push(bodyId.valueStart, i, allClassesAndIdsWithinHeadFinalUglified[allClassesAndIdsWithinHeadFinal.indexOf("#".concat(carvedId))].slice(1));
             }
           }
@@ -1072,7 +1071,7 @@ function comb(str, opts) {
       }
       if (!doNothing && round === 1) {
         if (commentStartedAt !== null && commentStartedAt < i && str[i] === ">" && !usedOnce) {
-          if (opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains && isArr(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some(function (val) {
+          if (opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains && Array.isArray(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some(function (val) {
             return val.trim() && str.slice(commentStartedAt, i).toLowerCase().includes(val);
           })) {
             canDelete = false;
@@ -1111,11 +1110,11 @@ function comb(str, opts) {
           }
         }
         if (opts.removeHTMLComments && commentStartedAt === null && str[i] === "<" && str[i + 1] === "!") {
-          if ((!allHeads || isArr(allHeads) && allHeads.length && !allHeads.includes("<!")) && (!allTails || isArr(allTails) && allTails.length && !allTails.includes("<!"))) {
+          if ((!allHeads || Array.isArray(allHeads) && allHeads.length && !allHeads.includes("<!")) && (!allTails || Array.isArray(allTails) && allTails.length && !allTails.includes("<!"))) {
             if (!stringMatchLeftRight.matchRight(str, i + 1, "doctype", {
               i: true,
               trimBeforeMatching: true
-            }) && !(str[i + 2] === "-" && str[i + 3] === "-" && isArr(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length && stringMatchLeftRight.matchRight(str, i + 3, opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains, {
+            }) && !(str[i + 2] === "-" && str[i + 3] === "-" && Array.isArray(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length && stringMatchLeftRight.matchRight(str, i + 3, opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains, {
               trimBeforeMatching: true
             }))) {
               commentStartedAt = i;
@@ -1151,7 +1150,7 @@ function comb(str, opts) {
           whitespaceStartedAt = null;
         }
       }
-      if (!doNothing && round === 2 && isArr(round1RangesClone) && round1RangesClone.length && i === round1RangesClone[0][0]) {
+      if (!doNothing && round === 2 && Array.isArray(round1RangesClone) && round1RangesClone.length && i === round1RangesClone[0][0]) {
         var _temp = round1RangesClone.shift();
         if (_temp[1] - 1 > i) {
           i = _temp[1] - 1;
@@ -1161,7 +1160,7 @@ function comb(str, opts) {
       if (commentNearlyStartedAt !== null && str[i] === ">") {
         commentNearlyStartedAt = null;
         var _temp2 = void 0;
-        if (opts.removeHTMLComments && isArr(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length && (opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some(function (val) {
+        if (opts.removeHTMLComments && Array.isArray(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length && (opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some(function (val) {
           return val.includes("if");
         }) || opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some(function (val) {
           return val.includes("mso");
@@ -1258,7 +1257,7 @@ function comb(str, opts) {
         return "#".concat(val);
       }))).sort();
       allClassesAndIdsWithinHeadFinal = pullAll(pullAll(Array.from(allClassesAndIdsWithinHead), bodyCssToDelete), headCssToDelete);
-      if (isArr(allClassesAndIdsWithinBodyThatWereWhitelisted) && allClassesAndIdsWithinBodyThatWereWhitelisted.length) {
+      if (Array.isArray(allClassesAndIdsWithinBodyThatWereWhitelisted) && allClassesAndIdsWithinBodyThatWereWhitelisted.length) {
         allClassesAndIdsWithinBodyThatWereWhitelisted.forEach(function (classOrId) {
           if (!allClassesAndIdsWithinHeadFinal.includes(classOrId)) {
             allClassesAndIdsWithinHeadFinal.push(classOrId);

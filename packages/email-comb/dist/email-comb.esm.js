@@ -46,8 +46,15 @@ function isObj(something) {
 function hasOwnProp(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 }
+function isLatinLetter(char) {
+  return (
+    typeof char === "string" &&
+    char.length === 1 &&
+    ((char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91) ||
+      (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123))
+  );
+}
 
-const isArr = Array.isArray;
 function comb(str, opts) {
   const start = Date.now();
   const finalIndexesToDelete = new Ranges({ limitToBeAddedWhitespace: true });
@@ -66,14 +73,6 @@ function comb(str, opts) {
       nameStart: null,
       ...initObj,
     };
-  }
-  function isLatinLetter(char) {
-    return (
-      typeof char === "string" &&
-      char.length === 1 &&
-      ((char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91) ||
-        (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123))
-    );
   }
   let i;
   let prevailingEOL;
@@ -159,7 +158,7 @@ function comb(str, opts) {
   if (isStr(opts.whitelist)) {
     opts.whitelist = [opts.whitelist];
   }
-  if (!isArr(opts.whitelist)) {
+  if (!Array.isArray(opts.whitelist)) {
     throw new TypeError(
       `email-remove-unused-css: [THROW_ID_03] opts.whitelist should be an array, but it was customised to a wrong thing, ${JSON.stringify(
         opts.whitelist,
@@ -177,7 +176,7 @@ function comb(str, opts) {
       )}`
     );
   }
-  if (!isArr(opts.backend)) {
+  if (!Array.isArray(opts.backend)) {
     throw new TypeError(
       `email-remove-unused-css: [THROW_ID_05] opts.backend should be an array, but it was customised to a wrong thing, ${JSON.stringify(
         opts.backend,
@@ -236,7 +235,7 @@ function comb(str, opts) {
   }
   let allHeads = null;
   let allTails = null;
-  if (isArr(opts.backend) && opts.backend.length) {
+  if (Array.isArray(opts.backend) && opts.backend.length) {
     allHeads = opts.backend.map((headsAndTailsObj) => headsAndTailsObj.heads);
     allTails = opts.backend.map((headsAndTailsObj) => headsAndTailsObj.tails);
   }
@@ -673,7 +672,7 @@ function comb(str, opts) {
           } else if (round === 2 && !selectorChunkCanBeDeleted) {
             if (
               opts.uglify &&
-              (!isArr(opts.whitelist) ||
+              (!Array.isArray(opts.whitelist) ||
                 !opts.whitelist.length ||
                 !matcher([singleSelector], opts.whitelist).length)
             ) {
@@ -1119,7 +1118,7 @@ function comb(str, opts) {
             if (
               opts.uglify &&
               !(
-                isArr(opts.whitelist) &&
+                Array.isArray(opts.whitelist) &&
                 opts.whitelist.length &&
                 matcher([`.${carvedClass}`], opts.whitelist).length
               )
@@ -1180,7 +1179,7 @@ function comb(str, opts) {
           if (
             opts.uglify &&
             !(
-              isArr(opts.whitelist) &&
+              Array.isArray(opts.whitelist) &&
               opts.whitelist.length &&
               matcher([`#${carvedId}`], opts.whitelist).length
             )
@@ -1349,7 +1348,9 @@ function comb(str, opts) {
         ) {
           if (
             opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains &&
-            isArr(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) &&
+            Array.isArray(
+              opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains
+            ) &&
             opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length &&
             opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some(
               (val) =>
@@ -1400,11 +1401,13 @@ function comb(str, opts) {
         ) {
           if (
             (!allHeads ||
-              (isArr(allHeads) &&
+              (Array.isArray(allHeads) &&
                 allHeads.length &&
                 !allHeads.includes("<!"))) &&
             (!allTails ||
-              (isArr(allTails) && allTails.length && !allTails.includes("<!")))
+              (Array.isArray(allTails) &&
+                allTails.length &&
+                !allTails.includes("<!")))
           ) {
             if (
               !matchRight(str, i + 1, "doctype", {
@@ -1414,7 +1417,9 @@ function comb(str, opts) {
               !(
                 str[i + 2] === "-" &&
                 str[i + 3] === "-" &&
-                isArr(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) &&
+                Array.isArray(
+                  opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains
+                ) &&
                 opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length &&
                 matchRight(
                   str,
@@ -1466,7 +1471,7 @@ function comb(str, opts) {
       if (
         !doNothing &&
         round === 2 &&
-        isArr(round1RangesClone) &&
+        Array.isArray(round1RangesClone) &&
         round1RangesClone.length &&
         i === round1RangesClone[0][0]
       ) {
@@ -1481,7 +1486,7 @@ function comb(str, opts) {
         let temp;
         if (
           opts.removeHTMLComments &&
-          isArr(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) &&
+          Array.isArray(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) &&
           opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length &&
           (opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some((val) =>
             val.includes("if")
@@ -1616,7 +1621,7 @@ function comb(str, opts) {
         headCssToDelete
       );
       if (
-        isArr(allClassesAndIdsWithinBodyThatWereWhitelisted) &&
+        Array.isArray(allClassesAndIdsWithinBodyThatWereWhitelisted) &&
         allClassesAndIdsWithinBodyThatWereWhitelisted.length
       ) {
         allClassesAndIdsWithinBodyThatWereWhitelisted.forEach((classOrId) => {

@@ -23,10 +23,21 @@ function hasOwnProp(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 }
 
+function isLatinLetter(char) {
+  // we mean Latin letters A-Z, a-z
+  return (
+    typeof char === "string" &&
+    char.length === 1 &&
+    ((char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91) ||
+      (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123))
+  );
+}
+
 export {
   isObj,
   defaults,
   hasOwnProp,
+  isLatinLetter,
   regexEmptyStyleTag,
   regexEmptyMediaQuery,
   regexEmptyUnclosedMediaQuery,
