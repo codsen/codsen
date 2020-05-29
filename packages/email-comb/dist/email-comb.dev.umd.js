@@ -7736,7 +7736,7 @@
         //
         //
         //
-        allClassesAndIdsWithinBody = lodash_uniq(bodyClassesArr.concat(bodyIdsArr).sort()); // extract all classes or id's from `headSelectorsArr` and get count of each.
+        allClassesAndIdsWithinBody = lodash_uniq(bodyClassesArr.concat(bodyIdsArr)); // extract all classes or id's from `headSelectorsArr` and get count of each.
         // That's so we can later exclude sandwitched classes. Each time "collateral"
         // legit, but sandwitched with false-one class gets deleted, we keep count, and
         // later compare totals with these below.
@@ -7760,7 +7760,7 @@
 
         allClassesAndIdsWithinHead = lodash_uniq(headSelectorsArr.reduce(function (arr, el) {
           return arr.concat(stringExtractClassNames(el));
-        }, [])).sort();
+        }, []));
         countBeforeCleaning = allClassesAndIdsWithinHead.length; // to avoid false positives, let's apply two cycles when removing unused classes/id's from head:
         // ---------------------------------------
         // TWO-CYCLE UNUSED CSS IDENTIFICATION:
@@ -7816,7 +7816,7 @@
         bodyCssToDelete = lodash_uniq(pullAllWithGlob(lodash_pullall(bodyClassesArr.concat(bodyIdsArr), preppedAllClassesAndIdsWithinHead), opts.whitelist)); // now that we know final to-be-deleted selectors list, compare them with `deletedFromHeadArr`
         // and fill any missing CSS in `headCssToDelete`:
 
-        headCssToDelete = lodash_uniq(headCssToDelete.concat(lodash_intersection(deletedFromHeadArr, bodyCssToDelete))).sort();
+        headCssToDelete = lodash_uniq(headCssToDelete.concat(lodash_intersection(deletedFromHeadArr, bodyCssToDelete)));
         bodyClassesToDelete = bodyCssToDelete.filter(function (s) {
           return s.startsWith(".");
         }).map(function (s) {
@@ -7846,7 +7846,7 @@
           return ".".concat(val);
         }), bodyIdsToDelete.map(function (val) {
           return "#".concat(val);
-        }))).sort();
+        })));
         allClassesAndIdsWithinHeadFinal = lodash_pullall(lodash_pullall(Array.from(allClassesAndIdsWithinHead), bodyCssToDelete), headCssToDelete);
 
         if (Array.isArray(allClassesAndIdsWithinBodyThatWereWhitelisted) && allClassesAndIdsWithinBodyThatWereWhitelisted.length) {
@@ -8076,8 +8076,8 @@
       result: str,
       countAfterCleaning: countAfterCleaning,
       countBeforeCleaning: countBeforeCleaning,
-      allInHead: allClassesAndIdsWithinHead,
-      allInBody: allClassesAndIdsWithinBody,
+      allInHead: allClassesAndIdsWithinHead.sort(),
+      allInBody: allClassesAndIdsWithinBody.sort(),
       deletedFromHead: headCssToDelete.sort(),
       deletedFromBody: bodyCssToDelete.sort()
     };

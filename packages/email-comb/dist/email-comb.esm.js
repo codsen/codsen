@@ -1520,9 +1520,7 @@ function comb(str, opts) {
       }
     }
     if (round === 1) {
-      allClassesAndIdsWithinBody = uniq(
-        bodyClassesArr.concat(bodyIdsArr).sort()
-      );
+      allClassesAndIdsWithinBody = uniq(bodyClassesArr.concat(bodyIdsArr));
       headSelectorsArr.forEach((el) => {
         extract(el).forEach((selector) => {
           if (
@@ -1537,7 +1535,7 @@ function comb(str, opts) {
       headSelectorsCountClone = { ...headSelectorsCount };
       allClassesAndIdsWithinHead = uniq(
         headSelectorsArr.reduce((arr, el) => arr.concat(extract(el)), [])
-      ).sort();
+      );
       countBeforeCleaning = allClassesAndIdsWithinHead.length;
       const preppedHeadSelectorsArr = Array.from(headSelectorsArr);
       let deletedFromHeadArr = [];
@@ -1586,7 +1584,7 @@ function comb(str, opts) {
         headCssToDelete.concat(
           intersection(deletedFromHeadArr, bodyCssToDelete)
         )
-      ).sort();
+      );
       bodyClassesToDelete = bodyCssToDelete
         .filter((s) => s.startsWith("."))
         .map((s) => s.slice(1));
@@ -1615,7 +1613,7 @@ function comb(str, opts) {
           bodyClassesToDelete.map((val) => `.${val}`),
           bodyIdsToDelete.map((val) => `#${val}`)
         )
-      ).sort();
+      );
       allClassesAndIdsWithinHeadFinal = pullAll(
         pullAll(Array.from(allClassesAndIdsWithinHead), bodyCssToDelete),
         headCssToDelete
@@ -1799,8 +1797,8 @@ function comb(str, opts) {
     result: str,
     countAfterCleaning,
     countBeforeCleaning,
-    allInHead: allClassesAndIdsWithinHead,
-    allInBody: allClassesAndIdsWithinBody,
+    allInHead: allClassesAndIdsWithinHead.sort(),
+    allInBody: allClassesAndIdsWithinBody.sort(),
     deletedFromHead: headCssToDelete.sort(),
     deletedFromBody: bodyCssToDelete.sort(),
   };

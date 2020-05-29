@@ -1186,7 +1186,7 @@ function comb(str, opts) {
       }
     }
     if (round === 1) {
-      allClassesAndIdsWithinBody = uniq(bodyClassesArr.concat(bodyIdsArr).sort());
+      allClassesAndIdsWithinBody = uniq(bodyClassesArr.concat(bodyIdsArr));
       headSelectorsArr.forEach(function (el) {
         extract(el).forEach(function (selector) {
           if (Object.prototype.hasOwnProperty.call(headSelectorsCount, selector)) {
@@ -1199,7 +1199,7 @@ function comb(str, opts) {
       headSelectorsCountClone = _objectSpread2({}, headSelectorsCount);
       allClassesAndIdsWithinHead = uniq(headSelectorsArr.reduce(function (arr, el) {
         return arr.concat(extract(el));
-      }, [])).sort();
+      }, []));
       countBeforeCleaning = allClassesAndIdsWithinHead.length;
       var preppedHeadSelectorsArr = Array.from(headSelectorsArr);
       var deletedFromHeadArr = [];
@@ -1230,7 +1230,7 @@ function comb(str, opts) {
       }
       headCssToDelete = pullAllWithGlob(pullAll(uniq(Array.from(allClassesAndIdsWithinHead)), bodyClassesArr.concat(bodyIdsArr)), opts.whitelist);
       bodyCssToDelete = uniq(pullAllWithGlob(pullAll(bodyClassesArr.concat(bodyIdsArr), preppedAllClassesAndIdsWithinHead), opts.whitelist));
-      headCssToDelete = uniq(headCssToDelete.concat(intersection(deletedFromHeadArr, bodyCssToDelete))).sort();
+      headCssToDelete = uniq(headCssToDelete.concat(intersection(deletedFromHeadArr, bodyCssToDelete)));
       bodyClassesToDelete = bodyCssToDelete.filter(function (s) {
         return s.startsWith(".");
       }).map(function (s) {
@@ -1255,7 +1255,7 @@ function comb(str, opts) {
         return ".".concat(val);
       }), bodyIdsToDelete.map(function (val) {
         return "#".concat(val);
-      }))).sort();
+      })));
       allClassesAndIdsWithinHeadFinal = pullAll(pullAll(Array.from(allClassesAndIdsWithinHead), bodyCssToDelete), headCssToDelete);
       if (Array.isArray(allClassesAndIdsWithinBodyThatWereWhitelisted) && allClassesAndIdsWithinBodyThatWereWhitelisted.length) {
         allClassesAndIdsWithinBodyThatWereWhitelisted.forEach(function (classOrId) {
@@ -1382,8 +1382,8 @@ function comb(str, opts) {
     result: str,
     countAfterCleaning: countAfterCleaning,
     countBeforeCleaning: countBeforeCleaning,
-    allInHead: allClassesAndIdsWithinHead,
-    allInBody: allClassesAndIdsWithinBody,
+    allInHead: allClassesAndIdsWithinHead.sort(),
+    allInBody: allClassesAndIdsWithinBody.sort(),
     deletedFromHead: headCssToDelete.sort(),
     deletedFromBody: bodyCssToDelete.sort()
   };
