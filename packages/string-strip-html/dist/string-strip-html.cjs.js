@@ -494,8 +494,10 @@ function stripHtml(str, originalOpts) {
     if (tag.nameStarts !== undefined && tag.nameEnds === undefined && (!str[i].trim() || !characterSuitableForNames(str[i]))) {
       tag.nameEnds = i;
       tag.name = str.slice(tag.nameStarts, tag.nameEnds + (str[i] !== ">" && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0));
-      if (str[tag.nameStarts - 1] !== "!" &&
-      !tag.name.replace(/-/g, "").length) {
+      if (
+      str[tag.nameStarts - 1] !== "!" &&
+      !tag.name.replace(/-/g, "").length ||
+      /^\d+$/.test(tag.name)) {
         tag = {};
         continue;
       }

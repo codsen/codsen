@@ -9239,10 +9239,12 @@
         // 1. mark the name ending
         tag.nameEnds = i; // 2. extract the full name string
 
-        tag.name = str.slice(tag.nameStarts, tag.nameEnds + (str[i] !== ">" && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0)); // if we caught "----" from "<----" or "---->", bail:
+        tag.name = str.slice(tag.nameStarts, tag.nameEnds + (str[i] !== ">" && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0));
 
-        if (str[tag.nameStarts - 1] !== "!" && // protection against <!--
-        !tag.name.replace(/-/g, "").length) {
+        if ( // if we caught "----" from "<----" or "---->", bail:
+        str[tag.nameStarts - 1] !== "!" && // protection against <!--
+        !tag.name.replace(/-/g, "").length || // if tag name consists of only number characters
+        /^\d+$/.test(tag.name)) {
           tag = {};
           continue;
         }

@@ -645,8 +645,9 @@ function stripHtml(str, originalOpts) {
           (str[i] !== ">" && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0)
       );
       if (
-        str[tag.nameStarts - 1] !== "!" &&
-        !tag.name.replace(/-/g, "").length
+        (str[tag.nameStarts - 1] !== "!" &&
+          !tag.name.replace(/-/g, "").length) ||
+        /^\d+$/.test(tag.name)
       ) {
         tag = {};
         continue;

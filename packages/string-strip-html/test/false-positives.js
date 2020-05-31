@@ -161,3 +161,36 @@ tap.test("17 - false positives - consecutive tags", (t) => {
   );
   t.end();
 });
+
+tap.test(
+  "18 - digit is the first character following the opening bracket, quote",
+  (t) => {
+    const input = `"<5 text here`;
+    t.same(stripHtml(input), input, "18");
+    t.end();
+  }
+);
+
+tap.test(
+  "19 - digit is the first character following the opening bracket",
+  (t) => {
+    const input = `<5 text here`;
+    t.same(stripHtml(input), input, "19");
+    t.end();
+  }
+);
+
+tap.test(
+  "20 - digit is the first character following the opening bracket",
+  (t) => {
+    const input = `< 5 text here`;
+    t.same(stripHtml(input), input, "20");
+    t.end();
+  }
+);
+
+tap.test("21 - numbers compared", (t) => {
+  const input = `1 < 5 for sure`;
+  t.same(stripHtml(input), input, "21");
+  t.end();
+});

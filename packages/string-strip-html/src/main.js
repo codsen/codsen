@@ -1012,14 +1012,14 @@ function stripHtml(str, originalOpts) {
         )}`
       );
 
-      // if we caught "----" from "<----" or "---->", bail:
       if (
-        str[tag.nameStarts - 1] !== "!" && // protection against <!--
-        !tag.name.replace(/-/g, "").length
+        // if we caught "----" from "<----" or "---->", bail:
+        (str[tag.nameStarts - 1] !== "!" && // protection against <!--
+          !tag.name.replace(/-/g, "").length) ||
+        // if tag name consists of only number characters
+        /^\d+$/.test(tag.name)
       ) {
-        console.log(
-          `1021 \u001b[${33}m${`ONLY DOTS PRESENT IN TAG NAME`}\u001b[${39}m - reset`
-        );
+        console.log(`1022 \u001b[${33}m${`BAIL`}\u001b[${39}m - reset`);
         tag = {};
         continue;
       }
