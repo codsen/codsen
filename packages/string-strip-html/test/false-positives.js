@@ -194,3 +194,27 @@ tap.test("21 - numbers compared", (t) => {
   t.same(stripHtml(input), input, "21");
   t.end();
 });
+
+tap.test("22 - numbers compared, tight", (t) => {
+  const input = `1 <5 for sure`;
+  t.same(stripHtml(input), input, "22");
+  t.end();
+});
+
+tap.test("23 - number letter", (t) => {
+  const input = `aaa 1 < 5s bbb`;
+  t.same(stripHtml(input), input, "23");
+  t.end();
+});
+
+tap.test("24 - number letter, tight", (t) => {
+  const input = `aaa 1 <5s bbb`;
+  t.same(stripHtml(input), input, "24");
+  t.end();
+});
+
+tap.test("25 - number letter, tight around", (t) => {
+  const input = `aaa 1<5s bbb`;
+  t.same(stripHtml(input), input, "25");
+  t.end();
+});

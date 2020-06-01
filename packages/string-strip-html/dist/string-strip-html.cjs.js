@@ -497,7 +497,7 @@ function stripHtml(str, originalOpts) {
       if (
       str[tag.nameStarts - 1] !== "!" &&
       !tag.name.replace(/-/g, "").length ||
-      /^\d+$/.test(tag.name)) {
+      /^\d+$/.test(tag.name[0])) {
         tag = {};
         continue;
       }
