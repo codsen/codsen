@@ -1016,7 +1016,7 @@ function stripHtml(str, originalOpts) {
         // if we caught "----" from "<----" or "---->", bail:
         (str[tag.nameStarts - 1] !== "!" && // protection against <!--
           !tag.name.replace(/-/g, "").length) ||
-        // if tag name consists of only number characters
+        // if tag name starts with a number character
         /^\d+$/.test(tag.name[0])
       ) {
         tag = {};
