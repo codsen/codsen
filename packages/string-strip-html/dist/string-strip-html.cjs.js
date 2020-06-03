@@ -597,7 +597,9 @@ function stripHtml(str, originalOpts) {
         if (tag.lastOpeningBracketAt < i && str[i] !== "<" && (
         str[i + 1] === undefined || str[i + 1] === "<") && tag.nameContainsLetters) {
           tag.name = str.slice(tag.nameStarts, tag.nameEnds ? tag.nameEnds : i + 1).toLowerCase();
-          if (opts.ignoreTags.includes(tag.name) || tag.onlyPlausible && !definitelyTagNames.has(tag.name)) {
+          if (
+          opts.ignoreTags.includes(tag.name) ||
+          tag.onlyPlausible && !definitelyTagNames.has(tag.name)) {
             tag = {};
             attrObj = {};
             continue;
@@ -688,9 +690,6 @@ function stripHtml(str, originalOpts) {
               proposedReturn: [tag.leftOuterWhitespace, i, _whiteSpaceCompensation3]
             });
             treatRangedTags(i, opts, rangesToDelete);
-            tag = {};
-            attrObj = {};
-          } else if (tag.onlyPlausible && !definitelyTagNames.has(tag.name) && !singleLetterTags.has(tag.name) && !(tag.attributes && tag.attributes.length)) {
             tag = {};
             attrObj = {};
           }

@@ -983,14 +983,6 @@ function stripHtml(str, originalOpts) {
             treatRangedTags(i, opts, rangesToDelete);
             tag = {};
             attrObj = {};
-          } else if (
-            tag.onlyPlausible &&
-            !definitelyTagNames.has(tag.name) &&
-            !singleLetterTags.has(tag.name) &&
-            !(tag.attributes && tag.attributes.length)
-          ) {
-            tag = {};
-            attrObj = {};
           }
         }
         if (

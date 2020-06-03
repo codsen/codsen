@@ -9243,7 +9243,7 @@
 
         if ( // if we caught "----" from "<----" or "---->", bail:
         str[tag.nameStarts - 1] !== "!" && // protection against <!--
-        !tag.name.replace(/-/g, "").length || // if tag name consists of only number characters
+        !tag.name.replace(/-/g, "").length || // if tag name starts with a number character
         /^\d+$/.test(tag.name[0])) {
           tag = {};
           continue;
@@ -9415,9 +9415,11 @@
           str[i + 1] === undefined || str[i + 1] === "<") && tag.nameContainsLetters) {
             // find out the tag name earlier than dedicated tag name ending catching section:
             // if (str[i + 1] === undefined) {
-            tag.name = str.slice(tag.nameStarts, tag.nameEnds ? tag.nameEnds : i + 1).toLowerCase(); // if it's an ignored tag or just plausible and unrecognised, bail:
+            tag.name = str.slice(tag.nameStarts, tag.nameEnds ? tag.nameEnds : i + 1).toLowerCase();
 
-            if (opts.ignoreTags.includes(tag.name) || tag.onlyPlausible && !definitelyTagNames.has(tag.name)) {
+            if ( // if it's an ignored tag
+            opts.ignoreTags.includes(tag.name) || // or just plausible and unrecognised
+            tag.onlyPlausible && !definitelyTagNames.has(tag.name)) {
               tag = {};
               attrObj = {};
               continue;
@@ -9555,9 +9557,6 @@
 
               treatRangedTags(i, opts, rangesToDelete); // then, for continuity, mark everything up accordingly if it's a new bracket:
 
-              tag = {};
-              attrObj = {};
-            } else if (tag.onlyPlausible && !definitelyTagNames.has(tag.name) && !singleLetterTags.has(tag.name) && !(tag.attributes && tag.attributes.length)) {
               tag = {};
               attrObj = {};
             }
