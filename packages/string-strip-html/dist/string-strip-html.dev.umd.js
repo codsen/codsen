@@ -9501,12 +9501,17 @@
 
             if (tag.leftOuterWhitespace === 0 || !right(str, endingRangeIndex - 1)) {
               insert = "";
-            } // shorten multiple space values-to-add to a single space
-
-
-            if (insert && insert.length > 1 && !insert.trim() && !insert.includes("\n") && !insert.includes("\r")) {
-              insert = " ";
-            } // pass the range onto the callback function, be it default or user's
+            } // // shorten multiple space values-to-add to a single space
+            // if (
+            //   insert &&
+            //   insert.length > 1 &&
+            //   !insert.trim() &&
+            //   !insert.includes("\n") &&
+            //   !insert.includes("\r")
+            // ) {
+            //   insert = " ";
+            // }
+            // pass the range onto the callback function, be it default or user's
 
 
             opts.cb({

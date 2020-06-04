@@ -653,9 +653,6 @@ function stripHtml(str, originalOpts) {
           if (tag.leftOuterWhitespace === 0 || !stringLeftRight.right(str, endingRangeIndex - 1)) {
             insert = "";
           }
-          if (insert && insert.length > 1 && !insert.trim() && !insert.includes("\n") && !insert.includes("\r")) {
-            insert = " ";
-          }
           opts.cb({
             tag: tag,
             deleteFrom: tag.leftOuterWhitespace,
