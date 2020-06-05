@@ -373,3 +373,9 @@ tap.test(
     t.end();
   }
 );
+
+tap.test("47 - dodgy attribute", (t) => {
+  const input = `< abc |>`;
+  t.same(stripHtml(input), input, "47");
+  t.end();
+});

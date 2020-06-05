@@ -552,12 +552,8 @@ function stripHtml(str, originalOpts) {
         attrObj = {};
       }
     }
-    if (!tag.quotes && tag.nameEnds < i && str[i] !== ">" && str[i] !== "/" && str[i] !== "!" && !str[i - 1].trim() && str[i].trim() && !attrObj.nameStarts && !tag.lastClosingBracketAt) {
-      if (isValidAttributeCharacter("".concat(str[i]).concat(str[i + 1])) && str[i] !== "<") {
-        attrObj.nameStarts = i;
-      } else if (tag.onlyPlausible && str[i] !== "<") {
-        tag = {};
-      }
+    if (!tag.quotes && tag.nameEnds < i && !str[i - 1].trim() && str[i].trim() && !"<>/!".includes(str[i]) && !attrObj.nameStarts && !tag.lastClosingBracketAt && isValidAttributeCharacter(str[i])) {
+      attrObj.nameStarts = i;
     }
     if (tag.lastOpeningBracketAt !== null && tag.lastOpeningBracketAt < i && str[i] === "/" && tag.onlyPlausible) {
       tag.onlyPlausible = false;

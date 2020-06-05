@@ -9338,15 +9338,8 @@
       // -------------------------------------------------------------------------
 
 
-      if (!tag.quotes && tag.nameEnds < i && str[i] !== ">" && str[i] !== "/" && str[i] !== "!" && !str[i - 1].trim() && str[i].trim() && !attrObj.nameStarts && !tag.lastClosingBracketAt) {
-        if (isValidAttributeCharacter("".concat(str[i]).concat(str[i + 1])) && str[i] !== "<") {
-          attrObj.nameStarts = i;
-        } else if (tag.onlyPlausible && str[i] !== "<") {
-          // If we have already suspicious tag where there's a space after "<", now it's fine to skip this
-          // tag because it's not a tag - attribute starts with a non-legit symbol...
-          // Wipe the whole tag record object:
-          tag = {};
-        }
+      if (!tag.quotes && tag.nameEnds < i && !str[i - 1].trim() && str[i].trim() && !"<>/!".includes(str[i]) && !attrObj.nameStarts && !tag.lastClosingBracketAt && isValidAttributeCharacter(str[i])) {
+        attrObj.nameStarts = i;
       } // catch "< /" - turn off "onlyPlausible"
       // -------------------------------------------------------------------------
 
@@ -9501,17 +9494,7 @@
 
             if (tag.leftOuterWhitespace === 0 || !right(str, endingRangeIndex - 1)) {
               insert = "";
-            } // // shorten multiple space values-to-add to a single space
-            // if (
-            //   insert &&
-            //   insert.length > 1 &&
-            //   !insert.trim() &&
-            //   !insert.includes("\n") &&
-            //   !insert.includes("\r")
-            // ) {
-            //   insert = " ";
-            // }
-            // pass the range onto the callback function, be it default or user's
+            } // pass the range onto the callback function, be it default or user's
 
 
             opts.cb({

@@ -737,22 +737,14 @@ function stripHtml(str, originalOpts) {
     if (
       !tag.quotes &&
       tag.nameEnds < i &&
-      str[i] !== ">" &&
-      str[i] !== "/" &&
-      str[i] !== "!" &&
       !str[i - 1].trim() &&
       str[i].trim() &&
+      !`<>/!`.includes(str[i]) &&
       !attrObj.nameStarts &&
-      !tag.lastClosingBracketAt
+      !tag.lastClosingBracketAt &&
+      isValidAttributeCharacter(str[i])
     ) {
-      if (
-        isValidAttributeCharacter(`${str[i]}${str[i + 1]}`) &&
-        str[i] !== "<"
-      ) {
-        attrObj.nameStarts = i;
-      } else if (tag.onlyPlausible && str[i] !== "<") {
-        tag = {};
-      }
+      attrObj.nameStarts = i;
     }
     if (
       tag.lastOpeningBracketAt !== null &&
