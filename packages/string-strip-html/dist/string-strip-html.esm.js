@@ -575,20 +575,6 @@ function stripHtml(str, originalOpts) {
     ) {
       tag.slashPresent = i;
     }
-    if (
-      tag.nameStarts &&
-      tag.nameStarts < i &&
-      !tag.quotes &&
-      punctuation.has(str[i]) &&
-      !attrObj.equalsAt &&
-      tag.attributes &&
-      !tag.attributes.length &&
-      !tag.lastClosingBracketAt
-    ) {
-      tag = {};
-      tag.attributes = [];
-      attrObj = {};
-    }
     if (str[i] === '"' || str[i] === "'") {
       if (
         tag.nameStarts &&

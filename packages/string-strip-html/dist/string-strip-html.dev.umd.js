@@ -9183,16 +9183,7 @@
 
       if (str[i] === "/" && !(tag.quotes && tag.quotes.value) && Number.isInteger(tag.lastOpeningBracketAt) && !Number.isInteger(tag.lastClosingBracketAt)) {
         tag.slashPresent = i;
-      } // catch punctuation, present after alleged tag start:
-      // -------------------------------------------------------------------------
-
-
-      if (tag.nameStarts && tag.nameStarts < i && !tag.quotes && punctuation.has(str[i]) && !attrObj.equalsAt && tag.attributes && !tag.attributes.length && !tag.lastClosingBracketAt // still within a tag
-      ) {
-          tag = {};
-          tag.attributes = [];
-          attrObj = {};
-        } // catch double or single quotes
+      } // catch double or single quotes
       // -------------------------------------------------------------------------
 
 

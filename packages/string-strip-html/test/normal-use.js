@@ -379,3 +379,9 @@ tap.test("47 - dodgy attribute", (t) => {
   t.same(stripHtml(input), input, "47");
   t.end();
 });
+
+tap.test("48 - dodgy attribute", (t) => {
+  const input = `<table .>`;
+  t.same(stripHtml(input), "", "48");
+  t.end();
+});

@@ -456,12 +456,6 @@ function stripHtml(str, originalOpts) {
     if (str[i] === "/" && !(tag.quotes && tag.quotes.value) && Number.isInteger(tag.lastOpeningBracketAt) && !Number.isInteger(tag.lastClosingBracketAt)) {
       tag.slashPresent = i;
     }
-    if (tag.nameStarts && tag.nameStarts < i && !tag.quotes && punctuation.has(str[i]) && !attrObj.equalsAt && tag.attributes && !tag.attributes.length && !tag.lastClosingBracketAt
-    ) {
-        tag = {};
-        tag.attributes = [];
-        attrObj = {};
-      }
     if (str[i] === '"' || str[i] === "'") {
       if (tag.nameStarts && tag.quotes && tag.quotes.value && tag.quotes.value === str[i]) {
         attrObj.valueEnds = i;
