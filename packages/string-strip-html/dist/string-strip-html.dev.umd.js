@@ -8809,7 +8809,7 @@
     }
 
     function treatRangedTags(i, opts, rangesToDelete) {
-      if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
+      if (Array.isArray(opts.stripTogetherWithTheirContents) && opts.stripTogetherWithTheirContents.includes(tag.name)) {
         // it depends, is it opening or closing range tag:
         // We could try to distinguish opening from closing tags by presence of
         // slash, but that would be a liability for dirty code cases where clash
@@ -8943,6 +8943,8 @@
 
     if (typeof str !== "string") {
       throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_01] Input must be string! Currently it's: ".concat(_typeof(str).toLowerCase(), ", equal to:\n").concat(JSON.stringify(str, null, 4)));
+    } else if (!str || !str.trim()) {
+      return str;
     }
 
     if (originalOpts !== undefined && originalOpts !== null && !lodash_isplainobject(originalOpts)) {
@@ -9051,11 +9053,6 @@
       opts.dumpLinkHrefsNearby = _objectSpread2({}, defaults.dumpLinkHrefsNearby); // clone, not just assign
     }
 
-    if (!isArr(opts.stripTogetherWithTheirContents)) {
-      // means either null or undefined
-      opts.stripTogetherWithTheirContents = [];
-    }
-
     var somethingCaught = {};
 
     if (opts.stripTogetherWithTheirContents && isArr(opts.stripTogetherWithTheirContents) && opts.stripTogetherWithTheirContents.length && !opts.stripTogetherWithTheirContents.every(function (el, i) {
@@ -9085,13 +9082,7 @@
     var rangesToDelete = new Ranges({
       limitToBeAddedWhitespace: true,
       limitLinebreaksCount: 2
-    }); // step 0.
-    // ===========================================================================
-    // End sooner if it's an empty or empty-ish string:
-
-    if (str === "" || str.trim() === "") {
-      return str;
-    }
+    });
 
     if (!opts.skipHtmlDecoding) {
       while (str !== ent.decode(str)) {
@@ -9150,11 +9141,6 @@
                     for (var z = deleteUpTo; z < len; z++) {
                       if (str[z].trim()) {
                         deleteUpTo = z;
-                        break;
-                      }
-
-                      if (!str[z + 1]) {
-                        deleteUpTo = z + 1;
                         break;
                       }
                     }

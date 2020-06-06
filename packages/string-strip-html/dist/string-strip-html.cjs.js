@@ -207,7 +207,7 @@ function stripHtml(str, originalOpts) {
     return true;
   }
   function treatRangedTags(i, opts, rangesToDelete) {
-    if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
+    if (Array.isArray(opts.stripTogetherWithTheirContents) && opts.stripTogetherWithTheirContents.includes(tag.name)) {
       if (isArr(rangedOpeningTags) && rangedOpeningTags.some(function (obj) {
         return obj.name === tag.name && obj.lastClosingBracketAt < i;
       })) {
@@ -291,6 +291,8 @@ function stripHtml(str, originalOpts) {
   }
   if (typeof str !== "string") {
     throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_01] Input must be string! Currently it's: ".concat(_typeof(str).toLowerCase(), ", equal to:\n").concat(JSON.stringify(str, null, 4)));
+  } else if (!str || !str.trim()) {
+    return str;
   }
   if (originalOpts !== undefined && originalOpts !== null && !isObj(originalOpts)) {
     throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_02] Optional Options Object must be a plain object! Currently it's: ".concat(_typeof(originalOpts).toLowerCase(), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
@@ -368,9 +370,6 @@ function stripHtml(str, originalOpts) {
   if (!opts.dumpLinkHrefsNearby || isObj(opts.dumpLinkHrefsNearby) && !Object.keys(opts.dumpLinkHrefsNearby).length) {
     opts.dumpLinkHrefsNearby = _objectSpread2({}, defaults.dumpLinkHrefsNearby);
   }
-  if (!isArr(opts.stripTogetherWithTheirContents)) {
-    opts.stripTogetherWithTheirContents = [];
-  }
   var somethingCaught = {};
   if (opts.stripTogetherWithTheirContents && isArr(opts.stripTogetherWithTheirContents) && opts.stripTogetherWithTheirContents.length && !opts.stripTogetherWithTheirContents.every(function (el, i) {
     if (!(typeof el === "string")) {
@@ -393,9 +392,6 @@ function stripHtml(str, originalOpts) {
     limitToBeAddedWhitespace: true,
     limitLinebreaksCount: 2
   });
-  if (str === "" || str.trim() === "") {
-    return str;
-  }
   if (!opts.skipHtmlDecoding) {
     while (str !== ent.decode(str)) {
       str = ent.decode(str);
@@ -429,10 +425,6 @@ function stripHtml(str, originalOpts) {
                   for (var z = deleteUpTo; z < len; z++) {
                     if (str[z].trim()) {
                       deleteUpTo = z;
-                      break;
-                    }
-                    if (!str[z + 1]) {
-                      deleteUpTo = z + 1;
                       break;
                     }
                   }

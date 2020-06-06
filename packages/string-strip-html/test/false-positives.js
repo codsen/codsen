@@ -218,3 +218,9 @@ tap.test("25 - number letter, tight around", (t) => {
   t.same(stripHtml(input), input, "25");
   t.end();
 });
+
+tap.test("26 - tag name with closing bracket in front", (t) => {
+  const input = `>table`;
+  t.same(stripHtml(input), input, "26");
+  t.end();
+});

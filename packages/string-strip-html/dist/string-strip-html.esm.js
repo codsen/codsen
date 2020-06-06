@@ -231,7 +231,10 @@ function stripHtml(str, originalOpts) {
     return true;
   }
   function treatRangedTags(i, opts, rangesToDelete) {
-    if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
+    if (
+      Array.isArray(opts.stripTogetherWithTheirContents) &&
+      opts.stripTogetherWithTheirContents.includes(tag.name)
+    ) {
       if (
         isArr(rangedOpeningTags) &&
         rangedOpeningTags.some(
@@ -342,6 +345,8 @@ function stripHtml(str, originalOpts) {
         4
       )}`
     );
+  } else if (!str || !str.trim()) {
+    return str;
   }
   if (
     originalOpts !== undefined &&
@@ -452,9 +457,6 @@ function stripHtml(str, originalOpts) {
   ) {
     opts.dumpLinkHrefsNearby = { ...defaults.dumpLinkHrefsNearby };
   }
-  if (!isArr(opts.stripTogetherWithTheirContents)) {
-    opts.stripTogetherWithTheirContents = [];
-  }
   const somethingCaught = {};
   if (
     opts.stripTogetherWithTheirContents &&
@@ -486,9 +488,6 @@ function stripHtml(str, originalOpts) {
     limitToBeAddedWhitespace: true,
     limitLinebreaksCount: 2,
   });
-  if (str === "" || str.trim() === "") {
-    return str;
-  }
   if (!opts.skipHtmlDecoding) {
     while (str !== ent.decode(str)) {
       str = ent.decode(str);
@@ -541,10 +540,6 @@ function stripHtml(str, originalOpts) {
                 for (let z = deleteUpTo; z < len; z++) {
                   if (str[z].trim()) {
                     deleteUpTo = z;
-                    break;
-                  }
-                  if (!str[z + 1]) {
-                    deleteUpTo = z + 1;
                     break;
                   }
                 }
