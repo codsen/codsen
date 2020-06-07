@@ -1,13 +1,16 @@
 import tap from "tap";
 import stripHtml from "../dist/string-strip-html.esm";
 
-// opts.dumpLinkHrefsNearby
+// api peculiarities
 // -----------------------------------------------------------------------------
 
-tap.test("01 - opts.dumpLinkHrefsNearby - clean code, double quotes", (t) => {
+tap.test("01 - opts.dumpLinkHrefsNearby - null", (t) => {
   t.same(
     stripHtml(
-      'Let\'s watch <a href="https://www.rt.com/" target="_blank">RT news</a> this evening'
+      'Let\'s watch <a href="https://www.rt.com/" target="_blank">RT news</a> this evening',
+      {
+        dumpLinkHrefsNearby: null,
+      }
     ),
     "Let's watch RT news this evening",
     "01 - control, default behaviour"
@@ -15,38 +18,44 @@ tap.test("01 - opts.dumpLinkHrefsNearby - clean code, double quotes", (t) => {
   t.end();
 });
 
-tap.test("02 - opts.dumpLinkHrefsNearby - clean code, double quotes", (t) => {
+tap.test("02 - opts.dumpLinkHrefsNearby - undefined", (t) => {
   t.same(
     stripHtml(
       'Let\'s watch <a href="https://www.rt.com/" target="_blank">RT news</a> this evening',
-      { dumpLinkHrefsNearby: { enabled: false } }
+      {
+        dumpLinkHrefsNearby: undefined,
+      }
     ),
     "Let's watch RT news this evening",
-    "02 - control, hardcoded default"
+    "02 - control, default behaviour"
   );
   t.end();
 });
 
-tap.test("03 - opts.dumpLinkHrefsNearby - clean code, double quotes", (t) => {
+tap.test("03 - opts.dumpLinkHrefsNearby - {}", (t) => {
   t.same(
     stripHtml(
       'Let\'s watch <a href="https://www.rt.com/" target="_blank">RT news</a> this evening',
-      { dumpLinkHrefsNearby: { enabled: true } }
+      {
+        dumpLinkHrefsNearby: {},
+      }
     ),
-    "Let's watch RT news https://www.rt.com/ this evening",
+    "Let's watch RT news this evening",
     "03 - control, default behaviour"
   );
   t.end();
 });
 
+// opts.dumpLinkHrefsNearby
+// -----------------------------------------------------------------------------
+
 tap.test("04 - opts.dumpLinkHrefsNearby - clean code, double quotes", (t) => {
   t.same(
     stripHtml(
-      'Let\'s sell some juicy gossip to the <a href="mailto:gossip@thesun.co.uk" target="_blank">The Sun</a> right now!',
-      { dumpLinkHrefsNearby: { enabled: true } }
+      'Let\'s watch <a href="https://www.rt.com/" target="_blank">RT news</a> this evening'
     ),
-    "Let's sell some juicy gossip to the The Sun mailto:gossip@thesun.co.uk right now!",
-    "04 - mailto links without customisation"
+    "Let's watch RT news this evening",
+    "04 - control, default behaviour"
   );
   t.end();
 });
@@ -54,46 +63,47 @@ tap.test("04 - opts.dumpLinkHrefsNearby - clean code, double quotes", (t) => {
 tap.test("05 - opts.dumpLinkHrefsNearby - clean code, double quotes", (t) => {
   t.same(
     stripHtml(
-      'Here\'s the <a href="mailto:bob@thesun.co.uk?cc=gossip@thesun.co.uk&subject=look%20what%20Kate%20did%20last%20night" target="_blank">chief editor\'s</a> email.',
-      { dumpLinkHrefsNearby: { enabled: true } }
+      'Let\'s watch <a href="https://www.rt.com/" target="_blank">RT news</a> this evening',
+      { dumpLinkHrefsNearby: { enabled: false } }
     ),
-    "Here's the chief editor's mailto:bob@thesun.co.uk?cc=gossip@thesun.co.uk&subject=look%20what%20Kate%20did%20last%20night email.",
-    "05 - mailto links with customisation"
+    "Let's watch RT news this evening",
+    "05 - control, hardcoded default"
   );
   t.end();
 });
 
-tap.test("06 - opts.dumpLinkHrefsNearby - clean code, single quotes", (t) => {
+tap.test("06 - opts.dumpLinkHrefsNearby - clean code, double quotes", (t) => {
   t.same(
     stripHtml(
-      "Let's watch <a href='https://www.rt.com/' target='_blank'>RT news</a> this evening"
+      'Let\'s watch <a href="https://www.rt.com/" target="_blank">RT news</a> this evening',
+      { dumpLinkHrefsNearby: { enabled: true } }
     ),
-    "Let's watch RT news this evening",
+    "Let's watch RT news https://www.rt.com/ this evening",
     "06 - control, default behaviour"
   );
   t.end();
 });
 
-tap.test("07 - opts.dumpLinkHrefsNearby - clean code, single quotes", (t) => {
+tap.test("07 - opts.dumpLinkHrefsNearby - clean code, double quotes", (t) => {
   t.same(
     stripHtml(
-      "Let's watch <a href='https://www.rt.com/' target='_blank'>RT news</a> this evening",
-      { dumpLinkHrefsNearby: { enabled: false } }
+      'Let\'s sell some juicy gossip to the <a href="mailto:gossip@thesun.co.uk" target="_blank">The Sun</a> right now!',
+      { dumpLinkHrefsNearby: { enabled: true } }
     ),
-    "Let's watch RT news this evening",
-    "07 - control, hardcoded default"
+    "Let's sell some juicy gossip to the The Sun mailto:gossip@thesun.co.uk right now!",
+    "07 - mailto links without customisation"
   );
   t.end();
 });
 
-tap.test("08 - opts.dumpLinkHrefsNearby - clean code, single quotes", (t) => {
+tap.test("08 - opts.dumpLinkHrefsNearby - clean code, double quotes", (t) => {
   t.same(
     stripHtml(
-      "Let's watch <a href='https://www.rt.com/' target='_blank'>RT news</a> this evening",
+      'Here\'s the <a href="mailto:bob@thesun.co.uk?cc=gossip@thesun.co.uk&subject=look%20what%20Kate%20did%20last%20night" target="_blank">chief editor\'s</a> email.',
       { dumpLinkHrefsNearby: { enabled: true } }
     ),
-    "Let's watch RT news https://www.rt.com/ this evening",
-    "08 - control, default behaviour"
+    "Here's the chief editor's mailto:bob@thesun.co.uk?cc=gossip@thesun.co.uk&subject=look%20what%20Kate%20did%20last%20night email.",
+    "08 - mailto links with customisation"
   );
   t.end();
 });
@@ -101,11 +111,10 @@ tap.test("08 - opts.dumpLinkHrefsNearby - clean code, single quotes", (t) => {
 tap.test("09 - opts.dumpLinkHrefsNearby - clean code, single quotes", (t) => {
   t.same(
     stripHtml(
-      "Let's sell some juicy gossip to the <a href='mailto:gossip@thesun.co.uk' target='_blank'>The Sun</a> right now!",
-      { dumpLinkHrefsNearby: { enabled: true } }
+      "Let's watch <a href='https://www.rt.com/' target='_blank'>RT news</a> this evening"
     ),
-    "Let's sell some juicy gossip to the The Sun mailto:gossip@thesun.co.uk right now!",
-    "09 - mailto links without customisation"
+    "Let's watch RT news this evening",
+    "09 - control, default behaviour"
   );
   t.end();
 });
@@ -113,54 +122,90 @@ tap.test("09 - opts.dumpLinkHrefsNearby - clean code, single quotes", (t) => {
 tap.test("10 - opts.dumpLinkHrefsNearby - clean code, single quotes", (t) => {
   t.same(
     stripHtml(
+      "Let's watch <a href='https://www.rt.com/' target='_blank'>RT news</a> this evening",
+      { dumpLinkHrefsNearby: { enabled: false } }
+    ),
+    "Let's watch RT news this evening",
+    "10 - control, hardcoded default"
+  );
+  t.end();
+});
+
+tap.test("11 - opts.dumpLinkHrefsNearby - clean code, single quotes", (t) => {
+  t.same(
+    stripHtml(
+      "Let's watch <a href='https://www.rt.com/' target='_blank'>RT news</a> this evening",
+      { dumpLinkHrefsNearby: { enabled: true } }
+    ),
+    "Let's watch RT news https://www.rt.com/ this evening",
+    "11 - control, default behaviour"
+  );
+  t.end();
+});
+
+tap.test("12 - opts.dumpLinkHrefsNearby - clean code, single quotes", (t) => {
+  t.same(
+    stripHtml(
+      "Let's sell some juicy gossip to the <a href='mailto:gossip@thesun.co.uk' target='_blank'>The Sun</a> right now!",
+      { dumpLinkHrefsNearby: { enabled: true } }
+    ),
+    "Let's sell some juicy gossip to the The Sun mailto:gossip@thesun.co.uk right now!",
+    "12 - mailto links without customisation"
+  );
+  t.end();
+});
+
+tap.test("13 - opts.dumpLinkHrefsNearby - clean code, single quotes", (t) => {
+  t.same(
+    stripHtml(
       "Here's the <a href='mailto:bob@thesun.co.uk?cc=gossip@thesun.co.uk&subject=look%20what%20Kate%20did%20last%20night' target='_blank'>chief editor's</a> email.",
       { dumpLinkHrefsNearby: { enabled: true } }
     ),
     "Here's the chief editor's mailto:bob@thesun.co.uk?cc=gossip@thesun.co.uk&subject=look%20what%20Kate%20did%20last%20night email.",
-    "10 - mailto links with customisation"
+    "13 - mailto links with customisation"
   );
   t.end();
 });
 
 tap.test(
-  "11 - opts.dumpLinkHrefsNearby - dirty code, HTML is chopped but href captured",
+  "14 - opts.dumpLinkHrefsNearby - dirty code, HTML is chopped but href captured",
   (t) => {
     t.same(
       stripHtml('Let\'s watch <a href="https://www.rt.com/" targ'),
       "Let's watch",
-      "11 - control, default behaviour"
+      "14 - control, default behaviour"
     );
     t.end();
   }
 );
 
 tap.test(
-  "12 - opts.dumpLinkHrefsNearby - dirty code, HTML is chopped but href captured",
+  "15 - opts.dumpLinkHrefsNearby - dirty code, HTML is chopped but href captured",
   (t) => {
     t.same(
       stripHtml('Let\'s watch <a href="https://www.rt.com/" targ', {
         dumpLinkHrefsNearby: { enabled: true },
       }),
       "Let's watch https://www.rt.com/",
-      "12 - only href contents are left after stripping"
+      "15 - only href contents are left after stripping"
     );
     t.end();
   }
 );
 
-tap.test("13 - opts.dumpLinkHrefsNearby - linked image", (t) => {
+tap.test("16 - opts.dumpLinkHrefsNearby - linked image", (t) => {
   t.same(
     stripHtml(
       `a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b`
     ),
     "a b",
-    "13 - control, default"
+    "16 - control, default"
   );
   t.end();
 });
 
 tap.test(
-  "14 - opts.dumpLinkHrefsNearby - linked image, dumpLinkHrefsNearby=off",
+  "17 - opts.dumpLinkHrefsNearby - linked image, dumpLinkHrefsNearby=off",
   (t) => {
     t.same(
       stripHtml(
@@ -168,14 +213,14 @@ tap.test(
         { dumpLinkHrefsNearby: { enabled: false } }
       ),
       "a b",
-      "14 - control, hardcoded default"
+      "17 - control, hardcoded default"
     );
     t.end();
   }
 );
 
 tap.test(
-  "15 - opts.dumpLinkHrefsNearby - linked image, dumpLinkHrefsNearby=on",
+  "18 - opts.dumpLinkHrefsNearby - linked image, dumpLinkHrefsNearby=on",
   (t) => {
     t.same(
       stripHtml(
@@ -183,24 +228,24 @@ tap.test(
         { dumpLinkHrefsNearby: { enabled: true } }
       ),
       "a https://codsen.com b",
-      "15 - dumps href of a linked image"
+      "18 - dumps href of a linked image"
     );
     t.end();
   }
 );
 
-tap.test("16 - opts.dumpLinkHrefsNearby - .putOnNewLine, control", (t) => {
+tap.test("19 - opts.dumpLinkHrefsNearby - .putOnNewLine, control", (t) => {
   t.same(
     stripHtml(
       `a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b`
     ),
     "a b",
-    "16 - control, default, off"
+    "19 - control, default, off"
   );
   t.end();
 });
 
-tap.test("17 - opts.dumpLinkHrefsNearby - .putOnNewLine, control", (t) => {
+tap.test("20 - opts.dumpLinkHrefsNearby - .putOnNewLine, control", (t) => {
   t.same(
     stripHtml(
       `a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b`,
@@ -212,12 +257,12 @@ tap.test("17 - opts.dumpLinkHrefsNearby - .putOnNewLine, control", (t) => {
       }
     ),
     "a https://codsen.com b",
-    "17 - dumpLinkHrefsNearby = on; putOnNewLine = off"
+    "20 - dumpLinkHrefsNearby = on; putOnNewLine = off"
   );
   t.end();
 });
 
-tap.test("18 - opts.dumpLinkHrefsNearby - .putOnNewLine, control", (t) => {
+tap.test("21 - opts.dumpLinkHrefsNearby - .putOnNewLine, control", (t) => {
   t.same(
     stripHtml(
       `a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b`,
@@ -229,12 +274,12 @@ tap.test("18 - opts.dumpLinkHrefsNearby - .putOnNewLine, control", (t) => {
       }
     ),
     "a\n\nhttps://codsen.com\n\nb",
-    "18 - dumpLinkHrefsNearby = on; putOnNewLine = on"
+    "21 - dumpLinkHrefsNearby = on; putOnNewLine = on"
   );
   t.end();
 });
 
-tap.test("19 - opts.dumpLinkHrefsNearby - .putOnNewLine", (t) => {
+tap.test("22 - opts.dumpLinkHrefsNearby - .putOnNewLine", (t) => {
   t.same(
     stripHtml(
       `a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b`,
@@ -248,27 +293,27 @@ tap.test("19 - opts.dumpLinkHrefsNearby - .putOnNewLine", (t) => {
       }
     ),
     "a\n\n[https://codsen.com]\n\nb",
-    "19 - dumpLinkHrefsNearby = on; putOnNewLine = on; wrapHeads = on; wrapTails = on;"
+    "22 - dumpLinkHrefsNearby = on; putOnNewLine = on; wrapHeads = on; wrapTails = on;"
   );
   t.end();
 });
 
 tap.test(
-  "20 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails - control",
+  "23 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails - control",
   (t) => {
     t.same(
       stripHtml(
         `a<a href="https://codsen.com" target="_blank"><div>z</div></a>b`
       ),
       "a z b",
-      "20 - control, default"
+      "23 - control, default"
     );
     t.end();
   }
 );
 
 tap.test(
-  "21 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails - default dump",
+  "24 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails - default dump",
   (t) => {
     t.same(
       stripHtml(
@@ -280,14 +325,14 @@ tap.test(
         }
       ),
       "a z https://codsen.com b",
-      "21 - heads only"
+      "24 - heads only"
     );
     t.end();
   }
 );
 
 tap.test(
-  "22 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails wrap heads only",
+  "25 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails wrap heads only",
   (t) => {
     t.same(
       stripHtml(
@@ -300,14 +345,14 @@ tap.test(
         }
       ),
       "a z [https://codsen.com b",
-      "22 - heads only"
+      "25 - heads only"
     );
     t.end();
   }
 );
 
 tap.test(
-  "23 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails wrap teads only",
+  "26 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails wrap teads only",
   (t) => {
     t.same(
       stripHtml(
@@ -320,14 +365,14 @@ tap.test(
         }
       ),
       "a z https://codsen.com] b",
-      "23 - tails only"
+      "26 - tails only"
     );
     t.end();
   }
 );
 
 tap.test(
-  "24 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails wrap both",
+  "27 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails wrap both",
   (t) => {
     t.same(
       stripHtml(
@@ -341,14 +386,14 @@ tap.test(
         }
       ),
       "a z [https://codsen.com] b",
-      "24 - tails only"
+      "27 - tails only"
     );
     t.end();
   }
 );
 
 tap.test(
-  "25 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails + ignoreTags",
+  "28 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails + ignoreTags",
   (t) => {
     t.same(
       stripHtml(
@@ -363,14 +408,14 @@ tap.test(
         }
       ),
       "a <div>z</div> [https://codsen.com] b",
-      "25 - ignore on a div only"
+      "28 - ignore on a div only"
     );
     t.end();
   }
 );
 
 tap.test(
-  "26 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails + ignoreTags",
+  "29 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails + ignoreTags",
   (t) => {
     t.same(
       stripHtml(
@@ -385,14 +430,14 @@ tap.test(
         }
       ),
       "a z [https://codsen.com] b",
-      "26 - ignore on a div only"
+      "29 - ignore on a div only"
     );
     t.end();
   }
 );
 
 tap.test(
-  "27 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails + stripTogetherWithTheirContents",
+  "30 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails + stripTogetherWithTheirContents",
   (t) => {
     t.same(
       stripHtml(
@@ -407,7 +452,7 @@ tap.test(
         }
       ),
       "a [https://codsen.com] b",
-      "27 - whole div pair is removed"
+      "30 - whole div pair is removed"
     );
     t.end();
   }

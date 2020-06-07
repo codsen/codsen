@@ -367,9 +367,6 @@ function stripHtml(str, originalOpts) {
   } else if (typeof opts.stripTogetherWithTheirContents === "string" && opts.stripTogetherWithTheirContents.length > 0) {
     opts.stripTogetherWithTheirContents = [opts.stripTogetherWithTheirContents];
   }
-  if (!opts.dumpLinkHrefsNearby || isObj(opts.dumpLinkHrefsNearby) && !Object.keys(opts.dumpLinkHrefsNearby).length) {
-    opts.dumpLinkHrefsNearby = _objectSpread2({}, defaults.dumpLinkHrefsNearby);
-  }
   var somethingCaught = {};
   if (opts.stripTogetherWithTheirContents && isArr(opts.stripTogetherWithTheirContents) && opts.stripTogetherWithTheirContents.length && !opts.stripTogetherWithTheirContents.every(function (el, i) {
     if (!(typeof el === "string")) {

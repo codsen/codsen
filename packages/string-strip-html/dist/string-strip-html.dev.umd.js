@@ -9049,10 +9049,6 @@
       opts.stripTogetherWithTheirContents = [opts.stripTogetherWithTheirContents];
     }
 
-    if (!opts.dumpLinkHrefsNearby || lodash_isplainobject(opts.dumpLinkHrefsNearby) && !Object.keys(opts.dumpLinkHrefsNearby).length) {
-      opts.dumpLinkHrefsNearby = _objectSpread2({}, defaults.dumpLinkHrefsNearby); // clone, not just assign
-    }
-
     var somethingCaught = {};
 
     if (opts.stripTogetherWithTheirContents && isArr(opts.stripTogetherWithTheirContents) && opts.stripTogetherWithTheirContents.length && !opts.stripTogetherWithTheirContents.every(function (el, i) {

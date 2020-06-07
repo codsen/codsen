@@ -450,13 +450,6 @@ function stripHtml(str, originalOpts) {
   ) {
     opts.stripTogetherWithTheirContents = [opts.stripTogetherWithTheirContents];
   }
-  if (
-    !opts.dumpLinkHrefsNearby ||
-    (isObj(opts.dumpLinkHrefsNearby) &&
-      !Object.keys(opts.dumpLinkHrefsNearby).length)
-  ) {
-    opts.dumpLinkHrefsNearby = { ...defaults.dumpLinkHrefsNearby };
-  }
   const somethingCaught = {};
   if (
     opts.stripTogetherWithTheirContents &&
