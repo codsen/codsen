@@ -349,6 +349,7 @@ function stripHtml(str, originalOpts) {
     Object.prototype.hasOwnProperty.call(originalOpts, "dumpLinkHrefsNearby") &&
     existy(originalOpts.dumpLinkHrefsNearby)
   ) {
+    /* istanbul ignore else */
     if (isObj(originalOpts.dumpLinkHrefsNearby)) {
       opts.dumpLinkHrefsNearby = {
         ...defaults.dumpLinkHrefsNearby,
@@ -538,6 +539,7 @@ function stripHtml(str, originalOpts) {
       tag.name = str.slice(
         tag.nameStarts,
         tag.nameEnds +
+          /* istanbul ignore next */
           (str[i] !== ">" && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0)
       );
       if (
@@ -583,19 +585,16 @@ function stripHtml(str, originalOpts) {
       attrObj.equalsAt &&
       !attrObj.valueStarts
     ) {
-      if (attrObj.valueEnds) ; else {
-        attrObj.valueStarts = i;
-      }
+      attrObj.valueStarts = i;
     }
     if (
       !tag.quotes &&
       attrObj.nameEnds &&
       str[i] === "=" &&
-      !attrObj.valueStarts
+      !attrObj.valueStarts &&
+      !attrObj.equalsAt
     ) {
-      if (!attrObj.equalsAt) {
-        attrObj.equalsAt = i;
-      }
+      attrObj.equalsAt = i;
     }
     if (
       !tag.quotes &&
@@ -613,6 +612,7 @@ function stripHtml(str, originalOpts) {
         attrObj.nameEnds = i;
         attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
       } else if (str[i] === "=") {
+        /* istanbul ignore else */
         if (!attrObj.equalsAt) {
           attrObj.nameEnds = i;
           attrObj.equalsAt = i;

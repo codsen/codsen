@@ -952,3 +952,13 @@ tap.test("121 - dirty code - unclosed tag followed by a tag", (t) => {
   t.same(stripHtml("111 <a\t/\r\n\t \n<img> 222"), "111\n\n222", "121");
   t.end();
 });
+
+tap.test("122 - two equals", (t) => {
+  t.same(stripHtml('aaa <div class=="yo"> zzz'), "aaa zzz", "122");
+  t.end();
+});
+
+tap.test("123 - space + two equals", (t) => {
+  t.same(stripHtml('aaa <div class =="yo"> zzz'), "aaa zzz", "123");
+  t.end();
+});

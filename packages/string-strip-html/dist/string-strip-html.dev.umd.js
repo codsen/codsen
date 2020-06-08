@@ -8933,6 +8933,7 @@
     opts.dumpLinkHrefsNearby = defaults.dumpLinkHrefsNearby;
 
     if (lodash_isplainobject(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "dumpLinkHrefsNearby") && existy(originalOpts.dumpLinkHrefsNearby)) {
+      /* istanbul ignore else */
       if (lodash_isplainobject(originalOpts.dumpLinkHrefsNearby)) {
         opts.dumpLinkHrefsNearby = _objectSpread2(_objectSpread2({}, defaults.dumpLinkHrefsNearby), originalOpts.dumpLinkHrefsNearby);
       } else if (originalOpts.dumpLinkHrefsNearby) {
@@ -9110,7 +9111,9 @@
         // 1. mark the name ending
         tag.nameEnds = i; // 2. extract the full name string
 
-        tag.name = str.slice(tag.nameStarts, tag.nameEnds + (str[i] !== ">" && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0));
+        tag.name = str.slice(tag.nameStarts, tag.nameEnds + (
+        /* istanbul ignore next */
+        str[i] !== ">" && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0));
 
         if ( // if we caught "----" from "<----" or "---->", bail:
         str[tag.nameStarts - 1] !== "!" && // protection against <!--
@@ -9148,17 +9151,13 @@
 
 
       if (tag.quotes && tag.quotes.start && tag.quotes.start < i && !tag.quotes.end && attrObj.nameEnds && attrObj.equalsAt && !attrObj.valueStarts) {
-        if (attrObj.valueEnds) ; else {
-          attrObj.valueStarts = i;
-        }
+        attrObj.valueStarts = i;
       } // catch rare cases when attributes name has some space after it, before equals
       // -------------------------------------------------------------------------
 
 
-      if (!tag.quotes && attrObj.nameEnds && str[i] === "=" && !attrObj.valueStarts) {
-        if (!attrObj.equalsAt) {
-          attrObj.equalsAt = i;
-        }
+      if (!tag.quotes && attrObj.nameEnds && str[i] === "=" && !attrObj.valueStarts && !attrObj.equalsAt) {
+        attrObj.equalsAt = i;
       } // catch the ending of the whole attribute
       // -------------------------------------------------------------------------
       // for example, <a b c> this "c" ends "b" because it's not "equals" sign.
@@ -9181,7 +9180,7 @@
           attrObj.nameEnds = i;
           attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
         } else if (str[i] === "=") {
-          // 1. BAU cases, equal hasn't been met
+          /* istanbul ignore else */
           if (!attrObj.equalsAt) {
             attrObj.nameEnds = i;
             attrObj.equalsAt = i;

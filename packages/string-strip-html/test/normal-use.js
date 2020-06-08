@@ -5,7 +5,9 @@ import stripHtml from "../dist/string-strip-html.esm";
 // -----------------------------------------------------------------------------
 
 tap.test("01 - string is whole (opening) tag - no ignore", (t) => {
-  t.same(stripHtml("<a>"), "", "01");
+  t.same(stripHtml("<a>"), "", "01.01");
+  t.same(stripHtml("<a/>"), "", "01.02");
+  t.same(stripHtml("<a />"), "", "01.03");
   t.end();
 });
 

@@ -278,6 +278,7 @@ function stripHtml(str, originalOpts) {
   }
   opts.dumpLinkHrefsNearby = defaults.dumpLinkHrefsNearby;
   if (isObj(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "dumpLinkHrefsNearby") && existy(originalOpts.dumpLinkHrefsNearby)) {
+    /* istanbul ignore else */
     if (isObj(originalOpts.dumpLinkHrefsNearby)) {
       opts.dumpLinkHrefsNearby = _objectSpread2(_objectSpread2({}, defaults.dumpLinkHrefsNearby), originalOpts.dumpLinkHrefsNearby);
     } else if (originalOpts.dumpLinkHrefsNearby) {
@@ -398,7 +399,9 @@ function stripHtml(str, originalOpts) {
     }
     if (tag.nameStarts !== undefined && tag.nameEnds === undefined && (!str[i].trim() || !characterSuitableForNames(str[i]))) {
       tag.nameEnds = i;
-      tag.name = str.slice(tag.nameStarts, tag.nameEnds + (str[i] !== ">" && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0));
+      tag.name = str.slice(tag.nameStarts, tag.nameEnds + (
+      /* istanbul ignore next */
+      str[i] !== ">" && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0));
       if (
       str[tag.nameStarts - 1] !== "!" &&
       !tag.name.replace(/-/g, "").length ||
@@ -422,14 +425,10 @@ function stripHtml(str, originalOpts) {
       }
     }
     if (tag.quotes && tag.quotes.start && tag.quotes.start < i && !tag.quotes.end && attrObj.nameEnds && attrObj.equalsAt && !attrObj.valueStarts) {
-      if (attrObj.valueEnds) ; else {
-        attrObj.valueStarts = i;
-      }
+      attrObj.valueStarts = i;
     }
-    if (!tag.quotes && attrObj.nameEnds && str[i] === "=" && !attrObj.valueStarts) {
-      if (!attrObj.equalsAt) {
-        attrObj.equalsAt = i;
-      }
+    if (!tag.quotes && attrObj.nameEnds && str[i] === "=" && !attrObj.valueStarts && !attrObj.equalsAt) {
+      attrObj.equalsAt = i;
     }
     if (!tag.quotes && attrObj.nameStarts && attrObj.nameEnds && !attrObj.valueStarts && str[i].trim() && str[i] !== "=") {
       tag.attributes.push(attrObj);
@@ -440,6 +439,7 @@ function stripHtml(str, originalOpts) {
         attrObj.nameEnds = i;
         attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
       } else if (str[i] === "=") {
+        /* istanbul ignore else */
         if (!attrObj.equalsAt) {
           attrObj.nameEnds = i;
           attrObj.equalsAt = i;
