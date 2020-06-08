@@ -15,8 +15,91 @@ import without from 'lodash.without';
 import ent from 'ent';
 import { right } from 'string-left-right';
 
+function isValidAttributeCharacter(char) {
+  if (char.charCodeAt(0) >= 0 && char.charCodeAt(0) <= 31) {
+    return false;
+  }
+  if (char.charCodeAt(0) >= 127 && char.charCodeAt(0) <= 159) {
+    return false;
+  }
+  if (char.charCodeAt(0) === 32) {
+    return false;
+  }
+  if (char.charCodeAt(0) === 34) {
+    return false;
+  }
+  if (char.charCodeAt(0) === 39) {
+    return false;
+  }
+  if (char.charCodeAt(0) === 62) {
+    return false;
+  }
+  if (char.charCodeAt(0) === 47) {
+    return false;
+  }
+  if (char.charCodeAt(0) === 61) {
+    return false;
+  }
+  if (
+    (char.charCodeAt(0) >= 64976 && char.charCodeAt(0) <= 65007) ||
+    char.charCodeAt(0) === 65534 ||
+    char.charCodeAt(0) === 65535 ||
+    (char.charCodeAt(0) === 55359 && char.charCodeAt(1) === 57342) ||
+    (char.charCodeAt(0) === 55359 && char.charCodeAt(1) === 57343) ||
+    (char.charCodeAt(0) === 55423 && char.charCodeAt(1) === 57342) ||
+    (char.charCodeAt(0) === 55423 && char.charCodeAt(1) === 57343) ||
+    (char.charCodeAt(0) === 55487 && char.charCodeAt(1) === 57342) ||
+    (char.charCodeAt(0) === 55487 && char.charCodeAt(1) === 57343) ||
+    (char.charCodeAt(0) === 55551 && char.charCodeAt(1) === 57342) ||
+    (char.charCodeAt(0) === 55551 && char.charCodeAt(1) === 57343) ||
+    (char.charCodeAt(0) === 55615 && char.charCodeAt(1) === 57342) ||
+    (char.charCodeAt(0) === 55615 && char.charCodeAt(1) === 57343) ||
+    (char.charCodeAt(0) === 55679 && char.charCodeAt(1) === 57342) ||
+    (char.charCodeAt(0) === 55679 && char.charCodeAt(1) === 57343) ||
+    (char.charCodeAt(0) === 55743 && char.charCodeAt(1) === 57342) ||
+    (char.charCodeAt(0) === 55743 && char.charCodeAt(1) === 57343) ||
+    (char.charCodeAt(0) === 55807 && char.charCodeAt(1) === 57342) ||
+    (char.charCodeAt(0) === 55807 && char.charCodeAt(1) === 57343) ||
+    (char.charCodeAt(0) === 55871 && char.charCodeAt(1) === 57342) ||
+    (char.charCodeAt(0) === 55871 && char.charCodeAt(1) === 57343) ||
+    (char.charCodeAt(0) === 55935 && char.charCodeAt(1) === 57342) ||
+    (char.charCodeAt(0) === 55935 && char.charCodeAt(1) === 57343) ||
+    (char.charCodeAt(0) === 55999 && char.charCodeAt(1) === 57342) ||
+    (char.charCodeAt(0) === 55999 && char.charCodeAt(1) === 57343) ||
+    (char.charCodeAt(0) === 56063 && char.charCodeAt(1) === 57342) ||
+    (char.charCodeAt(0) === 56063 && char.charCodeAt(1) === 57343) ||
+    (char.charCodeAt(0) === 56127 && char.charCodeAt(1) === 57342) ||
+    (char.charCodeAt(0) === 56127 && char.charCodeAt(1) === 57343) ||
+    (char.charCodeAt(0) === 56191 && char.charCodeAt(1) === 57342) ||
+    (char.charCodeAt(0) === 56191 && char.charCodeAt(1) === 57343) ||
+    (char.charCodeAt(0) === 56255 && char.charCodeAt(1) === 57342) ||
+    (char.charCodeAt(0) === 56255 && char.charCodeAt(1) === 57343) ||
+    (char.charCodeAt(0) === 56319 && char.charCodeAt(1) === 57342) ||
+    (char.charCodeAt(0) === 56319 && char.charCodeAt(1) === 57343)
+  ) {
+    return false;
+  }
+  return true;
+}
+function characterSuitableForNames(char) {
+  return /[-_A-Za-z0-9]/.test(char);
+}
+function prepHopefullyAnArray(something, name) {
+  if (!something) {
+    return [];
+  }
+  if (Array.isArray(something)) {
+    return something.filter((val) => typeof val === "string" && val.trim());
+  }
+  if (typeof something === "string") {
+    return something.trim() ? [something] : [];
+  }
+  throw new TypeError(
+    `string-strip-html/stripHtml(): [THROW_ID_03] ${name} must be array containing zero or more strings or something falsey. Currently it's equal to: ${something}, that a type of ${typeof something}.`
+  );
+}
+
 function stripHtml(str, originalOpts) {
-  const isArr = Array.isArray;
   const definitelyTagNames = new Set([
     "!doctype",
     "abbr",
@@ -164,79 +247,13 @@ function stripHtml(str, originalOpts) {
   function isStr(something) {
     return typeof something === "string";
   }
-  function isValidAttributeCharacter(char) {
-    if (char.charCodeAt(0) >= 0 && char.charCodeAt(0) <= 31) {
-      return false;
-    }
-    if (char.charCodeAt(0) >= 127 && char.charCodeAt(0) <= 159) {
-      return false;
-    }
-    if (char.charCodeAt(0) === 32) {
-      return false;
-    }
-    if (char.charCodeAt(0) === 34) {
-      return false;
-    }
-    if (char.charCodeAt(0) === 39) {
-      return false;
-    }
-    if (char.charCodeAt(0) === 62) {
-      return false;
-    }
-    if (char.charCodeAt(0) === 47) {
-      return false;
-    }
-    if (char.charCodeAt(0) === 61) {
-      return false;
-    }
-    if (
-      (char.charCodeAt(0) >= 64976 && char.charCodeAt(0) <= 65007) ||
-      char.charCodeAt(0) === 65534 ||
-      char.charCodeAt(0) === 65535 ||
-      (char.charCodeAt(0) === 55359 && char.charCodeAt(1) === 57342) ||
-      (char.charCodeAt(0) === 55359 && char.charCodeAt(1) === 57343) ||
-      (char.charCodeAt(0) === 55423 && char.charCodeAt(1) === 57342) ||
-      (char.charCodeAt(0) === 55423 && char.charCodeAt(1) === 57343) ||
-      (char.charCodeAt(0) === 55487 && char.charCodeAt(1) === 57342) ||
-      (char.charCodeAt(0) === 55487 && char.charCodeAt(1) === 57343) ||
-      (char.charCodeAt(0) === 55551 && char.charCodeAt(1) === 57342) ||
-      (char.charCodeAt(0) === 55551 && char.charCodeAt(1) === 57343) ||
-      (char.charCodeAt(0) === 55615 && char.charCodeAt(1) === 57342) ||
-      (char.charCodeAt(0) === 55615 && char.charCodeAt(1) === 57343) ||
-      (char.charCodeAt(0) === 55679 && char.charCodeAt(1) === 57342) ||
-      (char.charCodeAt(0) === 55679 && char.charCodeAt(1) === 57343) ||
-      (char.charCodeAt(0) === 55743 && char.charCodeAt(1) === 57342) ||
-      (char.charCodeAt(0) === 55743 && char.charCodeAt(1) === 57343) ||
-      (char.charCodeAt(0) === 55807 && char.charCodeAt(1) === 57342) ||
-      (char.charCodeAt(0) === 55807 && char.charCodeAt(1) === 57343) ||
-      (char.charCodeAt(0) === 55871 && char.charCodeAt(1) === 57342) ||
-      (char.charCodeAt(0) === 55871 && char.charCodeAt(1) === 57343) ||
-      (char.charCodeAt(0) === 55935 && char.charCodeAt(1) === 57342) ||
-      (char.charCodeAt(0) === 55935 && char.charCodeAt(1) === 57343) ||
-      (char.charCodeAt(0) === 55999 && char.charCodeAt(1) === 57342) ||
-      (char.charCodeAt(0) === 55999 && char.charCodeAt(1) === 57343) ||
-      (char.charCodeAt(0) === 56063 && char.charCodeAt(1) === 57342) ||
-      (char.charCodeAt(0) === 56063 && char.charCodeAt(1) === 57343) ||
-      (char.charCodeAt(0) === 56127 && char.charCodeAt(1) === 57342) ||
-      (char.charCodeAt(0) === 56127 && char.charCodeAt(1) === 57343) ||
-      (char.charCodeAt(0) === 56191 && char.charCodeAt(1) === 57342) ||
-      (char.charCodeAt(0) === 56191 && char.charCodeAt(1) === 57343) ||
-      (char.charCodeAt(0) === 56255 && char.charCodeAt(1) === 57342) ||
-      (char.charCodeAt(0) === 56255 && char.charCodeAt(1) === 57343) ||
-      (char.charCodeAt(0) === 56319 && char.charCodeAt(1) === 57342) ||
-      (char.charCodeAt(0) === 56319 && char.charCodeAt(1) === 57343)
-    ) {
-      return false;
-    }
-    return true;
-  }
   function treatRangedTags(i, opts, rangesToDelete) {
     if (
       Array.isArray(opts.stripTogetherWithTheirContents) &&
       opts.stripTogetherWithTheirContents.includes(tag.name)
     ) {
       if (
-        isArr(rangedOpeningTags) &&
+        Array.isArray(rangedOpeningTags) &&
         rangedOpeningTags.some(
           (obj) => obj.name === tag.name && obj.lastClosingBracketAt < i
         )
@@ -304,7 +321,7 @@ function stripHtml(str, originalOpts) {
       str2[currCharIdx] !== "!"
     ) {
       const foundLineBreaks = strToEvaluateForLineBreaks.match(/\n/g);
-      if (isArr(foundLineBreaks) && foundLineBreaks.length) {
+      if (Array.isArray(foundLineBreaks) && foundLineBreaks.length) {
         if (foundLineBreaks.length === 1) {
           return "\n";
         }
@@ -334,9 +351,6 @@ function stripHtml(str, originalOpts) {
       stringToInsertAfter = `${lineBreaks}${hrefDump.hrefValue}${lineBreaks}`;
     }
   }
-  function characterSuitableForNames(char) {
-    return /[-_A-Za-z0-9]/.test(char);
-  }
   if (typeof str !== "string") {
     throw new TypeError(
       `string-strip-html/stripHtml(): [THROW_ID_01] Input must be string! Currently it's: ${(typeof str).toLowerCase()}, equal to:\n${JSON.stringify(
@@ -360,25 +374,6 @@ function stripHtml(str, originalOpts) {
         4
       )}`
     );
-  }
-  function prepHopefullyAnArray(something, name) {
-    if (!something) {
-      return [];
-    }
-    if (isArr(something)) {
-      return something.filter((val) => isStr(val) && val.trim());
-    }
-    if (isStr(something)) {
-      if (something.length) {
-        return [something];
-      }
-      return [];
-    }
-    if (!isArr(something)) {
-      throw new TypeError(
-        `string-strip-html/stripHtml(): [THROW_ID_03] ${name} must be array containing zero or more strings or something falsey. Currently it's equal to: ${something}, that a type of ${typeof something}.`
-      );
-    }
   }
   function resetHrefMarkers() {
     if (hrefInsertionActive) {
@@ -414,13 +409,6 @@ function stripHtml(str, originalOpts) {
   if (!isObj(opts.dumpLinkHrefsNearby)) {
     opts.dumpLinkHrefsNearby = { ...defaults.dumpLinkHrefsNearby };
   }
-  if (typeof opts.ignoreTags === "string") {
-    if (opts.ignoreTags.length === 0) {
-      opts.ignoreTags = [];
-    } else {
-      opts.ignoreTags = [opts.ignoreTags];
-    }
-  }
   opts.dumpLinkHrefsNearby = defaults.dumpLinkHrefsNearby;
   if (
     isObj(originalOpts) &&
@@ -453,7 +441,7 @@ function stripHtml(str, originalOpts) {
   const somethingCaught = {};
   if (
     opts.stripTogetherWithTheirContents &&
-    isArr(opts.stripTogetherWithTheirContents) &&
+    Array.isArray(opts.stripTogetherWithTheirContents) &&
     opts.stripTogetherWithTheirContents.length &&
     !opts.stripTogetherWithTheirContents.every((el, i) => {
       if (!(typeof el === "string")) {

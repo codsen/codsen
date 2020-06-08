@@ -117,8 +117,91 @@ function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
+function isValidAttributeCharacter(char) {
+  if (char.charCodeAt(0) >= 0 && char.charCodeAt(0) <= 31) {
+    return false;
+  }
+  if (char.charCodeAt(0) >= 127 && char.charCodeAt(0) <= 159) {
+    return false;
+  }
+  if (char.charCodeAt(0) === 32) {
+    return false;
+  }
+  if (char.charCodeAt(0) === 34) {
+    return false;
+  }
+  if (char.charCodeAt(0) === 39) {
+    return false;
+  }
+  if (char.charCodeAt(0) === 62) {
+    return false;
+  }
+  if (char.charCodeAt(0) === 47) {
+    return false;
+  }
+  if (char.charCodeAt(0) === 61) {
+    return false;
+  }
+  if (
+  char.charCodeAt(0) >= 64976 && char.charCodeAt(0) <= 65007 ||
+  char.charCodeAt(0) === 65534 ||
+  char.charCodeAt(0) === 65535 ||
+  char.charCodeAt(0) === 55359 && char.charCodeAt(1) === 57342 ||
+  char.charCodeAt(0) === 55359 && char.charCodeAt(1) === 57343 ||
+  char.charCodeAt(0) === 55423 && char.charCodeAt(1) === 57342 ||
+  char.charCodeAt(0) === 55423 && char.charCodeAt(1) === 57343 ||
+  char.charCodeAt(0) === 55487 && char.charCodeAt(1) === 57342 ||
+  char.charCodeAt(0) === 55487 && char.charCodeAt(1) === 57343 ||
+  char.charCodeAt(0) === 55551 && char.charCodeAt(1) === 57342 ||
+  char.charCodeAt(0) === 55551 && char.charCodeAt(1) === 57343 ||
+  char.charCodeAt(0) === 55615 && char.charCodeAt(1) === 57342 ||
+  char.charCodeAt(0) === 55615 && char.charCodeAt(1) === 57343 ||
+  char.charCodeAt(0) === 55679 && char.charCodeAt(1) === 57342 ||
+  char.charCodeAt(0) === 55679 && char.charCodeAt(1) === 57343 ||
+  char.charCodeAt(0) === 55743 && char.charCodeAt(1) === 57342 ||
+  char.charCodeAt(0) === 55743 && char.charCodeAt(1) === 57343 ||
+  char.charCodeAt(0) === 55807 && char.charCodeAt(1) === 57342 ||
+  char.charCodeAt(0) === 55807 && char.charCodeAt(1) === 57343 ||
+  char.charCodeAt(0) === 55871 && char.charCodeAt(1) === 57342 ||
+  char.charCodeAt(0) === 55871 && char.charCodeAt(1) === 57343 ||
+  char.charCodeAt(0) === 55935 && char.charCodeAt(1) === 57342 ||
+  char.charCodeAt(0) === 55935 && char.charCodeAt(1) === 57343 ||
+  char.charCodeAt(0) === 55999 && char.charCodeAt(1) === 57342 ||
+  char.charCodeAt(0) === 55999 && char.charCodeAt(1) === 57343 ||
+  char.charCodeAt(0) === 56063 && char.charCodeAt(1) === 57342 ||
+  char.charCodeAt(0) === 56063 && char.charCodeAt(1) === 57343 ||
+  char.charCodeAt(0) === 56127 && char.charCodeAt(1) === 57342 ||
+  char.charCodeAt(0) === 56127 && char.charCodeAt(1) === 57343 ||
+  char.charCodeAt(0) === 56191 && char.charCodeAt(1) === 57342 ||
+  char.charCodeAt(0) === 56191 && char.charCodeAt(1) === 57343 ||
+  char.charCodeAt(0) === 56255 && char.charCodeAt(1) === 57342 ||
+  char.charCodeAt(0) === 56255 && char.charCodeAt(1) === 57343 ||
+  char.charCodeAt(0) === 56319 && char.charCodeAt(1) === 57342 ||
+  char.charCodeAt(0) === 56319 && char.charCodeAt(1) === 57343
+  ) {
+      return false;
+    }
+  return true;
+}
+function characterSuitableForNames(char) {
+  return /[-_A-Za-z0-9]/.test(char);
+}
+function prepHopefullyAnArray(something, name) {
+  if (!something) {
+    return [];
+  }
+  if (Array.isArray(something)) {
+    return something.filter(function (val) {
+      return typeof val === "string" && val.trim();
+    });
+  }
+  if (typeof something === "string") {
+    return something.trim() ? [something] : [];
+  }
+  throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_03] ".concat(name, " must be array containing zero or more strings or something falsey. Currently it's equal to: ").concat(something, ", that a type of ").concat(_typeof(something), "."));
+}
+
 function stripHtml(str, originalOpts) {
-  var isArr = Array.isArray;
   var definitelyTagNames = new Set(["!doctype", "abbr", "address", "area", "article", "aside", "audio", "base", "bdi", "bdo", "blockquote", "body", "br", "button", "canvas", "caption", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "param", "picture", "pre", "progress", "rb", "rp", "rt", "rtc", "ruby", "samp", "script", "section", "select", "slot", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "ul", "var", "video", "wbr", "xml"]);
   var singleLetterTags = new Set(["a", "b", "i", "p", "q", "s", "u"]);
   var punctuation = new Set([".", ",", "?", ";", ")", "\u2026", '"', "\xBB"]);
@@ -140,75 +223,9 @@ function stripHtml(str, originalOpts) {
   function isStr(something) {
     return typeof something === "string";
   }
-  function isValidAttributeCharacter(char) {
-    if (char.charCodeAt(0) >= 0 && char.charCodeAt(0) <= 31) {
-      return false;
-    }
-    if (char.charCodeAt(0) >= 127 && char.charCodeAt(0) <= 159) {
-      return false;
-    }
-    if (char.charCodeAt(0) === 32) {
-      return false;
-    }
-    if (char.charCodeAt(0) === 34) {
-      return false;
-    }
-    if (char.charCodeAt(0) === 39) {
-      return false;
-    }
-    if (char.charCodeAt(0) === 62) {
-      return false;
-    }
-    if (char.charCodeAt(0) === 47) {
-      return false;
-    }
-    if (char.charCodeAt(0) === 61) {
-      return false;
-    }
-    if (
-    char.charCodeAt(0) >= 64976 && char.charCodeAt(0) <= 65007 ||
-    char.charCodeAt(0) === 65534 ||
-    char.charCodeAt(0) === 65535 ||
-    char.charCodeAt(0) === 55359 && char.charCodeAt(1) === 57342 ||
-    char.charCodeAt(0) === 55359 && char.charCodeAt(1) === 57343 ||
-    char.charCodeAt(0) === 55423 && char.charCodeAt(1) === 57342 ||
-    char.charCodeAt(0) === 55423 && char.charCodeAt(1) === 57343 ||
-    char.charCodeAt(0) === 55487 && char.charCodeAt(1) === 57342 ||
-    char.charCodeAt(0) === 55487 && char.charCodeAt(1) === 57343 ||
-    char.charCodeAt(0) === 55551 && char.charCodeAt(1) === 57342 ||
-    char.charCodeAt(0) === 55551 && char.charCodeAt(1) === 57343 ||
-    char.charCodeAt(0) === 55615 && char.charCodeAt(1) === 57342 ||
-    char.charCodeAt(0) === 55615 && char.charCodeAt(1) === 57343 ||
-    char.charCodeAt(0) === 55679 && char.charCodeAt(1) === 57342 ||
-    char.charCodeAt(0) === 55679 && char.charCodeAt(1) === 57343 ||
-    char.charCodeAt(0) === 55743 && char.charCodeAt(1) === 57342 ||
-    char.charCodeAt(0) === 55743 && char.charCodeAt(1) === 57343 ||
-    char.charCodeAt(0) === 55807 && char.charCodeAt(1) === 57342 ||
-    char.charCodeAt(0) === 55807 && char.charCodeAt(1) === 57343 ||
-    char.charCodeAt(0) === 55871 && char.charCodeAt(1) === 57342 ||
-    char.charCodeAt(0) === 55871 && char.charCodeAt(1) === 57343 ||
-    char.charCodeAt(0) === 55935 && char.charCodeAt(1) === 57342 ||
-    char.charCodeAt(0) === 55935 && char.charCodeAt(1) === 57343 ||
-    char.charCodeAt(0) === 55999 && char.charCodeAt(1) === 57342 ||
-    char.charCodeAt(0) === 55999 && char.charCodeAt(1) === 57343 ||
-    char.charCodeAt(0) === 56063 && char.charCodeAt(1) === 57342 ||
-    char.charCodeAt(0) === 56063 && char.charCodeAt(1) === 57343 ||
-    char.charCodeAt(0) === 56127 && char.charCodeAt(1) === 57342 ||
-    char.charCodeAt(0) === 56127 && char.charCodeAt(1) === 57343 ||
-    char.charCodeAt(0) === 56191 && char.charCodeAt(1) === 57342 ||
-    char.charCodeAt(0) === 56191 && char.charCodeAt(1) === 57343 ||
-    char.charCodeAt(0) === 56255 && char.charCodeAt(1) === 57342 ||
-    char.charCodeAt(0) === 56255 && char.charCodeAt(1) === 57343 ||
-    char.charCodeAt(0) === 56319 && char.charCodeAt(1) === 57342 ||
-    char.charCodeAt(0) === 56319 && char.charCodeAt(1) === 57343
-    ) {
-        return false;
-      }
-    return true;
-  }
   function treatRangedTags(i, opts, rangesToDelete) {
     if (Array.isArray(opts.stripTogetherWithTheirContents) && opts.stripTogetherWithTheirContents.includes(tag.name)) {
-      if (isArr(rangedOpeningTags) && rangedOpeningTags.some(function (obj) {
+      if (Array.isArray(rangedOpeningTags) && rangedOpeningTags.some(function (obj) {
         return obj.name === tag.name && obj.lastClosingBracketAt < i;
       })) {
         for (var y = rangedOpeningTags.length; y--;) {
@@ -264,7 +281,7 @@ function stripHtml(str, originalOpts) {
     str2[currCharIdx] !== "!"
     ) {
         var foundLineBreaks = strToEvaluateForLineBreaks.match(/\n/g);
-        if (isArr(foundLineBreaks) && foundLineBreaks.length) {
+        if (Array.isArray(foundLineBreaks) && foundLineBreaks.length) {
           if (foundLineBreaks.length === 1) {
             return "\n";
           }
@@ -286,9 +303,6 @@ function stripHtml(str, originalOpts) {
       stringToInsertAfter = "".concat(lineBreaks).concat(hrefDump.hrefValue).concat(lineBreaks);
     }
   }
-  function characterSuitableForNames(char) {
-    return /[-_A-Za-z0-9]/.test(char);
-  }
   if (typeof str !== "string") {
     throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_01] Input must be string! Currently it's: ".concat(_typeof(str).toLowerCase(), ", equal to:\n").concat(JSON.stringify(str, null, 4)));
   } else if (!str || !str.trim()) {
@@ -296,25 +310,6 @@ function stripHtml(str, originalOpts) {
   }
   if (originalOpts !== undefined && originalOpts !== null && !isObj(originalOpts)) {
     throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_02] Optional Options Object must be a plain object! Currently it's: ".concat(_typeof(originalOpts).toLowerCase(), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
-  }
-  function prepHopefullyAnArray(something, name) {
-    if (!something) {
-      return [];
-    }
-    if (isArr(something)) {
-      return something.filter(function (val) {
-        return isStr(val) && val.trim();
-      });
-    }
-    if (isStr(something)) {
-      if (something.length) {
-        return [something];
-      }
-      return [];
-    }
-    if (!isArr(something)) {
-      throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_03] ".concat(name, " must be array containing zero or more strings or something falsey. Currently it's equal to: ").concat(something, ", that a type of ").concat(_typeof(something), "."));
-    }
   }
   function resetHrefMarkers() {
     if (hrefInsertionActive) {
@@ -347,13 +342,6 @@ function stripHtml(str, originalOpts) {
   if (!isObj(opts.dumpLinkHrefsNearby)) {
     opts.dumpLinkHrefsNearby = _objectSpread2({}, defaults.dumpLinkHrefsNearby);
   }
-  if (typeof opts.ignoreTags === "string") {
-    if (opts.ignoreTags.length === 0) {
-      opts.ignoreTags = [];
-    } else {
-      opts.ignoreTags = [opts.ignoreTags];
-    }
-  }
   opts.dumpLinkHrefsNearby = defaults.dumpLinkHrefsNearby;
   if (isObj(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "dumpLinkHrefsNearby") && existy(originalOpts.dumpLinkHrefsNearby)) {
     if (isObj(originalOpts.dumpLinkHrefsNearby)) {
@@ -368,7 +356,7 @@ function stripHtml(str, originalOpts) {
     opts.stripTogetherWithTheirContents = [opts.stripTogetherWithTheirContents];
   }
   var somethingCaught = {};
-  if (opts.stripTogetherWithTheirContents && isArr(opts.stripTogetherWithTheirContents) && opts.stripTogetherWithTheirContents.length && !opts.stripTogetherWithTheirContents.every(function (el, i) {
+  if (opts.stripTogetherWithTheirContents && Array.isArray(opts.stripTogetherWithTheirContents) && opts.stripTogetherWithTheirContents.length && !opts.stripTogetherWithTheirContents.every(function (el, i) {
     if (!(typeof el === "string")) {
       somethingCaught.el = el;
       somethingCaught.i = i;
