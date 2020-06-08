@@ -15,72 +15,6 @@ import without from 'lodash.without';
 import ent from 'ent';
 import { right } from 'string-left-right';
 
-function isValidAttributeCharacter(char) {
-  if (char.charCodeAt(0) >= 0 && char.charCodeAt(0) <= 31) {
-    return false;
-  }
-  if (char.charCodeAt(0) >= 127 && char.charCodeAt(0) <= 159) {
-    return false;
-  }
-  if (char.charCodeAt(0) === 32) {
-    return false;
-  }
-  if (char.charCodeAt(0) === 34) {
-    return false;
-  }
-  if (char.charCodeAt(0) === 39) {
-    return false;
-  }
-  if (char.charCodeAt(0) === 62) {
-    return false;
-  }
-  if (char.charCodeAt(0) === 47) {
-    return false;
-  }
-  if (char.charCodeAt(0) === 61) {
-    return false;
-  }
-  if (
-    (char.charCodeAt(0) >= 64976 && char.charCodeAt(0) <= 65007) ||
-    char.charCodeAt(0) === 65534 ||
-    char.charCodeAt(0) === 65535 ||
-    (char.charCodeAt(0) === 55359 && char.charCodeAt(1) === 57342) ||
-    (char.charCodeAt(0) === 55359 && char.charCodeAt(1) === 57343) ||
-    (char.charCodeAt(0) === 55423 && char.charCodeAt(1) === 57342) ||
-    (char.charCodeAt(0) === 55423 && char.charCodeAt(1) === 57343) ||
-    (char.charCodeAt(0) === 55487 && char.charCodeAt(1) === 57342) ||
-    (char.charCodeAt(0) === 55487 && char.charCodeAt(1) === 57343) ||
-    (char.charCodeAt(0) === 55551 && char.charCodeAt(1) === 57342) ||
-    (char.charCodeAt(0) === 55551 && char.charCodeAt(1) === 57343) ||
-    (char.charCodeAt(0) === 55615 && char.charCodeAt(1) === 57342) ||
-    (char.charCodeAt(0) === 55615 && char.charCodeAt(1) === 57343) ||
-    (char.charCodeAt(0) === 55679 && char.charCodeAt(1) === 57342) ||
-    (char.charCodeAt(0) === 55679 && char.charCodeAt(1) === 57343) ||
-    (char.charCodeAt(0) === 55743 && char.charCodeAt(1) === 57342) ||
-    (char.charCodeAt(0) === 55743 && char.charCodeAt(1) === 57343) ||
-    (char.charCodeAt(0) === 55807 && char.charCodeAt(1) === 57342) ||
-    (char.charCodeAt(0) === 55807 && char.charCodeAt(1) === 57343) ||
-    (char.charCodeAt(0) === 55871 && char.charCodeAt(1) === 57342) ||
-    (char.charCodeAt(0) === 55871 && char.charCodeAt(1) === 57343) ||
-    (char.charCodeAt(0) === 55935 && char.charCodeAt(1) === 57342) ||
-    (char.charCodeAt(0) === 55935 && char.charCodeAt(1) === 57343) ||
-    (char.charCodeAt(0) === 55999 && char.charCodeAt(1) === 57342) ||
-    (char.charCodeAt(0) === 55999 && char.charCodeAt(1) === 57343) ||
-    (char.charCodeAt(0) === 56063 && char.charCodeAt(1) === 57342) ||
-    (char.charCodeAt(0) === 56063 && char.charCodeAt(1) === 57343) ||
-    (char.charCodeAt(0) === 56127 && char.charCodeAt(1) === 57342) ||
-    (char.charCodeAt(0) === 56127 && char.charCodeAt(1) === 57343) ||
-    (char.charCodeAt(0) === 56191 && char.charCodeAt(1) === 57342) ||
-    (char.charCodeAt(0) === 56191 && char.charCodeAt(1) === 57343) ||
-    (char.charCodeAt(0) === 56255 && char.charCodeAt(1) === 57342) ||
-    (char.charCodeAt(0) === 56255 && char.charCodeAt(1) === 57343) ||
-    (char.charCodeAt(0) === 56319 && char.charCodeAt(1) === 57342) ||
-    (char.charCodeAt(0) === 56319 && char.charCodeAt(1) === 57343)
-  ) {
-    return false;
-  }
-  return true;
-}
 function characterSuitableForNames(char) {
   return /[-_A-Za-z0-9]/.test(char);
 }
@@ -689,7 +623,7 @@ function stripHtml(str, originalOpts) {
         attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
         tag.attributes.push(attrObj);
         attrObj = {};
-      } else if (str[i] === "<" || !isValidAttributeCharacter(str[i])) {
+      } else if (str[i] === "<") {
         attrObj.nameEnds = i;
         attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
         tag.attributes.push(attrObj);
@@ -703,8 +637,7 @@ function stripHtml(str, originalOpts) {
       str[i].trim() &&
       !`<>/!`.includes(str[i]) &&
       !attrObj.nameStarts &&
-      !tag.lastClosingBracketAt &&
-      isValidAttributeCharacter(str[i])
+      !tag.lastClosingBracketAt
     ) {
       attrObj.nameStarts = i;
     }
@@ -865,6 +798,7 @@ function stripHtml(str, originalOpts) {
           let insert;
           if (isStr(stringToInsertAfter) && stringToInsertAfter.length) {
             insert = `${whiteSpaceCompensation}${stringToInsertAfter}${
+              /* istanbul ignore next */
               whiteSpaceCompensation === "\n\n" ? "\n" : whiteSpaceCompensation
             }`;
           } else {
@@ -949,6 +883,7 @@ function stripHtml(str, originalOpts) {
           if (chunkOfWhitespaceStartsAt === null) {
             tag.leftOuterWhitespace = i;
           } else if (opts.trimOnlySpaces && chunkOfWhitespaceStartsAt === 0) {
+            /* istanbul ignore next */
             tag.leftOuterWhitespace = chunkOfSpacesStartsAt || i;
           } else {
             tag.leftOuterWhitespace = chunkOfWhitespaceStartsAt;
@@ -1045,6 +980,7 @@ function stripHtml(str, originalOpts) {
         str[i] !== '"' &&
         str[i] !== "'"
       ) {
+        /* istanbul ignore else */
         if (isObj(attrObj)) {
           tag.attributes.push(attrObj);
         }

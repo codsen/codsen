@@ -117,72 +117,6 @@ function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
-function isValidAttributeCharacter(char) {
-  if (char.charCodeAt(0) >= 0 && char.charCodeAt(0) <= 31) {
-    return false;
-  }
-  if (char.charCodeAt(0) >= 127 && char.charCodeAt(0) <= 159) {
-    return false;
-  }
-  if (char.charCodeAt(0) === 32) {
-    return false;
-  }
-  if (char.charCodeAt(0) === 34) {
-    return false;
-  }
-  if (char.charCodeAt(0) === 39) {
-    return false;
-  }
-  if (char.charCodeAt(0) === 62) {
-    return false;
-  }
-  if (char.charCodeAt(0) === 47) {
-    return false;
-  }
-  if (char.charCodeAt(0) === 61) {
-    return false;
-  }
-  if (
-  char.charCodeAt(0) >= 64976 && char.charCodeAt(0) <= 65007 ||
-  char.charCodeAt(0) === 65534 ||
-  char.charCodeAt(0) === 65535 ||
-  char.charCodeAt(0) === 55359 && char.charCodeAt(1) === 57342 ||
-  char.charCodeAt(0) === 55359 && char.charCodeAt(1) === 57343 ||
-  char.charCodeAt(0) === 55423 && char.charCodeAt(1) === 57342 ||
-  char.charCodeAt(0) === 55423 && char.charCodeAt(1) === 57343 ||
-  char.charCodeAt(0) === 55487 && char.charCodeAt(1) === 57342 ||
-  char.charCodeAt(0) === 55487 && char.charCodeAt(1) === 57343 ||
-  char.charCodeAt(0) === 55551 && char.charCodeAt(1) === 57342 ||
-  char.charCodeAt(0) === 55551 && char.charCodeAt(1) === 57343 ||
-  char.charCodeAt(0) === 55615 && char.charCodeAt(1) === 57342 ||
-  char.charCodeAt(0) === 55615 && char.charCodeAt(1) === 57343 ||
-  char.charCodeAt(0) === 55679 && char.charCodeAt(1) === 57342 ||
-  char.charCodeAt(0) === 55679 && char.charCodeAt(1) === 57343 ||
-  char.charCodeAt(0) === 55743 && char.charCodeAt(1) === 57342 ||
-  char.charCodeAt(0) === 55743 && char.charCodeAt(1) === 57343 ||
-  char.charCodeAt(0) === 55807 && char.charCodeAt(1) === 57342 ||
-  char.charCodeAt(0) === 55807 && char.charCodeAt(1) === 57343 ||
-  char.charCodeAt(0) === 55871 && char.charCodeAt(1) === 57342 ||
-  char.charCodeAt(0) === 55871 && char.charCodeAt(1) === 57343 ||
-  char.charCodeAt(0) === 55935 && char.charCodeAt(1) === 57342 ||
-  char.charCodeAt(0) === 55935 && char.charCodeAt(1) === 57343 ||
-  char.charCodeAt(0) === 55999 && char.charCodeAt(1) === 57342 ||
-  char.charCodeAt(0) === 55999 && char.charCodeAt(1) === 57343 ||
-  char.charCodeAt(0) === 56063 && char.charCodeAt(1) === 57342 ||
-  char.charCodeAt(0) === 56063 && char.charCodeAt(1) === 57343 ||
-  char.charCodeAt(0) === 56127 && char.charCodeAt(1) === 57342 ||
-  char.charCodeAt(0) === 56127 && char.charCodeAt(1) === 57343 ||
-  char.charCodeAt(0) === 56191 && char.charCodeAt(1) === 57342 ||
-  char.charCodeAt(0) === 56191 && char.charCodeAt(1) === 57343 ||
-  char.charCodeAt(0) === 56255 && char.charCodeAt(1) === 57342 ||
-  char.charCodeAt(0) === 56255 && char.charCodeAt(1) === 57343 ||
-  char.charCodeAt(0) === 56319 && char.charCodeAt(1) === 57342 ||
-  char.charCodeAt(0) === 56319 && char.charCodeAt(1) === 57343
-  ) {
-      return false;
-    }
-  return true;
-}
 function characterSuitableForNames(char) {
   return /[-_A-Za-z0-9]/.test(char);
 }
@@ -516,14 +450,14 @@ function stripHtml(str, originalOpts) {
         attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
         tag.attributes.push(attrObj);
         attrObj = {};
-      } else if (str[i] === "<" || !isValidAttributeCharacter(str[i])) {
+      } else if (str[i] === "<") {
         attrObj.nameEnds = i;
         attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
         tag.attributes.push(attrObj);
         attrObj = {};
       }
     }
-    if (!tag.quotes && tag.nameEnds < i && !str[i - 1].trim() && str[i].trim() && !"<>/!".includes(str[i]) && !attrObj.nameStarts && !tag.lastClosingBracketAt && isValidAttributeCharacter(str[i])) {
+    if (!tag.quotes && tag.nameEnds < i && !str[i - 1].trim() && str[i].trim() && !"<>/!".includes(str[i]) && !attrObj.nameStarts && !tag.lastClosingBracketAt) {
       attrObj.nameStarts = i;
     }
     if (tag.lastOpeningBracketAt !== null && tag.lastOpeningBracketAt < i && str[i] === "/" && tag.onlyPlausible) {
@@ -613,7 +547,9 @@ function stripHtml(str, originalOpts) {
           calculateHrefToBeInserted(opts);
           var insert = void 0;
           if (isStr(stringToInsertAfter) && stringToInsertAfter.length) {
-            insert = "".concat(_whiteSpaceCompensation2).concat(stringToInsertAfter).concat(_whiteSpaceCompensation2 === "\n\n" ? "\n" : _whiteSpaceCompensation2);
+            insert = "".concat(_whiteSpaceCompensation2).concat(stringToInsertAfter).concat(
+            /* istanbul ignore next */
+            _whiteSpaceCompensation2 === "\n\n" ? "\n" : _whiteSpaceCompensation2);
           } else {
             insert = _whiteSpaceCompensation2;
           }
@@ -669,6 +605,7 @@ function stripHtml(str, originalOpts) {
           if (chunkOfWhitespaceStartsAt === null) {
             tag.leftOuterWhitespace = i;
           } else if (opts.trimOnlySpaces && chunkOfWhitespaceStartsAt === 0) {
+            /* istanbul ignore next */
             tag.leftOuterWhitespace = chunkOfSpacesStartsAt || i;
           } else {
             tag.leftOuterWhitespace = chunkOfWhitespaceStartsAt;
@@ -725,6 +662,7 @@ function stripHtml(str, originalOpts) {
       }
     } else if (chunkOfWhitespaceStartsAt !== null) {
       if (!tag.quotes && attrObj.equalsAt > chunkOfWhitespaceStartsAt - 1 && attrObj.nameEnds && attrObj.equalsAt > attrObj.nameEnds && str[i] !== '"' && str[i] !== "'") {
+        /* istanbul ignore else */
         if (isObj(attrObj)) {
           tag.attributes.push(attrObj);
         }
