@@ -32,12 +32,13 @@ function isBool(something) {
 function isNull(something) {
   return something === null;
 }
+/* istanbul ignore next */
 function isBlank(something) {
   if (isObj(something)) {
-    return Object.keys(something).length === 0;
+    return !Object.keys(something).length;
   }
   if (isArr(something) || isStr(something)) {
-    return something.length === 0;
+    return !something.length;
   }
   return false;
 }

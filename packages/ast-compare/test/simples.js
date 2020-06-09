@@ -20,13 +20,14 @@ tap.test("02 - plain objects", (t) => {
 });
 
 tap.test("03 - plain objects", (t) => {
-  t.not(
+  t.is(
     compare(
       { a: "1", b: "2" },
       { a: "1", b: "2", c: "3" },
       { verboseWhenMismatches: true }
     ),
-    true
+    `The given object has key "c" which the other-one does not have.`,
+    "03"
   );
   t.end();
 });

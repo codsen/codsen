@@ -91,3 +91,79 @@ tap.test("08 - matching empty arrays - blank vs. empty - both opts", (t) => {
   );
   t.end();
 });
+
+tap.test(
+  "09 - matching empty arrays - blank vs. empty - both opts, arr values",
+  (t) => {
+    t.same(
+      compare(
+        { a: [], b: [], c: [] },
+        {},
+        { hungryForWhitespace: true, matchStrictly: true }
+      ),
+      true,
+      "09"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  "10 - matching empty arrays - blank vs. empty - both opts, arr values",
+  (t) => {
+    t.same(
+      compare([" "], "", { hungryForWhitespace: true, matchStrictly: true }),
+      true,
+      "10"
+    );
+    t.end();
+  }
+);
+
+tap.test("11 - array vs string", (t) => {
+  t.same(
+    compare([" "], "", { hungryForWhitespace: true, matchStrictly: true }),
+    true,
+    "11"
+  );
+  t.end();
+});
+
+tap.test("12 - array vs null", (t) => {
+  t.same(
+    compare([" "], [null], { hungryForWhitespace: true, matchStrictly: true }),
+    true,
+    "12"
+  );
+  t.end();
+});
+
+tap.test("13 - array vs bool", (t) => {
+  t.same(
+    compare([" "], true, { hungryForWhitespace: true, matchStrictly: true }),
+    false,
+    "13"
+  );
+  t.end();
+});
+
+tap.test("14", (t) => {
+  t.same(
+    compare(false, true, { hungryForWhitespace: true, matchStrictly: true }),
+    false,
+    "14"
+  );
+  t.end();
+});
+
+tap.test("15", (t) => {
+  t.same(
+    compare([false], [true], {
+      hungryForWhitespace: true,
+      matchStrictly: true,
+    }),
+    true,
+    "15"
+  );
+  t.end();
+});

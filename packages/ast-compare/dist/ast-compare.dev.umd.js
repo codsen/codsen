@@ -111,9 +111,12 @@
     throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
 
-  function _createForOfIteratorHelper(o) {
+  function _createForOfIteratorHelper(o, allowArrayLike) {
+    var it;
+
     if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
-      if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) {
+      if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
+        if (it) o = it;
         var i = 0;
 
         var F = function () {};
@@ -139,8 +142,7 @@
       throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
     }
 
-    var it,
-        normalCompletion = true,
+    var normalCompletion = true,
         didErr = false,
         err;
     return {
@@ -2664,14 +2666,16 @@
   function isNull(something) {
     return something === null;
   }
+  /* istanbul ignore next */
+
 
   function isBlank(something) {
     if (isObj$1(something)) {
-      return Object.keys(something).length === 0;
+      return !Object.keys(something).length;
     }
 
     if (isArr(something) || isStr(something)) {
-      return something.length === 0;
+      return !something.length;
     }
 
     return false;
