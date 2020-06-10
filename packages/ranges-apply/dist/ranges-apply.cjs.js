@@ -64,6 +64,7 @@ function rangesApply(str, originalRangesArr, _progressFn) {
   rangesArr.forEach(function (el, i) {
     if (_progressFn) {
       percentageDone = Math.floor(counter / len * 10);
+      /* istanbul ignore else */
       if (percentageDone !== lastPercentageDone) {
         lastPercentageDone = percentageDone;
         _progressFn(percentageDone);
@@ -92,6 +93,7 @@ function rangesApply(str, originalRangesArr, _progressFn) {
     progressFn: function progressFn(perc) {
       if (_progressFn) {
         percentageDone = 10 + Math.floor(perc / 10);
+        /* istanbul ignore else */
         if (percentageDone !== lastPercentageDone) {
           lastPercentageDone = percentageDone;
           _progressFn(percentageDone);
@@ -105,6 +107,7 @@ function rangesApply(str, originalRangesArr, _progressFn) {
     str = workingRanges.reduce(function (acc, val, i, arr) {
       if (_progressFn) {
         percentageDone = 20 + Math.floor(i / len2 * 80);
+        /* istanbul ignore else */
         if (percentageDone !== lastPercentageDone) {
           lastPercentageDone = percentageDone;
           _progressFn(percentageDone);

@@ -271,6 +271,7 @@
     rangesArr.forEach(function (el, i) {
       if (_progressFn) {
         percentageDone = Math.floor(counter / len * 10);
+        /* istanbul ignore else */
 
         if (percentageDone !== lastPercentageDone) {
           lastPercentageDone = percentageDone;
@@ -308,6 +309,7 @@
           // since "perc" is already from zero to hundred, we just divide by 10 and
           // get the range from zero to ten:
           percentageDone = 10 + Math.floor(perc / 10);
+          /* istanbul ignore else */
 
           if (percentageDone !== lastPercentageDone) {
             lastPercentageDone = percentageDone;
@@ -328,6 +330,7 @@
           // since "perc" is already from zero to hundred, we just divide by 10 and
           // get the range from zero to ten:
           percentageDone = 20 + Math.floor(i / len2 * 80);
+          /* istanbul ignore else */
 
           if (percentageDone !== lastPercentageDone) {
             lastPercentageDone = percentageDone;
