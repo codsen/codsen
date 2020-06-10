@@ -105,11 +105,13 @@ function convertOne(str, _ref) {
     ) {
         if (convertApostrophes && str.slice(from, to + 2) !== (convertEntities ? "&rsquo;n&rsquo;" : "".concat(rightSingleQuote, "n").concat(rightSingleQuote)) && value !== (convertEntities ? "&rsquo;n&rsquo;" : "".concat(rightSingleQuote, "n").concat(rightSingleQuote))) {
           rangesArr.push([from, to + 2, convertEntities ? "&rsquo;n&rsquo;" : "".concat(rightSingleQuote, "n").concat(rightSingleQuote)]);
+          /* istanbul ignore next */
           if (typeof offsetBy === "function") {
             offsetBy(2);
           }
         } else if (!convertApostrophes && str.slice(from, to + 2) !== "'n'" && value !== "'n'") {
           rangesArr.push([from, to + 2, "'n'"]);
+          /* istanbul ignore next */
           if (typeof offsetBy === "function") {
             offsetBy(2);
           }
@@ -132,11 +134,13 @@ function convertOne(str, _ref) {
       ) {
           if (convertApostrophes && str.slice(from, to + 1) !== (convertEntities ? "&rsquo;&rdquo;" : "".concat(rightSingleQuote).concat(rightDoubleQuote)) && value !== (convertEntities ? "&rsquo;&rdquo;" : "".concat(rightSingleQuote).concat(rightDoubleQuote))) {
             rangesArr.push([from, to + 1, "".concat(convertEntities ? "&rsquo;&rdquo;" : "".concat(rightSingleQuote).concat(rightDoubleQuote))]);
+            /* istanbul ignore next */
             if (typeof offsetBy === "function") {
               offsetBy(1);
             }
           } else if (!convertApostrophes && str.slice(from, to + 1) !== "'\"" && value !== "'\"") {
             rangesArr.push([from, to + 1, "'\""]);
+            /* istanbul ignore next */
             if (typeof offsetBy === "function") {
               offsetBy(1);
             }
@@ -207,11 +211,13 @@ function convertOne(str, _ref) {
       str[to + 1] && !str[to + 1].trim()) {
         if (convertApostrophes && str.slice(from, to + 1) !== (convertEntities ? "&rdquo;&rsquo;" : "".concat(rightDoubleQuote).concat(rightSingleQuote)) && value !== (convertEntities ? "&rdquo;&rsquo;" : "".concat(rightDoubleQuote).concat(rightSingleQuote))) {
           rangesArr.push([from, to + 1, convertEntities ? "&rdquo;&rsquo;" : "".concat(rightDoubleQuote).concat(rightSingleQuote)]);
+          /* istanbul ignore next */
           if (typeof offsetBy === "function") {
             offsetBy(1);
           }
         } else if (!convertApostrophes && str.slice(from, to + 1) !== "\"'" && value !== "\"'") {
           rangesArr.push([from, to + 1, "\"'"]);
+          /* istanbul ignore next */
           if (typeof offsetBy === "function") {
             offsetBy(1);
           }

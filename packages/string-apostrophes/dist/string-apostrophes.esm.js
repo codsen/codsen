@@ -99,6 +99,7 @@ function convertOne(
             ? "&rsquo;n&rsquo;"
             : `${rightSingleQuote}n${rightSingleQuote}`,
         ]);
+        /* istanbul ignore next */
         if (typeof offsetBy === "function") {
           offsetBy(2);
         }
@@ -108,6 +109,7 @@ function convertOne(
         value !== "'n'"
       ) {
         rangesArr.push([from, to + 2, "'n'"]);
+        /* istanbul ignore next */
         if (typeof offsetBy === "function") {
           offsetBy(2);
         }
@@ -206,6 +208,7 @@ function convertOne(
                 : `${rightSingleQuote}${rightDoubleQuote}`
             }`,
           ]);
+          /* istanbul ignore next */
           if (typeof offsetBy === "function") {
             offsetBy(1);
           }
@@ -215,6 +218,7 @@ function convertOne(
           value !== `'"`
         ) {
           rangesArr.push([from, to + 1, `'"`]);
+          /* istanbul ignore next */
           if (typeof offsetBy === "function") {
             offsetBy(1);
           }
@@ -456,6 +460,7 @@ function convertOne(
               ? "&rdquo;&rsquo;"
               : `${rightDoubleQuote}${rightSingleQuote}`,
           ]);
+          /* istanbul ignore next */
           if (typeof offsetBy === "function") {
             offsetBy(1);
           }
@@ -465,6 +470,7 @@ function convertOne(
           value !== `"'`
         ) {
           rangesArr.push([from, to + 1, `"'`]);
+          /* istanbul ignore next */
           if (typeof offsetBy === "function") {
             offsetBy(1);
           }
