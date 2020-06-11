@@ -468,7 +468,7 @@
           } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
             rangesArr.push([from, to, "'"]);
           }
-        } else if (str[to].charCodeAt(0) === 34 && // double quote follows
+        } else if (str[to] === "\"" && // double quote follows
         str[to + 1] && !str[to + 1].trim() // and whitespace after
         ) {
             if (convertApostrophes && str.slice(from, to + 1) !== (convertEntities ? "&rsquo;&rdquo;" : "".concat(rightSingleQuote).concat(rightDoubleQuote)) && value !== (convertEntities ? "&rsquo;&rdquo;" : "".concat(rightSingleQuote).concat(rightDoubleQuote))) {
@@ -566,7 +566,7 @@
           } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {
             rangesArr.push([from, to, "\""]);
           }
-        } else if (str[to].charCodeAt(0) === 39 && // single quote follows
+        } else if (str[to] === "'" && // single quote follows
         str[to + 1] && !str[to + 1].trim()) {
           if (convertApostrophes && str.slice(from, to + 1) !== (convertEntities ? "&rdquo;&rsquo;" : "".concat(rightDoubleQuote).concat(rightSingleQuote)) && value !== (convertEntities ? "&rdquo;&rsquo;" : "".concat(rightDoubleQuote).concat(rightSingleQuote))) {
             rangesArr.push([from, to + 1, convertEntities ? "&rdquo;&rsquo;" : "".concat(rightDoubleQuote).concat(rightSingleQuote)]);

@@ -290,7 +290,7 @@ function convertOne(
           );
         }
       } else if (
-        str[to].charCodeAt(0) === 34 && // double quote follows
+        str[to] === `"` && // double quote follows
         str[to + 1] &&
         !str[to + 1].trim() // and whitespace after
       ) {
@@ -670,7 +670,7 @@ function convertOne(
           );
         }
       } else if (
-        str[to].charCodeAt(0) === 39 && // single quote follows
+        str[to] === `'` && // single quote follows
         str[to + 1] &&
         !str[to + 1].trim()
       ) {

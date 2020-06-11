@@ -129,7 +129,7 @@ function convertOne(str, _ref) {
         } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
           rangesArr.push([from, to, "'"]);
         }
-      } else if (str[to].charCodeAt(0) === 34 &&
+      } else if (str[to] === "\"" &&
       str[to + 1] && !str[to + 1].trim()
       ) {
           if (convertApostrophes && str.slice(from, to + 1) !== (convertEntities ? "&rsquo;&rdquo;" : "".concat(rightSingleQuote).concat(rightDoubleQuote)) && value !== (convertEntities ? "&rsquo;&rdquo;" : "".concat(rightSingleQuote).concat(rightDoubleQuote))) {
@@ -207,7 +207,7 @@ function convertOne(str, _ref) {
         } else if (!convertApostrophes && str.slice(from, to) !== "\"" && value !== "\"") {
           rangesArr.push([from, to, "\""]);
         }
-      } else if (str[to].charCodeAt(0) === 39 &&
+      } else if (str[to] === "'" &&
       str[to + 1] && !str[to + 1].trim()) {
         if (convertApostrophes && str.slice(from, to + 1) !== (convertEntities ? "&rdquo;&rsquo;" : "".concat(rightDoubleQuote).concat(rightSingleQuote)) && value !== (convertEntities ? "&rdquo;&rsquo;" : "".concat(rightDoubleQuote).concat(rightSingleQuote))) {
           rangesArr.push([from, to + 1, convertEntities ? "&rdquo;&rsquo;" : "".concat(rightDoubleQuote).concat(rightSingleQuote)]);

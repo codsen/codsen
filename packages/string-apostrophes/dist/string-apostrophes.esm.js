@@ -184,7 +184,7 @@ function convertOne(
           rangesArr.push([from, to, "'"]);
         }
       } else if (
-        str[to].charCodeAt(0) === 34 &&
+        str[to] === `"` &&
         str[to + 1] &&
         !str[to + 1].trim()
       ) {
@@ -438,7 +438,7 @@ function convertOne(
           rangesArr.push([from, to, `"`]);
         }
       } else if (
-        str[to].charCodeAt(0) === 39 &&
+        str[to] === `'` &&
         str[to + 1] &&
         !str[to + 1].trim()
       ) {
