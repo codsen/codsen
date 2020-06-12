@@ -36,7 +36,7 @@
     },
     {
         "name": "ast-compare",
-        "size": 7628,
+        "size": 7645,
         "imports": [
             "ast-contains-only-empty-space"
         ]
@@ -241,11 +241,10 @@
     },
     {
         "name": "email-comb",
-        "size": 60436,
+        "size": 60545,
         "imports": [
             "array-pull-all-with-glob",
             "ast-is-empty",
-            "codsen-tokenizer",
             "ranges-apply",
             "ranges-push",
             "regex-empty-conditional-comments",
@@ -526,7 +525,7 @@
     },
     {
         "name": "ranges-apply",
-        "size": 4694,
+        "size": 4797,
         "imports": [
             "ranges-merge"
         ]
@@ -606,7 +605,7 @@
     },
     {
         "name": "string-apostrophes",
-        "size": 17953,
+        "size": 18145,
         "imports": [
             "ranges-apply"
         ]
@@ -729,7 +728,7 @@
     },
     {
         "name": "string-strip-html",
-        "size": 33868,
+        "size": 29249,
         "imports": [
             "ranges-apply",
             "ranges-push",
