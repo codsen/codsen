@@ -204,7 +204,7 @@ In this particular case, you can either turn off HTML decoding OR, even better, 
 
 In either case, whitespace between the detected tags will still be aggressively trimmed - `text <div>\n \t \r\n <br>\t \t \t</div> here` &rarr; `text here`.
 
-When this setting is on, only spaces will be trimmed from outside; an algorithm will stop at first non-space character, in this case, non-breaking space:
+When this setting is on, only spaces will be trimmed from outside; an algorithm will stop at a first non-space character, in this case, non-breaking space:
 
 ```
 "      &nbsp;     Hi! Please <div>shop now</div>!      &nbsp;      "
@@ -276,7 +276,7 @@ This option can work in combination with `opts.ignoreTags`. Any tags listed in `
 
 ### `opts.cb`
 
-Sometimes you want more control over the program: maybe you want to strip only certain tags and write your own custom conditions, maybe you want to do something extra on tags which are being ignored, for example, fix whitespace within them?
+Sometimes you want more control over the program: maybe you want to strip only certain tags and write your custom conditions, maybe you want to do something extra on tags which are being ignored, for example, fix whitespace within them?
 
 You can get this level of control using `opts.cb`. In options object, under key's `cb` value, put a function. Whenever this program wants to do something, it will call your function, `Array.forEach(key => {})`-style. Instead of `key` you get a plain object with the following keys:
 
@@ -371,7 +371,7 @@ console.log(`res2 = ${JSON.stringify(res2, null, 4)}`);
 
 ## Not assuming anything
 
-Some HTML tag stripping libraries _assume_ that the input is always valid HTML and that intention of their libraries is sanitation of some mystical rogue visitor's input string. Hence, libraries just rip the brackets out and call it a day.
+Some HTML tag stripping libraries _assume_ that the input is always valid HTML and that intention of their libraries is the sanitation of some mystical rogue visitor's input string. Hence, libraries just rip the brackets out and call it a day.
 
 But those libraries assume too much - what if neither input nor output is not an HTML? What if HTML tag stripping library is used in a universal tool which accepts all kinds of text **and strips only and strictly only recognised HTML tags**? Like [Detergent](https://gitlab.com/codsen/codsen/tree/master/packages/detergent) for example?
 
