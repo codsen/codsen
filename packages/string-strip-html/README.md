@@ -401,7 +401,7 @@ This library is the last missing piece of a puzzle to get rid of `string.js`.
 
 ## Algorithm
 
-This program does not use AST's because we want to strip badly broken HTML which throws parsers. It does not use a parser, it works from lexer-level. Lexer or tokenizer is a standalone program or part of a program, responsible for character chunk identification.
+This program does not use AST's because we want to strip broken HTML or HTML mixed with other sources (which throws parsers). This program does not use a parser, it works from lexer-level (precisely speaking, it's a _scanerless_ parser algorithm).
 
 Good read on a subject: https://tomassetti.me/parsing-in-javascript/
 
@@ -409,16 +409,16 @@ Good read on a subject: https://tomassetti.me/parsing-in-javascript/
 
 ## Quality dependencies
 
-We use only our own or top-quality dependencies from the Elders of the npm (no sarcasm): [`ent`](https://www.npmjs.com/package/ent) is by [substack](https://www.npmjs.com/~substack) himself and [`lodash`] is, well, The Lodash. All other dependencies are our own:
+We use only our own or very popular dependencies: [`ent`](https://www.npmjs.com/package/ent) is by [substack](https://www.npmjs.com/~substack) himself and [`lodash`] is, well, The Lodash. All other dependencies are our own:
 
 ```
-"ent": "^2.2.0",
-"lodash.isplainobject": "^4.0.6",
-"lodash.trim": "^4.5.1",
-"lodash.without": "^4.4.0",
-"ranges-apply": "^3.1.3",
-"ranges-push": "^3.7.3",
-"string-left-right": "^2.3.18"
+"ent"
+"lodash.isplainobject"
+"lodash.trim"
+"lodash.without"
+"ranges-apply"
+"ranges-push"
+"string-left-right"
 ```
 
 **[⬆ back to top](#)**
