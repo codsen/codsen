@@ -385,20 +385,6 @@ Choose your HTML stripping tool wisely.
 
 **[⬆ back to top](#)**
 
-## A bigger picture
-
-I scratched my itch, producing [Detergent](https://gitlab.com/codsen/codsen/tree/master/packages/detergent) — I needed a tool to clean the text before pasting into HTML because clients would supply briefing documents in all possible forms and shapes and often text would contain invisible Unicode characters. I've been given: Excel files, PSD's, Illustrator files, PDF's and of course, good old "nothing" where I had to reference existing code.
-
-Detergent would remove the excessive whitespace, invisible characters and improve the text's English style. Detergent would also take HTML as input — stripping the tags, cleaning the text and giving back ready-to-paste sentences. But most of the cases, Detergent's input is just a text. And not always it ends up in HTML.
-
-In September 2017, [string.js](https://www.npmjs.com/package/string) which originally performed the HTML-stripping was discovered as having [vulnerabilities](https://snyk.io/vuln/npm:string).
-
-I was able to quickly replace all functions that Detergent was consuming from `string.js` except **HTML-stripping**.
-
-This library is the last missing piece of a puzzle to get rid of `string.js`.
-
-**[⬆ back to top](#)**
-
 ## Algorithm
 
 This program does not use AST's because we want to strip broken HTML or HTML mixed with other sources (which throws parsers). This program does not use a parser, it works from lexer-level (precisely speaking, it's a _scanerless_ parser algorithm).
