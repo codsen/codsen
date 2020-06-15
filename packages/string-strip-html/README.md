@@ -369,22 +369,6 @@ console.log(`res2 = ${JSON.stringify(res2, null, 4)}`);
 
 **[⬆ back to top](#)**
 
-## Not assuming anything
-
-Some HTML tag stripping libraries _assume_ that the input is always valid HTML and that intention of their libraries is the sanitation of some mystical rogue visitor's input string. Hence, libraries just rip the brackets out and call it a day.
-
-But those libraries assume too much - what if neither input nor output is not an HTML? What if HTML tag stripping library is used in a universal tool which accepts all kinds of text **and strips only and strictly only recognised HTML tags**? Like [Detergent](https://gitlab.com/codsen/codsen/tree/master/packages/detergent) for example?
-
-For the record, somebody might input `a < b and c > d` (clearly, not HTML) into Detergent with intention clean invisible characters before **pasting the result into Photoshop**. A user just wants to get rid of any invisible characters. There's not even a smell of HTML here. There's no rogue XSS injection or cross-site scripting. Notice there are even spaces around brackets! Even Chrome will interpret `a < b and c > d` as text. I believe we should not delete `a < b and c > d` from a text when stripping the HTML. However, [other](https://www.npmjs.com/package/striptags) [HTML](https://www.npmjs.com/package/strip-html-tags) [stripping](https://www.npmjs.com/package/htmlstrip-native) libraries find excuses to think differently.
-
-This library does not assume anything, and its detection will interpret `a < b and c > d` as **not HTML**. Our competition, on the other hand, will strip `a < b and c > d` into `a d`.
-
-But, if you think, a child can code up bracket-to-bracket removal library in 5 minutes. There's more to HTML stripping than just bracket-to-bracket.
-
-Choose your HTML stripping tool wisely.
-
-**[⬆ back to top](#)**
-
 ## Algorithm
 
 This program does not use AST's because we want to strip broken HTML or HTML mixed with other sources (which throws parsers). This program does not use a parser, it works from lexer-level (precisely speaking, it's a _scanerless_ parser algorithm).
