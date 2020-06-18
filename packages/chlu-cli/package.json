@@ -1,6 +1,6 @@
 {
   "name": "chlu-cli",
-  "version": "1.16.73",
+  "version": "1.16.74",
   "description": "CH-ange-L-og U-pdate - Automatically fix errors in your changelog file",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -121,7 +121,7 @@
     "timeout": 0
   },
   "dependencies": {
-    "chlu": "^3.7.68",
+    "chlu": "^3.7.69",
     "fs-extra": "^9.0.1",
     "meow": "^7.0.1",
     "simple-git": "^2.7.2",
@@ -142,9 +142,9 @@
     "eslint-plugin-import": "^2.21.2",
     "eslint-plugin-no-unsanitized": "^3.1.2",
     "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-row-num": "^1.2.6",
+    "eslint-plugin-row-num": "^1.2.7",
     "execa": "^4.0.2",
-    "lect": "^0.13.6",
+    "lect": "^0.13.7",
     "prettier": "^2.0.5",
     "tap": "^14.10.7",
     "tempy": "^0.5.0"

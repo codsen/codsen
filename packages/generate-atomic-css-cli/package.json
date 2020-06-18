@@ -1,6 +1,6 @@
 {
   "name": "generate-atomic-css-cli",
-  "version": "1.1.46",
+  "version": "1.1.47",
   "description": "Generates and updates all HTML templates' atomic CSS",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -122,7 +122,7 @@
   },
   "dependencies": {
     "fs-extra": "^9.0.1",
-    "generate-atomic-css": "^1.2.43",
+    "generate-atomic-css": "^1.2.44",
     "globby": "^11.0.1",
     "is-d": "^1.0.0",
     "meow": "^7.0.1",
@@ -144,9 +144,9 @@
     "eslint-plugin-import": "^2.21.2",
     "eslint-plugin-no-unsanitized": "^3.1.2",
     "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-row-num": "^1.2.6",
+    "eslint-plugin-row-num": "^1.2.7",
     "execa": "^4.0.2",
-    "lect": "^0.13.6",
+    "lect": "^0.13.7",
     "prettier": "^2.0.5",
     "tap": "^14.10.7",
     "tempy": "^0.5.0"

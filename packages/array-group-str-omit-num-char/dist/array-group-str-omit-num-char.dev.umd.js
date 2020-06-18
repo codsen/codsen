@@ -1,7 +1,7 @@
 /**
  * array-group-str-omit-num-char
  * Groups array of strings by omitting number characters
- * Version: 2.1.40
+ * Version: 2.1.41
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/array-group-str-omit-num-char
@@ -1210,7 +1210,7 @@
   /**
    * ranges-apply
    * Take an array of string slice ranges, delete/replace the string according to them
-   * Version: 3.1.9
+   * Version: 3.1.10
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply

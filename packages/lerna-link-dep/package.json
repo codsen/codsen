@@ -1,6 +1,6 @@
 {
   "name": "lerna-link-dep",
-  "version": "1.1.30",
+  "version": "1.1.31",
   "description": "CLI to symlink a local package to the current package in Lerna monorepo",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -145,8 +145,8 @@
     "eslint-plugin-import": "^2.21.2",
     "eslint-plugin-no-unsanitized": "^3.1.2",
     "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-row-num": "^1.2.6",
-    "lect": "^0.13.6",
+    "eslint-plugin-row-num": "^1.2.7",
+    "lect": "^0.13.7",
     "prettier": "^2.0.5",
     "tap": "^14.10.7",
     "tempy": "^0.5.0"

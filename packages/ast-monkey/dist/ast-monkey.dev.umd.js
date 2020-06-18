@@ -1,7 +1,7 @@
 /**
  * ast-monkey
  * Traverse and edit AST's (like parsed HTML or anything nested)
- * Version: 7.11.13
+ * Version: 7.11.14
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey
@@ -5474,7 +5474,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
   /**
    * ast-compare
    * Compare anything: AST, objects, arrays, strings and nested thereof
-   * Version: 1.13.10
+   * Version: 1.13.11
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-compare

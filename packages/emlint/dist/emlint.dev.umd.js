@@ -1,7 +1,7 @@
 /**
  * emlint
  * Pluggable email template code linter
- * Version: 2.18.6
+ * Version: 2.18.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
@@ -29251,7 +29251,7 @@
   /**
    * is-relative-uri
    * Is given string a relative URI?
-   * Version: 1.0.13
+   * Version: 1.0.14
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-relative-uri
@@ -32795,7 +32795,7 @@
   /**
    * is-media-descriptor
    * Is given string a valid media descriptor (including media query)?
-   * Version: 1.2.11
+   * Version: 1.2.12
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-media-descriptor
@@ -43146,7 +43146,7 @@
     return Linter;
   }(EventEmitter);
 
-  var version = "2.18.6";
+  var version = "2.18.7";
 
   exports.Linter = Linter;
   exports.version = version;

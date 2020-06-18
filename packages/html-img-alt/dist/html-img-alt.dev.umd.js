@@ -1,7 +1,7 @@
 /**
  * html-img-alt
  * Adds missing ALT attributes to IMG tags and cleans within IMG tags. No HTML parsing used.
- * Version: 1.4.54
+ * Version: 1.4.55
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/html-img-alt
@@ -4482,7 +4482,7 @@
   /**
    * ranges-apply
    * Take an array of string slice ranges, delete/replace the string according to them
-   * Version: 3.1.9
+   * Version: 3.1.10
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply
