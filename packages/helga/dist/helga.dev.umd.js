@@ -231,7 +231,7 @@
     exports.default = _default;
     module.exports = exports.default;
   });
-  var unescapeJs = unwrapExports(dist);
+  var unescapeJs = /*@__PURE__*/unwrapExports(dist);
 
   var version = "1.1.33";
 

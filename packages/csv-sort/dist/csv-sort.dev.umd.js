@@ -279,6 +279,7 @@
     rangesArr.forEach((el, i) => {
       if (progressFn) {
         percentageDone = Math.floor(counter / len * 10);
+        /* istanbul ignore else */
 
         if (percentageDone !== lastPercentageDone) {
           lastPercentageDone = percentageDone;
@@ -312,6 +313,7 @@
       progressFn: perc => {
         if (progressFn) {
           percentageDone = 10 + Math.floor(perc / 10);
+          /* istanbul ignore else */
 
           if (percentageDone !== lastPercentageDone) {
             lastPercentageDone = percentageDone;
@@ -327,6 +329,7 @@
       str = workingRanges.reduce((acc, val, i, arr) => {
         if (progressFn) {
           percentageDone = 20 + Math.floor(i / len2 * 80);
+          /* istanbul ignore else */
 
           if (percentageDone !== lastPercentageDone) {
             lastPercentageDone = percentageDone;
@@ -830,7 +833,6 @@
       }
     })();
   });
-  var isNumeric_1 = isNumeric.isNumeric;
 
   /**
    * lodash (Custom Build) <https://lodash.com/>

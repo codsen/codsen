@@ -73,8 +73,6 @@ console.log(stripHtml("aaa<div>bbb</div>ccc")); // => 'aaa bbb ccc'
 - [Features](#features)
 - [API](#api)
 - [Options](#options)
-- [Not assuming anything](#not-assuming-anything)
-- [A bigger picture](#a-bigger-picture)
 - [Algorithm](#algorithm)
 - [Quality dependencies](#quality-dependencies)
 - [Contributing](#contributing)

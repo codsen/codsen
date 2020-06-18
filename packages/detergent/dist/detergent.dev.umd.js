@@ -11348,6 +11348,7 @@
     rangesArr.forEach((el, i) => {
       if (progressFn) {
         percentageDone = Math.floor(counter / len * 10);
+        /* istanbul ignore else */
 
         if (percentageDone !== lastPercentageDone) {
           lastPercentageDone = percentageDone;
@@ -11381,6 +11382,7 @@
       progressFn: perc => {
         if (progressFn) {
           percentageDone = 10 + Math.floor(perc / 10);
+          /* istanbul ignore else */
 
           if (percentageDone !== lastPercentageDone) {
             lastPercentageDone = percentageDone;
@@ -11396,6 +11398,7 @@
       str = workingRanges.reduce((acc, val, i, arr) => {
         if (progressFn) {
           percentageDone = 20 + Math.floor(i / len2 * 80);
+          /* istanbul ignore else */
 
           if (percentageDone !== lastPercentageDone) {
             lastPercentageDone = percentageDone;
@@ -18630,8 +18633,27 @@
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html
    */
 
+  function characterSuitableForNames(char) {
+    return /[-_A-Za-z0-9]/.test(char);
+  }
+
+  function prepHopefullyAnArray(something, name) {
+    if (!something) {
+      return [];
+    }
+
+    if (Array.isArray(something)) {
+      return something.filter(val => typeof val === "string" && val.trim());
+    }
+
+    if (typeof something === "string") {
+      return something.trim() ? [something] : [];
+    }
+
+    throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_03] ${name} must be array containing zero or more strings or something falsey. Currently it's equal to: ${something}, that a type of ${typeof something}.`);
+  }
+
   function stripHtml(str, originalOpts) {
-    const isArr = Array.isArray;
     const definitelyTagNames = new Set(["!doctype", "abbr", "address", "area", "article", "aside", "audio", "base", "bdi", "bdo", "blockquote", "body", "br", "button", "canvas", "caption", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "param", "picture", "pre", "progress", "rb", "rp", "rt", "rtc", "ruby", "samp", "script", "section", "select", "slot", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "ul", "var", "video", "wbr", "xml"]);
     const singleLetterTags = new Set(["a", "b", "i", "p", "q", "s", "u"]);
     const punctuation = new Set([".", ",", "?", ";", ")", "\u2026", '"', "\u00BB"]);
@@ -18656,49 +18678,9 @@
       return typeof something === "string";
     }
 
-    function isValidAttributeCharacter(char) {
-      if (char.charCodeAt(0) >= 0 && char.charCodeAt(0) <= 31) {
-        return false;
-      }
-
-      if (char.charCodeAt(0) >= 127 && char.charCodeAt(0) <= 159) {
-        return false;
-      }
-
-      if (char.charCodeAt(0) === 32) {
-        return false;
-      }
-
-      if (char.charCodeAt(0) === 34) {
-        return false;
-      }
-
-      if (char.charCodeAt(0) === 39) {
-        return false;
-      }
-
-      if (char.charCodeAt(0) === 62) {
-        return false;
-      }
-
-      if (char.charCodeAt(0) === 47) {
-        return false;
-      }
-
-      if (char.charCodeAt(0) === 61) {
-        return false;
-      }
-
-      if (char.charCodeAt(0) >= 64976 && char.charCodeAt(0) <= 65007 || char.charCodeAt(0) === 65534 || char.charCodeAt(0) === 65535 || char.charCodeAt(0) === 55359 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55359 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55423 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55423 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55487 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55487 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55551 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55551 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55615 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55615 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55679 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55679 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55743 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55743 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55807 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55807 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55871 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55871 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55935 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55935 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 55999 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 55999 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 56063 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 56063 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 56127 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 56127 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 56191 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 56191 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 56255 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 56255 && char.charCodeAt(1) === 57343 || char.charCodeAt(0) === 56319 && char.charCodeAt(1) === 57342 || char.charCodeAt(0) === 56319 && char.charCodeAt(1) === 57343) {
-        return false;
-      }
-
-      return true;
-    }
-
     function treatRangedTags(i, opts, rangesToDelete) {
-      if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
-        if (isArr(rangedOpeningTags) && rangedOpeningTags.some(obj => obj.name === tag.name && obj.lastClosingBracketAt < i)) {
+      if (Array.isArray(opts.stripTogetherWithTheirContents) && opts.stripTogetherWithTheirContents.includes(tag.name)) {
+        if (Array.isArray(rangedOpeningTags) && rangedOpeningTags.some(obj => obj.name === tag.name && obj.lastClosingBracketAt < i)) {
           for (let y = rangedOpeningTags.length; y--;) {
             if (rangedOpeningTags[y].name === tag.name) {
               if (punctuation.has(str[i])) {
@@ -18751,7 +18733,7 @@
       if (!punctuation.has(str2[currCharIdx]) && str2[currCharIdx] !== "!") {
         const foundLineBreaks = strToEvaluateForLineBreaks.match(/\n/g);
 
-        if (isArr(foundLineBreaks) && foundLineBreaks.length) {
+        if (Array.isArray(foundLineBreaks) && foundLineBreaks.length) {
           if (foundLineBreaks.length === 1) {
             return "\n";
           }
@@ -18780,38 +18762,14 @@
       }
     }
 
-    function characterSuitableForNames(char) {
-      return /[-_A-Za-z0-9]/.test(char);
-    }
-
     if (typeof str !== "string") {
       throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_01] Input must be string! Currently it's: ${(typeof str).toLowerCase()}, equal to:\n${JSON.stringify(str, null, 4)}`);
+    } else if (!str || !str.trim()) {
+      return str;
     }
 
     if (originalOpts !== undefined && originalOpts !== null && !lodash_isplainobject(originalOpts)) {
       throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_02] Optional Options Object must be a plain object! Currently it's: ${(typeof originalOpts).toLowerCase()}, equal to:\n${JSON.stringify(originalOpts, null, 4)}`);
-    }
-
-    function prepHopefullyAnArray(something, name) {
-      if (!something) {
-        return [];
-      }
-
-      if (isArr(something)) {
-        return something.filter(val => isStr(val) && val.trim());
-      }
-
-      if (isStr(something)) {
-        if (something.length) {
-          return [something];
-        }
-
-        return [];
-      }
-
-      if (!isArr(something)) {
-        throw new TypeError(`string-strip-html/stripHtml(): [THROW_ID_03] ${name} must be array containing zero or more strings or something falsey. Currently it's equal to: ${something}, that a type of ${typeof something}.`);
-      }
     }
 
     function resetHrefMarkers() {
@@ -18852,17 +18810,10 @@
       };
     }
 
-    if (typeof opts.ignoreTags === "string") {
-      if (opts.ignoreTags.length === 0) {
-        opts.ignoreTags = [];
-      } else {
-        opts.ignoreTags = [opts.ignoreTags];
-      }
-    }
-
     opts.dumpLinkHrefsNearby = defaults.dumpLinkHrefsNearby;
 
     if (lodash_isplainobject(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "dumpLinkHrefsNearby") && existy(originalOpts.dumpLinkHrefsNearby)) {
+      /* istanbul ignore else */
       if (lodash_isplainobject(originalOpts.dumpLinkHrefsNearby)) {
         opts.dumpLinkHrefsNearby = { ...defaults.dumpLinkHrefsNearby,
           ...originalOpts.dumpLinkHrefsNearby
@@ -18878,18 +18829,9 @@
       opts.stripTogetherWithTheirContents = [opts.stripTogetherWithTheirContents];
     }
 
-    if (!opts.dumpLinkHrefsNearby || lodash_isplainobject(opts.dumpLinkHrefsNearby) && !Object.keys(opts.dumpLinkHrefsNearby).length) {
-      opts.dumpLinkHrefsNearby = { ...defaults.dumpLinkHrefsNearby
-      };
-    }
-
-    if (!isArr(opts.stripTogetherWithTheirContents)) {
-      opts.stripTogetherWithTheirContents = [];
-    }
-
     const somethingCaught = {};
 
-    if (opts.stripTogetherWithTheirContents && isArr(opts.stripTogetherWithTheirContents) && opts.stripTogetherWithTheirContents.length && !opts.stripTogetherWithTheirContents.every((el, i) => {
+    if (opts.stripTogetherWithTheirContents && Array.isArray(opts.stripTogetherWithTheirContents) && opts.stripTogetherWithTheirContents.length && !opts.stripTogetherWithTheirContents.every((el, i) => {
       if (!(typeof el === "string")) {
         somethingCaught.el = el;
         somethingCaught.i = i;
@@ -18914,10 +18856,6 @@
       limitToBeAddedWhitespace: true,
       limitLinebreaksCount: 2
     });
-
-    if (str === "" || str.trim() === "") {
-      return str;
-    }
 
     if (!opts.skipHtmlDecoding) {
       while (str !== ent.decode(str)) {
@@ -18951,11 +18889,6 @@
                       deleteUpTo = z;
                       break;
                     }
-
-                    if (!str[z + 1]) {
-                      deleteUpTo = z + 1;
-                      break;
-                    }
                   }
                 }
 
@@ -18977,12 +18910,6 @@
 
       if (str[i] === "/" && !(tag.quotes && tag.quotes.value) && Number.isInteger(tag.lastOpeningBracketAt) && !Number.isInteger(tag.lastClosingBracketAt)) {
         tag.slashPresent = i;
-      }
-
-      if (tag.nameStarts && tag.nameStarts < i && !tag.quotes && punctuation.has(str[i]) && !attrObj.equalsAt && tag.attributes && !tag.attributes.length && !tag.lastClosingBracketAt) {
-        tag = {};
-        tag.attributes = [];
-        attrObj = {};
       }
 
       if (str[i] === '"' || str[i] === "'") {
@@ -19018,9 +18945,11 @@
 
       if (tag.nameStarts !== undefined && tag.nameEnds === undefined && (!str[i].trim() || !characterSuitableForNames(str[i]))) {
         tag.nameEnds = i;
-        tag.name = str.slice(tag.nameStarts, tag.nameEnds + (str[i] !== ">" && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0));
+        tag.name = str.slice(tag.nameStarts, tag.nameEnds + (
+        /* istanbul ignore next */
+        str[i] !== ">" && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0));
 
-        if (str[tag.nameStarts - 1] !== "!" && !tag.name.replace(/-/g, "").length) {
+        if (str[tag.nameStarts - 1] !== "!" && !tag.name.replace(/-/g, "").length || /^\d+$/.test(tag.name[0])) {
           tag = {};
           continue;
         }
@@ -19042,15 +18971,11 @@
       }
 
       if (tag.quotes && tag.quotes.start && tag.quotes.start < i && !tag.quotes.end && attrObj.nameEnds && attrObj.equalsAt && !attrObj.valueStarts) {
-        if (attrObj.valueEnds) ;else {
-          attrObj.valueStarts = i;
-        }
+        attrObj.valueStarts = i;
       }
 
-      if (!tag.quotes && attrObj.nameEnds && str[i] === "=" && !attrObj.valueStarts) {
-        if (!attrObj.equalsAt) {
-          attrObj.equalsAt = i;
-        }
+      if (!tag.quotes && attrObj.nameEnds && str[i] === "=" && !attrObj.valueStarts && !attrObj.equalsAt) {
+        attrObj.equalsAt = i;
       }
 
       if (!tag.quotes && attrObj.nameStarts && attrObj.nameEnds && !attrObj.valueStarts && str[i].trim() && str[i] !== "=") {
@@ -19063,6 +18988,7 @@
           attrObj.nameEnds = i;
           attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
         } else if (str[i] === "=") {
+          /* istanbul ignore else */
           if (!attrObj.equalsAt) {
             attrObj.nameEnds = i;
             attrObj.equalsAt = i;
@@ -19073,7 +18999,7 @@
           attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
           tag.attributes.push(attrObj);
           attrObj = {};
-        } else if (str[i] === "<" || !isValidAttributeCharacter(str[i])) {
+        } else if (str[i] === "<") {
           attrObj.nameEnds = i;
           attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
           tag.attributes.push(attrObj);
@@ -19081,12 +19007,8 @@
         }
       }
 
-      if (!tag.quotes && tag.nameEnds < i && str[i] !== ">" && str[i] !== "/" && str[i] !== "!" && !str[i - 1].trim() && str[i].trim() && !attrObj.nameStarts && !tag.lastClosingBracketAt) {
-        if (isValidAttributeCharacter(`${str[i]}${str[i + 1]}`) && str[i] !== "<") {
-          attrObj.nameStarts = i;
-        } else if (tag.onlyPlausible && str[i] !== "<") {
-          tag = {};
-        }
+      if (!tag.quotes && tag.nameEnds < i && !str[i - 1].trim() && str[i].trim() && !`<>/!`.includes(str[i]) && !attrObj.nameStarts && !tag.lastClosingBracketAt) {
+        attrObj.nameStarts = i;
       }
 
       if (tag.lastOpeningBracketAt !== null && tag.lastOpeningBracketAt < i && str[i] === "/" && tag.onlyPlausible) {
@@ -19180,17 +19102,15 @@
             let insert;
 
             if (isStr(stringToInsertAfter) && stringToInsertAfter.length) {
-              insert = `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation === "\n\n" ? "\n" : whiteSpaceCompensation}`;
+              insert = `${whiteSpaceCompensation}${stringToInsertAfter}${
+            /* istanbul ignore next */
+            whiteSpaceCompensation === "\n\n" ? "\n" : whiteSpaceCompensation}`;
             } else {
               insert = whiteSpaceCompensation;
             }
 
             if (tag.leftOuterWhitespace === 0 || !right(str, endingRangeIndex - 1)) {
               insert = "";
-            }
-
-            if (insert && insert.length > 1 && !insert.trim() && !insert.includes("\n") && !insert.includes("\r")) {
-              insert = " ";
             }
 
             opts.cb({
@@ -19231,9 +19151,6 @@
               treatRangedTags(i, opts, rangesToDelete);
               tag = {};
               attrObj = {};
-            } else if (tag.onlyPlausible && !definitelyTagNames.has(tag.name) && !singleLetterTags.has(tag.name) && !(tag.attributes && tag.attributes.length)) {
-              tag = {};
-              attrObj = {};
             }
           }
 
@@ -19250,6 +19167,7 @@
             if (chunkOfWhitespaceStartsAt === null) {
               tag.leftOuterWhitespace = i;
             } else if (opts.trimOnlySpaces && chunkOfWhitespaceStartsAt === 0) {
+              /* istanbul ignore next */
               tag.leftOuterWhitespace = chunkOfSpacesStartsAt || i;
             } else {
               tag.leftOuterWhitespace = chunkOfWhitespaceStartsAt;
@@ -19313,6 +19231,7 @@
         }
       } else if (chunkOfWhitespaceStartsAt !== null) {
         if (!tag.quotes && attrObj.equalsAt > chunkOfWhitespaceStartsAt - 1 && attrObj.nameEnds && attrObj.equalsAt > attrObj.nameEnds && str[i] !== '"' && str[i] !== "'") {
+          /* istanbul ignore else */
           if (lodash_isplainobject(attrObj)) {
             tag.attributes.push(attrObj);
           }
@@ -25556,12 +25475,14 @@
       } else if (str[to] && str[to + 1] && str[to] === "n" && str.slice(from, to) === str.slice(to + 1, to + 1 + (to - from))) {
         if (convertApostrophes && str.slice(from, to + 2) !== (convertEntities ? "&rsquo;n&rsquo;" : `${rightSingleQuote}n${rightSingleQuote}`) && value !== (convertEntities ? "&rsquo;n&rsquo;" : `${rightSingleQuote}n${rightSingleQuote}`)) {
           rangesArr.push([from, to + 2, convertEntities ? "&rsquo;n&rsquo;" : `${rightSingleQuote}n${rightSingleQuote}`]);
+          /* istanbul ignore next */
 
           if (typeof offsetBy === "function") {
             offsetBy(2);
           }
         } else if (!convertApostrophes && str.slice(from, to + 2) !== "'n'" && value !== "'n'") {
           rangesArr.push([from, to + 2, "'n'"]);
+          /* istanbul ignore next */
 
           if (typeof offsetBy === "function") {
             offsetBy(2);
@@ -25580,15 +25501,17 @@
           } else if (!convertApostrophes && str.slice(from, to) !== "'" && value !== "'") {
             rangesArr.push([from, to, "'"]);
           }
-        } else if (str[to].charCodeAt(0) === 34 && str[to + 1] && !str[to + 1].trim()) {
+        } else if (str[to] === `"` && str[to + 1] && !str[to + 1].trim()) {
           if (convertApostrophes && str.slice(from, to + 1) !== (convertEntities ? "&rsquo;&rdquo;" : `${rightSingleQuote}${rightDoubleQuote}`) && value !== (convertEntities ? "&rsquo;&rdquo;" : `${rightSingleQuote}${rightDoubleQuote}`)) {
             rangesArr.push([from, to + 1, `${convertEntities ? "&rsquo;&rdquo;" : `${rightSingleQuote}${rightDoubleQuote}`}`]);
+            /* istanbul ignore next */
 
             if (typeof offsetBy === "function") {
               offsetBy(1);
             }
           } else if (!convertApostrophes && str.slice(from, to + 1) !== `'"` && value !== `'"`) {
             rangesArr.push([from, to + 1, `'"`]);
+            /* istanbul ignore next */
 
             if (typeof offsetBy === "function") {
               offsetBy(1);
@@ -25656,15 +25579,17 @@
           } else if (!convertApostrophes && str.slice(from, to) !== `"` && value !== `"`) {
             rangesArr.push([from, to, `"`]);
           }
-        } else if (str[to].charCodeAt(0) === 39 && str[to + 1] && !str[to + 1].trim()) {
+        } else if (str[to] === `'` && str[to + 1] && !str[to + 1].trim()) {
           if (convertApostrophes && str.slice(from, to + 1) !== (convertEntities ? "&rdquo;&rsquo;" : `${rightDoubleQuote}${rightSingleQuote}`) && value !== (convertEntities ? "&rdquo;&rsquo;" : `${rightDoubleQuote}${rightSingleQuote}`)) {
             rangesArr.push([from, to + 1, convertEntities ? "&rdquo;&rsquo;" : `${rightDoubleQuote}${rightSingleQuote}`]);
+            /* istanbul ignore next */
 
             if (typeof offsetBy === "function") {
               offsetBy(1);
             }
           } else if (!convertApostrophes && str.slice(from, to + 1) !== `"'` && value !== `"'`) {
             rangesArr.push([from, to + 1, `"'`]);
+            /* istanbul ignore next */
 
             if (typeof offsetBy === "function") {
               offsetBy(1);

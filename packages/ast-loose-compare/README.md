@@ -16,7 +16,7 @@
 - [Purpose](#purpose)
 - [Difference from `ast-compare`](#difference-from-ast-compare)
 - [Differences from \_.isMatch](#differences-from-_ismatch)
-- [Competition](#competition)
+- [Other alternative programs](#other-alternative-programs)
 - [API](#api)
 - [More examples](#more-examples)
 - [Contributing](#contributing)

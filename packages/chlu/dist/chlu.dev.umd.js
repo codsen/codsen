@@ -1325,10 +1325,6 @@
       return fragment.toLowerCase().replace(/^\W+|\/|\W+$/g, '').replace(/\W+/g, '-');
     }
   });
-  var gitHostInfo_1 = gitHostInfo.github;
-  var gitHostInfo_2 = gitHostInfo.bitbucket;
-  var gitHostInfo_3 = gitHostInfo.gitlab;
-  var gitHostInfo_4 = gitHostInfo.gist;
 
   /* eslint-disable node/no-deprecated-api */
   // copy-pasta util._extend from node's source, to avoid pulling
@@ -1653,7 +1649,6 @@
       };
     }
   });
-  var hostedGitInfo_1 = hostedGitInfo.fromUrl;
 
   const {
     parse: parse$2
@@ -4247,15 +4242,6 @@
       return year + '-' + month + '-' + day;
     }
   });
-  var dehumanizeDate_1 = dehumanizeDate.parseNearbyDays;
-  var dehumanizeDate_2 = dehumanizeDate.parseLastThisNext;
-  var dehumanizeDate_3 = dehumanizeDate.parseAgoFrom;
-  var dehumanizeDate_4 = dehumanizeDate.parseNumberDate;
-  var dehumanizeDate_5 = dehumanizeDate.parseNumberDateShortYear;
-  var dehumanizeDate_6 = dehumanizeDate.parseNumberDateNoYear;
-  var dehumanizeDate_7 = dehumanizeDate.parseWordyDate;
-  var dehumanizeDate_8 = dehumanizeDate.monthFromName;
-  var dehumanizeDate_9 = dehumanizeDate.date;
 
   /**
    * lodash (Custom Build) <https://lodash.com/>

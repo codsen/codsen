@@ -6531,7 +6531,6 @@
       return bufferEs6.SlowBuffer(size);
     };
   });
-  var safeBuffer_1 = safeBuffer.Buffer;
 
   /*<replacement>*/
 
@@ -8656,14 +8655,6 @@
       exports.pipeline = pipeline_1;
     }
   });
-  var readable_1 = readable.Stream;
-  var readable_2 = readable.Readable;
-  var readable_3 = readable.Writable;
-  var readable_4 = readable.Duplex;
-  var readable_5 = readable.Transform;
-  var readable_6 = readable.PassThrough;
-  var readable_7 = readable.finished;
-  var readable_8 = readable.pipeline;
 
   var require$$1$1 = getCjsExportFromNamespace(stringDecoder);
 
@@ -8826,7 +8817,6 @@
       }
     }
   });
-  var processNextickArgs_1 = processNextickArgs.nextTick;
 
   var toString$1 = {}.toString;
 
@@ -11061,12 +11051,6 @@
       exports.PassThrough = _stream_passthrough$1;
     }
   });
-  var readable_1$1 = readable$1.Readable;
-  var readable_2$1 = readable$1.Writable;
-  var readable_3$1 = readable$1.Duplex;
-  var readable_4$1 = readable$1.Transform;
-  var readable_5$1 = readable$1.PassThrough;
-  var readable_6$1 = readable$1.Stream;
 
   var Transform$4 = readable$1.Transform,
       inherits$3 = require$$1.inherits;
