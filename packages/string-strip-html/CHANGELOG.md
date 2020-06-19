@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 4.5.0 (2020-06-18)
-
-### Features
-
-- improve the algorithm, if tag's name starts with a digit that's not a tag ([d548cdb](https://gitlab.com/codsen/codsen/commit/d548cdb129b95ae784aeda00d59d7e2f020dd8ad))
-- punctuation doesn't terminate the tag ([64e7628](https://gitlab.com/codsen/codsen/commit/64e76283c79be9a52a20e1594c3ca2839d3cb024))
-- recognise greater than signs followed by numbers only ([418a689](https://gitlab.com/codsen/codsen/commit/418a689e1eeb88e8dda84ec4614fd1589eb7cc0c)), closes [#32](https://gitlab.com/codsen/codsen/issues/32)
-
 ## 4.4.0 (2020-04-26)
 
 ### Features

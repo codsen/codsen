@@ -1,7 +1,7 @@
 /**
  * string-remove-thousand-separators
  * Detects and removes thousand separators (dot/comma/quote/space) from string-type digits
- * Version: 3.0.64
+ * Version: 3.0.63
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-thousand-separators
@@ -277,7 +277,7 @@
   /**
    * ranges-apply
    * Take an array of string slice ranges, delete/replace the string according to them
-   * Version: 3.1.10
+   * Version: 3.1.9
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply

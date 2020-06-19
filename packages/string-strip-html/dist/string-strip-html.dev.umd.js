@@ -1,7 +1,7 @@
 /**
  * string-strip-html
  * Strips HTML tags from strings. No parser, accepts mixed sources.
- * Version: 4.5.0
+ * Version: 4.4.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html
@@ -310,7 +310,7 @@
   /**
    * ranges-apply
    * Take an array of string slice ranges, delete/replace the string according to them
-   * Version: 3.1.10
+   * Version: 3.1.9
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply

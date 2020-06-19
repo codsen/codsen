@@ -1,7 +1,7 @@
 /**
  * eslint-plugin-row-num
  * ESLint plugin to update row numbers on each console.log
- * Version: 1.2.7
+ * Version: 1.2.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/eslint-plugin-row-num
@@ -521,7 +521,7 @@
   /**
    * ranges-apply
    * Take an array of string slice ranges, delete/replace the string according to them
-   * Version: 3.1.10
+   * Version: 3.1.9
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply
@@ -643,7 +643,7 @@
   /**
    * js-row-num
    * Update all row numbers in all console.logs in JS code
-   * Version: 2.7.20
+   * Version: 2.7.19
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/js-row-num

@@ -1,7 +1,7 @@
 /**
  * string-remove-duplicate-heads-tails
  * Detect and (recursively) remove head and tail wrappings around the input string
- * Version: 3.0.65
+ * Version: 3.0.64
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-duplicate-heads-tails
@@ -1053,7 +1053,7 @@
   /**
    * ranges-apply
    * Take an array of string slice ranges, delete/replace the string according to them
-   * Version: 3.1.10
+   * Version: 3.1.9
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply

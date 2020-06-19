@@ -1,7 +1,7 @@
 /**
  * ranges-invert
  * Invert string index ranges [ [1, 3] ] => [ [0, 1], [3, ...] ]
- * Version: 2.1.43
+ * Version: 2.1.42
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-invert
@@ -277,7 +277,7 @@
   /**
    * ranges-crop
    * Crop array of ranges when they go beyond the reference string's length
-   * Version: 2.0.56
+   * Version: 2.0.55
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-crop

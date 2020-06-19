@@ -1,7 +1,7 @@
 /**
  * csv-sort
  * Sorts double-entry bookkeeping CSV coming from internet banking
- * Version: 3.0.64
+ * Version: 3.0.63
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/csv-sort
@@ -228,7 +228,7 @@
   /**
    * ranges-apply
    * Take an array of string slice ranges, delete/replace the string according to them
-   * Version: 3.1.10
+   * Version: 3.1.9
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply
@@ -1253,7 +1253,7 @@
   /**
    * string-remove-thousand-separators
    * Detects and removes thousand separators (dot/comma/quote/space) from string-type digits
-   * Version: 3.0.64
+   * Version: 3.0.63
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-thousand-separators
@@ -1360,7 +1360,7 @@
   /**
    * csv-split-easy
    * Splits the CSV string into array of arrays, each representing a row of columns
-   * Version: 3.0.64
+   * Version: 3.0.63
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/csv-split-easy
@@ -2345,14 +2345,7 @@
         balanceColumnIndex = potentialBalanceColumnIndexesList[0];
       } else if (potentialBalanceColumnIndexesList.length === 0) {
         throw new Error('csv-sort/csvSort(): [THROW_ID_04] The computer can\'t find the "Balance" column! It saw some numeric-only columns, but they all seem to have certain rows with the same values as rows right below/above them!');
-      } // TODO - continue processing interpolating horizontally and vertically.
-      //
-      //
-      // COMPLEX ATTEMPT TO RULE-OUT NOT-BALANCE COLUMNS
-      //
-      //
-      // zzz
-      // at this point 99% of normal-size, real-life bank account CSV's should have
+      } // at this point 99% of normal-size, real-life bank account CSV's should have
       // "Balance" column identified because there will be both "Credit" and "Debit"
       // transaction rows which will be not exclusively numeric, but ["empty", "numeric"] type.
       // Even Lloyds Business banking CSV's that output account numbers

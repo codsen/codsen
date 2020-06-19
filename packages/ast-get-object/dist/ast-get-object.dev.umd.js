@@ -1,7 +1,7 @@
 /**
  * ast-get-object
  * Getter/setter for nested parsed HTML AST's, querying objects by key/value pairs
- * Version: 1.9.10
+ * Version: 1.9.9
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-get-object
@@ -2505,7 +2505,7 @@
   /**
    * ast-compare
    * Compare anything: AST, objects, arrays, strings and nested thereof
-   * Version: 1.13.11
+   * Version: 1.13.10
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-compare

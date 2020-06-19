@@ -1,7 +1,7 @@
 /**
  * html-table-patcher
  * Wraps any content between TR/TD tags in additional rows/columns to appear in browser correctly
- * Version: 2.0.4
+ * Version: 2.0.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/html-table-patcher
@@ -5422,7 +5422,7 @@
   /**
    * ranges-apply
    * Take an array of string slice ranges, delete/replace the string according to them
-   * Version: 3.1.10
+   * Version: 3.1.9
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply
@@ -5652,7 +5652,7 @@
 
   var htmlCommentRegex = /<!--([\s\S]*?)-->/g;
 
-  var version = "2.0.4";
+  var version = "2.0.3";
 
   var ranges = new Ranges();
 

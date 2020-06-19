@@ -1,7 +1,7 @@
 /**
  * string-convert-indexes
  * Convert string character indexes from JS native index-based to Unicode character-count-based and backwards.
- * Version: 1.10.13
+ * Version: 1.10.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-convert-indexes

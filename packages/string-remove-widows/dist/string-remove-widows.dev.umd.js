@@ -1,7 +1,7 @@
 /**
  * string-remove-widows
  * Helps to prevent widow words in a text
- * Version: 1.6.8
+ * Version: 1.6.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows
@@ -2987,7 +2987,7 @@
   /**
    * ranges-apply
    * Take an array of string slice ranges, delete/replace the string according to them
-   * Version: 3.1.10
+   * Version: 3.1.9
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply
@@ -3106,7 +3106,7 @@
     return str;
   }
 
-  var version = "1.6.8";
+  var version = "1.6.7";
 
   // consts
   var rawnbsp = "\xA0";
@@ -3654,8 +3654,7 @@
           i = _i;
           return true;
         }
-      })) ; // continue;
-      // logging after each loop's iteration:
+      })) ; // logging after each loop's iteration:
       // ███████████████████████████████████████
       //
       //
