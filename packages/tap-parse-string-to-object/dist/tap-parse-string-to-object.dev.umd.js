@@ -1116,7 +1116,7 @@
     return Object.prototype.hasOwnProperty.call(obj, prop);
   }
 
-  var util = {
+  var debugUtil = {
     inherits: inherits$1,
     _extend: _extend,
     log: log,
@@ -1140,33 +1140,6 @@
     format: format,
     debuglog: debuglog
   };
-
-  var util$1 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    format: format,
-    deprecate: deprecate,
-    debuglog: debuglog,
-    inspect: inspect,
-    isArray: isArray,
-    isBoolean: isBoolean,
-    isNull: isNull,
-    isNullOrUndefined: isNullOrUndefined,
-    isNumber: isNumber,
-    isString: isString,
-    isSymbol: isSymbol,
-    isUndefined: isUndefined,
-    isRegExp: isRegExp,
-    isObject: isObject,
-    isDate: isDate,
-    isError: isError,
-    isFunction: isFunction,
-    isPrimitive: isPrimitive,
-    isBuffer: isBuffer,
-    log: log,
-    inherits: inherits$1,
-    _extend: _extend,
-    'default': util
-  });
 
   var lookup = [];
   var revLookup = [];
@@ -5130,8 +5103,6 @@
 
   var stream$1 = Stream$1;
 
-  var require$$1 = getCjsExportFromNamespace(util$1);
-
   function ownKeys(object, enumerableOnly) {
     var keys = Object.keys(object);
 
@@ -5204,7 +5175,7 @@
   }
 
   var Buffer$2 = bufferEs6.Buffer;
-  var inspect$1 = require$$1.inspect;
+  var inspect$1 = debugUtil.inspect;
   var custom = inspect$1 && inspect$1.custom || 'inspect';
 
   function copyBuffer(src, target, offset) {
@@ -5678,7 +5649,7 @@
 
   var inherits$2 = createCommonjsModule(function (module) {
     try {
-      var util = require$$1;
+      var util = debugUtil;
       /* istanbul ignore next */
 
       if (typeof util.inherits !== 'function') throw '';
@@ -5693,7 +5664,7 @@
    * For Node.js, simply re-export the core `util.deprecate` function.
    */
 
-  var node = require$$1.deprecate;
+  var node = debugUtil.deprecate;
 
   var _stream_writable = Writable$1;
   // there will be only 2 of these for each stream
@@ -7345,8 +7316,8 @@
 
   var debug$1;
 
-  if (require$$1 && require$$1.debuglog) {
-    debug$1 = require$$1.debuglog('stream');
+  if (debugUtil && debugUtil.debuglog) {
+    debug$1 = debugUtil.debuglog('stream');
   } else {
     debug$1 = function debug() {};
   }
@@ -8656,14 +8627,14 @@
     }
   });
 
-  var require$$1$1 = getCjsExportFromNamespace(stringDecoder);
+  var require$$1 = getCjsExportFromNamespace(stringDecoder);
 
   const {
     Transform: Transform$2
   } = readable;
   const {
     StringDecoder: StringDecoder$3
-  } = require$$1$1;
+  } = require$$1;
   const kLast = Symbol('last');
   const kDecoder = Symbol('decoder');
 
@@ -8942,7 +8913,7 @@
     return Object.prototype.toString.call(o);
   }
 
-  var util$2 = {
+  var util = {
     isArray: isArray_1,
     isBoolean: isBoolean_1,
     isNull: isNull_1,
@@ -9047,9 +9018,9 @@
       return BufferList;
     }();
 
-    if (require$$1 && require$$1.inspect && require$$1.inspect.custom) {
-      module.exports.prototype[require$$1.inspect.custom] = function () {
-        var obj = require$$1.inspect({
+    if (debugUtil && debugUtil.inspect && debugUtil.inspect.custom) {
+      module.exports.prototype[debugUtil.inspect.custom] = function () {
+        var obj = debugUtil.inspect({
           length: this.length
         });
         return this.constructor.name + ' ' + obj;
@@ -9166,8 +9137,8 @@
   Writable$2.WritableState = WritableState$2;
   /*<replacement>*/
 
-  var util$3 = Object.create(util$2);
-  util$3.inherits = inherits$2;
+  var util$1 = Object.create(util);
+  util$1.inherits = inherits$2;
   /*</replacement>*/
 
   /*<replacement>*/
@@ -9197,7 +9168,7 @@
   /*</replacement>*/
 
 
-  util$3.inherits(Writable$2, stream$2);
+  util$1.inherits(Writable$2, stream$2);
 
   function nop$2() {}
 
@@ -9792,11 +9763,11 @@
   var _stream_duplex$1 = Duplex$5;
   /*<replacement>*/
 
-  var util$4 = Object.create(util$2);
-  util$4.inherits = inherits$2;
+  var util$2 = Object.create(util);
+  util$2.inherits = inherits$2;
   /*</replacement>*/
 
-  util$4.inherits(Duplex$5, _stream_readable$1);
+  util$2.inherits(Duplex$5, _stream_readable$1);
   {
     // avoid scope creep, the keys array can then be collected
     var keys$2 = objectKeys$1(_stream_writable$1.prototype);
@@ -9914,16 +9885,16 @@
   /*<replacement>*/
 
 
-  var util$5 = Object.create(util$2);
-  util$5.inherits = inherits$2;
+  var util$3 = Object.create(util);
+  util$3.inherits = inherits$2;
   /*</replacement>*/
 
   /*<replacement>*/
 
   var debug$2 = void 0;
 
-  if (require$$1 && require$$1.debuglog) {
-    debug$2 = require$$1.debuglog('stream');
+  if (debugUtil && debugUtil.debuglog) {
+    debug$2 = debugUtil.debuglog('stream');
   } else {
     debug$2 = function () {};
   }
@@ -9931,7 +9902,7 @@
 
 
   var StringDecoder$4;
-  util$5.inherits(Readable$2, stream$2);
+  util$3.inherits(Readable$2, stream$2);
   var kProxyEvents$1 = ['error', 'close', 'destroy', 'pause', 'resume'];
 
   function prependListener$2(emitter, event, fn) {
@@ -10877,11 +10848,11 @@
   var _stream_transform$1 = Transform$3;
   /*<replacement>*/
 
-  var util$6 = Object.create(util$2);
-  util$6.inherits = inherits$2;
+  var util$4 = Object.create(util);
+  util$4.inherits = inherits$2;
   /*</replacement>*/
 
-  util$6.inherits(Transform$3, _stream_duplex$1);
+  util$4.inherits(Transform$3, _stream_duplex$1);
 
   function afterTransform$2(er, data) {
     var ts = this._transformState;
@@ -11016,11 +10987,11 @@
   var _stream_passthrough$1 = PassThrough$2;
   /*<replacement>*/
 
-  var util$7 = Object.create(util$2);
-  util$7.inherits = inherits$2;
+  var util$5 = Object.create(util);
+  util$5.inherits = inherits$2;
   /*</replacement>*/
 
-  util$7.inherits(PassThrough$2, _stream_transform$1);
+  util$5.inherits(PassThrough$2, _stream_transform$1);
 
   function PassThrough$2(options) {
     if (!(this instanceof PassThrough$2)) return new PassThrough$2(options);
@@ -11052,15 +11023,14 @@
     }
   });
 
-  var Transform$4 = readable$1.Transform,
-      inherits$3 = require$$1.inherits;
+  var Transform$4 = readable$1.Transform;
 
   function DestroyableTransform(opts) {
     Transform$4.call(this, opts);
     this._destroyed = false;
   }
 
-  inherits$3(DestroyableTransform, Transform$4);
+  inherits$2(DestroyableTransform, Transform$4);
 
   DestroyableTransform.prototype.destroy = function (err) {
     if (this._destroyed) return;
@@ -11109,7 +11079,7 @@
       DestroyableTransform.call(this, this.options);
     }
 
-    inherits$3(Through2, DestroyableTransform);
+    inherits$2(Through2, DestroyableTransform);
     Through2.prototype._transform = transform;
     if (flush) Through2.prototype._flush = flush;
     return Through2;

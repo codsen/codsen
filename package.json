@@ -34,11 +34,6 @@
     "test:only": "FORCE_COLOR=1 lerna run unittest --stream --concurrency 1 && npm run readme:generate && npm run info",
     "wipe": "rm package-lock.json || true && rm -rf node_modules && FORCE_COLOR=1 npx lerna clean -y"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lerna run test --since --concurrency 2 && git add packages/*/dist/*.*"
-    }
-  },
   "watch": {
     "readme:generate": "scripts/generate-readme.js"
   },
@@ -48,7 +43,7 @@
     "benchmark": "^2.1.4",
     "commitizen": "^4.1.2",
     "cz-conventional-changelog": "^3.2.0",
-    "eslint": "7.2.0",
+    "eslint": "^7.3.1",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.21.2",
     "eslint-plugin-no-unsanitized": "^3.1.2",
@@ -57,7 +52,6 @@
     "eslint-plugin-row-num": "^1.2.6",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-airbnb-base": "^14.2.0",
-    "husky": "^4.2.5",
     "lect": "^0.13.6",
     "lerna": "^3.22.1",
     "lerna-clean-changelogs-cli": "^1.2.63",
