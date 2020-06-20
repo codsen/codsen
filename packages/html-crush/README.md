@@ -151,11 +151,11 @@ If supplied input arguments are of any other types, an error will be thrown.
 
 The function exported under key `crush` will return **a plain object** where you'll find log data, result string and corresponding string ranges of all actions performed:
 
-| Key's name | Key value's type                          | Description                                                                                                                      |
-| ---------- | ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `log`      | Plain object                              | For example, `{ timeTakenInMiliseconds: 6, originalLength: 0, cleanedLength: 0, bytesSaved: 0, percentageReducedOfOriginal: 0 }` |
-| `ranges`   | Array of zero or more string range arrays | For example, if characters from index `0` to `5` and `30` to `35` were deleted, that would be `[[0, 5], [30, 35]]`               |
-| `result`   | String                                    | The string version where all ranges were applied to it.                                                                          |
+| Key's name | Key value's type                          | Description                                                                                                                       |
+| ---------- | ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `log`      | Plain object                              | For example, `{ timeTakenInMilliseconds: 6, originalLength: 0, cleanedLength: 0, bytesSaved: 0, percentageReducedOfOriginal: 0 }` |
+| `ranges`   | Array of zero or more string range arrays | For example, if characters from index `0` to `5` and `30` to `35` were deleted, that would be `[[0, 5], [30, 35]]`                |
+| `result`   | String                                    | The string version where all ranges were applied to it.                                                                           |
 
 **[⬆ back to top](#)**
 

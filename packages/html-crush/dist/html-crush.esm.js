@@ -22,6 +22,8 @@ const defaults = {
   lineLengthLimit: 500,
   removeIndentations: true,
   removeLineBreaks: false,
+  removeHTMLComments: false,
+  removeCSSComments: false,
   reportProgressFunc: null,
   reportProgressFuncFrom: 0,
   reportProgressFuncTo: 100,
@@ -914,7 +916,7 @@ function crush(str, originalOpts) {
   }
   return {
     log: {
-      timeTakenInMiliseconds: Date.now() - start,
+      timeTakenInMilliseconds: Date.now() - start,
       originalLength: len,
       cleanedLength: len,
       bytesSaved: 0,

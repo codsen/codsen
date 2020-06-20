@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.0.0
+
+- renamed output `log.timeTakenInMiliseconds` to `log.timeTakenInMilliseconds` (was a typo)
+
 ## 1.9.35 (2020-05-24)
 
 ### Bug Fixes
