@@ -31,9 +31,10 @@ tap.test(
     );
 
     // short input string should report only when passing at 50%:
-    const error1 = t.throws(() => {
-      m(
-        `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    t.throws(
+      () => {
+        m(
+          `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -55,10 +56,12 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
-        { removeLineBreaks: true, reportProgressFunc: shouldveBeenCalled }
-      );
-    });
-    t.match(error1.message, /50/, "01.04");
+          { removeLineBreaks: true, reportProgressFunc: shouldveBeenCalled }
+        );
+      },
+      /50/,
+      "01.04"
+    );
 
     // long input (>1000 chars long) should report at each natural number percentage passed:
 
