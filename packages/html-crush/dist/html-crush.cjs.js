@@ -15,7 +15,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var applyRanges = _interopDefault(require('ranges-apply'));
-var Slices = _interopDefault(require('ranges-push'));
+var Ranges = _interopDefault(require('ranges-push'));
 var stringMatchLeftRight = require('string-match-left-right');
 var expand = _interopDefault(require('string-range-expander'));
 var stringLeftRight = require('string-left-right');
@@ -159,8 +159,7 @@ function _nonIterableRest() {
 
 var version = "1.9.35";
 
-var isArr = Array.isArray;
-var finalIndexesToDelete = new Slices({
+var finalIndexesToDelete = new Ranges({
   limitToBeAddedWhitespace: true
 });
 var defaults = {
@@ -168,18 +167,19 @@ var defaults = {
   removeIndentations: true,
   removeLineBreaks: false,
   removeHTMLComments: false,
-  removeCSSComments: false,
+  removeCSSComments: true,
   reportProgressFunc: null,
   reportProgressFuncFrom: 0,
   reportProgressFuncTo: 100,
   breakToTheLeftOf: ["</td", "<html", "</html", "<head", "</head", "<meta", "<link", "<table", "<script", "</script", "<!DOCTYPE", "<style", "</style", "<title", "<body", "@media", "</body", "<!--[if", "<!--<![endif", "<![endif]"],
   mindTheInlineTags: ["a", "abbr", "acronym", "audio", "b", "bdi", "bdo", "big", "br", "button", "canvas", "cite", "code", "data", "datalist", "del", "dfn", "em", "embed", "i", "iframe", "img", "input", "ins", "kbd", "label", "map", "mark", "meter", "noscript", "object", "output", "picture", "progress", "q", "ruby", "s", "samp", "script", "select", "slot", "small", "span", "strong", "sub", "sup", "svg", "template", "textarea", "time", "u", "tt", "var", "video", "wbr"]
 };
+var applicableOpts = {
+  removeHTMLComments: false,
+  removeCSSComments: false
+};
 function isStr(something) {
   return typeof something === "string";
-}
-function existy(x) {
-  return x != null;
 }
 function isLetter(something) {
   return typeof something === "string" && something.toUpperCase() !== something.toLowerCase();
@@ -193,10 +193,10 @@ function crush(str, originalOpts) {
       throw new Error("html-crush: [THROW_ID_02] the first input argument must be string! It was given as \"".concat(_typeof(str), "\", equal to:\n").concat(JSON.stringify(str, null, 4)));
     }
   }
-  if (existy(originalOpts) && !isObj(originalOpts)) {
+  if (originalOpts && !isObj(originalOpts)) {
     throw new Error("html-crush: [THROW_ID_03] the second input argument, options object, should be a plain object but it was given as type ".concat(_typeof(originalOpts), ", equal to ").concat(JSON.stringify(originalOpts, null, 4)));
   }
-  if (originalOpts && isArr(originalOpts.breakToTheLeftOf) && originalOpts.breakToTheLeftOf.length) {
+  if (originalOpts && Array.isArray(originalOpts.breakToTheLeftOf) && originalOpts.breakToTheLeftOf.length) {
     for (var z = 0, _len = originalOpts.breakToTheLeftOf.length; z < _len; z++) {
       if (!isStr(originalOpts.breakToTheLeftOf[z])) {
         throw new TypeError("html-crush: [THROW_ID_05] the opts.breakToTheLeftOf array contains non-string elements! For example, element at index ".concat(z, " is of a type \"").concat(_typeof(originalOpts.breakToTheLeftOf[z]), "\" and is equal to:\n").concat(JSON.stringify(originalOpts.breakToTheLeftOf[z], null, 4)));
@@ -208,7 +208,7 @@ function crush(str, originalOpts) {
     opts.breakToTheLeftOf = [];
   }
   var breakToTheLeftOfFirstLetters = new Set();
-  if (isArr(opts.breakToTheLeftOf) && opts.breakToTheLeftOf.length) {
+  if (Array.isArray(opts.breakToTheLeftOf) && opts.breakToTheLeftOf.length) {
     for (var i = 0, _len2 = opts.breakToTheLeftOf.length; i < _len2; i++) {
       breakToTheLeftOfFirstLetters.add(opts.breakToTheLeftOf[i][0]);
     }
@@ -229,12 +229,12 @@ function crush(str, originalOpts) {
   var tagName = null;
   var tagNameStartsAt = null;
   var leftTagName = null;
-  var CHARS_BREAK_ON_THE_RIGHT_OF_THEM = [">", "}", ";"];
-  var CHARS_BREAK_ON_THE_LEFT_OF_THEM = ["<"];
-  var CHARS_DONT_BREAK_ON_THE_LEFT_OF_THEM = ["!"];
-  var DELETE_TIGHTLY_IF_ON_LEFT_IS = [">"];
-  var DELETE_TIGHTLY_IF_ON_RIGHT_IS = ["<"];
-  var set = ["{", "}", ",", ":", ";", "<", ">", "~", "+"];
+  var CHARS_BREAK_ON_THE_RIGHT_OF_THEM = ">};";
+  var CHARS_BREAK_ON_THE_LEFT_OF_THEM = "<";
+  var CHARS_DONT_BREAK_ON_THE_LEFT_OF_THEM = "!";
+  var DELETE_TIGHTLY_IF_ON_LEFT_IS = ">";
+  var DELETE_TIGHTLY_IF_ON_RIGHT_IS = "<";
+  var set = "{},:;<>~+";
   var DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS = set;
   var DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS = set;
   var beginningOfAFile = true;
@@ -294,10 +294,10 @@ function crush(str, originalOpts) {
         whitespaceStartedAt = null;
         lastLinebreak = null;
       }
-      if (withinHTMLConditional && stringMatchLeftRight.matchRight(str, _i, "![endif")) {
+      if (withinHTMLConditional && str.startsWith("![endif", _i + 1)) {
         withinHTMLConditional = false;
       }
-      if (str[_i] === "<" && stringMatchLeftRight.matchRight(str, _i, "!--[if") && !withinHTMLConditional) {
+      if (str[_i] === "<" && str.startsWith("!--[if", _i + 1) && !withinHTMLConditional) {
         withinHTMLConditional = true;
       }
       if (tagNameStartsAt !== null && tagName === null && !/\w/.test(str[_i])
@@ -326,8 +326,8 @@ function crush(str, originalOpts) {
           str: str,
           from: styleCommentStartedAt,
           to: _i + 2,
-          ifLeftSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS || "",
-          ifRightSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS || ""
+          ifLeftSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS ,
+          ifRightSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS 
         });
         var _expand2 = _slicedToArray(_expand, 2);
         stageFrom = _expand2[0];
@@ -343,7 +343,12 @@ function crush(str, originalOpts) {
         doNothing = _i + 2;
       }
       if (!doNothing && (withinStyleTag || withinInlineStyle) && styleCommentStartedAt === null && str[_i] === "/" && str[_i + 1] === "*") {
-        styleCommentStartedAt = _i;
+        if (!applicableOpts.removeCSSComments) {
+          applicableOpts.removeCSSComments = true;
+        }
+        if (opts.removeCSSComments) {
+          styleCommentStartedAt = _i;
+        }
       }
       if (!doNothing && withinStyleTag && styleCommentStartedAt === null && str.startsWith("</style", _i) && !isLetter(str[_i + 7])) {
         withinStyleTag = false;
@@ -405,7 +410,7 @@ function crush(str, originalOpts) {
               })
               ) ; else if (str[~-whitespaceStartedAt] && DELETE_TIGHTLY_IF_ON_LEFT_IS.includes(str[~-whitespaceStartedAt]) && DELETE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[_i]) || (withinStyleTag || withinInlineStyle) && styleCommentStartedAt === null && (DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS.includes(str[~-whitespaceStartedAt]) || DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[_i])) || str.startsWith("!important", _i) && !withinHTMLConditional || withinInlineStyle && (str[~-whitespaceStartedAt] === "'" || str[~-whitespaceStartedAt] === '"') || str[~-whitespaceStartedAt] === "}" && str.startsWith("</style", _i) || str[_i] === ">" && ("'\"".includes(str[stringLeftRight.left(str, _i)]) || str[stringLeftRight.right(str, _i)] === "<") || str[_i] === "/" && str[stringLeftRight.right(str, _i)] === ">") {
                 whatToAdd = "";
-                if (str[_i] === "/" && str[stringLeftRight.right(str, _i)] === ">" && stringLeftRight.right(str, _i) > _i + 1) {
+                if (str[_i] === "/" && str[_i + 1] === ">" && stringLeftRight.right(str, _i) > _i + 1) {
                   finalIndexesToDelete.push(_i + 1, stringLeftRight.right(str, _i));
                   countCharactersPerLine -= stringLeftRight.right(str, _i) - _i + 1;
                 }
@@ -419,7 +424,7 @@ function crush(str, originalOpts) {
                   finalIndexesToDelete.push(whitespaceStartedAt, _i, whatToAdd);
                 }
               } else {
-                if (countCharactersPerLine >= opts.lineLengthLimit || !str[_i + 1] || str[_i] === ">" || str[_i] === "/" && str[stringLeftRight.right(str, _i)] === ">") {
+                if (countCharactersPerLine >= opts.lineLengthLimit || !str[_i + 1] || str[_i] === ">" || str[_i] === "/" && str[_i + 1] === ">") {
                   if (countCharactersPerLine > opts.lineLengthLimit || countCharactersPerLine === opts.lineLengthLimit && str[_i + 1] && str[_i + 1].trim() && !CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i]) && !CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i + 1])) {
                     whatToAdd = "\n";
                     countCharactersPerLine = 1;
@@ -454,8 +459,8 @@ function crush(str, originalOpts) {
           nonWhitespaceCharMet = true;
         }
       }
-      if (!doNothing && !beginningOfAFile && _i !== 0 && opts.removeLineBreaks && (opts.lineLengthLimit || breakToTheLeftOfFirstLetters.size) && !stringMatchLeftRight.matchRightIncl(str, _i, "</a")) {
-        if (breakToTheLeftOfFirstLetters.size && stringMatchLeftRight.matchRightIncl(str, _i, opts.breakToTheLeftOf) && stringLeftRight.left(str, _i) !== null && (!str.slice(_i).startsWith("<![endif]") || !stringMatchLeftRight.matchLeft(str, _i, "<!--"))) {
+      if (!doNothing && !beginningOfAFile && _i !== 0 && opts.removeLineBreaks && (opts.lineLengthLimit || breakToTheLeftOfFirstLetters.size) && !str.startsWith("</a", _i)) {
+        if (breakToTheLeftOfFirstLetters.size && stringMatchLeftRight.matchRightIncl(str, _i, opts.breakToTheLeftOf) && str.slice(0, _i).trim() && (!str.startsWith("<![endif]", _i) || !stringMatchLeftRight.matchLeft(str, _i, "<!--"))) {
           finalIndexesToDelete.push(_i, _i, "\n");
           stageFrom = null;
           stageTo = null;
@@ -490,7 +495,7 @@ function crush(str, originalOpts) {
               stageFrom = _i;
               stageTo = _i;
               stageAdd = null;
-            } else if (styleCommentStartedAt === null && stageFrom !== null && (withinInlineStyle || !opts.mindTheInlineTags || !isArr(opts.mindTheInlineTags) || isArr(opts.mindTheInlineTags.length) && !opts.mindTheInlineTags.length || !isStr(tagName) || isArr(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && isStr(tagName) && !opts.mindTheInlineTags.includes(tagName)) && !(str[_i] === "<" && stringMatchLeftRight.matchRight(str, _i, opts.mindTheInlineTags, {
+            } else if (styleCommentStartedAt === null && stageFrom !== null && (withinInlineStyle || !opts.mindTheInlineTags || !Array.isArray(opts.mindTheInlineTags) || Array.isArray(opts.mindTheInlineTags.length) && !opts.mindTheInlineTags.length || !isStr(tagName) || Array.isArray(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && isStr(tagName) && !opts.mindTheInlineTags.includes(tagName)) && !(str[_i] === "<" && stringMatchLeftRight.matchRight(str, _i, opts.mindTheInlineTags, {
               trimCharsBeforeMatching: "/",
               cb: function cb(nextChar) {
                 return !nextChar || !/\w/.test(nextChar);
@@ -524,7 +529,7 @@ function crush(str, originalOpts) {
               finalIndexesToDelete.push(_i, _i, "\n");
               countCharactersPerLine = 0;
             }
-          } else if (str[_i + 1] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i]) && isStr(tagName) && isArr(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && !opts.mindTheInlineTags.includes(tagName)) {
+          } else if (str[_i + 1] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i]) && isStr(tagName) && Array.isArray(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && !opts.mindTheInlineTags.includes(tagName)) {
             if (stageFrom !== null && stageTo !== null && (stageFrom !== stageTo || stageAdd && stageAdd.length)) ; else {
               finalIndexesToDelete.push(_i + 1, _i + 1, "\n");
               countCharactersPerLine = 0;
@@ -570,8 +575,8 @@ function crush(str, originalOpts) {
             str: str,
             from: styleCommentStartedAt,
             to: _i,
-            ifLeftSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS || "",
-            ifRightSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS || ""
+            ifLeftSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS ,
+            ifRightSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS 
           })));
         } else if (whitespaceStartedAt && str[_i] !== "\n" && str[_i] !== "\r") {
           finalIndexesToDelete.push(whitespaceStartedAt, _i + 1);
@@ -646,6 +651,7 @@ function crush(str, originalOpts) {
       bytesSaved: 0,
       percentageReducedOfOriginal: 0
     },
+    applicableOpts: applicableOpts,
     ranges: [],
     result: str
   };

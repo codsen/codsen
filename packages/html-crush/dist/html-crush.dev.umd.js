@@ -3346,7 +3346,6 @@
 
   var version = "1.9.35";
 
-  var isArr = Array.isArray;
   var finalIndexesToDelete = new Ranges({
     limitToBeAddedWhitespace: true
   });
@@ -3355,20 +3354,20 @@
     removeIndentations: true,
     removeLineBreaks: false,
     removeHTMLComments: false,
-    removeCSSComments: false,
+    removeCSSComments: true,
     reportProgressFunc: null,
     reportProgressFuncFrom: 0,
     reportProgressFuncTo: 100,
     breakToTheLeftOf: ["</td", "<html", "</html", "<head", "</head", "<meta", "<link", "<table", "<script", "</script", "<!DOCTYPE", "<style", "</style", "<title", "<body", "@media", "</body", "<!--[if", "<!--<![endif", "<![endif]"],
     mindTheInlineTags: ["a", "abbr", "acronym", "audio", "b", "bdi", "bdo", "big", "br", "button", "canvas", "cite", "code", "data", "datalist", "del", "dfn", "em", "embed", "i", "iframe", "img", "input", "ins", "kbd", "label", "map", "mark", "meter", "noscript", "object", "output", "picture", "progress", "q", "ruby", "s", "samp", "script", "select", "slot", "small", "span", "strong", "sub", "sup", "svg", "template", "textarea", "time", "u", "tt", "var", "video", "wbr"]
   };
+  var applicableOpts = {
+    removeHTMLComments: false,
+    removeCSSComments: false
+  };
 
   function isStr$3(something) {
     return typeof something === "string";
-  }
-
-  function existy$2(x) {
-    return x != null;
   }
 
   function isLetter(something) {
@@ -3386,11 +3385,11 @@
       }
     }
 
-    if (existy$2(originalOpts) && !lodash_isplainobject(originalOpts)) {
+    if (originalOpts && !lodash_isplainobject(originalOpts)) {
       throw new Error("html-crush: [THROW_ID_03] the second input argument, options object, should be a plain object but it was given as type ".concat(_typeof(originalOpts), ", equal to ").concat(JSON.stringify(originalOpts, null, 4)));
     }
 
-    if (originalOpts && isArr(originalOpts.breakToTheLeftOf) && originalOpts.breakToTheLeftOf.length) {
+    if (originalOpts && Array.isArray(originalOpts.breakToTheLeftOf) && originalOpts.breakToTheLeftOf.length) {
       for (var z = 0, _len = originalOpts.breakToTheLeftOf.length; z < _len; z++) {
         if (!isStr$3(originalOpts.breakToTheLeftOf[z])) {
           throw new TypeError("html-crush: [THROW_ID_05] the opts.breakToTheLeftOf array contains non-string elements! For example, element at index ".concat(z, " is of a type \"").concat(_typeof(originalOpts.breakToTheLeftOf[z]), "\" and is equal to:\n").concat(JSON.stringify(originalOpts.breakToTheLeftOf[z], null, 4)));
@@ -3414,7 +3413,7 @@
 
     var breakToTheLeftOfFirstLetters = new Set();
 
-    if (isArr(opts.breakToTheLeftOf) && opts.breakToTheLeftOf.length) {
+    if (Array.isArray(opts.breakToTheLeftOf) && opts.breakToTheLeftOf.length) {
       for (var i = 0, _len2 = opts.breakToTheLeftOf.length; i < _len2; i++) {
         breakToTheLeftOfFirstLetters.add(opts.breakToTheLeftOf[i][0]);
       }
@@ -3461,12 +3460,12 @@
     var tagName = null;
     var tagNameStartsAt = null;
     var leftTagName = null;
-    var CHARS_BREAK_ON_THE_RIGHT_OF_THEM = [">", "}", ";"];
-    var CHARS_BREAK_ON_THE_LEFT_OF_THEM = ["<"];
-    var CHARS_DONT_BREAK_ON_THE_LEFT_OF_THEM = ["!"];
-    var DELETE_TIGHTLY_IF_ON_LEFT_IS = [">"];
-    var DELETE_TIGHTLY_IF_ON_RIGHT_IS = ["<"];
-    var set = ["{", "}", ",", ":", ";", "<", ">", "~", "+"];
+    var CHARS_BREAK_ON_THE_RIGHT_OF_THEM = ">};";
+    var CHARS_BREAK_ON_THE_LEFT_OF_THEM = "<";
+    var CHARS_DONT_BREAK_ON_THE_LEFT_OF_THEM = "!";
+    var DELETE_TIGHTLY_IF_ON_LEFT_IS = ">";
+    var DELETE_TIGHTLY_IF_ON_RIGHT_IS = "<";
+    var set = "{},:;<>~+";
     var DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS = set;
     var DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS = set; // the first non-whitespace character turns this flag off:
 
@@ -3596,13 +3595,13 @@
         // ███████████████████████████████████████
 
 
-        if (withinHTMLConditional && matchRight(str, _i, "![endif")) {
+        if (withinHTMLConditional && str.startsWith("![endif", _i + 1)) {
           withinHTMLConditional = false;
         } // catch the begining of mso conditional tags
         // ███████████████████████████████████████
 
 
-        if (str[_i] === "<" && matchRight(str, _i, "!--[if") && !withinHTMLConditional) {
+        if (str[_i] === "<" && str.startsWith("!--[if", _i + 1) && !withinHTMLConditional) {
           withinHTMLConditional = true;
         } // catch ending of the tag's name
         // ███████████████████████████████████████
@@ -3645,8 +3644,8 @@
             str: str,
             from: styleCommentStartedAt,
             to: _i + 2,
-            ifLeftSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS || "",
-            ifRightSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS || ""
+            ifLeftSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS ,
+            ifRightSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS 
           });
 
           var _expand2 = _slicedToArray(_expand, 2);
@@ -3674,7 +3673,15 @@
 
 
         if (!doNothing && (withinStyleTag || withinInlineStyle) && styleCommentStartedAt === null && str[_i] === "/" && str[_i + 1] === "*") {
-          styleCommentStartedAt = _i;
+          // independently of options settings, mark the options setting
+          // "removeCSSComments" as applicable:
+          if (!applicableOpts.removeCSSComments) {
+            applicableOpts.removeCSSComments = true;
+          }
+
+          if (opts.removeCSSComments) {
+            styleCommentStartedAt = _i;
+          }
         } // catch style tag
         // ███████████████████████████████████████
 
@@ -3777,7 +3784,7 @@
                 ) ; else if (str[~-whitespaceStartedAt] && DELETE_TIGHTLY_IF_ON_LEFT_IS.includes(str[~-whitespaceStartedAt]) && DELETE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[_i]) || (withinStyleTag || withinInlineStyle) && styleCommentStartedAt === null && (DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS.includes(str[~-whitespaceStartedAt]) || DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[_i])) || str.startsWith("!important", _i) && !withinHTMLConditional || withinInlineStyle && (str[~-whitespaceStartedAt] === "'" || str[~-whitespaceStartedAt] === '"') || str[~-whitespaceStartedAt] === "}" && str.startsWith("</style", _i) || str[_i] === ">" && ("'\"".includes(str[left(str, _i)]) || str[right(str, _i)] === "<") || str[_i] === "/" && str[right(str, _i)] === ">") {
                   whatToAdd = "";
 
-                  if (str[_i] === "/" && str[right(str, _i)] === ">" && right(str, _i) > _i + 1) {
+                  if (str[_i] === "/" && str[_i + 1] === ">" && right(str, _i) > _i + 1) {
                     // delete whitespace between / and >
                     finalIndexesToDelete.push(_i + 1, right(str, _i));
                     countCharactersPerLine -= right(str, _i) - _i + 1;
@@ -3801,7 +3808,7 @@
                 } else {
                   // 2-2: Line-length limiting is on (not that easy)
                   // maybe we are already beyond the limit?
-                  if (countCharactersPerLine >= opts.lineLengthLimit || !str[_i + 1] || str[_i] === ">" || str[_i] === "/" && str[right(str, _i)] === ">") {
+                  if (countCharactersPerLine >= opts.lineLengthLimit || !str[_i + 1] || str[_i] === ">" || str[_i] === "/" && str[_i + 1] === ">") {
                     if (countCharactersPerLine > opts.lineLengthLimit || countCharactersPerLine === opts.lineLengthLimit && str[_i + 1] && str[_i + 1].trim() && !CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i]) && !CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i + 1])) {
                       whatToAdd = "\n";
                       countCharactersPerLine = 1;
@@ -3860,8 +3867,8 @@
         } // catch the characters, suitable for a break
 
 
-        if (!doNothing && !beginningOfAFile && _i !== 0 && opts.removeLineBreaks && (opts.lineLengthLimit || breakToTheLeftOfFirstLetters.size) && !matchRightIncl(str, _i, "</a")) {
-          if (breakToTheLeftOfFirstLetters.size && matchRightIncl(str, _i, opts.breakToTheLeftOf) && left(str, _i) !== null && (!str.slice(_i).startsWith("<![endif]") || !matchLeft(str, _i, "<!--"))) {
+        if (!doNothing && !beginningOfAFile && _i !== 0 && opts.removeLineBreaks && (opts.lineLengthLimit || breakToTheLeftOfFirstLetters.size) && !str.startsWith("</a", _i)) {
+          if (breakToTheLeftOfFirstLetters.size && matchRightIncl(str, _i, opts.breakToTheLeftOf) && str.slice(0, _i).trim() && (!str.startsWith("<![endif]", _i) || !matchLeft(str, _i, "<!--"))) {
             finalIndexesToDelete.push(_i, _i, "\n");
             stageFrom = null;
             stageTo = null;
@@ -3911,7 +3918,7 @@
                 stageFrom = _i;
                 stageTo = _i;
                 stageAdd = null;
-              } else if (styleCommentStartedAt === null && stageFrom !== null && (withinInlineStyle || !opts.mindTheInlineTags || !isArr(opts.mindTheInlineTags) || isArr(opts.mindTheInlineTags.length) && !opts.mindTheInlineTags.length || !isStr$3(tagName) || isArr(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && isStr$3(tagName) && !opts.mindTheInlineTags.includes(tagName)) && !(str[_i] === "<" && matchRight(str, _i, opts.mindTheInlineTags, {
+              } else if (styleCommentStartedAt === null && stageFrom !== null && (withinInlineStyle || !opts.mindTheInlineTags || !Array.isArray(opts.mindTheInlineTags) || Array.isArray(opts.mindTheInlineTags.length) && !opts.mindTheInlineTags.length || !isStr$3(tagName) || Array.isArray(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && isStr$3(tagName) && !opts.mindTheInlineTags.includes(tagName)) && !(str[_i] === "<" && matchRight(str, _i, opts.mindTheInlineTags, {
                 trimCharsBeforeMatching: "/",
                 cb: function cb(nextChar) {
                   return !nextChar || !/\w/.test(nextChar);
@@ -3976,7 +3983,7 @@
                 finalIndexesToDelete.push(_i, _i, "\n");
                 countCharactersPerLine = 0;
               }
-            } else if (str[_i + 1] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i]) && isStr$3(tagName) && isArr(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && !opts.mindTheInlineTags.includes(tagName)) {
+            } else if (str[_i + 1] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i]) && isStr$3(tagName) && Array.isArray(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && !opts.mindTheInlineTags.includes(tagName)) {
               // ██ 2.
               //
               if (stageFrom !== null && stageTo !== null && (stageFrom !== stageTo || stageAdd && stageAdd.length)) ; else {
@@ -4054,8 +4061,8 @@
               str: str,
               from: styleCommentStartedAt,
               to: _i,
-              ifLeftSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS || "",
-              ifRightSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS || ""
+              ifLeftSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS ,
+              ifRightSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS 
             })));
           } else if (whitespaceStartedAt && str[_i] !== "\n" && str[_i] !== "\r") {
             // catch trailing whitespace at the end of the string which is not legit
@@ -4183,6 +4190,7 @@
         bytesSaved: 0,
         percentageReducedOfOriginal: 0
       },
+      applicableOpts: applicableOpts,
       ranges: [],
       result: str
     };

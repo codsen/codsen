@@ -9,21 +9,20 @@
 
 import isObj from 'lodash.isplainobject';
 import applyRanges from 'ranges-apply';
-import Slices from 'ranges-push';
-import { matchRight, matchRightIncl, matchLeft } from 'string-match-left-right';
+import Ranges from 'ranges-push';
+import { matchRightIncl, matchRight, matchLeft } from 'string-match-left-right';
 import expand from 'string-range-expander';
 import { right, left } from 'string-left-right';
 
 var version = "1.9.35";
 
-const isArr = Array.isArray;
-const finalIndexesToDelete = new Slices({ limitToBeAddedWhitespace: true });
+const finalIndexesToDelete = new Ranges({ limitToBeAddedWhitespace: true });
 const defaults = {
   lineLengthLimit: 500,
   removeIndentations: true,
   removeLineBreaks: false,
   removeHTMLComments: false,
-  removeCSSComments: false,
+  removeCSSComments: true,
   reportProgressFunc: null,
   reportProgressFuncFrom: 0,
   reportProgressFuncTo: 100,
@@ -107,11 +106,12 @@ const defaults = {
     "wbr",
   ],
 };
+const applicableOpts = {
+  removeHTMLComments: false,
+  removeCSSComments: false,
+};
 function isStr(something) {
   return typeof something === "string";
-}
-function existy(x) {
-  return x != null;
 }
 function isLetter(something) {
   return (
@@ -136,7 +136,7 @@ function crush(str, originalOpts) {
       );
     }
   }
-  if (existy(originalOpts) && !isObj(originalOpts)) {
+  if (originalOpts && !isObj(originalOpts)) {
     throw new Error(
       `html-crush: [THROW_ID_03] the second input argument, options object, should be a plain object but it was given as type ${typeof originalOpts}, equal to ${JSON.stringify(
         originalOpts,
@@ -147,7 +147,7 @@ function crush(str, originalOpts) {
   }
   if (
     originalOpts &&
-    isArr(originalOpts.breakToTheLeftOf) &&
+    Array.isArray(originalOpts.breakToTheLeftOf) &&
     originalOpts.breakToTheLeftOf.length
   ) {
     for (let z = 0, len = originalOpts.breakToTheLeftOf.length; z < len; z++) {
@@ -168,7 +168,7 @@ function crush(str, originalOpts) {
     opts.breakToTheLeftOf = [];
   }
   const breakToTheLeftOfFirstLetters = new Set();
-  if (isArr(opts.breakToTheLeftOf) && opts.breakToTheLeftOf.length) {
+  if (Array.isArray(opts.breakToTheLeftOf) && opts.breakToTheLeftOf.length) {
     for (let i = 0, len = opts.breakToTheLeftOf.length; i < len; i++) {
       breakToTheLeftOfFirstLetters.add(opts.breakToTheLeftOf[i][0]);
     }
@@ -189,12 +189,12 @@ function crush(str, originalOpts) {
   let tagName = null;
   let tagNameStartsAt = null;
   let leftTagName = null;
-  const CHARS_BREAK_ON_THE_RIGHT_OF_THEM = [">", "}", ";"];
-  const CHARS_BREAK_ON_THE_LEFT_OF_THEM = ["<"];
-  const CHARS_DONT_BREAK_ON_THE_LEFT_OF_THEM = ["!"];
-  const DELETE_TIGHTLY_IF_ON_LEFT_IS = [">"];
-  const DELETE_TIGHTLY_IF_ON_RIGHT_IS = ["<"];
-  const set = ["{", "}", ",", ":", ";", "<", ">", "~", "+"];
+  const CHARS_BREAK_ON_THE_RIGHT_OF_THEM = `>};`;
+  const CHARS_BREAK_ON_THE_LEFT_OF_THEM = `<`;
+  const CHARS_DONT_BREAK_ON_THE_LEFT_OF_THEM = `!`;
+  const DELETE_TIGHTLY_IF_ON_LEFT_IS = `>`;
+  const DELETE_TIGHTLY_IF_ON_RIGHT_IS = `<`;
+  const set = `{},:;<>~+`;
   const DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS = set;
   const DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS = set;
   let beginningOfAFile = true;
@@ -281,12 +281,12 @@ function crush(str, originalOpts) {
         whitespaceStartedAt = null;
         lastLinebreak = null;
       }
-      if (withinHTMLConditional && matchRight(str, i, "![endif")) {
+      if (withinHTMLConditional && str.startsWith("![endif", i + 1)) {
         withinHTMLConditional = false;
       }
       if (
         str[i] === "<" &&
-        matchRight(str, i, "!--[if") &&
+        str.startsWith("!--[if", i + 1) &&
         !withinHTMLConditional
       ) {
         withinHTMLConditional = true;
@@ -342,9 +342,9 @@ function crush(str, originalOpts) {
           from: styleCommentStartedAt,
           to: i + 2,
           ifLeftSideIncludesThisThenCropTightly:
-            DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS || "",
+            DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS ,
           ifRightSideIncludesThisThenCropTightly:
-            DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS || "",
+            DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS ,
         });
         styleCommentStartedAt = null;
         if (
@@ -364,7 +364,12 @@ function crush(str, originalOpts) {
         str[i] === "/" &&
         str[i + 1] === "*"
       ) {
-        styleCommentStartedAt = i;
+        if (!applicableOpts.removeCSSComments) {
+          applicableOpts.removeCSSComments = true;
+        }
+        if (opts.removeCSSComments) {
+          styleCommentStartedAt = i;
+        }
       }
       if (
         !doNothing &&
@@ -485,7 +490,7 @@ function crush(str, originalOpts) {
                 whatToAdd = "";
                 if (
                   str[i] === "/" &&
-                  str[right(str, i)] === ">" &&
+                  str[i + 1] === ">" &&
                   right(str, i) > i + 1
                 ) {
                   finalIndexesToDelete.push(i + 1, right(str, i));
@@ -509,7 +514,7 @@ function crush(str, originalOpts) {
                   countCharactersPerLine >= opts.lineLengthLimit ||
                   !str[i + 1] ||
                   str[i] === ">" ||
-                  (str[i] === "/" && str[right(str, i)] === ">")
+                  (str[i] === "/" && str[i + 1] === ">")
                 ) {
                   if (
                     countCharactersPerLine > opts.lineLengthLimit ||
@@ -568,13 +573,13 @@ function crush(str, originalOpts) {
         i !== 0 &&
         opts.removeLineBreaks &&
         (opts.lineLengthLimit || breakToTheLeftOfFirstLetters.size) &&
-        !matchRightIncl(str, i, "</a")
+        !str.startsWith("</a", i)
       ) {
         if (
           breakToTheLeftOfFirstLetters.size &&
           matchRightIncl(str, i, opts.breakToTheLeftOf) &&
-          left(str, i) !== null &&
-          (!str.slice(i).startsWith("<![endif]") || !matchLeft(str, i, "<!--"))
+          str.slice(0, i).trim() &&
+          (!str.startsWith("<![endif]", i) || !matchLeft(str, i, "<!--"))
         ) {
           finalIndexesToDelete.push(i, i, "\n");
           stageFrom = null;
@@ -649,11 +654,11 @@ function crush(str, originalOpts) {
               stageFrom !== null &&
               (withinInlineStyle ||
                 !opts.mindTheInlineTags ||
-                !isArr(opts.mindTheInlineTags) ||
-                (isArr(opts.mindTheInlineTags.length) &&
+                !Array.isArray(opts.mindTheInlineTags) ||
+                (Array.isArray(opts.mindTheInlineTags.length) &&
                   !opts.mindTheInlineTags.length) ||
                 !isStr(tagName) ||
-                (isArr(opts.mindTheInlineTags) &&
+                (Array.isArray(opts.mindTheInlineTags) &&
                   opts.mindTheInlineTags.length &&
                   isStr(tagName) &&
                   !opts.mindTheInlineTags.includes(tagName))) &&
@@ -716,7 +721,7 @@ function crush(str, originalOpts) {
             str[i + 1] &&
             CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) &&
             isStr(tagName) &&
-            isArr(opts.mindTheInlineTags) &&
+            Array.isArray(opts.mindTheInlineTags) &&
             opts.mindTheInlineTags.length &&
             !opts.mindTheInlineTags.includes(tagName)
           ) {
@@ -807,9 +812,9 @@ function crush(str, originalOpts) {
               from: styleCommentStartedAt,
               to: i,
               ifLeftSideIncludesThisThenCropTightly:
-                DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS || "",
+                DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS ,
               ifRightSideIncludesThisThenCropTightly:
-                DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS || "",
+                DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS ,
             })
           );
         } else if (whitespaceStartedAt && str[i] !== "\n" && str[i] !== "\r") {
@@ -922,6 +927,7 @@ function crush(str, originalOpts) {
       bytesSaved: 0,
       percentageReducedOfOriginal: 0,
     },
+    applicableOpts,
     ranges: [],
     result: str,
   };
