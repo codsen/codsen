@@ -412,7 +412,7 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
         } else {
           var unitThatFollow;
           units.some(function (unit) {
-            if (source.slice(y + 1).startsWith(unit)) {
+            if (source.startsWith(unit, y + 1)) {
               unitThatFollow = unit;
               return true;
             }

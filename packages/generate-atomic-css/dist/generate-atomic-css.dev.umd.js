@@ -2759,7 +2759,7 @@
             var unitThatFollow; // eslint-disable-next-line consistent-return, array-callback-return
 
             units.some(function (unit) {
-              if (source.slice(y + 1).startsWith(unit)) {
+              if (source.startsWith(unit, y + 1)) {
                 unitThatFollow = unit;
                 return true;
               }
