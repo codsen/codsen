@@ -3403,7 +3403,7 @@
       // catch dashes
 
 
-      if (!doNothingUntil && opts.hyphens && (str[_i] === "-" || str[_i] === rawMdash || str[_i] === rawNdash || str.slice(_i).startsWith(encodedNdashHtml) || str.slice(_i).startsWith(encodedNdashCss) || str.slice(_i).startsWith(encodedNdashJs) || str.slice(_i).startsWith(encodedMdashHtml) || str.slice(_i).startsWith(encodedMdashCss) || str.slice(_i).startsWith(encodedMdashJs)) && str[_i + 1] && (!str[_i + 1].trim() || str[_i] === "&")) {
+      if (!doNothingUntil && opts.hyphens && ("-".concat(rawMdash).concat(rawNdash).includes(str[_i]) || str.startsWith(encodedNdashHtml, _i) || str.startsWith(encodedNdashCss, _i) || str.startsWith(encodedNdashJs, _i) || str.startsWith(encodedMdashHtml, _i) || str.startsWith(encodedMdashCss, _i) || str.startsWith(encodedMdashJs, _i)) && str[_i + 1] && (!str[_i + 1].trim() || str[_i] === "&")) {
         if (str[_i - 1] && !str[_i - 1].trim() && str[left(str, _i)]) {
           push(left(str, _i) + 1, _i); // report what was done:
 
@@ -3412,7 +3412,7 @@
       } // catch the HTML-encoded (named or numeric) nbsp's:
 
 
-      if (!doNothingUntil && (str[_i] === "&" && str[_i + 1] === "n" && str[_i + 2] === "b" && str[_i + 3] === "s" && str[_i + 4] === "p" && str[_i + 5] === ";" || str[_i] === "&" && str[_i + 1] === "#" && str[_i + 2] === "1" && str[_i + 3] === "6" && str[_i + 4] === "0" && str[_i + 5] === ";")) {
+      if (!doNothingUntil && (str.startsWith("&nbsp;", _i) || str.startsWith("&#160;", _i))) {
         lastEncodedNbspStartedAt = _i;
         lastEncodedNbspEndedAt = _i + 6; // since there was no whitespace, word counting needs to ba taken care of
         // separately, but the index-bumping must happen in future, at correct time
@@ -3432,7 +3432,7 @@
       } // catch the CSS-encoded (\00A0) nbsp's:
 
 
-      if (!doNothingUntil && str[_i] === "\\" && str[_i + 1] === "0" && str[_i + 2] === "0" && str[_i + 3] && str[_i + 3].toUpperCase() === "A" && str[_i + 4] === "0") {
+      if (!doNothingUntil && str[_i + 4] && str[_i] === "\\" && str[_i + 1] === "0" && str[_i + 2] === "0" && str[_i + 3].toUpperCase() === "A" && str[_i + 4] === "0") {
         lastEncodedNbspStartedAt = _i;
         lastEncodedNbspEndedAt = _i + 5; // since there was no whitespace, word counting needs to ba taken care of
         // separately, but the index-bumping must happen in future, at correct time
@@ -3492,56 +3492,43 @@
       } // catch the ending of paragraphs or the EOL - here's where the action happens
 
 
-      if (!doNothingUntil && (!str[_i] || "\r\n".includes(str[_i]) || (str[_i] === "\n" || str[_i] === "\r" || str[_i] === "\r" && str[_i + 1] === "\n") && str[_i - 1] && punctuationCharsToConsiderWidowIssue.includes(str[left(str, _i)])) // !doNothingUntil &&
-      // (!str[i] ||
-      //   ((str[i] === "\n" && str[i + 1] === "\n") ||
-      //     (str[i] === "\r" && str[i + 1] === "\r") ||
-      //     (str[i] === "\r" &&
-      //       str[i + 1] === "\n" &&
-      //       str[i + 2] === "\r" &&
-      //       str[i + 3] === "\n")) ||
-      //   ((str[i] === "\n" ||
-      //     str[i] === "\r" ||
-      //     (str[i] === "\r" && str[i + 1] === "\n")) &&
-      //     str[i - 1] &&
-      //     punctuationCharsToConsiderWidowIssue.includes(str[left(str, i)])))
-      ) {
-          if ((!opts.minWordCount || wordCount >= opts.minWordCount) && (!opts.minCharCount || charCount >= opts.minCharCount)) {
-            var finalStart;
-            var finalEnd; // calculate start and end values
+      if (!doNothingUntil && (!str[_i] || "\r\n".includes(str[_i]) || (str[_i] === "\n" || str[_i] === "\r" || str[_i] === "\r" && str[_i + 1] === "\n") && str[_i - 1] && punctuationCharsToConsiderWidowIssue.includes(str[left(str, _i)]))) {
+        if ((!opts.minWordCount || wordCount >= opts.minWordCount) && (!opts.minCharCount || charCount >= opts.minCharCount)) {
+          var finalStart;
+          var finalEnd; // calculate start and end values
 
-            if (lastWhitespaceStartedAt !== undefined && lastWhitespaceEndedAt !== undefined && lastEncodedNbspStartedAt !== undefined && lastEncodedNbspEndedAt !== undefined) {
-              if (lastWhitespaceStartedAt > lastEncodedNbspStartedAt) {
-                finalStart = lastWhitespaceStartedAt;
-                finalEnd = lastWhitespaceEndedAt;
-              } else {
-                finalStart = lastEncodedNbspStartedAt;
-                finalEnd = lastEncodedNbspEndedAt;
-              }
-            } else if (lastWhitespaceStartedAt !== undefined && lastWhitespaceEndedAt !== undefined) {
+          if (lastWhitespaceStartedAt !== undefined && lastWhitespaceEndedAt !== undefined && lastEncodedNbspStartedAt !== undefined && lastEncodedNbspEndedAt !== undefined) {
+            if (lastWhitespaceStartedAt > lastEncodedNbspStartedAt) {
               finalStart = lastWhitespaceStartedAt;
               finalEnd = lastWhitespaceEndedAt;
-            } else if (lastEncodedNbspStartedAt !== undefined && lastEncodedNbspEndedAt !== undefined) {
+            } else {
               finalStart = lastEncodedNbspStartedAt;
               finalEnd = lastEncodedNbspEndedAt;
-            } // if by now the point to insert non-breaking space was not found,
-            // give last chance to secondToLastWhitespaceStartedAt and
-            // secondToLastWhitespaceEndedAt:
-
-
-            if (!(finalStart && finalEnd) && secondToLastWhitespaceStartedAt && secondToLastWhitespaceEndedAt) {
-              finalStart = secondToLastWhitespaceStartedAt;
-              finalEnd = secondToLastWhitespaceEndedAt;
             }
+          } else if (lastWhitespaceStartedAt !== undefined && lastWhitespaceEndedAt !== undefined) {
+            finalStart = lastWhitespaceStartedAt;
+            finalEnd = lastWhitespaceEndedAt;
+          } else if (lastEncodedNbspStartedAt !== undefined && lastEncodedNbspEndedAt !== undefined) {
+            finalStart = lastEncodedNbspStartedAt;
+            finalEnd = lastEncodedNbspEndedAt;
+          } // if by now the point to insert non-breaking space was not found,
+          // give last chance to secondToLastWhitespaceStartedAt and
+          // secondToLastWhitespaceEndedAt:
 
-            if (finalStart && finalEnd) {
-              push(finalStart, finalEnd);
-              whatWasDone.removeWidows = true;
-            }
+
+          if (!(finalStart && finalEnd) && secondToLastWhitespaceStartedAt && secondToLastWhitespaceEndedAt) {
+            finalStart = secondToLastWhitespaceStartedAt;
+            finalEnd = secondToLastWhitespaceEndedAt;
           }
 
-          resetAll();
-        } // catch postcodes
+          if (finalStart && finalEnd) {
+            push(finalStart, finalEnd);
+            whatWasDone.removeWidows = true;
+          }
+        }
+
+        resetAll();
+      } // catch postcodes
       // postcodeRegexFront, postcodeRegexEnd
 
 
@@ -3572,7 +3559,7 @@
       // old whitespace record and it's the first character of new whitespace chunk
 
 
-      if (!doNothingUntil && str[_i] && !str[_i].trim() && str[_i - 1] && str[_i - 1].trim() && (lastWhitespaceStartedAt === undefined || str[lastWhitespaceStartedAt - 1] && str[lastWhitespaceStartedAt - 1].trim()) && !"/>".includes(str[right(str, _i)]) && !str.slice(0, left(str, _i) + 1).endsWith("br") && !str.slice(0, left(str, _i) + 1).endsWith("hr") && !(str[left(str, _i)] === "<" && knownHTMLTags.some(function (tag) {
+      if (!doNothingUntil && str[_i] && !str[_i].trim() && str[_i - 1] && str[_i - 1].trim() && (lastWhitespaceStartedAt === undefined || str[lastWhitespaceStartedAt - 1] && str[lastWhitespaceStartedAt - 1].trim()) && !"/>".includes(str[right(str, _i)]) && !str.slice(0, _i).trim().endsWith("br") && !str.slice(0, _i).trim().endsWith("hr") && !(str.slice(0, _i).endsWith("<") && knownHTMLTags.some(function (tag) {
         return str.startsWith(tag, right(str, _i));
       }))) {
         // 1. current value becomes second-to-last

@@ -361,15 +361,13 @@ function removeWidows(str, originalOpts) {
     if (
       !doNothingUntil &&
       opts.hyphens &&
-      (str[i] === "-" ||
-        str[i] === rawMdash ||
-        str[i] === rawNdash ||
-        str.slice(i).startsWith(encodedNdashHtml) ||
-        str.slice(i).startsWith(encodedNdashCss) ||
-        str.slice(i).startsWith(encodedNdashJs) ||
-        str.slice(i).startsWith(encodedMdashHtml) ||
-        str.slice(i).startsWith(encodedMdashCss) ||
-        str.slice(i).startsWith(encodedMdashJs)) &&
+      (`-${rawMdash}${rawNdash}`.includes(str[i]) ||
+        str.startsWith(encodedNdashHtml, i) ||
+        str.startsWith(encodedNdashCss, i) ||
+        str.startsWith(encodedNdashJs, i) ||
+        str.startsWith(encodedMdashHtml, i) ||
+        str.startsWith(encodedMdashCss, i) ||
+        str.startsWith(encodedMdashJs, i)) &&
       str[i + 1] &&
       (!str[i + 1].trim() || str[i] === "&")
     ) {
@@ -380,18 +378,7 @@ function removeWidows(str, originalOpts) {
     }
     if (
       !doNothingUntil &&
-      ((str[i] === "&" &&
-        str[i + 1] === "n" &&
-        str[i + 2] === "b" &&
-        str[i + 3] === "s" &&
-        str[i + 4] === "p" &&
-        str[i + 5] === ";") ||
-        (str[i] === "&" &&
-          str[i + 1] === "#" &&
-          str[i + 2] === "1" &&
-          str[i + 3] === "6" &&
-          str[i + 4] === "0" &&
-          str[i + 5] === ";"))
+      (str.startsWith("&nbsp;", i) || str.startsWith("&#160;", i))
     ) {
       lastEncodedNbspStartedAt = i;
       lastEncodedNbspEndedAt = i + 6;
@@ -415,10 +402,10 @@ function removeWidows(str, originalOpts) {
     }
     if (
       !doNothingUntil &&
+      str[i + 4] &&
       str[i] === "\\" &&
       str[i + 1] === "0" &&
       str[i + 2] === "0" &&
-      str[i + 3] &&
       str[i + 3].toUpperCase() === "A" &&
       str[i + 4] === "0"
     ) {
@@ -577,10 +564,10 @@ function removeWidows(str, originalOpts) {
         (str[lastWhitespaceStartedAt - 1] &&
           str[lastWhitespaceStartedAt - 1].trim())) &&
       !"/>".includes(str[right(str, i)]) &&
-      !str.slice(0, left(str, i) + 1).endsWith("br") &&
-      !str.slice(0, left(str, i) + 1).endsWith("hr") &&
+      !str.slice(0, i).trim().endsWith("br") &&
+      !str.slice(0, i).trim().endsWith("hr") &&
       !(
-        str[left(str, i)] === "<" &&
+        str.slice(0, i).endsWith("<") &&
         knownHTMLTags.some((tag) => str.startsWith(tag, right(str, i)))
       )
     ) {
