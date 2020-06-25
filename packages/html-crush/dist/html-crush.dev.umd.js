@@ -3611,17 +3611,19 @@
         ) {
             tagName = str.slice(tagNameStartsAt, _i); // check for inner tag whitespace
 
-            if (str[right(str, ~-_i)] === ">" && !str[_i].trim()) {
+            var idxOnTheRight = right(str, ~-_i);
+
+            if (str[idxOnTheRight] === ">" && !str[_i].trim()) {
               finalIndexesToDelete.push(_i, right(str, _i));
-            } else if (str[right(str, ~-_i)] === "/" && str[right(str, right(str, ~-_i))] === ">") {
+            } else if (str[idxOnTheRight] === "/" && str[right(str, idxOnTheRight)] === ">") {
               // if there's a space in front of "/>"
               if (!str[_i].trim()) {
                 finalIndexesToDelete.push(_i, right(str, _i));
               } // if there's space between slash and bracket
 
 
-              if (str[right(str, ~-_i) + 1] !== ">") {
-                finalIndexesToDelete.push(right(str, ~-_i) + 1, right(str, right(str, ~-_i) + 1));
+              if (str[idxOnTheRight + 1] !== ">") {
+                finalIndexesToDelete.push(idxOnTheRight + 1, right(str, idxOnTheRight + 1));
               }
             }
           } // catch tag's opening bracket

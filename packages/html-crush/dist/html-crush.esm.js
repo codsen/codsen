@@ -297,19 +297,20 @@ function crush(str, originalOpts) {
         !/\w/.test(str[i])
       ) {
         tagName = str.slice(tagNameStartsAt, i);
-        if (str[right(str, ~-i)] === ">" && !str[i].trim()) {
+        const idxOnTheRight = right(str, ~-i);
+        if (str[idxOnTheRight] === ">" && !str[i].trim()) {
           finalIndexesToDelete.push(i, right(str, i));
         } else if (
-          str[right(str, ~-i)] === "/" &&
-          str[right(str, right(str, ~-i))] === ">"
+          str[idxOnTheRight] === "/" &&
+          str[right(str, idxOnTheRight)] === ">"
         ) {
           if (!str[i].trim()) {
             finalIndexesToDelete.push(i, right(str, i));
           }
-          if (str[right(str, ~-i) + 1] !== ">") {
+          if (str[idxOnTheRight + 1] !== ">") {
             finalIndexesToDelete.push(
-              right(str, ~-i) + 1,
-              right(str, right(str, ~-i) + 1)
+              idxOnTheRight + 1,
+              right(str, idxOnTheRight + 1)
             );
           }
         }

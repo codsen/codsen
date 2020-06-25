@@ -303,14 +303,15 @@ function crush(str, originalOpts) {
       if (tagNameStartsAt !== null && tagName === null && !/\w/.test(str[_i])
       ) {
           tagName = str.slice(tagNameStartsAt, _i);
-          if (str[stringLeftRight.right(str, ~-_i)] === ">" && !str[_i].trim()) {
+          var idxOnTheRight = stringLeftRight.right(str, ~-_i);
+          if (str[idxOnTheRight] === ">" && !str[_i].trim()) {
             finalIndexesToDelete.push(_i, stringLeftRight.right(str, _i));
-          } else if (str[stringLeftRight.right(str, ~-_i)] === "/" && str[stringLeftRight.right(str, stringLeftRight.right(str, ~-_i))] === ">") {
+          } else if (str[idxOnTheRight] === "/" && str[stringLeftRight.right(str, idxOnTheRight)] === ">") {
             if (!str[_i].trim()) {
               finalIndexesToDelete.push(_i, stringLeftRight.right(str, _i));
             }
-            if (str[stringLeftRight.right(str, ~-_i) + 1] !== ">") {
-              finalIndexesToDelete.push(stringLeftRight.right(str, ~-_i) + 1, stringLeftRight.right(str, stringLeftRight.right(str, ~-_i) + 1));
+            if (str[idxOnTheRight + 1] !== ">") {
+              finalIndexesToDelete.push(idxOnTheRight + 1, stringLeftRight.right(str, idxOnTheRight + 1));
             }
           }
         }
