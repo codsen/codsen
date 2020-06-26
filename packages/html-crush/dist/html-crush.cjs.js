@@ -207,6 +207,9 @@ function crush(str, originalOpts) {
   if (opts.breakToTheLeftOf === false || opts.breakToTheLeftOf === null) {
     opts.breakToTheLeftOf = [];
   }
+  if (typeof opts.removeHTMLComments === "boolean") {
+    opts.removeHTMLComments = opts.removeHTMLComments ? 1 : 0;
+  }
   var breakToTheLeftOfFirstLetters = "";
   if (Array.isArray(opts.breakToTheLeftOf) && opts.breakToTheLeftOf.length) {
     breakToTheLeftOfFirstLetters = _toConsumableArray(new Set(opts.breakToTheLeftOf.map(function (val) {
@@ -221,6 +224,7 @@ function crush(str, originalOpts) {
   var withinHTMLConditional = false;
   var withinInlineStyle = null;
   var styleCommentStartedAt = null;
+  var htmlCommentStartedAt = null;
   var scriptStartedAt = null;
   var doNothing;
   var stageFrom = null;
@@ -334,10 +338,9 @@ function crush(str, originalOpts) {
         stageFrom = _expand2[0];
         stageTo = _expand2[1];
         styleCommentStartedAt = null;
-        if (stageFrom != null
-        ) {
-            finalIndexesToDelete.push(stageFrom, stageTo);
-          } else {
+        if (stageFrom != null) {
+          finalIndexesToDelete.push(stageFrom, stageTo);
+        } else {
           countCharactersPerLine += 1;
           i += 1;
         }
@@ -349,6 +352,32 @@ function crush(str, originalOpts) {
         }
         if (opts.removeCSSComments) {
           styleCommentStartedAt = i;
+        }
+      }
+      if (!doNothing && !withinStyleTag && !withinInlineStyle && htmlCommentStartedAt !== null && str.startsWith("-->", i)) {
+        var _expand3 = expand({
+          str: str,
+          from: htmlCommentStartedAt,
+          to: i + 3
+        });
+        var _expand4 = _slicedToArray(_expand3, 2);
+        stageFrom = _expand4[0];
+        stageTo = _expand4[1];
+        htmlCommentStartedAt = null;
+        if (stageFrom != null) {
+          finalIndexesToDelete.push(stageFrom, stageTo);
+        } else {
+          countCharactersPerLine += 2;
+          i += 2;
+        }
+        doNothing = i + 3;
+      }
+      if (!doNothing && !withinStyleTag && !withinInlineStyle && str.startsWith("<!--", i) && htmlCommentStartedAt === null) {
+        if (!applicableOpts.removeHTMLComments) {
+          applicableOpts.removeHTMLComments = true;
+        }
+        if (opts.removeHTMLComments) {
+          htmlCommentStartedAt = i;
         }
       }
       if (!doNothing && withinStyleTag && styleCommentStartedAt === null && str.startsWith("</style", i) && !isLetter(str[i + 7])) {

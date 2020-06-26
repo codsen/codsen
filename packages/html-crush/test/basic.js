@@ -514,7 +514,7 @@ tap.test(
       {
         result: src,
         applicableOpts: {
-          removeHTMLComments: false,
+          removeHTMLComments: true,
           removeCSSComments: false,
         },
       },

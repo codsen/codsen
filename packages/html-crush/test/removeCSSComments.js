@@ -14,8 +14,8 @@ tap.test(
       {
         result: source,
         applicableOpts: {
-          removeHTMLComments: false,
           removeCSSComments: true,
+          removeHTMLComments: false,
         },
       },
       "01.01"
@@ -29,8 +29,8 @@ tap.test(
       {
         result: `<style></style><body>z</body>`,
         applicableOpts: {
-          removeHTMLComments: false,
           removeCSSComments: true,
+          removeHTMLComments: false,
         },
       },
       "01.02"
@@ -53,8 +53,8 @@ tap.test(
       {
         result: source,
         applicableOpts: {
-          removeHTMLComments: false,
           removeCSSComments: true,
+          removeHTMLComments: false,
         },
       },
       "02.01"
@@ -68,8 +68,8 @@ tap.test(
       {
         result: `<div style="display:block;width:100px;"></div>`,
         applicableOpts: {
-          removeHTMLComments: false,
           removeCSSComments: true,
+          removeHTMLComments: false,
         },
       },
       "02.02"

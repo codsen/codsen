@@ -3409,6 +3409,11 @@
 
     if (opts.breakToTheLeftOf === false || opts.breakToTheLeftOf === null) {
       opts.breakToTheLeftOf = [];
+    } // normalize the opts.removeHTMLComments
+
+
+    if (typeof opts.removeHTMLComments === "boolean") {
+      opts.removeHTMLComments = opts.removeHTMLComments ? 1 : 0;
     }
 
     var breakToTheLeftOfFirstLetters = "";
@@ -3444,6 +3449,7 @@
 
     var withinInlineStyle = null;
     var styleCommentStartedAt = null;
+    var htmlCommentStartedAt = null;
     var scriptStartedAt = null; // main do nothing switch, used to skip chunks of code and perform no action
 
     var doNothing; // we use staging "from" and "to" to preemptively mark the chunks
@@ -3591,13 +3597,13 @@
         //
         //
         //
-        // catch the ending of mso conditional tags
+        // catch an ending of mso conditional tags
         // ███████████████████████████████████████
 
 
         if (withinHTMLConditional && str.startsWith("![endif", i + 1)) {
           withinHTMLConditional = false;
-        } // catch the begining of mso conditional tags
+        } // catch a begining of mso conditional tags
         // ███████████████████████████████████████
 
 
@@ -3626,7 +3632,7 @@
                 finalIndexesToDelete.push(idxOnTheRight + 1, right(str, idxOnTheRight + 1));
               }
             }
-          } // catch tag's opening bracket
+          } // catch a tag's opening bracket
         // ███████████████████████████████████████
 
 
@@ -3636,7 +3642,7 @@
           } else if (str[right(str, ~-i)] === "/" && /\w/.test(str[right(str, right(str, ~-i))])) {
             tagNameStartsAt = right(str, right(str, ~-i));
           }
-        } // catch the end of CSS comments
+        } // catch an end of CSS comments
         // ███████████████████████████████████████
 
 
@@ -3657,12 +3663,9 @@
           // reset marker:
           styleCommentStartedAt = null;
 
-          if (stageFrom != null // &&
-          // str[stageTo] === undefined
-          // removed 14 May
-          ) {
-              finalIndexesToDelete.push(stageFrom, stageTo);
-            } else {
+          if (stageFrom != null) {
+            finalIndexesToDelete.push(stageFrom, stageTo);
+          } else {
             countCharactersPerLine += 1;
             i += 1;
           } // console.log(`0796 CONTINUE`);
@@ -3670,7 +3673,7 @@
 
 
           doNothing = i + 2;
-        } // catch start of CSS comments
+        } // catch a start of CSS comments
         // ███████████████████████████████████████
 
 
@@ -3683,6 +3686,50 @@
 
           if (opts.removeCSSComments) {
             styleCommentStartedAt = i;
+          }
+        } // catch an end of HTML comment
+        // ███████████████████████████████████████
+
+
+        if (!doNothing && !withinStyleTag && !withinInlineStyle && htmlCommentStartedAt !== null && str.startsWith("-->", i)) {
+          // stage:
+          var _expand3 = expander({
+            str: str,
+            from: htmlCommentStartedAt,
+            to: i + 3
+          });
+
+          var _expand4 = _slicedToArray(_expand3, 2);
+
+          stageFrom = _expand4[0];
+          stageTo = _expand4[1];
+          // reset marker:
+          htmlCommentStartedAt = null;
+
+          if (stageFrom != null) {
+            finalIndexesToDelete.push(stageFrom, stageTo);
+          } else {
+            countCharactersPerLine += 2;
+            i += 2;
+          } // console.log(`0796 CONTINUE`);
+          // continue;
+
+
+          doNothing = i + 3;
+        } // catch a start of HTML comment
+        // ███████████████████████████████████████
+
+
+        if (!doNothing && !withinStyleTag && !withinInlineStyle && str.startsWith("<!--", i) && htmlCommentStartedAt === null) {
+          // independently of options settings, mark the options setting
+          // "removeHTMLComments" as applicable:
+          if (!applicableOpts.removeHTMLComments) {
+            applicableOpts.removeHTMLComments = true;
+          } // opts.removeHTMLComments: 0|1|2
+
+
+          if (opts.removeHTMLComments) {
+            htmlCommentStartedAt = i;
           }
         } // catch style tag
         // ███████████████████████████████████████

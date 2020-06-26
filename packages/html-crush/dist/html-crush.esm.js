@@ -167,6 +167,9 @@ function crush(str, originalOpts) {
   if (opts.breakToTheLeftOf === false || opts.breakToTheLeftOf === null) {
     opts.breakToTheLeftOf = [];
   }
+  if (typeof opts.removeHTMLComments === "boolean") {
+    opts.removeHTMLComments = opts.removeHTMLComments ? 1 : 0;
+  }
   let breakToTheLeftOfFirstLetters = "";
   if (Array.isArray(opts.breakToTheLeftOf) && opts.breakToTheLeftOf.length) {
     breakToTheLeftOfFirstLetters = [
@@ -181,6 +184,7 @@ function crush(str, originalOpts) {
   let withinHTMLConditional = false;
   let withinInlineStyle = null;
   let styleCommentStartedAt = null;
+  let htmlCommentStartedAt = null;
   let scriptStartedAt = null;
   let doNothing;
   let stageFrom = null;
@@ -348,9 +352,7 @@ function crush(str, originalOpts) {
             DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS ,
         });
         styleCommentStartedAt = null;
-        if (
-          stageFrom != null
-        ) {
+        if (stageFrom != null) {
           finalIndexesToDelete.push(stageFrom, stageTo);
         } else {
           countCharactersPerLine += 1;
@@ -370,6 +372,41 @@ function crush(str, originalOpts) {
         }
         if (opts.removeCSSComments) {
           styleCommentStartedAt = i;
+        }
+      }
+      if (
+        !doNothing &&
+        !withinStyleTag &&
+        !withinInlineStyle &&
+        htmlCommentStartedAt !== null &&
+        str.startsWith("-->", i)
+      ) {
+        [stageFrom, stageTo] = expand({
+          str,
+          from: htmlCommentStartedAt,
+          to: i + 3,
+        });
+        htmlCommentStartedAt = null;
+        if (stageFrom != null) {
+          finalIndexesToDelete.push(stageFrom, stageTo);
+        } else {
+          countCharactersPerLine += 2;
+          i += 2;
+        }
+        doNothing = i + 3;
+      }
+      if (
+        !doNothing &&
+        !withinStyleTag &&
+        !withinInlineStyle &&
+        str.startsWith("<!--", i) &&
+        htmlCommentStartedAt === null
+      ) {
+        if (!applicableOpts.removeHTMLComments) {
+          applicableOpts.removeHTMLComments = true;
+        }
+        if (opts.removeHTMLComments) {
+          htmlCommentStartedAt = i;
         }
       }
       if (

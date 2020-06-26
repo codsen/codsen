@@ -2,7 +2,7 @@ import tap from "tap";
 import { crush as m } from "../dist/html-crush.esm";
 
 // grouped tests
-tap.todo(
+tap.test(
   `01 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - does nothing`,
   (t) => {
     [
@@ -17,11 +17,13 @@ tap.todo(
       `<!--a b-->`,
       `<!-- tralala -->`,
     ].forEach((source) => {
-      t.same(
+      t.match(
         m(source, {
           removeHTMLComments: false,
-        }).result,
-        source,
+        }),
+        {
+          result: source,
+        },
         "01.01"
       );
     });
@@ -29,27 +31,54 @@ tap.todo(
   }
 );
 
-tap.todo(
+tap.only(
   `02 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment only`,
   (t) => {
-    const source = `<!-- don't remove this -->`;
+    const source = `<!-- remove this -->`;
 
     // off
-    t.same(
+    t.match(
       m(source, {
-        removeHTMLComments: false,
-      }).result,
-      source,
+        removeHTMLComments: 0,
+      }),
+      {
+        result: source,
+        applicableOpts: {
+          removeHTMLComments: true,
+          removeCSSComments: false,
+        },
+      },
       "02.01"
     );
 
-    // on
-    t.same(
+    // 1 - only text comments
+    t.match(
       m(source, {
-        removeHTMLComments: true,
-      }).result,
-      "",
+        removeHTMLComments: 1,
+      }),
+      {
+        result: "",
+        applicableOpts: {
+          removeHTMLComments: true,
+          removeCSSComments: false,
+        },
+      },
       "02.02"
+    );
+
+    // 2 - includes outlook conditional comments
+    t.match(
+      m(source, {
+        removeHTMLComments: 2,
+      }),
+      {
+        result: "",
+        applicableOpts: {
+          removeHTMLComments: true,
+          removeCSSComments: false,
+        },
+      },
+      "02.03"
     );
 
     t.end();
@@ -59,23 +88,35 @@ tap.todo(
 tap.todo(
   `03 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment, surrounding whitespace`,
   (t) => {
-    const source = `  <!-- don't remove this -->  `;
+    const source = `  <!-- remove this -->  `;
 
     // off
-    t.same(
+    t.match(
       m(source, {
         removeHTMLComments: false,
-      }).result,
-      source.trim(),
+      }),
+      {
+        result: source.trim(),
+        applicableOpts: {
+          removeHTMLComments: true,
+          removeCSSComments: false,
+        },
+      },
       "03.01"
     );
 
     // on
-    t.same(
+    t.match(
       m(source, {
         removeHTMLComments: true,
-      }).result,
-      "",
+      }),
+      {
+        result: "",
+        applicableOpts: {
+          removeHTMLComments: true,
+          removeCSSComments: false,
+        },
+      },
       "03.02"
     );
 
@@ -86,31 +127,43 @@ tap.todo(
 tap.todo(
   `04 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - when line length limit is too tight`,
   (t) => {
-    const source = `<a><!-- don't remove this --></a>`;
+    const source = `<a><!-- remove this --></a>`;
 
     // off
-    t.same(
+    t.match(
       m(source, {
         removeHTMLComments: false,
         lineLengthLimit: 2,
-      }).result,
-      `<a>
+      }),
+      {
+        result: `<a>
 <!--
 don't
 remove
 this
 --></a>`,
+        applicableOpts: {
+          removeHTMLComments: true,
+          removeCSSComments: false,
+        },
+      },
       "04.01"
     );
 
     // on
-    t.same(
+    t.match(
       m(source, {
         removeHTMLComments: true,
         lineLengthLimit: 2,
-      }).result,
-      `<a>
+      }),
+      {
+        result: `<a>
 </a>`,
+        applicableOpts: {
+          removeHTMLComments: true,
+          removeCSSComments: false,
+        },
+      },
       "04.02"
     );
     t.end();
@@ -123,23 +176,51 @@ tap.todo(
     const source = `<!--<span>-->`;
 
     // off
-    t.same(
+    t.match(
       m(source, {
         removeHTMLComments: false,
-      }).result,
-      source,
+      }),
+      {
+        result: source,
+        applicableOpts: {
+          removeHTMLComments: true,
+          removeCSSComments: false,
+        },
+      },
       "05.01"
     );
 
     // on
-    t.same(
+    t.match(
       m(source, {
         removeHTMLComments: true,
-      }).result,
-      "",
+      }),
+      {
+        result: "",
+        applicableOpts: {
+          removeHTMLComments: true,
+          removeCSSComments: false,
+        },
+      },
       "05.02"
     );
 
     t.end();
   }
 );
+
+// outlook "only" type comments
+// -----------------------------------------------------------------------------
+// For your reference:
+
+// <!--[if mso]>
+//     <img src="fallback"/>
+// <![endif]-->
+
+// outlook "not" type comments
+// -----------------------------------------------------------------------------
+// For your reference:
+
+// <!--[if !mso]><!-->
+//     <img src="gif"/>
+// <!--<![endif]-->
