@@ -3411,12 +3411,12 @@
       opts.breakToTheLeftOf = [];
     }
 
-    var breakToTheLeftOfFirstLetters = new Set();
+    var breakToTheLeftOfFirstLetters = "";
 
     if (Array.isArray(opts.breakToTheLeftOf) && opts.breakToTheLeftOf.length) {
-      for (var i = 0, _len2 = opts.breakToTheLeftOf.length; i < _len2; i++) {
-        breakToTheLeftOfFirstLetters.add(opts.breakToTheLeftOf[i][0]);
-      }
+      breakToTheLeftOfFirstLetters = _toConsumableArray(new Set(opts.breakToTheLeftOf.map(function (val) {
+        return val[0];
+      }))).join("");
     } // console.log(
     //   `0187 ${`\u001b[${33}m${`breakToTheLeftOfFirstLetters`}\u001b[${39}m`} = ${JSON.stringify(
     //     breakToTheLeftOfFirstLetters,
@@ -3491,7 +3491,7 @@
     var lastPercentage = 0;
 
     if (len) {
-      for (var _i = 0; _i < len; _i++) {
+      for (var i = 0; i < len; i++) {
         //
         //
         //
@@ -3506,14 +3506,14 @@
         // Report the progress. We'll allocate 98% of the progress bar to this stage
         if (opts.reportProgressFunc) {
           if (len > 1000 && len < 2000) {
-            if (_i === midLen) {
+            if (i === midLen) {
               opts.reportProgressFunc(Math.floor((opts.reportProgressFuncTo - opts.reportProgressFuncFrom) / 2));
             }
           } else if (len >= 2000) {
             // defaults:
             // opts.reportProgressFuncFrom = 0
             // opts.reportProgressFuncTo = 100
-            currentPercentageDone = opts.reportProgressFuncFrom + Math.floor(_i / len * ceil);
+            currentPercentageDone = opts.reportProgressFuncFrom + Math.floor(i / len * ceil);
 
             if (currentPercentageDone !== lastPercentage) {
               lastPercentage = currentPercentageDone;
@@ -3524,25 +3524,25 @@
         // ███████████████████████████████████████
 
 
-        if (doNothing && typeof doNothing === "number" && _i >= doNothing) {
+        if (doNothing && typeof doNothing === "number" && i >= doNothing) {
           doNothing = undefined;
         } // catch ending of </script...
         // ███████████████████████████████████████
 
 
-        if (scriptStartedAt !== null && str.startsWith("</script", _i) && !isLetter(str[_i + 8])) {
+        if (scriptStartedAt !== null && str.startsWith("</script", i) && !isLetter(str[i + 8])) {
           // 1. if there is a line break, chunk of whitespace and </script>,
           // delete that chunk of whitespace, leave line break.
           // If there's non-whitespace character, chunk of whitespace and </script>,
           // delete that chunk of whitespace.
           // Basically, traverse backwards from "<" of "</script>", stop either
           // at first line break or non-whitespace character.
-          if ((opts.removeIndentations || opts.removeLineBreaks) && _i > 0 && str[~-_i] && !str[~-_i].trim()) {
+          if ((opts.removeIndentations || opts.removeLineBreaks) && i > 0 && str[~-i] && !str[~-i].trim()) {
             // march backwards
-            for (var y = _i; y--;) {
+            for (var y = i; y--;) {
               if (str[y] === "\n" || str[y] === "\r" || str[y].trim()) {
-                if (y + 1 < _i) {
-                  finalIndexesToDelete.push(y + 1, _i);
+                if (y + 1 < i) {
+                  finalIndexesToDelete.push(y + 1, i);
                 }
 
                 break;
@@ -3553,14 +3553,14 @@
 
           scriptStartedAt = null;
           doNothing = false;
-          _i += 8;
+          i += 8;
           continue;
         } // catch start of <script...
         // ███████████████████████████████████████
 
 
-        if (!doNothing && !withinStyleTag && str.startsWith("<script", _i) && !isLetter(str[_i + 7])) {
-          scriptStartedAt = _i;
+        if (!doNothing && !withinStyleTag && str.startsWith("<script", i) && !isLetter(str[i + 7])) {
+          scriptStartedAt = i;
           doNothing = true;
           var whatToInsert = "";
 
@@ -3569,7 +3569,7 @@
               whatToInsert = "\n";
             }
 
-            finalIndexesToDelete.push(whitespaceStartedAt, _i, whatToInsert);
+            finalIndexesToDelete.push(whitespaceStartedAt, i, whatToInsert);
           }
 
           whitespaceStartedAt = null;
@@ -3595,30 +3595,30 @@
         // ███████████████████████████████████████
 
 
-        if (withinHTMLConditional && str.startsWith("![endif", _i + 1)) {
+        if (withinHTMLConditional && str.startsWith("![endif", i + 1)) {
           withinHTMLConditional = false;
         } // catch the begining of mso conditional tags
         // ███████████████████████████████████████
 
 
-        if (str[_i] === "<" && str.startsWith("!--[if", _i + 1) && !withinHTMLConditional) {
+        if (str[i] === "<" && str.startsWith("!--[if", i + 1) && !withinHTMLConditional) {
           withinHTMLConditional = true;
         } // catch ending of the tag's name
         // ███████████████████████████████████████
 
 
-        if (tagNameStartsAt !== null && tagName === null && !/\w/.test(str[_i]) // not a letter
+        if (tagNameStartsAt !== null && tagName === null && !/\w/.test(str[i]) // not a letter
         ) {
-            tagName = str.slice(tagNameStartsAt, _i); // check for inner tag whitespace
+            tagName = str.slice(tagNameStartsAt, i); // check for inner tag whitespace
 
-            var idxOnTheRight = right(str, ~-_i);
+            var idxOnTheRight = right(str, ~-i);
 
-            if (str[idxOnTheRight] === ">" && !str[_i].trim()) {
-              finalIndexesToDelete.push(_i, right(str, _i));
+            if (str[idxOnTheRight] === ">" && !str[i].trim()) {
+              finalIndexesToDelete.push(i, right(str, i));
             } else if (str[idxOnTheRight] === "/" && str[right(str, idxOnTheRight)] === ">") {
               // if there's a space in front of "/>"
-              if (!str[_i].trim()) {
-                finalIndexesToDelete.push(_i, right(str, _i));
+              if (!str[i].trim()) {
+                finalIndexesToDelete.push(i, right(str, i));
               } // if there's space between slash and bracket
 
 
@@ -3630,22 +3630,22 @@
         // ███████████████████████████████████████
 
 
-        if (!doNothing && !withinStyleTag && !withinInlineStyle && str[~-_i] === "<" && tagNameStartsAt === null) {
-          if (/\w/.test(str[_i])) {
-            tagNameStartsAt = _i;
-          } else if (str[right(str, ~-_i)] === "/" && /\w/.test(str[right(str, right(str, ~-_i))])) {
-            tagNameStartsAt = right(str, right(str, ~-_i));
+        if (!doNothing && !withinStyleTag && !withinInlineStyle && str[~-i] === "<" && tagNameStartsAt === null) {
+          if (/\w/.test(str[i])) {
+            tagNameStartsAt = i;
+          } else if (str[right(str, ~-i)] === "/" && /\w/.test(str[right(str, right(str, ~-i))])) {
+            tagNameStartsAt = right(str, right(str, ~-i));
           }
         } // catch the end of CSS comments
         // ███████████████████████████████████████
 
 
-        if (!doNothing && (withinStyleTag || withinInlineStyle) && styleCommentStartedAt !== null && str[_i] === "*" && str[_i + 1] === "/") {
+        if (!doNothing && (withinStyleTag || withinInlineStyle) && styleCommentStartedAt !== null && str[i] === "*" && str[i + 1] === "/") {
           // stage:
           var _expand = expander({
             str: str,
             from: styleCommentStartedAt,
-            to: _i + 2,
+            to: i + 2,
             ifLeftSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS ,
             ifRightSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS 
           });
@@ -3664,17 +3664,17 @@
               finalIndexesToDelete.push(stageFrom, stageTo);
             } else {
             countCharactersPerLine += 1;
-            _i += 1;
+            i += 1;
           } // console.log(`0796 CONTINUE`);
           // continue;
 
 
-          doNothing = _i + 2;
+          doNothing = i + 2;
         } // catch start of CSS comments
         // ███████████████████████████████████████
 
 
-        if (!doNothing && (withinStyleTag || withinInlineStyle) && styleCommentStartedAt === null && str[_i] === "/" && str[_i + 1] === "*") {
+        if (!doNothing && (withinStyleTag || withinInlineStyle) && styleCommentStartedAt === null && str[i] === "/" && str[i + 1] === "*") {
           // independently of options settings, mark the options setting
           // "removeCSSComments" as applicable:
           if (!applicableOpts.removeCSSComments) {
@@ -3682,35 +3682,35 @@
           }
 
           if (opts.removeCSSComments) {
-            styleCommentStartedAt = _i;
+            styleCommentStartedAt = i;
           }
         } // catch style tag
         // ███████████████████████████████████████
 
 
-        if (!doNothing && withinStyleTag && styleCommentStartedAt === null && str.startsWith("</style", _i) && !isLetter(str[_i + 7])) {
+        if (!doNothing && withinStyleTag && styleCommentStartedAt === null && str.startsWith("</style", i) && !isLetter(str[i + 7])) {
           withinStyleTag = false;
-        } else if (!doNothing && !withinStyleTag && styleCommentStartedAt === null && str.startsWith("<style", _i) && !isLetter(str[_i + 6])) {
+        } else if (!doNothing && !withinStyleTag && styleCommentStartedAt === null && str.startsWith("<style", i) && !isLetter(str[i + 6])) {
           withinStyleTag = true; // if opts.breakToTheLeftOf have "<style" among them, break to the
           // right of this tag as well
 
-          if ((opts.removeLineBreaks || opts.removeIndentations) && opts.breakToTheLeftOf.includes("<style") && str.startsWith(" type=\"text/css\">", _i + 6) && str[_i + 24]) {
-            finalIndexesToDelete.push(_i + 23, _i + 23, "\n");
+          if ((opts.removeLineBreaks || opts.removeIndentations) && opts.breakToTheLeftOf.includes("<style") && str.startsWith(" type=\"text/css\">", i + 6) && str[i + 24]) {
+            finalIndexesToDelete.push(i + 23, i + 23, "\n");
           }
         } // catch start of inline styles
         // ███████████████████████████████████████
 
 
-        if (!doNothing && !withinInlineStyle && "\"'".includes(str[_i]) && str.endsWith("style=", _i)) {
-          withinInlineStyle = _i;
+        if (!doNothing && !withinInlineStyle && "\"'".includes(str[i]) && str.endsWith("style=", i)) {
+          withinInlineStyle = i;
         } // catch whitespace
         // ███████████████████████████████████████
 
 
-        if (!doNothing && !str[_i].trim()) {
+        if (!doNothing && !str[i].trim()) {
           // if whitespace
           if (whitespaceStartedAt === null) {
-            whitespaceStartedAt = _i;
+            whitespaceStartedAt = i;
           }
         } else if (!doNothing && !((withinStyleTag || withinInlineStyle) && styleCommentStartedAt !== null)) {
           // catch the ending of a whitespace chunk
@@ -3724,7 +3724,7 @@
               beginningOfAFile = false;
 
               if (opts.removeIndentations || opts.removeLineBreaks) {
-                finalIndexesToDelete.push(0, _i);
+                finalIndexesToDelete.push(0, i);
               }
             } else {
               // so it's not beginning of a file
@@ -3733,19 +3733,19 @@
               // ===================================================================
               // ██ CASE 1. Remove indentations only.
               if (opts.removeIndentations && !opts.removeLineBreaks) {
-                if (!nonWhitespaceCharMet && lastLinebreak !== null && _i > lastLinebreak) {
-                  finalIndexesToDelete.push(lastLinebreak + 1, _i);
-                } else if (whitespaceStartedAt + 1 < _i) {
+                if (!nonWhitespaceCharMet && lastLinebreak !== null && i > lastLinebreak) {
+                  finalIndexesToDelete.push(lastLinebreak + 1, i);
+                } else if (whitespaceStartedAt + 1 < i) {
                   // we'll try to recycle some spaces, either at the
                   // beginning (preferable) or ending (at least) of the
                   // whitespace chunk, instead of wiping whole whitespace
                   // chunk and adding single space again.
                   if (str[whitespaceStartedAt] === " ") {
-                    finalIndexesToDelete.push(whitespaceStartedAt + 1, _i);
-                  } else if (str[~-_i] === " ") {
-                    finalIndexesToDelete.push(whitespaceStartedAt, ~-_i);
+                    finalIndexesToDelete.push(whitespaceStartedAt + 1, i);
+                  } else if (str[~-i] === " ") {
+                    finalIndexesToDelete.push(whitespaceStartedAt, ~-i);
                   } else {
-                    finalIndexesToDelete.push(whitespaceStartedAt, _i, " ");
+                    finalIndexesToDelete.push(whitespaceStartedAt, i, " ");
                   }
                 }
               } // ===================================================================
@@ -3755,10 +3755,10 @@
               if (opts.removeLineBreaks || withinInlineStyle) {
                 //
                 // ██ CASE 2-1 - special break points from opts.breakToTheLeftOf
-                if (breakToTheLeftOfFirstLetters.size && breakToTheLeftOfFirstLetters.has(str[_i]) && matchRightIncl(str, _i, opts.breakToTheLeftOf)) {
+                if (breakToTheLeftOfFirstLetters.includes(str[i]) && matchRightIncl(str, i, opts.breakToTheLeftOf)) {
                   // maybe there was just single line break?
-                  if (!(str[~-_i] === "\n" && whitespaceStartedAt === ~-_i)) {
-                    finalIndexesToDelete.push(whitespaceStartedAt, _i, "\n");
+                  if (!(str[~-i] === "\n" && whitespaceStartedAt === ~-i)) {
+                    finalIndexesToDelete.push(whitespaceStartedAt, i, "\n");
                   }
 
                   stageFrom = null;
@@ -3774,7 +3774,7 @@
                 // for example "something < 2" or "zzz > 1"
 
                 if ( // (
-                str[_i] === "<" && matchRight(str, _i, opts.mindTheInlineTags, {
+                str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
                   cb: function cb(nextChar) {
                     return !nextChar || !/\w/.test(nextChar);
                   } // not a letter
@@ -3783,13 +3783,13 @@
                 // ("<>".includes(str[i]) &&
                 //   ("0123456789".includes(str[right(str, i)]) ||
                 //     "0123456789".includes(str[left(str, i)])))
-                ) ; else if (str[~-whitespaceStartedAt] && DELETE_TIGHTLY_IF_ON_LEFT_IS.includes(str[~-whitespaceStartedAt]) && DELETE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[_i]) || (withinStyleTag || withinInlineStyle) && styleCommentStartedAt === null && (DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS.includes(str[~-whitespaceStartedAt]) || DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[_i])) || str.startsWith("!important", _i) && !withinHTMLConditional || withinInlineStyle && (str[~-whitespaceStartedAt] === "'" || str[~-whitespaceStartedAt] === '"') || str[~-whitespaceStartedAt] === "}" && str.startsWith("</style", _i) || str[_i] === ">" && ("'\"".includes(str[left(str, _i)]) || str[right(str, _i)] === "<") || str[_i] === "/" && str[right(str, _i)] === ">") {
+                ) ; else if (str[~-whitespaceStartedAt] && DELETE_TIGHTLY_IF_ON_LEFT_IS.includes(str[~-whitespaceStartedAt]) && DELETE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[i]) || (withinStyleTag || withinInlineStyle) && styleCommentStartedAt === null && (DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS.includes(str[~-whitespaceStartedAt]) || DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[i])) || str.startsWith("!important", i) && !withinHTMLConditional || withinInlineStyle && (str[~-whitespaceStartedAt] === "'" || str[~-whitespaceStartedAt] === '"') || str[~-whitespaceStartedAt] === "}" && str.startsWith("</style", i) || str[i] === ">" && ("'\"".includes(str[left(str, i)]) || str[right(str, i)] === "<") || str[i] === "/" && str[right(str, i)] === ">") {
                   whatToAdd = "";
 
-                  if (str[_i] === "/" && str[_i + 1] === ">" && right(str, _i) > _i + 1) {
+                  if (str[i] === "/" && str[i + 1] === ">" && right(str, i) > i + 1) {
                     // delete whitespace between / and >
-                    finalIndexesToDelete.push(_i + 1, right(str, _i));
-                    countCharactersPerLine -= right(str, _i) - _i + 1;
+                    finalIndexesToDelete.push(i + 1, right(str, i));
+                    countCharactersPerLine -= right(str, i) - i + 1;
                   }
                 }
 
@@ -3803,15 +3803,15 @@
                   // We skip the stage part, the whitespace chunks to straight to
                   // finalIndexesToDelete ranges array.
                   // but ensure that we're not replacing a single space with a single space
-                  if (!(_i === whitespaceStartedAt + 1 && // str[whitespaceStartedAt] === " " &&
+                  if (!(i === whitespaceStartedAt + 1 && // str[whitespaceStartedAt] === " " &&
                   whatToAdd === " ")) {
-                    finalIndexesToDelete.push(whitespaceStartedAt, _i, whatToAdd);
+                    finalIndexesToDelete.push(whitespaceStartedAt, i, whatToAdd);
                   }
                 } else {
                   // 2-2: Line-length limiting is on (not that easy)
                   // maybe we are already beyond the limit?
-                  if (countCharactersPerLine >= opts.lineLengthLimit || !str[_i + 1] || str[_i] === ">" || str[_i] === "/" && str[_i + 1] === ">") {
-                    if (countCharactersPerLine > opts.lineLengthLimit || countCharactersPerLine === opts.lineLengthLimit && str[_i + 1] && str[_i + 1].trim() && !CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i]) && !CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i + 1])) {
+                  if (countCharactersPerLine >= opts.lineLengthLimit || !str[i + 1] || str[i] === ">" || str[i] === "/" && str[i + 1] === ">") {
+                    if (countCharactersPerLine > opts.lineLengthLimit || countCharactersPerLine === opts.lineLengthLimit && str[i + 1] && str[i + 1].trim() && !CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) && !CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i + 1])) {
                       whatToAdd = "\n";
                       countCharactersPerLine = 1;
                     } // replace the whitespace only in two cases:
@@ -3821,8 +3821,8 @@
                     // linebreak like it happens between tags.
 
 
-                    if (countCharactersPerLine > opts.lineLengthLimit || !(whatToAdd === " " && _i === whitespaceStartedAt + 1)) {
-                      finalIndexesToDelete.push(whitespaceStartedAt, _i, whatToAdd);
+                    if (countCharactersPerLine > opts.lineLengthLimit || !(whatToAdd === " " && i === whitespaceStartedAt + 1)) {
+                      finalIndexesToDelete.push(whitespaceStartedAt, i, whatToAdd);
                     }
 
                     stageFrom = null;
@@ -3831,7 +3831,7 @@
                   } else if (stageFrom === null || whitespaceStartedAt < stageFrom) {
                     // only submit the range if it's bigger
                     stageFrom = whitespaceStartedAt;
-                    stageTo = _i;
+                    stageTo = i;
                     stageAdd = whatToAdd;
                   }
                 }
@@ -3869,16 +3869,16 @@
         } // catch the characters, suitable for a break
 
 
-        if (!doNothing && !beginningOfAFile && _i !== 0 && opts.removeLineBreaks && (opts.lineLengthLimit || breakToTheLeftOfFirstLetters.size) && !str.startsWith("</a", _i)) {
-          if (breakToTheLeftOfFirstLetters.size && matchRightIncl(str, _i, opts.breakToTheLeftOf) && str.slice(0, _i).trim() && (!str.startsWith("<![endif]", _i) || !matchLeft(str, _i, "<!--"))) {
-            finalIndexesToDelete.push(_i, _i, "\n");
+        if (!doNothing && !beginningOfAFile && i !== 0 && opts.removeLineBreaks && (opts.lineLengthLimit || breakToTheLeftOfFirstLetters) && !str.startsWith("</a", i)) {
+          if (breakToTheLeftOfFirstLetters && matchRightIncl(str, i, opts.breakToTheLeftOf) && str.slice(0, i).trim() && (!str.startsWith("<![endif]", i) || !matchLeft(str, i, "<!--"))) {
+            finalIndexesToDelete.push(i, i, "\n");
             stageFrom = null;
             stageTo = null;
             stageAdd = null;
             countCharactersPerLine = 1;
             continue;
           } else if (opts.lineLengthLimit && countCharactersPerLine <= opts.lineLengthLimit) {
-            if (!str[_i + 1] || CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i]) && !CHARS_DONT_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i]) || CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i]) || !str[_i].trim()) {
+            if (!str[i + 1] || CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) && !CHARS_DONT_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) || CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) || !str[i].trim()) {
               // 1. release stage contents - now they'll be definitely deleted
               // =============================================================
               if (stageFrom !== null && stageTo !== null && (stageFrom !== stageTo || stageAdd && stageAdd.length)) {
@@ -3886,7 +3886,7 @@
                 // amended into linebreak because otherwise we'll exceed the
                 // character limit
 
-                if (str[_i].trim() && str[_i + 1] && str[_i + 1].trim() && countCharactersPerLine + (stageAdd ? stageAdd.length : 0) > opts.lineLengthLimit) {
+                if (str[i].trim() && str[i + 1] && str[i + 1].trim() && countCharactersPerLine + (stageAdd ? stageAdd.length : 0) > opts.lineLengthLimit) {
                   _whatToAdd = "\n";
                 } // if line is beyond the line length limit or whitespace is not
                 // a single space, staged to be replaced with single space,
@@ -3905,22 +3905,22 @@
               // =============================================================
 
 
-              if (str[_i].trim() && (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i]) || str[~-_i] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[~-_i])) && isStr$3(leftTagName) && !opts.mindTheInlineTags.includes(tagName) && !(str[_i] === "<" && matchRight(str, _i, opts.mindTheInlineTags, {
+              if (str[i].trim() && (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) || str[~-i] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[~-i])) && isStr$3(leftTagName) && !opts.mindTheInlineTags.includes(tagName) && !(str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
                 cb: function cb(nextChar) {
                   return !nextChar || !/\w/.test(nextChar);
                 } // not a letter
 
-              })) && !(str[_i] === "<" && matchRight(str, _i, opts.mindTheInlineTags, {
+              })) && !(str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
                 trimCharsBeforeMatching: "/",
                 cb: function cb(nextChar) {
                   return !nextChar || !/\w/.test(nextChar);
                 } // not a letter
 
               }))) {
-                stageFrom = _i;
-                stageTo = _i;
+                stageFrom = i;
+                stageTo = i;
                 stageAdd = null;
-              } else if (styleCommentStartedAt === null && stageFrom !== null && (withinInlineStyle || !opts.mindTheInlineTags || !Array.isArray(opts.mindTheInlineTags) || Array.isArray(opts.mindTheInlineTags.length) && !opts.mindTheInlineTags.length || !isStr$3(tagName) || Array.isArray(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && isStr$3(tagName) && !opts.mindTheInlineTags.includes(tagName)) && !(str[_i] === "<" && matchRight(str, _i, opts.mindTheInlineTags, {
+              } else if (styleCommentStartedAt === null && stageFrom !== null && (withinInlineStyle || !opts.mindTheInlineTags || !Array.isArray(opts.mindTheInlineTags) || Array.isArray(opts.mindTheInlineTags.length) && !opts.mindTheInlineTags.length || !isStr$3(tagName) || Array.isArray(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && isStr$3(tagName) && !opts.mindTheInlineTags.includes(tagName)) && !(str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
                 trimCharsBeforeMatching: "/",
                 cb: function cb(nextChar) {
                   return !nextChar || !/\w/.test(nextChar);
@@ -3941,7 +3941,7 @@
             // countCharactersPerLine > opts.lineLengthLimit
             // LIMIT HAS BEEN EXCEEDED!
             // WE NEED TO BREAK RIGHT HERE
-            if (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i]) && !(str[_i] === "<" && matchRight(str, _i, opts.mindTheInlineTags, {
+            if (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) && !(str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
               trimCharsBeforeMatching: "/",
               cb: function cb(nextChar) {
                 return !nextChar || !/\w/.test(nextChar);
@@ -3976,24 +3976,24 @@
                   // opts.lineLengthLimit ?
 
                   if (countCharactersPerLine - (stageTo - stageFrom - whatToAddLength) - 1 === opts.lineLengthLimit) {
-                    finalIndexesToDelete.push(_i, _i, "\n");
+                    finalIndexesToDelete.push(i, i, "\n");
                     countCharactersPerLine = 0;
                   }
                 }
               } else {
                 //
-                finalIndexesToDelete.push(_i, _i, "\n");
+                finalIndexesToDelete.push(i, i, "\n");
                 countCharactersPerLine = 0;
               }
-            } else if (str[_i + 1] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i]) && isStr$3(tagName) && Array.isArray(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && !opts.mindTheInlineTags.includes(tagName)) {
+            } else if (str[i + 1] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) && isStr$3(tagName) && Array.isArray(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && !opts.mindTheInlineTags.includes(tagName)) {
               // ██ 2.
               //
               if (stageFrom !== null && stageTo !== null && (stageFrom !== stageTo || stageAdd && stageAdd.length)) ; else {
                 //
-                finalIndexesToDelete.push(_i + 1, _i + 1, "\n");
+                finalIndexesToDelete.push(i + 1, i + 1, "\n");
                 countCharactersPerLine = 0;
               }
-            } else if (!str[_i].trim()) ; else if (!str[_i + 1]) {
+            } else if (!str[i].trim()) ; else if (!str[i + 1]) {
               // ██ 4.
               //
               // if we reached the end of string, check what's in stage
@@ -4005,15 +4005,15 @@
         } // catch any character beyond the line length limit:
 
 
-        if (!doNothing && !beginningOfAFile && opts.removeLineBreaks && opts.lineLengthLimit && countCharactersPerLine >= opts.lineLengthLimit && stageFrom !== null && stageTo !== null && !CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i]) && !CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i]) && !"/".includes(str[_i])) {
+        if (!doNothing && !beginningOfAFile && opts.removeLineBreaks && opts.lineLengthLimit && countCharactersPerLine >= opts.lineLengthLimit && stageFrom !== null && stageTo !== null && !CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) && !CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) && !"/".includes(str[i])) {
           // two possible cases:
           // 1. we hit the line length limit and we can break afterwards
           // 2. we can't break afterwards, and there might be stage present
-          if (!(countCharactersPerLine === opts.lineLengthLimit && str[_i + 1] && !str[_i + 1].trim())) {
+          if (!(countCharactersPerLine === opts.lineLengthLimit && str[i + 1] && !str[i + 1].trim())) {
             //
             var _whatToAdd2 = "\n";
 
-            if (str[_i + 1] && !str[_i + 1].trim() && countCharactersPerLine === opts.lineLengthLimit) {
+            if (str[i + 1] && !str[i + 1].trim() && countCharactersPerLine === opts.lineLengthLimit) {
               _whatToAdd2 = stageAdd;
             } // final correction - we might need to extend stageFrom to include
             // all whitespace on the left if whatToAdd is a line break
@@ -4024,9 +4024,9 @@
             }
 
             finalIndexesToDelete.push(stageFrom, stageTo, _whatToAdd2);
-            countCharactersPerLine = _i - stageTo;
+            countCharactersPerLine = i - stageTo;
 
-            if (str[_i].length) {
+            if (str[i].length) {
               countCharactersPerLine += 1;
             }
 
@@ -4038,10 +4038,10 @@
         // ███████████████████████████████████████
 
 
-        if (!doNothing && str[_i] === "\n" || str[_i] === "\r" && (!str[_i + 1] || str[_i + 1] && str[_i + 1] !== "\n")) {
+        if (!doNothing && str[i] === "\n" || str[i] === "\r" && (!str[i + 1] || str[i + 1] && str[i + 1] !== "\n")) {
           // =======================================================================
           // mark this
-          lastLinebreak = _i; // =======================================================================
+          lastLinebreak = i; // =======================================================================
           // reset nonWhitespaceCharMet
 
           if (nonWhitespaceCharMet) {
@@ -4050,28 +4050,28 @@
           // delete trailing whitespace on each line OR empty lines
 
 
-          if (!opts.removeLineBreaks && whitespaceStartedAt !== null && whitespaceStartedAt < _i && str[_i + 1] && str[_i + 1] !== "\r" && str[_i + 1] !== "\n") {
-            finalIndexesToDelete.push(whitespaceStartedAt, _i);
+          if (!opts.removeLineBreaks && whitespaceStartedAt !== null && whitespaceStartedAt < i && str[i + 1] && str[i + 1] !== "\r" && str[i + 1] !== "\n") {
+            finalIndexesToDelete.push(whitespaceStartedAt, i);
           }
         } // catch the EOF
         // ███████████████████████████████████████
 
 
-        if (!str[_i + 1]) {
+        if (!str[i + 1]) {
           if (withinStyleTag && styleCommentStartedAt !== null) {
             finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(expander({
               str: str,
               from: styleCommentStartedAt,
-              to: _i,
+              to: i,
               ifLeftSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS ,
               ifRightSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS 
             })));
-          } else if (whitespaceStartedAt && str[_i] !== "\n" && str[_i] !== "\r") {
+          } else if (whitespaceStartedAt && str[i] !== "\n" && str[i] !== "\r") {
             // catch trailing whitespace at the end of the string which is not legit
             // trailing linebreak
-            finalIndexesToDelete.push(whitespaceStartedAt, _i + 1);
-          } else if (whitespaceStartedAt && (str[_i] === "\r" && str[_i + 1] === "\n" || str[_i] === "\n")) {
-            finalIndexesToDelete.push(whitespaceStartedAt, _i);
+            finalIndexesToDelete.push(whitespaceStartedAt, i + 1);
+          } else if (whitespaceStartedAt && (str[i] === "\r" && str[i + 1] === "\n" || str[i] === "\n")) {
+            finalIndexesToDelete.push(whitespaceStartedAt, i);
           }
         } //
         //
@@ -4095,14 +4095,14 @@
         // ███████████████████████████████████████
 
 
-        if (!doNothing && withinInlineStyle && withinInlineStyle < _i && str[withinInlineStyle] === str[_i]) {
+        if (!doNothing && withinInlineStyle && withinInlineStyle < i && str[withinInlineStyle] === str[i]) {
           withinInlineStyle = null;
         } // catch <pre...>
         // ███████████████████████████████████████
 
 
-        if (!doNothing && !withinStyleTag && str.startsWith("<pre", _i) && !isLetter(str[_i + 4])) {
-          var locationOfClosingPre = str.indexOf("</pre", _i + 5);
+        if (!doNothing && !withinStyleTag && str.startsWith("<pre", i) && !isLetter(str[i + 4])) {
+          var locationOfClosingPre = str.indexOf("</pre", i + 5);
 
           if (locationOfClosingPre > 0) {
             doNothing = locationOfClosingPre;
@@ -4111,8 +4111,8 @@
         // ███████████████████████████████████████
 
 
-        if (!doNothing && !withinStyleTag && str.startsWith("<code", _i) && !isLetter(str[_i + 5])) {
-          var locationOfClosingCode = str.indexOf("</code", _i + 5);
+        if (!doNothing && !withinStyleTag && str.startsWith("<code", i) && !isLetter(str[i + 5])) {
+          var locationOfClosingCode = str.indexOf("</code", i + 5);
 
           if (locationOfClosingCode > 0) {
             doNothing = locationOfClosingCode;
@@ -4121,8 +4121,8 @@
         // ███████████████████████████████████████
 
 
-        if (!doNothing && str.startsWith("<![CDATA[", _i)) {
-          var locationOfClosingCData = str.indexOf("]]>", _i + 9);
+        if (!doNothing && str.startsWith("<![CDATA[", i)) {
+          var locationOfClosingCData = str.indexOf("]]>", i + 9);
 
           if (locationOfClosingCData > 0) {
             doNothing = locationOfClosingCData;
@@ -4131,9 +4131,9 @@
         // ███████████████████████████████████████
 
 
-        if (!doNothing && !withinStyleTag && !withinInlineStyle && tagNameStartsAt !== null && str[_i] === ">") {
+        if (!doNothing && !withinStyleTag && !withinInlineStyle && tagNameStartsAt !== null && str[i] === ">") {
           // if another tag starts on the right, hand over the name:
-          if (str[right(str, _i)] === "<") {
+          if (str[right(str, i)] === "<") {
             leftTagName = tagName;
           }
 
@@ -4143,7 +4143,7 @@
         // ███████████████████████████████████████
 
 
-        if (str[_i] === "<" && leftTagName !== null) {
+        if (str[i] === "<" && leftTagName !== null) {
           // reset it after use
           leftTagName = null;
         } // logging after each loop's iteration:

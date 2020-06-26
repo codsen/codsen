@@ -167,11 +167,11 @@ function crush(str, originalOpts) {
   if (opts.breakToTheLeftOf === false || opts.breakToTheLeftOf === null) {
     opts.breakToTheLeftOf = [];
   }
-  const breakToTheLeftOfFirstLetters = new Set();
+  let breakToTheLeftOfFirstLetters = "";
   if (Array.isArray(opts.breakToTheLeftOf) && opts.breakToTheLeftOf.length) {
-    for (let i = 0, len = opts.breakToTheLeftOf.length; i < len; i++) {
-      breakToTheLeftOfFirstLetters.add(opts.breakToTheLeftOf[i][0]);
-    }
+    breakToTheLeftOfFirstLetters = [
+      ...new Set(opts.breakToTheLeftOf.map((val) => val[0])),
+    ].join("");
   }
   let lastLinebreak = null;
   let whitespaceStartedAt = null;
@@ -445,8 +445,7 @@ function crush(str, originalOpts) {
             }
             if (opts.removeLineBreaks || withinInlineStyle) {
               if (
-                breakToTheLeftOfFirstLetters.size &&
-                breakToTheLeftOfFirstLetters.has(str[i]) &&
+                breakToTheLeftOfFirstLetters.includes(str[i]) &&
                 matchRightIncl(str, i, opts.breakToTheLeftOf)
               ) {
                 if (!(str[~-i] === "\n" && whitespaceStartedAt === ~-i)) {
@@ -573,11 +572,11 @@ function crush(str, originalOpts) {
         !beginningOfAFile &&
         i !== 0 &&
         opts.removeLineBreaks &&
-        (opts.lineLengthLimit || breakToTheLeftOfFirstLetters.size) &&
+        (opts.lineLengthLimit || breakToTheLeftOfFirstLetters) &&
         !str.startsWith("</a", i)
       ) {
         if (
-          breakToTheLeftOfFirstLetters.size &&
+          breakToTheLeftOfFirstLetters &&
           matchRightIncl(str, i, opts.breakToTheLeftOf) &&
           str.slice(0, i).trim() &&
           (!str.startsWith("<![endif]", i) || !matchLeft(str, i, "<!--"))
