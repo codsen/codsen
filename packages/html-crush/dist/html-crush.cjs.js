@@ -640,6 +640,7 @@ function crush(str, originalOpts) {
           percentageReducedOfOriginal: len ? Math.round(Math.max(len - resLen, 0) * 100 / len) : 0
         },
         ranges: rangesCopy,
+        applicableOpts: applicableOpts,
         result: res
       };
     }

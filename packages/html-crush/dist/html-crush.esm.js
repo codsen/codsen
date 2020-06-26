@@ -916,6 +916,7 @@ function crush(str, originalOpts) {
             : 0,
         },
         ranges: rangesCopy,
+        applicableOpts,
         result: res,
       };
     }

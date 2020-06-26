@@ -7,20 +7,32 @@ tap.test(
     const source = `<style>/* remove this */</style><body>z</body>`;
 
     // off
-    t.same(
+    t.match(
       m(source, {
         removeCSSComments: false,
-      }).result,
-      source,
+      }),
+      {
+        result: source,
+        applicableOpts: {
+          removeHTMLComments: false,
+          removeCSSComments: true,
+        },
+      },
       "01.01"
     );
 
     // on
-    t.same(
+    t.match(
       m(source, {
         removeCSSComments: true,
-      }).result,
-      `<style></style><body>z</body>`,
+      }),
+      {
+        result: `<style></style><body>z</body>`,
+        applicableOpts: {
+          removeHTMLComments: false,
+          removeCSSComments: true,
+        },
+      },
       "01.02"
     );
 
@@ -34,20 +46,32 @@ tap.test(
     const source = `<div style="display:block;/*font-size: 1px;*/width:100px;"></div>`;
 
     // off
-    t.same(
+    t.match(
       m(source, {
         removeCSSComments: false,
-      }).result,
-      source,
+      }),
+      {
+        result: source,
+        applicableOpts: {
+          removeHTMLComments: false,
+          removeCSSComments: true,
+        },
+      },
       "02.01"
     );
 
     // on
-    t.same(
+    t.match(
       m(source, {
         removeCSSComments: true,
-      }).result,
-      `<div style="display:block;width:100px;"></div>`,
+      }),
+      {
+        result: `<div style="display:block;width:100px;"></div>`,
+        applicableOpts: {
+          removeHTMLComments: false,
+          removeCSSComments: true,
+        },
+      },
       "02.02"
     );
 

@@ -6,6 +6,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ## 2.0.0
 
 - renamed output `log.timeTakenInMiliseconds` to `log.timeTakenInMilliseconds` (was a typo)
+- output returns `applicableOpts` - handy in UI's, to show only applicable options. Not all options can be "applicable" or not so this list contains only some of available options, not all.
 
 ## 1.9.35 (2020-05-24)
 

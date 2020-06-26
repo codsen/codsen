@@ -1759,18 +1759,20 @@ function crush(str, originalOpts) {
             : 0,
         },
         ranges: rangesCopy,
+        applicableOpts,
         result: res,
       };
     }
   }
   // ELSE - return the original input string
   console.log(
-    `1768 returning original ${`\u001b[${33}m${`str`}\u001b[${39}m`} =\n\n${JSON.stringify(
+    `1769 returning original ${`\u001b[${33}m${`str`}\u001b[${39}m`} =\n\n${JSON.stringify(
       str,
       null,
       4
     )}\n\n ${`\u001b[${90}m${`or:`}\u001b[${39}m`}\n\n${str}`
   );
+
   console.log(" ");
   console.log(" ");
   console.log(`\u001b[${90}m${`      ██ FIN ██\n\n`}\u001b[${39}m`);
