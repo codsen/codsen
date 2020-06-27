@@ -105,7 +105,7 @@ tap.todo(
       "03.01"
     );
 
-    // on
+    // 1 - only text comments
     t.match(
       m(source, {
         removeHTMLComments: true,
@@ -118,6 +118,21 @@ tap.todo(
         },
       },
       "03.02"
+    );
+
+    // 2 - includes outlook conditional comments
+    t.match(
+      m(source, {
+        removeHTMLComments: true,
+      }),
+      {
+        result: "",
+        applicableOpts: {
+          removeHTMLComments: true,
+          removeCSSComments: false,
+        },
+      },
+      "03.03"
     );
 
     t.end();
@@ -150,7 +165,7 @@ this
       "04.01"
     );
 
-    // on
+    // 1 - only text comments
     t.match(
       m(source, {
         removeHTMLComments: true,
@@ -166,6 +181,24 @@ this
       },
       "04.02"
     );
+
+    // 2 - includes outlook conditional comments
+    t.match(
+      m(source, {
+        removeHTMLComments: true,
+        lineLengthLimit: 2,
+      }),
+      {
+        result: `<a>
+</a>`,
+        applicableOpts: {
+          removeHTMLComments: true,
+          removeCSSComments: false,
+        },
+      },
+      "04.03"
+    );
+
     t.end();
   }
 );
@@ -190,7 +223,7 @@ tap.todo(
       "05.01"
     );
 
-    // on
+    // 1 - only text comments
     t.match(
       m(source, {
         removeHTMLComments: true,
@@ -203,6 +236,21 @@ tap.todo(
         },
       },
       "05.02"
+    );
+
+    // 2 - includes outlook conditional comments
+    t.match(
+      m(source, {
+        removeHTMLComments: true,
+      }),
+      {
+        result: "",
+        applicableOpts: {
+          removeHTMLComments: true,
+          removeCSSComments: false,
+        },
+      },
+      "05.03"
     );
 
     t.end();
