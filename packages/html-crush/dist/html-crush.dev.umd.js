@@ -3597,19 +3597,7 @@
         //
         //
         //
-        // catch an ending of mso conditional tags
-        // ███████████████████████████████████████
-
-
-        if (withinHTMLConditional && str.startsWith("![endif", i + 1)) {
-          withinHTMLConditional = false;
-        } // catch a begining of mso conditional tags
-        // ███████████████████████████████████████
-
-
-        if (str[i] === "<" && str.startsWith("!--[if", i + 1) && !withinHTMLConditional) {
-          withinHTMLConditional = true;
-        } // catch ending of the tag's name
+        // catch ending of the tag's name
         // ███████████████████████████████████████
 
 
@@ -3687,50 +3675,81 @@
           if (opts.removeCSSComments) {
             styleCommentStartedAt = i;
           }
+        } // catch an ending of mso conditional tags
+        // ███████████████████████████████████████
+
+
+        if (withinHTMLConditional && str.startsWith("![endif", i + 1)) {
+          withinHTMLConditional = false;
         } // catch an end of HTML comment
         // ███████████████████████████████████████
 
 
-        if (!doNothing && !withinStyleTag && !withinInlineStyle && htmlCommentStartedAt !== null && str.startsWith("-->", i)) {
-          // stage:
-          var _expand3 = expander({
-            str: str,
-            from: htmlCommentStartedAt,
-            to: i + 3
-          });
+        if (!doNothing && !withinStyleTag && !withinInlineStyle && htmlCommentStartedAt !== null) {
+          var distanceFromHereToCommentEnding = void 0;
 
-          var _expand4 = _slicedToArray(_expand3, 2);
+          if (str.startsWith("-->", i)) {
+            distanceFromHereToCommentEnding = 3;
+          } else if (str[i] === ">" && str[i - 1] === "]") {
+            distanceFromHereToCommentEnding = 1;
+          }
 
-          stageFrom = _expand4[0];
-          stageTo = _expand4[1];
-          // reset marker:
-          htmlCommentStartedAt = null;
+          if (distanceFromHereToCommentEnding) {
+            // stage:
+            var _expand3 = expander({
+              str: str,
+              from: htmlCommentStartedAt,
+              to: i + distanceFromHereToCommentEnding
+            });
 
-          if (stageFrom != null) {
-            finalIndexesToDelete.push(stageFrom, stageTo);
-          } else {
-            countCharactersPerLine += 2;
-            i += 2;
-          } // console.log(`0796 CONTINUE`);
-          // continue;
+            var _expand4 = _slicedToArray(_expand3, 2);
+
+            stageFrom = _expand4[0];
+            stageTo = _expand4[1];
+            // reset marker:
+            htmlCommentStartedAt = null;
+
+            if (stageFrom != null) {
+              finalIndexesToDelete.push(stageFrom, stageTo);
+            } else {
+              countCharactersPerLine += distanceFromHereToCommentEnding - 1;
+              i += distanceFromHereToCommentEnding - 1;
+            } // console.log(`0796 CONTINUE`);
+            // continue;
 
 
-          doNothing = i + 3;
+            doNothing = i + distanceFromHereToCommentEnding;
+          }
         } // catch a start of HTML comment
         // ███████████████████████████████████████
 
 
         if (!doNothing && !withinStyleTag && !withinInlineStyle && str.startsWith("<!--", i) && htmlCommentStartedAt === null) {
-          // independently of options settings, mark the options setting
+          // detect outlook conditionals
+          if (str.startsWith("[if", i + 4)) {
+            if (!withinHTMLConditional) {
+              withinHTMLConditional = true;
+            } // skip the second counterpart, "<!-->" of "<!--[if !mso]><!-->"
+            // the plan is to not set the "htmlCommentStartedAt" at all if deletion
+            // is not needed
+
+
+            if (opts.removeHTMLComments === 2) {
+              htmlCommentStartedAt = i;
+            }
+          } else if ( // setting is either 1 or 2 (delete text comments only or any comments):
+          opts.removeHTMLComments && ( // prevent the "not" type tails' "<!--" of "<!--<![endif]-->" from
+          // accidentally triggering the clauses
+          !withinHTMLConditional || opts.removeHTMLComments === 2)) {
+            htmlCommentStartedAt = i;
+          } // independently of options settings, mark the options setting
           // "removeHTMLComments" as applicable:
+
+
           if (!applicableOpts.removeHTMLComments) {
             applicableOpts.removeHTMLComments = true;
           } // opts.removeHTMLComments: 0|1|2
 
-
-          if (opts.removeHTMLComments) {
-            htmlCommentStartedAt = i;
-          }
         } // catch style tag
         // ███████████████████████████████████████
 

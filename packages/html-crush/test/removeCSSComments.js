@@ -1,6 +1,9 @@
 import tap from "tap";
 import { crush as m } from "../dist/html-crush.esm";
 
+// within head styles
+// -----------------------------------------------------------------------------
+
 tap.test(
   `01 - ${`\u001b[${33}m${`css comments`}\u001b[${39}m`} - in head styles`,
   (t) => {
@@ -41,7 +44,68 @@ tap.test(
 );
 
 tap.test(
-  `02 - ${`\u001b[${33}m${`css comments`}\u001b[${39}m`} - within body`,
+  `02 - ${`\u001b[${33}m${`css comments`}\u001b[${39}m`} - in head styles`,
+  (t) => {
+    const source = `<style>
+.a { font-size: 1px; }/* remove this */
+.b { /* remove this */
+  font-size: 1px;/* remove this */
+  line-height: 2px; /* remove this */
+  margin: 3px; /* remove this */
+}/* remove this */
+</style>
+<body>z</body>`;
+
+    // off
+    t.match(
+      m(source, {
+        removeCSSComments: false,
+      }),
+      {
+        result: `<style>
+.a { font-size: 1px; }/* remove this */
+.b { /* remove this */
+font-size: 1px;/* remove this */
+line-height: 2px; /* remove this */
+margin: 3px; /* remove this */
+}/* remove this */
+</style>
+<body>z</body>`,
+        applicableOpts: {
+          removeCSSComments: true,
+          removeHTMLComments: false,
+        },
+      },
+      "02.01"
+    );
+
+    // on
+    t.match(
+      m(source, {
+        removeCSSComments: true,
+      }),
+      {
+        result: `<style>.a{font-size:1px;}.b{font-size:1px;line-height:2px;margin:3px;}
+</style>
+<body>z
+</body>`,
+        applicableOpts: {
+          removeCSSComments: true,
+          removeHTMLComments: false,
+        },
+      },
+      "02.02"
+    );
+
+    t.end();
+  }
+);
+
+// within HTML body, inline
+// -----------------------------------------------------------------------------
+
+tap.test(
+  `03 - ${`\u001b[${33}m${`css comments`}\u001b[${39}m`} - within body`,
   (t) => {
     const source = `<div style="display:block;/*font-size: 1px;*/width:100px;"></div>`;
 
@@ -57,7 +121,7 @@ tap.test(
           removeHTMLComments: false,
         },
       },
-      "02.01"
+      "03.01"
     );
 
     // on
@@ -72,7 +136,7 @@ tap.test(
           removeHTMLComments: false,
         },
       },
-      "02.02"
+      "03.02"
     );
 
     t.end();

@@ -298,12 +298,6 @@ function crush(str, originalOpts) {
         whitespaceStartedAt = null;
         lastLinebreak = null;
       }
-      if (withinHTMLConditional && str.startsWith("![endif", i + 1)) {
-        withinHTMLConditional = false;
-      }
-      if (str[i] === "<" && str.startsWith("!--[if", i + 1) && !withinHTMLConditional) {
-        withinHTMLConditional = true;
-      }
       if (tagNameStartsAt !== null && tagName === null && !/\w/.test(str[i])
       ) {
           tagName = str.slice(tagNameStartsAt, i);
@@ -354,30 +348,50 @@ function crush(str, originalOpts) {
           styleCommentStartedAt = i;
         }
       }
-      if (!doNothing && !withinStyleTag && !withinInlineStyle && htmlCommentStartedAt !== null && str.startsWith("-->", i)) {
-        var _expand3 = expand({
-          str: str,
-          from: htmlCommentStartedAt,
-          to: i + 3
-        });
-        var _expand4 = _slicedToArray(_expand3, 2);
-        stageFrom = _expand4[0];
-        stageTo = _expand4[1];
-        htmlCommentStartedAt = null;
-        if (stageFrom != null) {
-          finalIndexesToDelete.push(stageFrom, stageTo);
-        } else {
-          countCharactersPerLine += 2;
-          i += 2;
+      if (withinHTMLConditional && str.startsWith("![endif", i + 1)) {
+        withinHTMLConditional = false;
+      }
+      if (!doNothing && !withinStyleTag && !withinInlineStyle && htmlCommentStartedAt !== null) {
+        var distanceFromHereToCommentEnding = void 0;
+        if (str.startsWith("-->", i)) {
+          distanceFromHereToCommentEnding = 3;
+        } else if (str[i] === ">" && str[i - 1] === "]") {
+          distanceFromHereToCommentEnding = 1;
         }
-        doNothing = i + 3;
+        if (distanceFromHereToCommentEnding) {
+          var _expand3 = expand({
+            str: str,
+            from: htmlCommentStartedAt,
+            to: i + distanceFromHereToCommentEnding
+          });
+          var _expand4 = _slicedToArray(_expand3, 2);
+          stageFrom = _expand4[0];
+          stageTo = _expand4[1];
+          htmlCommentStartedAt = null;
+          if (stageFrom != null) {
+            finalIndexesToDelete.push(stageFrom, stageTo);
+          } else {
+            countCharactersPerLine += distanceFromHereToCommentEnding - 1;
+            i += distanceFromHereToCommentEnding - 1;
+          }
+          doNothing = i + distanceFromHereToCommentEnding;
+        }
       }
       if (!doNothing && !withinStyleTag && !withinInlineStyle && str.startsWith("<!--", i) && htmlCommentStartedAt === null) {
+        if (str.startsWith("[if", i + 4)) {
+          if (!withinHTMLConditional) {
+            withinHTMLConditional = true;
+          }
+          if (opts.removeHTMLComments === 2) {
+            htmlCommentStartedAt = i;
+          }
+        } else if (
+        opts.removeHTMLComments && (
+        !withinHTMLConditional || opts.removeHTMLComments === 2)) {
+          htmlCommentStartedAt = i;
+        }
         if (!applicableOpts.removeHTMLComments) {
           applicableOpts.removeHTMLComments = true;
-        }
-        if (opts.removeHTMLComments) {
-          htmlCommentStartedAt = i;
         }
       }
       if (!doNothing && withinStyleTag && styleCommentStartedAt === null && str.startsWith("</style", i) && !isLetter(str[i + 7])) {

@@ -31,7 +31,7 @@ tap.test(
   }
 );
 
-tap.only(
+tap.test(
   `02 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment only`,
   (t) => {
     const source = `<!-- remove this -->`;
@@ -85,7 +85,7 @@ tap.only(
   }
 );
 
-tap.todo(
+tap.test(
   `03 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - one html comment, surrounding whitespace`,
   (t) => {
     const source = `  <!-- remove this -->  `;
@@ -93,7 +93,7 @@ tap.todo(
     // off
     t.match(
       m(source, {
-        removeHTMLComments: false,
+        removeHTMLComments: 0,
       }),
       {
         result: source.trim(),
@@ -108,7 +108,7 @@ tap.todo(
     // 1 - only text comments
     t.match(
       m(source, {
-        removeHTMLComments: true,
+        removeHTMLComments: 1,
       }),
       {
         result: "",
@@ -123,7 +123,7 @@ tap.todo(
     // 2 - includes outlook conditional comments
     t.match(
       m(source, {
-        removeHTMLComments: true,
+        removeHTMLComments: 2,
       }),
       {
         result: "",
@@ -139,24 +139,18 @@ tap.todo(
   }
 );
 
-tap.todo(
-  `04 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - when line length limit is too tight`,
+tap.test(
+  `04 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - commented tag`,
   (t) => {
-    const source = `<a><!-- remove this --></a>`;
+    const source = `<!--<span>-->`;
 
     // off
     t.match(
       m(source, {
-        removeHTMLComments: false,
-        lineLengthLimit: 2,
+        removeHTMLComments: 0,
       }),
       {
-        result: `<a>
-<!--
-don't
-remove
-this
---></a>`,
+        result: source,
         applicableOpts: {
           removeHTMLComments: true,
           removeCSSComments: false,
@@ -168,12 +162,10 @@ this
     // 1 - only text comments
     t.match(
       m(source, {
-        removeHTMLComments: true,
-        lineLengthLimit: 2,
+        removeHTMLComments: 1,
       }),
       {
-        result: `<a>
-</a>`,
+        result: "",
         applicableOpts: {
           removeHTMLComments: true,
           removeCSSComments: false,
@@ -185,12 +177,10 @@ this
     // 2 - includes outlook conditional comments
     t.match(
       m(source, {
-        removeHTMLComments: true,
-        lineLengthLimit: 2,
+        removeHTMLComments: 2,
       }),
       {
-        result: `<a>
-</a>`,
+        result: "",
         applicableOpts: {
           removeHTMLComments: true,
           removeCSSComments: false,
@@ -203,18 +193,23 @@ this
   }
 );
 
-tap.todo(
-  `05 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - commented tag`,
+tap.test(
+  `05 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - when line length limit is too tight`,
   (t) => {
-    const source = `<!--<span>-->`;
+    const source = `<a><!-- remove this --></a>`;
 
     // off
     t.match(
       m(source, {
-        removeHTMLComments: false,
+        removeHTMLComments: 0,
+        lineLengthLimit: 2,
       }),
       {
-        result: source,
+        result: `<a>
+<!--
+remove
+this
+--></a>`,
         applicableOpts: {
           removeHTMLComments: true,
           removeCSSComments: false,
@@ -226,10 +221,12 @@ tap.todo(
     // 1 - only text comments
     t.match(
       m(source, {
-        removeHTMLComments: true,
+        removeHTMLComments: 1,
+        lineLengthLimit: 2,
       }),
       {
-        result: "",
+        result: `<a>
+</a>`,
         applicableOpts: {
           removeHTMLComments: true,
           removeCSSComments: false,
@@ -241,10 +238,12 @@ tap.todo(
     // 2 - includes outlook conditional comments
     t.match(
       m(source, {
-        removeHTMLComments: true,
+        removeHTMLComments: 2,
+        lineLengthLimit: 2,
       }),
       {
-        result: "",
+        result: `<a>
+</a>`,
         applicableOpts: {
           removeHTMLComments: true,
           removeCSSComments: false,
@@ -265,6 +264,168 @@ tap.todo(
 //     <img src="fallback"/>
 // <![endif]-->
 
+tap.test(
+  `06 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - outlook "only" type, tight`,
+  (t) => {
+    const source = `<!--[if mso]><img src="fallback"/><![endif]-->`;
+
+    // 0 - off
+    t.match(
+      m(source, {
+        removeHTMLComments: 0,
+      }),
+      {
+        result: source,
+        applicableOpts: {
+          removeHTMLComments: true,
+          removeCSSComments: false,
+        },
+      },
+      "06.01"
+    );
+
+    // 1 - only text comments
+    t.match(
+      m(source, {
+        removeHTMLComments: 1,
+      }),
+      {
+        result: source,
+        applicableOpts: {
+          removeHTMLComments: true,
+          removeCSSComments: false,
+        },
+      },
+      "06.02"
+    );
+
+    // 2 - includes outlook conditional comments
+    t.match(
+      m(source, {
+        removeHTMLComments: 2,
+      }),
+      {
+        result: `<img src="fallback"/>`,
+        applicableOpts: {
+          removeHTMLComments: true,
+          removeCSSComments: false,
+        },
+      },
+      "06.03"
+    );
+
+    t.end();
+  }
+);
+
+tap.test(
+  `07 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - outlook "only" type, spaced`,
+  (t) => {
+    const source = `  <!--[if mso]>  <img src="fallback"/>  <![endif]-->  `;
+
+    // off
+    t.match(
+      m(source, {
+        removeHTMLComments: 0,
+      }),
+      {
+        result: `<!--[if mso]><img src="fallback"/><![endif]-->`,
+        applicableOpts: {
+          removeHTMLComments: true,
+          removeCSSComments: false,
+        },
+      },
+      "07.01"
+    );
+
+    // 1 - only text comments
+    t.match(
+      m(source, {
+        removeHTMLComments: 1,
+      }),
+      {
+        result: `<!--[if mso]><img src="fallback"/><![endif]-->`,
+        applicableOpts: {
+          removeHTMLComments: true,
+          removeCSSComments: false,
+        },
+      },
+      "07.02"
+    );
+
+    // 2 - includes outlook conditional comments
+    t.match(
+      m(source, {
+        removeHTMLComments: 2,
+      }),
+      {
+        result: `<img src="fallback"/>`,
+        applicableOpts: {
+          removeHTMLComments: true,
+          removeCSSComments: false,
+        },
+      },
+      "07.03"
+    );
+
+    t.end();
+  }
+);
+
+tap.test(
+  `08 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - stray opening only`,
+  (t) => {
+    const source = `abc\n<!--[if (gte mso 9)|(IE)]>\ndef`;
+
+    // off
+    t.match(
+      m(source, {
+        removeHTMLComments: 0,
+      }),
+      {
+        result: source,
+        applicableOpts: {
+          removeHTMLComments: true,
+          removeCSSComments: false,
+        },
+      },
+      "08.01"
+    );
+
+    // 1 - only text comments
+    t.match(
+      m(source, {
+        removeHTMLComments: 1,
+      }),
+      {
+        result: source,
+        applicableOpts: {
+          removeHTMLComments: true,
+          removeCSSComments: false,
+        },
+      },
+      "08.02"
+    );
+
+    // 2 - includes outlook conditional comments
+    t.match(
+      m(source, {
+        removeHTMLComments: 2,
+      }),
+      {
+        result: `abc\ndef`,
+        applicableOpts: {
+          removeHTMLComments: true,
+          removeCSSComments: false,
+        },
+      },
+      "08.03"
+    );
+
+    t.end();
+  }
+);
+
 // outlook "not" type comments
 // -----------------------------------------------------------------------------
 // For your reference:
@@ -272,3 +433,111 @@ tap.todo(
 // <!--[if !mso]><!-->
 //     <img src="gif"/>
 // <!--<![endif]-->
+
+tap.test(
+  `09 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - outlook "not" type, tight`,
+  (t) => {
+    const source = `<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->`;
+
+    // off
+    t.match(
+      m(source, {
+        removeHTMLComments: 0,
+      }),
+      {
+        result: source,
+        applicableOpts: {
+          removeHTMLComments: true,
+          removeCSSComments: false,
+        },
+      },
+      "09.01"
+    );
+
+    // 1 - only text comments
+    t.match(
+      m(source, {
+        removeHTMLComments: 1,
+      }),
+      {
+        result: source,
+        applicableOpts: {
+          removeHTMLComments: true,
+          removeCSSComments: false,
+        },
+      },
+      "09.02"
+    );
+
+    // 2 - includes outlook conditional comments
+    t.match(
+      m(source, {
+        removeHTMLComments: 2,
+      }),
+      {
+        result: `<img src="gif"/>`,
+        applicableOpts: {
+          removeHTMLComments: true,
+          removeCSSComments: false,
+        },
+      },
+      "09.03"
+    );
+
+    t.end();
+  }
+);
+
+tap.test(
+  `10 - ${`\u001b[${33}m${`html comments`}\u001b[${39}m`} - outlook "not" type, spaced`,
+  (t) => {
+    const source = `  <!--[if !mso]>  <!-->  <img src="gif"/>  <!--<![endif]-->`;
+
+    // off
+    t.match(
+      m(source, {
+        removeHTMLComments: 0,
+      }),
+      {
+        result: `<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->`,
+        applicableOpts: {
+          removeHTMLComments: true,
+          removeCSSComments: false,
+        },
+      },
+      "10.01"
+    );
+
+    // 1 - only text comments
+    t.match(
+      m(source, {
+        removeHTMLComments: 1,
+      }),
+      {
+        result: `<!--[if !mso]><!--><img src="gif"/><!--<![endif]-->`,
+        applicableOpts: {
+          removeHTMLComments: true,
+          removeCSSComments: false,
+        },
+      },
+      "10.02"
+    );
+
+    // 2 - includes outlook conditional comments
+    t.match(
+      m(source, {
+        removeHTMLComments: 2,
+      }),
+      {
+        result: `<img src="gif"/>`,
+        applicableOpts: {
+          removeHTMLComments: true,
+          removeCSSComments: false,
+        },
+      },
+      "10.03"
+    );
+
+    t.end();
+  }
+);
