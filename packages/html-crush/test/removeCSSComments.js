@@ -79,14 +79,32 @@ margin: 3px; /* remove this */
       "02.01"
     );
 
-    // on
+    // on - removeLineBreaks=off
     t.match(
       m(source, {
+        removeLineBreaks: false,
         removeCSSComments: true,
       }),
       {
-        result: `<style>.a{font-size:1px;}.b{font-size:1px;line-height:2px;margin:3px;}
-</style>
+        result: `<style>
+.a { font-size: 1px; }.b {font-size: 1px;line-height: 2px;margin: 3px;}</style>
+<body>z</body>`,
+        applicableOpts: {
+          removeCSSComments: true,
+          removeHTMLComments: false,
+        },
+      },
+      "02.02"
+    );
+
+    // on - removeLineBreaks=on
+    t.match(
+      m(source, {
+        removeLineBreaks: true,
+        removeCSSComments: true,
+      }),
+      {
+        result: `<style>.a{font-size:1px;}.b{font-size:1px;line-height:2px;margin:3px;}</style>
 <body>z
 </body>`,
         applicableOpts: {
@@ -94,7 +112,7 @@ margin: 3px; /* remove this */
           removeHTMLComments: false,
         },
       },
-      "02.02"
+      "02.03"
     );
 
     t.end();

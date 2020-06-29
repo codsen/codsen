@@ -481,7 +481,14 @@ function crush(str, originalOpts) {
               ) {
                 finalIndexesToDelete.push(lastLinebreak + 1, i);
               } else if (whitespaceStartedAt + 1 < i) {
-                if (str[whitespaceStartedAt] === " ") {
+                if (
+                  str.endsWith("]>", whitespaceStartedAt) ||
+                  str.endsWith("-->", whitespaceStartedAt) ||
+                  str.startsWith("<![", i) ||
+                  str.startsWith("<!--<![", i)
+                ) {
+                  finalIndexesToDelete.push(whitespaceStartedAt, i);
+                } else if (str[whitespaceStartedAt] === " ") {
                   finalIndexesToDelete.push(whitespaceStartedAt + 1, i);
                 } else if (str[~-i] === " ") {
                   finalIndexesToDelete.push(whitespaceStartedAt, ~-i);

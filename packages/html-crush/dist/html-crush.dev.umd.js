@@ -3806,7 +3806,18 @@
                   // beginning (preferable) or ending (at least) of the
                   // whitespace chunk, instead of wiping whole whitespace
                   // chunk and adding single space again.
-                  if (str[whitespaceStartedAt] === " ") {
+                  // first, crop tight around the conditional comments
+                  if ( // imagine <!--[if mso]>
+                  str.endsWith("]>", whitespaceStartedAt) || // imagine <!--[if !mso]><!-->...<
+                  //                            ^
+                  //                            |
+                  //                          our "whitespaceStartedAt"
+                  str.endsWith("-->", whitespaceStartedAt) || // imagine closing counterparts, .../>...<![endif]-->
+                  str.startsWith("<![", i) || // imagine other type of closing counterpart, .../>...<!--<![
+                  str.startsWith("<!--<![", i)) {
+                    // push the whole whitespace chunk
+                    finalIndexesToDelete.push(whitespaceStartedAt, i);
+                  } else if (str[whitespaceStartedAt] === " ") {
                     finalIndexesToDelete.push(whitespaceStartedAt + 1, i);
                   } else if (str[~-i] === " ") {
                     finalIndexesToDelete.push(whitespaceStartedAt, ~-i);
