@@ -220,6 +220,7 @@ function crush(str, originalOpts) {
   var whitespaceStartedAt = null;
   var nonWhitespaceCharMet = false;
   var countCharactersPerLine = 0;
+  var cpl = 0;
   var withinStyleTag = false;
   var withinHTMLConditional = false;
   var withinInlineStyle = null;
@@ -266,6 +267,7 @@ function crush(str, originalOpts) {
           }
         }
       }
+      cpl++;
       if (doNothing && typeof doNothing === "number" && i >= doNothing) {
         doNothing = undefined;
       }
@@ -369,7 +371,13 @@ function crush(str, originalOpts) {
           stageTo = _expand4[1];
           htmlCommentStartedAt = null;
           if (stageFrom != null) {
-            finalIndexesToDelete.push(stageFrom, stageTo);
+            if (opts.lineLengthLimit && cpl - (stageTo - stageFrom) >= opts.lineLengthLimit) {
+              finalIndexesToDelete.push(stageFrom, stageTo, "\n");
+              cpl = -distanceFromHereToCommentEnding;
+            } else {
+              finalIndexesToDelete.push(stageFrom, stageTo);
+              cpl -= stageTo - stageFrom;
+            }
           } else {
             countCharactersPerLine += distanceFromHereToCommentEnding - 1;
             i += distanceFromHereToCommentEnding - 1;

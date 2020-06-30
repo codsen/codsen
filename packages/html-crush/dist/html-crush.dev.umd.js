@@ -3443,7 +3443,9 @@
     var lastLinebreak = null;
     var whitespaceStartedAt = null;
     var nonWhitespaceCharMet = false;
-    var countCharactersPerLine = 0;
+    var countCharactersPerLine = 0; // new characters-per-line counter
+
+    var cpl = 0;
     var withinStyleTag = false;
     var withinHTMLConditional = false; // <!--[if lte mso 11]> etc
 
@@ -3526,9 +3528,11 @@
               opts.reportProgressFunc(currentPercentageDone);
             }
           }
-        } // turn off doNothing if marker passed
-        // ███████████████████████████████████████
+        } // count characters-per-line
 
+
+        cpl++; // turn off doNothing if marker passed
+        // ███████████████████████████████████████
 
         if (doNothing && typeof doNothing === "number" && i >= doNothing) {
           doNothing = undefined;
@@ -3710,7 +3714,29 @@
             htmlCommentStartedAt = null;
 
             if (stageFrom != null) {
-              finalIndexesToDelete.push(stageFrom, stageTo);
+              // it depends is there any character allowance left from the
+              // line length limit or not
+              if (opts.lineLengthLimit && cpl - (stageTo - stageFrom) >= opts.lineLengthLimit) {
+                finalIndexesToDelete.push(stageFrom, stageTo, "\n"); // Currently we're not on the bracket ">" of the comment
+                // closing "-->", we're at the start of it, that first
+                // dash. This means, we'll still traverse to the end
+                // of this comment tag, before the actual "reset" should
+                // happen.
+                // Luckily we know how many characters are there left
+                // to traverse until the comment's ending is reached -
+                // "distanceFromHereToCommentEnding".
+
+                cpl = -distanceFromHereToCommentEnding; // here we've reset cpl to some negative value, like -3
+              } else {
+                // we have some character length allowance left so
+                // let's just delete the comment and reduce the cpl
+                // by that length
+                finalIndexesToDelete.push(stageFrom, stageTo);
+                cpl -= stageTo - stageFrom;
+              } // finalIndexesToDelete.push(i + 1, i + 1, "\n");
+              // console.log(`1485 PUSH [${i + 1}, ${i + 1}, "\\n"]`);
+              // countCharactersPerLine = 0;
+
             } else {
               countCharactersPerLine += distanceFromHereToCommentEnding - 1;
               i += distanceFromHereToCommentEnding - 1;

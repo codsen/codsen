@@ -180,6 +180,7 @@ function crush(str, originalOpts) {
   let whitespaceStartedAt = null;
   let nonWhitespaceCharMet = false;
   let countCharactersPerLine = 0;
+  let cpl = 0;
   let withinStyleTag = false;
   let withinHTMLConditional = false;
   let withinInlineStyle = null;
@@ -236,6 +237,7 @@ function crush(str, originalOpts) {
           }
         }
       }
+      cpl++;
       if (doNothing && typeof doNothing === "number" && i >= doNothing) {
         doNothing = undefined;
       }
@@ -387,7 +389,16 @@ function crush(str, originalOpts) {
           });
           htmlCommentStartedAt = null;
           if (stageFrom != null) {
-            finalIndexesToDelete.push(stageFrom, stageTo);
+            if (
+              opts.lineLengthLimit &&
+              cpl - (stageTo - stageFrom) >= opts.lineLengthLimit
+            ) {
+              finalIndexesToDelete.push(stageFrom, stageTo, "\n");
+              cpl = -distanceFromHereToCommentEnding;
+            } else {
+              finalIndexesToDelete.push(stageFrom, stageTo);
+              cpl -= stageTo - stageFrom;
+            }
           } else {
             countCharactersPerLine += distanceFromHereToCommentEnding - 1;
             i += distanceFromHereToCommentEnding - 1;
