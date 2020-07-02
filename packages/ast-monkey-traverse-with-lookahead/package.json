@@ -125,6 +125,7 @@
       "text"
     ],
     "nyc-arg": [
+      "--exclude=**/*.cjs.js",
       "--exclude=**/*.umd.js"
     ],
     "timeout": 0

@@ -113,6 +113,7 @@
       "text"
     ],
     "nyc-arg": [
+      "--exclude=**/*.cjs.js",
       "--exclude=**/*.umd.js",
       "--exclude=dist/*.*"
     ],
