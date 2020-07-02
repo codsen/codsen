@@ -290,7 +290,7 @@
     },
     {
         "name": "generate-atomic-css",
-        "size": 20704,
+        "size": 20698,
         "imports": [
             "ranges-apply",
             "string-left-right"
@@ -317,7 +317,7 @@
     },
     {
         "name": "html-crush",
-        "size": 29191,
+        "size": 31698,
         "imports": [
             "ranges-apply",
             "ranges-push",
@@ -710,7 +710,7 @@
     },
     {
         "name": "string-remove-widows",
-        "size": 17772,
+        "size": 17394,
         "imports": [
             "arrayiffy-if-string",
             "ranges-apply",
