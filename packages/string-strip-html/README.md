@@ -124,7 +124,7 @@ If input arguments are supplied have any other types, an error will be `throw`n.
 | `returnRangesOnly`               | Boolean                                              | `false`                      | When set to `true`, only ranges will be returned. You can use them later in other [_range_- class libraries](https://gitlab.com/codsen/codsen#-range-libraries)        |
 | `trimOnlySpaces`                 | Boolean                                              | `false`                      | Used mainly in automated setups. It ensures non-spaces are not trimmed from the outer edges of a string.                                                               |
 | `dumpLinkHrefsNearby`            | Plain object or something _falsey_                   | `false`                      | Used to customise the output of link URL's: to enable the feature, also customise the URL location and wrapping.                                                       |
-| `cb`            | Something _falsey_ or a function                   | `null`                      | Gives you full control of the output and lets you tweak it. See the dedicated chapter below called "opts.cb" with explanation and examples.                                                       |
+| `cb`                             | Something _falsey_ or a function                     | `null`                       | Gives you full control of the output and lets you tweak it. See the dedicated chapter below called "opts.cb" with explanation and examples.                            |
 | }                                |                                                      |                              |
 
 **[⬆ back to top](#)**
@@ -188,13 +188,13 @@ Upon request, `string-strip-html` can also return _ranges_ instead of a final st
 But here's a catch — these _ranges_ will also tackle the whitespace and ranges will not be just locations of caught HTML tags. `opts.returnRangesOnly` will return ranges tackling surrounding whitespace. For example, consider code with indentations:
 
 ```js
-var strip = require("string-strip-html")
+var strip = require("string-strip-html");
 const sample = `    <div>
       something
     </div>
 `;
 const res = strip(sample, { returnRangesOnly: true });
-console.log(res)
+console.log(res);
 // => [[0, 12], [21, 32]]
 ```
 
