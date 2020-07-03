@@ -167,10 +167,13 @@ The function exported under key `crush` will return **a plain object** where you
 | `lineLengthLimit`        | number                                  | `500`       | When removing line breaks, what is the maximum line length to keep. Relevant only when `opts.removeLineBreaks` is on                                                                                                                                                                 |
 | `removeIndentations`     | Boolean                                 | `true`      | Should we remove indentations? The default is, yes.                                                                                                                                                                                                                                  |
 | `removeLineBreaks`       | Boolean                                 | `false`     | Should we remove the line breaks? The default answer is, no. Enabling it automatically enables `opts.removeIndentations`.                                                                                                                                                            |
+| `removeHTMLComments`       | Boolean or Numbers: `0`, `1` or `2`                                 | `false`|`0`|`1`|`2`     | Should we remove the HTML comments? Default answer, `false` is no, but there are settings to remove comments: `0` is off, `1` instructs to remove non-Outlook comments, `2` removes all comments including Outlook conditionals |
+| `removeCSSComments`       | Boolean                                 | `true`     | Should we remove CSS comments? This concerns both head CSS comments and inline CSS style comments within HTML style attributes.                                                                                                                                                            |
 | `reportProgressFunc`     | `null` or Boolean `false` or `function` | `null`      | If you supply a function here, it will be called, and an argument will be given to it, a natural number, which means percentage complete at that moment. Values will range from `1` to `99`, and finally, the main function will return the result's plain object.                   |
 | `reportProgressFuncFrom` | Natural number                          | `0`         | Default is zero percent but you can squeeze reporting percentages to start from a different number                                                                                                                                                                                   |
 | `reportProgressFuncTo`   | Natural number                          | `100`       | Default is 100 percent but you can squeeze reporting percentages to go up to a different number                                                                                                                                                                                      |
-| `breakToTheLeftOf`       | `array` of zero or more strings         | `see below` | When any of given strings are encountered AND `removeLineBreaks` option is on, current line will be terminated. This setting is not active if `removeLineBreaks` is turned off. If you want to disable a default set, either set this key to `false` or `null` or to an empty array. |
+| `breakToTheLeftOf`       | `array` of zero or more strings         | `see the list below` | When any of given strings are encountered AND `removeLineBreaks` option is on, current line will be terminated. This setting is not active if `removeLineBreaks` is turned off. If you want to disable a default set, either set this key to `false` or `null` or to an empty array. |
+| `mindTheInlineTags`       | `array` of zero or more strings         | `see the list below` | Inline HTML tags such as `<span>` can accidentally introduce extra text. We take extra precautions when minifying around inline tags. |
 | }                        |                                         |             |
 
 Here it is, in one place, in case you want to copy-paste it somewhere:
@@ -180,12 +183,19 @@ Here it is, in one place, in case you want to copy-paste it somewhere:
   lineLengthLimit: 500,
   removeIndentations: true,
   removeLineBreaks: false,
+  removeHTMLComments: false,
+  removeCSSComments: true,
   reportProgressFunc: null,
+  reportProgressFuncFrom: 0,
+  reportProgressFuncTo: 100,
   breakToTheLeftOf: [
     "</td",
     "<html",
+    "</html",
     "<head",
+    "</head",
     "<meta",
+    "<link",
     "<table",
     "<script",
     "</script",
@@ -195,11 +205,68 @@ Here it is, in one place, in case you want to copy-paste it somewhere:
     "<title",
     "<body",
     "@media",
-    "</html",
     "</body",
     "<!--[if",
-    "<!--<![endif"
-  ]
+    "<!--<![endif",
+    "<![endif]",
+  ],
+  mindTheInlineTags: [
+    "a",
+    "abbr",
+    "acronym",
+    "audio",
+    "b",
+    "bdi",
+    "bdo",
+    "big",
+    "br",
+    "button",
+    "canvas",
+    "cite",
+    "code",
+    "data",
+    "datalist",
+    "del",
+    "dfn",
+    "em",
+    "embed",
+    "i",
+    "iframe",
+    "img",
+    "input",
+    "ins",
+    "kbd",
+    "label",
+    "map",
+    "mark",
+    "meter",
+    "noscript",
+    "object",
+    "output",
+    "picture",
+    "progress",
+    "q",
+    "ruby",
+    "s",
+    "samp",
+    "script",
+    "select",
+    "slot",
+    "small",
+    "span",
+    "strong",
+    "sub",
+    "sup",
+    "svg",
+    "template",
+    "textarea",
+    "time",
+    "u",
+    "tt",
+    "var",
+    "video",
+    "wbr",
+  ],
 }
 ```
 

@@ -124,6 +124,7 @@ If input arguments are supplied have any other types, an error will be `throw`n.
 | `returnRangesOnly`               | Boolean                                              | `false`                      | When set to `true`, only ranges will be returned. You can use them later in other [_range_- class libraries](https://gitlab.com/codsen/codsen#-range-libraries)        |
 | `trimOnlySpaces`                 | Boolean                                              | `false`                      | Used mainly in automated setups. It ensures non-spaces are not trimmed from the outer edges of a string.                                                               |
 | `dumpLinkHrefsNearby`            | Plain object or something _falsey_                   | `false`                      | Used to customise the output of link URL's: to enable the feature, also customise the URL location and wrapping.                                                       |
+| `cb`            | Something _falsey_ or a function                   | `null`                      | Gives you full control of the output and lets you tweak it. See the dedicated chapter below called "opts.cb" with explanation and examples.                                                       |
 | }                                |                                                      |                              |
 
 **[⬆ back to top](#)**
@@ -174,15 +175,30 @@ A string of zero or more characters, with all HTML entities (both _named_, like 
 
 ### `opts.returnRangesOnly`
 
-If you construct development tools, different libraries perform separate steps, and it's inefficient to transform the input string during each step. It's better to keep a _note_ what needs to be done, supplementing or editing notes along the pipeline. Finally, when the end is reached, _notes_ are used to process the result string.
+_ranges_ is a notation we invented. It's just an array of zero or more arrays consisting of `from` and `to` string indexes (to be deleted) and optionally a third element, string, what to place there instead.
 
-Notes can be stored as _ranges_ - it's a fancy name for arrays of three arguments: `beginIndex`, `endIndex` and `whatToInsert`. First two correspond to [String.prototype.slice()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice) first two arguments. The third argument signifies what will be put in place of this string slice: if it's `undefined` (missing argument) or empty string — that slice will be deleted. If it's a string, its value will be placed instead of a deleted slice.
+That's all there is.
 
-All our [_range_- class libraries](https://gitlab.com/codsen/codsen#-range-libraries) adhere to this spec.
+The purpose of Ranges is to compile multiple string amends as "to do" list, then process the string in one go, in the end. It's more modular (whole family of Range libraries exist, such as inverting ranges or sorting), mode efficient (strings in JS are immutable) and easier to reason about.
 
-Now, `string-strip-html` can also return ranges instead of a final string.
+For example, ranges `[[1, 2], [10, 12, "replacement"]]` means delete characters from 1 to 2, then replace characters from 10 to 12 with string `replacement`.
 
-**PS.** If you wonder how [Unicode problem](https://mathiasbynens.be/notes/javascript-unicode) affects _ranges_ concept — the answer is — they are not related. As long as you use JavaScript, all strings will use native JS string index system, the same which ranges use. Now it's your challenge to put _correct_ ranges that mean intended string pieces.
+Upon request, `string-strip-html` can also return _ranges_ instead of a final string.
+
+But here's a catch — these _ranges_ will also tackle the whitespace and ranges will not be just locations of caught HTML tags. `opts.returnRangesOnly` will return ranges tackling surrounding whitespace. For example, consider code with indentations:
+
+```js
+var strip = require("string-strip-html")
+const sample = `    <div>
+      something
+    </div>
+`;
+const res = strip(sample, { returnRangesOnly: true });
+console.log(res)
+// => [[0, 12], [21, 32]]
+```
+
+It's not just strict tag index locations `[[4, 9], [30, 36]]`, it's what you'd feed to `ranges-apply` to get the nice clean result.
 
 **[⬆ back to top](#)**
 
