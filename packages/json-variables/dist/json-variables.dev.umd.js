@@ -1,7 +1,7 @@
 /**
  * json-variables
  * It's like SASS variables, but for JSON
- * Version: 8.2.9
+ * Version: 8.2.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/json-variables
@@ -3596,7 +3596,7 @@
   /**
    * ranges-apply
    * Take an array of string slice ranges, delete/replace the string according to them
-   * Version: 3.1.9
+   * Version: 3.1.10
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply
@@ -3955,7 +3955,7 @@
   /**
    * string-remove-duplicate-heads-tails
    * Detect and (recursively) remove head and tail wrappings around the input string
-   * Version: 3.0.64
+   * Version: 3.0.65
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-duplicate-heads-tails

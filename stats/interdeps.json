@@ -65,7 +65,7 @@
     },
     {
         "name": "ast-get-object",
-        "size": 2296,
+        "size": 2297,
         "imports": [
             "ast-compare"
         ]
@@ -433,7 +433,7 @@
     },
     {
         "name": "json-variables",
-        "size": 20504,
+        "size": 20505,
         "imports": [
             "arrayiffy-if-string",
             "ast-get-values-by-key",
@@ -525,7 +525,7 @@
     },
     {
         "name": "ranges-apply",
-        "size": 4797,
+        "size": 4798,
         "imports": [
             "ranges-merge"
         ]

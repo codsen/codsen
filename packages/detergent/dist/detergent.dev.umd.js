@@ -1,7 +1,7 @@
 /**
  * detergent
  * a tool to prepare text for pasting into HTML
- * Version: 5.10.6
+ * Version: 5.10.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://detergent.io
@@ -11297,7 +11297,7 @@
   /**
    * ranges-apply
    * Take an array of string slice ranges, delete/replace the string according to them
-   * Version: 3.1.9
+   * Version: 3.1.10
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply
@@ -11419,7 +11419,7 @@
   /**
    * string-remove-widows
    * Helps to prevent widow words in a text
-   * Version: 1.6.7
+   * Version: 1.6.8
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows
@@ -11829,7 +11829,7 @@
   /**
    * ranges-crop
    * Crop array of ranges when they go beyond the reference string's length
-   * Version: 2.0.55
+   * Version: 2.0.56
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-crop
@@ -11902,7 +11902,7 @@
   /**
    * ranges-invert
    * Invert string index ranges [ [1, 3] ] => [ [0, 1], [3, ...] ]
-   * Version: 2.1.42
+   * Version: 2.1.43
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-invert
@@ -12176,7 +12176,7 @@
   /**
    * ranges-process-outside
    * Iterate through string and optionally a given ranges as if they were one
-   * Version: 2.2.27
+   * Version: 2.2.28
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-process-outside
@@ -12235,7 +12235,7 @@
   /**
    * string-collapse-white-space
    * Efficient collapsing of white space with optional outer- and/or line-trimming and HTML tag recognition
-   * Version: 5.2.23
+   * Version: 5.2.24
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-white-space
@@ -18627,7 +18627,7 @@
   /**
    * string-strip-html
    * Strips HTML tags from strings. No parser, accepts mixed sources.
-   * Version: 4.4.7
+   * Version: 4.5.0
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html
@@ -23411,7 +23411,7 @@
     })(commonjsGlobal);
   });
 
-  var version$1 = "5.10.6";
+  var version$1 = "5.10.7";
 
   /**
    * html-entities-not-email-friendly
@@ -25426,7 +25426,7 @@
   /**
    * string-apostrophes
    * Comprehensive, HTML-entities-aware tool to typographically-correct the apostrophes and single/double quotes
-   * Version: 1.2.23
+   * Version: 1.2.24
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-apostrophes

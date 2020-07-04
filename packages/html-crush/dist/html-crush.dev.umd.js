@@ -1,7 +1,7 @@
 /**
  * html-crush
  * Minifies HTML/CSS: valid or broken, pure or mixed with other languages
- * Version: 1.9.35
+ * Version: 1.9.36
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/html-crush
@@ -495,7 +495,7 @@
   /**
    * ranges-apply
    * Take an array of string slice ranges, delete/replace the string according to them
-   * Version: 3.1.9
+   * Version: 3.1.10
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply
@@ -3344,7 +3344,7 @@
     return leftMain(str, idx, false);
   }
 
-  var version = "1.9.35";
+  var version = "1.9.36";
 
   var finalIndexesToDelete = new Ranges({
     limitToBeAddedWhitespace: true
