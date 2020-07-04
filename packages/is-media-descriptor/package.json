@@ -1,6 +1,6 @@
 {
   "name": "is-media-descriptor",
-  "version": "1.2.12",
+  "version": "1.2.13",
   "description": "Is given string a valid media descriptor (including media query)?",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",

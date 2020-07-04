@@ -1,7 +1,7 @@
 /**
  * html-crush
  * Minifies HTML/CSS: valid or broken, pure or mixed with other languages
- * Version: 1.9.36
+ * Version: 2.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/html-crush
@@ -14,7 +14,7 @@ import { matchRightIncl, matchRight, matchLeft } from 'string-match-left-right';
 import expand from 'string-range-expander';
 import { right, left } from 'string-left-right';
 
-var version = "1.9.36";
+var version = "2.0.0";
 
 const finalIndexesToDelete = new Ranges({ limitToBeAddedWhitespace: true });
 const defaults = {

@@ -1,6 +1,6 @@
 {
   "name": "html-crush",
-  "version": "1.9.36",
+  "version": "2.0.0",
   "description": "Minifies HTML/CSS: valid or broken, pure or mixed with other languages",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",

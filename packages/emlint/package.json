@@ -1,6 +1,6 @@
 {
   "name": "emlint",
-  "version": "2.18.7",
+  "version": "2.18.8",
   "description": "Pluggable email template code linter",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -149,7 +149,7 @@
     "html-entities-not-email-friendly": "^0.2.4",
     "is-d": "^1.0.0",
     "is-language-code": "^1.0.7",
-    "is-media-descriptor": "^1.2.11",
+    "is-media-descriptor": "^1.2.13",
     "is-relative-uri": "^1.0.13",
     "is-url-superb": "^4.0.0",
     "leven": "^3.1.0",

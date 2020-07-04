@@ -1,7 +1,7 @@
 /**
  * detergent
  * a tool to prepare text for pasting into HTML
- * Version: 5.10.7
+ * Version: 5.10.8
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://detergent.io
@@ -11419,7 +11419,7 @@
   /**
    * string-remove-widows
    * Helps to prevent widow words in a text
-   * Version: 1.6.8
+   * Version: 1.6.9
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows
@@ -23411,7 +23411,7 @@
     })(commonjsGlobal);
   });
 
-  var version$1 = "5.10.7";
+  var version$1 = "5.10.8";
 
   /**
    * html-entities-not-email-friendly

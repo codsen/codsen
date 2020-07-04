@@ -1,6 +1,6 @@
 {
   "name": "string-remove-widows",
-  "version": "1.6.8",
+  "version": "1.6.9",
   "description": "Helps to prevent widow words in a text",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
