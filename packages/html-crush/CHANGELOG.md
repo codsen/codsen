@@ -3,30 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.0.0](https://gitlab.com/codsen/codsen/compare/html-crush@1.9.36...html-crush@2.0.0) (2020-07-04)
-
+## 2.0.0 (2020-07-04)
 
 ### Bug Fixes
 
-* fix typo in the output, in log.timeTakenInMilliseconds ([48debda](https://gitlab.com/codsen/codsen/commit/48debda98858aa83d6f7df4a3b7f85895756d67e))
-
+- fix typo in the output, in log.timeTakenInMilliseconds ([48debda](https://gitlab.com/codsen/codsen/commit/48debda98858aa83d6f7df4a3b7f85895756d67e))
 
 ### Features
 
-* `opts.removeHTMLComments` ([2e51439](https://gitlab.com/codsen/codsen/commit/2e514393a3d25c9ebcc858435598964a1171f7d0))
-* add recognition for outlook conditionals ([61f61c1](https://gitlab.com/codsen/codsen/commit/61f61c1ec5769e27f2ddd9a7d849a3b65c75d5d8))
-* crop tighter around conditional comments ([cbc7383](https://gitlab.com/codsen/codsen/commit/cbc7383b702607e0b889d578433d78c838596b9f))
-* report `applicableOpts` in the output ([fd3c879](https://gitlab.com/codsen/codsen/commit/fd3c8799d299b65ecdd090d964174fe7bd028f22))
-
+- `opts.removeHTMLComments` ([2e51439](https://gitlab.com/codsen/codsen/commit/2e514393a3d25c9ebcc858435598964a1171f7d0))
+- add recognition for outlook conditionals ([61f61c1](https://gitlab.com/codsen/codsen/commit/61f61c1ec5769e27f2ddd9a7d849a3b65c75d5d8))
+- crop tighter around conditional comments ([cbc7383](https://gitlab.com/codsen/codsen/commit/cbc7383b702607e0b889d578433d78c838596b9f))
+- report `applicableOpts` in the output ([fd3c879](https://gitlab.com/codsen/codsen/commit/fd3c8799d299b65ecdd090d964174fe7bd028f22))
 
 ### BREAKING CHANGES
 
-* in output, log.timeTakenInMiliseconds is now called log.timeTakenInMilliseconds
+- in output, log.timeTakenInMiliseconds is now called log.timeTakenInMilliseconds
 (two l's)
-
-
-
-
 
 ## 2.0.0
 
