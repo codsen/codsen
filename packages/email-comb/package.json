@@ -1,6 +1,6 @@
 {
   "name": "email-comb",
-  "version": "3.9.18",
+  "version": "3.9.19",
   "description": "Remove unused CSS from email templates",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",

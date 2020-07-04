@@ -1,6 +1,6 @@
 {
   "name": "csv-sort",
-  "version": "3.0.63",
+  "version": "3.0.64",
   "description": "Sorts double-entry bookkeeping CSV coming from internet banking",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",

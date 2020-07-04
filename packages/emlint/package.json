@@ -1,6 +1,6 @@
 {
   "name": "emlint",
-  "version": "2.18.6",
+  "version": "2.18.7",
   "description": "Pluggable email template code linter",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",

@@ -1,6 +1,6 @@
 {
   "name": "string-apostrophes",
-  "version": "1.2.23",
+  "version": "1.2.24",
   "description": "Comprehensive, HTML-entities-aware tool to typographically-correct the apostrophes and single/double quotes",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",

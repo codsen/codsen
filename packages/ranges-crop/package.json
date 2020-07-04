@@ -1,6 +1,6 @@
 {
   "name": "ranges-crop",
-  "version": "2.0.55",
+  "version": "2.0.56",
   "description": "Crop array of ranges when they go beyond the reference string's length",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",

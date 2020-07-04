@@ -1,6 +1,6 @@
 {
   "name": "json-variables",
-  "version": "8.2.9",
+  "version": "8.2.10",
   "description": "It's like SASS variables, but for JSON",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",

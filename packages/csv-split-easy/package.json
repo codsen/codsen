@@ -1,6 +1,6 @@
 {
   "name": "csv-split-easy",
-  "version": "3.0.63",
+  "version": "3.0.64",
   "description": "Splits the CSV string into array of arrays, each representing a row of columns",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",

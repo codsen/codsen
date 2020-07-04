@@ -1,6 +1,6 @@
 {
   "name": "lerna-clean-changelogs-cli",
-  "version": "1.2.63",
+  "version": "1.2.64",
   "description": "CLI application to cleanse the lerna-generated changelogs",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",

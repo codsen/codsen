@@ -1,6 +1,6 @@
 {
   "name": "ast-delete-object",
-  "version": "1.8.68",
+  "version": "1.8.69",
   "description": "Delete all plain objects that contain a certain key/value pair",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",

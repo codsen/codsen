@@ -1,6 +1,6 @@
 {
   "name": "ast-monkey",
-  "version": "7.11.13",
+  "version": "7.11.14",
   "description": "Traverse and edit AST's (like parsed HTML or anything nested)",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",

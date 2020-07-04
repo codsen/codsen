@@ -1,6 +1,6 @@
 {
   "name": "string-remove-thousand-separators",
-  "version": "3.0.63",
+  "version": "3.0.64",
   "description": "Detects and removes thousand separators (dot/comma/quote/space) from string-type digits",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",

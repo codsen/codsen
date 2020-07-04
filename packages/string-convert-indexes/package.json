@@ -1,6 +1,6 @@
 {
   "name": "string-convert-indexes",
-  "version": "1.10.12",
+  "version": "1.10.13",
   "description": "Convert string character indexes from JS native index-based to Unicode character-count-based and backwards.",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",

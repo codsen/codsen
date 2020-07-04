@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-row-num",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "ESLint plugin to update row numbers on each console.log",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",

@@ -1,6 +1,6 @@
 {
   "name": "array-group-str-omit-num-char",
-  "version": "2.1.40",
+  "version": "2.1.41",
   "description": "Groups array of strings by omitting number characters",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",

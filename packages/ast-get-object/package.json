@@ -1,6 +1,6 @@
 {
   "name": "ast-get-object",
-  "version": "1.9.9",
+  "version": "1.9.10",
   "description": "Getter/setter for nested parsed HTML AST's, querying objects by key/value pairs",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",

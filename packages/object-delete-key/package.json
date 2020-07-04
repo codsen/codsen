@@ -1,6 +1,6 @@
 {
   "name": "object-delete-key",
-  "version": "1.9.29",
+  "version": "1.9.30",
   "description": "Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",

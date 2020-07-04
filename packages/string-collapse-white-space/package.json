@@ -1,6 +1,6 @@
 {
   "name": "string-collapse-white-space",
-  "version": "5.2.23",
+  "version": "5.2.24",
   "description": "Efficient collapsing of white space with optional outer- and/or line-trimming and HTML tag recognition",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",

@@ -1,6 +1,6 @@
 {
   "name": "tap-parse-string-to-object",
-  "version": "1.2.14",
+  "version": "1.2.15",
   "description": "Parses raw Tap: string-to-object or stream-to-a-promise-of-an-object",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",

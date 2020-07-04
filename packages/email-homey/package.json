@@ -1,6 +1,6 @@
 {
   "name": "email-homey",
-  "version": "2.7.66",
+  "version": "2.7.67",
   "description": "Generate homepage in the Browsersync root with links/screenshots to all your email templates",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",

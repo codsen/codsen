@@ -1,6 +1,6 @@
 {
   "name": "ranges-regex",
-  "version": "2.0.54",
+  "version": "2.0.55",
   "description": "Perform a regex search on string and get a ranges array of findings (or null)",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",

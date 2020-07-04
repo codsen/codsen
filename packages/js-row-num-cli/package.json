@@ -1,6 +1,6 @@
 {
   "name": "js-row-num-cli",
-  "version": "1.6.30",
+  "version": "1.6.31",
   "description": "Update all row numbers in all console.logs in JS code",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",

@@ -1,6 +1,6 @@
 {
   "name": "lerna-link-dep",
-  "version": "1.1.30",
+  "version": "1.1.31",
   "description": "CLI to symlink a local package to the current package in Lerna monorepo",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",

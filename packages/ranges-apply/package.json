@@ -1,6 +1,6 @@
 {
   "name": "ranges-apply",
-  "version": "3.1.9",
+  "version": "3.1.10",
   "description": "Take an array of string slice ranges, delete/replace the string according to them",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
