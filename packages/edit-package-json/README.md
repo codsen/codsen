@@ -103,7 +103,7 @@ It edits JSON as _string_ but let's you use [object-path](https://www.npmjs.com/
 const { set, del } = require("edit-package-json");
 // we defined JSON contents manually, but in real programs you'd read the file,
 // as string, without parsing and pass it to set()
-const startingJSONContents = `{
+const source = `{
   "a": "b",
   "c": {
     "d": "e"
@@ -174,7 +174,7 @@ For example,
 const { set, del } = require("edit-package-json");
 // we defined JSON contents manually, but in real programs you'd read the file,
 // as string, without parsing and pass it to set()
-const startingJSONContents = `{
+const source = `{
   "a": "b",
   "c": "d"
 }`;
