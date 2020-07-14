@@ -317,7 +317,7 @@
     },
     {
         "name": "html-crush",
-        "size": 31698,
+        "size": 31696,
         "imports": [
             "ranges-apply",
             "ranges-push",

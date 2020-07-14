@@ -19,7 +19,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### BREAKING CHANGES
 
 - in output, log.timeTakenInMiliseconds is now called log.timeTakenInMilliseconds
-(two l's)
+  (two l's)
 
 ## 2.0.0
 

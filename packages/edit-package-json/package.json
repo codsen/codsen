@@ -131,7 +131,7 @@
     "timeout": 0
   },
   "dependencies": {
-    "ranges-apply": "^3.1.9",
+    "ranges-apply": "^3.1.10",
     "string-left-right": "^2.3.24"
   },
   "devDependencies": {
@@ -144,11 +144,11 @@
     "ast-monkey-traverse": "^1.12.13",
     "benchmark": "^2.1.4",
     "globby": "^11.0.1",
-    "lect": "^0.13.6",
+    "lect": "^0.13.7",
     "lodash.clonedeep": "^4.5.0",
     "object-path": "^0.11.4",
     "p-map": "^4.0.0",
-    "rollup": "^2.18.2",
+    "rollup": "^2.19.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",
     "rollup-plugin-cleanup": "^3.1.1",

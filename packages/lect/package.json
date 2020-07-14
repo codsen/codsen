@@ -149,7 +149,7 @@
     "log-symbols": "^4.0.0",
     "matcher": "^3.0.0",
     "meow": "^7.0.1",
-    "object-delete-key": "^1.9.29",
+    "object-delete-key": "^1.9.30",
     "object-merge-advanced": "^10.11.22",
     "object-path": "^0.11.4",
     "p-map": "^4.0.0",
@@ -169,7 +169,7 @@
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^8.1.0",
     "@rollup/plugin-strip": "^1.3.3",
-    "lect": "^0.13.6",
+    "lect": "^0.13.7",
     "prettier": "^2.0.5",
     "tap": "^14.10.7",
     "tempy": "^0.5.0"
