@@ -99,7 +99,7 @@ Extra features are:
 
 ## API
 
-The main function is exported in a plain object under key `detergent`, so please import it like that:
+The main function is exported in a plain object under key `det`, so please import it like that:
 
 ```js
 const { det } = require("detergent");
@@ -128,7 +128,7 @@ The `det` above is a function. You pass two input arguments to it:
 
 **[⬆ back to top](#)**
 
-### API - `det()` options object
+### API - `det()` second input argument, the options object
 
 | Options object's key     | Type of its value                | Default                                   | Description                                                                                                                                                                       |
 | ------------------------ | -------------------------------- | ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -178,7 +178,7 @@ You can also set the options to numeric `0` or `1`, that's shorter than Boolean 
 
 **[⬆ back to top](#)**
 
-### API - `det()` output object
+### API - `det()` output - an object
 
 | output object's key | Type of its value | Description                                                                                                                 |
 | ------------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------- |
