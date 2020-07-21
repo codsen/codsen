@@ -1,7 +1,7 @@
 {
   "name": "detergent",
   "version": "5.10.8",
-  "description": "a tool to prepare text for pasting into HTML",
+  "description": "Extracts and cleans text",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
   "homepage": "https://detergent.io",
