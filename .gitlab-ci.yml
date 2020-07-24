@@ -31,7 +31,6 @@ deploy:
     - echo '█████████████████████████████ 3 █████████████████████████████'
     - git status
     - npm run readme:generate
-    - npm run info
     - echo '█████████████████████████████ 4 █████████████████████████████'
     - git status
     - git add packages

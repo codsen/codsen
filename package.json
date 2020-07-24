@@ -18,7 +18,7 @@
   },
   "scripts": {
     "bootstrap": "FORCE_COLOR=1 npx lerna bootstrap --hoist --ignore-scripts",
-    "build": "lerna run build --bail && lerna run ci_test --bail && npm run readme:generate && npm run info",
+    "build": "lerna run build --bail && lerna run ci_test --bail && npm run readme:generate",
     "build:just": "lerna run build --bail",
     "cm": "git-cz -n",
     "format": "lerna run format",
@@ -29,7 +29,7 @@
     "readme:edit": "npm-watch",
     "readme:generate": "node ./scripts/generate-readme.js",
     "republish": "lerna run republish",
-    "test": "FORCE_COLOR=1 lerna run ci_test && npm run readme:generate && npm run info",
+    "test": "FORCE_COLOR=1 lerna run ci_test && npm run readme:generate",
     "test:full": "FORCE_COLOR=1 lerna run test --stream --concurrency 1 && npm run readme:generate && npm run info",
     "test:only": "FORCE_COLOR=1 lerna run unittest --stream --concurrency 1 && npm run readme:generate && npm run info",
     "wipe": "rm package-lock.json || true && rm -rf node_modules && FORCE_COLOR=1 npx lerna clean -y"

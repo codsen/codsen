@@ -1,16 +1,18 @@
 #!/usr/bin/env node
 
+/* eslint operator-assignment:0 */
+
 const fs = require("fs");
 const path = require("path");
 const parse = require("tap-parse-string-to-object");
 
 const {
-  sortAllObjectsSync
+  sortAllObjectsSync,
 } = require("../packages/json-comb-core/dist/json-comb-core.cjs");
 
 (async () => {
   const dateObj = new Date();
-  const month = dateObj.getUTCMonth() + 1; //months from 1-12
+  const month = dateObj.getUTCMonth() + 1; // months from 1-12
   const day = dateObj.getUTCDate();
   const year = dateObj.getUTCFullYear();
   const newdate = `${year}-${`${month}`.padStart(2, "0")}-${`${day}`.padStart(
@@ -45,7 +47,7 @@ const {
   const allPackages = fs
     .readdirSync(path.resolve("packages"))
     .filter(
-      packageName =>
+      (packageName) =>
         typeof packageName === "string" &&
         packageName.length &&
         fs.statSync(path.join("packages", packageName)).isDirectory() &&
@@ -104,8 +106,8 @@ const {
       name,
       size,
       imports: pack.dependencies
-        ? Object.keys(pack.dependencies).filter(n => allPackages.includes(n))
-        : []
+        ? Object.keys(pack.dependencies).filter((n) => allPackages.includes(n))
+        : [],
     });
 
     // compile test stats
@@ -127,7 +129,7 @@ const {
       //     4
       //   )}`
       // );
-      allStats.push(Object.assign({}, obj));
+      allStats.push({ ...obj });
     } catch (e) {
       console.log(
         `! couldn't read/parse ${path.join(
@@ -141,7 +143,7 @@ const {
     // compile dependency stats
     if (Object.prototype.hasOwnProperty.call(pack, "dependencies")) {
       // has deps
-      Object.keys(pack.dependencies).forEach(dep => {
+      Object.keys(pack.dependencies).forEach((dep) => {
         // if dependency's name doesn't exist in compiled obj., create key
         if (
           !Object.prototype.hasOwnProperty.call(
@@ -158,7 +160,7 @@ const {
     }
     if (Object.prototype.hasOwnProperty.call(pack, "devDependencies")) {
       // has deps
-      Object.keys(pack.devDependencies).forEach(dep => {
+      Object.keys(pack.devDependencies).forEach((dep) => {
         // if devdependency's name doesn't exist in compiled obj., create key
         if (
           !Object.prototype.hasOwnProperty.call(
@@ -185,10 +187,10 @@ const {
     maxAssertsName: "",
     assertsCountMedian: 0,
     assertsCountArithmeticMean: 0,
-    assertsCountGeometricMean: 0
+    assertsCountGeometricMean: 0,
   };
 
-  allStats.forEach(statsObj => {
+  allStats.forEach((statsObj) => {
     // console.log(
     //   `${`\u001b[${33}m${`statsObj`}\u001b[${39}m`} = ${JSON.stringify(
     //     statsObj,
@@ -228,13 +230,13 @@ const {
     )
   );
 
-  allStats.forEach(statsObj => {
+  allStats.forEach((statsObj) => {
     compiledAssertionCounts.all[statsObj.name] = statsObj.asserts;
   });
 
   compiledAssertionCounts.assertsCountMedian = median(
     Object.keys(compiledAssertionCounts.all).map(
-      packageName => compiledAssertionCounts.all[packageName]
+      (packageName) => compiledAssertionCounts.all[packageName]
     )
   );
 
@@ -261,13 +263,13 @@ const {
     foundExternalMax = null;
 
     // iterate
-    Object.keys(dependencyStats.dependencies).forEach(depName => {
+    Object.keys(dependencyStats.dependencies).forEach((depName) => {
       if (
         (!foundOwnMax ||
           dependencyStats.dependencies[depName] >
             dependencyStats.dependencies[foundOwnMax]) &&
         allPackages.includes(depName) &&
-        !top10OwnDeps.some(obj =>
+        !top10OwnDeps.some((obj) =>
           Object.prototype.hasOwnProperty.call(obj, depName)
         )
       ) {
@@ -279,7 +281,7 @@ const {
           dependencyStats.dependencies[depName] >
             dependencyStats.dependencies[foundExternalMax]) &&
         !allPackages.includes(depName) &&
-        !top10ExternalDeps.some(obj =>
+        !top10ExternalDeps.some((obj) =>
           Object.prototype.hasOwnProperty.call(obj, depName)
         )
       ) {
@@ -288,12 +290,12 @@ const {
     });
     if (foundOwnMax) {
       top10OwnDeps.push({
-        [foundOwnMax]: dependencyStats.dependencies[foundOwnMax]
+        [foundOwnMax]: dependencyStats.dependencies[foundOwnMax],
       });
     }
     if (foundExternalMax) {
       top10ExternalDeps.push({
-        [foundExternalMax]: dependencyStats.dependencies[foundExternalMax]
+        [foundExternalMax]: dependencyStats.dependencies[foundExternalMax],
       });
     }
   }
@@ -308,16 +310,16 @@ const {
     path.resolve("stats/interdeps.json"),
     // JSON.stringify(interdep, null, 4),
     JSON.stringify(
-      interdep.filter(obj1 => {
+      interdep.filter((obj1) => {
         return !(
           !obj1.imports.length &&
-          !interdep.some(obj2 => obj2.imports.includes(obj1.name))
+          !interdep.some((obj2) => obj2.imports.includes(obj1.name))
         );
       }),
       null,
       4
     ),
-    err => {
+    (err) => {
       if (err) {
         throw err;
       }
@@ -328,7 +330,7 @@ const {
   fs.writeFile(
     path.resolve("stats/compiledAssertionCounts.json"),
     JSON.stringify(compiledAssertionCounts, null, 4),
-    err => {
+    (err) => {
       if (err) {
         throw err;
       }
@@ -341,7 +343,7 @@ const {
   fs.writeFile(
     path.resolve("stats/dependencyStats.json"),
     JSON.stringify(sortAllObjectsSync(dependencyStats), null, 4),
-    err => {
+    (err) => {
       if (err) {
         throw err;
       }
@@ -389,13 +391,13 @@ const {
       // push new
       oldHistoricTotals.push([
         newdate,
-        compiledAssertionCounts.totalAssertsCount
+        compiledAssertionCounts.totalAssertsCount,
       ]);
     }
     fs.writeFile(
       path.join("stats/oldHistoricTotals.json"),
       JSON.stringify(oldHistoricTotals, null, 4),
-      err => {
+      (err) => {
         if (err) {
           throw err;
         }
