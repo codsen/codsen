@@ -1,6 +1,6 @@
 /**
  * detergent
- * a tool to prepare text for pasting into HTML
+ * Extracts and cleans text
  * Version: 5.10.8
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
