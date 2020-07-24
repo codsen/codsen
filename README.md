@@ -27,7 +27,7 @@ Use these programs, profit from them, use them as ingredients to make even great
 | -------------- | ------- | ------- | ----------- | ----------------------- |
 | [`email-comb`](https://gitlab.com/codsen/codsen/tree/master/packages/email-comb/) | Remove unused CSS from email templates | [emailcomb.com](https://emailcomb.com) | [![email-comb on npm](https://img.shields.io/npm/v/email-comb.svg?style=flat-square)](https://www.npmjs.com/package/email-comb) | [packages/email-comb](https://gitlab.com/codsen/codsen/tree/master/packages/email-comb/) |
 | [`html-crush`](https://gitlab.com/codsen/codsen/tree/master/packages/html-crush/) | Minifies HTML/CSS: valid or broken, pure or mixed with other languages | [htmlcrush.com](https://htmlcrush.com) | [![html-crush on npm](https://img.shields.io/npm/v/html-crush.svg?style=flat-square)](https://www.npmjs.com/package/html-crush) | [packages/html-crush](https://gitlab.com/codsen/codsen/tree/master/packages/html-crush/) |
-| [`detergent`](https://gitlab.com/codsen/codsen/tree/master/packages/detergent/) | a tool to prepare text for pasting into HTML | [detergent.io](https://detergent.io) | [![detergent on npm](https://img.shields.io/npm/v/detergent.svg?style=flat-square)](https://www.npmjs.com/package/detergent) | [packages/detergent](https://gitlab.com/codsen/codsen/tree/master/packages/detergent/) |
+| [`detergent`](https://gitlab.com/codsen/codsen/tree/master/packages/detergent/) | Extracts and cleans text | [detergent.io](https://detergent.io) | [![detergent on npm](https://img.shields.io/npm/v/detergent.svg?style=flat-square)](https://www.npmjs.com/package/detergent) | [packages/detergent](https://gitlab.com/codsen/codsen/tree/master/packages/detergent/) |
 
 Let's group all others by their purpose.
 
