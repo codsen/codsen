@@ -13,12 +13,9 @@
 /browser.js
 /browser-polyfill.js
 /runtime.js
-coverage
 yarn.lock
 lerna-debug.log
 .npmrc
 *.lerna_backup
-/packages/ava/.nyc_output
-/packages/ava/coverage
 ideas.md
 testStats.md
