@@ -1,0 +1,3 @@
+{"total": {"lines":{"total":137,"covered":111,"skipped":0,"pct":81.02},"statements":{"total":139,"covered":113,"skipped":0,"pct":81.29},"functions":{"total":5,"covered":5,"skipped":0,"pct":100},"branches":{"total":521,"covered":386,"skipped":0,"pct":74.09}}
+,"/Users/royston/Documents/__PROJECTS/____libs2/packages/string-apostrophes/dist/string-apostrophes.esm.js": {"lines":{"total":137,"covered":111,"skipped":0,"pct":81.02},"functions":{"total":5,"covered":5,"skipped":0,"pct":100},"statements":{"total":139,"covered":113,"skipped":0,"pct":81.29},"branches":{"total":521,"covered":386,"skipped":0,"pct":74.09}}
+}

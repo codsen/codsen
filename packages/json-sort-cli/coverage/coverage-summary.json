@@ -1,0 +1,3 @@
+{"total": {"lines":{"total":112,"covered":94,"skipped":0,"pct":83.93},"statements":{"total":115,"covered":96,"skipped":0,"pct":83.48},"functions":{"total":37,"covered":32,"skipped":0,"pct":86.49},"branches":{"total":111,"covered":83,"skipped":0,"pct":74.77}}
+,"/Users/royston/Documents/__PROJECTS/____libs2/packages/json-sort-cli/cli.js": {"lines":{"total":112,"covered":94,"skipped":0,"pct":83.93},"functions":{"total":37,"covered":32,"skipped":0,"pct":86.49},"statements":{"total":115,"covered":96,"skipped":0,"pct":83.48},"branches":{"total":111,"covered":83,"skipped":0,"pct":74.77}}
+}

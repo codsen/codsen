@@ -1,0 +1,3 @@
+{"total": {"lines":{"total":53,"covered":50,"skipped":0,"pct":94.34},"statements":{"total":56,"covered":53,"skipped":0,"pct":94.64},"functions":{"total":3,"covered":3,"skipped":0,"pct":100},"branches":{"total":84,"covered":81,"skipped":0,"pct":96.43}}
+,"/Users/royston/Documents/__PROJECTS/____libs2/packages/string-collapse-leading-whitespace/dist/string-collapse-leading-whitespace.esm.js": {"lines":{"total":53,"covered":50,"skipped":0,"pct":94.34},"functions":{"total":3,"covered":3,"skipped":0,"pct":100},"statements":{"total":56,"covered":53,"skipped":0,"pct":94.64},"branches":{"total":84,"covered":81,"skipped":0,"pct":96.43}}
+}

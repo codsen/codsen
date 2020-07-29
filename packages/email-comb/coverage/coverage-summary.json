@@ -1,0 +1,3 @@
+{"total": {"lines":{"total":734,"covered":721,"skipped":0,"pct":98.23},"statements":{"total":754,"covered":741,"skipped":0,"pct":98.28},"functions":{"total":42,"covered":37,"skipped":0,"pct":88.1},"branches":{"total":983,"covered":929,"skipped":0,"pct":94.51}}
+,"/Users/royston/Documents/__PROJECTS/____libs2/packages/email-comb/dist/email-comb.esm.js": {"lines":{"total":734,"covered":721,"skipped":0,"pct":98.23},"functions":{"total":42,"covered":37,"skipped":0,"pct":88.1},"statements":{"total":754,"covered":741,"skipped":0,"pct":98.28},"branches":{"total":983,"covered":929,"skipped":0,"pct":94.51}}
+}

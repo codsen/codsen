@@ -1,0 +1,3 @@
+{"total": {"lines":{"total":80,"covered":62,"skipped":0,"pct":77.5},"statements":{"total":81,"covered":62,"skipped":0,"pct":76.54},"functions":{"total":14,"covered":8,"skipped":0,"pct":57.14},"branches":{"total":30,"covered":16,"skipped":0,"pct":53.33}}
+,"/Users/royston/Documents/__PROJECTS/____libs2/packages/email-all-chars-within-ascii-cli/cli.js": {"lines":{"total":80,"covered":62,"skipped":0,"pct":77.5},"functions":{"total":14,"covered":8,"skipped":0,"pct":57.14},"statements":{"total":81,"covered":62,"skipped":0,"pct":76.54},"branches":{"total":30,"covered":16,"skipped":0,"pct":53.33}}
+}

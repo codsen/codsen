@@ -1,0 +1,4 @@
+{"total": {"lines":{"total":186,"covered":183,"skipped":0,"pct":98.39},"statements":{"total":197,"covered":194,"skipped":0,"pct":98.48},"functions":{"total":12,"covered":11,"skipped":0,"pct":91.67},"branches":{"total":175,"covered":171,"skipped":0,"pct":97.71}}
+,"/Users/royston/Documents/__PROJECTS/____libs2/packages/is-media-descriptor/dist/is-media-descriptor.esm.js": {"lines":{"total":172,"covered":169,"skipped":0,"pct":98.26},"functions":{"total":6,"covered":5,"skipped":0,"pct":83.33},"statements":{"total":180,"covered":177,"skipped":0,"pct":98.33},"branches":{"total":164,"covered":160,"skipped":0,"pct":97.56}}
+,"/Users/royston/Documents/__PROJECTS/____libs2/packages/is-media-descriptor/t-util/util.js": {"lines":{"total":14,"covered":14,"skipped":0,"pct":100},"functions":{"total":6,"covered":6,"skipped":0,"pct":100},"statements":{"total":17,"covered":17,"skipped":0,"pct":100},"branches":{"total":11,"covered":11,"skipped":0,"pct":100}}
+}
