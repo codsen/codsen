@@ -359,3 +359,29 @@ tap.test("14 - adhoc 3", (t) => {
   t.equal(actual, intended, "14");
   t.end();
 });
+
+tap.test("15 - bug #36", (t) => {
+  const input = `<style>@media only screen {}</style>
+<style>.foo {x: y;}</style>
+<body><span class="foo">z</span>`;
+  const {
+    allInBody,
+    allInHead,
+    result,
+    deletedFromHead,
+    deletedFromBody,
+  } = comb(input);
+
+  t.same(allInBody, [".foo"], "15.01");
+  t.same(allInHead, [".foo"], "15.02");
+  t.same(
+    result,
+    `<style>.foo {x: y;}</style>
+<body><span class="foo">z</span>
+`,
+    "15.03"
+  );
+  t.same(deletedFromHead, [], "15.04");
+  t.same(deletedFromBody, [], "15.05");
+  t.end();
+});

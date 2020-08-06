@@ -10,7 +10,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (global = global || self, factory(global.emailComb = {}));
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.emailComb = {}));
 }(this, (function (exports) { 'use strict';
 
   function _typeof(obj) {
@@ -6683,10 +6683,7 @@
         // its closing yet:
         styleEndedAt === null && i >= styleStartedAt || // b) or, style tag was closed, later another-one was opened and we
         // haven't traversed through its closing tag yet:
-        styleStartedAt > styleEndedAt && styleStartedAt < i) && i >= beingCurrentlyAt && !insideCurlyBraces) {
-          // console.log(
-          //   `1243 catching the beginning/ending of CSS selectors in head`
-          // );
+        styleStartedAt > styleEndedAt && styleStartedAt <= i) && i >= beingCurrentlyAt && !insideCurlyBraces) {
           // TODO: skip all false-positive characters within quotes, like curlies
           // PART 1.
           // catch the START of single selectors (for example, "#head-only-id-2")

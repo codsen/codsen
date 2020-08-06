@@ -526,7 +526,7 @@ function comb(str, opts) {
       }
       if (!doNothing && !commentStartedAt && styleStartedAt && i >= styleStartedAt && (
       styleEndedAt === null && i >= styleStartedAt ||
-      styleStartedAt > styleEndedAt && styleStartedAt < i) && i >= beingCurrentlyAt && !insideCurlyBraces) {
+      styleStartedAt > styleEndedAt && styleStartedAt <= i) && i >= beingCurrentlyAt && !insideCurlyBraces) {
         if (singleSelectorStartedAt === null) {
           if (chr === "." || chr === "#") {
             singleSelectorStartedAt = i;

@@ -607,7 +607,7 @@ function comb(str, opts) {
         styleStartedAt &&
         i >= styleStartedAt &&
         ((styleEndedAt === null && i >= styleStartedAt) ||
-          (styleStartedAt > styleEndedAt && styleStartedAt < i)) &&
+          (styleStartedAt > styleEndedAt && styleStartedAt <= i)) &&
         i >= beingCurrentlyAt &&
         !insideCurlyBraces
       ) {
