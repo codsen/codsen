@@ -293,7 +293,8 @@ async function step14(receivedPack) {
   //   objectPath.set(receivedPack, "tap.timeout", 0);
   // }
 
-  const formattedPack = await format(receivedPack);
+  const formattedPack = undefined;
+  // const formattedPack = await format(receivedPack);
 
   // finally, write out amended var "lectrc" contents onto .lectrc.json
   // console.log(`0285 lect: about to write the lectrc:\n\n\n███████████████████████████████████████\n\n\n${JSON.stringify(lectrc, null, 4)}\n\n\n███████████████████████████████████████\n\n\n`)
@@ -335,7 +336,7 @@ async function step14(receivedPack) {
         );
         process.exit(1);
       }
-      // log(`${chalk.green(logSymbols.success, "package.json OK")}`);
+      log(`${chalk.green(logSymbols.success, "package.json OK")}`);
       log(`${chalk.green(logSymbols.success, "LECT OK")}`);
       process.exit(0);
     });
@@ -1027,7 +1028,7 @@ async function writePackageJson(receivedPackageJsonObj) {
         !pack.lect.various.devDependencies.includes(key)) &&
       !(isCLI || (isStr(pack.name) && pack.name.startsWith("gulp")))
     ) {
-      console.log(`1030 lect: we'll delete key "${key}" from dev dependencies`);
+      console.log(`1031 lect: we'll delete key "${key}" from dev dependencies`);
       delete receivedPackageJsonObj.devDependencies[key];
     } else if (
       Object.prototype.hasOwnProperty.call(lectrcDevDeps, key) &&
@@ -1668,7 +1669,7 @@ function step6() {
       }
     } else if (piecesHeadingIsNotAmongExcluded(readmePiece.heading)) {
       if (DEBUG) {
-        console.log(`1671 clause #3`);
+        console.log(`1672 clause #3`);
       }
       // if there was no heading, turn off its clauses so they accidentally
       // don't activate upon some random h1
