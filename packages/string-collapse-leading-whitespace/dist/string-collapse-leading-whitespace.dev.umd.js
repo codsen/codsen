@@ -10,7 +10,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global = global || self, global.stringCollapseLeadingWhitespace = factory());
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.stringCollapseLeadingWhitespace = factory());
 }(this, (function () { 'use strict';
 
   var rawNbsp = "\xA0"; // this function filters the characters, does the "collapsing" and trimming

@@ -10,7 +10,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (global = global || self, factory(global.helga = {}));
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.helga = {}));
 }(this, (function (exports) { 'use strict';
 
   function _defineProperty(obj, key, value) {
@@ -60,10 +60,6 @@
     }
 
     return target;
-  }
-
-  function unwrapExports (x) {
-  	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
   }
 
   function createCommonjsModule(fn, basedir, module) {
@@ -231,7 +227,6 @@
     exports.default = _default;
     module.exports = exports.default;
   });
-  var unescapeJs = /*@__PURE__*/unwrapExports(dist);
 
   var version = "1.1.34";
 
@@ -251,10 +246,10 @@
     // ---------------------------------------------------------------------------
 
 
-    var beautified = unescapeJs(str); // 2. minification:
+    var beautified = dist(str); // 2. minification:
     // ---------------------------------------------------------------------------
 
-    var minified = unescapeJs(str);
+    var minified = dist(str);
 
     if (opts.targetJSON) {
       // if target is JSON, replace all tabs with two spaces, then JSON stringify

@@ -10,7 +10,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global = global || self, global.arrayiffyIfString = factory());
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.arrayiffyIfString = factory());
 }(this, (function () { 'use strict';
 
   // If a string is given, put it into an array. Bypass everything else.

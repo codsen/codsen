@@ -10,7 +10,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global = global || self, global.csvSort = factory());
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.csvSort = factory());
 }(this, (function () { 'use strict';
 
   function _typeof(obj) {
@@ -1829,21 +1829,22 @@
   var lodash_pull = pull;
 
   /*!
-   * currency.js - v1.2.2
+   * currency.js - v2.0.2
    * http://scurker.github.io/currency.js
    *
-   * Copyright (c) 2019 Jason Wilson
+   * Copyright (c) 2020 Jason Wilson
    * Released under MIT license
    */
   var defaults = {
     symbol: '$',
     separator: ',',
     decimal: '.',
-    formatWithSymbol: false,
     errorOnInvalid: false,
     precision: 2,
     pattern: '!#',
-    negativePattern: '-!#'
+    negativePattern: '-!#',
+    format: format,
+    fromCents: false
   };
 
   var round = function round(v) {
@@ -1899,18 +1900,23 @@
         decimal = opts.decimal,
         errorOnInvalid = opts.errorOnInvalid,
         decimals = opts.precision,
+        fromCents = opts.fromCents,
         precision = pow(decimals),
-        isNumber = typeof value === 'number';
+        isNumber = typeof value === 'number',
+        isCurrency = value instanceof currency;
 
-    if (isNumber || value instanceof currency) {
-      v = (isNumber ? value : value.value) * precision;
+    if (isCurrency && fromCents) {
+      return value.intValue;
+    }
+
+    if (isNumber || isCurrency) {
+      v = isCurrency ? value.value : value;
     } else if (typeof value === 'string') {
       var regex = new RegExp('[^-\\d' + decimal + ']', 'g'),
           decimalString = new RegExp('\\' + decimal, 'g');
       v = value.replace(/\((.*)\)/, '-$1') // allow negative e.g. (1.99)
       .replace(regex, '') // replace any non numeric values
-      .replace(decimalString, '.') // convert any decimal values
-      * precision; // scale number to integer value
+      .replace(decimalString, '.'); // convert any decimal values
 
       v = v || 0;
     } else {
@@ -1919,11 +1925,38 @@
       }
 
       v = 0;
-    } // Handle additional decimal for proper rounding.
+    }
+
+    if (fromCents) {
+      v = Math.trunc(v); // Remove decimals. Invalid for cents.
+    } else {
+      v *= precision; // scale number to integer value
+
+      v = v.toFixed(4); // Handle additional decimal for proper rounding.
+
+      v = useRounding ? round(v) : v;
+    }
+
+    return v;
+  }
+  /**
+   * Formats a currency object
+   * @param currency
+   * @param {object} [opts]
+   */
 
 
-    v = v.toFixed(4);
-    return useRounding ? round(v) : v;
+  function format(currency, settings) {
+    var pattern = settings.pattern,
+        negativePattern = settings.negativePattern,
+        symbol = settings.symbol,
+        separator = settings.separator,
+        decimal = settings.decimal,
+        groups = settings.groups,
+        split = ('' + currency).replace(/^-/, '').split('.'),
+        dollars = split[0],
+        cents = split[1];
+    return (currency.value >= 0 ? pattern : negativePattern).replace('!', symbol).replace('#', dollars.replace(groups, '$1' + separator) + (cents ? decimal + cents : ''));
   }
 
   currency.prototype = {
@@ -1936,7 +1969,7 @@
       var intValue = this.intValue,
           _settings = this.s,
           _precision = this.p;
-      return currency((intValue += parse(number, _settings)) / _precision, _settings);
+      return currency((intValue += parse(number, _settings)) / (_settings.fromCents ? 1 : _precision), _settings);
     },
 
     /**
@@ -1948,7 +1981,7 @@
       var intValue = this.intValue,
           _settings = this.s,
           _precision = this.p;
-      return currency((intValue -= parse(number, _settings)) / _precision, _settings);
+      return currency((intValue -= parse(number, _settings)) / (_settings.fromCents ? 1 : _precision), _settings);
     },
 
     /**
@@ -1959,7 +1992,7 @@
     multiply: function multiply(number) {
       var intValue = this.intValue,
           _settings = this.s;
-      return currency((intValue *= number) / pow(_settings.precision), _settings);
+      return currency((intValue *= number) / (_settings.fromCents ? 1 : pow(_settings.precision)), _settings);
     },
 
     /**
@@ -1985,12 +2018,13 @@
           _settings = this.s,
           distribution = [],
           split = Math[intValue >= 0 ? 'floor' : 'ceil'](intValue / count),
-          pennies = Math.abs(intValue - split * count);
+          pennies = Math.abs(intValue - split * count),
+          precision = _settings.fromCents ? 1 : _precision;
 
       for (; count !== 0; count--) {
-        var item = currency(split / _precision, _settings); // Add any left over pennies
+        var item = currency(split / precision, _settings); // Add any left over pennies
 
-        pennies-- > 0 && (item = intValue >= 0 ? item.add(1 / _precision) : item.subtract(1 / _precision));
+        pennies-- > 0 && (item = item[intValue >= 0 ? 'add' : 'subtract'](1 / precision));
         distribution.push(item);
       }
 
@@ -2020,21 +2054,14 @@
      * @param {boolean} useSymbol - format with currency symbol
      * @returns {string}
      */
-    format: function format(useSymbol) {
-      var _this$_settings = this.s,
-          pattern = _this$_settings.pattern,
-          negativePattern = _this$_settings.negativePattern,
-          formatWithSymbol = _this$_settings.formatWithSymbol,
-          symbol = _this$_settings.symbol,
-          separator = _this$_settings.separator,
-          decimal = _this$_settings.decimal,
-          groups = _this$_settings.groups,
-          values = (this + '').replace(/^-/, '').split('.'),
-          dollars = values[0],
-          cents = values[1]; // set symbol formatting
+    format: function format(options) {
+      var _settings = this.s;
 
-      typeof useSymbol === 'undefined' && (useSymbol = formatWithSymbol);
-      return (this.value >= 0 ? pattern : negativePattern).replace('!', useSymbol ? symbol : '').replace('#', "".concat(dollars.replace(groups, '$1' + separator)).concat(cents ? decimal + cents : ''));
+      if (typeof options === 'function') {
+        return options(this, _settings);
+      }
+
+      return _settings.format(this, Object.assign({}, _settings, options));
     },
 
     /**
