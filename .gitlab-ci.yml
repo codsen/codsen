@@ -20,6 +20,7 @@ deploy:
     - echo "git user:"
     - git config user.name
     - echo "npm user:"
+    - git config --global http.postBuffer 157286400
     - npm whoami
     - set -o pipefail
     - echo '█████████████████████████████ 1 █████████████████████████████'
