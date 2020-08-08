@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.9.20](https://gitlab.com/codsen/codsen/compare/email-comb@3.9.19...email-comb@3.9.20) (2020-08-08)
-
+## 3.9.20 (2020-08-08)
 
 ### Bug Fixes
 
-* fix a bug with consecutive style tags ignored first class' first char ([758ea97](https://gitlab.com/codsen/codsen/commit/758ea970cd0911f7c04f6c209a515ee680b75c60)), closes [#36](https://gitlab.com/codsen/codsen/issues/36)
-
-
-
-
+- fix a bug with consecutive style tags ignored first class' first char ([758ea97](https://gitlab.com/codsen/codsen/commit/758ea970cd0911f7c04f6c209a515ee680b75c60)), closes [#36](https://gitlab.com/codsen/codsen/issues/36)
 
 ## 3.9.17 (2020-05-24)
 
