@@ -20,11 +20,6 @@ setup:
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )'
 
     ##
-    ## Run ssh-agent (inside the build environment)
-    ##
-    - eval "$(ssh-agent -s)"
-
-    ##
     ## Write the private key
     ##
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
@@ -32,7 +27,12 @@ setup:
     ##
     ## Set its permissions
     ##
-    - chmod 600 ~/.ssh/id_rsa
+    - chmod 700 ~/.ssh/id_rsa
+
+    ##
+    ## Run ssh-agent inside the build environment
+    ##
+    - eval "$(ssh-agent -s)"
 
     ##
     ## Add the SSH key
@@ -42,13 +42,13 @@ setup:
     ##
     ## Scan the keys of gitlab.com
     ##
-    - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
+    - ssh-keyscan -H 'gitlab.com' >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
 
     ##
     ## Start the helper to store credentials
     ##
-    - git config --global credential.helper store
+    # - git config --global credential.helper store
 
     ##
     ## Set up git remote
