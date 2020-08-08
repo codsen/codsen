@@ -53,8 +53,8 @@ setup:
     ##
     - git config --global user.email "$GITLAB_USER_EMAIL"
     - git config --global user.name "$YOUR_NAME_SURNAME"
-    # - git config user.name
     - echo "git user:"
+    - git config user.name
 
     ##
     ## Set up npm credentials
