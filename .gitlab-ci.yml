@@ -3,36 +3,92 @@
 #    C O D S E N
 #
 
-deploy:
-  except:
-    - tags
-  image: node:latest
-  stage: deploy
+# https://gitlab.com/gitlab-examples/ssh-private-key/-/blob/master/.gitlab-ci.yml
+setup:
+  stage: .pre
   script:
+    ##
+    ## Install ssh-agent if not already installed, it is required by Docker.
+    ## (change apt-get to yum if you use an RPM-based image)
+    ##
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )'
+
+    ##
+    ## Run ssh-agent (inside the build environment)
+    ##
+    - eval $(ssh-agent -s)
+
+    ##
+    ## Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
+    ## We're using tr to fix line endings which makes ed25519 keys work
+    ## without extra base64 encoding.
+    ## https://gitlab.com/gitlab-examples/ssh-private-key/issues/1#note_48526556
+    ##
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+
+    ##
+    ## Create the SSH directory and give it the right permissions
+    ##
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+
+    ##
+    ## Scan the keys of gitlab.com
+    ##
+    - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+
+    ##
+    ## Start the helper to store credentials
+    ##
     - git config --global credential.helper store
-    - git remote set-url origin https://gitlab-ci-token:$PERSONAL_ACCESS_TOKEN@gitlab.com/codsen/codsen.git
+
+    ##
+    ## Set up git remote
+    ##
+    - git remote set-url origin git@gitlab.com:codsen/codsen.git
+
+    ##
+    ## And git credentials
+    ##
     - git config --global user.email "$GITLAB_USER_EMAIL"
     - git config --global user.name "$YOUR_NAME_SURNAME"
+    # - git config user.name
+    - echo "git user:"
+
+    ##
+    ## Set up npm credentials
+    ##
     - npm set unsafe-perm true -g
     - npm set //registry.npmjs.org/:_authToken $NPM_TOKEN -g
     - npm set username $NPM_USERNAME -g
     - npm set email $NPM_EMAIL -g
-    - echo "git user:"
-    - git config user.name
     - echo "npm user:"
-    - git config --global http.postBuffer 157286400
     - npm whoami
-    - set -o pipefail
-    - echo '█████████████████████████████ 1 █████████████████████████████'
+
+    ##
+    ## Fail early and loudly
+    ##
+    - set -euo pipefail
+
+    ##
+    ## Checkout the repo
+    ##
     - git status
     - git checkout master
-    - echo '█████████████████████████████ 2 █████████████████████████████'
+
+building_and_testing:
+  stage: test
+  script:
+    - echo '█████████████████████████████ 1/9 - bootstrap and test █████████████████████████████'
     - git status
     - npm run fresh
-    - echo '█████████████████████████████ 3 █████████████████████████████'
+
+    - echo '█████████████████████████████ 2/9 - readme █████████████████████████████'
     - git status
     - npm run readme:generate
-    - echo '█████████████████████████████ 4 █████████████████████████████'
+
+    - echo '█████████████████████████████ 3/9 - the first git add █████████████████████████████'
     - git status
     - git add packages
     - git add stats
@@ -40,20 +96,32 @@ deploy:
     - "git add package-lock.json || echo 'no package-lock.json'"
     - "git diff-index --quiet HEAD || git commit -m '[skip ci] chore: automated build tasks' --no-verify"
     - npm run pub:vers
-    - echo '█████████████████████████████ 5 █████████████████████████████'
+
+    - echo '█████████████████████████████ 4/9 - the last git add █████████████████████████████'
     - git status
     - git add packages
     - git add README.md
-    - echo '█████████████████████████████ 6 █████████████████████████████'
+
+    - echo '█████████████████████████████ 5/9 - the last commit █████████████████████████████'
     - git status
     - "git commit -m '[skip ci] chore: automated build tasks' --no-verify"
-    - echo '█████████████████████████████ 7 █████████████████████████████'
+    - git status
+
+deployment:
+  except:
+    - tags
+  image: node:latest
+  stage: deploy
+  script:
+    - echo '█████████████████████████████ 6/9 - deploy █████████████████████████████'
     - git status
     - npm run republish
-    - echo '█████████████████████████████ 8 █████████████████████████████'
+
+    - echo '█████████████████████████████ 7/9 - push after deploy █████████████████████████████'
     - git status
     - git push origin master
-    - echo '█████████████████████████████ 9 █████████████████████████████'
+
+    - echo '█████████████████████████████ 8/9 - purge jsdelivr █████████████████████████████'
     - "curl https://purge.jsdelivr.net/npm/detergent/dist/detergent.umd.js || echo 'detergent unreachable on jsdelivr'"
     - "curl https://purge.jsdelivr.net/npm/html-crush/dist/html-crush.umd.js || echo 'html-crush unreachable on jsdelivr'"
     - "curl https://purge.jsdelivr.net/npm/email-comb/dist/email-comb.umd.js || echo 'email-comb unreachable on jsdelivr'"
@@ -62,4 +130,5 @@ deploy:
     - "curl https://purge.jsdelivr.net/npm/codsen-tokenizer/dist/codsen-tokenizer.umd.js || echo 'codsen-tokenizer unreachable on jsdelivr'"
     - "curl https://purge.jsdelivr.net/npm/codsen-parser/dist/codsen-parser.umd.js || echo 'codsen-parser unreachable on jsdelivr'"
     - "curl https://purge.jsdelivr.net/npm/json-variables/dist/json-variables.umd.js || echo 'json-variables unreachable on jsdelivr'"
-    - echo '█████████████████████████████ 10 ████████████████████████████ - done'
+
+    - echo '█████████████████████████████ 9/9 - done ████████████████████████████'
