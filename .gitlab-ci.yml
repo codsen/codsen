@@ -87,6 +87,7 @@ setup:
 
 building_and_testing:
   stage: test
+  image: node:latest
   script:
     - echo '█████████████████████████████ 1/9 - bootstrap and test █████████████████████████████'
     - git status
@@ -119,6 +120,7 @@ deployment:
   except:
     - tags
   stage: deploy
+  image: node:latest
   script:
     - echo '█████████████████████████████ 6/9 - deploy █████████████████████████████'
     - git status
