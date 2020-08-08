@@ -403,7 +403,9 @@ function step13() {
           pack.devDependencies["@rollup/plugin-json"] ? ",\n        json()" : ""
         },
         commonjs(),
-        babel(),
+        babel({
+          rootMode: "upward",
+        }),
         terser(),
         banner(licensePiece),
       ],
@@ -439,7 +441,9 @@ function step13() {
           pack.devDependencies["@rollup/plugin-json"] ? ",\n        json()" : ""
         },
         commonjs(),
-        babel(),
+        babel({
+          rootMode: "upward",
+        }),
         banner(licensePiece),
       ],
     },
@@ -480,7 +484,9 @@ function step13() {
     }${pack.devDependencies["@rollup/plugin-json"] ? ",\n        json()" : ""}${
       rollupPluginsStrToInsert ? `,\n        ${rollupPluginsStrToInsert}` : ""
     },
-        babel(),
+        babel({
+          rootMode: "upward",
+        }),
         cleanup({ comments: "istanbul" }),
         banner(licensePiece),
       ],
@@ -958,22 +964,22 @@ async function writePackageJson(receivedPackageJsonObj) {
   // What matters is lectrc.babelrc contents (keys "override" or "set") or
   // package.json override equivalent for it - package.json>lect.babelrc keys
   // "override" or "set"
-  if (
-    objectPath.has(pack, "devDependencies.babel-plugin-external-helpers") &&
-    (!objectPath.has(lectrc, "babelrc.override") ||
-      !JSON.stringify(lectrc.babelrc.override).includes(
-        "babel-plugin-external-helpers"
-      )) &&
-    (!objectPath.has(lectrc, "babelrc.set") ||
-      !JSON.stringify(lectrc.babelrc.set).includes(
-        "babel-plugin-external-helpers"
-      ))
-  ) {
-    objectPath.del(
-      receivedPackageJsonObj,
-      "devDependencies.babel-plugin-external-helpers"
-    );
-  }
+  // if (
+  //   objectPath.has(pack, "devDependencies.babel-plugin-external-helpers") &&
+  //   (!objectPath.has(lectrc, "babelrc.override") ||
+  //     !JSON.stringify(lectrc.babelrc.override).includes(
+  //       "babel-plugin-external-helpers"
+  //     )) &&
+  //   (!objectPath.has(lectrc, "babelrc.set") ||
+  //     !JSON.stringify(lectrc.babelrc.set).includes(
+  //       "babel-plugin-external-helpers"
+  //     ))
+  // ) {
+  //   objectPath.del(
+  //     receivedPackageJsonObj,
+  //     "devDependencies.babel-plugin-external-helpers"
+  //   );
+  // }
 
   if (!isSpecial) {
     if (isCLI || (isStr(pack.name) && pack.name.startsWith("gulp"))) {
@@ -1027,7 +1033,7 @@ async function writePackageJson(receivedPackageJsonObj) {
         !pack.lect.various.devDependencies.includes(key)) &&
       !(isCLI || (isStr(pack.name) && pack.name.startsWith("gulp")))
     ) {
-      console.log(`1030 lect: we'll delete key "${key}" from dev dependencies`);
+      console.log(`1036 lect: we'll delete key "${key}" from dev dependencies`);
       delete receivedPackageJsonObj.devDependencies[key];
     } else if (
       Object.prototype.hasOwnProperty.call(lectrcDevDeps, key) &&
@@ -1668,7 +1674,7 @@ function step6() {
       }
     } else if (piecesHeadingIsNotAmongExcluded(readmePiece.heading)) {
       if (DEBUG) {
-        console.log(`1671 clause #3`);
+        console.log(`1677 clause #3`);
       }
       // if there was no heading, turn off its clauses so they accidentally
       // don't activate upon some random h1
@@ -1964,161 +1970,164 @@ const ${consumedName} = ${camelCase(pack.name)};
 
 function step5() {
   // log(`${chalk.white("\nSTEP 5 - Assemble and write .babelrc")}`);
-  let finalBabelrc = null;
+  // let finalBabelrc = null;
 
-  if (
-    isSpecial ||
-    (isCLI && Object.keys(pack.bin).length > 0) ||
-    pack.name.startsWith("gulp")
-  ) {
-    // log(
-    //   `${chalk.yellow(
-    //     logSymbols.info,
-    //     "this project does not use transpiling!"
-    //   )}`
-    // );
-    step6();
-  } else {
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
+  // skip .babelrc - from Babel v.7 root config will be used
+  step6();
 
-    if (
-      objectPath.has(lectrc, "babelrc.override") &&
-      isObj(lectrc.babelrc.override) &&
-      Object.keys(lectrc.babelrc.override).length > 0
-    ) {
-      finalBabelrc = clone(lectrc.babelrc.override);
-    } else if (
-      objectPath.has(lectrc, "babelrc.set") &&
-      isObj(lectrc.babelrc.set) &&
-      Object.keys(lectrc.babelrc.set).length > 0
-    ) {
-      finalBabelrc = clone(lectrc.babelrc.set);
-    }
-
-    if (
-      finalBabelrc &&
-      (objectPath.has(pack, "devDependencies.rollup") ||
-        (objectPath.has(pack, "devDependencies") &&
-          isObj(pack.devDependencies) &&
-          Object.keys(pack.devDependencies).length > 0 &&
-          Object.keys(pack.devDependencies).some((key) =>
-            key.startsWith("babel")
-          )))
-    ) {
-      // set this babelrc template coming from lectrc as a base, which we
-      // might or might not tweak later:
-
-      // So the source of the new babelrc contents are given.
-      // Let's check are there any overrides per-library level:
-
-      // ***
-      // first - overrides. If any are provided, the current babelrc is kept and
-      // package.json overrides are hard-merged (overwriting everything that has
-      // the same key names, no matter the value type hierarchy, to which normally
-      // standard merge-advanced adheres)
-
-      if (
-        objectPath.has(pack, "lect.babelrc.override") &&
-        isObj(pack.lect.babelrc.override) &&
-        Object.keys(pack.lect.babelrc.override).length > 0
-      ) {
-        finalBabelrc = mergeAdvanced(finalBabelrc, pack.lect.babelrc.override, {
-          hardMergeEverything: true,
-          mergeObjectsOnlyWhenKeysetMatches: false,
-        });
-      }
-
-      // ***
-      // second - hard "set". If the key is present, babelrc will be set to its value,
-      // provided it's an object (empty or non-empty)
-      if (
-        objectPath.has(pack, "lect.babelrc.set") &&
-        isObj(pack.lect.babelrc.set)
-      ) {
-        finalBabelrc = clone(pack.lect.babelrc.set);
-      }
-
-      // if it's a tap-tested package, remove all AVA references
-      if (objectPath.has(pack, "devDependencies.tap")) {
-        // tap-tested libraries don't need instanbul plugins on babel, so
-        // delete the env from babel plugin
-        objectPath.del(finalBabelrc, "env");
-      }
-
-      // Write out whatever we got so far:
-      writeFileAtomic(
-        ".babelrc",
-        JSON.stringify(finalBabelrc, null, 2),
-        (err) => {
-          if (err) {
-            log(
-              `${chalk.red(
-                logSymbols.error,
-                `could not write .babelrc:\n${err}`
-              )}`
-            );
-          } else {
-            // log(`${chalk.green(logSymbols.success, ".babelrc OK")}`);
-          }
-          step6();
-        }
-      );
-    } else if (isCLI) {
-      //    SO IT'S A CLI !
-
-      // remove cli.js from "lect.npmignore.badFiles"
-      const badFiles = objectPath.get(pack, "lect.npmignore.badFiles");
-      if (isArr(badFiles) && badFiles.includes("cli.js")) {
-        objectPath.set(
-          pack,
-          "lect.npmignore.badFiles",
-          badFiles.filter((val) => val !== "cli.js")
-        );
-      }
-
-      objectPath.set(
-        pack,
-        "devDependencies",
-        deleteKey(objectPath.get(pack, "devDependencies"), { key: "babel*" })
-      );
-
-      // delete any existing .babelrc
-      fs.remove(path.resolve("./.babelrc"))
-        .then(() => {
-          log(chalk.green(logSymbols.success, ".babelrc DELETED"));
-          // and move on to the next step
-          step6();
-        })
-        .catch((err) => {
-          log(
-            `${chalk.red(logSymbols.error, `error deleting .babelrc:\n${err}`)}`
-          );
-          // and move on to the next step
-          step6();
-        });
-    }
-
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-  }
+  // if (
+  //   isSpecial ||
+  //   (isCLI && Object.keys(pack.bin).length > 0) ||
+  //   pack.name.startsWith("gulp")
+  // ) {
+  //   // log(
+  //   //   `${chalk.yellow(
+  //   //     logSymbols.info,
+  //   //     "this project does not use transpiling!"
+  //   //   )}`
+  //   // );
+  //   step6();
+  // } else {
+  //   //
+  //   //
+  //   //
+  //   //
+  //   //
+  //   //
+  //   //
+  //   //
+  //   //
+  //   //
+  //   //
+  //
+  //   if (
+  //     objectPath.has(lectrc, "babelrc.override") &&
+  //     isObj(lectrc.babelrc.override) &&
+  //     Object.keys(lectrc.babelrc.override).length > 0
+  //   ) {
+  //     finalBabelrc = clone(lectrc.babelrc.override);
+  //   } else if (
+  //     objectPath.has(lectrc, "babelrc.set") &&
+  //     isObj(lectrc.babelrc.set) &&
+  //     Object.keys(lectrc.babelrc.set).length > 0
+  //   ) {
+  //     finalBabelrc = clone(lectrc.babelrc.set);
+  //   }
+  //
+  //   if (
+  //     finalBabelrc &&
+  //     (objectPath.has(pack, "devDependencies.rollup") ||
+  //       (objectPath.has(pack, "devDependencies") &&
+  //         isObj(pack.devDependencies) &&
+  //         Object.keys(pack.devDependencies).length > 0 &&
+  //         Object.keys(pack.devDependencies).some((key) =>
+  //           key.startsWith("babel")
+  //         )))
+  //   ) {
+  //     // set this babelrc template coming from lectrc as a base, which we
+  //     // might or might not tweak later:
+  //
+  //     // So the source of the new babelrc contents are given.
+  //     // Let's check are there any overrides per-library level:
+  //
+  //     // ***
+  //     // first - overrides. If any are provided, the current babelrc is kept and
+  //     // package.json overrides are hard-merged (overwriting everything that has
+  //     // the same key names, no matter the value type hierarchy, to which normally
+  //     // standard merge-advanced adheres)
+  //
+  //     if (
+  //       objectPath.has(pack, "lect.babelrc.override") &&
+  //       isObj(pack.lect.babelrc.override) &&
+  //       Object.keys(pack.lect.babelrc.override).length > 0
+  //     ) {
+  //       finalBabelrc = mergeAdvanced(finalBabelrc, pack.lect.babelrc.override, {
+  //         hardMergeEverything: true,
+  //         mergeObjectsOnlyWhenKeysetMatches: false,
+  //       });
+  //     }
+  //
+  //     // ***
+  //     // second - hard "set". If the key is present, babelrc will be set to its value,
+  //     // provided it's an object (empty or non-empty)
+  //     if (
+  //       objectPath.has(pack, "lect.babelrc.set") &&
+  //       isObj(pack.lect.babelrc.set)
+  //     ) {
+  //       finalBabelrc = clone(pack.lect.babelrc.set);
+  //     }
+  //
+  //     // if it's a tap-tested package, remove all AVA references
+  //     if (objectPath.has(pack, "devDependencies.tap")) {
+  //       // tap-tested libraries don't need instanbul plugins on babel, so
+  //       // delete the env from babel plugin
+  //       objectPath.del(finalBabelrc, "env");
+  //     }
+  //
+  //     // Write out whatever we got so far:
+  //     writeFileAtomic(
+  //       ".babelrc",
+  //       JSON.stringify(finalBabelrc, null, 2),
+  //       (err) => {
+  //         if (err) {
+  //           log(
+  //             `${chalk.red(
+  //               logSymbols.error,
+  //               `could not write .babelrc:\n${err}`
+  //             )}`
+  //           );
+  //         } else {
+  //           // log(`${chalk.green(logSymbols.success, ".babelrc OK")}`);
+  //         }
+  //         step6();
+  //       }
+  //     );
+  //   } else if (isCLI) {
+  //     //    SO IT'S A CLI !
+  //
+  //     // remove cli.js from "lect.npmignore.badFiles"
+  //     const badFiles = objectPath.get(pack, "lect.npmignore.badFiles");
+  //     if (isArr(badFiles) && badFiles.includes("cli.js")) {
+  //       objectPath.set(
+  //         pack,
+  //         "lect.npmignore.badFiles",
+  //         badFiles.filter((val) => val !== "cli.js")
+  //       );
+  //     }
+  //
+  //     objectPath.set(
+  //       pack,
+  //       "devDependencies",
+  //       deleteKey(objectPath.get(pack, "devDependencies"), { key: "babel*" })
+  //     );
+  //
+  //     // delete any existing .babelrc
+  //     fs.remove(path.resolve("./.babelrc"))
+  //       .then(() => {
+  //         log(chalk.green(logSymbols.success, ".babelrc DELETED"));
+  //         // and move on to the next step
+  //         step6();
+  //       })
+  //       .catch((err) => {
+  //         log(
+  //           `${chalk.red(logSymbols.error, `error deleting .babelrc:\n${err}`)}`
+  //         );
+  //         // and move on to the next step
+  //         step6();
+  //       });
+  //   }
+  //
+  //   //
+  //   //
+  //   //
+  //   //
+  //   //
+  //   //
+  //   //
+  //   //
+  //   //
+  //   //
+  // }
 }
 
 // -----------------------------------------------------------------------------
@@ -2249,6 +2258,48 @@ function step2() {
       isCLI = true;
       log(`${chalk.yellow(logSymbols.info, `package is a CLI!`)}`);
     }
+
+    //     if (!isCLI) {
+    //       const contents = `import tap from "tap";
+    // import { Linter } from "eslint";
+    // import fs from "fs";
+    // import path from "path";
+    //
+    // tap.test("01 - umd is indeed ES5", (t) => {
+    //   const linter = new Linter();
+    //   const umdSource = fs.readFileSync(
+    //     path.resolve("dist/${pack.name}.umd.js"),
+    //     "utf8"
+    //   );
+    //   const messages = linter.verify(umdSource);
+    //   t.same(messages, [], "01 - umd build is not ES5!");
+    //   t.end();
+    // });
+    //
+    // tap.test("02 - dev.umd is indeed ES5", (t) => {
+    //   const linter = new Linter();
+    //   const devUmdSource = fs.readFileSync(
+    //     path.resolve("dist/${pack.name}.dev.umd.js"),
+    //     "utf8"
+    //   );
+    //   const messages = linter.verify(devUmdSource);
+    //   t.same(messages, [], "02 - dev.umd build is not ES5!");
+    //   t.end();
+    // });
+    //
+    // tap.test("03 - cjs is indeed ES5", (t) => {
+    //   const linter = new Linter();
+    //   const cjsSource = fs.readFileSync(
+    //     path.resolve("dist/${pack.name}.cjs.js"),
+    //     "utf8"
+    //   );
+    //   const messages = linter.verify(cjsSource);
+    //   t.same(messages, [], "03 - cjs build is not ES5!");
+    //   t.end();
+    // });
+    // `;
+    //       writeFileAtomic("test/es5.js", contents);
+    //     }
 
     step3();
   });

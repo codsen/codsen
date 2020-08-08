@@ -32,7 +32,9 @@ export default (commandLineArgs) => {
         builtins(),
         resolve(),
         commonjs(),
-        babel(),
+        babel({
+          rootMode: "upward",
+        }),
         terser(),
         banner(licensePiece),
       ],
@@ -53,7 +55,9 @@ export default (commandLineArgs) => {
         builtins(),
         resolve(),
         commonjs(),
-        babel(),
+        babel({
+          rootMode: "upward",
+        }),
         banner(licensePiece),
       ],
     },
@@ -68,7 +72,9 @@ export default (commandLineArgs) => {
           sourceMap: false,
         }),
         builtins(),
-        babel(),
+        babel({
+          rootMode: "upward",
+        }),
         cleanup({ comments: "istanbul" }),
         banner(licensePiece),
       ],

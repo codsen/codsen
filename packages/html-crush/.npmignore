@@ -21,7 +21,6 @@ test_alt
 
 # files:
 
-.babelrc
 .npmignore
 .prettierignore
 rollup.config.js

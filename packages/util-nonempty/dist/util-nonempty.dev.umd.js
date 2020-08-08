@@ -159,7 +159,7 @@
 
   var lodash_isplainobject = isPlainObject;
 
-  var isArr = Array.isArray;
+  const isArr = Array.isArray;
 
   function isStr(something) {
     return typeof something === "string";

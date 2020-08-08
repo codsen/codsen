@@ -138,6 +138,7 @@
 	},
 	"files": {
 		"delete": [
+			".babelrc",
 			".gitignore",
 			".editorconfig",
 			".gitattributes",

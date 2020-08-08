@@ -21,7 +21,6 @@ test
 
 # files:
 
-.babelrc
 .npmignore
 .prettierignore
 rollup.config.js

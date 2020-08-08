@@ -13,7 +13,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var isPlainObject = _interopDefault(require('lodash.isplainobject'));
 
-var isArr = Array.isArray;
+const isArr = Array.isArray;
 function isStr(something) {
   return typeof something === "string";
 }

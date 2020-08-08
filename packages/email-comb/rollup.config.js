@@ -34,7 +34,9 @@ export default (commandLineArgs) => {
         resolve(),
         json(),
         commonjs(),
-        babel(),
+        babel({
+          rootMode: "upward",
+        }),
         terser(),
         banner(licensePiece),
       ],
@@ -56,7 +58,9 @@ export default (commandLineArgs) => {
         resolve(),
         json(),
         commonjs(),
-        babel(),
+        babel({
+          rootMode: "upward",
+        }),
         banner(licensePiece),
       ],
     },
@@ -87,7 +91,9 @@ export default (commandLineArgs) => {
         }),
         builtins(),
         json(),
-        babel(),
+        babel({
+          rootMode: "upward",
+        }),
         cleanup({ comments: "istanbul" }),
         banner(licensePiece),
       ],

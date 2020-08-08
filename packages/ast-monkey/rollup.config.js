@@ -30,7 +30,9 @@ export default (commandLineArgs) => {
         }),
         resolve(),
         commonjs(),
-        babel(),
+        babel({
+          rootMode: "upward",
+        }),
         terser(),
         banner(licensePiece),
       ],
@@ -50,7 +52,9 @@ export default (commandLineArgs) => {
         }),
         resolve(),
         commonjs(),
-        babel(),
+        babel({
+          rootMode: "upward",
+        }),
         banner(licensePiece),
       ],
     },
@@ -69,7 +73,9 @@ export default (commandLineArgs) => {
         strip({
           sourceMap: false,
         }),
-        babel(),
+        babel({
+          rootMode: "upward",
+        }),
         cleanup({ comments: "istanbul" }),
         banner(licensePiece),
       ],
