@@ -89,6 +89,7 @@ setup:
 building_and_testing:
   stage: deploy
   script:
+    - set -euo pipefail
     - echo '█████████████████████████████ 1/9 - bootstrap and test █████████████████████████████'
     - git status
     - npm run fresh
