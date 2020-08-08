@@ -3,11 +3,9 @@
 #    C O D S E N
 #
 
-default:
+thy_pipeline:
   image: node:latest
-
-setup:
-  stage: .pre
+  stage: deploy
   script:
     ##
     ## Create the SSH directory and give it the right permissions
@@ -86,10 +84,10 @@ setup:
     - git status
     - git checkout master
 
-building_and_testing:
-  stage: deploy
-  script:
-    - set -euo pipefail
+    ##
+    ## THE REAL ACTION STARTS
+    ##
+
     - echo '█████████████████████████████ 1/9 - bootstrap and test █████████████████████████████'
     - git status
     - npm run fresh
