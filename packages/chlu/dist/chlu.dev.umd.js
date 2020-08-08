@@ -29,6 +29,55 @@
     return _typeof(obj);
   }
 
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
   function createCommonjsModule(fn, basedir, module) {
@@ -357,7 +406,6 @@
     });
   }
 
-  // Copyright Joyent, Inc. and other Node contributors.
   function isNull(arg) {
     return arg === null;
   }
@@ -368,7 +416,7 @@
     return typeof arg === 'string';
   }
   function isObject(arg) {
-    return typeof arg === 'object' && arg !== null;
+    return _typeof(arg) === 'object' && arg !== null;
   }
 
   // Copyright Joyent, Inc. and other Node contributors.
@@ -403,7 +451,7 @@
   };
 
   function stringifyPrimitive(v) {
-    switch (typeof v) {
+    switch (_typeof(v)) {
       case 'string':
         return v;
 
@@ -426,7 +474,7 @@
       obj = undefined;
     }
 
-    if (typeof obj === 'object') {
+    if (_typeof(obj) === 'object') {
       return map$1(objectKeys(obj), function (k) {
         var ks = encodeURIComponent(stringifyPrimitive(k)) + eq;
 
@@ -519,7 +567,6 @@
     return obj;
   }
 
-  // Copyright Joyent, Inc. and other Node contributors.
   var url = {
     parse: urlParse,
     resolve: urlResolve,
@@ -601,7 +648,7 @@
 
   function parse$1(self, url, parseQueryString, slashesDenoteHost) {
     if (!isString(url)) {
-      throw new TypeError('Parameter \'url\' must be a string, not ' + typeof url);
+      throw new TypeError('Parameter \'url\' must be a string, not ' + _typeof(url));
     } // Copy chrome, IE, opera backslash-handling behavior.
     // Back slashes before the query string get converted to forward slashes
     // See: https://code.google.com/p/chromium/issues/detail?id=25916
@@ -1015,7 +1062,8 @@
       if (!relative.host && !hostlessProtocol[relative.protocol]) {
         relPath = (relative.pathname || '').split('/');
 
-        while (relPath.length && !(relative.host = relPath.shift()));
+        while (relPath.length && !(relative.host = relPath.shift())) {
+        }
 
         if (!relative.host) relative.host = '';
         if (!relative.hostname) relative.hostname = '';
@@ -1293,7 +1341,7 @@
         'shortcuttemplate': '{type}:{project}{#committish}',
         'pathtemplate': '{project}{#committish}',
         'tarballtemplate': 'https://codeload.github.com/gist/{project}/tar.gz/{committish}',
-        'hashformat': function (fragment) {
+        'hashformat': function hashformat(fragment) {
           return 'file-' + formatHashFragment(fragment);
         }
       }
@@ -1335,7 +1383,7 @@
 
   var extend = Object.assign || function _extend(target, source) {
     // Don't do anything if source isn't an object
-    if (source === null || typeof source !== 'object') return target;
+    if (source === null || _typeof(source) !== 'object') return target;
     var keys = Object.keys(source);
     var i = keys.length;
 
@@ -1650,20 +1698,18 @@
     }
   });
 
-  const {
-    parse: parse$2
-  } = require$$0;
-  const URL_PATTERNS = new RegExp(/^\/?:?([/\w-.]+)\/([\w-.]+)\/?$/);
-  const GITHUB_API = new RegExp(/^\/repos\/([\w-.]+)\/([\w-.]+)\/(?:tarball|zipball)(?:\/.+)?$/);
-  const GITHUB_CODELOAD = new RegExp(/^\/([\w-.]+)\/([\w-.]+)\/(?:legacy\.(?:zip|tar\.gz))(?:\/.+)?$/);
+  var parse$2 = require$$0.parse;
+  var URL_PATTERNS = new RegExp(/^\/?:?([/\w-.]+)\/([\w-.]+)\/?$/);
+  var GITHUB_API = new RegExp(/^\/repos\/([\w-.]+)\/([\w-.]+)\/(?:tarball|zipball)(?:\/.+)?$/);
+  var GITHUB_CODELOAD = new RegExp(/^\/([\w-.]+)\/([\w-.]+)\/(?:legacy\.(?:zip|tar\.gz))(?:\/.+)?$/);
 
-  var src = url => {
-    const modifiedURL = url // Prepend `https` to the URL so that `url.parse` will see the value of `url` as an actual `url`, and therefore, correctly parse it.
-    .replace(/^git@/, `https://git@`) // Remove `.git` from any URL before applying regular expressions to the string. Removing `.git` through a non capture group is kind of difficult.
-    .replace(/\.git$/, ``);
-    const parsedURL = parse$2(modifiedURL);
+  var src = function src(url) {
+    var modifiedURL = url // Prepend `https` to the URL so that `url.parse` will see the value of `url` as an actual `url`, and therefore, correctly parse it.
+    .replace(/^git@/, "https://git@") // Remove `.git` from any URL before applying regular expressions to the string. Removing `.git` through a non capture group is kind of difficult.
+    .replace(/\.git$/, "");
+    var parsedURL = parse$2(modifiedURL);
 
-    const format = matches => {
+    var format = function format(matches) {
       return {
         browse: createBrowseURL(parsedURL, matches),
         domain: parsedURL.host,
@@ -1674,14 +1720,15 @@
     };
 
     if (parsedURL.host) {
-      if (parsedURL.host.includes(`api.github.com`)) {
-        const matches = GITHUB_API.exec(parsedURL.pathname) || [];
+      if (parsedURL.host.includes("api.github.com")) {
+        var matches = GITHUB_API.exec(parsedURL.pathname) || [];
         return format(matches);
       }
 
-      if (parsedURL.host.includes(`codeload.github.com`)) {
-        const matches = GITHUB_CODELOAD.exec(parsedURL.pathname) || [];
-        return format(matches);
+      if (parsedURL.host.includes("codeload.github.com")) {
+        var _matches = GITHUB_CODELOAD.exec(parsedURL.pathname) || [];
+
+        return format(_matches);
       }
     }
 
@@ -1689,15 +1736,15 @@
   };
 
   function getType(parsedURL) {
-    if (typeof parsedURL.host !== `string`) {
+    if (typeof parsedURL.host !== "string") {
       return null;
     }
 
-    if (parsedURL.host.indexOf(`github`) !== -1) {
+    if (parsedURL.host.indexOf("github") !== -1) {
       return 'github';
     }
 
-    if (parsedURL.host.indexOf(`gitlab`) !== -1) {
+    if (parsedURL.host.indexOf("gitlab") !== -1) {
       return 'gitlab';
     }
 
@@ -1705,19 +1752,19 @@
   }
 
   function createBrowseURL(parsedURL, matches) {
-    const protocol = parsedURL.protocol === `http:` ? `http:` : `https:`;
-    const browseURL = `${protocol}//${parsedURL.host}/${matches[1]}/${matches[2]}`;
-    return () => {
+    var protocol = parsedURL.protocol === "http:" ? "http:" : "https:";
+    var browseURL = "".concat(protocol, "//").concat(parsedURL.host, "/").concat(matches[1], "/").concat(matches[2]);
+    return function () {
       return browseURL;
     };
   }
 
-  var src$1 = packageData => {
+  var src$1 = function src$1(packageData) {
     if (!packageData || !packageData.repository || typeof packageData.repository !== 'string' && !packageData.repository.url) {
-      throw new Error(`No valid "repository" data found in package metadata. Please see https://docs.npmjs.com/files/package.json#repository for proper syntax.`);
+      throw new Error("No valid \"repository\" data found in package metadata. Please see https://docs.npmjs.com/files/package.json#repository for proper syntax.");
     }
 
-    const repositoryURL = typeof packageData.repository === 'string' ? packageData.repository : packageData.repository.url;
+    var repositoryURL = typeof packageData.repository === 'string' ? packageData.repository : packageData.repository.url;
     return hostedGitInfo.fromUrl(repositoryURL) || src(repositoryURL);
   };
 
@@ -1806,10 +1853,10 @@
     cloneableTags[errorTag] = cloneableTags[funcTag] = cloneableTags[weakMapTag] = false;
     /** Detect free variable `global` from Node.js. */
 
-    var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+    var freeGlobal = _typeof(commonjsGlobal) == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
     /** Detect free variable `self`. */
 
-    var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+    var freeSelf = (typeof self === "undefined" ? "undefined" : _typeof(self)) == 'object' && self && self.Object === Object && self;
     /** Used as a reference to the global object. */
 
     var root = freeGlobal || freeSelf || Function('return this')();
@@ -2063,7 +2110,7 @@
     /** Built-in value references. */
 
     var Buffer = moduleExports ? root.Buffer : undefined,
-        Symbol = root.Symbol,
+        _Symbol = root.Symbol,
         Uint8Array = root.Uint8Array,
         getPrototype = overArg(Object.getPrototypeOf, Object),
         objectCreate = Object.create,
@@ -2091,7 +2138,7 @@
         weakMapCtorString = toSource(WeakMap);
     /** Used to convert symbols to primitives and strings. */
 
-    var symbolProto = Symbol ? Symbol.prototype : undefined,
+    var symbolProto = _Symbol ? _Symbol.prototype : undefined,
         symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
     /**
      * Creates a hash object.
@@ -3009,7 +3056,7 @@
     // for data views in Edge < 14, and promises in Node.js.
 
     if (DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag || Map && getTag(new Map()) != mapTag || Promise && getTag(Promise.resolve()) != promiseTag || Set && getTag(new Set()) != setTag || WeakMap && getTag(new WeakMap()) != weakMapTag) {
-      getTag = function (value) {
+      getTag = function getTag(value) {
         var result = objectToString.call(value),
             Ctor = result == objectTag ? value.constructor : undefined,
             ctorString = Ctor ? toSource(Ctor) : undefined;
@@ -3149,7 +3196,8 @@
 
 
     function isKeyable(value) {
-      var type = typeof value;
+      var type = _typeof(value);
+
       return type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean' ? value !== '__proto__' : value === null;
     }
     /**
@@ -3472,7 +3520,8 @@
 
 
     function isObject(value) {
-      var type = typeof value;
+      var type = _typeof(value);
+
       return !!value && (type == 'object' || type == 'function');
     }
     /**
@@ -3502,7 +3551,7 @@
 
 
     function isObjectLike(value) {
-      return !!value && typeof value == 'object';
+      return !!value && _typeof(value) == 'object';
     }
     /**
      * Creates an array of the own enumerable property names of `object`.
@@ -3582,15 +3631,6 @@
     module.exports = cloneDeep;
   });
 
-  /**
-   * ast-monkey-traverse
-   * Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)
-   * Version: 1.12.13
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse
-   */
-
   function trimFirstDot(str) {
     if (typeof str === "string" && str.length && str[0] === ".") {
       return str.slice(1);
@@ -3600,24 +3640,25 @@
   }
 
   function isObj(something) {
-    return something && typeof something === "object" && !Array.isArray(something);
+    return something && _typeof(something) === "object" && !Array.isArray(something);
   }
 
   function astMonkeyTraverse(tree1, cb1) {
-    const stop2 = {
+    var stop2 = {
       now: false
     };
 
     function traverseInner(treeOriginal, callback, originalInnerObj, stop) {
-      const tree = lodash_clonedeep(treeOriginal);
-      let i;
-      let len;
-      let res;
-      const innerObj = {
+      var tree = lodash_clonedeep(treeOriginal);
+      var i;
+      var len;
+      var res;
+
+      var innerObj = _objectSpread2({
         depth: -1,
-        path: "",
-        ...originalInnerObj
-      };
+        path: ""
+      }, originalInnerObj);
+
       innerObj.depth += 1;
 
       if (Array.isArray(tree)) {
@@ -3626,16 +3667,16 @@
             break;
           }
 
-          const path = `${innerObj.path}.${i}`;
+          var path = "".concat(innerObj.path, ".").concat(i);
 
           if (tree[i] !== undefined) {
             innerObj.parent = lodash_clonedeep(tree);
             innerObj.parentType = "array";
-            res = traverseInner(callback(tree[i], undefined, { ...innerObj,
+            res = traverseInner(callback(tree[i], undefined, _objectSpread2(_objectSpread2({}, innerObj), {}, {
               path: trimFirstDot(path)
-            }, stop), callback, { ...innerObj,
+            }), stop), callback, _objectSpread2(_objectSpread2({}, innerObj), {}, {
               path: trimFirstDot(path)
-            }, stop);
+            }), stop);
 
             if (Number.isNaN(res) && i < tree.length) {
               tree.splice(i, 1);
@@ -3648,12 +3689,12 @@
           }
         }
       } else if (isObj(tree)) {
-        for (const key in tree) {
+        for (var key in tree) {
           if (stop.now && key != null) {
             break;
           }
 
-          const path = `${innerObj.path}.${key}`;
+          var _path = "".concat(innerObj.path, ".").concat(key);
 
           if (innerObj.depth === 0 && key != null) {
             innerObj.topmostKey = key;
@@ -3661,11 +3702,11 @@
 
           innerObj.parent = lodash_clonedeep(tree);
           innerObj.parentType = "object";
-          res = traverseInner(callback(key, tree[key], { ...innerObj,
-            path: trimFirstDot(path)
-          }, stop), callback, { ...innerObj,
-            path: trimFirstDot(path)
-          }, stop);
+          res = traverseInner(callback(key, tree[key], _objectSpread2(_objectSpread2({}, innerObj), {}, {
+            path: trimFirstDot(_path)
+          }), stop), callback, _objectSpread2(_objectSpread2({}, innerObj), {}, {
+            path: trimFirstDot(_path)
+          }), stop);
 
           if (Number.isNaN(res)) {
             delete tree[key];
@@ -3681,27 +3722,18 @@
     return traverseInner(tree1, cb1, {}, stop2);
   }
 
-  /**
-   * ast-contains-only-empty-space
-   * Returns Boolean depending if passed AST contain only empty space
-   * Version: 1.9.9
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-contains-only-empty-space
-   */
-
   function containsOnlyEmptySpace(input) {
     if (typeof input === "string") {
       return !input.trim();
     }
 
-    if (!["object", "string"].includes(typeof input) || !input) {
+    if (!["object", "string"].includes(_typeof(input)) || !input) {
       return false;
     }
 
-    let found = true;
-    input = astMonkeyTraverse(input, (key, val, innerObj, stop) => {
-      const current = val !== undefined ? val : key;
+    var found = true;
+    input = astMonkeyTraverse(input, function (key, val, innerObj, stop) {
+      var current = val !== undefined ? val : key;
 
       if (typeof current === "string" && current.trim()) {
         found = false;
@@ -3810,7 +3842,7 @@
    */
 
   function isObjectLike(value) {
-    return !!value && typeof value == 'object';
+    return !!value && _typeof(value) == 'object';
   }
   /**
    * Checks if `value` is a plain object, that is, an object created by the
@@ -3948,7 +3980,7 @@
 
 
   function isObjectLike$1(value) {
-    return !!value && typeof value == 'object';
+    return !!value && _typeof(value) == 'object';
   }
   /**
    * Checks if `value` is classified as a `Symbol` primitive or object.
@@ -3971,7 +4003,7 @@
 
 
   function isSymbol(value) {
-    return typeof value == 'symbol' || isObjectLike$1(value) && objectToString$1.call(value) == symbolTag;
+    return _typeof(value) == 'symbol' || isObjectLike$1(value) && objectToString$1.call(value) == symbolTag;
   }
   /**
    * This method returns the first argument given to it.
@@ -4027,7 +4059,7 @@
    * @param {Date|Number} year
    * @return {Boolean}
    */
-  var isLeapYear = function (year) {
+  var isLeapYear = function isLeapYear(year) {
     year = year instanceof Date ? year.getFullYear() : year;
     return !(new Date(year, 1, 29).getMonth() - 1);
   };
@@ -4040,7 +4072,7 @@
     31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
     exports = module.exports = function parse(str, options) {
-      if (typeof options !== 'object') {
+      if (_typeof(options) !== 'object') {
         options = {
           usa: options
         };
@@ -4263,20 +4295,20 @@
   var reTrim = /^\s+|\s+$/g;
   /** Used to compose unicode character classes. */
 
-  var rsAstralRange = '\\ud800-\\udfff',
-      rsComboMarksRange = '\\u0300-\\u036f\\ufe20-\\ufe23',
-      rsComboSymbolsRange = '\\u20d0-\\u20f0',
-      rsVarRange = '\\ufe0e\\ufe0f';
+  var rsAstralRange = "\\ud800-\\udfff",
+      rsComboMarksRange = "\\u0300-\\u036f\\ufe20-\\ufe23",
+      rsComboSymbolsRange = "\\u20d0-\\u20f0",
+      rsVarRange = "\\ufe0e\\ufe0f";
   /** Used to compose unicode capture groups. */
 
   var rsAstral = '[' + rsAstralRange + ']',
       rsCombo = '[' + rsComboMarksRange + rsComboSymbolsRange + ']',
-      rsFitz = '\\ud83c[\\udffb-\\udfff]',
+      rsFitz = "\\ud83c[\\udffb-\\udfff]",
       rsModifier = '(?:' + rsCombo + '|' + rsFitz + ')',
       rsNonAstral = '[^' + rsAstralRange + ']',
-      rsRegional = '(?:\\ud83c[\\udde6-\\uddff]){2}',
-      rsSurrPair = '[\\ud800-\\udbff][\\udc00-\\udfff]',
-      rsZWJ = '\\u200d';
+      rsRegional = "(?:\\ud83c[\\udde6-\\uddff]){2}",
+      rsSurrPair = "[\\ud800-\\udbff][\\udc00-\\udfff]",
+      rsZWJ = "\\u200d";
   /** Used to compose unicode regexes. */
 
   var reOptMod = rsModifier + '?',
@@ -4292,10 +4324,10 @@
   var reHasUnicode = RegExp('[' + rsZWJ + rsAstralRange + rsComboMarksRange + rsComboSymbolsRange + rsVarRange + ']');
   /** Detect free variable `global` from Node.js. */
 
-  var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+  var freeGlobal = _typeof(commonjsGlobal) == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
   /** Detect free variable `self`. */
 
-  var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+  var freeSelf = (typeof self === "undefined" ? "undefined" : _typeof(self)) == 'object' && self && self.Object === Object && self;
   /** Used as a reference to the global object. */
 
   var root = freeGlobal || freeSelf || Function('return this')();
@@ -4460,10 +4492,10 @@
   var objectToString$2 = objectProto$2.toString;
   /** Built-in value references. */
 
-  var Symbol$1 = root.Symbol;
+  var _Symbol = root.Symbol;
   /** Used to convert symbols to primitives and strings. */
 
-  var symbolProto = Symbol$1 ? Symbol$1.prototype : undefined,
+  var symbolProto = _Symbol ? _Symbol.prototype : undefined,
       symbolToString = symbolProto ? symbolProto.toString : undefined;
   /**
    * The base implementation of `_.slice` without an iteratee call guard.
@@ -4565,7 +4597,7 @@
 
 
   function isObjectLike$2(value) {
-    return !!value && typeof value == 'object';
+    return !!value && _typeof(value) == 'object';
   }
   /**
    * Checks if `value` is classified as a `Symbol` primitive or object.
@@ -4587,7 +4619,7 @@
 
 
   function isSymbol$1(value) {
-    return typeof value == 'symbol' || isObjectLike$2(value) && objectToString$2.call(value) == symbolTag$1;
+    return _typeof(value) == 'symbol' || isObjectLike$2(value) && objectToString$2.call(value) == symbolTag$1;
   }
   /**
    * Converts `value` to a string. An empty string is returned for `null`
@@ -4676,17 +4708,17 @@
       return [];
     }
 
-    const foundIndexArray = [];
-    const arrWhereToLook = Array.from(whereToLook);
-    const arrWhatToLookFor = Array.from(whatToLookFor);
-    let found;
+    var foundIndexArray = [];
+    var arrWhereToLook = Array.from(whereToLook);
+    var arrWhatToLookFor = Array.from(whatToLookFor);
+    var found;
 
-    for (let i = 0; i < arrWhereToLook.length; i++) {
+    for (var i = 0; i < arrWhereToLook.length; i++) {
       if (opts.i) {
         if (arrWhereToLook[i].toLowerCase() === arrWhatToLookFor[0].toLowerCase()) {
           found = true;
 
-          for (let i2 = 0; i2 < arrWhatToLookFor.length; i2++) {
+          for (var i2 = 0; i2 < arrWhatToLookFor.length; i2++) {
             if (!existy(arrWhereToLook[i + i2]) || !existy(arrWhatToLookFor[i2]) || arrWhereToLook[i + i2].toLowerCase() !== arrWhatToLookFor[i2].toLowerCase()) {
               found = false;
               break;
@@ -4700,8 +4732,8 @@
       } else if (arrWhereToLook[i] === arrWhatToLookFor[0]) {
         found = true;
 
-        for (let i2 = 0; i2 < arrWhatToLookFor.length; i2++) {
-          if (arrWhereToLook[i + i2] !== arrWhatToLookFor[i2]) {
+        for (var _i = 0; _i < arrWhatToLookFor.length; _i++) {
+          if (arrWhereToLook[i + _i] !== arrWhatToLookFor[_i]) {
             found = false;
             break;
           }
@@ -4726,17 +4758,23 @@
     }
 
     if (Array.isArray(incoming)) {
-      return incoming.filter(el => existy(el) && typeof el !== "boolean").map(el => String(el)).filter(el => el.length > 0);
+      return incoming.filter(function (el) {
+        return existy(el) && typeof el !== "boolean";
+      }).map(function (el) {
+        return String(el);
+      }).filter(function (el) {
+        return el.length > 0;
+      });
     }
 
     return [String(incoming)];
   }
 
   function iterateLeft(elem, arrSource, foundBeginningIndex, i) {
-    let matched = true;
-    const charsArray = Array.from(elem);
+    var matched = true;
+    var charsArray = Array.from(elem);
 
-    for (let i2 = 0, len = charsArray.length; i2 < len; i2++) {
+    for (var i2 = 0, len = charsArray.length; i2 < len; i2++) {
       if (i) {
         if (charsArray[i2].toLowerCase() !== arrSource[foundBeginningIndex - Array.from(elem).length + i2].toLowerCase()) {
           matched = false;
@@ -4752,10 +4790,10 @@
   }
 
   function iterateRight(elem, arrSource, foundEndingIndex, i) {
-    let matched = true;
-    const charsArray = Array.from(elem);
+    var matched = true;
+    var charsArray = Array.from(elem);
 
-    for (let i2 = 0, len = charsArray.length; i2 < len; i2++) {
+    for (var i2 = 0, len = charsArray.length; i2 < len; i2++) {
       if (i) {
         if (charsArray[i2].toLowerCase() !== arrSource[foundEndingIndex + i2].toLowerCase()) {
           matched = false;
@@ -4771,7 +4809,7 @@
   }
 
   function er(originalSource, options, originalReplacement) {
-    const defaults = {
+    var defaults = {
       i: {
         leftOutsideNot: false,
         leftOutside: false,
@@ -4782,10 +4820,10 @@
         rightOutsideNot: false
       }
     };
-    const opts = { ...defaults,
-      ...options
-    };
-    const source = stringise(originalSource);
+
+    var opts = _objectSpread2(_objectSpread2({}, defaults), options);
+
+    var source = stringise(originalSource);
     opts.leftOutsideNot = stringise(opts.leftOutsideNot);
     opts.leftOutside = stringise(opts.leftOutside);
     opts.leftMaybe = stringise(opts.leftMaybe);
@@ -4793,29 +4831,29 @@
     opts.rightMaybe = stringise(opts.rightMaybe);
     opts.rightOutside = stringise(opts.rightOutside);
     opts.rightOutsideNot = stringise(opts.rightOutsideNot);
-    const replacement = stringise(originalReplacement);
-    const arrSource = Array.from(source[0]);
-    let foundBeginningIndex;
-    let foundEndingIndex;
-    let matched;
-    let found;
-    const replacementRecipe = [];
-    let result = "";
-    const allResults = astralAwareSearch(source[0], opts.searchFor, {
+    var replacement = stringise(originalReplacement);
+    var arrSource = Array.from(source[0]);
+    var foundBeginningIndex;
+    var foundEndingIndex;
+    var matched;
+    var found;
+    var replacementRecipe = [];
+    var result = "";
+    var allResults = astralAwareSearch(source[0], opts.searchFor, {
       i: opts.i.searchFor
     });
 
-    for (let resIndex = 0, resLen = allResults.length; resIndex < resLen; resIndex++) {
-      const oneOfFoundIndexes = allResults[resIndex];
+    for (var resIndex = 0, resLen = allResults.length; resIndex < resLen; resIndex++) {
+      var oneOfFoundIndexes = allResults[resIndex];
       foundBeginningIndex = oneOfFoundIndexes;
       foundEndingIndex = oneOfFoundIndexes + Array.from(opts.searchFor).length;
 
       if (opts.leftMaybe.length > 0) {
-        for (let i = 0, len = opts.leftMaybe.length; i < len; i++) {
+        for (var i = 0, len = opts.leftMaybe.length; i < len; i++) {
           matched = true;
-          const splitLeftMaybe = Array.from(opts.leftMaybe[i]);
+          var splitLeftMaybe = Array.from(opts.leftMaybe[i]);
 
-          for (let i2 = 0, len2 = splitLeftMaybe.length; i2 < len2; i2++) {
+          for (var i2 = 0, len2 = splitLeftMaybe.length; i2 < len2; i2++) {
             if (opts.i.leftMaybe) {
               if (splitLeftMaybe[i2].toLowerCase() !== arrSource[oneOfFoundIndexes - splitLeftMaybe.length + i2].toLowerCase()) {
                 matched = false;
@@ -4834,17 +4872,17 @@
       }
 
       if (opts.rightMaybe.length > 0) {
-        for (let i = 0, len = opts.rightMaybe.length; i < len; i++) {
+        for (var _i2 = 0, _len = opts.rightMaybe.length; _i2 < _len; _i2++) {
           matched = true;
-          const splitRightMaybe = Array.from(opts.rightMaybe[i]);
+          var splitRightMaybe = Array.from(opts.rightMaybe[_i2]);
 
-          for (let i2 = 0, len2 = splitRightMaybe.length; i2 < len2; i2++) {
+          for (var _i3 = 0, _len2 = splitRightMaybe.length; _i3 < _len2; _i3++) {
             if (opts.i.rightMaybe) {
-              if (splitRightMaybe[i2].toLowerCase() !== arrSource[oneOfFoundIndexes + Array.from(opts.searchFor).length + i2].toLowerCase()) {
+              if (splitRightMaybe[_i3].toLowerCase() !== arrSource[oneOfFoundIndexes + Array.from(opts.searchFor).length + _i3].toLowerCase()) {
                 matched = false;
                 break;
               }
-            } else if (splitRightMaybe[i2] !== arrSource[oneOfFoundIndexes + Array.from(opts.searchFor).length + i2]) {
+            } else if (splitRightMaybe[_i3] !== arrSource[oneOfFoundIndexes + Array.from(opts.searchFor).length + _i3]) {
               matched = false;
               break;
             }
@@ -4859,8 +4897,8 @@
       if (opts.leftOutside[0] !== "") {
         found = false;
 
-        for (let i = 0, len = opts.leftOutside.length; i < len; i++) {
-          matched = iterateLeft(opts.leftOutside[i], arrSource, foundBeginningIndex, opts.i.leftOutside);
+        for (var _i4 = 0, _len3 = opts.leftOutside.length; _i4 < _len3; _i4++) {
+          matched = iterateLeft(opts.leftOutside[_i4], arrSource, foundBeginningIndex, opts.i.leftOutside);
 
           if (matched) {
             found = true;
@@ -4875,8 +4913,8 @@
       if (opts.rightOutside[0] !== "") {
         found = false;
 
-        for (let i = 0, len = opts.rightOutside.length; i < len; i++) {
-          matched = iterateRight(opts.rightOutside[i], arrSource, foundEndingIndex, opts.i.rightOutside);
+        for (var _i5 = 0, _len4 = opts.rightOutside.length; _i5 < _len4; _i5++) {
+          matched = iterateRight(opts.rightOutside[_i5], arrSource, foundEndingIndex, opts.i.rightOutside);
 
           if (matched) {
             found = true;
@@ -4889,8 +4927,8 @@
       }
 
       if (opts.leftOutsideNot[0] !== "") {
-        for (let i = 0, len = opts.leftOutsideNot.length; i < len; i++) {
-          matched = iterateLeft(opts.leftOutsideNot[i], arrSource, foundBeginningIndex, opts.i.leftOutsideNot);
+        for (var _i6 = 0, _len5 = opts.leftOutsideNot.length; _i6 < _len5; _i6++) {
+          matched = iterateLeft(opts.leftOutsideNot[_i6], arrSource, foundBeginningIndex, opts.i.leftOutsideNot);
 
           if (matched) {
             foundBeginningIndex = -1;
@@ -4905,8 +4943,8 @@
       }
 
       if (opts.rightOutsideNot[0] !== "") {
-        for (let i = 0, len = opts.rightOutsideNot.length; i < len; i++) {
-          matched = iterateRight(opts.rightOutsideNot[i], arrSource, foundEndingIndex, opts.i.rightOutsideNot);
+        for (var _i7 = 0, _len6 = opts.rightOutsideNot.length; _i7 < _len6; _i7++) {
+          matched = iterateRight(opts.rightOutsideNot[_i7], arrSource, foundEndingIndex, opts.i.rightOutsideNot);
 
           if (matched) {
             foundBeginningIndex = -1;
@@ -4924,12 +4962,12 @@
     }
 
     if (replacementRecipe.length > 0) {
-      replacementRecipe.forEach((elem, i) => {
+      replacementRecipe.forEach(function (elem, i) {
         if (replacementRecipe[i + 1] !== undefined && replacementRecipe[i][1] > replacementRecipe[i + 1][0]) {
           replacementRecipe[i + 1][0] = replacementRecipe[i][1];
         }
       });
-      replacementRecipe.forEach((elem, i) => {
+      replacementRecipe.forEach(function (elem, i) {
         if (elem[0] === elem[1]) {
           replacementRecipe.splice(i, 1);
         }
@@ -4942,7 +4980,7 @@
       result += arrSource.slice(0, replacementRecipe[0][0]).join("");
     }
 
-    replacementRecipe.forEach((elem, i) => {
+    replacementRecipe.forEach(function (elem, i) {
       result += replacement.join("");
 
       if (replacementRecipe[i + 1] !== undefined) {
@@ -4954,7 +4992,7 @@
     return result;
   }
 
-  var emojiRegex = function () {
+  var emojiRegex = function emojiRegex() {
     // https://mths.be/emoji
     return /\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62(?:\uDB40\uDC77\uDB40\uDC6C\uDB40\uDC73|\uDB40\uDC73\uDB40\uDC63\uDB40\uDC74|\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67)\uDB40\uDC7F|\uD83D\uDC69\u200D\uD83D\uDC69\u200D(?:\uD83D\uDC66\u200D\uD83D\uDC66|\uD83D\uDC67\u200D(?:\uD83D[\uDC66\uDC67]))|\uD83D\uDC68(?:\uD83C\uDFFF\u200D(?:\uD83E\uDD1D\u200D\uD83D\uDC68(?:\uD83C[\uDFFB-\uDFFE])|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFE\u200D(?:\uD83E\uDD1D\u200D\uD83D\uDC68(?:\uD83C[\uDFFB-\uDFFD\uDFFF])|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFD\u200D(?:\uD83E\uDD1D\u200D\uD83D\uDC68(?:\uD83C[\uDFFB\uDFFC\uDFFE\uDFFF])|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFC\u200D(?:\uD83E\uDD1D\u200D\uD83D\uDC68(?:\uD83C[\uDFFB\uDFFD-\uDFFF])|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFB\u200D(?:\uD83E\uDD1D\u200D\uD83D\uDC68(?:\uD83C[\uDFFC-\uDFFF])|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\u200D(?:\u2764\uFE0F\u200D(?:\uD83D\uDC8B\u200D)?\uD83D\uDC68|(?:\uD83D[\uDC68\uDC69])\u200D(?:\uD83D\uDC66\u200D\uD83D\uDC66|\uD83D\uDC67\u200D(?:\uD83D[\uDC66\uDC67]))|\uD83D\uDC66\u200D\uD83D\uDC66|\uD83D\uDC67\u200D(?:\uD83D[\uDC66\uDC67])|(?:\uD83D[\uDC68\uDC69])\u200D(?:\uD83D[\uDC66\uDC67])|[\u2695\u2696\u2708]\uFE0F|\uD83D[\uDC66\uDC67]|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|(?:\uD83C\uDFFF\u200D[\u2695\u2696\u2708]|\uD83C\uDFFE\u200D[\u2695\u2696\u2708]|\uD83C\uDFFD\u200D[\u2695\u2696\u2708]|\uD83C\uDFFC\u200D[\u2695\u2696\u2708]|\uD83C\uDFFB\u200D[\u2695\u2696\u2708])\uFE0F|\uD83C[\uDFFB-\uDFFF])|\uD83E\uDDD1(?:(?:\uD83C[\uDFFB-\uDFFF])\u200D(?:\uD83E\uDD1D\u200D\uD83E\uDDD1(?:\uD83C[\uDFFB-\uDFFF])|\uD83C[\uDF3E\uDF73\uDF7C\uDF84\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\u200D(?:\uD83E\uDD1D\u200D\uD83E\uDDD1|\uD83C[\uDF3E\uDF73\uDF7C\uDF84\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD]))|\uD83D\uDC69(?:\u200D(?:\u2764\uFE0F\u200D(?:\uD83D\uDC8B\u200D(?:\uD83D[\uDC68\uDC69])|\uD83D[\uDC68\uDC69])|\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFF\u200D(?:\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFE\u200D(?:\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFD\u200D(?:\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFC\u200D(?:\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD])|\uD83C\uDFFB\u200D(?:\uD83C[\uDF3E\uDF73\uDF7C\uDF93\uDFA4\uDFA8\uDFEB\uDFED]|\uD83D[\uDCBB\uDCBC\uDD27\uDD2C\uDE80\uDE92]|\uD83E[\uDDAF-\uDDB3\uDDBC\uDDBD]))|\uD83D\uDC69\uD83C\uDFFF\u200D\uD83E\uDD1D\u200D(?:\uD83D[\uDC68\uDC69])(?:\uD83C[\uDFFB-\uDFFE])|\uD83D\uDC69\uD83C\uDFFE\u200D\uD83E\uDD1D\u200D(?:\uD83D[\uDC68\uDC69])(?:\uD83C[\uDFFB-\uDFFD\uDFFF])|\uD83D\uDC69\uD83C\uDFFD\u200D\uD83E\uDD1D\u200D(?:\uD83D[\uDC68\uDC69])(?:\uD83C[\uDFFB\uDFFC\uDFFE\uDFFF])|\uD83D\uDC69\uD83C\uDFFC\u200D\uD83E\uDD1D\u200D(?:\uD83D[\uDC68\uDC69])(?:\uD83C[\uDFFB\uDFFD-\uDFFF])|\uD83D\uDC69\uD83C\uDFFB\u200D\uD83E\uDD1D\u200D(?:\uD83D[\uDC68\uDC69])(?:\uD83C[\uDFFC-\uDFFF])|\uD83D\uDC69\u200D\uD83D\uDC66\u200D\uD83D\uDC66|\uD83D\uDC69\u200D\uD83D\uDC69\u200D(?:\uD83D[\uDC66\uDC67])|(?:\uD83D\uDC41\uFE0F\u200D\uD83D\uDDE8|\uD83D\uDC69(?:\uD83C\uDFFF\u200D[\u2695\u2696\u2708]|\uD83C\uDFFE\u200D[\u2695\u2696\u2708]|\uD83C\uDFFD\u200D[\u2695\u2696\u2708]|\uD83C\uDFFC\u200D[\u2695\u2696\u2708]|\uD83C\uDFFB\u200D[\u2695\u2696\u2708]|\u200D[\u2695\u2696\u2708])|\uD83C\uDFF3\uFE0F\u200D\u26A7|\uD83E\uDDD1(?:(?:\uD83C[\uDFFB-\uDFFF])\u200D[\u2695\u2696\u2708]|\u200D[\u2695\u2696\u2708])|\uD83D\uDC3B\u200D\u2744|(?:\uD83C[\uDFC3\uDFC4\uDFCA]|\uD83D[\uDC6E\uDC70\uDC71\uDC73\uDC77\uDC81\uDC82\uDC86\uDC87\uDE45-\uDE47\uDE4B\uDE4D\uDE4E\uDEA3\uDEB4-\uDEB6]|\uD83E[\uDD26\uDD35\uDD37-\uDD39\uDD3D\uDD3E\uDDB8\uDDB9\uDDCD-\uDDCF\uDDD6-\uDDDD])(?:\uD83C[\uDFFB-\uDFFF])\u200D[\u2640\u2642]|(?:\u26F9|\uD83C[\uDFCB\uDFCC]|\uD83D\uDD75)(?:\uFE0F\u200D[\u2640\u2642]|(?:\uD83C[\uDFFB-\uDFFF])\u200D[\u2640\u2642])|\uD83C\uDFF4\u200D\u2620|(?:\uD83C[\uDFC3\uDFC4\uDFCA]|\uD83D[\uDC6E-\uDC71\uDC73\uDC77\uDC81\uDC82\uDC86\uDC87\uDE45-\uDE47\uDE4B\uDE4D\uDE4E\uDEA3\uDEB4-\uDEB6]|\uD83E[\uDD26\uDD35\uDD37-\uDD39\uDD3C-\uDD3E\uDDB8\uDDB9\uDDCD-\uDDCF\uDDD6-\uDDDF])\u200D[\u2640\u2642])\uFE0F|\uD83D\uDC69\u200D\uD83D\uDC67\u200D(?:\uD83D[\uDC66\uDC67])|\uD83C\uDFF3\uFE0F\u200D\uD83C\uDF08|\uD83D\uDC69\u200D\uD83D\uDC67|\uD83D\uDC69\u200D\uD83D\uDC66|\uD83D\uDC15\u200D\uD83E\uDDBA|\uD83C\uDDFD\uD83C\uDDF0|\uD83C\uDDF6\uD83C\uDDE6|\uD83C\uDDF4\uD83C\uDDF2|\uD83D\uDC08\u200D\u2B1B|\uD83E\uDDD1(?:\uD83C[\uDFFB-\uDFFF])|\uD83D\uDC69(?:\uD83C[\uDFFB-\uDFFF])|\uD83C\uDDFF(?:\uD83C[\uDDE6\uDDF2\uDDFC])|\uD83C\uDDFE(?:\uD83C[\uDDEA\uDDF9])|\uD83C\uDDFC(?:\uD83C[\uDDEB\uDDF8])|\uD83C\uDDFB(?:\uD83C[\uDDE6\uDDE8\uDDEA\uDDEC\uDDEE\uDDF3\uDDFA])|\uD83C\uDDFA(?:\uD83C[\uDDE6\uDDEC\uDDF2\uDDF3\uDDF8\uDDFE\uDDFF])|\uD83C\uDDF9(?:\uD83C[\uDDE6\uDDE8\uDDE9\uDDEB-\uDDED\uDDEF-\uDDF4\uDDF7\uDDF9\uDDFB\uDDFC\uDDFF])|\uD83C\uDDF8(?:\uD83C[\uDDE6-\uDDEA\uDDEC-\uDDF4\uDDF7-\uDDF9\uDDFB\uDDFD-\uDDFF])|\uD83C\uDDF7(?:\uD83C[\uDDEA\uDDF4\uDDF8\uDDFA\uDDFC])|\uD83C\uDDF5(?:\uD83C[\uDDE6\uDDEA-\uDDED\uDDF0-\uDDF3\uDDF7-\uDDF9\uDDFC\uDDFE])|\uD83C\uDDF3(?:\uD83C[\uDDE6\uDDE8\uDDEA-\uDDEC\uDDEE\uDDF1\uDDF4\uDDF5\uDDF7\uDDFA\uDDFF])|\uD83C\uDDF2(?:\uD83C[\uDDE6\uDDE8-\uDDED\uDDF0-\uDDFF])|\uD83C\uDDF1(?:\uD83C[\uDDE6-\uDDE8\uDDEE\uDDF0\uDDF7-\uDDFB\uDDFE])|\uD83C\uDDF0(?:\uD83C[\uDDEA\uDDEC-\uDDEE\uDDF2\uDDF3\uDDF5\uDDF7\uDDFC\uDDFE\uDDFF])|\uD83C\uDDEF(?:\uD83C[\uDDEA\uDDF2\uDDF4\uDDF5])|\uD83C\uDDEE(?:\uD83C[\uDDE8-\uDDEA\uDDF1-\uDDF4\uDDF6-\uDDF9])|\uD83C\uDDED(?:\uD83C[\uDDF0\uDDF2\uDDF3\uDDF7\uDDF9\uDDFA])|\uD83C\uDDEC(?:\uD83C[\uDDE6\uDDE7\uDDE9-\uDDEE\uDDF1-\uDDF3\uDDF5-\uDDFA\uDDFC\uDDFE])|\uD83C\uDDEB(?:\uD83C[\uDDEE-\uDDF0\uDDF2\uDDF4\uDDF7])|\uD83C\uDDEA(?:\uD83C[\uDDE6\uDDE8\uDDEA\uDDEC\uDDED\uDDF7-\uDDFA])|\uD83C\uDDE9(?:\uD83C[\uDDEA\uDDEC\uDDEF\uDDF0\uDDF2\uDDF4\uDDFF])|\uD83C\uDDE8(?:\uD83C[\uDDE6\uDDE8\uDDE9\uDDEB-\uDDEE\uDDF0-\uDDF5\uDDF7\uDDFA-\uDDFF])|\uD83C\uDDE7(?:\uD83C[\uDDE6\uDDE7\uDDE9-\uDDEF\uDDF1-\uDDF4\uDDF6-\uDDF9\uDDFB\uDDFC\uDDFE\uDDFF])|\uD83C\uDDE6(?:\uD83C[\uDDE8-\uDDEC\uDDEE\uDDF1\uDDF2\uDDF4\uDDF6-\uDDFA\uDDFC\uDDFD\uDDFF])|[#\*0-9]\uFE0F\u20E3|(?:\uD83C[\uDFC3\uDFC4\uDFCA]|\uD83D[\uDC6E\uDC70\uDC71\uDC73\uDC77\uDC81\uDC82\uDC86\uDC87\uDE45-\uDE47\uDE4B\uDE4D\uDE4E\uDEA3\uDEB4-\uDEB6]|\uD83E[\uDD26\uDD35\uDD37-\uDD39\uDD3D\uDD3E\uDDB8\uDDB9\uDDCD-\uDDCF\uDDD6-\uDDDD])(?:\uD83C[\uDFFB-\uDFFF])|(?:\u26F9|\uD83C[\uDFCB\uDFCC]|\uD83D\uDD75)(?:\uD83C[\uDFFB-\uDFFF])|(?:[\u261D\u270A-\u270D]|\uD83C[\uDF85\uDFC2\uDFC7]|\uD83D[\uDC42\uDC43\uDC46-\uDC50\uDC66\uDC67\uDC6B-\uDC6D\uDC72\uDC74-\uDC76\uDC78\uDC7C\uDC83\uDC85\uDCAA\uDD74\uDD7A\uDD90\uDD95\uDD96\uDE4C\uDE4F\uDEC0\uDECC]|\uD83E[\uDD0C\uDD0F\uDD18-\uDD1C\uDD1E\uDD1F\uDD30-\uDD34\uDD36\uDD77\uDDB5\uDDB6\uDDBB\uDDD2-\uDDD5])(?:\uD83C[\uDFFB-\uDFFF])|(?:[\u231A\u231B\u23E9-\u23EC\u23F0\u23F3\u25FD\u25FE\u2614\u2615\u2648-\u2653\u267F\u2693\u26A1\u26AA\u26AB\u26BD\u26BE\u26C4\u26C5\u26CE\u26D4\u26EA\u26F2\u26F3\u26F5\u26FA\u26FD\u2705\u270A\u270B\u2728\u274C\u274E\u2753-\u2755\u2757\u2795-\u2797\u27B0\u27BF\u2B1B\u2B1C\u2B50\u2B55]|\uD83C[\uDC04\uDCCF\uDD8E\uDD91-\uDD9A\uDDE6-\uDDFF\uDE01\uDE1A\uDE2F\uDE32-\uDE36\uDE38-\uDE3A\uDE50\uDE51\uDF00-\uDF20\uDF2D-\uDF35\uDF37-\uDF7C\uDF7E-\uDF93\uDFA0-\uDFCA\uDFCF-\uDFD3\uDFE0-\uDFF0\uDFF4\uDFF8-\uDFFF]|\uD83D[\uDC00-\uDC3E\uDC40\uDC42-\uDCFC\uDCFF-\uDD3D\uDD4B-\uDD4E\uDD50-\uDD67\uDD7A\uDD95\uDD96\uDDA4\uDDFB-\uDE4F\uDE80-\uDEC5\uDECC\uDED0-\uDED2\uDED5-\uDED7\uDEEB\uDEEC\uDEF4-\uDEFC\uDFE0-\uDFEB]|\uD83E[\uDD0C-\uDD3A\uDD3C-\uDD45\uDD47-\uDD78\uDD7A-\uDDCB\uDDCD-\uDDFF\uDE70-\uDE74\uDE78-\uDE7A\uDE80-\uDE86\uDE90-\uDEA8\uDEB0-\uDEB6\uDEC0-\uDEC2\uDED0-\uDED6])|(?:[#\*0-9\xA9\xAE\u203C\u2049\u2122\u2139\u2194-\u2199\u21A9\u21AA\u231A\u231B\u2328\u23CF\u23E9-\u23F3\u23F8-\u23FA\u24C2\u25AA\u25AB\u25B6\u25C0\u25FB-\u25FE\u2600-\u2604\u260E\u2611\u2614\u2615\u2618\u261D\u2620\u2622\u2623\u2626\u262A\u262E\u262F\u2638-\u263A\u2640\u2642\u2648-\u2653\u265F\u2660\u2663\u2665\u2666\u2668\u267B\u267E\u267F\u2692-\u2697\u2699\u269B\u269C\u26A0\u26A1\u26A7\u26AA\u26AB\u26B0\u26B1\u26BD\u26BE\u26C4\u26C5\u26C8\u26CE\u26CF\u26D1\u26D3\u26D4\u26E9\u26EA\u26F0-\u26F5\u26F7-\u26FA\u26FD\u2702\u2705\u2708-\u270D\u270F\u2712\u2714\u2716\u271D\u2721\u2728\u2733\u2734\u2744\u2747\u274C\u274E\u2753-\u2755\u2757\u2763\u2764\u2795-\u2797\u27A1\u27B0\u27BF\u2934\u2935\u2B05-\u2B07\u2B1B\u2B1C\u2B50\u2B55\u3030\u303D\u3297\u3299]|\uD83C[\uDC04\uDCCF\uDD70\uDD71\uDD7E\uDD7F\uDD8E\uDD91-\uDD9A\uDDE6-\uDDFF\uDE01\uDE02\uDE1A\uDE2F\uDE32-\uDE3A\uDE50\uDE51\uDF00-\uDF21\uDF24-\uDF93\uDF96\uDF97\uDF99-\uDF9B\uDF9E-\uDFF0\uDFF3-\uDFF5\uDFF7-\uDFFF]|\uD83D[\uDC00-\uDCFD\uDCFF-\uDD3D\uDD49-\uDD4E\uDD50-\uDD67\uDD6F\uDD70\uDD73-\uDD7A\uDD87\uDD8A-\uDD8D\uDD90\uDD95\uDD96\uDDA4\uDDA5\uDDA8\uDDB1\uDDB2\uDDBC\uDDC2-\uDDC4\uDDD1-\uDDD3\uDDDC-\uDDDE\uDDE1\uDDE3\uDDE8\uDDEF\uDDF3\uDDFA-\uDE4F\uDE80-\uDEC5\uDECB-\uDED2\uDED5-\uDED7\uDEE0-\uDEE5\uDEE9\uDEEB\uDEEC\uDEF0\uDEF3-\uDEFC\uDFE0-\uDFEB]|\uD83E[\uDD0C-\uDD3A\uDD3C-\uDD45\uDD47-\uDD78\uDD7A-\uDDCB\uDDCD-\uDDFF\uDE70-\uDE74\uDE78-\uDE7A\uDE80-\uDE86\uDE90-\uDEA8\uDEB0-\uDEB6\uDEC0-\uDEC2\uDED0-\uDED6])\uFE0F|(?:[\u261D\u26F9\u270A-\u270D]|\uD83C[\uDF85\uDFC2-\uDFC4\uDFC7\uDFCA-\uDFCC]|\uD83D[\uDC42\uDC43\uDC46-\uDC50\uDC66-\uDC78\uDC7C\uDC81-\uDC83\uDC85-\uDC87\uDC8F\uDC91\uDCAA\uDD74\uDD75\uDD7A\uDD90\uDD95\uDD96\uDE45-\uDE47\uDE4B-\uDE4F\uDEA3\uDEB4-\uDEB6\uDEC0\uDECC]|\uD83E[\uDD0C\uDD0F\uDD18-\uDD1F\uDD26\uDD30-\uDD39\uDD3C-\uDD3E\uDD77\uDDB5\uDDB6\uDDB8\uDDB9\uDDBB\uDDCD-\uDDCF\uDDD1-\uDDDD])/g;
   };

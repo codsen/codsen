@@ -175,7 +175,7 @@
    */
 
   function isObjectLike(value) {
-    return !!value && typeof value == 'object';
+    return !!value && _typeof(value) == 'object';
   }
   /**
    * Checks if `value` is a plain object, that is, an object created by the

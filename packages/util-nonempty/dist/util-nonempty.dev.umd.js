@@ -13,6 +13,22 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.utilNonempty = factory());
 }(this, (function () { 'use strict';
 
+  function _typeof(obj) {
+    "@babel/helpers - typeof";
+
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof = function (obj) {
+        return typeof obj;
+      };
+    } else {
+      _typeof = function (obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      };
+    }
+
+    return _typeof(obj);
+  }
+
   /**
    * lodash (Custom Build) <https://lodash.com/>
    * Build: `lodash modularize exports="npm" -o ./`
@@ -110,7 +126,7 @@
    */
 
   function isObjectLike(value) {
-    return !!value && typeof value == 'object';
+    return !!value && _typeof(value) == 'object';
   }
   /**
    * Checks if `value` is a plain object, that is, an object created by the
@@ -159,7 +175,7 @@
 
   var lodash_isplainobject = isPlainObject;
 
-  const isArr = Array.isArray;
+  var isArr = Array.isArray;
 
   function isStr(something) {
     return typeof something === "string";

@@ -175,7 +175,7 @@
    */
 
   function isObjectLike(value) {
-    return !!value && typeof value == 'object';
+    return !!value && _typeof(value) == 'object';
   }
   /**
    * Checks if `value` is a plain object, that is, an object created by the
@@ -314,10 +314,10 @@
     typedArrayTags[argsTag] = typedArrayTags[arrayTag] = typedArrayTags[arrayBufferTag] = typedArrayTags[boolTag] = typedArrayTags[dataViewTag] = typedArrayTags[dateTag] = typedArrayTags[errorTag] = typedArrayTags[funcTag] = typedArrayTags[mapTag] = typedArrayTags[numberTag] = typedArrayTags[objectTag] = typedArrayTags[regexpTag] = typedArrayTags[setTag] = typedArrayTags[stringTag] = typedArrayTags[weakMapTag] = false;
     /** Detect free variable `global` from Node.js. */
 
-    var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+    var freeGlobal = _typeof(commonjsGlobal) == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
     /** Detect free variable `self`. */
 
-    var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+    var freeSelf = (typeof self === "undefined" ? "undefined" : _typeof(self)) == 'object' && self && self.Object === Object && self;
     /** Used as a reference to the global object. */
 
     var root = freeGlobal || freeSelf || Function('return this')();
@@ -560,11 +560,11 @@
     /** Built-in value references. */
 
     var Buffer = moduleExports ? root.Buffer : undefined,
-        Symbol = root.Symbol,
+        _Symbol = root.Symbol,
         Uint8Array = root.Uint8Array,
         propertyIsEnumerable = objectProto.propertyIsEnumerable,
         splice = arrayProto.splice,
-        symToStringTag = Symbol ? Symbol.toStringTag : undefined;
+        symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
     /* Built-in method references for those with the same name as other `lodash` methods. */
 
     var nativeGetSymbols = Object.getOwnPropertySymbols,
@@ -587,7 +587,7 @@
         weakMapCtorString = toSource(WeakMap);
     /** Used to convert symbols to primitives and strings. */
 
-    var symbolProto = Symbol ? Symbol.prototype : undefined,
+    var symbolProto = _Symbol ? _Symbol.prototype : undefined,
         symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
     /**
      * Creates a hash object.
@@ -1664,7 +1664,7 @@
     var getTag = baseGetTag; // Fallback for data views, maps, sets, and weak maps in IE 11 and promises in Node.js < 6.
 
     if (DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag || Map && getTag(new Map()) != mapTag || Promise && getTag(Promise.resolve()) != promiseTag || Set && getTag(new Set()) != setTag || WeakMap && getTag(new WeakMap()) != weakMapTag) {
-      getTag = function (value) {
+      getTag = function getTag(value) {
         var result = baseGetTag(value),
             Ctor = result == objectTag ? value.constructor : undefined,
             ctorString = Ctor ? toSource(Ctor) : '';
@@ -1715,7 +1715,8 @@
 
 
     function isKeyable(value) {
-      var type = typeof value;
+      var type = _typeof(value);
+
       return type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean' ? value !== '__proto__' : value === null;
     }
     /**
@@ -2034,7 +2035,8 @@
 
 
     function isObject(value) {
-      var type = typeof value;
+      var type = _typeof(value);
+
       return value != null && (type == 'object' || type == 'function');
     }
     /**
@@ -2064,7 +2066,7 @@
 
 
     function isObjectLike(value) {
-      return value != null && typeof value == 'object';
+      return value != null && _typeof(value) == 'object';
     }
     /**
      * Checks if `value` is classified as a typed array.

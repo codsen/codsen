@@ -97,7 +97,7 @@
       var stringFromCharCode = String.fromCharCode;
       var floor = Math.floor;
 
-      var fromCodePoint = function (_) {
+      var fromCodePoint = function fromCodePoint(_) {
         var MAX_SIZE = 0x4000;
         var codeUnits = [];
         var highSurrogate;

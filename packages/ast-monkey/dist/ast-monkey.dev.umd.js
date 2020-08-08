@@ -111,6 +111,63 @@
     throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
 
+  function _createForOfIteratorHelper(o, allowArrayLike) {
+    var it;
+
+    if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
+      if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
+        if (it) o = it;
+        var i = 0;
+
+        var F = function () {};
+
+        return {
+          s: F,
+          n: function () {
+            if (i >= o.length) return {
+              done: true
+            };
+            return {
+              done: false,
+              value: o[i++]
+            };
+          },
+          e: function (e) {
+            throw e;
+          },
+          f: F
+        };
+      }
+
+      throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+    }
+
+    var normalCompletion = true,
+        didErr = false,
+        err;
+    return {
+      s: function () {
+        it = o[Symbol.iterator]();
+      },
+      n: function () {
+        var step = it.next();
+        normalCompletion = step.done;
+        return step;
+      },
+      e: function (e) {
+        didErr = true;
+        err = e;
+      },
+      f: function () {
+        try {
+          if (!normalCompletion && it.return != null) it.return();
+        } finally {
+          if (didErr) throw err;
+        }
+      }
+    };
+  }
+
   /**
    * lodash (Custom Build) <https://lodash.com/>
    * Build: `lodash modularize exports="npm" -o ./`
@@ -621,7 +678,8 @@
 
 
   function isObject(value) {
-    var type = typeof value;
+    var type = _typeof(value);
+
     return !!value && (type == 'object' || type == 'function');
   }
   /**
@@ -651,7 +709,7 @@
 
 
   function isObjectLike(value) {
-    return !!value && typeof value == 'object';
+    return !!value && _typeof(value) == 'object';
   }
   /**
    * Checks if `value` is classified as a `String` primitive or object.
@@ -695,7 +753,7 @@
 
 
   function isSymbol(value) {
-    return typeof value == 'symbol' || isObjectLike(value) && objectToString.call(value) == symbolTag;
+    return _typeof(value) == 'symbol' || isObjectLike(value) && objectToString.call(value) == symbolTag;
   }
   /**
    * Converts `value` to a finite number.
@@ -980,7 +1038,7 @@
    */
 
   function isObjectLike$1(value) {
-    return !!value && typeof value == 'object';
+    return !!value && _typeof(value) == 'object';
   }
   /**
    * Checks if `value` is a plain object, that is, an object created by the
@@ -1029,49 +1087,39 @@
 
   var lodash_isplainobject = isPlainObject;
 
-  /**
-   * util-array-object-or-both
-   * Validate and normalise user choice: array, object or both?
-   * Version: 2.7.60
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/util-array-object-or-both
-   */
-
   function arrObjOrBoth(str, originalOpts) {
     function existy(x) {
       return x != null;
     }
 
     if (!existy(str)) {
-      throw new Error(`util-array-object-or-both/validate(): [THROW_ID_01] Please provide a string to work on. Currently it's equal to ${JSON.stringify(str, null, 4)}`);
+      throw new Error("util-array-object-or-both/validate(): [THROW_ID_01] Please provide a string to work on. Currently it's equal to ".concat(JSON.stringify(str, null, 4)));
     }
 
     if (typeof str !== "string") {
-      throw new Error(`util-array-object-or-both/validate(): [THROW_ID_02] Input must be string! Currently it's ${typeof str}, equal to: ${JSON.stringify(str, null, 4)}`);
+      throw new Error("util-array-object-or-both/validate(): [THROW_ID_02] Input must be string! Currently it's ".concat(_typeof(str), ", equal to: ").concat(JSON.stringify(str, null, 4)));
     }
 
     if (existy(originalOpts) && !lodash_isplainobject(originalOpts)) {
-      throw new Error(`util-array-object-or-both/validate(): [THROW_ID_03] Second argument, options object, must be, well, object! Currenlty it's: ${typeof originalOpts}, equal to: ${JSON.stringify(originalOpts, null, 4)}`);
+      throw new Error("util-array-object-or-both/validate(): [THROW_ID_03] Second argument, options object, must be, well, object! Currenlty it's: ".concat(_typeof(originalOpts), ", equal to: ").concat(JSON.stringify(originalOpts, null, 4)));
     }
 
-    const onlyObjectValues = ["object", "objects", "obj", "ob", "o"];
-    const onlyArrayValues = ["array", "arrays", "arr", "aray", "arr", "a"];
-    const onlyAnyValues = ["any", "all", "everything", "both", "either", "each", "whatever", "whatevs", "e"];
-    const defaults = {
+    var onlyObjectValues = ["object", "objects", "obj", "ob", "o"];
+    var onlyArrayValues = ["array", "arrays", "arr", "aray", "arr", "a"];
+    var onlyAnyValues = ["any", "all", "everything", "both", "either", "each", "whatever", "whatevs", "e"];
+    var defaults = {
       msg: "",
       optsVarName: "given variable"
     };
-    const opts = { ...defaults,
-      ...originalOpts
-    };
+
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
     if (existy(opts.msg) && opts.msg.length > 0) {
-      opts.msg = `${opts.msg.trim()} `;
+      opts.msg = "".concat(opts.msg.trim(), " ");
     }
 
     if (opts.optsVarName !== "given variable") {
-      opts.optsVarName = `variable "${opts.optsVarName}"`;
+      opts.optsVarName = "variable \"".concat(opts.optsVarName, "\"");
     }
 
     if (lodash_includes(onlyObjectValues, str.toLowerCase().trim())) {
@@ -1086,7 +1134,7 @@
       return "any";
     }
 
-    throw new TypeError(`${opts.msg}The ${opts.optsVarName} was customised to an unrecognised value: ${str}. Please check it against the API documentation.`);
+    throw new TypeError("".concat(opts.msg, "The ").concat(opts.optsVarName, " was customised to an unrecognised value: ").concat(str, ". Please check it against the API documentation."));
   }
 
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
@@ -1118,7 +1166,7 @@
       var promiseExists = typeof Promise === 'function';
       /* eslint-disable no-undef */
 
-      var globalObject = typeof self === 'object' ? self : commonjsGlobal; // eslint-disable-line id-blacklist
+      var globalObject = (typeof self === "undefined" ? "undefined" : _typeof(self)) === 'object' ? self : commonjsGlobal; // eslint-disable-line id-blacklist
 
       var symbolExists = typeof Symbol !== 'undefined';
       var mapExists = typeof Map !== 'undefined';
@@ -1164,7 +1212,7 @@
          *   undefined          x 32,363,368 ops/sec ±1.07% (82 runs sampled)
          *   function           x 31,296,870 ops/sec ±0.96% (83 runs sampled)
          */
-        var typeofObj = typeof obj;
+        var typeofObj = _typeof(obj);
 
         if (typeofObj !== 'object') {
           return typeofObj;
@@ -1215,7 +1263,7 @@
         // for `window` to be unset before tests in quasi-browser environments.
 
 
-        if (typeof window === 'object' && window !== null) {
+        if ((typeof window === "undefined" ? "undefined" : _typeof(window)) === 'object' && window !== null) {
           /* ! Spec Conformance
            * (https://html.spec.whatwg.org/multipage/browsers.html#location)
            * WhatWG HTML$7.7.3 - The `Location` interface
@@ -1223,7 +1271,7 @@
            *  - IE <=11 === "[object Object]"
            *  - IE Edge <=13 === "[object Object]"
            */
-          if (typeof window.location === 'object' && obj === window.location) {
+          if (_typeof(window.location) === 'object' && obj === window.location) {
             return 'Location';
           }
           /* ! Spec Conformance
@@ -1247,18 +1295,18 @@
            */
 
 
-          if (typeof window.document === 'object' && obj === window.document) {
+          if (_typeof(window.document) === 'object' && obj === window.document) {
             return 'Document';
           }
 
-          if (typeof window.navigator === 'object') {
+          if (_typeof(window.navigator) === 'object') {
             /* ! Spec Conformance
              * (https://html.spec.whatwg.org/multipage/webappapis.html#mimetypearray)
              * WhatWG HTML$8.6.1.5 - Plugins - Interface MimeTypeArray
              * Test: `Object.prototype.toString.call(navigator.mimeTypes)``
              *  - IE <=10 === "[object MSMimeTypesCollection]"
              */
-            if (typeof window.navigator.mimeTypes === 'object' && obj === window.navigator.mimeTypes) {
+            if (_typeof(window.navigator.mimeTypes) === 'object' && obj === window.navigator.mimeTypes) {
               return 'MimeTypeArray';
             }
             /* ! Spec Conformance
@@ -1269,12 +1317,12 @@
              */
 
 
-            if (typeof window.navigator.plugins === 'object' && obj === window.navigator.plugins) {
+            if (_typeof(window.navigator.plugins) === 'object' && obj === window.navigator.plugins) {
               return 'PluginArray';
             }
           }
 
-          if ((typeof window.HTMLElement === 'function' || typeof window.HTMLElement === 'object') && obj instanceof window.HTMLElement) {
+          if ((typeof window.HTMLElement === 'function' || _typeof(window.HTMLElement) === 'object') && obj instanceof window.HTMLElement) {
             /* ! Spec Conformance
             * (https://html.spec.whatwg.org/multipage/webappapis.html#pluginarray)
             * WhatWG HTML$4.4.4 - The `blockquote` element - Interface `HTMLQuoteElement`
@@ -1804,10 +1852,10 @@
     cloneableTags[errorTag] = cloneableTags[funcTag] = cloneableTags[weakMapTag] = false;
     /** Detect free variable `global` from Node.js. */
 
-    var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+    var freeGlobal = _typeof(commonjsGlobal) == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
     /** Detect free variable `self`. */
 
-    var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+    var freeSelf = (typeof self === "undefined" ? "undefined" : _typeof(self)) == 'object' && self && self.Object === Object && self;
     /** Used as a reference to the global object. */
 
     var root = freeGlobal || freeSelf || Function('return this')();
@@ -2061,7 +2109,7 @@
     /** Built-in value references. */
 
     var Buffer = moduleExports ? root.Buffer : undefined,
-        Symbol = root.Symbol,
+        _Symbol = root.Symbol,
         Uint8Array = root.Uint8Array,
         getPrototype = overArg(Object.getPrototypeOf, Object),
         objectCreate = Object.create,
@@ -2089,7 +2137,7 @@
         weakMapCtorString = toSource(WeakMap);
     /** Used to convert symbols to primitives and strings. */
 
-    var symbolProto = Symbol ? Symbol.prototype : undefined,
+    var symbolProto = _Symbol ? _Symbol.prototype : undefined,
         symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
     /**
      * Creates a hash object.
@@ -3007,7 +3055,7 @@
     // for data views in Edge < 14, and promises in Node.js.
 
     if (DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag || Map && getTag(new Map()) != mapTag || Promise && getTag(Promise.resolve()) != promiseTag || Set && getTag(new Set()) != setTag || WeakMap && getTag(new WeakMap()) != weakMapTag) {
-      getTag = function (value) {
+      getTag = function getTag(value) {
         var result = objectToString.call(value),
             Ctor = result == objectTag ? value.constructor : undefined,
             ctorString = Ctor ? toSource(Ctor) : undefined;
@@ -3147,7 +3195,8 @@
 
 
     function isKeyable(value) {
-      var type = typeof value;
+      var type = _typeof(value);
+
       return type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean' ? value !== '__proto__' : value === null;
     }
     /**
@@ -3470,7 +3519,8 @@
 
 
     function isObject(value) {
-      var type = typeof value;
+      var type = _typeof(value);
+
       return !!value && (type == 'object' || type == 'function');
     }
     /**
@@ -3500,7 +3550,7 @@
 
 
     function isObjectLike(value) {
-      return !!value && typeof value == 'object';
+      return !!value && _typeof(value) == 'object';
     }
     /**
      * Creates an array of the own enumerable property names of `object`.
@@ -3580,15 +3630,6 @@
     module.exports = cloneDeep;
   });
 
-  /**
-   * ast-monkey-traverse
-   * Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)
-   * Version: 1.12.13
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse
-   */
-
   function trimFirstDot(str) {
     if (typeof str === "string" && str.length && str[0] === ".") {
       return str.slice(1);
@@ -3598,24 +3639,25 @@
   }
 
   function isObj(something) {
-    return something && typeof something === "object" && !Array.isArray(something);
+    return something && _typeof(something) === "object" && !Array.isArray(something);
   }
 
   function astMonkeyTraverse(tree1, cb1) {
-    const stop2 = {
+    var stop2 = {
       now: false
     };
 
     function traverseInner(treeOriginal, callback, originalInnerObj, stop) {
-      const tree = lodash_clonedeep(treeOriginal);
-      let i;
-      let len;
-      let res;
-      const innerObj = {
+      var tree = lodash_clonedeep(treeOriginal);
+      var i;
+      var len;
+      var res;
+
+      var innerObj = _objectSpread2({
         depth: -1,
-        path: "",
-        ...originalInnerObj
-      };
+        path: ""
+      }, originalInnerObj);
+
       innerObj.depth += 1;
 
       if (Array.isArray(tree)) {
@@ -3624,16 +3666,16 @@
             break;
           }
 
-          const path = `${innerObj.path}.${i}`;
+          var path = "".concat(innerObj.path, ".").concat(i);
 
           if (tree[i] !== undefined) {
             innerObj.parent = lodash_clonedeep(tree);
             innerObj.parentType = "array";
-            res = traverseInner(callback(tree[i], undefined, { ...innerObj,
+            res = traverseInner(callback(tree[i], undefined, _objectSpread2(_objectSpread2({}, innerObj), {}, {
               path: trimFirstDot(path)
-            }, stop), callback, { ...innerObj,
+            }), stop), callback, _objectSpread2(_objectSpread2({}, innerObj), {}, {
               path: trimFirstDot(path)
-            }, stop);
+            }), stop);
 
             if (Number.isNaN(res) && i < tree.length) {
               tree.splice(i, 1);
@@ -3646,12 +3688,12 @@
           }
         }
       } else if (isObj(tree)) {
-        for (const key in tree) {
+        for (var key in tree) {
           if (stop.now && key != null) {
             break;
           }
 
-          const path = `${innerObj.path}.${key}`;
+          var _path = "".concat(innerObj.path, ".").concat(key);
 
           if (innerObj.depth === 0 && key != null) {
             innerObj.topmostKey = key;
@@ -3659,11 +3701,11 @@
 
           innerObj.parent = lodash_clonedeep(tree);
           innerObj.parentType = "object";
-          res = traverseInner(callback(key, tree[key], { ...innerObj,
-            path: trimFirstDot(path)
-          }, stop), callback, { ...innerObj,
-            path: trimFirstDot(path)
-          }, stop);
+          res = traverseInner(callback(key, tree[key], _objectSpread2(_objectSpread2({}, innerObj), {}, {
+            path: trimFirstDot(_path)
+          }), stop), callback, _objectSpread2(_objectSpread2({}, innerObj), {}, {
+            path: trimFirstDot(_path)
+          }), stop);
 
           if (Number.isNaN(res)) {
             delete tree[key];
@@ -3709,10 +3751,10 @@
   var reIsHostCtor = /^\[object .+?Constructor\]$/;
   /** Detect free variable `global` from Node.js. */
 
-  var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+  var freeGlobal = _typeof(commonjsGlobal) == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
   /** Detect free variable `self`. */
 
-  var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+  var freeSelf = (typeof self === "undefined" ? "undefined" : _typeof(self)) == 'object' && self && self.Object === Object && self;
   /** Used as a reference to the global object. */
 
   var root = freeGlobal || freeSelf || Function('return this')();
@@ -4533,7 +4575,8 @@
 
 
   function isKeyable(value) {
-    var type = typeof value;
+    var type = _typeof(value);
+
     return type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean' ? value !== '__proto__' : value === null;
   }
   /**
@@ -4773,7 +4816,8 @@
 
 
   function isObject$1(value) {
-    var type = typeof value;
+    var type = _typeof(value);
+
     return !!value && (type == 'object' || type == 'function');
   }
   /**
@@ -4803,7 +4847,7 @@
 
 
   function isObjectLike$2(value) {
-    return !!value && typeof value == 'object';
+    return !!value && _typeof(value) == 'object';
   }
 
   var lodash_intersection = intersection;
@@ -4873,7 +4917,7 @@
       }
 
       function isObject(obj) {
-        return typeof obj === 'object' && toString(obj) === "[object Object]";
+        return _typeof(obj) === 'object' && toString(obj) === "[object Object]";
       }
 
       var isArray = Array.isArray || function (obj) {
@@ -4898,7 +4942,7 @@
       function factory(options) {
         options = options || {};
 
-        var objectPath = function (obj) {
+        var objectPath = function objectPath(obj) {
           return Object.keys(objectPath).reduce(function (proxy, prop) {
             if (prop === 'create') {
               return proxy;
@@ -5142,7 +5186,7 @@
     });
   });
 
-  var escapeStringRegexp = string => {
+  var escapeStringRegexp = function escapeStringRegexp(string) {
     if (typeof string !== 'string') {
       throw new TypeError('Expected a string');
     } // Escape characters with special meaning either inside or outside character sets.
@@ -5152,87 +5196,101 @@
     return string.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&').replace(/-/g, '\\x2d');
   };
 
-  const regexpCache = new Map();
+  var regexpCache = new Map();
 
   function makeRegexp(pattern, options) {
-    options = {
-      caseSensitive: false,
-      ...options
-    };
-    const cacheKey = pattern + JSON.stringify(options);
+    options = _objectSpread2({
+      caseSensitive: false
+    }, options);
+    var cacheKey = pattern + JSON.stringify(options);
 
     if (regexpCache.has(cacheKey)) {
       return regexpCache.get(cacheKey);
     }
 
-    const negated = pattern[0] === '!';
+    var negated = pattern[0] === '!';
 
     if (negated) {
       pattern = pattern.slice(1);
     }
 
     pattern = escapeStringRegexp(pattern).replace(/\\\*/g, '[\\s\\S]*');
-    const regexp = new RegExp(`^${pattern}$`, options.caseSensitive ? '' : 'i');
+    var regexp = new RegExp("^".concat(pattern, "$"), options.caseSensitive ? '' : 'i');
     regexp.negated = negated;
     regexpCache.set(cacheKey, regexp);
     return regexp;
   }
 
-  var matcher = (inputs, patterns, options) => {
+  var matcher = function matcher(inputs, patterns, options) {
     if (!(Array.isArray(inputs) && Array.isArray(patterns))) {
-      throw new TypeError(`Expected two arrays, got ${typeof inputs} ${typeof patterns}`);
+      throw new TypeError("Expected two arrays, got ".concat(_typeof(inputs), " ").concat(_typeof(patterns)));
     }
 
     if (patterns.length === 0) {
       return inputs;
     }
 
-    const isFirstPatternNegated = patterns[0][0] === '!';
-    patterns = patterns.map(pattern => makeRegexp(pattern, options));
-    const result = [];
+    var isFirstPatternNegated = patterns[0][0] === '!';
+    patterns = patterns.map(function (pattern) {
+      return makeRegexp(pattern, options);
+    });
+    var result = [];
 
-    for (const input of inputs) {
-      // If first pattern is negated we include everything to match user expectation.
-      let matches = isFirstPatternNegated;
+    var _iterator = _createForOfIteratorHelper(inputs),
+        _step;
 
-      for (const pattern of patterns) {
-        if (pattern.test(input)) {
-          matches = !pattern.negated;
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var input = _step.value;
+        // If first pattern is negated we include everything to match user expectation.
+        var matches = isFirstPatternNegated;
+
+        var _iterator2 = _createForOfIteratorHelper(patterns),
+            _step2;
+
+        try {
+          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+            var pattern = _step2.value;
+
+            if (pattern.test(input)) {
+              matches = !pattern.negated;
+            }
+          }
+        } catch (err) {
+          _iterator2.e(err);
+        } finally {
+          _iterator2.f();
+        }
+
+        if (matches) {
+          result.push(input);
         }
       }
-
-      if (matches) {
-        result.push(input);
-      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
     }
 
     return result;
   };
 
-  var isMatch = (input, pattern, options) => {
-    const inputArray = Array.isArray(input) ? input : [input];
-    const patternArray = Array.isArray(pattern) ? pattern : [pattern];
-    return inputArray.some(input => {
-      return patternArray.every(pattern => {
-        const regexp = makeRegexp(pattern, options);
-        const matches = regexp.test(input);
+  var isMatch = function isMatch(input, pattern, options) {
+    var inputArray = Array.isArray(input) ? input : [input];
+    var patternArray = Array.isArray(pattern) ? pattern : [pattern];
+    return inputArray.some(function (input) {
+      return patternArray.every(function (pattern) {
+        var regexp = makeRegexp(pattern, options);
+        var matches = regexp.test(input);
         return regexp.negated ? !matches : matches;
       });
     });
   };
   matcher.isMatch = isMatch;
 
-  /**
-   * check-types-mini
-   * Check the types of your options object's values after user has customised them
-   * Version: 5.7.65
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini
-   */
-
-  function checkTypesMini(obj, ref, originalOptions, shouldWeCheckTheOpts = true) {
-    const hasKey = Object.prototype.hasOwnProperty;
+  function checkTypesMini(obj, ref, originalOptions) {
+    var shouldWeCheckTheOpts = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
+    var hasKey = Object.prototype.hasOwnProperty;
 
     function existy(something) {
       return something != null;
@@ -5244,19 +5302,23 @@
 
     function pullAllWithGlob(originalInput, toBeRemoved) {
       toBeRemoved = arrayiffyString(toBeRemoved);
-      return Array.from(originalInput).filter(originalVal => !toBeRemoved.some(remVal => matcher.isMatch(originalVal, remVal, {
-        caseSensitive: true
-      })));
+      return Array.from(originalInput).filter(function (originalVal) {
+        return !toBeRemoved.some(function (remVal) {
+          return matcher.isMatch(originalVal, remVal, {
+            caseSensitive: true
+          });
+        });
+      });
     }
 
-    const NAMESFORANYTYPE = ["any", "anything", "every", "everything", "all", "whatever", "whatevs"];
-    const isArr = Array.isArray;
+    var NAMESFORANYTYPE = ["any", "anything", "every", "everything", "all", "whatever", "whatevs"];
+    var isArr = Array.isArray;
 
     if (!existy(obj)) {
       throw new Error("check-types-mini: [THROW_ID_01] First argument is missing!");
     }
 
-    const defaults = {
+    var defaults = {
       ignoreKeys: [],
       ignorePaths: [],
       acceptArrays: false,
@@ -5266,15 +5328,12 @@
       msg: "check-types-mini",
       optsVarName: "opts"
     };
-    let opts;
+    var opts;
 
     if (existy(originalOptions) && isObj(originalOptions)) {
-      opts = { ...defaults,
-        ...originalOptions
-      };
+      opts = _objectSpread2(_objectSpread2({}, defaults), originalOptions);
     } else {
-      opts = { ...defaults
-      };
+      opts = _objectSpread2({}, defaults);
     }
 
     if (!existy(opts.ignoreKeys) || !opts.ignoreKeys) {
@@ -5302,14 +5361,14 @@
     }
 
     if (opts.schema) {
-      Object.keys(opts.schema).forEach(oneKey => {
+      Object.keys(opts.schema).forEach(function (oneKey) {
         if (isObj(opts.schema[oneKey])) {
-          const tempObj = {};
-          astMonkeyTraverse(opts.schema[oneKey], (key, val, innerObj) => {
-            const current = val !== undefined ? val : key;
+          var tempObj = {};
+          astMonkeyTraverse(opts.schema[oneKey], function (key, val, innerObj) {
+            var current = val !== undefined ? val : key;
 
             if (!isArr(current) && !isObj(current)) {
-              tempObj[`${oneKey}.${innerObj.path}`] = current;
+              tempObj["".concat(oneKey, ".").concat(innerObj.path)] = current;
             }
 
             return current;
@@ -5318,12 +5377,16 @@
           opts.schema = Object.assign(opts.schema, tempObj);
         }
       });
-      Object.keys(opts.schema).forEach(oneKey => {
+      Object.keys(opts.schema).forEach(function (oneKey) {
         if (!isArr(opts.schema[oneKey])) {
           opts.schema[oneKey] = [opts.schema[oneKey]];
         }
 
-        opts.schema[oneKey] = opts.schema[oneKey].map(String).map(el => el.toLowerCase()).map(el => el.trim());
+        opts.schema[oneKey] = opts.schema[oneKey].map(String).map(function (el) {
+          return el.toLowerCase();
+        }).map(function (el) {
+          return el.trim();
+        });
       });
     }
 
@@ -5340,94 +5403,101 @@
     if (opts.enforceStrictKeyset) {
       if (existy(opts.schema) && Object.keys(opts.schema).length > 0) {
         if (pullAllWithGlob(lodash_pullall(Object.keys(obj), Object.keys(ref).concat(Object.keys(opts.schema))), opts.ignoreKeys).length !== 0) {
-          const keys = lodash_pullall(Object.keys(obj), Object.keys(ref).concat(Object.keys(opts.schema)));
-          throw new TypeError(`${opts.msg}: ${opts.optsVarName}.enforceStrictKeyset is on and the following key${keys.length > 1 ? "s" : ""} ${keys.length > 1 ? "are" : "is"} not covered by schema and/or reference objects: ${keys.join(", ")}`);
+          var keys = lodash_pullall(Object.keys(obj), Object.keys(ref).concat(Object.keys(opts.schema)));
+          throw new TypeError("".concat(opts.msg, ": ").concat(opts.optsVarName, ".enforceStrictKeyset is on and the following key").concat(keys.length > 1 ? "s" : "", " ").concat(keys.length > 1 ? "are" : "is", " not covered by schema and/or reference objects: ").concat(keys.join(", ")));
         }
       } else if (existy(ref) && Object.keys(ref).length > 0) {
         if (pullAllWithGlob(lodash_pullall(Object.keys(obj), Object.keys(ref)), opts.ignoreKeys).length !== 0) {
-          const keys = lodash_pullall(Object.keys(obj), Object.keys(ref));
-          throw new TypeError(`${opts.msg}: The input object has key${keys.length > 1 ? "s" : ""} which ${keys.length > 1 ? "are" : "is"} not covered by the reference object: ${keys.join(", ")}`);
+          var _keys = lodash_pullall(Object.keys(obj), Object.keys(ref));
+
+          throw new TypeError("".concat(opts.msg, ": The input object has key").concat(_keys.length > 1 ? "s" : "", " which ").concat(_keys.length > 1 ? "are" : "is", " not covered by the reference object: ").concat(_keys.join(", ")));
         } else if (pullAllWithGlob(lodash_pullall(Object.keys(ref), Object.keys(obj)), opts.ignoreKeys).length !== 0) {
-          const keys = lodash_pullall(Object.keys(ref), Object.keys(obj));
-          throw new TypeError(`${opts.msg}: The reference object has key${keys.length > 1 ? "s" : ""} which ${keys.length > 1 ? "are" : "is"} not present in the input object: ${keys.join(", ")}`);
+          var _keys2 = lodash_pullall(Object.keys(ref), Object.keys(obj));
+
+          throw new TypeError("".concat(opts.msg, ": The reference object has key").concat(_keys2.length > 1 ? "s" : "", " which ").concat(_keys2.length > 1 ? "are" : "is", " not present in the input object: ").concat(_keys2.join(", ")));
         }
       } else {
-        throw new TypeError(`${opts.msg}: Both ${opts.optsVarName}.schema and reference objects are missing! We don't have anything to match the keys as you requested via opts.enforceStrictKeyset!`);
+        throw new TypeError("".concat(opts.msg, ": Both ").concat(opts.optsVarName, ".schema and reference objects are missing! We don't have anything to match the keys as you requested via opts.enforceStrictKeyset!"));
       }
     }
 
-    const ignoredPathsArr = [];
-    astMonkeyTraverse(obj, (key, val, innerObj) => {
-      let current = val;
-      let objKey = key;
+    var ignoredPathsArr = [];
+    astMonkeyTraverse(obj, function (key, val, innerObj) {
+      var current = val;
+      var objKey = key;
 
       if (innerObj.parentType === "array") {
         objKey = undefined;
         current = key;
       }
 
-      if (isArr(ignoredPathsArr) && ignoredPathsArr.length && ignoredPathsArr.some(path => innerObj.path.startsWith(path))) {
+      if (isArr(ignoredPathsArr) && ignoredPathsArr.length && ignoredPathsArr.some(function (path) {
+        return innerObj.path.startsWith(path);
+      })) {
         return current;
       }
 
-      if (objKey && opts.ignoreKeys.some(oneOfKeysToIgnore => matcher.isMatch(objKey, oneOfKeysToIgnore))) {
+      if (objKey && opts.ignoreKeys.some(function (oneOfKeysToIgnore) {
+        return matcher.isMatch(objKey, oneOfKeysToIgnore);
+      })) {
         return current;
       }
 
-      if (opts.ignorePaths.some(oneOfPathsToIgnore => matcher.isMatch(innerObj.path, oneOfPathsToIgnore))) {
+      if (opts.ignorePaths.some(function (oneOfPathsToIgnore) {
+        return matcher.isMatch(innerObj.path, oneOfPathsToIgnore);
+      })) {
         return current;
       }
 
-      const isNotAnArrayChild = !(!isObj(current) && !isArr(current) && isArr(innerObj.parent));
-      let optsSchemaHasThisPathDefined = false;
+      var isNotAnArrayChild = !(!isObj(current) && !isArr(current) && isArr(innerObj.parent));
+      var optsSchemaHasThisPathDefined = false;
 
       if (isObj(opts.schema) && hasKey.call(opts.schema, objectPath.get(innerObj.path))) {
         optsSchemaHasThisPathDefined = true;
       }
 
-      let refHasThisPathDefined = false;
+      var refHasThisPathDefined = false;
 
       if (isObj(ref) && objectPath.has(ref, objectPath.get(innerObj.path))) {
         refHasThisPathDefined = true;
       }
 
       if (opts.enforceStrictKeyset && isNotAnArrayChild && !optsSchemaHasThisPathDefined && !refHasThisPathDefined) {
-        throw new TypeError(`${opts.msg}: ${opts.optsVarName}.${innerObj.path} is neither covered by reference object (second input argument), nor ${opts.optsVarName}.schema! To stop this error, turn off ${opts.optsVarName}.enforceStrictKeyset or provide some type reference (2nd argument or ${opts.optsVarName}.schema).\n\nDebug info:\n
-obj = ${JSON.stringify(obj, null, 4)}\n
-ref = ${JSON.stringify(ref, null, 4)}\n
-innerObj = ${JSON.stringify(innerObj, null, 4)}\n
-opts = ${JSON.stringify(opts, null, 4)}\n
-current = ${JSON.stringify(current, null, 4)}\n\n`);
+        throw new TypeError("".concat(opts.msg, ": ").concat(opts.optsVarName, ".").concat(innerObj.path, " is neither covered by reference object (second input argument), nor ").concat(opts.optsVarName, ".schema! To stop this error, turn off ").concat(opts.optsVarName, ".enforceStrictKeyset or provide some type reference (2nd argument or ").concat(opts.optsVarName, ".schema).\n\nDebug info:\n\nobj = ").concat(JSON.stringify(obj, null, 4), "\n\nref = ").concat(JSON.stringify(ref, null, 4), "\n\ninnerObj = ").concat(JSON.stringify(innerObj, null, 4), "\n\nopts = ").concat(JSON.stringify(opts, null, 4), "\n\ncurrent = ").concat(JSON.stringify(current, null, 4), "\n\n"));
       } else if (optsSchemaHasThisPathDefined) {
-        const currentKeysSchema = arrayiffyString(opts.schema[innerObj.path]).map(String).map(el => el.toLowerCase());
+        var currentKeysSchema = arrayiffyString(opts.schema[innerObj.path]).map(String).map(function (el) {
+          return el.toLowerCase();
+        });
         objectPath.set(opts.schema, innerObj.path, currentKeysSchema);
 
         if (!lodash_intersection(currentKeysSchema, NAMESFORANYTYPE).length) {
           if (current !== true && current !== false && !currentKeysSchema.includes(typeDetect(current).toLowerCase()) || (current === true || current === false) && !currentKeysSchema.includes(String(current)) && !currentKeysSchema.includes("boolean")) {
             if (isArr(current) && opts.acceptArrays) {
-              for (let i = 0, len = current.length; i < len; i++) {
+              for (var i = 0, len = current.length; i < len; i++) {
                 if (!currentKeysSchema.includes(typeDetect(current[i]).toLowerCase())) {
-                  throw new TypeError(`${opts.msg}: ${opts.optsVarName}.${innerObj.path}.${i}, the ${i}th element (equal to ${JSON.stringify(current[i], null, 0)}) is of a type ${typeDetect(current[i]).toLowerCase()}, but only the following are allowed by the ${opts.optsVarName}.schema: ${currentKeysSchema.join(", ")}`);
+                  throw new TypeError("".concat(opts.msg, ": ").concat(opts.optsVarName, ".").concat(innerObj.path, ".").concat(i, ", the ").concat(i, "th element (equal to ").concat(JSON.stringify(current[i], null, 0), ") is of a type ").concat(typeDetect(current[i]).toLowerCase(), ", but only the following are allowed by the ").concat(opts.optsVarName, ".schema: ").concat(currentKeysSchema.join(", ")));
                 }
               }
             } else {
-              throw new TypeError(`${opts.msg}: ${opts.optsVarName}.${innerObj.path} was customised to ${typeDetect(current) !== "string" ? '"' : ""}${JSON.stringify(current, null, 0)}${typeDetect(current) !== "string" ? '"' : ""} (type: ${typeDetect(current).toLowerCase()}) which is not among the allowed types in schema (which is equal to ${JSON.stringify(currentKeysSchema, null, 0)})`);
+              throw new TypeError("".concat(opts.msg, ": ").concat(opts.optsVarName, ".").concat(innerObj.path, " was customised to ").concat(typeDetect(current) !== "string" ? '"' : "").concat(JSON.stringify(current, null, 0)).concat(typeDetect(current) !== "string" ? '"' : "", " (type: ").concat(typeDetect(current).toLowerCase(), ") which is not among the allowed types in schema (which is equal to ").concat(JSON.stringify(currentKeysSchema, null, 0), ")"));
             }
           }
         } else {
           ignoredPathsArr.push(innerObj.path);
         }
       } else if (refHasThisPathDefined) {
-        const compareTo = objectPath.get(ref, innerObj.path);
+        var compareTo = objectPath.get(ref, innerObj.path);
 
         if (opts.acceptArrays && isArr(current) && !opts.acceptArraysIgnore.includes(key)) {
-          const allMatch = current.every(el => typeDetect(el).toLowerCase() === typeDetect(ref[key]).toLowerCase());
+          var allMatch = current.every(function (el) {
+            return typeDetect(el).toLowerCase() === typeDetect(ref[key]).toLowerCase();
+          });
 
           if (!allMatch) {
-            throw new TypeError(`${opts.msg}: ${opts.optsVarName}.${innerObj.path} was customised to be array, but not all of its elements are ${typeDetect(ref[key]).toLowerCase()}-type`);
+            throw new TypeError("".concat(opts.msg, ": ").concat(opts.optsVarName, ".").concat(innerObj.path, " was customised to be array, but not all of its elements are ").concat(typeDetect(ref[key]).toLowerCase(), "-type"));
           }
         } else if (typeDetect(current) !== typeDetect(compareTo)) {
-          throw new TypeError(`${opts.msg}: ${opts.optsVarName}.${innerObj.path} was customised to ${typeDetect(current).toLowerCase() === "string" ? "" : '"'}${JSON.stringify(current, null, 0)}${typeDetect(current).toLowerCase() === "string" ? "" : '"'} which is not ${typeDetect(compareTo).toLowerCase()} but ${typeDetect(current).toLowerCase()}`);
+          throw new TypeError("".concat(opts.msg, ": ").concat(opts.optsVarName, ".").concat(innerObj.path, " was customised to ").concat(typeDetect(current).toLowerCase() === "string" ? "" : '"').concat(JSON.stringify(current, null, 0)).concat(typeDetect(current).toLowerCase() === "string" ? "" : '"', " which is not ").concat(typeDetect(compareTo).toLowerCase(), " but ").concat(typeDetect(current).toLowerCase()));
         }
       }
 
@@ -5439,27 +5509,18 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
     return checkTypesMini(obj, ref, originalOptions);
   }
 
-  /**
-   * ast-contains-only-empty-space
-   * Returns Boolean depending if passed AST contain only empty space
-   * Version: 1.9.9
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-contains-only-empty-space
-   */
-
   function containsOnlyEmptySpace(input) {
     if (typeof input === "string") {
       return !input.trim();
     }
 
-    if (!["object", "string"].includes(typeof input) || !input) {
+    if (!["object", "string"].includes(_typeof(input)) || !input) {
       return false;
     }
 
-    let found = true;
-    input = astMonkeyTraverse(input, (key, val, innerObj, stop) => {
-      const current = val !== undefined ? val : key;
+    var found = true;
+    input = astMonkeyTraverse(input, function (key, val, innerObj, stop) {
+      var current = val !== undefined ? val : key;
 
       if (typeof current === "string" && current.trim()) {
         found = false;
@@ -5471,22 +5532,14 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
     return found;
   }
 
-  /**
-   * ast-compare
-   * Compare anything: AST, objects, arrays, strings and nested thereof
-   * Version: 1.13.11
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-compare
-   */
-  const isArr = Array.isArray;
+  var isArr = Array.isArray;
 
   function existy(x) {
     return x != null;
   }
 
   function isObj$1(something) {
-    return something && typeof something === "object" && !Array.isArray(something);
+    return something && _typeof(something) === "object" && !Array.isArray(something);
   }
 
   function isStr(something) {
@@ -5533,30 +5586,29 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
     }
 
     if (existy(b) && !isTheTypeLegit(b)) {
-      throw new TypeError(`ast-compare/compare(): [THROW_ID_03] first input argument is of a wrong type, ${typeDetect(b)}, equal to: ${JSON.stringify(b, null, 4)}`);
+      throw new TypeError("ast-compare/compare(): [THROW_ID_03] first input argument is of a wrong type, ".concat(typeDetect(b), ", equal to: ").concat(JSON.stringify(b, null, 4)));
     }
 
     if (existy(s) && !isTheTypeLegit(s)) {
-      throw new TypeError(`ast-compare/compare(): [THROW_ID_04] second input argument is of a wrong type, ${typeDetect(s)}, equal to: ${JSON.stringify(s, null, 4)}`);
+      throw new TypeError("ast-compare/compare(): [THROW_ID_04] second input argument is of a wrong type, ".concat(typeDetect(s), ", equal to: ").concat(JSON.stringify(s, null, 4)));
     }
 
     if (existy(originalOpts) && !isObj$1(originalOpts)) {
-      throw new TypeError(`ast-compare/compare(): [THROW_ID_05] third argument, options object, must, well, be an object! Currently it's: ${typeDetect(originalOpts)} and equal to: ${JSON.stringify(originalOpts, null, 4)}`);
+      throw new TypeError("ast-compare/compare(): [THROW_ID_05] third argument, options object, must, well, be an object! Currently it's: ".concat(typeDetect(originalOpts), " and equal to: ").concat(JSON.stringify(originalOpts, null, 4)));
     }
 
-    let sKeys;
-    let bKeys;
-    let found;
-    let bOffset = 0;
-    const defaults = {
+    var sKeys;
+    var bKeys;
+    var found;
+    var bOffset = 0;
+    var defaults = {
       hungryForWhitespace: false,
       matchStrictly: false,
       verboseWhenMismatches: false,
       useWildcards: false
     };
-    const opts = { ...defaults,
-      ...originalOpts
-    };
+
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
     if (opts.hungryForWhitespace && opts.matchStrictly && isObj$1(b) && containsOnlyEmptySpace(b) && isObj$1(s) && !Object.keys(s).length) {
       return true;
@@ -5572,7 +5624,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
       }
 
       if (opts.verboseWhenMismatches) {
-        return b === s ? true : `Given string ${s} is not matched! We have ${b} on the other end.`;
+        return b === s ? true : "Given string ".concat(s, " is not matched! We have ").concat(b, " on the other end.");
       }
 
       return opts.useWildcards ? matcher.isMatch(b, s, {
@@ -5590,7 +5642,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
           return false;
         }
 
-        return `The length of a given array, ${JSON.stringify(s, null, 4)} is ${s.length} but the length of an array on the other end, ${JSON.stringify(b, null, 4)} is ${b.length}`;
+        return "The length of a given array, ".concat(JSON.stringify(s, null, 4), " is ").concat(s.length, " but the length of an array on the other end, ").concat(JSON.stringify(b, null, 4), " is ").concat(b.length);
       }
 
       if (s.length === 0) {
@@ -5599,16 +5651,16 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
         }
 
         if (opts.verboseWhenMismatches) {
-          return `The given array has no elements, but the array on the other end, ${JSON.stringify(b, null, 4)} does have some`;
+          return "The given array has no elements, but the array on the other end, ".concat(JSON.stringify(b, null, 4), " does have some");
         }
 
         return false;
       }
 
-      for (let i = 0, sLen = s.length; i < sLen; i++) {
+      for (var i = 0, sLen = s.length; i < sLen; i++) {
         found = false;
 
-        for (let j = bOffset, bLen = b.length; j < bLen; j++) {
+        for (var j = bOffset, bLen = b.length; j < bLen; j++) {
           bOffset += 1;
 
           if (compare(b[j], s[i], opts) === true) {
@@ -5622,7 +5674,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
             return false;
           }
 
-          return `The given array ${JSON.stringify(s, null, 4)} is not a subset of an array on the other end, ${JSON.stringify(b, null, 4)}`;
+          return "The given array ".concat(JSON.stringify(s, null, 4), " is not a subset of an array on the other end, ").concat(JSON.stringify(b, null, 4));
         }
       }
     } else if (isObj$1(b) && isObj$1(s)) {
@@ -5634,52 +5686,92 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
           return false;
         }
 
-        const uniqueKeysOnS = new Set([...sKeys].filter(x => !bKeys.has(x)));
-        const sMessage = uniqueKeysOnS.size ? ` First object has unique keys: ${JSON.stringify(uniqueKeysOnS, null, 4)}.` : "";
-        const uniqueKeysOnB = new Set([...bKeys].filter(x => !sKeys.has(x)));
-        const bMessage = uniqueKeysOnB.size ? ` Second object has unique keys:
-        ${JSON.stringify(uniqueKeysOnB, null, 4)}.` : "";
-        return `When matching strictly, we found that both objects have different amount of keys.${sMessage}${bMessage}`;
+        var uniqueKeysOnS = new Set(_toConsumableArray(sKeys).filter(function (x) {
+          return !bKeys.has(x);
+        }));
+        var sMessage = uniqueKeysOnS.size ? " First object has unique keys: ".concat(JSON.stringify(uniqueKeysOnS, null, 4), ".") : "";
+        var uniqueKeysOnB = new Set(_toConsumableArray(bKeys).filter(function (x) {
+          return !sKeys.has(x);
+        }));
+        var bMessage = uniqueKeysOnB.size ? " Second object has unique keys:\n        ".concat(JSON.stringify(uniqueKeysOnB, null, 4), ".") : "";
+        return "When matching strictly, we found that both objects have different amount of keys.".concat(sMessage).concat(bMessage);
       }
 
-      for (const sKey of sKeys) {
-        if (!Object.prototype.hasOwnProperty.call(b, sKey)) {
-          if (!opts.useWildcards || opts.useWildcards && !sKey.includes("*")) {
-            if (!opts.verboseWhenMismatches) {
-              return false;
+      var _iterator = _createForOfIteratorHelper(sKeys),
+          _step;
+
+      try {
+        var _loop = function _loop() {
+          var sKey = _step.value;
+
+          if (!Object.prototype.hasOwnProperty.call(b, sKey)) {
+            if (!opts.useWildcards || opts.useWildcards && !sKey.includes("*")) {
+              if (!opts.verboseWhenMismatches) {
+                return {
+                  v: false
+                };
+              }
+
+              return {
+                v: "The given object has key \"".concat(sKey, "\" which the other-one does not have.")
+              };
             }
 
-            return `The given object has key "${sKey}" which the other-one does not have.`;
-          }
-
-          if (Object.keys(b).some(bKey => matcher.isMatch(bKey, sKey, {
-            caseSensitive: true
-          }))) {
-            return true;
-          }
-
-          if (!opts.verboseWhenMismatches) {
-            return false;
-          }
-
-          return `The given object has key "${sKey}" which the other-one does not have.`;
-        }
-
-        if (existy(b[sKey]) && typeDetect(b[sKey]) !== typeDetect(s[sKey])) {
-          if (!(containsOnlyEmptySpace(b[sKey]) && containsOnlyEmptySpace(s[sKey]) && opts.hungryForWhitespace)) {
-            if (!opts.verboseWhenMismatches) {
-              return false;
+            if (Object.keys(b).some(function (bKey) {
+              return matcher.isMatch(bKey, sKey, {
+                caseSensitive: true
+              });
+            })) {
+              return {
+                v: true
+              };
             }
 
-            return `The given key ${sKey} is of a different type on both objects. On the first-one, it's ${typeDetect(s[sKey])}, on the second-one, it's ${typeDetect(b[sKey])}`;
-          }
-        } else if (compare(b[sKey], s[sKey], opts) !== true) {
-          if (!opts.verboseWhenMismatches) {
-            return false;
+            if (!opts.verboseWhenMismatches) {
+              return {
+                v: false
+              };
+            }
+
+            return {
+              v: "The given object has key \"".concat(sKey, "\" which the other-one does not have.")
+            };
           }
 
-          return `The given piece ${JSON.stringify(s[sKey], null, 4)} and ${JSON.stringify(b[sKey], null, 4)} don't match.`;
+          if (existy(b[sKey]) && typeDetect(b[sKey]) !== typeDetect(s[sKey])) {
+            if (!(containsOnlyEmptySpace(b[sKey]) && containsOnlyEmptySpace(s[sKey]) && opts.hungryForWhitespace)) {
+              if (!opts.verboseWhenMismatches) {
+                return {
+                  v: false
+                };
+              }
+
+              return {
+                v: "The given key ".concat(sKey, " is of a different type on both objects. On the first-one, it's ").concat(typeDetect(s[sKey]), ", on the second-one, it's ").concat(typeDetect(b[sKey]))
+              };
+            }
+          } else if (compare(b[sKey], s[sKey], opts) !== true) {
+            if (!opts.verboseWhenMismatches) {
+              return {
+                v: false
+              };
+            }
+
+            return {
+              v: "The given piece ".concat(JSON.stringify(s[sKey], null, 4), " and ").concat(JSON.stringify(b[sKey], null, 4), " don't match.")
+            };
+          }
+        };
+
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var _ret = _loop();
+
+          if (_typeof(_ret) === "object") return _ret.v;
         }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
       }
     } else {
       if (opts.hungryForWhitespace && containsOnlyEmptySpace(b) && containsOnlyEmptySpace(s) && (!opts.matchStrictly || opts.matchStrictly && isBlank(s))) {

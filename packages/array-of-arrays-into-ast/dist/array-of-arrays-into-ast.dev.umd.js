@@ -78,6 +78,80 @@
     return target;
   }
 
+  function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+  }
+
+  function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+
+    for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+
+  function _createForOfIteratorHelper(o, allowArrayLike) {
+    var it;
+
+    if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
+      if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
+        if (it) o = it;
+        var i = 0;
+
+        var F = function () {};
+
+        return {
+          s: F,
+          n: function () {
+            if (i >= o.length) return {
+              done: true
+            };
+            return {
+              done: false,
+              value: o[i++]
+            };
+          },
+          e: function (e) {
+            throw e;
+          },
+          f: F
+        };
+      }
+
+      throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+    }
+
+    var normalCompletion = true,
+        didErr = false,
+        err;
+    return {
+      s: function () {
+        it = o[Symbol.iterator]();
+      },
+      n: function () {
+        var step = it.next();
+        normalCompletion = step.done;
+        return step;
+      },
+      e: function (e) {
+        didErr = true;
+        err = e;
+      },
+      f: function () {
+        try {
+          if (!normalCompletion && it.return != null) it.return();
+        } finally {
+          if (didErr) throw err;
+        }
+      }
+    };
+  }
+
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
   function createCommonjsModule(fn, basedir, module) {
@@ -107,7 +181,7 @@
       var promiseExists = typeof Promise === 'function';
       /* eslint-disable no-undef */
 
-      var globalObject = typeof self === 'object' ? self : commonjsGlobal; // eslint-disable-line id-blacklist
+      var globalObject = (typeof self === "undefined" ? "undefined" : _typeof(self)) === 'object' ? self : commonjsGlobal; // eslint-disable-line id-blacklist
 
       var symbolExists = typeof Symbol !== 'undefined';
       var mapExists = typeof Map !== 'undefined';
@@ -153,7 +227,7 @@
          *   undefined          x 32,363,368 ops/sec ±1.07% (82 runs sampled)
          *   function           x 31,296,870 ops/sec ±0.96% (83 runs sampled)
          */
-        var typeofObj = typeof obj;
+        var typeofObj = _typeof(obj);
 
         if (typeofObj !== 'object') {
           return typeofObj;
@@ -204,7 +278,7 @@
         // for `window` to be unset before tests in quasi-browser environments.
 
 
-        if (typeof window === 'object' && window !== null) {
+        if ((typeof window === "undefined" ? "undefined" : _typeof(window)) === 'object' && window !== null) {
           /* ! Spec Conformance
            * (https://html.spec.whatwg.org/multipage/browsers.html#location)
            * WhatWG HTML$7.7.3 - The `Location` interface
@@ -212,7 +286,7 @@
            *  - IE <=11 === "[object Object]"
            *  - IE Edge <=13 === "[object Object]"
            */
-          if (typeof window.location === 'object' && obj === window.location) {
+          if (_typeof(window.location) === 'object' && obj === window.location) {
             return 'Location';
           }
           /* ! Spec Conformance
@@ -236,18 +310,18 @@
            */
 
 
-          if (typeof window.document === 'object' && obj === window.document) {
+          if (_typeof(window.document) === 'object' && obj === window.document) {
             return 'Document';
           }
 
-          if (typeof window.navigator === 'object') {
+          if (_typeof(window.navigator) === 'object') {
             /* ! Spec Conformance
              * (https://html.spec.whatwg.org/multipage/webappapis.html#mimetypearray)
              * WhatWG HTML$8.6.1.5 - Plugins - Interface MimeTypeArray
              * Test: `Object.prototype.toString.call(navigator.mimeTypes)``
              *  - IE <=10 === "[object MSMimeTypesCollection]"
              */
-            if (typeof window.navigator.mimeTypes === 'object' && obj === window.navigator.mimeTypes) {
+            if (_typeof(window.navigator.mimeTypes) === 'object' && obj === window.navigator.mimeTypes) {
               return 'MimeTypeArray';
             }
             /* ! Spec Conformance
@@ -258,12 +332,12 @@
              */
 
 
-            if (typeof window.navigator.plugins === 'object' && obj === window.navigator.plugins) {
+            if (_typeof(window.navigator.plugins) === 'object' && obj === window.navigator.plugins) {
               return 'PluginArray';
             }
           }
 
-          if ((typeof window.HTMLElement === 'function' || typeof window.HTMLElement === 'object') && obj instanceof window.HTMLElement) {
+          if ((typeof window.HTMLElement === 'function' || _typeof(window.HTMLElement) === 'object') && obj instanceof window.HTMLElement) {
             /* ! Spec Conformance
             * (https://html.spec.whatwg.org/multipage/webappapis.html#pluginarray)
             * WhatWG HTML$4.4.4 - The `blockquote` element - Interface `HTMLQuoteElement`
@@ -793,10 +867,10 @@
     cloneableTags[errorTag] = cloneableTags[funcTag] = cloneableTags[weakMapTag] = false;
     /** Detect free variable `global` from Node.js. */
 
-    var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+    var freeGlobal = _typeof(commonjsGlobal) == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
     /** Detect free variable `self`. */
 
-    var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+    var freeSelf = (typeof self === "undefined" ? "undefined" : _typeof(self)) == 'object' && self && self.Object === Object && self;
     /** Used as a reference to the global object. */
 
     var root = freeGlobal || freeSelf || Function('return this')();
@@ -1050,7 +1124,7 @@
     /** Built-in value references. */
 
     var Buffer = moduleExports ? root.Buffer : undefined,
-        Symbol = root.Symbol,
+        _Symbol = root.Symbol,
         Uint8Array = root.Uint8Array,
         getPrototype = overArg(Object.getPrototypeOf, Object),
         objectCreate = Object.create,
@@ -1078,7 +1152,7 @@
         weakMapCtorString = toSource(WeakMap);
     /** Used to convert symbols to primitives and strings. */
 
-    var symbolProto = Symbol ? Symbol.prototype : undefined,
+    var symbolProto = _Symbol ? _Symbol.prototype : undefined,
         symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
     /**
      * Creates a hash object.
@@ -1996,7 +2070,7 @@
     // for data views in Edge < 14, and promises in Node.js.
 
     if (DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag || Map && getTag(new Map()) != mapTag || Promise && getTag(Promise.resolve()) != promiseTag || Set && getTag(new Set()) != setTag || WeakMap && getTag(new WeakMap()) != weakMapTag) {
-      getTag = function (value) {
+      getTag = function getTag(value) {
         var result = objectToString.call(value),
             Ctor = result == objectTag ? value.constructor : undefined,
             ctorString = Ctor ? toSource(Ctor) : undefined;
@@ -2136,7 +2210,8 @@
 
 
     function isKeyable(value) {
-      var type = typeof value;
+      var type = _typeof(value);
+
       return type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean' ? value !== '__proto__' : value === null;
     }
     /**
@@ -2459,7 +2534,8 @@
 
 
     function isObject(value) {
-      var type = typeof value;
+      var type = _typeof(value);
+
       return !!value && (type == 'object' || type == 'function');
     }
     /**
@@ -2489,7 +2565,7 @@
 
 
     function isObjectLike(value) {
-      return !!value && typeof value == 'object';
+      return !!value && _typeof(value) == 'object';
     }
     /**
      * Creates an array of the own enumerable property names of `object`.
@@ -2569,15 +2645,6 @@
     module.exports = cloneDeep;
   });
 
-  /**
-   * ast-monkey-traverse
-   * Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)
-   * Version: 1.12.13
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse
-   */
-
   function trimFirstDot(str) {
     if (typeof str === "string" && str.length && str[0] === ".") {
       return str.slice(1);
@@ -2587,24 +2654,25 @@
   }
 
   function isObj(something) {
-    return something && typeof something === "object" && !Array.isArray(something);
+    return something && _typeof(something) === "object" && !Array.isArray(something);
   }
 
   function astMonkeyTraverse(tree1, cb1) {
-    const stop2 = {
+    var stop2 = {
       now: false
     };
 
     function traverseInner(treeOriginal, callback, originalInnerObj, stop) {
-      const tree = lodash_clonedeep(treeOriginal);
-      let i;
-      let len;
-      let res;
-      const innerObj = {
+      var tree = lodash_clonedeep(treeOriginal);
+      var i;
+      var len;
+      var res;
+
+      var innerObj = _objectSpread2({
         depth: -1,
-        path: "",
-        ...originalInnerObj
-      };
+        path: ""
+      }, originalInnerObj);
+
       innerObj.depth += 1;
 
       if (Array.isArray(tree)) {
@@ -2613,16 +2681,16 @@
             break;
           }
 
-          const path = `${innerObj.path}.${i}`;
+          var path = "".concat(innerObj.path, ".").concat(i);
 
           if (tree[i] !== undefined) {
             innerObj.parent = lodash_clonedeep(tree);
             innerObj.parentType = "array";
-            res = traverseInner(callback(tree[i], undefined, { ...innerObj,
+            res = traverseInner(callback(tree[i], undefined, _objectSpread2(_objectSpread2({}, innerObj), {}, {
               path: trimFirstDot(path)
-            }, stop), callback, { ...innerObj,
+            }), stop), callback, _objectSpread2(_objectSpread2({}, innerObj), {}, {
               path: trimFirstDot(path)
-            }, stop);
+            }), stop);
 
             if (Number.isNaN(res) && i < tree.length) {
               tree.splice(i, 1);
@@ -2635,12 +2703,12 @@
           }
         }
       } else if (isObj(tree)) {
-        for (const key in tree) {
+        for (var key in tree) {
           if (stop.now && key != null) {
             break;
           }
 
-          const path = `${innerObj.path}.${key}`;
+          var _path = "".concat(innerObj.path, ".").concat(key);
 
           if (innerObj.depth === 0 && key != null) {
             innerObj.topmostKey = key;
@@ -2648,11 +2716,11 @@
 
           innerObj.parent = lodash_clonedeep(tree);
           innerObj.parentType = "object";
-          res = traverseInner(callback(key, tree[key], { ...innerObj,
-            path: trimFirstDot(path)
-          }, stop), callback, { ...innerObj,
-            path: trimFirstDot(path)
-          }, stop);
+          res = traverseInner(callback(key, tree[key], _objectSpread2(_objectSpread2({}, innerObj), {}, {
+            path: trimFirstDot(_path)
+          }), stop), callback, _objectSpread2(_objectSpread2({}, innerObj), {}, {
+            path: trimFirstDot(_path)
+          }), stop);
 
           if (Number.isNaN(res)) {
             delete tree[key];
@@ -2698,10 +2766,10 @@
   var reIsHostCtor = /^\[object .+?Constructor\]$/;
   /** Detect free variable `global` from Node.js. */
 
-  var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+  var freeGlobal = _typeof(commonjsGlobal) == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
   /** Detect free variable `self`. */
 
-  var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+  var freeSelf = (typeof self === "undefined" ? "undefined" : _typeof(self)) == 'object' && self && self.Object === Object && self;
   /** Used as a reference to the global object. */
 
   var root = freeGlobal || freeSelf || Function('return this')();
@@ -3522,7 +3590,8 @@
 
 
   function isKeyable(value) {
-    var type = typeof value;
+    var type = _typeof(value);
+
     return type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean' ? value !== '__proto__' : value === null;
   }
   /**
@@ -3762,7 +3831,8 @@
 
 
   function isObject(value) {
-    var type = typeof value;
+    var type = _typeof(value);
+
     return !!value && (type == 'object' || type == 'function');
   }
   /**
@@ -3792,7 +3862,7 @@
 
 
   function isObjectLike(value) {
-    return !!value && typeof value == 'object';
+    return !!value && _typeof(value) == 'object';
   }
 
   var lodash_intersection = intersection;
@@ -3862,7 +3932,7 @@
       }
 
       function isObject(obj) {
-        return typeof obj === 'object' && toString(obj) === "[object Object]";
+        return _typeof(obj) === 'object' && toString(obj) === "[object Object]";
       }
 
       var isArray = Array.isArray || function (obj) {
@@ -3887,7 +3957,7 @@
       function factory(options) {
         options = options || {};
 
-        var objectPath = function (obj) {
+        var objectPath = function objectPath(obj) {
           return Object.keys(objectPath).reduce(function (proxy, prop) {
             if (prop === 'create') {
               return proxy;
@@ -4131,7 +4201,7 @@
     });
   });
 
-  var escapeStringRegexp = string => {
+  var escapeStringRegexp = function escapeStringRegexp(string) {
     if (typeof string !== 'string') {
       throw new TypeError('Expected a string');
     } // Escape characters with special meaning either inside or outside character sets.
@@ -4141,87 +4211,101 @@
     return string.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&').replace(/-/g, '\\x2d');
   };
 
-  const regexpCache = new Map();
+  var regexpCache = new Map();
 
   function makeRegexp(pattern, options) {
-    options = {
-      caseSensitive: false,
-      ...options
-    };
-    const cacheKey = pattern + JSON.stringify(options);
+    options = _objectSpread2({
+      caseSensitive: false
+    }, options);
+    var cacheKey = pattern + JSON.stringify(options);
 
     if (regexpCache.has(cacheKey)) {
       return regexpCache.get(cacheKey);
     }
 
-    const negated = pattern[0] === '!';
+    var negated = pattern[0] === '!';
 
     if (negated) {
       pattern = pattern.slice(1);
     }
 
     pattern = escapeStringRegexp(pattern).replace(/\\\*/g, '[\\s\\S]*');
-    const regexp = new RegExp(`^${pattern}$`, options.caseSensitive ? '' : 'i');
+    var regexp = new RegExp("^".concat(pattern, "$"), options.caseSensitive ? '' : 'i');
     regexp.negated = negated;
     regexpCache.set(cacheKey, regexp);
     return regexp;
   }
 
-  var matcher = (inputs, patterns, options) => {
+  var matcher = function matcher(inputs, patterns, options) {
     if (!(Array.isArray(inputs) && Array.isArray(patterns))) {
-      throw new TypeError(`Expected two arrays, got ${typeof inputs} ${typeof patterns}`);
+      throw new TypeError("Expected two arrays, got ".concat(_typeof(inputs), " ").concat(_typeof(patterns)));
     }
 
     if (patterns.length === 0) {
       return inputs;
     }
 
-    const isFirstPatternNegated = patterns[0][0] === '!';
-    patterns = patterns.map(pattern => makeRegexp(pattern, options));
-    const result = [];
+    var isFirstPatternNegated = patterns[0][0] === '!';
+    patterns = patterns.map(function (pattern) {
+      return makeRegexp(pattern, options);
+    });
+    var result = [];
 
-    for (const input of inputs) {
-      // If first pattern is negated we include everything to match user expectation.
-      let matches = isFirstPatternNegated;
+    var _iterator = _createForOfIteratorHelper(inputs),
+        _step;
 
-      for (const pattern of patterns) {
-        if (pattern.test(input)) {
-          matches = !pattern.negated;
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var input = _step.value;
+        // If first pattern is negated we include everything to match user expectation.
+        var matches = isFirstPatternNegated;
+
+        var _iterator2 = _createForOfIteratorHelper(patterns),
+            _step2;
+
+        try {
+          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+            var pattern = _step2.value;
+
+            if (pattern.test(input)) {
+              matches = !pattern.negated;
+            }
+          }
+        } catch (err) {
+          _iterator2.e(err);
+        } finally {
+          _iterator2.f();
+        }
+
+        if (matches) {
+          result.push(input);
         }
       }
-
-      if (matches) {
-        result.push(input);
-      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
     }
 
     return result;
   };
 
-  var isMatch = (input, pattern, options) => {
-    const inputArray = Array.isArray(input) ? input : [input];
-    const patternArray = Array.isArray(pattern) ? pattern : [pattern];
-    return inputArray.some(input => {
-      return patternArray.every(pattern => {
-        const regexp = makeRegexp(pattern, options);
-        const matches = regexp.test(input);
+  var isMatch = function isMatch(input, pattern, options) {
+    var inputArray = Array.isArray(input) ? input : [input];
+    var patternArray = Array.isArray(pattern) ? pattern : [pattern];
+    return inputArray.some(function (input) {
+      return patternArray.every(function (pattern) {
+        var regexp = makeRegexp(pattern, options);
+        var matches = regexp.test(input);
         return regexp.negated ? !matches : matches;
       });
     });
   };
   matcher.isMatch = isMatch;
 
-  /**
-   * check-types-mini
-   * Check the types of your options object's values after user has customised them
-   * Version: 5.7.65
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini
-   */
-
-  function checkTypesMini(obj, ref, originalOptions, shouldWeCheckTheOpts = true) {
-    const hasKey = Object.prototype.hasOwnProperty;
+  function checkTypesMini(obj, ref, originalOptions) {
+    var shouldWeCheckTheOpts = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
+    var hasKey = Object.prototype.hasOwnProperty;
 
     function existy(something) {
       return something != null;
@@ -4233,19 +4317,23 @@
 
     function pullAllWithGlob(originalInput, toBeRemoved) {
       toBeRemoved = arrayiffyString(toBeRemoved);
-      return Array.from(originalInput).filter(originalVal => !toBeRemoved.some(remVal => matcher.isMatch(originalVal, remVal, {
-        caseSensitive: true
-      })));
+      return Array.from(originalInput).filter(function (originalVal) {
+        return !toBeRemoved.some(function (remVal) {
+          return matcher.isMatch(originalVal, remVal, {
+            caseSensitive: true
+          });
+        });
+      });
     }
 
-    const NAMESFORANYTYPE = ["any", "anything", "every", "everything", "all", "whatever", "whatevs"];
-    const isArr = Array.isArray;
+    var NAMESFORANYTYPE = ["any", "anything", "every", "everything", "all", "whatever", "whatevs"];
+    var isArr = Array.isArray;
 
     if (!existy(obj)) {
       throw new Error("check-types-mini: [THROW_ID_01] First argument is missing!");
     }
 
-    const defaults = {
+    var defaults = {
       ignoreKeys: [],
       ignorePaths: [],
       acceptArrays: false,
@@ -4255,15 +4343,12 @@
       msg: "check-types-mini",
       optsVarName: "opts"
     };
-    let opts;
+    var opts;
 
     if (existy(originalOptions) && isObj(originalOptions)) {
-      opts = { ...defaults,
-        ...originalOptions
-      };
+      opts = _objectSpread2(_objectSpread2({}, defaults), originalOptions);
     } else {
-      opts = { ...defaults
-      };
+      opts = _objectSpread2({}, defaults);
     }
 
     if (!existy(opts.ignoreKeys) || !opts.ignoreKeys) {
@@ -4291,14 +4376,14 @@
     }
 
     if (opts.schema) {
-      Object.keys(opts.schema).forEach(oneKey => {
+      Object.keys(opts.schema).forEach(function (oneKey) {
         if (isObj(opts.schema[oneKey])) {
-          const tempObj = {};
-          astMonkeyTraverse(opts.schema[oneKey], (key, val, innerObj) => {
-            const current = val !== undefined ? val : key;
+          var tempObj = {};
+          astMonkeyTraverse(opts.schema[oneKey], function (key, val, innerObj) {
+            var current = val !== undefined ? val : key;
 
             if (!isArr(current) && !isObj(current)) {
-              tempObj[`${oneKey}.${innerObj.path}`] = current;
+              tempObj["".concat(oneKey, ".").concat(innerObj.path)] = current;
             }
 
             return current;
@@ -4307,12 +4392,16 @@
           opts.schema = Object.assign(opts.schema, tempObj);
         }
       });
-      Object.keys(opts.schema).forEach(oneKey => {
+      Object.keys(opts.schema).forEach(function (oneKey) {
         if (!isArr(opts.schema[oneKey])) {
           opts.schema[oneKey] = [opts.schema[oneKey]];
         }
 
-        opts.schema[oneKey] = opts.schema[oneKey].map(String).map(el => el.toLowerCase()).map(el => el.trim());
+        opts.schema[oneKey] = opts.schema[oneKey].map(String).map(function (el) {
+          return el.toLowerCase();
+        }).map(function (el) {
+          return el.trim();
+        });
       });
     }
 
@@ -4329,94 +4418,101 @@
     if (opts.enforceStrictKeyset) {
       if (existy(opts.schema) && Object.keys(opts.schema).length > 0) {
         if (pullAllWithGlob(lodash_pullall(Object.keys(obj), Object.keys(ref).concat(Object.keys(opts.schema))), opts.ignoreKeys).length !== 0) {
-          const keys = lodash_pullall(Object.keys(obj), Object.keys(ref).concat(Object.keys(opts.schema)));
-          throw new TypeError(`${opts.msg}: ${opts.optsVarName}.enforceStrictKeyset is on and the following key${keys.length > 1 ? "s" : ""} ${keys.length > 1 ? "are" : "is"} not covered by schema and/or reference objects: ${keys.join(", ")}`);
+          var keys = lodash_pullall(Object.keys(obj), Object.keys(ref).concat(Object.keys(opts.schema)));
+          throw new TypeError("".concat(opts.msg, ": ").concat(opts.optsVarName, ".enforceStrictKeyset is on and the following key").concat(keys.length > 1 ? "s" : "", " ").concat(keys.length > 1 ? "are" : "is", " not covered by schema and/or reference objects: ").concat(keys.join(", ")));
         }
       } else if (existy(ref) && Object.keys(ref).length > 0) {
         if (pullAllWithGlob(lodash_pullall(Object.keys(obj), Object.keys(ref)), opts.ignoreKeys).length !== 0) {
-          const keys = lodash_pullall(Object.keys(obj), Object.keys(ref));
-          throw new TypeError(`${opts.msg}: The input object has key${keys.length > 1 ? "s" : ""} which ${keys.length > 1 ? "are" : "is"} not covered by the reference object: ${keys.join(", ")}`);
+          var _keys = lodash_pullall(Object.keys(obj), Object.keys(ref));
+
+          throw new TypeError("".concat(opts.msg, ": The input object has key").concat(_keys.length > 1 ? "s" : "", " which ").concat(_keys.length > 1 ? "are" : "is", " not covered by the reference object: ").concat(_keys.join(", ")));
         } else if (pullAllWithGlob(lodash_pullall(Object.keys(ref), Object.keys(obj)), opts.ignoreKeys).length !== 0) {
-          const keys = lodash_pullall(Object.keys(ref), Object.keys(obj));
-          throw new TypeError(`${opts.msg}: The reference object has key${keys.length > 1 ? "s" : ""} which ${keys.length > 1 ? "are" : "is"} not present in the input object: ${keys.join(", ")}`);
+          var _keys2 = lodash_pullall(Object.keys(ref), Object.keys(obj));
+
+          throw new TypeError("".concat(opts.msg, ": The reference object has key").concat(_keys2.length > 1 ? "s" : "", " which ").concat(_keys2.length > 1 ? "are" : "is", " not present in the input object: ").concat(_keys2.join(", ")));
         }
       } else {
-        throw new TypeError(`${opts.msg}: Both ${opts.optsVarName}.schema and reference objects are missing! We don't have anything to match the keys as you requested via opts.enforceStrictKeyset!`);
+        throw new TypeError("".concat(opts.msg, ": Both ").concat(opts.optsVarName, ".schema and reference objects are missing! We don't have anything to match the keys as you requested via opts.enforceStrictKeyset!"));
       }
     }
 
-    const ignoredPathsArr = [];
-    astMonkeyTraverse(obj, (key, val, innerObj) => {
-      let current = val;
-      let objKey = key;
+    var ignoredPathsArr = [];
+    astMonkeyTraverse(obj, function (key, val, innerObj) {
+      var current = val;
+      var objKey = key;
 
       if (innerObj.parentType === "array") {
         objKey = undefined;
         current = key;
       }
 
-      if (isArr(ignoredPathsArr) && ignoredPathsArr.length && ignoredPathsArr.some(path => innerObj.path.startsWith(path))) {
+      if (isArr(ignoredPathsArr) && ignoredPathsArr.length && ignoredPathsArr.some(function (path) {
+        return innerObj.path.startsWith(path);
+      })) {
         return current;
       }
 
-      if (objKey && opts.ignoreKeys.some(oneOfKeysToIgnore => matcher.isMatch(objKey, oneOfKeysToIgnore))) {
+      if (objKey && opts.ignoreKeys.some(function (oneOfKeysToIgnore) {
+        return matcher.isMatch(objKey, oneOfKeysToIgnore);
+      })) {
         return current;
       }
 
-      if (opts.ignorePaths.some(oneOfPathsToIgnore => matcher.isMatch(innerObj.path, oneOfPathsToIgnore))) {
+      if (opts.ignorePaths.some(function (oneOfPathsToIgnore) {
+        return matcher.isMatch(innerObj.path, oneOfPathsToIgnore);
+      })) {
         return current;
       }
 
-      const isNotAnArrayChild = !(!isObj(current) && !isArr(current) && isArr(innerObj.parent));
-      let optsSchemaHasThisPathDefined = false;
+      var isNotAnArrayChild = !(!isObj(current) && !isArr(current) && isArr(innerObj.parent));
+      var optsSchemaHasThisPathDefined = false;
 
       if (isObj(opts.schema) && hasKey.call(opts.schema, objectPath.get(innerObj.path))) {
         optsSchemaHasThisPathDefined = true;
       }
 
-      let refHasThisPathDefined = false;
+      var refHasThisPathDefined = false;
 
       if (isObj(ref) && objectPath.has(ref, objectPath.get(innerObj.path))) {
         refHasThisPathDefined = true;
       }
 
       if (opts.enforceStrictKeyset && isNotAnArrayChild && !optsSchemaHasThisPathDefined && !refHasThisPathDefined) {
-        throw new TypeError(`${opts.msg}: ${opts.optsVarName}.${innerObj.path} is neither covered by reference object (second input argument), nor ${opts.optsVarName}.schema! To stop this error, turn off ${opts.optsVarName}.enforceStrictKeyset or provide some type reference (2nd argument or ${opts.optsVarName}.schema).\n\nDebug info:\n
-obj = ${JSON.stringify(obj, null, 4)}\n
-ref = ${JSON.stringify(ref, null, 4)}\n
-innerObj = ${JSON.stringify(innerObj, null, 4)}\n
-opts = ${JSON.stringify(opts, null, 4)}\n
-current = ${JSON.stringify(current, null, 4)}\n\n`);
+        throw new TypeError("".concat(opts.msg, ": ").concat(opts.optsVarName, ".").concat(innerObj.path, " is neither covered by reference object (second input argument), nor ").concat(opts.optsVarName, ".schema! To stop this error, turn off ").concat(opts.optsVarName, ".enforceStrictKeyset or provide some type reference (2nd argument or ").concat(opts.optsVarName, ".schema).\n\nDebug info:\n\nobj = ").concat(JSON.stringify(obj, null, 4), "\n\nref = ").concat(JSON.stringify(ref, null, 4), "\n\ninnerObj = ").concat(JSON.stringify(innerObj, null, 4), "\n\nopts = ").concat(JSON.stringify(opts, null, 4), "\n\ncurrent = ").concat(JSON.stringify(current, null, 4), "\n\n"));
       } else if (optsSchemaHasThisPathDefined) {
-        const currentKeysSchema = arrayiffyString(opts.schema[innerObj.path]).map(String).map(el => el.toLowerCase());
+        var currentKeysSchema = arrayiffyString(opts.schema[innerObj.path]).map(String).map(function (el) {
+          return el.toLowerCase();
+        });
         objectPath.set(opts.schema, innerObj.path, currentKeysSchema);
 
         if (!lodash_intersection(currentKeysSchema, NAMESFORANYTYPE).length) {
           if (current !== true && current !== false && !currentKeysSchema.includes(typeDetect(current).toLowerCase()) || (current === true || current === false) && !currentKeysSchema.includes(String(current)) && !currentKeysSchema.includes("boolean")) {
             if (isArr(current) && opts.acceptArrays) {
-              for (let i = 0, len = current.length; i < len; i++) {
+              for (var i = 0, len = current.length; i < len; i++) {
                 if (!currentKeysSchema.includes(typeDetect(current[i]).toLowerCase())) {
-                  throw new TypeError(`${opts.msg}: ${opts.optsVarName}.${innerObj.path}.${i}, the ${i}th element (equal to ${JSON.stringify(current[i], null, 0)}) is of a type ${typeDetect(current[i]).toLowerCase()}, but only the following are allowed by the ${opts.optsVarName}.schema: ${currentKeysSchema.join(", ")}`);
+                  throw new TypeError("".concat(opts.msg, ": ").concat(opts.optsVarName, ".").concat(innerObj.path, ".").concat(i, ", the ").concat(i, "th element (equal to ").concat(JSON.stringify(current[i], null, 0), ") is of a type ").concat(typeDetect(current[i]).toLowerCase(), ", but only the following are allowed by the ").concat(opts.optsVarName, ".schema: ").concat(currentKeysSchema.join(", ")));
                 }
               }
             } else {
-              throw new TypeError(`${opts.msg}: ${opts.optsVarName}.${innerObj.path} was customised to ${typeDetect(current) !== "string" ? '"' : ""}${JSON.stringify(current, null, 0)}${typeDetect(current) !== "string" ? '"' : ""} (type: ${typeDetect(current).toLowerCase()}) which is not among the allowed types in schema (which is equal to ${JSON.stringify(currentKeysSchema, null, 0)})`);
+              throw new TypeError("".concat(opts.msg, ": ").concat(opts.optsVarName, ".").concat(innerObj.path, " was customised to ").concat(typeDetect(current) !== "string" ? '"' : "").concat(JSON.stringify(current, null, 0)).concat(typeDetect(current) !== "string" ? '"' : "", " (type: ").concat(typeDetect(current).toLowerCase(), ") which is not among the allowed types in schema (which is equal to ").concat(JSON.stringify(currentKeysSchema, null, 0), ")"));
             }
           }
         } else {
           ignoredPathsArr.push(innerObj.path);
         }
       } else if (refHasThisPathDefined) {
-        const compareTo = objectPath.get(ref, innerObj.path);
+        var compareTo = objectPath.get(ref, innerObj.path);
 
         if (opts.acceptArrays && isArr(current) && !opts.acceptArraysIgnore.includes(key)) {
-          const allMatch = current.every(el => typeDetect(el).toLowerCase() === typeDetect(ref[key]).toLowerCase());
+          var allMatch = current.every(function (el) {
+            return typeDetect(el).toLowerCase() === typeDetect(ref[key]).toLowerCase();
+          });
 
           if (!allMatch) {
-            throw new TypeError(`${opts.msg}: ${opts.optsVarName}.${innerObj.path} was customised to be array, but not all of its elements are ${typeDetect(ref[key]).toLowerCase()}-type`);
+            throw new TypeError("".concat(opts.msg, ": ").concat(opts.optsVarName, ".").concat(innerObj.path, " was customised to be array, but not all of its elements are ").concat(typeDetect(ref[key]).toLowerCase(), "-type"));
           }
         } else if (typeDetect(current) !== typeDetect(compareTo)) {
-          throw new TypeError(`${opts.msg}: ${opts.optsVarName}.${innerObj.path} was customised to ${typeDetect(current).toLowerCase() === "string" ? "" : '"'}${JSON.stringify(current, null, 0)}${typeDetect(current).toLowerCase() === "string" ? "" : '"'} which is not ${typeDetect(compareTo).toLowerCase()} but ${typeDetect(current).toLowerCase()}`);
+          throw new TypeError("".concat(opts.msg, ": ").concat(opts.optsVarName, ".").concat(innerObj.path, " was customised to ").concat(typeDetect(current).toLowerCase() === "string" ? "" : '"').concat(JSON.stringify(current, null, 0)).concat(typeDetect(current).toLowerCase() === "string" ? "" : '"', " which is not ").concat(typeDetect(compareTo).toLowerCase(), " but ").concat(typeDetect(current).toLowerCase()));
         }
       }
 
@@ -4428,15 +4524,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
     return checkTypesMini(obj, ref, originalOptions);
   }
 
-  /**
-   * array-includes-with-glob
-   * like _.includes but with wildcards
-   * Version: 2.12.36
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/array-includes-with-glob
-   */
-  const isArr = Array.isArray;
+  var isArr = Array.isArray;
 
   function arrayIncludesWithGlob(originalInput, stringToFind, originalOpts) {
     function existy(x) {
@@ -4447,12 +4535,11 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
       return typeof something === "string";
     }
 
-    const defaults = {
+    var defaults = {
       arrayVsArrayAllMustBeFound: "any"
     };
-    const opts = { ...defaults,
-      ...originalOpts
-    };
+
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
     if (arguments.length === 0) {
       throw new Error("array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_01] all inputs missing!");
@@ -4466,43 +4553,55 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
       if (isStr(originalInput)) {
         originalInput = [originalInput];
       } else {
-        throw new Error(`array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_03] first argument must be an array! It was given as ${typeof originalInput}`);
+        throw new Error("array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_03] first argument must be an array! It was given as ".concat(_typeof(originalInput)));
       }
     }
 
     if (!isStr(stringToFind) && !isArr(stringToFind)) {
-      throw new Error(`array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_04] second argument must be a string or array of strings! It was given as ${typeof stringToFind}`);
+      throw new Error("array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_04] second argument must be a string or array of strings! It was given as ".concat(_typeof(stringToFind)));
     }
 
     if (opts.arrayVsArrayAllMustBeFound !== "any" && opts.arrayVsArrayAllMustBeFound !== "all") {
-      throw new Error(`array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_05] opts.arrayVsArrayAllMustBeFound was customised to an unrecognised value, ${opts.arrayVsArrayAllMustBeFound}. It must be equal to either "any" or "all".`);
+      throw new Error("array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_05] opts.arrayVsArrayAllMustBeFound was customised to an unrecognised value, ".concat(opts.arrayVsArrayAllMustBeFound, ". It must be equal to either \"any\" or \"all\"."));
     }
 
     if (originalInput.length === 0) {
       return false;
     }
 
-    const input = originalInput.filter(elem => existy(elem));
+    var input = originalInput.filter(function (elem) {
+      return existy(elem);
+    });
 
     if (input.length === 0) {
       return false;
     }
 
     if (isStr(stringToFind)) {
-      return input.some(val => matcher.isMatch(val, stringToFind, {
-        caseSensitive: true
-      }));
+      return input.some(function (val) {
+        return matcher.isMatch(val, stringToFind, {
+          caseSensitive: true
+        });
+      });
     }
 
     if (opts.arrayVsArrayAllMustBeFound === "any") {
-      return stringToFind.some(stringToFindVal => input.some(val => matcher.isMatch(val, stringToFindVal, {
-        caseSensitive: true
-      })));
+      return stringToFind.some(function (stringToFindVal) {
+        return input.some(function (val) {
+          return matcher.isMatch(val, stringToFindVal, {
+            caseSensitive: true
+          });
+        });
+      });
     }
 
-    return stringToFind.every(stringToFindVal => input.some(val => matcher.isMatch(val, stringToFindVal, {
-      caseSensitive: true
-    })));
+    return stringToFind.every(function (stringToFindVal) {
+      return input.some(function (val) {
+        return matcher.isMatch(val, stringToFindVal, {
+          caseSensitive: true
+        });
+      });
+    });
   }
 
   /**
@@ -5015,7 +5114,8 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
 
 
   function isObject$1(value) {
-    var type = typeof value;
+    var type = _typeof(value);
+
     return !!value && (type == 'object' || type == 'function');
   }
   /**
@@ -5045,7 +5145,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
 
 
   function isObjectLike$1(value) {
-    return !!value && typeof value == 'object';
+    return !!value && _typeof(value) == 'object';
   }
   /**
    * Checks if `value` is classified as a `String` primitive or object.
@@ -5089,7 +5189,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
 
 
   function isSymbol(value) {
-    return typeof value == 'symbol' || isObjectLike$1(value) && objectToString$1.call(value) == symbolTag;
+    return _typeof(value) == 'symbol' || isObjectLike$1(value) && objectToString$1.call(value) == symbolTag;
   }
   /**
    * Converts `value` to a finite number.
@@ -5310,10 +5410,10 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
   var reIsHostCtor$1 = /^\[object .+?Constructor\]$/;
   /** Detect free variable `global` from Node.js. */
 
-  var freeGlobal$1 = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+  var freeGlobal$1 = _typeof(commonjsGlobal) == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
   /** Detect free variable `self`. */
 
-  var freeSelf$1 = typeof self == 'object' && self && self.Object === Object && self;
+  var freeSelf$1 = (typeof self === "undefined" ? "undefined" : _typeof(self)) == 'object' && self && self.Object === Object && self;
   /** Used as a reference to the global object. */
 
   var root$1 = freeGlobal$1 || freeSelf$1 || Function('return this')();
@@ -6053,7 +6153,8 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
 
 
   function isKeyable$1(value) {
-    var type = typeof value;
+    var type = _typeof(value);
+
     return type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean' ? value !== '__proto__' : value === null;
   }
   /**
@@ -6202,7 +6303,8 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
 
 
   function isObject$2(value) {
-    var type = typeof value;
+    var type = _typeof(value);
+
     return !!value && (type == 'object' || type == 'function');
   }
   /**
@@ -6321,7 +6423,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
    */
 
   function isObjectLike$2(value) {
-    return !!value && typeof value == 'object';
+    return !!value && _typeof(value) == 'object';
   }
   /**
    * Checks if `value` is a plain object, that is, an object created by the
@@ -6378,7 +6480,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/util-nonempty
    */
-  const isArr$1 = Array.isArray;
+  var isArr$1 = Array.isArray;
 
   function isStr(something) {
     return typeof something === "string";
@@ -6417,7 +6519,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
       return 'null';
     }
 
-    return String(val) + ' (' + typeof val + ')';
+    return String(val) + ' (' + _typeof(val) + ')';
   }
 
   /*!
@@ -6446,15 +6548,6 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
     });
   }
 
-  /**
-   * object-merge-advanced
-   * Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
-   * Version: 10.11.22
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-merge-advanced
-   */
-
   function isStr$1(something) {
     return typeof something === "string";
   }
@@ -6472,13 +6565,15 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
   }
 
   function isObj$1(something) {
-    return something && typeof something === "object" && !Array.isArray(something);
+    return something && _typeof(something) === "object" && !Array.isArray(something);
   }
 
-  const isArr$2 = Array.isArray;
+  var isArr$2 = Array.isArray;
 
   function arrayContainsStr(arr) {
-    return !!arr && arr.some(val => typeof val === "string");
+    return !!arr && arr.some(function (val) {
+      return typeof val === "string";
+    });
   }
 
   function equalOrSubsetKeys(obj1, obj2) {
@@ -6494,15 +6589,17 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
       return "array";
     }
 
-    return typeof something;
+    return _typeof(something);
   }
 
-  function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
+  function mergeAdvanced(infoObj, input1orig, input2orig) {
+    var originalOpts = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+
     if (!isObj$1(originalOpts)) {
       throw new TypeError("object-merge-advanced/mergeAdvanced(): [THROW_ID_02] Options object, the third argument, must be a plain object");
     }
 
-    const defaults = {
+    var defaults = {
       cb: null,
       mergeObjectsOnlyWhenKeysetMatches: true,
       ignoreKeys: [],
@@ -6518,7 +6615,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
       mergeBoolsUsingOrNotAnd: true,
       useNullAsExplicitFalse: false
     };
-    const opts = Object.assign(lodash_clonedeep(defaults), originalOpts);
+    var opts = Object.assign(lodash_clonedeep(defaults), originalOpts);
     opts.ignoreKeys = arrayiffyString(opts.ignoreKeys);
     opts.hardMergeKeys = arrayiffyString(opts.hardMergeKeys);
 
@@ -6530,7 +6627,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
       opts.ignoreEverything = true;
     }
 
-    let currPath;
+    var currPath;
 
     if (opts.useNullAsExplicitFalse && (input1orig === null || input2orig === null)) {
       return isFun(opts.cb) ? opts.cb(input1orig, input2orig, null, {
@@ -6540,9 +6637,9 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
       }) : null;
     }
 
-    let i1 = isArr$2(input1orig) || isObj$1(input1orig) ? lodash_clonedeep(input1orig) : input1orig;
-    const i2 = isArr$2(input2orig) || isObj$1(input2orig) ? lodash_clonedeep(input2orig) : input2orig;
-    let uniRes;
+    var i1 = isArr$2(input1orig) || isObj$1(input1orig) ? lodash_clonedeep(input1orig) : input1orig;
+    var i2 = isArr$2(input2orig) || isObj$1(input2orig) ? lodash_clonedeep(input2orig) : input2orig;
+    var uniRes;
 
     if (opts.ignoreEverything) {
       uniRes = i1;
@@ -6550,33 +6647,35 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
       uniRes = i2;
     }
 
-    const uni = opts.hardMergeEverything || opts.ignoreEverything;
+    var uni = opts.hardMergeEverything || opts.ignoreEverything;
 
     if (isArr$2(i1)) {
       if (nonEmpty(i1)) {
         if (isArr$2(i2) && nonEmpty(i2)) {
           if (opts.mergeArraysContainingStringsToBeEmpty && (arrayContainsStr(i1) || arrayContainsStr(i2))) {
-            const currentResult = uni ? uniRes : [];
-            return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+            var _currentResult = uni ? uniRes : [];
+
+            return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult, {
               path: currPath,
               key: infoObj.key,
               type: infoObj.type
-            }) : currentResult;
+            }) : _currentResult;
           }
 
           if (opts.hardArrayConcat) {
-            const currentResult = uni ? uniRes : i1.concat(i2);
-            return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+            var _currentResult2 = uni ? uniRes : i1.concat(i2);
+
+            return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult2, {
               path: currPath,
               key: infoObj.key,
               type: infoObj.type
-            }) : currentResult;
+            }) : _currentResult2;
           }
 
-          let temp = [];
+          var temp = [];
 
-          for (let index = 0, len = Math.max(i1.length, i2.length); index < len; index++) {
-            currPath = infoObj.path.length ? `${infoObj.path}.${index}` : `${index}`;
+          for (var index = 0, len = Math.max(i1.length, i2.length); index < len; index++) {
+            currPath = infoObj.path.length ? "".concat(infoObj.path, ".").concat(index) : "".concat(index);
 
             if (isObj$1(i1[index]) && isObj$1(i2[index]) && (opts.mergeObjectsOnlyWhenKeysetMatches && equalOrSubsetKeys(i1[index], i2[index]) || !opts.mergeObjectsOnlyWhenKeysetMatches)) {
               temp.push(mergeAdvanced({
@@ -6613,89 +6712,96 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
             }
           }
 
-          if (opts.dedupeStringsInArrayValues && temp.every(el => isStr$1(el))) {
+          if (opts.dedupeStringsInArrayValues && temp.every(function (el) {
+            return isStr$1(el);
+          })) {
             temp = lodash_uniq(temp).sort();
           }
 
           i1 = lodash_clonedeep(temp);
         } else {
-          const currentResult = uni ? uniRes : i1;
-          return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+          var _currentResult3 = uni ? uniRes : i1;
+
+          return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult3, {
             path: currPath,
             key: infoObj.key,
             type: infoObj.type
-          }) : currentResult;
+          }) : _currentResult3;
         }
       } else {
         if (nonEmpty(i2)) {
-          const currentResult = uni ? uniRes : i2;
-          return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+          var _currentResult5 = uni ? uniRes : i2;
+
+          return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult5, {
             path: currPath,
             key: infoObj.key,
             type: infoObj.type
-          }) : currentResult;
+          }) : _currentResult5;
         }
 
-        const currentResult = uni ? uniRes : i1;
-        return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+        var _currentResult4 = uni ? uniRes : i1;
+
+        return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult4, {
           path: currPath,
           key: infoObj.key,
           type: infoObj.type
-        }) : currentResult;
+        }) : _currentResult4;
       }
     } else if (isObj$1(i1)) {
       if (nonEmpty(i1)) {
         if (isArr$2(i2)) {
           if (nonEmpty(i2)) {
-            const currentResult = uni ? uniRes : i2;
-            return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+            var _currentResult9 = uni ? uniRes : i2;
+
+            return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult9, {
               path: currPath,
               key: infoObj.key,
               type: infoObj.type
-            }) : currentResult;
+            }) : _currentResult9;
           }
 
-          const currentResult = uni ? uniRes : i1;
-          return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+          var _currentResult8 = uni ? uniRes : i1;
+
+          return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult8, {
             path: currPath,
             key: infoObj.key,
             type: infoObj.type
-          }) : currentResult;
+          }) : _currentResult8;
         }
 
         if (isObj$1(i2)) {
-          Object.keys(i2).forEach(key => {
-            currPath = infoObj.path && infoObj.path.length ? `${infoObj.path}.${key}` : `${key}`;
+          Object.keys(i2).forEach(function (key) {
+            currPath = infoObj.path && infoObj.path.length ? "".concat(infoObj.path, ".").concat(key) : "".concat(key);
 
             if (i1.hasOwnProperty(key)) {
               if (arrayIncludesWithGlob(key, opts.ignoreKeys)) {
                 i1[key] = mergeAdvanced({
                   path: currPath,
-                  key,
+                  key: key,
                   type: [getType(i1), getType(i2)]
-                }, i1[key], i2[key], { ...opts,
+                }, i1[key], i2[key], _objectSpread2(_objectSpread2({}, opts), {}, {
                   ignoreEverything: true
-                });
+                }));
               } else if (arrayIncludesWithGlob(key, opts.hardMergeKeys)) {
                 i1[key] = mergeAdvanced({
                   path: currPath,
-                  key,
+                  key: key,
                   type: [getType(i1), getType(i2)]
-                }, i1[key], i2[key], { ...opts,
+                }, i1[key], i2[key], _objectSpread2(_objectSpread2({}, opts), {}, {
                   hardMergeEverything: true
-                });
+                }));
               } else if (arrayIncludesWithGlob(key, opts.hardArrayConcatKeys)) {
                 i1[key] = mergeAdvanced({
                   path: currPath,
-                  key,
+                  key: key,
                   type: [getType(i1), getType(i2)]
-                }, i1[key], i2[key], { ...opts,
+                }, i1[key], i2[key], _objectSpread2(_objectSpread2({}, opts), {}, {
                   hardArrayConcat: true
-                });
+                }));
               } else {
                 i1[key] = mergeAdvanced({
                   path: currPath,
-                  key,
+                  key: key,
                   type: [getType(i1), getType(i2)]
                 }, i1[key], i2[key], opts);
               }
@@ -6706,139 +6812,155 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
           return i1;
         }
 
-        const currentResult = uni ? uniRes : i1;
-        return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+        var _currentResult7 = uni ? uniRes : i1;
+
+        return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult7, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
-        }) : currentResult;
+        }) : _currentResult7;
       }
 
       if (isArr$2(i2) || isObj$1(i2) || nonEmpty(i2)) {
-        const currentResult = uni ? uniRes : i2;
-        return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+        var _currentResult10 = uni ? uniRes : i2;
+
+        return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult10, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
-        }) : currentResult;
+        }) : _currentResult10;
       }
 
-      const currentResult = uni ? uniRes : i1;
-      return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+      var _currentResult6 = uni ? uniRes : i1;
+
+      return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult6, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
-      }) : currentResult;
+      }) : _currentResult6;
     } else if (isStr$1(i1)) {
       if (nonEmpty(i1)) {
         if ((isArr$2(i2) || isObj$1(i2) || isStr$1(i2)) && nonEmpty(i2)) {
-          const currentResult = uni ? uniRes : i2;
-          return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+          var _currentResult13 = uni ? uniRes : i2;
+
+          return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult13, {
             path: infoObj.path,
             key: infoObj.key,
             type: infoObj.type
-          }) : currentResult;
+          }) : _currentResult13;
         }
 
-        const currentResult = uni ? uniRes : i1;
-        return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+        var _currentResult12 = uni ? uniRes : i1;
+
+        return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult12, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
-        }) : currentResult;
+        }) : _currentResult12;
       }
 
       if (i2 != null && !isBool(i2)) {
-        const currentResult = uni ? uniRes : i2;
-        return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+        var _currentResult14 = uni ? uniRes : i2;
+
+        return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult14, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
-        }) : currentResult;
+        }) : _currentResult14;
       }
 
-      const currentResult = uni ? uniRes : i1;
-      return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+      var _currentResult11 = uni ? uniRes : i1;
+
+      return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult11, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
-      }) : currentResult;
+      }) : _currentResult11;
     } else if (isNum$1(i1)) {
       if (nonEmpty(i2)) {
-        const currentResult = uni ? uniRes : i2;
-        return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+        var _currentResult16 = uni ? uniRes : i2;
+
+        return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult16, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
-        }) : currentResult;
+        }) : _currentResult16;
       }
 
-      const currentResult = uni ? uniRes : i1;
-      return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+      var _currentResult15 = uni ? uniRes : i1;
+
+      return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult15, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
-      }) : currentResult;
+      }) : _currentResult15;
     } else if (isBool(i1)) {
       if (isBool(i2)) {
         if (opts.mergeBoolsUsingOrNotAnd) {
-          const currentResult = uni ? uniRes : i1 || i2;
-          return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+          var _currentResult19 = uni ? uniRes : i1 || i2;
+
+          return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult19, {
             path: infoObj.path,
             key: infoObj.key,
             type: infoObj.type
-          }) : currentResult;
+          }) : _currentResult19;
         }
 
-        const currentResult = uni ? uniRes : i1 && i2;
-        return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+        var _currentResult18 = uni ? uniRes : i1 && i2;
+
+        return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult18, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
-        }) : currentResult;
+        }) : _currentResult18;
       }
 
       if (i2 != null) {
-        const currentResult = uni ? uniRes : i2;
-        return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+        var _currentResult20 = uni ? uniRes : i2;
+
+        return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult20, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
-        }) : currentResult;
+        }) : _currentResult20;
       }
 
-      const currentResult = uni ? uniRes : i1;
-      return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+      var _currentResult17 = uni ? uniRes : i1;
+
+      return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult17, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
-      }) : currentResult;
+      }) : _currentResult17;
     } else if (i1 === null) {
       if (i2 != null) {
-        const currentResult = uni ? uniRes : i2;
-        return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+        var _currentResult22 = uni ? uniRes : i2;
+
+        return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult22, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
-        }) : currentResult;
+        }) : _currentResult22;
       }
 
-      const currentResult = uni ? uniRes : i1;
-      return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+      var _currentResult21 = uni ? uniRes : i1;
+
+      return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult21, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
-      }) : currentResult;
+      }) : _currentResult21;
     } else {
-      const currentResult = uni ? uniRes : i2;
-      return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+      var _currentResult23 = uni ? uniRes : i2;
+
+      return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult23, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
-      }) : currentResult;
+      }) : _currentResult23;
     }
 
-    const currentResult = uni ? uniRes : i1;
+    var currentResult = uni ? uniRes : i1;
     return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
       path: infoObj.path,
       key: infoObj.key,

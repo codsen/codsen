@@ -9,7 +9,7 @@ tap.test("01 - umd is indeed ES5", (t) => {
     path.resolve("dist/object-delete-key.umd.js"),
     "utf8"
   );
-  const messages = linter.verify(umdSource);
+  const messages = linter.verify(umdSource, {}, { allowInlineConfig: false });
   t.same(messages, [], "01 - umd build is not ES5!");
   t.end();
 });
@@ -20,7 +20,11 @@ tap.test("02 - dev.umd is indeed ES5", (t) => {
     path.resolve("dist/object-delete-key.dev.umd.js"),
     "utf8"
   );
-  const messages = linter.verify(devUmdSource);
+  const messages = linter.verify(
+    devUmdSource,
+    {},
+    { allowInlineConfig: false }
+  );
   t.same(messages, [], "02 - dev.umd build is not ES5!");
   t.end();
 });
@@ -31,7 +35,7 @@ tap.test("03 - cjs is indeed ES5", (t) => {
     path.resolve("dist/object-delete-key.cjs.js"),
     "utf8"
   );
-  const messages = linter.verify(cjsSource);
+  const messages = linter.verify(cjsSource, {}, { allowInlineConfig: false });
   t.same(messages, [], "03 - cjs build is not ES5!");
   t.end();
 });

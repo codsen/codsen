@@ -588,7 +588,8 @@
 
 
   function isObject(value) {
-    var type = typeof value;
+    var type = _typeof(value);
+
     return !!value && (type == 'object' || type == 'function');
   }
   /**
@@ -618,7 +619,7 @@
 
 
   function isObjectLike(value) {
-    return !!value && typeof value == 'object';
+    return !!value && _typeof(value) == 'object';
   }
   /**
    * Checks if `value` is classified as a `String` primitive or object.
@@ -662,7 +663,7 @@
 
 
   function isSymbol(value) {
-    return typeof value == 'symbol' || isObjectLike(value) && objectToString.call(value) == symbolTag;
+    return _typeof(value) == 'symbol' || isObjectLike(value) && objectToString.call(value) == symbolTag;
   }
   /**
    * Converts `value` to a finite number.
@@ -947,7 +948,7 @@
    */
 
   function isObjectLike$1(value) {
-    return !!value && typeof value == 'object';
+    return !!value && _typeof(value) == 'object';
   }
   /**
    * Checks if `value` is a plain object, that is, an object created by the

@@ -29,6 +29,88 @@
     return _typeof(obj);
   }
 
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
+  function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+  }
+
+  function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+  }
+
+  function _iterableToArray(iter) {
+    if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+  }
+
+  function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+  }
+
+  function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+
+    for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+
+  function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
   /**
    * lodash (Custom Build) <https://lodash.com/>
    * Build: `lodash modularize exports="npm" -o ./`
@@ -126,7 +208,7 @@
    */
 
   function isObjectLike(value) {
-    return !!value && typeof value == 'object';
+    return !!value && _typeof(value) == 'object';
   }
   /**
    * Checks if `value` is a plain object, that is, an object created by the
@@ -260,10 +342,10 @@
     cloneableTags[errorTag] = cloneableTags[funcTag] = cloneableTags[weakMapTag] = false;
     /** Detect free variable `global` from Node.js. */
 
-    var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+    var freeGlobal = _typeof(commonjsGlobal) == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
     /** Detect free variable `self`. */
 
-    var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+    var freeSelf = (typeof self === "undefined" ? "undefined" : _typeof(self)) == 'object' && self && self.Object === Object && self;
     /** Used as a reference to the global object. */
 
     var root = freeGlobal || freeSelf || Function('return this')();
@@ -517,7 +599,7 @@
     /** Built-in value references. */
 
     var Buffer = moduleExports ? root.Buffer : undefined,
-        Symbol = root.Symbol,
+        _Symbol = root.Symbol,
         Uint8Array = root.Uint8Array,
         getPrototype = overArg(Object.getPrototypeOf, Object),
         objectCreate = Object.create,
@@ -545,7 +627,7 @@
         weakMapCtorString = toSource(WeakMap);
     /** Used to convert symbols to primitives and strings. */
 
-    var symbolProto = Symbol ? Symbol.prototype : undefined,
+    var symbolProto = _Symbol ? _Symbol.prototype : undefined,
         symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
     /**
      * Creates a hash object.
@@ -1463,7 +1545,7 @@
     // for data views in Edge < 14, and promises in Node.js.
 
     if (DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag || Map && getTag(new Map()) != mapTag || Promise && getTag(Promise.resolve()) != promiseTag || Set && getTag(new Set()) != setTag || WeakMap && getTag(new WeakMap()) != weakMapTag) {
-      getTag = function (value) {
+      getTag = function getTag(value) {
         var result = objectToString.call(value),
             Ctor = result == objectTag ? value.constructor : undefined,
             ctorString = Ctor ? toSource(Ctor) : undefined;
@@ -1603,7 +1685,8 @@
 
 
     function isKeyable(value) {
-      var type = typeof value;
+      var type = _typeof(value);
+
       return type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean' ? value !== '__proto__' : value === null;
     }
     /**
@@ -1926,7 +2009,8 @@
 
 
     function isObject(value) {
-      var type = typeof value;
+      var type = _typeof(value);
+
       return !!value && (type == 'object' || type == 'function');
     }
     /**
@@ -1956,7 +2040,7 @@
 
 
     function isObjectLike(value) {
-      return !!value && typeof value == 'object';
+      return !!value && _typeof(value) == 'object';
     }
     /**
      * Creates an array of the own enumerable property names of `object`.
@@ -2036,17 +2120,8 @@
     module.exports = cloneDeep;
   });
 
-  /**
-   * string-left-right
-   * Look what's to the left or the right of a given index within a string
-   * Version: 2.3.24
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right
-   */
-
   function x(something) {
-    const res = {
+    var res = {
       value: something,
       hungry: false,
       optional: false
@@ -2096,7 +2171,7 @@
       return idx + 2;
     }
 
-    for (let i = idx + 1, len = str.length; i < len; i++) {
+    for (var i = idx + 1, len = str.length; i < len; i++) {
       if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
         return i;
       }
@@ -2130,7 +2205,7 @@
       return idx - 2;
     }
 
-    for (let i = idx; i--;) {
+    for (var i = idx; i--;) {
       if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
         return i;
       }
@@ -2156,12 +2231,12 @@
       return null;
     }
 
-    let lastFinding = idx;
-    const gaps = [];
-    let leftmostChar;
-    let rightmostChar;
-    let satiated;
-    let i = 0;
+    var lastFinding = idx;
+    var gaps = [];
+    var leftmostChar;
+    var rightmostChar;
+    var satiated;
+    var i = 0;
 
     while (i < args.length) {
       if (!isStr(args[i]) || !args[i].length) {
@@ -2169,15 +2244,15 @@
         continue;
       }
 
-      const {
-        value,
-        optional,
-        hungry
-      } = x(args[i]);
-      const whattsOnTheSide = direction === "right" ? right(str, lastFinding) : left(str, lastFinding);
+      var _x = x(args[i]),
+          value = _x.value,
+          optional = _x.optional,
+          hungry = _x.hungry;
+
+      var whattsOnTheSide = direction === "right" ? right(str, lastFinding) : left(str, lastFinding);
 
       if (opts.i && str[whattsOnTheSide].toLowerCase() === value.toLowerCase() || !opts.i && str[whattsOnTheSide] === value) {
-        const temp = direction === "right" ? right(str, whattsOnTheSide) : left(str, whattsOnTheSide);
+        var temp = direction === "right" ? right(str, whattsOnTheSide) : left(str, whattsOnTheSide);
 
         if (hungry && (opts.i && str[temp].toLowerCase() === value.toLowerCase() || !opts.i && str[temp] === value)) {
           satiated = true;
@@ -2223,26 +2298,28 @@
     }
 
     return {
-      gaps,
-      leftmostChar,
-      rightmostChar
+      gaps: gaps,
+      leftmostChar: leftmostChar,
+      rightmostChar: rightmostChar
     };
   }
 
-  function leftSeq(str, idx, ...args) {
+  function leftSeq(str, idx) {
+    for (var _len = arguments.length, args = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+      args[_key - 2] = arguments[_key];
+    }
+
     if (!args.length) {
       return left(str, idx);
     }
 
-    const defaults = {
+    var defaults = {
       i: false
     };
-    let opts;
+    var opts;
 
     if (lodash_isplainobject(args[0])) {
-      opts = { ...defaults,
-        ...args.shift()
-      };
+      opts = _objectSpread2(_objectSpread2({}, defaults), args.shift());
     } else {
       opts = defaults;
     }
@@ -2250,20 +2327,22 @@
     return seq("left", str, idx, opts, Array.from(args).reverse());
   }
 
-  function rightSeq(str, idx, ...args) {
+  function rightSeq(str, idx) {
+    for (var _len2 = arguments.length, args = new Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+      args[_key2 - 2] = arguments[_key2];
+    }
+
     if (!args.length) {
       return right(str, idx);
     }
 
-    const defaults = {
+    var defaults = {
       i: false
     };
-    let opts;
+    var opts;
 
     if (lodash_isplainobject(args[0])) {
-      opts = { ...defaults,
-        ...args.shift()
-      };
+      opts = _objectSpread2(_objectSpread2({}, defaults), args.shift());
     } else {
       opts = defaults;
     }
@@ -2284,11 +2363,11 @@
       return null;
     }
 
-    let lastRes = null;
-    let lastIdx = null;
+    var lastRes = null;
+    var lastIdx = null;
 
     do {
-      lastRes = direction === "right" ? rightSeq(str, isNum(lastIdx) ? lastIdx : idx, ...args) : leftSeq(str, isNum(lastIdx) ? lastIdx : idx, ...args);
+      lastRes = direction === "right" ? rightSeq.apply(void 0, [str, isNum(lastIdx) ? lastIdx : idx].concat(_toConsumableArray(args))) : leftSeq.apply(void 0, [str, isNum(lastIdx) ? lastIdx : idx].concat(_toConsumableArray(args)));
 
       if (lastRes !== null) {
         lastIdx = direction === "right" ? lastRes.rightmostChar : lastRes.leftmostChar;
@@ -2308,7 +2387,7 @@
         return lastIdx;
       }
 
-      const whatsOnTheRight = right(str, lastIdx);
+      var whatsOnTheRight = right(str, lastIdx);
 
       if (opts.mode === 0) {
         if (whatsOnTheRight === lastIdx + 1) {
@@ -2316,8 +2395,8 @@
         }
 
         if (str.slice(lastIdx, whatsOnTheRight || str.length).trim() || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\n") || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\r")) {
-          for (let y = lastIdx, len = str.length; y < len; y++) {
-            if (`\n\r`.includes(str[y])) {
+          for (var y = lastIdx, len = str.length; y < len; y++) {
+            if ("\n\r".includes(str[y])) {
               return y;
             }
           }
@@ -2327,12 +2406,12 @@
       } else if (opts.mode === 1) {
         return lastIdx;
       } else if (opts.mode === 2) {
-        const remainderString = str.slice(lastIdx);
+        var remainderString = str.slice(lastIdx);
 
         if (remainderString.trim() || remainderString.includes("\n") || remainderString.includes("\r")) {
-          for (let y = lastIdx, len = str.length; y < len; y++) {
-            if (str[y].trim() || `\n\r`.includes(str[y])) {
-              return y;
+          for (var _y = lastIdx, _len3 = str.length; _y < _len3; _y++) {
+            if (str[_y].trim() || "\n\r".includes(str[_y])) {
+              return _y;
             }
           }
         }
@@ -2347,7 +2426,7 @@
       return lastIdx;
     }
 
-    const whatsOnTheLeft = left(str, lastIdx);
+    var whatsOnTheLeft = left(str, lastIdx);
 
     if (opts.mode === 0) {
       if (whatsOnTheLeft === lastIdx - 2) {
@@ -2355,9 +2434,9 @@
       }
 
       if (str.slice(0, lastIdx).trim() || str.slice(0, lastIdx).includes("\n") || str.slice(0, lastIdx).includes("\r")) {
-        for (let y = lastIdx; y--;) {
-          if (`\n\r`.includes(str[y]) || str[y].trim()) {
-            return y + 1 + (str[y].trim() ? 1 : 0);
+        for (var _y2 = lastIdx; _y2--;) {
+          if ("\n\r".includes(str[_y2]) || str[_y2].trim()) {
+            return _y2 + 1 + (str[_y2].trim() ? 1 : 0);
           }
         }
       }
@@ -2370,12 +2449,12 @@
     }
 
     if (opts.mode === 2) {
-      const remainderString = str.slice(0, lastIdx);
+      var _remainderString = str.slice(0, lastIdx);
 
-      if (remainderString.trim() || remainderString.includes("\n") || remainderString.includes("\r")) {
-        for (let y = lastIdx; y--;) {
-          if (str[y].trim() || `\n\r`.includes(str[y])) {
-            return y + 1;
+      if (_remainderString.trim() || _remainderString.includes("\n") || _remainderString.includes("\r")) {
+        for (var _y3 = lastIdx; _y3--;) {
+          if (str[_y3].trim() || "\n\r".includes(str[_y3])) {
+            return _y3 + 1;
           }
         }
       }
@@ -2386,26 +2465,28 @@
     return whatsOnTheLeft !== null ? whatsOnTheLeft + 1 : 0;
   }
 
-  function chompLeft(str, idx, ...args) {
+  function chompLeft(str, idx) {
+    for (var _len4 = arguments.length, args = new Array(_len4 > 2 ? _len4 - 2 : 0), _key3 = 2; _key3 < _len4; _key3++) {
+      args[_key3 - 2] = arguments[_key3];
+    }
+
     if (!args.length || args.length === 1 && lodash_isplainobject(args[0])) {
       return null;
     }
 
-    const defaults = {
+    var defaults = {
       mode: 0
     };
 
     if (lodash_isplainobject(args[0])) {
-      const opts = { ...defaults,
-        ...lodash_clonedeep(args[0])
-      };
+      var opts = _objectSpread2(_objectSpread2({}, defaults), lodash_clonedeep(args[0]));
 
       if (!opts.mode) {
         opts.mode = 0;
-      } else if (isStr(opts.mode) && `0123`.includes(opts.mode)) {
+      } else if (isStr(opts.mode) && "0123".includes(opts.mode)) {
         opts.mode = Number.parseInt(opts.mode, 10);
       } else if (!isNum(opts.mode)) {
-        throw new Error(`string-left-right/chompLeft(): [THROW_ID_01] the opts.mode is wrong! It should be 0, 1, 2 or 3. It was given as ${opts.mode} (type ${typeof opts.mode})`);
+        throw new Error("string-left-right/chompLeft(): [THROW_ID_01] the opts.mode is wrong! It should be 0, 1, 2 or 3. It was given as ".concat(opts.mode, " (type ").concat(_typeof(opts.mode), ")"));
       }
 
       return chomp("left", str, idx, opts, lodash_clonedeep(args).slice(1));
@@ -2431,17 +2512,17 @@
       return arrOfRanges;
     }
 
-    const defaults = {
+    var defaults = {
       strictlyTwoElementsInRangeArrays: false,
       progressFn: null
     };
-    const opts = { ...defaults,
-      ...originalOptions
-    };
-    let culpritsIndex;
-    let culpritsLen;
 
-    if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.every((rangeArr, indx) => {
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOptions);
+
+    var culpritsIndex;
+    var culpritsLen;
+
+    if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.every(function (rangeArr, indx) {
       if (rangeArr.length !== 2) {
         culpritsIndex = indx;
         culpritsLen = rangeArr.length;
@@ -2450,10 +2531,10 @@
 
       return true;
     })) {
-      throw new TypeError(`ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ${culpritsIndex}th range (${JSON.stringify(arrOfRanges[culpritsIndex], null, 4)}) has not two but ${culpritsLen} elements!`);
+      throw new TypeError("ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ".concat(culpritsIndex, "th range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 4), ") has not two but ").concat(culpritsLen, " elements!"));
     }
 
-    if (!arrOfRanges.every((rangeArr, indx) => {
+    if (!arrOfRanges.every(function (rangeArr, indx) {
       if (!Number.isInteger(rangeArr[0]) || rangeArr[0] < 0 || !Number.isInteger(rangeArr[1]) || rangeArr[1] < 0) {
         culpritsIndex = indx;
         return false;
@@ -2461,12 +2542,12 @@
 
       return true;
     })) {
-      throw new TypeError(`ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ${culpritsIndex}th range (${JSON.stringify(arrOfRanges[culpritsIndex], null, 4)}) does not consist of only natural numbers!`);
+      throw new TypeError("ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ".concat(culpritsIndex, "th range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 4), ") does not consist of only natural numbers!"));
     }
 
-    const maxPossibleIterations = arrOfRanges.length * arrOfRanges.length;
-    let counter = 0;
-    return Array.from(arrOfRanges).sort((range1, range2) => {
+    var maxPossibleIterations = arrOfRanges.length * arrOfRanges.length;
+    var counter = 0;
+    return Array.from(arrOfRanges).sort(function (range1, range2) {
       if (opts.progressFn) {
         counter += 1;
         opts.progressFn(Math.floor(counter * 100 / maxPossibleIterations));
@@ -2492,45 +2573,34 @@
     });
   }
 
-  /**
-   * ranges-merge
-   * Merge and sort arrays which mean string slice ranges
-   * Version: 4.3.8
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge
-   */
-
   function mergeRanges(arrOfRanges, originalOpts) {
     function isStr(something) {
       return typeof something === "string";
     }
 
     function isObj(something) {
-      return something && typeof something === "object" && !Array.isArray(something);
+      return something && _typeof(something) === "object" && !Array.isArray(something);
     }
 
     if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
       return arrOfRanges;
     }
 
-    const defaults = {
+    var defaults = {
       mergeType: 1,
       progressFn: null,
       joinRangesThatTouchEdges: true
     };
-    let opts;
+    var opts;
 
     if (originalOpts) {
       if (isObj(originalOpts)) {
-        opts = { ...defaults,
-          ...originalOpts
-        };
+        opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
         if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
           opts.progressFn = null;
         } else if (opts.progressFn && typeof opts.progressFn !== "function") {
-          throw new Error(`ranges-merge: [THROW_ID_01] opts.progressFn must be a function! It was given of a type: "${typeof opts.progressFn}", equal to ${JSON.stringify(opts.progressFn, null, 4)}`);
+          throw new Error("ranges-merge: [THROW_ID_01] opts.progressFn must be a function! It was given of a type: \"".concat(_typeof(opts.progressFn), "\", equal to ").concat(JSON.stringify(opts.progressFn, null, 4)));
         }
 
         if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
@@ -2539,29 +2609,32 @@
           } else if (isStr(opts.mergeType) && opts.mergeType.trim() === "2") {
             opts.mergeType = 2;
           } else {
-            throw new Error(`ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof opts.mergeType}", equal to ${JSON.stringify(opts.mergeType, null, 4)}`);
+            throw new Error("ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"".concat(_typeof(opts.mergeType), "\", equal to ").concat(JSON.stringify(opts.mergeType, null, 4)));
           }
         }
 
         if (typeof opts.joinRangesThatTouchEdges !== "boolean") {
-          throw new Error(`ranges-merge: [THROW_ID_04] opts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: "${typeof opts.joinRangesThatTouchEdges}", equal to ${JSON.stringify(opts.joinRangesThatTouchEdges, null, 4)}`);
+          throw new Error("ranges-merge: [THROW_ID_04] opts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: \"".concat(_typeof(opts.joinRangesThatTouchEdges), "\", equal to ").concat(JSON.stringify(opts.joinRangesThatTouchEdges, null, 4)));
         }
       } else {
-        throw new Error(`emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n${JSON.stringify(originalOpts, null, 4)} (type ${typeof originalOpts})`);
+        throw new Error("emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n".concat(JSON.stringify(originalOpts, null, 4), " (type ").concat(_typeof(originalOpts), ")"));
       }
     } else {
-      opts = { ...defaults
-      };
+      opts = _objectSpread2({}, defaults);
     }
 
-    const filtered = arrOfRanges.map(subarr => [...subarr]).filter(rangeArr => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]);
-    let sortedRanges;
-    let lastPercentageDone;
-    let percentageDone;
+    var filtered = arrOfRanges.map(function (subarr) {
+      return _toConsumableArray(subarr);
+    }).filter(function (rangeArr) {
+      return rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1];
+    });
+    var sortedRanges;
+    var lastPercentageDone;
+    var percentageDone;
 
     if (opts.progressFn) {
       sortedRanges = rangesSort(filtered, {
-        progressFn: percentage => {
+        progressFn: function progressFn(percentage) {
           percentageDone = Math.floor(percentage / 5);
 
           if (percentageDone !== lastPercentageDone) {
@@ -2574,9 +2647,9 @@
       sortedRanges = rangesSort(filtered);
     }
 
-    const len = sortedRanges.length - 1;
+    var len = sortedRanges.length - 1;
 
-    for (let i = len; i > 0; i--) {
+    for (var i = len; i > 0; i--) {
       if (opts.progressFn) {
         percentageDone = Math.floor((1 - i / len) * 78) + 21;
 
@@ -2614,15 +2687,6 @@
     return sortedRanges;
   }
 
-  /**
-   * ranges-apply
-   * Take an array of string slice ranges, delete/replace the string according to them
-   * Version: 3.1.10
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply
-   */
-
   function existy(x) {
     return x != null;
   }
@@ -2631,16 +2695,16 @@
     return typeof something === "string";
   }
 
-  function rangesApply(str, originalRangesArr, progressFn) {
-    let percentageDone = 0;
-    let lastPercentageDone = 0;
+  function rangesApply(str, originalRangesArr, _progressFn) {
+    var percentageDone = 0;
+    var lastPercentageDone = 0;
 
     if (arguments.length === 0) {
       throw new Error("ranges-apply: [THROW_ID_01] inputs missing!");
     }
 
     if (!isStr$1(str)) {
-      throw new TypeError(`ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof str}, equal to: ${JSON.stringify(str, null, 4)}`);
+      throw new TypeError("ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ".concat(_typeof(str), ", equal to: ").concat(JSON.stringify(str, null, 4)));
     }
 
     if (originalRangesArr === null) {
@@ -2648,14 +2712,14 @@
     }
 
     if (!Array.isArray(originalRangesArr)) {
-      throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof originalRangesArr}, equal to: ${JSON.stringify(originalRangesArr, null, 4)}`);
+      throw new TypeError("ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ".concat(_typeof(originalRangesArr), ", equal to: ").concat(JSON.stringify(originalRangesArr, null, 4)));
     }
 
-    if (progressFn && typeof progressFn !== "function") {
-      throw new TypeError(`ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof progressFn}, equal to: ${JSON.stringify(progressFn, null, 4)}`);
+    if (_progressFn && typeof _progressFn !== "function") {
+      throw new TypeError("ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ".concat(_typeof(_progressFn), ", equal to: ").concat(JSON.stringify(_progressFn, null, 4)));
     }
 
-    let rangesArr;
+    var rangesArr;
 
     if (Array.isArray(originalRangesArr) && (Number.isInteger(originalRangesArr[0]) && originalRangesArr[0] >= 0 || /^\d*$/.test(originalRangesArr[0])) && (Number.isInteger(originalRangesArr[1]) && originalRangesArr[1] >= 0 || /^\d*$/.test(originalRangesArr[1]))) {
       rangesArr = [Array.from(originalRangesArr)];
@@ -2663,28 +2727,29 @@
       rangesArr = Array.from(originalRangesArr);
     }
 
-    const len = rangesArr.length;
-    let counter = 0;
-    rangesArr.forEach((el, i) => {
-      if (progressFn) {
+    var len = rangesArr.length;
+    var counter = 0;
+    rangesArr.forEach(function (el, i) {
+      if (_progressFn) {
         percentageDone = Math.floor(counter / len * 10);
         /* istanbul ignore else */
 
         if (percentageDone !== lastPercentageDone) {
           lastPercentageDone = percentageDone;
-          progressFn(percentageDone);
+
+          _progressFn(percentageDone);
         }
       }
 
       if (!Array.isArray(el)) {
-        throw new TypeError(`ranges-apply: [THROW_ID_05] ranges array, second input arg., has ${i}th element not an array: ${JSON.stringify(el, null, 4)}, which is ${typeof el}`);
+        throw new TypeError("ranges-apply: [THROW_ID_05] ranges array, second input arg., has ".concat(i, "th element not an array: ").concat(JSON.stringify(el, null, 4), ", which is ").concat(_typeof(el)));
       }
 
       if (!Number.isInteger(el[0]) || el[0] < 0) {
         if (/^\d*$/.test(el[0])) {
           rangesArr[i][0] = Number.parseInt(rangesArr[i][0], 10);
         } else {
-          throw new TypeError(`ranges-apply: [THROW_ID_06] ranges array, second input arg. has ${i}th element, array [${el[0]},${el[1]}]. That array has first element not an integer, but ${typeof el[0]}, equal to: ${JSON.stringify(el[0], null, 4)}. Computer doesn't like this.`);
+          throw new TypeError("ranges-apply: [THROW_ID_06] ranges array, second input arg. has ".concat(i, "th element, array [").concat(el[0], ",").concat(el[1], "]. That array has first element not an integer, but ").concat(_typeof(el[0]), ", equal to: ").concat(JSON.stringify(el[0], null, 4), ". Computer doesn't like this."));
         }
       }
 
@@ -2692,42 +2757,44 @@
         if (/^\d*$/.test(el[1])) {
           rangesArr[i][1] = Number.parseInt(rangesArr[i][1], 10);
         } else {
-          throw new TypeError(`ranges-apply: [THROW_ID_07] ranges array, second input arg. has ${i}th element, array [${el[0]},${el[1]}]. That array has second element not an integer, but ${typeof el[1]}, equal to: ${JSON.stringify(el[1], null, 4)}. Computer doesn't like this.`);
+          throw new TypeError("ranges-apply: [THROW_ID_07] ranges array, second input arg. has ".concat(i, "th element, array [").concat(el[0], ",").concat(el[1], "]. That array has second element not an integer, but ").concat(_typeof(el[1]), ", equal to: ").concat(JSON.stringify(el[1], null, 4), ". Computer doesn't like this."));
         }
       }
 
       counter += 1;
     });
-    const workingRanges = mergeRanges(rangesArr, {
-      progressFn: perc => {
-        if (progressFn) {
+    var workingRanges = mergeRanges(rangesArr, {
+      progressFn: function progressFn(perc) {
+        if (_progressFn) {
           percentageDone = 10 + Math.floor(perc / 10);
           /* istanbul ignore else */
 
           if (percentageDone !== lastPercentageDone) {
             lastPercentageDone = percentageDone;
-            progressFn(percentageDone);
+
+            _progressFn(percentageDone);
           }
         }
       }
     });
-    const len2 = workingRanges.length;
+    var len2 = workingRanges.length;
 
     if (len2 > 0) {
-      const tails = str.slice(workingRanges[len2 - 1][1]);
-      str = workingRanges.reduce((acc, val, i, arr) => {
-        if (progressFn) {
+      var tails = str.slice(workingRanges[len2 - 1][1]);
+      str = workingRanges.reduce(function (acc, val, i, arr) {
+        if (_progressFn) {
           percentageDone = 20 + Math.floor(i / len2 * 80);
           /* istanbul ignore else */
 
           if (percentageDone !== lastPercentageDone) {
             lastPercentageDone = percentageDone;
-            progressFn(percentageDone);
+
+            _progressFn(percentageDone);
           }
         }
 
-        const beginning = i === 0 ? 0 : arr[i - 1][1];
-        const ending = arr[i][0];
+        var beginning = i === 0 ? 0 : arr[i - 1][1];
+        var ending = arr[i][0];
         return acc + str.slice(beginning, ending) + (existy(arr[i][2]) ? arr[i][2] : "");
       }, "");
       str += tails;

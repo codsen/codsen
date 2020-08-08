@@ -13,6 +13,172 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.tapParseStringToObject = factory());
 }(this, (function () { 'use strict';
 
+  function _typeof(obj) {
+    "@babel/helpers - typeof";
+
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof = function (obj) {
+        return typeof obj;
+      };
+    } else {
+      _typeof = function (obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      };
+    }
+
+    return _typeof(obj);
+  }
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  function _createClass(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties(Constructor, staticProps);
+    return Constructor;
+  }
+
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function");
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) _setPrototypeOf(subClass, superClass);
+  }
+
+  function _getPrototypeOf(o) {
+    _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+      return o.__proto__ || Object.getPrototypeOf(o);
+    };
+    return _getPrototypeOf(o);
+  }
+
+  function _setPrototypeOf(o, p) {
+    _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+      o.__proto__ = p;
+      return o;
+    };
+
+    return _setPrototypeOf(o, p);
+  }
+
+  function _isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function _assertThisInitialized(self) {
+    if (self === void 0) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return self;
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (call && (typeof call === "object" || typeof call === "function")) {
+      return call;
+    }
+
+    return _assertThisInitialized(self);
+  }
+
+  function _createSuper(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct();
+
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf(Derived),
+          result;
+
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf(this).constructor;
+
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
+
+      return _possibleConstructorReturn(this, result);
+    };
+  }
+
   var domain; // This constructor is used to store event handlers. Instantiating this is
   // faster than explicitly calling `Object.create(null)` to get a "clean" empty
   // object (tested with v8 v4.9).
@@ -78,7 +244,9 @@
       var len = handler.length;
       var listeners = arrayClone(handler, len);
 
-      for (var i = 0; i < len; ++i) listeners[i].call(self);
+      for (var i = 0; i < len; ++i) {
+        listeners[i].call(self);
+      }
     }
   }
 
@@ -87,7 +255,9 @@
       var len = handler.length;
       var listeners = arrayClone(handler, len);
 
-      for (var i = 0; i < len; ++i) listeners[i].call(self, arg1);
+      for (var i = 0; i < len; ++i) {
+        listeners[i].call(self, arg1);
+      }
     }
   }
 
@@ -96,7 +266,9 @@
       var len = handler.length;
       var listeners = arrayClone(handler, len);
 
-      for (var i = 0; i < len; ++i) listeners[i].call(self, arg1, arg2);
+      for (var i = 0; i < len; ++i) {
+        listeners[i].call(self, arg1, arg2);
+      }
     }
   }
 
@@ -105,7 +277,9 @@
       var len = handler.length;
       var listeners = arrayClone(handler, len);
 
-      for (var i = 0; i < len; ++i) listeners[i].call(self, arg1, arg2, arg3);
+      for (var i = 0; i < len; ++i) {
+        listeners[i].call(self, arg1, arg2, arg3);
+      }
     }
   }
 
@@ -114,7 +288,9 @@
       var len = handler.length;
       var listeners = arrayClone(handler, len);
 
-      for (var i = 0; i < len; ++i) listeners[i].apply(self, args);
+      for (var i = 0; i < len; ++i) {
+        listeners[i].apply(self, args);
+      }
     }
   }
 
@@ -173,7 +349,9 @@
       default:
         args = new Array(len - 1);
 
-        for (i = 1; i < len; i++) args[i - 1] = arguments[i];
+        for (i = 1; i < len; i++) {
+          args[i - 1] = arguments[i];
+        }
 
         emitMany(handler, isFn, this, args);
     }
@@ -416,7 +594,9 @@
 
 
   function spliceOne(list, index) {
-    for (var i = index, k = i + 1, n = list.length; k < n; i += 1, k += 1) list[i] = list[k];
+    for (var i = index, k = i + 1, n = list.length; k < n; i += 1, k += 1) {
+      list[i] = list[k];
+    }
 
     list.pop();
   }
@@ -424,7 +604,9 @@
   function arrayClone(arr, i) {
     var copy = new Array(i);
 
-    while (i--) copy[i] = arr[i];
+    while (i--) {
+      copy[i] = arr[i];
+    }
 
     return copy;
   }
@@ -608,7 +790,7 @@
     inherits = function inherits(ctor, superCtor) {
       ctor.super_ = superCtor;
 
-      var TempCtor = function () {};
+      var TempCtor = function TempCtor() {};
 
       TempCtor.prototype = superCtor.prototype;
       ctor.prototype = new TempCtor();
@@ -618,7 +800,6 @@
 
   var inherits$1 = inherits;
 
-  // Copyright Joyent, Inc. and other Node contributors.
   var formatRegExp = /%[sdj%]/g;
   function format(f) {
     if (!isString(f)) {
@@ -784,7 +965,7 @@
     var style = inspect.styles[styleType];
 
     if (style) {
-      return '\u001b[' + inspect.colors[style][0] + 'm' + str + '\u001b[' + inspect.colors[style][1] + 'm';
+      return "\x1B[" + inspect.colors[style][0] + 'm' + str + "\x1B[" + inspect.colors[style][1] + 'm';
     } else {
       return str;
     }
@@ -1051,7 +1232,7 @@
     return typeof arg === 'string';
   }
   function isSymbol(arg) {
-    return typeof arg === 'symbol';
+    return _typeof(arg) === 'symbol';
   }
   function isUndefined(arg) {
     return arg === void 0;
@@ -1060,7 +1241,7 @@
     return isObject(re) && objectToString(re) === '[object RegExp]';
   }
   function isObject(arg) {
-    return typeof arg === 'object' && arg !== null;
+    return _typeof(arg) === 'object' && arg !== null;
   }
   function isDate(d) {
     return isObject(d) && objectToString(d) === '[object Date]';
@@ -1072,7 +1253,7 @@
     return typeof arg === 'function';
   }
   function isPrimitive(arg) {
-    return arg === null || typeof arg === 'boolean' || typeof arg === 'number' || typeof arg === 'string' || typeof arg === 'symbol' || // ES6 symbol
+    return arg === null || typeof arg === 'boolean' || typeof arg === 'number' || typeof arg === 'string' || _typeof(arg) === 'symbol' || // ES6 symbol
     typeof arg === 'undefined';
   }
   function isBuffer(maybeBuf) {
@@ -5082,11 +5263,11 @@
   }
 
   function isReadable(obj) {
-    return isStream(obj) && typeof obj._read == 'function' && typeof obj._readableState == 'object';
+    return isStream(obj) && typeof obj._read == 'function' && _typeof(obj._readableState) == 'object';
   }
 
   function isWritable(obj) {
-    return isStream(obj) && typeof obj._write == 'function' && typeof obj._writableState == 'object';
+    return isStream(obj) && typeof obj._write == 'function' && _typeof(obj._writableState) == 'object';
   }
 
   function isDuplex(obj) {
@@ -5103,7 +5284,7 @@
 
   var stream$1 = Stream$1;
 
-  function ownKeys(object, enumerableOnly) {
+  function ownKeys$1(object, enumerableOnly) {
     var keys = Object.keys(object);
 
     if (Object.getOwnPropertySymbols) {
@@ -5122,13 +5303,13 @@
       var source = arguments[i] != null ? arguments[i] : {};
 
       if (i % 2) {
-        ownKeys(Object(source), true).forEach(function (key) {
-          _defineProperty(target, key, source[key]);
+        ownKeys$1(Object(source), true).forEach(function (key) {
+          _defineProperty$1(target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
         Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
       } else {
-        ownKeys(Object(source)).forEach(function (key) {
+        ownKeys$1(Object(source)).forEach(function (key) {
           Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
         });
       }
@@ -5137,7 +5318,7 @@
     return target;
   }
 
-  function _defineProperty(obj, key, value) {
+  function _defineProperty$1(obj, key, value) {
     if (key in obj) {
       Object.defineProperty(obj, key, {
         value: value,
@@ -5152,13 +5333,13 @@
     return obj;
   }
 
-  function _classCallCheck(instance, Constructor) {
+  function _classCallCheck$1(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
       throw new TypeError("Cannot call a class as a function");
     }
   }
 
-  function _defineProperties(target, props) {
+  function _defineProperties$1(target, props) {
     for (var i = 0; i < props.length; i++) {
       var descriptor = props[i];
       descriptor.enumerable = descriptor.enumerable || false;
@@ -5168,9 +5349,9 @@
     }
   }
 
-  function _createClass(Constructor, protoProps, staticProps) {
-    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) _defineProperties(Constructor, staticProps);
+  function _createClass$1(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties$1(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties$1(Constructor, staticProps);
     return Constructor;
   }
 
@@ -5184,14 +5365,14 @@
 
   var buffer_list = /*#__PURE__*/function () {
     function BufferList() {
-      _classCallCheck(this, BufferList);
+      _classCallCheck$1(this, BufferList);
 
       this.head = null;
       this.tail = null;
       this.length = 0;
     }
 
-    _createClass(BufferList, [{
+    _createClass$1(BufferList, [{
       key: "push",
       value: function push(v) {
         var entry = {
@@ -5469,7 +5650,7 @@
     errorOrDestroy: errorOrDestroy
   };
 
-  const codes = {};
+  var codes = {};
 
   function createErrorType(code, message, Base) {
     if (!Base) {
@@ -5484,12 +5665,19 @@
       }
     }
 
-    class NodeError extends Base {
-      constructor(arg1, arg2, arg3) {
-        super(getMessage(arg1, arg2, arg3));
+    var NodeError = /*#__PURE__*/function (_Base) {
+      _inherits(NodeError, _Base);
+
+      var _super = _createSuper(NodeError);
+
+      function NodeError(arg1, arg2, arg3) {
+        _classCallCheck(this, NodeError);
+
+        return _super.call(this, getMessage(arg1, arg2, arg3));
       }
 
-    }
+      return NodeError;
+    }(Base);
 
     NodeError.prototype.name = Base.name;
     NodeError.prototype.code = code;
@@ -5499,18 +5687,20 @@
 
   function oneOf(expected, thing) {
     if (Array.isArray(expected)) {
-      const len = expected.length;
-      expected = expected.map(i => String(i));
+      var len = expected.length;
+      expected = expected.map(function (i) {
+        return String(i);
+      });
 
       if (len > 2) {
-        return `one of ${thing} ${expected.slice(0, len - 1).join(', ')}, or ` + expected[len - 1];
+        return "one of ".concat(thing, " ").concat(expected.slice(0, len - 1).join(', '), ", or ") + expected[len - 1];
       } else if (len === 2) {
-        return `one of ${thing} ${expected[0]} or ${expected[1]}`;
+        return "one of ".concat(thing, " ").concat(expected[0], " or ").concat(expected[1]);
       } else {
-        return `of ${thing} ${expected[0]}`;
+        return "of ".concat(thing, " ").concat(expected[0]);
       }
     } else {
-      return `of ${thing} ${String(expected)}`;
+      return "of ".concat(thing, " ").concat(String(expected));
     }
   } // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith
 
@@ -5546,7 +5736,7 @@
   }, TypeError);
   createErrorType('ERR_INVALID_ARG_TYPE', function (name, expected, actual) {
     // determiner: 'must be' or 'must not be'
-    let determiner;
+    var determiner;
 
     if (typeof expected === 'string' && startsWith(expected, 'not ')) {
       determiner = 'must not be';
@@ -5555,17 +5745,17 @@
       determiner = 'must be';
     }
 
-    let msg;
+    var msg;
 
     if (endsWith(name, ' argument')) {
       // For cases like 'first argument'
-      msg = `The ${name} ${determiner} ${oneOf(expected, 'type')}`;
+      msg = "The ".concat(name, " ").concat(determiner, " ").concat(oneOf(expected, 'type'));
     } else {
-      const type = includes(name, '.') ? 'property' : 'argument';
-      msg = `The "${name}" ${type} ${determiner} ${oneOf(expected, 'type')}`;
+      var type = includes(name, '.') ? 'property' : 'argument';
+      msg = "The \"".concat(name, "\" ").concat(type, " ").concat(determiner, " ").concat(oneOf(expected, 'type'));
     }
 
-    msg += `. Received type ${typeof actual}`;
+    msg += ". Received type ".concat(_typeof(actual));
     return msg;
   }, TypeError);
   createErrorType('ERR_STREAM_PUSH_AFTER_EOF', 'stream.push() after EOF');
@@ -5637,7 +5827,7 @@
         if (superCtor) {
           ctor.super_ = superCtor;
 
-          var TempCtor = function () {};
+          var TempCtor = function TempCtor() {};
 
           TempCtor.prototype = superCtor.prototype;
           ctor.prototype = new TempCtor();
@@ -6696,19 +6886,19 @@
   function utf8CheckExtraBytes(self, buf, p) {
     if ((buf[0] & 0xC0) !== 0x80) {
       self.lastNeed = 0;
-      return '\ufffd';
+      return "\uFFFD";
     }
 
     if (self.lastNeed > 1 && buf.length > 1) {
       if ((buf[1] & 0xC0) !== 0x80) {
         self.lastNeed = 1;
-        return '\ufffd';
+        return "\uFFFD";
       }
 
       if (self.lastNeed > 2 && buf.length > 2) {
         if ((buf[2] & 0xC0) !== 0x80) {
           self.lastNeed = 2;
-          return '\ufffd';
+          return "\uFFFD";
         }
       }
     }
@@ -6745,7 +6935,7 @@
 
   function utf8End(buf) {
     var r = buf && buf.length ? this.write(buf) : '';
-    if (this.lastNeed) return r + '\ufffd';
+    if (this.lastNeed) return r + "\uFFFD";
     return r;
   } // UTF-16LE typically needs two bytes per character, but even if we have an even
   // number of bytes available, we need to check if we end on a leading/high
@@ -6929,7 +7119,7 @@
 
   var _Object$setPrototypeO;
 
-  function _defineProperty$1(obj, key, value) {
+  function _defineProperty$2(obj, key, value) {
     if (key in obj) {
       Object.defineProperty(obj, key, {
         value: value,
@@ -7056,9 +7246,9 @@
       this[kLastPromise] = promise;
       return promise;
     }
-  }, _defineProperty$1(_Object$setPrototypeO, Symbol.asyncIterator, function () {
+  }, _defineProperty$2(_Object$setPrototypeO, Symbol.asyncIterator, function () {
     return this;
-  }), _defineProperty$1(_Object$setPrototypeO, "return", function _return() {
+  }), _defineProperty$2(_Object$setPrototypeO, "return", function _return() {
     var _this2 = this; // destroy(err, cb) is a private API
     // we can guarantee we have that here, because we control the
     // Readable class this is attached to
@@ -7079,22 +7269,22 @@
   var createReadableStreamAsyncIterator = function createReadableStreamAsyncIterator(stream) {
     var _Object$create;
 
-    var iterator = Object.create(ReadableStreamAsyncIteratorPrototype, (_Object$create = {}, _defineProperty$1(_Object$create, kStream, {
+    var iterator = Object.create(ReadableStreamAsyncIteratorPrototype, (_Object$create = {}, _defineProperty$2(_Object$create, kStream, {
       value: stream,
       writable: true
-    }), _defineProperty$1(_Object$create, kLastResolve, {
+    }), _defineProperty$2(_Object$create, kLastResolve, {
       value: null,
       writable: true
-    }), _defineProperty$1(_Object$create, kLastReject, {
+    }), _defineProperty$2(_Object$create, kLastReject, {
       value: null,
       writable: true
-    }), _defineProperty$1(_Object$create, kError, {
+    }), _defineProperty$2(_Object$create, kError, {
       value: null,
       writable: true
-    }), _defineProperty$1(_Object$create, kEnded, {
+    }), _defineProperty$2(_Object$create, kEnded, {
       value: stream._readableState.endEmitted,
       writable: true
-    }), _defineProperty$1(_Object$create, kHandlePromise, {
+    }), _defineProperty$2(_Object$create, kHandlePromise, {
       value: function value(resolve, reject) {
         var data = iterator[kStream].read();
 
@@ -7180,7 +7370,7 @@
     };
   }
 
-  function ownKeys$1(object, enumerableOnly) {
+  function ownKeys$2(object, enumerableOnly) {
     var keys = Object.keys(object);
 
     if (Object.getOwnPropertySymbols) {
@@ -7199,13 +7389,13 @@
       var source = arguments[i] != null ? arguments[i] : {};
 
       if (i % 2) {
-        ownKeys$1(Object(source), true).forEach(function (key) {
-          _defineProperty$2(target, key, source[key]);
+        ownKeys$2(Object(source), true).forEach(function (key) {
+          _defineProperty$3(target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
         Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
       } else {
-        ownKeys$1(Object(source)).forEach(function (key) {
+        ownKeys$2(Object(source)).forEach(function (key) {
           Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
         });
       }
@@ -7214,7 +7404,7 @@
     return target;
   }
 
-  function _defineProperty$2(obj, key, value) {
+  function _defineProperty$3(obj, key, value) {
     if (key in obj) {
       Object.defineProperty(obj, key, {
         value: value,
@@ -7257,23 +7447,67 @@
     }
 
     function _next2() {
-      _next2 = _asyncToGenerator(function* () {
-        try {
-          var _ref = yield iterator.next(),
-              value = _ref.value,
-              done = _ref.done;
+      _next2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var _ref, value, done;
 
-          if (done) {
-            readable.push(null);
-          } else if (readable.push(yield value)) {
-            next();
-          } else {
-            reading = false;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return iterator.next();
+
+              case 3:
+                _ref = _context.sent;
+                value = _ref.value;
+                done = _ref.done;
+
+                if (!done) {
+                  _context.next = 10;
+                  break;
+                }
+
+                readable.push(null);
+                _context.next = 19;
+                break;
+
+              case 10:
+                _context.t0 = readable;
+                _context.next = 13;
+                return value;
+
+              case 13:
+                _context.t1 = _context.sent;
+
+                if (!_context.t0.push.call(_context.t0, _context.t1)) {
+                  _context.next = 18;
+                  break;
+                }
+
+                next();
+                _context.next = 19;
+                break;
+
+              case 18:
+                reading = false;
+
+              case 19:
+                _context.next = 24;
+                break;
+
+              case 21:
+                _context.prev = 21;
+                _context.t2 = _context["catch"](0);
+                readable.destroy(_context.t2);
+
+              case 24:
+              case "end":
+                return _context.stop();
+            }
           }
-        } catch (err) {
-          readable.destroy(err);
-        }
-      });
+        }, _callee, null, [[0, 21]]);
+      }));
       return _next2.apply(this, arguments);
     }
 
@@ -8629,14 +8863,10 @@
 
   var require$$1 = getCjsExportFromNamespace(stringDecoder);
 
-  const {
-    Transform: Transform$2
-  } = readable;
-  const {
-    StringDecoder: StringDecoder$3
-  } = require$$1;
-  const kLast = Symbol('last');
-  const kDecoder = Symbol('decoder');
+  var Transform$2 = readable.Transform;
+  var StringDecoder$3 = require$$1.StringDecoder;
+  var kLast = Symbol('last');
+  var kDecoder = Symbol('decoder');
 
   function transform(chunk, enc, cb) {
     var list;
@@ -8699,7 +8929,7 @@
         if (typeof matcher === 'function') {
           mapper = matcher;
           matcher = /\r?\n/; // If options is only argument.
-        } else if (typeof matcher === 'object' && !(matcher instanceof RegExp)) {
+        } else if (_typeof(matcher) === 'object' && !(matcher instanceof RegExp)) {
           options = matcher;
           matcher = /\r?\n/;
         }
@@ -8712,7 +8942,7 @@
           options = mapper;
           mapper = matcher;
           matcher = /\r?\n/; // If matcher and options are arguments.
-        } else if (typeof mapper === 'object') {
+        } else if (_typeof(mapper) === 'object') {
           options = mapper;
           mapper = noop$2;
         }
@@ -8723,7 +8953,7 @@
     options.transform = transform;
     options.flush = flush;
     options.readableObjectMode = true;
-    const stream = new Transform$2(options);
+    var stream = new Transform$2(options);
     stream[kLast] = '';
     stream[kDecoder] = new StringDecoder$3('utf8');
     stream.matcher = matcher;
@@ -8738,7 +8968,7 @@
 
   var stream$2 = Stream$1;
 
-  function ownKeys$2(object, enumerableOnly) {
+  function ownKeys$3(object, enumerableOnly) {
     var keys = Object.keys(object);
 
     if (Object.getOwnPropertySymbols) {
@@ -8757,13 +8987,13 @@
       var source = arguments[i] != null ? arguments[i] : {};
 
       if (i % 2) {
-        ownKeys$2(Object(source), true).forEach(function (key) {
-          _defineProperty$3(target, key, source[key]);
+        ownKeys$3(Object(source), true).forEach(function (key) {
+          _defineProperty$4(target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
         Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
       } else {
-        ownKeys$2(Object(source)).forEach(function (key) {
+        ownKeys$3(Object(source)).forEach(function (key) {
           Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
         });
       }
@@ -8772,7 +9002,7 @@
     return target;
   }
 
-  function _defineProperty$3(obj, key, value) {
+  function _defineProperty$4(obj, key, value) {
     if (key in obj) {
       Object.defineProperty(obj, key, {
         value: value,
@@ -8787,13 +9017,13 @@
     return obj;
   }
 
-  function _classCallCheck$1(instance, Constructor) {
+  function _classCallCheck$2(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
       throw new TypeError("Cannot call a class as a function");
     }
   }
 
-  function _defineProperties$1(target, props) {
+  function _defineProperties$2(target, props) {
     for (var i = 0; i < props.length; i++) {
       var descriptor = props[i];
       descriptor.enumerable = descriptor.enumerable || false;
@@ -8803,9 +9033,9 @@
     }
   }
 
-  function _createClass$1(Constructor, protoProps, staticProps) {
-    if (protoProps) _defineProperties$1(Constructor.prototype, protoProps);
-    if (staticProps) _defineProperties$1(Constructor, staticProps);
+  function _createClass$2(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties$2(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties$2(Constructor, staticProps);
     return Constructor;
   }
 
@@ -8819,14 +9049,14 @@
 
   var buffer_list$1 = /*#__PURE__*/function () {
     function BufferList() {
-      _classCallCheck$1(this, BufferList);
+      _classCallCheck$2(this, BufferList);
 
       this.head = null;
       this.tail = null;
       this.length = 0;
     }
 
-    _createClass$1(BufferList, [{
+    _createClass$2(BufferList, [{
       key: "push",
       value: function push(v) {
         var entry = {
@@ -9104,7 +9334,7 @@
     errorOrDestroy: errorOrDestroy$3
   };
 
-  const codes$1 = {};
+  var codes$1 = {};
 
   function createErrorType$1(code, message, Base) {
     if (!Base) {
@@ -9119,12 +9349,19 @@
       }
     }
 
-    class NodeError extends Base {
-      constructor(arg1, arg2, arg3) {
-        super(getMessage(arg1, arg2, arg3));
+    var NodeError = /*#__PURE__*/function (_Base) {
+      _inherits(NodeError, _Base);
+
+      var _super = _createSuper(NodeError);
+
+      function NodeError(arg1, arg2, arg3) {
+        _classCallCheck(this, NodeError);
+
+        return _super.call(this, getMessage(arg1, arg2, arg3));
       }
 
-    }
+      return NodeError;
+    }(Base);
 
     NodeError.prototype.name = Base.name;
     NodeError.prototype.code = code;
@@ -9134,18 +9371,20 @@
 
   function oneOf$1(expected, thing) {
     if (Array.isArray(expected)) {
-      const len = expected.length;
-      expected = expected.map(i => String(i));
+      var len = expected.length;
+      expected = expected.map(function (i) {
+        return String(i);
+      });
 
       if (len > 2) {
-        return `one of ${thing} ${expected.slice(0, len - 1).join(', ')}, or ` + expected[len - 1];
+        return "one of ".concat(thing, " ").concat(expected.slice(0, len - 1).join(', '), ", or ") + expected[len - 1];
       } else if (len === 2) {
-        return `one of ${thing} ${expected[0]} or ${expected[1]}`;
+        return "one of ".concat(thing, " ").concat(expected[0], " or ").concat(expected[1]);
       } else {
-        return `of ${thing} ${expected[0]}`;
+        return "of ".concat(thing, " ").concat(expected[0]);
       }
     } else {
-      return `of ${thing} ${String(expected)}`;
+      return "of ".concat(thing, " ").concat(String(expected));
     }
   } // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith
 
@@ -9181,7 +9420,7 @@
   }, TypeError);
   createErrorType$1('ERR_INVALID_ARG_TYPE', function (name, expected, actual) {
     // determiner: 'must be' or 'must not be'
-    let determiner;
+    var determiner;
 
     if (typeof expected === 'string' && startsWith$1(expected, 'not ')) {
       determiner = 'must not be';
@@ -9190,17 +9429,17 @@
       determiner = 'must be';
     }
 
-    let msg;
+    var msg;
 
     if (endsWith$1(name, ' argument')) {
       // For cases like 'first argument'
-      msg = `The ${name} ${determiner} ${oneOf$1(expected, 'type')}`;
+      msg = "The ".concat(name, " ").concat(determiner, " ").concat(oneOf$1(expected, 'type'));
     } else {
-      const type = includes$1(name, '.') ? 'property' : 'argument';
-      msg = `The "${name}" ${type} ${determiner} ${oneOf$1(expected, 'type')}`;
+      var type = includes$1(name, '.') ? 'property' : 'argument';
+      msg = "The \"".concat(name, "\" ").concat(type, " ").concat(determiner, " ").concat(oneOf$1(expected, 'type'));
     }
 
-    msg += `. Received type ${typeof actual}`;
+    msg += ". Received type ".concat(_typeof(actual));
     return msg;
   }, TypeError);
   createErrorType$1('ERR_STREAM_PUSH_AFTER_EOF', 'stream.push() after EOF');
@@ -10120,7 +10359,7 @@
 
   var _Object$setPrototypeO$1;
 
-  function _defineProperty$4(obj, key, value) {
+  function _defineProperty$5(obj, key, value) {
     if (key in obj) {
       Object.defineProperty(obj, key, {
         value: value,
@@ -10247,9 +10486,9 @@
       this[kLastPromise$1] = promise;
       return promise;
     }
-  }, _defineProperty$4(_Object$setPrototypeO$1, Symbol.asyncIterator, function () {
+  }, _defineProperty$5(_Object$setPrototypeO$1, Symbol.asyncIterator, function () {
     return this;
-  }), _defineProperty$4(_Object$setPrototypeO$1, "return", function _return() {
+  }), _defineProperty$5(_Object$setPrototypeO$1, "return", function _return() {
     var _this2 = this; // destroy(err, cb) is a private API
     // we can guarantee we have that here, because we control the
     // Readable class this is attached to
@@ -10270,22 +10509,22 @@
   var createReadableStreamAsyncIterator$2 = function createReadableStreamAsyncIterator(stream) {
     var _Object$create;
 
-    var iterator = Object.create(ReadableStreamAsyncIteratorPrototype$1, (_Object$create = {}, _defineProperty$4(_Object$create, kStream$1, {
+    var iterator = Object.create(ReadableStreamAsyncIteratorPrototype$1, (_Object$create = {}, _defineProperty$5(_Object$create, kStream$1, {
       value: stream,
       writable: true
-    }), _defineProperty$4(_Object$create, kLastResolve$1, {
+    }), _defineProperty$5(_Object$create, kLastResolve$1, {
       value: null,
       writable: true
-    }), _defineProperty$4(_Object$create, kLastReject$1, {
+    }), _defineProperty$5(_Object$create, kLastReject$1, {
       value: null,
       writable: true
-    }), _defineProperty$4(_Object$create, kError$1, {
+    }), _defineProperty$5(_Object$create, kError$1, {
       value: null,
       writable: true
-    }), _defineProperty$4(_Object$create, kEnded$1, {
+    }), _defineProperty$5(_Object$create, kEnded$1, {
       value: stream._readableState.endEmitted,
       writable: true
-    }), _defineProperty$4(_Object$create, kHandlePromise$1, {
+    }), _defineProperty$5(_Object$create, kHandlePromise$1, {
       value: function value(resolve, reject) {
         var data = iterator[kStream$1].read();
 
@@ -10371,7 +10610,7 @@
     };
   }
 
-  function ownKeys$3(object, enumerableOnly) {
+  function ownKeys$4(object, enumerableOnly) {
     var keys = Object.keys(object);
 
     if (Object.getOwnPropertySymbols) {
@@ -10390,13 +10629,13 @@
       var source = arguments[i] != null ? arguments[i] : {};
 
       if (i % 2) {
-        ownKeys$3(Object(source), true).forEach(function (key) {
-          _defineProperty$5(target, key, source[key]);
+        ownKeys$4(Object(source), true).forEach(function (key) {
+          _defineProperty$6(target, key, source[key]);
         });
       } else if (Object.getOwnPropertyDescriptors) {
         Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
       } else {
-        ownKeys$3(Object(source)).forEach(function (key) {
+        ownKeys$4(Object(source)).forEach(function (key) {
           Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
         });
       }
@@ -10405,7 +10644,7 @@
     return target;
   }
 
-  function _defineProperty$5(obj, key, value) {
+  function _defineProperty$6(obj, key, value) {
     if (key in obj) {
       Object.defineProperty(obj, key, {
         value: value,
@@ -10448,23 +10687,67 @@
     }
 
     function _next2() {
-      _next2 = _asyncToGenerator$1(function* () {
-        try {
-          var _ref = yield iterator.next(),
-              value = _ref.value,
-              done = _ref.done;
+      _next2 = _asyncToGenerator$1( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var _ref, value, done;
 
-          if (done) {
-            readable.push(null);
-          } else if (readable.push(yield value)) {
-            next();
-          } else {
-            reading = false;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return iterator.next();
+
+              case 3:
+                _ref = _context.sent;
+                value = _ref.value;
+                done = _ref.done;
+
+                if (!done) {
+                  _context.next = 10;
+                  break;
+                }
+
+                readable.push(null);
+                _context.next = 19;
+                break;
+
+              case 10:
+                _context.t0 = readable;
+                _context.next = 13;
+                return value;
+
+              case 13:
+                _context.t1 = _context.sent;
+
+                if (!_context.t0.push.call(_context.t0, _context.t1)) {
+                  _context.next = 18;
+                  break;
+                }
+
+                next();
+                _context.next = 19;
+                break;
+
+              case 18:
+                reading = false;
+
+              case 19:
+                _context.next = 24;
+                break;
+
+              case 21:
+                _context.prev = 21;
+                _context.t2 = _context["catch"](0);
+                readable.destroy(_context.t2);
+
+              case 24:
+              case "end":
+                return _context.stop();
+            }
           }
-        } catch (err) {
-          readable.destroy(err);
-        }
-      });
+        }, _callee, null, [[0, 21]]);
+      }));
       return _next2.apply(this, arguments);
     }
 
@@ -11818,9 +12101,7 @@
     }
   });
 
-  const {
-    Transform: Transform$4
-  } = readable$1;
+  var Transform$4 = readable$1.Transform;
 
   function inherits$3(fn, sup) {
     fn.super_ = sup;
@@ -11837,7 +12118,7 @@
 
 
   function through2(construct) {
-    return (options, transform, flush) => {
+    return function (options, transform, flush) {
       if (typeof options === 'function') {
         flush = transform;
         transform = options;
@@ -11846,7 +12127,9 @@
 
       if (typeof transform !== 'function') {
         // noop
-        transform = (chunk, enc, cb) => cb(null, chunk);
+        transform = function transform(chunk, enc, cb) {
+          return cb(null, chunk);
+        };
       }
 
       if (typeof flush !== 'function') {
@@ -11858,8 +12141,8 @@
   } // main export, just make me a transform stream!
 
 
-  const make = through2((options, transform, flush) => {
-    const t2 = new Transform$4(options);
+  var make = through2(function (options, transform, flush) {
+    var t2 = new Transform$4(options);
     t2._transform = transform;
 
     if (flush) {
@@ -11870,7 +12153,7 @@
   }); // make me a reusable prototype that I can `new`, or implicitly `new`
   // with a constructor call
 
-  const ctor = through2((options, transform, flush) => {
+  var ctor = through2(function (options, transform, flush) {
     function Through2(override) {
       if (!(this instanceof Through2)) {
         return new Through2(override);
@@ -11888,8 +12171,8 @@
     inherits$3(Through2, Transform$4);
     return Through2;
   });
-  const obj = through2(function (options, transform, flush) {
-    const t2 = new Transform$4(Object.assign({
+  var obj = through2(function (options, transform, flush) {
+    var t2 = new Transform$4(Object.assign({
       objectMode: true,
       highWaterMark: 16
     }, options));
@@ -11906,77 +12189,6 @@
   var obj_1 = obj;
   through2_1.ctor = ctor_1;
   through2_1.obj = obj_1;
-
-  function _classCallCheck$2(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  function _defineProperties$2(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }
-
-  function _createClass$2(Constructor, protoProps, staticProps) {
-    if (protoProps) _defineProperties$2(Constructor.prototype, protoProps);
-    if (staticProps) _defineProperties$2(Constructor, staticProps);
-    return Constructor;
-  }
-
-  function _defineProperty$6(obj, key, value) {
-    if (key in obj) {
-      Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-      });
-    } else {
-      obj[key] = value;
-    }
-
-    return obj;
-  }
-
-  function ownKeys$4(object, enumerableOnly) {
-    var keys = Object.keys(object);
-
-    if (Object.getOwnPropertySymbols) {
-      var symbols = Object.getOwnPropertySymbols(object);
-      if (enumerableOnly) symbols = symbols.filter(function (sym) {
-        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-      });
-      keys.push.apply(keys, symbols);
-    }
-
-    return keys;
-  }
-
-  function _objectSpread2(target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i] != null ? arguments[i] : {};
-
-      if (i % 2) {
-        ownKeys$4(Object(source), true).forEach(function (key) {
-          _defineProperty$6(target, key, source[key]);
-        });
-      } else if (Object.getOwnPropertyDescriptors) {
-        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-      } else {
-        ownKeys$4(Object(source)).forEach(function (key) {
-          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-        });
-      }
-    }
-
-    return target;
-  }
 
   // pings each line to the callback cb()
   function stringPingLineByLine(str, cb) {
@@ -12009,7 +12221,7 @@
 
   var Counter = /*#__PURE__*/function () {
     function Counter() {
-      _classCallCheck$2(this, Counter);
+      _classCallCheck(this, Counter);
 
       this.canCount = false;
       this.doNothing = false;
@@ -12025,7 +12237,7 @@
       };
     }
 
-    _createClass$2(Counter, [{
+    _createClass(Counter, [{
       key: "readLine",
       value: function readLine(lineStr) {
         // catch the --- to ...

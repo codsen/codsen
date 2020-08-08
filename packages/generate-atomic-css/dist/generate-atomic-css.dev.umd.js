@@ -231,7 +231,7 @@
    */
 
   function isObjectLike(value) {
-    return !!value && typeof value == 'object';
+    return !!value && _typeof(value) == 'object';
   }
   /**
    * Checks if `value` is a plain object, that is, an object created by the
@@ -365,10 +365,10 @@
     cloneableTags[errorTag] = cloneableTags[funcTag] = cloneableTags[weakMapTag] = false;
     /** Detect free variable `global` from Node.js. */
 
-    var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+    var freeGlobal = _typeof(commonjsGlobal) == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
     /** Detect free variable `self`. */
 
-    var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+    var freeSelf = (typeof self === "undefined" ? "undefined" : _typeof(self)) == 'object' && self && self.Object === Object && self;
     /** Used as a reference to the global object. */
 
     var root = freeGlobal || freeSelf || Function('return this')();
@@ -622,7 +622,7 @@
     /** Built-in value references. */
 
     var Buffer = moduleExports ? root.Buffer : undefined,
-        Symbol = root.Symbol,
+        _Symbol = root.Symbol,
         Uint8Array = root.Uint8Array,
         getPrototype = overArg(Object.getPrototypeOf, Object),
         objectCreate = Object.create,
@@ -650,7 +650,7 @@
         weakMapCtorString = toSource(WeakMap);
     /** Used to convert symbols to primitives and strings. */
 
-    var symbolProto = Symbol ? Symbol.prototype : undefined,
+    var symbolProto = _Symbol ? _Symbol.prototype : undefined,
         symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
     /**
      * Creates a hash object.
@@ -1568,7 +1568,7 @@
     // for data views in Edge < 14, and promises in Node.js.
 
     if (DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag || Map && getTag(new Map()) != mapTag || Promise && getTag(Promise.resolve()) != promiseTag || Set && getTag(new Set()) != setTag || WeakMap && getTag(new WeakMap()) != weakMapTag) {
-      getTag = function (value) {
+      getTag = function getTag(value) {
         var result = objectToString.call(value),
             Ctor = result == objectTag ? value.constructor : undefined,
             ctorString = Ctor ? toSource(Ctor) : undefined;
@@ -1708,7 +1708,8 @@
 
 
     function isKeyable(value) {
-      var type = typeof value;
+      var type = _typeof(value);
+
       return type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean' ? value !== '__proto__' : value === null;
     }
     /**
@@ -2031,7 +2032,8 @@
 
 
     function isObject(value) {
-      var type = typeof value;
+      var type = _typeof(value);
+
       return !!value && (type == 'object' || type == 'function');
     }
     /**
@@ -2061,7 +2063,7 @@
 
 
     function isObjectLike(value) {
-      return !!value && typeof value == 'object';
+      return !!value && _typeof(value) == 'object';
     }
     /**
      * Creates an array of the own enumerable property names of `object`.
@@ -2141,17 +2143,8 @@
     module.exports = cloneDeep;
   });
 
-  /**
-   * string-left-right
-   * Look what's to the left or the right of a given index within a string
-   * Version: 2.3.24
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right
-   */
-
   function x(something) {
-    const res = {
+    var res = {
       value: something,
       hungry: false,
       optional: false
@@ -2197,7 +2190,7 @@
       return idx + 2;
     }
 
-    for (let i = idx + 1, len = str.length; i < len; i++) {
+    for (var i = idx + 1, len = str.length; i < len; i++) {
       if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
         return i;
       }
@@ -2231,7 +2224,7 @@
       return idx - 2;
     }
 
-    for (let i = idx; i--;) {
+    for (var i = idx; i--;) {
       if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
         return i;
       }
@@ -2257,12 +2250,12 @@
       return null;
     }
 
-    let lastFinding = idx;
-    const gaps = [];
-    let leftmostChar;
-    let rightmostChar;
-    let satiated;
-    let i = 0;
+    var lastFinding = idx;
+    var gaps = [];
+    var leftmostChar;
+    var rightmostChar;
+    var satiated;
+    var i = 0;
 
     while (i < args.length) {
       if (!isStr(args[i]) || !args[i].length) {
@@ -2270,15 +2263,15 @@
         continue;
       }
 
-      const {
-        value,
-        optional,
-        hungry
-      } = x(args[i]);
-      const whattsOnTheSide = direction === "right" ? right(str, lastFinding) : left(str, lastFinding);
+      var _x = x(args[i]),
+          value = _x.value,
+          optional = _x.optional,
+          hungry = _x.hungry;
+
+      var whattsOnTheSide = direction === "right" ? right(str, lastFinding) : left(str, lastFinding);
 
       if (opts.i && str[whattsOnTheSide].toLowerCase() === value.toLowerCase() || !opts.i && str[whattsOnTheSide] === value) {
-        const temp = direction === "right" ? right(str, whattsOnTheSide) : left(str, whattsOnTheSide);
+        var temp = direction === "right" ? right(str, whattsOnTheSide) : left(str, whattsOnTheSide);
 
         if (hungry && (opts.i && str[temp].toLowerCase() === value.toLowerCase() || !opts.i && str[temp] === value)) {
           satiated = true;
@@ -2324,26 +2317,28 @@
     }
 
     return {
-      gaps,
-      leftmostChar,
-      rightmostChar
+      gaps: gaps,
+      leftmostChar: leftmostChar,
+      rightmostChar: rightmostChar
     };
   }
 
-  function leftSeq(str, idx, ...args) {
+  function leftSeq(str, idx) {
+    for (var _len = arguments.length, args = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+      args[_key - 2] = arguments[_key];
+    }
+
     if (!args.length) {
       return left(str, idx);
     }
 
-    const defaults = {
+    var defaults = {
       i: false
     };
-    let opts;
+    var opts;
 
     if (lodash_isplainobject(args[0])) {
-      opts = { ...defaults,
-        ...args.shift()
-      };
+      opts = _objectSpread2(_objectSpread2({}, defaults), args.shift());
     } else {
       opts = defaults;
     }
@@ -2351,20 +2346,22 @@
     return seq("left", str, idx, opts, Array.from(args).reverse());
   }
 
-  function rightSeq(str, idx, ...args) {
+  function rightSeq(str, idx) {
+    for (var _len2 = arguments.length, args = new Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+      args[_key2 - 2] = arguments[_key2];
+    }
+
     if (!args.length) {
       return right(str, idx);
     }
 
-    const defaults = {
+    var defaults = {
       i: false
     };
-    let opts;
+    var opts;
 
     if (lodash_isplainobject(args[0])) {
-      opts = { ...defaults,
-        ...args.shift()
-      };
+      opts = _objectSpread2(_objectSpread2({}, defaults), args.shift());
     } else {
       opts = defaults;
     }

@@ -70,26 +70,29 @@
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-is-index-within
    */
-  const isArr = Array.isArray;
+  var isArr = Array.isArray;
 
   function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
-    const defaults = {
+    var defaults = {
       inclusiveRangeEnds: false,
       returnMatchedRangeInsteadOfTrue: false
     };
-    const opts = { ...defaults,
-      ...originalOpts
-    };
+
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
     if (!isArr(rangesArr)) {
       return false;
     }
 
     if (opts.returnMatchedRangeInsteadOfTrue) {
-      return rangesArr.find(arr => opts.inclusiveRangeEnds ? originalIndex >= arr[0] && originalIndex <= arr[1] : originalIndex > arr[0] && originalIndex < arr[1]) || false;
+      return rangesArr.find(function (arr) {
+        return opts.inclusiveRangeEnds ? originalIndex >= arr[0] && originalIndex <= arr[1] : originalIndex > arr[0] && originalIndex < arr[1];
+      }) || false;
     }
 
-    return rangesArr.some(arr => opts.inclusiveRangeEnds ? originalIndex >= arr[0] && originalIndex <= arr[1] : originalIndex > arr[0] && originalIndex < arr[1]);
+    return rangesArr.some(function (arr) {
+      return opts.inclusiveRangeEnds ? originalIndex >= arr[0] && originalIndex <= arr[1] : originalIndex > arr[0] && originalIndex < arr[1];
+    });
   }
 
   function split(str, originalOpts) {

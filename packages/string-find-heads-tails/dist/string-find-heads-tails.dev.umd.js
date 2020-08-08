@@ -98,17 +98,8 @@
     return something;
   }
 
-  /**
-   * string-match-left-right
-   * Do substrings match what's on the left or right of a given index?
-   * Version: 4.0.8
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right
-   */
-
   function isObj(something) {
-    return something && typeof something === "object" && !Array.isArray(something);
+    return something && _typeof(something) === "object" && !Array.isArray(something);
   }
 
   function isStr(something) {
@@ -116,7 +107,7 @@
   }
 
   function march(str, fromIndexInclusive, whatToMatchVal, opts, special, getNextIdx) {
-    const whatToMatchValVal = typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal;
+    var whatToMatchValVal = typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal;
 
     if (fromIndexInclusive < 0 && special && whatToMatchValVal === "EOL") {
       return whatToMatchValVal;
@@ -126,17 +117,17 @@
       return false;
     }
 
-    let charsToCheckCount = special ? 1 : whatToMatchVal.length;
-    let lastWasMismatched = false;
-    let atLeastSomethingWasMatched = false;
-    let patience = opts.maxMismatches;
-    let i = fromIndexInclusive;
-    let somethingFound = false;
-    let firstCharacterMatched = false;
-    let lastCharacterMatched = false;
+    var charsToCheckCount = special ? 1 : whatToMatchVal.length;
+    var lastWasMismatched = false;
+    var atLeastSomethingWasMatched = false;
+    var patience = opts.maxMismatches;
+    var i = fromIndexInclusive;
+    var somethingFound = false;
+    var firstCharacterMatched = false;
+    var lastCharacterMatched = false;
 
     while (str[i]) {
-      const nextIdx = getNextIdx(i);
+      var nextIdx = getNextIdx(i);
 
       if (opts.trimBeforeMatching && str[i].trim() === "") {
         if (!str[nextIdx] && special && whatToMatchVal === "EOL") {
@@ -147,7 +138,9 @@
         continue;
       }
 
-      if (!opts.i && opts.trimCharsBeforeMatching.includes(str[i]) || opts.i && opts.trimCharsBeforeMatching.map(val => val.toLowerCase()).includes(str[i].toLowerCase())) {
+      if (!opts.i && opts.trimCharsBeforeMatching.includes(str[i]) || opts.i && opts.trimCharsBeforeMatching.map(function (val) {
+        return val.toLowerCase();
+      }).includes(str[i].toLowerCase())) {
         if (special && whatToMatchVal === "EOL" && !str[nextIdx]) {
           return true;
         }
@@ -156,7 +149,7 @@
         continue;
       }
 
-      const charToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount] : whatToMatchVal[charsToCheckCount - 1];
+      var charToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount] : whatToMatchVal[charsToCheckCount - 1];
 
       if (!opts.i && str[i] === charToCompareAgainst || opts.i && str[i].toLowerCase() === charToCompareAgainst.toLowerCase()) {
         if (!somethingFound) {
@@ -182,9 +175,9 @@
         if (opts.maxMismatches && patience && i) {
           patience -= 1;
 
-          for (let y = 0; y <= patience; y++) {
-            const nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1 + y] : whatToMatchVal[charsToCheckCount - 2 - y];
-            const nextCharInSource = str[getNextIdx(i)];
+          for (var y = 0; y <= patience; y++) {
+            var nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1 + y] : whatToMatchVal[charsToCheckCount - 2 - y];
+            var nextCharInSource = str[getNextIdx(i)];
 
             if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
               charsToCheckCount -= 2;
@@ -234,7 +227,7 @@
   }
 
   function main(mode, str, position, originalWhatToMatch, originalOpts) {
-    const defaults = {
+    var defaults = {
       i: false,
       trimBeforeMatching: false,
       trimCharsBeforeMatching: [],
@@ -244,14 +237,15 @@
     };
 
     if (isObj(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!${Array.isArray(originalOpts.trimBeforeMatching) ? ` Did you mean to use opts.trimCharsBeforeMatching?` : ""}`);
+      throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!").concat(Array.isArray(originalOpts.trimBeforeMatching) ? " Did you mean to use opts.trimCharsBeforeMatching?" : ""));
     }
 
-    const opts = { ...defaults,
-      ...originalOpts
-    };
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
+
     opts.trimCharsBeforeMatching = arrayiffyString(opts.trimCharsBeforeMatching);
-    opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(el => isStr(el) ? el : String(el));
+    opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(function (el) {
+      return isStr(el) ? el : String(el);
+    });
 
     if (!isStr(str)) {
       return false;
@@ -262,11 +256,11 @@
     }
 
     if (!Number.isInteger(position) || position < 0) {
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_03] the second argument should be a natural number. Currently it's of a type: ${typeof position}, equal to:\n${JSON.stringify(position, null, 4)}`);
+      throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_03] the second argument should be a natural number. Currently it's of a type: ").concat(_typeof(position), ", equal to:\n").concat(JSON.stringify(position, null, 4)));
     }
 
-    let whatToMatch;
-    let special;
+    var whatToMatch;
+    var special;
 
     if (isStr(originalWhatToMatch)) {
       whatToMatch = [originalWhatToMatch];
@@ -278,17 +272,17 @@
       whatToMatch = [];
       whatToMatch.push(originalWhatToMatch);
     } else {
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's ${typeof originalWhatToMatch}, equal to:\n${JSON.stringify(originalWhatToMatch, null, 4)}`);
+      throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's ").concat(_typeof(originalWhatToMatch), ", equal to:\n").concat(JSON.stringify(originalWhatToMatch, null, 4)));
     }
 
     if (originalOpts && !isObj(originalOpts)) {
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type "${typeof originalOpts}", and equal to:\n${JSON.stringify(originalOpts, null, 4)}`);
+      throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type \"").concat(_typeof(originalOpts), "\", and equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
     }
 
-    let culpritsIndex;
-    let culpritsVal;
+    var culpritsIndex;
+    var culpritsVal;
 
-    if (opts.trimCharsBeforeMatching.some((el, i) => {
+    if (opts.trimCharsBeforeMatching.some(function (el, i) {
       if (el.length > 1) {
         culpritsIndex = i;
         culpritsVal = el;
@@ -297,21 +291,21 @@
 
       return false;
     })) {
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ${culpritsIndex} is longer than 1 character, ${culpritsVal.length} (equals to ${culpritsVal}). Please split it into separate characters and put into array as separate elements.`);
+      throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ").concat(culpritsIndex, " is longer than 1 character, ").concat(culpritsVal.length, " (equals to ").concat(culpritsVal, "). Please split it into separate characters and put into array as separate elements."));
     }
 
     if (!whatToMatch || !Array.isArray(whatToMatch) || Array.isArray(whatToMatch) && !whatToMatch.length || Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr(whatToMatch[0]) && !whatToMatch[0].trim()) {
       if (typeof opts.cb === "function") {
-        let firstCharOutsideIndex;
-        let startingPosition = position;
+        var firstCharOutsideIndex;
+        var startingPosition = position;
 
         if (mode === "matchLeftIncl" || mode === "matchRight") {
           startingPosition += 1;
         }
 
         if (mode[5] === "L") {
-          for (let y = startingPosition; y--;) {
-            const currentChar = str[y];
+          for (var y = startingPosition; y--;) {
+            var currentChar = str[y];
 
             if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
               firstCharOutsideIndex = y;
@@ -319,11 +313,11 @@
             }
           }
         } else if (mode.startsWith("matchRight")) {
-          for (let y = startingPosition; y < str.length; y++) {
-            const currentChar = str[y];
+          for (var _y = startingPosition; _y < str.length; _y++) {
+            var _currentChar = str[_y];
 
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(currentChar))) {
-              firstCharOutsideIndex = y;
+            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && _currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(_currentChar))) {
+              firstCharOutsideIndex = _y;
               break;
             }
           }
@@ -333,9 +327,9 @@
           return false;
         }
 
-        const wholeCharacterOutside = str[firstCharOutsideIndex];
-        const indexOfTheCharacterAfter = firstCharOutsideIndex + 1;
-        let theRemainderOfTheString = "";
+        var wholeCharacterOutside = str[firstCharOutsideIndex];
+        var indexOfTheCharacterAfter = firstCharOutsideIndex + 1;
+        var theRemainderOfTheString = "";
 
         if (indexOfTheCharacterAfter && indexOfTheCharacterAfter > 0) {
           theRemainderOfTheString = str.slice(0, indexOfTheCharacterAfter);
@@ -352,30 +346,32 @@
         return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
       }
 
-      let extraNote = "";
+      var extraNote = "";
 
       if (!originalOpts) {
         extraNote = " More so, the whole options object, the fourth input argument, is missing!";
       }
 
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_08] the third argument, "whatToMatch", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key "cb" is not set!${extraNote}`);
+      throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_08] the third argument, \"whatToMatch\", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key \"cb\" is not set!").concat(extraNote));
     }
 
-    for (let i = 0, len = whatToMatch.length; i < len; i++) {
+    for (var i = 0, len = whatToMatch.length; i < len; i++) {
       special = typeof whatToMatch[i] === "function";
-      const whatToMatchVal = whatToMatch[i];
-      let fullCharacterInFront;
-      let indexOfTheCharacterInFront;
-      let restOfStringInFront = "";
-      let startingPosition = position;
+      var whatToMatchVal = whatToMatch[i];
+      var fullCharacterInFront = void 0;
+      var indexOfTheCharacterInFront = void 0;
+      var restOfStringInFront = "";
+      var _startingPosition = position;
 
       if (mode === "matchRight") {
-        startingPosition += 1;
+        _startingPosition += 1;
       } else if (mode === "matchLeft") {
-        startingPosition -= 1;
+        _startingPosition -= 1;
       }
 
-      const found = march(str, startingPosition, whatToMatchVal, opts, special, i2 => mode[5] === "L" ? i2 - 1 : i2 + 1);
+      var found = march(str, _startingPosition, whatToMatchVal, opts, special, function (i2) {
+        return mode[5] === "L" ? i2 - 1 : i2 + 1;
+      });
 
       if (found && special && typeof whatToMatchVal === "function" && whatToMatchVal() === "EOL") {
         return whatToMatchVal() && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true) ? whatToMatchVal() : false;

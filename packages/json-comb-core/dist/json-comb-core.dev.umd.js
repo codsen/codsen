@@ -29,6 +29,48 @@
     return _typeof(obj);
   }
 
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
+    try {
+      var info = gen[key](arg);
+      var value = info.value;
+    } catch (error) {
+      reject(error);
+      return;
+    }
+
+    if (info.done) {
+      resolve(value);
+    } else {
+      Promise.resolve(value).then(_next, _throw);
+    }
+  }
+
+  function _asyncToGenerator(fn) {
+    return function () {
+      var self = this,
+          args = arguments;
+      return new Promise(function (resolve, reject) {
+        var gen = fn.apply(self, args);
+
+        function _next(value) {
+          asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+        }
+
+        function _throw(err) {
+          asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+        }
+
+        _next(undefined);
+      });
+    };
+  }
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
   function _defineProperty(obj, key, value) {
     if (key in obj) {
       Object.defineProperty(obj, key, {
@@ -76,6 +118,140 @@
     }
 
     return target;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function");
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) _setPrototypeOf(subClass, superClass);
+  }
+
+  function _getPrototypeOf(o) {
+    _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+      return o.__proto__ || Object.getPrototypeOf(o);
+    };
+    return _getPrototypeOf(o);
+  }
+
+  function _setPrototypeOf(o, p) {
+    _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+      o.__proto__ = p;
+      return o;
+    };
+
+    return _setPrototypeOf(o, p);
+  }
+
+  function _isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function _construct(Parent, args, Class) {
+    if (_isNativeReflectConstruct()) {
+      _construct = Reflect.construct;
+    } else {
+      _construct = function _construct(Parent, args, Class) {
+        var a = [null];
+        a.push.apply(a, args);
+        var Constructor = Function.bind.apply(Parent, a);
+        var instance = new Constructor();
+        if (Class) _setPrototypeOf(instance, Class.prototype);
+        return instance;
+      };
+    }
+
+    return _construct.apply(null, arguments);
+  }
+
+  function _isNativeFunction(fn) {
+    return Function.toString.call(fn).indexOf("[native code]") !== -1;
+  }
+
+  function _wrapNativeSuper(Class) {
+    var _cache = typeof Map === "function" ? new Map() : undefined;
+
+    _wrapNativeSuper = function _wrapNativeSuper(Class) {
+      if (Class === null || !_isNativeFunction(Class)) return Class;
+
+      if (typeof Class !== "function") {
+        throw new TypeError("Super expression must either be null or a function");
+      }
+
+      if (typeof _cache !== "undefined") {
+        if (_cache.has(Class)) return _cache.get(Class);
+
+        _cache.set(Class, Wrapper);
+      }
+
+      function Wrapper() {
+        return _construct(Class, arguments, _getPrototypeOf(this).constructor);
+      }
+
+      Wrapper.prototype = Object.create(Class.prototype, {
+        constructor: {
+          value: Wrapper,
+          enumerable: false,
+          writable: true,
+          configurable: true
+        }
+      });
+      return _setPrototypeOf(Wrapper, Class);
+    };
+
+    return _wrapNativeSuper(Class);
+  }
+
+  function _assertThisInitialized(self) {
+    if (self === void 0) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return self;
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (call && (typeof call === "object" || typeof call === "function")) {
+      return call;
+    }
+
+    return _assertThisInitialized(self);
+  }
+
+  function _createSuper(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct();
+
+    return function _createSuperInternal() {
+      var Super = _getPrototypeOf(Derived),
+          result;
+
+      if (hasNativeReflectConstruct) {
+        var NewTarget = _getPrototypeOf(this).constructor;
+
+        result = Reflect.construct(Super, arguments, NewTarget);
+      } else {
+        result = Super.apply(this, arguments);
+      }
+
+      return _possibleConstructorReturn(this, result);
+    };
   }
 
   function _slicedToArray(arr, i) {
@@ -148,6 +324,63 @@
 
   function _nonIterableRest() {
     throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
+  function _createForOfIteratorHelper(o, allowArrayLike) {
+    var it;
+
+    if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
+      if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
+        if (it) o = it;
+        var i = 0;
+
+        var F = function () {};
+
+        return {
+          s: F,
+          n: function () {
+            if (i >= o.length) return {
+              done: true
+            };
+            return {
+              done: false,
+              value: o[i++]
+            };
+          },
+          e: function (e) {
+            throw e;
+          },
+          f: F
+        };
+      }
+
+      throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+    }
+
+    var normalCompletion = true,
+        didErr = false,
+        err;
+    return {
+      s: function () {
+        it = o[Symbol.iterator]();
+      },
+      n: function () {
+        var step = it.next();
+        normalCompletion = step.done;
+        return step;
+      },
+      e: function (e) {
+        didErr = true;
+        err = e;
+      },
+      f: function () {
+        try {
+          if (!normalCompletion && it.return != null) it.return();
+        } finally {
+          if (didErr) throw err;
+        }
+      }
+    };
   }
 
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
@@ -238,10 +471,10 @@
     typedArrayTags[argsTag] = typedArrayTags[arrayTag] = typedArrayTags[arrayBufferTag] = typedArrayTags[boolTag] = typedArrayTags[dataViewTag] = typedArrayTags[dateTag] = typedArrayTags[errorTag] = typedArrayTags[funcTag] = typedArrayTags[mapTag] = typedArrayTags[numberTag] = typedArrayTags[objectTag] = typedArrayTags[regexpTag] = typedArrayTags[setTag] = typedArrayTags[stringTag] = typedArrayTags[weakMapTag] = false;
     /** Detect free variable `global` from Node.js. */
 
-    var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+    var freeGlobal = _typeof(commonjsGlobal) == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
     /** Detect free variable `self`. */
 
-    var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+    var freeSelf = (typeof self === "undefined" ? "undefined" : _typeof(self)) == 'object' && self && self.Object === Object && self;
     /** Used as a reference to the global object. */
 
     var root = freeGlobal || freeSelf || Function('return this')();
@@ -405,14 +638,14 @@
     /** Built-in value references. */
 
     var Buffer = moduleExports ? root.Buffer : undefined,
-        Symbol = root.Symbol,
+        _Symbol = root.Symbol,
         Uint8Array = root.Uint8Array,
         allocUnsafe = Buffer ? Buffer.allocUnsafe : undefined,
         getPrototype = overArg(Object.getPrototypeOf, Object),
         objectCreate = Object.create,
         propertyIsEnumerable = objectProto.propertyIsEnumerable,
         splice = arrayProto.splice,
-        symToStringTag = Symbol ? Symbol.toStringTag : undefined;
+        symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
 
     var defineProperty = function () {
       try {
@@ -1492,7 +1725,8 @@
 
 
     function isIndex(value, length) {
-      var type = typeof value;
+      var type = _typeof(value);
+
       length = length == null ? MAX_SAFE_INTEGER : length;
       return !!length && (type == 'number' || type != 'symbol' && reIsUint.test(value)) && value > -1 && value % 1 == 0 && value < length;
     }
@@ -1513,7 +1747,7 @@
         return false;
       }
 
-      var type = typeof index;
+      var type = _typeof(index);
 
       if (type == 'number' ? isArrayLike(object) && isIndex(index, object.length) : type == 'string' && index in object) {
         return eq(object[index], value);
@@ -1531,7 +1765,8 @@
 
 
     function isKeyable(value) {
-      var type = typeof value;
+      var type = _typeof(value);
+
       return type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean' ? value !== '__proto__' : value === null;
     }
     /**
@@ -1964,7 +2199,8 @@
 
 
     function isObject(value) {
-      var type = typeof value;
+      var type = _typeof(value);
+
       return value != null && (type == 'object' || type == 'function');
     }
     /**
@@ -1994,7 +2230,7 @@
 
 
     function isObjectLike(value) {
-      return value != null && typeof value == 'object';
+      return value != null && _typeof(value) == 'object';
     }
     /**
      * Checks if `value` is a plain object, that is, an object created by the
@@ -2289,10 +2525,10 @@
     cloneableTags[errorTag] = cloneableTags[funcTag] = cloneableTags[weakMapTag] = false;
     /** Detect free variable `global` from Node.js. */
 
-    var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+    var freeGlobal = _typeof(commonjsGlobal) == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
     /** Detect free variable `self`. */
 
-    var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+    var freeSelf = (typeof self === "undefined" ? "undefined" : _typeof(self)) == 'object' && self && self.Object === Object && self;
     /** Used as a reference to the global object. */
 
     var root = freeGlobal || freeSelf || Function('return this')();
@@ -2546,7 +2782,7 @@
     /** Built-in value references. */
 
     var Buffer = moduleExports ? root.Buffer : undefined,
-        Symbol = root.Symbol,
+        _Symbol = root.Symbol,
         Uint8Array = root.Uint8Array,
         getPrototype = overArg(Object.getPrototypeOf, Object),
         objectCreate = Object.create,
@@ -2574,7 +2810,7 @@
         weakMapCtorString = toSource(WeakMap);
     /** Used to convert symbols to primitives and strings. */
 
-    var symbolProto = Symbol ? Symbol.prototype : undefined,
+    var symbolProto = _Symbol ? _Symbol.prototype : undefined,
         symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
     /**
      * Creates a hash object.
@@ -3492,7 +3728,7 @@
     // for data views in Edge < 14, and promises in Node.js.
 
     if (DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag || Map && getTag(new Map()) != mapTag || Promise && getTag(Promise.resolve()) != promiseTag || Set && getTag(new Set()) != setTag || WeakMap && getTag(new WeakMap()) != weakMapTag) {
-      getTag = function (value) {
+      getTag = function getTag(value) {
         var result = objectToString.call(value),
             Ctor = result == objectTag ? value.constructor : undefined,
             ctorString = Ctor ? toSource(Ctor) : undefined;
@@ -3632,7 +3868,8 @@
 
 
     function isKeyable(value) {
-      var type = typeof value;
+      var type = _typeof(value);
+
       return type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean' ? value !== '__proto__' : value === null;
     }
     /**
@@ -3955,7 +4192,8 @@
 
 
     function isObject(value) {
-      var type = typeof value;
+      var type = _typeof(value);
+
       return !!value && (type == 'object' || type == 'function');
     }
     /**
@@ -3985,7 +4223,7 @@
 
 
     function isObjectLike(value) {
-      return !!value && typeof value == 'object';
+      return !!value && _typeof(value) == 'object';
     }
     /**
      * Creates an array of the own enumerable property names of `object`.
@@ -4162,7 +4400,7 @@
    */
 
   function isObjectLike(value) {
-    return !!value && typeof value == 'object';
+    return !!value && _typeof(value) == 'object';
   }
   /**
    * Checks if `value` is a plain object, that is, an object created by the
@@ -4211,31 +4449,25 @@
 
   var lodash_isplainobject = isPlainObject;
 
-  /**
-   * object-flatten-all-arrays
-   * Merge and flatten any arrays found in all values within plain objects
-   * Version: 4.8.17
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-flatten-all-arrays
-   */
-  const isArr = Array.isArray;
+  var isArr = Array.isArray;
 
   function flattenAllArrays(originalIncommingObj, originalOpts) {
     function arrayContainsStr(arr) {
-      return arr.some(val => typeof val === "string");
+      return arr.some(function (val) {
+        return typeof val === "string";
+      });
     }
 
-    const defaults = {
+    var defaults = {
       flattenArraysContainingStringsToBeEmpty: false
     };
-    const opts = { ...defaults,
-      ...originalOpts
-    };
-    const incommingObj = lodash_clonedeep(originalIncommingObj);
-    let isFirstObj;
-    let combinedObj;
-    let firstObjIndex;
+
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
+
+    var incommingObj = lodash_clonedeep(originalIncommingObj);
+    var isFirstObj;
+    var combinedObj;
+    var firstObjIndex;
 
     if (isArr(incommingObj)) {
       if (opts.flattenArraysContainingStringsToBeEmpty && arrayContainsStr(incommingObj)) {
@@ -4246,7 +4478,7 @@
       combinedObj = {};
       firstObjIndex = 0;
 
-      for (let i = 0, len = incommingObj.length; i < len; i++) {
+      for (var i = 0, len = incommingObj.length; i < len; i++) {
         if (lodash_isplainobject(incommingObj[i])) {
           combinedObj = lodash_merge(combinedObj, incommingObj[i]);
 
@@ -4266,13 +4498,13 @@
     }
 
     if (lodash_isplainobject(incommingObj)) {
-      Object.keys(incommingObj).forEach(key => {
+      Object.keys(incommingObj).forEach(function (key) {
         if (lodash_isplainobject(incommingObj[key]) || isArr(incommingObj[key])) {
           incommingObj[key] = flattenAllArrays(incommingObj[key], opts);
         }
       });
     } else if (isArr(incommingObj)) {
-      incommingObj.forEach((el, i) => {
+      incommingObj.forEach(function (el, i) {
         if (lodash_isplainobject(incommingObj[i]) || isArr(incommingObj[i])) {
           incommingObj[i] = flattenAllArrays(incommingObj[i], opts);
         }
@@ -4282,7 +4514,7 @@
     return incommingObj;
   }
 
-  var escapeStringRegexp = string => {
+  var escapeStringRegexp = function escapeStringRegexp(string) {
     if (typeof string !== 'string') {
       throw new TypeError('Expected a string');
     } // Escape characters with special meaning either inside or outside character sets.
@@ -4292,85 +4524,99 @@
     return string.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&').replace(/-/g, '\\x2d');
   };
 
-  const regexpCache = new Map();
+  var regexpCache = new Map();
 
   function makeRegexp(pattern, options) {
-    options = {
-      caseSensitive: false,
-      ...options
-    };
-    const cacheKey = pattern + JSON.stringify(options);
+    options = _objectSpread2({
+      caseSensitive: false
+    }, options);
+    var cacheKey = pattern + JSON.stringify(options);
 
     if (regexpCache.has(cacheKey)) {
       return regexpCache.get(cacheKey);
     }
 
-    const negated = pattern[0] === '!';
+    var negated = pattern[0] === '!';
 
     if (negated) {
       pattern = pattern.slice(1);
     }
 
     pattern = escapeStringRegexp(pattern).replace(/\\\*/g, '[\\s\\S]*');
-    const regexp = new RegExp(`^${pattern}$`, options.caseSensitive ? '' : 'i');
+    var regexp = new RegExp("^".concat(pattern, "$"), options.caseSensitive ? '' : 'i');
     regexp.negated = negated;
     regexpCache.set(cacheKey, regexp);
     return regexp;
   }
 
-  var matcher = (inputs, patterns, options) => {
+  var matcher = function matcher(inputs, patterns, options) {
     if (!(Array.isArray(inputs) && Array.isArray(patterns))) {
-      throw new TypeError(`Expected two arrays, got ${typeof inputs} ${typeof patterns}`);
+      throw new TypeError("Expected two arrays, got ".concat(_typeof(inputs), " ").concat(_typeof(patterns)));
     }
 
     if (patterns.length === 0) {
       return inputs;
     }
 
-    const isFirstPatternNegated = patterns[0][0] === '!';
-    patterns = patterns.map(pattern => makeRegexp(pattern, options));
-    const result = [];
+    var isFirstPatternNegated = patterns[0][0] === '!';
+    patterns = patterns.map(function (pattern) {
+      return makeRegexp(pattern, options);
+    });
+    var result = [];
 
-    for (const input of inputs) {
-      // If first pattern is negated we include everything to match user expectation.
-      let matches = isFirstPatternNegated;
+    var _iterator = _createForOfIteratorHelper(inputs),
+        _step;
 
-      for (const pattern of patterns) {
-        if (pattern.test(input)) {
-          matches = !pattern.negated;
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var input = _step.value;
+        // If first pattern is negated we include everything to match user expectation.
+        var matches = isFirstPatternNegated;
+
+        var _iterator2 = _createForOfIteratorHelper(patterns),
+            _step2;
+
+        try {
+          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+            var pattern = _step2.value;
+
+            if (pattern.test(input)) {
+              matches = !pattern.negated;
+            }
+          }
+        } catch (err) {
+          _iterator2.e(err);
+        } finally {
+          _iterator2.f();
+        }
+
+        if (matches) {
+          result.push(input);
         }
       }
-
-      if (matches) {
-        result.push(input);
-      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
     }
 
     return result;
   };
 
-  var isMatch = (input, pattern, options) => {
-    const inputArray = Array.isArray(input) ? input : [input];
-    const patternArray = Array.isArray(pattern) ? pattern : [pattern];
-    return inputArray.some(input => {
-      return patternArray.every(pattern => {
-        const regexp = makeRegexp(pattern, options);
-        const matches = regexp.test(input);
+  var isMatch = function isMatch(input, pattern, options) {
+    var inputArray = Array.isArray(input) ? input : [input];
+    var patternArray = Array.isArray(pattern) ? pattern : [pattern];
+    return inputArray.some(function (input) {
+      return patternArray.every(function (pattern) {
+        var regexp = makeRegexp(pattern, options);
+        var matches = regexp.test(input);
         return regexp.negated ? !matches : matches;
       });
     });
   };
   matcher.isMatch = isMatch;
 
-  /**
-   * array-includes-with-glob
-   * like _.includes but with wildcards
-   * Version: 2.12.36
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/array-includes-with-glob
-   */
-  const isArr$1 = Array.isArray;
+  var isArr$1 = Array.isArray;
 
   function arrayIncludesWithGlob(originalInput, stringToFind, originalOpts) {
     function existy(x) {
@@ -4381,12 +4627,11 @@
       return typeof something === "string";
     }
 
-    const defaults = {
+    var defaults = {
       arrayVsArrayAllMustBeFound: "any"
     };
-    const opts = { ...defaults,
-      ...originalOpts
-    };
+
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
     if (arguments.length === 0) {
       throw new Error("array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_01] all inputs missing!");
@@ -4400,43 +4645,55 @@
       if (isStr(originalInput)) {
         originalInput = [originalInput];
       } else {
-        throw new Error(`array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_03] first argument must be an array! It was given as ${typeof originalInput}`);
+        throw new Error("array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_03] first argument must be an array! It was given as ".concat(_typeof(originalInput)));
       }
     }
 
     if (!isStr(stringToFind) && !isArr$1(stringToFind)) {
-      throw new Error(`array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_04] second argument must be a string or array of strings! It was given as ${typeof stringToFind}`);
+      throw new Error("array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_04] second argument must be a string or array of strings! It was given as ".concat(_typeof(stringToFind)));
     }
 
     if (opts.arrayVsArrayAllMustBeFound !== "any" && opts.arrayVsArrayAllMustBeFound !== "all") {
-      throw new Error(`array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_05] opts.arrayVsArrayAllMustBeFound was customised to an unrecognised value, ${opts.arrayVsArrayAllMustBeFound}. It must be equal to either "any" or "all".`);
+      throw new Error("array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_05] opts.arrayVsArrayAllMustBeFound was customised to an unrecognised value, ".concat(opts.arrayVsArrayAllMustBeFound, ". It must be equal to either \"any\" or \"all\"."));
     }
 
     if (originalInput.length === 0) {
       return false;
     }
 
-    const input = originalInput.filter(elem => existy(elem));
+    var input = originalInput.filter(function (elem) {
+      return existy(elem);
+    });
 
     if (input.length === 0) {
       return false;
     }
 
     if (isStr(stringToFind)) {
-      return input.some(val => matcher.isMatch(val, stringToFind, {
-        caseSensitive: true
-      }));
+      return input.some(function (val) {
+        return matcher.isMatch(val, stringToFind, {
+          caseSensitive: true
+        });
+      });
     }
 
     if (opts.arrayVsArrayAllMustBeFound === "any") {
-      return stringToFind.some(stringToFindVal => input.some(val => matcher.isMatch(val, stringToFindVal, {
-        caseSensitive: true
-      })));
+      return stringToFind.some(function (stringToFindVal) {
+        return input.some(function (val) {
+          return matcher.isMatch(val, stringToFindVal, {
+            caseSensitive: true
+          });
+        });
+      });
     }
 
-    return stringToFind.every(stringToFindVal => input.some(val => matcher.isMatch(val, stringToFindVal, {
-      caseSensitive: true
-    })));
+    return stringToFind.every(function (stringToFindVal) {
+      return input.some(function (val) {
+        return matcher.isMatch(val, stringToFindVal, {
+          caseSensitive: true
+        });
+      });
+    });
   }
 
   /**
@@ -4949,7 +5206,8 @@
 
 
   function isObject(value) {
-    var type = typeof value;
+    var type = _typeof(value);
+
     return !!value && (type == 'object' || type == 'function');
   }
   /**
@@ -4979,7 +5237,7 @@
 
 
   function isObjectLike$1(value) {
-    return !!value && typeof value == 'object';
+    return !!value && _typeof(value) == 'object';
   }
   /**
    * Checks if `value` is classified as a `String` primitive or object.
@@ -5023,7 +5281,7 @@
 
 
   function isSymbol(value) {
-    return typeof value == 'symbol' || isObjectLike$1(value) && objectToString$1.call(value) == symbolTag;
+    return _typeof(value) == 'symbol' || isObjectLike$1(value) && objectToString$1.call(value) == symbolTag;
   }
   /**
    * Converts `value` to a finite number.
@@ -5244,10 +5502,10 @@
   var reIsHostCtor = /^\[object .+?Constructor\]$/;
   /** Detect free variable `global` from Node.js. */
 
-  var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+  var freeGlobal = _typeof(commonjsGlobal) == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
   /** Detect free variable `self`. */
 
-  var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+  var freeSelf = (typeof self === "undefined" ? "undefined" : _typeof(self)) == 'object' && self && self.Object === Object && self;
   /** Used as a reference to the global object. */
 
   var root = freeGlobal || freeSelf || Function('return this')();
@@ -5987,7 +6245,8 @@
 
 
   function isKeyable(value) {
-    var type = typeof value;
+    var type = _typeof(value);
+
     return type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean' ? value !== '__proto__' : value === null;
   }
   /**
@@ -6136,7 +6395,8 @@
 
 
   function isObject$1(value) {
-    var type = typeof value;
+    var type = _typeof(value);
+
     return !!value && (type == 'object' || type == 'function');
   }
   /**
@@ -6186,7 +6446,7 @@
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/util-nonempty
    */
-  const isArr$2 = Array.isArray;
+  var isArr$2 = Array.isArray;
 
   function isStr(something) {
     return typeof something === "string";
@@ -6225,7 +6485,7 @@
       return 'null';
     }
 
-    return String(val) + ' (' + typeof val + ')';
+    return String(val) + ' (' + _typeof(val) + ')';
   }
 
   /*!
@@ -6254,15 +6514,6 @@
     });
   }
 
-  /**
-   * object-merge-advanced
-   * Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
-   * Version: 10.11.22
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-merge-advanced
-   */
-
   function isStr$1(something) {
     return typeof something === "string";
   }
@@ -6280,13 +6531,15 @@
   }
 
   function isObj(something) {
-    return something && typeof something === "object" && !Array.isArray(something);
+    return something && _typeof(something) === "object" && !Array.isArray(something);
   }
 
-  const isArr$3 = Array.isArray;
+  var isArr$3 = Array.isArray;
 
   function arrayContainsStr(arr) {
-    return !!arr && arr.some(val => typeof val === "string");
+    return !!arr && arr.some(function (val) {
+      return typeof val === "string";
+    });
   }
 
   function equalOrSubsetKeys(obj1, obj2) {
@@ -6302,15 +6555,17 @@
       return "array";
     }
 
-    return typeof something;
+    return _typeof(something);
   }
 
-  function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
+  function mergeAdvanced(infoObj, input1orig, input2orig) {
+    var originalOpts = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+
     if (!isObj(originalOpts)) {
       throw new TypeError("object-merge-advanced/mergeAdvanced(): [THROW_ID_02] Options object, the third argument, must be a plain object");
     }
 
-    const defaults = {
+    var defaults = {
       cb: null,
       mergeObjectsOnlyWhenKeysetMatches: true,
       ignoreKeys: [],
@@ -6326,7 +6581,7 @@
       mergeBoolsUsingOrNotAnd: true,
       useNullAsExplicitFalse: false
     };
-    const opts = Object.assign(lodash_clonedeep(defaults), originalOpts);
+    var opts = Object.assign(lodash_clonedeep(defaults), originalOpts);
     opts.ignoreKeys = arrayiffyString(opts.ignoreKeys);
     opts.hardMergeKeys = arrayiffyString(opts.hardMergeKeys);
 
@@ -6338,7 +6593,7 @@
       opts.ignoreEverything = true;
     }
 
-    let currPath;
+    var currPath;
 
     if (opts.useNullAsExplicitFalse && (input1orig === null || input2orig === null)) {
       return isFun(opts.cb) ? opts.cb(input1orig, input2orig, null, {
@@ -6348,9 +6603,9 @@
       }) : null;
     }
 
-    let i1 = isArr$3(input1orig) || isObj(input1orig) ? lodash_clonedeep(input1orig) : input1orig;
-    const i2 = isArr$3(input2orig) || isObj(input2orig) ? lodash_clonedeep(input2orig) : input2orig;
-    let uniRes;
+    var i1 = isArr$3(input1orig) || isObj(input1orig) ? lodash_clonedeep(input1orig) : input1orig;
+    var i2 = isArr$3(input2orig) || isObj(input2orig) ? lodash_clonedeep(input2orig) : input2orig;
+    var uniRes;
 
     if (opts.ignoreEverything) {
       uniRes = i1;
@@ -6358,33 +6613,35 @@
       uniRes = i2;
     }
 
-    const uni = opts.hardMergeEverything || opts.ignoreEverything;
+    var uni = opts.hardMergeEverything || opts.ignoreEverything;
 
     if (isArr$3(i1)) {
       if (nonEmpty(i1)) {
         if (isArr$3(i2) && nonEmpty(i2)) {
           if (opts.mergeArraysContainingStringsToBeEmpty && (arrayContainsStr(i1) || arrayContainsStr(i2))) {
-            const currentResult = uni ? uniRes : [];
-            return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+            var _currentResult = uni ? uniRes : [];
+
+            return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult, {
               path: currPath,
               key: infoObj.key,
               type: infoObj.type
-            }) : currentResult;
+            }) : _currentResult;
           }
 
           if (opts.hardArrayConcat) {
-            const currentResult = uni ? uniRes : i1.concat(i2);
-            return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+            var _currentResult2 = uni ? uniRes : i1.concat(i2);
+
+            return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult2, {
               path: currPath,
               key: infoObj.key,
               type: infoObj.type
-            }) : currentResult;
+            }) : _currentResult2;
           }
 
-          let temp = [];
+          var temp = [];
 
-          for (let index = 0, len = Math.max(i1.length, i2.length); index < len; index++) {
-            currPath = infoObj.path.length ? `${infoObj.path}.${index}` : `${index}`;
+          for (var index = 0, len = Math.max(i1.length, i2.length); index < len; index++) {
+            currPath = infoObj.path.length ? "".concat(infoObj.path, ".").concat(index) : "".concat(index);
 
             if (isObj(i1[index]) && isObj(i2[index]) && (opts.mergeObjectsOnlyWhenKeysetMatches && equalOrSubsetKeys(i1[index], i2[index]) || !opts.mergeObjectsOnlyWhenKeysetMatches)) {
               temp.push(mergeAdvanced({
@@ -6421,89 +6678,96 @@
             }
           }
 
-          if (opts.dedupeStringsInArrayValues && temp.every(el => isStr$1(el))) {
+          if (opts.dedupeStringsInArrayValues && temp.every(function (el) {
+            return isStr$1(el);
+          })) {
             temp = lodash_uniq(temp).sort();
           }
 
           i1 = lodash_clonedeep(temp);
         } else {
-          const currentResult = uni ? uniRes : i1;
-          return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+          var _currentResult3 = uni ? uniRes : i1;
+
+          return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult3, {
             path: currPath,
             key: infoObj.key,
             type: infoObj.type
-          }) : currentResult;
+          }) : _currentResult3;
         }
       } else {
         if (nonEmpty(i2)) {
-          const currentResult = uni ? uniRes : i2;
-          return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+          var _currentResult5 = uni ? uniRes : i2;
+
+          return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult5, {
             path: currPath,
             key: infoObj.key,
             type: infoObj.type
-          }) : currentResult;
+          }) : _currentResult5;
         }
 
-        const currentResult = uni ? uniRes : i1;
-        return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+        var _currentResult4 = uni ? uniRes : i1;
+
+        return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult4, {
           path: currPath,
           key: infoObj.key,
           type: infoObj.type
-        }) : currentResult;
+        }) : _currentResult4;
       }
     } else if (isObj(i1)) {
       if (nonEmpty(i1)) {
         if (isArr$3(i2)) {
           if (nonEmpty(i2)) {
-            const currentResult = uni ? uniRes : i2;
-            return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+            var _currentResult9 = uni ? uniRes : i2;
+
+            return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult9, {
               path: currPath,
               key: infoObj.key,
               type: infoObj.type
-            }) : currentResult;
+            }) : _currentResult9;
           }
 
-          const currentResult = uni ? uniRes : i1;
-          return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+          var _currentResult8 = uni ? uniRes : i1;
+
+          return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult8, {
             path: currPath,
             key: infoObj.key,
             type: infoObj.type
-          }) : currentResult;
+          }) : _currentResult8;
         }
 
         if (isObj(i2)) {
-          Object.keys(i2).forEach(key => {
-            currPath = infoObj.path && infoObj.path.length ? `${infoObj.path}.${key}` : `${key}`;
+          Object.keys(i2).forEach(function (key) {
+            currPath = infoObj.path && infoObj.path.length ? "".concat(infoObj.path, ".").concat(key) : "".concat(key);
 
             if (i1.hasOwnProperty(key)) {
               if (arrayIncludesWithGlob(key, opts.ignoreKeys)) {
                 i1[key] = mergeAdvanced({
                   path: currPath,
-                  key,
+                  key: key,
                   type: [getType(i1), getType(i2)]
-                }, i1[key], i2[key], { ...opts,
+                }, i1[key], i2[key], _objectSpread2(_objectSpread2({}, opts), {}, {
                   ignoreEverything: true
-                });
+                }));
               } else if (arrayIncludesWithGlob(key, opts.hardMergeKeys)) {
                 i1[key] = mergeAdvanced({
                   path: currPath,
-                  key,
+                  key: key,
                   type: [getType(i1), getType(i2)]
-                }, i1[key], i2[key], { ...opts,
+                }, i1[key], i2[key], _objectSpread2(_objectSpread2({}, opts), {}, {
                   hardMergeEverything: true
-                });
+                }));
               } else if (arrayIncludesWithGlob(key, opts.hardArrayConcatKeys)) {
                 i1[key] = mergeAdvanced({
                   path: currPath,
-                  key,
+                  key: key,
                   type: [getType(i1), getType(i2)]
-                }, i1[key], i2[key], { ...opts,
+                }, i1[key], i2[key], _objectSpread2(_objectSpread2({}, opts), {}, {
                   hardArrayConcat: true
-                });
+                }));
               } else {
                 i1[key] = mergeAdvanced({
                   path: currPath,
-                  key,
+                  key: key,
                   type: [getType(i1), getType(i2)]
                 }, i1[key], i2[key], opts);
               }
@@ -6514,139 +6778,155 @@
           return i1;
         }
 
-        const currentResult = uni ? uniRes : i1;
-        return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+        var _currentResult7 = uni ? uniRes : i1;
+
+        return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult7, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
-        }) : currentResult;
+        }) : _currentResult7;
       }
 
       if (isArr$3(i2) || isObj(i2) || nonEmpty(i2)) {
-        const currentResult = uni ? uniRes : i2;
-        return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+        var _currentResult10 = uni ? uniRes : i2;
+
+        return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult10, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
-        }) : currentResult;
+        }) : _currentResult10;
       }
 
-      const currentResult = uni ? uniRes : i1;
-      return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+      var _currentResult6 = uni ? uniRes : i1;
+
+      return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult6, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
-      }) : currentResult;
+      }) : _currentResult6;
     } else if (isStr$1(i1)) {
       if (nonEmpty(i1)) {
         if ((isArr$3(i2) || isObj(i2) || isStr$1(i2)) && nonEmpty(i2)) {
-          const currentResult = uni ? uniRes : i2;
-          return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+          var _currentResult13 = uni ? uniRes : i2;
+
+          return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult13, {
             path: infoObj.path,
             key: infoObj.key,
             type: infoObj.type
-          }) : currentResult;
+          }) : _currentResult13;
         }
 
-        const currentResult = uni ? uniRes : i1;
-        return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+        var _currentResult12 = uni ? uniRes : i1;
+
+        return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult12, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
-        }) : currentResult;
+        }) : _currentResult12;
       }
 
       if (i2 != null && !isBool(i2)) {
-        const currentResult = uni ? uniRes : i2;
-        return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+        var _currentResult14 = uni ? uniRes : i2;
+
+        return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult14, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
-        }) : currentResult;
+        }) : _currentResult14;
       }
 
-      const currentResult = uni ? uniRes : i1;
-      return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+      var _currentResult11 = uni ? uniRes : i1;
+
+      return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult11, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
-      }) : currentResult;
+      }) : _currentResult11;
     } else if (isNum$1(i1)) {
       if (nonEmpty(i2)) {
-        const currentResult = uni ? uniRes : i2;
-        return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+        var _currentResult16 = uni ? uniRes : i2;
+
+        return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult16, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
-        }) : currentResult;
+        }) : _currentResult16;
       }
 
-      const currentResult = uni ? uniRes : i1;
-      return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+      var _currentResult15 = uni ? uniRes : i1;
+
+      return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult15, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
-      }) : currentResult;
+      }) : _currentResult15;
     } else if (isBool(i1)) {
       if (isBool(i2)) {
         if (opts.mergeBoolsUsingOrNotAnd) {
-          const currentResult = uni ? uniRes : i1 || i2;
-          return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+          var _currentResult19 = uni ? uniRes : i1 || i2;
+
+          return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult19, {
             path: infoObj.path,
             key: infoObj.key,
             type: infoObj.type
-          }) : currentResult;
+          }) : _currentResult19;
         }
 
-        const currentResult = uni ? uniRes : i1 && i2;
-        return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+        var _currentResult18 = uni ? uniRes : i1 && i2;
+
+        return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult18, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
-        }) : currentResult;
+        }) : _currentResult18;
       }
 
       if (i2 != null) {
-        const currentResult = uni ? uniRes : i2;
-        return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+        var _currentResult20 = uni ? uniRes : i2;
+
+        return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult20, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
-        }) : currentResult;
+        }) : _currentResult20;
       }
 
-      const currentResult = uni ? uniRes : i1;
-      return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+      var _currentResult17 = uni ? uniRes : i1;
+
+      return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult17, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
-      }) : currentResult;
+      }) : _currentResult17;
     } else if (i1 === null) {
       if (i2 != null) {
-        const currentResult = uni ? uniRes : i2;
-        return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+        var _currentResult22 = uni ? uniRes : i2;
+
+        return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult22, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
-        }) : currentResult;
+        }) : _currentResult22;
       }
 
-      const currentResult = uni ? uniRes : i1;
-      return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+      var _currentResult21 = uni ? uniRes : i1;
+
+      return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult21, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
-      }) : currentResult;
+      }) : _currentResult21;
     } else {
-      const currentResult = uni ? uniRes : i2;
-      return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
+      var _currentResult23 = uni ? uniRes : i2;
+
+      return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult23, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
-      }) : currentResult;
+      }) : _currentResult23;
     }
 
-    const currentResult = uni ? uniRes : i1;
+    var currentResult = uni ? uniRes : i1;
     return isFun(opts.cb) ? opts.cb(i1, i2, currentResult, {
       path: infoObj.path,
       key: infoObj.key,
@@ -6740,10 +7020,10 @@
     typedArrayTags[argsTag] = typedArrayTags[arrayTag] = typedArrayTags[arrayBufferTag] = typedArrayTags[boolTag] = typedArrayTags[dataViewTag] = typedArrayTags[dateTag] = typedArrayTags[errorTag] = typedArrayTags[funcTag] = typedArrayTags[mapTag] = typedArrayTags[numberTag] = typedArrayTags[objectTag] = typedArrayTags[regexpTag] = typedArrayTags[setTag] = typedArrayTags[stringTag] = typedArrayTags[weakMapTag] = false;
     /** Detect free variable `global` from Node.js. */
 
-    var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+    var freeGlobal = _typeof(commonjsGlobal) == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
     /** Detect free variable `self`. */
 
-    var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+    var freeSelf = (typeof self === "undefined" ? "undefined" : _typeof(self)) == 'object' && self && self.Object === Object && self;
     /** Used as a reference to the global object. */
 
     var root = freeGlobal || freeSelf || Function('return this')();
@@ -6986,11 +7266,11 @@
     /** Built-in value references. */
 
     var Buffer = moduleExports ? root.Buffer : undefined,
-        Symbol = root.Symbol,
+        _Symbol = root.Symbol,
         Uint8Array = root.Uint8Array,
         propertyIsEnumerable = objectProto.propertyIsEnumerable,
         splice = arrayProto.splice,
-        symToStringTag = Symbol ? Symbol.toStringTag : undefined;
+        symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
     /* Built-in method references for those with the same name as other `lodash` methods. */
 
     var nativeGetSymbols = Object.getOwnPropertySymbols,
@@ -7013,7 +7293,7 @@
         weakMapCtorString = toSource(WeakMap);
     /** Used to convert symbols to primitives and strings. */
 
-    var symbolProto = Symbol ? Symbol.prototype : undefined,
+    var symbolProto = _Symbol ? _Symbol.prototype : undefined,
         symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
     /**
      * Creates a hash object.
@@ -8090,7 +8370,7 @@
     var getTag = baseGetTag; // Fallback for data views, maps, sets, and weak maps in IE 11 and promises in Node.js < 6.
 
     if (DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag || Map && getTag(new Map()) != mapTag || Promise && getTag(Promise.resolve()) != promiseTag || Set && getTag(new Set()) != setTag || WeakMap && getTag(new WeakMap()) != weakMapTag) {
-      getTag = function (value) {
+      getTag = function getTag(value) {
         var result = baseGetTag(value),
             Ctor = result == objectTag ? value.constructor : undefined,
             ctorString = Ctor ? toSource(Ctor) : '';
@@ -8141,7 +8421,8 @@
 
 
     function isKeyable(value) {
-      var type = typeof value;
+      var type = _typeof(value);
+
       return type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean' ? value !== '__proto__' : value === null;
     }
     /**
@@ -8460,7 +8741,8 @@
 
 
     function isObject(value) {
-      var type = typeof value;
+      var type = _typeof(value);
+
       return value != null && (type == 'object' || type == 'function');
     }
     /**
@@ -8490,7 +8772,7 @@
 
 
     function isObjectLike(value) {
-      return value != null && typeof value == 'object';
+      return value != null && _typeof(value) == 'object';
     }
     /**
      * Checks if `value` is classified as a typed array.
@@ -8589,15 +8871,7 @@
     module.exports = isEqual;
   });
 
-  /**
-   * object-all-values-equal-to
-   * Does the AST/nested-plain-object/array/whatever contain only one kind of value?
-   * Version: 1.8.18
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-all-values-equal-to
-   */
-  const isArr$4 = Array.isArray;
+  var isArr$4 = Array.isArray;
 
   function allValuesEqualTo(input, value, opts) {
     if (isArr$4(input)) {
@@ -8605,11 +8879,13 @@
         return true;
       }
 
-      if (opts.arraysMustNotContainPlaceholders && input.length > 0 && input.some(el => lodash_isequal(el, value))) {
+      if (opts.arraysMustNotContainPlaceholders && input.length > 0 && input.some(function (el) {
+        return lodash_isequal(el, value);
+      })) {
         return false;
       }
 
-      for (let i = input.length; i--;) {
+      for (var i = input.length; i--;) {
         if (!allValuesEqualTo(input[i], value, opts)) {
           return false;
         }
@@ -8619,14 +8895,14 @@
     }
 
     if (lodash_isplainobject(input)) {
-      const keys = Object.keys(input);
+      var keys = Object.keys(input);
 
       if (keys.length === 0) {
         return true;
       }
 
-      for (let i = keys.length; i--;) {
-        if (!allValuesEqualTo(input[keys[i]], value, opts)) {
+      for (var _i = keys.length; _i--;) {
+        if (!allValuesEqualTo(input[keys[_i]], value, opts)) {
           return false;
         }
       }
@@ -8647,26 +8923,17 @@
     }
 
     if (originalOpts !== undefined && originalOpts !== null && !lodash_isplainobject(originalOpts)) {
-      throw new Error(`object-all-values-equal-to: [THROW_ID_03] The third argument, options object, was given not as a plain object but as a ${typeof originalOpts}, equal to:\n${JSON.stringify(originalOpts, null, 4)}`);
+      throw new Error("object-all-values-equal-to: [THROW_ID_03] The third argument, options object, was given not as a plain object but as a ".concat(_typeof(originalOpts), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
     }
 
-    const defaults = {
+    var defaults = {
       arraysMustNotContainPlaceholders: true
     };
-    const opts = { ...defaults,
-      ...originalOpts
-    };
+
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
+
     return allValuesEqualTo(inputOriginal, valueOriginal, opts);
   }
-
-  /**
-   * object-fill-missing-keys
-   * Add missing keys into plain objects, according to a reference object
-   * Version: 7.10.20
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-fill-missing-keys
-   */
 
   function typ(something) {
     if (lodash_isplainobject(something)) {
@@ -8677,7 +8944,7 @@
       return "array";
     }
 
-    return typeof something;
+    return _typeof(something);
   }
 
   function isStr$2(something) {
@@ -8688,15 +8955,16 @@
     return x != null;
   }
 
-  const isArr$5 = Array.isArray;
+  var isArr$5 = Array.isArray;
 
-  function fillMissingKeys(incompleteOriginal, schema, opts, path = "") {
-    const incomplete = lodash_clonedeep(incompleteOriginal);
+  function fillMissingKeys(incompleteOriginal, schema, opts) {
+    var path = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "";
+    var incomplete = lodash_clonedeep(incompleteOriginal);
 
     if (existy(incomplete) || !(path.length && opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(path) && allValuesEqualToWrapper(incomplete, opts.placeholder))) {
       if (lodash_isplainobject(schema) && lodash_isplainobject(incomplete)) {
-        Object.keys(schema).forEach(key => {
-          const currentPath = `${path ? `${path}.` : ""}${key}`;
+        Object.keys(schema).forEach(function (key) {
+          var currentPath = "".concat(path ? "".concat(path, ".") : "").concat(key);
 
           if (opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(currentPath)) {
             if (existy(incomplete[key])) {
@@ -8718,8 +8986,8 @@
         }
 
         if (schema.length > 0) {
-          for (let i = incomplete.length; i--;) {
-            const currentPath = `${path ? `${path}.` : ""}0`;
+          for (var i = incomplete.length; i--;) {
+            var currentPath = "".concat(path ? "".concat(path, ".") : "", "0");
 
             if (lodash_isplainobject(schema[0]) || isArr$5(schema[0])) {
               incomplete[i] = fillMissingKeys(incomplete[i], schema[0], opts, currentPath);
@@ -8742,34 +9010,34 @@
     }
 
     if (!lodash_isplainobject(originalIncompleteWrapper)) {
-      throw new Error(`object-fill-missing-keys: [THROW_ID_02] First argument, input object must be a plain object. Currently it's type is "${typ(originalIncompleteWrapper)}" and it's equal to: ${JSON.stringify(originalIncompleteWrapper, null, 4)}`);
+      throw new Error("object-fill-missing-keys: [THROW_ID_02] First argument, input object must be a plain object. Currently it's type is \"".concat(typ(originalIncompleteWrapper), "\" and it's equal to: ").concat(JSON.stringify(originalIncompleteWrapper, null, 4)));
     }
 
     if (!lodash_isplainobject(originalSchemaWrapper)) {
-      throw new Error(`object-fill-missing-keys: [THROW_ID_03] Second argument, schema object, must be a plain object. Currently it's type is "${typ(originalSchemaWrapper)}" and it's equal to: ${JSON.stringify(originalSchemaWrapper, null, 4)}`);
+      throw new Error("object-fill-missing-keys: [THROW_ID_03] Second argument, schema object, must be a plain object. Currently it's type is \"".concat(typ(originalSchemaWrapper), "\" and it's equal to: ").concat(JSON.stringify(originalSchemaWrapper, null, 4)));
     }
 
     if (originalOptsWrapper !== undefined && originalOptsWrapper !== null && !lodash_isplainobject(originalOptsWrapper)) {
-      throw new Error(`object-fill-missing-keys: [THROW_ID_04] Third argument, schema object, must be a plain object. Currently it's type is "${typ(originalOptsWrapper)}" and it's equal to: ${JSON.stringify(originalOptsWrapper, null, 4)}`);
+      throw new Error("object-fill-missing-keys: [THROW_ID_04] Third argument, schema object, must be a plain object. Currently it's type is \"".concat(typ(originalOptsWrapper), "\" and it's equal to: ").concat(JSON.stringify(originalOptsWrapper, null, 4)));
     }
 
     if (originalOptsWrapper === null) {
       originalOptsWrapper = {};
     }
 
-    const defaults = {
+    var defaults = {
       placeholder: false,
       doNotFillThesePathsIfTheyContainPlaceholders: [],
       useNullAsExplicitFalse: true
     };
-    const opts = { ...defaults,
-      ...originalOptsWrapper
-    };
-    opts.doNotFillThesePathsIfTheyContainPlaceholders = arrayiffyString(opts.doNotFillThesePathsIfTheyContainPlaceholders);
-    let culpritsVal = null;
-    let culpritsIndex = null;
 
-    if (opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 && !opts.doNotFillThesePathsIfTheyContainPlaceholders.every((key, idx) => {
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOptsWrapper);
+
+    opts.doNotFillThesePathsIfTheyContainPlaceholders = arrayiffyString(opts.doNotFillThesePathsIfTheyContainPlaceholders);
+    var culpritsVal = null;
+    var culpritsIndex = null;
+
+    if (opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 && !opts.doNotFillThesePathsIfTheyContainPlaceholders.every(function (key, idx) {
       if (!isStr$2(key)) {
         culpritsVal = key;
         culpritsIndex = idx;
@@ -8778,7 +9046,7 @@
 
       return true;
     })) {
-      throw new Error(`object-fill-missing-keys: [THROW_ID_06] opts.doNotFillThesePathsIfTheyContainPlaceholders element with an index number "${culpritsIndex}" is not a string! It's ${typ(culpritsVal)}, equal to:\n${JSON.stringify(culpritsVal, null, 4)}`);
+      throw new Error("object-fill-missing-keys: [THROW_ID_06] opts.doNotFillThesePathsIfTheyContainPlaceholders element with an index number \"".concat(culpritsIndex, "\" is not a string! It's ").concat(typ(culpritsVal), ", equal to:\n").concat(JSON.stringify(culpritsVal, null, 4)));
     }
 
     return fillMissingKeys(lodash_clonedeep(originalIncompleteWrapper), lodash_clonedeep(originalSchemaWrapper), opts);
@@ -8792,11 +9060,11 @@
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-set-all-values-to
    */
-  const isArr$6 = Array.isArray;
+  var isArr$6 = Array.isArray;
 
   function setAllValuesTo(inputOriginal, valueOriginal) {
-    let value;
-    const input = lodash_clonedeep(inputOriginal);
+    var value;
+    var input = lodash_clonedeep(inputOriginal);
 
     if (arguments.length < 2) {
       value = false;
@@ -8807,13 +9075,13 @@
     }
 
     if (isArr$6(input)) {
-      input.forEach((el, i) => {
+      input.forEach(function (el, i) {
         if (lodash_isplainobject(input[i]) || isArr$6(input[i])) {
           input[i] = setAllValuesTo(input[i], value);
         }
       });
     } else if (lodash_isplainobject(input)) {
-      Object.keys(input).forEach(key => {
+      Object.keys(input).forEach(function (key) {
         if (isArr$6(input[key]) || lodash_isplainobject(input[key])) {
           input[key] = setAllValuesTo(input[key], value);
         } else {
@@ -8903,7 +9171,7 @@
 
       function validateOperator(op) {
         if (typeof op !== 'string') {
-          throw new TypeError('Invalid operator type, expected string but got ' + typeof op);
+          throw new TypeError('Invalid operator type, expected string but got ' + _typeof(op));
         }
 
         if (allowedOperators.indexOf(op) === -1) {
@@ -8937,20 +9205,19 @@
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-no-new-keys
    */
   function isObj$1(something) {
-    return something && typeof something === "object" && !Array.isArray(something);
+    return something && _typeof(something) === "object" && !Array.isArray(something);
   }
 
   function objectNoNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
     if (originalOptsOuter && !isObj$1(originalOptsOuter)) {
-      throw new TypeError(`object-no-new-keys/objectNoNewKeys(): [THROW_ID_02] opts should be a plain object. It was given as ${JSON.stringify(originalOptsOuter, null, 4)} (type ${typeof originalOptsOuter})`);
+      throw new TypeError("object-no-new-keys/objectNoNewKeys(): [THROW_ID_02] opts should be a plain object. It was given as ".concat(JSON.stringify(originalOptsOuter, null, 4), " (type ").concat(_typeof(originalOptsOuter), ")"));
     }
 
-    const defaults = {
+    var defaults = {
       mode: 2
     };
-    const optsOuter = { ...defaults,
-      ...originalOptsOuter
-    };
+
+    var optsOuter = _objectSpread2(_objectSpread2({}, defaults), originalOptsOuter);
 
     if (typeof optsOuter.mode === "string" && ["1", "2"].includes(optsOuter.mode)) {
       if (optsOuter.mode === "1") {
@@ -8959,11 +9226,11 @@
         optsOuter.mode = 2;
       }
     } else if (![1, 2].includes(optsOuter.mode)) {
-      throw new TypeError(`object-no-new-keys/objectNoNewKeys(): [THROW_ID_01] opts.mode should be "1" or "2" (string or number).`);
+      throw new TypeError("object-no-new-keys/objectNoNewKeys(): [THROW_ID_01] opts.mode should be \"1\" or \"2\" (string or number).");
     }
 
     function objectNoNewKeysInternal(input, reference, opts, innerVar) {
-      let temp;
+      var temp;
 
       if (innerVar === undefined) {
         innerVar = {
@@ -8974,26 +9241,28 @@
 
       if (isObj$1(input)) {
         if (isObj$1(reference)) {
-          Object.keys(input).forEach(key => {
+          Object.keys(input).forEach(function (key) {
             if (!Object.prototype.hasOwnProperty.call(reference, key)) {
-              temp = innerVar.path.length > 0 ? `${innerVar.path}.${key}` : key;
+              temp = innerVar.path.length > 0 ? "".concat(innerVar.path, ".").concat(key) : key;
               innerVar.res.push(temp);
             } else if (isObj$1(input[key]) || Array.isArray(input[key])) {
               temp = {
-                path: innerVar.path.length > 0 ? `${innerVar.path}.${key}` : key,
+                path: innerVar.path.length > 0 ? "".concat(innerVar.path, ".").concat(key) : key,
                 res: innerVar.res
               };
               innerVar.res = objectNoNewKeysInternal(input[key], reference[key], opts, temp).res;
             }
           });
         } else {
-          innerVar.res = innerVar.res.concat(Object.keys(input).map(key => innerVar.path.length > 0 ? `${innerVar.path}.${key}` : key));
+          innerVar.res = innerVar.res.concat(Object.keys(input).map(function (key) {
+            return innerVar.path.length > 0 ? "".concat(innerVar.path, ".").concat(key) : key;
+          }));
         }
       } else if (Array.isArray(input)) {
         if (Array.isArray(reference)) {
-          for (let i = 0, len = input.length; i < len; i++) {
+          for (var i = 0, len = input.length; i < len; i++) {
             temp = {
-              path: `${innerVar.path.length > 0 ? innerVar.path : ""}[${i}]`,
+              path: "".concat(innerVar.path.length > 0 ? innerVar.path : "", "[").concat(i, "]"),
               res: innerVar.res
             };
 
@@ -9004,7 +9273,9 @@
             }
           }
         } else {
-          innerVar.res = innerVar.res.concat(input.map((el, i) => `${innerVar.path.length > 0 ? innerVar.path : ""}[${i}]`));
+          innerVar.res = innerVar.res.concat(input.map(function (el, i) {
+            return "".concat(innerVar.path.length > 0 ? innerVar.path : "", "[").concat(i, "]");
+          }));
         }
       }
 
@@ -9014,37 +9285,37 @@
     return objectNoNewKeysInternal(inputOuter, referenceOuter, optsOuter).res;
   }
 
-  var isPlainObj = value => {
+  var isPlainObj = function isPlainObj(value) {
     if (Object.prototype.toString.call(value) !== '[object Object]') {
       return false;
     }
 
-    const prototype = Object.getPrototypeOf(value);
+    var prototype = Object.getPrototypeOf(value);
     return prototype === null || prototype === Object.prototype;
   };
 
-  var sortKeys = (object, options = {}) => {
+  var sortKeys = function sortKeys(object) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
     if (!isPlainObj(object)) {
       throw new TypeError('Expected a plain object');
     }
 
-    const {
-      deep
-    } = options;
-    const seenInput = [];
-    const seenOutput = [];
+    var deep = options.deep;
+    var seenInput = [];
+    var seenOutput = [];
 
-    const deepSortArray = array => {
-      const seenIndex = seenInput.indexOf(array);
+    var deepSortArray = function deepSortArray(array) {
+      var seenIndex = seenInput.indexOf(array);
 
       if (seenIndex !== -1) {
         return seenOutput[seenIndex];
       }
 
-      const result = [];
+      var result = [];
       seenInput.push(array);
       seenOutput.push(result);
-      result.push(...array.map(item => {
+      result.push.apply(result, _toConsumableArray(array.map(function (item) {
         if (Array.isArray(item)) {
           return deepSortArray(item);
         }
@@ -9054,31 +9325,41 @@
         }
 
         return item;
-      }));
+      })));
       return result;
     };
 
-    const sortKeys = object => {
-      const seenIndex = seenInput.indexOf(object);
+    var sortKeys = function sortKeys(object) {
+      var seenIndex = seenInput.indexOf(object);
 
       if (seenIndex !== -1) {
         return seenOutput[seenIndex];
       }
 
-      const result = {};
-      const keys = Object.keys(object).sort(options.compare);
+      var result = {};
+      var keys = Object.keys(object).sort(options.compare);
       seenInput.push(object);
       seenOutput.push(result);
 
-      for (const key of keys) {
-        const value = object[key];
+      var _iterator = _createForOfIteratorHelper(keys),
+          _step;
 
-        if (deep && Array.isArray(value)) {
-          result[key] = deepSortArray(value);
-          continue;
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var key = _step.value;
+          var value = object[key];
+
+          if (deep && Array.isArray(value)) {
+            result[key] = deepSortArray(value);
+            continue;
+          }
+
+          result[key] = deep && isPlainObj(value) ? sortKeys(value) : value;
         }
-
-        result[key] = deep && isPlainObj(value) ? sortKeys(value) : value;
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
       }
 
       return result;
@@ -9087,28 +9368,60 @@
     return sortKeys(object);
   };
 
-  const pReduce = (iterable, reducer, initialValue) => new Promise((resolve, reject) => {
-    const iterator = iterable[Symbol.iterator]();
-    let index = 0;
+  var pReduce = function pReduce(iterable, reducer, initialValue) {
+    return new Promise(function (resolve, reject) {
+      var iterator = iterable[Symbol.iterator]();
+      var index = 0;
 
-    const next = async total => {
-      const element = iterator.next();
+      var next = /*#__PURE__*/function () {
+        var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(total) {
+          var element, value;
+          return regeneratorRuntime.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  element = iterator.next();
 
-      if (element.done) {
-        resolve(total);
-        return;
-      }
+                  if (!element.done) {
+                    _context.next = 4;
+                    break;
+                  }
 
-      try {
-        const value = await Promise.all([total, element.value]);
-        next(reducer(value[0], value[1], index++));
-      } catch (error) {
-        reject(error);
-      }
-    };
+                  resolve(total);
+                  return _context.abrupt("return");
 
-    next(initialValue);
-  });
+                case 4:
+                  _context.prev = 4;
+                  _context.next = 7;
+                  return Promise.all([total, element.value]);
+
+                case 7:
+                  value = _context.sent;
+                  next(reducer(value[0], value[1], index++));
+                  _context.next = 14;
+                  break;
+
+                case 11:
+                  _context.prev = 11;
+                  _context.t0 = _context["catch"](4);
+                  reject(_context.t0);
+
+                case 14:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee, null, [[4, 11]]);
+        }));
+
+        return function next(_x) {
+          return _ref.apply(this, arguments);
+        };
+      }();
+
+      next(initialValue);
+    });
+  };
 
   var pReduce_1 = pReduce; // TODO: Remove this for the next major release
 
@@ -9128,7 +9441,7 @@
       var promiseExists = typeof Promise === 'function';
       /* eslint-disable no-undef */
 
-      var globalObject = typeof self === 'object' ? self : commonjsGlobal; // eslint-disable-line id-blacklist
+      var globalObject = (typeof self === "undefined" ? "undefined" : _typeof(self)) === 'object' ? self : commonjsGlobal; // eslint-disable-line id-blacklist
 
       var symbolExists = typeof Symbol !== 'undefined';
       var mapExists = typeof Map !== 'undefined';
@@ -9174,7 +9487,7 @@
          *   undefined          x 32,363,368 ops/sec ±1.07% (82 runs sampled)
          *   function           x 31,296,870 ops/sec ±0.96% (83 runs sampled)
          */
-        var typeofObj = typeof obj;
+        var typeofObj = _typeof(obj);
 
         if (typeofObj !== 'object') {
           return typeofObj;
@@ -9225,7 +9538,7 @@
         // for `window` to be unset before tests in quasi-browser environments.
 
 
-        if (typeof window === 'object' && window !== null) {
+        if ((typeof window === "undefined" ? "undefined" : _typeof(window)) === 'object' && window !== null) {
           /* ! Spec Conformance
            * (https://html.spec.whatwg.org/multipage/browsers.html#location)
            * WhatWG HTML$7.7.3 - The `Location` interface
@@ -9233,7 +9546,7 @@
            *  - IE <=11 === "[object Object]"
            *  - IE Edge <=13 === "[object Object]"
            */
-          if (typeof window.location === 'object' && obj === window.location) {
+          if (_typeof(window.location) === 'object' && obj === window.location) {
             return 'Location';
           }
           /* ! Spec Conformance
@@ -9257,18 +9570,18 @@
            */
 
 
-          if (typeof window.document === 'object' && obj === window.document) {
+          if (_typeof(window.document) === 'object' && obj === window.document) {
             return 'Document';
           }
 
-          if (typeof window.navigator === 'object') {
+          if (_typeof(window.navigator) === 'object') {
             /* ! Spec Conformance
              * (https://html.spec.whatwg.org/multipage/webappapis.html#mimetypearray)
              * WhatWG HTML$8.6.1.5 - Plugins - Interface MimeTypeArray
              * Test: `Object.prototype.toString.call(navigator.mimeTypes)``
              *  - IE <=10 === "[object MSMimeTypesCollection]"
              */
-            if (typeof window.navigator.mimeTypes === 'object' && obj === window.navigator.mimeTypes) {
+            if (_typeof(window.navigator.mimeTypes) === 'object' && obj === window.navigator.mimeTypes) {
               return 'MimeTypeArray';
             }
             /* ! Spec Conformance
@@ -9279,12 +9592,12 @@
              */
 
 
-            if (typeof window.navigator.plugins === 'object' && obj === window.navigator.plugins) {
+            if (_typeof(window.navigator.plugins) === 'object' && obj === window.navigator.plugins) {
               return 'PluginArray';
             }
           }
 
-          if ((typeof window.HTMLElement === 'function' || typeof window.HTMLElement === 'object') && obj instanceof window.HTMLElement) {
+          if ((typeof window.HTMLElement === 'function' || _typeof(window.HTMLElement) === 'object') && obj instanceof window.HTMLElement) {
             /* ! Spec Conformance
             * (https://html.spec.whatwg.org/multipage/webappapis.html#pluginarray)
             * WhatWG HTML$4.4.4 - The `blockquote` element - Interface `HTMLQuoteElement`
@@ -9516,98 +9829,168 @@
     });
   });
 
-  const pMap = (iterable, mapper, options) => new Promise((resolve, reject) => {
-    options = Object.assign({
-      concurrency: Infinity
-    }, options);
+  var pMap = function pMap(iterable, mapper, options) {
+    return new Promise(function (resolve, reject) {
+      options = Object.assign({
+        concurrency: Infinity
+      }, options);
 
-    if (typeof mapper !== 'function') {
-      throw new TypeError('Mapper function is required');
-    }
-
-    const {
-      concurrency
-    } = options;
-
-    if (!(typeof concurrency === 'number' && concurrency >= 1)) {
-      throw new TypeError(`Expected \`concurrency\` to be a number from 1 and up, got \`${concurrency}\` (${typeof concurrency})`);
-    }
-
-    const ret = [];
-    const iterator = iterable[Symbol.iterator]();
-    let isRejected = false;
-    let isIterableDone = false;
-    let resolvingCount = 0;
-    let currentIndex = 0;
-
-    const next = () => {
-      if (isRejected) {
-        return;
+      if (typeof mapper !== 'function') {
+        throw new TypeError('Mapper function is required');
       }
 
-      const nextItem = iterator.next();
-      const i = currentIndex;
-      currentIndex++;
+      var _options = options,
+          concurrency = _options.concurrency;
 
-      if (nextItem.done) {
-        isIterableDone = true;
+      if (!(typeof concurrency === 'number' && concurrency >= 1)) {
+        throw new TypeError("Expected `concurrency` to be a number from 1 and up, got `".concat(concurrency, "` (").concat(_typeof(concurrency), ")"));
+      }
 
-        if (resolvingCount === 0) {
-          resolve(ret);
+      var ret = [];
+      var iterator = iterable[Symbol.iterator]();
+      var isRejected = false;
+      var isIterableDone = false;
+      var resolvingCount = 0;
+      var currentIndex = 0;
+
+      var next = function next() {
+        if (isRejected) {
+          return;
         }
 
-        return;
-      }
+        var nextItem = iterator.next();
+        var i = currentIndex;
+        currentIndex++;
 
-      resolvingCount++;
-      Promise.resolve(nextItem.value).then(element => mapper(element, i)).then(value => {
-        ret[i] = value;
-        resolvingCount--;
+        if (nextItem.done) {
+          isIterableDone = true;
+
+          if (resolvingCount === 0) {
+            resolve(ret);
+          }
+
+          return;
+        }
+
+        resolvingCount++;
+        Promise.resolve(nextItem.value).then(function (element) {
+          return mapper(element, i);
+        }).then(function (value) {
+          ret[i] = value;
+          resolvingCount--;
+          next();
+        }, function (error) {
+          isRejected = true;
+          reject(error);
+        });
+      };
+
+      for (var i = 0; i < concurrency; i++) {
         next();
-      }, error => {
-        isRejected = true;
-        reject(error);
-      });
-    };
 
-    for (let i = 0; i < concurrency; i++) {
-      next();
-
-      if (isIterableDone) {
-        break;
+        if (isIterableDone) {
+          break;
+        }
       }
-    }
-  });
+    });
+  };
 
   var pMap_1 = pMap; // TODO: Remove this for the next major release
 
   var _default$1 = pMap;
   pMap_1.default = _default$1;
 
-  class EndError extends Error {}
+  var EndError = /*#__PURE__*/function (_Error) {
+    _inherits(EndError, _Error);
 
-  const test = testFunction => async (x, i) => {
-    const value = await testFunction(x, i);
+    var _super = _createSuper(EndError);
 
-    if (value) {
-      throw new EndError();
+    function EndError() {
+      _classCallCheck(this, EndError);
+
+      return _super.apply(this, arguments);
     }
 
-    return value;
+    return EndError;
+  }( /*#__PURE__*/_wrapNativeSuper(Error));
+
+  var test = function test(testFunction) {
+    return /*#__PURE__*/function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(x, i) {
+        var value;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return testFunction(x, i);
+
+              case 2:
+                value = _context.sent;
+
+                if (!value) {
+                  _context.next = 5;
+                  break;
+                }
+
+                throw new EndError();
+
+              case 5:
+                return _context.abrupt("return", value);
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      return function (_x, _x2) {
+        return _ref.apply(this, arguments);
+      };
+    }();
   };
 
-  const pOne = async (iterable, testFunction, options) => {
-    try {
-      await pMap_1(iterable, test(testFunction), options);
-      return false;
-    } catch (error) {
-      if (error instanceof EndError) {
-        return true;
-      }
+  var pOne = /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(iterable, testFunction, options) {
+      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              _context2.next = 3;
+              return pMap_1(iterable, test(testFunction), options);
 
-      throw error;
-    }
-  };
+            case 3:
+              return _context2.abrupt("return", false);
+
+            case 6:
+              _context2.prev = 6;
+              _context2.t0 = _context2["catch"](0);
+
+              if (!(_context2.t0 instanceof EndError)) {
+                _context2.next = 10;
+                break;
+              }
+
+              return _context2.abrupt("return", true);
+
+            case 10:
+              throw _context2.t0;
+
+            case 11:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, null, [[0, 6]]);
+    }));
+
+    return function pOne(_x3, _x4, _x5) {
+      return _ref2.apply(this, arguments);
+    };
+  }();
 
   var pOne_1 = pOne;
   var _default$2 = pOne;

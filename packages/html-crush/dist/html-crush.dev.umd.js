@@ -29,6 +29,28 @@
     return _typeof(obj);
   }
 
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  function _createClass(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties(Constructor, staticProps);
+    return Constructor;
+  }
+
   function _defineProperty(obj, key, value) {
     if (key in obj) {
       Object.defineProperty(obj, key, {
@@ -247,7 +269,7 @@
    */
 
   function isObjectLike(value) {
-    return !!value && typeof value == 'object';
+    return !!value && _typeof(value) == 'object';
   }
   /**
    * Checks if `value` is a plain object, that is, an object created by the
@@ -309,17 +331,17 @@
       return arrOfRanges;
     }
 
-    const defaults = {
+    var defaults = {
       strictlyTwoElementsInRangeArrays: false,
       progressFn: null
     };
-    const opts = { ...defaults,
-      ...originalOptions
-    };
-    let culpritsIndex;
-    let culpritsLen;
 
-    if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.every((rangeArr, indx) => {
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOptions);
+
+    var culpritsIndex;
+    var culpritsLen;
+
+    if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.every(function (rangeArr, indx) {
       if (rangeArr.length !== 2) {
         culpritsIndex = indx;
         culpritsLen = rangeArr.length;
@@ -328,10 +350,10 @@
 
       return true;
     })) {
-      throw new TypeError(`ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ${culpritsIndex}th range (${JSON.stringify(arrOfRanges[culpritsIndex], null, 4)}) has not two but ${culpritsLen} elements!`);
+      throw new TypeError("ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ".concat(culpritsIndex, "th range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 4), ") has not two but ").concat(culpritsLen, " elements!"));
     }
 
-    if (!arrOfRanges.every((rangeArr, indx) => {
+    if (!arrOfRanges.every(function (rangeArr, indx) {
       if (!Number.isInteger(rangeArr[0]) || rangeArr[0] < 0 || !Number.isInteger(rangeArr[1]) || rangeArr[1] < 0) {
         culpritsIndex = indx;
         return false;
@@ -339,12 +361,12 @@
 
       return true;
     })) {
-      throw new TypeError(`ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ${culpritsIndex}th range (${JSON.stringify(arrOfRanges[culpritsIndex], null, 4)}) does not consist of only natural numbers!`);
+      throw new TypeError("ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ".concat(culpritsIndex, "th range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 4), ") does not consist of only natural numbers!"));
     }
 
-    const maxPossibleIterations = arrOfRanges.length * arrOfRanges.length;
-    let counter = 0;
-    return Array.from(arrOfRanges).sort((range1, range2) => {
+    var maxPossibleIterations = arrOfRanges.length * arrOfRanges.length;
+    var counter = 0;
+    return Array.from(arrOfRanges).sort(function (range1, range2) {
       if (opts.progressFn) {
         counter += 1;
         opts.progressFn(Math.floor(counter * 100 / maxPossibleIterations));
@@ -370,45 +392,34 @@
     });
   }
 
-  /**
-   * ranges-merge
-   * Merge and sort arrays which mean string slice ranges
-   * Version: 4.3.8
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge
-   */
-
   function mergeRanges(arrOfRanges, originalOpts) {
     function isStr(something) {
       return typeof something === "string";
     }
 
     function isObj(something) {
-      return something && typeof something === "object" && !Array.isArray(something);
+      return something && _typeof(something) === "object" && !Array.isArray(something);
     }
 
     if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
       return arrOfRanges;
     }
 
-    const defaults = {
+    var defaults = {
       mergeType: 1,
       progressFn: null,
       joinRangesThatTouchEdges: true
     };
-    let opts;
+    var opts;
 
     if (originalOpts) {
       if (isObj(originalOpts)) {
-        opts = { ...defaults,
-          ...originalOpts
-        };
+        opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
         if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
           opts.progressFn = null;
         } else if (opts.progressFn && typeof opts.progressFn !== "function") {
-          throw new Error(`ranges-merge: [THROW_ID_01] opts.progressFn must be a function! It was given of a type: "${typeof opts.progressFn}", equal to ${JSON.stringify(opts.progressFn, null, 4)}`);
+          throw new Error("ranges-merge: [THROW_ID_01] opts.progressFn must be a function! It was given of a type: \"".concat(_typeof(opts.progressFn), "\", equal to ").concat(JSON.stringify(opts.progressFn, null, 4)));
         }
 
         if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
@@ -417,29 +428,32 @@
           } else if (isStr(opts.mergeType) && opts.mergeType.trim() === "2") {
             opts.mergeType = 2;
           } else {
-            throw new Error(`ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof opts.mergeType}", equal to ${JSON.stringify(opts.mergeType, null, 4)}`);
+            throw new Error("ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"".concat(_typeof(opts.mergeType), "\", equal to ").concat(JSON.stringify(opts.mergeType, null, 4)));
           }
         }
 
         if (typeof opts.joinRangesThatTouchEdges !== "boolean") {
-          throw new Error(`ranges-merge: [THROW_ID_04] opts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: "${typeof opts.joinRangesThatTouchEdges}", equal to ${JSON.stringify(opts.joinRangesThatTouchEdges, null, 4)}`);
+          throw new Error("ranges-merge: [THROW_ID_04] opts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: \"".concat(_typeof(opts.joinRangesThatTouchEdges), "\", equal to ").concat(JSON.stringify(opts.joinRangesThatTouchEdges, null, 4)));
         }
       } else {
-        throw new Error(`emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n${JSON.stringify(originalOpts, null, 4)} (type ${typeof originalOpts})`);
+        throw new Error("emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n".concat(JSON.stringify(originalOpts, null, 4), " (type ").concat(_typeof(originalOpts), ")"));
       }
     } else {
-      opts = { ...defaults
-      };
+      opts = _objectSpread2({}, defaults);
     }
 
-    const filtered = arrOfRanges.map(subarr => [...subarr]).filter(rangeArr => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]);
-    let sortedRanges;
-    let lastPercentageDone;
-    let percentageDone;
+    var filtered = arrOfRanges.map(function (subarr) {
+      return _toConsumableArray(subarr);
+    }).filter(function (rangeArr) {
+      return rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1];
+    });
+    var sortedRanges;
+    var lastPercentageDone;
+    var percentageDone;
 
     if (opts.progressFn) {
       sortedRanges = rangesSort(filtered, {
-        progressFn: percentage => {
+        progressFn: function progressFn(percentage) {
           percentageDone = Math.floor(percentage / 5);
 
           if (percentageDone !== lastPercentageDone) {
@@ -452,9 +466,9 @@
       sortedRanges = rangesSort(filtered);
     }
 
-    const len = sortedRanges.length - 1;
+    var len = sortedRanges.length - 1;
 
-    for (let i = len; i > 0; i--) {
+    for (var i = len; i > 0; i--) {
       if (opts.progressFn) {
         percentageDone = Math.floor((1 - i / len) * 78) + 21;
 
@@ -492,15 +506,6 @@
     return sortedRanges;
   }
 
-  /**
-   * ranges-apply
-   * Take an array of string slice ranges, delete/replace the string according to them
-   * Version: 3.1.10
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply
-   */
-
   function existy(x) {
     return x != null;
   }
@@ -509,16 +514,16 @@
     return typeof something === "string";
   }
 
-  function rangesApply(str, originalRangesArr, progressFn) {
-    let percentageDone = 0;
-    let lastPercentageDone = 0;
+  function rangesApply(str, originalRangesArr, _progressFn) {
+    var percentageDone = 0;
+    var lastPercentageDone = 0;
 
     if (arguments.length === 0) {
       throw new Error("ranges-apply: [THROW_ID_01] inputs missing!");
     }
 
     if (!isStr(str)) {
-      throw new TypeError(`ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof str}, equal to: ${JSON.stringify(str, null, 4)}`);
+      throw new TypeError("ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ".concat(_typeof(str), ", equal to: ").concat(JSON.stringify(str, null, 4)));
     }
 
     if (originalRangesArr === null) {
@@ -526,14 +531,14 @@
     }
 
     if (!Array.isArray(originalRangesArr)) {
-      throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof originalRangesArr}, equal to: ${JSON.stringify(originalRangesArr, null, 4)}`);
+      throw new TypeError("ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ".concat(_typeof(originalRangesArr), ", equal to: ").concat(JSON.stringify(originalRangesArr, null, 4)));
     }
 
-    if (progressFn && typeof progressFn !== "function") {
-      throw new TypeError(`ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof progressFn}, equal to: ${JSON.stringify(progressFn, null, 4)}`);
+    if (_progressFn && typeof _progressFn !== "function") {
+      throw new TypeError("ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ".concat(_typeof(_progressFn), ", equal to: ").concat(JSON.stringify(_progressFn, null, 4)));
     }
 
-    let rangesArr;
+    var rangesArr;
 
     if (Array.isArray(originalRangesArr) && (Number.isInteger(originalRangesArr[0]) && originalRangesArr[0] >= 0 || /^\d*$/.test(originalRangesArr[0])) && (Number.isInteger(originalRangesArr[1]) && originalRangesArr[1] >= 0 || /^\d*$/.test(originalRangesArr[1]))) {
       rangesArr = [Array.from(originalRangesArr)];
@@ -541,28 +546,29 @@
       rangesArr = Array.from(originalRangesArr);
     }
 
-    const len = rangesArr.length;
-    let counter = 0;
-    rangesArr.forEach((el, i) => {
-      if (progressFn) {
+    var len = rangesArr.length;
+    var counter = 0;
+    rangesArr.forEach(function (el, i) {
+      if (_progressFn) {
         percentageDone = Math.floor(counter / len * 10);
         /* istanbul ignore else */
 
         if (percentageDone !== lastPercentageDone) {
           lastPercentageDone = percentageDone;
-          progressFn(percentageDone);
+
+          _progressFn(percentageDone);
         }
       }
 
       if (!Array.isArray(el)) {
-        throw new TypeError(`ranges-apply: [THROW_ID_05] ranges array, second input arg., has ${i}th element not an array: ${JSON.stringify(el, null, 4)}, which is ${typeof el}`);
+        throw new TypeError("ranges-apply: [THROW_ID_05] ranges array, second input arg., has ".concat(i, "th element not an array: ").concat(JSON.stringify(el, null, 4), ", which is ").concat(_typeof(el)));
       }
 
       if (!Number.isInteger(el[0]) || el[0] < 0) {
         if (/^\d*$/.test(el[0])) {
           rangesArr[i][0] = Number.parseInt(rangesArr[i][0], 10);
         } else {
-          throw new TypeError(`ranges-apply: [THROW_ID_06] ranges array, second input arg. has ${i}th element, array [${el[0]},${el[1]}]. That array has first element not an integer, but ${typeof el[0]}, equal to: ${JSON.stringify(el[0], null, 4)}. Computer doesn't like this.`);
+          throw new TypeError("ranges-apply: [THROW_ID_06] ranges array, second input arg. has ".concat(i, "th element, array [").concat(el[0], ",").concat(el[1], "]. That array has first element not an integer, but ").concat(_typeof(el[0]), ", equal to: ").concat(JSON.stringify(el[0], null, 4), ". Computer doesn't like this."));
         }
       }
 
@@ -570,42 +576,44 @@
         if (/^\d*$/.test(el[1])) {
           rangesArr[i][1] = Number.parseInt(rangesArr[i][1], 10);
         } else {
-          throw new TypeError(`ranges-apply: [THROW_ID_07] ranges array, second input arg. has ${i}th element, array [${el[0]},${el[1]}]. That array has second element not an integer, but ${typeof el[1]}, equal to: ${JSON.stringify(el[1], null, 4)}. Computer doesn't like this.`);
+          throw new TypeError("ranges-apply: [THROW_ID_07] ranges array, second input arg. has ".concat(i, "th element, array [").concat(el[0], ",").concat(el[1], "]. That array has second element not an integer, but ").concat(_typeof(el[1]), ", equal to: ").concat(JSON.stringify(el[1], null, 4), ". Computer doesn't like this."));
         }
       }
 
       counter += 1;
     });
-    const workingRanges = mergeRanges(rangesArr, {
-      progressFn: perc => {
-        if (progressFn) {
+    var workingRanges = mergeRanges(rangesArr, {
+      progressFn: function progressFn(perc) {
+        if (_progressFn) {
           percentageDone = 10 + Math.floor(perc / 10);
           /* istanbul ignore else */
 
           if (percentageDone !== lastPercentageDone) {
             lastPercentageDone = percentageDone;
-            progressFn(percentageDone);
+
+            _progressFn(percentageDone);
           }
         }
       }
     });
-    const len2 = workingRanges.length;
+    var len2 = workingRanges.length;
 
     if (len2 > 0) {
-      const tails = str.slice(workingRanges[len2 - 1][1]);
-      str = workingRanges.reduce((acc, val, i, arr) => {
-        if (progressFn) {
+      var tails = str.slice(workingRanges[len2 - 1][1]);
+      str = workingRanges.reduce(function (acc, val, i, arr) {
+        if (_progressFn) {
           percentageDone = 20 + Math.floor(i / len2 * 80);
           /* istanbul ignore else */
 
           if (percentageDone !== lastPercentageDone) {
             lastPercentageDone = percentageDone;
-            progressFn(percentageDone);
+
+            _progressFn(percentageDone);
           }
         }
 
-        const beginning = i === 0 ? 0 : arr[i - 1][1];
-        const ending = arr[i][0];
+        var beginning = i === 0 ? 0 : arr[i - 1][1];
+        var ending = arr[i][0];
         return acc + str.slice(beginning, ending) + (existy(arr[i][2]) ? arr[i][2] : "");
       }, "");
       str += tails;
@@ -622,9 +630,12 @@
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace
    */
-  const rawNbsp = "\u00A0";
+  var rawNbsp = "\xA0";
 
-  function push(arr, leftSide = true, charToPush) {
+  function push(arr) {
+    var leftSide = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+    var charToPush = arguments.length > 2 ? arguments[2] : undefined;
+
     if (!charToPush.trim() && (!arr.length || charToPush === "\n" || charToPush === rawNbsp || (leftSide ? arr[arr.length - 1] : arr[0]) !== " ") && (!arr.length || (leftSide ? arr[arr.length - 1] : arr[0]) !== "\n" || charToPush === "\n" || charToPush === rawNbsp)) {
       if (leftSide) {
         if ((charToPush === "\n" || charToPush === rawNbsp) && arr.length && arr[arr.length - 1] === " ") {
@@ -648,13 +659,13 @@
 
   function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
     if (typeof str === "string" && str.length) {
-      let windowsEol = false;
+      var windowsEol = false;
 
       if (str.includes("\r\n")) {
         windowsEol = true;
       }
 
-      let limitLinebreaksCount;
+      var limitLinebreaksCount;
 
       if (!originalLimitLinebreaksCount || typeof originalLimitLinebreaksCount !== "number") {
         limitLinebreaksCount = 1;
@@ -662,12 +673,12 @@
         limitLinebreaksCount = originalLimitLinebreaksCount;
       }
 
-      let limit;
+      var limit;
 
       if (str.trim() === "") {
-        const resArr = [];
+        var resArr = [];
         limit = limitLinebreaksCount;
-        Array.from(str).forEach(char => {
+        Array.from(str).forEach(function (char) {
           if (char !== "\n" || limit) {
             if (char === "\n") {
               limit -= 1;
@@ -684,11 +695,11 @@
         return resArr.join("");
       }
 
-      const startCharacter = [];
+      var startCharacter = [];
       limit = limitLinebreaksCount;
 
       if (str[0].trim() === "") {
-        for (let i = 0, len = str.length; i < len; i++) {
+        for (var i = 0, len = str.length; i < len; i++) {
           if (str[i].trim()) {
             break;
           } else if (str[i] !== "\n" || limit) {
@@ -701,19 +712,19 @@
         }
       }
 
-      const endCharacter = [];
+      var endCharacter = [];
       limit = limitLinebreaksCount;
 
       if (str.slice(-1).trim() === "") {
-        for (let i = str.length; i--;) {
-          if (str[i].trim()) {
+        for (var _i = str.length; _i--;) {
+          if (str[_i].trim()) {
             break;
-          } else if (str[i] !== "\n" || limit) {
-            if (str[i] === "\n") {
+          } else if (str[_i] !== "\n" || limit) {
+            if (str[_i] === "\n") {
               limit -= 1;
             }
 
-            push(endCharacter, false, str[i]);
+            push(endCharacter, false, str[_i]);
           }
         }
       }
@@ -722,20 +733,11 @@
         return startCharacter.join("") + str.trim() + endCharacter.join("");
       }
 
-      return `${startCharacter.join("")}${str.trim()}${endCharacter.join("")}`.replace(/\n/g, "\r\n");
+      return "".concat(startCharacter.join("")).concat(str.trim()).concat(endCharacter.join("")).replace(/\n/g, "\r\n");
     }
 
     return str;
   }
-
-  /**
-   * ranges-push
-   * Manage the array of ranges referencing the index ranges within the string
-   * Version: 3.7.14
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
-   */
 
   function existy$1(x) {
     return x != null;
@@ -753,16 +755,17 @@
     return /^\d*$/.test(str) ? parseInt(str, 10) : str;
   }
 
-  class Ranges {
-    constructor(originalOpts) {
-      const defaults = {
+  var Ranges = /*#__PURE__*/function () {
+    function Ranges(originalOpts) {
+      _classCallCheck(this, Ranges);
+
+      var defaults = {
         limitToBeAddedWhitespace: false,
         limitLinebreaksCount: 1,
         mergeType: 1
       };
-      const opts = { ...defaults,
-        ...originalOpts
-      };
+
+      var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
       if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
         if (isStr$1(opts.mergeType) && opts.mergeType.trim() === "1") {
@@ -770,142 +773,165 @@
         } else if (isStr$1(opts.mergeType) && opts.mergeType.trim() === "2") {
           opts.mergeType = 2;
         } else {
-          throw new Error(`ranges-push: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof opts.mergeType}", equal to ${JSON.stringify(opts.mergeType, null, 4)}`);
+          throw new Error("ranges-push: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"".concat(_typeof(opts.mergeType), "\", equal to ").concat(JSON.stringify(opts.mergeType, null, 4)));
         }
       }
 
       this.opts = opts;
     }
 
-    add(originalFrom, originalTo, addVal, ...etc) {
-      if (etc.length > 0) {
-        throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_03] Please don't overload the add() method. From the 4th input argument onwards we see these redundant arguments: ${JSON.stringify(etc, null, 4)}`);
-      }
+    _createClass(Ranges, [{
+      key: "add",
+      value: function add(originalFrom, originalTo, addVal) {
+        var _this = this;
 
-      if (!existy$1(originalFrom) && !existy$1(originalTo)) {
-        return;
-      }
+        for (var _len = arguments.length, etc = new Array(_len > 3 ? _len - 3 : 0), _key = 3; _key < _len; _key++) {
+          etc[_key - 3] = arguments[_key];
+        }
 
-      if (existy$1(originalFrom) && !existy$1(originalTo)) {
-        if (Array.isArray(originalFrom)) {
-          if (originalFrom.length) {
-            if (originalFrom.some(el => Array.isArray(el))) {
-              originalFrom.forEach(thing => {
-                if (Array.isArray(thing)) {
-                  this.add(...thing);
-                }
-              });
-              return;
-            }
+        if (etc.length > 0) {
+          throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_03] Please don't overload the add() method. From the 4th input argument onwards we see these redundant arguments: ".concat(JSON.stringify(etc, null, 4)));
+        }
 
-            if (originalFrom.length > 1 && isNum(prepNumStr(originalFrom[0])) && isNum(prepNumStr(originalFrom[1]))) {
-              this.add(...originalFrom);
-            }
-          }
-
+        if (!existy$1(originalFrom) && !existy$1(originalTo)) {
           return;
         }
 
-        throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_12] the first input argument, "from" is set (${JSON.stringify(originalFrom, null, 0)}) but second-one, "to" is not (${JSON.stringify(originalTo, null, 0)})`);
-      } else if (!existy$1(originalFrom) && existy$1(originalTo)) {
-        throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_13] the second input argument, "to" is set (${JSON.stringify(originalTo, null, 0)}) but first-one, "from" is not (${JSON.stringify(originalFrom, null, 0)})`);
-      }
+        if (existy$1(originalFrom) && !existy$1(originalTo)) {
+          if (Array.isArray(originalFrom)) {
+            if (originalFrom.length) {
+              if (originalFrom.some(function (el) {
+                return Array.isArray(el);
+              })) {
+                originalFrom.forEach(function (thing) {
+                  if (Array.isArray(thing)) {
+                    _this.add.apply(_this, _toConsumableArray(thing));
+                  }
+                });
+                return;
+              }
 
-      const from = /^\d*$/.test(originalFrom) ? parseInt(originalFrom, 10) : originalFrom;
-      const to = /^\d*$/.test(originalTo) ? parseInt(originalTo, 10) : originalTo;
-
-      if (isNum(addVal)) {
-        addVal = String(addVal);
-      }
-
-      if (isNum(from) && isNum(to)) {
-        if (existy$1(addVal) && !isStr$1(addVal) && !isNum(addVal)) {
-          throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ${typeof addVal}, equal to:\n${JSON.stringify(addVal, null, 4)}`);
-        }
-
-        if (existy$1(this.slices) && Array.isArray(this.last()) && from === this.last()[1]) {
-          this.last()[1] = to;
-          if (this.last()[2] === null || addVal === null) ;
-
-          if (this.last()[2] !== null && existy$1(addVal)) {
-            let calculatedVal = existy$1(this.last()[2]) && this.last()[2].length > 0 && (!this.opts || !this.opts.mergeType || this.opts.mergeType === 1) ? this.last()[2] + addVal : addVal;
-
-            if (this.opts.limitToBeAddedWhitespace) {
-              calculatedVal = collapseLeadingWhitespace(calculatedVal, this.opts.limitLinebreaksCount);
+              if (originalFrom.length > 1 && isNum(prepNumStr(originalFrom[0])) && isNum(prepNumStr(originalFrom[1]))) {
+                this.add.apply(this, _toConsumableArray(originalFrom));
+              }
             }
 
-            if (!(isStr$1(calculatedVal) && !calculatedVal.length)) {
-              this.last()[2] = calculatedVal;
-            }
-          }
-        } else {
-          if (!this.slices) {
-            this.slices = [];
+            return;
           }
 
-          const whatToPush = addVal !== undefined && !(isStr$1(addVal) && !addVal.length) ? [from, to, this.opts.limitToBeAddedWhitespace ? collapseLeadingWhitespace(addVal, this.opts.limitLinebreaksCount) : addVal] : [from, to];
-          this.slices.push(whatToPush);
+          throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_12] the first input argument, \"from\" is set (".concat(JSON.stringify(originalFrom, null, 0), ") but second-one, \"to\" is not (").concat(JSON.stringify(originalTo, null, 0), ")"));
+        } else if (!existy$1(originalFrom) && existy$1(originalTo)) {
+          throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_13] the second input argument, \"to\" is set (".concat(JSON.stringify(originalTo, null, 0), ") but first-one, \"from\" is not (").concat(JSON.stringify(originalFrom, null, 0), ")"));
         }
-      } else {
-        if (!(isNum(from) && from >= 0)) {
-          throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_09] "from" value, the first input argument, must be a natural number or zero! Currently it's of a type "${typeof from}" equal to: ${JSON.stringify(from, null, 4)}`);
-        } else {
-          throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_10] "to" value, the second input argument, must be a natural number or zero! Currently it's of a type "${typeof to}" equal to: ${JSON.stringify(to, null, 4)}`);
+
+        var from = /^\d*$/.test(originalFrom) ? parseInt(originalFrom, 10) : originalFrom;
+        var to = /^\d*$/.test(originalTo) ? parseInt(originalTo, 10) : originalTo;
+
+        if (isNum(addVal)) {
+          addVal = String(addVal);
         }
-      }
-    }
 
-    push(originalFrom, originalTo, addVal, ...etc) {
-      this.add(originalFrom, originalTo, addVal, ...etc);
-    }
+        if (isNum(from) && isNum(to)) {
+          if (existy$1(addVal) && !isStr$1(addVal) && !isNum(addVal)) {
+            throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ".concat(_typeof(addVal), ", equal to:\n").concat(JSON.stringify(addVal, null, 4)));
+          }
 
-    current() {
-      if (this.slices != null) {
-        this.slices = mergeRanges(this.slices, {
-          mergeType: this.opts.mergeType
-        });
+          if (existy$1(this.slices) && Array.isArray(this.last()) && from === this.last()[1]) {
+            this.last()[1] = to;
+            if (this.last()[2] === null || addVal === null) ;
 
-        if (this.opts.limitToBeAddedWhitespace) {
-          return this.slices.map(val => {
-            if (existy$1(val[2])) {
-              return [val[0], val[1], collapseLeadingWhitespace(val[2], this.opts.limitLinebreaksCount)];
+            if (this.last()[2] !== null && existy$1(addVal)) {
+              var calculatedVal = existy$1(this.last()[2]) && this.last()[2].length > 0 && (!this.opts || !this.opts.mergeType || this.opts.mergeType === 1) ? this.last()[2] + addVal : addVal;
+
+              if (this.opts.limitToBeAddedWhitespace) {
+                calculatedVal = collapseLeadingWhitespace(calculatedVal, this.opts.limitLinebreaksCount);
+              }
+
+              if (!(isStr$1(calculatedVal) && !calculatedVal.length)) {
+                this.last()[2] = calculatedVal;
+              }
+            }
+          } else {
+            if (!this.slices) {
+              this.slices = [];
             }
 
-            return val;
+            var whatToPush = addVal !== undefined && !(isStr$1(addVal) && !addVal.length) ? [from, to, this.opts.limitToBeAddedWhitespace ? collapseLeadingWhitespace(addVal, this.opts.limitLinebreaksCount) : addVal] : [from, to];
+            this.slices.push(whatToPush);
+          }
+        } else {
+          if (!(isNum(from) && from >= 0)) {
+            throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_09] \"from\" value, the first input argument, must be a natural number or zero! Currently it's of a type \"".concat(_typeof(from), "\" equal to: ").concat(JSON.stringify(from, null, 4)));
+          } else {
+            throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_10] \"to\" value, the second input argument, must be a natural number or zero! Currently it's of a type \"".concat(_typeof(to), "\" equal to: ").concat(JSON.stringify(to, null, 4)));
+          }
+        }
+      }
+    }, {
+      key: "push",
+      value: function push(originalFrom, originalTo, addVal) {
+        for (var _len2 = arguments.length, etc = new Array(_len2 > 3 ? _len2 - 3 : 0), _key2 = 3; _key2 < _len2; _key2++) {
+          etc[_key2 - 3] = arguments[_key2];
+        }
+
+        this.add.apply(this, [originalFrom, originalTo, addVal].concat(etc));
+      }
+    }, {
+      key: "current",
+      value: function current() {
+        var _this2 = this;
+
+        if (this.slices != null) {
+          this.slices = mergeRanges(this.slices, {
+            mergeType: this.opts.mergeType
           });
+
+          if (this.opts.limitToBeAddedWhitespace) {
+            return this.slices.map(function (val) {
+              if (existy$1(val[2])) {
+                return [val[0], val[1], collapseLeadingWhitespace(val[2], _this2.opts.limitLinebreaksCount)];
+              }
+
+              return val;
+            });
+          }
+
+          return this.slices;
         }
 
-        return this.slices;
+        return null;
       }
-
-      return null;
-    }
-
-    wipe() {
-      this.slices = undefined;
-    }
-
-    replace(givenRanges) {
-      if (Array.isArray(givenRanges) && givenRanges.length) {
-        if (!(Array.isArray(givenRanges[0]) && isNum(givenRanges[0][0]))) {
-          throw new Error(`ranges-push/Ranges/replace(): [THROW_ID_11] Single range was given but we expected array of arrays! The first element, ${JSON.stringify(givenRanges[0], null, 4)} should be an array and its first element should be an integer, a string index.`);
-        } else {
-          this.slices = Array.from(givenRanges);
-        }
-      } else {
+    }, {
+      key: "wipe",
+      value: function wipe() {
         this.slices = undefined;
       }
-    }
-
-    last() {
-      if (this.slices !== undefined && Array.isArray(this.slices)) {
-        return this.slices[this.slices.length - 1];
+    }, {
+      key: "replace",
+      value: function replace(givenRanges) {
+        if (Array.isArray(givenRanges) && givenRanges.length) {
+          if (!(Array.isArray(givenRanges[0]) && isNum(givenRanges[0][0]))) {
+            throw new Error("ranges-push/Ranges/replace(): [THROW_ID_11] Single range was given but we expected array of arrays! The first element, ".concat(JSON.stringify(givenRanges[0], null, 4), " should be an array and its first element should be an integer, a string index."));
+          } else {
+            this.slices = Array.from(givenRanges);
+          }
+        } else {
+          this.slices = undefined;
+        }
       }
+    }, {
+      key: "last",
+      value: function last() {
+        if (this.slices !== undefined && Array.isArray(this.slices)) {
+          return this.slices[this.slices.length - 1];
+        }
 
-      return null;
-    }
+        return null;
+      }
+    }]);
 
-  }
+    return Ranges;
+  }();
 
   /**
    * arrayiffy-if-string
@@ -927,17 +953,8 @@
     return something;
   }
 
-  /**
-   * string-match-left-right
-   * Do substrings match what's on the left or right of a given index?
-   * Version: 4.0.8
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right
-   */
-
   function isObj(something) {
-    return something && typeof something === "object" && !Array.isArray(something);
+    return something && _typeof(something) === "object" && !Array.isArray(something);
   }
 
   function isStr$2(something) {
@@ -945,7 +962,7 @@
   }
 
   function march(str, fromIndexInclusive, whatToMatchVal, opts, special, getNextIdx) {
-    const whatToMatchValVal = typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal;
+    var whatToMatchValVal = typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal;
 
     if (fromIndexInclusive < 0 && special && whatToMatchValVal === "EOL") {
       return whatToMatchValVal;
@@ -955,17 +972,17 @@
       return false;
     }
 
-    let charsToCheckCount = special ? 1 : whatToMatchVal.length;
-    let lastWasMismatched = false;
-    let atLeastSomethingWasMatched = false;
-    let patience = opts.maxMismatches;
-    let i = fromIndexInclusive;
-    let somethingFound = false;
-    let firstCharacterMatched = false;
-    let lastCharacterMatched = false;
+    var charsToCheckCount = special ? 1 : whatToMatchVal.length;
+    var lastWasMismatched = false;
+    var atLeastSomethingWasMatched = false;
+    var patience = opts.maxMismatches;
+    var i = fromIndexInclusive;
+    var somethingFound = false;
+    var firstCharacterMatched = false;
+    var lastCharacterMatched = false;
 
     while (str[i]) {
-      const nextIdx = getNextIdx(i);
+      var nextIdx = getNextIdx(i);
 
       if (opts.trimBeforeMatching && str[i].trim() === "") {
         if (!str[nextIdx] && special && whatToMatchVal === "EOL") {
@@ -976,7 +993,9 @@
         continue;
       }
 
-      if (!opts.i && opts.trimCharsBeforeMatching.includes(str[i]) || opts.i && opts.trimCharsBeforeMatching.map(val => val.toLowerCase()).includes(str[i].toLowerCase())) {
+      if (!opts.i && opts.trimCharsBeforeMatching.includes(str[i]) || opts.i && opts.trimCharsBeforeMatching.map(function (val) {
+        return val.toLowerCase();
+      }).includes(str[i].toLowerCase())) {
         if (special && whatToMatchVal === "EOL" && !str[nextIdx]) {
           return true;
         }
@@ -985,7 +1004,7 @@
         continue;
       }
 
-      const charToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount] : whatToMatchVal[charsToCheckCount - 1];
+      var charToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount] : whatToMatchVal[charsToCheckCount - 1];
 
       if (!opts.i && str[i] === charToCompareAgainst || opts.i && str[i].toLowerCase() === charToCompareAgainst.toLowerCase()) {
         if (!somethingFound) {
@@ -1011,9 +1030,9 @@
         if (opts.maxMismatches && patience && i) {
           patience -= 1;
 
-          for (let y = 0; y <= patience; y++) {
-            const nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1 + y] : whatToMatchVal[charsToCheckCount - 2 - y];
-            const nextCharInSource = str[getNextIdx(i)];
+          for (var y = 0; y <= patience; y++) {
+            var nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1 + y] : whatToMatchVal[charsToCheckCount - 2 - y];
+            var nextCharInSource = str[getNextIdx(i)];
 
             if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
               charsToCheckCount -= 2;
@@ -1063,7 +1082,7 @@
   }
 
   function main(mode, str, position, originalWhatToMatch, originalOpts) {
-    const defaults = {
+    var defaults = {
       i: false,
       trimBeforeMatching: false,
       trimCharsBeforeMatching: [],
@@ -1073,14 +1092,15 @@
     };
 
     if (isObj(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!${Array.isArray(originalOpts.trimBeforeMatching) ? ` Did you mean to use opts.trimCharsBeforeMatching?` : ""}`);
+      throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!").concat(Array.isArray(originalOpts.trimBeforeMatching) ? " Did you mean to use opts.trimCharsBeforeMatching?" : ""));
     }
 
-    const opts = { ...defaults,
-      ...originalOpts
-    };
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
+
     opts.trimCharsBeforeMatching = arrayiffyString(opts.trimCharsBeforeMatching);
-    opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(el => isStr$2(el) ? el : String(el));
+    opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(function (el) {
+      return isStr$2(el) ? el : String(el);
+    });
 
     if (!isStr$2(str)) {
       return false;
@@ -1091,11 +1111,11 @@
     }
 
     if (!Number.isInteger(position) || position < 0) {
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_03] the second argument should be a natural number. Currently it's of a type: ${typeof position}, equal to:\n${JSON.stringify(position, null, 4)}`);
+      throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_03] the second argument should be a natural number. Currently it's of a type: ").concat(_typeof(position), ", equal to:\n").concat(JSON.stringify(position, null, 4)));
     }
 
-    let whatToMatch;
-    let special;
+    var whatToMatch;
+    var special;
 
     if (isStr$2(originalWhatToMatch)) {
       whatToMatch = [originalWhatToMatch];
@@ -1107,17 +1127,17 @@
       whatToMatch = [];
       whatToMatch.push(originalWhatToMatch);
     } else {
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's ${typeof originalWhatToMatch}, equal to:\n${JSON.stringify(originalWhatToMatch, null, 4)}`);
+      throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's ").concat(_typeof(originalWhatToMatch), ", equal to:\n").concat(JSON.stringify(originalWhatToMatch, null, 4)));
     }
 
     if (originalOpts && !isObj(originalOpts)) {
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type "${typeof originalOpts}", and equal to:\n${JSON.stringify(originalOpts, null, 4)}`);
+      throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type \"").concat(_typeof(originalOpts), "\", and equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
     }
 
-    let culpritsIndex;
-    let culpritsVal;
+    var culpritsIndex;
+    var culpritsVal;
 
-    if (opts.trimCharsBeforeMatching.some((el, i) => {
+    if (opts.trimCharsBeforeMatching.some(function (el, i) {
       if (el.length > 1) {
         culpritsIndex = i;
         culpritsVal = el;
@@ -1126,21 +1146,21 @@
 
       return false;
     })) {
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ${culpritsIndex} is longer than 1 character, ${culpritsVal.length} (equals to ${culpritsVal}). Please split it into separate characters and put into array as separate elements.`);
+      throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ").concat(culpritsIndex, " is longer than 1 character, ").concat(culpritsVal.length, " (equals to ").concat(culpritsVal, "). Please split it into separate characters and put into array as separate elements."));
     }
 
     if (!whatToMatch || !Array.isArray(whatToMatch) || Array.isArray(whatToMatch) && !whatToMatch.length || Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr$2(whatToMatch[0]) && !whatToMatch[0].trim()) {
       if (typeof opts.cb === "function") {
-        let firstCharOutsideIndex;
-        let startingPosition = position;
+        var firstCharOutsideIndex;
+        var startingPosition = position;
 
         if (mode === "matchLeftIncl" || mode === "matchRight") {
           startingPosition += 1;
         }
 
         if (mode[5] === "L") {
-          for (let y = startingPosition; y--;) {
-            const currentChar = str[y];
+          for (var y = startingPosition; y--;) {
+            var currentChar = str[y];
 
             if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
               firstCharOutsideIndex = y;
@@ -1148,11 +1168,11 @@
             }
           }
         } else if (mode.startsWith("matchRight")) {
-          for (let y = startingPosition; y < str.length; y++) {
-            const currentChar = str[y];
+          for (var _y = startingPosition; _y < str.length; _y++) {
+            var _currentChar = str[_y];
 
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(currentChar))) {
-              firstCharOutsideIndex = y;
+            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && _currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(_currentChar))) {
+              firstCharOutsideIndex = _y;
               break;
             }
           }
@@ -1162,9 +1182,9 @@
           return false;
         }
 
-        const wholeCharacterOutside = str[firstCharOutsideIndex];
-        const indexOfTheCharacterAfter = firstCharOutsideIndex + 1;
-        let theRemainderOfTheString = "";
+        var wholeCharacterOutside = str[firstCharOutsideIndex];
+        var indexOfTheCharacterAfter = firstCharOutsideIndex + 1;
+        var theRemainderOfTheString = "";
 
         if (indexOfTheCharacterAfter && indexOfTheCharacterAfter > 0) {
           theRemainderOfTheString = str.slice(0, indexOfTheCharacterAfter);
@@ -1181,30 +1201,32 @@
         return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
       }
 
-      let extraNote = "";
+      var extraNote = "";
 
       if (!originalOpts) {
         extraNote = " More so, the whole options object, the fourth input argument, is missing!";
       }
 
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_08] the third argument, "whatToMatch", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key "cb" is not set!${extraNote}`);
+      throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_08] the third argument, \"whatToMatch\", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key \"cb\" is not set!").concat(extraNote));
     }
 
-    for (let i = 0, len = whatToMatch.length; i < len; i++) {
+    for (var i = 0, len = whatToMatch.length; i < len; i++) {
       special = typeof whatToMatch[i] === "function";
-      const whatToMatchVal = whatToMatch[i];
-      let fullCharacterInFront;
-      let indexOfTheCharacterInFront;
-      let restOfStringInFront = "";
-      let startingPosition = position;
+      var whatToMatchVal = whatToMatch[i];
+      var fullCharacterInFront = void 0;
+      var indexOfTheCharacterInFront = void 0;
+      var restOfStringInFront = "";
+      var _startingPosition = position;
 
       if (mode === "matchRight") {
-        startingPosition += 1;
+        _startingPosition += 1;
       } else if (mode === "matchLeft") {
-        startingPosition -= 1;
+        _startingPosition -= 1;
       }
 
-      const found = march(str, startingPosition, whatToMatchVal, opts, special, i2 => mode[5] === "L" ? i2 - 1 : i2 + 1);
+      var found = march(str, _startingPosition, whatToMatchVal, opts, special, function (i2) {
+        return mode[5] === "L" ? i2 - 1 : i2 + 1;
+      });
 
       if (found && special && typeof whatToMatchVal === "function" && whatToMatchVal() === "EOL") {
         return whatToMatchVal() && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true) ? whatToMatchVal() : false;
@@ -1257,7 +1279,7 @@
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-range-expander
    */
   function expander(originalOpts) {
-    const letterOrDigit = /^[0-9a-zA-Z]+$/;
+    var letterOrDigit = /^[0-9a-zA-Z]+$/;
 
     function isWhitespace(char) {
       if (!char || typeof char !== "string") {
@@ -1271,47 +1293,47 @@
       return typeof something === "string";
     }
 
-    if (!originalOpts || typeof originalOpts !== "object" || Array.isArray(originalOpts)) {
-      let supplementalString;
+    if (!originalOpts || _typeof(originalOpts) !== "object" || Array.isArray(originalOpts)) {
+      var supplementalString;
 
       if (originalOpts === undefined) {
         supplementalString = "but it is missing completely.";
       } else if (originalOpts === null) {
         supplementalString = "but it was given as null.";
       } else {
-        supplementalString = `but it was given as ${typeof originalOpts}, equal to:\n${JSON.stringify(originalOpts, null, 4)}.`;
+        supplementalString = "but it was given as ".concat(_typeof(originalOpts), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4), ".");
       }
 
-      throw new Error(`string-range-expander: [THROW_ID_01] Input must be a plain object ${supplementalString}`);
-    } else if (typeof originalOpts === "object" && originalOpts !== null && !Array.isArray(originalOpts) && !Object.keys(originalOpts).length) {
-      throw new Error(`string-range-expander: [THROW_ID_02] Input must be a plain object but it was given as a plain object without any keys.`);
+      throw new Error("string-range-expander: [THROW_ID_01] Input must be a plain object ".concat(supplementalString));
+    } else if (_typeof(originalOpts) === "object" && originalOpts !== null && !Array.isArray(originalOpts) && !Object.keys(originalOpts).length) {
+      throw new Error("string-range-expander: [THROW_ID_02] Input must be a plain object but it was given as a plain object without any keys.");
     }
 
     if (typeof originalOpts.from !== "number") {
-      throw new Error(`string-range-expander: [THROW_ID_03] The input's "from" value opts.from, is not a number! Currently it's given as ${typeof originalOpts.from}, equal to ${JSON.stringify(originalOpts.from, null, 0)}`);
+      throw new Error("string-range-expander: [THROW_ID_03] The input's \"from\" value opts.from, is not a number! Currently it's given as ".concat(_typeof(originalOpts.from), ", equal to ").concat(JSON.stringify(originalOpts.from, null, 0)));
     }
 
     if (typeof originalOpts.to !== "number") {
-      throw new Error(`string-range-expander: [THROW_ID_04] The input's "to" value opts.to, is not a number! Currently it's given as ${typeof originalOpts.to}, equal to ${JSON.stringify(originalOpts.to, null, 0)}`);
+      throw new Error("string-range-expander: [THROW_ID_04] The input's \"to\" value opts.to, is not a number! Currently it's given as ".concat(_typeof(originalOpts.to), ", equal to ").concat(JSON.stringify(originalOpts.to, null, 0)));
     }
 
     if (!originalOpts.str[originalOpts.from] && originalOpts.from !== originalOpts.to) {
-      throw new Error(`string-range-expander: [THROW_ID_05] The given input string opts.str ("${originalOpts.str}") must contain the character at index "from" ("${originalOpts.from}")`);
+      throw new Error("string-range-expander: [THROW_ID_05] The given input string opts.str (\"".concat(originalOpts.str, "\") must contain the character at index \"from\" (\"").concat(originalOpts.from, "\")"));
     }
 
     if (!originalOpts.str[originalOpts.to - 1]) {
-      throw new Error(`string-range-expander: [THROW_ID_06] The given input string, opts.str ("${originalOpts.str}") must contain the character at index before "to" ("${originalOpts.to - 1}")`);
+      throw new Error("string-range-expander: [THROW_ID_06] The given input string, opts.str (\"".concat(originalOpts.str, "\") must contain the character at index before \"to\" (\"").concat(originalOpts.to - 1, "\")"));
     }
 
     if (originalOpts.from > originalOpts.to) {
-      throw new Error(`string-range-expander: [THROW_ID_07] The given "from" index, "${originalOpts.from}" is greater than "to" index, "${originalOpts.to}". That's wrong!`);
+      throw new Error("string-range-expander: [THROW_ID_07] The given \"from\" index, \"".concat(originalOpts.from, "\" is greater than \"to\" index, \"").concat(originalOpts.to, "\". That's wrong!"));
     }
 
     if (isStr(originalOpts.extendToOneSide) && originalOpts.extendToOneSide !== "left" && originalOpts.extendToOneSide !== "right" || !isStr(originalOpts.extendToOneSide) && originalOpts.extendToOneSide !== undefined && originalOpts.extendToOneSide !== false) {
-      throw new Error(`string-range-expander: [THROW_ID_08] The opts.extendToOneSide value is not recogniseable! It's set to: "${originalOpts.extendToOneSide}" (${typeof originalOpts.extendToOneSide}). It has to be either Boolean "false" or strings "left" or "right"`);
+      throw new Error("string-range-expander: [THROW_ID_08] The opts.extendToOneSide value is not recogniseable! It's set to: \"".concat(originalOpts.extendToOneSide, "\" (").concat(_typeof(originalOpts.extendToOneSide), "). It has to be either Boolean \"false\" or strings \"left\" or \"right\""));
     }
 
-    const defaults = {
+    var defaults = {
       str: "",
       from: 0,
       to: 0,
@@ -1324,15 +1346,14 @@
       wipeAllWhitespaceOnRight: false,
       addSingleSpaceToPreventAccidentalConcatenation: false
     };
-    const opts = { ...defaults,
-      ...originalOpts
-    };
+
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
     if (Array.isArray(opts.ifLeftSideIncludesThisThenCropTightly)) {
-      let culpritsIndex;
-      let culpritsValue;
+      var culpritsIndex;
+      var culpritsValue;
 
-      if (opts.ifLeftSideIncludesThisThenCropTightly.every((val, i) => {
+      if (opts.ifLeftSideIncludesThisThenCropTightly.every(function (val, i) {
         if (!isStr(val)) {
           culpritsIndex = i;
           culpritsValue = val;
@@ -1343,16 +1364,16 @@
       })) {
         opts.ifLeftSideIncludesThisThenCropTightly = opts.ifLeftSideIncludesThisThenCropTightly.join("");
       } else {
-        throw new Error(`string-range-expander: [THROW_ID_09] The opts.ifLeftSideIncludesThisThenCropTightly was set to an array:\n${JSON.stringify(opts.ifLeftSideIncludesThisThenCropTightly, null, 4)}. Now, that array contains not only string elements. For example, an element at index ${culpritsIndex} is of a type ${typeof culpritsValue} (equal to ${JSON.stringify(culpritsValue, null, 0)}).`);
+        throw new Error("string-range-expander: [THROW_ID_09] The opts.ifLeftSideIncludesThisThenCropTightly was set to an array:\n".concat(JSON.stringify(opts.ifLeftSideIncludesThisThenCropTightly, null, 4), ". Now, that array contains not only string elements. For example, an element at index ").concat(culpritsIndex, " is of a type ").concat(_typeof(culpritsValue), " (equal to ").concat(JSON.stringify(culpritsValue, null, 0), ")."));
       }
     }
 
-    const str = opts.str;
-    let from = opts.from;
-    let to = opts.to;
+    var str = opts.str;
+    var from = opts.from;
+    var to = opts.to;
 
     if (opts.extendToOneSide !== "right" && (isWhitespace(str[from - 1]) && (isWhitespace(str[from - 2]) || opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 2])) || str[from - 1] && opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 1]) || opts.wipeAllWhitespaceOnLeft && isWhitespace(str[from - 1]))) {
-      for (let i = from; i--;) {
+      for (var i = from; i--;) {
         if (!opts.ifLeftSideIncludesThisCropItToo.includes(str[i])) {
           if (str[i].trim()) {
             if (opts.wipeAllWhitespaceOnLeft || opts.ifLeftSideIncludesThisCropItToo.includes(str[i + 1])) {
@@ -1376,12 +1397,12 @@
     }
 
     if (opts.extendToOneSide !== "left" && (isWhitespace(str[to]) && (opts.wipeAllWhitespaceOnRight || isWhitespace(str[to + 1])) || opts.ifRightSideIncludesThisCropItToo.includes(str[to]))) {
-      for (let i = to, len = str.length; i < len; i++) {
-        if (!opts.ifRightSideIncludesThisCropItToo.includes(str[i]) && (str[i] && str[i].trim() || str[i] === undefined)) {
-          if (opts.wipeAllWhitespaceOnRight || opts.ifRightSideIncludesThisCropItToo.includes(str[i - 1])) {
-            to = i;
+      for (var _i = to, len = str.length; _i < len; _i++) {
+        if (!opts.ifRightSideIncludesThisCropItToo.includes(str[_i]) && (str[_i] && str[_i].trim() || str[_i] === undefined)) {
+          if (opts.wipeAllWhitespaceOnRight || opts.ifRightSideIncludesThisCropItToo.includes(str[_i - 1])) {
+            to = _i;
           } else {
-            to = i - 1;
+            to = _i - 1;
           }
 
           break;
@@ -1491,10 +1512,10 @@
     cloneableTags[errorTag] = cloneableTags[funcTag] = cloneableTags[weakMapTag] = false;
     /** Detect free variable `global` from Node.js. */
 
-    var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+    var freeGlobal = _typeof(commonjsGlobal) == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
     /** Detect free variable `self`. */
 
-    var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+    var freeSelf = (typeof self === "undefined" ? "undefined" : _typeof(self)) == 'object' && self && self.Object === Object && self;
     /** Used as a reference to the global object. */
 
     var root = freeGlobal || freeSelf || Function('return this')();
@@ -1748,7 +1769,7 @@
     /** Built-in value references. */
 
     var Buffer = moduleExports ? root.Buffer : undefined,
-        Symbol = root.Symbol,
+        _Symbol = root.Symbol,
         Uint8Array = root.Uint8Array,
         getPrototype = overArg(Object.getPrototypeOf, Object),
         objectCreate = Object.create,
@@ -1776,7 +1797,7 @@
         weakMapCtorString = toSource(WeakMap);
     /** Used to convert symbols to primitives and strings. */
 
-    var symbolProto = Symbol ? Symbol.prototype : undefined,
+    var symbolProto = _Symbol ? _Symbol.prototype : undefined,
         symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
     /**
      * Creates a hash object.
@@ -2694,7 +2715,7 @@
     // for data views in Edge < 14, and promises in Node.js.
 
     if (DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag || Map && getTag(new Map()) != mapTag || Promise && getTag(Promise.resolve()) != promiseTag || Set && getTag(new Set()) != setTag || WeakMap && getTag(new WeakMap()) != weakMapTag) {
-      getTag = function (value) {
+      getTag = function getTag(value) {
         var result = objectToString.call(value),
             Ctor = result == objectTag ? value.constructor : undefined,
             ctorString = Ctor ? toSource(Ctor) : undefined;
@@ -2834,7 +2855,8 @@
 
 
     function isKeyable(value) {
-      var type = typeof value;
+      var type = _typeof(value);
+
       return type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean' ? value !== '__proto__' : value === null;
     }
     /**
@@ -3157,7 +3179,8 @@
 
 
     function isObject(value) {
-      var type = typeof value;
+      var type = _typeof(value);
+
       return !!value && (type == 'object' || type == 'function');
     }
     /**
@@ -3187,7 +3210,7 @@
 
 
     function isObjectLike(value) {
-      return !!value && typeof value == 'object';
+      return !!value && _typeof(value) == 'object';
     }
     /**
      * Creates an array of the own enumerable property names of `object`.
@@ -3267,15 +3290,6 @@
     module.exports = cloneDeep;
   });
 
-  /**
-   * string-left-right
-   * Look what's to the left or the right of a given index within a string
-   * Version: 2.3.24
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right
-   */
-
   function rightMain(str, idx, stopAtNewlines) {
     if (typeof str !== "string" || !str.length) {
       return null;
@@ -3297,7 +3311,7 @@
       return idx + 2;
     }
 
-    for (let i = idx + 1, len = str.length; i < len; i++) {
+    for (var i = idx + 1, len = str.length; i < len; i++) {
       if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
         return i;
       }
@@ -3331,7 +3345,7 @@
       return idx - 2;
     }
 
-    for (let i = idx; i--;) {
+    for (var i = idx; i--;) {
       if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
         return i;
       }

@@ -29,12 +29,73 @@
     return _typeof(obj);
   }
 
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
   function _slicedToArray(arr, i) {
     return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
   }
 
+  function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+  }
+
+  function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+  }
+
   function _arrayWithHoles(arr) {
     if (Array.isArray(arr)) return arr;
+  }
+
+  function _iterableToArray(iter) {
+    if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
   }
 
   function _iterableToArrayLimit(arr, i) {
@@ -81,6 +142,10 @@
     return arr2;
   }
 
+  function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
   function _nonIterableRest() {
     throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
@@ -98,17 +163,17 @@
       return arrOfRanges;
     }
 
-    const defaults = {
+    var defaults = {
       strictlyTwoElementsInRangeArrays: false,
       progressFn: null
     };
-    const opts = { ...defaults,
-      ...originalOptions
-    };
-    let culpritsIndex;
-    let culpritsLen;
 
-    if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.every((rangeArr, indx) => {
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOptions);
+
+    var culpritsIndex;
+    var culpritsLen;
+
+    if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.every(function (rangeArr, indx) {
       if (rangeArr.length !== 2) {
         culpritsIndex = indx;
         culpritsLen = rangeArr.length;
@@ -117,10 +182,10 @@
 
       return true;
     })) {
-      throw new TypeError(`ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ${culpritsIndex}th range (${JSON.stringify(arrOfRanges[culpritsIndex], null, 4)}) has not two but ${culpritsLen} elements!`);
+      throw new TypeError("ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ".concat(culpritsIndex, "th range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 4), ") has not two but ").concat(culpritsLen, " elements!"));
     }
 
-    if (!arrOfRanges.every((rangeArr, indx) => {
+    if (!arrOfRanges.every(function (rangeArr, indx) {
       if (!Number.isInteger(rangeArr[0]) || rangeArr[0] < 0 || !Number.isInteger(rangeArr[1]) || rangeArr[1] < 0) {
         culpritsIndex = indx;
         return false;
@@ -128,12 +193,12 @@
 
       return true;
     })) {
-      throw new TypeError(`ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ${culpritsIndex}th range (${JSON.stringify(arrOfRanges[culpritsIndex], null, 4)}) does not consist of only natural numbers!`);
+      throw new TypeError("ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ".concat(culpritsIndex, "th range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 4), ") does not consist of only natural numbers!"));
     }
 
-    const maxPossibleIterations = arrOfRanges.length * arrOfRanges.length;
-    let counter = 0;
-    return Array.from(arrOfRanges).sort((range1, range2) => {
+    var maxPossibleIterations = arrOfRanges.length * arrOfRanges.length;
+    var counter = 0;
+    return Array.from(arrOfRanges).sort(function (range1, range2) {
       if (opts.progressFn) {
         counter += 1;
         opts.progressFn(Math.floor(counter * 100 / maxPossibleIterations));
@@ -159,45 +224,34 @@
     });
   }
 
-  /**
-   * ranges-merge
-   * Merge and sort arrays which mean string slice ranges
-   * Version: 4.3.8
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge
-   */
-
   function mergeRanges(arrOfRanges, originalOpts) {
     function isStr(something) {
       return typeof something === "string";
     }
 
     function isObj(something) {
-      return something && typeof something === "object" && !Array.isArray(something);
+      return something && _typeof(something) === "object" && !Array.isArray(something);
     }
 
     if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
       return arrOfRanges;
     }
 
-    const defaults = {
+    var defaults = {
       mergeType: 1,
       progressFn: null,
       joinRangesThatTouchEdges: true
     };
-    let opts;
+    var opts;
 
     if (originalOpts) {
       if (isObj(originalOpts)) {
-        opts = { ...defaults,
-          ...originalOpts
-        };
+        opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
         if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
           opts.progressFn = null;
         } else if (opts.progressFn && typeof opts.progressFn !== "function") {
-          throw new Error(`ranges-merge: [THROW_ID_01] opts.progressFn must be a function! It was given of a type: "${typeof opts.progressFn}", equal to ${JSON.stringify(opts.progressFn, null, 4)}`);
+          throw new Error("ranges-merge: [THROW_ID_01] opts.progressFn must be a function! It was given of a type: \"".concat(_typeof(opts.progressFn), "\", equal to ").concat(JSON.stringify(opts.progressFn, null, 4)));
         }
 
         if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
@@ -206,29 +260,32 @@
           } else if (isStr(opts.mergeType) && opts.mergeType.trim() === "2") {
             opts.mergeType = 2;
           } else {
-            throw new Error(`ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof opts.mergeType}", equal to ${JSON.stringify(opts.mergeType, null, 4)}`);
+            throw new Error("ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"".concat(_typeof(opts.mergeType), "\", equal to ").concat(JSON.stringify(opts.mergeType, null, 4)));
           }
         }
 
         if (typeof opts.joinRangesThatTouchEdges !== "boolean") {
-          throw new Error(`ranges-merge: [THROW_ID_04] opts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: "${typeof opts.joinRangesThatTouchEdges}", equal to ${JSON.stringify(opts.joinRangesThatTouchEdges, null, 4)}`);
+          throw new Error("ranges-merge: [THROW_ID_04] opts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: \"".concat(_typeof(opts.joinRangesThatTouchEdges), "\", equal to ").concat(JSON.stringify(opts.joinRangesThatTouchEdges, null, 4)));
         }
       } else {
-        throw new Error(`emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n${JSON.stringify(originalOpts, null, 4)} (type ${typeof originalOpts})`);
+        throw new Error("emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n".concat(JSON.stringify(originalOpts, null, 4), " (type ").concat(_typeof(originalOpts), ")"));
       }
     } else {
-      opts = { ...defaults
-      };
+      opts = _objectSpread2({}, defaults);
     }
 
-    const filtered = arrOfRanges.map(subarr => [...subarr]).filter(rangeArr => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]);
-    let sortedRanges;
-    let lastPercentageDone;
-    let percentageDone;
+    var filtered = arrOfRanges.map(function (subarr) {
+      return _toConsumableArray(subarr);
+    }).filter(function (rangeArr) {
+      return rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1];
+    });
+    var sortedRanges;
+    var lastPercentageDone;
+    var percentageDone;
 
     if (opts.progressFn) {
       sortedRanges = rangesSort(filtered, {
-        progressFn: percentage => {
+        progressFn: function progressFn(percentage) {
           percentageDone = Math.floor(percentage / 5);
 
           if (percentageDone !== lastPercentageDone) {
@@ -241,9 +298,9 @@
       sortedRanges = rangesSort(filtered);
     }
 
-    const len = sortedRanges.length - 1;
+    var len = sortedRanges.length - 1;
 
-    for (let i = len; i > 0; i--) {
+    for (var i = len; i > 0; i--) {
       if (opts.progressFn) {
         percentageDone = Math.floor((1 - i / len) * 78) + 21;
 
@@ -281,15 +338,7 @@
     return sortedRanges;
   }
 
-  /**
-   * ranges-crop
-   * Crop array of ranges when they go beyond the reference string's length
-   * Version: 2.0.56
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-crop
-   */
-  const isArr = Array.isArray;
+  var isArr = Array.isArray;
 
   function isStr(something) {
     return typeof something === "string";
@@ -301,20 +350,20 @@
 
   function rangesCrop(arrOfRanges, strLen) {
     if (!isArr(arrOfRanges)) {
-      throw new TypeError(`ranges-crop: [THROW_ID_01] The first input's argument must be an array, consisting of range arrays! Currently its type is: ${typeof arrOfRanges}, equal to: ${JSON.stringify(arrOfRanges, null, 4)}`);
+      throw new TypeError("ranges-crop: [THROW_ID_01] The first input's argument must be an array, consisting of range arrays! Currently its type is: ".concat(_typeof(arrOfRanges), ", equal to: ").concat(JSON.stringify(arrOfRanges, null, 4)));
     }
 
     if (!Number.isInteger(strLen)) {
-      throw new TypeError(`ranges-crop: [THROW_ID_02] The second input's argument must be a natural number or zero (coming from String.length)! Currently its type is: ${typeof strLen}, equal to: ${JSON.stringify(strLen, null, 4)}`);
+      throw new TypeError("ranges-crop: [THROW_ID_02] The second input's argument must be a natural number or zero (coming from String.length)! Currently its type is: ".concat(_typeof(strLen), ", equal to: ").concat(JSON.stringify(strLen, null, 4)));
     }
 
     if (arrOfRanges.length === 0) {
       return arrOfRanges;
     }
 
-    let culpritsIndex;
+    var culpritsIndex;
 
-    if (!arrOfRanges.every((rangeArr, indx) => {
+    if (!arrOfRanges.every(function (rangeArr, indx) {
       if (!Number.isInteger(rangeArr[0]) || !Number.isInteger(rangeArr[1])) {
         culpritsIndex = indx;
         return false;
@@ -323,13 +372,13 @@
       return true;
     })) {
       if (Array.isArray(arrOfRanges) && typeof arrOfRanges[0] === "number" && typeof arrOfRanges[1] === "number") {
-        throw new TypeError(`ranges-crop: [THROW_ID_03] The first argument should be AN ARRAY OF RANGES, not a single range! Currently arrOfRanges = ${JSON.stringify(arrOfRanges, null, 0)}!`);
+        throw new TypeError("ranges-crop: [THROW_ID_03] The first argument should be AN ARRAY OF RANGES, not a single range! Currently arrOfRanges = ".concat(JSON.stringify(arrOfRanges, null, 0), "!"));
       }
 
-      throw new TypeError(`ranges-crop: [THROW_ID_04] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ${culpritsIndex + 1}th range (${JSON.stringify(arrOfRanges[culpritsIndex], null, 0)}) does not consist of only natural numbers!`);
+      throw new TypeError("ranges-crop: [THROW_ID_04] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ".concat(culpritsIndex + 1, "th range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 0), ") does not consist of only natural numbers!"));
     }
 
-    if (!arrOfRanges.every((rangeArr, indx) => {
+    if (!arrOfRanges.every(function (rangeArr, indx) {
       if (existy(rangeArr[2]) && !isStr(rangeArr[2])) {
         culpritsIndex = indx;
         return false;
@@ -337,10 +386,12 @@
 
       return true;
     })) {
-      throw new TypeError(`ranges-crop: [THROW_ID_05] The third argument, if present at all, should be of a string-type or null. Currently the ${culpritsIndex}th range ${JSON.stringify(arrOfRanges[culpritsIndex], null, 0)} has a argument in the range of a type ${typeof arrOfRanges[culpritsIndex][2]}`);
+      throw new TypeError("ranges-crop: [THROW_ID_05] The third argument, if present at all, should be of a string-type or null. Currently the ".concat(culpritsIndex, "th range ").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 0), " has a argument in the range of a type ").concat(_typeof(arrOfRanges[culpritsIndex][2])));
     }
 
-    const res = mergeRanges(arrOfRanges).filter(singleRangeArr => singleRangeArr[0] <= strLen && (singleRangeArr[2] !== undefined || singleRangeArr[0] < strLen)).map(singleRangeArr => {
+    var res = mergeRanges(arrOfRanges).filter(function (singleRangeArr) {
+      return singleRangeArr[0] <= strLen && (singleRangeArr[2] !== undefined || singleRangeArr[0] < strLen);
+    }).map(function (singleRangeArr) {
       if (singleRangeArr[1] > strLen) {
         if (singleRangeArr[2] !== undefined) {
           return [singleRangeArr[0], strLen, singleRangeArr[2]];
@@ -354,23 +405,15 @@
     return res;
   }
 
-  /**
-   * ranges-invert
-   * Invert string index ranges [ [1, 3] ] => [ [0, 1], [3, ...] ]
-   * Version: 2.1.43
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-invert
-   */
-  const isArr$1 = Array.isArray;
+  var isArr$1 = Array.isArray;
 
   function rangesInvert(arrOfRanges, strLen, originalOptions) {
     if (!isArr$1(arrOfRanges) && arrOfRanges !== null) {
-      throw new TypeError(`ranges-invert: [THROW_ID_01] Input's first argument must be an array, consisting of range arrays! Currently its type is: ${typeof arrOfRanges}, equal to: ${JSON.stringify(arrOfRanges, null, 4)}`);
+      throw new TypeError("ranges-invert: [THROW_ID_01] Input's first argument must be an array, consisting of range arrays! Currently its type is: ".concat(_typeof(arrOfRanges), ", equal to: ").concat(JSON.stringify(arrOfRanges, null, 4)));
     }
 
     if (!Number.isInteger(strLen) || strLen < 0) {
-      throw new TypeError(`ranges-invert: [THROW_ID_02] Input's second argument must be a natural number or zero (coming from String.length)! Currently its type is: ${typeof strLen}, equal to: ${JSON.stringify(strLen, null, 4)}`);
+      throw new TypeError("ranges-invert: [THROW_ID_02] Input's second argument must be a natural number or zero (coming from String.length)! Currently its type is: ".concat(_typeof(strLen), ", equal to: ").concat(JSON.stringify(strLen, null, 4)));
     }
 
     if (arrOfRanges === null) {
@@ -385,17 +428,17 @@
       return [];
     }
 
-    const defaults = {
+    var defaults = {
       strictlyTwoElementsInRangeArrays: false,
       skipChecks: false
     };
-    const opts = { ...defaults,
-      ...originalOptions
-    };
-    let culpritsIndex;
-    let culpritsLen;
 
-    if (!opts.skipChecks && opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.every((rangeArr, indx) => {
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOptions);
+
+    var culpritsIndex;
+    var culpritsLen;
+
+    if (!opts.skipChecks && opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.every(function (rangeArr, indx) {
       if (rangeArr.length !== 2) {
         culpritsIndex = indx;
         culpritsLen = rangeArr.length;
@@ -404,10 +447,10 @@
 
       return true;
     })) {
-      throw new TypeError(`ranges-invert: [THROW_ID_04] Because opts.strictlyTwoElementsInRangeArrays was enabled, all ranges must be strictly two-element-long. However, the ${culpritsIndex}th range (${JSON.stringify(arrOfRanges[culpritsIndex], null, 0)}) has not two but ${culpritsLen} elements!`);
+      throw new TypeError("ranges-invert: [THROW_ID_04] Because opts.strictlyTwoElementsInRangeArrays was enabled, all ranges must be strictly two-element-long. However, the ".concat(culpritsIndex, "th range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 0), ") has not two but ").concat(culpritsLen, " elements!"));
     }
 
-    if (!opts.skipChecks && !arrOfRanges.every((rangeArr, indx) => {
+    if (!opts.skipChecks && !arrOfRanges.every(function (rangeArr, indx) {
       if (!Number.isInteger(rangeArr[0]) || rangeArr[0] < 0 || !Number.isInteger(rangeArr[1]) || rangeArr[1] < 0) {
         culpritsIndex = indx;
         return false;
@@ -416,18 +459,22 @@
       return true;
     })) {
       if (Array.isArray(arrOfRanges) && typeof arrOfRanges[0] === "number" && typeof arrOfRanges[1] === "number") {
-        throw new TypeError(`ranges-invert: [THROW_ID_07] The first argument should be AN ARRAY OF RANGES, not a single range! Currently arrOfRanges = ${JSON.stringify(arrOfRanges, null, 0)}!`);
+        throw new TypeError("ranges-invert: [THROW_ID_07] The first argument should be AN ARRAY OF RANGES, not a single range! Currently arrOfRanges = ".concat(JSON.stringify(arrOfRanges, null, 0), "!"));
       }
 
-      throw new TypeError(`ranges-invert: [THROW_ID_05] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ${culpritsIndex + 1}th range (${JSON.stringify(arrOfRanges[culpritsIndex], null, 0)}) does not consist of only natural numbers!`);
+      throw new TypeError("ranges-invert: [THROW_ID_05] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ".concat(culpritsIndex + 1, "th range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 0), ") does not consist of only natural numbers!"));
     }
 
-    let prep;
+    var prep;
 
     if (!opts.skipChecks) {
-      prep = mergeRanges(arrOfRanges.filter(rangeArr => rangeArr[0] !== rangeArr[1]));
+      prep = mergeRanges(arrOfRanges.filter(function (rangeArr) {
+        return rangeArr[0] !== rangeArr[1];
+      }));
     } else {
-      prep = arrOfRanges.filter(rangeArr => rangeArr[0] !== rangeArr[1]);
+      prep = arrOfRanges.filter(function (rangeArr) {
+        return rangeArr[0] !== rangeArr[1];
+      });
     }
 
     if (prep.length === 0) {
@@ -438,18 +485,18 @@
       return [[0, strLen]];
     }
 
-    const res = prep.reduce((accum, currArr, i, arr) => {
-      const res2 = [];
+    var res = prep.reduce(function (accum, currArr, i, arr) {
+      var res2 = [];
 
       if (i === 0 && arr[0][0] !== 0) {
         res2.push([0, arr[0][0]]);
       }
 
-      const endingIndex = i < arr.length - 1 ? arr[i + 1][0] : strLen;
+      var endingIndex = i < arr.length - 1 ? arr[i + 1][0] : strLen;
 
       if (currArr[1] !== endingIndex) {
         if (opts.skipChecks && currArr[1] > endingIndex) {
-          throw new TypeError(`ranges-invert: [THROW_ID_08] The checking (opts.skipChecks) is off and input ranges were not sorted! We nearly wrote range [${currArr[1]}, ${endingIndex}] which is backwards. For investigation, whole ranges array is:\n${JSON.stringify(arr, null, 0)}`);
+          throw new TypeError("ranges-invert: [THROW_ID_08] The checking (opts.skipChecks) is off and input ranges were not sorted! We nearly wrote range [".concat(currArr[1], ", ").concat(endingIndex, "] which is backwards. For investigation, whole ranges array is:\n").concat(JSON.stringify(arr, null, 0)));
         }
 
         res2.push([currArr[1], endingIndex]);
@@ -460,19 +507,19 @@
     return rangesCrop(res, strLen);
   }
 
-  const HIGH_SURROGATE_START = 0xd800;
-  const HIGH_SURROGATE_END = 0xdbff;
-  const LOW_SURROGATE_START = 0xdc00;
-  const REGIONAL_INDICATOR_START = 0x1f1e6;
-  const REGIONAL_INDICATOR_END = 0x1f1ff;
-  const FITZPATRICK_MODIFIER_START = 0x1f3fb;
-  const FITZPATRICK_MODIFIER_END = 0x1f3ff;
-  const VARIATION_MODIFIER_START = 0xfe00;
-  const VARIATION_MODIFIER_END = 0xfe0f;
-  const DIACRITICAL_MARKS_START = 0x20d0;
-  const DIACRITICAL_MARKS_END = 0x20ff;
-  const ZWJ = 0x200d;
-  const GRAPHEMS = [0x0308, // ( ◌̈ ) COMBINING DIAERESIS
+  var HIGH_SURROGATE_START = 0xd800;
+  var HIGH_SURROGATE_END = 0xdbff;
+  var LOW_SURROGATE_START = 0xdc00;
+  var REGIONAL_INDICATOR_START = 0x1f1e6;
+  var REGIONAL_INDICATOR_END = 0x1f1ff;
+  var FITZPATRICK_MODIFIER_START = 0x1f3fb;
+  var FITZPATRICK_MODIFIER_END = 0x1f3ff;
+  var VARIATION_MODIFIER_START = 0xfe00;
+  var VARIATION_MODIFIER_END = 0xfe0f;
+  var DIACRITICAL_MARKS_START = 0x20d0;
+  var DIACRITICAL_MARKS_END = 0x20ff;
+  var ZWJ = 0x200d;
+  var GRAPHEMS = [0x0308, // ( ◌̈ ) COMBINING DIAERESIS
   0x0937, // ( ष ) DEVANAGARI LETTER SSA
   0x0937, // ( ष ) DEVANAGARI LETTER SSA
   0x093F, // ( ि ) DEVANAGARI VOWEL SIGN I
@@ -494,9 +541,9 @@
       throw new Error('string cannot be undefined or null');
     }
 
-    const result = [];
-    let i = 0;
-    let increment = 0;
+    var result = [];
+    var i = 0;
+    var increment = 0;
 
     while (i < string.length) {
       increment += nextUnits(i + increment, string);
@@ -533,15 +580,15 @@
 
 
   function nextUnits(i, string) {
-    const current = string[i]; // If we don't have a value that is part of a surrogate pair, or we're at
+    var current = string[i]; // If we don't have a value that is part of a surrogate pair, or we're at
     // the end, only take the value at i
 
     if (!isFirstOfSurrogatePair(current) || i === string.length - 1) {
       return 1;
     }
 
-    const currentPair = current + string[i + 1];
-    let nextPair = string.substring(i + 2, i + 5); // Country flags are comprised of two regional indicator symbols,
+    var currentPair = current + string[i + 1];
+    var nextPair = string.substring(i + 2, i + 5); // Country flags are comprised of two regional indicator symbols,
     // each represented by a surrogate pair.
     // See http://emojipedia.org/flags/
     // If both pairs are regional indicator symbols, take 4
@@ -593,8 +640,8 @@
   }
 
   function codePointFromSurrogatePair(pair) {
-    const highOffset = pair.charCodeAt(0) - HIGH_SURROGATE_START;
-    const lowOffset = pair.charCodeAt(1) - LOW_SURROGATE_START;
+    var highOffset = pair.charCodeAt(0) - HIGH_SURROGATE_START;
+    var lowOffset = pair.charCodeAt(1) - LOW_SURROGATE_START;
     return (highOffset << 10) + lowOffset + 0x10000;
   }
 
@@ -603,7 +650,7 @@
   }
 
   function substring(string, start, width) {
-    const chars = runes(string);
+    var chars = runes(string);
 
     if (start === undefined) {
       return string;
@@ -613,9 +660,9 @@
       return '';
     }
 
-    const rest = chars.length - start;
-    const stringWidth = width === undefined ? rest : width;
-    let endIndex = start + stringWidth;
+    var rest = chars.length - start;
+    var stringWidth = width === undefined ? rest : width;
+    var endIndex = start + stringWidth;
 
     if (endIndex > start + rest) {
       endIndex = undefined;

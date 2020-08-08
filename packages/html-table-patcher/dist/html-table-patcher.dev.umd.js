@@ -29,6 +29,28 @@
     return _typeof(obj);
   }
 
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  function _createClass(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties(Constructor, staticProps);
+    return Constructor;
+  }
+
   function _defineProperty(obj, key, value) {
     if (key in obj) {
       Object.defineProperty(obj, key, {
@@ -78,6 +100,39 @@
     return target;
   }
 
+  function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+  }
+
+  function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+  }
+
+  function _iterableToArray(iter) {
+    if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+  }
+
+  function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+  }
+
+  function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+
+    for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+
+  function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
   /**
    * ast-monkey-util
    * Utility library of AST helper functions
@@ -92,11 +147,11 @@
     }
 
     if (str.includes(".") && /^\d*$/.test(str.slice(str.lastIndexOf(".") + 1))) {
-      return `${str.slice(0, str.lastIndexOf(".") + 1)}${+str.slice(str.lastIndexOf(".") + 1) + 1}`;
+      return "".concat(str.slice(0, str.lastIndexOf(".") + 1)).concat(+str.slice(str.lastIndexOf(".") + 1) + 1);
     }
 
     if (/^\d*$/.test(str)) {
-      return `${+str + 1}`;
+      return "".concat(+str + 1);
     }
 
     return str;
@@ -107,18 +162,18 @@
       return null;
     }
 
-    const extractedValue = str.slice(str.lastIndexOf(".") + 1);
+    var extractedValue = str.slice(str.lastIndexOf(".") + 1);
 
     if (extractedValue === "0") {
       return null;
     }
 
     if (str.includes(".") && /^\d*$/.test(extractedValue)) {
-      return `${str.slice(0, str.lastIndexOf(".") + 1)}${+str.slice(str.lastIndexOf(".") + 1) - 1}`;
+      return "".concat(str.slice(0, str.lastIndexOf(".") + 1)).concat(+str.slice(str.lastIndexOf(".") + 1) - 1);
     }
 
     if (/^\d*$/.test(str)) {
-      return `${+str - 1}`;
+      return "".concat(+str - 1);
     }
 
     return null;
@@ -130,9 +185,9 @@
         return "0";
       }
 
-      let dotsCount = 0;
+      var dotsCount = 0;
 
-      for (let i = str.length; i--;) {
+      for (var i = str.length; i--;) {
         if (str[i] === ".") {
           dotsCount += 1;
         }
@@ -146,14 +201,6 @@
     return str;
   }
 
-  /**
-   * lodash (Custom Build) <https://lodash.com/>
-   * Build: `lodash modularize exports="npm" -o ./`
-   * Copyright jQuery Foundation and other contributors <https://jquery.org/>
-   * Released under MIT license <https://lodash.com/license>
-   * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
-   * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
-   */
   /** Used for built-in method references. */
 
 
@@ -250,10 +297,10 @@
     cloneableTags[errorTag] = cloneableTags[funcTag] = cloneableTags[weakMapTag] = false;
     /** Detect free variable `global` from Node.js. */
 
-    var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+    var freeGlobal = _typeof(commonjsGlobal) == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
     /** Detect free variable `self`. */
 
-    var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+    var freeSelf = (typeof self === "undefined" ? "undefined" : _typeof(self)) == 'object' && self && self.Object === Object && self;
     /** Used as a reference to the global object. */
 
     var root = freeGlobal || freeSelf || Function('return this')();
@@ -507,7 +554,7 @@
     /** Built-in value references. */
 
     var Buffer = moduleExports ? root.Buffer : undefined,
-        Symbol = root.Symbol,
+        _Symbol = root.Symbol,
         Uint8Array = root.Uint8Array,
         getPrototype = overArg(Object.getPrototypeOf, Object),
         objectCreate = Object.create,
@@ -535,7 +582,7 @@
         weakMapCtorString = toSource(WeakMap);
     /** Used to convert symbols to primitives and strings. */
 
-    var symbolProto = Symbol ? Symbol.prototype : undefined,
+    var symbolProto = _Symbol ? _Symbol.prototype : undefined,
         symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
     /**
      * Creates a hash object.
@@ -1453,7 +1500,7 @@
     // for data views in Edge < 14, and promises in Node.js.
 
     if (DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag || Map && getTag(new Map()) != mapTag || Promise && getTag(Promise.resolve()) != promiseTag || Set && getTag(new Set()) != setTag || WeakMap && getTag(new WeakMap()) != weakMapTag) {
-      getTag = function (value) {
+      getTag = function getTag(value) {
         var result = objectToString.call(value),
             Ctor = result == objectTag ? value.constructor : undefined,
             ctorString = Ctor ? toSource(Ctor) : undefined;
@@ -1593,7 +1640,8 @@
 
 
     function isKeyable(value) {
-      var type = typeof value;
+      var type = _typeof(value);
+
       return type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean' ? value !== '__proto__' : value === null;
     }
     /**
@@ -1916,7 +1964,8 @@
 
 
     function isObject(value) {
-      var type = typeof value;
+      var type = _typeof(value);
+
       return !!value && (type == 'object' || type == 'function');
     }
     /**
@@ -1946,7 +1995,7 @@
 
 
     function isObjectLike(value) {
-      return !!value && typeof value == 'object';
+      return !!value && _typeof(value) == 'object';
     }
     /**
      * Creates an array of the own enumerable property names of `object`.
@@ -2026,15 +2075,6 @@
     module.exports = cloneDeep;
   });
 
-  /**
-   * string-left-right
-   * Look what's to the left or the right of a given index within a string
-   * Version: 2.3.24
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right
-   */
-
   function rightMain(str, idx, stopAtNewlines) {
     if (typeof str !== "string" || !str.length) {
       return null;
@@ -2056,7 +2096,7 @@
       return idx + 2;
     }
 
-    for (let i = idx + 1, len = str.length; i < len; i++) {
+    for (var i = idx + 1, len = str.length; i < len; i++) {
       if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
         return i;
       }
@@ -2090,7 +2130,7 @@
       return idx - 2;
     }
 
-    for (let i = idx; i--;) {
+    for (var i = idx; i--;) {
       if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
         return i;
       }
@@ -2103,17 +2143,8 @@
     return leftMain(str, idx, false);
   }
 
-  /**
-   * string-find-malformed
-   * Search for a malformed string. Think of Levenshtein distance but in search.
-   * Version: 1.1.9
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-find-malformed
-   */
-
   function isObj(something) {
-    return something && typeof something === "object" && !Array.isArray(something);
+    return something && _typeof(something) === "object" && !Array.isArray(something);
   }
 
   function isStr(something) {
@@ -2122,52 +2153,51 @@
 
   function strFindMalformed(str, refStr, cb, originalOpts) {
     if (!isStr(str)) {
-      throw new TypeError(`string-find-malformed: [THROW_ID_01] the first input argument, string where to look for, must be a string! Currently it's equal to: ${str} (type: ${typeof str})`);
+      throw new TypeError("string-find-malformed: [THROW_ID_01] the first input argument, string where to look for, must be a string! Currently it's equal to: ".concat(str, " (type: ").concat(_typeof(str), ")"));
     } else if (!str.length) {
       return;
     }
 
     if (!isStr(refStr)) {
-      throw new TypeError(`string-find-malformed: [THROW_ID_02] the second input argument, string we should find, must be a string! Currently it's equal to: ${refStr} (type: ${typeof refStr})`);
+      throw new TypeError("string-find-malformed: [THROW_ID_02] the second input argument, string we should find, must be a string! Currently it's equal to: ".concat(refStr, " (type: ").concat(_typeof(refStr), ")"));
     } else if (!refStr.length) {
       return;
     }
 
     if (typeof cb !== "function") {
-      throw new TypeError(`string-find-malformed: [THROW_ID_03] the third input argument, a callback function, must be a function! Currently it's equal to: ${cb} (type: ${typeof cb})`);
+      throw new TypeError("string-find-malformed: [THROW_ID_03] the third input argument, a callback function, must be a function! Currently it's equal to: ".concat(cb, " (type: ").concat(_typeof(cb), ")"));
     }
 
     if (originalOpts && !isObj(originalOpts)) {
-      throw new TypeError(`string-find-malformed: [THROW_ID_04] the fourth input argument, an Optional Options Object, must be a plain object! Currently it's equal to: ${originalOpts} (type: ${typeof originalOpts})`);
+      throw new TypeError("string-find-malformed: [THROW_ID_04] the fourth input argument, an Optional Options Object, must be a plain object! Currently it's equal to: ".concat(originalOpts, " (type: ").concat(_typeof(originalOpts), ")"));
     }
 
-    const defaults = {
+    var defaults = {
       stringOffset: 0,
       maxDistance: 1,
       ignoreWhitespace: true
     };
-    const opts = { ...defaults,
-      ...originalOpts
-    };
+
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
     if (typeof opts.stringOffset === "string" && /^\d*$/.test(opts.stringOffset)) {
       opts.stringOffset = Number(opts.stringOffset);
     } else if (!Number.isInteger(opts.stringOffset) || opts.stringOffset < 0) {
-      throw new TypeError(`${opts.source} [THROW_ID_05] opts.stringOffset must be a natural number or zero! Currently it's: ${opts.fromIndex}`);
+      throw new TypeError("".concat(opts.source, " [THROW_ID_05] opts.stringOffset must be a natural number or zero! Currently it's: ").concat(opts.fromIndex));
     }
 
-    const len = str.length;
-    const len2 = Math.min(refStr.length, opts.maxDistance + 1);
-    let pendingMatchesArr = [];
-    const patience = opts.maxDistance;
-    let wasThisLetterMatched;
+    var len = str.length;
+    var len2 = Math.min(refStr.length, opts.maxDistance + 1);
+    var pendingMatchesArr = [];
+    var patience = opts.maxDistance;
+    var wasThisLetterMatched;
 
-    for (let i = 0; i < len; i++) {
+    for (var i = 0; i < len; i++) {
       if (opts.ignoreWhitespace && !str[i].trim()) {
         continue;
       }
 
-      for (let z = 0, len3 = pendingMatchesArr.length; z < len3; z++) {
+      for (var z = 0, len3 = pendingMatchesArr.length; z < len3; z++) {
         wasThisLetterMatched = false;
 
         if (Array.isArray(pendingMatchesArr[z].pendingToCheck) && pendingMatchesArr[z].pendingToCheck.length && str[i] === pendingMatchesArr[z].pendingToCheck[0]) {
@@ -2191,12 +2221,18 @@
         }
       }
 
-      pendingMatchesArr = pendingMatchesArr.filter(obj => obj.patienceLeft >= 0);
-      const tempArr = pendingMatchesArr.filter(obj => obj.pendingToCheck.length === 0).map(obj => obj.startsAt);
+      pendingMatchesArr = pendingMatchesArr.filter(function (obj) {
+        return obj.patienceLeft >= 0;
+      });
+      var tempArr = pendingMatchesArr.filter(function (obj) {
+        return obj.pendingToCheck.length === 0;
+      }).map(function (obj) {
+        return obj.startsAt;
+      });
 
       if (Array.isArray(tempArr) && tempArr.length) {
-        const idxFrom = Math.min(...tempArr);
-        const idxTo = i + (wasThisLetterMatched ? 1 : 0);
+        var idxFrom = Math.min.apply(Math, _toConsumableArray(tempArr));
+        var idxTo = i + (wasThisLetterMatched ? 1 : 0);
 
         if (str.slice(idxFrom, idxTo) !== refStr) {
           cb({
@@ -2205,12 +2241,14 @@
           });
         }
 
-        pendingMatchesArr = pendingMatchesArr.filter(obj => obj.pendingToCheck.length);
+        pendingMatchesArr = pendingMatchesArr.filter(function (obj) {
+          return obj.pendingToCheck.length;
+        });
       }
 
-      for (let y = 0; y < len2; y++) {
+      for (var y = 0; y < len2; y++) {
         if (str[i] === refStr[y]) {
-          const whatToPush = {
+          var whatToPush = {
             startsAt: i,
             patienceLeft: patience - y,
             pendingToCheck: Array.from(refStr.slice(y + 1))
@@ -2242,17 +2280,8 @@
     return something;
   }
 
-  /**
-   * string-match-left-right
-   * Do substrings match what's on the left or right of a given index?
-   * Version: 4.0.8
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right
-   */
-
   function isObj$1(something) {
-    return something && typeof something === "object" && !Array.isArray(something);
+    return something && _typeof(something) === "object" && !Array.isArray(something);
   }
 
   function isStr$1(something) {
@@ -2260,7 +2289,7 @@
   }
 
   function march(str, fromIndexInclusive, whatToMatchVal, opts, special, getNextIdx) {
-    const whatToMatchValVal = typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal;
+    var whatToMatchValVal = typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal;
 
     if (fromIndexInclusive < 0 && special && whatToMatchValVal === "EOL") {
       return whatToMatchValVal;
@@ -2270,17 +2299,17 @@
       return false;
     }
 
-    let charsToCheckCount = special ? 1 : whatToMatchVal.length;
-    let lastWasMismatched = false;
-    let atLeastSomethingWasMatched = false;
-    let patience = opts.maxMismatches;
-    let i = fromIndexInclusive;
-    let somethingFound = false;
-    let firstCharacterMatched = false;
-    let lastCharacterMatched = false;
+    var charsToCheckCount = special ? 1 : whatToMatchVal.length;
+    var lastWasMismatched = false;
+    var atLeastSomethingWasMatched = false;
+    var patience = opts.maxMismatches;
+    var i = fromIndexInclusive;
+    var somethingFound = false;
+    var firstCharacterMatched = false;
+    var lastCharacterMatched = false;
 
     while (str[i]) {
-      const nextIdx = getNextIdx(i);
+      var nextIdx = getNextIdx(i);
 
       if (opts.trimBeforeMatching && str[i].trim() === "") {
         if (!str[nextIdx] && special && whatToMatchVal === "EOL") {
@@ -2291,7 +2320,9 @@
         continue;
       }
 
-      if (!opts.i && opts.trimCharsBeforeMatching.includes(str[i]) || opts.i && opts.trimCharsBeforeMatching.map(val => val.toLowerCase()).includes(str[i].toLowerCase())) {
+      if (!opts.i && opts.trimCharsBeforeMatching.includes(str[i]) || opts.i && opts.trimCharsBeforeMatching.map(function (val) {
+        return val.toLowerCase();
+      }).includes(str[i].toLowerCase())) {
         if (special && whatToMatchVal === "EOL" && !str[nextIdx]) {
           return true;
         }
@@ -2300,7 +2331,7 @@
         continue;
       }
 
-      const charToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount] : whatToMatchVal[charsToCheckCount - 1];
+      var charToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount] : whatToMatchVal[charsToCheckCount - 1];
 
       if (!opts.i && str[i] === charToCompareAgainst || opts.i && str[i].toLowerCase() === charToCompareAgainst.toLowerCase()) {
         if (!somethingFound) {
@@ -2326,9 +2357,9 @@
         if (opts.maxMismatches && patience && i) {
           patience -= 1;
 
-          for (let y = 0; y <= patience; y++) {
-            const nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1 + y] : whatToMatchVal[charsToCheckCount - 2 - y];
-            const nextCharInSource = str[getNextIdx(i)];
+          for (var y = 0; y <= patience; y++) {
+            var nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1 + y] : whatToMatchVal[charsToCheckCount - 2 - y];
+            var nextCharInSource = str[getNextIdx(i)];
 
             if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
               charsToCheckCount -= 2;
@@ -2378,7 +2409,7 @@
   }
 
   function main(mode, str, position, originalWhatToMatch, originalOpts) {
-    const defaults = {
+    var defaults = {
       i: false,
       trimBeforeMatching: false,
       trimCharsBeforeMatching: [],
@@ -2388,14 +2419,15 @@
     };
 
     if (isObj$1(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!${Array.isArray(originalOpts.trimBeforeMatching) ? ` Did you mean to use opts.trimCharsBeforeMatching?` : ""}`);
+      throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!").concat(Array.isArray(originalOpts.trimBeforeMatching) ? " Did you mean to use opts.trimCharsBeforeMatching?" : ""));
     }
 
-    const opts = { ...defaults,
-      ...originalOpts
-    };
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
+
     opts.trimCharsBeforeMatching = arrayiffyString(opts.trimCharsBeforeMatching);
-    opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(el => isStr$1(el) ? el : String(el));
+    opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(function (el) {
+      return isStr$1(el) ? el : String(el);
+    });
 
     if (!isStr$1(str)) {
       return false;
@@ -2406,11 +2438,11 @@
     }
 
     if (!Number.isInteger(position) || position < 0) {
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_03] the second argument should be a natural number. Currently it's of a type: ${typeof position}, equal to:\n${JSON.stringify(position, null, 4)}`);
+      throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_03] the second argument should be a natural number. Currently it's of a type: ").concat(_typeof(position), ", equal to:\n").concat(JSON.stringify(position, null, 4)));
     }
 
-    let whatToMatch;
-    let special;
+    var whatToMatch;
+    var special;
 
     if (isStr$1(originalWhatToMatch)) {
       whatToMatch = [originalWhatToMatch];
@@ -2422,17 +2454,17 @@
       whatToMatch = [];
       whatToMatch.push(originalWhatToMatch);
     } else {
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's ${typeof originalWhatToMatch}, equal to:\n${JSON.stringify(originalWhatToMatch, null, 4)}`);
+      throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's ").concat(_typeof(originalWhatToMatch), ", equal to:\n").concat(JSON.stringify(originalWhatToMatch, null, 4)));
     }
 
     if (originalOpts && !isObj$1(originalOpts)) {
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type "${typeof originalOpts}", and equal to:\n${JSON.stringify(originalOpts, null, 4)}`);
+      throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type \"").concat(_typeof(originalOpts), "\", and equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
     }
 
-    let culpritsIndex;
-    let culpritsVal;
+    var culpritsIndex;
+    var culpritsVal;
 
-    if (opts.trimCharsBeforeMatching.some((el, i) => {
+    if (opts.trimCharsBeforeMatching.some(function (el, i) {
       if (el.length > 1) {
         culpritsIndex = i;
         culpritsVal = el;
@@ -2441,21 +2473,21 @@
 
       return false;
     })) {
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ${culpritsIndex} is longer than 1 character, ${culpritsVal.length} (equals to ${culpritsVal}). Please split it into separate characters and put into array as separate elements.`);
+      throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ").concat(culpritsIndex, " is longer than 1 character, ").concat(culpritsVal.length, " (equals to ").concat(culpritsVal, "). Please split it into separate characters and put into array as separate elements."));
     }
 
     if (!whatToMatch || !Array.isArray(whatToMatch) || Array.isArray(whatToMatch) && !whatToMatch.length || Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr$1(whatToMatch[0]) && !whatToMatch[0].trim()) {
       if (typeof opts.cb === "function") {
-        let firstCharOutsideIndex;
-        let startingPosition = position;
+        var firstCharOutsideIndex;
+        var startingPosition = position;
 
         if (mode === "matchLeftIncl" || mode === "matchRight") {
           startingPosition += 1;
         }
 
         if (mode[5] === "L") {
-          for (let y = startingPosition; y--;) {
-            const currentChar = str[y];
+          for (var y = startingPosition; y--;) {
+            var currentChar = str[y];
 
             if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
               firstCharOutsideIndex = y;
@@ -2463,11 +2495,11 @@
             }
           }
         } else if (mode.startsWith("matchRight")) {
-          for (let y = startingPosition; y < str.length; y++) {
-            const currentChar = str[y];
+          for (var _y = startingPosition; _y < str.length; _y++) {
+            var _currentChar = str[_y];
 
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(currentChar))) {
-              firstCharOutsideIndex = y;
+            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && _currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(_currentChar))) {
+              firstCharOutsideIndex = _y;
               break;
             }
           }
@@ -2477,9 +2509,9 @@
           return false;
         }
 
-        const wholeCharacterOutside = str[firstCharOutsideIndex];
-        const indexOfTheCharacterAfter = firstCharOutsideIndex + 1;
-        let theRemainderOfTheString = "";
+        var wholeCharacterOutside = str[firstCharOutsideIndex];
+        var indexOfTheCharacterAfter = firstCharOutsideIndex + 1;
+        var theRemainderOfTheString = "";
 
         if (indexOfTheCharacterAfter && indexOfTheCharacterAfter > 0) {
           theRemainderOfTheString = str.slice(0, indexOfTheCharacterAfter);
@@ -2496,30 +2528,32 @@
         return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
       }
 
-      let extraNote = "";
+      var extraNote = "";
 
       if (!originalOpts) {
         extraNote = " More so, the whole options object, the fourth input argument, is missing!";
       }
 
-      throw new Error(`string-match-left-right/${mode}(): [THROW_ID_08] the third argument, "whatToMatch", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key "cb" is not set!${extraNote}`);
+      throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_08] the third argument, \"whatToMatch\", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key \"cb\" is not set!").concat(extraNote));
     }
 
-    for (let i = 0, len = whatToMatch.length; i < len; i++) {
+    for (var i = 0, len = whatToMatch.length; i < len; i++) {
       special = typeof whatToMatch[i] === "function";
-      const whatToMatchVal = whatToMatch[i];
-      let fullCharacterInFront;
-      let indexOfTheCharacterInFront;
-      let restOfStringInFront = "";
-      let startingPosition = position;
+      var whatToMatchVal = whatToMatch[i];
+      var fullCharacterInFront = void 0;
+      var indexOfTheCharacterInFront = void 0;
+      var restOfStringInFront = "";
+      var _startingPosition = position;
 
       if (mode === "matchRight") {
-        startingPosition += 1;
+        _startingPosition += 1;
       } else if (mode === "matchLeft") {
-        startingPosition -= 1;
+        _startingPosition -= 1;
       }
 
-      const found = march(str, startingPosition, whatToMatchVal, opts, special, i2 => mode[5] === "L" ? i2 - 1 : i2 + 1);
+      var found = march(str, _startingPosition, whatToMatchVal, opts, special, function (i2) {
+        return mode[5] === "L" ? i2 - 1 : i2 + 1;
+      });
 
       if (found && special && typeof whatToMatchVal === "function" && whatToMatchVal() === "EOL") {
         return whatToMatchVal() && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true) ? whatToMatchVal() : false;
@@ -2575,7 +2609,7 @@
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities
    */
-  const allHtmlAttribs = new Set(["abbr", "accept", "accept-charset", "accesskey", "action", "align", "alink", "allow", "alt", "archive", "async", "autocapitalize", "autocomplete", "autofocus", "autoplay", "axis", "background", "background-attachment", "background-color", "background-image", "background-position", "background-position-x", "background-position-y", "background-repeat", "bgcolor", "border", "border-bottom", "border-bottom-color", "border-bottom-style", "border-bottom-width", "border-collapse", "border-color", "border-left", "border-left-color", "border-left-style", "border-left-width", "border-right", "border-right-color", "border-right-style", "border-right-width", "border-style", "border-top", "border-top-color", "border-top-style", "border-top-width", "border-width", "buffered", "capture", "cellpadding", "cellspacing", "challenge", "char", "charoff", "charset", "checked", "cite", "class", "classid", "clear", "clip", "code", "codebase", "codetype", "color", "cols", "colspan", "column-span", "compact", "content", "contenteditable", "contextmenu", "controls", "coords", "crossorigin", "csp", "cursor", "data", "data-*", "datetime", "declare", "decoding", "default", "defer", "dir", "direction", "dirname", "disabled", "display", "download", "draggable", "dropzone", "enctype", "enterkeyhint", "face", "filter", "float", "font", "font-color", "font-emphasize", "font-emphasize-position", "font-emphasize-style", "font-family", "font-size", "font-style", "font-variant", "font-weight", "for", "form", "formaction", "formenctype", "formmethod", "formnovalidate", "formtarget", "frame", "frameborder", "frontuid", "headers", "height", "hidden", "high", "horiz-align", "href", "hreflang", "hspace", "http-equiv", "icon", "id", "importance", "inputmode", "integrity", "intrinsicsize", "ismap", "itemprop", "keytype", "kind", "label", "lang", "language", "layout-flow", "layout-grid", "layout-grid-char", "layout-grid-line", "layout-grid-mode", "layout-grid-type", "left", "letter-spacing", "line-break", "line-height", "link", "list", "list-image-1", "list-image-2", "list-image-3", "list-style", "list-style-image", "list-style-position", "list-style-type", "loading", "longdesc", "loop", "low", "manifest", "margin", "margin-bottom", "margin-left", "margin-right", "margin-top", "marginheight", "marginwidth", "max", "maxlength", "media", "method", "min", "minlength", "mso-ansi-font-size", "mso-ansi-font-style", "mso-ansi-font-weight", "mso-ansi-language", "mso-ascii-font-family", "mso-background", "mso-background-source", "mso-baseline-position", "mso-bidi-flag", "mso-bidi-font-family", "mso-bidi-font-size", "mso-bidi-font-style", "mso-bidi-font-weight", "mso-bidi-language", "mso-bookmark", "mso-border-alt", "mso-border-between", "mso-border-between-color", "mso-border-between-style", "mso-border-between-width", "mso-border-bottom-alt", "mso-border-bottom-color-alt", "mso-border-bottom-source", "mso-border-bottom-style-alt", "mso-border-bottom-width-alt", "mso-border-color-alt", "mso-border-effect", "mso-border-left-alt", "mso-border-left-color-alt", "mso-border-left-source", "mso-border-left-style-alt", "mso-border-left-width-alt", "mso-border-right-alt", "mso-border-right-color-alt", "mso-border-right-source", "mso-border-right-style-alt", "mso-border-right-width-alt", "mso-border-shadow", "mso-border-source", "mso-border-style-alt", "mso-border-top-alt", "mso-border-top-color-alt", "mso-border-top-source", "mso-border-top-style-alt", "mso-border-top-width-alt", "mso-border-width-alt", "mso-break-type", "mso-build", "mso-build-after-action", "mso-build-after-color", "mso-build-auto-secs", "mso-build-avi", "mso-build-dual-id", "mso-build-order", "mso-build-sound-name", "mso-bullet-image", "mso-cell-special", "mso-cellspacing", "mso-char-indent", "mso-char-indent-count", "mso-char-indent-size", "mso-char-type", "mso-char-wrap", "mso-color-alt", "mso-color-index", "mso-color-source", "mso-column-break-before", "mso-column-separator", "mso-columns", "mso-comment-author", "mso-comment-continuation", "mso-comment-id", "mso-comment-reference", "mso-data-placement", "mso-default-height", "mso-default-width", "mso-diagonal-down", "mso-diagonal-down-color", "mso-diagonal-down-source", "mso-diagonal-down-style", "mso-diagonal-down-width", "mso-diagonal-up", "mso-diagonal-up-color", "mso-diagonal-up-source", "mso-diagonal-up-style", "mso-diagonal-up-width", "mso-displayed-decimal-separator", "mso-displayed-thousand-separator", "mso-element", "mso-element-anchor-horizontal", "mso-element-anchor-lock", "mso-element-anchor-vertical", "mso-element-frame-height", "mso-element-frame-hspace", "mso-element-frame-vspace", "mso-element-frame-width", "mso-element-left", "mso-element-linespan", "mso-element-top", "mso-element-wrap", "mso-endnote-continuation-notice", "mso-endnote-continuation-notice-id", "mso-endnote-continuation-notice-src", "mso-endnote-continuation-separator", "mso-endnote-continuation-separator-id", "mso-endnote-continuation-separator-src", "mso-endnote-display", "mso-endnote-id", "mso-endnote-numbering", "mso-endnote-numbering-restart", "mso-endnote-numbering-start", "mso-endnote-numbering-style", "mso-endnote-position", "mso-endnote-separator", "mso-endnote-separator-id", "mso-endnote-separator-src", "mso-even-footer", "mso-even-footer-id", "mso-even-footer-src", "mso-even-header", "mso-even-header-id", "mso-even-header-src", "mso-facing-pages", "mso-fareast-font-family", "mso-fareast-hint", "mso-fareast-language", "mso-field-change", "mso-field-change-author", "mso-field-change-time", "mso-field-change-value", "mso-field-code", "mso-field-lock", "mso-fills-color", "mso-first-footer", "mso-first-footer-id", "mso-first-footer-src", "mso-first-header", "mso-first-header-id", "mso-first-header-src", "mso-font-alt", "mso-font-charset", "mso-font-format", "mso-font-info", "mso-font-info-charset", "mso-font-info-type", "mso-font-kerning", "mso-font-pitch", "mso-font-signature", "mso-font-signature-csb-one", "mso-font-signature-csb-two", "mso-font-signature-usb-four", "mso-font-signature-usb-one", "mso-font-signature-usb-three", "mso-font-signature-usb-two", "mso-font-src", "mso-font-width", "mso-footer", "mso-footer-data", "mso-footer-id", "mso-footer-margin", "mso-footer-src", "mso-footnote-continuation-notice", "mso-footnote-continuation-notice-id", "mso-footnote-continuation-notice-src", "mso-footnote-continuation-separator", "mso-footnote-continuation-separator-id", "mso-footnote-continuation-separator-src", "mso-footnote-id", "mso-footnote-numbering", "mso-footnote-numbering-restart", "mso-footnote-numbering-start", "mso-footnote-numbering-style", "mso-footnote-position", "mso-footnote-separator", "mso-footnote-separator-id", "mso-footnote-separator-src", "mso-foreground", "mso-forms-protection", "mso-generic-font-family", "mso-grid-bottom", "mso-grid-bottom-count", "mso-grid-left", "mso-grid-left-count", "mso-grid-right", "mso-grid-right-count", "mso-grid-top", "mso-grid-top-count", "mso-gutter-direction", "mso-gutter-margin", "mso-gutter-position", "mso-hansi-font-family", "mso-header", "mso-header-data", "mso-header-id", "mso-header-margin", "mso-header-src", "mso-height-alt", "mso-height-rule", "mso-height-source", "mso-hide", "mso-highlight", "mso-horizontal-page-align", "mso-hyphenate", "mso-ignore", "mso-kinsoku-overflow", "mso-layout-grid-align", "mso-layout-grid-char-alt", "mso-layout-grid-origin", "mso-level-inherit", "mso-level-legacy", "mso-level-legacy-indent", "mso-level-legacy-space", "mso-level-legal-format", "mso-level-number-format", "mso-level-number-position", "mso-level-numbering", "mso-level-reset-level", "mso-level-start-at", "mso-level-style-link", "mso-level-suffix", "mso-level-tab-stop", "mso-level-text", "mso-line-break-override", "mso-line-grid", "mso-line-height-alt", "mso-line-height-rule", "mso-line-numbers-count-by", "mso-line-numbers-distance", "mso-line-numbers-restart", "mso-line-numbers-start", "mso-line-spacing", "mso-linked-frame", "mso-list", "mso-list-change", "mso-list-change-author", "mso-list-change-time", "mso-list-change-values", "mso-list-id", "mso-list-ins", "mso-list-ins-author", "mso-list-ins-time", "mso-list-name", "mso-list-template-ids", "mso-list-type", "mso-margin-bottom-alt", "mso-margin-left-alt", "mso-margin-top-alt", "mso-mirror-margins", "mso-negative-indent-tab", "mso-number-format", "mso-outline-level", "mso-outline-parent", "mso-outline-parent-col", "mso-outline-parent-row", "mso-outline-parent-visibility", "mso-outline-style", "mso-padding-alt", "mso-padding-between", "mso-padding-bottom-alt", "mso-padding-left-alt", "mso-padding-right-alt", "mso-padding-top-alt", "mso-page-border-aligned", "mso-page-border-art", "mso-page-border-bottom-art", "mso-page-border-display", "mso-page-border-left-art", "mso-page-border-offset-from", "mso-page-border-right-art", "mso-page-border-surround-footer", "mso-page-border-surround-header", "mso-page-border-top-art", "mso-page-border-z-order", "mso-page-numbers", "mso-page-numbers-chapter-separator", "mso-page-numbers-chapter-style", "mso-page-numbers-start", "mso-page-numbers-style", "mso-page-orientation", "mso-page-scale", "mso-pagination", "mso-panose-arm-style", "mso-panose-contrast", "mso-panose-family-type", "mso-panose-letterform", "mso-panose-midline", "mso-panose-proportion", "mso-panose-serif-style", "mso-panose-stroke-variation", "mso-panose-weight", "mso-panose-x-height", "mso-paper-source", "mso-paper-source-first-page", "mso-paper-source-other-pages", "mso-pattern", "mso-pattern-color", "mso-pattern-style", "mso-print-area", "mso-print-color", "mso-print-gridlines", "mso-print-headings", "mso-print-resolution", "mso-print-sheet-order", "mso-print-title-column", "mso-print-title-row", "mso-prop-change", "mso-prop-change-author", "mso-prop-change-time", "mso-protection", "mso-rotate", "mso-row-margin-left", "mso-row-margin-right", "mso-ruby-merge", "mso-ruby-visibility", "mso-scheme-fill-color", "mso-scheme-shadow-color", "mso-shading", "mso-shadow-color", "mso-space-above", "mso-space-below", "mso-spacerun", "mso-special-character", "mso-special-format", "mso-style-id", "mso-style-name", "mso-style-next", "mso-style-parent", "mso-style-type", "mso-style-update", "mso-subdocument", "mso-symbol-font-family", "mso-tab-count", "mso-table-anchor-horizontal", "mso-table-anchor-vertical", "mso-table-bspace", "mso-table-del-author", "mso-table-del-time", "mso-table-deleted", "mso-table-dir", "mso-table-ins-author", "mso-table-ins-time", "mso-table-inserted", "mso-table-layout-alt", "mso-table-left", "mso-table-lspace", "mso-table-overlap", "mso-table-prop-author", "mso-table-prop-change", "mso-table-prop-time", "mso-table-rspace", "mso-table-top", "mso-table-tspace", "mso-table-wrap", "mso-text-animation", "mso-text-combine-brackets", "mso-text-combine-id", "mso-text-control", "mso-text-fit-id", "mso-text-indent-alt", "mso-text-orientation", "mso-text-raise", "mso-title-page", "mso-tny-compress", "mso-unsynced", "mso-vertical-align-alt", "mso-vertical-align-special", "mso-vertical-page-align", "mso-width-alt", "mso-width-source", "mso-word-wrap", "mso-xlrowspan", "mso-zero-height", "multiple", "muted", "name", "nav-banner-image", "navbutton_background_color", "navbutton_home_hovered", "navbutton_home_normal", "navbutton_home_pushed", "navbutton_horiz_hovered", "navbutton_horiz_normal", "navbutton_horiz_pushed", "navbutton_next_hovered", "navbutton_next_normal", "navbutton_next_pushed", "navbutton_prev_hovered", "navbutton_prev_normal", "navbutton_prev_pushed", "navbutton_up_hovered", "navbutton_up_normal", "navbutton_up_pushed", "navbutton_vert_hovered", "navbutton_vert_normal", "navbutton_vert_pushed", "nohref", "noresize", "noshade", "novalidate", "nowrap", "object", "onblur", "onchange", "onclick", "ondblclick", "onfocus", "onkeydown", "onkeypress", "onkeyup", "onload", "onmousedown", "onmousemove", "onmouseout", "onmouseover", "onmouseup", "onreset", "onselect", "onsubmit", "onunload", "open", "optimum", "overflow", "padding", "padding-bottom", "padding-left", "padding-right", "padding-top", "page", "page-break-after", "page-break-before", "panose-1", "pattern", "ping", "placeholder", "position", "poster", "preload", "profile", "prompt", "punctuation-trim", "punctuation-wrap", "radiogroup", "readonly", "referrerpolicy", "rel", "required", "rev", "reversed", "right", "row-span", "rows", "rowspan", "ruby-align", "ruby-overhang", "ruby-position", "rules", "sandbox", "scheme", "scope", "scoped", "scrolling", "selected", "separator-image", "shape", "size", "sizes", "slot", "span", "spellcheck", "src", "srcdoc", "srclang", "srcset", "standby", "start", "step", "style", "summary", "tab-interval", "tab-stops", "tabindex", "table-border-color-dark", "table-border-color-light", "table-layout", "target", "text", "text-align", "text-autospace", "text-combine", "text-decoration", "text-effect", "text-fit", "text-indent", "text-justify", "text-justify-trim", "text-kashida", "text-line-through", "text-shadow", "text-transform", "text-underline", "text-underline-color", "text-underline-style", "title", "top", "top-bar-button", "translate", "type", "unicode-bidi", "urlId", "usemap", "valign", "value", "valuetype", "version", "vert-align", "vertical-align", "visibility", "vlink", "vnd.ms-excel.numberformat", "vspace", "white-space", "width", "word-break", "word-spacing", "wrap", "xmlns", "z-index"]);
+  var allHtmlAttribs = new Set(["abbr", "accept", "accept-charset", "accesskey", "action", "align", "alink", "allow", "alt", "archive", "async", "autocapitalize", "autocomplete", "autofocus", "autoplay", "axis", "background", "background-attachment", "background-color", "background-image", "background-position", "background-position-x", "background-position-y", "background-repeat", "bgcolor", "border", "border-bottom", "border-bottom-color", "border-bottom-style", "border-bottom-width", "border-collapse", "border-color", "border-left", "border-left-color", "border-left-style", "border-left-width", "border-right", "border-right-color", "border-right-style", "border-right-width", "border-style", "border-top", "border-top-color", "border-top-style", "border-top-width", "border-width", "buffered", "capture", "cellpadding", "cellspacing", "challenge", "char", "charoff", "charset", "checked", "cite", "class", "classid", "clear", "clip", "code", "codebase", "codetype", "color", "cols", "colspan", "column-span", "compact", "content", "contenteditable", "contextmenu", "controls", "coords", "crossorigin", "csp", "cursor", "data", "data-*", "datetime", "declare", "decoding", "default", "defer", "dir", "direction", "dirname", "disabled", "display", "download", "draggable", "dropzone", "enctype", "enterkeyhint", "face", "filter", "float", "font", "font-color", "font-emphasize", "font-emphasize-position", "font-emphasize-style", "font-family", "font-size", "font-style", "font-variant", "font-weight", "for", "form", "formaction", "formenctype", "formmethod", "formnovalidate", "formtarget", "frame", "frameborder", "frontuid", "headers", "height", "hidden", "high", "horiz-align", "href", "hreflang", "hspace", "http-equiv", "icon", "id", "importance", "inputmode", "integrity", "intrinsicsize", "ismap", "itemprop", "keytype", "kind", "label", "lang", "language", "layout-flow", "layout-grid", "layout-grid-char", "layout-grid-line", "layout-grid-mode", "layout-grid-type", "left", "letter-spacing", "line-break", "line-height", "link", "list", "list-image-1", "list-image-2", "list-image-3", "list-style", "list-style-image", "list-style-position", "list-style-type", "loading", "longdesc", "loop", "low", "manifest", "margin", "margin-bottom", "margin-left", "margin-right", "margin-top", "marginheight", "marginwidth", "max", "maxlength", "media", "method", "min", "minlength", "mso-ansi-font-size", "mso-ansi-font-style", "mso-ansi-font-weight", "mso-ansi-language", "mso-ascii-font-family", "mso-background", "mso-background-source", "mso-baseline-position", "mso-bidi-flag", "mso-bidi-font-family", "mso-bidi-font-size", "mso-bidi-font-style", "mso-bidi-font-weight", "mso-bidi-language", "mso-bookmark", "mso-border-alt", "mso-border-between", "mso-border-between-color", "mso-border-between-style", "mso-border-between-width", "mso-border-bottom-alt", "mso-border-bottom-color-alt", "mso-border-bottom-source", "mso-border-bottom-style-alt", "mso-border-bottom-width-alt", "mso-border-color-alt", "mso-border-effect", "mso-border-left-alt", "mso-border-left-color-alt", "mso-border-left-source", "mso-border-left-style-alt", "mso-border-left-width-alt", "mso-border-right-alt", "mso-border-right-color-alt", "mso-border-right-source", "mso-border-right-style-alt", "mso-border-right-width-alt", "mso-border-shadow", "mso-border-source", "mso-border-style-alt", "mso-border-top-alt", "mso-border-top-color-alt", "mso-border-top-source", "mso-border-top-style-alt", "mso-border-top-width-alt", "mso-border-width-alt", "mso-break-type", "mso-build", "mso-build-after-action", "mso-build-after-color", "mso-build-auto-secs", "mso-build-avi", "mso-build-dual-id", "mso-build-order", "mso-build-sound-name", "mso-bullet-image", "mso-cell-special", "mso-cellspacing", "mso-char-indent", "mso-char-indent-count", "mso-char-indent-size", "mso-char-type", "mso-char-wrap", "mso-color-alt", "mso-color-index", "mso-color-source", "mso-column-break-before", "mso-column-separator", "mso-columns", "mso-comment-author", "mso-comment-continuation", "mso-comment-id", "mso-comment-reference", "mso-data-placement", "mso-default-height", "mso-default-width", "mso-diagonal-down", "mso-diagonal-down-color", "mso-diagonal-down-source", "mso-diagonal-down-style", "mso-diagonal-down-width", "mso-diagonal-up", "mso-diagonal-up-color", "mso-diagonal-up-source", "mso-diagonal-up-style", "mso-diagonal-up-width", "mso-displayed-decimal-separator", "mso-displayed-thousand-separator", "mso-element", "mso-element-anchor-horizontal", "mso-element-anchor-lock", "mso-element-anchor-vertical", "mso-element-frame-height", "mso-element-frame-hspace", "mso-element-frame-vspace", "mso-element-frame-width", "mso-element-left", "mso-element-linespan", "mso-element-top", "mso-element-wrap", "mso-endnote-continuation-notice", "mso-endnote-continuation-notice-id", "mso-endnote-continuation-notice-src", "mso-endnote-continuation-separator", "mso-endnote-continuation-separator-id", "mso-endnote-continuation-separator-src", "mso-endnote-display", "mso-endnote-id", "mso-endnote-numbering", "mso-endnote-numbering-restart", "mso-endnote-numbering-start", "mso-endnote-numbering-style", "mso-endnote-position", "mso-endnote-separator", "mso-endnote-separator-id", "mso-endnote-separator-src", "mso-even-footer", "mso-even-footer-id", "mso-even-footer-src", "mso-even-header", "mso-even-header-id", "mso-even-header-src", "mso-facing-pages", "mso-fareast-font-family", "mso-fareast-hint", "mso-fareast-language", "mso-field-change", "mso-field-change-author", "mso-field-change-time", "mso-field-change-value", "mso-field-code", "mso-field-lock", "mso-fills-color", "mso-first-footer", "mso-first-footer-id", "mso-first-footer-src", "mso-first-header", "mso-first-header-id", "mso-first-header-src", "mso-font-alt", "mso-font-charset", "mso-font-format", "mso-font-info", "mso-font-info-charset", "mso-font-info-type", "mso-font-kerning", "mso-font-pitch", "mso-font-signature", "mso-font-signature-csb-one", "mso-font-signature-csb-two", "mso-font-signature-usb-four", "mso-font-signature-usb-one", "mso-font-signature-usb-three", "mso-font-signature-usb-two", "mso-font-src", "mso-font-width", "mso-footer", "mso-footer-data", "mso-footer-id", "mso-footer-margin", "mso-footer-src", "mso-footnote-continuation-notice", "mso-footnote-continuation-notice-id", "mso-footnote-continuation-notice-src", "mso-footnote-continuation-separator", "mso-footnote-continuation-separator-id", "mso-footnote-continuation-separator-src", "mso-footnote-id", "mso-footnote-numbering", "mso-footnote-numbering-restart", "mso-footnote-numbering-start", "mso-footnote-numbering-style", "mso-footnote-position", "mso-footnote-separator", "mso-footnote-separator-id", "mso-footnote-separator-src", "mso-foreground", "mso-forms-protection", "mso-generic-font-family", "mso-grid-bottom", "mso-grid-bottom-count", "mso-grid-left", "mso-grid-left-count", "mso-grid-right", "mso-grid-right-count", "mso-grid-top", "mso-grid-top-count", "mso-gutter-direction", "mso-gutter-margin", "mso-gutter-position", "mso-hansi-font-family", "mso-header", "mso-header-data", "mso-header-id", "mso-header-margin", "mso-header-src", "mso-height-alt", "mso-height-rule", "mso-height-source", "mso-hide", "mso-highlight", "mso-horizontal-page-align", "mso-hyphenate", "mso-ignore", "mso-kinsoku-overflow", "mso-layout-grid-align", "mso-layout-grid-char-alt", "mso-layout-grid-origin", "mso-level-inherit", "mso-level-legacy", "mso-level-legacy-indent", "mso-level-legacy-space", "mso-level-legal-format", "mso-level-number-format", "mso-level-number-position", "mso-level-numbering", "mso-level-reset-level", "mso-level-start-at", "mso-level-style-link", "mso-level-suffix", "mso-level-tab-stop", "mso-level-text", "mso-line-break-override", "mso-line-grid", "mso-line-height-alt", "mso-line-height-rule", "mso-line-numbers-count-by", "mso-line-numbers-distance", "mso-line-numbers-restart", "mso-line-numbers-start", "mso-line-spacing", "mso-linked-frame", "mso-list", "mso-list-change", "mso-list-change-author", "mso-list-change-time", "mso-list-change-values", "mso-list-id", "mso-list-ins", "mso-list-ins-author", "mso-list-ins-time", "mso-list-name", "mso-list-template-ids", "mso-list-type", "mso-margin-bottom-alt", "mso-margin-left-alt", "mso-margin-top-alt", "mso-mirror-margins", "mso-negative-indent-tab", "mso-number-format", "mso-outline-level", "mso-outline-parent", "mso-outline-parent-col", "mso-outline-parent-row", "mso-outline-parent-visibility", "mso-outline-style", "mso-padding-alt", "mso-padding-between", "mso-padding-bottom-alt", "mso-padding-left-alt", "mso-padding-right-alt", "mso-padding-top-alt", "mso-page-border-aligned", "mso-page-border-art", "mso-page-border-bottom-art", "mso-page-border-display", "mso-page-border-left-art", "mso-page-border-offset-from", "mso-page-border-right-art", "mso-page-border-surround-footer", "mso-page-border-surround-header", "mso-page-border-top-art", "mso-page-border-z-order", "mso-page-numbers", "mso-page-numbers-chapter-separator", "mso-page-numbers-chapter-style", "mso-page-numbers-start", "mso-page-numbers-style", "mso-page-orientation", "mso-page-scale", "mso-pagination", "mso-panose-arm-style", "mso-panose-contrast", "mso-panose-family-type", "mso-panose-letterform", "mso-panose-midline", "mso-panose-proportion", "mso-panose-serif-style", "mso-panose-stroke-variation", "mso-panose-weight", "mso-panose-x-height", "mso-paper-source", "mso-paper-source-first-page", "mso-paper-source-other-pages", "mso-pattern", "mso-pattern-color", "mso-pattern-style", "mso-print-area", "mso-print-color", "mso-print-gridlines", "mso-print-headings", "mso-print-resolution", "mso-print-sheet-order", "mso-print-title-column", "mso-print-title-row", "mso-prop-change", "mso-prop-change-author", "mso-prop-change-time", "mso-protection", "mso-rotate", "mso-row-margin-left", "mso-row-margin-right", "mso-ruby-merge", "mso-ruby-visibility", "mso-scheme-fill-color", "mso-scheme-shadow-color", "mso-shading", "mso-shadow-color", "mso-space-above", "mso-space-below", "mso-spacerun", "mso-special-character", "mso-special-format", "mso-style-id", "mso-style-name", "mso-style-next", "mso-style-parent", "mso-style-type", "mso-style-update", "mso-subdocument", "mso-symbol-font-family", "mso-tab-count", "mso-table-anchor-horizontal", "mso-table-anchor-vertical", "mso-table-bspace", "mso-table-del-author", "mso-table-del-time", "mso-table-deleted", "mso-table-dir", "mso-table-ins-author", "mso-table-ins-time", "mso-table-inserted", "mso-table-layout-alt", "mso-table-left", "mso-table-lspace", "mso-table-overlap", "mso-table-prop-author", "mso-table-prop-change", "mso-table-prop-time", "mso-table-rspace", "mso-table-top", "mso-table-tspace", "mso-table-wrap", "mso-text-animation", "mso-text-combine-brackets", "mso-text-combine-id", "mso-text-control", "mso-text-fit-id", "mso-text-indent-alt", "mso-text-orientation", "mso-text-raise", "mso-title-page", "mso-tny-compress", "mso-unsynced", "mso-vertical-align-alt", "mso-vertical-align-special", "mso-vertical-page-align", "mso-width-alt", "mso-width-source", "mso-word-wrap", "mso-xlrowspan", "mso-zero-height", "multiple", "muted", "name", "nav-banner-image", "navbutton_background_color", "navbutton_home_hovered", "navbutton_home_normal", "navbutton_home_pushed", "navbutton_horiz_hovered", "navbutton_horiz_normal", "navbutton_horiz_pushed", "navbutton_next_hovered", "navbutton_next_normal", "navbutton_next_pushed", "navbutton_prev_hovered", "navbutton_prev_normal", "navbutton_prev_pushed", "navbutton_up_hovered", "navbutton_up_normal", "navbutton_up_pushed", "navbutton_vert_hovered", "navbutton_vert_normal", "navbutton_vert_pushed", "nohref", "noresize", "noshade", "novalidate", "nowrap", "object", "onblur", "onchange", "onclick", "ondblclick", "onfocus", "onkeydown", "onkeypress", "onkeyup", "onload", "onmousedown", "onmousemove", "onmouseout", "onmouseover", "onmouseup", "onreset", "onselect", "onsubmit", "onunload", "open", "optimum", "overflow", "padding", "padding-bottom", "padding-left", "padding-right", "padding-top", "page", "page-break-after", "page-break-before", "panose-1", "pattern", "ping", "placeholder", "position", "poster", "preload", "profile", "prompt", "punctuation-trim", "punctuation-wrap", "radiogroup", "readonly", "referrerpolicy", "rel", "required", "rev", "reversed", "right", "row-span", "rows", "rowspan", "ruby-align", "ruby-overhang", "ruby-position", "rules", "sandbox", "scheme", "scope", "scoped", "scrolling", "selected", "separator-image", "shape", "size", "sizes", "slot", "span", "spellcheck", "src", "srcdoc", "srclang", "srcset", "standby", "start", "step", "style", "summary", "tab-interval", "tab-stops", "tabindex", "table-border-color-dark", "table-border-color-light", "table-layout", "target", "text", "text-align", "text-autospace", "text-combine", "text-decoration", "text-effect", "text-fit", "text-indent", "text-justify", "text-justify-trim", "text-kashida", "text-line-through", "text-shadow", "text-transform", "text-underline", "text-underline-color", "text-underline-style", "title", "top", "top-bar-button", "translate", "type", "unicode-bidi", "urlId", "usemap", "valign", "value", "valuetype", "version", "vert-align", "vertical-align", "visibility", "vlink", "vnd.ms-excel.numberformat", "vspace", "white-space", "width", "word-break", "word-spacing", "wrap", "xmlns", "z-index"]);
 
   /**
    * is-char-suitable-for-html-attr-name
@@ -2589,31 +2623,36 @@
     return typeof char === "string" && (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123 || char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58 || char === ":" || char === "-");
   }
 
-  /**
-   * is-html-attribute-closing
-   * Is a character on a given index a closing of an HTML attribute?
-   * Version: 1.2.1
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-attribute-closing
-   */
+  function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x) {
+    var y = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
 
-  function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x, y = []) {
-    for (let i = startingIdx, len = str.length; i < len; i++) {
-      if (y.some(oneOfStr => str.startsWith(oneOfStr, i))) {
-        return true;
+    var _loop = function _loop(i, len) {
+      if (y.some(function (oneOfStr) {
+        return str.startsWith(oneOfStr, i);
+      })) {
+        return {
+          v: true
+        };
       }
 
       if (str[i] === x) {
-        return false;
+        return {
+          v: false
+        };
       }
+    };
+
+    for (var i = startingIdx, len = str.length; i < len; i++) {
+      var _ret = _loop(i);
+
+      if (_typeof(_ret) === "object") return _ret.v;
     }
 
     return true;
   }
 
   function xBeforeYOnTheRight(str, startingIdx, x, y) {
-    for (let i = startingIdx, len = str.length; i < len; i++) {
+    for (var i = startingIdx, len = str.length; i < len; i++) {
       if (str.startsWith(x, i)) {
         return true;
       }
@@ -2631,7 +2670,7 @@
       return false;
     }
 
-    const regex = /^[a-zA-Z0-9:-]*(\s*[=]?\s*((?:'[^']*')|(?:"[^"]*")))|( [^/>'"=]*['"])/;
+    var regex = /^[a-zA-Z0-9:-]*(\s*[=]?\s*((?:'[^']*')|(?:"[^"]*")))|( [^/>'"=]*['"])/;
     return regex.test(str.slice(start));
   }
 
@@ -2640,7 +2679,7 @@
       return false;
     }
 
-    const regex = /^[a-zA-Z0-9:-]*=(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
+    var regex = /^[a-zA-Z0-9:-]*=(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
     return regex.test(str.slice(start));
   }
 
@@ -2649,7 +2688,7 @@
       return;
     }
 
-    for (let y = i; y--;) {
+    for (var y = i; y--;) {
       if (str[y].trim().length && !charSuitableForHTMLAttrName(str[y])) {
         return str.slice(y + 1, i);
       }
@@ -2657,7 +2696,7 @@
   }
 
   function makeTheQuoteOpposite(quoteChar) {
-    return quoteChar === `'` ? `"` : `'`;
+    return quoteChar === "'" ? "\"" : "'";
   }
 
   function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
@@ -2665,47 +2704,49 @@
       return false;
     }
 
-    const openingQuote = `'"`.includes(str[idxOfAttrOpening]) ? str[idxOfAttrOpening] : null;
-    let oppositeToOpeningQuote = null;
+    var openingQuote = "'\"".includes(str[idxOfAttrOpening]) ? str[idxOfAttrOpening] : null;
+    var oppositeToOpeningQuote = null;
 
     if (openingQuote) {
       oppositeToOpeningQuote = makeTheQuoteOpposite(openingQuote);
     }
 
-    let chunkStartsAt;
-    const quotesCount = new Map().set(`'`, 0).set(`"`, 0).set(`matchedPairs`, 0);
-    let lastQuoteAt = null;
-    let totalQuotesCount = 0;
-    let lastQuoteWasMatched = false;
-    let lastMatchedQuotesPairsStartIsAt = false;
-    let lastMatchedQuotesPairsEndIsAt = false;
-    let lastCapturedChunk;
-    let lastChunkWasCapturedAfterSuspectedClosing = false;
-    let closingBracketMet = false;
-    let openingBracketMet = false;
+    var chunkStartsAt;
+    var quotesCount = new Map().set("'", 0).set("\"", 0).set("matchedPairs", 0);
+    var lastQuoteAt = null;
+    var totalQuotesCount = 0;
+    var lastQuoteWasMatched = false;
+    var lastMatchedQuotesPairsStartIsAt = false;
+    var lastMatchedQuotesPairsEndIsAt = false;
+    var lastCapturedChunk;
+    var lastChunkWasCapturedAfterSuspectedClosing = false;
+    var closingBracketMet = false;
+    var openingBracketMet = false;
 
-    for (let i = idxOfAttrOpening, len = str.length; i < len; i++) {
-      if (`'"`.includes(str[i]) && lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt < i && i >= isThisClosingIdx) {
-        const E1 = i !== isThisClosingIdx || guaranteedAttrStartsAtX(str, right(str, isThisClosingIdx)) || `/>`.includes(str[right(str, i)]);
-        const E2 = !(i > isThisClosingIdx && str[idxOfAttrOpening] === str[isThisClosingIdx] && str[idxOfAttrOpening] === str[i] && plausibleAttrStartsAtX(str, i + 1));
-        const E31 = i === isThisClosingIdx && plausibleAttrStartsAtX(str, isThisClosingIdx + 1);
-        const E32 = chunkStartsAt && chunkStartsAt < i && allHtmlAttribs.has(str.slice(chunkStartsAt, i).trim());
-        const E33 = chunkStartsAt && chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim() && Array.from(str.slice(chunkStartsAt, i).trim()).every(char => charSuitableForHTMLAttrName(char)) && str[idxOfAttrOpening] === str[isThisClosingIdx];
-        let attrNameCharsChunkOnTheLeft;
+    for (var i = idxOfAttrOpening, len = str.length; i < len; i++) {
+      if ("'\"".includes(str[i]) && lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt < i && i >= isThisClosingIdx) {
+        var E1 = i !== isThisClosingIdx || guaranteedAttrStartsAtX(str, right(str, isThisClosingIdx)) || "/>".includes(str[right(str, i)]);
+        var E2 = !(i > isThisClosingIdx && str[idxOfAttrOpening] === str[isThisClosingIdx] && str[idxOfAttrOpening] === str[i] && plausibleAttrStartsAtX(str, i + 1));
+        var E31 = i === isThisClosingIdx && plausibleAttrStartsAtX(str, isThisClosingIdx + 1);
+        var E32 = chunkStartsAt && chunkStartsAt < i && allHtmlAttribs.has(str.slice(chunkStartsAt, i).trim());
+        var E33 = chunkStartsAt && chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim() && Array.from(str.slice(chunkStartsAt, i).trim()).every(function (char) {
+          return charSuitableForHTMLAttrName(char);
+        }) && str[idxOfAttrOpening] === str[isThisClosingIdx];
+        var attrNameCharsChunkOnTheLeft = void 0;
 
         if (i === isThisClosingIdx) {
           attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);
         }
 
-        const E34 = i === isThisClosingIdx && (!charSuitableForHTMLAttrName(str[left(str, i)]) || attrNameCharsChunkOnTheLeft && !allHtmlAttribs.has(attrNameCharsChunkOnTheLeft)) && str[left(str, i)] !== "=";
-        const E41 = `/>`.includes(str[right(str, i)]) && i === isThisClosingIdx;
-        const E42 = charSuitableForHTMLAttrName(str[right(str, i)]);
-        const E43 = lastQuoteWasMatched && i !== isThisClosingIdx;
+        var E34 = i === isThisClosingIdx && (!charSuitableForHTMLAttrName(str[left(str, i)]) || attrNameCharsChunkOnTheLeft && !allHtmlAttribs.has(attrNameCharsChunkOnTheLeft)) && str[left(str, i)] !== "=";
+        var E41 = "/>".includes(str[right(str, i)]) && i === isThisClosingIdx;
+        var E42 = charSuitableForHTMLAttrName(str[right(str, i)]);
+        var E43 = lastQuoteWasMatched && i !== isThisClosingIdx;
         return E1 && E2 && (E31 || E32 || E33 || E34) && (E41 || E42 || E43);
       }
 
-      if (`'"`.includes(str[i])) {
-        if (str[i] === `'` && str[i - 1] === `"` && str[i + 1] === `"` || str[i] === `"` && str[i - 1] === `'` && str[i + 1] === `'`) {
+      if ("'\"".includes(str[i])) {
+        if (str[i] === "'" && str[i - 1] === "\"" && str[i + 1] === "\"" || str[i] === "\"" && str[i - 1] === "'" && str[i + 1] === "'") {
           continue;
         }
 
@@ -2720,13 +2761,13 @@
         }
 
         quotesCount.set(str[i], quotesCount.get(str[i]) + 1);
-        totalQuotesCount = quotesCount.get(`"`) + quotesCount.get(`'`);
+        totalQuotesCount = quotesCount.get("\"") + quotesCount.get("'");
       }
 
       if (str[i] === ">" && !closingBracketMet) {
         closingBracketMet = true;
 
-        if (totalQuotesCount && quotesCount.get(`matchedPairs`) && totalQuotesCount === quotesCount.get(`matchedPairs`) * 2 && i < isThisClosingIdx) {
+        if (totalQuotesCount && quotesCount.get("matchedPairs") && totalQuotesCount === quotesCount.get("matchedPairs") * 2 && i < isThisClosingIdx) {
           return false;
         }
       }
@@ -2744,17 +2785,21 @@
         lastCapturedChunk = str.slice(chunkStartsAt, i);
         lastChunkWasCapturedAfterSuspectedClosing = chunkStartsAt >= isThisClosingIdx;
 
-        if (`'"`.includes(str[i]) && quotesCount.get(`matchedPairs`) === 0 && totalQuotesCount === 3 && str[idxOfAttrOpening] === str[i] && allHtmlAttribs.has(lastCapturedChunk)) {
-          const A1 = i > isThisClosingIdx;
-          const A21 = !lastQuoteAt;
-          const A22 = lastQuoteAt + 1 >= i;
-          const A23 = str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(chunk => allHtmlAttribs.has(chunk));
-          const B1 = i === isThisClosingIdx;
-          const B21 = totalQuotesCount < 3;
-          const B22 = !!lastQuoteWasMatched;
-          const B23 = !lastQuoteAt;
-          const B24 = lastQuoteAt + 1 >= i;
-          const B25 = !str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(chunk => allHtmlAttribs.has(chunk));
+        if ("'\"".includes(str[i]) && quotesCount.get("matchedPairs") === 0 && totalQuotesCount === 3 && str[idxOfAttrOpening] === str[i] && allHtmlAttribs.has(lastCapturedChunk)) {
+          var A1 = i > isThisClosingIdx;
+          var A21 = !lastQuoteAt;
+          var A22 = lastQuoteAt + 1 >= i;
+          var A23 = str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(function (chunk) {
+            return allHtmlAttribs.has(chunk);
+          });
+          var B1 = i === isThisClosingIdx;
+          var B21 = totalQuotesCount < 3;
+          var B22 = !!lastQuoteWasMatched;
+          var B23 = !lastQuoteAt;
+          var B24 = lastQuoteAt + 1 >= i;
+          var B25 = !str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(function (chunk) {
+            return allHtmlAttribs.has(chunk);
+          });
           return A1 && (A21 || A22 || A23) || B1 && (B21 || B22 || B23 || B24 || B25);
         }
 
@@ -2763,28 +2808,30 @@
         }
       }
 
-      if (`'"`.includes(str[i]) && (!(quotesCount.get(`"`) % 2) || !(quotesCount.get(`'`) % 2)) && (quotesCount.get(`"`) + quotesCount.get(`'`)) % 2 && (lastCapturedChunk && allHtmlAttribs.has(lastCapturedChunk) || i > isThisClosingIdx + 1 && allHtmlAttribs.has(str.slice(isThisClosingIdx + 1, i).trim()))) {
-        const R0 = i > isThisClosingIdx;
-        const R1 = !!openingQuote;
-        const R2 = str[idxOfAttrOpening] !== str[isThisClosingIdx];
-        const R3 = allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, isThisClosingIdx).trim());
-        const R4 = !xBeforeYOnTheRight(str, i + 1, str[isThisClosingIdx], makeTheQuoteOpposite(str[isThisClosingIdx]));
+      if ("'\"".includes(str[i]) && (!(quotesCount.get("\"") % 2) || !(quotesCount.get("'") % 2)) && (quotesCount.get("\"") + quotesCount.get("'")) % 2 && (lastCapturedChunk && allHtmlAttribs.has(lastCapturedChunk) || i > isThisClosingIdx + 1 && allHtmlAttribs.has(str.slice(isThisClosingIdx + 1, i).trim()))) {
+        var R0 = i > isThisClosingIdx;
+        var R1 = !!openingQuote;
+        var R2 = str[idxOfAttrOpening] !== str[isThisClosingIdx];
+        var R3 = allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, isThisClosingIdx).trim());
+        var R4 = !xBeforeYOnTheRight(str, i + 1, str[isThisClosingIdx], makeTheQuoteOpposite(str[isThisClosingIdx]));
         return R0 && !(R1 && R2 && R3 && R4);
       }
 
       if ((str[i] === "=" || !str[i].length && str[right(str, i)] === "=") && lastCapturedChunk && allHtmlAttribs.has(lastCapturedChunk)) {
-        const W1 = i > isThisClosingIdx;
-        const W2 = !(!(lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt === isThisClosingIdx || guaranteedAttrStartsAtX(str, chunkStartsAt)) && lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt && lastMatchedQuotesPairsStartIsAt <= isThisClosingIdx);
+        var W1 = i > isThisClosingIdx;
+        var W2 = !(!(lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt === isThisClosingIdx || guaranteedAttrStartsAtX(str, chunkStartsAt)) && lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt && lastMatchedQuotesPairsStartIsAt <= isThisClosingIdx);
         return W1 && W2;
       }
 
       if (i > isThisClosingIdx) {
         if (openingQuote && str[i] === openingQuote) {
-          const Y1 = !!lastQuoteAt;
-          const Y2 = lastQuoteAt === isThisClosingIdx;
-          const Y3 = lastQuoteAt + 1 < i && str.slice(lastQuoteAt + 1, i).trim();
-          const Y4 = str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(chunk => allHtmlAttribs.has(chunk));
-          const Y5 = i >= isThisClosingIdx;
+          var Y1 = !!lastQuoteAt;
+          var Y2 = lastQuoteAt === isThisClosingIdx;
+          var Y3 = lastQuoteAt + 1 < i && str.slice(lastQuoteAt + 1, i).trim();
+          var Y4 = str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(function (chunk) {
+            return allHtmlAttribs.has(chunk);
+          });
+          var Y5 = i >= isThisClosingIdx;
           return Y1 && Y2 && Y3 && Y4 && Y5;
         }
 
@@ -2793,31 +2840,38 @@
         }
 
         if (str[i] === "/" || str[i] === ">" || str[i] === "<") {
-          const R0 = str[idxOfAttrOpening] === str[isThisClosingIdx] && lastQuoteAt === isThisClosingIdx && !str.slice(idxOfAttrOpening + 1, isThisClosingIdx).includes(str[idxOfAttrOpening]);
-          const R11 = quotesCount.get(`matchedPairs`) < 2;
-          const attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);
-          const R12 = (!attrNameCharsChunkOnTheLeft || !allHtmlAttribs.has(attrNameCharsChunkOnTheLeft)) && (!(i > isThisClosingIdx && quotesCount.get(`'`) && quotesCount.get(`"`) && quotesCount.get(`matchedPairs`) > 1) || `/>`.includes(str[right(str, i)]));
-          const R2 = totalQuotesCount < 3 || quotesCount.get(`"`) + quotesCount.get(`'`) - quotesCount.get(`matchedPairs`) * 2 !== 2;
-          const R31 = !lastQuoteWasMatched || lastQuoteWasMatched && !(lastMatchedQuotesPairsStartIsAt && Array.from(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()).every(char => charSuitableForHTMLAttrName(char)) && allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()));
-          const R32 = !right(str, i) && totalQuotesCount % 2 === 0;
-          const R33 = str[idxOfAttrOpening - 2] && str[idxOfAttrOpening - 1] === "=" && charSuitableForHTMLAttrName(str[idxOfAttrOpening - 2]);
-          const R34 = !ensureXIsNotPresentBeforeOneOfY(str, i + 1, "<", [`='`, `="`]);
-          return R0 || (R11 || R12) && R2 && (R31 || R32 || R33 || R34);
+          var _R = str[idxOfAttrOpening] === str[isThisClosingIdx] && lastQuoteAt === isThisClosingIdx && !str.slice(idxOfAttrOpening + 1, isThisClosingIdx).includes(str[idxOfAttrOpening]);
+
+          var R11 = quotesCount.get("matchedPairs") < 2;
+
+          var _attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);
+
+          var R12 = (!_attrNameCharsChunkOnTheLeft || !allHtmlAttribs.has(_attrNameCharsChunkOnTheLeft)) && (!(i > isThisClosingIdx && quotesCount.get("'") && quotesCount.get("\"") && quotesCount.get("matchedPairs") > 1) || "/>".includes(str[right(str, i)]));
+
+          var _R2 = totalQuotesCount < 3 || quotesCount.get("\"") + quotesCount.get("'") - quotesCount.get("matchedPairs") * 2 !== 2;
+
+          var R31 = !lastQuoteWasMatched || lastQuoteWasMatched && !(lastMatchedQuotesPairsStartIsAt && Array.from(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()).every(function (char) {
+            return charSuitableForHTMLAttrName(char);
+          }) && allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()));
+          var R32 = !right(str, i) && totalQuotesCount % 2 === 0;
+          var R33 = str[idxOfAttrOpening - 2] && str[idxOfAttrOpening - 1] === "=" && charSuitableForHTMLAttrName(str[idxOfAttrOpening - 2]);
+          var R34 = !ensureXIsNotPresentBeforeOneOfY(str, i + 1, "<", ["='", "=\""]);
+          return _R || (R11 || R12) && _R2 && (R31 || R32 || R33 || R34);
         }
 
-        if (str[i] === "=" && matchRight(str, i, [`'`, `"`], {
+        if (str[i] === "=" && matchRight(str, i, ["'", "\""], {
           trimBeforeMatching: true,
           trimCharsBeforeMatching: ["="]
         })) {
           return true;
         }
       } else {
-        let firstNonWhitespaceCharOnTheLeft;
+        var firstNonWhitespaceCharOnTheLeft = void 0;
 
         if (str[i - 1] && str[i - 1].trim() && str[i - 1] !== "=") {
           firstNonWhitespaceCharOnTheLeft = i - 1;
         } else {
-          for (let y = i; y--;) {
+          for (var y = i; y--;) {
             if (str[y].trim() && str[y] !== "=") {
               firstNonWhitespaceCharOnTheLeft = y;
               break;
@@ -2825,8 +2879,10 @@
           }
         }
 
-        if (str[i] === "=" && matchRight(str, i, [`'`, `"`], {
-          cb: char => !`/>`.includes(char),
+        if (str[i] === "=" && matchRight(str, i, ["'", "\""], {
+          cb: function cb(char) {
+            return !"/>".includes(char);
+          },
           trimBeforeMatching: true,
           trimCharsBeforeMatching: ["="]
         }) && charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft])) {
@@ -2837,12 +2893,12 @@
           return true;
         }
 
-        if (i < isThisClosingIdx && `'"`.includes(str[i]) && lastCapturedChunk && str[left(str, idxOfAttrOpening)] && str[left(str, idxOfAttrOpening)] !== "=" && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && allHtmlAttribs.has(lastCapturedChunk)) {
+        if (i < isThisClosingIdx && "'\"".includes(str[i]) && lastCapturedChunk && str[left(str, idxOfAttrOpening)] && str[left(str, idxOfAttrOpening)] !== "=" && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && allHtmlAttribs.has(lastCapturedChunk)) {
           return false;
         }
       }
 
-      if (`'"`.includes(str[i]) && i > isThisClosingIdx) {
+      if ("'\"".includes(str[i]) && i > isThisClosingIdx) {
         if (!lastChunkWasCapturedAfterSuspectedClosing || !lastCapturedChunk || !allHtmlAttribs.has(lastCapturedChunk)) {
           return false;
         }
@@ -2850,7 +2906,7 @@
         return true;
       }
 
-      if (`'"`.includes(str[i])) {
+      if ("'\"".includes(str[i])) {
         lastQuoteAt = i;
       }
 
@@ -2862,46 +2918,40 @@
     return false;
   }
 
-  /**
-   * is-html-tag-opening
-   * Is given opening bracket a beginning of a tag?
-   * Version: 1.7.9
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-tag-opening
-   */
-  const BACKSLASH = "\u005C";
-  const knownHtmlTags = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h1 - h6", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "slot", "small", "source", "span", "strike", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xml"];
+  var BACKSLASH = "\\";
+  var knownHtmlTags = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h1 - h6", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "slot", "small", "source", "span", "strike", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xml"];
 
   function isStr$2(something) {
     return typeof something === "string";
   }
 
   function isNotLetter(char) {
-    return char === undefined || char.toUpperCase() === char.toLowerCase() && !`0123456789`.includes(char) && char !== "=";
+    return char === undefined || char.toUpperCase() === char.toLowerCase() && !"0123456789".includes(char) && char !== "=";
   }
 
-  function isOpening(str, idx = 0, originalOpts) {
-    const defaults = {
+  function isOpening(str) {
+    var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+    var originalOpts = arguments.length > 2 ? arguments[2] : undefined;
+    var defaults = {
       allowCustomTagNames: false,
       skipOpeningBracket: false
     };
-    const opts = { ...defaults,
-      ...originalOpts
-    };
-    const whitespaceChunk = `[\\\\ \\t\\r\\n/]*`;
-    const generalChar = `._a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF`;
-    const r1 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}${whitespaceChunk}\\w+${whitespaceChunk}>`, "g");
-    const r5 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}${whitespaceChunk}[${generalChar}]+[-${generalChar}]*${whitespaceChunk}>`, "g");
-    const r2 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}\\s*\\w+\\s+\\w+(?:-\\w+)?\\s*=\\s*['"\\w]`, "g");
-    const r6 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}\\s*\\w+\\s+[${generalChar}]+[-${generalChar}]*(?:-\\w+)?\\s*=\\s*['"\\w]`);
-    const r3 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}\\s*\\/?\\s*\\w+\\s*\\/?\\s*>`, "g");
-    const r7 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}\\s*\\/?\\s*[${generalChar}]+[-${generalChar}]*\\s*\\/?\\s*>`, "g");
-    const r4 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}${whitespaceChunk}\\w+(?:\\s*\\w+)*\\s*\\w+=['"]`, "g");
-    const r8 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}${whitespaceChunk}[${generalChar}]+[-${generalChar}]*(?:\\s*\\w+)*\\s*\\w+=['"]`, "g");
-    const whatToTest = idx ? str.slice(idx) : str;
-    let passed = false;
-    const matchingOptions = {
+
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
+
+    var whitespaceChunk = "[\\\\ \\t\\r\\n/]*";
+    var generalChar = "._a-z0-9\xB7\xC0-\xD6\xD8-\xF6\xF8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF";
+    var r1 = new RegExp("^".concat(opts.skipOpeningBracket ? "" : "<").concat(whitespaceChunk, "\\w+").concat(whitespaceChunk, ">"), "g");
+    var r5 = new RegExp("^".concat(opts.skipOpeningBracket ? "" : "<").concat(whitespaceChunk, "[").concat(generalChar, "]+[-").concat(generalChar, "]*").concat(whitespaceChunk, ">"), "g");
+    var r2 = new RegExp("^".concat(opts.skipOpeningBracket ? "" : "<", "\\s*\\w+\\s+\\w+(?:-\\w+)?\\s*=\\s*['\"\\w]"), "g");
+    var r6 = new RegExp("^".concat(opts.skipOpeningBracket ? "" : "<", "\\s*\\w+\\s+[").concat(generalChar, "]+[-").concat(generalChar, "]*(?:-\\w+)?\\s*=\\s*['\"\\w]"));
+    var r3 = new RegExp("^".concat(opts.skipOpeningBracket ? "" : "<", "\\s*\\/?\\s*\\w+\\s*\\/?\\s*>"), "g");
+    var r7 = new RegExp("^".concat(opts.skipOpeningBracket ? "" : "<", "\\s*\\/?\\s*[").concat(generalChar, "]+[-").concat(generalChar, "]*\\s*\\/?\\s*>"), "g");
+    var r4 = new RegExp("^".concat(opts.skipOpeningBracket ? "" : "<").concat(whitespaceChunk, "\\w+(?:\\s*\\w+)*\\s*\\w+=['\"]"), "g");
+    var r8 = new RegExp("^".concat(opts.skipOpeningBracket ? "" : "<").concat(whitespaceChunk, "[").concat(generalChar, "]+[-").concat(generalChar, "]*(?:\\s*\\w+)*\\s*\\w+=['\"]"), "g");
+    var whatToTest = idx ? str.slice(idx) : str;
+    var passed = false;
+    var matchingOptions = {
       cb: isNotLetter,
       i: true,
       trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
@@ -2937,24 +2987,16 @@
       passed = true;
     }
 
-    const res = isStr$2(str) && idx < str.length && passed;
+    var res = isStr$2(str) && idx < str.length && passed;
     return res;
   }
 
-  /**
-   * codsen-tokenizer
-   * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
-   * Version: 2.17.0
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer
-   */
-  const allHTMLTagsKnownToHumanity = new Set(["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "bgsound", "big", "blink", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "command", "content", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "dt", "element", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "image", "img", "input", "ins", "isindex", "kbd", "keygen", "label", "legend", "li", "link", "listing", "main", "map", "mark", "marquee", "menu", "menuitem", "meta", "meter", "multicol", "nav", "nextid", "nobr", "noembed", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "plaintext", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "shadow", "slot", "small", "source", "spacer", "span", "strike", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xmp"]);
-  const espChars = `{}%-$_()*|#`;
-  const veryEspChars = `{}()|#`;
-  const notVeryEspChars = `%$_*#`;
-  const espLumpBlacklist = [")|(", "|(", ")(", "()", "}{", "{}", "%)", "*)"];
-  const punctuationChars = `.,;!?`;
+  var allHTMLTagsKnownToHumanity = new Set(["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "bgsound", "big", "blink", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "command", "content", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "dt", "element", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "image", "img", "input", "ins", "isindex", "kbd", "keygen", "label", "legend", "li", "link", "listing", "main", "map", "mark", "marquee", "menu", "menuitem", "meta", "meter", "multicol", "nav", "nextid", "nobr", "noembed", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "plaintext", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "shadow", "slot", "small", "source", "spacer", "span", "strike", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xmp"]);
+  var espChars = "{}%-$_()*|#";
+  var veryEspChars = "{}()|#";
+  var notVeryEspChars = "%$_*#";
+  var espLumpBlacklist = [")|(", "|(", ")(", "()", "}{", "{}", "%)", "*)"];
+  var punctuationChars = ".,;!?";
 
   function isStr$3(something) {
     return typeof something === "string";
@@ -2969,27 +3011,27 @@
   }
 
   function flipEspTag(str) {
-    let res = "";
+    var res = "";
 
-    for (let i = 0, len = str.length; i < len; i++) {
+    for (var i = 0, len = str.length; i < len; i++) {
       if (str[i] === "[") {
-        res = `]${res}`;
+        res = "]".concat(res);
       } else if (str[i] === "]") {
-        res = `[${res}`;
+        res = "[".concat(res);
       } else if (str[i] === "{") {
-        res = `}${res}`;
+        res = "}".concat(res);
       } else if (str[i] === "}") {
-        res = `{${res}`;
+        res = "{".concat(res);
       } else if (str[i] === "(") {
-        res = `)${res}`;
+        res = ")".concat(res);
       } else if (str[i] === ")") {
-        res = `(${res}`;
+        res = "(".concat(res);
       } else if (str[i] === "<") {
-        res = `>${res}`;
+        res = ">".concat(res);
       } else if (str[i] === ">") {
-        res = `<${res}`;
+        res = "<".concat(res);
       } else {
-        res = `${str[i]}${res}`;
+        res = "".concat(str[i]).concat(res);
       }
     }
 
@@ -3001,7 +3043,7 @@
   }
 
   function xBeforeYOnTheRight$1(str, startingIdx, x, y) {
-    for (let i = startingIdx, len = str.length; i < len; i++) {
+    for (var i = startingIdx, len = str.length; i < len; i++) {
       if (str.startsWith(x, i)) {
         return true;
       }
@@ -3015,11 +3057,11 @@
   }
 
   function getWholeEspTagLumpOnTheRight(str, i, layers) {
-    let wholeEspTagLumpOnTheRight = str[i];
-    const len = str.length;
+    var wholeEspTagLumpOnTheRight = str[i];
+    var len = str.length;
 
-    for (let y = i + 1; y < len; y++) {
-      if (wholeEspTagLumpOnTheRight.length > 1 && (wholeEspTagLumpOnTheRight.includes(`{`) || wholeEspTagLumpOnTheRight.includes(`[`) || wholeEspTagLumpOnTheRight.includes(`(`)) && str[y] === "(") {
+    for (var y = i + 1; y < len; y++) {
+      if (wholeEspTagLumpOnTheRight.length > 1 && (wholeEspTagLumpOnTheRight.includes("{") || wholeEspTagLumpOnTheRight.includes("[") || wholeEspTagLumpOnTheRight.includes("(")) && str[y] === "(") {
         break;
       }
 
@@ -3035,18 +3077,28 @@
         return wholeEspTagLumpOnTheRight.slice(0, wholeEspTagLumpOnTheRight.length - layers[layers.length - 1].openingLump.length);
       }
 
-      let uniqueCharsListFromGuessedClosingLumpArr = new Set(layers[layers.length - 1].guessedClosingLump);
-      let found = 0;
+      var uniqueCharsListFromGuessedClosingLumpArr = new Set(layers[layers.length - 1].guessedClosingLump);
+      var found = 0;
 
-      for (let y = 0, len2 = wholeEspTagLumpOnTheRight.length; y < len2; y++) {
-        if (!uniqueCharsListFromGuessedClosingLumpArr.has(wholeEspTagLumpOnTheRight[y]) && found > 1) {
-          return wholeEspTagLumpOnTheRight.slice(0, y);
+      var _loop = function _loop(len2, _y) {
+        if (!uniqueCharsListFromGuessedClosingLumpArr.has(wholeEspTagLumpOnTheRight[_y]) && found > 1) {
+          return {
+            v: wholeEspTagLumpOnTheRight.slice(0, _y)
+          };
         }
 
-        if (uniqueCharsListFromGuessedClosingLumpArr.has(wholeEspTagLumpOnTheRight[y])) {
+        if (uniqueCharsListFromGuessedClosingLumpArr.has(wholeEspTagLumpOnTheRight[_y])) {
           found += 1;
-          uniqueCharsListFromGuessedClosingLumpArr = new Set([...uniqueCharsListFromGuessedClosingLumpArr].filter(el => el !== wholeEspTagLumpOnTheRight[y]));
+          uniqueCharsListFromGuessedClosingLumpArr = new Set(_toConsumableArray(uniqueCharsListFromGuessedClosingLumpArr).filter(function (el) {
+            return el !== wholeEspTagLumpOnTheRight[_y];
+          }));
         }
+      };
+
+      for (var _y = 0, len2 = wholeEspTagLumpOnTheRight.length; _y < len2; _y++) {
+        var _ret = _loop(len2, _y);
+
+        if (_typeof(_ret) === "object") return _ret.v;
       }
     }
 
@@ -3058,13 +3110,15 @@
       return;
     }
 
-    const whichLayerToMatch = matchFirstInstead ? layers[0] : layers[layers.length - 1];
+    var whichLayerToMatch = matchFirstInstead ? layers[0] : layers[layers.length - 1];
 
     if (whichLayerToMatch.type !== "esp") {
       return;
     }
 
-    if (wholeEspTagLump.includes(whichLayerToMatch.guessedClosingLump) || Array.from(wholeEspTagLump).every(char => whichLayerToMatch.guessedClosingLump.includes(char))) {
+    if (wholeEspTagLump.includes(whichLayerToMatch.guessedClosingLump) || Array.from(wholeEspTagLump).every(function (char) {
+      return whichLayerToMatch.guessedClosingLump.includes(char);
+    })) {
       return wholeEspTagLump.length;
     }
   }
@@ -3090,7 +3144,7 @@
     }) && (!Array.isArray(layers) || !layers.length || layers[layers.length - 1].type !== "esp" || !(layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-"));
   }
 
-  const BACKSLASH$1 = "\u005C";
+  var BACKSLASH$1 = "\\";
 
   function startsTag(str, i, token, layers) {
     return str[i] && str[i].trim().length && (!layers.length || token.type === "text") && !["doctype", "xml"].includes(token.kind) && (str[i] === "<" && (isOpening(str, i, {
@@ -3106,46 +3160,46 @@
   }
 
   function startsEsp(str, i, token, layers, styleStarts) {
-    const res = espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && !(notVeryEspChars.includes(str[i]) && notVeryEspChars.includes(str[i + 1])) && (str[i] !== str[i + 1] || veryEspChars.includes(str[i])) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && "-{(".includes(str[i + 1])) && !("})".includes(str[i]) && "-".includes(str[i + 1])) && !(str[i] === "%" && str[i + 1] === "%" && "0123456789".includes(str[i - 1]) && (!str[i + 2] || punctuationChars.includes(str[i + 2]) || !str[i + 2].trim().length)) && !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[right(str, i)]))) || str[i] === "<" && (str[i + 1] === "/" && espChars.includes(str[i + 2]) || espChars.includes(str[i + 1]) && !["-"].includes(str[i + 1])) || `>})`.includes(str[i]) && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump.includes(flipEspTag(str[i])) && (str[i] !== ">" || !xBeforeYOnTheRight$1(str, i + 1, ">", "<")) || str[i] === "-" && str[i + 1] === "-" && str[i + 2] === ">" && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-";
+    var res = espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && !(notVeryEspChars.includes(str[i]) && notVeryEspChars.includes(str[i + 1])) && (str[i] !== str[i + 1] || veryEspChars.includes(str[i])) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && "-{(".includes(str[i + 1])) && !("})".includes(str[i]) && "-".includes(str[i + 1])) && !(str[i] === "%" && str[i + 1] === "%" && "0123456789".includes(str[i - 1]) && (!str[i + 2] || punctuationChars.includes(str[i + 2]) || !str[i + 2].trim().length)) && !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[right(str, i)]))) || str[i] === "<" && (str[i + 1] === "/" && espChars.includes(str[i + 2]) || espChars.includes(str[i + 1]) && !["-"].includes(str[i + 1])) || ">})".includes(str[i]) && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump.includes(flipEspTag(str[i])) && (str[i] !== ">" || !xBeforeYOnTheRight$1(str, i + 1, ">", "<")) || str[i] === "-" && str[i + 1] === "-" && str[i + 2] === ">" && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-";
     return res;
   }
 
   function isObj$2(something) {
-    return something && typeof something === "object" && !Array.isArray(something);
+    return something && _typeof(something) === "object" && !Array.isArray(something);
   }
 
-  const voidTags = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"];
-  const charsThatEndCSSChunks = ["{", "}", ","];
-  const BACKTICK = "\x60";
+  var voidTags = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"];
+  var charsThatEndCSSChunks = ["{", "}", ","];
+  var BACKTICK = "\x60";
 
   function tokenizer(str, originalOpts) {
-    const start = Date.now();
+    var start = Date.now();
 
     if (!isStr$3(str)) {
       if (str === undefined) {
         throw new Error("codsen-tokenizer: [THROW_ID_01] the first input argument is completely missing! It should be given as string.");
       } else {
-        throw new Error(`codsen-tokenizer: [THROW_ID_02] the first input argument must be string! It was given as "${typeof str}", equal to:\n${JSON.stringify(str, null, 4)}`);
+        throw new Error("codsen-tokenizer: [THROW_ID_02] the first input argument must be string! It was given as \"".concat(_typeof(str), "\", equal to:\n").concat(JSON.stringify(str, null, 4)));
       }
     }
 
     if (originalOpts && !isObj$2(originalOpts)) {
-      throw new Error(`codsen-tokenizer: [THROW_ID_03] the second input argument, an options object, should be a plain object but it was given as type ${typeof originalOpts}, equal to ${JSON.stringify(originalOpts, null, 4)}`);
+      throw new Error("codsen-tokenizer: [THROW_ID_03] the second input argument, an options object, should be a plain object but it was given as type ".concat(_typeof(originalOpts), ", equal to ").concat(JSON.stringify(originalOpts, null, 4)));
     }
 
     if (isObj$2(originalOpts) && originalOpts.tagCb && typeof originalOpts.tagCb !== "function") {
-      throw new Error(`codsen-tokenizer: [THROW_ID_04] the opts.tagCb, callback function, should be a function but it was given as type ${typeof originalOpts.tagCb}, equal to ${JSON.stringify(originalOpts.tagCb, null, 4)}`);
+      throw new Error("codsen-tokenizer: [THROW_ID_04] the opts.tagCb, callback function, should be a function but it was given as type ".concat(_typeof(originalOpts.tagCb), ", equal to ").concat(JSON.stringify(originalOpts.tagCb, null, 4)));
     }
 
     if (isObj$2(originalOpts) && originalOpts.charCb && typeof originalOpts.charCb !== "function") {
-      throw new Error(`codsen-tokenizer: [THROW_ID_05] the opts.charCb, callback function, should be a function but it was given as type ${typeof originalOpts.charCb}, equal to ${JSON.stringify(originalOpts.charCb, null, 4)}`);
+      throw new Error("codsen-tokenizer: [THROW_ID_05] the opts.charCb, callback function, should be a function but it was given as type ".concat(_typeof(originalOpts.charCb), ", equal to ").concat(JSON.stringify(originalOpts.charCb, null, 4)));
     }
 
     if (isObj$2(originalOpts) && originalOpts.reportProgressFunc && typeof originalOpts.reportProgressFunc !== "function") {
-      throw new Error(`codsen-tokenizer: [THROW_ID_06] the opts.reportProgressFunc, callback function, should be a function but it was given as type ${typeof originalOpts.reportProgressFunc}, equal to ${JSON.stringify(originalOpts.reportProgressFunc, null, 4)}`);
+      throw new Error("codsen-tokenizer: [THROW_ID_06] the opts.reportProgressFunc, callback function, should be a function but it was given as type ".concat(_typeof(originalOpts.reportProgressFunc), ", equal to ").concat(JSON.stringify(originalOpts.reportProgressFunc, null, 4)));
     }
 
-    const defaults = {
+    var defaults = {
       tagCb: null,
       tagCbLookahead: 0,
       charCb: null,
@@ -3154,19 +3208,19 @@
       reportProgressFuncFrom: 0,
       reportProgressFuncTo: 100
     };
-    const opts = { ...defaults,
-      ...originalOpts
-    };
-    let currentPercentageDone;
-    let lastPercentage = 0;
-    const len = str.length;
-    const midLen = Math.floor(len / 2);
-    let doNothing;
-    let withinStyle = false;
-    const tagStash = [];
-    const charStash = [];
-    let token = {};
-    const tokenDefault = {
+
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
+
+    var currentPercentageDone;
+    var lastPercentage = 0;
+    var len = str.length;
+    var midLen = Math.floor(len / 2);
+    var doNothing;
+    var withinStyle = false;
+    var tagStash = [];
+    var charStash = [];
+    var token = {};
+    var tokenDefault = {
       type: null,
       start: null,
       end: null,
@@ -3179,8 +3233,8 @@
       return token;
     }
 
-    let attrib = {};
-    const attribDefault = {
+    var attrib = {};
+    var attribDefault = {
       attribName: null,
       attribNameRecognised: null,
       attribNameStartsAt: null,
@@ -3201,17 +3255,17 @@
     }
 
     tokenReset();
-    let selectorChunkStartedAt;
-    let parentTokenToBackup;
-    let attribToBackup;
-    let lastNonWhitespaceCharAt;
-    const layers = [];
+    var selectorChunkStartedAt;
+    var parentTokenToBackup;
+    var attribToBackup;
+    var lastNonWhitespaceCharAt;
+    var layers = [];
 
     function reportFirstFromStash(stash, cb, lookaheadLength) {
-      const currentElem = stash.shift();
-      const next = [];
+      var currentElem = stash.shift();
+      var next = [];
 
-      for (let i = 0; i < lookaheadLength; i++) {
+      for (var i = 0; i < lookaheadLength; i++) {
         if (stash[i]) {
           next.push(lodash_clonedeep(stash[i]));
         } else {
@@ -3248,10 +3302,10 @@
         incomingToken.value = str.slice(incomingToken.start, incomingToken.end);
 
         if (incomingToken.type === "tag" && !"/>".includes(str[~-incomingToken.end])) {
-          let cutOffIndex = incomingToken.tagNameEndsAt || i;
+          var cutOffIndex = incomingToken.tagNameEndsAt || i;
 
           if (Array.isArray(incomingToken.attribs) && incomingToken.attribs.length) {
-            for (let i2 = 0, len2 = incomingToken.attribs.length; i2 < len2; i2++) {
+            for (var i2 = 0, len2 = incomingToken.attribs.length; i2 < len2; i2++) {
               if (incomingToken.attribs[i2].attribNameRecognised) {
                 cutOffIndex = incomingToken.attribs[i2].attribEnd;
 
@@ -3316,10 +3370,12 @@
       return layers.length && layers[~-layers.length].type === "at" && isObj$2(layers[~-layers.length].token) && layers[~-layers.length].token.openingCurlyAt && !layers[~-layers.length].token.closingCurlyAt;
     }
 
-    function getNewToken(type, startVal = null) {
+    function getNewToken(type) {
+      var startVal = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
       if (type === "tag") {
         return {
-          type,
+          type: type,
           start: startVal,
           end: null,
           value: null,
@@ -3337,7 +3393,7 @@
 
       if (type === "comment") {
         return {
-          type,
+          type: type,
           start: startVal,
           end: null,
           value: null,
@@ -3348,7 +3404,7 @@
 
       if (type === "rule") {
         return {
-          type,
+          type: type,
           start: startVal,
           end: null,
           value: null,
@@ -3364,7 +3420,7 @@
 
       if (type === "at") {
         return {
-          type,
+          type: type,
           start: startVal,
           end: null,
           value: null,
@@ -3384,7 +3440,7 @@
 
       if (type === "text") {
         return {
-          type,
+          type: type,
           start: startVal,
           end: null,
           value: null
@@ -3393,7 +3449,7 @@
 
       if (type === "esp") {
         return {
-          type,
+          type: type,
           start: startVal,
           end: null,
           value: null,
@@ -3412,14 +3468,14 @@
       token = getNewToken(type, startVal);
     }
 
-    for (let i = 0; i <= len; i++) {
-      if (!doNothing && str[i] && opts.reportProgressFunc) {
+    var _loop2 = function _loop2(_i) {
+      if (!doNothing && str[_i] && opts.reportProgressFunc) {
         if (len > 1000 && len < 2000) {
-          if (i === midLen) {
+          if (_i === midLen) {
             opts.reportProgressFunc(Math.floor((opts.reportProgressFuncTo - opts.reportProgressFuncFrom) / 2));
           }
         } else if (len >= 2000) {
-          currentPercentageDone = opts.reportProgressFuncFrom + Math.floor(i / len * (opts.reportProgressFuncTo - opts.reportProgressFuncFrom));
+          currentPercentageDone = opts.reportProgressFuncFrom + Math.floor(_i / len * (opts.reportProgressFuncTo - opts.reportProgressFuncFrom));
 
           if (currentPercentageDone !== lastPercentage) {
             lastPercentage = currentPercentageDone;
@@ -3432,23 +3488,25 @@
         withinStyle = false;
       }
 
-      if (doNothing && i >= doNothing) {
+      if (doNothing && _i >= doNothing) {
         doNothing = false;
       }
 
-      if (isLatinLetter(str[i]) && isLatinLetter(str[~-i]) && isLatinLetter(str[i + 1])) {
-        continue;
+      if (isLatinLetter(str[_i]) && isLatinLetter(str[~-_i]) && isLatinLetter(str[_i + 1])) {
+        i = _i;
+        return "continue";
       }
 
-      if (` \t\r\n`.includes(str[i]) && str[i] === str[~-i] && str[i] === str[i + 1]) {
-        continue;
+      if (" \t\r\n".includes(str[_i]) && str[_i] === str[~-_i] && str[_i] === str[_i + 1]) {
+        i = _i;
+        return "continue";
       }
 
       if (!doNothing && atRuleWaitingForClosingCurlie()) {
-        if (str[i] === "}") {
+        if (str[_i] === "}") {
           if (token.type === null || token.type === "text" || token.type === "rule" && token.openingCurlyAt === null) {
             if (token.type === "rule") {
-              token.end = left(str, i) + 1;
+              token.end = left(str, _i) + 1;
               token.value = str.slice(token.start, token.end);
               pingTagCb(token);
 
@@ -3458,16 +3516,16 @@
 
               tokenReset();
 
-              if (left(str, i) < ~-i) {
-                initToken("text", left(str, i) + 1);
+              if (left(str, _i) < ~-_i) {
+                initToken("text", left(str, _i) + 1);
               }
             }
 
-            dumpCurrentToken(token, i);
-            const poppedToken = layers.pop();
+            dumpCurrentToken(token, _i);
+            var poppedToken = layers.pop();
             token = poppedToken.token;
-            token.closingCurlyAt = i;
-            token.end = i + 1;
+            token.closingCurlyAt = _i;
+            token.end = _i + 1;
             token.value = str.slice(token.start, token.end);
             pingTagCb(token);
 
@@ -3476,10 +3534,10 @@
             }
 
             tokenReset();
-            doNothing = i + 1;
+            doNothing = _i + 1;
           }
-        } else if (token.type === "text" && str[i] && str[i].trim()) {
-          token.end = i;
+        } else if (token.type === "text" && str[_i] && str[_i].trim()) {
+          token.end = _i;
           token.value = str.slice(token.start, token.end);
 
           if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "at") {
@@ -3492,7 +3550,7 @@
         }
       }
 
-      if (token.end && token.end === i) {
+      if (token.end && token.end === _i) {
         if (token.tagName === "style" && !token.closing) {
           withinStyle = true;
         }
@@ -3504,141 +3562,141 @@
           attribToBackup = undefined;
           parentTokenToBackup = undefined;
         } else {
-          dumpCurrentToken(token, i);
+          dumpCurrentToken(token, _i);
           layers.length = 0;
         }
       }
 
       if (!doNothing) {
         if (["tag", "rule", "at"].includes(token.type) && token.kind !== "cdata") {
-          if ([`"`, `'`, `(`, `)`].includes(str[i]) && !([`"`, `'`, "`"].includes(str[left(str, i)]) && str[left(str, i)] === str[right(str, i)])) {
-            if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "simple" && layers[~-layers.length].value === flipEspTag(str[i])) {
+          if (["\"", "'", "(", ")"].includes(str[_i]) && !(["\"", "'", "`"].includes(str[left(str, _i)]) && str[left(str, _i)] === str[right(str, _i)])) {
+            if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "simple" && layers[~-layers.length].value === flipEspTag(str[_i])) {
               layers.pop();
             } else {
               layers.push({
                 type: "simple",
-                value: str[i],
-                position: i
+                value: str[_i],
+                position: _i
               });
             }
           }
         } else if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
-          if ([`[`, `]`].includes(str[i])) {
-            if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "simple" && layers[~-layers.length].value === flipEspTag(str[i])) {
+          if (["[", "]"].includes(str[_i])) {
+            if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "simple" && layers[~-layers.length].value === flipEspTag(str[_i])) {
               layers.pop();
             } else {
               layers.push({
                 type: "simple",
-                value: str[i],
-                position: i
+                value: str[_i],
+                position: _i
               });
             }
           }
-        } else if (token.type === "esp" && `'"${BACKTICK}()`.includes(str[i]) && !([`"`, `'`, "`"].includes(str[left(str, i)]) && str[left(str, i)] === str[right(str, i)])) {
-          if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "simple" && layers[~-layers.length].value === flipEspTag(str[i])) {
+        } else if (token.type === "esp" && "'\"".concat(BACKTICK, "()").includes(str[_i]) && !(["\"", "'", "`"].includes(str[left(str, _i)]) && str[left(str, _i)] === str[right(str, _i)])) {
+          if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "simple" && layers[~-layers.length].value === flipEspTag(str[_i])) {
             layers.pop();
-            doNothing = i + 1;
-          } else if (!`]})>`.includes(str[i])) {
+            doNothing = _i + 1;
+          } else if (!"]})>".includes(str[_i])) {
             layers.push({
               type: "simple",
-              value: str[i],
-              position: i
+              value: str[_i],
+              position: _i
             });
           }
         }
       }
 
-      if (!doNothing && token.type === "at" && token.start != null && i >= token.start && !token.identifierStartsAt && str[i] && str[i].trim() && str[i] !== "@") {
-        token.identifierStartsAt = i;
+      if (!doNothing && token.type === "at" && token.start != null && _i >= token.start && !token.identifierStartsAt && str[_i] && str[_i].trim() && str[_i] !== "@") {
+        token.identifierStartsAt = _i;
       }
 
-      if (!doNothing && token.type === "at" && token.queryStartsAt != null && !token.queryEndsAt && `{;`.includes(str[i])) {
-        if (str[i] === "{") {
-          if (str[~-i] && str[~-i].trim()) {
-            token.queryEndsAt = i;
+      if (!doNothing && token.type === "at" && token.queryStartsAt != null && !token.queryEndsAt && "{;".includes(str[_i])) {
+        if (str[_i] === "{") {
+          if (str[~-_i] && str[~-_i].trim()) {
+            token.queryEndsAt = _i;
           } else {
-            token.queryEndsAt = left(str, i) + 1;
+            token.queryEndsAt = left(str, _i) + 1;
           }
         } else {
-          token.queryEndsAt = left(str, i + 1);
+          token.queryEndsAt = left(str, _i + 1);
         }
 
         token.query = str.slice(token.queryStartsAt, token.queryEndsAt);
-        token.end = str[i] === ";" ? i + 1 : i;
+        token.end = str[_i] === ";" ? _i + 1 : _i;
         token.value = str.slice(token.start, token.end);
 
-        if (str[i] === ";") {
+        if (str[_i] === ";") {
           pingTagCb(token);
         } else {
-          token.openingCurlyAt = i;
+          token.openingCurlyAt = _i;
           layers.push({
             type: "at",
-            token
+            token: token
           });
         }
 
         tokenReset();
-        doNothing = i + 1;
+        doNothing = _i + 1;
       }
 
-      if (!doNothing && token.type === "at" && token.identifier && str[i] && str[i].trim() && !token.queryStartsAt) {
-        token.queryStartsAt = i;
+      if (!doNothing && token.type === "at" && token.identifier && str[_i] && str[_i].trim() && !token.queryStartsAt) {
+        token.queryStartsAt = _i;
       }
 
-      if (!doNothing && token.type === "at" && token.identifierStartsAt != null && i >= token.start && str[i] && (!str[i].trim() || "()".includes(str[i])) && !token.identifierEndsAt) {
-        token.identifierEndsAt = i;
-        token.identifier = str.slice(token.identifierStartsAt, i);
+      if (!doNothing && token.type === "at" && token.identifierStartsAt != null && _i >= token.start && str[_i] && (!str[_i].trim() || "()".includes(str[_i])) && !token.identifierEndsAt) {
+        token.identifierEndsAt = _i;
+        token.identifier = str.slice(token.identifierStartsAt, _i);
       }
 
-      if (token.type === "rule" && selectorChunkStartedAt && (charsThatEndCSSChunks.includes(str[i]) || str[i] && !str[i].trim() && charsThatEndCSSChunks.includes(str[right(str, i)]))) {
+      if (token.type === "rule" && selectorChunkStartedAt && (charsThatEndCSSChunks.includes(str[_i]) || str[_i] && !str[_i].trim() && charsThatEndCSSChunks.includes(str[right(str, _i)]))) {
         token.selectors.push({
-          value: str.slice(selectorChunkStartedAt, i),
+          value: str.slice(selectorChunkStartedAt, _i),
           selectorStarts: selectorChunkStartedAt,
-          selectorEnds: i
+          selectorEnds: _i
         });
         selectorChunkStartedAt = undefined;
-        token.selectorsEnd = i;
+        token.selectorsEnd = _i;
       }
 
-      if (!doNothing && str[i]) {
-        if (startsTag(str, i, token, layers)) {
+      if (!doNothing && str[_i]) {
+        if (startsTag(str, _i, token, layers)) {
           if (token.type && token.start !== null) {
-            dumpCurrentToken(token, i);
+            dumpCurrentToken(token, _i);
             tokenReset();
           }
 
-          initToken("tag", i);
+          initToken("tag", _i);
 
           if (withinStyle) {
             withinStyle = false;
           }
 
-          if (matchRight(str, i, "doctype", {
+          if (matchRight(str, _i, "doctype", {
             i: true,
             trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
           })) {
             token.kind = "doctype";
-          } else if (matchRight(str, i, "cdata", {
+          } else if (matchRight(str, _i, "cdata", {
             i: true,
             trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
           })) {
             token.kind = "cdata";
-          } else if (matchRight(str, i, "xml", {
+          } else if (matchRight(str, _i, "xml", {
             i: true,
             trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
           })) {
             token.kind = "xml";
           }
-        } else if (startsComment(str, i, token, layers)) {
+        } else if (startsComment(str, _i, token, layers)) {
           if (token.start != null) {
-            dumpCurrentToken(token, i);
+            dumpCurrentToken(token, _i);
           }
 
-          initToken("comment", i);
+          initToken("comment", _i);
 
-          if (str[i] === "-") {
+          if (str[_i] === "-") {
             token.closing = true;
-          } else if (matchRightIncl(str, i, ["<![endif]-->"], {
+          } else if (matchRightIncl(str, _i, ["<![endif]-->"], {
             i: true,
             trimBeforeMatching: true,
             maxMismatches: 2
@@ -3650,20 +3708,20 @@
           if (withinStyle) {
             withinStyle = false;
           }
-        } else if (startsEsp(str, i, token, layers, withinStyle) && (!Array.isArray(layers) || !layers.length || layers[~-layers.length].type !== "simple" || ![`'`, `"`].includes(layers[~-layers.length].value) || attrib && attrib.attribStart && !attrib.attribEnd)) {
-          const wholeEspTagLumpOnTheRight = getWholeEspTagLumpOnTheRight(str, i, layers);
+        } else if (startsEsp(str, _i, token, layers, withinStyle) && (!Array.isArray(layers) || !layers.length || layers[~-layers.length].type !== "simple" || !["'", "\""].includes(layers[~-layers.length].value) || attrib && attrib.attribStart && !attrib.attribEnd)) {
+          var wholeEspTagLumpOnTheRight = getWholeEspTagLumpOnTheRight(str, _i, layers);
 
           if (!espLumpBlacklist.includes(wholeEspTagLumpOnTheRight)) {
-            let lengthOfClosingEspChunk;
-            let disposableVar;
+            var lengthOfClosingEspChunk;
+            var disposableVar;
 
             if (layers.length && (lengthOfClosingEspChunk = matchLayerLast(wholeEspTagLumpOnTheRight, layers))) {
               if (token.type === "esp") {
                 if (!token.end) {
-                  token.end = i + lengthOfClosingEspChunk;
+                  token.end = _i + lengthOfClosingEspChunk;
                   token.value = str.slice(token.start, token.end);
-                  token.tail = str.slice(i, i + lengthOfClosingEspChunk);
-                  token.tailStartsAt = i;
+                  token.tail = str.slice(_i, _i + lengthOfClosingEspChunk);
+                  token.tailStartsAt = _i;
                   token.tailEndsAt = token.end;
                 }
 
@@ -3685,9 +3743,10 @@
                   parentTokenToBackup = undefined;
                   attribToBackup = undefined;
                   layers.pop();
-                  continue;
+                  i = _i;
+                  return "continue";
                 } else {
-                  dumpCurrentToken(token, i);
+                  dumpCurrentToken(token, _i);
                 }
 
                 tokenReset();
@@ -3697,29 +3756,31 @@
             } else if (layers.length && (lengthOfClosingEspChunk = matchLayerLast(wholeEspTagLumpOnTheRight, layers, "matchFirst"))) {
               if (token.type === "esp") {
                 if (!token.end) {
-                  token.end = i + lengthOfClosingEspChunk;
+                  token.end = _i + lengthOfClosingEspChunk;
                   token.value = str.slice(token.start, token.end);
                 }
 
-                dumpCurrentToken(token, i);
+                dumpCurrentToken(token, _i);
                 tokenReset();
               }
 
               layers.length = 0;
-            } else if (attrib && attrib.attribValue && attrib.attribValue.length && Array.from(str.slice(attrib.attribValue[~-attrib.attribValue.length].start, i)).some((char, idx) => wholeEspTagLumpOnTheRight.includes(flipEspTag(char)) && (veryEspChars.includes(char) || !idx) && (disposableVar = {
-              char,
-              idx
-            })) && token.type === "tag" && attrib && attrib.attribValueStartsAt && !attrib.attribValueEndsAt && attrib.attribValue[~-attrib.attribValue.length] && attrib.attribValue[~-attrib.attribValue.length].type === "text") {
+            } else if (attrib && attrib.attribValue && attrib.attribValue.length && Array.from(str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i)).some(function (char, idx) {
+              return wholeEspTagLumpOnTheRight.includes(flipEspTag(char)) && (veryEspChars.includes(char) || !idx) && (disposableVar = {
+                char: char,
+                idx: idx
+              });
+            }) && token.type === "tag" && attrib && attrib.attribValueStartsAt && !attrib.attribValueEndsAt && attrib.attribValue[~-attrib.attribValue.length] && attrib.attribValue[~-attrib.attribValue.length].type === "text") {
               token.pureHTML = false;
-              const lastAttrValueObj = attrib.attribValue[~-attrib.attribValue.length];
-              const newTokenToPutInstead = getNewToken("esp", lastAttrValueObj.start);
+              var lastAttrValueObj = attrib.attribValue[~-attrib.attribValue.length];
+              var newTokenToPutInstead = getNewToken("esp", lastAttrValueObj.start);
 
               if (!disposableVar || !disposableVar.idx) {
                 newTokenToPutInstead.head = disposableVar.char;
                 newTokenToPutInstead.headStartsAt = lastAttrValueObj.start;
                 newTokenToPutInstead.headEndsAt = newTokenToPutInstead.headStartsAt + 1;
-                newTokenToPutInstead.tailStartsAt = i;
-                newTokenToPutInstead.tailEndsAt = i + wholeEspTagLumpOnTheRight.length;
+                newTokenToPutInstead.tailStartsAt = _i;
+                newTokenToPutInstead.tailEndsAt = _i + wholeEspTagLumpOnTheRight.length;
                 newTokenToPutInstead.tail = wholeEspTagLumpOnTheRight;
                 attrib.attribValue[~-attrib.attribValue.length] = newTokenToPutInstead;
               }
@@ -3740,14 +3801,14 @@
                 type: "esp",
                 openingLump: wholeEspTagLumpOnTheRight,
                 guessedClosingLump: flipEspTag(wholeEspTagLumpOnTheRight),
-                position: i
+                position: _i
               });
 
               if (token.start !== null) {
                 if (token.type === "tag") {
                   if (!token.tagName || !token.tagNameEndsAt) {
-                    token.tagNameEndsAt = i;
-                    token.tagName = str.slice(token.tagNameStartsAt, i);
+                    token.tagNameEndsAt = _i;
+                    token.tagName = str.slice(token.tagNameStartsAt, _i);
                     token.recognised = isTagNameRecognised(token.tagName);
                   }
 
@@ -3757,17 +3818,17 @@
                     attribToBackup = lodash_clonedeep(attrib);
                   }
                 } else if (!attribToBackup) {
-                  dumpCurrentToken(token, i);
+                  dumpCurrentToken(token, _i);
                 } else if (attribToBackup && Array.isArray(attribToBackup.attribValue) && attribToBackup.attribValue.length && attribToBackup.attribValue[~-attribToBackup.attribValue.length].type === "esp" && !attribToBackup.attribValue[~-attribToBackup.attribValue.length].end) {
-                  attribToBackup.attribValue[~-attribToBackup.attribValue.length].end = i;
-                  attribToBackup.attribValue[~-attribToBackup.attribValue.length].value = str.slice(attribToBackup.attribValue[~-attribToBackup.attribValue.length].start, i);
+                  attribToBackup.attribValue[~-attribToBackup.attribValue.length].end = _i;
+                  attribToBackup.attribValue[~-attribToBackup.attribValue.length].value = str.slice(attribToBackup.attribValue[~-attribToBackup.attribValue.length].start, _i);
                 }
               }
 
-              initToken("esp", i);
+              initToken("esp", _i);
               token.head = wholeEspTagLumpOnTheRight;
-              token.headStartsAt = i;
-              token.headEndsAt = i + wholeEspTagLumpOnTheRight.length;
+              token.headStartsAt = _i;
+              token.headEndsAt = _i + wholeEspTagLumpOnTheRight.length;
 
               if (parentTokenToBackup && parentTokenToBackup.pureHTML) {
                 parentTokenToBackup.pureHTML = false;
@@ -3777,102 +3838,104 @@
                 if (attribToBackup.attribValue[~-attribToBackup.attribValue.length].start === token.start) {
                   attribToBackup.attribValue.pop();
                 } else if (attribToBackup.attribValue[~-attribToBackup.attribValue.length].type === "text" && !attribToBackup.attribValue[~-attribToBackup.attribValue.length].end) {
-                  attribToBackup.attribValue[~-attribToBackup.attribValue.length].end = i;
-                  attribToBackup.attribValue[~-attribToBackup.attribValue.length].value = str.slice(attribToBackup.attribValue[~-attribToBackup.attribValue.length].start, i);
+                  attribToBackup.attribValue[~-attribToBackup.attribValue.length].end = _i;
+                  attribToBackup.attribValue[~-attribToBackup.attribValue.length].value = str.slice(attribToBackup.attribValue[~-attribToBackup.attribValue.length].start, _i);
                 }
               }
             }
 
-            doNothing = i + (lengthOfClosingEspChunk || wholeEspTagLumpOnTheRight.length);
+            doNothing = _i + (lengthOfClosingEspChunk || wholeEspTagLumpOnTheRight.length);
           }
-        } else if (withinStyle && str[i] && str[i].trim() && (!token.type || ["text"].includes(token.type))) {
+        } else if (withinStyle && str[_i] && str[_i].trim() && (!token.type || ["text"].includes(token.type))) {
           if (token.type) {
-            dumpCurrentToken(token, i);
+            dumpCurrentToken(token, _i);
           }
 
-          initToken(str[i] === "@" ? "at" : "rule", i);
+          initToken(str[_i] === "@" ? "at" : "rule", _i);
           token.left = lastNonWhitespaceCharAt;
-          token.nested = layers.some(o => o.type === "at");
+          token.nested = layers.some(function (o) {
+            return o.type === "at";
+          });
         } else if (!token.type) {
-          initToken("text", i);
+          initToken("text", _i);
         }
       }
 
-      if (!doNothing && token.type === "rule" && str[i] && str[i].trim() && !"{}".includes(str[i]) && !selectorChunkStartedAt && !token.openingCurlyAt) {
-        if (!",".includes(str[i])) {
-          selectorChunkStartedAt = i;
+      if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && !"{}".includes(str[_i]) && !selectorChunkStartedAt && !token.openingCurlyAt) {
+        if (!",".includes(str[_i])) {
+          selectorChunkStartedAt = _i;
 
           if (token.selectorsStart === null) {
-            token.selectorsStart = i;
+            token.selectorsStart = _i;
           }
         } else {
-          token.selectorsEnd = i + 1;
+          token.selectorsEnd = _i + 1;
         }
       }
 
       if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
-        if (str[i] === "[") ;
+        if (str[_i] === "[") ;
       }
 
       if (!doNothing) {
-        if (token.type === "tag" && !layers.length && str[i] === ">") {
-          token.end = i + 1;
+        if (token.type === "tag" && !layers.length && str[_i] === ">") {
+          token.end = _i + 1;
           token.value = str.slice(token.start, token.end);
-        } else if (token.type === "comment" && !layers.length && token.kind === "simple" && (str[token.start] === "<" && str[i] === "-" && (matchLeft(str, i, "!-", {
+        } else if (token.type === "comment" && !layers.length && token.kind === "simple" && (str[token.start] === "<" && str[_i] === "-" && (matchLeft(str, _i, "!-", {
           trimBeforeMatching: true
-        }) || matchLeftIncl(str, i, "!-", {
+        }) || matchLeftIncl(str, _i, "!-", {
           trimBeforeMatching: true
-        }) && str[i + 1] !== "-") || str[token.start] === "-" && str[i] === ">" && matchLeft(str, i, "--", {
+        }) && str[_i + 1] !== "-") || str[token.start] === "-" && str[_i] === ">" && matchLeft(str, _i, "--", {
           trimBeforeMatching: true,
           maxMismatches: 1
         }))) {
-          if (str[i] === "-" && (matchRight(str, i, ["[if", "(if", "{if"], {
+          if (str[_i] === "-" && (matchRight(str, _i, ["[if", "(if", "{if"], {
             i: true,
             trimBeforeMatching: true
-          }) || matchRight(str, i, ["if"], {
+          }) || matchRight(str, _i, ["if"], {
             i: true,
             trimBeforeMatching: true
-          }) && (xBeforeYOnTheRight$1(str, i, "]", ">") || str.includes("mso", i) && !str.slice(i, str.indexOf("mso")).includes("<") && !str.slice(i, str.indexOf("mso")).includes(">")))) {
+          }) && (xBeforeYOnTheRight$1(str, _i, "]", ">") || str.includes("mso", _i) && !str.slice(_i, str.indexOf("mso")).includes("<") && !str.slice(_i, str.indexOf("mso")).includes(">")))) {
             token.kind = "only";
-          } else if (str[token.start] !== "-" && matchRightIncl(str, i, ["-<![endif"], {
+          } else if (str[token.start] !== "-" && matchRightIncl(str, _i, ["-<![endif"], {
             i: true,
             trimBeforeMatching: true,
             maxMismatches: 2
           })) {
             token.kind = "not";
             token.closing = true;
-          } else if (token.kind === "simple" && !token.closing && str[right(str, i)] === ">") {
-            token.end = right(str, i) + 1;
+          } else if (token.kind === "simple" && !token.closing && str[right(str, _i)] === ">") {
+            token.end = right(str, _i) + 1;
             token.kind = "simplet";
             token.closing = null;
           } else {
-            token.end = i + 1;
+            token.end = _i + 1;
 
-            if (str[left(str, i)] === "!" && str[right(str, i)] === "-") {
-              token.end = right(str, i) + 1;
+            if (str[left(str, _i)] === "!" && str[right(str, _i)] === "-") {
+              token.end = right(str, _i) + 1;
             }
 
             token.value = str.slice(token.start, token.end);
           }
-        } else if (token.type === "comment" && str[i] === ">" && (!layers.length || str[right(str, i)] === "<")) {
+        } else if (token.type === "comment" && str[_i] === ">" && (!layers.length || str[right(str, _i)] === "<")) {
           if (Array.isArray(layers) && layers.length && layers[~-layers.length].value === "[") {
             layers.pop();
           }
 
-          if (!["simplet", "not"].includes(token.kind) && matchRight(str, i, ["<!-->", "<!---->"], {
+          if (!["simplet", "not"].includes(token.kind) && matchRight(str, _i, ["<!-->", "<!---->"], {
             trimBeforeMatching: true,
             maxMismatches: 1,
             lastMustMatch: true
           })) {
             token.kind = "not";
           } else {
-            token.end = i + 1;
+            token.end = _i + 1;
             token.value = str.slice(token.start, token.end);
           }
-        } else if (token.type === "esp" && token.end === null && isStr$3(token.tail) && token.tail.includes(str[i])) {
-          let wholeEspTagClosing = "";
+        } else if (token.type === "esp" && token.end === null && isStr$3(token.tail) && token.tail.includes(str[_i])) {
+          var wholeEspTagClosing = "";
 
-          for (let y = i; y < len; y++) {
+          for (var y = _i; y < len; y++) {
             if (espChars.includes(str[y])) {
               wholeEspTagClosing += str[y];
             } else {
@@ -3881,32 +3944,34 @@
           }
 
           if (wholeEspTagClosing.length > token.head.length) {
-            const headsFirstChar = token.head[0];
+            var headsFirstChar = token.head[0];
 
             if (wholeEspTagClosing.endsWith(token.head)) {
-              token.end = i + wholeEspTagClosing.length - token.head.length;
+              token.end = _i + wholeEspTagClosing.length - token.head.length;
               token.value = str.slice(token.start, token.end);
               doNothing = token.end;
             } else if (wholeEspTagClosing.startsWith(token.tail)) {
-              token.end = i + token.tail.length;
+              token.end = _i + token.tail.length;
               token.value = str.slice(token.start, token.end);
               doNothing = token.end;
             } else if (!token.tail.includes(headsFirstChar) && wholeEspTagClosing.includes(headsFirstChar) || wholeEspTagClosing.endsWith(token.head) || wholeEspTagClosing.startsWith(token.tail)) {
-              const firstPartOfWholeEspTagClosing = wholeEspTagClosing.slice(0, wholeEspTagClosing.indexOf(headsFirstChar));
-              const secondPartOfWholeEspTagClosing = wholeEspTagClosing.slice(wholeEspTagClosing.indexOf(headsFirstChar));
+              var firstPartOfWholeEspTagClosing = wholeEspTagClosing.slice(0, wholeEspTagClosing.indexOf(headsFirstChar));
+              var secondPartOfWholeEspTagClosing = wholeEspTagClosing.slice(wholeEspTagClosing.indexOf(headsFirstChar));
 
-              if (firstPartOfWholeEspTagClosing.length && secondPartOfWholeEspTagClosing.length && token.tail.split("").every(char => firstPartOfWholeEspTagClosing.includes(char))) {
-                token.end = i + firstPartOfWholeEspTagClosing.length;
+              if (firstPartOfWholeEspTagClosing.length && secondPartOfWholeEspTagClosing.length && token.tail.split("").every(function (char) {
+                return firstPartOfWholeEspTagClosing.includes(char);
+              })) {
+                token.end = _i + firstPartOfWholeEspTagClosing.length;
                 token.value = str.slice(token.start, token.end);
                 doNothing = token.end;
               }
             } else {
-              token.end = i + wholeEspTagClosing.length;
+              token.end = _i + wholeEspTagClosing.length;
               token.value = str.slice(token.start, token.end);
               doNothing = token.end;
             }
           } else {
-            token.end = i + wholeEspTagClosing.length;
+            token.end = _i + wholeEspTagClosing.length;
             token.value = str.slice(token.start, token.end);
 
             if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "esp") {
@@ -3919,9 +3984,9 @@
       }
 
       if (!doNothing && token.type === "tag" && token.tagNameStartsAt && !token.tagNameEndsAt) {
-        if (!str[i] || !charSuitableForTagName(str[i])) {
-          token.tagNameEndsAt = i;
-          token.tagName = str.slice(token.tagNameStartsAt, i).toLowerCase();
+        if (!str[_i] || !charSuitableForTagName(str[_i])) {
+          token.tagNameEndsAt = _i;
+          token.tagName = str.slice(token.tagNameStartsAt, _i).toLowerCase();
 
           if (token.tagName === "xml" && token.closing && !token.kind) {
             token.kind = "xml";
@@ -3935,11 +4000,11 @@
         }
       }
 
-      if (!doNothing && token.type === "tag" && !token.tagNameStartsAt && token.start != null && (token.start < i || str[token.start] !== "<")) {
-        if (str[i] === "/") {
+      if (!doNothing && token.type === "tag" && !token.tagNameStartsAt && token.start != null && (token.start < _i || str[token.start] !== "<")) {
+        if (str[_i] === "/") {
           token.closing = true;
-        } else if (isLatinLetter(str[i])) {
-          token.tagNameStartsAt = i;
+        } else if (isLatinLetter(str[_i])) {
+          token.tagNameStartsAt = _i;
 
           if (!token.closing) {
             token.closing = false;
@@ -3947,31 +4012,31 @@
         }
       }
 
-      if (!doNothing && token.type === "tag" && token.kind !== "cdata" && attrib.attribNameStartsAt && i > attrib.attribNameStartsAt && attrib.attribNameEndsAt === null && !charSuitableForHTMLAttrName(str[i])) {
-        attrib.attribNameEndsAt = i;
-        attrib.attribName = str.slice(attrib.attribNameStartsAt, i);
+      if (!doNothing && token.type === "tag" && token.kind !== "cdata" && attrib.attribNameStartsAt && _i > attrib.attribNameStartsAt && attrib.attribNameEndsAt === null && !charSuitableForHTMLAttrName(str[_i])) {
+        attrib.attribNameEndsAt = _i;
+        attrib.attribName = str.slice(attrib.attribNameStartsAt, _i);
         attrib.attribNameRecognised = allHtmlAttribs.has(attrib.attribName);
-        if (str[i] && !str[i].trim() && str[right(str, i)] === "=") ;else if (str[i] && !str[i].trim() || str[i] === ">" || str[i] === "/" && str[right(str, i)] === ">") {
-          if (`'"`.includes(str[right(str, i)])) ;else {
-            attrib.attribEnd = i;
+        if (str[_i] && !str[_i].trim() && str[right(str, _i)] === "=") ;else if (str[_i] && !str[_i].trim() || str[_i] === ">" || str[_i] === "/" && str[right(str, _i)] === ">") {
+          if ("'\"".includes(str[right(str, _i)])) ;else {
+            attrib.attribEnd = _i;
             token.attribs.push(lodash_clonedeep(attrib));
             attribReset();
           }
         }
       }
 
-      if (!doNothing && str[i] && token.type === "tag" && token.kind !== "cdata" && token.tagNameEndsAt && i > token.tagNameEndsAt && attrib.attribStart === null && charSuitableForHTMLAttrName(str[i])) {
-        attrib.attribStart = i;
+      if (!doNothing && str[_i] && token.type === "tag" && token.kind !== "cdata" && token.tagNameEndsAt && _i > token.tagNameEndsAt && attrib.attribStart === null && charSuitableForHTMLAttrName(str[_i])) {
+        attrib.attribStart = _i;
         attrib.attribLeft = lastNonWhitespaceCharAt;
-        attrib.attribNameStartsAt = i;
+        attrib.attribNameStartsAt = _i;
       }
 
       if (!doNothing && token.type === "rule") {
-        if (str[i] === "{" && !token.openingCurlyAt) {
-          token.openingCurlyAt = i;
-        } else if (str[i] === "}" && token.openingCurlyAt && !token.closingCurlyAt) {
-          token.closingCurlyAt = i;
-          token.end = i + 1;
+        if (str[_i] === "{" && !token.openingCurlyAt) {
+          token.openingCurlyAt = _i;
+        } else if (str[_i] === "}" && token.openingCurlyAt && !token.closingCurlyAt) {
+          token.closingCurlyAt = _i;
+          token.end = _i + 1;
           token.value = str.slice(token.start, token.end);
           pingTagCb(token);
 
@@ -3983,14 +4048,16 @@
         }
       }
 
-      if (!doNothing && token.type === "tag" && attrib.attribValueStartsAt && i >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
-        if (`'"`.includes(str[i])) {
-          const R1 = !layers.some(layerObj => layerObj.type === "esp");
-          const R2 = isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, i);
+      if (!doNothing && token.type === "tag" && attrib.attribValueStartsAt && _i >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
+        if ("'\"".includes(str[_i])) {
+          var R1 = !layers.some(function (layerObj) {
+            return layerObj.type === "esp";
+          });
+          var R2 = isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, _i);
 
-          if (str[left(str, i)] === str[i] && !`/>${espChars}`.includes(str[right(str, i)]) && !xBeforeYOnTheRight$1(str, i, "=", `"`) && !xBeforeYOnTheRight$1(str, i, "=", `'`) && (xBeforeYOnTheRight$1(str, i, `"`, `>`) || xBeforeYOnTheRight$1(str, i, `'`, `>`)) && (!str.slice(i + 1).includes("<") || !str.slice(0, str.indexOf("<")).includes("="))) {
-            attrib.attribOpeningQuoteAt = i;
-            attrib.attribValueStartsAt = i + 1;
+          if (str[left(str, _i)] === str[_i] && !"/>".concat(espChars).includes(str[right(str, _i)]) && !xBeforeYOnTheRight$1(str, _i, "=", "\"") && !xBeforeYOnTheRight$1(str, _i, "=", "'") && (xBeforeYOnTheRight$1(str, _i, "\"", ">") || xBeforeYOnTheRight$1(str, _i, "'", ">")) && (!str.slice(_i + 1).includes("<") || !str.slice(0, str.indexOf("<")).includes("="))) {
+            attrib.attribOpeningQuoteAt = _i;
+            attrib.attribValueStartsAt = _i + 1;
 
             if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && attrib.attribValue[~-attrib.attribValue.length].start && !attrib.attribValue[~-attrib.attribValue.length].end && attrib.attribValueStartsAt > attrib.attribValue[~-attrib.attribValue.length].start) {
               attrib.attribValue[~-attrib.attribValue.length].start = attrib.attribValueStartsAt;
@@ -3998,25 +4065,27 @@
 
             layers.push({
               type: "simple",
-              value: str[i],
-              position: i
+              value: str[_i],
+              position: _i
             });
-          } else if (!layers.some(layerObj => layerObj.type === "esp") && isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, i)) {
-            attrib.attribClosingQuoteAt = i;
-            attrib.attribValueEndsAt = i;
+          } else if (!layers.some(function (layerObj) {
+            return layerObj.type === "esp";
+          }) && isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, _i)) {
+            attrib.attribClosingQuoteAt = _i;
+            attrib.attribValueEndsAt = _i;
 
             if (attrib.attribValueStartsAt) {
-              attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, i);
+              attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i);
             }
 
-            attrib.attribEnd = i + 1;
+            attrib.attribEnd = _i + 1;
 
             if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
-              attrib.attribValue[~-attrib.attribValue.length].end = i;
-              attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, i);
+              attrib.attribValue[~-attrib.attribValue.length].end = _i;
+              attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i);
             }
 
-            if (str[attrib.attribOpeningQuoteAt] !== str[i]) {
+            if (str[attrib.attribOpeningQuoteAt] !== str[_i]) {
               layers.pop();
               layers.pop();
             }
@@ -4024,42 +4093,42 @@
             token.attribs.push(lodash_clonedeep(attrib));
             attribReset();
           }
-        } else if (attrib.attribOpeningQuoteAt === null && (str[i] && !str[i].trim() || ["/", ">"].includes(str[i]) || espChars.includes(str[i]) && espChars.includes(str[i + 1]))) {
-          attrib.attribValueEndsAt = i;
-          attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, i);
+        } else if (attrib.attribOpeningQuoteAt === null && (str[_i] && !str[_i].trim() || ["/", ">"].includes(str[_i]) || espChars.includes(str[_i]) && espChars.includes(str[_i + 1]))) {
+          attrib.attribValueEndsAt = _i;
+          attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i);
 
           if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
-            attrib.attribValue[~-attrib.attribValue.length].end = i;
+            attrib.attribValue[~-attrib.attribValue.length].end = _i;
             attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, attrib.attribValue[~-attrib.attribValue.length].end);
           }
 
-          attrib.attribEnd = i;
+          attrib.attribEnd = _i;
           token.attribs.push(lodash_clonedeep(attrib));
           attribReset();
           layers.pop();
 
-          if (str[i] === ">") {
-            token.end = i + 1;
+          if (str[_i] === ">") {
+            token.end = _i + 1;
             token.value = str.slice(token.start, token.end);
           }
-        } else if (str[i] === "=" && (`'"`.includes(str[right(str, i)]) || str[~-i] && isLatinLetter(str[~-i]))) {
-          let whitespaceFound;
-          let attribClosingQuoteAt;
+        } else if (str[_i] === "=" && ("'\"".includes(str[right(str, _i)]) || str[~-_i] && isLatinLetter(str[~-_i]))) {
+          var whitespaceFound;
+          var attribClosingQuoteAt;
 
-          for (let y = left(str, i); y >= attrib.attribValueStartsAt; y--) {
-            if (!whitespaceFound && str[y] && !str[y].trim()) {
+          for (var _y2 = left(str, _i); _y2 >= attrib.attribValueStartsAt; _y2--) {
+            if (!whitespaceFound && str[_y2] && !str[_y2].trim()) {
               whitespaceFound = true;
 
               if (attribClosingQuoteAt) {
-                const extractedChunksVal = str.slice(y, attribClosingQuoteAt);
+                var extractedChunksVal = str.slice(_y2, attribClosingQuoteAt);
               }
             }
 
-            if (whitespaceFound && str[y] && str[y].trim()) {
+            if (whitespaceFound && str[_y2] && str[_y2].trim()) {
               whitespaceFound = false;
 
               if (!attribClosingQuoteAt) {
-                attribClosingQuoteAt = y + 1;
+                attribClosingQuoteAt = _y2 + 1;
               }
             }
           }
@@ -4078,44 +4147,46 @@
 
             attrib.attribEnd = attribClosingQuoteAt;
 
-            if (str[attrib.attribOpeningQuoteAt] !== str[i]) {
+            if (str[attrib.attribOpeningQuoteAt] !== str[_i]) {
               layers.pop();
             }
 
             token.attribs.push(lodash_clonedeep(attrib));
             attribReset();
-            i = ~-attribClosingQuoteAt;
-            continue;
-          } else if (attrib.attribOpeningQuoteAt && (`'"`.includes(str[right(str, i)]) || allHtmlAttribs.has(str.slice(attrib.attribOpeningQuoteAt + 1, i).trim()))) {
-            i = attrib.attribOpeningQuoteAt;
+            _i = ~-attribClosingQuoteAt;
+            i = _i;
+            return "continue";
+          } else if (attrib.attribOpeningQuoteAt && ("'\"".includes(str[right(str, _i)]) || allHtmlAttribs.has(str.slice(attrib.attribOpeningQuoteAt + 1, _i).trim()))) {
+            _i = attrib.attribOpeningQuoteAt;
             attrib.attribEnd = attrib.attribOpeningQuoteAt + 1;
             attrib.attribValueStartsAt = null;
             layers.pop();
             token.attribs.push(lodash_clonedeep(attrib));
             attribReset();
-            continue;
+            i = _i;
+            return "continue";
           }
-        } else if (attrib && attrib.attribStart && !attrib.attribEnd && (!Array.isArray(attrib.attribValue) || !attrib.attribValue.length || attrib.attribValue[~-attrib.attribValue.length].end && attrib.attribValue[~-attrib.attribValue.length].end <= i)) {
+        } else if (attrib && attrib.attribStart && !attrib.attribEnd && (!Array.isArray(attrib.attribValue) || !attrib.attribValue.length || attrib.attribValue[~-attrib.attribValue.length].end && attrib.attribValue[~-attrib.attribValue.length].end <= _i)) {
           attrib.attribValue.push({
             type: "text",
-            start: i,
+            start: _i,
             end: null,
             value: null
           });
         }
-      } else if (token.type === "esp" && attribToBackup && parentTokenToBackup && attribToBackup.attribOpeningQuoteAt && `'"`.includes(str[i]) && str[attribToBackup.attribOpeningQuoteAt] === str[i] && isAttrClosing(str, attribToBackup.attribOpeningQuoteAt, i)) {
-        token.end = i;
-        token.value = str.slice(token.start, i);
+      } else if (token.type === "esp" && attribToBackup && parentTokenToBackup && attribToBackup.attribOpeningQuoteAt && "'\"".includes(str[_i]) && str[attribToBackup.attribOpeningQuoteAt] === str[_i] && isAttrClosing(str, attribToBackup.attribOpeningQuoteAt, _i)) {
+        token.end = _i;
+        token.value = str.slice(token.start, _i);
 
         if (attribToBackup && !Array.isArray(attribToBackup.attribValue)) {
           attribToBackup.attribValue.length = 0;
         }
 
         attribToBackup.attribValue.push(token);
-        attribToBackup.attribValueEndsAt = i;
-        attribToBackup.attribValueRaw = str.slice(attribToBackup.attribValueStartsAt, i);
-        attribToBackup.attribClosingQuoteAt = i;
-        attribToBackup.attribEnd = i + 1;
+        attribToBackup.attribValueEndsAt = _i;
+        attribToBackup.attribValueRaw = str.slice(attribToBackup.attribValueStartsAt, _i);
+        attribToBackup.attribClosingQuoteAt = _i;
+        attribToBackup.attribEnd = _i + 1;
         token = lodash_clonedeep(parentTokenToBackup);
         token.attribs.push(attribToBackup);
         attribToBackup = undefined;
@@ -4125,17 +4196,22 @@
         layers.pop();
       }
 
-      if (!doNothing && token.type === "tag" && !attrib.attribValueStartsAt && attrib.attribNameEndsAt && attrib.attribNameEndsAt <= i && str[i] && str[i].trim()) {
-        if (str[i] === "=" && !`'"=`.includes(str[right(str, i)]) && !espChars.includes(str[right(str, i)])) {
-          const firstCharOnTheRight = right(str, i);
-          const firstQuoteOnTheRightIdx = [str.indexOf(`'`, firstCharOnTheRight), str.indexOf(`"`, firstCharOnTheRight)].filter(val => val > 0).length ? Math.min(...[str.indexOf(`'`, firstCharOnTheRight), str.indexOf(`"`, firstCharOnTheRight)].filter(val => val > 0)) : undefined;
+      if (!doNothing && token.type === "tag" && !attrib.attribValueStartsAt && attrib.attribNameEndsAt && attrib.attribNameEndsAt <= _i && str[_i] && str[_i].trim()) {
+        if (str[_i] === "=" && !"'\"=".includes(str[right(str, _i)]) && !espChars.includes(str[right(str, _i)])) {
+          var firstCharOnTheRight = right(str, _i);
+          var firstQuoteOnTheRightIdx = [str.indexOf("'", firstCharOnTheRight), str.indexOf("\"", firstCharOnTheRight)].filter(function (val) {
+            return val > 0;
+          }).length ? Math.min.apply(Math, _toConsumableArray([str.indexOf("'", firstCharOnTheRight), str.indexOf("\"", firstCharOnTheRight)].filter(function (val) {
+            return val > 0;
+          }))) : undefined;
 
           if (firstCharOnTheRight && str.slice(firstCharOnTheRight).includes("=") && allHtmlAttribs.has(str.slice(firstCharOnTheRight, firstCharOnTheRight + str.slice(firstCharOnTheRight).indexOf("=")).trim().toLowerCase())) {
-            attrib.attribEnd = i + 1;
-            token.attribs.push({ ...attrib
-            });
+            attrib.attribEnd = _i + 1;
+            token.attribs.push(_objectSpread2({}, attrib));
             attribReset();
-          } else if (!firstQuoteOnTheRightIdx || str.slice(firstCharOnTheRight, firstQuoteOnTheRightIdx).includes("=") || !str.includes(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1) || Array.from(str.slice(firstQuoteOnTheRightIdx + 1, str.indexOf(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1))).some(char => `<>=`.includes(char))) {
+          } else if (!firstQuoteOnTheRightIdx || str.slice(firstCharOnTheRight, firstQuoteOnTheRightIdx).includes("=") || !str.includes(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1) || Array.from(str.slice(firstQuoteOnTheRightIdx + 1, str.indexOf(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1))).some(function (char) {
+            return "<>=".includes(char);
+          })) {
             attrib.attribValueStartsAt = firstCharOnTheRight;
             layers.push({
               type: "simple",
@@ -4143,16 +4219,18 @@
               position: attrib.attribValueStartsAt
             });
           }
-        } else if (`'"`.includes(str[i])) {
-          const nextCharIdx = right(str, i);
+        } else if ("'\"".includes(str[_i])) {
+          var nextCharIdx = right(str, _i);
 
-          if (nextCharIdx && `'"`.includes(str[nextCharIdx]) && str[i] !== str[nextCharIdx] && str.length > nextCharIdx + 2 && str.slice(nextCharIdx + 1).includes(str[nextCharIdx]) && (!str.indexOf(str[nextCharIdx], nextCharIdx + 1) || !right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1)) || str[i] !== str[right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1))]) && !Array.from(str.slice(nextCharIdx + 1, str.indexOf(str[nextCharIdx]))).some(char => `<>=${str[i]}`.includes(char))) {
+          if (nextCharIdx && "'\"".includes(str[nextCharIdx]) && str[_i] !== str[nextCharIdx] && str.length > nextCharIdx + 2 && str.slice(nextCharIdx + 1).includes(str[nextCharIdx]) && (!str.indexOf(str[nextCharIdx], nextCharIdx + 1) || !right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1)) || str[_i] !== str[right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1))]) && !Array.from(str.slice(nextCharIdx + 1, str.indexOf(str[nextCharIdx]))).some(function (char) {
+            return "<>=".concat(str[_i]).includes(char);
+          })) {
             layers.pop();
           } else {
-            attrib.attribOpeningQuoteAt = i;
+            attrib.attribOpeningQuoteAt = _i;
 
-            if (str[i + 1]) {
-              attrib.attribValueStartsAt = i + 1;
+            if (str[_i + 1]) {
+              attrib.attribValueStartsAt = _i + 1;
             }
 
             if (Array.isArray(attrib.attribValue) && (!attrib.attribValue.length || attrib.attribValue[~-attrib.attribValue.length].end)) {
@@ -4167,24 +4245,24 @@
         }
       }
 
-      if (str[i] === ">" && token.type === "tag" && attrib.attribStart && !attrib.attribEnd) {
-        let thisIsRealEnding = false;
+      if (str[_i] === ">" && token.type === "tag" && attrib.attribStart && !attrib.attribEnd) {
+        var thisIsRealEnding = false;
 
-        if (str[i + 1]) {
-          for (let y = i + 1; y < len; y++) {
-            if (attrib.attribOpeningQuoteAt && str[y] === str[attrib.attribOpeningQuoteAt]) {
-              if (y !== i + 1 && str[~-y] !== "=") {
+        if (str[_i + 1]) {
+          for (var _y3 = _i + 1; _y3 < len; _y3++) {
+            if (attrib.attribOpeningQuoteAt && str[_y3] === str[attrib.attribOpeningQuoteAt]) {
+              if (_y3 !== _i + 1 && str[~-_y3] !== "=") {
                 thisIsRealEnding = true;
               }
 
               break;
-            } else if (str[y] === ">") {
+            } else if (str[_y3] === ">") {
               break;
-            } else if (str[y] === "<") {
+            } else if (str[_y3] === "<") {
               thisIsRealEnding = true;
               layers.pop();
               break;
-            } else if (!str[y + 1]) {
+            } else if (!str[_y3 + 1]) {
               thisIsRealEnding = true;
               break;
             }
@@ -4194,61 +4272,69 @@
         }
 
         if (thisIsRealEnding) {
-          token.end = i + 1;
+          token.end = _i + 1;
           token.value = str.slice(token.start, token.end);
 
-          if (attrib.attribValueStartsAt && i && attrib.attribValueStartsAt < i && str.slice(attrib.attribValueStartsAt, i).trim()) {
-            attrib.attribValueEndsAt = i;
-            attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, i);
+          if (attrib.attribValueStartsAt && _i && attrib.attribValueStartsAt < _i && str.slice(attrib.attribValueStartsAt, _i).trim()) {
+            attrib.attribValueEndsAt = _i;
+            attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i);
 
             if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
-              attrib.attribValue[~-attrib.attribValue.length].end = i;
-              attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, i);
+              attrib.attribValue[~-attrib.attribValue.length].end = _i;
+              attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i);
             }
           } else {
             attrib.attribValueStartsAt = null;
           }
 
-          attrib.attribEnd = i;
+          attrib.attribEnd = _i;
           token.attribs.push(lodash_clonedeep(attrib));
           attribReset();
         }
       }
 
-      if (str[i] && opts.charCb) {
+      if (str[_i] && opts.charCb) {
         pingCharCb({
           type: token.type,
-          chr: str[i],
-          i
+          chr: str[_i],
+          i: _i
         });
       }
 
-      if (!str[i] && token.start !== null) {
-        token.end = i;
+      if (!str[_i] && token.start !== null) {
+        token.end = _i;
         token.value = str.slice(token.start, token.end);
         pingTagCb(token);
       }
 
-      if (str[i] && str[i].trim()) {
-        lastNonWhitespaceCharAt = i;
+      if (str[_i] && str[_i].trim()) {
+        lastNonWhitespaceCharAt = _i;
       }
+
+      i = _i;
+    };
+
+    for (var i = 0; i <= len; i++) {
+      var _ret2 = _loop2(i);
+
+      if (_ret2 === "continue") continue;
     }
 
     if (charStash.length) {
-      for (let i = 0, len2 = charStash.length; i < len2; i++) {
+      for (var _i2 = 0, len2 = charStash.length; _i2 < len2; _i2++) {
         reportFirstFromStash(charStash, opts.charCb, opts.charCbLookahead);
       }
     }
 
     if (tagStash.length) {
-      for (let i = 0, len2 = tagStash.length; i < len2; i++) {
+      for (var _i3 = 0, _len = tagStash.length; _i3 < _len; _i3++) {
         reportFirstFromStash(tagStash, opts.tagCb, opts.tagCbLookahead);
       }
     }
 
-    const timeTakenInMilliseconds = Date.now() - start;
+    var timeTakenInMilliseconds = Date.now() - start;
     return {
-      timeTakenInMilliseconds
+      timeTakenInMilliseconds: timeTakenInMilliseconds
     };
   }
 
@@ -4297,7 +4383,7 @@
       }
 
       function isObject(obj) {
-        return typeof obj === 'object' && toString(obj) === "[object Object]";
+        return _typeof(obj) === 'object' && toString(obj) === "[object Object]";
       }
 
       var isArray = Array.isArray || function (obj) {
@@ -4322,7 +4408,7 @@
       function factory(options) {
         options = options || {};
 
-        var objectPath = function (obj) {
+        var objectPath = function objectPath(obj) {
           return Object.keys(objectPath).reduce(function (proxy, prop) {
             if (prop === 'create') {
               return proxy;
@@ -4566,21 +4652,14 @@
     });
   });
 
-  /**
-   * codsen-parser
-   * Parser aiming at broken code, especially HTML & CSS
-   * Version: 0.7.0
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser
-   */
-
   function isObj$3(something) {
-    return something && typeof something === "object" && !Array.isArray(something);
+    return something && _typeof(something) === "object" && !Array.isArray(something);
   }
 
   function layerPending(layers, tokenObj) {
-    return tokenObj.closing && layers.length && (layers[layers.length - 1].type === tokenObj.type && Object.prototype.hasOwnProperty.call(layers[layers.length - 1], "tagName") && Object.prototype.hasOwnProperty.call(tokenObj, "tagName") && layers[layers.length - 1].tagName === tokenObj.tagName && layers[layers.length - 1].closing === false || tokenObj.type === "comment" && layers.some(layerObjToken => Object.prototype.hasOwnProperty.call(layerObjToken, "closing") && !layerObjToken.closing));
+    return tokenObj.closing && layers.length && (layers[layers.length - 1].type === tokenObj.type && Object.prototype.hasOwnProperty.call(layers[layers.length - 1], "tagName") && Object.prototype.hasOwnProperty.call(tokenObj, "tagName") && layers[layers.length - 1].tagName === tokenObj.tagName && layers[layers.length - 1].closing === false || tokenObj.type === "comment" && layers.some(function (layerObjToken) {
+      return Object.prototype.hasOwnProperty.call(layerObjToken, "closing") && !layerObjToken.closing;
+    }));
   }
 
   function cparser(str, originalOpts) {
@@ -4588,31 +4667,31 @@
       if (str === undefined) {
         throw new Error("codsen-tokenizer: [THROW_ID_01] the first input argument is completely missing! It should be given as string.");
       } else {
-        throw new Error(`codsen-tokenizer: [THROW_ID_02] the first input argument must be string! It was given as "${typeof str}", equal to:\n${JSON.stringify(str, null, 4)}`);
+        throw new Error("codsen-tokenizer: [THROW_ID_02] the first input argument must be string! It was given as \"".concat(_typeof(str), "\", equal to:\n").concat(JSON.stringify(str, null, 4)));
       }
     }
 
     if (originalOpts && !isObj$3(originalOpts)) {
-      throw new Error(`codsen-tokenizer: [THROW_ID_03] the second input argument, an options object, should be a plain object but it was given as type ${typeof originalOpts}, equal to ${JSON.stringify(originalOpts, null, 4)}`);
+      throw new Error("codsen-tokenizer: [THROW_ID_03] the second input argument, an options object, should be a plain object but it was given as type ".concat(_typeof(originalOpts), ", equal to ").concat(JSON.stringify(originalOpts, null, 4)));
     }
 
     if (isObj$3(originalOpts) && originalOpts.tagCb && typeof originalOpts.tagCb !== "function") {
-      throw new Error(`codsen-tokenizer: [THROW_ID_04] the opts.tagCb, callback function, should be a function but it was given as type ${typeof originalOpts.tagCb}, equal to ${JSON.stringify(originalOpts.tagCb, null, 4)}`);
+      throw new Error("codsen-tokenizer: [THROW_ID_04] the opts.tagCb, callback function, should be a function but it was given as type ".concat(_typeof(originalOpts.tagCb), ", equal to ").concat(JSON.stringify(originalOpts.tagCb, null, 4)));
     }
 
     if (isObj$3(originalOpts) && originalOpts.charCb && typeof originalOpts.charCb !== "function") {
-      throw new Error(`codsen-tokenizer: [THROW_ID_05] the opts.charCb, callback function, should be a function but it was given as type ${typeof originalOpts.charCb}, equal to ${JSON.stringify(originalOpts.charCb, null, 4)}`);
+      throw new Error("codsen-tokenizer: [THROW_ID_05] the opts.charCb, callback function, should be a function but it was given as type ".concat(_typeof(originalOpts.charCb), ", equal to ").concat(JSON.stringify(originalOpts.charCb, null, 4)));
     }
 
     if (isObj$3(originalOpts) && originalOpts.reportProgressFunc && typeof originalOpts.reportProgressFunc !== "function") {
-      throw new Error(`codsen-tokenizer: [THROW_ID_06] the opts.reportProgressFunc, callback function, should be a function but it was given as type ${typeof originalOpts.reportProgressFunc}, equal to ${JSON.stringify(originalOpts.reportProgressFunc, null, 4)}`);
+      throw new Error("codsen-tokenizer: [THROW_ID_06] the opts.reportProgressFunc, callback function, should be a function but it was given as type ".concat(_typeof(originalOpts.reportProgressFunc), ", equal to ").concat(JSON.stringify(originalOpts.reportProgressFunc, null, 4)));
     }
 
     if (isObj$3(originalOpts) && originalOpts.errCb && typeof originalOpts.errCb !== "function") {
-      throw new Error(`codsen-tokenizer: [THROW_ID_07] the opts.errCb, callback function, should be a function but it was given as type ${typeof originalOpts.errCb}, equal to ${JSON.stringify(originalOpts.errCb, null, 4)}`);
+      throw new Error("codsen-tokenizer: [THROW_ID_07] the opts.errCb, callback function, should be a function but it was given as type ".concat(_typeof(originalOpts.errCb), ", equal to ").concat(JSON.stringify(originalOpts.errCb, null, 4)));
     }
 
-    const defaults = {
+    var defaults = {
       reportProgressFunc: null,
       reportProgressFuncFrom: 0,
       reportProgressFuncTo: 100,
@@ -4620,28 +4699,28 @@
       charCb: null,
       errCb: null
     };
-    const opts = { ...defaults,
-      ...originalOpts
-    };
-    const layers = [];
-    const res = [];
-    let path;
-    let nestNext = false;
-    let lastProcessedToken = {};
-    const tokensWithChildren = ["tag", "comment"];
-    const tagNamesThatDontHaveClosings = ["doctype"];
+
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
+
+    var layers = [];
+    var res = [];
+    var path;
+    var nestNext = false;
+    var lastProcessedToken = {};
+    var tokensWithChildren = ["tag", "comment"];
+    var tagNamesThatDontHaveClosings = ["doctype"];
     tokenizer(str, {
       reportProgressFunc: opts.reportProgressFunc,
       reportProgressFuncFrom: opts.reportProgressFuncFrom,
       reportProgressFuncTo: opts.reportProgressFuncTo,
       tagCbLookahead: 2,
-      tagCb: (tokenObj, next) => {
+      tagCb: function tagCb(tokenObj, next) {
         if (typeof opts.tagCb === "function") {
           opts.tagCb(tokenObj);
         }
 
         if (!tokenObj.nested) {
-          let prevToken = objectPath.get(res, path);
+          var prevToken = objectPath.get(res, path);
 
           if (!isObj$3(prevToken)) {
             prevToken = null;
@@ -4649,7 +4728,7 @@
 
           if (nestNext && !tokenObj.closing && (!prevToken || !(prevToken.tagName === tokenObj.tagName && !prevToken.closing && tokenObj.closing)) && !layerPending(layers, tokenObj) && (!next.length || !(tokenObj.type === "text" && next[0].type === "tag" && (next[0].closing && lastProcessedToken.closing || layers[layers.length - 3] && next[0].tagName !== layers[layers.length - 1].tagName && layers[layers.length - 3].type === "tag" && !layers[layers.length - 3].closing && next[0].tagName === layers[layers.length - 3].tagName)))) {
             nestNext = false;
-            path = `${path}.children.0`;
+            path = "".concat(path, ".children.0");
           } else if (tokenObj.closing && typeof path === "string" && path.includes(".") && (!tokenObj.tagName || lastProcessedToken.tagName !== tokenObj.tagName || lastProcessedToken.closing)) {
             path = pathNext(pathUp(path));
 
@@ -4665,9 +4744,9 @@
                 path = pathNext(pathUp(path));
 
                 if (opts.errCb) {
-                  const lastLayersToken = layers[layers.length - 1];
+                  var lastLayersToken = layers[layers.length - 1];
                   opts.errCb({
-                    ruleId: `${lastLayersToken.type}${lastLayersToken.type === "comment" ? `-${lastLayersToken.kind}` : ""}-missing-closing`,
+                    ruleId: "".concat(lastLayersToken.type).concat(lastLayersToken.type === "comment" ? "-".concat(lastLayersToken.kind) : "", "-missing-closing"),
                     idxFrom: lastLayersToken.start,
                     idxTo: lastLayersToken.end,
                     tokenObj: lastLayersToken
@@ -4680,12 +4759,12 @@
                 path = pathNext(pathUp(path));
 
                 if (opts.errCb) {
-                  const lastLayersToken = layers[layers.length - 1];
+                  var _lastLayersToken = layers[layers.length - 1];
                   opts.errCb({
-                    ruleId: `tag-rogue`,
-                    idxFrom: lastLayersToken.start,
-                    idxTo: lastLayersToken.end,
-                    tokenObj: lastLayersToken
+                    ruleId: "tag-rogue",
+                    idxFrom: _lastLayersToken.start,
+                    idxTo: _lastLayersToken.end,
+                    tokenObj: _lastLayersToken
                   });
                 }
 
@@ -4694,12 +4773,12 @@
                 layers.pop();
               } else if (layers.length > 1 && layers[layers.length - 2].type === tokenObj.type && layers[layers.length - 2].type === tokenObj.type && layers[layers.length - 2].tagName === tokenObj.tagName) {
                 if (opts.errCb) {
-                  const lastLayersToken = layers[layers.length - 1];
+                  var _lastLayersToken2 = layers[layers.length - 1];
                   opts.errCb({
-                    ruleId: `tag-rogue`,
-                    idxFrom: lastLayersToken.start,
-                    idxTo: lastLayersToken.end,
-                    tokenObj: lastLayersToken
+                    ruleId: "tag-rogue",
+                    idxFrom: _lastLayersToken2.start,
+                    idxTo: _lastLayersToken2.end,
+                    tokenObj: _lastLayersToken2
                   });
                 }
 
@@ -4721,45 +4800,44 @@
             nestNext = true;
 
             if (!tagNamesThatDontHaveClosings.includes(tokenObj.kind)) {
-              layers.push({ ...tokenObj
-              });
+              layers.push(_objectSpread2({}, tokenObj));
             }
           }
 
-          const previousPath = pathPrev(path);
-          const parentPath = pathUp(path);
-          let parentTagsToken;
+          var previousPath = pathPrev(path);
+          var parentPath = pathUp(path);
+          var parentTagsToken;
 
           if (parentPath && path.includes(".")) {
             parentTagsToken = objectPath.get(res, parentPath);
           }
 
-          let previousTagsToken;
+          var previousTagsToken;
 
           if (previousPath) {
             previousTagsToken = objectPath.get(res, previousPath);
           }
 
-          const suspiciousCommentTagEndingRegExp = /(-+|-+[^>])>/;
-          let parentsLastChildTokenValue;
-          let parentsLastChildTokenPath;
+          var suspiciousCommentTagEndingRegExp = /(-+|-+[^>])>/;
+          var parentsLastChildTokenValue;
+          var parentsLastChildTokenPath;
 
           if (isObj$3(previousTagsToken) && Array.isArray(previousTagsToken.children) && previousTagsToken.children.length && previousTagsToken.children[previousTagsToken.children.length - 1]) {
             parentsLastChildTokenValue = previousTagsToken.children[previousTagsToken.children.length - 1];
-            parentsLastChildTokenPath = `${previousPath}.children.${objectPath.get(res, previousPath).children.length - 1}`;
+            parentsLastChildTokenPath = "".concat(previousPath, ".children.").concat(objectPath.get(res, previousPath).children.length - 1);
           }
 
-          let tokenTakenCareOf = false;
+          var tokenTakenCareOf = false;
 
           if (tokenObj.type === "text" && isObj$3(parentTagsToken) && parentTagsToken.type === "comment" && parentTagsToken.kind === "simple" && !parentTagsToken.closing && suspiciousCommentTagEndingRegExp.test(tokenObj.value)) {
-            const suspiciousEndingStartsAt = suspiciousCommentTagEndingRegExp.exec(tokenObj.value).index;
-            const suspiciousEndingEndsAt = suspiciousEndingStartsAt + tokenObj.value.slice(suspiciousEndingStartsAt).indexOf(">") + 1;
+            var suspiciousEndingStartsAt = suspiciousCommentTagEndingRegExp.exec(tokenObj.value).index;
+            var suspiciousEndingEndsAt = suspiciousEndingStartsAt + tokenObj.value.slice(suspiciousEndingStartsAt).indexOf(">") + 1;
 
             if (suspiciousEndingStartsAt > 0) {
-              objectPath.set(res, path, { ...tokenObj,
+              objectPath.set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
                 end: tokenObj.start + suspiciousEndingStartsAt,
                 value: tokenObj.value.slice(0, suspiciousEndingStartsAt)
-              });
+              }));
 
               if (tokensWithChildren.includes(tokenObj.type)) {
                 tokenObj.children = [];
@@ -4790,15 +4868,15 @@
             tokenTakenCareOf = true;
           } else if (tokenObj.type === "comment" && tokenObj.kind === "only" && isObj$3(previousTagsToken)) {
             if (previousTagsToken.type === "text" && previousTagsToken.value.trim() && "<!-".includes(previousTagsToken.value[left(previousTagsToken.value, previousTagsToken.value.length)])) {
-              const capturedMalformedTagRanges = [];
-              strFindMalformed(previousTagsToken.value, "<!--", obj => {
+              var capturedMalformedTagRanges = [];
+              strFindMalformed(previousTagsToken.value, "<!--", function (obj) {
                 capturedMalformedTagRanges.push(obj);
               }, {
                 maxDistance: 2
               });
 
               if (capturedMalformedTagRanges.length && !right(previousTagsToken.value, capturedMalformedTagRanges[capturedMalformedTagRanges.length - 1].idxTo - 1)) {
-                const malformedRange = capturedMalformedTagRanges.pop();
+                var malformedRange = capturedMalformedTagRanges.pop();
 
                 if (!left(previousTagsToken.value, malformedRange.idxFrom) && previousPath && isObj$3(previousTagsToken)) {
                   if (tokensWithChildren.includes(tokenObj.type)) {
@@ -4806,68 +4884,68 @@
                   }
 
                   path = previousPath;
-                  objectPath.set(res, path, { ...tokenObj,
+                  objectPath.set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
                     start: malformedRange.idxFrom + previousTagsToken.start,
                     kind: "not",
-                    value: `${previousTagsToken.value}${tokenObj.value}`
-                  });
+                    value: "".concat(previousTagsToken.value).concat(tokenObj.value)
+                  }));
                   tokenTakenCareOf = true;
                 } else if (previousPath && isObj$3(previousTagsToken)) {
-                  objectPath.set(res, previousPath, { ...previousTagsToken,
+                  objectPath.set(res, previousPath, _objectSpread2(_objectSpread2({}, previousTagsToken), {}, {
                     end: malformedRange.idxFrom + previousTagsToken.start,
                     value: previousTagsToken.value.slice(0, malformedRange.idxFrom)
-                  });
+                  }));
 
                   if (tokensWithChildren.includes(tokenObj.type)) {
                     tokenObj.children = [];
                   }
 
-                  objectPath.set(res, path, { ...tokenObj,
+                  objectPath.set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
                     start: malformedRange.idxFrom + previousTagsToken.start,
                     kind: "not",
-                    value: `${previousTagsToken.value.slice(malformedRange.idxFrom)}${tokenObj.value}`
-                  });
+                    value: "".concat(previousTagsToken.value.slice(malformedRange.idxFrom)).concat(tokenObj.value)
+                  }));
                   tokenTakenCareOf = true;
                 }
               }
             } else if (isObj$3(parentsLastChildTokenValue) && parentsLastChildTokenValue.type === "text" && parentsLastChildTokenValue.value.trim() && "<!-".includes(parentsLastChildTokenValue.value[left(parentsLastChildTokenValue.value, parentsLastChildTokenValue.value.length)])) {
-              const capturedMalformedTagRanges = [];
-              strFindMalformed(parentsLastChildTokenValue.value, "<!--", obj => {
-                capturedMalformedTagRanges.push(obj);
+              var _capturedMalformedTagRanges = [];
+              strFindMalformed(parentsLastChildTokenValue.value, "<!--", function (obj) {
+                _capturedMalformedTagRanges.push(obj);
               }, {
                 maxDistance: 2
               });
 
-              if (capturedMalformedTagRanges.length && !right(parentsLastChildTokenValue.value, capturedMalformedTagRanges[capturedMalformedTagRanges.length - 1].idxTo - 1)) {
-                const malformedRange = capturedMalformedTagRanges.pop();
+              if (_capturedMalformedTagRanges.length && !right(parentsLastChildTokenValue.value, _capturedMalformedTagRanges[_capturedMalformedTagRanges.length - 1].idxTo - 1)) {
+                var _malformedRange = _capturedMalformedTagRanges.pop();
 
-                if (!left(parentsLastChildTokenValue.value, malformedRange.idxFrom) && previousPath && isObj$3(parentsLastChildTokenValue)) {
+                if (!left(parentsLastChildTokenValue.value, _malformedRange.idxFrom) && previousPath && isObj$3(parentsLastChildTokenValue)) {
                   if (tokensWithChildren.includes(tokenObj.type)) {
                     tokenObj.children = [];
                   }
 
-                  objectPath.set(res, path, { ...tokenObj,
-                    start: malformedRange.idxFrom + parentsLastChildTokenValue.start,
+                  objectPath.set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
+                    start: _malformedRange.idxFrom + parentsLastChildTokenValue.start,
                     kind: "not",
-                    value: `${parentsLastChildTokenValue.value}${tokenObj.value}`
-                  });
-                  objectPath.del(res, `${previousPath}.children.${objectPath.get(res, previousPath).children.length - 1}`);
+                    value: "".concat(parentsLastChildTokenValue.value).concat(tokenObj.value)
+                  }));
+                  objectPath.del(res, "".concat(previousPath, ".children.").concat(objectPath.get(res, previousPath).children.length - 1));
                   tokenTakenCareOf = true;
                 } else if (previousPath && isObj$3(parentsLastChildTokenValue) && parentsLastChildTokenPath) {
-                  objectPath.set(res, parentsLastChildTokenPath, { ...parentsLastChildTokenValue,
-                    end: malformedRange.idxFrom + parentsLastChildTokenValue.start,
-                    value: parentsLastChildTokenValue.value.slice(0, malformedRange.idxFrom)
-                  });
+                  objectPath.set(res, parentsLastChildTokenPath, _objectSpread2(_objectSpread2({}, parentsLastChildTokenValue), {}, {
+                    end: _malformedRange.idxFrom + parentsLastChildTokenValue.start,
+                    value: parentsLastChildTokenValue.value.slice(0, _malformedRange.idxFrom)
+                  }));
 
                   if (tokensWithChildren.includes(tokenObj.type)) {
                     tokenObj.children = [];
                   }
 
-                  objectPath.set(res, path, { ...tokenObj,
-                    start: malformedRange.idxFrom + parentsLastChildTokenValue.start,
+                  objectPath.set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
+                    start: _malformedRange.idxFrom + parentsLastChildTokenValue.start,
                     kind: "not",
-                    value: `${parentsLastChildTokenValue.value.slice(malformedRange.idxFrom)}${tokenObj.value}`
-                  });
+                    value: "".concat(parentsLastChildTokenValue.value.slice(_malformedRange.idxFrom)).concat(tokenObj.value)
+                  }));
                   tokenTakenCareOf = true;
                 }
               }
@@ -4886,42 +4964,41 @@
             if (tokenObj.void) {
               if (opts.errCb) {
                 opts.errCb({
-                  ruleId: `tag-void-frontal-slash`,
+                  ruleId: "tag-void-frontal-slash",
                   idxFrom: tokenObj.start,
                   idxTo: tokenObj.end,
                   fix: {
                     ranges: [[tokenObj.start + 1, tokenObj.tagNameStartsAt]]
                   },
-                  tokenObj
+                  tokenObj: tokenObj
                 });
               }
             } else {
               if (opts.errCb) {
                 opts.errCb({
-                  ruleId: `${tokenObj.type}${tokenObj.type === "comment" ? `-${tokenObj.kind}` : ""}-missing-opening`,
+                  ruleId: "".concat(tokenObj.type).concat(tokenObj.type === "comment" ? "-".concat(tokenObj.kind) : "", "-missing-opening"),
                   idxFrom: tokenObj.start,
                   idxTo: tokenObj.end,
-                  tokenObj
+                  tokenObj: tokenObj
                 });
               }
             }
           }
 
-          lastProcessedToken = { ...tokenObj
-          };
+          lastProcessedToken = _objectSpread2({}, tokenObj);
         }
       },
       charCb: opts.charCb
     });
 
     if (layers.length) {
-      layers.forEach(tokenObj => {
+      layers.forEach(function (tokenObj) {
         if (opts.errCb) {
           opts.errCb({
-            ruleId: `${tokenObj.type}${tokenObj.type === "comment" ? `-${tokenObj.kind}` : ""}-missing-closing`,
+            ruleId: "".concat(tokenObj.type).concat(tokenObj.type === "comment" ? "-".concat(tokenObj.kind) : "", "-missing-closing"),
             idxFrom: tokenObj.start,
             idxTo: tokenObj.end,
-            tokenObj
+            tokenObj: tokenObj
           });
         }
       });
@@ -4938,9 +5015,12 @@
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace
    */
-  const rawNbsp = "\u00A0";
+  var rawNbsp = "\xA0";
 
-  function push(arr, leftSide = true, charToPush) {
+  function push(arr) {
+    var leftSide = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+    var charToPush = arguments.length > 2 ? arguments[2] : undefined;
+
     if (!charToPush.trim() && (!arr.length || charToPush === "\n" || charToPush === rawNbsp || (leftSide ? arr[arr.length - 1] : arr[0]) !== " ") && (!arr.length || (leftSide ? arr[arr.length - 1] : arr[0]) !== "\n" || charToPush === "\n" || charToPush === rawNbsp)) {
       if (leftSide) {
         if ((charToPush === "\n" || charToPush === rawNbsp) && arr.length && arr[arr.length - 1] === " ") {
@@ -4964,13 +5044,13 @@
 
   function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
     if (typeof str === "string" && str.length) {
-      let windowsEol = false;
+      var windowsEol = false;
 
       if (str.includes("\r\n")) {
         windowsEol = true;
       }
 
-      let limitLinebreaksCount;
+      var limitLinebreaksCount;
 
       if (!originalLimitLinebreaksCount || typeof originalLimitLinebreaksCount !== "number") {
         limitLinebreaksCount = 1;
@@ -4978,12 +5058,12 @@
         limitLinebreaksCount = originalLimitLinebreaksCount;
       }
 
-      let limit;
+      var limit;
 
       if (str.trim() === "") {
-        const resArr = [];
+        var resArr = [];
         limit = limitLinebreaksCount;
-        Array.from(str).forEach(char => {
+        Array.from(str).forEach(function (char) {
           if (char !== "\n" || limit) {
             if (char === "\n") {
               limit -= 1;
@@ -5000,11 +5080,11 @@
         return resArr.join("");
       }
 
-      const startCharacter = [];
+      var startCharacter = [];
       limit = limitLinebreaksCount;
 
       if (str[0].trim() === "") {
-        for (let i = 0, len = str.length; i < len; i++) {
+        for (var i = 0, len = str.length; i < len; i++) {
           if (str[i].trim()) {
             break;
           } else if (str[i] !== "\n" || limit) {
@@ -5017,19 +5097,19 @@
         }
       }
 
-      const endCharacter = [];
+      var endCharacter = [];
       limit = limitLinebreaksCount;
 
       if (str.slice(-1).trim() === "") {
-        for (let i = str.length; i--;) {
-          if (str[i].trim()) {
+        for (var _i = str.length; _i--;) {
+          if (str[_i].trim()) {
             break;
-          } else if (str[i] !== "\n" || limit) {
-            if (str[i] === "\n") {
+          } else if (str[_i] !== "\n" || limit) {
+            if (str[_i] === "\n") {
               limit -= 1;
             }
 
-            push(endCharacter, false, str[i]);
+            push(endCharacter, false, str[_i]);
           }
         }
       }
@@ -5038,7 +5118,7 @@
         return startCharacter.join("") + str.trim() + endCharacter.join("");
       }
 
-      return `${startCharacter.join("")}${str.trim()}${endCharacter.join("")}`.replace(/\n/g, "\r\n");
+      return "".concat(startCharacter.join("")).concat(str.trim()).concat(endCharacter.join("")).replace(/\n/g, "\r\n");
     }
 
     return str;
@@ -5057,17 +5137,17 @@
       return arrOfRanges;
     }
 
-    const defaults = {
+    var defaults = {
       strictlyTwoElementsInRangeArrays: false,
       progressFn: null
     };
-    const opts = { ...defaults,
-      ...originalOptions
-    };
-    let culpritsIndex;
-    let culpritsLen;
 
-    if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.every((rangeArr, indx) => {
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOptions);
+
+    var culpritsIndex;
+    var culpritsLen;
+
+    if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.every(function (rangeArr, indx) {
       if (rangeArr.length !== 2) {
         culpritsIndex = indx;
         culpritsLen = rangeArr.length;
@@ -5076,10 +5156,10 @@
 
       return true;
     })) {
-      throw new TypeError(`ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ${culpritsIndex}th range (${JSON.stringify(arrOfRanges[culpritsIndex], null, 4)}) has not two but ${culpritsLen} elements!`);
+      throw new TypeError("ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ".concat(culpritsIndex, "th range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 4), ") has not two but ").concat(culpritsLen, " elements!"));
     }
 
-    if (!arrOfRanges.every((rangeArr, indx) => {
+    if (!arrOfRanges.every(function (rangeArr, indx) {
       if (!Number.isInteger(rangeArr[0]) || rangeArr[0] < 0 || !Number.isInteger(rangeArr[1]) || rangeArr[1] < 0) {
         culpritsIndex = indx;
         return false;
@@ -5087,12 +5167,12 @@
 
       return true;
     })) {
-      throw new TypeError(`ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ${culpritsIndex}th range (${JSON.stringify(arrOfRanges[culpritsIndex], null, 4)}) does not consist of only natural numbers!`);
+      throw new TypeError("ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ".concat(culpritsIndex, "th range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 4), ") does not consist of only natural numbers!"));
     }
 
-    const maxPossibleIterations = arrOfRanges.length * arrOfRanges.length;
-    let counter = 0;
-    return Array.from(arrOfRanges).sort((range1, range2) => {
+    var maxPossibleIterations = arrOfRanges.length * arrOfRanges.length;
+    var counter = 0;
+    return Array.from(arrOfRanges).sort(function (range1, range2) {
       if (opts.progressFn) {
         counter += 1;
         opts.progressFn(Math.floor(counter * 100 / maxPossibleIterations));
@@ -5118,45 +5198,34 @@
     });
   }
 
-  /**
-   * ranges-merge
-   * Merge and sort arrays which mean string slice ranges
-   * Version: 4.3.8
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge
-   */
-
   function mergeRanges(arrOfRanges, originalOpts) {
     function isStr(something) {
       return typeof something === "string";
     }
 
     function isObj(something) {
-      return something && typeof something === "object" && !Array.isArray(something);
+      return something && _typeof(something) === "object" && !Array.isArray(something);
     }
 
     if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
       return arrOfRanges;
     }
 
-    const defaults = {
+    var defaults = {
       mergeType: 1,
       progressFn: null,
       joinRangesThatTouchEdges: true
     };
-    let opts;
+    var opts;
 
     if (originalOpts) {
       if (isObj(originalOpts)) {
-        opts = { ...defaults,
-          ...originalOpts
-        };
+        opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
         if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
           opts.progressFn = null;
         } else if (opts.progressFn && typeof opts.progressFn !== "function") {
-          throw new Error(`ranges-merge: [THROW_ID_01] opts.progressFn must be a function! It was given of a type: "${typeof opts.progressFn}", equal to ${JSON.stringify(opts.progressFn, null, 4)}`);
+          throw new Error("ranges-merge: [THROW_ID_01] opts.progressFn must be a function! It was given of a type: \"".concat(_typeof(opts.progressFn), "\", equal to ").concat(JSON.stringify(opts.progressFn, null, 4)));
         }
 
         if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
@@ -5165,29 +5234,32 @@
           } else if (isStr(opts.mergeType) && opts.mergeType.trim() === "2") {
             opts.mergeType = 2;
           } else {
-            throw new Error(`ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof opts.mergeType}", equal to ${JSON.stringify(opts.mergeType, null, 4)}`);
+            throw new Error("ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"".concat(_typeof(opts.mergeType), "\", equal to ").concat(JSON.stringify(opts.mergeType, null, 4)));
           }
         }
 
         if (typeof opts.joinRangesThatTouchEdges !== "boolean") {
-          throw new Error(`ranges-merge: [THROW_ID_04] opts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: "${typeof opts.joinRangesThatTouchEdges}", equal to ${JSON.stringify(opts.joinRangesThatTouchEdges, null, 4)}`);
+          throw new Error("ranges-merge: [THROW_ID_04] opts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: \"".concat(_typeof(opts.joinRangesThatTouchEdges), "\", equal to ").concat(JSON.stringify(opts.joinRangesThatTouchEdges, null, 4)));
         }
       } else {
-        throw new Error(`emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n${JSON.stringify(originalOpts, null, 4)} (type ${typeof originalOpts})`);
+        throw new Error("emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n".concat(JSON.stringify(originalOpts, null, 4), " (type ").concat(_typeof(originalOpts), ")"));
       }
     } else {
-      opts = { ...defaults
-      };
+      opts = _objectSpread2({}, defaults);
     }
 
-    const filtered = arrOfRanges.map(subarr => [...subarr]).filter(rangeArr => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]);
-    let sortedRanges;
-    let lastPercentageDone;
-    let percentageDone;
+    var filtered = arrOfRanges.map(function (subarr) {
+      return _toConsumableArray(subarr);
+    }).filter(function (rangeArr) {
+      return rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1];
+    });
+    var sortedRanges;
+    var lastPercentageDone;
+    var percentageDone;
 
     if (opts.progressFn) {
       sortedRanges = rangesSort(filtered, {
-        progressFn: percentage => {
+        progressFn: function progressFn(percentage) {
           percentageDone = Math.floor(percentage / 5);
 
           if (percentageDone !== lastPercentageDone) {
@@ -5200,9 +5272,9 @@
       sortedRanges = rangesSort(filtered);
     }
 
-    const len = sortedRanges.length - 1;
+    var len = sortedRanges.length - 1;
 
-    for (let i = len; i > 0; i--) {
+    for (var i = len; i > 0; i--) {
       if (opts.progressFn) {
         percentageDone = Math.floor((1 - i / len) * 78) + 21;
 
@@ -5240,15 +5312,6 @@
     return sortedRanges;
   }
 
-  /**
-   * ranges-push
-   * Manage the array of ranges referencing the index ranges within the string
-   * Version: 3.7.14
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
-   */
-
   function existy(x) {
     return x != null;
   }
@@ -5265,16 +5328,17 @@
     return /^\d*$/.test(str) ? parseInt(str, 10) : str;
   }
 
-  class Ranges {
-    constructor(originalOpts) {
-      const defaults = {
+  var Ranges = /*#__PURE__*/function () {
+    function Ranges(originalOpts) {
+      _classCallCheck(this, Ranges);
+
+      var defaults = {
         limitToBeAddedWhitespace: false,
         limitLinebreaksCount: 1,
         mergeType: 1
       };
-      const opts = { ...defaults,
-        ...originalOpts
-      };
+
+      var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
       if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
         if (isStr$4(opts.mergeType) && opts.mergeType.trim() === "1") {
@@ -5282,151 +5346,165 @@
         } else if (isStr$4(opts.mergeType) && opts.mergeType.trim() === "2") {
           opts.mergeType = 2;
         } else {
-          throw new Error(`ranges-push: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof opts.mergeType}", equal to ${JSON.stringify(opts.mergeType, null, 4)}`);
+          throw new Error("ranges-push: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"".concat(_typeof(opts.mergeType), "\", equal to ").concat(JSON.stringify(opts.mergeType, null, 4)));
         }
       }
 
       this.opts = opts;
     }
 
-    add(originalFrom, originalTo, addVal, ...etc) {
-      if (etc.length > 0) {
-        throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_03] Please don't overload the add() method. From the 4th input argument onwards we see these redundant arguments: ${JSON.stringify(etc, null, 4)}`);
-      }
+    _createClass(Ranges, [{
+      key: "add",
+      value: function add(originalFrom, originalTo, addVal) {
+        var _this = this;
 
-      if (!existy(originalFrom) && !existy(originalTo)) {
-        return;
-      }
+        for (var _len = arguments.length, etc = new Array(_len > 3 ? _len - 3 : 0), _key = 3; _key < _len; _key++) {
+          etc[_key - 3] = arguments[_key];
+        }
 
-      if (existy(originalFrom) && !existy(originalTo)) {
-        if (Array.isArray(originalFrom)) {
-          if (originalFrom.length) {
-            if (originalFrom.some(el => Array.isArray(el))) {
-              originalFrom.forEach(thing => {
-                if (Array.isArray(thing)) {
-                  this.add(...thing);
-                }
-              });
-              return;
-            }
+        if (etc.length > 0) {
+          throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_03] Please don't overload the add() method. From the 4th input argument onwards we see these redundant arguments: ".concat(JSON.stringify(etc, null, 4)));
+        }
 
-            if (originalFrom.length > 1 && isNum(prepNumStr(originalFrom[0])) && isNum(prepNumStr(originalFrom[1]))) {
-              this.add(...originalFrom);
-            }
-          }
-
+        if (!existy(originalFrom) && !existy(originalTo)) {
           return;
         }
 
-        throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_12] the first input argument, "from" is set (${JSON.stringify(originalFrom, null, 0)}) but second-one, "to" is not (${JSON.stringify(originalTo, null, 0)})`);
-      } else if (!existy(originalFrom) && existy(originalTo)) {
-        throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_13] the second input argument, "to" is set (${JSON.stringify(originalTo, null, 0)}) but first-one, "from" is not (${JSON.stringify(originalFrom, null, 0)})`);
-      }
+        if (existy(originalFrom) && !existy(originalTo)) {
+          if (Array.isArray(originalFrom)) {
+            if (originalFrom.length) {
+              if (originalFrom.some(function (el) {
+                return Array.isArray(el);
+              })) {
+                originalFrom.forEach(function (thing) {
+                  if (Array.isArray(thing)) {
+                    _this.add.apply(_this, _toConsumableArray(thing));
+                  }
+                });
+                return;
+              }
 
-      const from = /^\d*$/.test(originalFrom) ? parseInt(originalFrom, 10) : originalFrom;
-      const to = /^\d*$/.test(originalTo) ? parseInt(originalTo, 10) : originalTo;
-
-      if (isNum(addVal)) {
-        addVal = String(addVal);
-      }
-
-      if (isNum(from) && isNum(to)) {
-        if (existy(addVal) && !isStr$4(addVal) && !isNum(addVal)) {
-          throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ${typeof addVal}, equal to:\n${JSON.stringify(addVal, null, 4)}`);
-        }
-
-        if (existy(this.slices) && Array.isArray(this.last()) && from === this.last()[1]) {
-          this.last()[1] = to;
-          if (this.last()[2] === null || addVal === null) ;
-
-          if (this.last()[2] !== null && existy(addVal)) {
-            let calculatedVal = existy(this.last()[2]) && this.last()[2].length > 0 && (!this.opts || !this.opts.mergeType || this.opts.mergeType === 1) ? this.last()[2] + addVal : addVal;
-
-            if (this.opts.limitToBeAddedWhitespace) {
-              calculatedVal = collapseLeadingWhitespace(calculatedVal, this.opts.limitLinebreaksCount);
+              if (originalFrom.length > 1 && isNum(prepNumStr(originalFrom[0])) && isNum(prepNumStr(originalFrom[1]))) {
+                this.add.apply(this, _toConsumableArray(originalFrom));
+              }
             }
 
-            if (!(isStr$4(calculatedVal) && !calculatedVal.length)) {
-              this.last()[2] = calculatedVal;
-            }
-          }
-        } else {
-          if (!this.slices) {
-            this.slices = [];
+            return;
           }
 
-          const whatToPush = addVal !== undefined && !(isStr$4(addVal) && !addVal.length) ? [from, to, this.opts.limitToBeAddedWhitespace ? collapseLeadingWhitespace(addVal, this.opts.limitLinebreaksCount) : addVal] : [from, to];
-          this.slices.push(whatToPush);
+          throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_12] the first input argument, \"from\" is set (".concat(JSON.stringify(originalFrom, null, 0), ") but second-one, \"to\" is not (").concat(JSON.stringify(originalTo, null, 0), ")"));
+        } else if (!existy(originalFrom) && existy(originalTo)) {
+          throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_13] the second input argument, \"to\" is set (".concat(JSON.stringify(originalTo, null, 0), ") but first-one, \"from\" is not (").concat(JSON.stringify(originalFrom, null, 0), ")"));
         }
-      } else {
-        if (!(isNum(from) && from >= 0)) {
-          throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_09] "from" value, the first input argument, must be a natural number or zero! Currently it's of a type "${typeof from}" equal to: ${JSON.stringify(from, null, 4)}`);
-        } else {
-          throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_10] "to" value, the second input argument, must be a natural number or zero! Currently it's of a type "${typeof to}" equal to: ${JSON.stringify(to, null, 4)}`);
+
+        var from = /^\d*$/.test(originalFrom) ? parseInt(originalFrom, 10) : originalFrom;
+        var to = /^\d*$/.test(originalTo) ? parseInt(originalTo, 10) : originalTo;
+
+        if (isNum(addVal)) {
+          addVal = String(addVal);
         }
-      }
-    }
 
-    push(originalFrom, originalTo, addVal, ...etc) {
-      this.add(originalFrom, originalTo, addVal, ...etc);
-    }
+        if (isNum(from) && isNum(to)) {
+          if (existy(addVal) && !isStr$4(addVal) && !isNum(addVal)) {
+            throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ".concat(_typeof(addVal), ", equal to:\n").concat(JSON.stringify(addVal, null, 4)));
+          }
 
-    current() {
-      if (this.slices != null) {
-        this.slices = mergeRanges(this.slices, {
-          mergeType: this.opts.mergeType
-        });
+          if (existy(this.slices) && Array.isArray(this.last()) && from === this.last()[1]) {
+            this.last()[1] = to;
+            if (this.last()[2] === null || addVal === null) ;
 
-        if (this.opts.limitToBeAddedWhitespace) {
-          return this.slices.map(val => {
-            if (existy(val[2])) {
-              return [val[0], val[1], collapseLeadingWhitespace(val[2], this.opts.limitLinebreaksCount)];
+            if (this.last()[2] !== null && existy(addVal)) {
+              var calculatedVal = existy(this.last()[2]) && this.last()[2].length > 0 && (!this.opts || !this.opts.mergeType || this.opts.mergeType === 1) ? this.last()[2] + addVal : addVal;
+
+              if (this.opts.limitToBeAddedWhitespace) {
+                calculatedVal = collapseLeadingWhitespace(calculatedVal, this.opts.limitLinebreaksCount);
+              }
+
+              if (!(isStr$4(calculatedVal) && !calculatedVal.length)) {
+                this.last()[2] = calculatedVal;
+              }
+            }
+          } else {
+            if (!this.slices) {
+              this.slices = [];
             }
 
-            return val;
+            var whatToPush = addVal !== undefined && !(isStr$4(addVal) && !addVal.length) ? [from, to, this.opts.limitToBeAddedWhitespace ? collapseLeadingWhitespace(addVal, this.opts.limitLinebreaksCount) : addVal] : [from, to];
+            this.slices.push(whatToPush);
+          }
+        } else {
+          if (!(isNum(from) && from >= 0)) {
+            throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_09] \"from\" value, the first input argument, must be a natural number or zero! Currently it's of a type \"".concat(_typeof(from), "\" equal to: ").concat(JSON.stringify(from, null, 4)));
+          } else {
+            throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_10] \"to\" value, the second input argument, must be a natural number or zero! Currently it's of a type \"".concat(_typeof(to), "\" equal to: ").concat(JSON.stringify(to, null, 4)));
+          }
+        }
+      }
+    }, {
+      key: "push",
+      value: function push(originalFrom, originalTo, addVal) {
+        for (var _len2 = arguments.length, etc = new Array(_len2 > 3 ? _len2 - 3 : 0), _key2 = 3; _key2 < _len2; _key2++) {
+          etc[_key2 - 3] = arguments[_key2];
+        }
+
+        this.add.apply(this, [originalFrom, originalTo, addVal].concat(etc));
+      }
+    }, {
+      key: "current",
+      value: function current() {
+        var _this2 = this;
+
+        if (this.slices != null) {
+          this.slices = mergeRanges(this.slices, {
+            mergeType: this.opts.mergeType
           });
+
+          if (this.opts.limitToBeAddedWhitespace) {
+            return this.slices.map(function (val) {
+              if (existy(val[2])) {
+                return [val[0], val[1], collapseLeadingWhitespace(val[2], _this2.opts.limitLinebreaksCount)];
+              }
+
+              return val;
+            });
+          }
+
+          return this.slices;
         }
 
-        return this.slices;
+        return null;
       }
-
-      return null;
-    }
-
-    wipe() {
-      this.slices = undefined;
-    }
-
-    replace(givenRanges) {
-      if (Array.isArray(givenRanges) && givenRanges.length) {
-        if (!(Array.isArray(givenRanges[0]) && isNum(givenRanges[0][0]))) {
-          throw new Error(`ranges-push/Ranges/replace(): [THROW_ID_11] Single range was given but we expected array of arrays! The first element, ${JSON.stringify(givenRanges[0], null, 4)} should be an array and its first element should be an integer, a string index.`);
-        } else {
-          this.slices = Array.from(givenRanges);
-        }
-      } else {
+    }, {
+      key: "wipe",
+      value: function wipe() {
         this.slices = undefined;
       }
-    }
-
-    last() {
-      if (this.slices !== undefined && Array.isArray(this.slices)) {
-        return this.slices[this.slices.length - 1];
+    }, {
+      key: "replace",
+      value: function replace(givenRanges) {
+        if (Array.isArray(givenRanges) && givenRanges.length) {
+          if (!(Array.isArray(givenRanges[0]) && isNum(givenRanges[0][0]))) {
+            throw new Error("ranges-push/Ranges/replace(): [THROW_ID_11] Single range was given but we expected array of arrays! The first element, ".concat(JSON.stringify(givenRanges[0], null, 4), " should be an array and its first element should be an integer, a string index."));
+          } else {
+            this.slices = Array.from(givenRanges);
+          }
+        } else {
+          this.slices = undefined;
+        }
       }
+    }, {
+      key: "last",
+      value: function last() {
+        if (this.slices !== undefined && Array.isArray(this.slices)) {
+          return this.slices[this.slices.length - 1];
+        }
 
-      return null;
-    }
+        return null;
+      }
+    }]);
 
-  }
-
-  /**
-   * ranges-apply
-   * Take an array of string slice ranges, delete/replace the string according to them
-   * Version: 3.1.10
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply
-   */
+    return Ranges;
+  }();
 
   function existy$1(x) {
     return x != null;
@@ -5436,16 +5514,16 @@
     return typeof something === "string";
   }
 
-  function rangesApply(str, originalRangesArr, progressFn) {
-    let percentageDone = 0;
-    let lastPercentageDone = 0;
+  function rangesApply(str, originalRangesArr, _progressFn) {
+    var percentageDone = 0;
+    var lastPercentageDone = 0;
 
     if (arguments.length === 0) {
       throw new Error("ranges-apply: [THROW_ID_01] inputs missing!");
     }
 
     if (!isStr$5(str)) {
-      throw new TypeError(`ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof str}, equal to: ${JSON.stringify(str, null, 4)}`);
+      throw new TypeError("ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ".concat(_typeof(str), ", equal to: ").concat(JSON.stringify(str, null, 4)));
     }
 
     if (originalRangesArr === null) {
@@ -5453,14 +5531,14 @@
     }
 
     if (!Array.isArray(originalRangesArr)) {
-      throw new TypeError(`ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof originalRangesArr}, equal to: ${JSON.stringify(originalRangesArr, null, 4)}`);
+      throw new TypeError("ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ".concat(_typeof(originalRangesArr), ", equal to: ").concat(JSON.stringify(originalRangesArr, null, 4)));
     }
 
-    if (progressFn && typeof progressFn !== "function") {
-      throw new TypeError(`ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof progressFn}, equal to: ${JSON.stringify(progressFn, null, 4)}`);
+    if (_progressFn && typeof _progressFn !== "function") {
+      throw new TypeError("ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ".concat(_typeof(_progressFn), ", equal to: ").concat(JSON.stringify(_progressFn, null, 4)));
     }
 
-    let rangesArr;
+    var rangesArr;
 
     if (Array.isArray(originalRangesArr) && (Number.isInteger(originalRangesArr[0]) && originalRangesArr[0] >= 0 || /^\d*$/.test(originalRangesArr[0])) && (Number.isInteger(originalRangesArr[1]) && originalRangesArr[1] >= 0 || /^\d*$/.test(originalRangesArr[1]))) {
       rangesArr = [Array.from(originalRangesArr)];
@@ -5468,28 +5546,29 @@
       rangesArr = Array.from(originalRangesArr);
     }
 
-    const len = rangesArr.length;
-    let counter = 0;
-    rangesArr.forEach((el, i) => {
-      if (progressFn) {
+    var len = rangesArr.length;
+    var counter = 0;
+    rangesArr.forEach(function (el, i) {
+      if (_progressFn) {
         percentageDone = Math.floor(counter / len * 10);
         /* istanbul ignore else */
 
         if (percentageDone !== lastPercentageDone) {
           lastPercentageDone = percentageDone;
-          progressFn(percentageDone);
+
+          _progressFn(percentageDone);
         }
       }
 
       if (!Array.isArray(el)) {
-        throw new TypeError(`ranges-apply: [THROW_ID_05] ranges array, second input arg., has ${i}th element not an array: ${JSON.stringify(el, null, 4)}, which is ${typeof el}`);
+        throw new TypeError("ranges-apply: [THROW_ID_05] ranges array, second input arg., has ".concat(i, "th element not an array: ").concat(JSON.stringify(el, null, 4), ", which is ").concat(_typeof(el)));
       }
 
       if (!Number.isInteger(el[0]) || el[0] < 0) {
         if (/^\d*$/.test(el[0])) {
           rangesArr[i][0] = Number.parseInt(rangesArr[i][0], 10);
         } else {
-          throw new TypeError(`ranges-apply: [THROW_ID_06] ranges array, second input arg. has ${i}th element, array [${el[0]},${el[1]}]. That array has first element not an integer, but ${typeof el[0]}, equal to: ${JSON.stringify(el[0], null, 4)}. Computer doesn't like this.`);
+          throw new TypeError("ranges-apply: [THROW_ID_06] ranges array, second input arg. has ".concat(i, "th element, array [").concat(el[0], ",").concat(el[1], "]. That array has first element not an integer, but ").concat(_typeof(el[0]), ", equal to: ").concat(JSON.stringify(el[0], null, 4), ". Computer doesn't like this."));
         }
       }
 
@@ -5497,42 +5576,44 @@
         if (/^\d*$/.test(el[1])) {
           rangesArr[i][1] = Number.parseInt(rangesArr[i][1], 10);
         } else {
-          throw new TypeError(`ranges-apply: [THROW_ID_07] ranges array, second input arg. has ${i}th element, array [${el[0]},${el[1]}]. That array has second element not an integer, but ${typeof el[1]}, equal to: ${JSON.stringify(el[1], null, 4)}. Computer doesn't like this.`);
+          throw new TypeError("ranges-apply: [THROW_ID_07] ranges array, second input arg. has ".concat(i, "th element, array [").concat(el[0], ",").concat(el[1], "]. That array has second element not an integer, but ").concat(_typeof(el[1]), ", equal to: ").concat(JSON.stringify(el[1], null, 4), ". Computer doesn't like this."));
         }
       }
 
       counter += 1;
     });
-    const workingRanges = mergeRanges(rangesArr, {
-      progressFn: perc => {
-        if (progressFn) {
+    var workingRanges = mergeRanges(rangesArr, {
+      progressFn: function progressFn(perc) {
+        if (_progressFn) {
           percentageDone = 10 + Math.floor(perc / 10);
           /* istanbul ignore else */
 
           if (percentageDone !== lastPercentageDone) {
             lastPercentageDone = percentageDone;
-            progressFn(percentageDone);
+
+            _progressFn(percentageDone);
           }
         }
       }
     });
-    const len2 = workingRanges.length;
+    var len2 = workingRanges.length;
 
     if (len2 > 0) {
-      const tails = str.slice(workingRanges[len2 - 1][1]);
-      str = workingRanges.reduce((acc, val, i, arr) => {
-        if (progressFn) {
+      var tails = str.slice(workingRanges[len2 - 1][1]);
+      str = workingRanges.reduce(function (acc, val, i, arr) {
+        if (_progressFn) {
           percentageDone = 20 + Math.floor(i / len2 * 80);
           /* istanbul ignore else */
 
           if (percentageDone !== lastPercentageDone) {
             lastPercentageDone = percentageDone;
-            progressFn(percentageDone);
+
+            _progressFn(percentageDone);
           }
         }
 
-        const beginning = i === 0 ? 0 : arr[i - 1][1];
-        const ending = arr[i][0];
+        var beginning = i === 0 ? 0 : arr[i - 1][1];
+        var ending = arr[i][0];
         return acc + str.slice(beginning, ending) + (existy$1(arr[i][2]) ? arr[i][2] : "");
       }, "");
       str += tails;
@@ -5540,15 +5621,6 @@
 
     return str;
   }
-
-  /**
-   * ast-monkey-traverse-with-lookahead
-   * Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)
-   * Version: 1.1.6
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse-with-lookahead
-   */
 
   function trimFirstDot(str) {
     if (typeof str === "string" && str[0] === ".") {
@@ -5559,46 +5631,46 @@
   }
 
   function isObj$4(something) {
-    return something && typeof something === "object" && !Array.isArray(something);
+    return something && _typeof(something) === "object" && !Array.isArray(something);
   }
 
-  function astMonkeyTraverseWithLookahead(tree1, cb1, lookahead = 0) {
-    const stop1 = {
+  function astMonkeyTraverseWithLookahead(tree1, cb1) {
+    var lookahead = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+    var stop1 = {
       now: false
     };
-    const stash = [];
+    var stash = [];
 
     function traverseInner(tree, callback, innerObj, stop) {
-      innerObj = {
+      innerObj = _objectSpread2({
         depth: -1,
-        path: "",
-        ...innerObj
-      };
+        path: ""
+      }, innerObj);
       innerObj.depth += 1;
 
       if (Array.isArray(tree)) {
-        for (let i = 0, len = tree.length; i < len; i++) {
+        for (var i = 0, len = tree.length; i < len; i++) {
           if (stop.now) {
             break;
           }
 
-          const path = `${innerObj.path}.${i}`;
+          var path = "".concat(innerObj.path, ".").concat(i);
           innerObj.parent = lodash_clonedeep(tree);
           innerObj.parentType = "array";
-          callback(tree[i], undefined, { ...innerObj,
+          callback(tree[i], undefined, _objectSpread2(_objectSpread2({}, innerObj), {}, {
             path: trimFirstDot(path)
-          }, stop);
-          traverseInner(tree[i], callback, { ...innerObj,
+          }), stop);
+          traverseInner(tree[i], callback, _objectSpread2(_objectSpread2({}, innerObj), {}, {
             path: trimFirstDot(path)
-          }, stop);
+          }), stop);
         }
       } else if (isObj$4(tree)) {
-        for (const key in tree) {
+        for (var key in tree) {
           if (stop.now && key != null) {
             break;
           }
 
-          const path = `${innerObj.path}.${key}`;
+          var _path = "".concat(innerObj.path, ".").concat(key);
 
           if (innerObj.depth === 0 && key != null) {
             innerObj.topmostKey = key;
@@ -5606,12 +5678,12 @@
 
           innerObj.parent = lodash_clonedeep(tree);
           innerObj.parentType = "object";
-          callback(key, tree[key], { ...innerObj,
-            path: trimFirstDot(path)
-          }, stop);
-          traverseInner(tree[key], callback, { ...innerObj,
-            path: trimFirstDot(path)
-          }, stop);
+          callback(key, tree[key], _objectSpread2(_objectSpread2({}, innerObj), {}, {
+            path: trimFirstDot(_path)
+          }), stop);
+          traverseInner(tree[key], callback, _objectSpread2(_objectSpread2({}, innerObj), {}, {
+            path: trimFirstDot(_path)
+          }), stop);
         }
       }
 
@@ -5619,10 +5691,10 @@
     }
 
     function reportFirstFromStash() {
-      const currentElem = stash.shift();
+      var currentElem = stash.shift();
       currentElem[2].next = [];
 
-      for (let i = 0; i < lookahead; i++) {
+      for (var i = 0; i < lookahead; i++) {
         if (stash[i]) {
           currentElem[2].next.push(lodash_clonedeep([stash[i][0], stash[i][1], stash[i][2]]));
         } else {
@@ -5630,11 +5702,15 @@
         }
       }
 
-      cb1(...currentElem);
+      cb1.apply(void 0, _toConsumableArray(currentElem));
     }
 
-    function intermediary(...incoming) {
-      stash.push([...incoming]);
+    function intermediary() {
+      for (var _len = arguments.length, incoming = new Array(_len), _key = 0; _key < _len; _key++) {
+        incoming[_key] = arguments[_key];
+      }
+
+      stash.push([].concat(incoming));
 
       if (stash.length > lookahead) {
         reportFirstFromStash();
@@ -5644,7 +5720,7 @@
     traverseInner(tree1, intermediary, {}, stop1);
 
     if (stash.length) {
-      for (let i = 0, len = stash.length; i < len; i++) {
+      for (var i = 0, len = stash.length; i < len; i++) {
         reportFirstFromStash();
       }
     }

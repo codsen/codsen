@@ -134,15 +134,15 @@
     throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
 
-  const array = [];
-  const charCodeCache = [];
+  var array = [];
+  var charCodeCache = [];
 
-  const leven = (left, right) => {
+  var leven = function leven(left, right) {
     if (left === right) {
       return 0;
     }
 
-    const swap = left; // Swapping the strings if `a` is longer than `b` so we know which one is the
+    var swap = left; // Swapping the strings if `a` is longer than `b` so we know which one is the
     // shortest & which one is the longest
 
     if (left.length > right.length) {
@@ -150,8 +150,8 @@
       right = swap;
     }
 
-    let leftLength = left.length;
-    let rightLength = right.length; // Performing suffix trimming:
+    var leftLength = left.length;
+    var rightLength = right.length; // Performing suffix trimming:
     // We can linearly drop suffix common to both strings since they
     // don't increase distance at all
     // Note: `~-` is the bitwise way to perform a `- 1` operation
@@ -164,7 +164,7 @@
     // don't increase distance at all
 
 
-    let start = 0;
+    var start = 0;
 
     while (start < leftLength && left.charCodeAt(start) === right.charCodeAt(start)) {
       start++;
@@ -177,12 +177,12 @@
       return rightLength;
     }
 
-    let bCharCode;
-    let result;
-    let temp;
-    let temp2;
-    let i = 0;
-    let j = 0;
+    var bCharCode;
+    var result;
+    var temp;
+    var temp2;
+    var i = 0;
+    var j = 0;
 
     while (i < leftLength) {
       charCodeCache[i] = left.charCodeAt(start + i);
@@ -220,12 +220,12 @@
    */
   function processCommaSeparated(str, originalOpts) {
     if (typeof str !== "string") {
-      throw new Error(`string-process-comma-separated: [THROW_ID_01] input must be string! It was given as ${typeof str}, equal to:\n${JSON.stringify(str, null, 4)}`);
+      throw new Error("string-process-comma-separated: [THROW_ID_01] input must be string! It was given as ".concat(_typeof(str), ", equal to:\n").concat(JSON.stringify(str, null, 4)));
     } else if (!str.length || !originalOpts.cb && !originalOpts.errCb) {
       return;
     }
 
-    const defaults = {
+    var defaults = {
       from: 0,
       to: str.length,
       offset: 0,
@@ -237,9 +237,8 @@
       cb: null,
       errCb: null
     };
-    const opts = { ...defaults,
-      ...originalOpts
-    };
+
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
     if (!Number.isInteger(originalOpts.from)) {
       opts.from = 0;
@@ -253,14 +252,14 @@
       opts.offset = 0;
     }
 
-    let chunkStartsAt = null;
-    let whitespaceStartsAt = null;
-    let firstNonwhitespaceNonseparatorCharFound = false;
-    let separatorsArr = [];
-    let lastNonWhitespaceCharAt = null;
-    let fixable = true;
+    var chunkStartsAt = null;
+    var whitespaceStartsAt = null;
+    var firstNonwhitespaceNonseparatorCharFound = false;
+    var separatorsArr = [];
+    var lastNonWhitespaceCharAt = null;
+    var fixable = true;
 
-    for (let i = opts.from; i < opts.to; i++) {
+    for (var i = opts.from; i < opts.to; i++) {
       if (str[i].trim() && str[i] !== opts.separator) {
         lastNonWhitespaceCharAt = i;
       }
@@ -272,7 +271,7 @@
 
         if (separatorsArr.length) {
           if (separatorsArr.length > 1) {
-            separatorsArr.forEach((separatorsIdx, orderNumber) => {
+            separatorsArr.forEach(function (separatorsIdx, orderNumber) {
               if (orderNumber) {
                 opts.errCb([[separatorsIdx + opts.offset, separatorsIdx + 1 + opts.offset]], "Remove separator.", fixable);
               }
@@ -286,7 +285,7 @@
       }
 
       if (Number.isInteger(chunkStartsAt) && (i > chunkStartsAt && opts.separator && str[i] === opts.separator || i + 1 === opts.to)) {
-        const chunk = str.slice(chunkStartsAt, i + 1 === opts.to && str[i] !== opts.separator && str[i].trim() ? i + 1 : i);
+        var chunk = str.slice(chunkStartsAt, i + 1 === opts.to && str[i] !== opts.separator && str[i].trim() ? i + 1 : i);
 
         if (typeof opts.cb === "function") {
           opts.cb(chunkStartsAt + opts.offset, (i + 1 === opts.to && str[i] !== opts.separator && str[i].trim() ? i + 1 : lastNonWhitespaceCharAt + 1) + opts.offset);
@@ -309,14 +308,14 @@
             opts.errCb([[whitespaceStartsAt + opts.offset, i + 1 + opts.offset]], "Remove whitespace.", fixable);
           }
         } else if ((!opts.oneSpaceAfterCommaOK || !(str[i].trim() && i > opts.from + 1 && str[i - 1] === " " && str[i - 2] === ",")) && (!opts.innerWhitespaceAllowed || !(firstNonwhitespaceNonseparatorCharFound && str[whitespaceStartsAt - 1] && str[i].trim() && str[i] !== opts.separator && str[whitespaceStartsAt - 1] !== opts.separator))) {
-          let startingIdx = whitespaceStartsAt;
-          let endingIdx = i;
+          var startingIdx = whitespaceStartsAt;
+          var endingIdx = i;
 
           if (i + 1 === opts.to && str[i] !== opts.separator && !str[i].trim()) {
             endingIdx += 1;
           }
 
-          let whatToAdd = "";
+          var whatToAdd = "";
 
           if (opts.oneSpaceAfterCommaOK) {
             if (str[whitespaceStartsAt] === " " && str[whitespaceStartsAt - 1] === opts.separator) {
@@ -326,7 +325,7 @@
             }
           }
 
-          let message = "Remove whitespace.";
+          var message = "Remove whitespace.";
 
           if (!opts.innerWhitespaceAllowed && firstNonwhitespaceNonseparatorCharFound && str[whitespaceStartsAt - 1] && str[i].trim() && str[i] !== opts.separator && str[whitespaceStartsAt - 1] !== opts.separator) {
             fixable = false;
@@ -354,7 +353,7 @@
       }
 
       if (i + 1 === opts.to) {
-        separatorsArr.forEach(separatorsIdx => {
+        separatorsArr.forEach(function (separatorsIdx) {
           opts.errCb([[separatorsIdx + opts.offset, separatorsIdx + 1 + opts.offset]], "Remove separator.", fixable);
         });
       }
