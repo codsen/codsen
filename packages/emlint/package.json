@@ -183,7 +183,7 @@
     "lect": "^0.13.7",
     "prettier": "^2.0.5",
     "ranges-apply": "^3.1.10",
-    "rollup": "^2.23.0",
+    "rollup": "^2.23.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-banner": "^0.2.1",
