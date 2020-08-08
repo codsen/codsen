@@ -1,6 +1,6 @@
 {
   "name": "easy-replace",
-  "version": "3.7.59",
+  "version": "3.7.60",
   "description": "Replace strings with optional lookarounds, but without regexes",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -136,7 +136,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.6.0",
-    "lect": "^0.13.7",
+    "lect": "^0.13.8",
     "rollup": "^2.23.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

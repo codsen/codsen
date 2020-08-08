@@ -1,7 +1,7 @@
 /**
  * string-extract-sass-vars
  * Parse SASS variables file into a plain object of CSS key-value pairs
- * Version: 1.2.2
+ * Version: 1.2.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-extract-sass-vars

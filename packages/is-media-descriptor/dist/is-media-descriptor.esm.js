@@ -1,7 +1,7 @@
 /**
  * is-media-descriptor
  * Is given string a valid media descriptor (including media query)?
- * Version: 1.2.13
+ * Version: 1.2.14
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-media-descriptor

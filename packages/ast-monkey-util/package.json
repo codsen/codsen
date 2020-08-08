@@ -1,6 +1,6 @@
 {
   "name": "ast-monkey-util",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "Utility library of AST helper functions",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -146,7 +146,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.6.0",
-    "lect": "^0.13.7",
+    "lect": "^0.13.8",
     "lodash.isequal": "^4.5.0",
     "object-path": "^0.11.4",
     "rollup": "^2.23.1",

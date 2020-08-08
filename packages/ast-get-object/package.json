@@ -1,6 +1,6 @@
 {
   "name": "ast-get-object",
-  "version": "1.9.10",
+  "version": "1.9.11",
   "description": "Getter/setter for nested parsed HTML AST's, querying objects by key/value pairs",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -129,7 +129,7 @@
     "timeout": 0
   },
   "dependencies": {
-    "ast-compare": "^1.13.11",
+    "ast-compare": "^1.13.12",
     "lodash.clonedeep": "^4.5.0"
   },
   "devDependencies": {
@@ -145,7 +145,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.6.0",
-    "lect": "^0.13.7",
+    "lect": "^0.13.8",
     "rollup": "^2.23.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.70](https://gitlab.com/codsen/codsen/compare/ast-delete-object@1.8.69...ast-delete-object@1.8.70) (2020-08-08)
+
+**Note:** Version bump only for package ast-delete-object
+
+
+
+
+
 ## 1.8.63 (2020-04-26)
 
 ### Bug Fixes

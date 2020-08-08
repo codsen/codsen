@@ -1,7 +1,7 @@
 /**
  * ranges-regex
  * Perform a regex search on string and get a ranges array of findings (or null)
- * Version: 2.0.55
+ * Version: 2.0.56
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-regex
@@ -114,7 +114,7 @@
   /**
    * ranges-sort
    * Sort natural number index ranges [ [5, 6], [1, 3] ] => [ [1, 3], [5, 6] ]
-   * Version: 3.12.0
+   * Version: 3.12.1
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-sort

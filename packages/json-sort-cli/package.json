@@ -1,6 +1,6 @@
 {
   "name": "json-sort-cli",
-  "version": "1.15.23",
+  "version": "1.15.24",
   "description": "Command line app to deep sort JSON files, retains package.json special key order",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -120,7 +120,7 @@
     "timeout": 0
   },
   "dependencies": {
-    "ast-monkey-traverse": "^1.12.13",
+    "ast-monkey-traverse": "^1.12.14",
     "chalk": "^4.1.0",
     "format-package": "^5.2.0",
     "fs-extra": "^9.0.1",
@@ -147,7 +147,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "eslint": "^7.6.0",
     "execa": "^4.0.3",
-    "lect": "^0.13.7",
+    "lect": "^0.13.8",
     "p-map": "^4.0.0",
     "prettier": "^2.0.5",
     "tap": "^14.10.8",

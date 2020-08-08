@@ -1,6 +1,6 @@
 {
   "name": "object-fill-missing-keys",
-  "version": "7.10.20",
+  "version": "7.10.21",
   "description": "Add missing keys into plain objects, according to a reference object",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -127,11 +127,11 @@
     "timeout": 0
   },
   "dependencies": {
-    "arrayiffy-if-string": "^3.11.32",
+    "arrayiffy-if-string": "^3.11.33",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6",
-    "object-all-values-equal-to": "^1.8.18",
-    "object-merge-advanced": "^10.11.22"
+    "object-all-values-equal-to": "^1.8.19",
+    "object-merge-advanced": "^10.11.23"
   },
   "devDependencies": {
     "@babel/core": "^7.11.1",
@@ -146,7 +146,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.6.0",
-    "lect": "^0.13.7",
+    "lect": "^0.13.8",
     "rollup": "^2.23.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

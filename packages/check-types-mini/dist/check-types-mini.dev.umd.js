@@ -1,7 +1,7 @@
 /**
  * check-types-mini
  * Check the types of your options object's values after user has customised them
- * Version: 5.7.65
+ * Version: 5.7.66
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini
@@ -3870,7 +3870,7 @@
   /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-   * Version: 3.11.32
+   * Version: 3.11.33
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string

@@ -1,6 +1,6 @@
 {
   "name": "array-of-arrays-into-ast",
-  "version": "1.9.42",
+  "version": "1.9.43",
   "description": "turns an array of arrays of data into a nested tree of plain objects",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -128,8 +128,8 @@
     "timeout": 0
   },
   "dependencies": {
-    "check-types-mini": "^5.7.65",
-    "object-merge-advanced": "^10.11.22"
+    "check-types-mini": "^5.7.66",
+    "object-merge-advanced": "^10.11.23"
   },
   "devDependencies": {
     "@babel/core": "^7.11.1",
@@ -144,7 +144,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.6.0",
-    "lect": "^0.13.7",
+    "lect": "^0.13.8",
     "rollup": "^2.23.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

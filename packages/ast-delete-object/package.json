@@ -1,6 +1,6 @@
 {
   "name": "ast-delete-object",
-  "version": "1.8.69",
+  "version": "1.8.70",
   "description": "Delete all plain objects that contain a certain key/value pair",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -125,8 +125,8 @@
     "timeout": 0
   },
   "dependencies": {
-    "ast-compare": "^1.13.11",
-    "ast-monkey-traverse": "^1.12.13",
+    "ast-compare": "^1.13.12",
+    "ast-monkey-traverse": "^1.12.14",
     "lodash.clonedeep": "^4.5.0"
   },
   "devDependencies": {
@@ -142,7 +142,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.6.0",
-    "lect": "^0.13.7",
+    "lect": "^0.13.8",
     "rollup": "^2.23.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

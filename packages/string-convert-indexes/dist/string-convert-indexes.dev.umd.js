@@ -1,7 +1,7 @@
 /**
  * string-convert-indexes
  * Convert string character indexes from JS native index-based to Unicode character-count-based and backwards.
- * Version: 1.10.13
+ * Version: 1.10.14
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-convert-indexes
@@ -3897,7 +3897,7 @@
   /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-   * Version: 3.11.32
+   * Version: 3.11.33
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string

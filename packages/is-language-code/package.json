@@ -1,6 +1,6 @@
 {
   "name": "is-language-code",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Is given string a language code (as per IANA)",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -144,7 +144,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.6.0",
-    "lect": "^0.13.7",
+    "lect": "^0.13.8",
     "rollup": "^2.23.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

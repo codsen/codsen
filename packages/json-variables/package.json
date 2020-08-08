@@ -1,6 +1,6 @@
 {
   "name": "json-variables",
-  "version": "8.2.10",
+  "version": "8.2.11",
   "description": "It's like SASS variables, but for JSON",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -129,16 +129,16 @@
     "timeout": 0
   },
   "dependencies": {
-    "arrayiffy-if-string": "^3.11.32",
-    "ast-get-values-by-key": "^2.6.65",
-    "ast-monkey-traverse": "^1.12.13",
+    "arrayiffy-if-string": "^3.11.33",
+    "ast-get-values-by-key": "^2.6.66",
+    "ast-monkey-traverse": "^1.12.14",
     "matcher": "^3.0.0",
     "object-path": "^0.11.4",
-    "ranges-apply": "^3.1.10",
-    "ranges-push": "^3.7.14",
-    "string-find-heads-tails": "^3.16.10",
-    "string-match-left-right": "^4.0.8",
-    "string-remove-duplicate-heads-tails": "^3.0.65"
+    "ranges-apply": "^3.1.11",
+    "ranges-push": "^3.7.15",
+    "string-find-heads-tails": "^3.16.11",
+    "string-match-left-right": "^4.0.9",
+    "string-remove-duplicate-heads-tails": "^3.0.66"
   },
   "devDependencies": {
     "@babel/core": "^7.11.1",
@@ -153,7 +153,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.6.0",
-    "lect": "^0.13.7",
+    "lect": "^0.13.8",
     "rollup": "^2.23.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

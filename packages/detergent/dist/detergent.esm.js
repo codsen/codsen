@@ -1,7 +1,7 @@
 /**
  * detergent
  * Extracts and cleans text
- * Version: 5.10.8
+ * Version: 5.10.9
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://detergent.io
@@ -24,7 +24,7 @@ import { allNamedEntities } from 'all-named-html-entities';
 import rangesExpander from 'string-range-expander';
 import { convertOne } from 'string-apostrophes';
 
-var version = "5.10.8";
+var version = "5.10.9";
 
 const defaultOpts = {
   fixBrokenEntities: true,
