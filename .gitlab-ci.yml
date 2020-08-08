@@ -6,6 +6,7 @@
 # https://gitlab.com/gitlab-examples/ssh-private-key/-/blob/master/.gitlab-ci.yml
 setup:
   stage: .pre
+  image: node:latest
   script:
     ##
     ## Create the SSH directory and give it the right permissions
@@ -117,7 +118,6 @@ building_and_testing:
 deployment:
   except:
     - tags
-  image: node:latest
   stage: deploy
   script:
     - echo '█████████████████████████████ 6/9 - deploy █████████████████████████████'
