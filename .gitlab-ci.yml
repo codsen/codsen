@@ -3,10 +3,11 @@
 #    C O D S E N
 #
 
-# https://gitlab.com/gitlab-examples/ssh-private-key/-/blob/master/.gitlab-ci.yml
+default:
+  image: node:latest
+
 setup:
   stage: .pre
-  image: node:latest
   script:
     ##
     ## Create the SSH directory and give it the right permissions
@@ -86,8 +87,7 @@ setup:
     - git checkout master
 
 building_and_testing:
-  stage: test
-  image: node:latest
+  stage: deploy
   script:
     - echo '█████████████████████████████ 1/9 - bootstrap and test █████████████████████████████'
     - git status
@@ -116,11 +116,6 @@ building_and_testing:
     - "git commit -m '[skip ci] chore: automated build tasks' --no-verify"
     - git status
 
-deployment:
-  except:
-    - tags
-  stage: deploy
-  image: node:latest
-  script:
     - echo '█████████████████████████████ 6/9 - deploy █████████████████████████████'
     - git status
+    - ls -a
