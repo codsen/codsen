@@ -1,7 +1,7 @@
 {
   "name": "string-find-heads-tails",
   "version": "3.16.11",
-  "description": "Search for string pairs. A special case of string search algorithm.",
+  "description": "Finds given pattern templating markers in a string",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
   "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/string-find-heads-tails",
@@ -20,7 +20,8 @@
     "plus",
     "search",
     "string",
-    "unicode"
+    "unicode",
+    "templating"
   ],
   "main": "dist/string-find-heads-tails.cjs.js",
   "module": "dist/string-find-heads-tails.esm.js",
