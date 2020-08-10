@@ -1,7 +1,7 @@
 {
   "name": "html-img-alt",
   "version": "1.4.56",
-  "description": "Adds missing ALT attributes to IMG tags and cleans within IMG tags. No HTML parsing used.",
+  "description": "Adds missing alt attributes to img tags. Non-parsing.",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
   "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/html-img-alt",
@@ -13,6 +13,7 @@
   "keywords": [
     "add",
     "alt",
+    "attribute",
     "attributes",
     "clean",
     "email",
@@ -23,6 +24,7 @@
     "parsing",
     "restore",
     "tags",
+    "html",
     "template",
     "templates"
   ],
