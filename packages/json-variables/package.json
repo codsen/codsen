@@ -26,7 +26,8 @@
     "same",
     "schema",
     "variable",
-    "variables"
+    "variables",
+    "templating"
   ],
   "main": "dist/json-variables.cjs.js",
   "module": "dist/json-variables.esm.js",
