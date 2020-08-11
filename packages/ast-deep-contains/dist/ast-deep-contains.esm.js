@@ -1,6 +1,6 @@
 /**
  * ast-deep-contains
- * an alternative assertion for Ava's t.deepEqual and Tap's t.same
+ * Like t.same assert on array of objects, where element order doesn't matter.
  * Version: 1.1.15
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
