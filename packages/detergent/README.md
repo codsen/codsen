@@ -105,7 +105,7 @@ The main function is exported in a plain object under key `det`, so please impor
 const { det } = require("detergent");
 // or request everything:
 const { det, opts, version } = require("detergent");
-// this gives extra plain object `exportedOpts` with default options. Handy when
+// this gives extra plain object `opts` with default options. Handy when
 // developing front-ends that consume the Detergent.
 ```
 
