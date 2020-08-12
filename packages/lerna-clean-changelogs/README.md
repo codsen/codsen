@@ -37,18 +37,18 @@ Other siblings of this package:
 npm i lerna-clean-changelogs
 ```
 
-The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`c`" below, you can name the consumed function however you want.
+The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`cleanChangelogs`" below, you can name the consumed function however you want.
 
 Consume via a `require()`:
 
 ```js
-const c = require("lerna-clean-changelogs");
+const cleanChangelogs = require("lerna-clean-changelogs");
 ```
 
 or as an ES Module:
 
 ```js
-import c from "lerna-clean-changelogs";
+import cleanChangelogs from "lerna-clean-changelogs";
 ```
 
 or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
@@ -59,7 +59,7 @@ or for web pages, as a production-ready minified script file (so-called "UMD bui
 
 ```js
 // in which case you get a global variable "lernaCleanChangelogs" which you consume like this:
-const c = lernaCleanChangelogs;
+const cleanChangelogs = lernaCleanChangelogs;
 ```
 
 This package has three builds in `dist/` folder:
