@@ -265,7 +265,7 @@
 			"@rollup/plugin-strip": "^2.0.0",
 			"benchmark": "^2.1.4",
 			"eslint": "^7.6.0",
-			"lect": "^0.13.7",
+			"lect": "^0.13.8",
 			"rollup": "^2.23.1",
 			"rollup-plugin-ascii": "^0.0.3",
 			"rollup-plugin-banner": "^0.2.1",
@@ -311,23 +311,24 @@
 	},
 	"scripts": {
 		"cli": {
-			"ci_test": "tap --no-only --reporter=silent --output-file=testStats.md && npm run format",
+			"ci_test": "tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",
 			"dev": "echo\"\"",
-			"devunittest": "npm run dev && ./node_modules/.bin/tap --only -R 'base'",
+			"devunittest": "npm run dev && ./node_modules/.bin/tap --only -R 'base' && npm run clean_cov",
 			"format": "npm run lect && npm run prettier && npm run lint",
 			"lect": "lect",
 			"lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --config \"../../.eslintrc.json\" --quiet",
 			"prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md}' --write --loglevel silent",
 			"republish": "npm publish || :",
-			"tap": "tap",
+			"tap": "tap && npm run clean_cov",
 			"test": "npm run lint && npm run unittest && npm run format",
-			"unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md"
+			"unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md && npm run clean_cov",
+			"clean_cov": "../../scripts/leaveCoverageTotalOnly.js"
 		},
 		"rollup": {
 			"build": "rollup -c",
-			"ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run format",
+			"ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",
 			"dev": "rollup -c --dev",
-			"devunittest": "npm run dev && ./node_modules/.bin/tap --only -R 'base'",
+			"devunittest": "npm run dev && ./node_modules/.bin/tap --only -R 'base' && npm run clean_cov",
 			"format": "npm run lect && npm run prettier && npm run lint",
 			"lect": "lect",
 			"lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --config \"../../.eslintrc.json\" --quiet",
@@ -335,11 +336,12 @@
 			"prepare": "npm run build",
 			"prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md}' --write --loglevel silent",
 			"republish": "npm publish || :",
-			"tap": "tap",
+			"tap": "tap && npm run clean_cov",
 			"pretest": "npm run build",
-			"test": "npm run lint && npm run unittest && npm run format",
-			"unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md && npm run perf",
-			"version": "npm run build && git add ."
+			"test": "npm run lint && npm run unittest && npm run clean_cov && npm run format",
+			"unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md && npm run clean_cov && npm run perf",
+			"version": "npm run build && git add .",
+			"clean_cov": "../../scripts/leaveCoverageTotalOnly.js"
 		}
 	},
 	"travis": false,
