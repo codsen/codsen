@@ -9,9 +9,11 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var remSep = require('string-remove-thousand-separators');
 
-var remSep = _interopDefault(require('string-remove-thousand-separators'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var remSep__default = /*#__PURE__*/_interopDefaultLegacy(remSep);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -115,7 +117,7 @@ function splitEasy(str, originalOpts) {
         if (newElem.trim() !== "") {
           thisRowContainsOnlyEmptySpace = false;
         }
-        var processedElem = /""/.test(newElem) ? newElem.replace(/""/g, '"') : remSep(newElem, {
+        var processedElem = /""/.test(newElem) ? newElem.replace(/""/g, '"') : remSep__default['default'](newElem, {
           removeThousandSeparatorsFromNumbers: opts.removeThousandSeparatorsFromNumbers,
           padSingleDecimalPlaceNumbers: opts.padSingleDecimalPlaceNumbers,
           forceUKStyle: opts.forceUKStyle
@@ -132,7 +134,7 @@ function splitEasy(str, originalOpts) {
           if (_newElem.trim() !== "") {
             thisRowContainsOnlyEmptySpace = false;
           }
-          rowArray.push(remSep(_newElem,
+          rowArray.push(remSep__default['default'](_newElem,
           {
             removeThousandSeparatorsFromNumbers: opts.removeThousandSeparatorsFromNumbers,
             padSingleDecimalPlaceNumbers: opts.padSingleDecimalPlaceNumbers,
@@ -152,7 +154,7 @@ function splitEasy(str, originalOpts) {
               if (_newElem2.trim() !== "") {
                 thisRowContainsOnlyEmptySpace = false;
               }
-              rowArray.push(remSep(_newElem2, {
+              rowArray.push(remSep__default['default'](_newElem2, {
                 removeThousandSeparatorsFromNumbers: opts.removeThousandSeparatorsFromNumbers,
                 padSingleDecimalPlaceNumbers: opts.padSingleDecimalPlaceNumbers,
                 forceUKStyle: opts.forceUKStyle
@@ -178,7 +180,7 @@ function splitEasy(str, originalOpts) {
         if (_newElem3.trim()) {
           thisRowContainsOnlyEmptySpace = false;
         }
-        rowArray.push(remSep(_newElem3, {
+        rowArray.push(remSep__default['default'](_newElem3, {
           removeThousandSeparatorsFromNumbers: opts.removeThousandSeparatorsFromNumbers,
           padSingleDecimalPlaceNumbers: opts.padSingleDecimalPlaceNumbers,
           forceUKStyle: opts.forceUKStyle

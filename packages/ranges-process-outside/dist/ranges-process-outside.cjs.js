@@ -9,11 +9,15 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var invert = require('ranges-invert');
+var crop = require('ranges-crop');
+var runes = require('runes');
 
-var invert = _interopDefault(require('ranges-invert'));
-var crop = _interopDefault(require('ranges-crop'));
-var runes = _interopDefault(require('runes'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var invert__default = /*#__PURE__*/_interopDefaultLegacy(invert);
+var crop__default = /*#__PURE__*/_interopDefaultLegacy(crop);
+var runes__default = /*#__PURE__*/_interopDefaultLegacy(runes);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -112,7 +116,7 @@ function processOutside(originalStr, originalRanges, cb) {
           fromIdx = _ref2[0],
           toIdx = _ref2[1];
       for (var i = fromIdx; i < toIdx; i++) {
-        var charLength = runes(str.slice(i))[0].length;
+        var charLength = runes__default['default'](str.slice(i))[0].length;
         cb(i, i + charLength, function (offsetValue) {
           /* istanbul ignore else */
           if (offsetValue != null) {
@@ -126,7 +130,7 @@ function processOutside(originalStr, originalRanges, cb) {
     });
   }
   if (originalRanges && originalRanges.length) {
-    var temp = crop(invert(skipChecks ? originalRanges : originalRanges, originalStr.length, {
+    var temp = crop__default['default'](invert__default['default'](skipChecks ? originalRanges : originalRanges, originalStr.length, {
       skipChecks: !!skipChecks
     }), originalStr.length);
     iterator(originalStr, temp);

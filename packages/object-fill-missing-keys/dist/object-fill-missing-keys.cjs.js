@@ -9,13 +9,19 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var clone = require('lodash.clonedeep');
+var merge = require('object-merge-advanced');
+var arrayiffyIfString = require('arrayiffy-if-string');
+var allValuesEqualTo = require('object-all-values-equal-to');
+var isObj = require('lodash.isplainobject');
 
-var clone = _interopDefault(require('lodash.clonedeep'));
-var merge = _interopDefault(require('object-merge-advanced'));
-var arrayiffyIfString = _interopDefault(require('arrayiffy-if-string'));
-var allValuesEqualTo = _interopDefault(require('object-all-values-equal-to'));
-var isObj = _interopDefault(require('lodash.isplainobject'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
+var merge__default = /*#__PURE__*/_interopDefaultLegacy(merge);
+var arrayiffyIfString__default = /*#__PURE__*/_interopDefaultLegacy(arrayiffyIfString);
+var allValuesEqualTo__default = /*#__PURE__*/_interopDefaultLegacy(allValuesEqualTo);
+var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -83,7 +89,7 @@ function _objectSpread2(target) {
 }
 
 function typ(something) {
-  if (isObj(something)) {
+  if (isObj__default['default'](something)) {
     return "plain object";
   }
   if (Array.isArray(something)) {
@@ -100,21 +106,21 @@ function existy(x) {
 var isArr = Array.isArray;
 function fillMissingKeys(incompleteOriginal, schema, opts) {
   var path = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "";
-  var incomplete = clone(incompleteOriginal);
-  if (existy(incomplete) || !(path.length && opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(path) && allValuesEqualTo(incomplete, opts.placeholder))) {
-    if (isObj(schema) && isObj(incomplete)) {
+  var incomplete = clone__default['default'](incompleteOriginal);
+  if (existy(incomplete) || !(path.length && opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(path) && allValuesEqualTo__default['default'](incomplete, opts.placeholder))) {
+    if (isObj__default['default'](schema) && isObj__default['default'](incomplete)) {
       Object.keys(schema).forEach(function (key) {
         var currentPath = "".concat(path ? "".concat(path, ".") : "").concat(key);
         if (opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(currentPath)) {
           if (existy(incomplete[key])) {
-            if (allValuesEqualTo(incomplete[key], opts.placeholder)) {
+            if (allValuesEqualTo__default['default'](incomplete[key], opts.placeholder)) {
               incomplete[key] = opts.placeholder;
             }
           } else {
             incomplete[key] = opts.placeholder;
           }
         }
-        if (!existy(incomplete[key]) || !(opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(currentPath) && allValuesEqualTo(incomplete[key], opts.placeholder))) {
+        if (!existy(incomplete[key]) || !(opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(currentPath) && allValuesEqualTo__default['default'](incomplete[key], opts.placeholder))) {
           incomplete[key] = fillMissingKeys(incomplete[key], schema[key], opts, currentPath);
         }
       });
@@ -125,13 +131,13 @@ function fillMissingKeys(incompleteOriginal, schema, opts) {
       if (schema.length > 0) {
         for (var i = incomplete.length; i--;) {
           var currentPath = "".concat(path ? "".concat(path, ".") : "", "0");
-          if (isObj(schema[0]) || isArr(schema[0])) {
+          if (isObj__default['default'](schema[0]) || isArr(schema[0])) {
             incomplete[i] = fillMissingKeys(incomplete[i], schema[0], opts, currentPath);
           }
         }
       }
     } else {
-      return merge(schema, incomplete, {
+      return merge__default['default'](schema, incomplete, {
         useNullAsExplicitFalse: opts.useNullAsExplicitFalse
       });
     }
@@ -142,13 +148,13 @@ function fillMissingKeysWrapper(originalIncompleteWrapper, originalSchemaWrapper
   if (arguments.length === 0) {
     throw new Error("object-fill-missing-keys: [THROW_ID_01] All arguments are missing!");
   }
-  if (!isObj(originalIncompleteWrapper)) {
+  if (!isObj__default['default'](originalIncompleteWrapper)) {
     throw new Error("object-fill-missing-keys: [THROW_ID_02] First argument, input object must be a plain object. Currently it's type is \"".concat(typ(originalIncompleteWrapper), "\" and it's equal to: ").concat(JSON.stringify(originalIncompleteWrapper, null, 4)));
   }
-  if (!isObj(originalSchemaWrapper)) {
+  if (!isObj__default['default'](originalSchemaWrapper)) {
     throw new Error("object-fill-missing-keys: [THROW_ID_03] Second argument, schema object, must be a plain object. Currently it's type is \"".concat(typ(originalSchemaWrapper), "\" and it's equal to: ").concat(JSON.stringify(originalSchemaWrapper, null, 4)));
   }
-  if (originalOptsWrapper !== undefined && originalOptsWrapper !== null && !isObj(originalOptsWrapper)) {
+  if (originalOptsWrapper !== undefined && originalOptsWrapper !== null && !isObj__default['default'](originalOptsWrapper)) {
     throw new Error("object-fill-missing-keys: [THROW_ID_04] Third argument, schema object, must be a plain object. Currently it's type is \"".concat(typ(originalOptsWrapper), "\" and it's equal to: ").concat(JSON.stringify(originalOptsWrapper, null, 4)));
   }
   if (originalOptsWrapper === null) {
@@ -160,7 +166,7 @@ function fillMissingKeysWrapper(originalIncompleteWrapper, originalSchemaWrapper
     useNullAsExplicitFalse: true
   };
   var opts = _objectSpread2(_objectSpread2({}, defaults), originalOptsWrapper);
-  opts.doNotFillThesePathsIfTheyContainPlaceholders = arrayiffyIfString(opts.doNotFillThesePathsIfTheyContainPlaceholders);
+  opts.doNotFillThesePathsIfTheyContainPlaceholders = arrayiffyIfString__default['default'](opts.doNotFillThesePathsIfTheyContainPlaceholders);
   var culpritsVal = null;
   var culpritsIndex = null;
   if (opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 && !opts.doNotFillThesePathsIfTheyContainPlaceholders.every(function (key, idx) {
@@ -173,7 +179,7 @@ function fillMissingKeysWrapper(originalIncompleteWrapper, originalSchemaWrapper
   })) {
     throw new Error("object-fill-missing-keys: [THROW_ID_06] opts.doNotFillThesePathsIfTheyContainPlaceholders element with an index number \"".concat(culpritsIndex, "\" is not a string! It's ").concat(typ(culpritsVal), ", equal to:\n").concat(JSON.stringify(culpritsVal, null, 4)));
   }
-  return fillMissingKeys(clone(originalIncompleteWrapper), clone(originalSchemaWrapper), opts);
+  return fillMissingKeys(clone__default['default'](originalIncompleteWrapper), clone__default['default'](originalSchemaWrapper), opts);
 }
 
 module.exports = fillMissingKeysWrapper;

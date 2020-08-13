@@ -9,9 +9,11 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var traverse = require('ast-monkey-traverse');
 
-var traverse = _interopDefault(require('ast-monkey-traverse'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var traverse__default = /*#__PURE__*/_interopDefaultLegacy(traverse);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -37,7 +39,7 @@ function containsOnlyEmptySpace(input) {
     return false;
   }
   var found = true;
-  input = traverse(input, function (key, val, innerObj, stop) {
+  input = traverse__default['default'](input, function (key, val, innerObj, stop) {
     var current = val !== undefined ? val : key;
     if (typeof current === "string" && current.trim()) {
       found = false;

@@ -55,9 +55,9 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                         | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/bitbucket-slug.cjs.js` | 879 B |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/bitbucket-slug.cjs.js` | 1 KB  |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/bitbucket-slug.esm.js` | 726 B |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/bitbucket-slug.umd.js` | 63 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/bitbucket-slug.umd.js` | 62 KB |
 
 **[⬆ back to top](#)**
 

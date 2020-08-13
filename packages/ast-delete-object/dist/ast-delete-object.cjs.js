@@ -9,11 +9,15 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var clone = require('lodash.clonedeep');
+var compare = require('ast-compare');
+var traverse = require('ast-monkey-traverse');
 
-var clone = _interopDefault(require('lodash.clonedeep'));
-var compare = _interopDefault(require('ast-compare'));
-var traverse = _interopDefault(require('ast-monkey-traverse'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
+var compare__default = /*#__PURE__*/_interopDefaultLegacy(compare);
+var traverse__default = /*#__PURE__*/_interopDefaultLegacy(traverse);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -98,21 +102,21 @@ function deleteObj(originalInput, objToDelete, originalOpts) {
     hungryForWhitespace: false
   };
   var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
-  var input = clone(originalInput);
+  var input = clone__default['default'](originalInput);
   var current;
-  if (compare(input, objToDelete, {
+  if (compare__default['default'](input, objToDelete, {
     hungryForWhitespace: opts.hungryForWhitespace,
     matchStrictly: opts.matchKeysStrictly
   })) {
     return {};
   }
-  input = traverse(input, function (key, val) {
+  input = traverse__default['default'](input, function (key, val) {
     current = val !== undefined ? val : key;
     if (isObj(current)) {
       if (isObj(objToDelete) && isObj(current) && !Object.keys(objToDelete).length && !Object.keys(current).length) {
         return NaN;
       }
-      if (compare(current, objToDelete, {
+      if (compare__default['default'](current, objToDelete, {
         hungryForWhitespace: opts.hungryForWhitespace,
         matchStrictly: opts.matchKeysStrictly
       })) {

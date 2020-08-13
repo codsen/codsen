@@ -9,10 +9,13 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var compare = require('ast-compare');
+var clone = require('lodash.clonedeep');
 
-var compare = _interopDefault(require('ast-compare'));
-var clone = _interopDefault(require('lodash.clonedeep'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var compare__default = /*#__PURE__*/_interopDefaultLegacy(compare);
+var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -51,9 +54,9 @@ function getObj(originalAst, keyValPair, replacementContentsArr) {
   if (existy(replacementContentsArr) && Array.isArray(replacementContentsArr)) {
     set = true;
   }
-  var ast = clone(originalAst);
+  var ast = clone__default['default'](originalAst);
   if (isObj(ast)) {
-    if (compare(ast, keyValPair)) {
+    if (compare__default['default'](ast, keyValPair)) {
       if (set) {
         if (replacementContentsArr.length > 0) {
           ast = replacementContentsArr[0];

@@ -9,9 +9,11 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var sortRanges = require('ranges-sort');
 
-var sortRanges = _interopDefault(require('ranges-sort'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var sortRanges__default = /*#__PURE__*/_interopDefaultLegacy(sortRanges);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -163,7 +165,7 @@ function mergeRanges(arrOfRanges, originalOpts) {
   var lastPercentageDone;
   var percentageDone;
   if (opts.progressFn) {
-    sortedRanges = sortRanges(filtered, {
+    sortedRanges = sortRanges__default['default'](filtered, {
       progressFn: function progressFn(percentage) {
         percentageDone = Math.floor(percentage / 5);
         if (percentageDone !== lastPercentageDone) {
@@ -173,7 +175,7 @@ function mergeRanges(arrOfRanges, originalOpts) {
       }
     });
   } else {
-    sortedRanges = sortRanges(filtered);
+    sortedRanges = sortRanges__default['default'](filtered);
   }
   var len = sortedRanges.length - 1;
   for (var i = len; i > 0; i--) {

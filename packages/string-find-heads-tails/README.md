@@ -1,6 +1,6 @@
 # string-find-heads-tails
 
-> Search for string pairs. A special case of string search algorithm.
+> Finds given pattern templating markers in a string
 
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]

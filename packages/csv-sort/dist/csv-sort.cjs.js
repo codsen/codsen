@@ -9,12 +9,17 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var split = require('csv-split-easy');
+var pull = require('lodash.pull');
+var currency = require('currency.js');
+var isNumeric = require('is-numeric');
 
-var split = _interopDefault(require('csv-split-easy'));
-var pull = _interopDefault(require('lodash.pull'));
-var currency = _interopDefault(require('currency.js'));
-var isNumeric = _interopDefault(require('is-numeric'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var split__default = /*#__PURE__*/_interopDefaultLegacy(split);
+var pull__default = /*#__PURE__*/_interopDefaultLegacy(pull);
+var currency__default = /*#__PURE__*/_interopDefaultLegacy(currency);
+var isNumeric__default = /*#__PURE__*/_interopDefaultLegacy(isNumeric);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -40,12 +45,12 @@ function findtype(something) {
   if (typeof something !== "string") {
     throw new Error("csv-sort/util/findtype(): input must be string! Currently it's: ".concat(_typeof(something)));
   }
-  if (isNumeric(something)) {
+  if (isNumeric__default['default'](something)) {
     return "numeric";
   }
   if (currencySigns.some(function (singleSign) {
     return (
-      isNumeric(something.replace(singleSign, "").replace(/[,.]/g, ""))
+      isNumeric__default['default'](something.replace(singleSign, "").replace(/[,.]/g, ""))
     );
   })) {
     return "numeric";
@@ -63,7 +68,7 @@ function csvSort(input) {
     if (input.length === 0) {
       return [[""]];
     }
-    content = split(input);
+    content = split__default['default'](input);
   } else if (Array.isArray(input)) {
     var culpritVal;
     var culpritIndex;
@@ -198,7 +203,7 @@ function csvSort(input) {
         stateColumnsContainingSameValueEverywhere.push(suspectedBalanceColumnsIndexNumber);
       }
     }
-    potentialBalanceColumnIndexesList = pull.apply(void 0, [potentialBalanceColumnIndexesList].concat(deleteFromPotentialBalanceColumnIndexesList));
+    potentialBalanceColumnIndexesList = pull__default['default'].apply(void 0, [potentialBalanceColumnIndexesList].concat(deleteFromPotentialBalanceColumnIndexesList));
     if (potentialBalanceColumnIndexesList.length === 1) {
       balanceColumnIndex = potentialBalanceColumnIndexesList[0];
     } else if (potentialBalanceColumnIndexesList.length === 0) {
@@ -208,7 +213,7 @@ function csvSort(input) {
   if (!balanceColumnIndex) {
     throw new Error("csv-sort/csvSort(): [THROW_ID_05] Sadly computer couldn't find its way in this CSV and had to stop working on it.");
   }
-  var potentialCreditDebitColumns = pull.apply(void 0, [Array.from(schema.reduce(function (result, el, index) {
+  var potentialCreditDebitColumns = pull__default['default'].apply(void 0, [Array.from(schema.reduce(function (result, el, index) {
     if (typeof el === "string" && el === "numeric" || Array.isArray(el) && el.includes("numeric")) {
       result.push(index);
     }
@@ -225,23 +230,23 @@ function csvSort(input) {
         for (var suspectedColIndex = 0, _len4 = potentialCreditDebitColumns.length; suspectedColIndex < _len4; suspectedColIndex++) {
           var diffVal = null;
           if (content[suspectedRowsIndex][potentialCreditDebitColumns[suspectedColIndex]] !== "") {
-            diffVal = currency(content[suspectedRowsIndex][potentialCreditDebitColumns[suspectedColIndex]]);
+            diffVal = currency__default['default'](content[suspectedRowsIndex][potentialCreditDebitColumns[suspectedColIndex]]);
           }
           var totalVal = null;
           if (content[suspectedRowsIndex][balanceColumnIndex] !== "") {
-            totalVal = currency(content[suspectedRowsIndex][balanceColumnIndex]);
+            totalVal = currency__default['default'](content[suspectedRowsIndex][balanceColumnIndex]);
           }
           var topmostResContentBalance = null;
           if (resContent[0][balanceColumnIndex] !== "") {
-            topmostResContentBalance = currency(resContent[0][balanceColumnIndex]).format();
+            topmostResContentBalance = currency__default['default'](resContent[0][balanceColumnIndex]).format();
           }
           var currentRowsDiffVal = null;
           if (resContent[resContent.length - 1][potentialCreditDebitColumns[suspectedColIndex]] !== "") {
-            currentRowsDiffVal = currency(resContent[resContent.length - 1][potentialCreditDebitColumns[suspectedColIndex]]).format();
+            currentRowsDiffVal = currency__default['default'](resContent[resContent.length - 1][potentialCreditDebitColumns[suspectedColIndex]]).format();
           }
           var lastResContentRowsBalance = null;
           if (resContent[resContent.length - 1][balanceColumnIndex] !== "") {
-            lastResContentRowsBalance = currency(resContent[resContent.length - 1][balanceColumnIndex]);
+            lastResContentRowsBalance = currency__default['default'](resContent[resContent.length - 1][balanceColumnIndex]);
           }
           if (diffVal && totalVal.add(diffVal).format() === topmostResContentBalance) {
             resContent.unshift(content[suspectedRowsIndex].slice(0, indexAtWhichEmptyCellsStart));

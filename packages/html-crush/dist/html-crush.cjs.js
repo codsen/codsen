@@ -11,14 +11,19 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var isObj = _interopDefault(require('lodash.isplainobject'));
-var applyRanges = _interopDefault(require('ranges-apply'));
-var Ranges = _interopDefault(require('ranges-push'));
+var isObj = require('lodash.isplainobject');
+var applyRanges = require('ranges-apply');
+var Ranges = require('ranges-push');
 var stringMatchLeftRight = require('string-match-left-right');
-var expand = _interopDefault(require('string-range-expander'));
+var expand = require('string-range-expander');
 var stringLeftRight = require('string-left-right');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
+var applyRanges__default = /*#__PURE__*/_interopDefaultLegacy(applyRanges);
+var Ranges__default = /*#__PURE__*/_interopDefaultLegacy(Ranges);
+var expand__default = /*#__PURE__*/_interopDefaultLegacy(expand);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -159,7 +164,7 @@ function _nonIterableRest() {
 
 var version = "2.0.1";
 
-var finalIndexesToDelete = new Ranges({
+var finalIndexesToDelete = new Ranges__default['default']({
   limitToBeAddedWhitespace: true
 });
 var defaults = {
@@ -193,7 +198,7 @@ function crush(str, originalOpts) {
       throw new Error("html-crush: [THROW_ID_02] the first input argument must be string! It was given as \"".concat(_typeof(str), "\", equal to:\n").concat(JSON.stringify(str, null, 4)));
     }
   }
-  if (originalOpts && !isObj(originalOpts)) {
+  if (originalOpts && !isObj__default['default'](originalOpts)) {
     throw new Error("html-crush: [THROW_ID_03] the second input argument, options object, should be a plain object but it was given as type ".concat(_typeof(originalOpts), ", equal to ").concat(JSON.stringify(originalOpts, null, 4)));
   }
   if (originalOpts && Array.isArray(originalOpts.breakToTheLeftOf) && originalOpts.breakToTheLeftOf.length) {
@@ -323,7 +328,7 @@ function crush(str, originalOpts) {
         }
       }
       if (!doNothing && (withinStyleTag || withinInlineStyle) && styleCommentStartedAt !== null && str[i] === "*" && str[i + 1] === "/") {
-        var _expand = expand({
+        var _expand = expand__default['default']({
           str: str,
           from: styleCommentStartedAt,
           to: i + 2,
@@ -361,7 +366,7 @@ function crush(str, originalOpts) {
           distanceFromHereToCommentEnding = 1;
         }
         if (distanceFromHereToCommentEnding) {
-          var _expand3 = expand({
+          var _expand3 = expand__default['default']({
             str: str,
             from: htmlCommentStartedAt,
             to: i + distanceFromHereToCommentEnding
@@ -629,7 +634,7 @@ function crush(str, originalOpts) {
       }
       if (!str[i + 1]) {
         if (withinStyleTag && styleCommentStartedAt !== null) {
-          finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(expand({
+          finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(expand__default['default']({
             str: str,
             from: styleCommentStartedAt,
             to: i,
@@ -676,7 +681,7 @@ function crush(str, originalOpts) {
     }
     if (finalIndexesToDelete.current()) {
       var startingPercentageDone = opts.reportProgressFuncTo - (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage;
-      var res = applyRanges(str, finalIndexesToDelete.current(), function (applyPercDone) {
+      var res = applyRanges__default['default'](str, finalIndexesToDelete.current(), function (applyPercDone) {
         if (opts.reportProgressFunc && len >= 2000) {
           currentPercentageDone = Math.floor(startingPercentageDone + (opts.reportProgressFuncTo - startingPercentageDone) * (applyPercDone / 100));
           if (currentPercentageDone !== lastPercentage) {

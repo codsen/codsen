@@ -9,11 +9,14 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var replaceSlicesArr = _interopDefault(require('ranges-apply'));
-var rangesMerge = _interopDefault(require('ranges-merge'));
+var replaceSlicesArr = require('ranges-apply');
+var rangesMerge = require('ranges-merge');
 var stringMatchLeftRight = require('string-match-left-right');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var replaceSlicesArr__default = /*#__PURE__*/_interopDefaultLegacy(replaceSlicesArr);
+var rangesMerge__default = /*#__PURE__*/_interopDefaultLegacy(rangesMerge);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -477,9 +480,9 @@ function collapse(str, originalOpts) {
     }
   }
   if (opts.returnRangesOnly) {
-    return rangesMerge(finalIndexesToDelete);
+    return rangesMerge__default['default'](finalIndexesToDelete);
   }
-  return finalIndexesToDelete.length ? replaceSlicesArr(str, finalIndexesToDelete) : str;
+  return finalIndexesToDelete.length ? replaceSlicesArr__default['default'](str, finalIndexesToDelete) : str;
 }
 
 module.exports = collapse;

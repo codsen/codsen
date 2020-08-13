@@ -9,11 +9,13 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var leven = _interopDefault(require('leven'));
+var leven = require('leven');
 var allNamedHtmlEntities = require('all-named-html-entities');
 var stringLeftRight = require('string-left-right');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var leven__default = /*#__PURE__*/_interopDefaultLegacy(leven);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -526,12 +528,12 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               } else if (
               potentialEntity.length < allNamedHtmlEntities.maxLength + 2 && (
               (temp = _toConsumableArray(allNamedHtmlEntities.allNamedEntitiesSetOnly).filter(function (curr) {
-                return leven(curr, potentialEntity) === 1;
+                return leven__default['default'](curr, potentialEntity) === 1;
               })) && temp.length ||
               (temp = _toConsumableArray(allNamedHtmlEntities.allNamedEntitiesSetOnly).filter(function (curr) {
                 return (
                   /* istanbul ignore next */
-                  leven(curr, potentialEntity) === 2 && potentialEntity.length > 3
+                  leven__default['default'](curr, potentialEntity) === 2 && potentialEntity.length > 3
                 );
               })) && temp.length)) {
                 if (temp.length === 1) {

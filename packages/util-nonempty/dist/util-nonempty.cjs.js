@@ -9,9 +9,11 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var isPlainObject = require('lodash.isplainobject');
 
-var isPlainObject = _interopDefault(require('lodash.isplainobject'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var isPlainObject__default = /*#__PURE__*/_interopDefaultLegacy(isPlainObject);
 
 var isArr = Array.isArray;
 function isStr(something) {
@@ -27,7 +29,7 @@ function nonEmpty(input) {
   if (isArr(input) || isStr(input)) {
     return input.length > 0;
   }
-  if (isPlainObject(input)) {
+  if (isPlainObject__default['default'](input)) {
     return Object.keys(input).length > 0;
   }
   if (isNum(input)) {

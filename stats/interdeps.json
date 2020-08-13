@@ -43,7 +43,7 @@
     },
     {
         "name": "ast-contains-only-empty-space",
-        "size": 832,
+        "size": 833,
         "imports": [
             "ast-monkey-traverse"
         ]
@@ -194,7 +194,7 @@
     },
     {
         "name": "detergent",
-        "size": 53954,
+        "size": 53934,
         "imports": [
             "all-named-html-entities",
             "html-entities-not-email-friendly",
@@ -241,7 +241,7 @@
     },
     {
         "name": "email-comb",
-        "size": 60545,
+        "size": 60546,
         "imports": [
             "array-pull-all-with-glob",
             "ast-is-empty",
@@ -368,7 +368,7 @@
     },
     {
         "name": "is-html-tag-opening",
-        "size": 4839,
+        "size": 4840,
         "imports": [
             "string-match-left-right"
         ]
@@ -447,7 +447,7 @@
     },
     {
         "name": "lect",
-        "size": 74448,
+        "size": 75163,
         "imports": [
             "array-pull-all-with-glob",
             "arrayiffy-if-string",
@@ -653,7 +653,7 @@
     },
     {
         "name": "string-find-malformed",
-        "size": 4578,
+        "size": 4579,
         "imports": [
             "string-left-right"
         ]
@@ -710,7 +710,7 @@
     },
     {
         "name": "string-remove-widows",
-        "size": 17394,
+        "size": 17396,
         "imports": [
             "arrayiffy-if-string",
             "ranges-apply",

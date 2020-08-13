@@ -330,10 +330,6 @@
   	}, fn(module, module.exports), module.exports;
   }
 
-  function getCjsExportFromNamespace (n) {
-  	return n && n['default'] || n;
-  }
-
   function commonjsRequire () {
   	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
   }
@@ -14855,7 +14851,7 @@
     'default': punycode
   });
 
-  var reversed = {
+  var revEntities = {
   	"9": "Tab;",
   	"10": "NewLine;",
   	"33": "excl;",
@@ -16171,15 +16167,6 @@
   	"64260": "ffllig;"
   };
 
-  var reversed$1 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    'default': reversed
-  });
-
-  var punycode$2 = getCjsExportFromNamespace(punycode$1);
-
-  var revEntities = getCjsExportFromNamespace(reversed$1);
-
   var encode_1 = encode$1;
 
   function encode$1(str, opts) {
@@ -16198,12 +16185,12 @@
       '>': true,
       '&': true
     };
-    var codePoints = punycode$2.ucs2.decode(str);
+    var codePoints = punycode$1.ucs2.decode(str);
     var chars = [];
 
     for (var i = 0; i < codePoints.length; i++) {
       var cc = codePoints[i];
-      var c = punycode$2.ucs2.encode([cc]);
+      var c = punycode$1.ucs2.encode([cc]);
       var e = revEntities[cc];
 
       if (e && (cc >= 127 || special[c]) && !numeric) {
@@ -18558,119 +18545,6 @@
   	"zwnj;": "‌"
   };
 
-  var entities$1 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    Aacute: Aacute$1,
-    aacute: aacute$1,
-    Acirc: Acirc$1,
-    acirc: acirc$1,
-    acute: acute$2,
-    AElig: AElig$1,
-    aelig: aelig$1,
-    Agrave: Agrave$1,
-    agrave: agrave$1,
-    AMP: AMP$1,
-    amp: amp$2,
-    Aring: Aring$2,
-    aring: aring$2,
-    Atilde: Atilde$1,
-    atilde: atilde$2,
-    Auml: Auml$1,
-    auml: auml$1,
-    brvbar: brvbar$1,
-    Ccedil: Ccedil$1,
-    ccedil: ccedil$1,
-    cedil: cedil$2,
-    cent: cent$2,
-    COPY: COPY$2,
-    copy: copy$2,
-    curren: curren$1,
-    deg: deg$2,
-    divide: divide$2,
-    Eacute: Eacute$1,
-    eacute: eacute$1,
-    Ecirc: Ecirc$1,
-    ecirc: ecirc$1,
-    Egrave: Egrave$1,
-    egrave: egrave$2,
-    ETH: ETH$2,
-    eth: eth$2,
-    Euml: Euml$1,
-    euml: euml$1,
-    frac12: frac12$1,
-    frac14: frac14$1,
-    frac34: frac34$1,
-    GT: GT$2,
-    gt: gt$2,
-    Iacute: Iacute$1,
-    iacute: iacute$1,
-    Icirc: Icirc$1,
-    icirc: icirc$1,
-    iexcl: iexcl$1,
-    Igrave: Igrave$1,
-    igrave: igrave$1,
-    iquest: iquest$1,
-    Iuml: Iuml$1,
-    iuml: iuml$1,
-    laquo: laquo$1,
-    LT: LT$2,
-    lt: lt$2,
-    macr: macr$1,
-    micro: micro$1,
-    middot: middot$1,
-    nbsp: nbsp$1,
-    not: not$2,
-    Ntilde: Ntilde$1,
-    ntilde: ntilde$1,
-    Oacute: Oacute$1,
-    oacute: oacute$1,
-    Ocirc: Ocirc$1,
-    ocirc: ocirc$1,
-    Ograve: Ograve$1,
-    ograve: ograve$1,
-    ordf: ordf$1,
-    ordm: ordm$1,
-    Oslash: Oslash$1,
-    oslash: oslash$1,
-    Otilde: Otilde$1,
-    otilde: otilde$1,
-    Ouml: Ouml$1,
-    ouml: ouml$1,
-    para: para$2,
-    plusmn: plusmn$1,
-    pound: pound$2,
-    QUOT: QUOT$2,
-    quot: quot$2,
-    raquo: raquo$1,
-    REG: REG$2,
-    reg: reg$2,
-    sect: sect$2,
-    shy: shy$2,
-    sup1: sup1$1,
-    sup2: sup2$1,
-    sup3: sup3$1,
-    szlig: szlig$1,
-    THORN: THORN$2,
-    thorn: thorn$2,
-    times: times$2,
-    Uacute: Uacute$1,
-    uacute: uacute$1,
-    Ucirc: Ucirc$1,
-    ucirc: ucirc$1,
-    Ugrave: Ugrave$1,
-    ugrave: ugrave$1,
-    uml: uml$2,
-    Uuml: Uuml$1,
-    uuml: uuml$1,
-    Yacute: Yacute$1,
-    yacute: yacute$1,
-    yen: yen$2,
-    yuml: yuml$1,
-    'default': entities
-  });
-
-  var entities$2 = getCjsExportFromNamespace(entities$1);
-
   var decode_1 = decode$2;
 
   function decode$2(str) {
@@ -18682,17 +18556,17 @@
       var m;
 
       if (m = /^#(\d+);?$/.exec(match)) {
-        return punycode$2.ucs2.encode([parseInt(m[1], 10)]);
+        return punycode$1.ucs2.encode([parseInt(m[1], 10)]);
       } else if (m = /^#[Xx]([A-Fa-f0-9]+);?/.exec(match)) {
-        return punycode$2.ucs2.encode([parseInt(m[1], 16)]);
+        return punycode$1.ucs2.encode([parseInt(m[1], 16)]);
       } else {
         // named entity
         var hasSemi = /;$/.test(match);
         var withoutSemi = hasSemi ? match.replace(/;$/, '') : match;
-        var target = entities$2[withoutSemi] || hasSemi && entities$2[match];
+        var target = entities[withoutSemi] || hasSemi && entities[match];
 
         if (typeof target === 'number') {
-          return punycode$2.ucs2.encode([target]);
+          return punycode$1.ucs2.encode([target]);
         } else if (typeof target === 'string') {
           return target;
         } else {

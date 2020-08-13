@@ -9,9 +9,11 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var clone = require('lodash.clonedeep');
 
-var clone = _interopDefault(require('lodash.clonedeep'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -92,7 +94,7 @@ function astMonkeyTraverse(tree1, cb1) {
     now: false
   };
   function traverseInner(treeOriginal, callback, originalInnerObj, stop) {
-    var tree = clone(treeOriginal);
+    var tree = clone__default['default'](treeOriginal);
     var i;
     var len;
     var res;
@@ -108,7 +110,7 @@ function astMonkeyTraverse(tree1, cb1) {
         }
         var path = "".concat(innerObj.path, ".").concat(i);
         if (tree[i] !== undefined) {
-          innerObj.parent = clone(tree);
+          innerObj.parent = clone__default['default'](tree);
           innerObj.parentType = "array";
           res = traverseInner(callback(tree[i], undefined, _objectSpread2(_objectSpread2({}, innerObj), {}, {
             path: trimFirstDot(path)
@@ -134,7 +136,7 @@ function astMonkeyTraverse(tree1, cb1) {
         if (innerObj.depth === 0 && key != null) {
           innerObj.topmostKey = key;
         }
-        innerObj.parent = clone(tree);
+        innerObj.parent = clone__default['default'](tree);
         innerObj.parentType = "object";
         res = traverseInner(callback(key, tree[key], _objectSpread2(_objectSpread2({}, innerObj), {}, {
           path: trimFirstDot(_path)

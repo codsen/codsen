@@ -9,13 +9,17 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
 var astMonkeyUtil = require('ast-monkey-util');
-var strFindMalformed = _interopDefault(require('string-find-malformed'));
+var strFindMalformed = require('string-find-malformed');
 var stringLeftRight = require('string-left-right');
-var tokenizer = _interopDefault(require('codsen-tokenizer'));
-var op = _interopDefault(require('object-path'));
+var tokenizer = require('codsen-tokenizer');
+var op = require('object-path');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var strFindMalformed__default = /*#__PURE__*/_interopDefaultLegacy(strFindMalformed);
+var tokenizer__default = /*#__PURE__*/_interopDefaultLegacy(tokenizer);
+var op__default = /*#__PURE__*/_interopDefaultLegacy(op);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -132,7 +136,7 @@ function cparser(str, originalOpts) {
   var lastProcessedToken = {};
   var tokensWithChildren = ["tag", "comment"];
   var tagNamesThatDontHaveClosings = ["doctype"];
-  tokenizer(str, {
+  tokenizer__default['default'](str, {
     reportProgressFunc: opts.reportProgressFunc,
     reportProgressFuncFrom: opts.reportProgressFuncFrom,
     reportProgressFuncTo: opts.reportProgressFuncTo,
@@ -142,7 +146,7 @@ function cparser(str, originalOpts) {
         opts.tagCb(tokenObj);
       }
       if (!tokenObj.nested) {
-        var prevToken = op.get(res, path);
+        var prevToken = op__default['default'].get(res, path);
         if (!isObj(prevToken)) {
           prevToken = null;
         }
@@ -223,25 +227,25 @@ function cparser(str, originalOpts) {
         var parentPath = astMonkeyUtil.pathUp(path);
         var parentTagsToken;
         if (parentPath && path.includes(".")) {
-          parentTagsToken = op.get(res, parentPath);
+          parentTagsToken = op__default['default'].get(res, parentPath);
         }
         var previousTagsToken;
         if (previousPath) {
-          previousTagsToken = op.get(res, previousPath);
+          previousTagsToken = op__default['default'].get(res, previousPath);
         }
         var suspiciousCommentTagEndingRegExp = /(-+|-+[^>])>/;
         var parentsLastChildTokenValue;
         var parentsLastChildTokenPath;
         if (isObj(previousTagsToken) && Array.isArray(previousTagsToken.children) && previousTagsToken.children.length && previousTagsToken.children[previousTagsToken.children.length - 1]) {
           parentsLastChildTokenValue = previousTagsToken.children[previousTagsToken.children.length - 1];
-          parentsLastChildTokenPath = "".concat(previousPath, ".children.").concat(op.get(res, previousPath).children.length - 1);
+          parentsLastChildTokenPath = "".concat(previousPath, ".children.").concat(op__default['default'].get(res, previousPath).children.length - 1);
         }
         var tokenTakenCareOf = false;
         if (tokenObj.type === "text" && isObj(parentTagsToken) && parentTagsToken.type === "comment" && parentTagsToken.kind === "simple" && !parentTagsToken.closing && suspiciousCommentTagEndingRegExp.test(tokenObj.value)) {
           var suspiciousEndingStartsAt = suspiciousCommentTagEndingRegExp.exec(tokenObj.value).index;
           var suspiciousEndingEndsAt = suspiciousEndingStartsAt + tokenObj.value.slice(suspiciousEndingStartsAt).indexOf(">") + 1;
           if (suspiciousEndingStartsAt > 0) {
-            op.set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
+            op__default['default'].set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
               end: tokenObj.start + suspiciousEndingStartsAt,
               value: tokenObj.value.slice(0, suspiciousEndingStartsAt)
             }));
@@ -250,7 +254,7 @@ function cparser(str, originalOpts) {
             }
           }
           path = astMonkeyUtil.pathNext(astMonkeyUtil.pathUp(path));
-          op.set(res, path, {
+          op__default['default'].set(res, path, {
             type: "comment",
             kind: "simple",
             closing: true,
@@ -261,7 +265,7 @@ function cparser(str, originalOpts) {
           });
           if (suspiciousEndingEndsAt < tokenObj.value.length) {
             path = astMonkeyUtil.pathNext(path);
-            op.set(res, path, {
+            op__default['default'].set(res, path, {
               type: "text",
               start: tokenObj.start + suspiciousEndingEndsAt,
               end: tokenObj.end,
@@ -272,7 +276,7 @@ function cparser(str, originalOpts) {
         } else if (tokenObj.type === "comment" && tokenObj.kind === "only" && isObj(previousTagsToken)) {
           if (previousTagsToken.type === "text" && previousTagsToken.value.trim() && "<!-".includes(previousTagsToken.value[stringLeftRight.left(previousTagsToken.value, previousTagsToken.value.length)])) {
             var capturedMalformedTagRanges = [];
-            strFindMalformed(previousTagsToken.value, "<!--", function (obj) {
+            strFindMalformed__default['default'](previousTagsToken.value, "<!--", function (obj) {
               capturedMalformedTagRanges.push(obj);
             }, {
               maxDistance: 2
@@ -284,21 +288,21 @@ function cparser(str, originalOpts) {
                   tokenObj.children = [];
                 }
                 path = previousPath;
-                op.set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
+                op__default['default'].set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
                   start: malformedRange.idxFrom + previousTagsToken.start,
                   kind: "not",
                   value: "".concat(previousTagsToken.value).concat(tokenObj.value)
                 }));
                 tokenTakenCareOf = true;
               } else if (previousPath && isObj(previousTagsToken)) {
-                op.set(res, previousPath, _objectSpread2(_objectSpread2({}, previousTagsToken), {}, {
+                op__default['default'].set(res, previousPath, _objectSpread2(_objectSpread2({}, previousTagsToken), {}, {
                   end: malformedRange.idxFrom + previousTagsToken.start,
                   value: previousTagsToken.value.slice(0, malformedRange.idxFrom)
                 }));
                 if (tokensWithChildren.includes(tokenObj.type)) {
                   tokenObj.children = [];
                 }
-                op.set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
+                op__default['default'].set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
                   start: malformedRange.idxFrom + previousTagsToken.start,
                   kind: "not",
                   value: "".concat(previousTagsToken.value.slice(malformedRange.idxFrom)).concat(tokenObj.value)
@@ -308,7 +312,7 @@ function cparser(str, originalOpts) {
             }
           } else if (isObj(parentsLastChildTokenValue) && parentsLastChildTokenValue.type === "text" && parentsLastChildTokenValue.value.trim() && "<!-".includes(parentsLastChildTokenValue.value[stringLeftRight.left(parentsLastChildTokenValue.value, parentsLastChildTokenValue.value.length)])) {
             var _capturedMalformedTagRanges = [];
-            strFindMalformed(parentsLastChildTokenValue.value, "<!--", function (obj) {
+            strFindMalformed__default['default'](parentsLastChildTokenValue.value, "<!--", function (obj) {
               _capturedMalformedTagRanges.push(obj);
             }, {
               maxDistance: 2
@@ -319,22 +323,22 @@ function cparser(str, originalOpts) {
                 if (tokensWithChildren.includes(tokenObj.type)) {
                   tokenObj.children = [];
                 }
-                op.set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
+                op__default['default'].set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
                   start: _malformedRange.idxFrom + parentsLastChildTokenValue.start,
                   kind: "not",
                   value: "".concat(parentsLastChildTokenValue.value).concat(tokenObj.value)
                 }));
-                op.del(res, "".concat(previousPath, ".children.").concat(op.get(res, previousPath).children.length - 1));
+                op__default['default'].del(res, "".concat(previousPath, ".children.").concat(op__default['default'].get(res, previousPath).children.length - 1));
                 tokenTakenCareOf = true;
               } else if (previousPath && isObj(parentsLastChildTokenValue) && parentsLastChildTokenPath) {
-                op.set(res, parentsLastChildTokenPath, _objectSpread2(_objectSpread2({}, parentsLastChildTokenValue), {}, {
+                op__default['default'].set(res, parentsLastChildTokenPath, _objectSpread2(_objectSpread2({}, parentsLastChildTokenValue), {}, {
                   end: _malformedRange.idxFrom + parentsLastChildTokenValue.start,
                   value: parentsLastChildTokenValue.value.slice(0, _malformedRange.idxFrom)
                 }));
                 if (tokensWithChildren.includes(tokenObj.type)) {
                   tokenObj.children = [];
                 }
-                op.set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
+                op__default['default'].set(res, path, _objectSpread2(_objectSpread2({}, tokenObj), {}, {
                   start: _malformedRange.idxFrom + parentsLastChildTokenValue.start,
                   kind: "not",
                   value: "".concat(parentsLastChildTokenValue.value.slice(_malformedRange.idxFrom)).concat(tokenObj.value)
@@ -348,7 +352,7 @@ function cparser(str, originalOpts) {
           if (tokensWithChildren.includes(tokenObj.type)) {
             tokenObj.children = [];
           }
-          op.set(res, path, tokenObj);
+          op__default['default'].set(res, path, tokenObj);
         }
         if (tokensWithChildren.includes(tokenObj.type) && tokenObj.closing && (!previousPath || !isObj(previousTagsToken) || previousTagsToken.closing || previousTagsToken.type !== tokenObj.type || previousTagsToken.tagName !== tokenObj.tagName)) {
           if (tokenObj.void) {

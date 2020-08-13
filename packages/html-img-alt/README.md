@@ -1,6 +1,6 @@
 # html-img-alt
 
-> Adds missing ALT attributes to IMG tags and cleans within IMG tags. No HTML parsing used.
+> Adds missing alt attributes to img tags. Non-parsing.
 
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
@@ -54,7 +54,7 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                       | Size   |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------- | ------ |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/html-img-alt.cjs.js` | 11 KB  |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/html-img-alt.cjs.js` | 12 KB  |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/html-img-alt.esm.js` | 10 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/html-img-alt.umd.js` | 118 KB |
 

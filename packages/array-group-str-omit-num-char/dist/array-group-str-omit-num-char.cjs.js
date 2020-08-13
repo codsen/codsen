@@ -9,10 +9,13 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var uniq = require('lodash.uniq');
+var rangesApply = require('ranges-apply');
 
-var uniq = _interopDefault(require('lodash.uniq'));
-var rangesApply = _interopDefault(require('ranges-apply'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var uniq__default = /*#__PURE__*/_interopDefaultLegacy(uniq);
+var rangesApply__default = /*#__PURE__*/_interopDefaultLegacy(rangesApply);
 
 function _defineProperty(obj, key, value) {
   if (key in obj) {
@@ -83,7 +86,7 @@ function groupStr(originalArr, originalOpts) {
   }
   var arr;
   if (opts.dedupePlease) {
-    arr = uniq(originalArr);
+    arr = uniq__default['default'](originalArr);
   } else {
     arr = Array.from(originalArr);
   }
@@ -128,7 +131,7 @@ function groupStr(originalArr, originalOpts) {
           rangesArr.push([nThIndex, nThIndex + opts.wildcard.length, compiledObj[key].elementsWhichWeCanReplaceWithWildcards[z]]);
         }
       }
-      newKey = rangesApply(newKey, rangesArr);
+      newKey = rangesApply__default['default'](newKey, rangesArr);
     }
     resObj[newKey] = compiledObj[key].count;
   });

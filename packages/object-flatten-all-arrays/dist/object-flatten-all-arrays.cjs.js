@@ -9,11 +9,15 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var merge = require('lodash.merge');
+var clone = require('lodash.clonedeep');
+var isObj = require('lodash.isplainobject');
 
-var merge = _interopDefault(require('lodash.merge'));
-var clone = _interopDefault(require('lodash.clonedeep'));
-var isObj = _interopDefault(require('lodash.isplainobject'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var merge__default = /*#__PURE__*/_interopDefaultLegacy(merge);
+var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
+var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
 function _defineProperty(obj, key, value) {
   if (key in obj) {
@@ -75,7 +79,7 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
     flattenArraysContainingStringsToBeEmpty: false
   };
   var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
-  var incommingObj = clone(originalIncommingObj);
+  var incommingObj = clone__default['default'](originalIncommingObj);
   var isFirstObj;
   var combinedObj;
   var firstObjIndex;
@@ -87,8 +91,8 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
     combinedObj = {};
     firstObjIndex = 0;
     for (var i = 0, len = incommingObj.length; i < len; i++) {
-      if (isObj(incommingObj[i])) {
-        combinedObj = merge(combinedObj, incommingObj[i]);
+      if (isObj__default['default'](incommingObj[i])) {
+        combinedObj = merge__default['default'](combinedObj, incommingObj[i]);
         if (isFirstObj === null) {
           isFirstObj = true;
           firstObjIndex = i;
@@ -99,18 +103,18 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
       }
     }
     if (isFirstObj !== null) {
-      incommingObj[firstObjIndex] = clone(combinedObj);
+      incommingObj[firstObjIndex] = clone__default['default'](combinedObj);
     }
   }
-  if (isObj(incommingObj)) {
+  if (isObj__default['default'](incommingObj)) {
     Object.keys(incommingObj).forEach(function (key) {
-      if (isObj(incommingObj[key]) || isArr(incommingObj[key])) {
+      if (isObj__default['default'](incommingObj[key]) || isArr(incommingObj[key])) {
         incommingObj[key] = flattenAllArrays(incommingObj[key], opts);
       }
     });
   } else if (isArr(incommingObj)) {
     incommingObj.forEach(function (el, i) {
-      if (isObj(incommingObj[i]) || isArr(incommingObj[i])) {
+      if (isObj__default['default'](incommingObj[i]) || isArr(incommingObj[i])) {
         incommingObj[i] = flattenAllArrays(incommingObj[i], opts);
       }
     });

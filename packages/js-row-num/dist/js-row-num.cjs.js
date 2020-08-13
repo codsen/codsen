@@ -9,10 +9,13 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var Ranges = require('ranges-push');
+var apply = require('ranges-apply');
 
-var Ranges = _interopDefault(require('ranges-push'));
-var apply = _interopDefault(require('ranges-apply'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var Ranges__default = /*#__PURE__*/_interopDefaultLegacy(Ranges);
+var apply__default = /*#__PURE__*/_interopDefaultLegacy(apply);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -55,7 +58,7 @@ function fixRowNums(str, originalOpts) {
   if (!opts.padStart || typeof opts.padStart !== "number" || typeof opts.padStart === "number" && opts.padStart < 0) {
     opts.padStart = 0;
   }
-  var finalIndexesToDelete = new Ranges();
+  var finalIndexesToDelete = new Ranges__default['default']();
   var i;
   var len = str.length;
   var quotes = null;
@@ -182,7 +185,7 @@ function fixRowNums(str, originalOpts) {
     return finalIndexesToDelete.current();
   }
   if (finalIndexesToDelete.current()) {
-    return apply(str, finalIndexesToDelete.current());
+    return apply__default['default'](str, finalIndexesToDelete.current());
   }
   return str;
 }

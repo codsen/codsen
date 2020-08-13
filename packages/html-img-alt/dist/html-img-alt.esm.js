@@ -1,6 +1,6 @@
 /**
  * html-img-alt
- * Adds missing ALT attributes to IMG tags and cleans within IMG tags. No HTML parsing used.
+ * Adds missing alt attributes to img tags. Non-parsing.
  * Version: 1.4.56
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT

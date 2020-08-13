@@ -9,10 +9,13 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var isObj = require('lodash.isplainobject');
+var isEq = require('lodash.isequal');
 
-var isObj = _interopDefault(require('lodash.isplainobject'));
-var isEq = _interopDefault(require('lodash.isequal'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
+var isEq__default = /*#__PURE__*/_interopDefaultLegacy(isEq);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -86,7 +89,7 @@ function allValuesEqualTo(input, value, opts) {
       return true;
     }
     if (opts.arraysMustNotContainPlaceholders && input.length > 0 && input.some(function (el) {
-      return isEq(el, value);
+      return isEq__default['default'](el, value);
     })) {
       return false;
     }
@@ -97,7 +100,7 @@ function allValuesEqualTo(input, value, opts) {
     }
     return true;
   }
-  if (isObj(input)) {
+  if (isObj__default['default'](input)) {
     var keys = Object.keys(input);
     if (keys.length === 0) {
       return true;
@@ -109,7 +112,7 @@ function allValuesEqualTo(input, value, opts) {
     }
     return true;
   }
-  return isEq(input, value);
+  return isEq__default['default'](input, value);
 }
 function allValuesEqualToWrapper(inputOriginal, valueOriginal, originalOpts) {
   if (inputOriginal === undefined) {
@@ -118,7 +121,7 @@ function allValuesEqualToWrapper(inputOriginal, valueOriginal, originalOpts) {
   if (valueOriginal === undefined) {
     throw new Error("object-all-values-equal-to: [THROW_ID_02] The second input is undefined! Please provide the second argument.");
   }
-  if (originalOpts !== undefined && originalOpts !== null && !isObj(originalOpts)) {
+  if (originalOpts !== undefined && originalOpts !== null && !isObj__default['default'](originalOpts)) {
     throw new Error("object-all-values-equal-to: [THROW_ID_03] The third argument, options object, was given not as a plain object but as a ".concat(_typeof(originalOpts), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
   }
   var defaults = {

@@ -9,13 +9,19 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var clone = require('lodash.clonedeep');
+var search = require('str-indexes-of-plus');
+var matcher = require('matcher');
+var isObj = require('lodash.isplainobject');
+var isStringInt = require('is-string-int');
 
-var clone = _interopDefault(require('lodash.clonedeep'));
-var search = _interopDefault(require('str-indexes-of-plus'));
-var matcher = _interopDefault(require('matcher'));
-var isObj = _interopDefault(require('lodash.isplainobject'));
-var isStringInt = _interopDefault(require('is-string-int'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
+var search__default = /*#__PURE__*/_interopDefaultLegacy(search);
+var matcher__default = /*#__PURE__*/_interopDefaultLegacy(matcher);
+var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
+var isStringInt__default = /*#__PURE__*/_interopDefaultLegacy(isStringInt);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -90,11 +96,11 @@ function flattenObject(objOrig, opts) {
   if (arguments.length === 0 || Object.keys(objOrig).length === 0) {
     return [];
   }
-  var obj = clone(objOrig);
+  var obj = clone__default['default'](objOrig);
   var res = [];
-  if (isObj(obj)) {
+  if (isObj__default['default'](obj)) {
     Object.keys(obj).forEach(function (key) {
-      if (isObj(obj[key])) {
+      if (isObj__default['default'](obj[key])) {
         obj[key] = flattenObject(obj[key], opts);
       }
       if (isArr(obj[key])) {
@@ -113,7 +119,7 @@ function flattenArr(arrOrig, opts, wrap, joinArraysUsingBrs) {
   if (arguments.length === 0 || arrOrig.length === 0) {
     return "";
   }
-  var arr = clone(arrOrig);
+  var arr = clone__default['default'](arrOrig);
   var res = "";
   if (arr.length > 0) {
     if (joinArraysUsingBrs) {
@@ -169,7 +175,7 @@ function arrayiffyString(something) {
   return something;
 }
 function reclaimIntegerString(something) {
-  if (isStr(something) && isStringInt(something.trim())) {
+  if (isStr(something) && isStringInt__default['default'](something.trim())) {
     return parseInt(something.trim(), 10);
   }
   return something;
@@ -189,15 +195,15 @@ function outer(originalInput1, originalReference1, opts1) {
   if (arguments.length === 1) {
     throw new Error("object-flatten-referencing/ofr(): [THROW_ID_02] reference object missing!");
   }
-  if (existy(opts1) && !isObj(opts1)) {
+  if (existy(opts1) && !isObj__default['default'](opts1)) {
     throw new Error("object-flatten-referencing/ofr(): [THROW_ID_03] third input, options object must be a plain object. Currently it's: ".concat(_typeof(opts1)));
   }
   function ofr(originalInput, originalReference, originalOpts) {
     var wrap = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
     var joinArraysUsingBrs = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : true;
     var currentRoot = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : "";
-    var input = clone(originalInput);
-    var reference = clone(originalReference);
+    var input = clone__default['default'](originalInput);
+    var reference = clone__default['default'](originalReference);
     var defaults = {
       wrapHeadsWith: "%%_",
       wrapTailsWith: "_%%",
@@ -223,7 +229,7 @@ function outer(originalInput1, originalReference1, opts1) {
     if (!opts.wrapGlobalFlipSwitch) {
       wrap = false;
     }
-    if (isObj(input)) {
+    if (isObj__default['default'](input)) {
       Object.keys(input).forEach(function (key) {
         var currentPath = currentRoot + (currentRoot.length === 0 ? key : ".".concat(key));
         if (opts.ignore.length === 0 || !opts.ignore.includes(key)) {
@@ -231,7 +237,7 @@ function outer(originalInput1, originalReference1, opts1) {
             wrap = true;
             if (opts.dontWrapKeys.length > 0) {
               wrap = wrap && !opts.dontWrapKeys.some(function (elem) {
-                return matcher.isMatch(key, elem, {
+                return matcher__default['default'].isMatch(key, elem, {
                   caseSensitive: true
                 });
               });
@@ -267,7 +273,7 @@ function outer(originalInput1, originalReference1, opts1) {
                 }
                 input[key] = ofr(input[key], reference[key], opts, wrap, joinArraysUsingBrs, currentPath);
               }
-            } else if (isObj(input[key])) {
+            } else if (isObj__default['default'](input[key])) {
               if (opts.whatToDoWhenReferenceIsMissing === 2 || isStr$1(reference[key])) {
                 input[key] = flattenArr(flattenObject(input[key], opts), opts, wrap, joinArraysUsingBrs);
               } else if (!wrap) {
@@ -301,7 +307,7 @@ function outer(originalInput1, originalReference1, opts1) {
       }
     } else if (isStr$1(input)) {
       if (input.length > 0 && (opts.wrapHeadsWith || opts.wrapTailsWith)) {
-        if (!opts.preventDoubleWrapping || (opts.wrapHeadsWith === "" || !search(input, opts.wrapHeadsWith.trim()).length) && (opts.wrapTailsWith === "" || !search(input, opts.wrapTailsWith.trim()).length)) {
+        if (!opts.preventDoubleWrapping || (opts.wrapHeadsWith === "" || !search__default['default'](input, opts.wrapHeadsWith.trim()).length) && (opts.wrapTailsWith === "" || !search__default['default'](input, opts.wrapTailsWith.trim()).length)) {
           input = (wrap ? opts.wrapHeadsWith : "") + input + (wrap ? opts.wrapTailsWith : "");
         }
       }

@@ -9,10 +9,13 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var mergeRanges = require('ranges-merge');
+var rangesCrop = require('ranges-crop');
 
-var mergeRanges = _interopDefault(require('ranges-merge'));
-var rangesCrop = _interopDefault(require('ranges-crop'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var mergeRanges__default = /*#__PURE__*/_interopDefaultLegacy(mergeRanges);
+var rangesCrop__default = /*#__PURE__*/_interopDefaultLegacy(rangesCrop);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -127,7 +130,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
   }
   var prep;
   if (!opts.skipChecks) {
-    prep = mergeRanges(arrOfRanges.filter(function (rangeArr) {
+    prep = mergeRanges__default['default'](arrOfRanges.filter(function (rangeArr) {
       return rangeArr[0] !== rangeArr[1];
     }));
   } else {
@@ -155,7 +158,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     }
     return accum.concat(res2);
   }, []);
-  return rangesCrop(res, strLen);
+  return rangesCrop__default['default'](res, strLen);
 }
 
 module.exports = rangesInvert;

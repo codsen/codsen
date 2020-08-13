@@ -11,10 +11,13 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var isObj = require('lodash.isplainobject');
+var clone = require('lodash.clonedeep');
 
-var isObj = _interopDefault(require('lodash.isplainobject'));
-var clone = _interopDefault(require('lodash.clonedeep'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
+var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -279,7 +282,7 @@ function leftSeq(str, idx) {
     i: false
   };
   var opts;
-  if (isObj(args[0])) {
+  if (isObj__default['default'](args[0])) {
     opts = _objectSpread2(_objectSpread2({}, defaults), args.shift());
   } else {
     opts = defaults;
@@ -297,7 +300,7 @@ function rightSeq(str, idx) {
     i: false
   };
   var opts;
-  if (isObj(args[0])) {
+  if (isObj__default['default'](args[0])) {
     opts = _objectSpread2(_objectSpread2({}, defaults), args.shift());
   } else {
     opts = defaults;
@@ -398,14 +401,14 @@ function chompLeft(str, idx) {
   for (var _len4 = arguments.length, args = new Array(_len4 > 2 ? _len4 - 2 : 0), _key3 = 2; _key3 < _len4; _key3++) {
     args[_key3 - 2] = arguments[_key3];
   }
-  if (!args.length || args.length === 1 && isObj(args[0])) {
+  if (!args.length || args.length === 1 && isObj__default['default'](args[0])) {
     return null;
   }
   var defaults = {
     mode: 0
   };
-  if (isObj(args[0])) {
-    var opts = _objectSpread2(_objectSpread2({}, defaults), clone(args[0]));
+  if (isObj__default['default'](args[0])) {
+    var opts = _objectSpread2(_objectSpread2({}, defaults), clone__default['default'](args[0]));
     if (!opts.mode) {
       opts.mode = 0;
     } else if (isStr(opts.mode) && "0123".includes(opts.mode)) {
@@ -413,25 +416,25 @@ function chompLeft(str, idx) {
     } else if (!isNum(opts.mode)) {
       throw new Error("string-left-right/chompLeft(): [THROW_ID_01] the opts.mode is wrong! It should be 0, 1, 2 or 3. It was given as ".concat(opts.mode, " (type ").concat(_typeof(opts.mode), ")"));
     }
-    return chomp("left", str, idx, opts, clone(args).slice(1));
+    return chomp("left", str, idx, opts, clone__default['default'](args).slice(1));
   }
   if (!isStr(args[0])) {
-    return chomp("left", str, idx, defaults, clone(args).slice(1));
+    return chomp("left", str, idx, defaults, clone__default['default'](args).slice(1));
   }
-  return chomp("left", str, idx, defaults, clone(args));
+  return chomp("left", str, idx, defaults, clone__default['default'](args));
 }
 function chompRight(str, idx) {
   for (var _len5 = arguments.length, args = new Array(_len5 > 2 ? _len5 - 2 : 0), _key4 = 2; _key4 < _len5; _key4++) {
     args[_key4 - 2] = arguments[_key4];
   }
-  if (!args.length || args.length === 1 && isObj(args[0])) {
+  if (!args.length || args.length === 1 && isObj__default['default'](args[0])) {
     return null;
   }
   var defaults = {
     mode: 0
   };
-  if (isObj(args[0])) {
-    var opts = _objectSpread2(_objectSpread2({}, defaults), clone(args[0]));
+  if (isObj__default['default'](args[0])) {
+    var opts = _objectSpread2(_objectSpread2({}, defaults), clone__default['default'](args[0]));
     if (!opts.mode) {
       opts.mode = 0;
     } else if (isStr(opts.mode) && "0123".includes(opts.mode)) {
@@ -439,12 +442,12 @@ function chompRight(str, idx) {
     } else if (!isNum(opts.mode)) {
       throw new Error("string-left-right/chompRight(): [THROW_ID_02] the opts.mode is wrong! It should be 0, 1, 2 or 3. It was given as ".concat(opts.mode, " (type ").concat(_typeof(opts.mode), ")"));
     }
-    return chomp("right", str, idx, opts, clone(args).slice(1));
+    return chomp("right", str, idx, opts, clone__default['default'](args).slice(1));
   }
   if (!isStr(args[0])) {
-    return chomp("right", str, idx, defaults, clone(args).slice(1));
+    return chomp("right", str, idx, defaults, clone__default['default'](args).slice(1));
   }
-  return chomp("right", str, idx, defaults, clone(args));
+  return chomp("right", str, idx, defaults, clone__default['default'](args));
 }
 
 exports.chompLeft = chompLeft;

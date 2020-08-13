@@ -9,9 +9,11 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var mergeRanges = require('ranges-merge');
 
-var mergeRanges = _interopDefault(require('ranges-merge'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var mergeRanges__default = /*#__PURE__*/_interopDefaultLegacy(mergeRanges);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -68,7 +70,7 @@ function rangesCrop(arrOfRanges, strLen) {
   })) {
     throw new TypeError("ranges-crop: [THROW_ID_05] The third argument, if present at all, should be of a string-type or null. Currently the ".concat(culpritsIndex, "th range ").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 0), " has a argument in the range of a type ").concat(_typeof(arrOfRanges[culpritsIndex][2])));
   }
-  var res = mergeRanges(arrOfRanges).filter(function (singleRangeArr) {
+  var res = mergeRanges__default['default'](arrOfRanges).filter(function (singleRangeArr) {
     return singleRangeArr[0] <= strLen && (singleRangeArr[2] !== undefined || singleRangeArr[0] < strLen);
   }).map(function (singleRangeArr) {
     if (singleRangeArr[1] > strLen) {

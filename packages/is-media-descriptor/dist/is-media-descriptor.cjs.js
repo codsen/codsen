@@ -9,10 +9,13 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var leven = require('leven');
+var processCommaSep = require('string-process-comma-separated');
 
-var leven = _interopDefault(require('leven'));
-var processCommaSep = _interopDefault(require('string-process-comma-separated'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var leven__default = /*#__PURE__*/_interopDefaultLegacy(leven);
+var processCommaSep__default = /*#__PURE__*/_interopDefaultLegacy(processCommaSep);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -384,7 +387,7 @@ function isMediaD(originalStr, originalOpts) {
     });
   } else if (str.match(lettersOnlyRegex) && !str.includes("(") && !str.includes(")")) {
     for (var _i2 = 0, _len = recognisedMediaTypes.length; _i2 < _len; _i2++) {
-      if (leven(recognisedMediaTypes[_i2], str) === 1) {
+      if (leven__default['default'](recognisedMediaTypes[_i2], str) === 1) {
         res.push({
           idxFrom: nonWhitespaceStart + opts.offset,
           idxTo: nonWhitespaceEnd + opts.offset,
@@ -478,7 +481,7 @@ function isMediaD(originalStr, originalOpts) {
     if (res.length) {
       return res;
     }
-    processCommaSep(str, {
+    processCommaSep__default['default'](str, {
       offset: opts.offset,
       leadingWhitespaceOK: false,
       trailingWhitespaceOK: false,

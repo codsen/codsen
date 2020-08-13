@@ -1,6 +1,6 @@
 /**
  * string-find-heads-tails
- * Search for string pairs. A special case of string search algorithm.
+ * Finds given pattern templating markers in a string
  * Version: 3.16.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT

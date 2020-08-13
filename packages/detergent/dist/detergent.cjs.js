@@ -11,24 +11,36 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
 var stringLeftRight = require('string-left-right');
-var fixBrokenEntities = _interopDefault(require('string-fix-broken-named-entities'));
+var fixBrokenEntities = require('string-fix-broken-named-entities');
 var stringRemoveWidows = require('string-remove-widows');
-var processOutside = _interopDefault(require('ranges-process-outside'));
-var collapse = _interopDefault(require('string-collapse-white-space'));
-var trimSpaces = _interopDefault(require('string-trim-spaces-only'));
-var stripHtml = _interopDefault(require('string-strip-html'));
-var invertRanges = _interopDefault(require('ranges-invert'));
-var rangesApply = _interopDefault(require('ranges-apply'));
-var ansiRegex = _interopDefault(require('ansi-regex'));
-var Ranges = _interopDefault(require('ranges-push'));
-var he = _interopDefault(require('he'));
+var processOutside = require('ranges-process-outside');
+var collapse = require('string-collapse-white-space');
+var trimSpaces = require('string-trim-spaces-only');
+var stripHtml = require('string-strip-html');
+var invertRanges = require('ranges-invert');
+var rangesApply = require('ranges-apply');
+var ansiRegex = require('ansi-regex');
+var Ranges = require('ranges-push');
+var he = require('he');
 var htmlEntitiesNotEmailFriendly = require('html-entities-not-email-friendly');
 var allNamedHtmlEntities = require('all-named-html-entities');
-var rangesExpander = _interopDefault(require('string-range-expander'));
+var rangesExpander = require('string-range-expander');
 var stringApostrophes = require('string-apostrophes');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var fixBrokenEntities__default = /*#__PURE__*/_interopDefaultLegacy(fixBrokenEntities);
+var processOutside__default = /*#__PURE__*/_interopDefaultLegacy(processOutside);
+var collapse__default = /*#__PURE__*/_interopDefaultLegacy(collapse);
+var trimSpaces__default = /*#__PURE__*/_interopDefaultLegacy(trimSpaces);
+var stripHtml__default = /*#__PURE__*/_interopDefaultLegacy(stripHtml);
+var invertRanges__default = /*#__PURE__*/_interopDefaultLegacy(invertRanges);
+var rangesApply__default = /*#__PURE__*/_interopDefaultLegacy(rangesApply);
+var ansiRegex__default = /*#__PURE__*/_interopDefaultLegacy(ansiRegex);
+var Ranges__default = /*#__PURE__*/_interopDefaultLegacy(Ranges);
+var he__default = /*#__PURE__*/_interopDefaultLegacy(he);
+var rangesExpander__default = /*#__PURE__*/_interopDefaultLegacy(rangesExpander);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -166,14 +178,14 @@ function doConvertEntities(inputString, dontEncodeNonLatin) {
       if (char.charCodeAt(0) < 880 || latinAndNonNonLatinRanges.some(function (rangeArr) {
         return char.charCodeAt(0) > rangeArr[0] && char.charCodeAt(0) < rangeArr[1];
       })) {
-        return he.encode(char, {
+        return he__default['default'].encode(char, {
           useNamedReferences: true
         });
       }
       return char;
     }).join("");
   }
-  return he.encode(inputString, {
+  return he__default['default'].encode(inputString, {
     useNamedReferences: true
   });
 }
@@ -403,7 +415,7 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
                 rangesArr.push(i, i + temp.length + 2, "&".concat(htmlEntitiesNotEmailFriendly.notEmailFriendly[str.slice(i + 1, i + temp.length + 1)], ";"));
                 offsetBy(temp.length + 1);
               } else if (!opts.convertEntities) {
-                rangesArr.push(i, i + temp.length + 2, he.decode("".concat(str.slice(i, i + temp.length + 2))));
+                rangesArr.push(i, i + temp.length + 2, he__default['default'].decode("".concat(str.slice(i, i + temp.length + 2))));
                 offsetBy(temp.length + 1);
               } else {
                 offsetBy(temp.length + 1);
@@ -415,7 +427,7 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
             for (var z = stringLeftRight.right(str, i); z < len; z++) {
               if (str[z].trim().length && !isNumber(str[z]) && str[z] !== "#") {
                 if (str[z] === ";") {
-                  var _tempRes = he.encode(he.decode(str.slice(i, z + 1)), {
+                  var _tempRes = he__default['default'].encode(he__default['default'].decode(str.slice(i, z + 1)), {
                     useNamedReferences: true
                   });
                   if (_tempRes) {
@@ -584,7 +596,7 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
         if (!str[y]) {
           rangesArr.push(i, y);
         } else {
-          var expandedRange = rangesExpander({
+          var expandedRange = rangesExpander__default['default']({
             str: str,
             from: i,
             to: y,
@@ -799,12 +811,12 @@ function det(str, inputOpts) {
     endOfLine = "\r";
   }
   var brClosingBracketIndexesArr = [];
-  var finalIndexesToDelete = new Ranges({
+  var finalIndexesToDelete = new Ranges__default['default']({
     limitToBeAddedWhitespace: false
   });
-  var skipArr = new Ranges();
+  var skipArr = new Ranges__default['default']();
   function applyAndWipe() {
-    str = rangesApply(str, finalIndexesToDelete.current());
+    str = rangesApply__default['default'](str, finalIndexesToDelete.current());
     finalIndexesToDelete.wipe();
   }
   function isNum(something) {
@@ -813,7 +825,7 @@ function det(str, inputOpts) {
   var state = {
     onUrlCurrently: false
   };
-  str = trimSpaces(str.replace(ansiRegex(), "").replace(/\u200A/g, " "), {
+  str = trimSpaces__default['default'](str.replace(ansiRegex__default['default'](), "").replace(/\u200A/g, " "), {
     cr: true,
     lf: true,
     tab: true,
@@ -824,12 +836,12 @@ function det(str, inputOpts) {
   var lastVal;
   do {
     lastVal = temp;
-    temp = he.decode(temp);
+    temp = he__default['default'].decode(temp);
   } while (temp !== str && lastVal !== temp);
   if (str !== temp) {
     str = temp;
   }
-  str = collapse(str, {
+  str = collapse__default['default'](str, {
     trimLines: true,
     recogniseHTML: false,
     removeEmptyLines: true,
@@ -849,18 +861,18 @@ function det(str, inputOpts) {
     }
   }
   applyAndWipe();
-  var entityFixes = fixBrokenEntities(str, {
+  var entityFixes = fixBrokenEntities__default['default'](str, {
     decode: false
   });
   if (entityFixes && entityFixes.length) {
     applicableOpts.fixBrokenEntities = true;
     if (opts.fixBrokenEntities) {
-      str = rangesApply(str, entityFixes);
+      str = rangesApply__default['default'](str, entityFixes);
     }
   }
   if (opts.cb) {
     if (str.includes("<") || str.includes(">")) {
-      var outsideTagRanges = invertRanges(stripHtml(str, {
+      var outsideTagRanges = invertRanges__default['default'](stripHtml__default['default'](str, {
         cb: function cb(_ref) {
           var tag = _ref.tag,
               rangesArr = _ref.rangesArr;
@@ -874,7 +886,7 @@ function det(str, inputOpts) {
         }
         return accumRanges;
       }, []);
-      str = rangesApply(str, outsideTagRanges);
+      str = rangesApply__default['default'](str, outsideTagRanges);
     } else {
       str = opts.cb(str);
     }
@@ -968,15 +980,15 @@ function det(str, inputOpts) {
         }
       }
     };
-    stripHtml(str, {
+    stripHtml__default['default'](str, {
       cb: cb,
       trimOnlySpaces: true,
-      ignoreTags: stripHtml ? opts.stripHtmlButIgnoreTags : [],
+      ignoreTags: stripHtml__default['default'] ? opts.stripHtmlButIgnoreTags : [],
       skipHtmlDecoding: true,
       returnRangesOnly: true
     });
   }
-  processOutside(str, skipArr.current(), function (idxFrom, idxTo, offsetBy) {
+  processOutside__default['default'](str, skipArr.current(), function (idxFrom, idxTo, offsetBy) {
     return processCharacter(str, opts, finalIndexesToDelete, idxFrom, idxTo, offsetBy, brClosingBracketIndexesArr, state, applicableOpts, endOfLine, opts.cb);
   }, true);
   applyAndWipe();
@@ -1010,12 +1022,12 @@ function det(str, inputOpts) {
       str = str.replace(/\r\n|\r|\n/gm, " ");
     }
   }
-  str = collapse(str, {
+  str = collapse__default['default'](str, {
     trimLines: true,
     recogniseHTML: false
   });
   return {
-    res: rangesApply(str, finalIndexesToDelete.current()),
+    res: rangesApply__default['default'](str, finalIndexesToDelete.current()),
     applicableOpts: applicableOpts
   };
 }

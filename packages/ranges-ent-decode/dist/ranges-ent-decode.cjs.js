@@ -9,11 +9,15 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var he = require('he');
+var mergeRanges = require('ranges-merge');
+var isObj = require('lodash.isplainobject');
 
-var he = _interopDefault(require('he'));
-var mergeRanges = _interopDefault(require('ranges-merge'));
-var isObj = _interopDefault(require('lodash.isplainobject'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var he__default = /*#__PURE__*/_interopDefaultLegacy(he);
+var mergeRanges__default = /*#__PURE__*/_interopDefaultLegacy(mergeRanges);
+var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -88,7 +92,7 @@ function decode(str, originalOpts) {
   if (typeof str !== "string") {
     throw new TypeError("ranges-ent-decode/decode(): [THROW_ID_01] Expected a String! Currently it's given as ".concat(str, ", type ").concat(_typeof(str)));
   }
-  if (originalOpts != null && !isObj(originalOpts)) {
+  if (originalOpts != null && !isObj__default['default'](originalOpts)) {
     throw new TypeError("ranges-ent-decode/decode(): [THROW_ID_02] Optional Options Object, the second in put argument, must be a plain object! Currently it's given as ".concat(originalOpts, ", type ").concat(_typeof(originalOpts)));
   }
   var defaults = {
@@ -116,13 +120,13 @@ function decode(str, originalOpts) {
     if (chomped === "&") {
       rangesArr.push([entityRegex.lastIndex - array1[0].length, entityRegex.lastIndex, "&"]);
     } else {
-      var decoded = he.decode(chomped, opts);
+      var decoded = he__default['default'].decode(chomped, opts);
       if (decoded !== chomped) {
         rangesArr.push([entityRegex.lastIndex - array1[0].length, entityRegex.lastIndex, decoded]);
       }
     }
   }
-  return mergeRanges(rangesArr);
+  return mergeRanges__default['default'](rangesArr);
 }
 
 module.exports = decode;

@@ -9,9 +9,11 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var clone = require('lodash.clonedeep');
 
-var clone = _interopDefault(require('lodash.clonedeep'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -138,7 +140,7 @@ function astMonkeyTraverseWithLookahead(tree1, cb1) {
           break;
         }
         var path = "".concat(innerObj.path, ".").concat(i);
-        innerObj.parent = clone(tree);
+        innerObj.parent = clone__default['default'](tree);
         innerObj.parentType = "array";
         callback(tree[i], undefined, _objectSpread2(_objectSpread2({}, innerObj), {}, {
           path: trimFirstDot(path)
@@ -156,7 +158,7 @@ function astMonkeyTraverseWithLookahead(tree1, cb1) {
         if (innerObj.depth === 0 && key != null) {
           innerObj.topmostKey = key;
         }
-        innerObj.parent = clone(tree);
+        innerObj.parent = clone__default['default'](tree);
         innerObj.parentType = "object";
         callback(key, tree[key], _objectSpread2(_objectSpread2({}, innerObj), {}, {
           path: trimFirstDot(_path)
@@ -173,7 +175,7 @@ function astMonkeyTraverseWithLookahead(tree1, cb1) {
     currentElem[2].next = [];
     for (var i = 0; i < lookahead; i++) {
       if (stash[i]) {
-        currentElem[2].next.push(clone([stash[i][0], stash[i][1], stash[i][2]]));
+        currentElem[2].next.push(clone__default['default']([stash[i][0], stash[i][1], stash[i][2]]));
       } else {
         break;
       }

@@ -9,19 +9,22 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var deburr = require('lodash.deburr');
+var ent = require('ent');
 
-var deburr = _interopDefault(require('lodash.deburr'));
-var ent = _interopDefault(require('ent'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var deburr__default = /*#__PURE__*/_interopDefaultLegacy(deburr);
+var ent__default = /*#__PURE__*/_interopDefaultLegacy(ent);
 
 function bSlug(str) {
   if (typeof str !== "string") {
     return "";
   }
-  while (str !== ent.decode(str)) {
-    str = ent.decode(str);
+  while (str !== ent__default['default'].decode(str)) {
+    str = ent__default['default'].decode(str);
   }
-  return "markdown-header-".concat(deburr(str).replace(/\]\((.*?)\)/g, "")
+  return "markdown-header-".concat(deburr__default['default'](str).replace(/\]\((.*?)\)/g, "")
   .replace(/ [-]+ /gi, " ").replace(/[^\w\d\s-]/g, "")
   .replace(/\s+/g, " ")
   .toLowerCase().trim().replace(/ /g, "-"));

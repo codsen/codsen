@@ -9,10 +9,13 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var collapseLeadingWhitespace = require('string-collapse-leading-whitespace');
+var mergeRanges = require('ranges-merge');
 
-var collapseLeadingWhitespace = _interopDefault(require('string-collapse-leading-whitespace'));
-var mergeRanges = _interopDefault(require('ranges-merge'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var collapseLeadingWhitespace__default = /*#__PURE__*/_interopDefaultLegacy(collapseLeadingWhitespace);
+var mergeRanges__default = /*#__PURE__*/_interopDefaultLegacy(mergeRanges);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -217,7 +220,7 @@ var Ranges = function () {
           if (this.last()[2] !== null && existy(addVal)) {
             var calculatedVal = existy(this.last()[2]) && this.last()[2].length > 0 && (!this.opts || !this.opts.mergeType || this.opts.mergeType === 1) ? this.last()[2] + addVal : addVal;
             if (this.opts.limitToBeAddedWhitespace) {
-              calculatedVal = collapseLeadingWhitespace(calculatedVal, this.opts.limitLinebreaksCount);
+              calculatedVal = collapseLeadingWhitespace__default['default'](calculatedVal, this.opts.limitLinebreaksCount);
             }
             if (!(isStr(calculatedVal) && !calculatedVal.length)) {
               this.last()[2] = calculatedVal;
@@ -227,7 +230,7 @@ var Ranges = function () {
           if (!this.slices) {
             this.slices = [];
           }
-          var whatToPush = addVal !== undefined && !(isStr(addVal) && !addVal.length) ? [from, to, this.opts.limitToBeAddedWhitespace ? collapseLeadingWhitespace(addVal, this.opts.limitLinebreaksCount) : addVal] : [from, to];
+          var whatToPush = addVal !== undefined && !(isStr(addVal) && !addVal.length) ? [from, to, this.opts.limitToBeAddedWhitespace ? collapseLeadingWhitespace__default['default'](addVal, this.opts.limitLinebreaksCount) : addVal] : [from, to];
           this.slices.push(whatToPush);
         }
       } else {
@@ -251,13 +254,13 @@ var Ranges = function () {
     value: function current() {
       var _this2 = this;
       if (this.slices != null) {
-        this.slices = mergeRanges(this.slices, {
+        this.slices = mergeRanges__default['default'](this.slices, {
           mergeType: this.opts.mergeType
         });
         if (this.opts.limitToBeAddedWhitespace) {
           return this.slices.map(function (val) {
             if (existy(val[2])) {
-              return [val[0], val[1], collapseLeadingWhitespace(val[2], _this2.opts.limitLinebreaksCount)];
+              return [val[0], val[1], collapseLeadingWhitespace__default['default'](val[2], _this2.opts.limitLinebreaksCount)];
             }
             return val;
           });

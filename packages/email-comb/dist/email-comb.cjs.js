@@ -11,22 +11,34 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
 var stringMatchLeftRight = require('string-match-left-right');
-var emptyCondCommentRegex = _interopDefault(require('regex-empty-conditional-comments'));
-var pullAllWithGlob = _interopDefault(require('array-pull-all-with-glob'));
-var extract = _interopDefault(require('string-extract-class-names'));
-var intersection = _interopDefault(require('lodash.intersection'));
-var expander = _interopDefault(require('string-range-expander'));
+var emptyCondCommentRegex = require('regex-empty-conditional-comments');
+var pullAllWithGlob = require('array-pull-all-with-glob');
+var extract = require('string-extract-class-names');
+var intersection = require('lodash.intersection');
+var expander = require('string-range-expander');
 var stringLeftRight = require('string-left-right');
 var stringUglify = require('string-uglify');
-var applyRanges = _interopDefault(require('ranges-apply'));
-var pullAll = _interopDefault(require('lodash.pullall'));
-var isEmpty = _interopDefault(require('ast-is-empty'));
-var Ranges = _interopDefault(require('ranges-push'));
-var uniq = _interopDefault(require('lodash.uniq'));
-var matcher = _interopDefault(require('matcher'));
+var applyRanges = require('ranges-apply');
+var pullAll = require('lodash.pullall');
+var isEmpty = require('ast-is-empty');
+var Ranges = require('ranges-push');
+var uniq = require('lodash.uniq');
+var matcher = require('matcher');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var emptyCondCommentRegex__default = /*#__PURE__*/_interopDefaultLegacy(emptyCondCommentRegex);
+var pullAllWithGlob__default = /*#__PURE__*/_interopDefaultLegacy(pullAllWithGlob);
+var extract__default = /*#__PURE__*/_interopDefaultLegacy(extract);
+var intersection__default = /*#__PURE__*/_interopDefaultLegacy(intersection);
+var expander__default = /*#__PURE__*/_interopDefaultLegacy(expander);
+var applyRanges__default = /*#__PURE__*/_interopDefaultLegacy(applyRanges);
+var pullAll__default = /*#__PURE__*/_interopDefaultLegacy(pullAll);
+var isEmpty__default = /*#__PURE__*/_interopDefaultLegacy(isEmpty);
+var Ranges__default = /*#__PURE__*/_interopDefaultLegacy(Ranges);
+var uniq__default = /*#__PURE__*/_interopDefaultLegacy(uniq);
+var matcher__default = /*#__PURE__*/_interopDefaultLegacy(matcher);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -154,11 +166,11 @@ function isLatinLetter(char) {
 
 function comb(str, opts) {
   var start = Date.now();
-  var finalIndexesToDelete = new Ranges({
+  var finalIndexesToDelete = new Ranges__default['default']({
     limitToBeAddedWhitespace: true
   });
-  var currentChunksMinifiedSelectors = new Ranges();
-  var lineBreaksToDelete = new Ranges();
+  var currentChunksMinifiedSelectors = new Ranges__default['default']();
+  var lineBreaksToDelete = new Ranges__default['default']();
   function characterSuitableForNames(char) {
     return /[-_A-Za-z0-9]/.test(char);
   }
@@ -230,7 +242,7 @@ function comb(str, opts) {
       opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains = [];
     }
   }
-  if (isObj(opts) && hasOwnProp(opts, "backend") && isEmpty(opts.backend)) {
+  if (isObj(opts) && hasOwnProp(opts, "backend") && isEmpty__default['default'](opts.backend)) {
     opts.backend = [];
   }
   opts = _objectSpread2(_objectSpread2({}, defaults), opts);
@@ -573,7 +585,7 @@ function comb(str, opts) {
               selectorChunkCanBeDeleted = true;
               onlyDeletedChunksFollow = true;
             } else if (round === 2 && !selectorChunkCanBeDeleted) {
-              if (opts.uglify && (!Array.isArray(opts.whitelist) || !opts.whitelist.length || !matcher([singleSelector], opts.whitelist).length)) {
+              if (opts.uglify && (!Array.isArray(opts.whitelist) || !opts.whitelist.length || !matcher__default['default']([singleSelector], opts.whitelist).length)) {
                 currentChunksMinifiedSelectors.push(singleSelectorStartedAt, i, allClassesAndIdsWithinHeadFinalUglified[allClassesAndIdsWithinHeadFinal.indexOf(singleSelector)]);
               }
               if (chr === ",") {
@@ -640,7 +652,7 @@ function comb(str, opts) {
                 })) {
                   fromIndex = tempFindingIndex + 2;
                 }
-                var resToPush = expander({
+                var resToPush = expander__default['default']({
                   str: str,
                   from: fromIndex,
                   to: toIndex,
@@ -734,7 +746,7 @@ function comb(str, opts) {
               valuesStart = i + 6;
               quoteless = true;
             } else if (str[i + 6] && (!str[i + 6].trim() || "/>".includes(str[i + 6]))) {
-              var calculatedRange = expander({
+              var calculatedRange = expander__default['default']({
                 str: str,
                 from: i,
                 to: i + 6,
@@ -796,7 +808,7 @@ function comb(str, opts) {
               _valuesStart = i + 3;
               _quoteless = true;
             } else if (str[i + 3] && (!str[i + 3].trim() || "/>".includes(str[i + 3]))) {
-              var _calculatedRange = expander({
+              var _calculatedRange = expander__default['default']({
                 str: str,
                 from: i,
                 to: i + 3,
@@ -853,7 +865,7 @@ function comb(str, opts) {
             doNothing = true;
             bodyClassOrIdCanBeDeleted = false;
             if (whitespaceStartedAt && i > whitespaceStartedAt + 1) {
-              var _calculatedRange2 = expander({
+              var _calculatedRange2 = expander__default['default']({
                 str: str,
                 from: whitespaceStartedAt,
                 to: i,
@@ -910,7 +922,7 @@ function comb(str, opts) {
             }
           }
           else if (bodyClass.valueStart != null && bodyClassesToDelete.includes(carvedClass)) {
-              var expandedRange = expander({
+              var expandedRange = expander__default['default']({
                 str: str,
                 from: bodyClass.valueStart,
                 to: i,
@@ -925,7 +937,7 @@ function comb(str, opts) {
               finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(expandedRange).concat([whatToInsert]));
             } else {
               bodyClassOrIdCanBeDeleted = false;
-              if (opts.uglify && !(Array.isArray(opts.whitelist) && opts.whitelist.length && matcher([".".concat(carvedClass)], opts.whitelist).length)) {
+              if (opts.uglify && !(Array.isArray(opts.whitelist) && opts.whitelist.length && matcher__default['default']([".".concat(carvedClass)], opts.whitelist).length)) {
                 finalIndexesToDelete.push(bodyClass.valueStart, i, allClassesAndIdsWithinHeadFinalUglified[allClassesAndIdsWithinHeadFinal.indexOf(".".concat(carvedClass))].slice(1));
               }
             }
@@ -943,7 +955,7 @@ function comb(str, opts) {
           }
         }
         else if (bodyId.valueStart != null && bodyIdsToDelete.includes(carvedId)) {
-            var _expandedRange = expander({
+            var _expandedRange = expander__default['default']({
               str: str,
               from: bodyId.valueStart,
               to: i,
@@ -956,7 +968,7 @@ function comb(str, opts) {
             finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_expandedRange));
           } else {
             bodyClassOrIdCanBeDeleted = false;
-            if (opts.uglify && !(Array.isArray(opts.whitelist) && opts.whitelist.length && matcher(["#".concat(carvedId)], opts.whitelist).length)) {
+            if (opts.uglify && !(Array.isArray(opts.whitelist) && opts.whitelist.length && matcher__default['default'](["#".concat(carvedId)], opts.whitelist).length)) {
               finalIndexesToDelete.push(bodyId.valueStart, i, allClassesAndIdsWithinHeadFinalUglified[allClassesAndIdsWithinHeadFinal.indexOf("#".concat(carvedId))].slice(1));
             }
           }
@@ -965,7 +977,7 @@ function comb(str, opts) {
       if (!doNothing && bodyClass.valuesStart != null && (!bodyClass.quoteless && (chr === "'" || chr === '"') || bodyClass.quoteless && !characterSuitableForNames(str[i])) && i >= bodyClass.valuesStart) {
         if (i === bodyClass.valuesStart) {
           if (round === 1) {
-            finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(expander({
+            finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(expander__default['default']({
               str: str,
               from: bodyClass.nameStart,
               to: i + 1,
@@ -975,7 +987,7 @@ function comb(str, opts) {
           }
         } else {
           if (round === 2 && bodyClassOrIdCanBeDeleted) {
-            var _expandedRange2 = expander({
+            var _expandedRange2 = expander__default['default']({
               str: str,
               from: bodyClass.valuesStart - 7,
               to: i + 1,
@@ -998,7 +1010,7 @@ function comb(str, opts) {
       if (!doNothing && bodyId.valuesStart !== null && (!bodyId.quoteless && (chr === "'" || chr === '"') || bodyId.quoteless && !characterSuitableForNames(str[i])) && i >= bodyId.valuesStart) {
         if (i === bodyId.valuesStart) {
           if (round === 1) {
-            finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(expander({
+            finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(expander__default['default']({
               str: str,
               from: bodyId.nameStart,
               to: i + 1,
@@ -1008,7 +1020,7 @@ function comb(str, opts) {
           }
         } else {
           if (round === 2 && bodyClassOrIdCanBeDeleted) {
-            var _expandedRange3 = expander({
+            var _expandedRange3 = expander__default['default']({
               str: str,
               from: bodyId.valuesStart - 4,
               to: i + 1,
@@ -1034,7 +1046,7 @@ function comb(str, opts) {
             doNothing = true;
             bodyClassOrIdCanBeDeleted = false;
             if (whitespaceStartedAt && i > whitespaceStartedAt + 1) {
-              var _calculatedRange3 = expander({
+              var _calculatedRange3 = expander__default['default']({
                 str: str,
                 from: whitespaceStartedAt,
                 to: i,
@@ -1080,7 +1092,7 @@ function comb(str, opts) {
         }
         if (commentStartedAt !== null && str[i] === ">") {
           if (!bogusHTMLComment && str[i - 1] === "-" && str[i - 2] === "-") {
-            var _calculatedRange4 = expander({
+            var _calculatedRange4 = expander__default['default']({
               str: str,
               from: commentStartedAt,
               to: i + 1,
@@ -1094,7 +1106,7 @@ function comb(str, opts) {
             commentStartedAt = null;
             bogusHTMLComment = undefined;
           } else if (bogusHTMLComment) {
-            var _calculatedRange5 = expander({
+            var _calculatedRange5 = expander__default['default']({
               str: str,
               from: commentStartedAt,
               to: i + 1,
@@ -1186,9 +1198,9 @@ function comb(str, opts) {
       }
     }
     if (round === 1) {
-      allClassesAndIdsWithinBody = uniq(bodyClassesArr.concat(bodyIdsArr));
+      allClassesAndIdsWithinBody = uniq__default['default'](bodyClassesArr.concat(bodyIdsArr));
       headSelectorsArr.forEach(function (el) {
-        extract(el).forEach(function (selector) {
+        extract__default['default'](el).forEach(function (selector) {
           if (Object.prototype.hasOwnProperty.call(headSelectorsCount, selector)) {
             headSelectorsCount[selector] += 1;
           } else {
@@ -1197,8 +1209,8 @@ function comb(str, opts) {
         });
       });
       headSelectorsCountClone = _objectSpread2({}, headSelectorsCount);
-      allClassesAndIdsWithinHead = uniq(headSelectorsArr.reduce(function (arr, el) {
-        return arr.concat(extract(el));
+      allClassesAndIdsWithinHead = uniq__default['default'](headSelectorsArr.reduce(function (arr, el) {
+        return arr.concat(extract__default['default'](el));
       }, []));
       countBeforeCleaning = allClassesAndIdsWithinHead.length;
       var preppedHeadSelectorsArr = Array.from(headSelectorsArr);
@@ -1207,30 +1219,30 @@ function comb(str, opts) {
         totalCounter += 1;
         var _temp3 = void 0;
         if (preppedHeadSelectorsArr[_y8] != null) {
-          _temp3 = extract(preppedHeadSelectorsArr[_y8]);
+          _temp3 = extract__default['default'](preppedHeadSelectorsArr[_y8]);
         }
         if (!_temp3.every(function (el) {
           return allClassesAndIdsWithinBody.includes(el);
         })) {
           var _deletedFromHeadArr;
-          (_deletedFromHeadArr = deletedFromHeadArr).push.apply(_deletedFromHeadArr, _toConsumableArray(extract(preppedHeadSelectorsArr[_y8])));
+          (_deletedFromHeadArr = deletedFromHeadArr).push.apply(_deletedFromHeadArr, _toConsumableArray(extract__default['default'](preppedHeadSelectorsArr[_y8])));
           preppedHeadSelectorsArr.splice(_y8, 1);
           _y8 -= 1;
           len2 -= 1;
         }
       }
-      deletedFromHeadArr = uniq(pullAllWithGlob(deletedFromHeadArr, opts.whitelist));
+      deletedFromHeadArr = uniq__default['default'](pullAllWithGlob__default['default'](deletedFromHeadArr, opts.whitelist));
       var preppedAllClassesAndIdsWithinHead;
       if (preppedHeadSelectorsArr.length > 0) {
         preppedAllClassesAndIdsWithinHead = preppedHeadSelectorsArr.reduce(function (arr, el) {
-          return arr.concat(extract(el));
+          return arr.concat(extract__default['default'](el));
         }, []);
       } else {
         preppedAllClassesAndIdsWithinHead = [];
       }
-      headCssToDelete = pullAllWithGlob(pullAll(uniq(Array.from(allClassesAndIdsWithinHead)), bodyClassesArr.concat(bodyIdsArr)), opts.whitelist);
-      bodyCssToDelete = uniq(pullAllWithGlob(pullAll(bodyClassesArr.concat(bodyIdsArr), preppedAllClassesAndIdsWithinHead), opts.whitelist));
-      headCssToDelete = uniq(headCssToDelete.concat(intersection(deletedFromHeadArr, bodyCssToDelete)));
+      headCssToDelete = pullAllWithGlob__default['default'](pullAll__default['default'](uniq__default['default'](Array.from(allClassesAndIdsWithinHead)), bodyClassesArr.concat(bodyIdsArr)), opts.whitelist);
+      bodyCssToDelete = uniq__default['default'](pullAllWithGlob__default['default'](pullAll__default['default'](bodyClassesArr.concat(bodyIdsArr), preppedAllClassesAndIdsWithinHead), opts.whitelist));
+      headCssToDelete = uniq__default['default'](headCssToDelete.concat(intersection__default['default'](deletedFromHeadArr, bodyCssToDelete)));
       bodyClassesToDelete = bodyCssToDelete.filter(function (s) {
         return s.startsWith(".");
       }).map(function (s) {
@@ -1244,19 +1256,19 @@ function comb(str, opts) {
       allClassesAndIdsThatWereCompletelyDeletedFromHead = Object.keys(headSelectorsCountClone).filter(function (singleSelector) {
         return headSelectorsCountClone[singleSelector] < 1;
       });
-      bodyClassesToDelete = uniq(bodyClassesToDelete.concat(intersection(pullAllWithGlob(allClassesAndIdsWithinBody, opts.whitelist), allClassesAndIdsThatWereCompletelyDeletedFromHead).filter(function (val) {
+      bodyClassesToDelete = uniq__default['default'](bodyClassesToDelete.concat(intersection__default['default'](pullAllWithGlob__default['default'](allClassesAndIdsWithinBody, opts.whitelist), allClassesAndIdsThatWereCompletelyDeletedFromHead).filter(function (val) {
         return val[0] === ".";
       })
       .map(function (val) {
         return val.slice(1);
       })));
-      var allClassesAndIdsWithinBodyThatWereWhitelisted = matcher(allClassesAndIdsWithinBody, opts.whitelist);
-      bodyCssToDelete = uniq(bodyCssToDelete.concat(bodyClassesToDelete.map(function (val) {
+      var allClassesAndIdsWithinBodyThatWereWhitelisted = matcher__default['default'](allClassesAndIdsWithinBody, opts.whitelist);
+      bodyCssToDelete = uniq__default['default'](bodyCssToDelete.concat(bodyClassesToDelete.map(function (val) {
         return ".".concat(val);
       }), bodyIdsToDelete.map(function (val) {
         return "#".concat(val);
       })));
-      allClassesAndIdsWithinHeadFinal = pullAll(pullAll(Array.from(allClassesAndIdsWithinHead), bodyCssToDelete), headCssToDelete);
+      allClassesAndIdsWithinHeadFinal = pullAll__default['default'](pullAll__default['default'](Array.from(allClassesAndIdsWithinHead), bodyCssToDelete), headCssToDelete);
       if (Array.isArray(allClassesAndIdsWithinBodyThatWereWhitelisted) && allClassesAndIdsWithinBodyThatWereWhitelisted.length) {
         allClassesAndIdsWithinBodyThatWereWhitelisted.forEach(function (classOrId) {
           if (!allClassesAndIdsWithinHeadFinal.includes(classOrId)) {
@@ -1272,7 +1284,7 @@ function comb(str, opts) {
         return [name, allClassesAndIdsWithinHeadFinalUglified[id]];
       }).filter(function (arr) {
         return !opts.whitelist.some(function (whitelistVal) {
-          return matcher.isMatch(arr[0], whitelistVal);
+          return matcher__default['default'].isMatch(arr[0], whitelistVal);
         });
       }) : null;
       if (finalIndexesToDelete.current()) {
@@ -1298,7 +1310,7 @@ function comb(str, opts) {
   }
   finalIndexesToDelete.push(lineBreaksToDelete.current());
   if (str.length && finalIndexesToDelete.current()) {
-    str = applyRanges(str, finalIndexesToDelete.current());
+    str = applyRanges__default['default'](str, finalIndexesToDelete.current());
     finalIndexesToDelete.wipe();
   }
   var startingPercentageDone = opts.reportProgressFuncTo - (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage;
@@ -1332,7 +1344,7 @@ function comb(str, opts) {
     }
   }
   var tempLen = str.length;
-  str = str.replace(emptyCondCommentRegex(), "");
+  str = str.replace(emptyCondCommentRegex__default['default'](), "");
   totalCounter += str.length;
   if (tempLen !== str.length) {
     commentsLength += str.length - tempLen;

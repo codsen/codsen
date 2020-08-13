@@ -11,9 +11,11 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var rangesIsIndexWithin = require('ranges-is-index-within');
 
-var rangesIsIndexWithin = _interopDefault(require('ranges-is-index-within'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var rangesIsIndexWithin__default = /*#__PURE__*/_interopDefaultLegacy(rangesIsIndexWithin);
 
 var nameStartChar = [[58, 58],
 [65, 90],
@@ -60,10 +62,10 @@ var opts = {
   skipIncomingRangeSorting: true
 };
 function isProduction4(char) {
-  return rangesIsIndexWithin(char.codePointAt(0), priorityNameChar, opts) || rangesIsIndexWithin(char.codePointAt(0), nameStartChar, opts);
+  return rangesIsIndexWithin__default['default'](char.codePointAt(0), priorityNameChar, opts) || rangesIsIndexWithin__default['default'](char.codePointAt(0), nameStartChar, opts);
 }
 function isProduction4a(char) {
-  return rangesIsIndexWithin(char.codePointAt(0), priorityNameChar, opts) || rangesIsIndexWithin(char.codePointAt(0), nameChar, opts);
+  return rangesIsIndexWithin__default['default'](char.codePointAt(0), priorityNameChar, opts) || rangesIsIndexWithin__default['default'](char.codePointAt(0), nameChar, opts);
 }
 
 exports.isProduction4 = isProduction4;

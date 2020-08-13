@@ -9,12 +9,17 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var intersection = require('lodash.intersection');
+var pull = require('lodash.pull');
+var isObject = require('lodash.isplainobject');
+var clone = require('lodash.clonedeep');
 
-var intersection = _interopDefault(require('lodash.intersection'));
-var pull = _interopDefault(require('lodash.pull'));
-var isObject = _interopDefault(require('lodash.isplainobject'));
-var clone = _interopDefault(require('lodash.clonedeep'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var intersection__default = /*#__PURE__*/_interopDefaultLegacy(intersection);
+var pull__default = /*#__PURE__*/_interopDefaultLegacy(pull);
+var isObject__default = /*#__PURE__*/_interopDefaultLegacy(isObject);
+var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 
 function objectBooleanCombinations(originalIncomingObject, originalOverrideObject) {
   function combinations(n) {
@@ -34,14 +39,14 @@ function objectBooleanCombinations(originalIncomingObject, originalOverrideObjec
   if (!existy(originalIncomingObject)) {
     throw new Error("[THROW_ID_01] missing input object");
   }
-  if (!isObject(originalIncomingObject)) {
+  if (!isObject__default['default'](originalIncomingObject)) {
     throw new Error("[THROW_ID_02] the first input object must be a true object");
   }
-  if (existy(originalOverrideObject) && !isObject(originalOverrideObject)) {
+  if (existy(originalOverrideObject) && !isObject__default['default'](originalOverrideObject)) {
     throw new Error("[THROW_ID_03] the second override object must be a true object");
   }
-  var incomingObject = clone(originalIncomingObject);
-  var overrideObject = clone(originalOverrideObject);
+  var incomingObject = clone__default['default'](originalIncomingObject);
+  var overrideObject = clone__default['default'](originalOverrideObject);
   var propertiesToMix = Object.keys(incomingObject);
   var outcomingObjectsArray = [];
   var propertiesToBeOverridden;
@@ -50,9 +55,9 @@ function objectBooleanCombinations(originalIncomingObject, originalOverrideObjec
     override = true;
   }
   if (override) {
-    propertiesToBeOverridden = intersection(Object.keys(overrideObject), Object.keys(incomingObject));
+    propertiesToBeOverridden = intersection__default['default'](Object.keys(overrideObject), Object.keys(incomingObject));
     propertiesToBeOverridden.forEach(function (elem) {
-      return pull(propertiesToMix, elem);
+      return pull__default['default'](propertiesToMix, elem);
     });
   }
   var boolCombinations = combinations(Object.keys(propertiesToMix).length);

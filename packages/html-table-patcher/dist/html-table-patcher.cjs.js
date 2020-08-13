@@ -11,13 +11,19 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var parser = require('codsen-parser');
+var Ranges = require('ranges-push');
+var apply = require('ranges-apply');
+var traverse = require('ast-monkey-traverse-with-lookahead');
+var htmlCommentRegex = require('html-comment-regex');
 
-var parser = _interopDefault(require('codsen-parser'));
-var Ranges = _interopDefault(require('ranges-push'));
-var apply = _interopDefault(require('ranges-apply'));
-var traverse = _interopDefault(require('ast-monkey-traverse-with-lookahead'));
-var htmlCommentRegex = _interopDefault(require('html-comment-regex'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var parser__default = /*#__PURE__*/_interopDefaultLegacy(parser);
+var Ranges__default = /*#__PURE__*/_interopDefaultLegacy(Ranges);
+var apply__default = /*#__PURE__*/_interopDefaultLegacy(apply);
+var traverse__default = /*#__PURE__*/_interopDefaultLegacy(traverse);
+var htmlCommentRegex__default = /*#__PURE__*/_interopDefaultLegacy(htmlCommentRegex);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -86,7 +92,7 @@ function _objectSpread2(target) {
 
 var version = "2.0.5";
 
-var ranges = new Ranges();
+var ranges = new Ranges__default['default']();
 function isStr(something) {
   return typeof something === "string";
 }
@@ -110,7 +116,7 @@ function patcher(str, generalOpts) {
     opts.cssStylesContent = "";
   }
   var knownCommentTokenPaths = [];
-  traverse(parser(str), function (key, val, innerObj) {
+  traverse__default['default'](parser__default['default'](str), function (key, val, innerObj) {
     /* istanbul ignore else */
     if (isObj(key) && key.type === "comment" && !knownCommentTokenPaths.some(function (oneOfRecordedPaths) {
       return innerObj.path.startsWith(oneOfRecordedPaths);
@@ -145,7 +151,7 @@ function patcher(str, generalOpts) {
                 colspanVal = count;
               }
             }
-          } else if (obj.type !== "text" || obj.value.replace(htmlCommentRegex, "").trim()) {
+          } else if (obj.type !== "text" || obj.value.replace(htmlCommentRegex__default['default'], "").trim()) {
             count = 0;
           }
         }
@@ -155,7 +161,7 @@ function patcher(str, generalOpts) {
         return ["text", "esp"].includes(childNodeObj.type);
       })
       .forEach(function (obj) {
-        if (obj.value.replace(htmlCommentRegex, "").trim()) {
+        if (obj.value.replace(htmlCommentRegex__default['default'], "").trim()) {
           ranges.push(obj.start, obj.end, "\n<tr>\n  <td".concat(colspanVal > 1 ? " colspan=\"".concat(colspanVal, "\"") : "").concat(opts.alwaysCenter || centered ? " align=\"center\"" : "").concat(opts.cssStylesContent ? " style=\"".concat(opts.cssStylesContent, "\"") : "", ">\n    ").concat(obj.value.trim(), "\n  </td>\n</tr>\n"));
         }
       });
@@ -189,7 +195,7 @@ function patcher(str, generalOpts) {
     }
   });
   if (ranges.current()) {
-    var result = apply(str, ranges.current());
+    var result = apply__default['default'](str, ranges.current());
     ranges.wipe();
     return {
       result: result

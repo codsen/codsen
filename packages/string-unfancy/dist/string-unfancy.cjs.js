@@ -9,9 +9,11 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var he = require('he');
 
-var he = _interopDefault(require('he'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var he__default = /*#__PURE__*/_interopDefaultLegacy(he);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -64,8 +66,8 @@ function unfancy(str) {
     throw new Error("string-unfancy/unfancy(): [THROW_ID_02] The input is not a string! It's: ".concat(_typeof(str)));
   }
   var res = str;
-  while (he.decode(res) !== res) {
-    res = he.decode(res);
+  while (he__default['default'].decode(res) !== res) {
+    res = he__default['default'].decode(res);
   }
   for (var i = 0, len = res.length; i < len; i++) {
     if (Object.prototype.hasOwnProperty.call(CHARS, res[i])) {

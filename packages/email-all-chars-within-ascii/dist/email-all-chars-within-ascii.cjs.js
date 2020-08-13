@@ -9,9 +9,11 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var isObj = require('lodash.isplainobject');
 
-var isObj = _interopDefault(require('lodash.isplainobject'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -85,7 +87,7 @@ function within(str, originalOpts) {
   if (typeof str !== "string") {
     throw new Error("email-all-chars-within-ascii/within(): [THROW_ID_01] The input is not string but ".concat(_typeof(str), ", equal to: ").concat(JSON.stringify(str, null, 4)));
   }
-  if (existy(originalOpts) && !isObj(originalOpts)) {
+  if (existy(originalOpts) && !isObj__default['default'](originalOpts)) {
     throw new Error("email-all-chars-within-ascii/within(): [THROW_ID_02] The opts is not a plain object but ".concat(_typeof(originalOpts), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
   }
   var defaults = {

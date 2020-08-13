@@ -9,11 +9,15 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var isStream = require('isstream');
+var split2 = require('split2');
+var through2 = require('through2');
 
-var isStream = _interopDefault(require('isstream'));
-var split2 = _interopDefault(require('split2'));
-var through2 = _interopDefault(require('through2'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var isStream__default = /*#__PURE__*/_interopDefaultLegacy(isStream);
+var split2__default = /*#__PURE__*/_interopDefaultLegacy(split2);
+var through2__default = /*#__PURE__*/_interopDefaultLegacy(through2);
 
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -194,10 +198,10 @@ var Counter = function () {
 }();
 
 function externalApi(something) {
-  if (isStream(something)) {
+  if (isStream__default['default'](something)) {
     return new Promise(function (resolve, reject) {
       var counter = new Counter();
-      something.pipe(split2()).pipe(through2.obj(function (line, encoding, next) {
+      something.pipe(split2__default['default']()).pipe(through2__default['default'].obj(function (line, encoding, next) {
         counter.readLine(line);
         next();
       }));

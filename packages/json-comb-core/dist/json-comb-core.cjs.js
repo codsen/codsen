@@ -11,20 +11,33 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var flattenAllArrays = require('object-flatten-all-arrays');
+var fillMissingKeys = require('object-fill-missing-keys');
+var setAllValuesTo = require('object-set-all-values-to');
+var mergeAdvanced = require('object-merge-advanced');
+var compareVersions = require('compare-versions');
+var includes = require('lodash.includes');
+var nnk = require('object-no-new-keys');
+var clone = require('lodash.clonedeep');
+var sortKeys = require('sort-keys');
+var pReduce = require('p-reduce');
+var typ = require('type-detect');
+var pOne = require('p-one');
 
-var flattenAllArrays = _interopDefault(require('object-flatten-all-arrays'));
-var fillMissingKeys = _interopDefault(require('object-fill-missing-keys'));
-var setAllValuesTo = _interopDefault(require('object-set-all-values-to'));
-var mergeAdvanced = _interopDefault(require('object-merge-advanced'));
-var compareVersions = _interopDefault(require('compare-versions'));
-var includes = _interopDefault(require('lodash.includes'));
-var nnk = _interopDefault(require('object-no-new-keys'));
-var clone = _interopDefault(require('lodash.clonedeep'));
-var sortKeys = _interopDefault(require('sort-keys'));
-var pReduce = _interopDefault(require('p-reduce'));
-var typ = _interopDefault(require('type-detect'));
-var pOne = _interopDefault(require('p-one'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var flattenAllArrays__default = /*#__PURE__*/_interopDefaultLegacy(flattenAllArrays);
+var fillMissingKeys__default = /*#__PURE__*/_interopDefaultLegacy(fillMissingKeys);
+var setAllValuesTo__default = /*#__PURE__*/_interopDefaultLegacy(setAllValuesTo);
+var mergeAdvanced__default = /*#__PURE__*/_interopDefaultLegacy(mergeAdvanced);
+var compareVersions__default = /*#__PURE__*/_interopDefaultLegacy(compareVersions);
+var includes__default = /*#__PURE__*/_interopDefaultLegacy(includes);
+var nnk__default = /*#__PURE__*/_interopDefaultLegacy(nnk);
+var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
+var sortKeys__default = /*#__PURE__*/_interopDefaultLegacy(sortKeys);
+var pReduce__default = /*#__PURE__*/_interopDefaultLegacy(pReduce);
+var typ__default = /*#__PURE__*/_interopDefaultLegacy(typ);
+var pOne__default = /*#__PURE__*/_interopDefaultLegacy(pOne);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -170,7 +183,7 @@ function truthy(x) {
   return x !== false && existy(x);
 }
 function isObj(something) {
-  return typ(something) === "Object";
+  return typ__default['default'](something) === "Object";
 }
 function isStr(something) {
   return typeof something === "string";
@@ -214,13 +227,13 @@ function defaultCompare(x, y) {
 function compare(firstEl, secondEl) {
   var semverRegex = /^\d+\.\d+\.\d+$/g;
   if (firstEl.match(semverRegex) && secondEl.match(semverRegex)) {
-    return compareVersions(firstEl, secondEl);
+    return compareVersions__default['default'](firstEl, secondEl);
   }
   return defaultCompare(firstEl, secondEl);
 }
 function sortAllObjectsSync(input) {
   if (isObj(input) || isArr(input)) {
-    return sortKeys(input, {
+    return sortKeys__default['default'](input, {
       deep: true,
       compare: compare
     });
@@ -241,7 +254,7 @@ function getKeyset(arrOfPromises, originalOpts) {
   var culpritIndex;
   var culpritVal;
   return new Promise(function (resolve, reject) {
-    pOne(arrOfPromises, function (element, index) {
+    pOne__default['default'](arrOfPromises, function (element, index) {
       if (!isObj(element)) {
         culpritIndex = index;
         culpritVal = element;
@@ -252,11 +265,11 @@ function getKeyset(arrOfPromises, originalOpts) {
       if (res) {
         return reject(Error("json-comb-core/getKeyset(): [THROW_ID_13] Oops! ".concat(culpritIndex, "th element resolved not to a plain object but to a ").concat(_typeof(culpritVal), "\n").concat(JSON.stringify(culpritVal, null, 4))));
       }
-      return pReduce(arrOfPromises,
+      return pReduce__default['default'](arrOfPromises,
       function (previousValue, currentValue) {
-        return mergeAdvanced(flattenAllArrays(previousValue, {
+        return mergeAdvanced__default['default'](flattenAllArrays__default['default'](previousValue, {
           flattenArraysContainingStringsToBeEmpty: true
-        }), flattenAllArrays(currentValue, {
+        }), flattenAllArrays__default['default'](currentValue, {
           flattenArraysContainingStringsToBeEmpty: true
         }), {
           mergeArraysContainingStringsToBeEmpty: true
@@ -264,7 +277,7 @@ function getKeyset(arrOfPromises, originalOpts) {
       },
       {}
       ).then(function (res2) {
-        resolve(setAllValuesTo(res2, opts.placeholder));
+        resolve(setAllValuesTo__default['default'](res2, opts.placeholder));
       });
     });
   });
@@ -283,7 +296,7 @@ function getKeysetSync(arrOriginal, originalOpts) {
     throw new TypeError("json-comb-core/getKeysetSync(): [THROW_ID_24] Options object must be a plain object! Currently it's: ".concat(_typeof(originalOpts), ", equal to: ").concat(JSON.stringify(originalOpts, null, 4)));
   }
   var schemaObj = {};
-  var arr = clone(arrOriginal);
+  var arr = clone__default['default'](arrOriginal);
   var defaults = {
     placeholder: false
   };
@@ -295,11 +308,11 @@ function getKeysetSync(arrOriginal, originalOpts) {
     if (!isObj(obj)) {
       throw new TypeError("json-comb-core/getKeysetSync(): [THROW_ID_25] Non-object (".concat(_typeof(obj), ") detected within an array! It's the ").concat(i, "th element: ").concat(JSON.stringify(obj, null, 4)));
     }
-    schemaObj = mergeAdvanced(flattenAllArrays(schemaObj, fOpts), flattenAllArrays(obj, fOpts), {
+    schemaObj = mergeAdvanced__default['default'](flattenAllArrays__default['default'](schemaObj, fOpts), flattenAllArrays__default['default'](obj, fOpts), {
       mergeArraysContainingStringsToBeEmpty: true
     });
   });
-  schemaObj = sortAllObjectsSync(setAllValuesTo(schemaObj, opts.placeholder));
+  schemaObj = sortAllObjectsSync(setAllValuesTo__default['default'](schemaObj, opts.placeholder));
   return schemaObj;
 }
 function enforceKeyset(obj, schemaKeyset, originalOpts) {
@@ -331,7 +344,7 @@ function enforceKeyset(obj, schemaKeyset, originalOpts) {
       if (!isObj(schemaKeyset)) {
         return reject(Error("json-comb-core/enforceKeyset(): [THROW_ID_35] Schema, 2nd arg, must resolve to a plain object! Currently it's resolving to: ".concat(_typeof(schemaKeyset), ", equal to: ").concat(JSON.stringify(schemaKeyset, null, 4))));
       }
-      return resolve(sortAllObjectsSync(clone(fillMissingKeys(clone(objResolved), clone(schemaKeysetResolved), opts))));
+      return resolve(sortAllObjectsSync(clone__default['default'](fillMissingKeys__default['default'](clone__default['default'](objResolved), clone__default['default'](schemaKeysetResolved), opts))));
     });
   });
 }
@@ -359,7 +372,7 @@ function enforceKeysetSync(obj, schemaKeyset, originalOpts) {
   })) {
     throw new Error("json-comb-core/enforceKeyset(): [THROW_ID_45] Array opts.doNotFillThesePathsIfTheyContainPlaceholders contains non-string values:\n".concat(JSON.stringify(opts.doNotFillThesePathsIfTheyContainPlaceholders, null, 4)));
   }
-  return sortAllObjectsSync(fillMissingKeys(clone(obj), schemaKeyset, opts));
+  return sortAllObjectsSync(fillMissingKeys__default['default'](clone__default['default'](obj), schemaKeyset, opts));
 }
 function noNewKeysSync(obj, schemaKeyset) {
   if (arguments.length === 0) {
@@ -374,7 +387,7 @@ function noNewKeysSync(obj, schemaKeyset) {
   if (!isObj(schemaKeyset)) {
     throw new Error("json-comb-core/noNewKeysSync(): [THROW_ID_54] Schema input (2nd arg.) must be a plain object! Currently it's: ".concat(_typeof(schemaKeyset), ", equal to: ").concat(JSON.stringify(schemaKeyset, null, 4)));
   }
-  return nnk(obj, schemaKeyset);
+  return nnk__default['default'](obj, schemaKeyset);
 }
 function findUnusedSync(arrOriginal, originalOpts) {
   if (isArr(arrOriginal)) {
@@ -404,7 +417,7 @@ function findUnusedSync(arrOriginal, originalOpts) {
   if (opts.comments === "") {
     opts.comments = false;
   }
-  var arr = clone(arrOriginal);
+  var arr = clone__default['default'](arrOriginal);
   function removeLeadingDot(something) {
     return something.map(function (finding) {
       return finding.charAt(0) === "." ? finding.slice(1) : finding;
@@ -425,7 +438,7 @@ function findUnusedSync(arrOriginal, originalOpts) {
       if (arr1.length > 1) {
         var unusedKeys = Object.keys(keySet).filter(function (key) {
           return arr1.every(function (obj) {
-            return (obj[key] === opts1.placeholder || obj[key] === undefined) && (!opts1.comments || !includes(key, opts1.comments));
+            return (obj[key] === opts1.placeholder || obj[key] === undefined) && (!opts1.comments || !includes__default['default'](key, opts1.comments));
           });
         });
         res = res.concat(unusedKeys.map(function (el) {
@@ -436,13 +449,13 @@ function findUnusedSync(arrOriginal, originalOpts) {
         return isObj(keySet[key]) || isArr(keySet[key]);
       })));
       var keysContents = keys.map(function (key) {
-        return typ(keySet[key]);
+        return typ__default['default'](keySet[key]);
       });
       var extras = keys.map(function (el) {
         var _ref4;
         return (_ref4 = []).concat.apply(_ref4, _toConsumableArray(arr1.reduce(function (res1, obj) {
           if (existy(obj[el]) && obj[el] !== opts1.placeholder) {
-            if (!opts1.comments || !includes(obj[el], opts1.comments)) {
+            if (!opts1.comments || !includes__default['default'](obj[el], opts1.comments)) {
               res1.push(obj[el]);
             }
           }

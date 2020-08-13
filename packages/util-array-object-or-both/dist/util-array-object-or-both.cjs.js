@@ -9,10 +9,13 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var includes = require('lodash.includes');
+var isObj = require('lodash.isplainobject');
 
-var includes = _interopDefault(require('lodash.includes'));
-var isObj = _interopDefault(require('lodash.isplainobject'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var includes__default = /*#__PURE__*/_interopDefaultLegacy(includes);
+var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -89,7 +92,7 @@ function arrObjOrBoth(str, originalOpts) {
   if (typeof str !== "string") {
     throw new Error("util-array-object-or-both/validate(): [THROW_ID_02] Input must be string! Currently it's ".concat(_typeof(str), ", equal to: ").concat(JSON.stringify(str, null, 4)));
   }
-  if (existy(originalOpts) && !isObj(originalOpts)) {
+  if (existy(originalOpts) && !isObj__default['default'](originalOpts)) {
     throw new Error("util-array-object-or-both/validate(): [THROW_ID_03] Second argument, options object, must be, well, object! Currenlty it's: ".concat(_typeof(originalOpts), ", equal to: ").concat(JSON.stringify(originalOpts, null, 4)));
   }
   var onlyObjectValues = ["object", "objects", "obj", "ob", "o"];
@@ -106,13 +109,13 @@ function arrObjOrBoth(str, originalOpts) {
   if (opts.optsVarName !== "given variable") {
     opts.optsVarName = "variable \"".concat(opts.optsVarName, "\"");
   }
-  if (includes(onlyObjectValues, str.toLowerCase().trim())) {
+  if (includes__default['default'](onlyObjectValues, str.toLowerCase().trim())) {
     return "object";
   }
-  if (includes(onlyArrayValues, str.toLowerCase().trim())) {
+  if (includes__default['default'](onlyArrayValues, str.toLowerCase().trim())) {
     return "array";
   }
-  if (includes(onlyAnyValues, str.toLowerCase().trim())) {
+  if (includes__default['default'](onlyAnyValues, str.toLowerCase().trim())) {
     return "any";
   }
   throw new TypeError("".concat(opts.msg, "The ").concat(opts.optsVarName, " was customised to an unrecognised value: ").concat(str, ". Please check it against the API documentation."));

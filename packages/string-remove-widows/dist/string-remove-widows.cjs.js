@@ -11,14 +11,19 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
 var stringMatchLeftRight = require('string-match-left-right');
-var arrayiffyIfStr = _interopDefault(require('arrayiffy-if-string'));
+var arrayiffyIfStr = require('arrayiffy-if-string');
 var stringLeftRight = require('string-left-right');
-var isObj = _interopDefault(require('lodash.isplainobject'));
-var Ranges = _interopDefault(require('ranges-push'));
-var apply = _interopDefault(require('ranges-apply'));
+var isObj = require('lodash.isplainobject');
+var Ranges = require('ranges-push');
+var apply = require('ranges-apply');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var arrayiffyIfStr__default = /*#__PURE__*/_interopDefaultLegacy(arrayiffyIfStr);
+var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
+var Ranges__default = /*#__PURE__*/_interopDefaultLegacy(Ranges);
+var apply__default = /*#__PURE__*/_interopDefaultLegacy(apply);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -151,12 +156,12 @@ function removeWidows(str, originalOpts) {
       throw new Error("string-remove-widows: [THROW_ID_02] the first input argument must be string! It was given as \"".concat(_typeof(str), "\", equal to:\n").concat(JSON.stringify(str, null, 4)));
     }
   }
-  if (originalOpts && !isObj(originalOpts)) {
+  if (originalOpts && !isObj__default['default'](originalOpts)) {
     throw new Error("string-remove-widows: [THROW_ID_03] the second input argument, options object, should be a plain object but it was given as type ".concat(_typeof(originalOpts), ", equal to ").concat(JSON.stringify(originalOpts, null, 4)));
   }
   var isArr = Array.isArray;
   var len = str.length;
-  var rangesArr = new Ranges({
+  var rangesArr = new Ranges__default['default']({
     mergeType: 2
   });
   var punctuationCharsToConsiderWidowIssue = ["."];
@@ -187,7 +192,7 @@ function removeWidows(str, originalOpts) {
   if (!opts.ignore || !isArr(opts.ignore) && !isStr(opts.ignore)) {
     opts.ignore = [];
   } else {
-    opts.ignore = arrayiffyIfStr(opts.ignore);
+    opts.ignore = arrayiffyIfStr__default['default'](opts.ignore);
     if (opts.ignore.includes("all")) {
       opts.ignore = opts.ignore.concat(headsAndTailsJinja.concat(headsAndTailsHexo));
     } else if (opts.ignore.some(function (val) {
@@ -432,7 +437,7 @@ function removeWidows(str, originalOpts) {
     _loop(i);
   }
   return {
-    res: apply(str, rangesArr.current(), opts.reportProgressFunc ? function (incomingPerc) {
+    res: apply__default['default'](str, rangesArr.current(), opts.reportProgressFunc ? function (incomingPerc) {
       currentPercentageDone = Math.floor((opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * (1 - leavePercForLastStage) + incomingPerc / 100 * (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage);
       if (currentPercentageDone !== lastPercentage) {
         lastPercentage = currentPercentageDone;

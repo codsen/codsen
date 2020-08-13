@@ -9,15 +9,23 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var clone = require('lodash.clonedeep');
+var includes = require('array-includes-with-glob');
+var lodashIncludes = require('lodash.includes');
+var uniq = require('lodash.uniq');
+var arrayiffyString = require('arrayiffy-if-string');
+var nonEmpty = require('util-nonempty');
+var includesAll = require('array-includes-all');
 
-var clone = _interopDefault(require('lodash.clonedeep'));
-var includes = _interopDefault(require('array-includes-with-glob'));
-var lodashIncludes = _interopDefault(require('lodash.includes'));
-var uniq = _interopDefault(require('lodash.uniq'));
-var arrayiffyString = _interopDefault(require('arrayiffy-if-string'));
-var nonEmpty = _interopDefault(require('util-nonempty'));
-var includesAll = _interopDefault(require('array-includes-all'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
+var includes__default = /*#__PURE__*/_interopDefaultLegacy(includes);
+var lodashIncludes__default = /*#__PURE__*/_interopDefaultLegacy(lodashIncludes);
+var uniq__default = /*#__PURE__*/_interopDefaultLegacy(uniq);
+var arrayiffyString__default = /*#__PURE__*/_interopDefaultLegacy(arrayiffyString);
+var nonEmpty__default = /*#__PURE__*/_interopDefaultLegacy(nonEmpty);
+var includesAll__default = /*#__PURE__*/_interopDefaultLegacy(includesAll);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -106,7 +114,7 @@ function arrayContainsStr(arr) {
   });
 }
 function equalOrSubsetKeys(obj1, obj2) {
-  return Object.keys(obj1).length === 0 || Object.keys(obj2).length === 0 || includesAll(Object.keys(obj1), Object.keys(obj2)) || includesAll(Object.keys(obj2), Object.keys(obj1));
+  return Object.keys(obj1).length === 0 || Object.keys(obj2).length === 0 || includesAll__default['default'](Object.keys(obj1), Object.keys(obj2)) || includesAll__default['default'](Object.keys(obj2), Object.keys(obj1));
 }
 function getType(something) {
   if (isObj(something)) {
@@ -138,9 +146,9 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
     mergeBoolsUsingOrNotAnd: true,
     useNullAsExplicitFalse: false
   };
-  var opts = Object.assign(clone(defaults), originalOpts);
-  opts.ignoreKeys = arrayiffyString(opts.ignoreKeys);
-  opts.hardMergeKeys = arrayiffyString(opts.hardMergeKeys);
+  var opts = Object.assign(clone__default['default'](defaults), originalOpts);
+  opts.ignoreKeys = arrayiffyString__default['default'](opts.ignoreKeys);
+  opts.hardMergeKeys = arrayiffyString__default['default'](opts.hardMergeKeys);
   if (opts.hardMergeKeys.includes("*")) {
     opts.hardMergeEverything = true;
   }
@@ -155,8 +163,8 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
       type: infoObj.type
     }) : null;
   }
-  var i1 = isArr(input1orig) || isObj(input1orig) ? clone(input1orig) : input1orig;
-  var i2 = isArr(input2orig) || isObj(input2orig) ? clone(input2orig) : input2orig;
+  var i1 = isArr(input1orig) || isObj(input1orig) ? clone__default['default'](input1orig) : input1orig;
+  var i2 = isArr(input2orig) || isObj(input2orig) ? clone__default['default'](input2orig) : input2orig;
   var uniRes;
   if (opts.ignoreEverything) {
     uniRes = i1;
@@ -165,8 +173,8 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
   }
   var uni = opts.hardMergeEverything || opts.ignoreEverything;
   if (isArr(i1)) {
-    if (nonEmpty(i1)) {
-      if (isArr(i2) && nonEmpty(i2)) {
+    if (nonEmpty__default['default'](i1)) {
+      if (isArr(i2) && nonEmpty__default['default'](i2)) {
         if (opts.mergeArraysContainingStringsToBeEmpty && (arrayContainsStr(i1) || arrayContainsStr(i2))) {
           var _currentResult = uni ? uniRes : [];
           return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult, {
@@ -214,7 +222,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
             if (index < i1.length) {
               temp.push(i1[index]);
             }
-            if (index < i2.length && !lodashIncludes(i1, i2[index])) {
+            if (index < i2.length && !lodashIncludes__default['default'](i1, i2[index])) {
               temp.push(i2[index]);
             }
           }
@@ -222,9 +230,9 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
         if (opts.dedupeStringsInArrayValues && temp.every(function (el) {
           return isStr(el);
         })) {
-          temp = uniq(temp).sort();
+          temp = uniq__default['default'](temp).sort();
         }
-        i1 = clone(temp);
+        i1 = clone__default['default'](temp);
       } else {
         var _currentResult3 = uni ? uniRes : i1;
         return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult3, {
@@ -234,7 +242,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
         }) : _currentResult3;
       }
     } else {
-      if (nonEmpty(i2)) {
+      if (nonEmpty__default['default'](i2)) {
         var _currentResult5 = uni ? uniRes : i2;
         return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult5, {
           path: currPath,
@@ -250,9 +258,9 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
       }) : _currentResult4;
     }
   } else if (isObj(i1)) {
-    if (nonEmpty(i1)) {
+    if (nonEmpty__default['default'](i1)) {
       if (isArr(i2)) {
-        if (nonEmpty(i2)) {
+        if (nonEmpty__default['default'](i2)) {
           var _currentResult9 = uni ? uniRes : i2;
           return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult9, {
             path: currPath,
@@ -271,7 +279,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
         Object.keys(i2).forEach(function (key) {
           currPath = infoObj.path && infoObj.path.length ? "".concat(infoObj.path, ".").concat(key) : "".concat(key);
           if (i1.hasOwnProperty(key)) {
-            if (includes(key, opts.ignoreKeys)) {
+            if (includes__default['default'](key, opts.ignoreKeys)) {
               i1[key] = mergeAdvanced({
                 path: currPath,
                 key: key,
@@ -279,7 +287,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
               }, i1[key], i2[key], _objectSpread2(_objectSpread2({}, opts), {}, {
                 ignoreEverything: true
               }));
-            } else if (includes(key, opts.hardMergeKeys)) {
+            } else if (includes__default['default'](key, opts.hardMergeKeys)) {
               i1[key] = mergeAdvanced({
                 path: currPath,
                 key: key,
@@ -287,7 +295,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
               }, i1[key], i2[key], _objectSpread2(_objectSpread2({}, opts), {}, {
                 hardMergeEverything: true
               }));
-            } else if (includes(key, opts.hardArrayConcatKeys)) {
+            } else if (includes__default['default'](key, opts.hardArrayConcatKeys)) {
               i1[key] = mergeAdvanced({
                 path: currPath,
                 key: key,
@@ -315,7 +323,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
         type: infoObj.type
       }) : _currentResult7;
     }
-    if (isArr(i2) || isObj(i2) || nonEmpty(i2)) {
+    if (isArr(i2) || isObj(i2) || nonEmpty__default['default'](i2)) {
       var _currentResult10 = uni ? uniRes : i2;
       return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult10, {
         path: infoObj.path,
@@ -330,8 +338,8 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
       type: infoObj.type
     }) : _currentResult6;
   } else if (isStr(i1)) {
-    if (nonEmpty(i1)) {
-      if ((isArr(i2) || isObj(i2) || isStr(i2)) && nonEmpty(i2)) {
+    if (nonEmpty__default['default'](i1)) {
+      if ((isArr(i2) || isObj(i2) || isStr(i2)) && nonEmpty__default['default'](i2)) {
         var _currentResult13 = uni ? uniRes : i2;
         return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult13, {
           path: infoObj.path,
@@ -361,7 +369,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
       type: infoObj.type
     }) : _currentResult11;
   } else if (isNum(i1)) {
-    if (nonEmpty(i2)) {
+    if (nonEmpty__default['default'](i2)) {
       var _currentResult16 = uni ? uniRes : i2;
       return isFun(opts.cb) ? opts.cb(i1, i2, _currentResult16, {
         path: infoObj.path,

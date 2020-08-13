@@ -1,3 +1,3 @@
 {"total": {"lines":{"total":80,"covered":62,"skipped":0,"pct":77.5},"statements":{"total":81,"covered":63,"skipped":0,"pct":77.78},"functions":{"total":20,"covered":17,"skipped":0,"pct":85},"branches":{"total":68,"covered":45,"skipped":0,"pct":66.18}}
-,"/builds/codsen/codsen/packages/lerna-clean-changelogs-cli/cli.js": {"lines":{"total":80,"covered":62,"skipped":0,"pct":77.5},"functions":{"total":20,"covered":17,"skipped":0,"pct":85},"statements":{"total":81,"covered":63,"skipped":0,"pct":77.78},"branches":{"total":68,"covered":45,"skipped":0,"pct":66.18}}
+,"/Users/royston/Documents/__PROJECTS/____libs2/packages/lerna-clean-changelogs-cli/cli.js": {"lines":{"total":80,"covered":62,"skipped":0,"pct":77.5},"functions":{"total":20,"covered":17,"skipped":0,"pct":85},"statements":{"total":81,"covered":63,"skipped":0,"pct":77.78},"branches":{"total":68,"covered":45,"skipped":0,"pct":66.18}}
 }

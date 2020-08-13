@@ -9,10 +9,12 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var op = _interopDefault(require('object-path'));
+var op = require('object-path');
 var stringLeftRight = require('string-left-right');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var op__default = /*#__PURE__*/_interopDefaultLegacy(op);
 
 function _defineProperty(obj, key, value) {
   if (key in obj) {
@@ -121,13 +123,13 @@ var create = function create(context) {
   var counter = 0;
   return {
     ExpressionStatement: function ExpressionStatement(node) {
-      if (op.get(node, "expression.type") === "CallExpression" && ["test", "only", "skip", "todo"].includes(op.get(node, "expression.callee.property.name")) && ["TemplateLiteral", "Literal"].includes(op.get(node, "expression.arguments.0.type"))) {
+      if (op__default['default'].get(node, "expression.type") === "CallExpression" && ["test", "only", "skip", "todo"].includes(op__default['default'].get(node, "expression.callee.property.name")) && ["TemplateLiteral", "Literal"].includes(op__default['default'].get(node, "expression.arguments.0.type"))) {
         counter += 1;
         var testOrderNumber = "".concat(counter).padStart(2, "0");
         var finalDigitChunk;
-        if (!finalDigitChunk && op.get(node, "expression.arguments.0.type") === "TemplateLiteral" && op.has(node, "expression.arguments.0.quasis.0.value.raw")) {
-          var _ref = prep(op.get(node, "expression.arguments.0.quasis.0.value.raw"), {
-            offset: op.get(node, "expression.arguments.0.quasis.0.start"),
+        if (!finalDigitChunk && op__default['default'].get(node, "expression.arguments.0.type") === "TemplateLiteral" && op__default['default'].has(node, "expression.arguments.0.quasis.0.value.raw")) {
+          var _ref = prep(op__default['default'].get(node, "expression.arguments.0.quasis.0.value.raw"), {
+            offset: op__default['default'].get(node, "expression.arguments.0.quasis.0.start"),
             returnRangesOnly: true
           }) || {},
               start = _ref.start,
@@ -138,7 +140,7 @@ var create = function create(context) {
               start: start,
               end: end,
               value: testOrderNumber,
-              node: op.get(node, "expression.arguments.0.quasis.0")
+              node: op__default['default'].get(node, "expression.arguments.0.quasis.0")
             };
           }
         }
@@ -159,32 +161,32 @@ var create = function create(context) {
             };
           }
         }
-        if (!finalDigitChunk && op.get(node, "expression.arguments.1.type") === "ArrowFunctionExpression" && op.get(node, "expression.arguments.1.body.type") === "BlockStatement" && op.get(node, "expression.arguments.1.body.body").length) {
+        if (!finalDigitChunk && op__default['default'].get(node, "expression.arguments.1.type") === "ArrowFunctionExpression" && op__default['default'].get(node, "expression.arguments.1.body.type") === "BlockStatement" && op__default['default'].get(node, "expression.arguments.1.body.body").length) {
           var subTestCount = "multiple";
           var filteredExpressionStatements = {};
-          if ((filteredExpressionStatements = op.get(node, "expression.arguments.1.body.body").filter(function (nodeObj) {
-            return nodeObj.type === "ExpressionStatement" && op.get(nodeObj, "expression.callee.object.name") === "t";
+          if ((filteredExpressionStatements = op__default['default'].get(node, "expression.arguments.1.body.body").filter(function (nodeObj) {
+            return nodeObj.type === "ExpressionStatement" && op__default['default'].get(nodeObj, "expression.callee.object.name") === "t";
           })).length === 2 &&
-          op.get(filteredExpressionStatements[filteredExpressionStatements.length - 1], "expression.callee.property.name") === "end") {
+          op__default['default'].get(filteredExpressionStatements[filteredExpressionStatements.length - 1], "expression.callee.property.name") === "end") {
             subTestCount = "single";
           }
-          var exprStatements = op.get(node, "expression.arguments.1.body.body");
+          var exprStatements = op__default['default'].get(node, "expression.arguments.1.body.body");
           /* istanbul ignore else */
           if (Array.isArray(exprStatements)) {
             var counter2 = 0;
             for (var i = 0, len = exprStatements.length; i < len; i++) {
-              var assertsName = op.get(exprStatements[i], "expression.callee.property.name");
+              var assertsName = op__default['default'].get(exprStatements[i], "expression.callee.property.name");
               if (!assertsName) {
                 continue;
               }
               var messageArgsPositionWeWillAimFor = void 0;
               if (
               messageIsThirdArg.has(assertsName) &&
-              op.has(exprStatements[i], "expression.arguments.2")) {
+              op__default['default'].has(exprStatements[i], "expression.arguments.2")) {
                 messageArgsPositionWeWillAimFor = 2;
               } else if (
               messageIsSecondArg.has(assertsName) &&
-              op.has(exprStatements[i], "expression.arguments.1")) {
+              op__default['default'].has(exprStatements[i], "expression.arguments.1")) {
                 messageArgsPositionWeWillAimFor = 1;
               }
               if (messageArgsPositionWeWillAimFor) {
@@ -193,15 +195,15 @@ var create = function create(context) {
                   var rawPathToMsgArgValue = void 0;
                   var pathToMsgArgStart = void 0;
                   /* istanbul ignore else */
-                  if (op.get(exprStatements[i], "expression.arguments.".concat(messageArgsPositionWeWillAimFor, ".type")) === "TemplateLiteral") {
+                  if (op__default['default'].get(exprStatements[i], "expression.arguments.".concat(messageArgsPositionWeWillAimFor, ".type")) === "TemplateLiteral") {
                     rawPathToMsgArgValue = "expression.arguments.".concat(messageArgsPositionWeWillAimFor, ".quasis.0");
-                    pathToMsgArgValue = op.get(exprStatements[i], "".concat(rawPathToMsgArgValue, ".value.raw"));
-                    pathToMsgArgStart = op.get(exprStatements[i], "".concat(rawPathToMsgArgValue, ".start"));
+                    pathToMsgArgValue = op__default['default'].get(exprStatements[i], "".concat(rawPathToMsgArgValue, ".value.raw"));
+                    pathToMsgArgStart = op__default['default'].get(exprStatements[i], "".concat(rawPathToMsgArgValue, ".start"));
                     counter2 += 1;
-                  } else if (op.get(exprStatements[i], "expression.arguments.".concat(messageArgsPositionWeWillAimFor, ".type")) === "Literal") {
+                  } else if (op__default['default'].get(exprStatements[i], "expression.arguments.".concat(messageArgsPositionWeWillAimFor, ".type")) === "Literal") {
                     rawPathToMsgArgValue = "expression.arguments.".concat(messageArgsPositionWeWillAimFor);
-                    pathToMsgArgValue = op.get(exprStatements[i], "".concat(rawPathToMsgArgValue, ".raw"));
-                    pathToMsgArgStart = op.get(exprStatements[i], "".concat(rawPathToMsgArgValue, ".start"));
+                    pathToMsgArgValue = op__default['default'].get(exprStatements[i], "".concat(rawPathToMsgArgValue, ".raw"));
+                    pathToMsgArgStart = op__default['default'].get(exprStatements[i], "".concat(rawPathToMsgArgValue, ".start"));
                     counter2 += 1;
                   }
                   var _ref3 = prep(pathToMsgArgValue, {
@@ -216,7 +218,7 @@ var create = function create(context) {
                   var newValue = getNewValue(subTestCount, testOrderNumber, counter2);
                   if (prep(pathToMsgArgValue).value !== newValue) {
                     context.report({
-                      node: op.get(exprStatements[i], rawPathToMsgArgValue),
+                      node: op__default['default'].get(exprStatements[i], rawPathToMsgArgValue),
                       messageId: "correctTestNum",
                       fix: function fix(fixerObj) {
                         return fixerObj.replaceTextRange([start, end], newValue);
@@ -229,14 +231,14 @@ var create = function create(context) {
                 var positionDecided = void 0;
                 if (
                 messageIsThirdArg.has(assertsName) &&
-                Array.isArray(op.get(exprStatements[i], "expression.arguments")) && op.get(exprStatements[i], "expression.arguments").length === 2) {
+                Array.isArray(op__default['default'].get(exprStatements[i], "expression.arguments")) && op__default['default'].get(exprStatements[i], "expression.arguments").length === 2) {
                   positionDecided = 2;
-                } else if (messageIsSecondArg.has(assertsName) && Array.isArray(op.get(exprStatements[i], "expression.arguments")) && op.get(exprStatements[i], "expression.arguments").length === 1) {
+                } else if (messageIsSecondArg.has(assertsName) && Array.isArray(op__default['default'].get(exprStatements[i], "expression.arguments")) && op__default['default'].get(exprStatements[i], "expression.arguments").length === 1) {
                   positionDecided = 1;
                 }
                 if (positionDecided) {
                   (function () {
-                    var positionToInsertAt = op.get(exprStatements[i], "expression.end") - 1;
+                    var positionToInsertAt = op__default['default'].get(exprStatements[i], "expression.end") - 1;
                     var newValue = getNewValue(subTestCount, testOrderNumber, counter2);
                     var wholeSourceStr = context.getSourceCode().getText();
                     var endIdx = positionToInsertAt;

@@ -9,9 +9,11 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var rangesMerge = require('ranges-merge');
 
-var rangesMerge = _interopDefault(require('ranges-merge'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var rangesMerge__default = /*#__PURE__*/_interopDefaultLegacy(rangesMerge);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -89,7 +91,7 @@ function rangesApply(str, originalRangesArr, _progressFn) {
     }
     counter += 1;
   });
-  var workingRanges = rangesMerge(rangesArr, {
+  var workingRanges = rangesMerge__default['default'](rangesArr, {
     progressFn: function progressFn(perc) {
       if (_progressFn) {
         percentageDone = 10 + Math.floor(perc / 10);

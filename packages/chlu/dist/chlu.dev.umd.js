@@ -90,10 +90,6 @@
   	}, fn(module, module.exports), module.exports;
   }
 
-  function getCjsExportFromNamespace (n) {
-  	return n && n['default'] || n;
-  }
-
   function commonjsRequire () {
   	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
   }
@@ -1540,8 +1536,6 @@
     return this.sshurl(opts);
   };
 
-  var require$$0 = getCjsExportFromNamespace(url$1);
-
   var hostedGitInfo = createCommonjsModule(function (module) {
 
     var GitHost = module.exports = gitHost;
@@ -1642,7 +1636,7 @@
 
     function fixupUnqualifiedGist(giturl) {
       // necessary for round-tripping gists
-      var parsed = require$$0.parse(giturl);
+      var parsed = url$1.parse(giturl);
 
       if (parsed.protocol === 'gist:' && parsed.host && !parsed.path) {
         return parsed.protocol + '/' + parsed.host;
@@ -1655,10 +1649,10 @@
       var matched = giturl.match(/^([^@]+)@([^:/]+):[/]?((?:[^/]+[/])?[^/]+?)(?:[.]git)?(#.*)?$/);
 
       if (!matched) {
-        var legacy = require$$0.parse(giturl); // If we don't have url.URL, then sorry, this is just not fixable.
+        var legacy = url$1.parse(giturl); // If we don't have url.URL, then sorry, this is just not fixable.
         // This affects Node <= 6.12.
 
-        if (legacy.auth && typeof require$$0.URL === 'function') {
+        if (legacy.auth && typeof url$1.URL === 'function') {
           // git urls can be in the form of scp-style/ssh-connect strings, like
           // git+ssh://user@host.com:some/path, which the legacy url parser
           // supports, but WhatWG url.URL class does not.  However, the legacy
@@ -1672,7 +1666,7 @@
           /* istanbul ignore else - this should be impossible */
 
           if (authmatch) {
-            var whatwg = new require$$0.URL(authmatch[0]);
+            var whatwg = new url$1.URL(authmatch[0]);
             legacy.auth = whatwg.username || '';
             if (whatwg.password) legacy.auth += ':' + whatwg.password;
           }
@@ -1698,7 +1692,7 @@
     }
   });
 
-  var parse$2 = require$$0.parse;
+  var parse$2 = url$1.parse;
   var URL_PATTERNS = new RegExp(/^\/?:?([/\w-.]+)\/([\w-.]+)\/?$/);
   var GITHUB_API = new RegExp(/^\/repos\/([\w-.]+)\/([\w-.]+)\/(?:tarball|zipball)(?:\/.+)?$/);
   var GITHUB_CODELOAD = new RegExp(/^\/([\w-.]+)\/([\w-.]+)\/(?:legacy\.(?:zip|tar\.gz))(?:\/.+)?$/);

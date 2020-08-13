@@ -9,14 +9,18 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var r = require('hex-color-regex');
+var isPlainObject = require('lodash.isplainobject');
+var clone = require('lodash.clonedeep');
 
-var r = _interopDefault(require('hex-color-regex'));
-var isPlainObject = _interopDefault(require('lodash.isplainobject'));
-var clone = _interopDefault(require('lodash.clonedeep'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var r__default = /*#__PURE__*/_interopDefaultLegacy(r);
+var isPlainObject__default = /*#__PURE__*/_interopDefaultLegacy(isPlainObject);
+var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 
 function conv(originalInput) {
-  var input = clone(originalInput);
+  var input = clone__default['default'](originalInput);
   function toFullHex(hex, findings, offset, string) {
     if (string[offset - 1] !== "&" &&
     hex.length === 4 && hex.charAt(0) === "#") {
@@ -25,12 +29,12 @@ function conv(originalInput) {
     return hex.toLowerCase();
   }
   if (typeof originalInput === "string") {
-    input = input.replace(r(), toFullHex);
+    input = input.replace(r__default['default'](), toFullHex);
   } else if (Array.isArray(input)) {
     for (var i = 0, len = input.length; i < len; i++) {
       input[i] = conv(input[i]);
     }
-  } else if (isPlainObject(originalInput)) {
+  } else if (isPlainObject__default['default'](originalInput)) {
     Object.keys(input).forEach(function (key) {
       input[key] = conv(input[key]);
     });

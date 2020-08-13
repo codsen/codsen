@@ -9,10 +9,13 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var checkTypes = require('check-types-mini');
+var mergeAdvanced = require('object-merge-advanced');
 
-var checkTypes = _interopDefault(require('check-types-mini'));
-var mergeAdvanced = _interopDefault(require('object-merge-advanced'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var checkTypes__default = /*#__PURE__*/_interopDefaultLegacy(checkTypes);
+var mergeAdvanced__default = /*#__PURE__*/_interopDefaultLegacy(mergeAdvanced);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -96,7 +99,7 @@ function generateAst(input, originalOpts) {
     dedupe: true
   };
   var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
-  checkTypes(opts, defaults, {
+  checkTypes__default['default'](opts, defaults, {
     msg: "array-of-arrays-into-ast: [THROW_ID_02*]",
     optsVarName: "opts"
   });
@@ -106,7 +109,7 @@ function generateAst(input, originalOpts) {
     for (var i = arr.length; i--;) {
       temp = _defineProperty({}, arr[i], [temp]);
     }
-    res = mergeAdvanced(res, temp, {
+    res = mergeAdvanced__default['default'](res, temp, {
       concatInsteadOfMerging: !opts.dedupe
     });
   });

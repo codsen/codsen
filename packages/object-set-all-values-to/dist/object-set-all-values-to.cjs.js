@@ -9,31 +9,34 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var clone = require('lodash.clonedeep');
+var isObj = require('lodash.isplainobject');
 
-var clone = _interopDefault(require('lodash.clonedeep'));
-var isObj = _interopDefault(require('lodash.isplainobject'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
+var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
 var isArr = Array.isArray;
 function setAllValuesTo(inputOriginal, valueOriginal) {
   var value;
-  var input = clone(inputOriginal);
+  var input = clone__default['default'](inputOriginal);
   if (arguments.length < 2) {
     value = false;
-  } else if (isObj(valueOriginal) || isArr(valueOriginal)) {
-    value = clone(valueOriginal);
+  } else if (isObj__default['default'](valueOriginal) || isArr(valueOriginal)) {
+    value = clone__default['default'](valueOriginal);
   } else {
     value = valueOriginal;
   }
   if (isArr(input)) {
     input.forEach(function (el, i) {
-      if (isObj(input[i]) || isArr(input[i])) {
+      if (isObj__default['default'](input[i]) || isArr(input[i])) {
         input[i] = setAllValuesTo(input[i], value);
       }
     });
-  } else if (isObj(input)) {
+  } else if (isObj__default['default'](input)) {
     Object.keys(input).forEach(function (key) {
-      if (isArr(input[key]) || isObj(input[key])) {
+      if (isArr(input[key]) || isObj__default['default'](input[key])) {
         input[key] = setAllValuesTo(input[key], value);
       } else {
         input[key] = value;

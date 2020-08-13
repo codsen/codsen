@@ -9,18 +9,28 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var traverse = _interopDefault(require('ast-monkey-traverse'));
-var matcher = _interopDefault(require('matcher'));
-var objectPath = _interopDefault(require('object-path'));
-var arrayiffyIfString = _interopDefault(require('arrayiffy-if-string'));
-var strFindHeadsTails = _interopDefault(require('string-find-heads-tails'));
-var get = _interopDefault(require('ast-get-values-by-key'));
-var Ranges = _interopDefault(require('ranges-push'));
-var rangesApply = _interopDefault(require('ranges-apply'));
-var removeDuplicateHeadsTails = _interopDefault(require('string-remove-duplicate-heads-tails'));
+var traverse = require('ast-monkey-traverse');
+var matcher = require('matcher');
+var objectPath = require('object-path');
+var arrayiffyIfString = require('arrayiffy-if-string');
+var strFindHeadsTails = require('string-find-heads-tails');
+var get = require('ast-get-values-by-key');
+var Ranges = require('ranges-push');
+var rangesApply = require('ranges-apply');
+var removeDuplicateHeadsTails = require('string-remove-duplicate-heads-tails');
 var stringMatchLeftRight = require('string-match-left-right');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var traverse__default = /*#__PURE__*/_interopDefaultLegacy(traverse);
+var matcher__default = /*#__PURE__*/_interopDefaultLegacy(matcher);
+var objectPath__default = /*#__PURE__*/_interopDefaultLegacy(objectPath);
+var arrayiffyIfString__default = /*#__PURE__*/_interopDefaultLegacy(arrayiffyIfString);
+var strFindHeadsTails__default = /*#__PURE__*/_interopDefaultLegacy(strFindHeadsTails);
+var get__default = /*#__PURE__*/_interopDefaultLegacy(get);
+var Ranges__default = /*#__PURE__*/_interopDefaultLegacy(Ranges);
+var rangesApply__default = /*#__PURE__*/_interopDefaultLegacy(rangesApply);
+var removeDuplicateHeadsTails__default = /*#__PURE__*/_interopDefaultLegacy(removeDuplicateHeadsTails);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -188,7 +198,7 @@ function wrap(placementValue, opts) {
     opts.wrapTailsWith = "";
   }
   if (isStr(placementValue) && !dontWrapTheseVars && opts.wrapGlobalFlipSwitch && !opts.dontWrapVars.some(function (val) {
-    return matcher.isMatch(oldVarName, val);
+    return matcher__default['default'].isMatch(oldVarName, val);
   }) && (
   !opts.preventDoubleWrapping || opts.preventDoubleWrapping && isStr(placementValue) && !placementValue.includes(opts.wrapHeadsWith) && !placementValue.includes(opts.wrapTailsWith))) {
     return opts.wrapHeadsWith + placementValue + opts.wrapTailsWith;
@@ -197,7 +207,7 @@ function wrap(placementValue, opts) {
     if (!isStr(placementValue)) {
       return placementValue;
     }
-    var tempValue = removeDuplicateHeadsTails(placementValue, {
+    var tempValue = removeDuplicateHeadsTails__default['default'](placementValue, {
       heads: opts.wrapHeadsWith,
       tails: opts.wrapTailsWith
     });
@@ -214,9 +224,9 @@ function findValues(input, varName, path, opts) {
     var currentPath = path;
     var handBrakeOff = true;
     if (opts.lookForDataContainers && typeof opts.dataContainerIdentifierTails === "string" && opts.dataContainerIdentifierTails.length > 0 && !currentPath.endsWith(opts.dataContainerIdentifierTails)) {
-      var gotPath = objectPath.get(input, currentPath + opts.dataContainerIdentifierTails);
-      if (isObj(gotPath) && objectPath.get(gotPath, varName)) {
-        resolveValue = objectPath.get(gotPath, varName);
+      var gotPath = objectPath__default['default'].get(input, currentPath + opts.dataContainerIdentifierTails);
+      if (isObj(gotPath) && objectPath__default['default'].get(gotPath, varName)) {
+        resolveValue = objectPath__default['default'].get(gotPath, varName);
         handBrakeOff = false;
       }
     }
@@ -226,30 +236,30 @@ function findValues(input, varName, path, opts) {
         throw new Error("json-variables/findValues(): [THROW_ID_20] While trying to resolve: \"".concat(varName, "\" at path \"").concat(path, "\", we encountered a closed loop. The parent key \"").concat(getLastKey(currentPath), "\" is called the same as the variable \"").concat(varName, "\" we're looking for."));
       }
       if (opts.lookForDataContainers && typeof opts.dataContainerIdentifierTails === "string" && opts.dataContainerIdentifierTails.length > 0 && !currentPath.endsWith(opts.dataContainerIdentifierTails)) {
-        var _gotPath = objectPath.get(input, currentPath + opts.dataContainerIdentifierTails);
-        if (isObj(_gotPath) && objectPath.get(_gotPath, varName)) {
-          resolveValue = objectPath.get(_gotPath, varName);
+        var _gotPath = objectPath__default['default'].get(input, currentPath + opts.dataContainerIdentifierTails);
+        if (isObj(_gotPath) && objectPath__default['default'].get(_gotPath, varName)) {
+          resolveValue = objectPath__default['default'].get(_gotPath, varName);
           handBrakeOff = false;
         }
       }
       if (resolveValue === undefined) {
-        var _gotPath2 = objectPath.get(input, currentPath);
-        if (isObj(_gotPath2) && objectPath.get(_gotPath2, varName)) {
-          resolveValue = objectPath.get(_gotPath2, varName);
+        var _gotPath2 = objectPath__default['default'].get(input, currentPath);
+        if (isObj(_gotPath2) && objectPath__default['default'].get(_gotPath2, varName)) {
+          resolveValue = objectPath__default['default'].get(_gotPath2, varName);
           handBrakeOff = false;
         }
       }
     }
   }
   if (resolveValue === undefined) {
-    var _gotPath3 = objectPath.get(input, varName);
+    var _gotPath3 = objectPath__default['default'].get(input, varName);
     if (_gotPath3 !== undefined) {
       resolveValue = _gotPath3;
     }
   }
   if (resolveValue === undefined) {
     if (varName.indexOf(".") === -1) {
-      var gotPathArr = get(input, varName);
+      var gotPathArr = get__default['default'](input, varName);
       if (gotPathArr.length > 0) {
         for (var y = 0, len2 = gotPathArr.length; y < len2; y++) {
           if (isStr(gotPathArr[y].val) || isBool(gotPathArr[y].val) || isNull(gotPathArr[y].val)) {
@@ -267,10 +277,10 @@ function findValues(input, varName, path, opts) {
         }
       }
     } else {
-      var _gotPath4 = get(input, getTopmostKey(varName));
+      var _gotPath4 = get__default['default'](input, getTopmostKey(varName));
       if (_gotPath4.length > 0) {
         for (var _y = 0, _len = _gotPath4.length; _y < _len; _y++) {
-          var temp = objectPath.get(_gotPath4[_y].val, withoutTopmostKey(varName));
+          var temp = objectPath__default['default'].get(_gotPath4[_y].val, withoutTopmostKey(varName));
           if (temp && isStr(temp)) {
             resolveValue = temp;
           }
@@ -296,7 +306,7 @@ function resolveString(input, string, path, opts) {
   var secretResolvedVarsStash = {};
   var breadCrumbPath = Array.from(incomingBreadCrumbPath);
   breadCrumbPath.push(path);
-  var finalRangesArr = new Ranges();
+  var finalRangesArr = new Ranges__default['default']();
   function processHeadsAndTails(arr, dontWrapTheseVars, wholeValueIsVariable) {
     for (var i = 0, len = arr.length; i < len; i++) {
       var obj = arr[i];
@@ -371,7 +381,7 @@ function resolveString(input, string, path, opts) {
   }
   var foundHeadsAndTails;
   try {
-    foundHeadsAndTails = strFindHeadsTails(string, opts.heads, opts.tails, {
+    foundHeadsAndTails = strFindHeadsTails__default['default'](string, opts.heads, opts.tails, {
       source: "",
       throwWhenSomethingWrongIsDetected: false
     });
@@ -379,7 +389,7 @@ function resolveString(input, string, path, opts) {
     throw new Error("json-variables/resolveString(): [THROW_ID_17] While trying to resolve string: \"".concat(string, "\" at path ").concat(path, ", something wrong with heads and tails was detected! Here's the internal error message:\n").concat(error));
   }
   var wholeValueIsVariable = false;
-  if (foundHeadsAndTails.length === 1 && rangesApply(string, [foundHeadsAndTails[0].headsStartAt, foundHeadsAndTails[0].tailsEndAt]).trim() === "") {
+  if (foundHeadsAndTails.length === 1 && rangesApply__default['default'](string, [foundHeadsAndTails[0].headsStartAt, foundHeadsAndTails[0].tailsEndAt]).trim() === "") {
     wholeValueIsVariable = true;
   }
   var temp1 = processHeadsAndTails(foundHeadsAndTails, false, wholeValueIsVariable);
@@ -390,14 +400,14 @@ function resolveString(input, string, path, opts) {
     return temp1;
   }
   try {
-    foundHeadsAndTails = strFindHeadsTails(string, opts.headsNoWrap, opts.tailsNoWrap, {
+    foundHeadsAndTails = strFindHeadsTails__default['default'](string, opts.headsNoWrap, opts.tailsNoWrap, {
       source: "",
       throwWhenSomethingWrongIsDetected: false
     });
   } catch (error) {
     throw new Error("json-variables/resolveString(): [THROW_ID_22] While trying to resolve string: \"".concat(string, "\" at path ").concat(path, ", something wrong with no-wrap heads and no-wrap tails was detected! Here's the internal error message:\n").concat(error));
   }
-  if (foundHeadsAndTails.length === 1 && rangesApply(string, [foundHeadsAndTails[0].headsStartAt, foundHeadsAndTails[0].tailsEndAt]).trim() === "") {
+  if (foundHeadsAndTails.length === 1 && rangesApply__default['default'](string, [foundHeadsAndTails[0].headsStartAt, foundHeadsAndTails[0].tailsEndAt]).trim() === "") {
     wholeValueIsVariable = true;
   }
   var temp2 = processHeadsAndTails(foundHeadsAndTails, true, wholeValueIsVariable);
@@ -408,7 +418,7 @@ function resolveString(input, string, path, opts) {
     return temp2;
   }
   if (finalRangesArr && finalRangesArr.current()) {
-    return rangesApply(string, finalRangesArr.current());
+    return rangesApply__default['default'](string, finalRangesArr.current());
   }
   return string;
 }
@@ -445,7 +455,7 @@ function jsonVariables(input) {
   if (!opts.dontWrapVars) {
     opts.dontWrapVars = [];
   } else if (!Array.isArray(opts.dontWrapVars)) {
-    opts.dontWrapVars = arrayiffyIfString(opts.dontWrapVars);
+    opts.dontWrapVars = arrayiffyIfString__default['default'](opts.dontWrapVars);
   }
   var culpritVal;
   var culpritIndex;
@@ -487,7 +497,7 @@ function jsonVariables(input) {
     throw new Error("json-variables/jsonVariables(): [THROW_ID_14] Alas! opts.headsNoWrap and opts.tailsNoWrap can't be equal!");
   }
   var current;
-  return traverse(input, function (key, val, innerObj) {
+  return traverse__default['default'](input, function (key, val, innerObj) {
     if (existy(val) && containsHeadsOrTails(key, opts)) {
       throw new Error("json-variables/jsonVariables(): [THROW_ID_15] Alas! Object keys can't contain variables!\nPlease check the following key: ".concat(key));
     }

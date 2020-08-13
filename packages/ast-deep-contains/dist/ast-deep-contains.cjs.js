@@ -9,10 +9,13 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var objectPath = require('object-path');
+var traverse = require('ast-monkey-traverse');
 
-var objectPath = _interopDefault(require('object-path'));
-var traverse = _interopDefault(require('ast-monkey-traverse'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var objectPath__default = /*#__PURE__*/_interopDefaultLegacy(objectPath);
+var traverse__default = /*#__PURE__*/_interopDefaultLegacy(traverse);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -111,14 +114,14 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
   if (typeDetect(tree1) !== typeDetect(tree2)) {
     errCb("the first input arg is of a type ".concat(typeDetect(tree1).toLowerCase(), " but the second is ").concat(typeDetect(tree2).toLowerCase(), ". Values are - 1st:\n").concat(JSON.stringify(tree1, null, 4), "\n2nd:\n").concat(JSON.stringify(tree2, null, 4)));
   } else {
-    traverse(tree2, function (key, val, innerObj, stop) {
+    traverse__default['default'](tree2, function (key, val, innerObj, stop) {
       var current = val !== undefined ? val : key;
       var path = innerObj.path;
-      if (objectPath.has(tree1, path)) {
+      if (objectPath__default['default'].has(tree1, path)) {
         if (!opts.arrayStrictComparison && isObj(current) && innerObj.parentType === "array" && innerObj.parent.length > 1) {
           (function () {
             stop.now = true;
-            var arr1 = Array.from(innerObj.path.includes(".") ? objectPath.get(tree1, goUp(path)) : tree1);
+            var arr1 = Array.from(innerObj.path.includes(".") ? objectPath__default['default'].get(tree1, goUp(path)) : tree1);
             if (arr1.length < innerObj.parent.length) {
               errCb("the first array: ".concat(JSON.stringify(arr1, null, 4), "\nhas less objects than array we're matching against, ").concat(JSON.stringify(innerObj.parent, null, 4)));
             } else {
@@ -186,7 +189,7 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
             }
           })();
         } else {
-          var retrieved = objectPath.get(tree1, path);
+          var retrieved = objectPath__default['default'].get(tree1, path);
           if (!opts.skipContainers || !isObj(retrieved) && !isArr(retrieved)) {
             cb(retrieved, current, path);
           }

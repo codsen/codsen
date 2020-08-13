@@ -9,15 +9,22 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var rangesApply = _interopDefault(require('ranges-apply'));
-var Ranges = _interopDefault(require('ranges-push'));
-var isObj = _interopDefault(require('lodash.isplainobject'));
-var trim = _interopDefault(require('lodash.trim'));
-var without = _interopDefault(require('lodash.without'));
-var ent = _interopDefault(require('ent'));
+var rangesApply = require('ranges-apply');
+var Ranges = require('ranges-push');
+var isObj = require('lodash.isplainobject');
+var trim = require('lodash.trim');
+var without = require('lodash.without');
+var ent = require('ent');
 var stringLeftRight = require('string-left-right');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var rangesApply__default = /*#__PURE__*/_interopDefaultLegacy(rangesApply);
+var Ranges__default = /*#__PURE__*/_interopDefaultLegacy(Ranges);
+var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
+var trim__default = /*#__PURE__*/_interopDefaultLegacy(trim);
+var without__default = /*#__PURE__*/_interopDefaultLegacy(without);
+var ent__default = /*#__PURE__*/_interopDefaultLegacy(ent);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -242,7 +249,7 @@ function stripHtml(str, originalOpts) {
   } else if (!str || !str.trim()) {
     return str;
   }
-  if (originalOpts !== undefined && originalOpts !== null && !isObj(originalOpts)) {
+  if (originalOpts !== undefined && originalOpts !== null && !isObj__default['default'](originalOpts)) {
     throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_02] Optional Options Object must be a plain object! Currently it's: ".concat(_typeof(originalOpts).toLowerCase(), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
   }
   function resetHrefMarkers() {
@@ -271,15 +278,15 @@ function stripHtml(str, originalOpts) {
   opts.onlyStripTags = prepHopefullyAnArray(opts.onlyStripTags, "opts.onlyStripTags");
   var onlyStripTagsMode = !!opts.onlyStripTags.length;
   if (opts.onlyStripTags.length && opts.ignoreTags.length) {
-    opts.onlyStripTags = without.apply(void 0, [opts.onlyStripTags].concat(_toConsumableArray(opts.ignoreTags)));
+    opts.onlyStripTags = without__default['default'].apply(void 0, [opts.onlyStripTags].concat(_toConsumableArray(opts.ignoreTags)));
   }
-  if (!isObj(opts.dumpLinkHrefsNearby)) {
+  if (!isObj__default['default'](opts.dumpLinkHrefsNearby)) {
     opts.dumpLinkHrefsNearby = _objectSpread2({}, defaults.dumpLinkHrefsNearby);
   }
   opts.dumpLinkHrefsNearby = defaults.dumpLinkHrefsNearby;
-  if (isObj(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "dumpLinkHrefsNearby") && existy(originalOpts.dumpLinkHrefsNearby)) {
+  if (isObj__default['default'](originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "dumpLinkHrefsNearby") && existy(originalOpts.dumpLinkHrefsNearby)) {
     /* istanbul ignore else */
-    if (isObj(originalOpts.dumpLinkHrefsNearby)) {
+    if (isObj__default['default'](originalOpts.dumpLinkHrefsNearby)) {
       opts.dumpLinkHrefsNearby = _objectSpread2(_objectSpread2({}, defaults.dumpLinkHrefsNearby), originalOpts.dumpLinkHrefsNearby);
     } else if (originalOpts.dumpLinkHrefsNearby) {
       throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_04] Optional Options Object's key dumpLinkHrefsNearby was set to ".concat(_typeof(originalOpts.dumpLinkHrefsNearby), ", equal to ").concat(JSON.stringify(originalOpts.dumpLinkHrefsNearby, null, 4), ". The only allowed value is a plain object. See the API reference."));
@@ -308,13 +315,13 @@ function stripHtml(str, originalOpts) {
       rangesArr.push.apply(rangesArr, _toConsumableArray(proposedReturn));
     };
   }
-  var rangesToDelete = new Ranges({
+  var rangesToDelete = new Ranges__default['default']({
     limitToBeAddedWhitespace: true,
     limitLinebreaksCount: 2
   });
   if (!opts.skipHtmlDecoding) {
-    while (str !== ent.decode(str)) {
-      str = ent.decode(str);
+    while (str !== ent__default['default'].decode(str)) {
+      str = ent__default['default'].decode(str);
     }
   }
   if (!opts.trimOnlySpaces) {
@@ -331,9 +338,9 @@ function stripHtml(str, originalOpts) {
             var _ret = function () {
               var startingPoint = str[y - 1] === undefined ? y : y + 1;
               var culprit = str.slice(startingPoint, i + 1);
-              if (str !== "<".concat(trim(culprit.trim(), "/>"), ">") &&
+              if (str !== "<".concat(trim__default['default'](culprit.trim(), "/>"), ">") &&
               _toConsumableArray(definitelyTagNames).some(function (val) {
-                return trim(culprit.trim().split(" ").filter(function (val2) {
+                return trim__default['default'](culprit.trim().split(" ").filter(function (val2) {
                   return val2.trim();
                 }).filter(function (val3, i3) {
                   return i3 === 0;
@@ -663,7 +670,7 @@ function stripHtml(str, originalOpts) {
     } else if (chunkOfWhitespaceStartsAt !== null) {
       if (!tag.quotes && attrObj.equalsAt > chunkOfWhitespaceStartsAt - 1 && attrObj.nameEnds && attrObj.equalsAt > attrObj.nameEnds && str[i] !== '"' && str[i] !== "'") {
         /* istanbul ignore else */
-        if (isObj(attrObj)) {
+        if (isObj__default['default'](attrObj)) {
           tag.attributes.push(attrObj);
         }
         attrObj = {};
@@ -683,9 +690,9 @@ function stripHtml(str, originalOpts) {
     if (opts.returnRangesOnly) {
       return rangesToDelete.current();
     }
-    var untrimmedRes = rangesApply(str, rangesToDelete.current());
+    var untrimmedRes = rangesApply__default['default'](str, rangesToDelete.current());
     if (opts.trimOnlySpaces) {
-      return trim(untrimmedRes, " ");
+      return trim__default['default'](untrimmedRes, " ");
     }
     return untrimmedRes.trim();
   }
@@ -693,7 +700,7 @@ function stripHtml(str, originalOpts) {
     return [];
   }
   if (opts.trimOnlySpaces) {
-    return trim(str, " ");
+    return trim__default['default'](str, " ");
   }
   return str.trim();
 }

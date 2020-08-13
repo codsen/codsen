@@ -906,10 +906,6 @@
   	}, fn(module, module.exports), module.exports;
   }
 
-  function getCjsExportFromNamespace (n) {
-  	return n && n['default'] || n;
-  }
-
   function commonjsRequire () {
   	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
   }
@@ -2963,7 +2959,7 @@
     'default': punycode
   });
 
-  var reversed = {
+  var revEntities = {
   	"9": "Tab;",
   	"10": "NewLine;",
   	"33": "excl;",
@@ -4279,15 +4275,6 @@
   	"64260": "ffllig;"
   };
 
-  var reversed$1 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    'default': reversed
-  });
-
-  var punycode$2 = getCjsExportFromNamespace(punycode$1);
-
-  var revEntities = getCjsExportFromNamespace(reversed$1);
-
   var encode_1 = encode$1;
 
   function encode$1(str, opts) {
@@ -4306,12 +4293,12 @@
       '>': true,
       '&': true
     };
-    var codePoints = punycode$2.ucs2.decode(str);
+    var codePoints = punycode$1.ucs2.decode(str);
     var chars = [];
 
     for (var i = 0; i < codePoints.length; i++) {
       var cc = codePoints[i];
-      var c = punycode$2.ucs2.encode([cc]);
+      var c = punycode$1.ucs2.encode([cc]);
       var e = revEntities[cc];
 
       if (e && (cc >= 127 || special[c]) && !numeric) {
@@ -6666,119 +6653,6 @@
   	"zwnj;": "‌"
   };
 
-  var entities$1 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    Aacute: Aacute,
-    aacute: aacute,
-    Acirc: Acirc,
-    acirc: acirc,
-    acute: acute,
-    AElig: AElig,
-    aelig: aelig,
-    Agrave: Agrave,
-    agrave: agrave,
-    AMP: AMP,
-    amp: amp,
-    Aring: Aring,
-    aring: aring,
-    Atilde: Atilde,
-    atilde: atilde,
-    Auml: Auml,
-    auml: auml,
-    brvbar: brvbar,
-    Ccedil: Ccedil,
-    ccedil: ccedil,
-    cedil: cedil,
-    cent: cent,
-    COPY: COPY,
-    copy: copy,
-    curren: curren,
-    deg: deg,
-    divide: divide,
-    Eacute: Eacute,
-    eacute: eacute,
-    Ecirc: Ecirc,
-    ecirc: ecirc,
-    Egrave: Egrave,
-    egrave: egrave,
-    ETH: ETH,
-    eth: eth,
-    Euml: Euml,
-    euml: euml,
-    frac12: frac12,
-    frac14: frac14,
-    frac34: frac34,
-    GT: GT,
-    gt: gt,
-    Iacute: Iacute,
-    iacute: iacute,
-    Icirc: Icirc,
-    icirc: icirc,
-    iexcl: iexcl,
-    Igrave: Igrave,
-    igrave: igrave,
-    iquest: iquest,
-    Iuml: Iuml,
-    iuml: iuml,
-    laquo: laquo,
-    LT: LT,
-    lt: lt,
-    macr: macr,
-    micro: micro,
-    middot: middot,
-    nbsp: nbsp,
-    not: not,
-    Ntilde: Ntilde,
-    ntilde: ntilde,
-    Oacute: Oacute,
-    oacute: oacute,
-    Ocirc: Ocirc,
-    ocirc: ocirc,
-    Ograve: Ograve,
-    ograve: ograve,
-    ordf: ordf,
-    ordm: ordm,
-    Oslash: Oslash,
-    oslash: oslash,
-    Otilde: Otilde,
-    otilde: otilde,
-    Ouml: Ouml,
-    ouml: ouml,
-    para: para,
-    plusmn: plusmn,
-    pound: pound,
-    QUOT: QUOT,
-    quot: quot,
-    raquo: raquo,
-    REG: REG,
-    reg: reg,
-    sect: sect,
-    shy: shy,
-    sup1: sup1,
-    sup2: sup2,
-    sup3: sup3,
-    szlig: szlig,
-    THORN: THORN,
-    thorn: thorn,
-    times: times,
-    Uacute: Uacute,
-    uacute: uacute,
-    Ucirc: Ucirc,
-    ucirc: ucirc,
-    Ugrave: Ugrave,
-    ugrave: ugrave,
-    uml: uml,
-    Uuml: Uuml,
-    uuml: uuml,
-    Yacute: Yacute,
-    yacute: yacute,
-    yen: yen,
-    yuml: yuml,
-    'default': entities
-  });
-
-  var entities$2 = getCjsExportFromNamespace(entities$1);
-
   var decode_1 = decode$1;
 
   function decode$1(str) {
@@ -6790,17 +6664,17 @@
       var m;
 
       if (m = /^#(\d+);?$/.exec(match)) {
-        return punycode$2.ucs2.encode([parseInt(m[1], 10)]);
+        return punycode$1.ucs2.encode([parseInt(m[1], 10)]);
       } else if (m = /^#[Xx]([A-Fa-f0-9]+);?/.exec(match)) {
-        return punycode$2.ucs2.encode([parseInt(m[1], 16)]);
+        return punycode$1.ucs2.encode([parseInt(m[1], 16)]);
       } else {
         // named entity
         var hasSemi = /;$/.test(match);
         var withoutSemi = hasSemi ? match.replace(/;$/, '') : match;
-        var target = entities$2[withoutSemi] || hasSemi && entities$2[match];
+        var target = entities[withoutSemi] || hasSemi && entities[match];
 
         if (typeof target === 'number') {
-          return punycode$2.ucs2.encode([target]);
+          return punycode$1.ucs2.encode([target]);
         } else if (typeof target === 'string') {
           return target;
         } else {

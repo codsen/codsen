@@ -9,9 +9,11 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var matcher = require('matcher');
 
-var matcher = _interopDefault(require('matcher'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var matcher__default = /*#__PURE__*/_interopDefaultLegacy(matcher);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -131,7 +133,7 @@ function pullAllWithGlob(originalInput, originalToBeRemoved, originalOpts) {
   }
   return Array.from(originalInput).filter(function (originalVal) {
     return !toBeRemoved.some(function (remVal) {
-      return matcher.isMatch(originalVal, remVal, {
+      return matcher__default['default'].isMatch(originalVal, remVal, {
         caseSensitive: opts.caseSensitive
       });
     });

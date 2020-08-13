@@ -9,9 +9,11 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var empty = require('ast-contains-only-empty-space');
 
-var empty = _interopDefault(require('ast-contains-only-empty-space'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var empty__default = /*#__PURE__*/_interopDefaultLegacy(empty);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -47,7 +49,7 @@ function looseCompare(bigObj, smallObj, res) {
   }
   res = res || true;
   if (_typeof(bigObj) !== _typeof(smallObj)) {
-    if (empty(bigObj) && empty(smallObj)) {
+    if (empty__default['default'](bigObj) && empty__default['default'](smallObj)) {
       return true;
     }
     return false;
@@ -61,7 +63,7 @@ function looseCompare(bigObj, smallObj, res) {
             return false;
           }
         } else if (smallObj[i] !== bigObj[i]) {
-          if (empty(smallObj[i]) && empty(bigObj[i])) {
+          if (empty__default['default'](smallObj[i]) && empty__default['default'](bigObj[i])) {
             return true;
           }
           res = false;
@@ -69,7 +71,7 @@ function looseCompare(bigObj, smallObj, res) {
         }
       }
     } else {
-      if (smallObj.length === 0 && bigObj.length === 0 || empty(smallObj) && empty(bigObj)) {
+      if (smallObj.length === 0 && bigObj.length === 0 || empty__default['default'](smallObj) && empty__default['default'](bigObj)) {
         return true;
       }
       res = false;
@@ -85,14 +87,14 @@ function looseCompare(bigObj, smallObj, res) {
             return false;
           }
         } else if (smallObj[keysArr[i]] !== bigObj[keysArr[i]]) {
-          if (!empty(smallObj[keysArr[i]]) || !empty(bigObj[keysArr[i]])) {
+          if (!empty__default['default'](smallObj[keysArr[i]]) || !empty__default['default'](bigObj[keysArr[i]])) {
             res = false;
             return false;
           }
         }
       }
     } else {
-      if (Object.keys(smallObj).length === 0 && Object.keys(bigObj).length === 0 || empty(smallObj) && empty(bigObj)) {
+      if (Object.keys(smallObj).length === 0 && Object.keys(bigObj).length === 0 || empty__default['default'](smallObj) && empty__default['default'](bigObj)) {
         return true;
       }
       res = false;
@@ -100,14 +102,14 @@ function looseCompare(bigObj, smallObj, res) {
     }
   } else if (typeof bigObj === "string" && typeof smallObj === "string") {
     if (bigObj !== smallObj) {
-      if (empty(smallObj) && empty(bigObj)) {
+      if (empty__default['default'](smallObj) && empty__default['default'](bigObj)) {
         return true;
       }
       res = false;
       return false;
     }
   } else {
-    if (empty(smallObj) && empty(bigObj)) {
+    if (empty__default['default'](smallObj) && empty__default['default'](bigObj)) {
       return true;
     }
     res = false;

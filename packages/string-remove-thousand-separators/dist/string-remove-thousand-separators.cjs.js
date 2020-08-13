@@ -9,13 +9,19 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var replaceSlicesArr = require('ranges-apply');
+var Slices = require('ranges-push');
+var isObj = require('lodash.isplainobject');
+var isNum = require('is-numeric');
+var trimChars = require('lodash.trim');
 
-var replaceSlicesArr = _interopDefault(require('ranges-apply'));
-var Slices = _interopDefault(require('ranges-push'));
-var isObj = _interopDefault(require('lodash.isplainobject'));
-var isNum = _interopDefault(require('is-numeric'));
-var trimChars = _interopDefault(require('lodash.trim'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var replaceSlicesArr__default = /*#__PURE__*/_interopDefaultLegacy(replaceSlicesArr);
+var Slices__default = /*#__PURE__*/_interopDefaultLegacy(Slices);
+var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
+var isNum__default = /*#__PURE__*/_interopDefaultLegacy(isNum);
+var trimChars__default = /*#__PURE__*/_interopDefaultLegacy(trimChars);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -89,7 +95,7 @@ function remSep(str, originalOpts) {
   if (typeof str !== "string") {
     throw new TypeError("string-remove-thousand-separators/remSep(): [THROW_ID_01] Input must be string! Currently it's: ".concat(_typeof(str), ", equal to:\n").concat(JSON.stringify(str, null, 4)));
   }
-  if (originalOpts !== undefined && originalOpts !== null && !isObj(originalOpts)) {
+  if (originalOpts !== undefined && originalOpts !== null && !isObj__default['default'](originalOpts)) {
     throw new TypeError("string-remove-thousand-separators/remSep(): [THROW_ID_02] Options object must be a plain object! Currently it's: ".concat(_typeof(originalOpts), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
   }
   var defaults = {
@@ -98,11 +104,11 @@ function remSep(str, originalOpts) {
     forceUKStyle: false
   };
   var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
-  var res = trimChars(str.trim(), '"');
+  var res = trimChars__default['default'](str.trim(), '"');
   if (res === "") {
     return res;
   }
-  var rangesToDelete = new Slices();
+  var rangesToDelete = new Slices__default['default']();
   for (var i = 0, len = res.length; i < len; i++) {
     if (opts.removeThousandSeparatorsFromNumbers && res[i].trim() === "") {
       rangesToDelete.add(i, i + 1);
@@ -115,12 +121,12 @@ function remSep(str, originalOpts) {
       }
     }
     if (knownSeparatorsArray.includes(res[i])) {
-      if (res[i + 1] !== undefined && isNum(res[i + 1])) {
+      if (res[i + 1] !== undefined && isNum__default['default'](res[i + 1])) {
         if (res[i + 2] !== undefined) {
-          if (isNum(res[i + 2])) {
+          if (isNum__default['default'](res[i + 2])) {
             if (res[i + 3] !== undefined) {
-              if (isNum(res[i + 3])) {
-                if (res[i + 4] !== undefined && isNum(res[i + 4])) {
+              if (isNum__default['default'](res[i + 3])) {
+                if (res[i + 4] !== undefined && isNum__default['default'](res[i + 4])) {
                   allOK = false;
                   break;
                 } else {
@@ -154,13 +160,13 @@ function remSep(str, originalOpts) {
           }
         }
       }
-    } else if (!isNum(res[i])) {
+    } else if (!isNum__default['default'](res[i])) {
       allOK = false;
       break;
     }
   }
   if (allOK && rangesToDelete.current()) {
-    return replaceSlicesArr(res, rangesToDelete.current());
+    return replaceSlicesArr__default['default'](res, rangesToDelete.current());
   }
   return res;
 }

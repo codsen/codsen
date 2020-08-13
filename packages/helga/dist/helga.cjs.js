@@ -11,9 +11,11 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var unescapeJs = require('unescape-js');
 
-var unescapeJs = _interopDefault(require('unescape-js'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var unescapeJs__default = /*#__PURE__*/_interopDefaultLegacy(unescapeJs);
 
 function _defineProperty(obj, key, value) {
   if (key in obj) {
@@ -71,8 +73,8 @@ var defaults = {
 };
 function helga(str, originalOpts) {
   var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
-  var beautified = unescapeJs(str);
-  var minified = unescapeJs(str);
+  var beautified = unescapeJs__default['default'](str);
+  var minified = unescapeJs__default['default'](str);
   if (opts.targetJSON) {
     minified = JSON.stringify(minified.replace(/\t/g, "  "), null, 0);
     minified = minified.slice(1, minified.length - 1);

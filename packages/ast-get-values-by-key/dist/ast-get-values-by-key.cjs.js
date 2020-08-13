@@ -9,11 +9,15 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var traverse = require('ast-monkey-traverse');
+var matcher = require('matcher');
+var clone = require('lodash.clonedeep');
 
-var traverse = _interopDefault(require('ast-monkey-traverse'));
-var matcher = _interopDefault(require('matcher'));
-var clone = _interopDefault(require('lodash.clonedeep'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var traverse__default = /*#__PURE__*/_interopDefaultLegacy(traverse);
+var matcher__default = /*#__PURE__*/_interopDefaultLegacy(matcher);
+var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -65,13 +69,13 @@ function getAllValuesByKey(originalInput, whatToFind, originalReplacement) {
     if (typeof originalReplacement === "string") {
       replacement = [originalReplacement];
     } else {
-      replacement = clone(originalReplacement);
+      replacement = clone__default['default'](originalReplacement);
     }
   }
   var res = [];
-  var input = traverse(originalInput, function (key, val, innerObj) {
+  var input = traverse__default['default'](originalInput, function (key, val, innerObj) {
     var current = val !== undefined ? val : key;
-    if (val !== undefined && matcher.isMatch(key, whatToFind, {
+    if (val !== undefined && matcher__default['default'].isMatch(key, whatToFind, {
       caseSensitive: true
     })) {
       if (replacement === undefined) {

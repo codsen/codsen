@@ -62,6 +62,10 @@
     return target;
   }
 
+  function getDefaultExportFromCjs (x) {
+  	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
+  }
+
   function createCommonjsModule(fn, basedir, module) {
   	return module = {
   	  path: basedir,
@@ -70,10 +74,6 @@
         return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
       }
   	}, fn(module, module.exports), module.exports;
-  }
-
-  function getCjsExportFromNamespace (n) {
-  	return n && n['default'] || n;
   }
 
   function commonjsRequire () {
@@ -155,12 +155,6 @@
     })();
   }
 
-  var fromcodepoint = /*#__PURE__*/Object.freeze({
-    __proto__: null
-  });
-
-  getCjsExportFromNamespace(fromcodepoint);
-
   var dist = createCommonjsModule(function (module, exports) {
 
     Object.defineProperty(exports, "__esModule", {
@@ -227,6 +221,7 @@
     exports.default = _default;
     module.exports = exports.default;
   });
+  var unescapeJs = /*@__PURE__*/getDefaultExportFromCjs(dist);
 
   var version = "1.1.35";
 
@@ -246,10 +241,10 @@
     // ---------------------------------------------------------------------------
 
 
-    var beautified = dist(str); // 2. minification:
+    var beautified = unescapeJs(str); // 2. minification:
     // ---------------------------------------------------------------------------
 
-    var minified = dist(str);
+    var minified = unescapeJs(str);
 
     if (opts.targetJSON) {
       // if target is JSON, replace all tabs with two spaces, then JSON stringify

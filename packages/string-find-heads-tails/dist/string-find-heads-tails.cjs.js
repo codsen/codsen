@@ -1,6 +1,6 @@
 /**
  * string-find-heads-tails
- * Search for string pairs. A special case of string search algorithm.
+ * Finds given pattern templating markers in a string
  * Version: 3.16.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
@@ -9,10 +9,12 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
 var stringMatchLeftRight = require('string-match-left-right');
-var arrayiffy = _interopDefault(require('arrayiffy-if-string'));
+var arrayiffy = require('arrayiffy-if-string');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var arrayiffy__default = /*#__PURE__*/_interopDefaultLegacy(arrayiffy);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -123,7 +125,7 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
       }
       throw new TypeError("string-find-heads-tails: [THROW_ID_04] the second input argument, heads, must be a non-empty string! Currently it's empty.");
     } else {
-      heads = arrayiffy(heads);
+      heads = arrayiffy__default['default'](heads);
     }
   } else if (Array.isArray(heads)) {
     if (heads.length === 0) {
@@ -174,7 +176,7 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
       }
       throw new TypeError("string-find-heads-tails: [THROW_ID_09] the third input argument, tails, must be a non-empty string! Currently it's empty.");
     } else {
-      tails = arrayiffy(tails);
+      tails = arrayiffy__default['default'](tails);
     }
   } else if (Array.isArray(tails)) {
     if (tails.length === 0) {
@@ -215,9 +217,9 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
   }
   var s = opts.source === defaults.source;
   if (opts.throwWhenSomethingWrongIsDetected && !opts.allowWholeValueToBeOnlyHeadsOrTails) {
-    if (arrayiffy(heads).includes(str)) {
+    if (arrayiffy__default['default'](heads).includes(str)) {
       throw new Error("".concat(opts.source).concat(s ? ": [THROW_ID_16]" : "", " the whole input string can't be equal to ").concat(isStr(heads) ? "" : "one of ", "heads (").concat(str, ")!"));
-    } else if (arrayiffy(tails).includes(str)) {
+    } else if (arrayiffy__default['default'](tails).includes(str)) {
       throw new Error("".concat(opts.source).concat(s ? ": [THROW_ID_17]" : "", " the whole input string can't be equal to ").concat(isStr(tails) ? "" : "one of ", "tails (").concat(str, ")!"));
     }
   }

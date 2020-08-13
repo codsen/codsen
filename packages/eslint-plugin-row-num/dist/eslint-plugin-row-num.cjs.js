@@ -9,9 +9,11 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var fixRowNums = require('js-row-num');
 
-var fixRowNums = _interopDefault(require('js-row-num'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var fixRowNums__default = /*#__PURE__*/_interopDefaultLegacy(fixRowNums);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -35,7 +37,7 @@ var create = function create(context) {
       /* istanbul ignore else */
       if (node.callee && node.callee.type === "MemberExpression" && node.callee.object && node.callee.object.type === "Identifier" && node.callee.object.name === "console" && node.callee.property && node.callee.property.type === "Identifier" && node.callee.property.name === "log" && node.arguments && Array.isArray(node.arguments) && node.arguments.length) {
         node.arguments.forEach(function (arg) {
-          if (arg.type === "Literal" && typeof arg.raw === "string" && arg.raw !== fixRowNums(arg.raw, {
+          if (arg.type === "Literal" && typeof arg.raw === "string" && arg.raw !== fixRowNums__default['default'](arg.raw, {
             overrideRowNum: arg.loc.start.line,
             returnRangesOnly: false,
             extractedLogContentsWereGiven: true
@@ -44,7 +46,7 @@ var create = function create(context) {
               node: node,
               messageId: "correctRowNum",
               fix: function fix(fixerObj) {
-                var ranges = fixRowNums(arg.raw, {
+                var ranges = fixRowNums__default['default'](arg.raw, {
                   overrideRowNum: arg.loc.start.line,
                   returnRangesOnly: true,
                   extractedLogContentsWereGiven: true
@@ -53,7 +55,7 @@ var create = function create(context) {
                 return fixerObj.replaceTextRange(preppedRanges, ranges[0][2]);
               }
             });
-          } else if (arg.type === "TemplateLiteral" && Array.isArray(arg.quasis) && arg.quasis.length && _typeof(arg.quasis[0]) === "object" && arg.quasis[0].value && arg.quasis[0].value.raw && arg.quasis[0].value.raw !== fixRowNums(arg.quasis[0].value.raw, {
+          } else if (arg.type === "TemplateLiteral" && Array.isArray(arg.quasis) && arg.quasis.length && _typeof(arg.quasis[0]) === "object" && arg.quasis[0].value && arg.quasis[0].value.raw && arg.quasis[0].value.raw !== fixRowNums__default['default'](arg.quasis[0].value.raw, {
             overrideRowNum: arg.loc.start.line,
             returnRangesOnly: false,
             extractedLogContentsWereGiven: true
@@ -62,7 +64,7 @@ var create = function create(context) {
               node: node,
               messageId: "correctRowNum",
               fix: function fix(fixerObj) {
-                var ranges = fixRowNums(arg.quasis[0].value.raw, {
+                var ranges = fixRowNums__default['default'](arg.quasis[0].value.raw, {
                   overrideRowNum: arg.loc.start.line,
                   returnRangesOnly: true,
                   extractedLogContentsWereGiven: true

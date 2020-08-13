@@ -1,6 +1,6 @@
 /**
  * html-img-alt
- * Adds missing ALT attributes to IMG tags and cleans within IMG tags. No HTML parsing used.
+ * Adds missing alt attributes to img tags. Non-parsing.
  * Version: 1.4.56
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
@@ -9,13 +9,19 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var unfancy = require('string-unfancy');
+var apply = require('ranges-apply');
+var Ranges = require('ranges-push');
+var checkTypes = require('check-types-mini');
+var isObj = require('lodash.isplainobject');
 
-var unfancy = _interopDefault(require('string-unfancy'));
-var apply = _interopDefault(require('ranges-apply'));
-var Ranges = _interopDefault(require('ranges-push'));
-var checkTypes = _interopDefault(require('check-types-mini'));
-var isObj = _interopDefault(require('lodash.isplainobject'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var unfancy__default = /*#__PURE__*/_interopDefaultLegacy(unfancy);
+var apply__default = /*#__PURE__*/_interopDefaultLegacy(apply);
+var Ranges__default = /*#__PURE__*/_interopDefaultLegacy(Ranges);
+var checkTypes__default = /*#__PURE__*/_interopDefaultLegacy(checkTypes);
+var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -89,7 +95,7 @@ function alts(str, originalOpts) {
   if (typeof str !== "string") {
     throw new TypeError("html-img-alt/alts(): [THROW_ID_01] Input must be string! Currently its type is: ".concat(_typeof(str), ", equal to: ").concat(JSON.stringify(str, null, 4)));
   }
-  if (existy(originalOpts) && !isObj(originalOpts)) {
+  if (existy(originalOpts) && !isObj__default['default'](originalOpts)) {
     throw new TypeError("html-img-alt/alts(): [THROW_ID_02] Options object must be a plain object! Currently its type is: ".concat(_typeof(originalOpts), ", equal to: ").concat(JSON.stringify(originalOpts, null, 4)));
   }
   var finalSpaceNeeded;
@@ -105,13 +111,13 @@ function alts(str, originalOpts) {
   var thereShouldBeTheSecondDoubleQuoteHere = 0;
   var addSpaceInTheFutureBeforeSlashOrBracket = false;
   var altBegins = null;
-  var rangesArr = new Ranges();
-  var plausibleWithinQuotesRanges = new Ranges();
+  var rangesArr = new Ranges__default['default']();
+  var plausibleWithinQuotesRanges = new Ranges__default['default']();
   var defaults = {
     unfancyTheAltContents: true
   };
   var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
-  checkTypes(opts, defaults, {
+  checkTypes__default['default'](opts, defaults, {
     msg: "html-img-alt/alts(): [THROW_ID_03]"
   });
   for (var i = 0, len = str.length; i < len; i++) {
@@ -206,8 +212,8 @@ function alts(str, originalOpts) {
         }
         if (altContentsStart && opts.unfancyTheAltContents) {
           var altContents = str.slice(altContentsStart, i);
-          if (unfancy(altContents).trim() !== altContents) {
-            rangesArr.add(altContentsStart, i, unfancy(altContents).trim());
+          if (unfancy__default['default'](altContents).trim() !== altContents) {
+            rangesArr.add(altContentsStart, i, unfancy__default['default'](altContents).trim());
           }
         }
         altContentsStart = 0;
@@ -288,7 +294,7 @@ function alts(str, originalOpts) {
     }
   }
   if (existy(rangesArr.current()) && rangesArr.current().length > 0) {
-    return apply(str, rangesArr.current());
+    return apply__default['default'](str, rangesArr.current());
   }
   return str;
 }

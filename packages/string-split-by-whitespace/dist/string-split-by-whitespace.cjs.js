@@ -9,9 +9,11 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var within = require('ranges-is-index-within');
 
-var within = _interopDefault(require('ranges-is-index-within'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var within__default = /*#__PURE__*/_interopDefaultLegacy(within);
 
 function _defineProperty(obj, key, value) {
   if (key in obj) {
@@ -84,7 +86,7 @@ function split(str, originalOpts) {
   var nonWhitespaceSubStringStartsAt = null;
   var res = [];
   for (var i = 0, len = str.length; i < len; i++) {
-    if (nonWhitespaceSubStringStartsAt === null && str[i].trim() && (!opts.ignoreRanges.length || opts.ignoreRanges.length && !within(i, opts.ignoreRanges.map(function (arr) {
+    if (nonWhitespaceSubStringStartsAt === null && str[i].trim() && (!opts.ignoreRanges.length || opts.ignoreRanges.length && !within__default['default'](i, opts.ignoreRanges.map(function (arr) {
       return [arr[0], arr[1] - 1];
     }), {
       inclusiveRangeEnds: true
@@ -95,7 +97,7 @@ function split(str, originalOpts) {
       if (!str[i].trim()) {
         res.push(str.slice(nonWhitespaceSubStringStartsAt, i));
         nonWhitespaceSubStringStartsAt = null;
-      } else if (opts.ignoreRanges.length && within(i, opts.ignoreRanges)) {
+      } else if (opts.ignoreRanges.length && within__default['default'](i, opts.ignoreRanges)) {
         res.push(str.slice(nonWhitespaceSubStringStartsAt, i - 1));
         nonWhitespaceSubStringStartsAt = null;
       } else if (str[i + 1] === undefined) {

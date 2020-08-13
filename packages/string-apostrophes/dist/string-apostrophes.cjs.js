@@ -11,9 +11,11 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var rangesApply = require('ranges-apply');
 
-var rangesApply = _interopDefault(require('ranges-apply'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var rangesApply__default = /*#__PURE__*/_interopDefaultLegacy(rangesApply);
 
 function _defineProperty(obj, key, value) {
   if (key in obj) {
@@ -280,7 +282,7 @@ function convertAll(str, opts) {
     }
   }
   return {
-    result: rangesApply(str, ranges),
+    result: rangesApply__default['default'](str, ranges),
     ranges: ranges
   };
 }

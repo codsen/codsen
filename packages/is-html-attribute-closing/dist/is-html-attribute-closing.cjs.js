@@ -9,12 +9,14 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
 var htmlAllKnownAttributes = require('html-all-known-attributes');
-var charSuitableForHTMLAttrName = _interopDefault(require('is-char-suitable-for-html-attr-name'));
+var charSuitableForHTMLAttrName = require('is-char-suitable-for-html-attr-name');
 var stringLeftRight = require('string-left-right');
 var stringMatchLeftRight = require('string-match-left-right');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var charSuitableForHTMLAttrName__default = /*#__PURE__*/_interopDefaultLegacy(charSuitableForHTMLAttrName);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -66,25 +68,25 @@ function xBeforeYOnTheRight(str, startingIdx, x, y) {
   return false;
 }
 function plausibleAttrStartsAtX(str, start) {
-  if (!charSuitableForHTMLAttrName(str[start]) || !start) {
+  if (!charSuitableForHTMLAttrName__default['default'](str[start]) || !start) {
     return false;
   }
   var regex = /^[a-zA-Z0-9:-]*(\s*[=]?\s*((?:'[^']*')|(?:"[^"]*")))|( [^/>'"=]*['"])/;
   return regex.test(str.slice(start));
 }
 function guaranteedAttrStartsAtX(str, start) {
-  if (!charSuitableForHTMLAttrName(str[start]) || !start) {
+  if (!charSuitableForHTMLAttrName__default['default'](str[start]) || !start) {
     return false;
   }
   var regex = /^[a-zA-Z0-9:-]*=(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
   return regex.test(str.slice(start));
 }
 function findAttrNameCharsChunkOnTheLeft(str, i) {
-  if (!charSuitableForHTMLAttrName(str[stringLeftRight.left(str, i)])) {
+  if (!charSuitableForHTMLAttrName__default['default'](str[stringLeftRight.left(str, i)])) {
     return;
   }
   for (var y = i; y--;) {
-    if (str[y].trim().length && !charSuitableForHTMLAttrName(str[y])) {
+    if (str[y].trim().length && !charSuitableForHTMLAttrName__default['default'](str[y])) {
       return str.slice(y + 1, i);
     }
   }
@@ -130,7 +132,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       chunkStartsAt && chunkStartsAt < i && htmlAllKnownAttributes.allHtmlAttribs.has(str.slice(chunkStartsAt, i).trim());
       var E33 = chunkStartsAt && chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim() &&
       Array.from(str.slice(chunkStartsAt, i).trim()).every(function (char) {
-        return charSuitableForHTMLAttrName(char);
+        return charSuitableForHTMLAttrName__default['default'](char);
       }) &&
       str[idxOfAttrOpening] === str[isThisClosingIdx];
       var attrNameCharsChunkOnTheLeft = void 0;
@@ -139,13 +141,13 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       }
       var E34 =
       i === isThisClosingIdx && (
-      !charSuitableForHTMLAttrName(str[stringLeftRight.left(str, i)]) ||
+      !charSuitableForHTMLAttrName__default['default'](str[stringLeftRight.left(str, i)]) ||
       attrNameCharsChunkOnTheLeft && !htmlAllKnownAttributes.allHtmlAttribs.has(attrNameCharsChunkOnTheLeft)) &&
       str[stringLeftRight.left(str, i)] !== "=";
       var E41 =
       "/>".includes(str[stringLeftRight.right(str, i)]) && i === isThisClosingIdx;
       var E42 =
-      charSuitableForHTMLAttrName(str[stringLeftRight.right(str, i)]);
+      charSuitableForHTMLAttrName__default['default'](str[stringLeftRight.right(str, i)]);
       var E43 =
       lastQuoteWasMatched && i !== isThisClosingIdx;
       return E1 && E2 && (E31 || E32 || E33 || E34) && (E41 || E42 || E43);
@@ -178,10 +180,10 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       return false;
     }
     if (str[i].trim() && !chunkStartsAt) {
-      if (charSuitableForHTMLAttrName(str[i])) {
+      if (charSuitableForHTMLAttrName__default['default'](str[i])) {
         chunkStartsAt = i;
       }
-    } else if (chunkStartsAt && !charSuitableForHTMLAttrName(str[i])) {
+    } else if (chunkStartsAt && !charSuitableForHTMLAttrName__default['default'](str[i])) {
       lastCapturedChunk = str.slice(chunkStartsAt, i);
       lastChunkWasCapturedAfterSuspectedClosing = chunkStartsAt >= isThisClosingIdx;
       if ("'\"".includes(str[i]) && quotesCount.get("matchedPairs") === 0 && totalQuotesCount === 3 && str[idxOfAttrOpening] === str[i] && htmlAllKnownAttributes.allHtmlAttribs.has(lastCapturedChunk)) {
@@ -267,10 +269,10 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         var _R2 = totalQuotesCount < 3 ||
         quotesCount.get("\"") + quotesCount.get("'") - quotesCount.get("matchedPairs") * 2 !== 2;
         var R31 = !lastQuoteWasMatched || lastQuoteWasMatched && !(lastMatchedQuotesPairsStartIsAt && Array.from(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()).every(function (char) {
-          return charSuitableForHTMLAttrName(char);
+          return charSuitableForHTMLAttrName__default['default'](char);
         }) && htmlAllKnownAttributes.allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()));
         var R32 = !stringLeftRight.right(str, i) && totalQuotesCount % 2 === 0;
-        var R33 = str[idxOfAttrOpening - 2] && str[idxOfAttrOpening - 1] === "=" && charSuitableForHTMLAttrName(str[idxOfAttrOpening - 2]);
+        var R33 = str[idxOfAttrOpening - 2] && str[idxOfAttrOpening - 1] === "=" && charSuitableForHTMLAttrName__default['default'](str[idxOfAttrOpening - 2]);
         var R34 = !ensureXIsNotPresentBeforeOneOfY(str, i + 1, "<", ["='", "=\""]);
         return (
           _R ||
@@ -307,7 +309,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         trimBeforeMatching: true,
         trimCharsBeforeMatching: ["="]
       }) &&
-      charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft])) {
+      charSuitableForHTMLAttrName__default['default'](str[firstNonWhitespaceCharOnTheLeft])) {
         return false;
       }
       if (i === isThisClosingIdx && guaranteedAttrStartsAtX(str, i + 1)) {
@@ -329,7 +331,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     if ("'\"".includes(str[i])) {
       lastQuoteAt = i;
     }
-    if (chunkStartsAt && !charSuitableForHTMLAttrName(str[i])) {
+    if (chunkStartsAt && !charSuitableForHTMLAttrName__default['default'](str[i])) {
       chunkStartsAt = null;
     }
   }

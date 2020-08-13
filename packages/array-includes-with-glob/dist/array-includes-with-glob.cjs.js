@@ -9,9 +9,11 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var matcher = require('matcher');
 
-var matcher = _interopDefault(require('matcher'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var matcher__default = /*#__PURE__*/_interopDefaultLegacy(matcher);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -120,7 +122,7 @@ function arrayIncludesWithGlob(originalInput, stringToFind, originalOpts) {
   }
   if (isStr(stringToFind)) {
     return input.some(function (val) {
-      return matcher.isMatch(val, stringToFind, {
+      return matcher__default['default'].isMatch(val, stringToFind, {
         caseSensitive: true
       });
     });
@@ -128,7 +130,7 @@ function arrayIncludesWithGlob(originalInput, stringToFind, originalOpts) {
   if (opts.arrayVsArrayAllMustBeFound === "any") {
     return stringToFind.some(function (stringToFindVal) {
       return input.some(function (val) {
-        return matcher.isMatch(val, stringToFindVal, {
+        return matcher__default['default'].isMatch(val, stringToFindVal, {
           caseSensitive: true
         });
       });
@@ -136,7 +138,7 @@ function arrayIncludesWithGlob(originalInput, stringToFind, originalOpts) {
   }
   return stringToFind.every(function (stringToFindVal) {
     return input.some(function (val) {
-      return matcher.isMatch(val, stringToFindVal, {
+      return matcher__default['default'].isMatch(val, stringToFindVal, {
         caseSensitive: true
       });
     });

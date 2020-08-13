@@ -621,6 +621,12 @@
     return ret;
   }
 
+  var events = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    'default': EventEmitter,
+    EventEmitter: EventEmitter
+  });
+
   // shim for using process in browser
   // based off https://github.com/defunctzombie/node-process/blob/master/browser.js
   function defaultSetTimout() {
@@ -1297,7 +1303,7 @@
     return Object.prototype.hasOwnProperty.call(obj, prop);
   }
 
-  var debugUtil = {
+  var util = {
     inherits: inherits$1,
     _extend: _extend,
     log: log,
@@ -1321,6 +1327,33 @@
     format: format,
     debuglog: debuglog
   };
+
+  var util$1 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    format: format,
+    deprecate: deprecate,
+    debuglog: debuglog,
+    inspect: inspect,
+    isArray: isArray,
+    isBoolean: isBoolean,
+    isNull: isNull,
+    isNullOrUndefined: isNullOrUndefined,
+    isNumber: isNumber,
+    isString: isString,
+    isSymbol: isSymbol,
+    isUndefined: isUndefined,
+    isRegExp: isRegExp,
+    isObject: isObject,
+    isDate: isDate,
+    isError: isError,
+    isFunction: isFunction,
+    isPrimitive: isPrimitive,
+    isBuffer: isBuffer,
+    log: log,
+    inherits: inherits$1,
+    _extend: _extend,
+    'default': util
+  });
 
   var lookup = [];
   var revLookup = [];
@@ -5236,30 +5269,8 @@
     Stream: Stream
   });
 
-  var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-  function createCommonjsModule(fn, basedir, module) {
-  	return module = {
-  	  path: basedir,
-  	  exports: {},
-  	  require: function (path, base) {
-        return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
-      }
-  	}, fn(module, module.exports), module.exports;
-  }
-
-  function getCjsExportFromNamespace (n) {
-  	return n && n['default'] || n;
-  }
-
-  function commonjsRequire () {
-  	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
-  }
-
-  var Stream$1 = getCjsExportFromNamespace(stream);
-
   function isStream(obj) {
-    return obj instanceof Stream$1.Stream;
+    return obj instanceof stream.Stream;
   }
 
   function isReadable(obj) {
@@ -5282,7 +5293,23 @@
   isstream.isWritable = isWritable_1;
   isstream.isDuplex = isDuplex_1;
 
-  var stream$1 = Stream$1;
+  var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+  function createCommonjsModule(fn, basedir, module) {
+  	return module = {
+  	  path: basedir,
+  	  exports: {},
+  	  require: function (path, base) {
+        return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
+      }
+  	}, fn(module, module.exports), module.exports;
+  }
+
+  function commonjsRequire () {
+  	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
+  }
+
+  var stream$1 = stream;
 
   function ownKeys$1(object, enumerableOnly) {
     var keys = Object.keys(object);
@@ -5356,7 +5383,7 @@
   }
 
   var Buffer$2 = bufferEs6.Buffer;
-  var inspect$1 = debugUtil.inspect;
+  var inspect$1 = util$1.inspect;
   var custom = inspect$1 && inspect$1.custom || 'inspect';
 
   function copyBuffer(src, target, offset) {
@@ -5839,7 +5866,7 @@
 
   var inherits$2 = createCommonjsModule(function (module) {
     try {
-      var util = debugUtil;
+      var util = util$1;
       /* istanbul ignore next */
 
       if (typeof util.inherits !== 'function') throw '';
@@ -5854,7 +5881,7 @@
    * For Node.js, simply re-export the core `util.deprecate` function.
    */
 
-  var node = debugUtil.deprecate;
+  var node = util$1.deprecate;
 
   var _stream_writable = Writable$1;
   // there will be only 2 of these for each stream
@@ -7523,6 +7550,9 @@
   /*</replacement>*/
 
   Readable$1.ReadableState = ReadableState$1;
+  /*<replacement>*/
+
+  var EE = events.EventEmitter;
 
   var EElistenerCount = function EElistenerCount(emitter, type) {
     return emitter.listeners(type).length;
@@ -7550,8 +7580,8 @@
 
   var debug$1;
 
-  if (debugUtil && debugUtil.debuglog) {
-    debug$1 = debugUtil.debuglog('stream');
+  if (util$1 && util$1.debuglog) {
+    debug$1 = util$1.debuglog('stream');
   } else {
     debug$1 = function debug() {};
   }
@@ -8844,13 +8874,13 @@
   var pipeline_1 = pipeline;
 
   var readable = createCommonjsModule(function (module, exports) {
-    if (process.env.READABLE_STREAM === 'disable' && Stream$1) {
-      module.exports = Stream$1.Readable;
-      Object.assign(module.exports, Stream$1);
-      module.exports.Stream = Stream$1;
+    if (process.env.READABLE_STREAM === 'disable' && stream) {
+      module.exports = stream.Readable;
+      Object.assign(module.exports, stream);
+      module.exports.Stream = stream;
     } else {
       exports = module.exports = _stream_readable;
-      exports.Stream = Stream$1 || exports;
+      exports.Stream = stream || exports;
       exports.Readable = exports;
       exports.Writable = _stream_writable;
       exports.Duplex = _stream_duplex;
@@ -8861,10 +8891,8 @@
     }
   });
 
-  var require$$1 = getCjsExportFromNamespace(stringDecoder);
-
   var Transform$2 = readable.Transform;
-  var StringDecoder$3 = require$$1.StringDecoder;
+  var StringDecoder$3 = stringDecoder.StringDecoder;
   var kLast = Symbol('last');
   var kDecoder = Symbol('decoder');
 
@@ -8966,7 +8994,7 @@
 
   var split2 = split;
 
-  var stream$2 = Stream$1;
+  var stream$2 = stream;
 
   function ownKeys$3(object, enumerableOnly) {
     var keys = Object.keys(object);
@@ -9040,7 +9068,7 @@
   }
 
   var Buffer$6 = bufferEs6.Buffer;
-  var inspect$2 = debugUtil.inspect;
+  var inspect$2 = util$1.inspect;
   var custom$1 = inspect$2 && inspect$2.custom || 'inspect';
 
   function copyBuffer$1(src, target, offset) {
@@ -10763,6 +10791,9 @@
   /*</replacement>*/
 
   Readable$2.ReadableState = ReadableState$2;
+  /*<replacement>*/
+
+  var EE$1 = events.EventEmitter;
 
   var EElistenerCount$1 = function EElistenerCount(emitter, type) {
     return emitter.listeners(type).length;
@@ -10790,8 +10821,8 @@
 
   var debug$2;
 
-  if (debugUtil && debugUtil.debuglog) {
-    debug$2 = debugUtil.debuglog('stream');
+  if (util$1 && util$1.debuglog) {
+    debug$2 = util$1.debuglog('stream');
   } else {
     debug$2 = function debug() {};
   }
@@ -12084,13 +12115,13 @@
   var pipeline_1$1 = pipeline$1;
 
   var readable$1 = createCommonjsModule(function (module, exports) {
-    if (process.env.READABLE_STREAM === 'disable' && Stream$1) {
-      module.exports = Stream$1.Readable;
-      Object.assign(module.exports, Stream$1);
-      module.exports.Stream = Stream$1;
+    if (process.env.READABLE_STREAM === 'disable' && stream) {
+      module.exports = stream.Readable;
+      Object.assign(module.exports, stream);
+      module.exports.Stream = stream;
     } else {
       exports = module.exports = _stream_readable$1;
-      exports.Stream = Stream$1 || exports;
+      exports.Stream = stream || exports;
       exports.Readable = exports;
       exports.Writable = _stream_writable$1;
       exports.Duplex = _stream_duplex$1;

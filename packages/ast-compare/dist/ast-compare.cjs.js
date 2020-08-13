@@ -9,11 +9,15 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var typeDetect = require('type-detect');
+var empty = require('ast-contains-only-empty-space');
+var matcher = require('matcher');
 
-var typeDetect = _interopDefault(require('type-detect'));
-var empty = _interopDefault(require('ast-contains-only-empty-space'));
-var matcher = _interopDefault(require('matcher'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var typeDetect__default = /*#__PURE__*/_interopDefaultLegacy(typeDetect);
+var empty__default = /*#__PURE__*/_interopDefaultLegacy(empty);
+var matcher__default = /*#__PURE__*/_interopDefaultLegacy(matcher);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -210,13 +214,13 @@ function compare(b, s, originalOpts) {
     throw new TypeError("ast-compare/compare(): [THROW_ID_02] second argument is missing!");
   }
   if (existy(b) && !isTheTypeLegit(b)) {
-    throw new TypeError("ast-compare/compare(): [THROW_ID_03] first input argument is of a wrong type, ".concat(typeDetect(b), ", equal to: ").concat(JSON.stringify(b, null, 4)));
+    throw new TypeError("ast-compare/compare(): [THROW_ID_03] first input argument is of a wrong type, ".concat(typeDetect__default['default'](b), ", equal to: ").concat(JSON.stringify(b, null, 4)));
   }
   if (existy(s) && !isTheTypeLegit(s)) {
-    throw new TypeError("ast-compare/compare(): [THROW_ID_04] second input argument is of a wrong type, ".concat(typeDetect(s), ", equal to: ").concat(JSON.stringify(s, null, 4)));
+    throw new TypeError("ast-compare/compare(): [THROW_ID_04] second input argument is of a wrong type, ".concat(typeDetect__default['default'](s), ", equal to: ").concat(JSON.stringify(s, null, 4)));
   }
   if (existy(originalOpts) && !isObj(originalOpts)) {
-    throw new TypeError("ast-compare/compare(): [THROW_ID_05] third argument, options object, must, well, be an object! Currently it's: ".concat(typeDetect(originalOpts), " and equal to: ").concat(JSON.stringify(originalOpts, null, 4)));
+    throw new TypeError("ast-compare/compare(): [THROW_ID_05] third argument, options object, must, well, be an object! Currently it's: ".concat(typeDetect__default['default'](originalOpts), " and equal to: ").concat(JSON.stringify(originalOpts, null, 4)));
   }
   var sKeys;
   var bKeys;
@@ -229,25 +233,25 @@ function compare(b, s, originalOpts) {
     useWildcards: false
   };
   var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
-  if (opts.hungryForWhitespace && opts.matchStrictly && isObj(b) && empty(b) && isObj(s) && !Object.keys(s).length) {
+  if (opts.hungryForWhitespace && opts.matchStrictly && isObj(b) && empty__default['default'](b) && isObj(s) && !Object.keys(s).length) {
     return true;
   }
-  if ((!opts.hungryForWhitespace || opts.hungryForWhitespace && !empty(b) && empty(s)) && isObj(b) && Object.keys(b).length !== 0 && isObj(s) && Object.keys(s).length === 0 || typeDetect(b) !== typeDetect(s) && (!opts.hungryForWhitespace || opts.hungryForWhitespace && !empty(b))) {
+  if ((!opts.hungryForWhitespace || opts.hungryForWhitespace && !empty__default['default'](b) && empty__default['default'](s)) && isObj(b) && Object.keys(b).length !== 0 && isObj(s) && Object.keys(s).length === 0 || typeDetect__default['default'](b) !== typeDetect__default['default'](s) && (!opts.hungryForWhitespace || opts.hungryForWhitespace && !empty__default['default'](b))) {
     return false;
   }
   if (isStr(b) && isStr(s)) {
-    if (opts.hungryForWhitespace && empty(b) && empty(s)) {
+    if (opts.hungryForWhitespace && empty__default['default'](b) && empty__default['default'](s)) {
       return true;
     }
     if (opts.verboseWhenMismatches) {
       return b === s ? true : "Given string ".concat(s, " is not matched! We have ").concat(b, " on the other end.");
     }
-    return opts.useWildcards ? matcher.isMatch(b, s, {
+    return opts.useWildcards ? matcher__default['default'].isMatch(b, s, {
       caseSensitive: true
     }) : b === s;
   }
   if (isArr(b) && isArr(s)) {
-    if (opts.hungryForWhitespace && empty(s) && (!opts.matchStrictly || opts.matchStrictly && b.length === s.length)) {
+    if (opts.hungryForWhitespace && empty__default['default'](s) && (!opts.matchStrictly || opts.matchStrictly && b.length === s.length)) {
       return true;
     }
     if (!opts.hungryForWhitespace && s.length > b.length || opts.matchStrictly && s.length !== b.length) {
@@ -315,7 +319,7 @@ function compare(b, s, originalOpts) {
             };
           }
           if (Object.keys(b).some(function (bKey) {
-            return matcher.isMatch(bKey, sKey, {
+            return matcher__default['default'].isMatch(bKey, sKey, {
               caseSensitive: true
             });
           })) {
@@ -332,15 +336,15 @@ function compare(b, s, originalOpts) {
             v: "The given object has key \"".concat(sKey, "\" which the other-one does not have.")
           };
         }
-        if (existy(b[sKey]) && typeDetect(b[sKey]) !== typeDetect(s[sKey])) {
-          if (!(empty(b[sKey]) && empty(s[sKey]) && opts.hungryForWhitespace)) {
+        if (existy(b[sKey]) && typeDetect__default['default'](b[sKey]) !== typeDetect__default['default'](s[sKey])) {
+          if (!(empty__default['default'](b[sKey]) && empty__default['default'](s[sKey]) && opts.hungryForWhitespace)) {
             if (!opts.verboseWhenMismatches) {
               return {
                 v: false
               };
             }
             return {
-              v: "The given key ".concat(sKey, " is of a different type on both objects. On the first-one, it's ").concat(typeDetect(s[sKey]), ", on the second-one, it's ").concat(typeDetect(b[sKey]))
+              v: "The given key ".concat(sKey, " is of a different type on both objects. On the first-one, it's ").concat(typeDetect__default['default'](s[sKey]), ", on the second-one, it's ").concat(typeDetect__default['default'](b[sKey]))
             };
           }
         } else if (compare(b[sKey], s[sKey], opts) !== true) {
@@ -364,7 +368,7 @@ function compare(b, s, originalOpts) {
       _iterator.f();
     }
   } else {
-    if (opts.hungryForWhitespace && empty(b) && empty(s) && (!opts.matchStrictly || opts.matchStrictly && isBlank(s))) {
+    if (opts.hungryForWhitespace && empty__default['default'](b) && empty__default['default'](s) && (!opts.matchStrictly || opts.matchStrictly && isBlank(s))) {
       return true;
     }
     return b === s;

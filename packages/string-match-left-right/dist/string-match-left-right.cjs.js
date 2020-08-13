@@ -11,9 +11,11 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var arrayiffy = require('arrayiffy-if-string');
 
-var arrayiffy = _interopDefault(require('arrayiffy-if-string'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var arrayiffy__default = /*#__PURE__*/_interopDefaultLegacy(arrayiffy);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -197,7 +199,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!").concat(Array.isArray(originalOpts.trimBeforeMatching) ? " Did you mean to use opts.trimCharsBeforeMatching?" : ""));
   }
   var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
-  opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching);
+  opts.trimCharsBeforeMatching = arrayiffy__default['default'](opts.trimCharsBeforeMatching);
   opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(function (el) {
     return isStr(el) ? el : String(el);
   });

@@ -11,12 +11,17 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var arrayObjectOrBoth = require('util-array-object-or-both');
+var checkTypes = require('check-types-mini');
+var astCompare = require('ast-compare');
+var traverse = require('ast-monkey-traverse');
 
-var arrayObjectOrBoth = _interopDefault(require('util-array-object-or-both'));
-var checkTypes = _interopDefault(require('check-types-mini'));
-var astCompare = _interopDefault(require('ast-compare'));
-var traverse = _interopDefault(require('ast-monkey-traverse'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var arrayObjectOrBoth__default = /*#__PURE__*/_interopDefaultLegacy(arrayObjectOrBoth);
+var checkTypes__default = /*#__PURE__*/_interopDefaultLegacy(checkTypes);
+var astCompare__default = /*#__PURE__*/_interopDefaultLegacy(astCompare);
+var traverse__default = /*#__PURE__*/_interopDefaultLegacy(traverse);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -126,7 +131,7 @@ function compareIsEqual(a, b) {
   if (_typeof(a) !== _typeof(b)) {
     return false;
   }
-  return astCompare(a, b, {
+  return astCompare__default['default'](a, b, {
     matchStrictly: true,
     useWildcards: true
   });
@@ -160,7 +165,7 @@ function monkey(originalInput, originalOpts) {
   if (opts.mode === "arrayFirstOnly" && Array.isArray(input) && input.length > 0) {
     input = [input[0]];
   }
-  input = traverse(input, function (key, val, innerObj) {
+  input = traverse__default['default'](input, function (key, val, innerObj) {
     var temp;
     data.count += 1;
     data.gatherPath.length = innerObj.depth;
@@ -225,7 +230,7 @@ function find(input, originalOpts) {
     throw new Error("ast-monkey/main.js/find(): [THROW_ID_03] Please provide opts.key or opts.val");
   }
   var opts = _objectSpread2({}, originalOpts);
-  checkTypes(opts, null, {
+  checkTypes__default['default'](opts, null, {
     schema: {
       key: ["null", "string"],
       val: "any",
@@ -234,7 +239,7 @@ function find(input, originalOpts) {
     msg: "ast-monkey/get(): [THROW_ID_04*]"
   });
   if (typeof opts.only === "string" && opts.only.length > 0) {
-    opts.only = arrayObjectOrBoth(opts.only, {
+    opts.only = arrayObjectOrBoth__default['default'](opts.only, {
       optsVarName: "opts.only",
       msg: "ast-monkey/find(): [THROW_ID_05*]"
     });
@@ -287,7 +292,7 @@ function set(input, originalOpts) {
   if (existy(opts.key) && !notUndef(opts.val)) {
     opts.val = opts.key;
   }
-  checkTypes(opts, null, {
+  checkTypes__default['default'](opts, null, {
     schema: {
       key: [null, "string"],
       val: "any",
@@ -330,7 +335,7 @@ function del(input, originalOpts) {
     throw new Error("ast-monkey/main.js/del(): [THROW_ID_28] Please provide opts.key or opts.val");
   }
   var opts = _objectSpread2({}, originalOpts);
-  checkTypes(opts, null, {
+  checkTypes__default['default'](opts, null, {
     schema: {
       key: [null, "string"],
       val: "any",
@@ -339,7 +344,7 @@ function del(input, originalOpts) {
     msg: "ast-monkey/drop(): [THROW_ID_29*]"
   });
   if (typeof opts.only === "string" && opts.only.length > 0) {
-    opts.only = arrayObjectOrBoth(opts.only, {
+    opts.only = arrayObjectOrBoth__default['default'](opts.only, {
       msg: "ast-monkey/del(): [THROW_ID_30*]",
       optsVarName: "opts.only"
     });
@@ -359,7 +364,12 @@ function arrayFirstOnly(input) {
   });
 }
 
-exports.traverse = traverse;
+Object.defineProperty(exports, 'traverse', {
+  enumerable: true,
+  get: function () {
+    return traverse__default['default'];
+  }
+});
 exports.arrayFirstOnly = arrayFirstOnly;
 exports.del = del;
 exports.drop = drop;

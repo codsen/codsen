@@ -11,10 +11,12 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
 var stringLeftRight = require('string-left-right');
-var apply = _interopDefault(require('ranges-apply'));
+var apply = require('ranges-apply');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var apply__default = /*#__PURE__*/_interopDefaultLegacy(apply);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -326,8 +328,8 @@ function main(_ref) {
     log("".concat("\x1B[".concat(33, "m", "withinArrayIndexes", "\x1B[", 39, "m"), " = ", JSON.stringify(withinArrayIndexes, null, 0), "; ", "\x1B[".concat(33, "m", "withinObjectIndexes", "\x1B[", 39, "m"), " = ").concat(JSON.stringify(withinObjectIndexes, null, 0), ";"));
   }
   log();
-  log("947 RETURN applied ".concat(JSON.stringify(apply(str, ranges), null, 4)));
-  return apply(str, ranges);
+  log("947 RETURN applied ".concat(JSON.stringify(apply__default['default'](str, ranges), null, 4)));
+  return apply__default['default'](str, ranges);
 }
 function set(str, path, valToInsert) {
   if (!isStr(str) || !str.length) {

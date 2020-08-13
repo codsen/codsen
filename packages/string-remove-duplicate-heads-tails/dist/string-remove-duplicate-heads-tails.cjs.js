@@ -9,14 +9,20 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var isObj = _interopDefault(require('lodash.isplainobject'));
-var arrayiffy = _interopDefault(require('arrayiffy-if-string'));
+var isObj = require('lodash.isplainobject');
+var arrayiffy = require('arrayiffy-if-string');
 var stringMatchLeftRight = require('string-match-left-right');
-var Ranges = _interopDefault(require('ranges-push'));
-var rangesApply = _interopDefault(require('ranges-apply'));
-var trimSpaces = _interopDefault(require('string-trim-spaces-only'));
+var Ranges = require('ranges-push');
+var rangesApply = require('ranges-apply');
+var trimSpaces = require('string-trim-spaces-only');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
+var arrayiffy__default = /*#__PURE__*/_interopDefaultLegacy(arrayiffy);
+var Ranges__default = /*#__PURE__*/_interopDefaultLegacy(Ranges);
+var rangesApply__default = /*#__PURE__*/_interopDefaultLegacy(rangesApply);
+var trimSpaces__default = /*#__PURE__*/_interopDefaultLegacy(trimSpaces);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -98,28 +104,28 @@ function removeDuplicateHeadsTails(str) {
   if (typeof str !== "string") {
     return str;
   }
-  if (existy(originalOpts) && !isObj(originalOpts)) {
+  if (existy(originalOpts) && !isObj__default['default'](originalOpts)) {
     throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_03] The given options are not a plain object but ".concat(_typeof(originalOpts), "!"));
   }
   if (existy(originalOpts) && has.call(originalOpts, "heads")) {
-    if (!arrayiffy(originalOpts.heads).every(function (val) {
+    if (!arrayiffy__default['default'](originalOpts.heads).every(function (val) {
       return isStr(val);
     })) {
       throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_04] The opts.heads contains elements which are not string-type!");
     } else if (isStr(originalOpts.heads)) {
-      originalOpts.heads = arrayiffy(originalOpts.heads);
+      originalOpts.heads = arrayiffy__default['default'](originalOpts.heads);
     }
   }
   if (existy(originalOpts) && has.call(originalOpts, "tails")) {
-    if (!arrayiffy(originalOpts.tails).every(function (val) {
+    if (!arrayiffy__default['default'](originalOpts.tails).every(function (val) {
       return isStr(val);
     })) {
       throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_05] The opts.tails contains elements which are not string-type!");
     } else if (isStr(originalOpts.tails)) {
-      originalOpts.tails = arrayiffy(originalOpts.tails);
+      originalOpts.tails = arrayiffy__default['default'](originalOpts.tails);
     }
   }
-  var temp = trimSpaces(str).res;
+  var temp = trimSpaces__default['default'](str).res;
   if (temp.length === 0) {
     return str;
   }
@@ -137,10 +143,10 @@ function removeDuplicateHeadsTails(str) {
   });
   var firstNonMarkerChunkFound = false;
   var secondNonMarkerChunkFound = false;
-  var realRanges = new Ranges({
+  var realRanges = new Ranges__default['default']({
     limitToBeAddedWhitespace: true
   });
-  var conditionalRanges = new Ranges({
+  var conditionalRanges = new Ranges__default['default']({
     limitToBeAddedWhitespace: true
   });
   var itsFirstTail = true;
@@ -173,7 +179,7 @@ function removeDuplicateHeadsTails(str) {
     return str1;
   }
   while (str !== delLeadingEmptyHeadTailChunks(str, opts)) {
-    str = trimSpaces(delLeadingEmptyHeadTailChunks(str, opts)).res;
+    str = trimSpaces__default['default'](delLeadingEmptyHeadTailChunks(str, opts)).res;
   }
   function delTrailingEmptyHeadTailChunks(str1, opts1) {
     var noteDownTheIndex;
@@ -202,7 +208,7 @@ function removeDuplicateHeadsTails(str) {
     return str1;
   }
   while (str !== delTrailingEmptyHeadTailChunks(str, opts)) {
-    str = trimSpaces(delTrailingEmptyHeadTailChunks(str, opts)).res;
+    str = trimSpaces__default['default'](delTrailingEmptyHeadTailChunks(str, opts)).res;
   }
   if (!opts.heads.length || !stringMatchLeftRight.matchRightIncl(str, 0, opts.heads, {
     trimBeforeMatching: true,
@@ -211,7 +217,7 @@ function removeDuplicateHeadsTails(str) {
     trimBeforeMatching: true,
     relaxedApi: true
   })) {
-    return trimSpaces(str).res;
+    return trimSpaces__default['default'](str).res;
   }
   for (var i = 0, len = str.length; i < len; i++) {
     if (str[i].trim() === "") ; else {
@@ -301,7 +307,7 @@ function removeDuplicateHeadsTails(str) {
     realRanges.push(conditionalRanges.current());
   }
   if (realRanges.current()) {
-    return rangesApply(str, realRanges.current()).trim();
+    return rangesApply__default['default'](str, realRanges.current()).trim();
   }
   return str.trim();
 }

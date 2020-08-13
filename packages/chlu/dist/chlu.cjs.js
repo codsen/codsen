@@ -9,18 +9,29 @@
 
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var getPkgRepo = require('get-pkg-repo');
+var semverCompare = require('semver-compare');
+var empty = require('ast-contains-only-empty-space');
+var clone = require('lodash.clonedeep');
+var isObj = require('lodash.isplainobject');
+var min = require('lodash.min');
+var dd = require('dehumanize-date');
+var trim = require('lodash.trim');
+var easyReplace = require('easy-replace');
+var emojiRegexLib = require('emoji-regex');
 
-var getPkgRepo = _interopDefault(require('get-pkg-repo'));
-var semverCompare = _interopDefault(require('semver-compare'));
-var empty = _interopDefault(require('ast-contains-only-empty-space'));
-var clone = _interopDefault(require('lodash.clonedeep'));
-var isObj = _interopDefault(require('lodash.isplainobject'));
-var min = _interopDefault(require('lodash.min'));
-var dd = _interopDefault(require('dehumanize-date'));
-var trim = _interopDefault(require('lodash.trim'));
-var easyReplace = _interopDefault(require('easy-replace'));
-var emojiRegexLib = _interopDefault(require('emoji-regex'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var getPkgRepo__default = /*#__PURE__*/_interopDefaultLegacy(getPkgRepo);
+var semverCompare__default = /*#__PURE__*/_interopDefaultLegacy(semverCompare);
+var empty__default = /*#__PURE__*/_interopDefaultLegacy(empty);
+var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
+var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
+var min__default = /*#__PURE__*/_interopDefaultLegacy(min);
+var dd__default = /*#__PURE__*/_interopDefaultLegacy(dd);
+var trim__default = /*#__PURE__*/_interopDefaultLegacy(trim);
+var easyReplace__default = /*#__PURE__*/_interopDefaultLegacy(easyReplace);
+var emojiRegexLib__default = /*#__PURE__*/_interopDefaultLegacy(emojiRegexLib);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -38,7 +49,7 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
-var emojiRegex = emojiRegexLib();
+var emojiRegex = emojiRegexLib__default['default']();
 var versionWithBracketsRegex = /\[v?\d+\.\d+(\.\d+)*\]/g;
 var versionWithoutBracketsRegex = /v?\d+\.\d+(\.\d+)*/g;
 var versionWithoutBracketsRegexNoVersion = /\d+\.\d+(\.\d+)*/g;
@@ -83,7 +94,7 @@ function isTitle(str) {
       stringInFrontOfVersion = stringInFrontOfVersion[0];
     }
   }
-  return str.length > 0 && existy(str.match(versionWithoutBracketsRegex)) && !str.includes("http") && !str.includes("]:") && trim(stringInFrontOfVersion, "[# \t") === "" && str.includes("#");
+  return str.length > 0 && existy(str.match(versionWithoutBracketsRegex)) && !str.includes("http") && !str.includes("]:") && trim__default['default'](stringInFrontOfVersion, "[# \t") === "" && str.includes("#");
 }
 function getTitlesAndFooterLinks(linesArr) {
   var titles = [];
@@ -138,9 +149,9 @@ function getPreviousVersion(currVers, originalVersionsArr) {
   if (!isArr(originalVersionsArr)) {
     throw new Error("chlu/util.js/getPreviousVersion(): [THROW_ID_05] The second argument must be an array. Currently it's ".concat(_typeof(originalVersionsArr), " equal to:\nJSON.stringify(originalVersionsArr, null, 4)"));
   }
-  var versionsArr = clone(originalVersionsArr).map(function (val) {
+  var versionsArr = clone__default['default'](originalVersionsArr).map(function (val) {
     return prep(val);
-  }).sort(semverCompare);
+  }).sort(semverCompare__default['default']);
   if (currVers === versionsArr[0]) {
     return null;
   }
@@ -152,7 +163,7 @@ function getPreviousVersion(currVers, originalVersionsArr) {
   throw new Error("chlu/util.js/getPreviousVersion(): [THROW_ID_06] The given version (".concat(currVers, ") is not in the versions array (").concat(JSON.stringify(versionsArr, null, 4), ")"));
 }
 function setRow(rowsArray, index, content) {
-  var res = clone(rowsArray);
+  var res = clone__default['default'](rowsArray);
   for (var i = 0, len = res.length; i < len; i++) {
     if (i === index) {
       res[i] = content;
@@ -200,13 +211,13 @@ function getSetFooterLink(str) {
       res.project = existy(o.project) ? o.project : split[i + 2];
     } else if (split[i] === "compare") {
       if (split[i + 1].includes("...")) {
-        var splitVersions = trim(split[i + 1], "#diff").split("...");
-        res.versBefore = existy(o.versBefore) ? o.versBefore : trim(currentlyWeHaveLinkOfAType === "github" ? splitVersions[0] : splitVersions[1], "v");
-        res.versAfter = existy(o.versAfter) ? o.versAfter : trim(currentlyWeHaveLinkOfAType === "github" ? splitVersions[1] : splitVersions[0], "v");
+        var splitVersions = trim__default['default'](split[i + 1], "#diff").split("...");
+        res.versBefore = existy(o.versBefore) ? o.versBefore : trim__default['default'](currentlyWeHaveLinkOfAType === "github" ? splitVersions[0] : splitVersions[1], "v");
+        res.versAfter = existy(o.versAfter) ? o.versAfter : trim__default['default'](currentlyWeHaveLinkOfAType === "github" ? splitVersions[1] : splitVersions[0], "v");
       } else if (split[i + 1].includes("%0D")) {
-        var _splitVersions = trim(split[i + 1], "#diff").split("%0D");
-        res.versBefore = existy(o.versBefore) ? o.versBefore : trim(currentlyWeHaveLinkOfAType === "github" ? _splitVersions[0] : _splitVersions[1], "v");
-        res.versAfter = existy(o.versAfter) ? o.versAfter : trim(currentlyWeHaveLinkOfAType === "github" ? _splitVersions[1] : _splitVersions[0], "v");
+        var _splitVersions = trim__default['default'](split[i + 1], "#diff").split("%0D");
+        res.versBefore = existy(o.versBefore) ? o.versBefore : trim__default['default'](currentlyWeHaveLinkOfAType === "github" ? _splitVersions[0] : _splitVersions[1], "v");
+        res.versAfter = existy(o.versAfter) ? o.versAfter : trim__default['default'](currentlyWeHaveLinkOfAType === "github" ? _splitVersions[1] : _splitVersions[0], "v");
       } else {
         return null;
       }
@@ -226,11 +237,11 @@ function getSetFooterLink(str) {
   }
 }
 function versionSort(a, b) {
-  return semverCompare(a.version, b.version);
+  return semverCompare__default['default'](a.version, b.version);
 }
 function filterDate(someString) {
   var res = someString.trim();
-  res = easyReplace(res, {
+  res = easyReplace__default['default'](res, {
     leftOutsideNot: "",
     leftOutside: "",
     leftMaybe: "[",
@@ -247,7 +258,7 @@ function filterDate(someString) {
   res = res.replace(";", " ");
   res = res.replace(emojiRegex, "");
   res = res.replace(/[ ]+/g, " ");
-  res = trim(res, "[](),.-/\\ \u2013\u2014\t\xA0");
+  res = trim__default['default'](res, "[](),.-/\\ \u2013\u2014\t\xA0");
   return res;
 }
 
@@ -287,11 +298,11 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       } catch (e) {
         throw new Error("chlu/main.js: [THROW_ID_04] Package JSON could not be parsed, JSON.parse gave error:\n".concat(e, "\n\nBy the way, we're talking about contents:\n").concat(JSON.stringify(packageJsonContents, null, 0), "\ntheir type is: \"").concat(_typeof(packageJsonContents), "\"").concat(typeof packageJsonContents === "string" ? " and its length is: ".concat(packageJsonContents.length) : ""));
       }
-    } else if (isObj(packageJsonContents)) {
+    } else if (isObj__default['default'](packageJsonContents)) {
       parsedContents = packageJsonContents;
     }
     try {
-      packageJson = getPkgRepo(parsedContents);
+      packageJson = getPkgRepo__default['default'](parsedContents);
     } catch (e) {
       throw new Error("chlu/main.js: [THROW_ID_05] There was an error in get-pkg-repo:\n".concat(e, "\n\nBy the way, we're talking about contents:\n").concat(JSON.stringify(parsedContents, null, 4)));
     }
@@ -343,7 +354,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   }
   var sortedTitlesArray = titles.map(function (el) {
     return el.version;
-  }).sort(semverCompare);
+  }).sort(semverCompare__default['default']);
   var unusedFooterLinks = footerLinks.filter(function (link) {
     return !titles.map(function (title) {
       return title.version;
@@ -376,7 +387,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   var descendingFooterLinkCount = 0;
   if (footerLinks.length > 1) {
     for (var _i2 = 0, _len2 = footerLinks.length; _i2 < _len2 - 1; _i2++) {
-      if (semverCompare(footerLinks[_i2].version, footerLinks[_i2 + 1].version) === 1) {
+      if (semverCompare__default['default'](footerLinks[_i2].version, footerLinks[_i2 + 1].version) === 1) {
         descendingFooterLinkCount += 1;
       } else {
         ascendingFooterLinkCount += 1;
@@ -390,7 +401,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   var whereToPlaceIt;
   if (footerLinks.length === 0) {
     for (var _i3 = linesArr.length - 1, start = 0; _i3 >= start; _i3--) {
-      if (existy$1(linesArr[_i3]) && !empty(linesArr[_i3])) {
+      if (existy$1(linesArr[_i3]) && !empty__default['default'](linesArr[_i3])) {
         whereToPlaceIt = _i3 + 2;
         break;
       }
@@ -431,7 +442,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
     } else {
       var extractedVersBefore = extracted.versBefore;
       var titlesVersBefore = getPreviousVersion(extracted.version, sortedTitlesArray);
-      if (semverCompare(extractedVersBefore, titlesVersBefore) < 1) {
+      if (semverCompare__default['default'](extractedVersBefore, titlesVersBefore) < 1) {
         finalVersBefore = titlesVersBefore;
       } else {
         finalVersBefore = extractedVersBefore;
@@ -450,14 +461,14 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
     });
     newLinesArr = setRow(newLinesArr, footerLinks[_i4].rowNum, footerLinks[_i4].content);
   }
-  temp = clone(footerLinks).sort(versionSort);
+  temp = clone__default['default'](footerLinks).sort(versionSort);
   if (!ascending) {
     temp = temp.reverse();
   }
   footerLinks.forEach(function (footerLink, index) {
     newLinesArr = setRow(newLinesArr, footerLink.rowNum, temp[index].content);
   });
-  var firstRowWithFooterLink = min(footerLinks.map(function (link) {
+  var firstRowWithFooterLink = min__default['default'](footerLinks.map(function (link) {
     return link.rowNum;
   }));
   for (var _i5 = firstRowWithFooterLink + 1, _len4 = newLinesArr.length; _i5 < _len4; _i5++) {
@@ -472,12 +483,12 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   titlesAndFooterLinks = getTitlesAndFooterLinks(newLinesArr);
   titles = titlesAndFooterLinks.titles;
   footerLinks = titlesAndFooterLinks.footerLinks;
-  if (existy$1(footerLinks) && footerLinks.length > 0 && !empty(getRow(newLinesArr, footerLinks[0].rowNum - 1))) {
+  if (existy$1(footerLinks) && footerLinks.length > 0 && !empty__default['default'](getRow(newLinesArr, footerLinks[0].rowNum - 1))) {
     newLinesArr.splice(footerLinks[0].rowNum, 0, "");
   }
   {
     titles.forEach(function (title) {
-      var fixedDate = dd(filterDate(title.afterVersion));
+      var fixedDate = dd__default['default'](filterDate(title.afterVersion));
       if (fixedDate !== null) {
         newLinesArr = setRow(newLinesArr, title.rowNum, "## ".concat(title.version !== sortedTitlesArray[0] ? "[" : "").concat(title.version).concat(title.version !== sortedTitlesArray[0] ? "]" : "", " - ").concat(fixedDate));
       } else {
