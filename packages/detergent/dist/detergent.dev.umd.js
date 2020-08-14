@@ -11290,7 +11290,7 @@
             throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ".concat(_typeof(addVal), ", equal to:\n").concat(JSON.stringify(addVal, null, 4)));
           }
 
-          if (existy(this.slices) && Array.isArray(this.last()) && from === this.last()[1]) {
+          if (existy(this.ranges) && Array.isArray(this.last()) && from === this.last()[1]) {
             this.last()[1] = to;
             if (this.last()[2] === null || addVal === null) ;
 
@@ -11306,12 +11306,12 @@
               }
             }
           } else {
-            if (!this.slices) {
-              this.slices = [];
+            if (!this.ranges) {
+              this.ranges = [];
             }
 
             var whatToPush = addVal !== undefined && !(isStr$3(addVal) && !addVal.length) ? [from, to, this.opts.limitToBeAddedWhitespace ? collapseLeadingWhitespace(addVal, this.opts.limitLinebreaksCount) : addVal] : [from, to];
-            this.slices.push(whatToPush);
+            this.ranges.push(whatToPush);
           }
         } else {
           if (!(isNum$1(from) && from >= 0)) {
@@ -11335,13 +11335,13 @@
       value: function current() {
         var _this2 = this;
 
-        if (this.slices != null) {
-          this.slices = mergeRanges(this.slices, {
+        if (this.ranges != null) {
+          this.ranges = mergeRanges(this.ranges, {
             mergeType: this.opts.mergeType
           });
 
           if (this.opts.limitToBeAddedWhitespace) {
-            return this.slices.map(function (val) {
+            return this.ranges.map(function (val) {
               if (existy(val[2])) {
                 return [val[0], val[1], collapseLeadingWhitespace(val[2], _this2.opts.limitLinebreaksCount)];
               }
@@ -11350,7 +11350,7 @@
             });
           }
 
-          return this.slices;
+          return this.ranges;
         }
 
         return null;
@@ -11358,7 +11358,7 @@
     }, {
       key: "wipe",
       value: function wipe() {
-        this.slices = undefined;
+        this.ranges = undefined;
       }
     }, {
       key: "replace",
@@ -11367,17 +11367,17 @@
           if (!(Array.isArray(givenRanges[0]) && isNum$1(givenRanges[0][0]))) {
             throw new Error("ranges-push/Ranges/replace(): [THROW_ID_11] Single range was given but we expected array of arrays! The first element, ".concat(JSON.stringify(givenRanges[0], null, 4), " should be an array and its first element should be an integer, a string index."));
           } else {
-            this.slices = Array.from(givenRanges);
+            this.ranges = Array.from(givenRanges);
           }
         } else {
-          this.slices = undefined;
+          this.ranges = undefined;
         }
       }
     }, {
       key: "last",
       value: function last() {
-        if (this.slices !== undefined && Array.isArray(this.slices)) {
-          return this.slices[this.slices.length - 1];
+        if (this.ranges !== undefined && Array.isArray(this.ranges)) {
+          return this.ranges[this.ranges.length - 1];
         }
 
         return null;
@@ -18718,11 +18718,9 @@
 
     if (typeof str !== "string") {
       throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_01] Input must be string! Currently it's: ".concat(_typeof(str).toLowerCase(), ", equal to:\n").concat(JSON.stringify(str, null, 4)));
-    } else if (!str || !str.trim()) {
-      return str;
     }
 
-    if (originalOpts !== undefined && originalOpts !== null && !lodash_isplainobject(originalOpts)) {
+    if (originalOpts && !lodash_isplainobject(originalOpts)) {
       throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_02] Optional Options Object must be a plain object! Currently it's: ".concat(_typeof(originalOpts).toLowerCase(), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
     }
 
@@ -18739,6 +18737,7 @@
       stripTogetherWithTheirContents: _toConsumableArray(stripTogetherWithTheirContentsDefaults),
       skipHtmlDecoding: false,
       returnRangesOnly: false,
+      returnTagLocations: false,
       trimOnlySpaces: false,
       dumpLinkHrefsNearby: {
         enabled: false,
@@ -18813,8 +18812,20 @@
       }
     }
 
-    if (!opts.trimOnlySpaces) {
-      str = str.trim();
+    if (!str.length) {
+      if (opts.returnRangesOnly) {
+        return null;
+      }
+
+      if (opts.returnTagLocations) {
+        return [];
+      }
+
+      return "";
+    }
+
+    if (opts.returnTagLocations && !str.trim()) {
+      return [];
     }
 
     for (var i = 0, len = str.length; i < len; i++) {
@@ -19221,29 +19232,56 @@
       }
     }
 
-    if (rangesToDelete.current()) {
-      if (opts.returnRangesOnly) {
-        return rangesToDelete.current();
+    if (opts.trimOnlySpaces && str[0] === " " || !opts.trimOnlySpaces && !str[0].trim()) {
+      for (var _i = 0, _len = str.length; _i < _len; _i++) {
+        if (opts.trimOnlySpaces && str[_i] !== " " || !opts.trimOnlySpaces && str[_i].trim()) {
+          rangesToDelete.push([0, _i]);
+          break;
+        } else if (!str[_i + 1]) {
+          rangesToDelete.push([0, _i + 1]);
+        }
+      }
+    }
+
+    if (opts.trimOnlySpaces && str[str.length - 1] === " " || !opts.trimOnlySpaces && !str[str.length - 1].trim()) {
+      for (var _i2 = str.length; _i2--;) {
+        if (opts.trimOnlySpaces && str[_i2] !== " " || !opts.trimOnlySpaces && str[_i2].trim()) {
+          rangesToDelete.push([_i2 + 1, str.length]);
+          break;
+        }
+      }
+    }
+
+    if ((!originalOpts || !originalOpts.cb) && rangesToDelete.current()) {
+      if (rangesToDelete.current()[0] && !rangesToDelete.current()[0][0]) {
+        var startingIdx = rangesToDelete.current()[0][1];
+        rangesToDelete.current();
+        rangesToDelete.ranges[0] = [rangesToDelete.ranges[0][0], rangesToDelete.ranges[0][1]];
       }
 
-      var untrimmedRes = rangesApply(str, rangesToDelete.current());
+      if (rangesToDelete.current()[rangesToDelete.current().length - 1] && rangesToDelete.current()[rangesToDelete.current().length - 1][1] === str.length) {
+        var _startingIdx = rangesToDelete.current()[rangesToDelete.current().length - 1][0];
+        rangesToDelete.current();
+        var startingIdx2 = rangesToDelete.ranges[rangesToDelete.ranges.length - 1][0];
 
-      if (opts.trimOnlySpaces) {
-        return lodash_trim(untrimmedRes, " ");
+        if (str[startingIdx2 - 1] && (opts.trimOnlySpaces && str[startingIdx2 - 1] === " " || !opts.trimOnlySpaces && !str[startingIdx2 - 1].trim())) {
+          startingIdx2 -= 1;
+        }
+
+        var backupWhatToAdd = rangesToDelete.ranges[rangesToDelete.ranges.length - 1][2];
+        rangesToDelete.ranges[rangesToDelete.ranges.length - 1] = [startingIdx2, rangesToDelete.ranges[rangesToDelete.ranges.length - 1][1]];
+
+        if (backupWhatToAdd && backupWhatToAdd.trim()) {
+          rangesToDelete.ranges[rangesToDelete.ranges.length - 1].push(backupWhatToAdd.trimEnd());
+        }
       }
-
-      return untrimmedRes.trim();
     }
 
     if (opts.returnRangesOnly) {
-      return [];
+      return rangesToDelete.current();
     }
 
-    if (opts.trimOnlySpaces) {
-      return lodash_trim(str, " ");
-    }
-
-    return str.trim();
+    return rangesApply(str, rangesToDelete.current());
   }
 
   var ansiRegex = function ansiRegex() {

@@ -36,7 +36,7 @@
     "lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --config \"../../.eslintrc.json\" --quiet",
     "prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md}' --write --loglevel silent",
     "republish": "npm publish || :",
-    "tap": "tap && npm run clean_cov",
+    "tap": "tap",
     "test": "npm run lint && npm run unittest && npm run format",
     "unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md && npm run clean_cov"
   },

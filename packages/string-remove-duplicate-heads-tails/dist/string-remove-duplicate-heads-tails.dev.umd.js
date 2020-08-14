@@ -1014,7 +1014,7 @@
             throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ".concat(_typeof(addVal), ", equal to:\n").concat(JSON.stringify(addVal, null, 4)));
           }
 
-          if (existy(this.slices) && Array.isArray(this.last()) && from === this.last()[1]) {
+          if (existy(this.ranges) && Array.isArray(this.last()) && from === this.last()[1]) {
             this.last()[1] = to;
             if (this.last()[2] === null || addVal === null) ;
 
@@ -1030,12 +1030,12 @@
               }
             }
           } else {
-            if (!this.slices) {
-              this.slices = [];
+            if (!this.ranges) {
+              this.ranges = [];
             }
 
             var whatToPush = addVal !== undefined && !(isStr$1(addVal) && !addVal.length) ? [from, to, this.opts.limitToBeAddedWhitespace ? collapseLeadingWhitespace(addVal, this.opts.limitLinebreaksCount) : addVal] : [from, to];
-            this.slices.push(whatToPush);
+            this.ranges.push(whatToPush);
           }
         } else {
           if (!(isNum(from) && from >= 0)) {
@@ -1059,13 +1059,13 @@
       value: function current() {
         var _this2 = this;
 
-        if (this.slices != null) {
-          this.slices = mergeRanges(this.slices, {
+        if (this.ranges != null) {
+          this.ranges = mergeRanges(this.ranges, {
             mergeType: this.opts.mergeType
           });
 
           if (this.opts.limitToBeAddedWhitespace) {
-            return this.slices.map(function (val) {
+            return this.ranges.map(function (val) {
               if (existy(val[2])) {
                 return [val[0], val[1], collapseLeadingWhitespace(val[2], _this2.opts.limitLinebreaksCount)];
               }
@@ -1074,7 +1074,7 @@
             });
           }
 
-          return this.slices;
+          return this.ranges;
         }
 
         return null;
@@ -1082,7 +1082,7 @@
     }, {
       key: "wipe",
       value: function wipe() {
-        this.slices = undefined;
+        this.ranges = undefined;
       }
     }, {
       key: "replace",
@@ -1091,17 +1091,17 @@
           if (!(Array.isArray(givenRanges[0]) && isNum(givenRanges[0][0]))) {
             throw new Error("ranges-push/Ranges/replace(): [THROW_ID_11] Single range was given but we expected array of arrays! The first element, ".concat(JSON.stringify(givenRanges[0], null, 4), " should be an array and its first element should be an integer, a string index."));
           } else {
-            this.slices = Array.from(givenRanges);
+            this.ranges = Array.from(givenRanges);
           }
         } else {
-          this.slices = undefined;
+          this.ranges = undefined;
         }
       }
     }, {
       key: "last",
       value: function last() {
-        if (this.slices !== undefined && Array.isArray(this.slices)) {
-          return this.slices[this.slices.length - 1];
+        if (this.ranges !== undefined && Array.isArray(this.ranges)) {
+          return this.ranges[this.ranges.length - 1];
         }
 
         return null;

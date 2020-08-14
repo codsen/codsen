@@ -1,3 +1,1 @@
-{"total": {"lines":{"total":130,"covered":122,"skipped":0,"pct":93.85},"statements":{"total":132,"covered":124,"skipped":0,"pct":93.94},"functions":{"total":5,"covered":4,"skipped":0,"pct":80},"branches":{"total":124,"covered":109,"skipped":0,"pct":87.9}}
-,"/Users/royston/Documents/__PROJECTS/____libs2/packages/is-language-code/dist/is-language-code.esm.js": {"lines":{"total":130,"covered":122,"skipped":0,"pct":93.85},"functions":{"total":5,"covered":4,"skipped":0,"pct":80},"statements":{"total":132,"covered":124,"skipped":0,"pct":93.94},"branches":{"total":124,"covered":109,"skipped":0,"pct":87.9}}
-}
+{"total":{"lines":{"total":130,"covered":122,"skipped":0,"pct":93.85},"statements":{"total":132,"covered":124,"skipped":0,"pct":93.94},"functions":{"total":5,"covered":4,"skipped":0,"pct":80},"branches":{"total":124,"covered":109,"skipped":0,"pct":87.9}}}

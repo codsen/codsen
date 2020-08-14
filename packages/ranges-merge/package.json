@@ -38,7 +38,7 @@
     "prepare": "npm run build",
     "prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md}' --write --loglevel silent",
     "republish": "npm publish || :",
-    "tap": "tap && npm run clean_cov",
+    "tap": "tap",
     "pretest": "npm run build",
     "test": "npm run lint && npm run unittest && npm run clean_cov && npm run format",
     "unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md && npm run clean_cov && npm run perf",

@@ -1,3 +1,1 @@
-{"total": {"lines":{"total":85,"covered":61,"skipped":0,"pct":71.76},"statements":{"total":87,"covered":62,"skipped":0,"pct":71.26},"functions":{"total":14,"covered":10,"skipped":0,"pct":71.43},"branches":{"total":45,"covered":19,"skipped":0,"pct":42.22}}
-,"/Users/royston/Documents/__PROJECTS/____libs2/packages/csv-sort-cli/cli.js": {"lines":{"total":85,"covered":61,"skipped":0,"pct":71.76},"functions":{"total":14,"covered":10,"skipped":0,"pct":71.43},"statements":{"total":87,"covered":62,"skipped":0,"pct":71.26},"branches":{"total":45,"covered":19,"skipped":0,"pct":42.22}}
-}
+{"total":{"lines":{"total":85,"covered":61,"skipped":0,"pct":71.76},"statements":{"total":87,"covered":62,"skipped":0,"pct":71.26},"functions":{"total":14,"covered":10,"skipped":0,"pct":71.43},"branches":{"total":45,"covered":19,"skipped":0,"pct":42.22}}}
