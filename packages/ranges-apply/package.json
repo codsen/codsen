@@ -102,7 +102,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
-    "req": "replaceSlicesArr",
+    "req": "applyR",
     "various": {
       "back_to_top": {
         "enabled": true,
