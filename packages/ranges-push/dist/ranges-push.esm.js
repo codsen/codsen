@@ -123,7 +123,7 @@ class Ranges {
         );
       }
       if (
-        existy(this.slices) &&
+        existy(this.ranges) &&
         Array.isArray(this.last()) &&
         from === this.last()[1]
       ) {
@@ -147,8 +147,8 @@ class Ranges {
           }
         }
       } else {
-        if (!this.slices) {
-          this.slices = [];
+        if (!this.ranges) {
+          this.ranges = [];
         }
         const whatToPush =
           addVal !== undefined && !(isStr(addVal) && !addVal.length)
@@ -163,7 +163,7 @@ class Ranges {
                   : addVal,
               ]
             : [from, to];
-        this.slices.push(whatToPush);
+        this.ranges.push(whatToPush);
       }
     } else {
       if (!(isNum(from) && from >= 0)) {
@@ -189,12 +189,12 @@ class Ranges {
     this.add(originalFrom, originalTo, addVal, ...etc);
   }
   current() {
-    if (this.slices != null) {
-      this.slices = mergeRanges(this.slices, {
+    if (this.ranges != null) {
+      this.ranges = mergeRanges(this.ranges, {
         mergeType: this.opts.mergeType,
       });
       if (this.opts.limitToBeAddedWhitespace) {
-        return this.slices.map((val) => {
+        return this.ranges.map((val) => {
           if (existy(val[2])) {
             return [
               val[0],
@@ -205,12 +205,12 @@ class Ranges {
           return val;
         });
       }
-      return this.slices;
+      return this.ranges;
     }
     return null;
   }
   wipe() {
-    this.slices = undefined;
+    this.ranges = undefined;
   }
   replace(givenRanges) {
     if (Array.isArray(givenRanges) && givenRanges.length) {
@@ -223,15 +223,15 @@ class Ranges {
           )} should be an array and its first element should be an integer, a string index.`
         );
       } else {
-        this.slices = Array.from(givenRanges);
+        this.ranges = Array.from(givenRanges);
       }
     } else {
-      this.slices = undefined;
+      this.ranges = undefined;
     }
   }
   last() {
-    if (this.slices !== undefined && Array.isArray(this.slices)) {
-      return this.slices[this.slices.length - 1];
+    if (this.ranges !== undefined && Array.isArray(this.ranges)) {
+      return this.ranges[this.ranges.length - 1];
     }
     return null;
   }

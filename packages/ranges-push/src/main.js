@@ -177,7 +177,7 @@ class Ranges {
       );
       // Does the incoming "from" value match the existing last element's "to" value?
       if (
-        existy(this.slices) &&
+        existy(this.ranges) &&
         Array.isArray(this.last()) &&
         from === this.last()[1]
       ) {
@@ -232,8 +232,8 @@ class Ranges {
         console.log(
           `233 ${`\u001b[${31}m${`NO`}\u001b[${39}m`}, incoming "from" value does not match the existing last element's "to" value`
         );
-        if (!this.slices) {
-          this.slices = [];
+        if (!this.ranges) {
+          this.ranges = [];
         }
         const whatToPush =
           addVal !== undefined && !(isStr(addVal) && !addVal.length)
@@ -251,9 +251,9 @@ class Ranges {
         console.log(
           `252 PUSH whatToPush = ${JSON.stringify(whatToPush, null, 4)}`
         );
-        this.slices.push(whatToPush);
+        this.ranges.push(whatToPush);
         console.log(
-          `256 this.slices = ${JSON.stringify(this.slices, null, 4)};`
+          `256 this.ranges = ${JSON.stringify(this.ranges, null, 4)};`
         );
       }
     } else {
@@ -295,13 +295,13 @@ class Ranges {
   // C U R R E N T () - kindof a getter
   // ==================================
   current() {
-    if (this.slices != null) {
+    if (this.ranges != null) {
       // != is intentional
-      this.slices = mergeRanges(this.slices, {
+      this.ranges = mergeRanges(this.ranges, {
         mergeType: this.opts.mergeType,
       });
       if (this.opts.limitToBeAddedWhitespace) {
-        return this.slices.map((val) => {
+        return this.ranges.map((val) => {
           if (existy(val[2])) {
             return [
               val[0],
@@ -312,7 +312,7 @@ class Ranges {
           return val;
         });
       }
-      return this.slices;
+      return this.ranges;
     }
     return null;
   }
@@ -320,7 +320,7 @@ class Ranges {
   // W I P E ()
   // ==========
   wipe() {
-    this.slices = undefined;
+    this.ranges = undefined;
   }
 
   // R E P L A C E ()
@@ -339,18 +339,18 @@ class Ranges {
           )} should be an array and its first element should be an integer, a string index.`
         );
       } else {
-        this.slices = Array.from(givenRanges);
+        this.ranges = Array.from(givenRanges);
       }
     } else {
-      this.slices = undefined;
+      this.ranges = undefined;
     }
   }
 
   // L A S T ()
   // ==========
   last() {
-    if (this.slices !== undefined && Array.isArray(this.slices)) {
-      return this.slices[this.slices.length - 1];
+    if (this.ranges !== undefined && Array.isArray(this.ranges)) {
+      return this.ranges[this.ranges.length - 1];
     }
     return null;
   }
