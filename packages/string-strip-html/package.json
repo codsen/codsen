@@ -113,6 +113,7 @@
       },
       "devDependencies": [
         "@rollup/plugin-json",
+        "ranges-invert",
         "rollup-plugin-node-builtins"
       ],
       "travisVersionsOverride": []
@@ -153,6 +154,7 @@
     "benchmark": "^2.1.4",
     "eslint": "^7.6.0",
     "lect": "^0.13.8",
+    "ranges-invert": "^2.1.44",
     "rollup": "^2.25.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

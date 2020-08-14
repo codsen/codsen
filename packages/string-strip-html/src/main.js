@@ -10,8 +10,10 @@ import { right } from "string-left-right";
 import { characterSuitableForNames, prepHopefullyAnArray } from "./util";
 
 function stripHtml(str, originalOpts) {
-  // constants
+  // const
   // ===========================================================================
+  const start = Date.now();
+
   const definitelyTagNames = new Set([
     "!doctype",
     "abbr",
@@ -149,6 +151,13 @@ function stripHtml(str, originalOpts) {
     "xml",
   ]);
 
+  // we'll gather opening tags from ranged-pairs here:
+  const rangedOpeningTags = [];
+
+  // we'll put tag locations here
+  const allTagLocations = [];
+  const filteredTagLocations = [];
+
   // variables
   // ===========================================================================
 
@@ -160,9 +169,6 @@ function stripHtml(str, originalOpts) {
 
   // records the beginning of the current chunk of spaces (strictly spaces-only):
   let chunkOfSpacesStartsAt = null;
-
-  // we'll gather opening tags from ranged-pairs here:
-  const rangedOpeningTags = [];
 
   // temporary variable to assemble the attribute pieces:
   let attrObj = {};
@@ -195,9 +201,9 @@ function stripHtml(str, originalOpts) {
   }
 
   function treatRangedTags(i, opts, rangesToDelete) {
-    console.log(`198 treatRangedTags(${i}) called`);
+    console.log(`204 treatRangedTags(${i}) called`);
     console.log(
-      `200 opts.stripTogetherWithTheirContents = ${JSON.stringify(
+      `206 opts.stripTogetherWithTheirContents = ${JSON.stringify(
         opts.stripTogetherWithTheirContents,
         null,
         0
@@ -215,7 +221,7 @@ function stripHtml(str, originalOpts) {
       // already exists in the rangesToDelete[].
 
       console.log(
-        `218 ${`\u001b[${33}m${`rangedOpeningTags`}\u001b[${39}m`} = ${JSON.stringify(
+        `224 ${`\u001b[${33}m${`rangedOpeningTags`}\u001b[${39}m`} = ${JSON.stringify(
           rangedOpeningTags,
           null,
           4
@@ -229,7 +235,7 @@ function stripHtml(str, originalOpts) {
       ) {
         // if (tag.slashPresent) {
         console.log(
-          `232 \u001b[${31}m${`treatRangedTags():`}\u001b[${39}m closing ranged tag`
+          `238 \u001b[${31}m${`treatRangedTags():`}\u001b[${39}m closing ranged tag`
         );
         // closing tag.
         // filter and remove the found tag
@@ -254,8 +260,27 @@ function stripHtml(str, originalOpts) {
                 0
               )}`
             );
+
+            // if (
+            //   Number.isInteger(tag.lastClosingBracketAt) &&
+            //   (!allTagLocations.length ||
+            //     allTagLocations[allTagLocations.length - 1][0] !==
+            //       tag.lastOpeningBracketAt)
+            // ) {
+            //   // submit the tag
+            //   allTagLocations.push([
+            //     tag.lastOpeningBracketAt,
+            //     tag.lastClosingBracketAt + 1,
+            //   ]);
+            //   console.log(
+            //     `276 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+            //       tag.lastOpeningBracketAt
+            //     }, ${tag.lastClosingBracketAt + 1}] to allTagLocations`
+            //   );
+            // }
+
             console.log(
-              `258 ABOUT TO cb()-PUSH RANGE: [${rangedOpeningTags[y].lastOpeningBracketAt}, ${i}]`
+              `283 ABOUT TO cb()-PUSH RANGE: [${rangedOpeningTags[y].lastOpeningBracketAt}, ${i}]`
             );
             if (punctuation.has(str[i])) {
               opts.cb({
@@ -293,7 +318,7 @@ function stripHtml(str, originalOpts) {
             // or different name.
             rangedOpeningTags.splice(y, 1);
             console.log(
-              `296 new \u001b[${33}m${`rangedOpeningTags`}\u001b[${39}m = ${JSON.stringify(
+              `321 new \u001b[${33}m${`rangedOpeningTags`}\u001b[${39}m = ${JSON.stringify(
                 rangedOpeningTags,
                 null,
                 4
@@ -306,11 +331,11 @@ function stripHtml(str, originalOpts) {
       } else {
         // opening tag.
         console.log(
-          `309 \u001b[${31}m${`treatRangedTags():`}\u001b[${39}m opening ranged tag`
+          `334 \u001b[${31}m${`treatRangedTags():`}\u001b[${39}m opening ranged tag`
         );
         rangedOpeningTags.push(tag);
         console.log(
-          `313 pushed tag{} to \u001b[${33}m${`rangedOpeningTags`}\u001b[${39}m\nwhich is now equal to:\n${JSON.stringify(
+          `338 pushed tag{} to \u001b[${33}m${`rangedOpeningTags`}\u001b[${39}m\nwhich is now equal to:\n${JSON.stringify(
             rangedOpeningTags,
             null,
             4
@@ -329,10 +354,10 @@ function stripHtml(str, originalOpts) {
     lastClosingBracketAt // tag actually ends here (>)
   ) {
     console.log(
-      `332 \u001b[${35}m${`calculateWhitespaceToInsert() called`}\u001b[${39}m`
+      `357 \u001b[${35}m${`calculateWhitespaceToInsert() called`}\u001b[${39}m`
     );
     console.log(
-      `335 calculateWhitespaceToInsert(): ${`\u001b[${33}m${`currCharIdx`}\u001b[${39}m`} = ${JSON.stringify(
+      `360 calculateWhitespaceToInsert(): ${`\u001b[${33}m${`currCharIdx`}\u001b[${39}m`} = ${JSON.stringify(
         currCharIdx,
         null,
         0
@@ -362,7 +387,7 @@ function stripHtml(str, originalOpts) {
     if (fromIdx < lastOpeningBracketAt) {
       strToEvaluateForLineBreaks += str2.slice(fromIdx, lastOpeningBracketAt);
       console.log(
-        `365 strToEvaluateForLineBreaks = ${JSON.stringify(
+        `390 strToEvaluateForLineBreaks = ${JSON.stringify(
           strToEvaluateForLineBreaks,
           null,
           0
@@ -381,7 +406,7 @@ function stripHtml(str, originalOpts) {
         strToEvaluateForLineBreaks += temp;
       }
       console.log(
-        `384 strToEvaluateForLineBreaks = ${JSON.stringify(
+        `409 strToEvaluateForLineBreaks = ${JSON.stringify(
           strToEvaluateForLineBreaks,
           null,
           0
@@ -391,18 +416,13 @@ function stripHtml(str, originalOpts) {
       );
     }
     console.log(
-      `394 strToEvaluateForLineBreaks = ${JSON.stringify(
+      `419 strToEvaluateForLineBreaks = ${JSON.stringify(
         strToEvaluateForLineBreaks,
         null,
         0
       )} (length ${strToEvaluateForLineBreaks.length})`
     );
-    if (
-      !punctuation.has(str2[currCharIdx]) &&
-      // str2[tag.leftOuterWhitespace - 1] !== ">" &&
-      str2[currCharIdx] !== "!" // &&
-      // str2[currCharIdx] !== "<"
-    ) {
+    if (!punctuation.has(str2[currCharIdx]) && str2[currCharIdx] !== "!") {
       const foundLineBreaks = strToEvaluateForLineBreaks.match(/\n/g);
       if (Array.isArray(foundLineBreaks) && foundLineBreaks.length) {
         if (foundLineBreaks.length === 1) {
@@ -433,7 +453,7 @@ function stripHtml(str, originalOpts) {
     ) {
       hrefInsertionActive = true;
       console.log(
-        `436 calculateHrefToBeInserted(): hrefInsertionActive = "${hrefInsertionActive}"`
+        `456 calculateHrefToBeInserted(): hrefInsertionActive = "${hrefInsertionActive}"`
       );
     }
 
@@ -441,7 +461,7 @@ function stripHtml(str, originalOpts) {
       const lineBreaks = opts.dumpLinkHrefsNearby.putOnNewLine ? "\n\n" : "";
       stringToInsertAfter = `${lineBreaks}${hrefDump.hrefValue}${lineBreaks}`;
       console.log(
-        `444 calculateHrefToBeInserted(): stringToInsertAfter = ${stringToInsertAfter}`
+        `464 calculateHrefToBeInserted(): stringToInsertAfter = ${stringToInsertAfter}`
       );
     }
   }
@@ -483,8 +503,6 @@ function stripHtml(str, originalOpts) {
     onlyStripTags: [],
     stripTogetherWithTheirContents: [...stripTogetherWithTheirContentsDefaults],
     skipHtmlDecoding: false,
-    returnRangesOnly: false,
-    returnTagLocations: false,
     trimOnlySpaces: false,
     dumpLinkHrefsNearby: {
       enabled: false,
@@ -495,6 +513,12 @@ function stripHtml(str, originalOpts) {
     cb: null,
   };
   const opts = { ...defaults, ...originalOpts };
+
+  if (Object.prototype.hasOwnProperty.call(opts, "returnRangesOnly")) {
+    throw new TypeError(
+      `string-strip-html/stripHtml(): [THROW_ID_03] opts.returnRangesOnly has been removed from the API since v.5 release.`
+    );
+  }
 
   // filter non-string or whitespace entries from the following arrays or turn
   // them into arrays:
@@ -567,7 +591,7 @@ function stripHtml(str, originalOpts) {
     })
   ) {
     throw new TypeError(
-      `string-strip-html/stripHtml(): [THROW_ID_06] Optional Options Object's key stripTogetherWithTheirContents was set to contain not just string elements! For example, element at index ${
+      `string-strip-html/stripHtml(): [THROW_ID_05] Optional Options Object's key stripTogetherWithTheirContents was set to contain not just string elements! For example, element at index ${
         somethingCaught.i
       } has a value ${
         somethingCaught.el
@@ -576,7 +600,7 @@ function stripHtml(str, originalOpts) {
   }
 
   // prep the opts.cb
-  console.log(`579 opts.cb type = ${typeof opts.cb}`);
+  console.log(`603 opts.cb type = ${typeof opts.cb}`);
   if (!opts.cb) {
     opts.cb = ({ rangesArr, proposedReturn }) => {
       rangesArr.push(...proposedReturn);
@@ -584,7 +608,7 @@ function stripHtml(str, originalOpts) {
   }
 
   console.log(
-    `587 string-strip-html: final ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+    `611 string-strip-html: final ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
       opts,
       null,
       4
@@ -599,25 +623,13 @@ function stripHtml(str, originalOpts) {
     limitLinebreaksCount: 2,
   });
 
+  // TODO - that's crummy
+  // use ranges-ent-decode
   if (!opts.skipHtmlDecoding) {
     while (str !== ent.decode(str)) {
       // eslint-disable-next-line no-param-reassign
       str = ent.decode(str);
     }
-  }
-
-  if (!str.length) {
-    if (opts.returnRangesOnly) {
-      return null;
-    }
-    if (opts.returnTagLocations) {
-      return [];
-    }
-    return "";
-  }
-
-  if (opts.returnTagLocations && !str.trim()) {
-    return [];
   }
 
   // step 1.
@@ -657,21 +669,21 @@ function stripHtml(str, originalOpts) {
     // catch the closing bracket of dirty tags with missing opening brackets
     // -------------------------------------------------------------------------
     if (str[i] === ">") {
-      console.log(`660 closing bracket caught`);
+      console.log(`672 closing bracket caught`);
       // tend cases where opening bracket of a tag is missing:
       if ((!tag || Object.keys(tag).length < 2) && i > 1) {
-        console.log("663 TRAVERSE BACKWARDS");
+        console.log("675 TRAVERSE BACKWARDS");
 
         // traverse backwards either until start of string or ">" is found
         for (let y = i; y--; ) {
           console.log(`\u001b[${35}m${`str[${y}] = ${str[y]}`}\u001b[${39}m`);
           if (str[y - 1] === undefined || str[y] === ">") {
-            console.log("669 BREAK");
+            console.log("681 BREAK");
 
             const startingPoint = str[y - 1] === undefined ? y : y + 1;
             const culprit = str.slice(startingPoint, i + 1);
             console.log(
-              `674 CULPRIT: "${`\u001b[${31}m${culprit}\u001b[${39}m`}"`
+              `686 CULPRIT: "${`\u001b[${31}m${culprit}\u001b[${39}m`}"`
             );
 
             // Check if the culprit starts with a tag that's more likely a tag
@@ -681,10 +693,10 @@ function stripHtml(str, originalOpts) {
             // but single letter names can be plausible: "a > b" in math.
 
             console.log(
-              `684 "${trim(
+              `696 "${trim(
                 culprit
                   .trim()
-                  .split(" ")
+                  .split(/\s+/)
                   .filter((val2) => val2.trim())
                   .filter((val3, i3) => i3 === 0),
                 "/>"
@@ -698,14 +710,42 @@ function stripHtml(str, originalOpts) {
                   trim(
                     culprit
                       .trim()
-                      .split(" ")
+                      .split(/\s+/)
                       .filter((val2) => val2.trim())
                       .filter((val3, i3) => i3 === 0),
                     "/>"
                   ).toLowerCase() === val
               ) &&
-              stripHtml(`<${culprit.trim()}>`, opts) === ""
+              stripHtml(`<${culprit.trim()}>`, opts).result === ""
             ) {
+              /* istanbul ignore else */
+              if (
+                !allTagLocations.length ||
+                allTagLocations[allTagLocations.length - 1][0] !==
+                  tag.lastOpeningBracketAt
+              ) {
+                allTagLocations.push([startingPoint, i + 1]);
+                console.log(
+                  `729 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+                    tag.lastOpeningBracketAt
+                  }, ${tag.lastClosingBracketAt + 1}] to allTagLocations`
+                );
+              }
+
+              /* istanbul ignore else */
+              if (
+                !filteredTagLocations.length ||
+                filteredTagLocations[filteredTagLocations.length - 1][0] !==
+                  tag.lastOpeningBracketAt
+              ) {
+                filteredTagLocations.push([startingPoint, i + 1]);
+                console.log(
+                  `743 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+                    tag.lastOpeningBracketAt
+                  }, ${tag.lastClosingBracketAt + 1}] to filteredTagLocations`
+                );
+              }
+
               const whiteSpaceCompensation = calculateWhitespaceToInsert(
                 str,
                 i,
@@ -715,7 +755,7 @@ function stripHtml(str, originalOpts) {
                 i + 1
               );
               console.log(
-                `718 \u001b[${33}m${`SUBMIT RANGE #3: [${startingPoint}, ${
+                `758 \u001b[${33}m${`SUBMIT RANGE #3: [${startingPoint}, ${
                   i + 1
                 }, "${whiteSpaceCompensation}"]`}\u001b[${39}m`
               );
@@ -729,7 +769,7 @@ function stripHtml(str, originalOpts) {
                 }
               }
               console.log(
-                `732 cb()-PUSHING [${startingPoint}, ${deleteUpTo}, "${whiteSpaceCompensation}"]`
+                `772 cb()-PUSHING [${startingPoint}, ${deleteUpTo}, "${whiteSpaceCompensation}"]`
               );
               opts.cb({
                 tag,
@@ -758,7 +798,7 @@ function stripHtml(str, originalOpts) {
       Number.isInteger(tag.lastOpeningBracketAt) &&
       !Number.isInteger(tag.lastClosingBracketAt)
     ) {
-      console.log(`761 \u001b[${33}m${`tag.slashPresent`}\u001b[${39}m = true`);
+      console.log(`801 \u001b[${33}m${`tag.slashPresent`}\u001b[${39}m = true`);
       tag.slashPresent = i;
     }
 
@@ -775,7 +815,7 @@ function stripHtml(str, originalOpts) {
         attrObj.valueEnds = i;
         attrObj.value = str.slice(attrObj.valueStarts, i);
         console.log(
-          `778 PUSHING ${`\u001b[${33}m${`attrObj`}\u001b[${39}m`} = ${JSON.stringify(
+          `818 PUSHING ${`\u001b[${33}m${`attrObj`}\u001b[${39}m`} = ${JSON.stringify(
             attrObj,
             null,
             4
@@ -805,7 +845,7 @@ function stripHtml(str, originalOpts) {
             hrefValue: hrefVal,
           };
           console.log(
-            `808 SET ${`\u001b[${33}m${`hrefDump`}\u001b[${39}m`} = ${JSON.stringify(
+            `848 SET ${`\u001b[${33}m${`hrefDump`}\u001b[${39}m`} = ${JSON.stringify(
               hrefDump,
               null,
               4
@@ -815,7 +855,7 @@ function stripHtml(str, originalOpts) {
       } else if (!tag.quotes && tag.nameStarts) {
         // 1. if it's opening marker, record the type and location of quotes
         console.log(
-          `818 SET tag.quotes = {}, tag.quotes.value = ${str[i]}, tag.quotes.start = ${i}`
+          `858 SET tag.quotes = {}, tag.quotes.value = ${str[i]}, tag.quotes.start = ${i}`
         );
         tag.quotes = {};
         tag.quotes.value = str[i];
@@ -830,7 +870,7 @@ function stripHtml(str, originalOpts) {
         ) {
           attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
           console.log(
-            `833 SET ${`\u001b[${33}m${`attrObj`}\u001b[${39}m`} = ${JSON.stringify(
+            `873 SET ${`\u001b[${33}m${`attrObj`}\u001b[${39}m`} = ${JSON.stringify(
               attrObj,
               null,
               4
@@ -850,7 +890,7 @@ function stripHtml(str, originalOpts) {
       // 1. mark the name ending
       tag.nameEnds = i;
       console.log(
-        `853 SET \u001b[${33}m${`tag.nameEnds`}\u001b[${39}m = ${tag.nameEnds}`
+        `893 SET \u001b[${33}m${`tag.nameEnds`}\u001b[${39}m = ${tag.nameEnds}`
       );
       // 2. extract the full name string
       tag.name = str.slice(
@@ -860,11 +900,11 @@ function stripHtml(str, originalOpts) {
           (str[i] !== ">" && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0)
       );
       console.log(
-        `863 SET \u001b[${33}m${`tag.name`}\u001b[${39}m = ${tag.name}`
+        `903 SET \u001b[${33}m${`tag.name`}\u001b[${39}m = ${tag.name}`
       );
 
       console.log(
-        `867 ${`\u001b[${33}m${`tag`}\u001b[${39}m`} is currently = ${JSON.stringify(
+        `907 ${`\u001b[${33}m${`tag`}\u001b[${39}m`} is currently = ${JSON.stringify(
           tag,
           null,
           4
@@ -884,11 +924,11 @@ function stripHtml(str, originalOpts) {
 
       if (str[i] === "<") {
         // process it because we need to tackle this new tag
-        console.log(`887 opening bracket caught`);
+        console.log(`927 opening bracket caught`);
 
         calculateHrefToBeInserted(opts);
         console.log(
-          `891 ${`\u001b[${33}m${`stringToInsertAfter`}\u001b[${39}m`} = ${JSON.stringify(
+          `931 ${`\u001b[${33}m${`stringToInsertAfter`}\u001b[${39}m`} = ${JSON.stringify(
             stringToInsertAfter,
             null,
             4
@@ -912,17 +952,31 @@ function stripHtml(str, originalOpts) {
         );
 
         console.log(
-          `915 \u001b[${33}m${`cb()-PUSH: [${tag.leftOuterWhitespace}, ${
+          `955 \u001b[${33}m${`cb()-PUSH: [${tag.leftOuterWhitespace}, ${
             i + 1
           }, "${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}"]`}\u001b[${39}m`
         );
         console.log(
-          `920 ${`\u001b[${33}m${`tag`}\u001b[${39}m`} = ${JSON.stringify(
+          `960 ${`\u001b[${33}m${`tag`}\u001b[${39}m`} = ${JSON.stringify(
             tag,
             null,
             4
           )}`
         );
+
+        // if (
+        //   !allTagLocations.length ||
+        //   allTagLocations[allTagLocations.length - 1][0] !==
+        //     tag.lastOpeningBracketAt
+        // ) {
+        //   // prevent duplicates
+        //   allTagLocations.push([tag.lastOpeningBracketAt, i]);
+        //   console.log(
+        //     `973 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+        //       tag.lastOpeningBracketAt
+        //     }, ${i}] to allTagLocations`
+        //   );
+        // }
 
         opts.cb({
           tag,
@@ -955,7 +1009,7 @@ function stripHtml(str, originalOpts) {
       !attrObj.valueStarts
     ) {
       console.log(
-        `958 SET \u001b[${33}m${`attrObj.valueStarts`}\u001b[${39}m = ${
+        `1012 SET \u001b[${33}m${`attrObj.valueStarts`}\u001b[${39}m = ${
           attrObj.valueStarts
         }`
       );
@@ -973,7 +1027,7 @@ function stripHtml(str, originalOpts) {
     ) {
       attrObj.equalsAt = i;
       console.log(
-        `976 SET \u001b[${33}m${`attrObj.equalsAt`}\u001b[${39}m = ${
+        `1030 SET \u001b[${33}m${`attrObj.equalsAt`}\u001b[${39}m = ${
           attrObj.equalsAt
         }`
       );
@@ -996,18 +1050,18 @@ function stripHtml(str, originalOpts) {
       //   tag.attributes = [];
       // }
       tag.attributes.push(attrObj);
-      console.log("999 PUSHED attrObj into tag.attributes, reset attrObj");
+      console.log("1053 PUSHED attrObj into tag.attributes, reset attrObj");
       attrObj = {};
     }
 
     // catch the ending of an attribute's name
     // -------------------------------------------------------------------------
     if (!tag.quotes && attrObj.nameStarts && !attrObj.nameEnds) {
-      console.log("1006");
+      console.log("1060");
       if (!str[i].trim()) {
         attrObj.nameEnds = i;
         console.log(
-          `1010 SET ${`\u001b[${33}m${`attrObj.nameEnds`}\u001b[${39}m`} = ${JSON.stringify(
+          `1064 SET ${`\u001b[${33}m${`attrObj.nameEnds`}\u001b[${39}m`} = ${JSON.stringify(
             attrObj.nameEnds,
             null,
             4
@@ -1015,13 +1069,13 @@ function stripHtml(str, originalOpts) {
         );
         attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
       } else if (str[i] === "=") {
-        console.log(`1018 equal char clauses`);
+        console.log(`1072 equal char clauses`);
         /* istanbul ignore else */
         if (!attrObj.equalsAt) {
-          console.log(`1021 equal hasn't been met`);
+          console.log(`1075 equal hasn't been met`);
           attrObj.nameEnds = i;
           console.log(
-            `1024 SET ${`\u001b[${33}m${`attrObj.nameEnds`}\u001b[${39}m`} = ${JSON.stringify(
+            `1078 SET ${`\u001b[${33}m${`attrObj.nameEnds`}\u001b[${39}m`} = ${JSON.stringify(
               attrObj.nameEnds,
               null,
               4
@@ -1029,7 +1083,7 @@ function stripHtml(str, originalOpts) {
           );
           attrObj.equalsAt = i;
           console.log(
-            `1032 SET ${`\u001b[${33}m${`attrObj.equalsAt`}\u001b[${39}m`} = ${JSON.stringify(
+            `1086 SET ${`\u001b[${33}m${`attrObj.equalsAt`}\u001b[${39}m`} = ${JSON.stringify(
               attrObj.equalsAt,
               null,
               4
@@ -1039,7 +1093,7 @@ function stripHtml(str, originalOpts) {
         }
       } else if (str[i] === "/" || str[i] === ">") {
         console.log(
-          `1042 SET ${`\u001b[${33}m${`attrObj.nameEnds`}\u001b[${39}m`} = ${JSON.stringify(
+          `1096 SET ${`\u001b[${33}m${`attrObj.nameEnds`}\u001b[${39}m`} = ${JSON.stringify(
             attrObj.nameEnds,
             null,
             4
@@ -1048,7 +1102,7 @@ function stripHtml(str, originalOpts) {
         attrObj.nameEnds = i;
         attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
         console.log(
-          `1051 \u001b[${33}m${`PUSH attrObj and wipe`}\u001b[${39}m`
+          `1105 \u001b[${33}m${`PUSH attrObj and wipe`}\u001b[${39}m`
         );
         // if (!tag.attributes) {
         //   tag.attributes = [];
@@ -1057,7 +1111,7 @@ function stripHtml(str, originalOpts) {
         attrObj = {};
       } else if (str[i] === "<") {
         console.log(
-          `1060 \u001b[${33}m${`ATTR NAME ENDS WITH NEW TAG`}\u001b[${39}m - ${`\u001b[${31}m${`TODO`}\u001b[${39}m`}`
+          `1114 \u001b[${33}m${`ATTR NAME ENDS WITH NEW TAG`}\u001b[${39}m - ${`\u001b[${31}m${`TODO`}\u001b[${39}m`}`
         );
         // TODO - address both cases of onlyPlausible
         attrObj.nameEnds = i;
@@ -1083,7 +1137,7 @@ function stripHtml(str, originalOpts) {
     ) {
       attrObj.nameStarts = i;
       console.log(
-        `1086 SET \u001b[${33}m${`attrObj.nameStarts`}\u001b[${39}m = ${
+        `1140 SET \u001b[${33}m${`attrObj.nameStarts`}\u001b[${39}m = ${
           attrObj.nameStarts
         }`
       );
@@ -1115,7 +1169,7 @@ function stripHtml(str, originalOpts) {
           tag.onlyPlausible = false;
         }
         console.log(
-          `1118 SET \u001b[${33}m${`tag.onlyPlausible`}\u001b[${39}m = ${
+          `1172 SET \u001b[${33}m${`tag.onlyPlausible`}\u001b[${39}m = ${
             tag.onlyPlausible
           }`
         );
@@ -1133,7 +1187,7 @@ function stripHtml(str, originalOpts) {
         tag.nameStarts = i;
         tag.nameContainsLetters = false;
         console.log(
-          `1136 \u001b[${33}m${`tag.nameStarts`}\u001b[${39}m = ${
+          `1190 \u001b[${33}m${`tag.nameStarts`}\u001b[${39}m = ${
             tag.nameStarts
           }`
         );
@@ -1157,14 +1211,14 @@ function stripHtml(str, originalOpts) {
         tag.lastClosingBracketAt = i;
 
         console.log(
-          `1160 SET tag.lastClosingBracketAt = ${tag.lastClosingBracketAt}`
+          `1214 SET tag.lastClosingBracketAt = ${tag.lastClosingBracketAt}`
         );
         // 2. reset the spacesChunkWhichFollowsTheClosingBracketEndsAt
         spacesChunkWhichFollowsTheClosingBracketEndsAt = null;
         // 3. push attrObj into tag.attributes[]
         if (Object.keys(attrObj).length) {
           console.log(
-            `1167 PUSH \u001b[${33}m${`attrObj`}\u001b[${39}m & reset`
+            `1221 PUSH \u001b[${33}m${`attrObj`}\u001b[${39}m & reset`
           );
           // if (!tag.attributes) {
           //   tag.attributes = [];
@@ -1181,7 +1235,7 @@ function stripHtml(str, originalOpts) {
           // finish assembling the hrefDump{}
           hrefDump.openingTagEnds = i; // or tag.lastClosingBracketAt, same
           console.log(
-            `1184 SET ${`\u001b[${33}m${`hrefDump`}\u001b[${39}m`} = ${JSON.stringify(
+            `1238 SET ${`\u001b[${33}m${`hrefDump`}\u001b[${39}m`} = ${JSON.stringify(
               hrefDump,
               null,
               4
@@ -1196,28 +1250,43 @@ function stripHtml(str, originalOpts) {
     // the tag is "released" into "rangesApply":
 
     if (tag.lastOpeningBracketAt !== undefined) {
-      console.log(`1199 opening bracket has been met`);
+      console.log(`1253 opening bracket has been met`);
       if (tag.lastClosingBracketAt === undefined) {
-        console.log(`1201 closing bracket hasn't been met`);
+        console.log(`1255 closing bracket hasn't been met`);
         if (
           tag.lastOpeningBracketAt < i &&
           str[i] !== "<" && // to prevent cases like "text <<<<<< text"
           (str[i + 1] === undefined || str[i + 1] === "<") &&
           tag.nameContainsLetters
         ) {
-          console.log(`1208 str[i + 1] = ${str[i + 1]}`);
+          console.log(`1262 str[i + 1] = ${str[i + 1]}`);
           // find out the tag name earlier than dedicated tag name ending catching section:
           // if (str[i + 1] === undefined) {
           tag.name = str
             .slice(tag.nameStarts, tag.nameEnds ? tag.nameEnds : i + 1)
             .toLowerCase();
           console.log(
-            `1215 SET ${`\u001b[${33}m${`tag.name`}\u001b[${39}m`} = ${JSON.stringify(
+            `1269 SET ${`\u001b[${33}m${`tag.name`}\u001b[${39}m`} = ${JSON.stringify(
               tag.name,
               null,
               4
             )}`
           );
+
+          // submit tag to allTagLocations
+          /* istanbul ignore else */
+          if (
+            !allTagLocations.length ||
+            allTagLocations[allTagLocations.length - 1][0] !==
+              tag.lastOpeningBracketAt
+          ) {
+            allTagLocations.push([tag.lastOpeningBracketAt, i + 1]);
+            console.log(
+              `1285 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+                tag.lastOpeningBracketAt
+              }, ${i + 1}] to allTagLocations`
+            );
+          }
 
           if (
             // if it's an ignored tag
@@ -1226,7 +1295,7 @@ function stripHtml(str, originalOpts) {
             (tag.onlyPlausible && !definitelyTagNames.has(tag.name))
           ) {
             console.log(
-              `1229 Ignored tag - \u001b[${31}m${`WIPE AND RESET`}\u001b[${39}m`
+              `1298 Ignored tag - \u001b[${31}m${`WIPE AND RESET`}\u001b[${39}m`
             );
             tag = {};
             attrObj = {};
@@ -1236,7 +1305,7 @@ function stripHtml(str, originalOpts) {
           // if the tag is only plausible (there's space after opening bracket) and it's not among
           // recognised tags, leave it as it is:
 
-          console.log(`1239`);
+          console.log(`1308`);
           if (
             ((definitelyTagNames.has(tag.name) ||
               singleLetterTags.has(tag.name)) &&
@@ -1246,7 +1315,7 @@ function stripHtml(str, originalOpts) {
           ) {
             calculateHrefToBeInserted(opts);
             console.log(
-              `1249 ${`\u001b[${33}m${`stringToInsertAfter`}\u001b[${39}m`} = ${JSON.stringify(
+              `1318 ${`\u001b[${33}m${`stringToInsertAfter`}\u001b[${39}m`} = ${JSON.stringify(
                 stringToInsertAfter,
                 null,
                 4
@@ -1263,12 +1332,12 @@ function stripHtml(str, originalOpts) {
             );
 
             console.log(
-              `1266 \u001b[${33}m${`cb()-PUSH: [${tag.leftOuterWhitespace}, ${
+              `1335 \u001b[${33}m${`cb()-PUSH: [${tag.leftOuterWhitespace}, ${
                 i + 1
               }, "${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}"]`}\u001b[${39}m`
             );
             console.log(
-              `1271 ${`\u001b[${33}m${`tag`}\u001b[${39}m`} = ${JSON.stringify(
+              `1340 ${`\u001b[${33}m${`tag`}\u001b[${39}m`} = ${JSON.stringify(
                 tag,
                 null,
                 4
@@ -1291,19 +1360,29 @@ function stripHtml(str, originalOpts) {
 
             // also,
             treatRangedTags(i, opts, rangesToDelete);
-          } // else {
-          //   console.log(`1455 continue`);
-          //   continue;
-          // }
-          // }
-          console.log(`1299`);
+          }
+          console.log(`1364`);
+
+          /* istanbul ignore else */
+          if (
+            !filteredTagLocations.length ||
+            filteredTagLocations[filteredTagLocations.length - 1][0] !==
+              tag.lastOpeningBracketAt
+          ) {
+            filteredTagLocations.push([tag.lastOpeningBracketAt, i + 1]);
+            console.log(
+              `1374 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+                tag.lastOpeningBracketAt
+              }, ${i + 1}] to filteredTagLocations`
+            );
+          }
         }
-        console.log(`1301`);
+        console.log(`1380`);
       } else if (
         (i > tag.lastClosingBracketAt && str[i].trim()) ||
         str[i + 1] === undefined
       ) {
-        console.log(`1306 closing bracket has been met`);
+        console.log(`1385 closing bracket has been met`);
         // case 2. closing bracket HAS BEEN met
         // we'll look for a non-whitespace character and delete up to it
         // BUT, we'll wipe the tag object only if that non-whitespace character
@@ -1313,7 +1392,7 @@ function stripHtml(str, originalOpts) {
 
         let endingRangeIndex = tag.lastClosingBracketAt === i ? i + 1 : i;
         console.log(
-          `1316 ${`\u001b[${33}m${`endingRangeIndex`}\u001b[${39}m`} = ${JSON.stringify(
+          `1395 ${`\u001b[${33}m${`endingRangeIndex`}\u001b[${39}m`} = ${JSON.stringify(
             endingRangeIndex,
             null,
             4
@@ -1334,12 +1413,31 @@ function stripHtml(str, originalOpts) {
         // the tag name is not recognised.
 
         console.log(
-          `1337 ${`\u001b[${33}m${`tag.name`}\u001b[${39}m`} = ${JSON.stringify(
+          `1416 ${`\u001b[${33}m${`tag.name`}\u001b[${39}m`} = ${JSON.stringify(
             tag.name,
             null,
             4
           )}`
         );
+
+        // submit tag to allTagLocations
+        /* istanbul ignore else */
+        if (
+          !allTagLocations.length ||
+          allTagLocations[allTagLocations.length - 1][0] !==
+            tag.lastOpeningBracketAt
+        ) {
+          allTagLocations.push([
+            tag.lastOpeningBracketAt,
+            tag.lastClosingBracketAt + 1,
+          ]);
+          console.log(
+            `1435 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+              tag.lastOpeningBracketAt
+            }, ${tag.lastClosingBracketAt + 1}] to allTagLocations`
+          );
+        }
+
         if (
           (!onlyStripTagsMode && opts.ignoreTags.includes(tag.name)) ||
           (onlyStripTagsMode && !opts.onlyStripTags.includes(tag.name))
@@ -1354,9 +1452,11 @@ function stripHtml(str, originalOpts) {
             proposedReturn: [],
           });
 
+          // don't submit the tag onto "filteredTagLocations"
+
           // then reset:
           console.log(
-            `1359 Ignored tag - \u001b[${31}m${`WIPE AND RESET`}\u001b[${39}m`
+            `1459 Ignored tag - \u001b[${31}m${`WIPE AND RESET`}\u001b[${39}m`
           );
           tag = {};
           attrObj = {};
@@ -1372,6 +1472,24 @@ function stripHtml(str, originalOpts) {
           (tag.attributes &&
             tag.attributes.some((attrObj2) => attrObj2.equalsAt))
         ) {
+          // submit tag to filteredTagLocations
+          /* istanbul ignore else */
+          if (
+            !filteredTagLocations.length ||
+            filteredTagLocations[filteredTagLocations.length - 1][0] !==
+              tag.lastOpeningBracketAt
+          ) {
+            filteredTagLocations.push([
+              tag.lastOpeningBracketAt,
+              tag.lastClosingBracketAt + 1,
+            ]);
+            console.log(
+              `1487 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+                tag.lastOpeningBracketAt
+              }, ${tag.lastClosingBracketAt + 1}] to filteredTagLocations`
+            );
+          }
+
           // if this was an ignored tag name, algorithm would have bailed earlier,
           // in stage "catch the ending of the tag name".
 
@@ -1384,7 +1502,7 @@ function stripHtml(str, originalOpts) {
             tag.lastClosingBracketAt
           );
           console.log(
-            `1387 ${`\u001b[${33}m${`whiteSpaceCompensation`}\u001b[${39}m`} = ${JSON.stringify(
+            `1505 ${`\u001b[${33}m${`whiteSpaceCompensation`}\u001b[${39}m`} = ${JSON.stringify(
               whiteSpaceCompensation,
               null,
               4
@@ -1398,7 +1516,7 @@ function stripHtml(str, originalOpts) {
           calculateHrefToBeInserted(opts);
 
           console.log(
-            `1401 ${`\u001b[${33}m${`stringToInsertAfter`}\u001b[${39}m`} = ${JSON.stringify(
+            `1519 ${`\u001b[${33}m${`stringToInsertAfter`}\u001b[${39}m`} = ${JSON.stringify(
               stringToInsertAfter,
               null,
               4
@@ -1411,7 +1529,7 @@ function stripHtml(str, originalOpts) {
               whiteSpaceCompensation === "\n\n" ? "\n" : whiteSpaceCompensation
             }`;
             console.log(
-              `1414 SET ${`\u001b[${33}m${`insert`}\u001b[${39}m`} = ${JSON.stringify(
+              `1532 SET ${`\u001b[${33}m${`insert`}\u001b[${39}m`} = ${JSON.stringify(
                 insert,
                 null,
                 4
@@ -1420,7 +1538,7 @@ function stripHtml(str, originalOpts) {
           } else {
             insert = whiteSpaceCompensation;
             console.log(
-              `1423 SET ${`\u001b[${33}m${`insert`}\u001b[${39}m`} = ${JSON.stringify(
+              `1541 SET ${`\u001b[${33}m${`insert`}\u001b[${39}m`} = ${JSON.stringify(
                 insert,
                 null,
                 4
@@ -1434,7 +1552,7 @@ function stripHtml(str, originalOpts) {
           ) {
             insert = "";
             console.log(
-              `1437 SET ${`\u001b[${33}m${`insert`}\u001b[${39}m`} = ${JSON.stringify(
+              `1555 SET ${`\u001b[${33}m${`insert`}\u001b[${39}m`} = ${JSON.stringify(
                 insert,
                 null,
                 4
@@ -1444,7 +1562,7 @@ function stripHtml(str, originalOpts) {
 
           // pass the range onto the callback function, be it default or user's
           console.log(
-            `1447 \u001b[${33}m${`cb()-SUBMIT RANGE #2: [${
+            `1565 \u001b[${33}m${`cb()-SUBMIT RANGE #2: [${
               tag.leftOuterWhitespace
             }, ${endingRangeIndex}, ${JSON.stringify(
               insert,
@@ -1465,41 +1583,41 @@ function stripHtml(str, originalOpts) {
           // also,
           treatRangedTags(i, opts, rangesToDelete);
         } else {
-          console.log(`1468 \u001b[${33}m${`RESET tag{}`}\u001b[${39}m`);
+          console.log(`1586 \u001b[${33}m${`RESET tag{}`}\u001b[${39}m`);
           tag = {};
         }
 
         // part 2.
         if (str[i] !== ">") {
-          console.log(`1474 \u001b[${33}m${`RESET tag{}`}\u001b[${39}m`);
+          console.log(`1592 \u001b[${33}m${`RESET tag{}`}\u001b[${39}m`);
           tag = {};
         }
       }
     }
 
-    // catch opening bracket
+    // catch an opening bracket
     // -------------------------------------------------------------------------
     if (str[i] === "<" && str[i - 1] !== "<") {
-      console.log(`1483 caught opening bracket`);
+      console.log(`1601 caught opening bracket`);
       // cater sequences of opening brackets "<<<<div>>>"
       if (str[right(str, i)] === ">") {
         // cater cases like: "<><><>"
-        console.log(`1487 cases like <><><>`);
+        console.log(`1605 cases like <><><>`);
         continue;
       } else {
-        console.log(`1490 opening brackets else clauses`);
+        console.log(`1608 opening brackets else clauses`);
         // 1. Before (re)setting flags, check, do we have a case of a tag with a
         // missing closing bracket, and this is a new tag following it.
 
         console.log(
-          `1495 R1: ${!!tag.nameEnds}; R2: ${
+          `1613 R1: ${!!tag.nameEnds}; R2: ${
             tag.nameEnds < i
           }; R3: ${!tag.lastClosingBracketAt}`
         );
         if (tag.nameEnds && tag.nameEnds < i && !tag.lastClosingBracketAt) {
-          console.log(`1500`);
+          console.log(`1618`);
           console.log(
-            `1502 R1: ${!!tag.onlyPlausible}; R2: ${!definitelyTagNames.has(
+            `1620 R1: ${!!tag.onlyPlausible}; R2: ${!definitelyTagNames.has(
               tag.name
             )}; R3: ${!singleLetterTags.has(tag.name)}; R4: ${!(
               tag.attributes && tag.attributes.length
@@ -1511,7 +1629,7 @@ function stripHtml(str, originalOpts) {
               tag.attributes.length) ||
             tag.onlyPlausible === false
           ) {
-            console.log(`1514`);
+            console.log(`1632`);
             // tag.onlyPlausible can be undefined too
             const whiteSpaceCompensation = calculateWhitespaceToInsert(
               str,
@@ -1521,8 +1639,9 @@ function stripHtml(str, originalOpts) {
               tag.lastOpeningBracketAt,
               i
             );
+
             console.log(
-              `1525 cb()-PUSH range [${tag.leftOuterWhitespace}, ${i}, "${whiteSpaceCompensation}"]`
+              `1644 cb()-PUSH range [${tag.leftOuterWhitespace}, ${i}, "${whiteSpaceCompensation}"]`
             );
             opts.cb({
               tag,
@@ -1586,7 +1705,7 @@ function stripHtml(str, originalOpts) {
           //   chunkOfWhitespaceStartsAt === null ? i : chunkOfWhitespaceStartsAt;
 
           console.log(
-            `1589 SET \u001b[${33}m${`tag.leftOuterWhitespace`}\u001b[${39}m = ${
+            `1708 SET \u001b[${33}m${`tag.leftOuterWhitespace`}\u001b[${39}m = ${
               tag.leftOuterWhitespace
             }; \u001b[${33}m${`tag.lastOpeningBracketAt`}\u001b[${39}m = ${
               tag.lastOpeningBracketAt
@@ -1603,14 +1722,14 @@ function stripHtml(str, originalOpts) {
             }${str[i + 7]}${str[i + 8]}` === "![CDATA["
           ) {
             console.log(
-              `1606 \u001b[${31}m${`███████████████████████████████████████`}\u001b[${39}m`
+              `1725 \u001b[${31}m${`███████████████████████████████████████`}\u001b[${39}m`
             );
             // make a note which one it is:
             let cdata = true;
             if (str[i + 2] === "-") {
               cdata = false;
             }
-            console.log("1613 traversing forward");
+            console.log("1732 traversing forward");
             let closingFoundAt;
             for (let y = i; y < len; y++) {
               console.log(
@@ -1623,7 +1742,7 @@ function stripHtml(str, originalOpts) {
                 (!cdata && `${str[y - 2]}${str[y - 1]}${str[y]}` === "-->")
               ) {
                 closingFoundAt = y;
-                console.log(`1626 closingFoundAt = ${closingFoundAt}`);
+                console.log(`1745 closingFoundAt = ${closingFoundAt}`);
               }
 
               if (
@@ -1631,7 +1750,7 @@ function stripHtml(str, originalOpts) {
                 ((closingFoundAt < y && str[y].trim()) ||
                   str[y + 1] === undefined)
               ) {
-                console.log("1634 END detected");
+                console.log("1753 END detected");
                 let rangeEnd = y;
                 if (
                   (str[y + 1] === undefined && !str[y].trim()) ||
@@ -1639,6 +1758,42 @@ function stripHtml(str, originalOpts) {
                 ) {
                   rangeEnd += 1;
                 }
+
+                // submit the tag
+                /* istanbul ignore else */
+                if (
+                  !allTagLocations.length ||
+                  allTagLocations[allTagLocations.length - 1][0] !==
+                    tag.lastOpeningBracketAt
+                ) {
+                  allTagLocations.push([
+                    tag.lastOpeningBracketAt,
+                    closingFoundAt + 1,
+                  ]);
+                  console.log(
+                    `1774 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+                      tag.lastOpeningBracketAt
+                    }, ${closingFoundAt + 1}] to allTagLocations`
+                  );
+                }
+
+                /* istanbul ignore else */
+                if (
+                  !filteredTagLocations.length ||
+                  filteredTagLocations[filteredTagLocations.length - 1][0] !==
+                    tag.lastOpeningBracketAt
+                ) {
+                  filteredTagLocations.push([
+                    tag.lastOpeningBracketAt,
+                    closingFoundAt + 1,
+                  ]);
+                  console.log(
+                    `1791 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+                      tag.lastOpeningBracketAt
+                    }, ${closingFoundAt + 1}] to filteredTagLocations`
+                  );
+                }
+
                 const whiteSpaceCompensation = calculateWhitespaceToInsert(
                   str,
                   y,
@@ -1648,7 +1803,7 @@ function stripHtml(str, originalOpts) {
                   closingFoundAt
                 );
                 console.log(
-                  `1651 cb()-PUSH range [${tag.leftOuterWhitespace}, ${rangeEnd}, "${whiteSpaceCompensation}"]`
+                  `1806 cb()-PUSH range [${tag.leftOuterWhitespace}, ${rangeEnd}, "${whiteSpaceCompensation}"]`
                 );
                 opts.cb({
                   tag,
@@ -1687,7 +1842,7 @@ function stripHtml(str, originalOpts) {
       if (chunkOfWhitespaceStartsAt === null) {
         chunkOfWhitespaceStartsAt = i;
         console.log(
-          `1690 SET \u001b[${33}m${`chunkOfWhitespaceStartsAt`}\u001b[${39}m = ${chunkOfWhitespaceStartsAt}`
+          `1845 SET \u001b[${33}m${`chunkOfWhitespaceStartsAt`}\u001b[${39}m = ${chunkOfWhitespaceStartsAt}`
         );
         if (
           tag.lastOpeningBracketAt !== undefined &&
@@ -1702,7 +1857,7 @@ function stripHtml(str, originalOpts) {
           )
         ) {
           console.log(
-            `1705 RESET ALL \u001b[${31}m${`███████████████████████████████████████`}\u001b[${39}m`
+            `1860 RESET ALL \u001b[${31}m${`███████████████████████████████████████`}\u001b[${39}m`
           );
           tag.onlyPlausible = true;
           tag.name = undefined;
@@ -1710,7 +1865,7 @@ function stripHtml(str, originalOpts) {
         }
       }
     } else if (chunkOfWhitespaceStartsAt !== null) {
-      console.log("1713");
+      console.log("1868");
       // 1. piggyback the catching of the attributes with equal and no value
       if (
         !tag.quotes &&
@@ -1723,7 +1878,7 @@ function stripHtml(str, originalOpts) {
         /* istanbul ignore else */
         if (isObj(attrObj)) {
           console.log(
-            `1726 PUSHING ${`\u001b[${33}m${`attrObj`}\u001b[${39}m`} = ${JSON.stringify(
+            `1881 PUSHING ${`\u001b[${33}m${`attrObj`}\u001b[${39}m`} = ${JSON.stringify(
               attrObj,
               null,
               4
@@ -1739,7 +1894,7 @@ function stripHtml(str, originalOpts) {
       // 2. reset whitespace marker
       chunkOfWhitespaceStartsAt = null;
       console.log(
-        `1742 SET \u001b[${33}m${`chunkOfWhitespaceStartsAt`}\u001b[${39}m = ${chunkOfWhitespaceStartsAt}`
+        `1897 SET \u001b[${33}m${`chunkOfWhitespaceStartsAt`}\u001b[${39}m = ${chunkOfWhitespaceStartsAt}`
       );
     }
 
@@ -1751,14 +1906,14 @@ function stripHtml(str, originalOpts) {
       if (chunkOfSpacesStartsAt === null) {
         chunkOfSpacesStartsAt = i;
         console.log(
-          `1754 SET \u001b[${33}m${`chunkOfSpacesStartsAt`}\u001b[${39}m = ${chunkOfSpacesStartsAt}`
+          `1909 SET \u001b[${33}m${`chunkOfSpacesStartsAt`}\u001b[${39}m = ${chunkOfSpacesStartsAt}`
         );
       }
     } else if (chunkOfSpacesStartsAt !== null) {
       // 2. reset the marker
       chunkOfSpacesStartsAt = null;
       console.log(
-        `1761 SET \u001b[${33}m${`chunkOfSpacesStartsAt`}\u001b[${39}m = ${chunkOfSpacesStartsAt}`
+        `1916 SET \u001b[${33}m${`chunkOfSpacesStartsAt`}\u001b[${39}m = ${chunkOfSpacesStartsAt}`
       );
     }
 
@@ -1780,7 +1935,7 @@ function stripHtml(str, originalOpts) {
       )}`
     );
     console.log(
-      `1783 ${`\u001b[${33}m${`spacesChunkWhichFollowsTheClosingBracketEndsAt`}\u001b[${39}m`} = ${JSON.stringify(
+      `1938 ${`\u001b[${33}m${`spacesChunkWhichFollowsTheClosingBracketEndsAt`}\u001b[${39}m`} = ${JSON.stringify(
         spacesChunkWhichFollowsTheClosingBracketEndsAt,
         null,
         4
@@ -1794,14 +1949,14 @@ function stripHtml(str, originalOpts) {
     //   )}`
     // );
     console.log(
-      `1797 ${`\u001b[${33}m${`hrefDump`}\u001b[${39}m`} = ${JSON.stringify(
+      `1952 ${`\u001b[${33}m${`hrefDump`}\u001b[${39}m`} = ${JSON.stringify(
         hrefDump,
         null,
         4
       )}`
     );
     console.log(
-      `1804 ${`\u001b[${33}m${`attrObj`}\u001b[${39}m`} = ${JSON.stringify(
+      `1959 ${`\u001b[${33}m${`attrObj`}\u001b[${39}m`} = ${JSON.stringify(
         attrObj,
         null,
         4
@@ -1834,48 +1989,50 @@ function stripHtml(str, originalOpts) {
   // trim but in ranges
   // first tackle the beginning on the string
   if (
+    str &&
     // if only spaces were meant to be trimmed,
-    (opts.trimOnlySpaces &&
+    ((opts.trimOnlySpaces &&
       // and first character is a space
       str[0] === " ") ||
-    // if normal trim is requested
-    (!opts.trimOnlySpaces &&
-      // and the first character is whitespace character
-      !str[0].trim())
+      // if normal trim is requested
+      (!opts.trimOnlySpaces &&
+        // and the first character is whitespace character
+        !str[0].trim()))
   ) {
-    console.log(`1846 trim frontal part`);
+    console.log(`2002 trim frontal part`);
     for (let i = 0, len = str.length; i < len; i++) {
       if (
         (opts.trimOnlySpaces && str[i] !== " ") ||
         (!opts.trimOnlySpaces && str[i].trim())
       ) {
-        console.log(`1852 PUSH [0, ${i}]`);
+        console.log(`2008 PUSH [0, ${i}]`);
         rangesToDelete.push([0, i]);
         break;
       } else if (!str[i + 1]) {
         // if end has been reached and whole string has been trimmable
-        console.log(`1857 PUSH [0, ${i + 1}]`);
+        console.log(`2013 PUSH [0, ${i + 1}]`);
         rangesToDelete.push([0, i + 1]);
       }
     }
   }
 
   if (
+    str &&
     // if only spaces were meant to be trimmed,
-    (opts.trimOnlySpaces &&
+    ((opts.trimOnlySpaces &&
       // and last character is a space
       str[str.length - 1] === " ") ||
-    // if normal trim is requested
-    (!opts.trimOnlySpaces &&
-      // and the last character is whitespace character
-      !str[str.length - 1].trim())
+      // if normal trim is requested
+      (!opts.trimOnlySpaces &&
+        // and the last character is whitespace character
+        !str[str.length - 1].trim()))
   ) {
     for (let i = str.length; i--; ) {
       if (
         (opts.trimOnlySpaces && str[i] !== " ") ||
         (!opts.trimOnlySpaces && str[i].trim())
       ) {
-        console.log(`1878 PUSH [i + 1, ${str.length}]`);
+        console.log(`2035 PUSH [i + 1, ${str.length}]`);
         rangesToDelete.push([i + 1, str.length]);
         break;
       }
@@ -1895,7 +2052,7 @@ function stripHtml(str, originalOpts) {
     // check front - the first range of gathered ranges, does it touch start (0)
     if (rangesToDelete.current()[0] && !rangesToDelete.current()[0][0]) {
       console.log(
-        `1898 ${`\u001b[${33}m${`the first range`}\u001b[${39}m`} = ${JSON.stringify(
+        `2055 ${`\u001b[${33}m${`the first range`}\u001b[${39}m`} = ${JSON.stringify(
           rangesToDelete.current()[0],
           null,
           4
@@ -1904,7 +2061,7 @@ function stripHtml(str, originalOpts) {
       const startingIdx = rangesToDelete.current()[0][1];
       // check the character at str[startingIdx]
       console.log(
-        `1907 ${`\u001b[${33}m${`startingIdx`}\u001b[${39}m`} = ${JSON.stringify(
+        `2064 ${`\u001b[${33}m${`startingIdx`}\u001b[${39}m`} = ${JSON.stringify(
           startingIdx,
           null,
           4
@@ -1929,7 +2086,7 @@ function stripHtml(str, originalOpts) {
         str.length
     ) {
       console.log(
-        `1932 ${`\u001b[${33}m${`the last range`}\u001b[${39}m`} = ${JSON.stringify(
+        `2089 ${`\u001b[${33}m${`the last range`}\u001b[${39}m`} = ${JSON.stringify(
           rangesToDelete.current()[rangesToDelete.current().length - 1],
           null,
           4
@@ -1940,7 +2097,7 @@ function stripHtml(str, originalOpts) {
       ][0];
       // check character at str[startingIdx - 1]
       console.log(
-        `1943 ${`\u001b[${33}m${`startingIdx`}\u001b[${39}m`} = ${JSON.stringify(
+        `2100 ${`\u001b[${33}m${`startingIdx`}\u001b[${39}m`} = ${JSON.stringify(
           startingIdx,
           null,
           4
@@ -1984,32 +2141,24 @@ function stripHtml(str, originalOpts) {
     }
   }
 
+  const res = {
+    log: {
+      timeTakenInMilliseconds: Date.now() - start,
+    },
+    result: rangesApply(str, rangesToDelete.current()),
+    ranges: rangesToDelete.current(),
+    allTagLocations,
+    filteredTagLocations,
+  };
   console.log(
-    `1988 ${`\u001b[${35}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`rangesToDelete.current()`}\u001b[${39}m`} = ${JSON.stringify(
-      rangesToDelete.current(),
+    `2154 ${`\u001b[${32}m${`FINAL RESULT`}\u001b[${39}m`} = ${JSON.stringify(
+      res,
       null,
       4
     )}`
   );
 
-  if (opts.returnRangesOnly) {
-    console.log(
-      `1997 RETURNING: ${JSON.stringify(
-        rangesToDelete.current(),
-        null,
-        4
-      )}\n\n\n\n\n\n`
-    );
-    return rangesToDelete.current();
-  }
-  console.log(
-    `2006 RETURNING: ${JSON.stringify(
-      rangesApply(str, rangesToDelete.current()),
-      null,
-      4
-    )}\n\n\n\n\n\n`
-  );
-  return rangesApply(str, rangesToDelete.current());
+  return res;
 }
 
 export default stripHtml;

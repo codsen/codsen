@@ -8595,14 +8595,20 @@
   }
 
   function stripHtml(str, originalOpts) {
-    // constants
+    // const
     // ===========================================================================
+    var start = Date.now();
     var definitelyTagNames = new Set(["!doctype", "abbr", "address", "area", "article", "aside", "audio", "base", "bdi", "bdo", "blockquote", "body", "br", "button", "canvas", "caption", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "param", "picture", "pre", "progress", "rb", "rp", "rt", "rtc", "ruby", "samp", "script", "section", "select", "slot", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "ul", "var", "video", "wbr", "xml"]);
     var singleLetterTags = new Set(["a", "b", "i", "p", "q", "s", "u"]);
     var punctuation = new Set([".", ",", "?", ";", ")", "\u2026", '"', "\xBB"]); // \u00BB is &raquo; - guillemet - right angled quote
     // \u2026 is &hellip; - ellipsis
 
-    var stripTogetherWithTheirContentsDefaults = new Set(["script", "style", "xml"]); // variables
+    var stripTogetherWithTheirContentsDefaults = new Set(["script", "style", "xml"]); // we'll gather opening tags from ranged-pairs here:
+
+    var rangedOpeningTags = []; // we'll put tag locations here
+
+    var allTagLocations = [];
+    var filteredTagLocations = []; // variables
     // ===========================================================================
     // records the info about the suspected tag:
 
@@ -8612,9 +8618,7 @@
 
     var chunkOfWhitespaceStartsAt = null; // records the beginning of the current chunk of spaces (strictly spaces-only):
 
-    var chunkOfSpacesStartsAt = null; // we'll gather opening tags from ranged-pairs here:
-
-    var rangedOpeningTags = []; // temporary variable to assemble the attribute pieces:
+    var chunkOfSpacesStartsAt = null; // temporary variable to assemble the attribute pieces:
 
     var attrObj = {}; // marker to store captured href, used in opts.dumpLinkHrefsNearby.enabled
 
@@ -8667,6 +8671,23 @@
               // around tags.
               // 1. add range without caring about surrounding whitespace around
               // the range
+              // if (
+              //   Number.isInteger(tag.lastClosingBracketAt) &&
+              //   (!allTagLocations.length ||
+              //     allTagLocations[allTagLocations.length - 1][0] !==
+              //       tag.lastOpeningBracketAt)
+              // ) {
+              //   // submit the tag
+              //   allTagLocations.push([
+              //     tag.lastOpeningBracketAt,
+              //     tag.lastClosingBracketAt + 1,
+              //   ]);
+              //   console.log(
+              //     `276 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+              //       tag.lastOpeningBracketAt
+              //     }, ${tag.lastClosingBracketAt + 1}] to allTagLocations`
+              //   );
+              // }
               if (punctuation.has(str[i])) {
                 opts.cb({
                   tag: tag,
@@ -8730,28 +8751,25 @@
         }
       }
 
-      if (!punctuation.has(str2[currCharIdx]) && // str2[tag.leftOuterWhitespace - 1] !== ">" &&
-      str2[currCharIdx] !== "!" // &&
-      // str2[currCharIdx] !== "<"
-      ) {
-          var foundLineBreaks = strToEvaluateForLineBreaks.match(/\n/g);
+      if (!punctuation.has(str2[currCharIdx]) && str2[currCharIdx] !== "!") {
+        var foundLineBreaks = strToEvaluateForLineBreaks.match(/\n/g);
 
-          if (Array.isArray(foundLineBreaks) && foundLineBreaks.length) {
-            if (foundLineBreaks.length === 1) {
-              return "\n";
-            }
+        if (Array.isArray(foundLineBreaks) && foundLineBreaks.length) {
+          if (foundLineBreaks.length === 1) {
+            return "\n";
+          }
 
-            if (foundLineBreaks.length === 2) {
-              return "\n\n";
-            } // return three line breaks maximum
+          if (foundLineBreaks.length === 2) {
+            return "\n\n";
+          } // return three line breaks maximum
 
 
-            return "\n\n\n";
-          } // default spacer - a single space
+          return "\n\n\n";
+        } // default spacer - a single space
 
 
-          return " ";
-        } // default case: space
+        return " ";
+      } // default case: space
 
 
       return "";
@@ -8794,8 +8812,6 @@
       onlyStripTags: [],
       stripTogetherWithTheirContents: _toConsumableArray(stripTogetherWithTheirContentsDefaults),
       skipHtmlDecoding: false,
-      returnRangesOnly: false,
-      returnTagLocations: false,
       trimOnlySpaces: false,
       dumpLinkHrefsNearby: {
         enabled: false,
@@ -8806,7 +8822,11 @@
       cb: null
     };
 
-    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); // filter non-string or whitespace entries from the following arrays or turn
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
+
+    if (Object.prototype.hasOwnProperty.call(opts, "returnRangesOnly")) {
+      throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_03] opts.returnRangesOnly has been removed from the API since v.5 release.");
+    } // filter non-string or whitespace entries from the following arrays or turn
     // them into arrays:
 
 
@@ -8856,7 +8876,7 @@
 
       return true;
     })) {
-      throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_06] Optional Options Object's key stripTogetherWithTheirContents was set to contain not just string elements! For example, element at index ".concat(somethingCaught.i, " has a value ").concat(somethingCaught.el, " which is not string but ").concat(_typeof(somethingCaught.el).toLowerCase(), "."));
+      throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_05] Optional Options Object's key stripTogetherWithTheirContents was set to contain not just string elements! For example, element at index ".concat(somethingCaught.i, " has a value ").concat(somethingCaught.el, " which is not string but ").concat(_typeof(somethingCaught.el).toLowerCase(), "."));
     } // prep the opts.cb
 
 
@@ -8874,29 +8894,14 @@
     var rangesToDelete = new Ranges({
       limitToBeAddedWhitespace: true,
       limitLinebreaksCount: 2
-    });
+    }); // TODO - that's crummy
+    // use ranges-ent-decode
 
     if (!opts.skipHtmlDecoding) {
       while (str !== ent.decode(str)) {
         // eslint-disable-next-line no-param-reassign
         str = ent.decode(str);
       }
-    }
-
-    if (!str.length) {
-      if (opts.returnRangesOnly) {
-        return null;
-      }
-
-      if (opts.returnTagLocations) {
-        return [];
-      }
-
-      return "";
-    }
-
-    if (opts.returnTagLocations && !str.trim()) {
-      return [];
     } // step 1.
     // ===========================================================================
 
@@ -8930,12 +8935,23 @@
 
                 if (str !== "<".concat(lodash_trim(culprit.trim(), "/>"), ">") && // recursion prevention
                 _toConsumableArray(definitelyTagNames).some(function (val) {
-                  return lodash_trim(culprit.trim().split(" ").filter(function (val2) {
+                  return lodash_trim(culprit.trim().split(/\s+/).filter(function (val2) {
                     return val2.trim();
                   }).filter(function (val3, i3) {
                     return i3 === 0;
                   }), "/>").toLowerCase() === val;
-                }) && stripHtml("<".concat(culprit.trim(), ">"), opts) === "") {
+                }) && stripHtml("<".concat(culprit.trim(), ">"), opts).result === "") {
+                  /* istanbul ignore else */
+                  if (!allTagLocations.length || allTagLocations[allTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
+                    allTagLocations.push([startingPoint, i + 1]);
+                  }
+                  /* istanbul ignore else */
+
+
+                  if (!filteredTagLocations.length || filteredTagLocations[filteredTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
+                    filteredTagLocations.push([startingPoint, i + 1]);
+                  }
+
                   var whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, startingPoint, i + 1, startingPoint, i + 1);
                   var deleteUpTo = i + 1;
 
@@ -9040,7 +9056,20 @@
           // lastOpeningBracketAt, // tag actually starts here (<)
           // lastClosingBracketAt // tag actually ends here (>)
 
-          var whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i, tag.lastOpeningBracketAt, i);
+          var whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i, tag.lastOpeningBracketAt, i); // if (
+          //   !allTagLocations.length ||
+          //   allTagLocations[allTagLocations.length - 1][0] !==
+          //     tag.lastOpeningBracketAt
+          // ) {
+          //   // prevent duplicates
+          //   allTagLocations.push([tag.lastOpeningBracketAt, i]);
+          //   console.log(
+          //     `973 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+          //       tag.lastOpeningBracketAt
+          //     }, ${i}] to allTagLocations`
+          //   );
+          // }
+
           opts.cb({
             tag: tag,
             deleteFrom: tag.leftOuterWhitespace,
@@ -9185,7 +9214,13 @@
           str[i + 1] === undefined || str[i + 1] === "<") && tag.nameContainsLetters) {
             // find out the tag name earlier than dedicated tag name ending catching section:
             // if (str[i + 1] === undefined) {
-            tag.name = str.slice(tag.nameStarts, tag.nameEnds ? tag.nameEnds : i + 1).toLowerCase();
+            tag.name = str.slice(tag.nameStarts, tag.nameEnds ? tag.nameEnds : i + 1).toLowerCase(); // submit tag to allTagLocations
+
+            /* istanbul ignore else */
+
+            if (!allTagLocations.length || allTagLocations[allTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
+              allTagLocations.push([tag.lastOpeningBracketAt, i + 1]);
+            }
 
             if ( // if it's an ignored tag
             opts.ignoreTags.includes(tag.name) || // or just plausible and unrecognised
@@ -9213,12 +9248,13 @@
               resetHrefMarkers(); // also,
 
               treatRangedTags(i, opts, rangesToDelete);
-            } // else {
-            //   console.log(`1455 continue`);
-            //   continue;
-            // }
-            // }
+            }
+            /* istanbul ignore else */
 
+
+            if (!filteredTagLocations.length || filteredTagLocations[filteredTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
+              filteredTagLocations.push([tag.lastOpeningBracketAt, i + 1]);
+            }
           }
         } else if (i > tag.lastClosingBracketAt && str[i].trim() || str[i + 1] === undefined) {
           // case 2. closing bracket HAS BEEN met
@@ -9233,7 +9269,14 @@
           } // if it's a dodgy suspicious tag where space follows opening bracket, there's an extra requirement
           // for this tag to be considered a tag - there has to be at least one attribute with equals if
           // the tag name is not recognised.
+          // submit tag to allTagLocations
 
+          /* istanbul ignore else */
+
+
+          if (!allTagLocations.length || allTagLocations[allTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
+            allTagLocations.push([tag.lastOpeningBracketAt, tag.lastClosingBracketAt + 1]);
+          }
 
           if (!onlyStripTagsMode && opts.ignoreTags.includes(tag.name) || onlyStripTagsMode && !opts.onlyStripTags.includes(tag.name)) {
             // ping the callback with nulls:
@@ -9244,7 +9287,8 @@
               insert: null,
               rangesArr: rangesToDelete,
               proposedReturn: []
-            }); // then reset:
+            }); // don't submit the tag onto "filteredTagLocations"
+            // then reset:
 
             tag = {};
             attrObj = {}; // continue;
@@ -9253,8 +9297,15 @@
           tag.attributes && tag.attributes.some(function (attrObj2) {
             return attrObj2.equalsAt;
           })) {
-            // if this was an ignored tag name, algorithm would have bailed earlier,
+            // submit tag to filteredTagLocations
+
+            /* istanbul ignore else */
+            if (!filteredTagLocations.length || filteredTagLocations[filteredTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
+              filteredTagLocations.push([tag.lastOpeningBracketAt, tag.lastClosingBracketAt + 1]);
+            } // if this was an ignored tag name, algorithm would have bailed earlier,
             // in stage "catch the ending of the tag name".
+
+
             var _whiteSpaceCompensation2 = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, endingRangeIndex, tag.lastOpeningBracketAt, tag.lastClosingBracketAt); // calculate optional opts.dumpLinkHrefsNearby.enabled HREF to insert
 
 
@@ -9296,7 +9347,7 @@
             tag = {};
           }
         }
-      } // catch opening bracket
+      } // catch an opening bracket
       // -------------------------------------------------------------------------
 
 
@@ -9380,6 +9431,19 @@
 
                   if (str[_y + 1] === undefined && !str[_y].trim() || str[_y] === ">") {
                     rangeEnd += 1;
+                  } // submit the tag
+
+                  /* istanbul ignore else */
+
+
+                  if (!allTagLocations.length || allTagLocations[allTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
+                    allTagLocations.push([tag.lastOpeningBracketAt, closingFoundAt + 1]);
+                  }
+                  /* istanbul ignore else */
+
+
+                  if (!filteredTagLocations.length || filteredTagLocations[filteredTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
+                    filteredTagLocations.push([tag.lastOpeningBracketAt, closingFoundAt + 1]);
                   }
 
                   var _whiteSpaceCompensation4 = calculateWhitespaceToInsert(str, _y, tag.leftOuterWhitespace, rangeEnd, tag.lastOpeningBracketAt, closingFoundAt);
@@ -9476,11 +9540,11 @@
     // first tackle the beginning on the string
 
 
-    if ( // if only spaces were meant to be trimmed,
+    if (str && ( // if only spaces were meant to be trimmed,
     opts.trimOnlySpaces && // and first character is a space
     str[0] === " " || // if normal trim is requested
     !opts.trimOnlySpaces && // and the first character is whitespace character
-    !str[0].trim()) {
+    !str[0].trim())) {
       for (var _i = 0, _len = str.length; _i < _len; _i++) {
         if (opts.trimOnlySpaces && str[_i] !== " " || !opts.trimOnlySpaces && str[_i].trim()) {
           rangesToDelete.push([0, _i]);
@@ -9492,11 +9556,11 @@
       }
     }
 
-    if ( // if only spaces were meant to be trimmed,
+    if (str && ( // if only spaces were meant to be trimmed,
     opts.trimOnlySpaces && // and last character is a space
     str[str.length - 1] === " " || // if normal trim is requested
     !opts.trimOnlySpaces && // and the last character is whitespace character
-    !str[str.length - 1].trim()) {
+    !str[str.length - 1].trim())) {
       for (var _i2 = str.length; _i2--;) {
         if (opts.trimOnlySpaces && str[_i2] !== " " || !opts.trimOnlySpaces && str[_i2].trim()) {
           rangesToDelete.push([_i2 + 1, str.length]);
@@ -9554,11 +9618,16 @@
       }
     }
 
-    if (opts.returnRangesOnly) {
-      return rangesToDelete.current();
-    }
-
-    return rangesApply(str, rangesToDelete.current());
+    var res = {
+      log: {
+        timeTakenInMilliseconds: Date.now() - start
+      },
+      result: rangesApply(str, rangesToDelete.current()),
+      ranges: rangesToDelete.current(),
+      allTagLocations: allTagLocations,
+      filteredTagLocations: filteredTagLocations
+    };
+    return res;
   }
 
   return stripHtml;

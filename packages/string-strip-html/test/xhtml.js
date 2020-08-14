@@ -12,13 +12,9 @@ tap.test("01 - strips XML - strips Outlook XML fix block, tight", (t) => {
 <o:PixelsPerInch>96</o:PixelsPerInch>
 </o:OfficeDocumentSettings>
 </xml><![endif]-->def`;
-  const res = "abc def";
-  t.same(stripHtml(input), res, "01.01");
-  t.same(
-    applyR(input, stripHtml(input, { returnRangesOnly: true })),
-    res,
-    "01.02"
-  );
+  const result = "abc def";
+  t.match(stripHtml(input), { result }, "01.01");
+  t.match(applyR(input, stripHtml(input).ranges), result, "01.02");
   t.end();
 });
 
@@ -31,13 +27,9 @@ tap.test(
 <o:PixelsPerInch>96</o:PixelsPerInch>
 </o:OfficeDocumentSettings>
 </xml><![endif]-->def`;
-    const res = "abc def";
-    t.same(stripHtml(input), res, "02.01");
-    t.same(
-      applyR(input, stripHtml(input, { returnRangesOnly: true })),
-      res,
-      "02.02"
-    );
+    const result = "abc def";
+    t.match(stripHtml(input), { result }, "02.01");
+    t.match(applyR(input, stripHtml(input).ranges), result, "02.02");
     t.end();
   }
 );
@@ -51,13 +43,9 @@ tap.test(
 <o:PixelsPerInch>96</o:PixelsPerInch>
 </o:OfficeDocumentSettings>
 </xml><![endif]--> def`;
-    const res = "abc def";
-    t.same(stripHtml(input), res, "03.01");
-    t.same(
-      applyR(input, stripHtml(input, { returnRangesOnly: true })),
-      res,
-      "03.02"
-    );
+    const result = "abc def";
+    t.match(stripHtml(input), { result }, "03.01");
+    t.match(applyR(input, stripHtml(input).ranges), result, "03.02");
     t.end();
   }
 );
@@ -71,13 +59,9 @@ tap.test(
 <o:PixelsPerInch>96</o:PixelsPerInch>
 </o:OfficeDocumentSettings>
 </xml><![endif]--> def`;
-    const res = "abc def";
-    t.same(stripHtml(input), res, "04.01");
-    t.same(
-      applyR(input, stripHtml(input, { returnRangesOnly: true })),
-      res,
-      "04.02"
-    );
+    const result = "abc def";
+    t.match(stripHtml(input), { result }, "04.01");
+    t.match(applyR(input, stripHtml(input).ranges), result, "04.02");
     t.end();
   }
 );
@@ -91,13 +75,9 @@ tap.test("05 - strips XML - generous trailing space", (t) => {
 </xml><![endif]-->
 
   def`;
-  const res = "abc\n\ndef";
-  t.same(stripHtml(input), res, "05.01");
-  t.same(
-    applyR(input, stripHtml(input, { returnRangesOnly: true })),
-    res,
-    "05.02"
-  );
+  const result = "abc\n\ndef";
+  t.match(stripHtml(input), { result }, "05.01");
+  t.match(applyR(input, stripHtml(input).ranges), result, "05.02");
   t.end();
 });
 
@@ -110,14 +90,9 @@ tap.test("06 - strips XML - text-whitespace-tag", (t) => {
 </xml><![endif]-->
 
   `;
-  const res = "abc";
-  t.same(stripHtml(input), res, "06.01");
-  t.same(stripHtml(input, { returnRangesOnly: true }), [[3, 159]], "06.02");
-  t.same(
-    applyR(input, stripHtml(input, { returnRangesOnly: true })),
-    res,
-    "06.03"
-  );
+  const result = "abc";
+  t.match(stripHtml(input), { result, ranges: [[3, 159]] }, "06.01");
+  t.match(applyR(input, stripHtml(input).ranges), result, "06.02");
   t.end();
 });
 
@@ -130,13 +105,9 @@ tap.test("07 - strips XML - text-tabs-tag", (t) => {
 </xml><![endif]-->
 
   `;
-  const res = "abc";
-  t.same(stripHtml(input), res, "07.01");
-  t.same(
-    applyR(input, stripHtml(input, { returnRangesOnly: true })),
-    res,
-    "07.02"
-  );
+  const result = "abc";
+  t.match(stripHtml(input), { result }, "07.01");
+  t.match(applyR(input, stripHtml(input).ranges), result, "07.02");
   t.end();
 });
 
@@ -149,13 +120,9 @@ tap.test("08 - strips XML - tag-whitespace-text", (t) => {
 </xml><![endif]-->  abc
 
   `;
-  const res = "abc";
-  t.same(stripHtml(input), res, "08.01");
-  t.same(
-    applyR(input, stripHtml(input, { returnRangesOnly: true })),
-    res,
-    "08.02"
-  );
+  const result = "abc";
+  t.match(stripHtml(input), { result }, "08.01");
+  t.match(applyR(input, stripHtml(input).ranges), result, "08.02");
   t.end();
 });
 
@@ -168,13 +135,9 @@ tap.test("09 - strips XML - tag-tabs-text", (t) => {
 </xml><![endif]-->\t\tabc
 
   `;
-  const res = "abc";
-  t.same(stripHtml(input), res, "09.01");
-  t.same(
-    applyR(input, stripHtml(input, { returnRangesOnly: true })),
-    res,
-    "09.02"
-  );
+  const result = "abc";
+  t.match(stripHtml(input), { result }, "09.01");
+  t.match(applyR(input, stripHtml(input).ranges), result, "09.02");
   t.end();
 });
 
@@ -187,13 +150,9 @@ tap.test("10 - strips XML - leading content", (t) => {
 </xml>
 
   `;
-  const res = "abc";
-  t.same(stripHtml(input), res, "10.01");
-  t.same(
-    applyR(input, stripHtml(input, { returnRangesOnly: true })),
-    res,
-    "10.02"
-  );
+  const result = "abc";
+  t.match(stripHtml(input), { result }, "10.01");
+  t.match(applyR(input, stripHtml(input).ranges), result, "10.02");
   t.end();
 });
 
@@ -206,12 +165,8 @@ tap.test("11 - strips XML - leading content", (t) => {
 </xml>
 
   abc`;
-  const res = "abc";
-  t.same(stripHtml(input), res, "11.01");
-  t.same(
-    applyR(input, stripHtml(input, { returnRangesOnly: true })),
-    res,
-    "11.02"
-  );
+  const result = "abc";
+  t.match(stripHtml(input), { result }, "11.01");
+  t.match(applyR(input, stripHtml(input).ranges), result, "11.02");
   t.end();
 });

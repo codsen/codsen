@@ -45,9 +45,9 @@ This package has three builds in `dist/` folder:
 
 | Type                                                                                                    | Key in `package.json` | Path                            | Size   |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ------ |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-strip-html.cjs.js` | 31 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-strip-html.esm.js` | 31 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-strip-html.umd.js` | 101 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-strip-html.cjs.js` | 34 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-strip-html.esm.js` | 33 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-strip-html.umd.js` | 102 KB |
 
 **[⬆ back to top](#)**
 
@@ -56,11 +56,11 @@ This package has three builds in `dist/` folder:
 ```js
 const stripHtml = require("string-strip-html");
 // it does not assume the output must be always HTML and detects legit brackets:
-console.log(stripHtml("a < b and c > d")); // => 'a < b and c > d'
+console.log(stripHtml("a < b and c > d").result); // => 'a < b and c > d'
 // leaves content between tags:
-console.log(stripHtml("Some text <b>and</b> text.")); // => 'Some text and text.'
+console.log(stripHtml("Some text <b>and</b> text.").result); // => 'Some text and text.'
 // adds spaces to prevent accidental string concatenation
-console.log(stripHtml("aaa<div>bbb</div>ccc")); // => 'aaa bbb ccc'
+console.log(stripHtml("aaa<div>bbb</div>ccc").result); // => 'aaa bbb ccc'
 ```
 
 **[⬆ back to top](#)**
@@ -72,6 +72,9 @@ console.log(stripHtml("aaa<div>bbb</div>ccc")); // => 'aaa bbb ccc'
 - [Purpose](#purpose)
 - [Features](#features)
 - [API](#api)
+- [API - Input](#api-input)
+- [API - Output](#api-output)
+- [Optional Options Object](#optional-options-object)
 - [Options](#options)
 - [Algorithm](#algorithm)
 - [Quality dependencies](#quality-dependencies)
@@ -99,9 +102,11 @@ This library only detects and removes HTML tags from strings (text, in other wor
 
 ## API
 
-String-in string-out, with optional second input argument - an Optional Options Object.
+**stripHtml(str, \[originalOpts])**
 
-### API - Input
+In other words, it's a function which takes two input arguments, second-one is optional (marked by square brackets above).
+
+## API - Input
 
 | Input argument | Type         | Obligatory? | Description                                        |
 | -------------- | ------------ | ----------- | -------------------------------------------------- |
@@ -112,7 +117,21 @@ If input arguments are supplied have any other types, an error will be `throw`n.
 
 **[⬆ back to top](#)**
 
-### Optional Options Object
+## API - Output
+
+The `stripHtml()` function will return **a plain object** where you'll find log data, result string, ranges and locations of both all and filtered (via `opts.ignoreTags` and `opts.onlyStripTags`) HTML tag locations.
+
+| Key's name             | Key value's type                                     | Description                                                                                                                                                                                   |
+| ---------------------- | ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `log`                  | Plain object                                         | For example, `{ timeTakenInMilliseconds: 6 }`                                                                                                                                                 |
+| `result`               | String                                               | The string version where all ranges were applied to it.                                                                                                                                       |
+| `ranges`               | Array of one or more string _range_ arrays OR `null` | For example, if characters from index `0` to `5` and `30` to `35` were deleted, that would be `[[0, 5], [30, 35]]`                                                                            |
+| `allTagLocations`      | Array of zero or more arrays                         | For example, `[[0, 5], [30, 35]]`. If you `String.slice()` each pair, you'll get HTML tag values.                                                                                             |
+| `filteredTagLocations` | Array of zero or more arrays                         | Only the tags that ended up stripped will be reported here. Takes into account `opts.ignoreTags` and `opts.onlyStripTags`, unlike `allTagLocations` above. For example, `[[0, 5], [30, 35]]`. |
+
+**[⬆ back to top](#)**
+
+## Optional Options Object
 
 | An Optional Options Object's key | Type of its value                                    | Default                      | Description                                                                                                                                                            |
 | -------------------------------- | ---------------------------------------------------- | ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -121,26 +140,10 @@ If input arguments are supplied have any other types, an error will be `throw`n.
 | `onlyStripTags`                  | Array of zero or more strings                        | `[]`                         | If one or more tag names are given here, only these tags will be stripped, nothing else                                                                                |
 | `stripTogetherWithTheirContents` | Array of zero or more strings, or _something falsey_ | `['script', 'style', 'xml']` | These tags will be removed from the opening tag up to closing tag, including content in-between opening and closing tags. Set it to something _falsey_ to turn it off. |
 | `skipHtmlDecoding`               | Boolean                                              | `false`                      | By default, all escaped HTML entities for example `&pound;` input will be recursively decoded before HTML-stripping. You can turn it off here if you don't need it.    |
-| `returnRangesOnly`               | Boolean                                              | `false`                      | When set to `true`, only ranges will be returned. You can use them later in other [_range_- class libraries](https://gitlab.com/codsen/codsen#-range-libraries)        |
 | `trimOnlySpaces`                 | Boolean                                              | `false`                      | Used mainly in automated setups. It ensures non-spaces are not trimmed from the outer edges of a string.                                                               |
 | `dumpLinkHrefsNearby`            | Plain object or something _falsey_                   | `false`                      | Used to customise the output of link URL's: to enable the feature, also customise the URL location and wrapping.                                                       |
 | `cb`                             | Something _falsey_ or a function                     | `null`                       | Gives you full control of the output and lets you tweak it. See the dedicated chapter below called "opts.cb" with explanation and examples.                            |
 | }                                |                                                      |                              |
-
-**[⬆ back to top](#)**
-
-### opts.dumpLinkHrefsNearby - plain object
-
-| opts.dumpLinkHrefsNearby key | default value | purpose                                                                                                                                                                                                    |
-| ---------------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| enabled                      | `false`       | by default, this function is disabled - URL's are not inserted nearby. Set it to Boolean `true` to enable it.                                                                                              |
-| putOnNewLine                 | `false`       | By default, URL is inserted after any whatever was left after stripping the particular linked piece of code. If you want, you can force all inserted URL's to be on a new line, separated by a blank line. |
-| wrapHeads                    | `""`          | This string (default is an empty string) will be inserted in front of every URL. Set it to any string you want, for example `[`.                                                                           |
-| wrapTails                    | `""`          | This string (default is an empty string) will be inserted straight after every URL. Set it to any string you want, for example `]`.                                                                        |
-
-**[⬆ back to top](#)**
-
-### Opts Validation
 
 The Optional Options Object is not validated; please take care of what values and of what type you pass.
 
@@ -150,55 +153,31 @@ Here is the Optional Options Object in one place (in case you ever want to copy 
 {
   ignoreTags: [],
   onlyStripTags: [],
-  stripTogetherWithTheirContents: ["script", "style", "xml"],
+  stripTogetherWithTheirContents: [...stripTogetherWithTheirContentsDefaults],
   skipHtmlDecoding: false,
-  returnRangesOnly: false,
   trimOnlySpaces: false,
   dumpLinkHrefsNearby: {
     enabled: false,
     putOnNewLine: false,
     wrapHeads: "",
-    wrapTails: ""
-  }
+    wrapTails: "",
+  },
+  cb: null,
 }
 ```
 
 **[⬆ back to top](#)**
 
-### API - Output
-
-A string of zero or more characters, with all HTML entities (both _named_, like `&nbsp;` and _numeric_, like `&#x20;`) recursively decoded. _Recursive decoding_ means that twice-encoded `&amp;nbsp;` would still get decoded. There's no way the tags can get past with the help of encoding.
-
-**[⬆ back to top](#)**
-
 ## Options
 
-### `opts.returnRangesOnly`
+### opts.dumpLinkHrefsNearby - plain object
 
-_ranges_ is a notation we invented. It's just an array of zero or more arrays consisting of `from` and `to` string indexes (to be deleted) and optionally a third element, string, what to place there instead.
-
-That's all there is.
-
-The purpose of Ranges is to compile multiple string amends as "to do" list, then process the string in one go, in the end. It's more modular (whole family of Range libraries exist, such as inverting ranges or sorting), mode efficient (strings in JS are immutable) and easier to reason about.
-
-For example, ranges `[[1, 2], [10, 12, "replacement"]]` means delete characters from 1 to 2, then replace characters from 10 to 12 with string `replacement`.
-
-Upon request, `string-strip-html` can also return _ranges_ instead of a final string.
-
-But here's a catch — these _ranges_ will also tackle the whitespace and ranges will not be just locations of caught HTML tags. `opts.returnRangesOnly` will return ranges tackling surrounding whitespace. For example, consider code with indentations:
-
-```js
-var strip = require("string-strip-html");
-const sample = `    <div>
-      something
-    </div>
-`;
-const res = strip(sample, { returnRangesOnly: true });
-console.log(res);
-// => [[0, 12], [21, 32]]
-```
-
-It's not just strict tag index locations `[[4, 9], [30, 36]]`, it's what you'd feed to `ranges-apply` to get the nice clean result.
+| opts.dumpLinkHrefsNearby key | default value | purpose                                                                                                                                                                                                    |
+| ---------------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| enabled                      | `false`       | by default, this function is disabled - URL's are not inserted nearby. Set it to Boolean `true` to enable it.                                                                                              |
+| putOnNewLine                 | `false`       | By default, URL is inserted after any whatever was left after stripping the particular linked piece of code. If you want, you can force all inserted URL's to be on a new line, separated by a blank line. |
+| wrapHeads                    | `""`          | This string (default is an empty string) will be inserted in front of every URL. Set it to any string you want, for example `[`.                                                                           |
+| wrapTails                    | `""`          | This string (default is an empty string) will be inserted straight after every URL. Set it to any string you want, for example `]`.                                                                        |
 
 **[⬆ back to top](#)**
 
@@ -307,7 +286,7 @@ const cb = ({
   rangesArr.push(deleteFrom, deleteTo, insert);
   // you might want to do something different, depending on "tag" contents.
 };
-const result = stripHtml("abc<hr>def", { cb });
+const { result } = stripHtml("abc<hr>def", { cb });
 ```
 
 The `tag` key contains all the internal data for the particular tag which is being removed. Feel free to `console.log(JSON.stringify(tag, null, 4))` it and tap its contents.
@@ -331,14 +310,13 @@ const cb = ({
 }) => {
   rangesArr.push(deleteFrom, deleteTo, insert);
 };
-const res1 = stripHtml("abc<hr>def", { cb });
-console.log(res1);
+const { result, ranges, allTagLocations } = stripHtml("abc<hr>def", { cb });
+console.log(result);
 // => "abc def"
-
-// you can request ranges instead:
-const res2 = stripHtml("abc<hr>def", { returnRangesOnly: true, cb });
-console.log(res2);
+console.log(ranges);
 // => [[3, 7, " "]]
+console.log(allTagLocations);
+// => [[3, 7]]
 ```
 
 **[⬆ back to top](#)**
@@ -366,19 +344,14 @@ const cb = ({
     `<${tag.slashPresent ? "/" : ""}tralala>`
   );
 };
-const res1 = stripHtml("<div >abc</ div>", { cb });
-console.log(`res1 = "${res1}"`);
-// res1 = "<tralala>abc</tralala>"
-
-const res2 = stripHtml("<div >abc</ div>", {
-  returnRangesOnly: true,
-  cb,
-});
-console.log(`res2 = ${JSON.stringify(res2, null, 4)}`);
-// res2 = [
-//   [0, 6, "<tralala>"],
-//   [9, 16, "</tralala>"]
-// ]
+const { result, ranges } = stripHtml("<div >abc</ div>", { cb });
+console.log(result);
+// => "<tralala>abc</tralala>"
+console.log(ranges);
+// => [
+//      [0, 6, "<tralala>"],
+//      [9, 16, "</tralala>"]
+//    ]
 ```
 
 **[⬆ back to top](#)**
@@ -387,23 +360,11 @@ console.log(`res2 = ${JSON.stringify(res2, null, 4)}`);
 
 This program does not use AST's because we want to strip broken HTML or HTML mixed with other sources (which throws parsers). This program does not use a parser, it works from lexer-level (precisely speaking, it's a _scanerless_ parser algorithm).
 
-Good read on a subject: https://tomassetti.me/parsing-in-javascript/
-
 **[⬆ back to top](#)**
 
 ## Quality dependencies
 
-We use only our own or very popular dependencies: [`ent`](https://www.npmjs.com/package/ent) is by [substack](https://www.npmjs.com/~substack) himself and [`lodash`] is, well, The Lodash. All other dependencies are our own:
-
-```
-"ent"
-"lodash.isplainobject"
-"lodash.trim"
-"lodash.without"
-"ranges-apply"
-"ranges-push"
-"string-left-right"
-```
+We use only our own or very popular dependencies: [`ent`](https://www.npmjs.com/package/ent) is by [substack](https://www.npmjs.com/~substack) himself and [`lodash`] is, well, The Lodash. All other dependencies are our own.
 
 **[⬆ back to top](#)**
 

@@ -49,72 +49,115 @@ tap.test("06 - wrong opts", (t) => {
   t.end();
 });
 
+tap.test("07 - wrong opts", (t) => {
+  t.throws(() => {
+    stripHtml("zzz", {
+      returnRangesOnly: true,
+    });
+  }, /THROW_ID_03/);
+  t.throws(() => {
+    stripHtml("zzz", {
+      returnRangesOnly: false,
+    });
+  }, /THROW_ID_03/);
+  t.throws(() => {
+    stripHtml("zzz", {
+      returnRangesOnly: null,
+    });
+  }, /THROW_ID_03/);
+  t.throws(() => {
+    stripHtml("zzz", {
+      returnRangesOnly: undefined,
+    });
+  }, /THROW_ID_03/);
+  t.end();
+});
+
+tap.test("08 - wrong opts.dumpLinkHrefsNearby", (t) => {
+  t.throws(() => {
+    stripHtml("zzz", { dumpLinkHrefsNearby: true });
+  }, /THROW_ID_04/);
+  t.end();
+});
+
+tap.test("09 - wrong opts.stripTogetherWithTheirContents", (t) => {
+  t.throws(() => {
+    stripHtml("zzz", { stripTogetherWithTheirContents: ["div", 1] });
+  }, /THROW_ID_05/);
+  t.end();
+});
+
 // legit input
 // -----------------------------------------------------------------------------
 
-tap.test("07 - empty input", (t) => {
-  t.same(stripHtml(""), "", "07.01");
-  t.same(
-    stripHtml("", {
-      returnRangesOnly: true,
-    }),
-    null,
-    "07.02"
-  );
-  t.same(
-    stripHtml("", {
-      returnTagLocations: true,
-    }),
-    [],
-    "07.03"
+tap.test("10 - empty input", (t) => {
+  t.match(
+    stripHtml(""),
+    {
+      result: "",
+      ranges: null,
+      allTagLocations: [],
+      filteredTagLocations: [],
+    },
+    "10"
   );
   t.end();
 });
 
-tap.test("08 - whitespace only", (t) => {
-  const source = "\t\t\t";
-  t.same(stripHtml(source), "", "08.01");
-  t.same(
-    stripHtml(source, {
+tap.test("11 - tabs only", (t) => {
+  const input = "\t\t\t";
+  t.match(
+    stripHtml(input, {
       trimOnlySpaces: true,
     }),
-    source,
-    "08.02"
+    {
+      result: input,
+      ranges: null,
+      allTagLocations: [],
+      filteredTagLocations: [],
+    },
+    "11.01"
   );
-
-  // opts.returnRangesOnly
-  t.same(
-    stripHtml(source, {
-      returnRangesOnly: true,
+  t.match(
+    stripHtml(input, {
+      trimOnlySpaces: false,
     }),
-    [[0, 3]],
-    "08.03"
+    {
+      result: "",
+      ranges: [[0, 3]],
+      allTagLocations: [],
+      filteredTagLocations: [],
+    },
+    "11.02"
   );
-  t.same(
-    stripHtml(source, {
-      returnRangesOnly: true,
+  t.end();
+});
+
+tap.test("12 - spaces only", (t) => {
+  const input = "   ";
+  t.match(
+    stripHtml(input, {
       trimOnlySpaces: true,
     }),
-    null, // no ranges is always null
-    "08.04"
+    {
+      result: "",
+      ranges: [[0, 3]],
+      allTagLocations: [],
+      filteredTagLocations: [],
+    },
+    "12.01"
   );
-
-  // opts.returnTagLocations
-  t.same(
-    stripHtml(source, {
-      returnTagLocations: true,
-      trimOnlySpaces: false, // default
+  t.match(
+    stripHtml(input, {
+      trimOnlySpaces: false,
     }),
-    [],
-    "08.05"
-  );
-  t.same(
-    stripHtml(source, {
-      returnTagLocations: true,
-      trimOnlySpaces: true, // doesn't matter, there are no tags anyway
-    }),
-    [],
-    "08.06"
+    {
+      result: "",
+      ranges: [[0, 3]],
+      allTagLocations: [],
+      filteredTagLocations: [],
+    },
+    "12.02"
   );
   t.end();
 });

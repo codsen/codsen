@@ -1,56 +1,37 @@
 import tap from "tap";
 import applyR from "ranges-apply";
 import stripHtml from "../dist/string-strip-html.esm";
+import validateTagLocations from "./util/validateTagLocations";
 
-// opts.returnRangesOnly
+// concentrating on ranges output
 // -----------------------------------------------------------------------------
 
-tap.test("01 - opts.returnRangesOnly - anchor wrapping text", (t) => {
-  // both default known range tags
-  t.same(
-    stripHtml(
-      'Some text <a class="btn btn__large" id="z">click me</a> and more text.'
-    ),
-    "Some text click me and more text.",
-    "01.01 - default"
+tap.only("01 - ranges - quick sanity check", (t) => {
+  const allTagLocations = [
+    [10, 43],
+    [51, 55],
+  ];
+  const input = `Some text <a class="btn btn__large" id="z">click me</a> and more text.`;
+  t.match(
+    stripHtml(input),
+    {
+      result: "Some text click me and more text.",
+      ranges: [
+        [9, 43, " "],
+        [51, 56, " "],
+      ],
+      allTagLocations,
+    },
+    "01"
   );
-  t.same(
-    stripHtml(
-      'Some text <a class="btn btn__large" id="z">click me</a> and more text.'
-    ),
-    "Some text click me and more text.",
-    "01.02 - hardcoded defaults"
-  );
-  t.same(
-    stripHtml(
-      'Some text <a class="btn btn__large" id="z">click me</a> and more text.',
-      { returnRangesOnly: true }
-    ),
-    [
-      [9, 43, " "],
-      [51, 56, " "],
-    ],
-    "01.03 - opts"
-  );
-  t.end();
-});
-
-tap.test("02 - opts.returnRangesOnly - no tags were present at all", (t) => {
-  // t.same(stripHtml("Some text"), "Some text", "15.02.01 - control");
-  t.same(
-    stripHtml("Some text", {
-      returnRangesOnly: true,
-    }),
-    null,
-    "02"
-  );
+  validateTagLocations(t, input, allTagLocations);
   t.end();
 });
 
 // ensure consistency with ranges-apply
 // -----------------------------------------------------------------------------
 
-tap.test("03 - consistency with ranges-apply", (t) => {
+tap.test("02 - consistency with ranges-apply", (t) => {
   const input = `<!DOCTYPE html>
   <html lang="en" dir="ltr">
   <head>
@@ -70,35 +51,27 @@ tap.test("03 - consistency with ranges-apply", (t) => {
   </body>
   </html>`;
 
-  // t.same(stripHtml(input), "1\n\n2\n\n3", `03`);
-
-  t.same(
-    stripHtml(input, {
-      returnRangesOnly: true,
-    }),
-    [
-      [0, 136],
-      [137, 165, "\n\n"],
-      [166, 194, "\n\n"],
-      [195, 226],
-    ],
-    `03`
+  const result = "1\n\n2\n\n3";
+  t.match(
+    stripHtml(input),
+    {
+      result,
+      ranges: [
+        [0, 136],
+        [137, 165, "\n\n"],
+        [166, 194, "\n\n"],
+        [195, 226],
+      ],
+      allTagLocations: [[0, 15]],
+    },
+    `02.01`
   );
 
-  // t.same(
-  //   applyR(
-  //     input,
-  //     stripHtml(input, {
-  //       returnRangesOnly: true,
-  //     })
-  //   ),
-  //   "1\n\n2\n\n3",
-  //   `03`
-  // );
+  t.same(applyR(input, stripHtml(input).ranges), result, `02.02`);
   t.end();
 });
 
-tap.test("04 - consistency with ranges-apply", (t) => {
+tap.test("03 - consistency with ranges-apply", (t) => {
   const inputs = [
     ``,
     `   `,
@@ -189,31 +162,24 @@ tap.test("04 - consistency with ranges-apply", (t) => {
 </html>`,
   ];
 
-  // ensure the string result matches applied ranges result
   inputs.forEach((input, idx) => {
     t.same(
-      stripHtml(input, { trimOnlySpaces: false }),
+      stripHtml(input, { trimOnlySpaces: false }).result,
       applyR(
         input,
         stripHtml(input, {
-          returnRangesOnly: true,
           trimOnlySpaces: false, // <----------- trim all whitespace!
-        })
+        }).ranges
       ),
       `${idx} - ${input}`
     );
-  });
-
-  // check opts.trimOnlySpaces
-  inputs.forEach((input, idx) => {
     t.same(
-      stripHtml(input, { trimOnlySpaces: true }),
+      stripHtml(input, { trimOnlySpaces: true }).result,
       applyR(
         input,
         stripHtml(input, {
-          returnRangesOnly: true,
           trimOnlySpaces: true, // <----------- trim only spaces!
-        })
+        }).ranges
       ),
       `${idx} - ${input}`
     );

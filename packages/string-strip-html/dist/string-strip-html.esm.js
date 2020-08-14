@@ -34,6 +34,7 @@ function prepHopefullyAnArray(something, name) {
 }
 
 function stripHtml(str, originalOpts) {
+  const start = Date.now();
   const definitelyTagNames = new Set([
     "!doctype",
     "abbr",
@@ -166,10 +167,12 @@ function stripHtml(str, originalOpts) {
     "style",
     "xml",
   ]);
+  const rangedOpeningTags = [];
+  const allTagLocations = [];
+  const filteredTagLocations = [];
   let tag = { attributes: [] };
   let chunkOfWhitespaceStartsAt = null;
   let chunkOfSpacesStartsAt = null;
-  const rangedOpeningTags = [];
   let attrObj = {};
   let hrefDump = {};
   let stringToInsertAfter = "";
@@ -250,10 +253,7 @@ function stripHtml(str, originalOpts) {
         strToEvaluateForLineBreaks += temp;
       }
     }
-    if (
-      !punctuation.has(str2[currCharIdx]) &&
-      str2[currCharIdx] !== "!"
-    ) {
+    if (!punctuation.has(str2[currCharIdx]) && str2[currCharIdx] !== "!") {
       const foundLineBreaks = strToEvaluateForLineBreaks.match(/\n/g);
       if (Array.isArray(foundLineBreaks) && foundLineBreaks.length) {
         if (foundLineBreaks.length === 1) {
@@ -314,8 +314,6 @@ function stripHtml(str, originalOpts) {
     onlyStripTags: [],
     stripTogetherWithTheirContents: [...stripTogetherWithTheirContentsDefaults],
     skipHtmlDecoding: false,
-    returnRangesOnly: false,
-    returnTagLocations: false,
     trimOnlySpaces: false,
     dumpLinkHrefsNearby: {
       enabled: false,
@@ -326,6 +324,11 @@ function stripHtml(str, originalOpts) {
     cb: null,
   };
   const opts = { ...defaults, ...originalOpts };
+  if (Object.prototype.hasOwnProperty.call(opts, "returnRangesOnly")) {
+    throw new TypeError(
+      `string-strip-html/stripHtml(): [THROW_ID_03] opts.returnRangesOnly has been removed from the API since v.5 release.`
+    );
+  }
   opts.ignoreTags = prepHopefullyAnArray(opts.ignoreTags, "opts.ignoreTags");
   opts.onlyStripTags = prepHopefullyAnArray(
     opts.onlyStripTags,
@@ -383,7 +386,7 @@ function stripHtml(str, originalOpts) {
     })
   ) {
     throw new TypeError(
-      `string-strip-html/stripHtml(): [THROW_ID_06] Optional Options Object's key stripTogetherWithTheirContents was set to contain not just string elements! For example, element at index ${
+      `string-strip-html/stripHtml(): [THROW_ID_05] Optional Options Object's key stripTogetherWithTheirContents was set to contain not just string elements! For example, element at index ${
         somethingCaught.i
       } has a value ${
         somethingCaught.el
@@ -403,18 +406,6 @@ function stripHtml(str, originalOpts) {
     while (str !== ent.decode(str)) {
       str = ent.decode(str);
     }
-  }
-  if (!str.length) {
-    if (opts.returnRangesOnly) {
-      return null;
-    }
-    if (opts.returnTagLocations) {
-      return [];
-    }
-    return "";
-  }
-  if (opts.returnTagLocations && !str.trim()) {
-    return [];
   }
   for (let i = 0, len = str.length; i < len; i++) {
     if (
@@ -439,14 +430,30 @@ function stripHtml(str, originalOpts) {
                   trim(
                     culprit
                       .trim()
-                      .split(" ")
+                      .split(/\s+/)
                       .filter((val2) => val2.trim())
                       .filter((val3, i3) => i3 === 0),
                     "/>"
                   ).toLowerCase() === val
               ) &&
-              stripHtml(`<${culprit.trim()}>`, opts) === ""
+              stripHtml(`<${culprit.trim()}>`, opts).result === ""
             ) {
+              /* istanbul ignore else */
+              if (
+                !allTagLocations.length ||
+                allTagLocations[allTagLocations.length - 1][0] !==
+                  tag.lastOpeningBracketAt
+              ) {
+                allTagLocations.push([startingPoint, i + 1]);
+              }
+              /* istanbul ignore else */
+              if (
+                !filteredTagLocations.length ||
+                filteredTagLocations[filteredTagLocations.length - 1][0] !==
+                  tag.lastOpeningBracketAt
+              ) {
+                filteredTagLocations.push([startingPoint, i + 1]);
+              }
               const whiteSpaceCompensation = calculateWhitespaceToInsert(
                 str,
                 i,
@@ -712,6 +719,14 @@ function stripHtml(str, originalOpts) {
           tag.name = str
             .slice(tag.nameStarts, tag.nameEnds ? tag.nameEnds : i + 1)
             .toLowerCase();
+          /* istanbul ignore else */
+          if (
+            !allTagLocations.length ||
+            allTagLocations[allTagLocations.length - 1][0] !==
+              tag.lastOpeningBracketAt
+          ) {
+            allTagLocations.push([tag.lastOpeningBracketAt, i + 1]);
+          }
           if (
             opts.ignoreTags.includes(tag.name) ||
             (tag.onlyPlausible && !definitelyTagNames.has(tag.name))
@@ -751,6 +766,14 @@ function stripHtml(str, originalOpts) {
             resetHrefMarkers();
             treatRangedTags(i, opts, rangesToDelete);
           }
+          /* istanbul ignore else */
+          if (
+            !filteredTagLocations.length ||
+            filteredTagLocations[filteredTagLocations.length - 1][0] !==
+              tag.lastOpeningBracketAt
+          ) {
+            filteredTagLocations.push([tag.lastOpeningBracketAt, i + 1]);
+          }
         }
       } else if (
         (i > tag.lastClosingBracketAt && str[i].trim()) ||
@@ -764,6 +787,17 @@ function stripHtml(str, originalOpts) {
           spacesChunkWhichFollowsTheClosingBracketEndsAt < i
         ) {
           endingRangeIndex = spacesChunkWhichFollowsTheClosingBracketEndsAt;
+        }
+        /* istanbul ignore else */
+        if (
+          !allTagLocations.length ||
+          allTagLocations[allTagLocations.length - 1][0] !==
+            tag.lastOpeningBracketAt
+        ) {
+          allTagLocations.push([
+            tag.lastOpeningBracketAt,
+            tag.lastClosingBracketAt + 1,
+          ]);
         }
         if (
           (!onlyStripTagsMode && opts.ignoreTags.includes(tag.name)) ||
@@ -788,6 +822,17 @@ function stripHtml(str, originalOpts) {
           (tag.attributes &&
             tag.attributes.some((attrObj2) => attrObj2.equalsAt))
         ) {
+          /* istanbul ignore else */
+          if (
+            !filteredTagLocations.length ||
+            filteredTagLocations[filteredTagLocations.length - 1][0] !==
+              tag.lastOpeningBracketAt
+          ) {
+            filteredTagLocations.push([
+              tag.lastOpeningBracketAt,
+              tag.lastClosingBracketAt + 1,
+            ]);
+          }
           const whiteSpaceCompensation = calculateWhitespaceToInsert(
             str,
             i,
@@ -924,6 +969,28 @@ function stripHtml(str, originalOpts) {
                 ) {
                   rangeEnd += 1;
                 }
+                /* istanbul ignore else */
+                if (
+                  !allTagLocations.length ||
+                  allTagLocations[allTagLocations.length - 1][0] !==
+                    tag.lastOpeningBracketAt
+                ) {
+                  allTagLocations.push([
+                    tag.lastOpeningBracketAt,
+                    closingFoundAt + 1,
+                  ]);
+                }
+                /* istanbul ignore else */
+                if (
+                  !filteredTagLocations.length ||
+                  filteredTagLocations[filteredTagLocations.length - 1][0] !==
+                    tag.lastOpeningBracketAt
+                ) {
+                  filteredTagLocations.push([
+                    tag.lastOpeningBracketAt,
+                    closingFoundAt + 1,
+                  ]);
+                }
                 const whiteSpaceCompensation = calculateWhitespaceToInsert(
                   str,
                   y,
@@ -1002,10 +1069,11 @@ function stripHtml(str, originalOpts) {
     }
   }
   if (
-    (opts.trimOnlySpaces &&
+    str &&
+    ((opts.trimOnlySpaces &&
       str[0] === " ") ||
-    (!opts.trimOnlySpaces &&
-      !str[0].trim())
+      (!opts.trimOnlySpaces &&
+        !str[0].trim()))
   ) {
     for (let i = 0, len = str.length; i < len; i++) {
       if (
@@ -1020,10 +1088,11 @@ function stripHtml(str, originalOpts) {
     }
   }
   if (
-    (opts.trimOnlySpaces &&
+    str &&
+    ((opts.trimOnlySpaces &&
       str[str.length - 1] === " ") ||
-    (!opts.trimOnlySpaces &&
-      !str[str.length - 1].trim())
+      (!opts.trimOnlySpaces &&
+        !str[str.length - 1].trim()))
   ) {
     for (let i = str.length; i--; ) {
       if (
@@ -1075,10 +1144,16 @@ function stripHtml(str, originalOpts) {
       }
     }
   }
-  if (opts.returnRangesOnly) {
-    return rangesToDelete.current();
-  }
-  return rangesApply(str, rangesToDelete.current());
+  const res = {
+    log: {
+      timeTakenInMilliseconds: Date.now() - start,
+    },
+    result: rangesApply(str, rangesToDelete.current()),
+    ranges: rangesToDelete.current(),
+    allTagLocations,
+    filteredTagLocations,
+  };
+  return res;
 }
 
 export default stripHtml;

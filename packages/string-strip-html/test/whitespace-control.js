@@ -5,27 +5,27 @@ import stripHtml from "../dist/string-strip-html.esm";
 // -----------------------------------------------------------------------------
 
 tap.test("01 - whitespace control - line breaks between tags", (t) => {
-  t.same(
+  t.match(
     stripHtml("something <a> \n\n to <a> put here to test"),
-    "something\n\nto put here to test",
+    { result: "something\n\nto put here to test" },
     "01"
   );
   t.end();
 });
 
 tap.test("02 - whitespace control - line breaks within tag", (t) => {
-  t.same(
+  t.match(
     stripHtml("something <a\n\n>  to <a> put here to test"),
-    "something to put here to test",
+    { result: "something to put here to test" },
     "02"
   );
   t.end();
 });
 
 tap.test("03 - whitespace control - leading inner tag linebreaks", (t) => {
-  t.same(
+  t.match(
     stripHtml("something <\n\na>  to <a> put here to test"),
-    "something to put here to test",
+    { result: "something to put here to test" },
     "03"
   );
   t.end();
@@ -34,9 +34,9 @@ tap.test("03 - whitespace control - leading inner tag linebreaks", (t) => {
 tap.test(
   "04 - whitespace control - multiple tags, inner trailing linebreaks",
   (t) => {
-    t.same(
+    t.match(
       stripHtml("something <a>  to <a\n\n> put here to test"),
-      "something to put here to test",
+      { result: "something to put here to test" },
       "04"
     );
     t.end();
@@ -46,9 +46,9 @@ tap.test(
 tap.test(
   "05 - whitespace control - multiple tags, inner leading linebreaks",
   (t) => {
-    t.same(
+    t.match(
       stripHtml("something <a>  to <\n\na> put here to test"),
-      "something to put here to test",
+      { result: "something to put here to test" },
       "05"
     );
     t.end();
@@ -58,9 +58,9 @@ tap.test(
 tap.test(
   "06 - whitespace control - tabs and linebreaks inside, multiple tags",
   (t) => {
-    t.same(
+    t.match(
       stripHtml("something <\t\na\n>  to <a\n\n> put here to test"),
-      "something to put here to test",
+      { result: "something to put here to test" },
       "06"
     );
     t.end();
@@ -68,9 +68,9 @@ tap.test(
 );
 
 tap.test("07 - whitespace control - even this", (t) => {
-  t.same(
+  t.match(
     stripHtml("something <\n\na\t>\t\t\t\t\t  to \t<\n\na\t> put here to test"),
-    "something to put here to test",
+    { result: "something to put here to test" },
     "07"
   );
   t.end();
@@ -79,7 +79,7 @@ tap.test("07 - whitespace control - even this", (t) => {
 tap.test(
   "08 - whitespace control - adds a space in place of stripped tags, tight",
   (t) => {
-    t.same(stripHtml("a<div>b</div>c"), "a b c", "08");
+    t.match(stripHtml("a<div>b</div>c"), { result: "a b c" }, "08");
     t.end();
   }
 );
@@ -87,9 +87,9 @@ tap.test(
 tap.test(
   "09 - whitespace control - adds a space in place of stripped tags, loose",
   (t) => {
-    t.same(
+    t.match(
       stripHtml("a <div>   b    </div>    c"),
-      "a b c",
+      { result: "a b c" },
       "09 - stays on one line because it was on one line"
     );
     t.end();
@@ -99,9 +99,9 @@ tap.test(
 tap.test(
   "10 - whitespace control - adds a space in place of stripped tags, tabs and LF's",
   (t) => {
-    t.same(
+    t.match(
       stripHtml("\t\t\ta <div>   b    </div>    c\n\n\n"),
-      "a b c",
+      { result: "a b c" },
       "10 - like 02 above but with trimming"
     );
     t.end();
@@ -111,7 +111,7 @@ tap.test(
 tap.test(
   "11 - whitespace control - adds a linebreak between each substring piece",
   (t) => {
-    t.same(
+    t.match(
       stripHtml(`a
 
 
@@ -119,7 +119,7 @@ tap.test(
     b
   </div>
 c`),
-      "a\n\nb\n\nc",
+      { result: "a\n\nb\n\nc" },
       "11"
     );
     t.end();
@@ -127,12 +127,12 @@ c`),
 );
 
 tap.test("12 - whitespace control - multiple tag combo case #1", (t) => {
-  t.same(stripHtml("z<a><b>c</b></a>y"), "z c y", "12");
+  t.match(stripHtml("z<a><b>c</b></a>y"), { result: "z c y" }, "12");
   t.end();
 });
 
 tap.test("13 - whitespace control - multiple tag combo case #2", (t) => {
-  t.same(
+  t.match(
     stripHtml(`
       z
         <a>
@@ -141,21 +141,25 @@ tap.test("13 - whitespace control - multiple tag combo case #2", (t) => {
           </b>
         </a>
       y`),
-    "z\n\nc\n\ny",
+    { result: "z\n\nc\n\ny" },
     "13"
   );
   t.end();
 });
 
 tap.test("14 - whitespace control - dirty html, trailing space", (t) => {
-  t.same(stripHtml("something <article>article> here"), "something here", "14");
+  t.match(
+    stripHtml("something <article>article> here"),
+    { result: "something here" },
+    "14"
+  );
   t.end();
 });
 
 tap.test("15 - whitespace control - dirty html, few trailing spaces", (t) => {
-  t.same(
+  t.match(
     stripHtml("something <article>article>   here"),
-    "something here",
+    { result: "something here" },
     "15"
   );
   t.end();

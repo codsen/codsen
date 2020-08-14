@@ -4,27 +4,48 @@ import stripHtml from "../dist/string-strip-html.esm";
 // opts.cb
 // -----------------------------------------------------------------------------
 
-tap.test("01 - opts.cb - baseline, no ranges requested", (t) => {
+tap.test("01 - opts.cb - baseline", (t) => {
   // baseline, notice dirty whitespace:
-  t.same(
-    stripHtml(`<div style="display: inline !important;" >abc</ div>`, {
-      returnRangesOnly: false,
-    }),
-    "abc",
+  t.match(
+    stripHtml(`<div style="display: inline !important;" >abc</ div>`),
+    {
+      result: "abc",
+      ranges: [
+        [0, 42],
+        [45, 52],
+      ],
+      allTagLocations: [
+        [0, 42],
+        [45, 52],
+      ],
+      filteredTagLocations: [
+        [0, 42],
+        [45, 52],
+      ],
+    },
     "01"
   );
   t.end();
 });
 
-tap.test("02 - opts.cb - baseline, ranges requested", (t) => {
-  t.same(
-    stripHtml("<div >abc</ div>", {
-      returnRangesOnly: true,
-    }),
-    [
-      [0, 6],
-      [9, 16],
-    ],
+tap.test("02 - opts.cb - baseline 2", (t) => {
+  t.match(
+    stripHtml("<div >abc</ div>"),
+    {
+      result: "abc",
+      ranges: [
+        [0, 6],
+        [9, 16],
+      ],
+      allTagLocations: [
+        [0, 6],
+        [9, 16],
+      ],
+      filteredTagLocations: [
+        [0, 6],
+        [9, 16],
+      ],
+    },
     "02"
   );
   t.end();
@@ -41,11 +62,15 @@ tap.test("03 - opts.cb - replace hr with tralala", (t) => {
   }) => {
     rangesArr.push(deleteFrom, deleteTo, "<tralala>");
   };
-  t.same(stripHtml("abc<hr>def", { cb }), "abc<tralala>def", "03.01");
-  t.same(
-    stripHtml("abc<hr>def", { returnRangesOnly: true, cb }),
-    [[3, 7, "<tralala>"]],
-    "03.02"
+  t.match(
+    stripHtml("abc<hr>def", { cb }),
+    {
+      result: "abc<tralala>def",
+      ranges: [[3, 7, "<tralala>"]],
+      allTagLocations: [[3, 7]],
+      filteredTagLocations: [[3, 7]],
+    },
+    "03"
   );
   t.end();
 });
@@ -65,21 +90,24 @@ tap.test("04 - opts.cb - replace div with tralala", (t) => {
       `<${tag.slashPresent ? "/" : ""}tralala>`
     );
   };
-  t.same(
+  t.match(
     stripHtml("<div >abc</ div>", { cb }),
-    "<tralala>abc</tralala>",
-    "04.01"
-  );
-  t.same(
-    stripHtml("<div >abc</ div>", {
-      returnRangesOnly: true,
-      cb,
-    }),
-    [
-      [0, 6, "<tralala>"],
-      [9, 16, "</tralala>"],
-    ],
-    "04.02"
+    {
+      result: "<tralala>abc</tralala>",
+      ranges: [
+        [0, 6, "<tralala>"],
+        [9, 16, "</tralala>"],
+      ],
+      allTagLocations: [
+        [0, 6],
+        [9, 16],
+      ],
+      filteredTagLocations: [
+        [0, 6],
+        [9, 16],
+      ],
+    },
+    "04"
   );
   t.end();
 });
@@ -101,15 +129,23 @@ tap.test("05 - opts.cb - replace only hr", (t) => {
       );
     }
   };
-  t.same(
+  t.match(
     stripHtml("abc<hr>def<span>ghi</span>jkl", { cb }),
-    "abc<tralala>def<span>ghi</span>jkl",
-    "05.01"
-  );
-  t.same(
-    stripHtml("abc<hr>def<span>ghi</span>jkl", { returnRangesOnly: true, cb }),
-    [[3, 7, "<tralala>"]],
-    "05.02"
+    {
+      result: "abc<tralala>def<span>ghi</span>jkl",
+      ranges: [[3, 7, "<tralala>"]],
+      allTagLocations: [
+        [3, 7],
+        [10, 16],
+        [19, 26],
+      ],
+      filteredTagLocations: [
+        [3, 7],
+        [10, 16],
+        [19, 26],
+      ],
+    },
+    "05"
   );
   t.end();
 });
@@ -125,17 +161,21 @@ tap.test("06 - opts.cb - readme example one", (t) => {
   }) => {
     rangesArr.push(deleteFrom, deleteTo, insert);
   };
-  t.same(stripHtml("abc<hr>def", { cb }), "abc def", "06.01");
-  t.same(
-    stripHtml("abc<hr>def", { returnRangesOnly: true, cb }),
-    [[3, 7, " "]],
-    "06.02"
+  t.match(
+    stripHtml("abc<hr>def", { cb }),
+    {
+      result: "abc def",
+      ranges: [[3, 7, " "]],
+      allTagLocations: [[3, 7]],
+      filteredTagLocations: [[3, 7]],
+    },
+    "06"
   );
   t.end();
 });
 
 tap.test(
-  "07 - opts.cb - ignored tags are also being pinged, with null values",
+  "07 - opts.cb - ignored tags are also being pinged, with null deletion range values",
   (t) => {
     const capturedTags = [];
     const cb = ({
@@ -149,40 +189,25 @@ tap.test(
       rangesArr.push(deleteFrom, deleteTo, insert);
       capturedTags.push(tag.name);
     };
-    const res = stripHtml("abc<hr>def<br>ghi", { cb, ignoreTags: ["hr"] });
-    t.same(res, "abc<hr>def ghi", "07.01");
+    t.match(
+      stripHtml("abc<hr>def<br>ghi", { cb, ignoreTags: ["hr"] }),
+      {
+        result: "abc<hr>def ghi",
+        ranges: [[10, 14, " "]],
+        allTagLocations: [
+          [3, 7],
+          [10, 14],
+        ],
+        filteredTagLocations: [[10, 14]],
+      },
+      "07.01"
+    );
     t.same(capturedTags, ["hr", "br"], "07.02");
     t.end();
   }
 );
 
-tap.test(
-  "08 - opts.cb - ignored tags are also being pinged, with null values",
-  (t) => {
-    const capturedTags = [];
-    const cb = ({
-      tag,
-      deleteFrom,
-      deleteTo,
-      insert,
-      rangesArr,
-      // proposedReturn
-    }) => {
-      rangesArr.push(deleteFrom, deleteTo, insert);
-      capturedTags.push(tag.name);
-    };
-    const res = stripHtml("abc<hr>def<br>ghi", {
-      returnRangesOnly: true,
-      cb,
-      ignoreTags: ["hr"],
-    });
-    t.same(res, [[10, 14, " "]], "08.01");
-    t.same(capturedTags, ["hr", "br"], "08.02");
-    t.end();
-  }
-);
-
-tap.test("09 - opts.cb - cb.tag contents are right on ignored tags", (t) => {
+tap.test("08 - opts.cb - cb.tag contents are correct on ignored tags", (t) => {
   const capturedTags = [];
   // const rangesArr = [];
   const cb = ({
@@ -203,7 +228,6 @@ tap.test("09 - opts.cb - cb.tag contents are right on ignored tags", (t) => {
     onlyStripTags: [],
     stripTogetherWithTheirContents: ["script", "style", "xml"],
     skipHtmlDecoding: true,
-    returnRangesOnly: true,
     trimOnlySpaces: true,
     dumpLinkHrefsNearby: {
       enabled: false,
@@ -229,13 +253,13 @@ tap.test("09 - opts.cb - cb.tag contents are right on ignored tags", (t) => {
         name: "br",
       },
     ],
-    "09"
+    "08"
   );
   t.end();
 });
 
 tap.test(
-  "10 - opts.cb - cb.tag contents are right on non-ignored tags",
+  "09 - opts.cb - cb.tag contents are right on non-ignored tags",
   (t) => {
     const capturedTags = [];
     // const rangesArr = [];
@@ -257,7 +281,6 @@ tap.test(
       onlyStripTags: [],
       stripTogetherWithTheirContents: ["script", "style", "xml"],
       skipHtmlDecoding: true,
-      returnRangesOnly: true,
       trimOnlySpaces: true,
       dumpLinkHrefsNearby: {
         enabled: false,
@@ -319,7 +342,7 @@ tap.test(
           slashPresent: 30,
         },
       ],
-      "10"
+      "09"
     );
     t.end();
   }

@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.0.0 (2020-08-16)
+
+Why change what's returned, upon user's request, when we can return everything and let the user pick?
+
+That's why we removed `opts.returnRangesOnly`.
+
+Function's output is a plain object now, containing:
+
+1. cleaned string (considering `opts.ignoreTags` and `opts.onlyStripTags`)
+2. gathered _ranges_, used to produce cleaned string (considering `opts.ignoreTags` and `opts.onlyStripTags`)
+3. tag locations of all spotted HTML tags IGNORING the whitelist/blacklist `opts.ignoreTags` and `opts.onlyStripTags`
+4. locations of filtered HTML tags (considering `opts.ignoreTags` and `opts.onlyStripTags`)
+5. plus, some statistics goodies
+
+```js
+stripHtml("abc<a>click me</a>def");
+// => {
+//      log: {
+//        timeTakenInMilliseconds: 6
+//      },
+//      result: "abc click me def",
+//      ranges: [
+//        [3, 6, " "],
+//        [14, 18, " "],
+//      ],
+//      allTagLocations: [
+//        [3, 6],
+//        [14, 18],
+//      ],
+//      filteredTagLocations: [
+//        [3, 6],
+//        [14, 18],
+//      ],
+//    }
+```
+
+`allTagLocations` can be used for syntax highlighting, for example.
+
 ## 4.4.0 (2020-04-26)
 
 ### Features
