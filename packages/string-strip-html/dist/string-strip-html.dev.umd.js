@@ -651,7 +651,7 @@
             throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ".concat(_typeof(addVal), ", equal to:\n").concat(JSON.stringify(addVal, null, 4)));
           }
 
-          if (existy$1(this.slices) && Array.isArray(this.last()) && from === this.last()[1]) {
+          if (existy$1(this.ranges) && Array.isArray(this.last()) && from === this.last()[1]) {
             this.last()[1] = to;
             if (this.last()[2] === null || addVal === null) ;
 
@@ -667,12 +667,12 @@
               }
             }
           } else {
-            if (!this.slices) {
-              this.slices = [];
+            if (!this.ranges) {
+              this.ranges = [];
             }
 
             var whatToPush = addVal !== undefined && !(isStr$1(addVal) && !addVal.length) ? [from, to, this.opts.limitToBeAddedWhitespace ? collapseLeadingWhitespace(addVal, this.opts.limitLinebreaksCount) : addVal] : [from, to];
-            this.slices.push(whatToPush);
+            this.ranges.push(whatToPush);
           }
         } else {
           if (!(isNum(from) && from >= 0)) {
@@ -696,13 +696,13 @@
       value: function current() {
         var _this2 = this;
 
-        if (this.slices != null) {
-          this.slices = mergeRanges(this.slices, {
+        if (this.ranges != null) {
+          this.ranges = mergeRanges(this.ranges, {
             mergeType: this.opts.mergeType
           });
 
           if (this.opts.limitToBeAddedWhitespace) {
-            return this.slices.map(function (val) {
+            return this.ranges.map(function (val) {
               if (existy$1(val[2])) {
                 return [val[0], val[1], collapseLeadingWhitespace(val[2], _this2.opts.limitLinebreaksCount)];
               }
@@ -711,7 +711,7 @@
             });
           }
 
-          return this.slices;
+          return this.ranges;
         }
 
         return null;
@@ -719,7 +719,7 @@
     }, {
       key: "wipe",
       value: function wipe() {
-        this.slices = undefined;
+        this.ranges = undefined;
       }
     }, {
       key: "replace",
@@ -728,17 +728,17 @@
           if (!(Array.isArray(givenRanges[0]) && isNum(givenRanges[0][0]))) {
             throw new Error("ranges-push/Ranges/replace(): [THROW_ID_11] Single range was given but we expected array of arrays! The first element, ".concat(JSON.stringify(givenRanges[0], null, 4), " should be an array and its first element should be an integer, a string index."));
           } else {
-            this.slices = Array.from(givenRanges);
+            this.ranges = Array.from(givenRanges);
           }
         } else {
-          this.slices = undefined;
+          this.ranges = undefined;
         }
       }
     }, {
       key: "last",
       value: function last() {
-        if (this.slices !== undefined && Array.isArray(this.slices)) {
-          return this.slices[this.slices.length - 1];
+        if (this.ranges !== undefined && Array.isArray(this.ranges)) {
+          return this.ranges[this.ranges.length - 1];
         }
 
         return null;
@@ -8772,11 +8772,9 @@
 
     if (typeof str !== "string") {
       throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_01] Input must be string! Currently it's: ".concat(_typeof(str).toLowerCase(), ", equal to:\n").concat(JSON.stringify(str, null, 4)));
-    } else if (!str || !str.trim()) {
-      return str;
     }
 
-    if (originalOpts !== undefined && originalOpts !== null && !lodash_isplainobject(originalOpts)) {
+    if (originalOpts && !lodash_isplainobject(originalOpts)) {
       throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_02] Optional Options Object must be a plain object! Currently it's: ".concat(_typeof(originalOpts).toLowerCase(), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
     } // eslint-disable-next-line consistent-return
 
@@ -8797,6 +8795,7 @@
       stripTogetherWithTheirContents: _toConsumableArray(stripTogetherWithTheirContentsDefaults),
       skipHtmlDecoding: false,
       returnRangesOnly: false,
+      returnTagLocations: false,
       trimOnlySpaces: false,
       dumpLinkHrefsNearby: {
         enabled: false,
@@ -8882,12 +8881,22 @@
         // eslint-disable-next-line no-param-reassign
         str = ent.decode(str);
       }
-    } // trim first, if allowed
+    }
 
+    if (!str.length) {
+      if (opts.returnRangesOnly) {
+        return null;
+      }
 
-    if (!opts.trimOnlySpaces) {
-      // eslint-disable-next-line no-param-reassign
-      str = str.trim();
+      if (opts.returnTagLocations) {
+        return [];
+      }
+
+      return "";
+    }
+
+    if (opts.returnTagLocations && !str.trim()) {
+      return [];
     } // step 1.
     // ===========================================================================
 
@@ -9463,31 +9472,93 @@
       //   )}`
       // );
 
+    } // trim but in ranges
+    // first tackle the beginning on the string
+
+
+    if ( // if only spaces were meant to be trimmed,
+    opts.trimOnlySpaces && // and first character is a space
+    str[0] === " " || // if normal trim is requested
+    !opts.trimOnlySpaces && // and the first character is whitespace character
+    !str[0].trim()) {
+      for (var _i = 0, _len = str.length; _i < _len; _i++) {
+        if (opts.trimOnlySpaces && str[_i] !== " " || !opts.trimOnlySpaces && str[_i].trim()) {
+          rangesToDelete.push([0, _i]);
+          break;
+        } else if (!str[_i + 1]) {
+          // if end has been reached and whole string has been trimmable
+          rangesToDelete.push([0, _i + 1]);
+        }
+      }
     }
 
-    if (rangesToDelete.current()) {
-      if (opts.returnRangesOnly) {
-        return rangesToDelete.current();
+    if ( // if only spaces were meant to be trimmed,
+    opts.trimOnlySpaces && // and last character is a space
+    str[str.length - 1] === " " || // if normal trim is requested
+    !opts.trimOnlySpaces && // and the last character is whitespace character
+    !str[str.length - 1].trim()) {
+      for (var _i2 = str.length; _i2--;) {
+        if (opts.trimOnlySpaces && str[_i2] !== " " || !opts.trimOnlySpaces && str[_i2].trim()) {
+          rangesToDelete.push([_i2 + 1, str.length]);
+          break;
+        } // don't tackle end-to-end because it would have been already caught on the
+        // start-to-end direction loop above.
+
       }
+    } // last correction, imagine we've got text-whitespace-tag.
+    // That last part "tag" was removed but "whitespace" in between is left.
+    // We need to trim() that too if applicable.
+    // By now we'll be able to tell, is starting/ending range array touching
+    // the start (index 0) or end (str.length - 1) character indexes, and if so,
+    // their inner sides will need to be trimmed accordingly, considering the
+    // "opts.trimOnlySpaces" of course.
 
-      var untrimmedRes = rangesApply(str, rangesToDelete.current());
 
-      if (opts.trimOnlySpaces) {
-        return lodash_trim(untrimmedRes, " ");
+    if ((!originalOpts || !originalOpts.cb) && rangesToDelete.current()) {
+      // check front - the first range of gathered ranges, does it touch start (0)
+      if (rangesToDelete.current()[0] && !rangesToDelete.current()[0][0]) {
+        var startingIdx = rangesToDelete.current()[0][1]; // check the character at str[startingIdx]
+        // call to current() merges and sorts, mutating but cleaning array.
+
+        rangesToDelete.current(); // hard edit:
+
+        rangesToDelete.ranges[0] = [rangesToDelete.ranges[0][0], rangesToDelete.ranges[0][1]];
+      } // check end - the last range of gathered ranges, does it touch the end (str.length)
+      // PS. remember ending is not inclusive, so ranges covering the whole ending
+      // would go up to str.length, not up to str.length - 1!
+
+
+      if (rangesToDelete.current()[rangesToDelete.current().length - 1] && rangesToDelete.current()[rangesToDelete.current().length - 1][1] === str.length) {
+        var _startingIdx = rangesToDelete.current()[rangesToDelete.current().length - 1][0]; // check character at str[startingIdx - 1]
+        // remove third element from the last range "what to add" - because
+        // ranges will crop aggressively, covering all whitespace, but they
+        // then restore missing spaces (in which case it's not missing).
+        // We already have tight crop, we just need to remove that "what to add"
+        // third element.
+        // call to current() merges and sorts, mutating but cleaning array.
+
+        rangesToDelete.current(); // hard edit:
+
+        var startingIdx2 = rangesToDelete.ranges[rangesToDelete.ranges.length - 1][0];
+
+        if (str[startingIdx2 - 1] && (opts.trimOnlySpaces && str[startingIdx2 - 1] === " " || !opts.trimOnlySpaces && !str[startingIdx2 - 1].trim())) {
+          startingIdx2 -= 1;
+        }
+
+        var backupWhatToAdd = rangesToDelete.ranges[rangesToDelete.ranges.length - 1][2];
+        rangesToDelete.ranges[rangesToDelete.ranges.length - 1] = [startingIdx2, rangesToDelete.ranges[rangesToDelete.ranges.length - 1][1]]; // for cases of opts.dumpLinkHrefsNearby
+
+        if (backupWhatToAdd && backupWhatToAdd.trim()) {
+          rangesToDelete.ranges[rangesToDelete.ranges.length - 1].push(backupWhatToAdd.trimEnd());
+        }
       }
-
-      return untrimmedRes.trim();
     }
 
     if (opts.returnRangesOnly) {
-      return [];
+      return rangesToDelete.current();
     }
 
-    if (opts.trimOnlySpaces) {
-      return lodash_trim(str, " ");
-    }
-
-    return str.trim();
+    return rangesApply(str, rangesToDelete.current());
   }
 
   return stripHtml;

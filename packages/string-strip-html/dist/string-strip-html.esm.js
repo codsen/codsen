@@ -293,14 +293,8 @@ function stripHtml(str, originalOpts) {
         4
       )}`
     );
-  } else if (!str || !str.trim()) {
-    return str;
   }
-  if (
-    originalOpts !== undefined &&
-    originalOpts !== null &&
-    !isObj(originalOpts)
-  ) {
+  if (originalOpts && !isObj(originalOpts)) {
     throw new TypeError(
       `string-strip-html/stripHtml(): [THROW_ID_02] Optional Options Object must be a plain object! Currently it's: ${(typeof originalOpts).toLowerCase()}, equal to:\n${JSON.stringify(
         originalOpts,
@@ -321,6 +315,7 @@ function stripHtml(str, originalOpts) {
     stripTogetherWithTheirContents: [...stripTogetherWithTheirContentsDefaults],
     skipHtmlDecoding: false,
     returnRangesOnly: false,
+    returnTagLocations: false,
     trimOnlySpaces: false,
     dumpLinkHrefsNearby: {
       enabled: false,
@@ -409,8 +404,17 @@ function stripHtml(str, originalOpts) {
       str = ent.decode(str);
     }
   }
-  if (!opts.trimOnlySpaces) {
-    str = str.trim();
+  if (!str.length) {
+    if (opts.returnRangesOnly) {
+      return null;
+    }
+    if (opts.returnTagLocations) {
+      return [];
+    }
+    return "";
+  }
+  if (opts.returnTagLocations && !str.trim()) {
+    return [];
   }
   for (let i = 0, len = str.length; i < len; i++) {
     if (
@@ -997,23 +1001,84 @@ function stripHtml(str, originalOpts) {
       chunkOfSpacesStartsAt = null;
     }
   }
-  if (rangesToDelete.current()) {
-    if (opts.returnRangesOnly) {
-      return rangesToDelete.current();
+  if (
+    (opts.trimOnlySpaces &&
+      str[0] === " ") ||
+    (!opts.trimOnlySpaces &&
+      !str[0].trim())
+  ) {
+    for (let i = 0, len = str.length; i < len; i++) {
+      if (
+        (opts.trimOnlySpaces && str[i] !== " ") ||
+        (!opts.trimOnlySpaces && str[i].trim())
+      ) {
+        rangesToDelete.push([0, i]);
+        break;
+      } else if (!str[i + 1]) {
+        rangesToDelete.push([0, i + 1]);
+      }
     }
-    const untrimmedRes = rangesApply(str, rangesToDelete.current());
-    if (opts.trimOnlySpaces) {
-      return trim(untrimmedRes, " ");
+  }
+  if (
+    (opts.trimOnlySpaces &&
+      str[str.length - 1] === " ") ||
+    (!opts.trimOnlySpaces &&
+      !str[str.length - 1].trim())
+  ) {
+    for (let i = str.length; i--; ) {
+      if (
+        (opts.trimOnlySpaces && str[i] !== " ") ||
+        (!opts.trimOnlySpaces && str[i].trim())
+      ) {
+        rangesToDelete.push([i + 1, str.length]);
+        break;
+      }
     }
-    return untrimmedRes.trim();
+  }
+  if ((!originalOpts || !originalOpts.cb) && rangesToDelete.current()) {
+    if (rangesToDelete.current()[0] && !rangesToDelete.current()[0][0]) {
+      const startingIdx = rangesToDelete.current()[0][1];
+      rangesToDelete.current();
+      rangesToDelete.ranges[0] = [
+        rangesToDelete.ranges[0][0],
+        rangesToDelete.ranges[0][1],
+      ];
+    }
+    if (
+      rangesToDelete.current()[rangesToDelete.current().length - 1] &&
+      rangesToDelete.current()[rangesToDelete.current().length - 1][1] ===
+        str.length
+    ) {
+      const startingIdx = rangesToDelete.current()[
+        rangesToDelete.current().length - 1
+      ][0];
+      rangesToDelete.current();
+      let startingIdx2 =
+        rangesToDelete.ranges[rangesToDelete.ranges.length - 1][0];
+      if (
+        str[startingIdx2 - 1] &&
+        ((opts.trimOnlySpaces && str[startingIdx2 - 1] === " ") ||
+          (!opts.trimOnlySpaces && !str[startingIdx2 - 1].trim()))
+      ) {
+        startingIdx2 -= 1;
+      }
+      const backupWhatToAdd =
+        rangesToDelete.ranges[rangesToDelete.ranges.length - 1][2];
+      rangesToDelete.ranges[rangesToDelete.ranges.length - 1] = [
+        startingIdx2,
+        rangesToDelete.ranges[rangesToDelete.ranges.length - 1][1],
+      ];
+      if (backupWhatToAdd && backupWhatToAdd.trim()) {
+        rangesToDelete.ranges[rangesToDelete.ranges.length - 1].push(
+          backupWhatToAdd.trimEnd()
+        );
+      }
+    }
   }
   if (opts.returnRangesOnly) {
-    return [];
+    return rangesToDelete.current();
   }
-  if (opts.trimOnlySpaces) {
-    return trim(str, " ");
-  }
-  return str.trim();
+  return rangesApply(str, rangesToDelete.current());
 }
 
 export default stripHtml;

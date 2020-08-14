@@ -53,11 +53,68 @@ tap.test("06 - wrong opts", (t) => {
 // -----------------------------------------------------------------------------
 
 tap.test("07 - empty input", (t) => {
-  t.same(stripHtml(""), "", "07");
+  t.same(stripHtml(""), "", "07.01");
+  t.same(
+    stripHtml("", {
+      returnRangesOnly: true,
+    }),
+    null,
+    "07.02"
+  );
+  t.same(
+    stripHtml("", {
+      returnTagLocations: true,
+    }),
+    [],
+    "07.03"
+  );
   t.end();
 });
 
 tap.test("08 - whitespace only", (t) => {
-  t.same(stripHtml("\t\t\t"), "\t\t\t", "08");
+  const source = "\t\t\t";
+  t.same(stripHtml(source), "", "08.01");
+  t.same(
+    stripHtml(source, {
+      trimOnlySpaces: true,
+    }),
+    source,
+    "08.02"
+  );
+
+  // opts.returnRangesOnly
+  t.same(
+    stripHtml(source, {
+      returnRangesOnly: true,
+    }),
+    [[0, 3]],
+    "08.03"
+  );
+  t.same(
+    stripHtml(source, {
+      returnRangesOnly: true,
+      trimOnlySpaces: true,
+    }),
+    null, // no ranges is always null
+    "08.04"
+  );
+
+  // opts.returnTagLocations
+  t.same(
+    stripHtml(source, {
+      returnTagLocations: true,
+      trimOnlySpaces: false, // default
+    }),
+    [],
+    "08.05"
+  );
+  t.same(
+    stripHtml(source, {
+      returnTagLocations: true,
+      trimOnlySpaces: true, // doesn't matter, there are no tags anyway
+    }),
+    [],
+    "08.06"
+  );
   t.end();
 });
