@@ -13,6 +13,7 @@
   "keywords": [
     "array",
     "arrays",
+    "assert",
     "assertion",
     "ast",
     "ava",
@@ -25,9 +26,16 @@
     "object",
     "objects",
     "subsets",
+    "node",
+    "tap",
+    "node-tap",
+    "tape",
     "test",
     "tests",
-    "unit"
+    "unit",
+    "shallow",
+    "has",
+    "similar"
   ],
   "main": "dist/ast-deep-contains.cjs.js",
   "module": "dist/ast-deep-contains.esm.js",

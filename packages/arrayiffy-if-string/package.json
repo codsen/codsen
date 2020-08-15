@@ -16,7 +16,14 @@
     "if",
     "into",
     "string",
-    "turn"
+    "turn",
+    "stringify",
+    "only",
+    "api",
+    "input",
+    "validation",
+    "validate",
+    "cast"
   ],
   "main": "dist/arrayiffy-if-string.cjs.js",
   "module": "dist/arrayiffy-if-string.esm.js",

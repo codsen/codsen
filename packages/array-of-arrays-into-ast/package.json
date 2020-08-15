@@ -11,19 +11,17 @@
     "url": "codsen.com"
   },
   "keywords": [
+    "ast",
     "array",
-    "delete",
-    "element",
+    "array",
+    "into",
+    "turn",
+    "put",
+    "nested",
+    "generate",
     "from",
-    "glob",
-    "pattern",
-    "pulal",
-    "pulall",
-    "pull",
-    "pullal",
-    "pullall",
-    "remove",
-    "whitelist"
+    "plain",
+    "object"
   ],
   "main": "dist/array-of-arrays-into-ast.cjs.js",
   "module": "dist/array-of-arrays-into-ast.esm.js",

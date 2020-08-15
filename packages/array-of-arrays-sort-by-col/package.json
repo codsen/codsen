@@ -19,7 +19,8 @@
     "descending",
     "nested",
     "order",
-    "sort"
+    "sort",
+    "sorting"
   ],
   "main": "dist/array-of-arrays-sort-by-col.cjs.js",
   "module": "dist/array-of-arrays-sort-by-col.esm.js",
