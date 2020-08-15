@@ -1541,8 +1541,7 @@ function det(str, inputOpts) {
             );
           },
           skipHtmlDecoding: true,
-          returnRangesOnly: true,
-        }),
+        }).ranges,
         str.length
       ).reduce((accumRanges, currRange) => {
         if (
@@ -1768,7 +1767,6 @@ function det(str, inputOpts) {
       trimOnlySpaces: true,
       ignoreTags: stripHtml ? opts.stripHtmlButIgnoreTags : [],
       skipHtmlDecoding: true,
-      returnRangesOnly: true,
     });
   }
   processOutside(

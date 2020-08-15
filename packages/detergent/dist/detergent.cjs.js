@@ -878,9 +878,8 @@ function det(str, inputOpts) {
               rangesArr = _ref.rangesArr;
           return rangesArr.push(tag.lastOpeningBracketAt, tag.lastClosingBracketAt + 1);
         },
-        skipHtmlDecoding: true,
-        returnRangesOnly: true
-      }), str.length).reduce(function (accumRanges, currRange) {
+        skipHtmlDecoding: true
+      }).ranges, str.length).reduce(function (accumRanges, currRange) {
         if (str.slice(currRange[0], currRange[1]) !== opts.cb(str.slice(currRange[0], currRange[1]))) {
           return accumRanges.concat([[currRange[0], currRange[1], opts.cb(str.slice(currRange[0], currRange[1]))]]);
         }
@@ -984,8 +983,7 @@ function det(str, inputOpts) {
       cb: cb,
       trimOnlySpaces: true,
       ignoreTags: stripHtml__default['default'] ? opts.stripHtmlButIgnoreTags : [],
-      skipHtmlDecoding: true,
-      returnRangesOnly: true
+      skipHtmlDecoding: true
     });
   }
   processOutside__default['default'](str, skipArr.current(), function (idxFrom, idxTo, offsetBy) {

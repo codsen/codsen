@@ -18606,16 +18606,19 @@
   }
 
   function stripHtml(str, originalOpts) {
+    var start = Date.now();
     var definitelyTagNames = new Set(["!doctype", "abbr", "address", "area", "article", "aside", "audio", "base", "bdi", "bdo", "blockquote", "body", "br", "button", "canvas", "caption", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "param", "picture", "pre", "progress", "rb", "rp", "rt", "rtc", "ruby", "samp", "script", "section", "select", "slot", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "ul", "var", "video", "wbr", "xml"]);
     var singleLetterTags = new Set(["a", "b", "i", "p", "q", "s", "u"]);
     var punctuation = new Set([".", ",", "?", ";", ")", "\u2026", '"', "\xBB"]);
     var stripTogetherWithTheirContentsDefaults = new Set(["script", "style", "xml"]);
+    var rangedOpeningTags = [];
+    var allTagLocations = [];
+    var filteredTagLocations = [];
     var tag = {
       attributes: []
     };
     var chunkOfWhitespaceStartsAt = null;
     var chunkOfSpacesStartsAt = null;
-    var rangedOpeningTags = [];
     var attrObj = {};
     var hrefDump = {};
     var stringToInsertAfter = "";
@@ -18736,8 +18739,6 @@
       onlyStripTags: [],
       stripTogetherWithTheirContents: _toConsumableArray(stripTogetherWithTheirContentsDefaults),
       skipHtmlDecoding: false,
-      returnRangesOnly: false,
-      returnTagLocations: false,
       trimOnlySpaces: false,
       dumpLinkHrefsNearby: {
         enabled: false,
@@ -18749,6 +18750,10 @@
     };
 
     var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
+
+    if (Object.prototype.hasOwnProperty.call(opts, "returnRangesOnly")) {
+      throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_03] opts.returnRangesOnly has been removed from the API since v.5 release.");
+    }
 
     opts.ignoreTags = prepHopefullyAnArray(opts.ignoreTags, "opts.ignoreTags");
     opts.onlyStripTags = prepHopefullyAnArray(opts.onlyStripTags, "opts.onlyStripTags");
@@ -18790,7 +18795,7 @@
 
       return true;
     })) {
-      throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_06] Optional Options Object's key stripTogetherWithTheirContents was set to contain not just string elements! For example, element at index ".concat(somethingCaught.i, " has a value ").concat(somethingCaught.el, " which is not string but ").concat(_typeof(somethingCaught.el).toLowerCase(), "."));
+      throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_05] Optional Options Object's key stripTogetherWithTheirContents was set to contain not just string elements! For example, element at index ".concat(somethingCaught.i, " has a value ").concat(somethingCaught.el, " which is not string but ").concat(_typeof(somethingCaught.el).toLowerCase(), "."));
     }
 
     if (!opts.cb) {
@@ -18812,22 +18817,6 @@
       }
     }
 
-    if (!str.length) {
-      if (opts.returnRangesOnly) {
-        return null;
-      }
-
-      if (opts.returnTagLocations) {
-        return [];
-      }
-
-      return "";
-    }
-
-    if (opts.returnTagLocations && !str.trim()) {
-      return [];
-    }
-
     for (var i = 0, len = str.length; i < len; i++) {
       if (Object.keys(tag).length > 1 && tag.lastClosingBracketAt && tag.lastClosingBracketAt < i && str[i] !== " " && spacesChunkWhichFollowsTheClosingBracketEndsAt === null) {
         spacesChunkWhichFollowsTheClosingBracketEndsAt = i;
@@ -18842,12 +18831,23 @@
                 var culprit = str.slice(startingPoint, i + 1);
 
                 if (str !== "<".concat(lodash_trim(culprit.trim(), "/>"), ">") && _toConsumableArray(definitelyTagNames).some(function (val) {
-                  return lodash_trim(culprit.trim().split(" ").filter(function (val2) {
+                  return lodash_trim(culprit.trim().split(/\s+/).filter(function (val2) {
                     return val2.trim();
                   }).filter(function (val3, i3) {
                     return i3 === 0;
                   }), "/>").toLowerCase() === val;
-                }) && stripHtml("<".concat(culprit.trim(), ">"), opts) === "") {
+                }) && stripHtml("<".concat(culprit.trim(), ">"), opts).result === "") {
+                  /* istanbul ignore else */
+                  if (!allTagLocations.length || allTagLocations[allTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
+                    allTagLocations.push([startingPoint, i + 1]);
+                  }
+                  /* istanbul ignore else */
+
+
+                  if (!filteredTagLocations.length || filteredTagLocations[filteredTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
+                    filteredTagLocations.push([startingPoint, i + 1]);
+                  }
+
                   var whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, startingPoint, i + 1, startingPoint, i + 1);
                   var deleteUpTo = i + 1;
 
@@ -19025,6 +19025,11 @@
         if (tag.lastClosingBracketAt === undefined) {
           if (tag.lastOpeningBracketAt < i && str[i] !== "<" && (str[i + 1] === undefined || str[i + 1] === "<") && tag.nameContainsLetters) {
             tag.name = str.slice(tag.nameStarts, tag.nameEnds ? tag.nameEnds : i + 1).toLowerCase();
+            /* istanbul ignore else */
+
+            if (!allTagLocations.length || allTagLocations[allTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
+              allTagLocations.push([tag.lastOpeningBracketAt, i + 1]);
+            }
 
             if (opts.ignoreTags.includes(tag.name) || tag.onlyPlausible && !definitelyTagNames.has(tag.name)) {
               tag = {};
@@ -19048,12 +19053,24 @@
               resetHrefMarkers();
               treatRangedTags(i, opts, rangesToDelete);
             }
+            /* istanbul ignore else */
+
+
+            if (!filteredTagLocations.length || filteredTagLocations[filteredTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
+              filteredTagLocations.push([tag.lastOpeningBracketAt, i + 1]);
+            }
           }
         } else if (i > tag.lastClosingBracketAt && str[i].trim() || str[i + 1] === undefined) {
           var endingRangeIndex = tag.lastClosingBracketAt === i ? i + 1 : i;
 
           if (opts.trimOnlySpaces && endingRangeIndex === len - 1 && spacesChunkWhichFollowsTheClosingBracketEndsAt !== null && spacesChunkWhichFollowsTheClosingBracketEndsAt < i) {
             endingRangeIndex = spacesChunkWhichFollowsTheClosingBracketEndsAt;
+          }
+          /* istanbul ignore else */
+
+
+          if (!allTagLocations.length || allTagLocations[allTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
+            allTagLocations.push([tag.lastOpeningBracketAt, tag.lastClosingBracketAt + 1]);
           }
 
           if (!onlyStripTagsMode && opts.ignoreTags.includes(tag.name) || onlyStripTagsMode && !opts.onlyStripTags.includes(tag.name)) {
@@ -19070,6 +19087,11 @@
           } else if (!tag.onlyPlausible || tag.attributes.length === 0 && tag.name && (definitelyTagNames.has(tag.name.toLowerCase()) || singleLetterTags.has(tag.name.toLowerCase())) || tag.attributes && tag.attributes.some(function (attrObj2) {
             return attrObj2.equalsAt;
           })) {
+            /* istanbul ignore else */
+            if (!filteredTagLocations.length || filteredTagLocations[filteredTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
+              filteredTagLocations.push([tag.lastOpeningBracketAt, tag.lastClosingBracketAt + 1]);
+            }
+
             var _whiteSpaceCompensation2 = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, endingRangeIndex, tag.lastOpeningBracketAt, tag.lastClosingBracketAt);
 
             stringToInsertAfter = "";
@@ -19170,6 +19192,18 @@
                   if (str[_y + 1] === undefined && !str[_y].trim() || str[_y] === ">") {
                     rangeEnd += 1;
                   }
+                  /* istanbul ignore else */
+
+
+                  if (!allTagLocations.length || allTagLocations[allTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
+                    allTagLocations.push([tag.lastOpeningBracketAt, closingFoundAt + 1]);
+                  }
+                  /* istanbul ignore else */
+
+
+                  if (!filteredTagLocations.length || filteredTagLocations[filteredTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
+                    filteredTagLocations.push([tag.lastOpeningBracketAt, closingFoundAt + 1]);
+                  }
 
                   var _whiteSpaceCompensation4 = calculateWhitespaceToInsert(str, _y, tag.leftOuterWhitespace, rangeEnd, tag.lastOpeningBracketAt, closingFoundAt);
 
@@ -19232,7 +19266,7 @@
       }
     }
 
-    if (opts.trimOnlySpaces && str[0] === " " || !opts.trimOnlySpaces && !str[0].trim()) {
+    if (str && (opts.trimOnlySpaces && str[0] === " " || !opts.trimOnlySpaces && !str[0].trim())) {
       for (var _i = 0, _len = str.length; _i < _len; _i++) {
         if (opts.trimOnlySpaces && str[_i] !== " " || !opts.trimOnlySpaces && str[_i].trim()) {
           rangesToDelete.push([0, _i]);
@@ -19243,7 +19277,7 @@
       }
     }
 
-    if (opts.trimOnlySpaces && str[str.length - 1] === " " || !opts.trimOnlySpaces && !str[str.length - 1].trim()) {
+    if (str && (opts.trimOnlySpaces && str[str.length - 1] === " " || !opts.trimOnlySpaces && !str[str.length - 1].trim())) {
       for (var _i2 = str.length; _i2--;) {
         if (opts.trimOnlySpaces && str[_i2] !== " " || !opts.trimOnlySpaces && str[_i2].trim()) {
           rangesToDelete.push([_i2 + 1, str.length]);
@@ -19277,11 +19311,16 @@
       }
     }
 
-    if (opts.returnRangesOnly) {
-      return rangesToDelete.current();
-    }
-
-    return rangesApply(str, rangesToDelete.current());
+    var res = {
+      log: {
+        timeTakenInMilliseconds: Date.now() - start
+      },
+      result: rangesApply(str, rangesToDelete.current()),
+      ranges: rangesToDelete.current(),
+      allTagLocations: allTagLocations,
+      filteredTagLocations: filteredTagLocations
+    };
+    return res;
   }
 
   var ansiRegex = function ansiRegex() {
@@ -26790,9 +26829,8 @@
                 rangesArr = _ref.rangesArr;
             return rangesArr.push(tag.lastOpeningBracketAt, tag.lastClosingBracketAt + 1);
           },
-          skipHtmlDecoding: true,
-          returnRangesOnly: true
-        }), str.length).reduce(function (accumRanges, currRange) {
+          skipHtmlDecoding: true
+        }).ranges, str.length).reduce(function (accumRanges, currRange) {
           // if there's difference after callback's result, push it as range
           if (str.slice(currRange[0], currRange[1]) !== opts.cb(str.slice(currRange[0], currRange[1]))) {
             return accumRanges.concat([[currRange[0], currRange[1], opts.cb(str.slice(currRange[0], currRange[1]))]]);
@@ -26964,8 +27002,7 @@
         cb: cb,
         trimOnlySpaces: true,
         ignoreTags: stripHtml ? opts.stripHtmlButIgnoreTags : [],
-        skipHtmlDecoding: true,
-        returnRangesOnly: true
+        skipHtmlDecoding: true
       });
     } // ---------------------------------------------------------------------------
     // NEXT STEP.
