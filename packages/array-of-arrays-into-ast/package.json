@@ -11,17 +11,16 @@
     "url": "codsen.com"
   },
   "keywords": [
+    "array",
     "ast",
-    "array",
-    "array",
-    "into",
-    "turn",
-    "put",
-    "nested",
-    "generate",
     "from",
+    "generate",
+    "into",
+    "nested",
+    "object",
     "plain",
-    "object"
+    "put",
+    "turn"
   ],
   "main": "dist/array-of-arrays-into-ast.cjs.js",
   "module": "dist/array-of-arrays-into-ast.esm.js",

@@ -11,19 +11,19 @@
     "url": "codsen.com"
   },
   "keywords": [
+    "api",
     "array",
     "arrayiffy",
+    "cast",
     "if",
-    "into",
-    "string",
-    "turn",
-    "stringify",
-    "only",
-    "api",
     "input",
-    "validation",
+    "into",
+    "only",
+    "string",
+    "stringify",
+    "turn",
     "validate",
-    "cast"
+    "validation"
   ],
   "main": "dist/arrayiffy-if-string.cjs.js",
   "module": "dist/arrayiffy-if-string.esm.js",

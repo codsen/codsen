@@ -222,7 +222,7 @@ Copyright (c) 2015-2020 Roy Revelt and other contributors
 
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-uglify
-[cov-img]: https://img.shields.io/badge/coverage-95.95%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-94.59%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-uglify
 [no-deps-img]: https://img.shields.io/badge/-no%20dependencies-brightgreen?style=flat-square
 [no-deps-url]: https://www.npmjs.com/package/string-uglify?activeTab=dependencies

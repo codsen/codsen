@@ -12,11 +12,10 @@
   },
   "keywords": [
     "ast",
+    "by",
     "edit",
     "get",
     "html",
-    "xhtml",
-    "by",
     "key",
     "object",
     "parse",
@@ -30,6 +29,7 @@
     "tree",
     "value",
     "write",
+    "xhtml",
     "xml"
   ],
   "main": "dist/ast-get-values-by-key.cjs.js",

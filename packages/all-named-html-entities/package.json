@@ -11,16 +11,16 @@
     "url": "codsen.com"
   },
   "keywords": [
-    "entity",
-    "entities",
-    "xhtml",
-    "html",
-    "named",
     "all",
-    "list",
     "array",
+    "encoded",
+    "entities",
+    "entity",
     "existing",
-    "encoded"
+    "html",
+    "list",
+    "named",
+    "xhtml"
   ],
   "main": "dist/all-named-html-entities.cjs.js",
   "module": "dist/all-named-html-entities.esm.js",
