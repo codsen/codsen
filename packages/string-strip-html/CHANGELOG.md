@@ -41,6 +41,17 @@ stripHtml("abc<a>click me</a>def");
 
 `allTagLocations` can be used for syntax highlighting, for example.
 
+**Migration instructions:**
+
+Previously, function on defaults returned result string. Now it's under `result` key, in output plain object.
+Previously, you could request _ranges_ output via `opts.returnRangesOnly`. Now _ranges_ are always present under key `ranges`.
+
+Some people mistakenly took _ranges_ output for exact tag locations. Now exact tag locations are under `allTagLocations` key.
+
+That's different from _ranges_ output, because _ranges_ are instructions: what to add, what to replace and can be merged and their character indexes covered will include whitespace management.
+
+`allTagLocations`, on other hand, are exact tag locations. If you slice them using `String.slice()` you'll get string from bracket-to-bracket like `<a>`.
+
 ## 4.4.0 (2020-04-26)
 
 ### Features
