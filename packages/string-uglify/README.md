@@ -75,31 +75,140 @@ into something like:
 [".g", ".j5", ".s9"];
 ```
 
-## Main feature - it's not position-sensitive
+## Almost deterministic algorithm
 
-### Basic algorithm
+_Deterministic_ means that the same input always results in the same output.
 
-A basic uglification algorithm looks like this: take an array of class/id names, first-one gets name `a`, second `b`. After 26 letters are depleted, the next name gets `aa` and so on.
+Our algorithm is nearly deterministic; "nearly" because many class names compete to be shortened to a single character and depending on the list, a single-character slot may be available or not. When default, two-character-long class names clash, the third character is appended (and so on, with less and less probability of happening).
 
-Problem with this algorithm is that when you add or remove some classes from code, all others "below" in the list get shifted — their names change.
+Technically speaking, we want to uglify an array of class names in such way, that replacing half of the classes in the array and uglifying them again, "veteran" values would stay the same.
 
-Practically, this means, if you add a single new class high-enough, there will be code changes _all over the file_.
+Practically, _deterministic algorithm_ means you can heavily edit your HTML and it's unlikely that there will be reported git changes outside your edited code areas.
 
-Besides being simple, the second strength of such algorithm is that length-wise, class/id names are the shortest possible.
+For example, let's minify CSS classes made of NATO phonetic alphabet, `.oscar` being one of them. Then, let's create another array: leave only `.oscar` and fill the list with other words. In both uglified result arrays, `.oscar` is consistently minified to the same `.k`.
 
-**[⬆ back to top](#)**
+That's _determinism_.
 
-### Our algorithm
+```js
+const input1 = [
+  ".alpha",
+  ".bravo",
+  ".charlie",
+  ".delta",
+  ".echo",
+  ".foxtrot",
+  ".golf",
+  ".hotel",
+  ".india",
+  ".juliett",
+  ".kilo",
+  ".lima",
+  ".mike",
+  ".november",
+  ".oscar", // <---- here
+  ".papa",
+  ".quebec",
+  ".romeo",
+  ".sierra",
+  ".tango",
+  ".uniform",
+  ".victor",
+  ".whiskey",
+  ".xray",
+  ".yankee",
+  ".zulu",
+];
+const output1 = uglifyArr(input1);
+console.log(`\n\n\n the first array:`);
+console.log(input1.map((val, i) => `${val} - ${output1[i]}`).join("\n"));
+// => the first array:
+//
+// .alpha - .s
+// .bravo - .m
+// .charlie - .u
+// .delta - .w
+// .echo - .t
+// .foxtrot - .e
+// .golf - .c
+// .hotel - .o
+// .india - .r
+// .juliett - .j
+// .kilo - .jj
+// .lima - .x
+// .mike - .a
+// .november - .y
+// .oscar - .k // <---- here
+// .papa - .w6
+// .quebec - .z
+// .romeo - .uq
+// .sierra - .q
+// .tango - .l
+// .uniform - .i
+// .victor - .h
+// .whiskey - .m0
+// .xray - .e4
+// .yankee - .h9
+// .zulu - .qg
 
-This program generates uglified names differently. It uses a special formula to turn the unique sequence of letters and their positions into another, unique combination of two or more letters.
+const input2 = [
+  ".abandon",
+  ".ability",
+  ".able",
+  ".about",
+  ".above",
+  ".abroad",
+  ".absence",
+  ".absent",
+  ".absolute",
+  ".abstract",
+  ".abuse",
+  ".abusive",
 
-In this approach, if you add, remove or shuffle strings in the input array, up to 0.1% of the uglified values might change.
+  ".oscar", // <---- here
 
-The drawback of this algorithm is that class/id names start at two-characters length and if that combination is taken, get three-character (or, with increasingly lesser probability, longer) names.
+  ".academic",
+  ".accept",
+  ".acceptable",
+  ".acceptance",
+  ".access",
+  ".accident",
+  ".accompany",
+  ".according",
+  ".account",
+  ".accountant",
+  ".accurate",
+];
 
-Single-letter names are assigned during the cleanup phase: existing single-character names are left untouched, the remaining pool of letters is distributed the following way.
-
-We scan the list of uglified result names and check their first letter. If that letter is not taken, that name gets shortened to one letter.
+const output2 = uglifyArr(input2);
+console.log(`\n\n\n the second array:`);
+console.log(input2.map((val, i) => `${val} - ${output2[i]}`).join("\n"));
+// => the second array:
+//
+// .abandon - .p
+// .ability - .q
+// .able - .i
+// .about - .n
+// .above - .z
+// .abroad - .np
+// .absence - .nl
+// .absent - .h
+// .absolute - .zj
+// .abstract - .o
+// .abuse - .c
+// .abusive - .r
+// .oscar - .k // <---- here
+// .academic - .v
+// .accept - .u
+// .acceptable - .i4
+// .acceptance - .l
+// .access - .w
+// .accident - .pj
+// .accompany - .n3
+// .according - .wm
+// .account - .pd
+// .accountant - .a
+// .accurate - .cw
+```
 
 **[⬆ back to top](#)**
 
@@ -147,7 +256,7 @@ const { uglifyArr, uglifyById, version } = require("string-uglify");
 
 **Input** — anything.
 If it's not an array, the same thing will be instantly returned.
-If it's array, an array is returned.
+If it's an array, an array is returned.
 If it's an array of one or more strings, it will return an array of that many uglified strings.
 
 **Output** - same type as **input**.

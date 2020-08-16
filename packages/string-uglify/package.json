@@ -1,7 +1,7 @@
 {
   "name": "string-uglify",
   "version": "1.2.40",
-  "description": "Uglify - generate unique short names for sets of strings",
+  "description": "Shorten sets of strings deterministically, to be git-friendly",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
   "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/string-uglify",

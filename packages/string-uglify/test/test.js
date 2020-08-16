@@ -288,3 +288,78 @@ tap.test(
     t.end();
   }
 );
+
+tap.test(`13 - readme examples`, (t) => {
+  const input1 = [
+    ".alpha",
+    ".bravo",
+    ".charlie",
+    ".delta",
+    ".echo",
+    ".foxtrot",
+    ".golf",
+    ".hotel",
+    ".india",
+    ".juliett",
+    ".kilo",
+    ".lima",
+    ".mike",
+    ".november",
+    ".oscar",
+    ".papa",
+    ".quebec",
+    ".romeo",
+    ".sierra",
+    ".tango",
+    ".uniform",
+    ".victor",
+    ".whiskey",
+    ".xray",
+    ".yankee",
+    ".zulu",
+  ];
+  const output1 = uglifyArr(input1);
+  // console.log(`\n\n\n the first array:`);
+  // console.log(input1.map((val, i) => `${val} - ${output1[i]}`).join("\n"));
+
+  const input2 = [
+    ".abandon",
+    ".ability",
+    ".able",
+    ".about",
+    ".above",
+    ".abroad",
+    ".absence",
+    ".absent",
+    ".absolute",
+    ".abstract",
+    ".abuse",
+    ".abusive",
+
+    ".oscar",
+
+    ".academic",
+    ".accept",
+    ".acceptable",
+    ".acceptance",
+    ".access",
+    ".accident",
+    ".accompany",
+    ".according",
+    ".account",
+    ".accountant",
+    ".accurate",
+  ];
+
+  const output2 = uglifyArr(input2);
+  // console.log(`\n\n\n the second array:`);
+  // console.log(input2.map((val, i) => `${val} - ${output2[i]}`).join("\n"));
+
+  t.is(
+    output1[input1.indexOf(".oscar")],
+    output2[input2.indexOf(".oscar")],
+    ".oscar"
+  );
+
+  t.end();
+});

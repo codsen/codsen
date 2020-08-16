@@ -1,6 +1,6 @@
 /**
  * string-uglify
- * Uglify - generate unique short names for sets of strings
+ * Shorten sets of strings deterministically, to be git-friendly
  * Version: 1.2.40
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
