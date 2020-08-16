@@ -81,12 +81,6 @@ console.log(stripHtml("aaa<div>bbb</div>ccc").result); // => 'aaa bbb ccc'
 - [Contributing](#contributing)
 - [Licence](#licence)
 
-## Purpose
-
-This library only detects and removes HTML tags from strings (text, in other words). Not more, not less. If something is deemed to be not a tag, it will not be removed. The bar is set higher than browsers - we aim to tackle as much broken code as possible so that later everything will work on browsers. This library is a development tool.
-
-**[⬆ back to top](#)**
-
 ## Features
 
 - Can be used to generate Email Text versions. Optionally, any URL links can be extracted and put after a previously-linked element.
