@@ -144,7 +144,7 @@
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
     "@rollup/plugin-strip": "^2.0.0",
-    "eslint": "^7.6.0",
+    "eslint": "^7.7.0",
     "execa": "^4.0.3",
     "lect": "^0.13.8",
     "prettier": "^2.0.5",
