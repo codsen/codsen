@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.0.5](https://gitlab.com/codsen/codsen/compare/html-all-known-attributes@2.0.4...html-all-known-attributes@2.0.5) (2020-08-16)
-
-**Note:** Version bump only for package html-all-known-attributes
-
-
-
-
-
 ## 2.0.0 (2020-04-13)
 
 ### Features
