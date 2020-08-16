@@ -253,7 +253,7 @@ function checkTypesMini(obj, ref, originalOptions) {
       } else if (typ__default['default'](current) !== typ__default['default'](compareTo)) {
         throw new TypeError("".concat(opts.msg, ": ").concat(opts.optsVarName, ".").concat(innerObj.path, " was customised to ").concat(typ__default['default'](current).toLowerCase() === "string" ? "" : '"').concat(JSON.stringify(current, null, 0)).concat(typ__default['default'](current).toLowerCase() === "string" ? "" : '"', " which is not ").concat(typ__default['default'](compareTo).toLowerCase(), " but ").concat(typ__default['default'](current).toLowerCase()));
       }
-    }
+    } else ;
     return current;
   });
 }

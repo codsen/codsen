@@ -334,7 +334,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
           ).toLowerCase()}`
         );
       }
-    }
+    } else ;
     return current;
   });
 }

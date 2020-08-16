@@ -7575,10 +7575,6 @@
 		}, fn(module, module.exports), module.exports;
 	}
 
-	function getCjsExportFromNamespace (n) {
-		return n && n['default'] || n;
-	}
-
 	function commonjsRequire () {
 		throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
 	}
@@ -12390,7 +12386,7 @@
 	        if (!token.closing) {
 	          token.closing = false;
 	        }
-	      }
+	      } else ;
 	    }
 
 	    if (!doNothing && token.type === "tag" && token.kind !== "cdata" && attrib.attribNameStartsAt && i > attrib.attribNameStartsAt && attrib.attribNameEndsAt === null && !charSuitableForHTMLAttrName(str[i])) {
@@ -13151,7 +13147,7 @@
 
 	              layers.pop();
 	              layers.pop();
-	            }
+	            } else ;
 	          }
 	        } else if (!path) {
 	          path = "0";
@@ -18379,7 +18375,7 @@
 	              ranges: [context.str[node.attribClosingQuoteAt] === `'` ? [node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, `'`] : [node.attribClosingQuoteAt, node.attribClosingQuoteAt + 1, `'`]]
 	            }
 	          });
-	        }
+	        } else ;
 	      }
 	    }
 
@@ -18632,7 +18628,7 @@
 	  };
 	}
 
-	var db = {
+	var require$$0 = {
 		"application/1d-interleaved-parityfec": {
 		source: "iana"
 	},
@@ -28938,13 +28934,6 @@
 	}
 	};
 
-	var db$1 = /*#__PURE__*/Object.freeze({
-		__proto__: null,
-		'default': db
-	});
-
-	var require$$0 = getCjsExportFromNamespace(db$1);
-
 	/*!
 	 * mime-db
 	 * Copyright(c) 2014 Jonathan Ong
@@ -32051,7 +32040,7 @@
 	              message: `Repeated variant subtag, "${split[i]}".`
 	            };
 	          }
-	        }
+	        } else ;
 	      }
 	    } else if (i === 2) {
 	      if (type === "normal") {

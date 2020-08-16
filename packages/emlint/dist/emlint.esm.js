@@ -3562,7 +3562,7 @@ function attributeMalformed(context, ...opts) {
               ],
             },
           });
-        }
+        } else ;
       }
     },
   };

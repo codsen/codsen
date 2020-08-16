@@ -1,6 +1,6 @@
 # string-uglify
 
-> Uglify - generate unique short names for sets of strings
+> Shorten sets of strings deterministically, to be git-friendly
 
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
@@ -14,7 +14,7 @@
 
 - [Install](#install)
 - [Idea](#idea)
-- [Main feature - it's not position-sensitive](#main-feature-its-not-position-sensitive)
+- [Almost deterministic algorithm](#almost-deterministic-algorithm)
 - [Other features](#other-features)
 - [Usage](#usage)
 - [API](#api)

@@ -4633,7 +4633,7 @@
         } else if (typeDetect(current) !== typeDetect(compareTo)) {
           throw new TypeError("".concat(opts.msg, ": ").concat(opts.optsVarName, ".").concat(innerObj.path, " was customised to ").concat(typeDetect(current).toLowerCase() === "string" ? "" : '"').concat(JSON.stringify(current, null, 0)).concat(typeDetect(current).toLowerCase() === "string" ? "" : '"', " which is not ").concat(typeDetect(compareTo).toLowerCase(), " but ").concat(typeDetect(current).toLowerCase()));
         }
-      }
+      } else ;
 
       return current;
     });

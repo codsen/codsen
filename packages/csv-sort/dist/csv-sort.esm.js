@@ -380,7 +380,7 @@ function csvSort(input) {
       throw new Error(
         'csv-sort/csvSort(): [THROW_ID_04] The computer can\'t find the "Balance" column! It saw some numeric-only columns, but they all seem to have certain rows with the same values as rows right below/above them!'
       );
-    }
+    } else ;
   }
   if (!balanceColumnIndex) {
     throw new Error(

@@ -2457,7 +2457,7 @@
         balanceColumnIndex = potentialBalanceColumnIndexesList[0];
       } else if (potentialBalanceColumnIndexesList.length === 0) {
         throw new Error('csv-sort/csvSort(): [THROW_ID_04] The computer can\'t find the "Balance" column! It saw some numeric-only columns, but they all seem to have certain rows with the same values as rows right below/above them!');
-      } // at this point 99% of normal-size, real-life bank account CSV's should have
+      } else ; // at this point 99% of normal-size, real-life bank account CSV's should have
       // "Balance" column identified because there will be both "Credit" and "Debit"
       // transaction rows which will be not exclusively numeric, but ["empty", "numeric"] type.
       // Even Lloyds Business banking CSV's that output account numbers

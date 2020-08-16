@@ -1556,7 +1556,7 @@ function tokenizer(str, originalOpts) {
         if (!token.closing) {
           token.closing = false;
         }
-      }
+      } else ;
     }
     if (
       !doNothing &&

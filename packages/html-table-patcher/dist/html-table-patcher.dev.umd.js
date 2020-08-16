@@ -4009,7 +4009,7 @@
           if (!token.closing) {
             token.closing = false;
           }
-        }
+        } else ;
       }
 
       if (!doNothing && token.type === "tag" && token.kind !== "cdata" && attrib.attribNameStartsAt && _i > attrib.attribNameStartsAt && attrib.attribNameEndsAt === null && !charSuitableForHTMLAttrName(str[_i])) {
@@ -4784,7 +4784,7 @@
 
                 layers.pop();
                 layers.pop();
-              }
+              } else ;
             }
           } else if (!path) {
             path = "0";

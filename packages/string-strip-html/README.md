@@ -69,7 +69,6 @@ console.log(stripHtml("aaa<div>bbb</div>ccc").result); // => 'aaa bbb ccc'
 
 - [Install](#install)
 - [Use it](#use-it)
-- [Purpose](#purpose)
 - [Features](#features)
 - [API](#api)
 - [API - Input](#api-input)

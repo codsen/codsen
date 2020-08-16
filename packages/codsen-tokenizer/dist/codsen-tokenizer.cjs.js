@@ -1045,7 +1045,7 @@ function tokenizer(str, originalOpts) {
         if (!token.closing) {
           token.closing = false;
         }
-      }
+      } else ;
     }
     if (!doNothing && token.type === "tag" && token.kind !== "cdata" && attrib.attribNameStartsAt && _i > attrib.attribNameStartsAt && attrib.attribNameEndsAt === null && !charSuitableForHTMLAttrName__default['default'](str[_i])) {
       attrib.attribNameEndsAt = _i;

@@ -11,31 +11,50 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var stringFixBrokenNamedEntities = _interopDefault(require('string-fix-broken-named-entities'));
-var traverse = _interopDefault(require('ast-monkey-traverse'));
-var lineColumn = _interopDefault(require('line-column'));
-var clone = _interopDefault(require('lodash.clonedeep'));
-var parser = _interopDefault(require('codsen-parser'));
-var matcher = _interopDefault(require('matcher'));
-var defineLazyProp = _interopDefault(require('define-lazy-prop'));
-var processCommaSeparated = _interopDefault(require('string-process-comma-separated'));
+var stringFixBrokenNamedEntities = require('string-fix-broken-named-entities');
+var traverse = require('ast-monkey-traverse');
+var lineColumn = require('line-column');
+var clone = require('lodash.clonedeep');
+var parser = require('codsen-parser');
+var matcher = require('matcher');
+var defineLazyProp = require('define-lazy-prop');
+var processCommaSeparated = require('string-process-comma-separated');
 var stringLeftRight = require('string-left-right');
-var isRegExp = _interopDefault(require('lodash.isregexp'));
+var isRegExp = require('lodash.isregexp');
 var htmlAllKnownAttributes = require('html-all-known-attributes');
-var leven = _interopDefault(require('leven'));
-var db = _interopDefault(require('mime-db'));
-var isRel = _interopDefault(require('is-relative-uri'));
-var urlRegex = _interopDefault(require('url-regex'));
-var isLangCode = _interopDefault(require('is-language-code'));
-var isMediaD = _interopDefault(require('is-media-descriptor'));
+var leven = require('leven');
+var db = require('mime-db');
+var isRel = require('is-relative-uri');
+var urlRegex = require('url-regex');
+var isLangCode = require('is-language-code');
+var isMediaD = require('is-media-descriptor');
 var htmlEntitiesNotEmailFriendly$1 = require('html-entities-not-email-friendly');
-var he = _interopDefault(require('he'));
-var findMalformed = _interopDefault(require('string-find-malformed'));
+var he = require('he');
+var findMalformed = require('string-find-malformed');
 var stringMatchLeftRight = require('string-match-left-right');
 var astMonkeyUtil = require('ast-monkey-util');
-var op = _interopDefault(require('object-path'));
+var op = require('object-path');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var stringFixBrokenNamedEntities__default = /*#__PURE__*/_interopDefaultLegacy(stringFixBrokenNamedEntities);
+var traverse__default = /*#__PURE__*/_interopDefaultLegacy(traverse);
+var lineColumn__default = /*#__PURE__*/_interopDefaultLegacy(lineColumn);
+var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
+var parser__default = /*#__PURE__*/_interopDefaultLegacy(parser);
+var matcher__default = /*#__PURE__*/_interopDefaultLegacy(matcher);
+var defineLazyProp__default = /*#__PURE__*/_interopDefaultLegacy(defineLazyProp);
+var processCommaSeparated__default = /*#__PURE__*/_interopDefaultLegacy(processCommaSeparated);
+var isRegExp__default = /*#__PURE__*/_interopDefaultLegacy(isRegExp);
+var leven__default = /*#__PURE__*/_interopDefaultLegacy(leven);
+var db__default = /*#__PURE__*/_interopDefaultLegacy(db);
+var isRel__default = /*#__PURE__*/_interopDefaultLegacy(isRel);
+var urlRegex__default = /*#__PURE__*/_interopDefaultLegacy(urlRegex);
+var isLangCode__default = /*#__PURE__*/_interopDefaultLegacy(isLangCode);
+var isMediaD__default = /*#__PURE__*/_interopDefaultLegacy(isMediaD);
+var he__default = /*#__PURE__*/_interopDefaultLegacy(he);
+var findMalformed__default = /*#__PURE__*/_interopDefaultLegacy(findMalformed);
+var op__default = /*#__PURE__*/_interopDefaultLegacy(op);
 
 var domain;
 function EventHandlers() {}
@@ -537,7 +556,7 @@ function checkForWhitespace(str, idxOffset) {
       idxTo: gatheredRanges[gatheredRanges.length - 1][1],
       message: `Remove whitespace.`,
       fix: {
-        ranges: clone(gatheredRanges)
+        ranges: clone__default['default'](gatheredRanges)
       }
     });
     gatheredRanges.length = 0;
@@ -555,7 +574,7 @@ function includesWithRegex(arr, whatToMatch, opts = {}) {
   if (!Array.isArray(arr) || !arr.length) {
     return false;
   }
-  return arr.some(val => isRegExp(val) && whatToMatch.match(val) || typeof val === "string" && (!opts.caseInsensitive && whatToMatch === val || opts.caseInsensitive && whatToMatch.toLowerCase() === val.toLowerCase()));
+  return arr.some(val => isRegExp__default['default'](val) && whatToMatch.match(val) || typeof val === "string" && (!opts.caseInsensitive && whatToMatch === val || opts.caseInsensitive && whatToMatch.toLowerCase() === val.toLowerCase()));
 }
 
 function validateValue(str, idxOffset, opts, charStart, charEnd, errorArr) {
@@ -602,7 +621,7 @@ function validateString(str, idxOffset, originalOpts) {
   } = checkForWhitespace(str, idxOffset);
   if (Number.isInteger(charStart)) {
     if (opts.canBeCommaSeparated) {
-      processCommaSeparated(str, {
+      processCommaSeparated__default['default'](str, {
         offset: idxOffset,
         oneSpaceAfterCommaOK: false,
         leadingWhitespaceOK: true,
@@ -3311,8 +3330,8 @@ function tagIsPresent(context, ...opts) {
   return {
     tag(node) {
       if (Array.isArray(opts) && opts.length) {
-        const temp = matcher([node.tagName], opts);
-        if (matcher([node.tagName], opts).length) {
+        const temp = matcher__default['default']([node.tagName], opts);
+        if (matcher__default['default']([node.tagName], opts).length) {
           context.report({
             ruleId: "tag-is-present",
             message: `${node.tagName} is not allowed.`,
@@ -3466,7 +3485,7 @@ function attributeMalformed(context, ...opts) {
       if (!node.attribNameRecognised && !node.attribName.startsWith("xmlns:") && !blacklist.includes(node.parent.tagName)) {
         let somethingMatched = false;
         for (const oneOfAttribs of htmlAllKnownAttributes.allHtmlAttribs.values()) {
-          if (leven(oneOfAttribs, node.attribName) === 1) {
+          if (leven__default['default'](oneOfAttribs, node.attribName) === 1) {
             context.report({
               ruleId: "attribute-malformed",
               message: `Probably meant "${oneOfAttribs}".`,
@@ -3557,7 +3576,7 @@ function attributeMalformed(context, ...opts) {
               ranges: [context.str[node.attribClosingQuoteAt] === `'` ? [node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, `'`] : [node.attribClosingQuoteAt, node.attribClosingQuoteAt + 1, `'`]]
             }
           });
-        }
+        } else ;
       }
     }
   };
@@ -3808,7 +3827,7 @@ function attributeValidateAccept(context, ...opts) {
         node.attribValueStartsAt,
         {
           quickPermittedValues: ["audio/*", "video/*", "image/*", "text/html", "image/png", "image/gif", "video/mpeg", "text/css", "audio/basic", wholeExtensionRegex],
-          permittedValues: Object.keys(db),
+          permittedValues: Object.keys(db__default['default']),
           canBeCommaSeparated: true,
           noSpaceAfterComma: true
         });
@@ -3903,7 +3922,7 @@ function validateValue$1(str, originalOpts, errorArr) {
     ...originalOpts
   };
   const extractedValue = str.slice(opts.from, opts.to);
-  const calcultedIsRel = isRel(extractedValue);
+  const calcultedIsRel = isRel__default['default'](extractedValue);
   if (Array.from(extractedValue).some(val => !val.trim().length)) {
     const ranges = [];
     const foundCharacterRanges = [];
@@ -3913,7 +3932,7 @@ function validateValue$1(str, originalOpts, errorArr) {
       ranges.push(whitespaceRangeArr);
     }, originalOpts);
     const countOfURIs = foundCharacterRanges.reduce((acc, curr) => {
-      if (extractedValue.slice(curr[0] - opts.offset, curr[1] - opts.offset).match(urlRegex({
+      if (extractedValue.slice(curr[0] - opts.offset, curr[1] - opts.offset).match(urlRegex__default['default']({
         exact: true
       }))) {
         return acc + 1;
@@ -3940,13 +3959,13 @@ function validateValue$1(str, originalOpts, errorArr) {
         }
       });
     }
-  } else if (!extractedValue.startsWith("tel:") && !(urlRegex({
+  } else if (!extractedValue.startsWith("tel:") && !(urlRegex__default['default']({
     exact: true
   }).test(extractedValue) || calcultedIsRel.res)) {
     let message = `Should be an URI.`;
     let idxFrom = opts.offset + opts.from;
     let idxTo = opts.offset + opts.to;
-    const whatCouldBeExtractedAtAllFromRegex = extractedValue.match(urlRegex());
+    const whatCouldBeExtractedAtAllFromRegex = extractedValue.match(urlRegex__default['default']());
     if (Array.isArray(whatCouldBeExtractedAtAllFromRegex)) {
       if (whatCouldBeExtractedAtAllFromRegex.length > 1 && !opts.multipleOK) {
         message = `There should be only one URI.`;
@@ -4011,7 +4030,7 @@ function validateUri(str, originalOpts) {
           to: charEnd
         });
       } else {
-        processCommaSeparated(str, {
+        processCommaSeparated__default['default'](str, {
           offset: opts.offset,
           oneSpaceAfterCommaOK: false,
           leadingWhitespaceOK: true,
@@ -4538,7 +4557,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
   if (Number.isInteger(charStart)) {
     if (opts.canBeCommaSeparated) {
       const extractedValues = [];
-      processCommaSeparated(str, {
+      processCommaSeparated__default['default'](str, {
         offset: idxOffset,
         oneSpaceAfterCommaOK: false,
         leadingWhitespaceOK: true,
@@ -5155,7 +5174,7 @@ function attributeValidateCodetype(context, ...opts) {
         node.attribValueStartsAt,
         {
           quickPermittedValues: ["application/javascript", "application/json", "application/x-www-form-urlencoded", "application/xml", "application/zip", "application/pdf", "application/sql", "application/graphql", "application/ld+json", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.oasis.opendocument.text", "application/zstd", "audio/mpeg", "audio/ogg", "multipart/form-data", "text/css", "text/html", "text/xml", "text/csv", "text/plain", "image/png", "image/jpeg", "image/gif", "application/vnd.api+json"],
-          permittedValues: Object.keys(db),
+          permittedValues: Object.keys(db__default['default']),
           canBeCommaSeparated: false,
           noSpaceAfterComma: false
         });
@@ -5598,7 +5617,7 @@ function attributeValidateEnctype(context, ...opts) {
         node.attribValueStartsAt,
         {
           quickPermittedValues: ["application/x-www-form-urlencoded", "multipart/form-data", "text/plain"],
-          permittedValues: Object.keys(db),
+          permittedValues: Object.keys(db__default['default']),
           canBeCommaSeparated: false
         });
         errorArr.forEach(errorObj => {
@@ -5872,7 +5891,7 @@ function attributeValidateHreflang(context, ...opts) {
         } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
         const {
           message
-        } = isLangCode(node.attribValueRaw.slice(charStart, charEnd));
+        } = isLangCode__default['default'](node.attribValueRaw.slice(charStart, charEnd));
         if (message) {
           errorArr.push({
             idxFrom: node.attribValueStartsAt + charStart,
@@ -6065,7 +6084,7 @@ function attributeValidateLang(context, ...opts) {
         } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
         const {
           message
-        } = isLangCode(node.attribValueRaw.slice(charStart, charEnd));
+        } = isLangCode__default['default'](node.attribValueRaw.slice(charStart, charEnd));
         if (message) {
           errorArr.push({
             idxFrom: node.attribValueStartsAt + charStart,
@@ -6267,7 +6286,7 @@ function attributeValidateMedia(context, ...opts) {
           charEnd,
           errorArr
         } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-        errorArr.concat(isMediaD(node.attribValueRaw.slice(charStart, charEnd), {
+        errorArr.concat(isMediaD__default['default'](node.attribValueRaw.slice(charStart, charEnd), {
           offset: node.attribValueStartsAt
         })).forEach(errorObj => {
           context.report({ ...errorObj,
@@ -7759,7 +7778,7 @@ function attributeValidateType(context, ...opts) {
             node.attribValueStartsAt,
             {
               quickPermittedValues: ["application/javascript", "application/json", "application/x-www-form-urlencoded", "application/xml", "application/zip", "application/pdf", "application/sql", "application/graphql", "application/ld+json", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.oasis.opendocument.text", "application/zstd", "audio/mpeg", "audio/ogg", "multipart/form-data", "text/css", "text/html", "text/xml", "text/csv", "text/plain", "image/png", "image/jpeg", "image/gif", "application/vnd.api+json"],
-              permittedValues: Object.keys(db),
+              permittedValues: Object.keys(db__default['default']),
               canBeCommaSeparated: false,
               noSpaceAfterComma: false
             }).forEach(errorObj => {
@@ -8117,7 +8136,7 @@ function htmlEntitiesNotEmailFriendly(context) {
 function processStr(str, offset, context, mode) {
   for (let i = 0, len = str.length; i < len; i++) {
     if ((str[i].charCodeAt(0) > 127 || `<>"&`.includes(str[i])) && (str[i].charCodeAt(0) !== 160 || !Object.keys(context.processedRulesConfig).includes("bad-character-non-breaking-space") || !isAnEnabledValue(context.processedRulesConfig["bad-character-non-breaking-space"]))) {
-      let encodedChr = he.encode(str[i], {
+      let encodedChr = he__default['default'].encode(str[i], {
         useNamedReferences: mode === "named"
       });
       if (Object.keys(htmlEntitiesNotEmailFriendly$1.notEmailFriendly).includes(encodedChr.slice(1, encodedChr.length - 1))) {
@@ -8261,7 +8280,7 @@ function mediaMalformed(context, ...opts) {
   return {
     at(node) {
       if (node.identifier === "media") {
-        const errors = isMediaD(node.query, {
+        const errors = isMediaD__default['default'](node.query, {
           offset: node.queryStartsAt
         });
         errors.forEach(errorObj => {
@@ -8358,7 +8377,7 @@ function validateCommentOpening(token) {
   }
   let wrongBracketType;
   if (["only", "not"].includes(token.kind)) {
-    findMalformed(token.value, "<!--[", ({
+    findMalformed__default['default'](token.value, "<!--[", ({
       idxFrom,
       idxTo
     }) => {
@@ -8384,7 +8403,7 @@ function validateCommentOpening(token) {
     });
   }
   if (token.kind === "not") {
-    findMalformed(token.value, "]><!-->", ({
+    findMalformed__default['default'](token.value, "]><!-->", ({
       idxFrom,
       idxTo
     }) => {
@@ -8429,7 +8448,7 @@ function validateCommentOpening(token) {
 function commentOpeningMalformed(context, ...opts) {
   return {
     text: node => {
-      findMalformed(node.value, "<!--", errorObj => {
+      findMalformed__default['default'](node.value, "<!--", errorObj => {
         context.report({ ...errorObj,
           message: "Malformed opening comment tag.",
           ruleId: "comment-opening-malformed",
@@ -8457,12 +8476,12 @@ function commentOpeningMalformed(context, ...opts) {
 function commentMismatchingPair(context, ...opts) {
   return {
     ast(node) {
-      traverse(node,
+      traverse__default['default'](node,
       (key, val, innerObj) => {
         const current = val !== undefined ? val : key;
         if (isObj(current)) {
           if (current.type === "comment" && current.closing) {
-            const previousToken = op.get(node, astMonkeyUtil.pathPrev(innerObj.path));
+            const previousToken = op__default['default'].get(node, astMonkeyUtil.pathPrev(innerObj.path));
             if (isObj(previousToken) && previousToken.type === "comment" && !previousToken.closing) {
               if (previousToken.kind === "not" && current.kind === "only") {
                 context.report({
@@ -8500,7 +8519,7 @@ function commentConditionalNested(context) {
   return {
     ast(node) {
       const pathsWithOpeningComments = [];
-      traverse(node,
+      traverse__default['default'](node,
       (key, val, innerObj) => {
         const current = val !== undefined ? val : key;
         if (isObj(current)) {
@@ -8526,257 +8545,257 @@ function commentConditionalNested(context) {
 }
 
 const builtInRules = {};
-defineLazyProp(builtInRules, "bad-character-null", () => badCharacterNull);
-defineLazyProp(builtInRules, "bad-character-start-of-heading", () => badCharacterStartOfHeading);
-defineLazyProp(builtInRules, "bad-character-start-of-text", () => badCharacterStartOfText);
-defineLazyProp(builtInRules, "bad-character-end-of-text", () => badCharacterEndOfText);
-defineLazyProp(builtInRules, "bad-character-end-of-transmission", () => badCharacterEndOfTransmission);
-defineLazyProp(builtInRules, "bad-character-enquiry", () => badCharacterEnquiry);
-defineLazyProp(builtInRules, "bad-character-acknowledge", () => badCharacterAcknowledge);
-defineLazyProp(builtInRules, "bad-character-bell", () => badCharacterBell);
-defineLazyProp(builtInRules, "bad-character-backspace", () => badCharacterBackspace);
-defineLazyProp(builtInRules, "bad-character-tabulation", () => badCharacterTabulation);
-defineLazyProp(builtInRules, "bad-character-line-tabulation", () => badCharacterLineTabulation);
-defineLazyProp(builtInRules, "bad-character-form-feed", () => badCharacterFormFeed);
-defineLazyProp(builtInRules, "bad-character-shift-out", () => badCharacterShiftOut);
-defineLazyProp(builtInRules, "bad-character-shift-in", () => badCharacterShiftIn);
-defineLazyProp(builtInRules, "bad-character-data-link-escape", () => badCharacterDataLinkEscape);
-defineLazyProp(builtInRules, "bad-character-device-control-one", () => badCharacterDeviceControlOne);
-defineLazyProp(builtInRules, "bad-character-device-control-two", () => badCharacterDeviceControlTwo);
-defineLazyProp(builtInRules, "bad-character-device-control-three", () => badCharacterDeviceControlThree);
-defineLazyProp(builtInRules, "bad-character-device-control-four", () => badCharacterDeviceControlFour);
-defineLazyProp(builtInRules, "bad-character-negative-acknowledge", () => badCharacterNegativeAcknowledge);
-defineLazyProp(builtInRules, "bad-character-synchronous-idle", () => badCharacterSynchronousIdle);
-defineLazyProp(builtInRules, "bad-character-end-of-transmission-block", () => badCharacterEndOfTransmissionBlock);
-defineLazyProp(builtInRules, "bad-character-cancel", () => badCharacterCancel);
-defineLazyProp(builtInRules, "bad-character-end-of-medium", () => badCharacterEndOfMedium);
-defineLazyProp(builtInRules, "bad-character-substitute", () => badCharacterSubstitute);
-defineLazyProp(builtInRules, "bad-character-escape", () => badCharacterEscape);
-defineLazyProp(builtInRules, "bad-character-information-separator-four", () => badCharacterInformationSeparatorFour);
-defineLazyProp(builtInRules, "bad-character-information-separator-three", () => badCharacterInformationSeparatorThree);
-defineLazyProp(builtInRules, "bad-character-information-separator-two", () => badCharacterInformationSeparatorTwo);
-defineLazyProp(builtInRules, "bad-character-information-separator-one", () => badCharacterInformationSeparatorTwo$1);
-defineLazyProp(builtInRules, "bad-character-delete", () => badCharacterDelete);
-defineLazyProp(builtInRules, "bad-character-control-0080", () => badCharacterControl0080);
-defineLazyProp(builtInRules, "bad-character-control-0081", () => badCharacterControl0081);
-defineLazyProp(builtInRules, "bad-character-break-permitted-here", () => badCharacterBreakPermittedHere);
-defineLazyProp(builtInRules, "bad-character-no-break-here", () => badCharacterNoBreakHere);
-defineLazyProp(builtInRules, "bad-character-control-0084", () => badCharacterControl0084);
-defineLazyProp(builtInRules, "bad-character-next-line", () => badCharacterNextLine);
-defineLazyProp(builtInRules, "bad-character-start-of-selected-area", () => badCharacterStartOfSelectedArea);
-defineLazyProp(builtInRules, "bad-character-end-of-selected-area", () => badCharacterEndOfSelectedArea);
-defineLazyProp(builtInRules, "bad-character-character-tabulation-set", () => badCharacterCharacterTabulationSet);
-defineLazyProp(builtInRules, "bad-character-character-tabulation-with-justification", () => badCharacterCharacterTabulationWithJustification);
-defineLazyProp(builtInRules, "bad-character-line-tabulation-set", () => badCharacterLineTabulationSet);
-defineLazyProp(builtInRules, "bad-character-partial-line-forward", () => badCharacterPartialLineForward);
-defineLazyProp(builtInRules, "bad-character-partial-line-backward", () => badCharacterPartialLineBackward);
-defineLazyProp(builtInRules, "bad-character-reverse-line-feed", () => badCharacterReverseLineFeed);
-defineLazyProp(builtInRules, "bad-character-single-shift-two", () => badCharacterSingleShiftTwo);
-defineLazyProp(builtInRules, "bad-character-single-shift-three", () => badCharacterSingleShiftTwo$1);
-defineLazyProp(builtInRules, "bad-character-device-control-string", () => badCharacterDeviceControlString);
-defineLazyProp(builtInRules, "bad-character-private-use-1", () => badCharacterPrivateUseOne);
-defineLazyProp(builtInRules, "bad-character-private-use-2", () => badCharacterPrivateUseTwo);
-defineLazyProp(builtInRules, "bad-character-set-transmit-state", () => badCharacterSetTransmitState);
-defineLazyProp(builtInRules, "bad-character-cancel-character", () => badCharacterCancelCharacter);
-defineLazyProp(builtInRules, "bad-character-message-waiting", () => badCharacterMessageWaiting);
-defineLazyProp(builtInRules, "bad-character-start-of-protected-area", () => badCharacterStartOfProtectedArea);
-defineLazyProp(builtInRules, "bad-character-end-of-protected-area", () => badCharacterEndOfProtectedArea);
-defineLazyProp(builtInRules, "bad-character-start-of-string", () => badCharacterStartOfString);
-defineLazyProp(builtInRules, "bad-character-control-0099", () => badCharacterControl0099);
-defineLazyProp(builtInRules, "bad-character-single-character-introducer", () => badCharacterSingleCharacterIntroducer);
-defineLazyProp(builtInRules, "bad-character-control-sequence-introducer", () => badCharacterControlSequenceIntroducer);
-defineLazyProp(builtInRules, "bad-character-string-terminator", () => badCharacterStringTerminator);
-defineLazyProp(builtInRules, "bad-character-operating-system-command", () => badCharacterOperatingSystemCommand);
-defineLazyProp(builtInRules, "bad-character-private-message", () => badCharacterPrivateMessage);
-defineLazyProp(builtInRules, "bad-character-application-program-command", () => badCharacterApplicationProgramCommand);
-defineLazyProp(builtInRules, "bad-character-soft-hyphen", () => badCharacterSoftHyphen);
-defineLazyProp(builtInRules, "bad-character-non-breaking-space", () => badCharacterNonBreakingSpace);
-defineLazyProp(builtInRules, "bad-character-ogham-space-mark", () => badCharacterOghamSpaceMark);
-defineLazyProp(builtInRules, "bad-character-en-quad", () => badCharacterEnQuad);
-defineLazyProp(builtInRules, "bad-character-em-quad", () => badCharacterEmQuad);
-defineLazyProp(builtInRules, "bad-character-en-space", () => badCharacterEnSpace);
-defineLazyProp(builtInRules, "bad-character-em-space", () => badCharacterEmSpace);
-defineLazyProp(builtInRules, "bad-character-three-per-em-space", () => badCharacterThreePerEmSpace);
-defineLazyProp(builtInRules, "bad-character-four-per-em-space", () => badCharacterFourPerEmSpace);
-defineLazyProp(builtInRules, "bad-character-six-per-em-space", () => badCharacterSixPerEmSpace);
-defineLazyProp(builtInRules, "bad-character-figure-space", () => badCharacterFigureSpace);
-defineLazyProp(builtInRules, "bad-character-punctuation-space", () => badCharacterPunctuationSpace);
-defineLazyProp(builtInRules, "bad-character-thin-space", () => badCharacterThinSpace);
-defineLazyProp(builtInRules, "bad-character-hair-space", () => badCharacterHairSpace);
-defineLazyProp(builtInRules, "bad-character-zero-width-space", () => badCharacterZeroWidthSpace);
-defineLazyProp(builtInRules, "bad-character-zero-width-non-joiner", () => badCharacterZeroWidthNonJoiner);
-defineLazyProp(builtInRules, "bad-character-zero-width-joiner", () => badCharacterZeroWidthJoiner);
-defineLazyProp(builtInRules, "bad-character-left-to-right-mark", () => badCharacterLeftToRightMark);
-defineLazyProp(builtInRules, "bad-character-right-to-left-mark", () => badCharacterRightToLeftMark);
-defineLazyProp(builtInRules, "bad-character-left-to-right-embedding", () => badCharacterLeftToRightEmbedding);
-defineLazyProp(builtInRules, "bad-character-right-to-left-embedding", () => badCharacterRightToLeftEmbedding);
-defineLazyProp(builtInRules, "bad-character-pop-directional-formatting", () => badCharacterPopDirectionalFormatting);
-defineLazyProp(builtInRules, "bad-character-left-to-right-override", () => badCharacterLeftToRightOverride);
-defineLazyProp(builtInRules, "bad-character-right-to-left-override", () => badCharacterRightToLeftOverride);
-defineLazyProp(builtInRules, "bad-character-word-joiner", () => badCharacterWordJoiner);
-defineLazyProp(builtInRules, "bad-character-function-application", () => badCharacterFunctionApplication);
-defineLazyProp(builtInRules, "bad-character-invisible-times", () => badCharacterInvisibleTimes);
-defineLazyProp(builtInRules, "bad-character-invisible-separator", () => badCharacterInvisibleSeparator);
-defineLazyProp(builtInRules, "bad-character-invisible-plus", () => badCharacterInvisiblePlus);
-defineLazyProp(builtInRules, "bad-character-left-to-right-isolate", () => badCharacterLeftToRightIsolate);
-defineLazyProp(builtInRules, "bad-character-right-to-left-isolate", () => badCharacterRightToLeftIsolate);
-defineLazyProp(builtInRules, "bad-character-first-strong-isolate", () => badCharacterFirstStrongIsolate);
-defineLazyProp(builtInRules, "bad-character-pop-directional-isolate", () => badCharacterPopDirectionalIsolate);
-defineLazyProp(builtInRules, "bad-character-inhibit-symmetric-swapping", () => badCharacterInhibitSymmetricSwapping);
-defineLazyProp(builtInRules, "bad-character-activate-symmetric-swapping", () => badCharacterActivateSymmetricSwapping);
-defineLazyProp(builtInRules, "bad-character-inhibit-arabic-form-shaping", () => badCharacterInhibitArabicFormShaping);
-defineLazyProp(builtInRules, "bad-character-activate-arabic-form-shaping", () => badCharacterActivateArabicFormShaping);
-defineLazyProp(builtInRules, "bad-character-national-digit-shapes", () => badCharacterNationalDigitShapes);
-defineLazyProp(builtInRules, "bad-character-nominal-digit-shapes", () => badCharacterNominalDigitShapes);
-defineLazyProp(builtInRules, "bad-character-zero-width-no-break-space", () => badCharacterZeroWidthNoBreakSpace);
-defineLazyProp(builtInRules, "bad-character-interlinear-annotation-anchor", () => badCharacterInterlinearAnnotationAnchor);
-defineLazyProp(builtInRules, "bad-character-interlinear-annotation-separator", () => badCharacterInterlinearAnnotationSeparator);
-defineLazyProp(builtInRules, "bad-character-interlinear-annotation-terminator", () => badCharacterInterlinearAnnotationTerminator);
-defineLazyProp(builtInRules, "bad-character-line-separator", () => badCharacterLineSeparator);
-defineLazyProp(builtInRules, "bad-character-paragraph-separator", () => badCharacterParagraphSeparator);
-defineLazyProp(builtInRules, "bad-character-narrow-no-break-space", () => badCharacterNarrowNoBreakSpace);
-defineLazyProp(builtInRules, "bad-character-medium-mathematical-space", () => badCharacterMediumMathematicalSpace);
-defineLazyProp(builtInRules, "bad-character-ideographic-space", () => badCharacterIdeographicSpace);
-defineLazyProp(builtInRules, "bad-character-replacement-character", () => badCharacterReplacementCharacter);
-defineLazyProp(builtInRules, "tag-space-after-opening-bracket", () => tagSpaceAfterOpeningBracket);
-defineLazyProp(builtInRules, "tag-space-before-closing-bracket", () => tagSpaceBeforeClosingBracket);
-defineLazyProp(builtInRules, "tag-space-before-closing-slash", () => tagSpaceBeforeClosingSlash);
-defineLazyProp(builtInRules, "tag-space-between-slash-and-bracket", () => tagSpaceBetweenSlashAndBracket);
-defineLazyProp(builtInRules, "tag-closing-backslash", () => tagClosingBackslash);
-defineLazyProp(builtInRules, "tag-void-slash", () => tagVoidSlash);
-defineLazyProp(builtInRules, "tag-name-case", () => tagNameCase);
-defineLazyProp(builtInRules, "tag-is-present", () => tagIsPresent);
-defineLazyProp(builtInRules, "tag-bold", () => tagBold);
-defineLazyProp(builtInRules, "tag-bad-self-closing", () => tagBadSelfClosing);
-defineLazyProp(builtInRules, "attribute-duplicate", () => attributeDuplicate);
-defineLazyProp(builtInRules, "attribute-malformed", () => attributeMalformed);
-defineLazyProp(builtInRules, "attribute-validate-abbr", () => attributeValidateAbbr);
-defineLazyProp(builtInRules, "attribute-validate-accept-charset", () => attributeValidateAcceptCharset);
-defineLazyProp(builtInRules, "attribute-validate-accept", () => attributeValidateAccept);
-defineLazyProp(builtInRules, "attribute-validate-accesskey", () => attributeValidateAccesskey);
-defineLazyProp(builtInRules, "attribute-validate-action", () => attributeValidateAction);
-defineLazyProp(builtInRules, "attribute-validate-align", () => attributeValidateAlign);
-defineLazyProp(builtInRules, "attribute-validate-alink", () => attributeValidateAlink);
-defineLazyProp(builtInRules, "attribute-validate-alt", () => attributeValidateAlt);
-defineLazyProp(builtInRules, "attribute-validate-archive", () => attributeValidateArchive);
-defineLazyProp(builtInRules, "attribute-validate-axis", () => attributeValidateAxis);
-defineLazyProp(builtInRules, "attribute-validate-background", () => attributeValidateBackground);
-defineLazyProp(builtInRules, "attribute-validate-bgcolor", () => attributeValidateBgcolor);
-defineLazyProp(builtInRules, "attribute-validate-border", () => attributeValidateBorder);
-defineLazyProp(builtInRules, "attribute-validate-cellpadding", () => attributeValidateCellpadding);
-defineLazyProp(builtInRules, "attribute-validate-cellspacing", () => attributeValidateCellspacing);
-defineLazyProp(builtInRules, "attribute-validate-char", () => attributeValidateChar);
-defineLazyProp(builtInRules, "attribute-validate-charoff", () => attributeValidateCharoff);
-defineLazyProp(builtInRules, "attribute-validate-charset", () => attributeValidateCharset);
-defineLazyProp(builtInRules, "attribute-validate-checked", () => attributeValidateChecked);
-defineLazyProp(builtInRules, "attribute-validate-cite", () => attributeValidateCite);
-defineLazyProp(builtInRules, "attribute-validate-class", () => attributeValidateClass);
-defineLazyProp(builtInRules, "attribute-validate-classid", () => attributeValidateClassid);
-defineLazyProp(builtInRules, "attribute-validate-clear", () => attributeValidateClassid$1);
-defineLazyProp(builtInRules, "attribute-validate-code", () => attributeValidateCode);
-defineLazyProp(builtInRules, "attribute-validate-codebase", () => attributeValidateCodebase);
-defineLazyProp(builtInRules, "attribute-validate-codetype", () => attributeValidateCodetype);
-defineLazyProp(builtInRules, "attribute-validate-color", () => attributeValidateColor);
-defineLazyProp(builtInRules, "attribute-validate-cols", () => attributeValidateCols);
-defineLazyProp(builtInRules, "attribute-validate-colspan", () => attributeValidateColspan);
-defineLazyProp(builtInRules, "attribute-validate-compact", () => attributeValidateCompact);
-defineLazyProp(builtInRules, "attribute-validate-content", () => attributeValidateContent);
-defineLazyProp(builtInRules, "attribute-validate-coords", () => attributeValidateCoords);
-defineLazyProp(builtInRules, "attribute-validate-data", () => attributeValidateData);
-defineLazyProp(builtInRules, "attribute-validate-datetime", () => attributeValidateDatetime);
-defineLazyProp(builtInRules, "attribute-validate-declare", () => attributeValidateDeclare);
-defineLazyProp(builtInRules, "attribute-validate-defer", () => attributeValidateDefer);
-defineLazyProp(builtInRules, "attribute-validate-dir", () => attributeValidateDir);
-defineLazyProp(builtInRules, "attribute-validate-disabled", () => attributeValidateDisabled);
-defineLazyProp(builtInRules, "attribute-validate-enctype", () => attributeValidateEnctype);
-defineLazyProp(builtInRules, "attribute-validate-face", () => attributeValidateFace);
-defineLazyProp(builtInRules, "attribute-validate-for", () => attributeValidateFor);
-defineLazyProp(builtInRules, "attribute-validate-frame", () => attributeValidateFrame);
-defineLazyProp(builtInRules, "attribute-validate-frameborder", () => attributeValidateFrameborder);
-defineLazyProp(builtInRules, "attribute-validate-headers", () => attributeValidateHeaders);
-defineLazyProp(builtInRules, "attribute-validate-height", () => attributeValidateHeight);
-defineLazyProp(builtInRules, "attribute-validate-href", () => attributeValidateHref);
-defineLazyProp(builtInRules, "attribute-validate-hreflang", () => attributeValidateHreflang);
-defineLazyProp(builtInRules, "attribute-validate-hspace", () => attributeValidateHspace);
-defineLazyProp(builtInRules, "attribute-validate-http-equiv", () => attributeValidateHttpequiv);
-defineLazyProp(builtInRules, "attribute-validate-id", () => attributeValidateId);
-defineLazyProp(builtInRules, "attribute-validate-ismap", () => attributeValidateIsmap);
-defineLazyProp(builtInRules, "attribute-validate-label", () => attributeValidateLabel);
-defineLazyProp(builtInRules, "attribute-validate-lang", () => attributeValidateLang);
-defineLazyProp(builtInRules, "attribute-validate-language", () => attributeValidateLanguage);
-defineLazyProp(builtInRules, "attribute-validate-link", () => attributeValidateLink);
-defineLazyProp(builtInRules, "attribute-validate-longdesc", () => attributeValidateLongdesc);
-defineLazyProp(builtInRules, "attribute-validate-marginheight", () => attributeValidateMarginheight);
-defineLazyProp(builtInRules, "attribute-validate-marginwidth", () => attributeValidateMarginwidth);
-defineLazyProp(builtInRules, "attribute-validate-maxlength", () => attributeValidateMaxlength);
-defineLazyProp(builtInRules, "attribute-validate-media", () => attributeValidateMedia);
-defineLazyProp(builtInRules, "attribute-validate-method", () => attributeValidateMethod);
-defineLazyProp(builtInRules, "attribute-validate-multiple", () => attributeValidateMultiple);
-defineLazyProp(builtInRules, "attribute-validate-name", () => attributeValidateName);
-defineLazyProp(builtInRules, "attribute-validate-nohref", () => attributeValidateNohref);
-defineLazyProp(builtInRules, "attribute-validate-noresize", () => attributeValidateNoresize);
-defineLazyProp(builtInRules, "attribute-validate-noshade", () => attributeValidateNoshade);
-defineLazyProp(builtInRules, "attribute-validate-nowrap", () => attributeValidateNowrap);
-defineLazyProp(builtInRules, "attribute-validate-object", () => attributeValidateObject);
-defineLazyProp(builtInRules, "attribute-validate-onblur", () => attributeValidateOnblur);
-defineLazyProp(builtInRules, "attribute-validate-onchange", () => attributeValidateOnchange);
-defineLazyProp(builtInRules, "attribute-validate-onclick", () => attributeValidateOnclick);
-defineLazyProp(builtInRules, "attribute-validate-ondblclick", () => attributeValidateOndblclick);
-defineLazyProp(builtInRules, "attribute-validate-onfocus", () => attributeValidateOnfocus);
-defineLazyProp(builtInRules, "attribute-validate-onkeydown", () => attributeValidateOnkeydown);
-defineLazyProp(builtInRules, "attribute-validate-onkeypress", () => attributeValidateOnkeypress);
-defineLazyProp(builtInRules, "attribute-validate-onkeyup", () => attributeValidateOnkeyup);
-defineLazyProp(builtInRules, "attribute-validate-onload", () => attributeValidateOnload);
-defineLazyProp(builtInRules, "attribute-validate-onmousedown", () => attributeValidateOnmousedown);
-defineLazyProp(builtInRules, "attribute-validate-onmousemove", () => attributeValidateOnmousemove);
-defineLazyProp(builtInRules, "attribute-validate-onmouseout", () => attributeValidateOnmouseout);
-defineLazyProp(builtInRules, "attribute-validate-onmouseover", () => attributeValidateOnmouseover);
-defineLazyProp(builtInRules, "attribute-validate-onmouseup", () => attributeValidateOnmouseup);
-defineLazyProp(builtInRules, "attribute-validate-onreset", () => attributeValidateOnreset);
-defineLazyProp(builtInRules, "attribute-validate-onsubmit", () => attributeValidateOnsubmit);
-defineLazyProp(builtInRules, "attribute-validate-onselect", () => attributeValidateOnselect);
-defineLazyProp(builtInRules, "attribute-validate-onunload", () => attributeValidateOnunload);
-defineLazyProp(builtInRules, "attribute-validate-profile", () => attributeValidateProfile);
-defineLazyProp(builtInRules, "attribute-validate-prompt", () => attributeValidatePrompt);
-defineLazyProp(builtInRules, "attribute-validate-readonly", () => attributeValidateReadonly);
-defineLazyProp(builtInRules, "attribute-validate-rel", () => attributeValidateRel);
-defineLazyProp(builtInRules, "attribute-validate-rev", () => attributeValidateRev);
-defineLazyProp(builtInRules, "attribute-validate-rows", () => attributeValidateRows);
-defineLazyProp(builtInRules, "attribute-validate-rowspan", () => attributeValidateRowspan);
-defineLazyProp(builtInRules, "attribute-validate-rules", () => attributeValidateRules);
-defineLazyProp(builtInRules, "attribute-validate-scheme", () => attributeValidateScheme);
-defineLazyProp(builtInRules, "attribute-validate-scope", () => attributeValidateScope);
-defineLazyProp(builtInRules, "attribute-validate-scrolling", () => attributeValidateScrolling);
-defineLazyProp(builtInRules, "attribute-validate-selected", () => attributeValidateSelected);
-defineLazyProp(builtInRules, "attribute-validate-shape", () => attributeValidateShape);
-defineLazyProp(builtInRules, "attribute-validate-size", () => attributeValidateSize);
-defineLazyProp(builtInRules, "attribute-validate-span", () => attributeValidateSpan);
-defineLazyProp(builtInRules, "attribute-validate-src", () => attributeValidateSrc);
-defineLazyProp(builtInRules, "attribute-validate-standby", () => attributeValidateStandby);
-defineLazyProp(builtInRules, "attribute-validate-start", () => attributeValidateStart);
-defineLazyProp(builtInRules, "attribute-validate-style", () => attributeValidateStyle);
-defineLazyProp(builtInRules, "attribute-validate-summary", () => attributeValidateSummary);
-defineLazyProp(builtInRules, "attribute-validate-tabindex", () => attributeValidateTabindex);
-defineLazyProp(builtInRules, "attribute-validate-target", () => attributeValidateTarget);
-defineLazyProp(builtInRules, "attribute-validate-text", () => attributeValidateText);
-defineLazyProp(builtInRules, "attribute-validate-title", () => attributeValidateTitle);
-defineLazyProp(builtInRules, "attribute-validate-type", () => attributeValidateType);
-defineLazyProp(builtInRules, "attribute-validate-usemap", () => attributeValidateUsemap);
-defineLazyProp(builtInRules, "attribute-validate-valign", () => attributeValidateValign);
-defineLazyProp(builtInRules, "attribute-validate-value", () => attributeValidateValue);
-defineLazyProp(builtInRules, "attribute-validate-valuetype", () => attributeValidateValuetype);
-defineLazyProp(builtInRules, "attribute-validate-version", () => attributeValidateVersion);
-defineLazyProp(builtInRules, "attribute-validate-vlink", () => attributeValidateVlink);
-defineLazyProp(builtInRules, "attribute-validate-vspace", () => attributeValidateVspace);
-defineLazyProp(builtInRules, "attribute-validate-width", () => attributeValidateWidth);
-defineLazyProp(builtInRules, "bad-named-html-entity-not-email-friendly", () => htmlEntitiesNotEmailFriendly);
-defineLazyProp(builtInRules, "character-encode", () => characterEncode);
-defineLazyProp(builtInRules, "character-unspaced-punctuation", () => characterUnspacedPunctuation);
-defineLazyProp(builtInRules, "media-malformed", () => mediaMalformed);
-defineLazyProp(builtInRules, "comment-closing-malformed", () => commentClosingMalformed);
-defineLazyProp(builtInRules, "comment-opening-malformed", () => commentOpeningMalformed);
-defineLazyProp(builtInRules, "comment-mismatching-pair", () => commentMismatchingPair);
-defineLazyProp(builtInRules, "comment-conditional-nested", () => commentConditionalNested);
+defineLazyProp__default['default'](builtInRules, "bad-character-null", () => badCharacterNull);
+defineLazyProp__default['default'](builtInRules, "bad-character-start-of-heading", () => badCharacterStartOfHeading);
+defineLazyProp__default['default'](builtInRules, "bad-character-start-of-text", () => badCharacterStartOfText);
+defineLazyProp__default['default'](builtInRules, "bad-character-end-of-text", () => badCharacterEndOfText);
+defineLazyProp__default['default'](builtInRules, "bad-character-end-of-transmission", () => badCharacterEndOfTransmission);
+defineLazyProp__default['default'](builtInRules, "bad-character-enquiry", () => badCharacterEnquiry);
+defineLazyProp__default['default'](builtInRules, "bad-character-acknowledge", () => badCharacterAcknowledge);
+defineLazyProp__default['default'](builtInRules, "bad-character-bell", () => badCharacterBell);
+defineLazyProp__default['default'](builtInRules, "bad-character-backspace", () => badCharacterBackspace);
+defineLazyProp__default['default'](builtInRules, "bad-character-tabulation", () => badCharacterTabulation);
+defineLazyProp__default['default'](builtInRules, "bad-character-line-tabulation", () => badCharacterLineTabulation);
+defineLazyProp__default['default'](builtInRules, "bad-character-form-feed", () => badCharacterFormFeed);
+defineLazyProp__default['default'](builtInRules, "bad-character-shift-out", () => badCharacterShiftOut);
+defineLazyProp__default['default'](builtInRules, "bad-character-shift-in", () => badCharacterShiftIn);
+defineLazyProp__default['default'](builtInRules, "bad-character-data-link-escape", () => badCharacterDataLinkEscape);
+defineLazyProp__default['default'](builtInRules, "bad-character-device-control-one", () => badCharacterDeviceControlOne);
+defineLazyProp__default['default'](builtInRules, "bad-character-device-control-two", () => badCharacterDeviceControlTwo);
+defineLazyProp__default['default'](builtInRules, "bad-character-device-control-three", () => badCharacterDeviceControlThree);
+defineLazyProp__default['default'](builtInRules, "bad-character-device-control-four", () => badCharacterDeviceControlFour);
+defineLazyProp__default['default'](builtInRules, "bad-character-negative-acknowledge", () => badCharacterNegativeAcknowledge);
+defineLazyProp__default['default'](builtInRules, "bad-character-synchronous-idle", () => badCharacterSynchronousIdle);
+defineLazyProp__default['default'](builtInRules, "bad-character-end-of-transmission-block", () => badCharacterEndOfTransmissionBlock);
+defineLazyProp__default['default'](builtInRules, "bad-character-cancel", () => badCharacterCancel);
+defineLazyProp__default['default'](builtInRules, "bad-character-end-of-medium", () => badCharacterEndOfMedium);
+defineLazyProp__default['default'](builtInRules, "bad-character-substitute", () => badCharacterSubstitute);
+defineLazyProp__default['default'](builtInRules, "bad-character-escape", () => badCharacterEscape);
+defineLazyProp__default['default'](builtInRules, "bad-character-information-separator-four", () => badCharacterInformationSeparatorFour);
+defineLazyProp__default['default'](builtInRules, "bad-character-information-separator-three", () => badCharacterInformationSeparatorThree);
+defineLazyProp__default['default'](builtInRules, "bad-character-information-separator-two", () => badCharacterInformationSeparatorTwo);
+defineLazyProp__default['default'](builtInRules, "bad-character-information-separator-one", () => badCharacterInformationSeparatorTwo$1);
+defineLazyProp__default['default'](builtInRules, "bad-character-delete", () => badCharacterDelete);
+defineLazyProp__default['default'](builtInRules, "bad-character-control-0080", () => badCharacterControl0080);
+defineLazyProp__default['default'](builtInRules, "bad-character-control-0081", () => badCharacterControl0081);
+defineLazyProp__default['default'](builtInRules, "bad-character-break-permitted-here", () => badCharacterBreakPermittedHere);
+defineLazyProp__default['default'](builtInRules, "bad-character-no-break-here", () => badCharacterNoBreakHere);
+defineLazyProp__default['default'](builtInRules, "bad-character-control-0084", () => badCharacterControl0084);
+defineLazyProp__default['default'](builtInRules, "bad-character-next-line", () => badCharacterNextLine);
+defineLazyProp__default['default'](builtInRules, "bad-character-start-of-selected-area", () => badCharacterStartOfSelectedArea);
+defineLazyProp__default['default'](builtInRules, "bad-character-end-of-selected-area", () => badCharacterEndOfSelectedArea);
+defineLazyProp__default['default'](builtInRules, "bad-character-character-tabulation-set", () => badCharacterCharacterTabulationSet);
+defineLazyProp__default['default'](builtInRules, "bad-character-character-tabulation-with-justification", () => badCharacterCharacterTabulationWithJustification);
+defineLazyProp__default['default'](builtInRules, "bad-character-line-tabulation-set", () => badCharacterLineTabulationSet);
+defineLazyProp__default['default'](builtInRules, "bad-character-partial-line-forward", () => badCharacterPartialLineForward);
+defineLazyProp__default['default'](builtInRules, "bad-character-partial-line-backward", () => badCharacterPartialLineBackward);
+defineLazyProp__default['default'](builtInRules, "bad-character-reverse-line-feed", () => badCharacterReverseLineFeed);
+defineLazyProp__default['default'](builtInRules, "bad-character-single-shift-two", () => badCharacterSingleShiftTwo);
+defineLazyProp__default['default'](builtInRules, "bad-character-single-shift-three", () => badCharacterSingleShiftTwo$1);
+defineLazyProp__default['default'](builtInRules, "bad-character-device-control-string", () => badCharacterDeviceControlString);
+defineLazyProp__default['default'](builtInRules, "bad-character-private-use-1", () => badCharacterPrivateUseOne);
+defineLazyProp__default['default'](builtInRules, "bad-character-private-use-2", () => badCharacterPrivateUseTwo);
+defineLazyProp__default['default'](builtInRules, "bad-character-set-transmit-state", () => badCharacterSetTransmitState);
+defineLazyProp__default['default'](builtInRules, "bad-character-cancel-character", () => badCharacterCancelCharacter);
+defineLazyProp__default['default'](builtInRules, "bad-character-message-waiting", () => badCharacterMessageWaiting);
+defineLazyProp__default['default'](builtInRules, "bad-character-start-of-protected-area", () => badCharacterStartOfProtectedArea);
+defineLazyProp__default['default'](builtInRules, "bad-character-end-of-protected-area", () => badCharacterEndOfProtectedArea);
+defineLazyProp__default['default'](builtInRules, "bad-character-start-of-string", () => badCharacterStartOfString);
+defineLazyProp__default['default'](builtInRules, "bad-character-control-0099", () => badCharacterControl0099);
+defineLazyProp__default['default'](builtInRules, "bad-character-single-character-introducer", () => badCharacterSingleCharacterIntroducer);
+defineLazyProp__default['default'](builtInRules, "bad-character-control-sequence-introducer", () => badCharacterControlSequenceIntroducer);
+defineLazyProp__default['default'](builtInRules, "bad-character-string-terminator", () => badCharacterStringTerminator);
+defineLazyProp__default['default'](builtInRules, "bad-character-operating-system-command", () => badCharacterOperatingSystemCommand);
+defineLazyProp__default['default'](builtInRules, "bad-character-private-message", () => badCharacterPrivateMessage);
+defineLazyProp__default['default'](builtInRules, "bad-character-application-program-command", () => badCharacterApplicationProgramCommand);
+defineLazyProp__default['default'](builtInRules, "bad-character-soft-hyphen", () => badCharacterSoftHyphen);
+defineLazyProp__default['default'](builtInRules, "bad-character-non-breaking-space", () => badCharacterNonBreakingSpace);
+defineLazyProp__default['default'](builtInRules, "bad-character-ogham-space-mark", () => badCharacterOghamSpaceMark);
+defineLazyProp__default['default'](builtInRules, "bad-character-en-quad", () => badCharacterEnQuad);
+defineLazyProp__default['default'](builtInRules, "bad-character-em-quad", () => badCharacterEmQuad);
+defineLazyProp__default['default'](builtInRules, "bad-character-en-space", () => badCharacterEnSpace);
+defineLazyProp__default['default'](builtInRules, "bad-character-em-space", () => badCharacterEmSpace);
+defineLazyProp__default['default'](builtInRules, "bad-character-three-per-em-space", () => badCharacterThreePerEmSpace);
+defineLazyProp__default['default'](builtInRules, "bad-character-four-per-em-space", () => badCharacterFourPerEmSpace);
+defineLazyProp__default['default'](builtInRules, "bad-character-six-per-em-space", () => badCharacterSixPerEmSpace);
+defineLazyProp__default['default'](builtInRules, "bad-character-figure-space", () => badCharacterFigureSpace);
+defineLazyProp__default['default'](builtInRules, "bad-character-punctuation-space", () => badCharacterPunctuationSpace);
+defineLazyProp__default['default'](builtInRules, "bad-character-thin-space", () => badCharacterThinSpace);
+defineLazyProp__default['default'](builtInRules, "bad-character-hair-space", () => badCharacterHairSpace);
+defineLazyProp__default['default'](builtInRules, "bad-character-zero-width-space", () => badCharacterZeroWidthSpace);
+defineLazyProp__default['default'](builtInRules, "bad-character-zero-width-non-joiner", () => badCharacterZeroWidthNonJoiner);
+defineLazyProp__default['default'](builtInRules, "bad-character-zero-width-joiner", () => badCharacterZeroWidthJoiner);
+defineLazyProp__default['default'](builtInRules, "bad-character-left-to-right-mark", () => badCharacterLeftToRightMark);
+defineLazyProp__default['default'](builtInRules, "bad-character-right-to-left-mark", () => badCharacterRightToLeftMark);
+defineLazyProp__default['default'](builtInRules, "bad-character-left-to-right-embedding", () => badCharacterLeftToRightEmbedding);
+defineLazyProp__default['default'](builtInRules, "bad-character-right-to-left-embedding", () => badCharacterRightToLeftEmbedding);
+defineLazyProp__default['default'](builtInRules, "bad-character-pop-directional-formatting", () => badCharacterPopDirectionalFormatting);
+defineLazyProp__default['default'](builtInRules, "bad-character-left-to-right-override", () => badCharacterLeftToRightOverride);
+defineLazyProp__default['default'](builtInRules, "bad-character-right-to-left-override", () => badCharacterRightToLeftOverride);
+defineLazyProp__default['default'](builtInRules, "bad-character-word-joiner", () => badCharacterWordJoiner);
+defineLazyProp__default['default'](builtInRules, "bad-character-function-application", () => badCharacterFunctionApplication);
+defineLazyProp__default['default'](builtInRules, "bad-character-invisible-times", () => badCharacterInvisibleTimes);
+defineLazyProp__default['default'](builtInRules, "bad-character-invisible-separator", () => badCharacterInvisibleSeparator);
+defineLazyProp__default['default'](builtInRules, "bad-character-invisible-plus", () => badCharacterInvisiblePlus);
+defineLazyProp__default['default'](builtInRules, "bad-character-left-to-right-isolate", () => badCharacterLeftToRightIsolate);
+defineLazyProp__default['default'](builtInRules, "bad-character-right-to-left-isolate", () => badCharacterRightToLeftIsolate);
+defineLazyProp__default['default'](builtInRules, "bad-character-first-strong-isolate", () => badCharacterFirstStrongIsolate);
+defineLazyProp__default['default'](builtInRules, "bad-character-pop-directional-isolate", () => badCharacterPopDirectionalIsolate);
+defineLazyProp__default['default'](builtInRules, "bad-character-inhibit-symmetric-swapping", () => badCharacterInhibitSymmetricSwapping);
+defineLazyProp__default['default'](builtInRules, "bad-character-activate-symmetric-swapping", () => badCharacterActivateSymmetricSwapping);
+defineLazyProp__default['default'](builtInRules, "bad-character-inhibit-arabic-form-shaping", () => badCharacterInhibitArabicFormShaping);
+defineLazyProp__default['default'](builtInRules, "bad-character-activate-arabic-form-shaping", () => badCharacterActivateArabicFormShaping);
+defineLazyProp__default['default'](builtInRules, "bad-character-national-digit-shapes", () => badCharacterNationalDigitShapes);
+defineLazyProp__default['default'](builtInRules, "bad-character-nominal-digit-shapes", () => badCharacterNominalDigitShapes);
+defineLazyProp__default['default'](builtInRules, "bad-character-zero-width-no-break-space", () => badCharacterZeroWidthNoBreakSpace);
+defineLazyProp__default['default'](builtInRules, "bad-character-interlinear-annotation-anchor", () => badCharacterInterlinearAnnotationAnchor);
+defineLazyProp__default['default'](builtInRules, "bad-character-interlinear-annotation-separator", () => badCharacterInterlinearAnnotationSeparator);
+defineLazyProp__default['default'](builtInRules, "bad-character-interlinear-annotation-terminator", () => badCharacterInterlinearAnnotationTerminator);
+defineLazyProp__default['default'](builtInRules, "bad-character-line-separator", () => badCharacterLineSeparator);
+defineLazyProp__default['default'](builtInRules, "bad-character-paragraph-separator", () => badCharacterParagraphSeparator);
+defineLazyProp__default['default'](builtInRules, "bad-character-narrow-no-break-space", () => badCharacterNarrowNoBreakSpace);
+defineLazyProp__default['default'](builtInRules, "bad-character-medium-mathematical-space", () => badCharacterMediumMathematicalSpace);
+defineLazyProp__default['default'](builtInRules, "bad-character-ideographic-space", () => badCharacterIdeographicSpace);
+defineLazyProp__default['default'](builtInRules, "bad-character-replacement-character", () => badCharacterReplacementCharacter);
+defineLazyProp__default['default'](builtInRules, "tag-space-after-opening-bracket", () => tagSpaceAfterOpeningBracket);
+defineLazyProp__default['default'](builtInRules, "tag-space-before-closing-bracket", () => tagSpaceBeforeClosingBracket);
+defineLazyProp__default['default'](builtInRules, "tag-space-before-closing-slash", () => tagSpaceBeforeClosingSlash);
+defineLazyProp__default['default'](builtInRules, "tag-space-between-slash-and-bracket", () => tagSpaceBetweenSlashAndBracket);
+defineLazyProp__default['default'](builtInRules, "tag-closing-backslash", () => tagClosingBackslash);
+defineLazyProp__default['default'](builtInRules, "tag-void-slash", () => tagVoidSlash);
+defineLazyProp__default['default'](builtInRules, "tag-name-case", () => tagNameCase);
+defineLazyProp__default['default'](builtInRules, "tag-is-present", () => tagIsPresent);
+defineLazyProp__default['default'](builtInRules, "tag-bold", () => tagBold);
+defineLazyProp__default['default'](builtInRules, "tag-bad-self-closing", () => tagBadSelfClosing);
+defineLazyProp__default['default'](builtInRules, "attribute-duplicate", () => attributeDuplicate);
+defineLazyProp__default['default'](builtInRules, "attribute-malformed", () => attributeMalformed);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-abbr", () => attributeValidateAbbr);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-accept-charset", () => attributeValidateAcceptCharset);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-accept", () => attributeValidateAccept);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-accesskey", () => attributeValidateAccesskey);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-action", () => attributeValidateAction);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-align", () => attributeValidateAlign);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-alink", () => attributeValidateAlink);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-alt", () => attributeValidateAlt);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-archive", () => attributeValidateArchive);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-axis", () => attributeValidateAxis);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-background", () => attributeValidateBackground);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-bgcolor", () => attributeValidateBgcolor);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-border", () => attributeValidateBorder);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-cellpadding", () => attributeValidateCellpadding);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-cellspacing", () => attributeValidateCellspacing);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-char", () => attributeValidateChar);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-charoff", () => attributeValidateCharoff);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-charset", () => attributeValidateCharset);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-checked", () => attributeValidateChecked);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-cite", () => attributeValidateCite);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-class", () => attributeValidateClass);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-classid", () => attributeValidateClassid);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-clear", () => attributeValidateClassid$1);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-code", () => attributeValidateCode);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-codebase", () => attributeValidateCodebase);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-codetype", () => attributeValidateCodetype);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-color", () => attributeValidateColor);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-cols", () => attributeValidateCols);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-colspan", () => attributeValidateColspan);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-compact", () => attributeValidateCompact);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-content", () => attributeValidateContent);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-coords", () => attributeValidateCoords);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-data", () => attributeValidateData);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-datetime", () => attributeValidateDatetime);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-declare", () => attributeValidateDeclare);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-defer", () => attributeValidateDefer);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-dir", () => attributeValidateDir);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-disabled", () => attributeValidateDisabled);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-enctype", () => attributeValidateEnctype);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-face", () => attributeValidateFace);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-for", () => attributeValidateFor);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-frame", () => attributeValidateFrame);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-frameborder", () => attributeValidateFrameborder);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-headers", () => attributeValidateHeaders);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-height", () => attributeValidateHeight);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-href", () => attributeValidateHref);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-hreflang", () => attributeValidateHreflang);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-hspace", () => attributeValidateHspace);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-http-equiv", () => attributeValidateHttpequiv);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-id", () => attributeValidateId);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-ismap", () => attributeValidateIsmap);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-label", () => attributeValidateLabel);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-lang", () => attributeValidateLang);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-language", () => attributeValidateLanguage);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-link", () => attributeValidateLink);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-longdesc", () => attributeValidateLongdesc);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-marginheight", () => attributeValidateMarginheight);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-marginwidth", () => attributeValidateMarginwidth);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-maxlength", () => attributeValidateMaxlength);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-media", () => attributeValidateMedia);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-method", () => attributeValidateMethod);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-multiple", () => attributeValidateMultiple);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-name", () => attributeValidateName);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-nohref", () => attributeValidateNohref);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-noresize", () => attributeValidateNoresize);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-noshade", () => attributeValidateNoshade);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-nowrap", () => attributeValidateNowrap);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-object", () => attributeValidateObject);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onblur", () => attributeValidateOnblur);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onchange", () => attributeValidateOnchange);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onclick", () => attributeValidateOnclick);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-ondblclick", () => attributeValidateOndblclick);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onfocus", () => attributeValidateOnfocus);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onkeydown", () => attributeValidateOnkeydown);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onkeypress", () => attributeValidateOnkeypress);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onkeyup", () => attributeValidateOnkeyup);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onload", () => attributeValidateOnload);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onmousedown", () => attributeValidateOnmousedown);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onmousemove", () => attributeValidateOnmousemove);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onmouseout", () => attributeValidateOnmouseout);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onmouseover", () => attributeValidateOnmouseover);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onmouseup", () => attributeValidateOnmouseup);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onreset", () => attributeValidateOnreset);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onsubmit", () => attributeValidateOnsubmit);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onselect", () => attributeValidateOnselect);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onunload", () => attributeValidateOnunload);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-profile", () => attributeValidateProfile);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-prompt", () => attributeValidatePrompt);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-readonly", () => attributeValidateReadonly);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-rel", () => attributeValidateRel);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-rev", () => attributeValidateRev);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-rows", () => attributeValidateRows);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-rowspan", () => attributeValidateRowspan);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-rules", () => attributeValidateRules);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-scheme", () => attributeValidateScheme);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-scope", () => attributeValidateScope);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-scrolling", () => attributeValidateScrolling);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-selected", () => attributeValidateSelected);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-shape", () => attributeValidateShape);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-size", () => attributeValidateSize);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-span", () => attributeValidateSpan);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-src", () => attributeValidateSrc);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-standby", () => attributeValidateStandby);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-start", () => attributeValidateStart);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-style", () => attributeValidateStyle);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-summary", () => attributeValidateSummary);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-tabindex", () => attributeValidateTabindex);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-target", () => attributeValidateTarget);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-text", () => attributeValidateText);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-title", () => attributeValidateTitle);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-type", () => attributeValidateType);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-usemap", () => attributeValidateUsemap);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-valign", () => attributeValidateValign);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-value", () => attributeValidateValue);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-valuetype", () => attributeValidateValuetype);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-version", () => attributeValidateVersion);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-vlink", () => attributeValidateVlink);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-vspace", () => attributeValidateVspace);
+defineLazyProp__default['default'](builtInRules, "attribute-validate-width", () => attributeValidateWidth);
+defineLazyProp__default['default'](builtInRules, "bad-named-html-entity-not-email-friendly", () => htmlEntitiesNotEmailFriendly);
+defineLazyProp__default['default'](builtInRules, "character-encode", () => characterEncode);
+defineLazyProp__default['default'](builtInRules, "character-unspaced-punctuation", () => characterUnspacedPunctuation);
+defineLazyProp__default['default'](builtInRules, "media-malformed", () => mediaMalformed);
+defineLazyProp__default['default'](builtInRules, "comment-closing-malformed", () => commentClosingMalformed);
+defineLazyProp__default['default'](builtInRules, "comment-opening-malformed", () => commentOpeningMalformed);
+defineLazyProp__default['default'](builtInRules, "comment-mismatching-pair", () => commentMismatchingPair);
+defineLazyProp__default['default'](builtInRules, "comment-conditional-nested", () => commentConditionalNested);
 function get(something) {
   return builtInRules[something];
 }
@@ -8829,11 +8848,11 @@ function normaliseRequestedRules(opts) {
     Object.keys(opts).forEach(ruleName => {
       if (!["all", "tag", "tag*", "tag-*", "attribute", "attribute*", "attribute-*", "bad-character", "bad-character", "bad-character*", "bad-character-*", "bad-html-entity"].includes(ruleName)) {
         if (Object.keys(builtInRules).includes(ruleName)) {
-          res[ruleName] = clone(opts[ruleName]);
+          res[ruleName] = clone__default['default'](opts[ruleName]);
         } else if (ruleName.includes("*")) {
           Object.keys(builtInRules).forEach(builtInRule => {
-            if (matcher.isMatch(builtInRule, ruleName)) {
-              res[builtInRule] = clone(opts[ruleName]);
+            if (matcher__default['default'].isMatch(builtInRule, ruleName)) {
+              res[builtInRule] = clone__default['default'](opts[ruleName]);
             }
           });
         }
@@ -8848,7 +8867,7 @@ class Linter extends EventEmitter {
   verify(str, config) {
     this.messages = [];
     this.str = str;
-    this.config = clone(config);
+    this.config = clone__default['default'](config);
     this.hasBeenCalledWithKeepSeparateWhenFixing = false;
     if (config) {
       if (typeof config !== "object") {
@@ -8886,7 +8905,7 @@ class Linter extends EventEmitter {
         });
       });
     });
-    this.emit("ast", traverse(parser(str, {
+    this.emit("ast", traverse__default['default'](parser__default['default'](str, {
       charCb: obj => {
         this.emit("character", obj);
       },
@@ -8923,8 +8942,8 @@ class Linter extends EventEmitter {
     }));
     if (Object.keys(config.rules).some(ruleName => (ruleName === "all" ||
     ruleName === "bad-html-entity" ||
-    ruleName.startsWith("bad-html-entity") || ruleName.startsWith("bad-named-html-entity") || matcher.isMatch(["bad-malformed-numeric-character-entity"], ruleName)) && (isAnEnabledValue(config.rules[ruleName]) || isAnEnabledValue(processedRulesConfig[ruleName])))) {
-      stringFixBrokenNamedEntities(str, {
+    ruleName.startsWith("bad-html-entity") || ruleName.startsWith("bad-named-html-entity") || matcher__default['default'].isMatch(["bad-malformed-numeric-character-entity"], ruleName)) && (isAnEnabledValue(config.rules[ruleName]) || isAnEnabledValue(processedRulesConfig[ruleName])))) {
+      stringFixBrokenNamedEntities__default['default'](str, {
         cb: obj => {
           let matchedRulesName;
           let severity;
@@ -8937,7 +8956,7 @@ class Linter extends EventEmitter {
               severity = config.rules["bad-html-entity"];
             }
           } else if (Object.keys(config.rules).some(rulesName => {
-            if (matcher.isMatch(obj.ruleName, rulesName)) {
+            if (matcher__default['default'].isMatch(obj.ruleName, rulesName)) {
               matchedRulesName = rulesName;
               return true;
             }
@@ -8997,7 +9016,7 @@ class Linter extends EventEmitter {
     const {
       line,
       col
-    } = lineColumn(this.str, obj.idxFrom);
+    } = lineColumn__default['default'](this.str, obj.idxFrom);
     let {
       severity
     } = obj;

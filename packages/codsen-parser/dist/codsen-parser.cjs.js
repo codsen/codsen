@@ -207,7 +207,7 @@ function cparser(str, originalOpts) {
               }
               layers.pop();
               layers.pop();
-            }
+            } else ;
           }
         } else if (!path) {
           path = "0";

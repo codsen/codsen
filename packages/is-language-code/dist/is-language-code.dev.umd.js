@@ -9248,7 +9248,7 @@
                   message: "Repeated variant subtag, \"".concat(split[i], "\".")
                 };
               }
-            }
+            } else ;
           } //
 
         } else if (i === 2) {

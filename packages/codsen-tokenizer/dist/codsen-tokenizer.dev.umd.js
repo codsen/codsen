@@ -4595,7 +4595,7 @@
           if (!token.closing) {
             token.closing = false;
           }
-        }
+        } else ;
       } // catch the end of a tag attribute's name
       // -------------------------------------------------------------------------
 

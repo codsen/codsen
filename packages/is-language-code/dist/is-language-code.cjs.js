@@ -9152,7 +9152,7 @@ function isLangCode(str) {
               message: "Repeated variant subtag, \"".concat(split[i], "\".")
             };
           }
-        }
+        } else ;
       }
     } else if (i === 2) {
       if (type === "normal") {
