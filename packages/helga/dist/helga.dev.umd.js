@@ -1,7 +1,7 @@
 /**
  * helga
  * Your next best friend when editing complex nested code
- * Version: 1.1.35
+ * Version: 1.1.36
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/helga
@@ -223,7 +223,7 @@
   });
   var unescapeJs = /*@__PURE__*/getDefaultExportFromCjs(dist);
 
-  var version = "1.1.35";
+  var version = "1.1.36";
 
   var defaults = {
     targetJSON: false

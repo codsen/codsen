@@ -1,7 +1,7 @@
 /**
  * object-merge-advanced
  * Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
- * Version: 10.11.23
+ * Version: 10.11.24
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-merge-advanced

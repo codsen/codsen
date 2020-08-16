@@ -1,7 +1,7 @@
 /**
  * string-strip-html
  * Strips HTML tags from strings. No parser, accepts mixed sources.
- * Version: 4.5.1
+ * Version: 5.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html

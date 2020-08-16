@@ -1,7 +1,7 @@
 /**
  * html-table-patcher
  * Wraps any content between TR/TD tags in additional rows/columns to appear in browser correctly
- * Version: 2.0.5
+ * Version: 2.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/html-table-patcher
@@ -136,7 +136,7 @@
   /**
    * ast-monkey-util
    * Utility library of AST helper functions
-   * Version: 1.1.7
+   * Version: 1.1.8
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-util
@@ -2263,7 +2263,7 @@
   /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-   * Version: 3.11.33
+   * Version: 3.11.34
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string
@@ -2604,7 +2604,7 @@
   /**
    * html-all-known-attributes
    * All HTML attributes known to the Humanity
-   * Version: 2.0.4
+   * Version: 2.0.5
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities
@@ -2614,7 +2614,7 @@
   /**
    * is-char-suitable-for-html-attr-name
    * Is given character suitable to be in an HTML attribute's name?
-   * Version: 1.1.5
+   * Version: 1.1.6
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-char-suitable-for-html-attr-name
@@ -5010,7 +5010,7 @@
   /**
    * string-collapse-leading-whitespace
    * Collapse the leading and trailing whitespace of a string
-   * Version: 2.0.21
+   * Version: 2.0.22
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace
@@ -5127,7 +5127,7 @@
   /**
    * ranges-sort
    * Sort natural number index ranges [ [5, 6], [1, 3] ] => [ [1, 3], [5, 6] ]
-   * Version: 3.12.1
+   * Version: 3.12.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-sort
@@ -5728,7 +5728,7 @@
 
   var htmlCommentRegex = /<!--([\s\S]*?)-->/g;
 
-  var version = "2.0.5";
+  var version = "2.0.6";
 
   var ranges = new Ranges();
 

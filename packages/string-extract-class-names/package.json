@@ -1,6 +1,6 @@
 {
   "name": "string-extract-class-names",
-  "version": "5.9.26",
+  "version": "5.9.27",
   "description": "Extract class (or id) name from a string",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -120,7 +120,7 @@
     "timeout": 0
   },
   "dependencies": {
-    "string-left-right": "^2.3.25"
+    "string-left-right": "^2.3.26"
   },
   "devDependencies": {
     "@babel/core": "^7.11.1",
@@ -135,7 +135,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.7.0",
-    "lect": "^0.13.8",
+    "lect": "^0.13.9",
     "rollup": "^2.26.2",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

@@ -1,7 +1,7 @@
 /**
  * chlu
  * CH-ange-L-og U-pdate - Automatically fix errors in your changelog file
- * Version: 3.7.70
+ * Version: 3.7.71
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/chlu
@@ -4688,7 +4688,7 @@
   /**
    * easy-replace
    * Replace strings with optional lookarounds, but without regexes
-   * Version: 3.7.60
+   * Version: 3.7.61
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/easy-replace

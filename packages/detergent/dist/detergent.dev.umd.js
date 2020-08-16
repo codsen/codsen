@@ -1,7 +1,7 @@
 /**
  * detergent
  * Extracts and cleans text
- * Version: 5.10.9
+ * Version: 5.11.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://detergent.io
@@ -2647,7 +2647,7 @@
   /**
    * all-named-html-entities
    * List of all named HTML entities
-   * Version: 1.3.2
+   * Version: 1.3.3
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities
@@ -10558,7 +10558,7 @@
   /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-   * Version: 3.11.33
+   * Version: 3.11.34
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string
@@ -10891,7 +10891,7 @@
   /**
    * string-collapse-leading-whitespace
    * Collapse the leading and trailing whitespace of a string
-   * Version: 2.0.21
+   * Version: 2.0.22
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace
@@ -11008,7 +11008,7 @@
   /**
    * ranges-sort
    * Sort natural number index ranges [ [5, 6], [1, 3] ] => [ [1, 3], [5, 6] ]
-   * Version: 3.12.1
+   * Version: 3.12.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-sort
@@ -12715,7 +12715,7 @@
   /**
    * string-trim-spaces-only
    * Like String.trim() but you can choose granularly what to trim
-   * Version: 2.8.18
+   * Version: 2.8.19
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-trim-spaces-only
@@ -23459,12 +23459,12 @@
     })(commonjsGlobal);
   });
 
-  var version$1 = "5.10.9";
+  var version$1 = "5.11.0";
 
   /**
    * html-entities-not-email-friendly
    * All HTML entities which are not email template friendly
-   * Version: 0.2.5
+   * Version: 0.2.6
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities
@@ -25316,7 +25316,7 @@
   /**
    * string-range-expander
    * Expands string index ranges within whitespace boundaries until letters are met
-   * Version: 1.11.6
+   * Version: 1.11.7
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-range-expander

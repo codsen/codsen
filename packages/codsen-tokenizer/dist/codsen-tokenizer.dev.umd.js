@@ -1,7 +1,7 @@
 /**
  * codsen-tokenizer
  * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
- * Version: 2.17.1
+ * Version: 2.17.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer
@@ -114,7 +114,7 @@
   /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-   * Version: 3.11.33
+   * Version: 3.11.34
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string
@@ -2397,7 +2397,7 @@
   /**
    * html-all-known-attributes
    * All HTML attributes known to the Humanity
-   * Version: 2.0.4
+   * Version: 2.0.5
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities
@@ -2407,7 +2407,7 @@
   /**
    * is-char-suitable-for-html-attr-name
    * Is given character suitable to be in an HTML attribute's name?
-   * Version: 1.1.5
+   * Version: 1.1.6
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-char-suitable-for-html-attr-name

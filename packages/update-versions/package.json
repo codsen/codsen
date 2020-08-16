@@ -1,6 +1,6 @@
 {
   "name": "update-versions",
-  "version": "2.4.17",
+  "version": "2.4.18",
   "description": "Like npm-check-updates but supports Lerna monorepos and enforces strict semver values",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -133,7 +133,7 @@
   },
   "dependencies": {
     "ansi-diff-stream": "^1.2.1",
-    "edit-package-json": "^0.1.30",
+    "edit-package-json": "^0.1.31",
     "globby": "^11.0.1",
     "is-online": "^8.4.0",
     "lodash.isplainobject": "^4.0.6",
@@ -162,7 +162,7 @@
     "eslint": "^7.7.0",
     "execa": "^4.0.3",
     "fs-extra": "^9.0.1",
-    "lect": "^0.13.8",
+    "lect": "^0.13.9",
     "lodash.clonedeep": "^4.5.0",
     "prettier": "^2.0.5",
     "tap": "^14.10.8",

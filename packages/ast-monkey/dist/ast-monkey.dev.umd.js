@@ -1,7 +1,7 @@
 /**
  * ast-monkey
  * Traverse and edit AST's (like parsed HTML or anything nested)
- * Version: 7.11.15
+ * Version: 7.11.16
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey
@@ -4855,7 +4855,7 @@
   /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-   * Version: 3.11.33
+   * Version: 3.11.34
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string

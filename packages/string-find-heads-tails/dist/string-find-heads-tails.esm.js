@@ -1,7 +1,7 @@
 /**
  * string-find-heads-tails
  * Finds given pattern templating markers in a string
- * Version: 3.16.11
+ * Version: 3.16.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-find-heads-tails

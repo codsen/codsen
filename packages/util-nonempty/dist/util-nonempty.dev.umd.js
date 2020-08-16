@@ -1,7 +1,7 @@
 /**
  * util-nonempty
  * Is the input (plain object, array, string or whatever) not empty?
- * Version: 2.9.60
+ * Version: 2.9.61
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/util-nonempty

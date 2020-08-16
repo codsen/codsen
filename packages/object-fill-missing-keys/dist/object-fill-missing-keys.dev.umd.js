@@ -1,7 +1,7 @@
 /**
  * object-fill-missing-keys
  * Add missing keys into plain objects, according to a reference object
- * Version: 7.10.21
+ * Version: 7.10.22
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-fill-missing-keys
@@ -3922,7 +3922,7 @@
   /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-   * Version: 3.11.33
+   * Version: 3.11.34
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string
@@ -4088,7 +4088,7 @@
   /**
    * util-nonempty
    * Is the input (plain object, array, string or whatever) not empty?
-   * Version: 2.9.60
+   * Version: 2.9.61
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/util-nonempty

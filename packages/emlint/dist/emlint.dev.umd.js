@@ -1,7 +1,7 @@
 /**
  * emlint
  * Pluggable email template code linter
- * Version: 2.18.9
+ * Version: 2.18.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
@@ -92,7 +92,7 @@
 	/**
 	 * all-named-html-entities
 	 * List of all named HTML entities
-	 * Version: 1.3.2
+	 * Version: 1.3.3
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities
@@ -9427,7 +9427,7 @@
 	/**
 	 * string-left-right
 	 * Look what's to the left or the right of a given index within a string
-	 * Version: 2.3.25
+	 * Version: 2.3.26
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right
@@ -9662,7 +9662,7 @@
 	/**
 	 * string-fix-broken-named-entities
 	 * Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes
-	 * Version: 3.0.4
+	 * Version: 3.0.5
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
@@ -10214,7 +10214,7 @@
 	/**
 	 * ast-monkey-traverse
 	 * Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)
-	 * Version: 1.12.14
+	 * Version: 1.12.15
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse
@@ -10480,7 +10480,7 @@
 	/**
 	 * ast-monkey-util
 	 * Utility library of AST helper functions
-	 * Version: 1.1.7
+	 * Version: 1.1.8
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-util
@@ -10548,7 +10548,7 @@
 	/**
 	 * string-find-malformed
 	 * Search for a malformed string. Think of Levenshtein distance but in search.
-	 * Version: 1.1.10
+	 * Version: 1.1.11
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-find-malformed
@@ -10667,7 +10667,7 @@
 	/**
 	 * arrayiffy-if-string
 	 * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-	 * Version: 3.11.33
+	 * Version: 3.11.34
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string
@@ -10687,7 +10687,7 @@
 	/**
 	 * string-match-left-right
 	 * Do substrings match what's on the left or right of a given index?
-	 * Version: 4.0.9
+	 * Version: 4.0.10
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right
@@ -11012,7 +11012,7 @@
 	/**
 	 * html-all-known-attributes
 	 * All HTML attributes known to the Humanity
-	 * Version: 2.0.4
+	 * Version: 2.0.5
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities
@@ -11022,7 +11022,7 @@
 	/**
 	 * is-char-suitable-for-html-attr-name
 	 * Is given character suitable to be in an HTML attribute's name?
-	 * Version: 1.1.5
+	 * Version: 1.1.6
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-char-suitable-for-html-attr-name
@@ -11034,7 +11034,7 @@
 	/**
 	 * is-html-attribute-closing
 	 * Is a character on a given index a closing of an HTML attribute?
-	 * Version: 1.2.2
+	 * Version: 1.2.3
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-attribute-closing
@@ -11307,7 +11307,7 @@
 	/**
 	 * is-html-tag-opening
 	 * Is given opening bracket a beginning of a tag?
-	 * Version: 1.7.10
+	 * Version: 1.7.11
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-tag-opening
@@ -11386,7 +11386,7 @@
 	/**
 	 * codsen-tokenizer
 	 * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
-	 * Version: 2.17.1
+	 * Version: 2.17.2
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer
@@ -13011,7 +13011,7 @@
 	/**
 	 * codsen-parser
 	 * Parser aiming at broken code, especially HTML & CSS
-	 * Version: 0.7.1
+	 * Version: 0.7.2
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser
@@ -14051,7 +14051,7 @@
 	/**
 	 * string-process-comma-separated
 	 * Extracts chunks from possibly comma or whatever-separated string
-	 * Version: 1.2.9
+	 * Version: 1.2.10
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-process-comma-separated
@@ -29039,7 +29039,7 @@
 	/**
 	 * is-relative-uri
 	 * Is given string a relative URI?
-	 * Version: 1.0.15
+	 * Version: 1.0.16
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-relative-uri
@@ -31907,7 +31907,7 @@
 	/**
 	 * is-language-code
 	 * Is given string a language code (as per IANA)
-	 * Version: 1.0.8
+	 * Version: 1.0.9
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-language-code
@@ -32680,7 +32680,7 @@
 	/**
 	 * is-media-descriptor
 	 * Is given string a valid media descriptor (including media query)?
-	 * Version: 1.2.14
+	 * Version: 1.2.15
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-media-descriptor
@@ -35393,7 +35393,7 @@
 	/**
 	 * html-entities-not-email-friendly
 	 * All HTML entities which are not email template friendly
-	 * Version: 0.2.5
+	 * Version: 0.2.6
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities
@@ -42631,7 +42631,7 @@
 
 	}
 
-	var version = "2.18.9";
+	var version = "2.18.10";
 
 	exports.Linter = Linter;
 	exports.version = version;

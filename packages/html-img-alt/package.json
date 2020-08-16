@@ -1,6 +1,6 @@
 {
   "name": "html-img-alt",
-  "version": "1.4.56",
+  "version": "1.4.57",
   "description": "Adds missing alt attributes to img tags. Non-parsing.",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -130,11 +130,11 @@
     "timeout": 0
   },
   "dependencies": {
-    "check-types-mini": "^5.7.66",
+    "check-types-mini": "^5.7.67",
     "lodash.isplainobject": "^4.0.6",
-    "ranges-apply": "^3.1.11",
-    "ranges-push": "^3.7.15",
-    "string-unfancy": "^3.9.60"
+    "ranges-apply": "^3.1.12",
+    "ranges-push": "^3.7.16",
+    "string-unfancy": "^3.9.61"
   },
   "devDependencies": {
     "@babel/core": "^7.11.1",
@@ -149,7 +149,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.7.0",
-    "lect": "^0.13.8",
+    "lect": "^0.13.9",
     "rollup": "^2.26.2",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

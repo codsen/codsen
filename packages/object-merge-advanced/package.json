@@ -1,6 +1,6 @@
 {
   "name": "object-merge-advanced",
-  "version": "10.11.23",
+  "version": "10.11.24",
   "description": "Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -125,12 +125,12 @@
   },
   "dependencies": {
     "array-includes-all": "^2.0.0",
-    "array-includes-with-glob": "^2.12.37",
-    "arrayiffy-if-string": "^3.11.33",
+    "array-includes-with-glob": "^2.12.38",
+    "arrayiffy-if-string": "^3.11.34",
     "lodash.clonedeep": "^4.5.0",
     "lodash.includes": "^4.3.0",
     "lodash.uniq": "^4.5.0",
-    "util-nonempty": "^2.9.60"
+    "util-nonempty": "^2.9.61"
   },
   "devDependencies": {
     "@babel/core": "^7.11.1",
@@ -146,7 +146,7 @@
     "benchmark": "^2.1.4",
     "deep-equal": "^2.0.3",
     "eslint": "^7.7.0",
-    "lect": "^0.13.8",
+    "lect": "^0.13.9",
     "rollup": "^2.26.2",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

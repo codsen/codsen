@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.11.0](https://gitlab.com/codsen/codsen/compare/detergent@5.10.9...detergent@5.11.0) (2020-08-16)
+
+
+### Features
+
+* update to the latest string-strip-html v.5 ([230e35b](https://gitlab.com/codsen/codsen/commit/230e35b557f112eeb07c4ee9825da909163fcbbc))
+
+
+
+
+
 ## 5.10.0 (2020-05-06)
 
 ### Features

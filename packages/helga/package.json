@@ -1,6 +1,6 @@
 {
   "name": "helga",
-  "version": "1.1.35",
+  "version": "1.1.36",
   "description": "Your next best friend when editing complex nested code",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -146,7 +146,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.7.0",
-    "lect": "^0.13.8",
+    "lect": "^0.13.9",
     "rollup": "^2.26.2",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",
