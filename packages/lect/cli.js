@@ -1723,6 +1723,7 @@ function step6() {
         } catch (e) {
           sourceContainsDefaultExport = false;
         }
+        pack.lect.defaultExported = sourceContainsDefaultExport;
       }
 
       if (pack.lect.req === camelCase(pack.name)) {
