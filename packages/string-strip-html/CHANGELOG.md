@@ -13,7 +13,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### BREAKING CHANGES
 
 - now returns keys: result, ranges, allTagLocations, filteredTagLocations - no more
-opts.returnRangesOnly
+  opts.returnRangesOnly
 - align applied opts.returnRangesOnly output to default returned string
 
 ## 5.0.0 (2020-08-16)

@@ -1,6 +1,6 @@
 # edit-package-json
 
-> Edit package.json without parsing, as string, keep indentation etc intact
+> Edit package.json without parsing, as string, to keep the formatting intact
 
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]

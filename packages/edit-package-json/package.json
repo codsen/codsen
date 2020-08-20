@@ -1,7 +1,7 @@
 {
   "name": "edit-package-json",
   "version": "0.1.31",
-  "description": "Edit package.json without parsing, as string, keep indentation etc intact",
+  "description": "Edit package.json without parsing, as string, to keep the formatting intact",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
   "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/edit-package-json",
@@ -69,6 +69,7 @@
       "travis": true,
       "vulnerabilities": true
     },
+    "defaultExported": false,
     "eslintrc": {
       "add": [],
       "remove": []

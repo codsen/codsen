@@ -75,6 +75,7 @@
       "travis": true,
       "vulnerabilities": true
     },
+    "defaultExported": true,
     "eslintrc": {
       "add": [],
       "remove": []
