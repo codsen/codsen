@@ -1,6 +1,6 @@
 # lerna-link-dep
 
-> CLI to symlink a local package to the current package in Lerna monorepo
+> Like lerna add but does just the symlinking, works on CLI bins too
 
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
