@@ -131,11 +131,11 @@
     "js-row-num": "^2.7.22",
     "meow": "^7.1.0",
     "p-reduce": "^2.1.0",
-    "update-notifier": "^4.1.0",
+    "update-notifier": "^4.1.1",
     "write-file-atomic": "^3.0.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.1",
+    "@babel/core": "^7.11.4",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.10.4",
     "@babel/plugin-proposal-object-rest-spread": "^7.11.0",

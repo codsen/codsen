@@ -1,6 +1,6 @@
 /**
  * edit-package-json
- * Edit package.json without parsing, as string, keep indentation etc intact
+ * Edit package.json without parsing, as string, to keep the formatting intact
  * Version: 0.1.31
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
