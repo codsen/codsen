@@ -45,6 +45,7 @@
     "tap": "tap",
     "pretest": "npm run build",
     "test": "npm run lint && npm run unittest && npm run clean_cov && npm run format",
+    "tsd": "tsd",
     "unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md && npm run clean_cov && npm run perf",
     "version": "npm run build && git add ."
   },
@@ -155,6 +156,7 @@
     "rollup-plugin-cleanup": "^3.1.1",
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-terser": "^7.0.0",
-    "tap": "^14.10.8"
+    "tap": "^14.10.8",
+    "tsd": "^0.13.1"
   }
 }
