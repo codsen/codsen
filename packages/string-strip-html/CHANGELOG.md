@@ -5,20 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 5.0.0 (2020-08-16)
 
-### Features
-
-- align applied opts.returnRangesOnly output to default returned string ([d32096d](https://gitlab.com/codsen/codsen/commit/d32096d0b763b88ba36c40da4935d62ee9041ead))
-- now returns keys: result, ranges, allTagLocations, filteredTagLocations ([567a0bd](https://gitlab.com/codsen/codsen/commit/567a0bdfd2a7663c656f8b7615b048e11f28f4c2))
+Why change what's returned, upon user's request, when we can return everything and let the user pick?
 
 ### BREAKING CHANGES
-
-- now returns keys: result, ranges, allTagLocations, filteredTagLocations - no more
-  opts.returnRangesOnly
-- align applied opts.returnRangesOnly output to default returned string
-
-## 5.0.0 (2020-08-16)
-
-Why change what's returned, upon user's request, when we can return everything and let the user pick?
 
 That's why we removed `opts.returnRangesOnly`.
 
