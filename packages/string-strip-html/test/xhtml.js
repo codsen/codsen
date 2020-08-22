@@ -18,53 +18,44 @@ tap.test("01 - strips XML - strips Outlook XML fix block, tight", (t) => {
   t.end();
 });
 
-tap.test(
-  "02 - strips XML - strips Outlook XML fix block, leading space",
-  (t) => {
-    const input = `abc <!--[if gte mso 9]><xml>
+tap.test("02 - strips XML - strips Outlook XML fix block, leading space", (t) => {
+  const input = `abc <!--[if gte mso 9]><xml>
 <o:OfficeDocumentSettings>
 <o:AllowPNG/>
 <o:PixelsPerInch>96</o:PixelsPerInch>
 </o:OfficeDocumentSettings>
 </xml><![endif]-->def`;
-    const result = "abc def";
-    t.match(stripHtml(input), { result }, "02.01");
-    t.match(applyR(input, stripHtml(input).ranges), result, "02.02");
-    t.end();
-  }
-);
+  const result = "abc def";
+  t.match(stripHtml(input), { result }, "02.01");
+  t.match(applyR(input, stripHtml(input).ranges), result, "02.02");
+  t.end();
+});
 
-tap.test(
-  "03 - strips XML - strips Outlook XML fix block, trailing space",
-  (t) => {
-    const input = `abc<!--[if gte mso 9]><xml>
+tap.test("03 - strips XML - strips Outlook XML fix block, trailing space", (t) => {
+  const input = `abc<!--[if gte mso 9]><xml>
 <o:OfficeDocumentSettings>
 <o:AllowPNG/>
 <o:PixelsPerInch>96</o:PixelsPerInch>
 </o:OfficeDocumentSettings>
 </xml><![endif]--> def`;
-    const result = "abc def";
-    t.match(stripHtml(input), { result }, "03.01");
-    t.match(applyR(input, stripHtml(input).ranges), result, "03.02");
-    t.end();
-  }
-);
+  const result = "abc def";
+  t.match(stripHtml(input), { result }, "03.01");
+  t.match(applyR(input, stripHtml(input).ranges), result, "03.02");
+  t.end();
+});
 
-tap.test(
-  "04 - strips XML - strips Outlook XML fix block, spaces around",
-  (t) => {
-    const input = `abc <!--[if gte mso 9]><xml>
+tap.test("04 - strips XML - strips Outlook XML fix block, spaces around", (t) => {
+  const input = `abc <!--[if gte mso 9]><xml>
 <o:OfficeDocumentSettings>
 <o:AllowPNG/>
 <o:PixelsPerInch>96</o:PixelsPerInch>
 </o:OfficeDocumentSettings>
 </xml><![endif]--> def`;
-    const result = "abc def";
-    t.match(stripHtml(input), { result }, "04.01");
-    t.match(applyR(input, stripHtml(input).ranges), result, "04.02");
-    t.end();
-  }
-);
+  const result = "abc def";
+  t.match(stripHtml(input), { result }, "04.01");
+  t.match(applyR(input, stripHtml(input).ranges), result, "04.02");
+  t.end();
+});
 
 tap.test("05 - strips XML - generous trailing space", (t) => {
   const input = `abc <!--[if gte mso 9]><xml>

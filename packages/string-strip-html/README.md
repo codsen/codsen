@@ -46,7 +46,7 @@ This package has three builds in `dist/` folder:
 | Type                                                                                                    | Key in `package.json` | Path                            | Size   |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ------ |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-strip-html.cjs.js` | 34 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-strip-html.esm.js` | 33 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-strip-html.esm.js` | 32 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-strip-html.umd.js` | 102 KB |
 
 **[⬆ back to top](#)**
@@ -229,13 +229,7 @@ But equally, any link on any tag, even one without text, will be retained:
 Codsen
 <div>
   <a href="https://codsen.com" target="_blank"
-    ><img
-      src="logo.png"
-      width="100"
-      height="100"
-      border="0"
-      style="display:block;"
-      alt="Codsen logo"
+    ><img src="logo.png" width="100" height="100" border="0" style="display:block;" alt="Codsen logo"
   /></a>
 </div>
 ```
@@ -267,14 +261,7 @@ Sometimes you want more control over the program: maybe you want to strip only c
 You can get this level of control using `opts.cb`. In options object, under key's `cb` value, put a function. Whenever this program wants to do something, it will call your function, `Array.forEach(key => {})`-style. Instead of `key` you get a plain object with the following keys:
 
 ```js
-const cb = ({
-  tag,
-  deleteFrom,
-  deleteTo,
-  insert,
-  rangesArr,
-  proposedReturn,
-}) => {
+const cb = ({ tag, deleteFrom, deleteTo, insert, rangesArr, proposedReturn }) => {
   // default action which does nothing different from normal, non-callback operation
   rangesArr.push(deleteFrom, deleteTo, insert);
   // you might want to do something different, depending on "tag" contents.
@@ -293,14 +280,7 @@ The point of this callback interface is to pass the action of pushing of ranges 
 Below, the program "does nothing", that is, you push what it proposes, "proposedReturn" array:
 
 ```js
-const cb = ({
-  tag,
-  deleteFrom,
-  deleteTo,
-  insert,
-  rangesArr,
-  proposedReturn,
-}) => {
+const cb = ({ tag, deleteFrom, deleteTo, insert, rangesArr, proposedReturn }) => {
   rangesArr.push(deleteFrom, deleteTo, insert);
 };
 const { result, ranges, allTagLocations } = stripHtml("abc<hr>def", { cb });
@@ -331,11 +311,7 @@ const cb = ({
   rangesArr,
   // proposedReturn
 }) => {
-  rangesArr.push(
-    deleteFrom,
-    deleteTo,
-    `<${tag.slashPresent ? "/" : ""}tralala>`
-  );
+  rangesArr.push(deleteFrom, deleteTo, `<${tag.slashPresent ? "/" : ""}tralala>`);
 };
 const { result, ranges } = stripHtml("<div >abc</ div>", { cb });
 console.log(result);

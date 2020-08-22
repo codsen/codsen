@@ -4,37 +4,23 @@ import stripHtml from "../dist/string-strip-html.esm";
 // false positives
 // -----------------------------------------------------------------------------
 
-tap.test(
-  "01 - false positives - equations: very sneaky considering b is a legit tag name",
-  (t) => {
-    t.match(
-      stripHtml("Equations are: a < b and c > d"),
-      { result: "Equations are: a < b and c > d" },
-      "01"
-    );
-    t.end();
-  }
-);
+tap.test("01 - false positives - equations: very sneaky considering b is a legit tag name", (t) => {
+  t.match(stripHtml("Equations are: a < b and c > d"), { result: "Equations are: a < b and c > d" }, "01");
+  t.end();
+});
 
 tap.test("02 - false positives - inwards-pointing arrows", (t) => {
-  t.match(
-    stripHtml("Look here: ---> a <---"),
-    { result: "Look here: ---> a <---" },
-    "02"
-  );
+  t.match(stripHtml("Look here: ---> a <---"), { result: "Look here: ---> a <---" }, "02");
   t.end();
 });
 
 tap.test("03 - false positives - arrows mixed with tags", (t) => {
   t.match(
-    stripHtml(
-      "Look here: ---> a <--- and here: ---> b <--- oh, and few tags: <div><article>\nzz</article></div>"
-    ),
+    stripHtml("Look here: ---> a <--- and here: ---> b <--- oh, and few tags: <div><article>\nzz</article></div>"),
     {
-      result:
-        "Look here: ---> a <--- and here: ---> b <--- oh, and few tags:\nzz",
+      result: "Look here: ---> a <--- and here: ---> b <--- oh, and few tags:\nzz",
     },
-    "03"
+    "03",
   );
   t.end();
 });
@@ -64,21 +50,15 @@ tap.test("08 - false positives - spaced three openings", (t) => {
   t.end();
 });
 
-tap.test(
-  "09 - false positives - tight recognised opening tag name, missing closing",
-  (t) => {
-    t.match(stripHtml("<a"), { result: "" }, "09");
-    t.end();
-  }
-);
+tap.test("09 - false positives - tight recognised opening tag name, missing closing", (t) => {
+  t.match(stripHtml("<a"), { result: "" }, "09");
+  t.end();
+});
 
-tap.test(
-  "10 - false positives - unrecognised opening tag, missing closing",
-  (t) => {
-    t.match(stripHtml("<yo"), { result: "" }, "10");
-    t.end();
-  }
-);
+tap.test("10 - false positives - unrecognised opening tag, missing closing", (t) => {
+  t.match(stripHtml("<yo"), { result: "" }, "10");
+  t.end();
+});
 
 tap.test("11 - false positives - missing opening, recognised tag", (t) => {
   t.match(stripHtml("a>"), { result: "a>" }, "11");
@@ -90,11 +70,9 @@ tap.test("12 - false positives - missing opening, unrecognised tag", (t) => {
   t.end();
 });
 
-tap.test(
-  "13 - false positives - conditionals that appear on Outlook only",
-  (t) => {
-    t.match(
-      stripHtml(`<!--[if (gte mso 9)|(IE)]>
+tap.test("13 - false positives - conditionals that appear on Outlook only", (t) => {
+  t.match(
+    stripHtml(`<!--[if (gte mso 9)|(IE)]>
   <table width="540" align="center" cellpadding="0" cellspacing="0" border="0">
     <tr>
       <td>
@@ -105,96 +83,75 @@ zzz
     </tr>
   </table>
 <![endif]-->`),
-      { result: "zzz" },
-      "13"
-    );
-    t.end();
-  }
-);
+    { result: "zzz" },
+    "13",
+  );
+  t.end();
+});
 
-tap.test(
-  "14 - false positives - conditionals that are visible for Outlook only",
-  (t) => {
-    t.match(
-      stripHtml(`<!--[if !mso]><!-->
+tap.test("14 - false positives - conditionals that are visible for Outlook only", (t) => {
+  t.match(
+    stripHtml(`<!--[if !mso]><!-->
   shown for everything except Outlook
   <!--<![endif]-->`),
-      { result: "shown for everything except Outlook" },
-      "14 - checking also for whitespace control"
-    );
-    t.end();
-  }
-);
+    { result: "shown for everything except Outlook" },
+    "14 - checking also for whitespace control",
+  );
+  t.end();
+});
 
-tap.test(
-  "15 - false positives - conditionals that are visible for Outlook only",
-  (t) => {
-    t.match(
-      stripHtml(`a<!--[if !mso]><!-->
+tap.test("15 - false positives - conditionals that are visible for Outlook only", (t) => {
+  t.match(
+    stripHtml(`a<!--[if !mso]><!-->
   shown for everything except Outlook
   <!--<![endif]-->b`),
-      { result: "a\nshown for everything except Outlook\nb" },
-      "15 - checking also for whitespace control"
-    );
-    t.end();
-  }
-);
+    { result: "a\nshown for everything except Outlook\nb" },
+    "15 - checking also for whitespace control",
+  );
+  t.end();
+});
 
-tap.test(
-  "16 - false positives - conditionals that are visible for Outlook only",
-  (t) => {
-    t.match(
-      stripHtml(`<!--[if !mso]><!--><table width="100%" border="0" cellpadding="0" cellspacing="0">
+tap.test("16 - false positives - conditionals that are visible for Outlook only", (t) => {
+  t.match(
+    stripHtml(`<!--[if !mso]><!--><table width="100%" border="0" cellpadding="0" cellspacing="0">
     <tr>
       <td>
         shown for everything except Outlook
       </td>
     </tr>
   </table><!--<![endif]-->`),
-      { result: "shown for everything except Outlook" },
-      "16 - all those line breaks in-between the tags need to be taken care of too"
-    );
-    t.end();
-  }
-);
-
-tap.test("17 - false positives - consecutive tags", (t) => {
-  t.match(
-    stripHtml(
-      "Text <ul><li>First point</li><li>Second point</li><li>Third point</li></ul>Text straight after"
-    ),
-    { result: "Text First point Second point Third point Text straight after" },
-    "17"
+    { result: "shown for everything except Outlook" },
+    "16 - all those line breaks in-between the tags need to be taken care of too",
   );
   t.end();
 });
 
-tap.test(
-  "18 - digit is the first character following the opening bracket, quote",
-  (t) => {
-    const input = `"<5 text here`;
-    t.match(stripHtml(input), { result: input }, "18");
-    t.end();
-  }
-);
+tap.test("17 - false positives - consecutive tags", (t) => {
+  t.match(
+    stripHtml("Text <ul><li>First point</li><li>Second point</li><li>Third point</li></ul>Text straight after"),
+    { result: "Text First point Second point Third point Text straight after" },
+    "17",
+  );
+  t.end();
+});
 
-tap.test(
-  "19 - digit is the first character following the opening bracket",
-  (t) => {
-    const input = `<5 text here`;
-    t.match(stripHtml(input), { result: input }, "19");
-    t.end();
-  }
-);
+tap.test("18 - digit is the first character following the opening bracket, quote", (t) => {
+  const input = `"<5 text here`;
+  t.match(stripHtml(input), { result: input }, "18");
+  t.end();
+});
 
-tap.test(
-  "20 - digit is the first character following the opening bracket",
-  (t) => {
-    const input = `< 5 text here`;
-    t.match(stripHtml(input), { result: input }, "20");
-    t.end();
-  }
-);
+tap.test("19 - digit is the first character following the opening bracket", (t) => {
+  const input = `<5 text here`;
+  t.match(stripHtml(input), { result: input }, "19");
+  t.end();
+});
+
+tap.test("20 - digit is the first character following the opening bracket", (t) => {
+  const input = `< 5 text here`;
+  t.match(stripHtml(input), { result: input }, "20");
+  t.end();
+});
 
 tap.test("21 - numbers compared", (t) => {
   const input = `1 < 5 for sure`;

@@ -23,7 +23,7 @@ tap.test("01 - opts.cb - baseline", (t) => {
         [45, 52],
       ],
     },
-    "01"
+    "01",
   );
   t.end();
 });
@@ -46,7 +46,7 @@ tap.test("02 - opts.cb - baseline 2", (t) => {
         [9, 16],
       ],
     },
-    "02"
+    "02",
   );
   t.end();
 });
@@ -70,7 +70,7 @@ tap.test("03 - opts.cb - replace hr with tralala", (t) => {
       allTagLocations: [[3, 7]],
       filteredTagLocations: [[3, 7]],
     },
-    "03"
+    "03",
   );
   t.end();
 });
@@ -84,11 +84,7 @@ tap.test("04 - opts.cb - replace div with tralala", (t) => {
     rangesArr,
     // proposedReturn
   }) => {
-    rangesArr.push(
-      deleteFrom,
-      deleteTo,
-      `<${tag.slashPresent ? "/" : ""}tralala>`
-    );
+    rangesArr.push(deleteFrom, deleteTo, `<${tag.slashPresent ? "/" : ""}tralala>`);
   };
   t.match(
     stripHtml("<div >abc</ div>", { cb }),
@@ -107,7 +103,7 @@ tap.test("04 - opts.cb - replace div with tralala", (t) => {
         [9, 16],
       ],
     },
-    "04"
+    "04",
   );
   t.end();
 });
@@ -122,11 +118,7 @@ tap.test("05 - opts.cb - replace only hr", (t) => {
     // proposedReturn
   }) => {
     if (tag.name === "hr") {
-      rangesArr.push(
-        deleteFrom,
-        deleteTo,
-        `<${tag.slashPresent ? "/" : ""}tralala>`
-      );
+      rangesArr.push(deleteFrom, deleteTo, `<${tag.slashPresent ? "/" : ""}tralala>`);
     }
   };
   t.match(
@@ -145,7 +137,7 @@ tap.test("05 - opts.cb - replace only hr", (t) => {
         [19, 26],
       ],
     },
-    "05"
+    "05",
   );
   t.end();
 });
@@ -169,43 +161,40 @@ tap.test("06 - opts.cb - readme example one", (t) => {
       allTagLocations: [[3, 7]],
       filteredTagLocations: [[3, 7]],
     },
-    "06"
+    "06",
   );
   t.end();
 });
 
-tap.test(
-  "07 - opts.cb - ignored tags are also being pinged, with null deletion range values",
-  (t) => {
-    const capturedTags = [];
-    const cb = ({
-      tag,
-      deleteFrom,
-      deleteTo,
-      insert,
-      rangesArr,
-      // proposedReturn
-    }) => {
-      rangesArr.push(deleteFrom, deleteTo, insert);
-      capturedTags.push(tag.name);
-    };
-    t.match(
-      stripHtml("abc<hr>def<br>ghi", { cb, ignoreTags: ["hr"] }),
-      {
-        result: "abc<hr>def ghi",
-        ranges: [[10, 14, " "]],
-        allTagLocations: [
-          [3, 7],
-          [10, 14],
-        ],
-        filteredTagLocations: [[10, 14]],
-      },
-      "07.01"
-    );
-    t.same(capturedTags, ["hr", "br"], "07.02");
-    t.end();
-  }
-);
+tap.test("07 - opts.cb - ignored tags are also being pinged, with null deletion range values", (t) => {
+  const capturedTags = [];
+  const cb = ({
+    tag,
+    deleteFrom,
+    deleteTo,
+    insert,
+    rangesArr,
+    // proposedReturn
+  }) => {
+    rangesArr.push(deleteFrom, deleteTo, insert);
+    capturedTags.push(tag.name);
+  };
+  t.match(
+    stripHtml("abc<hr>def<br>ghi", { cb, ignoreTags: ["hr"] }),
+    {
+      result: "abc<hr>def ghi",
+      ranges: [[10, 14, " "]],
+      allTagLocations: [
+        [3, 7],
+        [10, 14],
+      ],
+      filteredTagLocations: [[10, 14]],
+    },
+    "07.01",
+  );
+  t.same(capturedTags, ["hr", "br"], "07.02");
+  t.end();
+});
 
 tap.test("08 - opts.cb - cb.tag contents are correct on ignored tags", (t) => {
   const capturedTags = [];
@@ -253,97 +242,94 @@ tap.test("08 - opts.cb - cb.tag contents are correct on ignored tags", (t) => {
         name: "br",
       },
     ],
-    "08"
+    "08",
   );
   t.end();
 });
 
-tap.test(
-  "09 - opts.cb - cb.tag contents are right on non-ignored tags",
-  (t) => {
-    const capturedTags = [];
-    // const rangesArr = [];
-    const cb = ({
-      tag,
-      // deleteFrom,
-      // deleteTo,
-      // insert
-      // rangesArr
-      // proposedReturn
-    }) => {
-      capturedTags.push(tag);
-    };
+tap.test("09 - opts.cb - cb.tag contents are right on non-ignored tags", (t) => {
+  const capturedTags = [];
+  // const rangesArr = [];
+  const cb = ({
+    tag,
+    // deleteFrom,
+    // deleteTo,
+    // insert
+    // rangesArr
+    // proposedReturn
+  }) => {
+    capturedTags.push(tag);
+  };
 
-    // notice there's no assigning to a variable, we just rely on a callback:
-    stripHtml("abc<br >def<br>ghi<br/>jkl<br />mno", {
-      cb,
-      ignoreTags: ["b", "strong", "i", "em", "br", "sup"],
-      onlyStripTags: [],
-      stripTogetherWithTheirContents: ["script", "style", "xml"],
-      skipHtmlDecoding: true,
-      trimOnlySpaces: true,
-      dumpLinkHrefsNearby: {
-        enabled: false,
-        putOnNewLine: false,
-        wrapHeads: "",
-        wrapTails: "",
+  // notice there's no assigning to a variable, we just rely on a callback:
+  stripHtml("abc<br >def<br>ghi<br/>jkl<br />mno", {
+    cb,
+    ignoreTags: ["b", "strong", "i", "em", "br", "sup"],
+    onlyStripTags: [],
+    stripTogetherWithTheirContents: ["script", "style", "xml"],
+    skipHtmlDecoding: true,
+    trimOnlySpaces: true,
+    dumpLinkHrefsNearby: {
+      enabled: false,
+      putOnNewLine: false,
+      wrapHeads: "",
+      wrapTails: "",
+    },
+  });
+
+  t.same(
+    capturedTags,
+    [
+      {
+        attributes: [],
+        lastClosingBracketAt: 7,
+        lastOpeningBracketAt: 3,
+        leftOuterWhitespace: 3,
+        name: "br",
+        nameContainsLetters: true,
+        nameEnds: 6,
+        nameStarts: 4,
+        onlyPlausible: false,
+        slashPresent: false,
       },
-    });
-
-    t.same(
-      capturedTags,
-      [
-        {
-          attributes: [],
-          lastClosingBracketAt: 7,
-          lastOpeningBracketAt: 3,
-          leftOuterWhitespace: 3,
-          name: "br",
-          nameContainsLetters: true,
-          nameEnds: 6,
-          nameStarts: 4,
-          onlyPlausible: false,
-          slashPresent: false,
-        },
-        {
-          attributes: [],
-          lastClosingBracketAt: 14,
-          lastOpeningBracketAt: 11,
-          leftOuterWhitespace: 11,
-          name: "br",
-          nameContainsLetters: true,
-          nameEnds: 14,
-          nameStarts: 12,
-          onlyPlausible: false,
-          slashPresent: false,
-        },
-        {
-          attributes: [],
-          lastClosingBracketAt: 22,
-          lastOpeningBracketAt: 18,
-          leftOuterWhitespace: 18,
-          name: "br",
-          nameContainsLetters: true,
-          nameEnds: 21,
-          nameStarts: 19,
-          onlyPlausible: false,
-          slashPresent: 21,
-        },
-        {
-          attributes: [],
-          lastClosingBracketAt: 31,
-          lastOpeningBracketAt: 26,
-          leftOuterWhitespace: 26,
-          name: "br",
-          nameContainsLetters: true,
-          nameEnds: 29,
-          nameStarts: 27,
-          onlyPlausible: false,
-          slashPresent: 30,
-        },
-      ],
-      "09"
-    );
-    t.end();
-  }
-);
+      {
+        attributes: [],
+        lastClosingBracketAt: 14,
+        lastOpeningBracketAt: 11,
+        leftOuterWhitespace: 11,
+        name: "br",
+        nameContainsLetters: true,
+        nameEnds: 14,
+        nameStarts: 12,
+        onlyPlausible: false,
+        slashPresent: false,
+      },
+      {
+        attributes: [],
+        lastClosingBracketAt: 22,
+        lastOpeningBracketAt: 18,
+        leftOuterWhitespace: 18,
+        name: "br",
+        nameContainsLetters: true,
+        nameEnds: 21,
+        nameStarts: 19,
+        onlyPlausible: false,
+        slashPresent: 21,
+      },
+      {
+        attributes: [],
+        lastClosingBracketAt: 31,
+        lastOpeningBracketAt: 26,
+        leftOuterWhitespace: 26,
+        name: "br",
+        nameContainsLetters: true,
+        nameEnds: 29,
+        nameStarts: 27,
+        onlyPlausible: false,
+        slashPresent: 30,
+      },
+    ],
+    "09",
+  );
+  t.end();
+});

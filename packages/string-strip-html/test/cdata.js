@@ -17,7 +17,7 @@ tap.test("01 - CDATA - tight", (t) => {
       allTagLocations: [[1, 95]],
       filteredTagLocations: [[1, 95]],
     },
-    "01"
+    "01",
   );
   t.end();
 });
@@ -34,7 +34,7 @@ tap.test("02 - CDATA - normal", (t) => {
       allTagLocations: [[2, 90]],
       filteredTagLocations: [[2, 90]],
     },
-    "02"
+    "02",
   );
   t.end();
 });
@@ -51,7 +51,7 @@ tap.test("03 - CDATA - loose", (t) => {
       allTagLocations: [[4, 98]],
       filteredTagLocations: [[4, 98]],
     },
-    "03"
+    "03",
   );
   t.end();
 });
@@ -69,7 +69,7 @@ tap.test("04 - CDATA - single linebreaks", (t) => {
       allTagLocations: [[2, 96]],
       filteredTagLocations: [[2, 96]],
     },
-    "04"
+    "04",
   );
   t.end();
 });
@@ -86,7 +86,7 @@ tap.test("05 - CDATA - excessive linebreaks", (t) => {
       allTagLocations: [[4, 98]],
       filteredTagLocations: [[4, 98]],
     },
-    "05"
+    "05",
   );
   t.end();
 });
@@ -103,7 +103,7 @@ tap.test("06 - CDATA - mixed linebreaks", (t) => {
       allTagLocations: [[6, 100]],
       filteredTagLocations: [[6, 100]],
     },
-    "06"
+    "06",
   );
   t.end();
 });
