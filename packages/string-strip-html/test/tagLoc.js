@@ -22,7 +22,7 @@ tap.test("01 - tag locations - anchor wrapping text", (t) => {
         [14, 18],
       ],
     },
-    "01",
+    "01"
   );
   t.end();
 });
@@ -36,7 +36,7 @@ tap.test("02 - tag locations - no tags were present at all", (t) => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "02",
+    "02"
   );
   t.end();
 });
@@ -63,7 +63,7 @@ tap.test("03 - tag locations - opts.ignoreTags", (t) => {
         [10, 17],
       ],
     },
-    "03",
+    "03"
   );
   t.end();
 });
@@ -85,7 +85,7 @@ tap.test("04 - tag locations - opts.ignoreTags", (t) => {
       ],
       filteredTagLocations: [],
     },
-    "04",
+    "04"
   );
   t.end();
 });
@@ -113,7 +113,7 @@ tap.test("05 - tag locations - opts.onlyStripTags", (t) => {
         [10, 17],
       ],
     },
-    "05",
+    "05"
   );
   t.end();
 });
@@ -143,7 +143,7 @@ tap.test("06 - tag locations - opts.onlyStripTags", (t) => {
         [17, 21],
       ],
     },
-    "06",
+    "06"
   );
   t.end();
 });
@@ -164,7 +164,7 @@ tap.only("07 - tag locations - closing bracket missing", (t) => {
         [23, 41],
       ],
     },
-    "07",
+    "07"
   );
   t.end();
 });
@@ -187,7 +187,7 @@ tap.test("08 - tag locations - closing bracket missing", (t) => {
         [23, 41],
       ],
     },
-    "08",
+    "08"
   );
   t.end();
 });
@@ -207,7 +207,7 @@ tap.test("09 - tag locations - closing bracket missing on ignored tag", (t) => {
       ],
       filteredTagLocations: [],
     },
-    "09",
+    "09"
   );
   t.end();
 });

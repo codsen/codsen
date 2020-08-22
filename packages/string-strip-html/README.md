@@ -229,7 +229,13 @@ But equally, any link on any tag, even one without text, will be retained:
 Codsen
 <div>
   <a href="https://codsen.com" target="_blank"
-    ><img src="logo.png" width="100" height="100" border="0" style="display:block;" alt="Codsen logo"
+    ><img
+      src="logo.png"
+      width="100"
+      height="100"
+      border="0"
+      style="display:block;"
+      alt="Codsen logo"
   /></a>
 </div>
 ```
@@ -261,7 +267,14 @@ Sometimes you want more control over the program: maybe you want to strip only c
 You can get this level of control using `opts.cb`. In options object, under key's `cb` value, put a function. Whenever this program wants to do something, it will call your function, `Array.forEach(key => {})`-style. Instead of `key` you get a plain object with the following keys:
 
 ```js
-const cb = ({ tag, deleteFrom, deleteTo, insert, rangesArr, proposedReturn }) => {
+const cb = ({
+  tag,
+  deleteFrom,
+  deleteTo,
+  insert,
+  rangesArr,
+  proposedReturn,
+}) => {
   // default action which does nothing different from normal, non-callback operation
   rangesArr.push(deleteFrom, deleteTo, insert);
   // you might want to do something different, depending on "tag" contents.
@@ -280,7 +293,14 @@ The point of this callback interface is to pass the action of pushing of ranges 
 Below, the program "does nothing", that is, you push what it proposes, "proposedReturn" array:
 
 ```js
-const cb = ({ tag, deleteFrom, deleteTo, insert, rangesArr, proposedReturn }) => {
+const cb = ({
+  tag,
+  deleteFrom,
+  deleteTo,
+  insert,
+  rangesArr,
+  proposedReturn,
+}) => {
   rangesArr.push(deleteFrom, deleteTo, insert);
 };
 const { result, ranges, allTagLocations } = stripHtml("abc<hr>def", { cb });
@@ -311,7 +331,11 @@ const cb = ({
   rangesArr,
   // proposedReturn
 }) => {
-  rangesArr.push(deleteFrom, deleteTo, `<${tag.slashPresent ? "/" : ""}tralala>`);
+  rangesArr.push(
+    deleteFrom,
+    deleteTo,
+    `<${tag.slashPresent ? "/" : ""}tralala>`
+  );
 };
 const { result, ranges } = stripHtml("<div >abc</ div>", { cb });
 console.log(result);

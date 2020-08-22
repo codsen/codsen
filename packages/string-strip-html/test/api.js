@@ -99,7 +99,7 @@ tap.test("10 - empty input", (t) => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "10",
+    "10"
   );
   t.end();
 });
@@ -116,7 +116,7 @@ tap.test("11 - tabs only", (t) => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "11.01",
+    "11.01"
   );
   t.match(
     stripHtml(input, {
@@ -128,7 +128,7 @@ tap.test("11 - tabs only", (t) => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "11.02",
+    "11.02"
   );
   t.end();
 });
@@ -145,7 +145,7 @@ tap.test("12 - spaces only", (t) => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "12.01",
+    "12.01"
   );
   t.match(
     stripHtml(input, {
@@ -157,7 +157,7 @@ tap.test("12 - spaces only", (t) => {
       allTagLocations: [],
       filteredTagLocations: [],
     },
-    "12.02",
+    "12.02"
   );
   t.end();
 });

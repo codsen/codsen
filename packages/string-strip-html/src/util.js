@@ -13,7 +13,7 @@ function prepHopefullyAnArray(something, name) {
     return something.trim() ? [something] : [];
   }
   throw new TypeError(
-    `string-strip-html/stripHtml(): [THROW_ID_03] ${name} must be array containing zero or more strings or something falsey. Currently it's equal to: ${something}, that a type of ${typeof something}.`,
+    `string-strip-html/stripHtml(): [THROW_ID_03] ${name} must be array containing zero or more strings or something falsey. Currently it's equal to: ${something}, that a type of ${typeof something}.`
   );
 }
 

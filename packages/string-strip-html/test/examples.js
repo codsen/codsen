@@ -60,7 +60,7 @@ tap.test("01 - Remove HTML tags, give me a clean string.", (t) => {
       allTagLocations,
       filteredTagLocations: allTagLocations,
     },
-    "01",
+    "01"
   );
   t.end();
 });
@@ -77,11 +77,13 @@ The promo is still on!
 {% endif %}
 </div>
 `;
-  const { result, ranges, allTagLocations, filteredTagLocations } = stripHtml(input);
+  const { result, ranges, allTagLocations, filteredTagLocations } = stripHtml(
+    input
+  );
   t.is(
     result,
     `{% if data.customer.purchases[0].spendTotal < 100 %}\nYou earned a discount!\n{% else %}\nThe promo is still on!\n{% endif %}`,
-    "02.01",
+    "02.01"
   );
   t.same(
     ranges,
@@ -89,7 +91,7 @@ The promo is still on!
       [0, 31],
       [152, 160],
     ],
-    "02.02",
+    "02.02"
   );
   t.same(
     allTagLocations,
@@ -97,7 +99,7 @@ The promo is still on!
       [0, 30],
       [153, 159],
     ],
-    "02.03",
+    "02.03"
   );
   t.same(
     filteredTagLocations,
@@ -105,9 +107,13 @@ The promo is still on!
       [0, 30],
       [153, 159],
     ],
-    "02.04",
+    "02.04"
   );
-  t.is(apply(input, invert(allTagLocations, input.length)), `<div class="module-container"></div>`, "02.05");
+  t.is(
+    apply(input, invert(allTagLocations, input.length)),
+    `<div class="module-container"></div>`,
+    "02.05"
+  );
   t.end();
 });
 
@@ -139,13 +145,17 @@ tap.test("03 - Tell me String indexes of where the <tr> tags are.", (t) => {
       [143, 148],
       [176, 181],
     ],
-    "03.01",
+    "03.01"
   );
   const gatheredExtractedTagStrings = [];
   filteredTagLocations.forEach(([from, to]) => {
     gatheredExtractedTagStrings.push(input.slice(from, to));
   });
 
-  t.same(gatheredExtractedTagStrings, [`<tr>`, `<tr>`, `</tr>`, `</tr>`], "03.02");
+  t.same(
+    gatheredExtractedTagStrings,
+    [`<tr>`, `<tr>`, `</tr>`, `</tr>`],
+    "03.02"
+  );
   t.end();
 });

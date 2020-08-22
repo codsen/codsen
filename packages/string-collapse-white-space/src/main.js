@@ -600,7 +600,10 @@ function collapse(str, originalOpts) {
                       str,
                       i,
                       ["kbd", "dd", "embed", "legend", "td"],
-                      { cb: isSpaceOrLeftBracket, i: true }
+                      {
+                        cb: isSpaceOrLeftBracket,
+                        i: true,
+                      }
                     ))) ||
                 (str[i] === "e" &&
                   (matchLeftIncl(str, i, "source", {
@@ -617,7 +620,10 @@ function collapse(str, originalOpts) {
                         str,
                         i,
                         ["table", "article", "title", "style"],
-                        { cb: isSpaceOrLeftBracket, i: true }
+                        {
+                          cb: isSpaceOrLeftBracket,
+                          i: true,
+                        }
                       )) ||
                     (str[i - 1] === "m" &&
                       matchLeftIncl(str, i, ["iframe", "time"], {
@@ -634,7 +640,10 @@ function collapse(str, originalOpts) {
                         str,
                         i,
                         ["template", "cite", "blockquote"],
-                        { cb: isSpaceOrLeftBracket, i: true }
+                        {
+                          cb: isSpaceOrLeftBracket,
+                          i: true,
+                        }
                       )) ||
                     matchLeftIncl(str, i, "base", {
                       cb: isSpaceOrLeftBracket,
@@ -667,7 +676,10 @@ function collapse(str, originalOpts) {
                     str,
                     i,
                     ["html", "ol", "ul", "dl", "label", "del", "small", "col"],
-                    { cb: isSpaceOrLeftBracket, i: true }
+                    {
+                      cb: isSpaceOrLeftBracket,
+                      i: true,
+                    }
                   )) ||
                 (str[i] === "m" &&
                   matchLeftIncl(str, i, ["param", "em", "menuitem", "form"], {
@@ -680,7 +692,10 @@ function collapse(str, originalOpts) {
                       str,
                       i,
                       ["section", "caption", "figcaption", "option", "button"],
-                      { cb: isSpaceOrLeftBracket, i: true }
+                      {
+                        cb: isSpaceOrLeftBracket,
+                        i: true,
+                      }
                     )) ||
                     matchLeftIncl(str, i, ["span", "keygen", "dfn", "main"], {
                       cb: isSpaceOrLeftBracket,
@@ -689,7 +704,7 @@ function collapse(str, originalOpts) {
               ) {
                 tagMatched = true;
                 console.log(
-                  `692 SET ${`\u001b[${33}m${`tagMatched`}\u001b[${39}m`} = ${tagMatched}`
+                  `707 SET ${`\u001b[${33}m${`tagMatched`}\u001b[${39}m`} = ${tagMatched}`
                 );
               }
             }
@@ -707,7 +722,10 @@ function collapse(str, originalOpts) {
                       str,
                       i,
                       ["hgroup", "colgroup", "optgroup", "sup"],
-                      { cb: isSpaceOrLeftBracket, i: true }
+                      {
+                        cb: isSpaceOrLeftBracket,
+                        i: true,
+                      }
                     )) ||
                   matchLeftIncl(str, i, ["map", "samp", "rp"], {
                     cb: isSpaceOrLeftBracket,
@@ -724,7 +742,10 @@ function collapse(str, originalOpts) {
                     str,
                     i,
                     ["var", "br", "abbr", "wbr", "hr", "tr"],
-                    { cb: isSpaceOrLeftBracket, i: true }
+                    {
+                      cb: isSpaceOrLeftBracket,
+                      i: true,
+                    }
                   ))) ||
               (str[i] === "s" &&
                 ((str[i - 1] === "s" &&
@@ -781,7 +802,7 @@ function collapse(str, originalOpts) {
             ) {
               tagMatched = true;
               console.log(
-                `784 SET ${`\u001b[${33}m${`tagMatched`}\u001b[${39}m`} = ${tagMatched}`
+                `805 SET ${`\u001b[${33}m${`tagMatched`}\u001b[${39}m`} = ${tagMatched}`
               );
             }
 
@@ -793,7 +814,7 @@ function collapse(str, originalOpts) {
             // if digits 1-6
             tagCanEndHere = false;
             console.log(
-              `796 SET ${`\u001b[${33}m${`tagCanEndHere`}\u001b[${39}m`} = ${tagCanEndHere}`
+              `817 SET ${`\u001b[${33}m${`tagCanEndHere`}\u001b[${39}m`} = ${tagCanEndHere}`
             );
             if (
               str[i - 1] === "h" &&
@@ -801,13 +822,13 @@ function collapse(str, originalOpts) {
             ) {
               tagMatched = true;
               console.log(
-                `804 SET ${`\u001b[${33}m${`tagMatched`}\u001b[${39}m`} = ${tagMatched}`
+                `825 SET ${`\u001b[${33}m${`tagMatched`}\u001b[${39}m`} = ${tagMatched}`
               );
             }
           } else if (str[i] === "=" || str[i] === '"') {
             tagCanEndHere = false;
             console.log(
-              `810 SET ${`\u001b[${33}m${`tagCanEndHere`}\u001b[${39}m`} = ${`\u001b[${35}m${tagCanEndHere}\u001b[${39}m`}`
+              `831 SET ${`\u001b[${33}m${`tagCanEndHere`}\u001b[${39}m`} = ${`\u001b[${35}m${tagCanEndHere}\u001b[${39}m`}`
             );
           }
         }
@@ -832,7 +853,7 @@ function collapse(str, originalOpts) {
 
   if (opts.returnRangesOnly) {
     console.log(
-      `835 RETURNING: ${JSON.stringify(finalIndexesToDelete, null, 4)}`
+      `856 RETURNING: ${JSON.stringify(finalIndexesToDelete, null, 4)}`
     );
     return rangesMerge(finalIndexesToDelete);
   }

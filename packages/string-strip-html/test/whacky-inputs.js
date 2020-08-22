@@ -34,40 +34,56 @@ tap.test("04 - whacky - sequence of empty <> - just trimmed", (t) => {
   t.end();
 });
 
-tap.test("05 - whacky - brackets used for expressive purposes (very very suspicious but possible)", (t) => {
-  const input = "text <<<<<<<<<<< text";
-  t.match(stripHtml(input), { result: input }, "05.01");
-  t.match(applyR(input, stripHtml(input).ranges), input, "05.02");
-  t.end();
-});
+tap.test(
+  "05 - whacky - brackets used for expressive purposes (very very suspicious but possible)",
+  (t) => {
+    const input = "text <<<<<<<<<<< text";
+    t.match(stripHtml(input), { result: input }, "05.01");
+    t.match(applyR(input, stripHtml(input).ranges), input, "05.02");
+    t.end();
+  }
+);
 
-tap.test("06 - brackets used for expressive purposes (very very suspicious but possible)", (t) => {
-  const input = "text <<<<<<<<<<< text <<<<<<<<<<< text";
-  t.match(stripHtml(input), { result: input }, "06.01");
-  t.match(applyR(input, stripHtml(input).ranges), input, "06.02");
-  t.end();
-});
+tap.test(
+  "06 - brackets used for expressive purposes (very very suspicious but possible)",
+  (t) => {
+    const input = "text <<<<<<<<<<< text <<<<<<<<<<< text";
+    t.match(stripHtml(input), { result: input }, "06.01");
+    t.match(applyR(input, stripHtml(input).ranges), input, "06.02");
+    t.end();
+  }
+);
 
-tap.test("07 - brackets used for expressive purposes (very very suspicious but possible)", (t) => {
-  const input = "<article> text <<<<<<<<<<< text </article>";
-  const result = "text <<<<<<<<<<< text";
-  t.match(stripHtml(input), { result }, "07.01");
-  t.match(applyR(input, stripHtml(input).ranges), result, "07.02");
-  t.end();
-});
+tap.test(
+  "07 - brackets used for expressive purposes (very very suspicious but possible)",
+  (t) => {
+    const input = "<article> text <<<<<<<<<<< text </article>";
+    const result = "text <<<<<<<<<<< text";
+    t.match(stripHtml(input), { result }, "07.01");
+    t.match(applyR(input, stripHtml(input).ranges), result, "07.02");
+    t.end();
+  }
+);
 
-tap.test("08 - brackets used for expressive purposes (very very suspicious but possible)", (t) => {
-  // will not remove
-  const input = "text1 <<<<<<<<<<< text2 >>>>>>>>>>> text3";
-  t.match(stripHtml(input), { result: input }, "08.01");
-  t.match(applyR(input, stripHtml(input).ranges), input, "08.02");
-  t.end();
-});
+tap.test(
+  "08 - brackets used for expressive purposes (very very suspicious but possible)",
+  (t) => {
+    // will not remove
+    const input = "text1 <<<<<<<<<<< text2 >>>>>>>>>>> text3";
+    t.match(stripHtml(input), { result: input }, "08.01");
+    t.match(applyR(input, stripHtml(input).ranges), input, "08.02");
+    t.end();
+  }
+);
 
-tap.test("09 - brackets used for expressive purposes (very very suspicious but possible)", (t) => {
-  const input = "<article> text1 <<<<<<<<<<< text2 >>>>>>>>> text3 </article>";
-  const result = "text1 <<<<<<<<<<< text2 >>>>>>>>> text3";
-  t.match(stripHtml(input), { result }, "09.01");
-  t.match(applyR(input, stripHtml(input).ranges), result, "09.02");
-  t.end();
-});
+tap.test(
+  "09 - brackets used for expressive purposes (very very suspicious but possible)",
+  (t) => {
+    const input =
+      "<article> text1 <<<<<<<<<<< text2 >>>>>>>>> text3 </article>";
+    const result = "text1 <<<<<<<<<<< text2 >>>>>>>>> text3";
+    t.match(stripHtml(input), { result }, "09.01");
+    t.match(applyR(input, stripHtml(input).ranges), result, "09.02");
+    t.end();
+  }
+);

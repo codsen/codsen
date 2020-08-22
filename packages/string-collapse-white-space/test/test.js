@@ -776,7 +776,9 @@ tap.test(
       t.equal(
         collapse(
           `     \xa0    aaa   bbb    \xa0    ${presentEolType}     \xa0     ccc   ddd   \xa0   `,
-          { trimLines: false }
+          {
+            trimLines: false,
+          }
         ),
         `\xa0 aaa bbb \xa0 ${presentEolType} \xa0 ccc ddd \xa0`,
         `EOL ${key[idx]}`
@@ -784,7 +786,10 @@ tap.test(
       t.equal(
         collapse(
           `     \xa0    aaa   bbb    \xa0    ${presentEolType}     \xa0     ccc   ddd   \xa0   `,
-          { trimLines: true, trimnbsp: false }
+          {
+            trimLines: true,
+            trimnbsp: false,
+          }
         ),
         `\xa0 aaa bbb \xa0${presentEolType}\xa0 ccc ddd \xa0`,
         `04.03.02 - trimLines = 1, trimnbsp = 0`
@@ -792,7 +797,10 @@ tap.test(
       t.equal(
         collapse(
           `     \xa0    aaa   bbb    \xa0    ${presentEolType}     \xa0     ccc   ddd   \xa0   `,
-          { trimLines: true, trimnbsp: true }
+          {
+            trimLines: true,
+            trimnbsp: true,
+          }
         ),
         `aaa bbb${presentEolType}ccc ddd`,
         `04.03.03 - trimLines = 1, trimnbsp = 1`
@@ -1001,7 +1009,9 @@ tap.test(
       t.equal(
         collapse(
           `${presentEolType} \n    \r\r   \t\t  <  \t   html   \r   \t \t   >\n  \r \t    \n  `,
-          { recogniseHTML: false }
+          {
+            recogniseHTML: false,
+          }
         ),
         "< \t html \r \t \t >",
         `EOL ${key[idx]}`
@@ -1218,7 +1228,9 @@ tap.test(
       t.equal(
         collapse(
           `${presentEolType}\n \n    \r\r   \t\t  <  \t   html   \t   \t \t  / >\n  \r \t    \n  `,
-          { recogniseHTML: false }
+          {
+            recogniseHTML: false,
+          }
         ),
         "< \t html \t \t \t / >",
         `EOL ${key[idx]}`

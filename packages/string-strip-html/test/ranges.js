@@ -22,7 +22,7 @@ tap.only("01 - ranges - quick sanity check", (t) => {
       ],
       allTagLocations,
     },
-    "01",
+    "01"
   );
   validateTagLocations(t, input, allTagLocations);
   t.end();
@@ -64,7 +64,7 @@ tap.test("02 - consistency with ranges-apply", (t) => {
       ],
       allTagLocations: [[0, 15]],
     },
-    `02.01`,
+    `02.01`
   );
 
   t.same(applyR(input, stripHtml(input).ranges), result, `02.02`);
@@ -169,9 +169,9 @@ tap.test("03 - consistency with ranges-apply", (t) => {
         input,
         stripHtml(input, {
           trimOnlySpaces: false, // <----------- trim all whitespace!
-        }).ranges,
+        }).ranges
       ),
-      `${idx} - ${input}`,
+      `${idx} - ${input}`
     );
     t.same(
       stripHtml(input, { trimOnlySpaces: true }).result,
@@ -179,9 +179,9 @@ tap.test("03 - consistency with ranges-apply", (t) => {
         input,
         stripHtml(input, {
           trimOnlySpaces: true, // <----------- trim only spaces!
-        }).ranges,
+        }).ranges
       ),
-      `${idx} - ${input}`,
+      `${idx} - ${input}`
     );
   });
   t.end();

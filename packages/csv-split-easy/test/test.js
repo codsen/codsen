@@ -343,7 +343,9 @@ tap.test("11 - to pad or not to pad", (t) => {
   t.same(
     splitEasy(
       'Product Name,Main Price,Discounted Price\n\rPencil HB,"2.2","2.1"\nPencil 2H,"2.32","2.3"',
-      { padSingleDecimalPlaceNumbers: false }
+      {
+        padSingleDecimalPlaceNumbers: false,
+      }
     ),
     [
       ["Product Name", "Main Price", "Discounted Price"],

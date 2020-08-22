@@ -177,7 +177,10 @@ console.log("res3 = " + res3);
 // \xa0 is an unencoded non-breaking space:
 let res4 = collapse(
   "     \xa0    aaa   bbb    \xa0    \n     \xa0     ccc   ddd   \xa0   ",
-  { trimLines: true, trimnbsp: true }
+  {
+    trimLines: true,
+    trimnbsp: true,
+  }
 );
 console.log("res4 = " + res4);
 // => 'aaa bbb\nccc ddd'

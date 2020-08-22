@@ -27,7 +27,9 @@ tap.test("01 - called upon a single file which is healthy", async (t) => {
 
   const stdOutContents = await execa(
     `cd ${tempFolder} && ${path.join(__dirname, "../")}cli.js test.html`,
-    { shell: true }
+    {
+      shell: true,
+    }
   );
   t.match(stdOutContents.stdout, /ALL OK/, "01");
   t.end();
