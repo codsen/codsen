@@ -64,6 +64,7 @@
       "travis": true,
       "vulnerabilities": true
     },
+    "defaultExported": false,
     "eslintrc": {
       "add": [],
       "remove": []
@@ -98,6 +99,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "typeSriptDefinitions": false,
     "various": {
       "back_to_top": {
         "enabled": true,

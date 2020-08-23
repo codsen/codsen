@@ -65,6 +65,7 @@
     },
     "cliSpecialKeyword": "tinaturner",
     "cliSpecialKeywordInstructions": "",
+    "defaultExported": false,
     "eslintrc": {
       "add": [],
       "remove": []
@@ -99,6 +100,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "typeSriptDefinitions": false,
     "various": {
       "back_to_top": {
         "enabled": true,

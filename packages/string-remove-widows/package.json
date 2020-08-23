@@ -110,6 +110,7 @@
       "goodFolders": []
     },
     "req": "{ removeWidows, defaultOpts, version }",
+    "typeSriptDefinitions": false,
     "various": {
       "back_to_top": {
         "enabled": true,

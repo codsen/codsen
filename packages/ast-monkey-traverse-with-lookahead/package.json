@@ -119,6 +119,7 @@
       "goodFolders": []
     },
     "req": "traverse2",
+    "typeSriptDefinitions": false,
     "various": {
       "back_to_top": {
         "enabled": true,

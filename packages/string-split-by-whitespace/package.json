@@ -109,6 +109,7 @@
       "goodFolders": []
     },
     "req": "splitByW",
+    "typeSriptDefinitions": false,
     "various": {
       "back_to_top": {
         "enabled": true,

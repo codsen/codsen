@@ -110,6 +110,7 @@
       "goodFolders": []
     },
     "req": "{ isProduction4, isProduction4a, validFirstChar, validSecondCharOnwards }",
+    "typeSriptDefinitions": false,
     "various": {
       "back_to_top": {
         "enabled": true,

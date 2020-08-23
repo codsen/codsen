@@ -111,6 +111,7 @@
       "goodFolders": []
     },
     "req": "{ uglifyById, uglifyArr, version }",
+    "typeSriptDefinitions": false,
     "various": {
       "back_to_top": {
         "enabled": true,

@@ -72,6 +72,7 @@
     },
     "cliSpecialKeyword": "johnnydepp",
     "cliSpecialKeywordInstructions": "remember the actor, DEPP as in _Johnny Dependency_ - just type his full name and surname.",
+    "defaultExported": false,
     "eslintrc": {
       "add": [],
       "remove": []
@@ -106,6 +107,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
+    "typeSriptDefinitions": false,
     "various": {
       "back_to_top": {
         "enabled": true,

@@ -109,6 +109,7 @@
       "goodFolders": []
     },
     "req": "stripHtml",
+    "typeSriptDefinitions": true,
     "various": {
       "back_to_top": {
         "enabled": true,

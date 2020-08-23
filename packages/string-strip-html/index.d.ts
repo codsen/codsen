@@ -14,12 +14,11 @@ declare type Callback = (cbObj: {
   deleteFrom: number;
   deleteTo: number;
   insert: string;
-  rangesArr: [number, number, (string|null)?][];
-  proposedReturn: [number, number, (string|null)?][];
+  rangesArr: [number, number, (string | null)?][];
+  proposedReturn: [number, number, (string | null)?][];
 }) => void;
 
 declare namespace stringStripHtml {
-
   interface Options {
     /**
 		Ignore any tags upon request.
@@ -56,12 +55,15 @@ declare namespace stringStripHtml {
     It is used to activate text version generation functionality.
     @default false | plain object
     */
-    dumpLinkHrefsNearby?: false | null | {
-      enabled?: boolean,
-      putOnNewLine?: boolean,
-      wrapHeads?: string,
-      wrapTails?: string
-    };
+    dumpLinkHrefsNearby?:
+      | false
+      | null
+      | {
+          enabled?: boolean;
+          putOnNewLine?: boolean;
+          wrapHeads?: string;
+          wrapTails?: string;
+        };
 
     /**
 		Callback function to granularly control the output of a program.
@@ -73,7 +75,7 @@ declare namespace stringStripHtml {
   interface Output {
     log: { timeTakenInMilliseconds: number };
     result: string;
-    ranges: null | readonly [number, number, (string|null)?][];
+    ranges: null | readonly [number, number, (string | null)?][];
     allTagLocations: readonly [number, number][];
     filteredTagLocations: readonly [number, number][];
   }

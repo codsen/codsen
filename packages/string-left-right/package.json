@@ -108,6 +108,7 @@
       "goodFolders": []
     },
     "req": "{ left, right, leftSeq, rightSeq, chompLeft, chompRight, leftStopAtNewLines, rightStopAtNewLines }",
+    "typeSriptDefinitions": false,
     "various": {
       "back_to_top": {
         "enabled": true,

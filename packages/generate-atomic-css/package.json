@@ -105,6 +105,7 @@
       "goodFolders": []
     },
     "req": "{ genAtomic, version, headsAndTails, extractFromToSource }",
+    "typeSriptDefinitions": false,
     "various": {
       "back_to_top": {
         "enabled": true,

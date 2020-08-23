@@ -113,6 +113,7 @@
       "goodFolders": []
     },
     "req": "{ pathNext, pathPrev, pathUp }",
+    "typeSriptDefinitions": false,
     "various": {
       "back_to_top": {
         "enabled": true,

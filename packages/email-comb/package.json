@@ -105,6 +105,7 @@
       "goodFolders": []
     },
     "req": "{ comb, defaults, version }",
+    "typeSriptDefinitions": false,
     "various": {
       "back_to_top": {
         "enabled": true,

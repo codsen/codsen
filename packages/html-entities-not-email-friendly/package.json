@@ -105,6 +105,7 @@
       "goodFolders": []
     },
     "req": "{\n  notEmailFriendly,\n  notEmailFriendlySetOnly,\n  notEmailFriendlyLowercaseSetOnly,\n  notEmailFriendlyMinLength,\n  notEmailFriendlyMaxLength\n}",
+    "typeSriptDefinitions": false,
     "various": {
       "back_to_top": {
         "enabled": true,

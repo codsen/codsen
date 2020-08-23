@@ -1723,8 +1723,19 @@ function step6() {
         } catch (e) {
           sourceContainsDefaultExport = false;
         }
-        pack.lect.defaultExported = sourceContainsDefaultExport;
       }
+      pack.lect.defaultExported = sourceContainsDefaultExport;
+
+      // find out are TypeScript definitions present
+      let typeSriptDefinitionsPresent = false;
+      if (!isCLI) {
+        try {
+          typeSriptDefinitionsPresent = !!fs.statSync("./index.d.ts");
+        } catch (e) {
+          typeSriptDefinitionsPresent = false;
+        }
+      }
+      pack.lect.typeSriptDefinitions = typeSriptDefinitionsPresent;
 
       if (pack.lect.req === camelCase(pack.name)) {
         throw new Error(

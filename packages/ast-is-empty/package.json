@@ -116,6 +116,7 @@
       "goodFolders": []
     },
     "req": "isEmpty",
+    "typeSriptDefinitions": false,
     "various": {
       "back_to_top": {
         "enabled": true,

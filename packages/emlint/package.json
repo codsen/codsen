@@ -80,6 +80,7 @@
       "travis": true,
       "vulnerabilities": true
     },
+    "defaultExported": false,
     "eslintrc": {
       "add": [],
       "remove": []
@@ -116,6 +117,7 @@
     },
     "req": "{ Linter, version }",
     "special": true,
+    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": [
         "ast-deep-contains",

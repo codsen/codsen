@@ -72,6 +72,7 @@
       "travis": true,
       "vulnerabilities": true
     },
+    "defaultExported": false,
     "eslintrc": {
       "add": [],
       "remove": []
@@ -108,6 +109,7 @@
         "util"
       ]
     },
+    "typeSriptDefinitions": false,
     "various": {
       "back_to_top": {
         "enabled": true,
