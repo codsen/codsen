@@ -1,7 +1,7 @@
 /**
  * html-table-patcher
  * Wraps any content between TR/TD tags in additional rows/columns to appear in browser correctly
- * Version: 2.0.6
+ * Version: 2.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/html-table-patcher
@@ -5010,7 +5010,7 @@
   /**
    * string-collapse-leading-whitespace
    * Collapse the leading and trailing whitespace of a string
-   * Version: 2.0.22
+   * Version: 2.0.23
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace
@@ -5728,7 +5728,7 @@
 
   var htmlCommentRegex = /<!--([\s\S]*?)-->/g;
 
-  var version = "2.0.6";
+  var version = "2.0.7";
 
   var ranges = new Ranges();
 

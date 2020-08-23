@@ -1,6 +1,6 @@
 {
   "name": "object-delete-key",
-  "version": "1.9.32",
+  "version": "1.9.33",
   "description": "Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -137,9 +137,9 @@
   },
   "dependencies": {
     "ast-is-empty": "^1.10.7",
-    "ast-monkey": "^7.11.16",
+    "ast-monkey": "^7.11.17",
     "lodash.clonedeep": "^4.5.0",
-    "util-array-object-or-both": "^2.7.62"
+    "util-array-object-or-both": "^2.7.63"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",
@@ -154,7 +154,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.7.0",
-    "lect": "^0.13.9",
+    "lect": "^0.13.10",
     "posthtml-parser": "^0.4.2",
     "rollup": "^2.26.4",
     "rollup-plugin-ascii": "^0.0.3",

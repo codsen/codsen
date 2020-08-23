@@ -1,7 +1,7 @@
 /**
  * string-remove-widows
  * Helps to prevent widow words in a text
- * Version: 1.6.11
+ * Version: 1.6.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows
@@ -2542,7 +2542,7 @@
   /**
    * string-collapse-leading-whitespace
    * Collapse the leading and trailing whitespace of a string
-   * Version: 2.0.22
+   * Version: 2.0.23
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace
@@ -3154,7 +3154,7 @@
     return str;
   }
 
-  var version = "1.6.11";
+  var version = "1.6.12";
 
   // consts
   var rawnbsp = "\xA0";

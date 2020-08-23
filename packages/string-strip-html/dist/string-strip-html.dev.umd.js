@@ -1,7 +1,7 @@
 /**
  * string-strip-html
  * Strips HTML tags from strings. No parser, accepts mixed sources.
- * Version: 5.0.0
+ * Version: 5.0.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html
@@ -440,7 +440,7 @@
   /**
    * string-collapse-leading-whitespace
    * Collapse the leading and trailing whitespace of a string
-   * Version: 2.0.22
+   * Version: 2.0.23
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace

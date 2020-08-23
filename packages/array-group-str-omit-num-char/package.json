@@ -1,6 +1,6 @@
 {
   "name": "array-group-str-omit-num-char",
-  "version": "2.1.43",
+  "version": "2.1.44",
   "description": "Groups array of strings by omitting number characters",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -146,7 +146,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.7.0",
-    "lect": "^0.13.9",
+    "lect": "^0.13.10",
     "rollup": "^2.26.4",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

@@ -1,6 +1,6 @@
 {
   "name": "edit-package-json",
-  "version": "0.1.31",
+  "version": "0.1.32",
   "description": "Edit package.json without parsing, as string, to keep the formatting intact",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -136,7 +136,7 @@
   },
   "dependencies": {
     "ranges-apply": "^3.1.12",
-    "string-left-right": "^2.3.26"
+    "string-left-right": "^2.3.27"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",
@@ -149,11 +149,11 @@
     "@rollup/plugin-commonjs": "^15.0.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
     "@rollup/plugin-strip": "^2.0.0",
-    "ast-monkey-traverse": "^1.12.15",
+    "ast-monkey-traverse": "^1.12.16",
     "benchmark": "^2.1.4",
     "eslint": "^7.7.0",
     "globby": "^11.0.1",
-    "lect": "^0.13.9",
+    "lect": "^0.13.10",
     "lodash.clonedeep": "^4.5.0",
     "object-path": "^0.11.4",
     "p-map": "^4.0.0",

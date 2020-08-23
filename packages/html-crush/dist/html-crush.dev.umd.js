@@ -1,7 +1,7 @@
 /**
  * html-crush
  * Minifies HTML/CSS: valid or broken, pure or mixed with other languages
- * Version: 2.0.2
+ * Version: 2.0.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/html-crush
@@ -625,7 +625,7 @@
   /**
    * string-collapse-leading-whitespace
    * Collapse the leading and trailing whitespace of a string
-   * Version: 2.0.22
+   * Version: 2.0.23
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace
@@ -3358,7 +3358,7 @@
     return leftMain(str, idx, false);
   }
 
-  var version = "2.0.2";
+  var version = "2.0.3";
 
   var finalIndexesToDelete = new Ranges({
     limitToBeAddedWhitespace: true

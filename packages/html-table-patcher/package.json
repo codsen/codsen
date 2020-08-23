@@ -1,6 +1,6 @@
 {
   "name": "html-table-patcher",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "Wraps any content between TR/TD tags in additional rows/columns to appear in browser correctly",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -130,11 +130,11 @@
     "timeout": 0
   },
   "dependencies": {
-    "ast-monkey-traverse-with-lookahead": "^1.1.8",
-    "codsen-parser": "^0.7.2",
+    "ast-monkey-traverse-with-lookahead": "^1.1.9",
+    "codsen-parser": "^0.7.3",
     "html-comment-regex": "^1.1.2",
     "ranges-apply": "^3.1.12",
-    "ranges-push": "^3.7.16"
+    "ranges-push": "^3.7.17"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",
@@ -150,7 +150,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.7.0",
-    "lect": "^0.13.9",
+    "lect": "^0.13.10",
     "rollup": "^2.26.4",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

@@ -1,6 +1,6 @@
 {
   "name": "ast-compare",
-  "version": "1.13.13",
+  "version": "1.13.14",
   "description": "Compare anything: AST, objects, arrays, strings and nested thereof",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -136,7 +136,7 @@
     "timeout": 0
   },
   "dependencies": {
-    "ast-contains-only-empty-space": "^1.9.11",
+    "ast-contains-only-empty-space": "^1.9.12",
     "matcher": "^3.0.0",
     "type-detect": "^4.0.8"
   },
@@ -153,7 +153,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.7.0",
-    "lect": "^0.13.9",
+    "lect": "^0.13.10",
     "rollup": "^2.26.4",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

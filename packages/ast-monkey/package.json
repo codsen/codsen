@@ -1,6 +1,6 @@
 {
   "name": "ast-monkey",
-  "version": "7.11.16",
+  "version": "7.11.17",
   "description": "Traverse and edit AST's (like parsed HTML or anything nested)",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -140,10 +140,10 @@
     "timeout": 0
   },
   "dependencies": {
-    "ast-compare": "^1.13.13",
-    "ast-monkey-traverse": "^1.12.15",
-    "check-types-mini": "^5.7.67",
-    "util-array-object-or-both": "^2.7.62"
+    "ast-compare": "^1.13.14",
+    "ast-monkey-traverse": "^1.12.16",
+    "check-types-mini": "^5.7.68",
+    "util-array-object-or-both": "^2.7.63"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",
@@ -158,7 +158,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.7.0",
-    "lect": "^0.13.9",
+    "lect": "^0.13.10",
     "rollup": "^2.26.4",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

@@ -1,7 +1,7 @@
 /**
  * emlint
  * Pluggable email template code linter
- * Version: 2.18.10
+ * Version: 2.18.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
@@ -9427,7 +9427,7 @@
 	/**
 	 * string-left-right
 	 * Look what's to the left or the right of a given index within a string
-	 * Version: 2.3.26
+	 * Version: 2.3.27
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right
@@ -9662,7 +9662,7 @@
 	/**
 	 * string-fix-broken-named-entities
 	 * Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes
-	 * Version: 3.0.5
+	 * Version: 3.0.6
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
@@ -10214,7 +10214,7 @@
 	/**
 	 * ast-monkey-traverse
 	 * Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)
-	 * Version: 1.12.15
+	 * Version: 1.12.16
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse
@@ -10548,7 +10548,7 @@
 	/**
 	 * string-find-malformed
 	 * Search for a malformed string. Think of Levenshtein distance but in search.
-	 * Version: 1.1.11
+	 * Version: 1.1.12
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-find-malformed
@@ -11034,7 +11034,7 @@
 	/**
 	 * is-html-attribute-closing
 	 * Is a character on a given index a closing of an HTML attribute?
-	 * Version: 1.2.3
+	 * Version: 1.2.4
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-attribute-closing
@@ -11307,7 +11307,7 @@
 	/**
 	 * is-html-tag-opening
 	 * Is given opening bracket a beginning of a tag?
-	 * Version: 1.7.11
+	 * Version: 1.7.12
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-tag-opening
@@ -11386,7 +11386,7 @@
 	/**
 	 * codsen-tokenizer
 	 * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
-	 * Version: 2.17.2
+	 * Version: 2.17.3
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer
@@ -13011,7 +13011,7 @@
 	/**
 	 * codsen-parser
 	 * Parser aiming at broken code, especially HTML & CSS
-	 * Version: 0.7.2
+	 * Version: 0.7.3
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser
@@ -43988,7 +43988,7 @@
 
 	}
 
-	var version = "2.18.10";
+	var version = "2.18.11";
 
 	exports.Linter = Linter;
 	exports.version = version;

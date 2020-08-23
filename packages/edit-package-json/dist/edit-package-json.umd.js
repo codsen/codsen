@@ -1,7 +1,7 @@
 /**
  * edit-package-json
  * Edit package.json without parsing, as string, to keep the formatting intact
- * Version: 0.1.31
+ * Version: 0.1.32
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/edit-package-json

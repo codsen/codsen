@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.32](https://gitlab.com/codsen/codsen/compare/edit-package-json@0.1.31...edit-package-json@0.1.32) (2020-08-23)
+
+**Note:** Version bump only for package edit-package-json
+
+
+
+
+
 ## 0.1.24 (2020-04-26)
 
 ### Bug Fixes

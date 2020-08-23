@@ -1,6 +1,6 @@
 {
   "name": "string-remove-widows",
-  "version": "1.6.11",
+  "version": "1.6.12",
   "description": "Helps to prevent widow words in a text",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -137,8 +137,8 @@
     "arrayiffy-if-string": "^3.11.34",
     "lodash.isplainobject": "^4.0.6",
     "ranges-apply": "^3.1.12",
-    "ranges-push": "^3.7.16",
-    "string-left-right": "^2.3.26",
+    "ranges-push": "^3.7.17",
+    "string-left-right": "^2.3.27",
     "string-match-left-right": "^4.0.10"
   },
   "devDependencies": {
@@ -155,7 +155,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.7.0",
-    "lect": "^0.13.9",
+    "lect": "^0.13.10",
     "rollup": "^2.26.4",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

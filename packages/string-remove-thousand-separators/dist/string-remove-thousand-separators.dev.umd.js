@@ -1,7 +1,7 @@
 /**
  * string-remove-thousand-separators
  * Detects and removes thousand separators (dot/comma/quote/space) from string-type digits
- * Version: 3.0.66
+ * Version: 3.0.67
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-thousand-separators
@@ -440,7 +440,7 @@
   /**
    * string-collapse-leading-whitespace
    * Collapse the leading and trailing whitespace of a string
-   * Version: 2.0.22
+   * Version: 2.0.23
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace

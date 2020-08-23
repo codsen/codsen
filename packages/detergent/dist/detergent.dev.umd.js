@@ -1,7 +1,7 @@
 /**
  * detergent
  * Extracts and cleans text
- * Version: 5.11.0
+ * Version: 5.11.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://detergent.io
@@ -10891,7 +10891,7 @@
   /**
    * string-collapse-leading-whitespace
    * Collapse the leading and trailing whitespace of a string
-   * Version: 2.0.22
+   * Version: 2.0.23
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace
@@ -23459,7 +23459,7 @@
     })(commonjsGlobal);
   });
 
-  var version$1 = "5.11.0";
+  var version$1 = "5.11.1";
 
   /**
    * html-entities-not-email-friendly

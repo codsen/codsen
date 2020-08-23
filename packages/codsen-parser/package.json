@@ -1,6 +1,6 @@
 {
   "name": "codsen-parser",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "description": "Parser aiming at broken code, especially HTML & CSS",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -127,10 +127,10 @@
   },
   "dependencies": {
     "ast-monkey-util": "^1.1.8",
-    "codsen-tokenizer": "^2.17.2",
+    "codsen-tokenizer": "^2.17.3",
     "object-path": "^0.11.4",
-    "string-find-malformed": "^1.1.11",
-    "string-left-right": "^2.3.26"
+    "string-find-malformed": "^1.1.12",
+    "string-left-right": "^2.3.27"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",
@@ -145,7 +145,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.7.0",
-    "lect": "^0.13.9",
+    "lect": "^0.13.10",
     "rollup": "^2.26.4",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

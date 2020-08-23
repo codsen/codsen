@@ -1,7 +1,7 @@
 /**
  * html-img-alt
  * Adds missing alt attributes to img tags. Non-parsing.
- * Version: 1.4.57
+ * Version: 1.4.58
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/html-img-alt
@@ -4693,7 +4693,7 @@
   /**
    * string-collapse-leading-whitespace
    * Collapse the leading and trailing whitespace of a string
-   * Version: 2.0.22
+   * Version: 2.0.23
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace

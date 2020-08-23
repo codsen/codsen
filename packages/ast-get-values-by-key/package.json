@@ -1,6 +1,6 @@
 {
   "name": "ast-get-values-by-key",
-  "version": "2.6.67",
+  "version": "2.6.68",
   "description": "Read or edit parsed HTML (or AST in general)",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -139,7 +139,7 @@
     "timeout": 0
   },
   "dependencies": {
-    "ast-monkey-traverse": "^1.12.15",
+    "ast-monkey-traverse": "^1.12.16",
     "lodash.clonedeep": "^4.5.0",
     "matcher": "^3.0.0"
   },
@@ -156,7 +156,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.7.0",
-    "lect": "^0.13.9",
+    "lect": "^0.13.10",
     "object-path": "^0.11.4",
     "rollup": "^2.26.4",
     "rollup-plugin-ascii": "^0.0.3",

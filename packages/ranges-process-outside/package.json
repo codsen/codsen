@@ -1,6 +1,6 @@
 {
   "name": "ranges-process-outside",
-  "version": "2.2.30",
+  "version": "2.2.31",
   "description": "Iterate through string and optionally a given ranges as if they were one",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -139,7 +139,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.7.0",
-    "lect": "^0.13.9",
+    "lect": "^0.13.10",
     "rollup": "^2.26.4",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

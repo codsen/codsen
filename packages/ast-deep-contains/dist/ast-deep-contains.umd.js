@@ -1,7 +1,7 @@
 /**
  * ast-deep-contains
  * Like t.same assert on array of objects, where element order doesn't matter.
- * Version: 1.1.16
+ * Version: 1.1.17
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-deep-contains

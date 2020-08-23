@@ -1,7 +1,7 @@
 /**
  * email-comb
  * Remove unused CSS from email templates
- * Version: 3.9.21
+ * Version: 3.9.22
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/email-comb
@@ -4022,7 +4022,7 @@
   /**
    * string-uglify
    * Shorten sets of strings deterministically, to be git-friendly
-   * Version: 1.2.41
+   * Version: 1.2.42
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-uglify
@@ -4820,7 +4820,7 @@
   /**
    * string-collapse-leading-whitespace
    * Collapse the leading and trailing whitespace of a string
-   * Version: 2.0.22
+   * Version: 2.0.23
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace
@@ -6077,7 +6077,7 @@
 
   var lodash_uniq = uniq;
 
-  var version = "3.9.21";
+  var version = "3.9.22";
 
   var regexEmptyStyleTag = /[\n]?\s*<style[^>]*>\s*<\/style\s*>/g;
   var regexEmptyMediaQuery = /[\n]?\s*@(media|supports|document)[^{]*{\s*}/g;
