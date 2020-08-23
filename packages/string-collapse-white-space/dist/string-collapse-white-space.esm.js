@@ -311,7 +311,10 @@ function collapse(str, originalOpts) {
                       str,
                       i,
                       ["kbd", "dd", "embed", "legend", "td"],
-                      { cb: isSpaceOrLeftBracket, i: true }
+                      {
+                        cb: isSpaceOrLeftBracket,
+                        i: true,
+                      }
                     ))) ||
                 (str[i] === "e" &&
                   (matchLeftIncl(str, i, "source", {
@@ -328,7 +331,10 @@ function collapse(str, originalOpts) {
                         str,
                         i,
                         ["table", "article", "title", "style"],
-                        { cb: isSpaceOrLeftBracket, i: true }
+                        {
+                          cb: isSpaceOrLeftBracket,
+                          i: true,
+                        }
                       )) ||
                     (str[i - 1] === "m" &&
                       matchLeftIncl(str, i, ["iframe", "time"], {
@@ -345,7 +351,10 @@ function collapse(str, originalOpts) {
                         str,
                         i,
                         ["template", "cite", "blockquote"],
-                        { cb: isSpaceOrLeftBracket, i: true }
+                        {
+                          cb: isSpaceOrLeftBracket,
+                          i: true,
+                        }
                       )) ||
                     matchLeftIncl(str, i, "base", {
                       cb: isSpaceOrLeftBracket,
@@ -378,7 +387,10 @@ function collapse(str, originalOpts) {
                     str,
                     i,
                     ["html", "ol", "ul", "dl", "label", "del", "small", "col"],
-                    { cb: isSpaceOrLeftBracket, i: true }
+                    {
+                      cb: isSpaceOrLeftBracket,
+                      i: true,
+                    }
                   )) ||
                 (str[i] === "m" &&
                   matchLeftIncl(str, i, ["param", "em", "menuitem", "form"], {
@@ -391,7 +403,10 @@ function collapse(str, originalOpts) {
                       str,
                       i,
                       ["section", "caption", "figcaption", "option", "button"],
-                      { cb: isSpaceOrLeftBracket, i: true }
+                      {
+                        cb: isSpaceOrLeftBracket,
+                        i: true,
+                      }
                     )) ||
                     matchLeftIncl(str, i, ["span", "keygen", "dfn", "main"], {
                       cb: isSpaceOrLeftBracket,
@@ -414,7 +429,10 @@ function collapse(str, originalOpts) {
                       str,
                       i,
                       ["hgroup", "colgroup", "optgroup", "sup"],
-                      { cb: isSpaceOrLeftBracket, i: true }
+                      {
+                        cb: isSpaceOrLeftBracket,
+                        i: true,
+                      }
                     )) ||
                   matchLeftIncl(str, i, ["map", "samp", "rp"], {
                     cb: isSpaceOrLeftBracket,
@@ -431,7 +449,10 @@ function collapse(str, originalOpts) {
                     str,
                     i,
                     ["var", "br", "abbr", "wbr", "hr", "tr"],
-                    { cb: isSpaceOrLeftBracket, i: true }
+                    {
+                      cb: isSpaceOrLeftBracket,
+                      i: true,
+                    }
                   ))) ||
               (str[i] === "s" &&
                 ((str[i - 1] === "s" &&

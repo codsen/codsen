@@ -46,7 +46,7 @@ This package has three builds in `dist/` folder:
 | Type                                                                                                    | Key in `package.json` | Path                            | Size   |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ------ |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-strip-html.cjs.js` | 34 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-strip-html.esm.js` | 32 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-strip-html.esm.js` | 33 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-strip-html.umd.js` | 102 KB |
 
 **[⬆ back to top](#)**

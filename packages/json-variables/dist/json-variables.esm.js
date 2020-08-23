@@ -457,7 +457,10 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
       string,
       opts.headsNoWrap,
       opts.tailsNoWrap,
-      { source: "", throwWhenSomethingWrongIsDetected: false }
+      {
+        source: "",
+        throwWhenSomethingWrongIsDetected: false,
+      }
     );
   } catch (error) {
     throw new Error(

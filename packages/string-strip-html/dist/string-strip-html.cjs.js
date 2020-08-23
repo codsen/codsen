@@ -207,8 +207,8 @@ function stripHtml(str, originalOpts) {
   fromIdx,
   toIdx,
   lastOpeningBracketAt,
-  lastClosingBracketAt)
-  {
+  lastClosingBracketAt
+  ) {
     var strToEvaluateForLineBreaks = "";
     if (fromIdx < lastOpeningBracketAt) {
       strToEvaluateForLineBreaks += str2.slice(fromIdx, lastOpeningBracketAt);

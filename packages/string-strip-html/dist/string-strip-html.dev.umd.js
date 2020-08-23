@@ -8731,8 +8731,8 @@
     fromIdx, // leftmost whitespace edge around tag
     toIdx, // rightmost whitespace edge around tag
     lastOpeningBracketAt, // tag actually starts here (<)
-    lastClosingBracketAt) // tag actually ends here (>)
-    {
+    lastClosingBracketAt // tag actually ends here (>)
+    ) {
       var strToEvaluateForLineBreaks = "";
 
       if (fromIdx < lastOpeningBracketAt) {
