@@ -187,6 +187,7 @@
         "posthtml-parser": 1,
         "prettier": 14,
         "ranges-apply": 6,
+        "ranges-invert": 1,
         "ranges-merge": 1,
         "rollup": 102,
         "rollup-plugin-ascii": 102,
@@ -198,6 +199,7 @@
         "string-find-heads-tails": 1,
         "tap": 115,
         "tempy": 13,
+        "tsd": 115,
         "vinyl-string": 1
     },
     "top10ExternalDeps": [

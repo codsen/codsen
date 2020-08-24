@@ -32,8 +32,8 @@
         "csv-split-easy": 43,
         "detect-is-it-html-or-xhtml": 53,
         "detergent": 741600,
-        "easy-replace": 203,
-        "edit-package-json": 14507,
+        "easy-replace": 204,
+        "edit-package-json": 14687,
         "email-all-chars-within-ascii": 59,
         "email-all-chars-within-ascii-cli": 11,
         "email-comb": 377,
@@ -107,9 +107,9 @@
         "string-remove-thousand-separators": 89,
         "string-remove-widows": 263,
         "string-split-by-whitespace": 29,
-        "string-strip-html": 531,
+        "string-strip-html": 883,
         "string-trim-spaces-only": 65,
-        "string-uglify": 2510,
+        "string-uglify": 2511,
         "string-unfancy": 13,
         "tap-parse-string-to-object": 13,
         "update-versions": 29,
@@ -117,12 +117,12 @@
         "util-nonempty": 17
     },
     "totalPackageCount": 115,
-    "totalAssertsCount": 795885,
+    "totalAssertsCount": 796419,
     "minAssertsCount": 4,
     "minAssertsName": "csv-sort-cli",
     "maxAssertsCount": 741600,
     "maxAssertsName": "detergent",
     "assertsCountMedian": 52,
-    "assertsCountArithmeticMean": 6921,
-    "assertsCountGeometricMean": 70
+    "assertsCountArithmeticMean": 6925,
+    "assertsCountGeometricMean": 71
 }

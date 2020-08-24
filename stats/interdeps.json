@@ -50,7 +50,7 @@
     },
     {
         "name": "ast-deep-contains",
-        "size": 5068,
+        "size": 5080,
         "imports": [
             "ast-monkey-traverse"
         ]
@@ -84,7 +84,7 @@
     },
     {
         "name": "ast-loose-compare",
-        "size": 3045,
+        "size": 3046,
         "imports": [
             "ast-contains-only-empty-space"
         ]
@@ -128,7 +128,7 @@
     },
     {
         "name": "check-types-mini",
-        "size": 11011,
+        "size": 11018,
         "imports": [
             "arrayiffy-if-string",
             "ast-monkey-traverse"
@@ -151,7 +151,7 @@
     },
     {
         "name": "codsen-parser",
-        "size": 19508,
+        "size": 19515,
         "imports": [
             "ast-monkey-util",
             "codsen-tokenizer",
@@ -161,7 +161,7 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 59966,
+        "size": 59973,
         "imports": [
             "html-all-known-attributes",
             "is-char-suitable-for-html-attr-name",
@@ -173,7 +173,7 @@
     },
     {
         "name": "csv-sort",
-        "size": 14137,
+        "size": 14144,
         "imports": [
             "csv-split-easy"
         ]
@@ -194,7 +194,7 @@
     },
     {
         "name": "detergent",
-        "size": 53934,
+        "size": 53877,
         "imports": [
             "all-named-html-entities",
             "html-entities-not-email-friendly",
@@ -219,7 +219,7 @@
     },
     {
         "name": "edit-package-json",
-        "size": 18089,
+        "size": 18091,
         "imports": [
             "ranges-apply",
             "string-left-right"
@@ -257,7 +257,7 @@
     },
     {
         "name": "emlint",
-        "size": 308006,
+        "size": 308015,
         "imports": [
             "ast-monkey-traverse",
             "ast-monkey-util",
@@ -276,7 +276,7 @@
     },
     {
         "name": "eslint-plugin-row-num",
-        "size": 3470,
+        "size": 3471,
         "imports": [
             "js-row-num"
         ]
@@ -333,7 +333,7 @@
     },
     {
         "name": "html-img-alt",
-        "size": 10643,
+        "size": 10607,
         "imports": [
             "check-types-mini",
             "ranges-apply",
@@ -375,7 +375,7 @@
     },
     {
         "name": "is-language-code",
-        "size": 79041,
+        "size": 79048,
         "imports": []
     },
     {
@@ -433,7 +433,7 @@
     },
     {
         "name": "json-variables",
-        "size": 20505,
+        "size": 20528,
         "imports": [
             "arrayiffy-if-string",
             "ast-get-values-by-key",
@@ -447,7 +447,7 @@
     },
     {
         "name": "lect",
-        "size": 75163,
+        "size": 75587,
         "imports": [
             "array-pull-all-with-glob",
             "arrayiffy-if-string",
@@ -559,7 +559,7 @@
     },
     {
         "name": "ranges-merge",
-        "size": 5038,
+        "size": 5039,
         "imports": [
             "ranges-sort"
         ]
@@ -622,7 +622,7 @@
     },
     {
         "name": "string-collapse-white-space",
-        "size": 17949,
+        "size": 18446,
         "imports": [
             "ranges-apply",
             "ranges-merge",
@@ -645,7 +645,7 @@
     },
     {
         "name": "string-find-heads-tails",
-        "size": 12541,
+        "size": 12524,
         "imports": [
             "arrayiffy-if-string",
             "string-match-left-right"
@@ -673,7 +673,7 @@
     },
     {
         "name": "string-match-left-right",
-        "size": 13191,
+        "size": 13192,
         "imports": [
             "arrayiffy-if-string",
             "string-character-is-astral-surrogate"
@@ -681,7 +681,7 @@
     },
     {
         "name": "string-process-comma-separated",
-        "size": 6294,
+        "size": 6295,
         "imports": []
     },
     {
@@ -728,7 +728,7 @@
     },
     {
         "name": "string-strip-html",
-        "size": 29249,
+        "size": 34279,
         "imports": [
             "ranges-apply",
             "ranges-push",
@@ -742,7 +742,7 @@
     },
     {
         "name": "string-uglify",
-        "size": 5643,
+        "size": 5648,
         "imports": []
     },
     {

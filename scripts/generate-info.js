@@ -5,6 +5,8 @@
 const fs = require("fs");
 const path = require("path");
 const parse = require("tap-parse-string-to-object");
+const git = require("simple-git");
+// require("debug").enable("simple-git");
 
 const {
   sortAllObjectsSync,
@@ -405,6 +407,29 @@ const {
           `\u001b[${32}m${`oldHistoricTotals.json written OK`}\u001b[${39}m`
         );
       }
+    );
+  }
+
+  // 6. gather git repo info
+  // ---------------------------------------------------------------------------
+
+  let commitTotal = null;
+  try {
+    // git rev-list --count HEAD
+    commitTotal = await git(".git").raw(["rev-list", "--count", "HEAD"]);
+    fs.writeFile(
+      path.join("stats/gitStats.json"),
+      JSON.stringify({ commitTotal: commitTotal.trim() }, null, 4),
+      (err) => {
+        if (err) {
+          throw err;
+        }
+        console.log(`\u001b[${32}m${`gitStats.json written OK`}\u001b[${39}m`);
+      }
+    );
+  } catch (e) {
+    throw new Error(
+      "generate-info.js: can't access git data for gitStats.json"
     );
   }
 })();

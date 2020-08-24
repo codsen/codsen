@@ -53,6 +53,7 @@
     "eslint-plugin-row-num": "^1.2.9",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-airbnb-base": "^14.2.0",
+    "simple-git": "^2.20.1",
     "lect": "^0.13.9",
     "lerna": "^3.22.1",
     "lerna-clean-changelogs-cli": "^1.2.66",
