@@ -21,15 +21,15 @@ declare type Callback = (cbObj: {
 declare namespace stringStripHtml {
   interface Options {
     /**
-		Ignore any tags upon request.
-		@default []
-		*/
+    Ignore any tags upon request.
+    @default []
+    */
     readonly ignoreTags?: string[];
 
     /**
-		Only strip these tags.
-		@default []
-		*/
+    Only strip these tags.
+    @default []
+    */
     readonly onlyStripTags?: string[];
 
     /**
@@ -39,9 +39,9 @@ declare namespace stringStripHtml {
     readonly stripTogetherWithTheirContents?: string[];
 
     /**
-		Should we skip recursive HTML decoding (will decode multiple-times encoded source).
-		@default false
-		*/
+    Should we skip recursive HTML decoding (will decode multiple-times encoded source).
+    @default false
+    */
     skipHtmlDecoding?: boolean;
 
     /**
@@ -66,9 +66,9 @@ declare namespace stringStripHtml {
         };
 
     /**
-		Callback function to granularly control the output of a program.
-		@default false
-		*/
+    Callback function to granularly control the output of a program.
+    @default false
+    */
     cb?: false | null | Callback;
   }
 
