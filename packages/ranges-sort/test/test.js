@@ -158,11 +158,7 @@ tap.test("06 - two ranges", (t) => {
 
 tap.test("07 - many ranges", (t) => {
   t.same(
-    srt([
-      [0, 3],
-      [5, 8],
-      [5, 6],
-    ]),
+    srt([[0, 3], null, [5, 8], [5, 6]]),
     [
       [0, 3],
       [5, 6],

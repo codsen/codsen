@@ -90,7 +90,9 @@
     var culpritsIndex;
     var culpritsLen; // validate does every range consist of exactly two indexes:
 
-    if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.every(function (rangeArr, indx) {
+    if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.filter(function (range) {
+      return range;
+    }).every(function (rangeArr, indx) {
       if (rangeArr.length !== 2) {
         culpritsIndex = indx;
         culpritsLen = rangeArr.length;
@@ -103,7 +105,9 @@
     } // validate are range indexes natural numbers:
 
 
-    if (!arrOfRanges.every(function (rangeArr, indx) {
+    if (!arrOfRanges.filter(function (range) {
+      return range;
+    }).every(function (rangeArr, indx) {
       if (!Number.isInteger(rangeArr[0]) || rangeArr[0] < 0 || !Number.isInteger(rangeArr[1]) || rangeArr[1] < 0) {
         culpritsIndex = indx;
         return false;
@@ -115,9 +119,13 @@
     } // let's assume worst case scenario is N x N.
 
 
-    var maxPossibleIterations = arrOfRanges.length * arrOfRanges.length;
+    var maxPossibleIterations = Math.pow(arrOfRanges.filter(function (range) {
+      return range;
+    }).length, 2);
     var counter = 0;
-    return Array.from(arrOfRanges).sort(function (range1, range2) {
+    return Array.from(arrOfRanges).filter(function (range) {
+      return range;
+    }).sort(function (range1, range2) {
       if (opts.progressFn) {
         counter += 1;
         opts.progressFn(Math.floor(counter * 100 / maxPossibleIterations));
