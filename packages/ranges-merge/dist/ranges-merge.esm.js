@@ -82,6 +82,7 @@ function mergeRanges(arrOfRanges, originalOpts) {
     opts = { ...defaults };
   }
   const filtered = arrOfRanges
+    .filter((range) => range)
     .map((subarr) => [...subarr])
     .filter(
       (rangeArr) => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]

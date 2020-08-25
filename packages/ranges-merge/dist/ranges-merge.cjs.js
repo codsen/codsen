@@ -155,7 +155,10 @@ function mergeRanges(arrOfRanges, originalOpts) {
   } else {
     opts = _objectSpread2({}, defaults);
   }
-  var filtered = arrOfRanges.map(function (subarr) {
+  var filtered = arrOfRanges
+  .filter(function (range) {
+    return range;
+  }).map(function (subarr) {
     return _toConsumableArray(subarr);
   }).filter(
   function (rangeArr) {

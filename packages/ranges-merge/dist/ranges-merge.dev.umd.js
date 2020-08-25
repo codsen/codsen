@@ -251,7 +251,10 @@
     // two-level-deep array clone:
 
 
-    var filtered = arrOfRanges.map(function (subarr) {
+    var filtered = arrOfRanges // filter out null
+    .filter(function (range) {
+      return range;
+    }).map(function (subarr) {
       return _toConsumableArray(subarr);
     }).filter( // filter out futile ranges with identical starting and ending points with
     // nothing to add (no 3rd argument)

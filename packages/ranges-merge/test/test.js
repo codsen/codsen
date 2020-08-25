@@ -159,13 +159,7 @@ tap.test("09 - empty input", (t) => {
 tap.test("10 - more complex case", (t) => {
   let counter = 0;
   t.same(
-    mergeRanges([
-      [1, 5],
-      [11, 15],
-      [6, 10],
-      [16, 20],
-      [10, 30],
-    ]),
+    mergeRanges([[1, 5], null, [11, 15], [6, 10], null, [16, 20], [10, 30]]),
     [
       [1, 5],
       [6, 30],
