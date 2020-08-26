@@ -72,18 +72,27 @@ tap.test("04 - second input argument is not string", (t) => {
   t.end();
 });
 
+tap.test("05 - third input argument is present and is not string", (t) => {
+  // throw pinning:
+  t.throws(() => {
+    rare(/def/g, "abcdefghij_abcdefghij", true);
+  }, /THROW_ID_04/);
+
+  t.end();
+});
+
 // ==============================
 // 01. B.A.U.
 // ==============================
 
-tap.test(`05 - crops out few ranges outside the strlen`, (t) => {
+tap.test(`06 - crops out few ranges outside the strlen`, (t) => {
   t.same(
     rare(/def/g, "abcdefghij_abcdefghij"),
     [
       [3, 6],
       [14, 17],
     ],
-    "05.01"
+    "06.01"
   );
   t.same(
     rare(/def/g, "abcdefghij_abcdefghij", "yo"),
@@ -91,7 +100,7 @@ tap.test(`05 - crops out few ranges outside the strlen`, (t) => {
       [3, 6, "yo"],
       [14, 17, "yo"],
     ],
-    "05.02"
+    "06.02"
   );
   t.same(
     rare(/def/g, "abcdefghij_abcdefghij", null),
@@ -99,7 +108,7 @@ tap.test(`05 - crops out few ranges outside the strlen`, (t) => {
       [3, 6, null],
       [14, 17, null],
     ],
-    "05.03"
+    "06.03"
   );
   t.same(
     rare(/def/g, "abcdefghij_abcdefghij", ""),
@@ -107,21 +116,21 @@ tap.test(`05 - crops out few ranges outside the strlen`, (t) => {
       [3, 6],
       [14, 17],
     ],
-    "05.04 - empty string is omitted by defa"
+    "06.04 - empty string is omitted by defa"
   );
 
   t.end();
 });
 
-tap.test(`06 - nothing found`, (t) => {
-  t.same(rare(/def/g, ""), null, "06.01");
-  t.same(rare(/def/g, "", "yo"), null, "06.02");
-  t.same(rare(/def/g, "", null), null, "06.03");
+tap.test(`07 - nothing found`, (t) => {
+  t.same(rare(/def/g, ""), null, "07.01");
+  t.same(rare(/def/g, "", "yo"), null, "07.02");
+  t.same(rare(/def/g, "", null), null, "07.03");
   t.end();
 });
 
 tap.test(
-  `07 - result ranges are consecutive so their ranges are merged into one`,
+  `08 - result ranges are consecutive so their ranges are merged into one`,
   (t) => {
     const reg = /def/g;
     const str = "abcdefdefghij_abcdefghij";
@@ -131,17 +140,17 @@ tap.test(
         [3, 9],
         [17, 20],
       ],
-      "07.01"
+      "08.01"
     );
-    t.equal(rangesApply(str, rare(reg, str)), str.replace(reg, ""), "07.02");
+    t.equal(rangesApply(str, rare(reg, str)), str.replace(reg, ""), "08.02");
     t.end();
   }
 );
 
-tap.test(`08 - no findings - returns null`, (t) => {
+tap.test(`09 - no findings - returns null`, (t) => {
   const reg = /yyy/g;
   const str = "zzzzzzzz";
-  t.equal(rare(reg, str), null, "08.01");
-  t.equal(rare(reg, str, "yo"), null, "08.02");
+  t.equal(rare(reg, str), null, "09.01");
+  t.equal(rare(reg, str, "yo"), null, "09.02");
   t.end();
 });

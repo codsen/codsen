@@ -1,6 +1,6 @@
 /**
  * ranges-regex
- * Perform a regex search on string and get a ranges array of findings (or null)
+ * Integrate regex operations into Ranges workflow
  * Version: 2.0.57
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
@@ -33,11 +33,7 @@ function rangesRegex(regx, str, replacement) {
       )}`
     );
   }
-  if (
-    replacement !== undefined &&
-    replacement !== null &&
-    typeof replacement !== "string"
-  ) {
+  if (replacement && typeof replacement !== "string") {
     throw new TypeError(
       `ranges-regex: [THROW_ID_04] The third input's argument must be a string or null! Currently its type is: ${typeof replacement}, equal to: ${JSON.stringify(
         replacement,
@@ -46,14 +42,14 @@ function rangesRegex(regx, str, replacement) {
       )}`
     );
   }
-  if (str.length === 0) {
+  if (!str.length) {
     return null;
   }
   let tempArr;
   const resRange = [];
   if (
     replacement === null ||
-    (typeof replacement === "string" && replacement.length > 0)
+    (typeof replacement === "string" && replacement.length)
   ) {
     while ((tempArr = regx.exec(str)) !== null) {
       resRange.push([

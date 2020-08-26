@@ -1,6 +1,6 @@
 /**
  * ranges-regex
- * Perform a regex search on string and get a ranges array of findings (or null)
+ * Integrate regex operations into Ranges workflow
  * Version: 2.0.57
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
@@ -134,7 +134,9 @@
     var culpritsIndex;
     var culpritsLen;
 
-    if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.every(function (rangeArr, indx) {
+    if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.filter(function (range) {
+      return range;
+    }).every(function (rangeArr, indx) {
       if (rangeArr.length !== 2) {
         culpritsIndex = indx;
         culpritsLen = rangeArr.length;
@@ -146,7 +148,9 @@
       throw new TypeError("ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ".concat(culpritsIndex, "th range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 4), ") has not two but ").concat(culpritsLen, " elements!"));
     }
 
-    if (!arrOfRanges.every(function (rangeArr, indx) {
+    if (!arrOfRanges.filter(function (range) {
+      return range;
+    }).every(function (rangeArr, indx) {
       if (!Number.isInteger(rangeArr[0]) || rangeArr[0] < 0 || !Number.isInteger(rangeArr[1]) || rangeArr[1] < 0) {
         culpritsIndex = indx;
         return false;
@@ -157,9 +161,13 @@
       throw new TypeError("ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ".concat(culpritsIndex, "th range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 4), ") does not consist of only natural numbers!"));
     }
 
-    var maxPossibleIterations = arrOfRanges.length * arrOfRanges.length;
+    var maxPossibleIterations = Math.pow(arrOfRanges.filter(function (range) {
+      return range;
+    }).length, 2);
     var counter = 0;
-    return Array.from(arrOfRanges).sort(function (range1, range2) {
+    return Array.from(arrOfRanges).filter(function (range) {
+      return range;
+    }).sort(function (range1, range2) {
       if (opts.progressFn) {
         counter += 1;
         opts.progressFn(Math.floor(counter * 100 / maxPossibleIterations));
@@ -235,7 +243,9 @@
       opts = _objectSpread2({}, defaults);
     }
 
-    var filtered = arrOfRanges.map(function (subarr) {
+    var filtered = arrOfRanges.filter(function (range) {
+      return range;
+    }).map(function (subarr) {
       return _toConsumableArray(subarr);
     }).filter(function (rangeArr) {
       return rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1];
@@ -457,12 +467,12 @@
     } // replacement validation
 
 
-    if (replacement !== undefined && replacement !== null && typeof replacement !== "string") {
+    if (replacement && typeof replacement !== "string") {
       throw new TypeError("ranges-regex: [THROW_ID_04] The third input's argument must be a string or null! Currently its type is: ".concat(_typeof(replacement), ", equal to: ").concat(JSON.stringify(replacement, null, 4)));
     } // if an empty string was given, return an empty (ranges) array:
 
 
-    if (str.length === 0) {
+    if (!str.length) {
       return null;
     } //                       finally, the real action
     // ---------------------------------------------------------------------------
@@ -471,7 +481,7 @@
     var tempArr;
     var resRange = [];
 
-    if (replacement === null || typeof replacement === "string" && replacement.length > 0) {
+    if (replacement === null || typeof replacement === "string" && replacement.length) {
       // eslint-disable-next-line no-cond-assign
       while ((tempArr = regx.exec(str)) !== null) {
         resRange.push([regx.lastIndex - tempArr[0].length, regx.lastIndex, replacement]);

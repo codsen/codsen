@@ -2,7 +2,6 @@ import mergeRanges from "ranges-merge";
 import isregexp from "lodash.isregexp";
 
 function rangesRegex(regx, str, replacement) {
-  console.log("\n".repeat(15));
   // given regx validation
   if (regx === undefined) {
     throw new TypeError(
@@ -28,11 +27,7 @@ function rangesRegex(regx, str, replacement) {
     );
   }
   // replacement validation
-  if (
-    replacement !== undefined &&
-    replacement !== null &&
-    typeof replacement !== "string"
-  ) {
+  if (replacement && typeof replacement !== "string") {
     throw new TypeError(
       `ranges-regex: [THROW_ID_04] The third input's argument must be a string or null! Currently its type is: ${typeof replacement}, equal to: ${JSON.stringify(
         replacement,
@@ -42,7 +37,7 @@ function rangesRegex(regx, str, replacement) {
     );
   }
   // if an empty string was given, return an empty (ranges) array:
-  if (str.length === 0) {
+  if (!str.length) {
     return null;
   }
 
@@ -54,7 +49,7 @@ function rangesRegex(regx, str, replacement) {
   const resRange = [];
   if (
     replacement === null ||
-    (typeof replacement === "string" && replacement.length > 0)
+    (typeof replacement === "string" && replacement.length)
   ) {
     // eslint-disable-next-line no-cond-assign
     while ((tempArr = regx.exec(str)) !== null) {
