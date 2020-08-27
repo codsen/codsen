@@ -63,7 +63,9 @@ function rangesApply(str, originalRangesArr, _progressFn) {
   }
   var len = rangesArr.length;
   var counter = 0;
-  rangesArr.forEach(function (el, i) {
+  rangesArr.filter(function (range) {
+    return range;
+  }).forEach(function (el, i) {
     if (_progressFn) {
       percentageDone = Math.floor(counter / len * 10);
       /* istanbul ignore else */

@@ -248,10 +248,7 @@ tap.test("11 - replaces multiple chunks correctly", (t) => {
   // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
   // console.log('slice 2: >>>' + str.slice(18, 28) + '<<<\n')
   t.same(
-    repl(str, [
-      [4, 13, "zzz"],
-      [18, 28, null],
-    ]),
+    repl(str, [[4, 13, "zzz"], null, [18, 28, null]]),
     "aaa zzz bbb  ccc",
     "11"
   );

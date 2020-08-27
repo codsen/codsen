@@ -61,61 +61,63 @@ function rangesApply(str, originalRangesArr, progressFn) {
   const len = rangesArr.length;
   let counter = 0;
 
-  rangesArr.forEach((el, i) => {
-    if (progressFn) {
-      percentageDone = Math.floor((counter / len) * 10);
-      /* istanbul ignore else */
-      if (percentageDone !== lastPercentageDone) {
-        lastPercentageDone = percentageDone;
-        progressFn(percentageDone);
+  rangesArr
+    .filter((range) => range)
+    .forEach((el, i) => {
+      if (progressFn) {
+        percentageDone = Math.floor((counter / len) * 10);
+        /* istanbul ignore else */
+        if (percentageDone !== lastPercentageDone) {
+          lastPercentageDone = percentageDone;
+          progressFn(percentageDone);
+        }
       }
-    }
 
-    if (!Array.isArray(el)) {
-      throw new TypeError(
-        `ranges-apply: [THROW_ID_05] ranges array, second input arg., has ${i}th element not an array: ${JSON.stringify(
-          el,
-          null,
-          4
-        )}, which is ${typeof el}`
-      );
-    }
-    if (!Number.isInteger(el[0]) || el[0] < 0) {
-      if (/^\d*$/.test(el[0])) {
-        rangesArr[i][0] = Number.parseInt(rangesArr[i][0], 10);
-      } else {
+      if (!Array.isArray(el)) {
         throw new TypeError(
-          `ranges-apply: [THROW_ID_06] ranges array, second input arg. has ${i}th element, array [${
-            el[0]
-          },${
-            el[1]
-          }]. That array has first element not an integer, but ${typeof el[0]}, equal to: ${JSON.stringify(
-            el[0],
+          `ranges-apply: [THROW_ID_05] ranges array, second input arg., has ${i}th element not an array: ${JSON.stringify(
+            el,
             null,
             4
-          )}. Computer doesn't like this.`
+          )}, which is ${typeof el}`
         );
       }
-    }
-    if (!Number.isInteger(el[1])) {
-      if (/^\d*$/.test(el[1])) {
-        rangesArr[i][1] = Number.parseInt(rangesArr[i][1], 10);
-      } else {
-        throw new TypeError(
-          `ranges-apply: [THROW_ID_07] ranges array, second input arg. has ${i}th element, array [${
-            el[0]
-          },${
-            el[1]
-          }]. That array has second element not an integer, but ${typeof el[1]}, equal to: ${JSON.stringify(
-            el[1],
-            null,
-            4
-          )}. Computer doesn't like this.`
-        );
+      if (!Number.isInteger(el[0]) || el[0] < 0) {
+        if (/^\d*$/.test(el[0])) {
+          rangesArr[i][0] = Number.parseInt(rangesArr[i][0], 10);
+        } else {
+          throw new TypeError(
+            `ranges-apply: [THROW_ID_06] ranges array, second input arg. has ${i}th element, array [${
+              el[0]
+            },${
+              el[1]
+            }]. That array has first element not an integer, but ${typeof el[0]}, equal to: ${JSON.stringify(
+              el[0],
+              null,
+              4
+            )}. Computer doesn't like this.`
+          );
+        }
       }
-    }
-    counter += 1;
-  });
+      if (!Number.isInteger(el[1])) {
+        if (/^\d*$/.test(el[1])) {
+          rangesArr[i][1] = Number.parseInt(rangesArr[i][1], 10);
+        } else {
+          throw new TypeError(
+            `ranges-apply: [THROW_ID_07] ranges array, second input arg. has ${i}th element, array [${
+              el[0]
+            },${
+              el[1]
+            }]. That array has second element not an integer, but ${typeof el[1]}, equal to: ${JSON.stringify(
+              el[1],
+              null,
+              4
+            )}. Computer doesn't like this.`
+          );
+        }
+      }
+      counter += 1;
+    });
 
   // allocate another 10% of the progress indicator length to the rangesMerge step:
   const workingRanges = rangesMerge(rangesArr, {
