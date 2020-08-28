@@ -1,18 +1,12 @@
 import mergeRanges from "ranges-merge";
 
-const isArr = Array.isArray;
-
 function isStr(something) {
   return typeof something === "string";
 }
 
-function existy(x) {
-  return x != null;
-}
-
 function rangesCrop(arrOfRanges, strLen) {
   // arrOfRanges validation
-  if (!isArr(arrOfRanges)) {
+  if (!Array.isArray(arrOfRanges)) {
     throw new TypeError(
       `ranges-crop: [THROW_ID_01] The first input's argument must be an array, consisting of range arrays! Currently its type is: ${typeof arrOfRanges}, equal to: ${JSON.stringify(
         arrOfRanges,
@@ -31,21 +25,23 @@ function rangesCrop(arrOfRanges, strLen) {
       )}`
     );
   }
-  if (arrOfRanges.length === 0) {
-    return arrOfRanges;
+  if (!arrOfRanges.filter((range) => range).length) {
+    return arrOfRanges.filter((range) => range);
   }
 
   let culpritsIndex;
 
   // validate are range indexes natural numbers:
   if (
-    !arrOfRanges.every((rangeArr, indx) => {
-      if (!Number.isInteger(rangeArr[0]) || !Number.isInteger(rangeArr[1])) {
-        culpritsIndex = indx;
-        return false;
-      }
-      return true;
-    })
+    !arrOfRanges
+      .filter((range) => range)
+      .every((rangeArr, indx) => {
+        if (!Number.isInteger(rangeArr[0]) || !Number.isInteger(rangeArr[1])) {
+          culpritsIndex = indx;
+          return false;
+        }
+        return true;
+      })
   ) {
     if (
       Array.isArray(arrOfRanges) &&
@@ -74,13 +70,16 @@ function rangesCrop(arrOfRanges, strLen) {
 
   // validate that any third argument values (if any) are of a string-type
   if (
-    !arrOfRanges.every((rangeArr, indx) => {
-      if (existy(rangeArr[2]) && !isStr(rangeArr[2])) {
-        culpritsIndex = indx;
-        return false;
-      }
-      return true;
-    })
+    !arrOfRanges
+      .filter((range) => range)
+      .every((rangeArr, indx) => {
+        // != below is existy()
+        if (rangeArr[2] != null && !isStr(rangeArr[2])) {
+          culpritsIndex = indx;
+          return false;
+        }
+        return true;
+      })
   ) {
     throw new TypeError(
       `ranges-crop: [THROW_ID_05] The third argument, if present at all, should be of a string-type or null. Currently the ${culpritsIndex}th range ${JSON.stringify(
@@ -97,7 +96,7 @@ function rangesCrop(arrOfRanges, strLen) {
   // ---------------------------------------------------------------------------
 
   console.log(
-    `100 ${`\u001b[${33}m${`arrOfRanges`}\u001b[${39}m`} = ${JSON.stringify(
+    `099 ${`\u001b[${33}m${`arrOfRanges`}\u001b[${39}m`} = ${JSON.stringify(
       arrOfRanges,
       null,
       4
@@ -112,26 +111,26 @@ function rangesCrop(arrOfRanges, strLen) {
     .map((singleRangeArr) => {
       if (singleRangeArr[1] > strLen) {
         console.log(
-          `115 - we will process the ${JSON.stringify(singleRangeArr, null, 0)}`
+          `114 - we will process the ${JSON.stringify(singleRangeArr, null, 0)}`
         );
         if (singleRangeArr[2] !== undefined) {
           console.log(
-            `119 - third argument detected! RETURN [${singleRangeArr[0]}, ${strLen}, ${singleRangeArr[2]}]`
+            `118 - third argument detected! RETURN [${singleRangeArr[0]}, ${strLen}, ${singleRangeArr[2]}]`
           );
           return [singleRangeArr[0], strLen, singleRangeArr[2]];
         }
         console.log(
-          `124 - no third argument detected, returning [${singleRangeArr[0]}, ${strLen}]`
+          `123 - no third argument detected, returning [${singleRangeArr[0]}, ${strLen}]`
         );
         return [singleRangeArr[0], strLen];
       }
       console.log(
-        `129 - returning intact ${JSON.stringify(singleRangeArr, null, 0)}`
+        `128 - returning intact ${JSON.stringify(singleRangeArr, null, 0)}`
       );
       return singleRangeArr;
     });
   console.log(
-    `134 ${`\u001b[${33}m${`about to return ${`\u001b[${32}m${`res`}\u001b[${39}m`}`}\u001b[${39}m`} = ${JSON.stringify(
+    `133 ${`\u001b[${33}m${`about to return ${`\u001b[${32}m${`res`}\u001b[${39}m`}`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

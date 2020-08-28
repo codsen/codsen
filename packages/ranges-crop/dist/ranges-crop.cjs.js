@@ -31,25 +31,27 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
-var isArr = Array.isArray;
 function isStr(something) {
   return typeof something === "string";
 }
-function existy(x) {
-  return x != null;
-}
 function rangesCrop(arrOfRanges, strLen) {
-  if (!isArr(arrOfRanges)) {
+  if (!Array.isArray(arrOfRanges)) {
     throw new TypeError("ranges-crop: [THROW_ID_01] The first input's argument must be an array, consisting of range arrays! Currently its type is: ".concat(_typeof(arrOfRanges), ", equal to: ").concat(JSON.stringify(arrOfRanges, null, 4)));
   }
   if (!Number.isInteger(strLen)) {
     throw new TypeError("ranges-crop: [THROW_ID_02] The second input's argument must be a natural number or zero (coming from String.length)! Currently its type is: ".concat(_typeof(strLen), ", equal to: ").concat(JSON.stringify(strLen, null, 4)));
   }
-  if (arrOfRanges.length === 0) {
-    return arrOfRanges;
+  if (!arrOfRanges.filter(function (range) {
+    return range;
+  }).length) {
+    return arrOfRanges.filter(function (range) {
+      return range;
+    });
   }
   var culpritsIndex;
-  if (!arrOfRanges.every(function (rangeArr, indx) {
+  if (!arrOfRanges.filter(function (range) {
+    return range;
+  }).every(function (rangeArr, indx) {
     if (!Number.isInteger(rangeArr[0]) || !Number.isInteger(rangeArr[1])) {
       culpritsIndex = indx;
       return false;
@@ -61,8 +63,10 @@ function rangesCrop(arrOfRanges, strLen) {
     }
     throw new TypeError("ranges-crop: [THROW_ID_04] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ".concat(culpritsIndex + 1, "th range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 0), ") does not consist of only natural numbers!"));
   }
-  if (!arrOfRanges.every(function (rangeArr, indx) {
-    if (existy(rangeArr[2]) && !isStr(rangeArr[2])) {
+  if (!arrOfRanges.filter(function (range) {
+    return range;
+  }).every(function (rangeArr, indx) {
+    if (rangeArr[2] != null && !isStr(rangeArr[2])) {
       culpritsIndex = indx;
       return false;
     }

@@ -97,11 +97,7 @@ tap.test(
 tap.test(`06 - crops out few ranges outside the strlen`, (t) => {
   const length = 7;
   const testStr = "z".repeat(length);
-  const sourceRange = [
-    [1, 3],
-    [4, 6],
-    [8, 10],
-  ];
+  const sourceRange = [[1, 3], null, [4, 6], [8, 10]];
   const sourceRangeBackup = clone(sourceRange);
   const resRange = [
     [1, 3],

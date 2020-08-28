@@ -134,7 +134,9 @@
     var culpritsIndex;
     var culpritsLen;
 
-    if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.every(function (rangeArr, indx) {
+    if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.filter(function (range) {
+      return range;
+    }).every(function (rangeArr, indx) {
       if (rangeArr.length !== 2) {
         culpritsIndex = indx;
         culpritsLen = rangeArr.length;
@@ -146,7 +148,9 @@
       throw new TypeError("ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ".concat(culpritsIndex, "th range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 4), ") has not two but ").concat(culpritsLen, " elements!"));
     }
 
-    if (!arrOfRanges.every(function (rangeArr, indx) {
+    if (!arrOfRanges.filter(function (range) {
+      return range;
+    }).every(function (rangeArr, indx) {
       if (!Number.isInteger(rangeArr[0]) || rangeArr[0] < 0 || !Number.isInteger(rangeArr[1]) || rangeArr[1] < 0) {
         culpritsIndex = indx;
         return false;
@@ -157,9 +161,13 @@
       throw new TypeError("ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ".concat(culpritsIndex, "th range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 4), ") does not consist of only natural numbers!"));
     }
 
-    var maxPossibleIterations = arrOfRanges.length * arrOfRanges.length;
+    var maxPossibleIterations = Math.pow(arrOfRanges.filter(function (range) {
+      return range;
+    }).length, 2);
     var counter = 0;
-    return Array.from(arrOfRanges).sort(function (range1, range2) {
+    return Array.from(arrOfRanges).filter(function (range) {
+      return range;
+    }).sort(function (range1, range2) {
       if (opts.progressFn) {
         counter += 1;
         opts.progressFn(Math.floor(counter * 100 / maxPossibleIterations));
@@ -235,7 +243,9 @@
       opts = _objectSpread2({}, defaults);
     }
 
-    var filtered = arrOfRanges.map(function (subarr) {
+    var filtered = arrOfRanges.filter(function (range) {
+      return range;
+    }).map(function (subarr) {
       return _toConsumableArray(subarr);
     }).filter(function (rangeArr) {
       return rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1];
@@ -299,19 +309,13 @@
     return sortedRanges;
   }
 
-  var isArr = Array.isArray;
-
   function isStr(something) {
     return typeof something === "string";
   }
 
-  function existy(x) {
-    return x != null;
-  }
-
   function rangesCrop(arrOfRanges, strLen) {
     // arrOfRanges validation
-    if (!isArr(arrOfRanges)) {
+    if (!Array.isArray(arrOfRanges)) {
       throw new TypeError("ranges-crop: [THROW_ID_01] The first input's argument must be an array, consisting of range arrays! Currently its type is: ".concat(_typeof(arrOfRanges), ", equal to: ").concat(JSON.stringify(arrOfRanges, null, 4)));
     } // strLen validation
 
@@ -320,13 +324,19 @@
       throw new TypeError("ranges-crop: [THROW_ID_02] The second input's argument must be a natural number or zero (coming from String.length)! Currently its type is: ".concat(_typeof(strLen), ", equal to: ").concat(JSON.stringify(strLen, null, 4)));
     }
 
-    if (arrOfRanges.length === 0) {
-      return arrOfRanges;
+    if (!arrOfRanges.filter(function (range) {
+      return range;
+    }).length) {
+      return arrOfRanges.filter(function (range) {
+        return range;
+      });
     }
 
     var culpritsIndex; // validate are range indexes natural numbers:
 
-    if (!arrOfRanges.every(function (rangeArr, indx) {
+    if (!arrOfRanges.filter(function (range) {
+      return range;
+    }).every(function (rangeArr, indx) {
       if (!Number.isInteger(rangeArr[0]) || !Number.isInteger(rangeArr[1])) {
         culpritsIndex = indx;
         return false;
@@ -342,8 +352,11 @@
     } // validate that any third argument values (if any) are of a string-type
 
 
-    if (!arrOfRanges.every(function (rangeArr, indx) {
-      if (existy(rangeArr[2]) && !isStr(rangeArr[2])) {
+    if (!arrOfRanges.filter(function (range) {
+      return range;
+    }).every(function (rangeArr, indx) {
+      // != below is existy()
+      if (rangeArr[2] != null && !isStr(rangeArr[2])) {
         culpritsIndex = indx;
         return false;
       }
