@@ -19,7 +19,7 @@ function mergeRanges(arrOfRanges, originalOpts) {
     );
   }
   if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
-    return arrOfRanges;
+    return null;
   }
   const defaults = {
     mergeType: 1,
@@ -156,7 +156,7 @@ function mergeRanges(arrOfRanges, originalOpts) {
       i = sortedRanges.length;
     }
   }
-  return sortedRanges;
+  return sortedRanges.length ? sortedRanges : null;
 }
 
 export default mergeRanges;

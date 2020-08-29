@@ -23,7 +23,7 @@ function mergeRanges(arrOfRanges, originalOpts) {
   // quick ending:
   // ---------------------------------------------------------------------------
   if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
-    return arrOfRanges;
+    return null;
   }
 
   // tend the opts:
@@ -260,7 +260,7 @@ function mergeRanges(arrOfRanges, originalOpts) {
       4
     )}\n`
   );
-  return sortedRanges;
+  return sortedRanges.length ? sortedRanges : null;
 }
 
 export default mergeRanges;

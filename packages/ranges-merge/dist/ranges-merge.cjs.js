@@ -121,7 +121,7 @@ function mergeRanges(arrOfRanges, originalOpts) {
     return something && _typeof(something) === "object" && !Array.isArray(something);
   }
   if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
-    return arrOfRanges;
+    return null;
   }
   var defaults = {
     mergeType: 1,
@@ -211,7 +211,7 @@ function mergeRanges(arrOfRanges, originalOpts) {
       i = sortedRanges.length;
     }
   }
-  return sortedRanges;
+  return sortedRanges.length ? sortedRanges : null;
 }
 
 module.exports = mergeRanges;
