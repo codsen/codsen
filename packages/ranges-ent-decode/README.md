@@ -1,6 +1,6 @@
 # ranges-ent-decode
 
-> Decode HTML entities recursively, get string index ranges of what needs to be replaced where
+> Recursive HTML entity decoding for Ranges workflow
 
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]

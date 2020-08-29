@@ -1,7 +1,7 @@
 {
   "name": "ranges-ent-decode",
   "version": "2.0.56",
-  "description": "Decode HTML entities recursively, get string index ranges of what needs to be replaced where",
+  "description": "Recursive HTML entity decoding for Ranges workflow",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
   "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/ranges-ent-decode",
@@ -17,6 +17,8 @@
     "encode",
     "encoder",
     "entities",
+    "entity",
+    "he",
     "html",
     "ranges",
     "string"

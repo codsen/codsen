@@ -1,6 +1,6 @@
 /**
  * ranges-ent-decode
- * Decode HTML entities recursively, get string index ranges of what needs to be replaced where
+ * Recursive HTML entity decoding for Ranges workflow
  * Version: 2.0.56
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
@@ -91,6 +91,8 @@ function chomp(str) {
 function decode(str, originalOpts) {
   if (typeof str !== "string") {
     throw new TypeError("ranges-ent-decode/decode(): [THROW_ID_01] Expected a String! Currently it's given as ".concat(str, ", type ").concat(_typeof(str)));
+  } else if (!str.trim()) {
+    return null;
   }
   if (originalOpts != null && !isObj__default['default'](originalOpts)) {
     throw new TypeError("ranges-ent-decode/decode(): [THROW_ID_02] Optional Options Object, the second in put argument, must be a plain object! Currently it's given as ".concat(originalOpts, ", type ").concat(_typeof(originalOpts)));

@@ -28,6 +28,9 @@ function decode(str, originalOpts) {
     throw new TypeError(
       `ranges-ent-decode/decode(): [THROW_ID_01] Expected a String! Currently it's given as ${str}, type ${typeof str}`
     );
+  } else if (!str.trim()) {
+    // fast ending, matching Ranges notation — absence is marked by falsy null
+    return null;
   }
   if (originalOpts != null && !isObj(originalOpts)) {
     throw new TypeError(
@@ -46,14 +49,14 @@ function decode(str, originalOpts) {
   }
 
   console.log(
-    `049 ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
+    `052 ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
       str,
       null,
       4
     )}`
   );
   console.log(
-    `056 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+    `059 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
       opts,
       null,
       4
@@ -106,7 +109,7 @@ function decode(str, originalOpts) {
     );
     const chomped = chomp(array1[0]);
     if (chomped === "&") {
-      console.log('109 chomped === "&"');
+      console.log('112 chomped === "&"');
       rangesArr.push([
         entityRegex.lastIndex - array1[0].length,
         entityRegex.lastIndex,
@@ -115,11 +118,11 @@ function decode(str, originalOpts) {
     } else {
       const decoded = he.decode(chomped, opts);
       console.log(
-        `118 ${`\u001b[${33}m${`decoded`}\u001b[${39}m`} = ${decoded}`
+        `121 ${`\u001b[${33}m${`decoded`}\u001b[${39}m`} = ${decoded}`
       );
       if (decoded !== chomped) {
         console.log(
-          `122 will push "${`\u001b[${33}m${JSON.stringify(
+          `125 will push "${`\u001b[${33}m${JSON.stringify(
             [
               entityRegex.lastIndex - array1[0].length,
               entityRegex.lastIndex,

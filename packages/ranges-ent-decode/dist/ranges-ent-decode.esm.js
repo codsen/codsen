@@ -1,6 +1,6 @@
 /**
  * ranges-ent-decode
- * Decode HTML entities recursively, get string index ranges of what needs to be replaced where
+ * Recursive HTML entity decoding for Ranges workflow
  * Version: 2.0.56
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
@@ -20,6 +20,8 @@ function decode(str, originalOpts) {
     throw new TypeError(
       `ranges-ent-decode/decode(): [THROW_ID_01] Expected a String! Currently it's given as ${str}, type ${typeof str}`
     );
+  } else if (!str.trim()) {
+    return null;
   }
   if (originalOpts != null && !isObj(originalOpts)) {
     throw new TypeError(
