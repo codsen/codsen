@@ -46,14 +46,16 @@ function rangesApply(str, originalRangesArr, _progressFn) {
   if (!isStr(str)) {
     throw new TypeError("ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ".concat(_typeof(str), ", equal to: ").concat(JSON.stringify(str, null, 4)));
   }
-  if (originalRangesArr === null) {
-    return str;
-  }
-  if (!Array.isArray(originalRangesArr)) {
+  if (originalRangesArr && !Array.isArray(originalRangesArr)) {
     throw new TypeError("ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ".concat(_typeof(originalRangesArr), ", equal to: ").concat(JSON.stringify(originalRangesArr, null, 4)));
   }
   if (_progressFn && typeof _progressFn !== "function") {
     throw new TypeError("ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ".concat(_typeof(_progressFn), ", equal to: ").concat(JSON.stringify(_progressFn, null, 4)));
+  }
+  if (!originalRangesArr || !originalRangesArr.filter(function (range) {
+    return range;
+  }).length) {
+    return str;
   }
   var rangesArr;
   if (Array.isArray(originalRangesArr) && (Number.isInteger(originalRangesArr[0]) && originalRangesArr[0] >= 0 || /^\d*$/.test(originalRangesArr[0])) && (Number.isInteger(originalRangesArr[1]) && originalRangesArr[1] >= 0 || /^\d*$/.test(originalRangesArr[1]))) {
@@ -106,6 +108,7 @@ function rangesApply(str, originalRangesArr, _progressFn) {
     }
   });
   var len2 = workingRanges.length;
+  /* istanbul ignore else */
   if (len2 > 0) {
     var tails = str.slice(workingRanges[len2 - 1][1]);
     str = workingRanges.reduce(function (acc, val, i, arr) {

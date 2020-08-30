@@ -92,17 +92,35 @@ tap.test("01 - wrong inputs", (t) => {
 
 tap.test("02 - correct inputs", (t) => {
   // all inputs can be empty as long as types are correct
-  t.doesNotThrow(() => {
-    repl("", []);
-  }, "02.01");
 
-  // opts can be falsey, the absence being hardcoded
-  t.doesNotThrow(() => {
-    repl("", [], null);
-  }, "02.02");
-  t.doesNotThrow(() => {
-    repl("", [], undefined);
-  }, "02.03");
+  // str, originalRangesArr, progressFn
+
+  t.same(repl("", null), "", "02.01");
+  t.same(repl(" ", null), " ", "02.02");
+  t.same(repl("abc", null), "abc", "02.03");
+
+  t.same(repl("", []), "", "02.04");
+  t.same(repl(" ", []), " ", "02.05");
+  t.same(repl("abc", []), "abc", "02.06");
+
+  t.same(repl("", [null, null]), "", "02.07");
+  t.same(repl(" ", [null, null]), " ", "02.08");
+  t.same(repl("abc", [null, null]), "abc", "02.09");
+
+  // progressFn as null
+
+  t.same(repl("", null, null), "", "02.10");
+  t.same(repl(" ", null, null), " ", "02.11");
+  t.same(repl("abc", null, null), "abc", "02.12");
+
+  t.same(repl("", [], null), "", "02.13");
+  t.same(repl(" ", [], null), " ", "02.14");
+  t.same(repl("abc", [], null), "abc", "02.15");
+
+  t.same(repl("", [null, null], null), "", "02.16");
+  t.same(repl(" ", [null, null], null), " ", "02.17");
+  t.same(repl("abc", [null, null], null), "abc", "02.18");
+
   t.end();
 });
 

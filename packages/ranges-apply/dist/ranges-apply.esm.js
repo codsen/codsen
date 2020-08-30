@@ -30,10 +30,7 @@ function rangesApply(str, originalRangesArr, progressFn) {
       )}`
     );
   }
-  if (originalRangesArr === null) {
-    return str;
-  }
-  if (!Array.isArray(originalRangesArr)) {
+  if (originalRangesArr && !Array.isArray(originalRangesArr)) {
     throw new TypeError(
       `ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof originalRangesArr}, equal to: ${JSON.stringify(
         originalRangesArr,
@@ -50,6 +47,12 @@ function rangesApply(str, originalRangesArr, progressFn) {
         4
       )}`
     );
+  }
+  if (
+    !originalRangesArr ||
+    !originalRangesArr.filter((range) => range).length
+  ) {
+    return str;
   }
   let rangesArr;
   if (
@@ -134,6 +137,7 @@ function rangesApply(str, originalRangesArr, progressFn) {
     },
   });
   const len2 = workingRanges.length;
+  /* istanbul ignore else */
   if (len2 > 0) {
     const tails = str.slice(workingRanges[len2 - 1][1]);
     str = workingRanges.reduce((acc, val, i, arr) => {

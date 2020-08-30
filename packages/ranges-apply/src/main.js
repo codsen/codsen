@@ -23,10 +23,7 @@ function rangesApply(str, originalRangesArr, progressFn) {
       )}`
     );
   }
-  if (originalRangesArr === null) {
-    return str;
-  }
-  if (!Array.isArray(originalRangesArr)) {
+  if (originalRangesArr && !Array.isArray(originalRangesArr)) {
     throw new TypeError(
       `ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof originalRangesArr}, equal to: ${JSON.stringify(
         originalRangesArr,
@@ -44,6 +41,14 @@ function rangesApply(str, originalRangesArr, progressFn) {
       )}`
     );
   }
+  if (
+    !originalRangesArr ||
+    !originalRangesArr.filter((range) => range).length
+  ) {
+    // quick ending - no ranges passed
+    return str;
+  }
+
   let rangesArr;
   if (
     Array.isArray(originalRangesArr) &&
@@ -137,6 +142,7 @@ function rangesApply(str, originalRangesArr, progressFn) {
 
   // allocate the rest 80% to the actual string assembly:
   const len2 = workingRanges.length;
+  /* istanbul ignore else */
   if (len2 > 0) {
     const tails = str.slice(workingRanges[len2 - 1][1]);
     // eslint-disable-next-line no-param-reassign
