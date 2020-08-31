@@ -145,9 +145,6 @@ const knownHtmlTags = [
   "wbr",
   "xml",
 ];
-function isStr(something) {
-  return typeof something === "string";
-}
 function isNotLetter(char) {
   return (
     char === undefined ||
@@ -157,6 +154,24 @@ function isNotLetter(char) {
   );
 }
 function isOpening(str, idx = 0, originalOpts) {
+  if (typeof str !== "string") {
+    throw new Error(
+      `is-html-tag-opening: [THROW_ID_01] the first input argument should have been a string but it was given as "${typeof str}", value being ${JSON.stringify(
+        str,
+        null,
+        4
+      )}`
+    );
+  }
+  if (!Number.isInteger(idx) || idx < 0) {
+    throw new Error(
+      `is-html-tag-opening: [THROW_ID_02] the second input argument should have been a natural number string index but it was given as "${typeof idx}", value being ${JSON.stringify(
+        idx,
+        null,
+        4
+      )}`
+    );
+  }
   const defaults = {
     allowCustomTagNames: false,
     skipOpeningBracket: false,
@@ -256,12 +271,13 @@ function isOpening(str, idx = 0, originalOpts) {
     !passed &&
     !opts.skipOpeningBracket &&
     str[idx] === "<" &&
+    str[idx + 1] &&
     str[idx + 1].trim() &&
     matchRight(str, idx, knownHtmlTags, matchingOptions)
   ) {
     passed = true;
   }
-  const res = isStr(str) && idx < str.length && passed;
+  const res = typeof str === "string" && idx < str.length && passed;
   return res;
 }
 

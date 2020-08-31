@@ -137,9 +137,6 @@ const knownHtmlTags = [
   "xml",
 ];
 
-function isStr(something) {
-  return typeof something === "string";
-}
 function isNotLetter(char) {
   return (
     char === undefined ||
@@ -150,11 +147,25 @@ function isNotLetter(char) {
 }
 
 function isOpening(str, idx = 0, originalOpts) {
-  console.log(
-    `154 ${`\u001b[${33}m${`idx`}\u001b[${39}m`} = ${`\u001b[${31}m${idx}\u001b[${39}m`}, "${
-      str[idx]
-    }"`
-  );
+  // insurance
+  if (typeof str !== "string") {
+    throw new Error(
+      `is-html-tag-opening: [THROW_ID_01] the first input argument should have been a string but it was given as "${typeof str}", value being ${JSON.stringify(
+        str,
+        null,
+        4
+      )}`
+    );
+  }
+  if (!Number.isInteger(idx) || idx < 0) {
+    throw new Error(
+      `is-html-tag-opening: [THROW_ID_02] the second input argument should have been a natural number string index but it was given as "${typeof idx}", value being ${JSON.stringify(
+        idx,
+        null,
+        4
+      )}`
+    );
+  }
 
   const defaults = {
     allowCustomTagNames: false,
@@ -248,22 +259,22 @@ function isOpening(str, idx = 0, originalOpts) {
   };
 
   console.log(
-    `251 ██ ${`\u001b[${33}m${`whatToTest`}\u001b[${39}m`} = "${whatToTest}"`
+    `262 ██ ${`\u001b[${33}m${`whatToTest`}\u001b[${39}m`} = "${whatToTest}"`
   );
 
   if (opts.allowCustomTagNames) {
-    console.log(`255 inside opts.allowCustomTagNames clauses`);
+    console.log(`266 inside opts.allowCustomTagNames clauses`);
     if (r5.test(whatToTest)) {
-      console.log(`257 ${`\u001b[${31}m${`R5`}\u001b[${39}m`} passed`);
+      console.log(`268 ${`\u001b[${31}m${`R5`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r6.test(whatToTest)) {
-      console.log(`260 ${`\u001b[${31}m${`R6`}\u001b[${39}m`} passed`);
+      console.log(`271 ${`\u001b[${31}m${`R6`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r7.test(whatToTest)) {
-      console.log(`263 ${`\u001b[${31}m${`R7`}\u001b[${39}m`} passed`);
+      console.log(`274 ${`\u001b[${31}m${`R7`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r8.test(whatToTest)) {
-      console.log(`266 ${`\u001b[${31}m${`R8`}\u001b[${39}m`} passed`);
+      console.log(`277 ${`\u001b[${31}m${`R8`}\u001b[${39}m`} passed`);
       passed = true;
     }
   } else if (
@@ -282,24 +293,24 @@ function isOpening(str, idx = 0, originalOpts) {
       ],
     })
   ) {
-    console.log(`285 outside opts.allowCustomTagNames clauses`);
+    console.log(`296 outside opts.allowCustomTagNames clauses`);
     if (r1.test(whatToTest)) {
-      console.log(`287 ${`\u001b[${31}m${`R1`}\u001b[${39}m`} passed`);
+      console.log(`298 ${`\u001b[${31}m${`R1`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r2.test(whatToTest)) {
-      console.log(`290 ${`\u001b[${31}m${`R2`}\u001b[${39}m`} passed`);
+      console.log(`301 ${`\u001b[${31}m${`R2`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r3.test(whatToTest)) {
-      console.log(`293 ${`\u001b[${31}m${`R3`}\u001b[${39}m`} passed`);
+      console.log(`304 ${`\u001b[${31}m${`R3`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r4.test(whatToTest)) {
-      console.log(`296 ${`\u001b[${31}m${`R4`}\u001b[${39}m`} passed`);
+      console.log(`307 ${`\u001b[${31}m${`R4`}\u001b[${39}m`} passed`);
       passed = true;
     }
   }
 
   console.log(
-    `302 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
+    `313 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
       passed,
       null,
       4
@@ -310,15 +321,16 @@ function isOpening(str, idx = 0, originalOpts) {
     !passed &&
     !opts.skipOpeningBracket &&
     str[idx] === "<" &&
+    str[idx + 1] &&
     str[idx + 1].trim() &&
     matchRight(str, idx, knownHtmlTags, matchingOptions)
   ) {
     passed = true;
-    console.log(`317 SET passed = true`);
+    console.log(`329 SET passed = true`);
   }
 
   console.log(
-    `321 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
+    `333 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
       passed,
       null,
       4
@@ -327,7 +339,7 @@ function isOpening(str, idx = 0, originalOpts) {
 
   //
   console.log(
-    `330 ${`\u001b[${33}m${`isNotLetter(str[${
+    `342 ${`\u001b[${33}m${`isNotLetter(str[${
       idx + 1
     }])`}\u001b[${39}m`} = ${JSON.stringify(
       isNotLetter(str[idx + 1]),
@@ -335,8 +347,8 @@ function isOpening(str, idx = 0, originalOpts) {
       4
     )}`
   );
-  const res = isStr(str) && idx < str.length && passed;
-  console.log(`339 return ${`\u001b[${36}m${res}\u001b[${39}m`}`);
+  const res = typeof str === "string" && idx < str.length && passed;
+  console.log(`351 return ${`\u001b[${36}m${res}\u001b[${39}m`}`);
   return res;
 }
 
