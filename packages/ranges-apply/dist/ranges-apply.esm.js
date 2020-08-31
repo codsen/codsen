@@ -136,6 +136,9 @@ function rangesApply(str, originalRangesArr, progressFn) {
       }
     },
   });
+  if (!workingRanges) {
+    return str;
+  }
   const len2 = workingRanges.length;
   /* istanbul ignore else */
   if (len2 > 0) {

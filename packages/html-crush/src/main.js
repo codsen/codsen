@@ -1945,10 +1945,9 @@ function crush(str, originalOpts) {
         }
       );
 
-      const rangesCopy = Array.from(finalIndexesToDelete.current());
       finalIndexesToDelete.wipe();
       console.log(
-        `1951 returning ${`\u001b[${33}m${`res`}\u001b[${39}m`} =\n\n${JSON.stringify(
+        `1950 returning ${`\u001b[${33}m${`res`}\u001b[${39}m`} =\n\n${JSON.stringify(
           res,
           null,
           4
@@ -1966,7 +1965,7 @@ function crush(str, originalOpts) {
             ? Math.round((Math.max(len - resLen, 0) * 100) / len)
             : 0,
         },
-        ranges: rangesCopy,
+        ranges: finalIndexesToDelete.current(),
         applicableOpts,
         result: res,
       };
@@ -1974,7 +1973,7 @@ function crush(str, originalOpts) {
   }
   // ELSE - return the original input string
   console.log(
-    `1977 returning original ${`\u001b[${33}m${`str`}\u001b[${39}m`} =\n\n${JSON.stringify(
+    `1976 returning original ${`\u001b[${33}m${`str`}\u001b[${39}m`} =\n\n${JSON.stringify(
       str,
       null,
       4

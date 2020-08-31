@@ -131,7 +131,7 @@
   "dependencies": {
     "execa": "^4.0.3",
     "fs-extra": "^9.0.1",
-    "meow": "^7.1.0",
+    "meow": "^7.1.1",
     "package-json-editor": "^1.0.1",
     "update-notifier": "^4.1.1"
   },
@@ -148,8 +148,8 @@
     "@rollup/plugin-node-resolve": "^9.0.0",
     "@rollup/plugin-strip": "^2.0.0",
     "eslint": "^7.7.0",
-    "lect": "^0.13.9",
-    "prettier": "^2.0.5",
+    "lect": "^0.13.10",
+    "prettier": "^2.1.1",
     "tap": "^14.10.8",
     "tempy": "^0.6.0",
     "tsd": "^0.13.1"

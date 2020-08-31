@@ -11,7 +11,6 @@ import invert from 'ranges-invert';
 import crop from 'ranges-crop';
 import runes from 'runes';
 
-const isArr = Array.isArray;
 function processOutside(originalStr, originalRanges, cb, skipChecks = false) {
   function isFunction(functionToCheck) {
     return (
@@ -34,7 +33,11 @@ function processOutside(originalStr, originalRanges, cb, skipChecks = false) {
       );
     }
   }
-  if (originalRanges && !isArr(originalRanges)) {
+  if (
+    originalRanges &&
+    (!Array.isArray(originalRanges) ||
+      (originalRanges.length && !Array.isArray(originalRanges[0])))
+  ) {
     throw new Error(
       `ranges-process-outside: [THROW_ID_03] the second input argument must be array of ranges or null! It was given as:\n${JSON.stringify(
         originalRanges,

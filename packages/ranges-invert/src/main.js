@@ -1,10 +1,8 @@
 import mergeRanges from "ranges-merge";
 import rangesCrop from "ranges-crop";
 
-const isArr = Array.isArray;
-
 function rangesInvert(arrOfRanges, strLen, originalOptions) {
-  if (!isArr(arrOfRanges) && arrOfRanges !== null) {
+  if (!Array.isArray(arrOfRanges) && arrOfRanges !== null) {
     throw new TypeError(
       `ranges-invert: [THROW_ID_01] Input's first argument must be an array, consisting of range arrays! Currently its type is: ${typeof arrOfRanges}, equal to: ${JSON.stringify(
         arrOfRanges,
@@ -13,7 +11,6 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
       )}`
     );
   }
-
   // strLen validation
   if (!Number.isInteger(strLen) || strLen < 0) {
     throw new TypeError(
@@ -25,21 +22,38 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     );
   }
   // arrOfRanges validation
-  if (arrOfRanges === null) {
+  if (
+    Array.isArray(arrOfRanges) &&
+    typeof arrOfRanges[0] === "number" &&
+    typeof arrOfRanges[1] === "number"
+  ) {
+    throw new TypeError(
+      `ranges-invert: [THROW_ID_07] The first argument should be AN ARRAY OF RANGES, not a single range! Currently arrOfRanges = ${JSON.stringify(
+        arrOfRanges,
+        null,
+        0
+      )}!`
+    );
+  }
+  if (
+    !Array.isArray(arrOfRanges) ||
+    !arrOfRanges.filter(
+      (range) => Array.isArray(range) && range[0] !== range[1]
+    ).length ||
+    !strLen
+  ) {
     // this could be ranges.current() from "ranges-push" npm library
     // which means, absence of any ranges, so invert result is everything:
     // from index zero to index string.length
-    if (strLen === 0) {
-      return [];
+    if (!strLen) {
+      return null;
     }
     return [[0, strLen]];
-  }
-  if (arrOfRanges.length === 0) {
-    return [];
   }
 
   // opts validation
 
+  console.log("███████████████████████████████████████");
   // declare defaults, so we can enforce types later:
   const defaults = {
     strictlyTwoElementsInRangeArrays: false,
@@ -56,14 +70,16 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
   if (
     !opts.skipChecks &&
     opts.strictlyTwoElementsInRangeArrays &&
-    !arrOfRanges.every((rangeArr, indx) => {
-      if (rangeArr.length !== 2) {
-        culpritsIndex = indx;
-        culpritsLen = rangeArr.length;
-        return false;
-      }
-      return true;
-    })
+    !arrOfRanges
+      .filter((range) => range)
+      .every((rangeArr, indx) => {
+        if (rangeArr.length !== 2) {
+          culpritsIndex = indx;
+          culpritsLen = rangeArr.length;
+          return false;
+        }
+        return true;
+      })
   ) {
     throw new TypeError(
       `ranges-invert: [THROW_ID_04] Because opts.strictlyTwoElementsInRangeArrays was enabled, all ranges must be strictly two-element-long. However, the ${culpritsIndex}th range (${JSON.stringify(
@@ -89,20 +105,6 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
       return true;
     })
   ) {
-    if (
-      Array.isArray(arrOfRanges) &&
-      typeof arrOfRanges[0] === "number" &&
-      typeof arrOfRanges[1] === "number"
-    ) {
-      throw new TypeError(
-        `ranges-invert: [THROW_ID_07] The first argument should be AN ARRAY OF RANGES, not a single range! Currently arrOfRanges = ${JSON.stringify(
-          arrOfRanges,
-          null,
-          0
-        )}!`
-      );
-    }
-
     throw new TypeError(
       `ranges-invert: [THROW_ID_05] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ${
         culpritsIndex + 1
@@ -134,15 +136,8 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     // hopefully input ranges were really sorted...
   }
 
-  if (prep.length === 0) {
-    if (strLen === 0) {
-      return [];
-    }
-    return [[0, strLen]];
-  }
-
   console.log(
-    `145 ${`\u001b[${33}m${`prep`}\u001b[${39}m`} = ${JSON.stringify(
+    `140 ${`\u001b[${33}m${`prep`}\u001b[${39}m`} = ${JSON.stringify(
       prep,
       null,
       4
@@ -161,7 +156,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
 
     // if the first range's first index is not zero, additionally add zero range:
     if (i === 0 && arr[0][0] !== 0) {
-      console.log(`164 \u001b[${36}m${`PUSH [0, ${arr[0][0]}]`}\u001b[${39}m`);
+      console.log(`159 \u001b[${36}m${`PUSH [0, ${arr[0][0]}]`}\u001b[${39}m`);
       res2.push([0, arr[0][0]]);
     }
 
@@ -171,7 +166,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     const endingIndex = i < arr.length - 1 ? arr[i + 1][0] : strLen;
     if (currArr[1] !== endingIndex) {
       console.log(
-        `174 \u001b[${36}m${`PUSH [${currArr[1]}, ${endingIndex}]`}\u001b[${39}m`
+        `169 \u001b[${36}m${`PUSH [${currArr[1]}, ${endingIndex}]`}\u001b[${39}m`
       );
 
       // this can happen only when opts.skipChecks is on:

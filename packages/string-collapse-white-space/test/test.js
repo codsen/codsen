@@ -1891,7 +1891,7 @@ tap.test(
       "a b",
       "124.02 - hardcoded default"
     );
-    t.same(collapse("a b", { returnRangesOnly: true }), [], "124.03");
+    t.same(collapse("a b", { returnRangesOnly: true }), null, "124.03");
     t.end();
   }
 );
@@ -1912,7 +1912,7 @@ tap.test(
       );
       t.same(
         collapse(`a${presentEolType}b`, { returnRangesOnly: true }),
-        [],
+        null,
         `EOL ${key[idx]}`
       );
     });

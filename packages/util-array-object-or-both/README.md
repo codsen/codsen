@@ -98,12 +98,12 @@ Options object lets you customise the `throw`n error message. It's format is the
 
     ${opts.msg}The ${opts.optsVarName} was customised to an unrecognised value: ${str}. Please check it against the API documentation.
 
-| `options` object's key | Type   | Obligatory? | Default                                               | Description                                    |
-| ---------------------- | ------ | ----------- | ----------------------------------------------------- | ---------------------------------------------- |
-| {                      |        |             |                                                       |
-| `msg`                  | String | no          | `` | Append the message in front of the thrown error. |
-| `optsVarName`          | String | no          | `given variable`                                      | The name of the variable we are checking here. |
-| }                      |        |             |                                                       |
+| `options` object's key | Type   | Obligatory? | Default          | Description                                      |
+| ---------------------- | ------ | ----------- | ---------------- | ------------------------------------------------ |
+| {                      |        |             |                  |
+| `msg`                  | String | no          | ``               | Append the message in front of the thrown error. |
+| `optsVarName`          | String | no          | `given variable` | The name of the variable we are checking here.   |
+| }                      |        |             |                  |
 
 For example, set `optsVarName` to `opts.only` and set `msg` to `ast-delete-key/deleteKey(): [THROW_ID_01]` and the error message `throw`n if user misconfigures the setting will be, for example:
 

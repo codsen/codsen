@@ -129,7 +129,7 @@
     "generate-atomic-css": "^1.2.48",
     "globby": "^11.0.1",
     "is-d": "^1.0.0",
-    "meow": "^7.1.0",
+    "meow": "^7.1.1",
     "p-reduce": "^2.1.0",
     "update-notifier": "^4.1.1",
     "write-file-atomic": "^3.0.3"
@@ -149,7 +149,7 @@
     "eslint": "^7.7.0",
     "execa": "^4.0.3",
     "lect": "^0.13.10",
-    "prettier": "^2.0.5",
+    "prettier": "^2.1.1",
     "tap": "^14.10.8",
     "tempy": "^0.6.0",
     "tsd": "^0.13.1"

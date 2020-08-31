@@ -54,7 +54,7 @@ tap.test(
   (t) => {
     t.throws(() => {
       p("zzz", ["zzz"], () => {});
-    }, /THROW_ID_05/g);
+    }, /THROW_ID_03/g);
     t.end();
   }
 );

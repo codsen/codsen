@@ -1,6 +1,6 @@
 /**
  * ranges-invert
- * Invert string index ranges [ [1, 3] ] => [ [0, 1], [3, ...] ]
+ * Invert Ranges [ [1, 3] ] => [ [0, 1], [3, ...] ]
  * Version: 2.1.45
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
@@ -10,9 +10,8 @@
 import mergeRanges from 'ranges-merge';
 import rangesCrop from 'ranges-crop';
 
-const isArr = Array.isArray;
 function rangesInvert(arrOfRanges, strLen, originalOptions) {
-  if (!isArr(arrOfRanges) && arrOfRanges !== null) {
+  if (!Array.isArray(arrOfRanges) && arrOfRanges !== null) {
     throw new TypeError(
       `ranges-invert: [THROW_ID_01] Input's first argument must be an array, consisting of range arrays! Currently its type is: ${typeof arrOfRanges}, equal to: ${JSON.stringify(
         arrOfRanges,
@@ -30,14 +29,30 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
       )}`
     );
   }
-  if (arrOfRanges === null) {
-    if (strLen === 0) {
-      return [];
+  if (
+    Array.isArray(arrOfRanges) &&
+    typeof arrOfRanges[0] === "number" &&
+    typeof arrOfRanges[1] === "number"
+  ) {
+    throw new TypeError(
+      `ranges-invert: [THROW_ID_07] The first argument should be AN ARRAY OF RANGES, not a single range! Currently arrOfRanges = ${JSON.stringify(
+        arrOfRanges,
+        null,
+        0
+      )}!`
+    );
+  }
+  if (
+    !Array.isArray(arrOfRanges) ||
+    !arrOfRanges.filter(
+      (range) => Array.isArray(range) && range[0] !== range[1]
+    ).length ||
+    !strLen
+  ) {
+    if (!strLen) {
+      return null;
     }
     return [[0, strLen]];
-  }
-  if (arrOfRanges.length === 0) {
-    return [];
   }
   const defaults = {
     strictlyTwoElementsInRangeArrays: false,
@@ -49,14 +64,16 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
   if (
     !opts.skipChecks &&
     opts.strictlyTwoElementsInRangeArrays &&
-    !arrOfRanges.every((rangeArr, indx) => {
-      if (rangeArr.length !== 2) {
-        culpritsIndex = indx;
-        culpritsLen = rangeArr.length;
-        return false;
-      }
-      return true;
-    })
+    !arrOfRanges
+      .filter((range) => range)
+      .every((rangeArr, indx) => {
+        if (rangeArr.length !== 2) {
+          culpritsIndex = indx;
+          culpritsLen = rangeArr.length;
+          return false;
+        }
+        return true;
+      })
   ) {
     throw new TypeError(
       `ranges-invert: [THROW_ID_04] Because opts.strictlyTwoElementsInRangeArrays was enabled, all ranges must be strictly two-element-long. However, the ${culpritsIndex}th range (${JSON.stringify(
@@ -81,19 +98,6 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
       return true;
     })
   ) {
-    if (
-      Array.isArray(arrOfRanges) &&
-      typeof arrOfRanges[0] === "number" &&
-      typeof arrOfRanges[1] === "number"
-    ) {
-      throw new TypeError(
-        `ranges-invert: [THROW_ID_07] The first argument should be AN ARRAY OF RANGES, not a single range! Currently arrOfRanges = ${JSON.stringify(
-          arrOfRanges,
-          null,
-          0
-        )}!`
-      );
-    }
     throw new TypeError(
       `ranges-invert: [THROW_ID_05] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ${
         culpritsIndex + 1
@@ -111,12 +115,6 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     );
   } else {
     prep = arrOfRanges.filter((rangeArr) => rangeArr[0] !== rangeArr[1]);
-  }
-  if (prep.length === 0) {
-    if (strLen === 0) {
-      return [];
-    }
-    return [[0, strLen]];
   }
   const res = prep.reduce((accum, currArr, i, arr) => {
     const res2 = [];

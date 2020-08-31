@@ -203,7 +203,7 @@
     }
 
     if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
-      return arrOfRanges;
+      return null;
     }
 
     var defaults = {
@@ -306,7 +306,7 @@
       }
     }
 
-    return sortedRanges;
+    return sortedRanges.length ? sortedRanges : null;
   }
 
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};

@@ -129,8 +129,8 @@
   "dependencies": {
     "chlu": "^3.7.72",
     "fs-extra": "^9.0.1",
-    "meow": "^7.1.0",
-    "simple-git": "^2.19.0",
+    "meow": "^7.1.1",
+    "simple-git": "^2.20.1",
     "update-notifier": "^4.1.1",
     "write-file-atomic": "^3.0.3"
   },
@@ -149,7 +149,7 @@
     "eslint": "^7.7.0",
     "execa": "^4.0.3",
     "lect": "^0.13.10",
-    "prettier": "^2.0.5",
+    "prettier": "^2.1.1",
     "tap": "^14.10.8",
     "tempy": "^0.6.0",
     "tsd": "^0.13.1"

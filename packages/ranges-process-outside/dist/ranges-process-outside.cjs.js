@@ -91,7 +91,6 @@ function _nonIterableRest() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
-var isArr = Array.isArray;
 function processOutside(originalStr, originalRanges, cb) {
   var skipChecks = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
   function isFunction(functionToCheck) {
@@ -104,7 +103,7 @@ function processOutside(originalStr, originalRanges, cb) {
       throw new Error("ranges-process-outside: [THROW_ID_02] the first input argument must be string! It was given as:\n".concat(JSON.stringify(originalStr, null, 4), " (type ").concat(_typeof(originalStr), ")"));
     }
   }
-  if (originalRanges && !isArr(originalRanges)) {
+  if (originalRanges && (!Array.isArray(originalRanges) || originalRanges.length && !Array.isArray(originalRanges[0]))) {
     throw new Error("ranges-process-outside: [THROW_ID_03] the second input argument must be array of ranges or null! It was given as:\n".concat(JSON.stringify(originalRanges, null, 4), " (type ").concat(_typeof(originalRanges), ")"));
   }
   if (!isFunction(cb)) {

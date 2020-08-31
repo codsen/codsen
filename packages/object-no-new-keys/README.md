@@ -80,11 +80,11 @@ Personally, I use this library to look for any rogue keys in email template cont
 
 ### API - Function's Input
 
-| Function's argument                                                                                                                                                                  | Key value's type                                                                                         | Obligatory? | Description        |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------- | ----------- | ------------------ |
-| `input`                                                                                                                                                                              | Normally, a plain object or array — but can be whatever in which case the results will be an empty array | yes         | What to work upon. |
-| `reference | Same, normally, a plain object or array — but can be whatever type in which case result will be empty array | yes | The reference against which we'll match the`input`. |
-| `opts | Plain object | no | Optional options object                                                                                                                                  |
+| Function's argument | Key value's type                                                                                            | Obligatory? | Description                                         |
+| ------------------- | ----------------------------------------------------------------------------------------------------------- | ----------- | --------------------------------------------------- |
+| `input`             | Normally, a plain object or array — but can be whatever in which case the results will be an empty array    | yes         | What to work upon.                                  |
+| `reference          | Same, normally, a plain object or array — but can be whatever type in which case result will be empty array | yes         | The reference against which we'll match the`input`. |
+| `opts               | Plain object                                                                                                | no          | Optional options object                             |
 
 **[⬆ back to top](#)**
 

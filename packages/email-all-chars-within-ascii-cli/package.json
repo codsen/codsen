@@ -131,7 +131,7 @@
     "inquirer": "^7.3.3",
     "lodash.pullall": "^4.2.0",
     "lodash.uniq": "^4.5.0",
-    "meow": "^7.1.0",
+    "meow": "^7.1.1",
     "update-notifier": "^4.1.1"
   },
   "devDependencies": {
@@ -149,7 +149,7 @@
     "eslint": "^7.7.0",
     "execa": "^4.0.3",
     "lect": "^0.13.10",
-    "prettier": "^2.0.5",
+    "prettier": "^2.1.1",
     "tap": "^14.10.8",
     "tempy": "^0.6.0",
     "tsd": "^0.13.1"

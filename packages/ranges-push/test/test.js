@@ -348,7 +348,7 @@ tap.test(
 tap.test("37  -  ADD() - same value in heads and tails", (t) => {
   const ranges1 = new Ranges();
   ranges1.add(1, 1);
-  t.same(ranges1.current(), [], "37.01");
+  t.same(ranges1.current(), null, "37.01");
 
   const ranges2 = new Ranges();
   ranges2.add(1, 1, "zzz");

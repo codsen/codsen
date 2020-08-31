@@ -140,6 +140,11 @@ function rangesApply(str, originalRangesArr, progressFn) {
     },
   });
 
+  // can be null
+  if (!workingRanges) {
+    return str;
+  }
+
   // allocate the rest 80% to the actual string assembly:
   const len2 = workingRanges.length;
   /* istanbul ignore else */

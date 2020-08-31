@@ -966,7 +966,6 @@ function crush(str, originalOpts) {
           }
         }
       );
-      const rangesCopy = Array.from(finalIndexesToDelete.current());
       finalIndexesToDelete.wipe();
       const resLen = res.length;
       return {
@@ -979,7 +978,7 @@ function crush(str, originalOpts) {
             ? Math.round((Math.max(len - resLen, 0) * 100) / len)
             : 0,
         },
-        ranges: rangesCopy,
+        ranges: finalIndexesToDelete.current(),
         applicableOpts,
         result: res,
       };

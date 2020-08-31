@@ -193,7 +193,7 @@ class Ranges {
       this.ranges = mergeRanges(this.ranges, {
         mergeType: this.opts.mergeType,
       });
-      if (this.opts.limitToBeAddedWhitespace) {
+      if (this.ranges && this.opts.limitToBeAddedWhitespace) {
         return this.ranges.map((val) => {
           if (existy(val[2])) {
             return [

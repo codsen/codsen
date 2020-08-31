@@ -1,6 +1,6 @@
 /**
  * ranges-invert
- * Invert string index ranges [ [1, 3] ] => [ [0, 1], [3, ...] ]
+ * Invert Ranges [ [1, 3] ] => [ [0, 1], [3, ...] ]
  * Version: 2.1.45
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
@@ -134,7 +134,9 @@
     var culpritsIndex;
     var culpritsLen;
 
-    if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.every(function (rangeArr, indx) {
+    if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.filter(function (range) {
+      return range;
+    }).every(function (rangeArr, indx) {
       if (rangeArr.length !== 2) {
         culpritsIndex = indx;
         culpritsLen = rangeArr.length;
@@ -146,7 +148,9 @@
       throw new TypeError("ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ".concat(culpritsIndex, "th range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 4), ") has not two but ").concat(culpritsLen, " elements!"));
     }
 
-    if (!arrOfRanges.every(function (rangeArr, indx) {
+    if (!arrOfRanges.filter(function (range) {
+      return range;
+    }).every(function (rangeArr, indx) {
       if (!Number.isInteger(rangeArr[0]) || rangeArr[0] < 0 || !Number.isInteger(rangeArr[1]) || rangeArr[1] < 0) {
         culpritsIndex = indx;
         return false;
@@ -157,9 +161,13 @@
       throw new TypeError("ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ".concat(culpritsIndex, "th range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 4), ") does not consist of only natural numbers!"));
     }
 
-    var maxPossibleIterations = arrOfRanges.length * arrOfRanges.length;
+    var maxPossibleIterations = Math.pow(arrOfRanges.filter(function (range) {
+      return range;
+    }).length, 2);
     var counter = 0;
-    return Array.from(arrOfRanges).sort(function (range1, range2) {
+    return Array.from(arrOfRanges).filter(function (range) {
+      return range;
+    }).sort(function (range1, range2) {
       if (opts.progressFn) {
         counter += 1;
         opts.progressFn(Math.floor(counter * 100 / maxPossibleIterations));
@@ -195,7 +203,7 @@
     }
 
     if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
-      return arrOfRanges;
+      return null;
     }
 
     var defaults = {
@@ -235,7 +243,9 @@
       opts = _objectSpread2({}, defaults);
     }
 
-    var filtered = arrOfRanges.map(function (subarr) {
+    var filtered = arrOfRanges.filter(function (range) {
+      return range;
+    }).map(function (subarr) {
       return _toConsumableArray(subarr);
     }).filter(function (rangeArr) {
       return rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1];
@@ -296,21 +306,15 @@
       }
     }
 
-    return sortedRanges;
+    return sortedRanges.length ? sortedRanges : null;
   }
-
-  var isArr = Array.isArray;
 
   function isStr(something) {
     return typeof something === "string";
   }
 
-  function existy(x) {
-    return x != null;
-  }
-
   function rangesCrop(arrOfRanges, strLen) {
-    if (!isArr(arrOfRanges)) {
+    if (!Array.isArray(arrOfRanges)) {
       throw new TypeError("ranges-crop: [THROW_ID_01] The first input's argument must be an array, consisting of range arrays! Currently its type is: ".concat(_typeof(arrOfRanges), ", equal to: ").concat(JSON.stringify(arrOfRanges, null, 4)));
     }
 
@@ -318,13 +322,19 @@
       throw new TypeError("ranges-crop: [THROW_ID_02] The second input's argument must be a natural number or zero (coming from String.length)! Currently its type is: ".concat(_typeof(strLen), ", equal to: ").concat(JSON.stringify(strLen, null, 4)));
     }
 
-    if (arrOfRanges.length === 0) {
-      return arrOfRanges;
+    if (!arrOfRanges.filter(function (range) {
+      return range;
+    }).length) {
+      return arrOfRanges.filter(function (range) {
+        return range;
+      });
     }
 
     var culpritsIndex;
 
-    if (!arrOfRanges.every(function (rangeArr, indx) {
+    if (!arrOfRanges.filter(function (range) {
+      return range;
+    }).every(function (rangeArr, indx) {
       if (!Number.isInteger(rangeArr[0]) || !Number.isInteger(rangeArr[1])) {
         culpritsIndex = indx;
         return false;
@@ -339,8 +349,10 @@
       throw new TypeError("ranges-crop: [THROW_ID_04] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ".concat(culpritsIndex + 1, "th range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 0), ") does not consist of only natural numbers!"));
     }
 
-    if (!arrOfRanges.every(function (rangeArr, indx) {
-      if (existy(rangeArr[2]) && !isStr(rangeArr[2])) {
+    if (!arrOfRanges.filter(function (range) {
+      return range;
+    }).every(function (rangeArr, indx) {
+      if (rangeArr[2] != null && !isStr(rangeArr[2])) {
         culpritsIndex = indx;
         return false;
       }
@@ -366,10 +378,8 @@
     return res;
   }
 
-  var isArr$1 = Array.isArray;
-
   function rangesInvert(arrOfRanges, strLen, originalOptions) {
-    if (!isArr$1(arrOfRanges) && arrOfRanges !== null) {
+    if (!Array.isArray(arrOfRanges) && arrOfRanges !== null) {
       throw new TypeError("ranges-invert: [THROW_ID_01] Input's first argument must be an array, consisting of range arrays! Currently its type is: ".concat(_typeof(arrOfRanges), ", equal to: ").concat(JSON.stringify(arrOfRanges, null, 4)));
     } // strLen validation
 
@@ -379,19 +389,21 @@
     } // arrOfRanges validation
 
 
-    if (arrOfRanges === null) {
+    if (Array.isArray(arrOfRanges) && typeof arrOfRanges[0] === "number" && typeof arrOfRanges[1] === "number") {
+      throw new TypeError("ranges-invert: [THROW_ID_07] The first argument should be AN ARRAY OF RANGES, not a single range! Currently arrOfRanges = ".concat(JSON.stringify(arrOfRanges, null, 0), "!"));
+    }
+
+    if (!Array.isArray(arrOfRanges) || !arrOfRanges.filter(function (range) {
+      return Array.isArray(range) && range[0] !== range[1];
+    }).length || !strLen) {
       // this could be ranges.current() from "ranges-push" npm library
       // which means, absence of any ranges, so invert result is everything:
       // from index zero to index string.length
-      if (strLen === 0) {
-        return [];
+      if (!strLen) {
+        return null;
       }
 
       return [[0, strLen]];
-    }
-
-    if (arrOfRanges.length === 0) {
-      return [];
     } // opts validation
     // declare defaults, so we can enforce types later:
 
@@ -407,7 +419,9 @@
     var culpritsIndex;
     var culpritsLen; // validate does every range consist of exactly two indexes:
 
-    if (!opts.skipChecks && opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.every(function (rangeArr, indx) {
+    if (!opts.skipChecks && opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.filter(function (range) {
+      return range;
+    }).every(function (rangeArr, indx) {
       if (rangeArr.length !== 2) {
         culpritsIndex = indx;
         culpritsLen = rangeArr.length;
@@ -428,10 +442,6 @@
 
       return true;
     })) {
-      if (Array.isArray(arrOfRanges) && typeof arrOfRanges[0] === "number" && typeof arrOfRanges[1] === "number") {
-        throw new TypeError("ranges-invert: [THROW_ID_07] The first argument should be AN ARRAY OF RANGES, not a single range! Currently arrOfRanges = ".concat(JSON.stringify(arrOfRanges, null, 0), "!"));
-      }
-
       throw new TypeError("ranges-invert: [THROW_ID_05] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ".concat(culpritsIndex + 1, "th range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 0), ") does not consist of only natural numbers!"));
     }
 
@@ -453,14 +463,6 @@
       prep = arrOfRanges.filter(function (rangeArr) {
         return rangeArr[0] !== rangeArr[1];
       }); // hopefully input ranges were really sorted...
-    }
-
-    if (prep.length === 0) {
-      if (strLen === 0) {
-        return [];
-      }
-
-      return [[0, strLen]];
     }
 
     var res = prep.reduce(function (accum, currArr, i, arr) {

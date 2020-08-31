@@ -273,7 +273,9 @@
     var culpritsIndex;
     var culpritsLen;
 
-    if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.every(function (rangeArr, indx) {
+    if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.filter(function (range) {
+      return range;
+    }).every(function (rangeArr, indx) {
       if (rangeArr.length !== 2) {
         culpritsIndex = indx;
         culpritsLen = rangeArr.length;
@@ -285,7 +287,9 @@
       throw new TypeError("ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ".concat(culpritsIndex, "th range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 4), ") has not two but ").concat(culpritsLen, " elements!"));
     }
 
-    if (!arrOfRanges.every(function (rangeArr, indx) {
+    if (!arrOfRanges.filter(function (range) {
+      return range;
+    }).every(function (rangeArr, indx) {
       if (!Number.isInteger(rangeArr[0]) || rangeArr[0] < 0 || !Number.isInteger(rangeArr[1]) || rangeArr[1] < 0) {
         culpritsIndex = indx;
         return false;
@@ -296,9 +300,13 @@
       throw new TypeError("ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ".concat(culpritsIndex, "th range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 4), ") does not consist of only natural numbers!"));
     }
 
-    var maxPossibleIterations = arrOfRanges.length * arrOfRanges.length;
+    var maxPossibleIterations = Math.pow(arrOfRanges.filter(function (range) {
+      return range;
+    }).length, 2);
     var counter = 0;
-    return Array.from(arrOfRanges).sort(function (range1, range2) {
+    return Array.from(arrOfRanges).filter(function (range) {
+      return range;
+    }).sort(function (range1, range2) {
       if (opts.progressFn) {
         counter += 1;
         opts.progressFn(Math.floor(counter * 100 / maxPossibleIterations));
@@ -334,7 +342,7 @@
     }
 
     if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
-      return arrOfRanges;
+      return null;
     }
 
     var defaults = {
@@ -374,7 +382,9 @@
       opts = _objectSpread2({}, defaults);
     }
 
-    var filtered = arrOfRanges.map(function (subarr) {
+    var filtered = arrOfRanges.filter(function (range) {
+      return range;
+    }).map(function (subarr) {
       return _toConsumableArray(subarr);
     }).filter(function (rangeArr) {
       return rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1];
@@ -435,7 +445,7 @@
       }
     }
 
-    return sortedRanges;
+    return sortedRanges.length ? sortedRanges : null;
   }
 
   function existy(x) {
@@ -610,11 +620,12 @@
 
         if (this.ranges != null) {
           // != is intentional
+          // beware, merging can return null
           this.ranges = mergeRanges(this.ranges, {
             mergeType: this.opts.mergeType
           });
 
-          if (this.opts.limitToBeAddedWhitespace) {
+          if (this.ranges && this.opts.limitToBeAddedWhitespace) {
             return this.ranges.map(function (val) {
               if (existy(val[2])) {
                 return [val[0], val[1], collapseLeadingWhitespace(val[2], _this2.opts.limitLinebreaksCount)];

@@ -67,6 +67,7 @@ For example:
 
 ```js
 "Hi {{ first_name }}!";
+
 ```
 
 This library detects and deletes redundant heads and tails wrapped around the **whole** input string:

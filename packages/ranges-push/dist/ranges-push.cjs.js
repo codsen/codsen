@@ -257,7 +257,7 @@ var Ranges = function () {
         this.ranges = mergeRanges__default['default'](this.ranges, {
           mergeType: this.opts.mergeType
         });
-        if (this.opts.limitToBeAddedWhitespace) {
+        if (this.ranges && this.opts.limitToBeAddedWhitespace) {
           return this.ranges.map(function (val) {
             if (existy(val[2])) {
               return [val[0], val[1], collapseLeadingWhitespace__default['default'](val[2], _this2.opts.limitLinebreaksCount)];

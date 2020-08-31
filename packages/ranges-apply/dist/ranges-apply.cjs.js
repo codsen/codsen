@@ -107,6 +107,9 @@ function rangesApply(str, originalRangesArr, _progressFn) {
       }
     }
   });
+  if (!workingRanges) {
+    return str;
+  }
   var len2 = workingRanges.length;
   /* istanbul ignore else */
   if (len2 > 0) {

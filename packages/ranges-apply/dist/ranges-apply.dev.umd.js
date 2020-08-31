@@ -407,7 +407,12 @@
           }
         }
       }
-    }); // allocate the rest 80% to the actual string assembly:
+    }); // can be null
+
+    if (!workingRanges) {
+      return str;
+    } // allocate the rest 80% to the actual string assembly:
+
 
     var len2 = workingRanges.length;
     /* istanbul ignore else */

@@ -690,7 +690,6 @@ function crush(str, originalOpts) {
           }
         }
       });
-      var rangesCopy = Array.from(finalIndexesToDelete.current());
       finalIndexesToDelete.wipe();
       var resLen = res.length;
       return {
@@ -701,7 +700,7 @@ function crush(str, originalOpts) {
           bytesSaved: Math.max(len - resLen, 0),
           percentageReducedOfOriginal: len ? Math.round(Math.max(len - resLen, 0) * 100 / len) : 0
         },
-        ranges: rangesCopy,
+        ranges: finalIndexesToDelete.current(),
         applicableOpts: applicableOpts,
         result: res
       };

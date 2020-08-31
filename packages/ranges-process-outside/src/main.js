@@ -2,8 +2,6 @@ import invert from "ranges-invert";
 import crop from "ranges-crop";
 import runes from "runes";
 
-const isArr = Array.isArray;
-
 function processOutside(originalStr, originalRanges, cb, skipChecks = false) {
   //
   // internal functions:
@@ -32,7 +30,11 @@ function processOutside(originalStr, originalRanges, cb, skipChecks = false) {
       );
     }
   }
-  if (originalRanges && !isArr(originalRanges)) {
+  if (
+    originalRanges &&
+    (!Array.isArray(originalRanges) ||
+      (originalRanges.length && !Array.isArray(originalRanges[0])))
+  ) {
     throw new Error(
       `ranges-process-outside: [THROW_ID_03] the second input argument must be array of ranges or null! It was given as:\n${JSON.stringify(
         originalRanges,
@@ -55,10 +57,10 @@ function processOutside(originalStr, originalRanges, cb, skipChecks = false) {
   // with separately calculated "everything" if the ranges are empty/falsey
   function iterator(str, arrOfArrays) {
     console.log(
-      `058 iterator called with ${JSON.stringify(arrOfArrays, null, 0)}`
+      `060 iterator called with ${JSON.stringify(arrOfArrays, null, 0)}`
     );
     console.log(
-      `061 ${`\u001b[${36}m${`loop [${JSON.stringify(
+      `063 ${`\u001b[${36}m${`loop [${JSON.stringify(
         arrOfArrays,
         null,
         0
@@ -66,32 +68,32 @@ function processOutside(originalStr, originalRanges, cb, skipChecks = false) {
     );
     arrOfArrays.forEach(([fromIdx, toIdx]) => {
       console.log(
-        `069 ${`\u001b[${36}m${`----------------------- [${fromIdx}, ${toIdx}]`}\u001b[${39}m`}`
+        `071 ${`\u001b[${36}m${`----------------------- [${fromIdx}, ${toIdx}]`}\u001b[${39}m`}`
       );
-      console.log(`071 fromIdx = ${fromIdx}; toIdx = ${toIdx}`);
+      console.log(`073 fromIdx = ${fromIdx}; toIdx = ${toIdx}`);
       for (let i = fromIdx; i < toIdx; i++) {
-        console.log(`073 ${`\u001b[${36}m${`i = ${i}`}\u001b[${39}m`}`);
+        console.log(`075 ${`\u001b[${36}m${`i = ${i}`}\u001b[${39}m`}`);
         const charLength = runes(str.slice(i))[0].length;
 
-        console.log(`076 charLength = ${charLength}`);
+        console.log(`078 charLength = ${charLength}`);
         cb(i, i + charLength, (offsetValue) => {
           /* istanbul ignore else */
           if (offsetValue != null) {
-            console.log(`080 offset i by "${offsetValue}" requested`);
-            console.log(`081 old i = ${i}`);
+            console.log(`082 offset i by "${offsetValue}" requested`);
+            console.log(`083 old i = ${i}`);
             i += offsetValue;
-            console.log(`083 new i = ${i}`);
+            console.log(`085 new i = ${i}`);
           }
         });
         if (charLength && charLength > 1) {
-          console.log(`087 old i = ${i}`);
+          console.log(`089 old i = ${i}`);
           i += charLength - 1;
-          console.log(`089 new i = ${i}`);
+          console.log(`091 new i = ${i}`);
         }
       }
     });
     console.log(
-      `094 ${`\u001b[${36}m${`-----------------------`}\u001b[${39}m`}`
+      `096 ${`\u001b[${36}m${`-----------------------`}\u001b[${39}m`}`
     );
   }
 
@@ -104,7 +106,7 @@ function processOutside(originalStr, originalRanges, cb, skipChecks = false) {
       originalStr.length
     );
     console.log(
-      `107 ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
+      `109 ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
         temp,
         null,
         0

@@ -140,7 +140,7 @@
     "is-online": "^8.4.0",
     "lodash.isplainobject": "^4.0.6",
     "log-update": "^4.0.0",
-    "meow": "^7.1.0",
+    "meow": "^7.1.1",
     "object-path": "^0.11.4",
     "p-map": "^4.0.0",
     "p-progress": "^0.4.2",
@@ -166,7 +166,7 @@
     "fs-extra": "^9.0.1",
     "lect": "^0.13.10",
     "lodash.clonedeep": "^4.5.0",
-    "prettier": "^2.0.5",
+    "prettier": "^2.1.1",
     "tap": "^14.10.8",
     "tempy": "^0.6.0",
     "tsd": "^0.13.1"

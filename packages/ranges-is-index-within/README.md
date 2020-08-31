@@ -215,9 +215,9 @@ console.log(res4);
 
 ## The algorithm
 
-Sugarcoated `Array.some` / `Array.find` — no dependencies. This program is slightly slower than raw `Array` methods but it gives you insurance when ranges are `null` (returns `false` while raw `Array` methods would throw).
+It's just a wrapper for `Array.some` / `Array.find` — no dependencies. This program is slightly slower than raw `Array` methods but it gives you insurance when ranges are `null` (returns `false` while raw `Array` methods would throw).
 
-By the way, [Binary Search algorithm](https://en.wikipedia.org/wiki/Binary_search_algorithm) would be 85 times slower than `Array.some`/`Array.find`, which I tried in previous versions of this package.
+By the way, [Binary Search algorithm](https://en.wikipedia.org/wiki/Binary_search_algorithm) would be 85 times slower than `Array.some`/`Array.find`, which we tried in previous versions of this package.
 
 **[⬆ back to top](#)**
 
