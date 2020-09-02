@@ -1,7 +1,7 @@
 {
   "name": "string-find-heads-tails",
   "version": "3.16.12",
-  "description": "Finds given pattern templating markers in a string",
+  "description": "Finds where are arbitrary templating marker heads and tails located",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
   "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/string-find-heads-tails",
