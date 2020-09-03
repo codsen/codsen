@@ -1,6 +1,6 @@
 # string-find-heads-tails
 
-> Finds given pattern templating markers in a string
+> Finds where are arbitrary templating marker heads and tails located
 
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]

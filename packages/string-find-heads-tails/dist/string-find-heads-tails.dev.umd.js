@@ -1,6 +1,6 @@
 /**
  * string-find-heads-tails
- * Finds given pattern templating markers in a string
+ * Finds where are arbitrary templating marker heads and tails located
  * Version: 3.16.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
