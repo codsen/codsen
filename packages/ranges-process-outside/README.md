@@ -1,6 +1,6 @@
 # ranges-process-outside
 
-> Iterate through string and optionally a given ranges as if they were one
+> Iterate string considering ranges, as if they were already applied
 
 [![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
