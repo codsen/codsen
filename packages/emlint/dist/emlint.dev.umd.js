@@ -11315,15 +11315,19 @@
 	const BACKSLASH = "\u005C";
 	const knownHtmlTags = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h1 - h6", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "slot", "small", "source", "span", "strike", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xml"];
 
-	function isStr$4(something) {
-	  return typeof something === "string";
-	}
-
 	function isNotLetter(char) {
 	  return char === undefined || char.toUpperCase() === char.toLowerCase() && !`0123456789`.includes(char) && char !== "=";
 	}
 
 	function isOpening(str, idx = 0, originalOpts) {
+	  if (typeof str !== "string") {
+	    throw new Error(`is-html-tag-opening: [THROW_ID_01] the first input argument should have been a string but it was given as "${typeof str}", value being ${JSON.stringify(str, null, 4)}`);
+	  }
+
+	  if (!Number.isInteger(idx) || idx < 0) {
+	    throw new Error(`is-html-tag-opening: [THROW_ID_02] the second input argument should have been a natural number string index but it was given as "${typeof idx}", value being ${JSON.stringify(idx, null, 4)}`);
+	  }
+
 	  const defaults = {
 	    allowCustomTagNames: false,
 	    skipOpeningBracket: false
@@ -11375,11 +11379,11 @@
 	    }
 	  }
 
-	  if (!passed && !opts.skipOpeningBracket && str[idx] === "<" && str[idx + 1].trim() && matchRight(str, idx, knownHtmlTags, matchingOptions)) {
+	  if (!passed && !opts.skipOpeningBracket && str[idx] === "<" && str[idx + 1] && str[idx + 1].trim() && matchRight(str, idx, knownHtmlTags, matchingOptions)) {
 	    passed = true;
 	  }
 
-	  const res = isStr$4(str) && idx < str.length && passed;
+	  const res = typeof str === "string" && idx < str.length && passed;
 	  return res;
 	}
 
@@ -11398,12 +11402,12 @@
 	const espLumpBlacklist = [")|(", "|(", ")(", "()", "}{", "{}", "%)", "*)"];
 	const punctuationChars = `.,;!?`;
 
-	function isStr$5(something) {
+	function isStr$4(something) {
 	  return typeof something === "string";
 	}
 
 	function isLatinLetter$1(char) {
-	  return isStr$5(char) && char.length === 1 && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
+	  return isStr$4(char) && char.length === 1 && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
 	}
 
 	function charSuitableForTagName(char) {
@@ -11563,7 +11567,7 @@
 	function tokenizer(str, originalOpts) {
 	  const start = Date.now();
 
-	  if (!isStr$5(str)) {
+	  if (!isStr$4(str)) {
 	    if (str === undefined) {
 	      throw new Error("codsen-tokenizer: [THROW_ID_01] the first input argument is completely missing! It should be given as string.");
 	    } else {
@@ -12311,7 +12315,7 @@
 	          token.end = i + 1;
 	          token.value = str.slice(token.start, token.end);
 	        }
-	      } else if (token.type === "esp" && token.end === null && isStr$5(token.tail) && token.tail.includes(str[i])) {
+	      } else if (token.type === "esp" && token.end === null && isStr$4(token.tail) && token.tail.includes(str[i])) {
 	        let wholeEspTagClosing = "";
 
 	        for (let y = i; y < len; y++) {

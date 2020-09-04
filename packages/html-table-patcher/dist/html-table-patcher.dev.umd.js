@@ -2921,10 +2921,6 @@
   var BACKSLASH = "\\";
   var knownHtmlTags = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h1 - h6", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "slot", "small", "source", "span", "strike", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xml"];
 
-  function isStr$2(something) {
-    return typeof something === "string";
-  }
-
   function isNotLetter(char) {
     return char === undefined || char.toUpperCase() === char.toLowerCase() && !"0123456789".includes(char) && char !== "=";
   }
@@ -2932,6 +2928,15 @@
   function isOpening(str) {
     var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
     var originalOpts = arguments.length > 2 ? arguments[2] : undefined;
+
+    if (typeof str !== "string") {
+      throw new Error("is-html-tag-opening: [THROW_ID_01] the first input argument should have been a string but it was given as \"".concat(_typeof(str), "\", value being ").concat(JSON.stringify(str, null, 4)));
+    }
+
+    if (!Number.isInteger(idx) || idx < 0) {
+      throw new Error("is-html-tag-opening: [THROW_ID_02] the second input argument should have been a natural number string index but it was given as \"".concat(_typeof(idx), "\", value being ").concat(JSON.stringify(idx, null, 4)));
+    }
+
     var defaults = {
       allowCustomTagNames: false,
       skipOpeningBracket: false
@@ -2983,11 +2988,11 @@
       }
     }
 
-    if (!passed && !opts.skipOpeningBracket && str[idx] === "<" && str[idx + 1].trim() && matchRight(str, idx, knownHtmlTags, matchingOptions)) {
+    if (!passed && !opts.skipOpeningBracket && str[idx] === "<" && str[idx + 1] && str[idx + 1].trim() && matchRight(str, idx, knownHtmlTags, matchingOptions)) {
       passed = true;
     }
 
-    var res = isStr$2(str) && idx < str.length && passed;
+    var res = typeof str === "string" && idx < str.length && passed;
     return res;
   }
 
@@ -2998,12 +3003,12 @@
   var espLumpBlacklist = [")|(", "|(", ")(", "()", "}{", "{}", "%)", "*)"];
   var punctuationChars = ".,;!?";
 
-  function isStr$3(something) {
+  function isStr$2(something) {
     return typeof something === "string";
   }
 
   function isLatinLetter(char) {
-    return isStr$3(char) && char.length === 1 && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
+    return isStr$2(char) && char.length === 1 && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
   }
 
   function charSuitableForTagName(char) {
@@ -3175,7 +3180,7 @@
   function tokenizer(str, originalOpts) {
     var start = Date.now();
 
-    if (!isStr$3(str)) {
+    if (!isStr$2(str)) {
       if (str === undefined) {
         throw new Error("codsen-tokenizer: [THROW_ID_01] the first input argument is completely missing! It should be given as string.");
       } else {
@@ -3932,7 +3937,7 @@
             token.end = _i + 1;
             token.value = str.slice(token.start, token.end);
           }
-        } else if (token.type === "esp" && token.end === null && isStr$3(token.tail) && token.tail.includes(str[_i])) {
+        } else if (token.type === "esp" && token.end === null && isStr$2(token.tail) && token.tail.includes(str[_i])) {
           var wholeEspTagClosing = "";
 
           for (var y = _i; y < len; y++) {
@@ -5330,7 +5335,7 @@
     return Number.isInteger(something) && something >= 0;
   }
 
-  function isStr$4(something) {
+  function isStr$3(something) {
     return typeof something === "string";
   }
 
@@ -5351,9 +5356,9 @@
       var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
       if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
-        if (isStr$4(opts.mergeType) && opts.mergeType.trim() === "1") {
+        if (isStr$3(opts.mergeType) && opts.mergeType.trim() === "1") {
           opts.mergeType = 1;
-        } else if (isStr$4(opts.mergeType) && opts.mergeType.trim() === "2") {
+        } else if (isStr$3(opts.mergeType) && opts.mergeType.trim() === "2") {
           opts.mergeType = 2;
         } else {
           throw new Error("ranges-push: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"".concat(_typeof(opts.mergeType), "\", equal to ").concat(JSON.stringify(opts.mergeType, null, 4)));
@@ -5415,7 +5420,7 @@
         }
 
         if (isNum(from) && isNum(to)) {
-          if (existy(addVal) && !isStr$4(addVal) && !isNum(addVal)) {
+          if (existy(addVal) && !isStr$3(addVal) && !isNum(addVal)) {
             throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ".concat(_typeof(addVal), ", equal to:\n").concat(JSON.stringify(addVal, null, 4)));
           }
 
@@ -5430,7 +5435,7 @@
                 calculatedVal = collapseLeadingWhitespace(calculatedVal, this.opts.limitLinebreaksCount);
               }
 
-              if (!(isStr$4(calculatedVal) && !calculatedVal.length)) {
+              if (!(isStr$3(calculatedVal) && !calculatedVal.length)) {
                 this.last()[2] = calculatedVal;
               }
             }
@@ -5439,7 +5444,7 @@
               this.ranges = [];
             }
 
-            var whatToPush = addVal !== undefined && !(isStr$4(addVal) && !addVal.length) ? [from, to, this.opts.limitToBeAddedWhitespace ? collapseLeadingWhitespace(addVal, this.opts.limitLinebreaksCount) : addVal] : [from, to];
+            var whatToPush = addVal !== undefined && !(isStr$3(addVal) && !addVal.length) ? [from, to, this.opts.limitToBeAddedWhitespace ? collapseLeadingWhitespace(addVal, this.opts.limitLinebreaksCount) : addVal] : [from, to];
             this.ranges.push(whatToPush);
           }
         } else {
@@ -5520,7 +5525,7 @@
     return x != null;
   }
 
-  function isStr$5(something) {
+  function isStr$4(something) {
     return typeof something === "string";
   }
 
@@ -5532,7 +5537,7 @@
       throw new Error("ranges-apply: [THROW_ID_01] inputs missing!");
     }
 
-    if (!isStr$5(str)) {
+    if (!isStr$4(str)) {
       throw new TypeError("ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ".concat(_typeof(str), ", equal to: ").concat(JSON.stringify(str, null, 4)));
     }
 
@@ -5752,7 +5757,7 @@
 
   var ranges = new Ranges();
 
-  function isStr$6(something) {
+  function isStr$5(something) {
     return typeof something === "string";
   }
 
@@ -5782,7 +5787,7 @@
     var opts = _objectSpread2(_objectSpread2({}, defaults), generalOpts);
 
     if (opts.cssStylesContent && ( // if not a string was passed
-    !isStr$6(opts.cssStylesContent) || // or it was empty of full of whitespace
+    !isStr$5(opts.cssStylesContent) || // or it was empty of full of whitespace
     !opts.cssStylesContent.trim())) {
       opts.cssStylesContent = "";
     } // the bizness
