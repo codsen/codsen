@@ -132,5 +132,6 @@ thy_pipeline:
     - "curl https://purge.jsdelivr.net/npm/codsen-tokenizer/dist/codsen-tokenizer.umd.js || echo 'codsen-tokenizer unreachable on jsdelivr'"
     - "curl https://purge.jsdelivr.net/npm/codsen-parser/dist/codsen-parser.umd.js || echo 'codsen-parser unreachable on jsdelivr'"
     - "curl https://purge.jsdelivr.net/npm/json-variables/dist/json-variables.umd.js || echo 'json-variables unreachable on jsdelivr'"
+    - "curl -X POST $VERCEL_TRIGGER"
 
     - echo '█████████████████████████████ 9/9 - done ████████████████████████████'
