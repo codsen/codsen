@@ -4,7 +4,7 @@
  * Version: 7.11.17
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey
+ * Homepage: https://codsen.com/os/ast-monkey/
  */
 
 import arrayObjectOrBoth from 'util-array-object-or-both';

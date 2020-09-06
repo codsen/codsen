@@ -4,7 +4,7 @@
  * Version: 1.2.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-extract-sass-vars
+ * Homepage: https://codsen.com/os/string-extract-sass-vars/
  */
 
 (function (global, factory) {

@@ -4,7 +4,7 @@
  * Version: 1.2.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/eslint-plugin-row-num
+ * Homepage: https://codsen.com/os/eslint-plugin-row-num/
  */
 
 (function (global, factory) {
@@ -139,7 +139,7 @@
    * Version: 2.0.23
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace
+   * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
    */
   var rawNbsp = "\xA0";
 
@@ -256,7 +256,7 @@
    * Version: 3.12.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-sort
+   * Homepage: https://codsen.com/os/ranges-sort/
    */
   function rangesSort(arrOfRanges, originalOptions) {
     if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {

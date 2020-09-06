@@ -4,7 +4,7 @@
   "description": "sort array of arrays by column, rippling the sorting outwards from that column",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/array-of-arrays-sort-by-col",
+  "homepage": "https://codsen.com/os/array-of-arrays-sort-by-col/",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -51,29 +51,7 @@
     }
   },
   "lect": {
-    "babelrc": {
-      "override": false,
-      "set": false
-    },
-    "badges": {
-      "cov": true,
-      "deps": true,
-      "deps2d": true,
-      "dev": true,
-      "downloads": true,
-      "license": true,
-      "node": true,
-      "npm": true,
-      "overall": true,
-      "runkit": true,
-      "travis": true,
-      "vulnerabilities": true
-    },
     "defaultExported": true,
-    "eslintrc": {
-      "add": [],
-      "remove": []
-    },
     "files": {
       "delete": [],
       "write_hard": [
@@ -89,10 +67,6 @@
         }
       ]
     },
-    "header": {
-      "dontQuoteDescription": false,
-      "rightFloatedBadge": []
-    },
     "licence": {
       "extras": [
         ""
@@ -107,15 +81,10 @@
     "req": "sortBySubarray",
     "typeSriptDefinitions": false,
     "various": {
-      "back_to_top": {
-        "enabled": true,
-        "label": ""
-      },
       "devDependencies": [
         "array-shuffle",
         "benchmark"
-      ],
-      "travisVersionsOverride": []
+      ]
     }
   },
   "tap": {

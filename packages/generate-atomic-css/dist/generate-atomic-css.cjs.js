@@ -4,7 +4,7 @@
  * Version: 1.2.48
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/generate-atomic-css
+ * Homepage: https://codsen.com/os/generate-atomic-css/
  */
 
 'use strict';

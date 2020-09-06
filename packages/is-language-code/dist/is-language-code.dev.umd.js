@@ -4,7 +4,7 @@
  * Version: 1.0.9
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-language-code
+ * Homepage: https://codsen.com/os/is-language-code/
  */
 
 (function (global, factory) {

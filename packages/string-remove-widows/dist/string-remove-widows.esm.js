@@ -4,7 +4,7 @@
  * Version: 1.6.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows
+ * Homepage: https://codsen.com/os/string-remove-widows/
  */
 
 import { matchRightIncl } from 'string-match-left-right';

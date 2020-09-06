@@ -4,7 +4,7 @@
  * Version: 1.1.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-char-suitable-for-html-attr-name
+ * Homepage: https://codsen.com/os/is-char-suitable-for-html-attr-name/
  */
 
 (function (global, factory) {

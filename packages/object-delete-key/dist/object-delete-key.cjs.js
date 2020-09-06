@@ -4,7 +4,7 @@
  * Version: 1.9.33
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-delete-key
+ * Homepage: https://codsen.com/os/object-delete-key/
  */
 
 'use strict';

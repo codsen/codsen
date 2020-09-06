@@ -4,7 +4,7 @@
  * Version: 5.11.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://detergent.io
+ * Homepage: https://codsen.com/os/detergent/
  */
 
 import { left, right, leftStopAtNewLines, rightStopAtNewLines, chompLeft } from 'string-left-right';

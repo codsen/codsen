@@ -4,7 +4,7 @@
   "description": "Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities",
+  "homepage": "https://codsen.com/os/string-fix-broken-named-entities/",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -55,29 +55,7 @@
     }
   },
   "lect": {
-    "babelrc": {
-      "override": false,
-      "set": false
-    },
-    "badges": {
-      "cov": true,
-      "deps": true,
-      "deps2d": true,
-      "dev": true,
-      "downloads": true,
-      "license": true,
-      "node": true,
-      "npm": true,
-      "overall": true,
-      "runkit": true,
-      "travis": true,
-      "vulnerabilities": true
-    },
     "defaultExported": true,
-    "eslintrc": {
-      "add": [],
-      "remove": []
-    },
     "files": {
       "delete": [],
       "write_hard": [
@@ -92,10 +70,6 @@
           "name": ""
         }
       ]
-    },
-    "header": {
-      "dontQuoteDescription": false,
-      "rightFloatedBadge": []
     },
     "licence": {
       "extras": [
@@ -113,12 +87,7 @@
     "req": "fixEnt",
     "typeSriptDefinitions": false,
     "various": {
-      "back_to_top": {
-        "enabled": true,
-        "label": ""
-      },
-      "devDependencies": [],
-      "travisVersionsOverride": []
+      "devDependencies": []
     }
   },
   "tap": {

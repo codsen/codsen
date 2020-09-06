@@ -4,7 +4,7 @@
  * Version: 3.0.68
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-duplicate-heads-tails
+ * Homepage: https://codsen.com/os/string-remove-duplicate-heads-tails/
  */
 
 (function (global, factory) {
@@ -285,7 +285,7 @@
    * Version: 3.11.34
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string
+   * Homepage: https://codsen.com/os/arrayiffy-if-string/
    */
   function arrayiffyString(something) {
     if (typeof something === "string") {
@@ -618,7 +618,7 @@
    * Version: 2.0.23
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace
+   * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
    */
   var rawNbsp = "\xA0";
 
@@ -735,7 +735,7 @@
    * Version: 3.12.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-sort
+   * Homepage: https://codsen.com/os/ranges-sort/
    */
   function rangesSort(arrOfRanges, originalOptions) {
     if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
@@ -1253,7 +1253,7 @@
    * Version: 2.8.19
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-trim-spaces-only
+   * Homepage: https://codsen.com/os/string-trim-spaces-only/
    */
   function trimSpaces(s, originalOpts) {
     if (typeof s !== "string") {

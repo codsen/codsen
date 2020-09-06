@@ -4,7 +4,7 @@
   "description": "Strips HTML tags from strings. No parser, accepts mixed sources.",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html",
+  "homepage": "https://codsen.com/os/string-strip-html/",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -55,29 +55,7 @@
     }
   },
   "lect": {
-    "babelrc": {
-      "override": false,
-      "set": false
-    },
-    "badges": {
-      "cov": true,
-      "deps": true,
-      "deps2d": true,
-      "dev": true,
-      "downloads": true,
-      "license": true,
-      "node": true,
-      "npm": true,
-      "overall": true,
-      "runkit": true,
-      "travis": true,
-      "vulnerabilities": true
-    },
     "defaultExported": true,
-    "eslintrc": {
-      "add": [],
-      "remove": []
-    },
     "files": {
       "delete": [],
       "write_hard": [
@@ -93,10 +71,6 @@
         }
       ]
     },
-    "header": {
-      "dontQuoteDescription": false,
-      "rightFloatedBadge": []
-    },
     "licence": {
       "extras": [
         ""
@@ -111,16 +85,11 @@
     "req": "stripHtml",
     "typeSriptDefinitions": true,
     "various": {
-      "back_to_top": {
-        "enabled": true,
-        "label": ""
-      },
       "devDependencies": [
         "@rollup/plugin-json",
         "ranges-invert",
         "rollup-plugin-node-builtins"
-      ],
-      "travisVersionsOverride": []
+      ]
     }
   },
   "tap": {

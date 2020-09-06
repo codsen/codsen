@@ -4,7 +4,7 @@
  * Version: 2.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/html-table-patcher
+ * Homepage: https://codsen.com/os/html-table-patcher/
  */
 
 import parser from 'codsen-parser';

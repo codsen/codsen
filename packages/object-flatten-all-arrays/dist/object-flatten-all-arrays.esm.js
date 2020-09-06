@@ -4,7 +4,7 @@
  * Version: 4.8.20
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-flatten-all-arrays
+ * Homepage: https://codsen.com/os/object-flatten-all-arrays/
  */
 
 import merge from 'lodash.merge';

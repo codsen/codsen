@@ -4,7 +4,7 @@
  * Version: 2.0.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/html-crush
+ * Homepage: https://codsen.com/os/html-crush/
  */
 
 (function (global, factory) {
@@ -324,7 +324,7 @@
    * Version: 3.12.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-sort
+   * Homepage: https://codsen.com/os/ranges-sort/
    */
   function rangesSort(arrOfRanges, originalOptions) {
     if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
@@ -648,7 +648,7 @@
    * Version: 2.0.23
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace
+   * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
    */
   var rawNbsp = "\xA0";
 
@@ -959,7 +959,7 @@
    * Version: 3.11.34
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string
+   * Homepage: https://codsen.com/os/arrayiffy-if-string/
    */
   function arrayiffyString(something) {
     if (typeof something === "string") {
@@ -1296,7 +1296,7 @@
    * Version: 1.11.7
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-range-expander
+   * Homepage: https://codsen.com/os/string-range-expander/
    */
   function expander(originalOpts) {
     var letterOrDigit = /^[0-9a-zA-Z]+$/;

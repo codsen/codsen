@@ -4,7 +4,7 @@
   "description": "Like lerna add but does just the symlinking, works on CLI bins too",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/lerna-link-dep",
+  "homepage": "https://codsen.com/os/lerna-link-dep/",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -52,31 +52,9 @@
     }
   },
   "lect": {
-    "babelrc": {
-      "override": false,
-      "set": false
-    },
-    "badges": {
-      "cov": false,
-      "deps": true,
-      "deps2d": true,
-      "dev": true,
-      "downloads": true,
-      "license": true,
-      "node": true,
-      "npm": true,
-      "overall": true,
-      "runkit": true,
-      "travis": true,
-      "vulnerabilities": true
-    },
     "cliSpecialKeyword": "johnnydepp",
     "cliSpecialKeywordInstructions": "remember the actor, DEPP as in _Johnny Dependency_ - just type his full name and surname.",
     "defaultExported": false,
-    "eslintrc": {
-      "add": [],
-      "remove": []
-    },
     "files": {
       "delete": [],
       "write_hard": [
@@ -92,10 +70,6 @@
         }
       ]
     },
-    "header": {
-      "dontQuoteDescription": false,
-      "rightFloatedBadge": []
-    },
     "licence": {
       "extras": [
         ""
@@ -109,12 +83,7 @@
     },
     "typeSriptDefinitions": false,
     "various": {
-      "back_to_top": {
-        "enabled": true,
-        "label": ""
-      },
-      "devDependencies": [],
-      "travisVersionsOverride": []
+      "devDependencies": []
     }
   },
   "tap": {

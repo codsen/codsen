@@ -4,7 +4,7 @@
  * Version: 1.9.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-get-object
+ * Homepage: https://codsen.com/os/ast-get-object/
  */
 
 'use strict';

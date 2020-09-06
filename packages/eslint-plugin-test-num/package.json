@@ -4,7 +4,7 @@
   "description": "ESLint plugin to update unit test numbers automatically",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/eslint-plugin-test-num",
+  "homepage": "https://codsen.com/os/eslint-plugin-test-num/",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -50,25 +50,7 @@
     "version": "npm run build && git add ."
   },
   "lect": {
-    "badges": {
-      "cov": false,
-      "deps": true,
-      "deps2d": true,
-      "dev": true,
-      "downloads": true,
-      "license": true,
-      "node": true,
-      "npm": true,
-      "overall": true,
-      "runkit": false,
-      "travis": false,
-      "vulnerabilities": false
-    },
     "defaultExported": true,
-    "eslintrc": {
-      "add": [],
-      "remove": []
-    },
     "files": {
       "delete": [],
       "write_hard": [
@@ -84,10 +66,6 @@
         }
       ]
     },
-    "header": {
-      "dontQuoteDescription": false,
-      "rightFloatedBadge": []
-    },
     "licence": {
       "extras": [
         ""
@@ -102,10 +80,6 @@
     "special": false,
     "typeSriptDefinitions": false,
     "various": {
-      "back_to_top": {
-        "enabled": true,
-        "label": ""
-      },
       "devDependencies": [
         "eslint"
       ]

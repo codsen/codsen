@@ -4,7 +4,7 @@
  * Version: 0.1.32
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/edit-package-json
+ * Homepage: https://codsen.com/os/edit-package-json/
  */
 
 (function (global, factory) {
@@ -2505,7 +2505,7 @@
    * Version: 3.12.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-sort
+   * Homepage: https://codsen.com/os/ranges-sort/
    */
   function rangesSort(arrOfRanges, originalOptions) {
     if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {

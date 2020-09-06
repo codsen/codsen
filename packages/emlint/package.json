@@ -4,7 +4,7 @@
   "description": "Pluggable email template code linter",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/emlint",
+  "homepage": "https://codsen.com/os/emlint/",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -62,29 +62,7 @@
     }
   },
   "lect": {
-    "babelrc": {
-      "override": false,
-      "set": false
-    },
-    "badges": {
-      "cov": true,
-      "deps": true,
-      "deps2d": true,
-      "dev": true,
-      "downloads": true,
-      "license": true,
-      "node": true,
-      "npm": true,
-      "overall": true,
-      "runkit": true,
-      "travis": true,
-      "vulnerabilities": true
-    },
     "defaultExported": false,
-    "eslintrc": {
-      "add": [],
-      "remove": []
-    },
     "files": {
       "delete": [],
       "write_hard": [
@@ -99,10 +77,6 @@
           "name": ""
         }
       ]
-    },
-    "header": {
-      "dontQuoteDescription": false,
-      "rightFloatedBadge": []
     },
     "licence": {
       "extras": [
@@ -125,8 +99,7 @@
         "ranges-apply",
         "rollup-plugin-node-builtins",
         "rollup-plugin-node-globals"
-      ],
-      "travisVersionsOverride": []
+      ]
     }
   },
   "tap": {

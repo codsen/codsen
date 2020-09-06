@@ -1,36 +1,4 @@
 {
-	"babelrc": {
-		"cli": {
-			"presets": [
-				[
-					"@babel/preset-env",
-					{
-						"modules": false,
-						"targets": {
-							"node": "4.0"
-						}
-					}
-				]
-			]
-		},
-		"set": {
-			"env": {
-				"test": {
-					"plugins": [
-						"istanbul"
-					]
-				}
-			},
-			"presets": [
-				[
-					"@babel/preset-env",
-					{
-						"modules": false
-					}
-				]
-			]
-		}
-	},
 	"badges": [
 		{
 			"gitlab": {
@@ -85,56 +53,6 @@
 	"contributing": {
 		"header": "## Contributing",
 		"restofit": "- If you see an error, [raise an issue](<%ISSUELINK%>).\n- If you want a new feature but can't code it up yourself, also [raise an issue](<%ISSUELINK%>). Let's discuss it.\n- If you tried to use this package, but something didn't work out, also [raise an issue](<%ISSUELINK%>). We'll try to help.\n- If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.\n\nIn monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command-line application).\n\nThe npm script \"`dev`\", the `\"dev\": \"rollup -c --dev\"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s."
-	},
-	"eslintrc": {
-		"env": {
-			"es6": true,
-			"node": true
-		},
-		"extends": [
-			"airbnb/base",
-			"eslint:recommended",
-			"plugin:prettier/recommended",
-			"plugin:import/errors",
-			"plugin:import/warnings"
-		],
-		"parserOptions": {
-			"ecmaVersion": 2018,
-			"sourceType": "module"
-		},
-		"plugins": [],
-		"root": true,
-		"rules": {
-			"curly": "error",
-			"no-constant-condition": [
-				"error",
-				{
-					"checkLoops": false
-				}
-			],
-			"no-else-return": "error",
-			"no-inner-declarations": "error",
-			"no-nested-ternary": "error",
-			"no-unneeded-ternary": "error",
-			"no-useless-return": "error",
-			"no-var": "error",
-			"one-var": [
-				"error",
-				"never"
-			],
-			"prefer-arrow-callback": "error",
-			"prefer-const": "error",
-			"prefer-template": "error",
-			"strict": "error",
-			"symbol-description": "error",
-			"yoda": [
-				"error",
-				"never",
-				{
-					"exceptRange": true
-				}
-			]
-		}
 	},
 	"files": {
 		"delete": [
@@ -346,15 +264,6 @@
 			"unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md && npm run clean_cov && npm run perf",
 			"version": "npm run build && git add .",
 			"clean_cov": "../../scripts/leaveCoverageTotalOnly.js"
-		}
-	},
-	"travis": false,
-	"various": {
-		"addBlanks": true,
-		"back_to_top": {
-			"enabled": true,
-			"label": "⬆ back to top",
-			"url": "#"
 		}
 	}
 }

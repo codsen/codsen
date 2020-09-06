@@ -4,7 +4,7 @@
  * Version: 0.7.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser
+ * Homepage: https://codsen.com/os/codsen-parser/
  */
 
 'use strict';

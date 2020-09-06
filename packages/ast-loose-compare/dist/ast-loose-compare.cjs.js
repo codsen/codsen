@@ -4,7 +4,7 @@
  * Version: 1.8.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-loose-compare
+ * Homepage: https://codsen.com/os/ast-loose-compare/
  */
 
 'use strict';

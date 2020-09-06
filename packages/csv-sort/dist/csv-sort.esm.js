@@ -4,7 +4,7 @@
  * Version: 3.0.68
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/csv-sort
+ * Homepage: https://codsen.com/os/csv-sort/
  */
 
 import split from 'csv-split-easy';

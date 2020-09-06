@@ -4,7 +4,7 @@
  * Version: 2.17.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/codsen-tokenizer
+ * Homepage: https://codsen.com/os/codsen-tokenizer/
  */
 
 import { matchRight, matchLeft, matchRightIncl, matchLeftIncl } from 'string-match-left-right';

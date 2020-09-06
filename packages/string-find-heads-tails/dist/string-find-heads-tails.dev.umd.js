@@ -4,7 +4,7 @@
  * Version: 3.16.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-find-heads-tails
+ * Homepage: https://codsen.com/os/string-find-heads-tails/
  */
 
 (function (global, factory) {
@@ -84,7 +84,7 @@
    * Version: 3.11.34
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string
+   * Homepage: https://codsen.com/os/arrayiffy-if-string/
    */
   function arrayiffyString(something) {
     if (typeof something === "string") {

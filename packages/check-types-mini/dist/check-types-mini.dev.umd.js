@@ -4,7 +4,7 @@
  * Version: 5.7.68
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini
+ * Homepage: https://codsen.com/os/check-types-mini/
  */
 
 (function (global, factory) {
@@ -3873,7 +3873,7 @@
    * Version: 3.11.34
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string
+   * Homepage: https://codsen.com/os/arrayiffy-if-string/
    */
   function arrayiffyString(something) {
     if (typeof something === "string") {

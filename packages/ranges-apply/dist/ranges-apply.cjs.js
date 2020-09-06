@@ -4,7 +4,7 @@
  * Version: 3.1.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply
+ * Homepage: https://codsen.com/os/ranges-apply/
  */
 
 'use strict';

@@ -4,7 +4,7 @@
  * Version: 3.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
+ * Homepage: https://codsen.com/os/string-fix-broken-named-entities/
  */
 
 import leven from 'leven';

@@ -4,7 +4,7 @@
  * Version: 2.9.67
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/email-all-chars-within-ascii
+ * Homepage: https://codsen.com/os/email-all-chars-within-ascii/
  */
 
 'use strict';

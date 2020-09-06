@@ -4,7 +4,7 @@
  * Version: 4.11.23
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-flatten-referencing
+ * Homepage: https://codsen.com/os/object-flatten-referencing/
  */
 
 (function (global, factory) {
@@ -2021,7 +2021,7 @@
    * Version: 2.10.7
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/str-indexes-of-plus
+   * Homepage: https://codsen.com/os/str-indexes-of-plus/
    */
   function existy(x) {
     return x != null;

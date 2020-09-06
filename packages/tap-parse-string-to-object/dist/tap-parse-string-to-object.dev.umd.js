@@ -4,7 +4,7 @@
  * Version: 1.2.19
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/tap-parse-string-to-object
+ * Homepage: https://codsen.com/os/tap-parse-string-to-object/
  */
 
 (function (global, factory) {

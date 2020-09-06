@@ -4,7 +4,7 @@
  * Version: 1.10.16
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-convert-indexes
+ * Homepage: https://codsen.com/os/string-convert-indexes/
  */
 
 'use strict';

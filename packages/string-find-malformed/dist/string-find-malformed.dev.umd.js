@@ -4,7 +4,7 @@
  * Version: 1.1.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-find-malformed
+ * Homepage: https://codsen.com/os/string-find-malformed/
  */
 
 (function (global, factory) {

@@ -4,7 +4,7 @@
  * Version: 10.11.25
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-merge-advanced
+ * Homepage: https://codsen.com/os/object-merge-advanced/
  */
 
 import clone from 'lodash.clonedeep';

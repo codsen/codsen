@@ -4,7 +4,7 @@
  * Version: 1.10.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-is-empty
+ * Homepage: https://codsen.com/os/ast-is-empty/
  */
 
 'use strict';

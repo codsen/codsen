@@ -4,7 +4,7 @@
  * Version: 1.6.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-widows
+ * Homepage: https://codsen.com/os/string-remove-widows/
  */
 
 (function (global, factory) {
@@ -139,7 +139,7 @@
    * Version: 3.11.34
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string
+   * Homepage: https://codsen.com/os/arrayiffy-if-string/
    */
   function arrayiffyString(something) {
     if (typeof something === "string") {
@@ -2545,7 +2545,7 @@
    * Version: 2.0.23
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace
+   * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
    */
   var rawNbsp = "\xA0";
 
@@ -2662,7 +2662,7 @@
    * Version: 3.12.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-sort
+   * Homepage: https://codsen.com/os/ranges-sort/
    */
   function rangesSort(arrOfRanges, originalOptions) {
     if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {

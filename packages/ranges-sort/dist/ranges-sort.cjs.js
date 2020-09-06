@@ -4,7 +4,7 @@
  * Version: 3.12.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-sort
+ * Homepage: https://codsen.com/os/ranges-sort/
  */
 
 'use strict';

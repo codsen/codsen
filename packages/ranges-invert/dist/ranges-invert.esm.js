@@ -4,7 +4,7 @@
  * Version: 2.1.45
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-invert
+ * Homepage: https://codsen.com/os/ranges-invert/
  */
 
 import mergeRanges from 'ranges-merge';

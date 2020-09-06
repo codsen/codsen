@@ -4,7 +4,7 @@
  * Version: 1.6.68
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-split-by-whitespace
+ * Homepage: https://codsen.com/os/string-split-by-whitespace/
  */
 
 import within from 'ranges-is-index-within';

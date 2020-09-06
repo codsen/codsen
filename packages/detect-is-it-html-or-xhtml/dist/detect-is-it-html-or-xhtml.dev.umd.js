@@ -4,7 +4,7 @@
  * Version: 3.9.59
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/detect-is-it-html-or-xhtml
+ * Homepage: https://codsen.com/os/detect-is-it-html-or-xhtml/
  */
 
 (function (global, factory) {

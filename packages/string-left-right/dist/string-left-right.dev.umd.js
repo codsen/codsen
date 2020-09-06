@@ -4,7 +4,7 @@
  * Version: 2.3.27
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right
+ * Homepage: https://codsen.com/os/string-left-right/
  */
 
 (function (global, factory) {

@@ -4,7 +4,7 @@
  * Version: 2.7.23
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/js-row-num
+ * Homepage: https://codsen.com/os/js-row-num/
  */
 
 import Ranges from 'ranges-push';

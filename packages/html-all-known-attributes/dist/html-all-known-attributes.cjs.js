@@ -4,7 +4,7 @@
  * Version: 2.0.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities
+ * Homepage: https://codsen.com/os/html-all-known-attributes/
  */
 
 'use strict';

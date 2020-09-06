@@ -4,7 +4,7 @@
  * Version: 5.9.28
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-extract-class-names
+ * Homepage: https://codsen.com/os/string-extract-class-names/
  */
 
 import { left, right } from 'string-left-right';

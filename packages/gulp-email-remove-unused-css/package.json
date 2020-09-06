@@ -4,7 +4,7 @@
   "description": "Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/gulp-email-remove-unused-css",
+  "homepage": "https://codsen.com/os/gulp-email-remove-unused-css/",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -45,29 +45,7 @@
     }
   },
   "lect": {
-    "babelrc": {
-      "override": false,
-      "set": false
-    },
-    "badges": {
-      "cov": true,
-      "deps": true,
-      "deps2d": true,
-      "dev": true,
-      "downloads": true,
-      "license": true,
-      "node": true,
-      "npm": true,
-      "overall": true,
-      "runkit": false,
-      "travis": true,
-      "vulnerabilities": true
-    },
     "defaultExported": false,
-    "eslintrc": {
-      "add": [],
-      "remove": []
-    },
     "files": {
       "delete": [],
       "write_hard": [
@@ -83,10 +61,6 @@
         }
       ]
     },
-    "header": {
-      "dontQuoteDescription": false,
-      "rightFloatedBadge": []
-    },
     "licence": {
       "extras": [
         ""
@@ -100,16 +74,11 @@
     },
     "typeSriptDefinitions": false,
     "various": {
-      "back_to_top": {
-        "enabled": true,
-        "label": ""
-      },
       "devDependencies": [
         "tempy",
         "map-stream",
         "vinyl-string"
-      ],
-      "travisVersionsOverride": []
+      ]
     }
   },
   "tap": {

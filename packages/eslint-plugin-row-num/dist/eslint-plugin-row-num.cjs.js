@@ -4,7 +4,7 @@
  * Version: 1.2.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/eslint-plugin-row-num
+ * Homepage: https://codsen.com/os/eslint-plugin-row-num/
  */
 
 'use strict';

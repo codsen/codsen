@@ -4,7 +4,7 @@
  * Version: 2.0.57
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-regex
+ * Homepage: https://codsen.com/os/ranges-regex/
  */
 
 import mergeRanges from 'ranges-merge';

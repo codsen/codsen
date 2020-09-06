@@ -4,7 +4,7 @@
  * Version: 3.0.67
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-thousand-separators
+ * Homepage: https://codsen.com/os/string-remove-thousand-separators/
  */
 
 'use strict';

@@ -4,7 +4,7 @@
   "description": "Parses raw Tap: string-to-object or stream-to-a-promise-of-an-object",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/tap-parse-string-to-object",
+  "homepage": "https://codsen.com/os/tap-parse-string-to-object/",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -54,29 +54,7 @@
     }
   },
   "lect": {
-    "babelrc": {
-      "override": false,
-      "set": false
-    },
-    "badges": {
-      "cov": true,
-      "deps": true,
-      "deps2d": true,
-      "dev": true,
-      "downloads": true,
-      "license": true,
-      "node": true,
-      "npm": true,
-      "overall": true,
-      "runkit": true,
-      "travis": true,
-      "vulnerabilities": true
-    },
     "defaultExported": true,
-    "eslintrc": {
-      "add": [],
-      "remove": []
-    },
     "files": {
       "delete": [],
       "write_hard": [
@@ -92,10 +70,6 @@
         }
       ]
     },
-    "header": {
-      "dontQuoteDescription": false,
-      "rightFloatedBadge": []
-    },
     "licence": {
       "extras": [
         ""
@@ -110,17 +84,12 @@
     "req": "parseRawTap",
     "typeSriptDefinitions": false,
     "various": {
-      "back_to_top": {
-        "enabled": true,
-        "label": ""
-      },
       "devDependencies": [
         "fs-extra",
         "rollup-plugin-node-builtins",
         "tempy",
         "eslint-plugin-node"
-      ],
-      "travisVersionsOverride": []
+      ]
     }
   },
   "tap": {

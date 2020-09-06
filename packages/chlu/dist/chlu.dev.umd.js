@@ -4,7 +4,7 @@
  * Version: 3.7.72
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/chlu
+ * Homepage: https://codsen.com/os/chlu/
  */
 
 (function (global, factory) {
@@ -4691,7 +4691,7 @@
    * Version: 3.7.61
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/easy-replace
+   * Homepage: https://codsen.com/os/easy-replace/
    */
   function astralAwareSearch(whereToLook, whatToLookFor, opts) {
     function existy(something) {

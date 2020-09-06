@@ -4,7 +4,7 @@
  * Version: 6.6.29
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/json-comb-core
+ * Homepage: https://codsen.com/os/json-comb-core/
  */
 
 (function (global, factory) {
@@ -6424,7 +6424,7 @@
    * Version: 3.11.34
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string
+   * Homepage: https://codsen.com/os/arrayiffy-if-string/
    */
   function arrayiffyString(something) {
     if (typeof something === "string") {
@@ -6444,7 +6444,7 @@
    * Version: 2.9.61
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/util-nonempty
+   * Homepage: https://codsen.com/os/util-nonempty/
    */
   var isArr$2 = Array.isArray;
 
@@ -9058,7 +9058,7 @@
    * Version: 3.9.63
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-set-all-values-to
+   * Homepage: https://codsen.com/os/object-set-all-values-to/
    */
   var isArr$6 = Array.isArray;
 
@@ -9202,7 +9202,7 @@
    * Version: 2.9.7
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-no-new-keys
+   * Homepage: https://codsen.com/os/object-no-new-keys/
    */
   function isObj$1(something) {
     return something && _typeof(something) === "object" && !Array.isArray(something);

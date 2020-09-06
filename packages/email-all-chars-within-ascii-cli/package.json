@@ -4,7 +4,7 @@
   "description": "Command line app to scan email templates, are all their characters within ASCII range",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/email-all-chars-within-ascii-cli",
+  "homepage": "https://codsen.com/os/email-all-chars-within-ascii-cli/",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -45,31 +45,9 @@
     }
   },
   "lect": {
-    "babelrc": {
-      "override": false,
-      "set": false
-    },
-    "badges": {
-      "cov": true,
-      "deps": true,
-      "deps2d": true,
-      "dev": true,
-      "downloads": true,
-      "license": true,
-      "node": true,
-      "npm": true,
-      "overall": true,
-      "runkit": true,
-      "travis": true,
-      "vulnerabilities": true
-    },
     "cliSpecialKeyword": "tinaturner",
     "cliSpecialKeywordInstructions": "",
     "defaultExported": false,
-    "eslintrc": {
-      "add": [],
-      "remove": []
-    },
     "files": {
       "delete": [],
       "write_hard": [
@@ -85,10 +63,6 @@
         }
       ]
     },
-    "header": {
-      "dontQuoteDescription": false,
-      "rightFloatedBadge": []
-    },
     "licence": {
       "extras": [
         ""
@@ -102,14 +76,9 @@
     },
     "typeSriptDefinitions": false,
     "various": {
-      "back_to_top": {
-        "enabled": true,
-        "label": ""
-      },
       "devDependencies": [
         "tempy"
-      ],
-      "travisVersionsOverride": []
+      ]
     }
   },
   "tap": {

@@ -4,7 +4,7 @@
   "description": "Parse SASS variables file into a plain object of CSS key-value pairs",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/string-extract-sass-vars",
+  "homepage": "https://codsen.com/os/string-extract-sass-vars/",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -54,29 +54,7 @@
   },
   "browserslist": "> 0.25%, not dead",
   "lect": {
-    "babelrc": {
-      "override": false,
-      "set": false
-    },
-    "badges": {
-      "cov": true,
-      "deps": true,
-      "deps2d": true,
-      "dev": true,
-      "downloads": true,
-      "license": true,
-      "node": true,
-      "npm": true,
-      "overall": true,
-      "runkit": true,
-      "travis": true,
-      "vulnerabilities": true
-    },
     "defaultExported": true,
-    "eslintrc": {
-      "add": [],
-      "remove": []
-    },
     "files": {
       "delete": [],
       "write_hard": [
@@ -92,10 +70,6 @@
         }
       ]
     },
-    "header": {
-      "dontQuoteDescription": false,
-      "rightFloatedBadge": []
-    },
     "licence": {
       "extras": [
         ""
@@ -110,12 +84,7 @@
     "req": "extractVars",
     "typeSriptDefinitions": false,
     "various": {
-      "back_to_top": {
-        "enabled": true,
-        "label": ""
-      },
-      "devDependencies": [],
-      "travisVersionsOverride": []
+      "devDependencies": []
     }
   },
   "tap": {

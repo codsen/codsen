@@ -4,7 +4,7 @@
  * Version: 1.13.14
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-compare
+ * Homepage: https://codsen.com/os/ast-compare/
  */
 
 'use strict';

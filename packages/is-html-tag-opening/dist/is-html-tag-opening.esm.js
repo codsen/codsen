@@ -4,7 +4,7 @@
  * Version: 1.7.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-html-tag-opening
+ * Homepage: https://codsen.com/os/is-html-tag-opening/
  */
 
 import { matchRightIncl, matchRight } from 'string-match-left-right';

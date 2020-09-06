@@ -4,7 +4,7 @@
   "description": "Like npm-check-updates but supports Lerna monorepos and enforces strict semver values",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/update-versions",
+  "homepage": "https://codsen.com/os/update-versions/",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -54,29 +54,7 @@
     }
   },
   "lect": {
-    "babelrc": {
-      "override": false,
-      "set": false
-    },
-    "badges": {
-      "cov": true,
-      "deps": true,
-      "deps2d": true,
-      "dev": true,
-      "downloads": true,
-      "license": true,
-      "node": true,
-      "npm": true,
-      "overall": true,
-      "runkit": true,
-      "travis": true,
-      "vulnerabilities": true
-    },
     "defaultExported": false,
-    "eslintrc": {
-      "add": [],
-      "remove": []
-    },
     "files": {
       "delete": [],
       "write_hard": [
@@ -91,10 +69,6 @@
           "name": ""
         }
       ]
-    },
-    "header": {
-      "dontQuoteDescription": false,
-      "rightFloatedBadge": []
     },
     "licence": {
       "extras": [
@@ -111,15 +85,10 @@
     },
     "typeSriptDefinitions": false,
     "various": {
-      "back_to_top": {
-        "enabled": true,
-        "label": ""
-      },
       "devDependencies": [
         "fs-extra",
         "lodash.clonedeep"
-      ],
-      "travisVersionsOverride": []
+      ]
     }
   },
   "tap": {

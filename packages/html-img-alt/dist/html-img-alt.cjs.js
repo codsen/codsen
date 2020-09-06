@@ -4,7 +4,7 @@
  * Version: 1.4.58
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/html-img-alt
+ * Homepage: https://codsen.com/os/html-img-alt/
  */
 
 'use strict';

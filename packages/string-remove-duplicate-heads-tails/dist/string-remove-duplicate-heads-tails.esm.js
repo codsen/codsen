@@ -4,7 +4,7 @@
  * Version: 3.0.68
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-duplicate-heads-tails
+ * Homepage: https://codsen.com/os/string-remove-duplicate-heads-tails/
  */
 
 import isObj from 'lodash.isplainobject';

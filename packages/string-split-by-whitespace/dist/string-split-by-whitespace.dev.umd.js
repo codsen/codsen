@@ -4,7 +4,7 @@
  * Version: 1.6.68
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-split-by-whitespace
+ * Homepage: https://codsen.com/os/string-split-by-whitespace/
  */
 
 (function (global, factory) {
@@ -68,7 +68,7 @@
    * Version: 1.14.37
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-is-index-within
+   * Homepage: https://codsen.com/os/ranges-is-index-within/
    */
   var isArr = Array.isArray;
 

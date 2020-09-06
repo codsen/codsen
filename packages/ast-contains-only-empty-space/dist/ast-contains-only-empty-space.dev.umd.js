@@ -4,7 +4,7 @@
  * Version: 1.9.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-contains-only-empty-space
+ * Homepage: https://codsen.com/os/ast-contains-only-empty-space/
  */
 
 (function (global, factory) {

@@ -4,7 +4,7 @@
  * Version: 2.10.65
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/color-shorthand-hex-to-six-digit
+ * Homepage: https://codsen.com/os/color-shorthand-hex-to-six-digit/
  */
 
 import r from 'hex-color-regex';

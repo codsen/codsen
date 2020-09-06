@@ -10,118 +10,15 @@
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
-## Table of Contents
-
-- [Install](#install)
-- [Idea](#idea)
-- [API](#api)
-- [Example](#example)
-- [Why Set not Array and not JSON?](#why-set-not-array-and-not-json)
-- [Contributing](#contributing)
-- [Licence](#licence)
-
 ## Install
 
 ```bash
 npm i html-all-known-attributes
 ```
 
-Consume via a `require()`:
+## Documentation
 
-```js
-const { allHtmlAttribs } = require("html-all-known-attributes");
-```
-
-or as an ES Module:
-
-```js
-import { allHtmlAttribs } from "html-all-known-attributes";
-```
-
-or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/html-all-known-attributes/dist/html-all-known-attributes.umd.js"></script>
-```
-
-```js
-// in which case you get a global variable "htmlAllKnownAttributes" which you consume like this:
-const { allHtmlAttribs } = htmlAllKnownAttributes;
-```
-
-This package has three builds in `dist/` folder:
-
-| Type                                                                                                    | Key in `package.json` | Path                                    | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/html-all-known-attributes.cjs.js` | 13 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/html-all-known-attributes.esm.js` | 15 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/html-all-known-attributes.umd.js` | 13 KB |
-
-**[⬆ back to top](#)**
-
-## Idea
-
-This package aims to have the most excessive list of all legit attribute names that can be put into HTML. Currently we have a list of 702 attribute names.
-
-This includes deprecated attributes, Microsoft-proprietary-ones that email templates use (like `mso-line-height-rule`) and other-ones you've probably never seen before.
-
-**[⬆ back to top](#)**
-
-## API
-
-This package exports a plain object with a single key, `allHtmlAttribs`. Its value is a [Set](https://exploringjs.com/impatient-js/ch_sets.html) of 702 strings — all HTML attribute names known to the Humanity.
-
-**[⬆ back to top](#)**
-
-## Example
-
-```js
-const { allHtmlAttribs } = require("html-all-known-attributes");
-
-console.log(allHtmlAttribs.has("href"));
-// => true
-
-console.log(allHtmlAttribs.size); // not size()
-// => 702
-
-// iterating:
-for (const x of allHtmlAttribs) {
-  console.log(x);
-}
-// => "abbr",
-//    "accept",
-//    "accept-charset",
-//    ...
-```
-
-**[⬆ back to top](#)**
-
-## Why Set not Array and not JSON?
-
-Because of performance reasons.
-
-Previously, we `import()`ed JSON and exported it as an object value.
-
-Now, we export hardcoded Set, in an object value.
-
-Size evaluation speed is 3187251.38% faster according our built-in perf tests (see `perf/` folder in the root of each package in this monorepo):
-
-![matching algorithm](https://glcdn.githack.com/codsen/codsen/raw/master/packages/html-all-known-attributes/media/perf_set_vs_array_from_json.png)
-
-**[⬆ back to top](#)**
-
-## Contributing
-
-- If you see an error, [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=html-all-known-attributes%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Ahtml-all-known-attributes%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>).
-- If you want a new feature but can't code it up yourself, also [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=html-all-known-attributes%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Ahtml-all-known-attributes%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>). Let's discuss it.
-- If you tried to use this package, but something didn't work out, also [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=html-all-known-attributes%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Ahtml-all-known-attributes%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>). We'll try to help.
-- If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
-
-In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command-line application).
-
-The npm script "`dev`", the `"dev": "rollup -c --dev"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
-
-**[⬆ back to top](#)**
+Please [visit our documentation](https://codsen.com/os/html-all-known-attributes/) for a full description of the API and examples.
 
 ## Licence
 

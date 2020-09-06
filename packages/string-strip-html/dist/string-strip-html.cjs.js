@@ -4,7 +4,7 @@
  * Version: 5.0.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html
+ * Homepage: https://codsen.com/os/string-strip-html/
  */
 
 'use strict';

@@ -4,7 +4,7 @@
  * Version: 3.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
+ * Homepage: https://codsen.com/os/string-fix-broken-named-entities/
  */
 
 (function (global, factory) {
@@ -232,7 +232,7 @@
    * Version: 1.3.3
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities
+   * Homepage: https://codsen.com/os/all-named-html-entities/
    */
   var Aacute = "Á";
   var aacute = "á";

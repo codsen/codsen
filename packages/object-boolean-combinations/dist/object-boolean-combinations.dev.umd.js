@@ -4,7 +4,7 @@
  * Version: 2.11.63
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-boolean-combinations
+ * Homepage: https://codsen.com/os/object-boolean-combinations/
  */
 
 (function (global, factory) {

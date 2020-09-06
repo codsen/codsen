@@ -4,7 +4,7 @@
  * Version: 2.0.23
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace
+ * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
  */
 
 'use strict';

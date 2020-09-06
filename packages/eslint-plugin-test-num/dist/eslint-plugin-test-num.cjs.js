@@ -4,7 +4,7 @@
  * Version: 1.3.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/eslint-plugin-test-num
+ * Homepage: https://codsen.com/os/eslint-plugin-test-num/
  */
 
 'use strict';

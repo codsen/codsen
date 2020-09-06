@@ -4,7 +4,7 @@
  * Version: 2.0.58
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-crop
+ * Homepage: https://codsen.com/os/ranges-crop/
  */
 
 'use strict';

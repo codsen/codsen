@@ -4,7 +4,7 @@
  * Version: 1.5.61
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-overlap-one-on-another
+ * Homepage: https://codsen.com/os/string-overlap-one-on-another/
  */
 
 function overlap(str1, str2, originalOpts) {

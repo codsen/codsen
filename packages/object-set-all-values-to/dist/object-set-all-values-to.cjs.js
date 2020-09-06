@@ -4,7 +4,7 @@
  * Version: 3.9.63
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-set-all-values-to
+ * Homepage: https://codsen.com/os/object-set-all-values-to/
  */
 
 'use strict';

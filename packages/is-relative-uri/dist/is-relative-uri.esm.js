@@ -4,7 +4,7 @@
  * Version: 1.0.16
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-relative-uri
+ * Homepage: https://codsen.com/os/is-relative-uri/
  */
 
 const BACKSLASH = "\u005C";

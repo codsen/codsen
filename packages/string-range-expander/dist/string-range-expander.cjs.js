@@ -4,7 +4,7 @@
  * Version: 1.11.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-range-expander
+ * Homepage: https://codsen.com/os/string-range-expander/
  */
 
 'use strict';

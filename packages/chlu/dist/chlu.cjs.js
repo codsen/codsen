@@ -4,7 +4,7 @@
  * Version: 3.7.72
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/chlu
+ * Homepage: https://codsen.com/os/chlu/
  */
 
 'use strict';

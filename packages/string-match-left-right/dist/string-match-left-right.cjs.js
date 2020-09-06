@@ -4,7 +4,7 @@
  * Version: 4.0.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right
+ * Homepage: https://codsen.com/os/string-match-left-right/
  */
 
 'use strict';

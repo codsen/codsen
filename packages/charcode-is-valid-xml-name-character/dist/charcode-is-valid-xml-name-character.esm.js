@@ -4,7 +4,7 @@
  * Version: 1.10.60
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/charcode-is-valid-xml-name-character
+ * Homepage: https://codsen.com/os/charcode-is-valid-xml-name-character/
  */
 
 import rangesIsIndexWithin from 'ranges-is-index-within';

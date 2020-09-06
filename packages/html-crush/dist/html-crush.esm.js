@@ -4,7 +4,7 @@
  * Version: 2.0.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/html-crush
+ * Homepage: https://codsen.com/os/html-crush/
  */
 
 import isObj from 'lodash.isplainobject';

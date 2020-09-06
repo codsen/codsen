@@ -4,7 +4,7 @@
   "description": "Extract class (or id) name from a string",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/string-extract-class-names",
+  "homepage": "https://codsen.com/os/string-extract-class-names/",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -47,29 +47,7 @@
     }
   },
   "lect": {
-    "babelrc": {
-      "override": false,
-      "set": false
-    },
-    "badges": {
-      "cov": true,
-      "deps": true,
-      "deps2d": true,
-      "dev": true,
-      "downloads": true,
-      "license": true,
-      "node": true,
-      "npm": true,
-      "overall": true,
-      "runkit": true,
-      "travis": true,
-      "vulnerabilities": true
-    },
     "defaultExported": true,
-    "eslintrc": {
-      "add": [],
-      "remove": []
-    },
     "files": {
       "delete": [],
       "write_hard": [
@@ -85,10 +63,6 @@
         }
       ]
     },
-    "header": {
-      "dontQuoteDescription": false,
-      "rightFloatedBadge": []
-    },
     "licence": {
       "extras": [
         ""
@@ -103,12 +77,7 @@
     "req": "extract",
     "typeSriptDefinitions": false,
     "various": {
-      "back_to_top": {
-        "enabled": true,
-        "label": ""
-      },
-      "devDependencies": [],
-      "travisVersionsOverride": []
+      "devDependencies": []
     }
   },
   "tap": {

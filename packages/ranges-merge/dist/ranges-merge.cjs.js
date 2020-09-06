@@ -4,7 +4,7 @@
  * Version: 4.3.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge
+ * Homepage: https://codsen.com/os/ranges-merge/
  */
 
 'use strict';

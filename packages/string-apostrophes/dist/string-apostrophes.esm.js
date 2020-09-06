@@ -4,7 +4,7 @@
  * Version: 1.2.26
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-apostrophes
+ * Homepage: https://codsen.com/os/string-apostrophes/
  */
 
 import rangesApply from 'ranges-apply';

@@ -4,7 +4,7 @@
   "description": "Does a given character belong to XML spec's \"Production 4 OR 4a\" type (is acceptable for XML element's name)",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/charcode-is-valid-xml-name-character",
+  "homepage": "https://codsen.com/os/charcode-is-valid-xml-name-character/",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -56,29 +56,7 @@
     }
   },
   "lect": {
-    "babelrc": {
-      "override": false,
-      "set": false
-    },
-    "badges": {
-      "cov": true,
-      "deps": true,
-      "deps2d": true,
-      "dev": true,
-      "downloads": true,
-      "license": true,
-      "node": true,
-      "npm": true,
-      "overall": true,
-      "runkit": true,
-      "travis": true,
-      "vulnerabilities": true
-    },
     "defaultExported": false,
-    "eslintrc": {
-      "add": [],
-      "remove": []
-    },
     "files": {
       "delete": [],
       "write_hard": [
@@ -94,10 +72,6 @@
         }
       ]
     },
-    "header": {
-      "dontQuoteDescription": false,
-      "rightFloatedBadge": []
-    },
     "licence": {
       "extras": [
         ""
@@ -112,12 +86,7 @@
     "req": "{ isProduction4, isProduction4a, validFirstChar, validSecondCharOnwards }",
     "typeSriptDefinitions": false,
     "various": {
-      "back_to_top": {
-        "enabled": true,
-        "label": ""
-      },
-      "devDependencies": [],
-      "travisVersionsOverride": []
+      "devDependencies": []
     }
   },
   "tap": {

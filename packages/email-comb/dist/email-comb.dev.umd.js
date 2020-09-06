@@ -4,7 +4,7 @@
  * Version: 3.9.22
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/email-comb
+ * Homepage: https://codsen.com/os/email-comb/
  */
 
 (function (global, factory) {
@@ -196,7 +196,7 @@
    * Version: 3.11.34
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string
+   * Homepage: https://codsen.com/os/arrayiffy-if-string/
    */
   function arrayiffyString(something) {
     if (typeof something === "string") {
@@ -533,7 +533,7 @@
    * Version: 1.8.59
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/regex-empty-conditional-comments
+   * Homepage: https://codsen.com/os/regex-empty-conditional-comments/
    */
   var main$1 = function main() {
     return /<!(--)?\[if[^\]]*]>[<>!-\s]*<!\[endif\]\1>/gi;
@@ -3868,7 +3868,7 @@
    * Version: 1.11.7
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-range-expander
+   * Homepage: https://codsen.com/os/string-range-expander/
    */
   function expander(originalOpts) {
     var letterOrDigit = /^[0-9a-zA-Z]+$/;
@@ -4025,7 +4025,7 @@
    * Version: 1.2.42
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-uglify
+   * Homepage: https://codsen.com/os/string-uglify/
    */
   var isArr = Array.isArray;
 
@@ -4230,7 +4230,7 @@
    * Version: 3.12.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-sort
+   * Homepage: https://codsen.com/os/ranges-sort/
    */
   function rangesSort(arrOfRanges, originalOptions) {
     if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
@@ -4783,7 +4783,7 @@
    * Version: 1.10.7
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-is-empty
+   * Homepage: https://codsen.com/os/ast-is-empty/
    */
   function isObj$1(something) {
     return something && _typeof(something) === "object" && !Array.isArray(something);
@@ -4843,7 +4843,7 @@
    * Version: 2.0.23
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace
+   * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
    */
   var rawNbsp = "\xA0";
 

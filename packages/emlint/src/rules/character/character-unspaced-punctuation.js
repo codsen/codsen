@@ -8,11 +8,11 @@ import { left, right } from "string-left-right";
 
 function characterUnspacedPunctuation(context, ...originalOpts) {
   const charCodeMapping = {
-    "63": "questionMark",
-    "33": "exclamationMark",
-    "59": "semicolon",
-    "187": "rightDoubleAngleQuotMark",
-    "171": "leftDoubleAngleQuotMark",
+    63: "questionMark",
+    33: "exclamationMark",
+    59: "semicolon",
+    187: "rightDoubleAngleQuotMark",
+    171: "leftDoubleAngleQuotMark",
   };
 
   return {

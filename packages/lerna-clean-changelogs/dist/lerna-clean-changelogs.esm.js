@@ -4,7 +4,7 @@
  * Version: 1.3.57
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs
+ * Homepage: https://codsen.com/os/lerna-clean-changelogs/
  */
 
 var version = "1.3.57";

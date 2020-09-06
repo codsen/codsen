@@ -4,7 +4,7 @@
   "description": "Utility library of AST helper functions",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-util",
+  "homepage": "https://codsen.com/os/ast-monkey-util/",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -57,31 +57,7 @@
     }
   },
   "lect": {
-    "babelrc": {
-      "override": false,
-      "set": false
-    },
-    "badges": {
-      "cov": true,
-      "deps": true,
-      "deps2d": true,
-      "dev": true,
-      "downloads": true,
-      "license": true,
-      "node": true,
-      "npm": true,
-      "overall": true,
-      "runkit": true,
-      "travis": true,
-      "vulnerabilities": true
-    },
     "defaultExported": false,
-    "eslintrc": {
-      "add": [
-        "whatnot"
-      ],
-      "remove": []
-    },
     "files": {
       "delete": [],
       "write_hard": [
@@ -97,10 +73,6 @@
         }
       ]
     },
-    "header": {
-      "dontQuoteDescription": false,
-      "rightFloatedBadge": []
-    },
     "licence": {
       "extras": [
         ""
@@ -115,15 +87,10 @@
     "req": "{ pathNext, pathPrev, pathUp }",
     "typeSriptDefinitions": false,
     "various": {
-      "back_to_top": {
-        "enabled": true,
-        "label": ""
-      },
       "devDependencies": [
         "object-path",
         "lodash.isequal"
-      ],
-      "travisVersionsOverride": []
+      ]
     }
   },
   "tap": {

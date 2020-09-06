@@ -4,7 +4,7 @@
  * Version: 3.7.17
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
+ * Homepage: https://codsen.com/os/ranges-push/
  */
 
 import collapseLeadingWhitespace from 'string-collapse-leading-whitespace';

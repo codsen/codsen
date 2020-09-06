@@ -1,10 +1,10 @@
 {
   "name": "codsen-parser",
   "version": "0.7.3",
-  "description": "Parser aiming at broken code, especially HTML & CSS",
+  "description": "Parser aiming at broken or mixed code, especially HTML & CSS",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/codsen-parser",
+  "homepage": "https://codsen.com/os/codsen-parser/",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -48,31 +48,7 @@
     }
   },
   "lect": {
-    "babelrc": {
-      "override": false,
-      "set": false
-    },
-    "badges": {
-      "cov": true,
-      "deps": true,
-      "deps2d": true,
-      "dev": true,
-      "downloads": true,
-      "license": true,
-      "node": true,
-      "npm": true,
-      "overall": true,
-      "runkit": true,
-      "travis": true,
-      "vulnerabilities": true
-    },
     "defaultExported": true,
-    "eslintrc": {
-      "add": [
-        "whatnot"
-      ],
-      "remove": []
-    },
     "files": {
       "delete": [],
       "write_hard": [
@@ -88,10 +64,6 @@
         }
       ]
     },
-    "header": {
-      "dontQuoteDescription": false,
-      "rightFloatedBadge": []
-    },
     "licence": {
       "extras": [
         ""
@@ -106,12 +78,7 @@
     "req": "cparser",
     "typeSriptDefinitions": false,
     "various": {
-      "back_to_top": {
-        "enabled": true,
-        "label": ""
-      },
-      "devDependencies": [],
-      "travisVersionsOverride": []
+      "devDependencies": []
     }
   },
   "tap": {

@@ -4,7 +4,7 @@
  * Version: 2.12.38
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/array-includes-with-glob
+ * Homepage: https://codsen.com/os/array-includes-with-glob/
  */
 
 'use strict';

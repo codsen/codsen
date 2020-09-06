@@ -4,7 +4,7 @@
  * Version: 1.10.60
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-character-is-astral-surrogate
+ * Homepage: https://codsen.com/os/string-character-is-astral-surrogate/
  */
 
 (function (global, factory) {

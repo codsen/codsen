@@ -4,7 +4,7 @@
  * Version: 1.9.45
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/array-of-arrays-into-ast
+ * Homepage: https://codsen.com/os/array-of-arrays-into-ast/
  */
 
 import checkTypes from 'check-types-mini';

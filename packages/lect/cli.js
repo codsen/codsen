@@ -24,12 +24,8 @@ const uniq = require("lodash.uniq");
 const camelCase = require("lodash.camelcase");
 // const semverRegex = require("semver-regex");
 // const semverCompare = require("semver-compare");
-// const bSlug = require("bitbucket-slug");
-const GithubSlugger = require("github-slugger");
 
 const pull1 = require("array-pull-all-with-glob");
-
-const slugger = new GithubSlugger();
 
 const findRecursivelyUp = require("find-file-recursively-up");
 const inquirer = require("inquirer");
@@ -49,17 +45,7 @@ const {
 
 // const flow = require('lodash.flow')
 
-const {
-  resolveVars,
-  removeRecognisedLintingBadges,
-  piecesHeadingIsNotAmongExcluded,
-  extractStringUnderBadges,
-  parseReadme,
-  standardiseBools,
-  assembleRollupInfoTable,
-} = require("./util");
-
-const DEBUG = 0;
+const { resolveVars } = require("./util");
 
 const log = console.log;
 const isArr = Array.isArray;
@@ -70,108 +56,21 @@ function isStr(something) {
 function existy(x) {
   return x != null;
 }
-function getUmdUrl(name) {
-  // JSDelivr:
-  return `https://cdn.jsdelivr.net/npm/${name}/dist/${name}.umd.js`;
-
-  // Statically:
-  // return `https://cdn.statically.io/gl/codsen/codsen/master/packages/${name}/dist/${name}.umd.js`;
-}
 
 // -----------------------------------------------------------------------------
 // 0. STUFF WE READ
 
 let showCoverageBadge = true; // flipswitch for coverage badges
 let coverageValues = null; // the container to place coverage report's content
-let readmeData = ""; // readme's contents
 let pack = {}; // package.json of the lib located at root
 let parsedPack; // package.json parsed through "getPkgRepo"
 let lectrc = {}; // .lectrc one level above from root
-let addBackToTopLinks = true; // should we add back-to-top anchor links under sections?
 
 let isCLI = false; // is this a CLI package ("special" packages are both or neither)
 let isSpecial = false; // is this special package where we granularly control everything
 
 // -----------------------------------------------------------------------------
 // 0. STUFF WE SET
-
-// a dozen of possible readme file names
-const readmeNames = [
-  "README.md", // all caps
-  "readme.md", // wrong
-  "Readme.md", // first capital
-  "readMe.md", // strange - some dev got carried away typing camel case all day
-  "ReadMe.md", // just cheeky
-  "readme.txt", // txt, maybe from Windows
-  "README.txt", // txt, all caps, probably from Windows too
-  "Readme.txt", // txt, first capital, smells Windows
-  "ReadMe.txt", // strange, but possible. Likely on Windows.
-  "readme", // small caps, no extension
-  "README", // all caps, no extension
-  "Readme", // first capital, no extension
-];
-
-const packageJsonlectKeyDefaults = {
-  special: false,
-  babelrc: {
-    override: false,
-    set: false,
-  },
-  badges: {
-    node: true,
-    npm: true,
-    travis: true,
-    cov: true,
-    overall: true,
-    deps: true,
-    deps2d: true,
-    dev: true,
-    vulnerabilities: true,
-    downloads: true,
-    runkit: true,
-    contributors: true,
-    license: true,
-  },
-  cliSpecialKeyword: "",
-  cliSpecialKeywordInstructions: "",
-  eslintrc: {
-    add: [],
-    remove: [],
-  },
-  files: {
-    delete: [],
-    write_hard: [
-      {
-        name: "",
-        contents: "",
-      },
-    ],
-    write_soft: [
-      {
-        name: "",
-        contents: "",
-      },
-    ],
-  },
-  header: {
-    dontQuoteDescription: false,
-    rightFloatedBadge: [],
-  },
-  licence: {
-    extras: ["", ""],
-  },
-  npmignore: {
-    badFiles: [],
-    badFolders: [],
-    goodFiles: [],
-    goodFolders: [],
-  },
-  various: {
-    rollupEntryPoint: "",
-    travisVersionsOverride: [""],
-    devDependencies: [],
-  },
-};
 
 // For every setting fetching, we first look for lectrc if something is set.
 // Then, that setting might be overridden in package.json .lect key
@@ -240,6 +139,13 @@ async function step14(receivedPack) {
   // versions, plus we've got 3 builds!!! Maybe transpiled CJS is ES5 but ESM
   // is way higher.
   objectPath.del(receivedPack, "engines");
+  objectPath.del(receivedPack, "lect.badges.vulnerabilities");
+  objectPath.del(receivedPack, "lect.header");
+  objectPath.del(receivedPack, "lect.badges");
+  objectPath.del(receivedPack, "lect.babelrc");
+  objectPath.del(receivedPack, "lect.eslintrc");
+  objectPath.del(receivedPack, "lect.various.back_to_top");
+  objectPath.del(receivedPack, "lect.various.travisVersionsOverride");
 
   if (
     !objectPath.has(receivedPack, "scripts.republish") &&
@@ -250,6 +156,8 @@ async function step14(receivedPack) {
     );
     process.abort();
   }
+
+  receivedPack.homepage = `https://codsen.com/os/${receivedPack.name}/`;
 
   // // if it's a tap-tested package, remove all AVA references
   // if (objectPath.has(receivedPack, "devDependencies.tap")) {
@@ -596,80 +504,7 @@ export default (commandLineArgs) => {
 // -----------------------------------------------------------------------------
 // 12. write .travis.yml file if one was set in .lectrc.json
 
-// function step12() {
-//   log(`${chalk.white("\nSTEP 12 - Assemble and write .travis.yml")}`);
-//   if (get("travis.yml")) {
-//     let newValue = get("travis.yml");
-//     if (
-//       objectPath.has(pack, "devDependencies.coveralls") &&
-//       !newValue.includes("after_success: npm run coverage")
-//     ) {
-//       newValue += "after_success: npm run coverage\n";
-//     }
-//     if (!objectPath.has(pack, "engines.node")) {
-//       log(
-//         `${chalk.red(
-//           logSymbols.error,
-//           "that's strange, package.json doesn't have an engines.node key! Skipping to the next step"
-//         )}`
-//       );
-//       step13();
-//     }
-//     const finalVersion = trim(pack.engines.node, "<=>. ")[0];
-//
-//     // it depends, were there custom Travis Node targets set on package.json >
-//     // lect.various.travisVersionsOverride[] or not
-//
-//     const packTravisOverride = objectPath
-//       .get(pack, "lect.various.travisVersionsOverride")
-//       .filter(
-//         val =>
-//           typeof val === "string" && val.length > 0 && val.trim().length !== 0
-//       );
-//
-//     // if the override is set and contains any non-empty values:
-//     if (
-//       packTravisOverride &&
-//       isArr(packTravisOverride) &&
-//       packTravisOverride.length > 0
-//     ) {
-//       newValue = replace(
-//         newValue,
-//         "%VERSIONSLISTING%",
-//         `\n  - '${packTravisOverride.join("'\n  - '")}'`
-//       );
-//     } else {
-//       // newValue = replace(newValue, "%NODEVERSION%", finalVersion);
-//       newValue = replace(
-//         newValue,
-//         "%VERSIONSLISTING%",
-//         `\n  - 'node'\n  - '${finalVersion}'`
-//       );
-//     }
-//
-//     fs.outputFile(".travis.yml", newValue, err => {
-//       if (err) {
-//         log(
-//           `${chalk.red(
-//             logSymbols.error,
-//             "there was a problem while writing a new .travis.yml! Skipping to the next step."
-//           )}`
-//         );
-//         step13();
-//       }
-//       log(`${chalk.green(logSymbols.success, ".travis.yml OK")}`);
-//       step13();
-//     });
-//   } else {
-//     log(
-//       `${chalk.red(
-//         logSymbols.error,
-//         ".travis.yml was not set neither in a global .lectrc.json nor in local package.json.\nSkipping to the next step."
-//       )}`
-//     );
-//     step13();
-//   }
-// }
+// (removed since)
 
 // -----------------------------------------------------------------------------
 // 11. generate a fresh .npmignore
@@ -854,62 +689,6 @@ function step11() {
 
 // second part
 async function writePackageJson(receivedPackageJsonObj) {
-  // const backupPerfScript = pack.scripts.perf;
-
-  if (
-    (objectPath.has(lectrc, "various.addBlanks") && lectrc.various.addBlanks) ||
-    (objectPath.has(pack, "lect.addBlanks") && pack.lect.addBlanks)
-  ) {
-    // standardise the value:
-    if (
-      objectPath.has(receivedPackageJsonObj, "lect.addBlanks") &&
-      receivedPackageJsonObj.lect.addBlanks !== true &&
-      receivedPackageJsonObj.lect.addBlanks !== false
-    ) {
-      receivedPackageJsonObj.lect.addBlanks = !!receivedPackageJsonObj.lect
-        .addBlanks;
-    }
-
-    // Defaults are meant to be set onto `lect` key within package.json, not
-    // within the root of it.
-    // Therefore, let's "shift" the lect defaults to be within key "lect"
-    // This will be the correct default object.
-
-    let defaultlectKeys = {};
-    defaultlectKeys = {}; // to trick ESLint to accept that it's used
-    // and to stop suggesting to set it as const
-    objectPath.set(defaultlectKeys, "lect", packageJsonlectKeyDefaults);
-    defaultlectKeys.lect.various.travisVersionsOverride = defaultlectKeys.lect.various.travisVersionsOverride.filter(
-      (val) => val.length > 0 && val.trim().length !== 0
-    );
-
-    // object-assign the defaults:
-    receivedPackageJsonObj = mergeAdvanced(
-      clone(defaultlectKeys),
-      receivedPackageJsonObj,
-      {
-        concatInsteadOfMerging: false,
-        dedupeStringsInArrayValues: true,
-        mergeBoolsUsingOrNotAnd: false,
-        ignoreKeys: [],
-      }
-    );
-  }
-
-  // standardise all bools
-  if (objectPath.has(receivedPackageJsonObj, "lect.badges")) {
-    receivedPackageJsonObj.lect.badges = standardiseBools(
-      receivedPackageJsonObj.lect.badges
-    );
-  }
-  if (
-    objectPath.has(receivedPackageJsonObj, "lect.header.dontQuoteDescription")
-  ) {
-    receivedPackageJsonObj.lect.header.dontQuoteDescription = standardiseBools(
-      receivedPackageJsonObj.lect.header.dontQuoteDescription
-    );
-  }
-
   // delete unit test-related entries in case those were not present before:
   if (!objectPath.has(pack, "devDependencies.ava")) {
     objectPath.del(receivedPackageJsonObj, "devDependencies.ava");
@@ -958,28 +737,6 @@ async function writePackageJson(receivedPackageJsonObj) {
   ) {
     objectPath.del(receivedPackageJsonObj, "devDependencies.format-package");
   }
-
-  // remove unused babel-plugin-external-helpers:
-  // existing .babelrc does not matter as it will be overwritten.
-  // What matters is lectrc.babelrc contents (keys "override" or "set") or
-  // package.json override equivalent for it - package.json>lect.babelrc keys
-  // "override" or "set"
-  // if (
-  //   objectPath.has(pack, "devDependencies.babel-plugin-external-helpers") &&
-  //   (!objectPath.has(lectrc, "babelrc.override") ||
-  //     !JSON.stringify(lectrc.babelrc.override).includes(
-  //       "babel-plugin-external-helpers"
-  //     )) &&
-  //   (!objectPath.has(lectrc, "babelrc.set") ||
-  //     !JSON.stringify(lectrc.babelrc.set).includes(
-  //       "babel-plugin-external-helpers"
-  //     ))
-  // ) {
-  //   objectPath.del(
-  //     receivedPackageJsonObj,
-  //     "devDependencies.babel-plugin-external-helpers"
-  //   );
-  // }
 
   if (!isSpecial) {
     if (isCLI || (isStr(pack.name) && pack.name.startsWith("gulp"))) {
@@ -1033,7 +790,7 @@ async function writePackageJson(receivedPackageJsonObj) {
         !pack.lect.various.devDependencies.includes(key)) &&
       !(isCLI || (isStr(pack.name) && pack.name.startsWith("gulp")))
     ) {
-      console.log(`1036 lect: we'll delete key "${key}" from dev dependencies`);
+      console.log(`793 lect: we'll delete key "${key}" from dev dependencies`);
       delete receivedPackageJsonObj.devDependencies[key];
     } else if (
       Object.prototype.hasOwnProperty.call(lectrcDevDeps, key) &&
@@ -1229,45 +986,7 @@ async function step10() {
 // -----------------------------------------------------------------------------
 // 9. writing the .eslintrc.json
 
-function step9() {
-  // // log(`${chalk.white("\nSTEP 9 - Assemble and write .eslintrc.json")}`);
-  // // if eslint is used,
-  // if (
-  //   objectPath.has(pack, "devDependencies.eslint") &&
-  //   objectPath.has(lectrc, "eslintrc")
-  // ) {
-  //   // log(
-  //   //   chalk.blue(
-  //   //     logSymbols.info,
-  //   //     "eslint used and lectrc given within .lectrc.json"
-  //   //   )
-  //   // );
-  //   // if there's no signs of AVA, exclude all ava ESLint rules:
-  //   let finalEslintRc = clone(lectrc.eslintrc);
-  //   if (!objectPath.has(pack, "devDependencies.ava")) {
-  //     finalEslintRc = deleteKey(finalEslintRc, { key: "ava/*" });
-  //   }
-  //
-  //   writeFileAtomic(
-  //     ".eslintrc.json",
-  //     `${JSON.stringify(finalEslintRc, null, 2)}\n`,
-  //     err => {
-  //       if (err) {
-  //         log(
-  //           chalk.red(
-  //             logSymbols.error,
-  //             `there was an error writing .eslintrc: ${err}`
-  //           )
-  //         );
-  //       }
-  //       // log(chalk.green(logSymbols.success, ".eslintrc.json OK"));
-  //       step10();
-  //     }
-  //   );
-  // } else {
-  step10();
-  // }
-}
+// (removed since)
 
 // -----------------------------------------------------------------------------
 // 8. ad-hoc delete all files
@@ -1289,11 +1008,11 @@ function step8() {
       .catch(() => {});
   })
     .then(() => {
-      step9();
+      step10();
     })
     .catch((err) => {
       log(`${chalk.red(logSymbols.error, `error deleting file:\n${err}`)}`);
-      step9();
+      step10();
     });
 }
 
@@ -1353,17 +1072,8 @@ function step6() {
   //   )}`
   // );
 
-  const backToTop = `**[${
-    get("various.back_to_top.label") || "⬆  back to top"
-  }](${get("various.back_to_top.url") || "#"})**`;
   const noDepsBadge = `https://img.shields.io/badge/-no%20dependencies-brightgreen?style=flat-square`;
   const noDepsUrl = `https://www.npmjs.com/package/${pack.name}?activeTab=dependencies`;
-  if (
-    objectPath.has(pack, "various.back_to_top.enabled") &&
-    !pack.various.back_to_top.enabled
-  ) {
-    addBackToTopLinks = false;
-  }
 
   let topBadgesString = "";
   let bottomBadgesString = "";
@@ -1374,539 +1084,193 @@ function step6() {
     showRunkitBadge = false;
   }
 
-  // if the package.json lect.badges is not set to falsey
+  // 1. get custom badges from package.json > lect.badges_custom
+  let customBadges = objectPath.get(pack, "lect.badges_custom");
   if (
-    objectPath.get(pack, "lect.badges") !== false &&
-    objectPath.get(pack, "lect.badges") !== null &&
-    isObj(objectPath.get(pack, "lect.badges")) &&
-    Object.keys(objectPath.get(pack, "lect.badges")).length > 0
+    !customBadges ||
+    !isObj(customBadges) ||
+    (isObj(customBadges) && Object.keys(customBadges).length === 0)
   ) {
-    // 1. get custom badges from package.json > lect.badges_custom
-    let customBadges = objectPath.get(pack, "lect.badges_custom");
-    if (
-      !customBadges ||
-      !isObj(customBadges) ||
-      (isObj(customBadges) && Object.keys(customBadges).length === 0)
-    ) {
-      customBadges = null;
-    }
+    customBadges = null;
+  }
 
-    let customBadgesSortedIndexList = [];
-    if (customBadges) {
-      // if (DEBUG) { console.log(`customBadges = ${JSON.stringify(customBadges, null, 4)}`) }
-      customBadgesSortedIndexList = uniq(
-        Object.keys(customBadges).map((badgeName) =>
-          parseInt(customBadges[badgeName].insert_before, 10)
-        )
-      ).sort();
+  let customBadgesSortedIndexList = [];
+  if (customBadges) {
+    // if (DEBUG) { console.log(`customBadges = ${JSON.stringify(customBadges, null, 4)}`) }
+    customBadgesSortedIndexList = uniq(
+      Object.keys(customBadges).map((badgeName) =>
+        parseInt(customBadges[badgeName].insert_before, 10)
+      )
+    ).sort();
 
-      // console.log(
-      //   `customBadgesSortedIndexList = ${JSON.stringify(
-      //     customBadgesSortedIndexList,
-      //     null,
-      //     4
-      //   )}`
-      // );
-    }
+    // console.log(
+    //   `customBadgesSortedIndexList = ${JSON.stringify(
+    //     customBadgesSortedIndexList,
+    //     null,
+    //     4
+    //   )}`
+    // );
+  }
 
-    // 2. assemble the badges string:
-    let res;
-    topBadgesString = lectrc.badges
-      .reduce((totalConcatenatedString, badge) => {
-        res = totalConcatenatedString;
+  // 2. assemble the badges string:
+  let res;
+  topBadgesString = lectrc.badges
+    .reduce((totalConcatenatedString, badge) => {
+      res = totalConcatenatedString;
 
-        // There's only one object per-badge within "badges" in .lectrc.json.
-        // Within that object there's only one key - name of the badge. Get that name.
-        const name = Object.keys(badge)[0];
+      // There's only one object per-badge within "badges" in .lectrc.json.
+      // Within that object there's only one key - name of the badge. Get that name.
+      const name = Object.keys(badge)[0];
 
-        // if there's no coverage set up, automatically don't show the coverage's badge:
-        if (name === "cov" && !showCoverageBadge) {
-          return res;
-        }
-
-        // if it's a CLI app, automatically don't show the runkit badge:
-        if (name === "runkit" && !showRunkitBadge) {
-          return res;
-        }
-
-        // if package.json doesn't contain contributors, don't show the badge:
-        if (
-          name === "contributors" &&
-          (!objectPath.has(pack, "lect.contributors") ||
-            !isArr(pack.lect.contributors) ||
-            (isArr(pack.lect.contributors) &&
-              pack.lect.contributors.length < 2))
-        ) {
-          return res;
-        }
-
-        // if there are no deps, don't show "deps in 2D":
-        if (name === "deps2d" && !pack.dependencies) {
-          return `${totalConcatenatedString}[![no dependencies][no-deps-img]][no-deps-url]\n`;
-        }
-
-        // Now reduce into string depending if badges are switched on or off or setting's missing
-        if (
-          !objectPath.has(pack, `lect.badges.${name}`) ||
-          pack.lect.badges[name]
-        ) {
-          return `${totalConcatenatedString}[![${badge[name].alt}][${name}-img]][${name}-url]\n`;
-        }
+      // if there's no coverage set up, automatically don't show the coverage's badge:
+      if (name === "cov" && !showCoverageBadge) {
         return res;
-      }, "")
-      .trim();
-
-    // now that we have topBadgesString, let's add custom badges.
-    topBadgesString = topBadgesString
-      .split("\n")
-      .map((el, idx, wholeArr) => {
-        if (customBadgesSortedIndexList.includes(idx + 2)) {
-          Object.keys(customBadges).forEach((key) => {
-            if (customBadges[key].insert_before === idx + 2) {
-              const slug = slugify(customBadges[key].alt);
-              // check, do any of the existing slugs match it, and if so, throw
-              if (
-                wholeArr.some(
-                  (oneOfBadgeObjects) =>
-                    Object.keys(oneOfBadgeObjects)[0] === slug
-                )
-              ) {
-                throw new Error(
-                  `${chalk.red(
-                    logSymbols.error,
-                    ` When we tried to create a slug from your custom badge's "alt" key:\n${JSON.stringify(
-                      customBadges[key],
-                      null,
-                      4
-                    )}\nthe slug we generated (${slug}) is clashing with one of existing badges from .lectrc.json:\n${JSON.stringify(
-                      wholeArr.filter((obj) => obj[slug] !== undefined)[0],
-                      null,
-                      4
-                    )}. Please set a different "alt" value for the custom badge in this package.json.`
-                  )}`
-                );
-              }
-              //
-              el += `\n[![${customBadges[key].alt}][${slug}-img]][${slug}-url]`;
-            }
-          });
-        }
-        return el;
-      })
-      .join("\n");
-
-    bottomBadgesString = lectrc.badges
-      .reduce((totalConcatenatedString, badge, i) => {
-        res = totalConcatenatedString;
-
-        // If there are custom badges, add their corresponding footer links too:
-        if (customBadgesSortedIndexList.includes(i)) {
-          // if (DEBUG) { console.log(`add before this badge: ${JSON.stringify(badge, null, 4)}`) }
-          Object.keys(customBadges).forEach((key) => {
-            if (customBadges[key].insert_before === i) {
-              const slug = slugify(customBadges[key].alt);
-              // no need to check, do any of the existing slugs match it
-              // because the head links would have thrown already
-              res += `[${slug}-img]: ${customBadges[key].img}\n[${slug}-url]: ${customBadges[key].url}\n\n`;
-            }
-          });
-        }
-
-        const name = Object.keys(badge)[0];
-
-        // if there's no coverage set up, automatically don't show the badge:
-        if (name === "cov" && !showCoverageBadge) {
-          return res;
-        }
-
-        // if it's a CLI app, automatically don't show the badge:
-        if (name === "runkit" && !showRunkitBadge) {
-          return res;
-        }
-
-        // if package.json doesn't contain contributors, don't show the badge:
-        if (
-          name === "contributors" &&
-          (!objectPath.has(pack, "lect.contributors") ||
-            !isArr(pack.lect.contributors) ||
-            (isArr(pack.lect.contributors) &&
-              pack.lect.contributors.length < 2))
-        ) {
-          return res;
-        }
-
-        // Now reduce footer badge links into string depending are they switched on or
-        // not or setting is missing (means "on")
-        if (!pack.dependencies && name === "deps2d") {
-          return `${res}[no-deps-img]: ${noDepsBadge}\n[no-deps-url]: ${noDepsUrl}\n\n`;
-        }
-        if (
-          !objectPath.has(pack, `lect.badges.${name}`) ||
-          pack.lect.badges[name]
-        ) {
-          return `${res}[${name}-img]: ${badge[name].img}\n[${name}-url]: ${badge[name].url}\n\n`;
-        }
-        return res;
-      }, "")
-      .trim();
-  }
-
-  // start setting up the final readme's string:
-  let content = "";
-
-  // description quotes - setting global-level:
-  const descriptionQuoteSpaceValue = "> ";
-  let descriptionQuoteSpace = descriptionQuoteSpaceValue;
-  if (
-    objectPath.has(lectrc, "header.dontQuoteDescription") &&
-    lectrc.header.dontQuoteDescription
-  ) {
-    descriptionQuoteSpace = "";
-  }
-
-  // description quotes - setting per-library level:
-  if (objectPath.has(pack, "lect.header.dontQuoteDescription")) {
-    if (pack.lect.header.dontQuoteDescription) {
-      descriptionQuoteSpace = "";
-    } else {
-      descriptionQuoteSpace = descriptionQuoteSpaceValue;
-    }
-  }
-
-  let firstHeadingIsDone = false;
-
-  // ASSEMBLING THE NEW README:
-
-  let existingContributorsBackup = null;
-
-  // eslint-disable-next-line consistent-return
-  readmeData.forEach((readmePiece, indx) => {
-    // console.log(
-    //   `1613 lect() ${`\u001b[${35}m${`███████████████████████████████████████`}\u001b[${39}m`}`
-    // );
-    // console.log(
-    //   `\n\n-----------\n\n#${indx}:\n${JSON.stringify(readmePiece, null, 4)}`
-    // );
-    // console.log(
-    //   readmePiece.restofit && readmePiece.restofit.length
-    //     ? `readmePiece.restofit.length = ${JSON.stringify(
-    //         readmePiece.restofit.length,
-    //         null,
-    //         4
-    //       )}`
-    //     : ""
-    // );
-
-    // Back up existing contributors content if such exists.
-    // If interwebs were not reachable, we'll stick that back in.
-    if (
-      objectPath.has(readmePiece, "heading") &&
-      readmePiece.heading.includes("# ") &&
-      readmePiece.heading.toLowerCase().includes(" contributors")
-    ) {
-      existingContributorsBackup = readmePiece.restofit;
-    }
-
-    // retain any content above the first h1
-    if (typeof readmePiece === "string" && indx === 0) {
-      // if (DEBUG) {
-      //   console.log(`1641 clause #1`);
-      // }
-      content += `${removeRecognisedLintingBadges(readmePiece).trim()}${
-        removeRecognisedLintingBadges(readmePiece).trim().length > 0
-          ? "\n\n"
-          : ""
-      }`;
-      // if (DEBUG) {
-      //   console.log(
-      //     `\n${`\u001b[${33}m${`content so far`}\u001b[${39}m`}:\n██${content}\n██\n\n`
-      //   );
-      // }
-    } else if (
-      !firstHeadingIsDone &&
-      typeof readmePiece !== "string" &&
-      readmePiece.heading.startsWith("# ")
-    ) {
-      // if (DEBUG) {
-      //   console.log(`1659 clause #2`);
-      // }
-      // prep the first h tag's contents
-      firstHeadingIsDone = true;
-      // if package's name does not contain hyphens, capitalise the first letter
-      let librarysName;
-      if (pack.name === "emlint") {
-        librarysName = "EMLint";
-      } else {
-        librarysName =
-          pack.name.split("-").length > 1
-            ? pack.name
-            : pack.name[0].toUpperCase() + pack.name.substr(1);
       }
-      const headerTopRightFloatedBadges = get("header.rightFloatedBadge");
-      let finalHeaderTopRightFloatedBadges = "";
+
+      // if it's a CLI app, automatically don't show the runkit badge:
+      if (name === "runkit" && !showRunkitBadge) {
+        return res;
+      }
+
+      // if package.json doesn't contain contributors, don't show the badge:
       if (
-        existy(headerTopRightFloatedBadges) &&
-        headerTopRightFloatedBadges.length
+        name === "contributors" &&
+        (!objectPath.has(pack, "lect.contributors") ||
+          !isArr(pack.lect.contributors) ||
+          (isArr(pack.lect.contributors) && pack.lect.contributors.length < 2))
       ) {
-        finalHeaderTopRightFloatedBadges = `${headerTopRightFloatedBadges
-          .map(String.prototype.trim)
-          .join("  ")}\n`;
-      }
-      if (!content.includes(`<div align="center">`)) {
-        // if header is not custom, add h1, subtitle
-        content += `\n# ${librarysName}\n\n${finalHeaderTopRightFloatedBadges}${descriptionQuoteSpace}${
-          pack.description
-        }${topBadgesString.length > 0 ? `\n\n${topBadgesString.trim()}` : ""}`;
-        firstHeadingIsDone = true;
-        if (DEBUG) {
-          console.log(
-            `\n${`\u001b[${33}m${`content so far`}\u001b[${39}m`}:\n██${content}\n██\n\n`
-          );
-        }
-      }
-      content += `${
-        extractStringUnderBadges(readmePiece.restofit).length > 0 ? "\n\n" : ""
-      }${extractStringUnderBadges(readmePiece.restofit)}\n\n`;
-      if (DEBUG) {
-        console.log(
-          `\n${`\u001b[${33}m${`content so far`}\u001b[${39}m`}:\n██${content}\n██\n\n`
-        );
-      }
-    } else if (piecesHeadingIsNotAmongExcluded(readmePiece.heading)) {
-      if (DEBUG) {
-        console.log(`1677 clause #3`);
-      }
-      // if there was no heading, turn off its clauses so they accidentally
-      // don't activate upon some random h1
-      if (!firstHeadingIsDone) {
-        firstHeadingIsDone = true;
+        return res;
       }
 
-      let btt = "";
+      // if there are no deps, don't show "deps in 2D":
+      if (name === "deps2d" && !pack.dependencies) {
+        return `${totalConcatenatedString}[![no dependencies][no-deps-img]][no-deps-url]\n`;
+      }
 
-      if (readmePiece.heading.toLowerCase().includes("table of contents")) {
-        readmePiece.restofit = readmeData
-          .map((obj) => obj.heading)
-          .filter(
-            (val) =>
-              isStr(val) &&
-              val.includes("##") &&
-              !val.includes("###") &&
-              !val.includes("###")
-          )
-          .map((val) => val.replace(/##/g, "").trim())
-          .filter((val) => !val.toLowerCase().includes("table of contents"))
-          .map((val) => {
-            return {
-              fullTitle: val,
-              slug: slugger.slug(val.replace(" - ", " ")),
-            };
-          })
-          .map(({ fullTitle, slug }) => `- [${fullTitle}](#${slug})`)
-          .join("\n");
-      } else if (
-        addBackToTopLinks &&
-        readmePiece.heading.startsWith("##") &&
-        readmePiece.restofit.length > 200 &&
-        readmePiece.restofit.trim().length > 10
+      // Now reduce into string depending if badges are switched on or off or setting's missing
+      if (
+        !objectPath.has(pack, `lect.badges.${name}`) ||
+        pack.lect.badges[name]
       ) {
-        btt = `\n\n${backToTop}`;
+        return `${totalConcatenatedString}[![${badge[name].alt}][${name}-img]][${name}-url]\n`;
       }
+      return res;
+    }, "")
+    .trim();
 
-      // find out is default exported
-      let sourceContainsDefaultExport = false;
-      if (!isSpecial && !isCLI) {
-        try {
-          sourceContainsDefaultExport = fs
-            .readFileSync("src/main.js", "utf8")
-            .includes("export default");
-        } catch (e) {
-          sourceContainsDefaultExport = false;
-        }
-      }
-      pack.lect.defaultExported = sourceContainsDefaultExport;
-
-      // find out are TypeScript definitions present
-      let typeSriptDefinitionsPresent = false;
-      if (!isCLI) {
-        try {
-          typeSriptDefinitionsPresent = !!fs.statSync("./index.d.ts");
-        } catch (e) {
-          typeSriptDefinitionsPresent = false;
-        }
-      }
-      pack.lect.typeSriptDefinitions = typeSriptDefinitionsPresent;
-
-      if (pack.lect.req === camelCase(pack.name)) {
-        throw new Error(
-          `lect(): [THROW_ID_02] ${`\u001b[${31}m${`UMD build's variable name (package.json/lect.req) is the same as camelised package's name! ("${pack.lect.req}")`}\u001b[${39}m`}`
-        );
-      }
-
-      let bodyContent = readmePiece.restofit;
-      if (trim(readmePiece.heading, "# ").toLowerCase() === "install") {
-        const consumedName = objectPath.get(pack, "lect.req")
-          ? pack.lect.req
-          : sourceContainsDefaultExport
-          ? camelCase(pack.name)
-          : !pack.name.startsWith("gulp-") &&
-            // !pack.name.startsWith("eslint-plugin-") &&
-            !isCLI
-          ? process.exit(1)
-          : "";
-
-        // insurance
-        if (consumedName === pack.name) {
-          console.log(
-            `\n\n\n${`\u001b[${31}m${`lect error: `}\u001b[${39}m`}${`\u001b[${33}m${`consumedName === pack.name === ${pack.name}`}\u001b[${39}m`}\n\n\n`
-          );
-          return process.exit(1);
-        }
-        let prep = `
-\`\`\`bash
-npm i ${isCLI ? "-g " : ""}${pack.name}
-\`\`\`
-`;
-
-        if (isCLI) {
-          // if it's a CLI
-          prep += `\nThen, call it from the command line using ${
-            Object.keys(pack.bin).length > 1
-              ? "one of the following keywords"
-              : "keyword"
-          }:\n\n\`\`\`bash`;
-          Object.keys(pack.bin).forEach((key) => {
+  // now that we have topBadgesString, let's add custom badges.
+  topBadgesString = topBadgesString
+    .split("\n")
+    .map((el, idx, wholeArr) => {
+      if (customBadgesSortedIndexList.includes(idx + 2)) {
+        Object.keys(customBadges).forEach((key) => {
+          if (customBadges[key].insert_before === idx + 2) {
+            const slug = slugify(customBadges[key].alt);
+            // check, do any of the existing slugs match it, and if so, throw
             if (
-              !(
-                pack &&
-                pack.lect &&
-                pack.lect.cliSpecialKeyword &&
-                pack.lect.cliSpecialKeyword === key
+              wholeArr.some(
+                (oneOfBadgeObjects) =>
+                  Object.keys(oneOfBadgeObjects)[0] === slug
               )
             ) {
-              // ignore "special" fancy CLI call names:
-              prep += `\n${key}`;
-            }
-          });
-          prep += `\n\`\`\``;
-          if (pack && pack.lect && pack.lect.cliSpecialKeyword) {
-            prep += `\n\nAs a last resort, if your memory would fail, the alternative keyword is: \`${
-              pack.lect.cliSpecialKeyword
-            }\`${
-              pack.lect.cliSpecialKeywordInstructions
-                ? ` — ${pack.lect.cliSpecialKeywordInstructions}`
-                : ""
-            }`;
-          }
-        } else {
-          // if it's a normal package
-          prep += `${
-            !pack.name.startsWith("gulp-") && sourceContainsDefaultExport
-              ? `\nThe [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "\`${consumedName}\`" below, you can name the consumed function however you want.\n`
-              : ""
-          }${
-            !pack.name.startsWith("gulp-")
-              ? `\nConsume via a \`require()\`:\n\n\`\`\`js
-const ${consumedName} = require("${pack.name}");
-\`\`\`
-
-or as an ES Module:
-
-\`\`\`js
-import ${consumedName} from "${pack.name}";
-\`\`\`
-
-or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
-
-\`\`\`html
-<script src="${getUmdUrl(pack.name)}"></script>
-\`\`\`
-
-\`\`\`js
-// in which case you get a global variable "${camelCase(
-                  pack.name
-                )}" which you consume like this:
-const ${consumedName} = ${camelCase(pack.name)};
-\`\`\``
-              : ""
-          }${
-            !pack.name.startsWith("gulp-") && !isCLI
-              ? `\n\nThis package has three builds in \`dist/\` folder:\n\n${assembleRollupInfoTable(
-                  pack,
-                  lectrc
+              throw new Error(
+                `${chalk.red(
+                  logSymbols.error,
+                  ` When we tried to create a slug from your custom badge's "alt" key:\n${JSON.stringify(
+                    customBadges[key],
+                    null,
+                    4
+                  )}\nthe slug we generated (${slug}) is clashing with one of existing badges from .lectrc.json:\n${JSON.stringify(
+                    wholeArr.filter((obj) => obj[slug] !== undefined)[0],
+                    null,
+                    4
+                  )}. Please set a different "alt" value for the custom badge in this package.json.`
                 )}`
-              : ""
+              );
+            }
+            //
+            el += `\n[![${customBadges[key].alt}][${slug}-img]][${slug}-url]`;
           }
-          `.trim();
-        }
-
-        // const prep = replaceRollupInfoTableAndItsHeader(
-        //   replaceNpmInstallRow(replaceNpxRow(bodyContent, pack), pack),
-        //   pack,
-        //   lectrc
-        // );
-        bodyContent = `${prep}`;
+        });
       }
-      content += `${readmePiece.heading.trim()}${
-        bodyContent.trim().length > 0 ? `\n\n${bodyContent.trim()}` : ""
-      }${addBackToTopLinks ? btt : ""}\n\n`;
-      if (DEBUG) {
-        console.log(
-          `\n${`\u001b[${33}m${`content so far`}\u001b[${39}m`}:\n██${content}\n██\n\n`
-        );
+      return el;
+    })
+    .join("\n");
+
+  bottomBadgesString = lectrc.badges
+    .reduce((totalConcatenatedString, badge, i) => {
+      res = totalConcatenatedString;
+
+      // If there are custom badges, add their corresponding footer links too:
+      if (customBadgesSortedIndexList.includes(i)) {
+        // if (DEBUG) { console.log(`add before this badge: ${JSON.stringify(badge, null, 4)}`) }
+        Object.keys(customBadges).forEach((key) => {
+          if (customBadges[key].insert_before === i) {
+            const slug = slugify(customBadges[key].alt);
+            // no need to check, do any of the existing slugs match it
+            // because the head links would have thrown already
+            res += `[${slug}-img]: ${customBadges[key].img}\n[${slug}-url]: ${customBadges[key].url}\n\n`;
+          }
+        });
       }
-    }
-  });
-  // console.log(`1876 lect()`);
 
-  // contributing module
-  content += `${
-    lectrc.contributing.header.length > 0 ? `${lectrc.contributing.header}` : ""
-  }`;
-  content += `${
-    lectrc.contributing.restofit.length > 0
-      ? `\n\n${lectrc.contributing.restofit}${
-          addBackToTopLinks ? `\n\n${backToTop}` : ""
-        }\n\n`
-      : ""
-  }`;
+      const name = Object.keys(badge)[0];
 
-  // contributors list
-  // if (finalContributorsString) {
-  //   if (DEBUG) {
-  //     console.log(
-  //       `${`\u001b[${33}m${"951 finalContributorsString"}\u001b[${39}m`} = ${JSON.stringify(
-  //         finalContributorsString,
-  //         null,
-  //         4
-  //       )}`
-  //     );
-  //   }
-  //   let prepend = "";
-  //   if (
-  //     objectPath.has(lectrc, "contributors.content_above_table") &&
-  //     isStr(lectrc.contributors.content_above_table) &&
-  //     lectrc.contributors.content_above_table.trim().length > 0
-  //   ) {
-  //     prepend = `\n\n${lectrc.contributors.content_above_table}`;
-  //   }
-  //   let append = "";
-  //   if (
-  //     objectPath.has(lectrc, "contributors.content_below_table") &&
-  //     isStr(lectrc.contributors.content_below_table) &&
-  //     lectrc.contributors.content_below_table.trim().length > 0
-  //   ) {
-  //     append = `\n\n${lectrc.contributors.content_below_table}`;
-  //   }
-  //   content += `\n\n## Contributors${prepend}\n\n${finalContributorsString.trim()}${append}${
-  //     addBackToTopLinks ? `\n\n${backToTop}` : ""
-  //   }`;
-  // } else if (
-  //   existingContributorsBackup &&
-  //   typeof existingContributorsBackup === "string"
-  // ) {
-  //   content += `\n\n## Contributors\n\n${existingContributorsBackup.trim()}`;
-  // }
+      // if there's no coverage set up, automatically don't show the badge:
+      if (name === "cov" && !showCoverageBadge) {
+        return res;
+      }
+
+      // if it's a CLI app, automatically don't show the badge:
+      if (name === "runkit" && !showRunkitBadge) {
+        return res;
+      }
+
+      // if package.json doesn't contain contributors, don't show the badge:
+      if (
+        name === "contributors" &&
+        (!objectPath.has(pack, "lect.contributors") ||
+          !isArr(pack.lect.contributors) ||
+          (isArr(pack.lect.contributors) && pack.lect.contributors.length < 2))
+      ) {
+        return res;
+      }
+
+      // Now reduce footer badge links into string depending are they switched on or
+      // not or setting is missing (means "on")
+      if (!pack.dependencies && name === "deps2d") {
+        return `${res}[no-deps-img]: ${noDepsBadge}\n[no-deps-url]: ${noDepsUrl}\n\n`;
+      }
+      if (
+        !objectPath.has(pack, `lect.badges.${name}`) ||
+        pack.lect.badges[name]
+      ) {
+        return `${res}[${name}-img]: ${badge[name].img}\n[${name}-url]: ${badge[name].url}\n\n`;
+      }
+      return res;
+    }, "")
+    .trim();
+
+  // start setting up the final readme's string:
+  let content = `# ${pack.name}
+
+> ${pack.description}
+
+${topBadgesString.trim()}
+
+## Install
+
+\`\`\`bash
+npm i${isCLI ? " -g" : ""} ${pack.name}
+\`\`\`
+
+## Documentation
+
+Please [visit our documentation](https://codsen.com/os/${
+    pack.name
+  }/) for a full description of the API and examples.
+
+`;
 
   // licence module
   const licenceExtras = get("licence.extras");
@@ -1937,7 +1301,7 @@ const ${consumedName} = ${camelCase(pack.name)};
     content += "\n";
   }
 
-  content = resolveVars(content, pack, parsedPack, existingContributorsBackup);
+  content = resolveVars(content, pack, parsedPack, null);
   // also, fix coverage variables, %COVPERC% and %COVBADGECOLOR% which come
   // from .lectrc.json:
   if (content.includes("%COVPERC%")) {
@@ -1980,172 +1344,12 @@ const ${consumedName} = ${camelCase(pack.name)};
 // -----------------------------------------------------------------------------
 // 5. manage babelrc
 
-function step5() {
-  // log(`${chalk.white("\nSTEP 5 - Assemble and write .babelrc")}`);
-  // let finalBabelrc = null;
-
-  // skip .babelrc - from Babel v.7 root config will be used
-  step6();
-
-  // if (
-  //   isSpecial ||
-  //   (isCLI && Object.keys(pack.bin).length > 0) ||
-  //   pack.name.startsWith("gulp")
-  // ) {
-  //   // log(
-  //   //   `${chalk.yellow(
-  //   //     logSymbols.info,
-  //   //     "this project does not use transpiling!"
-  //   //   )}`
-  //   // );
-  //   step6();
-  // } else {
-  //   //
-  //   //
-  //   //
-  //   //
-  //   //
-  //   //
-  //   //
-  //   //
-  //   //
-  //   //
-  //   //
-  //
-  //   if (
-  //     objectPath.has(lectrc, "babelrc.override") &&
-  //     isObj(lectrc.babelrc.override) &&
-  //     Object.keys(lectrc.babelrc.override).length > 0
-  //   ) {
-  //     finalBabelrc = clone(lectrc.babelrc.override);
-  //   } else if (
-  //     objectPath.has(lectrc, "babelrc.set") &&
-  //     isObj(lectrc.babelrc.set) &&
-  //     Object.keys(lectrc.babelrc.set).length > 0
-  //   ) {
-  //     finalBabelrc = clone(lectrc.babelrc.set);
-  //   }
-  //
-  //   if (
-  //     finalBabelrc &&
-  //     (objectPath.has(pack, "devDependencies.rollup") ||
-  //       (objectPath.has(pack, "devDependencies") &&
-  //         isObj(pack.devDependencies) &&
-  //         Object.keys(pack.devDependencies).length > 0 &&
-  //         Object.keys(pack.devDependencies).some((key) =>
-  //           key.startsWith("babel")
-  //         )))
-  //   ) {
-  //     // set this babelrc template coming from lectrc as a base, which we
-  //     // might or might not tweak later:
-  //
-  //     // So the source of the new babelrc contents are given.
-  //     // Let's check are there any overrides per-library level:
-  //
-  //     // ***
-  //     // first - overrides. If any are provided, the current babelrc is kept and
-  //     // package.json overrides are hard-merged (overwriting everything that has
-  //     // the same key names, no matter the value type hierarchy, to which normally
-  //     // standard merge-advanced adheres)
-  //
-  //     if (
-  //       objectPath.has(pack, "lect.babelrc.override") &&
-  //       isObj(pack.lect.babelrc.override) &&
-  //       Object.keys(pack.lect.babelrc.override).length > 0
-  //     ) {
-  //       finalBabelrc = mergeAdvanced(finalBabelrc, pack.lect.babelrc.override, {
-  //         hardMergeEverything: true,
-  //         mergeObjectsOnlyWhenKeysetMatches: false,
-  //       });
-  //     }
-  //
-  //     // ***
-  //     // second - hard "set". If the key is present, babelrc will be set to its value,
-  //     // provided it's an object (empty or non-empty)
-  //     if (
-  //       objectPath.has(pack, "lect.babelrc.set") &&
-  //       isObj(pack.lect.babelrc.set)
-  //     ) {
-  //       finalBabelrc = clone(pack.lect.babelrc.set);
-  //     }
-  //
-  //     // if it's a tap-tested package, remove all AVA references
-  //     if (objectPath.has(pack, "devDependencies.tap")) {
-  //       // tap-tested libraries don't need instanbul plugins on babel, so
-  //       // delete the env from babel plugin
-  //       objectPath.del(finalBabelrc, "env");
-  //     }
-  //
-  //     // Write out whatever we got so far:
-  //     writeFileAtomic(
-  //       ".babelrc",
-  //       JSON.stringify(finalBabelrc, null, 2),
-  //       (err) => {
-  //         if (err) {
-  //           log(
-  //             `${chalk.red(
-  //               logSymbols.error,
-  //               `could not write .babelrc:\n${err}`
-  //             )}`
-  //           );
-  //         } else {
-  //           // log(`${chalk.green(logSymbols.success, ".babelrc OK")}`);
-  //         }
-  //         step6();
-  //       }
-  //     );
-  //   } else if (isCLI) {
-  //     //    SO IT'S A CLI !
-  //
-  //     // remove cli.js from "lect.npmignore.badFiles"
-  //     const badFiles = objectPath.get(pack, "lect.npmignore.badFiles");
-  //     if (isArr(badFiles) && badFiles.includes("cli.js")) {
-  //       objectPath.set(
-  //         pack,
-  //         "lect.npmignore.badFiles",
-  //         badFiles.filter((val) => val !== "cli.js")
-  //       );
-  //     }
-  //
-  //     objectPath.set(
-  //       pack,
-  //       "devDependencies",
-  //       deleteKey(objectPath.get(pack, "devDependencies"), { key: "babel*" })
-  //     );
-  //
-  //     // delete any existing .babelrc
-  //     fs.remove(path.resolve("./.babelrc"))
-  //       .then(() => {
-  //         log(chalk.green(logSymbols.success, ".babelrc DELETED"));
-  //         // and move on to the next step
-  //         step6();
-  //       })
-  //       .catch((err) => {
-  //         log(
-  //           `${chalk.red(logSymbols.error, `error deleting .babelrc:\n${err}`)}`
-  //         );
-  //         // and move on to the next step
-  //         step6();
-  //       });
-  //   }
-  //
-  //   //
-  //   //
-  //   //
-  //   //
-  //   //
-  //   //
-  //   //
-  //   //
-  //   //
-  //   //
-  // }
-}
+// (removed since)
 
 // -----------------------------------------------------------------------------
 // 4. fetch github contributors user data
 
-// removed
+// (removed since)
 
 // -----------------------------------------------------------------------------
 // 3. Read the lectrc file one level above, the .lectrc
@@ -2183,7 +1387,7 @@ function step3() {
           process.exit(1);
         }
         lectrc = obj;
-        step5();
+        step6();
       });
     } catch (e) {
       log(
@@ -2201,25 +1405,6 @@ function step3() {
 // 2. We fetched the contents of readme successfully.
 
 function step2() {
-  // if (readmeData) {
-  //   log(
-  //     `${chalk.blue(
-  //       logSymbols.info,
-  //       `${readmeName} was read OK, parsed readme components found (readmeData.length): ${
-  //         readmeData.length
-  //       }`
-  //     )}`
-  //   );
-  // } else {
-  //   log(`${chalk.blue(logSymbols.info, "we'll create a new readme")}`);
-  // }
-
-  // log(
-  //   `${chalk.white(
-  //     "\nSTEP 2 - Now let's try to get the contents of package.json"
-  //   )}`
-  // );
-
   fs.readJson("package.json", { throws: false }, (err, obj) => {
     if (err) {
       log(
@@ -2230,33 +1415,6 @@ function step2() {
       );
       process.exit(1);
     }
-
-    // const user = getPkgRepo(clone(obj)).user;
-    // console.log(
-    // 	`${`\u001b[${33}m${`user`}\u001b[${39}m`} = ${JSON.stringify(
-    // 		user,
-    // 		null,
-    // 		4
-    // 	)}`
-    // );
-    //
-    // if (objectPath.has(obj, "name") && isStr(obj.name) && obj.name.length > 0) {
-    // 	if (isStr(user) && user.length > 0) {
-    // 		pack = normalisePackageJson(clone(obj), user, obj.name);
-    // 	} else {
-    // 		throw new Error(
-    // 			`${chalk.red(
-    // 				logSymbols.error,
-    // 				"we could not recognise the GitHub user from the given repo paths in package.json"
-    // 			)}`
-    // 		);
-    // 	}
-    // } else {
-    // 	throw new Error(
-    // 		`${chalk.red(logSymbols.error, "package.json does not have a name!")}`
-    // 	);
-    // }
-    // parsedPack = getPkgRepo(clone(pack));
 
     parsedPack = clone(obj);
     pack = clone(obj);
@@ -2329,36 +1487,6 @@ function step1() {
 // -----------------------------------------------------------------------------
 // 0. Get the readme name and contents
 
-function tryToReadAFile(obj, i) {
-  fs.readFile(readmeNames[i], "utf8", (err, originalReadmeData) => {
-    if (err) {
-      obj.onerror();
-    } else if (originalReadmeData) {
-      obj.onload(readmeNames[i], originalReadmeData);
-    }
-  });
-}
-
-function checkOneOfNames(i) {
-  if (i > 11) {
-    readmeData = null;
-    step1();
-  } else {
-    tryToReadAFile(
-      {
-        onload(receivedReadmeName, receivedReadmeData) {
-          readmeData = parseReadme(receivedReadmeData);
-          step1();
-        },
-        onerror() {
-          checkOneOfNames(i + 1);
-        },
-      },
-      i
-    );
-  }
-}
-
 // START:
 // quickly read package.json and bail early if needed
 try {
@@ -2374,31 +1502,5 @@ try {
   console.log(`error reading package.json: ${e}`);
 }
 
-// log(`${chalk.white("\nSTEP 0 - Get the readme name and contents")}`);
-checkOneOfNames(0); // will start from 0-th index of readmeNames[]
-
-// -----------------------------------------------------------------------------
-
-// if (cli.flags.init) {
-//   if (DEBUG) {
-//     console.log("INIT MODE");
-//   }
-//   fs.access("package.json", fs.constants.F_OK, err => {
-//     if (err) {
-//       // GOOD, no package.json
-//       // CALL INIT
-//       initNpmIgnore();
-//     } else {
-//       // BAD, there's package.json in the root so it's probably false root!
-//       log(
-//         `${chalk.red(
-//           logSymbols.error,
-//           "Computer discovered package.json in this folder's root. Real root folder should contain projects, not be a project!"
-//         )}`
-//       );
-//       process.exit(1);
-//     }
-//   });
-// } else {
-//
-// }
+// start:
+step1();

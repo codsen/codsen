@@ -4,7 +4,7 @@
  * Version: 1.9.45
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/array-of-arrays-into-ast
+ * Homepage: https://codsen.com/os/array-of-arrays-into-ast/
  */
 
 (function (global, factory) {
@@ -3873,7 +3873,7 @@
    * Version: 3.11.34
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string
+   * Homepage: https://codsen.com/os/arrayiffy-if-string/
    */
   function arrayiffyString(something) {
     if (typeof something === "string") {
@@ -6478,7 +6478,7 @@
    * Version: 2.9.61
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/util-nonempty
+   * Homepage: https://codsen.com/os/util-nonempty/
    */
   var isArr$1 = Array.isArray;
 

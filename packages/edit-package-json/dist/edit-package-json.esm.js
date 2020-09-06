@@ -4,7 +4,7 @@
  * Version: 0.1.32
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/edit-package-json
+ * Homepage: https://codsen.com/os/edit-package-json/
  */
 
 import { left, right, chompLeft } from 'string-left-right';

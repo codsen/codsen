@@ -4,7 +4,7 @@
  * Version: 8.2.13
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/json-variables
+ * Homepage: https://codsen.com/os/json-variables/
  */
 
 import traverse from 'ast-monkey-traverse';

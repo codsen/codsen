@@ -4,7 +4,7 @@
  * Version: 1.3.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities
+ * Homepage: https://codsen.com/os/all-named-html-entities/
  */
 
 'use strict';

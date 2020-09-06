@@ -4,7 +4,7 @@
  * Version: 2.18.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
+ * Homepage: https://codsen.com/os/emlint/
  */
 
 import stringFixBrokenNamedEntities from 'string-fix-broken-named-entities';
@@ -9454,11 +9454,11 @@ function characterEncode(context, ...opts) {
 
 function characterUnspacedPunctuation(context, ...originalOpts) {
   const charCodeMapping = {
-    "63": "questionMark",
-    "33": "exclamationMark",
-    "59": "semicolon",
-    "187": "rightDoubleAngleQuotMark",
-    "171": "leftDoubleAngleQuotMark",
+    63: "questionMark",
+    33: "exclamationMark",
+    59: "semicolon",
+    187: "rightDoubleAngleQuotMark",
+    171: "leftDoubleAngleQuotMark",
   };
   return {
     text(node) {
@@ -11289,7 +11289,7 @@ class Linter extends EventEmitter {
       Object.keys(config.rules).some(
         (ruleName) =>
           (ruleName === "all" ||
-          ruleName === "bad-html-entity" ||
+            ruleName === "bad-html-entity" ||
             ruleName.startsWith("bad-html-entity") ||
             ruleName.startsWith("bad-named-html-entity") ||
             matcher.isMatch(

@@ -4,7 +4,7 @@
   "description": "Shorten sets of strings deterministically, to be git-friendly",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/string-uglify",
+  "homepage": "https://codsen.com/os/string-uglify/",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -57,29 +57,7 @@
     }
   },
   "lect": {
-    "babelrc": {
-      "override": false,
-      "set": false
-    },
-    "badges": {
-      "cov": true,
-      "deps": true,
-      "deps2d": true,
-      "dev": true,
-      "downloads": true,
-      "license": true,
-      "node": true,
-      "npm": true,
-      "overall": true,
-      "runkit": true,
-      "travis": true,
-      "vulnerabilities": true
-    },
     "defaultExported": false,
-    "eslintrc": {
-      "add": [],
-      "remove": []
-    },
     "files": {
       "delete": [],
       "write_hard": [
@@ -95,10 +73,6 @@
         }
       ]
     },
-    "header": {
-      "dontQuoteDescription": false,
-      "rightFloatedBadge": []
-    },
     "licence": {
       "extras": [
         ""
@@ -113,14 +87,9 @@
     "req": "{ uglifyById, uglifyArr, version }",
     "typeSriptDefinitions": false,
     "various": {
-      "back_to_top": {
-        "enabled": true,
-        "label": ""
-      },
       "devDependencies": [
         "@rollup/plugin-json"
-      ],
-      "travisVersionsOverride": []
+      ]
     }
   },
   "tap": {

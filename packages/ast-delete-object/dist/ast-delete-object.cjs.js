@@ -4,7 +4,7 @@
  * Version: 1.8.72
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-delete-object
+ * Homepage: https://codsen.com/os/ast-delete-object/
  */
 
 'use strict';

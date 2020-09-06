@@ -4,7 +4,7 @@
  * Version: 3.9.61
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-unfancy
+ * Homepage: https://codsen.com/os/string-unfancy/
  */
 
 'use strict';

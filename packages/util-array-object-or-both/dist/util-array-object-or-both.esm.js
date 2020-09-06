@@ -4,7 +4,7 @@
  * Version: 2.7.63
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/util-array-object-or-both
+ * Homepage: https://codsen.com/os/util-array-object-or-both/
  */
 
 import includes from 'lodash.includes';

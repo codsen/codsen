@@ -4,7 +4,7 @@
  * Version: 1.9.62
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/bitbucket-slug
+ * Homepage: https://codsen.com/os/bitbucket-slug/
  */
 
 (function (global, factory) {

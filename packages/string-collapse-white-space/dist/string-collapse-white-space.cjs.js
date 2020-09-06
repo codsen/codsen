@@ -4,7 +4,7 @@
  * Version: 5.2.27
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-white-space
+ * Homepage: https://codsen.com/os/string-collapse-white-space/
  */
 
 'use strict';

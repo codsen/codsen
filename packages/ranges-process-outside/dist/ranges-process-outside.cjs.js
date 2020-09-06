@@ -4,7 +4,7 @@
  * Version: 2.2.31
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-process-outside
+ * Homepage: https://codsen.com/os/ranges-process-outside/
  */
 
 'use strict';

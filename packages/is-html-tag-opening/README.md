@@ -10,105 +10,15 @@
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
-## Table of Contents
-
-- [Install](#install)
-- [Idea](#idea)
-- [API - Input](#api-input)
-- [API - Output](#api-output)
-- [For example,](#for-example)
-- [Contributing](#contributing)
-- [Licence](#licence)
-
 ## Install
 
 ```bash
 npm i is-html-tag-opening
 ```
 
-The [_default_](https://exploringjs.com/es6/ch_modules.html#_default-exports-one-per-module) is exported, so instead of "`isOpening`" below, you can name the consumed function however you want.
+## Documentation
 
-Consume via a `require()`:
-
-```js
-const isOpening = require("is-html-tag-opening");
-```
-
-or as an ES Module:
-
-```js
-import isOpening from "is-html-tag-opening";
-```
-
-or for web pages, as a production-ready minified script file (so-called "UMD build"), straight from CDN:
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/is-html-tag-opening/dist/is-html-tag-opening.umd.js"></script>
-```
-
-```js
-// in which case you get a global variable "isHtmlTagOpening" which you consume like this:
-const isOpening = isHtmlTagOpening;
-```
-
-This package has three builds in `dist/` folder:
-
-| Type                                                                                                    | Key in `package.json` | Path                              | Size |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------------- | ---- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/is-html-tag-opening.cjs.js` | 7 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/is-html-tag-opening.esm.js` | 5 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/is-html-tag-opening.umd.js` | 9 KB |
-
-**[⬆ back to top](#)**
-
-## Idea
-
-Detect, is an opening bracket (`<`) a tag opening? Alternative being, it might be un-encoded text.
-
-## API - Input
-
-**isOpening(str, idx)** — in other words, function which takes two arguments:
-
-| Input argument | Key value's type       | Obligatory? | Description                                 |
-| -------------- | ---------------------- | ----------- | ------------------------------------------- |
-| `str`          | String                 | yes         | The input string of zero or more characters |
-| `idx`          | Natural number or zero | yes         | Index of an opening bracket (`<`)           |
-
-If supplied input arguments are of any other types, an error will be thrown.
-
-**[⬆ back to top](#)**
-
-## API - Output
-
-Boolean, `true` or `false`.
-
-## For example,
-
-```js
-const isOpening = require("is-html-tag-opening");
-const text = `<span>a < b<span>`;
-console.log(is(text, 0));
-// => true
-console.log(is(text, 8));
-// => false
-console.log(is(text, 11));
-// => true
-```
-
-**[⬆ back to top](#)**
-
-## Contributing
-
-- If you see an error, [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=is-html-tag-opening%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Ais-html-tag-opening%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>).
-- If you want a new feature but can't code it up yourself, also [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=is-html-tag-opening%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Ais-html-tag-opening%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>). Let's discuss it.
-- If you tried to use this package, but something didn't work out, also [raise an issue](<https://gitlab.com/codsen/codsen/issues/new?issue[title]=is-html-tag-opening%20package%20-%20put%20title%20here&issue[description]=**Which%20package%20is%20this%20issue%20for**%3A%20%0Ais-html-tag-opening%0A%0A**Describe%20the%20issue%20(if%20necessary)**%3A%20%0A%0A%0A%2Fassign%20%40revelt>). We'll try to help.
-- If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
-
-In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command-line application).
-
-The npm script "`dev`", the `"dev": "rollup -c --dev"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
-
-**[⬆ back to top](#)**
+Please [visit our documentation](https://codsen.com/os/is-html-tag-opening/) for a full description of the API and examples.
 
 ## Licence
 

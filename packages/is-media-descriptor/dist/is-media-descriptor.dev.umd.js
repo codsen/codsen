@@ -4,7 +4,7 @@
  * Version: 1.2.15
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/is-media-descriptor
+ * Homepage: https://codsen.com/os/is-media-descriptor/
  */
 
 (function (global, factory) {
@@ -216,7 +216,7 @@
    * Version: 1.2.10
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-process-comma-separated
+   * Homepage: https://codsen.com/os/string-process-comma-separated/
    */
   function processCommaSeparated(str, originalOpts) {
     if (typeof str !== "string") {

@@ -1,10 +1,10 @@
 {
   "name": "ast-monkey-traverse-with-lookahead",
   "version": "1.1.9",
-  "description": "Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)",
+  "description": "Utility library to traverse AST, reports upcoming values",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse-with-lookahead",
+  "homepage": "https://codsen.com/os/ast-monkey-traverse-with-lookahead/",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -63,31 +63,7 @@
     }
   },
   "lect": {
-    "babelrc": {
-      "override": false,
-      "set": false
-    },
-    "badges": {
-      "cov": true,
-      "deps": true,
-      "deps2d": true,
-      "dev": true,
-      "downloads": true,
-      "license": true,
-      "node": true,
-      "npm": true,
-      "overall": true,
-      "runkit": true,
-      "travis": true,
-      "vulnerabilities": true
-    },
     "defaultExported": true,
-    "eslintrc": {
-      "add": [
-        "whatnot"
-      ],
-      "remove": []
-    },
     "files": {
       "delete": [],
       "write_hard": [
@@ -103,10 +79,6 @@
         }
       ]
     },
-    "header": {
-      "dontQuoteDescription": false,
-      "rightFloatedBadge": []
-    },
     "licence": {
       "extras": [
         ""
@@ -121,15 +93,10 @@
     "req": "traverse2",
     "typeSriptDefinitions": false,
     "various": {
-      "back_to_top": {
-        "enabled": true,
-        "label": ""
-      },
       "devDependencies": [
         "object-path",
         "lodash.isequal"
-      ],
-      "travisVersionsOverride": []
+      ]
     }
   },
   "tap": {

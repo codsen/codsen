@@ -4,7 +4,7 @@
  * Version: 2.9.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-no-new-keys
+ * Homepage: https://codsen.com/os/object-no-new-keys/
  */
 
 'use strict';

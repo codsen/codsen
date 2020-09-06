@@ -4,7 +4,7 @@
   "description": "Edit package.json without parsing, as string, to keep the formatting intact",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/edit-package-json",
+  "homepage": "https://codsen.com/os/edit-package-json/",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -52,29 +52,7 @@
     }
   },
   "lect": {
-    "babelrc": {
-      "override": false,
-      "set": false
-    },
-    "badges": {
-      "cov": true,
-      "deps": true,
-      "deps2d": true,
-      "dev": true,
-      "downloads": true,
-      "license": true,
-      "node": true,
-      "npm": true,
-      "overall": true,
-      "runkit": true,
-      "travis": true,
-      "vulnerabilities": true
-    },
     "defaultExported": false,
-    "eslintrc": {
-      "add": [],
-      "remove": []
-    },
     "files": {
       "delete": [],
       "write_hard": [
@@ -89,10 +67,6 @@
           "name": ""
         }
       ]
-    },
-    "header": {
-      "dontQuoteDescription": false,
-      "rightFloatedBadge": []
     },
     "licence": {
       "extras": [
@@ -109,18 +83,13 @@
     "req": "{ set, del }",
     "typeSriptDefinitions": false,
     "various": {
-      "back_to_top": {
-        "enabled": true,
-        "label": ""
-      },
       "devDependencies": [
         "ast-monkey-traverse",
         "object-path",
         "lodash.clonedeep",
         "p-map",
         "globby"
-      ],
-      "travisVersionsOverride": []
+      ]
     }
   },
   "tap": {

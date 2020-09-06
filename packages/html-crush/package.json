@@ -4,7 +4,7 @@
   "description": "Minifies HTML/CSS: valid or broken, pure or mixed with other languages",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/html-crush",
+  "homepage": "https://codsen.com/os/html-crush/",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -61,29 +61,7 @@
     }
   },
   "lect": {
-    "babelrc": {
-      "override": false,
-      "set": false
-    },
-    "badges": {
-      "cov": true,
-      "deps": true,
-      "deps2d": true,
-      "dev": true,
-      "downloads": true,
-      "license": true,
-      "node": true,
-      "npm": true,
-      "overall": true,
-      "runkit": true,
-      "travis": true,
-      "vulnerabilities": true
-    },
     "defaultExported": false,
-    "eslintrc": {
-      "add": [],
-      "remove": []
-    },
     "files": {
       "delete": [],
       "write_hard": [
@@ -99,10 +77,6 @@
         }
       ]
     },
-    "header": {
-      "dontQuoteDescription": false,
-      "rightFloatedBadge": []
-    },
     "licence": {
       "extras": [
         ""
@@ -117,10 +91,6 @@
     "req": "{ crush, defaults, version }",
     "typeSriptDefinitions": false,
     "various": {
-      "back_to_top": {
-        "enabled": true,
-        "label": ""
-      },
       "devDependencies": [
         "@babel/polyfill",
         "rollup-plugin-node-builtins",
@@ -128,8 +98,7 @@
         "node-fetch",
         "p-map",
         "benchmark"
-      ],
-      "travisVersionsOverride": []
+      ]
     }
   },
   "tap": {

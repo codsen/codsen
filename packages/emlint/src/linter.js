@@ -259,7 +259,7 @@ class Linter extends EventEmitter {
       Object.keys(config.rules).some(
         (ruleName) =>
           (ruleName === "all" || // group blanket setting
-          ruleName === "bad-html-entity" || // group blanket setting
+            ruleName === "bad-html-entity" || // group blanket setting
             ruleName.startsWith("bad-html-entity") ||
             ruleName.startsWith("bad-named-html-entity") ||
             matcher.isMatch(

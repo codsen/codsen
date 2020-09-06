@@ -4,7 +4,7 @@
   "description": "List of all named HTML entities",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/all-named-html-entities",
+  "homepage": "https://codsen.com/os/all-named-html-entities/",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -51,29 +51,7 @@
     }
   },
   "lect": {
-    "babelrc": {
-      "override": false,
-      "set": false
-    },
-    "badges": {
-      "cov": true,
-      "deps": true,
-      "deps2d": true,
-      "dev": true,
-      "downloads": true,
-      "license": true,
-      "node": true,
-      "npm": true,
-      "overall": true,
-      "runkit": true,
-      "travis": true,
-      "vulnerabilities": true
-    },
     "defaultExported": false,
-    "eslintrc": {
-      "add": [],
-      "remove": []
-    },
     "files": {
       "delete": [],
       "write_hard": [
@@ -88,10 +66,6 @@
           "name": ""
         }
       ]
-    },
-    "header": {
-      "dontQuoteDescription": false,
-      "rightFloatedBadge": []
     },
     "licence": {
       "extras": [
@@ -109,14 +83,9 @@
     "req": "{\n  allNamedEntities,\n  entStartsWith,\n  entEndsWith,\n  entStartsWithCaseInsensitive,\n  entEndsWithCaseInsensitive,\n  brokenNamedEntities,\n  decode,\n  minLength,\n  maxLength,\n  uncertain\n}",
     "typeSriptDefinitions": false,
     "various": {
-      "back_to_top": {
-        "enabled": true,
-        "label": ""
-      },
       "devDependencies": [
         "@rollup/plugin-json"
-      ],
-      "travisVersionsOverride": []
+      ]
     }
   },
   "tap": {

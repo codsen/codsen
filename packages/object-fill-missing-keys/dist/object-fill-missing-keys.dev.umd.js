@@ -4,7 +4,7 @@
  * Version: 7.10.23
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-fill-missing-keys
+ * Homepage: https://codsen.com/os/object-fill-missing-keys/
  */
 
 (function (global, factory) {
@@ -3925,7 +3925,7 @@
    * Version: 3.11.34
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string
+   * Homepage: https://codsen.com/os/arrayiffy-if-string/
    */
   function arrayiffyString(something) {
     if (typeof something === "string") {
@@ -4091,7 +4091,7 @@
    * Version: 2.9.61
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
-   * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/util-nonempty
+   * Homepage: https://codsen.com/os/util-nonempty/
    */
   var isArr$1 = Array.isArray;
 

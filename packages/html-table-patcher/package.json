@@ -1,10 +1,10 @@
 {
   "name": "html-table-patcher",
   "version": "2.0.7",
-  "description": "Wraps any content between TR/TD tags in additional rows/columns to appear in browser correctly",
+  "description": "Visual helper to place templating code around table tags into correct places",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/html-table-patcher",
+  "homepage": "https://codsen.com/os/html-table-patcher/",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -55,29 +55,7 @@
     }
   },
   "lect": {
-    "babelrc": {
-      "override": false,
-      "set": false
-    },
-    "badges": {
-      "cov": true,
-      "deps": true,
-      "deps2d": true,
-      "dev": true,
-      "downloads": true,
-      "license": true,
-      "node": true,
-      "npm": true,
-      "overall": true,
-      "runkit": true,
-      "travis": true,
-      "vulnerabilities": true
-    },
     "defaultExported": false,
-    "eslintrc": {
-      "add": [],
-      "remove": []
-    },
     "files": {
       "delete": [],
       "write_hard": [
@@ -92,10 +70,6 @@
           "name": ""
         }
       ]
-    },
-    "header": {
-      "dontQuoteDescription": false,
-      "rightFloatedBadge": []
     },
     "licence": {
       "extras": [
@@ -114,8 +88,7 @@
       "devDependencies": [
         "@rollup/plugin-json",
         "rollup-plugin-node-builtins"
-      ],
-      "travisVersionsOverride": []
+      ]
     }
   },
   "tap": {
