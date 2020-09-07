@@ -64,7 +64,7 @@
 
   /**
    * ranges-is-index-within
-   * Efficiently checks if index is within any of the given ranges
+   * Checks if index is within any of the given string index ranges
    * Version: 1.14.37
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT

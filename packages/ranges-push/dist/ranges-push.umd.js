@@ -1,6 +1,6 @@
 /**
  * ranges-push
- * Manage the array of ranges referencing the index ranges within the string
+ * Gather string index ranges
  * Version: 3.7.17
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT

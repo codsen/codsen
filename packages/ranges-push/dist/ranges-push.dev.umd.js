@@ -1,6 +1,6 @@
 /**
  * ranges-push
- * Manage the array of ranges referencing the index ranges within the string
+ * Gather string index ranges
  * Version: 3.7.17
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
@@ -252,7 +252,7 @@
 
   /**
    * ranges-sort
-   * Sort natural number index ranges [ [5, 6], [1, 3] ] => [ [1, 3], [5, 6] ]
+   * Sort string index ranges
    * Version: 3.12.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT

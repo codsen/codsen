@@ -1,6 +1,6 @@
 /**
  * ranges-invert
- * Invert Ranges [ [1, 3] ] => [ [0, 1], [3, ...] ]
+ * Invert string index ranges
  * Version: 2.1.45
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT

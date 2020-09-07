@@ -10213,7 +10213,7 @@
 
 	/**
 	 * ast-monkey-traverse
-	 * Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)
+	 * Utility library to traverse AST
 	 * Version: 1.12.16
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
@@ -13014,7 +13014,7 @@
 
 	/**
 	 * codsen-parser
-	 * Parser aiming at broken code, especially HTML & CSS
+	 * Parser aiming at broken or mixed code, especially HTML & CSS
 	 * Version: 0.7.3
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT

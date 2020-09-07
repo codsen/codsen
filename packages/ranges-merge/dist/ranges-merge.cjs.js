@@ -1,6 +1,6 @@
 /**
  * ranges-merge
- * Merge and sort arrays which mean string slice ranges
+ * Merge and sort string index ranges
  * Version: 4.3.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT

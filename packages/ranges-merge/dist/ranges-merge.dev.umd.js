@@ -1,6 +1,6 @@
 /**
  * ranges-merge
- * Merge and sort arrays which mean string slice ranges
+ * Merge and sort string index ranges
  * Version: 4.3.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
@@ -113,7 +113,7 @@
 
   /**
    * ranges-sort
-   * Sort natural number index ranges [ [5, 6], [1, 3] ] => [ [1, 3], [5, 6] ]
+   * Sort string index ranges
    * Version: 3.12.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT

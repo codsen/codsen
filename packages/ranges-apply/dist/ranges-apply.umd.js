@@ -1,6 +1,6 @@
 /**
  * ranges-apply
- * Take an array of string slice ranges, delete/replace the string according to them
+ * Take an array of string index ranges, delete/replace the string according to them
  * Version: 3.1.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT

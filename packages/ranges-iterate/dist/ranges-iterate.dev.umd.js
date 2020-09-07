@@ -1,6 +1,6 @@
 /**
  * ranges-iterate
- * Iterate a string and any changes within already existing ranges
+ * Iterate a string and any changes within given string index ranges
  * Version: 1.1.44
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT

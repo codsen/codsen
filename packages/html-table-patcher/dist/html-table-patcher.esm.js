@@ -1,6 +1,6 @@
 /**
  * html-table-patcher
- * Wraps any content between TR/TD tags in additional rows/columns to appear in browser correctly
+ * Visual helper to place templating code around table tags into correct places
  * Version: 2.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT

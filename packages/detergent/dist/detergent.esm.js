@@ -1,6 +1,6 @@
 /**
  * detergent
- * Extracts and cleans text
+ * Extracts, cleans and encodes text
  * Version: 5.11.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT

@@ -1,6 +1,6 @@
 /**
  * string-unfancy
- * Replace all fancy dashes, quotes etc with their simpler equivalents
+ * Replace all n/m dashes, curly quotes with their simpler equivalents
  * Version: 3.9.61
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT

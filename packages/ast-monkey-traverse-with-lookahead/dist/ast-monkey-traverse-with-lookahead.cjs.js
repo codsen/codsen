@@ -1,6 +1,6 @@
 /**
  * ast-monkey-traverse-with-lookahead
- * Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)
+ * Utility library to traverse AST, reports upcoming values
  * Version: 1.1.9
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
