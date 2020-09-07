@@ -1,7 +1,7 @@
 /**
  * string-overlap-one-on-another
  * Lay one string on top of another, with an optional offset
- * Version: 1.5.61
+ * Version: 1.5.62
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-overlap-one-on-another/

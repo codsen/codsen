@@ -1,6 +1,6 @@
 {
   "name": "lect",
-  "version": "0.13.10",
+  "version": "0.13.11",
   "description": "Maintenance CLI for internal consumption",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -99,8 +99,8 @@
     "timeout": 0
   },
   "dependencies": {
-    "array-pull-all-with-glob": "^4.12.68",
-    "arrayiffy-if-string": "^3.11.34",
+    "array-pull-all-with-glob": "^4.12.69",
+    "arrayiffy-if-string": "^3.11.35",
     "chalk": "^4.1.0",
     "execa": "^4.0.3",
     "find-file-recursively-up": "^1.1.2",
@@ -116,8 +116,8 @@
     "log-symbols": "^4.0.0",
     "matcher": "^3.0.0",
     "meow": "^7.1.1",
-    "object-delete-key": "^1.9.33",
-    "object-merge-advanced": "^10.11.25",
+    "object-delete-key": "^1.9.34",
+    "object-merge-advanced": "^10.11.26",
     "object-path": "^0.11.4",
     "p-map": "^4.0.0",
     "p-reduce": "^2.1.0",
@@ -140,7 +140,7 @@
     "@rollup/plugin-node-resolve": "^9.0.0",
     "@rollup/plugin-strip": "^2.0.0",
     "eslint": "^7.8.1",
-    "lect": "^0.13.10",
+    "lect": "^0.13.11",
     "prettier": "^2.1.1",
     "tap": "^14.10.8",
     "tempy": "^0.6.0",

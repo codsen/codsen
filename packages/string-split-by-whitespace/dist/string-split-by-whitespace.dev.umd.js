@@ -1,7 +1,7 @@
 /**
  * string-split-by-whitespace
  * Split string into array by chunks of whitespace
- * Version: 1.6.68
+ * Version: 1.6.69
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-split-by-whitespace/
@@ -65,7 +65,7 @@
   /**
    * ranges-is-index-within
    * Checks if index is within any of the given string index ranges
-   * Version: 1.14.37
+   * Version: 1.14.38
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/ranges-is-index-within/

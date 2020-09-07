@@ -1,6 +1,6 @@
 {
   "name": "is-html-tag-opening",
-  "version": "1.7.12",
+  "version": "1.8.0",
   "description": "Is given opening bracket a beginning of a tag?",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -99,7 +99,7 @@
     "timeout": 0
   },
   "dependencies": {
-    "string-match-left-right": "^4.0.10"
+    "string-match-left-right": "^4.0.11"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
@@ -114,7 +114,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.8.1",
-    "lect": "^0.13.10",
+    "lect": "^0.13.11",
     "rollup": "^2.26.10",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

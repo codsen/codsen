@@ -1,6 +1,6 @@
 {
   "name": "string-split-by-whitespace",
-  "version": "1.6.68",
+  "version": "1.6.69",
   "description": "Split string into array by chunks of whitespace",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -102,7 +102,7 @@
     "timeout": 0
   },
   "dependencies": {
-    "ranges-is-index-within": "^1.14.37"
+    "ranges-is-index-within": "^1.14.38"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
@@ -117,13 +117,13 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.8.1",
-    "lect": "^0.13.10",
+    "lect": "^0.13.11",
     "rollup": "^2.26.10",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",
     "rollup-plugin-cleanup": "^3.1.1",
     "rollup-plugin-terser": "^7.0.2",
-    "string-find-heads-tails": "^3.16.12",
+    "string-find-heads-tails": "^3.16.13",
     "tap": "^14.10.8",
     "tsd": "^0.13.1"
   }

@@ -1,6 +1,6 @@
 {
   "name": "ast-loose-compare",
-  "version": "1.8.11",
+  "version": "1.8.12",
   "description": "Compare anything: AST, objects, arrays and strings",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -105,7 +105,7 @@
     "timeout": 0
   },
   "dependencies": {
-    "ast-contains-only-empty-space": "^1.9.12"
+    "ast-contains-only-empty-space": "^1.9.13"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
@@ -120,7 +120,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.8.1",
-    "lect": "^0.13.10",
+    "lect": "^0.13.11",
     "rollup": "^2.26.10",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

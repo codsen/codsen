@@ -1,7 +1,7 @@
 /**
  * html-crush
  * Minifies HTML/CSS: valid or broken, pure or mixed with other languages
- * Version: 2.0.3
+ * Version: 2.0.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/html-crush/
@@ -321,7 +321,7 @@
   /**
    * ranges-sort
    * Sort string index ranges
-   * Version: 3.12.2
+   * Version: 3.13.0
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/ranges-sort/
@@ -645,7 +645,7 @@
   /**
    * string-collapse-leading-whitespace
    * Collapse the leading and trailing whitespace of a string
-   * Version: 2.0.23
+   * Version: 2.0.24
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
@@ -956,7 +956,7 @@
   /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-   * Version: 3.11.34
+   * Version: 3.11.35
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -1293,7 +1293,7 @@
   /**
    * string-range-expander
    * Expands string index ranges within whitespace boundaries until letters are met
-   * Version: 1.11.7
+   * Version: 1.11.8
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/string-range-expander/
@@ -3378,7 +3378,7 @@
     return leftMain(str, idx, false);
   }
 
-  var version = "2.0.3";
+  var version = "2.0.4";
 
   var finalIndexesToDelete = new Ranges({
     limitToBeAddedWhitespace: true

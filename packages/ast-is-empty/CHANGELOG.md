@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.8](https://gitlab.com/codsen/codsen/compare/ast-is-empty@1.10.7...ast-is-empty@1.10.8) (2020-09-07)
+
+**Note:** Version bump only for package ast-is-empty
+
+
+
+
+
 ## 1.10.0 (2020-02-01)
 
 ### Features

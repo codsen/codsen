@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.20](https://gitlab.com/codsen/codsen/compare/string-trim-spaces-only@2.8.19...string-trim-spaces-only@2.8.20) (2020-09-07)
+
+**Note:** Version bump only for package string-trim-spaces-only
+
+
+
+
+
 ## 2.8.0 (2019-09-11)
 
 ### Features

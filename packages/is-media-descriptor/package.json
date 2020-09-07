@@ -1,6 +1,6 @@
 {
   "name": "is-media-descriptor",
-  "version": "1.2.15",
+  "version": "1.2.16",
   "description": "Is given string a valid media descriptor (including media query)?",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -102,7 +102,7 @@
   },
   "dependencies": {
     "leven": "^3.1.0",
-    "string-process-comma-separated": "^1.2.10"
+    "string-process-comma-separated": "^1.2.11"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
@@ -118,8 +118,8 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.8.1",
-    "lect": "^0.13.10",
-    "ranges-apply": "^3.1.12",
+    "lect": "^0.13.11",
+    "ranges-apply": "^3.2.0",
     "rollup": "^2.26.10",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

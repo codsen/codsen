@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.2](https://gitlab.com/codsen/codsen/compare/string-strip-html@5.0.1...string-strip-html@5.0.2) (2020-09-07)
+
+**Note:** Version bump only for package string-strip-html
+
+
+
+
+
 ## 5.0.0 (2020-08-16)
 
 Why change what's returned, upon user's request, when we can return everything and let the user pick?

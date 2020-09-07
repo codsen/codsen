@@ -1,7 +1,7 @@
 /**
  * object-flatten-referencing
  * Flatten complex nested objects according to a reference objects
- * Version: 4.11.23
+ * Version: 4.11.24
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-flatten-referencing/
@@ -2018,7 +2018,7 @@
   /**
    * str-indexes-of-plus
    * Search for a string in another string. Get array of indexes. Full Unicode support.
-   * Version: 2.10.7
+   * Version: 2.10.8
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/str-indexes-of-plus/

@@ -1,7 +1,7 @@
 /**
  * email-comb
  * Remove unused CSS from email templates
- * Version: 3.9.22
+ * Version: 3.9.23
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/email-comb/
@@ -193,7 +193,7 @@
   /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-   * Version: 3.11.34
+   * Version: 3.11.35
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -530,7 +530,7 @@
   /**
    * regex-empty-conditional-comments
    * Regular expression for matching HTML empty conditional comments
-   * Version: 1.8.59
+   * Version: 1.8.60
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/regex-empty-conditional-comments/
@@ -3865,7 +3865,7 @@
   /**
    * string-range-expander
    * Expands string index ranges within whitespace boundaries until letters are met
-   * Version: 1.11.7
+   * Version: 1.11.8
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/string-range-expander/
@@ -4022,7 +4022,7 @@
   /**
    * string-uglify
    * Shorten sets of strings deterministically, to be git-friendly
-   * Version: 1.2.42
+   * Version: 1.2.43
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/string-uglify/
@@ -4227,7 +4227,7 @@
   /**
    * ranges-sort
    * Sort string index ranges
-   * Version: 3.12.2
+   * Version: 3.13.0
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/ranges-sort/
@@ -4780,7 +4780,7 @@
   /**
    * ast-is-empty
    * Find out, is nested array/object/string/AST tree is empty
-   * Version: 1.10.7
+   * Version: 1.10.8
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/ast-is-empty/
@@ -4840,7 +4840,7 @@
   /**
    * string-collapse-leading-whitespace
    * Collapse the leading and trailing whitespace of a string
-   * Version: 2.0.23
+   * Version: 2.0.24
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
@@ -6097,7 +6097,7 @@
 
   var lodash_uniq = uniq;
 
-  var version = "3.9.22";
+  var version = "3.9.23";
 
   var regexEmptyStyleTag = /[\n]?\s*<style[^>]*>\s*<\/style\s*>/g;
   var regexEmptyMediaQuery = /[\n]?\s*@(media|supports|document)[^{]*{\s*}/g;

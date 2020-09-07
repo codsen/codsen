@@ -1,6 +1,6 @@
 {
   "name": "html-table-patcher",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "Visual helper to place templating code around table tags into correct places",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -103,11 +103,11 @@
     "timeout": 0
   },
   "dependencies": {
-    "ast-monkey-traverse-with-lookahead": "^1.1.9",
-    "codsen-parser": "^0.7.3",
+    "ast-monkey-traverse-with-lookahead": "^1.1.10",
+    "codsen-parser": "^0.7.4",
     "html-comment-regex": "^1.1.2",
-    "ranges-apply": "^3.1.12",
-    "ranges-push": "^3.7.17"
+    "ranges-apply": "^3.2.0",
+    "ranges-push": "^3.7.18"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
@@ -123,7 +123,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.8.1",
-    "lect": "^0.13.10",
+    "lect": "^0.13.11",
     "rollup": "^2.26.10",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

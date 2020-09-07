@@ -1,6 +1,6 @@
 {
   "name": "is-relative-uri",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "Is given string a relative URI?",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -110,8 +110,8 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.8.1",
-    "lect": "^0.13.10",
-    "ranges-apply": "^3.1.12",
+    "lect": "^0.13.11",
+    "ranges-apply": "^3.2.0",
     "rollup": "^2.26.10",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

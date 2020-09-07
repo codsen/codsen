@@ -1,6 +1,6 @@
 {
   "name": "object-flatten-all-arrays",
-  "version": "4.8.20",
+  "version": "4.8.21",
   "description": "Merge and flatten any arrays found in all values within plain objects",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -114,7 +114,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.8.1",
-    "lect": "^0.13.10",
+    "lect": "^0.13.11",
     "rollup": "^2.26.10",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

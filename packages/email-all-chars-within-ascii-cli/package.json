@@ -1,6 +1,6 @@
 {
   "name": "email-all-chars-within-ascii-cli",
-  "version": "1.10.74",
+  "version": "1.10.75",
   "description": "Command line app to scan email templates, are all their characters within ASCII range",
   "license": "MIT",
   "repository": "https://gitlab.com/codsen/codsen/",
@@ -94,7 +94,7 @@
   },
   "dependencies": {
     "chalk": "^4.1.0",
-    "email-all-chars-within-ascii": "^2.9.67",
+    "email-all-chars-within-ascii": "^2.9.68",
     "fs-extra": "^9.0.1",
     "globby": "^11.0.1",
     "inquirer": "^7.3.3",
@@ -117,7 +117,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "eslint": "^7.8.1",
     "execa": "^4.0.3",
-    "lect": "^0.13.10",
+    "lect": "^0.13.11",
     "prettier": "^2.1.1",
     "tap": "^14.10.8",
     "tempy": "^0.6.0",
