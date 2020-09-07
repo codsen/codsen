@@ -8,7 +8,6 @@ const fs = require("fs-extra");
 const logSymbols = require("log-symbols");
 const chalk = require("chalk");
 const pReduce = require("p-reduce");
-const uniq = require("lodash.uniq");
 const util = require("util");
 const matcher = require("matcher");
 const partition = require("lodash.partition");
@@ -301,8 +300,8 @@ function initNpmIgnore() {
       }
     )
       .then(({ folders, files }) => ({
-        folders: removeOfficiallyTakenCareOf(uniq(folders).sort()),
-        files: removeOfficiallyTakenCareOf(uniq(files).sort()),
+        folders: removeOfficiallyTakenCareOf([...new Set(folders)].sort()),
+        files: removeOfficiallyTakenCareOf([...new Set(files)].sort()),
       }))
       .then((res) => {
         prepRes(res);

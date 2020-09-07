@@ -20,7 +20,6 @@ const trim = require("lodash.trim");
 const isObj = require("lodash.isplainobject");
 const clone = require("lodash.clonedeep");
 const partition = require("lodash.partition");
-const uniq = require("lodash.uniq");
 const camelCase = require("lodash.camelcase");
 // const semverRegex = require("semver-regex");
 // const semverCompare = require("semver-compare");
@@ -60,8 +59,6 @@ function existy(x) {
 // -----------------------------------------------------------------------------
 // 0. STUFF WE READ
 
-let showCoverageBadge = true; // flipswitch for coverage badges
-let coverageValues = null; // the container to place coverage report's content
 let pack = {}; // package.json of the lib located at root
 let parsedPack; // package.json parsed through "getPkgRepo"
 let lectrc = {}; // .lectrc one level above from root
@@ -103,14 +100,6 @@ function get(
     return res;
   }
   return null;
-}
-
-// primitive tool to turn strings to slugs
-function slugify(str) {
-  if (typeof str !== "string") {
-    return str;
-  }
-  return str.split(" ")[0].replace(" ", "_").toLowerCase();
 }
 
 //
@@ -790,7 +779,7 @@ async function writePackageJson(receivedPackageJsonObj) {
         !pack.lect.various.devDependencies.includes(key)) &&
       !(isCLI || (isStr(pack.name) && pack.name.startsWith("gulp")))
     ) {
-      console.log(`793 lect: we'll delete key "${key}" from dev dependencies`);
+      console.log(`782 lect: we'll delete key "${key}" from dev dependencies`);
       delete receivedPackageJsonObj.devDependencies[key];
     } else if (
       Object.prototype.hasOwnProperty.call(lectrcDevDeps, key) &&
@@ -1072,191 +1061,20 @@ function step6() {
   //   )}`
   // );
 
-  const noDepsBadge = `https://img.shields.io/badge/-no%20dependencies-brightgreen?style=flat-square`;
-  const noDepsUrl = `https://www.npmjs.com/package/${pack.name}?activeTab=dependencies`;
+  const badge1 = `<img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center">`;
 
-  let topBadgesString = "";
-  let bottomBadgesString = "";
+  const badge2 = `<img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center">`;
 
-  // if this is a CLI app, don't show the Runkit badge
-  let showRunkitBadge = true;
-  if (!isSpecial && isCLI && !(pack.lect && pack.lect.special)) {
-    showRunkitBadge = false;
-  }
+  const badge3 = `<img src="https://codsen.com/images/png-codsen-star.png" width="42" alt="star" align="center">`;
 
-  // 1. get custom badges from package.json > lect.badges_custom
-  let customBadges = objectPath.get(pack, "lect.badges_custom");
-  if (
-    !customBadges ||
-    !isObj(customBadges) ||
-    (isObj(customBadges) && Object.keys(customBadges).length === 0)
-  ) {
-    customBadges = null;
-  }
-
-  let customBadgesSortedIndexList = [];
-  if (customBadges) {
-    // if (DEBUG) { console.log(`customBadges = ${JSON.stringify(customBadges, null, 4)}`) }
-    customBadgesSortedIndexList = uniq(
-      Object.keys(customBadges).map((badgeName) =>
-        parseInt(customBadges[badgeName].insert_before, 10)
-      )
-    ).sort();
-
-    // console.log(
-    //   `customBadgesSortedIndexList = ${JSON.stringify(
-    //     customBadgesSortedIndexList,
-    //     null,
-    //     4
-    //   )}`
-    // );
-  }
-
-  // 2. assemble the badges string:
-  let res;
-  topBadgesString = lectrc.badges
-    .reduce((totalConcatenatedString, badge) => {
-      res = totalConcatenatedString;
-
-      // There's only one object per-badge within "badges" in .lectrc.json.
-      // Within that object there's only one key - name of the badge. Get that name.
-      const name = Object.keys(badge)[0];
-
-      // if there's no coverage set up, automatically don't show the coverage's badge:
-      if (name === "cov" && !showCoverageBadge) {
-        return res;
-      }
-
-      // if it's a CLI app, automatically don't show the runkit badge:
-      if (name === "runkit" && !showRunkitBadge) {
-        return res;
-      }
-
-      // if package.json doesn't contain contributors, don't show the badge:
-      if (
-        name === "contributors" &&
-        (!objectPath.has(pack, "lect.contributors") ||
-          !isArr(pack.lect.contributors) ||
-          (isArr(pack.lect.contributors) && pack.lect.contributors.length < 2))
-      ) {
-        return res;
-      }
-
-      // if there are no deps, don't show "deps in 2D":
-      if (name === "deps2d" && !pack.dependencies) {
-        return `${totalConcatenatedString}[![no dependencies][no-deps-img]][no-deps-url]\n`;
-      }
-
-      // Now reduce into string depending if badges are switched on or off or setting's missing
-      if (
-        !objectPath.has(pack, `lect.badges.${name}`) ||
-        pack.lect.badges[name]
-      ) {
-        return `${totalConcatenatedString}[![${badge[name].alt}][${name}-img]][${name}-url]\n`;
-      }
-      return res;
-    }, "")
-    .trim();
-
-  // now that we have topBadgesString, let's add custom badges.
-  topBadgesString = topBadgesString
-    .split("\n")
-    .map((el, idx, wholeArr) => {
-      if (customBadgesSortedIndexList.includes(idx + 2)) {
-        Object.keys(customBadges).forEach((key) => {
-          if (customBadges[key].insert_before === idx + 2) {
-            const slug = slugify(customBadges[key].alt);
-            // check, do any of the existing slugs match it, and if so, throw
-            if (
-              wholeArr.some(
-                (oneOfBadgeObjects) =>
-                  Object.keys(oneOfBadgeObjects)[0] === slug
-              )
-            ) {
-              throw new Error(
-                `${chalk.red(
-                  logSymbols.error,
-                  ` When we tried to create a slug from your custom badge's "alt" key:\n${JSON.stringify(
-                    customBadges[key],
-                    null,
-                    4
-                  )}\nthe slug we generated (${slug}) is clashing with one of existing badges from .lectrc.json:\n${JSON.stringify(
-                    wholeArr.filter((obj) => obj[slug] !== undefined)[0],
-                    null,
-                    4
-                  )}. Please set a different "alt" value for the custom badge in this package.json.`
-                )}`
-              );
-            }
-            //
-            el += `\n[![${customBadges[key].alt}][${slug}-img]][${slug}-url]`;
-          }
-        });
-      }
-      return el;
-    })
-    .join("\n");
-
-  bottomBadgesString = lectrc.badges
-    .reduce((totalConcatenatedString, badge, i) => {
-      res = totalConcatenatedString;
-
-      // If there are custom badges, add their corresponding footer links too:
-      if (customBadgesSortedIndexList.includes(i)) {
-        // if (DEBUG) { console.log(`add before this badge: ${JSON.stringify(badge, null, 4)}`) }
-        Object.keys(customBadges).forEach((key) => {
-          if (customBadges[key].insert_before === i) {
-            const slug = slugify(customBadges[key].alt);
-            // no need to check, do any of the existing slugs match it
-            // because the head links would have thrown already
-            res += `[${slug}-img]: ${customBadges[key].img}\n[${slug}-url]: ${customBadges[key].url}\n\n`;
-          }
-        });
-      }
-
-      const name = Object.keys(badge)[0];
-
-      // if there's no coverage set up, automatically don't show the badge:
-      if (name === "cov" && !showCoverageBadge) {
-        return res;
-      }
-
-      // if it's a CLI app, automatically don't show the badge:
-      if (name === "runkit" && !showRunkitBadge) {
-        return res;
-      }
-
-      // if package.json doesn't contain contributors, don't show the badge:
-      if (
-        name === "contributors" &&
-        (!objectPath.has(pack, "lect.contributors") ||
-          !isArr(pack.lect.contributors) ||
-          (isArr(pack.lect.contributors) && pack.lect.contributors.length < 2))
-      ) {
-        return res;
-      }
-
-      // Now reduce footer badge links into string depending are they switched on or
-      // not or setting is missing (means "on")
-      if (!pack.dependencies && name === "deps2d") {
-        return `${res}[no-deps-img]: ${noDepsBadge}\n[no-deps-url]: ${noDepsUrl}\n\n`;
-      }
-      if (
-        !objectPath.has(pack, `lect.badges.${name}`) ||
-        pack.lect.badges[name]
-      ) {
-        return `${res}[${name}-img]: ${badge[name].img}\n[${name}-url]: ${badge[name].url}\n\n`;
-      }
-      return res;
-    }, "")
-    .trim();
+  const badge4 = `<img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">`;
 
   // start setting up the final readme's string:
   let content = `# ${pack.name}
 
 > ${pack.description}
 
-${topBadgesString.trim()}
+${badge1}
 
 ## Install
 
@@ -1264,11 +1082,15 @@ ${topBadgesString.trim()}
 npm i${isCLI ? " -g" : ""} ${pack.name}
 \`\`\`
 
+${badge2}
+
 ## Documentation
 
 Please [visit our documentation](https://codsen.com/os/${
     pack.name
   }/) for a full description of the API and examples.
+
+${badge3}
 
 `;
 
@@ -1290,47 +1112,13 @@ Please [visit our documentation](https://codsen.com/os/${
       .join("\n")}`;
   }
 
-  // here go the footer bits:
-  content = `${content.trim()}\n\n${
-    bottomBadgesString.length > 0
-      ? `${bottomBadgesString.replace(/\n+/g, "\n").trim()}`
-      : ""
-  }`;
-
   if (!content.endsWith("\n")) {
-    content += "\n";
+    content += "\n\n";
   }
 
   content = resolveVars(content, pack, parsedPack, null);
-  // also, fix coverage variables, %COVPERC% and %COVBADGECOLOR% which come
-  // from .lectrc.json:
-  if (content.includes("%COVPERC%")) {
-    let colour = "red";
-    let perc = objectPath.get(coverageValues, "total.lines.pct");
-    let caught;
-    if (
-      Object.keys(coverageValues).some((key) => {
-        caught = key;
-        return key.includes(".esm.");
-      })
-    ) {
-      const perc2 = objectPath.get(coverageValues[caught], `lines.pct`);
-      if (perc2) {
-        perc = perc2;
-      }
-    }
-    if (typeof perc === "number" && perc > 50) {
-      colour = perc > 85 ? "brightgreen" : "yellow";
-    }
 
-    content = content.replace("%COVPERC%", `${perc}%25` || "n/a");
-    content = content.replace("%COVBADGECOLOR%", perc ? colour : "lightgrey");
-    // if (perc) {
-    //   log(`${chalk.blue(logSymbols.info, `coverage: ${perc} (${colour})`)}`);
-    // } else {
-    //   log(`${chalk.red(logSymbols.error, `coverage: ${perc} (${colour})`)}`);
-    // }
-  }
+  content += `${badge4}\n\n`;
 
   writeFileAtomic("README.md", content, (err) => {
     if (err) {
@@ -1404,7 +1192,7 @@ function step3() {
 // -----------------------------------------------------------------------------
 // 2. We fetched the contents of readme successfully.
 
-function step2() {
+function step1() {
   fs.readJson("package.json", { throws: false }, (err, obj) => {
     if (err) {
       log(
@@ -1431,57 +1219,6 @@ function step2() {
 
     step3();
   });
-}
-
-// -----------------------------------------------------------------------------
-// 1. Read coverage report
-
-function step1() {
-  // log(
-  //   `${chalk.white(
-  //     "\nSTEP 1 - Attempt to read coverage/coverage-summary.json"
-  //   )}`
-  // );
-
-  try {
-    fs.statSync(path.resolve("coverage", "coverage-summary.json"));
-    const content = fs.readFileSync(
-      path.resolve("coverage", "coverage-summary.json"),
-      "utf8"
-    );
-    if (content) {
-      try {
-        coverageValues = JSON.parse(content);
-        // console.log(
-        //   `received coverage:\n${JSON.stringify(coverageValues, null, 4)}`
-        // );
-        if (
-          !isObj(coverageValues) ||
-          !objectPath.get(coverageValues, "total.lines.pct")
-        ) {
-          console.log(
-            `no coverage value found, setting showCoverageBadge = false`
-          );
-          showCoverageBadge = false;
-          log(`${chalk.yellow(logSymbols.info, `skipping coverage`)}`);
-        }
-      } catch (e1) {
-        showCoverageBadge = false;
-        log(
-          `${chalk.yellow(
-            logSymbols.info,
-            `did read coverage/coverage-summary.json but could not parse!\n${e1}`
-          )}`
-        );
-      }
-    } else {
-      showCoverageBadge = false;
-    }
-  } catch (e) {
-    showCoverageBadge = false;
-  } finally {
-    step2();
-  }
 }
 
 // -----------------------------------------------------------------------------

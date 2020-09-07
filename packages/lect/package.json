@@ -113,7 +113,6 @@
     "lodash.isplainobject": "^4.0.6",
     "lodash.partition": "^4.6.0",
     "lodash.trim": "^4.5.1",
-    "lodash.uniq": "^4.5.0",
     "log-symbols": "^4.0.0",
     "matcher": "^3.0.0",
     "meow": "^7.1.1",
