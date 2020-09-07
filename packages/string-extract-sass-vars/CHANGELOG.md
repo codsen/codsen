@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.2.5](https://gitlab.com/codsen/codsen/compare/string-extract-sass-vars@1.2.4...string-extract-sass-vars@1.2.5) (2020-09-07)
-
-**Note:** Version bump only for package string-extract-sass-vars
-
-
-
-
-
 ## 1.2.0 (2020-04-26)
 
 ### Features

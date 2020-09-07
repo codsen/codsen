@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.9.14](https://gitlab.com/codsen/codsen/compare/ast-get-object@1.9.13...ast-get-object@1.9.14) (2020-09-07)
-
-**Note:** Version bump only for package ast-get-object
-
-
-
-
-
 ## 1.9.0 (2020-02-01)
 
 ### Features

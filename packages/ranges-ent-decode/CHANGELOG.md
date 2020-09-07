@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.1.0](https://gitlab.com/codsen/codsen/compare/ranges-ent-decode@2.0.56...ranges-ent-decode@2.1.0) (2020-09-07)
-
+## 2.1.0 (2020-09-07)
 
 ### Features
 
-* update to the latest ranges-merge which returns null now instead of empty array ([b36d068](https://gitlab.com/codsen/codsen/commit/b36d068bbd940f248d3ea46e5f37082887332785))
-
-
-
-
+- update to the latest ranges-merge which returns null now instead of empty array ([b36d068](https://gitlab.com/codsen/codsen/commit/b36d068bbd940f248d3ea46e5f37082887332785))
 
 ## 2.0.36 (2019-10-05)
 

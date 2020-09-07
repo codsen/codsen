@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.13.0](https://gitlab.com/codsen/codsen/compare/ranges-sort@3.12.2...ranges-sort@3.13.0) (2020-09-07)
-
+## 3.13.0 (2020-09-07)
 
 ### Features
 
-* discard any nulls among the ranges ([5f86fbc](https://gitlab.com/codsen/codsen/commit/5f86fbcb0989fe3e2f7b19ffd9665b2725266e89))
-
-
-
-
+- discard any nulls among the ranges ([5f86fbc](https://gitlab.com/codsen/codsen/commit/5f86fbcb0989fe3e2f7b19ffd9665b2725266e89))
 
 ## 3.12.0 (2020-05-24)
 

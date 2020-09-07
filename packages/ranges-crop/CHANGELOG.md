@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.1.0](https://gitlab.com/codsen/codsen/compare/ranges-crop@2.0.58...ranges-crop@2.1.0) (2020-09-07)
-
+## 2.1.0 (2020-09-07)
 
 ### Features
 
-* discard any nulls among arrays ([d984ac0](https://gitlab.com/codsen/codsen/commit/d984ac0b05e9f16ed8d29c12d0b8650e0ddd473c))
-
-
-
-
+- discard any nulls among arrays ([d984ac0](https://gitlab.com/codsen/codsen/commit/d984ac0b05e9f16ed8d29c12d0b8650e0ddd473c))
 
 ## 2.0.35 (2019-10-02)
 

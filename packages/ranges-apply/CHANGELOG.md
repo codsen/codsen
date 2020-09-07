@@ -3,21 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.2.0](https://gitlab.com/codsen/codsen/compare/ranges-apply@3.1.12...ranges-apply@3.2.0) (2020-09-07)
-
+## 3.2.0 (2020-09-07)
 
 ### Bug Fixes
 
-* make all tests pass ([d86cf1b](https://gitlab.com/codsen/codsen/commit/d86cf1bca9b0ac38e5bf141ed4ffd44c935ef51c))
-
+- make all tests pass ([d86cf1b](https://gitlab.com/codsen/codsen/commit/d86cf1bca9b0ac38e5bf141ed4ffd44c935ef51c))
 
 ### Features
 
-* discard any nulls among ranges ([2a09e88](https://gitlab.com/codsen/codsen/commit/2a09e88fb3a7b50be255b4cfb265bf0b8542e4ee))
-
-
-
-
+- discard any nulls among ranges ([2a09e88](https://gitlab.com/codsen/codsen/commit/2a09e88fb3a7b50be255b4cfb265bf0b8542e4ee))
 
 ## 3.1.5 (2020-04-26)
 

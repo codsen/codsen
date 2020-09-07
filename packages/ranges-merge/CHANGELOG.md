@@ -3,22 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [5.0.0](https://gitlab.com/codsen/codsen/compare/ranges-merge@4.3.10...ranges-merge@5.0.0) (2020-09-07)
-
+## 5.0.0 (2020-09-07)
 
 ### Features
 
-* discard any null ranges when merging ([ae51bce](https://gitlab.com/codsen/codsen/commit/ae51bce0bcbdb4012548887a31633eaafda5dfdc))
-* return null instead of empty array ([27fa708](https://gitlab.com/codsen/codsen/commit/27fa70879ef0fb65594ffa55de17a26d64353186))
-
+- discard any null ranges when merging ([ae51bce](https://gitlab.com/codsen/codsen/commit/ae51bce0bcbdb4012548887a31633eaafda5dfdc))
+- return null instead of empty array ([27fa708](https://gitlab.com/codsen/codsen/commit/27fa70879ef0fb65594ffa55de17a26d64353186))
 
 ### BREAKING CHANGES
 
-* return null instead of empty array
-
-
-
-
+- return null instead of empty array
 
 ## 4.3.0 (2020-02-01)
 

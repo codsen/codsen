@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.7.4](https://gitlab.com/codsen/codsen/compare/codsen-parser@0.7.3...codsen-parser@0.7.4) (2020-09-07)
-
-**Note:** Version bump only for package codsen-parser
-
-
-
-
-
 ## 0.7.0 (2020-05-24)
 
 ### Features

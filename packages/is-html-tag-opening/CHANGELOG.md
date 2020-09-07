@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.8.0](https://gitlab.com/codsen/codsen/compare/is-html-tag-opening@1.7.12...is-html-tag-opening@1.8.0) (2020-09-07)
-
+## 1.8.0 (2020-09-07)
 
 ### Features
 
-* add type checks and split tests into multiple files ([6a40e8b](https://gitlab.com/codsen/codsen/commit/6a40e8bb4c70b85fd7301b69379091b4b2dd8172))
-
-
-
-
+- add type checks and split tests into multiple files ([6a40e8b](https://gitlab.com/codsen/codsen/commit/6a40e8bb4c70b85fd7301b69379091b4b2dd8172))
 
 ## 1.7.0 (2020-03-16)
 
