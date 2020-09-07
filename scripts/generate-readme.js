@@ -35,7 +35,7 @@ const template = `# Codsen
 
 ## 📚 Documentation
 
-Please [visit our documentation](https://codsen.com/os/) for an overview and a full documentation of all packages.
+Please [visit codsen.com](https://codsen.com/os/) for an overview and full documentation of all packages.
 
 ## 🤝 Contributing
 ${lectrc.contributing.restofit}
