@@ -15,12 +15,34 @@ const pFilter = require("p-filter");
 const sortObject = require("sorted-object");
 const traverse = require("ast-monkey-traverse");
 const isObj = require("lodash.isplainobject");
-const format = require("sort-package-json");
+const sortPackageJson = require("sort-package-json");
 
 const isArr = Array.isArray;
 
 function isStr(something) {
   return typeof something === "string";
+}
+function format(obj) {
+  if (typeof obj !== "object") {
+    return obj;
+  }
+  const sortOrder = sortPackageJson.sortOrder
+    // 1. delete tap and lect fields
+    .filter((field) => !["lect", "tap"].includes(field));
+
+  // 2. then, insert both after resolutions, first tap then lect
+  // console.log(sortOrder);
+
+  const idxOfResolutions = sortOrder.indexOf("resolutions");
+  // console.log(idxOfResolutions);
+  // => 63
+
+  sortOrder.splice(idxOfResolutions, 0, "tap", "lect");
+
+  // use custom array for sorting order:
+  return sortPackageJson(obj, {
+    sortOrder,
+  });
 }
 
 const prefix = "✨ json-sort-cli: ";
