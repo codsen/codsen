@@ -15,7 +15,7 @@ const pFilter = require("p-filter");
 const sortObject = require("sorted-object");
 const traverse = require("ast-monkey-traverse");
 const isObj = require("lodash.isplainobject");
-const format = require("format-package");
+const format = require("sort-package-json");
 
 const isArr = Array.isArray;
 
@@ -202,7 +202,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
 
       return Promise.resolve(
         !cli.flags.pack && path.basename(oneOfPaths) === "package.json"
-          ? format(result).then((str) => JSON.parse(str))
+          ? format(result)
           : result
       ).then((obj) => {
         if (cli.flags.ci) {
