@@ -12,28 +12,44 @@ const logSymbols = require("log-symbols");
 const chalk = require("chalk");
 const objectPath = require("object-path");
 const deleteKey = require("object-delete-key");
-const format = require("format-package");
+const sortPackageJson = require("sort-package-json");
 const mergeAdvanced = require("object-merge-advanced");
 const pMap = require("p-map");
-
 const trim = require("lodash.trim");
 const isObj = require("lodash.isplainobject");
 const clone = require("lodash.clonedeep");
 const partition = require("lodash.partition");
 const camelCase = require("lodash.camelcase");
-// const semverRegex = require("semver-regex");
-// const semverCompare = require("semver-compare");
-
+const arrayiffy = require("arrayiffy-if-string");
 const pull1 = require("array-pull-all-with-glob");
-
 const findRecursivelyUp = require("find-file-recursively-up");
 const inquirer = require("inquirer");
-// const matcher = require('matcher')
 
 function pull(arg1, arg2) {
   return pull1(arg1, arg2, { caseSensitive: false });
 }
-const arrayiffy = require("arrayiffy-if-string");
+function format(obj) {
+  if (typeof obj !== "object") {
+    return obj;
+  }
+  const sortOrder = sortPackageJson.sortOrder
+    // 1. delete tap and lect fields
+    .filter((field) => !["lect", "tap"].includes(field));
+
+  // 2. then, insert both after resolutions, first tap then lect
+  // console.log(sortOrder);
+
+  const idxOfResolutions = sortOrder.indexOf("resolutions");
+  // console.log(idxOfResolutions);
+  // => 63
+
+  sortOrder.splice(idxOfResolutions, 0, "tap", "lect");
+
+  // use custom array for sorting order:
+  return sortPackageJson(obj, {
+    sortOrder,
+  });
+}
 
 const {
   // initNpmIgnore,
@@ -148,49 +164,13 @@ async function step14(receivedPack) {
 
   receivedPack.homepage = `https://codsen.com/os/${receivedPack.name}/`;
 
-  // // if it's a tap-tested package, remove all AVA references
-  // if (objectPath.has(receivedPack, "devDependencies.tap")) {
-  //   objectPath.del(receivedPack, "devDependencies.ava");
-  //   objectPath.del(receivedPack, "scripts.ava");
-  //   objectPath.del(receivedPack, "scripts.coverage");
-  //   objectPath.del(receivedPack, "devDependencies.@babel/register");
-  //   objectPath.del(receivedPack, "devDependencies.babel-plugin-istanbul");
-  //   objectPath.del(receivedPack, "devDependencies.eslint-plugin-ava");
-  //   objectPath.del(receivedPack, "devDependencies.esm");
-  //   objectPath.del(receivedPack, "devDependencies.nyc");
-  //   objectPath.del(receivedPack, "ava");
-  //   objectPath.del(receivedPack, "esm");
-  //   objectPath.del(receivedPack, "nyc");
-  //   // objectPath.set(
-  //   //   receivedPack,
-  //   //   "scripts.unittest",
-  //   //   "./node_modules/.bin/tap && npm run perf"
-  //   // );
-  //
-  //   // this can be either Mocha (eslint-*) or Tap (the rest)
-  //   if (!objectPath.get(receivedPack, "lect.special")) {
-  //     objectPath.set(
-  //       receivedPack,
-  //       "scripts.unittest",
-  //       "./node_modules/.bin/tap --no-only"
-  //     );
-  //     objectPath.set(
-  //       receivedPack,
-  //       "scripts.devunittest",
-  //       "npm run dev && ./node_modules/.bin/tap --only"
-  //     );
-  //   }
-  //   objectPath.set(
-  //     receivedPack,
-  //     "scripts.test",
-  //     "npm run lint && npm run unittest && npm run format"
-  //   );
-  //
-  //   objectPath.set(receivedPack, "tap.coverage-report", "json-summary");
-  //   objectPath.set(receivedPack, "tap.timeout", 0);
-  // }
-
-  const formattedPack = await format(receivedPack);
+  if (!receivedPack) {
+    process.exit(1);
+  }
+  const formattedPack = format(receivedPack);
+  if (!formattedPack) {
+    process.exit(1);
+  }
 
   // finally, write out amended var "lectrc" contents onto .lectrc.json
   // console.log(`0285 lect: about to write the lectrc:\n\n\n███████████████████████████████████████\n\n\n${JSON.stringify(lectrc, null, 4)}\n\n\n███████████████████████████████████████\n\n\n`)
@@ -210,7 +190,7 @@ async function step14(receivedPack) {
             `could not write .lectrc.json:\n${err}`
           )}`
         );
-        if (!(isStr(formattedPack) && formattedPack.length)) {
+        if (!formattedPack) {
           process.exit(1);
         }
       });
@@ -220,22 +200,26 @@ async function step14(receivedPack) {
     );
   }
 
-  if (isStr(formattedPack) && formattedPack.length) {
+  if (formattedPack) {
     // and also write out amended var "pack" contents (formattedPack) onto package.json
-    writeFileAtomic("package.json", formattedPack, (err) => {
-      if (err) {
-        log(
-          `${chalk.red(
-            logSymbols.error,
-            `could not write package.json:\n${err}`
-          )}`
-        );
-        process.exit(1);
+    writeFileAtomic(
+      "package.json",
+      JSON.stringify(formattedPack, null, 2),
+      (err) => {
+        if (err) {
+          log(
+            `${chalk.red(
+              logSymbols.error,
+              `could not write package.json:\n${err}`
+            )}`
+          );
+          process.exit(1);
+        }
+        log(`${chalk.green(logSymbols.success, "package.json OK")}`);
+        log(`${chalk.green(logSymbols.success, "LECT OK")}`);
+        process.exit(0);
       }
-      log(`${chalk.green(logSymbols.success, "package.json OK")}`);
-      log(`${chalk.green(logSymbols.success, "LECT OK")}`);
-      process.exit(0);
-    });
+    );
   }
 }
 
@@ -779,7 +763,7 @@ async function writePackageJson(receivedPackageJsonObj) {
         !pack.lect.various.devDependencies.includes(key)) &&
       !(isCLI || (isStr(pack.name) && pack.name.startsWith("gulp")))
     ) {
-      console.log(`782 lect: we'll delete key "${key}" from dev dependencies`);
+      console.log(`766 lect: we'll delete key "${key}" from dev dependencies`);
       delete receivedPackageJsonObj.devDependencies[key];
     } else if (
       Object.prototype.hasOwnProperty.call(lectrcDevDeps, key) &&

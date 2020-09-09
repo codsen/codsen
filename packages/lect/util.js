@@ -6,14 +6,13 @@ const trim = require("lodash.trim");
 
 const currentTime = new Date();
 const year = currentTime.getFullYear();
-const isArr = Array.isArray;
 
 function resolveVars(str, pack, parsedPack) {
   // if contributors section exists in package.json, get contributors' count from there
   let count = 0;
   if (
     objectPath.has(pack, "lect.contributors") &&
-    isArr(pack.lect.contributors)
+    Array.isArray(pack.lect.contributors)
   ) {
     count = pack.lect.contributors.length;
   }
