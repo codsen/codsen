@@ -17,8 +17,6 @@ const traverse = require("ast-monkey-traverse");
 const isObj = require("lodash.isplainobject");
 const sortPackageJson = require("sort-package-json");
 
-const isArr = Array.isArray;
-
 function isStr(something) {
   return typeof something === "string";
 }
@@ -204,7 +202,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
         result = sortObject(parsedJson);
       } else if (
         cli.flags.arrays &&
-        isArr(parsedJson) &&
+        Array.isArray(parsedJson) &&
         parsedJson.length &&
         parsedJson.every(isStr)
       ) {
@@ -242,7 +240,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
               }
               if (
                 cli.flags.arrays &&
-                isArr(current) &&
+                Array.isArray(current) &&
                 current.length > 1 &&
                 current.every(isStr)
               ) {
@@ -279,7 +277,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
               }
               if (
                 cli.flags.arrays &&
-                isArr(current) &&
+                Array.isArray(current) &&
                 current.length > 1 &&
                 current.every(isStr)
               ) {
