@@ -2,14 +2,6 @@
   "name": "string-apostrophes",
   "version": "1.2.27",
   "description": "Comprehensive, HTML-entities-aware tool to typographically-correct the apostrophes and single/double quotes",
-  "license": "MIT",
-  "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://codsen.com/os/string-apostrophes/",
-  "author": {
-    "email": "roy@codsen.com",
-    "name": "Roy Revelt",
-    "url": "codsen.com"
-  },
   "keywords": [
     "apostrophe",
     "apostrophes",
@@ -21,6 +13,14 @@
     "typographically",
     "typography"
   ],
+  "homepage": "https://codsen.com/os/string-apostrophes/",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "main": "dist/string-apostrophes.cjs.js",
   "module": "dist/string-apostrophes.esm.js",
   "browser": "dist/string-apostrophes.umd.js",
@@ -48,6 +48,17 @@
     "hooks": {
       "pre-commit": "npm run format && npm test"
     }
+  },
+  "tap": {
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
+    "nyc-arg": [
+      "--exclude=**/*.cjs.js",
+      "--exclude=**/*.umd.js"
+    ],
+    "timeout": 0
   },
   "lect": {
     "defaultExported": false,
@@ -82,17 +93,6 @@
     "various": {
       "devDependencies": []
     }
-  },
-  "tap": {
-    "coverage-report": [
-      "json-summary",
-      "text"
-    ],
-    "nyc-arg": [
-      "--exclude=**/*.cjs.js",
-      "--exclude=**/*.umd.js"
-    ],
-    "timeout": 0
   },
   "dependencies": {
     "ranges-apply": "^3.2.0"

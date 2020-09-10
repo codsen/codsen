@@ -2,14 +2,6 @@
   "name": "string-find-malformed",
   "version": "1.1.13",
   "description": "Search for a malformed string. Think of Levenshtein distance but in search.",
-  "license": "MIT",
-  "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://codsen.com/os/string-find-malformed/",
-  "author": {
-    "email": "roy@codsen.com",
-    "name": "Roy Revelt",
-    "url": "codsen.com"
-  },
   "keywords": [
     "character",
     "find",
@@ -25,6 +17,14 @@
     "text",
     "validate"
   ],
+  "homepage": "https://codsen.com/os/string-find-malformed/",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "main": "dist/string-find-malformed.cjs.js",
   "module": "dist/string-find-malformed.esm.js",
   "browser": "dist/string-find-malformed.umd.js",
@@ -52,6 +52,17 @@
     "hooks": {
       "pre-commit": "npm run format && npm test"
     }
+  },
+  "tap": {
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
+    "nyc-arg": [
+      "--exclude=**/*.cjs.js",
+      "--exclude=**/*.umd.js"
+    ],
+    "timeout": 0
   },
   "lect": {
     "defaultExported": true,
@@ -86,17 +97,6 @@
     "various": {
       "devDependencies": []
     }
-  },
-  "tap": {
-    "coverage-report": [
-      "json-summary",
-      "text"
-    ],
-    "nyc-arg": [
-      "--exclude=**/*.cjs.js",
-      "--exclude=**/*.umd.js"
-    ],
-    "timeout": 0
   },
   "dependencies": {
     "string-left-right": "^2.3.28"

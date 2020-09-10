@@ -2,14 +2,6 @@
   "name": "emlint",
   "version": "2.18.12",
   "description": "Pluggable email template code linter",
-  "license": "MIT",
-  "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://codsen.com/os/emlint/",
-  "author": {
-    "email": "roy@codsen.com",
-    "name": "Roy Revelt",
-    "url": "codsen.com"
-  },
   "keywords": [
     "analysis",
     "automatic",
@@ -32,12 +24,20 @@
     "utility",
     "xhtml"
   ],
-  "bin": {
-    "emlint": "bin/cli.js"
+  "homepage": "https://codsen.com/os/emlint/",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
   },
   "main": "dist/emlint.cjs.js",
   "module": "dist/emlint.esm.js",
   "browser": "dist/emlint.umd.js",
+  "bin": {
+    "emlint": "bin/cli.js"
+  },
   "scripts": {
     "build": "node bin/helper && rollup -c",
     "dev": "node bin/helper && rollup -c --dev",
@@ -60,6 +60,17 @@
     "hooks": {
       "pre-commit": "npm run format && npm test"
     }
+  },
+  "tap": {
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
+    "nyc-arg": [
+      "--exclude=**/*.cjs.js",
+      "--exclude=**/*.umd.js"
+    ],
+    "timeout": 0
   },
   "lect": {
     "defaultExported": false,
@@ -101,17 +112,6 @@
         "rollup-plugin-node-globals"
       ]
     }
-  },
-  "tap": {
-    "coverage-report": [
-      "json-summary",
-      "text"
-    ],
-    "nyc-arg": [
-      "--exclude=**/*.cjs.js",
-      "--exclude=**/*.umd.js"
-    ],
-    "timeout": 0
   },
   "dependencies": {
     "ast-monkey-traverse": "^1.12.17",

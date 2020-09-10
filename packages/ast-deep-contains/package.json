@@ -2,14 +2,6 @@
   "name": "ast-deep-contains",
   "version": "1.1.18",
   "description": "Like t.same assert on array of objects, where element order doesn't matter.",
-  "license": "MIT",
-  "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://codsen.com/os/ast-deep-contains/",
-  "author": {
-    "email": "roy@codsen.com",
-    "name": "Roy Revelt",
-    "url": "codsen.com"
-  },
   "keywords": [
     "array",
     "arrays",
@@ -37,6 +29,14 @@
     "tests",
     "unit"
   ],
+  "homepage": "https://codsen.com/os/ast-deep-contains/",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "main": "dist/ast-deep-contains.cjs.js",
   "module": "dist/ast-deep-contains.esm.js",
   "browser": "dist/ast-deep-contains.umd.js",
@@ -64,6 +64,17 @@
     "hooks": {
       "pre-commit": "npm run format && npm test"
     }
+  },
+  "tap": {
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
+    "nyc-arg": [
+      "--exclude=**/*.cjs.js",
+      "--exclude=**/*.umd.js"
+    ],
+    "timeout": 0
   },
   "lect": {
     "defaultExported": true,
@@ -98,17 +109,6 @@
     "various": {
       "devDependencies": []
     }
-  },
-  "tap": {
-    "coverage-report": [
-      "json-summary",
-      "text"
-    ],
-    "nyc-arg": [
-      "--exclude=**/*.cjs.js",
-      "--exclude=**/*.umd.js"
-    ],
-    "timeout": 0
   },
   "dependencies": {
     "ast-monkey-traverse": "^1.12.17",

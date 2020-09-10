@@ -2,14 +2,6 @@
   "name": "string-convert-indexes",
   "version": "1.10.17",
   "description": "Convert string character indexes from JS native index-based to Unicode character-count-based and backwards.",
-  "license": "MIT",
-  "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://codsen.com/os/string-convert-indexes/",
-  "author": {
-    "email": "roy@codsen.com",
-    "name": "Roy Revelt",
-    "url": "codsen.com"
-  },
   "keywords": [
     "astral",
     "based",
@@ -21,6 +13,14 @@
     "string",
     "unicode"
   ],
+  "homepage": "https://codsen.com/os/string-convert-indexes/",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "main": "dist/string-convert-indexes.cjs.js",
   "module": "dist/string-convert-indexes.esm.js",
   "browser": "dist/string-convert-indexes.umd.js",
@@ -48,6 +48,17 @@
     "hooks": {
       "pre-commit": "npm run format && npm test"
     }
+  },
+  "tap": {
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
+    "nyc-arg": [
+      "--exclude=**/*.cjs.js",
+      "--exclude=**/*.umd.js"
+    ],
+    "timeout": 0
   },
   "lect": {
     "defaultExported": false,
@@ -82,17 +93,6 @@
     "various": {
       "devDependencies": []
     }
-  },
-  "tap": {
-    "coverage-report": [
-      "json-summary",
-      "text"
-    ],
-    "nyc-arg": [
-      "--exclude=**/*.cjs.js",
-      "--exclude=**/*.umd.js"
-    ],
-    "timeout": 0
   },
   "dependencies": {
     "ast-monkey": "^7.11.18"

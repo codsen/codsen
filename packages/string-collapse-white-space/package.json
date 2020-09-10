@@ -2,14 +2,6 @@
   "name": "string-collapse-white-space",
   "version": "5.2.28",
   "description": "Efficient collapsing of white space with optional outer- and/or line-trimming and HTML tag recognition",
-  "license": "MIT",
-  "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://codsen.com/os/string-collapse-white-space/",
-  "author": {
-    "email": "roy@codsen.com",
-    "name": "Roy Revelt",
-    "url": "codsen.com"
-  },
   "keywords": [
     "collapse",
     "empty",
@@ -19,6 +11,14 @@
     "white",
     "whitespace"
   ],
+  "homepage": "https://codsen.com/os/string-collapse-white-space/",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "main": "dist/string-collapse-white-space.cjs.js",
   "module": "dist/string-collapse-white-space.esm.js",
   "browser": "dist/string-collapse-white-space.umd.js",
@@ -46,6 +46,17 @@
     "hooks": {
       "pre-commit": "npm run format && npm test"
     }
+  },
+  "tap": {
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
+    "nyc-arg": [
+      "--exclude=**/*.cjs.js",
+      "--exclude=**/*.umd.js"
+    ],
+    "timeout": 0
   },
   "lect": {
     "defaultExported": true,
@@ -80,17 +91,6 @@
     "various": {
       "devDependencies": []
     }
-  },
-  "tap": {
-    "coverage-report": [
-      "json-summary",
-      "text"
-    ],
-    "nyc-arg": [
-      "--exclude=**/*.cjs.js",
-      "--exclude=**/*.umd.js"
-    ],
-    "timeout": 0
   },
   "dependencies": {
     "ranges-apply": "^3.2.0",

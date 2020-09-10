@@ -2,14 +2,6 @@
   "name": "color-shorthand-hex-to-six-digit",
   "version": "2.10.66",
   "description": "Convert shorthand hex color codes into full",
-  "license": "MIT",
-  "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://codsen.com/os/color-shorthand-hex-to-six-digit/",
-  "author": {
-    "email": "roy@codsen.com",
-    "name": "Roy Revelt",
-    "url": "codsen.com"
-  },
   "keywords": [
     "characters",
     "code",
@@ -25,6 +17,14 @@
     "shorthand",
     "six"
   ],
+  "homepage": "https://codsen.com/os/color-shorthand-hex-to-six-digit/",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "main": "dist/color-shorthand-hex-to-six-digit.cjs.js",
   "module": "dist/color-shorthand-hex-to-six-digit.esm.js",
   "browser": "dist/color-shorthand-hex-to-six-digit.umd.js",
@@ -52,6 +52,17 @@
     "hooks": {
       "pre-commit": "npm run format && npm test"
     }
+  },
+  "tap": {
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
+    "nyc-arg": [
+      "--exclude=**/*.cjs.js",
+      "--exclude=**/*.umd.js"
+    ],
+    "timeout": 0
   },
   "lect": {
     "defaultExported": true,
@@ -86,17 +97,6 @@
     "various": {
       "devDependencies": []
     }
-  },
-  "tap": {
-    "coverage-report": [
-      "json-summary",
-      "text"
-    ],
-    "nyc-arg": [
-      "--exclude=**/*.cjs.js",
-      "--exclude=**/*.umd.js"
-    ],
-    "timeout": 0
   },
   "dependencies": {
     "hex-color-regex": "^1.1.0",

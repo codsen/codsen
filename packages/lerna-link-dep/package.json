@@ -2,14 +2,6 @@
   "name": "lerna-link-dep",
   "version": "1.1.34",
   "description": "Like lerna add but does just the symlinking, works on CLI bins too",
-  "license": "MIT",
-  "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://codsen.com/os/lerna-link-dep/",
-  "author": {
-    "email": "roy@codsen.com",
-    "name": "Roy Revelt",
-    "url": "codsen.com"
-  },
   "keywords": [
     "add",
     "cli",
@@ -27,6 +19,14 @@
     "tool",
     "utility"
   ],
+  "homepage": "https://codsen.com/os/lerna-link-dep/",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "bin": {
     "deplink": "cli.js",
     "johnnydepp": "cli.js",
@@ -50,6 +50,17 @@
     "hooks": {
       "pre-commit": "npm run format && npm test"
     }
+  },
+  "tap": {
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
+    "nyc-arg": [
+      "--exclude=**/*.cjs.js",
+      "--exclude=**/*.umd.js"
+    ],
+    "timeout": 0
   },
   "lect": {
     "cliSpecialKeyword": "johnnydepp",
@@ -85,17 +96,6 @@
     "various": {
       "devDependencies": []
     }
-  },
-  "tap": {
-    "coverage-report": [
-      "json-summary",
-      "text"
-    ],
-    "nyc-arg": [
-      "--exclude=**/*.cjs.js",
-      "--exclude=**/*.umd.js"
-    ],
-    "timeout": 0
   },
   "dependencies": {
     "execa": "^4.0.3",

@@ -2,14 +2,6 @@
   "name": "charcode-is-valid-xml-name-character",
   "version": "1.10.61",
   "description": "Does a given character belong to XML spec's \"Production 4 OR 4a\" type (is acceptable for XML element's name)",
-  "license": "MIT",
-  "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://codsen.com/os/charcode-is-valid-xml-name-character/",
-  "author": {
-    "email": "roy@codsen.com",
-    "name": "Roy Revelt",
-    "url": "codsen.com"
-  },
   "keywords": [
     "4",
     "4a",
@@ -27,6 +19,14 @@
     "valid",
     "xml"
   ],
+  "homepage": "https://codsen.com/os/charcode-is-valid-xml-name-character/",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "main": "dist/charcode-is-valid-xml-name-character.cjs.js",
   "module": "dist/charcode-is-valid-xml-name-character.esm.js",
   "browser": "dist/charcode-is-valid-xml-name-character.umd.js",
@@ -54,6 +54,17 @@
     "hooks": {
       "pre-commit": "npm run format && npm test"
     }
+  },
+  "tap": {
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
+    "nyc-arg": [
+      "--exclude=**/*.cjs.js",
+      "--exclude=**/*.umd.js"
+    ],
+    "timeout": 0
   },
   "lect": {
     "defaultExported": false,
@@ -88,17 +99,6 @@
     "various": {
       "devDependencies": []
     }
-  },
-  "tap": {
-    "coverage-report": [
-      "json-summary",
-      "text"
-    ],
-    "nyc-arg": [
-      "--exclude=**/*.cjs.js",
-      "--exclude=**/*.umd.js"
-    ],
-    "timeout": 0
   },
   "dependencies": {
     "ranges-is-index-within": "^1.14.38"

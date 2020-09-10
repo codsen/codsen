@@ -2,14 +2,6 @@
   "name": "array-group-str-omit-num-char",
   "version": "2.1.45",
   "description": "Groups array of strings by omitting number characters",
-  "license": "MIT",
-  "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://codsen.com/os/array-group-str-omit-num-char/",
-  "author": {
-    "email": "roy@codsen.com",
-    "name": "Roy Revelt",
-    "url": "codsen.com"
-  },
   "keywords": [
     "array",
     "character",
@@ -23,6 +15,14 @@
     "same",
     "similar"
   ],
+  "homepage": "https://codsen.com/os/array-group-str-omit-num-char/",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "main": "dist/array-group-str-omit-num-char.cjs.js",
   "module": "dist/array-group-str-omit-num-char.esm.js",
   "browser": "dist/array-group-str-omit-num-char.umd.js",
@@ -50,6 +50,17 @@
     "hooks": {
       "pre-commit": "npm run format && npm test"
     }
+  },
+  "tap": {
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
+    "nyc-arg": [
+      "--exclude=**/*.cjs.js",
+      "--exclude=**/*.umd.js"
+    ],
+    "timeout": 0
   },
   "lect": {
     "defaultExported": true,
@@ -86,17 +97,6 @@
         "benchmark"
       ]
     }
-  },
-  "tap": {
-    "coverage-report": [
-      "json-summary",
-      "text"
-    ],
-    "nyc-arg": [
-      "--exclude=**/*.cjs.js",
-      "--exclude=**/*.umd.js"
-    ],
-    "timeout": 0
   },
   "dependencies": {
     "lodash.uniq": "^4.5.0",

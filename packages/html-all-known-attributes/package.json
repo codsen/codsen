@@ -2,14 +2,6 @@
   "name": "html-all-known-attributes",
   "version": "2.0.6",
   "description": "All HTML attributes known to the Humanity",
-  "license": "MIT",
-  "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://codsen.com/os/html-all-known-attributes/",
-  "author": {
-    "email": "roy@codsen.com",
-    "name": "Roy Revelt",
-    "url": "codsen.com"
-  },
   "keywords": [
     "email",
     "entities",
@@ -20,6 +12,14 @@
     "not",
     "template"
   ],
+  "homepage": "https://codsen.com/os/html-all-known-attributes/",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "main": "dist/html-all-known-attributes.cjs.js",
   "module": "dist/html-all-known-attributes.esm.js",
   "browser": "dist/html-all-known-attributes.umd.js",
@@ -47,6 +47,17 @@
     "hooks": {
       "pre-commit": "npm run format && npm test"
     }
+  },
+  "tap": {
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
+    "nyc-arg": [
+      "--exclude=**/*.cjs.js",
+      "--exclude=**/*.umd.js"
+    ],
+    "timeout": 0
   },
   "lect": {
     "defaultExported": false,
@@ -85,17 +96,6 @@
         "@rollup/plugin-json"
       ]
     }
-  },
-  "tap": {
-    "coverage-report": [
-      "json-summary",
-      "text"
-    ],
-    "nyc-arg": [
-      "--exclude=**/*.cjs.js",
-      "--exclude=**/*.umd.js"
-    ],
-    "timeout": 0
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",

@@ -2,14 +2,6 @@
   "name": "object-fill-missing-keys",
   "version": "7.10.24",
   "description": "Add missing keys into plain objects, according to a reference object",
-  "license": "MIT",
-  "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://codsen.com/os/object-fill-missing-keys/",
-  "author": {
-    "email": "roy@codsen.com",
-    "name": "Roy Revelt",
-    "url": "codsen.com"
-  },
   "keywords": [
     "add",
     "ast",
@@ -26,6 +18,14 @@
     "schema",
     "unify"
   ],
+  "homepage": "https://codsen.com/os/object-fill-missing-keys/",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "main": "dist/object-fill-missing-keys.cjs.js",
   "module": "dist/object-fill-missing-keys.esm.js",
   "browser": "dist/object-fill-missing-keys.umd.js",
@@ -53,6 +53,17 @@
     "hooks": {
       "pre-commit": "npm run format && npm test"
     }
+  },
+  "tap": {
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
+    "nyc-arg": [
+      "--exclude=**/*.cjs.js",
+      "--exclude=**/*.umd.js"
+    ],
+    "timeout": 0
   },
   "lect": {
     "defaultExported": true,
@@ -87,17 +98,6 @@
     "various": {
       "devDependencies": []
     }
-  },
-  "tap": {
-    "coverage-report": [
-      "json-summary",
-      "text"
-    ],
-    "nyc-arg": [
-      "--exclude=**/*.cjs.js",
-      "--exclude=**/*.umd.js"
-    ],
-    "timeout": 0
   },
   "dependencies": {
     "arrayiffy-if-string": "^3.11.35",

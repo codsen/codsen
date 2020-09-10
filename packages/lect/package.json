@@ -2,14 +2,6 @@
   "name": "lect",
   "version": "0.13.11",
   "description": "Maintenance CLI for internal consumption",
-  "license": "MIT",
-  "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://codsen.com/os/lect/",
-  "author": {
-    "email": "roy@codsen.com",
-    "name": "Roy Revelt",
-    "url": "codsen.com"
-  },
   "keywords": [
     "amend",
     "automagically",
@@ -30,6 +22,14 @@
     "tool",
     "update"
   ],
+  "homepage": "https://codsen.com/os/lect/",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "bin": {
     "lect": "cli.js"
   },
@@ -51,6 +51,17 @@
     "hooks": {
       "pre-commit": "npm run format && npm test"
     }
+  },
+  "tap": {
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
+    "nyc-arg": [
+      "--exclude=**/*.cjs.js",
+      "--exclude=**/*.umd.js"
+    ],
+    "timeout": 0
   },
   "lect": {
     "defaultExported": false,
@@ -87,24 +98,12 @@
       "devDependencies": []
     }
   },
-  "tap": {
-    "coverage-report": [
-      "json-summary",
-      "text"
-    ],
-    "nyc-arg": [
-      "--exclude=**/*.cjs.js",
-      "--exclude=**/*.umd.js"
-    ],
-    "timeout": 0
-  },
   "dependencies": {
     "array-pull-all-with-glob": "^4.12.69",
     "arrayiffy-if-string": "^3.11.35",
     "chalk": "^4.1.0",
     "execa": "^4.0.3",
     "find-file-recursively-up": "^1.1.2",
-    "sort-package-json": "^1.44.0",
     "fs-extra": "^9.0.1",
     "get-pkg-repo": "^4.1.1",
     "inquirer": "^7.3.3",
@@ -123,6 +122,7 @@
     "p-reduce": "^2.1.0",
     "semver-compare": "^1.0.0",
     "semver-regex": "^3.1.1",
+    "sort-package-json": "^1.44.0",
     "update-notifier": "^4.1.1",
     "write-file-atomic": "^3.0.3",
     "write-json-file": "^4.3.0"

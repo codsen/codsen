@@ -2,14 +2,6 @@
   "name": "ast-loose-compare",
   "version": "1.8.12",
   "description": "Compare anything: AST, objects, arrays and strings",
-  "license": "MIT",
-  "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://codsen.com/os/ast-loose-compare/",
-  "author": {
-    "email": "roy@codsen.com",
-    "name": "Roy Revelt",
-    "url": "codsen.com"
-  },
   "keywords": [
     "array",
     "ast",
@@ -31,6 +23,14 @@
     "xhtml",
     "xml"
   ],
+  "homepage": "https://codsen.com/os/ast-loose-compare/",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "main": "dist/ast-loose-compare.cjs.js",
   "module": "dist/ast-loose-compare.esm.js",
   "browser": "dist/ast-loose-compare.umd.js",
@@ -58,6 +58,17 @@
     "hooks": {
       "pre-commit": "npm run format && npm test"
     }
+  },
+  "tap": {
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
+    "nyc-arg": [
+      "--exclude=**/*.cjs.js",
+      "--exclude=**/*.umd.js"
+    ],
+    "timeout": 0
   },
   "lect": {
     "defaultExported": true,
@@ -92,17 +103,6 @@
     "various": {
       "devDependencies": []
     }
-  },
-  "tap": {
-    "coverage-report": [
-      "json-summary",
-      "text"
-    ],
-    "nyc-arg": [
-      "--exclude=**/*.cjs.js",
-      "--exclude=**/*.umd.js"
-    ],
-    "timeout": 0
   },
   "dependencies": {
     "ast-contains-only-empty-space": "^1.9.13"

@@ -2,14 +2,6 @@
   "name": "ast-get-object",
   "version": "1.9.14",
   "description": "Getter/setter for nested parsed HTML AST's, querying objects by key/value pairs",
-  "license": "MIT",
-  "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://codsen.com/os/ast-get-object/",
-  "author": {
-    "email": "roy@codsen.com",
-    "name": "Roy Revelt",
-    "url": "codsen.com"
-  },
   "keywords": [
     "ast",
     "by",
@@ -31,6 +23,14 @@
     "xhtml",
     "xml"
   ],
+  "homepage": "https://codsen.com/os/ast-get-object/",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "main": "dist/ast-get-object.cjs.js",
   "module": "dist/ast-get-object.esm.js",
   "browser": "dist/ast-get-object.umd.js",
@@ -58,6 +58,17 @@
     "hooks": {
       "pre-commit": "npm run format && npm test"
     }
+  },
+  "tap": {
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
+    "nyc-arg": [
+      "--exclude=**/*.cjs.js",
+      "--exclude=**/*.umd.js"
+    ],
+    "timeout": 0
   },
   "lect": {
     "defaultExported": true,
@@ -92,17 +103,6 @@
     "various": {
       "devDependencies": []
     }
-  },
-  "tap": {
-    "coverage-report": [
-      "json-summary",
-      "text"
-    ],
-    "nyc-arg": [
-      "--exclude=**/*.cjs.js",
-      "--exclude=**/*.umd.js"
-    ],
-    "timeout": 0
   },
   "dependencies": {
     "ast-compare": "^1.13.15",

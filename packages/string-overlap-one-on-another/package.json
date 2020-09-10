@@ -2,14 +2,6 @@
   "name": "string-overlap-one-on-another",
   "version": "1.5.62",
   "description": "Lay one string on top of another, with an optional offset",
-  "license": "MIT",
-  "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://codsen.com/os/string-overlap-one-on-another/",
-  "author": {
-    "email": "roy@codsen.com",
-    "name": "Roy Revelt",
-    "url": "codsen.com"
-  },
   "keywords": [
     "add",
     "another",
@@ -28,6 +20,14 @@
     "word",
     "words"
   ],
+  "homepage": "https://codsen.com/os/string-overlap-one-on-another/",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "main": "dist/string-overlap-one-on-another.cjs.js",
   "module": "dist/string-overlap-one-on-another.esm.js",
   "browser": "dist/string-overlap-one-on-another.umd.js",
@@ -55,6 +55,17 @@
     "hooks": {
       "pre-commit": "npm run format && npm test"
     }
+  },
+  "tap": {
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
+    "nyc-arg": [
+      "--exclude=**/*.cjs.js",
+      "--exclude=**/*.umd.js"
+    ],
+    "timeout": 0
   },
   "lect": {
     "defaultExported": true,
@@ -89,17 +100,6 @@
     "various": {
       "devDependencies": []
     }
-  },
-  "tap": {
-    "coverage-report": [
-      "json-summary",
-      "text"
-    ],
-    "nyc-arg": [
-      "--exclude=**/*.cjs.js",
-      "--exclude=**/*.umd.js"
-    ],
-    "timeout": 0
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",

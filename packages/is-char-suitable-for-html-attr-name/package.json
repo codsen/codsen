@@ -2,14 +2,6 @@
   "name": "is-char-suitable-for-html-attr-name",
   "version": "1.1.7",
   "description": "Is given character suitable to be in an HTML attribute's name?",
-  "license": "MIT",
-  "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://codsen.com/os/is-char-suitable-for-html-attr-name/",
-  "author": {
-    "email": "roy@codsen.com",
-    "name": "Roy Revelt",
-    "url": "codsen.com"
-  },
   "keywords": [
     "attribute",
     "character",
@@ -27,6 +19,14 @@
     "tokenizer",
     "value"
   ],
+  "homepage": "https://codsen.com/os/is-char-suitable-for-html-attr-name/",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "main": "dist/is-char-suitable-for-html-attr-name.cjs.js",
   "module": "dist/is-char-suitable-for-html-attr-name.esm.js",
   "browser": "dist/is-char-suitable-for-html-attr-name.umd.js",
@@ -54,6 +54,17 @@
     "hooks": {
       "pre-commit": "npm run format && npm test"
     }
+  },
+  "tap": {
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
+    "nyc-arg": [
+      "--exclude=**/*.cjs.js",
+      "--exclude=**/*.umd.js"
+    ],
+    "timeout": 0
   },
   "lect": {
     "defaultExported": true,
@@ -88,17 +99,6 @@
     "various": {
       "devDependencies": []
     }
-  },
-  "tap": {
-    "coverage-report": [
-      "json-summary",
-      "text"
-    ],
-    "nyc-arg": [
-      "--exclude=**/*.cjs.js",
-      "--exclude=**/*.umd.js"
-    ],
-    "timeout": 0
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",

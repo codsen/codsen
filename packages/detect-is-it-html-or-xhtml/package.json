@@ -2,14 +2,6 @@
   "name": "detect-is-it-html-or-xhtml",
   "version": "3.9.60",
   "description": "Answers, is the string input string more an HTML or XHTML (or neither)",
-  "license": "MIT",
-  "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://codsen.com/os/detect-is-it-html-or-xhtml/",
-  "author": {
-    "email": "roy@codsen.com",
-    "name": "Roy Revelt",
-    "url": "codsen.com"
-  },
   "keywords": [
     "check",
     "code",
@@ -26,6 +18,14 @@
     "tags",
     "xhtml"
   ],
+  "homepage": "https://codsen.com/os/detect-is-it-html-or-xhtml/",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "main": "dist/detect-is-it-html-or-xhtml.cjs.js",
   "module": "dist/detect-is-it-html-or-xhtml.esm.js",
   "browser": "dist/detect-is-it-html-or-xhtml.umd.js",
@@ -53,6 +53,17 @@
     "hooks": {
       "pre-commit": "npm run format && npm test"
     }
+  },
+  "tap": {
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
+    "nyc-arg": [
+      "--exclude=**/*.cjs.js",
+      "--exclude=**/*.umd.js"
+    ],
+    "timeout": 0
   },
   "lect": {
     "defaultExported": true,
@@ -87,17 +98,6 @@
     "various": {
       "devDependencies": []
     }
-  },
-  "tap": {
-    "coverage-report": [
-      "json-summary",
-      "text"
-    ],
-    "nyc-arg": [
-      "--exclude=**/*.cjs.js",
-      "--exclude=**/*.umd.js"
-    ],
-    "timeout": 0
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",

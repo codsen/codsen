@@ -2,14 +2,6 @@
   "name": "is-html-tag-opening",
   "version": "1.8.0",
   "description": "Is given opening bracket a beginning of a tag?",
-  "license": "MIT",
-  "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://codsen.com/os/is-html-tag-opening/",
-  "author": {
-    "email": "roy@codsen.com",
-    "name": "Roy Revelt",
-    "url": "codsen.com"
-  },
   "keywords": [
     "bracket",
     "brackets",
@@ -25,6 +17,14 @@
     "tokenizer",
     "utility"
   ],
+  "homepage": "https://codsen.com/os/is-html-tag-opening/",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "main": "dist/is-html-tag-opening.cjs.js",
   "module": "dist/is-html-tag-opening.esm.js",
   "browser": "dist/is-html-tag-opening.umd.js",
@@ -52,6 +52,17 @@
     "hooks": {
       "pre-commit": "npm run format && npm test"
     }
+  },
+  "tap": {
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
+    "nyc-arg": [
+      "--exclude=**/*.cjs.js",
+      "--exclude=**/*.umd.js"
+    ],
+    "timeout": 0
   },
   "lect": {
     "defaultExported": true,
@@ -86,17 +97,6 @@
     "various": {
       "devDependencies": []
     }
-  },
-  "tap": {
-    "coverage-report": [
-      "json-summary",
-      "text"
-    ],
-    "nyc-arg": [
-      "--exclude=**/*.cjs.js",
-      "--exclude=**/*.umd.js"
-    ],
-    "timeout": 0
   },
   "dependencies": {
     "string-match-left-right": "^4.0.11"

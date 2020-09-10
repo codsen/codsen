@@ -2,14 +2,6 @@
   "name": "csv-split-easy",
   "version": "3.0.68",
   "description": "Splits the CSV string into array of arrays, each representing a row of columns",
-  "license": "MIT",
-  "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://codsen.com/os/csv-split-easy/",
-  "author": {
-    "email": "roy@codsen.com",
-    "name": "Roy Revelt",
-    "url": "codsen.com"
-  },
   "keywords": [
     "add",
     "alt",
@@ -26,6 +18,14 @@
     "template",
     "templates"
   ],
+  "homepage": "https://codsen.com/os/csv-split-easy/",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "main": "dist/csv-split-easy.cjs.js",
   "module": "dist/csv-split-easy.esm.js",
   "browser": "dist/csv-split-easy.umd.js",
@@ -53,6 +53,17 @@
     "hooks": {
       "pre-commit": "npm run format && npm test"
     }
+  },
+  "tap": {
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
+    "nyc-arg": [
+      "--exclude=**/*.cjs.js",
+      "--exclude=**/*.umd.js"
+    ],
+    "timeout": 0
   },
   "lect": {
     "defaultExported": true,
@@ -87,17 +98,6 @@
     "various": {
       "devDependencies": []
     }
-  },
-  "tap": {
-    "coverage-report": [
-      "json-summary",
-      "text"
-    ],
-    "nyc-arg": [
-      "--exclude=**/*.cjs.js",
-      "--exclude=**/*.umd.js"
-    ],
-    "timeout": 0
   },
   "dependencies": {
     "string-remove-thousand-separators": "^3.0.68"

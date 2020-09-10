@@ -2,14 +2,6 @@
   "name": "ast-monkey-traverse-with-lookahead",
   "version": "1.1.10",
   "description": "Utility library to traverse AST, reports upcoming values",
-  "license": "MIT",
-  "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://codsen.com/os/ast-monkey-traverse-with-lookahead/",
-  "author": {
-    "email": "roy@codsen.com",
-    "name": "Roy Revelt",
-    "url": "codsen.com"
-  },
   "keywords": [
     "ast",
     "by",
@@ -34,6 +26,14 @@
     "value",
     "xml"
   ],
+  "homepage": "https://codsen.com/os/ast-monkey-traverse-with-lookahead/",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "main": "dist/ast-monkey-traverse-with-lookahead.cjs.js",
   "module": "dist/ast-monkey-traverse-with-lookahead.esm.js",
   "browser": "dist/ast-monkey-traverse-with-lookahead.umd.js",
@@ -61,6 +61,17 @@
     "hooks": {
       "pre-commit": "npm run format && npm test"
     }
+  },
+  "tap": {
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
+    "nyc-arg": [
+      "--exclude=**/*.cjs.js",
+      "--exclude=**/*.umd.js"
+    ],
+    "timeout": 0
   },
   "lect": {
     "defaultExported": true,
@@ -98,17 +109,6 @@
         "lodash.isequal"
       ]
     }
-  },
-  "tap": {
-    "coverage-report": [
-      "json-summary",
-      "text"
-    ],
-    "nyc-arg": [
-      "--exclude=**/*.cjs.js",
-      "--exclude=**/*.umd.js"
-    ],
-    "timeout": 0
   },
   "dependencies": {
     "lodash.clonedeep": "^4.5.0"

@@ -2,14 +2,6 @@
   "name": "array-of-arrays-sort-by-col",
   "version": "2.12.10",
   "description": "sort array of arrays by column, rippling the sorting outwards from that column",
-  "license": "MIT",
-  "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://codsen.com/os/array-of-arrays-sort-by-col/",
-  "author": {
-    "email": "roy@codsen.com",
-    "name": "Roy Revelt",
-    "url": "codsen.com"
-  },
   "keywords": [
     "array",
     "arrays",
@@ -22,6 +14,14 @@
     "sort",
     "sorting"
   ],
+  "homepage": "https://codsen.com/os/array-of-arrays-sort-by-col/",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "main": "dist/array-of-arrays-sort-by-col.cjs.js",
   "module": "dist/array-of-arrays-sort-by-col.esm.js",
   "browser": "dist/array-of-arrays-sort-by-col.umd.js",
@@ -49,6 +49,17 @@
     "hooks": {
       "pre-commit": "npm run format && npm test"
     }
+  },
+  "tap": {
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
+    "nyc-arg": [
+      "--exclude=**/*.cjs.js",
+      "--exclude=**/*.umd.js"
+    ],
+    "timeout": 0
   },
   "lect": {
     "defaultExported": true,
@@ -86,17 +97,6 @@
         "benchmark"
       ]
     }
-  },
-  "tap": {
-    "coverage-report": [
-      "json-summary",
-      "text"
-    ],
-    "nyc-arg": [
-      "--exclude=**/*.cjs.js",
-      "--exclude=**/*.umd.js"
-    ],
-    "timeout": 0
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",

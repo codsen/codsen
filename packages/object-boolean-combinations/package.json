@@ -2,10 +2,6 @@
   "name": "object-boolean-combinations",
   "version": "2.11.64",
   "description": "Generate an array full of object copies, each containing a unique Boolean value combination. Includes overrides.",
-  "license": "MIT",
-  "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://codsen.com/os/object-boolean-combinations/",
-  "author": "Roy Revelt <roy@codsen.com> (http://codsen.com/)",
   "keywords": [
     "all",
     "array",
@@ -19,6 +15,10 @@
     "unique",
     "variations"
   ],
+  "homepage": "https://codsen.com/os/object-boolean-combinations/",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "license": "MIT",
+  "author": "Roy Revelt <roy@codsen.com> (http://codsen.com/)",
   "main": "dist/object-boolean-combinations.cjs.js",
   "module": "dist/object-boolean-combinations.esm.js",
   "browser": "dist/object-boolean-combinations.umd.js",
@@ -46,6 +46,17 @@
     "hooks": {
       "pre-commit": "npm run format && npm test"
     }
+  },
+  "tap": {
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
+    "nyc-arg": [
+      "--exclude=**/*.cjs.js",
+      "--exclude=**/*.umd.js"
+    ],
+    "timeout": 0
   },
   "lect": {
     "defaultExported": true,
@@ -80,17 +91,6 @@
     "various": {
       "devDependencies": []
     }
-  },
-  "tap": {
-    "coverage-report": [
-      "json-summary",
-      "text"
-    ],
-    "nyc-arg": [
-      "--exclude=**/*.cjs.js",
-      "--exclude=**/*.umd.js"
-    ],
-    "timeout": 0
   },
   "dependencies": {
     "lodash.clonedeep": "^4.5.0",

@@ -2,14 +2,6 @@
   "name": "email-comb",
   "version": "3.9.23",
   "description": "Remove unused CSS from email templates",
-  "license": "MIT",
-  "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://codsen.com/os/email-comb/",
-  "author": {
-    "email": "roy@codsen.com",
-    "name": "Roy Revelt",
-    "url": "https://codsen.com"
-  },
   "keywords": [
     "body",
     "css",
@@ -22,6 +14,14 @@
     "uncss",
     "unused"
   ],
+  "homepage": "https://codsen.com/os/email-comb/",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "https://codsen.com"
+  },
   "main": "dist/email-comb.cjs.js",
   "module": "dist/email-comb.esm.js",
   "browser": "dist/email-comb.umd.js",
@@ -49,6 +49,17 @@
     "hooks": {
       "pre-commit": "npm run format && npm test"
     }
+  },
+  "tap": {
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
+    "nyc-arg": [
+      "--exclude=**/*.cjs.js",
+      "--exclude=**/*.umd.js"
+    ],
+    "timeout": 0
   },
   "lect": {
     "defaultExported": false,
@@ -87,17 +98,6 @@
         "rollup-plugin-node-builtins"
       ]
     }
-  },
-  "tap": {
-    "coverage-report": [
-      "json-summary",
-      "text"
-    ],
-    "nyc-arg": [
-      "--exclude=**/*.cjs.js",
-      "--exclude=**/*.umd.js"
-    ],
-    "timeout": 0
   },
   "dependencies": {
     "array-pull-all-with-glob": "^4.12.69",

@@ -2,14 +2,6 @@
   "name": "html-entities-not-email-friendly",
   "version": "0.2.7",
   "description": "All HTML entities which are not email template friendly",
-  "license": "MIT",
-  "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://codsen.com/os/html-entities-not-email-friendly/",
-  "author": {
-    "email": "roy@codsen.com",
-    "name": "Roy Revelt",
-    "url": "codsen.com"
-  },
   "keywords": [
     "email",
     "entities",
@@ -20,6 +12,14 @@
     "not",
     "template"
   ],
+  "homepage": "https://codsen.com/os/html-entities-not-email-friendly/",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "main": "dist/html-entities-not-email-friendly.cjs.js",
   "module": "dist/html-entities-not-email-friendly.esm.js",
   "browser": "dist/html-entities-not-email-friendly.umd.js",
@@ -47,6 +47,17 @@
     "hooks": {
       "pre-commit": "npm run format && npm test"
     }
+  },
+  "tap": {
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
+    "nyc-arg": [
+      "--exclude=**/*.cjs.js",
+      "--exclude=**/*.umd.js"
+    ],
+    "timeout": 0
   },
   "lect": {
     "defaultExported": false,
@@ -85,17 +96,6 @@
         "@rollup/plugin-json"
       ]
     }
-  },
-  "tap": {
-    "coverage-report": [
-      "json-summary",
-      "text"
-    ],
-    "nyc-arg": [
-      "--exclude=**/*.cjs.js",
-      "--exclude=**/*.umd.js"
-    ],
-    "timeout": 0
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",

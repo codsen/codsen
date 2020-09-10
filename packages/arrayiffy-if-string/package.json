@@ -2,14 +2,6 @@
   "name": "arrayiffy-if-string",
   "version": "3.11.35",
   "description": "Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.",
-  "license": "MIT",
-  "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://codsen.com/os/arrayiffy-if-string/",
-  "author": {
-    "email": "roy@codsen.com",
-    "name": "Roy Revelt",
-    "url": "codsen.com"
-  },
   "keywords": [
     "api",
     "array",
@@ -25,6 +17,14 @@
     "validate",
     "validation"
   ],
+  "homepage": "https://codsen.com/os/arrayiffy-if-string/",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "main": "dist/arrayiffy-if-string.cjs.js",
   "module": "dist/arrayiffy-if-string.esm.js",
   "browser": "dist/arrayiffy-if-string.umd.js",
@@ -52,6 +52,17 @@
     "hooks": {
       "pre-commit": "npm run format && npm test"
     }
+  },
+  "tap": {
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
+    "nyc-arg": [
+      "--exclude=**/*.cjs.js",
+      "--exclude=**/*.umd.js"
+    ],
+    "timeout": 0
   },
   "lect": {
     "defaultExported": true,
@@ -88,17 +99,6 @@
         "benchmark"
       ]
     }
-  },
-  "tap": {
-    "coverage-report": [
-      "json-summary",
-      "text"
-    ],
-    "nyc-arg": [
-      "--exclude=**/*.cjs.js",
-      "--exclude=**/*.umd.js"
-    ],
-    "timeout": 0
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",

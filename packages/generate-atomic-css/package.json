@@ -2,14 +2,6 @@
   "name": "generate-atomic-css",
   "version": "1.2.49",
   "description": "Generate Atomic CSS",
-  "license": "MIT",
-  "repository": "https://gitlab.com/codsen/codsen/",
-  "homepage": "https://codsen.com/os/generate-atomic-css/",
-  "author": {
-    "email": "roy@codsen.com",
-    "name": "Roy Revelt",
-    "url": "codsen.com"
-  },
   "keywords": [
     "api",
     "atomic",
@@ -22,6 +14,14 @@
     "templates",
     "tool"
   ],
+  "homepage": "https://codsen.com/os/generate-atomic-css/",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "license": "MIT",
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "main": "dist/generate-atomic-css.cjs.js",
   "module": "dist/generate-atomic-css.esm.js",
   "browser": "dist/generate-atomic-css.umd.js",
@@ -49,6 +49,17 @@
     "hooks": {
       "pre-commit": "npm run format && npm test"
     }
+  },
+  "tap": {
+    "coverage-report": [
+      "json-summary",
+      "text"
+    ],
+    "nyc-arg": [
+      "--exclude=**/*.cjs.js",
+      "--exclude=**/*.umd.js"
+    ],
+    "timeout": 0
   },
   "lect": {
     "defaultExported": false,
@@ -85,17 +96,6 @@
         "@rollup/plugin-json"
       ]
     }
-  },
-  "tap": {
-    "coverage-report": [
-      "json-summary",
-      "text"
-    ],
-    "nyc-arg": [
-      "--exclude=**/*.cjs.js",
-      "--exclude=**/*.umd.js"
-    ],
-    "timeout": 0
   },
   "dependencies": {
     "ranges-apply": "^3.2.0",
