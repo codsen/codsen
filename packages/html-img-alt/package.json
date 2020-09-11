@@ -122,7 +122,7 @@
     "benchmark": "^2.1.4",
     "eslint": "^7.8.1",
     "lect": "^0.13.11",
-    "rollup": "^2.26.10",
+    "rollup": "^2.26.11",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",
     "rollup-plugin-cleanup": "^3.1.1",
