@@ -34,7 +34,6 @@
         "ent": 2,
         "execa": 2,
         "find-file-recursively-up": 1,
-        "format-package": 2,
         "fs-extra": 9,
         "generate-atomic-css": 1,
         "get-pkg-repo": 2,
@@ -77,7 +76,7 @@
         "lodash.pull": 2,
         "lodash.pullall": 4,
         "lodash.trim": 4,
-        "lodash.uniq": 7,
+        "lodash.uniq": 6,
         "lodash.without": 1,
         "log-symbols": 2,
         "log-update": 1,
@@ -115,6 +114,7 @@
         "semver-regex": 1,
         "simple-git": 1,
         "sort-keys": 1,
+        "sort-package-json": 2,
         "sorted-object": 1,
         "split2": 1,
         "str-indexes-of-plus": 1,
@@ -227,7 +227,7 @@
             "object-path": 8
         },
         {
-            "lodash.uniq": 7
+            "lodash.uniq": 6
         }
     ],
     "top10OwnDeps": [

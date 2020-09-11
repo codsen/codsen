@@ -1,6 +1,6 @@
 {
     "all": {
-        "all-named-html-entities": 2684,
+        "all-named-html-entities": 2683,
         "array-group-str-omit-num-char": 43,
         "array-includes-with-glob": 42,
         "array-of-arrays-into-ast": 13,
@@ -33,7 +33,7 @@
         "detect-is-it-html-or-xhtml": 53,
         "detergent": 741600,
         "easy-replace": 203,
-        "edit-package-json": 12148,
+        "edit-package-json": 12149,
         "email-all-chars-within-ascii": 59,
         "email-all-chars-within-ascii-cli": 11,
         "email-comb": 377,
@@ -53,7 +53,7 @@
         "is-char-suitable-for-html-attr-name": 40,
         "is-html-attribute-closing": 1024,
         "is-html-tag-opening": 194,
-        "is-language-code": 816,
+        "is-language-code": 782,
         "is-media-descriptor": 135,
         "is-relative-uri": 79,
         "js-row-num": 83,
@@ -117,7 +117,7 @@
         "util-nonempty": 17
     },
     "totalPackageCount": 115,
-    "totalAssertsCount": 793946,
+    "totalAssertsCount": 793912,
     "minAssertsCount": 4,
     "minAssertsName": "csv-sort-cli",
     "maxAssertsCount": 741600,

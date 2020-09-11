@@ -91,7 +91,7 @@
     },
     {
         "name": "ast-monkey",
-        "size": 8510,
+        "size": 8470,
         "imports": [
             "ast-compare",
             "ast-monkey-traverse",
@@ -101,12 +101,12 @@
     },
     {
         "name": "ast-monkey-traverse",
-        "size": 2580,
+        "size": 2494,
         "imports": []
     },
     {
         "name": "ast-monkey-traverse-with-lookahead",
-        "size": 2771,
+        "size": 2711,
         "imports": []
     },
     {
@@ -146,7 +146,7 @@
     },
     {
         "name": "codsen-parser",
-        "size": 19484,
+        "size": 19493,
         "imports": [
             "ast-monkey-util",
             "codsen-tokenizer",
@@ -189,7 +189,7 @@
     },
     {
         "name": "detergent",
-        "size": 53889,
+        "size": 53898,
         "imports": [
             "all-named-html-entities",
             "html-entities-not-email-friendly",
@@ -338,7 +338,7 @@
     },
     {
         "name": "html-table-patcher",
-        "size": 6555,
+        "size": 6537,
         "imports": [
             "ast-monkey-traverse-with-lookahead",
             "codsen-parser",
@@ -363,14 +363,14 @@
     },
     {
         "name": "is-html-tag-opening",
-        "size": 5348,
+        "size": 5347,
         "imports": [
             "string-match-left-right"
         ]
     },
     {
         "name": "is-language-code",
-        "size": 79017,
+        "size": 79018,
         "imports": []
     },
     {
@@ -421,7 +421,7 @@
     },
     {
         "name": "json-sort-cli",
-        "size": 16457,
+        "size": 17007,
         "imports": [
             "ast-monkey-traverse"
         ]
@@ -442,7 +442,7 @@
     },
     {
         "name": "lect",
-        "size": 47257,
+        "size": 37448,
         "imports": [
             "array-pull-all-with-glob",
             "arrayiffy-if-string",
@@ -518,28 +518,28 @@
     },
     {
         "name": "ranges-apply",
-        "size": 5060,
+        "size": 5059,
         "imports": [
             "ranges-merge"
         ]
     },
     {
         "name": "ranges-crop",
-        "size": 3279,
+        "size": 3278,
         "imports": [
             "ranges-merge"
         ]
     },
     {
         "name": "ranges-ent-decode",
-        "size": 2946,
+        "size": 2945,
         "imports": [
             "ranges-merge"
         ]
     },
     {
         "name": "ranges-invert",
-        "size": 4238,
+        "size": 4216,
         "imports": [
             "ranges-crop",
             "ranges-merge"
@@ -547,12 +547,12 @@
     },
     {
         "name": "ranges-is-index-within",
-        "size": 1022,
+        "size": 1023,
         "imports": []
     },
     {
         "name": "ranges-merge",
-        "size": 5060,
+        "size": 5041,
         "imports": [
             "ranges-sort"
         ]
@@ -567,7 +567,7 @@
     },
     {
         "name": "ranges-push",
-        "size": 7413,
+        "size": 7366,
         "imports": [
             "ranges-merge",
             "string-collapse-leading-whitespace",
@@ -576,14 +576,14 @@
     },
     {
         "name": "ranges-regex",
-        "size": 1948,
+        "size": 1947,
         "imports": [
             "ranges-merge"
         ]
     },
     {
         "name": "ranges-sort",
-        "size": 2610,
+        "size": 2561,
         "imports": []
     },
     {
