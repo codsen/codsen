@@ -14,7 +14,7 @@ tap.test("01 - plain objects", (t) => {
   t.end();
 });
 
-tap.only("02 - plain objects, useWildcards, key with wildcard", (t) => {
+tap.test("02 - plain objects, useWildcards, key with wildcard", (t) => {
   t.not(
     compare(
       { a: "1", b: "2" },

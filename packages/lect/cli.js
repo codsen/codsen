@@ -721,7 +721,11 @@ async function writePackageJson(receivedPackageJsonObj) {
   }
 
   if (!isSpecial) {
-    if (isCLI || (isStr(pack.name) && pack.name.startsWith("gulp"))) {
+    if (
+      isCLI ||
+      (isStr(pack.name) &&
+        (pack.name.startsWith("gulp-") || pack.name.startsWith("eleventy-")))
+    ) {
       // it's a CLI
       // set scripts to the ones set in .lectrc
       const cliScripts = objectPath.get(lectrc, "scripts.cli");
@@ -770,9 +774,13 @@ async function writePackageJson(receivedPackageJsonObj) {
       !whitelist.includes(key) &&
       (!isArr(objectPath.get(pack, "lect.various.devDependencies")) ||
         !pack.lect.various.devDependencies.includes(key)) &&
-      !(isCLI || (isStr(pack.name) && pack.name.startsWith("gulp")))
+      !(
+        isCLI ||
+        (isStr(pack.name) &&
+          (pack.name.startsWith("gulp-") || pack.name.startsWith("eleventy-")))
+      )
     ) {
-      console.log(`775 lect: we'll delete key "${key}" from dev dependencies`);
+      console.log(`783 lect: we'll delete key "${key}" from dev dependencies`);
       delete receivedPackageJsonObj.devDependencies[key];
     } else if (
       Object.prototype.hasOwnProperty.call(lectrcDevDeps, key) &&
@@ -792,7 +800,12 @@ async function writePackageJson(receivedPackageJsonObj) {
     // dependency
     if (
       (!Object.prototype.hasOwnProperty.call(packDevDeps, key) &&
-        !(isCLI || (isStr(pack.name) && pack.name.startsWith("gulp")))) ||
+        !(
+          isCLI ||
+          (isStr(pack.name) &&
+            (pack.name.startsWith("gulp-") ||
+              pack.name.startsWith("eleventy-")))
+        )) ||
       !key.startsWith("rollup")
     ) {
       // console.log(`1087 lect: we'll add a new key ${key} under dev deps`);
@@ -1067,7 +1080,34 @@ function step6() {
 
 > ${pack.description}
 
-${badge1}
+<div class="package-badges">
+  <a href="https://www.npmjs.com/package/${
+    pack.name
+  }" rel="nofollow noreferrer noopener">
+    <img src="https://img.shields.io/badge/-npm-blue?style=flat-square" alt="page on npm">
+  </a>
+  <a href="https://codsen.com/os/${
+    pack.name
+  }" rel="nofollow noreferrer noopener">
+    <img src="https://img.shields.io/badge/-Codsen-blue?style=flat-square" alt="page on npm">
+  </a>
+  <a href="https://gitlab.com/codsen/codsen/tree/master/packages/${
+    pack.name
+  }" rel="nofollow noreferrer noopener">
+    <img src="https://img.shields.io/badge/-GitLab-blue?style=flat-square" alt="page on GitLab">
+  </a>
+  <a href="https://npmcharts.com/compare/${
+    pack.name
+  }?interval=30" rel="nofollow noreferrer noopener" target="_blank">
+    <img src="https://img.shields.io/npm/dm/${
+      pack.name
+    }.svg?style=flat-square" alt="Downloads per month">
+  </a>
+  <a href="https://prettier.io" rel="nofollow noreferrer noopener" target="_blank">
+    <img src="https://img.shields.io/badge/code_style-prettier-brightgreen.svg?style=flat-square" alt="Code style: prettier">
+  </a>
+  <img src="https://img.shields.io/badge/licence-MIT-brightgreen.svg?style=flat-square" alt="MIT License">
+</div>
 
 ## Install
 
@@ -1079,7 +1119,7 @@ ${badge2}
 
 ## Documentation
 
-Please [visit our documentation](https://codsen.com/os/${
+Please [visit codsen.com](https://codsen.com/os/${
     pack.name
   }/) for a full description of the API and examples.
 
@@ -1111,7 +1151,7 @@ ${badge3}
 
   content = resolveVars(content, pack, parsedPack, null);
 
-  content += `${badge4}\n\n`;
+  content += `${badge1} ${badge4}\n\n`;
 
   writeFileAtomic("README.md", content, (err) => {
     if (err) {

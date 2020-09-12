@@ -30,7 +30,7 @@ tap.test("01 - mvp", (t) => {
   t.end();
 });
 
-tap.only("02 - @charset", (t) => {
+tap.test("02 - @charset", (t) => {
   const source = `<head>
 @charset "utf-8";
 <style type="text/css">@media (max-width: 600px) {

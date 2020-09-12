@@ -144,7 +144,7 @@ tap.test("20 - wrong inputs, opts.backend", (t) => {
   t.end();
 });
 
-tap.only("21 - wrong inputs, opts.backend", (t) => {
+tap.test("21 - wrong inputs, opts.backend", (t) => {
   t.doesNotThrow(() => {
     comb("zzz", { backend: [{}] }); // empty arrays are permitted
   }, "21");

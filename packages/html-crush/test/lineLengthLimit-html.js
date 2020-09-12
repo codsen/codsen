@@ -110,7 +110,7 @@ new`,
   }
 );
 
-tap.only(
+tap.test(
   `03 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - non-inline tags are separated`,
   (t) => {
     t.match(
