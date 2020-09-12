@@ -99,7 +99,6 @@
       "goodFolders": []
     },
     "req": "deleteObj",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }

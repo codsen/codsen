@@ -92,7 +92,6 @@
       "goodFolders": []
     },
     "req": "tokenizer",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }

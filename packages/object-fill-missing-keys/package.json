@@ -94,7 +94,6 @@
       "goodFolders": []
     },
     "req": "fillMissingKeysWrapper",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }

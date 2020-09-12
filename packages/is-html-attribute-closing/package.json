@@ -94,7 +94,6 @@
       "goodFolders": []
     },
     "req": "isAttrClosing",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }

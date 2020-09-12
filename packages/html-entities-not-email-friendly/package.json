@@ -90,7 +90,6 @@
       "goodFolders": []
     },
     "req": "{\n  notEmailFriendly,\n  notEmailFriendlySetOnly,\n  notEmailFriendlyLowercaseSetOnly,\n  notEmailFriendlyMinLength,\n  notEmailFriendlyMaxLength\n}",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": [
         "@rollup/plugin-json"

@@ -96,7 +96,6 @@
       "goodFolders": []
     },
     "req": "{ pathNext, pathPrev, pathUp }",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": [
         "object-path",

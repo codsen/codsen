@@ -152,6 +152,15 @@ async function step14(receivedPack) {
   objectPath.del(receivedPack, "lect.various.back_to_top");
   objectPath.del(receivedPack, "lect.various.travisVersionsOverride");
 
+  // set TS definitions
+  try {
+    if (fs.statSync(path.resolve("./index.d.ts"))) {
+      receivedPack.types = "index.d.ts";
+    }
+  } catch (e) {
+    // it's fine, move on
+  }
+
   if (
     !objectPath.has(receivedPack, "scripts.republish") &&
     !receivedPack.private
@@ -763,7 +772,7 @@ async function writePackageJson(receivedPackageJsonObj) {
         !pack.lect.various.devDependencies.includes(key)) &&
       !(isCLI || (isStr(pack.name) && pack.name.startsWith("gulp")))
     ) {
-      console.log(`766 lect: we'll delete key "${key}" from dev dependencies`);
+      console.log(`775 lect: we'll delete key "${key}" from dev dependencies`);
       delete receivedPackageJsonObj.devDependencies[key];
     } else if (
       Object.prototype.hasOwnProperty.call(lectrcDevDeps, key) &&

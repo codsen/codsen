@@ -94,7 +94,6 @@
       "goodFolders": []
     },
     "req": "containsOnlyEmptySpace",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": [
         "benchmark"

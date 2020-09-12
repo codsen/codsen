@@ -90,7 +90,6 @@
       "goodFolders": []
     },
     "req": "{\n  getKeysetSync,\n  getKeyset,\n  enforceKeyset,\n  enforceKeysetSync,\n  sortAllObjectsSync,\n  noNewKeysSync,\n  findUnusedSync\n}",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }

@@ -95,7 +95,6 @@
       "goodFolders": []
     },
     "req": "{ isProduction4, isProduction4a, validFirstChar, validSecondCharOnwards }",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }

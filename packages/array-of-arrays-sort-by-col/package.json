@@ -90,7 +90,6 @@
       "goodFolders": []
     },
     "req": "sortBySubarray",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": [
         "array-shuffle",

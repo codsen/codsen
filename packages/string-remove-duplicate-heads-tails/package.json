@@ -94,7 +94,6 @@
       "goodFolders": []
     },
     "req": "removeDuplicateHeadsTails",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }

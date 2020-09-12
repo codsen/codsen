@@ -95,7 +95,6 @@
       "goodFolders": []
     },
     "req": "chluLib",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": [
         "@rollup/plugin-json",

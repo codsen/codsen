@@ -100,7 +100,6 @@
       "goodFolders": []
     },
     "req": "{ crush, defaults, version }",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": [
         "@babel/polyfill",

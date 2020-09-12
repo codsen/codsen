@@ -90,7 +90,6 @@
       "goodFolders": []
     },
     "req": "trimSpaces",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }

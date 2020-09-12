@@ -94,7 +94,6 @@
       "goodFolders": []
     },
     "req": "includesWithGlob",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": [
         "benchmark"

@@ -89,7 +89,6 @@
       "goodFolders": []
     },
     "req": "within",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }

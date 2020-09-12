@@ -90,7 +90,6 @@
       "goodFolders": []
     },
     "req": "isRel",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": [
         "ranges-apply"

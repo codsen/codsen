@@ -87,7 +87,6 @@
       "goodFolders": []
     },
     "req": "cparser",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }

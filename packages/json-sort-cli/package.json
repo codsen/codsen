@@ -84,7 +84,6 @@
       "goodFiles": [],
       "goodFolders": []
     },
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": [
         "p-map"

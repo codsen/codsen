@@ -94,7 +94,6 @@
       "goodFolders": []
     },
     "req": "fixRowNums",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }

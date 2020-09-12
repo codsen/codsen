@@ -93,7 +93,6 @@
       "goodFolders": []
     },
     "req": "{ left, right, leftSeq, rightSeq, chompLeft, chompRight, leftStopAtNewLines, rightStopAtNewLines }",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }

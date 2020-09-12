@@ -94,7 +94,6 @@
         "util"
       ]
     },
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": [
         "fs-extra",

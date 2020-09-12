@@ -96,7 +96,6 @@
       "goodFolders": []
     },
     "req": "overlap",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }

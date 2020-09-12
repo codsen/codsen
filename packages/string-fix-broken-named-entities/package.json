@@ -96,7 +96,6 @@
       "goodFolders": []
     },
     "req": "fixEnt",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }

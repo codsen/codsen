@@ -92,7 +92,6 @@
       "goodFolders": []
     },
     "req": "mergeRanges",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": [
         "lodash.clonedeep"

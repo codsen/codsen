@@ -93,7 +93,6 @@
       "goodFolders": []
     },
     "req": "isOpening",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }

@@ -105,7 +105,6 @@
       "goodFolders": []
     },
     "req": "deepContains",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }

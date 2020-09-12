@@ -92,7 +92,6 @@
       "goodFolders": []
     },
     "req": "emptyCondCommentRegex",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }

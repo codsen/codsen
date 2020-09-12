@@ -92,7 +92,6 @@
       "goodFolders": []
     },
     "req": "isMediaD",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": [
         "@rollup/plugin-json",

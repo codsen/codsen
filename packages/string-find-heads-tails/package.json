@@ -91,7 +91,6 @@
       "goodFolders": []
     },
     "req": "strFindHeadsTails",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }

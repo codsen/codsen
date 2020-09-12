@@ -92,7 +92,6 @@
       "goodFolders": []
     },
     "req": "raReg",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": [
         "ranges-apply"

@@ -89,7 +89,6 @@
       "goodFolders": []
     },
     "req": "crop",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": [
         "ranges-apply",

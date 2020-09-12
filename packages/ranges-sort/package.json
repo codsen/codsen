@@ -85,7 +85,6 @@
       "goodFolders": []
     },
     "req": "rsort",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }

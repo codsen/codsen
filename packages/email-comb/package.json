@@ -90,7 +90,6 @@
       "goodFolders": []
     },
     "req": "{ comb, defaults, version }",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": [
         "@rollup/plugin-json",

@@ -94,7 +94,6 @@
       "goodFolders": []
     },
     "req": "{ isHighSurrogate, isLowSurrogate }",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }

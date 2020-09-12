@@ -99,7 +99,6 @@
       "goodFolders": []
     },
     "req": "getObj",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }

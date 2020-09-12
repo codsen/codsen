@@ -91,7 +91,6 @@
       "goodFolders": []
     },
     "req": "flattenAllArrays",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }

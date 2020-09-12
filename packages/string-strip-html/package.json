@@ -29,6 +29,7 @@
   "main": "dist/string-strip-html.cjs.js",
   "module": "dist/string-strip-html.esm.js",
   "browser": "dist/string-strip-html.umd.js",
+  "types": "index.d.ts",
   "scripts": {
     "build": "rollup -c",
     "ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",
@@ -94,7 +95,6 @@
       "goodFolders": []
     },
     "req": "stripHtml",
-    "typeSriptDefinitions": true,
     "various": {
       "devDependencies": [
         "@rollup/plugin-json",

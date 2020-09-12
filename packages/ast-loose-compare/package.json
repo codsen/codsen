@@ -99,7 +99,6 @@
       "goodFolders": []
     },
     "req": "looseCompare",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }

@@ -100,7 +100,6 @@
       "goodFolders": []
     },
     "req": "getAllValuesByKey",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": [
         "object-path"

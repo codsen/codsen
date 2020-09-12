@@ -92,7 +92,6 @@
       "goodFolders": []
     },
     "req": "{ set, del }",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": [
         "ast-monkey-traverse",

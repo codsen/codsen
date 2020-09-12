@@ -102,7 +102,6 @@
       "goodFolders": []
     },
     "req": "traverse2",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": [
         "object-path",

@@ -87,7 +87,6 @@
       "goodFolders": []
     },
     "special": false,
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": [
         "eslint"

@@ -101,7 +101,6 @@
       "goodFolders": []
     },
     "req": "traverse",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": [
         "object-path",

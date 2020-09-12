@@ -94,7 +94,6 @@
       "goodFolders": []
     },
     "req": "detectIsItHTMLOrXhtml",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }

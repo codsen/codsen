@@ -93,7 +93,6 @@
       "goodFolders": []
     },
     "req": "strFindMalformed",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }

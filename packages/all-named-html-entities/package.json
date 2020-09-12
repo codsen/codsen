@@ -92,7 +92,6 @@
       "goodFolders": []
     },
     "req": "{\n  allNamedEntities,\n  entStartsWith,\n  entEndsWith,\n  entStartsWithCaseInsensitive,\n  entEndsWithCaseInsensitive,\n  brokenNamedEntities,\n  decode,\n  minLength,\n  maxLength,\n  uncertain\n}",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": [
         "@rollup/plugin-json"

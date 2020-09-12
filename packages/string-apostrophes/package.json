@@ -89,7 +89,6 @@
       "goodFolders": []
     },
     "req": "{ convertOne, convertAll }",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }

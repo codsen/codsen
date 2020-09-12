@@ -90,7 +90,6 @@
       "goodFolders": []
     },
     "req": "{ genAtomic, version, headsAndTails, extractFromToSource }",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": [
         "@rollup/plugin-json"

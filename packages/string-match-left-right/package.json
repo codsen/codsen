@@ -88,7 +88,6 @@
       "goodFolders": []
     },
     "req": "{ matchLeftIncl, matchRightIncl, matchLeft, matchRight }",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }

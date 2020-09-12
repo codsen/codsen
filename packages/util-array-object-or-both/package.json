@@ -89,7 +89,6 @@
       "goodFolders": []
     },
     "req": "arrObjOrBoth",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }

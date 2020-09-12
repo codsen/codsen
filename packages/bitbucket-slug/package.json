@@ -100,7 +100,6 @@
       "goodFolders": []
     },
     "req": "bSlug",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": [
         "@rollup/plugin-json",

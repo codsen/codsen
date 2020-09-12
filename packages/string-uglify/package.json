@@ -96,7 +96,6 @@
       "goodFolders": []
     },
     "req": "{ uglifyById, uglifyArr, version }",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": [
         "@rollup/plugin-json"

@@ -101,7 +101,6 @@
       "goodFolders": []
     },
     "req": "{ find, get, set, drop, info, del, arrayFirstOnly, traverse }",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }

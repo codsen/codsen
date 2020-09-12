@@ -93,7 +93,6 @@
       "goodFolders": []
     },
     "req": "{ det, opts, version }",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": [
         "is-ci",

@@ -94,7 +94,6 @@
       "goodFolders": []
     },
     "req": "splitByW",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": [
         "string-find-heads-tails"

@@ -96,7 +96,6 @@
       "goodFolders": []
     },
     "req": "deleteKey",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": [
         "eslint",

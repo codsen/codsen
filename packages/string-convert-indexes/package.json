@@ -89,7 +89,6 @@
       "goodFolders": []
     },
     "req": "{ nativeToUnicode, unicodeToNative }",
-    "typeSriptDefinitions": false,
     "various": {
       "devDependencies": []
     }
