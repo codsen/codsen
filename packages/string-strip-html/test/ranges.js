@@ -6,7 +6,7 @@ import validateTagLocations from "./util/validateTagLocations";
 // concentrating on ranges output
 // -----------------------------------------------------------------------------
 
-tap.only("01 - ranges - quick sanity check", (t) => {
+tap.test("01 - ranges - quick sanity check", (t) => {
   const allTagLocations = [
     [10, 43],
     [51, 55],

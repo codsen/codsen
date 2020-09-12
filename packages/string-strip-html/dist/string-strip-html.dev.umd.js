@@ -100,6 +100,10 @@
     return target;
   }
 
+  function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+  }
+
   function _toConsumableArray(arr) {
     return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
   }
@@ -108,8 +112,39 @@
     if (Array.isArray(arr)) return _arrayLikeToArray(arr);
   }
 
+  function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+  }
+
   function _iterableToArray(iter) {
     if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+  }
+
+  function _iterableToArrayLimit(arr, i) {
+    if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _e = undefined;
+
+    try {
+      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+        _arr.push(_s.value);
+
+        if (i && _arr.length === i) break;
+      }
+    } catch (err) {
+      _d = true;
+      _e = err;
+    } finally {
+      try {
+        if (!_n && _i["return"] != null) _i["return"]();
+      } finally {
+        if (_d) throw _e;
+      }
+    }
+
+    return _arr;
   }
 
   function _unsupportedIterableToArray(o, minLen) {
@@ -131,6 +166,10 @@
 
   function _nonIterableSpread() {
     throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
+  function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
 
   /**
@@ -8632,9 +8671,15 @@
     // ===========================================================================
     // records the info about the suspected tag:
 
-    var tag = {
-      attributes: []
-    }; // records the beginning of the current whitespace chunk:
+    var tag;
+
+    function resetTag() {
+      tag = {
+        attributes: []
+      };
+    }
+
+    resetTag(); // records the beginning of the current whitespace chunk:
 
     var chunkOfWhitespaceStartsAt = null; // records the beginning of the current chunk of spaces (strictly spaces-only):
 
@@ -8675,10 +8720,7 @@
         if (Array.isArray(rangedOpeningTags) && rangedOpeningTags.some(function (obj) {
           return obj.name === tag.name && obj.lastClosingBracketAt < i;
         })) {
-          // if (tag.slashPresent) {
-          // closing tag.
-          // filter and remove the found tag
-          for (var y = rangedOpeningTags.length; y--;) {
+          var _loop = function _loop(y) {
             if (rangedOpeningTags[y].name === tag.name) {
               // we'll remove from opening tag's opening bracket to closing tag's
               // closing bracket because whitespace will be taken care of separately,
@@ -8691,28 +8733,32 @@
               // around tags.
               // 1. add range without caring about surrounding whitespace around
               // the range
-              // if (
-              //   Number.isInteger(tag.lastClosingBracketAt) &&
-              //   (!allTagLocations.length ||
-              //     allTagLocations[allTagLocations.length - 1][0] !==
-              //       tag.lastOpeningBracketAt)
-              // ) {
-              //   // submit the tag
-              //   allTagLocations.push([
-              //     tag.lastOpeningBracketAt,
-              //     tag.lastClosingBracketAt + 1,
-              //   ]);
-              //   console.log(
-              //     `276 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
-              //       tag.lastOpeningBracketAt
-              //     }, ${tag.lastClosingBracketAt + 1}] to allTagLocations`
-              //   );
-              // }
+              // also, tend filteredTagLocations in the output - tags which are to be
+              // deleted with contents should be reported as one large range in
+              // filteredTagLocations - from opening to closing - not two ranges
+              if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
+                filteredTagLocations = filteredTagLocations.filter(function (_ref) {
+                  var _ref2 = _slicedToArray(_ref, 2),
+                      from = _ref2[0],
+                      upto = _ref2[1];
+
+                  return (from < rangedOpeningTags[y].lastOpeningBracketAt || from >= i + 1) && (upto <= rangedOpeningTags[y].lastOpeningBracketAt || upto > i + 1);
+                });
+              }
+
+              var endingIdx = i; // correction for missing closing bracket cases
+
+              if (str[i] !== "<" && str[i - 1] !== ">") {
+                endingIdx++;
+              }
+
+              filteredTagLocations.push([rangedOpeningTags[y].lastOpeningBracketAt, endingIdx]);
+
               if (punctuation.has(str[i])) {
                 opts.cb({
                   tag: tag,
                   deleteFrom: rangedOpeningTags[y].lastOpeningBracketAt,
-                  deleteTo: i,
+                  deleteTo: i + 1,
                   insert: null,
                   rangesArr: rangesToDelete,
                   proposedReturn: [rangedOpeningTags[y].lastOpeningBracketAt, i, null]
@@ -8736,8 +8782,17 @@
 
               rangedOpeningTags.splice(y, 1); // 3. stop the loop
 
-              break;
+              return "break";
             }
+          };
+
+          // if (tag.slashPresent) {
+          // closing tag.
+          // filter and remove the found tag
+          for (var y = rangedOpeningTags.length; y--;) {
+            var _ret = _loop(y);
+
+            if (_ret === "break") break;
           }
         } else {
           // opening tag.
@@ -8901,9 +8956,9 @@
 
 
     if (!opts.cb) {
-      opts.cb = function (_ref) {
-        var rangesArr = _ref.rangesArr,
-            proposedReturn = _ref.proposedReturn;
+      opts.cb = function (_ref3) {
+        var rangesArr = _ref3.rangesArr,
+            proposedReturn = _ref3.proposedReturn;
         rangesArr.push.apply(rangesArr, _toConsumableArray(proposedReturn));
       };
     } // if the links have to be on a new line, we need to increase the allowance for line breaks
@@ -8926,28 +8981,28 @@
     // ===========================================================================
 
 
-    for (var i = 0, len = str.length; i < len; i++) {
+    var _loop2 = function _loop2(_i, len) {
       // catch the first ending of the spaces chunk that follows the closing bracket.
       // -------------------------------------------------------------------------
       // There can be no space after bracket, in that case, the result will be that character that
       // follows the closing bracket.
       // There can be bunch of spaces that end with EOF. In that case it's fine, this variable will
       // be null.
-      if (Object.keys(tag).length > 1 && tag.lastClosingBracketAt && tag.lastClosingBracketAt < i && str[i] !== " " && spacesChunkWhichFollowsTheClosingBracketEndsAt === null) {
-        spacesChunkWhichFollowsTheClosingBracketEndsAt = i;
+      if (Object.keys(tag).length > 1 && tag.lastClosingBracketAt && tag.lastClosingBracketAt < _i && str[_i] !== " " && spacesChunkWhichFollowsTheClosingBracketEndsAt === null) {
+        spacesChunkWhichFollowsTheClosingBracketEndsAt = _i;
       } // catch the closing bracket of dirty tags with missing opening brackets
       // -------------------------------------------------------------------------
 
 
-      if (str[i] === ">") {
+      if (str[_i] === ">") {
         // tend cases where opening bracket of a tag is missing:
-        if ((!tag || Object.keys(tag).length < 2) && i > 1) {
+        if ((!tag || Object.keys(tag).length < 2) && _i > 1) {
           // traverse backwards either until start of string or ">" is found
-          for (var y = i; y--;) {
+          for (var y = _i; y--;) {
             if (str[y - 1] === undefined || str[y] === ">") {
-              var _ret = function () {
+              var _ret3 = function () {
                 var startingPoint = str[y - 1] === undefined ? y : y + 1;
-                var culprit = str.slice(startingPoint, i + 1); // Check if the culprit starts with a tag that's more likely a tag
+                var culprit = str.slice(startingPoint, _i + 1); // Check if the culprit starts with a tag that's more likely a tag
                 // name (like "body" or "article"). Single-letter tag names are excluded
                 // because they can be plausible, ie. in math texts and so on.
                 // Nobody uses puts comparison signs between words like: "article > ",
@@ -8963,17 +9018,17 @@
                 }) && stripHtml("<".concat(culprit.trim(), ">"), opts).result === "") {
                   /* istanbul ignore else */
                   if (!allTagLocations.length || allTagLocations[allTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
-                    allTagLocations.push([startingPoint, i + 1]);
+                    allTagLocations.push([startingPoint, _i + 1]);
                   }
                   /* istanbul ignore else */
 
 
                   if (!filteredTagLocations.length || filteredTagLocations[filteredTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
-                    filteredTagLocations.push([startingPoint, i + 1]);
+                    filteredTagLocations.push([startingPoint, _i + 1]);
                   }
 
-                  var whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, startingPoint, i + 1, startingPoint, i + 1);
-                  var deleteUpTo = i + 1;
+                  var whiteSpaceCompensation = calculateWhitespaceToInsert(str, _i, startingPoint, _i + 1, startingPoint, _i + 1);
+                  var deleteUpTo = _i + 1;
 
                   if (str[deleteUpTo] && !str[deleteUpTo].trim()) {
                     for (var z = deleteUpTo; z < len; z++) {
@@ -8997,7 +9052,7 @@
                 return "break";
               }();
 
-              if (_ret === "break") break;
+              if (_ret3 === "break") break;
             }
           }
         }
@@ -9005,29 +9060,30 @@
       // -------------------------------------------------------------------------
 
 
-      if (str[i] === "/" && !(tag.quotes && tag.quotes.value) && Number.isInteger(tag.lastOpeningBracketAt) && !Number.isInteger(tag.lastClosingBracketAt)) {
-        tag.slashPresent = i;
+      if (str[_i] === "/" && !(tag.quotes && tag.quotes.value) && Number.isInteger(tag.lastOpeningBracketAt) && !Number.isInteger(tag.lastClosingBracketAt)) {
+        tag.slashPresent = _i;
       } // catch double or single quotes
       // -------------------------------------------------------------------------
 
 
-      if (str[i] === '"' || str[i] === "'") {
-        if (tag.nameStarts && tag.quotes && tag.quotes.value && tag.quotes.value === str[i]) {
+      if (str[_i] === '"' || str[_i] === "'") {
+        if (tag.nameStarts && tag.quotes && tag.quotes.value && tag.quotes.value === str[_i]) {
           // 1. finish assembling the "attrObj{}"
-          attrObj.valueEnds = i;
-          attrObj.value = str.slice(attrObj.valueStarts, i);
+          attrObj.valueEnds = _i;
+          attrObj.value = str.slice(attrObj.valueStarts, _i);
           tag.attributes.push(attrObj); // reset:
 
           attrObj = {}; // 2. finally, delete the quotes marker, we don't need it any more
 
           tag.quotes = undefined; // 3. if opts.dumpLinkHrefsNearby.enabled is on, catch href
 
-          var hrefVal = void 0;
+          var hrefVal;
 
           if (opts.dumpLinkHrefsNearby.enabled && // eslint-disable-next-line
           tag.attributes.some(function (obj) {
             if (obj.name && obj.name.toLowerCase() === "href") {
               hrefVal = "".concat(opts.dumpLinkHrefsNearby.wrapHeads || "").concat(obj.value).concat(opts.dumpLinkHrefsNearby.wrapTails || "");
+              i = _i;
               return true;
             }
           })) {
@@ -9039,10 +9095,10 @@
         } else if (!tag.quotes && tag.nameStarts) {
           // 1. if it's opening marker, record the type and location of quotes
           tag.quotes = {};
-          tag.quotes.value = str[i];
-          tag.quotes.start = i; // 2. start assembling the attribute object which we'll dump into tag.attributes[] array:
+          tag.quotes.value = str[_i];
+          tag.quotes.start = _i; // 2. start assembling the attribute object which we'll dump into tag.attributes[] array:
 
-          if (attrObj.nameStarts && attrObj.nameEnds && attrObj.nameEnds < i && attrObj.nameStarts < i && !attrObj.valueStarts) {
+          if (attrObj.nameStarts && attrObj.nameEnds && attrObj.nameEnds < _i && attrObj.nameStarts < _i && !attrObj.valueStarts) {
             attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
           }
         }
@@ -9050,23 +9106,24 @@
       // -------------------------------------------------------------------------
 
 
-      if (tag.nameStarts !== undefined && tag.nameEnds === undefined && (!str[i].trim() || !characterSuitableForNames(str[i]))) {
+      if (tag.nameStarts !== undefined && tag.nameEnds === undefined && (!str[_i].trim() || !characterSuitableForNames(str[_i]))) {
         // 1. mark the name ending
-        tag.nameEnds = i; // 2. extract the full name string
+        tag.nameEnds = _i; // 2. extract the full name string
 
         tag.name = str.slice(tag.nameStarts, tag.nameEnds + (
         /* istanbul ignore next */
-        str[i] !== ">" && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0));
+        str[_i] !== ">" && str[_i] !== "/" && str[_i + 1] === undefined ? 1 : 0));
 
         if ( // if we caught "----" from "<----" or "---->", bail:
         str[tag.nameStarts - 1] !== "!" && // protection against <!--
         !tag.name.replace(/-/g, "").length || // if tag name starts with a number character
         /^\d+$/.test(tag.name[0])) {
           tag = {};
-          continue;
+          i = _i;
+          return "continue";
         }
 
-        if (str[i] === "<") {
+        if (str[_i] === "<") {
           // process it because we need to tackle this new tag
           calculateHrefToBeInserted(opts); // calculateWhitespaceToInsert() API:
           // str, // whole string
@@ -9076,44 +9133,49 @@
           // lastOpeningBracketAt, // tag actually starts here (<)
           // lastClosingBracketAt // tag actually ends here (>)
 
-          var whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i, tag.lastOpeningBracketAt, i); // if (
-          //   !allTagLocations.length ||
-          //   allTagLocations[allTagLocations.length - 1][0] !==
-          //     tag.lastOpeningBracketAt
-          // ) {
-          //   // prevent duplicates
-          //   allTagLocations.push([tag.lastOpeningBracketAt, i]);
-          //   console.log(
-          //     `973 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
-          //       tag.lastOpeningBracketAt
-          //     }, ${i}] to allTagLocations`
-          //   );
-          // }
+          var whiteSpaceCompensation = calculateWhitespaceToInsert(str, _i, tag.leftOuterWhitespace, _i, tag.lastOpeningBracketAt, _i); // only on pair tags, exclude the opening counterpart and closing
+          // counterpart if whole pair is to be deleted
+
+          if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
+            filteredTagLocations = filteredTagLocations.filter(function (_ref4) {
+              var _ref5 = _slicedToArray(_ref4, 2),
+                  from = _ref5[0],
+                  upto = _ref5[1];
+
+              return !(from === tag.leftOuterWhitespace && upto === _i);
+            });
+          } // console.log(
+          //   `1011 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+          //     tag.leftOuterWhitespace
+          //   }, ${i}] to filteredTagLocations`
+          // );
+          // filteredTagLocations.push([tag.leftOuterWhitespace, i]);
+
 
           opts.cb({
             tag: tag,
             deleteFrom: tag.leftOuterWhitespace,
-            deleteTo: i,
+            deleteTo: _i,
             insert: "".concat(whiteSpaceCompensation).concat(stringToInsertAfter).concat(whiteSpaceCompensation),
             rangesArr: rangesToDelete,
-            proposedReturn: [tag.leftOuterWhitespace, i, "".concat(whiteSpaceCompensation).concat(stringToInsertAfter).concat(whiteSpaceCompensation)]
+            proposedReturn: [tag.leftOuterWhitespace, _i, "".concat(whiteSpaceCompensation).concat(stringToInsertAfter).concat(whiteSpaceCompensation)]
           });
           resetHrefMarkers(); // also,
 
-          treatRangedTags(i, opts, rangesToDelete);
+          treatRangedTags(_i, opts, rangesToDelete);
         }
       } // catch beginning of an attribute value
       // -------------------------------------------------------------------------
 
 
-      if (tag.quotes && tag.quotes.start && tag.quotes.start < i && !tag.quotes.end && attrObj.nameEnds && attrObj.equalsAt && !attrObj.valueStarts) {
-        attrObj.valueStarts = i;
+      if (tag.quotes && tag.quotes.start && tag.quotes.start < _i && !tag.quotes.end && attrObj.nameEnds && attrObj.equalsAt && !attrObj.valueStarts) {
+        attrObj.valueStarts = _i;
       } // catch rare cases when attributes name has some space after it, before equals
       // -------------------------------------------------------------------------
 
 
-      if (!tag.quotes && attrObj.nameEnds && str[i] === "=" && !attrObj.valueStarts && !attrObj.equalsAt) {
-        attrObj.equalsAt = i;
+      if (!tag.quotes && attrObj.nameEnds && str[_i] === "=" && !attrObj.valueStarts && !attrObj.equalsAt) {
+        attrObj.equalsAt = _i;
       } // catch the ending of the whole attribute
       // -------------------------------------------------------------------------
       // for example, <a b c> this "c" ends "b" because it's not "equals" sign.
@@ -9121,7 +9183,7 @@
       // < article class = " something " / >
 
 
-      if (!tag.quotes && attrObj.nameStarts && attrObj.nameEnds && !attrObj.valueStarts && str[i].trim() && str[i] !== "=") {
+      if (!tag.quotes && attrObj.nameStarts && attrObj.nameEnds && !attrObj.valueStarts && str[_i].trim() && str[_i] !== "=") {
         // if (!tag.attributes) {
         //   tag.attributes = [];
         // }
@@ -9132,27 +9194,27 @@
 
 
       if (!tag.quotes && attrObj.nameStarts && !attrObj.nameEnds) {
-        if (!str[i].trim()) {
-          attrObj.nameEnds = i;
+        if (!str[_i].trim()) {
+          attrObj.nameEnds = _i;
           attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
-        } else if (str[i] === "=") {
+        } else if (str[_i] === "=") {
           /* istanbul ignore else */
           if (!attrObj.equalsAt) {
-            attrObj.nameEnds = i;
-            attrObj.equalsAt = i;
+            attrObj.nameEnds = _i;
+            attrObj.equalsAt = _i;
             attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
           }
-        } else if (str[i] === "/" || str[i] === ">") {
-          attrObj.nameEnds = i;
+        } else if (str[_i] === "/" || str[_i] === ">") {
+          attrObj.nameEnds = _i;
           attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds); // if (!tag.attributes) {
           //   tag.attributes = [];
           // }
 
           tag.attributes.push(attrObj);
           attrObj = {};
-        } else if (str[i] === "<") {
+        } else if (str[_i] === "<") {
           // TODO - address both cases of onlyPlausible
-          attrObj.nameEnds = i;
+          attrObj.nameEnds = _i;
           attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds); // if (!tag.attributes) {
           //   tag.attributes = [];
           // }
@@ -9164,23 +9226,23 @@
       // -------------------------------------------------------------------------
 
 
-      if (!tag.quotes && tag.nameEnds < i && !str[i - 1].trim() && str[i].trim() && !"<>/!".includes(str[i]) && !attrObj.nameStarts && !tag.lastClosingBracketAt) {
-        attrObj.nameStarts = i;
+      if (!tag.quotes && tag.nameEnds < _i && !str[_i - 1].trim() && str[_i].trim() && !"<>/!".includes(str[_i]) && !attrObj.nameStarts && !tag.lastClosingBracketAt) {
+        attrObj.nameStarts = _i;
       } // catch "< /" - turn off "onlyPlausible"
       // -------------------------------------------------------------------------
 
 
-      if (tag.lastOpeningBracketAt !== null && tag.lastOpeningBracketAt < i && str[i] === "/" && tag.onlyPlausible) {
+      if (tag.lastOpeningBracketAt !== null && tag.lastOpeningBracketAt < _i && str[_i] === "/" && tag.onlyPlausible) {
         tag.onlyPlausible = false;
       } // catch character that follows an opening bracket:
       // -------------------------------------------------------------------------
 
 
-      if (tag.lastOpeningBracketAt !== null && tag.lastOpeningBracketAt < i && str[i] !== "/" // there can be closing slashes in various places, legit and not
+      if (tag.lastOpeningBracketAt !== null && tag.lastOpeningBracketAt < _i && str[_i] !== "/" // there can be closing slashes in various places, legit and not
       ) {
           // 1. identify, is it definite or just plausible tag
           if (tag.onlyPlausible === undefined) {
-            if ((!str[i].trim() || str[i] === "<") && !tag.slashPresent) {
+            if ((!str[_i].trim() || str[_i] === "<") && !tag.slashPresent) {
               tag.onlyPlausible = true;
             } else {
               tag.onlyPlausible = false;
@@ -9189,23 +9251,23 @@
           // and also known (X)HTML tags:
 
 
-          if (str[i].trim() && tag.nameStarts === undefined && str[i] !== "<" && str[i] !== "/" && str[i] !== ">" && str[i] !== "!") {
-            tag.nameStarts = i;
+          if (str[_i].trim() && tag.nameStarts === undefined && str[_i] !== "<" && str[_i] !== "/" && str[_i] !== ">" && str[_i] !== "!") {
+            tag.nameStarts = _i;
             tag.nameContainsLetters = false;
           }
         } // Catch letters in the tag name. Necessary to filter out false positives like "<------"
 
 
-      if (tag.nameStarts && !tag.quotes && str[i].toLowerCase() !== str[i].toUpperCase()) {
+      if (tag.nameStarts && !tag.quotes && str[_i].toLowerCase() !== str[_i].toUpperCase()) {
         tag.nameContainsLetters = true;
       } // catch closing bracket
       // -------------------------------------------------------------------------
 
 
-      if (str[i] === ">") {
+      if (str[_i] === ">") {
         if (tag.lastOpeningBracketAt !== undefined) {
           // 1. mark the index
-          tag.lastClosingBracketAt = i; // 2. reset the spacesChunkWhichFollowsTheClosingBracketEndsAt
+          tag.lastClosingBracketAt = _i; // 2. reset the spacesChunkWhichFollowsTheClosingBracketEndsAt
 
           spacesChunkWhichFollowsTheClosingBracketEndsAt = null; // 3. push attrObj into tag.attributes[]
 
@@ -9220,7 +9282,7 @@
 
           if (opts.dumpLinkHrefsNearby.enabled && hrefDump.tagName && !hrefDump.openingTagEnds) {
             // finish assembling the hrefDump{}
-            hrefDump.openingTagEnds = i; // or tag.lastClosingBracketAt, same
+            hrefDump.openingTagEnds = _i; // or tag.lastClosingBracketAt, same
           }
         }
       } // catch the ending of the tag
@@ -9230,16 +9292,16 @@
 
       if (tag.lastOpeningBracketAt !== undefined) {
         if (tag.lastClosingBracketAt === undefined) {
-          if (tag.lastOpeningBracketAt < i && str[i] !== "<" && ( // to prevent cases like "text <<<<<< text"
-          str[i + 1] === undefined || str[i + 1] === "<") && tag.nameContainsLetters) {
+          if (tag.lastOpeningBracketAt < _i && str[_i] !== "<" && ( // to prevent cases like "text <<<<<< text"
+          str[_i + 1] === undefined || str[_i + 1] === "<") && tag.nameContainsLetters) {
             // find out the tag name earlier than dedicated tag name ending catching section:
             // if (str[i + 1] === undefined) {
-            tag.name = str.slice(tag.nameStarts, tag.nameEnds ? tag.nameEnds : i + 1).toLowerCase(); // submit tag to allTagLocations
+            tag.name = str.slice(tag.nameStarts, tag.nameEnds ? tag.nameEnds : _i + 1).toLowerCase(); // submit tag to allTagLocations
 
             /* istanbul ignore else */
 
             if (!allTagLocations.length || allTagLocations[allTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
-              allTagLocations.push([tag.lastOpeningBracketAt, i + 1]);
+              allTagLocations.push([tag.lastOpeningBracketAt, _i + 1]);
             }
 
             if ( // if it's an ignored tag
@@ -9247,44 +9309,73 @@
             tag.onlyPlausible && !definitelyTagNames.has(tag.name)) {
               tag = {};
               attrObj = {};
-              continue;
+              i = _i;
+              return "continue";
             } // if the tag is only plausible (there's space after opening bracket) and it's not among
             // recognised tags, leave it as it is:
 
 
-            if ((definitelyTagNames.has(tag.name) || singleLetterTags.has(tag.name)) && (tag.onlyPlausible === false || tag.onlyPlausible === true && tag.attributes.length) || str[i + 1] === undefined) {
+            if ((definitelyTagNames.has(tag.name) || singleLetterTags.has(tag.name)) && (tag.onlyPlausible === false || tag.onlyPlausible === true && tag.attributes.length) || str[_i + 1] === undefined) {
               calculateHrefToBeInserted(opts);
 
-              var _whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i + 1, tag.lastOpeningBracketAt, tag.lastClosingBracketAt);
+              var _whiteSpaceCompensation = calculateWhitespaceToInsert(str, _i, tag.leftOuterWhitespace, _i + 1, tag.lastOpeningBracketAt, tag.lastClosingBracketAt);
 
               opts.cb({
                 tag: tag,
                 deleteFrom: tag.leftOuterWhitespace,
-                deleteTo: i + 1,
+                deleteTo: _i + 1,
                 insert: "".concat(_whiteSpaceCompensation).concat(stringToInsertAfter).concat(_whiteSpaceCompensation),
                 rangesArr: rangesToDelete,
-                proposedReturn: [tag.leftOuterWhitespace, i + 1, "".concat(_whiteSpaceCompensation).concat(stringToInsertAfter).concat(_whiteSpaceCompensation)]
+                proposedReturn: [tag.leftOuterWhitespace, _i + 1, "".concat(_whiteSpaceCompensation).concat(stringToInsertAfter).concat(_whiteSpaceCompensation)]
               });
               resetHrefMarkers(); // also,
 
-              treatRangedTags(i, opts, rangesToDelete);
+              treatRangedTags(_i, opts, rangesToDelete);
             }
             /* istanbul ignore else */
 
 
-            if (!filteredTagLocations.length || filteredTagLocations[filteredTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
-              filteredTagLocations.push([tag.lastOpeningBracketAt, i + 1]);
+            if (!filteredTagLocations.length || filteredTagLocations[filteredTagLocations.length - 1][0] !== tag.lastOpeningBracketAt && filteredTagLocations[filteredTagLocations.length - 1][1] !== _i + 1) {
+              // filter out opening/closing tag pair because whole chunk
+              // from opening's opening to closing's closing will be pushed
+              if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
+                // get the last opening counterpart of the pair
+                // iterate rangedOpeningTags from the, pick the first
+                // ranged opening tag whose name is same like current, closing's
+                var lastRangedOpeningTag;
+
+                for (var z = rangedOpeningTags.length; z--;) {
+                  if (rangedOpeningTags[z].name === tag.name) {
+                    lastRangedOpeningTag = rangedOpeningTags[z];
+                  }
+                }
+
+                if (lastRangedOpeningTag) {
+                  filteredTagLocations = filteredTagLocations.filter(function (_ref6) {
+                    var _ref7 = _slicedToArray(_ref6, 1),
+                        from = _ref7[0];
+
+                    return from !== lastRangedOpeningTag.lastOpeningBracketAt;
+                  });
+                  filteredTagLocations.push([lastRangedOpeningTag.lastOpeningBracketAt, _i + 1]);
+                } else {
+                  filteredTagLocations.push([tag.lastOpeningBracketAt, _i + 1]);
+                }
+              } else {
+                // if it's not ranged tag, just push it as it is to filteredTagLocations
+                filteredTagLocations.push([tag.lastOpeningBracketAt, _i + 1]);
+              }
             }
           }
-        } else if (i > tag.lastClosingBracketAt && str[i].trim() || str[i + 1] === undefined) {
+        } else if (_i > tag.lastClosingBracketAt && str[_i].trim() || str[_i + 1] === undefined) {
           // case 2. closing bracket HAS BEEN met
           // we'll look for a non-whitespace character and delete up to it
           // BUT, we'll wipe the tag object only if that non-whitespace character
           // is not a ">". This way we'll catch and delete sequences of closing brackets.
           // part 1.
-          var endingRangeIndex = tag.lastClosingBracketAt === i ? i + 1 : i;
+          var endingRangeIndex = tag.lastClosingBracketAt === _i ? _i + 1 : _i;
 
-          if (opts.trimOnlySpaces && endingRangeIndex === len - 1 && spacesChunkWhichFollowsTheClosingBracketEndsAt !== null && spacesChunkWhichFollowsTheClosingBracketEndsAt < i) {
+          if (opts.trimOnlySpaces && endingRangeIndex === len - 1 && spacesChunkWhichFollowsTheClosingBracketEndsAt !== null && spacesChunkWhichFollowsTheClosingBracketEndsAt < _i) {
             endingRangeIndex = spacesChunkWhichFollowsTheClosingBracketEndsAt;
           } // if it's a dodgy suspicious tag where space follows opening bracket, there's an extra requirement
           // for this tag to be considered a tag - there has to be at least one attribute with equals if
@@ -9326,13 +9417,13 @@
             // in stage "catch the ending of the tag name".
 
 
-            var _whiteSpaceCompensation2 = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, endingRangeIndex, tag.lastOpeningBracketAt, tag.lastClosingBracketAt); // calculate optional opts.dumpLinkHrefsNearby.enabled HREF to insert
+            var _whiteSpaceCompensation2 = calculateWhitespaceToInsert(str, _i, tag.leftOuterWhitespace, endingRangeIndex, tag.lastOpeningBracketAt, tag.lastClosingBracketAt); // calculate optional opts.dumpLinkHrefsNearby.enabled HREF to insert
 
 
             stringToInsertAfter = "";
             hrefInsertionActive = false;
             calculateHrefToBeInserted(opts);
-            var insert = void 0;
+            var insert;
 
             if (isStr(stringToInsertAfter) && stringToInsertAfter.length) {
               insert = "".concat(_whiteSpaceCompensation2).concat(stringToInsertAfter).concat(
@@ -9357,13 +9448,13 @@
             });
             resetHrefMarkers(); // also,
 
-            treatRangedTags(i, opts, rangesToDelete);
+            treatRangedTags(_i, opts, rangesToDelete);
           } else {
             tag = {};
           } // part 2.
 
 
-          if (str[i] !== ">") {
+          if (str[_i] !== ">") {
             tag = {};
           }
         }
@@ -9371,29 +9462,30 @@
       // -------------------------------------------------------------------------
 
 
-      if (str[i] === "<" && str[i - 1] !== "<") {
+      if (str[_i] === "<" && str[_i - 1] !== "<") {
         // cater sequences of opening brackets "<<<<div>>>"
-        if (str[right(str, i)] === ">") {
+        if (str[right(str, _i)] === ">") {
+          i = _i;
           // cater cases like: "<><><>"
-          continue;
+          return "continue";
         } else {
           // 1. Before (re)setting flags, check, do we have a case of a tag with a
           // missing closing bracket, and this is a new tag following it.
-          if (tag.nameEnds && tag.nameEnds < i && !tag.lastClosingBracketAt) {
+          if (tag.nameEnds && tag.nameEnds < _i && !tag.lastClosingBracketAt) {
             if (tag.onlyPlausible === true && tag.attributes && tag.attributes.length || tag.onlyPlausible === false) {
               // tag.onlyPlausible can be undefined too
-              var _whiteSpaceCompensation3 = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i, tag.lastOpeningBracketAt, i);
+              var _whiteSpaceCompensation3 = calculateWhitespaceToInsert(str, _i, tag.leftOuterWhitespace, _i, tag.lastOpeningBracketAt, _i);
 
               opts.cb({
                 tag: tag,
                 deleteFrom: tag.leftOuterWhitespace,
-                deleteTo: i,
+                deleteTo: _i,
                 insert: _whiteSpaceCompensation3,
                 rangesArr: rangesToDelete,
-                proposedReturn: [tag.leftOuterWhitespace, i, _whiteSpaceCompensation3]
+                proposedReturn: [tag.leftOuterWhitespace, _i, _whiteSpaceCompensation3]
               }); // also,
 
-              treatRangedTags(i, opts, rangesToDelete); // then, for continuity, mark everything up accordingly if it's a new bracket:
+              treatRangedTags(_i, opts, rangesToDelete); // then, for continuity, mark everything up accordingly if it's a new bracket:
 
               tag = {};
               attrObj = {};
@@ -9404,24 +9496,25 @@
           if (tag.lastOpeningBracketAt !== undefined && tag.onlyPlausible && tag.name && !tag.quotes) {
             // reset:
             tag.lastOpeningBracketAt = undefined;
+            tag.name = undefined;
             tag.onlyPlausible = false;
           }
 
           if ((tag.lastOpeningBracketAt === undefined || !tag.onlyPlausible) && !tag.quotes) {
-            tag.lastOpeningBracketAt = i;
+            tag.lastOpeningBracketAt = _i;
             tag.slashPresent = false;
             tag.attributes = []; // since 2.1.0 we started to care about not trimming outer whitespace which is not spaces.
             // For example, " \t <a> \n ". Tag's whitespace boundaries should not extend to string
             // edges but until "\t" on the left and "\n" on the right IF opts.trimOnlySpaces is on.
 
             if (chunkOfWhitespaceStartsAt === null) {
-              tag.leftOuterWhitespace = i;
+              tag.leftOuterWhitespace = _i;
             } else if (opts.trimOnlySpaces && chunkOfWhitespaceStartsAt === 0) {
               // if whitespace extends to the beginning of a string, there's a risk it might include
               // not only spaces. To fix that, switch to space-only range marker:
 
               /* istanbul ignore next */
-              tag.leftOuterWhitespace = chunkOfSpacesStartsAt || i;
+              tag.leftOuterWhitespace = chunkOfSpacesStartsAt || _i;
             } else {
               tag.leftOuterWhitespace = chunkOfWhitespaceStartsAt;
             } // tag.leftOuterWhitespace =
@@ -9431,17 +9524,17 @@
             // until EOL or "-->" is reached and offset outer index "i".
 
 
-            if ("".concat(str[i + 1]).concat(str[i + 2]).concat(str[i + 3]) === "!--" || "".concat(str[i + 1]).concat(str[i + 2]).concat(str[i + 3]).concat(str[i + 4]).concat(str[i + 5]).concat(str[i + 6]).concat(str[i + 7]).concat(str[i + 8]) === "![CDATA[") {
+            if ("".concat(str[_i + 1]).concat(str[_i + 2]).concat(str[_i + 3]) === "!--" || "".concat(str[_i + 1]).concat(str[_i + 2]).concat(str[_i + 3]).concat(str[_i + 4]).concat(str[_i + 5]).concat(str[_i + 6]).concat(str[_i + 7]).concat(str[_i + 8]) === "![CDATA[") {
               // make a note which one it is:
               var cdata = true;
 
-              if (str[i + 2] === "-") {
+              if (str[_i + 2] === "-") {
                 cdata = false;
               }
 
-              var closingFoundAt = void 0;
+              var closingFoundAt;
 
-              for (var _y = i; _y < len; _y++) {
+              for (var _y = _i; _y < len; _y++) {
                 if (!closingFoundAt && cdata && "".concat(str[_y - 2]).concat(str[_y - 1]).concat(str[_y]) === "]]>" || !cdata && "".concat(str[_y - 2]).concat(str[_y - 1]).concat(str[_y]) === "-->") {
                   closingFoundAt = _y;
                 }
@@ -9477,10 +9570,10 @@
                     proposedReturn: [tag.leftOuterWhitespace, rangeEnd, _whiteSpaceCompensation4]
                   }); // offset:
 
-                  i = _y - 1;
+                  _i = _y - 1;
 
                   if (str[_y] === ">") {
-                    i = _y;
+                    _i = _y;
                   } // resets:
 
 
@@ -9497,12 +9590,12 @@
       // -------------------------------------------------------------------------
 
 
-      if (str[i].trim() === "") {
+      if (str[_i].trim() === "") {
         // 1. catch chunk boundaries:
         if (chunkOfWhitespaceStartsAt === null) {
-          chunkOfWhitespaceStartsAt = i;
+          chunkOfWhitespaceStartsAt = _i;
 
-          if (tag.lastOpeningBracketAt !== undefined && tag.lastOpeningBracketAt < i && tag.nameStarts && tag.nameStarts < tag.lastOpeningBracketAt && i === tag.lastOpeningBracketAt + 1 && // insurance against tail part of ranged tag being deleted:
+          if (tag.lastOpeningBracketAt !== undefined && tag.lastOpeningBracketAt < _i && tag.nameStarts && tag.nameStarts < tag.lastOpeningBracketAt && _i === tag.lastOpeningBracketAt + 1 && // insurance against tail part of ranged tag being deleted:
           !rangedOpeningTags.some( // eslint-disable-next-line no-loop-func
           function (rangedTagObj) {
             return rangedTagObj.name === tag.name;
@@ -9514,7 +9607,7 @@
         }
       } else if (chunkOfWhitespaceStartsAt !== null) {
         // 1. piggyback the catching of the attributes with equal and no value
-        if (!tag.quotes && attrObj.equalsAt > chunkOfWhitespaceStartsAt - 1 && attrObj.nameEnds && attrObj.equalsAt > attrObj.nameEnds && str[i] !== '"' && str[i] !== "'") {
+        if (!tag.quotes && attrObj.equalsAt > chunkOfWhitespaceStartsAt - 1 && attrObj.nameEnds && attrObj.equalsAt > attrObj.nameEnds && str[_i] !== '"' && str[_i] !== "'") {
           /* istanbul ignore else */
           if (lodash_isplainobject(attrObj)) {
             tag.attributes.push(attrObj);
@@ -9531,10 +9624,10 @@
       // -------------------------------------------------------------------------
 
 
-      if (str[i] === " ") {
+      if (str[_i] === " ") {
         // 1. catch spaces boundaries:
         if (chunkOfSpacesStartsAt === null) {
-          chunkOfSpacesStartsAt = i;
+          chunkOfSpacesStartsAt = _i;
         }
       } else if (chunkOfSpacesStartsAt !== null) {
         // 2. reset the marker
@@ -9556,6 +9649,14 @@
       //   )}`
       // );
 
+
+      i = _i;
+    };
+
+    for (var i = 0, len = str.length; i < len; i++) {
+      var _ret2 = _loop2(i, len);
+
+      if (_ret2 === "continue") continue;
     } // trim but in ranges
     // first tackle the beginning on the string
 
@@ -9565,13 +9666,13 @@
     str[0] === " " || // if normal trim is requested
     !opts.trimOnlySpaces && // and the first character is whitespace character
     !str[0].trim())) {
-      for (var _i = 0, _len = str.length; _i < _len; _i++) {
-        if (opts.trimOnlySpaces && str[_i] !== " " || !opts.trimOnlySpaces && str[_i].trim()) {
-          rangesToDelete.push([0, _i]);
+      for (var _i2 = 0, _len = str.length; _i2 < _len; _i2++) {
+        if (opts.trimOnlySpaces && str[_i2] !== " " || !opts.trimOnlySpaces && str[_i2].trim()) {
+          rangesToDelete.push([0, _i2]);
           break;
-        } else if (!str[_i + 1]) {
+        } else if (!str[_i2 + 1]) {
           // if end has been reached and whole string has been trimmable
-          rangesToDelete.push([0, _i + 1]);
+          rangesToDelete.push([0, _i2 + 1]);
         }
       }
     }
@@ -9581,9 +9682,9 @@
     str[str.length - 1] === " " || // if normal trim is requested
     !opts.trimOnlySpaces && // and the last character is whitespace character
     !str[str.length - 1].trim())) {
-      for (var _i2 = str.length; _i2--;) {
-        if (opts.trimOnlySpaces && str[_i2] !== " " || !opts.trimOnlySpaces && str[_i2].trim()) {
-          rangesToDelete.push([_i2 + 1, str.length]);
+      for (var _i3 = str.length; _i3--;) {
+        if (opts.trimOnlySpaces && str[_i3] !== " " || !opts.trimOnlySpaces && str[_i3].trim()) {
+          rangesToDelete.push([_i3 + 1, str.length]);
           break;
         } // don't tackle end-to-end because it would have been already caught on the
         // start-to-end direction loop above.

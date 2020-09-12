@@ -148,7 +148,7 @@ tap.test("06 - tag locations - opts.onlyStripTags", (t) => {
   t.end();
 });
 
-tap.only("07 - tag locations - closing bracket missing", (t) => {
+tap.test("07 - tag locations - closing bracket missing", (t) => {
   const input = `<div class="container" <div class="inner"`;
   t.match(
     stripHtml(input),
@@ -182,10 +182,7 @@ tap.test("08 - tag locations - closing bracket missing", (t) => {
         [0, 23],
         [23, 41],
       ],
-      filteredTagLocations: [
-        [0, 23],
-        [23, 41],
-      ],
+      filteredTagLocations: [[0, 41]],
     },
     "08"
   );

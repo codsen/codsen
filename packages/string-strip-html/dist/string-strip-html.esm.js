@@ -169,8 +169,12 @@ function stripHtml(str, originalOpts) {
   ]);
   const rangedOpeningTags = [];
   const allTagLocations = [];
-  const filteredTagLocations = [];
-  let tag = { attributes: [] };
+  let filteredTagLocations = [];
+  let tag;
+  function resetTag() {
+    tag = { attributes: [] };
+  }
+  resetTag();
   let chunkOfWhitespaceStartsAt = null;
   let chunkOfSpacesStartsAt = null;
   let attrObj = {};
@@ -197,11 +201,28 @@ function stripHtml(str, originalOpts) {
       ) {
         for (let y = rangedOpeningTags.length; y--; ) {
           if (rangedOpeningTags[y].name === tag.name) {
+            if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
+              filteredTagLocations = filteredTagLocations.filter(
+                ([from, upto]) =>
+                  (from < rangedOpeningTags[y].lastOpeningBracketAt ||
+                    from >= i + 1) &&
+                  (upto <= rangedOpeningTags[y].lastOpeningBracketAt ||
+                    upto > i + 1)
+              );
+            }
+            let endingIdx = i;
+            if (str[i] !== "<" && str[i - 1] !== ">") {
+              endingIdx++;
+            }
+            filteredTagLocations.push([
+              rangedOpeningTags[y].lastOpeningBracketAt,
+              endingIdx,
+            ]);
             if (punctuation.has(str[i])) {
               opts.cb({
                 tag,
                 deleteFrom: rangedOpeningTags[y].lastOpeningBracketAt,
-                deleteTo: i,
+                deleteTo: i + 1,
                 insert: null,
                 rangesArr: rangesToDelete,
                 proposedReturn: [
@@ -571,6 +592,11 @@ function stripHtml(str, originalOpts) {
           tag.lastOpeningBracketAt,
           i
         );
+        if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
+          filteredTagLocations = filteredTagLocations.filter(
+            ([from, upto]) => !(from === tag.leftOuterWhitespace && upto === i)
+          );
+        }
         opts.cb({
           tag,
           deleteFrom: tag.leftOuterWhitespace,
@@ -769,10 +795,32 @@ function stripHtml(str, originalOpts) {
           /* istanbul ignore else */
           if (
             !filteredTagLocations.length ||
-            filteredTagLocations[filteredTagLocations.length - 1][0] !==
-              tag.lastOpeningBracketAt
+            (filteredTagLocations[filteredTagLocations.length - 1][0] !==
+              tag.lastOpeningBracketAt &&
+              filteredTagLocations[filteredTagLocations.length - 1][1] !==
+                i + 1)
           ) {
-            filteredTagLocations.push([tag.lastOpeningBracketAt, i + 1]);
+            if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
+              let lastRangedOpeningTag;
+              for (let z = rangedOpeningTags.length; z--; ) {
+                if (rangedOpeningTags[z].name === tag.name) {
+                  lastRangedOpeningTag = rangedOpeningTags[z];
+                }
+              }
+              if (lastRangedOpeningTag) {
+                filteredTagLocations = filteredTagLocations.filter(
+                  ([from]) => from !== lastRangedOpeningTag.lastOpeningBracketAt
+                );
+                filteredTagLocations.push([
+                  lastRangedOpeningTag.lastOpeningBracketAt,
+                  i + 1,
+                ]);
+              } else {
+                filteredTagLocations.push([tag.lastOpeningBracketAt, i + 1]);
+              }
+            } else {
+              filteredTagLocations.push([tag.lastOpeningBracketAt, i + 1]);
+            }
           }
         }
       } else if (
@@ -920,6 +968,7 @@ function stripHtml(str, originalOpts) {
           !tag.quotes
         ) {
           tag.lastOpeningBracketAt = undefined;
+          tag.name = undefined;
           tag.onlyPlausible = false;
         }
         if (

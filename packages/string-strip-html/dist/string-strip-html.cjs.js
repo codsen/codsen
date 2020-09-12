@@ -91,6 +91,10 @@ function _objectSpread2(target) {
   return target;
 }
 
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+
 function _toConsumableArray(arr) {
   return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
 }
@@ -99,8 +103,39 @@ function _arrayWithoutHoles(arr) {
   if (Array.isArray(arr)) return _arrayLikeToArray(arr);
 }
 
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
 function _iterableToArray(iter) {
   if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+}
+
+function _iterableToArrayLimit(arr, i) {
+  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
 }
 
 function _unsupportedIterableToArray(o, minLen) {
@@ -122,6 +157,10 @@ function _arrayLikeToArray(arr, len) {
 
 function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
 function characterSuitableForNames(char) {
@@ -151,9 +190,13 @@ function stripHtml(str, originalOpts) {
   var rangedOpeningTags = [];
   var allTagLocations = [];
   var filteredTagLocations = [];
-  var tag = {
-    attributes: []
-  };
+  var tag;
+  function resetTag() {
+    tag = {
+      attributes: []
+    };
+  }
+  resetTag();
   var chunkOfWhitespaceStartsAt = null;
   var chunkOfSpacesStartsAt = null;
   var attrObj = {};
@@ -172,13 +215,26 @@ function stripHtml(str, originalOpts) {
       if (Array.isArray(rangedOpeningTags) && rangedOpeningTags.some(function (obj) {
         return obj.name === tag.name && obj.lastClosingBracketAt < i;
       })) {
-        for (var y = rangedOpeningTags.length; y--;) {
+        var _loop = function _loop(y) {
           if (rangedOpeningTags[y].name === tag.name) {
+            if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
+              filteredTagLocations = filteredTagLocations.filter(function (_ref) {
+                var _ref2 = _slicedToArray(_ref, 2),
+                    from = _ref2[0],
+                    upto = _ref2[1];
+                return (from < rangedOpeningTags[y].lastOpeningBracketAt || from >= i + 1) && (upto <= rangedOpeningTags[y].lastOpeningBracketAt || upto > i + 1);
+              });
+            }
+            var endingIdx = i;
+            if (str[i] !== "<" && str[i - 1] !== ">") {
+              endingIdx++;
+            }
+            filteredTagLocations.push([rangedOpeningTags[y].lastOpeningBracketAt, endingIdx]);
             if (punctuation.has(str[i])) {
               opts.cb({
                 tag: tag,
                 deleteFrom: rangedOpeningTags[y].lastOpeningBracketAt,
-                deleteTo: i,
+                deleteTo: i + 1,
                 insert: null,
                 rangesArr: rangesToDelete,
                 proposedReturn: [rangedOpeningTags[y].lastOpeningBracketAt, i, null]
@@ -194,8 +250,12 @@ function stripHtml(str, originalOpts) {
               });
             }
             rangedOpeningTags.splice(y, 1);
-            break;
+            return "break";
           }
+        };
+        for (var y = rangedOpeningTags.length; y--;) {
+          var _ret = _loop(y);
+          if (_ret === "break") break;
         }
       } else {
         rangedOpeningTags.push(tag);
@@ -310,9 +370,9 @@ function stripHtml(str, originalOpts) {
     throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_05] Optional Options Object's key stripTogetherWithTheirContents was set to contain not just string elements! For example, element at index ".concat(somethingCaught.i, " has a value ").concat(somethingCaught.el, " which is not string but ").concat(_typeof(somethingCaught.el).toLowerCase(), "."));
   }
   if (!opts.cb) {
-    opts.cb = function (_ref) {
-      var rangesArr = _ref.rangesArr,
-          proposedReturn = _ref.proposedReturn;
+    opts.cb = function (_ref3) {
+      var rangesArr = _ref3.rangesArr,
+          proposedReturn = _ref3.proposedReturn;
       rangesArr.push.apply(rangesArr, _toConsumableArray(proposedReturn));
     };
   }
@@ -325,17 +385,17 @@ function stripHtml(str, originalOpts) {
       str = ent__default['default'].decode(str);
     }
   }
-  for (var i = 0, len = str.length; i < len; i++) {
-    if (Object.keys(tag).length > 1 && tag.lastClosingBracketAt && tag.lastClosingBracketAt < i && str[i] !== " " && spacesChunkWhichFollowsTheClosingBracketEndsAt === null) {
-      spacesChunkWhichFollowsTheClosingBracketEndsAt = i;
+  var _loop2 = function _loop2(_i, len) {
+    if (Object.keys(tag).length > 1 && tag.lastClosingBracketAt && tag.lastClosingBracketAt < _i && str[_i] !== " " && spacesChunkWhichFollowsTheClosingBracketEndsAt === null) {
+      spacesChunkWhichFollowsTheClosingBracketEndsAt = _i;
     }
-    if (str[i] === ">") {
-      if ((!tag || Object.keys(tag).length < 2) && i > 1) {
-        for (var y = i; y--;) {
+    if (str[_i] === ">") {
+      if ((!tag || Object.keys(tag).length < 2) && _i > 1) {
+        for (var y = _i; y--;) {
           if (str[y - 1] === undefined || str[y] === ">") {
-            var _ret = function () {
+            var _ret3 = function () {
               var startingPoint = str[y - 1] === undefined ? y : y + 1;
-              var culprit = str.slice(startingPoint, i + 1);
+              var culprit = str.slice(startingPoint, _i + 1);
               if (str !== "<".concat(trim__default['default'](culprit.trim(), "/>"), ">") &&
               _toConsumableArray(definitelyTagNames).some(function (val) {
                 return trim__default['default'](culprit.trim().split(/\s+/).filter(function (val2) {
@@ -346,14 +406,14 @@ function stripHtml(str, originalOpts) {
               }) && stripHtml("<".concat(culprit.trim(), ">"), opts).result === "") {
                 /* istanbul ignore else */
                 if (!allTagLocations.length || allTagLocations[allTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
-                  allTagLocations.push([startingPoint, i + 1]);
+                  allTagLocations.push([startingPoint, _i + 1]);
                 }
                 /* istanbul ignore else */
                 if (!filteredTagLocations.length || filteredTagLocations[filteredTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
-                  filteredTagLocations.push([startingPoint, i + 1]);
+                  filteredTagLocations.push([startingPoint, _i + 1]);
                 }
-                var whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, startingPoint, i + 1, startingPoint, i + 1);
-                var deleteUpTo = i + 1;
+                var whiteSpaceCompensation = calculateWhitespaceToInsert(str, _i, startingPoint, _i + 1, startingPoint, _i + 1);
+                var deleteUpTo = _i + 1;
                 if (str[deleteUpTo] && !str[deleteUpTo].trim()) {
                   for (var z = deleteUpTo; z < len; z++) {
                     if (str[z].trim()) {
@@ -373,26 +433,27 @@ function stripHtml(str, originalOpts) {
               }
               return "break";
             }();
-            if (_ret === "break") break;
+            if (_ret3 === "break") break;
           }
         }
       }
     }
-    if (str[i] === "/" && !(tag.quotes && tag.quotes.value) && Number.isInteger(tag.lastOpeningBracketAt) && !Number.isInteger(tag.lastClosingBracketAt)) {
-      tag.slashPresent = i;
+    if (str[_i] === "/" && !(tag.quotes && tag.quotes.value) && Number.isInteger(tag.lastOpeningBracketAt) && !Number.isInteger(tag.lastClosingBracketAt)) {
+      tag.slashPresent = _i;
     }
-    if (str[i] === '"' || str[i] === "'") {
-      if (tag.nameStarts && tag.quotes && tag.quotes.value && tag.quotes.value === str[i]) {
-        attrObj.valueEnds = i;
-        attrObj.value = str.slice(attrObj.valueStarts, i);
+    if (str[_i] === '"' || str[_i] === "'") {
+      if (tag.nameStarts && tag.quotes && tag.quotes.value && tag.quotes.value === str[_i]) {
+        attrObj.valueEnds = _i;
+        attrObj.value = str.slice(attrObj.valueStarts, _i);
         tag.attributes.push(attrObj);
         attrObj = {};
         tag.quotes = undefined;
-        var hrefVal = void 0;
+        var hrefVal;
         if (opts.dumpLinkHrefsNearby.enabled &&
         tag.attributes.some(function (obj) {
           if (obj.name && obj.name.toLowerCase() === "href") {
             hrefVal = "".concat(opts.dumpLinkHrefsNearby.wrapHeads || "").concat(obj.value).concat(opts.dumpLinkHrefsNearby.wrapTails || "");
+            i = _i;
             return true;
           }
         })) {
@@ -403,147 +464,176 @@ function stripHtml(str, originalOpts) {
         }
       } else if (!tag.quotes && tag.nameStarts) {
         tag.quotes = {};
-        tag.quotes.value = str[i];
-        tag.quotes.start = i;
-        if (attrObj.nameStarts && attrObj.nameEnds && attrObj.nameEnds < i && attrObj.nameStarts < i && !attrObj.valueStarts) {
+        tag.quotes.value = str[_i];
+        tag.quotes.start = _i;
+        if (attrObj.nameStarts && attrObj.nameEnds && attrObj.nameEnds < _i && attrObj.nameStarts < _i && !attrObj.valueStarts) {
           attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
         }
       }
     }
-    if (tag.nameStarts !== undefined && tag.nameEnds === undefined && (!str[i].trim() || !characterSuitableForNames(str[i]))) {
-      tag.nameEnds = i;
+    if (tag.nameStarts !== undefined && tag.nameEnds === undefined && (!str[_i].trim() || !characterSuitableForNames(str[_i]))) {
+      tag.nameEnds = _i;
       tag.name = str.slice(tag.nameStarts, tag.nameEnds + (
       /* istanbul ignore next */
-      str[i] !== ">" && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0));
+      str[_i] !== ">" && str[_i] !== "/" && str[_i + 1] === undefined ? 1 : 0));
       if (
       str[tag.nameStarts - 1] !== "!" &&
       !tag.name.replace(/-/g, "").length ||
       /^\d+$/.test(tag.name[0])) {
         tag = {};
-        continue;
+        i = _i;
+        return "continue";
       }
-      if (str[i] === "<") {
+      if (str[_i] === "<") {
         calculateHrefToBeInserted(opts);
-        var whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i, tag.lastOpeningBracketAt, i);
+        var whiteSpaceCompensation = calculateWhitespaceToInsert(str, _i, tag.leftOuterWhitespace, _i, tag.lastOpeningBracketAt, _i);
+        if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
+          filteredTagLocations = filteredTagLocations.filter(function (_ref4) {
+            var _ref5 = _slicedToArray(_ref4, 2),
+                from = _ref5[0],
+                upto = _ref5[1];
+            return !(from === tag.leftOuterWhitespace && upto === _i);
+          });
+        }
         opts.cb({
           tag: tag,
           deleteFrom: tag.leftOuterWhitespace,
-          deleteTo: i,
+          deleteTo: _i,
           insert: "".concat(whiteSpaceCompensation).concat(stringToInsertAfter).concat(whiteSpaceCompensation),
           rangesArr: rangesToDelete,
-          proposedReturn: [tag.leftOuterWhitespace, i, "".concat(whiteSpaceCompensation).concat(stringToInsertAfter).concat(whiteSpaceCompensation)]
+          proposedReturn: [tag.leftOuterWhitespace, _i, "".concat(whiteSpaceCompensation).concat(stringToInsertAfter).concat(whiteSpaceCompensation)]
         });
         resetHrefMarkers();
-        treatRangedTags(i, opts, rangesToDelete);
+        treatRangedTags(_i, opts, rangesToDelete);
       }
     }
-    if (tag.quotes && tag.quotes.start && tag.quotes.start < i && !tag.quotes.end && attrObj.nameEnds && attrObj.equalsAt && !attrObj.valueStarts) {
-      attrObj.valueStarts = i;
+    if (tag.quotes && tag.quotes.start && tag.quotes.start < _i && !tag.quotes.end && attrObj.nameEnds && attrObj.equalsAt && !attrObj.valueStarts) {
+      attrObj.valueStarts = _i;
     }
-    if (!tag.quotes && attrObj.nameEnds && str[i] === "=" && !attrObj.valueStarts && !attrObj.equalsAt) {
-      attrObj.equalsAt = i;
+    if (!tag.quotes && attrObj.nameEnds && str[_i] === "=" && !attrObj.valueStarts && !attrObj.equalsAt) {
+      attrObj.equalsAt = _i;
     }
-    if (!tag.quotes && attrObj.nameStarts && attrObj.nameEnds && !attrObj.valueStarts && str[i].trim() && str[i] !== "=") {
+    if (!tag.quotes && attrObj.nameStarts && attrObj.nameEnds && !attrObj.valueStarts && str[_i].trim() && str[_i] !== "=") {
       tag.attributes.push(attrObj);
       attrObj = {};
     }
     if (!tag.quotes && attrObj.nameStarts && !attrObj.nameEnds) {
-      if (!str[i].trim()) {
-        attrObj.nameEnds = i;
+      if (!str[_i].trim()) {
+        attrObj.nameEnds = _i;
         attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
-      } else if (str[i] === "=") {
+      } else if (str[_i] === "=") {
         /* istanbul ignore else */
         if (!attrObj.equalsAt) {
-          attrObj.nameEnds = i;
-          attrObj.equalsAt = i;
+          attrObj.nameEnds = _i;
+          attrObj.equalsAt = _i;
           attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
         }
-      } else if (str[i] === "/" || str[i] === ">") {
-        attrObj.nameEnds = i;
+      } else if (str[_i] === "/" || str[_i] === ">") {
+        attrObj.nameEnds = _i;
         attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
         tag.attributes.push(attrObj);
         attrObj = {};
-      } else if (str[i] === "<") {
-        attrObj.nameEnds = i;
+      } else if (str[_i] === "<") {
+        attrObj.nameEnds = _i;
         attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
         tag.attributes.push(attrObj);
         attrObj = {};
       }
     }
-    if (!tag.quotes && tag.nameEnds < i && !str[i - 1].trim() && str[i].trim() && !"<>/!".includes(str[i]) && !attrObj.nameStarts && !tag.lastClosingBracketAt) {
-      attrObj.nameStarts = i;
+    if (!tag.quotes && tag.nameEnds < _i && !str[_i - 1].trim() && str[_i].trim() && !"<>/!".includes(str[_i]) && !attrObj.nameStarts && !tag.lastClosingBracketAt) {
+      attrObj.nameStarts = _i;
     }
-    if (tag.lastOpeningBracketAt !== null && tag.lastOpeningBracketAt < i && str[i] === "/" && tag.onlyPlausible) {
+    if (tag.lastOpeningBracketAt !== null && tag.lastOpeningBracketAt < _i && str[_i] === "/" && tag.onlyPlausible) {
       tag.onlyPlausible = false;
     }
-    if (tag.lastOpeningBracketAt !== null && tag.lastOpeningBracketAt < i && str[i] !== "/"
+    if (tag.lastOpeningBracketAt !== null && tag.lastOpeningBracketAt < _i && str[_i] !== "/"
     ) {
         if (tag.onlyPlausible === undefined) {
-          if ((!str[i].trim() || str[i] === "<") && !tag.slashPresent) {
+          if ((!str[_i].trim() || str[_i] === "<") && !tag.slashPresent) {
             tag.onlyPlausible = true;
           } else {
             tag.onlyPlausible = false;
           }
         }
-        if (str[i].trim() && tag.nameStarts === undefined && str[i] !== "<" && str[i] !== "/" && str[i] !== ">" && str[i] !== "!") {
-          tag.nameStarts = i;
+        if (str[_i].trim() && tag.nameStarts === undefined && str[_i] !== "<" && str[_i] !== "/" && str[_i] !== ">" && str[_i] !== "!") {
+          tag.nameStarts = _i;
           tag.nameContainsLetters = false;
         }
       }
-    if (tag.nameStarts && !tag.quotes && str[i].toLowerCase() !== str[i].toUpperCase()) {
+    if (tag.nameStarts && !tag.quotes && str[_i].toLowerCase() !== str[_i].toUpperCase()) {
       tag.nameContainsLetters = true;
     }
-    if (str[i] === ">") {
+    if (str[_i] === ">") {
       if (tag.lastOpeningBracketAt !== undefined) {
-        tag.lastClosingBracketAt = i;
+        tag.lastClosingBracketAt = _i;
         spacesChunkWhichFollowsTheClosingBracketEndsAt = null;
         if (Object.keys(attrObj).length) {
           tag.attributes.push(attrObj);
           attrObj = {};
         }
         if (opts.dumpLinkHrefsNearby.enabled && hrefDump.tagName && !hrefDump.openingTagEnds) {
-          hrefDump.openingTagEnds = i;
+          hrefDump.openingTagEnds = _i;
         }
       }
     }
     if (tag.lastOpeningBracketAt !== undefined) {
       if (tag.lastClosingBracketAt === undefined) {
-        if (tag.lastOpeningBracketAt < i && str[i] !== "<" && (
-        str[i + 1] === undefined || str[i + 1] === "<") && tag.nameContainsLetters) {
-          tag.name = str.slice(tag.nameStarts, tag.nameEnds ? tag.nameEnds : i + 1).toLowerCase();
+        if (tag.lastOpeningBracketAt < _i && str[_i] !== "<" && (
+        str[_i + 1] === undefined || str[_i + 1] === "<") && tag.nameContainsLetters) {
+          tag.name = str.slice(tag.nameStarts, tag.nameEnds ? tag.nameEnds : _i + 1).toLowerCase();
           /* istanbul ignore else */
           if (!allTagLocations.length || allTagLocations[allTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
-            allTagLocations.push([tag.lastOpeningBracketAt, i + 1]);
+            allTagLocations.push([tag.lastOpeningBracketAt, _i + 1]);
           }
           if (
           opts.ignoreTags.includes(tag.name) ||
           tag.onlyPlausible && !definitelyTagNames.has(tag.name)) {
             tag = {};
             attrObj = {};
-            continue;
+            i = _i;
+            return "continue";
           }
-          if ((definitelyTagNames.has(tag.name) || singleLetterTags.has(tag.name)) && (tag.onlyPlausible === false || tag.onlyPlausible === true && tag.attributes.length) || str[i + 1] === undefined) {
+          if ((definitelyTagNames.has(tag.name) || singleLetterTags.has(tag.name)) && (tag.onlyPlausible === false || tag.onlyPlausible === true && tag.attributes.length) || str[_i + 1] === undefined) {
             calculateHrefToBeInserted(opts);
-            var _whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i + 1, tag.lastOpeningBracketAt, tag.lastClosingBracketAt);
+            var _whiteSpaceCompensation = calculateWhitespaceToInsert(str, _i, tag.leftOuterWhitespace, _i + 1, tag.lastOpeningBracketAt, tag.lastClosingBracketAt);
             opts.cb({
               tag: tag,
               deleteFrom: tag.leftOuterWhitespace,
-              deleteTo: i + 1,
+              deleteTo: _i + 1,
               insert: "".concat(_whiteSpaceCompensation).concat(stringToInsertAfter).concat(_whiteSpaceCompensation),
               rangesArr: rangesToDelete,
-              proposedReturn: [tag.leftOuterWhitespace, i + 1, "".concat(_whiteSpaceCompensation).concat(stringToInsertAfter).concat(_whiteSpaceCompensation)]
+              proposedReturn: [tag.leftOuterWhitespace, _i + 1, "".concat(_whiteSpaceCompensation).concat(stringToInsertAfter).concat(_whiteSpaceCompensation)]
             });
             resetHrefMarkers();
-            treatRangedTags(i, opts, rangesToDelete);
+            treatRangedTags(_i, opts, rangesToDelete);
           }
           /* istanbul ignore else */
-          if (!filteredTagLocations.length || filteredTagLocations[filteredTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
-            filteredTagLocations.push([tag.lastOpeningBracketAt, i + 1]);
+          if (!filteredTagLocations.length || filteredTagLocations[filteredTagLocations.length - 1][0] !== tag.lastOpeningBracketAt && filteredTagLocations[filteredTagLocations.length - 1][1] !== _i + 1) {
+            if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
+              var lastRangedOpeningTag;
+              for (var z = rangedOpeningTags.length; z--;) {
+                if (rangedOpeningTags[z].name === tag.name) {
+                  lastRangedOpeningTag = rangedOpeningTags[z];
+                }
+              }
+              if (lastRangedOpeningTag) {
+                filteredTagLocations = filteredTagLocations.filter(function (_ref6) {
+                  var _ref7 = _slicedToArray(_ref6, 1),
+                      from = _ref7[0];
+                  return from !== lastRangedOpeningTag.lastOpeningBracketAt;
+                });
+                filteredTagLocations.push([lastRangedOpeningTag.lastOpeningBracketAt, _i + 1]);
+              } else {
+                filteredTagLocations.push([tag.lastOpeningBracketAt, _i + 1]);
+              }
+            } else {
+              filteredTagLocations.push([tag.lastOpeningBracketAt, _i + 1]);
+            }
           }
         }
-      } else if (i > tag.lastClosingBracketAt && str[i].trim() || str[i + 1] === undefined) {
-        var endingRangeIndex = tag.lastClosingBracketAt === i ? i + 1 : i;
-        if (opts.trimOnlySpaces && endingRangeIndex === len - 1 && spacesChunkWhichFollowsTheClosingBracketEndsAt !== null && spacesChunkWhichFollowsTheClosingBracketEndsAt < i) {
+      } else if (_i > tag.lastClosingBracketAt && str[_i].trim() || str[_i + 1] === undefined) {
+        var endingRangeIndex = tag.lastClosingBracketAt === _i ? _i + 1 : _i;
+        if (opts.trimOnlySpaces && endingRangeIndex === len - 1 && spacesChunkWhichFollowsTheClosingBracketEndsAt !== null && spacesChunkWhichFollowsTheClosingBracketEndsAt < _i) {
           endingRangeIndex = spacesChunkWhichFollowsTheClosingBracketEndsAt;
         }
         /* istanbul ignore else */
@@ -570,11 +660,11 @@ function stripHtml(str, originalOpts) {
           if (!filteredTagLocations.length || filteredTagLocations[filteredTagLocations.length - 1][0] !== tag.lastOpeningBracketAt) {
             filteredTagLocations.push([tag.lastOpeningBracketAt, tag.lastClosingBracketAt + 1]);
           }
-          var _whiteSpaceCompensation2 = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, endingRangeIndex, tag.lastOpeningBracketAt, tag.lastClosingBracketAt);
+          var _whiteSpaceCompensation2 = calculateWhitespaceToInsert(str, _i, tag.leftOuterWhitespace, endingRangeIndex, tag.lastOpeningBracketAt, tag.lastClosingBracketAt);
           stringToInsertAfter = "";
           hrefInsertionActive = false;
           calculateHrefToBeInserted(opts);
-          var insert = void 0;
+          var insert;
           if (isStr(stringToInsertAfter) && stringToInsertAfter.length) {
             insert = "".concat(_whiteSpaceCompensation2).concat(stringToInsertAfter).concat(
             /* istanbul ignore next */
@@ -594,58 +684,60 @@ function stripHtml(str, originalOpts) {
             proposedReturn: [tag.leftOuterWhitespace, endingRangeIndex, insert]
           });
           resetHrefMarkers();
-          treatRangedTags(i, opts, rangesToDelete);
+          treatRangedTags(_i, opts, rangesToDelete);
         } else {
           tag = {};
         }
-        if (str[i] !== ">") {
+        if (str[_i] !== ">") {
           tag = {};
         }
       }
     }
-    if (str[i] === "<" && str[i - 1] !== "<") {
-      if (str[stringLeftRight.right(str, i)] === ">") {
-        continue;
+    if (str[_i] === "<" && str[_i - 1] !== "<") {
+      if (str[stringLeftRight.right(str, _i)] === ">") {
+        i = _i;
+        return "continue";
       } else {
-        if (tag.nameEnds && tag.nameEnds < i && !tag.lastClosingBracketAt) {
+        if (tag.nameEnds && tag.nameEnds < _i && !tag.lastClosingBracketAt) {
           if (tag.onlyPlausible === true && tag.attributes && tag.attributes.length || tag.onlyPlausible === false) {
-            var _whiteSpaceCompensation3 = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i, tag.lastOpeningBracketAt, i);
+            var _whiteSpaceCompensation3 = calculateWhitespaceToInsert(str, _i, tag.leftOuterWhitespace, _i, tag.lastOpeningBracketAt, _i);
             opts.cb({
               tag: tag,
               deleteFrom: tag.leftOuterWhitespace,
-              deleteTo: i,
+              deleteTo: _i,
               insert: _whiteSpaceCompensation3,
               rangesArr: rangesToDelete,
-              proposedReturn: [tag.leftOuterWhitespace, i, _whiteSpaceCompensation3]
+              proposedReturn: [tag.leftOuterWhitespace, _i, _whiteSpaceCompensation3]
             });
-            treatRangedTags(i, opts, rangesToDelete);
+            treatRangedTags(_i, opts, rangesToDelete);
             tag = {};
             attrObj = {};
           }
         }
         if (tag.lastOpeningBracketAt !== undefined && tag.onlyPlausible && tag.name && !tag.quotes) {
           tag.lastOpeningBracketAt = undefined;
+          tag.name = undefined;
           tag.onlyPlausible = false;
         }
         if ((tag.lastOpeningBracketAt === undefined || !tag.onlyPlausible) && !tag.quotes) {
-          tag.lastOpeningBracketAt = i;
+          tag.lastOpeningBracketAt = _i;
           tag.slashPresent = false;
           tag.attributes = [];
           if (chunkOfWhitespaceStartsAt === null) {
-            tag.leftOuterWhitespace = i;
+            tag.leftOuterWhitespace = _i;
           } else if (opts.trimOnlySpaces && chunkOfWhitespaceStartsAt === 0) {
             /* istanbul ignore next */
-            tag.leftOuterWhitespace = chunkOfSpacesStartsAt || i;
+            tag.leftOuterWhitespace = chunkOfSpacesStartsAt || _i;
           } else {
             tag.leftOuterWhitespace = chunkOfWhitespaceStartsAt;
           }
-          if ("".concat(str[i + 1]).concat(str[i + 2]).concat(str[i + 3]) === "!--" || "".concat(str[i + 1]).concat(str[i + 2]).concat(str[i + 3]).concat(str[i + 4]).concat(str[i + 5]).concat(str[i + 6]).concat(str[i + 7]).concat(str[i + 8]) === "![CDATA[") {
+          if ("".concat(str[_i + 1]).concat(str[_i + 2]).concat(str[_i + 3]) === "!--" || "".concat(str[_i + 1]).concat(str[_i + 2]).concat(str[_i + 3]).concat(str[_i + 4]).concat(str[_i + 5]).concat(str[_i + 6]).concat(str[_i + 7]).concat(str[_i + 8]) === "![CDATA[") {
             var cdata = true;
-            if (str[i + 2] === "-") {
+            if (str[_i + 2] === "-") {
               cdata = false;
             }
-            var closingFoundAt = void 0;
-            for (var _y = i; _y < len; _y++) {
+            var closingFoundAt;
+            for (var _y = _i; _y < len; _y++) {
               if (!closingFoundAt && cdata && "".concat(str[_y - 2]).concat(str[_y - 1]).concat(str[_y]) === "]]>" || !cdata && "".concat(str[_y - 2]).concat(str[_y - 1]).concat(str[_y]) === "-->") {
                 closingFoundAt = _y;
               }
@@ -671,9 +763,9 @@ function stripHtml(str, originalOpts) {
                   rangesArr: rangesToDelete,
                   proposedReturn: [tag.leftOuterWhitespace, rangeEnd, _whiteSpaceCompensation4]
                 });
-                i = _y - 1;
+                _i = _y - 1;
                 if (str[_y] === ">") {
-                  i = _y;
+                  _i = _y;
                 }
                 tag = {};
                 attrObj = {};
@@ -684,10 +776,10 @@ function stripHtml(str, originalOpts) {
         }
       }
     }
-    if (str[i].trim() === "") {
+    if (str[_i].trim() === "") {
       if (chunkOfWhitespaceStartsAt === null) {
-        chunkOfWhitespaceStartsAt = i;
-        if (tag.lastOpeningBracketAt !== undefined && tag.lastOpeningBracketAt < i && tag.nameStarts && tag.nameStarts < tag.lastOpeningBracketAt && i === tag.lastOpeningBracketAt + 1 &&
+        chunkOfWhitespaceStartsAt = _i;
+        if (tag.lastOpeningBracketAt !== undefined && tag.lastOpeningBracketAt < _i && tag.nameStarts && tag.nameStarts < tag.lastOpeningBracketAt && _i === tag.lastOpeningBracketAt + 1 &&
         !rangedOpeningTags.some(
         function (rangedTagObj) {
           return rangedTagObj.name === tag.name;
@@ -698,7 +790,7 @@ function stripHtml(str, originalOpts) {
         }
       }
     } else if (chunkOfWhitespaceStartsAt !== null) {
-      if (!tag.quotes && attrObj.equalsAt > chunkOfWhitespaceStartsAt - 1 && attrObj.nameEnds && attrObj.equalsAt > attrObj.nameEnds && str[i] !== '"' && str[i] !== "'") {
+      if (!tag.quotes && attrObj.equalsAt > chunkOfWhitespaceStartsAt - 1 && attrObj.nameEnds && attrObj.equalsAt > attrObj.nameEnds && str[_i] !== '"' && str[_i] !== "'") {
         /* istanbul ignore else */
         if (isObj__default['default'](attrObj)) {
           tag.attributes.push(attrObj);
@@ -708,25 +800,30 @@ function stripHtml(str, originalOpts) {
       }
       chunkOfWhitespaceStartsAt = null;
     }
-    if (str[i] === " ") {
+    if (str[_i] === " ") {
       if (chunkOfSpacesStartsAt === null) {
-        chunkOfSpacesStartsAt = i;
+        chunkOfSpacesStartsAt = _i;
       }
     } else if (chunkOfSpacesStartsAt !== null) {
       chunkOfSpacesStartsAt = null;
     }
+    i = _i;
+  };
+  for (var i = 0, len = str.length; i < len; i++) {
+    var _ret2 = _loop2(i, len);
+    if (_ret2 === "continue") continue;
   }
   if (str && (
   opts.trimOnlySpaces &&
   str[0] === " " ||
   !opts.trimOnlySpaces &&
   !str[0].trim())) {
-    for (var _i = 0, _len = str.length; _i < _len; _i++) {
-      if (opts.trimOnlySpaces && str[_i] !== " " || !opts.trimOnlySpaces && str[_i].trim()) {
-        rangesToDelete.push([0, _i]);
+    for (var _i2 = 0, _len = str.length; _i2 < _len; _i2++) {
+      if (opts.trimOnlySpaces && str[_i2] !== " " || !opts.trimOnlySpaces && str[_i2].trim()) {
+        rangesToDelete.push([0, _i2]);
         break;
-      } else if (!str[_i + 1]) {
-        rangesToDelete.push([0, _i + 1]);
+      } else if (!str[_i2 + 1]) {
+        rangesToDelete.push([0, _i2 + 1]);
       }
     }
   }
@@ -735,9 +832,9 @@ function stripHtml(str, originalOpts) {
   str[str.length - 1] === " " ||
   !opts.trimOnlySpaces &&
   !str[str.length - 1].trim())) {
-    for (var _i2 = str.length; _i2--;) {
-      if (opts.trimOnlySpaces && str[_i2] !== " " || !opts.trimOnlySpaces && str[_i2].trim()) {
-        rangesToDelete.push([_i2 + 1, str.length]);
+    for (var _i3 = str.length; _i3--;) {
+      if (opts.trimOnlySpaces && str[_i3] !== " " || !opts.trimOnlySpaces && str[_i3].trim()) {
+        rangesToDelete.push([_i3 + 1, str.length]);
         break;
       }
     }
