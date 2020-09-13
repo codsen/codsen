@@ -9359,6 +9359,7 @@
                   });
                   filteredTagLocations.push([lastRangedOpeningTag.lastOpeningBracketAt, _i + 1]);
                 } else {
+                  /* istanbul ignore next */
                   filteredTagLocations.push([tag.lastOpeningBracketAt, _i + 1]);
                 }
               } else {

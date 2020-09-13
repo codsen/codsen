@@ -816,6 +816,7 @@ function stripHtml(str, originalOpts) {
                   i + 1,
                 ]);
               } else {
+                /* istanbul ignore next */
                 filteredTagLocations.push([tag.lastOpeningBracketAt, i + 1]);
               }
             } else {
