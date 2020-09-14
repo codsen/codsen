@@ -1223,6 +1223,67 @@ function step3() {
 }
 
 // -----------------------------------------------------------------------------
+// 3. Bake examples API DIY makeshift-endpoint, a JSON file
+
+const titleRegexp = /\/\/\s(.*)/;
+const readFiles = async (dirname) => {
+  try {
+    let filenames = await fs.readdir(dirname);
+    filenames = filenames.filter(
+      (filename) => path.extname(filename) === ".mjs"
+    );
+    const filesPromiseArr = filenames.map((filename) => {
+      return fs.readFile(dirname + filename, "utf-8");
+    });
+    const response = await Promise.all(filesPromiseArr);
+    const res = filenames.reduce((acc, filename, currentIndex) => {
+      let content = response[currentIndex]
+        .replace(/\/\*\s*eslint[^*]*\*\//g, "")
+        .trim()
+        .replace(/\.\.\/dist\/([^.]+)\.cjs\.js/, "$1")
+        .replace(/\.\.\/\.\.\/[^/]+\/dist\/([^.]+)\.cjs\.js/, "$1");
+      let title = null;
+      if (content.startsWith("//") && titleRegexp.exec(content)) {
+        title = titleRegexp.exec(content)[1];
+        content = content.replace(titleRegexp, "").trim();
+      }
+      acc[filename] = {
+        title,
+        content,
+      };
+      return acc;
+    }, {});
+    return res;
+  } catch (error) {
+    console.error(`lect: ${error}`);
+  }
+};
+
+async function step2() {
+  try {
+    const response = await readFiles("./examples/");
+    if (response) {
+      writeFileAtomic(
+        "./examples/api.json",
+        JSON.stringify(response, null, 4),
+        (err) => {
+          if (err) {
+            throw new Error(`${chalk.red(logSymbols.error, err)}`);
+          }
+          log(`${chalk.green(logSymbols.success, "examples OK")}`);
+          step3();
+        }
+      );
+    } else {
+      step3();
+    }
+  } catch (e) {
+    console.log(`lect: no examples, move on`);
+    step3();
+  }
+}
+
+// -----------------------------------------------------------------------------
 // 2. We fetched the contents of readme successfully.
 
 function step1() {
@@ -1250,7 +1311,7 @@ function step1() {
       log(`${chalk.yellow(logSymbols.info, `package is a CLI!`)}`);
     }
 
-    step3();
+    step2();
   });
 }
 
