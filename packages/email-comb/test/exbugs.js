@@ -332,8 +332,7 @@ tap.test("09 - one-letter classes - comprehensive comparison", (t) => {
     </tr>
   </table>
 </body>
-</html>
-`,
+</html>`,
     allInHead: [".used-1", ".aaaaa", ".aaaaaa", "#unused-2"],
     allInBody: ["#unused-3", ".unused-4", ".used-1", ".unused-5", ".unused-6"],
     deletedFromHead: [".used-1", ".aaaaa", ".aaaaaa", "#unused-2"],
@@ -391,8 +390,7 @@ tap.test("10 - checking whole results object, all its keys #1", (t) => {
 <body>
   <span></span>
 </body>
-</html>
-`,
+</html>`,
     allInHead: [".used-1", ".unused-2", ".unused-3"],
     allInBody: [".used-1", ".unused-4"],
     deletedFromHead: [".used-1", ".unused-2", ".unused-3"],
@@ -435,7 +433,8 @@ tap.test("11 - checking whole results object, all its keys #2", (t) => {
 <body>
   <span class="used-1 unused-4"></span>
 </body>
-</html>`);
+</html>
+`);
 
   const intended = {
     result: `<html>
@@ -631,5 +630,16 @@ tap.test("18 - adhoc", (t) => {
 <td class="sm-border-0">
 `;
   t.same(comb(inp).result, outp, "18");
+  t.end();
+});
+
+tap.test("19 - #40 - pre", (t) => {
+  const inp = `<pre>Dear name.
+
+How are you?
+Yours sincerely,
+
+	Good person</pre>`;
+  t.same(comb(inp).result, inp, "19");
   t.end();
 });

@@ -330,8 +330,7 @@ tap.test("08 - trims commented-out HTML", (t) => {
 
 tap.test("09 - outer trims - single leading space", (t) => {
   const source = ` <body>`;
-  const intended = `<body>
-`;
+  const intended = `<body>`;
 
   t.equal(comb(source).result, intended, "09");
   t.end();
@@ -342,8 +341,7 @@ tap.test("10 - outer trims - doctype with leading line break", (t) => {
 <html>`;
 
   const intended = `<!DOCTYPE html>
-<html>
-`;
+<html>`;
 
   t.equal(
     comb(source, { uglify: true, removeIndentations: true }).result,
@@ -364,8 +362,7 @@ tap.test("11 - outer trims - trailing line breaks", (t) => {
 
 tap.test("12 - comment surrounded by tags", (t) => {
   const source = ` <strong><!-- --></strong> `;
-  const intended = `<strong></strong>
-`;
+  const intended = `<strong></strong>`;
 
   t.equal(comb(source).result, intended, "12");
   t.end();
@@ -373,8 +370,7 @@ tap.test("12 - comment surrounded by tags", (t) => {
 
 tap.test("13 - leading comment", (t) => {
   const source = `<!-- something -->zzz`;
-  const intended = `zzz
-`;
+  const intended = `zzz`;
 
   t.equal(comb(source).result, intended, "13");
   t.end();
@@ -382,8 +378,7 @@ tap.test("13 - leading comment", (t) => {
 
 tap.test("14 - leading spaces #1 - just text", (t) => {
   const source = `  a`;
-  const intended = `a
-`;
+  const intended = `a`;
 
   t.equal(comb(source).result, intended, "14");
   t.end();
@@ -411,8 +406,7 @@ tap.test("15 - leading spaces #2 - no body", (t) => {
 
 tap.test("16 - outer trims - some leading tabs", (t) => {
   const source = `\n\t\t<body>`;
-  const intended = `<body>
-`;
+  const intended = `<body>`;
 
   t.equal(comb(source).result, intended, "16");
   t.end();
@@ -420,8 +414,7 @@ tap.test("16 - outer trims - some leading tabs", (t) => {
 
 tap.test("17 - outer trims - doctype with leading space", (t) => {
   const source = ` <!DOCTYPE>`;
-  const intended = `<!DOCTYPE>
-`;
+  const intended = `<!DOCTYPE>`;
 
   t.equal(comb(source).result, intended, "17");
   t.end();

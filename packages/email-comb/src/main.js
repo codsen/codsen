@@ -10,6 +10,7 @@ import { left, right } from "string-left-right";
 import { uglifyArr } from "string-uglify";
 import applyRanges from "ranges-apply";
 import pullAll from "lodash.pullall";
+import { crush } from "html-crush";
 import isEmpty from "ast-is-empty";
 import Ranges from "ranges-push";
 import uniq from "lodash.uniq";
@@ -48,7 +49,6 @@ function comb(str, opts) {
   }
 
   let i;
-  let prevailingEOL;
 
   let styleStartedAt;
   let styleEndedAt;
@@ -3606,21 +3606,6 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
         round1RangesClone = null;
       }
 
-      // EOL dealings:
-      if (
-        endingsCount.rn > endingsCount.r &&
-        endingsCount.rn > endingsCount.n
-      ) {
-        prevailingEOL = "\r\n";
-      } else if (
-        endingsCount.r > endingsCount.rn &&
-        endingsCount.r > endingsCount.n
-      ) {
-        prevailingEOL = "\r";
-      } else {
-        prevailingEOL = "\n";
-      }
-
       //
       //
       //
@@ -3648,13 +3633,8 @@ ${`\u001b[${90}m${`insideCurlyBraces`}\u001b[${39}m = ${insideCurlyBraces}`};`
       //
       //
 
-      // if there's no trailing linebreak, add it
-      if (!"\r\n".includes(str[len - 1])) {
-        finalIndexesToDelete.push(len, len, prevailingEOL);
-      }
-
       console.log(
-        `3657: allClassesAndIdsWithinHeadFinal = ${JSON.stringify(
+        `3637: allClassesAndIdsWithinHeadFinal = ${JSON.stringify(
           allClassesAndIdsWithinHeadFinal,
           null,
           4
@@ -3740,11 +3720,11 @@ ${
   finalIndexesToDelete.push(lineBreaksToDelete.current());
 
   console.log(
-    `3743 BEFORE 3RD STEP PREP ${`\u001b[${33}m${`str`}\u001b[${39}m`} = "${str}"`
+    `3723 BEFORE 3RD STEP PREP ${`\u001b[${33}m${`str`}\u001b[${39}m`} = "${str}"`
   );
 
   console.log(
-    `3747 AFTER 3ND ROUND, finalIndexesToDelete.current() = ${JSON.stringify(
+    `3727 AFTER 3ND ROUND, finalIndexesToDelete.current() = ${JSON.stringify(
       finalIndexesToDelete.current(),
       null,
       4
@@ -3760,7 +3740,7 @@ ${
     (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) *
       leavePercForLastStage;
   console.log(
-    `3763 ${`\u001b[${33}m${`startingPercentageDone`}\u001b[${39}m`} = ${JSON.stringify(
+    `3743 ${`\u001b[${33}m${`startingPercentageDone`}\u001b[${39}m`} = ${JSON.stringify(
       startingPercentageDone,
       null,
       4
@@ -3779,7 +3759,7 @@ ${
     }
   }
   console.log("\n\n");
-  console.log(`3782 string after ROUND 3:\n${str}\n\n`);
+  console.log(`3762 string after ROUND 3:\n${str}\n\n`);
 
   // final fixing:
   // =============
@@ -3840,8 +3820,15 @@ ${
   }
 
   // remove empty lines:
+  str = crush(str, {
+    removeLineBreaks: false,
+    removeIndentations: false,
+    removeHTMLComments: false,
+    removeCSSComments: false,
+    lineLengthLimit: 500,
+  }).result;
+
   tempLen = str.length;
-  str = str.replace(/(\r?\n|\r)*[ ]*(\r?\n|\r)+/g, prevailingEOL);
   if (tempLen !== str.length) {
     nonIndentationsWhitespaceLength += str.length - tempLen;
   }
@@ -3865,17 +3852,21 @@ ${
     ) {
       nonIndentationsWhitespaceLength += str.length - str.trim();
     }
-    str = `${str.trim()}${prevailingEOL}`;
+    str = str.trimStart();
   }
 
   console.log(
-    `3872 ${`\u001b[${33}m${`allClassesAndIdsWithinHeadFinal`}\u001b[${39}m`} = ${JSON.stringify(
+    `3859 ${`\u001b[${33}m${`allClassesAndIdsWithinHeadFinal`}\u001b[${39}m`} = ${JSON.stringify(
       allClassesAndIdsWithinHeadFinal,
       null,
       4
     )}`
   );
+
+  // remove first character, space, inside classes/id's - it might
+  // be a leftover after class/id removal
   str = str.replace(/ ((class|id)=["']) /g, " $1");
+
   return {
     log: {
       timeTakenInMiliseconds: Date.now() - start,

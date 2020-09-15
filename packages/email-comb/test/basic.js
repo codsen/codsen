@@ -131,7 +131,7 @@ tap.test("06 - sandwitched used and unused", (t) => {
 </head>
 <body><br class="cd">
 </body>
-  `).result;
+`).result;
 
   const intended = `<head>
   <style>
@@ -162,8 +162,7 @@ tap.test("07 - sandwitched used and unused", (t) => {
   </style>
 </head>
 <body><br class="cd">
-</body>
-`;
+</body>`;
 
   t.equal(actual, intended, "07");
   t.end();
@@ -1398,8 +1397,7 @@ u+.a .jb{uvw}
 <body>
 <u><a class="a"><i class="klm">x</i></a></u>
 <u><a class="a"><i>y</i></a></u>
-<u><a class="a"><i class="jb">z</i></a></u>
-`;
+<u><a class="a"><i class="jb">z</i></a></u>`;
 
   t.equal(actual1, intended1, "29");
   t.end();
@@ -1430,8 +1428,7 @@ display: {{ abc.de_fg | hi_jk: 10 }};
 <table class="used-1">
 <tr>
 <td>
-text
-`;
+text`;
 
   t.equal(actual1, intended1, "30");
   t.end();

@@ -201,8 +201,7 @@ zzz
 </style>
 <body class="real">
 zzz
-</body>
-`;
+</body>`;
 
   t.same(actual, intended, "04");
   t.end();
@@ -212,7 +211,8 @@ tap.test("05 - special case - checking adjacent markers #2", (t) => {
   const actual = comb(`<style type="text/css">.del-1{display: none;}.del-2{display: none;}.del-3{display: none;}</style>
 <body>
 zzz
-</body>`).result;
+</body>
+`).result;
 
   const intended = `<body>
 zzz
@@ -239,8 +239,7 @@ zzz
 </style>
 <body class="used">
 zzz
-</body>
-`;
+</body>`;
 
   t.same(actual, intended, "06");
   t.end();

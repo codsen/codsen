@@ -72,6 +72,7 @@ export default (commandLineArgs) => {
       external: [
         "array-pull-all-with-glob",
         "ast-is-empty",
+        "html-crush",
         "lodash.intersection",
         "lodash.pullall",
         "lodash.uniq",
@@ -106,6 +107,7 @@ export default (commandLineArgs) => {
       external: [
         "array-pull-all-with-glob",
         "ast-is-empty",
+        "html-crush",
         "lodash.intersection",
         "lodash.pullall",
         "lodash.uniq",

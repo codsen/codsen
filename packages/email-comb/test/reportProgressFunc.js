@@ -20,17 +20,17 @@ tap.test(
 
     t.same(
       comb("aaaaaaaaaa").result,
-      "aaaaaaaaaa\n",
+      "aaaaaaaaaa",
       "01.01 - default behaviour"
     );
     t.same(
       comb("aaaaaaaaaa", { reportProgressFunc: null }).result,
-      "aaaaaaaaaa\n",
+      "aaaaaaaaaa",
       "01.02"
     );
     t.same(
       comb("aaaaaaaaaa", { reportProgressFunc: false }).result,
-      "aaaaaaaaaa\n",
+      "aaaaaaaaaa",
       "01.03"
     );
 

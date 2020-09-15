@@ -100,6 +100,10 @@
     return target;
   }
 
+  function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+  }
+
   function _toConsumableArray(arr) {
     return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
   }
@@ -108,8 +112,39 @@
     if (Array.isArray(arr)) return _arrayLikeToArray(arr);
   }
 
+  function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+  }
+
   function _iterableToArray(iter) {
     if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+  }
+
+  function _iterableToArrayLimit(arr, i) {
+    if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _e = undefined;
+
+    try {
+      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+        _arr.push(_s.value);
+
+        if (i && _arr.length === i) break;
+      }
+    } catch (err) {
+      _d = true;
+      _e = err;
+    } finally {
+      try {
+        if (!_n && _i["return"] != null) _i["return"]();
+      } finally {
+        if (_d) throw _e;
+      }
+    }
+
+    return _arr;
   }
 
   function _unsupportedIterableToArray(o, minLen) {
@@ -131,6 +166,10 @@
 
   function _nonIterableSpread() {
     throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
+  function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
 
   function _createForOfIteratorHelper(o, allowArrayLike) {
@@ -714,16 +753,151 @@
     });
   }
 
+  /**
+   * lodash (Custom Build) <https://lodash.com/>
+   * Build: `lodash modularize exports="npm" -o ./`
+   * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+   * Released under MIT license <https://lodash.com/license>
+   * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+   * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+   */
+
+  /** `Object#toString` result references. */
+  var objectTag = '[object Object]';
+  /**
+   * Checks if `value` is a host object in IE < 9.
+   *
+   * @private
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
+   */
+
+  function isHostObject(value) {
+    // Many host objects are `Object` objects that can coerce to strings
+    // despite having improperly defined `toString` methods.
+    var result = false;
+
+    if (value != null && typeof value.toString != 'function') {
+      try {
+        result = !!(value + '');
+      } catch (e) {}
+    }
+
+    return result;
+  }
+  /**
+   * Creates a unary function that invokes `func` with its argument transformed.
+   *
+   * @private
+   * @param {Function} func The function to wrap.
+   * @param {Function} transform The argument transform.
+   * @returns {Function} Returns the new function.
+   */
+
+
+  function overArg(func, transform) {
+    return function (arg) {
+      return func(transform(arg));
+    };
+  }
   /** Used for built-in method references. */
 
 
-  var funcProto = Function.prototype;
+  var funcProto = Function.prototype,
+      objectProto = Object.prototype;
   /** Used to resolve the decompiled source of functions. */
 
   var funcToString = funcProto.toString;
+  /** Used to check objects for own properties. */
+
+  var hasOwnProperty = objectProto.hasOwnProperty;
   /** Used to infer the `Object` constructor. */
 
   var objectCtorString = funcToString.call(Object);
+  /**
+   * Used to resolve the
+   * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+   * of values.
+   */
+
+  var objectToString = objectProto.toString;
+  /** Built-in value references. */
+
+  var getPrototype = overArg(Object.getPrototypeOf, Object);
+  /**
+   * Checks if `value` is object-like. A value is object-like if it's not `null`
+   * and has a `typeof` result of "object".
+   *
+   * @static
+   * @memberOf _
+   * @since 4.0.0
+   * @category Lang
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+   * @example
+   *
+   * _.isObjectLike({});
+   * // => true
+   *
+   * _.isObjectLike([1, 2, 3]);
+   * // => true
+   *
+   * _.isObjectLike(_.noop);
+   * // => false
+   *
+   * _.isObjectLike(null);
+   * // => false
+   */
+
+  function isObjectLike(value) {
+    return !!value && _typeof(value) == 'object';
+  }
+  /**
+   * Checks if `value` is a plain object, that is, an object created by the
+   * `Object` constructor or one with a `[[Prototype]]` of `null`.
+   *
+   * @static
+   * @memberOf _
+   * @since 0.8.0
+   * @category Lang
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
+   * @example
+   *
+   * function Foo() {
+   *   this.a = 1;
+   * }
+   *
+   * _.isPlainObject(new Foo);
+   * // => false
+   *
+   * _.isPlainObject([1, 2, 3]);
+   * // => false
+   *
+   * _.isPlainObject({ 'x': 0, 'y': 0 });
+   * // => true
+   *
+   * _.isPlainObject(Object.create(null));
+   * // => true
+   */
+
+
+  function isPlainObject(value) {
+    if (!isObjectLike(value) || objectToString.call(value) != objectTag || isHostObject(value)) {
+      return false;
+    }
+
+    var proto = getPrototype(value);
+
+    if (proto === null) {
+      return true;
+    }
+
+    var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
+    return typeof Ctor == 'function' && Ctor instanceof Ctor && funcToString.call(Ctor) == objectCtorString;
+  }
+
+  var lodash_isplainobject = isPlainObject;
 
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -2969,7 +3143,7 @@
    */
 
 
-  function isHostObject(value) {
+  function isHostObject$1(value) {
     // Many host objects are `Object` objects that can coerce to strings
     // despite having improperly defined `toString` methods.
     var result = false;
@@ -2987,7 +3161,7 @@
 
   var arrayProto = Array.prototype,
       funcProto$1 = Function.prototype,
-      objectProto = Object.prototype;
+      objectProto$1 = Object.prototype;
   /** Used to detect overreaching core-js shims. */
 
   var coreJsData = root['__core-js_shared__'];
@@ -3003,17 +3177,17 @@
   var funcToString$1 = funcProto$1.toString;
   /** Used to check objects for own properties. */
 
-  var hasOwnProperty = objectProto.hasOwnProperty;
+  var hasOwnProperty$1 = objectProto$1.hasOwnProperty;
   /**
    * Used to resolve the
    * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
    * of values.
    */
 
-  var objectToString = objectProto.toString;
+  var objectToString$1 = objectProto$1.toString;
   /** Used to detect if a method is native. */
 
-  var reIsNative = RegExp('^' + funcToString$1.call(hasOwnProperty).replace(reRegExpChar, '\\$&').replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
+  var reIsNative = RegExp('^' + funcToString$1.call(hasOwnProperty$1).replace(reRegExpChar, '\\$&').replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
   /** Built-in value references. */
 
   var splice = arrayProto.splice;
@@ -3089,7 +3263,7 @@
       return result === HASH_UNDEFINED ? undefined : result;
     }
 
-    return hasOwnProperty.call(data, key) ? data[key] : undefined;
+    return hasOwnProperty$1.call(data, key) ? data[key] : undefined;
   }
   /**
    * Checks if a hash value for `key` exists.
@@ -3104,7 +3278,7 @@
 
   function hashHas(key) {
     var data = this.__data__;
-    return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);
+    return nativeCreate ? data[key] !== undefined : hasOwnProperty$1.call(data, key);
   }
   /**
    * Sets the hash `key` to `value`.
@@ -3499,7 +3673,7 @@
       return false;
     }
 
-    var pattern = isFunction(value) || isHostObject(value) ? reIsNative : reIsHostCtor;
+    var pattern = isFunction(value) || isHostObject$1(value) ? reIsNative : reIsHostCtor;
     return pattern.test(toSource(value));
   }
   /**
@@ -3740,7 +3914,7 @@
 
 
   function isArrayLikeObject(value) {
-    return isObjectLike(value) && isArrayLike(value);
+    return isObjectLike$1(value) && isArrayLike(value);
   }
   /**
    * Checks if `value` is classified as a `Function` object.
@@ -3764,7 +3938,7 @@
   function isFunction(value) {
     // The use of `Object#toString` avoids issues with the `typeof` operator
     // in Safari 8-9 which returns 'object' for typed array and other constructors.
-    var tag = isObject(value) ? objectToString.call(value) : '';
+    var tag = isObject(value) ? objectToString$1.call(value) : '';
     return tag == funcTag || tag == genTag;
   }
   /**
@@ -3856,7 +4030,7 @@
    */
 
 
-  function isObjectLike(value) {
+  function isObjectLike$1(value) {
     return !!value && _typeof(value) == 'object';
   }
 
@@ -4778,66 +4952,6 @@
   var lodash_pullall = pullAll;
 
   /**
-   * ast-is-empty
-   * Find out, is nested array/object/string/AST tree is empty
-   * Version: 1.10.8
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://codsen.com/os/ast-is-empty/
-   */
-  function isObj$1(something) {
-    return something && _typeof(something) === "object" && !Array.isArray(something);
-  }
-
-  function isEmpty(input) {
-    var i;
-    var len;
-    var res = true;
-
-    if (Array.isArray(input)) {
-      if (input.length === 0) {
-        return true;
-      }
-
-      for (i = 0, len = input.length; i < len; i++) {
-        res = isEmpty(input[i]);
-
-        if (res === null) {
-          return null;
-        }
-
-        if (!res) {
-          return false;
-        }
-      }
-    } else if (isObj$1(input)) {
-      if (Object.keys(input).length === 0) {
-        return true;
-      }
-
-      for (i = 0, len = Object.keys(input).length; i < len; i++) {
-        res = isEmpty(input[Object.keys(input)[i]]);
-
-        if (res === null) {
-          return null;
-        }
-
-        if (!res) {
-          return false;
-        }
-      }
-    } else if (typeof input === "string") {
-      if (input.length !== 0) {
-        return false;
-      }
-    } else {
-      return null;
-    }
-
-    return res;
-  }
-
-  /**
    * string-collapse-leading-whitespace
    * Collapse the leading and trailing whitespace of a string
    * Version: 2.0.24
@@ -5148,6 +5262,705 @@
     return Ranges;
   }();
 
+  var finalIndexesToDelete = new Ranges({
+    limitToBeAddedWhitespace: true
+  });
+  var defaults = {
+    lineLengthLimit: 500,
+    removeIndentations: true,
+    removeLineBreaks: false,
+    removeHTMLComments: false,
+    removeCSSComments: true,
+    reportProgressFunc: null,
+    reportProgressFuncFrom: 0,
+    reportProgressFuncTo: 100,
+    breakToTheLeftOf: ["</td", "<html", "</html", "<head", "</head", "<meta", "<link", "<table", "<script", "</script", "<!DOCTYPE", "<style", "</style", "<title", "<body", "@media", "</body", "<!--[if", "<!--<![endif", "<![endif]"],
+    mindTheInlineTags: ["a", "abbr", "acronym", "audio", "b", "bdi", "bdo", "big", "br", "button", "canvas", "cite", "code", "data", "datalist", "del", "dfn", "em", "embed", "i", "iframe", "img", "input", "ins", "kbd", "label", "map", "mark", "meter", "noscript", "object", "output", "picture", "progress", "q", "ruby", "s", "samp", "script", "select", "slot", "small", "span", "strong", "sub", "sup", "svg", "template", "textarea", "time", "u", "tt", "var", "video", "wbr"]
+  };
+  var applicableOpts = {
+    removeHTMLComments: false,
+    removeCSSComments: false
+  };
+
+  function isStr$3(something) {
+    return typeof something === "string";
+  }
+
+  function isLetter(something) {
+    return typeof something === "string" && something.toUpperCase() !== something.toLowerCase();
+  }
+
+  function crush(str, originalOpts) {
+    var start = Date.now();
+
+    if (!isStr$3(str)) {
+      if (str === undefined) {
+        throw new Error("html-crush: [THROW_ID_01] the first input argument is completely missing! It should be given as string.");
+      } else {
+        throw new Error("html-crush: [THROW_ID_02] the first input argument must be string! It was given as \"".concat(_typeof(str), "\", equal to:\n").concat(JSON.stringify(str, null, 4)));
+      }
+    }
+
+    if (originalOpts && !lodash_isplainobject(originalOpts)) {
+      throw new Error("html-crush: [THROW_ID_03] the second input argument, options object, should be a plain object but it was given as type ".concat(_typeof(originalOpts), ", equal to ").concat(JSON.stringify(originalOpts, null, 4)));
+    }
+
+    if (originalOpts && Array.isArray(originalOpts.breakToTheLeftOf) && originalOpts.breakToTheLeftOf.length) {
+      for (var z = 0, _len = originalOpts.breakToTheLeftOf.length; z < _len; z++) {
+        if (!isStr$3(originalOpts.breakToTheLeftOf[z])) {
+          throw new TypeError("html-crush: [THROW_ID_05] the opts.breakToTheLeftOf array contains non-string elements! For example, element at index ".concat(z, " is of a type \"").concat(_typeof(originalOpts.breakToTheLeftOf[z]), "\" and is equal to:\n").concat(JSON.stringify(originalOpts.breakToTheLeftOf[z], null, 4)));
+        }
+      }
+    }
+
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
+
+    if (opts.breakToTheLeftOf === false || opts.breakToTheLeftOf === null) {
+      opts.breakToTheLeftOf = [];
+    }
+
+    if (typeof opts.removeHTMLComments === "boolean") {
+      opts.removeHTMLComments = opts.removeHTMLComments ? 1 : 0;
+    }
+
+    var breakToTheLeftOfFirstLetters = "";
+
+    if (Array.isArray(opts.breakToTheLeftOf) && opts.breakToTheLeftOf.length) {
+      breakToTheLeftOfFirstLetters = _toConsumableArray(new Set(opts.breakToTheLeftOf.map(function (val) {
+        return val[0];
+      }))).join("");
+    }
+
+    var lastLinebreak = null;
+    var whitespaceStartedAt = null;
+    var nonWhitespaceCharMet = false;
+    var countCharactersPerLine = 0;
+    var cpl = 0;
+    var withinStyleTag = false;
+    var withinHTMLConditional = false;
+    var withinInlineStyle = null;
+    var styleCommentStartedAt = null;
+    var htmlCommentStartedAt = null;
+    var scriptStartedAt = null;
+    var doNothing;
+    var stageFrom = null;
+    var stageTo = null;
+    var stageAdd = null;
+    var tagName = null;
+    var tagNameStartsAt = null;
+    var leftTagName = null;
+    var CHARS_BREAK_ON_THE_RIGHT_OF_THEM = ">};";
+    var CHARS_BREAK_ON_THE_LEFT_OF_THEM = "<";
+    var CHARS_DONT_BREAK_ON_THE_LEFT_OF_THEM = "!";
+    var DELETE_TIGHTLY_IF_ON_LEFT_IS = ">";
+    var DELETE_TIGHTLY_IF_ON_RIGHT_IS = "<";
+    var set = "{},:;<>~+";
+    var DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS = set;
+    var DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS = set;
+    var beginningOfAFile = true;
+    var len = str.length;
+    var midLen = Math.floor(len / 2);
+    var leavePercForLastStage = 0.01;
+    var ceil;
+
+    if (opts.reportProgressFunc) {
+      ceil = Math.floor(opts.reportProgressFuncTo - (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage - opts.reportProgressFuncFrom);
+    }
+
+    var currentPercentageDone;
+    var lastPercentage = 0;
+
+    if (len) {
+      for (var i = 0; i < len; i++) {
+        if (opts.reportProgressFunc) {
+          if (len > 1000 && len < 2000) {
+            if (i === midLen) {
+              opts.reportProgressFunc(Math.floor((opts.reportProgressFuncTo - opts.reportProgressFuncFrom) / 2));
+            }
+          } else if (len >= 2000) {
+            currentPercentageDone = opts.reportProgressFuncFrom + Math.floor(i / len * ceil);
+
+            if (currentPercentageDone !== lastPercentage) {
+              lastPercentage = currentPercentageDone;
+              opts.reportProgressFunc(currentPercentageDone);
+            }
+          }
+        }
+
+        cpl++;
+
+        if (doNothing && typeof doNothing === "number" && i >= doNothing) {
+          doNothing = undefined;
+        }
+
+        if (scriptStartedAt !== null && str.startsWith("</script", i) && !isLetter(str[i + 8])) {
+          if ((opts.removeIndentations || opts.removeLineBreaks) && i > 0 && str[~-i] && !str[~-i].trim()) {
+            for (var y = i; y--;) {
+              if (str[y] === "\n" || str[y] === "\r" || str[y].trim()) {
+                if (y + 1 < i) {
+                  finalIndexesToDelete.push(y + 1, i);
+                }
+
+                break;
+              }
+            }
+          }
+
+          scriptStartedAt = null;
+          doNothing = false;
+          i += 8;
+          continue;
+        }
+
+        if (!doNothing && !withinStyleTag && str.startsWith("<script", i) && !isLetter(str[i + 7])) {
+          scriptStartedAt = i;
+          doNothing = true;
+          var whatToInsert = "";
+
+          if ((opts.removeLineBreaks || opts.removeIndentations) && whitespaceStartedAt !== null) {
+            if (whitespaceStartedAt > 0) {
+              whatToInsert = "\n";
+            }
+
+            finalIndexesToDelete.push(whitespaceStartedAt, i, whatToInsert);
+          }
+
+          whitespaceStartedAt = null;
+          lastLinebreak = null;
+        }
+
+        if (tagNameStartsAt !== null && tagName === null && !/\w/.test(str[i])) {
+          tagName = str.slice(tagNameStartsAt, i);
+          var idxOnTheRight = right(str, ~-i);
+
+          if (str[idxOnTheRight] === ">" && !str[i].trim()) {
+            finalIndexesToDelete.push(i, right(str, i));
+          } else if (str[idxOnTheRight] === "/" && str[right(str, idxOnTheRight)] === ">") {
+            if (!str[i].trim()) {
+              finalIndexesToDelete.push(i, right(str, i));
+            }
+
+            if (str[idxOnTheRight + 1] !== ">") {
+              finalIndexesToDelete.push(idxOnTheRight + 1, right(str, idxOnTheRight + 1));
+            }
+          }
+        }
+
+        if (!doNothing && !withinStyleTag && !withinInlineStyle && str[~-i] === "<" && tagNameStartsAt === null) {
+          if (/\w/.test(str[i])) {
+            tagNameStartsAt = i;
+          } else if (str[right(str, ~-i)] === "/" && /\w/.test(str[right(str, right(str, ~-i))])) {
+            tagNameStartsAt = right(str, right(str, ~-i));
+          }
+        }
+
+        if (!doNothing && (withinStyleTag || withinInlineStyle) && styleCommentStartedAt !== null && str[i] === "*" && str[i + 1] === "/") {
+          var _expand = expander({
+            str: str,
+            from: styleCommentStartedAt,
+            to: i + 2,
+            ifLeftSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS,
+            ifRightSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS
+          });
+
+          var _expand2 = _slicedToArray(_expand, 2);
+
+          stageFrom = _expand2[0];
+          stageTo = _expand2[1];
+          styleCommentStartedAt = null;
+
+          if (stageFrom != null) {
+            finalIndexesToDelete.push(stageFrom, stageTo);
+          } else {
+            countCharactersPerLine += 1;
+            i += 1;
+          }
+
+          doNothing = i + 2;
+        }
+
+        if (!doNothing && (withinStyleTag || withinInlineStyle) && styleCommentStartedAt === null && str[i] === "/" && str[i + 1] === "*") {
+          if (!applicableOpts.removeCSSComments) {
+            applicableOpts.removeCSSComments = true;
+          }
+
+          if (opts.removeCSSComments) {
+            styleCommentStartedAt = i;
+          }
+        }
+
+        if (withinHTMLConditional && str.startsWith("![endif", i + 1)) {
+          withinHTMLConditional = false;
+        }
+
+        if (!doNothing && !withinStyleTag && !withinInlineStyle && htmlCommentStartedAt !== null) {
+          var distanceFromHereToCommentEnding = void 0;
+
+          if (str.startsWith("-->", i)) {
+            distanceFromHereToCommentEnding = 3;
+          } else if (str[i] === ">" && str[i - 1] === "]") {
+            distanceFromHereToCommentEnding = 1;
+          }
+
+          if (distanceFromHereToCommentEnding) {
+            var _expand3 = expander({
+              str: str,
+              from: htmlCommentStartedAt,
+              to: i + distanceFromHereToCommentEnding
+            });
+
+            var _expand4 = _slicedToArray(_expand3, 2);
+
+            stageFrom = _expand4[0];
+            stageTo = _expand4[1];
+            htmlCommentStartedAt = null;
+
+            if (stageFrom != null) {
+              if (opts.lineLengthLimit && cpl - (stageTo - stageFrom) >= opts.lineLengthLimit) {
+                finalIndexesToDelete.push(stageFrom, stageTo, "\n");
+                cpl = -distanceFromHereToCommentEnding;
+              } else {
+                finalIndexesToDelete.push(stageFrom, stageTo);
+                cpl -= stageTo - stageFrom;
+              }
+            } else {
+              countCharactersPerLine += distanceFromHereToCommentEnding - 1;
+              i += distanceFromHereToCommentEnding - 1;
+            }
+
+            doNothing = i + distanceFromHereToCommentEnding;
+          }
+        }
+
+        if (!doNothing && !withinStyleTag && !withinInlineStyle && str.startsWith("<!--", i) && htmlCommentStartedAt === null) {
+          if (str.startsWith("[if", i + 4)) {
+            if (!withinHTMLConditional) {
+              withinHTMLConditional = true;
+            }
+
+            if (opts.removeHTMLComments === 2) {
+              htmlCommentStartedAt = i;
+            }
+          } else if (opts.removeHTMLComments && (!withinHTMLConditional || opts.removeHTMLComments === 2)) {
+            htmlCommentStartedAt = i;
+          }
+
+          if (!applicableOpts.removeHTMLComments) {
+            applicableOpts.removeHTMLComments = true;
+          }
+        }
+
+        if (!doNothing && withinStyleTag && styleCommentStartedAt === null && str.startsWith("</style", i) && !isLetter(str[i + 7])) {
+          withinStyleTag = false;
+        } else if (!doNothing && !withinStyleTag && styleCommentStartedAt === null && str.startsWith("<style", i) && !isLetter(str[i + 6])) {
+          withinStyleTag = true;
+
+          if ((opts.removeLineBreaks || opts.removeIndentations) && opts.breakToTheLeftOf.includes("<style") && str.startsWith(" type=\"text/css\">", i + 6) && str[i + 24]) {
+            finalIndexesToDelete.push(i + 23, i + 23, "\n");
+          }
+        }
+
+        if (!doNothing && !withinInlineStyle && "\"'".includes(str[i]) && str.endsWith("style=", i)) {
+          withinInlineStyle = i;
+        }
+
+        if (!doNothing && !str[i].trim()) {
+          if (whitespaceStartedAt === null) {
+            whitespaceStartedAt = i;
+          }
+        } else if (!doNothing && !((withinStyleTag || withinInlineStyle) && styleCommentStartedAt !== null)) {
+          if (whitespaceStartedAt !== null) {
+            if (opts.removeLineBreaks) {
+              countCharactersPerLine += 1;
+            }
+
+            if (beginningOfAFile) {
+              beginningOfAFile = false;
+
+              if (opts.removeIndentations || opts.removeLineBreaks) {
+                finalIndexesToDelete.push(0, i);
+              }
+            } else {
+              if (opts.removeIndentations && !opts.removeLineBreaks) {
+                if (!nonWhitespaceCharMet && lastLinebreak !== null && i > lastLinebreak) {
+                  finalIndexesToDelete.push(lastLinebreak + 1, i);
+                } else if (whitespaceStartedAt + 1 < i) {
+                  if (str.endsWith("]>", whitespaceStartedAt) || str.endsWith("-->", whitespaceStartedAt) || str.startsWith("<![", i) || str.startsWith("<!--<![", i)) {
+                    finalIndexesToDelete.push(whitespaceStartedAt, i);
+                  } else if (str[whitespaceStartedAt] === " ") {
+                    finalIndexesToDelete.push(whitespaceStartedAt + 1, i);
+                  } else if (str[~-i] === " ") {
+                    finalIndexesToDelete.push(whitespaceStartedAt, ~-i);
+                  } else {
+                    finalIndexesToDelete.push(whitespaceStartedAt, i, " ");
+                  }
+                }
+              }
+
+              if (opts.removeLineBreaks || withinInlineStyle) {
+                if (breakToTheLeftOfFirstLetters.includes(str[i]) && matchRightIncl(str, i, opts.breakToTheLeftOf)) {
+                  if (!(str[~-i] === "\n" && whitespaceStartedAt === ~-i)) {
+                    finalIndexesToDelete.push(whitespaceStartedAt, i, "\n");
+                  }
+
+                  stageFrom = null;
+                  stageTo = null;
+                  stageAdd = null;
+                  whitespaceStartedAt = null;
+                  countCharactersPerLine = 1;
+                  continue;
+                }
+
+                var whatToAdd = " ";
+                if (str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
+                  cb: function cb(nextChar) {
+                    return !nextChar || !/\w/.test(nextChar);
+                  }
+                })) ;else if (str[~-whitespaceStartedAt] && DELETE_TIGHTLY_IF_ON_LEFT_IS.includes(str[~-whitespaceStartedAt]) && DELETE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[i]) || (withinStyleTag || withinInlineStyle) && styleCommentStartedAt === null && (DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS.includes(str[~-whitespaceStartedAt]) || DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS.includes(str[i])) || str.startsWith("!important", i) && !withinHTMLConditional || withinInlineStyle && (str[~-whitespaceStartedAt] === "'" || str[~-whitespaceStartedAt] === '"') || str[~-whitespaceStartedAt] === "}" && str.startsWith("</style", i) || str[i] === ">" && ("'\"".includes(str[left(str, i)]) || str[right(str, i)] === "<") || str[i] === "/" && str[right(str, i)] === ">") {
+                  whatToAdd = "";
+
+                  if (str[i] === "/" && str[i + 1] === ">" && right(str, i) > i + 1) {
+                    finalIndexesToDelete.push(i + 1, right(str, i));
+                    countCharactersPerLine -= right(str, i) - i + 1;
+                  }
+                }
+
+                if (whatToAdd && whatToAdd.length) {
+                  countCharactersPerLine += 1;
+                }
+
+                if (!opts.lineLengthLimit) {
+                  if (!(i === whitespaceStartedAt + 1 && whatToAdd === " ")) {
+                    finalIndexesToDelete.push(whitespaceStartedAt, i, whatToAdd);
+                  }
+                } else {
+                  if (countCharactersPerLine >= opts.lineLengthLimit || !str[i + 1] || str[i] === ">" || str[i] === "/" && str[i + 1] === ">") {
+                    if (countCharactersPerLine > opts.lineLengthLimit || countCharactersPerLine === opts.lineLengthLimit && str[i + 1] && str[i + 1].trim() && !CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) && !CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i + 1])) {
+                      whatToAdd = "\n";
+                      countCharactersPerLine = 1;
+                    }
+
+                    if (countCharactersPerLine > opts.lineLengthLimit || !(whatToAdd === " " && i === whitespaceStartedAt + 1)) {
+                      finalIndexesToDelete.push(whitespaceStartedAt, i, whatToAdd);
+                    }
+
+                    stageFrom = null;
+                    stageTo = null;
+                    stageAdd = null;
+                  } else if (stageFrom === null || whitespaceStartedAt < stageFrom) {
+                    stageFrom = whitespaceStartedAt;
+                    stageTo = i;
+                    stageAdd = whatToAdd;
+                  }
+                }
+              }
+            }
+
+            whitespaceStartedAt = null;
+
+            if (!nonWhitespaceCharMet) {
+              nonWhitespaceCharMet = true;
+            }
+          } else {
+            if (beginningOfAFile) {
+              beginningOfAFile = false;
+            }
+
+            if (opts.removeLineBreaks) {
+              countCharactersPerLine += 1;
+            }
+          }
+
+          if (!nonWhitespaceCharMet) {
+            nonWhitespaceCharMet = true;
+          }
+        }
+
+        if (!doNothing && !beginningOfAFile && i !== 0 && opts.removeLineBreaks && (opts.lineLengthLimit || breakToTheLeftOfFirstLetters) && !str.startsWith("</a", i)) {
+          if (breakToTheLeftOfFirstLetters && matchRightIncl(str, i, opts.breakToTheLeftOf) && str.slice(0, i).trim() && (!str.startsWith("<![endif]", i) || !matchLeft(str, i, "<!--"))) {
+            finalIndexesToDelete.push(i, i, "\n");
+            stageFrom = null;
+            stageTo = null;
+            stageAdd = null;
+            countCharactersPerLine = 1;
+            continue;
+          } else if (opts.lineLengthLimit && countCharactersPerLine <= opts.lineLengthLimit) {
+            if (!str[i + 1] || CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) && !CHARS_DONT_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) || CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) || !str[i].trim()) {
+              if (stageFrom !== null && stageTo !== null && (stageFrom !== stageTo || stageAdd && stageAdd.length)) {
+                var _whatToAdd = stageAdd;
+
+                if (str[i].trim() && str[i + 1] && str[i + 1].trim() && countCharactersPerLine + (stageAdd ? stageAdd.length : 0) > opts.lineLengthLimit) {
+                  _whatToAdd = "\n";
+                }
+
+                if (countCharactersPerLine + (_whatToAdd ? _whatToAdd.length : 0) > opts.lineLengthLimit || !(_whatToAdd === " " && stageTo === stageFrom + 1)) {
+                  if (!(str[~-stageFrom] === "}" && str[stageTo] === "{")) {
+                    finalIndexesToDelete.push(stageFrom, stageTo, _whatToAdd);
+                  }
+                } else {
+                  countCharactersPerLine -= lastLinebreak;
+                }
+              }
+
+              if (str[i].trim() && (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) || str[~-i] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[~-i])) && isStr$3(leftTagName) && !opts.mindTheInlineTags.includes(tagName) && !(str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
+                cb: function cb(nextChar) {
+                  return !nextChar || !/\w/.test(nextChar);
+                }
+              })) && !(str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
+                trimCharsBeforeMatching: "/",
+                cb: function cb(nextChar) {
+                  return !nextChar || !/\w/.test(nextChar);
+                }
+              }))) {
+                stageFrom = i;
+                stageTo = i;
+                stageAdd = null;
+              } else if (styleCommentStartedAt === null && stageFrom !== null && (withinInlineStyle || !opts.mindTheInlineTags || !Array.isArray(opts.mindTheInlineTags) || Array.isArray(opts.mindTheInlineTags.length) && !opts.mindTheInlineTags.length || !isStr$3(tagName) || Array.isArray(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && isStr$3(tagName) && !opts.mindTheInlineTags.includes(tagName)) && !(str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
+                trimCharsBeforeMatching: "/",
+                cb: function cb(nextChar) {
+                  return !nextChar || !/\w/.test(nextChar);
+                }
+              }))) {
+                stageFrom = null;
+                stageTo = null;
+                stageAdd = null;
+              }
+            }
+          } else if (opts.lineLengthLimit) {
+            if (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) && !(str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
+              trimCharsBeforeMatching: "/",
+              cb: function cb(nextChar) {
+                return !nextChar || !/\w/.test(nextChar);
+              }
+            }))) {
+              if (stageFrom !== null && stageTo !== null && (stageFrom !== stageTo || stageAdd && stageAdd.length)) {
+                var whatToAddLength = stageAdd && stageAdd.length ? stageAdd.length : 0;
+                if (countCharactersPerLine - (stageTo - stageFrom - whatToAddLength) - 1 > opts.lineLengthLimit) ;else {
+                  finalIndexesToDelete.push(stageFrom, stageTo, stageAdd);
+                  stageFrom = null;
+                  stageTo = null;
+                  stageAdd = null;
+
+                  if (countCharactersPerLine - (stageTo - stageFrom - whatToAddLength) - 1 === opts.lineLengthLimit) {
+                    finalIndexesToDelete.push(i, i, "\n");
+                    countCharactersPerLine = 0;
+                  }
+                }
+              } else {
+                finalIndexesToDelete.push(i, i, "\n");
+                countCharactersPerLine = 0;
+              }
+            } else if (str[i + 1] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) && isStr$3(tagName) && Array.isArray(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && !opts.mindTheInlineTags.includes(tagName)) {
+              if (stageFrom !== null && stageTo !== null && (stageFrom !== stageTo || stageAdd && stageAdd.length)) ;else {
+                finalIndexesToDelete.push(i + 1, i + 1, "\n");
+                countCharactersPerLine = 0;
+              }
+            } else if (!str[i].trim()) ;else if (!str[i + 1]) {
+              if (stageFrom !== null && stageTo !== null && (stageFrom !== stageTo || stageAdd && stageAdd.length)) {
+                finalIndexesToDelete.push(stageFrom, stageTo, "\n");
+              }
+            }
+          }
+        }
+
+        if (!doNothing && !beginningOfAFile && opts.removeLineBreaks && opts.lineLengthLimit && countCharactersPerLine >= opts.lineLengthLimit && stageFrom !== null && stageTo !== null && !CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) && !CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) && !"/".includes(str[i])) {
+          if (!(countCharactersPerLine === opts.lineLengthLimit && str[i + 1] && !str[i + 1].trim())) {
+            var _whatToAdd2 = "\n";
+
+            if (str[i + 1] && !str[i + 1].trim() && countCharactersPerLine === opts.lineLengthLimit) {
+              _whatToAdd2 = stageAdd;
+            }
+
+            if (_whatToAdd2 === "\n" && !str[~-stageFrom].trim()) {
+              stageFrom = left(str, stageFrom) + 1;
+            }
+
+            finalIndexesToDelete.push(stageFrom, stageTo, _whatToAdd2);
+            countCharactersPerLine = i - stageTo;
+
+            if (str[i].length) {
+              countCharactersPerLine += 1;
+            }
+
+            stageFrom = null;
+            stageTo = null;
+            stageAdd = null;
+          }
+        }
+
+        if (!doNothing && str[i] === "\n" || str[i] === "\r" && (!str[i + 1] || str[i + 1] && str[i + 1] !== "\n")) {
+          lastLinebreak = i;
+
+          if (nonWhitespaceCharMet) {
+            nonWhitespaceCharMet = false;
+          }
+
+          if (!opts.removeLineBreaks && whitespaceStartedAt !== null && whitespaceStartedAt < i && str[i + 1] && str[i + 1] !== "\r" && str[i + 1] !== "\n") {
+            finalIndexesToDelete.push(whitespaceStartedAt, i);
+          }
+        }
+
+        if (!str[i + 1]) {
+          if (withinStyleTag && styleCommentStartedAt !== null) {
+            finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(expander({
+              str: str,
+              from: styleCommentStartedAt,
+              to: i,
+              ifLeftSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_LEFT_IS,
+              ifRightSideIncludesThisThenCropTightly: DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS
+            })));
+          } else if (whitespaceStartedAt && str[i] !== "\n" && str[i] !== "\r") {
+            finalIndexesToDelete.push(whitespaceStartedAt, i + 1);
+          } else if (whitespaceStartedAt && (str[i] === "\r" && str[i + 1] === "\n" || str[i] === "\n" && str[i - 1] !== "\r")) {
+            finalIndexesToDelete.push(whitespaceStartedAt, i);
+          }
+        }
+
+        if (!doNothing && withinInlineStyle && withinInlineStyle < i && str[withinInlineStyle] === str[i]) {
+          withinInlineStyle = null;
+        }
+
+        if (!doNothing && !withinStyleTag && str.startsWith("<pre", i) && !isLetter(str[i + 4])) {
+          var locationOfClosingPre = str.indexOf("</pre", i + 5);
+
+          if (locationOfClosingPre > 0) {
+            doNothing = locationOfClosingPre;
+          }
+        }
+
+        if (!doNothing && !withinStyleTag && str.startsWith("<code", i) && !isLetter(str[i + 5])) {
+          var locationOfClosingCode = str.indexOf("</code", i + 5);
+
+          if (locationOfClosingCode > 0) {
+            doNothing = locationOfClosingCode;
+          }
+        }
+
+        if (!doNothing && str.startsWith("<![CDATA[", i)) {
+          var locationOfClosingCData = str.indexOf("]]>", i + 9);
+
+          if (locationOfClosingCData > 0) {
+            doNothing = locationOfClosingCData;
+          }
+        }
+
+        if (!doNothing && !withinStyleTag && !withinInlineStyle && tagNameStartsAt !== null && str[i] === ">") {
+          if (str[right(str, i)] === "<") {
+            leftTagName = tagName;
+          }
+
+          tagNameStartsAt = null;
+          tagName = null;
+        }
+
+        if (str[i] === "<" && leftTagName !== null) {
+          leftTagName = null;
+        }
+      }
+
+      if (finalIndexesToDelete.current()) {
+        var startingPercentageDone = opts.reportProgressFuncTo - (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage;
+        var res = rangesApply(str, finalIndexesToDelete.current(), function (applyPercDone) {
+          if (opts.reportProgressFunc && len >= 2000) {
+            currentPercentageDone = Math.floor(startingPercentageDone + (opts.reportProgressFuncTo - startingPercentageDone) * (applyPercDone / 100));
+
+            if (currentPercentageDone !== lastPercentage) {
+              lastPercentage = currentPercentageDone;
+              opts.reportProgressFunc(currentPercentageDone);
+            }
+          }
+        });
+        finalIndexesToDelete.wipe();
+        var resLen = res.length;
+        return {
+          log: {
+            timeTakenInMiliseconds: Date.now() - start,
+            originalLength: len,
+            cleanedLength: resLen,
+            bytesSaved: Math.max(len - resLen, 0),
+            percentageReducedOfOriginal: len ? Math.round(Math.max(len - resLen, 0) * 100 / len) : 0
+          },
+          ranges: finalIndexesToDelete.current(),
+          applicableOpts: applicableOpts,
+          result: res
+        };
+      }
+    }
+
+    return {
+      log: {
+        timeTakenInMilliseconds: Date.now() - start,
+        originalLength: len,
+        cleanedLength: len,
+        bytesSaved: 0,
+        percentageReducedOfOriginal: 0
+      },
+      applicableOpts: applicableOpts,
+      ranges: [],
+      result: str
+    };
+  }
+
+  /**
+   * ast-is-empty
+   * Find out, is nested array/object/string/AST tree is empty
+   * Version: 1.10.8
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://codsen.com/os/ast-is-empty/
+   */
+  function isObj$1(something) {
+    return something && _typeof(something) === "object" && !Array.isArray(something);
+  }
+
+  function isEmpty(input) {
+    var i;
+    var len;
+    var res = true;
+
+    if (Array.isArray(input)) {
+      if (input.length === 0) {
+        return true;
+      }
+
+      for (i = 0, len = input.length; i < len; i++) {
+        res = isEmpty(input[i]);
+
+        if (res === null) {
+          return null;
+        }
+
+        if (!res) {
+          return false;
+        }
+      }
+    } else if (isObj$1(input)) {
+      if (Object.keys(input).length === 0) {
+        return true;
+      }
+
+      for (i = 0, len = Object.keys(input).length; i < len; i++) {
+        res = isEmpty(input[Object.keys(input)[i]]);
+
+        if (res === null) {
+          return null;
+        }
+
+        if (!res) {
+          return false;
+        }
+      }
+    } else if (typeof input === "string") {
+      if (input.length !== 0) {
+        return false;
+      }
+    } else {
+      return null;
+    }
+
+    return res;
+  }
+
   /**
    * lodash (Custom Build) <https://lodash.com/>
    * Build: `lodash modularize exports="npm" -o ./`
@@ -5324,7 +6137,7 @@
    */
 
 
-  function isHostObject$1(value) {
+  function isHostObject$2(value) {
     // Many host objects are `Object` objects that can coerce to strings
     // despite having improperly defined `toString` methods.
     var result = false;
@@ -5359,7 +6172,7 @@
 
   var arrayProto$2 = Array.prototype,
       funcProto$2 = Function.prototype,
-      objectProto$1 = Object.prototype;
+      objectProto$2 = Object.prototype;
   /** Used to detect overreaching core-js shims. */
 
   var coreJsData$1 = root$1['__core-js_shared__'];
@@ -5375,24 +6188,24 @@
   var funcToString$2 = funcProto$2.toString;
   /** Used to check objects for own properties. */
 
-  var hasOwnProperty$1 = objectProto$1.hasOwnProperty;
+  var hasOwnProperty$2 = objectProto$2.hasOwnProperty;
   /**
    * Used to resolve the
    * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
    * of values.
    */
 
-  var objectToString$1 = objectProto$1.toString;
+  var objectToString$2 = objectProto$2.toString;
   /** Used to detect if a method is native. */
 
-  var reIsNative$1 = RegExp('^' + funcToString$2.call(hasOwnProperty$1).replace(reRegExpChar$1, '\\$&').replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
+  var reIsNative$1 = RegExp('^' + funcToString$2.call(hasOwnProperty$2).replace(reRegExpChar$1, '\\$&').replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
   /** Built-in value references. */
 
   var splice$2 = arrayProto$2.splice;
   /* Built-in method references that are verified to be native. */
 
   var Map$2 = getNative$1(root$1, 'Map'),
-      Set = getNative$1(root$1, 'Set'),
+      Set$1 = getNative$1(root$1, 'Set'),
       nativeCreate$1 = getNative$1(Object, 'create');
   /**
    * Creates a hash object.
@@ -5458,7 +6271,7 @@
       return result === HASH_UNDEFINED$1 ? undefined : result;
     }
 
-    return hasOwnProperty$1.call(data, key) ? data[key] : undefined;
+    return hasOwnProperty$2.call(data, key) ? data[key] : undefined;
   }
   /**
    * Checks if a hash value for `key` exists.
@@ -5473,7 +6286,7 @@
 
   function hashHas$1(key) {
     var data = this.__data__;
-    return nativeCreate$1 ? data[key] !== undefined : hasOwnProperty$1.call(data, key);
+    return nativeCreate$1 ? data[key] !== undefined : hasOwnProperty$2.call(data, key);
   }
   /**
    * Sets the hash `key` to `value`.
@@ -5806,7 +6619,7 @@
       return false;
     }
 
-    var pattern = isFunction$1(value) || isHostObject$1(value) ? reIsNative$1 : reIsHostCtor$1;
+    var pattern = isFunction$1(value) || isHostObject$2(value) ? reIsNative$1 : reIsHostCtor$1;
     return pattern.test(toSource$1(value));
   }
   /**
@@ -5884,8 +6697,8 @@
    */
 
 
-  var createSet = !(Set && 1 / setToArray(new Set([, -0]))[1] == INFINITY) ? noop : function (values) {
-    return new Set(values);
+  var createSet = !(Set$1 && 1 / setToArray(new Set$1([, -0]))[1] == INFINITY) ? noop : function (values) {
+    return new Set$1(values);
   };
   /**
    * Gets the data for `map`.
@@ -6043,7 +6856,7 @@
   function isFunction$1(value) {
     // The use of `Object#toString` avoids issues with the `typeof` operator
     // in Safari 8-9 which returns 'object' for typed array and other constructors.
-    var tag = isObject$1(value) ? objectToString$1.call(value) : '';
+    var tag = isObject$1(value) ? objectToString$2.call(value) : '';
     return tag == funcTag$1 || tag == genTag$1;
   }
   /**
@@ -6102,7 +6915,7 @@
   var regexEmptyStyleTag = /[\n]?\s*<style[^>]*>\s*<\/style\s*>/g;
   var regexEmptyMediaQuery = /[\n]?\s*@(media|supports|document)[^{]*{\s*}/g;
   var regexEmptyUnclosedMediaQuery = /@media[^{@}]+{(?=\s*<\/style>)/g;
-  var defaults = {
+  var defaults$1 = {
     whitelist: [],
     backend: [],
     // pass the ESP head & tail sets as separate objects inside this array
@@ -6154,7 +6967,6 @@
     }
 
     var i;
-    var prevailingEOL;
     var styleStartedAt;
     var styleEndedAt;
     var headSelectorsArr = [];
@@ -6299,7 +7111,7 @@
       opts.backend = [];
     }
 
-    opts = _objectSpread2(_objectSpread2({}, defaults), opts); // sweeping:
+    opts = _objectSpread2(_objectSpread2({}, defaults$1), opts); // sweeping:
 
     if (isStr(opts.whitelist)) {
       opts.whitelist = [opts.whitelist];
@@ -6400,13 +7212,6 @@
     var currentChunk;
     var canDelete;
     var usedOnce; // ---------------------------------------------------------------------------
-    // Calculate the prevailing line ending sign: is it \r, \n or \r\n?
-
-    var endingsCount = {
-      n: 0,
-      r: 0,
-      rn: 0
-    }; // ---------------------------------------------------------------------------
     // this is the main FOR loop which will traverse the input string twice:
 
     var _loop = function _loop(round) {
@@ -6497,18 +7302,8 @@
         var chr = str[i]; // count line endings:
 
         if (str[i] === "\n") {
-          if (str[i - 1] === "\r") {
-            if (round === 1) {
-              endingsCount.rn += 1;
-            }
-          } else if (round === 1) {
-            endingsCount.n += 1;
-          }
-        } else if (str[i] === "\r" && str[i + 1] !== "\n") {
-          if (round === 1) {
-            endingsCount.r += 1;
-          }
-        }
+          if (str[i - 1] === "\r") ;
+        } else if (str[i] === "\r" && str[i + 1] !== "\n") ;
 
         if (stateWithinStyleTag !== true && ( // a) either it's the first style tag and currently we haven't traversed
         // it's closing yet:
@@ -7982,46 +8777,8 @@
           round1RangesClone = Array.from(finalIndexesToDelete.current());
         } else {
           round1RangesClone = null;
-        } // EOL dealings:
-
-
-        if (endingsCount.rn > endingsCount.r && endingsCount.rn > endingsCount.n) {
-          prevailingEOL = "\r\n";
-        } else if (endingsCount.r > endingsCount.rn && endingsCount.r > endingsCount.n) {
-          prevailingEOL = "\r";
-        } else {
-          prevailingEOL = "\n";
         } //
         //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-
-      } else if (round === 2) {
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        // if there's no trailing linebreak, add it
-        if (!"\r\n".includes(str[len - 1])) {
-          finalIndexesToDelete.push(len, len, prevailingEOL);
-        } //
         //
         //
         //
@@ -8138,8 +8895,14 @@
     } // remove empty lines:
 
 
+    str = crush(str, {
+      removeLineBreaks: false,
+      removeIndentations: false,
+      removeHTMLComments: false,
+      removeCSSComments: false,
+      lineLengthLimit: 500
+    }).result;
     tempLen = str.length;
-    str = str.replace(/(\r?\n|\r)*[ ]*(\r?\n|\r)+/g, prevailingEOL);
 
     if (tempLen !== str.length) {
       nonIndentationsWhitespaceLength += str.length - tempLen;
@@ -8162,8 +8925,10 @@
         nonIndentationsWhitespaceLength += str.length - str.trim();
       }
 
-      str = "".concat(str.trim()).concat(prevailingEOL);
-    }
+      str = str.trimStart();
+    } // remove first character, space, inside classes/id's - it might
+    // be a leftover after class/id removal
+
 
     str = str.replace(/ ((class|id)=["']) /g, " $1");
     return {
@@ -8192,7 +8957,7 @@
   }
 
   exports.comb = comb;
-  exports.defaults = defaults;
+  exports.defaults = defaults$1;
   exports.version = version;
 
   Object.defineProperty(exports, '__esModule', { value: true });

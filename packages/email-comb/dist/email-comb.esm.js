@@ -17,6 +17,7 @@ import { left, right } from 'string-left-right';
 import { uglifyArr } from 'string-uglify';
 import applyRanges from 'ranges-apply';
 import pullAll from 'lodash.pullall';
+import { crush } from 'html-crush';
 import isEmpty from 'ast-is-empty';
 import Ranges from 'ranges-push';
 import uniq from 'lodash.uniq';
@@ -75,7 +76,6 @@ function comb(str, opts) {
     };
   }
   let i;
-  let prevailingEOL;
   let styleStartedAt;
   let styleEndedAt;
   const headSelectorsArr = [];
@@ -275,11 +275,6 @@ function comb(str, opts) {
   let currentChunk;
   let canDelete;
   let usedOnce;
-  const endingsCount = {
-    n: 0,
-    r: 0,
-    rn: 0,
-  };
   for (let round = 1; round <= 2; round++) {
     checkingInsideCurlyBraces = false;
     selectorChunkStartedAt = null;
@@ -331,18 +326,8 @@ function comb(str, opts) {
       }
       const chr = str[i];
       if (str[i] === "\n") {
-        if (str[i - 1] === "\r") {
-          if (round === 1) {
-            endingsCount.rn += 1;
-          }
-        } else if (round === 1) {
-          endingsCount.n += 1;
-        }
-      } else if (str[i] === "\r" && str[i + 1] !== "\n") {
-        if (round === 1) {
-          endingsCount.r += 1;
-        }
-      }
+        if (str[i - 1] === "\r") ;
+      } else if (str[i] === "\r" && str[i + 1] !== "\n") ;
       if (
         stateWithinStyleTag !== true &&
         ((styleEndedAt === null &&
@@ -1652,23 +1637,6 @@ function comb(str, opts) {
       } else {
         round1RangesClone = null;
       }
-      if (
-        endingsCount.rn > endingsCount.r &&
-        endingsCount.rn > endingsCount.n
-      ) {
-        prevailingEOL = "\r\n";
-      } else if (
-        endingsCount.r > endingsCount.rn &&
-        endingsCount.r > endingsCount.n
-      ) {
-        prevailingEOL = "\r";
-      } else {
-        prevailingEOL = "\n";
-      }
-    } else if (round === 2) {
-      if (!"\r\n".includes(str[len - 1])) {
-        finalIndexesToDelete.push(len, len, prevailingEOL);
-      }
     }
   }
   finalIndexesToDelete.push(lineBreaksToDelete.current());
@@ -1736,8 +1704,14 @@ function comb(str, opts) {
       opts.reportProgressFunc(currentPercentageDone);
     }
   }
+  str = crush(str, {
+    removeLineBreaks: false,
+    removeIndentations: false,
+    removeHTMLComments: false,
+    removeCSSComments: false,
+    lineLengthLimit: 500,
+  }).result;
   tempLen = str.length;
-  str = str.replace(/(\r?\n|\r)*[ ]*(\r?\n|\r)+/g, prevailingEOL);
   if (tempLen !== str.length) {
     nonIndentationsWhitespaceLength += str.length - tempLen;
   }
@@ -1759,7 +1733,7 @@ function comb(str, opts) {
     ) {
       nonIndentationsWhitespaceLength += str.length - str.trim();
     }
-    str = `${str.trim()}${prevailingEOL}`;
+    str = str.trimStart();
   }
   str = str.replace(/ ((class|id)=["']) /g, " $1");
   return {

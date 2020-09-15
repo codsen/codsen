@@ -21,6 +21,7 @@ var stringLeftRight = require('string-left-right');
 var stringUglify = require('string-uglify');
 var applyRanges = require('ranges-apply');
 var pullAll = require('lodash.pullall');
+var htmlCrush = require('html-crush');
 var isEmpty = require('ast-is-empty');
 var Ranges = require('ranges-push');
 var uniq = require('lodash.uniq');
@@ -186,7 +187,6 @@ function comb(str, opts) {
     }, initObj);
   }
   var i;
-  var prevailingEOL;
   var styleStartedAt;
   var styleEndedAt;
   var headSelectorsArr = [];
@@ -320,11 +320,6 @@ function comb(str, opts) {
   var currentChunk;
   var canDelete;
   var usedOnce;
-  var endingsCount = {
-    n: 0,
-    r: 0,
-    rn: 0
-  };
   var _loop = function _loop(round) {
     checkingInsideCurlyBraces = false;
     selectorChunkStartedAt = null;
@@ -370,18 +365,8 @@ function comb(str, opts) {
       }
       var chr = str[i];
       if (str[i] === "\n") {
-        if (str[i - 1] === "\r") {
-          if (round === 1) {
-            endingsCount.rn += 1;
-          }
-        } else if (round === 1) {
-          endingsCount.n += 1;
-        }
-      } else if (str[i] === "\r" && str[i + 1] !== "\n") {
-        if (round === 1) {
-          endingsCount.r += 1;
-        }
-      }
+        if (str[i - 1] === "\r") ;
+      } else if (str[i] === "\r" && str[i + 1] !== "\n") ;
       if (stateWithinStyleTag !== true && (
       styleEndedAt === null && styleStartedAt !== null && i >= styleStartedAt ||
       styleStartedAt !== null && styleEndedAt !== null && styleStartedAt > styleEndedAt && styleStartedAt < i)) {
@@ -1292,17 +1277,6 @@ function comb(str, opts) {
       } else {
         round1RangesClone = null;
       }
-      if (endingsCount.rn > endingsCount.r && endingsCount.rn > endingsCount.n) {
-        prevailingEOL = "\r\n";
-      } else if (endingsCount.r > endingsCount.rn && endingsCount.r > endingsCount.n) {
-        prevailingEOL = "\r";
-      } else {
-        prevailingEOL = "\n";
-      }
-    } else if (round === 2) {
-      if (!"\r\n".includes(str[len - 1])) {
-        finalIndexesToDelete.push(len, len, prevailingEOL);
-      }
     }
   };
   for (var round = 1; round <= 2; round++) {
@@ -1356,8 +1330,14 @@ function comb(str, opts) {
       opts.reportProgressFunc(currentPercentageDone);
     }
   }
+  str = htmlCrush.crush(str, {
+    removeLineBreaks: false,
+    removeIndentations: false,
+    removeHTMLComments: false,
+    removeCSSComments: false,
+    lineLengthLimit: 500
+  }).result;
   tempLen = str.length;
-  str = str.replace(/(\r?\n|\r)*[ ]*(\r?\n|\r)+/g, prevailingEOL);
   if (tempLen !== str.length) {
     nonIndentationsWhitespaceLength += str.length - tempLen;
   }
@@ -1373,7 +1353,7 @@ function comb(str, opts) {
     if ((!str[0].trim() || !str[str.length - 1].trim()) && str.length !== str.trim()) {
       nonIndentationsWhitespaceLength += str.length - str.trim();
     }
-    str = "".concat(str.trim()).concat(prevailingEOL);
+    str = str.trimStart();
   }
   str = str.replace(/ ((class|id)=["']) /g, " $1");
   return {

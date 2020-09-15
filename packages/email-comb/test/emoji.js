@@ -6,8 +6,7 @@ import { comb } from "../dist/email-comb.esm";
 
 tap.test("01 - doesn't affect emoji characters within the code", (t) => {
   const actual = comb("<td>🦄</td>").result;
-  const intended = `<td>🦄</td>
-`;
+  const intended = `<td>🦄</td>`;
 
   t.same(actual, intended, "01");
   t.end();
@@ -17,8 +16,7 @@ tap.test(
   "02 - doesn't affect emoji characters within the attribute names",
   (t) => {
     const actual = comb('<td data-emoji="🦄">emoji</td>').result;
-    const intended = `<td data-emoji="🦄">emoji</td>
-`;
+    const intended = `<td data-emoji="🦄">emoji</td>`;
 
     t.same(actual, intended, "02");
     t.end();

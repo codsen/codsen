@@ -123,8 +123,7 @@ tap.test(
     </td>
   </tr>
 </table>
-</body>
-`;
+</body>`;
 
     t.same(
       actual,
@@ -172,8 +171,7 @@ zzz
 </head>
 <body>
 zzz
-</body>
-`;
+</body>`;
 
   t.equal(actual1, intended1, "06");
   t.end();

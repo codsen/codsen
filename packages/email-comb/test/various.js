@@ -253,17 +253,25 @@ tap.test("09 - cleans spaces within classes and id's", (t) => {
   t.end();
 });
 
-tap.test("10 - does not mangle different-type line endings", (t) => {
-  const source1 = "a\n";
-  const source2 = "a\r";
-  const source3 = "a\r\n";
-  t.equal(comb(source1).result, source1, "10.01");
-  t.equal(comb(source2).result, source2, "10.02");
-  t.equal(comb(source3).result, source3, "10.03");
+tap.test("10 - does not mangle different-type line endings, LF", (t) => {
+  const source = "a\n";
+  t.equal(comb(source).result, source, "10");
   t.end();
 });
 
-tap.test("11 - dirty code #1", (t) => {
+tap.test("11 - does not mangle different-type line endings, CR", (t) => {
+  const source = "a\r";
+  t.equal(comb(source).result, source, "11");
+  t.end();
+});
+
+tap.test("12 - does not mangle different-type line endings, LFCR", (t) => {
+  const source = "a\r\n";
+  t.equal(comb(source).result, source, "12");
+  t.end();
+});
+
+tap.test("13 - dirty code #1", (t) => {
   const actual = comb(`<body>
 
 <style>
@@ -289,11 +297,11 @@ float:left !important;}
 <td align="left" style="color:#00000;"><a href="https://email.yo.com" style="color:#000000;">p</a>
 `;
 
-  t.equal(actual, intended, "11");
+  t.equal(actual, intended, "13");
   t.end();
 });
 
-tap.test("12 - adhoc #1", (t) => {
+tap.test("14 - adhoc #1", (t) => {
   const actual = comb(`<style>
   .aa{b: c;}
 </style>
@@ -310,11 +318,11 @@ tap.test("12 - adhoc #1", (t) => {
 </body>
 `;
 
-  t.equal(actual, intended, "12");
+  t.equal(actual, intended, "14");
   t.end();
 });
 
-tap.test("13 - adhoc 2", (t) => {
+tap.test("15 - adhoc 2", (t) => {
   const actual = comb(`<head>
 <style type="text/css">
   .aa {z:2;}
@@ -333,11 +341,11 @@ tap.test("13 - adhoc 2", (t) => {
 </body>
 `;
 
-  t.equal(actual, intended, "13");
+  t.equal(actual, intended, "15");
   t.end();
 });
 
-tap.test("14 - adhoc 3", (t) => {
+tap.test("16 - adhoc 3", (t) => {
   const actual = comb(`<head>
 <style type="text/css">
   @media y z (a-a:0px){.col-1,.col-2,.zz{m:100%!n}}
@@ -356,11 +364,11 @@ tap.test("14 - adhoc 3", (t) => {
 </body>
 `;
 
-  t.equal(actual, intended, "14");
+  t.equal(actual, intended, "16");
   t.end();
 });
 
-tap.test("15 - bug #36", (t) => {
+tap.test("17 - bug #36", (t) => {
   const input = `<style>@media only screen {}</style>
 <style>.foo {x: y;}</style>
 <body><span class="foo">z</span>`;
@@ -372,16 +380,15 @@ tap.test("15 - bug #36", (t) => {
     deletedFromBody,
   } = comb(input);
 
-  t.same(allInBody, [".foo"], "15.01");
-  t.same(allInHead, [".foo"], "15.02");
+  t.same(allInBody, [".foo"], "17.01");
+  t.same(allInHead, [".foo"], "17.02");
   t.same(
     result,
     `<style>.foo {x: y;}</style>
-<body><span class="foo">z</span>
-`,
-    "15.03"
+<body><span class="foo">z</span>`,
+    "17.03"
   );
-  t.same(deletedFromHead, [], "15.04");
-  t.same(deletedFromBody, [], "15.05");
+  t.same(deletedFromHead, [], "17.04");
+  t.same(deletedFromBody, [], "17.05");
   t.end();
 });
