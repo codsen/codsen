@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.0.0](https://gitlab.com/codsen/codsen/compare/string-strip-html@5.0.2...string-strip-html@6.0.0) (2020-09-15)
+
+
+### Bug Fixes
+
+* correct filteredTagLocations for pair tags which are stripped with content ([6bd6f4c](https://gitlab.com/codsen/codsen/commit/6bd6f4c8639571089bb3baa3b8146045ca891375))
+
+
+### BREAKING CHANGES
+
+* now filteredTagLocations shows only one range for pair tags which are to be
+stripped with their contents
+
+
+
+
+
 ## 5.0.0 (2020-08-16)
 
 Why change what's returned, upon user's request, when we can return everything and let the user pick?

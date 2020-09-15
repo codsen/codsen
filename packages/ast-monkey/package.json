@@ -1,6 +1,6 @@
 {
   "name": "ast-monkey",
-  "version": "7.11.18",
+  "version": "7.11.19",
   "description": "Traverse and edit AST",
   "keywords": [
     "ast",
@@ -107,9 +107,9 @@
     }
   },
   "dependencies": {
-    "ast-compare": "^1.13.15",
+    "ast-compare": "^1.13.16",
     "ast-monkey-traverse": "^1.12.17",
-    "check-types-mini": "^5.7.69",
+    "check-types-mini": "^5.7.70",
     "util-array-object-or-both": "^2.7.64"
   },
   "devDependencies": {
@@ -125,7 +125,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.9.0",
-    "lect": "^0.13.11",
+    "lect": "^0.14.0",
     "rollup": "^2.26.11",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

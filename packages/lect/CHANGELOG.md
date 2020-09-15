@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.14.0](https://gitlab.com/codsen/codsen/compare/lect@0.13.11...lect@0.14.0) (2020-09-15)
+
+
+### Features
+
+* switch to sort-package-json (from format-package) ([4c0df1c](https://gitlab.com/codsen/codsen/commit/4c0df1c25d4cdf85c40d497965f0f968eec006a1))
+
+
+
+
+
 ## 0.13.0 (2020-05-06)
 
 ### Features

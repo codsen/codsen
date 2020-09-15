@@ -1,6 +1,6 @@
 {
   "name": "string-convert-indexes",
-  "version": "1.10.17",
+  "version": "1.10.18",
   "description": "Convert string character indexes from JS native index-based to Unicode character-count-based and backwards.",
   "keywords": [
     "astral",
@@ -95,7 +95,7 @@
     }
   },
   "dependencies": {
-    "ast-monkey": "^7.11.18"
+    "ast-monkey": "^7.11.19"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
@@ -110,7 +110,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.9.0",
-    "lect": "^0.13.11",
+    "lect": "^0.14.0",
     "rollup": "^2.26.11",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

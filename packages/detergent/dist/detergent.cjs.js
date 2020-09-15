@@ -1,7 +1,7 @@
 /**
  * detergent
  * Extracts, cleans and encodes text
- * Version: 5.11.2
+ * Version: 5.11.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/detergent/
@@ -140,7 +140,7 @@ function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
-var version = "5.11.2";
+var version = "5.11.3";
 
 var defaultOpts = {
   fixBrokenEntities: true,

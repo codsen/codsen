@@ -1,7 +1,7 @@
 /**
  * detergent
  * Extracts, cleans and encodes text
- * Version: 5.11.2
+ * Version: 5.11.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/detergent/
@@ -23546,7 +23546,7 @@
     })(commonjsGlobal);
   });
 
-  var version$1 = "5.11.2";
+  var version$1 = "5.11.3";
 
   /**
    * html-entities-not-email-friendly

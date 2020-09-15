@@ -1,7 +1,7 @@
 /**
  * ast-delete-object
  * Delete all plain objects that contain a certain key/value pair
- * Version: 1.8.73
+ * Version: 1.8.74
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-delete-object/

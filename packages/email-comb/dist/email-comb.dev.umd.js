@@ -1,7 +1,7 @@
 /**
  * email-comb
  * Remove unused CSS from email templates
- * Version: 3.9.23
+ * Version: 3.10.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/email-comb/
@@ -4196,7 +4196,7 @@
   /**
    * string-uglify
    * Shorten sets of strings deterministically, to be git-friendly
-   * Version: 1.2.43
+   * Version: 1.2.44
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/string-uglify/
@@ -6910,7 +6910,7 @@
 
   var lodash_uniq = uniq;
 
-  var version = "3.9.23";
+  var version = "3.10.0";
 
   var regexEmptyStyleTag = /[\n]?\s*<style[^>]*>\s*<\/style\s*>/g;
   var regexEmptyMediaQuery = /[\n]?\s*@(media|supports|document)[^{]*{\s*}/g;
