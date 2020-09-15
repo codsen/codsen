@@ -1332,3 +1332,30 @@ tap.test(
     t.end();
   }
 );
+
+tap.test(
+  `21 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - does not mangle different-type line endings, LF`,
+  (t) => {
+    const source = "a\n";
+    t.equal(m(source).result, source, "21");
+    t.end();
+  }
+);
+
+tap.test(
+  `22 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - does not mangle different-type line endings, CR`,
+  (t) => {
+    const source = "a\r";
+    t.equal(m(source).result, source, "22");
+    t.end();
+  }
+);
+
+tap.test(
+  `23 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - does not mangle different-type line endings, CRLF`,
+  (t) => {
+    const source = "a\r\n";
+    t.equal(m(source).result, source, "23");
+    t.end();
+  }
+);

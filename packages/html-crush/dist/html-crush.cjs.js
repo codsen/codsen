@@ -643,7 +643,7 @@ function crush(str, originalOpts) {
           })));
         } else if (whitespaceStartedAt && str[i] !== "\n" && str[i] !== "\r") {
           finalIndexesToDelete.push(whitespaceStartedAt, i + 1);
-        } else if (whitespaceStartedAt && (str[i] === "\r" && str[i + 1] === "\n" || str[i] === "\n")) {
+        } else if (whitespaceStartedAt && (str[i] === "\r" && str[i + 1] === "\n" || str[i] === "\n" && str[i - 1] !== "\r")) {
           finalIndexesToDelete.push(whitespaceStartedAt, i);
         }
       }

@@ -4207,7 +4207,7 @@
             // catch trailing whitespace at the end of the string which is not legit
             // trailing linebreak
             finalIndexesToDelete.push(whitespaceStartedAt, i + 1);
-          } else if (whitespaceStartedAt && (str[i] === "\r" && str[i + 1] === "\n" || str[i] === "\n")) {
+          } else if (whitespaceStartedAt && (str[i] === "\r" && str[i + 1] === "\n" || str[i] === "\n" && str[i - 1] !== "\r")) {
             finalIndexesToDelete.push(whitespaceStartedAt, i);
           }
         } //
