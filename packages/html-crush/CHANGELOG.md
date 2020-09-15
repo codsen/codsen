@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.0.5](https://gitlab.com/codsen/codsen/compare/html-crush@2.0.4...html-crush@2.0.5) (2020-09-15)
-
+## 2.0.5 (2020-09-15)
 
 ### Bug Fixes
 
-* improve CRLF line ending recognition ([ff3e3e7](https://gitlab.com/codsen/codsen/commit/ff3e3e7d7943a52e2339fb78e0cbd4677b72a11a))
-
-
-
-
+- improve CRLF line ending recognition ([ff3e3e7](https://gitlab.com/codsen/codsen/commit/ff3e3e7d7943a52e2339fb78e0cbd4677b72a11a))
 
 ## 2.0.0 (2020-07-04)
 

@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.10.0](https://gitlab.com/codsen/codsen/compare/email-comb@3.9.23...email-comb@3.10.0) (2020-09-15)
-
+## 3.10.0 (2020-09-15)
 
 ### Features
 
-* leave the trailing line break condition as it comes in, unless it's excessive (trim then) ([f2dee90](https://gitlab.com/codsen/codsen/commit/f2dee90a155f0e40f5d813d9b3e863ad9d154449)), closes [#40](https://gitlab.com/codsen/codsen/issues/40)
-
-
-
-
+- leave the trailing line break condition as it comes in, unless it's excessive (trim then) ([f2dee90](https://gitlab.com/codsen/codsen/commit/f2dee90a155f0e40f5d813d9b3e863ad9d154449)), closes [#40](https://gitlab.com/codsen/codsen/issues/40)
 
 ## 3.9.20 (2020-08-08)
 

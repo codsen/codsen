@@ -3,17 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.16.0](https://gitlab.com/codsen/codsen/compare/json-sort-cli@1.15.27...json-sort-cli@1.16.0) (2020-09-15)
-
+## 1.16.0 (2020-09-15)
 
 ### Features
 
-* implement custom sorting, considering tap and lect custom keys ([10a1647](https://gitlab.com/codsen/codsen/commit/10a1647322331caeea9b861f5bef773ac4034d09))
-* swap a dependency, format-package with sort-package-json ([ba5c390](https://gitlab.com/codsen/codsen/commit/ba5c3902eb130abe2d17023a7b89dce0aeccba1d))
-
-
-
-
+- implement custom sorting, considering tap and lect custom keys ([10a1647](https://gitlab.com/codsen/codsen/commit/10a1647322331caeea9b861f5bef773ac4034d09))
+- swap a dependency, format-package with sort-package-json ([ba5c390](https://gitlab.com/codsen/codsen/commit/ba5c3902eb130abe2d17023a7b89dce0aeccba1d))
 
 ## 1.15.3 (2019-12-09)
 
