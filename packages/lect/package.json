@@ -121,7 +121,7 @@
     "p-reduce": "^2.1.0",
     "semver-compare": "^1.0.0",
     "semver-regex": "^3.1.1",
-    "sort-package-json": "^1.44.0",
+    "sort-package-json": "^1.46.0",
     "update-notifier": "^4.1.1",
     "write-file-atomic": "^3.0.3",
     "write-json-file": "^4.3.0"
@@ -140,7 +140,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "eslint": "^7.9.0",
     "lect": "^0.14.0",
-    "prettier": "^2.1.1",
+    "prettier": "^2.1.2",
     "tap": "^14.10.8",
     "tempy": "^0.7.0",
     "tsd": "^0.13.1"

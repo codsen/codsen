@@ -26,17 +26,17 @@ readdir(path.resolve(`.`, "examples"))
           })
           .catch((err) => {
             // log "PASS" on bold, black on green brackground:
-            console.log(
+            throw new Error(
               `\u001b[${37};${1};${41}m FAIL \u001b[${49}m examples/${file}:\n${err}`
             );
           })
       )
     ).catch((err) => {
       // tests failed:
-      console.log(
+      throw new Error(
         `text-examples.js - Unit test failed:\n${`\u001b[${31}m${err}\u001b[${39}m`}`
       );
-      process.exit(1);
+      // process.exit(1);
     })
   )
   .catch(() => {

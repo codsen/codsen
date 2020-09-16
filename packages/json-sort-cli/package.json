@@ -100,7 +100,7 @@
     "meow": "^7.1.1",
     "p-filter": "^2.1.0",
     "p-reduce": "^2.1.0",
-    "sort-package-json": "^1.44.0",
+    "sort-package-json": "^1.46.0",
     "sorted-object": "^2.0.1",
     "update-notifier": "^4.1.1"
   },
@@ -120,7 +120,7 @@
     "execa": "^4.0.3",
     "lect": "^0.14.0",
     "p-map": "^4.0.0",
-    "prettier": "^2.1.1",
+    "prettier": "^2.1.2",
     "tap": "^14.10.8",
     "tempy": "^0.7.0",
     "tsd": "^0.13.1"

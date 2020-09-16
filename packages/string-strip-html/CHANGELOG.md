@@ -12,7 +12,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### BREAKING CHANGES
 
 - now filteredTagLocations shows only one range for pair tags which are to be
-stripped with their contents
+  stripped with their contents
 
 ## 5.0.0 (2020-08-16)
 
