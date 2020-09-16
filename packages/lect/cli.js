@@ -81,6 +81,7 @@ let lectrc = {}; // .lectrc one level above from root
 
 let isCLI = false; // is this a CLI package ("special" packages are both or neither)
 let isSpecial = false; // is this special package where we granularly control everything
+let examples;
 
 // -----------------------------------------------------------------------------
 // 0. STUFF WE SET
@@ -780,7 +781,7 @@ async function writePackageJson(receivedPackageJsonObj) {
           (pack.name.startsWith("gulp-") || pack.name.startsWith("eleventy-")))
       )
     ) {
-      console.log(`783 lect: we'll delete key "${key}" from dev dependencies`);
+      console.log(`784 lect: we'll delete key "${key}" from dev dependencies`);
       delete receivedPackageJsonObj.devDependencies[key];
     } else if (
       Object.prototype.hasOwnProperty.call(lectrcDevDeps, key) &&
@@ -1067,13 +1068,11 @@ function step6() {
   //   )}`
   // );
 
-  const badge1 = `<img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center">`;
+  const badge1 = `<img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center">`;
 
-  const badge2 = `<img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center">`;
+  const badge2 = `<img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center">`;
 
-  const badge3 = `<img src="https://codsen.com/images/png-codsen-star.png" width="42" alt="star" align="center">`;
-
-  const badge4 = `<img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">`;
+  const badge3 = `<img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">`;
 
   // start setting up the final readme's string:
   let content = `# ${pack.name}
@@ -1115,15 +1114,18 @@ function step6() {
 npm i${isCLI ? " -g" : ""} ${pack.name}
 \`\`\`
 
-${badge2}
-
-## Documentation
+${
+  examples && examples["_quickTake.mjs"] && examples["_quickTake.mjs"].content
+    ? `## Quick Take\n
+\`\`\`js
+${examples["_quickTake.mjs"].content}
+\`\`\`\n\n`
+    : ""
+}## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/${
     pack.name
   }/) for a full description of the API and examples.
-
-${badge3}
 
 `;
 
@@ -1151,7 +1153,7 @@ ${badge3}
 
   content = resolveVars(content, pack, parsedPack, null);
 
-  content += `${badge1} ${badge4}\n\n`;
+  content += `${badge1} ${badge2} ${badge3}\n\n`;
 
   writeFileAtomic("README.md", content, (err) => {
     if (err) {
@@ -1261,11 +1263,11 @@ const readFiles = async (dirname) => {
 
 async function step2() {
   try {
-    const response = await readFiles("./examples/");
-    if (response) {
+    examples = await readFiles("./examples/");
+    if (examples) {
       writeFileAtomic(
         "./examples/api.json",
-        JSON.stringify(response, null, 4),
+        JSON.stringify(examples, null, 0),
         (err) => {
           if (err) {
             throw new Error(`${chalk.red(logSymbols.error, err)}`);
