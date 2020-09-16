@@ -32,13 +32,13 @@ tap.test(
       },
     });
 
-    console.log(
-      `036 ${`\u001b[${33}m${`gathered`}\u001b[${39}m`} = ${JSON.stringify(
-        gathered,
-        null,
-        4
-      )}`
-    );
+    // console.log(
+    //   `036 ${`\u001b[${33}m${`gathered`}\u001b[${39}m`} = ${JSON.stringify(
+    //     gathered,
+    //     null,
+    //     4
+    //   )}`
+    // );
     t.same(res, [[5, 8, `'n'`]], "01.01");
     t.same(gathered, [2], "01.02");
     t.end();
