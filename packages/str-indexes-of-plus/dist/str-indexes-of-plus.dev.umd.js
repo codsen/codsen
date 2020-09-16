@@ -1,6 +1,6 @@
 /**
  * str-indexes-of-plus
- * Search for a string in another string. Get array of indexes. Full Unicode support.
+ * Like indexOf but returns array and counts per-grapheme
  * Version: 2.10.8
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT

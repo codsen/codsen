@@ -1,7 +1,7 @@
 {
   "name": "str-indexes-of-plus",
   "version": "2.10.8",
-  "description": "Search for a string in another string. Get array of indexes. Full Unicode support.",
+  "description": "Like indexOf but returns array and counts per-grapheme",
   "keywords": [
     "array",
     "astral",

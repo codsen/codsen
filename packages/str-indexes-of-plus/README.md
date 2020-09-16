@@ -1,6 +1,6 @@
 # str-indexes-of-plus
 
-> Search for a string in another string. Get array of indexes. Full Unicode support.
+> Like indexOf but returns array and counts per-grapheme
 
 <div class="package-badges">
   <a href="https://www.npmjs.com/package/str-indexes-of-plus" rel="nofollow noreferrer noopener">
@@ -27,13 +27,28 @@
 npm i str-indexes-of-plus
 ```
 
-<img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center">
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import indx from "str-indexes-of-plus";
+
+// searches for string in a string, returns array:
+assert.deepEqual(indx("abc-abc-abc-abc", "abc"), [0, 4, 8, 12]);
+
+// all graphemes are counted as one, emoji too:
+assert.deepEqual(
+  indx("🐴-🦄", "🦄"),
+  [2] // not [3] considering unicorn is 2-characters long
+);
+
+// you can offset the start of a search:
+assert.deepEqual(indx("abczabc", "abc", 3), [4]);
+```
 
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/str-indexes-of-plus/) for a full description of the API and examples.
-
-<img src="https://codsen.com/images/png-codsen-star.png" width="42" alt="star" align="center">
 
 ## Licence
 
@@ -41,4 +56,4 @@ MIT License
 
 Copyright (c) 2015-2020 Roy Revelt and other contributors
 
-<img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">
+<img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center"> <img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">
