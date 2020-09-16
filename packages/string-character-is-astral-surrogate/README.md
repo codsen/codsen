@@ -27,13 +27,34 @@
 npm i string-character-is-astral-surrogate
 ```
 
-<img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center">
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import {
+  isHighSurrogate,
+  isLowSurrogate,
+} from "../dist/string-character-is-astral-surrogate.esm.js";
+
+// 🧢 = \uD83E\uDDE2
+
+assert.equal(isHighSurrogate("\uD83E"), true);
+// the first character, high surrogate of the cap is indeed a high surrogate
+
+assert.equal(isHighSurrogate("\uDDE2"), false);
+// the second character, low surrogate of the cap is NOT a high surrogate
+
+assert.equal(isLowSurrogate("\uD83E"), false);
+// the first character, high surrogate of the cap is NOT a low surrogate
+// it's a high surrogate
+
+assert.equal(isLowSurrogate("\uDDE2"), true);
+// the second character, low surrogate of the cap is indeed a low surrogate
+```
 
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/string-character-is-astral-surrogate/) for a full description of the API and examples.
-
-<img src="https://codsen.com/images/png-codsen-star.png" width="42" alt="star" align="center">
 
 ## Licence
 
@@ -41,4 +62,4 @@ MIT License
 
 Copyright (c) 2015-2020 Roy Revelt and other contributors
 
-<img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">
+<img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center"> <img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">

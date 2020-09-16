@@ -41,8 +41,12 @@ tap.test("01 - wrong/missing input = throw", (t) => {
 // "false". This will save us from otherwise unnecessary if-else
 // statements during traversal.
 tap.test("02 - undefined yields false", (t) => {
-  t.same(isHighSurrogate(undefined), false, "02.01");
-  t.same(isLowSurrogate(undefined), false, "02.02");
+  // no arguments
+  t.same(isHighSurrogate(), false, "02.01");
+  t.same(isLowSurrogate(), false, "02.02");
+  // undefined as primitive value
+  t.same(isHighSurrogate(undefined), false, "02.03");
+  t.same(isLowSurrogate(undefined), false, "02.04");
   t.end();
 });
 
