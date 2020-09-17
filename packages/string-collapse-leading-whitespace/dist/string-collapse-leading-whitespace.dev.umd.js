@@ -13,134 +13,106 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.stringCollapseLeadingWhitespace = factory());
 }(this, (function () { 'use strict';
 
-  var rawNbsp = "\xA0"; // this function filters the characters, does the "collapsing" and trimming
+  var rawNbsp = "\xA0";
 
-  function push(arr) {
-    var leftSide = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-    var charToPush = arguments.length > 2 ? arguments[2] : undefined;
+  function collapseLeadingWhitespace(str) {
+    var originallineBreakLimit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
 
-    // character has to be line break, space or non-breaking space - nothing
-    // else is considered
-    if ( // 1. it's \n or nbsp or space or some other whitespace char which would end up as space
-    !charToPush.trim() && ( // 2. don't let sequences of spaces - \n or nbsp sequences are fine
-    !arr.length || charToPush === "\n" || charToPush === rawNbsp || (leftSide ? arr[arr.length - 1] : arr[0]) !== " ") && ( // 3. line trimming - only other linebreaks or nbsp's can follow linebreaks (per-line trim)
-    !arr.length || (leftSide ? arr[arr.length - 1] : arr[0]) !== "\n" || charToPush === "\n" || charToPush === rawNbsp) // this last clause is line trimming
-    ) {
-        // don't let in spaces if array is empty
-        // tabs would end up as spaces
-        if (leftSide) {
-          if ((charToPush === "\n" || charToPush === rawNbsp) && arr.length && arr[arr.length - 1] === " ") {
-            while (arr.length && arr[arr.length - 1] === " ") {
-              arr.pop(); // remove the last element, space
-            }
-          } // 2. put in the end of arr
+    // helpers
+    function reverse(s) {
+      return Array.from(s).reverse().join("");
+    } // replaces the leading/trailing whitespace chunks with final strings
 
 
-          arr.push(charToPush === rawNbsp || charToPush === "\n" ? charToPush : " ");
-        } else {
-          // 1. if last char in arr is space and line break is incoming, remove
-          // all spaces from the end of arr either until it's empty or until the
-          // last element is not a space
-          if ((charToPush === "\n" || charToPush === rawNbsp) && arr.length && arr[0] === " ") {
-            while (arr.length && arr[0] === " ") {
-              arr.shift(); // remove the first element, space
-            }
-          } // 2. put in front of arr
+    function prep(whitespaceChunk, limit, trailing) {
+      // when processing the leading whitespace, it's \n\r --- CR - LF
+      // when processing the trailing whitespace, we're processing inverted order,
+      // so it's \n\r --- LF - CR
+      // for this reason, we set first and second linebreak according to direction,
+      // the "trailing" boolean:
+      var firstBreakChar = trailing ? "\n" : "\r";
+      var secondBreakChar = trailing ? "\r" : "\n";
 
+      if (!whitespaceChunk) {
+        return whitespaceChunk;
+      } // let whitespace char count since last CR or LF
+      var crlfCount = 0;
+      var res = ""; // let beginning = true;
 
-          arr.unshift(charToPush === rawNbsp || charToPush === "\n" ? charToPush : " ");
+      for (var i = 0, len = whitespaceChunk.length; i < len; i++) {
+        if (whitespaceChunk[i] === firstBreakChar || whitespaceChunk[i] === secondBreakChar && whitespaceChunk[i - 1] !== firstBreakChar) {
+          crlfCount++;
         }
-      }
-  }
 
-  function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
-    if (typeof str === "string" && str.length) {
-      var windowsEol = false;
+        if ("\r\n".includes(whitespaceChunk[i]) || whitespaceChunk[i] === rawNbsp) {
 
-      if (str.includes("\r\n")) {
-        windowsEol = true;
-      } // without a fuss, set the max allowed line breaks as a leading/trailing whitespace:
+          if (whitespaceChunk[i] === rawNbsp) {
+            res += whitespaceChunk[i];
+          } else if (whitespaceChunk[i] === firstBreakChar) {
+            if (crlfCount <= limit) {
+              res += whitespaceChunk[i];
 
-
-      var limitLinebreaksCount;
-
-      if (!originalLimitLinebreaksCount || // will avoid zero too
-      typeof originalLimitLinebreaksCount !== "number") {
-        limitLinebreaksCount = 1;
-      } else {
-        limitLinebreaksCount = originalLimitLinebreaksCount;
-      }
-
-      var limit; //
-      // STAGE 1. quick end - whole string is whitespace
-
-      if (str.trim() === "") {
-        var resArr = [];
-        limit = limitLinebreaksCount;
-        Array.from(str).forEach(function (char) {
-          if (char !== "\n" || limit) {
-            if (char === "\n") {
-              limit -= 1;
+              if (whitespaceChunk[i + 1] === secondBreakChar) {
+                res += whitespaceChunk[i + 1];
+                i++;
+              }
             }
-
-            push(resArr, true, char);
+          } else if (whitespaceChunk[i] === secondBreakChar && (!whitespaceChunk[i - 1] || whitespaceChunk[i - 1] !== firstBreakChar) && crlfCount <= limit) {
+            res += whitespaceChunk[i];
           }
-        }); // now trim the whitespace characters from the end which are not
-        // non-breaking spaces:
+        } else {
 
-        while (resArr.length > 1 && resArr[resArr.length - 1] === " ") {
-          resArr.pop();
+          if (!whitespaceChunk[i + 1] && !crlfCount) {
+            res += " ";
+          }
         }
+      }
 
-        return resArr.join("");
-      } //
-      // STAGE 2. Calculation.
-      // Set the default to put in front:
+      return res;
+    }
+
+    if (typeof str === "string" && str.length) {
+      // without a fuss, set the max allowed line breaks as a leading/trailing whitespace:
+      var lineBreakLimit = 1;
+
+      if (typeof +originallineBreakLimit === "number" && Number.isInteger(+originallineBreakLimit) && +originallineBreakLimit >= 0) {
+        lineBreakLimit = +originallineBreakLimit;
+      } // plan: extract what would String.prototype() would remove, front and back parts
 
 
-      var startCharacter = [];
-      limit = limitLinebreaksCount; // If there's some leading whitespace. Check first character:
+      var frontPart = "";
+      var endPart = "";
 
-      if (str[0].trim() === "") {
+      if (!str.trim()) {
+        frontPart = str;
+      } else if (!str[0].trim()) {
         for (var i = 0, len = str.length; i < len; i++) {
           if (str[i].trim()) {
+            frontPart = str.slice(0, i);
             break;
-          } else if (str[i] !== "\n" || limit) {
-            // limit the amount of linebreaks to "limitLinebreaksCount"
-            if (str[i] === "\n") {
-              limit -= 1;
-            }
-
-            push(startCharacter, true, str[i]);
           }
         }
-      } // set the default to put in front:
+      } // if whole string is whitespace, endPart is empty string
 
 
-      var endCharacter = [];
-      limit = limitLinebreaksCount; // if there's some trailing whitespace
-
-      if (str.slice(-1).trim() === "") {
+      if (str.trim() && (str.slice(-1).trim() === "" || str.slice(-1) === rawNbsp)) {
         for (var _i = str.length; _i--;) {
+          // console.log(
+          //   `${`\u001b[${36}m${`----------------------------------------------\niterating through: ${JSON.stringify(
+          //     str[i],
+          //     null,
+          //     4
+          //   )}`}\u001b[${39}m`}`
+          // );
           if (str[_i].trim()) {
+            endPart = str.slice(_i + 1);
             break;
-          } else if (str[_i] !== "\n" || limit) {
-            // limit the amount of linebreaks to "limitLinebreaksCount"
-            if (str[_i] === "\n") {
-              limit -= 1;
-            }
-
-            push(endCharacter, false, str[_i]);
           }
         }
       } // -------------------------------------------------------------------------
 
 
-      if (!windowsEol) {
-        return startCharacter.join("") + str.trim() + endCharacter.join("");
-      }
-
-      return "".concat(startCharacter.join("")).concat(str.trim()).concat(endCharacter.join("")).replace(/\n/g, "\r\n");
+      return "".concat(prep(frontPart, lineBreakLimit, false)).concat(str.trim()).concat(reverse(prep(reverse(endPart), lineBreakLimit, true)));
     }
 
     return str;

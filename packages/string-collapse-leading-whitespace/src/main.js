@@ -1,245 +1,253 @@
 const rawNbsp = "\u00A0";
 
-// this function filters the characters, does the "collapsing" and trimming
-function push(arr, leftSide = true, charToPush) {
-  // character has to be line break, space or non-breaking space - nothing
-  // else is considered
-  console.log(
-    `008 ${`\u001b[${36}m${`push(): incoming ${JSON.stringify(
-      charToPush,
-      null,
-      4
-    )} (charcode=${charToPush.charCodeAt(0)})`}\u001b[${39}m`}`
-  );
-  if (
-    // 1. it's \n or nbsp or space or some other whitespace char which would end up as space
-    !charToPush.trim() &&
-    // 2. don't let sequences of spaces - \n or nbsp sequences are fine
-    (!arr.length ||
-      charToPush === "\n" ||
-      charToPush === rawNbsp ||
-      (leftSide ? arr[arr.length - 1] : arr[0]) !== " ") &&
-    // 3. line trimming - only other linebreaks or nbsp's can follow linebreaks (per-line trim)
-    (!arr.length ||
-      (leftSide ? arr[arr.length - 1] : arr[0]) !== "\n" ||
-      charToPush === "\n" ||
-      charToPush === rawNbsp) // this last clause is line trimming
-  ) {
-    console.log(`028 inside clauses`);
-    // don't let in spaces if array is empty
-    // tabs would end up as spaces
-    if (leftSide) {
-      if (
-        (charToPush === "\n" || charToPush === rawNbsp) &&
-        arr.length &&
-        arr[arr.length - 1] === " "
-      ) {
-        while (arr.length && arr[arr.length - 1] === " ") {
-          arr.pop(); // remove the last element, space
-        }
-      }
+function collapseLeadingWhitespace(str, originallineBreakLimit = 1) {
+  // helpers
 
-      // 2. put in the end of arr
-      console.log(`043 add in the end of arr`);
-      arr.push(
-        charToPush === rawNbsp || charToPush === "\n" ? charToPush : " "
-      );
-      console.log(`047 after pushing, arr = ${JSON.stringify(arr, null, 0)}`);
-    } else {
-      // 1. if last char in arr is space and line break is incoming, remove
-      // all spaces from the end of arr either until it's empty or until the
-      // last element is not a space
-      if (
-        (charToPush === "\n" || charToPush === rawNbsp) &&
-        arr.length &&
-        arr[0] === " "
-      ) {
-        while (arr.length && arr[0] === " ") {
-          arr.shift(); // remove the first element, space
-        }
-      }
-
-      // 2. put in front of arr
-      console.log(`063 add in front`);
-      arr.unshift(
-        charToPush === rawNbsp || charToPush === "\n" ? charToPush : " "
-      );
-      console.log(`067 after pushing, arr = ${JSON.stringify(arr, null, 0)}`);
-    }
+  function reverse(s) {
+    return Array.from(s).reverse().join("");
   }
-}
 
-function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
-  if (typeof str === "string" && str.length) {
-    let windowsEol = false;
-    if (str.includes("\r\n")) {
-      windowsEol = true;
-    }
-
-    // without a fuss, set the max allowed line breaks as a leading/trailing whitespace:
-    let limitLinebreaksCount;
-    if (
-      !originalLimitLinebreaksCount || // will avoid zero too
-      typeof originalLimitLinebreaksCount !== "number"
-    ) {
-      limitLinebreaksCount = 1;
-    } else {
-      limitLinebreaksCount = originalLimitLinebreaksCount;
-    }
+  // replaces the leading/trailing whitespace chunks with final strings
+  function prep(whitespaceChunk, limit, trailing) {
+    console.log(`.`);
+    console.log(`.`);
+    console.log(`.`);
     console.log(
-      `090 ${`\u001b[${33}m${`limitLinebreaksCount`}\u001b[${39}m`} = ${JSON.stringify(
-        limitLinebreaksCount,
+      `${`\u001b[${34}m${`============== prep() ==============`}\u001b[${39}m`}`
+    );
+    console.log(
+      `019 ${`\u001b[${36}m${`prep()`}\u001b[${39}m`}: incoming whitespaceChunk=${JSON.stringify(
+        whitespaceChunk,
         null,
         4
-      )}`
+      )}; limit="${limit}"`
     );
-    let limit;
 
-    //
-    // STAGE 1. quick end - whole string is whitespace
+    // when processing the leading whitespace, it's \n\r --- CR - LF
+    // when processing the trailing whitespace, we're processing inverted order,
+    // so it's \n\r --- LF - CR
+    // for this reason, we set first and second linebreak according to direction,
+    // the "trailing" boolean:
 
-    if (str.trim() === "") {
-      const resArr = [];
-      limit = limitLinebreaksCount;
-      Array.from(str).forEach((char) => {
-        if (char !== "\n" || limit) {
-          if (char === "\n") {
-            limit -= 1;
-            console.log(`108 limit now set to ${limit}`);
-          }
-          push(resArr, true, char);
-        }
-      });
-      console.log(`113 resArr = ${JSON.stringify(resArr, null, 4)}`);
-      // now trim the whitespace characters from the end which are not
-      // non-breaking spaces:
-      while (resArr.length > 1 && resArr[resArr.length - 1] === " ") {
-        console.log(
-          `${`\u001b[${36}m${`----------------------------------------------`}\u001b[${39}m`}`
-        );
-        console.log(`120 pop ${JSON.stringify(resArr.length - 1, null, 4)}`);
-        resArr.pop();
-        console.log(`122 resArr now = ${JSON.stringify(resArr, null, 4)}`);
-      }
+    const firstBreakChar = trailing ? "\n" : "\r";
+    const secondBreakChar = trailing ? "\r" : "\n";
+
+    if (!whitespaceChunk) {
       console.log(
-        `${`\u001b[${36}m${`----------------------------------------------`}\u001b[${39}m`}\n\n\n`
-      );
-      console.log(
-        `128 FINAL ${`\u001b[${32}m${`resArr`}\u001b[${39}m`} = ${JSON.stringify(
-          resArr,
+        `037 ${`\u001b[${36}m${`prep()`}\u001b[${39}m`}: RETURN ${JSON.stringify(
+          whitespaceChunk,
           null,
           4
         )}`
       );
-      return resArr.join("");
+      return whitespaceChunk;
     }
 
-    //
-    // STAGE 2. Calculation.
+    // let whitespace char count since last CR or LF
+    let whspCount = 0;
+    let crlfCount = 0;
+    let res = "";
+    // let beginning = true;
+    for (let i = 0, len = whitespaceChunk.length; i < len; i++) {
+      console.log(
+        `053 ${`\u001b[${36}m${`===============`}\u001b[${39}m`} whitespaceChunk[${`\u001b[${33}m${i}\u001b[${39}m`}] = ${
+          whitespaceChunk[i] === rawNbsp
+            ? "nbsp"
+            : JSON.stringify(whitespaceChunk[i], null, 0)
+        } ${`\u001b[${36}m${`===============`}\u001b[${39}m`}`
+      );
 
-    // Set the default to put in front:
-    const startCharacter = [];
-    limit = limitLinebreaksCount;
-    // If there's some leading whitespace. Check first character:
-    if (str[0].trim() === "") {
-      console.log(`145 the first char is whitespace`);
+      if (
+        whitespaceChunk[i] === firstBreakChar ||
+        (whitespaceChunk[i] === secondBreakChar &&
+          whitespaceChunk[i - 1] !== firstBreakChar)
+      ) {
+        crlfCount++;
+      }
+
+      console.log(
+        `069 FIY, ${`\u001b[${33}m${`crlfCount`}\u001b[${39}m`} = ${JSON.stringify(
+          crlfCount,
+          null,
+          4
+        )}`
+      );
+
+      if (
+        `\r\n`.includes(whitespaceChunk[i]) ||
+        whitespaceChunk[i] === rawNbsp
+      ) {
+        whspCount = 0;
+
+        if (whitespaceChunk[i] === rawNbsp) {
+          res += whitespaceChunk[i];
+          console.log(
+            `085 PUSH ${JSON.stringify(
+              whitespaceChunk[i],
+              null,
+              4
+            )}, now res = ${JSON.stringify(res, null, 4)}`
+          );
+        } else if (whitespaceChunk[i] === firstBreakChar) {
+          if (crlfCount <= limit) {
+            console.log(
+              `094 FIY, ${`\u001b[${33}m${`crlfCount`}\u001b[${39}m`} = ${JSON.stringify(
+                crlfCount,
+                null,
+                4
+              )}; ${`\u001b[${33}m${`limit`}\u001b[${39}m`} = ${JSON.stringify(
+                limit,
+                null,
+                4
+              )}`
+            );
+
+            res += whitespaceChunk[i];
+            console.log(
+              `107 PUSH ${JSON.stringify(
+                whitespaceChunk[i],
+                null,
+                4
+              )}, now res = ${JSON.stringify(res, null, 4)}`
+            );
+
+            if (whitespaceChunk[i + 1] === secondBreakChar) {
+              res += whitespaceChunk[i + 1];
+              console.log(
+                `117 PUSH ${JSON.stringify(
+                  whitespaceChunk[i + 1],
+                  null,
+                  4
+                )}, now res = ${JSON.stringify(res, null, 4)}`
+              );
+
+              i++;
+              console.log(`125 BUMP i = ${i}`);
+            }
+          }
+        } else if (
+          whitespaceChunk[i] === secondBreakChar &&
+          (!whitespaceChunk[i - 1] ||
+            whitespaceChunk[i - 1] !== firstBreakChar) &&
+          crlfCount <= limit
+        ) {
+          res += whitespaceChunk[i];
+          console.log(
+            `136 PUSH ${JSON.stringify(
+              whitespaceChunk[i],
+              null,
+              4
+            )}, now res = ${JSON.stringify(res, null, 4)}`
+          );
+        }
+      } else {
+        whspCount++;
+        if (!whitespaceChunk[i + 1] && !crlfCount) {
+          res += " ";
+          console.log(
+            `148 PUSH " ", now res = ${JSON.stringify(res, null, 4)}`
+          );
+        }
+      }
+      console.log(
+        `153 ${`\u001b[${90}m${`██ whspCount = ${whspCount}; res = ${JSON.stringify(
+          res,
+          null,
+          0
+        )}; crlfCount = ${crlfCount}`}\u001b[${39}m`}`
+      );
+    }
+    console.log(
+      `161 ${`\u001b[${36}m${`prep()`}\u001b[${39}m`}: ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+        res,
+        null,
+        4
+      )}`
+    );
+    return res;
+  }
+
+  if (typeof str === "string" && str.length) {
+    // without a fuss, set the max allowed line breaks as a leading/trailing whitespace:
+    let lineBreakLimit = 1;
+    if (
+      typeof +originallineBreakLimit === "number" &&
+      Number.isInteger(+originallineBreakLimit) &&
+      +originallineBreakLimit >= 0
+    ) {
+      lineBreakLimit = +originallineBreakLimit;
+    }
+    console.log(
+      `181 ${`\u001b[${33}m${`lineBreakLimit`}\u001b[${39}m`} = ${JSON.stringify(
+        lineBreakLimit,
+        null,
+        4
+      )}`
+    );
+
+    // plan: extract what would String.prototype() would remove, front and back parts
+    let frontPart = "";
+    let endPart = "";
+
+    if (!str.trim()) {
+      frontPart = str;
+    } else if (!str[0].trim()) {
+      console.log(`195 the first char is whitespace`);
       for (let i = 0, len = str.length; i < len; i++) {
-        console.log(
-          `${`\u001b[${36}m${`----------------------------------------------\niterating through: ${JSON.stringify(
-            str[i],
-            null,
-            4
-          )}`}\u001b[${39}m`}`
-        );
         if (str[i].trim()) {
-          console.log(`155 break`);
+          frontPart = str.slice(0, i);
           break;
-        } else if (str[i] !== "\n" || limit) {
-          // limit the amount of linebreaks to "limitLinebreaksCount"
-          if (str[i] === "\n") {
-            limit -= 1;
-            console.log(`161 limit now set to ${limit}`);
-          }
-          console.log(`163 OK, pushing ${JSON.stringify(str[i], null, 4)}`);
-          push(startCharacter, true, str[i]);
         }
-        console.log(
-          `${`\u001b[${90}m${`----------\nending limit = ${limit}`}\u001b[${39}m`}`
-        );
       }
-      console.log(
-        `${`\u001b[${36}m${`----------------------------------------------\n`}\u001b[${39}m`}`
-      );
     }
+    console.log(".");
+    console.log(
+      `205 ${`\u001b[${35}m${`██ frontPart`}\u001b[${39}m`} = ${JSON.stringify(
+        frontPart,
+        null,
+        4
+      )}`
+    );
+    console.log(".");
 
-    console.log(`${`\u001b[${90}m${`\n\n      *`}\u001b[${39}m`}`);
-    console.log(`${`\u001b[${90}m${`now backwards`}\u001b[${39}m`}\n\n`);
-    console.log(`${`\u001b[${90}m${`\n\n      *`}\u001b[${39}m`}`);
-
-    // set the default to put in front:
-    const endCharacter = [];
-    limit = limitLinebreaksCount;
-    // if there's some trailing whitespace
-    if (str.slice(-1).trim() === "") {
-      console.log(`184 the last char is whitespace`);
+    // if whole string is whitespace, endPart is empty string
+    if (
+      str.trim() &&
+      (str.slice(-1).trim() === "" || str.slice(-1) === rawNbsp)
+    ) {
+      console.log(`218 the last char is whitespace`);
       for (let i = str.length; i--; ) {
-        console.log(
-          `${`\u001b[${36}m${`----------------------------------------------\niterating through: ${JSON.stringify(
-            str[i],
-            null,
-            4
-          )}`}\u001b[${39}m`}`
-        );
+        // console.log(
+        //   `${`\u001b[${36}m${`----------------------------------------------\niterating through: ${JSON.stringify(
+        //     str[i],
+        //     null,
+        //     4
+        //   )}`}\u001b[${39}m`}`
+        // );
         if (str[i].trim()) {
-          console.log(`194 break`);
+          endPart = str.slice(i + 1);
           break;
-        } else if (str[i] !== "\n" || limit) {
-          // limit the amount of linebreaks to "limitLinebreaksCount"
-          if (str[i] === "\n") {
-            limit -= 1;
-            console.log(`200 limit now set to ${limit}`);
-          }
-          console.log(`202 OK, pushing ${JSON.stringify(str[i], null, 4)}`);
-          push(endCharacter, false, str[i]);
         }
       }
-      console.log(
-        `${`\u001b[${36}m${`----------------------------------------------\n`}\u001b[${39}m`}`
-      );
     }
+    console.log(".");
+    console.log(
+      `235 ${`\u001b[${35}m${`██ endPart`}\u001b[${39}m`} = ${JSON.stringify(
+        endPart,
+        null,
+        4
+      )}`
+    );
+    console.log(".");
 
     // -------------------------------------------------------------------------
 
-    console.log(
-      `214 ${`\u001b[${33}m${`startCharacter`}\u001b[${39}m`} = ${JSON.stringify(
-        startCharacter.join(""),
-        null,
-        4
-      )}`
-    );
-    console.log(
-      `221 ${`\u001b[${33}m${`endCharacter`}\u001b[${39}m`} = ${JSON.stringify(
-        endCharacter.join(""),
-        null,
-        4
-      )}`
-    );
-
-    if (!windowsEol) {
-      console.log(
-        `230 RETURN ${JSON.stringify(
-          startCharacter.join("") + str.trim() + endCharacter.join(""),
-          null,
-          4
-        )}`
-      );
-      return startCharacter.join("") + str.trim() + endCharacter.join("");
-    }
-    return `${startCharacter.join("")}${str.trim()}${endCharacter.join(
-      ""
-    )}`.replace(/\n/g, "\r\n");
+    console.log(`245 end reached`);
+    return `${prep(frontPart, lineBreakLimit, false)}${str.trim()}${reverse(
+      prep(reverse(endPart), lineBreakLimit, true)
+    )}`;
   }
-  console.log(`242 just return whatever was given`);
+  console.log(`250 just return whatever was given`);
   return str;
 }
 

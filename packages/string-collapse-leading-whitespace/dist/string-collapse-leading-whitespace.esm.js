@@ -8,113 +8,91 @@
  */
 
 const rawNbsp = "\u00A0";
-function push(arr, leftSide = true, charToPush) {
-  if (
-    !charToPush.trim() &&
-    (!arr.length ||
-      charToPush === "\n" ||
-      charToPush === rawNbsp ||
-      (leftSide ? arr[arr.length - 1] : arr[0]) !== " ") &&
-    (!arr.length ||
-      (leftSide ? arr[arr.length - 1] : arr[0]) !== "\n" ||
-      charToPush === "\n" ||
-      charToPush === rawNbsp)
-  ) {
-    if (leftSide) {
-      if (
-        (charToPush === "\n" || charToPush === rawNbsp) &&
-        arr.length &&
-        arr[arr.length - 1] === " "
-      ) {
-        while (arr.length && arr[arr.length - 1] === " ") {
-          arr.pop();
-        }
-      }
-      arr.push(
-        charToPush === rawNbsp || charToPush === "\n" ? charToPush : " "
-      );
-    } else {
-      if (
-        (charToPush === "\n" || charToPush === rawNbsp) &&
-        arr.length &&
-        arr[0] === " "
-      ) {
-        while (arr.length && arr[0] === " ") {
-          arr.shift();
-        }
-      }
-      arr.unshift(
-        charToPush === rawNbsp || charToPush === "\n" ? charToPush : " "
-      );
-    }
+function collapseLeadingWhitespace(str, originallineBreakLimit = 1) {
+  function reverse(s) {
+    return Array.from(s).reverse().join("");
   }
-}
-function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
-  if (typeof str === "string" && str.length) {
-    let windowsEol = false;
-    if (str.includes("\r\n")) {
-      windowsEol = true;
+  function prep(whitespaceChunk, limit, trailing) {
+    const firstBreakChar = trailing ? "\n" : "\r";
+    const secondBreakChar = trailing ? "\r" : "\n";
+    if (!whitespaceChunk) {
+      return whitespaceChunk;
     }
-    let limitLinebreaksCount;
-    if (
-      !originalLimitLinebreaksCount ||
-      typeof originalLimitLinebreaksCount !== "number"
-    ) {
-      limitLinebreaksCount = 1;
-    } else {
-      limitLinebreaksCount = originalLimitLinebreaksCount;
-    }
-    let limit;
-    if (str.trim() === "") {
-      const resArr = [];
-      limit = limitLinebreaksCount;
-      Array.from(str).forEach((char) => {
-        if (char !== "\n" || limit) {
-          if (char === "\n") {
-            limit -= 1;
-          }
-          push(resArr, true, char);
-        }
-      });
-      while (resArr.length > 1 && resArr[resArr.length - 1] === " ") {
-        resArr.pop();
+    let crlfCount = 0;
+    let res = "";
+    for (let i = 0, len = whitespaceChunk.length; i < len; i++) {
+      if (
+        whitespaceChunk[i] === firstBreakChar ||
+        (whitespaceChunk[i] === secondBreakChar &&
+          whitespaceChunk[i - 1] !== firstBreakChar)
+      ) {
+        crlfCount++;
       }
-      return resArr.join("");
+      if (
+        `\r\n`.includes(whitespaceChunk[i]) ||
+        whitespaceChunk[i] === rawNbsp
+      ) {
+        if (whitespaceChunk[i] === rawNbsp) {
+          res += whitespaceChunk[i];
+        } else if (whitespaceChunk[i] === firstBreakChar) {
+          if (crlfCount <= limit) {
+            res += whitespaceChunk[i];
+            if (whitespaceChunk[i + 1] === secondBreakChar) {
+              res += whitespaceChunk[i + 1];
+              i++;
+            }
+          }
+        } else if (
+          whitespaceChunk[i] === secondBreakChar &&
+          (!whitespaceChunk[i - 1] ||
+            whitespaceChunk[i - 1] !== firstBreakChar) &&
+          crlfCount <= limit
+        ) {
+          res += whitespaceChunk[i];
+        }
+      } else {
+        if (!whitespaceChunk[i + 1] && !crlfCount) {
+          res += " ";
+        }
+      }
     }
-    const startCharacter = [];
-    limit = limitLinebreaksCount;
-    if (str[0].trim() === "") {
+    return res;
+  }
+  if (typeof str === "string" && str.length) {
+    let lineBreakLimit = 1;
+    if (
+      typeof +originallineBreakLimit === "number" &&
+      Number.isInteger(+originallineBreakLimit) &&
+      +originallineBreakLimit >= 0
+    ) {
+      lineBreakLimit = +originallineBreakLimit;
+    }
+    let frontPart = "";
+    let endPart = "";
+    if (!str.trim()) {
+      frontPart = str;
+    } else if (!str[0].trim()) {
       for (let i = 0, len = str.length; i < len; i++) {
         if (str[i].trim()) {
+          frontPart = str.slice(0, i);
           break;
-        } else if (str[i] !== "\n" || limit) {
-          if (str[i] === "\n") {
-            limit -= 1;
-          }
-          push(startCharacter, true, str[i]);
         }
       }
     }
-    const endCharacter = [];
-    limit = limitLinebreaksCount;
-    if (str.slice(-1).trim() === "") {
+    if (
+      str.trim() &&
+      (str.slice(-1).trim() === "" || str.slice(-1) === rawNbsp)
+    ) {
       for (let i = str.length; i--; ) {
         if (str[i].trim()) {
+          endPart = str.slice(i + 1);
           break;
-        } else if (str[i] !== "\n" || limit) {
-          if (str[i] === "\n") {
-            limit -= 1;
-          }
-          push(endCharacter, false, str[i]);
         }
       }
     }
-    if (!windowsEol) {
-      return startCharacter.join("") + str.trim() + endCharacter.join("");
-    }
-    return `${startCharacter.join("")}${str.trim()}${endCharacter.join(
-      ""
-    )}`.replace(/\n/g, "\r\n");
+    return `${prep(frontPart, lineBreakLimit, false)}${str.trim()}${reverse(
+      prep(reverse(endPart), lineBreakLimit, true)
+    )}`;
   }
   return str;
 }

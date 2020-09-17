@@ -1,12 +1,6 @@
 import tap from "tap";
 import c from "../dist/string-collapse-leading-whitespace.esm";
 
-const rawNbsp = "\u00A0";
-
-// -----------------------------------------------------------------------------
-// 01. normal use
-// -----------------------------------------------------------------------------
-
 tap.test("01 - does nothing to trimmed strings", (t) => {
   t.equal(c("zzz"), "zzz", "01");
   t.end();
@@ -232,485 +226,362 @@ tap.test("45 - whitespace on both ends", (t) => {
   t.end();
 });
 
-tap.test("46 - whitespace with single line breaks in front", (t) => {
+tap.test("46 - whitespace with single line breaks in front, LF", (t) => {
   t.equal(c("\nzzz"), "\nzzz", "46");
   t.end();
 });
 
-tap.test("47 - whitespace with single line breaks in front", (t) => {
-  t.equal(c(" \n zzz"), "\nzzz", "47");
+tap.test("47 - whitespace with single line breaks in front, CRLF", (t) => {
+  t.equal(c("\r\nzzz"), "\r\nzzz", "47");
   t.end();
 });
 
-tap.test("48 - whitespace with single line breaks in front", (t) => {
-  t.equal(c("\t\nzzz"), "\nzzz", "48");
+tap.test("48 - whitespace with single line breaks in front, LF", (t) => {
+  // plain object will get discarded and default value of 1 will be used
+  t.equal(c(" \n zzz", { a: "z" }), "\nzzz", "48");
   t.end();
 });
 
-tap.test("49 - whitespace with single line breaks in front", (t) => {
-  t.equal(c("\nzzz", 0), "\nzzz", "49");
+tap.test("49 - whitespace with single line breaks in front, CR", (t) => {
+  t.equal(c(" \r\n zzz"), "\r\nzzz", "49");
   t.end();
 });
 
-tap.test("50 - whitespace with single line breaks in front", (t) => {
-  t.equal(c(" \n zzz", 0), "\nzzz", "50");
+tap.test("50 - whitespace with single line breaks in front, LF", (t) => {
+  t.equal(c("\t\nzzz"), "\nzzz", "50");
   t.end();
 });
 
-tap.test("51 - whitespace with single line breaks in front", (t) => {
-  t.equal(c("\t\nzzz", 0), "\nzzz", "51");
+tap.test("51 - whitespace with single line breaks in front, CR", (t) => {
+  t.equal(c("\t\r\nzzz"), "\r\nzzz", "51");
   t.end();
 });
 
-tap.test("52 - whitespace with single line breaks in front", (t) => {
-  t.equal(c("\nzzz", 1), "\nzzz", "52");
+tap.test("52 - whitespace with single line breaks in front, LF", (t) => {
+  t.equal(c("\nzzz", 0), "zzz", "52");
   t.end();
 });
 
-tap.test("53 - whitespace with single line breaks in front", (t) => {
-  t.equal(c(" \n zzz", 1), "\nzzz", "53");
+tap.test("53 - whitespace with single line breaks in front, CR", (t) => {
+  t.equal(c("\r\nzzz", 0), "zzz", "53");
   t.end();
 });
 
-tap.test("54 - whitespace with single line breaks in front", (t) => {
-  t.equal(c("\t\nzzz", 1), "\nzzz", "54");
+tap.test("54 - whitespace with single line breaks in front, LF", (t) => {
+  t.equal(c(" \n zzz", 0), "zzz", "54");
   t.end();
 });
 
-tap.test("55 - whitespace with single line breaks in front", (t) => {
-  t.equal(c("\nzzz", 2), "\nzzz", "55");
+tap.test("55 - whitespace with single line breaks in front, CR", (t) => {
+  t.equal(c(" \r\n zzz", 0), "zzz", "55");
   t.end();
 });
 
-tap.test("56 - whitespace with single line breaks in front", (t) => {
-  t.equal(c(" \n zzz", 2), "\nzzz", "56");
+tap.test("56 - whitespace with single line breaks in front, LF", (t) => {
+  t.equal(c("\t\nzzz", 0), "zzz", "56");
   t.end();
 });
 
-tap.test("57 - whitespace with single line breaks in front", (t) => {
-  t.equal(c("\t\nzzz", 2), "\nzzz", "57");
+tap.test("57 - whitespace with single line breaks in front, CR", (t) => {
+  t.equal(c("\t\r\nzzz", 0), "zzz", "57");
   t.end();
 });
 
-tap.test("58 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c("zzz\n"), "zzz\n", "58");
+tap.test("58 - whitespace with single line breaks in front, LF", (t) => {
+  t.equal(c("\nzzz", 1), "\nzzz", "58");
   t.end();
 });
 
-tap.test("59 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c("zzz \n "), "zzz\n", "59");
+tap.test("59 - whitespace with single line breaks in front, CR", (t) => {
+  t.equal(c("\r\nzzz", 1), "\r\nzzz", "59");
   t.end();
 });
 
-tap.test("60 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c("zzz\t\n"), "zzz\n", "60");
+tap.test("60 - whitespace with single line breaks in front, LF", (t) => {
+  t.equal(c(" \n zzz", 1), "\nzzz", "60");
   t.end();
 });
 
-tap.test("61 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c("zzz\n", 0), "zzz\n", "61");
+tap.test("61 - whitespace with single line breaks in front, CR", (t) => {
+  t.equal(c(" \r\n zzz", 1), "\r\nzzz", "61");
   t.end();
 });
 
-tap.test("62 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c("zzz \n ", 0), "zzz\n", "62");
+tap.test("62 - whitespace with single line breaks in front, LF", (t) => {
+  t.equal(c("\t\nzzz", 1), "\nzzz", "62");
   t.end();
 });
 
-tap.test("63 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c("zzz\t\n", 0), "zzz\n", "63");
+tap.test("63 - whitespace with single line breaks in front, CR", (t) => {
+  t.equal(c("\t\r\nzzz", 1), "\r\nzzz", "63");
   t.end();
 });
 
-tap.test("64 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c("zzz\n", 1), "zzz\n", "64");
+tap.test("64 - whitespace with single line breaks in front", (t) => {
+  t.equal(c("\nzzz", 2), "\nzzz", "64");
   t.end();
 });
 
-tap.test("65 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c("zzz \n ", 1), "zzz\n", "65");
+tap.test("65 - whitespace with single line breaks in front", (t) => {
+  t.equal(c(" \n zzz", 2), "\nzzz", "65");
   t.end();
 });
 
-tap.test("66 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c("zzz\t\n", 1), "zzz\n", "66");
+tap.test("66 - whitespace with single line breaks in front", (t) => {
+  t.equal(c("\t\nzzz", 2), "\nzzz", "66");
   t.end();
 });
 
 tap.test("67 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c("zzz\n", 2), "zzz\n", "67");
+  t.equal(c("zzz\n"), "zzz\n", "67");
   t.end();
 });
 
 tap.test("68 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c("zzz \n ", 2), "zzz\n", "68");
+  t.equal(c("zzz\n\n"), "zzz\n", "68");
   t.end();
 });
 
 tap.test("69 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c("zzz\t\n", 2), "zzz\n", "69");
+  t.equal(c("zzz \n "), "zzz\n", "69");
   t.end();
 });
 
 tap.test("70 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c("\n\nzzz\n\n"), "\nzzz\n", "70");
+  t.equal(c("zzz\t\n"), "zzz\n", "70");
   t.end();
 });
 
 tap.test("71 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c(" \n \n zzz \n \n "), "\nzzz\n", "71");
+  t.equal(c("zzz\n", 0), "zzz", "71");
   t.end();
 });
 
 tap.test("72 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c("\n \n \n zzz \n \n \n"), "\nzzz\n", "72");
+  t.equal(c("zzz \n ", 0), "zzz", "72");
   t.end();
 });
 
 tap.test("73 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c(" \n \n \n zzz \n \n \n "), "\nzzz\n", "73");
+  t.equal(c("zzz\t\n", 0), "zzz", "73");
   t.end();
 });
 
 tap.test("74 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c(" \n \t\n \n zzz \n \n \n \t"), "\nzzz\n", "74");
+  t.equal(c("zzz\n", 1), "zzz\n", "74");
   t.end();
 });
 
 tap.test("75 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c(" \n \t\n \n zzz \n \n \n \t "), "\nzzz\n", "75");
+  t.equal(c("zzz \n ", 1), "zzz\n", "75");
   t.end();
 });
 
 tap.test("76 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c("\n\nzzz\n\n", 1), "\nzzz\n", "76");
+  t.equal(c("zzz\t\n", 1), "zzz\n", "76");
   t.end();
 });
 
 tap.test("77 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c(" \n \n zzz \n \n ", 1), "\nzzz\n", "77");
+  t.equal(c("zzz\n", 2), "zzz\n", "77");
   t.end();
 });
 
 tap.test("78 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c("\n \n \n zzz \n \n \n", 1), "\nzzz\n", "78");
+  t.equal(c("zzz \n ", 2), "zzz\n", "78");
   t.end();
 });
 
 tap.test("79 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c(" \n \n \n zzz \n \n \n ", 1), "\nzzz\n", "79");
+  t.equal(c("zzz\t\n", 2), "zzz\n", "79");
   t.end();
 });
 
 tap.test("80 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c(" \n \t\n \n zzz \n \n \n \t", 1), "\nzzz\n", "80");
+  t.equal(c("\n\nzzz\n\n"), "\nzzz\n", "80");
   t.end();
 });
 
 tap.test("81 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c(" \n \t\n \n zzz \n \n \n \t ", 1), "\nzzz\n", "81");
+  t.equal(c(" \n \n zzz \n \n "), "\nzzz\n", "81");
   t.end();
 });
 
 tap.test("82 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c("\n\nzzz\n\n", 2), "\n\nzzz\n\n", "82");
+  t.equal(c("\n \n \n zzz \n \n \n"), "\nzzz\n", "82");
   t.end();
 });
 
 tap.test("83 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c("\n\nzzz\n", 2), "\n\nzzz\n", "83");
+  t.equal(c(" \n \n \n zzz \n \n \n "), "\nzzz\n", "83");
   t.end();
 });
 
 tap.test("84 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c("\n\n\nzzz\n", 2), "\n\nzzz\n", "84");
+  t.equal(c(" \n \t\n \n zzz \n \n \n \t"), "\nzzz\n", "84");
   t.end();
 });
 
 tap.test("85 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c("\n \n \n zzz \n \n \n", 2), "\n\nzzz\n\n", "85");
+  t.equal(c(" \n \t\n \n zzz \n \n \n \t "), "\nzzz\n", "85");
   t.end();
 });
 
 tap.test("86 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c(" \n \n \n zzz \n \n \n ", 2), "\n\nzzz\n\n", "86");
+  t.equal(c("\n\nzzz\n\n", 1), "\nzzz\n", "86");
   t.end();
 });
 
 tap.test("87 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c(" \n \t\n \n zzz \n \n \n \t", 2), "\n\nzzz\n\n", "87");
+  t.equal(c(" \n \n zzz \n \n ", 1), "\nzzz\n", "87");
   t.end();
 });
 
 tap.test("88 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c(" \n \t\n \n zzz \n \n \n \t ", 2), "\n\nzzz\n\n", "88");
+  t.equal(c("\n \n \n zzz \n \n \n", 1), "\nzzz\n", "88");
   t.end();
 });
 
 tap.test("89 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c(" \n \n zzz \n \n ", 2), "\n\nzzz\n\n", "89");
+  t.equal(c(" \n \n \n zzz \n \n \n ", 1), "\nzzz\n", "89");
   t.end();
 });
 
 tap.test("90 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c("\n\nzzz\n\n", 3), "\n\nzzz\n\n", "90");
+  t.equal(c(" \n \t\n \n zzz \n \n \n \t", 1), "\nzzz\n", "90");
   t.end();
 });
 
 tap.test("91 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c(" \n \n zzz \n \n ", 3), "\n\nzzz\n\n", "91");
+  t.equal(c(" \n \t\n \n zzz \n \n \n \t ", 1), "\nzzz\n", "91");
   t.end();
 });
 
 tap.test("92 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c("\n \n \n zzz \n \n \n", 3), "\n\n\nzzz\n\n\n", "92");
+  t.equal(c("\n\nzzz\n\n", 2), "\n\nzzz\n\n", "92");
   t.end();
 });
 
 tap.test("93 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c(" \n \n \n zzz \n \n \n ", 3), "\n\n\nzzz\n\n\n", "93");
+  t.equal(c("\n\nzzz\n", 2), "\n\nzzz\n", "93");
   t.end();
 });
 
 tap.test("94 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c(" \n \t\n \n zzz \n \n \n \t", 3), "\n\n\nzzz\n\n\n", "94");
+  t.equal(c("\n\n\nzzz\n", 2), "\n\nzzz\n", "94");
   t.end();
 });
 
 tap.test("95 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c(" \n \t\n \n zzz \n \n \n \t ", 3), "\n\n\nzzz\n\n\n", "95");
+  t.equal(c("\n \n \n zzz \n \n \n", 2), "\n\nzzz\n\n", "95");
   t.end();
 });
 
 tap.test("96 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c("\n\nzzz\n\n", 9), "\n\nzzz\n\n", "96");
+  t.equal(c(" \n \n \n zzz \n \n \n ", 2), "\n\nzzz\n\n", "96");
   t.end();
 });
 
 tap.test("97 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c(" \n \n zzz \n \n ", 9), "\n\nzzz\n\n", "97");
+  t.equal(c(" \n \t\n \n zzz \n \n \n \t", 2), "\n\nzzz\n\n", "97");
   t.end();
 });
 
 tap.test("98 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c("\n \n \n zzz \n \n \n", 9), "\n\n\nzzz\n\n\n", "98");
+  t.equal(c(" \n \t\n \n zzz \n \n \n \t ", 2), "\n\nzzz\n\n", "98");
   t.end();
 });
 
 tap.test("99 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c(" \n \n \n zzz \n \n \n ", 9), "\n\n\nzzz\n\n\n", "99");
+  t.equal(c(" \n \n zzz \n \n ", 2), "\n\nzzz\n\n", "99");
   t.end();
 });
 
 tap.test("100 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c(" \n \t\n \n zzz \n \n \n \t", 9), "\n\n\nzzz\n\n\n", "100");
+  t.equal(c("\n\nzzz\n\n", 3), "\n\nzzz\n\n", "100");
   t.end();
 });
 
 tap.test("101 - whitespace with single line breaks in the end", (t) => {
-  t.equal(c(" \n \t\n \n zzz \n \n \n \t ", 9), "\n\n\nzzz\n\n\n", "101");
+  t.equal(c(" \n \n zzz \n \n ", 3), "\n\nzzz\n\n", "101");
   t.end();
 });
 
-// -----------------------------------------------------------------------------
-// 02. quick ends
-// -----------------------------------------------------------------------------
-
-tap.test("102 - empty input", (t) => {
-  t.equal(c(""), "", "102");
+tap.test("102 - whitespace with single line breaks in the end", (t) => {
+  t.equal(c("\n \n \n zzz \n \n \n", 3), "\n\n\nzzz\n\n\n", "102");
   t.end();
 });
 
-tap.test("103 - all whitespace", (t) => {
-  t.equal(c("    "), " ", "103");
+tap.test("103 - whitespace with single line breaks in the end", (t) => {
+  t.equal(c(" \n \n \n zzz \n \n \n ", 3), "\n\n\nzzz\n\n\n", "103");
   t.end();
 });
 
-tap.test("104 - all whitespace", (t) => {
-  t.equal(c("\t"), " ", "104");
+tap.test("104 - whitespace with single line breaks in the end", (t) => {
+  t.equal(c(" \n \t\n \n zzz \n \n \n \t", 3), "\n\n\nzzz\n\n\n", "104");
   t.end();
 });
 
-tap.test("105 - all whitespace", (t) => {
-  t.equal(c("    ", 1), " ", "105");
+tap.test("105 - whitespace with single line breaks in the end", (t) => {
+  t.equal(c(" \n \t\n \n zzz \n \n \n \t ", 3), "\n\n\nzzz\n\n\n", "105");
   t.end();
 });
 
-tap.test("106 - all whitespace", (t) => {
-  t.equal(c("\t", 1), " ", "106");
+tap.test("106 - whitespace with single line breaks in the end", (t) => {
+  t.equal(c("\n\nzzz\n\n", 9), "\n\nzzz\n\n", "106");
   t.end();
 });
 
-tap.test("107 - all whitespace", (t) => {
-  t.equal(c("    ", 2), " ", "107");
+tap.test("107 - whitespace with single line breaks in the end", (t) => {
+  t.equal(c(" \n \n zzz \n \n ", 9), "\n\nzzz\n\n", "107");
   t.end();
 });
 
-tap.test("108 - all whitespace", (t) => {
-  t.equal(c("\t", 2), " ", "108");
+tap.test("108 - whitespace with single line breaks in the end", (t) => {
+  t.equal(c("\n \n \n zzz \n \n \n", 9), "\n\n\nzzz\n\n\n", "108");
   t.end();
 });
 
-tap.test("109 - all whitespace", (t) => {
-  t.equal(c("  \n\n  "), "\n", "109");
+tap.test("109 - whitespace with single line breaks in the end", (t) => {
+  t.equal(c(" \n \n \n zzz \n \n \n ", 9), "\n\n\nzzz\n\n\n", "109");
   t.end();
 });
 
-tap.test("110 - all whitespace", (t) => {
-  t.equal(c("  \n\n  ", 1), "\n", "110");
+tap.test("110 - whitespace with single line breaks in the end", (t) => {
+  t.equal(c(" \n \t\n \n zzz \n \n \n \t", 9), "\n\n\nzzz\n\n\n", "110");
   t.end();
 });
 
-tap.test("111 - all whitespace", (t) => {
-  t.equal(c("  \n\n  ", 2), "\n\n", "111");
+tap.test("111 - whitespace with single line breaks in the end", (t) => {
+  t.equal(c(" \n \t\n \n zzz \n \n \n \t ", 9), "\n\n\nzzz\n\n\n", "111");
   t.end();
 });
 
-tap.test("112 - all whitespace", (t) => {
-  t.equal(c("  \n\n  ", 9), "\n\n", "112");
+tap.test("112 - tight tabs", (t) => {
+  t.equal(c("\n\t\t\t   \t\t\t", 9), "\n", "112");
   t.end();
 });
 
-tap.test("113 - all whitespace", (t) => {
-  t.equal(c("\n"), "\n", "113");
+tap.test("113 - tight tabs", (t) => {
+  t.equal(c("\t\t\t   \t\t\t\n", 9), "\n", "113");
   t.end();
 });
 
-tap.test("114 - all whitespace", (t) => {
-  t.equal(c("\n", 1), "\n", "114");
+tap.test("114", (t) => {
+  t.equal(c("\n   \t    ", 9), "\n", "114");
   t.end();
 });
 
-tap.test("115 - all whitespace", (t) => {
-  t.equal(c("\n", 2), "\n", "115");
+tap.test("115", (t) => {
+  t.equal(c("   \t   \n", 9), "\n", "115");
   t.end();
 });
 
-tap.test("116 - all whitespace", (t) => {
-  t.equal(c("\n\n", 2), "\n\n", "116");
-  t.end();
-});
-
-tap.test("117 - all whitespace", (t) => {
-  t.equal(c("\n\n", 3), "\n\n", "117");
-  t.end();
-});
-
-tap.test("118 - all whitespace", (t) => {
-  t.equal(c("\n \n\n\n", 5), "\n\n\n\n", "118");
-  t.end();
-});
-
-tap.test("119 - not a string input", (t) => {
-  t.equal(c(1), 1, "119");
-  t.end();
-});
-
-tap.test("120 - not a string input", (t) => {
-  t.equal(c(1, 1), 1, "120");
-  t.end();
-});
-
-tap.test("121 - not a string input", (t) => {
-  t.equal(c(1, 2), 1, "121");
-  t.end();
-});
-
-tap.test("122 - not a string input", (t) => {
-  t.equal(c(1, "zz"), 1, "122");
-  t.end();
-});
-
-// -----------------------------------------------------------------------------
-// 03. nbsp
-// -----------------------------------------------------------------------------
-
-tap.test("123 - nbsp - left side - blank", (t) => {
-  t.equal(c(`${rawNbsp}zzz`), `${rawNbsp}zzz`, "123");
-  t.end();
-});
-
-tap.test("124 - nbsp - left side - space + nbsp", (t) => {
-  t.equal(c(` ${rawNbsp}zzz`), `${rawNbsp}zzz`, "124");
-  t.end();
-});
-
-tap.test("125 - nbsp - left side - two spaces", (t) => {
-  t.equal(c(`  ${rawNbsp}zzz`), `${rawNbsp}zzz`, "125");
-  t.end();
-});
-
-tap.test("126 - nbsp - left side - nbsp + space", (t) => {
-  t.equal(c(`${rawNbsp} zzz`), `${rawNbsp} zzz`, "126");
-  t.end();
-});
-
-tap.test("127 - nbsp - left side - nbsp + two spaces", (t) => {
-  t.equal(c(`${rawNbsp}  zzz`), `${rawNbsp} zzz`, "127");
-  t.end();
-});
-
-tap.test("128 - nbsp - left side - eol + nbsp", (t) => {
-  t.equal(c(`\n${rawNbsp}zzz`), `\n${rawNbsp}zzz`, "128");
-  t.end();
-});
-
-tap.test("129 - nbsp - left side - nbsp + eol", (t) => {
-  t.equal(c(`${rawNbsp}\nzzz`), `${rawNbsp}\nzzz`, "129");
-  t.end();
-});
-
-tap.test("130 - nbsp - left side - multiple eols", (t) => {
-  t.equal(c(`\n\n${rawNbsp}\nzzz`, 3), `\n\n${rawNbsp}\nzzz`, "130");
-  t.end();
-});
-
-tap.test("131 - nbsp - left side - multiple spaced eols", (t) => {
-  t.equal(c(`  \n \n   ${rawNbsp}\nzzz`, 3), `\n\n${rawNbsp}\nzzz`, "131");
-  t.end();
-});
-
-tap.test("132 - nbsp - right side - blank", (t) => {
-  t.equal(c(`zzz${rawNbsp}`), `zzz${rawNbsp}`, "132");
-  t.end();
-});
-
-tap.test("133 - nbsp - right side - nbsp + space", (t) => {
-  t.equal(c(`zzz${rawNbsp} `), `zzz${rawNbsp}`, "133");
-  t.end();
-});
-
-tap.test("134 - nbsp - right side - nbsp + two spaces", (t) => {
-  t.equal(c(`zzz${rawNbsp}  `), `zzz${rawNbsp}`, "134");
-  t.end();
-});
-
-tap.test("135 - nbsp - right side - space + nbsp", (t) => {
-  t.equal(c(`zzz ${rawNbsp}`), `zzz ${rawNbsp}`, "135");
-  t.end();
-});
-
-tap.test("136 - nbsp - right side - two spaces + nbsp", (t) => {
-  t.equal(c(`zzz  ${rawNbsp}`), `zzz ${rawNbsp}`, "136");
-  t.end();
-});
-
-tap.test("137 - nbsp - right side - nbsp + eol", (t) => {
-  t.equal(c(`zzz${rawNbsp}\n`), `zzz${rawNbsp}\n`, "137");
-  t.end();
-});
-
-tap.test("138 - nbsp - right side - eol + nbsp", (t) => {
-  t.equal(c(`zzz\n${rawNbsp}`), `zzz\n${rawNbsp}`, "138");
-  t.end();
-});
-
-tap.test("139 - nbsp - right side - mulitple eols", (t) => {
-  t.equal(c(`zzz\n${rawNbsp}\n\n`, 3), `zzz\n${rawNbsp}\n\n`, "139");
-  t.end();
-});
-
-tap.test("140 - nbsp - right side - multiple spaced eols", (t) => {
-  t.equal(c(`zzz\n${rawNbsp}  \n \n   `, 3), `zzz\n${rawNbsp}\n\n`, "140");
+tap.test("116 - mixed EOL's", (t) => {
+  t.equal(
+    c("\r\n\r\n\n\n zzz \n \n \n \t ", 9),
+    "\r\n\r\n\n\nzzz\n\n\n",
+    "116"
+  );
   t.end();
 });
