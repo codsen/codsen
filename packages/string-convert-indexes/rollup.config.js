@@ -63,7 +63,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: ["ast-monkey"],
+      external: ["ast-monkey-traverse", "grapheme-splitter"],
       plugins: [
         strip({
           sourceMap: false,
@@ -80,7 +80,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: ["ast-monkey"],
+      external: ["ast-monkey-traverse", "grapheme-splitter"],
       plugins: [
         strip({
           sourceMap: false,

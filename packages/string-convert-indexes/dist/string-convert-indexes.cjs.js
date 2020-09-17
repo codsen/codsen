@@ -1,6 +1,6 @@
 /**
  * string-convert-indexes
- * Convert string character indexes from JS native index-based to Unicode character-count-based and backwards.
+ * Convert between native JS string character indexes and grapheme-count-based indexes
  * Version: 1.10.18
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
@@ -11,7 +11,13 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var astMonkey = require('ast-monkey');
+var traverse = require('ast-monkey-traverse');
+var GraphemeSplitter = require('grapheme-splitter');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var traverse__default = /*#__PURE__*/_interopDefaultLegacy(traverse);
+var GraphemeSplitter__default = /*#__PURE__*/_interopDefaultLegacy(GraphemeSplitter);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -29,178 +35,79 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    if (enumerableOnly) symbols = symbols.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    });
-    keys.push.apply(keys, symbols);
-  }
-
-  return keys;
-}
-
-function _objectSpread2(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-
-    if (i % 2) {
-      ownKeys(Object(source), true).forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
-    } else if (Object.getOwnPropertyDescriptors) {
-      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-    } else {
-      ownKeys(Object(source)).forEach(function (key) {
-        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-      });
+function strConvertIndexes(mode, str, indexes) {
+  function isItOk(something) {
+    if (!["string", "number"].includes(_typeof(something)) || typeof something === "string" && !/^\d*$/.test(something) || typeof something === "number" && (!Number.isInteger(something) || something < 0)) {
+      return false;
     }
+    return true;
   }
-
-  return target;
-}
-
-function isStr(something) {
-  return typeof something === "string";
-}
-function mandatory(i) {
-  throw new Error("string-convert-indexes: [THROW_ID_01*] Missing ".concat(i, "th parameter!"));
-}
-function prep(something) {
-  if (typeof something === "string") {
-    return parseInt(something, 10);
+  function oneNativeToUnicode(graphemeStrArr, idx) {
+    var currLowerIdx = 0;
+    var currUpperIdx = 0;
+    for (var i = 0, len = graphemeStrArr.length; i < len; i++) {
+      currUpperIdx += graphemeStrArr[i].length;
+      if (idx >= currLowerIdx && idx < currUpperIdx) {
+        return i;
+      }
+      currLowerIdx += graphemeStrArr[i].length;
+    }
+    throw new Error("string-convert-indexes: [THROW_ID_05] the \"indexes\" value, ".concat(indexes, ", is not covered by graphemes length!"));
   }
-  return something;
-}
-function customSort(arr) {
-  return arr.sort(function (a, b) {
-    if (prep(a.val) < prep(b.val)) {
-      return -1;
+  function oneUnicodeToNative(graphemeStrArr, idx) {
+    if (idx >= graphemeStrArr.length) {
+      throw new Error("string-convert-indexes: [THROW_ID_06] the index to convert, ".concat(idx, ", is not covered by graphemes length!"));
     }
-    if (prep(a.val) > prep(b.val)) {
-      return 1;
-    }
+    return graphemeStrArr.slice(0, idx).join("").length;
+  }
+  if (typeof str !== "string" || !str) {
+    throw new TypeError("string-convert-indexes: [THROW_ID_01] the first input argument, input string, must be a non-zero-length string! Currently it's: ".concat(_typeof(str), ", equal to:\n").concat(str));
+  }
+  if (indexes === 0) {
     return 0;
-  });
-}
-function strConvertIndexes(mode, str, indexes, originalOpts) {
-  if (!isStr(str) || str.length === 0) {
-    throw new TypeError("string-convert-indexes: [THROW_ID_02] the first input argument, input string, must be a non-zero-length string! Currently it's: ".concat(_typeof(str), ", equal to:\n").concat(str));
   }
-  if (originalOpts && _typeof(originalOpts) !== "object") {
-    throw new TypeError("string-convert-indexes: [THROW_ID_03] the third input argument, Optional Options Object, must be a plain object! Currently it's: ".concat(_typeof(originalOpts), ", equal to:\n").concat(originalOpts));
+  if (indexes === "0") {
+    return "0";
   }
-  var defaults = {
-    throwIfAnyOfTheIndexesAreOutsideOfTheReferenceString: true
-  };
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
-  var data = {
-    id: 0
-  };
-  var toDoList = [];
-  if (Number.isInteger(indexes) && indexes >= 0 || /^\d*$/.test(indexes)) {
-    toDoList = [{
-      id: 1,
-      val: indexes
-    }];
+  var splitter = new GraphemeSplitter__default['default']();
+  var graphemeStrArr = splitter.splitGraphemes(str);
+  if (["string", "number"].includes(_typeof(indexes))) {
+    if (isItOk(indexes)) {
+      if (mode === "u") {
+        return typeof indexes === "string" ? String(oneUnicodeToNative(graphemeStrArr, +indexes)) : oneUnicodeToNative(graphemeStrArr, +indexes);
+      }
+      return typeof indexes === "string" ? String(oneNativeToUnicode(graphemeStrArr, +indexes)) : oneNativeToUnicode(graphemeStrArr, +indexes);
+    }
+    throw new Error("string-convert-indexes: [THROW_ID_02] the second input argument, \"indexes\" is not suitable to describe string index - it was given as ".concat(JSON.stringify(indexes, null, 4), " (").concat(_typeof(indexes), ")"));
+  } else if (indexes && _typeof(indexes) === "object") {
+    return mode === "u" ? traverse__default['default'](indexes, function (key, val, innerObj) {
+      var current = val !== undefined ? val : key;
+      if (["string", "number"].includes(_typeof(current))) {
+        if (isItOk(current)) {
+          return typeof current === "string" ? String(oneUnicodeToNative(graphemeStrArr, +current)) : oneUnicodeToNative(graphemeStrArr, +current);
+        }
+        throw new Error("string-convert-indexes: [THROW_ID_03] bad value was encountered, ".concat(JSON.stringify(current, null, 4), ", its path is ").concat(innerObj.path));
+      }
+      return current;
+    }) : traverse__default['default'](indexes, function (key, val, innerObj) {
+      var current = val !== undefined ? val : key;
+      if (["string", "number"].includes(_typeof(current))) {
+        if (isItOk(current)) {
+          return typeof current === "string" ? String(oneNativeToUnicode(graphemeStrArr, +current)) : oneNativeToUnicode(graphemeStrArr, +current);
+        }
+        throw new Error("string-convert-indexes: [THROW_ID_04] bad value was encountered, ".concat(JSON.stringify(current, null, 4), ", its path is ").concat(innerObj.path));
+      }
+      return current;
+    });
   } else {
-    indexes = astMonkey.traverse(indexes, function (key, val) {
-      data.id += 1;
-      data.val = val !== undefined ? val : key;
-      if (Number.isInteger(data.val) && data.val >= 0 || /^\d*$/.test(data.val)) {
-        toDoList.push(_objectSpread2({}, data));
-      }
-      return data.val;
-    });
+    throw new Error("string-convert-indexes: [THROW_ID_07] the first input argument, a source string should be a string but it was given as ".concat(str, ", type ").concat(_typeof(str)));
   }
-  if (toDoList.length === 0) {
-    return indexes;
-  }
-  toDoList = customSort(toDoList);
-  var unicodeIndex = -1;
-  var surrogateDetected = false;
-  for (var i = 0, len = str.length; i <= len; i++) {
-    if (str[i] === undefined) {
-      unicodeIndex += 1;
-    } else if (str[i].charCodeAt(0) >= 55296 && str[i].charCodeAt(0) <= 57343) {
-      if (surrogateDetected !== true) {
-        unicodeIndex += 1;
-        surrogateDetected = true;
-      } else {
-        surrogateDetected = false;
-      }
-    } else {
-      unicodeIndex += 1;
-      if (surrogateDetected === true) {
-        surrogateDetected = false;
-      }
-    }
-    if (mode === "n") {
-      for (var y = 0, leny = toDoList.length; y < leny; y++) {
-        if (prep(toDoList[y].val) === i) {
-          toDoList[y].res = isStr(toDoList[y].val) ? String(unicodeIndex) : unicodeIndex;
-        } else if (prep(toDoList[y].val) > i) {
-          break;
-        }
-      }
-    } else {
-      for (var _y = 0, _leny = toDoList.length; _y < _leny; _y++) {
-        if (prep(toDoList[_y].val) === unicodeIndex && toDoList[_y].res === undefined) {
-          toDoList[_y].res = isStr(toDoList[_y].val) ? String(i) : i;
-        } else if (prep(toDoList[_y].val) > unicodeIndex) {
-          break;
-        }
-      }
-    }
-    if (opts.throwIfAnyOfTheIndexesAreOutsideOfTheReferenceString && i === len - 1 && (mode === "n" && prep(toDoList[toDoList.length - 1].val) > len || mode === "u" && prep(toDoList[toDoList.length - 1].val) > unicodeIndex + 1)) {
-      if (mode === "n") {
-        throw new Error("string-convert-indexes: [THROW_ID_05] the reference string has native JS string indexes going only upto ".concat(i, ", but you are trying to convert an index larger than that, ").concat(prep(toDoList[toDoList.length - 1].val)));
-      } else {
-        throw new Error("string-convert-indexes: [THROW_ID_06] the reference string has Unicode character count going only upto ".concat(unicodeIndex, ", but you are trying to convert an index larger than that, ").concat(prep(toDoList[toDoList.length - 1].val)));
-      }
-    }
-  }
-  if (Number.isInteger(indexes) && indexes >= 0 || /^\d*$/.test(indexes)) {
-    return toDoList[0].res !== undefined ? toDoList[0].res : toDoList[0].val;
-  }
-  var res = Array.from(indexes);
-  for (var z = toDoList.length; z--;) {
-    res = astMonkey.set(res, {
-      index: toDoList[z].id,
-      val: toDoList[z].res !== undefined ? toDoList[z].res : toDoList[z].val
-    });
-  }
-  return res;
 }
-function nativeToUnicode() {
-  var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : mandatory(1);
-  var indexes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : mandatory(2);
-  var opts = arguments.length > 2 ? arguments[2] : undefined;
-  return strConvertIndexes("n", str, indexes, opts);
+function nativeToUnicode(str, indexes) {
+  return strConvertIndexes("n", str, indexes);
 }
-function unicodeToNative() {
-  var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : mandatory(1);
-  var indexes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : mandatory(2);
-  var opts = arguments.length > 2 ? arguments[2] : undefined;
-  return strConvertIndexes("u", str, indexes, opts);
+function unicodeToNative(str, indexes) {
+  return strConvertIndexes("u", str, indexes);
 }
 
 exports.nativeToUnicode = nativeToUnicode;

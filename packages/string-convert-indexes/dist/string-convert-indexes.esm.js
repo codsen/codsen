@@ -1,159 +1,129 @@
 /**
  * string-convert-indexes
- * Convert string character indexes from JS native index-based to Unicode character-count-based and backwards.
+ * Convert between native JS string character indexes and grapheme-count-based indexes
  * Version: 1.10.18
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-convert-indexes/
  */
 
-import { traverse, set } from 'ast-monkey';
+import traverse from 'ast-monkey-traverse';
+import GraphemeSplitter from 'grapheme-splitter';
 
-function isStr(something) {
-  return typeof something === "string";
-}
-function mandatory(i) {
-  throw new Error(
-    `string-convert-indexes: [THROW_ID_01*] Missing ${i}th parameter!`
-  );
-}
-function prep(something) {
-  if (typeof something === "string") {
-    return parseInt(something, 10);
-  }
-  return something;
-}
-function customSort(arr) {
-  return arr.sort((a, b) => {
-    if (prep(a.val) < prep(b.val)) {
-      return -1;
-    }
-    if (prep(a.val) > prep(b.val)) {
-      return 1;
-    }
-    return 0;
-  });
-}
-function strConvertIndexes(mode, str, indexes, originalOpts) {
-  if (!isStr(str) || str.length === 0) {
-    throw new TypeError(
-      `string-convert-indexes: [THROW_ID_02] the first input argument, input string, must be a non-zero-length string! Currently it's: ${typeof str}, equal to:\n${str}`
-    );
-  }
-  if (originalOpts && typeof originalOpts !== "object") {
-    throw new TypeError(
-      `string-convert-indexes: [THROW_ID_03] the third input argument, Optional Options Object, must be a plain object! Currently it's: ${typeof originalOpts}, equal to:\n${originalOpts}`
-    );
-  }
-  const defaults = {
-    throwIfAnyOfTheIndexesAreOutsideOfTheReferenceString: true,
-  };
-  const opts = { ...defaults, ...originalOpts };
-  const data = { id: 0 };
-  let toDoList = [];
-  if ((Number.isInteger(indexes) && indexes >= 0) || /^\d*$/.test(indexes)) {
-    toDoList = [
-      {
-        id: 1,
-        val: indexes,
-      },
-    ];
-  } else {
-    indexes = traverse(indexes, (key, val) => {
-      data.id += 1;
-      data.val = val !== undefined ? val : key;
-      if (
-        (Number.isInteger(data.val) && data.val >= 0) ||
-        /^\d*$/.test(data.val)
-      ) {
-        toDoList.push({ ...data });
-      }
-      return data.val;
-    });
-  }
-  if (toDoList.length === 0) {
-    return indexes;
-  }
-  toDoList = customSort(toDoList);
-  let unicodeIndex = -1;
-  let surrogateDetected = false;
-  for (let i = 0, len = str.length; i <= len; i++) {
-    if (str[i] === undefined) {
-      unicodeIndex += 1;
-    } else if (str[i].charCodeAt(0) >= 55296 && str[i].charCodeAt(0) <= 57343) {
-      if (surrogateDetected !== true) {
-        unicodeIndex += 1;
-        surrogateDetected = true;
-      } else {
-        surrogateDetected = false;
-      }
-    } else {
-      unicodeIndex += 1;
-      if (surrogateDetected === true) {
-        surrogateDetected = false;
-      }
-    }
-    if (mode === "n") {
-      for (let y = 0, leny = toDoList.length; y < leny; y++) {
-        if (prep(toDoList[y].val) === i) {
-          toDoList[y].res = isStr(toDoList[y].val)
-            ? String(unicodeIndex)
-            : unicodeIndex;
-        } else if (prep(toDoList[y].val) > i) {
-          break;
-        }
-      }
-    } else {
-      for (let y = 0, leny = toDoList.length; y < leny; y++) {
-        if (
-          prep(toDoList[y].val) === unicodeIndex &&
-          toDoList[y].res === undefined
-        ) {
-          toDoList[y].res = isStr(toDoList[y].val) ? String(i) : i;
-        } else if (prep(toDoList[y].val) > unicodeIndex) {
-          break;
-        }
-      }
-    }
+function strConvertIndexes(mode, str, indexes) {
+  function isItOk(something) {
     if (
-      opts.throwIfAnyOfTheIndexesAreOutsideOfTheReferenceString &&
-      i === len - 1 &&
-      ((mode === "n" && prep(toDoList[toDoList.length - 1].val) > len) ||
-        (mode === "u" &&
-          prep(toDoList[toDoList.length - 1].val) > unicodeIndex + 1))
+      !["string", "number"].includes(typeof something) ||
+      (typeof something === "string" && !/^\d*$/.test(something)) ||
+      (typeof something === "number" &&
+        (!Number.isInteger(something) || something < 0))
     ) {
-      if (mode === "n") {
-        throw new Error(
-          `string-convert-indexes: [THROW_ID_05] the reference string has native JS string indexes going only upto ${i}, but you are trying to convert an index larger than that, ${prep(
-            toDoList[toDoList.length - 1].val
-          )}`
-        );
-      } else {
-        throw new Error(
-          `string-convert-indexes: [THROW_ID_06] the reference string has Unicode character count going only upto ${unicodeIndex}, but you are trying to convert an index larger than that, ${prep(
-            toDoList[toDoList.length - 1].val
-          )}`
-        );
-      }
+      return false;
     }
+    return true;
   }
-  if ((Number.isInteger(indexes) && indexes >= 0) || /^\d*$/.test(indexes)) {
-    return toDoList[0].res !== undefined ? toDoList[0].res : toDoList[0].val;
+  function oneNativeToUnicode(graphemeStrArr, idx) {
+    let currLowerIdx = 0;
+    let currUpperIdx = 0;
+    for (let i = 0, len = graphemeStrArr.length; i < len; i++) {
+      currUpperIdx += graphemeStrArr[i].length;
+      if (idx >= currLowerIdx && idx < currUpperIdx) {
+        return i;
+      }
+      currLowerIdx += graphemeStrArr[i].length;
+    }
+    throw new Error(
+      `string-convert-indexes: [THROW_ID_05] the "indexes" value, ${indexes}, is not covered by graphemes length!`
+    );
   }
-  let res = Array.from(indexes);
-  for (let z = toDoList.length; z--; ) {
-    res = set(res, {
-      index: toDoList[z].id,
-      val: toDoList[z].res !== undefined ? toDoList[z].res : toDoList[z].val,
-    });
+  function oneUnicodeToNative(graphemeStrArr, idx) {
+    if (idx >= graphemeStrArr.length) {
+      throw new Error(
+        `string-convert-indexes: [THROW_ID_06] the index to convert, ${idx}, is not covered by graphemes length!`
+      );
+    }
+    return graphemeStrArr.slice(0, idx).join("").length;
   }
-  return res;
+  if (typeof str !== "string" || !str) {
+    throw new TypeError(
+      `string-convert-indexes: [THROW_ID_01] the first input argument, input string, must be a non-zero-length string! Currently it's: ${typeof str}, equal to:\n${str}`
+    );
+  }
+  if (indexes === 0) {
+    return 0;
+  }
+  if (indexes === "0") {
+    return "0";
+  }
+  const splitter = new GraphemeSplitter();
+  const graphemeStrArr = splitter.splitGraphemes(str);
+  if (["string", "number"].includes(typeof indexes)) {
+    if (isItOk(indexes)) {
+      if (mode === "u") {
+        return typeof indexes === "string"
+          ? String(oneUnicodeToNative(graphemeStrArr, +indexes))
+          : oneUnicodeToNative(graphemeStrArr, +indexes);
+      }
+      return typeof indexes === "string"
+        ? String(oneNativeToUnicode(graphemeStrArr, +indexes))
+        : oneNativeToUnicode(graphemeStrArr, +indexes);
+    }
+    throw new Error(
+      `string-convert-indexes: [THROW_ID_02] the second input argument, "indexes" is not suitable to describe string index - it was given as ${JSON.stringify(
+        indexes,
+        null,
+        4
+      )} (${typeof indexes})`
+    );
+  } else if (indexes && typeof indexes === "object") {
+    return mode === "u"
+      ? traverse(indexes, (key, val, innerObj) => {
+          const current = val !== undefined ? val : key;
+          if (["string", "number"].includes(typeof current)) {
+            if (isItOk(current)) {
+              return typeof current === "string"
+                ? String(oneUnicodeToNative(graphemeStrArr, +current))
+                : oneUnicodeToNative(graphemeStrArr, +current);
+            }
+            throw new Error(
+              `string-convert-indexes: [THROW_ID_03] bad value was encountered, ${JSON.stringify(
+                current,
+                null,
+                4
+              )}, its path is ${innerObj.path}`
+            );
+          }
+          return current;
+        })
+      : traverse(indexes, (key, val, innerObj) => {
+          const current = val !== undefined ? val : key;
+          if (["string", "number"].includes(typeof current)) {
+            if (isItOk(current)) {
+              return typeof current === "string"
+                ? String(oneNativeToUnicode(graphemeStrArr, +current))
+                : oneNativeToUnicode(graphemeStrArr, +current);
+            }
+            throw new Error(
+              `string-convert-indexes: [THROW_ID_04] bad value was encountered, ${JSON.stringify(
+                current,
+                null,
+                4
+              )}, its path is ${innerObj.path}`
+            );
+          }
+          return current;
+        });
+  } else {
+    throw new Error(
+      `string-convert-indexes: [THROW_ID_07] the first input argument, a source string should be a string but it was given as ${str}, type ${typeof str}`
+    );
+  }
 }
-function nativeToUnicode(str = mandatory(1), indexes = mandatory(2), opts) {
-  return strConvertIndexes("n", str, indexes, opts);
+function nativeToUnicode(str, indexes) {
+  return strConvertIndexes("n", str, indexes);
 }
-function unicodeToNative(str = mandatory(1), indexes = mandatory(2), opts) {
-  return strConvertIndexes("u", str, indexes, opts);
+function unicodeToNative(str, indexes) {
+  return strConvertIndexes("u", str, indexes);
 }
 
 export { nativeToUnicode, unicodeToNative };

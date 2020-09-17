@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.0.0 (2020-09-20)
+
+Complete rewrite. Dropping options, now program always throws if requested indexes are beyond the source length. Beside that, API-wise, nothing new.
+
 ## 1.10.0 (2020-02-01)
 
 ### Features
