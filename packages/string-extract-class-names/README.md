@@ -27,6 +27,32 @@
 npm i string-extract-class-names
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import extract from "string-extract-class-names";
+
+// extracts classes
+assert.deepEqual(extract("div.first-class.second-class"), [
+  ".first-class",
+  ".second-class",
+]);
+
+// and id's
+assert.deepEqual(extract("div#brambles.gramples#croodles"), [
+  "#brambles",
+  ".gramples",
+  "#croodles",
+]);
+
+// optionally, you can request ranges (see codsen.com/ranges/):
+assert.deepEqual(extract("div.first-class.second-class", true), [
+  [3, 15],
+  [15, 28],
+]);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/string-extract-class-names/) for a full description of the API and examples.
