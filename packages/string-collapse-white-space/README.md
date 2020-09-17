@@ -27,6 +27,36 @@
 npm i string-collapse-white-space
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import collapse from "string-collapse-white-space";
+
+assert.equal(collapse("  aaa     bbb    ccc   dddd  "), "aaa bbb ccc dddd");
+
+assert.equal(collapse("   \t\t\t   aaa   \t\t\t   "), "aaa");
+
+assert.equal(
+  collapse("   aaa   bbb  \n    ccc   ddd   ", { trimLines: false }),
+  "aaa bbb \n ccc ddd"
+);
+
+assert.equal(
+  collapse("   aaa   bbb  \n    ccc   ddd   ", { trimLines: true }),
+  "aaa bbb\nccc ddd"
+);
+
+// \xa0 is an unencoded non-breaking space:
+assert.equal(
+  collapse(
+    "     \xa0    aaa   bbb    \xa0    \n     \xa0     ccc   ddd   \xa0   ",
+    { trimLines: true, trimnbsp: true }
+  ),
+  "aaa bbb\nccc ddd"
+);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/string-collapse-white-space/) for a full description of the API and examples.

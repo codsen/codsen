@@ -624,6 +624,7 @@
 
   function main(mode, str, position, originalWhatToMatch, originalOpts) {
     var defaults = {
+      cb: undefined,
       i: false,
       trimBeforeMatching: false,
       trimCharsBeforeMatching: [],
