@@ -27,6 +27,30 @@
 npm i string-range-expander
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import expander from "string-range-expander";
+
+// let's say we have picked the "zzzz" index range - [16, 20]
+// "something>\n\t    zzzz <here"
+//                    |   |
+//                  from  to
+//
+// PS. "\n" and "\t" take up a single character's length
+
+assert.deepEqual(
+  expander({
+    str: "something>\n\t    zzzz <here",
+    from: 16,
+    to: 20,
+    ifRightSideIncludesThisThenCropTightly: "<",
+  }),
+  [10, 21]
+);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/string-range-expander/) for a full description of the API and examples.
