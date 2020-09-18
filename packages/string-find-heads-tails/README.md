@@ -27,6 +27,36 @@
 npm i string-find-heads-tails
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import strFindHeadsTails from "string-find-heads-tails";
+
+// processing an arbitrary, custom templating markup:
+assert.deepEqual(
+  strFindHeadsTails(
+    "some text %%_var1-%% more text %%_var2_%%",
+    ["%%_", "%%-"], // two flavours of heads
+    ["-%%", "_%%"] // two flavours of tails
+  ),
+  [
+    {
+      headsStartAt: 10,
+      headsEndAt: 13,
+      tailsStartAt: 17,
+      tailsEndAt: 20,
+    },
+    {
+      headsStartAt: 31,
+      headsEndAt: 34,
+      tailsStartAt: 38,
+      tailsEndAt: 41,
+    },
+  ]
+);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/string-find-heads-tails/) for a full description of the API and examples.
