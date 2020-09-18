@@ -27,6 +27,15 @@
 npm i string-overlap-one-on-another
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import overlap from "string-overlap-one-on-another";
+
+assert.equal(overlap("aaa", "bbb", { offset: -2 }), "bbbaa");
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/string-overlap-one-on-another/) for a full description of the API and examples.
