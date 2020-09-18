@@ -1,6 +1,6 @@
 /**
  * string-match-left-right
- * Do substrings match what's on the left or right of a given index?
+ * Match substrings on the left or right of a given index, ignoring whitespace
  * Version: 4.0.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
@@ -292,6 +292,7 @@
 
   function main(mode, str, position, originalWhatToMatch, originalOpts) {
     var defaults = {
+      cb: undefined,
       i: false,
       trimBeforeMatching: false,
       trimCharsBeforeMatching: [],
