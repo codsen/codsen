@@ -1,6 +1,6 @@
 # string-left-right
 
-> Look what's to the left or the right of a given index within a string
+> Looks up the first non-whitespace character to the left/right of a given index
 
 <div class="package-badges">
   <a href="https://www.npmjs.com/package/string-left-right" rel="nofollow noreferrer noopener">
@@ -25,6 +25,35 @@
 
 ```bash
 npm i string-left-right
+```
+
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import {
+  left,
+  right,
+  leftSeq,
+  rightSeq,
+  chompLeft,
+  chompRight,
+  leftStopAtNewLines,
+  rightStopAtNewLines,
+} from "string-left-right";
+
+// get the closest non-whitespace character to the left of "d" (which itself
+// is at string index 6)
+const str = "abc   def";
+//             |   |
+//           012345678
+
+assert.equal(
+  `next non-whitespace character to the left of ${str[6]} (index 6) is ${
+    str[left(str, 6)]
+  } (index ${left(str, 6)})`,
+  "next non-whitespace character to the left of d (index 6) is c (index 2)"
+);
 ```
 
 ## Documentation
