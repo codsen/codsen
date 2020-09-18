@@ -27,6 +27,30 @@
 npm i string-remove-widows
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import { removeWidows } from "string-remove-widows";
+
+const result = removeWidows("Some text with many words on one line.");
+
+// time taken can vary so we'll set it to zero:
+result.log.timeTakenInMiliseconds = 0;
+
+assert.deepEqual(result, {
+  log: {
+    timeTakenInMiliseconds: 0,
+  },
+  ranges: [[32, 33, "&nbsp;"]], // see codsen.com/ranges/
+  res: "Some text with many words on one&nbsp;line.",
+  whatWasDone: {
+    convertEntities: false,
+    removeWidows: true,
+  },
+});
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/string-remove-widows/) for a full description of the API and examples.
