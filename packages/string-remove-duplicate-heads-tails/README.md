@@ -27,6 +27,21 @@
 npm i string-remove-duplicate-heads-tails
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import removeDuplicateHeadsTails from "string-remove-duplicate-heads-tails";
+
+assert.equal(
+  removeDuplicateHeadsTails("{{ Hi {{ first_name }}! }}", {
+    heads: "{{ ",
+    tails: " }}",
+  }),
+  "Hi {{ first_name }}!"
+);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/string-remove-duplicate-heads-tails/) for a full description of the API and examples.

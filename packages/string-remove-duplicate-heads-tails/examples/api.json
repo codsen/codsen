@@ -1,0 +1,1 @@
+{"_quickTake.js":{"title":"Quick Take","content":"import { strict as assert } from \"assert\";\nimport removeDuplicateHeadsTails from \"string-remove-duplicate-heads-tails\";\n\nassert.equal(\n  removeDuplicateHeadsTails(\"{{ Hi {{ first_name }}! }}\", {\n    heads: \"{{ \",\n    tails: \" }}\",\n  }),\n  \"Hi {{ first_name }}!\"\n);"}}
