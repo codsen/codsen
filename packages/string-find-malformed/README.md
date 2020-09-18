@@ -27,6 +27,33 @@
 npm i string-find-malformed
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import strFindMalformed from "string-find-malformed";
+
+// Below, we look for dodgy cases of `<!--`
+const gathered = [];
+strFindMalformed(
+  "<div><!-something--></div>",
+  "<!--",
+  // your callback function:
+  (obj) => {
+    gathered.push(obj);
+  },
+  {
+    maxDistance: 1, // Levenshtein distance
+  }
+);
+assert.deepEqual(gathered, [
+  {
+    idxFrom: 5,
+    idxTo: 8,
+  },
+]);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/string-find-malformed/) for a full description of the API and examples.
