@@ -27,6 +27,23 @@
 npm i string-unfancy
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import unfancy from "string-unfancy";
+
+// U+2019
+// https://www.fileformat.info/info/unicode/char/2019/index.htm
+// https://mothereff.in/js-escapes
+const rightSingleQuote = "\u2019";
+
+assert.equal(unfancy(`someone${rightSingleQuote}s`), "someone's");
+
+// works with encoded HTML:
+assert.equal(unfancy("someone&rsquo;s"), "someone's");
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/string-unfancy/) for a full description of the API and examples.
