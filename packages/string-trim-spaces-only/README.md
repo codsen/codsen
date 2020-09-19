@@ -27,6 +27,29 @@
 npm i string-trim-spaces-only
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import trimSpaces from "string-trim-spaces-only";
+
+assert.deepEqual(trimSpaces("  aaa   "), {
+  res: "aaa",
+  ranges: [
+    [0, 2],
+    [5, 8],
+  ],
+});
+
+assert.deepEqual(trimSpaces("   \t  zz   \n    "), {
+  res: "\t  zz   \n",
+  ranges: [
+    [0, 3],
+    [12, 16],
+  ],
+});
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/string-trim-spaces-only/) for a full description of the API and examples.
