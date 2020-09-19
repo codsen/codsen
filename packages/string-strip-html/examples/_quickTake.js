@@ -3,7 +3,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
-import stripHtml from "../dist/string-strip-html.cjs.js";
+import stripHtml from "../dist/string-strip-html.esm.js";
 
 assert.equal(
   stripHtml(`Some text <b>and</b> text.`).result,

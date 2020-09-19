@@ -3,7 +3,7 @@
 // Leave only td tags
 
 import { strict as assert } from "assert";
-import stripHtml from "../dist/string-strip-html.cjs.js";
+import stripHtml from "../dist/string-strip-html.esm.js";
 
 const someHtml = `<table width="100" border="0" cellpadding="0" cellspacing="0">
   <tr>
