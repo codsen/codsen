@@ -27,6 +27,29 @@
 npm i string-uglify
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import { uglifyById, uglifyArr, version } from "string-uglify";
+
+// notice we put dots and hashes for classes and id's but algorithm will work
+// fine too if you won't.
+const names = [
+  ".module-promo-all",
+  ".module-promo-main",
+  ".module-promo-second",
+  "#zzz",
+];
+
+// notice we put dots and hashes for classes and id's but algorithm will work
+// fine too if you won't.
+assert.deepEqual(uglifyArr(names), [".o", ".s", ".z", "#l"]);
+
+// uglify a particular id number:
+assert.equal(uglifyById(names, 3), "#l");
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/string-uglify/) for a full description of the API and examples.
