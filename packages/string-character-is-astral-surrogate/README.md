@@ -34,7 +34,7 @@ import { strict as assert } from "assert";
 import {
   isHighSurrogate,
   isLowSurrogate,
-} from "../dist/string-character-is-astral-surrogate.esm.js";
+} from "string-character-is-astral-surrogate";
 
 // 🧢 = \uD83E\uDDE2
 
