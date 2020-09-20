@@ -11,11 +11,10 @@ assert.deepEqual(
     convertEntities: 0,
   }),
   {
-    result: "In the ’60s, rock ’n ’ roll",
+    result: "In the ’60s, rock ’n’ roll",
     ranges: [
       [7, 8, "’"],
-      [18, 19, "’"],
-      [20, 21, "’"],
+      [18, 21, "’n’"],
     ],
   }
 );
@@ -25,7 +24,7 @@ assert.deepEqual(
     from: 4,
     to: 5,
     convertApostrophes: true,
-    convertEntities: false,
+    convertEntities: true,
   }),
   [[4, 5, "&rsquo;"]]
 );
