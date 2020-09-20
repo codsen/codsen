@@ -5269,8 +5269,41 @@
     Stream: Stream
   });
 
+  var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+  function createCommonjsModule(fn, basedir, module) {
+  	return module = {
+  		path: basedir,
+  		exports: {},
+  		require: function (path, base) {
+  			return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
+  		}
+  	}, fn(module, module.exports), module.exports;
+  }
+
+  function getAugmentedNamespace(n) {
+  	if (n.__esModule) return n;
+  	var a = Object.defineProperty({}, '__esModule', {value: true});
+  	Object.keys(n).forEach(function (k) {
+  		var d = Object.getOwnPropertyDescriptor(n, k);
+  		Object.defineProperty(a, k, d.get ? d : {
+  			enumerable: true,
+  			get: function () {
+  				return n[k];
+  			}
+  		});
+  	});
+  	return a;
+  }
+
+  function commonjsRequire () {
+  	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
+  }
+
+  var Stream$1 = /*@__PURE__*/getAugmentedNamespace(stream);
+
   function isStream(obj) {
-    return obj instanceof stream.Stream;
+    return obj instanceof Stream$1.Stream;
   }
 
   function isReadable(obj) {
@@ -5293,23 +5326,11 @@
   isstream.isWritable = isWritable_1;
   isstream.isDuplex = isDuplex_1;
 
-  var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+  var stream$1 = Stream$1;
 
-  function createCommonjsModule(fn, basedir, module) {
-  	return module = {
-  	  path: basedir,
-  	  exports: {},
-  	  require: function (path, base) {
-        return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
-      }
-  	}, fn(module, module.exports), module.exports;
-  }
+  var require$$1 = /*@__PURE__*/getAugmentedNamespace(bufferEs6);
 
-  function commonjsRequire () {
-  	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
-  }
-
-  var stream$1 = stream;
+  var debugUtil = /*@__PURE__*/getAugmentedNamespace(util$1);
 
   function ownKeys$1(object, enumerableOnly) {
     var keys = Object.keys(object);
@@ -5382,8 +5403,8 @@
     return Constructor;
   }
 
-  var Buffer$2 = bufferEs6.Buffer;
-  var inspect$1 = util$1.inspect;
+  var Buffer$2 = require$$1.Buffer;
+  var inspect$1 = debugUtil.inspect;
   var custom = inspect$1 && inspect$1.custom || 'inspect';
 
   function copyBuffer(src, target, offset) {
@@ -5866,7 +5887,7 @@
 
   var inherits$2 = createCommonjsModule(function (module) {
     try {
-      var util = util$1;
+      var util = debugUtil;
       /* istanbul ignore next */
 
       if (typeof util.inherits !== 'function') throw '';
@@ -5881,7 +5902,7 @@
    * For Node.js, simply re-export the core `util.deprecate` function.
    */
 
-  var node = util$1.deprecate;
+  var node = debugUtil.deprecate;
 
   var _stream_writable = Writable$1;
   // there will be only 2 of these for each stream
@@ -5917,7 +5938,7 @@
 
   /*</replacement>*/
 
-  var Buffer$3 = bufferEs6.Buffer;
+  var Buffer$3 = require$$1.Buffer;
 
   var OurUint8Array = commonjsGlobal.Uint8Array || function () {};
 
@@ -6652,7 +6673,7 @@
 
   var safeBuffer = createCommonjsModule(function (module, exports) {
     /* eslint-disable node/no-deprecated-api */
-    var Buffer = bufferEs6.Buffer; // alternative to using Object.keys for old browsers
+    var Buffer = require$$1.Buffer; // alternative to using Object.keys for old browsers
 
     function copyProps(src, dst) {
       for (var key in src) {
@@ -6661,10 +6682,10 @@
     }
 
     if (Buffer.from && Buffer.alloc && Buffer.allocUnsafe && Buffer.allocUnsafeSlow) {
-      module.exports = bufferEs6;
+      module.exports = require$$1;
     } else {
       // Copy properties from require('buffer')
-      copyProps(bufferEs6, exports);
+      copyProps(require$$1, exports);
       exports.Buffer = SafeBuffer;
     }
 
@@ -6716,7 +6737,7 @@
         throw new TypeError('Argument must be a number');
       }
 
-      return bufferEs6.SlowBuffer(size);
+      return require$$1.SlowBuffer(size);
     };
   });
 
@@ -7543,6 +7564,8 @@
 
   var from_1 = from$1;
 
+  var require$$0 = /*@__PURE__*/getAugmentedNamespace(events);
+
   var _stream_readable = Readable$1;
   /*<replacement>*/
 
@@ -7552,7 +7575,7 @@
   Readable$1.ReadableState = ReadableState$1;
   /*<replacement>*/
 
-  var EE = events.EventEmitter;
+  var EE = require$$0.EventEmitter;
 
   var EElistenerCount = function EElistenerCount(emitter, type) {
     return emitter.listeners(type).length;
@@ -7564,7 +7587,7 @@
   /*</replacement>*/
 
 
-  var Buffer$5 = bufferEs6.Buffer;
+  var Buffer$5 = require$$1.Buffer;
 
   var OurUint8Array$1 = commonjsGlobal.Uint8Array || function () {};
 
@@ -7580,8 +7603,8 @@
 
   var debug$1;
 
-  if (util$1 && util$1.debuglog) {
-    debug$1 = util$1.debuglog('stream');
+  if (debugUtil && debugUtil.debuglog) {
+    debug$1 = debugUtil.debuglog('stream');
   } else {
     debug$1 = function debug() {};
   }
@@ -8874,13 +8897,13 @@
   var pipeline_1 = pipeline;
 
   var readable = createCommonjsModule(function (module, exports) {
-    if (process.env.READABLE_STREAM === 'disable' && stream) {
-      module.exports = stream.Readable;
-      Object.assign(module.exports, stream);
-      module.exports.Stream = stream;
+    if (process.env.READABLE_STREAM === 'disable' && Stream$1) {
+      module.exports = Stream$1.Readable;
+      Object.assign(module.exports, Stream$1);
+      module.exports.Stream = Stream$1;
     } else {
       exports = module.exports = _stream_readable;
-      exports.Stream = stream || exports;
+      exports.Stream = Stream$1 || exports;
       exports.Readable = exports;
       exports.Writable = _stream_writable;
       exports.Duplex = _stream_duplex;
@@ -8891,8 +8914,10 @@
     }
   });
 
+  var require$$1$1 = /*@__PURE__*/getAugmentedNamespace(stringDecoder);
+
   var Transform$2 = readable.Transform;
-  var StringDecoder$3 = stringDecoder.StringDecoder;
+  var StringDecoder$3 = require$$1$1.StringDecoder;
   var kLast = Symbol('last');
   var kDecoder = Symbol('decoder');
 
@@ -9002,7 +9027,7 @@
 
   var split2 = split;
 
-  var stream$2 = stream;
+  var stream$2 = Stream$1;
 
   function ownKeys$3(object, enumerableOnly) {
     var keys = Object.keys(object);
@@ -9075,8 +9100,8 @@
     return Constructor;
   }
 
-  var Buffer$6 = bufferEs6.Buffer;
-  var inspect$2 = util$1.inspect;
+  var Buffer$6 = require$$1.Buffer;
+  var inspect$2 = debugUtil.inspect;
   var custom$1 = inspect$2 && inspect$2.custom || 'inspect';
 
   function copyBuffer$1(src, target, offset) {
@@ -9559,7 +9584,7 @@
 
   /*</replacement>*/
 
-  var Buffer$7 = bufferEs6.Buffer;
+  var Buffer$7 = require$$1.Buffer;
 
   var OurUint8Array$2 = commonjsGlobal.Uint8Array || function () {};
 
@@ -10801,7 +10826,7 @@
   Readable$2.ReadableState = ReadableState$2;
   /*<replacement>*/
 
-  var EE$1 = events.EventEmitter;
+  var EE$1 = require$$0.EventEmitter;
 
   var EElistenerCount$1 = function EElistenerCount(emitter, type) {
     return emitter.listeners(type).length;
@@ -10813,7 +10838,7 @@
   /*</replacement>*/
 
 
-  var Buffer$8 = bufferEs6.Buffer;
+  var Buffer$8 = require$$1.Buffer;
 
   var OurUint8Array$3 = commonjsGlobal.Uint8Array || function () {};
 
@@ -10829,8 +10854,8 @@
 
   var debug$2;
 
-  if (util$1 && util$1.debuglog) {
-    debug$2 = util$1.debuglog('stream');
+  if (debugUtil && debugUtil.debuglog) {
+    debug$2 = debugUtil.debuglog('stream');
   } else {
     debug$2 = function debug() {};
   }
@@ -12123,13 +12148,13 @@
   var pipeline_1$1 = pipeline$1;
 
   var readable$1 = createCommonjsModule(function (module, exports) {
-    if (process.env.READABLE_STREAM === 'disable' && stream) {
-      module.exports = stream.Readable;
-      Object.assign(module.exports, stream);
-      module.exports.Stream = stream;
+    if (process.env.READABLE_STREAM === 'disable' && Stream$1) {
+      module.exports = Stream$1.Readable;
+      Object.assign(module.exports, Stream$1);
+      module.exports.Stream = Stream$1;
     } else {
       exports = module.exports = _stream_readable$1;
-      exports.Stream = stream || exports;
+      exports.Stream = Stream$1 || exports;
       exports.Readable = exports;
       exports.Writable = _stream_writable$1;
       exports.Duplex = _stream_duplex$1;
