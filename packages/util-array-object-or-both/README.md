@@ -27,6 +27,32 @@
 npm i util-array-object-or-both
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import arrObjOrBoth from "util-array-object-or-both";
+
+// normalises string, a user preference:
+
+assert.equal(arrObjOrBoth("arrays"), "array");
+assert.equal(arrObjOrBoth("array"), "array");
+assert.equal(arrObjOrBoth("arr"), "array");
+assert.equal(arrObjOrBoth("a"), "array");
+
+assert.equal(arrObjOrBoth("objects"), "object");
+assert.equal(arrObjOrBoth("object"), "object");
+assert.equal(arrObjOrBoth("obj"), "object");
+assert.equal(arrObjOrBoth("o"), "object");
+
+assert.equal(arrObjOrBoth("whatever"), "any");
+assert.equal(arrObjOrBoth("either"), "any");
+assert.equal(arrObjOrBoth("both"), "any");
+assert.equal(arrObjOrBoth("any"), "any");
+assert.equal(arrObjOrBoth("all"), "any");
+assert.equal(arrObjOrBoth("e"), "any");
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/util-array-object-or-both/) for a full description of the API and examples.
