@@ -27,6 +27,35 @@
 npm i ranges-merge
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import mergeR from "ranges-merge";
+
+// joining edges:
+assert.deepEqual(
+  mergeR([
+    [1, 2],
+    [2, 3],
+    [9, 10],
+  ]),
+  [
+    [1, 3],
+    [9, 10],
+  ]
+);
+
+// an overlap:
+assert.deepEqual(
+  mergeR([
+    [1, 5],
+    [2, 10],
+  ]),
+  [[1, 10]]
+);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/ranges-merge/) for a full description of the API and examples.
