@@ -27,6 +27,27 @@
 npm i ranges-invert
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import invert from "ranges-invert";
+
+assert.deepEqual(
+  invert(
+    [
+      [3, 5],
+      [5, 7],
+    ],
+    9 // string length needed to set the boundary
+  ),
+  [
+    [0, 3],
+    [7, 9],
+  ]
+);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/ranges-invert/) for a full description of the API and examples.
