@@ -27,6 +27,19 @@
 npm i ranges-ent-decode
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import decode from "ranges-ent-decode";
+
+// see codsen.com/ranges/
+assert.deepEqual(decode("a &#x26; b &amp; c"), [
+  [2, 8, "&"], // <--- that's Ranges notation, instructing to replace
+  [11, 16, "&"],
+]);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/ranges-ent-decode/) for a full description of the API and examples.
