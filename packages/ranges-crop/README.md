@@ -27,6 +27,25 @@
 npm i ranges-crop
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import crop from "ranges-crop";
+
+assert.deepEqual(
+  crop(
+    [
+      [2, 3],
+      [9, 10, "bad grey wolf"],
+      [1, 2],
+    ],
+    7
+  ),
+  [[1, 3]] // sorted, merged and cropped
+);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/ranges-crop/) for a full description of the API and examples.
