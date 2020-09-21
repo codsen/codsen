@@ -27,6 +27,23 @@
 npm i ranges-apply
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import applyR from "ranges-apply";
+
+const oldString = `The quick brown fox jumps over the lazy dog.`;
+const ranges = [
+  [4, 19, "bad grey wolf"],
+  [35, 43, "little Red Riding Hood"],
+];
+assert.equal(
+  applyR(oldString, ranges),
+  "The bad grey wolf jumps over the little Red Riding Hood."
+);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/ranges-apply/) for a full description of the API and examples.
