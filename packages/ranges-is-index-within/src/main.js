@@ -1,5 +1,3 @@
-const isArr = Array.isArray;
-
 function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
   const defaults = {
     inclusiveRangeEnds: false,
@@ -7,7 +5,14 @@ function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
   };
 
   const opts = { ...defaults, ...originalOpts };
-  if (!isArr(rangesArr)) {
+  // insurance
+  if (!Number.isInteger(originalIndex)) {
+    throw new Error(
+      `ranges-is-index-within: [THROW_ID_01] the first input argument should be string index, a natural number (or zero). It was given as ${originalIndex} (type ${typeof originalIndex})`
+    );
+  }
+
+  if (!Array.isArray(rangesArr)) {
     return false;
   }
 

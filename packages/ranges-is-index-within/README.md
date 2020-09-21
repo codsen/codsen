@@ -27,6 +27,29 @@
 npm i ranges-is-index-within
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import isIndexWithin from "ranges-is-index-within";
+
+assert.equal(
+  isIndexWithin(8, [
+    [1, 2],
+    [5, 10],
+  ]),
+  true
+);
+
+assert.equal(
+  isIndexWithin(12, [
+    [1, 2],
+    [5, 10],
+  ]),
+  false
+);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/ranges-is-index-within/) for a full description of the API and examples.
