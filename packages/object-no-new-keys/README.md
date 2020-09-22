@@ -27,6 +27,31 @@
 npm i object-no-new-keys
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import nnk from "object-no-new-keys";
+
+assert.deepEqual(
+  nnk(
+    {
+      a: {
+        b: "b",
+        c: "c",
+      },
+      x: "y",
+    },
+    {
+      a: {
+        c: "z",
+      },
+    }
+  ),
+  ["a.b", "x"]
+);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/object-no-new-keys/) for a full description of the API and examples.

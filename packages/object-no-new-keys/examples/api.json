@@ -1,0 +1,1 @@
+{"_quickTake.js":{"title":"Quick Take","content":"import { strict as assert } from \"assert\";\nimport nnk from \"object-no-new-keys\";\n\nassert.deepEqual(\n  nnk(\n    {\n      a: {\n        b: \"b\",\n        c: \"c\",\n      },\n      x: \"y\",\n    },\n    {\n      a: {\n        c: \"z\",\n      },\n    }\n  ),\n  [\"a.b\", \"x\"]\n);"}}
