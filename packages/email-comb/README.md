@@ -27,6 +27,35 @@
 npm i email-comb
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import { comb, defaults, version } from "email-comb";
+
+// aptly named classes:
+const source = `<head>
+<style type="text/css">
+.unused1[z] {a:1;}
+.used[z] {a:2;}
+</style>
+</head>
+<body class="  used  "><a class="used unused3">z</a>
+</body>
+`;
+
+const intended = `<head>
+<style type="text/css">
+.used[z] {a:2;}
+</style>
+</head>
+<body class="used"><a class="used">z</a>
+</body>
+`;
+
+assert.equal(comb(source).result, intended);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/email-comb/) for a full description of the API and examples.
