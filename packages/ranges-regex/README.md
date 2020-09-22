@@ -27,6 +27,28 @@
 npm i ranges-regex
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import raReg from "ranges-regex";
+
+const oldString = `The quick brown fox jumps over the lazy dog.`;
+const result = raReg(/the/gi, oldString);
+
+// all regex matches, but in Ranges notation (see codsen.com/ranges/):
+assert.deepEqual(result, [
+  [0, 3],
+  [31, 34],
+]);
+
+// if you slice the ranges, you'll get original regex caught values:
+assert.deepEqual(
+  result.map(([from, to]) => oldString.slice(from, to)),
+  ["The", "the"]
+);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/ranges-regex/) for a full description of the API and examples.
