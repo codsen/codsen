@@ -27,6 +27,47 @@
 npm i object-set-all-values-to
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import setAllValuesTo from "object-set-all-values-to";
+
+assert.deepEqual(
+  setAllValuesTo({
+    a: "a",
+    b: "b",
+    c: "c",
+    d: "d",
+  }),
+  {
+    a: false,
+    b: false,
+    c: false,
+    d: false,
+  }
+);
+
+// you can change the default "false" to something else:
+assert.deepEqual(
+  setAllValuesTo(
+    {
+      a: "a",
+      b: "b",
+      c: "c",
+      d: "d",
+    },
+    "x"
+  ),
+  {
+    a: "x",
+    b: "x",
+    c: "x",
+    d: "x",
+  }
+);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/object-set-all-values-to/) for a full description of the API and examples.
