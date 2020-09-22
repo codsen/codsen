@@ -27,6 +27,28 @@
 npm i ranges-process-outside
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import processOutside from "ranges-process-outside";
+
+const gathered = [];
+
+// a callback interface:
+processOutside(
+  "abcdefghij",
+  [
+    [1, 5], // delete from "b" to "f"
+  ],
+  (fromIdx, toIdx, offsetValueCb) => {
+    gathered.push(fromIdx);
+  }
+);
+
+assert.deepEqual(gathered, [0, 5, 6, 7, 8, 9]);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/ranges-process-outside/) for a full description of the API and examples.
