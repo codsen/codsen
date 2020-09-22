@@ -27,6 +27,27 @@
 npm i ranges-sort
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import rsort from "ranges-sort";
+
+// Ranges (see codsen.com/ranges/) are sorted:
+assert.deepEqual(
+  rsort([
+    [2, 3],
+    [9, 10, "bad grey wolf"],
+    [1, 2],
+  ]),
+  [
+    [1, 2],
+    [2, 3],
+    [9, 10, "bad grey wolf"],
+  ]
+);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/ranges-sort/) for a full description of the API and examples.
