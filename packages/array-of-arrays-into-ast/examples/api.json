@@ -1,0 +1,1 @@
+{"_quickTake.js":{"title":"Quick Take","content":"import { strict as assert } from \"assert\";\nimport generateAst from \"array-of-arrays-into-ast\";\n\nassert.deepEqual(generateAst([[1, 2, 3], [1, 2], [5]]), {\n  1: [\n    {\n      2: [\n        {\n          3: [null],\n        },\n        null,\n      ],\n    },\n  ],\n  5: [null],\n});"}}

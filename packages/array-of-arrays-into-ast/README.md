@@ -27,6 +27,27 @@
 npm i array-of-arrays-into-ast
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import generateAst from "array-of-arrays-into-ast";
+
+assert.deepEqual(generateAst([[1, 2, 3], [1, 2], [5]]), {
+  1: [
+    {
+      2: [
+        {
+          3: [null],
+        },
+        null,
+      ],
+    },
+  ],
+  5: [null],
+});
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/array-of-arrays-into-ast/) for a full description of the API and examples.
