@@ -27,6 +27,34 @@
 npm i object-merge-advanced
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import mergeAdvanced from "object-merge-advanced";
+
+assert.deepEqual(
+  mergeAdvanced(
+    {
+      a: ["c"],
+      m: "n",
+    },
+    {
+      a: "b",
+      k: "l",
+    },
+    {
+      ignoreKeys: ["a"],
+    }
+  ),
+  {
+    a: ["c"],
+    k: "l",
+    m: "n",
+  }
+);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/object-merge-advanced/) for a full description of the API and examples.
