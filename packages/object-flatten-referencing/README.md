@@ -27,6 +27,30 @@
 npm i object-flatten-referencing
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import ofr from "object-flatten-referencing";
+
+assert.deepEqual(
+  ofr(
+    {
+      key1: "val11.val12",
+      key2: "val21.val22",
+    },
+    {
+      key1: "Contact us",
+      key2: "Tel. 0123456789",
+    }
+  ),
+  {
+    key1: "%%_val11.val12_%%",
+    key2: "%%_val21.val22_%%",
+  }
+);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/object-flatten-referencing/) for a full description of the API and examples.
