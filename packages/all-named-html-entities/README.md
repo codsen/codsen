@@ -27,6 +27,29 @@
 npm i all-named-html-entities
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import {
+  allNamedEntities,
+  allNamedEntitiesSetOnly,
+  allNamedEntitiesSetOnlyCaseInsensitive,
+  entStartsWith,
+  entEndsWith,
+  entStartsWithCaseInsensitive,
+  entEndsWithCaseInsensitive,
+  brokenNamedEntities,
+  decode,
+  minLength,
+  maxLength,
+  uncertain,
+} from "all-named-html-entities";
+
+assert.equal(Object.keys(allNamedEntities).length, 2125);
+assert.equal(entStartsWith.A.E[0], "AElig");
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/all-named-html-entities/) for a full description of the API and examples.
