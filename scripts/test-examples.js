@@ -11,12 +11,15 @@ const readdir = util.promisify(fs.readdir);
 
 readdir(path.resolve(`.`, "examples"))
   // filter out *.mjs
-  .then((files) => files.filter((file) => path.extname(file) === ".mjs"))
+  .then((files) =>
+    files.filter((file) => [".js", ".mjs"].includes(path.extname(file)))
+  )
   .then((files) =>
     Promise.all(
       files.map((file) =>
-        execa(`node ${path.resolve(`.`, "examples", file)}`, {
+        execa(`node -r esm ${path.resolve(`.`, "examples", file)}`, {
           shell: true,
+          stdio: "inherit",
         })
           .then(() => {
             // log "PASS" on bold, black on green brackground:

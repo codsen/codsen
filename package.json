@@ -32,6 +32,7 @@
     "test": "FORCE_COLOR=1 lerna run ci_test && npm run readme:generate",
     "test:full": "FORCE_COLOR=1 lerna run test --stream --concurrency 1 && npm run readme:generate && npm run info",
     "test:only": "FORCE_COLOR=1 lerna run unittest --stream --concurrency 1 && npm run readme:generate && npm run info",
+    "test:examples": "FORCE_COLOR=1 lerna run test:examples",
     "wipe": "rm package-lock.json || true && rm -rf node_modules && FORCE_COLOR=1 npx lerna clean -y"
   },
   "watch": {
@@ -59,7 +60,9 @@
     "lerna": "^3.22.1",
     "lerna-clean-changelogs-cli": "^1.2.67",
     "npm-watch": "^0.7.0",
+    "object-path": "^0.11.4",
     "prettier": "^2.1.2",
+    "esm": "^3.2.25",
     "tap-parse-string-to-object": "^1.2.20"
   }
 }

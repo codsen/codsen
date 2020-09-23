@@ -1115,10 +1115,10 @@ npm i${isCLI ? " -g" : ""} ${pack.name}
 \`\`\`
 
 ${
-  examples && examples["_quickTake.mjs"] && examples["_quickTake.mjs"].content
+  examples && examples["_quickTake.js"] && examples["_quickTake.js"].content
     ? `## Quick Take\n
 \`\`\`js
-${examples["_quickTake.mjs"].content}
+${examples["_quickTake.js"].content}
 \`\`\`\n\n`
     : ""
 }## Documentation
@@ -1232,7 +1232,7 @@ const readFiles = async (dirname) => {
   try {
     let filenames = await fs.readdir(dirname);
     filenames = filenames.filter(
-      (filename) => path.extname(filename) === ".mjs"
+      (filename) => path.extname(filename) === ".js"
     );
     const filesPromiseArr = filenames.map((filename) => {
       return fs.readFile(dirname + filename, "utf-8");
@@ -1242,13 +1242,21 @@ const readFiles = async (dirname) => {
       let content = response[currentIndex]
         .replace(/\/\*\s*eslint[^*]*\*\//g, "")
         .trim()
-        .replace(/\.\.\/dist\/([^.]+)\.cjs\.js/, "$1")
-        .replace(/\.\.\/\.\.\/[^/]+\/dist\/([^.]+)\.cjs\.js/, "$1");
+        .replace(/\.\.\/dist\/([^.]+)\.esm\.js/, "$1")
+        .replace(/\.\.\/\.\.\/[^/]+\/dist\/([^.]+)\.cjs\.js/, "$1")
+        .replace(/\.\.\/\.\.\/[^/]+\/dist\/([^.]+)\.esm\.js/, "$1")
+        .replace(/"\.\.\/\.\.\/\.\.\/\.\.\//g, "")
+        .replace(/"\.\.\/\.\.\/\.\.\//g, "")
+        .replace(/"\.\.\/\.\.\//g, "")
+        .replace(/"\.\.\//g, "");
       let title = null;
       if (content.startsWith("//") && titleRegexp.exec(content)) {
         title = titleRegexp.exec(content)[1];
         content = content.replace(titleRegexp, "").trim();
       }
+      // console.log(
+      //   `1258 lect: ${`\u001b[${33}m${`content`}\u001b[${39}m`} = ${content}`
+      // );
       acc[filename] = {
         title,
         content,
