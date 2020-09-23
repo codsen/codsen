@@ -27,6 +27,19 @@
 npm i array-group-str-omit-num-char
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import groupStr from "array-group-str-omit-num-char";
+
+assert.deepEqual(groupStr(["a1-1", "a2-2", "b3-3", "c4-4"]), {
+  "a*-*": 2,
+  "b3-3": 1,
+  "c4-4": 1,
+});
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/array-group-str-omit-num-char/) for a full description of the API and examples.
