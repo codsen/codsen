@@ -27,6 +27,22 @@
 npm i array-includes-with-glob
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import includesWithGlob from "array-includes-with-glob";
+
+assert.equal(includesWithGlob(["xc", "yc", "zc"], "*c"), true);
+// (all 3)
+
+assert.equal(includesWithGlob(["xc", "yc", "zc"], "*a"), false);
+// (none found)
+
+assert.equal(includesWithGlob(["something", "anything", "zzz"], "some*"), true);
+// (1 hit)
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/array-includes-with-glob/) for a full description of the API and examples.
