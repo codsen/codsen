@@ -32,7 +32,7 @@ npm i ranges-push
 ```js
 import { strict as assert } from "assert";
 import Ranges from "ranges-push";
-import applyR from ranges-apply";
+import applyR from "ranges-apply";
 
 const gatheredRanges = new Ranges();
 

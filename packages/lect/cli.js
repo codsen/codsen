@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-/* eslint no-console:0, no-param-reassign: 0, no-nested-ternary: 0 */
+/* eslint no-console:0, no-param-reassign: 0, no-nested-ternary: 0, import/no-extraneous-dependencies:0 */
 
 // -----------------------------------------------------------------------------
 // SETUP
@@ -24,6 +24,9 @@ const arrayiffy = require("arrayiffy-if-string");
 const pull1 = require("array-pull-all-with-glob");
 const findRecursivelyUp = require("find-file-recursively-up");
 const inquirer = require("inquirer");
+
+// prettier is for testing the examples
+const prettier = require("prettier");
 
 function pull(arg1, arg2) {
   return pull1(arg1, arg2, { caseSensitive: false });
@@ -781,7 +784,7 @@ async function writePackageJson(receivedPackageJsonObj) {
           (pack.name.startsWith("gulp-") || pack.name.startsWith("eleventy-")))
       )
     ) {
-      console.log(`784 lect: we'll delete key "${key}" from dev dependencies`);
+      console.log(`787 lect: we'll delete key "${key}" from dev dependencies`);
       delete receivedPackageJsonObj.devDependencies[key];
     } else if (
       Object.prototype.hasOwnProperty.call(lectrcDevDeps, key) &&
@@ -1245,10 +1248,10 @@ const readFiles = async (dirname) => {
         .replace(/\.\.\/dist\/([^.]+)\.esm\.js/, "$1")
         .replace(/\.\.\/\.\.\/[^/]+\/dist\/([^.]+)\.cjs\.js/, "$1")
         .replace(/\.\.\/\.\.\/[^/]+\/dist\/([^.]+)\.esm\.js/, "$1")
-        .replace(/"\.\.\/\.\.\/\.\.\/\.\.\//g, "")
-        .replace(/"\.\.\/\.\.\/\.\.\//g, "")
-        .replace(/"\.\.\/\.\.\//g, "")
-        .replace(/"\.\.\//g, "");
+        .replace(/"\.\.\/\.\.\/\.\.\/\.\.\//g, `"`)
+        .replace(/"\.\.\/\.\.\/\.\.\//g, `"`)
+        .replace(/"\.\.\/\.\.\//g, `"`)
+        .replace(/"\.\.\//g, `"`);
       let title = null;
       if (content.startsWith("//") && titleRegexp.exec(content)) {
         title = titleRegexp.exec(content)[1];
@@ -1257,6 +1260,12 @@ const readFiles = async (dirname) => {
       // console.log(
       //   `1258 lect: ${`\u001b[${33}m${`content`}\u001b[${39}m`} = ${content}`
       // );
+
+      // lint the "content" again because we messed with the source code:
+      prettier.resolveConfig("../../.prettierrc").then((options) => {
+        prettier.check(content, { ...options, parser: "babel" });
+      });
+
       acc[filename] = {
         title,
         content,
