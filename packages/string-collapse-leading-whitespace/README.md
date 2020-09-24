@@ -31,7 +31,7 @@ npm i string-collapse-leading-whitespace
 
 ```js
 import { strict as assert } from "assert";
-import collWhitespace from "../dist/string-collapse-leading-whitespace.esm.js";
+import collWhitespace from "string-collapse-leading-whitespace";
 
 // if leading/trailing whitespace doesn't contain \n, collapse to a single space
 assert.equal(collWhitespace("  aaa   "), " aaa ");

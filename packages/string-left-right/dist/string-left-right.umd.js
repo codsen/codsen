@@ -1,6 +1,6 @@
 /**
  * string-left-right
- * Look what's to the left or the right of a given index within a string
+ * Looks up the first non-whitespace character to the left/right of a given index
  * Version: 2.3.28
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT

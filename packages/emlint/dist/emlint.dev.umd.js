@@ -7567,11 +7567,11 @@
 
 	function createCommonjsModule(fn, basedir, module) {
 		return module = {
-		  path: basedir,
-		  exports: {},
-		  require: function (path, base) {
-	      return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
-	    }
+			path: basedir,
+			exports: {},
+			require: function (path, base) {
+				return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
+			}
 		}, fn(module, module.exports), module.exports;
 	}
 
@@ -9426,7 +9426,7 @@
 
 	/**
 	 * string-left-right
-	 * Look what's to the left or the right of a given index within a string
+	 * Looks up the first non-whitespace character to the left/right of a given index
 	 * Version: 2.3.28
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
@@ -10686,7 +10686,7 @@
 
 	/**
 	 * string-match-left-right
-	 * Do substrings match what's on the left or right of a given index?
+	 * Match substrings on the left or right of a given index, ignoring whitespace
 	 * Version: 4.0.11
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
@@ -10821,6 +10821,7 @@
 
 	function main(mode, str, position, originalWhatToMatch, originalOpts) {
 	  const defaults = {
+	    cb: undefined,
 	    i: false,
 	    trimBeforeMatching: false,
 	    trimCharsBeforeMatching: [],
@@ -18828,9 +18829,8 @@
 		"application/cals-1840": {
 		source: "iana"
 	},
-		"application/cap+xml": {
+		"application/captive+json": {
 		source: "iana",
-		charset: "UTF-8",
 		compressible: true
 	},
 		"application/cbor": {
@@ -19087,6 +19087,11 @@
 	},
 		"application/efi": {
 		source: "iana"
+	},
+		"application/emergencycalldata.cap+xml": {
+		source: "iana",
+		charset: "UTF-8",
+		compressible: true
 	},
 		"application/emergencycalldata.comment+xml": {
 		source: "iana",
@@ -19855,6 +19860,10 @@
 			"onepkg"
 		]
 	},
+		"application/opc-nodeset+xml": {
+		source: "iana",
+		compressible: true
+	},
 		"application/oscore": {
 		source: "iana"
 	},
@@ -20224,6 +20233,10 @@
 		source: "iana",
 		compressible: true
 	},
+		"application/sarif+json": {
+		source: "iana",
+		compressible: true
+	},
 		"application/sbe": {
 		source: "iana"
 	},
@@ -20578,6 +20591,12 @@
 		"application/tzif-leap": {
 		source: "iana"
 	},
+		"application/ubjson": {
+		compressible: false,
+		extensions: [
+			"ubj"
+		]
+	},
 		"application/ulpfec": {
 		source: "iana"
 	},
@@ -20594,7 +20613,10 @@
 	},
 		"application/urc-targetdesc+xml": {
 		source: "iana",
-		compressible: true
+		compressible: true,
+		extensions: [
+			"td"
+		]
 	},
 		"application/urc-uisocketdesc+xml": {
 		source: "iana",
@@ -21028,7 +21050,7 @@
 		"application/vnd.apple.keynote": {
 		source: "iana",
 		extensions: [
-			"keynote"
+			"key"
 		]
 	},
 		"application/vnd.apple.mpegurl": {
@@ -21416,6 +21438,12 @@
 		source: "iana",
 		compressible: false
 	},
+		"application/vnd.d3m-dataset": {
+		source: "iana"
+	},
+		"application/vnd.d3m-problem": {
+		source: "iana"
+	},
 		"application/vnd.dart": {
 		source: "iana",
 		compressible: true,
@@ -21438,7 +21466,10 @@
 		compressible: true
 	},
 		"application/vnd.dbf": {
-		source: "iana"
+		source: "iana",
+		extensions: [
+			"dbf"
+		]
 	},
 		"application/vnd.debian.binary-package": {
 		source: "iana"
@@ -23604,6 +23635,9 @@
 		source: "iana",
 		compressible: true
 	},
+		"application/vnd.oma.lwm2m+cbor": {
+		source: "iana"
+	},
 		"application/vnd.oma.lwm2m+json": {
 		source: "iana",
 		compressible: true
@@ -24275,7 +24309,10 @@
 		source: "iana"
 	},
 		"application/vnd.rar": {
-		source: "iana"
+		source: "iana",
+		extensions: [
+			"rar"
+		]
 	},
 		"application/vnd.realvnc.bed": {
 		source: "iana",
@@ -24667,6 +24704,10 @@
 	},
 		"application/vnd.swiftview-ics": {
 		source: "iana"
+	},
+		"application/vnd.sycle+xml": {
+		source: "iana",
+		compressible: true
 	},
 		"application/vnd.symbian.install": {
 		source: "apache",
@@ -26182,6 +26223,7 @@
 		source: "iana",
 		compressible: true,
 		extensions: [
+			"xsl",
 			"xslt"
 		]
 	},
@@ -26613,6 +26655,9 @@
 		"audio/smv0": {
 		source: "iana"
 	},
+		"audio/sofa": {
+		source: "iana"
+	},
 		"audio/sp-midi": {
 		source: "iana"
 	},
@@ -26635,6 +26680,9 @@
 		source: "iana"
 	},
 		"audio/tone": {
+		source: "iana"
+	},
+		"audio/tsvcis": {
 		source: "iana"
 	},
 		"audio/uemclip": {
@@ -27022,6 +27070,12 @@
 		"image/avcs": {
 		source: "iana"
 	},
+		"image/avif": {
+		compressible: false,
+		extensions: [
+			"avif"
+		]
+	},
 		"image/bmp": {
 		source: "iana",
 		compressible: true,
@@ -27206,6 +27260,12 @@
 			"ktx"
 		]
 	},
+		"image/ktx2": {
+		source: "iana",
+		extensions: [
+			"ktx2"
+		]
+	},
 		"image/naplps": {
 		source: "iana"
 	},
@@ -27384,6 +27444,12 @@
 		source: "iana",
 		extensions: [
 			"npx"
+		]
+	},
+		"image/vnd.pco.b16": {
+		source: "iana",
+		extensions: [
+			"b16"
 		]
 	},
 		"image/vnd.radiance": {
@@ -27658,6 +27724,9 @@
 		extensions: [
 			"3mf"
 		]
+	},
+		"model/e57": {
+		source: "iana"
 	},
 		"model/gltf+json": {
 		source: "iana",
@@ -27958,6 +28027,9 @@
 		"text/fwdred": {
 		source: "iana"
 	},
+		"text/gff3": {
+		source: "iana"
+	},
 		"text/grammar-ref-list": {
 		source: "iana"
 	},
@@ -28101,6 +28173,9 @@
 			"sgm"
 		]
 	},
+		"text/shaclc": {
+		source: "iana"
+	},
 		"text/shex": {
 		extensions: [
 			"shex"
@@ -28110,6 +28185,12 @@
 		extensions: [
 			"slim",
 			"slm"
+		]
+	},
+		"text/spdx": {
+		source: "iana",
+		extensions: [
+			"spdx"
 		]
 	},
 		"text/strings": {
@@ -28241,6 +28322,9 @@
 		extensions: [
 			"gv"
 		]
+	},
+		"text/vnd.hans": {
+		source: "iana"
 	},
 		"text/vnd.hgl": {
 		source: "iana"

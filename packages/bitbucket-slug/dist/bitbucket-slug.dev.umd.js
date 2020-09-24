@@ -31,6 +31,21 @@
 
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
+  function getAugmentedNamespace(n) {
+  	if (n.__esModule) return n;
+  	var a = Object.defineProperty({}, '__esModule', {value: true});
+  	Object.keys(n).forEach(function (k) {
+  		var d = Object.getOwnPropertyDescriptor(n, k);
+  		Object.defineProperty(a, k, d.get ? d : {
+  			enumerable: true,
+  			get: function () {
+  				return n[k];
+  			}
+  		});
+  	});
+  	return a;
+  }
+
   /**
    * lodash (Custom Build) <https://lodash.com/>
    * Build: `lodash modularize exports="npm" -o ./`
@@ -2262,6 +2277,8 @@
   	"64260": "ffllig;"
   };
 
+  var punycode$2 = /*@__PURE__*/getAugmentedNamespace(punycode$1);
+
   var encode_1 = encode$1;
 
   function encode$1(str, opts) {
@@ -2280,12 +2297,12 @@
       '>': true,
       '&': true
     };
-    var codePoints = punycode$1.ucs2.decode(str);
+    var codePoints = punycode$2.ucs2.decode(str);
     var chars = [];
 
     for (var i = 0; i < codePoints.length; i++) {
       var cc = codePoints[i];
-      var c = punycode$1.ucs2.encode([cc]);
+      var c = punycode$2.ucs2.encode([cc]);
       var e = revEntities[cc];
 
       if (e && (cc >= 127 || special[c]) && !numeric) {
@@ -4651,9 +4668,9 @@
       var m;
 
       if (m = /^#(\d+);?$/.exec(match)) {
-        return punycode$1.ucs2.encode([parseInt(m[1], 10)]);
+        return punycode$2.ucs2.encode([parseInt(m[1], 10)]);
       } else if (m = /^#[Xx]([A-Fa-f0-9]+);?/.exec(match)) {
-        return punycode$1.ucs2.encode([parseInt(m[1], 16)]);
+        return punycode$2.ucs2.encode([parseInt(m[1], 16)]);
       } else {
         // named entity
         var hasSemi = /;$/.test(match);
@@ -4661,7 +4678,7 @@
         var target = entities[withoutSemi] || hasSemi && entities[match];
 
         if (typeof target === 'number') {
-          return punycode$1.ucs2.encode([target]);
+          return punycode$2.ucs2.encode([target]);
         } else if (typeof target === 'string') {
           return target;
         } else {

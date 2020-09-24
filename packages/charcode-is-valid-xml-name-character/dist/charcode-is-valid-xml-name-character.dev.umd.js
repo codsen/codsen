@@ -13,6 +13,22 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.charcodeIsValidXmlNameCharacter = {}));
 }(this, (function (exports) { 'use strict';
 
+  function _typeof(obj) {
+    "@babel/helpers - typeof";
+
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof = function (obj) {
+        return typeof obj;
+      };
+    } else {
+      _typeof = function (obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      };
+    }
+
+    return _typeof(obj);
+  }
+
   function _defineProperty(obj, key, value) {
     if (key in obj) {
       Object.defineProperty(obj, key, {
@@ -70,8 +86,6 @@
    * License: MIT
    * Homepage: https://codsen.com/os/ranges-is-index-within/
    */
-  var isArr = Array.isArray;
-
   function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
     var defaults = {
       inclusiveRangeEnds: false,
@@ -80,7 +94,11 @@
 
     var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
-    if (!isArr(rangesArr)) {
+    if (!Number.isInteger(originalIndex)) {
+      throw new Error("ranges-is-index-within: [THROW_ID_01] the first input argument should be string index, a natural number (or zero). It was given as ".concat(originalIndex, " (type ").concat(_typeof(originalIndex), ")"));
+    }
+
+    if (!Array.isArray(rangesArr)) {
       return false;
     }
 

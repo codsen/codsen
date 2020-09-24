@@ -1,6 +1,6 @@
 /**
  * string-left-right
- * Look what's to the left or the right of a given index within a string
+ * Looks up the first non-whitespace character to the left/right of a given index
  * Version: 2.3.28
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
@@ -261,11 +261,11 @@
 
   function createCommonjsModule(fn, basedir, module) {
   	return module = {
-  	  path: basedir,
-  	  exports: {},
-  	  require: function (path, base) {
-        return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
-      }
+  		path: basedir,
+  		exports: {},
+  		require: function (path, base) {
+  			return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
+  		}
   	}, fn(module, module.exports), module.exports;
   }
 
