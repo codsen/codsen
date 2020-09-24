@@ -28,6 +28,12 @@ const inquirer = require("inquirer");
 // prettier is for testing the examples
 const prettier = require("prettier");
 
+function decodeContent(str) {
+  if (typeof str !== "string") {
+    return str;
+  }
+  return str.replace(/&#x7B;/g, "{").replace(/&#x7D;/g, "}");
+}
 function pull(arg1, arg2) {
   return pull1(arg1, arg2, { caseSensitive: false });
 }
@@ -784,7 +790,7 @@ async function writePackageJson(receivedPackageJsonObj) {
           (pack.name.startsWith("gulp-") || pack.name.startsWith("eleventy-")))
       )
     ) {
-      console.log(`787 lect: we'll delete key "${key}" from dev dependencies`);
+      console.log(`793 lect: we'll delete key "${key}" from dev dependencies`);
       delete receivedPackageJsonObj.devDependencies[key];
     } else if (
       Object.prototype.hasOwnProperty.call(lectrcDevDeps, key) &&
@@ -1121,7 +1127,7 @@ ${
   examples && examples["_quickTake.js"] && examples["_quickTake.js"].content
     ? `## Quick Take\n
 \`\`\`js
-${examples["_quickTake.js"].content}
+${decodeContent(examples["_quickTake.js"].content)}
 \`\`\`\n\n`
     : ""
 }## Documentation
@@ -1260,6 +1266,10 @@ const readFiles = async (dirname) => {
       // console.log(
       //   `1258 lect: ${`\u001b[${33}m${`content`}\u001b[${39}m`} = ${content}`
       // );
+
+      // encode curly braces because Eleventy will try to parse them
+      // and all examples will break
+      content = content.replace(/{/g, "&#x7B;").replace(/}/g, "&#x7D;");
 
       // lint the "content" again because we messed with the source code:
       prettier.resolveConfig("../../.prettierrc").then((options) => {
