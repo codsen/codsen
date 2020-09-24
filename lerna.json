@@ -9,7 +9,6 @@
     "**/CHANGELOG.md",
     "**/node_modules/**",
     "**/package.json",
-    "**/*.md",
     "**/perf/**"
   ],
   "lifecycle": {
