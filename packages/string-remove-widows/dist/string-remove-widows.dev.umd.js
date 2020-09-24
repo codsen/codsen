@@ -1,7 +1,7 @@
 /**
  * string-remove-widows
  * Helps to prevent widow words in a text
- * Version: 1.6.14
+ * Version: 1.6.15
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-remove-widows/
@@ -3152,7 +3152,7 @@
     return str;
   }
 
-  var version = "1.6.14";
+  var version = "1.6.15";
 
   // consts
   var rawnbsp = "\xA0";

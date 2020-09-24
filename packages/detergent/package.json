@@ -1,6 +1,6 @@
 {
   "name": "detergent",
-  "version": "5.11.4",
+  "version": "5.11.5",
   "description": "Extracts, cleans and encodes text",
   "keywords": [
     "brief",
@@ -113,14 +113,14 @@
     "ranges-apply": "^3.2.1",
     "ranges-invert": "^2.1.47",
     "ranges-process-outside": "^2.2.33",
-    "ranges-push": "^3.7.19",
+    "ranges-push": "^3.7.20",
     "string-apostrophes": "^1.2.28",
     "string-collapse-white-space": "^5.2.29",
-    "string-fix-broken-named-entities": "^3.0.8",
+    "string-fix-broken-named-entities": "^3.0.9",
     "string-left-right": "^2.3.29",
     "string-range-expander": "^1.11.9",
-    "string-remove-widows": "^1.6.14",
-    "string-strip-html": "^6.0.1",
+    "string-remove-widows": "^1.6.15",
+    "string-strip-html": "^6.0.2",
     "string-trim-spaces-only": "^2.8.21"
   },
   "devDependencies": {
@@ -138,7 +138,7 @@
     "benchmark": "^2.1.4",
     "eslint": "^7.9.0",
     "is-ci": "^2.0.0",
-    "lect": "^0.14.1",
+    "lect": "^0.14.2",
     "lodash.clonedeep": "^4.5.0",
     "object-boolean-combinations": "^2.11.65",
     "object-path": "^0.11.4",

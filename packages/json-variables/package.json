@@ -1,6 +1,6 @@
 {
   "name": "json-variables",
-  "version": "8.2.15",
+  "version": "8.2.16",
   "description": "Resolves custom-marked, cross-referenced paths in parsed JSON",
   "keywords": [
     "comb",
@@ -109,10 +109,10 @@
     "matcher": "^3.0.0",
     "object-path": "^0.11.4",
     "ranges-apply": "^3.2.1",
-    "ranges-push": "^3.7.19",
+    "ranges-push": "^3.7.20",
     "string-find-heads-tails": "^3.16.14",
     "string-match-left-right": "^4.0.12",
-    "string-remove-duplicate-heads-tails": "^3.0.70"
+    "string-remove-duplicate-heads-tails": "^3.0.71"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
@@ -127,7 +127,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.9.0",
-    "lect": "^0.14.1",
+    "lect": "^0.14.2",
     "rollup": "^2.28.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

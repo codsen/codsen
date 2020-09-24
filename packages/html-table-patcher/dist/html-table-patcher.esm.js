@@ -1,7 +1,7 @@
 /**
  * html-table-patcher
  * Visual helper to place templating code around table tags into correct places
- * Version: 2.0.9
+ * Version: 2.0.10
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/html-table-patcher/
@@ -13,7 +13,7 @@ import apply from 'ranges-apply';
 import traverse from 'ast-monkey-traverse-with-lookahead';
 import htmlCommentRegex from 'html-comment-regex';
 
-var version = "2.0.9";
+var version = "2.0.10";
 
 const ranges = new Ranges();
 function isStr(something) {
