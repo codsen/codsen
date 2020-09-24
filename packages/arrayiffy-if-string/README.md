@@ -27,6 +27,21 @@
 npm i arrayiffy-if-string
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import arrayiffy from "arrayiffy-if-string";
+
+assert.deepEqual(arrayiffy("aaa"), ["aaa"]);
+
+assert.deepEqual(arrayiffy(""), []);
+
+assert.equal(arrayiffy(true), true);
+
+assert.equal(arrayiffy(), undefined);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/arrayiffy-if-string/) for a full description of the API and examples.

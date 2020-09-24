@@ -1273,7 +1273,7 @@ const readFiles = async (dirname) => {
 
       // lint the "content" again because we messed with the source code:
       prettier.resolveConfig("../../.prettierrc").then((options) => {
-        prettier.check(content, { ...options, parser: "babel" });
+        prettier.check(decodeContent(content), { ...options, parser: "babel" });
       });
 
       acc[filename] = {

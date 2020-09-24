@@ -27,6 +27,21 @@
 npm i array-pull-all-with-glob
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import pullAllWithGlob from "array-pull-all-with-glob";
+
+assert.deepEqual(
+  pullAllWithGlob(
+    ["keep_me", "name-1", "name-2", "name-jhkgdhgkhdfghdkghfdk"],
+    ["name-*"]
+  ),
+  ["keep_me"]
+);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/array-pull-all-with-glob/) for a full description of the API and examples.

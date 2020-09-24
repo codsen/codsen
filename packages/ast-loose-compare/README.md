@@ -27,6 +27,33 @@
 npm i ast-loose-compare
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import looseCompare from "ast-loose-compare";
+
+assert.equal(
+  looseCompare(
+    {
+      a: {
+        b: "d",
+        c: [],
+        e: "f",
+        g: "h",
+      },
+    },
+    {
+      a: {
+        b: "d",
+        c: [],
+      },
+    }
+  ),
+  true
+);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/ast-loose-compare/) for a full description of the API and examples.

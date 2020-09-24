@@ -27,6 +27,33 @@
 npm i ast-contains-only-empty-space
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import containsOnlyEmptySpace from "ast-contains-only-empty-space";
+
+assert.equal(
+  containsOnlyEmptySpace({
+    a: [
+      {
+        x: {
+          y: [
+            {
+              z: ["\n"],
+            },
+          ],
+        },
+      },
+    ],
+    b: ["\t\t\t  "],
+    c: ["\n \n\n"],
+    d: ["\t   "],
+  }),
+  true
+);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/ast-contains-only-empty-space/) for a full description of the API and examples.

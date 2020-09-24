@@ -27,6 +27,34 @@
 npm i ast-compare
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import compare from "ast-compare";
+
+// Find out, does an object/array/string/nested-mix is a subset or equal to another input:
+assert.equal(
+  compare(
+    {
+      a: {
+        b: "d",
+        c: [],
+        e: "f",
+        g: "h",
+      },
+    },
+    {
+      a: {
+        b: "d",
+        c: [],
+      },
+    }
+  ),
+  true
+);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/ast-compare/) for a full description of the API and examples.
