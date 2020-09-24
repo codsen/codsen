@@ -1,6 +1,6 @@
 {
   "name": "detect-is-it-html-or-xhtml",
-  "version": "3.9.60",
+  "version": "3.9.61",
   "description": "Answers, is the string input string more an HTML or XHTML (or neither)",
   "keywords": [
     "check",
@@ -112,7 +112,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.9.0",
-    "lect": "^0.14.0",
+    "lect": "^0.14.1",
     "rollup": "^2.28.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

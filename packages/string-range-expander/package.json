@@ -1,6 +1,6 @@
 {
   "name": "string-range-expander",
-  "version": "1.11.8",
+  "version": "1.11.9",
   "description": "Expands string index ranges within whitespace boundaries until letters are met",
   "keywords": [
     "expand",
@@ -107,7 +107,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.9.0",
-    "lect": "^0.14.0",
+    "lect": "^0.14.1",
     "rollup": "^2.28.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

@@ -1,7 +1,7 @@
 /**
  * ranges-invert
  * Invert string index ranges
- * Version: 2.1.46
+ * Version: 2.1.47
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-invert/
@@ -114,7 +114,7 @@
   /**
    * ranges-sort
    * Sort string index ranges
-   * Version: 3.13.0
+   * Version: 3.13.1
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/ranges-sort/

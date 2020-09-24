@@ -1,7 +1,7 @@
 /**
  * generate-atomic-css
  * Generate Atomic CSS
- * Version: 1.2.49
+ * Version: 1.2.50
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/generate-atomic-css/
@@ -9,7 +9,7 @@
 
 import { right, left, leftSeq, rightSeq } from 'string-left-right';
 
-var version = "1.2.49";
+var version = "1.2.50";
 
 const isArr = Array.isArray;
 function isStr(something) {

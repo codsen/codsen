@@ -1,6 +1,6 @@
 {
   "name": "string-remove-widows",
-  "version": "1.6.13",
+  "version": "1.6.14",
   "description": "Helps to prevent widow words in a text",
   "keywords": [
     "against",
@@ -103,12 +103,12 @@
     }
   },
   "dependencies": {
-    "arrayiffy-if-string": "^3.11.35",
+    "arrayiffy-if-string": "^3.11.36",
     "lodash.isplainobject": "^4.0.6",
-    "ranges-apply": "^3.2.0",
-    "ranges-push": "^3.7.18",
-    "string-left-right": "^2.3.28",
-    "string-match-left-right": "^4.0.11"
+    "ranges-apply": "^3.2.1",
+    "ranges-push": "^3.7.19",
+    "string-left-right": "^2.3.29",
+    "string-match-left-right": "^4.0.12"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
@@ -124,7 +124,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.9.0",
-    "lect": "^0.14.0",
+    "lect": "^0.14.1",
     "rollup": "^2.28.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

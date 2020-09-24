@@ -1,6 +1,6 @@
 {
   "name": "object-all-values-equal-to",
-  "version": "1.8.23",
+  "version": "1.8.24",
   "description": "Does the AST/nested-plain-object/array/whatever contain only one kind of value?",
   "keywords": [
     "all",
@@ -113,7 +113,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.9.0",
-    "lect": "^0.14.0",
+    "lect": "^0.14.1",
     "rollup": "^2.28.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

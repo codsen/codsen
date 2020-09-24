@@ -1,6 +1,6 @@
 {
   "name": "ast-monkey-traverse",
-  "version": "1.12.17",
+  "version": "1.12.18",
   "description": "Utility library to traverse AST",
   "keywords": [
     "ast",
@@ -125,7 +125,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.9.0",
-    "lect": "^0.14.0",
+    "lect": "^0.14.1",
     "lodash.isequal": "^4.5.0",
     "object-path": "^0.11.4",
     "rollup": "^2.28.1",

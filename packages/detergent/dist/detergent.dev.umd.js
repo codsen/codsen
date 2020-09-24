@@ -1,7 +1,7 @@
 /**
  * detergent
  * Extracts, cleans and encodes text
- * Version: 5.11.3
+ * Version: 5.11.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/detergent/
@@ -2662,7 +2662,7 @@
   /**
    * all-named-html-entities
    * List of all named HTML entities
-   * Version: 1.3.4
+   * Version: 1.3.5
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/all-named-html-entities/
@@ -10573,7 +10573,7 @@
   /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-   * Version: 3.11.35
+   * Version: 3.11.36
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -10907,7 +10907,7 @@
   /**
    * string-collapse-leading-whitespace
    * Collapse the leading and trailing whitespace of a string
-   * Version: 2.0.24
+   * Version: 3.0.0
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
@@ -11001,7 +11001,7 @@
   /**
    * ranges-sort
    * Sort string index ranges
-   * Version: 3.13.0
+   * Version: 3.13.1
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/ranges-sort/
@@ -12718,7 +12718,7 @@
   /**
    * string-trim-spaces-only
    * Like String.trim() but you can choose granularly what to trim
-   * Version: 2.8.20
+   * Version: 2.8.21
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/string-trim-spaces-only/
@@ -23541,12 +23541,12 @@
     })(commonjsGlobal);
   });
 
-  var version$1 = "5.11.3";
+  var version$1 = "5.11.4";
 
   /**
    * html-entities-not-email-friendly
    * All HTML entities which are not email template friendly
-   * Version: 0.2.7
+   * Version: 0.2.8
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/html-entities-not-email-friendly/
@@ -25398,7 +25398,7 @@
   /**
    * string-range-expander
    * Expands string index ranges within whitespace boundaries until letters are met
-   * Version: 1.11.8
+   * Version: 1.11.9
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/string-range-expander/

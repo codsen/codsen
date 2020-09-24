@@ -1,6 +1,6 @@
 {
   "name": "ranges-process-outside",
-  "version": "2.2.32",
+  "version": "2.2.33",
   "description": "Iterate string considering ranges, as if they were already applied",
   "keywords": [
     "array",
@@ -91,8 +91,8 @@
     }
   },
   "dependencies": {
-    "ranges-crop": "^2.1.0",
-    "ranges-invert": "^2.1.46",
+    "ranges-crop": "^2.1.1",
+    "ranges-invert": "^2.1.47",
     "runes": "^0.4.3"
   },
   "devDependencies": {
@@ -108,7 +108,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.9.0",
-    "lect": "^0.14.0",
+    "lect": "^0.14.1",
     "rollup": "^2.28.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

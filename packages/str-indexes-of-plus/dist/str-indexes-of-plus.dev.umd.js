@@ -1,7 +1,7 @@
 /**
  * str-indexes-of-plus
  * Like indexOf but returns array and counts per-grapheme
- * Version: 2.10.8
+ * Version: 2.10.9
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/str-indexes-of-plus/

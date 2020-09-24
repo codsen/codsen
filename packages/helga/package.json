@@ -1,6 +1,6 @@
 {
   "name": "helga",
-  "version": "1.1.37",
+  "version": "1.1.38",
   "description": "Your next best friend when editing complex nested code",
   "keywords": [
     "api",
@@ -118,7 +118,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.9.0",
-    "lect": "^0.14.0",
+    "lect": "^0.14.1",
     "rollup": "^2.28.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",
