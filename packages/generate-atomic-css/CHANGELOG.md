@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.2.50](https://gitlab.com/codsen/codsen/compare/generate-atomic-css@1.2.49...generate-atomic-css@1.2.50) (2020-09-24)
-
-**Note:** Version bump only for package generate-atomic-css
-
-
-
-
-
 ## 1.2.3 (2019-07-24)
 
 ### Bug Fixes

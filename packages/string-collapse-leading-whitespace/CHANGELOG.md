@@ -3,21 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.0.0](https://gitlab.com/codsen/codsen/compare/string-collapse-leading-whitespace@2.0.24...string-collapse-leading-whitespace@3.0.0) (2020-09-24)
-
+## 3.0.0 (2020-09-24)
 
 ### Features
 
-* properly treat all kinds of line endings ([aa197c2](https://gitlab.com/codsen/codsen/commit/aa197c22315f748ee3a4719d9a815af0963f72fd))
-
+- properly treat all kinds of line endings ([aa197c2](https://gitlab.com/codsen/codsen/commit/aa197c22315f748ee3a4719d9a815af0963f72fd))
 
 ### BREAKING CHANGES
 
-* it's a fix to support Windows line endings, CRLF, but no changes API-wise
-
-
-
-
+- it's a fix to support Windows line endings, CRLF, but no changes API-wise
 
 ## 2.0.0 (2019-09-14)
 

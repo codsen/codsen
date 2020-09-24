@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.15.0](https://gitlab.com/codsen/codsen/compare/ranges-is-index-within@1.14.38...ranges-is-index-within@1.15.0) (2020-09-24)
-
+## 1.15.0 (2020-09-24)
 
 ### Features
 
-* add safeguards against wrong input types ([2949e4d](https://gitlab.com/codsen/codsen/commit/2949e4dbad8cac2c97996401b21fafffc83aff6e))
-
-
-
-
+- add safeguards against wrong input types ([2949e4d](https://gitlab.com/codsen/codsen/commit/2949e4dbad8cac2c97996401b21fafffc83aff6e))
 
 ## 1.14.0 (2019-06-01)
 
