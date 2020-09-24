@@ -21,6 +21,7 @@
     "build": "lerna run build --bail && lerna run ci_test --bail && npm run readme:generate",
     "build:just": "lerna run build --bail",
     "cm": "git-cz -n",
+    "changed": "lerna changed",
     "format": "lerna run format",
     "fresh": "npm run wipe && npm run bootstrap && npm run build",
     "info": "node ./scripts/generate-info.js",
