@@ -322,12 +322,27 @@
 
   function createCommonjsModule(fn, basedir, module) {
   	return module = {
-  	  path: basedir,
-  	  exports: {},
-  	  require: function (path, base) {
-        return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
-      }
+  		path: basedir,
+  		exports: {},
+  		require: function (path, base) {
+  			return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
+  		}
   	}, fn(module, module.exports), module.exports;
+  }
+
+  function getAugmentedNamespace(n) {
+  	if (n.__esModule) return n;
+  	var a = Object.defineProperty({}, '__esModule', {value: true});
+  	Object.keys(n).forEach(function (k) {
+  		var d = Object.getOwnPropertyDescriptor(n, k);
+  		Object.defineProperty(a, k, d.get ? d : {
+  			enumerable: true,
+  			get: function () {
+  				return n[k];
+  			}
+  		});
+  	});
+  	return a;
   }
 
   function commonjsRequire () {
@@ -10705,6 +10720,7 @@
 
   function main(mode, str, position, originalWhatToMatch, originalOpts) {
     var defaults = {
+      cb: undefined,
       i: false,
       trimBeforeMatching: false,
       trimCharsBeforeMatching: [],
@@ -10898,108 +10914,85 @@
    */
   var rawNbsp = "\xA0";
 
-  function push(arr) {
-    var leftSide = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-    var charToPush = arguments.length > 2 ? arguments[2] : undefined;
+  function collapseLeadingWhitespace(str) {
+    var originallineBreakLimit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
 
-    if (!charToPush.trim() && (!arr.length || charToPush === "\n" || charToPush === rawNbsp || (leftSide ? arr[arr.length - 1] : arr[0]) !== " ") && (!arr.length || (leftSide ? arr[arr.length - 1] : arr[0]) !== "\n" || charToPush === "\n" || charToPush === rawNbsp)) {
-      if (leftSide) {
-        if ((charToPush === "\n" || charToPush === rawNbsp) && arr.length && arr[arr.length - 1] === " ") {
-          while (arr.length && arr[arr.length - 1] === " ") {
-            arr.pop();
-          }
-        }
-
-        arr.push(charToPush === rawNbsp || charToPush === "\n" ? charToPush : " ");
-      } else {
-        if ((charToPush === "\n" || charToPush === rawNbsp) && arr.length && arr[0] === " ") {
-          while (arr.length && arr[0] === " ") {
-            arr.shift();
-          }
-        }
-
-        arr.unshift(charToPush === rawNbsp || charToPush === "\n" ? charToPush : " ");
-      }
+    function reverse(s) {
+      return Array.from(s).reverse().join("");
     }
-  }
 
-  function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
-    if (typeof str === "string" && str.length) {
-      var windowsEol = false;
+    function prep(whitespaceChunk, limit, trailing) {
+      var firstBreakChar = trailing ? "\n" : "\r";
+      var secondBreakChar = trailing ? "\r" : "\n";
 
-      if (str.includes("\r\n")) {
-        windowsEol = true;
+      if (!whitespaceChunk) {
+        return whitespaceChunk;
       }
 
-      var limitLinebreaksCount;
+      var crlfCount = 0;
+      var res = "";
 
-      if (!originalLimitLinebreaksCount || typeof originalLimitLinebreaksCount !== "number") {
-        limitLinebreaksCount = 1;
-      } else {
-        limitLinebreaksCount = originalLimitLinebreaksCount;
-      }
-
-      var limit;
-
-      if (str.trim() === "") {
-        var resArr = [];
-        limit = limitLinebreaksCount;
-        Array.from(str).forEach(function (char) {
-          if (char !== "\n" || limit) {
-            if (char === "\n") {
-              limit -= 1;
-            }
-
-            push(resArr, true, char);
-          }
-        });
-
-        while (resArr.length > 1 && resArr[resArr.length - 1] === " ") {
-          resArr.pop();
+      for (var i = 0, len = whitespaceChunk.length; i < len; i++) {
+        if (whitespaceChunk[i] === firstBreakChar || whitespaceChunk[i] === secondBreakChar && whitespaceChunk[i - 1] !== firstBreakChar) {
+          crlfCount++;
         }
 
-        return resArr.join("");
+        if ("\r\n".includes(whitespaceChunk[i]) || whitespaceChunk[i] === rawNbsp) {
+          if (whitespaceChunk[i] === rawNbsp) {
+            res += whitespaceChunk[i];
+          } else if (whitespaceChunk[i] === firstBreakChar) {
+            if (crlfCount <= limit) {
+              res += whitespaceChunk[i];
+
+              if (whitespaceChunk[i + 1] === secondBreakChar) {
+                res += whitespaceChunk[i + 1];
+                i++;
+              }
+            }
+          } else if (whitespaceChunk[i] === secondBreakChar && (!whitespaceChunk[i - 1] || whitespaceChunk[i - 1] !== firstBreakChar) && crlfCount <= limit) {
+            res += whitespaceChunk[i];
+          }
+        } else {
+          if (!whitespaceChunk[i + 1] && !crlfCount) {
+            res += " ";
+          }
+        }
       }
 
-      var startCharacter = [];
-      limit = limitLinebreaksCount;
+      return res;
+    }
 
-      if (str[0].trim() === "") {
+    if (typeof str === "string" && str.length) {
+      var lineBreakLimit = 1;
+
+      if (typeof +originallineBreakLimit === "number" && Number.isInteger(+originallineBreakLimit) && +originallineBreakLimit >= 0) {
+        lineBreakLimit = +originallineBreakLimit;
+      }
+
+      var frontPart = "";
+      var endPart = "";
+
+      if (!str.trim()) {
+        frontPart = str;
+      } else if (!str[0].trim()) {
         for (var i = 0, len = str.length; i < len; i++) {
           if (str[i].trim()) {
+            frontPart = str.slice(0, i);
             break;
-          } else if (str[i] !== "\n" || limit) {
-            if (str[i] === "\n") {
-              limit -= 1;
-            }
-
-            push(startCharacter, true, str[i]);
           }
         }
       }
 
-      var endCharacter = [];
-      limit = limitLinebreaksCount;
-
-      if (str.slice(-1).trim() === "") {
+      if (str.trim() && (str.slice(-1).trim() === "" || str.slice(-1) === rawNbsp)) {
         for (var _i = str.length; _i--;) {
           if (str[_i].trim()) {
+            endPart = str.slice(_i + 1);
             break;
-          } else if (str[_i] !== "\n" || limit) {
-            if (str[_i] === "\n") {
-              limit -= 1;
-            }
-
-            push(endCharacter, false, str[_i]);
           }
         }
       }
 
-      if (!windowsEol) {
-        return startCharacter.join("") + str.trim() + endCharacter.join("");
-      }
-
-      return "".concat(startCharacter.join("")).concat(str.trim()).concat(endCharacter.join("")).replace(/\n/g, "\r\n");
+      return "".concat(prep(frontPart, lineBreakLimit, false)).concat(str.trim()).concat(reverse(prep(reverse(endPart), lineBreakLimit, true)));
     }
 
     return str;
@@ -16177,6 +16170,8 @@
   	"64260": "ffllig;"
   };
 
+  var punycode$2 = /*@__PURE__*/getAugmentedNamespace(punycode$1);
+
   var encode_1 = encode$1;
 
   function encode$1(str, opts) {
@@ -16195,12 +16190,12 @@
       '>': true,
       '&': true
     };
-    var codePoints = punycode$1.ucs2.decode(str);
+    var codePoints = punycode$2.ucs2.decode(str);
     var chars = [];
 
     for (var i = 0; i < codePoints.length; i++) {
       var cc = codePoints[i];
-      var c = punycode$1.ucs2.encode([cc]);
+      var c = punycode$2.ucs2.encode([cc]);
       var e = revEntities[cc];
 
       if (e && (cc >= 127 || special[c]) && !numeric) {
@@ -18566,9 +18561,9 @@
       var m;
 
       if (m = /^#(\d+);?$/.exec(match)) {
-        return punycode$1.ucs2.encode([parseInt(m[1], 10)]);
+        return punycode$2.ucs2.encode([parseInt(m[1], 10)]);
       } else if (m = /^#[Xx]([A-Fa-f0-9]+);?/.exec(match)) {
-        return punycode$1.ucs2.encode([parseInt(m[1], 16)]);
+        return punycode$2.ucs2.encode([parseInt(m[1], 16)]);
       } else {
         // named entity
         var hasSemi = /;$/.test(match);
@@ -18576,7 +18571,7 @@
         var target = entities[withoutSemi] || hasSemi && entities[match];
 
         if (typeof target === 'number') {
-          return punycode$1.ucs2.encode([target]);
+          return punycode$2.ucs2.encode([target]);
         } else if (typeof target === 'string') {
           return target;
         } else {

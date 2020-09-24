@@ -27,6 +27,16 @@
 npm i detergent
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import { det, opts, version } from "detergent";
+
+// on default setting, widow removal and encoding are enabled:
+assert.equal(det("clean this text £").res, "clean this text&nbsp;&pound;");
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/detergent/) for a full description of the API and examples.

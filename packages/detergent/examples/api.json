@@ -1,0 +1,1 @@
+{"_quickTake.js":{"title":"Quick Take","content":"import { strict as assert } from \"assert\";\nimport { det, opts, version } from \"detergent\";\n\n// on default setting, widow removal and encoding are enabled:\nassert.equal(det(\"clean this text £\").res, \"clean this text&nbsp;&pound;\");"}}
