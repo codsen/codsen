@@ -27,6 +27,28 @@
 npm i html-crush
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import { crush, defaults, version } from "html-crush";
+
+assert.equal(
+  crush(
+    `<table width="100" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+      hi
+    </td>
+  </tr>
+</table>`,
+    { removeLineBreaks: true }
+  ).result,
+  `<table width="100" border="0" cellpadding="0" cellspacing="0"><tr><td> hi
+</td></tr></table>`
+);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/html-crush/) for a full description of the API and examples.
