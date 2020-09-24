@@ -1,7 +1,7 @@
 {
   "name": "json-variables",
   "version": "8.2.14",
-  "description": "It's like SASS variables, but for JSON",
+  "description": "Resolves custom-marked, cross-referenced paths in parsed JSON",
   "keywords": [
     "comb",
     "files",

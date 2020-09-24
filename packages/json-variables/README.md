@@ -1,6 +1,6 @@
 # json-variables
 
-> It's like SASS variables, but for JSON
+> Resolves custom-marked, cross-referenced paths in parsed JSON
 
 <div class="package-badges">
   <a href="https://www.npmjs.com/package/json-variables" rel="nofollow noreferrer noopener">
@@ -25,6 +25,28 @@
 
 ```bash
 npm i json-variables
+```
+
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import jVar from "json-variables";
+
+assert.deepEqual(
+  jVar({
+    a: "some text %%_var1.key1.0_%% more text %%_var2.key2.key3.1_%%",
+    b: "something",
+    var1: { key1: ["value1"] },
+    var2: { key2: { key3: ["", "value2"] } },
+  }),
+  {
+    a: "some text value1 more text value2",
+    b: "something",
+    var1: { key1: ["value1"] },
+    var2: { key2: { key3: ["", "value2"] } },
+  }
+);
 ```
 
 ## Documentation

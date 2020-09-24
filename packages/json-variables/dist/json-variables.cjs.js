@@ -1,6 +1,6 @@
 /**
  * json-variables
- * It's like SASS variables, but for JSON
+ * Resolves custom-marked, cross-referenced paths in parsed JSON
  * Version: 8.2.14
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
