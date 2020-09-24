@@ -1,7 +1,7 @@
 {
   "name": "ast-delete-object",
   "version": "1.8.75",
-  "description": "Delete all plain objects that contain a certain key/value pair",
+  "description": "Delete all plain objects in AST if they contain a certain key/value pair",
   "keywords": [
     "ast",
     "delete",

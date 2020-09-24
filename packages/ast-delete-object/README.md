@@ -1,6 +1,6 @@
 # ast-delete-object
 
-> Delete all plain objects that contain a certain key/value pair
+> Delete all plain objects in AST if they contain a certain key/value pair
 
 <div class="package-badges">
   <a href="https://www.npmjs.com/package/ast-delete-object" rel="nofollow noreferrer noopener">
@@ -25,6 +25,34 @@
 
 ```bash
 npm i ast-delete-object
+```
+
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import deleteObj from "ast-delete-object";
+
+// if all keys in source object match target object's keys, the
+// source object gets deleted:
+assert.deepEqual(
+  deleteObj(
+    [
+      "elem1",
+      {
+        findme1: "zzz",
+        findme2: "yyy",
+        somethingelse: "qqq",
+      },
+      "elem2",
+    ],
+    {
+      findme1: "zzz",
+      findme2: "yyy",
+    }
+  ),
+  ["elem1", "elem2"]
+);
 ```
 
 ## Documentation
