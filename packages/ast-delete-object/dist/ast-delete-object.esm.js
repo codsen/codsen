@@ -1,6 +1,6 @@
 /**
  * ast-delete-object
- * Delete all plain objects that contain a certain key/value pair
+ * Delete all plain objects in AST if they contain a certain key/value pair
  * Version: 1.8.75
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT

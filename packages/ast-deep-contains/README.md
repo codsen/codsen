@@ -63,6 +63,8 @@ deepContains(
   }
 );
 
+// imagine instead of pushing pairs into array, you fed them into assert
+// function in unit tests:
 assert.deepEqual(gathered, [
   ["1", "1"],
   ["2", "2"],
