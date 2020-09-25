@@ -1,7 +1,7 @@
 /**
  * is-media-descriptor
  * Is given string a valid media descriptor (including media query)?
- * Version: 1.2.17
+ * Version: 1.2.18
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-media-descriptor/
@@ -213,7 +213,7 @@
   /**
    * string-process-comma-separated
    * Extracts chunks from possibly comma or whatever-separated string
-   * Version: 1.2.12
+   * Version: 1.2.13
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/string-process-comma-separated/

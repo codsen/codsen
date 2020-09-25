@@ -1,6 +1,6 @@
 {
   "name": "email-all-chars-within-ascii",
-  "version": "2.9.70",
+  "version": "2.9.71",
   "description": "Scans all characters within a string and checks are they within ASCII range",
   "keywords": [
     "7bit",
@@ -95,7 +95,7 @@
     }
   },
   "dependencies": {
-    "check-types-mini": "^5.7.71",
+    "check-types-mini": "^5.7.72",
     "lodash.isplainobject": "^4.0.6"
   },
   "devDependencies": {
@@ -111,7 +111,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.9.0",
-    "lect": "^0.14.1",
+    "lect": "^0.14.3",
     "rollup": "^2.28.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

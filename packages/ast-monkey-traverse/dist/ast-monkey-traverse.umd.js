@@ -1,7 +1,7 @@
 /**
  * ast-monkey-traverse
  * Utility library to traverse AST
- * Version: 1.12.18
+ * Version: 1.12.19
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-traverse/

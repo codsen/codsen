@@ -1,7 +1,7 @@
 /**
  * is-html-attribute-closing
  * Is a character on a given index a closing of an HTML attribute?
- * Version: 1.2.6
+ * Version: 1.2.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-html-attribute-closing/

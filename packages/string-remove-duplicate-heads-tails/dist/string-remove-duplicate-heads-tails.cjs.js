@@ -1,7 +1,7 @@
 /**
  * string-remove-duplicate-heads-tails
  * Detect and (recursively) remove head and tail wrappings around the input string
- * Version: 3.0.71
+ * Version: 3.0.72
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-remove-duplicate-heads-tails/

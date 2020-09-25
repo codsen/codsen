@@ -1,7 +1,7 @@
 /**
  * string-apostrophes
  * Comprehensive, HTML-entities-aware tool to typographically-correct the apostrophes and single/double quotes
- * Version: 1.2.28
+ * Version: 1.2.29
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-apostrophes/
@@ -114,7 +114,7 @@
   /**
    * ranges-sort
    * Sort string index ranges
-   * Version: 3.13.1
+   * Version: 3.13.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/ranges-sort/

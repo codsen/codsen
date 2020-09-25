@@ -1,7 +1,7 @@
 /**
  * ranges-process-outside
  * Iterate string considering ranges, as if they were already applied
- * Version: 2.2.33
+ * Version: 2.2.34
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-process-outside/

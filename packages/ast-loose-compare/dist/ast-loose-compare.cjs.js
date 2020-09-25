@@ -1,7 +1,7 @@
 /**
  * ast-loose-compare
  * Compare anything: AST, objects, arrays and strings
- * Version: 1.8.14
+ * Version: 1.8.15
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-loose-compare/

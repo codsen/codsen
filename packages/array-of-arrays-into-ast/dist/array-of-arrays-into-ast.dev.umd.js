@@ -1,7 +1,7 @@
 /**
  * array-of-arrays-into-ast
  * turns an array of arrays of data into a nested tree of plain objects
- * Version: 1.9.48
+ * Version: 1.9.49
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/array-of-arrays-into-ast/
@@ -3870,7 +3870,7 @@
   /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-   * Version: 3.11.36
+   * Version: 3.11.37
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -6475,7 +6475,7 @@
   /**
    * util-nonempty
    * Is the input (plain object, array, string or whatever) not empty?
-   * Version: 2.9.63
+   * Version: 2.9.64
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/util-nonempty/

@@ -1,7 +1,7 @@
 /**
  * email-all-chars-within-ascii
  * Scans all characters within a string and checks are they within ASCII range
- * Version: 2.9.70
+ * Version: 2.9.71
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/email-all-chars-within-ascii/

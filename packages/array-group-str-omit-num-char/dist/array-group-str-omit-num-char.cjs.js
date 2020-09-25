@@ -1,7 +1,7 @@
 /**
  * array-group-str-omit-num-char
  * Groups array of strings by omitting number characters
- * Version: 2.1.46
+ * Version: 2.1.47
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/array-group-str-omit-num-char/

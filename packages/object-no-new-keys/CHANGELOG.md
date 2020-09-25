@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.9.10](https://gitlab.com/codsen/codsen/compare/object-no-new-keys@2.9.9...object-no-new-keys@2.9.10) (2020-09-24)
+
+**Note:** Version bump only for package object-no-new-keys
+
+
+
+
+
 ## 2.9.0 (2020-02-01)
 
 ### Features

@@ -1,7 +1,7 @@
 /**
  * ranges-regex
  * Integrate regex operations into Ranges workflow
- * Version: 2.1.1
+ * Version: 2.1.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-regex/
@@ -114,7 +114,7 @@
   /**
    * ranges-sort
    * Sort string index ranges
-   * Version: 3.13.1
+   * Version: 3.13.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/ranges-sort/

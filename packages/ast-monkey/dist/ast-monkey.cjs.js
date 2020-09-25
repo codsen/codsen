@@ -1,7 +1,7 @@
 /**
  * ast-monkey
  * Traverse and edit AST
- * Version: 7.11.20
+ * Version: 7.11.21
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey/

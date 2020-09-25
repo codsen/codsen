@@ -1,7 +1,7 @@
 /**
  * codsen-parser
  * Parser aiming at broken or mixed code, especially HTML & CSS
- * Version: 0.7.5
+ * Version: 0.7.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/codsen-parser/
@@ -2241,7 +2241,7 @@
   /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-   * Version: 3.11.36
+   * Version: 3.11.37
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/arrayiffy-if-string/

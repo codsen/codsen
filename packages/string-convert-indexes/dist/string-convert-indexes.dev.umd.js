@@ -1,7 +1,7 @@
 /**
  * string-convert-indexes
  * Convert between native JS string character indexes and grapheme-count-based indexes
- * Version: 2.0.0
+ * Version: 2.0.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-convert-indexes/

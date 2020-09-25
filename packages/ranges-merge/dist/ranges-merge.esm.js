@@ -1,7 +1,7 @@
 /**
  * ranges-merge
  * Merge and sort string index ranges
- * Version: 5.0.1
+ * Version: 5.0.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-merge/

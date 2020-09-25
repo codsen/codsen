@@ -1,7 +1,7 @@
 /**
  * codsen-tokenizer
  * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
- * Version: 2.17.5
+ * Version: 2.17.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/codsen-tokenizer/
@@ -114,7 +114,7 @@
   /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-   * Version: 3.11.36
+   * Version: 3.11.37
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/arrayiffy-if-string/

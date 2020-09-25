@@ -1,6 +1,6 @@
 {
   "name": "is-html-attribute-closing",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "Is a character on a given index a closing of an HTML attribute?",
   "keywords": [
     "attribute",
@@ -102,8 +102,8 @@
   "dependencies": {
     "html-all-known-attributes": "^2.0.7",
     "is-char-suitable-for-html-attr-name": "^1.1.8",
-    "string-left-right": "^2.3.29",
-    "string-match-left-right": "^4.0.12"
+    "string-left-right": "^2.3.30",
+    "string-match-left-right": "^4.0.13"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
@@ -118,7 +118,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.9.0",
-    "lect": "^0.14.1",
+    "lect": "^0.14.3",
     "rollup": "^2.28.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

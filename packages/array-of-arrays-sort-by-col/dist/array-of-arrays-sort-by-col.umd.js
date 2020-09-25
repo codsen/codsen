@@ -1,7 +1,7 @@
 /**
  * array-of-arrays-sort-by-col
  * sort array of arrays by column, rippling the sorting outwards from that column
- * Version: 2.12.11
+ * Version: 2.12.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/array-of-arrays-sort-by-col/

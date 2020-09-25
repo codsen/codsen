@@ -1,7 +1,7 @@
 /**
  * json-variables
  * Resolves custom-marked, cross-referenced paths in parsed JSON
- * Version: 8.2.16
+ * Version: 8.2.17
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/json-variables/
@@ -2563,7 +2563,7 @@
   /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-   * Version: 3.11.36
+   * Version: 3.11.37
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -3224,7 +3224,7 @@
   /**
    * string-collapse-leading-whitespace
    * Collapse the leading and trailing whitespace of a string
-   * Version: 3.0.0
+   * Version: 3.0.1
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
@@ -3318,7 +3318,7 @@
   /**
    * ranges-sort
    * Sort string index ranges
-   * Version: 3.13.1
+   * Version: 3.13.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/ranges-sort/
@@ -3982,7 +3982,7 @@
   /**
    * string-trim-spaces-only
    * Like String.trim() but you can choose granularly what to trim
-   * Version: 2.8.21
+   * Version: 2.8.22
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/string-trim-spaces-only/

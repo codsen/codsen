@@ -1,6 +1,6 @@
 {
   "name": "codsen-tokenizer",
-  "version": "2.17.5",
+  "version": "2.17.6",
   "description": "HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages",
   "keywords": [
     "ast",
@@ -100,12 +100,12 @@
   "dependencies": {
     "html-all-known-attributes": "^2.0.7",
     "is-char-suitable-for-html-attr-name": "^1.1.8",
-    "is-html-attribute-closing": "^1.2.6",
-    "is-html-tag-opening": "^1.8.1",
+    "is-html-attribute-closing": "^1.2.7",
+    "is-html-tag-opening": "^1.8.2",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6",
-    "string-left-right": "^2.3.29",
-    "string-match-left-right": "^4.0.12"
+    "string-left-right": "^2.3.30",
+    "string-match-left-right": "^4.0.13"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
@@ -120,7 +120,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.9.0",
-    "lect": "^0.14.1",
+    "lect": "^0.14.3",
     "rollup": "^2.28.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

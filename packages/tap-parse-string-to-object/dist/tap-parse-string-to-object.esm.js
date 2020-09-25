@@ -1,7 +1,7 @@
 /**
  * tap-parse-string-to-object
  * Parses raw Tap: string-to-object or stream-to-a-promise-of-an-object
- * Version: 1.2.21
+ * Version: 1.2.22
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/tap-parse-string-to-object/
