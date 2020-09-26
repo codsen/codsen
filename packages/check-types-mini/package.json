@@ -92,7 +92,7 @@
       "goodFiles": [],
       "goodFolders": []
     },
-    "req": "checkTypes",
+    "req": "checkTypesMini",
     "various": {
       "devDependencies": []
     }

@@ -27,6 +27,33 @@
 npm i check-types-mini
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import checkTypesMini from "check-types-mini";
+
+assert.throws(() => {
+  checkTypesMini(
+    checkTypesMini(
+      {
+        // object to check
+        option1: "setting1",
+        option2: "false",
+        option3: false,
+      },
+      {
+        // reference defaults object
+        option1: "setting1",
+        option2: false,
+        option3: false,
+      }
+    ),
+    /not boolean but string/g
+  );
+});
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/check-types-mini/) for a full description of the API and examples.
