@@ -2166,20 +2166,19 @@
     }
   };
 
-  function existy$2(x) {
-    return x != null;
-  }
-
   var currencySigns = ["د.إ", "؋", "L", "֏", "ƒ", "Kz", "$", "ƒ", "₼", "KM", "৳", "лв", ".د.ب", "FBu", "$b", "R$", "฿", "Nu.", "P", "p.", "BZ$", "FC", "CHF", "¥", "₡", "₱", "Kč", "Fdj", "kr", "RD$", "دج", "kr", "Nfk", "Br", "Ξ", "€", "₾", "₵", "GH₵", "D", "FG", "Q", "L", "kn", "G", "Ft", "Rp", "₪", "₹", "ع.د", "﷼", "kr", "J$", "JD", "¥", "KSh", "лв", "៛", "CF", "₩", "₩", "KD", "лв", "₭", "₨", "M", "Ł", "Lt", "Ls", "LD", "MAD", "lei", "Ar", "ден", "K", "₮", "MOP$", "UM", "₨", "Rf", "MK", "RM", "MT", "₦", "C$", "kr", "₨", "﷼", "B/.", "S/.", "K", "₱", "₨", "zł", "Gs", "﷼", "￥", "lei", "Дин.", "₽", "R₣", "﷼", "₨", "ج.س.", "kr", "£", "Le", "S", "Db", "E", "฿", "SM", "T", "د.ت", "T$", "₤", "₺", "TT$", "NT$", "TSh", "₴", "USh", "$U", "лв", "Bs", "₫", "VT", "WS$", "FCFA", "Ƀ", "CFA", "₣", "﷼", "R", "Z$"];
 
-  function findtype(something) {
+  function findType(something) {
+    /* istanbul ignore next */
     if (typeof something !== "string") {
-      throw new Error("csv-sort/util/findtype(): input must be string! Currently it's: ".concat(_typeof(something)));
+      throw new Error("csv-sort/util/findType(): input must be string! Currently it's: ".concat(_typeof(something)));
     }
 
     if (isNumeric(something)) {
       return "numeric";
     }
+    /* istanbul ignore next */
+
 
     if (currencySigns.some(function (singleSign) {
       return (// We remove all known currency symbols one by one from this input string.
@@ -2213,8 +2212,10 @@
     } else if (Array.isArray(input)) {
       var culpritVal;
       var culpritIndex;
+      /* istanbul ignore else */
 
       if (!input.every(function (val, index) {
+        /* istanbul ignore else */
         if (!Array.isArray(val)) {
           culpritVal = val;
           culpritIndex = index;
@@ -2244,17 +2245,19 @@
     for (var i = content.length - 1; i >= 0; i--) {
       if (!schema) {
         // prevention against last blank row:
+
+        /* istanbul ignore next */
         if (content[i].length !== 1 || content[i][0] !== "") {
           schema = [];
 
           for (var y = 0, len = content[i].length; y < len; y++) {
-            schema.push(findtype(content[i][y].trim()));
+            schema.push(findType(content[i][y].trim()));
 
-            if (indexAtWhichEmptyCellsStart === null && findtype(content[i][y].trim()) === "empty") {
+            if (indexAtWhichEmptyCellsStart === null && findType(content[i][y].trim()) === "empty") {
               indexAtWhichEmptyCellsStart = y;
             }
 
-            if (indexAtWhichEmptyCellsStart !== null && findtype(content[i][y].trim()) !== "empty") {
+            if (indexAtWhichEmptyCellsStart !== null && findType(content[i][y].trim()) !== "empty") {
               indexAtWhichEmptyCellsStart = null;
             }
           }
@@ -2265,12 +2268,14 @@
           // Header rows should consist of only text content.
           // Let's iterate through all elements and find out.
           stateHeaderRowPresent = content[i].every(function (el) {
-            return findtype(el) === "text" || findtype(el) === "empty";
+            return findType(el) === "text" || findType(el) === "empty";
           }); // if schema was calculated (this means there's header row and at least one content row),
           // find out if the column length in the header differs from schema's
           // if (stateHeaderRowPresent && (schema.length !== content[i].length)) {
           // }
         }
+        /* istanbul ignore else */
+
 
         if (!stateHeaderRowPresent && schema.length !== content[i].length) {
           stateDataColumnRowLengthIsConsistent = false;
@@ -2280,21 +2285,28 @@
 
         for (var _y = 0, _len = content[i].length; _y < _len; _y++) {
           // trim
-          if (perRowIndexAtWhichEmptyCellsStart === null && findtype(content[i][_y].trim()) === "empty") {
+
+          /* istanbul ignore else */
+          if (perRowIndexAtWhichEmptyCellsStart === null && findType(content[i][_y].trim()) === "empty") {
             perRowIndexAtWhichEmptyCellsStart = _y;
           }
+          /* istanbul ignore else */
 
-          if (perRowIndexAtWhichEmptyCellsStart !== null && findtype(content[i][_y].trim()) !== "empty") {
+
+          if (perRowIndexAtWhichEmptyCellsStart !== null && findType(content[i][_y].trim()) !== "empty") {
             perRowIndexAtWhichEmptyCellsStart = null;
           } // checking schema
 
+          /* istanbul ignore else */
 
-          if (findtype(content[i][_y].trim()) !== schema[_y] && !stateHeaderRowPresent) {
-            var toAdd = findtype(content[i][_y].trim());
+
+          if (findType(content[i][_y].trim()) !== schema[_y] && !stateHeaderRowPresent) {
+            var toAdd = findType(content[i][_y].trim());
+            /* istanbul ignore else */
 
             if (Array.isArray(schema[_y])) {
               if (!schema[_y].includes(toAdd)) {
-                schema[_y].push(findtype(content[i][_y].trim()));
+                schema[_y].push(findType(content[i][_y].trim()));
               }
             } else if (schema[_y] !== toAdd) {
               var temp = schema[_y];
@@ -2304,9 +2316,7 @@
 
               schema[_y].push(toAdd);
             }
-          } // else {
-          // }
-
+          }
         } // when row has finished, get the perRowIndexAtWhichEmptyCellsStart
         // that's to cover cases where last row got schema calculated, but it
         // had more empty columns than the following rows:
@@ -2323,12 +2333,16 @@
         // so algorithm skips those empty columns.
         //
 
+        /* istanbul ignore next */
+
 
         if (indexAtWhichEmptyCellsStart !== null && perRowIndexAtWhichEmptyCellsStart !== null && perRowIndexAtWhichEmptyCellsStart > indexAtWhichEmptyCellsStart && (!stateHeaderRowPresent || stateHeaderRowPresent && i !== 0)) {
           indexAtWhichEmptyCellsStart = perRowIndexAtWhichEmptyCellsStart;
         }
       }
     }
+    /* istanbul ignore else */
+
 
     if (!indexAtWhichEmptyCellsStart) {
       indexAtWhichEmptyCellsStart = schema.length;
@@ -2344,6 +2358,8 @@
         break;
       }
     } // if there are empty column in front, trim (via slice) both content and schema
+
+    /* istanbul ignore else */
 
 
     if (nonEmptyColsStartAt !== 0) {
@@ -2413,8 +2429,11 @@
 
         for (var rowNum = traverseUpToThisIndexAtTheTop, len2 = content.length; rowNum < len2; rowNum++) {
           // 1. check for two consecutive equal values
+
+          /* istanbul ignore else */
           if (lookForTwoEqualAndConsecutive) {
-            if (!existy$2(previousValue)) {
+            // deliberate == to catch undefined and null
+            if (previousValue == null) {
               previousValue = content[rowNum][suspectedBalanceColumnsIndexNumber];
             } else if (previousValue === content[rowNum][suspectedBalanceColumnsIndexNumber]) {
               // potentialBalanceColumnIndexesList.splice(suspectedBalanceColumnsIndexNumber, 1)
@@ -2427,9 +2446,12 @@
             }
           } // 2. also, tell if ALL values are the same:
 
+          /* istanbul ignore else */
+
 
           if (lookForAllTheSame) {
-            if (!existy$2(firstValue)) {
+            // deliberate == to catch undefined and null
+            if (firstValue == null) {
               firstValue = content[rowNum][suspectedBalanceColumnsIndexNumber];
             } else if (content[rowNum][suspectedBalanceColumnsIndexNumber] !== firstValue) {
               lookForAllTheSame = false;
@@ -2440,6 +2462,8 @@
             break;
           }
         }
+        /* istanbul ignore else */
+
 
         if (lookForAllTheSame) {
           stateColumnsContainingSameValueEverywhere.push(suspectedBalanceColumnsIndexNumber);
@@ -2449,6 +2473,7 @@
 
 
       potentialBalanceColumnIndexesList = lodash_pull.apply(void 0, [potentialBalanceColumnIndexesList].concat(deleteFromPotentialBalanceColumnIndexesList));
+      /* istanbul ignore else */
 
       if (potentialBalanceColumnIndexesList.length === 1) {
         balanceColumnIndex = potentialBalanceColumnIndexesList[0];
@@ -2508,28 +2533,34 @@
             }
 
             var totalVal = null;
+            /* istanbul ignore else */
 
             if (content[suspectedRowsIndex][balanceColumnIndex] !== "") {
               totalVal = currency(content[suspectedRowsIndex][balanceColumnIndex]);
             }
 
             var topmostResContentBalance = null;
+            /* istanbul ignore else */
 
             if (resContent[0][balanceColumnIndex] !== "") {
               topmostResContentBalance = currency(resContent[0][balanceColumnIndex]).format();
             }
 
             var currentRowsDiffVal = null;
+            /* istanbul ignore else */
 
             if (resContent[resContent.length - 1][potentialCreditDebitColumns[suspectedColIndex]] !== "") {
               currentRowsDiffVal = currency(resContent[resContent.length - 1][potentialCreditDebitColumns[suspectedColIndex]]).format();
             }
 
             var lastResContentRowsBalance = null;
+            /* istanbul ignore else */
 
             if (resContent[resContent.length - 1][balanceColumnIndex] !== "") {
               lastResContentRowsBalance = currency(resContent[resContent.length - 1][balanceColumnIndex]);
             }
+            /* istanbul ignore else */
+
 
             if (diffVal && totalVal.add(diffVal).format() === topmostResContentBalance) {
               // ADD THIS ROW ABOVE EVERYTHING
@@ -2558,6 +2589,8 @@
               break;
             }
           }
+          /* istanbul ignore else */
+
 
           if (thisRowIsDone) {
             thisRowIsDone = false;
@@ -2566,6 +2599,8 @@
         }
       }
     } // restore title row if present
+
+    /* istanbul ignore else */
 
 
     if (stateHeaderRowPresent) {
@@ -2577,6 +2612,8 @@
 
       resContent.unshift(content[0].slice(0, indexAtWhichEmptyCellsStart));
     }
+    /* istanbul ignore else */
+
 
     if (content.length - (stateHeaderRowPresent ? 2 : 1) !== usedUpRows.length) {
       msgContent = "Not all rows were recognised!";

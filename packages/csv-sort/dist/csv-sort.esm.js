@@ -12,9 +12,6 @@ import pull from 'lodash.pull';
 import currency from 'currency.js';
 import isNumeric from 'is-numeric';
 
-function existy(x) {
-  return x != null;
-}
 const currencySigns = [
   "د.إ",
   "؋",
@@ -152,15 +149,17 @@ const currencySigns = [
   "R",
   "Z$",
 ];
-function findtype(something) {
+function findType(something) {
+  /* istanbul ignore next */
   if (typeof something !== "string") {
     throw new Error(
-      `csv-sort/util/findtype(): input must be string! Currently it's: ${typeof something}`
+      `csv-sort/util/findType(): input must be string! Currently it's: ${typeof something}`
     );
   }
   if (isNumeric(something)) {
     return "numeric";
   }
+  /* istanbul ignore next */
   if (
     currencySigns.some((singleSign) =>
       isNumeric(something.replace(singleSign, "").replace(/[,.]/g, ""))
@@ -173,6 +172,7 @@ function findtype(something) {
   }
   return "text";
 }
+
 function csvSort(input) {
   let content;
   let msgContent = null;
@@ -185,8 +185,10 @@ function csvSort(input) {
   } else if (Array.isArray(input)) {
     let culpritVal;
     let culpritIndex;
+    /* istanbul ignore else */
     if (
       !input.every((val, index) => {
+        /* istanbul ignore else */
         if (!Array.isArray(val)) {
           culpritVal = val;
           culpritIndex = index;
@@ -218,19 +220,20 @@ function csvSort(input) {
   let indexAtWhichEmptyCellsStart = null;
   for (let i = content.length - 1; i >= 0; i--) {
     if (!schema) {
+      /* istanbul ignore next */
       if (content[i].length !== 1 || content[i][0] !== "") {
         schema = [];
         for (let y = 0, len = content[i].length; y < len; y++) {
-          schema.push(findtype(content[i][y].trim()));
+          schema.push(findType(content[i][y].trim()));
           if (
             indexAtWhichEmptyCellsStart === null &&
-            findtype(content[i][y].trim()) === "empty"
+            findType(content[i][y].trim()) === "empty"
           ) {
             indexAtWhichEmptyCellsStart = y;
           }
           if (
             indexAtWhichEmptyCellsStart !== null &&
-            findtype(content[i][y].trim()) !== "empty"
+            findType(content[i][y].trim()) !== "empty"
           ) {
             indexAtWhichEmptyCellsStart = null;
           }
@@ -239,34 +242,39 @@ function csvSort(input) {
     } else {
       if (i === 0) {
         stateHeaderRowPresent = content[i].every(
-          (el) => findtype(el) === "text" || findtype(el) === "empty"
+          (el) => findType(el) === "text" || findType(el) === "empty"
         );
       }
+      /* istanbul ignore else */
       if (!stateHeaderRowPresent && schema.length !== content[i].length) {
         stateDataColumnRowLengthIsConsistent = false;
       }
       let perRowIndexAtWhichEmptyCellsStart = null;
       for (let y = 0, len = content[i].length; y < len; y++) {
+        /* istanbul ignore else */
         if (
           perRowIndexAtWhichEmptyCellsStart === null &&
-          findtype(content[i][y].trim()) === "empty"
+          findType(content[i][y].trim()) === "empty"
         ) {
           perRowIndexAtWhichEmptyCellsStart = y;
         }
+        /* istanbul ignore else */
         if (
           perRowIndexAtWhichEmptyCellsStart !== null &&
-          findtype(content[i][y].trim()) !== "empty"
+          findType(content[i][y].trim()) !== "empty"
         ) {
           perRowIndexAtWhichEmptyCellsStart = null;
         }
+        /* istanbul ignore else */
         if (
-          findtype(content[i][y].trim()) !== schema[y] &&
+          findType(content[i][y].trim()) !== schema[y] &&
           !stateHeaderRowPresent
         ) {
-          const toAdd = findtype(content[i][y].trim());
+          const toAdd = findType(content[i][y].trim());
+          /* istanbul ignore else */
           if (Array.isArray(schema[y])) {
             if (!schema[y].includes(toAdd)) {
-              schema[y].push(findtype(content[i][y].trim()));
+              schema[y].push(findType(content[i][y].trim()));
             }
           } else if (schema[y] !== toAdd) {
             const temp = schema[y];
@@ -276,6 +284,7 @@ function csvSort(input) {
           }
         }
       }
+      /* istanbul ignore next */
       if (
         indexAtWhichEmptyCellsStart !== null &&
         perRowIndexAtWhichEmptyCellsStart !== null &&
@@ -286,6 +295,7 @@ function csvSort(input) {
       }
     }
   }
+  /* istanbul ignore else */
   if (!indexAtWhichEmptyCellsStart) {
     indexAtWhichEmptyCellsStart = schema.length;
   }
@@ -297,6 +307,7 @@ function csvSort(input) {
       break;
     }
   }
+  /* istanbul ignore else */
   if (nonEmptyColsStartAt !== 0) {
     content = content.map((arr) =>
       arr.slice(nonEmptyColsStartAt + 1, indexAtWhichEmptyCellsStart)
@@ -336,8 +347,9 @@ function csvSort(input) {
         rowNum < len2;
         rowNum++
       ) {
+        /* istanbul ignore else */
         if (lookForTwoEqualAndConsecutive) {
-          if (!existy(previousValue)) {
+          if (previousValue == null) {
             previousValue = content[rowNum][suspectedBalanceColumnsIndexNumber];
           } else if (
             previousValue ===
@@ -351,8 +363,9 @@ function csvSort(input) {
             previousValue = content[rowNum][suspectedBalanceColumnsIndexNumber];
           }
         }
+        /* istanbul ignore else */
         if (lookForAllTheSame) {
-          if (!existy(firstValue)) {
+          if (firstValue == null) {
             firstValue = content[rowNum][suspectedBalanceColumnsIndexNumber];
           } else if (
             content[rowNum][suspectedBalanceColumnsIndexNumber] !== firstValue
@@ -364,6 +377,7 @@ function csvSort(input) {
           break;
         }
       }
+      /* istanbul ignore else */
       if (lookForAllTheSame) {
         stateColumnsContainingSameValueEverywhere.push(
           suspectedBalanceColumnsIndexNumber
@@ -374,6 +388,7 @@ function csvSort(input) {
       potentialBalanceColumnIndexesList,
       ...deleteFromPotentialBalanceColumnIndexesList
     );
+    /* istanbul ignore else */
     if (potentialBalanceColumnIndexesList.length === 1) {
       balanceColumnIndex = potentialBalanceColumnIndexesList[0];
     } else if (potentialBalanceColumnIndexesList.length === 0) {
@@ -434,18 +449,21 @@ function csvSort(input) {
             );
           }
           let totalVal = null;
+          /* istanbul ignore else */
           if (content[suspectedRowsIndex][balanceColumnIndex] !== "") {
             totalVal = currency(
               content[suspectedRowsIndex][balanceColumnIndex]
             );
           }
           let topmostResContentBalance = null;
+          /* istanbul ignore else */
           if (resContent[0][balanceColumnIndex] !== "") {
             topmostResContentBalance = currency(
               resContent[0][balanceColumnIndex]
             ).format();
           }
           let currentRowsDiffVal = null;
+          /* istanbul ignore else */
           if (
             resContent[resContent.length - 1][
               potentialCreditDebitColumns[suspectedColIndex]
@@ -458,11 +476,13 @@ function csvSort(input) {
             ).format();
           }
           let lastResContentRowsBalance = null;
+          /* istanbul ignore else */
           if (resContent[resContent.length - 1][balanceColumnIndex] !== "") {
             lastResContentRowsBalance = currency(
               resContent[resContent.length - 1][balanceColumnIndex]
             );
           }
+          /* istanbul ignore else */
           if (
             diffVal &&
             totalVal.add(diffVal).format() === topmostResContentBalance
@@ -507,6 +527,7 @@ function csvSort(input) {
             break;
           }
         }
+        /* istanbul ignore else */
         if (thisRowIsDone) {
           thisRowIsDone = false;
           break;
@@ -514,6 +535,7 @@ function csvSort(input) {
       }
     }
   }
+  /* istanbul ignore else */
   if (stateHeaderRowPresent) {
     if (
       stateDataColumnRowLengthIsConsistent &&
@@ -523,6 +545,7 @@ function csvSort(input) {
     }
     resContent.unshift(content[0].slice(0, indexAtWhichEmptyCellsStart));
   }
+  /* istanbul ignore else */
   if (content.length - (stateHeaderRowPresent ? 2 : 1) !== usedUpRows.length) {
     msgContent = "Not all rows were recognised!";
     msgType = "alert";

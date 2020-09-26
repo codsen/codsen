@@ -1,173 +1,7 @@
 import split from "csv-split-easy";
 import pull from "lodash.pull";
 import currency from "currency.js";
-import isNumeric from "is-numeric";
-
-function existy(x) {
-  return x != null;
-}
-
-const currencySigns = [
-  "د.إ",
-  "؋",
-  "L",
-  "֏",
-  "ƒ",
-  "Kz",
-  "$",
-  "ƒ",
-  "₼",
-  "KM",
-  "৳",
-  "лв",
-  ".د.ب",
-  "FBu",
-  "$b",
-  "R$",
-  "฿",
-  "Nu.",
-  "P",
-  "p.",
-  "BZ$",
-  "FC",
-  "CHF",
-  "¥",
-  "₡",
-  "₱",
-  "Kč",
-  "Fdj",
-  "kr",
-  "RD$",
-  "دج",
-  "kr",
-  "Nfk",
-  "Br",
-  "Ξ",
-  "€",
-  "₾",
-  "₵",
-  "GH₵",
-  "D",
-  "FG",
-  "Q",
-  "L",
-  "kn",
-  "G",
-  "Ft",
-  "Rp",
-  "₪",
-  "₹",
-  "ع.د",
-  "﷼",
-  "kr",
-  "J$",
-  "JD",
-  "¥",
-  "KSh",
-  "лв",
-  "៛",
-  "CF",
-  "₩",
-  "₩",
-  "KD",
-  "лв",
-  "₭",
-  "₨",
-  "M",
-  "Ł",
-  "Lt",
-  "Ls",
-  "LD",
-  "MAD",
-  "lei",
-  "Ar",
-  "ден",
-  "K",
-  "₮",
-  "MOP$",
-  "UM",
-  "₨",
-  "Rf",
-  "MK",
-  "RM",
-  "MT",
-  "₦",
-  "C$",
-  "kr",
-  "₨",
-  "﷼",
-  "B/.",
-  "S/.",
-  "K",
-  "₱",
-  "₨",
-  "zł",
-  "Gs",
-  "﷼",
-  "￥",
-  "lei",
-  "Дин.",
-  "₽",
-  "R₣",
-  "﷼",
-  "₨",
-  "ج.س.",
-  "kr",
-  "£",
-  "Le",
-  "S",
-  "Db",
-  "E",
-  "฿",
-  "SM",
-  "T",
-  "د.ت",
-  "T$",
-  "₤",
-  "₺",
-  "TT$",
-  "NT$",
-  "TSh",
-  "₴",
-  "USh",
-  "$U",
-  "лв",
-  "Bs",
-  "₫",
-  "VT",
-  "WS$",
-  "FCFA",
-  "Ƀ",
-  "CFA",
-  "₣",
-  "﷼",
-  "R",
-  "Z$",
-];
-
-function findtype(something) {
-  if (typeof something !== "string") {
-    throw new Error(
-      `csv-sort/util/findtype(): input must be string! Currently it's: ${typeof something}`
-    );
-  }
-  if (isNumeric(something)) {
-    return "numeric";
-  }
-  if (
-    currencySigns.some((singleSign) =>
-      // We remove all known currency symbols one by one from this input string.
-      // If at least one passes as numeric after the currency symbol-removing, it's numeric.
-      isNumeric(something.replace(singleSign, "").replace(/[,.]/g, ""))
-    )
-  ) {
-    return "numeric";
-  }
-  if (!something.trim()) {
-    return "empty";
-  }
-  return "text";
-}
+import findType from "./util/findType";
 
 function csvSort(input) {
   let content;
@@ -185,8 +19,10 @@ function csvSort(input) {
   } else if (Array.isArray(input)) {
     let culpritVal;
     let culpritIndex;
+    /* istanbul ignore else */
     if (
       !input.every((val, index) => {
+        /* istanbul ignore else */
         if (!Array.isArray(val)) {
           culpritVal = val;
           culpritIndex = index;
@@ -228,22 +64,23 @@ function csvSort(input) {
   let indexAtWhichEmptyCellsStart = null;
 
   for (let i = content.length - 1; i >= 0; i--) {
-    console.log(`231 content[${i}] = ${content[i]}`);
+    console.log(`067 content[${i}] = ${content[i]}`);
     if (!schema) {
       // prevention against last blank row:
+      /* istanbul ignore next */
       if (content[i].length !== 1 || content[i][0] !== "") {
         schema = [];
         for (let y = 0, len = content[i].length; y < len; y++) {
-          schema.push(findtype(content[i][y].trim()));
+          schema.push(findType(content[i][y].trim()));
           if (
             indexAtWhichEmptyCellsStart === null &&
-            findtype(content[i][y].trim()) === "empty"
+            findType(content[i][y].trim()) === "empty"
           ) {
             indexAtWhichEmptyCellsStart = y;
           }
           if (
             indexAtWhichEmptyCellsStart !== null &&
-            findtype(content[i][y].trim()) !== "empty"
+            findType(content[i][y].trim()) !== "empty"
           ) {
             indexAtWhichEmptyCellsStart = null;
           }
@@ -255,7 +92,7 @@ function csvSort(input) {
         // Header rows should consist of only text content.
         // Let's iterate through all elements and find out.
         stateHeaderRowPresent = content[i].every(
-          (el) => findtype(el) === "text" || findtype(el) === "empty"
+          (el) => findType(el) === "text" || findType(el) === "empty"
         );
 
         // if schema was calculated (this means there's header row and at least one content row),
@@ -264,6 +101,7 @@ function csvSort(input) {
         // if (stateHeaderRowPresent && (schema.length !== content[i].length)) {
         // }
       }
+      /* istanbul ignore else */
       if (!stateHeaderRowPresent && schema.length !== content[i].length) {
         stateDataColumnRowLengthIsConsistent = false;
       }
@@ -271,27 +109,31 @@ function csvSort(input) {
       let perRowIndexAtWhichEmptyCellsStart = null;
       for (let y = 0, len = content[i].length; y < len; y++) {
         // trim
+        /* istanbul ignore else */
         if (
           perRowIndexAtWhichEmptyCellsStart === null &&
-          findtype(content[i][y].trim()) === "empty"
+          findType(content[i][y].trim()) === "empty"
         ) {
           perRowIndexAtWhichEmptyCellsStart = y;
         }
+        /* istanbul ignore else */
         if (
           perRowIndexAtWhichEmptyCellsStart !== null &&
-          findtype(content[i][y].trim()) !== "empty"
+          findType(content[i][y].trim()) !== "empty"
         ) {
           perRowIndexAtWhichEmptyCellsStart = null;
         }
         // checking schema
+        /* istanbul ignore else */
         if (
-          findtype(content[i][y].trim()) !== schema[y] &&
+          findType(content[i][y].trim()) !== schema[y] &&
           !stateHeaderRowPresent
         ) {
-          const toAdd = findtype(content[i][y].trim());
+          const toAdd = findType(content[i][y].trim());
+          /* istanbul ignore else */
           if (Array.isArray(schema[y])) {
             if (!schema[y].includes(toAdd)) {
-              schema[y].push(findtype(content[i][y].trim()));
+              schema[y].push(findType(content[i][y].trim()));
             }
           } else if (schema[y] !== toAdd) {
             const temp = schema[y];
@@ -299,8 +141,7 @@ function csvSort(input) {
             schema[y].push(temp);
             schema[y].push(toAdd);
           }
-        } // else {
-        // }
+        }
       }
       // when row has finished, get the perRowIndexAtWhichEmptyCellsStart
       // that's to cover cases where last row got schema calculated, but it
@@ -318,6 +159,7 @@ function csvSort(input) {
       // so algorithm skips those empty columns.
       //
 
+      /* istanbul ignore next */
       if (
         indexAtWhichEmptyCellsStart !== null &&
         perRowIndexAtWhichEmptyCellsStart !== null &&
@@ -329,6 +171,7 @@ function csvSort(input) {
     }
   }
 
+  /* istanbul ignore else */
   if (!indexAtWhichEmptyCellsStart) {
     indexAtWhichEmptyCellsStart = schema.length;
   }
@@ -344,6 +187,7 @@ function csvSort(input) {
   }
 
   // if there are empty column in front, trim (via slice) both content and schema
+  /* istanbul ignore else */
   if (nonEmptyColsStartAt !== 0) {
     content = content.map((arr) =>
       arr.slice(nonEmptyColsStartAt + 1, indexAtWhichEmptyCellsStart)
@@ -425,8 +269,10 @@ function csvSort(input) {
         rowNum++
       ) {
         // 1. check for two consecutive equal values
+        /* istanbul ignore else */
         if (lookForTwoEqualAndConsecutive) {
-          if (!existy(previousValue)) {
+          // deliberate == to catch undefined and null
+          if (previousValue == null) {
             previousValue = content[rowNum][suspectedBalanceColumnsIndexNumber];
           } else if (
             previousValue ===
@@ -444,8 +290,10 @@ function csvSort(input) {
           }
         }
         // 2. also, tell if ALL values are the same:
+        /* istanbul ignore else */
         if (lookForAllTheSame) {
-          if (!existy(firstValue)) {
+          // deliberate == to catch undefined and null
+          if (firstValue == null) {
             firstValue = content[rowNum][suspectedBalanceColumnsIndexNumber];
           } else if (
             content[rowNum][suspectedBalanceColumnsIndexNumber] !== firstValue
@@ -458,6 +306,7 @@ function csvSort(input) {
         }
       }
 
+      /* istanbul ignore else */
       if (lookForAllTheSame) {
         stateColumnsContainingSameValueEverywhere.push(
           suspectedBalanceColumnsIndexNumber
@@ -472,6 +321,7 @@ function csvSort(input) {
       ...deleteFromPotentialBalanceColumnIndexesList
     );
 
+    /* istanbul ignore else */
     if (potentialBalanceColumnIndexesList.length === 1) {
       balanceColumnIndex = potentialBalanceColumnIndexesList[0];
     } else if (potentialBalanceColumnIndexesList.length === 0) {
@@ -541,7 +391,7 @@ function csvSort(input) {
   );
 
   console.log(
-    `544 after push ${`\u001b[${33}m${`resContent`}\u001b[${39}m`} = ${JSON.stringify(
+    `394 after push ${`\u001b[${33}m${`resContent`}\u001b[${39}m`} = ${JSON.stringify(
       resContent,
       null,
       4
@@ -559,7 +409,7 @@ function csvSort(input) {
       `\n\u001b[${90}m${`                       S`}\u001b[${39}m`.repeat(15)
     );
     console.log(
-      `562 \u001b[${90}m${`████████████████ y = ${y} ████████████████`}\u001b[${39}m`
+      `412 \u001b[${90}m${`████████████████ y = ${y} ████████████████`}\u001b[${39}m`
     );
 
     for (
@@ -569,7 +419,7 @@ function csvSort(input) {
     ) {
       console.log(`\n\n\n\n\n ${`\u001b[${90}m${`██`}\u001b[${39}m`}`);
       console.log(
-        `572 \u001b[${90}m${`=============== suspected row: ${JSON.stringify(
+        `422 \u001b[${90}m${`=============== suspected row: ${JSON.stringify(
           content[suspectedRowsIndex],
           null,
           0
@@ -586,7 +436,7 @@ function csvSort(input) {
           suspectedColIndex++
         ) {
           console.log(
-            `589 \u001b[${90}m${`--------------- suspectedColIndex = ${suspectedColIndex} ---------------`}\u001b[${39}m`
+            `439 \u001b[${90}m${`--------------- suspectedColIndex = ${suspectedColIndex} ---------------`}\u001b[${39}m`
           );
           let diffVal = null;
           if (
@@ -600,7 +450,7 @@ function csvSort(input) {
               ]
             );
             console.log(
-              `603 SET ${`\u001b[${33}m${`diffVal`}\u001b[${39}m`} = ${JSON.stringify(
+              `453 SET ${`\u001b[${33}m${`diffVal`}\u001b[${39}m`} = ${JSON.stringify(
                 diffVal,
                 null,
                 4
@@ -609,12 +459,13 @@ function csvSort(input) {
           }
 
           let totalVal = null;
+          /* istanbul ignore else */
           if (content[suspectedRowsIndex][balanceColumnIndex] !== "") {
             totalVal = currency(
               content[suspectedRowsIndex][balanceColumnIndex]
             );
             console.log(
-              `617 SET ${`\u001b[${33}m${`totalVal`}\u001b[${39}m`} = ${JSON.stringify(
+              `468 SET ${`\u001b[${33}m${`totalVal`}\u001b[${39}m`} = ${JSON.stringify(
                 totalVal,
                 null,
                 4
@@ -623,12 +474,13 @@ function csvSort(input) {
           }
 
           let topmostResContentBalance = null;
+          /* istanbul ignore else */
           if (resContent[0][balanceColumnIndex] !== "") {
             topmostResContentBalance = currency(
               resContent[0][balanceColumnIndex]
             ).format();
             console.log(
-              `631 SET ${`\u001b[${33}m${`topmostResContentBalance`}\u001b[${39}m`} = ${JSON.stringify(
+              `483 SET ${`\u001b[${33}m${`topmostResContentBalance`}\u001b[${39}m`} = ${JSON.stringify(
                 topmostResContentBalance,
                 null,
                 4
@@ -637,6 +489,7 @@ function csvSort(input) {
           }
 
           let currentRowsDiffVal = null;
+          /* istanbul ignore else */
           if (
             resContent[resContent.length - 1][
               potentialCreditDebitColumns[suspectedColIndex]
@@ -657,6 +510,7 @@ function csvSort(input) {
           }
 
           let lastResContentRowsBalance = null;
+          /* istanbul ignore else */
           if (resContent[resContent.length - 1][balanceColumnIndex] !== "") {
             lastResContentRowsBalance = currency(
               resContent[resContent.length - 1][balanceColumnIndex]
@@ -665,7 +519,7 @@ function csvSort(input) {
 
           console.log("\n\n\n\n\n");
           console.log(
-            `668 ${`\u001b[${33}m${`diffVal`}\u001b[${39}m`} = ${JSON.stringify(
+            `522 ${`\u001b[${33}m${`diffVal`}\u001b[${39}m`} = ${JSON.stringify(
               diffVal,
               null,
               4
@@ -685,11 +539,12 @@ function csvSort(input) {
             `case 4 lastResContentRowsBalance=${lastResContentRowsBalance} - currentRowsDiffVal=${currentRowsDiffVal} === totalVal=${totalVal}`
           );
 
+          /* istanbul ignore else */
           if (
             diffVal &&
             totalVal.add(diffVal).format() === topmostResContentBalance
           ) {
-            console.log(`692 ADD THIS ROW ABOVE EVERYTHING`);
+            console.log(`547 ADD THIS ROW ABOVE EVERYTHING`);
             // ADD THIS ROW ABOVE EVERYTHING
             // add this row above the current HEAD in resContent lines array (index `0`)
             resContent.unshift(
@@ -737,13 +592,14 @@ function csvSort(input) {
 
           console.log("----------");
           console.log(
-            `740 ${`\u001b[${33}m${`thisRowIsDone`}\u001b[${39}m`} = ${JSON.stringify(
+            `595 ${`\u001b[${33}m${`thisRowIsDone`}\u001b[${39}m`} = ${JSON.stringify(
               thisRowIsDone,
               null,
               4
             )}`
           );
         }
+        /* istanbul ignore else */
         if (thisRowIsDone) {
           thisRowIsDone = false;
           break;
@@ -752,7 +608,7 @@ function csvSort(input) {
     }
 
     console.log(
-      `755 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ENDING \u001b[${33}m${`resContent`}\u001b[${39}m = ${JSON.stringify(
+      `611 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ENDING \u001b[${33}m${`resContent`}\u001b[${39}m = ${JSON.stringify(
         resContent,
         null,
         4
@@ -761,6 +617,7 @@ function csvSort(input) {
   }
 
   // restore title row if present
+  /* istanbul ignore else */
   if (stateHeaderRowPresent) {
     // trim header row of trailing empty columns if they protrude outside of the (consistent row length) schema
     if (
@@ -773,6 +630,7 @@ function csvSort(input) {
     resContent.unshift(content[0].slice(0, indexAtWhichEmptyCellsStart));
   }
 
+  /* istanbul ignore else */
   if (content.length - (stateHeaderRowPresent ? 2 : 1) !== usedUpRows.length) {
     msgContent = "Not all rows were recognised!";
     msgType = "alert";
