@@ -27,6 +27,18 @@
 npm i bitbucket-slug
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import bSlug from "bitbucket-slug";
+
+assert.equal(
+  bSlug("# Let's backwards-engineer BitBucket anchor link slug algorithm"),
+  "markdown-header-lets-backwards-engineer-bitbucket-anchor-link-slug-algorithm"
+);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/bitbucket-slug/) for a full description of the API and examples.

@@ -1,0 +1,1 @@
+{"_quickTake.js":{"title":"Quick Take","content":"import &#x7B; strict as assert &#x7D; from \"assert\";\nimport bSlug from \"bitbucket-slug\";\n\nassert.equal(\n  bSlug(\"# Let's backwards-engineer BitBucket anchor link slug algorithm\"),\n  \"markdown-header-lets-backwards-engineer-bitbucket-anchor-link-slug-algorithm\"\n);"}}
