@@ -254,6 +254,8 @@
       // they're not hungry, i.e. the whole Maybe must be of the left of searchFor exactly
       //
 
+      /* istanbul ignore else */
+
       if (opts.leftMaybe.length > 0) {
         for (var i = 0, len = opts.leftMaybe.length; i < len; i++) {
           // iterate each of the maybe's in the array:
@@ -278,6 +280,8 @@
           }
         }
       } // ===================== rightMaybe =====================
+
+      /* istanbul ignore else */
 
 
       if (opts.rightMaybe.length > 0) {

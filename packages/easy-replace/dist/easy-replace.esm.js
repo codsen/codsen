@@ -157,6 +157,7 @@ function er(originalSource, options, originalReplacement) {
     const oneOfFoundIndexes = allResults[resIndex];
     foundBeginningIndex = oneOfFoundIndexes;
     foundEndingIndex = oneOfFoundIndexes + Array.from(opts.searchFor).length;
+    /* istanbul ignore else */
     if (opts.leftMaybe.length > 0) {
       for (let i = 0, len = opts.leftMaybe.length; i < len; i++) {
         matched = true;
@@ -188,6 +189,7 @@ function er(originalSource, options, originalReplacement) {
         }
       }
     }
+    /* istanbul ignore else */
     if (opts.rightMaybe.length > 0) {
       for (let i = 0, len = opts.rightMaybe.length; i < len; i++) {
         matched = true;

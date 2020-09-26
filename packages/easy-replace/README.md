@@ -27,6 +27,33 @@
 npm i easy-replace
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import er from "easy-replace";
+
+assert.equal(
+  er(
+    "&nBsp; NBsp &nbSP NbsP;",
+    {
+      leftOutsideNot: "",
+      leftOutside: "",
+      leftMaybe: ["&", "&amp;"],
+      searchFor: "nbsp",
+      rightMaybe: ";",
+      rightOutside: "",
+      rightOutsideNot: "",
+      i: {
+        searchFor: true,
+      },
+    },
+    "&nbsp;"
+  ),
+  "&nbsp; &nbsp; &nbsp; &nbsp;"
+);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/easy-replace/) for a full description of the API and examples.

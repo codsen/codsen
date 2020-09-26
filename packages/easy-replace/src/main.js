@@ -210,6 +210,7 @@ function er(originalSource, options, originalReplacement) {
     // commence with maybe's
     // they're not hungry, i.e. the whole Maybe must be of the left of searchFor exactly
     //
+    /* istanbul ignore else */
     if (opts.leftMaybe.length > 0) {
       for (let i = 0, len = opts.leftMaybe.length; i < len; i++) {
         // iterate each of the maybe's in the array:
@@ -244,6 +245,7 @@ function er(originalSource, options, originalReplacement) {
       }
     }
     // ===================== rightMaybe =====================
+    /* istanbul ignore else */
     if (opts.rightMaybe.length > 0) {
       for (let i = 0, len = opts.rightMaybe.length; i < len; i++) {
         // iterate each of the Maybe's in the array:
