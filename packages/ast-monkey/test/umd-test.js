@@ -32,6 +32,6 @@ const intended = [
 ];
 
 tap.test("UMD build works fine", (t) => {
-  t.same(find(input, { key: "a*" }), intended, "01");
+  t.strictSame(find(input, { key: "a*" }), intended, "01");
   t.end();
 });
