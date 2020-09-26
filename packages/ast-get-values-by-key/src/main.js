@@ -2,31 +2,24 @@ import traverse from "ast-monkey-traverse";
 import matcher from "matcher";
 import clone from "lodash.clonedeep";
 
-const isArr = Array.isArray;
-function existy(x) {
-  return x != null;
-}
-function isStr(something) {
-  return typeof something === "string";
-}
-
 function getAllValuesByKey(originalInput, whatToFind, originalReplacement) {
-  if (!existy(originalInput)) {
+  if (!originalInput) {
     throw new Error(
       "ast-get-values-by-key: [THROW_ID_01] the first argument is missing!"
     );
   }
-  if (!existy(whatToFind)) {
+  if (!whatToFind) {
     throw new Error(
       "ast-get-values-by-key: [THROW_ID_02] the second argument is missing!"
     );
-  } else if (isArr(whatToFind)) {
+  } else if (Array.isArray(whatToFind)) {
     let culpritsIndex;
     let culpritsVal;
+    /* istanbul ignore else */
     if (
       whatToFind.length &&
       whatToFind.some((val, i) => {
-        if (isStr(val)) {
+        if (typeof val === "string") {
           return false;
         }
         culpritsIndex = i;
@@ -54,7 +47,7 @@ function getAllValuesByKey(originalInput, whatToFind, originalReplacement) {
 
   let replacement;
 
-  if (existy(originalReplacement)) {
+  if (typeof originalReplacement === "string" || originalReplacement) {
     if (typeof originalReplacement === "string") {
       replacement = [originalReplacement];
     } else {
