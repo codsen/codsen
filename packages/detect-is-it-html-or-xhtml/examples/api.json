@@ -1,0 +1,1 @@
+{"_quickTake.js":{"title":"Quick Take","content":"import &#x7B; strict as assert &#x7D; from \"assert\";\nimport detectIsItHTMLOrXhtml from \"detect-is-it-html-or-xhtml\";\n\nassert.equal(\n  detectIsItHTMLOrXhtml(\n    `<img src=\"some.jpg\" width=\"zzz\" height=\"zzz\" border=\"0\" style=\"display:block;\" alt=\"zzz\"/>`\n  ),\n  \"xhtml\"\n);"}}

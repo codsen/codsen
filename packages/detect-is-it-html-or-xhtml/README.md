@@ -27,6 +27,20 @@
 npm i detect-is-it-html-or-xhtml
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import detectIsItHTMLOrXhtml from "detect-is-it-html-or-xhtml";
+
+assert.equal(
+  detectIsItHTMLOrXhtml(
+    `<img src="some.jpg" width="zzz" height="zzz" border="0" style="display:block;" alt="zzz"/>`
+  ),
+  "xhtml"
+);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/detect-is-it-html-or-xhtml/) for a full description of the API and examples.
