@@ -35,7 +35,7 @@ Please [visit codsen.com](https://codsen.com/os/lect/) for a full description of
 
 MIT License
 
-Copyright (c) 2015-2020 Roy Revelt and other contributors
+Copyright (c) 2010-2020 Roy Revelt and other contributors
 
 Icons mapping in util.js/`defaultTypes` taken from [all-contributors-cli](https://github.com/jfmengels/all-contributors-cli). MIT Licence.
 
