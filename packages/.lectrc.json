@@ -105,7 +105,7 @@
 	"licence": {
 		"extras": [],
 		"header": "## Licence",
-		"restofit": "MIT License\n\nCopyright (c) 2015-%YEAR% Roy Revelt and other contributors"
+		"restofit": "MIT License\n\nCopyright (c) 2010-%YEAR% Roy Revelt and other contributors"
 	},
 	"npmignore": {
 		"badFiles": [
