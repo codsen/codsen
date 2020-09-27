@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.2.19](https://gitlab.com/codsen/codsen/compare/is-media-descriptor@1.2.18...is-media-descriptor@1.2.19) (2020-09-27)
-
-**Note:** Version bump only for package is-media-descriptor
-
-
-
-
-
 ## 1.2.2 (2020-02-24)
 
 ### Bug Fixes

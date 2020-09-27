@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.1.0](https://gitlab.com/codsen/codsen/compare/csv-sort@3.0.72...csv-sort@3.1.0) (2020-09-27)
-
+## 3.1.0 (2020-09-27)
 
 ### Features
 
-* fixture mangling prevention using SHA hashes, 100% cov and some rebase ([0973579](https://gitlab.com/codsen/codsen/commit/0973579ca57df0d2f641ff4a4fea2f6951b4f6fe))
-
-
-
-
+- fixture mangling prevention using SHA hashes, 100% cov and some rebase ([0973579](https://gitlab.com/codsen/codsen/commit/0973579ca57df0d2f641ff4a4fea2f6951b4f6fe))
 
 ## 3.0.37 (2019-10-05)
 

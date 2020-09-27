@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.0.20](https://gitlab.com/codsen/codsen/compare/is-relative-uri@1.0.19...is-relative-uri@1.0.20) (2020-09-27)
-
-**Note:** Version bump only for package is-relative-uri
-
-
-
-
-
 ## 1.0.0 (2020-01-11)
 
 ### Features

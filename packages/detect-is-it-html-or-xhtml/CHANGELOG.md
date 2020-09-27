@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.10.0](https://gitlab.com/codsen/codsen/compare/detect-is-it-html-or-xhtml@3.9.61...detect-is-it-html-or-xhtml@3.10.0) (2020-09-27)
-
+## 3.10.0 (2020-09-27)
 
 ### Features
 
-* split tests into separate files and add examples ([d5d1fc3](https://gitlab.com/codsen/codsen/commit/d5d1fc3c29524c53569b2e48c18d63a275afae25))
-
-
-
-
+- split tests into separate files and add examples ([d5d1fc3](https://gitlab.com/codsen/codsen/commit/d5d1fc3c29524c53569b2e48c18d63a275afae25))
 
 ## 3.9.0 (2019-01-20)
 

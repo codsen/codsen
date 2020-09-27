@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.10.0](https://gitlab.com/codsen/codsen/compare/bitbucket-slug@1.9.64...bitbucket-slug@1.10.0) (2020-09-27)
-
+## 1.10.0 (2020-09-27)
 
 ### Features
 
-* add examples ([336d407](https://gitlab.com/codsen/codsen/commit/336d4075089a9a5cae32601cd0ce3fde8af024da))
-
-
-
-
+- add examples ([336d407](https://gitlab.com/codsen/codsen/commit/336d4075089a9a5cae32601cd0ce3fde8af024da))
 
 ## 1.9.0 (2019-01-20)
 

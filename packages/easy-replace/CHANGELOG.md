@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.8.0](https://gitlab.com/codsen/codsen/compare/easy-replace@3.7.63...easy-replace@3.8.0) (2020-09-27)
-
+## 3.8.0 (2020-09-27)
 
 ### Features
 
-* add examples and sort the coverage ([c826fae](https://gitlab.com/codsen/codsen/commit/c826faed665614dc5b0716bdf1dbfa07e0b81170))
-
-
-
-
+- add examples and sort the coverage ([c826fae](https://gitlab.com/codsen/codsen/commit/c826faed665614dc5b0716bdf1dbfa07e0b81170))
 
 ## 3.9.0 (2019-01-20)
 
