@@ -271,7 +271,7 @@ tap.test(
       ],
       "05.01"
     );
-    t.same(gathered.length, 1, "05.02");
+    t.strictSame(gathered.length, 1, "05.02");
     t.end();
   }
 );
@@ -554,7 +554,7 @@ tap.test(
       ],
       "09.01"
     );
-    t.same(gathered[0].attribs[0].attribValue.length, 1, "09.02");
+    t.strictSame(gathered[0].attribs[0].attribValue.length, 1, "09.02");
     t.end();
   }
 );
@@ -1342,7 +1342,7 @@ tap.test(
       },
     });
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -1400,7 +1400,7 @@ tap.test(
       },
     });
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -1480,7 +1480,7 @@ tap.test(
       },
     });
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -2568,7 +2568,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -2663,7 +2663,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -2742,7 +2742,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -2837,7 +2837,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -2931,7 +2931,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -3031,7 +3031,7 @@ tap.test(
         },
       }
     );
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -5534,7 +5534,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {

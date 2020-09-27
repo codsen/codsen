@@ -44,7 +44,7 @@ tap.test("03 - detects is the character a letter", (t) => {
 });
 
 tap.test("04 - package exports the options object", (t) => {
-  t.same(opts, defaultOpts, "04");
+  t.strictSame(opts, defaultOpts, "04");
   t.end();
 });
 

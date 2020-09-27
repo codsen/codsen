@@ -8,7 +8,7 @@ import { processThis, tiny } from "./util";
 tap.test(
   `01 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TABLE and TR`}\u001b[${39}m`} - the beginning`,
   (t) => {
-    t.same(
+    t.strictSame(
       processThis(`<table>
   zzz
   <tr>
@@ -38,7 +38,7 @@ tap.test(
 tap.test(
   `02 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TABLE and TR`}\u001b[${39}m`} - the ending`,
   (t) => {
-    t.same(
+    t.strictSame(
       processThis(`<table>
   <tr>
     <td>
@@ -68,7 +68,7 @@ tap.test(
 tap.test(
   `03 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - code between two tr's`,
   (t) => {
-    t.same(
+    t.strictSame(
       processThis(`<table>
 <tr>
 <td>
@@ -108,7 +108,7 @@ zzz
 tap.test(
   `04 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TABLE and TR`}\u001b[${39}m`} - mess within comment block`,
   (t) => {
-    t.same(
+    t.strictSame(
       processThis(`<table>
   zzz
   <!--<tr>
@@ -140,7 +140,7 @@ tap.test(
 tap.test(
   `05 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - commented-out code + raw code`,
   (t) => {
-    t.same(
+    t.strictSame(
       processThis(`<table>
   <tr>
     <td>
@@ -180,7 +180,7 @@ tap.test(
 tap.test(
   `06 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - colspan=2`,
   (t) => {
-    t.same(
+    t.strictSame(
       processThis(`<table>
   xyz
   <tr>
@@ -216,7 +216,7 @@ tap.test(
 tap.test(
   `07 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - detects centering, HTML align attribute`,
   (t) => {
-    t.same(
+    t.strictSame(
       processThis(`<table>
 <tr>
 <td align="center">
@@ -256,7 +256,7 @@ zzz
 tap.test(
   `08 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - detects centering, inline CSS text-align`,
   (t) => {
-    t.same(
+    t.strictSame(
       processThis(`<table>
 <tr>
 <td style="text-align: center;">
@@ -296,7 +296,7 @@ zzz
 tap.test(
   `09 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - single quote as TD content`,
   (t) => {
-    t.same(
+    t.strictSame(
       processThis(`<table>
 <tr><td>a</td></tr>
 {{ 0 }}
@@ -320,7 +320,7 @@ tap.test(
 tap.test(
   `10 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - styling via opts`,
   (t) => {
-    t.same(
+    t.strictSame(
       processThis(
         `<table>
 <tr><td>a</td></tr>
@@ -351,7 +351,7 @@ tap.test(
 tap.test(
   `11 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - styling via opts, #2`,
   (t) => {
-    t.same(
+    t.strictSame(
       processThis(
         `<table>
 {{ 0 }}
@@ -386,7 +386,7 @@ tap.test(
 tap.test(
   `12 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - styling via opts, #3`,
   (t) => {
-    t.same(
+    t.strictSame(
       processThis(
         `<table><tr><td></td></tr>
 1
@@ -417,7 +417,7 @@ tap.test(
 tap.test(
   `13 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - deeper nesting`,
   (t) => {
-    t.same(
+    t.strictSame(
       processThis(
         `<table><tr><td></td></tr>
 1
@@ -448,7 +448,7 @@ tap.test(
 tap.test(
   `14 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - deeper nesting`,
   (t) => {
-    t.same(
+    t.strictSame(
       processThis(
         `<table><tr><td></td></tr>
 1

@@ -216,7 +216,7 @@ tap.test(
     const res = comb(actual, { uglify: true });
     t.equal(res.result, intended, "03.02 - uglify is on");
 
-    t.same(
+    t.strictSame(
       res.log.uglified,
       [
         [".aaa01", ".s"],

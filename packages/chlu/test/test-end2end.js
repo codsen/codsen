@@ -28,7 +28,7 @@ function compare(t, name, gitTags = null) {
   //   )}`
   // );
 
-  return t.same(c(changelog, gitTags, packageJson), expected);
+  return t.strictSame(c(changelog, gitTags, packageJson), expected);
 }
 
 function throws(t, name, gitTags = null) {
@@ -48,7 +48,7 @@ function throws(t, name, gitTags = null) {
 // -----------------------------------------------------------------------------
 
 tap.test("01. if no input, will silently return indefined", (t) => {
-  t.same(c(), undefined, "01");
+  t.strictSame(c(), undefined, "01");
   t.end();
 });
 
@@ -287,7 +287,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [1.2.0]: https://github.com/codsen/correct-lib/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/codsen/correct-lib/compare/v1.0.0...v1.1.0
 `;
-    t.same(c(original), expected, "19");
+    t.strictSame(c(original), expected, "19");
 
     t.end();
   }
@@ -398,7 +398,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [1.2.0]: https://bitbucket.org/codsen/correct-lib/branches/compare/v1.2.0%0Dv1.1.0#diff
 [1.1.0]: https://bitbucket.org/codsen/correct-lib/branches/compare/v1.1.0%0Dv1.0.0#diff
 `;
-    t.same(
+    t.strictSame(
       c(original),
       expected,
       "20 - result has descending order links because source had one row only"

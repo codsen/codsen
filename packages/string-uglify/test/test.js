@@ -186,7 +186,7 @@ tap.test(
 tap.test(
   `10 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - should work if strings don't have hashes/dots`,
   (t) => {
-    t.same(
+    t.strictSame(
       uglifyArr([
         ".class1",
         ".class1",
@@ -211,7 +211,7 @@ tap.test(
 tap.test(
   `11 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - bunch of identical just-names should be turned into single letter`,
   (t) => {
-    t.same(
+    t.strictSame(
       uglifyArr([
         "zzz",
         "zzz",
@@ -236,7 +236,7 @@ tap.test(
 tap.test(
   `12 - ${`\u001b[${36}m${`aims`}\u001b[${39}m`} - single and double letter name, repeating, cross-type`,
   (t) => {
-    t.same(
+    t.strictSame(
       uglifyArr([
         "a",
         "a",

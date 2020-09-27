@@ -82,9 +82,8 @@ function _objectSpread2(target) {
   return target;
 }
 
-var isArr = Array.isArray;
 function allValuesEqualTo(input, value, opts) {
-  if (isArr(input)) {
+  if (Array.isArray(input)) {
     if (input.length === 0) {
       return true;
     }
@@ -121,7 +120,7 @@ function allValuesEqualToWrapper(inputOriginal, valueOriginal, originalOpts) {
   if (valueOriginal === undefined) {
     throw new Error("object-all-values-equal-to: [THROW_ID_02] The second input is undefined! Please provide the second argument.");
   }
-  if (originalOpts !== undefined && originalOpts !== null && !isObj__default['default'](originalOpts)) {
+  if (originalOpts && !isObj__default['default'](originalOpts)) {
     throw new Error("object-all-values-equal-to: [THROW_ID_03] The third argument, options object, was given not as a plain object but as a ".concat(_typeof(originalOpts), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
   }
   var defaults = {

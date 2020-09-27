@@ -4,7 +4,7 @@ import { crush as m } from "../dist/html-crush.esm";
 tap.test(
   `01 - ${`\u001b[${90}m${`adhoc 1`}\u001b[${39}m`} - a peculiar set of characters`,
   (t) => {
-    t.same(
+    t.strictSame(
       m("<a>\n<<>", { removeLineBreaks: true }).result,
       "<a><<>",
       "01 - a peculiar set of characters"
@@ -16,7 +16,7 @@ tap.test(
 tap.test(
   `02 - ${`\u001b[${90}m${`adhoc 2`}\u001b[${39}m`} - another peculiar set of characters`,
   (t) => {
-    t.same(
+    t.strictSame(
       m("You&rsquo;ve").result,
       "You&rsquo;ve",
       "02 - another peculiar set of characters"
@@ -42,7 +42,7 @@ xmlns:o="urn:schemas-microsoft-com:office:office">
     const output = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html lang="en" xmlns="http://www.w3.org/1999/xhtml"
 xmlns:v="urn:schemas-microsoft-com:vml"
 xmlns:o="urn:schemas-microsoft-com:office:office"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><!--[if !mso]><!-- --><meta http-equiv="X-UA-Compatible" content="IE=edge"/><!--<![endif]--><meta name="format-detection" content="telephone=no"/><meta name="viewport" zzz`;
-    t.same(
+    t.strictSame(
       m(input, {
         removeLineBreaks: true,
         breakToTheLeftOf: [],
@@ -65,47 +65,47 @@ tap.test(
 tap.test(
   `05 - ${`\u001b[${90}m${`adhoc 5`}\u001b[${39}m`} - raw non-breaking spaces`,
   (t) => {
-    t.same(
+    t.strictSame(
       m("\u00A0<x>\n\u00A0\u00A0<y>\u00A0", { removeLineBreaks: true }).result,
       "<x><y>",
       "05.01"
     );
-    t.same(
+    t.strictSame(
       m("\u00A0<x>\n\u00A0\u00A0<y>\u00A0", { removeLineBreaks: false }).result,
       "<x>\n<y>",
       "05.02"
     );
-    t.same(
+    t.strictSame(
       m("\u00A0<x/>\n\u00A0\u00A0<y/>\u00A0", { removeLineBreaks: true })
         .result,
       "<x/><y/>",
       "05.03"
     );
-    t.same(
+    t.strictSame(
       m("\u00A0<x/>\n\u00A0\u00A0<y/>\u00A0", { removeLineBreaks: false })
         .result,
       "<x/>\n<y/>",
       "05.04"
     );
-    t.same(
+    t.strictSame(
       m("\u00A0<x/>\n\u00A0\u00A0</y>\u00A0", { removeLineBreaks: true })
         .result,
       "<x/></y>",
       "05.05"
     );
-    t.same(
+    t.strictSame(
       m("\u00A0<x/>\n\u00A0\u00A0</y>\u00A0", { removeLineBreaks: false })
         .result,
       "<x/>\n</y>",
       "05.06"
     );
-    t.same(
+    t.strictSame(
       m("\u00A0</x>\n\u00A0\u00A0</y>\u00A0", { removeLineBreaks: true })
         .result,
       "</x></y>",
       "05.07"
     );
-    t.same(
+    t.strictSame(
       m("\u00A0</x>\n\u00A0\u00A0</y>\u00A0", { removeLineBreaks: false })
         .result,
       "</x>\n</y>",
@@ -120,8 +120,8 @@ tap.test(
   (t) => {
     const chunk = "    <script >   >]] > < div>";
     const res = "<script >   >]] > < div>";
-    t.same(m(chunk, { removeLineBreaks: true }).result, res, "06.01");
-    t.same(
+    t.strictSame(m(chunk, { removeLineBreaks: true }).result, res, "06.01");
+    t.strictSame(
       m(chunk, {
         removeLineBreaks: false,
         removeIndentations: true,
@@ -129,7 +129,7 @@ tap.test(
       res,
       "06.02"
     );
-    t.same(
+    t.strictSame(
       m(chunk, {
         removeLineBreaks: false,
         removeIndentations: false,
@@ -158,7 +158,7 @@ z>
     const output = `<m><n><o><p><x
 y
 z><t><x><y><z klm`;
-    t.same(
+    t.strictSame(
       m(input, {
         lineLengthLimit: 20,
         removeLineBreaks: true,
@@ -172,7 +172,7 @@ z><t><x><y><z klm`;
 );
 
 tap.test(`08 - ${`\u001b[${90}m${`adhoc 8`}\u001b[${39}m`} - nunjucks`, (t) => {
-  t.same(
+  t.strictSame(
     m("{%- length > 1 or length > 2 -%}", {
       removeLineBreaks: true,
     }).result,
@@ -185,7 +185,7 @@ tap.test(`08 - ${`\u001b[${90}m${`adhoc 8`}\u001b[${39}m`} - nunjucks`, (t) => {
 tap.test(`09 - ${`\u001b[${90}m${`adhoc 9`}\u001b[${39}m`} - nunjucks`, (t) => {
   const source =
     '{%- if (((not a.b) and (a.b | c("d") | e > 1)) or ((a.b) and (a.f | c("d") | e > 2))) -%}';
-  t.same(
+  t.strictSame(
     m(source, {
       removeLineBreaks: true,
     }).result,

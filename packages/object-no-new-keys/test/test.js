@@ -6,7 +6,7 @@ import nnk from "../dist/object-no-new-keys.esm";
 // ==========
 
 tap.test("01 - first level keys", (t) => {
-  t.same(
+  t.strictSame(
     nnk(
       {
         a: "a",
@@ -24,7 +24,7 @@ tap.test("01 - first level keys", (t) => {
 });
 
 tap.test("02 - two level object", (t) => {
-  t.same(
+  t.strictSame(
     nnk(
       {
         a: {
@@ -46,7 +46,7 @@ tap.test("02 - two level object", (t) => {
 });
 
 tap.test("03 - object does not even exist on a reference", (t) => {
-  t.same(
+  t.strictSame(
     nnk(
       {
         a: {
@@ -66,7 +66,7 @@ tap.test("03 - object does not even exist on a reference", (t) => {
 });
 
 tap.test("04 - same as 01.03 but deeper levels", (t) => {
-  t.same(
+  t.strictSame(
     nnk(
       {
         a: {
@@ -97,7 +97,7 @@ tap.test("04 - same as 01.03 but deeper levels", (t) => {
 // ====================
 
 tap.test("05 - objects within arrays", (t) => {
-  t.same(
+  t.strictSame(
     nnk(
       {
         a: [
@@ -118,7 +118,7 @@ tap.test("05 - objects within arrays", (t) => {
     ["a[0].d"],
     "05.01 - basic"
   );
-  t.same(
+  t.strictSame(
     nnk(
       {
         a: [
@@ -150,7 +150,7 @@ tap.test("05 - objects within arrays", (t) => {
     ["a[0].d", "a[0].f", "a[1].k", "x"],
     "05.02 - proper"
   );
-  t.same(
+  t.strictSame(
     nnk(
       {
         a: [
@@ -178,7 +178,7 @@ tap.test("05 - objects within arrays", (t) => {
     ["a[0].d", "a[0].f", "a[1].k", "x"],
     "05.03 - array in the reference has lesser number of elements (default, MODE #2)"
   );
-  t.same(
+  t.strictSame(
     nnk(
       {
         a: [
@@ -207,7 +207,7 @@ tap.test("05 - objects within arrays", (t) => {
     ["a[0].d", "a[0].f", "a[1].c", "a[1].k", "x"],
     "05.04 - MODE #1 - array in the reference has lesser number of elements"
   );
-  t.same(
+  t.strictSame(
     nnk(
       {
         a: [
@@ -240,7 +240,7 @@ tap.test("05 - objects within arrays", (t) => {
 });
 
 tap.test("06 - other cases", (t) => {
-  t.same(
+  t.strictSame(
     nnk(
       [
         {
@@ -253,7 +253,7 @@ tap.test("06 - other cases", (t) => {
     ["[0]"],
     "06.01"
   );
-  t.same(
+  t.strictSame(
     nnk(
       {
         a: [
@@ -268,7 +268,7 @@ tap.test("06 - other cases", (t) => {
     ["a[0]"],
     "06.02"
   );
-  t.same(
+  t.strictSame(
     nnk(
       {
         a: [
@@ -291,22 +291,22 @@ tap.test("06 - other cases", (t) => {
 // ========================================
 
 tap.test("07 - array vs ..., can be inner recursion situation", (t) => {
-  t.same(
+  t.strictSame(
     nnk(["a", "b", "c"]),
     ["[0]", "[1]", "[2]"],
     "07.01 - array vs undefined"
   );
-  t.same(
+  t.strictSame(
     nnk(["a", "b", "c"], "zzz"),
     ["[0]", "[1]", "[2]"],
     "07.02 - array vs string"
   );
-  t.same(
+  t.strictSame(
     nnk(["a", "b", "c"], { z: "zzz" }),
     ["[0]", "[1]", "[2]"],
     "07.03 - array vs plain object"
   );
-  t.same(
+  t.strictSame(
     nnk(
       [
         {
@@ -323,7 +323,7 @@ tap.test("07 - array vs ..., can be inner recursion situation", (t) => {
 });
 
 tap.test("08 - plain object vs ..., can be inner recursion situation", (t) => {
-  t.same(
+  t.strictSame(
     nnk({
       a: "a",
       b: "b",
@@ -332,7 +332,7 @@ tap.test("08 - plain object vs ..., can be inner recursion situation", (t) => {
     ["a", "b", "c"],
     "08.01 - object vs undefined"
   );
-  t.same(
+  t.strictSame(
     nnk(
       {
         a: "a",
@@ -350,7 +350,7 @@ tap.test("08 - plain object vs ..., can be inner recursion situation", (t) => {
 tap.test(
   "09 - more complex plain object vs undefined (deeper levels won't be traversed if parents are not matching)",
   (t) => {
-    t.same(
+    t.strictSame(
       nnk({
         a: "a",
         b: ["b"],
@@ -366,7 +366,7 @@ tap.test(
 );
 
 tap.test("10 - more complex plain object vs empty object", (t) => {
-  t.same(
+  t.strictSame(
     nnk(
       {
         a: "a",
@@ -384,7 +384,7 @@ tap.test("10 - more complex plain object vs empty object", (t) => {
 });
 
 tap.test("11 - string vs string", (t) => {
-  t.same(nnk("a", "b"), [], "11");
+  t.strictSame(nnk("a", "b"), [], "11");
   t.end();
 });
 

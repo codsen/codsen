@@ -31,7 +31,11 @@ color:  black;
 </html>
 `;
 
-  t.same(actual, intended, "01 - default behaviour - lib will extract var1");
+  t.strictSame(
+    actual,
+    intended,
+    "01 - default behaviour - lib will extract var1"
+  );
   t.end();
 });
 
@@ -66,7 +70,7 @@ color: black;
 </html>
 `;
 
-  t.same(
+  t.strictSame(
     actual,
     intended,
     "02 - default behaviour - curlies are not legal characters to be used as class names"
@@ -103,7 +107,7 @@ tap.test("03 - nunjucks variable as a class name (simplified version)", (t) => {
 </body>
 `;
 
-  t.same(
+  t.strictSame(
     actual,
     intended,
     "03 - we taught it how heads and tails look so it skips them now"
@@ -152,7 +156,7 @@ color:  black;
 </html>
 `;
 
-  t.same(
+  t.strictSame(
     actual,
     intended,
     "04 - we taught it how heads and tails look so it skips them now"
@@ -191,7 +195,7 @@ tap.test(
 </body>
 `;
 
-    t.same(
+    t.strictSame(
       actual,
       intended,
       "05 - we taught it how heads and tails look so it skips them now"
@@ -265,7 +269,7 @@ tap.test(
 </html>
 `;
 
-    t.same(actual, intended, "06");
+    t.strictSame(actual, intended, "06");
     t.end();
   }
 );
@@ -301,7 +305,7 @@ tap.test("07 - esp tag at the end of ignored class", (t) => {
 <table class="module-zzz-{{ loop.index }}">
 `;
 
-  t.same(actual, intended, "07");
+  t.strictSame(actual, intended, "07");
   t.end();
 });
 
@@ -328,6 +332,6 @@ tap.test("08 - esp tag at the end of ignored class", (t) => {
 <table class="module-zzz-{{ loop.index }}">
 `;
 
-  t.same(actual, intended, "08");
+  t.strictSame(actual, intended, "08");
   t.end();
 });

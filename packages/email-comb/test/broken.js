@@ -18,7 +18,7 @@ tap.test("01 - missing closing TD, TR, TABLE will not throw", (t) => {
     some text
 `;
 
-  t.same(actual, intended, "01 - does nothing as head has no styles");
+  t.strictSame(actual, intended, "01 - does nothing as head has no styles");
   t.end();
 });
 
@@ -43,7 +43,7 @@ tap.test(
 </html>
 `;
 
-    t.same(actual, intended, "02");
+    t.strictSame(actual, intended, "02");
     t.end();
   }
 );
@@ -77,7 +77,7 @@ tap.test(
 </html>
 `;
 
-    t.same(actual, intended, "03");
+    t.strictSame(actual, intended, "03");
     t.end();
   }
 );
@@ -125,7 +125,7 @@ tap.test(
 </table>
 </body>`;
 
-    t.same(
+    t.strictSame(
       actual,
       intended,
       "04 - rubbish in, rubbish out, only rubbish-with-unused-CSS-removed-out!"

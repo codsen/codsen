@@ -21,7 +21,7 @@ tap.test("01 - basic throws related to wrong input", (t) => {
   }, /THROW_ID_02/);
 
   // empty plain object does not throw
-  t.same(jv({}), {}, "empty plain object");
+  t.strictSame(jv({}), {}, "empty plain object");
 
   t.throws(() => {
     jv([]); // empty array
@@ -73,7 +73,7 @@ tap.test(
       );
     }, /THROW_ID_08/);
 
-    t.same(
+    t.strictSame(
       jv(
         {
           a: "a",
@@ -149,7 +149,7 @@ tap.test("06 - throws when keys contain variables", (t) => {
 tap.test(
   "07 - throws when there are unequal number of marker heads and tails",
   (t) => {
-    t.same(
+    t.strictSame(
       jv({
         a: "some text %%_var1_%% more %%_text",
         b: "something",
@@ -165,7 +165,7 @@ tap.test(
       "07.01"
     );
 
-    t.same(
+    t.strictSame(
       jv({
         a: "some text %%_var1_%% more text_%%",
         b: "%%_something",
@@ -203,7 +203,7 @@ tap.test("08 - throws when data is missing", (t) => {
   t.match(err2.message, /THROW_ID_18/, "08.02");
 
   // however, it does not throw when opts.allowUnresolved is on
-  t.same(
+  t.strictSame(
     jv(
       {
         a: "some text %%_var1_%% more text",
@@ -223,7 +223,7 @@ tap.test("08 - throws when data is missing", (t) => {
   );
 
   // when opts.allowUnresolved is string, that is used
-  t.same(
+  t.strictSame(
     jv(
       {
         a: "some text %%_var1_%% more text",
@@ -243,7 +243,7 @@ tap.test("08 - throws when data is missing", (t) => {
   );
 
   // when opts.allowUnresolved is empty string, that is used
-  t.same(
+  t.strictSame(
     jv(
       {
         a: "some text %%_var1_%% more text",
@@ -263,7 +263,7 @@ tap.test("08 - throws when data is missing", (t) => {
   );
 
   // also, consider the cases when only some variables can't be resolved
-  t.same(
+  t.strictSame(
     jv(
       {
         a: "some text %%_var1_%% more text%%_var2_%%",
@@ -310,7 +310,7 @@ tap.test(
         var1: "something",
       },
     };
-    t.same(
+    t.strictSame(
       jv(input1, { lookForDataContainers: false }),
       {
         a: "some text something more text",
@@ -321,7 +321,7 @@ tap.test(
       "data store is off, so empty opts.dataContainerIdentifierTails is fine"
     );
     // check against input argument mutation:
-    t.same(
+    t.strictSame(
       input1,
       {
         a: "some text %%_var1_%% more text",
@@ -357,7 +357,7 @@ tap.test(
       },
       var1: "222",
     };
-    t.same(
+    t.strictSame(
       jv(input2, { lookForDataContainers: false }),
       {
         a: {
@@ -373,7 +373,7 @@ tap.test(
       "resolves to topmost root level key because data store is off"
     );
     // mutation check:
-    t.same(
+    t.strictSame(
       input2,
       {
         a: {
@@ -402,7 +402,7 @@ tap.test(
       },
       var1: "222",
     };
-    t.same(
+    t.strictSame(
       jv(input3, { lookForDataContainers: true }),
       {
         a: {
@@ -418,7 +418,7 @@ tap.test(
       "resolves to datastore, not using value at the root"
     );
     // mutation check:
-    t.same(
+    t.strictSame(
       input3,
       {
         a: {

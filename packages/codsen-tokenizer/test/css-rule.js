@@ -404,7 +404,7 @@ tap.test(
       }
     );
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -472,7 +472,7 @@ tap.test(`09 - ${`\u001b[${36}m${`basics`}\u001b[${39}m`} - @media`, (t) => {
     }
   );
 
-  t.same(
+  t.strictSame(
     gathered,
     [
       {

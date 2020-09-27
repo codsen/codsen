@@ -85,7 +85,7 @@ The promo is still on!
     `{% if data.customer.purchases[0].spendTotal < 100 %}\nYou earned a discount!\n{% else %}\nThe promo is still on!\n{% endif %}`,
     "02.01"
   );
-  t.same(
+  t.strictSame(
     ranges,
     [
       [0, 31],
@@ -93,7 +93,7 @@ The promo is still on!
     ],
     "02.02"
   );
-  t.same(
+  t.strictSame(
     allTagLocations,
     [
       [0, 30],
@@ -101,7 +101,7 @@ The promo is still on!
     ],
     "02.03"
   );
-  t.same(
+  t.strictSame(
     filteredTagLocations,
     [
       [0, 30],
@@ -137,7 +137,7 @@ tap.test("03 - Tell me String indexes of where the <tr> tags are.", (t) => {
   const { filteredTagLocations } = stripHtml(input, {
     onlyStripTags: ["tr"],
   });
-  t.same(
+  t.strictSame(
     filteredTagLocations,
     [
       [22, 26],
@@ -152,7 +152,7 @@ tap.test("03 - Tell me String indexes of where the <tr> tags are.", (t) => {
     gatheredExtractedTagStrings.push(input.slice(from, to));
   });
 
-  t.same(
+  t.strictSame(
     gatheredExtractedTagStrings,
     [`<tr>`, `<tr>`, `</tr>`, `</tr>`],
     "03.02"

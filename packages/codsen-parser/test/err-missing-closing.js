@@ -11,7 +11,7 @@ tap.test(
     cparser(`<div></div>`, {
       errCb: (errObj) => gatheredErr.push(errObj),
     });
-    t.same(gatheredErr, [], "01");
+    t.strictSame(gatheredErr, [], "01");
     t.end();
   }
 );
@@ -23,7 +23,7 @@ tap.test(
     cparser(`<style>\n\n</style>`, {
       errCb: (errObj) => gatheredErr.push(errObj),
     });
-    t.same(gatheredErr, [], "02");
+    t.strictSame(gatheredErr, [], "02");
     t.end();
   }
 );
@@ -35,7 +35,7 @@ tap.test(
     cparser(`<div>\n\n</div>`, {
       errCb: (errObj) => gatheredErr.push(errObj),
     });
-    t.same(gatheredErr, [], "03");
+    t.strictSame(gatheredErr, [], "03");
     t.end();
   }
 );
@@ -263,7 +263,7 @@ tap.test(
     cparser(`<!doctype html>`, {
       errCb: (errObj) => gatheredErr.push(errObj),
     });
-    t.same(gatheredErr, [], "07");
+    t.strictSame(gatheredErr, [], "07");
     t.end();
   }
 );

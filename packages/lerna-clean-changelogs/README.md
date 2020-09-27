@@ -1,6 +1,6 @@
 # lerna-clean-changelogs
 
-> Cleans all the crap from Lerna and Conventional Commits-generated changelogs
+> Removes frivolous changelog entries from commitizen-generated changelogs
 
 <div class="package-badges">
   <a href="https://www.npmjs.com/package/lerna-clean-changelogs" rel="nofollow noreferrer noopener">
@@ -25,6 +25,71 @@
 
 ```bash
 npm i lerna-clean-changelogs
+```
+
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import cleanChangelogs from "lerna-clean-changelogs";
+
+// are all values equal to null:
+assert.deepEqual(
+  cleanChangelogs(`# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## 2.9.2 (2018-12-27)
+
+
+
+
+
+
+
+**Note:** Version bump only for package ranges-apply
+
+
+
+## [2.9.1](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/compare/ranges-apply@2.9.0...ranges-apply@2.9.1) (2018-12-27)
+
+**Note:** Version bump only for package ranges-apply
+
+## 2.9.0 (2018-12-26)
+
+### Bug Fixes
+
+* aaa
+
+### Features
+
+* bbb
+
+`),
+  //
+  //
+  //
+  // output:
+  {
+    version: "1.3.59",
+    res: `# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## 2.9.0 (2018-12-26)
+
+### Bug Fixes
+
+- aaa
+
+### Features
+
+- bbb
+`,
+  }
+);
 ```
 
 ## Documentation

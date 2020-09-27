@@ -1,0 +1,1 @@
+{"_quickTake.js":{"title":"Quick Take","content":"import &#x7B; strict as assert &#x7D; from \"assert\";\nimport &#x7B; pathNext, pathPrev, pathUp &#x7D; from \"ast-monkey-util\";\n\nassert.equal(pathNext(\"9.children.3\"), \"9.children.4\");\n\nassert.equal(pathPrev(\"9.children.33\"), \"9.children.32\");\n\nassert.equal(pathUp(\"9.children.1.children.2\"), \"9.children.1\");"}}

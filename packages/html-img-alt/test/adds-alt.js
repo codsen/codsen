@@ -5,7 +5,7 @@ import alt from "../dist/html-img-alt.esm";
 // -----------------------------------------------------------------------------
 
 tap.test("01 - normalising all attributes on IMG, adding ALT", (t) => {
-  t.same(
+  t.strictSame(
     alt('z<img         a="zz"        >z'),
     'z<img a="zz" alt="" >z',
     "01 - html simples"
@@ -14,7 +14,7 @@ tap.test("01 - normalising all attributes on IMG, adding ALT", (t) => {
 });
 
 tap.test("02 - normalising all attributes on IMG, adding ALT", (t) => {
-  t.same(
+  t.strictSame(
     alt('z<img         a="zz"        />z'),
     'z<img a="zz" alt="" />z',
     "02 - xhtml simples"
@@ -23,7 +23,7 @@ tap.test("02 - normalising all attributes on IMG, adding ALT", (t) => {
 });
 
 tap.test("03 - normalising all attributes on IMG, adding ALT", (t) => {
-  t.same(
+  t.strictSame(
     alt('z<img         a="zz"        /     >z'),
     'z<img a="zz" alt="" />z',
     "03 - xhtml simples"
@@ -32,7 +32,7 @@ tap.test("03 - normalising all attributes on IMG, adding ALT", (t) => {
 });
 
 tap.test("04 - normalising all attributes on IMG, adding ALT", (t) => {
-  t.same(
+  t.strictSame(
     alt('z<img         a="zz"/     >z'),
     'z<img a="zz" alt="" />z',
     "04 - xhtml simples"
@@ -41,7 +41,7 @@ tap.test("04 - normalising all attributes on IMG, adding ALT", (t) => {
 });
 
 tap.test("05 - normalising all attributes on IMG, adding ALT", (t) => {
-  t.same(
+  t.strictSame(
     alt(
       'zzz<img      whatever="sjldldljg; slhljdfg"       also="sdfkdh:232423 ; kgkd: 1223678638"       >zzz'
     ),
@@ -52,7 +52,7 @@ tap.test("05 - normalising all attributes on IMG, adding ALT", (t) => {
 });
 
 tap.test("06 - normalising all attributes on IMG, adding ALT", (t) => {
-  t.same(
+  t.strictSame(
     alt(
       'zzz<img      whatever="sjldldljg; slhljdfg"       also="sdfkdh:232423 ; kgkd: 1223678638"       />zzz'
     ),

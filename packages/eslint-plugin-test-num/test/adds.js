@@ -34,7 +34,7 @@ tap.test(
 
     // ensure no more errors are raised about "out"
     const messages = linter.verify(read("07-out"), c);
-    t.same(messages, [], `01.02`);
+    t.strictSame(messages, [], `01.02`);
     t.end();
   }
 );
@@ -48,7 +48,7 @@ tap.test(
 
     // ensure no more errors are raised about "out"
     const messages = linter.verify(read("08-out"), c);
-    t.same(messages, [], `02.02`);
+    t.strictSame(messages, [], `02.02`);
     t.end();
   }
 );
@@ -62,7 +62,7 @@ tap.test(
 
     // // ensure no more errors are raised about "out"
     // const messages = linter.verify(read("09-out"), c);
-    // t.same(messages, [], `03.02`);
+    // t.strictSame(messages, [], `03.02`);
     t.end();
   }
 );

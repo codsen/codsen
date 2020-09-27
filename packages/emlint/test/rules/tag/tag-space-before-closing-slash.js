@@ -85,7 +85,7 @@ tap.test(
         "tag-space-before-closing-slash": 1,
       },
     });
-    t.same(messages, [], "03.01");
+    t.strictSame(messages, [], "03.01");
     t.equal(applyFixes(str, messages), str, "03.02");
     t.end();
   }
@@ -101,7 +101,7 @@ tap.test(
         "tag-space-before-closing-slash": 2,
       },
     });
-    t.same(messages, [], "04.01");
+    t.strictSame(messages, [], "04.01");
     t.equal(applyFixes(str, messages), str, "04.02");
     t.end();
   }
@@ -186,7 +186,7 @@ tap.test(
         "tag-space-before-closing-slash": [1, "always"],
       },
     });
-    t.same(messages, [], "07.01");
+    t.strictSame(messages, [], "07.01");
     t.equal(applyFixes(str, messages), str, "07.02");
     t.end();
   }
@@ -202,7 +202,7 @@ tap.test(
         "tag-space-before-closing-slash": [2, "always"],
       },
     });
-    t.same(messages, [], "08.01");
+    t.strictSame(messages, [], "08.01");
     t.equal(applyFixes(str, messages), str, "08.02");
     t.end();
   }
@@ -287,7 +287,7 @@ tap.test(
         "tag-space-before-closing-slash": [1, "never"],
       },
     });
-    t.same(messages, [], "11.01");
+    t.strictSame(messages, [], "11.01");
     t.equal(applyFixes(str, messages), str, "11.02");
     t.end();
   }
@@ -303,7 +303,7 @@ tap.test(
         "tag-space-before-closing-slash": [2, "never"],
       },
     });
-    t.same(messages, [], "12.01");
+    t.strictSame(messages, [], "12.01");
     t.equal(applyFixes(str, messages), str, "12.02");
     t.end();
   }

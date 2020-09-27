@@ -27,6 +27,42 @@
 npm i object-flatten-all-arrays
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import flattenAllArrays from "object-flatten-all-arrays";
+
+assert.deepEqual(
+  flattenAllArrays({
+    a: "a",
+    b: "b",
+    c: [
+      {
+        b: "b",
+        a: "a",
+      },
+      {
+        d: "d",
+        c: "c",
+      },
+    ],
+  }),
+  {
+    a: "a",
+    b: "b",
+    c: [
+      {
+        a: "a",
+        b: "b",
+        c: "c",
+        d: "d",
+      },
+    ],
+  }
+);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/object-flatten-all-arrays/) for a full description of the API and examples.

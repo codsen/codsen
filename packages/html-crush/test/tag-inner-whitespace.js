@@ -7,21 +7,21 @@ import { crush as m } from "../dist/html-crush.esm";
 tap.test(
   `01 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - whitespace before closing bracket on opening tag`,
   (t) => {
-    t.same(
+    t.strictSame(
       m(`x<a >y`, {
         removeLineBreaks: true,
       }).result,
       `x<a>y`,
       "01.01"
     );
-    t.same(
+    t.strictSame(
       m(`x<a > y`, {
         removeLineBreaks: true,
       }).result,
       `x<a> y`,
       "01.02"
     );
-    t.same(
+    t.strictSame(
       m(`x<a>y`, {
         removeLineBreaks: true,
       }).result,
@@ -35,7 +35,7 @@ tap.test(
 tap.test(
   `02 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - div - block level`,
   (t) => {
-    t.same(
+    t.strictSame(
       m(`x<div >y`, {
         removeLineBreaks: true,
       }).result,
@@ -49,7 +49,7 @@ tap.test(
 tap.test(
   `03 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - a - inline tag`,
   (t) => {
-    t.same(
+    t.strictSame(
       m(`x<a >y`, {
         removeLineBreaks: false,
       }).result,
@@ -63,7 +63,7 @@ tap.test(
 tap.test(
   `04 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - removeLineBreaks = off`,
   (t) => {
-    t.same(
+    t.strictSame(
       m(`x<div >y`, {
         removeLineBreaks: false,
       }).result,
@@ -77,7 +77,7 @@ tap.test(
 tap.test(
   `05 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - all opts off, inline tag`,
   (t) => {
-    t.same(
+    t.strictSame(
       m(`x<a >y`, {
         removeLineBreaks: false,
         removeIndentations: false,
@@ -92,7 +92,7 @@ tap.test(
 tap.test(
   `06 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - all opts off, block level tag`,
   (t) => {
-    t.same(
+    t.strictSame(
       m(`x<div >y`, {
         removeLineBreaks: false,
         removeIndentations: false,
@@ -107,7 +107,7 @@ tap.test(
 tap.test(
   `07 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - before closing slash`,
   (t) => {
-    t.same(
+    t.strictSame(
       m(`x<a />y`, {
         removeLineBreaks: true,
       }).result,
@@ -121,7 +121,7 @@ tap.test(
 tap.test(
   `08 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - after closing slash`,
   (t) => {
-    t.same(
+    t.strictSame(
       m(`x<a/ >y`, {
         removeLineBreaks: true,
       }).result,
@@ -135,7 +135,7 @@ tap.test(
 tap.test(
   `09 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - around closing slash`,
   (t) => {
-    t.same(
+    t.strictSame(
       m(`x<a / >y`, {
         removeLineBreaks: true,
       }).result,
@@ -149,7 +149,7 @@ tap.test(
 tap.test(
   `10 - ${`\u001b[${33}m${`tag inner whitespace`}\u001b[${39}m`} - around closing slash - non inline tag`,
   (t) => {
-    t.same(
+    t.strictSame(
       m(`x<div / >y`, {
         removeLineBreaks: true,
       }).result,

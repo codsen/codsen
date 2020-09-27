@@ -91,7 +91,7 @@ tap.test(
     p("abcdefghij", [[1, 5]], (idx) => {
       gather.push(idx);
     });
-    t.same(gather, [0, 5, 6, 7, 8, 9], "08");
+    t.strictSame(gather, [0, 5, 6, 7, 8, 9], "08");
     t.end();
   }
 );
@@ -108,7 +108,7 @@ tap.test(
       },
       true
     );
-    t.same(gather2, [0, 5, 6, 7, 8, 9], "09");
+    t.strictSame(gather2, [0, 5, 6, 7, 8, 9], "09");
     t.end();
   }
 );
@@ -120,7 +120,7 @@ tap.test(
     p("abcdefghij", [[0, 5]], (idx) => {
       gather.push(idx);
     });
-    t.same(gather, [5, 6, 7, 8, 9], "10");
+    t.strictSame(gather, [5, 6, 7, 8, 9], "10");
     t.end();
   }
 );
@@ -137,7 +137,7 @@ tap.test(
       },
       true
     );
-    t.same(gathe2, [5, 6, 7, 8, 9], "11");
+    t.strictSame(gathe2, [5, 6, 7, 8, 9], "11");
     t.end();
   }
 );
@@ -156,7 +156,7 @@ tap.test(
         gather.push(idx);
       }
     );
-    t.same(gather, [5, 6, 8, 9], "12");
+    t.strictSame(gather, [5, 6, 8, 9], "12");
     t.end();
   }
 );
@@ -172,7 +172,7 @@ tap.test(
     p("abcdefghij", messy, (idx) => {
       gather2.push(idx);
     });
-    t.same(
+    t.strictSame(
       messy,
       [
         [7, 8],
@@ -180,7 +180,7 @@ tap.test(
       ],
       "13.01 - inputs were not mutated"
     );
-    t.same(
+    t.strictSame(
       gather2,
       [5, 6, 8, 9],
       "13.02 - result is the same as in previous test"
@@ -226,7 +226,7 @@ tap.test(
         gather.push(idx);
       }
     );
-    t.same(gather, [5, 6], "15 - result is the same as in previous test");
+    t.strictSame(gather, [5, 6], "15 - result is the same as in previous test");
     t.end();
   }
 );
@@ -265,7 +265,7 @@ tap.test(
     p("abcdefghij", [], (idx) => {
       gather.push(idx);
     });
-    t.same(gather, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], "17");
+    t.strictSame(gather, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], "17");
     t.end();
   }
 );
@@ -277,7 +277,7 @@ tap.test(
     p("abcdefghij", null, (idx) => {
       gather2.push(idx);
     });
-    t.same(gather2, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], "18");
+    t.strictSame(gather2, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], "18");
     t.end();
   }
 );
@@ -294,7 +294,7 @@ tap.test(
       },
       true
     );
-    t.same(gather, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], "19");
+    t.strictSame(gather, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], "19");
     t.end();
   }
 );
@@ -306,7 +306,7 @@ tap.test(
     p("abcdefghij", [[0, 100]], (idx) => {
       gather1.push(idx);
     });
-    t.same(gather1, [], "20");
+    t.strictSame(gather1, [], "20");
     t.end();
   }
 );
@@ -318,7 +318,7 @@ tap.test(
     p("abcdefghij", [[100, 200]], (idx) => {
       gather.push(idx);
     });
-    t.same(gather, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], "21");
+    t.strictSame(gather, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], "21");
     t.end();
   }
 );
@@ -335,7 +335,7 @@ tap.test(
       },
       false // skip=false so checks are on
     );
-    t.same(
+    t.strictSame(
       gather,
       [
         [5, 6],
@@ -362,7 +362,7 @@ tap.test(
       },
       false // skip=false so checks are on
     );
-    t.same(
+    t.strictSame(
       gather,
       [
         [5, 6],
@@ -390,7 +390,7 @@ tap.test(
         offsetBy(1);
       }
     });
-    t.same(gather, [0, 5, 7, 8, 9], "24");
+    t.strictSame(gather, [0, 5, 7, 8, 9], "24");
     t.end();
   }
 );
@@ -405,7 +405,7 @@ tap.test(
         offsetBy(1);
       }
     });
-    t.same(gather, [0, 5, 6, 8, 9], "25");
+    t.strictSame(gather, [0, 5, 6, 8, 9], "25");
     t.end();
   }
 );
@@ -421,7 +421,7 @@ tap.test(
         gather.push(idxFrom);
       }
     });
-    t.same(gather, [0, 7, 8, 9], "26");
+    t.strictSame(gather, [0, 7, 8, 9], "26");
     t.end();
   }
 );

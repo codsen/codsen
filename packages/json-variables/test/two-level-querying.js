@@ -4,7 +4,7 @@ import tap from "tap";
 import jv from "../dist/json-variables.esm";
 
 tap.test("01 - two-level querying, normal keys in the root", (t) => {
-  t.same(
+  t.strictSame(
     jv({
       a: "some text %%_var1.key3_%% more text %%_var2.key6_%%",
       b: "something",
@@ -45,7 +45,7 @@ tap.test("01 - two-level querying, normal keys in the root", (t) => {
 tap.test(
   "02 - two-level querying, normal keys in the root + wrapping & opts",
   (t) => {
-    t.same(
+    t.strictSame(
       jv(
         {
           a: "some text %%_var1.key3_%% more text %%_var2.key6_%%",
@@ -92,7 +92,7 @@ tap.test(
       "02.01 - didn't wrap either, first level caught"
     );
 
-    t.same(
+    t.strictSame(
       jv(
         {
           a: "some text %%_var1.key3_%% more text %%_var2.key6_%%",
@@ -139,7 +139,7 @@ tap.test(
       "02.02 - didn't wrap one, second level caught"
     );
 
-    t.same(
+    t.strictSame(
       jv(
         {
           a: "some text %%_var1.key3_%% more text %%_var2.key6_%%",
@@ -184,7 +184,7 @@ tap.test(
       "02.03 - didn't wrap either, second levels caught"
     );
 
-    t.same(
+    t.strictSame(
       jv(
         {
           a: "some text %%-var1.key3-%% more text %%-var2.key6-%%",
@@ -231,7 +231,7 @@ tap.test(
       "02.04 - didn't wrap either because of %%- the non-wrapping notation."
     );
 
-    t.same(
+    t.strictSame(
       jv(
         {
           a: "some text %%-var1.key3-%% more text %%-var2.key6-%%",
@@ -308,7 +308,7 @@ tap.test("03 - opts.throwWhenNonStringInsertedInString", (t) => {
 
   // then, also, pin the whole-value-variables
 
-  t.same(
+  t.strictSame(
     jv({
       a: "%%-var1-%%",
       var1: null,
@@ -324,7 +324,7 @@ tap.test("03 - opts.throwWhenNonStringInsertedInString", (t) => {
     "03.03 - no path, values are variables in whole"
   );
 
-  t.same(
+  t.strictSame(
     jv({
       a: "%%_var1.key1_%%",
       var1: { key1: null },
@@ -340,7 +340,7 @@ tap.test("03 - opts.throwWhenNonStringInsertedInString", (t) => {
     "03.04 - control"
   );
 
-  t.same(
+  t.strictSame(
     jv(
       {
         a: "%%_var1.key1_%%",
@@ -362,7 +362,7 @@ tap.test("03 - opts.throwWhenNonStringInsertedInString", (t) => {
 });
 
 tap.test("04 - multi-level + from array + root data store + ignores", (t) => {
-  t.same(
+  t.strictSame(
     jv(
       {
         title: [

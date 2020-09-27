@@ -19,7 +19,7 @@ tap.test(
         "tag-void-slash": 2,
       },
     });
-    t.same(messages, [], "01.01");
+    t.strictSame(messages, [], "01.01");
     t.equal(applyFixes(str, messages), str, "01.02");
     t.end();
   }
@@ -238,7 +238,7 @@ tap.test(
         "tag-void-slash": [2, "never"],
       },
     });
-    t.same(messages, [], "08.01");
+    t.strictSame(messages, [], "08.01");
     t.equal(applyFixes(str, messages), str, "08.02");
     t.end();
   }
@@ -290,7 +290,7 @@ tap.test(
         "tag-void-slash": [2, "never"],
       },
     });
-    t.same(messages, [], "10.01");
+    t.strictSame(messages, [], "10.01");
     t.equal(applyFixes(str, messages), str, "10.02");
     t.end();
   }
@@ -339,7 +339,7 @@ tap.test(
         "tag-void-slash": [2, "always"],
       },
     });
-    t.same(messages, [], "12.01");
+    t.strictSame(messages, [], "12.01");
     t.equal(applyFixes(str, messages), str, "12.02");
     t.end();
   }

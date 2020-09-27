@@ -146,7 +146,7 @@ tap.test((t) => {
   });
   t.equal(gather.length, 86 - 21);
 
-  t.same(
+  t.strictSame(
     gather,
     compareTo,
     `01.06 - ${`\u001b[${36}m${`opts.reportProgressFunc`}\u001b[${39}m`} - custom reporting range, longer input`

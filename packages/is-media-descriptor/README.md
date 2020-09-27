@@ -27,6 +27,24 @@
 npm i is-media-descriptor
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import isMediaD from "dist/is-media-descriptor.esm";
+
+assert.deepEqual(isMediaD("screeen"), [
+  {
+    idxFrom: 0,
+    idxTo: 7,
+    message: `Did you mean "screen"?`,
+    fix: {
+      ranges: [[0, 7, "screen"]],
+    },
+  },
+]);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/is-media-descriptor/) for a full description of the API and examples.

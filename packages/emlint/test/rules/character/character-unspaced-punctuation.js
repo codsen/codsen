@@ -19,7 +19,7 @@ tap.test(
         "character-unspaced-punctuation": 0,
       },
     });
-    t.same(messages, [], "01.01");
+    t.strictSame(messages, [], "01.01");
     t.equal(applyFixes(str, messages), str, "01.02");
     t.end();
   }

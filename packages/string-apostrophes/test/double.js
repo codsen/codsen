@@ -26,7 +26,7 @@ tap.test(
           from: 17,
         })
       );
-    t.same(
+    t.strictSame(
       gatheredRes,
       [
         [8, 9, "&ldquo;"],
@@ -55,7 +55,7 @@ tap.test(
           convertEntities: 0,
         })
       );
-    t.same(
+    t.strictSame(
       gatheredRes,
       [
         [8, 9, `${leftDoubleQuote}`],
@@ -84,7 +84,7 @@ tap.test(
           convertApostrophes: 0,
         })
       );
-    t.same(gatheredRes, [], "03");
+    t.strictSame(gatheredRes, [], "03");
     t.end();
   }
 );
@@ -92,7 +92,7 @@ tap.test(
 tap.test(
   `04 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - exclamation mark`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertAll('"What!" he said', {
         convertApostrophes: 1,
         convertEntities: 0,
@@ -107,7 +107,7 @@ tap.test(
 tap.test(
   `05 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - full stop`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertAll('"What." he said', {
         convertApostrophes: 1,
         convertEntities: 0,
@@ -122,7 +122,7 @@ tap.test(
 tap.test(
   `06 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - comma`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertAll('"What," he said', {
         convertApostrophes: 1,
         convertEntities: 0,
@@ -137,7 +137,7 @@ tap.test(
 tap.test(
   `07 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - semicolon`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertAll('"What;" he said', {
         convertApostrophes: 1,
         convertEntities: 0,
@@ -152,7 +152,7 @@ tap.test(
 tap.test(
   `08 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - question mark`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertAll('"What?" he said', {
         convertApostrophes: 1,
         convertEntities: 0,
@@ -167,7 +167,7 @@ tap.test(
 tap.test(
   `09 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - exclamation mark`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertAll(`'"What!"' he said`, {
         convertApostrophes: 1,
         convertEntities: 0,
@@ -182,7 +182,7 @@ tap.test(
 tap.test(
   `10 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - mix of quotes, full stop`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertAll(`'"What."' he said`, {
         convertApostrophes: 1,
         convertEntities: 0,
@@ -197,7 +197,7 @@ tap.test(
 tap.test(
   `11 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - mix of quotes, full stop`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertAll(`'"What,"' he said`, {
         convertApostrophes: 1,
         convertEntities: 0,
@@ -212,7 +212,7 @@ tap.test(
 tap.test(
   `12 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - mix of quotes, full stop`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertAll(`'"What;"' he said`, {
         convertApostrophes: 1,
         convertEntities: 0,
@@ -227,7 +227,7 @@ tap.test(
 tap.test(
   `13 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - mix of quotes, full stop`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertAll(`'"What?"' he said`, {
         convertApostrophes: 1,
         convertEntities: 0,
@@ -242,7 +242,7 @@ tap.test(
 tap.test(
   `14 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - with entities`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertOne(`"`, {
         from: 0,
         convertApostrophes: 1,
@@ -258,7 +258,7 @@ tap.test(
 tap.test(
   `15 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - one, off`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertOne(`${leftDoubleQuote}developers${rightDoubleQuote}`, {
         from: 0,
         convertApostrophes: 0,
@@ -274,7 +274,7 @@ tap.test(
 tap.test(
   `16 - ${`\u001b[${36}m${`double apostrophes`}\u001b[${39}m`} - all, off`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertAll(` ${leftDoubleQuote}developers${rightDoubleQuote} `, {
         convertApostrophes: 0,
         convertEntities: 1,

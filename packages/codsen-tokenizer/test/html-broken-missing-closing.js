@@ -2,7 +2,7 @@ import tap from "tap";
 import ct from "../dist/codsen-tokenizer.esm";
 // const BACKSLASH = "\u005C";
 
-// 01. general tests, exact matching via t.same
+// 01. general tests, exact matching via t.strictDeepEqual
 // -----------------------------------------------------------------------------
 
 tap.test(
@@ -14,7 +14,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -70,7 +70,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -347,7 +347,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -396,7 +396,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -445,7 +445,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -503,7 +503,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {

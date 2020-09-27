@@ -27,6 +27,19 @@
 npm i js-row-num
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import fixRowNums from "dist/js-row-num.esm";
+
+// sets line number to 002 because it's on row number two
+assert.equal(
+  fixRowNums(`const foo = "bar";\n console.log(\`0 foo = \${foo}\`)`),
+  `const foo = "bar";\n console.log(\`002 foo = \${foo}\`)`
+);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/js-row-num/) for a full description of the API and examples.

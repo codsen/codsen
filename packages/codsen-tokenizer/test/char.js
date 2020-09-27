@@ -14,7 +14,7 @@ tap.test(
       },
     });
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -60,7 +60,7 @@ tap.test(
       charCbLookahead: 0,
     });
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -111,7 +111,7 @@ tap.test(
       charCbLookahead: 1,
     });
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -186,7 +186,7 @@ tap.test(
       charCbLookahead: 2,
     });
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -276,7 +276,7 @@ tap.test(
       charCbLookahead: 3,
     });
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -376,7 +376,7 @@ tap.test(
       charCbLookahead: 4,
     });
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -481,7 +481,7 @@ tap.test(
       charCbLookahead: 5,
     });
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -586,7 +586,7 @@ tap.test(
       charCbLookahead: 99,
     });
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -694,7 +694,7 @@ tap.test(
       // eslint-disable-next-line no-prototype-builtins
       t.false(obj.hasOwnProperty("next"));
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {

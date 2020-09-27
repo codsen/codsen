@@ -18,7 +18,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -49,7 +49,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -86,7 +86,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -129,7 +129,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -190,7 +190,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -251,7 +251,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -313,7 +313,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -357,7 +357,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -401,7 +401,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {

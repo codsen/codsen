@@ -66,7 +66,7 @@ tap.test(
   (t) => {
     matchLeft("a", 0, () => "EOL", {
       cb: (...args) => {
-        t.same(
+        t.strictSame(
           args,
           [undefined, "", undefined] // because there's nothing outside-left of index 0
         );
@@ -562,7 +562,7 @@ tap.test(
   (t) => {
     matchRight("a", 0, () => "EOL", {
       cb: (...args) => {
-        t.same(args, [undefined, "", undefined], "10.04.05 - useless cb");
+        t.strictSame(args, [undefined, "", undefined], "10.04.05 - useless cb");
         return true;
       },
     });

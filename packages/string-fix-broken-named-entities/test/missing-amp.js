@@ -48,7 +48,7 @@ tap.test(
         //
         // ampersand missing, isolated:
         //
-        t.same(
+        t.strictSame(
           fix(`${singleEntity};`, {
             cb: (obj) => obj,
           }),
@@ -73,23 +73,23 @@ tap.test(
 tap.test(`02 - ad hoc #1`, (t) => {
   const inp1 = "amp;";
   const outp1 = [[0, 4, "&amp;"]];
-  t.same(fix(inp1), outp1, "02");
+  t.strictSame(fix(inp1), outp1, "02");
   t.end();
 });
 
 tap.test(`03 - false positive prevention`, (t) => {
   falseCases.forEach((str) => {
-    t.same(fix(str), [], `03* - ${`\u001b[${33}m${str}\u001b[${39}m`}`);
+    t.strictSame(fix(str), [], `03* - ${`\u001b[${33}m${str}\u001b[${39}m`}`);
   });
-  t.same(fix("paste & copy & paste again"), [], "03");
+  t.strictSame(fix("paste & copy & paste again"), [], "03");
   t.end();
 });
 
 tap.test(
   `04 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - aacute vs acute`,
   (t) => {
-    t.same(fix("z &aacute; y"), [], "04.01");
-    t.same(fix("z &acute; y"), [], "04.02");
+    t.strictSame(fix("z &aacute; y"), [], "04.01");
+    t.strictSame(fix("z &acute; y"), [], "04.02");
     t.end();
   }
 );
@@ -97,7 +97,11 @@ tap.test(
 tap.test(
   `05 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - aacute vs acute, false positive`,
   (t) => {
-    t.same(fix("Diagnosis can be acute; it is up to a doctor to"), [], "05");
+    t.strictSame(
+      fix("Diagnosis can be acute; it is up to a doctor to"),
+      [],
+      "05"
+    );
     t.end();
   }
 );
@@ -107,8 +111,8 @@ tap.test(
   (t) => {
     const inp1 = "rarrpl;";
     const outp1 = [[0, 7, "&rarrpl;"]];
-    t.same(fix(inp1), outp1, "06.01");
-    t.same(fix(inp1, { cb }), outp1, "06.02");
+    t.strictSame(fix(inp1), outp1, "06.01");
+    t.strictSame(fix(inp1, { cb }), outp1, "06.02");
     t.end();
   }
 );
@@ -117,7 +121,7 @@ tap.test(
   `07 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - &block; vs. display:block`,
   (t) => {
     const inp1 = `<img src=abc.jpg width=123 height=456 border=0 style=display:block; alt=xyz/>`;
-    t.same(fix(inp1), [], "07");
+    t.strictSame(fix(inp1), [], "07");
     t.end();
   }
 );
@@ -125,12 +129,12 @@ tap.test(
 tap.test(`08 - nbsp`, (t) => {
   const inp1 = "nbsp;";
   const outp1 = [[0, 5, "&nbsp;"]];
-  t.same(fix(inp1), outp1, "08");
+  t.strictSame(fix(inp1), outp1, "08");
   t.end();
 });
 
 tap.test(`09 - red & bull;`, (t) => {
   const inp1 = "red & bull;";
-  t.same(fix(inp1), [], "09");
+  t.strictSame(fix(inp1), [], "09");
   t.end();
 });

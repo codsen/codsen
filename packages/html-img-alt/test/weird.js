@@ -10,7 +10,7 @@ tap.test(
     // it kicks in when encounters equals sign after the first double quote
     // until we add function to recognise the attributes within IMG tags,
     // escape latch will kick in and prevent all action when second double quote is missing
-    t.same(
+    t.strictSame(
       alt('zzz<img alt="  class="" />zzz'),
       'zzz<img alt="  class="" />zzz',
       "01"
@@ -23,9 +23,13 @@ tap.test("02 - testing seriously messed up code", (t) => {
   // it kicks in when encounters equals sign after the first double quote
   // until we add function to recognise the attributes within IMG tags,
   // escape latch will kick in and prevent all action when second double quote is missing
-  t.same(alt("zzz<img >>>>>>>>>>zzz"), 'zzz<img alt="" >>>>>>>>>>zzz', "02.01");
-  t.same(alt("zzz<<img >>zzz"), 'zzz<<img alt="" >>zzz', "02.02");
-  t.same(
+  t.strictSame(
+    alt("zzz<img >>>>>>>>>>zzz"),
+    'zzz<img alt="" >>>>>>>>>>zzz',
+    "02.01"
+  );
+  t.strictSame(alt("zzz<<img >>zzz"), 'zzz<<img alt="" >>zzz', "02.02");
+  t.strictSame(
     alt("zzz<><><<>><<<>>>><img >>zzz"),
     'zzz<><><<>><<<>>>><img alt="" >>zzz',
     "02.03"
@@ -34,48 +38,48 @@ tap.test("02 - testing seriously messed up code", (t) => {
 });
 
 tap.test("03 - other attributes don't have equal and value", (t) => {
-  t.same(
+  t.strictSame(
     alt('<img something alt="" >'),
     '<img something alt="" >',
     "03.01 - img tag only, with alt"
   );
-  t.same(
+  t.strictSame(
     alt("<img something>"),
     '<img something alt="" >',
     "03.02 - img tag only, no alt"
   );
-  t.same(
+  t.strictSame(
     alt("<img something >"),
     '<img something alt="" >',
     "03.03 - img tag only, no alt"
   );
   // XHTML counterparts:
-  t.same(
+  t.strictSame(
     alt('<img something alt="" />'),
     '<img something alt="" />',
     "03.04 - img tag only, with alt"
   );
-  t.same(
+  t.strictSame(
     alt("<img something/>"),
     '<img something alt="" />',
     "03.05 - img tag only, no alt, tight"
   );
-  t.same(
+  t.strictSame(
     alt("<img something />"),
     '<img something alt="" />',
     "03.06 - img tag only, no alt"
   );
-  t.same(
+  t.strictSame(
     alt('<img something alt="" /     >'),
     '<img something alt="" />',
     "03.07 - img tag only, with alt, excessive white space"
   );
-  t.same(
+  t.strictSame(
     alt("<img something/     >"),
     '<img something alt="" />',
     "03.08 - img tag only, no alt, excessive white space"
   );
-  t.same(
+  t.strictSame(
     alt("<img something /     >"),
     '<img something alt="" />',
     "03.09 - img tag only, no alt, excessive white space"
@@ -86,7 +90,7 @@ tap.test("03 - other attributes don't have equal and value", (t) => {
 tap.test(
   "04 - specific place in the algorithm, protection against rogue slashes",
   (t) => {
-    t.same(
+    t.strictSame(
       alt('<img alt="/ class="" />'),
       '<img alt="/ class="" />',
       "04 - should do nothing."

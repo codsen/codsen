@@ -633,7 +633,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), str, "21.01");
-    t.same(messages, [], "21.02");
+    t.strictSame(messages, [], "21.02");
     t.end();
   }
 );

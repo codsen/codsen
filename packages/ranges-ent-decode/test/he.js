@@ -8,13 +8,13 @@ MIT Licence - Copyright Mathias Bynens <https://mathiasbynens.be/>
 */
 
 tap.test("01 - ambiguous ampersand", (t) => {
-  t.same(decode("a&foololthisdoesntexist;b"), null, "01.01");
-  t.same(decode("foo &lolwat; bar"), null, "01.02");
+  t.strictSame(decode("a&foololthisdoesntexist;b"), null, "01.01");
+  t.strictSame(decode("foo &lolwat; bar"), null, "01.02");
   t.end();
 });
 
 tap.test("02 - legacy named references (without a trailing semicolon)", (t) => {
-  t.same(
+  t.strictSame(
     decode("&notin; &noti &notin &copy123"),
     [
       [0, 7, "\u2209"],
@@ -28,7 +28,7 @@ tap.test("02 - legacy named references (without a trailing semicolon)", (t) => {
 });
 
 tap.test("03 - hexadecimal escape", (t) => {
-  t.same(
+  t.strictSame(
     decode("a&#x1D306;b&#X0000000000001d306;c"),
     [
       [1, 10, "\uD834\uDF06"],
@@ -40,7 +40,7 @@ tap.test("03 - hexadecimal escape", (t) => {
 });
 
 tap.test("04 - Decimal escape", (t) => {
-  t.same(
+  t.strictSame(
     decode("a&#119558;b&#169;c&#00000000000000000169;d"),
     [
       [1, 10, "\uD834\uDF06"],
@@ -53,7 +53,7 @@ tap.test("04 - Decimal escape", (t) => {
 });
 
 tap.test("05 - Special numerical escapes (see he.js issue #4)", (t) => {
-  t.same(
+  t.strictSame(
     decode("a&#xD834;&#xDF06;b&#55348;&#57094;c a&#x0;b&#0;c"),
     [
       [1, 17, "\uFFFD\uFFFD"],
@@ -74,7 +74,7 @@ tap.test("06 - special numerical escapes in strict mode", (t) => {
 });
 
 tap.test("07 - out-of-range hexadecimal escape in error-tolerant mode", (t) => {
-  t.same(decode("a&#x9999999999999999;b"), [[1, 21, "\uFFFD"]], "07");
+  t.strictSame(decode("a&#x9999999999999999;b"), [[1, 21, "\uFFFD"]], "07");
   t.end();
 });
 
@@ -86,7 +86,7 @@ tap.test("08 - out-of-range hexadecimal escape in strict mode", (t) => {
 });
 
 tap.test("09 - out-of-range hexadecimal escape in error-tolerant mode", (t) => {
-  t.same(decode("a&#x110000;b"), [[1, 11, "\uFFFD"]], "09");
+  t.strictSame(decode("a&#x110000;b"), [[1, 11, "\uFFFD"]], "09");
   t.end();
 });
 
@@ -98,7 +98,7 @@ tap.test("10 - out-of-range hexadecimal escape in strict mode", (t) => {
 });
 
 tap.test("11 - ambiguous ampersand in text context", (t) => {
-  t.same(decode("foo&ampbar"), [[3, 8, "&b"]], "11");
+  t.strictSame(decode("foo&ampbar"), [[3, 8, "&b"]], "11");
   t.end();
 });
 
@@ -112,7 +112,7 @@ tap.test("12 - ambiguous ampersand in text context in strict mode", (t) => {
 tap.test(
   "13 - hexadecimal escape without trailing semicolon in error-tolerant mode",
   (t) => {
-    t.same(decode("foo&#x1D306qux"), [[3, 11, "\uD834\uDF06"]], "13");
+    t.strictSame(decode("foo&#x1D306qux"), [[3, 11, "\uD834\uDF06"]], "13");
     t.end();
   }
 );
@@ -130,7 +130,7 @@ tap.test(
 tap.test(
   "15 - decimal escape without trailing semicolon in error-tolerant mode",
   (t) => {
-    t.same(decode("foo&#119558qux"), [[3, 11, "\uD834\uDF06"]], "15");
+    t.strictSame(decode("foo&#119558qux"), [[3, 11, "\uD834\uDF06"]], "15");
     t.end();
   }
 );
@@ -148,7 +148,7 @@ tap.test(
 tap.test(
   "17 - attribute value context - entity without semicolon sandwitched",
   (t) => {
-    t.same(
+    t.strictSame(
       decode("foo&ampbar", {
         isAttributeValue: true,
       }),
@@ -162,7 +162,7 @@ tap.test(
 tap.test(
   "18 - attribute value context - entity with semicolon sandwitched with text",
   (t) => {
-    t.same(
+    t.strictSame(
       decode("foo&amp;bar", {
         isAttributeValue: true,
       }),
@@ -176,7 +176,7 @@ tap.test(
 tap.test(
   "19 - attribute value context - ends with entity with semicolon",
   (t) => {
-    t.same(
+    t.strictSame(
       decode("foo&amp;", {
         isAttributeValue: true,
       }),
@@ -188,7 +188,7 @@ tap.test(
 );
 
 tap.test("20 - entity ends with equal sign instead of semicolon", (t) => {
-  t.same(decode("foo&amp="), [[3, 8, "&="]], "20");
+  t.strictSame(decode("foo&amp="), [[3, 8, "&="]], "20");
   t.end();
 });
 
@@ -206,7 +206,7 @@ tap.test(
 );
 
 tap.test("22 - unclosed HTML entity ends the input string", (t) => {
-  t.same(
+  t.strictSame(
     decode("foo&amp", {
       isAttributeValue: true,
     }),
@@ -217,7 +217,7 @@ tap.test("22 - unclosed HTML entity ends the input string", (t) => {
 });
 
 tap.test("23 - false positive, not a parsing error", (t) => {
-  t.same(
+  t.strictSame(
     decode("foo&amplol", {
       isAttributeValue: true,
       strict: true,
@@ -252,7 +252,7 @@ tap.test(
 );
 
 tap.test("26 - attribute value in error-tolerant mode, non-strict", (t) => {
-  t.same(
+  t.strictSame(
     decode("I'm &notit; I tell you", {
       strict: false,
       isAttributeValue: true,
@@ -264,7 +264,7 @@ tap.test("26 - attribute value in error-tolerant mode, non-strict", (t) => {
 });
 
 tap.test("27 - attribute value in error-tolerant mode, strict", (t) => {
-  t.same(
+  t.strictSame(
     decode("I'm &notin; I tell you", {
       strict: true,
     }),
@@ -275,7 +275,7 @@ tap.test("27 - attribute value in error-tolerant mode, strict", (t) => {
 });
 
 tap.test("28 - decoding `&#x8D;` in error-tolerant mode", (t) => {
-  t.same(decode("&#x8D;"), [[0, 6, "\x8D"]], "28");
+  t.strictSame(decode("&#x8D;"), [[0, 6, "\x8D"]], "28");
   t.end();
 });
 
@@ -289,7 +289,7 @@ tap.test("29 - decoding `&#x8D;` in strict mode", (t) => {
 });
 
 tap.test("30 - decoding `&#xD;` in error-tolerant mode", (t) => {
-  t.same(decode("&#xD;"), [[0, 5, "\x0D"]], "30");
+  t.strictSame(decode("&#xD;"), [[0, 5, "\x0D"]], "30");
   t.end();
 });
 
@@ -303,7 +303,7 @@ tap.test("31 - decoding `&#xD;` in strict mode", (t) => {
 });
 
 tap.test("32 - decoding `&#x94;` in error-tolerant mode", (t) => {
-  t.same(decode("&#x94;"), [[0, 6, "\u201D"]], "32");
+  t.strictSame(decode("&#x94;"), [[0, 6, "\u201D"]], "32");
   t.end();
 });
 
@@ -317,7 +317,7 @@ tap.test("33 - decoding `&#x94;` in strict mode", (t) => {
 });
 
 tap.test("34 - decoding `&#x1;` in error-tolerant mode", (t) => {
-  t.same(decode("&#x1;"), [[0, 5, "\x01"]], "34");
+  t.strictSame(decode("&#x1;"), [[0, 5, "\x01"]], "34");
   t.end();
 });
 
@@ -329,7 +329,7 @@ tap.test("35 - decoding `&#x1;` in strict mode", (t) => {
 });
 
 tap.test("36 - decoding `&#x10FFFF;` in error-tolerant mode", (t) => {
-  t.same(decode("&#x10FFFF;"), [[0, 10, "\uDBFF\uDFFF"]], "36");
+  t.strictSame(decode("&#x10FFFF;"), [[0, 10, "\uDBFF\uDFFF"]], "36");
   t.end();
 });
 
@@ -341,7 +341,11 @@ tap.test("37 - decoding `&#x10FFFF;` in strict mode", (t) => {
 });
 
 tap.test("38 - decoding `&#196605;` (valid code point) in strict mode", (t) => {
-  t.same(decode("&#196605;", { strict: true }), [[0, 9, "\uD87F\uDFFD"]], "38");
+  t.strictSame(
+    decode("&#196605;", { strict: true }),
+    [[0, 9, "\uD87F\uDFFD"]],
+    "38"
+  );
   t.end();
 });
 
@@ -353,7 +357,7 @@ tap.test("39 - throws when decoding `&#196607;` in strict mode", (t) => {
 });
 
 tap.test("40 - decoding &#xZ in error-tolerant mode", (t) => {
-  t.same(decode("&#xZ", { strict: false }), null, "40");
+  t.strictSame(decode("&#xZ", { strict: false }), null, "40");
   t.end();
 });
 
@@ -365,7 +369,7 @@ tap.test("41 - decoding &#xZ in strict mode", (t) => {
 });
 
 tap.test("42 - decoding &#Z in error-tolerant mode", (t) => {
-  t.same(decode("&#Z", { strict: false }), null, "42");
+  t.strictSame(decode("&#Z", { strict: false }), null, "42");
   t.end();
 });
 
@@ -379,12 +383,12 @@ tap.test("43 - decoding &#Z in strict mode", (t) => {
 tap.test(
   "44 - decoding `&#00` numeric character reference (see issue #43)",
   (t) => {
-    t.same(decode("&#00"), [[0, 4, "\uFFFD"]], "44");
+    t.strictSame(decode("&#00"), [[0, 4, "\uFFFD"]], "44");
     t.end();
   }
 );
 
 tap.test("45 - decoding `0`-prefixed numeric character referencs", (t) => {
-  t.same(decode("&#0128;"), [[0, 7, "\u20AC"]], "45");
+  t.strictSame(decode("&#0128;"), [[0, 7, "\u20AC"]], "45");
   t.end();
 });

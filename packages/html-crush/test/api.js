@@ -81,7 +81,7 @@ tap.test(
 tap.test(
   `04 - ${`\u001b[${32}m${`API`}\u001b[${39}m`} - plain object is exported and contains correct keys`,
   (t) => {
-    t.same(
+    t.strictSame(
       Object.keys(defaults).sort(),
       [
         "mindTheInlineTags",

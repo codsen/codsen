@@ -5,7 +5,7 @@ import compare from "../dist/ast-compare.esm";
 // -----------------------------------------------------------------------------
 
 tap.test("01 - simple nested plain objects", (t) => {
-  t.same(
+  t.strictSame(
     compare({ a: { d: "4" }, b: "2", c: "3" }, { a: { d: "4" }, b: "2" }),
     true,
     "01"
@@ -14,7 +14,7 @@ tap.test("01 - simple nested plain objects", (t) => {
 });
 
 tap.test("02 - simple nested plain objects + array wrapper", (t) => {
-  t.same(
+  t.strictSame(
     compare({ a: [{ d: "4" }], b: "2", c: "3" }, { a: [{ d: "4" }], b: "2" }),
     true,
     "02"
@@ -23,7 +23,7 @@ tap.test("02 - simple nested plain objects + array wrapper", (t) => {
 });
 
 tap.test("03 - simple nested plain objects, won't find", (t) => {
-  t.same(
+  t.strictSame(
     compare({ a: { d: "4" }, b: "2" }, { a: { d: "4" }, b: "2", c: "3" }),
     false,
     "03"
@@ -34,7 +34,7 @@ tap.test("03 - simple nested plain objects, won't find", (t) => {
 tap.test(
   "04 - simple nested plain objects + array wrapper, won't find",
   (t) => {
-    t.same(
+    t.strictSame(
       compare({ a: [{ d: "4" }], b: "2" }, { a: [{ d: "4" }], b: "2", c: "3" }),
       false,
       "04"
@@ -44,7 +44,7 @@ tap.test(
 );
 
 tap.test("05 - obj, multiple nested levels, bigObj has more", (t) => {
-  t.same(
+  t.strictSame(
     compare(
       { a: { b: { c: { d: [{ e: "1" }, { f: "2" }] } } } },
       { a: { b: { c: { d: [{ e: "1" }] } } } }
@@ -56,7 +56,7 @@ tap.test("05 - obj, multiple nested levels, bigObj has more", (t) => {
 });
 
 tap.test("06 - obj, multiple nested levels, equal", (t) => {
-  t.same(
+  t.strictSame(
     compare(
       { a: { b: { c: { d: [{ e: "1" }, { f: "2" }] } } } },
       { a: { b: { c: { d: [{ e: "1" }, { f: "2" }] } } } }
@@ -68,7 +68,7 @@ tap.test("06 - obj, multiple nested levels, equal", (t) => {
 });
 
 tap.test("07 - obj, multiple nested levels, smallObj has more", (t) => {
-  t.same(
+  t.strictSame(
     compare(
       { a: { b: { c: { d: [{ e: "1" }] } } } },
       { a: { b: { c: { d: [{ e: "1" }, { f: "2" }] } } } }
@@ -80,12 +80,12 @@ tap.test("07 - obj, multiple nested levels, smallObj has more", (t) => {
 });
 
 tap.test("08 - obj, deeper level doesn't match", (t) => {
-  t.same(compare({ a: { b: "c" } }, { a: { b: "d" } }), false, "08");
+  t.strictSame(compare({ a: { b: "c" } }, { a: { b: "d" } }), false, "08");
   t.end();
 });
 
 tap.test("09 - empty string and empty nested object - defaults", (t) => {
-  t.same(
+  t.strictSame(
     compare("", {
       key2: [],
       key3: [""],
@@ -99,7 +99,7 @@ tap.test("09 - empty string and empty nested object - defaults", (t) => {
 tap.test(
   "10 - empty string and empty nested object - hungryForWhitespace",
   (t) => {
-    t.same(
+    t.strictSame(
       compare(
         "",
         {
@@ -118,7 +118,7 @@ tap.test(
 );
 
 tap.test("11 - empty string and empty nested object - matchStrictly", (t) => {
-  t.same(
+  t.strictSame(
     compare(
       "",
       {
@@ -138,7 +138,7 @@ tap.test("11 - empty string and empty nested object - matchStrictly", (t) => {
 tap.test(
   "12 - empty string and empty nested object - hungryForWhitespace + matchStrictly",
   (t) => {
-    t.same(
+    t.strictSame(
       compare(
         "",
         {
@@ -160,7 +160,7 @@ tap.test(
 tap.test(
   "13 - empty string and empty nested object - hungryForWhitespace + matchStrictly",
   (t) => {
-    t.same(
+    t.strictSame(
       compare(
         "",
         {},
@@ -177,7 +177,7 @@ tap.test(
 );
 
 tap.test("14 - multiple keys", (t) => {
-  t.same(
+  t.strictSame(
     compare(
       {
         key2: "\n\n \t \n \n    ",
@@ -196,7 +196,7 @@ tap.test("14 - multiple keys", (t) => {
 });
 
 tap.test("15 - multiple keys", (t) => {
-  t.same(
+  t.strictSame(
     compare(
       {
         key2: "\n\n \t \n \n    ",

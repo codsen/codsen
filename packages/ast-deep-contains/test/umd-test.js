@@ -16,7 +16,7 @@ tap.test("UMD build works fine", (t) => {
     }
   );
 
-  t.same(
+  t.strictSame(
     gathered,
     [
       ["1", "1"],
@@ -24,6 +24,6 @@ tap.test("UMD build works fine", (t) => {
     ],
     "01.01"
   );
-  t.same(errors, [], "01.02");
+  t.strictSame(errors, [], "01.02");
   t.end();
 });

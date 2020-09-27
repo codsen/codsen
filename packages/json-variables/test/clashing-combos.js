@@ -6,7 +6,7 @@ import jv from "../dist/json-variables.esm";
 tap.test(
   "01 - surrounding underscores - sneaky similarity with wrong side brackets #1",
   (t) => {
-    t.same(
+    t.strictSame(
       jv({
         a: "joined with an underscores: %%_var1_%%_%%_var2_%%",
         b: "something",
@@ -28,7 +28,7 @@ tap.test(
 tap.test(
   "02 - surrounding underscores - sneaky similarity with wrong side brackets #2",
   (t) => {
-    t.same(
+    t.strictSame(
       jv({
         a: "joined with an dashes: %%-var1-%%-%%-var2-%%",
         b: "something",
@@ -50,7 +50,7 @@ tap.test(
 tap.test(
   "03 - surrounding underscores - sneaky similarity with wrong side brackets #3",
   (t) => {
-    t.same(
+    t.strictSame(
       jv({
         a: "zzz_%%-var1-%%_%%-var2-%%_yyy",
         b: "something",
@@ -72,7 +72,7 @@ tap.test(
 tap.test(
   "04 - surrounding underscores - sneaky similarity with wrong side brackets #4",
   (t) => {
-    t.same(
+    t.strictSame(
       jv({
         a: "zzz_%%-var1-%%_%%-var2-%%",
         b: "something",
@@ -94,7 +94,7 @@ tap.test(
 tap.test(
   "05 - surrounding dashes - sneaky similarity with wrong side brackets #1",
   (t) => {
-    t.same(
+    t.strictSame(
       jv({
         a: "zzz-%%_var1_%%-%%_var2_%%-yyy",
         b: "something",
@@ -116,7 +116,7 @@ tap.test(
 tap.test(
   "06 - surrounding dashes - sneaky similarity with wrong side brackets #2",
   (t) => {
-    t.same(
+    t.strictSame(
       jv({
         a: "zzz-%%_var1_%%-%%_var2_%%",
         b: "something",

@@ -16,7 +16,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), str, "01.01");
-    t.same(messages, [], "01.02");
+    t.strictSame(messages, [], "01.02");
     t.end();
   }
 );
@@ -32,7 +32,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), str, "02.01");
-    t.same(messages, [], "02.02");
+    t.strictSame(messages, [], "02.02");
     t.end();
   }
 );
@@ -48,7 +48,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), str, "03.01");
-    t.same(messages, [], "03.02");
+    t.strictSame(messages, [], "03.02");
     t.end();
   }
 );
@@ -64,7 +64,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), str, "04.01");
-    t.same(messages, [], "04.02");
+    t.strictSame(messages, [], "04.02");
     t.end();
   }
 );
@@ -80,7 +80,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), str, "05.01");
-    t.same(messages, [], "05.02");
+    t.strictSame(messages, [], "05.02");
     t.end();
   }
 );
@@ -158,7 +158,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), str, "08.01");
-    t.same(messages, [], "08.02");
+    t.strictSame(messages, [], "08.02");
     t.end();
   }
 );
@@ -204,7 +204,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), str, "10.01");
-    t.same(messages, [], "10.02");
+    t.strictSame(messages, [], "10.02");
     t.end();
   }
 );
@@ -220,7 +220,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), str, "11.01");
-    t.same(messages, [], "11.02");
+    t.strictSame(messages, [], "11.02");
     t.end();
   }
 );
@@ -266,7 +266,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), str, "13.01");
-    t.same(messages, [], "13.02");
+    t.strictSame(messages, [], "13.02");
     t.end();
   }
 );
@@ -282,7 +282,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), str, "14.01");
-    t.same(messages, [], "14.02");
+    t.strictSame(messages, [], "14.02");
     t.end();
   }
 );
@@ -296,7 +296,7 @@ tap.test(`15 - ${`\u001b[${35}m${`frameset`}\u001b[${39}m`} - mixed`, (t) => {
     },
   });
   t.equal(applyFixes(str, messages), str, "15.01");
-  t.same(messages, [], "15.02");
+  t.strictSame(messages, [], "15.02");
   t.end();
 });
 
@@ -556,7 +556,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), str, "23.01");
-    t.same(messages, [], "23.02");
+    t.strictSame(messages, [], "23.02");
     t.end();
   }
 );
@@ -572,7 +572,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), str, "24.01");
-    t.same(messages, [], "24.02");
+    t.strictSame(messages, [], "24.02");
     t.end();
   }
 );

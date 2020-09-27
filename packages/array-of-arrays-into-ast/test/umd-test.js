@@ -17,6 +17,6 @@ const result = {
 };
 
 tap.test("UMD build works fine", (t) => {
-  t.same(a1(source), result, "01");
+  t.strictSame(a1(source), result, "01");
   t.end();
 });

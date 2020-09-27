@@ -21,7 +21,7 @@ tap.test(
         "bad-character-tabulation": 0, // means every TAB will be flagged up
       },
     });
-    t.same(messages, [], "01.01");
+    t.strictSame(messages, [], "01.01");
     t.equal(applyFixes(str, messages), str, "01.02");
     t.end();
   }
@@ -37,7 +37,7 @@ tap.test(
         "bad-character-tabulation": [0], // means every TAB will be flagged up
       },
     });
-    t.same(messages, [], "02.01");
+    t.strictSame(messages, [], "02.01");
     t.equal(applyFixes(str, messages), str, "02.02");
     t.end();
   }

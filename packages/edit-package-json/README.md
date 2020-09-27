@@ -27,6 +27,59 @@
 npm i edit-package-json
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import { set, del } from "dist/edit-package-json.esm";
+
+// edit JSON as string
+assert.equal(
+  set(
+    `{
+  "name": "test",
+  "dependencies": {
+    "ranges-apply": "^2.0.0",
+    "string-left-right": "^2.3.30"
+  },
+  "devDependencies": {}
+}`,
+    "dependencies.ranges-apply", // path to amend
+    "^3.2.2" // new value
+  ),
+  `{
+  "name": "test",
+  "dependencies": {
+    "ranges-apply": "^3.2.2",
+    "string-left-right": "^2.3.30"
+  },
+  "devDependencies": {}
+}`
+);
+
+// edit from JSON string
+assert.equal(
+  del(
+    `{
+  "name": "test",
+  "dependencies": {
+    "ranges-apply": "^2.0.0",
+    "string-left-right": "^2.3.30"
+  },
+  "devDependencies": {}
+}`,
+    "devDependencies" // path to delete
+  ),
+  `{
+  "name": "test",
+  "dependencies": {
+    "ranges-apply": "^2.0.0",
+    "string-left-right": "^2.3.30"
+  }
+}`
+);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/edit-package-json/) for a full description of the API and examples.

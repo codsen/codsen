@@ -27,6 +27,19 @@
 npm i ast-monkey-util
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import { pathNext, pathPrev, pathUp } from "ast-monkey-util";
+
+assert.equal(pathNext("9.children.3"), "9.children.4");
+
+assert.equal(pathPrev("9.children.33"), "9.children.32");
+
+assert.equal(pathUp("9.children.1.children.2"), "9.children.1");
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/ast-monkey-util/) for a full description of the API and examples.

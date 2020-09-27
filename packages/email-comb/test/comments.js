@@ -589,37 +589,41 @@ tap.test(
 </body>
 </html>
 `;
-    t.same(comb(source).result, cssAndHtmlCommentsRemoved, "19.01 - defaults");
-    t.same(
+    t.strictSame(
+      comb(source).result,
+      cssAndHtmlCommentsRemoved,
+      "19.01 - defaults"
+    );
+    t.strictSame(
       comb(source, { removeCSSComments: true }).result,
       cssAndHtmlCommentsRemoved,
       "19.02 - hardcoded defaults"
     );
-    t.same(
+    t.strictSame(
       comb(source, { removeCSSComments: false }).result,
       htmlRemovedCssNot,
       "19.03 - off"
     );
 
-    t.same(
+    t.strictSame(
       comb(source, { removeCSSComments: true, removeHTMLComments: true })
         .result,
       cssAndHtmlCommentsRemoved,
       "19.04 - html on, css on"
     );
-    t.same(
+    t.strictSame(
       comb(source, { removeCSSComments: false, removeHTMLComments: true })
         .result,
       htmlRemovedCssNot,
       "19.05 - html on, css off"
     );
-    t.same(
+    t.strictSame(
       comb(source, { removeCSSComments: true, removeHTMLComments: false })
         .result,
       cssRemovedHtmlNot,
       "19.06 - html off, css on"
     );
-    t.same(
+    t.strictSame(
       comb(source, { removeCSSComments: false, removeHTMLComments: false })
         .result,
       neitherCssNorHtml,
@@ -688,7 +692,7 @@ tap.test(
 </html>
 `;
 
-    t.same(comb(source).result, intended, "20");
+    t.strictSame(comb(source).result, intended, "20");
     t.end();
   }
 );

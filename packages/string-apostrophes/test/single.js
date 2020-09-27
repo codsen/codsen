@@ -14,7 +14,7 @@ const rightDoubleQuote = "\u201D";
 tap.test(
   `01 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with entities`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertOne(`test's`, {
         from: 4,
         convertApostrophes: 1,
@@ -30,7 +30,7 @@ tap.test(
 tap.test(
   `02 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with entities`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertOne(`test's`, {
         from: 4,
         to: 5,
@@ -47,7 +47,7 @@ tap.test(
 tap.test(
   `03 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with entities`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertOne(`test's`, {
         from: 4,
         to: 5,
@@ -64,7 +64,7 @@ tap.test(
 tap.test(
   `04 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with entities - convertApostrophes=off`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertOne(`test's`, {
         from: 4,
         convertApostrophes: 0,
@@ -80,7 +80,7 @@ tap.test(
 tap.test(
   `05 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with entities - convertApostrophes=off`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertOne(`test's`, {
         from: 4,
         to: 5,
@@ -97,7 +97,7 @@ tap.test(
 tap.test(
   `06 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with entities - convertApostrophes=off`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertOne(`test's`, {
         from: 4,
         to: 5,
@@ -114,7 +114,7 @@ tap.test(
 tap.test(
   `07 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - exclamation mark + space`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertAll(`'What!' he said`, {
         convertApostrophes: 1,
         convertEntities: 0,
@@ -129,7 +129,7 @@ tap.test(
 tap.test(
   `08 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - full stop + space`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertAll(`'What.' he said`, {
         convertApostrophes: 1,
         convertEntities: 0,
@@ -144,7 +144,7 @@ tap.test(
 tap.test(
   `09 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - semicolon + space`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertAll(`'What;' he said`, {
         convertApostrophes: 1,
         convertEntities: 0,
@@ -159,7 +159,7 @@ tap.test(
 tap.test(
   `10 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - question mark + space`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertAll(`'What?' he said`, {
         convertApostrophes: 1,
         convertEntities: 0,
@@ -174,7 +174,7 @@ tap.test(
 tap.test(
   `11 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - exclamation mark`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertAll(`"'What!'" he said`, {
         convertApostrophes: 1,
         convertEntities: 0,
@@ -189,7 +189,7 @@ tap.test(
 tap.test(
   `12 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - full stop`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertAll(`"'What.'" he said`, {
         convertApostrophes: 1,
         convertEntities: 0,
@@ -204,7 +204,7 @@ tap.test(
 tap.test(
   `13 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - comma`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertAll(`"'What,'" he said`, {
         convertApostrophes: 1,
         convertEntities: 0,
@@ -219,7 +219,7 @@ tap.test(
 tap.test(
   `14 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - semicolon`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertAll(`"'What;'" he said`, {
         convertApostrophes: 1,
         convertEntities: 0,
@@ -234,7 +234,7 @@ tap.test(
 tap.test(
   `15 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - question mark`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertAll(`"'What;'" he said`, {
         convertApostrophes: 1,
         convertEntities: 0,
@@ -249,7 +249,7 @@ tap.test(
 tap.test(
   `16 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - comma + space`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertAll(`'What,' he said`, {
         convertApostrophes: 1,
         convertEntities: 0,
@@ -264,7 +264,7 @@ tap.test(
 tap.test(
   `17 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - HTML-escaped apostrophe`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertOne(`test&apos;s`, {
         from: 4,
         to: 10,
@@ -281,7 +281,7 @@ tap.test(
 tap.test(
   `18 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - with entities`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertOne(`'`, {
         from: 0,
         convertApostrophes: 1,
@@ -297,7 +297,7 @@ tap.test(
 tap.test(
   `19 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=on`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertOne(`test${leftSingleQuote}s`, {
         from: 4,
         convertApostrophes: 1,
@@ -313,7 +313,7 @@ tap.test(
 tap.test(
   `20 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=on`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertOne(`test${leftSingleQuote}s`, {
         from: 4,
         to: 5,
@@ -330,7 +330,7 @@ tap.test(
 tap.test(
   `21 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=on`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertOne(`test${leftSingleQuote}s`, {
         from: 4,
         to: 5,
@@ -347,7 +347,7 @@ tap.test(
 tap.test(
   `22 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=off`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertOne(`test${leftSingleQuote}s`, {
         from: 4,
         convertApostrophes: 0,
@@ -363,7 +363,7 @@ tap.test(
 tap.test(
   `23 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=off`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertOne(`test${leftSingleQuote}s`, {
         from: 4,
         to: 5,
@@ -380,7 +380,7 @@ tap.test(
 tap.test(
   `24 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - left instead of right single quote - convertApostrophes=off`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertOne(`test${leftSingleQuote}s`, {
         from: 4,
         to: 5,

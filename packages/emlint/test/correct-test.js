@@ -32,7 +32,7 @@ tap.test(
           all: 2,
         },
       });
-      t.same(messages, [], `01.01.01 - ${str}`);
+      t.strictSame(messages, [], `01.01.01 - ${str}`);
       t.equal(applyFixes(str, messages), str, "01.01.02");
     });
     t.end();

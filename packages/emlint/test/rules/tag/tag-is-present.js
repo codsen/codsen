@@ -14,7 +14,7 @@ tap.test(`01 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - off`, (t) => {
       "tag-is-present": 0,
     },
   });
-  t.same(messages, [], "01.01");
+  t.strictSame(messages, [], "01.01");
   t.equal(applyFixes(str, messages), str, "01.02");
   t.end();
 });
@@ -27,7 +27,7 @@ tap.test(`02 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - warn`, (t) => {
       "tag-is-present": 1,
     },
   });
-  t.same(messages, [], "02.01");
+  t.strictSame(messages, [], "02.01");
   t.equal(applyFixes(str, messages), str, "02.02");
   t.end();
 });
@@ -40,7 +40,7 @@ tap.test(`03 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - err`, (t) => {
       "tag-is-present": 2,
     },
   });
-  t.same(messages, [], "03.01");
+  t.strictSame(messages, [], "03.01");
   t.equal(applyFixes(str, messages), str, "03.02");
   t.end();
 });

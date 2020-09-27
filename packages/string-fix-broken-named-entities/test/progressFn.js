@@ -4,7 +4,7 @@ import fix from "../dist/string-fix-broken-named-entities.esm";
 tap.test(
   `01 - ${`\u001b[${32}m${`opts.progressFn`}\u001b[${39}m`} - reports progress - baseline`,
   (t) => {
-    t.same(
+    t.strictSame(
       fix(
         "text &ang text&ang text text &ang text&ang text text &ang text&ang text"
       ),
@@ -20,7 +20,7 @@ tap.test(
     );
 
     let count = 0;
-    t.same(
+    t.strictSame(
       fix(
         "text &ang text&ang text text &ang text&ang text text &ang text&ang text",
         {

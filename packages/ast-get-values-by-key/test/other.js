@@ -3,7 +3,7 @@ import objectPath from "object-path";
 import get from "../dist/ast-get-values-by-key.esm";
 
 tap.test("01 - input is plain object, replacement is string", (t) => {
-  t.same(
+  t.strictSame(
     get(
       {
         style: "html",
@@ -27,7 +27,7 @@ tap.test("02 - paths match object-paht paths", (t) => {
       },
     ],
   };
-  t.same(
+  t.strictSame(
     get(source, "style"),
     [
       {

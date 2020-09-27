@@ -6,7 +6,7 @@ import objectBooleanCombinations from "../dist/object-boolean-combinations.esm";
 // ==============================
 
 tap.test("01 - one property - 1, no override", (t) => {
-  t.same(
+  t.strictSame(
     objectBooleanCombinations({
       a: 1,
     }),
@@ -17,7 +17,7 @@ tap.test("01 - one property - 1, no override", (t) => {
 });
 
 tap.test("02 - one property - 0, no override", (t) => {
-  t.same(
+  t.strictSame(
     objectBooleanCombinations({
       a: 0,
     }),
@@ -28,7 +28,7 @@ tap.test("02 - one property - 0, no override", (t) => {
 });
 
 tap.test("03 - three properties, no override", (t) => {
-  t.same(
+  t.strictSame(
     objectBooleanCombinations({
       a: 1,
       b: 1,
@@ -54,7 +54,7 @@ tap.test("03 - three properties, no override", (t) => {
 // ==============================
 
 tap.test("04 - three properties 2 overrides", (t) => {
-  t.same(
+  t.strictSame(
     objectBooleanCombinations({ a: 0, b: 0, c: 0 }, { a: 1, b: 1 }),
     [
       { a: 1, b: 1, c: 0 },
@@ -62,7 +62,7 @@ tap.test("04 - three properties 2 overrides", (t) => {
     ],
     "04.01"
   );
-  t.same(
+  t.strictSame(
     objectBooleanCombinations({ a: 0, b: 0, c: 0 }, { a: "z", b: "y" }),
     [
       { a: "z", b: "y", c: 0 },
@@ -74,7 +74,7 @@ tap.test("04 - three properties 2 overrides", (t) => {
 });
 
 tap.test("05 - four properties three overrides", (t) => {
-  t.same(
+  t.strictSame(
     objectBooleanCombinations(
       {
         a: 1,
@@ -106,7 +106,7 @@ tap.test("05 - four properties three overrides", (t) => {
 // edge cases:
 
 tap.test("06 - empty override object", (t) => {
-  t.same(
+  t.strictSame(
     objectBooleanCombinations({ a: 1, b: 0, c: 0 }, {}),
     [
       { a: 0, b: 0, c: 0 },
@@ -124,7 +124,7 @@ tap.test("06 - empty override object", (t) => {
 });
 
 tap.test("07 - both input and override objects empty", (t) => {
-  t.same(objectBooleanCombinations({}, {}), [{}], "07");
+  t.strictSame(objectBooleanCombinations({}, {}), [{}], "07");
   t.end();
 });
 
@@ -157,7 +157,7 @@ tap.test("10 - second input is not an object - throws", (t) => {
 });
 
 tap.test("11 - non-boolean object overrides - throws", (t) => {
-  t.same(
+  t.strictSame(
     objectBooleanCombinations(
       {
         a: 1,

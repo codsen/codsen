@@ -7,12 +7,12 @@ import compare from "../dist/ast-compare.esm";
 // -----------------------------------------------------------------------------
 
 tap.test("01 - wildcards against values within object", (t) => {
-  t.same(
+  t.strictSame(
     compare({ a: "1", b: "2a", c: "3" }, { a: "1", b: "2*" }),
     false,
     "01.01 - default"
   );
-  t.same(
+  t.strictSame(
     compare(
       { a: "1", b: "2a", c: "3" },
       { a: "1", b: "2*" },
@@ -21,7 +21,7 @@ tap.test("01 - wildcards against values within object", (t) => {
     false,
     "01.02 - hardcoded default"
   );
-  t.same(
+  t.strictSame(
     compare(
       { a: "1", b: "2a", c: "3" },
       { a: "1", b: "2*" },
@@ -30,7 +30,7 @@ tap.test("01 - wildcards against values within object", (t) => {
     true,
     "01.03 - wildcards enabled"
   );
-  t.same(
+  t.strictSame(
     compare(
       { a: "1", b: "za", c: "3" },
       { a: "1", b: "z*" },
@@ -39,7 +39,7 @@ tap.test("01 - wildcards against values within object", (t) => {
     true,
     "01.04 - with letters and wildcards"
   );
-  t.same(
+  t.strictSame(
     compare(
       { a: "1", b: "Za", c: "3" },
       { a: "1", b: "z*" },
@@ -48,7 +48,7 @@ tap.test("01 - wildcards against values within object", (t) => {
     false,
     "01.05 - won't match because it's now case-sensitive in wildcards too"
   );
-  t.same(
+  t.strictSame(
     compare(
       { a: "1", b: "Za", c: "3" },
       { a: "1", b: "Z*" },
@@ -58,7 +58,7 @@ tap.test("01 - wildcards against values within object", (t) => {
     "01.06 - won't match because it's now case-sensitive in wildcards too"
   );
 
-  t.same(
+  t.strictSame(
     compare(
       { a: "1", b: "2*" },
       { a: "1", b: "2a", c: "3" },
@@ -67,7 +67,7 @@ tap.test("01 - wildcards against values within object", (t) => {
     false,
     "01.07 - weird"
   );
-  t.same(
+  t.strictSame(
     compare(
       { a: "1", b: "2*" },
       { a: "1", b: "2a", c: "3" },
@@ -80,12 +80,12 @@ tap.test("01 - wildcards against values within object", (t) => {
 });
 
 tap.test("02 - wildcards against keys within object", (t) => {
-  t.same(
+  t.strictSame(
     compare({ az: "1", bz: "2a", cz: "3" }, { "a*": "1", "b*": "2*" }),
     false,
     "02.01 - default"
   );
-  t.same(
+  t.strictSame(
     compare(
       { az: "1", bz: "2a", cz: "3" },
       { "a*": "1", "b*": "2a" },
@@ -94,12 +94,12 @@ tap.test("02 - wildcards against keys within object", (t) => {
     true,
     "02.02 - wildcards on"
   );
-  t.same(
+  t.strictSame(
     compare({ az: "1", bz: "2a", cz: "3" }, { "x*": "1", "b*": "2*" }),
     false,
     "02.03 - won't find, despite wildcards, which are turned off"
   );
-  t.same(
+  t.strictSame(
     compare(
       { az: "1", bz: "2a", cz: "3" },
       { "x*": "1", "b*": "2a" },
@@ -112,7 +112,7 @@ tap.test("02 - wildcards against keys within object", (t) => {
 });
 
 tap.test("03 - wildcards in deeper levels", (t) => {
-  t.same(
+  t.strictSame(
     compare(
       {
         a: [
@@ -133,7 +133,7 @@ tap.test("03 - wildcards in deeper levels", (t) => {
     false,
     "03.01 - default (control), wildcards are turned off"
   );
-  t.same(
+  t.strictSame(
     compare(
       {
         a: [
@@ -158,7 +158,7 @@ tap.test("03 - wildcards in deeper levels", (t) => {
 });
 
 tap.test("04 - wildcards in deeper levels within arrays", (t) => {
-  t.same(
+  t.strictSame(
     compare(
       {
         a: [
@@ -182,7 +182,7 @@ tap.test("04 - wildcards in deeper levels within arrays", (t) => {
     false,
     "04.01"
   );
-  t.same(
+  t.strictSame(
     compare(
       {
         a: [
@@ -206,7 +206,7 @@ tap.test("04 - wildcards in deeper levels within arrays", (t) => {
     true,
     "04.02"
   );
-  t.same(
+  t.strictSame(
     compare(
       {
         a: [
@@ -230,7 +230,7 @@ tap.test("04 - wildcards in deeper levels within arrays", (t) => {
     false,
     "04.03"
   );
-  t.same(
+  t.strictSame(
     compare(
       {
         a: [
@@ -254,7 +254,7 @@ tap.test("04 - wildcards in deeper levels within arrays", (t) => {
     false,
     "04.04"
   );
-  t.same(
+  t.strictSame(
     compare(
       {
         a: [

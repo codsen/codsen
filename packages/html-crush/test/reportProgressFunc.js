@@ -18,13 +18,17 @@ tap.test(
       counter += 1;
     };
 
-    t.same(m("aaaaaaaaaa").result, "aaaaaaaaaa", "01.01 - default behaviour");
-    t.same(
+    t.strictSame(
+      m("aaaaaaaaaa").result,
+      "aaaaaaaaaa",
+      "01.01 - default behaviour"
+    );
+    t.strictSame(
       m("aaaaaaaaaa", { reportProgressFunc: null }).result,
       "aaaaaaaaaa",
       "01.02"
     );
-    t.same(
+    t.strictSame(
       m("aaaaaaaaaa", { reportProgressFunc: false }).result,
       "aaaaaaaaaa",
       "01.03"
@@ -323,7 +327,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
       t.ok(compareTo.includes(perc), `checking: ${perc}%`)
     );
     t.equal(gather.length, 86 - 21 - 1, "02.01");
-    // t.same(gather, compareTo, "03.02")
+    // t.strictSame(gather, compareTo, "03.02")
     t.end();
   }
 );

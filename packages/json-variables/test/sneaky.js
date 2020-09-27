@@ -4,7 +4,7 @@ import tap from "tap";
 import jv from "../dist/json-variables.esm";
 
 tap.test("01 - two-level variables resolved", (t) => {
-  t.same(
+  t.strictSame(
     jv({
       a: "%%_b_%%",
       b: "%%_c_%%",
@@ -17,7 +17,7 @@ tap.test("01 - two-level variables resolved", (t) => {
     },
     "01.01 - two redirects, querying strings"
   );
-  t.same(
+  t.strictSame(
     jv({
       a: "%%_b.c_key_%%",
       b: { c_key: "%%_c_%%" },
@@ -34,7 +34,7 @@ tap.test("01 - two-level variables resolved", (t) => {
 });
 
 tap.test("02 - two-level redirects, backwards order", (t) => {
-  t.same(
+  t.strictSame(
     jv({
       x: "val",
       y: "%%_x_%%",
@@ -47,7 +47,7 @@ tap.test("02 - two-level redirects, backwards order", (t) => {
     },
     "02.01"
   );
-  t.same(
+  t.strictSame(
     jv({
       x: { key1: "val" },
       y: { key2: "%%_x.key1_%%" },
@@ -64,7 +64,7 @@ tap.test("02 - two-level redirects, backwards order", (t) => {
 });
 
 tap.test("03 - two-level variables resolved, mixed", (t) => {
-  t.same(
+  t.strictSame(
     jv({
       a: "Some text %%_b_%% some more text %%_c_%%",
       b: "Some text %%_c_%%, some more text %%_d_%%",
@@ -79,7 +79,7 @@ tap.test("03 - two-level variables resolved, mixed", (t) => {
     },
     "03.01"
   );
-  t.same(
+  t.strictSame(
     jv({
       a: "Some text %%_b_%% some more text %%_c.key1_%%",
       b: "Some text %%_c.key1_%%, some more text %%_d.key2_%%",
@@ -98,7 +98,7 @@ tap.test("03 - two-level variables resolved, mixed", (t) => {
 });
 
 tap.test("04 - three-level variables resolved", (t) => {
-  t.same(
+  t.strictSame(
     jv({
       a: "%%_b_%% %%_d_%%",
       b: "%%_c_%% %%_d_%%",
@@ -113,7 +113,7 @@ tap.test("04 - three-level variables resolved", (t) => {
     },
     "04.01"
   );
-  t.same(
+  t.strictSame(
     jv({
       a: "%%_b_%% %%_h_%%",
       b: "%%_c.e.f.g_%% %%_h_%%",
@@ -132,7 +132,7 @@ tap.test("04 - three-level variables resolved", (t) => {
 });
 
 tap.test("05 - another three-level var resolving", (t) => {
-  t.same(
+  t.strictSame(
     jv({
       a: "%%_b_%% %%_c_%%",
       b: "%%_c_%% %%_d_%%",
@@ -151,7 +151,7 @@ tap.test("05 - another three-level var resolving", (t) => {
 });
 
 tap.test("06 - multiple variables resolved", (t) => {
-  t.same(
+  t.strictSame(
     jv({
       a: "%%_e_%% %%_d_%%",
       b: "%%_a_%%",
@@ -197,7 +197,7 @@ tap.test("06 - multiple variables resolved", (t) => {
 });
 
 tap.test("07 - preventDoubleWrapping: on & off", (t) => {
-  t.same(
+  t.strictSame(
     jv(
       {
         a: "%%_b_%%",
@@ -213,7 +213,7 @@ tap.test("07 - preventDoubleWrapping: on & off", (t) => {
     },
     "07.01"
   );
-  t.same(
+  t.strictSame(
     jv(
       {
         a: "%%_b_%%",
@@ -232,7 +232,7 @@ tap.test("07 - preventDoubleWrapping: on & off", (t) => {
 
   // here values come already wrapped:
 
-  t.same(
+  t.strictSame(
     jv(
       {
         a: "%%_b_%%",
@@ -248,7 +248,7 @@ tap.test("07 - preventDoubleWrapping: on & off", (t) => {
     },
     "07.03"
   );
-  t.same(
+  t.strictSame(
     jv(
       {
         a: "%%_b_%%",
@@ -265,7 +265,7 @@ tap.test("07 - preventDoubleWrapping: on & off", (t) => {
     "07.04"
   );
 
-  t.same(
+  t.strictSame(
     jv(
       {
         a: "%%_b_%%",
@@ -281,7 +281,7 @@ tap.test("07 - preventDoubleWrapping: on & off", (t) => {
     },
     "07.05 - more real-life case"
   );
-  t.same(
+  t.strictSame(
     jv(
       {
         a: "%%_b_%%",
@@ -298,7 +298,7 @@ tap.test("07 - preventDoubleWrapping: on & off", (t) => {
     "07.06 - more real-life case"
   );
 
-  t.same(
+  t.strictSame(
     jv(
       {
         a: "%%_b_%%",
@@ -318,7 +318,7 @@ tap.test("07 - preventDoubleWrapping: on & off", (t) => {
 });
 
 tap.test("08 - empty variable", (t) => {
-  t.same(
+  t.strictSame(
     jv({
       a: "%%__%%",
       b: "bbb",

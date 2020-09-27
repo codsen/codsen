@@ -1,6 +1,6 @@
 /**
  * lerna-clean-changelogs
- * Cleans all the crap from Lerna and Conventional Commits-generated changelogs
+ * Removes frivolous changelog entries from commitizen-generated changelogs
  * Version: 1.3.59
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT

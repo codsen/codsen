@@ -30,7 +30,7 @@ tap.test(
     const input = read("01-in");
     t.is(
       sha256(input),
-      "8b40134cfe373a347521d895126cdcae00d7af3d2a29cd9e37472582619ce22f",
+      "ac32ddfd3670f39ce2f55ce674f99850989e1fe1958c49c5348ba7a87a1534ab",
       "01.01 - inputs were mangled!"
     );
     // ensure "in" is fixed
@@ -46,7 +46,7 @@ tap.test(
 
     // ensure no more errors are raised about "out"
     const messages = linter.verify(read("01-out"), c);
-    t.same(messages, [], `01.03`);
+    t.strictSame(messages, [], `01.03`);
     t.end();
   }
 );
@@ -70,11 +70,11 @@ tap.test(
       },
       `02.02`
     );
-    t.same(resIn.messages, [], `02.03`);
+    t.strictSame(resIn.messages, [], `02.03`);
 
     // ensure no more errors are raised about "out"
     const messages = linter.verify(read("02-out"), c);
-    t.same(messages, [], `02.04`);
+    t.strictSame(messages, [], `02.04`);
     t.end();
   }
 );
@@ -96,11 +96,11 @@ tap.test(`03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - edge cases`, (t) => {
     },
     `03.02`
   );
-  t.same(resIn.messages, [], `03.03`);
+  t.strictSame(resIn.messages, [], `03.03`);
 
   // ensure no more errors are raised about "out"
   const messages = linter.verify(read("03-out"), c);
-  t.same(messages, [], `03.04`);
+  t.strictSame(messages, [], `03.04`);
   t.end();
 });
 
@@ -108,7 +108,7 @@ tap.test(`04 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - edge cases`, (t) => {
   const input = read("04-in");
   t.is(
     sha256(input),
-    "162842a3debd3140d91336d63223c852d726147ea400e60fabd2935ad4cb29eb",
+    "447e5621c37f92bc95a3e5595574dfc2a7939849d053ca0f66ee0b74fd6b106c",
     "04.01 - inputs were mangled!"
   );
   // ensure "in" is fixed
@@ -121,11 +121,11 @@ tap.test(`04 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - edge cases`, (t) => {
     },
     `04.02`
   );
-  t.same(resIn.messages, [], `04.03`);
+  t.strictSame(resIn.messages, [], `04.03`);
 
   // ensure no more errors are raised about "out"
   const messages = linter.verify(read("04-out"), c);
-  t.same(messages, [], `04.04`);
+  t.strictSame(messages, [], `04.04`);
   t.end();
 });
 
@@ -146,11 +146,11 @@ tap.test(`05 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - edge cases`, (t) => {
     },
     `05.02`
   );
-  t.same(resIn.messages, [], `05.03`);
+  t.strictSame(resIn.messages, [], `05.03`);
 
   // ensure no more errors are raised about "out"
   const messages = linter.verify(read("05-out"), c);
-  t.same(messages, [], `05.04`);
+  t.strictSame(messages, [], `05.04`);
   t.end();
 });
 
@@ -174,7 +174,7 @@ tap.test(`06 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - edge cases`, (t) => {
 
   // ensure no more errors are raised about "out"
   const messages = linter.verify(read("06-out"), c);
-  t.same(messages, [], `06.03`);
+  t.strictSame(messages, [], `06.03`);
   t.end();
 });
 
@@ -200,7 +200,7 @@ tap.test(
 
     // ensure no more errors are raised about "out"
     const messages = linter.verify(read("10-out"), c);
-    t.same(messages, [], `07.03`);
+    t.strictSame(messages, [], `07.03`);
     t.end();
   }
 );

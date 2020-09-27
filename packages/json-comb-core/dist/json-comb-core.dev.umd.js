@@ -8871,10 +8871,8 @@
     module.exports = isEqual;
   });
 
-  var isArr$4 = Array.isArray;
-
   function allValuesEqualTo(input, value, opts) {
-    if (isArr$4(input)) {
+    if (Array.isArray(input)) {
       if (input.length === 0) {
         return true;
       }
@@ -8922,7 +8920,7 @@
       throw new Error("object-all-values-equal-to: [THROW_ID_02] The second input is undefined! Please provide the second argument.");
     }
 
-    if (originalOpts !== undefined && originalOpts !== null && !lodash_isplainobject(originalOpts)) {
+    if (originalOpts && !lodash_isplainobject(originalOpts)) {
       throw new Error("object-all-values-equal-to: [THROW_ID_03] The third argument, options object, was given not as a plain object but as a ".concat(_typeof(originalOpts), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
     }
 
@@ -8955,8 +8953,6 @@
     return x != null;
   }
 
-  var isArr$5 = Array.isArray;
-
   function fillMissingKeys(incompleteOriginal, schema, opts) {
     var path = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "";
     var incomplete = lodash_clonedeep(incompleteOriginal);
@@ -8980,7 +8976,7 @@
             incomplete[key] = fillMissingKeys(incomplete[key], schema[key], opts, currentPath);
           }
         });
-      } else if (isArr$5(schema) && isArr$5(incomplete)) {
+      } else if (Array.isArray(schema) && Array.isArray(incomplete)) {
         if (incomplete.length === 0) {
           return schema;
         }
@@ -8989,7 +8985,7 @@
           for (var i = incomplete.length; i--;) {
             var currentPath = "".concat(path ? "".concat(path, ".") : "", "0");
 
-            if (lodash_isplainobject(schema[0]) || isArr$5(schema[0])) {
+            if (lodash_isplainobject(schema[0]) || Array.isArray(schema[0])) {
               incomplete[i] = fillMissingKeys(incomplete[i], schema[0], opts, currentPath);
             }
           }
@@ -9060,7 +9056,7 @@
    * License: MIT
    * Homepage: https://codsen.com/os/object-set-all-values-to/
    */
-  var isArr$6 = Array.isArray;
+  var isArr$4 = Array.isArray;
 
   function setAllValuesTo(inputOriginal, valueOriginal) {
     var value;
@@ -9068,21 +9064,21 @@
 
     if (arguments.length < 2) {
       value = false;
-    } else if (lodash_isplainobject(valueOriginal) || isArr$6(valueOriginal)) {
+    } else if (lodash_isplainobject(valueOriginal) || isArr$4(valueOriginal)) {
       value = lodash_clonedeep(valueOriginal);
     } else {
       value = valueOriginal;
     }
 
-    if (isArr$6(input)) {
+    if (isArr$4(input)) {
       input.forEach(function (el, i) {
-        if (lodash_isplainobject(input[i]) || isArr$6(input[i])) {
+        if (lodash_isplainobject(input[i]) || isArr$4(input[i])) {
           input[i] = setAllValuesTo(input[i], value);
         }
       });
     } else if (lodash_isplainobject(input)) {
       Object.keys(input).forEach(function (key) {
-        if (isArr$6(input[key]) || lodash_isplainobject(input[key])) {
+        if (isArr$4(input[key]) || lodash_isplainobject(input[key])) {
           input[key] = setAllValuesTo(input[key], value);
         } else {
           input[key] = value;
@@ -10012,7 +10008,7 @@
     return typeof something === "string";
   }
 
-  var isArr$7 = Array.isArray; // ECMA specification: http://www.ecma-international.org/ecma-262/6.0/#sec-tostring
+  var isArr$5 = Array.isArray; // ECMA specification: http://www.ecma-international.org/ecma-262/6.0/#sec-tostring
 
   function toString(obj) {
     if (obj === null) {
@@ -10079,7 +10075,7 @@
   }
 
   function sortAllObjectsSync(input) {
-    if (isObj$2(input) || isArr$7(input)) {
+    if (isObj$2(input) || isArr$5(input)) {
       return sortKeys(input, {
         deep: true,
         compare: compare
@@ -10149,7 +10145,7 @@
       throw new Error("json-comb-core/getKeysetSync(): [THROW_ID_21] Inputs missing!");
     }
 
-    if (!isArr$7(arrOriginal)) {
+    if (!isArr$5(arrOriginal)) {
       throw new Error("json-comb-core/getKeysetSync(): [THROW_ID_22] Input must be array! Currently it's: ".concat(_typeof(arrOriginal)));
     }
 
@@ -10291,7 +10287,7 @@
     //
     // PREPARATIONS AND TYPE CHECKS
     // ============================
-    if (isArr$7(arrOriginal)) {
+    if (isArr$5(arrOriginal)) {
       if (arrOriginal.length === 0) {
         return [];
       }
@@ -10338,7 +10334,7 @@
       var res = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
       var path = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "";
 
-      if (isArr$7(arr1) && arr1.length === 0) {
+      if (isArr$5(arr1) && arr1.length === 0) {
         return res;
       }
 
@@ -10371,7 +10367,7 @@
 
 
         var keys = (_ref3 = []).concat.apply(_ref3, _toConsumableArray(Object.keys(keySet).filter(function (key) {
-          return isObj$2(keySet[key]) || isArr$7(keySet[key]);
+          return isObj$2(keySet[key]) || isArr$5(keySet[key]);
         })));
 
         var keysContents = keys.map(function (key) {
@@ -10406,7 +10402,7 @@
           });
         }
       } else if (arr1.every(function (el) {
-        return isArr$7(el);
+        return isArr$5(el);
       })) {
         arr1.forEach(function (singleArray, i) {
           res = findUnusedSyncInner(singleArray, opts1, res, "".concat(path, "[").concat(i, "]"));

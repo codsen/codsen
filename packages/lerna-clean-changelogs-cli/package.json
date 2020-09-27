@@ -1,7 +1,7 @@
 {
   "name": "lerna-clean-changelogs-cli",
   "version": "1.2.68",
-  "description": "CLI application to cleanse the lerna-generated changelogs",
+  "description": "CLI application to cleanse the lerna/commitizen-generated changelogs",
   "keywords": [
     "changelog",
     "cli",

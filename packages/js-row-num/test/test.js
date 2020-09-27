@@ -707,7 +707,7 @@ tap.test(
 tap.test(
   `42 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - no quotes - no text`,
   (t) => {
-    t.same(
+    t.strictSame(
       fixRowNums("1", {
         overrideRowNum: 124,
         returnRangesOnly: true,
@@ -739,7 +739,7 @@ tap.test(
 tap.test(
   `44 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - no quotes - with text`,
   (t) => {
-    t.same(
+    t.strictSame(
       fixRowNums("1 something", {
         overrideRowNum: 124,
         returnRangesOnly: true,
@@ -771,7 +771,7 @@ tap.test(
 tap.test(
   `46 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - with quotes - no text, override rownum is number`,
   (t) => {
-    t.same(
+    t.strictSame(
       fixRowNums(`"1"`, {
         overrideRowNum: 124,
         returnRangesOnly: true,
@@ -787,7 +787,7 @@ tap.test(
 tap.test(
   `47 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - with quotes - no text, override rownum is text`,
   (t) => {
-    t.same(
+    t.strictSame(
       fixRowNums(`"1"`, {
         overrideRowNum: "124", // <----- text, not number
         returnRangesOnly: true,
@@ -819,7 +819,7 @@ tap.test(
 tap.test(
   `49 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - with quotes - with text`,
   (t) => {
-    t.same(
+    t.strictSame(
       fixRowNums(`"1 something"`, {
         overrideRowNum: 124,
         returnRangesOnly: true,
@@ -851,7 +851,7 @@ tap.test(
 tap.test(
   `51 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - with backticks - no text, override rownum is number`,
   (t) => {
-    t.same(
+    t.strictSame(
       fixRowNums("`1`", {
         overrideRowNum: 124,
         returnRangesOnly: true,
@@ -867,7 +867,7 @@ tap.test(
 tap.test(
   `52 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - only number, with surrounding whitespace`,
   (t) => {
-    t.same(
+    t.strictSame(
       fixRowNums("\n1\n", {
         overrideRowNum: 124,
         returnRangesOnly: true,
@@ -884,7 +884,7 @@ tap.test(
   `53 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - insurance 1`,
   (t) => {
     const source = "\\u001b[${32}m${`z`}\\u001b[${39}m";
-    t.same(
+    t.strictSame(
       fixRowNums(source, {
         overrideRowNum: 124,
         returnRangesOnly: false,
@@ -901,7 +901,7 @@ tap.test(
   `54 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - insurance 2`,
   (t) => {
     const source = "some text 1 and more text";
-    t.same(
+    t.strictSame(
       fixRowNums(source, {
         overrideRowNum: 124,
         returnRangesOnly: false,
@@ -918,7 +918,7 @@ tap.test(
   `55 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} - extractedLogContentsWereGiven`,
   (t) => {
     const source = `${BACKSLASH}u1000`;
-    t.same(
+    t.strictSame(
       fixRowNums(source, {
         extractedLogContentsWereGiven: true,
       }),

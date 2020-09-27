@@ -5,7 +5,7 @@ tap.test(
   `01 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - legit pound, no decode`,
   (t) => {
     const inp1 = "one pound;";
-    t.same(
+    t.strictSame(
       fix(inp1, {
         cb: (obj) => obj,
         decode: false,
@@ -21,7 +21,7 @@ tap.test(
   `02 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`} - legit pound, no decode`,
   (t) => {
     const inp1 = "one pound;";
-    t.same(
+    t.strictSame(
       fix(inp1, {
         cb: (obj) => obj,
         decode: true,

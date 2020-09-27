@@ -5,7 +5,7 @@ import cparser from "../dist/codsen-parser.esm";
 // -----------------------------------------------------------------------------
 
 tap.test(`01 - ${`\u001b[${33}m${`style`}\u001b[${39}m`} - two tags`, (t) => {
-  t.same(
+  t.strictSame(
     cparser(`<style>
 .red{color: red;}
 </style>`),
@@ -88,7 +88,7 @@ tap.test(`01 - ${`\u001b[${33}m${`style`}\u001b[${39}m`} - two tags`, (t) => {
 tap.test(
   `02 - ${`\u001b[${36}m${`media`}\u001b[${39}m`} - two selectors with empty curlies`,
   (t) => {
-    t.same(
+    t.strictSame(
       cparser(`<style>
 @media screen and {
 .a, .b {}

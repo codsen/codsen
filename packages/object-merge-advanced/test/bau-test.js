@@ -21,7 +21,7 @@ import mergeAdvanced from "../dist/object-merge-advanced.esm";
 // ==============================
 
 tap.test("01 - simple objects, no key clash", (t) => {
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: "a",
@@ -36,7 +36,7 @@ tap.test("01 - simple objects, no key clash", (t) => {
     },
     "01.01"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         b: "b",
@@ -55,7 +55,7 @@ tap.test("01 - simple objects, no key clash", (t) => {
   // https://stackoverflow.com/a/51148924/3943954
   const x = { a: { a: 1 } };
   const y = { a: { b: 1 } };
-  t.same(
+  t.strictSame(
     mergeAdvanced(x, y),
     {
       a: {
@@ -69,7 +69,7 @@ tap.test("01 - simple objects, no key clash", (t) => {
 });
 
 tap.test("02 - different types, no key clash", (t) => {
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         b: ["b1", "b2", "b3"],
@@ -88,7 +88,7 @@ tap.test("02 - different types, no key clash", (t) => {
     },
     "02.01"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         d: null,
@@ -111,7 +111,7 @@ tap.test("02 - different types, no key clash", (t) => {
 });
 
 tap.test("03 - string vs string value clash", (t) => {
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         b: "b",
@@ -127,7 +127,7 @@ tap.test("03 - string vs string value clash", (t) => {
     },
     "03.01"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: "c",
@@ -147,7 +147,7 @@ tap.test("03 - string vs string value clash", (t) => {
 });
 
 tap.test("04 - array vs array value clash", (t) => {
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         b: "b",
@@ -163,7 +163,7 @@ tap.test("04 - array vs array value clash", (t) => {
     },
     "04"
   );
-  // t.same(
+  // t.strictSame(
   //   mergeAdvanced(
   //     {
   //       a: ['c']
@@ -182,7 +182,7 @@ tap.test("04 - array vs array value clash", (t) => {
 });
 
 tap.test("05 - object vs object value clash", (t) => {
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: { c: "c" },
@@ -205,7 +205,7 @@ tap.test("05 - object vs object value clash", (t) => {
 });
 
 tap.test("06 - array vs empty array", (t) => {
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         b: "b",
@@ -221,7 +221,7 @@ tap.test("06 - array vs empty array", (t) => {
     },
     "06.01"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: [],
@@ -241,7 +241,7 @@ tap.test("06 - array vs empty array", (t) => {
 });
 
 tap.test("07 - object vs empty array - object wins", (t) => {
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         b: "b",
@@ -257,7 +257,7 @@ tap.test("07 - object vs empty array - object wins", (t) => {
     },
     "07.01"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: [],
@@ -277,7 +277,7 @@ tap.test("07 - object vs empty array - object wins", (t) => {
 });
 
 tap.test("08 - string vs empty array - string wins", (t) => {
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         b: "b",
@@ -293,7 +293,7 @@ tap.test("08 - string vs empty array - string wins", (t) => {
     },
     "08.01"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: [],
@@ -313,7 +313,7 @@ tap.test("08 - string vs empty array - string wins", (t) => {
 });
 
 tap.test("09 - empty array vs empty array", (t) => {
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         b: "b",
@@ -329,7 +329,7 @@ tap.test("09 - empty array vs empty array", (t) => {
     },
     "09.01"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: [],
@@ -349,7 +349,7 @@ tap.test("09 - empty array vs empty array", (t) => {
 });
 
 tap.test("10 - string vs array", (t) => {
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         b: "b",
@@ -365,7 +365,7 @@ tap.test("10 - string vs array", (t) => {
     },
     "10.01"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: "a",
@@ -381,7 +381,7 @@ tap.test("10 - string vs array", (t) => {
     },
     "10.02"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         b: "b",
@@ -397,7 +397,7 @@ tap.test("10 - string vs array", (t) => {
     },
     "10.03"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: ["a"],
@@ -417,7 +417,7 @@ tap.test("10 - string vs array", (t) => {
 });
 
 tap.test("11 - string vs object", (t) => {
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         b: "b",
@@ -433,7 +433,7 @@ tap.test("11 - string vs object", (t) => {
     },
     "11.01"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: { c: "c" },
@@ -449,7 +449,7 @@ tap.test("11 - string vs object", (t) => {
     },
     "11.02"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         b: "b",
@@ -465,7 +465,7 @@ tap.test("11 - string vs object", (t) => {
     },
     "11.03"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: "a",
@@ -485,7 +485,7 @@ tap.test("11 - string vs object", (t) => {
 });
 
 tap.test("12 - object vs array", (t) => {
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         b: "b",
@@ -503,7 +503,7 @@ tap.test("12 - object vs array", (t) => {
     },
     "12.01"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: ["c"],
@@ -521,7 +521,7 @@ tap.test("12 - object vs array", (t) => {
     },
     "12.02"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         b: "b",
@@ -539,7 +539,7 @@ tap.test("12 - object vs array", (t) => {
     },
     "12.03"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: {
@@ -561,7 +561,7 @@ tap.test("12 - object vs array", (t) => {
 });
 
 tap.test("13 - empty object vs empty array", (t) => {
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         b: "b",
@@ -577,7 +577,7 @@ tap.test("13 - empty object vs empty array", (t) => {
     },
     "13.01"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: {},
@@ -593,7 +593,7 @@ tap.test("13 - empty object vs empty array", (t) => {
     },
     "13.02"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         b: "b",
@@ -609,7 +609,7 @@ tap.test("13 - empty object vs empty array", (t) => {
     },
     "13.03"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: [],
@@ -629,7 +629,7 @@ tap.test("13 - empty object vs empty array", (t) => {
 });
 
 tap.test("14 - empty string vs object", (t) => {
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         b: "b",
@@ -649,7 +649,7 @@ tap.test("14 - empty string vs object", (t) => {
     },
     "14.01"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: {
@@ -669,7 +669,7 @@ tap.test("14 - empty string vs object", (t) => {
     },
     "14.02"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         b: "b",
@@ -689,7 +689,7 @@ tap.test("14 - empty string vs object", (t) => {
     },
     "14.03"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: "",
@@ -713,7 +713,7 @@ tap.test("14 - empty string vs object", (t) => {
 });
 
 tap.test("15 - object values are arrays and get merged", (t) => {
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         b: "b",
@@ -754,7 +754,7 @@ tap.test("15 - object values are arrays and get merged", (t) => {
 });
 
 tap.test("16 - object values are objects and get merged", (t) => {
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         b: "b",
@@ -779,7 +779,7 @@ tap.test("16 - object values are objects and get merged", (t) => {
     },
     "16.01"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: {
@@ -804,7 +804,7 @@ tap.test("16 - object values are objects and get merged", (t) => {
     },
     "16.02"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         b: "b",
@@ -829,7 +829,7 @@ tap.test("16 - object values are objects and get merged", (t) => {
     },
     "16.03"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: {
@@ -858,7 +858,7 @@ tap.test("16 - object values are objects and get merged", (t) => {
 });
 
 tap.test("17 - merging booleans", (t) => {
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: [
@@ -880,7 +880,7 @@ tap.test("17 - merging booleans", (t) => {
     },
     "17.01"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: false,
@@ -906,7 +906,7 @@ tap.test("17 - merging booleans", (t) => {
 });
 
 tap.test("18 - merging undefined", (t) => {
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: undefined,
@@ -920,7 +920,7 @@ tap.test("18 - merging undefined", (t) => {
     },
     "18.01"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: "a",
@@ -938,7 +938,7 @@ tap.test("18 - merging undefined", (t) => {
 });
 
 tap.test("19 - merging null", (t) => {
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: null,
@@ -952,7 +952,7 @@ tap.test("19 - merging null", (t) => {
     },
     "19.01"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: "a",
@@ -971,7 +971,7 @@ tap.test("19 - merging null", (t) => {
 
 tap.test("20 - boolean vs boolean merge (#78)", (t) => {
   // base 2^2 combinations, default behaviour - OR logical operation
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         b: "b",
@@ -987,7 +987,7 @@ tap.test("20 - boolean vs boolean merge (#78)", (t) => {
     },
     "20.01"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: false,
@@ -1003,7 +1003,7 @@ tap.test("20 - boolean vs boolean merge (#78)", (t) => {
     },
     "20.02"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: false,
@@ -1019,7 +1019,7 @@ tap.test("20 - boolean vs boolean merge (#78)", (t) => {
     },
     "20.03"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: true,
@@ -1036,7 +1036,7 @@ tap.test("20 - boolean vs boolean merge (#78)", (t) => {
     "20.04"
   );
   // !opts.mergeBoolsUsingOrNotAnd - AND logical operation
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         b: "b",
@@ -1055,7 +1055,7 @@ tap.test("20 - boolean vs boolean merge (#78)", (t) => {
     },
     "20.05"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: false,
@@ -1074,7 +1074,7 @@ tap.test("20 - boolean vs boolean merge (#78)", (t) => {
     },
     "20.06"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: false,
@@ -1093,7 +1093,7 @@ tap.test("20 - boolean vs boolean merge (#78)", (t) => {
     },
     "20.07"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: true,
@@ -1116,7 +1116,7 @@ tap.test("20 - boolean vs boolean merge (#78)", (t) => {
 });
 
 tap.test("21 - boolean vs undefined merge (#80)", (t) => {
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         b: "b",
@@ -1132,7 +1132,7 @@ tap.test("21 - boolean vs undefined merge (#80)", (t) => {
     },
     "21.01"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: undefined,
@@ -1148,7 +1148,7 @@ tap.test("21 - boolean vs undefined merge (#80)", (t) => {
     },
     "21.02"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         b: "b",
@@ -1164,7 +1164,7 @@ tap.test("21 - boolean vs undefined merge (#80)", (t) => {
     },
     "21.03"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: undefined,
@@ -1184,7 +1184,7 @@ tap.test("21 - boolean vs undefined merge (#80)", (t) => {
 });
 
 tap.test("22 - null vs empty object merge (#84)", (t) => {
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         b: "b",
@@ -1200,7 +1200,7 @@ tap.test("22 - null vs empty object merge (#84)", (t) => {
     },
     "22.01"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: null,
@@ -1220,7 +1220,7 @@ tap.test("22 - null vs empty object merge (#84)", (t) => {
 });
 
 tap.test("23 - null vs. undefined (#90)", (t) => {
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         b: "b",
@@ -1236,7 +1236,7 @@ tap.test("23 - null vs. undefined (#90)", (t) => {
     },
     "23.01"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: undefined,
@@ -1259,7 +1259,7 @@ tap.test("24 - no clash, just filling missing values", (t) => {
   function f() {
     return null;
   }
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         b: "b",
@@ -1274,7 +1274,7 @@ tap.test("24 - no clash, just filling missing values", (t) => {
     },
     "24.01"
   );
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: f,
@@ -1293,7 +1293,7 @@ tap.test("24 - no clash, just filling missing values", (t) => {
 });
 
 tap.test("25 - arrays and opts.ignoreKeys", (t) => {
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: [1, 2, 3],
@@ -1314,7 +1314,7 @@ tap.test("25 - arrays and opts.ignoreKeys", (t) => {
 });
 
 tap.test("26 - arrays and opts.ignoreKeys", (t) => {
-  t.same(
+  t.strictSame(
     mergeAdvanced(
       {
         a: [1, 2, 3],

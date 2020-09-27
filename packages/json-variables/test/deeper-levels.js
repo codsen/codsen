@@ -4,7 +4,7 @@ import tap from "tap";
 import jv from "../dist/json-variables.esm";
 
 tap.test("01 - variables resolve being in deeper levels", (t) => {
-  t.same(
+  t.strictSame(
     jv({
       a: [
         {
@@ -31,7 +31,7 @@ tap.test("01 - variables resolve being in deeper levels", (t) => {
 tap.test(
   "02 - deeper level variables not found, bubble up and are found",
   (t) => {
-    t.same(
+    t.strictSame(
       jv({
         a: [
           {
@@ -57,7 +57,7 @@ tap.test(
 );
 
 tap.test("03 - third level resolves at its level", (t) => {
-  t.same(
+  t.strictSame(
     jv({
       a: [
         {
@@ -90,7 +90,7 @@ tap.test("03 - third level resolves at its level", (t) => {
 });
 
 tap.test("04 - third level falls back to root", (t) => {
-  t.same(
+  t.strictSame(
     jv({
       a: [
         {
@@ -123,7 +123,7 @@ tap.test("04 - third level falls back to root", (t) => {
 });
 
 tap.test("05 - third level uses data container key", (t) => {
-  t.same(
+  t.strictSame(
     jv({
       a: [
         {
@@ -166,7 +166,7 @@ tap.test("05 - third level uses data container key", (t) => {
 tap.test(
   "06 - third level uses data container key, but there's nothing there so falls back to root (successfully)",
   (t) => {
-    t.same(
+    t.strictSame(
       jv({
         a: [
           {
@@ -208,7 +208,7 @@ tap.test(
 tap.test(
   "07 - third level uses data container key, but there's nothing there so falls back to root data container (successfully)",
   (t) => {
-    t.same(
+    t.strictSame(
       jv({
         a: [
           {
@@ -247,7 +247,7 @@ tap.test(
       },
       "07.01 - defaults - root has normal container, a_data, named by topmost parent key"
     );
-    t.same(
+    t.strictSame(
       jv({
         a: [
           {

@@ -5,7 +5,7 @@ import { helga } from "../dist/helga.esm";
 // -----------------------------------------------------------------------------
 
 tap.test("01 - just a single word", (t) => {
-  t.same(
+  t.strictSame(
     helga("abc"),
     {
       minified: "abc",
@@ -17,7 +17,7 @@ tap.test("01 - just a single word", (t) => {
 });
 
 tap.test("02 - converts line breaks - JSON off", (t) => {
-  t.same(
+  t.strictSame(
     helga("abc\ndef", { targetJSON: false }),
     {
       minified: "abc\ndef",
@@ -30,7 +30,7 @@ tap.test("02 - converts line breaks - JSON off", (t) => {
 
 tap.test("03 - converts line breaks - JSON on", (t) => {
   // beautified as input:
-  t.same(
+  t.strictSame(
     helga("abc\ndef", { targetJSON: true }),
     {
       minified: "abc\\ndef",
@@ -40,7 +40,7 @@ tap.test("03 - converts line breaks - JSON on", (t) => {
   );
 
   // minified as input:
-  t.same(
+  t.strictSame(
     helga("abc\\ndef", { targetJSON: true }),
     {
       minified: "abc\\ndef",

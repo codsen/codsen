@@ -7,7 +7,7 @@ import alt from "../dist/html-img-alt.esm";
 tap.test(
   "01 - alt with two double quotes, no space after slash, one XHTML tag",
   (t) => {
-    t.same(
+    t.strictSame(
       alt('zzz<img     alt=""    />zzz'),
       'zzz<img alt="" />zzz',
       "01 - html, excessive white space"
@@ -19,7 +19,7 @@ tap.test(
 tap.test(
   "02 - alt with two double quotes, no space after slash, one XHTML tag",
   (t) => {
-    t.same(
+    t.strictSame(
       alt('zzz<img     alt    =""    />zzz'),
       'zzz<img alt="" />zzz',
       "02 - html, excessive white space"
@@ -31,7 +31,7 @@ tap.test(
 tap.test(
   "03 - alt with two double quotes, no space after slash, one XHTML tag",
   (t) => {
-    t.same(
+    t.strictSame(
       alt('zzz<img     alt    =    ""    />zzz'),
       'zzz<img alt="" />zzz',
       "03 - html, excessive white space"
@@ -43,7 +43,7 @@ tap.test(
 tap.test(
   "04 - alt with two double quotes, no space after slash, one XHTML tag",
   (t) => {
-    t.same(
+    t.strictSame(
       alt('zzz<img     alt    =    ""/>zzz'),
       'zzz<img alt="" />zzz',
       "04 - html, excessive white space"
@@ -55,7 +55,7 @@ tap.test(
 tap.test(
   "05 - alt with two double quotes, no space after slash, one XHTML tag",
   (t) => {
-    t.same(
+    t.strictSame(
       alt('zzz<img     alt="   "    />zzz'),
       'zzz<img alt="" />zzz',
       "05 - html, excessive white space"
@@ -67,7 +67,7 @@ tap.test(
 tap.test(
   "06 - alt with two double quotes, no space after slash, one XHTML tag",
   (t) => {
-    t.same(
+    t.strictSame(
       alt('zzz<img     alt    ="   "    />zzz'),
       'zzz<img alt="" />zzz',
       "06 - html, excessive white space"
@@ -79,7 +79,7 @@ tap.test(
 tap.test(
   "07 - alt with two double quotes, no space after slash, one XHTML tag",
   (t) => {
-    t.same(
+    t.strictSame(
       alt('zzz<img     alt    =    "   "    />zzz'),
       'zzz<img alt="" />zzz',
       "07 - html, excessive white space"
@@ -91,7 +91,7 @@ tap.test(
 tap.test(
   "08 - alt with two double quotes, no space after slash, one XHTML tag",
   (t) => {
-    t.same(
+    t.strictSame(
       alt('zzz<img     alt    =    "   "/>zzz'),
       'zzz<img alt="" />zzz',
       "08 - html, excessive white space"
@@ -103,7 +103,7 @@ tap.test(
 tap.test(
   "09 - alt with two double quotes, no space after slash, one XHTML tag",
   (t) => {
-    t.same(
+    t.strictSame(
       alt('zzz<img     alt    =    "   "/>zzz'),
       'zzz<img alt="" />zzz',
       "09 - html, excessive white space"
@@ -115,7 +115,11 @@ tap.test(
 tap.test(
   "10 - alt with two double quotes, one space between slash & bracket, XHTML",
   (t) => {
-    t.same(alt('zzz<img     alt=""    / >zzz'), 'zzz<img alt="" />zzz', "10");
+    t.strictSame(
+      alt('zzz<img     alt=""    / >zzz'),
+      'zzz<img alt="" />zzz',
+      "10"
+    );
     t.end();
   }
 );
@@ -123,7 +127,7 @@ tap.test(
 tap.test(
   "11 - alt with two double quotes, one space between slash & bracket, XHTML",
   (t) => {
-    t.same(
+    t.strictSame(
       alt('zzz<img     alt    =""    / >zzz'),
       'zzz<img alt="" />zzz',
       "11"
@@ -135,7 +139,7 @@ tap.test(
 tap.test(
   "12 - alt with two double quotes, one space between slash & bracket, XHTML",
   (t) => {
-    t.same(
+    t.strictSame(
       alt('zzz<img     alt    =    ""    / >zzz'),
       'zzz<img alt="" />zzz',
       "12"
@@ -147,7 +151,7 @@ tap.test(
 tap.test(
   "13 - alt with two double quotes, one space between slash & bracket, XHTML",
   (t) => {
-    t.same(
+    t.strictSame(
       alt('zzz<img     alt    =    ""/ >zzz'),
       'zzz<img alt="" />zzz',
       "13"
@@ -159,7 +163,7 @@ tap.test(
 tap.test(
   "14 - alt with two double quotes, one space between slash & bracket, XHTML",
   (t) => {
-    t.same(
+    t.strictSame(
       alt('zzz<img     alt="   "    / >zzz'),
       'zzz<img alt="" />zzz',
       "14"
@@ -171,7 +175,7 @@ tap.test(
 tap.test(
   "15 - alt with two double quotes, one space between slash & bracket, XHTML",
   (t) => {
-    t.same(
+    t.strictSame(
       alt('zzz<img     alt    ="   "    / >zzz'),
       'zzz<img alt="" />zzz',
       "15"
@@ -183,7 +187,7 @@ tap.test(
 tap.test(
   "16 - alt with two double quotes, one space between slash & bracket, XHTML",
   (t) => {
-    t.same(
+    t.strictSame(
       alt('zzz<img     alt    =    "   "    / >zzz'),
       'zzz<img alt="" />zzz',
       "16"
@@ -195,7 +199,7 @@ tap.test(
 tap.test(
   "17 - alt with two double quotes, one space between slash & bracket, XHTML",
   (t) => {
-    t.same(
+    t.strictSame(
       alt('zzz<img     alt    =    "   "/ >zzz'),
       'zzz<img alt="" />zzz',
       "17"
@@ -207,7 +211,7 @@ tap.test(
 tap.test(
   "18 - alt with two double quotes, one space between slash & bracket, XHTML",
   (t) => {
-    t.same(
+    t.strictSame(
       alt('zzz<img     alt    =    "   "/ >zzz'),
       'zzz<img alt="" />zzz',
       "18"

@@ -2,7 +2,7 @@ import tap from "tap";
 import a from "../dist/array-of-arrays-into-ast.esm";
 
 tap.test("01 - three elements", (t) => {
-  t.same(
+  t.strictSame(
     a([[1, 2, 3], [1, 2], [5]]),
     {
       1: [
@@ -19,7 +19,7 @@ tap.test("01 - three elements", (t) => {
     },
     "01.01"
   );
-  t.same(
+  t.strictSame(
     a([[5], [1, 2, 3], [1, 2]]),
     {
       1: [
@@ -36,7 +36,7 @@ tap.test("01 - three elements", (t) => {
     },
     "01.02"
   );
-  t.same(
+  t.strictSame(
     a([[1, 2], [5], [1, 2, 3]]),
     {
       1: [
@@ -53,7 +53,7 @@ tap.test("01 - three elements", (t) => {
     },
     "01.03"
   );
-  t.same(
+  t.strictSame(
     a([[1], [5], [1, 2, 3]]),
     {
       1: [
@@ -74,14 +74,14 @@ tap.test("01 - three elements", (t) => {
 });
 
 tap.test("02 - opts.dedupe", (t) => {
-  t.same(
+  t.strictSame(
     a([[1], [1], [1]]),
     {
       1: [null],
     },
     "02.01"
   );
-  t.same(
+  t.strictSame(
     a([[1], [1], [1]], { dedupe: false }),
     {
       1: [null, null, null],
@@ -99,7 +99,7 @@ tap.test("03 - throws", (t) => {
 });
 
 tap.test("04 - empty input ends the operation quick", (t) => {
-  t.same(a([]), {}, "04.01");
-  t.same(a([], { dedupe: false }), {}, "04.02");
+  t.strictSame(a([]), {}, "04.01");
+  t.strictSame(a([], { dedupe: false }), {}, "04.02");
   t.end();
 });

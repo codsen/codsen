@@ -6,12 +6,12 @@ import pull from "../dist/array-pull-all-with-glob.esm";
 // =======
 
 tap.test("01 - no glob", (t) => {
-  t.same(pull(["one", "two", "three"], ["one", "three"]), ["two"], "01");
+  t.strictSame(pull(["one", "two", "three"], ["one", "three"]), ["two"], "01");
   t.end();
 });
 
 tap.test("02 - won't find", (t) => {
-  t.same(
+  t.strictSame(
     pull(["one", "two", "three"], ["something"]),
     ["one", "two", "three"],
     "02"
@@ -20,27 +20,27 @@ tap.test("02 - won't find", (t) => {
 });
 
 tap.test("03 - empty source array", (t) => {
-  t.same(pull([], ["one", "three"]), [], "03");
+  t.strictSame(pull([], ["one", "three"]), [], "03");
   t.end();
 });
 
 tap.test("04 - empty source array", (t) => {
-  t.same(pull([], []), [], "04");
+  t.strictSame(pull([], []), [], "04");
   t.end();
 });
 
 tap.test("05 - no glob, deletes last remaining thing", (t) => {
-  t.same(pull(["one"], ["one"]), [], "05");
+  t.strictSame(pull(["one"], ["one"]), [], "05");
   t.end();
 });
 
 tap.test("06 - no glob, case sensitive", (t) => {
-  t.same(
+  t.strictSame(
     pull(["One", "two", "Three"], ["one", "three"]),
     ["One", "two", "Three"],
     "06.01 - default"
   );
-  t.same(
+  t.strictSame(
     pull(["One", "two", "Three"], ["one", "three"], { caseSensitive: false }),
     ["two"],
     "06.02 - opts.caseSensitive"
@@ -53,7 +53,7 @@ tap.test("06 - no glob, case sensitive", (t) => {
 // ====
 
 tap.test("07 - glob, normal use", (t) => {
-  t.same(
+  t.strictSame(
     pull(
       [
         "module-1",
@@ -68,7 +68,7 @@ tap.test("07 - glob, normal use", (t) => {
     ["only this left"],
     "07.01"
   );
-  t.same(
+  t.strictSame(
     pull(
       [
         "Module-1",
@@ -83,7 +83,7 @@ tap.test("07 - glob, normal use", (t) => {
     ["Module-1", "only this left"],
     "07.02"
   );
-  t.same(
+  t.strictSame(
     pull(
       [
         "Module-1",
@@ -103,7 +103,7 @@ tap.test("07 - glob, normal use", (t) => {
 });
 
 tap.test("08 - asterisk the only input - pulls everything", (t) => {
-  t.same(
+  t.strictSame(
     pull(
       [
         "module-1",
@@ -118,7 +118,7 @@ tap.test("08 - asterisk the only input - pulls everything", (t) => {
     [],
     "08.01"
   );
-  t.same(
+  t.strictSame(
     pull(
       [
         "module-1",
@@ -137,7 +137,7 @@ tap.test("08 - asterisk the only input - pulls everything", (t) => {
 });
 
 tap.test("09 - asterisk in the source array", (t) => {
-  t.same(
+  t.strictSame(
     pull(
       ["module-*", "module-**", "something-*", "something-**"],
       ["module-*"]
@@ -149,12 +149,12 @@ tap.test("09 - asterisk in the source array", (t) => {
 });
 
 tap.test("10 - empty arrays as inputs", (t) => {
-  t.same(pull([], ["module-*"]), [], "10");
+  t.strictSame(pull([], ["module-*"]), [], "10");
   t.end();
 });
 
 tap.test("11 - empty array as second arg", (t) => {
-  t.same(
+  t.strictSame(
     pull(["module-*", "module-**", "something-*", "something-**"], []),
     ["module-*", "module-**", "something-*", "something-**"],
     "11"
@@ -163,12 +163,12 @@ tap.test("11 - empty array as second arg", (t) => {
 });
 
 tap.test("12 - pulls normal words in various ways", (t) => {
-  t.same(pull(["apples", "oranges"], "apples"), ["oranges"], "12.01");
-  t.same(pull(["apples", "oranges"], ["apples"]), ["oranges"], "12.02");
-  t.same(pull(["apples", "oranges"], ["apples*"]), ["oranges"], "12.03");
-  t.same(pull(["apples", "oranges"], "apples*"), ["oranges"], "12.04");
-  t.same(pull(["apples", "oranges"], "a*"), ["oranges"], "12.05");
-  t.same(pull(["apples", "oranges"], ["a*"]), ["oranges"], "12.06");
+  t.strictSame(pull(["apples", "oranges"], "apples"), ["oranges"], "12.01");
+  t.strictSame(pull(["apples", "oranges"], ["apples"]), ["oranges"], "12.02");
+  t.strictSame(pull(["apples", "oranges"], ["apples*"]), ["oranges"], "12.03");
+  t.strictSame(pull(["apples", "oranges"], "apples*"), ["oranges"], "12.04");
+  t.strictSame(pull(["apples", "oranges"], "a*"), ["oranges"], "12.05");
+  t.strictSame(pull(["apples", "oranges"], ["a*"]), ["oranges"], "12.06");
   t.end();
 });
 
@@ -184,7 +184,7 @@ tap.test("13 - missing both inputs - throws", (t) => {
 });
 
 tap.test("14 - against asterisk", (t) => {
-  t.same(pull(["a*", "a**", "*******", "*"], ["*"]), [], "14.01");
+  t.strictSame(pull(["a*", "a**", "*******", "*"], ["*"]), [], "14.01");
   t.throws(() => {
     pull(["a*", "a**", "*******", null, "*"], ["*"]);
   }, /THROW_ID_05/g); // because of null, a non-string element in the array
@@ -192,7 +192,7 @@ tap.test("14 - against asterisk", (t) => {
 });
 
 tap.test("15 - against emoji and asterisk", (t) => {
-  t.same(
+  t.strictSame(
     pull(["🦄", "🦄*", "🦄**", "*🦄", "*******", "*"], ["🦄*"]),
     ["*🦄", "*******", "*"],
     "15.01"
@@ -267,14 +267,14 @@ tap.test("17 - missing one input - throws", (t) => {
 });
 
 tap.test('18 - 1st arg, "originalInput" is an empty array', (t) => {
-  t.same(pull([], "z"), [], "18.01");
-  t.same(pull([], ""), [], "18.02");
-  t.same(pull([], ["z"]), [], "18.03");
+  t.strictSame(pull([], "z"), [], "18.01");
+  t.strictSame(pull([], ""), [], "18.02");
+  t.strictSame(pull([], ["z"]), [], "18.03");
   t.end();
 });
 
 tap.test('19 - 2nd arg, "originalToBeRemoved" is an empty string', (t) => {
-  t.same(pull(["apples", "oranges"], ""), ["apples", "oranges"], "19");
+  t.strictSame(pull(["apples", "oranges"], ""), ["apples", "oranges"], "19");
   t.end();
 });
 
@@ -291,9 +291,9 @@ tap.test("20 - does not mutate the input args", (t) => {
 
   const unneededResult2 = pull(arr1, arr3);
   t.pass(unneededResult2); // filler to shut up the linter complaining it's unused
-  t.same(arr1, ["a", "b", "c"], "20.01");
-  t.same(arr2, "c", "20.02");
-  t.same(arr3, ["c"], "20.03");
+  t.strictSame(arr1, ["a", "b", "c"], "20.01");
+  t.strictSame(arr2, "c", "20.02");
+  t.strictSame(arr3, ["c"], "20.03");
 
   t.end();
 });

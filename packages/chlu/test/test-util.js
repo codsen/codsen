@@ -15,18 +15,18 @@ import {
 tap.test(
   `01 - ${`\u001b[${35}m${`isTitle()`}\u001b[${39}m`} - negative result`,
   (t) => {
-    t.same(isTitle(""), false, "01.01");
-    t.same(isTitle("a.a.a"), false, "01.02");
-    t.same(isTitle("a.a.a."), false, "01.03");
-    t.same(isTitle("## a.a.a"), false, "01.04");
-    t.same(isTitle("## [a.a.a] - 2017-04-24"), false, "01.05");
-    t.same(isTitle("## [1.a.a] - 2017-04-24"), false, "01.06");
-    t.same(isTitle("## [1.a.a](http://codsen.com)"), false, "01.07");
-    t.same(isTitle("## [1.a.a]: http://codsen.com"), false, "01.08");
-    t.same(isTitle("## [1.a.a]:http://codsen.com"), false, "01.09");
-    t.same(isTitle("[1.a.a]:http://codsen.com"), false, "01.10");
-    t.same(isTitle("1.a.a:http://codsen.com"), false, "01.11");
-    t.same(
+    t.strictSame(isTitle(""), false, "01.01");
+    t.strictSame(isTitle("a.a.a"), false, "01.02");
+    t.strictSame(isTitle("a.a.a."), false, "01.03");
+    t.strictSame(isTitle("## a.a.a"), false, "01.04");
+    t.strictSame(isTitle("## [a.a.a] - 2017-04-24"), false, "01.05");
+    t.strictSame(isTitle("## [1.a.a] - 2017-04-24"), false, "01.06");
+    t.strictSame(isTitle("## [1.a.a](http://codsen.com)"), false, "01.07");
+    t.strictSame(isTitle("## [1.a.a]: http://codsen.com"), false, "01.08");
+    t.strictSame(isTitle("## [1.a.a]:http://codsen.com"), false, "01.09");
+    t.strictSame(isTitle("[1.a.a]:http://codsen.com"), false, "01.10");
+    t.strictSame(isTitle("1.a.a:http://codsen.com"), false, "01.11");
+    t.strictSame(
       isTitle(`some text
 some more text 1.0.0 and
 [1.0.0](http://codsen.com)
@@ -35,7 +35,7 @@ whatever
       false,
       "01.12"
     );
-    t.same(
+    t.strictSame(
       isTitle(`some text
 some more text 1.0 and
 [1.0.0](http://codsen.com)
@@ -44,13 +44,13 @@ whatever
       false,
       "01.13"
     );
-    t.same(isTitle("some text 1.0.0 and more text"), false, "01.14");
-    t.same(isTitle("some text 1.0 and more text"), false, "01.15");
-    t.same(isTitle("* some text 1.0.0 and more text"), false, "01.16");
-    t.same(isTitle("- some text 1.0 and more text"), false, "01.17");
-    t.same(isTitle("1.2.0 Text"), false, "01.18");
-    t.same(isTitle("[1.2.0]"), false, "01.19");
-    t.same(isTitle("[1.2.0] Text"), false, "01.20");
+    t.strictSame(isTitle("some text 1.0.0 and more text"), false, "01.14");
+    t.strictSame(isTitle("some text 1.0 and more text"), false, "01.15");
+    t.strictSame(isTitle("* some text 1.0.0 and more text"), false, "01.16");
+    t.strictSame(isTitle("- some text 1.0 and more text"), false, "01.17");
+    t.strictSame(isTitle("1.2.0 Text"), false, "01.18");
+    t.strictSame(isTitle("[1.2.0]"), false, "01.19");
+    t.strictSame(isTitle("[1.2.0] Text"), false, "01.20");
     t.end();
   }
 );
@@ -58,12 +58,12 @@ whatever
 tap.test(
   `02 - ${`\u001b[${35}m${`isTitle()`}\u001b[${39}m`} - positive result`,
   (t) => {
-    t.same(isTitle("## [1.2.0] - 2017-04-24"), true, "02.01");
-    t.same(isTitle("## [1.2.0]"), true, "02.02");
-    t.same(isTitle("## [1.2.0] aaa"), true, "02.03");
-    t.same(isTitle("# [1.2.0]"), true, "02.04");
-    t.same(isTitle("## 0.0.5 - 2014-12-13 - [YANKED]"), true, "02.05");
-    t.same(isTitle("## [0.0.5] - 2014-12-13 - [YANKED]"), true, "02.06");
+    t.strictSame(isTitle("## [1.2.0] - 2017-04-24"), true, "02.01");
+    t.strictSame(isTitle("## [1.2.0]"), true, "02.02");
+    t.strictSame(isTitle("## [1.2.0] aaa"), true, "02.03");
+    t.strictSame(isTitle("# [1.2.0]"), true, "02.04");
+    t.strictSame(isTitle("## 0.0.5 - 2014-12-13 - [YANKED]"), true, "02.05");
+    t.strictSame(isTitle("## [0.0.5] - 2014-12-13 - [YANKED]"), true, "02.06");
     t.end();
   }
 );
@@ -71,16 +71,16 @@ tap.test(
 tap.test(
   `03 - ${`\u001b[${35}m${`isTitle()`}\u001b[${39}m`} - non-semver, 2 digits only`,
   (t) => {
-    t.same(isTitle("## [1.2] - 2017-04-24"), true, "03.01");
-    t.same(isTitle("## [1.2]"), true, "03.02");
-    t.same(isTitle("## [1.2] aaa"), true, "03.03");
-    t.same(isTitle("# [1.2]"), true, "03.04");
-    t.same(isTitle("[1.2]"), false, "03.05");
-    t.same(isTitle("[1.2] Text"), false, "03.06");
-    t.same(isTitle("1.2 Text"), false, "03.07");
-    t.same(isTitle("# [1.2]"), true, "03.08");
-    t.same(isTitle("# [1.2] Text"), true, "03.09");
-    t.same(isTitle("# 1.2 Text"), true, "03.10");
+    t.strictSame(isTitle("## [1.2] - 2017-04-24"), true, "03.01");
+    t.strictSame(isTitle("## [1.2]"), true, "03.02");
+    t.strictSame(isTitle("## [1.2] aaa"), true, "03.03");
+    t.strictSame(isTitle("# [1.2]"), true, "03.04");
+    t.strictSame(isTitle("[1.2]"), false, "03.05");
+    t.strictSame(isTitle("[1.2] Text"), false, "03.06");
+    t.strictSame(isTitle("1.2 Text"), false, "03.07");
+    t.strictSame(isTitle("# [1.2]"), true, "03.08");
+    t.strictSame(isTitle("# [1.2] Text"), true, "03.09");
+    t.strictSame(isTitle("# 1.2 Text"), true, "03.10");
     t.end();
   }
 );
@@ -88,9 +88,9 @@ tap.test(
 tap.test(
   `04 - ${`\u001b[${35}m${`isTitle()`}\u001b[${39}m`} - three hashes, H3`,
   (t) => {
-    t.same(isTitle("### [1.2.0] - 2017-04-24"), true, "04.01");
-    t.same(isTitle("### [1.2.0]"), true, "04.02");
-    t.same(isTitle("### [1.2.0] aaa"), true, "04.03");
+    t.strictSame(isTitle("### [1.2.0] - 2017-04-24"), true, "04.01");
+    t.strictSame(isTitle("### [1.2.0]"), true, "04.02");
+    t.strictSame(isTitle("### [1.2.0] aaa"), true, "04.03");
     t.end();
   }
 );
@@ -98,9 +98,9 @@ tap.test(
 tap.test(
   `05 - ${`\u001b[${35}m${`isTitle()`}\u001b[${39}m`} - four hashes, H4`,
   (t) => {
-    t.same(isTitle("#### [1.2.0] - 2017-04-24"), true, "05.01");
-    t.same(isTitle("#### [1.2.0]"), true, "05.02");
-    t.same(isTitle("#### [1.2.0] aaa"), true, "05.03");
+    t.strictSame(isTitle("#### [1.2.0] - 2017-04-24"), true, "05.01");
+    t.strictSame(isTitle("#### [1.2.0]"), true, "05.02");
+    t.strictSame(isTitle("#### [1.2.0] aaa"), true, "05.03");
     t.end();
   }
 );
@@ -123,12 +123,16 @@ tap.test(
 tap.test(
   `07 - ${`\u001b[${33}m${`isFooterLink()`}\u001b[${39}m`} - negative result`,
   (t) => {
-    t.same(isFooterLink(""), false, "07.01");
-    t.same(isFooterLink(), false, "07.02");
-    t.same(isFooterLink("[1.1.0](https://github.com)"), false, "07.03");
-    t.same(isFooterLink("1.1.0: https://github.com"), false, "07.04");
-    t.same(isFooterLink("[1.1.0](github.com)"), false, "07.05");
-    t.same(isFooterLink("## 0.0.5 - 2014-12-13 - [YANKED]"), false, "07.06");
+    t.strictSame(isFooterLink(""), false, "07.01");
+    t.strictSame(isFooterLink(), false, "07.02");
+    t.strictSame(isFooterLink("[1.1.0](https://github.com)"), false, "07.03");
+    t.strictSame(isFooterLink("1.1.0: https://github.com"), false, "07.04");
+    t.strictSame(isFooterLink("[1.1.0](github.com)"), false, "07.05");
+    t.strictSame(
+      isFooterLink("## 0.0.5 - 2014-12-13 - [YANKED]"),
+      false,
+      "07.06"
+    );
     t.end();
   }
 );
@@ -136,14 +140,14 @@ tap.test(
 tap.test(
   `08 - ${`\u001b[${33}m${`isFooterLink()`}\u001b[${39}m`} - positive result`,
   (t) => {
-    t.same(
+    t.strictSame(
       isFooterLink(
         "[1.1.0]: https://github.com/codsen/wrong-lib/compare/v1.0.0...v1.1.0"
       ),
       true,
       "08.01"
     );
-    t.same(isFooterLink("[1.1.0]: https://github.com"), true, "08.02");
+    t.strictSame(isFooterLink("[1.1.0]: https://github.com"), true, "08.02");
     t.end();
   }
 );
@@ -181,51 +185,51 @@ tap.test(
   `11 - ${`\u001b[${35}m${`getPreviousVersion()`}\u001b[${39}m`} - BAU`,
   (t) => {
     // without "v."
-    t.same(
+    t.strictSame(
       getPreviousVersion("1.1.0", ["1.1.0", "1.2.0", "1.3.0", "1.0.0"]),
       "1.0.0",
       "11.01"
     );
-    t.same(
+    t.strictSame(
       getPreviousVersion("3.0.0", ["1.0.0", "3.0.0", "2.0.0", "4.0.0"]),
       "2.0.0",
       "11.02"
     );
-    t.same(
+    t.strictSame(
       getPreviousVersion("3.0.0", ["1.0.9", "3.0.0", "2.9.10", "4.0.0"]),
       "2.9.10",
       "11.03"
     );
 
     // with "v."
-    t.same(
+    t.strictSame(
       getPreviousVersion("v1.1.0", ["v1.1.0", "v1.2.0", "v1.3.0", "v1.0.0"]),
       "1.0.0",
       "11.04"
     );
-    t.same(
+    t.strictSame(
       getPreviousVersion("v3.0.0", ["v1.0.0", "v3.0.0", "v2.0.0", "v4.0.0"]),
       "2.0.0",
       "11.05"
     );
-    t.same(
+    t.strictSame(
       getPreviousVersion("v3.0.0", ["v1.0.9", "v3.0.0", "v2.9.10", "v4.0.0"]),
       "2.9.10",
       "11.06"
     );
 
     // mixed
-    t.same(
+    t.strictSame(
       getPreviousVersion("v1.1.0", ["1.1.0", "1.2.0", "1.3.0", "1.0.0"]),
       "1.0.0",
       "11.07"
     );
-    t.same(
+    t.strictSame(
       getPreviousVersion("v3.0.0", ["1.0.0", "3.0.0", "2.0.0", "4.0.0"]),
       "2.0.0",
       "11.08"
     );
-    t.same(
+    t.strictSame(
       getPreviousVersion("3.0.0", ["v1.0.9", "v3.0.0", "v2.9.10", "v4.0.0"]),
       "2.9.10",
       "11.09"
@@ -237,7 +241,7 @@ tap.test(
 tap.test(
   `12 - ${`\u001b[${35}m${`getPreviousVersion()`}\u001b[${39}m`} - requesting previous of a first`,
   (t) => {
-    t.same(
+    t.strictSame(
       getPreviousVersion("1.1.0", ["1.1.0", "1.2.0", "1.3.0"]),
       null,
       "12"
@@ -250,9 +254,9 @@ tap.test(
 // ------------------
 
 tap.test(`13 - ${`\u001b[${33}m${`aContainsB()`}\u001b[${39}m`} - BAU`, (t) => {
-  t.same(aContainsB("aaaaaabcdddddd", "bc"), true, "13.01");
-  t.same(aContainsB("aaaaaabcdddddd", null), false, "13.02");
-  t.same(aContainsB("aaaaaabcdddddd"), false, "13.03");
+  t.strictSame(aContainsB("aaaaaabcdddddd", "bc"), true, "13.01");
+  t.strictSame(aContainsB("aaaaaabcdddddd", null), false, "13.02");
+  t.strictSame(aContainsB("aaaaaabcdddddd"), false, "13.03");
   t.end();
 });
 
@@ -262,7 +266,7 @@ tap.test(`13 - ${`\u001b[${33}m${`aContainsB()`}\u001b[${39}m`} - BAU`, (t) => {
 tap.test(
   `14 - ${`\u001b[${35}m${`getSetFooterLink()`}\u001b[${39}m`} - ${`\u001b[${33}m${`sets`}\u001b[${39}m`} correctly GitHub`,
   (t) => {
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[1.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0",
         {
@@ -276,7 +280,7 @@ tap.test(
       "14.01"
     );
 
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[1.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0",
         {
@@ -289,7 +293,7 @@ tap.test(
       "14.02 - user only"
     );
 
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[1.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0",
         {
@@ -302,7 +306,7 @@ tap.test(
       "14.03 - package only"
     );
 
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[1.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0",
         {
@@ -315,7 +319,7 @@ tap.test(
       "14.04 - versBefore only"
     );
 
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[1.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0",
         {
@@ -328,7 +332,7 @@ tap.test(
       "14.05 - versAfter only"
     );
 
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[1.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0",
         {
@@ -341,7 +345,7 @@ tap.test(
       "14.06 - version only"
     );
 
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[6.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0",
         {
@@ -358,7 +362,7 @@ tap.test(
       "14.07 - all variables given, Github -> Github"
     );
 
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[6.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0",
         {
@@ -381,7 +385,7 @@ tap.test(
 tap.test(
   `15 - ${`\u001b[${35}m${`getSetFooterLink()`}\u001b[${39}m`} - ${`\u001b[${31}m${`gets`}\u001b[${39}m`} correctly GitHub`,
   (t) => {
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0"
       ),
@@ -395,7 +399,7 @@ tap.test(
       },
       "15.01"
     );
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0",
         null
@@ -410,7 +414,7 @@ tap.test(
       },
       "15.02 - null as second arg"
     );
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://github.com/userName/libName/compare/vv1.0.1...vv1.1.0"
       ),
@@ -424,7 +428,7 @@ tap.test(
       },
       "15.03 - error with double v - still OK"
     );
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://github.com/userName/libName/compare/1.0.1...1.1.0"
       ),
@@ -438,7 +442,7 @@ tap.test(
       },
       '15.04 - characters "v" missing completely'
     );
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://github.com/userName/libName/compare/1.0.1...vv1.1.0"
       ),
@@ -466,7 +470,7 @@ tap.test(
 tap.test(
   `16 - ${`\u001b[${35}m${`getSetFooterLink()`}\u001b[${39}m`} - ${`\u001b[${33}m${`sets`}\u001b[${39}m`} correctly Bitbucket`,
   (t) => {
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[1.1.0]: https://bitbucket.org/userName/libName/branches/compare/v1.1.0%0Dv1.0.1#diff",
         {
@@ -480,7 +484,7 @@ tap.test(
       "16.01"
     );
 
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[1.1.0]: https://bitbucket.org/userName/libName/branches/compare/v1.1.0%0Dv1.0.1#diff",
         {
@@ -493,7 +497,7 @@ tap.test(
       "16.02 - user only"
     );
 
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[1.1.0]: https://bitbucket.org/userName/libName/branches/compare/v1.1.0%0Dv1.0.1#diff",
         {
@@ -506,7 +510,7 @@ tap.test(
       "16.03 - package only"
     );
 
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[1.1.0]: https://bitbucket.org/userName/libName/branches/compare/v1.1.0%0Dv1.0.1#diff",
         {
@@ -519,7 +523,7 @@ tap.test(
       "16.04 - versBefore only"
     );
 
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[1.1.0]: https://bitbucket.org/userName/libName/branches/compare/v1.1.0%0Dv1.0.1#diff",
         {
@@ -532,7 +536,7 @@ tap.test(
       "16.05 - versAfter only"
     );
 
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[1.1.0]: https://bitbucket.org/userName/libName/branches/compare/v1.1.0%0Dv1.0.1#diff",
         {
@@ -545,7 +549,7 @@ tap.test(
       "16.06 - version only"
     );
 
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[6.1.0]: https://bitbucket.org/userName/libName/branches/compare/v1.1.0%0Dv1.0.1#diff",
         {
@@ -562,7 +566,7 @@ tap.test(
       "16.07 - all"
     );
 
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[6.1.0]: https://github.com/userName/libName/compare/1.0.1...1.1.0",
         {
@@ -586,7 +590,7 @@ tap.test(
   `17 - ${`\u001b[${35}m${`getSetFooterLink()`}\u001b[${39}m`} - ${`\u001b[${31}m${`gets`}\u001b[${39}m`} correctly Bitbucket, url is with ... - without diff`,
   (t) => {
     // passing {mode: "get"}:
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/v1.1.0...v1.0.1",
         {
@@ -603,7 +607,7 @@ tap.test(
       },
       "17.01 - URL IS WRONG! It should contain %0D not ..."
     );
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/vv1.1.0...vv1.0.1",
         {
@@ -620,7 +624,7 @@ tap.test(
       },
       "17.02 - error with double v - still OK"
     );
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/1.1.0...1.0.1",
         {
@@ -637,7 +641,7 @@ tap.test(
       },
       '17.03 - characters "v" missing completely'
     );
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/1.1.0...vv1.0.1",
         {
@@ -657,7 +661,7 @@ tap.test(
 
     // not passing the {mode: "get"} object also works:
 
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/v1.1.0...v1.0.1"
       ),
@@ -671,7 +675,7 @@ tap.test(
       },
       "17.05 - URL IS WRONG! It should contain %0D not ..."
     );
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/vv1.1.0...vv1.0.1"
       ),
@@ -685,7 +689,7 @@ tap.test(
       },
       "17.06 - error with double v - still OK"
     );
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/1.1.0...1.0.1"
       ),
@@ -699,7 +703,7 @@ tap.test(
       },
       '17.07 - characters "v" missing completely'
     );
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/1.1.0...vv1.0.1"
       ),
@@ -720,7 +724,7 @@ tap.test(
 tap.test(
   `18 - ${`\u001b[${35}m${`getSetFooterLink()`}\u001b[${39}m`} - ${`\u001b[${31}m${`gets`}\u001b[${39}m`} correctly Bitbucket, url is with %0D - without diff`,
   (t) => {
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/v1.1.0%0Dv1.0.1",
         {
@@ -737,7 +741,7 @@ tap.test(
       },
       "18.01 - diff is separated by %0D not ..."
     );
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/vv1.1.0%0Dvv1.0.1",
         {
@@ -754,7 +758,7 @@ tap.test(
       },
       "18.02 - error with double v - still OK"
     );
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/1.1.0%0D1.0.1",
         {
@@ -771,7 +775,7 @@ tap.test(
       },
       '18.03 - characters "v" missing completely'
     );
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/1.1.0%0Dvv1.0.1",
         {
@@ -796,7 +800,7 @@ tap.test(
   `19 - ${`\u001b[${35}m${`getSetFooterLink()`}\u001b[${39}m`} - ${`\u001b[${31}m${`gets`}\u001b[${39}m`} correctly Bitbucket, url is with ... - with diff`,
   (t) => {
     // with explicit {mode: "get"} object passed:
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/v1.1.0...v1.0.1#diff",
         {
@@ -813,7 +817,7 @@ tap.test(
       },
       "19.01 - URL IS WRONG! It should contain %0D not ..."
     );
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/vv1.1.0...vv1.0.1#diff",
         {
@@ -830,7 +834,7 @@ tap.test(
       },
       "19.02 - error with double v - still OK"
     );
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/1.1.0...1.0.1#diff",
         {
@@ -847,7 +851,7 @@ tap.test(
       },
       '19.03 - characters "v" missing completely'
     );
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/1.1.0...vv1.0.1#diff",
         {
@@ -866,7 +870,7 @@ tap.test(
     );
 
     // without explicit {mode: "get"} object passed:
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/v1.1.0...v1.0.1#diff"
       ),
@@ -880,7 +884,7 @@ tap.test(
       },
       "19.05 - URL IS WRONG! It should contain %0D not ..."
     );
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/vv1.1.0...vv1.0.1#diff"
       ),
@@ -894,7 +898,7 @@ tap.test(
       },
       "19.06 - error with double v - still OK"
     );
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/1.1.0...1.0.1#diff"
       ),
@@ -908,7 +912,7 @@ tap.test(
       },
       '19.07 - characters "v" missing completely'
     );
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/1.1.0...vv1.0.1#diff"
       ),
@@ -930,7 +934,7 @@ tap.test(
   `20 - ${`\u001b[${35}m${`getSetFooterLink()`}\u001b[${39}m`} - ${`\u001b[${31}m${`gets`}\u001b[${39}m`} correctly Bitbucket, url is with %0D - with diff`,
   (t) => {
     // with explicit {mode: "get"} object being passed:
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/v1.1.0%0Dv1.0.1#diff",
         {
@@ -947,7 +951,7 @@ tap.test(
       },
       "20.01 - diff is separated by %0D not ..."
     );
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/vv1.1.0%0Dvv1.0.1#diff",
         {
@@ -964,7 +968,7 @@ tap.test(
       },
       "20.02 - error with double v - still OK"
     );
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/1.1.0%0D1.0.1#diff",
         {
@@ -981,7 +985,7 @@ tap.test(
       },
       '20.03 - characters "v" missing completely'
     );
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/1.1.0%0Dvv1.0.1#diff",
         {
@@ -1000,7 +1004,7 @@ tap.test(
     );
 
     // without explicit {mode: "get"} object passed:
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/v1.1.0%0Dv1.0.1#diff"
       ),
@@ -1014,7 +1018,7 @@ tap.test(
       },
       "20.05 - diff is separated by %0D not ..."
     );
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/vv1.1.0%0Dvv1.0.1#diff"
       ),
@@ -1028,7 +1032,7 @@ tap.test(
       },
       "20.06 - error with double v - still OK"
     );
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/1.1.0%0D1.0.1#diff"
       ),
@@ -1042,7 +1046,7 @@ tap.test(
       },
       '20.07 - characters "v" missing completely'
     );
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/1.1.0%0Dvv1.0.1#diff"
       ),
@@ -1063,7 +1067,7 @@ tap.test(
 tap.test(
   `21 - ${`\u001b[${35}m${`getSetFooterLink()`}\u001b[${39}m`} - ${`\u001b[${36}m${`get`}\u001b[${39}m`} errors-out, returning null, when link is erroneous`,
   (t) => {
-    t.same(
+    t.strictSame(
       getSetFooterLink(
         "[999.88.7]: https://bitbucket.org/userName/libName/branches/compare/v1.0.1",
         {
@@ -1092,8 +1096,8 @@ tap.test(
 );
 
 tap.test(`23 - ${`\u001b[${33}m${`getRow()`}\u001b[${39}m`} - BAU`, (t) => {
-  t.same(getRow(["aaa", "bbb", "ccc"], 2), "ccc", "23.01 - found");
-  t.same(getRow(["aaa", "bbb", "ccc"], 99), null, "23.02 - not found");
+  t.strictSame(getRow(["aaa", "bbb", "ccc"], 2), "ccc", "23.01 - found");
+  t.strictSame(getRow(["aaa", "bbb", "ccc"], 99), null, "23.02 - not found");
   t.end();
 });
 
@@ -1103,38 +1107,54 @@ tap.test(`23 - ${`\u001b[${33}m${`getRow()`}\u001b[${39}m`} - BAU`, (t) => {
 tap.test(
   `24 - ${`\u001b[${35}m${`filterDate()`}\u001b[${39}m`} - filters out date string`,
   (t) => {
-    t.same(filterDate(" ]  (March 1st, 2017)"), "March 1st 2017", "24.01");
-    t.same(filterDate("]  (March 1st, 2017)"), "March 1st 2017", "24.02");
-    t.same(filterDate("   (March 1st, 2017)"), "March 1st 2017", "24.03");
-    t.same(filterDate("((March 1st, 2017)"), "March 1st 2017", "24.04");
-    t.same(filterDate("(March 1st, 2017)"), "March 1st 2017", "24.05");
-    t.same(filterDate("March 1st, 2017)"), "March 1st 2017", "24.06");
-    t.same(filterDate(", 1st of March 2017)"), "1st of March 2017", "24.07");
-    t.same(filterDate(" \u2014 March 1st, 2017)"), "March 1st 2017", "24.08");
-    t.same(filterDate("] - 2014-12-13 - [YANKED]"), "2014-12-13", "24.09");
-    t.same(filterDate("] - 2014-12-13 - YANKED"), "2014-12-13", "24.10");
-    t.same(filterDate("] - 2014-12-13, YANKED"), "2014-12-13", "24.11");
-    t.same(filterDate("] - 2014-12-13 -YANKED"), "2014-12-13", "24.12");
-    t.same(filterDate("] - 2014-12-13 YANKED"), "2014-12-13", "24.13");
-    t.same(filterDate(" - 2014-12-13 - [YANKED]"), "2014-12-13", "24.14");
-    t.same(filterDate(" - 2014-12-13 - YANKED"), "2014-12-13", "24.15");
-    t.same(filterDate(" - 2014-12-13, YANKED"), "2014-12-13", "24.16");
-    t.same(filterDate(" - 2014-12-13 -YANKED"), "2014-12-13", "24.17");
-    t.same(filterDate(" - 2014-12-13 YANKED"), "2014-12-13", "24.18");
-    t.same(
+    t.strictSame(
+      filterDate(" ]  (March 1st, 2017)"),
+      "March 1st 2017",
+      "24.01"
+    );
+    t.strictSame(filterDate("]  (March 1st, 2017)"), "March 1st 2017", "24.02");
+    t.strictSame(filterDate("   (March 1st, 2017)"), "March 1st 2017", "24.03");
+    t.strictSame(filterDate("((March 1st, 2017)"), "March 1st 2017", "24.04");
+    t.strictSame(filterDate("(March 1st, 2017)"), "March 1st 2017", "24.05");
+    t.strictSame(filterDate("March 1st, 2017)"), "March 1st 2017", "24.06");
+    t.strictSame(
+      filterDate(", 1st of March 2017)"),
+      "1st of March 2017",
+      "24.07"
+    );
+    t.strictSame(
+      filterDate(" \u2014 March 1st, 2017)"),
+      "March 1st 2017",
+      "24.08"
+    );
+    t.strictSame(
+      filterDate("] - 2014-12-13 - [YANKED]"),
+      "2014-12-13",
+      "24.09"
+    );
+    t.strictSame(filterDate("] - 2014-12-13 - YANKED"), "2014-12-13", "24.10");
+    t.strictSame(filterDate("] - 2014-12-13, YANKED"), "2014-12-13", "24.11");
+    t.strictSame(filterDate("] - 2014-12-13 -YANKED"), "2014-12-13", "24.12");
+    t.strictSame(filterDate("] - 2014-12-13 YANKED"), "2014-12-13", "24.13");
+    t.strictSame(filterDate(" - 2014-12-13 - [YANKED]"), "2014-12-13", "24.14");
+    t.strictSame(filterDate(" - 2014-12-13 - YANKED"), "2014-12-13", "24.15");
+    t.strictSame(filterDate(" - 2014-12-13, YANKED"), "2014-12-13", "24.16");
+    t.strictSame(filterDate(" - 2014-12-13 -YANKED"), "2014-12-13", "24.17");
+    t.strictSame(filterDate(" - 2014-12-13 YANKED"), "2014-12-13", "24.18");
+    t.strictSame(
       filterDate(" -                                    2014-12-13 YANKED"),
       "2014-12-13",
       "24.19 - many spaces"
     );
-    t.same(
+    t.strictSame(
       filterDate(" - 2014-12-13                          YANKED"),
       "2014-12-13",
       "24.20"
     );
-    t.same(filterDate(" (2017-3-17)"), "2017-3-17", "24.21");
-    t.same(filterDate(" - 2017-07-04 🇺🇸"), "2017-07-04", "24.22");
-    t.same(filterDate(" - 2017-07-04 - 🇺🇸"), "2017-07-04", "24.23");
-    t.same(filterDate(" - 2017-07-04 - 🇺🇸 "), "2017-07-04", "24.24");
+    t.strictSame(filterDate(" (2017-3-17)"), "2017-3-17", "24.21");
+    t.strictSame(filterDate(" - 2017-07-04 🇺🇸"), "2017-07-04", "24.22");
+    t.strictSame(filterDate(" - 2017-07-04 - 🇺🇸"), "2017-07-04", "24.23");
+    t.strictSame(filterDate(" - 2017-07-04 - 🇺🇸 "), "2017-07-04", "24.24");
     t.end();
   }
 );

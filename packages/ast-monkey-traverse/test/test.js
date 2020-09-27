@@ -36,7 +36,7 @@ tap.test(
         e: "f",
       },
     ];
-    t.same(actual01, intended01, "01.01");
+    t.strictSame(actual01, intended01, "01.01");
 
     const actual02 = traverse(input, (key1, val1) => {
       const current = val1 !== undefined ? val1 : key1;
@@ -53,7 +53,7 @@ tap.test(
         e: "f",
       },
     ];
-    t.same(actual02, intended02, "01.02");
+    t.strictSame(actual02, intended02, "01.02");
 
     const actual03 = traverse(input, (key1, val1) => {
       const current = val1 !== undefined ? val1 : key1;
@@ -70,7 +70,7 @@ tap.test(
         c: "d",
       },
     ];
-    t.same(actual03, intended03, "01.03");
+    t.strictSame(actual03, intended03, "01.03");
     t.end();
   }
 );
@@ -105,7 +105,7 @@ tap.test(
         c: "d",
       },
     ];
-    t.same(actual01, intended01, "02");
+    t.strictSame(actual01, intended01, "02");
     t.end();
   }
 );
@@ -146,7 +146,7 @@ tap.test(
         c: "d",
       },
     ];
-    t.same(actual01, intended01, "03");
+    t.strictSame(actual01, intended01, "03");
     t.end();
   }
 );
@@ -165,7 +165,7 @@ tap.test(
       return current;
     });
     const intended01 = ["a", "b"];
-    t.same(actual01, intended01, "04");
+    t.strictSame(actual01, intended01, "04");
     t.end();
   }
 );
@@ -191,7 +191,7 @@ tap.test(
       c: "c",
     };
 
-    t.same(actual, intended, "05");
+    t.strictSame(actual, intended, "05");
     t.end();
   }
 );
@@ -204,7 +204,11 @@ tap.test(
     };
     const actual = traverse(input, (key1, val1, innerObj) => {
       const current = val1 !== undefined ? val1 : key1;
-      t.same(current, objectPath.get(input, innerObj.path), innerObj.path);
+      t.strictSame(
+        current,
+        objectPath.get(input, innerObj.path),
+        innerObj.path
+      );
       return current;
     });
     t.pass(actual);
@@ -240,7 +244,11 @@ tap.test(
     const gathered = [];
     const actual = traverse(input, (key1, val1, innerObj) => {
       const current = val1 !== undefined ? val1 : key1;
-      t.same(current, objectPath.get(input, innerObj.path), innerObj.path);
+      t.strictSame(
+        current,
+        objectPath.get(input, innerObj.path),
+        innerObj.path
+      );
       gathered.push(current);
       return current;
     });
@@ -255,7 +263,11 @@ tap.test(
     const input = ["1", "2", { a: "3" }];
     const actual = traverse(input, (key1, val1, innerObj) => {
       const current = val1 !== undefined ? val1 : key1;
-      t.same(current, objectPath.get(input, innerObj.path), innerObj.path);
+      t.strictSame(
+        current,
+        objectPath.get(input, innerObj.path),
+        innerObj.path
+      );
       return current;
     });
     t.pass(actual);
@@ -276,7 +288,7 @@ tap.test(
       gathered.push(innerObj.path);
       return current;
     });
-    t.same(gathered, ["a", "b", "b.c"], "09");
+    t.strictSame(gathered, ["a", "b", "b.c"], "09");
     t.end();
   }
 );
@@ -295,7 +307,7 @@ tap.test(
       }
       return current;
     });
-    t.same(gathered, ["a", "b"], "10");
+    t.strictSame(gathered, ["a", "b"], "10");
     t.end();
   }
 );
@@ -310,7 +322,7 @@ tap.test(
       gathered.push(innerObj.path);
       return current;
     });
-    t.same(gathered, ["0", "1", "1.0", "1.1"], "11");
+    t.strictSame(gathered, ["0", "1", "1.0", "1.1"], "11");
     t.end();
   }
 );
@@ -329,7 +341,7 @@ tap.test(
       }
       return current;
     });
-    t.same(gathered, ["0", "1"], "12");
+    t.strictSame(gathered, ["0", "1"], "12");
     t.end();
   }
 );
@@ -364,7 +376,7 @@ tap.test(
     //     4
     //   )}`
     // );
-    t.same(
+    t.strictSame(
       gathered,
       [
         // ===================
@@ -372,7 +384,7 @@ tap.test(
           {
             a: "b",
           },
-          null,
+          undefined,
           {
             depth: 0,
             path: "0",
@@ -408,7 +420,7 @@ tap.test(
           {
             c: "d",
           },
-          null,
+          undefined,
           {
             depth: 0,
             path: "1",
@@ -444,7 +456,7 @@ tap.test(
           {
             e: "f",
           },
-          null,
+          undefined,
           {
             depth: 0,
             path: "2",
@@ -500,7 +512,7 @@ tap.todo(
     //     4
     //   )}`
     // );
-    t.same(
+    t.strictSame(
       gathered,
       [
         [
@@ -560,7 +572,7 @@ tap.test(
     //     4
     //   )}`
     // );
-    t.same(
+    t.strictSame(
       gathered,
       [
         [
@@ -634,7 +646,7 @@ tap.test(
     //     4
     //   )}`
     // );
-    t.same(
+    t.strictSame(
       gathered,
       [
         [
@@ -652,7 +664,7 @@ tap.test(
         ],
         [
           "1",
-          null,
+          undefined,
           {
             depth: 1,
             path: "a.0",
@@ -663,7 +675,7 @@ tap.test(
         ],
         [
           "2",
-          null,
+          undefined,
           {
             depth: 1,
             path: "a.1",
@@ -674,7 +686,7 @@ tap.test(
         ],
         [
           "3",
-          null,
+          undefined,
           {
             depth: 1,
             path: "a.2",
@@ -728,7 +740,7 @@ tap.test(
     //     4
     //   )}`
     // );
-    t.same(
+    t.strictSame(
       gathered,
       [
         // ===================
@@ -968,7 +980,7 @@ tap.test(
         // ===================
         [
           "1",
-          null,
+          undefined,
           {
             depth: 4,
             path: "a.f.g.h.0",
@@ -980,7 +992,7 @@ tap.test(
         // ===================
         [
           "2",
-          null,
+          undefined,
           {
             depth: 4,
             path: "a.f.g.h.1",
@@ -992,7 +1004,7 @@ tap.test(
         // ===================
         [
           "3",
-          null,
+          undefined,
           {
             depth: 4,
             path: "a.f.g.h.2",
@@ -1032,7 +1044,7 @@ tap.test(
         // ===================
         [
           "4",
-          null,
+          undefined,
           {
             depth: 4,
             path: "a.f.g.i.0",
@@ -1050,7 +1062,7 @@ tap.test(
         // ===================
         [
           "5",
-          null,
+          undefined,
           {
             depth: 4,
             path: "a.f.g.i.1",
@@ -1070,7 +1082,7 @@ tap.test(
           {
             j: "k",
           },
-          null,
+          undefined,
           {
             depth: 4,
             path: "a.f.g.i.2",
@@ -1124,7 +1136,7 @@ tap.test(
         // ===================
         [
           "7",
-          null,
+          undefined,
           {
             depth: 4,
             path: "a.f.g.l.0",
@@ -1136,7 +1148,7 @@ tap.test(
         // ===================
         [
           "8",
-          null,
+          undefined,
           {
             depth: 4,
             path: "a.f.g.l.1",
@@ -1148,7 +1160,7 @@ tap.test(
         // ===================
         [
           "9",
-          null,
+          undefined,
           {
             depth: 4,
             path: "a.f.g.l.2",
@@ -1182,7 +1194,7 @@ tap.test(
     //     4
     //   )}`
     // );
-    t.same(
+    t.strictSame(
       gathered,
       [
         [

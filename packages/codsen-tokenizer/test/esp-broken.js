@@ -18,7 +18,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -81,7 +81,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -168,7 +168,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -249,7 +249,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -293,7 +293,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -356,7 +356,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -487,7 +487,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -600,7 +600,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -663,7 +663,7 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.same(gathered, [], "09");
+    t.strictSame(gathered, [], "09");
     t.end();
   }
 );
@@ -677,7 +677,7 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.same(gathered, [], "10");
+    t.strictSame(gathered, [], "10");
     t.end();
   }
 );
@@ -691,7 +691,7 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.same(gathered, [], "11");
+    t.strictSame(gathered, [], "11");
     t.end();
   }
 );
@@ -705,7 +705,7 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.same(gathered, [], "12");
+    t.strictSame(gathered, [], "12");
     t.end();
   }
 );
@@ -719,7 +719,7 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.same(gathered, [], "13");
+    t.strictSame(gathered, [], "13");
     t.end();
   }
 );

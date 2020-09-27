@@ -22,15 +22,8 @@ tap.test(`"UMD build works fine"`, (t) => {
     },
     2 // <--- lookahead
   );
-  // console.log(
-  //   `- 01.01 ${`\u001b[${33}m${`gathered`}\u001b[${39}m`} = ${JSON.stringify(
-  //     gathered,
-  //     null,
-  //     4
-  //   )}`
-  // );
 
-  t.same(
+  t.strictSame(
     gathered,
     [
       // ===================
@@ -38,7 +31,7 @@ tap.test(`"UMD build works fine"`, (t) => {
         {
           a: "b",
         },
-        null,
+        undefined,
         {
           depth: 0,
           path: "0",
@@ -71,7 +64,7 @@ tap.test(`"UMD build works fine"`, (t) => {
               {
                 c: "d",
               },
-              null,
+              undefined,
               {
                 depth: 0,
                 path: "1",
@@ -108,7 +101,7 @@ tap.test(`"UMD build works fine"`, (t) => {
               {
                 c: "d",
               },
-              null,
+              undefined,
               {
                 depth: 0,
                 path: "1",
@@ -146,7 +139,7 @@ tap.test(`"UMD build works fine"`, (t) => {
         {
           c: "d",
         },
-        null,
+        undefined,
         {
           depth: 0,
           path: "1",
@@ -179,7 +172,7 @@ tap.test(`"UMD build works fine"`, (t) => {
               {
                 e: "f",
               },
-              null,
+              undefined,
               {
                 depth: 0,
                 path: "2",
@@ -216,7 +209,7 @@ tap.test(`"UMD build works fine"`, (t) => {
               {
                 e: "f",
               },
-              null,
+              undefined,
               {
                 depth: 0,
                 path: "2",
@@ -254,7 +247,7 @@ tap.test(`"UMD build works fine"`, (t) => {
         {
           e: "f",
         },
-        null,
+        undefined,
         {
           depth: 0,
           path: "2",

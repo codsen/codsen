@@ -8,7 +8,7 @@ tap.test(
   "01 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are Booleans",
   (t) => {
     // control:
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: {
@@ -41,7 +41,7 @@ tap.test(
       "01.01 - control, default behaviour (logical OR)"
     );
     // opts.mergeBoolsUsingOrNotAnd
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: {
@@ -77,7 +77,7 @@ tap.test(
       "01.02 - opts.mergeBoolsUsingOrNotAnd (logical AND)"
     );
     // cb override Bool merging to be hard merges
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: {
@@ -121,7 +121,7 @@ tap.test(
       "01.03 - cb overriding all Boolean merges"
     );
     // cb hard merge for Bools will override even opts.ignoreEverything!
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: {
@@ -166,7 +166,7 @@ tap.test(
       "01.04 - cb partially overriding opts.ignoreEverything"
     );
     // cb hard merge for Bools will override even opts.ignoreEverything!
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: {
@@ -219,7 +219,7 @@ tap.test(
   "02 - \u001b[33mOPTS\u001b[39m - opts.cb - setting ignoreAll on input Booleans",
   (t) => {
     // control:
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: {
@@ -252,7 +252,7 @@ tap.test(
       "02.01"
     );
     // opts.hardMergeEverything, NO CB:
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: {
@@ -289,7 +289,7 @@ tap.test(
       "02.02"
     );
     // opts.hardMergeEverything, CB:
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: {
@@ -344,7 +344,7 @@ tap.test(
   "03 - \u001b[33mOPTS\u001b[39m - opts.cb - using callback to wrap string with other strings",
   (t) => {
     // control:
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: {
@@ -377,7 +377,7 @@ tap.test(
       "03.01 - control, default behaviour (logical OR)"
     );
     // string wrapping:
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: {
@@ -454,7 +454,7 @@ tap.test(
       {
         cb: (inputArg1, inputArg2, resultAboutToBeReturned, infoObj) => {
           if (inputArg1 === "c1") {
-            t.same(
+            t.strictSame(
               infoObj,
               {
                 key: "b",
@@ -466,7 +466,7 @@ tap.test(
           }
 
           if (equal(inputArg1, null)) {
-            t.same(
+            t.strictSame(
               infoObj,
               {
                 key: "d",
@@ -478,7 +478,7 @@ tap.test(
           }
 
           if (equal(inputArg1, ["x"])) {
-            t.same(
+            t.strictSame(
               infoObj,
               {
                 key: "x",
@@ -502,7 +502,7 @@ tap.test(
 tap.test(
   "05 - \u001b[33mOPTS\u001b[39m - opts.cb - using cb's 4th arg to concatenate certain key values during merge",
   (t) => {
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           x: {
@@ -540,7 +540,7 @@ tap.test(
       },
       "05.01 - default behaviour, control"
     );
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           x: {
@@ -605,7 +605,7 @@ tap.test(
   "06 - \u001b[33mOPTS\u001b[39m - opts.hardMergeEverything - revisiting deep-level arrays",
   (t) => {
     // control:
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: {
@@ -663,7 +663,7 @@ tap.test(
     );
 
     // now set the opts.hardMergeEverything
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: {

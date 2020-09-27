@@ -9,12 +9,12 @@ const f = () => "zzz";
 // -----------------------------------------------------------------------------
 
 tap.test("01 - null vs null", (t) => {
-  t.same(compare(null, null), true, "01");
+  t.strictSame(compare(null, null), true, "01");
   t.end();
 });
 
 tap.test("02 - real-life #1", (t) => {
-  t.same(
+  t.strictSame(
     compare(
       {
         type: "rule",
@@ -28,7 +28,7 @@ tap.test("02 - real-life #1", (t) => {
     false,
     "02.01"
   );
-  t.same(
+  t.strictSame(
     compare(
       {
         type: "rule",
@@ -43,7 +43,7 @@ tap.test("02 - real-life #1", (t) => {
     true,
     "02.02"
   );
-  t.same(
+  t.strictSame(
     compare(
       {
         type: "rule",
@@ -62,7 +62,7 @@ tap.test("02 - real-life #1", (t) => {
 });
 
 tap.test("03 - real-life #2", (t) => {
-  t.same(
+  t.strictSame(
     compare(
       {
         type: "rule",
@@ -76,7 +76,7 @@ tap.test("03 - real-life #2", (t) => {
     true,
     "03.01"
   );
-  t.same(
+  t.strictSame(
     compare(
       {
         type: "rule",
@@ -104,7 +104,7 @@ tap.test("04 - function as input", (t) => {
 });
 
 tap.test("05 - real-life #3", (t) => {
-  t.same(
+  t.strictSame(
     compare(
       {
         type: "stylesheet",
@@ -235,7 +235,7 @@ tap.test("05 - real-life #3", (t) => {
     false,
     "05.01"
   );
-  t.same(
+  t.strictSame(
     compare(
       {
         type: "stylesheet",
@@ -367,7 +367,7 @@ tap.test("05 - real-life #3", (t) => {
     false,
     "05.02"
   );
-  t.same(
+  t.strictSame(
     compare(
       {
         type: "stylesheet",
@@ -503,7 +503,7 @@ tap.test("05 - real-life #3", (t) => {
 });
 
 tap.test("06 - real-life #3 reduced case", (t) => {
-  t.same(
+  t.strictSame(
     compare(
       {
         a: "a",
@@ -527,7 +527,7 @@ tap.test("06 - real-life #3 reduced case", (t) => {
     false,
     "06.01"
   );
-  t.same(
+  t.strictSame(
     compare(
       {
         a: "a",
@@ -551,7 +551,7 @@ tap.test("06 - real-life #3 reduced case", (t) => {
     false,
     "06.02"
   );
-  t.same(
+  t.strictSame(
     compare(
       {
         a: "a",
@@ -576,7 +576,7 @@ tap.test("06 - real-life #3 reduced case", (t) => {
     false,
     "06.03"
   );
-  t.same(
+  t.strictSame(
     compare(
       {
         a: "a",
@@ -605,7 +605,7 @@ tap.test("06 - real-life #3 reduced case", (t) => {
 });
 
 tap.test("07 - input args of mismatching type - easy win", (t) => {
-  t.same(
+  t.strictSame(
     compare(
       {
         a: "a",
@@ -615,14 +615,14 @@ tap.test("07 - input args of mismatching type - easy win", (t) => {
     false,
     "07.01"
   );
-  t.same(
+  t.strictSame(
     compare("a", {
       a: "a",
     }),
     false,
     "07.02"
   );
-  t.same(
+  t.strictSame(
     compare(
       {
         a: "a",
@@ -632,14 +632,14 @@ tap.test("07 - input args of mismatching type - easy win", (t) => {
     false,
     "07.03"
   );
-  t.same(
+  t.strictSame(
     compare(["a"], {
       a: "a",
     }),
     false,
     "07.04"
   );
-  t.same(
+  t.strictSame(
     compare(
       {
         a: "a",
@@ -650,7 +650,7 @@ tap.test("07 - input args of mismatching type - easy win", (t) => {
     false,
     "07.05"
   );
-  t.same(
+  t.strictSame(
     compare(
       "a",
       {
@@ -661,7 +661,7 @@ tap.test("07 - input args of mismatching type - easy win", (t) => {
     false,
     "07.06"
   );
-  t.same(
+  t.strictSame(
     compare(
       {
         a: "a",
@@ -672,7 +672,7 @@ tap.test("07 - input args of mismatching type - easy win", (t) => {
     false,
     "07.07"
   );
-  t.same(
+  t.strictSame(
     compare(
       ["a"],
       {

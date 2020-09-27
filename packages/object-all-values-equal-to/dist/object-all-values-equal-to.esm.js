@@ -10,9 +10,8 @@
 import isObj from 'lodash.isplainobject';
 import isEq from 'lodash.isequal';
 
-const isArr = Array.isArray;
 function allValuesEqualTo(input, value, opts) {
-  if (isArr(input)) {
+  if (Array.isArray(input)) {
     if (input.length === 0) {
       return true;
     }
@@ -55,11 +54,7 @@ function allValuesEqualToWrapper(inputOriginal, valueOriginal, originalOpts) {
       "object-all-values-equal-to: [THROW_ID_02] The second input is undefined! Please provide the second argument."
     );
   }
-  if (
-    originalOpts !== undefined &&
-    originalOpts !== null &&
-    !isObj(originalOpts)
-  ) {
+  if (originalOpts && !isObj(originalOpts)) {
     throw new Error(
       `object-all-values-equal-to: [THROW_ID_03] The third argument, options object, was given not as a plain object but as a ${typeof originalOpts}, equal to:\n${JSON.stringify(
         originalOpts,

@@ -36,7 +36,7 @@ tap.test(
           //     `${`\u001b[${33}m${`entityWithSpaceInserted`}\u001b[${39}m`} = "${entityWithSpaceInserted}"`
           //   );
           // }
-          t.same(
+          t.strictSame(
             fix(entityWithSpaceInserted, {
               cb: (obj) => obj,
             }),
@@ -72,7 +72,7 @@ tap.test(
         rangeValDecoded: "\xA0",
       },
     ];
-    t.same(fix(inp5, { cb: (obj) => obj }), outp5, "02");
+    t.strictSame(fix(inp5, { cb: (obj) => obj }), outp5, "02");
     t.end();
   }
 );
@@ -91,7 +91,7 @@ tap.test(
         rangeValDecoded: "\xA0",
       },
     ];
-    t.same(fix(inp5, { cb: (obj) => obj }), outp5, "03");
+    t.strictSame(fix(inp5, { cb: (obj) => obj }), outp5, "03");
     t.end();
   }
 );
@@ -110,7 +110,7 @@ tap.test(
         rangeValDecoded: "\xA0",
       },
     ];
-    t.same(fix(inp5, { cb: (obj) => obj }), outp5, "04");
+    t.strictSame(fix(inp5, { cb: (obj) => obj }), outp5, "04");
     t.end();
   }
 );

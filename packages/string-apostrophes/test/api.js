@@ -31,7 +31,7 @@ tap.test(
 tap.test(
   `02 - ${`\u001b[${34}m${`API`}\u001b[${39}m`} - ESM build works for convertAll`,
   (t) => {
-    t.same(
+    t.strictSame(
       c12(`'What!' he said`, {
         convertApostrophes: 1,
         convertEntities: 0,
@@ -59,7 +59,7 @@ tap.test(
 tap.test(
   `04 - ${`\u001b[${34}m${`API`}\u001b[${39}m`} - UMD build works for convertAll`,
   (t) => {
-    t.same(
+    t.strictSame(
       c22(`'What!' he said`, {
         convertApostrophes: 1,
         convertEntities: 0,
@@ -87,7 +87,7 @@ tap.test(
 tap.test(
   `06 - ${`\u001b[${34}m${`API`}\u001b[${39}m`} - CJS build works for convertAll`,
   (t) => {
-    t.same(
+    t.strictSame(
       c32(`'What!' he said`, {
         convertApostrophes: 1,
         convertEntities: 0,

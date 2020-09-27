@@ -16,7 +16,7 @@ tap.test(
         },
       });
       t.equal(applyFixes(tag, messages), tag);
-      t.same(messages, []);
+      t.strictSame(messages, []);
     });
     t.end();
   }
@@ -33,7 +33,7 @@ tap.test(
         },
       });
       t.equal(applyFixes(tag, messages), tag);
-      t.same(messages, []);
+      t.strictSame(messages, []);
     });
     t.end();
   }
@@ -50,7 +50,7 @@ tap.test(
         },
       });
       t.equal(applyFixes(tag, messages), tag);
-      t.same(messages, []);
+      t.strictSame(messages, []);
     });
     t.end();
   }
@@ -67,7 +67,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), str, "04.01");
-    t.same(messages, [], "04.02");
+    t.strictSame(messages, [], "04.02");
     t.end();
   }
 );
@@ -83,7 +83,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), str, "05.01");
-    t.same(messages, [], "05.02");
+    t.strictSame(messages, [], "05.02");
     t.end();
   }
 );
@@ -266,7 +266,7 @@ tap.test(`11 - ${`\u001b[${35}m${`applet`}\u001b[${39}m`} - healthy`, (t) => {
     },
   });
   t.equal(applyFixes(str, messages), str, "11.01");
-  t.same(messages, [], "11.02");
+  t.strictSame(messages, [], "11.02");
   t.end();
 });
 
@@ -451,7 +451,7 @@ tap.test(`16 - ${`\u001b[${35}m${`object`}\u001b[${39}m`} - healthy`, (t) => {
     },
   });
   t.equal(applyFixes(str, messages), str, "16.01");
-  t.same(messages, [], "16.02");
+  t.strictSame(messages, [], "16.02");
   t.end();
 });
 

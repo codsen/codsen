@@ -6,16 +6,16 @@ import a from "../dist/arrayiffy-if-string.esm";
 // -----------------------------------------------------------------------------
 
 tap.test("01 - string input", (t) => {
-  t.same(a("aaa"), ["aaa"], "01.01");
-  t.same(a(""), [], "01.02");
+  t.strictSame(a("aaa"), ["aaa"], "01.01");
+  t.strictSame(a(""), [], "01.02");
   t.end();
 });
 
 tap.test("02 - non-string input", (t) => {
-  t.same(a(1), 1, "02.01");
-  t.same(a(null), null, "02.02");
-  t.same(a(undefined), undefined, "02.03");
-  t.same(a(), undefined, "02.04");
-  t.same(a(true), true, "02.05");
+  t.strictSame(a(1), 1, "02.01");
+  t.strictSame(a(null), null, "02.02");
+  t.strictSame(a(undefined), undefined, "02.03");
+  t.strictSame(a(), undefined, "02.04");
+  t.strictSame(a(true), true, "02.05");
   t.end();
 });

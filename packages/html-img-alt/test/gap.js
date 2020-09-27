@@ -7,7 +7,7 @@ import alt from "../dist/html-img-alt.esm";
 tap.test(
   "01 - alt with two double quotes, many spaces between slash & bracket, XHTML",
   (t) => {
-    t.same(
+    t.strictSame(
       alt('zzz<img     alt=""    /    >zzz'),
       'zzz<img alt="" />zzz',
       "01"
@@ -19,7 +19,7 @@ tap.test(
 tap.test(
   "02 - alt with two double quotes, many spaces between slash & bracket, XHTML",
   (t) => {
-    t.same(
+    t.strictSame(
       alt('zzz<img     alt    =""    /    >zzz'),
       'zzz<img alt="" />zzz',
       "02"
@@ -31,7 +31,7 @@ tap.test(
 tap.test(
   "03 - alt with two double quotes, many spaces between slash & bracket, XHTML",
   (t) => {
-    t.same(
+    t.strictSame(
       alt('zzz<img     alt    =    ""    /    >zzz'),
       'zzz<img alt="" />zzz',
       "03"
@@ -43,7 +43,7 @@ tap.test(
 tap.test(
   "04 - alt with two double quotes, many spaces between slash & bracket, XHTML",
   (t) => {
-    t.same(
+    t.strictSame(
       alt('zzz<img     alt    =    ""/    >zzz'),
       'zzz<img alt="" />zzz',
       "04"
@@ -55,7 +55,7 @@ tap.test(
 tap.test(
   "05 - alt with two double quotes, many spaces between slash & bracket, XHTML",
   (t) => {
-    t.same(
+    t.strictSame(
       alt('zzz<img     alt="   "    /    >zzz'),
       'zzz<img alt="" />zzz',
       "05"
@@ -67,7 +67,7 @@ tap.test(
 tap.test(
   "06 - alt with two double quotes, many spaces between slash & bracket, XHTML",
   (t) => {
-    t.same(
+    t.strictSame(
       alt('zzz<img     alt    ="   "    /    >zzz'),
       'zzz<img alt="" />zzz',
       "06"
@@ -79,7 +79,7 @@ tap.test(
 tap.test(
   "07 - alt with two double quotes, many spaces between slash & bracket, XHTML",
   (t) => {
-    t.same(
+    t.strictSame(
       alt('zzz<img     alt    =    "   "    /    >zzz'),
       'zzz<img alt="" />zzz',
       "07"
@@ -91,7 +91,7 @@ tap.test(
 tap.test(
   "08 - alt with two double quotes, many spaces between slash & bracket, XHTML",
   (t) => {
-    t.same(
+    t.strictSame(
       alt('zzz<img     alt    =    "   "/    >zzz'),
       'zzz<img alt="" />zzz',
       "08"
@@ -103,7 +103,7 @@ tap.test(
 tap.test(
   "09 - alt with two double quotes, many spaces between slash & bracket, XHTML",
   (t) => {
-    t.same(
+    t.strictSame(
       alt('zzz<img     alt    =    "   "/    >zzz'),
       'zzz<img alt="" />zzz',
       "09"

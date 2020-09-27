@@ -4,7 +4,7 @@ import fix from "../dist/string-fix-broken-named-entities.esm";
 tap.test(
   `01 - ${`\u001b[${36}m${`rogue character`}\u001b[${39}m`} - in front of semicolon - no decode`,
   (t) => {
-    t.same(fix("&pound1;", { decode: false }), [[0, 8, "&pound;"]], "01");
+    t.strictSame(fix("&pound1;", { decode: false }), [[0, 8, "&pound;"]], "01");
     t.end();
   }
 );
@@ -12,7 +12,7 @@ tap.test(
 tap.test(
   `02 - ${`\u001b[${36}m${`rogue character`}\u001b[${39}m`} - in front of semicolon - decode`,
   (t) => {
-    t.same(fix("&pound1;", { decode: true }), [[0, 8, "\xA3"]], "02");
+    t.strictSame(fix("&pound1;", { decode: true }), [[0, 8, "\xA3"]], "02");
     t.end();
   }
 );
@@ -20,7 +20,7 @@ tap.test(
 tap.test(
   `03 - ${`\u001b[${36}m${`rogue character`}\u001b[${39}m`} - no semi - no decode`,
   (t) => {
-    t.same(fix("&puvaaa", { decode: false }), [], "03");
+    t.strictSame(fix("&puvaaa", { decode: false }), [], "03");
     t.end();
   }
 );
@@ -28,7 +28,7 @@ tap.test(
 tap.test(
   `04 - ${`\u001b[${36}m${`rogue character`}\u001b[${39}m`} - with semi - no decode`,
   (t) => {
-    t.same(fix("&puv;aaa", { decode: false }), [[0, 5, "&piv;"]], "04");
+    t.strictSame(fix("&puv;aaa", { decode: false }), [[0, 5, "&piv;"]], "04");
     t.end();
   }
 );
@@ -38,7 +38,11 @@ tap.test(
 tap.test(
   `05 - ${`\u001b[${36}m${`rogue character`}\u001b[${39}m`} - with semi - no decode - an extra rogue char`,
   (t) => {
-    t.same(fix("&nbsdp;aaa", { decode: false }), [[0, 7, "&nbsp;"]], "05");
+    t.strictSame(
+      fix("&nbsdp;aaa", { decode: false }),
+      [[0, 7, "&nbsp;"]],
+      "05"
+    );
     t.end();
   }
 );
@@ -46,7 +50,7 @@ tap.test(
 tap.test(
   `06 - ${`\u001b[${36}m${`rogue character`}\u001b[${39}m`} - with semi - no decode - an extra rogue char`,
   (t) => {
-    t.same(
+    t.strictSame(
       fix("&bigtrianglesup;aaa", { decode: false }),
       [[0, 16, "&bigtriangleup;"]],
       "06"
@@ -60,7 +64,7 @@ tap.test(
 tap.test(
   `07 - ${`\u001b[${36}m${`rogue character`}\u001b[${39}m`} - with semi - no decode - a replaced char`,
   (t) => {
-    t.same(fix("&npsp;aaa", { decode: false }), [[0, 6, "&nbsp;"]], "07");
+    t.strictSame(fix("&npsp;aaa", { decode: false }), [[0, 6, "&nbsp;"]], "07");
     t.end();
   }
 );
@@ -68,7 +72,7 @@ tap.test(
 tap.test(
   `08 - ${`\u001b[${36}m${`rogue character`}\u001b[${39}m`} - with semi - no decode - a replaced char`,
   (t) => {
-    t.same(
+    t.strictSame(
       fix("&bigtrangleup;aaa", { decode: false }),
       [[0, 14, "&bigtriangleup;"]],
       "08"

@@ -14,7 +14,7 @@ tap.test(
       },
     });
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -81,7 +81,7 @@ tap.test(
       },
     });
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -154,7 +154,7 @@ tap.test(
       }
     );
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         {
@@ -256,7 +256,7 @@ tap.test(
       },
     });
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         {

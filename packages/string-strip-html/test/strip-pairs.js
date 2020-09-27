@@ -66,7 +66,7 @@ tap.test("06 - no mutations!", (t) => {
   t.match(stripHtml("a<b>c</b>d", originalOpts), { result: "a d" }, "06.01");
 
   // now the actual check:
-  t.same(
+  t.strictSame(
     originalOpts,
     {
       stripTogetherWithTheirContents: "b",

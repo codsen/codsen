@@ -5,12 +5,12 @@ import alt from "../dist/html-img-alt.esm";
 // -----------------------------------------------------------------------------
 
 tap.test("01 - missing alt", (t) => {
-  t.same(alt("zzz<img>zzz"), 'zzz<img alt="" >zzz', "01 - html - tight");
+  t.strictSame(alt("zzz<img>zzz"), 'zzz<img alt="" >zzz', "01 - html - tight");
   t.end();
 });
 
 tap.test("02 - missing alt", (t) => {
-  t.same(
+  t.strictSame(
     alt("zzz<img >zzz"),
     'zzz<img alt="" >zzz',
     "02 - html - trailing space"
@@ -19,7 +19,7 @@ tap.test("02 - missing alt", (t) => {
 });
 
 tap.test("03 - missing alt", (t) => {
-  t.same(
+  t.strictSame(
     alt("zzz<img      >zzz"),
     'zzz<img alt="" >zzz',
     "03 - html - excessive trailing space"
@@ -28,12 +28,16 @@ tap.test("03 - missing alt", (t) => {
 });
 
 tap.test("04 - missing alt", (t) => {
-  t.same(alt("zzz<img/>zzz"), 'zzz<img alt="" />zzz', "04 - xhtml - tight");
+  t.strictSame(
+    alt("zzz<img/>zzz"),
+    'zzz<img alt="" />zzz',
+    "04 - xhtml - tight"
+  );
   t.end();
 });
 
 tap.test("05 - missing alt", (t) => {
-  t.same(
+  t.strictSame(
     alt("zzz<img />zzz"),
     'zzz<img alt="" />zzz',
     "05 - xhtml - one space before slash"
@@ -42,7 +46,7 @@ tap.test("05 - missing alt", (t) => {
 });
 
 tap.test("06 - missing alt", (t) => {
-  t.same(
+  t.strictSame(
     alt("zzz<img           />zzz"),
     'zzz<img alt="" />zzz',
     "06 - xhtml - many spaces before slash"
@@ -51,7 +55,7 @@ tap.test("06 - missing alt", (t) => {
 });
 
 tap.test("07 - missing alt", (t) => {
-  t.same(
+  t.strictSame(
     alt("zzz<img           /    >zzz"),
     'zzz<img alt="" />zzz',
     "07 - xhtml - many spaces on both sides"

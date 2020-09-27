@@ -7,7 +7,7 @@ import { processThis, tiny } from "./util";
 tap.test(
   `01 - ${`\u001b[${36}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}\u001b[${39}m`} - first TD after TR`,
   (t) => {
-    t.same(
+    t.strictSame(
       processThis(`<table>
   <tr>
     zzz
@@ -37,7 +37,7 @@ tap.test(
 tap.test(
   `02 - ${`\u001b[${36}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}\u001b[${39}m`} - colspan=2`,
   (t) => {
-    t.same(
+    t.strictSame(
       processThis(`<table>
   <tr>
     x
@@ -73,7 +73,7 @@ tap.test(
 tap.test(
   `03 - ${`\u001b[${36}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}\u001b[${39}m`} - align="center", one TD`,
   (t) => {
-    t.same(
+    t.strictSame(
       processThis(`<table>
   <tr>
     x
@@ -103,7 +103,7 @@ tap.test(
 tap.test(
   `04 - ${`\u001b[${36}m${`type 2`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}\u001b[${39}m`} - align="center" on one of two TD's`,
   (t) => {
-    t.same(
+    t.strictSame(
       processThis(`<table>
   <tr>
     x

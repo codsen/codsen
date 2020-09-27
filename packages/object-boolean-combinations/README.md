@@ -1,6 +1,6 @@
 # object-boolean-combinations
 
-> Generate an array full of object copies, each containing a unique Boolean value combination. Includes overrides.
+> Consumes a defaults object with booleans, generates all possible variations of it
 
 <div class="package-badges">
   <a href="https://www.npmjs.com/package/object-boolean-combinations" rel="nofollow noreferrer noopener">
@@ -25,6 +25,32 @@
 
 ```bash
 npm i object-boolean-combinations
+```
+
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import combinations from "object-boolean-combinations";
+
+assert.deepEqual(
+  combinations({
+    a: true, // values don't matter as long as they're boolean
+    b: false,
+    c: true,
+  }),
+  [
+    { a: 0, b: 0, c: 0 },
+    { a: 1, b: 0, c: 0 },
+    { a: 0, b: 1, c: 0 },
+    { a: 1, b: 1, c: 0 },
+    { a: 0, b: 0, c: 1 },
+    { a: 1, b: 0, c: 1 },
+    { a: 0, b: 1, c: 1 },
+    { a: 1, b: 1, c: 1 },
+  ]
+);
+// you get 2^n plain objects in an array
 ```
 
 ## Documentation

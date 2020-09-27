@@ -17,7 +17,7 @@ tap.test(
     </td><!--zzz-->
   </tr><!--zzz-->
   </table><!--zzz-->`;
-    t.same(processThis(str), tiny(str), "01");
+    t.strictSame(processThis(str), tiny(str), "01");
     t.end();
   }
 );
@@ -35,7 +35,7 @@ tap.test(
     </td><!--zzz\nyyy-->
   </tr><!--zzz\nyyy-->
   </table><!--zzz\nyyy-->`;
-    t.same(processThis(str), tiny(str), "02");
+    t.strictSame(processThis(str), tiny(str), "02");
     t.end();
   }
 );
@@ -53,7 +53,7 @@ tap.test(
   </td><!--zzz<td></td>yyy-->
 </tr><!--zzz<tr></tr><tr></tr><table>zzz</table>yyy-->
 </table><!--zzz\nyyy-->`;
-    t.same(processThis(str), tiny(str), "03");
+    t.strictSame(processThis(str), tiny(str), "03");
     t.end();
   }
 );

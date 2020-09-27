@@ -26,7 +26,7 @@ for (let i = 0, len = filesInSamples.length; i < len; i++) {
 tap.test(
   `01 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - non-string`,
   (t) => {
-    t.same(isMediaD(), [], "01");
+    t.strictSame(isMediaD(), [], "01");
     t.end();
   }
 );
@@ -35,7 +35,7 @@ tap.test(
   `02 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - empty string`,
   (t) => {
     const str = "";
-    t.same(isMediaD(str), [], "02");
+    t.strictSame(isMediaD(str), [], "02");
     writeSample({
       id: "00.02",
       str,
@@ -49,7 +49,7 @@ tap.test(
   `03 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - space character`,
   (t) => {
     const str = " ";
-    t.same(isMediaD(str), [], "03");
+    t.strictSame(isMediaD(str), [], "03");
     writeSample({
       id: "00.03",
       str,
@@ -63,7 +63,7 @@ tap.test(
   `04 - ${`\u001b[${33}m${`api bits`}\u001b[${39}m`} - trimmable to zero`,
   (t) => {
     const str = "\n\n\n";
-    t.same(isMediaD(str), [], "04");
+    t.strictSame(isMediaD(str), [], "04");
     writeSample({
       id: "00.04",
       str,
@@ -102,7 +102,7 @@ tap.test(
       "tty",
       "tv",
     ].forEach((val) => {
-      t.same(isMediaD(val), []);
+      t.strictSame(isMediaD(val), []);
     });
     t.end();
   }
@@ -124,7 +124,7 @@ tap.test(
       "tty",
       "tv",
     ].forEach((val) => {
-      t.same(isMediaD(val, { offset: 999 }), []);
+      t.strictSame(isMediaD(val, { offset: 999 }), []);
     });
     t.end();
   }
@@ -140,7 +140,7 @@ tap.test(
     });
     const offset = 10;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -175,7 +175,7 @@ tap.test(
     });
     const res = isMediaD(str);
     t.equal(applyFixes(str, res), str, "09.01");
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -201,7 +201,7 @@ tap.test(
     });
     const res = isMediaD(str);
     t.equal(applyFixes(str, res), str, "10.01");
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -233,7 +233,7 @@ tap.test(
     const offset = 90;
     const res = isMediaD(str, { offset });
     t.equal(applyFixes(str, res, offset), fixed, "11.01");
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -263,7 +263,7 @@ tap.test(
     });
     const res = isMediaD(str);
     t.equal(applyFixes(str, res), fixed, "12.01");
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -293,7 +293,7 @@ tap.test(
     });
     const res = isMediaD(str);
     t.equal(applyFixes(str, res), fixed, "13.01");
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -326,7 +326,7 @@ tap.test(
     });
     const offset = 1;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -357,7 +357,7 @@ tap.test(
     });
     const offset = 1;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -388,7 +388,7 @@ tap.test(
     });
     const offset = 1;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -419,7 +419,7 @@ tap.test(
     });
     const offset = 1;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -450,7 +450,7 @@ tap.test(
     });
     const offset = 1;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -480,7 +480,7 @@ tap.test(
     });
     const offset = 1;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -508,7 +508,7 @@ tap.test(
     });
     const offset = 1;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -537,7 +537,7 @@ tap.test(
     });
     const offset = 1;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -581,7 +581,7 @@ tap.test(
       fixed,
     });
     const res = isMediaD(str);
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -616,7 +616,7 @@ tap.test(
     const offset = 10;
     const res = isMediaD(str, { offset });
     t.equal(applyFixes(str, res, offset), fixed, "23.01");
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -646,7 +646,7 @@ tap.test(
     });
     const res = isMediaD(str);
     t.equal(applyFixes(str, res), fixed, "24.01");
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -688,7 +688,7 @@ tap.test(
     });
     const offset = 10;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -715,7 +715,7 @@ tap.test(
     });
     const offset = 10;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -742,7 +742,7 @@ tap.test(
     });
     const offset = 10;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -770,7 +770,7 @@ tap.test(
     });
     const offset = 10;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -799,7 +799,7 @@ tap.test(
     });
     const offset = 10;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -826,7 +826,7 @@ tap.test(
     });
     const offset = 10;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -853,7 +853,7 @@ tap.test(
     });
     const offset = 10;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -883,7 +883,7 @@ tap.test(
     });
     const offset = 60;
     const res = isMediaD(str, { offset });
-    t.same(res, [], "32.01");
+    t.strictSame(res, [], "32.01");
     t.equal(applyFixes(str, res, offset), str, "32.02");
     t.end();
   }
@@ -899,7 +899,7 @@ tap.test(
     });
     const offset = 50;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -926,7 +926,7 @@ tap.test(
     });
     const offset = 40;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -953,7 +953,7 @@ tap.test(
     });
     const offset = 30;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -980,7 +980,7 @@ tap.test(
     });
     const offset = 30;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -1007,7 +1007,7 @@ tap.test(
     });
     const offset = 30;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -1034,7 +1034,7 @@ tap.test(
     });
     const offset = 30;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -1061,7 +1061,7 @@ tap.test(
     });
     const offset = 30;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -1089,7 +1089,7 @@ tap.test(
     });
     const offset = 20;
     const res = isMediaD(str, { offset });
-    t.same(res, [], "40");
+    t.strictSame(res, [], "40");
     t.end();
   }
 );
@@ -1104,7 +1104,7 @@ tap.test(
     });
     const offset = 20;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -1132,7 +1132,7 @@ tap.test(
     });
     const offset = 88;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -1165,7 +1165,7 @@ tap.test(
     });
     const offset = 88;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -1194,7 +1194,7 @@ tap.test(
     });
     const offset = 0;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -1232,7 +1232,7 @@ tap.test(
     });
     const offset = 0;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -1263,7 +1263,7 @@ tap.test(
     });
     const offset = 20;
     const res = isMediaD(str, { offset });
-    t.same(res, [], "46.01");
+    t.strictSame(res, [], "46.01");
     t.equal(applyFixes(str, res, offset), str, "46.02");
     t.end();
   }
@@ -1280,7 +1280,7 @@ tap.test(
     });
     const offset = 20;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -1308,7 +1308,7 @@ tap.test(
     });
     const offset = 20;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -1336,7 +1336,7 @@ tap.test(
     });
     const offset = 0;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -1364,7 +1364,7 @@ tap.test(
     });
     const offset = 0;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -1392,7 +1392,7 @@ tap.test(
     });
     const offset = 9;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -1426,7 +1426,7 @@ tap.test(
     });
     const offset = 0;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -1454,7 +1454,7 @@ tap.test(
     });
     const offset = 20;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -1482,7 +1482,7 @@ tap.test(
     });
     const offset = 99;
     const res = isMediaD(str, { offset });
-    t.same(
+    t.strictSame(
       res,
       [
         {
@@ -1523,7 +1523,7 @@ tap.test(`55 - ${`\u001b[${36}m${`comma`}\u001b[${39}m`} - healthy`, (t) => {
   });
   const offset = 1;
   const res = isMediaD(str, { offset });
-  t.same(res, [], "55.01");
+  t.strictSame(res, [], "55.01");
   t.equal(applyFixes(str, res, offset), str, "55.02");
   t.end();
 });

@@ -19,7 +19,7 @@ tap.test(
         "character-encode": 2,
       },
     });
-    t.same(messages, [], "01.01");
+    t.strictSame(messages, [], "01.01");
     t.equal(applyFixes(str, messages), str, "01.02");
     t.end();
   }
@@ -230,7 +230,7 @@ tap.test(
         "character-encode": 2,
       },
     });
-    t.same(messages, [], "08.01");
+    t.strictSame(messages, [], "08.01");
     t.equal(applyFixes(str, messages), str, "08.02");
     t.end();
   }
@@ -481,7 +481,7 @@ tap.test(
         "character-encode": 2,
       },
     });
-    t.same(messages, [], "14.01");
+    t.strictSame(messages, [], "14.01");
     t.equal(applyFixes(str, messages), str, "14.02");
     t.end();
   }

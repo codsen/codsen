@@ -101,7 +101,7 @@ tap.test(`04 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - xml`, (t) => {
       },
     }
   );
-  t.same(
+  t.strictSame(
     gathered,
     [
       {

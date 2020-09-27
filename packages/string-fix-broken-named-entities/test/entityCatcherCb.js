@@ -28,8 +28,8 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
       decode: false,
     });
-    t.same(gatheredHealthy, [[2, 8]], "01.01");
-    t.same(gatheredBroken, [], "01.02");
+    t.strictSame(gatheredHealthy, [[2, 8]], "01.01");
+    t.strictSame(gatheredBroken, [], "01.02");
     t.end();
   }
 );
@@ -44,8 +44,8 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
       decode: false,
     });
-    t.same(gatheredHealthy, [[2, 8]], "02.01");
-    t.same(gatheredBroken, [], "02.02");
+    t.strictSame(gatheredHealthy, [[2, 8]], "02.01");
+    t.strictSame(gatheredBroken, [], "02.02");
     t.end();
   }
 );
@@ -65,8 +65,8 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
       decode: true,
     });
-    t.same(gatheredHealthy, [], "03.01");
-    t.same(gatheredBroken, ["encoded-html-entity-nbsp"], "03.02");
+    t.strictSame(gatheredHealthy, [], "03.01");
+    t.strictSame(gatheredBroken, ["encoded-html-entity-nbsp"], "03.02");
     t.end();
   }
 );
@@ -80,7 +80,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
       decode: true,
     });
-    t.same(gatheredHealthy, [], "04"); // <- because it's encoded and user asked unencoded
+    t.strictSame(gatheredHealthy, [], "04"); // <- because it's encoded and user asked unencoded
     t.end();
   }
 );
@@ -99,8 +99,12 @@ tap.test(
       },
       entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
     });
-    t.same(gatheredHealthy, [[2, 8]], "05.01");
-    t.same(gatheredBroken, ["bad-named-html-entity-malformed-nbsp"], "05.02");
+    t.strictSame(gatheredHealthy, [[2, 8]], "05.01");
+    t.strictSame(
+      gatheredBroken,
+      ["bad-named-html-entity-malformed-nbsp"],
+      "05.02"
+    );
     t.end();
   }
 );
@@ -127,7 +131,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
       decode: false,
     });
-    t.same(gatheredEntityRanges, [[2, 11]], "06");
+    t.strictSame(gatheredEntityRanges, [[2, 11]], "06");
     t.end();
   }
 );
@@ -141,7 +145,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
       decode: false,
     });
-    t.same(gatheredEntityRanges, [[2, 11]], "07");
+    t.strictSame(gatheredEntityRanges, [[2, 11]], "07");
     t.end();
   }
 );
@@ -161,7 +165,7 @@ tap.test(
       decode: true,
     });
 
-    t.same(gatheredHealthy, [], "08.01");
+    t.strictSame(gatheredHealthy, [], "08.01");
     t.match(
       gatheredBroken,
       [
@@ -189,7 +193,7 @@ tap.test(
       decode: true,
     });
 
-    t.same(healthy, [], "09");
+    t.strictSame(healthy, [], "09");
     t.end();
   }
 );
@@ -221,8 +225,12 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
       decode: false,
     });
-    t.same(gatheredBroken, ["bad-named-html-entity-malformed-nbsp"], "10.01");
-    t.same(gatheredHealthy, [], "10.02");
+    t.strictSame(
+      gatheredBroken,
+      ["bad-named-html-entity-malformed-nbsp"],
+      "10.01"
+    );
+    t.strictSame(gatheredHealthy, [], "10.02");
     t.end();
   }
 );
@@ -236,7 +244,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
       decode: false,
     });
-    t.same(gatheredHealthy, [], "11");
+    t.strictSame(gatheredHealthy, [], "11");
     t.end();
   }
 );
@@ -256,8 +264,12 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
       decode: true,
     });
-    t.same(gatheredBroken, ["bad-named-html-entity-malformed-nbsp"], "12.01");
-    t.same(gatheredHealthy, [], "12.02");
+    t.strictSame(
+      gatheredBroken,
+      ["bad-named-html-entity-malformed-nbsp"],
+      "12.01"
+    );
+    t.strictSame(gatheredHealthy, [], "12.02");
     t.end();
   }
 );
@@ -271,7 +283,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
       decode: true,
     });
-    t.same(gatheredHealthy, [], "13");
+    t.strictSame(gatheredHealthy, [], "13");
     t.end();
   }
 );
@@ -303,8 +315,12 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
       decode: false,
     });
-    t.same(gatheredBroken, ["bad-named-html-entity-unrecognised"], "14.01");
-    t.same(gatheredHealthy, [], "14.02");
+    t.strictSame(
+      gatheredBroken,
+      ["bad-named-html-entity-unrecognised"],
+      "14.01"
+    );
+    t.strictSame(gatheredHealthy, [], "14.02");
     t.end();
   }
 );
@@ -318,7 +334,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
       decode: false,
     });
-    t.same(gatheredHealthy, [], "15");
+    t.strictSame(gatheredHealthy, [], "15");
     t.end();
   }
 );
@@ -338,8 +354,12 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
       decode: true,
     });
-    t.same(gatheredBroken, ["bad-named-html-entity-unrecognised"], "16.01");
-    t.same(gatheredHealthy, [], "16.02");
+    t.strictSame(
+      gatheredBroken,
+      ["bad-named-html-entity-unrecognised"],
+      "16.01"
+    );
+    t.strictSame(gatheredHealthy, [], "16.02");
     t.end();
   }
 );
@@ -353,7 +373,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredHealthy.push([from, to]),
       decode: true,
     });
-    t.same(gatheredHealthy, [], "17");
+    t.strictSame(gatheredHealthy, [], "17");
     t.end();
   }
 );
@@ -380,7 +400,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
       decode: false,
     });
-    t.same(gatheredEntityRanges, [[2, 7]], "18");
+    t.strictSame(gatheredEntityRanges, [[2, 7]], "18");
     t.end();
   }
 );
@@ -394,7 +414,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
       decode: false,
     });
-    t.same(gatheredEntityRanges, [[2, 7]], "19");
+    t.strictSame(gatheredEntityRanges, [[2, 7]], "19");
     t.end();
   }
 );
@@ -409,7 +429,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
       decode: true,
     });
-    t.same(gatheredEntityRanges, [[2, 7]], "20");
+    t.strictSame(gatheredEntityRanges, [[2, 7]], "20");
     t.end();
   }
 );
@@ -423,7 +443,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
       decode: true,
     });
-    t.same(gatheredEntityRanges, [[2, 7]], "21");
+    t.strictSame(gatheredEntityRanges, [[2, 7]], "21");
     t.end();
   }
 );
@@ -449,7 +469,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
       decode: true,
     });
-    t.same(gatheredEntityRanges, [[2, 6]], "22");
+    t.strictSame(gatheredEntityRanges, [[2, 6]], "22");
     t.end();
   }
 );
@@ -463,7 +483,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
       decode: true,
     });
-    t.same(gatheredEntityRanges, [[2, 25]], "23");
+    t.strictSame(gatheredEntityRanges, [[2, 25]], "23");
     t.end();
   }
 );
@@ -490,7 +510,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
       decode: false,
     });
-    t.same(gatheredEntityRanges, [[2, 8]], "24");
+    t.strictSame(gatheredEntityRanges, [[2, 8]], "24");
     t.end();
   }
 );
@@ -504,7 +524,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
       decode: false,
     });
-    t.same(gatheredEntityRanges, [[2, 8]], "25");
+    t.strictSame(gatheredEntityRanges, [[2, 8]], "25");
     t.end();
   }
 );
@@ -519,7 +539,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
       decode: true,
     });
-    t.same(gatheredEntityRanges, [[2, 8]], "26");
+    t.strictSame(gatheredEntityRanges, [[2, 8]], "26");
     t.end();
   }
 );
@@ -533,7 +553,7 @@ tap.test(
       entityCatcherCb: (from, to) => gatheredEntityRanges.push([from, to]),
       decode: true,
     });
-    t.same(gatheredEntityRanges, [[2, 8]], "27");
+    t.strictSame(gatheredEntityRanges, [[2, 8]], "27");
     t.end();
   }
 );

@@ -77,19 +77,19 @@ zzz
 });
 
 tap.test("returns comment on match", (t) => {
-  t.same(
+  t.strictSame(
     "<html> <!--[if (gte mso 9)|(IE)]><![endif]--> <title>".match(r()),
     ["<!--[if (gte mso 9)|(IE)]><![endif]-->"],
     "02.01"
   );
-  t.same(
+  t.strictSame(
     `<html> <!--[if !mso]><![endif]--> <title>text</title> <!--[if gte mso 9]>
   <xml>
   <![endif]-->`.match(r()),
     ["<!--[if !mso]><![endif]-->"],
     "02.02"
   );
-  t.same(
+  t.strictSame(
     `<html> <!--[if !mso]><![endif]--> <title>text</title> <!--[if !mso]><!-- -->
 
 <!--<![endif]-->`.match(r()),

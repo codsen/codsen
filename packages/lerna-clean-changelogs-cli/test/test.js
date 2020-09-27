@@ -146,7 +146,7 @@ tap.test(
           .then(() => received)
       );
 
-    t.same(await processedFileContents, changelog1Fixed, "04.01");
+    t.strictSame(await processedFileContents, changelog1Fixed, "04.01");
   }
 );
 

@@ -13,7 +13,7 @@ function setter(t, source, result, path, val, idNum, isInvalidJson = false) {
   // we can process invalid JSON too!
   if (!isInvalidJson) {
     // 02. parsed versions we just compared must be deep-equal
-    t.same(
+    t.strictSame(
       JSON.parse(set(source, path, val)),
       JSON.parse(result),
       `${idNum}.02 - both parsed parties are deep-equal`
@@ -22,7 +22,7 @@ function setter(t, source, result, path, val, idNum, isInvalidJson = false) {
     // 03. result is equivalent to (JSON.parse + object-path.set())
     const temp = JSON.parse(source);
     objectPath.set(temp, path, val);
-    t.same(
+    t.strictSame(
       temp,
       JSON.parse(result),
       `${idNum}.03 - objectPath set is deep-equal`
@@ -39,7 +39,7 @@ function deleter(t, source, result, path, idNum) {
   );
 
   // 02. compare parsed
-  t.same(
+  t.strictSame(
     JSON.parse(del(source, path)),
     JSON.parse(result),
     `${idNum}.02 - both parsed parties are deep-equal`
@@ -48,7 +48,7 @@ function deleter(t, source, result, path, idNum) {
   // 03. if we did the deed manually, it would be the same if both were parsed
   const temp = JSON.parse(source);
   objectPath.del(temp, path);
-  t.same(
+  t.strictSame(
     temp,
     JSON.parse(result),
     `${idNum}.03 - objectPath del is deep-equal`

@@ -16,6 +16,6 @@ tap.test("01 - general sanity check", (t) => {
     a: "a",
   };
 
-  t.same(actual, intended, "01");
+  t.strictSame(actual, intended, "01");
   t.end();
 });

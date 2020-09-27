@@ -21,9 +21,9 @@ tap.test("01 - bug #01", (t) => {
 </body>
 `);
 
-  t.same(allInBody, [], "01.01");
-  t.same(allInHead, [".unused"], "01.02");
-  t.same(
+  t.strictSame(allInBody, [], "01.01");
+  t.strictSame(allInHead, [".unused"], "01.02");
+  t.strictSame(
     result,
     `<head>
 <style type="text/css">
@@ -35,8 +35,8 @@ tap.test("01 - bug #01", (t) => {
 `,
     "01.03"
   );
-  t.same(deletedFromHead, [".unused"], "01.04");
-  t.same(deletedFromBody, [], "01.05");
+  t.strictSame(deletedFromHead, [".unused"], "01.04");
+  t.strictSame(deletedFromBody, [], "01.05");
   t.end();
 });
 
@@ -87,7 +87,7 @@ tap.test("02 - working on early (stage I) per-line removal", (t) => {
 </html>
 `;
 
-  t.same(comb(source).result, intended, "02");
+  t.strictSame(comb(source).result, intended, "02");
   t.end();
 });
 
@@ -380,15 +380,15 @@ tap.test("17 - bug #36", (t) => {
     deletedFromBody,
   } = comb(input);
 
-  t.same(allInBody, [".foo"], "17.01");
-  t.same(allInHead, [".foo"], "17.02");
-  t.same(
+  t.strictSame(allInBody, [".foo"], "17.01");
+  t.strictSame(allInHead, [".foo"], "17.02");
+  t.strictSame(
     result,
     `<style>.foo {x: y;}</style>
 <body><span class="foo">z</span>`,
     "17.03"
   );
-  t.same(deletedFromHead, [], "17.04");
-  t.same(deletedFromBody, [], "17.05");
+  t.strictSame(deletedFromHead, [], "17.04");
+  t.strictSame(deletedFromBody, [], "17.05");
   t.end();
 });

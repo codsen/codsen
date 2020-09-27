@@ -27,6 +27,35 @@
 npm i object-fill-missing-keys
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import fillMissing from "object-fill-missing-keys";
+
+// deleting key 'c', with value 'd'
+assert.deepEqual(
+  fillMissing(
+    {
+      // input object that could have came from JSON
+      b: "b",
+    },
+    {
+      // schema reference object
+      a: false,
+      b: false,
+      c: false,
+    }
+  ),
+  {
+    // patched result
+    a: false,
+    b: "b",
+    c: false,
+  }
+);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/object-fill-missing-keys/) for a full description of the API and examples.

@@ -16,7 +16,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), str, "01.01");
-    t.same(messages, [], "01.02");
+    t.strictSame(messages, [], "01.02");
     t.end();
   }
 );
@@ -32,7 +32,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), str, "02.01");
-    t.same(messages, [], "02.02");
+    t.strictSame(messages, [], "02.02");
     t.end();
   }
 );
@@ -48,7 +48,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), str, "03.01");
-    t.same(messages, [], "03.02");
+    t.strictSame(messages, [], "03.02");
     t.end();
   }
 );
@@ -64,7 +64,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), str, "04.01");
-    t.same(messages, [], "04.02");
+    t.strictSame(messages, [], "04.02");
     t.end();
   }
 );
@@ -354,7 +354,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), str, "14.01");
-    t.same(messages, [], "14.02");
+    t.strictSame(messages, [], "14.02");
     t.end();
   }
 );
@@ -458,7 +458,7 @@ tap.test(`18 - ${`\u001b[${35}m${`img`}\u001b[${39}m`} - good value`, (t) => {
     },
   });
   t.equal(applyFixes(str, messages), str, "18.01");
-  t.same(messages, [], "18.02");
+  t.strictSame(messages, [], "18.02");
   t.end();
 });
 
@@ -561,7 +561,7 @@ tap.test(`22 - ${`\u001b[${35}m${`table`}\u001b[${39}m`} - good value`, (t) => {
     },
   });
   t.equal(applyFixes(str, messages), str, "22.01");
-  t.same(messages, [], "22.02");
+  t.strictSame(messages, [], "22.02");
   t.end();
 });
 
@@ -664,7 +664,7 @@ tap.test(`26 - ${`\u001b[${35}m${`div`}\u001b[${39}m`} - good value`, (t) => {
     },
   });
   t.equal(applyFixes(str, messages), str, "26.01");
-  t.same(messages, [], "26.02");
+  t.strictSame(messages, [], "26.02");
   t.end();
 });
 
@@ -767,6 +767,6 @@ tap.test(`30 - ${`\u001b[${35}m${`td`}\u001b[${39}m`} - good value`, (t) => {
     },
   });
   t.equal(applyFixes(str, messages), str, "30.01");
-  t.same(messages, [], "30.02");
+  t.strictSame(messages, [], "30.02");
   t.end();
 });

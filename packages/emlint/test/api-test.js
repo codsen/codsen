@@ -17,17 +17,17 @@ tap.test("config is truthy and is not an object", (t) => {
 
 tap.test("config is an empty object", (t) => {
   const linter = new Linter();
-  t.same(linter.verify("a", {}), [], "03");
+  t.strictSame(linter.verify("a", {}), [], "03");
   t.end();
 });
 
 tap.test("config is falsey", (t) => {
   const linter = new Linter();
-  t.same(linter.verify("a", null), [], "04.01");
-  t.same(linter.verify("a", false), [], "04.02");
-  t.same(linter.verify("a", undefined), [], "04.03");
-  t.same(linter.verify("a", 0), [], "04.04");
-  t.same(linter.verify("a", []), [], "04.05");
+  t.strictSame(linter.verify("a", null), [], "04.01");
+  t.strictSame(linter.verify("a", false), [], "04.02");
+  t.strictSame(linter.verify("a", undefined), [], "04.03");
+  t.strictSame(linter.verify("a", 0), [], "04.04");
+  t.strictSame(linter.verify("a", []), [], "04.05");
   t.end();
 });
 

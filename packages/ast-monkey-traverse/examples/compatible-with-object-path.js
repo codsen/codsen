@@ -1,6 +1,6 @@
 /* eslint import/extensions:0, import/no-extraneous-dependencies:0 */
 
-// Stop
+// Compatible With `object-path`
 
 import { strict as assert } from "assert";
 import op from "object-path";

@@ -5,7 +5,7 @@ tap.test("UMD build works fine", (t) => {
   const ranges = new Ranges1();
   ranges.push(1, 2);
   ranges.push(3, 4);
-  t.same(
+  t.strictSame(
     ranges.current(),
     [
       [1, 2],

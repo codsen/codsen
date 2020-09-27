@@ -5,7 +5,7 @@ import allValuesEqualTo from "../dist/object-all-values-equal-to.esm";
 // -----------------------------------------------------------------------------
 
 tap.test("01 - nested objects", (t) => {
-  t.same(
+  t.strictSame(
     allValuesEqualTo(
       {
         a: false,
@@ -23,7 +23,7 @@ tap.test("01 - nested objects", (t) => {
     true,
     "01.01"
   );
-  t.same(
+  t.strictSame(
     allValuesEqualTo(
       {
         a: false,
@@ -45,7 +45,7 @@ tap.test("01 - nested objects", (t) => {
 });
 
 tap.test("02 - nested array", (t) => {
-  t.same(
+  t.strictSame(
     allValuesEqualTo(
       [
         {
@@ -60,7 +60,7 @@ tap.test("02 - nested array", (t) => {
     true,
     "02.01"
   );
-  t.same(
+  t.strictSame(
     allValuesEqualTo(
       [
         {
@@ -76,14 +76,14 @@ tap.test("02 - nested array", (t) => {
     false,
     "02.02"
   );
-  t.same(allValuesEqualTo(["a"], false), false, "02.03");
-  t.same(allValuesEqualTo([[]], false), true, "02.04");
+  t.strictSame(allValuesEqualTo(["a"], false), false, "02.03");
+  t.strictSame(allValuesEqualTo([[]], false), true, "02.04");
   t.end();
 });
 
 tap.test("03 - nulls", (t) => {
-  t.same(allValuesEqualTo([null], null), false, "03.01");
-  t.same(
+  t.strictSame(allValuesEqualTo([null], null), false, "03.01");
+  t.strictSame(
     allValuesEqualTo([null], null, { arraysMustNotContainPlaceholders: false }),
     true,
     "03.02"
@@ -92,9 +92,9 @@ tap.test("03 - nulls", (t) => {
 });
 
 tap.test("04 - empty obj/arr", (t) => {
-  t.same(allValuesEqualTo([], false), true, "04.01");
-  t.same(allValuesEqualTo({}, false), true, "04.02");
-  t.same(
+  t.strictSame(allValuesEqualTo([], false), true, "04.01");
+  t.strictSame(allValuesEqualTo({}, false), true, "04.02");
+  t.strictSame(
     allValuesEqualTo(null, false),
     false,
     "04.03 - only valid for empty container-like types, array and plain object"

@@ -68,7 +68,7 @@ tap.test(
 );
 
 tap.test("05 - input present but non-container sort", (t) => {
-  t.same(get(1, "style", "meta"), 1, "05");
+  t.strictSame(get(1, "style", "meta"), 1, "05");
   t.end();
 });
 

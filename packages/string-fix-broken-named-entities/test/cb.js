@@ -18,7 +18,7 @@ function cb(obj) {
 tap.test(
   `01 - ${`\u001b[${31}m${`opts.cb`}\u001b[${39}m`} - \u001b[${33}m${`default callback`}\u001b[${39}m mimicking non-cb result`,
   (t) => {
-    t.same(
+    t.strictSame(
       fix("zzznbsp;zzznbsp;", {
         cb,
       }),
@@ -35,7 +35,7 @@ tap.test(
 tap.test(
   `02 - ${`\u001b[${31}m${`opts.cb`}\u001b[${39}m`} - \u001b[${33}m${`emlint issue spec`}\u001b[${39}m callback`,
   (t) => {
-    t.same(
+    t.strictSame(
       fix("zzznbsp;zzznbsp;", {
         cb: (oodles) => {
           // {

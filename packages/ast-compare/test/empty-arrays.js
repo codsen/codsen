@@ -5,19 +5,19 @@ import compare from "../dist/ast-compare.esm";
 // -----------------------------------------------------------------------------
 
 tap.test("01 - matching empty arrays - blank vs. normal - defaults", (t) => {
-  t.same(compare({ a: "1", b: "2", c: 3 }, {}), false, "01");
+  t.strictSame(compare({ a: "1", b: "2", c: 3 }, {}), false, "01");
   t.end();
 });
 
 tap.test("02 - matching empty arrays - blank vs. empty - defaults", (t) => {
-  t.same(compare({ a: "\n\n", b: "\t", c: "   " }, {}), false, "02");
+  t.strictSame(compare({ a: "\n\n", b: "\t", c: "   " }, {}), false, "02");
   t.end();
 });
 
 tap.test(
   "03 - matching empty arrays - blank vs. normal - opts.hungryForWhitespace",
   (t) => {
-    t.same(
+    t.strictSame(
       compare({ a: "1", b: "2", c: 3 }, {}, { hungryForWhitespace: true }),
       false,
       "03"
@@ -29,7 +29,7 @@ tap.test(
 tap.test(
   "04 - matching empty arrays - blank vs. empty - opts.hungryForWhitespace",
   (t) => {
-    t.same(
+    t.strictSame(
       compare(
         { a: "\n\n", b: "\t", c: "   " },
         {},
@@ -45,7 +45,7 @@ tap.test(
 tap.test(
   "05 - matching empty arrays - blank vs. normal - opts.matchStrictly",
   (t) => {
-    t.same(
+    t.strictSame(
       compare({ a: "1", b: "2", c: 3 }, {}, { matchStrictly: true }),
       false,
       "05"
@@ -57,7 +57,7 @@ tap.test(
 tap.test(
   "06 - matching empty arrays - blank vs. empty - opts.matchStrictly",
   (t) => {
-    t.same(
+    t.strictSame(
       compare({ a: "\n\n", b: "\t", c: "   " }, {}, { matchStrictly: true }),
       false,
       "06"
@@ -67,7 +67,7 @@ tap.test(
 );
 
 tap.test("07 - matching empty arrays - blank vs. normal - both opts", (t) => {
-  t.same(
+  t.strictSame(
     compare(
       { a: "1", b: "2", c: 3 },
       {},
@@ -80,7 +80,7 @@ tap.test("07 - matching empty arrays - blank vs. normal - both opts", (t) => {
 });
 
 tap.test("08 - matching empty arrays - blank vs. empty - both opts", (t) => {
-  t.same(
+  t.strictSame(
     compare(
       { a: "\n\n", b: "\t", c: "   " },
       {},
@@ -95,7 +95,7 @@ tap.test("08 - matching empty arrays - blank vs. empty - both opts", (t) => {
 tap.test(
   "09 - matching empty arrays - blank vs. empty - both opts, arr values",
   (t) => {
-    t.same(
+    t.strictSame(
       compare(
         { a: [], b: [], c: [] },
         {},
@@ -111,7 +111,7 @@ tap.test(
 tap.test(
   "10 - matching empty arrays - blank vs. empty - both opts, arr values",
   (t) => {
-    t.same(
+    t.strictSame(
       compare([" "], "", { hungryForWhitespace: true, matchStrictly: true }),
       true,
       "10"
@@ -121,7 +121,7 @@ tap.test(
 );
 
 tap.test("11 - array vs string", (t) => {
-  t.same(
+  t.strictSame(
     compare([" "], "", { hungryForWhitespace: true, matchStrictly: true }),
     true,
     "11"
@@ -130,7 +130,7 @@ tap.test("11 - array vs string", (t) => {
 });
 
 tap.test("12 - array vs null", (t) => {
-  t.same(
+  t.strictSame(
     compare([" "], [null], { hungryForWhitespace: true, matchStrictly: true }),
     true,
     "12"
@@ -139,7 +139,7 @@ tap.test("12 - array vs null", (t) => {
 });
 
 tap.test("13 - array vs bool", (t) => {
-  t.same(
+  t.strictSame(
     compare([" "], true, { hungryForWhitespace: true, matchStrictly: true }),
     false,
     "13"
@@ -148,7 +148,7 @@ tap.test("13 - array vs bool", (t) => {
 });
 
 tap.test("14", (t) => {
-  t.same(
+  t.strictSame(
     compare(false, true, { hungryForWhitespace: true, matchStrictly: true }),
     false,
     "14"
@@ -157,7 +157,7 @@ tap.test("14", (t) => {
 });
 
 tap.test("15", (t) => {
-  t.same(
+  t.strictSame(
     compare([false], [true], {
       hungryForWhitespace: true,
       matchStrictly: true,

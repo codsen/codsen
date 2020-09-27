@@ -72,7 +72,7 @@ tap.test(
 tap.test(
   "05 - getKeysetSync() - calculates - three objects - default placeholder",
   (t) => {
-    t.same(
+    t.strictSame(
       getKeysetSync([
         {
           a: "a",
@@ -109,7 +109,7 @@ tap.test(
 tap.test(
   "06 - getKeysetSync() - calculates - three objects - custom placeholder",
   (t) => {
-    t.same(
+    t.strictSame(
       getKeysetSync(
         [
           {
@@ -142,7 +142,7 @@ tap.test(
       },
       "06.01"
     );
-    t.same(
+    t.strictSame(
       getKeysetSync(
         [
           {
@@ -175,7 +175,7 @@ tap.test(
       },
       "06.02"
     );
-    t.same(
+    t.strictSame(
       getKeysetSync(
         [
           {
@@ -223,7 +223,7 @@ tap.test(
 );
 
 tap.test("08 - getKeysetSync() - multiple levels of nested arrays", (t) => {
-  t.same(
+  t.strictSame(
     getKeysetSync([
       {
         key2: [
@@ -269,7 +269,7 @@ tap.test("08 - getKeysetSync() - multiple levels of nested arrays", (t) => {
 });
 
 tap.test("09 - getKeysetSync() - objects that are directly in values", (t) => {
-  t.same(
+  t.strictSame(
     getKeysetSync([
       {
         a: {
@@ -299,7 +299,7 @@ tap.test("09 - getKeysetSync() - objects that are directly in values", (t) => {
     },
     "09.01"
   );
-  t.same(
+  t.strictSame(
     getKeysetSync([
       {
         a: {
@@ -335,7 +335,7 @@ tap.test("09 - getKeysetSync() - objects that are directly in values", (t) => {
 tap.test(
   "10 - getKeysetSync() - deeper level arrays containing only strings",
   (t) => {
-    t.same(
+    t.strictSame(
       getKeysetSync([
         {
           a: false,
@@ -366,7 +366,7 @@ tap.test(
 tap.test(
   "11 - getKeysetSync() - deeper level array with string vs false",
   (t) => {
-    t.same(
+    t.strictSame(
       getKeysetSync([
         {
           a: false,
@@ -395,7 +395,7 @@ tap.test(
 );
 
 tap.test("12 - getKeysetSync() - two deeper level arrays with strings", (t) => {
-  t.same(
+  t.strictSame(
     getKeysetSync([
       {
         a: false,
@@ -429,7 +429,7 @@ tap.test("12 - getKeysetSync() - two deeper level arrays with strings", (t) => {
 tap.test(
   "13 - getKeysetSync() - two deeper level arrays with mixed contents",
   (t) => {
-    t.same(
+    t.strictSame(
       getKeysetSync([
         {
           a: false,
@@ -464,7 +464,7 @@ tap.test(
 tap.test(
   "14 - getKeysetSync() - two deeper level arrays with plain objects",
   (t) => {
-    t.same(
+    t.strictSame(
       getKeysetSync([
         {
           a: false,
@@ -504,7 +504,7 @@ tap.test(
       },
       "14.01 - object vs object"
     );
-    t.same(
+    t.strictSame(
       getKeysetSync([
         {
           a: false,
@@ -532,7 +532,7 @@ tap.test(
       },
       "14.02 - object vs object"
     );
-    t.same(
+    t.strictSame(
       getKeysetSync([
         {
           a: false,
@@ -560,7 +560,7 @@ tap.test(
       },
       "14.03 - object vs object"
     );
-    t.same(
+    t.strictSame(
       getKeysetSync([
         {
           a: false,
@@ -606,7 +606,7 @@ tap.test("15 - enforceKeysetSync() - enforces a simple schema", (t) => {
       a: "ccc",
     },
   ]);
-  t.same(
+  t.strictSame(
     enforceKeysetSync(
       {
         a: "ccc",
@@ -640,7 +640,7 @@ tap.test("16 - enforceKeysetSync() - enforces a more complex schema", (t) => {
     a: "zzz",
   };
   const schema = getKeysetSync([obj1, obj2, obj3]);
-  t.same(
+  t.strictSame(
     schema,
     {
       a: false,
@@ -654,7 +654,7 @@ tap.test("16 - enforceKeysetSync() - enforces a more complex schema", (t) => {
     },
     "16.01 - .getKeysetSync"
   );
-  t.same(
+  t.strictSame(
     enforceKeysetSync(obj1, schema),
     {
       a: "aaa",
@@ -668,7 +668,7 @@ tap.test("16 - enforceKeysetSync() - enforces a more complex schema", (t) => {
     },
     "16.02 - .enforceKeysetSync"
   );
-  t.same(
+  t.strictSame(
     enforceKeysetSync(obj2, schema),
     {
       a: "ccc",
@@ -682,7 +682,7 @@ tap.test("16 - enforceKeysetSync() - enforces a more complex schema", (t) => {
     },
     "16.03 - .enforceKeysetSync"
   );
-  t.same(
+  t.strictSame(
     enforceKeysetSync(obj3, schema),
     {
       a: "zzz",
@@ -713,7 +713,7 @@ tap.test(
       a: false,
     };
     const schema = getKeysetSync([obj1, obj2]);
-    t.same(
+    t.strictSame(
       schema,
       {
         a: [
@@ -724,7 +724,7 @@ tap.test(
       },
       "17.01 - .getKeysetSync"
     );
-    t.same(
+    t.strictSame(
       enforceKeysetSync(obj1, schema),
       {
         a: [
@@ -735,7 +735,7 @@ tap.test(
       },
       "17.02 - .enforceKeysetSync"
     );
-    t.same(
+    t.strictSame(
       enforceKeysetSync(obj2, schema),
       {
         a: [
@@ -751,7 +751,7 @@ tap.test(
 );
 
 tap.test("18 - enforceKeysetSync() - another set involving arrays", (t) => {
-  t.same(
+  t.strictSame(
     prepArraySync([
       {
         c: "c val",
@@ -794,7 +794,7 @@ tap.test("18 - enforceKeysetSync() - another set involving arrays", (t) => {
 });
 
 tap.test("19 - enforceKeysetSync() - deep-nested arrays", (t) => {
-  t.same(
+  t.strictSame(
     prepArraySync([
       {
         a: [
@@ -914,7 +914,7 @@ tap.test(
       a: "a",
     };
     const schema = getKeysetSync([obj1, obj2]);
-    t.same(
+    t.strictSame(
       schema,
       {
         a: [
@@ -925,7 +925,7 @@ tap.test(
       },
       "20.01 - .getKeysetSync"
     );
-    t.same(
+    t.strictSame(
       enforceKeysetSync(obj1, schema),
       {
         a: [
@@ -936,7 +936,7 @@ tap.test(
       },
       "20.02 - .enforceKeysetSync"
     );
-    t.same(
+    t.strictSame(
       enforceKeysetSync(obj2, schema),
       {
         a: [
@@ -952,7 +952,7 @@ tap.test(
 );
 
 tap.test("21 - enforceKeysetSync() - multiple objects within an array", (t) => {
-  t.same(
+  t.strictSame(
     prepArraySync([
       {
         a: "a",
@@ -1041,7 +1041,7 @@ tap.test("22 - enforceKeysetSync() - multiple levels of arrays", (t) => {
     c: "ccc",
     a: false,
   };
-  t.same(
+  t.strictSame(
     prepArraySync([obj1, obj2]),
     [
       {
@@ -1087,7 +1087,7 @@ tap.test("22 - enforceKeysetSync() - multiple levels of arrays", (t) => {
 });
 
 tap.test("23 - enforceKeysetSync() - array vs string clashes", (t) => {
-  t.same(
+  t.strictSame(
     prepArraySync([
       {
         a: "aaa",
@@ -1175,7 +1175,7 @@ tap.test("28 - enforceKeysetSync() - array over empty array", (t) => {
     b: "b",
   };
   const schema = getKeysetSync([obj1, obj2]);
-  t.same(
+  t.strictSame(
     schema,
     {
       a: [
@@ -1189,7 +1189,7 @@ tap.test("28 - enforceKeysetSync() - array over empty array", (t) => {
     },
     "28.01"
   );
-  t.same(
+  t.strictSame(
     enforceKeysetSync(obj1, schema),
     {
       a: [
@@ -1207,7 +1207,7 @@ tap.test("28 - enforceKeysetSync() - array over empty array", (t) => {
     },
     "28.02"
   );
-  t.same(
+  t.strictSame(
     enforceKeysetSync(obj2, schema),
     {
       a: [
@@ -1235,7 +1235,7 @@ tap.test("29 - enforceKeysetSync() - opts", (t) => {
       b: false,
     },
   ]);
-  t.same(
+  t.strictSame(
     enforceKeysetSync(
       {
         a: "zzz",
@@ -1266,7 +1266,7 @@ tap.test("30 - enforceKeysetSync() - opts", (t) => {
       b: false,
     },
   ]);
-  t.same(
+  t.strictSame(
     enforceKeysetSync(
       {
         a: "zzz",
@@ -1296,7 +1296,7 @@ tap.test("31 - enforceKeysetSync() - opts off", (t) => {
       b: false,
     },
   ]);
-  t.same(
+  t.strictSame(
     enforceKeysetSync(
       {
         a: "zzz",
@@ -1348,7 +1348,7 @@ tap.test("33 - enforceKeysetSync() - opts.useNullAsExplicitFalse", (t) => {
       },
     },
   ]);
-  t.same(
+  t.strictSame(
     enforceKeysetSync(
       {
         a: null,
@@ -1361,7 +1361,7 @@ tap.test("33 - enforceKeysetSync() - opts.useNullAsExplicitFalse", (t) => {
     },
     "33.01 - default behaviour"
   );
-  t.same(
+  t.strictSame(
     enforceKeysetSync(
       {
         a: null,
@@ -1408,7 +1408,7 @@ tap.test("34 - enforceKeysetSync() - does not mutate the input args", (t) => {
   };
   const dummyResult = enforceKeysetSync(obj2, getKeysetSync([obj1, obj2]));
   t.pass(dummyResult); // necessary to avoid unused vars
-  t.same(
+  t.strictSame(
     obj2,
     {
       c: "ccc",
@@ -1424,7 +1424,7 @@ tap.test("34 - enforceKeysetSync() - does not mutate the input args", (t) => {
 // -----------------------------------------------------------------------------
 
 tap.test("35 - noNewKeysSync() - BAU", (t) => {
-  t.same(
+  t.strictSame(
     noNewKeysSync(
       {
         a: "a",
@@ -1439,7 +1439,7 @@ tap.test("35 - noNewKeysSync() - BAU", (t) => {
     [],
     "35.01 - no new keys"
   );
-  t.same(
+  t.strictSame(
     noNewKeysSync(
       {
         a: "a",
@@ -1458,7 +1458,7 @@ tap.test("35 - noNewKeysSync() - BAU", (t) => {
 });
 
 tap.test("36 - noNewKeysSync() - objects within arrays within objects", (t) => {
-  t.same(
+  t.strictSame(
     noNewKeysSync(
       {
         z: [
@@ -1492,7 +1492,7 @@ tap.test("36 - noNewKeysSync() - objects within arrays within objects", (t) => {
     [],
     "36.01 - same key set, just values differ"
   );
-  t.same(
+  t.strictSame(
     noNewKeysSync(
       {
         z: [
@@ -1524,7 +1524,7 @@ tap.test("36 - noNewKeysSync() - objects within arrays within objects", (t) => {
     [],
     "36.02 - less keys"
   );
-  t.same(
+  t.strictSame(
     noNewKeysSync(
       {
         z: [
@@ -1583,7 +1583,7 @@ tap.test("37 - noNewKeysSync() - various throws", (t) => {
 // -----------------------------------------------------------------------------
 
 tap.test("38 - findUnusedSync() - single-level plain objects", (t) => {
-  t.same(
+  t.strictSame(
     findUnusedSync([
       {
         a: false,
@@ -1599,7 +1599,7 @@ tap.test("38 - findUnusedSync() - single-level plain objects", (t) => {
     ["c"],
     "38.01 - running on defaults"
   );
-  t.same(
+  t.strictSame(
     findUnusedSync([
       {
         a: false,
@@ -1620,7 +1620,7 @@ tap.test("38 - findUnusedSync() - single-level plain objects", (t) => {
 });
 
 tap.test("39 - findUnusedSync() - multiple-level plain objects", (t) => {
-  t.same(
+  t.strictSame(
     findUnusedSync([
       {
         a: [
@@ -1658,7 +1658,7 @@ tap.test("39 - findUnusedSync() - multiple-level plain objects", (t) => {
     ["c", "a[0].l"],
     "39.01 - multiple levels, two objects, two unused keys, defaults"
   );
-  t.same(
+  t.strictSame(
     findUnusedSync([
       {
         a: [
@@ -1702,7 +1702,7 @@ tap.test("39 - findUnusedSync() - multiple-level plain objects", (t) => {
 });
 
 tap.test("40 - findUnusedSync() - double-nested arrays", (t) => {
-  t.same(
+  t.strictSame(
     findUnusedSync([
       {
         a: [
@@ -1744,7 +1744,7 @@ tap.test("40 - findUnusedSync() - double-nested arrays", (t) => {
     ["c", "a[0][0].l", "a[0][1].k"],
     "40.01"
   );
-  t.same(
+  t.strictSame(
     findUnusedSync([
       {
         a: [
@@ -1793,9 +1793,9 @@ tap.test("40 - findUnusedSync() - double-nested arrays", (t) => {
 });
 
 tap.test("41 - findUnusedSync() - works on empty arrays", (t) => {
-  t.same(findUnusedSync([]), [], "41.01");
-  t.same(findUnusedSync([{}]), [], "41.02");
-  t.same(findUnusedSync([{}, {}]), [], "41.03");
+  t.strictSame(findUnusedSync([]), [], "41.01");
+  t.strictSame(findUnusedSync([{}]), [], "41.02");
+  t.strictSame(findUnusedSync([{}, {}]), [], "41.03");
   t.end();
 });
 
@@ -1813,7 +1813,7 @@ tap.test("42 - findUnusedSync() - various throws", (t) => {
 });
 
 tap.test("43 - findUnusedSync() - case of empty array within an array", (t) => {
-  t.same(
+  t.strictSame(
     findUnusedSync([
       {
         a: [[]],
@@ -1829,7 +1829,7 @@ tap.test("43 - findUnusedSync() - case of empty array within an array", (t) => {
     ["c"],
     "43.01 - normal"
   );
-  t.same(
+  t.strictSame(
     findUnusedSync([
       {
         a: [[]],
@@ -1851,7 +1851,7 @@ tap.test("43 - findUnusedSync() - case of empty array within an array", (t) => {
 });
 
 tap.test("44 - findUnusedSync() - case of empty array within an array", (t) => {
-  t.same(
+  t.strictSame(
     findUnusedSync([
       {
         a: [[]],
@@ -1862,7 +1862,7 @@ tap.test("44 - findUnusedSync() - case of empty array within an array", (t) => {
     [],
     "44.01 - normalised"
   );
-  t.same(
+  t.strictSame(
     findUnusedSync([
       {
         a: [[]],
@@ -1881,7 +1881,7 @@ tap.test("44 - findUnusedSync() - case of empty array within an array", (t) => {
 tap.test(
   "45 - findUnusedSync() - objects containing objects (2 in total)",
   (t) => {
-    t.same(
+    t.strictSame(
       findUnusedSync([
         {
           a: {
@@ -1903,7 +1903,7 @@ tap.test(
       ["c", "a.x"],
       "45.01"
     );
-    t.same(
+    t.strictSame(
       findUnusedSync([
         {
           a: {
@@ -1935,7 +1935,7 @@ tap.test(
       ["c", "e", "a.x", "d.x"],
       "45.02"
     );
-    t.same(
+    t.strictSame(
       findUnusedSync([
         {
           a: {
@@ -1975,7 +1975,7 @@ tap.test(
 tap.test(
   "46 - findUnusedSync() - objects containing objects (3 in total)",
   (t) => {
-    t.same(
+    t.strictSame(
       findUnusedSync([
         {
           a: {
@@ -2005,7 +2005,7 @@ tap.test(
       ["c", "a.x", "a.k.l"],
       "46.01 - normalised, on default placeholder"
     );
-    t.same(
+    t.strictSame(
       findUnusedSync([
         {
           a: {
@@ -2044,7 +2044,7 @@ tap.test(
 tap.test(
   "47 - findUnusedSync() - objects containing objects, mixed with arrays",
   (t) => {
-    t.same(
+    t.strictSame(
       findUnusedSync([
         {
           a: {
@@ -2098,7 +2098,7 @@ tap.test(
       ["c", "a.x", "a.k.l"],
       "47.01"
     );
-    t.same(
+    t.strictSame(
       findUnusedSync([
         {
           a: {
@@ -2152,7 +2152,7 @@ tap.test(
       ["c", "a.x", "a.k.l", "a.k.p.r[0].x"],
       "47.02 - even deeper"
     );
-    t.same(
+    t.strictSame(
       findUnusedSync([
         {
           a: {
@@ -2215,17 +2215,17 @@ tap.test(
 tap.test(
   "48 - findUnusedSync() - array contents are not objects/arrays",
   (t) => {
-    t.same(
+    t.strictSame(
       findUnusedSync([false, false, false]),
       [],
       "48.01 - topmost level, Booleans"
     );
-    t.same(
+    t.strictSame(
       findUnusedSync(["zzz", "zzz", "zzz"]),
       [],
       "48.02 - topmost level, strings"
     );
-    t.same(
+    t.strictSame(
       findUnusedSync([{}, {}, {}]),
       [],
       "48.03 - topmost level, empty plain objects"
@@ -2237,7 +2237,7 @@ tap.test(
 tap.test(
   "49 - findUnusedSync() - array > single object > array > unused inside",
   (t) => {
-    t.same(
+    t.strictSame(
       findUnusedSync([
         {
           a: [
@@ -2264,7 +2264,7 @@ tap.test(
       ["a[0].k"],
       "49.01 - topmost array has a single object"
     );
-    t.same(
+    t.strictSame(
       findUnusedSync([
         {
           a: [
@@ -2317,7 +2317,7 @@ tap.test(
 );
 
 tap.test("50 - findUnusedSync() - simple case of not normalised input", (t) => {
-  t.same(
+  t.strictSame(
     findUnusedSync([
       {
         a: false,
@@ -2340,7 +2340,7 @@ tap.test("50 - findUnusedSync() - simple case of not normalised input", (t) => {
 });
 
 tap.test("51 - findUnusedSync() - opts.comments", (t) => {
-  t.same(
+  t.strictSame(
     findUnusedSync([
       {
         a: false,
@@ -2358,7 +2358,7 @@ tap.test("51 - findUnusedSync() - opts.comments", (t) => {
     ["c"],
     "51.01 - defaults recognise the comment substring within the key"
   );
-  t.same(
+  t.strictSame(
     findUnusedSync(
       [
         {
@@ -2379,7 +2379,7 @@ tap.test("51 - findUnusedSync() - opts.comments", (t) => {
     ["b__comment__this_is_a_comment_for_key_b", "c"],
     "51.02 - ignores comment fields because they match default value"
   );
-  t.same(
+  t.strictSame(
     findUnusedSync(
       [
         {
@@ -2400,7 +2400,7 @@ tap.test("51 - findUnusedSync() - opts.comments", (t) => {
     ["b__comment__this_is_a_comment_for_key_b", "c"],
     "51.03 - falsey opts.comments - instruction to turn it off"
   );
-  t.same(
+  t.strictSame(
     findUnusedSync(
       [
         {
@@ -2421,7 +2421,7 @@ tap.test("51 - findUnusedSync() - opts.comments", (t) => {
     ["b__comment__this_is_a_comment_for_key_b", "c"],
     "51.04 - falsey opts.comments - instruction to turn it off"
   );
-  t.same(
+  t.strictSame(
     findUnusedSync(
       [
         {
@@ -2442,7 +2442,7 @@ tap.test("51 - findUnusedSync() - opts.comments", (t) => {
     ["b__comment__this_is_a_comment_for_key_b", "c"],
     "51.05 - falsey opts.comments - instruction to turn it off"
   );
-  t.same(
+  t.strictSame(
     findUnusedSync(
       [
         {
@@ -2463,7 +2463,7 @@ tap.test("51 - findUnusedSync() - opts.comments", (t) => {
     ["b__comment__this_is_a_comment_for_key_b", "c"],
     "51.06 - falsey opts.comments - instruction to turn it off"
   );
-  t.same(
+  t.strictSame(
     findUnusedSync(
       [
         {
@@ -2579,7 +2579,7 @@ tap.test("52 - sortAllObjectsSync() - plain object", (t) => {
     c: "c",
   };
   t.notDeepEqual(JSON.stringify(original), JSON.stringify(sorted)); // control
-  t.same(
+  t.strictSame(
     JSON.stringify(sortAllObjectsSync(original)),
     JSON.stringify(sorted),
     "52.01"
@@ -2588,17 +2588,17 @@ tap.test("52 - sortAllObjectsSync() - plain object", (t) => {
 });
 
 tap.test("53 - sortAllObjectsSync() - non-sortable input types", (t) => {
-  t.same(sortAllObjectsSync(null), null, "53.01");
-  t.same(sortAllObjectsSync(1), 1, "53.02");
-  t.same(sortAllObjectsSync("zzz"), "zzz", "53.03");
-  t.same(sortAllObjectsSync(undefined), undefined, "53.04");
+  t.strictSame(sortAllObjectsSync(null), null, "53.01");
+  t.strictSame(sortAllObjectsSync(1), 1, "53.02");
+  t.strictSame(sortAllObjectsSync("zzz"), "zzz", "53.03");
+  t.strictSame(sortAllObjectsSync(undefined), undefined, "53.04");
   const f = (a) => a;
-  t.same(sortAllObjectsSync(f), f, "53.05");
+  t.strictSame(sortAllObjectsSync(f), f, "53.05");
   t.end();
 });
 
 tap.test("54 - sortAllObjectsSync() - object-array-object", (t) => {
-  t.same(
+  t.strictSame(
     sortAllObjectsSync({
       a: "a",
       c: [
@@ -2637,7 +2637,7 @@ tap.test("54 - sortAllObjectsSync() - object-array-object", (t) => {
 });
 
 tap.test("55 - sortAllObjectsSync() - object very deep", (t) => {
-  t.same(
+  t.strictSame(
     sortAllObjectsSync({
       a: [
         [
@@ -2767,7 +2767,7 @@ tap.test("56 - sortAllObjectsSync() - nested case", (t) => {
     c: "ccc",
   };
   t.notDeepEqual(JSON.stringify(original), JSON.stringify(sorted), "06.05.01"); // control
-  t.same(
+  t.strictSame(
     JSON.stringify(sortAllObjectsSync(original)),
     JSON.stringify(sorted),
     "56.01"
@@ -2896,7 +2896,7 @@ tap.test(
 tap.test(
   "64 - getKeyset() - calculates - three objects - default placeholder",
   async (t) => {
-    t.same(
+    t.strictSame(
       await getKeyset(
         makePromise([
           {
@@ -2935,7 +2935,7 @@ tap.test(
 tap.test(
   "65 - getKeyset() - calculates - three objects - custom placeholder",
   async (t) => {
-    t.same(
+    t.strictSame(
       await getKeyset(
         [
           {
@@ -2969,7 +2969,7 @@ tap.test(
       "65.01"
     );
 
-    t.same(
+    t.strictSame(
       await getKeyset(
         [
           {
@@ -3003,7 +3003,7 @@ tap.test(
       "65.02"
     );
 
-    t.same(
+    t.strictSame(
       await getKeyset(
         [
           {
@@ -3051,7 +3051,7 @@ tap.test(
 );
 
 tap.test("67 - getKeyset() - multiple levels of nested arrays", async (t) => {
-  t.same(
+  t.strictSame(
     await getKeyset([
       {
         key2: [
@@ -3099,7 +3099,7 @@ tap.test("67 - getKeyset() - multiple levels of nested arrays", async (t) => {
 tap.test(
   "68 - getKeyset() - objects that are directly in values",
   async (t) => {
-    t.same(
+    t.strictSame(
       await getKeyset([
         {
           a: {
@@ -3129,7 +3129,7 @@ tap.test(
       },
       "68.01"
     );
-    t.same(
+    t.strictSame(
       await getKeyset([
         {
           a: {
@@ -3166,7 +3166,7 @@ tap.test(
 tap.test(
   "69 - getKeyset() - deeper level arrays containing only strings",
   async (t) => {
-    t.same(
+    t.strictSame(
       await getKeyset([
         {
           a: false,
@@ -3197,7 +3197,7 @@ tap.test(
 tap.test(
   "70 - getKeyset() - deeper level array with string vs false",
   async (t) => {
-    t.same(
+    t.strictSame(
       await getKeyset([
         {
           a: false,
@@ -3228,7 +3228,7 @@ tap.test(
 tap.test(
   "71 - getKeyset() - two deeper level arrays with strings",
   async (t) => {
-    t.same(
+    t.strictSame(
       await getKeyset([
         {
           a: false,
@@ -3263,7 +3263,7 @@ tap.test(
 tap.test(
   "72 - getKeyset() - two deeper level arrays with mixed contents",
   async (t) => {
-    t.same(
+    t.strictSame(
       await getKeyset([
         {
           a: false,
@@ -3298,7 +3298,7 @@ tap.test(
 tap.test(
   "73 - getKeyset() - two deeper level arrays with plain objects",
   async (t) => {
-    t.same(
+    t.strictSame(
       await getKeyset([
         {
           a: false,
@@ -3338,7 +3338,7 @@ tap.test(
       },
       "73.01 - object vs object"
     );
-    t.same(
+    t.strictSame(
       await getKeyset([
         {
           a: false,
@@ -3366,7 +3366,7 @@ tap.test(
       },
       "73.02 - object vs object"
     );
-    t.same(
+    t.strictSame(
       await getKeyset([
         {
           a: false,
@@ -3394,7 +3394,7 @@ tap.test(
       },
       "73.03 - object vs object"
     );
-    t.same(
+    t.strictSame(
       await getKeyset([
         {
           a: false,
@@ -3440,7 +3440,7 @@ tap.test("74 - enforceKeyset() - enforces a simple schema", async (t) => {
       a: "ccc",
     },
   ]);
-  t.same(
+  t.strictSame(
     await enforceKeyset(
       {
         a: "ccc",
@@ -3474,7 +3474,7 @@ tap.test("75 - enforceKeyset() - enforces a more complex schema", async (t) => {
     a: "zzz",
   };
   const schema = await getKeyset([obj1, obj2, obj3]);
-  t.same(
+  t.strictSame(
     schema,
     {
       a: false,
@@ -3488,7 +3488,7 @@ tap.test("75 - enforceKeyset() - enforces a more complex schema", async (t) => {
     },
     "75.01 - .getKeyset itself"
   );
-  t.same(
+  t.strictSame(
     await enforceKeyset(obj1, schema),
     {
       a: "aaa",
@@ -3502,7 +3502,7 @@ tap.test("75 - enforceKeyset() - enforces a more complex schema", async (t) => {
     },
     "75.02 - .enforceKeyset"
   );
-  t.same(
+  t.strictSame(
     await enforceKeyset(obj2, schema),
     {
       a: "ccc",
@@ -3516,7 +3516,7 @@ tap.test("75 - enforceKeyset() - enforces a more complex schema", async (t) => {
     },
     "75.03 - .enforceKeyset"
   );
-  t.same(
+  t.strictSame(
     await enforceKeyset(obj3, schema),
     {
       a: "zzz",
@@ -3547,7 +3547,7 @@ tap.test(
       a: false,
     };
     const schema = await getKeyset([obj1, obj2]);
-    t.same(
+    t.strictSame(
       schema,
       {
         a: [
@@ -3558,7 +3558,7 @@ tap.test(
       },
       "76.01 - .getKeyset"
     );
-    t.same(
+    t.strictSame(
       await enforceKeyset(obj1, schema),
       {
         a: [
@@ -3569,7 +3569,7 @@ tap.test(
       },
       "76.02 - .enforceKeyset"
     );
-    t.same(
+    t.strictSame(
       await enforceKeyset(obj2, schema),
       {
         a: [
@@ -3585,7 +3585,7 @@ tap.test(
 );
 
 tap.test("77 - enforceKeyset() - another set involving arrays", async (t) => {
-  t.same(
+  t.strictSame(
     await prepArray(
       makePromise([
         {
@@ -3630,7 +3630,7 @@ tap.test("77 - enforceKeyset() - another set involving arrays", async (t) => {
 });
 
 tap.test("78 - enforceKeyset() - deep-nested arrays", async (t) => {
-  t.same(
+  t.strictSame(
     await prepArray([
       {
         a: [
@@ -3750,7 +3750,7 @@ tap.test(
       a: "a",
     };
     const schema = await getKeyset([obj1, obj2]);
-    t.same(
+    t.strictSame(
       schema,
       {
         a: [
@@ -3761,7 +3761,7 @@ tap.test(
       },
       "79.01 - .getKeyset"
     );
-    t.same(
+    t.strictSame(
       await enforceKeyset(obj1, schema),
       {
         a: [
@@ -3772,7 +3772,7 @@ tap.test(
       },
       "79.02 - .enforceKeyset"
     );
-    t.same(
+    t.strictSame(
       await enforceKeyset(obj2, schema),
       {
         a: [
@@ -3790,7 +3790,7 @@ tap.test(
 tap.test(
   "80 - enforceKeyset() - multiple objects within an array",
   async (t) => {
-    t.same(
+    t.strictSame(
       await prepArray([
         {
           a: "a",
@@ -3880,7 +3880,7 @@ tap.test("81 - enforceKeyset() - multiple levels of arrays", async (t) => {
     c: "ccc",
     a: false,
   };
-  t.same(
+  t.strictSame(
     await prepArray([obj1, obj2]),
     [
       {
@@ -3926,7 +3926,7 @@ tap.test("81 - enforceKeyset() - multiple levels of arrays", async (t) => {
 });
 
 tap.test("82 - enforceKeyset() - array vs string clashes", async (t) => {
-  t.same(
+  t.strictSame(
     await prepArray([
       {
         a: "aaa",
@@ -4025,7 +4025,7 @@ tap.test("87 - enforceKeyset() - array over empty array", async (t) => {
     b: "b",
   };
   const schema = await getKeyset([obj1, obj2]);
-  t.same(
+  t.strictSame(
     schema,
     {
       a: [
@@ -4039,7 +4039,7 @@ tap.test("87 - enforceKeyset() - array over empty array", async (t) => {
     },
     "87.01"
   );
-  t.same(
+  t.strictSame(
     await enforceKeyset(obj1, schema),
     {
       a: [
@@ -4057,7 +4057,7 @@ tap.test("87 - enforceKeyset() - array over empty array", async (t) => {
     },
     "87.02"
   );
-  t.same(
+  t.strictSame(
     await enforceKeyset(obj2, schema),
     {
       a: [
@@ -4102,7 +4102,7 @@ tap.test("89 - enforceKeyset() - opts.useNullAsExplicitFalse", async (t) => {
       },
     ])
   );
-  t.same(
+  t.strictSame(
     await enforceKeyset(
       {
         a: null,
@@ -4115,7 +4115,7 @@ tap.test("89 - enforceKeyset() - opts.useNullAsExplicitFalse", async (t) => {
     },
     "89.01 - defaults - null is explicit false"
   );
-  t.same(
+  t.strictSame(
     await enforceKeyset(
       {
         a: null,

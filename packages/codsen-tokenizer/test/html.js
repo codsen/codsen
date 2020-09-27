@@ -44,7 +44,7 @@ tap.test("02 - text only", (t) => {
       gathered.push(obj);
     },
   });
-  t.same(
+  t.strictSame(
     gathered,
     [
       {
@@ -66,7 +66,7 @@ tap.test("03 - opening tag only", (t) => {
       gathered.push(obj);
     },
   });
-  t.same(
+  t.strictSame(
     gathered,
     [
       {
@@ -98,7 +98,7 @@ tap.test("04 - closing tag only", (t) => {
       gathered.push(obj);
     },
   });
-  t.same(
+  t.strictSame(
     gathered,
     [
       {
@@ -633,7 +633,7 @@ tap.test("21 - exact match, tag pair with whitespace", (t) => {
       gathered.push(obj);
     },
   });
-  t.same(
+  t.strictSame(
     gathered,
     [
       {
@@ -704,7 +704,7 @@ tap.test("22 - closing tag with attributes", (t) => {
       gathered.push(obj);
     },
   });
-  t.same(
+  t.strictSame(
     gathered,
     [
       {
@@ -1121,7 +1121,7 @@ tap.test("35 - unrecognised tag name", (t) => {
       gathered.push(obj);
     },
   });
-  t.same(
+  t.strictSame(
     gathered,
     [
       {
@@ -1153,7 +1153,7 @@ tap.test("36 - unrecognised tag name with dash", (t) => {
       gathered.push(obj);
     },
   });
-  t.same(
+  t.strictSame(
     gathered,
     [
       {

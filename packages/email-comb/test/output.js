@@ -26,18 +26,18 @@ tap.test(
     <hr>
     <br><br>`);
 
-    t.same(
+    t.strictSame(
       actual.allInHead,
       ["#non-existent-id", "#other", ".non-existent-class"],
       "01.01"
     );
-    t.same(actual.allInBody, [], "01.02");
-    t.same(
+    t.strictSame(actual.allInBody, [], "01.02");
+    t.strictSame(
       actual.deletedFromHead,
       ["#non-existent-id", "#other", ".non-existent-class"],
       "01.03"
     );
-    t.same(actual.deletedFromBody, [], "01.04");
+    t.strictSame(actual.deletedFromBody, [], "01.04");
     t.end();
   }
 );
@@ -67,22 +67,22 @@ tap.test("02 - returned correct info object, clean HTML", (t) => {
 </html>
 `);
 
-  t.same(
+  t.strictSame(
     actual.allInHead,
     ["#non-existent-id", "#other", ".non-existent-class"],
     "02.01"
   );
-  t.same(
+  t.strictSame(
     actual.allInBody,
     ["#unused4", ".unused1", ".unused2", ".unused3"],
     "02.02"
   );
-  t.same(
+  t.strictSame(
     actual.deletedFromHead,
     ["#non-existent-id", "#other", ".non-existent-class"],
     "02.03"
   );
-  t.same(
+  t.strictSame(
     actual.deletedFromBody,
     ["#unused4", ".unused1", ".unused2", ".unused3"],
     "02.04"
@@ -119,22 +119,22 @@ tap.test("03 - as 06.02 but now with whitelist, dirty HTML", (t) => {
       ],
     }
   );
-  t.same(
+  t.strictSame(
     actual.allInHead,
     ["#non-existent-id", "#other", ".non-existent-class"],
     "03.01"
   );
-  t.same(
+  t.strictSame(
     actual.allInBody,
     [".body-only-class-1", ".body-only-class-2"],
     "03.02"
   );
-  t.same(
+  t.strictSame(
     actual.deletedFromHead,
     [],
     "03.03 - nothing removed because of whitelist"
   );
-  t.same(
+  t.strictSame(
     actual.deletedFromBody,
     [],
     "03.04 - nothing removed because of whitelist"
@@ -164,10 +164,10 @@ tap.test("04 - correct classes reported in info/deletedFromBody", (t) => {
 </html>
 `);
 
-  t.same(actual.allInHead, [".unused", ".used"], "04.01");
-  t.same(actual.allInBody, [".used"], "04.02");
-  t.same(actual.deletedFromHead, [".unused", ".used"], "04.03");
-  t.same(
+  t.strictSame(actual.allInHead, [".unused", ".used"], "04.01");
+  t.strictSame(actual.allInBody, [".used"], "04.02");
+  t.strictSame(actual.deletedFromHead, [".unused", ".used"], "04.03");
+  t.strictSame(
     actual.deletedFromBody,
     [".used"],
     "04.04 - sneaky case - it is within head, but it is sandwitched with an unused class, so it does not count!"
@@ -199,18 +199,18 @@ tap.test("05 - more sandwitched classes/ids cases", (t) => {
 </html>
 `);
 
-  t.same(
+  t.strictSame(
     actual.allInHead,
     ["#unused-id", "#used-id", ".unused-class", ".used-class"],
     "05.01"
   );
-  t.same(actual.allInBody, ["#used-id", ".used-class"], "05.02");
-  t.same(
+  t.strictSame(actual.allInBody, ["#used-id", ".used-class"], "05.02");
+  t.strictSame(
     actual.deletedFromHead,
     ["#unused-id", "#used-id", ".unused-class", ".used-class"],
     "05.03 - deleted because they'e sandwitched with unused classes/ids"
   );
-  t.same(
+  t.strictSame(
     actual.deletedFromBody,
     ["#used-id", ".used-class"],
     "05.04 - deleted because they'e sandwitched with unused classes/ids"

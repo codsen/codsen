@@ -36,7 +36,7 @@ tap.test(
     //   )}`
     // );
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         // ===================
@@ -44,7 +44,7 @@ tap.test(
           {
             a: "b",
           },
-          null,
+          undefined,
           {
             depth: 0,
             path: "0",
@@ -82,7 +82,7 @@ tap.test(
           {
             c: "d",
           },
-          null,
+          undefined,
           {
             depth: 0,
             path: "1",
@@ -120,7 +120,7 @@ tap.test(
           {
             e: "f",
           },
-          null,
+          undefined,
           {
             depth: 0,
             path: "2",
@@ -192,7 +192,7 @@ tap.test(
     //   )}`
     // );
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         // ===================
@@ -200,7 +200,7 @@ tap.test(
           {
             a: "b",
           },
-          null,
+          undefined,
           {
             depth: 0,
             path: "0",
@@ -248,7 +248,7 @@ tap.test(
                 {
                   c: "d",
                 },
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "1",
@@ -274,7 +274,7 @@ tap.test(
           {
             c: "d",
           },
-          null,
+          undefined,
           {
             depth: 0,
             path: "1",
@@ -322,7 +322,7 @@ tap.test(
                 {
                   e: "f",
                 },
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "2",
@@ -348,7 +348,7 @@ tap.test(
           {
             e: "f",
           },
-          null,
+          undefined,
           {
             depth: 0,
             path: "2",
@@ -433,7 +433,7 @@ tap.test(
     //   )}`
     // );
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         // ===================
@@ -441,7 +441,7 @@ tap.test(
           {
             a: "b",
           },
-          null,
+          undefined,
           {
             depth: 0,
             path: "0",
@@ -474,7 +474,7 @@ tap.test(
                 {
                   c: "d",
                 },
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "1",
@@ -511,7 +511,7 @@ tap.test(
                 {
                   c: "d",
                 },
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "1",
@@ -549,7 +549,7 @@ tap.test(
           {
             c: "d",
           },
-          null,
+          undefined,
           {
             depth: 0,
             path: "1",
@@ -582,7 +582,7 @@ tap.test(
                 {
                   e: "f",
                 },
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "2",
@@ -619,7 +619,7 @@ tap.test(
                 {
                   e: "f",
                 },
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "2",
@@ -657,7 +657,7 @@ tap.test(
           {
             e: "f",
           },
-          null,
+          undefined,
           {
             depth: 0,
             path: "2",
@@ -742,7 +742,7 @@ tap.test(
     //   )}`
     // );
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         // ===================
@@ -750,7 +750,7 @@ tap.test(
           {
             a: "b",
           },
-          null,
+          undefined,
           {
             depth: 0,
             path: "0",
@@ -783,7 +783,7 @@ tap.test(
                 {
                   c: "d",
                 },
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "1",
@@ -832,7 +832,7 @@ tap.test(
                 {
                   c: "d",
                 },
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "1",
@@ -866,7 +866,7 @@ tap.test(
                 {
                   e: "f",
                 },
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "2",
@@ -892,7 +892,7 @@ tap.test(
           {
             c: "d",
           },
-          null,
+          undefined,
           {
             depth: 0,
             path: "1",
@@ -925,7 +925,7 @@ tap.test(
                 {
                   e: "f",
                 },
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "2",
@@ -974,7 +974,7 @@ tap.test(
                 {
                   e: "f",
                 },
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "2",
@@ -1012,7 +1012,7 @@ tap.test(
           {
             e: "f",
           },
-          null,
+          undefined,
           {
             depth: 0,
             path: "2",
@@ -1097,7 +1097,7 @@ tap.test(
     //   )}`
     // );
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         // ===================
@@ -1105,7 +1105,7 @@ tap.test(
           {
             a: "b",
           },
-          null,
+          undefined,
           {
             depth: 0,
             path: "0",
@@ -1138,7 +1138,7 @@ tap.test(
                 {
                   c: "d",
                 },
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "1",
@@ -1172,7 +1172,7 @@ tap.test(
                 {
                   e: "f",
                 },
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "2",
@@ -1221,7 +1221,7 @@ tap.test(
                 {
                   c: "d",
                 },
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "1",
@@ -1255,7 +1255,7 @@ tap.test(
                 {
                   e: "f",
                 },
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "2",
@@ -1293,7 +1293,7 @@ tap.test(
           {
             c: "d",
           },
-          null,
+          undefined,
           {
             depth: 0,
             path: "1",
@@ -1326,7 +1326,7 @@ tap.test(
                 {
                   e: "f",
                 },
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "2",
@@ -1375,7 +1375,7 @@ tap.test(
                 {
                   e: "f",
                 },
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "2",
@@ -1413,7 +1413,7 @@ tap.test(
           {
             e: "f",
           },
-          null,
+          undefined,
           {
             depth: 0,
             path: "2",
@@ -1498,7 +1498,7 @@ tap.test(
     //   )}`
     // );
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         // ===================
@@ -1506,7 +1506,7 @@ tap.test(
           {
             a: "b",
           },
-          null,
+          undefined,
           {
             depth: 0,
             path: "0",
@@ -1539,7 +1539,7 @@ tap.test(
                 {
                   c: "d",
                 },
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "1",
@@ -1573,7 +1573,7 @@ tap.test(
                 {
                   e: "f",
                 },
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "2",
@@ -1622,7 +1622,7 @@ tap.test(
                 {
                   c: "d",
                 },
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "1",
@@ -1656,7 +1656,7 @@ tap.test(
                 {
                   e: "f",
                 },
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "2",
@@ -1694,7 +1694,7 @@ tap.test(
           {
             c: "d",
           },
-          null,
+          undefined,
           {
             depth: 0,
             path: "1",
@@ -1727,7 +1727,7 @@ tap.test(
                 {
                   e: "f",
                 },
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "2",
@@ -1776,7 +1776,7 @@ tap.test(
                 {
                   e: "f",
                 },
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "2",
@@ -1814,7 +1814,7 @@ tap.test(
           {
             e: "f",
           },
-          null,
+          undefined,
           {
             depth: 0,
             path: "2",
@@ -1899,7 +1899,7 @@ tap.test(
     //   )}`
     // );
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         // ===================
@@ -1907,7 +1907,7 @@ tap.test(
           {
             a: "b",
           },
-          null,
+          undefined,
           {
             depth: 0,
             path: "0",
@@ -1940,7 +1940,7 @@ tap.test(
                 {
                   c: "d",
                 },
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "1",
@@ -1974,7 +1974,7 @@ tap.test(
                 {
                   e: "f",
                 },
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "2",
@@ -2023,7 +2023,7 @@ tap.test(
                 {
                   c: "d",
                 },
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "1",
@@ -2057,7 +2057,7 @@ tap.test(
                 {
                   e: "f",
                 },
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "2",
@@ -2095,7 +2095,7 @@ tap.test(
           {
             c: "d",
           },
-          null,
+          undefined,
           {
             depth: 0,
             path: "1",
@@ -2128,7 +2128,7 @@ tap.test(
                 {
                   e: "f",
                 },
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "2",
@@ -2177,7 +2177,7 @@ tap.test(
                 {
                   e: "f",
                 },
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "2",
@@ -2215,7 +2215,7 @@ tap.test(
           {
             e: "f",
           },
-          null,
+          undefined,
           {
             depth: 0,
             path: "2",
@@ -2289,12 +2289,12 @@ tap.test(
     //   )}`
     // );
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         [
           "a",
-          null,
+          undefined,
           {
             depth: 0,
             path: "0",
@@ -2305,7 +2305,7 @@ tap.test(
         ],
         [
           undefined,
-          null,
+          undefined,
           {
             depth: 0,
             path: "1",
@@ -2316,11 +2316,11 @@ tap.test(
         ],
         [
           "b",
-          null,
+          undefined,
           {
             depth: 0,
             path: "2",
-            parent: ["a", null, "b"],
+            parent: ["a", undefined, "b"],
             parentType: "array",
             next: [],
           },
@@ -2353,12 +2353,12 @@ tap.test(
     //   )}`
     // );
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         [
           "a",
-          null,
+          undefined,
           {
             depth: 0,
             path: "0",
@@ -2367,7 +2367,7 @@ tap.test(
             next: [
               [
                 undefined,
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "1",
@@ -2380,7 +2380,7 @@ tap.test(
         ],
         [
           undefined,
-          null,
+          undefined,
           {
             depth: 0,
             path: "1",
@@ -2389,11 +2389,11 @@ tap.test(
             next: [
               [
                 "b",
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "2",
-                  parent: ["a", null, "b"],
+                  parent: ["a", undefined, "b"],
                   parentType: "array",
                 },
               ],
@@ -2402,11 +2402,11 @@ tap.test(
         ],
         [
           "b",
-          null,
+          undefined,
           {
             depth: 0,
             path: "2",
-            parent: ["a", null, "b"],
+            parent: ["a", undefined, "b"],
             parentType: "array",
             next: [],
           },
@@ -2439,12 +2439,12 @@ tap.test(
     //   )}`
     // );
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         [
           "a",
-          null,
+          undefined,
           {
             depth: 0,
             path: "0",
@@ -2453,7 +2453,7 @@ tap.test(
             next: [
               [
                 undefined,
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "1",
@@ -2463,11 +2463,11 @@ tap.test(
               ],
               [
                 "b",
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "2",
-                  parent: ["a", null, "b"],
+                  parent: ["a", undefined, "b"],
                   parentType: "array",
                 },
               ],
@@ -2476,7 +2476,7 @@ tap.test(
         ],
         [
           undefined,
-          null,
+          undefined,
           {
             depth: 0,
             path: "1",
@@ -2485,11 +2485,11 @@ tap.test(
             next: [
               [
                 "b",
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "2",
-                  parent: ["a", null, "b"],
+                  parent: ["a", undefined, "b"],
                   parentType: "array",
                 },
               ],
@@ -2498,11 +2498,11 @@ tap.test(
         ],
         [
           "b",
-          null,
+          undefined,
           {
             depth: 0,
             path: "2",
-            parent: ["a", null, "b"],
+            parent: ["a", undefined, "b"],
             parentType: "array",
             next: [],
           },
@@ -2535,12 +2535,12 @@ tap.test(
     //   )}`
     // );
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         [
           "a",
-          null,
+          undefined,
           {
             depth: 0,
             path: "0",
@@ -2549,7 +2549,7 @@ tap.test(
             next: [
               [
                 undefined,
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "1",
@@ -2559,11 +2559,11 @@ tap.test(
               ],
               [
                 "b",
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "2",
-                  parent: ["a", null, "b"],
+                  parent: ["a", undefined, "b"],
                   parentType: "array",
                 },
               ],
@@ -2572,7 +2572,7 @@ tap.test(
         ],
         [
           undefined,
-          null,
+          undefined,
           {
             depth: 0,
             path: "1",
@@ -2581,11 +2581,11 @@ tap.test(
             next: [
               [
                 "b",
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "2",
-                  parent: ["a", null, "b"],
+                  parent: ["a", undefined, "b"],
                   parentType: "array",
                 },
               ],
@@ -2594,11 +2594,11 @@ tap.test(
         ],
         [
           "b",
-          null,
+          undefined,
           {
             depth: 0,
             path: "2",
-            parent: ["a", null, "b"],
+            parent: ["a", undefined, "b"],
             parentType: "array",
             next: [],
           },
@@ -2631,12 +2631,12 @@ tap.test(
     //   )}`
     // );
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         [
           "a",
-          null,
+          undefined,
           {
             depth: 0,
             path: "0",
@@ -2645,7 +2645,7 @@ tap.test(
             next: [
               [
                 undefined,
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "1",
@@ -2655,11 +2655,11 @@ tap.test(
               ],
               [
                 "b",
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "2",
-                  parent: ["a", null, "b"],
+                  parent: ["a", undefined, "b"],
                   parentType: "array",
                 },
               ],
@@ -2668,7 +2668,7 @@ tap.test(
         ],
         [
           undefined,
-          null,
+          undefined,
           {
             depth: 0,
             path: "1",
@@ -2677,11 +2677,11 @@ tap.test(
             next: [
               [
                 "b",
-                null,
+                undefined,
                 {
                   depth: 0,
                   path: "2",
-                  parent: ["a", null, "b"],
+                  parent: ["a", undefined, "b"],
                   parentType: "array",
                 },
               ],
@@ -2690,11 +2690,11 @@ tap.test(
         ],
         [
           "b",
-          null,
+          undefined,
           {
             depth: 0,
             path: "2",
-            parent: ["a", null, "b"],
+            parent: ["a", undefined, "b"],
             parentType: "array",
             next: [],
           },
@@ -2730,7 +2730,7 @@ tap.test(
     //   )}`
     // );
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         // ===================
@@ -2811,7 +2811,7 @@ tap.test(
     //   )}`
     // );
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         [
@@ -2830,7 +2830,7 @@ tap.test(
         ],
         [
           "1",
-          null,
+          undefined,
           {
             depth: 1,
             path: "a.0",
@@ -2842,7 +2842,7 @@ tap.test(
         ],
         [
           "2",
-          null,
+          undefined,
           {
             depth: 1,
             path: "a.1",
@@ -2854,7 +2854,7 @@ tap.test(
         ],
         [
           "3",
-          null,
+          undefined,
           {
             depth: 1,
             path: "a.2",
@@ -2911,7 +2911,7 @@ tap.test(
     //   )}`
     // );
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         // ===================
@@ -3159,7 +3159,7 @@ tap.test(
         // ===================
         [
           "1",
-          null,
+          undefined,
           {
             depth: 4,
             path: "a.f.g.h.0",
@@ -3172,7 +3172,7 @@ tap.test(
         // ===================
         [
           "2",
-          null,
+          undefined,
           {
             depth: 4,
             path: "a.f.g.h.1",
@@ -3185,7 +3185,7 @@ tap.test(
         // ===================
         [
           "3",
-          null,
+          undefined,
           {
             depth: 4,
             path: "a.f.g.h.2",
@@ -3227,7 +3227,7 @@ tap.test(
         // ===================
         [
           "4",
-          null,
+          undefined,
           {
             depth: 4,
             path: "a.f.g.i.0",
@@ -3246,7 +3246,7 @@ tap.test(
         // ===================
         [
           "5",
-          null,
+          undefined,
           {
             depth: 4,
             path: "a.f.g.i.1",
@@ -3267,7 +3267,7 @@ tap.test(
           {
             j: "k",
           },
-          null,
+          undefined,
           {
             depth: 4,
             path: "a.f.g.i.2",
@@ -3324,7 +3324,7 @@ tap.test(
         // ===================
         [
           "7",
-          null,
+          undefined,
           {
             depth: 4,
             path: "a.f.g.l.0",
@@ -3337,7 +3337,7 @@ tap.test(
         // ===================
         [
           "8",
-          null,
+          undefined,
           {
             depth: 4,
             path: "a.f.g.l.1",
@@ -3350,7 +3350,7 @@ tap.test(
         // ===================
         [
           "9",
-          null,
+          undefined,
           {
             depth: 4,
             path: "a.f.g.l.2",
@@ -3384,7 +3384,7 @@ tap.test(
     //   )}`
     // );
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         [
@@ -3473,7 +3473,7 @@ tap.test(
       gathered.push(innerObj.path);
       return current;
     });
-    t.same(gathered, ["a", "b", "b.c"], "17");
+    t.strictSame(gathered, ["a", "b", "b.c"], "17");
     t.end();
   }
 );
@@ -3491,7 +3491,7 @@ tap.test(
       }
       return current;
     });
-    t.same(gathered, ["a", "b"], "18");
+    t.strictSame(gathered, ["a", "b"], "18");
     t.end();
   }
 );
@@ -3506,7 +3506,7 @@ tap.test(
       gathered.push(innerObj.path);
       return current;
     });
-    t.same(gathered, ["0", "1", "1.0", "1.1"], "19");
+    t.strictSame(gathered, ["0", "1", "1.0", "1.1"], "19");
     t.end();
   }
 );
@@ -3524,7 +3524,7 @@ tap.test(
       }
       return current;
     });
-    t.same(gathered, ["0", "1"], "20");
+    t.strictSame(gathered, ["0", "1"], "20");
     t.end();
   }
 );

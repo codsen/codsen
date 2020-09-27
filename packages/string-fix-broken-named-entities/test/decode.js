@@ -17,7 +17,7 @@ tap.test(
         //
         // healthy entity but decode requested:
         //
-        t.same(
+        t.strictSame(
           fix(`&${singleEntity};`, {
             decode: true,
             cb: (obj) => obj,
@@ -42,7 +42,7 @@ tap.test(
 tap.test(
   `02 - ${`\u001b[${36}m${`decode`}\u001b[${39}m`} - one of entities`,
   (t) => {
-    t.same(
+    t.strictSame(
       fix(`&EmptyVerySmallSquare;`, {
         decode: true,
         cb: (obj) => obj,

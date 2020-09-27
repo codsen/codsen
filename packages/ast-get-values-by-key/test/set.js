@@ -2,7 +2,7 @@ import tap from "tap";
 import get from "../dist/ast-get-values-by-key.esm";
 
 tap.test("01 - string replaced", (t) => {
-  t.same(
+  t.strictSame(
     get(
       {
         tag: "html",
@@ -19,7 +19,7 @@ tap.test("01 - string replaced", (t) => {
 });
 
 tap.test("02 - string within array replaced", (t) => {
-  t.same(
+  t.strictSame(
     get(
       {
         tag: ["html"],
@@ -36,7 +36,7 @@ tap.test("02 - string within array replaced", (t) => {
 });
 
 tap.test("03 - value is object and is replaced", (t) => {
-  t.same(
+  t.strictSame(
     get(
       {
         tag: {
@@ -61,7 +61,7 @@ tap.test("03 - value is object and is replaced", (t) => {
 });
 
 tap.test("04 - two objects replaced", (t) => {
-  t.same(
+  t.strictSame(
     get(
       [
         {
@@ -103,7 +103,7 @@ tap.test("04 - two objects replaced", (t) => {
 });
 
 tap.test("05 - simple edit", (t) => {
-  t.same(
+  t.strictSame(
     get(
       [
         {
@@ -146,7 +146,7 @@ tap.test("05 - simple edit", (t) => {
 });
 
 tap.test("06 - replaced to an empty string", (t) => {
-  t.same(
+  t.strictSame(
     get(
       {
         tag: "html",
@@ -163,7 +163,7 @@ tap.test("06 - replaced to an empty string", (t) => {
 });
 
 tap.test("07 - not enough replacement values given", (t) => {
-  t.same(
+  t.strictSame(
     get(
       {
         meta: [
@@ -200,7 +200,7 @@ tap.test("07 - not enough replacement values given", (t) => {
 });
 
 tap.test("08 - no results replacement", (t) => {
-  t.same(
+  t.strictSame(
     get(
       {
         style: "html",

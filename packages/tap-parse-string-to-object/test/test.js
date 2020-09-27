@@ -86,7 +86,7 @@ tap.test("02 - case 01 - arrayiffy-if-string - all pass", (t) => {
   # time=1816.082ms
 `;
 
-  t.same(
+  t.strictSame(
     parse(input),
     {
       ok: true,
@@ -166,9 +166,9 @@ tap.test("03 - case 01 - arrayiffy-if-string - none pass", (t) => {
               Object.<anonymous> (/libs/node_modules/append-transform/index.js:62:4)
             source: |
               tap.test("01.01 - string input", t => {
-                t.same(a("aaa"), ["aaa"], "01.01.01");
+                t.strictSame(a("aaa"), ["aaa"], "01.01.01");
               ----^
-                t.same(a(""), [], "01.01.02");
+                t.strictSame(a(""), [], "01.01.02");
                 t.end();
             ...
 
@@ -192,8 +192,8 @@ tap.test("03 - case 01 - arrayiffy-if-string - none pass", (t) => {
 
               Object.<anonymous> (/libs/node_modules/append-transform/index.js:62:4)
             source: |2
-                t.same(a("aaa"), ["aaa"], "01.01.01");
-                t.same(a(""), [], "01.01.02");
+                t.strictSame(a("aaa"), ["aaa"], "01.01.01");
+                t.strictSame(a(""), [], "01.01.02");
               ----^
                 t.end();
               });
@@ -225,10 +225,10 @@ tap.test("03 - case 01 - arrayiffy-if-string - none pass", (t) => {
               Object.<anonymous> (/libs/node_modules/append-transform/index.js:62:4)
             source: |
               tap.test("01.02 - non-string input", t => {
-                t.same(a(1), 1, "01.02.01");
+                t.strictSame(a(1), 1, "01.02.01");
               ----^
-                t.same(a(null), null, "01.02.02");
-                t.same(a(undefined), undefined, "01.02.03");
+                t.strictSame(a(null), null, "01.02.02");
+                t.strictSame(a(undefined), undefined, "01.02.03");
             ...
 
           not ok 2 - 01.02.02
@@ -251,11 +251,11 @@ tap.test("03 - case 01 - arrayiffy-if-string - none pass", (t) => {
 
               Object.<anonymous> (/libs/node_modules/append-transform/index.js:62:4)
             source: |2
-                t.same(a(1), 1, "01.02.01");
-                t.same(a(null), null, "01.02.02");
+                t.strictSame(a(1), 1, "01.02.01");
+                t.strictSame(a(null), null, "01.02.02");
               ----^
-                t.same(a(undefined), undefined, "01.02.03");
-                t.same(a(), undefined, "01.02.04");
+                t.strictSame(a(undefined), undefined, "01.02.03");
+                t.strictSame(a(), undefined, "01.02.04");
             ...
 
           not ok 3 - 01.02.03
@@ -278,11 +278,11 @@ tap.test("03 - case 01 - arrayiffy-if-string - none pass", (t) => {
 
               Object.<anonymous> (/libs/node_modules/append-transform/index.js:62:4)
             source: |2
-                t.same(a(null), null, "01.02.02");
-                t.same(a(undefined), undefined, "01.02.03");
+                t.strictSame(a(null), null, "01.02.02");
+                t.strictSame(a(undefined), undefined, "01.02.03");
               ----^
-                t.same(a(), undefined, "01.02.04");
-                t.same(a(true), true, "01.02.05");
+                t.strictSame(a(), undefined, "01.02.04");
+                t.strictSame(a(true), true, "01.02.05");
             ...
 
           not ok 4 - 01.02.04
@@ -305,10 +305,10 @@ tap.test("03 - case 01 - arrayiffy-if-string - none pass", (t) => {
 
               Object.<anonymous> (/libs/node_modules/append-transform/index.js:62:4)
             source: |2
-                t.same(a(undefined), undefined, "01.02.03");
-                t.same(a(), undefined, "01.02.04");
+                t.strictSame(a(undefined), undefined, "01.02.03");
+                t.strictSame(a(), undefined, "01.02.04");
               ----^
-                t.same(a(true), true, "01.02.05");
+                t.strictSame(a(true), true, "01.02.05");
                 t.end();
             ...
 
@@ -332,8 +332,8 @@ tap.test("03 - case 01 - arrayiffy-if-string - none pass", (t) => {
 
               Object.<anonymous> (/libs/node_modules/append-transform/index.js:62:4)
             source: |2
-                t.same(a(), undefined, "01.02.04");
-                t.same(a(true), true, "01.02.05");
+                t.strictSame(a(), undefined, "01.02.04");
+                t.strictSame(a(true), true, "01.02.05");
               ----^
                 t.end();
               });
@@ -389,7 +389,7 @@ tap.test("03 - case 01 - arrayiffy-if-string - none pass", (t) => {
               Object.<anonymous> (/libs/node_modules/append-transform/index.js:62:4)
             source: |
               tap.test("UMD build works fine", t => {
-                t.same(a1(source), res);
+                t.strictSame(a1(source), res);
               ----^
                 t.end();
               });
@@ -409,7 +409,7 @@ tap.test("03 - case 01 - arrayiffy-if-string - none pass", (t) => {
   # time=2198.062ms
 `;
 
-  t.same(
+  t.strictSame(
     parse(input),
     {
       ok: true,
@@ -638,7 +638,7 @@ tap.test("04 - ranges-merge", (t) => {
   # time=1658.26ms
 `;
 
-  t.same(
+  t.strictSame(
     parse(input),
     {
       ok: true,
@@ -792,7 +792,7 @@ tap.test("05 - object-set-all-values-to", (t) => {
   # time=2910.83ms
 `;
 
-  t.same(
+  t.strictSame(
     parse(input),
     {
       ok: true,
@@ -887,7 +887,7 @@ ok 1 - UMD build works fine # time=10.033ms
       path.join(tempFolder, "sampleTestStats.md")
     );
 
-    t.same(
+    t.strictSame(
       await parse(contentsAsStream),
       {
         ok: true,

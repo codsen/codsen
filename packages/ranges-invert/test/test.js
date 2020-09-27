@@ -199,13 +199,13 @@ tap.test("05 - zero-length ranges array", (t) => {
 tap.test(
   `06 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - zero length given`,
   (t) => {
-    t.same(i(null, 0), null, "06.01");
-    t.same(i([], 0), null, "06.02");
-    t.same(i([null], 0), null, "06.03");
-    t.same(i([[0, 0]], 0), null, "06.04");
-    t.same(i([[1, 2]], 0), null, "06.05");
-    t.same(i([[1, 2], null], 0), null, "06.06");
-    t.same(
+    t.strictSame(i(null, 0), null, "06.01");
+    t.strictSame(i([], 0), null, "06.02");
+    t.strictSame(i([null], 0), null, "06.03");
+    t.strictSame(i([[0, 0]], 0), null, "06.04");
+    t.strictSame(i([[1, 2]], 0), null, "06.05");
+    t.strictSame(i([[1, 2], null], 0), null, "06.06");
+    t.strictSame(
       i(
         [
           [1, 2],
@@ -216,7 +216,7 @@ tap.test(
       null,
       "06.07"
     );
-    t.same(i([[1, 2], null, [2, 4]], 0), null, "06.08");
+    t.strictSame(i([[1, 2], null, [2, 4]], 0), null, "06.08");
     t.end();
   }
 );
@@ -241,7 +241,7 @@ tap.test(
       "07.04 - all pieces add up"
     );
     // now, real deal:
-    t.same(i([range1], ref.length), [range2p1, range2p2], "07.05");
+    t.strictSame(i([range1], ref.length), [range2p1, range2p2], "07.05");
 
     t.end();
   }
@@ -251,9 +251,9 @@ tap.test(
   `08 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - is one too short`,
   (t) => {
     // good:
-    t.same(i([[1, 3]], 3), [[0, 1]], "08.01");
+    t.strictSame(i([[1, 3]], 3), [[0, 1]], "08.01");
     // one too short - will crop:
-    t.same(i([[1, 3]], 2), [[0, 1]], "08.02");
+    t.strictSame(i([[1, 3]], 2), [[0, 1]], "08.02");
 
     t.end();
   }
@@ -262,8 +262,8 @@ tap.test(
 tap.test(
   `09 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - same element range invert - yields everything`,
   (t) => {
-    t.same(i([[0, 0]], 3), [[0, 3]], "09.01");
-    t.same(i([[1, 1]], 3), [[0, 3]], "09.02");
+    t.strictSame(i([[0, 0]], 3), [[0, 3]], "09.01");
+    t.strictSame(i([[1, 1]], 3), [[0, 3]], "09.02");
     t.end();
   }
 );
@@ -291,7 +291,7 @@ tap.test(
       "10.03 - all pieces add up"
     );
     // // now, real deal:
-    t.same(
+    t.strictSame(
       i([range1, range2], ref.length),
       [range2p1, range2p2, range2p3],
       "10.04"
@@ -303,7 +303,7 @@ tap.test(
 tap.test(
   `11 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - ranges touch each other`,
   (t) => {
-    t.same(
+    t.strictSame(
       i(
         [
           [3, 5],
@@ -317,7 +317,7 @@ tap.test(
       ],
       "11.01 - ranges with deltas of two indexes"
     );
-    t.same(
+    t.strictSame(
       i(
         [
           [3, 4],
@@ -331,7 +331,7 @@ tap.test(
       ],
       "11.02 - ranges with deltas of one index"
     );
-    t.same(
+    t.strictSame(
       i(
         [
           [0, 1],
@@ -342,7 +342,7 @@ tap.test(
       [[2, 9]],
       "11.03 - ranges with deltas of one index"
     );
-    t.same(
+    t.strictSame(
       i(
         [
           [0, 1],
@@ -354,7 +354,7 @@ tap.test(
       [[2, 5]],
       "11.04 - ranges with deltas of one index"
     );
-    t.same(
+    t.strictSame(
       i(
         [
           [0, 1],
@@ -368,7 +368,7 @@ tap.test(
 
     // opts.skipChecks - results are the same
 
-    t.same(
+    t.strictSame(
       i(
         [
           [3, 5],
@@ -383,7 +383,7 @@ tap.test(
       ],
       "11.06 - ranges with deltas of two indexes"
     );
-    t.same(
+    t.strictSame(
       i(
         [
           [3, 4],
@@ -398,7 +398,7 @@ tap.test(
       ],
       "11.07 - ranges with deltas of one index"
     );
-    t.same(
+    t.strictSame(
       i(
         [
           [0, 1],
@@ -410,7 +410,7 @@ tap.test(
       [[2, 9]],
       "11.08 - ranges with deltas of one index"
     );
-    t.same(
+    t.strictSame(
       i(
         [
           [0, 1],
@@ -423,7 +423,7 @@ tap.test(
       [[2, 5]],
       "11.09 - ranges with deltas of one index"
     );
-    t.same(
+    t.strictSame(
       i(
         [
           [0, 1],
@@ -442,7 +442,7 @@ tap.test(
 tap.test(
   `12 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - input was given not merged`,
   (t) => {
-    t.same(
+    t.strictSame(
       i(
         [
           [0, 5],
@@ -453,7 +453,7 @@ tap.test(
       [[7, 9]],
       "12.01 - starts at zero"
     );
-    t.same(
+    t.strictSame(
       i(
         [
           [2, 5],
@@ -467,7 +467,7 @@ tap.test(
       ],
       "12.02 - does not start at zero"
     );
-    t.same(
+    t.strictSame(
       i(
         [
           [3, 5],
@@ -500,7 +500,7 @@ tap.test(
 tap.test(
   `13 - ${`\u001b[${35}m${`two ranges`}\u001b[${39}m`} - third argument present`,
   (t) => {
-    t.same(
+    t.strictSame(
       i(
         [
           [0, 5, "zzz"],
@@ -518,8 +518,8 @@ tap.test(
 tap.test(
   `14 - ${`\u001b[${32}m${`null instead of ranges`}\u001b[${39}m`}`,
   (t) => {
-    t.same(i(null, 0), null, "14.01");
-    t.same(i(null, 3), [[0, 3]], "14.02");
+    t.strictSame(i(null, 0), null, "14.01");
+    t.strictSame(i(null, 3), [[0, 3]], "14.02");
     t.end();
   }
 );
@@ -527,7 +527,7 @@ tap.test(
 tap.test(
   `15 - ${`\u001b[${35}m${`ad hoc`}\u001b[${39}m`} - range to invert is far outside #1`,
   (t) => {
-    t.same(i([[100, 200]], 10), [[0, 10]], "15");
+    t.strictSame(i([[100, 200]], 10), [[0, 10]], "15");
     t.end();
   }
 );
@@ -535,7 +535,7 @@ tap.test(
 tap.test(
   `16 - ${`\u001b[${35}m${`ad hoc`}\u001b[${39}m`} - ranges to invert is far outside #2`,
   (t) => {
-    t.same(
+    t.strictSame(
       i(
         [
           [100, 200],
@@ -553,7 +553,7 @@ tap.test(
 tap.test(
   `17 - ${`\u001b[${35}m${`ad hoc`}\u001b[${39}m`} - ranges to invert is far outside #3`,
   (t) => {
-    t.same(
+    t.strictSame(
       i(
         [
           [300, 400],

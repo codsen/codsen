@@ -27,6 +27,44 @@
 npm i ast-is-empty
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import isEmpty from "ast-is-empty";
+
+assert.equal(
+  isEmpty({
+    a: "",
+  }),
+  true
+);
+
+assert.equal(
+  isEmpty({
+    a: [""],
+    b: {
+      c: {
+        d: "",
+      },
+    },
+  }),
+  true
+);
+
+assert.equal(
+  isEmpty([
+    {
+      a: [""],
+      b: { c: { d: "" } },
+    },
+    "",
+    ["", "", ""],
+  ]),
+  true
+);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/ast-is-empty/) for a full description of the API and examples.

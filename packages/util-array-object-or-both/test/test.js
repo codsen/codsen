@@ -32,35 +32,35 @@ tap.test("01 - wrong/missing inputs - throws", (t) => {
 // ===
 
 tap.test("02 - arrays", (t) => {
-  t.same(aoob("array"), "array", "02.01");
-  t.same(aoob("Array"), "array", "02.02");
-  t.same(aoob("\n\nArray\t \t"), "array", "02.03");
-  t.same(aoob("\n\n   a \t"), "array", "02.04");
-  t.same(aoob("\n\n   arr \t"), "array", "02.05");
-  t.same(aoob("\n\n   ARR \t"), "array", "02.06");
+  t.strictSame(aoob("array"), "array", "02.01");
+  t.strictSame(aoob("Array"), "array", "02.02");
+  t.strictSame(aoob("\n\nArray\t \t"), "array", "02.03");
+  t.strictSame(aoob("\n\n   a \t"), "array", "02.04");
+  t.strictSame(aoob("\n\n   arr \t"), "array", "02.05");
+  t.strictSame(aoob("\n\n   ARR \t"), "array", "02.06");
   t.end();
 });
 
 tap.test("03 - objects", (t) => {
-  t.same(aoob("object"), "object", "03.01");
-  t.same(aoob("Object"), "object", "03.02");
-  t.same(aoob("obj"), "object", "03.03");
-  t.same(aoob("o"), "object", "03.04");
-  t.same(aoob("  object"), "object", "03.05");
-  t.same(aoob("Object   "), "object", "03.06");
-  t.same(aoob("\nobj"), "object", "03.07");
-  t.same(aoob("o\n\n "), "object", "03.08");
-  t.same(aoob(" OBJ"), "object", "03.09");
+  t.strictSame(aoob("object"), "object", "03.01");
+  t.strictSame(aoob("Object"), "object", "03.02");
+  t.strictSame(aoob("obj"), "object", "03.03");
+  t.strictSame(aoob("o"), "object", "03.04");
+  t.strictSame(aoob("  object"), "object", "03.05");
+  t.strictSame(aoob("Object   "), "object", "03.06");
+  t.strictSame(aoob("\nobj"), "object", "03.07");
+  t.strictSame(aoob("o\n\n "), "object", "03.08");
+  t.strictSame(aoob(" OBJ"), "object", "03.09");
   t.end();
 });
 
 tap.test("04 - any", (t) => {
-  t.same(aoob("any"), "any", "04.01");
-  t.same(aoob("all"), "any", "04.02");
-  t.same(aoob("Everything"), "any", "04.03");
-  t.same(aoob("e"), "any", "04.04");
-  t.same(aoob("ANY"), "any", "04.05");
-  t.same(aoob("\n\n all"), "any", "04.06");
+  t.strictSame(aoob("any"), "any", "04.01");
+  t.strictSame(aoob("all"), "any", "04.02");
+  t.strictSame(aoob("Everything"), "any", "04.03");
+  t.strictSame(aoob("e"), "any", "04.04");
+  t.strictSame(aoob("ANY"), "any", "04.05");
+  t.strictSame(aoob("\n\n all"), "any", "04.06");
   t.end();
 });
 
@@ -69,7 +69,7 @@ tap.test("04 - any", (t) => {
 // ====
 
 tap.test("05 - opts.msg", (t) => {
-  t.same(
+  t.strictSame(
     aoob("object", {
       msg: "z",
     }),

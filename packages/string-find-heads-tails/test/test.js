@@ -224,7 +224,7 @@ tap.test("09 - both heads and tails found but wrong order", (t) => {
 });
 
 tap.test("10 - heads of one type, tails of another", (t) => {
-  t.same(
+  t.strictSame(
     strFindHeadsTails(
       "some text %%_var1-%% more text %%_var2_%%",
       ["%%_", "%%-"],
@@ -298,7 +298,7 @@ tap.test("13 - heads of one type, tails of another", (t) => {
 tap.test(
   "14 - sequences are treated correctly by opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder",
   (t) => {
-    t.same(
+    t.strictSame(
       strFindHeadsTails(
         "some text -%%-var1-%%- more text _%%_var2_%%_ and even more -%%-var3-%%-.",
         ["%%_", "%%-"],
@@ -327,7 +327,7 @@ tap.test(
       ],
       "14.01 - default behaviour - no strict pair matching"
     );
-    t.same(
+    t.strictSame(
       strFindHeadsTails(
         "some text -%%-var1-%%- more text _%%_var2_%%_ and even more -%%-var3-%%-.",
         ["%%_", "%%-"],
@@ -356,7 +356,7 @@ tap.test(
       ],
       "14.02 - strict pair matching"
     );
-    t.same(
+    t.strictSame(
       strFindHeadsTails(
         "some text _%-var1-%_ more text _%_var2_%_ and even more -%-var3-%- and -%_var4_%-.",
         ["%_", "%-"],
@@ -401,7 +401,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test("15 - single char markers", (t) => {
-  t.same(
+  t.strictSame(
     strFindHeadsTails("abcdef", "b", "e"),
     [
       {
@@ -413,7 +413,7 @@ tap.test("15 - single char markers", (t) => {
     ],
     "15.01 - easies"
   );
-  t.same(
+  t.strictSame(
     strFindHeadsTails("ab", "a", "b"),
     [
       {
@@ -429,7 +429,7 @@ tap.test("15 - single char markers", (t) => {
 });
 
 tap.test("16 - multi-char markers", (t) => {
-  t.same(
+  t.strictSame(
     strFindHeadsTails("abc%%_def_%%ghi", "%%_", "_%%"),
     [
       {
@@ -447,7 +447,7 @@ tap.test("16 - multi-char markers", (t) => {
     strFindHeadsTails("abc%%_def_%%ghi", "%%_", "_%%", { fromIndex: 4 });
   }, /THROW_ID_21/);
 
-  t.same(
+  t.strictSame(
     strFindHeadsTails("abc%%_def_%%ghi", "%%_", "_%%", {
       fromIndex: 4,
       throwWhenSomethingWrongIsDetected: false,
@@ -455,7 +455,7 @@ tap.test("16 - multi-char markers", (t) => {
     [],
     "16.03 - offset meant we started beyond first heads, so no tails were accepted"
   );
-  t.same(
+  t.strictSame(
     strFindHeadsTails("abczz-def--aghi", "zz-", "--a"),
     [
       {
@@ -467,7 +467,7 @@ tap.test("16 - multi-char markers", (t) => {
     ],
     "16.04"
   );
-  t.same(
+  t.strictSame(
     strFindHeadsTails(
       "abc%%_def_%%ghi%%-jkl-%%",
       ["%%_", "%%-"],
@@ -495,7 +495,7 @@ tap.test("16 - multi-char markers", (t) => {
 tap.test(
   '17 - sneaky "casual" underscores try to blend in with legit heads/tails',
   (t) => {
-    t.same(
+    t.strictSame(
       strFindHeadsTails("aaa_%%_bbb_%%_ccc", "%%_", "_%%"),
       [
         {
@@ -516,7 +516,7 @@ tap.test("18 - sneaky tails precede heads", (t) => {
     strFindHeadsTails("aaa_%%bbb%%_ccc", "%%_", "_%%");
   }, /THROW_ID_22/);
 
-  t.same(
+  t.strictSame(
     strFindHeadsTails("aaa_%%bbb%%_ccc", "%%_", "_%%", {
       throwWhenSomethingWrongIsDetected: false,
     }),
@@ -527,7 +527,7 @@ tap.test("18 - sneaky tails precede heads", (t) => {
 });
 
 tap.test("19 - arrays of heads and tails", (t) => {
-  t.same(
+  t.strictSame(
     strFindHeadsTails(
       "zzz_%%-zz_cmp_id-%%_%%-lnk_id-%%",
       ["%%_", "%%-"],
@@ -553,21 +553,21 @@ tap.test("19 - arrays of heads and tails", (t) => {
 });
 
 tap.test("20 - input is equal to heads or tails", (t) => {
-  t.same(
+  t.strictSame(
     strFindHeadsTails("%%_", "%%_", "_%%", {
       throwWhenSomethingWrongIsDetected: false,
     }),
     [],
     "20.01"
   );
-  t.same(
+  t.strictSame(
     strFindHeadsTails("%%_", "%%_", "_%%", {
       throwWhenSomethingWrongIsDetected: true,
     }),
     [],
     "20.02"
   );
-  t.same(
+  t.strictSame(
     strFindHeadsTails("%%_", "%%_", "_%%", {
       throwWhenSomethingWrongIsDetected: true,
       allowWholeValueToBeOnlyHeadsOrTails: true,
@@ -575,7 +575,7 @@ tap.test("20 - input is equal to heads or tails", (t) => {
     [],
     "20.03"
   );
-  t.same(
+  t.strictSame(
     strFindHeadsTails("%%_", "%%_", "_%%", {
       throwWhenSomethingWrongIsDetected: false,
       allowWholeValueToBeOnlyHeadsOrTails: true,
@@ -627,7 +627,7 @@ tap.test("20 - input is equal to heads or tails", (t) => {
 });
 
 tap.test("21 - more clashing with outside characters", (t) => {
-  t.same(
+  t.strictSame(
     strFindHeadsTails(
       "aaa_%%-bbb-%%_%%-ccc-%%",
       ["%%_", "%%-"],
@@ -649,7 +649,7 @@ tap.test("21 - more clashing with outside characters", (t) => {
     ],
     "21.01"
   );
-  t.same(
+  t.strictSame(
     strFindHeadsTails(
       "aaa_%%-bbb-%%_%%-ccc-%%",
       ["%%_", "%%-"],
@@ -682,17 +682,17 @@ tap.test("21 - more clashing with outside characters", (t) => {
 // -----------------------------------------------------------------------------
 
 tap.test("22 - opts.relaxedAPI - input string", (t) => {
-  t.same(
+  t.strictSame(
     strFindHeadsTails(undefined, "%%_", "_%%", { relaxedAPI: true }),
     [],
     "22.01"
   );
-  t.same(
+  t.strictSame(
     strFindHeadsTails("", "%%_", "_%%", { relaxedAPI: true }),
     [],
     "22.02"
   );
-  t.same(
+  t.strictSame(
     strFindHeadsTails(null, "%%_", "_%%", { relaxedAPI: true }),
     [],
     "22.03"
@@ -701,37 +701,37 @@ tap.test("22 - opts.relaxedAPI - input string", (t) => {
 });
 
 tap.test("23 - opts.relaxedAPI - heads", (t) => {
-  t.same(
+  t.strictSame(
     strFindHeadsTails("aaa", undefined, "_%%", { relaxedAPI: true }),
     [],
     "23.01"
   );
-  t.same(
+  t.strictSame(
     strFindHeadsTails("aaa", "", "_%%", { relaxedAPI: true }),
     [],
     "23.02"
   );
-  t.same(
+  t.strictSame(
     strFindHeadsTails("aaa", [], "_%%", { relaxedAPI: true }),
     [],
     "23.03"
   );
-  t.same(
+  t.strictSame(
     strFindHeadsTails("aaa", [""], "_%%", { relaxedAPI: true }),
     [],
     "23.04"
   );
-  t.same(
+  t.strictSame(
     strFindHeadsTails("aaa", null, "_%%", { relaxedAPI: true }),
     [],
     "23.05"
   );
-  t.same(
+  t.strictSame(
     strFindHeadsTails("aaa", [null], "_%%", { relaxedAPI: true }),
     [],
     "23.06"
   );
-  t.same(
+  t.strictSame(
     strFindHeadsTails(
       "aaa %%_test_%% bbb",
       ["", "%%_", undefined, 1],
@@ -752,32 +752,32 @@ tap.test("23 - opts.relaxedAPI - heads", (t) => {
 });
 
 tap.test("24 - opts.relaxedAPI - tails", (t) => {
-  t.same(
+  t.strictSame(
     strFindHeadsTails("aaa", "%%_", undefined, { relaxedAPI: true }),
     [],
     "24.01"
   );
-  t.same(
+  t.strictSame(
     strFindHeadsTails("aaa", "%%_", "", { relaxedAPI: true }),
     [],
     "24.02"
   );
-  t.same(
+  t.strictSame(
     strFindHeadsTails("aaa", "%%_", [], { relaxedAPI: true }),
     [],
     "24.03"
   );
-  t.same(
+  t.strictSame(
     strFindHeadsTails("aaa", "%%_", [""], { relaxedAPI: true }),
     [],
     "24.04"
   );
-  t.same(
+  t.strictSame(
     strFindHeadsTails("aaa", "%%_", null, { relaxedAPI: true }),
     [],
     "24.05"
   );
-  t.same(
+  t.strictSame(
     strFindHeadsTails("aaa", "%%_", [null, 1], { relaxedAPI: true }),
     [],
     "24.06"

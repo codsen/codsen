@@ -85,7 +85,7 @@ tap.test(`06 - empty string`, (t) => {
   strFindMalformed("", "bde", (obj) => {
     gathered.push(obj);
   });
-  t.same(gathered, [], "06");
+  t.strictSame(gathered, [], "06");
   t.end();
 });
 
@@ -94,7 +94,7 @@ tap.test(`07 - empty string`, (t) => {
   strFindMalformed("abc", "", (obj) => {
     gathered.push(obj);
   });
-  t.same(gathered, [], "07");
+  t.strictSame(gathered, [], "07");
   t.end();
 });
 
@@ -107,7 +107,7 @@ tap.test(`08 - rogue character, "c"`, (t) => {
   strFindMalformed("abcdef", "bde", (obj) => {
     gathered.push(obj);
   });
-  t.same(
+  t.strictSame(
     gathered,
     [
       {
@@ -132,7 +132,7 @@ tap.test(`09 - overlapping and extended maxDistance`, (t) => {
       maxDistance: 2,
     }
   );
-  t.same(
+  t.strictSame(
     gathered,
     [
       {
@@ -158,7 +158,7 @@ tap.test(`10 - with opts.stringOffset`, (t) => {
       stringOffset: 100,
     }
   );
-  t.same(
+  t.strictSame(
     gathered,
     [
       {
@@ -184,7 +184,7 @@ tap.test(`11 - correct, fully matching value is not pinged`, (t) => {
       stringOffset: 100,
     }
   );
-  t.same(gathered, [], "11");
+  t.strictSame(gathered, [], "11");
   t.end();
 });
 
@@ -201,7 +201,7 @@ tap.test(`12 - like before but strings in opts`, (t) => {
       stringOffset: "100",
     }
   );
-  t.same(
+  t.strictSame(
     gathered,
     [
       {
@@ -224,7 +224,7 @@ tap.test(`13 - whitespace`, (t) => {
     },
     null
   );
-  t.same(
+  t.strictSame(
     gathered,
     [
       {
@@ -247,7 +247,7 @@ tap.test(`14 - repeated characters after failed match`, (t) => {
     },
     null
   );
-  t.same(
+  t.strictSame(
     gathered,
     [
       {
@@ -270,7 +270,7 @@ tap.test(`15 - repeated characters after failed match`, (t) => {
     },
     null
   );
-  t.same(
+  t.strictSame(
     gathered,
     [
       {

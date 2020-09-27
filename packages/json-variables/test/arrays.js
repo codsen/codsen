@@ -4,7 +4,7 @@ import tap from "tap";
 import jv from "../dist/json-variables.esm";
 
 tap.test("01 - arrays referencing values which are strings", (t) => {
-  t.same(
+  t.strictSame(
     jv({
       a: ["Some text %%_d_%% some more text %%_c_%%"],
       b: ["Some text %%_c_%%, some more text %%_d_%%"],
@@ -23,7 +23,7 @@ tap.test("01 - arrays referencing values which are strings", (t) => {
 });
 
 tap.test("02 - arrays referencing values which are arrays", (t) => {
-  t.same(
+  t.strictSame(
     jv({
       a: ["Some text %%_b_%% some more text %%_c_%%", "%%_c_%%", "%%_d_%%"],
       b: ["zzz", "Some text %%_c_%%, some more text %%_d_%%"],
@@ -46,7 +46,7 @@ tap.test("02 - arrays referencing values which are arrays", (t) => {
 });
 
 tap.test("03 - arrays, whitelisting as string", (t) => {
-  t.same(
+  t.strictSame(
     jv(
       {
         title: [
@@ -77,7 +77,7 @@ tap.test("03 - arrays, whitelisting as string", (t) => {
     },
     "03.01 - base - no ignores"
   );
-  t.same(
+  t.strictSame(
     jv(
       {
         title: [
@@ -112,7 +112,7 @@ tap.test("03 - arrays, whitelisting as string", (t) => {
 });
 
 tap.test("04 - arrays, whitelisting as array #1", (t) => {
-  t.same(
+  t.strictSame(
     jv(
       {
         title: [
@@ -143,7 +143,7 @@ tap.test("04 - arrays, whitelisting as array #1", (t) => {
     },
     "04.01"
   );
-  t.same(
+  t.strictSame(
     jv(
       {
         title: [
@@ -174,7 +174,7 @@ tap.test("04 - arrays, whitelisting as array #1", (t) => {
     },
     "04.02 - two ignores in an array"
   );
-  t.same(
+  t.strictSame(
     jv(
       {
         title: [
@@ -205,7 +205,7 @@ tap.test("04 - arrays, whitelisting as array #1", (t) => {
     },
     "04.03 - two ignores in an array startsWith"
   );
-  t.same(
+  t.strictSame(
     jv(
       {
         title: [
@@ -240,7 +240,7 @@ tap.test("04 - arrays, whitelisting as array #1", (t) => {
 });
 
 tap.test("05 - arrays, whitelisting as array #2", (t) => {
-  t.same(
+  t.strictSame(
     jv(
       {
         title: [
@@ -275,7 +275,7 @@ tap.test("05 - arrays, whitelisting as array #2", (t) => {
     },
     "05.01 - two ignores in an array, data store"
   );
-  t.same(
+  t.strictSame(
     jv(
       {
         a: {
@@ -315,7 +315,7 @@ tap.test("05 - arrays, whitelisting as array #2", (t) => {
     },
     "05.02 - does not wrap SUB"
   );
-  t.same(
+  t.strictSame(
     jv(
       {
         a: {
@@ -360,7 +360,7 @@ tap.test("05 - arrays, whitelisting as array #2", (t) => {
     },
     "05.03 - does not wrap SUB"
   );
-  t.same(
+  t.strictSame(
     jv(
       {
         title: [

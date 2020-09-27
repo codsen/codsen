@@ -10,7 +10,7 @@ tap.test("01 - umd is indeed ES5", (t) => {
     "utf8"
   );
   const messages = linter.verify(umdSource, {}, { allowInlineConfig: false });
-  t.same(messages, [], "01 - umd build is not ES5!");
+  t.strictSame(messages, [], "01 - umd build is not ES5!");
   t.end();
 });
 
@@ -25,7 +25,7 @@ tap.test("02 - dev.umd is indeed ES5", (t) => {
     {},
     { allowInlineConfig: false }
   );
-  t.same(messages, [], "02 - dev.umd build is not ES5!");
+  t.strictSame(messages, [], "02 - dev.umd build is not ES5!");
   t.end();
 });
 
@@ -36,6 +36,6 @@ tap.test("03 - cjs is indeed ES5", (t) => {
     "utf8"
   );
   const messages = linter.verify(cjsSource, {}, { allowInlineConfig: false });
-  t.same(messages, [], "03 - cjs build is not ES5!");
+  t.strictSame(messages, [], "03 - cjs build is not ES5!");
   t.end();
 });

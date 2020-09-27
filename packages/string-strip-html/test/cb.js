@@ -202,7 +202,7 @@ tap.test(
       },
       "07.01"
     );
-    t.same(capturedTags, ["hr", "br"], "07.02");
+    t.strictSame(capturedTags, ["hr", "br"], "07.02");
     t.end();
   }
 );
@@ -237,7 +237,7 @@ tap.test("08 - opts.cb - cb.tag contents are correct on ignored tags", (t) => {
     },
   });
 
-  t.same(
+  t.strictSame(
     capturedTags,
     [
       {
@@ -290,7 +290,7 @@ tap.test(
       },
     });
 
-    t.same(
+    t.strictSame(
       capturedTags,
       [
         {

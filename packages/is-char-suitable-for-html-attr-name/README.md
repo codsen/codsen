@@ -27,6 +27,19 @@
 npm i is-char-suitable-for-html-attr-name
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import is from "dist/is-char-suitable-for-html-attr-name.esm";
+
+// Follows the spec:
+// https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
+
+assert.equal(is("a"), true);
+assert.equal(is("?"), false);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/is-char-suitable-for-html-attr-name/) for a full description of the API and examples.

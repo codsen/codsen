@@ -27,6 +27,27 @@
 npm i email-all-chars-within-ascii
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import within from "email-all-chars-within-ascii";
+
+// that emoji should have been HTML-encoded (using Detergent.io for example)
+assert.throws(() => {
+  within(`<!DOCTYPE html>
+  <html lang="en" dir="ltr">
+    <head>
+      <meta charset="utf-8">
+      <title></title>
+    </head>
+    <body>
+      🧢
+    </body>
+  </html>`);
+});
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/email-all-chars-within-ascii/) for a full description of the API and examples.

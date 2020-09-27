@@ -7,7 +7,7 @@ import cparser from "../dist/codsen-parser.esm";
 tap.test(
   `01 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags`,
   (t) => {
-    t.same(
+    t.strictSame(
       cparser(`<div></div>`),
       [
         {
@@ -54,7 +54,7 @@ tap.test(
 tap.test(
   `02 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags, whitespace in between`,
   (t) => {
-    t.same(
+    t.strictSame(
       cparser(`<style>\n\n</style>`),
       [
         {
@@ -108,7 +108,7 @@ tap.test(
 tap.test(
   `03 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - two tags, whitespace in between`,
   (t) => {
-    t.same(
+    t.strictSame(
       cparser(`<div>\n\n</div>`),
       [
         {
@@ -235,7 +235,7 @@ tap.test(
   `05 - ${`\u001b[${33}m${`comment "simple"`}\u001b[${39}m`} - basic`,
   (t) => {
     const gatheredErr = [];
-    t.same(
+    t.strictSame(
       cparser(`x-->z`, {
         errCb: (errObj) => gatheredErr.push(errObj),
       }),
@@ -286,7 +286,7 @@ tap.test(
   `06 - ${`\u001b[${33}m${`conditional "only"`}\u001b[${39}m`} - basic`,
   (t) => {
     const gatheredErr = [];
-    t.same(
+    t.strictSame(
       cparser(`x<![endif]-->z`, {
         errCb: (errObj) => gatheredErr.push(errObj),
       }),
@@ -337,7 +337,7 @@ tap.test(
   `07 - ${`\u001b[${33}m${`conditional "not"`}\u001b[${39}m`} - basic`,
   (t) => {
     const gatheredErr = [];
-    t.same(
+    t.strictSame(
       cparser(`x<!--<![endif]-->z`, {
         errCb: (errObj) => gatheredErr.push(errObj),
       }),

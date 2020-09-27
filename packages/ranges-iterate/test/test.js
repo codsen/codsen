@@ -425,5 +425,5 @@ tap.test(
 //     }
 //   });
 //
-//   t.same(originalRanges, [[2, 9, "xyz"]]);
+//   t.strictSame(originalRanges, [[2, 9, "xyz"]]);
 // });

@@ -21,7 +21,7 @@ tap.test(
       }
     );
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         ["1", "1"],
@@ -29,7 +29,7 @@ tap.test(
       ],
       "01.01"
     );
-    t.same(errors, [], "01.02");
+    t.strictSame(errors, [], "01.02");
     t.end();
   }
 );
@@ -51,7 +51,7 @@ tap.test(
       }
     );
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         ["1", "1"],
@@ -82,7 +82,7 @@ tap.test(
       }
     );
 
-    t.same(gathered, [], "03.01");
+    t.strictSame(gathered, [], "03.01");
     t.equal(errors.length, 1, "03.02");
     t.match(errors[0], /string/g, "03.03");
     t.match(errors[0], /object/g, "03.04");
@@ -107,7 +107,7 @@ tap.test(
       }
     );
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         ["1", "4"],
@@ -116,7 +116,7 @@ tap.test(
       ],
       "04.01"
     );
-    t.same(errors, [], "04.02");
+    t.strictSame(errors, [], "04.02");
     t.end();
   }
 );
@@ -138,7 +138,7 @@ tap.test(
       }
     );
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         ["1", "4"],
@@ -168,7 +168,7 @@ tap.test(
         errors.push(err);
       }
     );
-    t.same(
+    t.strictSame(
       gathered,
       [
         ["1", "4"],
@@ -176,7 +176,7 @@ tap.test(
       ],
       "06.01"
     );
-    t.same(errors, [], "06.02");
+    t.strictSame(errors, [], "06.02");
     t.end();
   }
 );
@@ -199,7 +199,7 @@ tap.test(
       { skipContainers: false }
     );
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         ["1", "4"], // <---- skipped [{ a: "1" }, { b: "2" }, { c: "3" }] because it's at the root level
@@ -207,7 +207,7 @@ tap.test(
       ],
       "07.01"
     );
-    t.same(errors, [], "07.02");
+    t.strictSame(errors, [], "07.02");
     t.end();
   }
 );
@@ -241,7 +241,7 @@ tap.test(
       { skipContainers: false, arrayStrictComparison: false }
     );
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         ["x", "x"],
@@ -251,7 +251,7 @@ tap.test(
       ],
       "08.01"
     );
-    t.same(errors, [], "08.02");
+    t.strictSame(errors, [], "08.02");
     t.end();
   }
 );
@@ -282,8 +282,8 @@ tap.test(
       { skipContainers: false, arrayStrictComparison: true }
     );
 
-    t.same(gathered, [], "09.01");
-    t.same(
+    t.strictSame(gathered, [], "09.01");
+    t.strictSame(
       errors,
       [
         [
@@ -343,7 +343,7 @@ tap.test(
       { skipContainers: true, arrayStrictComparison: false }
     );
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         ["x", "x"],
@@ -353,7 +353,7 @@ tap.test(
       ],
       "10.01"
     );
-    t.same(errors, [], "10.02");
+    t.strictSame(errors, [], "10.02");
     t.end();
   }
 );
@@ -384,8 +384,8 @@ tap.test(
       { skipContainers: true, arrayStrictComparison: true }
     );
 
-    t.same(gathered, [], "11.01");
-    t.same(
+    t.strictSame(gathered, [], "11.01");
+    t.strictSame(
       errors,
       [
         ["a", "x"],
@@ -428,7 +428,7 @@ tap.test(
       { skipContainers: false }
     );
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         [
@@ -460,7 +460,7 @@ tap.test(
       ],
       "12.01"
     );
-    t.same(errors, [], "12.02");
+    t.strictSame(errors, [], "12.02");
     t.end();
   }
 );
@@ -491,7 +491,7 @@ tap.test(
       { skipContainers: true }
     );
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         ["x", "x"],
@@ -501,7 +501,7 @@ tap.test(
       ],
       "13.01"
     );
-    t.same(errors, [], "13.02");
+    t.strictSame(errors, [], "13.02");
     t.end();
   }
 );
@@ -524,7 +524,7 @@ tap.test(
       {} // default opts
     );
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         ["a", "a"],
@@ -532,7 +532,7 @@ tap.test(
       ],
       "14.01"
     );
-    t.same(errors, [], "14.02");
+    t.strictSame(errors, [], "14.02");
     t.end();
   }
 );
@@ -611,7 +611,7 @@ tap.test(
     //     4
     //   )}`
     // );
-    t.same(
+    t.strictSame(
       gathered,
       [
         ["tag-closing-backslash", "tag-closing-backslash"],
@@ -632,7 +632,7 @@ tap.test(
       ],
       "15.01"
     );
-    t.same(errors, [], "15.02");
+    t.strictSame(errors, [], "15.02");
     t.end();
   }
 );
@@ -678,7 +678,7 @@ tap.test(
 //       4
 //     )}`
 //   );
-//   t.same(
+//   t.strictSame(
 //     gathered,
 //     [
 //       ["x", "x"],
@@ -689,7 +689,7 @@ tap.test(
 //     ],
 //     "04.01.01"
 //   );
-//   t.same(errors, [], "04.01.02");
+//   t.strictSame(errors, [], "04.01.02");
 // });
 
 // 05. tree1 is superset
@@ -722,7 +722,7 @@ tap.test(
       { skipContainers: true }
     );
 
-    t.same(
+    t.strictSame(
       gathered,
       [
         ["x", "x"],
@@ -732,7 +732,7 @@ tap.test(
       ],
       "16.01"
     );
-    t.same(errors, [], "16.02");
+    t.strictSame(errors, [], "16.02");
     t.end();
   }
 );

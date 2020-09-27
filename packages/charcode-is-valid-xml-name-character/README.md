@@ -27,6 +27,32 @@
 npm i charcode-is-valid-xml-name-character
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import {
+  isProduction4,
+  isProduction4a,
+  validFirstChar,
+  validSecondCharOnwards,
+} from "charcode-is-valid-xml-name-character";
+
+// Spec: https://www.w3.org/TR/REC-xml/#NT-NameStartChar
+
+assert.equal(isProduction4("Z"), true);
+assert.equal(isProduction4("?"), false);
+
+assert.equal(isProduction4a("?"), false);
+assert.equal(isProduction4a("-"), true);
+
+assert.equal(validFirstChar("a"), true);
+assert.equal(validFirstChar("1"), false);
+
+assert.equal(validSecondCharOnwards("a"), true);
+assert.equal(validSecondCharOnwards("?"), false);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/charcode-is-valid-xml-name-character/) for a full description of the API and examples.

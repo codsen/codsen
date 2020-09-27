@@ -119,7 +119,7 @@ tap.test("10 - throws when opts.extendToOneSide is unrecognised", (t) => {
 
 tap.test("11 - nothing to expand", (t) => {
   // reference
-  t.same(
+  t.strictSame(
     e({
       str: "a     b",
       from: 2,
@@ -128,7 +128,7 @@ tap.test("11 - nothing to expand", (t) => {
     [2, 5],
     "11.01"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "a     b",
       from: 2,
@@ -138,7 +138,7 @@ tap.test("11 - nothing to expand", (t) => {
     [2, 5],
     "11.02"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "a     b",
       from: 2,
@@ -152,7 +152,7 @@ tap.test("11 - nothing to expand", (t) => {
   //
   // middle
   // --------------
-  t.same(
+  t.strictSame(
     e({
       str: "aaaaaaaaaaaa",
       from: 2,
@@ -161,7 +161,7 @@ tap.test("11 - nothing to expand", (t) => {
     [2, 5],
     "11.04 - addSingleSpaceToPreventAccidentalConcatenation default"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "aaaaaaaaaaaa",
       from: 2,
@@ -171,7 +171,7 @@ tap.test("11 - nothing to expand", (t) => {
     [2, 5],
     "11.05 - addSingleSpaceToPreventAccidentalConcatenation hardcoded default"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "aaaaaaaaaaaa",
       from: 2,
@@ -185,7 +185,7 @@ tap.test("11 - nothing to expand", (t) => {
   //
   // touches start EOL
   // --------------
-  t.same(
+  t.strictSame(
     e({
       str: "aaaaaaaaaaaa",
       from: 0,
@@ -194,7 +194,7 @@ tap.test("11 - nothing to expand", (t) => {
     [0, 5],
     "11.07"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "aaaaaaaaaaaa",
       from: 0,
@@ -204,7 +204,7 @@ tap.test("11 - nothing to expand", (t) => {
     [0, 5],
     "11.08"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "aaaaaaaaaaaa",
       from: 0,
@@ -218,7 +218,7 @@ tap.test("11 - nothing to expand", (t) => {
   //
   // touches end EOL
   // --------------
-  t.same(
+  t.strictSame(
     e({
       str: "aaaaaaaaaaaa",
       from: 2,
@@ -227,7 +227,7 @@ tap.test("11 - nothing to expand", (t) => {
     [2, 12],
     "11.10"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "aaaaaaaaaaaa",
       from: 2,
@@ -237,7 +237,7 @@ tap.test("11 - nothing to expand", (t) => {
     [2, 12],
     "11.11"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "aaaaaaaaaaaa",
       from: 2,
@@ -251,7 +251,7 @@ tap.test("11 - nothing to expand", (t) => {
   //
   // touches both EOLS's
   // --------------
-  t.same(
+  t.strictSame(
     e({
       str: "aaaaaaaaaaaa",
       from: 12,
@@ -260,7 +260,7 @@ tap.test("11 - nothing to expand", (t) => {
     [12, 12],
     "11.13"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "aaaaaaaaaaaa",
       from: 12,
@@ -270,7 +270,7 @@ tap.test("11 - nothing to expand", (t) => {
     [12, 12],
     "11.14"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "aaaaaaaaaaaa",
       from: 12,
@@ -284,7 +284,7 @@ tap.test("11 - nothing to expand", (t) => {
   //
   // combo with wipe
   // --------------
-  t.same(
+  t.strictSame(
     e({
       str: "aaaaaaaaaaaa",
       from: 2,
@@ -294,7 +294,7 @@ tap.test("11 - nothing to expand", (t) => {
     [2, 5],
     "11.16"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "aaaaaaaaaaaa",
       from: 2,
@@ -305,7 +305,7 @@ tap.test("11 - nothing to expand", (t) => {
     [2, 5],
     "11.17 - hardcoded addSingleSpaceToPreventAccidentalConcatenation default"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "aaaaaaaaaaaa",
       from: 2,
@@ -320,7 +320,7 @@ tap.test("11 - nothing to expand", (t) => {
 });
 
 tap.test("12 - expanding from the middle of a gap", (t) => {
-  t.same(
+  t.strictSame(
     e({
       str: "a     b",
       from: 3,
@@ -329,7 +329,7 @@ tap.test("12 - expanding from the middle of a gap", (t) => {
     [2, 5],
     "12.01"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "a     b",
       from: 2,
@@ -338,7 +338,7 @@ tap.test("12 - expanding from the middle of a gap", (t) => {
     [2, 5],
     "12.02"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "a     b",
       from: 3,
@@ -347,7 +347,7 @@ tap.test("12 - expanding from the middle of a gap", (t) => {
     [2, 5],
     "12.03"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "a     b",
       from: 1,
@@ -356,7 +356,7 @@ tap.test("12 - expanding from the middle of a gap", (t) => {
     [1, 5],
     "12.04"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "a     b",
       from: 3,
@@ -365,7 +365,7 @@ tap.test("12 - expanding from the middle of a gap", (t) => {
     [2, 6],
     "12.05"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "a     b",
       from: 3,
@@ -375,7 +375,7 @@ tap.test("12 - expanding from the middle of a gap", (t) => {
     [2, 6],
     "12.06"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "a     b",
       from: 3,
@@ -385,7 +385,7 @@ tap.test("12 - expanding from the middle of a gap", (t) => {
     [1, 5],
     "12.07"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "a     b",
       from: 3,
@@ -395,7 +395,7 @@ tap.test("12 - expanding from the middle of a gap", (t) => {
     [1, 6],
     "12.08"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "a     b",
       from: 3,
@@ -405,7 +405,7 @@ tap.test("12 - expanding from the middle of a gap", (t) => {
     [2, 6],
     "12.09"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "a     b",
       from: 3,
@@ -415,7 +415,7 @@ tap.test("12 - expanding from the middle of a gap", (t) => {
     [2, 6],
     "12.10"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "a     b",
       from: 3,
@@ -426,7 +426,7 @@ tap.test("12 - expanding from the middle of a gap", (t) => {
     [1, 6],
     "12.11"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "a     b",
       from: 1,
@@ -437,7 +437,7 @@ tap.test("12 - expanding from the middle of a gap", (t) => {
     [1, 6],
     "12.12"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "a     b",
       from: 1,
@@ -454,7 +454,7 @@ tap.test("12 - expanding from the middle of a gap", (t) => {
 tap.test(
   "13 - starting point is touching the edge (non-whitespace) even though tight cropping is not enabled",
   (t) => {
-    t.same(
+    t.strictSame(
       e({
         str: "a     b",
         from: 1,
@@ -463,7 +463,7 @@ tap.test(
       [1, 5],
       "13.01"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "a     b",
         from: 3,
@@ -472,7 +472,7 @@ tap.test(
       [2, 6],
       "13.02"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "a     b",
         from: 2,
@@ -481,7 +481,7 @@ tap.test(
       [2, 6],
       "13.03"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "a     b",
         from: 1,
@@ -495,7 +495,7 @@ tap.test(
 );
 
 tap.test("14 - both ends are equal", (t) => {
-  t.same(
+  t.strictSame(
     e({
       str: "ab",
       from: 1,
@@ -504,7 +504,7 @@ tap.test("14 - both ends are equal", (t) => {
     [1, 1],
     "14.01"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "ab",
       from: 2,
@@ -517,7 +517,7 @@ tap.test("14 - both ends are equal", (t) => {
 });
 
 tap.test("15 - addSingleSpaceToPreventAccidentalConcatenation", (t) => {
-  t.same(
+  t.strictSame(
     e({
       str: "aaaaa aaaaaaa",
       from: 5,
@@ -528,7 +528,7 @@ tap.test("15 - addSingleSpaceToPreventAccidentalConcatenation", (t) => {
   );
 
   // wipeAllWhitespaceOnLeft
-  t.same(
+  t.strictSame(
     e({
       str: "aaaaa aaaaaaa",
       from: 5,
@@ -538,7 +538,7 @@ tap.test("15 - addSingleSpaceToPreventAccidentalConcatenation", (t) => {
     [5, 6],
     "15.02 - wipeAllWhitespaceOnLeft hardcoded default"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "aaaaa aaaaaaa",
       from: 5,
@@ -550,7 +550,7 @@ tap.test("15 - addSingleSpaceToPreventAccidentalConcatenation", (t) => {
   );
 
   // addSingleSpaceToPreventAccidentalConcatenation
-  t.same(
+  t.strictSame(
     e({
       str: "aaaaa aaaaaaa",
       from: 5,
@@ -560,7 +560,7 @@ tap.test("15 - addSingleSpaceToPreventAccidentalConcatenation", (t) => {
     [5, 6],
     "15.04"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "aaaaa aaaaaaa",
       from: 5,
@@ -572,7 +572,7 @@ tap.test("15 - addSingleSpaceToPreventAccidentalConcatenation", (t) => {
   );
 
   // combo
-  t.same(
+  t.strictSame(
     e({
       str: "aaaaa aaaaaaa",
       from: 5,
@@ -583,7 +583,7 @@ tap.test("15 - addSingleSpaceToPreventAccidentalConcatenation", (t) => {
     [5, 6, " "],
     "15.06 - true-true"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "aaaaa aaaaaaa",
       from: 5,
@@ -594,7 +594,7 @@ tap.test("15 - addSingleSpaceToPreventAccidentalConcatenation", (t) => {
     [5, 6],
     "15.07 - true-false"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "aaaaa aaaaaaa",
       from: 5,
@@ -605,7 +605,7 @@ tap.test("15 - addSingleSpaceToPreventAccidentalConcatenation", (t) => {
     [5, 6, " "],
     "15.08 - false-true"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "aaaaa aaaaaaa",
       from: 5,
@@ -622,7 +622,7 @@ tap.test("15 - addSingleSpaceToPreventAccidentalConcatenation", (t) => {
 tap.test(
   "16 - wipeAllWhitespaceOnLeft + addSingleSpaceToPreventAccidentalConcatenation",
   (t) => {
-    t.same(
+    t.strictSame(
       e({
         str: "aaaaa  bbbbb",
         from: 6,
@@ -633,7 +633,7 @@ tap.test(
       [6, 7],
       "16.01"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "aaaaa  bbbbb",
         from: 6,
@@ -644,7 +644,7 @@ tap.test(
       [6, 7],
       "16.02"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "aaaaa  bbbbb",
         from: 6,
@@ -655,7 +655,7 @@ tap.test(
       [5, 7],
       "16.03"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "aaaaa  bbbbb",
         from: 6,
@@ -673,7 +673,7 @@ tap.test(
 tap.test(
   "17 - wipeAllWhitespaceOnRight + addSingleSpaceToPreventAccidentalConcatenation",
   (t) => {
-    t.same(
+    t.strictSame(
       e({
         str: "aaaaa  bbbbb",
         from: 5,
@@ -684,7 +684,7 @@ tap.test(
       [5, 6],
       "17.01"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "aaaaa  bbbbb",
         from: 5,
@@ -695,7 +695,7 @@ tap.test(
       [5, 6],
       "17.02"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "aaaaa  bbbbb",
         from: 5,
@@ -706,7 +706,7 @@ tap.test(
       [5, 7],
       "17.03"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "aaaaa  bbbbb",
         from: 5,
@@ -724,7 +724,7 @@ tap.test(
 tap.test(
   "18 - wipeAllWhitespaceOnLeft + wipeAllWhitespaceOnRight + addSingleSpaceToPreventAccidentalConcatenation",
   (t) => {
-    t.same(
+    t.strictSame(
       e({
         str: "aaaaa   bbbbb",
         from: 6,
@@ -735,7 +735,7 @@ tap.test(
       [6, 7],
       "18.01"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "aaaaa   bbbbb",
         from: 6,
@@ -746,7 +746,7 @@ tap.test(
       [5, 7],
       "18.02"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "aaaaa   bbbbb",
         from: 6,
@@ -759,7 +759,7 @@ tap.test(
     );
 
     // both on result in tight crop:
-    t.same(
+    t.strictSame(
       e({
         str: "aaaaa   bbbbb",
         from: 6,
@@ -772,7 +772,7 @@ tap.test(
       "18.04"
     );
 
-    t.same(
+    t.strictSame(
       e({
         str: "aaaaa   bbbbb",
         from: 6,
@@ -789,7 +789,7 @@ tap.test(
 );
 
 tap.test("19 - addSingleSpaceToPreventAccidentalConcatenation ignored", (t) => {
-  t.same(
+  t.strictSame(
     e({
       str: "<strong><!-- --></strong>",
       from: 8,
@@ -799,7 +799,7 @@ tap.test("19 - addSingleSpaceToPreventAccidentalConcatenation ignored", (t) => {
     [8, 16],
     "19.01 - baseline"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "<strong><!-- --></strong>",
       from: 8,
@@ -809,7 +809,7 @@ tap.test("19 - addSingleSpaceToPreventAccidentalConcatenation ignored", (t) => {
     [8, 16],
     "19.02 - non digits and non letters"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "a<!-- -->b",
       from: 1,
@@ -819,7 +819,7 @@ tap.test("19 - addSingleSpaceToPreventAccidentalConcatenation ignored", (t) => {
     [1, 9, " "],
     "19.03 - letters"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "<zzz><!-- -->b",
       from: 5,
@@ -829,7 +829,7 @@ tap.test("19 - addSingleSpaceToPreventAccidentalConcatenation ignored", (t) => {
     [5, 13, " "],
     "19.04 - letter on one side"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "<strong><!-- --></strong>",
       from: 8,
@@ -841,7 +841,7 @@ tap.test("19 - addSingleSpaceToPreventAccidentalConcatenation ignored", (t) => {
     [8, 16],
     "19.05"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "<strong><!-- -->a</strong>",
       from: 8,
@@ -853,7 +853,7 @@ tap.test("19 - addSingleSpaceToPreventAccidentalConcatenation ignored", (t) => {
     [8, 16, " "],
     "19.06"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "<strong>a<!-- --></strong>",
       from: 9,
@@ -865,7 +865,7 @@ tap.test("19 - addSingleSpaceToPreventAccidentalConcatenation ignored", (t) => {
     [9, 17, " "],
     "19.07"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "<strong>a<!-- -->a</strong>",
       from: 9,
@@ -880,7 +880,7 @@ tap.test("19 - addSingleSpaceToPreventAccidentalConcatenation ignored", (t) => {
 
   // AND...
 
-  t.same(
+  t.strictSame(
     e({
       str: "<strong>  <!-- -->  </strong>",
       from: 10,
@@ -892,7 +892,7 @@ tap.test("19 - addSingleSpaceToPreventAccidentalConcatenation ignored", (t) => {
     [8, 20],
     "19.09"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "<strong>  <!-- --></strong>",
       from: 10,
@@ -904,7 +904,7 @@ tap.test("19 - addSingleSpaceToPreventAccidentalConcatenation ignored", (t) => {
     [8, 18],
     "19.10"
   );
-  t.same(
+  t.strictSame(
     e({
       str: "<strong><!-- -->  </strong>",
       from: 8,
@@ -925,7 +925,7 @@ tap.test("19 - addSingleSpaceToPreventAccidentalConcatenation ignored", (t) => {
 tap.test(
   `20 - ${`\u001b[${33}m${`opts.ifLeftSideIncludesThisThenCropTightly`}\u001b[${39}m`} - normal use, both sides extended`,
   (t) => {
-    t.same(
+    t.strictSame(
       e({
         str: "a>     <b",
         from: 3,
@@ -935,7 +935,7 @@ tap.test(
       [2, 7],
       "20.01"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "a>     <b",
         from: 2,
@@ -945,7 +945,7 @@ tap.test(
       [2, 7],
       "20.02"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "a>     <b",
         from: 3,
@@ -955,7 +955,7 @@ tap.test(
       [2, 7],
       "20.03"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "a>     <b",
         from: 2,
@@ -972,7 +972,7 @@ tap.test(
 tap.test(
   `21 - ${`\u001b[${33}m${`opts.ifLeftSideIncludesThisThenCropTightly`}\u001b[${39}m`} - normal use, mismatching value`,
   (t) => {
-    t.same(
+    t.strictSame(
       e({
         str: "a>     <b",
         from: 5,
@@ -982,7 +982,7 @@ tap.test(
       [3, 6],
       "21.01"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "a>     <b",
         from: 4,
@@ -992,7 +992,7 @@ tap.test(
       [3, 6],
       "21.02"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "a>     <b",
         from: 3,
@@ -1002,7 +1002,7 @@ tap.test(
       [3, 6],
       "21.03"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "a>     <b",
         from: 2,
@@ -1012,7 +1012,7 @@ tap.test(
       [2, 6],
       "21.04"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "a>     <b",
         from: 3,
@@ -1022,7 +1022,7 @@ tap.test(
       [3, 7],
       "21.05"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "a>     <b",
         from: 2,
@@ -1039,7 +1039,7 @@ tap.test(
 tap.test(
   `22 - ${`\u001b[${33}m${`opts.ifLeftSideIncludesThisThenCropTightly`}\u001b[${39}m`} - range within characters, no whitespace`,
   (t) => {
-    t.same(
+    t.strictSame(
       e({
         str: "aaaaaaaaaaaaa",
         from: 5,
@@ -1049,7 +1049,7 @@ tap.test(
       [5, 5],
       "22.01"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "aaaaaaaaaaaaa",
         from: 5,
@@ -1059,7 +1059,7 @@ tap.test(
       [5, 5],
       "22.02"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "-aaaaaaaaaaaaa-",
         from: 5,
@@ -1079,7 +1079,7 @@ tap.test(
 tap.test(
   `23 - ${`\u001b[${33}m${`opts.ifRightSideIncludesThisThenCropTightly`}\u001b[${39}m`} - normal use, both sides extended`,
   (t) => {
-    t.same(
+    t.strictSame(
       e({
         str: "a>     <b",
         from: 3,
@@ -1089,7 +1089,7 @@ tap.test(
       [2, 7],
       "23.01"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "a>     <b",
         from: 2,
@@ -1099,7 +1099,7 @@ tap.test(
       [2, 7],
       "23.02"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "a>     <b",
         from: 3,
@@ -1109,7 +1109,7 @@ tap.test(
       [2, 7],
       "23.03"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "a>     <b",
         from: 2,
@@ -1126,7 +1126,7 @@ tap.test(
 tap.test(
   `24 - ${`\u001b[${33}m${`opts.ifRightSideIncludesThisThenCropTightly`}\u001b[${39}m`} - normal use, mismatching value`,
   (t) => {
-    t.same(
+    t.strictSame(
       e({
         str: "a>     <b",
         from: 5,
@@ -1136,7 +1136,7 @@ tap.test(
       [3, 6],
       "24.01"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "a>     <b",
         from: 4,
@@ -1146,7 +1146,7 @@ tap.test(
       [3, 6],
       "24.02"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "a>     <b",
         from: 3,
@@ -1156,7 +1156,7 @@ tap.test(
       [3, 6],
       "24.03"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "a>     <b",
         from: 2,
@@ -1166,7 +1166,7 @@ tap.test(
       [2, 6],
       "24.04"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "a>     <b",
         from: 3,
@@ -1176,7 +1176,7 @@ tap.test(
       [3, 7],
       "24.05"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "a>     <b",
         from: 2,
@@ -1193,7 +1193,7 @@ tap.test(
 tap.test(
   `25 - ${`\u001b[${33}m${`opts.ifRightSideIncludesThisThenCropTightly`}\u001b[${39}m`} - range within characters, no whitespace`,
   (t) => {
-    t.same(
+    t.strictSame(
       e({
         str: "aaaaaaaaaaaaa",
         from: 5,
@@ -1203,7 +1203,7 @@ tap.test(
       [5, 5],
       "25.01"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "aaaaaaaaaaaaa",
         from: 5,
@@ -1213,7 +1213,7 @@ tap.test(
       [5, 5],
       "25.02"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "-aaaaaaaaaaaaa-",
         from: 5,
@@ -1233,7 +1233,7 @@ tap.test(
 tap.test(
   `26 - ${`\u001b[${33}m${`opts.ifLeftSideIncludesThisCropItToo`}\u001b[${39}m`} - combo with tight crop`,
   (t) => {
-    t.same(
+    t.strictSame(
       e({
         str: "something>\n\t    zzzz <here",
         from: 16,
@@ -1243,7 +1243,7 @@ tap.test(
       [10, 21],
       "26.01 - control #1"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "something>\n\t    zzzz <here",
         from: 16,
@@ -1253,7 +1253,7 @@ tap.test(
       [10, 20],
       "26.02 - control #2"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "something>\n\t    zzzz <here",
         from: 16,
@@ -1264,7 +1264,7 @@ tap.test(
       [10, 21],
       "26.03"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "something> a    zzzz <here",
         from: 16,
@@ -1275,7 +1275,7 @@ tap.test(
       [12, 21],
       "26.04"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "something> a    zzzz <here",
         from: 16,
@@ -1287,7 +1287,7 @@ tap.test(
       [10, 21],
       "26.05"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "something> a    zzzz <here",
         from: 16,
@@ -1308,7 +1308,7 @@ tap.test(
 tap.test(
   `27 - ${`\u001b[${33}m${`opts.extendToOneSide`}\u001b[${39}m`} - one side only`,
   (t) => {
-    t.same(
+    t.strictSame(
       e({
         str: "a>     <b",
         from: 4,
@@ -1317,7 +1317,7 @@ tap.test(
       [3, 6],
       "27.01 - default, a control"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "a>     <b",
         from: 4,
@@ -1327,7 +1327,7 @@ tap.test(
       [3, 6],
       "27.02 - hardcoded default"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "a>     <b",
         from: 4,
@@ -1337,7 +1337,7 @@ tap.test(
       [4, 6],
       "27.03 - right only"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "a>     <b",
         from: 4,
@@ -1357,7 +1357,7 @@ tap.test(
 tap.test(
   `28 - ${`\u001b[${33}m${`opts.wipeAllWhitespaceOnLeft`}\u001b[${39}m`} - extends to both sides`,
   (t) => {
-    t.same(
+    t.strictSame(
       e({
         str: "a>     <b",
         from: 4,
@@ -1366,7 +1366,7 @@ tap.test(
       [3, 6],
       "28.01 - a control"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "a>     <b",
         from: 4,
@@ -1376,7 +1376,7 @@ tap.test(
       [2, 6],
       "28.02 - left"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "a>     <b",
         from: 4,
@@ -1386,7 +1386,7 @@ tap.test(
       [3, 7],
       "28.03 - right"
     );
-    t.same(
+    t.strictSame(
       e({
         str: "a>     <b",
         from: 4,
@@ -1413,7 +1413,7 @@ tap.test(`29 - ${`\u001b[${36}m${`various`}\u001b[${39}m`} - adhoc #1`, (t) => {
 <body id   =   ""  ><a class  =  "" >z</a>
 </body>`;
 
-  t.same(
+  t.strictSame(
     e({
       str,
       from: 82,
@@ -1436,7 +1436,7 @@ tap.test(`30 - ${`\u001b[${36}m${`various`}\u001b[${39}m`} - adhoc #2`, (t) => {
 <body>z
 </body>`;
 
-  t.same(
+  t.strictSame(
     e({
       str,
       from: 32,
@@ -1460,7 +1460,7 @@ tap.test(`31 - ${`\u001b[${36}m${`various`}\u001b[${39}m`} - adhoc #3`, (t) => {
 <body>z
 </body>`;
 
-  t.same(
+  t.strictSame(
     e({
       str,
       from: 39,

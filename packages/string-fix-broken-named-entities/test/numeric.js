@@ -7,7 +7,7 @@ tap.test(
   `01 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - decode within ASCII range - A`,
   (t) => {
     const inp1 = "&#65;";
-    t.same(
+    t.strictSame(
       fix(inp1, {
         decode: true,
         cb: (obj) => obj,
@@ -32,7 +32,7 @@ tap.test(
   `02 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - decode outside ASCII range - pound`,
   (t) => {
     const inp1 = "&#163;";
-    t.same(
+    t.strictSame(
       fix(inp1, {
         decode: true,
         cb: (obj) => obj,
@@ -57,7 +57,7 @@ tap.test(
   `03 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - decode outside ASCII range - non-existing number`,
   (t) => {
     const inp1 = "&#99999999999999999;";
-    t.same(
+    t.strictSame(
       fix(inp1, {
         decode: true,
         cb: (obj) => obj,
@@ -84,7 +84,7 @@ tap.test(
   `04 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - no decode, within ASCII range - A`,
   (t) => {
     const inp1 = "&#65;";
-    t.same(
+    t.strictSame(
       fix(inp1, {
         decode: false,
         cb: (obj) => obj,
@@ -100,7 +100,7 @@ tap.test(
   `05 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - no decode, outside ASCII range - pound`,
   (t) => {
     const inp1 = "&#163;";
-    t.same(
+    t.strictSame(
       fix(inp1, {
         decode: false,
         cb: (obj) => obj,
@@ -116,7 +116,7 @@ tap.test(
   `06 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - no decode, outside ASCII range - non-existing number`,
   (t) => {
     const inp1 = "&#99999999999999999;";
-    t.same(
+    t.strictSame(
       fix(inp1, {
         decode: false,
         cb: (obj) => obj,
@@ -141,7 +141,7 @@ tap.test(
   `07 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - dollar instead of hash`,
   (t) => {
     const inp1 = "&$65;";
-    t.same(
+    t.strictSame(
       fix(inp1, {
         cb: (obj) => obj,
       }),
@@ -165,7 +165,7 @@ tap.test(
   `08 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${31}m${"decimal pattern"}\u001b[${39}m`} - decoding text with healthy numeric entities`,
   (t) => {
     const inp1 = "something here &#163;";
-    t.same(
+    t.strictSame(
       fix(inp1, {
         cb: (obj) => obj,
         decode: false,
@@ -173,7 +173,7 @@ tap.test(
       [],
       "08.01"
     );
-    t.same(
+    t.strictSame(
       fix(inp1, {
         cb: (obj) => obj,
         decode: true,
@@ -190,7 +190,7 @@ tap.test(
       ],
       "08.02"
     );
-    t.same(fix(inp1, { decode: true }), [[15, 21, "\xA3"]], "08.03");
+    t.strictSame(fix(inp1, { decode: true }), [[15, 21, "\xA3"]], "08.03");
     t.end();
   }
 );
@@ -199,8 +199,8 @@ tap.test(
   `09 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - decode outside ASCII range - pound`,
   (t) => {
     const inp1 = "&#xA3;";
-    t.same(fix(inp1, { decode: true }), [[0, 6, "\xA3"]], "09.01");
-    t.same(
+    t.strictSame(fix(inp1, { decode: true }), [[0, 6, "\xA3"]], "09.01");
+    t.strictSame(
       fix(inp1, {
         decode: true,
         cb: (obj) => obj,
@@ -225,7 +225,7 @@ tap.test(
   `10 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - swapped hash and x, no decode - pound`,
   (t) => {
     const inp1 = "&x#A3;";
-    t.same(
+    t.strictSame(
       fix(inp1, {
         decode: false,
         cb: (obj) => obj,
@@ -250,8 +250,8 @@ tap.test(
   `11 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - swapped hash and x, with decode - pound`,
   (t) => {
     const inp1 = "&x#A3;";
-    t.same(fix(inp1, { decode: true }), [[0, 6]], "11.01");
-    t.same(
+    t.strictSame(fix(inp1, { decode: true }), [[0, 6]], "11.01");
+    t.strictSame(
       fix(inp1, {
         decode: true,
         cb: (obj) => obj,
@@ -276,7 +276,7 @@ tap.test(
   `12 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - &#x pattern with hash missing`,
   (t) => {
     const inp1 = "&x1000;";
-    t.same(
+    t.strictSame(
       fix(inp1, {
         cb: (obj) => obj,
       }),
@@ -300,7 +300,7 @@ tap.test(
   `13 - ${`\u001b[${33}m${`numeric entities`}\u001b[${39}m`} - ${`\u001b[${34}m${"hexidecimal pattern"}\u001b[${39}m`} - missing ampersand`,
   (t) => {
     const inp1 = "abc#x26;def";
-    t.same(
+    t.strictSame(
       fix(inp1, {
         cb: (obj) => obj,
       }),

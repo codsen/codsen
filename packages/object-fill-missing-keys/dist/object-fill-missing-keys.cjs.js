@@ -103,7 +103,6 @@ function isStr(something) {
 function existy(x) {
   return x != null;
 }
-var isArr = Array.isArray;
 function fillMissingKeys(incompleteOriginal, schema, opts) {
   var path = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "";
   var incomplete = clone__default['default'](incompleteOriginal);
@@ -124,14 +123,14 @@ function fillMissingKeys(incompleteOriginal, schema, opts) {
           incomplete[key] = fillMissingKeys(incomplete[key], schema[key], opts, currentPath);
         }
       });
-    } else if (isArr(schema) && isArr(incomplete)) {
+    } else if (Array.isArray(schema) && Array.isArray(incomplete)) {
       if (incomplete.length === 0) {
         return schema;
       }
       if (schema.length > 0) {
         for (var i = incomplete.length; i--;) {
           var currentPath = "".concat(path ? "".concat(path, ".") : "", "0");
-          if (isObj__default['default'](schema[0]) || isArr(schema[0])) {
+          if (isObj__default['default'](schema[0]) || Array.isArray(schema[0])) {
             incomplete[i] = fillMissingKeys(incomplete[i], schema[0], opts, currentPath);
           }
         }

@@ -14,7 +14,7 @@ tap.test(
     // ===
 
     // So, first let's establish the default behaviour
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: false,
@@ -28,7 +28,7 @@ tap.test(
       },
       "01.01 - control, case #79 - false. Null is lower in rank than any Boolean."
     );
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: true,
@@ -45,7 +45,7 @@ tap.test(
 
     // ===
 
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: null,
@@ -59,7 +59,7 @@ tap.test(
       },
       "01.03 - control, case #88 - false"
     );
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: null,
@@ -80,7 +80,7 @@ tap.test(
 
     // Onto the null-as-explicit-false mode then.
 
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: false,
@@ -97,7 +97,7 @@ tap.test(
       },
       "01.05 - null-as-explicit-false, case #79 - false"
     );
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: true,
@@ -117,7 +117,7 @@ tap.test(
 
     // ===
 
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: null,
@@ -134,7 +134,7 @@ tap.test(
       },
       "01.07 - null-as-explicit-false, case #88 - false"
     );
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: null,
@@ -158,7 +158,7 @@ tap.test(
 tap.test(
   "02 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, null vs. non-Booleans, cases #81-90",
   (t) => {
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: null,
@@ -175,7 +175,7 @@ tap.test(
       },
       "02.01 - #81 - null vs non-empty array"
     );
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: null,
@@ -192,7 +192,7 @@ tap.test(
       },
       "02.02 - #82 - null vs. empty array"
     );
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: null,
@@ -209,7 +209,7 @@ tap.test(
       },
       "02.03 - #83 - null vs. non-empty plain object"
     );
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: null,
@@ -226,7 +226,7 @@ tap.test(
       },
       "02.04 - #84 - null vs. empty plain object"
     );
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: null,
@@ -243,7 +243,7 @@ tap.test(
       },
       "02.05 - #85 - null vs. non-empty string"
     );
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: null,
@@ -260,7 +260,7 @@ tap.test(
       },
       "02.06 - #86 - null vs. non-empty string"
     );
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: null,
@@ -277,7 +277,7 @@ tap.test(
       },
       "02.07 - #87 - null vs. num"
     );
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: null,
@@ -294,7 +294,7 @@ tap.test(
       },
       "02.08 - #88 - null vs. bool, true"
     );
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: null,
@@ -311,7 +311,7 @@ tap.test(
       },
       "02.09 - #88 - null vs. bool, false"
     );
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: null,
@@ -328,7 +328,7 @@ tap.test(
       },
       "02.10 - #89 - null vs. null"
     );
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: null,
@@ -352,7 +352,7 @@ tap.test(
 tap.test(
   "03 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, non-Booleans vs. null, cases #9, 19, 29, 39, 49...99",
   (t) => {
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: ["a"],
@@ -369,7 +369,7 @@ tap.test(
       },
       "03.01 - #9 - null vs non-empty array"
     );
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: [],
@@ -386,7 +386,7 @@ tap.test(
       },
       "03.02 - #19 - null vs. empty array"
     );
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: { b: "c" },
@@ -403,7 +403,7 @@ tap.test(
       },
       "03.03 - #29 - null vs. non-empty plain object"
     );
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: {},
@@ -420,7 +420,7 @@ tap.test(
       },
       "03.04 - #39 - null vs. empty plain object"
     );
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: "zzz",
@@ -437,7 +437,7 @@ tap.test(
       },
       "03.05 - #49 - null vs. non-empty string"
     );
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: "",
@@ -454,7 +454,7 @@ tap.test(
       },
       "03.06 - #59 - null vs. non-empty string"
     );
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: 1,
@@ -471,7 +471,7 @@ tap.test(
       },
       "03.07 - #69 - null vs. num"
     );
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: true,
@@ -488,7 +488,7 @@ tap.test(
       },
       "03.08 - #79 - null vs. bool, true"
     );
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: false,
@@ -505,7 +505,7 @@ tap.test(
       },
       "03.09 - #79 - null vs. bool, false"
     );
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: null,
@@ -522,7 +522,7 @@ tap.test(
       },
       "03.10 - #89 - null vs. null"
     );
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: undefined,
@@ -546,7 +546,7 @@ tap.test(
 tap.test(
   "04 - \u001b[33mOPTS\u001b[39m - opts.hardConcatKeys - basic cases",
   (t) => {
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: [0, 1, 2],
@@ -563,7 +563,7 @@ tap.test(
       },
       "04.01"
     );
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: [{ a: 0 }, { a: 1 }, { a: 2 }],
@@ -580,7 +580,7 @@ tap.test(
       },
       "04.02"
     );
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: [1, 2, 3],
@@ -603,7 +603,7 @@ tap.test(
       },
       "04.03"
     );
-    t.same(
+    t.strictSame(
       mergeAdvanced(
         {
           a: [1, 2, 3],

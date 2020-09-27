@@ -5,12 +5,16 @@ import alt from "../dist/html-img-alt.esm";
 // -----------------------------------------------------------------------------
 
 tap.test("01 - alt without equal", (t) => {
-  t.same(alt("zzz<img alt>zzz"), 'zzz<img alt="" >zzz', "01 - html - tight");
+  t.strictSame(
+    alt("zzz<img alt>zzz"),
+    'zzz<img alt="" >zzz',
+    "01 - html - tight"
+  );
   t.end();
 });
 
 tap.test("02 - alt without equal", (t) => {
-  t.same(
+  t.strictSame(
     alt("zzz<img    alt>zzz"),
     'zzz<img alt="" >zzz',
     "02 - html - excessive white space"
@@ -19,7 +23,7 @@ tap.test("02 - alt without equal", (t) => {
 });
 
 tap.test("03 - alt without equal", (t) => {
-  t.same(
+  t.strictSame(
     alt("zzz<img alt >zzz"),
     'zzz<img alt="" >zzz',
     "03 - html - one trailing space"
@@ -28,7 +32,7 @@ tap.test("03 - alt without equal", (t) => {
 });
 
 tap.test("04 - alt without equal", (t) => {
-  t.same(
+  t.strictSame(
     alt("zzz<img      alt      >zzz"),
     'zzz<img alt="" >zzz',
     "04 - html - excessive white space on both sides"
@@ -37,12 +41,16 @@ tap.test("04 - alt without equal", (t) => {
 });
 
 tap.test("05 - alt without equal", (t) => {
-  t.same(alt("zzz<img alt/>zzz"), 'zzz<img alt="" />zzz', "05 - xhtml - tight");
+  t.strictSame(
+    alt("zzz<img alt/>zzz"),
+    'zzz<img alt="" />zzz',
+    "05 - xhtml - tight"
+  );
   t.end();
 });
 
 tap.test("06 - alt without equal", (t) => {
-  t.same(
+  t.strictSame(
     alt("zzz<img alt />zzz"),
     'zzz<img alt="" />zzz',
     "06 - xhtml - single space on both sides"
@@ -51,7 +59,7 @@ tap.test("06 - alt without equal", (t) => {
 });
 
 tap.test("07 - alt without equal", (t) => {
-  t.same(
+  t.strictSame(
     alt("zzz<img      alt   />zzz"),
     'zzz<img alt="" />zzz',
     "07 - xhtml - excessive white space on both sides"
@@ -60,7 +68,7 @@ tap.test("07 - alt without equal", (t) => {
 });
 
 tap.test("08 - alt without equal", (t) => {
-  t.same(
+  t.strictSame(
     alt("zzz<img      alt   /   >zzz"),
     'zzz<img alt="" />zzz',
     "08 - xhtml - excessive white space everywhere"

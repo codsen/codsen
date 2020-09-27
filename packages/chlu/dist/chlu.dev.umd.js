@@ -4858,6 +4858,7 @@
       var oneOfFoundIndexes = allResults[resIndex];
       foundBeginningIndex = oneOfFoundIndexes;
       foundEndingIndex = oneOfFoundIndexes + Array.from(opts.searchFor).length;
+      /* istanbul ignore else */
 
       if (opts.leftMaybe.length > 0) {
         for (var i = 0, len = opts.leftMaybe.length; i < len; i++) {
@@ -4881,6 +4882,8 @@
           }
         }
       }
+      /* istanbul ignore else */
+
 
       if (opts.rightMaybe.length > 0) {
         for (var _i2 = 0, _len = opts.rightMaybe.length; _i2 < _len; _i2++) {

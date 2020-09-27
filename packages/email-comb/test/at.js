@@ -94,7 +94,7 @@ tap.test(
 </html>
 `;
 
-    t.same(actual, intended, "03");
+    t.strictSame(actual, intended, "03");
     t.end();
   }
 );
@@ -140,7 +140,7 @@ zzz
 </html>
 `;
 
-    t.same(actual, intended, "04");
+    t.strictSame(actual, intended, "04");
     t.end();
   }
 );
@@ -193,7 +193,7 @@ tap.test(
 </html>
 `;
 
-    t.same(actual, intended, "05");
+    t.strictSame(actual, intended, "05");
     t.end();
   }
 );
@@ -252,7 +252,7 @@ tap.test("06 - empty media queries removed", (t) => {
 </html>
 `;
 
-  t.same(actual, intended, "06");
+  t.strictSame(actual, intended, "06");
   t.end();
 });
 
@@ -319,7 +319,7 @@ tap.test("07 - multiple levels of media queries cleaned", (t) => {
 </html>
 `;
 
-  t.same(actual, intended, "07");
+  t.strictSame(actual, intended, "07");
   t.end();
 });
 
@@ -394,7 +394,7 @@ tap.test(
 </html>
 `;
 
-    t.same(actual, intended, "08");
+    t.strictSame(actual, intended, "08");
     t.end();
   }
 );
@@ -445,7 +445,7 @@ zzz
 </html>
 `;
 
-  t.same(actual, intended, "09");
+  t.strictSame(actual, intended, "09");
   t.end();
 });
 
@@ -488,7 +488,7 @@ zzz
 </html>
 `;
 
-  t.same(actual, intended, "10");
+  t.strictSame(actual, intended, "10");
   t.end();
 });
 
@@ -533,7 +533,7 @@ zzz
 </html>
 `;
 
-  t.same(actual, intended, "11");
+  t.strictSame(actual, intended, "11");
   t.end();
 });
 
@@ -580,7 +580,7 @@ zzz
 </html>
 `;
 
-  t.same(actual, intended, "12");
+  t.strictSame(actual, intended, "12");
   t.end();
 });
 
@@ -625,7 +625,7 @@ zzz
 </html>
 `;
 
-  t.same(actual, intended, "13");
+  t.strictSame(actual, intended, "13");
   t.end();
 });
 
@@ -673,7 +673,7 @@ zzz
 </html>
 `;
 
-  t.same(actual, intended, "14");
+  t.strictSame(actual, intended, "14");
   t.end();
 });
 
@@ -721,7 +721,7 @@ zzz
 </html>
 `;
 
-  t.same(actual, intended, "15");
+  t.strictSame(actual, intended, "15");
   t.end();
 });
 
@@ -767,7 +767,7 @@ zzz
 </html>
 `;
 
-  t.same(actual, intended, "16");
+  t.strictSame(actual, intended, "16");
   t.end();
 });
 
@@ -815,7 +815,7 @@ zzz
 </html>
 `;
 
-  t.same(actual, intended, "17");
+  t.strictSame(actual, intended, "17");
   t.end();
 });
 
@@ -864,7 +864,7 @@ zzz
 </html>
 `;
 
-  t.same(actual, intended, "18");
+  t.strictSame(actual, intended, "18");
   t.end();
 });
 
@@ -955,7 +955,7 @@ tap.test("19 - copes with @font-face within media query", (t) => {
 </body>
 </html>
 `;
-  t.same(comb(source).result, intended, "19");
+  t.strictSame(comb(source).result, intended, "19");
   t.end();
 });
 
@@ -1012,7 +1012,7 @@ tap.test("20 - copes with @font-face not within media query", (t) => {
 </body>
 </html>
 `;
-  t.same(comb(source).result, intended, "20");
+  t.strictSame(comb(source).result, intended, "20");
   t.end();
 });
 
@@ -1184,7 +1184,7 @@ tap.test("22 - does not touch @font-face", (t) => {
 </html>
 `;
 
-  t.same(actual, intended, "22");
+  t.strictSame(actual, intended, "22");
   t.end();
 });
 
@@ -1230,7 +1230,7 @@ tap.test(
 </html>
 `;
 
-    t.same(actual, intended, "23");
+    t.strictSame(actual, intended, "23");
     t.end();
   }
 );
@@ -1282,7 +1282,7 @@ zzz
 </html>
 `;
 
-    t.same(actual, intended, "24");
+    t.strictSame(actual, intended, "24");
     t.end();
   }
 );
@@ -1319,7 +1319,7 @@ tap.test("25 - media query with asterisk", (t) => {
 </html>
 `;
 
-  t.same(actual, intended, "25");
+  t.strictSame(actual, intended, "25");
   t.end();
 });
 
@@ -1355,7 +1355,7 @@ tap.test("26 - complex media query #1", (t) => {
 </html>
 `;
 
-  t.same(actual, intended, "26");
+  t.strictSame(actual, intended, "26");
   t.end();
 });
 
@@ -1391,6 +1391,6 @@ tap.test("27 - complex media query #2", (t) => {
 </html>
 `;
 
-  t.same(actual, intended, "27");
+  t.strictSame(actual, intended, "27");
   t.end();
 });

@@ -27,6 +27,44 @@
 npm i object-delete-key
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import deleteKey from "object-delete-key";
+
+// deleting key 'c', with value 'd'
+assert.deepEqual(
+  deleteKey(
+    {
+      a: "b",
+      c: "d",
+    },
+    {
+      key: "c",
+      val: "d",
+    }
+  ),
+  { a: "b" }
+);
+
+// deleting key 'b' with value - array ['c', 'd']
+assert.deepEqual(
+  deleteKey(
+    {
+      a: { e: [{ b: ["c", "d"] }] },
+      b: ["c", "d"],
+    },
+    {
+      key: "b",
+      val: ["c", "d"],
+    }
+  ),
+  {}
+);
+// notice program cleaned after itself, it didn't leave empty "a" key
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/object-delete-key/) for a full description of the API and examples.

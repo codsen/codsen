@@ -80,7 +80,7 @@ globby([
           tap.test(
             `${idx} - ${innerObj.path} - our set() is identical to object-path.set()`,
             (t) => {
-              t.same(
+              t.strictSame(
                 calculated,
                 editedRefObj,
                 `package #${`${idx}`.padStart(3, "0")}: ${obj.name}; path: ${

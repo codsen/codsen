@@ -30,7 +30,7 @@ tap.test("01 - there are no usable files at all", async (t) => {
   }, "01.01");
 
   // confirm that the existing file is intact:
-  t.same(
+  t.strictSame(
     await fs.readFile(path.join(tempFolder, "file.md"), "utf8"),
     "zzz",
     "01.02"
@@ -92,14 +92,14 @@ tap.test("02 - sorts a file", async (t) => {
     .then(() => fs.readFile(path.join(tempFolder, "testfile-1.csv"), "utf8"))
     .catch((err) => t.fail(err));
 
-  t.same(await newlyGeneratedCsvFile, intendedCSV, "02.01");
+  t.strictSame(await newlyGeneratedCsvFile, intendedCSV, "02.01");
 
   // 3. check, is original file intact
   const originalCsvFile = fs.readFile(
     path.join(tempFolder, "testfile.csv"),
     "utf8"
   );
-  t.same(await originalCsvFile, originalCSV, "02.02");
+  t.strictSame(await originalCsvFile, originalCSV, "02.02");
 
   t.end();
 });

@@ -266,7 +266,7 @@ tap.test("10 - removes classes and id's from HTML5 (normal input)", (t) => {
 </html>
 `;
 
-  t.same(comb(source).result, intended, "10");
+  t.strictSame(comb(source).result, intended, "10");
   t.end();
 });
 
@@ -331,7 +331,7 @@ tap.test("11 - removes classes and id's from HTML5 - uglifies", (t) => {
 </html>
 `;
 
-  t.same(actual, intended, "11");
+  t.strictSame(actual, intended, "11");
   t.end();
 });
 
@@ -393,7 +393,7 @@ tap.test("12 - deletes blank class/id attrs", (t) => {
 </html>
 `;
 
-  t.same(actual, intended, "12");
+  t.strictSame(actual, intended, "12");
   t.end();
 });
 
@@ -439,7 +439,7 @@ tap.test(
 </body>
 </html>
 `;
-    t.same(actual, intended, "13");
+    t.strictSame(actual, intended, "13");
     t.end();
   }
 );
@@ -498,7 +498,7 @@ tap.test("14 - multiple style tags recognised and transformed", (t) => {
 </html>
 `;
 
-  t.same(actual, intended, "14");
+  t.strictSame(actual, intended, "14");
   t.end();
 });
 
@@ -556,7 +556,7 @@ tap.test("15 - style tags are outside HEAD", (t) => {
 </html>
 `;
 
-  t.same(actual, intended, "15");
+  t.strictSame(actual, intended, "15");
   t.end();
 });
 
@@ -589,7 +589,7 @@ color:  black;
 </html>
 `;
 
-  t.same(actual, intended, "16");
+  t.strictSame(actual, intended, "16");
   t.end();
 });
 
@@ -634,7 +634,7 @@ tap.test("17 - deletes multiple empty style tags", (t) => {
 </body>
 </html>
 `;
-  t.same(actual, intended, "17");
+  t.strictSame(actual, intended, "17");
   t.end();
 });
 
@@ -734,8 +734,8 @@ tap.test(
 </html>
 `;
 
-    t.same(actual, intended, "18.01");
-    t.same(actualUglified, intendedUglified, "18.02");
+    t.strictSame(actual, intended, "18.01");
+    t.strictSame(actualUglified, intendedUglified, "18.02");
     t.end();
   }
 );
@@ -788,7 +788,7 @@ tap.test(
   </body>
 </html>
 `;
-    t.same(comb(source).result, intended, "19");
+    t.strictSame(comb(source).result, intended, "19");
     t.end();
   }
 );
@@ -828,8 +828,8 @@ tap.test("20 - head CSS is given minified", (t) => {
 </body>
 </html>
 `;
-  t.same(comb(source1).result, intended1, "20.01");
-  t.same(comb(source2).result, intended2, "20.02");
+  t.strictSame(comb(source1).result, intended1, "20.01");
+  t.strictSame(comb(source2).result, intended2, "20.02");
   t.end();
 });
 
@@ -871,9 +871,9 @@ tap.test("21 - head CSS is given minified, comma separated", (t) => {
 </html>
 `;
 
-  t.same(comb(source1).result, intended, "21.01");
-  t.same(comb(source2).result, intended, "21.02");
-  t.same(comb(source3).result, intended, "21.03");
+  t.strictSame(comb(source1).result, intended, "21.01");
+  t.strictSame(comb(source2).result, intended, "21.02");
+  t.strictSame(comb(source3).result, intended, "21.03");
   t.end();
 });
 
@@ -905,12 +905,12 @@ tap.test("22 - head CSS is expanded", (t) => {
 </html>
 `;
 
-  t.same(comb(source).result, intended, "22");
+  t.strictSame(comb(source).result, intended, "22");
   t.end();
 });
 
 tap.test("23 - empty string produces empty string", (t) => {
-  t.same(comb("").result, "", "23");
+  t.strictSame(comb("").result, "", "23");
   t.end();
 });
 
@@ -1103,8 +1103,8 @@ tap.test(
 </html>
 `;
 
-    t.same(actual, intended, "26.01");
-    t.same(actualUglified, intendedUglified, "26.02");
+    t.strictSame(actual, intended, "26.01");
+    t.strictSame(actualUglified, intendedUglified, "26.02");
     t.end();
   }
 );
@@ -1193,8 +1193,8 @@ tap.test(
 </html>
 `;
 
-    t.same(actual, intended, "27.01");
-    t.same(actualUglified, intendedUglified, "27.02");
+    t.strictSame(actual, intended, "27.01");
+    t.strictSame(actualUglified, intendedUglified, "27.02");
     t.end();
   }
 );
@@ -1346,10 +1346,10 @@ tap.test(
 </html>
 `;
 
-    t.same(actual, intended, "28.01");
-    t.same(actualUglified, intendedUglified, "28.02");
-    t.same(actualAllCommentsDeleted, intendedAllCommentsDeleted, "28.03");
-    t.same(
+    t.strictSame(actual, intended, "28.01");
+    t.strictSame(actualUglified, intendedUglified, "28.02");
+    t.strictSame(actualAllCommentsDeleted, intendedAllCommentsDeleted, "28.03");
+    t.strictSame(
       actualAllCommentsDeletedUglified,
       intendedAllCommentsDeletedUglified,
       "28.04"
@@ -1360,18 +1360,18 @@ tap.test(
       removeHTMLComments: false,
       doNotRemoveHTMLCommentsWhoseOpeningTagContains: [],
     }).result;
-    t.same(actualUglifiedCommentsOffAndIgnored, intended, "28.05");
+    t.strictSame(actualUglifiedCommentsOffAndIgnored, intended, "28.05");
 
     const actualUglifiedCommentsOff = comb(source, {
       removeHTMLComments: false,
     }).result;
-    t.same(actualUglifiedCommentsOff, intended, "28.06");
+    t.strictSame(actualUglifiedCommentsOff, intended, "28.06");
 
     const actualUglifiedCommentsOffUglify = comb(source, {
       removeHTMLComments: false,
       uglify: true,
     }).result;
-    t.same(actualUglifiedCommentsOffUglify, intendedUglified, "28.07");
+    t.strictSame(actualUglifiedCommentsOffUglify, intendedUglified, "28.07");
     t.end();
   }
 );

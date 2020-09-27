@@ -19,7 +19,7 @@ tap.todo(
         },
       }
     );
-    t.same(
+    t.strictSame(
       gathered,
       [
         {

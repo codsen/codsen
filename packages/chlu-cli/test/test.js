@@ -31,7 +31,7 @@ tap.test("01 - there are no usable files at all", async (t) => {
     .then(() => fs.readFile(path.join(tempFolder, "file.md"), "utf8"))
     .catch((err) => t.fail(err));
   // confirm that the existing file is intact:
-  t.same(await processedFileContents, "zzz", "01");
+  t.strictSame(await processedFileContents, "zzz", "01");
   t.end();
 });
 
@@ -175,7 +175,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
       .then(() => fs.readFile(path.join(tempFolder, "changelog.md"), "utf8"))
       .catch((err) => t.fail(err));
 
-    t.same(await processedFileContents, intendedChangelog, "02");
+    t.strictSame(await processedFileContents, intendedChangelog, "02");
     t.end();
   }
 );
@@ -354,7 +354,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
       .then(() => fs.readFile(path.join(tempFolder, "changelog.md"), "utf8"))
       .catch((err) => t.fail(err));
 
-    t.same(await processedFileContents, intendedChangelog, "03");
+    t.strictSame(await processedFileContents, intendedChangelog, "03");
     t.end();
   }
 );
@@ -498,7 +498,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     .then(() => fs.readFile(path.join(tempFolder, "changelog.md"), "utf8"))
     .catch((err) => t.fail(err));
 
-  t.same(await processedFileContents, intendedChangelog, "04");
+  t.strictSame(await processedFileContents, intendedChangelog, "04");
   t.end();
 });
 
@@ -674,7 +674,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     .then(() => fs.readFile(path.join(tempFolder, "changelog.md"), "utf8"))
     .catch((err) => t.fail(err));
 
-  t.same(await processedFileContents, intendedChangelog, "05");
+  t.strictSame(await processedFileContents, intendedChangelog, "05");
   t.end();
 });
 

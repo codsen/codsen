@@ -7,7 +7,7 @@ tap.test("01 - just a plain object", (t) => {
     tag: "html",
   };
 
-  t.same(
+  t.strictSame(
     get(source, "tag"),
     [
       {
@@ -21,7 +21,7 @@ tap.test("01 - just a plain object", (t) => {
   // queries via object-path library:
   t.equal(objectPath.get(source, "tag"), "html", "01.02");
 
-  t.same(
+  t.strictSame(
     get(
       {
         Tag: "html",
@@ -40,7 +40,7 @@ tap.test("02 - single plain object within array", (t) => {
       tag: "html",
     },
   ];
-  t.same(
+  t.strictSame(
     get(source, "tag"),
     [
       {
@@ -66,15 +66,15 @@ tap.test("03 - string in array as result", (t) => {
       path: "tag",
     },
   ];
-  t.same(get(source, "tag"), res, "03.01");
+  t.strictSame(get(source, "tag"), res, "03.01");
   // double check, is the result's path pointing to exactly the same value if
   // queries via object-path library:
-  t.same(objectPath.get(source, "tag"), ["html"], "03.02");
+  t.strictSame(objectPath.get(source, "tag"), ["html"], "03.02");
   t.end();
 });
 
 tap.test("04 - two strings as result", (t) => {
-  t.same(
+  t.strictSame(
     get(
       [
         {
@@ -107,7 +107,7 @@ tap.test("04 - two strings as result", (t) => {
 });
 
 tap.test("05 - query by key, returns mixed results", (t) => {
-  t.same(
+  t.strictSame(
     get(
       [
         {
@@ -175,7 +175,11 @@ tap.test("06 - deep tree", (t) => {
     },
   ];
   const retrievedPath = "0.a.b.0.c.d.0.e.f.0.g.h.tag";
-  t.same(get(source, "tag"), [{ val: "html", path: retrievedPath }], "06.01");
+  t.strictSame(
+    get(source, "tag"),
+    [{ val: "html", path: retrievedPath }],
+    "06.01"
+  );
 
   // double check, is the result's path pointing to exactly the same value if
   // queries via object-path library:
@@ -184,7 +188,7 @@ tap.test("06 - deep tree", (t) => {
 });
 
 tap.test("07 - query returns an array", (t) => {
-  t.same(
+  t.strictSame(
     get(
       [
         {
@@ -200,7 +204,7 @@ tap.test("07 - query returns an array", (t) => {
 });
 
 tap.test("08 - query returns a string", (t) => {
-  t.same(
+  t.strictSame(
     get(
       [
         {
@@ -240,7 +244,7 @@ tap.test("09 - query returns array with two objects", (t) => {
       d: "d",
     },
   ];
-  t.same(
+  t.strictSame(
     get(source, "tag"),
     [
       {
@@ -253,12 +257,12 @@ tap.test("09 - query returns array with two objects", (t) => {
 
   // double check, is the result's path pointing to exactly the same value if
   // queries via object-path library:
-  t.same(objectPath.get(source, "0.tag"), retrievedValue, "09.02");
+  t.strictSame(objectPath.get(source, "0.tag"), retrievedValue, "09.02");
   t.end();
 });
 
 tap.test("10 - no results query", (t) => {
-  t.same(
+  t.strictSame(
     get(
       {
         style: "html",

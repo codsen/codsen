@@ -13,7 +13,7 @@ function mixer(t, tested, reference, idx) {
     //       : tested.length - i
     //   }`}\u001b[${39}m`} = ${JSON.stringify(tested, null, 0)}`
     // );
-    t.same(sortByCol(tested, idx), reference);
+    t.strictSame(sortByCol(tested, idx), reference);
   }
   for (let i = tested.length * tested.length; i--; ) {
     const specimen = shuffle(tested);
@@ -25,7 +25,7 @@ function mixer(t, tested, reference, idx) {
     //   }`}\u001b[${39}m`} = ${JSON.stringify(specimen, null, 0)}`
     // );
 
-    t.same(sortByCol(specimen, idx), reference);
+    t.strictSame(sortByCol(specimen, idx), reference);
   }
 }
 

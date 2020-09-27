@@ -6,7 +6,7 @@ import jv from "../dist/json-variables.esm";
 tap.test(
   "01 - opts.headsNoWrap & opts.tailsNoWrap work on single level vars",
   (t) => {
-    t.same(
+    t.strictSame(
       jv(
         {
           a: "some text %%-var1-%% more text %%_var2_%%",
@@ -27,7 +27,7 @@ tap.test(
       },
       "01.01 - defaults"
     );
-    t.same(
+    t.strictSame(
       jv(
         {
           a: "some text (( var1 )) more text %%_var2_%%",
@@ -50,7 +50,7 @@ tap.test(
       },
       "01.02 - custom opts.headsNoWrap & opts.tailsNoWrap"
     );
-    t.same(
+    t.strictSame(
       jv(
         {
           a: "some text (( var1 )) more text %%_var2_%%",
@@ -73,7 +73,7 @@ tap.test(
       },
       "01.03 - left side wrapped only, custom opts.headsNoWrap & opts.tailsNoWrap"
     );
-    t.same(
+    t.strictSame(
       jv(
         {
           a: "some text (( var1 )) more text %%_var2_%%",
@@ -103,7 +103,7 @@ tap.test(
 tap.test(
   "02 - opts.headsNoWrap & opts.tailsNoWrap work on multi-level vars",
   (t) => {
-    t.same(
+    t.strictSame(
       jv(
         {
           a:
@@ -123,7 +123,7 @@ tap.test(
       },
       "02.01 - two level redirects, default opts.headsNoWrap & opts.tailsNoWrap, matching var key lengths"
     );
-    t.same(
+    t.strictSame(
       jv(
         {
           a: "text %%-bbb-%% more text %%_c_%% and more %%-bbb-%% text",
@@ -142,7 +142,7 @@ tap.test(
       },
       "02.02 - two level redirects, default opts.headsNoWrap & opts.tailsNoWrap, mismatching var key lengths"
     );
-    t.same(
+    t.strictSame(
       jv(
         {
           a:
@@ -173,7 +173,7 @@ tap.test(
 tap.test(
   "03 - triple linking with resolving arrays and trailing new lines",
   (t) => {
-    t.same(
+    t.strictSame(
       jv(
         {
           aaa: "%%-bbb-%%",
@@ -191,7 +191,7 @@ tap.test(
       "03.01 - basic, checking are trailing line breaks retained"
     );
 
-    t.same(
+    t.strictSame(
       jv(
         {
           aaa: "%%-bbb-%%",
@@ -217,7 +217,7 @@ tap.test(
       "03.02 - line breaks on the values coming into array"
     );
 
-    t.same(
+    t.strictSame(
       jv(
         {
           aaa: "%%-bbb-%%",
@@ -243,7 +243,7 @@ tap.test(
       "03.03 - line breaks at array-level"
     );
 
-    t.same(
+    t.strictSame(
       jv(
         {
           aaa: "%%_bbb_%%", // <----- regular heads/tails
@@ -269,7 +269,7 @@ tap.test(
       "03.04 - like #02 but with wrapping"
     );
 
-    t.same(
+    t.strictSame(
       jv(
         {
           aaa: "%%-bbb-%%", // <-----  notice no-wrap heads/tails
@@ -295,7 +295,7 @@ tap.test(
       "03.05"
     );
 
-    t.same(
+    t.strictSame(
       jv(
         {
           aaa: "%%-bbb-%%",
@@ -329,7 +329,7 @@ tap.test(
       "03.06 - simple version"
     );
 
-    t.same(
+    t.strictSame(
       jv(
         {
           shop_info_text: "%%-shop_info_global-%%",

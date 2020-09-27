@@ -94,7 +94,7 @@ tap.test(
 // Think:
 // \nconsole.log('9 something')
 tap.test(`06 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - backticks`, (t) => {
-  t.same(
+  t.strictSame(
     linter.verifyAndFix(
       `\n${letterC}onsole.log(${backtick}9 something${backtick})`,
       {
@@ -116,7 +116,7 @@ tap.test(`06 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - backticks`, (t) => {
 });
 
 tap.test(`07 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - backticks`, (t) => {
-  t.same(
+  t.strictSame(
     linter.verifyAndFix(
       `\n${letterC}onsole.log(\n${backtick}9 something${backtick}\n)`,
       {

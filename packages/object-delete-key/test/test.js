@@ -23,7 +23,7 @@ tap.test("01 - delete a value which is string", (t) => {
     a: "a",
   };
 
-  t.same(actual, intended, "01");
+  t.strictSame(actual, intended, "01");
   t.end();
 });
 
@@ -42,7 +42,7 @@ tap.test("02 - delete a value which is plain object", (t) => {
     a: "a",
   };
 
-  t.same(actual, intended, "02");
+  t.strictSame(actual, intended, "02");
   t.end();
 });
 
@@ -62,7 +62,7 @@ tap.test("03 - delete two values, plain objects, cleanup=false", (t) => {
     a: { e: [{}] },
   };
 
-  t.same(actual, intended, "03");
+  t.strictSame(actual, intended, "03");
   t.end();
 });
 
@@ -80,7 +80,7 @@ tap.test("04 - delete two values, plain objects, cleanup=true", (t) => {
   );
   const intended = {};
 
-  t.same(actual, intended, "04");
+  t.strictSame(actual, intended, "04");
   t.end();
 });
 
@@ -97,7 +97,7 @@ tap.test("05 - delete two values which are plain objects (on default)", (t) => {
   );
   const intended = {};
 
-  t.same(actual, intended, "05");
+  t.strictSame(actual, intended, "05");
   t.end();
 });
 
@@ -116,7 +116,7 @@ tap.test("06 - delete a value which is an array", (t) => {
     a: "a",
   };
 
-  t.same(actual, intended, "06");
+  t.strictSame(actual, intended, "06");
   t.end();
 });
 
@@ -136,7 +136,7 @@ tap.test("07 - delete two values which are arrays, cleanup=false", (t) => {
     a: { e: [{}] },
   };
 
-  t.same(actual, intended, "07");
+  t.strictSame(actual, intended, "07");
   t.end();
 });
 
@@ -153,7 +153,7 @@ tap.test("08 - delete two values which are arrays, cleanup=default", (t) => {
   );
   const intended = {};
 
-  t.same(actual, intended, "08");
+  t.strictSame(actual, intended, "08");
   t.end();
 });
 
@@ -167,7 +167,7 @@ tap.test("09 - simple plain object, couple instances found", (t) => {
     b: "whatever",
     c: [{ b: "whatever as well" }],
   };
-  t.same(
+  t.strictSame(
     deleteKey(source, {
       key: "b",
     }),
@@ -176,7 +176,7 @@ tap.test("09 - simple plain object, couple instances found", (t) => {
     },
     "09.01 - no settings"
   );
-  t.same(
+  t.strictSame(
     deleteKey(source, {
       key: "b",
       only: "o", // object
@@ -186,7 +186,7 @@ tap.test("09 - simple plain object, couple instances found", (t) => {
     },
     "09.02 - objects only (same outcome as 2.1.1)"
   );
-  t.same(
+  t.strictSame(
     deleteKey(source, {
       key: "b",
       only: "a", // array
@@ -198,7 +198,7 @@ tap.test("09 - simple plain object, couple instances found", (t) => {
     },
     "09.03 - arrays only (none found)"
   );
-  t.same(
+  t.strictSame(
     deleteKey(source, {
       key: "b",
       only: "any", // same behaviour as defaults
@@ -210,7 +210,7 @@ tap.test("09 - simple plain object, couple instances found", (t) => {
   );
 
   // ensure no mutation happened:
-  t.same(
+  t.strictSame(
     source,
     {
       a: "a",
@@ -223,7 +223,7 @@ tap.test("09 - simple plain object, couple instances found", (t) => {
 });
 
 tap.test("10 - simple plain object, cleanup", (t) => {
-  t.same(
+  t.strictSame(
     deleteKey(
       {
         a: "a",
@@ -241,7 +241,7 @@ tap.test("10 - simple plain object, cleanup", (t) => {
     },
     '10.01 - does not touch key within object; cleanup will remove up to and including key "c"'
   );
-  t.same(
+  t.strictSame(
     deleteKey(
       {
         a: "a",
@@ -259,7 +259,7 @@ tap.test("10 - simple plain object, cleanup", (t) => {
     },
     "10.02 - does not touch key within array"
   );
-  t.same(
+  t.strictSame(
     deleteKey(
       {
         a: "apples",
@@ -277,7 +277,7 @@ tap.test("10 - simple plain object, cleanup", (t) => {
     },
     "10.03 - does not touch key within array"
   );
-  t.same(
+  t.strictSame(
     deleteKey(
       {
         a: "apples",
@@ -301,7 +301,7 @@ tap.test("10 - simple plain object, cleanup", (t) => {
 });
 
 tap.test("11 - nested array/plain objects, multiple instances found", (t) => {
-  t.same(
+  t.strictSame(
     deleteKey(
       [
         {
@@ -323,7 +323,7 @@ tap.test("11 - nested array/plain objects, multiple instances found", (t) => {
     [{ a: "a" }],
     "11.01, default cleanup"
   );
-  t.same(
+  t.strictSame(
     deleteKey(
       [
         {
@@ -346,7 +346,7 @@ tap.test("11 - nested array/plain objects, multiple instances found", (t) => {
     [{ a: "a" }],
     "11.02, only=object (same)"
   );
-  t.same(
+  t.strictSame(
     deleteKey(
       [
         {
@@ -385,7 +385,7 @@ tap.test("11 - nested array/plain objects, multiple instances found", (t) => {
 tap.test(
   "12 - nested array/plain objects, multiple instances found, false",
   (t) => {
-    t.same(
+    t.strictSame(
       deleteKey(
         [
           {
@@ -421,7 +421,7 @@ tap.test(
 );
 
 tap.test("13 - mixed array and object findings", (t) => {
-  t.same(
+  t.strictSame(
     deleteKey(
       [
         {
@@ -445,7 +445,7 @@ tap.test("13 - mixed array and object findings", (t) => {
     [{ a: "a" }],
     "13.01, default cleanup"
   );
-  t.same(
+  t.strictSame(
     deleteKey(
       [
         {
@@ -470,7 +470,7 @@ tap.test("13 - mixed array and object findings", (t) => {
     [{ a: "a" }],
     "13.02, only=any"
   );
-  t.same(
+  t.strictSame(
     deleteKey(
       [
         {
@@ -492,7 +492,7 @@ tap.test("13 - mixed array and object findings", (t) => {
     ],
     "13.03, only=object, mini case"
   );
-  t.same(
+  t.strictSame(
     deleteKey(
       [
         {
@@ -527,7 +527,7 @@ tap.test("13 - mixed array and object findings", (t) => {
     ],
     "13.04, only=arrays"
   );
-  t.same(
+  t.strictSame(
     deleteKey(
       [
         {
@@ -582,7 +582,7 @@ tap.test("14 - targets all keys by value, cleanup=true", (t) => {
     a: "a",
   };
 
-  t.same(actual, intended, "14");
+  t.strictSame(actual, intended, "14");
   t.end();
 });
 
@@ -603,7 +603,7 @@ tap.test("15 - targets all keys by value, cleanup=false", (t) => {
     c: [{}],
   };
 
-  t.same(actual, intended, "15");
+  t.strictSame(actual, intended, "15");
   t.end();
 });
 
@@ -639,7 +639,7 @@ tap.test(
       c: "c",
     };
 
-    t.same(actual, intended, "16");
+    t.strictSame(actual, intended, "16");
     t.end();
   }
 );
@@ -672,7 +672,7 @@ tap.test("17 - deletion of empty things is limited in arrays too", (t) => {
     ["c"],
   ];
 
-  t.same(actual, intended, "17");
+  t.strictSame(actual, intended, "17");
   t.end();
 });
 
@@ -786,7 +786,7 @@ tap.test("24 - deletes from real parsed HTML", (t) => {
 </body>
 </html>
 `);
-  t.same(actual, intended, "24");
+  t.strictSame(actual, intended, "24");
   t.end();
 });
 
@@ -903,7 +903,7 @@ tap.test("25 - real parsed HTML #1", (t) => {
       ],
     },
   ];
-  t.same(actual, intended, "25");
+  t.strictSame(actual, intended, "25");
   t.end();
 });
 
@@ -931,7 +931,7 @@ tap.test("26 - real parsed HTML #2", (t) => {
       },
     },
   ];
-  t.same(actual, intended, "26");
+  t.strictSame(actual, intended, "26");
   t.end();
 });
 
@@ -956,7 +956,7 @@ tap.test("27 - real parsed HTML #3", (t) => {
       e: "f",
     },
   };
-  t.same(actual, intended, "27");
+  t.strictSame(actual, intended, "27");
   t.end();
 });
 
@@ -979,7 +979,7 @@ tap.test("28 - real parsed HTML #4", (t) => {
       c: "d",
     },
   };
-  t.same(actual, intended, "28");
+  t.strictSame(actual, intended, "28");
   t.end();
 });
 
@@ -997,7 +997,7 @@ tap.test("29 - does not mutate input args", (t) => {
     val: "b",
   });
   t.pass(unneededRes); // dummy to prevent JS Standard swearing
-  t.same(
+  t.strictSame(
     obj1,
     {
       a: "a",
@@ -1025,7 +1025,7 @@ tap.test("30 - delete a value which is empty string", (t) => {
     a: ["b", "c"],
   };
 
-  t.same(actual, intended, "30");
+  t.strictSame(actual, intended, "30");
   t.end();
 });
 
@@ -1042,7 +1042,7 @@ tap.test("31 - delete a value which is non-empty string", (t) => {
     a: ["", "c"],
   };
 
-  t.same(actual, intended, "31");
+  t.strictSame(actual, intended, "31");
   t.end();
 });
 
@@ -1061,7 +1061,7 @@ tap.test(
       a: ["", "c"],
     };
 
-    t.same(actual, intended, "32");
+    t.strictSame(actual, intended, "32");
     t.end();
   }
 );
@@ -1084,7 +1084,7 @@ tap.test(
       bap: "bap",
     };
 
-    t.same(actual, intended, "33");
+    t.strictSame(actual, intended, "33");
     t.end();
   }
 );
@@ -1110,7 +1110,7 @@ tap.test("34 - wildcard deletes two keys have string values", (t) => {
     b: "b",
   };
 
-  t.same(actual, intended, "34");
+  t.strictSame(actual, intended, "34");
   t.end();
 });
 
@@ -1133,7 +1133,7 @@ tap.test("35 - wildcard deletes two keys have string values", (t) => {
     b: "b",
   };
 
-  t.same(actual, intended, "35");
+  t.strictSame(actual, intended, "35");
 
   // by both key and value, with wildcards, includes sneaky close positives
   // ---------------------------------------------------------------------------
@@ -1160,7 +1160,7 @@ tap.test("36 - wildcard deletes two keys have string values", (t) => {
     b: "b",
   };
 
-  t.same(actual, intended, "36");
+  t.strictSame(actual, intended, "36");
   t.end();
 });
 
@@ -1179,7 +1179,7 @@ tap.test("37 - wildcard deletes keys with plain object values, by key", (t) => {
     crawls: "e",
   };
 
-  t.same(actual, intended, "37");
+  t.strictSame(actual, intended, "37");
   t.end();
 });
 
@@ -1203,7 +1203,7 @@ tap.test("38 - wildcard delete two values, plain objects", (t) => {
     a: { e: [{}] },
   };
 
-  t.same(actual, intended, "38");
+  t.strictSame(actual, intended, "38");
   t.end();
 });
 
@@ -1225,6 +1225,6 @@ tap.test("39 - wildcard delete two values, plain objects", (t) => {
   );
   const intended = {};
 
-  t.same(actual, intended, "39");
+  t.strictSame(actual, intended, "39");
   t.end();
 });

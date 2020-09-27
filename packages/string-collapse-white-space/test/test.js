@@ -1866,7 +1866,7 @@ tap.test(
 tap.test(
   `123 - ${`\u001b[${35}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there was something to remove`,
   (t) => {
-    t.same(
+    t.strictSame(
       collapse(`   a   bbb  \n   c   d   `, { returnRangesOnly: true }),
       [
         [0, 3],
@@ -1891,7 +1891,7 @@ tap.test(
       "a b",
       "124.02 - hardcoded default"
     );
-    t.same(collapse("a b", { returnRangesOnly: true }), null, "124.03");
+    t.strictSame(collapse("a b", { returnRangesOnly: true }), null, "124.03");
     t.end();
   }
 );
@@ -1910,7 +1910,7 @@ tap.test(
         `a${presentEolType}b`,
         `EOL ${key[idx]}`
       );
-      t.same(
+      t.strictSame(
         collapse(`a${presentEolType}b`, { returnRangesOnly: true }),
         null,
         `EOL ${key[idx]}`

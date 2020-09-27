@@ -1,0 +1,1 @@
+{"_quickTake.js":{"title":"Quick Take","content":"import &#x7B; strict as assert &#x7D; from \"assert\";\nimport isMediaD from \"dist/is-media-descriptor.esm\";\n\nassert.deepEqual(isMediaD(\"screeen\"), [\n  &#x7B;\n    idxFrom: 0,\n    idxTo: 7,\n    message: `Did you mean \"screen\"?`,\n    fix: &#x7B;\n      ranges: [[0, 7, \"screen\"]],\n    &#x7D;,\n  &#x7D;,\n]);"}}

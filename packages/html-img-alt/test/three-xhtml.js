@@ -6,7 +6,7 @@ import alt from "../dist/html-img-alt.esm";
 // alt with only one double quote, three XHTML tags
 
 tap.test("01 - alt with only one double quote, three XHTML tags", (t) => {
-  t.same(
+  t.strictSame(
     alt('zzz<img alt="/>zzz<img alt="   />zzz<img alt="/    >zzz'),
     'zzz<img alt="" />zzz<img alt="" />zzz<img alt="" />zzz',
     "01"
@@ -15,7 +15,7 @@ tap.test("01 - alt with only one double quote, three XHTML tags", (t) => {
 });
 
 tap.test("02 - alt with only one double quote, three XHTML tags", (t) => {
-  t.same(
+  t.strictSame(
     alt('zzz<img alt ="/>zzz<img alt ="   />zzz<img alt ="/   >zzz'),
     'zzz<img alt="" />zzz<img alt="" />zzz<img alt="" />zzz',
     "02"
@@ -24,7 +24,7 @@ tap.test("02 - alt with only one double quote, three XHTML tags", (t) => {
 });
 
 tap.test("03 - alt with only one double quote, three XHTML tags", (t) => {
-  t.same(
+  t.strictSame(
     alt('zzz<img alt= "/>zzz<img alt= "   />zzz<img alt= "/   >zzz'),
     'zzz<img alt="" />zzz<img alt="" />zzz<img alt="" />zzz',
     "03"
@@ -33,7 +33,7 @@ tap.test("03 - alt with only one double quote, three XHTML tags", (t) => {
 });
 
 tap.test("04 - alt with only one double quote, three XHTML tags", (t) => {
-  t.same(
+  t.strictSame(
     alt('zzz<img alt=" />zzz<img alt="    />zzz<img alt=" /   >zzz'),
     'zzz<img alt="" />zzz<img alt="" />zzz<img alt="" />zzz',
     "04"
@@ -42,7 +42,7 @@ tap.test("04 - alt with only one double quote, three XHTML tags", (t) => {
 });
 
 tap.test("05 - alt with only one double quote, three XHTML tags", (t) => {
-  t.same(
+  t.strictSame(
     alt('zzz<img alt   ="/>zzz<img alt   ="    />zzz<img alt   ="/   >zzz'),
     'zzz<img alt="" />zzz<img alt="" />zzz<img alt="" />zzz',
     "05"
@@ -51,7 +51,7 @@ tap.test("05 - alt with only one double quote, three XHTML tags", (t) => {
 });
 
 tap.test("06 - alt with only one double quote, three XHTML tags", (t) => {
-  t.same(
+  t.strictSame(
     alt('zzz<img alt="   />zzz<img alt="     />zzz<img alt="   /   >zzz'),
     'zzz<img alt="" />zzz<img alt="" />zzz<img alt="" />zzz',
     "06"
@@ -60,7 +60,7 @@ tap.test("06 - alt with only one double quote, three XHTML tags", (t) => {
 });
 
 tap.test("07 - alt with only one double quote, three XHTML tags", (t) => {
-  t.same(
+  t.strictSame(
     alt(
       'zzz<img alt   ="   />zzz<img alt   ="     />zzz<img alt   ="   /    >zzz'
     ),
@@ -71,12 +71,12 @@ tap.test("07 - alt with only one double quote, three XHTML tags", (t) => {
 });
 
 tap.test("08 - alt with only one double quote, three XHTML tags", (t) => {
-  t.same(alt('<img alt="z"/   >'), '<img alt="z" />', "08");
+  t.strictSame(alt('<img alt="z"/   >'), '<img alt="z" />', "08");
   t.end();
 });
 
 tap.test("09 - alt with only one double quote, three XHTML tags", (t) => {
-  t.same(
+  t.strictSame(
     alt(
       '<img alt="legit quote: \'"/><img alt="legit quote: \'"   /><img alt="legit quote: \'"/   >'
     ),

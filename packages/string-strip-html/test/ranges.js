@@ -67,7 +67,7 @@ tap.test("02 - consistency with ranges-apply", (t) => {
     `02.01`
   );
 
-  t.same(applyR(input, stripHtml(input).ranges), result, `02.02`);
+  t.strictSame(applyR(input, stripHtml(input).ranges), result, `02.02`);
   t.end();
 });
 
@@ -163,7 +163,7 @@ tap.test("03 - consistency with ranges-apply", (t) => {
   ];
 
   inputs.forEach((input, idx) => {
-    t.same(
+    t.strictSame(
       stripHtml(input, { trimOnlySpaces: false }).result,
       applyR(
         input,
@@ -173,7 +173,7 @@ tap.test("03 - consistency with ranges-apply", (t) => {
       ),
       `${idx} - ${input}`
     );
-    t.same(
+    t.strictSame(
       stripHtml(input, { trimOnlySpaces: true }).result,
       applyR(
         input,

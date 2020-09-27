@@ -6518,10 +6518,8 @@
     module.exports = isEqual;
   });
 
-  var isArr$3 = Array.isArray;
-
   function allValuesEqualTo(input, value, opts) {
-    if (isArr$3(input)) {
+    if (Array.isArray(input)) {
       if (input.length === 0) {
         return true;
       }
@@ -6569,7 +6567,7 @@
       throw new Error("object-all-values-equal-to: [THROW_ID_02] The second input is undefined! Please provide the second argument.");
     }
 
-    if (originalOpts !== undefined && originalOpts !== null && !lodash_isplainobject(originalOpts)) {
+    if (originalOpts && !lodash_isplainobject(originalOpts)) {
       throw new Error("object-all-values-equal-to: [THROW_ID_03] The third argument, options object, was given not as a plain object but as a ".concat(_typeof(originalOpts), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
     }
 
@@ -6602,11 +6600,10 @@
 
   function existy(x) {
     return x != null;
-  }
-
-  var isArr$4 = Array.isArray; // this function does the job, but it is not exposed because its first argument
+  } // this function does the job, but it is not exposed because its first argument
   // requirements are loose - it can be anything since it will be calling itself recursively
   // with potentially AST contents (objects containing arrays containing objects etc.)
+
 
   function fillMissingKeys(incompleteOriginal, schema, opts) {
     var path = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "";
@@ -6634,7 +6631,7 @@
             incomplete[key] = fillMissingKeys(incomplete[key], schema[key], opts, currentPath);
           }
         });
-      } else if (isArr$4(schema) && isArr$4(incomplete)) {
+      } else if (Array.isArray(schema) && Array.isArray(incomplete)) {
         if (incomplete.length === 0) {
           return schema;
         }
@@ -6643,7 +6640,7 @@
           for (var i = incomplete.length; i--;) {
             var currentPath = "".concat(path ? "".concat(path, ".") : "", "0");
 
-            if (lodash_isplainobject(schema[0]) || isArr$4(schema[0])) {
+            if (lodash_isplainobject(schema[0]) || Array.isArray(schema[0])) {
               incomplete[i] = fillMissingKeys(incomplete[i], schema[0], opts, currentPath);
             }
           }

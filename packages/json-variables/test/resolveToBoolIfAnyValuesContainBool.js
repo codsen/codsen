@@ -8,7 +8,7 @@ tap.test(
   (t) => {
     // False
 
-    t.same(
+    t.strictSame(
       jv({
         a: "zzz %%_b_%% zzz",
         b: false,
@@ -19,7 +19,7 @@ tap.test(
       },
       "01.01 - false - default (opts on)"
     );
-    t.same(
+    t.strictSame(
       jv(
         {
           a: "zzz %%_b_%% zzz",
@@ -35,7 +35,7 @@ tap.test(
       },
       "01.02 - false - hardcoded (opts on)"
     );
-    t.same(
+    t.strictSame(
       jv(
         {
           a: "zzz %%_b_%% zzz",
@@ -54,7 +54,7 @@ tap.test(
 
     // True
 
-    t.same(
+    t.strictSame(
       jv(
         {
           a: "zzz %%_b_%% zzz %%_c_%%",
@@ -72,7 +72,7 @@ tap.test(
       },
       "01.04 - relying on default, opts.resolveToFalseIfAnyValuesContainBool does not matter"
     );
-    t.same(
+    t.strictSame(
       jv(
         {
           a: "zzz %%_b_%% zzz %%_c_%%",
@@ -91,7 +91,7 @@ tap.test(
       },
       "01.05 - Bools hardcoded default, not forcing false"
     );
-    t.same(
+    t.strictSame(
       jv(
         {
           a: "zzz %%_b_%% zzz %%_c_%%",

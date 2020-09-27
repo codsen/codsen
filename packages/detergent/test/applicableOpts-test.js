@@ -9,7 +9,7 @@ import { det as det1 } from "../dist/detergent.esm";
 tap.test(
   `01 - ${`\u001b[${31}m${`rubbish removal`}\u001b[${39}m`} - trailing/leading whitespace, convertEntities=on`,
   (t) => {
-    t.same(
+    t.strictSame(
       Object.keys(
         det1(`&nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;`, {
           convertEntities: 1,

@@ -12,7 +12,7 @@ tap.test(
   `01 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - edge cases`,
   (t) => {
     const input = `" " `;
-    t.same(
+    t.strictSame(
       convertAll(input, {
         convertApostrophes: 0,
         convertEntities: 0,
@@ -28,7 +28,7 @@ tap.test(
   `02 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - edge cases`,
   (t) => {
     const input = ` " " `;
-    t.same(
+    t.strictSame(
       convertAll(input, {
         convertApostrophes: 0,
         convertEntities: 0,
@@ -44,7 +44,7 @@ tap.test(
   `03 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - edge cases`,
   (t) => {
     const input = ` " "`;
-    t.same(
+    t.strictSame(
       convertAll(input, {
         convertApostrophes: 0,
         convertEntities: 0,
@@ -60,7 +60,7 @@ tap.test(
   `04 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - edge cases`,
   (t) => {
     const input = ` ${leftDoubleQuote}-${rightDoubleQuote} `;
-    t.same(
+    t.strictSame(
       convertAll(input, {
         convertApostrophes: 0,
         convertEntities: 0,
@@ -76,7 +76,7 @@ tap.test(
   `05 - ${`\u001b[${35}m${`various`}\u001b[${39}m`} - target 776`,
   (t) => {
     const input = ` a${rightDoubleQuote}`;
-    t.same(
+    t.strictSame(
       convertAll(input, {
         convertApostrophes: 0,
         convertEntities: 0,

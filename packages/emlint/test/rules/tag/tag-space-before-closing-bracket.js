@@ -152,7 +152,7 @@ tap.test(
         "tag-space-before-closing-bracket": 2,
       },
     });
-    t.same(messages, [], "05.01");
+    t.strictSame(messages, [], "05.01");
     t.equal(applyFixes(str, messages), str, "05.02");
     t.end();
   }
@@ -168,7 +168,7 @@ tap.test(
         "tag-space-before-closing-bracket": 2,
       },
     });
-    t.same(messages, [], "06.01");
+    t.strictSame(messages, [], "06.01");
     t.equal(applyFixes(str, messages), str, "06.02");
     t.end();
   }

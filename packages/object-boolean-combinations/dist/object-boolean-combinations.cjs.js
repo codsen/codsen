@@ -1,6 +1,6 @@
 /**
  * object-boolean-combinations
- * Generate an array full of object copies, each containing a unique Boolean value combination. Includes overrides.
+ * Consumes a defaults object with booleans, generates all possible variations of it
  * Version: 2.11.65
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT

@@ -7,7 +7,7 @@ import { processThis, tiny } from "./util";
 tap.test(
   `01 - ${`\u001b[${33}m${`code between ${`\u001b[${34}m${`TD`}\u001b[${39}m`} ${`\u001b[${33}m${`and`}\u001b[${39}m`} ${`\u001b[${34}m${`TD`}\u001b[${39}m`}`}`} - between two TD's`,
   (t) => {
-    t.same(
+    t.strictSame(
       processThis(`<table>
   <tr>
     <td>

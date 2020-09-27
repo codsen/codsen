@@ -43,7 +43,7 @@ function compare(t, testName, pathToProcess, val) {
   t.equal(testedResult, result, `01 - string is identical after the operation`);
 
   // 02. parsed versions we just compared must be deep-equal
-  t.same(
+  t.strictSame(
     JSON.parse(testedResult),
     JSON.parse(result),
     `02 - both parsed parties are deep-equal`
@@ -58,7 +58,7 @@ function compare(t, testName, pathToProcess, val) {
   } else {
     objectPath.del(temp, pathToProcess);
   }
-  t.same(
+  t.strictSame(
     temp,
     JSON.parse(result),
     `03 - objectPath operation is indeed equivalent`

@@ -3153,29 +3153,20 @@
     return res;
   }
 
-  var isArr = Array.isArray;
-
-  function existy(x) {
-    return x != null;
-  }
-
-  function isStr$2(something) {
-    return typeof something === "string";
-  }
-
   function getAllValuesByKey(originalInput, whatToFind, originalReplacement) {
-    if (!existy(originalInput)) {
+    if (!originalInput) {
       throw new Error("ast-get-values-by-key: [THROW_ID_01] the first argument is missing!");
     }
 
-    if (!existy(whatToFind)) {
+    if (!whatToFind) {
       throw new Error("ast-get-values-by-key: [THROW_ID_02] the second argument is missing!");
-    } else if (isArr(whatToFind)) {
+    } else if (Array.isArray(whatToFind)) {
       var culpritsIndex;
       var culpritsVal;
+      /* istanbul ignore else */
 
       if (whatToFind.length && whatToFind.some(function (val, i) {
-        if (isStr$2(val)) {
+        if (typeof val === "string") {
           return false;
         }
 
@@ -3191,7 +3182,7 @@
 
     var replacement;
 
-    if (existy(originalReplacement)) {
+    if (typeof originalReplacement === "string" || originalReplacement) {
       if (typeof originalReplacement === "string") {
         replacement = [originalReplacement];
       } else {
@@ -3513,7 +3504,7 @@
     return sortedRanges.length ? sortedRanges : null;
   }
 
-  function existy$1(x) {
+  function existy(x) {
     return x != null;
   }
 
@@ -3521,7 +3512,7 @@
     return Number.isInteger(something) && something >= 0;
   }
 
-  function isStr$3(something) {
+  function isStr$2(something) {
     return typeof something === "string";
   }
 
@@ -3542,9 +3533,9 @@
       var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
       if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
-        if (isStr$3(opts.mergeType) && opts.mergeType.trim() === "1") {
+        if (isStr$2(opts.mergeType) && opts.mergeType.trim() === "1") {
           opts.mergeType = 1;
-        } else if (isStr$3(opts.mergeType) && opts.mergeType.trim() === "2") {
+        } else if (isStr$2(opts.mergeType) && opts.mergeType.trim() === "2") {
           opts.mergeType = 2;
         } else {
           throw new Error("ranges-push: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"".concat(_typeof(opts.mergeType), "\", equal to ").concat(JSON.stringify(opts.mergeType, null, 4)));
@@ -3567,11 +3558,11 @@
           throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_03] Please don't overload the add() method. From the 4th input argument onwards we see these redundant arguments: ".concat(JSON.stringify(etc, null, 4)));
         }
 
-        if (!existy$1(originalFrom) && !existy$1(originalTo)) {
+        if (!existy(originalFrom) && !existy(originalTo)) {
           return;
         }
 
-        if (existy$1(originalFrom) && !existy$1(originalTo)) {
+        if (existy(originalFrom) && !existy(originalTo)) {
           if (Array.isArray(originalFrom)) {
             if (originalFrom.length) {
               if (originalFrom.some(function (el) {
@@ -3594,7 +3585,7 @@
           }
 
           throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_12] the first input argument, \"from\" is set (".concat(JSON.stringify(originalFrom, null, 0), ") but second-one, \"to\" is not (").concat(JSON.stringify(originalTo, null, 0), ")"));
-        } else if (!existy$1(originalFrom) && existy$1(originalTo)) {
+        } else if (!existy(originalFrom) && existy(originalTo)) {
           throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_13] the second input argument, \"to\" is set (".concat(JSON.stringify(originalTo, null, 0), ") but first-one, \"from\" is not (").concat(JSON.stringify(originalFrom, null, 0), ")"));
         }
 
@@ -3606,22 +3597,22 @@
         }
 
         if (isNum(from) && isNum(to)) {
-          if (existy$1(addVal) && !isStr$3(addVal) && !isNum(addVal)) {
+          if (existy(addVal) && !isStr$2(addVal) && !isNum(addVal)) {
             throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ".concat(_typeof(addVal), ", equal to:\n").concat(JSON.stringify(addVal, null, 4)));
           }
 
-          if (existy$1(this.ranges) && Array.isArray(this.last()) && from === this.last()[1]) {
+          if (existy(this.ranges) && Array.isArray(this.last()) && from === this.last()[1]) {
             this.last()[1] = to;
             if (this.last()[2] === null || addVal === null) ;
 
-            if (this.last()[2] !== null && existy$1(addVal)) {
-              var calculatedVal = existy$1(this.last()[2]) && this.last()[2].length > 0 && (!this.opts || !this.opts.mergeType || this.opts.mergeType === 1) ? this.last()[2] + addVal : addVal;
+            if (this.last()[2] !== null && existy(addVal)) {
+              var calculatedVal = existy(this.last()[2]) && this.last()[2].length > 0 && (!this.opts || !this.opts.mergeType || this.opts.mergeType === 1) ? this.last()[2] + addVal : addVal;
 
               if (this.opts.limitToBeAddedWhitespace) {
                 calculatedVal = collapseLeadingWhitespace(calculatedVal, this.opts.limitLinebreaksCount);
               }
 
-              if (!(isStr$3(calculatedVal) && !calculatedVal.length)) {
+              if (!(isStr$2(calculatedVal) && !calculatedVal.length)) {
                 this.last()[2] = calculatedVal;
               }
             }
@@ -3630,7 +3621,7 @@
               this.ranges = [];
             }
 
-            var whatToPush = addVal !== undefined && !(isStr$3(addVal) && !addVal.length) ? [from, to, this.opts.limitToBeAddedWhitespace ? collapseLeadingWhitespace(addVal, this.opts.limitLinebreaksCount) : addVal] : [from, to];
+            var whatToPush = addVal !== undefined && !(isStr$2(addVal) && !addVal.length) ? [from, to, this.opts.limitToBeAddedWhitespace ? collapseLeadingWhitespace(addVal, this.opts.limitLinebreaksCount) : addVal] : [from, to];
             this.ranges.push(whatToPush);
           }
         } else {
@@ -3662,7 +3653,7 @@
 
           if (this.ranges && this.opts.limitToBeAddedWhitespace) {
             return this.ranges.map(function (val) {
-              if (existy$1(val[2])) {
+              if (existy(val[2])) {
                 return [val[0], val[1], collapseLeadingWhitespace(val[2], _this2.opts.limitLinebreaksCount)];
               }
 
@@ -3707,11 +3698,11 @@
     return Ranges;
   }();
 
-  function existy$2(x) {
+  function existy$1(x) {
     return x != null;
   }
 
-  function isStr$4(something) {
+  function isStr$3(something) {
     return typeof something === "string";
   }
 
@@ -3723,7 +3714,7 @@
       throw new Error("ranges-apply: [THROW_ID_01] inputs missing!");
     }
 
-    if (!isStr$4(str)) {
+    if (!isStr$3(str)) {
       throw new TypeError("ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ".concat(_typeof(str), ", equal to: ").concat(JSON.stringify(str, null, 4)));
     }
 
@@ -3825,7 +3816,7 @@
 
         var beginning = i === 0 ? 0 : arr[i - 1][1];
         var ending = arr[i][0];
-        return acc + str.slice(beginning, ending) + (existy$2(arr[i][2]) ? arr[i][2] : "");
+        return acc + str.slice(beginning, ending) + (existy$1(arr[i][2]) ? arr[i][2] : "");
       }, "");
       str += tails;
     }
@@ -4343,7 +4334,7 @@
   //                       H E L P E R   F U N C T I O N S
   // -----------------------------------------------------------------------------
 
-  function isStr$5(something) {
+  function isStr$4(something) {
     return typeof something === "string";
   }
 
@@ -4363,12 +4354,12 @@
     return something && _typeof(something) === "object" && !Array.isArray(something);
   }
 
-  function existy$3(x) {
+  function existy$2(x) {
     return x != null;
   }
 
   function trimIfString(something) {
-    return isStr$5(something) ? something.trim() : something;
+    return isStr$4(something) ? something.trim() : something;
   }
 
   function getTopmostKey(str) {
@@ -4424,7 +4415,7 @@
       return false;
     }
 
-    if (str.includes(opts.heads) || str.includes(opts.tails) || isStr$5(opts.headsNoWrap) && opts.headsNoWrap.length > 0 && str.includes(opts.headsNoWrap) || isStr$5(opts.tailsNoWrap) && opts.tailsNoWrap.length > 0 && str.includes(opts.tailsNoWrap)) {
+    if (str.includes(opts.heads) || str.includes(opts.tails) || isStr$4(opts.headsNoWrap) && opts.headsNoWrap.length > 0 && str.includes(opts.headsNoWrap) || isStr$4(opts.tailsNoWrap) && opts.tailsNoWrap.length > 0 && str.includes(opts.tailsNoWrap)) {
       return true;
     }
 
@@ -4470,15 +4461,15 @@
     } // main opts
 
 
-    if (isStr$5(placementValue) && !dontWrapTheseVars && opts.wrapGlobalFlipSwitch && !opts.dontWrapVars.some(function (val) {
+    if (isStr$4(placementValue) && !dontWrapTheseVars && opts.wrapGlobalFlipSwitch && !opts.dontWrapVars.some(function (val) {
       return matcher.isMatch(oldVarName, val);
     }) && ( // considering double-wrapping prevention setting:
-    !opts.preventDoubleWrapping || opts.preventDoubleWrapping && isStr$5(placementValue) && !placementValue.includes(opts.wrapHeadsWith) && !placementValue.includes(opts.wrapTailsWith))) {
+    !opts.preventDoubleWrapping || opts.preventDoubleWrapping && isStr$4(placementValue) && !placementValue.includes(opts.wrapHeadsWith) && !placementValue.includes(opts.wrapTailsWith))) {
       return opts.wrapHeadsWith + placementValue + opts.wrapTailsWith;
     }
 
     if (dontWrapTheseVars) {
-      if (!isStr$5(placementValue)) {
+      if (!isStr$4(placementValue)) {
         return placementValue;
       }
 
@@ -4487,7 +4478,7 @@
         tails: opts.wrapTailsWith
       });
 
-      if (!isStr$5(tempValue)) {
+      if (!isStr$4(tempValue)) {
         return tempValue;
       }
 
@@ -4573,7 +4564,7 @@
 
         if (gotPathArr.length > 0) {
           for (var y = 0, len2 = gotPathArr.length; y < len2; y++) {
-            if (isStr$5(gotPathArr[y].val) || isBool(gotPathArr[y].val) || isNull(gotPathArr[y].val)) {
+            if (isStr$4(gotPathArr[y].val) || isBool(gotPathArr[y].val) || isNull(gotPathArr[y].val)) {
               resolveValue = gotPathArr[y].val;
               break;
             } else if (isNum$1(gotPathArr[y].val)) {
@@ -4595,7 +4586,7 @@
           for (var _y = 0, _len = _gotPath4.length; _y < _len; _y++) {
             var temp = objectPath.get(_gotPath4[_y].val, withoutTopmostKey(varName));
 
-            if (temp && isStr$5(temp)) {
+            if (temp && isStr$4(temp)) {
               resolveValue = temp;
             }
           }
@@ -4654,7 +4645,7 @@
           finalRangesArr.push(obj.headsStartAt, // replace from index
           obj.tailsEndAt // replace upto index - no third argument, just deletion of heads/tails
           );
-        } else if (has.call(secretResolvedVarsStash, varName) && isStr$5(secretResolvedVarsStash[varName])) {
+        } else if (has.call(secretResolvedVarsStash, varName) && isStr$4(secretResolvedVarsStash[varName])) {
           // check, maybe the value was already resolved before and present in secret stash:
           finalRangesArr.push(obj.headsStartAt, // replace from index
           obj.tailsEndAt, // replace upto index
@@ -4678,7 +4669,7 @@
             }
           }
 
-          if (!wholeValueIsVariable && opts.throwWhenNonStringInsertedInString && !isStr$5(resolvedValue)) {
+          if (!wholeValueIsVariable && opts.throwWhenNonStringInsertedInString && !isStr$4(resolvedValue)) {
             throw new Error("json-variables/processHeadsAndTails(): [THROW_ID_23] While resolving the variable ".concat(string.slice(obj.headsEndAt, obj.tailsStartAt), " at path ").concat(path, ", it resolved into a non-string value, ").concat(JSON.stringify(resolvedValue, null, 4), ". This is happening because options setting \"throwWhenNonStringInsertedInString\" is active (set to \"true\")."));
           }
 
@@ -4711,7 +4702,7 @@
             var replacementVal = wrap(resolveString( // replacement value    <--------- R E C U R S I O N
             input, resolvedValue, newPath, opts, breadCrumbPath), opts, dontWrapTheseVars, breadCrumbPath, newPath, varName.trim());
 
-            if (isStr$5(replacementVal)) {
+            if (isStr$4(replacementVal)) {
               finalRangesArr.push(obj.headsStartAt, // replace from index
               obj.tailsEndAt, // replace upto index
               replacementVal);
@@ -4723,7 +4714,7 @@
             var _replacementVal = wrap(resolvedValue, opts, dontWrapTheseVars, breadCrumbPath, newPath, varName.trim()); // replacement value
 
 
-            if (isStr$5(_replacementVal)) {
+            if (isStr$4(_replacementVal)) {
               // 2. submit to be replaced
               finalRangesArr.push(obj.headsStartAt, // replace from index
               obj.tailsEndAt, // replace upto index
@@ -4865,7 +4856,7 @@
     var culpritIndex;
 
     if (opts.dontWrapVars.length > 0 && !opts.dontWrapVars.every(function (el, idx) {
-      if (!isStr$5(el)) {
+      if (!isStr$4(el)) {
         culpritVal = el;
         culpritIndex = idx;
         return false;
@@ -4921,7 +4912,7 @@
     // we return the result of the traversal:
 
     return astMonkeyTraverse(input, function (key, val, innerObj) {
-      if (existy$3(val) && containsHeadsOrTails(key, opts)) {
+      if (existy$2(val) && containsHeadsOrTails(key, opts)) {
         throw new Error("json-variables/jsonVariables(): [THROW_ID_15] Alas! Object keys can't contain variables!\nPlease check the following key: ".concat(key));
       } // * * *
       // Get the current values which are being traversed by ast-monkey:
@@ -4954,13 +4945,13 @@
           return current;
         }
 
-        throw new Error("json-variables/jsonVariables(): [THROW_ID_16] Alas! While processing the input, we stumbled upon ".concat(trimIfString(current), " which is equal to ").concat(trimIfString(current) === trimIfString(opts.heads) ? "heads" : "").concat(trimIfString(current) === trimIfString(opts.tails) ? "tails" : "").concat(isStr$5(opts.headsNoWrap) && trimIfString(current) === trimIfString(opts.headsNoWrap) ? "headsNoWrap" : "").concat(isStr$5(opts.tailsNoWrap) && trimIfString(current) === trimIfString(opts.tailsNoWrap) ? "tailsNoWrap" : "", ". If you wouldn't have set opts.noSingleMarkers to \"true\" this error would not happen and computer would have left the current element (").concat(trimIfString(current), ") alone"));
+        throw new Error("json-variables/jsonVariables(): [THROW_ID_16] Alas! While processing the input, we stumbled upon ".concat(trimIfString(current), " which is equal to ").concat(trimIfString(current) === trimIfString(opts.heads) ? "heads" : "").concat(trimIfString(current) === trimIfString(opts.tails) ? "tails" : "").concat(isStr$4(opts.headsNoWrap) && trimIfString(current) === trimIfString(opts.headsNoWrap) ? "headsNoWrap" : "").concat(isStr$4(opts.tailsNoWrap) && trimIfString(current) === trimIfString(opts.tailsNoWrap) ? "tailsNoWrap" : "", ". If you wouldn't have set opts.noSingleMarkers to \"true\" this error would not happen and computer would have left the current element (").concat(trimIfString(current), ") alone"));
       } // *
       // Process the current node if it's a string and it contains heads / tails /
       // headsNoWrap / tailsNoWrap:
 
 
-      if (isStr$5(current) && containsHeadsOrTails(current, opts)) {
+      if (isStr$4(current) && containsHeadsOrTails(current, opts)) {
         // breadCrumbPath, the fifth argument is not passed as there're no previous paths
         return resolveString(input, current, innerObj.path, opts);
       } // otherwise, just return as it is. We're not going to touch plain objects/arrays,numbers/bools etc.

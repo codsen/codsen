@@ -1,6 +1,6 @@
 # lerna-clean-changelogs-cli
 
-> CLI application to cleanse the lerna-generated changelogs
+> CLI application to cleanse the lerna/commitizen-generated changelogs
 
 <div class="package-badges">
   <a href="https://www.npmjs.com/package/lerna-clean-changelogs-cli" rel="nofollow noreferrer noopener">

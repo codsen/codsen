@@ -393,7 +393,7 @@ tap.test("01 - default sort, called on the whole folder", async (t) => {
     )
     .catch((err) => t.fail(err));
 
-  t.same(await processedFileContents, sortedTestFileContents, "01");
+  t.strictSame(await processedFileContents, sortedTestFileContents, "01");
   t.end();
 });
 
@@ -436,7 +436,7 @@ tap.test("02 - sort, -t (tabs) mode", async (t) => {
     )
     .catch((err) => t.fail(err));
 
-  t.same(await processedFileContents, sortedTabbedTestFileContents, "02");
+  t.strictSame(await processedFileContents, sortedTabbedTestFileContents, "02");
   t.end();
 });
 
@@ -498,7 +498,7 @@ tap.test("03 - sort, there's a broken JSON among files", async (t) => {
     )
     .catch((err) => t.fail(err));
 
-  t.same(await processedFileContents, sortedTestFileContents, "03");
+  t.strictSame(await processedFileContents, sortedTestFileContents, "03");
   t.end();
 });
 
@@ -561,7 +561,7 @@ tap.test("04 - silent mode", async (t) => {
     )
     .catch((err) => t.fail(err));
 
-  t.same(processedFileContents, sortedTestFileContents, "04");
+  t.strictSame(processedFileContents, sortedTestFileContents, "04");
   t.end();
 });
 
@@ -583,7 +583,7 @@ tap.test("05 - fixes minified dotfiles in JSON format", async (t) => {
     )
     .catch((err) => t.fail(err));
 
-  t.same(await processedFileContents, prettifiedContents, "05");
+  t.strictSame(await processedFileContents, prettifiedContents, "05");
   t.end();
 });
 
@@ -621,7 +621,7 @@ tap.test("06 - topmost level is array", async (t) => {
     )
     .catch((err) => t.fail(err));
 
-  t.same(
+  t.strictSame(
     await processedFileContents,
     `[
   {
@@ -661,7 +661,7 @@ tap.test(
       )
       .catch((err) => t.fail(err));
 
-    t.same(
+    t.strictSame(
       await processedFileContents,
       `[
   "a",
@@ -697,7 +697,7 @@ tap.test(
           .then(() => received)
       )
       .catch((err) => t.fail(err));
-    t.same(
+    t.strictSame(
       await processedFileContents,
       `${JSON.stringify(sourceArr, null, 2)}\n`,
       "08"
@@ -740,7 +740,7 @@ tap.test("09 - array in deeper levels sorted (upon request)", async (t) => {
     )
     .catch((err) => t.fail(err));
 
-  t.same(
+  t.strictSame(
     await processedFileContents,
     `{
   "a": {
@@ -825,7 +825,7 @@ tap.test("13 - package.json is sorted by default", async (t) => {
     )
     .catch((err) => t.fail(err));
 
-  t.same(
+  t.strictSame(
     await processedFileContents,
     `{
   "name": "tester",
@@ -863,7 +863,7 @@ tap.test("14 - package.json is not sorted under -p flag", async (t) => {
     )
     .catch((err) => t.fail(err));
 
-  t.same(await processedFileContents, source, "14");
+  t.strictSame(await processedFileContents, source, "14");
   t.end();
 });
 

@@ -115,7 +115,7 @@ tap.test(`07 - \u001b[${34}m${`right`}\u001b[${39}m - normal use`, (t) => {
 
 tap.test(`08 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - normal use`, (t) => {
   // starts at "c":
-  t.same(
+  t.strictSame(
     rightSeq("abcdefghijklmnop", 2, "d"),
     {
       gaps: [],
@@ -124,7 +124,7 @@ tap.test(`08 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - normal use`, (t) => {
     },
     "08.01"
   );
-  t.same(
+  t.strictSame(
     rightSeq("abcdefghijklmnop", 2, "d", "e", "f"),
     {
       gaps: [],
@@ -133,7 +133,7 @@ tap.test(`08 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - normal use`, (t) => {
     },
     "08.02"
   );
-  t.same(
+  t.strictSame(
     rightSeq("a  b  c  d  e  f  g  h  i  j  k  l", 6, "d", "e", "f"),
     {
       gaps: [
@@ -158,7 +158,7 @@ tap.test(
   `10 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - absent skips to right()`,
   (t) => {
     t.equal(rightSeq("abcdefghijklmnop", 0, "", ""), null, "10.01");
-    t.same(
+    t.strictSame(
       rightSeq("abcdefghijklmnop", 0, "b", ""),
       {
         gaps: [],
@@ -167,7 +167,7 @@ tap.test(
       },
       "10.02"
     );
-    t.same(
+    t.strictSame(
       rightSeq("abcdefghijklmnop", 0, "", "b"),
       {
         gaps: [],
@@ -201,7 +201,7 @@ tap.test(
 tap.test(
   `13 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - optional - existing`,
   (t) => {
-    t.same(
+    t.strictSame(
       rightSeq("abcdefghijklmnop", 2, "d?", "e?", "f"),
       {
         gaps: [],
@@ -217,7 +217,7 @@ tap.test(
 tap.test(
   `14 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - 1 not existing, no whitespace`,
   (t) => {
-    t.same(
+    t.strictSame(
       rightSeq("abcefghijklmnop", 2, "d?", "e", "f"),
       {
         gaps: [],
@@ -233,7 +233,7 @@ tap.test(
 tap.test(
   `15 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - 1 not existing, with whitespace`,
   (t) => {
-    t.same(
+    t.strictSame(
       rightSeq("abc  e   f   g   hijklmnop", 2, "d?", "e", "f"),
       {
         gaps: [
@@ -252,7 +252,7 @@ tap.test(
 tap.test(
   `16 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - ends with non-existing optional`,
   (t) => {
-    t.same(
+    t.strictSame(
       rightSeq("abc  e   f   g   hijklmnop", 2, "y?", "e", "z?"),
       {
         gaps: [[3, 5]],
@@ -268,7 +268,7 @@ tap.test(
 tap.test(
   `17 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - all optional, existing`,
   (t) => {
-    t.same(
+    t.strictSame(
       rightSeq("abcdefghijklmnop", 2, "d?", "e?", "f?"),
       {
         gaps: [],
@@ -293,7 +293,7 @@ tap.test(
 
 tap.test(`19 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - no findings`, (t) => {
   t.equal(rightSeq("ABCDEFGHIJKLMNOP", 0, "b", "c", "d"), null, "19.01");
-  t.same(
+  t.strictSame(
     rightSeq("ABCDEFGHIJKLMNOP", 0, { i: true }, "b", "c", "d"),
     {
       gaps: [],
@@ -310,7 +310,7 @@ tap.test(`19 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - no findings`, (t) => {
 
 tap.test(`20 - \u001b[${36}m${`leftSeq`}\u001b[${39}m - normal use`, (t) => {
   // starts at "f":
-  t.same(
+  t.strictSame(
     leftSeq("abcdefghijk", 5, "c", "d", "e"),
     {
       gaps: [],
@@ -319,7 +319,7 @@ tap.test(`20 - \u001b[${36}m${`leftSeq`}\u001b[${39}m - normal use`, (t) => {
     },
     "20.01"
   );
-  t.same(
+  t.strictSame(
     leftSeq("a  b  c  d  e  f  g  h  i  j  k", 15, "c", "d", "e"),
     {
       gaps: [
@@ -332,7 +332,7 @@ tap.test(`20 - \u001b[${36}m${`leftSeq`}\u001b[${39}m - normal use`, (t) => {
     },
     "20.02"
   );
-  t.same(
+  t.strictSame(
     leftSeq("a  b  c  d  e  f  g  h  i  j  k", 15, "c", "d", "z?", "e"),
     {
       gaps: [
@@ -345,7 +345,7 @@ tap.test(`20 - \u001b[${36}m${`leftSeq`}\u001b[${39}m - normal use`, (t) => {
     },
     "20.03"
   );
-  t.same(
+  t.strictSame(
     leftSeq("a  b  c  d  e  f  g  h  i  j  k", 15, "c", "d", "z?", "e", "x?"),
     {
       gaps: [
@@ -365,7 +365,7 @@ tap.test(`21 - \u001b[${36}m${`leftSeq`}\u001b[${39}m - no findings`, (t) => {
   t.equal(leftSeq("abcdefghijklmnop", 0, "d", "e", "f"), null, "21.01");
   t.equal(leftSeq("abcdefghijklmnop", 2, "d", "e", "f"), null, "21.02");
   t.equal(leftSeq("abcdefghijklmnop", 2, "", ""), null, "21.03");
-  t.same(
+  t.strictSame(
     leftSeq("abcdefghijklmnop", 2, "b", ""),
     {
       gaps: [],
@@ -374,7 +374,7 @@ tap.test(`21 - \u001b[${36}m${`leftSeq`}\u001b[${39}m - no findings`, (t) => {
     },
     "21.04"
   );
-  t.same(
+  t.strictSame(
     leftSeq("abcdefghijklmnop", 2, "", "b"),
     {
       gaps: [],
@@ -391,7 +391,7 @@ tap.test(
   (t) => {
     t.equal(leftSeq("abcdefghijklmnop", 0), null, "22.01");
     t.equal(leftSeq("abcdefghijklmnop", 15), 14, "22.02");
-    t.same(leftSeq("abcdefghijklmn p", 15), 13, "22.03");
+    t.strictSame(leftSeq("abcdefghijklmn p", 15), 13, "22.03");
     t.equal(leftSeq("abcdefghijklmnop", 1), 0, "22.04");
     t.equal(leftSeq("ab  cdefghijklmnop", 4), 1, "22.05");
     t.end();
@@ -410,7 +410,7 @@ tap.test(
   `24 - \u001b[${36}m${`leftSeq`}\u001b[${39}m - case insensitive`,
   (t) => {
     t.equal(leftSeq("abcdefghijk", 5, "C", "D", "E"), null, "24.01");
-    t.same(
+    t.strictSame(
       leftSeq("abcdefghijk", 5, { i: true }, "C", "D", "E"),
       {
         gaps: [],

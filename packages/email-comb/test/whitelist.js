@@ -60,7 +60,7 @@ tap.test("01 - nothing removed because of settings.whitelist", (t) => {
 </html>
 `;
 
-  t.same(actual, intended, "01");
+  t.strictSame(actual, intended, "01");
   t.end();
 });
 
@@ -120,7 +120,7 @@ tap.test("02 - some removed, some whitelisted", (t) => {
 </html>
 `;
 
-  t.same(actual, intended, "02");
+  t.strictSame(actual, intended, "02");
   t.end();
 });
 
@@ -182,7 +182,7 @@ tap.test("03 - case of whitelisting everything", (t) => {
 </html>
 `;
 
-  t.same(actual, intended, "03");
+  t.strictSame(actual, intended, "03");
   t.end();
 });
 
@@ -203,7 +203,7 @@ zzz
 zzz
 </body>`;
 
-  t.same(actual, intended, "04");
+  t.strictSame(actual, intended, "04");
   t.end();
 });
 
@@ -219,7 +219,7 @@ zzz
 </body>
 `;
 
-  t.same(actual, intended, "05");
+  t.strictSame(actual, intended, "05");
   t.end();
 });
 
@@ -241,6 +241,6 @@ zzz
 zzz
 </body>`;
 
-  t.same(actual, intended, "06");
+  t.strictSame(actual, intended, "06");
   t.end();
 });

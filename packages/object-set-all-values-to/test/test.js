@@ -6,7 +6,7 @@ import setAllValuesTo from "../dist/object-set-all-values-to.esm";
 // ==============================
 
 tap.test("01 - input simple plain object, default", (t) => {
-  t.same(
+  t.strictSame(
     setAllValuesTo({
       a: "a",
       b: "b",
@@ -25,7 +25,7 @@ tap.test("01 - input simple plain object, default", (t) => {
 });
 
 tap.test("02 - two level nested plain object, default", (t) => {
-  t.same(
+  t.strictSame(
     setAllValuesTo({
       a: "a",
       b: "b",
@@ -54,7 +54,7 @@ tap.test("02 - two level nested plain object, default", (t) => {
 });
 
 tap.test("03 - topmost level input is array, default", (t) => {
-  t.same(
+  t.strictSame(
     setAllValuesTo([
       {
         a: "a",
@@ -87,7 +87,7 @@ tap.test("03 - topmost level input is array, default", (t) => {
 });
 
 tap.test("04 - many levels of nested arrays, default", (t) => {
-  t.same(
+  t.strictSame(
     setAllValuesTo([
       [
         [
@@ -204,7 +204,7 @@ tap.test("04 - many levels of nested arrays, default", (t) => {
 });
 
 tap.test("05 - array-object-array-object, default", (t) => {
-  t.same(
+  t.strictSame(
     setAllValuesTo([
       {
         a: [
@@ -229,7 +229,7 @@ tap.test("05 - array-object-array-object, default", (t) => {
 });
 
 tap.test("06 - array has array which has object, default", (t) => {
-  t.same(
+  t.strictSame(
     setAllValuesTo([
       [
         {
@@ -264,7 +264,7 @@ tap.test("06 - array has array which has object, default", (t) => {
 });
 
 tap.test("07 - object has object value, default", (t) => {
-  t.same(
+  t.strictSame(
     setAllValuesTo({
       a: {
         b: {
@@ -297,7 +297,7 @@ tap.test("07 - object has object value, default", (t) => {
 });
 
 tap.test("08 - input is object with only values — arrays, default", (t) => {
-  t.same(
+  t.strictSame(
     setAllValuesTo({
       a: ["a"],
       b: ["b"],
@@ -316,7 +316,7 @@ tap.test("08 - input is object with only values — arrays, default", (t) => {
 });
 
 tap.test("09 - ops within an array, default", (t) => {
-  t.same(
+  t.strictSame(
     setAllValuesTo([["a", { b: "b" }, "c"]]),
     [["a", { b: false }, "c"]],
     "09"
@@ -325,7 +325,7 @@ tap.test("09 - ops within an array, default", (t) => {
 });
 
 tap.test("10 - lots of empty things, default", (t) => {
-  t.same(
+  t.strictSame(
     setAllValuesTo([{}, {}, {}, { a: "a" }, {}]),
     [{}, {}, {}, { a: false }, {}],
     "10"
@@ -338,7 +338,7 @@ tap.test("10 - lots of empty things, default", (t) => {
 // ==============================
 
 tap.test("11 - input simple plain object, assigning a string", (t) => {
-  t.same(
+  t.strictSame(
     setAllValuesTo(
       {
         a: "a",
@@ -360,7 +360,7 @@ tap.test("11 - input simple plain object, assigning a string", (t) => {
 });
 
 tap.test("12 - input simple plain object, assigning a plain object", (t) => {
-  t.same(
+  t.strictSame(
     setAllValuesTo(
       {
         a: "a",
@@ -382,7 +382,7 @@ tap.test("12 - input simple plain object, assigning a plain object", (t) => {
 });
 
 tap.test("13 - input simple plain object, assigning an array", (t) => {
-  t.same(
+  t.strictSame(
     setAllValuesTo(
       {
         a: "a",
@@ -404,7 +404,7 @@ tap.test("13 - input simple plain object, assigning an array", (t) => {
 });
 
 tap.test("14 - input simple plain object, assigning a null", (t) => {
-  t.same(
+  t.strictSame(
     setAllValuesTo(
       {
         a: "a",
@@ -426,7 +426,7 @@ tap.test("14 - input simple plain object, assigning a null", (t) => {
 });
 
 tap.test("15 - input simple plain object, assigning a Boolean true", (t) => {
-  t.same(
+  t.strictSame(
     setAllValuesTo(
       {
         a: "a",
@@ -451,7 +451,7 @@ tap.test("16 - input simple plain object, assigning a function", (t) => {
   function f() {
     return 1;
   }
-  t.same(
+  t.strictSame(
     setAllValuesTo(
       [
         [
@@ -483,7 +483,7 @@ tap.test("16 - input simple plain object, assigning a function", (t) => {
 });
 
 tap.test("17 - input simple plain object, assigning a plain object", (t) => {
-  t.same(
+  t.strictSame(
     setAllValuesTo(
       {
         a: "a",
@@ -511,17 +511,17 @@ tap.test("17 - input simple plain object, assigning a plain object", (t) => {
 // ==============================
 
 tap.test("18 - input is string, default value", (t) => {
-  t.same(setAllValuesTo("nothing"), "nothing", "18");
+  t.strictSame(setAllValuesTo("nothing"), "nothing", "18");
   t.end();
 });
 
 tap.test("19 - input is string, value provided", (t) => {
-  t.same(setAllValuesTo("nothing", "something"), "nothing", "19");
+  t.strictSame(setAllValuesTo("nothing", "something"), "nothing", "19");
   t.end();
 });
 
 tap.test("20 - input is missing but value provided", (t) => {
-  t.same(setAllValuesTo(undefined, "a"), undefined, "20");
+  t.strictSame(setAllValuesTo(undefined, "a"), undefined, "20");
   t.end();
 });
 
@@ -536,7 +536,7 @@ tap.test("21 - does not mutate input args", (t) => {
   };
   const dummyResult = setAllValuesTo(inp);
   t.pass(dummyResult);
-  t.same(
+  t.strictSame(
     inp,
     {
       a: "a",

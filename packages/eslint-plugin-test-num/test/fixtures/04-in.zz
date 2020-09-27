@@ -1,7 +1,7 @@
 tap.test(
   `01 - ${`\u001b[${33}m${`single apostrophes`}\u001b[${39}m`} - full stop`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertAll(`"'What.'" he said`, {
         convertApostrophes: 1,
         convertEntities: 0,

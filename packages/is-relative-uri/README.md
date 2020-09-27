@@ -27,6 +27,18 @@
 npm i is-relative-uri
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import isRel from "dist/is-relative-uri.esm";
+
+assert.deepEqual(isRel(".../resource.txt"), {
+  res: false,
+  message: `Three consecutive dots.`,
+});
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/is-relative-uri/) for a full description of the API and examples.

@@ -7,21 +7,21 @@ import { crush as m } from "../dist/html-crush.esm";
 tap.test(
   `01 - ${`\u001b[${34}m${`opts.breakToTheLeftOf`}\u001b[${39}m`} - breaks based on breakpoints (no whitespace involved)`,
   (t) => {
-    t.same(
+    t.strictSame(
       m(`<m><n><o>`, {
         removeLineBreaks: false,
       }).result,
       `<m><n><o>`,
       "01.01 - no linebreak removal"
     );
-    t.same(
+    t.strictSame(
       m(`<m><n><o>`, {
         removeLineBreaks: true,
       }).result,
       `<m><n><o>`,
       "01.02 - default line break removal"
     );
-    t.same(
+    t.strictSame(
       m(`<m><n><o>`, {
         removeLineBreaks: true,
         breakToTheLeftOf: ["<n"],
@@ -29,7 +29,7 @@ tap.test(
       `<m>\n<n><o>`,
       "01.03 - break in the middle, once"
     );
-    t.same(
+    t.strictSame(
       m(`<m><n><o>`, {
         removeLineBreaks: true,
         breakToTheLeftOf: ["<n", "<o"],
@@ -37,7 +37,7 @@ tap.test(
       `<m>\n<n>\n<o>`,
       "01.04 - break twice"
     );
-    t.same(
+    t.strictSame(
       m(`<m><n><o>`, {
         removeLineBreaks: true,
         breakToTheLeftOf: ["<z", "<n", "<o"],
@@ -45,7 +45,7 @@ tap.test(
       `<m>\n<n>\n<o>`,
       "01.05 - don't break in front"
     );
-    t.same(
+    t.strictSame(
       m(`\n   \t   \t   <m><n><o>`, {
         removeLineBreaks: true,
         breakToTheLeftOf: ["<m", "<n", "<o"],
@@ -53,7 +53,7 @@ tap.test(
       `<m>\n<n>\n<o>`,
       "01.06 - don't break in front"
     );
-    t.same(
+    t.strictSame(
       m(`<m><n><o>`, {
         removeLineBreaks: true,
         breakToTheLeftOf: ["<x", "<y", "<z"],
@@ -61,7 +61,7 @@ tap.test(
       `<m><n><o>`,
       "01.07"
     );
-    t.same(
+    t.strictSame(
       m(`<m><n><o>`, {
         removeLineBreaks: true,
         breakToTheLeftOf: [],
@@ -69,7 +69,7 @@ tap.test(
       `<m><n><o>`,
       "01.08"
     );
-    t.same(
+    t.strictSame(
       m(`\n<m>\n  <n>\n  <o>`, {
         removeLineBreaks: true,
         breakToTheLeftOf: ["<x", "<y", "<z"],
@@ -77,7 +77,7 @@ tap.test(
       `<m><n><o>`,
       "01.09"
     );
-    t.same(
+    t.strictSame(
       m(`   \t\n  <m>   <n> \n\t     <o>`, {
         removeLineBreaks: true,
         breakToTheLeftOf: [],
@@ -92,7 +92,7 @@ tap.test(
 tap.test(
   `02 - ${`\u001b[${34}m${`opts.breakToTheLeftOf`}\u001b[${39}m`} - breaks based on breakpoints (whitespace involved)`,
   (t) => {
-    t.same(
+    t.strictSame(
       m(`<a>\n<b><c>`, {
         removeLineBreaks: true,
         breakToTheLeftOf: ["<b"],
@@ -100,7 +100,7 @@ tap.test(
       `<a>\n<b><c>`,
       "02.01"
     );
-    t.same(
+    t.strictSame(
       m(`<a> <b><c>`, {
         removeLineBreaks: true,
         breakToTheLeftOf: ["<b"],
@@ -108,7 +108,7 @@ tap.test(
       `<a>\n<b><c>`,
       "02.02"
     );
-    t.same(
+    t.strictSame(
       m(`<a>  <b><c>`, {
         removeLineBreaks: true,
         breakToTheLeftOf: ["<b"],
@@ -116,7 +116,7 @@ tap.test(
       `<a>\n<b><c>`,
       "02.03"
     );
-    t.same(
+    t.strictSame(
       m(`<a> \n   \t\t\t   \n <b><c>`, {
         removeLineBreaks: true,
         breakToTheLeftOf: ["<b"],
@@ -124,7 +124,7 @@ tap.test(
       `<a>\n<b><c>`,
       "02.04"
     );
-    t.same(
+    t.strictSame(
       m(`<a>\n<b><c>`, {
         removeLineBreaks: true,
         breakToTheLeftOf: ["<b", "<c"],
@@ -132,7 +132,7 @@ tap.test(
       `<a>\n<b>\n<c>`,
       "02.05"
     );
-    t.same(
+    t.strictSame(
       m(`<a> <b><c>`, {
         removeLineBreaks: true,
         breakToTheLeftOf: ["<b", "<c"],
@@ -140,7 +140,7 @@ tap.test(
       `<a>\n<b>\n<c>`,
       "02.06"
     );
-    t.same(
+    t.strictSame(
       m(`<a>  <b><c>`, {
         removeLineBreaks: true,
         breakToTheLeftOf: ["<b", "<c"],
@@ -148,7 +148,7 @@ tap.test(
       `<a>\n<b>\n<c>`,
       "02.07"
     );
-    t.same(
+    t.strictSame(
       m(`<a> \n   \t\t\t   \n <b><c>`, {
         removeLineBreaks: true,
         breakToTheLeftOf: ["<b", "<c"],
@@ -156,7 +156,7 @@ tap.test(
       `<a>\n<b>\n<c>`,
       "02.08"
     );
-    t.same(
+    t.strictSame(
       m(`<a>\n<b><c>`, {
         removeLineBreaks: true,
         breakToTheLeftOf: ["<x", "y"],
@@ -164,7 +164,7 @@ tap.test(
       `<a>\n<b><c>`,
       "02.09 - nothing in given breakpoints is useful"
     );
-    t.same(
+    t.strictSame(
       m(`<m>\n<n><o>`, {
         removeLineBreaks: true,
         breakToTheLeftOf: ["<x", "y"],

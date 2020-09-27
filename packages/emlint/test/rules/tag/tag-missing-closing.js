@@ -19,7 +19,7 @@ tap.todo(`01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - off`, (t) => {
     },
   });
   t.equal(applyFixes(str, messages), str, "01.01");
-  t.same(messages, [], "01.02");
+  t.strictSame(messages, [], "01.02");
   t.end();
 });
 
@@ -144,7 +144,7 @@ tap.todo(
       },
     });
     t.equal(applyFixes(str, messages), str, "06.01");
-    t.same(messages, [], "06.02");
+    t.strictSame(messages, [], "06.02");
     t.end();
   }
 );
@@ -163,7 +163,7 @@ tap.todo(`07 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - TD missing`, (t) => {
     },
   });
   t.equal(applyFixes(str, messages), str, "07.01");
-  t.same(messages, [], "07.02");
+  t.strictSame(messages, [], "07.02");
   t.end();
 });
 
@@ -181,7 +181,7 @@ tap.todo(`08 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - TR missing`, (t) => {
     },
   });
   t.equal(applyFixes(str, messages), str, "08.01");
-  t.same(messages, [], "08.02");
+  t.strictSame(messages, [], "08.02");
   t.end();
 });
 
@@ -201,7 +201,7 @@ tap.todo(
       },
     });
     t.equal(applyFixes(str, messages), str, "09.01");
-    t.same(messages, [], "09.02");
+    t.strictSame(messages, [], "09.02");
     t.end();
   }
 );
@@ -221,7 +221,7 @@ tap.todo(
       },
     });
     t.equal(applyFixes(str, messages), str, "10.01");
-    t.same(messages, [], "10.02");
+    t.strictSame(messages, [], "10.02");
     t.end();
   }
 );

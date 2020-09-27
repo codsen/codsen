@@ -18,7 +18,7 @@ tap.test(
         //
         // semicolon missing, isolated:
         //
-        t.same(
+        t.strictSame(
           fix(`&${singleEntity}`, {
             cb: (obj) => obj,
           }),
@@ -42,7 +42,7 @@ tap.test(
 tap.test("02 - single pi", (t) => {
   const gatheredBroken = [];
   const gatheredHealthy = [];
-  t.same(
+  t.strictSame(
     fix("&pi", {
       cb: (obj) => {
         gatheredBroken.push([obj.rangeFrom, obj.rangeTo, obj.rangeValEncoded]);
@@ -59,7 +59,7 @@ tap.test("02 - single pi", (t) => {
 });
 
 tap.test("03 - larger set", (t) => {
-  t.same(
+  t.strictSame(
     fix("aaa&pi&piv&pi&pivaaa"),
     [
       [3, 6, "&pi;"],
@@ -73,7 +73,7 @@ tap.test("03 - larger set", (t) => {
 });
 
 tap.test("04 - letters follow tightly", (t) => {
-  t.same(
+  t.strictSame(
     fix("aaa&ang&angst&ang&angstaaa"),
     [
       [3, 7, "&ang;"],
@@ -89,7 +89,7 @@ tap.test("04 - letters follow tightly", (t) => {
 tap.test(
   `05 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - control`,
   (t) => {
-    t.same(fix("z &ang; y"), [], "05");
+    t.strictSame(fix("z &ang; y"), [], "05");
     t.end();
   }
 );
@@ -97,7 +97,7 @@ tap.test(
 tap.test(
   `06 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`angst`}\u001b[${39}m - control`,
   (t) => {
-    t.same(fix("z &angst; y"), [], "06");
+    t.strictSame(fix("z &angst; y"), [], "06");
     t.end();
   }
 );
@@ -105,7 +105,7 @@ tap.test(
 tap.test(
   `07 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - no decode, spaced`,
   (t) => {
-    t.same(fix("z &ang y"), [[2, 6, "&ang;"]], "07");
+    t.strictSame(fix("z &ang y"), [[2, 6, "&ang;"]], "07");
     t.end();
   }
 );
@@ -113,7 +113,7 @@ tap.test(
 tap.test(
   `08 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - no decode, spaced`,
   (t) => {
-    t.same(fix("z &ang ;"), [[2, 8, "&ang;"]], "08");
+    t.strictSame(fix("z &ang ;"), [[2, 8, "&ang;"]], "08");
     t.end();
   }
 );
@@ -121,7 +121,7 @@ tap.test(
 tap.test(
   `09 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - no decode, spaced`,
   (t) => {
-    t.same(fix("z &ang st"), [[2, 6, "&ang;"]], "09");
+    t.strictSame(fix("z &ang st"), [[2, 6, "&ang;"]], "09");
     t.end();
   }
 );
@@ -129,7 +129,7 @@ tap.test(
 tap.test(
   `10 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - no decode, spaced`,
   (t) => {
-    t.same(fix("z &ang sx"), [[2, 6, "&ang;"]], "10");
+    t.strictSame(fix("z &ang sx"), [[2, 6, "&ang;"]], "10");
     t.end();
   }
 );
@@ -137,7 +137,7 @@ tap.test(
 tap.test(
   `11 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - no decode, spaced`,
   (t) => {
-    t.same(fix("z &angst y"), [[2, 8, "&angst;"]], "11");
+    t.strictSame(fix("z &angst y"), [[2, 8, "&angst;"]], "11");
     t.end();
   }
 );
@@ -145,7 +145,7 @@ tap.test(
 tap.test(
   `12 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - no decode, spaced`,
   (t) => {
-    t.same(
+    t.strictSame(
       fix("x &ang y&ang z"),
       [
         [2, 6, "&ang;"],
@@ -160,7 +160,7 @@ tap.test(
 tap.test(
   `13 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - no decode, tight`,
   (t) => {
-    t.same(
+    t.strictSame(
       fix("&ang&ang"),
       [
         [0, 4, "&ang;"],
@@ -175,7 +175,7 @@ tap.test(
 tap.test(
   `14 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - no decode, tight`,
   (t) => {
-    t.same(
+    t.strictSame(
       fix("text&angtext&angtext"),
       [
         [4, 8, "&ang;"],
@@ -190,7 +190,7 @@ tap.test(
 tap.test(
   `15 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`angst`}\u001b[${39}m - no decode, tight`,
   (t) => {
-    t.same(
+    t.strictSame(
       fix("text&angsttext&angsttext"),
       [
         [4, 10, "&angst;"],
@@ -205,7 +205,7 @@ tap.test(
 tap.test(
   `16 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`angst`}\u001b[${39}m - no decode, tight`,
   (t) => {
-    t.same(fix("text&angst"), [[4, 10, "&angst;"]], "16");
+    t.strictSame(fix("text&angst"), [[4, 10, "&angst;"]], "16");
     t.end();
   }
 );
@@ -213,7 +213,7 @@ tap.test(
 tap.test(
   `17 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`angst`}\u001b[${39}m - no decode, tight`,
   (t) => {
-    t.same(
+    t.strictSame(
       fix("text&angst text&angst text"),
       [
         [4, 10, "&angst;"],
@@ -228,7 +228,7 @@ tap.test(
 tap.test(
   `18 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`pi`}\u001b[${39}m - no decode, tight`,
   (t) => {
-    t.same(
+    t.strictSame(
       fix("text&pitext&pitext"),
       [],
       "18 - won't fix, it's a dubious case"
@@ -240,7 +240,7 @@ tap.test(
 tap.test(
   `19 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`piv`}\u001b[${39}m - no decode, tight`,
   (t) => {
-    t.same(
+    t.strictSame(
       fix("text&pivtext&pivtext"),
       [
         [4, 8, "&piv;"],
@@ -255,7 +255,7 @@ tap.test(
 tap.test(
   `20 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`Pi`}\u001b[${39}m - no decode, tight`,
   (t) => {
-    t.same(
+    t.strictSame(
       fix("text&Pitext&Pitext"),
       [],
       "20 - also won't fix, it's not conclusive"
@@ -267,7 +267,7 @@ tap.test(
 tap.test(
   `21 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`sigma`}\u001b[${39}m - not conclusive`,
   (t) => {
-    t.same(fix("text&sigma text&sigma text"), [], "21");
+    t.strictSame(fix("text&sigma text&sigma text"), [], "21");
     t.end();
   }
 );
@@ -275,7 +275,7 @@ tap.test(
 tap.test(
   `22 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`sub`}\u001b[${39}m - no decode, tight`,
   (t) => {
-    t.same(fix("text&sub text&sub text"), [], "22");
+    t.strictSame(fix("text&sub text&sub text"), [], "22");
     t.end();
   }
 );
@@ -283,7 +283,7 @@ tap.test(
 tap.test(
   `23 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`sup`}\u001b[${39}m - no decode, tight`,
   (t) => {
-    t.same(
+    t.strictSame(
       fix("text&suptext&suptext"),
       [
         [4, 8, "&sup;"],
@@ -298,7 +298,7 @@ tap.test(
 tap.test(
   `24 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`theta`}\u001b[${39}m - no decode, tight`,
   (t) => {
-    t.same(fix("text&theta text&theta text"), [], "24");
+    t.strictSame(fix("text&theta text&theta text"), [], "24");
     t.end();
   }
 );
@@ -306,7 +306,7 @@ tap.test(
 tap.test(
   `25 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`thinsp`}\u001b[${39}m - no decode, linebreaked`,
   (t) => {
-    t.same(
+    t.strictSame(
       fix("a &thinsp b\n&thinsp\nc"),
       [
         [2, 9, "&thinsp;"],
@@ -321,8 +321,8 @@ tap.test(
 tap.test(
   `26 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`thinsp`}\u001b[${39}m - joins`,
   (t) => {
-    t.same(fix("&thinsp"), [[0, 7, "&thinsp;"]], "26.01");
-    t.same(
+    t.strictSame(fix("&thinsp"), [[0, 7, "&thinsp;"]], "26.01");
+    t.strictSame(
       fix("&thinsp&thinsp"),
       [
         [0, 7, "&thinsp;"],
@@ -340,7 +340,7 @@ tap.test(
 tap.test(
   `27 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - with decode, spaced`,
   (t) => {
-    t.same(
+    t.strictSame(
       fix("text &ang text&ang text", { decode: true }),
       [
         [5, 9, "\u2220"],
@@ -355,7 +355,7 @@ tap.test(
 tap.test(
   `28 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - with decode, tight`,
   (t) => {
-    t.same(
+    t.strictSame(
       fix("text&angtext&angtext", { decode: true }),
       [
         [4, 8, "\u2220"],
@@ -370,7 +370,7 @@ tap.test(
 tap.test(
   `29 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`angst`}\u001b[${39}m - with decode, tight`,
   (t) => {
-    t.same(fix("text&angst", { decode: true }), [[4, 10, "\xC5"]], "29");
+    t.strictSame(fix("text&angst", { decode: true }), [[4, 10, "\xC5"]], "29");
     t.end();
   }
 );
@@ -378,7 +378,7 @@ tap.test(
 tap.test(
   `30 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`angst`}\u001b[${39}m - with decode, tight`,
   (t) => {
-    t.same(
+    t.strictSame(
       fix("text&angst text&angst text", { decode: true }),
       [
         [4, 10, "\xC5"],
@@ -393,7 +393,7 @@ tap.test(
 tap.test(
   `31 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`angst`}\u001b[${39}m - with decode, tight`,
   (t) => {
-    t.same(
+    t.strictSame(
       fix("text&angsttext&angsttext", { decode: true }),
       [
         [4, 10, "\xC5"],
@@ -408,7 +408,7 @@ tap.test(
 tap.test(
   `32 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`pi`}\u001b[${39}m - with decode, tight`,
   (t) => {
-    t.same(fix("text&pi text&pi text", { decode: true }), [], "32");
+    t.strictSame(fix("text&pi text&pi text", { decode: true }), [], "32");
     t.end();
   }
 );
@@ -416,7 +416,7 @@ tap.test(
 tap.test(
   `33 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`piv`}\u001b[${39}m - with decode, tight`,
   (t) => {
-    t.same(
+    t.strictSame(
       fix("text&pivtext&pivtext", { decode: true }),
       [
         [4, 8, "\u03D6"],
@@ -431,7 +431,7 @@ tap.test(
 tap.test(
   `34 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`Pi`}\u001b[${39}m - with decode, tight`,
   (t) => {
-    t.same(fix("text&Pi text&Pi text", { decode: true }), [], "34");
+    t.strictSame(fix("text&Pi text&Pi text", { decode: true }), [], "34");
     t.end();
   }
 );
@@ -439,7 +439,7 @@ tap.test(
 tap.test(
   `35 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`sigma`}\u001b[${39}m - with decode, tight`,
   (t) => {
-    t.same(fix("text&sigma text&sigma text", { decode: true }), [], "35");
+    t.strictSame(fix("text&sigma text&sigma text", { decode: true }), [], "35");
     t.end();
   }
 );
@@ -447,7 +447,7 @@ tap.test(
 tap.test(
   `36 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`sub`}\u001b[${39}m - with decode, tight`,
   (t) => {
-    t.same(fix("text&sub text&sub text", { decode: true }), [], "36");
+    t.strictSame(fix("text&sub text&sub text", { decode: true }), [], "36");
     t.end();
   }
 );
@@ -455,7 +455,7 @@ tap.test(
 tap.test(
   `37 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`sup`}\u001b[${39}m - with decode, tight`,
   (t) => {
-    t.same(
+    t.strictSame(
       fix("text&suptext&suptext", { decode: true }),
       [
         [4, 8, "\u2283"],
@@ -470,7 +470,7 @@ tap.test(
 tap.test(
   `38 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`theta`}\u001b[${39}m - with decode, tight`,
   (t) => {
-    t.same(fix("text&theta text&theta text", { decode: true }), [], "38");
+    t.strictSame(fix("text&theta text&theta text", { decode: true }), [], "38");
     t.end();
   }
 );
@@ -478,7 +478,7 @@ tap.test(
 tap.test(
   `39 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`thinsp`}\u001b[${39}m - with decode, line breaked`,
   (t) => {
-    t.same(
+    t.strictSame(
       fix("a &thinsp b\n&thinsp\nc", { decode: true }),
       [
         [2, 9, "\u2009"],
@@ -493,7 +493,7 @@ tap.test(
 tap.test(
   `40 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`thinsp`}\u001b[${39}m - with decode, isolated`,
   (t) => {
-    t.same(fix("&thinsp", { decode: true }), [[0, 7, "\u2009"]], "40");
+    t.strictSame(fix("&thinsp", { decode: true }), [[0, 7, "\u2009"]], "40");
     t.end();
   }
 );
@@ -501,7 +501,7 @@ tap.test(
 tap.test(
   `41 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`thinsp`}\u001b[${39}m - joins`,
   (t) => {
-    t.same(
+    t.strictSame(
       fix("&thinsp&thinsp", { decode: true }),
       [
         [0, 7, "\u2009"],
@@ -514,6 +514,6 @@ tap.test(
 );
 
 tap.test("42 - single pi - exact value in front", (t) => {
-  t.same(fix("&pivaaa"), [[0, 4, "&piv;"]], "42");
+  t.strictSame(fix("&pivaaa"), [[0, 4, "&piv;"]], "42");
   t.end();
 });

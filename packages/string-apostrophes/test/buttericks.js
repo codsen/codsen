@@ -15,7 +15,7 @@ const rightSingleQuote = "\u2019";
 tap.test(
   `01 - ${`\u001b[${34}m${`Buttericks Practical Typography`}\u001b[${39}m`} - 'n' - on`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertAll(`In the '60s, rock 'n' roll`, {
         convertApostrophes: 1,
         convertEntities: 0,
@@ -36,7 +36,7 @@ tap.test(
 tap.test(
   `02 - ${`\u001b[${34}m${`Buttericks Practical Typography`}\u001b[${39}m`} - 'n' - off`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertAll(`In the '60s, rock 'n' roll`, {
         convertApostrophes: 0,
         convertEntities: 0,
@@ -51,7 +51,7 @@ tap.test(
 tap.test(
   `03 - ${`\u001b[${34}m${`Buttericks Practical Typography`}\u001b[${39}m`} - Hawai${leftSingleQuote}i - sets okina #1`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertAll(`Hawai'i`, {
         convertApostrophes: 1,
         convertEntities: 0,
@@ -66,7 +66,7 @@ tap.test(
 tap.test(
   `04 - ${`\u001b[${34}m${`Buttericks Practical Typography`}\u001b[${39}m`} - O${leftSingleQuote}ahu - sets okina #2`,
   (t) => {
-    t.same(
+    t.strictSame(
       convertAll(`O'ahu`, {
         convertApostrophes: 1,
         convertEntities: 0,

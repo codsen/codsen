@@ -27,6 +27,27 @@
 npm i html-all-known-attributes
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import { allHtmlAttribs } from "html-all-known-attributes";
+
+assert.equal(allHtmlAttribs.has("href"), true);
+
+assert.equal(allHtmlAttribs.size, 702);
+
+// iterating:
+const gathered = [];
+for (const x of allHtmlAttribs) {
+  // push first three
+  if (gathered.length < 3) {
+    gathered.push(x);
+  }
+}
+assert.deepEqual(gathered, ["abbr", "accept", "accept-charset"]);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/html-all-known-attributes/) for a full description of the API and examples.

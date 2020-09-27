@@ -16,7 +16,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), str, "01.01");
-    t.same(messages, [], "01.02");
+    t.strictSame(messages, [], "01.02");
     t.end();
   }
 );
@@ -33,7 +33,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), fixed, "02.01");
-    t.same(
+    t.strictSame(
       messages,
       [
         {
@@ -68,7 +68,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), fixed, "03.01");
-    t.same(
+    t.strictSame(
       messages,
       [
         {
@@ -103,7 +103,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), fixed, "04.01");
-    t.same(
+    t.strictSame(
       messages,
       [
         {
@@ -138,7 +138,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), fixed, "05.01");
-    t.same(
+    t.strictSame(
       messages,
       [
         {
@@ -173,7 +173,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), fixed, "06.01");
-    t.same(
+    t.strictSame(
       messages,
       [
         {
@@ -216,7 +216,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), str, "07.01");
-    t.same(messages, [], "07.02");
+    t.strictSame(messages, [], "07.02");
     t.end();
   }
 );

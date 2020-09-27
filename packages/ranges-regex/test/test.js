@@ -86,7 +86,7 @@ tap.test("05 - third input argument is present and is not string", (t) => {
 // ==============================
 
 tap.test(`06 - crops out few ranges outside the strlen`, (t) => {
-  t.same(
+  t.strictSame(
     rare(/def/g, "abcdefghij_abcdefghij"),
     [
       [3, 6],
@@ -94,7 +94,7 @@ tap.test(`06 - crops out few ranges outside the strlen`, (t) => {
     ],
     "06.01"
   );
-  t.same(
+  t.strictSame(
     rare(/def/g, "abcdefghij_abcdefghij", "yo"),
     [
       [3, 6, "yo"],
@@ -102,7 +102,7 @@ tap.test(`06 - crops out few ranges outside the strlen`, (t) => {
     ],
     "06.02"
   );
-  t.same(
+  t.strictSame(
     rare(/def/g, "abcdefghij_abcdefghij", null),
     [
       [3, 6, null],
@@ -110,7 +110,7 @@ tap.test(`06 - crops out few ranges outside the strlen`, (t) => {
     ],
     "06.03"
   );
-  t.same(
+  t.strictSame(
     rare(/def/g, "abcdefghij_abcdefghij", ""),
     [
       [3, 6],
@@ -123,9 +123,9 @@ tap.test(`06 - crops out few ranges outside the strlen`, (t) => {
 });
 
 tap.test(`07 - nothing found`, (t) => {
-  t.same(rare(/def/g, ""), null, "07.01");
-  t.same(rare(/def/g, "", "yo"), null, "07.02");
-  t.same(rare(/def/g, "", null), null, "07.03");
+  t.strictSame(rare(/def/g, ""), null, "07.01");
+  t.strictSame(rare(/def/g, "", "yo"), null, "07.02");
+  t.strictSame(rare(/def/g, "", null), null, "07.03");
   t.end();
 });
 
@@ -134,7 +134,7 @@ tap.test(
   (t) => {
     const reg = /def/g;
     const str = "abcdefdefghij_abcdefghij";
-    t.same(
+    t.strictSame(
       rare(reg, str),
       [
         [3, 9],

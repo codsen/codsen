@@ -19,7 +19,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), str, "01.01");
-    t.same(messages, [], "01.02");
+    t.strictSame(messages, [], "01.02");
     t.end();
   }
 );
@@ -37,7 +37,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), str, "02.01");
-    t.same(messages, [], "02.02");
+    t.strictSame(messages, [], "02.02");
     t.end();
   }
 );
@@ -55,7 +55,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), str, "03.01");
-    t.same(messages, [], "03.02");
+    t.strictSame(messages, [], "03.02");
     t.end();
   }
 );
@@ -107,7 +107,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), str, "05.01");
-    t.same(messages, [], "05.02");
+    t.strictSame(messages, [], "05.02");
     t.end();
   }
 );

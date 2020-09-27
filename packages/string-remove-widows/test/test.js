@@ -62,7 +62,7 @@ tap.test(
       minCharCount: 5,
     });
     t.equal(resObj.res, `aaa bbb ccc${encodedNbspHtml}ddd`, "05.01");
-    t.same(
+    t.strictSame(
       resObj.whatWasDone,
       {
         removeWidows: true,
@@ -70,7 +70,7 @@ tap.test(
       },
       "05.02"
     );
-    t.same(resObj.ranges, [[11, 12, encodedNbspHtml]], "05.03");
+    t.strictSame(resObj.ranges, [[11, 12, encodedNbspHtml]], "05.03");
     t.end();
   }
 );
@@ -83,7 +83,7 @@ tap.test(
       minCharCount: 5,
     });
     t.equal(resObj.res, `aaa bbb ccc${encodedNbspHtml}ddd`, "06.01");
-    t.same(
+    t.strictSame(
       resObj.whatWasDone,
       {
         removeWidows: true,
@@ -91,7 +91,7 @@ tap.test(
       },
       "06.02"
     );
-    t.same(resObj.ranges, [[11, 13, encodedNbspHtml]], "06.03");
+    t.strictSame(resObj.ranges, [[11, 13, encodedNbspHtml]], "06.03");
     t.end();
   }
 );
@@ -280,7 +280,7 @@ tap.test(
         `aaa bbb ccc${encodedNbsps[i]}ddd`,
         `01.06.0${1 + i} - ${targetLanguage}`
       );
-      t.same(val1.whatWasDone, {
+      t.strictSame(val1.whatWasDone, {
         removeWidows: true,
         convertEntities: false,
       });
@@ -294,7 +294,7 @@ tap.test(
         `aaa bbb ccc${rawnbsp}ddd`,
         `01.06.0${2 + i} - ${targetLanguage}`
       );
-      t.same(val2.whatWasDone, {
+      t.strictSame(val2.whatWasDone, {
         removeWidows: true,
         convertEntities: false,
       });
@@ -309,7 +309,7 @@ tap.test(
         `aaa bbb ccc ddd`,
         `01.06.0${3 + i} - ${targetLanguage}`
       );
-      t.same(val3.whatWasDone, {
+      t.strictSame(val3.whatWasDone, {
         removeWidows: true,
         convertEntities: false,
       });
@@ -590,7 +590,7 @@ tap.test(
       UKPostcodes: true,
       hyphens: true,
     });
-    t.same(res.ranges, null, "18");
+    t.strictSame(res.ranges, null, "18");
     t.end();
   }
 );
@@ -603,7 +603,7 @@ tap.test(
       convertEntities: false,
     });
     t.equal(res.res, `abc${rawnbsp}def ghij${rawnbsp}knmn`, "19.01");
-    t.same(
+    t.strictSame(
       res.whatWasDone,
       {
         removeWidows: true,
@@ -623,7 +623,7 @@ tap.test(
       convertEntities: false,
     });
     t.equal(res.res, `x${rawnbsp}x`, "20.01");
-    t.same(
+    t.strictSame(
       res.whatWasDone,
       {
         removeWidows: false,
@@ -643,7 +643,7 @@ tap.test(
       convertEntities: false,
     });
     t.equal(res.res, `${rawnbsp}`, "21.01");
-    t.same(
+    t.strictSame(
       res.whatWasDone,
       {
         removeWidows: false,
@@ -2151,17 +2151,17 @@ tap.test(
       counter += 1;
     };
 
-    t.same(
+    t.strictSame(
       removeWidows(`aaaaaaaaaa`).res,
       `aaaaaaaaaa`,
       `95.01 - default behaviour`
     );
-    t.same(
+    t.strictSame(
       removeWidows(`aaaaaaaaaa`, { reportProgressFunc: null }).res,
       `aaaaaaaaaa`,
       `95.02`
     );
-    t.same(
+    t.strictSame(
       removeWidows(`aaaaaaaaaa`, { reportProgressFunc: false }).res,
       `aaaaaaaaaa`,
       `95.03`
@@ -2286,7 +2286,7 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
       t.ok(compareTo.includes(perc), `checking: ${perc}%`)
     );
     t.equal(gather.length, 86 - 21 + 1, "96.01");
-    // t.same(gather, compareTo, `10.02`)
+    // t.strictSame(gather, compareTo, `10.02`)
 
     t.end();
   }

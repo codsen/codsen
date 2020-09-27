@@ -566,7 +566,7 @@ tap.test(
     // and
     // "!--"
     // would sit inside opening comment, inside its children[] value array
-    t.same(
+    t.strictSame(
       cparser(`<!--[if !mso]><!--><img src="gif"/>!--<![endif]-->`),
       [
         {
@@ -642,7 +642,7 @@ tap.test(
     // and
     // "!--"
     // would sit inside opening comment, inside its children[] value array
-    t.same(
+    t.strictSame(
       cparser(`<!--[if !mso]><!--><img src="gif"/>zzz!--<![endif]-->`),
       [
         {
@@ -719,7 +719,7 @@ tap.test(
 
 tap.test(`17 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - false alarm`, (t) => {
   // clauses are triggered but nothing's found from characters: <, ! and -
-  t.same(
+  t.strictSame(
     cparser(`<!--[if !mso]><!--><img src="gif"/>zzz-<![endif]-->`),
     [
       {
@@ -797,7 +797,7 @@ tap.test(
   `18 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - rogue bracket`,
   (t) => {
     // clauses are triggered but nothing's found from characters: <, ! and -
-    t.same(
+    t.strictSame(
       cparser(`zzz<<![endif]-->`),
       [
         {

@@ -7,7 +7,7 @@ import { crush as m } from "../dist/html-crush.esm";
 tap.test(
   `01 - ${`\u001b[${33}m${`opts.removeIndentations`}\u001b[${39}m`} - collapses whitespace on removeIndentations`,
   (t) => {
-    t.same(
+    t.strictSame(
       m("a   b\nc    d", {
         removeLineBreaks: false,
         removeIndentations: true,
@@ -22,7 +22,7 @@ tap.test(
 tap.test(
   `02 - ${`\u001b[${33}m${`opts.removeIndentations`}\u001b[${39}m`} - trailing whitespace on removeIndentations`,
   (t) => {
-    t.same(
+    t.strictSame(
       m("a   \nb    ", {
         removeLineBreaks: false,
         removeIndentations: true,
@@ -37,7 +37,7 @@ tap.test(
 tap.test(
   `03 - ${`\u001b[${33}m${`opts.removeIndentations`}\u001b[${39}m`} - leading whitespace`,
   (t) => {
-    t.same(
+    t.strictSame(
       m(
         `
 

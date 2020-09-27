@@ -27,7 +27,6 @@ function isStr(something) {
 function existy(x) {
   return x != null;
 }
-const isArr = Array.isArray;
 
 // this function does the job, but it is not exposed because its first argument
 // requirements are loose - it can be anything since it will be calling itself recursively
@@ -79,14 +78,14 @@ function fillMissingKeys(incompleteOriginal, schema, opts, path = "") {
           );
         }
       });
-    } else if (isArr(schema) && isArr(incomplete)) {
+    } else if (Array.isArray(schema) && Array.isArray(incomplete)) {
       if (incomplete.length === 0) {
         return schema;
       }
       if (schema.length > 0) {
         for (let i = incomplete.length; i--; ) {
           const currentPath = `${path ? `${path}.` : ""}0`;
-          if (isObj(schema[0]) || isArr(schema[0])) {
+          if (isObj(schema[0]) || Array.isArray(schema[0])) {
             incomplete[i] = fillMissingKeys(
               incomplete[i],
               schema[0],

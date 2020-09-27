@@ -5,7 +5,7 @@ import compare from "../dist/ast-compare.esm";
 // -----------------------------------------------------------------------------
 
 tap.test("01 - hungryForWhitespace, empty strings within arrays", (t) => {
-  t.same(
+  t.strictSame(
     compare(
       {
         type: "rule",
@@ -19,7 +19,7 @@ tap.test("01 - hungryForWhitespace, empty strings within arrays", (t) => {
     false,
     "01.01"
   );
-  t.same(
+  t.strictSame(
     compare(
       {
         type: "rule",
@@ -36,7 +36,7 @@ tap.test("01 - hungryForWhitespace, empty strings within arrays", (t) => {
     true,
     "01.02"
   );
-  t.same(
+  t.strictSame(
     compare(
       {
         type: "rule",
@@ -50,7 +50,7 @@ tap.test("01 - hungryForWhitespace, empty strings within arrays", (t) => {
     false,
     "01.03"
   );
-  t.same(
+  t.strictSame(
     compare(
       {
         type: "rule",

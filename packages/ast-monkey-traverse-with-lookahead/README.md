@@ -27,6 +27,238 @@
 npm i ast-monkey-traverse-with-lookahead
 ```
 
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import traverse from "ast-monkey-traverse-with-lookahead";
+
+const input = [
+  {
+    a: "b",
+  },
+  {
+    c: "d",
+  },
+  {
+    e: "f",
+  },
+];
+const gathered = [];
+
+// callback interface:
+traverse(
+  input,
+  (key1, val1, innerObj) => {
+    gathered.push([key1, val1, innerObj]);
+  },
+  1 // <---------------- report one upcoming value
+);
+
+assert.deepEqual(gathered, [
+  // ===================
+  [
+    {
+      a: "b",
+    },
+    undefined,
+    {
+      depth: 0,
+      path: "0",
+      parent: [
+        {
+          a: "b",
+        },
+        {
+          c: "d",
+        },
+        {
+          e: "f",
+        },
+      ],
+      parentType: "array",
+      next: [
+        [
+          "a",
+          "b",
+          {
+            depth: 1,
+            path: "0.a",
+            parent: {
+              a: "b",
+            },
+            parentType: "object",
+          },
+        ],
+      ],
+    },
+  ],
+  // ===================
+  [
+    "a",
+    "b",
+    {
+      depth: 1,
+      path: "0.a",
+      parent: {
+        a: "b",
+      },
+      parentType: "object",
+      next: [
+        [
+          {
+            c: "d",
+          },
+          undefined,
+          {
+            depth: 0,
+            path: "1",
+            parent: [
+              {
+                a: "b",
+              },
+              {
+                c: "d",
+              },
+              {
+                e: "f",
+              },
+            ],
+            parentType: "array",
+          },
+        ],
+      ],
+    },
+  ],
+  // ===================
+  [
+    {
+      c: "d",
+    },
+    undefined,
+    {
+      depth: 0,
+      path: "1",
+      parent: [
+        {
+          a: "b",
+        },
+        {
+          c: "d",
+        },
+        {
+          e: "f",
+        },
+      ],
+      parentType: "array",
+      next: [
+        [
+          "c",
+          "d",
+          {
+            depth: 1,
+            path: "1.c",
+            parent: {
+              c: "d",
+            },
+            parentType: "object",
+          },
+        ],
+      ],
+    },
+  ],
+  // ===================
+  [
+    "c",
+    "d",
+    {
+      depth: 1,
+      path: "1.c",
+      parent: {
+        c: "d",
+      },
+      parentType: "object",
+      next: [
+        [
+          {
+            e: "f",
+          },
+          undefined,
+          {
+            depth: 0,
+            path: "2",
+            parent: [
+              {
+                a: "b",
+              },
+              {
+                c: "d",
+              },
+              {
+                e: "f",
+              },
+            ],
+            parentType: "array",
+          },
+        ],
+      ],
+    },
+  ],
+  // ===================
+  [
+    {
+      e: "f",
+    },
+    undefined,
+    {
+      depth: 0,
+      path: "2",
+      parent: [
+        {
+          a: "b",
+        },
+        {
+          c: "d",
+        },
+        {
+          e: "f",
+        },
+      ],
+      parentType: "array",
+      next: [
+        [
+          "e",
+          "f",
+          {
+            depth: 1,
+            path: "2.e",
+            parent: {
+              e: "f",
+            },
+            parentType: "object",
+          },
+        ],
+      ],
+    },
+  ],
+  // ===================
+  [
+    "e",
+    "f",
+    {
+      depth: 1,
+      path: "2.e",
+      parent: {
+        e: "f",
+      },
+      parentType: "object",
+      next: [],
+    },
+  ],
+  // ===================
+]);
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/ast-monkey-traverse-with-lookahead/) for a full description of the API and examples.

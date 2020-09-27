@@ -13,7 +13,7 @@ tap.todo(
           from: 17,
         })
       );
-    t.same(gatheredRes, [
+    t.strictSame(gatheredRes, [
       [8, 9, "&ldquo;"],
       [17, 18, "&rdquo;"],
     ], "01");
@@ -38,7 +38,7 @@ tap.todo(
           convertEntities: 0,
         })
       );
-    t.same(gatheredRes, [
+    t.strictSame(gatheredRes, [
       [8, 9, `${leftDoubleQuote}`],
       [17, 18, `${rightDoubleQuote}`],
     ], "02");

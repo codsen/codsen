@@ -19,7 +19,7 @@ tap.test(`01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - off`, (t) => {
     },
   });
   t.equal(applyFixes(str, messages), str, "01.01");
-  t.same(messages, [], "01.02");
+  t.strictSame(messages, [], "01.02");
   t.end();
 });
 
@@ -144,7 +144,7 @@ tap.test(
       },
     });
     t.equal(applyFixes(str, messages), str, "06.01");
-    t.same(messages, [], "06.02");
+    t.strictSame(messages, [], "06.02");
     t.end();
   }
 );

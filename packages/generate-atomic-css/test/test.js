@@ -104,7 +104,7 @@ tap.test(
   `06 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - no $$$ - oneliner`,
   (t) => {
     const source = "zzz";
-    t.same(
+    t.strictSame(
       genAtomic(source, {
         includeConfig: true,
         includeHeadsAndTails: true,
@@ -117,7 +117,7 @@ tap.test(
       },
       "06.01"
     );
-    t.same(
+    t.strictSame(
       genAtomic(source, {
         includeConfig: true,
         includeHeadsAndTails: false,
@@ -130,7 +130,7 @@ tap.test(
       },
       "06.02"
     );
-    t.same(
+    t.strictSame(
       genAtomic(source, {
         includeConfig: false,
         includeHeadsAndTails: true,
@@ -143,7 +143,7 @@ tap.test(
       },
       "06.03"
     );
-    t.same(
+    t.strictSame(
       genAtomic(source, {
         includeConfig: false,
         includeHeadsAndTails: false,
@@ -204,7 +204,7 @@ tap.test(
 tap.test(
   `08 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - defaults, empty content`,
   (t) => {
-    t.same(
+    t.strictSame(
       genAtomic(`111
 222
 /* GENERATE-ATOMIC-CSS-CONFIG-STARTS
@@ -245,7 +245,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 tap.test(
   `09 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - defaults, empty content, no pad`,
   (t) => {
-    t.same(
+    t.strictSame(
       genAtomic(
         `111
 222
@@ -289,7 +289,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 tap.test(
   `10 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - placeholder in the middle of the name, ends with px`,
   (t) => {
-    t.same(
+    t.strictSame(
       genAtomic(
         `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
 |   .pt$$$px[lang|=en] { padding-top: $$$px !important } | 0 | 2 |
@@ -313,7 +313,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 tap.test(
   `11 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - placeholder in the middle of the name, ends with px`,
   (t) => {
-    t.same(
+    t.strictSame(
       genAtomic(
         `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
 |   .pt$$$px[lang|=en] { padding-top: $$$px !important } | 0 | 10 |
@@ -345,7 +345,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 tap.test(
   `12 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - placeholder in the middle of the name, ends with p`,
   (t) => {
-    t.same(
+    t.strictSame(
       genAtomic(
         `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
 | .pt$$$p { padding-top: $$$% !important; }|0|3|
@@ -371,7 +371,7 @@ GENERATE-ATOMIC-CSS-CONTENT-STARTS */
 tap.test(
   `13 - ${`\u001b[${33}m${`taster`}\u001b[${39}m`} - starts with a placeholder (not legit)`,
   (t) => {
-    t.same(
+    t.strictSame(
       genAtomic(
         `/* GENERATE-ATOMIC-CSS-CONFIG-STARTS
 | .pt$$$p { padding-top: $$$px !important; }|0|3|
@@ -845,7 +845,7 @@ ${CONTENTTAIL}
 tap.test(
   `25 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - retains content around`,
   (t) => {
-    t.same(
+    t.strictSame(
       genAtomic(
         `tra
 
@@ -897,7 +897,7 @@ lala`,
         includeHeadsAndTails: true,
       }
     );
-    t.same(
+    t.strictSame(
       result,
       `tra
 
@@ -923,7 +923,7 @@ lala
 tap.test(
   `27 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - retains content around, incl. config tails`,
   (t) => {
-    t.same(
+    t.strictSame(
       genAtomic(
         `tra
 
@@ -962,7 +962,7 @@ lala
 tap.test(
   `28 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - incl. config tails, one comment block`,
   (t) => {
-    t.same(
+    t.strictSame(
       genAtomic(
         `tra
 
@@ -1001,7 +1001,7 @@ lala
 tap.test(
   `29 - ${`\u001b[${31}m${`config, heads/tails requested`}\u001b[${39}m`} - retains content around`,
   (t) => {
-    t.same(
+    t.strictSame(
       genAtomic(
         `tra
 
@@ -1043,7 +1043,7 @@ lala
 tap.test(
   `30 - ${`\u001b[${31}m${`config, heads/tails requested`}\u001b[${39}m`} - retains content around, incl. tails`,
   (t) => {
-    t.same(
+    t.strictSame(
       genAtomic(
         `tra
 
@@ -1087,7 +1087,7 @@ lala
 tap.test(
   `31 - ${`\u001b[${31}m${`config, heads/tails requested`}\u001b[${39}m`} - retains content around, incl. config tails`,
   (t) => {
-    t.same(
+    t.strictSame(
       genAtomic(
         `tra
 
@@ -1131,7 +1131,7 @@ lala
 tap.test(
   `32 - ${`\u001b[${31}m${`config, heads/tails requested`}\u001b[${39}m`} - incl. config tails, one comment block`,
   (t) => {
-    t.same(
+    t.strictSame(
       genAtomic(
         `tra
 
@@ -1175,7 +1175,7 @@ lala
 tap.test(
   `33 - ${`\u001b[${35}m${`config present no config requested`}\u001b[${39}m`} - comments surrounding`,
   (t) => {
-    t.same(
+    t.strictSame(
       genAtomic(
         `/* tra */
 
@@ -1214,7 +1214,7 @@ tap.test(
 tap.test(
   `34 - ${`\u001b[${35}m${`content tails present no config requested`}\u001b[${39}m`} - comments surrounding`,
   (t) => {
-    t.same(
+    t.strictSame(
       genAtomic(
         `/* tra */
 
@@ -1293,7 +1293,7 @@ b
 tap.test(
   `36 - ${`\u001b[${35}m${`no config, only heads/tails requested`}\u001b[${39}m`} - head missing`,
   (t) => {
-    t.same(
+    t.strictSame(
       genAtomic(
         `tra
 
@@ -1680,7 +1680,7 @@ ${CONTENTHEAD} */
 tap.test(
   `44 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - retains content around, content tails`,
   (t) => {
-    t.same(
+    t.strictSame(
       genAtomic(
         `<style>
 /* GENERATE-ATOMIC-CSS-CONTENT-STARTS */
@@ -1728,7 +1728,7 @@ tap.test(
 tap.test(
   `45 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - retains content around, config tails`,
   (t) => {
-    t.same(
+    t.strictSame(
       genAtomic(
         `<style>
 /* GENERATE-ATOMIC-CSS-CONFIG-STARTS */
@@ -1776,7 +1776,7 @@ tap.test(
 tap.test(
   `46 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - retains content around`,
   (t) => {
-    t.same(
+    t.strictSame(
       genAtomic(
         `tra
 
@@ -1818,7 +1818,7 @@ lala
 tap.test(
   `47 - ${`\u001b[${34}m${`config requested but not present`}\u001b[${39}m`} - above there are comments followed by content`,
   (t) => {
-    t.same(
+    t.strictSame(
       genAtomic(
         `/* tra */
 
@@ -2699,7 +2699,7 @@ tap.test(
 .db { display: block !important }
 .dib { display: inline-block !important }
 `.trim();
-    t.same(
+    t.strictSame(
       genAtomic(
         `/* ${CONFIGHEAD}
 ${content}
@@ -2733,7 +2733,7 @@ tap.test(
 .plr$$$ { padding-left:$$$px!important;padding-right:$$$px!important }|0|2
 .db { display: block !important }
 `.trim();
-    t.same(
+    t.strictSame(
       genAtomic(
         `/* ${CONFIGHEAD}
 ${content}
@@ -2769,7 +2769,7 @@ tap.test(
 .zzz3 { yyy: 0 auto !important }
 `.trim();
 
-    t.same(
+    t.strictSame(
       genAtomic(
         `/* ${CONFIGHEAD}
 ${content}
@@ -3042,13 +3042,13 @@ tap.test(
 tap.test(
   `73 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - wizard case, 1 arg`,
   (t) => {
-    t.same(extractFromToSource("mt|10"), [0, 10, "mt"], "73.01");
-    t.same(extractFromToSource("mt|10|"), [0, 10, "mt"], "73.02");
-    t.same(extractFromToSource("|mt|10|"), [0, 10, "mt"], "73.03");
-    t.same(extractFromToSource("| mt | 10 |"), [0, 10, " mt"], "73.04");
-    t.same(extractFromToSource(" | mt | 10 | "), [0, 10, " mt"], "73.05");
-    t.same(extractFromToSource(" | mt| 0 "), [0, 0, " mt"], "73.06");
-    t.same(extractFromToSource(" |||| mt| 0 "), [0, 0, " mt"], "73.07");
+    t.strictSame(extractFromToSource("mt|10"), [0, 10, "mt"], "73.01");
+    t.strictSame(extractFromToSource("mt|10|"), [0, 10, "mt"], "73.02");
+    t.strictSame(extractFromToSource("|mt|10|"), [0, 10, "mt"], "73.03");
+    t.strictSame(extractFromToSource("| mt | 10 |"), [0, 10, " mt"], "73.04");
+    t.strictSame(extractFromToSource(" | mt | 10 | "), [0, 10, " mt"], "73.05");
+    t.strictSame(extractFromToSource(" | mt| 0 "), [0, 0, " mt"], "73.06");
+    t.strictSame(extractFromToSource(" |||| mt| 0 "), [0, 0, " mt"], "73.07");
     t.end();
   }
 );
@@ -3056,15 +3056,31 @@ tap.test(
 tap.test(
   `74 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - wizard case, 2 args`,
   (t) => {
-    t.same(extractFromToSource("mt|2|10"), [2, 10, "mt"], "74.01");
-    t.same(extractFromToSource("mt|2|10|"), [2, 10, "mt"], "74.02");
-    t.same(extractFromToSource("|mt|2|10|"), [2, 10, "mt"], "74.03");
-    t.same(extractFromToSource(" mt | 2 | 10 "), [2, 10, " mt"], "74.04");
-    t.same(extractFromToSource(" mt | 2 | 10 |"), [2, 10, " mt"], "74.05");
-    t.same(extractFromToSource("| mt | 2 | 10 |"), [2, 10, " mt"], "74.06");
-    t.same(extractFromToSource(" | mt | 2 | 10 | "), [2, 10, " mt"], "74.07");
-    t.same(extractFromToSource("  mt| 2| 10|\n"), [2, 10, "  mt"], "74.08");
-    t.same(
+    t.strictSame(extractFromToSource("mt|2|10"), [2, 10, "mt"], "74.01");
+    t.strictSame(extractFromToSource("mt|2|10|"), [2, 10, "mt"], "74.02");
+    t.strictSame(extractFromToSource("|mt|2|10|"), [2, 10, "mt"], "74.03");
+    t.strictSame(extractFromToSource(" mt | 2 | 10 "), [2, 10, " mt"], "74.04");
+    t.strictSame(
+      extractFromToSource(" mt | 2 | 10 |"),
+      [2, 10, " mt"],
+      "74.05"
+    );
+    t.strictSame(
+      extractFromToSource("| mt | 2 | 10 |"),
+      [2, 10, " mt"],
+      "74.06"
+    );
+    t.strictSame(
+      extractFromToSource(" | mt | 2 | 10 | "),
+      [2, 10, " mt"],
+      "74.07"
+    );
+    t.strictSame(
+      extractFromToSource("  mt| 2| 10|\n"),
+      [2, 10, "  mt"],
+      "74.08"
+    );
+    t.strictSame(
       extractFromToSource("||| |  mt| 2| 10|\n"),
       [2, 10, "  mt"],
       "74.09"
@@ -3077,10 +3093,10 @@ tap.test(
   `75 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - wizard case, 3 args`,
   (t) => {
     // takes first two digits
-    t.same(extractFromToSource("mt|2|10|0"), [2, 10, "mt"], "75.01");
-    t.same(extractFromToSource("mt|2|10|0|"), [2, 10, "mt"], "75.02");
-    t.same(extractFromToSource("|mt|2|10|0|"), [2, 10, "mt"], "75.03");
-    t.same(extractFromToSource("||||mt|2|10|0|"), [2, 10, "mt"], "75.04");
+    t.strictSame(extractFromToSource("mt|2|10|0"), [2, 10, "mt"], "75.01");
+    t.strictSame(extractFromToSource("mt|2|10|0|"), [2, 10, "mt"], "75.02");
+    t.strictSame(extractFromToSource("|mt|2|10|0|"), [2, 10, "mt"], "75.03");
+    t.strictSame(extractFromToSource("||||mt|2|10|0|"), [2, 10, "mt"], "75.04");
     t.end();
   }
 );
@@ -3088,7 +3104,11 @@ tap.test(
 tap.test(
   `76 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - wizard case, 3 args - taster`,
   (t) => {
-    t.same(extractFromToSource("mt[lang|=en]|2"), [0, 2, "mt[lang|=en]"], "76");
+    t.strictSame(
+      extractFromToSource("mt[lang|=en]|2"),
+      [0, 2, "mt[lang|=en]"],
+      "76"
+    );
     t.end();
   }
 );
@@ -3096,37 +3116,37 @@ tap.test(
 tap.test(
   `77 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - wizard case, 3 args`,
   (t) => {
-    t.same(
+    t.strictSame(
       extractFromToSource("mt[lang|=en]|2|10"),
       [2, 10, "mt[lang|=en]"],
       "77.01"
     );
-    t.same(
+    t.strictSame(
       extractFromToSource(".mt[lang|=en]|2|"),
       [0, 2, ".mt[lang|=en]"],
       "77.02"
     );
-    t.same(
+    t.strictSame(
       extractFromToSource(".mt[lang|=en]|2|10|"),
       [2, 10, ".mt[lang|=en]"],
       "77.03"
     );
-    t.same(
+    t.strictSame(
       extractFromToSource("mt[lang|=en] | 2 | 10 | 0"),
       [2, 10, "mt[lang|=en]"],
       "77.04"
     );
-    t.same(
+    t.strictSame(
       extractFromToSource("mt[lang|=en] | 2 | 10 | a"),
       [2, 10, "mt[lang|=en]"],
       "77.05"
     );
-    t.same(
+    t.strictSame(
       extractFromToSource("|mt[lang|=en] | 2 | 10 | a"),
       [2, 10, "mt[lang|=en]"],
       "77.06"
     );
-    t.same(
+    t.strictSame(
       extractFromToSource("||||mt[lang|=en] | 2 | 10 | a"),
       [2, 10, "mt[lang|=en]"],
       "77.07"
@@ -3138,41 +3158,41 @@ tap.test(
 tap.test(
   `78 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - generator case, 1 arg`,
   (t) => {
-    t.same(
+    t.strictSame(
       extractFromToSource(".mt$$$ { margin-top: $$$px !important; } | 10"),
       [0, 10, ".mt$$$ { margin-top: $$$px !important; }"],
       "78.01"
     );
-    t.same(
+    t.strictSame(
       extractFromToSource("   .mt$$$ { margin-top: $$$px !important; } | 10"),
       [0, 10, "   .mt$$$ { margin-top: $$$px !important; }"],
       "78.02"
     );
-    t.same(
+    t.strictSame(
       extractFromToSource("   .mt$$$ { margin-top: $$$px !important; } | 10 "),
       [0, 10, "   .mt$$$ { margin-top: $$$px !important; }"],
       "78.03"
     );
-    t.same(
+    t.strictSame(
       extractFromToSource("   .mt$$$ { margin-top: $$$px !important; } | 10 |"),
       [0, 10, "   .mt$$$ { margin-top: $$$px !important; }"],
       "78.04"
     );
-    t.same(
+    t.strictSame(
       extractFromToSource(
         "   .mt$$$ { margin-top: $$$px !important; } | 10 | "
       ),
       [0, 10, "   .mt$$$ { margin-top: $$$px !important; }"],
       "78.05"
     );
-    t.same(
+    t.strictSame(
       extractFromToSource(
         "|   .mt$$$ { margin-top: $$$px !important; } | 10 | "
       ),
       [0, 10, "   .mt$$$ { margin-top: $$$px !important; }"],
       "78.06"
     );
-    t.same(
+    t.strictSame(
       extractFromToSource(
         "||||   .mt$$$ { margin-top: $$$px !important; } | 10 | "
       ),
@@ -3186,45 +3206,45 @@ tap.test(
 tap.test(
   `79 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - generator case, 2 arg`,
   (t) => {
-    t.same(
+    t.strictSame(
       extractFromToSource(".mt$$$ { margin-top: $$$px !important; }|2|10"),
       [2, 10, ".mt$$$ { margin-top: $$$px !important; }"],
       "79.01"
     );
-    t.same(
+    t.strictSame(
       extractFromToSource(".mt$$$ { margin-top: $$$px !important; } | 2 | 10 "),
       [2, 10, ".mt$$$ { margin-top: $$$px !important; }"],
       "79.02"
     );
-    t.same(
+    t.strictSame(
       extractFromToSource(
         ".mt$$$ { margin-top: $$$px !important; } | 2 | 10 |"
       ),
       [2, 10, ".mt$$$ { margin-top: $$$px !important; }"],
       "79.03"
     );
-    t.same(
+    t.strictSame(
       extractFromToSource(
         " .mt$$$ { margin-top: $$$px !important; } | 2 | 10  | "
       ),
       [2, 10, " .mt$$$ { margin-top: $$$px !important; }"],
       "79.04"
     );
-    t.same(
+    t.strictSame(
       extractFromToSource(
         " .mt$$$ { margin-top: $$$px !important; } | 2 | 10  | a"
       ),
       [2, 10, " .mt$$$ { margin-top: $$$px !important; }"],
       "79.05"
     );
-    t.same(
+    t.strictSame(
       extractFromToSource(
         "| .mt$$$ { margin-top: $$$px !important; } | 2 | 10  | a"
       ),
       [2, 10, " .mt$$$ { margin-top: $$$px !important; }"],
       "79.06"
     );
-    t.same(
+    t.strictSame(
       extractFromToSource(
         "|| .mt$$$ { margin-top: $$$px !important; } | 2 | 10  | a |"
       ),
@@ -3238,35 +3258,35 @@ tap.test(
 tap.test(
   `80 - ${`\u001b[${33}m${`API bits`}\u001b[${39}m`} - extractFromToSource - pipe in CSS`,
   (t) => {
-    t.same(
+    t.strictSame(
       extractFromToSource(
         ".mt$$$[lang|=en] { margin-top: $$$px !important; }|10"
       ),
       [0, 10, ".mt$$$[lang|=en] { margin-top: $$$px !important; }"],
       "80.01"
     );
-    t.same(
+    t.strictSame(
       extractFromToSource(
         ".mt$$$[lang|=en] { margin-top: $$$px !important; }|2|10"
       ),
       [2, 10, ".mt$$$[lang|=en] { margin-top: $$$px !important; }"],
       "80.02"
     );
-    t.same(
+    t.strictSame(
       extractFromToSource(
         "|.mt$$$[lang|=en] { margin-top: $$$px !important; }|10|"
       ),
       [0, 10, ".mt$$$[lang|=en] { margin-top: $$$px !important; }"],
       "80.03"
     );
-    t.same(
+    t.strictSame(
       extractFromToSource(
         "| .mt$$$[lang|=en] { margin-top: $$$px !important; }| 2 | 10 | "
       ),
       [2, 10, " .mt$$$[lang|=en] { margin-top: $$$px !important; }"],
       "80.04"
     );
-    t.same(
+    t.strictSame(
       extractFromToSource(
         "|||| .mt$$$[lang|=en] { margin-top: $$$px !important; }| 2 | 10 | "
       ),

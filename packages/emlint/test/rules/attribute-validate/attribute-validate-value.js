@@ -17,7 +17,7 @@ tap.test(
         },
       });
       t.equal(applyFixes(str, messages), str);
-      t.same(messages, []);
+      t.strictSame(messages, []);
     });
     t.end();
   }
@@ -35,7 +35,7 @@ tap.test(
         },
       });
       t.equal(applyFixes(str, messages), str);
-      t.same(messages, []);
+      t.strictSame(messages, []);
     });
     t.end();
   }
@@ -53,7 +53,7 @@ tap.test(
         },
       });
       t.equal(applyFixes(str, messages), str);
-      t.same(messages, []);
+      t.strictSame(messages, []);
     });
     t.end();
   }
