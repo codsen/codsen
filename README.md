@@ -22,6 +22,6 @@ The npm script "`dev`", the `"dev": "rollup -c --dev"` builds the development ve
 
 MIT License
 
-Copyright (c) 2015-2020 Roy Revelt and other contributors
+Copyright (c) 2010-2020 Roy Revelt and other contributors
 
 **[⬆ back to top](#codsen)**
