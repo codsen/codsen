@@ -1,7 +1,7 @@
 /**
  * ranges-iterate
  * Iterate a string and any changes within given string index ranges
- * Version: 1.1.47
+ * Version: 1.1.48
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-iterate/

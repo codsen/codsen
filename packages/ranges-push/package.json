@@ -1,6 +1,6 @@
 {
   "name": "ranges-push",
-  "version": "3.7.21",
+  "version": "3.7.22",
   "description": "Gather string index ranges",
   "keywords": [
     "delete",
@@ -96,9 +96,9 @@
     }
   },
   "dependencies": {
-    "ranges-merge": "^5.0.2",
-    "string-collapse-leading-whitespace": "^3.0.1",
-    "string-trim-spaces-only": "^2.8.22"
+    "ranges-merge": "^5.0.3",
+    "string-collapse-leading-whitespace": "^3.0.2",
+    "string-trim-spaces-only": "^2.8.23"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
@@ -113,7 +113,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.9.0",
-    "lect": "^0.14.3",
+    "lect": "^0.14.4",
     "rollup": "^2.28.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

@@ -1,6 +1,6 @@
 {
   "name": "chlu",
-  "version": "3.7.75",
+  "version": "3.7.76",
   "description": "CH-ange-L-og U-pdate - Automatically fix errors in your changelog file",
   "keywords": [
     "automated",
@@ -104,9 +104,9 @@
     }
   },
   "dependencies": {
-    "ast-contains-only-empty-space": "^1.9.15",
+    "ast-contains-only-empty-space": "^1.9.16",
     "dehumanize-date": "^3.0.0",
-    "easy-replace": "^3.7.63",
+    "easy-replace": "^3.8.0",
     "emoji-regex": "^9.0.0",
     "get-pkg-repo": "^4.1.1",
     "lodash.clonedeep": "^4.5.0",
@@ -129,7 +129,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.9.0",
-    "lect": "^0.14.3",
+    "lect": "^0.14.4",
     "rollup": "^2.28.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

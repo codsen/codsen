@@ -1,7 +1,7 @@
 /**
  * ranges-sort
  * Sort string index ranges
- * Version: 3.13.2
+ * Version: 3.13.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-sort/

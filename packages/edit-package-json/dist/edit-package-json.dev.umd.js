@@ -1,7 +1,7 @@
 /**
  * edit-package-json
  * Edit package.json without parsing, as string, to keep the formatting intact
- * Version: 0.1.35
+ * Version: 0.1.36
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/edit-package-json/
@@ -2502,7 +2502,7 @@
   /**
    * ranges-sort
    * Sort string index ranges
-   * Version: 3.13.2
+   * Version: 3.13.3
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/ranges-sort/

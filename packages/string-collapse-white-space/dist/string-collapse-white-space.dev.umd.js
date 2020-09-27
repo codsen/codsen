@@ -1,7 +1,7 @@
 /**
  * string-collapse-white-space
  * Efficient collapsing of white space with optional outer- and/or line-trimming and HTML tag recognition
- * Version: 5.2.30
+ * Version: 5.2.31
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-collapse-white-space/
@@ -153,7 +153,7 @@
   /**
    * ranges-sort
    * Sort string index ranges
-   * Version: 3.13.2
+   * Version: 3.13.3
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/ranges-sort/
@@ -477,7 +477,7 @@
   /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-   * Version: 3.11.37
+   * Version: 3.11.38
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/arrayiffy-if-string/

@@ -1,6 +1,6 @@
 {
   "name": "array-pull-all-with-glob",
-  "version": "4.12.71",
+  "version": "4.12.72",
   "description": "pullAllWithGlob - like _.pullAll but pulling stronger, with globs",
   "keywords": [
     "array",
@@ -117,7 +117,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.9.0",
-    "lect": "^0.14.3",
+    "lect": "^0.14.4",
     "rollup": "^2.28.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

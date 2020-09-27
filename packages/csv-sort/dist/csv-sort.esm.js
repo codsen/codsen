@@ -1,7 +1,7 @@
 /**
  * csv-sort
  * Sorts double-entry bookkeeping CSV coming from internet banking
- * Version: 3.0.72
+ * Version: 3.1.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/csv-sort/

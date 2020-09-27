@@ -1,7 +1,7 @@
 /**
  * is-html-attribute-closing
  * Is a character on a given index a closing of an HTML attribute?
- * Version: 1.2.7
+ * Version: 1.2.8
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-html-attribute-closing/
@@ -16,7 +16,7 @@
   /**
    * html-all-known-attributes
    * All HTML attributes known to the Humanity
-   * Version: 2.0.7
+   * Version: 2.0.8
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/html-all-known-attributes/
@@ -26,7 +26,7 @@
   /**
    * is-char-suitable-for-html-attr-name
    * Is given character suitable to be in an HTML attribute's name?
-   * Version: 1.1.8
+   * Version: 1.1.9
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/is-char-suitable-for-html-attr-name/
@@ -2045,7 +2045,7 @@
   /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-   * Version: 3.11.37
+   * Version: 3.11.38
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/arrayiffy-if-string/

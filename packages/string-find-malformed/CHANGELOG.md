@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.16](https://gitlab.com/codsen/codsen/compare/string-find-malformed@1.1.15...string-find-malformed@1.1.16) (2020-09-27)
+
+**Note:** Version bump only for package string-find-malformed
+
+
+
+
+
 ## 1.1.5 (2020-04-26)
 
 ### Bug Fixes

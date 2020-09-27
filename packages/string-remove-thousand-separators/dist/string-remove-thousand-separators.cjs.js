@@ -1,7 +1,7 @@
 /**
  * string-remove-thousand-separators
  * Detects and removes thousand separators (dot/comma/quote/space) from string-type digits
- * Version: 3.0.71
+ * Version: 3.0.72
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-remove-thousand-separators/

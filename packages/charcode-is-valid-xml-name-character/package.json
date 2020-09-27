@@ -1,6 +1,6 @@
 {
   "name": "charcode-is-valid-xml-name-character",
-  "version": "1.10.63",
+  "version": "1.10.64",
   "description": "Does a given character belong to XML spec's \"Production 4 OR 4a\" type (is acceptable for XML element's name)",
   "keywords": [
     "4",
@@ -101,7 +101,7 @@
     }
   },
   "dependencies": {
-    "ranges-is-index-within": "^1.15.1"
+    "ranges-is-index-within": "^1.15.2"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
@@ -116,7 +116,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.9.0",
-    "lect": "^0.14.3",
+    "lect": "^0.14.4",
     "rollup": "^2.28.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

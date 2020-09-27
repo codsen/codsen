@@ -1,7 +1,7 @@
 /**
  * string-unfancy
  * Replace all n/m dashes, curly quotes with their simpler equivalents
- * Version: 3.9.64
+ * Version: 3.9.65
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-unfancy/

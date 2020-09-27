@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.7.0](https://gitlab.com/codsen/codsen/compare/ast-get-values-by-key@2.6.71...ast-get-values-by-key@2.7.0) (2020-09-27)
+
+
+### Features
+
+* some rebasing and examples ([7fc5cf5](https://gitlab.com/codsen/codsen/commit/7fc5cf5885d32f1d289ec13ace27c313f9e203ae))
+
+
+
+
+
 ## 2.2.0 (2018-12-26)
 
 ### Features

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://gitlab.com/codsen/codsen/compare/csv-split-easy@3.0.71...csv-split-easy@3.1.0) (2020-09-27)
+
+
+### Features
+
+* rebase, split tests into separate files and add examples ([18e0373](https://gitlab.com/codsen/codsen/commit/18e0373c01f4e2cd4af2ceaf1b4719954b054291))
+
+
+
+
+
 ## 3.0.37 (2019-10-05)
 
 ### Performance Improvements

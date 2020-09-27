@@ -1,7 +1,7 @@
 /**
  * string-range-expander
  * Expands string index ranges within whitespace boundaries until letters are met
- * Version: 1.11.10
+ * Version: 1.11.11
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-range-expander/

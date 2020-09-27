@@ -1,7 +1,7 @@
 /**
  * string-uglify
  * Shorten sets of strings deterministically, to be git-friendly
- * Version: 1.2.46
+ * Version: 1.2.47
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-uglify/
@@ -11,7 +11,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var version = "1.2.46";
+var version = "1.2.47";
 
 var isArr = Array.isArray;
 function tellcp(str, idNum) {

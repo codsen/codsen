@@ -1,7 +1,7 @@
 /**
  * string-left-right
  * Looks up the first non-whitespace character to the left/right of a given index
- * Version: 2.3.30
+ * Version: 2.3.31
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-left-right/

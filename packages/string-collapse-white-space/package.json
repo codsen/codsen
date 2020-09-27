@@ -1,6 +1,6 @@
 {
   "name": "string-collapse-white-space",
-  "version": "5.2.30",
+  "version": "5.2.31",
   "description": "Efficient collapsing of white space with optional outer- and/or line-trimming and HTML tag recognition",
   "keywords": [
     "collapse",
@@ -93,9 +93,9 @@
     }
   },
   "dependencies": {
-    "ranges-apply": "^3.2.2",
-    "ranges-merge": "^5.0.2",
-    "string-match-left-right": "^4.0.13"
+    "ranges-apply": "^3.2.3",
+    "ranges-merge": "^5.0.3",
+    "string-match-left-right": "^4.0.14"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
@@ -110,7 +110,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.9.0",
-    "lect": "^0.14.3",
+    "lect": "^0.14.4",
     "rollup": "^2.28.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

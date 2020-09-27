@@ -1,6 +1,6 @@
 {
   "name": "html-crush",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "description": "Minifies HTML/CSS: valid or broken, pure or mixed with other languages",
   "keywords": [
     "breaks",
@@ -114,11 +114,11 @@
   },
   "dependencies": {
     "lodash.isplainobject": "^4.0.6",
-    "ranges-apply": "^3.2.2",
-    "ranges-push": "^3.7.21",
-    "string-left-right": "^2.3.30",
-    "string-match-left-right": "^4.0.13",
-    "string-range-expander": "^1.11.10"
+    "ranges-apply": "^3.2.3",
+    "ranges-push": "^3.7.22",
+    "string-left-right": "^2.3.31",
+    "string-match-left-right": "^4.0.14",
+    "string-range-expander": "^1.11.11"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
@@ -135,7 +135,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.9.0",
-    "lect": "^0.14.3",
+    "lect": "^0.14.4",
     "node-fetch": "^2.6.1",
     "p-map": "^4.0.0",
     "rollup": "^2.28.1",

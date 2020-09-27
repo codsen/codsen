@@ -1,7 +1,7 @@
 /**
  * csv-sort
  * Sorts double-entry bookkeeping CSV coming from internet banking
- * Version: 3.0.72
+ * Version: 3.1.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/csv-sort/
@@ -136,7 +136,7 @@
   /**
    * ranges-sort
    * Sort string index ranges
-   * Version: 3.13.2
+   * Version: 3.13.3
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/ranges-sort/
@@ -460,7 +460,7 @@
   /**
    * string-collapse-leading-whitespace
    * Collapse the leading and trailing whitespace of a string
-   * Version: 3.0.1
+   * Version: 3.0.2
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/

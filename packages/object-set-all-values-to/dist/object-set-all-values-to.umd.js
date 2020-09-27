@@ -1,7 +1,7 @@
 /**
  * object-set-all-values-to
  * Recursively walk the input and set all found values in plain objects to something
- * Version: 3.9.66
+ * Version: 3.9.67
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-set-all-values-to/
