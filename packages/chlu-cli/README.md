@@ -27,6 +27,12 @@
 npm i -g chlu-cli
 ```
 
+Then, call it from the command line using keyword:
+
+```bash
+chlu
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/chlu-cli/) for a full description of the API and examples.

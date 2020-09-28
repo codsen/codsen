@@ -27,6 +27,13 @@
 npm i -g csv-sort-cli
 ```
 
+Then, call it from the command line using one of the following keywords:
+
+```bash
+csvsort
+sortcsv
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/csv-sort-cli/) for a full description of the API and examples.

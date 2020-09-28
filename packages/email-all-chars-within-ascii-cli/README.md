@@ -27,6 +27,13 @@
 npm i -g email-all-chars-within-ascii-cli
 ```
 
+Then, call it from the command line using one of the following keywords:
+
+```bash
+tinaturner
+withinascii
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/email-all-chars-within-ascii-cli/) for a full description of the API and examples.

@@ -27,6 +27,12 @@
 npm i -g update-versions
 ```
 
+Then, call it from the command line using keyword:
+
+```bash
+upd
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/update-versions/) for a full description of the API and examples.

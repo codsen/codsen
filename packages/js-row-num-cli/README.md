@@ -27,6 +27,13 @@
 npm i -g js-row-num-cli
 ```
 
+Then, call it from the command line using one of the following keywords:
+
+```bash
+jrn
+jsrownum
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/js-row-num-cli/) for a full description of the API and examples.

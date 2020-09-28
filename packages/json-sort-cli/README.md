@@ -27,6 +27,13 @@
 npm i -g json-sort-cli
 ```
 
+Then, call it from the command line using one of the following keywords:
+
+```bash
+jsonsort
+sortjson
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/json-sort-cli/) for a full description of the API and examples.

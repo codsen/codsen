@@ -27,6 +27,12 @@
 npm i -g lect
 ```
 
+Then, call it from the command line using keyword:
+
+```bash
+lect
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/lect/) for a full description of the API and examples.

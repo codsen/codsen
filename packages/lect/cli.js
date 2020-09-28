@@ -1124,13 +1124,26 @@ npm i${isCLI ? " -g" : ""} ${pack.name}
 \`\`\`
 
 ${
-  examples && examples["_quickTake.js"] && examples["_quickTake.js"].content
-    ? `## Quick Take\n
+  isCLI
+    ? `\n\nThen, call it from the command line using ${
+        Object.keys(pack.bin).length > 1
+          ? "one of the following keywords"
+          : "keyword"
+      }:
+
+\`\`\`bash
+${Object.keys(pack.bin).join("\n")}
+\`\`\`
+`
+    : ""
+}${
+    examples && examples["_quickTake.js"] && examples["_quickTake.js"].content
+      ? `## Quick Take\n
 \`\`\`js
 ${decodeContent(examples["_quickTake.js"].content)}
 \`\`\`\n\n`
-    : ""
-}## Documentation
+      : ""
+  }## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/${
     pack.name

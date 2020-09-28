@@ -1,6 +1,6 @@
 /* eslint import/extensions:0 */
 
-// opts.matchKeysStrictly
+// `opts.matchKeysStrictly`
 
 import { strict as assert } from "assert";
 import deleteObj from "../dist/ast-delete-object.esm.js";

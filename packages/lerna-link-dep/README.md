@@ -27,6 +27,14 @@
 npm i -g lerna-link-dep
 ```
 
+Then, call it from the command line using one of the following keywords:
+
+```bash
+deplink
+johnnydepp
+linkdep
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/lerna-link-dep/) for a full description of the API and examples.

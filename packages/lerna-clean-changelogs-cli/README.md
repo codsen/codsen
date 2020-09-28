@@ -27,6 +27,13 @@
 npm i -g lerna-clean-changelogs-cli
 ```
 
+Then, call it from the command line using one of the following keywords:
+
+```bash
+lcc
+lernacleanchangelog
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/lerna-clean-changelogs-cli/) for a full description of the API and examples.

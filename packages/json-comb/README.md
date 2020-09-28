@@ -27,6 +27,12 @@
 npm i -g json-comb
 ```
 
+Then, call it from the command line using keyword:
+
+```bash
+jsoncomb
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/json-comb/) for a full description of the API and examples.

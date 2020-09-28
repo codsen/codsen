@@ -27,6 +27,12 @@
 npm i -g generate-atomic-css-cli
 ```
 
+Then, call it from the command line using keyword:
+
+```bash
+gac
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/generate-atomic-css-cli/) for a full description of the API and examples.

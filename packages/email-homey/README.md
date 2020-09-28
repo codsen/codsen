@@ -27,6 +27,12 @@
 npm i -g email-homey
 ```
 
+Then, call it from the command line using keyword:
+
+```bash
+homey
+```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/email-homey/) for a full description of the API and examples.
