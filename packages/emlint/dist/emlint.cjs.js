@@ -1,7 +1,7 @@
 /**
  * emlint
  * Pluggable email template code linter
- * Version: 2.18.16
+ * Version: 2.18.17
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/emlint/
@@ -9042,7 +9042,7 @@ class Linter extends EventEmitter {
   }
 }
 
-var version = "2.18.16";
+var version = "2.18.17";
 
 exports.Linter = Linter;
 exports.version = version;

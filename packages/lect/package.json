@@ -1,6 +1,6 @@
 {
   "name": "lect",
-  "version": "0.14.4",
+  "version": "0.14.5",
   "description": "Maintenance CLI for internal consumption",
   "keywords": [
     "amend",
@@ -139,7 +139,7 @@
     "@rollup/plugin-node-resolve": "^9.0.0",
     "@rollup/plugin-strip": "^2.0.0",
     "eslint": "^7.9.0",
-    "lect": "^0.14.4",
+    "lect": "^0.14.5",
     "prettier": "^2.1.2",
     "tap": "^14.10.8",
     "tempy": "^0.7.0",
