@@ -33,17 +33,20 @@ npm i string-collapse-white-space
 import { strict as assert } from "assert";
 import collapse from "string-collapse-white-space";
 
-assert.equal(collapse("  aaa     bbb    ccc   dddd  "), "aaa bbb ccc dddd");
+assert.equal(
+  collapse("  aaa     bbb    ccc   dddd  ").result,
+  "aaa bbb ccc dddd"
+);
 
-assert.equal(collapse("   \t\t\t   aaa   \t\t\t   "), "aaa");
+assert.equal(collapse("   \t\t\t   aaa   \t\t\t   ").result, "aaa");
 
 assert.equal(
-  collapse("   aaa   bbb  \n    ccc   ddd   ", { trimLines: false }),
+  collapse("   aaa   bbb  \n    ccc   ddd   ", { trimLines: false }).result,
   "aaa bbb \n ccc ddd"
 );
 
 assert.equal(
-  collapse("   aaa   bbb  \n    ccc   ddd   ", { trimLines: true }),
+  collapse("   aaa   bbb  \n    ccc   ddd   ", { trimLines: true }).result,
   "aaa bbb\nccc ddd"
 );
 
@@ -52,7 +55,7 @@ assert.equal(
   collapse(
     "     \xa0    aaa   bbb    \xa0    \n     \xa0     ccc   ddd   \xa0   ",
     { trimLines: true, trimnbsp: true }
-  ),
+  ).result,
   "aaa bbb\nccc ddd"
 );
 ```

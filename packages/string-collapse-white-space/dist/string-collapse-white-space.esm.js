@@ -7,8 +7,8 @@
  * Homepage: https://codsen.com/os/string-collapse-white-space/
  */
 
-import replaceSlicesArr from 'ranges-apply';
-import rangesMerge from 'ranges-merge';
+import apply from 'ranges-apply';
+import merge from 'ranges-merge';
 import { matchLeftIncl } from 'string-match-left-right';
 
 function collapse(str, originalOpts) {
@@ -39,7 +39,10 @@ function collapse(str, originalOpts) {
     );
   }
   if (!str.length) {
-    return "";
+    return {
+      result: "",
+      ranges: null,
+    };
   }
   const finalIndexesToDelete = [];
   const defaults = {
@@ -527,12 +530,12 @@ function collapse(str, originalOpts) {
       }
     }
   }
-  if (opts.returnRangesOnly) {
-    return rangesMerge(finalIndexesToDelete);
-  }
-  return finalIndexesToDelete.length
-    ? replaceSlicesArr(str, finalIndexesToDelete)
-    : str;
+  return {
+    result: finalIndexesToDelete.length
+      ? apply(str, finalIndexesToDelete)
+      : str,
+    ranges: finalIndexesToDelete.length ? merge(finalIndexesToDelete) : null,
+  };
 }
 
 export default collapse;

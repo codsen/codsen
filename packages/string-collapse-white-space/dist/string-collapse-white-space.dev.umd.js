@@ -823,7 +823,10 @@
     }
 
     if (!str.length) {
-      return "";
+      return {
+        result: "",
+        ranges: null
+      };
     }
 
     var finalIndexesToDelete = []; // declare defaults, so we can enforce types later:
@@ -1255,11 +1258,10 @@
       }
     }
 
-    if (opts.returnRangesOnly) {
-      return mergeRanges(finalIndexesToDelete);
-    }
-
-    return finalIndexesToDelete.length ? rangesApply(str, finalIndexesToDelete) : str;
+    return {
+      result: finalIndexesToDelete.length ? rangesApply(str, finalIndexesToDelete) : str,
+      ranges: finalIndexesToDelete.length ? mergeRanges(finalIndexesToDelete) : null
+    };
   }
 
   return collapse;

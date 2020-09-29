@@ -9,14 +9,14 @@
 
 'use strict';
 
-var replaceSlicesArr = require('ranges-apply');
-var rangesMerge = require('ranges-merge');
+var apply = require('ranges-apply');
+var merge = require('ranges-merge');
 var stringMatchLeftRight = require('string-match-left-right');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-var replaceSlicesArr__default = /*#__PURE__*/_interopDefaultLegacy(replaceSlicesArr);
-var rangesMerge__default = /*#__PURE__*/_interopDefaultLegacy(rangesMerge);
+var apply__default = /*#__PURE__*/_interopDefaultLegacy(apply);
+var merge__default = /*#__PURE__*/_interopDefaultLegacy(merge);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -153,7 +153,10 @@ function collapse(str, originalOpts) {
     throw new Error("string-collapse-white-space/collapse(): [THROW_ID_02] The opts is not a plain object but ".concat(_typeof(originalOpts), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
   }
   if (!str.length) {
-    return "";
+    return {
+      result: "",
+      ranges: null
+    };
   }
   var finalIndexesToDelete = [];
   var defaults = {
@@ -479,10 +482,10 @@ function collapse(str, originalOpts) {
       }
     }
   }
-  if (opts.returnRangesOnly) {
-    return rangesMerge__default['default'](finalIndexesToDelete);
-  }
-  return finalIndexesToDelete.length ? replaceSlicesArr__default['default'](str, finalIndexesToDelete) : str;
+  return {
+    result: finalIndexesToDelete.length ? apply__default['default'](str, finalIndexesToDelete) : str,
+    ranges: finalIndexesToDelete.length ? merge__default['default'](finalIndexesToDelete) : null
+  };
 }
 
 module.exports = collapse;
