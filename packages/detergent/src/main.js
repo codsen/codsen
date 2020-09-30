@@ -198,7 +198,7 @@ function det(str, inputOpts) {
     recogniseHTML: false,
     removeEmptyLines: true,
     limitConsecutiveEmptyLinesTo: 1,
-  });
+  }).result;
   console.log(`202 "str" after collapsing: ${JSON.stringify(str, null, 0)}`);
 
   // ---------------------------------------------------------------------------
@@ -1063,7 +1063,7 @@ function det(str, inputOpts) {
   str = collapse(str, {
     trimLines: true,
     recogniseHTML: false,
-  });
+  }).result;
   console.log(`1067 str after collapsing: ${JSON.stringify(str, null, 0)}`);
 
   // ---------------------------------------------------------------------------

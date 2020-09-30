@@ -12336,7 +12336,10 @@
     }
 
     if (!str.length) {
-      return "";
+      return {
+        result: "",
+        ranges: null
+      };
     }
 
     var finalIndexesToDelete = [];
@@ -12708,11 +12711,10 @@
       }
     }
 
-    if (opts.returnRangesOnly) {
-      return mergeRanges(finalIndexesToDelete);
-    }
-
-    return finalIndexesToDelete.length ? rangesApply(str, finalIndexesToDelete) : str;
+    return {
+      result: finalIndexesToDelete.length ? rangesApply(str, finalIndexesToDelete) : str,
+      ranges: finalIndexesToDelete.length ? mergeRanges(finalIndexesToDelete) : null
+    };
   }
 
   /**
@@ -26849,7 +26851,7 @@
       recogniseHTML: false,
       removeEmptyLines: true,
       limitConsecutiveEmptyLinesTo: 1
-    }); // ---------------------------------------------------------------------------
+    }).result; // ---------------------------------------------------------------------------
     // NEXT STEP.
     // preliminary loop through to remove/replace characters which later might
     // be needed to be considered when replacing others in the main loop;
@@ -27152,7 +27154,7 @@
     str = collapse(str, {
       trimLines: true,
       recogniseHTML: false
-    }); // ---------------------------------------------------------------------------
+    }).result; // ---------------------------------------------------------------------------
     // NEXT STEP.
 
     return {

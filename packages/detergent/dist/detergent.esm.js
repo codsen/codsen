@@ -1454,7 +1454,7 @@ function det(str, inputOpts) {
     recogniseHTML: false,
     removeEmptyLines: true,
     limitConsecutiveEmptyLinesTo: 1,
-  });
+  }).result;
   for (let i = 0, len = str.length; i < len; i++) {
     if (str[i].charCodeAt(0) === 65533) {
       if (
@@ -1823,7 +1823,7 @@ function det(str, inputOpts) {
   str = collapse(str, {
     trimLines: true,
     recogniseHTML: false,
-  });
+  }).result;
   return {
     res: rangesApply(str, finalIndexesToDelete.current()),
     applicableOpts,
