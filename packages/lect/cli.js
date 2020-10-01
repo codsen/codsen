@@ -1304,6 +1304,9 @@ const readFiles = async (dirname) => {
 async function step2() {
   try {
     examples = await readFiles("./examples/");
+    // console.log(
+    //   `██ examples: ${JSON.stringify(Object.keys(examples), null, 4)}`
+    // );
     if (examples) {
       writeFileAtomic(
         "./examples/api.json",
