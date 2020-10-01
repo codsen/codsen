@@ -46,7 +46,7 @@ ${lectrc.contributing.restofit}
 
 MIT License
 
-Copyright (c) 2015-${year} Roy Revelt and other contributors
+Copyright (c) 2010-${year} Roy Revelt and other contributors
 
 **[⬆ back to top](#codsen)**
 `;
