@@ -201,6 +201,7 @@ function stripHtml(str, originalOpts) {
       ) {
         for (let y = rangedOpeningTags.length; y--; ) {
           if (rangedOpeningTags[y].name === tag.name) {
+            /* istanbul ignore else */
             if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
               filteredTagLocations = filteredTagLocations.filter(
                 ([from, upto]) =>
@@ -593,6 +594,7 @@ function stripHtml(str, originalOpts) {
           i
         );
         if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
+          /* istanbul ignore next */
           filteredTagLocations = filteredTagLocations.filter(
             ([from, upto]) => !(from === tag.leftOuterWhitespace && upto === i)
           );
@@ -803,10 +805,12 @@ function stripHtml(str, originalOpts) {
             if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
               let lastRangedOpeningTag;
               for (let z = rangedOpeningTags.length; z--; ) {
+                /* istanbul ignore else */
                 if (rangedOpeningTags[z].name === tag.name) {
                   lastRangedOpeningTag = rangedOpeningTags[z];
                 }
               }
+              /* istanbul ignore else */
               if (lastRangedOpeningTag) {
                 filteredTagLocations = filteredTagLocations.filter(
                   ([from]) => from !== lastRangedOpeningTag.lastOpeningBracketAt
