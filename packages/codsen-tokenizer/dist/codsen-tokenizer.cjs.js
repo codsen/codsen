@@ -966,7 +966,7 @@ function tokenizer(str, originalOpts) {
         token.properties.push(clone__default['default'](property));
         propertyReset();
       } else if (str[_i] === ":" && Number.isInteger(property.colon) && property.colon < _i && lastNonWhitespaceCharAt && property.colon + 1 < lastNonWhitespaceCharAt) {
-        var split = str.slice(property.colon + 1, lastNonWhitespaceCharAt + 1).split(/\s+/);
+        var split = str.slice(stringLeftRight.right(str, property.colon), lastNonWhitespaceCharAt + 1).split(/\s+/);
         if (split.length === 2) {
           property.valueEnds = property.valueStarts + split[0].length;
           property.value = str.slice(property.valueStarts, property.valueEnds);

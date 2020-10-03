@@ -4433,7 +4433,7 @@
           //                               we're here
           //
           // we're looking to pinpoint where one rule ends and another starts.
-          var split = str.slice(property.colon + 1, lastNonWhitespaceCharAt + 1).split(/\s+/);
+          var split = str.slice(right(str, property.colon), lastNonWhitespaceCharAt + 1).split(/\s+/);
 
           if (split.length === 2) {
             // it's missing semicol, like: .a{b:c d:e;}

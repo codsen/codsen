@@ -2486,12 +2486,12 @@ function tokenizer(str, originalOpts) {
 
         console.log(
           `2488 ██ "${str.slice(
-            property.colon + 1,
+            right(str, property.colon),
             lastNonWhitespaceCharAt + 1
           )}"`
         );
         const split = str
-          .slice(property.colon + 1, lastNonWhitespaceCharAt + 1)
+          .slice(right(str, property.colon), lastNonWhitespaceCharAt + 1)
           .split(/\s+/);
         console.log(
           `${`\u001b[${33}m${`split`}\u001b[${39}m`} = ${JSON.stringify(

@@ -1417,7 +1417,7 @@ function tokenizer(str, originalOpts) {
         property.colon + 1 < lastNonWhitespaceCharAt
       ) {
         const split = str
-          .slice(property.colon + 1, lastNonWhitespaceCharAt + 1)
+          .slice(right(str, property.colon), lastNonWhitespaceCharAt + 1)
           .split(/\s+/);
         if (split.length === 2) {
           property.valueEnds = property.valueStarts + split[0].length;

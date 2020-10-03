@@ -142,7 +142,7 @@ tap.test(
 // missing semicols in head CSS
 // -----------------------------------------------------------------------------
 
-tap.only(
+tap.test(
   `02 - ${`\u001b[${36}m${`broken rule`}\u001b[${39}m`} - missing semicol`,
   (t) => {
     const gathered = [];
@@ -200,11 +200,69 @@ tap.only(
   }
 );
 
+tap.test(
+  `03 - ${`\u001b[${36}m${`broken rule`}\u001b[${39}m`} - missing semicol`,
+  (t) => {
+    const gathered = [];
+    ct(`<style>.a{color: red text-align: left;}</style>`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.strictSame(
+      gathered[1],
+      {
+        type: "rule",
+        start: 7,
+        end: 39,
+        value: ".a{color: red text-align: left;}",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: 38,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            property: "color",
+            propertyStarts: 10,
+            propertyEnds: 15,
+            colon: 15,
+            value: "red",
+            valueStarts: 17,
+            valueEnds: 20,
+            semi: null,
+          },
+          {
+            property: "text-align",
+            propertyStarts: 21,
+            propertyEnds: 31,
+            colon: 31,
+            value: "left",
+            valueStarts: 33,
+            valueEnds: 37,
+            semi: 37,
+          },
+        ],
+      },
+      "03"
+    );
+    t.end();
+  }
+);
+
 // missing value
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `03 - ${`\u001b[${36}m${`broken rule`}\u001b[${39}m`} - missing value`,
+  `04 - ${`\u001b[${36}m${`broken rule`}\u001b[${39}m`} - missing value`,
   (t) => {
     const gathered = [];
     ct(`<style>.a{b}</style>`, {
@@ -245,14 +303,14 @@ tap.test(
           },
         ],
       },
-      "03"
+      "04"
     );
     t.end();
   }
 );
 
 tap.test(
-  `04 - ${`\u001b[${36}m${`broken rule`}\u001b[${39}m`} - missing value, trailing space`,
+  `05 - ${`\u001b[${36}m${`broken rule`}\u001b[${39}m`} - missing value, trailing space`,
   (t) => {
     const gathered = [];
     ct(`<style>.a{b }</style>`, {
@@ -293,14 +351,14 @@ tap.test(
           },
         ],
       },
-      "04"
+      "05"
     );
     t.end();
   }
 );
 
 tap.test(
-  `05 - ${`\u001b[${36}m${`broken rule`}\u001b[${39}m`} - missing value but colon present`,
+  `06 - ${`\u001b[${36}m${`broken rule`}\u001b[${39}m`} - missing value but colon present`,
   (t) => {
     const gathered = [];
     ct(`<style>.a{b:}</style>`, {
@@ -341,14 +399,14 @@ tap.test(
           },
         ],
       },
-      "05"
+      "06"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06 - ${`\u001b[${36}m${`broken rule`}\u001b[${39}m`} - missing value, both colon and semicolon present`,
+  `07 - ${`\u001b[${36}m${`broken rule`}\u001b[${39}m`} - missing value, both colon and semicolon present`,
   (t) => {
     const gathered = [];
     ct(`<style>.a{b:;}</style>`, {
@@ -389,7 +447,7 @@ tap.test(
           },
         ],
       },
-      "06"
+      "07"
     );
     t.end();
   }
