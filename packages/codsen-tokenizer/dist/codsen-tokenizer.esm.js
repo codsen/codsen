@@ -302,27 +302,7 @@ function getWholeEspTagLumpOnTheRight(str, i, layers) {
   return wholeEspTagLumpOnTheRight;
 }
 
-function matchLayerLast(wholeEspTagLump, layers, matchFirstInstead) {
-  if (!layers.length) {
-    return;
-  }
-  const whichLayerToMatch = matchFirstInstead
-    ? layers[0]
-    : layers[layers.length - 1];
-  if (whichLayerToMatch.type !== "esp") {
-    return;
-  }
-  if (
-    wholeEspTagLump.includes(whichLayerToMatch.guessedClosingLump) ||
-    Array.from(wholeEspTagLump).every((char) =>
-      whichLayerToMatch.guessedClosingLump.includes(char)
-    )
-  ) {
-    return wholeEspTagLump.length;
-  }
-}
-
-function startsComment(str, i, token, layers) {
+function startsHtmlComment(str, i, token, layers) {
   return (
     (str[i] === "<" &&
       (matchRight(str, i, ["!--"], {
@@ -359,6 +339,34 @@ function startsComment(str, i, token, layers) {
           layers[layers.length - 1].openingLump[3] === "-"
         )))
   );
+}
+
+function startsCssComment(str, i, token, layers, withinStyle) {
+  return (
+    withinStyle &&
+    ((str[i] === "/" && str[i + 1] === "*") ||
+      (str[i] === "*" && str[i + 1] === "/"))
+  );
+}
+
+function matchLayerLast(wholeEspTagLump, layers, matchFirstInstead) {
+  if (!layers.length) {
+    return;
+  }
+  const whichLayerToMatch = matchFirstInstead
+    ? layers[0]
+    : layers[layers.length - 1];
+  if (whichLayerToMatch.type !== "esp") {
+    return;
+  }
+  if (
+    wholeEspTagLump.includes(whichLayerToMatch.guessedClosingLump) ||
+    Array.from(wholeEspTagLump).every((char) =>
+      whichLayerToMatch.guessedClosingLump.includes(char)
+    )
+  ) {
+    return wholeEspTagLump.length;
+  }
 }
 
 const BACKSLASH = "\u005C";
@@ -543,6 +551,7 @@ function tokenizer(str, originalOpts) {
   const midLen = Math.floor(len / 2);
   let doNothing;
   let withinStyle = false;
+  let withinStyleComment = false;
   const tagStash = [];
   const charStash = [];
   let token = {};
@@ -732,6 +741,7 @@ function tokenizer(str, originalOpts) {
         value: null,
         closing: false,
         kind: "simple",
+        language: "html",
       };
     }
     if (type === "rule") {
@@ -821,7 +831,7 @@ function tokenizer(str, originalOpts) {
     if (
       withinStyle &&
       token.type &&
-      !["rule", "at", "text"].includes(token.type)
+      !["rule", "at", "text", "comment"].includes(token.type)
     ) {
       withinStyle = false;
     }
@@ -1101,7 +1111,7 @@ function tokenizer(str, originalOpts) {
         ) {
           token.kind = "xml";
         }
-      } else if (startsComment(str, i, token, layers)) {
+      } else if (startsHtmlComment(str, i, token, layers)) {
         if (token.start != null) {
           dumpCurrentToken(token, i);
         }
@@ -1121,6 +1131,21 @@ function tokenizer(str, originalOpts) {
         if (withinStyle) {
           withinStyle = false;
         }
+      } else if (startsCssComment(str, i, token, layers, withinStyle)) {
+        if (token.start != null) {
+          dumpCurrentToken(token, i);
+        }
+        initToken("comment", i);
+        token.language = "css";
+        token.kind = str[i] === "/" && str[i + 1] === "/" ? "line" : "block";
+        token.value = str.slice(i, i + 2);
+        token.end = i + 2;
+        token.closing = str[i] === "*" && str[i + 1] === "/";
+        withinStyleComment = true;
+        if (token.closing) {
+          withinStyleComment = false;
+        }
+        doNothing = i + 2;
       } else if (
         startsEsp(str, i, token, layers, withinStyle) &&
         (!Array.isArray(layers) ||
@@ -1331,6 +1356,7 @@ function tokenizer(str, originalOpts) {
         }
       } else if (
         withinStyle &&
+        !withinStyleComment &&
         str[i] &&
         str[i].trim() &&
         (!token.type ||
@@ -1373,6 +1399,7 @@ function tokenizer(str, originalOpts) {
         token.value = str.slice(token.start, token.end);
       } else if (
         token.type === "comment" &&
+        token.language === "html" &&
         !layers.length &&
         token.kind === "simple" &&
         ((str[token.start] === "<" &&
@@ -1419,13 +1446,14 @@ function tokenizer(str, originalOpts) {
           token.closing = true;
         } else if (
           token.kind === "simple" &&
+          token.language === "html" &&
           !token.closing &&
           str[right(str, i)] === ">"
         ) {
           token.end = right(str, i) + 1;
           token.kind = "simplet";
           token.closing = null;
-        } else {
+        } else if (token.language === "html") {
           token.end = i + 1;
           if (str[left(str, i)] === "!" && str[right(str, i)] === "-") {
             token.end = right(str, i) + 1;
@@ -1434,6 +1462,7 @@ function tokenizer(str, originalOpts) {
         }
       } else if (
         token.type === "comment" &&
+        token.language === "html" &&
         str[i] === ">" &&
         (!layers.length || str[right(str, i)] === "<")
       ) {
@@ -1457,6 +1486,14 @@ function tokenizer(str, originalOpts) {
           token.end = i + 1;
           token.value = str.slice(token.start, token.end);
         }
+      } else if (
+        token.type === "comment" &&
+        token.language === "CSS" &&
+        str[i] === "*" &&
+        str[i + 1] === "/"
+      ) {
+        token.end = i + 1;
+        token.value = str.slice(token.start, token.end);
       } else if (
         token.type === "esp" &&
         token.end === null &&

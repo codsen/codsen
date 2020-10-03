@@ -117,6 +117,7 @@ tap.test(`04 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - xml`, (t) => {
         value: "<!--[if]>",
         kind: "only",
         closing: false,
+        language: "html",
       },
       {
         type: "tag",
@@ -130,7 +131,6 @@ tap.test(`04 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - xml`, (t) => {
         closing: false,
         void: false,
         pureHTML: true,
-
         kind: null,
         attribs: [],
       },

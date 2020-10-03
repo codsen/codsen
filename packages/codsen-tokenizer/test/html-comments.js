@@ -732,6 +732,7 @@ tap.test(
           value: "<![endif]-->",
           kind: "only",
           closing: true,
+          language: "html",
         },
       ],
       "17"
@@ -1424,6 +1425,7 @@ tap.test(
           value: `<!-->`,
           kind: "simplet",
           closing: null,
+          language: "html",
         },
       ],
       "32"
@@ -1452,6 +1454,7 @@ tap.test(
           value: `<!-->`,
           kind: "simplet",
           closing: null,
+          language: "html",
         },
         {
           type: "comment",
@@ -1460,6 +1463,7 @@ tap.test(
           value: `<!-- >`,
           kind: "simplet",
           closing: null,
+          language: "html",
         },
         {
           type: "comment",
@@ -1468,6 +1472,7 @@ tap.test(
           value: `<!--  >`,
           kind: "simplet",
           closing: null,
+          language: "html",
         },
       ],
       "33"

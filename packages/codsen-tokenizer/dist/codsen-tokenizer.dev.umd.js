@@ -2871,58 +2871,10 @@
     return wholeEspTagLumpOnTheRight;
   }
 
-  // We record ESP tag head and tails as we traverse code because we need to know
-  // the arrangement of all pieces: start, end, nesting etc.
-  //
-  // Now, we keep records of each "layer" - new opening of some sorts: quotes,
-  // heads of ESP tags and so on.
-  //
-  // This function is a helper to check, does something match as a counterpart
-  // to the last/first layer.
-  //
-  // Quotes could be checked here but are not at the moment, here currently
-  // we deal with ESP tokens only
-  // RETURNS: undefined or integer, length of a matched ESP lump.
-  function matchLayerLast(wholeEspTagLump, layers, matchFirstInstead) {
-    if (!layers.length) {
-      return;
-    }
-
-    var whichLayerToMatch = matchFirstInstead ? layers[0] : layers[layers.length - 1]; // console.log(
-    //   `023 matchLayer(): ${`\u001b[${33}m${`whichLayerToMatch`}\u001b[${39}m`} = ${JSON.stringify(
-    //     whichLayerToMatch,
-    //     null,
-    //     4
-    //   )}`
-    // );
-
-    if (whichLayerToMatch.type !== "esp") {
-      // we aim to match ESP tag layers, so instantly it's falsey result
-      // because layer we match against is not ESP tag layer
-      // console.log(`033 matchLayer(): early return undefined`);
-      return;
-    }
-
-    if ( // imagine case of Nunjucks: heads "{%" are normal but tails "-%}" (notice dash)
-    wholeEspTagLump.includes(whichLayerToMatch.guessedClosingLump) || // match every character from the last "layers" complex-type entry must be
-    // present in the extracted lump
-    Array.from(wholeEspTagLump).every(function (char) {
-      return whichLayerToMatch.guessedClosingLump.includes(char);
-    })) {
-      // console.log(
-      //   `047 matchLayer(): ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${
-      //     wholeEspTagLump.length
-      //   }`
-      // );
-      return wholeEspTagLump.length;
-    } // console.log(`054 matchLayer(): finally, return undefined`);
-
-  }
-
   // starts. Previously it sat within if() clauses but became unwieldy and
   // so we extracted into a function.
 
-  function startsComment(str, i, token, layers) {
+  function startsHtmlComment(str, i, token, layers) {
     // console.log(
     //   `R1: ${!!matchRight(str, i, ["!--"], {
     //     maxMismatches: 1,
@@ -2972,6 +2924,63 @@
       }) && ( // insurance against ESP tag, RPL comments: <#-- z -->
       !Array.isArray(layers) || !layers.length || layers[layers.length - 1].type !== "esp" || !(layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-"))
     );
+  }
+
+  // import { matchLeft, matchRight } from "string-match-left-right";
+  function startsCssComment(str, i, token, layers, withinStyle) {
+    return (// cast to bool
+      withinStyle && ( // match the /*
+      str[i] === "/" && str[i + 1] === "*" || // match the */
+      str[i] === "*" && str[i + 1] === "/")
+    );
+  }
+
+  // We record ESP tag head and tails as we traverse code because we need to know
+  // the arrangement of all pieces: start, end, nesting etc.
+  //
+  // Now, we keep records of each "layer" - new opening of some sorts: quotes,
+  // heads of ESP tags and so on.
+  //
+  // This function is a helper to check, does something match as a counterpart
+  // to the last/first layer.
+  //
+  // Quotes could be checked here but are not at the moment, here currently
+  // we deal with ESP tokens only
+  // RETURNS: undefined or integer, length of a matched ESP lump.
+  function matchLayerLast(wholeEspTagLump, layers, matchFirstInstead) {
+    if (!layers.length) {
+      return;
+    }
+
+    var whichLayerToMatch = matchFirstInstead ? layers[0] : layers[layers.length - 1]; // console.log(
+    //   `023 matchLayer(): ${`\u001b[${33}m${`whichLayerToMatch`}\u001b[${39}m`} = ${JSON.stringify(
+    //     whichLayerToMatch,
+    //     null,
+    //     4
+    //   )}`
+    // );
+
+    if (whichLayerToMatch.type !== "esp") {
+      // we aim to match ESP tag layers, so instantly it's falsey result
+      // because layer we match against is not ESP tag layer
+      // console.log(`033 matchLayer(): early return undefined`);
+      return;
+    }
+
+    if ( // imagine case of Nunjucks: heads "{%" are normal but tails "-%}" (notice dash)
+    wholeEspTagLump.includes(whichLayerToMatch.guessedClosingLump) || // match every character from the last "layers" complex-type entry must be
+    // present in the extracted lump
+    Array.from(wholeEspTagLump).every(function (char) {
+      return whichLayerToMatch.guessedClosingLump.includes(char);
+    })) {
+      // console.log(
+      //   `047 matchLayer(): ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${
+      //     wholeEspTagLump.length
+      //   }`
+      // );
+      return wholeEspTagLump.length;
+    } // console.log(`054 matchLayer(): finally, return undefined`);
+
   }
 
   var BACKSLASH = "\\";
@@ -3223,7 +3232,8 @@
     var doNothing; // normally set to a number, index until where to do nothing
 
     var withinStyle = false; // flag used to instruct content after <style> to toggle type="css"
-    // opts.*CbLookahead allows to request "x"-many tokens "from the future"
+
+    var withinStyleComment = false; // opts.*CbLookahead allows to request "x"-many tokens "from the future"
     // to be reported upon each token. You can check what's coming next.
     // To implement this, we need to stash "x"-many tokens and only when enough
     // have been gathered, array.shift() the first one and ping the callback
@@ -3571,7 +3581,9 @@
           end: null,
           value: null,
           closing: false,
-          kind: "simple" // or "only" or "not"
+          kind: "simple",
+          // or "only" or "not" (HTML) - OR  - "block" or "line" (CSS)
+          language: "html" // or "css"
 
         };
       }
@@ -3689,7 +3701,7 @@
       // -------------------------------------------------------------------------
 
 
-      if (withinStyle && token.type && !["rule", "at", "text"].includes(token.type)) {
+      if (withinStyle && token.type && !["rule", "at", "text", "comment"].includes(token.type)) {
         withinStyle = false;
       }
 
@@ -3960,7 +3972,7 @@
         //   )}`
         // );
         // console.log(
-        //   `1276 ███████████████████████████████████████ IS COMMENT STARTING? ${startsComment(
+        //   `1276 ███████████████████████████████████████ IS COMMENT STARTING? ${startsHtmlComment(
         //     str,
         //     i,
         //     token,
@@ -4015,11 +4027,11 @@
           })) {
             token.kind = "xml";
           }
-        } else if (startsComment(str, _i, token, layers)) {
+        } else if (startsHtmlComment(str, _i, token, layers)) {
           //
           //
           //
-          // COMMENT STARTING
+          // HTML COMMENT STARTING
           //
           //
           //
@@ -4029,7 +4041,8 @@
           // second arg is "start" key:
 
 
-          initToken("comment", _i); // set "closing"
+          initToken("comment", _i); // the "language" default is "html" anyway so no need to set it
+          // set "closing"
 
           if (str[_i] === "-") {
             token.closing = true;
@@ -4045,6 +4058,33 @@
           if (withinStyle) {
             withinStyle = false;
           }
+        } else if (startsCssComment(str, _i, token, layers, withinStyle)) {
+          //
+          //
+          //
+          // CSS COMMENT STARTING
+          //
+          //
+          //
+          if (token.start != null) {
+            dumpCurrentToken(token, _i);
+          } // add other token-specific keys onto the object
+          // second arg is "start" key:
+
+
+          initToken("comment", _i);
+          token.language = "css";
+          token.kind = str[_i] === "/" && str[_i + 1] === "/" ? "line" : "block";
+          token.value = str.slice(_i, _i + 2);
+          token.end = _i + 2;
+          token.closing = str[_i] === "*" && str[_i + 1] === "/";
+          withinStyleComment = true;
+
+          if (token.closing) {
+            withinStyleComment = false;
+          }
+
+          doNothing = _i + 2;
         } else if (startsEsp(str, _i, token, layers, withinStyle) && ( // ensure we're not inside quotes, so it's not an expression within a value
         // ${"${name}${name}${name}${name}"}
         //    ^
@@ -4311,7 +4351,7 @@
 
             doNothing = _i + (lengthOfClosingEspChunk || wholeEspTagLumpOnTheRight.length);
           }
-        } else if (withinStyle && str[_i] && str[_i].trim() && ( // if at rule starts right after <style>, if we're on "@"
+        } else if (withinStyle && !withinStyleComment && str[_i] && str[_i].trim() && ( // if at rule starts right after <style>, if we're on "@"
         // for example:
         // <style>@media a {.b{c}}</style>
         // first the <style> tag token will be pushed and then tag object
@@ -4321,25 +4361,21 @@
         //          ^
         //        we're here - look at the whitespace on the left.
         //
-        ["text"].includes(token.type)) //
-        // TODO: remove below
-        // &&
-        // !"{},".includes(str[i])
-        ) {
-            // Text token inside styles can be either whitespace chunk
-            // or rogue characters. In either case, inside styles, when
-            // "withinStyle" is on, non-whitespace character terminates
-            // this text token and "rule" token starts
-            if (token.type) {
-              dumpCurrentToken(token, _i);
-            }
+        ["text"].includes(token.type))) {
+          // Text token inside styles can be either whitespace chunk
+          // or rogue characters. In either case, inside styles, when
+          // "withinStyle" is on, non-whitespace character terminates
+          // this text token and "rule" token starts
+          if (token.type) {
+            dumpCurrentToken(token, _i);
+          }
 
-            initToken(str[_i] === "@" ? "at" : "rule", _i);
-            token.left = lastNonWhitespaceCharAt;
-            token.nested = layers.some(function (o) {
-              return o.type === "at";
-            });
-          } else if (!token.type) {
+          initToken(str[_i] === "@" ? "at" : "rule", _i);
+          token.left = lastNonWhitespaceCharAt;
+          token.nested = layers.some(function (o) {
+            return o.type === "at";
+          });
+        } else if (!token.type) {
           initToken("text", _i);
         } // END OF if (!doNothing)
 
@@ -4375,7 +4411,7 @@
           token.end = _i + 1;
           token.value = str.slice(token.start, token.end); // at this point other attributes might be still not submitted yet,
           // we can't reset it here
-        } else if (token.type === "comment" && !layers.length && token.kind === "simple" && (str[token.start] === "<" && str[_i] === "-" && (matchLeft(str, _i, "!-", {
+        } else if (token.type === "comment" && token.language === "html" && !layers.length && token.kind === "simple" && (str[token.start] === "<" && str[_i] === "-" && (matchLeft(str, _i, "!-", {
           trimBeforeMatching: true
         }) || matchLeftIncl(str, _i, "!-", {
           trimBeforeMatching: true
@@ -4416,11 +4452,11 @@
             //
             token.kind = "not";
             token.closing = true;
-          } else if (token.kind === "simple" && !token.closing && str[right(str, _i)] === ">") {
+          } else if (token.kind === "simple" && token.language === "html" && !token.closing && str[right(str, _i)] === ">") {
             token.end = right(str, _i) + 1;
             token.kind = "simplet";
             token.closing = null;
-          } else {
+          } else if (token.language === "html") {
             // if it's a simple HTML comment, <!--, end it right here
             token.end = _i + 1; // tokenizer will catch <!- as opening, so we need to extend
             // for correct cases with two dashes <!--
@@ -4433,7 +4469,7 @@
           } // at this point other attributes might be still not submitted yet,
           // we can't reset it here
 
-        } else if (token.type === "comment" && str[_i] === ">" && (!layers.length || str[right(str, _i)] === "<")) {
+        } else if (token.type === "comment" && token.language === "html" && str[_i] === ">" && (!layers.length || str[right(str, _i)] === "<")) {
           // if last layer was for square bracket, this means closing
           // counterpart is missing so we need to remove it now
           // because it's the ending of the tag ("only" kind) or
@@ -4454,6 +4490,9 @@
             token.end = _i + 1;
             token.value = str.slice(token.start, token.end);
           }
+        } else if (token.type === "comment" && token.language === "CSS" && str[_i] === "*" && str[_i + 1] === "/") {
+          token.end = _i + 1;
+          token.value = str.slice(token.start, token.end);
         } else if (token.type === "esp" && token.end === null && isStr$1(token.tail) && token.tail.includes(str[_i])) {
           // extract the whole lump of ESP tag characters:
           var wholeEspTagClosing = "";

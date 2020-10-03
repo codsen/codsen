@@ -1,7 +1,7 @@
 import tap from "tap";
 import ct from "../dist/codsen-tokenizer.esm";
 
-// broken
+// css broken rule
 // -----------------------------------------------------------------------------
 
 tap.todo(

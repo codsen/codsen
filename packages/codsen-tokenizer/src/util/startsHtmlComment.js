@@ -4,7 +4,7 @@ import { matchLeft, matchRight } from "string-match-left-right";
 // starts. Previously it sat within if() clauses but became unwieldy and
 // so we extracted into a function.
 
-function startsComment(str, i, token, layers) {
+function startsHtmlComment(str, i, token, layers) {
   // console.log(
   //   `R1: ${!!matchRight(str, i, ["!--"], {
   //     maxMismatches: 1,
@@ -72,4 +72,4 @@ function startsComment(str, i, token, layers) {
   );
 }
 
-export default startsComment;
+export default startsHtmlComment;
