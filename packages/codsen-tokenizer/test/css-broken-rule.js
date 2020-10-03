@@ -142,7 +142,7 @@ tap.test(
 // missing semicols in head CSS
 // -----------------------------------------------------------------------------
 
-tap.todo(
+tap.only(
   `02 - ${`\u001b[${36}m${`broken rule`}\u001b[${39}m`} - missing semicol`,
   (t) => {
     const gathered = [];
@@ -156,12 +156,12 @@ tap.todo(
       {
         type: "rule",
         start: 7,
-        end: 15,
-        value: ".a{b:c;}",
+        end: 19,
+        value: ".a{b:c d:e;}",
         left: 6,
         nested: false,
         openingCurlyAt: 9,
-        closingCurlyAt: 14,
+        closingCurlyAt: 18,
         selectorsStart: 7,
         selectorsEnd: 9,
         selectors: [
@@ -180,7 +180,17 @@ tap.todo(
             value: "c",
             valueStarts: 12,
             valueEnds: 13,
-            semi: 13,
+            semi: null,
+          },
+          {
+            property: "d",
+            propertyStarts: 14,
+            propertyEnds: 15,
+            colon: 15,
+            value: "e",
+            valueStarts: 16,
+            valueEnds: 17,
+            semi: 17,
           },
         ],
       },

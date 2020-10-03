@@ -4410,16 +4410,44 @@
       // -------------------------------------------------------------------------
 
 
-      if (!doNothing && token.type === "rule" && property.valueStarts && !property.valueEnds && ";}".includes(str[_i])) {
-        property.valueEnds = lastNonWhitespaceCharAt + 1;
-        property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
+      if (!doNothing && token.type === "rule" && property.valueStarts && !property.valueEnds) {
+        if (";}".includes(str[_i])) {
+          property.valueEnds = lastNonWhitespaceCharAt + 1;
+          property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
 
-        if (str[_i] === ";") {
-          property.semi = _i;
+          if (str[_i] === ";") {
+            property.semi = _i;
+          }
+
+          token.properties.push(lodash_clonedeep(property));
+          propertyReset();
+        } else if (str[_i] === ":" && Number.isInteger(property.colon) && property.colon < _i && lastNonWhitespaceCharAt && property.colon + 1 < lastNonWhitespaceCharAt) {
+          // .a{b:c d:e;}
+          //         ^
+          //  we're here
+          //
+          // semicolon is missing...
+          // traverse backwards from "lastNonWhitespaceCharAt", just in case
+          // there's space before colon, .a{b:c d :e;}
+          //                                      ^
+          //                               we're here
+          //
+          // we're looking to pinpoint where one rule ends and another starts.
+          var split = str.slice(property.colon + 1, lastNonWhitespaceCharAt + 1).split(/\s+/);
+
+          if (split.length === 2) {
+            // it's missing semicol, like: .a{b:c d:e;}
+            //                                 ^   ^
+            //                                 |gap| we split
+            //
+            property.valueEnds = property.valueStarts + split[0].length;
+            property.value = str.slice(property.valueStarts, property.valueEnds); // push and init and patch up to resume
+
+            token.properties.push(lodash_clonedeep(property));
+            propertyReset();
+            property.propertyStarts = lastNonWhitespaceCharAt + 1 - split[1].length;
+          }
         }
-
-        token.properties.push(lodash_clonedeep(property));
-        propertyReset();
       } // catch the start of a css property's value
       // -------------------------------------------------------------------------
 

@@ -1396,19 +1396,38 @@ function tokenizer(str, originalOpts) {
       !doNothing &&
       token.type === "rule" &&
       property.valueStarts &&
-      !property.valueEnds &&
-      `;}`.includes(str[i])
+      !property.valueEnds
     ) {
-      property.valueEnds = lastNonWhitespaceCharAt + 1;
-      property.value = str.slice(
-        property.valueStarts,
-        lastNonWhitespaceCharAt + 1
-      );
-      if (str[i] === ";") {
-        property.semi = i;
+      if (`;}`.includes(str[i])) {
+        property.valueEnds = lastNonWhitespaceCharAt + 1;
+        property.value = str.slice(
+          property.valueStarts,
+          lastNonWhitespaceCharAt + 1
+        );
+        if (str[i] === ";") {
+          property.semi = i;
+        }
+        token.properties.push(clone(property));
+        propertyReset();
+      } else if (
+        str[i] === ":" &&
+        Number.isInteger(property.colon) &&
+        property.colon < i &&
+        lastNonWhitespaceCharAt &&
+        property.colon + 1 < lastNonWhitespaceCharAt
+      ) {
+        const split = str
+          .slice(property.colon + 1, lastNonWhitespaceCharAt + 1)
+          .split(/\s+/);
+        if (split.length === 2) {
+          property.valueEnds = property.valueStarts + split[0].length;
+          property.value = str.slice(property.valueStarts, property.valueEnds);
+          token.properties.push(clone(property));
+          propertyReset();
+          property.propertyStarts =
+            lastNonWhitespaceCharAt + 1 - split[1].length;
+        }
       }
-      token.properties.push(clone(property));
-      propertyReset();
     }
     if (
       !doNothing &&

@@ -956,14 +956,25 @@ function tokenizer(str, originalOpts) {
         initToken("text", _i);
       }
     }
-    if (!doNothing && token.type === "rule" && property.valueStarts && !property.valueEnds && ";}".includes(str[_i])) {
-      property.valueEnds = lastNonWhitespaceCharAt + 1;
-      property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
-      if (str[_i] === ";") {
-        property.semi = _i;
+    if (!doNothing && token.type === "rule" && property.valueStarts && !property.valueEnds) {
+      if (";}".includes(str[_i])) {
+        property.valueEnds = lastNonWhitespaceCharAt + 1;
+        property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
+        if (str[_i] === ";") {
+          property.semi = _i;
+        }
+        token.properties.push(clone__default['default'](property));
+        propertyReset();
+      } else if (str[_i] === ":" && Number.isInteger(property.colon) && property.colon < _i && lastNonWhitespaceCharAt && property.colon + 1 < lastNonWhitespaceCharAt) {
+        var split = str.slice(property.colon + 1, lastNonWhitespaceCharAt + 1).split(/\s+/);
+        if (split.length === 2) {
+          property.valueEnds = property.valueStarts + split[0].length;
+          property.value = str.slice(property.valueStarts, property.valueEnds);
+          token.properties.push(clone__default['default'](property));
+          propertyReset();
+          property.propertyStarts = lastNonWhitespaceCharAt + 1 - split[1].length;
+        }
       }
-      token.properties.push(clone__default['default'](property));
-      propertyReset();
     }
     if (!doNothing && token.type === "rule" && property.colon && !property.valueStarts && str[_i].trim()) {
       if (";}".includes(str[_i])) {
