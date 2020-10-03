@@ -3273,7 +3273,7 @@
       attribValue: [],
       attribValueStartsAt: null,
       attribValueEndsAt: null,
-      attribStart: null,
+      attribStarts: null,
       attribEnd: null,
       attribLeft: null
     };
@@ -3282,6 +3282,23 @@
       // object-assign is basically cloning - objects are passed by reference,
       // we can't risk mutating the default object:
       attrib = lodash_clonedeep(attribDefault);
+    } // same for property:
+
+
+    var property = {};
+    var propertyDefault = {
+      property: null,
+      propertyStarts: null,
+      propertyEnds: null,
+      colon: null,
+      value: null,
+      valueStarts: null,
+      valueEnds: null,
+      semi: null
+    };
+
+    function propertyReset() {
+      property = lodash_clonedeep(propertyDefault);
     } // PS. we need this contraption in order to keep a single source of truth
     // of the token format - we'll improve and change the format of the default
     // object throughout the releases - it's best when its format comes from single
@@ -3600,7 +3617,8 @@
           closingCurlyAt: null,
           selectorsStart: null,
           selectorsEnd: null,
-          selectors: []
+          selectors: [],
+          properties: []
         };
       }
 
@@ -3653,6 +3671,12 @@
       // we mutate the object on the parent scope, so no Object.assign here
       attribReset();
       token = getNewToken(type, startVal);
+    }
+
+    function initProperty(propertyStarts) {
+      // we mutate the object on the parent scope, so no Object.assign here
+      propertyReset();
+      property.propertyStarts = propertyStarts;
     } //
     //
     //
@@ -4092,7 +4116,7 @@
         //
         !Array.isArray(layers) || !layers.length || // last layer is not quotes
         layers[~-layers.length].type !== "simple" || !["'", "\""].includes(layers[~-layers.length].value) || // or we're within an attribute (so quotes are HTML tag's not esp tag's)
-        attrib && attrib.attribStart && !attrib.attribEnd)) {
+        attrib && attrib.attribStarts && !attrib.attribEnd)) {
           //
           //
           //
@@ -4299,7 +4323,7 @@
 
                   parentTokenToBackup = lodash_clonedeep(token);
 
-                  if (attrib.attribStart && !attrib.attribEnd) {
+                  if (attrib.attribStarts && !attrib.attribEnd) {
                     attribToBackup = lodash_clonedeep(attrib);
                   }
                 } else if (!attribToBackup) {
@@ -4379,6 +4403,36 @@
           initToken("text", _i);
         } // END OF if (!doNothing)
 
+      } // catch the end of a css property's value
+      // -------------------------------------------------------------------------
+
+
+      if (!doNothing && token.type === "rule" && property.valueStarts && !property.valueEnds && ";}".includes(str[_i])) {
+        property.valueEnds = lastNonWhitespaceCharAt + 1;
+        property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
+
+        if (str[_i] === ";") {
+          property.semi = _i;
+        }
+
+        token.properties.push(lodash_clonedeep(property));
+        propertyReset();
+      } // catch the start of a css property's value
+      // -------------------------------------------------------------------------
+
+
+      if (!doNothing && token.type === "rule" && property.colon && !property.valueStarts && str[_i].trim()) {
+        if (";}".includes(str[_i])) {
+          // broken code!
+          if (str[_i] === ";") {
+            property.semi = _i;
+          }
+
+          token.properties.push(lodash_clonedeep(property));
+          propertyReset();
+        } else {
+          property.valueStarts = _i;
+        }
       } // catch the start of a css chunk
       // -------------------------------------------------------------------------
 
@@ -4395,6 +4449,32 @@
           // correctly broken chunk range, [selectorsStart, selectorsEnd]
           token.selectorsEnd = _i + 1;
         }
+      } // catch the end of a css property's name
+      // -------------------------------------------------------------------------
+
+
+      if (!doNothing && token.type === "rule" && property.propertyStarts && !property.propertyEnds && !/[\w-]/.test(str[_i])) {
+        property.propertyEnds = _i;
+        property.property = str.slice(property.propertyStarts, _i); // missing colon and onwards:
+        // <style>.b{c}</style>
+        // <style>.b{c;d}</style>
+
+        if ("};".includes(str[_i]) || !str[_i].trim() && str[right(str, _i)] === "}") {
+          token.properties.push(lodash_clonedeep(property));
+          propertyReset();
+        }
+      } // catch the colon of a css property
+      // -------------------------------------------------------------------------
+
+
+      if (!doNothing && token.type === "rule" && property.propertyEnds && !property.valueStarts && str[_i] === ":") {
+        property.colon = _i;
+      } // catch the start of a css property's name
+      // -------------------------------------------------------------------------
+
+
+      if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && /[\w-]/.test(str[_i]) && token.selectorsEnd && token.openingCurlyAt && !property.propertyStarts) {
+        initProperty(_i);
       } // in comment type, "only" kind tokens, submit square brackets to layers
       // -------------------------------------------------------------------------
       // ps. it's so that we can rule out greater-than signs
@@ -4662,8 +4742,8 @@
       // -------------------------------------------------------------------------
 
 
-      if (!doNothing && str[_i] && token.type === "tag" && token.kind !== "cdata" && token.tagNameEndsAt && _i > token.tagNameEndsAt && attrib.attribStart === null && charSuitableForHTMLAttrName(str[_i])) {
-        attrib.attribStart = _i;
+      if (!doNothing && str[_i] && token.type === "tag" && token.kind !== "cdata" && token.tagNameEndsAt && _i > token.tagNameEndsAt && attrib.attribStarts === null && charSuitableForHTMLAttrName(str[_i])) {
+        attrib.attribStarts = _i;
         attrib.attribLeft = lastNonWhitespaceCharAt;
         attrib.attribNameStartsAt = _i;
       } // catch the curlies inside CSS rule
@@ -4869,7 +4949,7 @@
             i = _i;
             return "continue";
           }
-        } else if (attrib && attrib.attribStart && !attrib.attribEnd && ( //
+        } else if (attrib && attrib.attribStarts && !attrib.attribEnd && ( //
         // AND,
         //
         // either there are no attributes recorded under attrib.attribValue:
@@ -5032,7 +5112,7 @@
       // mean the tag ending and maybe the closing quotes are missing?
 
 
-      if (str[_i] === ">" && token.type === "tag" && attrib.attribStart && !attrib.attribEnd) {
+      if (str[_i] === ">" && token.type === "tag" && attrib.attribStarts && !attrib.attribEnd) {
         // Idea is simple: we have to situations:
         // 1. this closing bracket is real, closing bracket
         // 2. this closing bracket is unencoded raw text

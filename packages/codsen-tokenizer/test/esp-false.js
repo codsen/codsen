@@ -39,7 +39,7 @@ tap.test(
               ],
               attribValueStartsAt: 14,
               attribValueEndsAt: 19,
-              attribStart: 7,
+              attribStarts: 7,
               attribEnd: 20,
             },
           ],

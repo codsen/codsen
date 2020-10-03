@@ -48,7 +48,171 @@ tap.test(
 );
 
 tap.test(
-  `02 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - one rule, linebreaks`,
+  `02 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - one rule, no linebreaks`,
+  (t) => {
+    const gathered = [];
+    ct(`<style>.a{b:c;}</style>`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.strictSame(
+      gathered[1],
+      {
+        type: "rule",
+        start: 7,
+        end: 15,
+        value: ".a{b:c;}",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: 14,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            property: "b",
+            propertyStarts: 10,
+            propertyEnds: 11,
+            colon: 11,
+            value: "c",
+            valueStarts: 12,
+            valueEnds: 13,
+            semi: 13,
+          },
+        ],
+      },
+      "02"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `03 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - one rule, no linebreaks`,
+  (t) => {
+    const gathered = [];
+    ct(`<style>.a { b : c ; }</style>`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.strictSame(
+      gathered[1],
+      {
+        type: "rule",
+        start: 7,
+        end: 21,
+        value: ".a { b : c ; }",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 10,
+        closingCurlyAt: 20,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            property: "b",
+            propertyStarts: 12,
+            propertyEnds: 13,
+            colon: 14,
+            value: "c",
+            valueStarts: 16,
+            valueEnds: 17,
+            semi: 18,
+          },
+        ],
+      },
+      "03"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `04 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - one rule, no linebreaks`,
+  (t) => {
+    const gathered = [];
+    ct(`<style>.a{b:c;d:e;f:g;}</style>`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.strictSame(
+      gathered[1],
+      {
+        type: "rule",
+        start: 7,
+        end: 23,
+        value: ".a{b:c;d:e;f:g;}",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: 22,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            property: "b",
+            propertyStarts: 10,
+            propertyEnds: 11,
+            colon: 11,
+            value: "c",
+            valueStarts: 12,
+            valueEnds: 13,
+            semi: 13,
+          },
+          {
+            property: "d",
+            propertyStarts: 14,
+            propertyEnds: 15,
+            colon: 15,
+            value: "e",
+            valueStarts: 16,
+            valueEnds: 17,
+            semi: 17,
+          },
+          {
+            property: "f",
+            propertyStarts: 18,
+            propertyEnds: 19,
+            colon: 19,
+            value: "g",
+            valueStarts: 20,
+            valueEnds: 21,
+            semi: 21,
+          },
+        ],
+      },
+      "04"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `05 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - one rule, linebreaks`,
   (t) => {
     const gathered = [];
     ct(
@@ -99,14 +263,14 @@ tap.test(
           end: 24,
         },
       ],
-      "02"
+      "05"
     );
     t.end();
   }
 );
 
 tap.test(
-  `03 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - two selectors`,
+  `06 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - two selectors`,
   (t) => {
     const gathered = [];
     ct(`<style>.a,.b{c}</style>`, {
@@ -149,14 +313,14 @@ tap.test(
           end: 23,
         },
       ],
-      "03"
+      "06"
     );
     t.end();
   }
 );
 
 tap.test(
-  `04 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - one rule, no linebreaks`,
+  `07 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - one rule, no linebreaks`,
   (t) => {
     const gathered = [];
     ct(
@@ -211,14 +375,14 @@ tap.test(
           end: 29,
         },
       ],
-      "04"
+      "07"
     );
     t.end();
   }
 );
 
 tap.test(
-  `05 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - dangling comma`,
+  `08 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - dangling comma`,
   (t) => {
     const gathered = [];
     ct(`<style>.a,.b,{c}</style>`, {
@@ -261,14 +425,14 @@ tap.test(
           end: 24,
         },
       ],
-      "05"
+      "08"
     );
     t.end();
   }
 );
 
 tap.test(
-  `06 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - double comma`,
+  `09 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - double comma`,
   (t) => {
     const gathered = [];
     ct(`<style>.a,,.b{c}</style>`, {
@@ -311,14 +475,14 @@ tap.test(
           end: 24,
         },
       ],
-      "06"
+      "09"
     );
     t.end();
   }
 );
 
 tap.test(
-  `07 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - esp tags can't have curlies`,
+  `10 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - esp tags can't have curlies`,
   (t) => {
     const gathered = [];
     ct(`<style>.b%{c}</style>`, {
@@ -376,14 +540,14 @@ tap.test(
           attribs: [],
         },
       ],
-      "07"
+      "10"
     );
     t.end();
   }
 );
 
 tap.test(
-  `08 - ${`\u001b[${36}m${`basics`}\u001b[${39}m`} - root level css declarations`,
+  `11 - ${`\u001b[${36}m${`basics`}\u001b[${39}m`} - root level css declarations`,
   (t) => {
     const gathered = [];
     ct(
@@ -425,6 +589,18 @@ tap.test(
               selectorEnds: 42,
             },
           ],
+          properties: [
+            {
+              property: "a",
+              propertyStarts: 44,
+              propertyEnds: 45,
+              colon: 45,
+              value: "1",
+              valueStarts: 46,
+              valueEnds: 47,
+              semi: 47,
+            },
+          ],
         },
         {
           type: "rule",
@@ -444,15 +620,27 @@ tap.test(
               selectorEnds: 58,
             },
           ],
+          properties: [
+            {
+              property: "a",
+              propertyStarts: 60,
+              propertyEnds: 61,
+              colon: 61,
+              value: "2",
+              valueStarts: 62,
+              valueEnds: 63,
+              semi: 63,
+            },
+          ],
         },
       ],
-      "08"
+      "11"
     );
     t.end();
   }
 );
 
-tap.test(`09 - ${`\u001b[${36}m${`basics`}\u001b[${39}m`} - @media`, (t) => {
+tap.test(`12 - ${`\u001b[${36}m${`basics`}\u001b[${39}m`} - @media`, (t) => {
   const gathered = [];
   ct(
     `<head>
@@ -528,7 +716,7 @@ tap.test(`09 - ${`\u001b[${36}m${`basics`}\u001b[${39}m`} - @media`, (t) => {
             ],
             attribValueStartsAt: 20,
             attribValueEndsAt: 28,
-            attribStart: 14,
+            attribStarts: 14,
             attribEnd: 29,
             attribLeft: 12,
           },
@@ -581,6 +769,18 @@ tap.test(`09 - ${`\u001b[${36}m${`basics`}\u001b[${39}m`} - @media`, (t) => {
             selectorEnds: 86,
           },
         ],
+        properties: [
+          {
+            property: "a",
+            propertyStarts: 88,
+            propertyEnds: 89,
+            colon: 89,
+            value: "1",
+            valueStarts: 90,
+            valueEnds: 91,
+            semi: 91,
+          },
+        ],
       },
       {
         type: "at",
@@ -620,6 +820,18 @@ tap.test(`09 - ${`\u001b[${36}m${`basics`}\u001b[${39}m`} - @media`, (t) => {
                 value: ".xx[z]",
                 selectorStarts: 80,
                 selectorEnds: 86,
+              },
+            ],
+            properties: [
+              {
+                property: "a",
+                propertyStarts: 88,
+                propertyEnds: 89,
+                colon: 89,
+                value: "1",
+                valueStarts: 90,
+                valueEnds: 91,
+                semi: 91,
               },
             ],
           },
@@ -711,7 +923,7 @@ tap.test(`09 - ${`\u001b[${36}m${`basics`}\u001b[${39}m`} - @media`, (t) => {
             ],
             attribValueStartsAt: 127,
             attribValueEndsAt: 133,
-            attribStart: 120,
+            attribStarts: 120,
             attribEnd: 134,
             attribLeft: 117,
           },
@@ -749,7 +961,7 @@ tap.test(`09 - ${`\u001b[${36}m${`basics`}\u001b[${39}m`} - @media`, (t) => {
             ],
             attribValueStartsAt: 147,
             attribValueEndsAt: 152,
-            attribStart: 140,
+            attribStarts: 140,
             attribEnd: 153,
             attribLeft: 136,
           },
@@ -798,7 +1010,7 @@ tap.test(`09 - ${`\u001b[${36}m${`basics`}\u001b[${39}m`} - @media`, (t) => {
         attribs: [],
       },
     ],
-    "09"
+    "12"
   );
   t.end();
 });

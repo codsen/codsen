@@ -1,66 +1,11 @@
 import tap from "tap";
 import ct from "../dist/codsen-tokenizer.esm";
 
-// css comments
+// css comments within inline HTML styles
 // -----------------------------------------------------------------------------
 
-tap.only(
-  `01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - head style, one rule, no linebreaks`,
-  (t) => {
-    const gathered = [];
-    ct(`<style>/* comment */</style>`, {
-      tagCb: (obj) => {
-        gathered.push(obj);
-      },
-    });
-    t.match(
-      gathered,
-      [
-        {
-          type: "tag",
-          start: 0,
-          end: 7,
-          tagName: "style",
-        },
-        {
-          type: "comment",
-          start: 7,
-          end: 9,
-          value: "/*",
-          closing: false,
-          kind: "block",
-          language: "css",
-        },
-        {
-          type: "text",
-          start: 9,
-          end: 18,
-          value: " comment ",
-        },
-        {
-          type: "comment",
-          start: 18,
-          end: 20,
-          value: "*/",
-          closing: true,
-          kind: "block",
-          language: "css",
-        },
-        {
-          type: "tag",
-          start: 20,
-          end: 28,
-          tagName: "style",
-        },
-      ],
-      "01"
-    );
-    t.end();
-  }
-);
-
 tap.todo(
-  `02 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - body inline style`,
+  `01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - body inline style`,
   (t) => {
     const gathered = [];
     ct(`<div style="/*color: red;*/">z</div>`, {
@@ -121,7 +66,7 @@ tap.todo(
               ],
               attribValueStartsAt: 12,
               attribValueEndsAt: 27,
-              attribStart: 5,
+              attribStarts: 5,
               attribEnd: 28,
               attribLeft: 3,
             },
@@ -149,14 +94,14 @@ tap.todo(
           attribs: [],
         },
       ],
-      "02"
+      "01"
     );
     t.end();
   }
 );
 
 tap.todo(
-  `03 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - body inline style, more`,
+  `02 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - body inline style, more`,
   (t) => {
     const gathered = [];
     ct(`<div style="/*color: red;*/ text-align: left;">z</div>`, {
@@ -236,7 +181,7 @@ tap.todo(
               ],
               attribValueStartsAt: 12,
               attribValueEndsAt: 45,
-              attribStart: 5,
+              attribStarts: 5,
               attribEnd: 46,
               attribLeft: 3,
             },
@@ -264,7 +209,7 @@ tap.todo(
           attribs: [],
         },
       ],
-      "03"
+      "02"
     );
     t.end();
   }

@@ -372,12 +372,26 @@ function tokenizer(str, originalOpts) {
     attribValue: [],
     attribValueStartsAt: null,
     attribValueEndsAt: null,
-    attribStart: null,
+    attribStarts: null,
     attribEnd: null,
     attribLeft: null
   };
   function attribReset() {
     attrib = clone__default['default'](attribDefault);
+  }
+  var property = {};
+  var propertyDefault = {
+    property: null,
+    propertyStarts: null,
+    propertyEnds: null,
+    colon: null,
+    value: null,
+    valueStarts: null,
+    valueEnds: null,
+    semi: null
+  };
+  function propertyReset() {
+    property = clone__default['default'](propertyDefault);
   }
   tokenReset();
   var selectorChunkStartedAt;
@@ -515,7 +529,8 @@ function tokenizer(str, originalOpts) {
         closingCurlyAt: null,
         selectorsStart: null,
         selectorsEnd: null,
-        selectors: []
+        selectors: [],
+        properties: []
       };
     }
     if (type === "at") {
@@ -563,6 +578,10 @@ function tokenizer(str, originalOpts) {
   function initToken(type, startVal) {
     attribReset();
     token = getNewToken(type, startVal);
+  }
+  function initProperty(propertyStarts) {
+    propertyReset();
+    property.propertyStarts = propertyStarts;
   }
   var _loop = function _loop(_i) {
     if (!doNothing && str[_i] && opts.reportProgressFunc) {
@@ -796,7 +815,7 @@ function tokenizer(str, originalOpts) {
       } else if (startsEsp(str, _i, token, layers, withinStyle) && (
       !Array.isArray(layers) || !layers.length ||
       layers[~-layers.length].type !== "simple" || !["'", "\""].includes(layers[~-layers.length].value) ||
-      attrib && attrib.attribStart && !attrib.attribEnd)) {
+      attrib && attrib.attribStarts && !attrib.attribEnd)) {
         var wholeEspTagLumpOnTheRight = getWholeEspTagLumpOnTheRight(str, _i, layers);
         if (!espLumpBlacklist.includes(wholeEspTagLumpOnTheRight)) {
           var lengthOfClosingEspChunk;
@@ -892,7 +911,7 @@ function tokenizer(str, originalOpts) {
                   token.recognised = isTagNameRecognised(token.tagName);
                 }
                 parentTokenToBackup = clone__default['default'](token);
-                if (attrib.attribStart && !attrib.attribEnd) {
+                if (attrib.attribStarts && !attrib.attribEnd) {
                   attribToBackup = clone__default['default'](attrib);
                 }
               } else if (!attribToBackup) {
@@ -936,6 +955,26 @@ function tokenizer(str, originalOpts) {
         initToken("text", _i);
       }
     }
+    if (!doNothing && token.type === "rule" && property.valueStarts && !property.valueEnds && ";}".includes(str[_i])) {
+      property.valueEnds = lastNonWhitespaceCharAt + 1;
+      property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
+      if (str[_i] === ";") {
+        property.semi = _i;
+      }
+      token.properties.push(clone__default['default'](property));
+      propertyReset();
+    }
+    if (!doNothing && token.type === "rule" && property.colon && !property.valueStarts && str[_i].trim()) {
+      if (";}".includes(str[_i])) {
+        if (str[_i] === ";") {
+          property.semi = _i;
+        }
+        token.properties.push(clone__default['default'](property));
+        propertyReset();
+      } else {
+        property.valueStarts = _i;
+      }
+    }
     if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && !"{}".includes(str[_i]) && !selectorChunkStartedAt && !token.openingCurlyAt) {
       if (!",".includes(str[_i])) {
         selectorChunkStartedAt = _i;
@@ -945,6 +984,20 @@ function tokenizer(str, originalOpts) {
       } else {
         token.selectorsEnd = _i + 1;
       }
+    }
+    if (!doNothing && token.type === "rule" && property.propertyStarts && !property.propertyEnds && !/[\w-]/.test(str[_i])) {
+      property.propertyEnds = _i;
+      property.property = str.slice(property.propertyStarts, _i);
+      if ("};".includes(str[_i]) || !str[_i].trim() && str[stringLeftRight.right(str, _i)] === "}") {
+        token.properties.push(clone__default['default'](property));
+        propertyReset();
+      }
+    }
+    if (!doNothing && token.type === "rule" && property.propertyEnds && !property.valueStarts && str[_i] === ":") {
+      property.colon = _i;
+    }
+    if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && /[\w-]/.test(str[_i]) && token.selectorsEnd && token.openingCurlyAt && !property.propertyStarts) {
+      initProperty(_i);
     }
     if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
       if (str[_i] === "[") ;
@@ -1086,8 +1139,8 @@ function tokenizer(str, originalOpts) {
         }
       }
     }
-    if (!doNothing && str[_i] && token.type === "tag" && token.kind !== "cdata" && token.tagNameEndsAt && _i > token.tagNameEndsAt && attrib.attribStart === null && charSuitableForHTMLAttrName__default['default'](str[_i])) {
-      attrib.attribStart = _i;
+    if (!doNothing && str[_i] && token.type === "tag" && token.kind !== "cdata" && token.tagNameEndsAt && _i > token.tagNameEndsAt && attrib.attribStarts === null && charSuitableForHTMLAttrName__default['default'](str[_i])) {
+      attrib.attribStarts = _i;
       attrib.attribLeft = lastNonWhitespaceCharAt;
       attrib.attribNameStartsAt = _i;
     }
@@ -1210,7 +1263,7 @@ function tokenizer(str, originalOpts) {
           i = _i;
           return "continue";
         }
-      } else if (attrib && attrib.attribStart && !attrib.attribEnd && (
+      } else if (attrib && attrib.attribStarts && !attrib.attribEnd && (
       !Array.isArray(attrib.attribValue) ||
       !attrib.attribValue.length ||
       attrib.attribValue[~-attrib.attribValue.length].end && attrib.attribValue[~-attrib.attribValue.length].end <= _i)) {
@@ -1301,7 +1354,7 @@ function tokenizer(str, originalOpts) {
         }
       }
     }
-    if (str[_i] === ">" && token.type === "tag" && attrib.attribStart && !attrib.attribEnd) {
+    if (str[_i] === ">" && token.type === "tag" && attrib.attribStarts && !attrib.attribEnd) {
       var thisIsRealEnding = false;
       if (str[_i + 1]) {
         for (var _y2 = _i + 1; _y2 < len; _y2++) {

@@ -5,7 +5,7 @@ import ct from "../dist/codsen-tokenizer.esm";
 // -----------------------------------------------------------------------------
 
 tap.todo(
-  `01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - repeated closing curlies`,
+  `01 - ${`\u001b[${36}m${`broken rule`}\u001b[${39}m`} - repeated closing curlies`,
   (t) => {
     const gathered = [];
     ct(
@@ -110,6 +110,252 @@ tap.todo(
         },
       ],
       "01"
+    );
+    t.end();
+  }
+);
+
+// missing semicols in head CSS
+// -----------------------------------------------------------------------------
+
+tap.todo(
+  `02 - ${`\u001b[${36}m${`broken rule`}\u001b[${39}m`} - missing semicol`,
+  (t) => {
+    const gathered = [];
+    ct(`<style>.a{b:c d:e;}</style>`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.strictSame(
+      gathered[1],
+      {
+        type: "rule",
+        start: 7,
+        end: 15,
+        value: ".a{b:c;}",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: 14,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            property: "b",
+            propertyStarts: 10,
+            propertyEnds: 11,
+            colon: 11,
+            value: "c",
+            valueStarts: 12,
+            valueEnds: 13,
+            semi: 13,
+          },
+        ],
+      },
+      "02"
+    );
+    t.end();
+  }
+);
+
+// missing value
+// -----------------------------------------------------------------------------
+
+tap.test(
+  `03 - ${`\u001b[${36}m${`broken rule`}\u001b[${39}m`} - missing value`,
+  (t) => {
+    const gathered = [];
+    ct(`<style>.a{b}</style>`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.strictSame(
+      gathered[1],
+      {
+        type: "rule",
+        start: 7,
+        end: 12,
+        value: ".a{b}",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: 11,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            property: "b",
+            propertyStarts: 10,
+            propertyEnds: 11,
+            colon: null,
+            value: null,
+            valueStarts: null,
+            valueEnds: null,
+            semi: null,
+          },
+        ],
+      },
+      "03"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `04 - ${`\u001b[${36}m${`broken rule`}\u001b[${39}m`} - missing value, trailing space`,
+  (t) => {
+    const gathered = [];
+    ct(`<style>.a{b }</style>`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.strictSame(
+      gathered[1],
+      {
+        type: "rule",
+        start: 7,
+        end: 13,
+        value: ".a{b }",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: 12,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            property: "b",
+            propertyStarts: 10,
+            propertyEnds: 11,
+            colon: null,
+            value: null,
+            valueStarts: null,
+            valueEnds: null,
+            semi: null,
+          },
+        ],
+      },
+      "04"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `05 - ${`\u001b[${36}m${`broken rule`}\u001b[${39}m`} - missing value but colon present`,
+  (t) => {
+    const gathered = [];
+    ct(`<style>.a{b:}</style>`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.strictSame(
+      gathered[1],
+      {
+        type: "rule",
+        start: 7,
+        end: 13,
+        value: ".a{b:}",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: 12,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            property: "b",
+            propertyStarts: 10,
+            propertyEnds: 11,
+            colon: 11,
+            value: null,
+            valueStarts: null,
+            valueEnds: null,
+            semi: null,
+          },
+        ],
+      },
+      "05"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `06 - ${`\u001b[${36}m${`broken rule`}\u001b[${39}m`} - missing value, both colon and semicolon present`,
+  (t) => {
+    const gathered = [];
+    ct(`<style>.a{b:;}</style>`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.strictSame(
+      gathered[1],
+      {
+        type: "rule",
+        start: 7,
+        end: 14,
+        value: ".a{b:;}",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: 13,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            property: "b",
+            propertyStarts: 10,
+            propertyEnds: 11,
+            colon: 11,
+            value: null,
+            valueStarts: null,
+            valueEnds: null,
+            semi: 12,
+          },
+        ],
+      },
+      "06"
     );
     t.end();
   }

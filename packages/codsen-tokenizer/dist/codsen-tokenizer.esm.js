@@ -578,12 +578,26 @@ function tokenizer(str, originalOpts) {
     attribValue: [],
     attribValueStartsAt: null,
     attribValueEndsAt: null,
-    attribStart: null,
+    attribStarts: null,
     attribEnd: null,
     attribLeft: null,
   };
   function attribReset() {
     attrib = clone(attribDefault);
+  }
+  let property = {};
+  const propertyDefault = {
+    property: null,
+    propertyStarts: null,
+    propertyEnds: null,
+    colon: null,
+    value: null,
+    valueStarts: null,
+    valueEnds: null,
+    semi: null,
+  };
+  function propertyReset() {
+    property = clone(propertyDefault);
   }
   tokenReset();
   let selectorChunkStartedAt;
@@ -757,6 +771,7 @@ function tokenizer(str, originalOpts) {
         selectorsStart: null,
         selectorsEnd: null,
         selectors: [],
+        properties: [],
       };
     }
     if (type === "at") {
@@ -804,6 +819,10 @@ function tokenizer(str, originalOpts) {
   function initToken(type, startVal) {
     attribReset();
     token = getNewToken(type, startVal);
+  }
+  function initProperty(propertyStarts) {
+    propertyReset();
+    property.propertyStarts = propertyStarts;
   }
   for (let i = 0; i <= len; i++) {
     if (!doNothing && str[i] && opts.reportProgressFunc) {
@@ -1152,7 +1171,7 @@ function tokenizer(str, originalOpts) {
           !layers.length ||
           layers[~-layers.length].type !== "simple" ||
           ![`'`, `"`].includes(layers[~-layers.length].value) ||
-          (attrib && attrib.attribStart && !attrib.attribEnd))
+          (attrib && attrib.attribStarts && !attrib.attribEnd))
       ) {
         const wholeEspTagLumpOnTheRight = getWholeEspTagLumpOnTheRight(
           str,
@@ -1287,7 +1306,7 @@ function tokenizer(str, originalOpts) {
                   token.recognised = isTagNameRecognised(token.tagName);
                 }
                 parentTokenToBackup = clone(token);
-                if (attrib.attribStart && !attrib.attribEnd) {
+                if (attrib.attribStarts && !attrib.attribEnd) {
                   attribToBackup = clone(attrib);
                 }
               } else if (!attribToBackup) {
@@ -1375,6 +1394,41 @@ function tokenizer(str, originalOpts) {
     if (
       !doNothing &&
       token.type === "rule" &&
+      property.valueStarts &&
+      !property.valueEnds &&
+      `;}`.includes(str[i])
+    ) {
+      property.valueEnds = lastNonWhitespaceCharAt + 1;
+      property.value = str.slice(
+        property.valueStarts,
+        lastNonWhitespaceCharAt + 1
+      );
+      if (str[i] === ";") {
+        property.semi = i;
+      }
+      token.properties.push(clone(property));
+      propertyReset();
+    }
+    if (
+      !doNothing &&
+      token.type === "rule" &&
+      property.colon &&
+      !property.valueStarts &&
+      str[i].trim()
+    ) {
+      if (`;}`.includes(str[i])) {
+        if (str[i] === ";") {
+          property.semi = i;
+        }
+        token.properties.push(clone(property));
+        propertyReset();
+      } else {
+        property.valueStarts = i;
+      }
+    }
+    if (
+      !doNothing &&
+      token.type === "rule" &&
       str[i] &&
       str[i].trim() &&
       !"{}".includes(str[i]) &&
@@ -1389,6 +1443,44 @@ function tokenizer(str, originalOpts) {
       } else {
         token.selectorsEnd = i + 1;
       }
+    }
+    if (
+      !doNothing &&
+      token.type === "rule" &&
+      property.propertyStarts &&
+      !property.propertyEnds &&
+      !/[\w-]/.test(str[i])
+    ) {
+      property.propertyEnds = i;
+      property.property = str.slice(property.propertyStarts, i);
+      if (
+        `};`.includes(str[i]) ||
+        (!str[i].trim() && str[right(str, i)] === "}")
+      ) {
+        token.properties.push(clone(property));
+        propertyReset();
+      }
+    }
+    if (
+      !doNothing &&
+      token.type === "rule" &&
+      property.propertyEnds &&
+      !property.valueStarts &&
+      str[i] === ":"
+    ) {
+      property.colon = i;
+    }
+    if (
+      !doNothing &&
+      token.type === "rule" &&
+      str[i] &&
+      str[i].trim() &&
+      /[\w-]/.test(str[i]) &&
+      token.selectorsEnd &&
+      token.openingCurlyAt &&
+      !property.propertyStarts
+    ) {
+      initProperty(i);
     }
     if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
       if (str[i] === "[") ;
@@ -1626,10 +1718,10 @@ function tokenizer(str, originalOpts) {
       token.kind !== "cdata" &&
       token.tagNameEndsAt &&
       i > token.tagNameEndsAt &&
-      attrib.attribStart === null &&
+      attrib.attribStarts === null &&
       charSuitableForHTMLAttrName(str[i])
     ) {
-      attrib.attribStart = i;
+      attrib.attribStarts = i;
       attrib.attribLeft = lastNonWhitespaceCharAt;
       attrib.attribNameStartsAt = i;
     }
@@ -1822,7 +1914,7 @@ function tokenizer(str, originalOpts) {
         }
       } else if (
         attrib &&
-        attrib.attribStart &&
+        attrib.attribStarts &&
         !attrib.attribEnd &&
         (!Array.isArray(attrib.attribValue) ||
           !attrib.attribValue.length ||
@@ -1977,7 +2069,7 @@ function tokenizer(str, originalOpts) {
     if (
       str[i] === ">" &&
       token.type === "tag" &&
-      attrib.attribStart &&
+      attrib.attribStarts &&
       !attrib.attribEnd
     ) {
       let thisIsRealEnding = false;
