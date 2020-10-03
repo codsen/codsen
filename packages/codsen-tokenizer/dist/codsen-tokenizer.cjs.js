@@ -940,7 +940,8 @@ function tokenizer(str, originalOpts) {
           }
           doNothing = _i + (lengthOfClosingEspChunk || wholeEspTagLumpOnTheRight.length);
         }
-      } else if (withinStyle && !withinStyleComment && str[_i] && str[_i].trim() && (
+      } else if (withinStyle && !withinStyleComment && str[_i] && str[_i].trim() &&
+      !"{}".includes(str[_i]) && (
       !token.type ||
       ["text"].includes(token.type))) {
         if (token.type) {

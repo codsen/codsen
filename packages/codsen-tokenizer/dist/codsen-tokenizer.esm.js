@@ -1378,6 +1378,7 @@ function tokenizer(str, originalOpts) {
         !withinStyleComment &&
         str[i] &&
         str[i].trim() &&
+        !`{}`.includes(str[i]) &&
         (!token.type ||
           ["text"].includes(token.type))
       ) {

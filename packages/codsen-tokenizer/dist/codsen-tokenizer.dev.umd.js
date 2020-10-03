@@ -4375,7 +4375,10 @@
 
             doNothing = _i + (lengthOfClosingEspChunk || wholeEspTagLumpOnTheRight.length);
           }
-        } else if (withinStyle && !withinStyleComment && str[_i] && str[_i].trim() && ( // if at rule starts right after <style>, if we're on "@"
+        } else if (withinStyle && !withinStyleComment && str[_i] && str[_i].trim() && // insurance against rogue extra closing curlies:
+        // .a{x}}
+        // don't start new rule at closing curlie!
+        !"{}".includes(str[_i]) && ( // if at rule starts right after <style>, if we're on "@"
         // for example:
         // <style>@media a {.b{c}}</style>
         // first the <style> tag token will be pushed and then tag object

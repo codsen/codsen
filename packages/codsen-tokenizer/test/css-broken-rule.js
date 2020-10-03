@@ -4,7 +4,7 @@ import ct from "../dist/codsen-tokenizer.esm";
 // css broken rule
 // -----------------------------------------------------------------------------
 
-tap.todo(
+tap.test(
   `01 - ${`\u001b[${36}m${`broken rule`}\u001b[${39}m`} - repeated closing curlies`,
   (t) => {
     const gathered = [];
@@ -61,6 +61,18 @@ tap.todo(
               selectorEnds: 10,
             },
           ],
+          properties: [
+            {
+              property: "x",
+              propertyStarts: 11,
+              propertyEnds: 12,
+              colon: null,
+              value: null,
+              valueStarts: null,
+              valueEnds: null,
+              semi: null,
+            },
+          ],
         },
         {
           type: "text",
@@ -84,6 +96,18 @@ tap.todo(
               value: ".b",
               selectorStarts: 15,
               selectorEnds: 17,
+            },
+          ],
+          properties: [
+            {
+              property: "x",
+              propertyStarts: 18,
+              propertyEnds: 19,
+              colon: null,
+              value: null,
+              valueStarts: null,
+              valueEnds: null,
+              semi: null,
             },
           ],
         },
