@@ -238,7 +238,7 @@ tap.test(
             value: "red",
             valueStarts: 17,
             valueEnds: 20,
-            semi: null,
+            semi: null, // <---
           },
           {
             property: "text-align",
@@ -406,7 +406,55 @@ tap.test(
 );
 
 tap.test(
-  `07 - ${`\u001b[${36}m${`broken rule`}\u001b[${39}m`} - missing value, both colon and semicolon present`,
+  `07 - ${`\u001b[${36}m${`broken rule`}\u001b[${39}m`} - missing value but semi present`,
+  (t) => {
+    const gathered = [];
+    ct(`<style>.a{b;}</style>`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.strictSame(
+      gathered[1],
+      {
+        type: "rule",
+        start: 7,
+        end: 13,
+        value: ".a{b;}",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: 12,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            property: "b",
+            propertyStarts: 10,
+            propertyEnds: 11,
+            colon: null,
+            value: null,
+            valueStarts: null,
+            valueEnds: null,
+            semi: 11,
+          },
+        ],
+      },
+      "07"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `08 - ${`\u001b[${36}m${`broken rule`}\u001b[${39}m`} - missing value, both colon and semicolon present`,
   (t) => {
     const gathered = [];
     ct(`<style>.a{b:;}</style>`, {
@@ -447,7 +495,7 @@ tap.test(
           },
         ],
       },
-      "07"
+      "08"
     );
     t.end();
   }
