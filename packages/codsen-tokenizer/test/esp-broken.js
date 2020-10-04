@@ -427,10 +427,14 @@ tap.test(
               attribValueRaw: "z",
               attribValue: [
                 {
-                  type: "text",
-                  start: 28,
-                  end: 29,
-                  value: "z",
+                  property: "z",
+                  propertyStarts: 28,
+                  propertyEnds: 29,
+                  colon: null,
+                  value: null,
+                  valueStarts: null,
+                  valueEnds: null,
+                  semi: null,
                 },
               ],
               attribValueStartsAt: 28,

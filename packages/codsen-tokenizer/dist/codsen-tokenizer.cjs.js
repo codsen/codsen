@@ -379,7 +379,7 @@ function tokenizer(str, originalOpts) {
   function attribReset() {
     attrib = clone__default['default'](attribDefault);
   }
-  var property = {};
+  var property = null;
   var propertyDefault = {
     property: null,
     propertyStarts: null,
@@ -475,8 +475,8 @@ function tokenizer(str, originalOpts) {
         token.value = str.slice(token.start, token.end);
       }
       if (token.start !== null && token.end) {
-        if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "at") {
-          layers[layers.length - 1].token.rules.push(token);
+        if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "at") {
+          layers[~-layers.length].token.rules.push(token);
         } else {
           pingTagCb(token);
         }
@@ -619,8 +619,8 @@ function tokenizer(str, originalOpts) {
             token.end = stringLeftRight.left(str, _i) + 1;
             token.value = str.slice(token.start, token.end);
             pingTagCb(token);
-            if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "at") {
-              layers[layers.length - 1].token.rules.push(token);
+            if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "at") {
+              layers[~-layers.length].token.rules.push(token);
             }
             tokenReset();
             if (stringLeftRight.left(str, _i) < ~-_i) {
@@ -634,8 +634,8 @@ function tokenizer(str, originalOpts) {
           token.end = _i + 1;
           token.value = str.slice(token.start, token.end);
           pingTagCb(token);
-          if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "at") {
-            layers[layers.length - 1].token.rules.push(token);
+          if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "at") {
+            layers[~-layers.length].token.rules.push(token);
           }
           tokenReset();
           doNothing = _i + 1;
@@ -643,8 +643,8 @@ function tokenizer(str, originalOpts) {
       } else if (token.type === "text" && str[_i] && str[_i].trim()) {
         token.end = _i;
         token.value = str.slice(token.start, token.end);
-        if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "at") {
-          layers[layers.length - 1].token.rules.push(token);
+        if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "at") {
+          layers[~-layers.length].token.rules.push(token);
         } else {
           pingTagCb(token);
         }
@@ -956,32 +956,45 @@ function tokenizer(str, originalOpts) {
         initToken("text", _i);
       }
     }
-    if (!doNothing && token.type === "rule" && property.valueStarts && !property.valueEnds) {
-      if (";}".includes(str[_i])) {
+    if (!doNothing &&
+    property && property.valueStarts && !property.valueEnds) {
+      if (
+      ";}".includes(str[_i]) && (!attrib || !attrib.attribName || attrib.attribName !== "style") ||
+      ";'\"".includes(str[_i]) && attrib && attrib.attribName === "style") {
         property.valueEnds = lastNonWhitespaceCharAt + 1;
         property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
         if (str[_i] === ";") {
           property.semi = _i;
         }
-        token.properties.push(clone__default['default'](property));
-        propertyReset();
+        /* istanbul ignore else */
+        if (property && attrib && attrib.attribName === "style") {
+          attrib.attribValue.push(clone__default['default'](property));
+        } else if (token && Array.isArray(token.properties)) {
+          token.properties.push(clone__default['default'](property));
+        }
+        property = null;
       } else if (str[_i] === ":" && Number.isInteger(property.colon) && property.colon < _i && lastNonWhitespaceCharAt && property.colon + 1 < lastNonWhitespaceCharAt) {
         var split = str.slice(stringLeftRight.right(str, property.colon), lastNonWhitespaceCharAt + 1).split(/\s+/);
         if (split.length === 2) {
           property.valueEnds = property.valueStarts + split[0].length;
           property.value = str.slice(property.valueStarts, property.valueEnds);
-          token.properties.push(clone__default['default'](property));
+          if (token && Array.isArray(token.properties)) {
+            token.properties.push(clone__default['default'](property));
+          }
           propertyReset();
           property.propertyStarts = lastNonWhitespaceCharAt + 1 - split[1].length;
         }
       }
     }
-    if (!doNothing && token.type === "rule" && property.colon && !property.valueStarts && str[_i].trim()) {
+    if (!doNothing &&
+    property && property.colon && !property.valueStarts && str[_i].trim()) {
       if (";}".includes(str[_i])) {
         if (str[_i] === ";") {
           property.semi = _i;
         }
-        token.properties.push(clone__default['default'](property));
+        if (token && Array.isArray(token.properties)) {
+          token.properties.push(clone__default['default'](property));
+        }
         propertyReset();
       } else {
         property.valueStarts = _i;
@@ -997,18 +1010,25 @@ function tokenizer(str, originalOpts) {
         token.selectorsEnd = _i + 1;
       }
     }
-    if (!doNothing && token.type === "rule" && property.propertyStarts && !property.propertyEnds && !/[\w-]/.test(str[_i])) {
+    if (!doNothing &&
+    property && property.propertyStarts && !property.propertyEnds && !/[\w-]/.test(str[_i])) {
       property.propertyEnds = _i;
       property.property = str.slice(property.propertyStarts, _i);
       if ("};".includes(str[_i]) || !str[_i].trim() && str[stringLeftRight.right(str, _i)] === "}") {
-        token.properties.push(clone__default['default'](property));
+        if (str[_i] === ";") {
+          property.semi = _i;
+        }
+        if (token && Array.isArray(token.properties)) {
+          token.properties.push(clone__default['default'](property));
+        }
         propertyReset();
       }
     }
-    if (!doNothing && token.type === "rule" && property.propertyEnds && !property.valueStarts && str[_i] === ":") {
+    if (!doNothing &&
+    property && property.propertyEnds && !property.valueStarts && str[_i] === ":") {
       property.colon = _i;
     }
-    if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && /[\w-]/.test(str[_i]) && token.selectorsEnd && token.openingCurlyAt && !property.propertyStarts) {
+    if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && /[\w-]/.test(str[_i]) && token.selectorsEnd && token.openingCurlyAt && (!property || !property.propertyStarts)) {
       initProperty(_i);
     }
     if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
@@ -1164,8 +1184,8 @@ function tokenizer(str, originalOpts) {
         token.end = _i + 1;
         token.value = str.slice(token.start, token.end);
         pingTagCb(token);
-        if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "at") {
-          layers[layers.length - 1].token.rules.push(token);
+        if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "at") {
+          layers[~-layers.length].token.rules.push(token);
         }
         tokenReset();
       }
@@ -1205,8 +1225,13 @@ function tokenizer(str, originalOpts) {
           }
           attrib.attribEnd = _i + 1;
           if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
-            attrib.attribValue[~-attrib.attribValue.length].end = _i;
-            attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i);
+            if (!attrib.attribValue[~-attrib.attribValue.length].property) {
+              attrib.attribValue[~-attrib.attribValue.length].end = _i;
+              attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i);
+            }
+          } else if (property) {
+            attrib.attribValue.push(clone__default['default'](property));
+            property = null;
           }
           if (str[attrib.attribOpeningQuoteAt] !== str[_i]) {
             layers.pop();
@@ -1275,7 +1300,7 @@ function tokenizer(str, originalOpts) {
           i = _i;
           return "continue";
         }
-      } else if (attrib && attrib.attribStarts && !attrib.attribEnd && (
+      } else if (attrib && attrib.attribName !== "style" && attrib.attribStarts && !attrib.attribEnd && !property && (
       !Array.isArray(attrib.attribValue) ||
       !attrib.attribValue.length ||
       attrib.attribValue[~-attrib.attribValue.length].end && attrib.attribValue[~-attrib.attribValue.length].end <= _i)) {
@@ -1349,19 +1374,52 @@ function tokenizer(str, originalOpts) {
         })) {
           layers.pop();
         } else {
-          attrib.attribOpeningQuoteAt = _i;
-          if (str[_i + 1]) {
-            attrib.attribValueStartsAt = _i + 1;
-          }
-          if (
-          Array.isArray(attrib.attribValue) && (!attrib.attribValue.length ||
-          attrib.attribValue[~-attrib.attribValue.length].end)) {
-            attrib.attribValue.push({
-              type: "text",
-              start: attrib.attribValueStartsAt,
-              end: null,
-              value: null
-            });
+          if (!attrib.attribOpeningQuoteAt) {
+            attrib.attribOpeningQuoteAt = _i;
+            if (
+            str[_i + 1] &&
+            str[_i + 1] !== str[_i]) {
+              attrib.attribValueStartsAt = _i + 1;
+              if (
+              Array.isArray(attrib.attribValue) && (!attrib.attribValue.length ||
+              attrib.attribValue[~-attrib.attribValue.length].end)) {
+                if (attrib.attribName === "style") {
+                  initProperty(stringLeftRight.right(str, _i));
+                } else {
+                  attrib.attribValue.push({
+                    type: "text",
+                    start: attrib.attribValueStartsAt,
+                    end: null,
+                    value: null
+                  });
+                }
+              }
+            }
+          } else {
+            if (attributeEnds__default['default'](str, attrib.attribOpeningQuoteAt, _i)) {
+              attrib.attribClosingQuoteAt = _i;
+            }
+            else {
+                attrib.attribOpeningQuoteAt = _i;
+                layers.push({
+                  type: "simple",
+                  value: str[_i],
+                  position: _i
+                });
+                if (
+                str[_i + 1] &&
+                str[_i + 1] !== str[_i]) {
+                  attrib.attribValueStartsAt = _i + 1;
+                }
+              }
+            /* istanbul ignore else */
+            if (attrib.attribOpeningQuoteAt && attrib.attribClosingQuoteAt) {
+              if (attrib.attribOpeningQuoteAt < ~-attrib.attribClosingQuoteAt) {
+                attrib.attribValueRaw = str.slice(attrib.attribOpeningQuoteAt + 1, attrib.attribClosingQuoteAt);
+              } else {
+                attrib.attribValueRaw = "";
+              }
+            }
           }
         }
       }

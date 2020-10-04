@@ -2523,9 +2523,10 @@
         var E2 = !(i > isThisClosingIdx && str[idxOfAttrOpening] === str[isThisClosingIdx] && str[idxOfAttrOpening] === str[i] && plausibleAttrStartsAtX(str, i + 1));
         var E31 = i === isThisClosingIdx && plausibleAttrStartsAtX(str, isThisClosingIdx + 1);
         var E32 = chunkStartsAt && chunkStartsAt < i && allHtmlAttribs.has(str.slice(chunkStartsAt, i).trim());
+        var plausibleAttrName = str.slice(chunkStartsAt, i).trim();
         var E33 = chunkStartsAt && chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim() && Array.from(str.slice(chunkStartsAt, i).trim()).every(function (char) {
           return charSuitableForHTMLAttrName(char);
-        }) && str[idxOfAttrOpening] === str[isThisClosingIdx];
+        }) && str[idxOfAttrOpening] === str[isThisClosingIdx] && !"/>".includes(str[right(str, i)]) && ensureXIsNotPresentBeforeOneOfY(str, i + 1, "=", ["'", "\""]);
         var attrNameCharsChunkOnTheLeft = void 0;
 
         if (i === isThisClosingIdx) {
@@ -3285,7 +3286,7 @@
     } // same for property:
 
 
-    var property = {};
+    var property = null;
     var propertyDefault = {
       property: null,
       propertyStarts: null,
@@ -3554,8 +3555,8 @@
         if (token.start !== null && token.end) {
           // if it's a text token inside "at" rule, nest it, push into that
           // "at" rule pending in layers - otherwise, ping as standalone
-          if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "at") {
-            layers[layers.length - 1].token.rules.push(token);
+          if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "at") {
+            layers[~-layers.length].token.rules.push(token);
           } else {
             pingTagCb(token);
           }
@@ -3760,8 +3761,8 @@
               pingTagCb(token); // if it's a text token inside "at" rule, nest it, push into that
               // "at" rule pending in layers - otherwise, ping as standalone
 
-              if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "at") {
-                layers[layers.length - 1].token.rules.push(token);
+              if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "at") {
+                layers[~-layers.length].token.rules.push(token);
               }
 
               tokenReset(); // if there was trailing whitespace, initiate it
@@ -3781,8 +3782,8 @@
             pingTagCb(token); // if it's a "rule" token and a parent "at" rule is pending in layers,
             // also put this "rule" into that parent in layers
 
-            if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "at") {
-              layers[layers.length - 1].token.rules.push(token);
+            if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "at") {
+              layers[~-layers.length].token.rules.push(token);
             }
 
             tokenReset();
@@ -3795,8 +3796,8 @@
           token.value = str.slice(token.start, token.end); // if it's a text token inside "at" rule, nest it, push into that
           // "at" rule pending in layers - otherwise, ping as standalone
 
-          if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "at") {
-            layers[layers.length - 1].token.rules.push(token);
+          if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "at") {
+            layers[~-layers.length].token.rules.push(token);
           } else {
             pingTagCb(token);
           }
@@ -4410,17 +4411,27 @@
       // -------------------------------------------------------------------------
 
 
-      if (!doNothing && token.type === "rule" && property.valueStarts && !property.valueEnds) {
-        if (";}".includes(str[_i])) {
+      if (!doNothing && // token.type === "rule" &&
+      property && property.valueStarts && !property.valueEnds) {
+        if ( // normal head css styles:
+        ";}".includes(str[_i]) && (!attrib || !attrib.attribName || attrib.attribName !== "style") || // inline css styles within html
+        ";'\"".includes(str[_i]) && attrib && attrib.attribName === "style") {
           property.valueEnds = lastNonWhitespaceCharAt + 1;
           property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
 
           if (str[_i] === ";") {
             property.semi = _i;
           }
+          /* istanbul ignore else */
 
-          token.properties.push(lodash_clonedeep(property));
-          propertyReset();
+
+          if (property && attrib && attrib.attribName === "style") {
+            attrib.attribValue.push(lodash_clonedeep(property));
+          } else if (token && Array.isArray(token.properties)) {
+            token.properties.push(lodash_clonedeep(property));
+          }
+
+          property = null;
         } else if (str[_i] === ":" && Number.isInteger(property.colon) && property.colon < _i && lastNonWhitespaceCharAt && property.colon + 1 < lastNonWhitespaceCharAt) {
           // .a{b:c d:e;}
           //         ^
@@ -4443,7 +4454,10 @@
             property.valueEnds = property.valueStarts + split[0].length;
             property.value = str.slice(property.valueStarts, property.valueEnds); // push and init and patch up to resume
 
-            token.properties.push(lodash_clonedeep(property));
+            if (token && Array.isArray(token.properties)) {
+              token.properties.push(lodash_clonedeep(property));
+            }
+
             propertyReset();
             property.propertyStarts = lastNonWhitespaceCharAt + 1 - split[1].length;
           }
@@ -4452,14 +4466,18 @@
       // -------------------------------------------------------------------------
 
 
-      if (!doNothing && token.type === "rule" && property.colon && !property.valueStarts && str[_i].trim()) {
+      if (!doNothing && // token.type === "rule" &&
+      property && property.colon && !property.valueStarts && str[_i].trim()) {
         if (";}".includes(str[_i])) {
           // broken code!
           if (str[_i] === ";") {
             property.semi = _i;
           }
 
-          token.properties.push(lodash_clonedeep(property));
+          if (token && Array.isArray(token.properties)) {
+            token.properties.push(lodash_clonedeep(property));
+          }
+
           propertyReset();
         } else {
           property.valueStarts = _i;
@@ -4484,27 +4502,40 @@
       // -------------------------------------------------------------------------
 
 
-      if (!doNothing && token.type === "rule" && property.propertyStarts && !property.propertyEnds && !/[\w-]/.test(str[_i])) {
+      if (!doNothing && // token.type === "rule" &&
+      property && property.propertyStarts && !property.propertyEnds && !/[\w-]/.test(str[_i])) {
         property.propertyEnds = _i;
         property.property = str.slice(property.propertyStarts, _i); // missing colon and onwards:
         // <style>.b{c}</style>
         // <style>.b{c;d}</style>
 
         if ("};".includes(str[_i]) || !str[_i].trim() && str[right(str, _i)] === "}") {
-          token.properties.push(lodash_clonedeep(property));
+          if (str[_i] === ";") {
+            property.semi = _i;
+          }
+
+          if (token && Array.isArray(token.properties)) {
+            token.properties.push(lodash_clonedeep(property));
+          }
+
           propertyReset();
         }
       } // catch the colon of a css property
       // -------------------------------------------------------------------------
 
 
-      if (!doNothing && token.type === "rule" && property.propertyEnds && !property.valueStarts && str[_i] === ":") {
+      if (!doNothing && // we don't check for token.type === "rule" because inline css will use
+      // these clauses too and token.type === "tag" there, but
+      // attrib.attribName === "style"
+      // on other hand, we don't need strict validation here either, to enter
+      // these clauses it's enough that "property" was initiated.
+      property && property.propertyEnds && !property.valueStarts && str[_i] === ":") {
         property.colon = _i;
       } // catch the start of a css property's name
       // -------------------------------------------------------------------------
 
 
-      if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && /[\w-]/.test(str[_i]) && token.selectorsEnd && token.openingCurlyAt && !property.propertyStarts) {
+      if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && /[\w-]/.test(str[_i]) && token.selectorsEnd && token.openingCurlyAt && (!property || !property.propertyStarts)) {
         initProperty(_i);
       } // in comment type, "only" kind tokens, submit square brackets to layers
       // -------------------------------------------------------------------------
@@ -4791,8 +4822,8 @@
           pingTagCb(token); // if it's a "rule" token and a parent "at" rule is pending in layers,
           // also put this "rule" into that parent in layers
 
-          if (Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "at") {
-            layers[layers.length - 1].token.rules.push(token);
+          if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "at") {
+            layers[~-layers.length].token.rules.push(token);
           }
 
           tokenReset();
@@ -4859,8 +4890,14 @@
             attrib.attribEnd = _i + 1;
 
             if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
-              attrib.attribValue[~-attrib.attribValue.length].end = _i;
-              attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i);
+              // if it's not a property (of inline style), set its "end"
+              if (!attrib.attribValue[~-attrib.attribValue.length].property) {
+                attrib.attribValue[~-attrib.attribValue.length].end = _i;
+                attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i);
+              }
+            } else if (property) {
+              attrib.attribValue.push(lodash_clonedeep(property));
+              property = null;
             } // 2. if the pair was mismatching, wipe layers' last element
 
 
@@ -4980,7 +5017,7 @@
             i = _i;
             return "continue";
           }
-        } else if (attrib && attrib.attribStarts && !attrib.attribEnd && ( //
+        } else if (attrib && attrib.attribName !== "style" && attrib.attribStarts && !attrib.attribEnd && !property && ( //
         // AND,
         //
         // either there are no attributes recorded under attrib.attribValue:
@@ -5107,22 +5144,79 @@
             // pop the layers
             layers.pop();
           } else {
-            attrib.attribOpeningQuoteAt = _i;
+            // OK then...
+            // has the quotes started (it's closing quote) or it's the opening quote?
 
-            if (str[_i + 1]) {
-              attrib.attribValueStartsAt = _i + 1;
-            }
+            /* eslint no-lonely-if: "off" */
+            if (!attrib.attribOpeningQuoteAt) {
+              attrib.attribOpeningQuoteAt = _i;
 
-            if ( // if attribValue array is empty, no object has been placed yet,
-            Array.isArray(attrib.attribValue) && (!attrib.attribValue.length || // of there is one but it's got ending (prevention from submitting
-            // another text type object on top, before previous has been closed)
-            attrib.attribValue[~-attrib.attribValue.length].end)) {
-              attrib.attribValue.push({
-                type: "text",
-                start: attrib.attribValueStartsAt,
-                end: null,
-                value: null
-              });
+              if ( // non-whitespace character exists on the right
+              str[_i + 1] && // it's not the same as opening quote we're currently on
+              str[_i + 1] !== str[_i]) {
+                attrib.attribValueStartsAt = _i + 1;
+
+                if ( // if attribValue array is empty, no object has been placed yet,
+                Array.isArray(attrib.attribValue) && (!attrib.attribValue.length || // of there is one but it's got ending (prevention from submitting
+                // another text type object on top, before previous has been closed)
+                attrib.attribValue[~-attrib.attribValue.length].end)) {
+                  // if depends, is it inline style or anything else?
+                  if (attrib.attribName === "style") {
+                    initProperty(right(str, _i)); // attrib.attribValueStartsAt starts right after opening
+                    // quotes, regardless of inner whitespace, so that we can
+                    // slice and extract the contents.
+                    // "property.propertyStarts" on other hand, minds the whitespace,
+                    // we start it from the first non-whitespace character
+                    // we don't put the /[\w-]/ regex validation here to catch-net
+                    // more errors - let the bad characters enter property names,
+                    // they'll be validated later down the line!
+                    // don't push to "attrib.attribValue" because in DRY fashion
+                    // we'll tap the existing "property" clauses that head CSS uses
+                  } else {
+                    attrib.attribValue.push({
+                      type: "text",
+                      start: attrib.attribValueStartsAt,
+                      end: null,
+                      value: null
+                    });
+                  }
+                }
+              }
+            } else {
+              // one quote exists. Either is clean closing:
+              // <table width="100">
+              //                  ^
+              //
+              if (isAttrClosing(str, attrib.attribOpeningQuoteAt, _i)) {
+                attrib.attribClosingQuoteAt = _i;
+              } // or another, dirty opening
+              // <table width=""100">
+              //               ^
+              else {
+                  attrib.attribOpeningQuoteAt = _i; // push layer again because it has been popped just before
+
+                  layers.push({
+                    type: "simple",
+                    value: str[_i],
+                    position: _i
+                  });
+
+                  if ( // character exists on the right
+                  str[_i + 1] && // it's not the same as opening quote we're currently on
+                  str[_i + 1] !== str[_i]) {
+                    attrib.attribValueStartsAt = _i + 1;
+                  }
+                }
+              /* istanbul ignore else */
+
+
+              if (attrib.attribOpeningQuoteAt && attrib.attribClosingQuoteAt) {
+                if (attrib.attribOpeningQuoteAt < ~-attrib.attribClosingQuoteAt) {
+                  attrib.attribValueRaw = str.slice(attrib.attribOpeningQuoteAt + 1, attrib.attribClosingQuoteAt);
+                } else {
+                  attrib.attribValueRaw = "";
+                }
+              }
             }
           }
         } // else - value we assume does not start

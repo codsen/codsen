@@ -214,3 +214,17 @@ tap.todo(
     t.end();
   }
 );
+
+tap.todo(
+  `03 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - body inline css, erroneous line comment`,
+  (t) => {
+    const gathered = [];
+    ct(`<div style="//color: red;">z</div>`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.match(gathered, [], "03");
+    t.end();
+  }
+);
