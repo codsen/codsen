@@ -130,11 +130,12 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       plausibleAttrStartsAtX(str, isThisClosingIdx + 1);
       var E32 =
       chunkStartsAt && chunkStartsAt < i && htmlAllKnownAttributes.allHtmlAttribs.has(str.slice(chunkStartsAt, i).trim());
+      var plausibleAttrName = str.slice(chunkStartsAt, i).trim();
       var E33 = chunkStartsAt && chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim() &&
       Array.from(str.slice(chunkStartsAt, i).trim()).every(function (char) {
         return charSuitableForHTMLAttrName__default['default'](char);
       }) &&
-      str[idxOfAttrOpening] === str[isThisClosingIdx];
+      str[idxOfAttrOpening] === str[isThisClosingIdx] && !"/>".includes(str[stringLeftRight.right(str, i)]) && ensureXIsNotPresentBeforeOneOfY(str, i + 1, "=", ["'", "\""]);
       var attrNameCharsChunkOnTheLeft = void 0;
       if (i === isThisClosingIdx) {
         attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);

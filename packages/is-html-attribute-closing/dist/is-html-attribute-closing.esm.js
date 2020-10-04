@@ -117,6 +117,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         chunkStartsAt &&
         chunkStartsAt < i &&
         allHtmlAttribs.has(str.slice(chunkStartsAt, i).trim());
+      const plausibleAttrName = str.slice(chunkStartsAt, i).trim();
       const E33 =
         chunkStartsAt &&
         chunkStartsAt < i &&
@@ -125,7 +126,9 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         Array.from(str.slice(chunkStartsAt, i).trim()).every((char) =>
           charSuitableForHTMLAttrName(char)
         ) &&
-        str[idxOfAttrOpening] === str[isThisClosingIdx];
+        str[idxOfAttrOpening] === str[isThisClosingIdx] &&
+        !`/>`.includes(str[right(str, i)]) &&
+        ensureXIsNotPresentBeforeOneOfY(str, i + 1, "=", [`'`, `"`]);
       let attrNameCharsChunkOnTheLeft;
       if (i === isThisClosingIdx) {
         attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);

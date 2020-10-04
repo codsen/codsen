@@ -2621,11 +2621,12 @@
         // like requiring whitespace to be in front and opening/closing to match
         // there's a whitespace in front of last chunk ("ddd" in example above)
 
+        var plausibleAttrName = str.slice(chunkStartsAt, i).trim();
         var E33 = chunkStartsAt && chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim() && // and whole chunk is a plausible attribute name
         Array.from(str.slice(chunkStartsAt, i).trim()).every(function (char) {
           return charSuitableForHTMLAttrName(char);
         }) && // known opening and suspected closing are both singles or doubles
-        str[idxOfAttrOpening] === str[isThisClosingIdx]; // anti-rule - it's fine if we're on suspected ending and to the left
+        str[idxOfAttrOpening] === str[isThisClosingIdx] && !"/>".includes(str[right(str, i)]) && ensureXIsNotPresentBeforeOneOfY(str, i + 1, "=", ["'", "\""]); // anti-rule - it's fine if we're on suspected ending and to the left
         // it's not an attribute start
         // <img alt='Deal is your's!"/>
         //          ^               ^
