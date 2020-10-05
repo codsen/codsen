@@ -394,6 +394,13 @@ function tokenizer(str, originalOpts) {
   function propertyReset() {
     property = clone__default['default'](propertyDefault);
   }
+  function pushProperty(p) {
+    if (attrib && attrib.attribName === "style") {
+      attrib.attribValue.push(clone__default['default'](p));
+    } else if (token && Array.isArray(token.properties)) {
+      token.properties.push(clone__default['default'](p));
+    }
+  }
   tokenReset();
   var selectorChunkStartedAt;
   var parentTokenToBackup;
@@ -967,12 +974,7 @@ function tokenizer(str, originalOpts) {
         if (str[_i] === ";") {
           property.semi = _i;
         }
-        /* istanbul ignore else */
-        if (property && attrib && attrib.attribName === "style") {
-          attrib.attribValue.push(clone__default['default'](property));
-        } else if (token && Array.isArray(token.properties)) {
-          token.properties.push(clone__default['default'](property));
-        }
+        pushProperty(property);
         property = null;
         var nextChar = stringLeftRight.right(str, _i);
         if (nextChar && attrNameRegexp.test(str[nextChar])) {
@@ -983,9 +985,7 @@ function tokenizer(str, originalOpts) {
         if (split.length === 2) {
           property.valueEnds = property.valueStarts + split[0].length;
           property.value = str.slice(property.valueStarts, property.valueEnds);
-          if (token && Array.isArray(token.properties)) {
-            token.properties.push(clone__default['default'](property));
-          }
+          pushProperty(property);
           propertyReset();
           property.propertyStarts = lastNonWhitespaceCharAt + 1 - split[1].length;
         }
@@ -997,10 +997,8 @@ function tokenizer(str, originalOpts) {
         if (str[_i] === ";") {
           property.semi = _i;
         }
-        if (token && Array.isArray(token.properties)) {
-          token.properties.push(clone__default['default'](property));
-        }
-        propertyReset();
+        pushProperty(property);
+        property = null;
       } else {
         property.valueStarts = _i;
       }
@@ -1023,10 +1021,8 @@ function tokenizer(str, originalOpts) {
         if (str[_i] === ";") {
           property.semi = _i;
         }
-        if (token && Array.isArray(token.properties)) {
-          token.properties.push(clone__default['default'](property));
-        }
-        propertyReset();
+        pushProperty(property);
+        property = null;
       }
     }
     if (!doNothing &&

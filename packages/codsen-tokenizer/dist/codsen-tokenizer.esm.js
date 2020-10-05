@@ -600,6 +600,13 @@ function tokenizer(str, originalOpts) {
   function propertyReset() {
     property = clone(propertyDefault);
   }
+  function pushProperty(p) {
+    if (attrib && attrib.attribName === "style") {
+      attrib.attribValue.push(clone(p));
+    } else if (token && Array.isArray(token.properties)) {
+      token.properties.push(clone(p));
+    }
+  }
   tokenReset();
   let selectorChunkStartedAt;
   let parentTokenToBackup;
@@ -1412,12 +1419,7 @@ function tokenizer(str, originalOpts) {
         if (str[i] === ";") {
           property.semi = i;
         }
-        /* istanbul ignore else */
-        if (property && attrib && attrib.attribName === "style") {
-          attrib.attribValue.push(clone(property));
-        } else if (token && Array.isArray(token.properties)) {
-          token.properties.push(clone(property));
-        }
+        pushProperty(property);
         property = null;
         const nextChar = right(str, i);
         if (nextChar && attrNameRegexp.test(str[nextChar])) {
@@ -1436,9 +1438,7 @@ function tokenizer(str, originalOpts) {
         if (split.length === 2) {
           property.valueEnds = property.valueStarts + split[0].length;
           property.value = str.slice(property.valueStarts, property.valueEnds);
-          if (token && Array.isArray(token.properties)) {
-            token.properties.push(clone(property));
-          }
+          pushProperty(property);
           propertyReset();
           property.propertyStarts =
             lastNonWhitespaceCharAt + 1 - split[1].length;
@@ -1456,10 +1456,8 @@ function tokenizer(str, originalOpts) {
         if (str[i] === ";") {
           property.semi = i;
         }
-        if (token && Array.isArray(token.properties)) {
-          token.properties.push(clone(property));
-        }
-        propertyReset();
+        pushProperty(property);
+        property = null;
       } else {
         property.valueStarts = i;
       }
@@ -1499,10 +1497,8 @@ function tokenizer(str, originalOpts) {
         if (str[i] === ";") {
           property.semi = i;
         }
-        if (token && Array.isArray(token.properties)) {
-          token.properties.push(clone(property));
-        }
-        propertyReset();
+        pushProperty(property);
+        property = null;
       }
     }
     if (

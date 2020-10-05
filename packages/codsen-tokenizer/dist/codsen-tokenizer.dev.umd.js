@@ -3301,6 +3301,18 @@
 
     function propertyReset() {
       property = lodash_clonedeep(propertyDefault);
+    } // The CSS properties can be in <style> blocks or inline, <div style="">.
+    // When we process the code, we have to address both places. This "push"
+    // is used in handful of places so we DRY'ed it to a function.
+
+
+    function pushProperty(p) {
+      // push and init and patch up to resume
+      if (attrib && attrib.attribName === "style") {
+        attrib.attribValue.push(lodash_clonedeep(p));
+      } else if (token && Array.isArray(token.properties)) {
+        token.properties.push(lodash_clonedeep(p));
+      }
     } // PS. we need this contraption in order to keep a single source of truth
     // of the token format - we'll improve and change the format of the default
     // object throughout the releases - it's best when its format comes from single
@@ -4422,16 +4434,10 @@
 
           if (str[_i] === ";") {
             property.semi = _i;
-          }
-          /* istanbul ignore else */
+          } // push and init and patch up to resume
 
 
-          if (property && attrib && attrib.attribName === "style") {
-            attrib.attribValue.push(lodash_clonedeep(property));
-          } else if (token && Array.isArray(token.properties)) {
-            token.properties.push(lodash_clonedeep(property));
-          }
-
+          pushProperty(property);
           property = null; // initiate the next property if it exists
 
           var nextChar = right(str, _i);
@@ -4470,10 +4476,7 @@
             property.valueEnds = property.valueStarts + split[0].length;
             property.value = str.slice(property.valueStarts, property.valueEnds); // push and init and patch up to resume
 
-            if (token && Array.isArray(token.properties)) {
-              token.properties.push(lodash_clonedeep(property));
-            }
-
+            pushProperty(property);
             propertyReset();
             property.propertyStarts = lastNonWhitespaceCharAt + 1 - split[1].length;
           }
@@ -4488,13 +4491,11 @@
           // broken code!
           if (str[_i] === ";") {
             property.semi = _i;
-          }
+          } // push and init and patch up to resume
 
-          if (token && Array.isArray(token.properties)) {
-            token.properties.push(lodash_clonedeep(property));
-          }
 
-          propertyReset();
+          pushProperty(property);
+          property = null;
         } else {
           property.valueStarts = _i;
         }
@@ -4528,13 +4529,11 @@
         if ("};".includes(str[_i]) || !str[_i].trim() && str[right(str, _i)] === "}") {
           if (str[_i] === ";") {
             property.semi = _i;
-          }
+          } // push and init and patch up to resume
 
-          if (token && Array.isArray(token.properties)) {
-            token.properties.push(lodash_clonedeep(property));
-          }
 
-          propertyReset();
+          pushProperty(property);
+          property = null;
         }
       } // catch the colon of a css property
       // -------------------------------------------------------------------------
