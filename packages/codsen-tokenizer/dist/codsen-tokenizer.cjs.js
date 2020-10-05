@@ -1024,12 +1024,22 @@ function tokenizer(str, originalOpts) {
         pushProperty(property);
         property = null;
       }
+      else if ("\r\n".includes(str[_i])) {
+          var nextCharIdx = stringLeftRight.right(str, _i);
+          if (!":}'\"".includes(str[nextCharIdx])) {
+            pushProperty(property);
+            property = null;
+            initProperty(nextCharIdx);
+          }
+        }
     }
     if (!doNothing &&
     property && property.propertyEnds && !property.valueStarts && str[_i] === ":") {
       property.colon = _i;
     }
-    if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && attrNameRegexp.test(str[_i]) && token.selectorsEnd && token.openingCurlyAt && (!property || !property.propertyStarts)) {
+    if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() &&
+    !"{};".includes(str[_i]) &&
+    token.selectorsEnd && token.openingCurlyAt && (!property || !property.propertyStarts)) {
       initProperty(_i);
     }
     if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
@@ -1225,14 +1235,15 @@ function tokenizer(str, originalOpts) {
             attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i);
           }
           attrib.attribEnd = _i + 1;
+          if (property) {
+            attrib.attribValue.push(clone__default['default'](property));
+            property = null;
+          }
           if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
             if (!attrib.attribValue[~-attrib.attribValue.length].property) {
               attrib.attribValue[~-attrib.attribValue.length].end = _i;
               attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i);
             }
-          } else if (property) {
-            attrib.attribValue.push(clone__default['default'](property));
-            property = null;
           }
           if (str[attrib.attribOpeningQuoteAt] !== str[_i]) {
             layers.pop();
@@ -1362,15 +1373,15 @@ function tokenizer(str, originalOpts) {
             });
           }
         } else if ("'\"".includes(str[_i])) {
-        var nextCharIdx = stringLeftRight.right(str, _i);
+        var _nextCharIdx = stringLeftRight.right(str, _i);
         if (
-        nextCharIdx &&
-        "'\"".includes(str[nextCharIdx]) &&
-        str[_i] !== str[nextCharIdx] &&
-        str.length > nextCharIdx + 2 &&
-        str.slice(nextCharIdx + 1).includes(str[nextCharIdx]) && (
-        !str.indexOf(str[nextCharIdx], nextCharIdx + 1) || !stringLeftRight.right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1)) || str[_i] !== str[stringLeftRight.right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1))]) &&
-        !Array.from(str.slice(nextCharIdx + 1, str.indexOf(str[nextCharIdx]))).some(function (char) {
+        _nextCharIdx &&
+        "'\"".includes(str[_nextCharIdx]) &&
+        str[_i] !== str[_nextCharIdx] &&
+        str.length > _nextCharIdx + 2 &&
+        str.slice(_nextCharIdx + 1).includes(str[_nextCharIdx]) && (
+        !str.indexOf(str[_nextCharIdx], _nextCharIdx + 1) || !stringLeftRight.right(str, str.indexOf(str[_nextCharIdx], _nextCharIdx + 1)) || str[_i] !== str[stringLeftRight.right(str, str.indexOf(str[_nextCharIdx], _nextCharIdx + 1))]) &&
+        !Array.from(str.slice(_nextCharIdx + 1, str.indexOf(str[_nextCharIdx]))).some(function (char) {
           return "<>=".concat(str[_i]).includes(char);
         })) {
           layers.pop();

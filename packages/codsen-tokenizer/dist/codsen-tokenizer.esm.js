@@ -1500,6 +1500,14 @@ function tokenizer(str, originalOpts) {
         pushProperty(property);
         property = null;
       }
+      else if (`\r\n`.includes(str[i])) {
+        const nextCharIdx = right(str, i);
+        if (!`:}'"`.includes(str[nextCharIdx])) {
+          pushProperty(property);
+          property = null;
+          initProperty(nextCharIdx);
+        }
+      }
     }
     if (
       !doNothing &&
@@ -1515,7 +1523,7 @@ function tokenizer(str, originalOpts) {
       token.type === "rule" &&
       str[i] &&
       str[i].trim() &&
-      attrNameRegexp.test(str[i]) &&
+      !"{};".includes(str[i]) &&
       token.selectorsEnd &&
       token.openingCurlyAt &&
       (!property || !property.propertyStarts)
@@ -1843,6 +1851,10 @@ function tokenizer(str, originalOpts) {
             attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, i);
           }
           attrib.attribEnd = i + 1;
+          if (property) {
+            attrib.attribValue.push(clone(property));
+            property = null;
+          }
           if (
             Array.isArray(attrib.attribValue) &&
             attrib.attribValue.length &&
@@ -1855,9 +1867,6 @@ function tokenizer(str, originalOpts) {
                 i
               );
             }
-          } else if (property) {
-            attrib.attribValue.push(clone(property));
-            property = null;
           }
           if (str[attrib.attribOpeningQuoteAt] !== str[i]) {
             layers.pop();

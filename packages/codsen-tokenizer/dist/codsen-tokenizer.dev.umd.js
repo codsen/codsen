@@ -3313,11 +3313,7 @@
       } else if (token && Array.isArray(token.properties)) {
         token.properties.push(lodash_clonedeep(p));
       }
-    } // PS. we need this contraption in order to keep a single source of truth
-    // of the token format - we'll improve and change the format of the default
-    // object throughout the releases - it's best when its format comes from single
-    // place, in this case, "tokenDefault".
-    // Initial resets:
+    } // Initial resets:
 
 
     tokenReset(); // ---------------------------------------------------------------------------
@@ -4534,7 +4530,18 @@
 
           pushProperty(property);
           property = null;
-        }
+        } // rubbish - line break - new property
+        // <div style="]\nfloat:left;">z</div>
+        else if ("\r\n".includes(str[_i])) {
+            var nextCharIdx = right(str, _i);
+
+            if (!":}'\"".includes(str[nextCharIdx])) {
+              // terminate the property
+              pushProperty(property);
+              property = null;
+              initProperty(nextCharIdx);
+            }
+          }
       } // catch the colon of a css property
       // -------------------------------------------------------------------------
 
@@ -4550,7 +4557,11 @@
       // -------------------------------------------------------------------------
 
 
-      if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && attrNameRegexp.test(str[_i]) && token.selectorsEnd && token.openingCurlyAt && (!property || !property.propertyStarts)) {
+      if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && // let all the crap in, filter later:
+      !"{};".includes(str[_i]) && // above is instead of a stricter clause:
+      // attrNameRegexp.test(str[i]) &&
+      //
+      token.selectorsEnd && token.openingCurlyAt && (!property || !property.propertyStarts)) {
         initProperty(_i);
       } // in comment type, "only" kind tokens, submit square brackets to layers
       // -------------------------------------------------------------------------
@@ -4904,15 +4915,17 @@
 
             attrib.attribEnd = _i + 1;
 
+            if (property) {
+              attrib.attribValue.push(lodash_clonedeep(property));
+              property = null;
+            }
+
             if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
               // if it's not a property (of inline style), set its "end"
               if (!attrib.attribValue[~-attrib.attribValue.length].property) {
                 attrib.attribValue[~-attrib.attribValue.length].end = _i;
                 attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i);
               }
-            } else if (property) {
-              attrib.attribValue.push(lodash_clonedeep(property));
-              property = null;
             } // 2. if the pair was mismatching, wipe layers' last element
 
 
@@ -5143,17 +5156,17 @@
             }
           } else if ("'\"".includes(str[_i])) {
           // maybe it's <span width='"100"> and it's a false opening quote, '
-          var nextCharIdx = right(str, _i);
+          var _nextCharIdx = right(str, _i);
 
           if ( // a non-whitespace character exists on the right of index i
-          nextCharIdx && // if it is a quote character
-          "'\"".includes(str[nextCharIdx]) && // but opposite kind,
-          str[_i] !== str[nextCharIdx] && // and string is long enough
-          str.length > nextCharIdx + 2 && // and remaining string contains that quote like the one on the right
-          str.slice(nextCharIdx + 1).includes(str[nextCharIdx]) && ( // and to the right of it we don't have str[i] quote,
+          _nextCharIdx && // if it is a quote character
+          "'\"".includes(str[_nextCharIdx]) && // but opposite kind,
+          str[_i] !== str[_nextCharIdx] && // and string is long enough
+          str.length > _nextCharIdx + 2 && // and remaining string contains that quote like the one on the right
+          str.slice(_nextCharIdx + 1).includes(str[_nextCharIdx]) && ( // and to the right of it we don't have str[i] quote,
           // case: <span width="'100'">
-          !str.indexOf(str[nextCharIdx], nextCharIdx + 1) || !right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1)) || str[_i] !== str[right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1))]) && // and that slice does not contain equal or brackets or quote of other kind
-          !Array.from(str.slice(nextCharIdx + 1, str.indexOf(str[nextCharIdx]))).some(function (char) {
+          !str.indexOf(str[_nextCharIdx], _nextCharIdx + 1) || !right(str, str.indexOf(str[_nextCharIdx], _nextCharIdx + 1)) || str[_i] !== str[right(str, str.indexOf(str[_nextCharIdx], _nextCharIdx + 1))]) && // and that slice does not contain equal or brackets or quote of other kind
+          !Array.from(str.slice(_nextCharIdx + 1, str.indexOf(str[_nextCharIdx]))).some(function (char) {
             return "<>=".concat(str[_i]).includes(char);
           })) {
             // pop the layers
