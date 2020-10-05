@@ -470,6 +470,7 @@ const voidTags = [
 ];
 const charsThatEndCSSChunks = ["{", "}", ","];
 const BACKTICK = "\x60";
+const attrNameRegexp = /[\w-]/;
 function tokenizer(str, originalOpts) {
   const start = Date.now();
   if (!isStr(str)) {
@@ -1418,6 +1419,10 @@ function tokenizer(str, originalOpts) {
           token.properties.push(clone(property));
         }
         property = null;
+        const nextChar = right(str, i);
+        if (nextChar && attrNameRegexp.test(str[nextChar])) {
+          initProperty(nextChar);
+        }
       } else if (
         str[i] === ":" &&
         Number.isInteger(property.colon) &&
@@ -1481,8 +1486,9 @@ function tokenizer(str, originalOpts) {
       !doNothing &&
       property &&
       property.propertyStarts &&
+      property.propertyStarts < i &&
       !property.propertyEnds &&
-      !/[\w-]/.test(str[i])
+      !attrNameRegexp.test(str[i])
     ) {
       property.propertyEnds = i;
       property.property = str.slice(property.propertyStarts, i);
@@ -1513,7 +1519,7 @@ function tokenizer(str, originalOpts) {
       token.type === "rule" &&
       str[i] &&
       str[i].trim() &&
-      /[\w-]/.test(str[i]) &&
+      attrNameRegexp.test(str[i]) &&
       token.selectorsEnd &&
       token.openingCurlyAt &&
       (!property || !property.propertyStarts)

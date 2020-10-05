@@ -308,6 +308,7 @@ function isObj(something) {
 var voidTags = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"];
 var charsThatEndCSSChunks = ["{", "}", ","];
 var BACKTICK = "\x60";
+var attrNameRegexp = /[\w-]/;
 function tokenizer(str, originalOpts) {
   var start = Date.now();
   if (!isStr(str)) {
@@ -973,6 +974,10 @@ function tokenizer(str, originalOpts) {
           token.properties.push(clone__default['default'](property));
         }
         property = null;
+        var nextChar = stringLeftRight.right(str, _i);
+        if (nextChar && attrNameRegexp.test(str[nextChar])) {
+          initProperty(nextChar);
+        }
       } else if (str[_i] === ":" && Number.isInteger(property.colon) && property.colon < _i && lastNonWhitespaceCharAt && property.colon + 1 < lastNonWhitespaceCharAt) {
         var split = str.slice(stringLeftRight.right(str, property.colon), lastNonWhitespaceCharAt + 1).split(/\s+/);
         if (split.length === 2) {
@@ -1011,7 +1016,7 @@ function tokenizer(str, originalOpts) {
       }
     }
     if (!doNothing &&
-    property && property.propertyStarts && !property.propertyEnds && !/[\w-]/.test(str[_i])) {
+    property && property.propertyStarts && property.propertyStarts < _i && !property.propertyEnds && !attrNameRegexp.test(str[_i])) {
       property.propertyEnds = _i;
       property.property = str.slice(property.propertyStarts, _i);
       if ("};".includes(str[_i]) || !str[_i].trim() && str[stringLeftRight.right(str, _i)] === "}") {
@@ -1028,7 +1033,7 @@ function tokenizer(str, originalOpts) {
     property && property.propertyEnds && !property.valueStarts && str[_i] === ":") {
       property.colon = _i;
     }
-    if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && /[\w-]/.test(str[_i]) && token.selectorsEnd && token.openingCurlyAt && (!property || !property.propertyStarts)) {
+    if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && attrNameRegexp.test(str[_i]) && token.selectorsEnd && token.openingCurlyAt && (!property || !property.propertyStarts)) {
       initProperty(_i);
     }
     if (token.type === "comment" && ["only", "not"].includes(token.kind)) {

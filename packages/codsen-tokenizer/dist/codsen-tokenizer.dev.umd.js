@@ -3157,7 +3157,8 @@
   // const atRulesWhichMightWrapStyles = ["media", "supports", "document"];
 
   var charsThatEndCSSChunks = ["{", "}", ","];
-  var BACKTICK = "\x60"; // TODO remove:
+  var BACKTICK = "\x60";
+  var attrNameRegexp = /[\w-]/; // TODO remove:
   // same as used in string-extract-class-names
   // const badChars = `.# ~\\!@$%^&*()+=,/';:"?><[]{}|\`\t\n`;
 
@@ -4431,7 +4432,22 @@
             token.properties.push(lodash_clonedeep(property));
           }
 
-          property = null;
+          property = null; // initiate the next property if it exists
+
+          var nextChar = right(str, _i);
+
+          if (nextChar && attrNameRegexp.test(str[nextChar])) {
+            initProperty(nextChar); // attrib.attribValueStartsAt starts right after opening
+            // quotes, regardless of inner whitespace, so that we can
+            // slice and extract the contents.
+            // "property.propertyStarts" on other hand, minds the whitespace,
+            // we start it from the first non-whitespace character
+            // we don't put the /[\w-]/ regex validation here to catch-net
+            // more errors - let the bad characters enter property names,
+            // they'll be validated later down the line!
+            // don't push to "attrib.attribValue" because in DRY fashion
+            // we'll tap the existing "property" clauses that head CSS uses
+          }
         } else if (str[_i] === ":" && Number.isInteger(property.colon) && property.colon < _i && lastNonWhitespaceCharAt && property.colon + 1 < lastNonWhitespaceCharAt) {
           // .a{b:c d:e;}
           //         ^
@@ -4503,7 +4519,7 @@
 
 
       if (!doNothing && // token.type === "rule" &&
-      property && property.propertyStarts && !property.propertyEnds && !/[\w-]/.test(str[_i])) {
+      property && property.propertyStarts && property.propertyStarts < _i && !property.propertyEnds && !attrNameRegexp.test(str[_i])) {
         property.propertyEnds = _i;
         property.property = str.slice(property.propertyStarts, _i); // missing colon and onwards:
         // <style>.b{c}</style>
@@ -4535,7 +4551,7 @@
       // -------------------------------------------------------------------------
 
 
-      if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && /[\w-]/.test(str[_i]) && token.selectorsEnd && token.openingCurlyAt && (!property || !property.propertyStarts)) {
+      if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && attrNameRegexp.test(str[_i]) && token.selectorsEnd && token.openingCurlyAt && (!property || !property.propertyStarts)) {
         initProperty(_i);
       } // in comment type, "only" kind tokens, submit square brackets to layers
       // -------------------------------------------------------------------------
