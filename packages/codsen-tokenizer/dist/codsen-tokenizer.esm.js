@@ -1409,7 +1409,8 @@ function tokenizer(str, originalOpts) {
       if (
         (`;}`.includes(str[i]) &&
           (!attrib || !attrib.attribName || attrib.attribName !== "style")) ||
-        (`;'"`.includes(str[i]) && attrib && attrib.attribName === "style")
+        (`;'"`.includes(str[i]) && attrib && attrib.attribName === "style") ||
+        !str[i].trim()
       ) {
         property.valueEnds = lastNonWhitespaceCharAt + 1;
         property.value = str.slice(
@@ -1418,11 +1419,23 @@ function tokenizer(str, originalOpts) {
         );
         if (str[i] === ";") {
           property.semi = i;
+        } else if (
+          !str[i].trim() &&
+          str[right(str, i)] === ";"
+        ) {
+          property.semi = right(str, i);
         }
         pushProperty(property);
         property = null;
         const nextChar = right(str, i);
-        if (nextChar && attrNameRegexp.test(str[nextChar])) {
+        if (
+          nextChar &&
+          str[nextChar].trim() &&
+          ((attrib &&
+            attrib.attribName === "style" &&
+            !`"'<>`.includes(str[nextChar])) ||
+            (token.type === "rule" && !`;{}@`.includes(str[nextChar])))
+        ) {
           initProperty(nextChar);
         }
       } else if (
@@ -1486,7 +1499,10 @@ function tokenizer(str, originalOpts) {
       property.propertyStarts &&
       property.propertyStarts < i &&
       !property.propertyEnds &&
-      !attrNameRegexp.test(str[i])
+      (!str[i].trim() ||
+        (!attrNameRegexp.test(str[i]) &&
+          (str[i] === ":" ||
+            str[right(str, i)] !== ":")))
     ) {
       property.propertyEnds = i;
       property.property = str.slice(property.propertyStarts, i);

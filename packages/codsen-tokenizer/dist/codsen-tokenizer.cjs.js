@@ -968,16 +968,24 @@ function tokenizer(str, originalOpts) {
     property && property.valueStarts && !property.valueEnds) {
       if (
       ";}".includes(str[_i]) && (!attrib || !attrib.attribName || attrib.attribName !== "style") ||
-      ";'\"".includes(str[_i]) && attrib && attrib.attribName === "style") {
+      ";'\"".includes(str[_i]) && attrib && attrib.attribName === "style" ||
+      !str[_i].trim()) {
         property.valueEnds = lastNonWhitespaceCharAt + 1;
         property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
         if (str[_i] === ";") {
           property.semi = _i;
+        } else if (
+        !str[_i].trim() &&
+        str[stringLeftRight.right(str, _i)] === ";") {
+          property.semi = stringLeftRight.right(str, _i);
         }
         pushProperty(property);
         property = null;
         var nextChar = stringLeftRight.right(str, _i);
-        if (nextChar && attrNameRegexp.test(str[nextChar])) {
+        if (nextChar &&
+        str[nextChar].trim() && (
+        attrib && attrib.attribName === "style" && !"\"'<>".includes(str[nextChar]) ||
+        token.type === "rule" && !";{}@".includes(str[nextChar]))) {
           initProperty(nextChar);
         }
       } else if (str[_i] === ":" && Number.isInteger(property.colon) && property.colon < _i && lastNonWhitespaceCharAt && property.colon + 1 < lastNonWhitespaceCharAt) {
@@ -1014,7 +1022,11 @@ function tokenizer(str, originalOpts) {
       }
     }
     if (!doNothing &&
-    property && property.propertyStarts && property.propertyStarts < _i && !property.propertyEnds && !attrNameRegexp.test(str[_i])) {
+    property && property.propertyStarts && property.propertyStarts < _i && !property.propertyEnds && (
+    !str[_i].trim() ||
+    !attrNameRegexp.test(str[_i]) && (
+    str[_i] === ":" ||
+    str[stringLeftRight.right(str, _i)] !== ":"))) {
       property.propertyEnds = _i;
       property.property = str.slice(property.propertyStarts, _i);
       if ("};".includes(str[_i]) || !str[_i].trim() && str[stringLeftRight.right(str, _i)] === "}") {

@@ -4424,12 +4424,17 @@
       property && property.valueStarts && !property.valueEnds) {
         if ( // normal head css styles:
         ";}".includes(str[_i]) && (!attrib || !attrib.attribName || attrib.attribName !== "style") || // inline css styles within html
-        ";'\"".includes(str[_i]) && attrib && attrib.attribName === "style") {
+        ";'\"".includes(str[_i]) && attrib && attrib.attribName === "style" || // erroneous code:
+        !str[_i].trim()) {
           property.valueEnds = lastNonWhitespaceCharAt + 1;
           property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
 
           if (str[_i] === ";") {
             property.semi = _i;
+          } else if ( // it's whitespace
+          !str[_i].trim() && // semicolon follows
+          str[right(str, _i)] === ";") {
+            property.semi = right(str, _i);
           } // push and init and patch up to resume
 
 
@@ -4438,7 +4443,17 @@
 
           var nextChar = right(str, _i);
 
-          if (nextChar && attrNameRegexp.test(str[nextChar])) {
+          if (nextChar && //
+          // don't do proper validation:
+          // attrNameRegexp.test(str[nextChar])
+          //
+          // let's let in all the crap, then validate later, rather than
+          // omit it here and then later try to catch it from AST (more difficult)
+          //
+          str[nextChar].trim() && ( //
+          // and EITHER it's html inline css
+          attrib && attrib.attribName === "style" && !"\"'<>".includes(str[nextChar]) || // OR it's head css style
+          token.type === "rule" && !";{}@".includes(str[nextChar]))) {
             initProperty(nextChar); // attrib.attribValueStartsAt starts right after opening
             // quotes, regardless of inner whitespace, so that we can
             // slice and extract the contents.
@@ -4516,7 +4531,23 @@
 
 
       if (!doNothing && // token.type === "rule" &&
-      property && property.propertyStarts && property.propertyStarts < _i && !property.propertyEnds && !attrNameRegexp.test(str[_i])) {
+      property && property.propertyStarts && property.propertyStarts < _i && !property.propertyEnds && ( // it's whitespace
+      !str[_i].trim() || // or
+      // it's not suitable
+      !attrNameRegexp.test(str[_i]) && ( // and
+      // it's a colon (clean code)
+      // <div style="float:left;">z</div>
+      //                  ^
+      //          we're here
+      //
+      str[_i] === ":" || //
+      // or
+      //
+      // <div style="float.:left;">z</div>
+      //                  ^
+      //                include this dot within property name
+      //                so that we can catch it later validating prop names
+      str[right(str, _i)] !== ":"))) {
         property.propertyEnds = _i;
         property.property = str.slice(property.propertyStarts, _i); // missing colon and onwards:
         // <style>.b{c}</style>

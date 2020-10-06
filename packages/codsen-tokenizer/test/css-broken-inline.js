@@ -280,22 +280,8 @@ tap.test(
   }
 );
 
-tap.todo(
-  `04 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character`,
-  (t) => {
-    const gathered = [];
-    ct(`<div style=".float:left;">z</div>`, {
-      tagCb: (obj) => {
-        gathered.push(obj);
-      },
-    });
-    t.strictSame(gathered, [], "04");
-    t.end();
-  }
-);
-
-tap.todo(
-  `05 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character`,
+tap.test(
+  `04 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - copious line breaks`,
   (t) => {
     const gathered = [];
     ct(`<div style="\n float:left;\n">z</div>`, {
@@ -303,13 +289,163 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.strictSame(gathered, [], "05");
+    t.strictSame(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 28,
+          value: '<div style="\n float:left;\n">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 4,
+          tagName: "div",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [
+            {
+              attribName: "style",
+              attribNameRecognised: true,
+              attribNameStartsAt: 5,
+              attribNameEndsAt: 10,
+              attribOpeningQuoteAt: 11,
+              attribClosingQuoteAt: 26,
+              attribValueRaw: "\n float:left;\n",
+              attribValue: [
+                {
+                  property: "float",
+                  propertyStarts: 14,
+                  propertyEnds: 19,
+                  colon: 19,
+                  value: "left",
+                  valueStarts: 20,
+                  valueEnds: 24,
+                  semi: 24,
+                },
+              ],
+              attribValueStartsAt: 12,
+              attribValueEndsAt: 26,
+              attribStarts: 5,
+              attribEnd: 27,
+              attribLeft: 3,
+            },
+          ],
+        },
+        {
+          type: "text",
+          start: 28,
+          end: 29,
+          value: "z",
+        },
+        {
+          type: "tag",
+          start: 29,
+          end: 35,
+          value: "</div>",
+          tagNameStartsAt: 31,
+          tagNameEndsAt: 34,
+          tagName: "div",
+          recognised: true,
+          closing: true,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [],
+        },
+      ],
+      "04"
+    );
     t.end();
   }
 );
 
-tap.todo(
-  `06 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character`,
+tap.test(
+  `05 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character before prop name`,
+  (t) => {
+    const gathered = [];
+    ct(`<div style=".float:left;">z</div>`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.strictSame(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 26,
+          value: '<div style=".float:left;">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 4,
+          tagName: "div",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [
+            {
+              attribName: "style",
+              attribNameRecognised: true,
+              attribNameStartsAt: 5,
+              attribNameEndsAt: 10,
+              attribOpeningQuoteAt: 11,
+              attribClosingQuoteAt: 24,
+              attribValueRaw: ".float:left;",
+              attribValue: [
+                {
+                  property: ".float", // <---
+                  propertyStarts: 12,
+                  propertyEnds: 18,
+                  colon: 18,
+                  value: "left",
+                  valueStarts: 19,
+                  valueEnds: 23,
+                  semi: 23,
+                },
+              ],
+              attribValueStartsAt: 12,
+              attribValueEndsAt: 24,
+              attribStarts: 5,
+              attribEnd: 25,
+              attribLeft: 3,
+            },
+          ],
+        },
+        {
+          type: "text",
+          start: 26,
+          end: 27,
+          value: "z",
+        },
+        {
+          type: "tag",
+          start: 27,
+          end: 33,
+          value: "</div>",
+          tagNameStartsAt: 29,
+          tagNameEndsAt: 32,
+          tagName: "div",
+          recognised: true,
+          closing: true,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [],
+        },
+      ],
+      "05"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `06 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character after prop name`,
   (t) => {
     const gathered = [];
     ct(`<div style="float.:left;">z</div>`, {
@@ -317,13 +453,81 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.strictSame(gathered, [], "06");
+    t.strictSame(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 26,
+          value: '<div style="float.:left;">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 4,
+          tagName: "div",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [
+            {
+              attribName: "style",
+              attribNameRecognised: true,
+              attribNameStartsAt: 5,
+              attribNameEndsAt: 10,
+              attribOpeningQuoteAt: 11,
+              attribClosingQuoteAt: 24,
+              attribValueRaw: "float.:left;",
+              attribValue: [
+                {
+                  property: "float.", // <---
+                  propertyStarts: 12,
+                  propertyEnds: 18,
+                  colon: 18,
+                  value: "left",
+                  valueStarts: 19,
+                  valueEnds: 23,
+                  semi: 23,
+                },
+              ],
+              attribValueStartsAt: 12,
+              attribValueEndsAt: 24,
+              attribStarts: 5,
+              attribEnd: 25,
+              attribLeft: 3,
+            },
+          ],
+        },
+        {
+          type: "text",
+          start: 26,
+          end: 27,
+          value: "z",
+        },
+        {
+          type: "tag",
+          start: 27,
+          end: 33,
+          value: "</div>",
+          tagNameStartsAt: 29,
+          tagNameEndsAt: 32,
+          tagName: "div",
+          recognised: true,
+          closing: true,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [],
+        },
+      ],
+      "06"
+    );
     t.end();
   }
 );
 
-tap.todo(
-  `07 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character`,
+tap.test(
+  `07 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character before prop name, no value`,
   (t) => {
     const gathered = [];
     ct(`<div style=".main">z</div>`, {
@@ -331,13 +535,81 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.strictSame(gathered, [], "07");
+    t.strictSame(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 19,
+          value: '<div style=".main">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 4,
+          tagName: "div",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [
+            {
+              attribName: "style",
+              attribNameRecognised: true,
+              attribNameStartsAt: 5,
+              attribNameEndsAt: 10,
+              attribOpeningQuoteAt: 11,
+              attribClosingQuoteAt: 17,
+              attribValueRaw: ".main",
+              attribValue: [
+                {
+                  property: ".main",
+                  propertyStarts: 12,
+                  propertyEnds: 17,
+                  colon: null,
+                  value: null,
+                  valueStarts: null,
+                  valueEnds: null,
+                  semi: null,
+                },
+              ],
+              attribValueStartsAt: 12,
+              attribValueEndsAt: 17,
+              attribStarts: 5,
+              attribEnd: 18,
+              attribLeft: 3,
+            },
+          ],
+        },
+        {
+          type: "text",
+          start: 19,
+          end: 20,
+          value: "z",
+        },
+        {
+          type: "tag",
+          start: 20,
+          end: 26,
+          value: "</div>",
+          tagNameStartsAt: 22,
+          tagNameEndsAt: 25,
+          tagName: "div",
+          recognised: true,
+          closing: true,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [],
+        },
+      ],
+      "07"
+    );
     t.end();
   }
 );
 
-tap.todo(
-  `08 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character`,
+tap.test(
+  `08 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character after value, no semi`,
   (t) => {
     const gathered = [];
     ct(`<div style="float:left.">z</div>`, {
@@ -345,13 +617,163 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.strictSame(gathered, [], "08");
+    t.strictSame(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 25,
+          value: '<div style="float:left.">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 4,
+          tagName: "div",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [
+            {
+              attribName: "style",
+              attribNameRecognised: true,
+              attribNameStartsAt: 5,
+              attribNameEndsAt: 10,
+              attribOpeningQuoteAt: 11,
+              attribClosingQuoteAt: 23,
+              attribValueRaw: "float:left.",
+              attribValue: [
+                {
+                  property: "float",
+                  propertyStarts: 12,
+                  propertyEnds: 17,
+                  colon: 17,
+                  value: "left.",
+                  valueStarts: 18,
+                  valueEnds: 23,
+                  semi: null,
+                },
+              ],
+              attribValueStartsAt: 12,
+              attribValueEndsAt: 23,
+              attribStarts: 5,
+              attribEnd: 24,
+              attribLeft: 3,
+            },
+          ],
+        },
+        {
+          type: "text",
+          start: 25,
+          end: 26,
+          value: "z",
+        },
+        {
+          type: "tag",
+          start: 26,
+          end: 32,
+          value: "</div>",
+          tagNameStartsAt: 28,
+          tagNameEndsAt: 31,
+          tagName: "div",
+          recognised: true,
+          closing: true,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [],
+        },
+      ],
+      "08"
+    );
     t.end();
   }
 );
 
-tap.todo(
-  `09 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character`,
+tap.test(
+  `09 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character after value, with semi`,
+  (t) => {
+    const gathered = [];
+    ct(`<div style="float:left.;">z</div>`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.strictSame(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 26,
+          value: '<div style="float:left.;">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 4,
+          tagName: "div",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [
+            {
+              attribName: "style",
+              attribNameRecognised: true,
+              attribNameStartsAt: 5,
+              attribNameEndsAt: 10,
+              attribOpeningQuoteAt: 11,
+              attribClosingQuoteAt: 24,
+              attribValueRaw: "float:left.;",
+              attribValue: [
+                {
+                  property: "float",
+                  propertyStarts: 12,
+                  propertyEnds: 17,
+                  colon: 17,
+                  value: "left.",
+                  valueStarts: 18,
+                  valueEnds: 23,
+                  semi: 23,
+                },
+              ],
+              attribValueStartsAt: 12,
+              attribValueEndsAt: 24,
+              attribStarts: 5,
+              attribEnd: 25,
+              attribLeft: 3,
+            },
+          ],
+        },
+        {
+          type: "text",
+          start: 26,
+          end: 27,
+          value: "z",
+        },
+        {
+          type: "tag",
+          start: 27,
+          end: 33,
+          value: "</div>",
+          tagNameStartsAt: 29,
+          tagNameEndsAt: 32,
+          tagName: "div",
+          recognised: true,
+          closing: true,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [],
+        },
+      ],
+      "09"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `10 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character`,
   (t) => {
     const gathered = [];
     ct(`<div style="\n\n   float:left\n\n   .">z</div>`, {
@@ -359,13 +781,91 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.strictSame(gathered, [], "09");
+    t.strictSame(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 35,
+          value: '<div style="\n\n   float:left\n\n   .">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 4,
+          tagName: "div",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [
+            {
+              attribName: "style",
+              attribNameRecognised: true,
+              attribNameStartsAt: 5,
+              attribNameEndsAt: 10,
+              attribOpeningQuoteAt: 11,
+              attribClosingQuoteAt: 33,
+              attribValueRaw: "\n\n   float:left\n\n   .",
+              attribValue: [
+                {
+                  property: "float",
+                  propertyStarts: 17,
+                  propertyEnds: 22,
+                  colon: 22,
+                  value: "left",
+                  valueStarts: 23,
+                  valueEnds: 27,
+                  semi: null,
+                },
+                {
+                  property: ".",
+                  propertyStarts: 32,
+                  propertyEnds: 33,
+                  colon: null,
+                  value: null,
+                  valueStarts: null,
+                  valueEnds: null,
+                  semi: null,
+                },
+              ],
+              attribValueStartsAt: 12,
+              attribValueEndsAt: 33,
+              attribStarts: 5,
+              attribEnd: 34,
+              attribLeft: 3,
+            },
+          ],
+        },
+        {
+          type: "text",
+          start: 35,
+          end: 36,
+          value: "z",
+        },
+        {
+          type: "tag",
+          start: 36,
+          end: 42,
+          value: "</div>",
+          tagNameStartsAt: 38,
+          tagNameEndsAt: 41,
+          tagName: "div",
+          recognised: true,
+          closing: true,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [],
+        },
+      ],
+      "10"
+    );
     t.end();
   }
 );
 
-tap.todo(
-  `10 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character`,
+tap.test(
+  `11 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - rogue character`,
   (t) => {
     const gathered = [];
     ct(`<div style="\n\n   float:left;\n\n   .">z</div>`, {
@@ -373,30 +873,94 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.strictSame(gathered, [], "10");
+    t.strictSame(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 36,
+          value: '<div style="\n\n   float:left;\n\n   .">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 4,
+          tagName: "div",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [
+            {
+              attribName: "style",
+              attribNameRecognised: true,
+              attribNameStartsAt: 5,
+              attribNameEndsAt: 10,
+              attribOpeningQuoteAt: 11,
+              attribClosingQuoteAt: 34,
+              attribValueRaw: "\n\n   float:left;\n\n   .",
+              attribValue: [
+                {
+                  property: "float",
+                  propertyStarts: 17,
+                  propertyEnds: 22,
+                  colon: 22,
+                  value: "left",
+                  valueStarts: 23,
+                  valueEnds: 27,
+                  semi: 27,
+                },
+                {
+                  property: ".",
+                  propertyStarts: 33,
+                  propertyEnds: 34,
+                  colon: null,
+                  value: null,
+                  valueStarts: null,
+                  valueEnds: null,
+                  semi: null,
+                },
+              ],
+              attribValueStartsAt: 12,
+              attribValueEndsAt: 34,
+              attribStarts: 5,
+              attribEnd: 35,
+              attribLeft: 3,
+            },
+          ],
+        },
+        {
+          type: "text",
+          start: 36,
+          end: 37,
+          value: "z",
+        },
+        {
+          type: "tag",
+          start: 37,
+          end: 43,
+          value: "</div>",
+          tagNameStartsAt: 39,
+          tagNameEndsAt: 42,
+          tagName: "div",
+          recognised: true,
+          closing: true,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [],
+        },
+      ],
+      "11"
+    );
     t.end();
   }
 );
 
 tap.todo(
-  `11 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - semi instead of a colon #1`,
+  `12 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - semi instead of a colon #1`,
   (t) => {
     const gathered = [];
     ct(`<div style="float;left">z</div>`, {
-      tagCb: (obj) => {
-        gathered.push(obj);
-      },
-    });
-    t.strictSame(gathered, [], "11");
-    t.end();
-  }
-);
-
-tap.todo(
-  `12 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - semi instead of a colon #2`,
-  (t) => {
-    const gathered = [];
-    ct(`<div style="float;left;">z</div>`, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
@@ -407,10 +971,10 @@ tap.todo(
 );
 
 tap.todo(
-  `13 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - quoted property value, no semi #1`,
+  `13 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - semi instead of a colon #2`,
   (t) => {
     const gathered = [];
-    ct(`<div style="float:"left"">z</div>`, {
+    ct(`<div style="float;left;">z</div>`, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
@@ -421,10 +985,10 @@ tap.todo(
 );
 
 tap.todo(
-  `14 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - quoted property value, no semi #2`,
+  `14 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - quoted property value, no semi #1`,
   (t) => {
     const gathered = [];
-    ct(`<div style="float:'left'">z</div>`, {
+    ct(`<div style="float:"left"">z</div>`, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
@@ -435,10 +999,10 @@ tap.todo(
 );
 
 tap.todo(
-  `15 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - quoted property value, semi #3`,
+  `15 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - quoted property value, no semi #2`,
   (t) => {
     const gathered = [];
-    ct(`<div style="float:"left";">z</div>`, {
+    ct(`<div style="float:'left'">z</div>`, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
@@ -449,10 +1013,10 @@ tap.todo(
 );
 
 tap.todo(
-  `16 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - quoted property value, semi #4`,
+  `16 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - quoted property value, semi #3`,
   (t) => {
     const gathered = [];
-    ct(`<div style="float:'left';">z</div>`, {
+    ct(`<div style="float:"left";">z</div>`, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
@@ -463,7 +1027,21 @@ tap.todo(
 );
 
 tap.todo(
-  `17 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - quoted property values`,
+  `17 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - quoted property value, semi #4`,
+  (t) => {
+    const gathered = [];
+    ct(`<div style="float:'left';">z</div>`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.strictSame(gathered, [], "17");
+    t.end();
+  }
+);
+
+tap.todo(
+  `18 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - quoted property values`,
   (t) => {
     const gathered = [];
     ct(`<div style="float:'left'; color: 'red'">z</div>`, {
@@ -471,7 +1049,7 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.strictSame(gathered, [], "17");
+    t.strictSame(gathered, [], "18");
     t.end();
   }
 );
