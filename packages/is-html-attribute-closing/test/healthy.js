@@ -112,3 +112,9 @@ tap.test(
     t.end();
   }
 );
+
+tap.test(`06`, (t) => {
+  const str = `<body alink="">`;
+  t.true(is(str, 12, 13), "06");
+  t.end();
+});
