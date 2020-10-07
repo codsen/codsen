@@ -112,6 +112,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
   var lastMatchedQuotesPairsStartIsAt = false;
   var lastMatchedQuotesPairsEndIsAt = false;
   var lastCapturedChunk;
+  var secondLastCapturedChunk;
   var lastChunkWasCapturedAfterSuspectedClosing = false;
   var closingBracketMet = false;
   var openingBracketMet = false;
@@ -151,7 +152,11 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       charSuitableForHTMLAttrName__default['default'](str[stringLeftRight.right(str, i)]);
       var E43 =
       lastQuoteWasMatched && i !== isThisClosingIdx;
-      return E1 && E2 && (E31 || E32 || E33 || E34) && (E41 || E42 || E43);
+      var E5 =
+      !(
+      i >= isThisClosingIdx &&
+      str[stringLeftRight.left(str, isThisClosingIdx)] === ":");
+      return E1 && E2 && (E31 || E32 || E33 || E34) && (E41 || E42 || E43) && E5;
     }
     if ("'\"".includes(str[i])) {
       if (str[i] === "'" && str[i - 1] === "\"" && str[i + 1] === "\"" || str[i] === "\"" && str[i - 1] === "'" && str[i + 1] === "'") {
@@ -185,15 +190,17 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         chunkStartsAt = i;
       }
     } else if (chunkStartsAt && !charSuitableForHTMLAttrName__default['default'](str[i])) {
+      secondLastCapturedChunk = lastCapturedChunk;
       lastCapturedChunk = str.slice(chunkStartsAt, i);
       lastChunkWasCapturedAfterSuspectedClosing = chunkStartsAt >= isThisClosingIdx;
-      if ("'\"".includes(str[i]) && quotesCount.get("matchedPairs") === 0 && totalQuotesCount === 3 && str[idxOfAttrOpening] === str[i] && htmlAllKnownAttributes.allHtmlAttribs.has(lastCapturedChunk)) {
+      if ("'\"".includes(str[i]) && quotesCount.get("matchedPairs") === 0 && totalQuotesCount === 3 && str[idxOfAttrOpening] === str[i] && htmlAllKnownAttributes.allHtmlAttribs.has(lastCapturedChunk) && !"'\"".includes(str[stringLeftRight.right(str, i)])) {
         var A1 = i > isThisClosingIdx;
         var A21 = !lastQuoteAt;
         var A22 = lastQuoteAt + 1 >= i;
         var A23 = str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(function (chunk) {
           return htmlAllKnownAttributes.allHtmlAttribs.has(chunk);
         });
+        var A3 = !lastCapturedChunk || !secondLastCapturedChunk || !secondLastCapturedChunk.endsWith(":");
         var B1 = i === isThisClosingIdx;
         var B21 = totalQuotesCount < 3;
         var B22 = !!lastQuoteWasMatched;
@@ -202,7 +209,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         var B25 = !str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(function (chunk) {
           return htmlAllKnownAttributes.allHtmlAttribs.has(chunk);
         });
-        return A1 && (A21 || A22 || A23) || B1 && (B21 || B22 || B23 || B24 || B25);
+        return A1 && (A21 || A22 || A23) && A3 || B1 && (B21 || B22 || B23 || B24 || B25);
       }
       if (
       lastCapturedChunk && htmlAllKnownAttributes.allHtmlAttribs.has(lastCapturedChunk) && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt === isThisClosingIdx) {
@@ -215,7 +222,12 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     (quotesCount.get("\"") + quotesCount.get("'")) % 2 && (
     lastCapturedChunk &&
     htmlAllKnownAttributes.allHtmlAttribs.has(lastCapturedChunk) ||
-    i > isThisClosingIdx + 1 && htmlAllKnownAttributes.allHtmlAttribs.has(str.slice(isThisClosingIdx + 1, i).trim()))) {
+    i > isThisClosingIdx + 1 && htmlAllKnownAttributes.allHtmlAttribs.has(str.slice(isThisClosingIdx + 1, i).trim())) &&
+    !(str[i + 1] === str[i] && str[i] === str[idxOfAttrOpening]) &&
+    !(
+    i > isThisClosingIdx + 1 &&
+    str[stringLeftRight.left(str, isThisClosingIdx)] === ":") &&
+    !(lastCapturedChunk && secondLastCapturedChunk && secondLastCapturedChunk.trim().endsWith(":"))) {
       var R0 = i > isThisClosingIdx;
       var R1 = !!openingQuote;
       var R2 = str[idxOfAttrOpening] !== str[isThisClosingIdx];
@@ -246,7 +258,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
           return htmlAllKnownAttributes.allHtmlAttribs.has(chunk);
         });
         var Y5 = i >= isThisClosingIdx;
-        return Y1 && Y2 && Y3 && Y4 && Y5;
+        var Y6 = !str[stringLeftRight.right(str, i)] || !"'\"".includes(str[stringLeftRight.right(str, i)]);
+        return Y1 && Y2 && Y3 && Y4 && Y5 && Y6;
       }
       if (
       openingQuote &&
@@ -318,6 +331,9 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       }
       if (i < isThisClosingIdx && "'\"".includes(str[i]) && lastCapturedChunk && str[stringLeftRight.left(str, idxOfAttrOpening)] && str[stringLeftRight.left(str, idxOfAttrOpening)] !== "=" && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && htmlAllKnownAttributes.allHtmlAttribs.has(lastCapturedChunk)) {
         return false;
+      }
+      if (i === isThisClosingIdx && "'\"".includes(str[i]) && lastCapturedChunk && secondLastCapturedChunk && totalQuotesCount % 2 === 0 && secondLastCapturedChunk.endsWith(":")) {
+        return true;
       }
     }
     if ("'\"".includes(str[i]) &&

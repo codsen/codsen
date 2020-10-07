@@ -2491,7 +2491,8 @@
     // we can evaluate that chunk, was it a known attribute name (idea being,
     // known attribute name followed by quote is probably legit attribute starting)
 
-    var lastCapturedChunk; // this boolean flag signifies, was the last chunk captured after passing
+    var lastCapturedChunk;
+    var secondLastCapturedChunk; // this boolean flag signifies, was the last chunk captured after passing
     // "isThisClosingIdx":
     // idea being, if you pass suspected quotes, then encounter new-ones and
     // in-between does not resemble an attribute name, it's falsey result:
@@ -2662,7 +2663,20 @@
         //                           ^
         //                          here
         lastQuoteWasMatched && i !== isThisClosingIdx;
-        return E1 && E2 && (E31 || E32 || E33 || E34) && (E41 || E42 || E43);
+        var E5 = // it's not a double-wrapped attribute value:
+        //
+        // <div style="float:"left"">z</div>
+        //            ^      ^
+        //          start   suspected
+        //
+        // we're at:
+        // <div style="float:"left"">z</div>
+        //                        ^
+        //                      here
+        !( // rule must not trigger before the suspected quote index
+        i >= isThisClosingIdx && // there's colon to the left of a suspected quote
+        str[left(str, isThisClosingIdx)] === ":");
+        return E1 && E2 && (E31 || E32 || E33 || E34) && (E41 || E42 || E43) && E5;
       } // catch quotes
 
 
@@ -2758,6 +2772,7 @@
         }
       } else if (chunkStartsAt && !charSuitableForHTMLAttrName(str[i])) {
         // ending of an attr name chunk
+        secondLastCapturedChunk = lastCapturedChunk;
         lastCapturedChunk = str.slice(chunkStartsAt, i);
         lastChunkWasCapturedAfterSuspectedClosing = chunkStartsAt >= isThisClosingIdx; // console.log(
         //   `434 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`}`
@@ -2772,7 +2787,7 @@
         // <z bbb"c' href"e>
         //               ^
 
-        if ("'\"".includes(str[i]) && quotesCount.get("matchedPairs") === 0 && totalQuotesCount === 3 && str[idxOfAttrOpening] === str[i] && allHtmlAttribs.has(lastCapturedChunk)) {
+        if ("'\"".includes(str[i]) && quotesCount.get("matchedPairs") === 0 && totalQuotesCount === 3 && str[idxOfAttrOpening] === str[i] && allHtmlAttribs.has(lastCapturedChunk) && !"'\"".includes(str[right(str, i)])) {
           var A1 = i > isThisClosingIdx; //
           // ensure that all continuous chunks since the last quote are
           // recognised attribute names
@@ -2781,7 +2796,11 @@
           var A22 = lastQuoteAt + 1 >= i;
           var A23 = str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(function (chunk) {
             return allHtmlAttribs.has(chunk);
-          });
+          }); // <div style="float:'left"">z</div>
+          //            ^           ^
+          //          start      we're here
+
+          var A3 = !lastCapturedChunk || !secondLastCapturedChunk || !secondLastCapturedChunk.endsWith(":");
           var B1 = i === isThisClosingIdx;
           var B21 = totalQuotesCount < 3;
           var B22 = !!lastQuoteWasMatched;
@@ -2790,7 +2809,7 @@
           var B25 = !str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(function (chunk) {
             return allHtmlAttribs.has(chunk);
           });
-          return A1 && (A21 || A22 || A23) || B1 && (B21 || B22 || B23 || B24 || B25);
+          return A1 && (A21 || A22 || A23) && A3 || B1 && (B21 || B22 || B23 || B24 || B25);
         }
 
         if ( // this is a recognised attribute
@@ -2832,7 +2851,40 @@
       // <z bbb"c" ddd'e'>
       //       ^      ^
       //     start   suspected ending
-      i > isThisClosingIdx + 1 && allHtmlAttribs.has(str.slice(isThisClosingIdx + 1, i).trim()))) {
+      i > isThisClosingIdx + 1 && allHtmlAttribs.has(str.slice(isThisClosingIdx + 1, i).trim())) && //
+      // the same quote doesn't follow on the right,
+      // think <div style="float:"left"">z</div>
+      //                  ^           ^
+      //               start    suspected closing
+      !(str[i + 1] === str[i] && str[i] === str[idxOfAttrOpening]) && //
+      //
+      // and it's not this case:
+      //
+      // <div style="float:'left'">z</div>
+      //            ^      ^
+      //         start   suspected
+      //
+      // we're here:
+      // <div style="float:'left'">z</div>
+      //                        ^
+      //                       here
+      !( // we're part the suspected closing, on another closing
+      i > isThisClosingIdx + 1 && // colon is to the left of suspected
+      str[left(str, isThisClosingIdx)] === ":") && //
+      // the suspected quote is the fourth,
+      // <div style="float:'left'">z</div>
+      //            ^            ^
+      //          start        suspected
+      //
+      // we want to exclude the quote on the left:
+      // <div style="float:'left'">z</div>
+      //                        ^
+      //                       this
+      //
+      // in which case, we'd have:
+      // lastCapturedChunk = "left"
+      // secondLastCapturedChunk = "float:"
+      !(lastCapturedChunk && secondLastCapturedChunk && secondLastCapturedChunk.trim().endsWith(":"))) {
         // rules:
         // before suspected index this pattern is falsey, after - truthy
         var R0 = i > isThisClosingIdx; //
@@ -2910,7 +2962,8 @@
             return allHtmlAttribs.has(chunk);
           });
           var Y5 = i >= isThisClosingIdx;
-          return Y1 && Y2 && Y3 && Y4 && Y5;
+          var Y6 = !str[right(str, i)] || !"'\"".includes(str[right(str, i)]);
+          return Y1 && Y2 && Y3 && Y4 && Y5 && Y6;
         } // if we have passed the suspected closing quote
         // and we meet another quote of the same kind,
         // it's false result. Imagine code:
@@ -3093,6 +3146,15 @@
 
         if (i < isThisClosingIdx && "'\"".includes(str[i]) && lastCapturedChunk && str[left(str, idxOfAttrOpening)] && str[left(str, idxOfAttrOpening)] !== "=" && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && allHtmlAttribs.has(lastCapturedChunk)) {
           return false;
+        } // catch
+        // <div style="float:"left'">z</div>
+        //            ^            ^
+        //          start       we're here, and also it's suspected too
+        //
+
+
+        if (i === isThisClosingIdx && "'\"".includes(str[i]) && lastCapturedChunk && secondLastCapturedChunk && totalQuotesCount % 2 === 0 && secondLastCapturedChunk.endsWith(":")) {
+          return true;
         }
       } //
       //

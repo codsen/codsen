@@ -89,6 +89,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
   let lastMatchedQuotesPairsStartIsAt = false;
   let lastMatchedQuotesPairsEndIsAt = false;
   let lastCapturedChunk;
+  let secondLastCapturedChunk;
   let lastChunkWasCapturedAfterSuspectedClosing = false;
   let closingBracketMet = false;
   let openingBracketMet = false;
@@ -145,7 +146,16 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         charSuitableForHTMLAttrName(str[right(str, i)]);
       const E43 =
         lastQuoteWasMatched && i !== isThisClosingIdx;
-      return E1 && E2 && (E31 || E32 || E33 || E34) && (E41 || E42 || E43);
+      const E5 =
+        !(
+          (
+            i >= isThisClosingIdx &&
+            str[left(str, isThisClosingIdx)] === ":"
+          )
+        );
+      return (
+        E1 && E2 && (E31 || E32 || E33 || E34) && (E41 || E42 || E43) && E5
+      );
     }
     if (`'"`.includes(str[i])) {
       if (
@@ -186,6 +196,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         chunkStartsAt = i;
       }
     } else if (chunkStartsAt && !charSuitableForHTMLAttrName(str[i])) {
+      secondLastCapturedChunk = lastCapturedChunk;
       lastCapturedChunk = str.slice(chunkStartsAt, i);
       lastChunkWasCapturedAfterSuspectedClosing =
         chunkStartsAt >= isThisClosingIdx;
@@ -194,7 +205,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         quotesCount.get(`matchedPairs`) === 0 &&
         totalQuotesCount === 3 &&
         str[idxOfAttrOpening] === str[i] &&
-        allHtmlAttribs.has(lastCapturedChunk)
+        allHtmlAttribs.has(lastCapturedChunk) &&
+        !`'"`.includes(str[right(str, i)])
       ) {
         const A1 = i > isThisClosingIdx;
         const A21 = !lastQuoteAt;
@@ -204,6 +216,10 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
           .trim()
           .split(/\s+/)
           .every((chunk) => allHtmlAttribs.has(chunk));
+        const A3 =
+          !lastCapturedChunk ||
+          !secondLastCapturedChunk ||
+          !secondLastCapturedChunk.endsWith(":");
         const B1 = i === isThisClosingIdx;
         const B21 = totalQuotesCount < 3;
         const B22 = !!lastQuoteWasMatched;
@@ -215,7 +231,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
           .split(/\s+/)
           .every((chunk) => allHtmlAttribs.has(chunk));
         return (
-          (A1 && (A21 || A22 || A23)) ||
+          (A1 && (A21 || A22 || A23) && A3) ||
           (B1 && (B21 || B22 || B23 || B24 || B25))
         );
       }
@@ -235,7 +251,19 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       ((lastCapturedChunk &&
         allHtmlAttribs.has(lastCapturedChunk)) ||
         (i > isThisClosingIdx + 1 &&
-          allHtmlAttribs.has(str.slice(isThisClosingIdx + 1, i).trim())))
+          allHtmlAttribs.has(str.slice(isThisClosingIdx + 1, i).trim()))) &&
+      !(str[i + 1] === str[i] && str[i] === str[idxOfAttrOpening]) &&
+      !(
+        (
+          i > isThisClosingIdx + 1 &&
+          str[left(str, isThisClosingIdx)] === ":"
+        )
+      ) &&
+      !(
+        lastCapturedChunk &&
+        secondLastCapturedChunk &&
+        secondLastCapturedChunk.trim().endsWith(":")
+      )
     ) {
       const R0 = i > isThisClosingIdx;
       const R1 = !!openingQuote;
@@ -286,7 +314,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
           .split(/\s+/)
           .every((chunk) => allHtmlAttribs.has(chunk));
         const Y5 = i >= isThisClosingIdx;
-        return Y1 && Y2 && Y3 && Y4 && Y5;
+        const Y6 = !str[right(str, i)] || !`'"`.includes(str[right(str, i)]);
+        return Y1 && Y2 && Y3 && Y4 && Y5 && Y6;
       }
       if (
         openingQuote &&
@@ -405,6 +434,16 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         allHtmlAttribs.has(lastCapturedChunk)
       ) {
         return false;
+      }
+      if (
+        i === isThisClosingIdx &&
+        `'"`.includes(str[i]) &&
+        lastCapturedChunk &&
+        secondLastCapturedChunk &&
+        totalQuotesCount % 2 === 0 &&
+        secondLastCapturedChunk.endsWith(":")
+      ) {
+        return true;
       }
     }
     if (
