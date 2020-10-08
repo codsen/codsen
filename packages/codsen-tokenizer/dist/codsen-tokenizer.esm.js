@@ -832,6 +832,17 @@ function tokenizer(str, originalOpts) {
     propertyReset();
     property.propertyStarts = propertyStarts;
   }
+  function ifQuoteThenAttrClosingQuote(idx) {
+    return (
+      !`'"`.includes(str[idx]) ||
+      !(attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt) ||
+      attributeEnds(
+        str,
+        attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt,
+        idx
+      )
+    );
+  }
   for (let i = 0; i <= len; i++) {
     if (!doNothing && str[i] && opts.reportProgressFunc) {
       if (len > 1000 && len < 2000) {
@@ -961,7 +972,8 @@ function tokenizer(str, originalOpts) {
               [`"`, `'`, "`"].includes(str[left(str, i)]) &&
               str[left(str, i)] === str[right(str, i)]
             )
-          )
+          ) &&
+          ifQuoteThenAttrClosingQuote(i)
         ) {
           if (
             Array.isArray(layers) &&
@@ -1409,7 +1421,10 @@ function tokenizer(str, originalOpts) {
       if (
         (`;}`.includes(str[i]) &&
           (!attrib || !attrib.attribName || attrib.attribName !== "style")) ||
-        (`;'"`.includes(str[i]) && attrib && attrib.attribName === "style") ||
+        (`;'"`.includes(str[i]) &&
+          attrib &&
+          attrib.attribName === "style" &&
+          ifQuoteThenAttrClosingQuote(i)) ||
         !str[i].trim()
       ) {
         property.valueEnds = lastNonWhitespaceCharAt + 1;
@@ -1465,7 +1480,10 @@ function tokenizer(str, originalOpts) {
       !property.valueStarts &&
       str[i].trim()
     ) {
-      if (`;}`.includes(str[i])) {
+      if (
+        `;}'"`.includes(str[i]) &&
+        ifQuoteThenAttrClosingQuote(i)
+      ) {
         if (str[i] === ";") {
           property.semi = i;
         }
@@ -1543,6 +1561,18 @@ function tokenizer(str, originalOpts) {
       token.selectorsEnd &&
       token.openingCurlyAt &&
       (!property || !property.propertyStarts)
+    ) {
+      initProperty(i);
+    }
+    if (
+      !doNothing &&
+      attrib &&
+      attrib.attribName === "style" &&
+      attrib.attribOpeningQuoteAt &&
+      !attrib.attribClosingQuoteAt &&
+      !property &&
+      str[i].trim() &&
+      !`'";`.includes(str[i])
     ) {
       initProperty(i);
     }
@@ -1826,34 +1856,6 @@ function tokenizer(str, originalOpts) {
           i
         );
         if (
-          str[left(str, i)] === str[i] &&
-          !`/>${espChars}`.includes(str[right(str, i)]) &&
-          !xBeforeYOnTheRight(str, i, "=", `"`) &&
-          !xBeforeYOnTheRight(str, i, "=", `'`) &&
-          (xBeforeYOnTheRight(str, i, `"`, `>`) ||
-            xBeforeYOnTheRight(str, i, `'`, `>`)) &&
-          (!str.slice(i + 1).includes("<") ||
-            !str.slice(0, str.indexOf("<")).includes("="))
-        ) {
-          attrib.attribOpeningQuoteAt = i;
-          attrib.attribValueStartsAt = i + 1;
-          if (
-            Array.isArray(attrib.attribValue) &&
-            attrib.attribValue.length &&
-            attrib.attribValue[~-attrib.attribValue.length].start &&
-            !attrib.attribValue[~-attrib.attribValue.length].end &&
-            attrib.attribValueStartsAt >
-              attrib.attribValue[~-attrib.attribValue.length].start
-          ) {
-            attrib.attribValue[~-attrib.attribValue.length].start =
-              attrib.attribValueStartsAt;
-          }
-          layers.push({
-            type: "simple",
-            value: str[i],
-            position: i,
-          });
-        } else if (
           !layers.some((layerObj) => layerObj.type === "esp") &&
           attributeEnds(
             str,
@@ -2123,7 +2125,8 @@ function tokenizer(str, originalOpts) {
             attrib.attribOpeningQuoteAt = i;
             if (
               str[i + 1] &&
-              str[i + 1] !== str[i]
+              (str[i + 1] !== str[i] ||
+                !ifQuoteThenAttrClosingQuote(i + 1))
             ) {
               attrib.attribValueStartsAt = i + 1;
               if (
@@ -2133,7 +2136,9 @@ function tokenizer(str, originalOpts) {
               ) {
                 if (attrib.attribName === "style") {
                   initProperty(right(str, i));
-                } else {
+                } else if (
+                  !ifQuoteThenAttrClosingQuote(i + 1)
+                ) {
                   attrib.attribValue.push({
                     type: "text",
                     start: attrib.attribValueStartsAt,
@@ -2144,22 +2149,9 @@ function tokenizer(str, originalOpts) {
               }
             }
           } else {
+            /* istanbul ignore else */
             if (attributeEnds(str, attrib.attribOpeningQuoteAt, i)) {
               attrib.attribClosingQuoteAt = i;
-            }
-            else {
-              attrib.attribOpeningQuoteAt = i;
-              layers.push({
-                type: "simple",
-                value: str[i],
-                position: i,
-              });
-              if (
-                str[i + 1] &&
-                str[i + 1] !== str[i]
-              ) {
-                attrib.attribValueStartsAt = i + 1;
-              }
             }
             /* istanbul ignore else */
             if (attrib.attribOpeningQuoteAt && attrib.attribClosingQuoteAt) {

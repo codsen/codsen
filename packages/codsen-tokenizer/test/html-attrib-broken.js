@@ -7,439 +7,422 @@ const apostrophe = `\u0027`;
 // broken HTML in attribute areas
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - no equals but quotes present`,
-  (t) => {
-    const gathered = [];
-    ct(`<a href"www" class'e'>`, {
-      tagCb: (obj) => {
-        gathered.push(obj);
+tap.test(`01 - no equals but quotes present`, (t) => {
+  const gathered = [];
+  ct(`<a href"www" class'e'>`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 22,
+        value: `<a href"www" class'e'>`,
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 2,
+        tagName: "a",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [
+          {
+            attribName: "href",
+            attribNameRecognised: true,
+            attribNameStartsAt: 3,
+            attribNameEndsAt: 7,
+            attribOpeningQuoteAt: 7,
+            attribClosingQuoteAt: 11,
+            attribValueRaw: "www",
+            attribValue: [
+              {
+                type: "text",
+                start: 8,
+                end: 11,
+                value: "www",
+              },
+            ],
+            attribValueStartsAt: 8,
+            attribValueEndsAt: 11,
+            attribStarts: 3,
+            attribEnd: 12,
+          },
+          {
+            attribName: "class",
+            attribNameRecognised: true,
+            attribNameStartsAt: 13,
+            attribNameEndsAt: 18,
+            attribOpeningQuoteAt: 18,
+            attribClosingQuoteAt: 20,
+            attribValueRaw: "e",
+            attribValue: [
+              {
+                type: "text",
+                start: 19,
+                end: 20,
+                value: "e",
+              },
+            ],
+            attribValueStartsAt: 19,
+            attribValueEndsAt: 20,
+            attribStarts: 13,
+            attribEnd: 21,
+          },
+        ],
       },
-    });
+    ],
+    "01"
+  );
+  t.end();
+});
 
-    t.match(
-      gathered,
-      [
-        {
-          type: "tag",
-          start: 0,
-          end: 22,
-          value: `<a href"www" class'e'>`,
-          tagNameStartsAt: 1,
-          tagNameEndsAt: 2,
-          tagName: "a",
-          recognised: true,
-          closing: false,
-          void: false,
-          pureHTML: true,
-          kind: null,
-          attribs: [
-            {
-              attribName: "href",
-              attribNameRecognised: true,
-              attribNameStartsAt: 3,
-              attribNameEndsAt: 7,
-              attribOpeningQuoteAt: 7,
-              attribClosingQuoteAt: 11,
-              attribValueRaw: "www",
-              attribValue: [
-                {
-                  type: "text",
-                  start: 8,
-                  end: 11,
-                  value: "www",
-                },
-              ],
-              attribValueStartsAt: 8,
-              attribValueEndsAt: 11,
-              attribStarts: 3,
-              attribEnd: 12,
-            },
-            {
-              attribName: "class",
-              attribNameRecognised: true,
-              attribNameStartsAt: 13,
-              attribNameEndsAt: 18,
-              attribOpeningQuoteAt: 18,
-              attribClosingQuoteAt: 20,
-              attribValueRaw: "e",
-              attribValue: [
-                {
-                  type: "text",
-                  start: 19,
-                  end: 20,
-                  value: "e",
-                },
-              ],
-              attribValueStartsAt: 19,
-              attribValueEndsAt: 20,
-              attribStarts: 13,
-              attribEnd: 21,
-            },
-          ],
-        },
-      ],
-      "01"
-    );
-    t.end();
-  }
-);
+tap.test(`02 - no opening quotes but equals present`, (t) => {
+  const gathered = [];
+  ct(`<a href=www" class=e'>`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
 
-tap.test(
-  `02 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - no opening quotes but equals present`,
-  (t) => {
-    const gathered = [];
-    ct(`<a href=www" class=e'>`, {
-      tagCb: (obj) => {
-        gathered.push(obj);
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 22,
+        value: `<a href=www" class=e'>`,
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 2,
+        tagName: "a",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [
+          {
+            attribName: "href",
+            attribNameRecognised: true,
+            attribNameStartsAt: 3,
+            attribNameEndsAt: 7,
+            attribOpeningQuoteAt: null,
+            attribClosingQuoteAt: 11,
+            attribValueRaw: "www",
+            attribValue: [
+              {
+                type: "text",
+                start: 8,
+                end: 11,
+                value: "www",
+              },
+            ],
+            attribValueStartsAt: 8,
+            attribValueEndsAt: 11,
+            attribStarts: 3,
+            attribEnd: 12,
+          },
+          {
+            attribName: "class",
+            attribNameRecognised: true,
+            attribNameStartsAt: 13,
+            attribNameEndsAt: 18,
+            attribOpeningQuoteAt: null,
+            attribClosingQuoteAt: 20,
+            attribValueRaw: "e",
+            attribValue: [
+              {
+                type: "text",
+                start: 19,
+                end: 20,
+                value: "e",
+              },
+            ],
+            attribValueStartsAt: 19,
+            attribValueEndsAt: 20,
+            attribStarts: 13,
+            attribEnd: 21,
+          },
+        ],
       },
-    });
+    ],
+    "02"
+  );
+  t.end();
+});
 
-    t.match(
-      gathered,
-      [
-        {
-          type: "tag",
-          start: 0,
-          end: 22,
-          value: `<a href=www" class=e'>`,
-          tagNameStartsAt: 1,
-          tagNameEndsAt: 2,
-          tagName: "a",
-          recognised: true,
-          closing: false,
-          void: false,
-          pureHTML: true,
-          kind: null,
-          attribs: [
-            {
-              attribName: "href",
-              attribNameRecognised: true,
-              attribNameStartsAt: 3,
-              attribNameEndsAt: 7,
-              attribOpeningQuoteAt: null,
-              attribClosingQuoteAt: 11,
-              attribValueRaw: "www",
-              attribValue: [
-                {
-                  type: "text",
-                  start: 8,
-                  end: 11,
-                  value: "www",
-                },
-              ],
-              attribValueStartsAt: 8,
-              attribValueEndsAt: 11,
-              attribStarts: 3,
-              attribEnd: 12,
-            },
-            {
-              attribName: "class",
-              attribNameRecognised: true,
-              attribNameStartsAt: 13,
-              attribNameEndsAt: 18,
-              attribOpeningQuoteAt: null,
-              attribClosingQuoteAt: 20,
-              attribValueRaw: "e",
-              attribValue: [
-                {
-                  type: "text",
-                  start: 19,
-                  end: 20,
-                  value: "e",
-                },
-              ],
-              attribValueStartsAt: 19,
-              attribValueEndsAt: 20,
-              attribStarts: 13,
-              attribEnd: 21,
-            },
-          ],
-        },
-      ],
-      "02"
-    );
-    t.end();
-  }
-);
+tap.test(`03 - two equals`, (t) => {
+  const gathered = [];
+  ct(`<a b=="c" d=='e'>`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
 
-tap.test(
-  `03 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - two equals`,
-  (t) => {
-    const gathered = [];
-    ct(`<a b=="c" d=='e'>`, {
-      tagCb: (obj) => {
-        gathered.push(obj);
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 17,
+        attribs: [
+          {
+            attribName: "b",
+            attribNameStartsAt: 3,
+            attribNameEndsAt: 4,
+            attribOpeningQuoteAt: 6,
+            attribClosingQuoteAt: 8,
+            attribValueRaw: "c",
+            attribValue: [
+              {
+                type: "text",
+                start: 7,
+                end: 8,
+                value: "c",
+              },
+            ],
+            attribValueStartsAt: 7,
+            attribValueEndsAt: 8,
+            attribStarts: 3,
+            attribEnd: 9,
+          },
+          {
+            attribName: "d",
+            attribNameStartsAt: 10,
+            attribNameEndsAt: 11,
+            attribOpeningQuoteAt: 13,
+            attribClosingQuoteAt: 15,
+            attribValueRaw: "e",
+            attribValue: [
+              {
+                type: "text",
+                start: 14,
+                end: 15,
+                value: "e",
+              },
+            ],
+            attribValueStartsAt: 14,
+            attribValueEndsAt: 15,
+            attribStarts: 10,
+            attribEnd: 16,
+          },
+        ],
       },
-    });
+    ],
+    "03"
+  );
+  t.end();
+});
 
-    t.match(
-      gathered,
-      [
-        {
-          type: "tag",
-          start: 0,
-          end: 17,
-          attribs: [
-            {
-              attribName: "b",
-              attribNameStartsAt: 3,
-              attribNameEndsAt: 4,
-              attribOpeningQuoteAt: 6,
-              attribClosingQuoteAt: 8,
-              attribValueRaw: "c",
-              attribValue: [
-                {
-                  type: "text",
-                  start: 7,
-                  end: 8,
-                  value: "c",
-                },
-              ],
-              attribValueStartsAt: 7,
-              attribValueEndsAt: 8,
-              attribStarts: 3,
-              attribEnd: 9,
-            },
-            {
-              attribName: "d",
-              attribNameStartsAt: 10,
-              attribNameEndsAt: 11,
-              attribOpeningQuoteAt: 13,
-              attribClosingQuoteAt: 15,
-              attribValueRaw: "e",
-              attribValue: [
-                {
-                  type: "text",
-                  start: 14,
-                  end: 15,
-                  value: "e",
-                },
-              ],
-              attribValueStartsAt: 14,
-              attribValueEndsAt: 15,
-              attribStarts: 10,
-              attribEnd: 16,
-            },
-          ],
-        },
-      ],
-      "03"
-    );
-    t.end();
-  }
-);
+tap.test(`04 - empty attr value`, (t) => {
+  const gathered = [];
+  ct(`<body alink="">`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
 
-tap.test(
-  `04 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - empty attr value`,
-  (t) => {
-    const gathered = [];
-    ct(`<body alink="">`, {
-      tagCb: (obj) => {
-        gathered.push(obj);
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 15,
+        value: '<body alink="">',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 5,
+        tagName: "body",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [
+          {
+            attribName: "alink",
+            attribNameRecognised: true,
+            attribNameStartsAt: 6,
+            attribNameEndsAt: 11,
+            attribOpeningQuoteAt: 12,
+            attribClosingQuoteAt: 13,
+            attribValueRaw: "",
+            attribValue: [],
+            attribValueStartsAt: null,
+            attribValueEndsAt: null,
+            attribStarts: 6,
+            attribEnd: 14,
+            attribLeft: 4,
+          },
+        ],
       },
-    });
+    ],
+    "04"
+  );
+  t.end();
+});
 
-    t.strictSame(
-      gathered,
-      [
-        {
-          type: "tag",
-          start: 0,
-          end: 15,
-          value: '<body alink="">',
-          tagNameStartsAt: 1,
-          tagNameEndsAt: 5,
-          tagName: "body",
-          recognised: true,
-          closing: false,
-          void: false,
-          pureHTML: true,
-          kind: null,
-          attribs: [
-            {
-              attribName: "alink",
-              attribNameRecognised: true,
-              attribNameStartsAt: 6,
-              attribNameEndsAt: 11,
-              attribOpeningQuoteAt: 12,
-              attribClosingQuoteAt: 13,
-              attribValueRaw: "",
-              attribValue: [],
-              attribValueStartsAt: null,
-              attribValueEndsAt: null,
-              attribStarts: 6,
-              attribEnd: 14,
-              attribLeft: 4,
-            },
-          ],
-        },
-      ],
-      "04"
-    );
-    t.end();
-  }
-);
+tap.test(`05 - false alarm, brackets - rgb()`, (t) => {
+  const gathered = [];
+  ct(`<body alink="rgb()">`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
 
-tap.test(
-  `05 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - false alarm, brackets - rgb()`,
-  (t) => {
-    const gathered = [];
-    ct(`<body alink="rgb()">`, {
-      tagCb: (obj) => {
-        gathered.push(obj);
+  t.match(
+    gathered,
+    [
+      {
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 5,
+        tagName: "body",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        type: "tag",
+        start: 0,
+        end: 20,
+        tail: null,
+        kind: null,
+        attribs: [
+          {
+            attribName: "alink",
+            attribNameStartsAt: 6,
+            attribNameEndsAt: 11,
+            attribOpeningQuoteAt: 12,
+            attribClosingQuoteAt: 18,
+            attribValueRaw: "rgb()",
+            attribValue: [
+              {
+                type: "text",
+                start: 13,
+                end: 18,
+                value: "rgb()",
+              },
+            ],
+            attribValueStartsAt: 13,
+            attribValueEndsAt: 18,
+            attribStarts: 6,
+            attribEnd: 19,
+          },
+        ],
       },
-    });
+    ],
+    "05"
+  );
+  t.end();
+});
 
-    t.match(
-      gathered,
-      [
-        {
-          tagNameStartsAt: 1,
-          tagNameEndsAt: 5,
-          tagName: "body",
-          recognised: true,
-          closing: false,
-          void: false,
-          pureHTML: true,
-          type: "tag",
-          start: 0,
-          end: 20,
-          tail: null,
-          kind: null,
-          attribs: [
-            {
-              attribName: "alink",
-              attribNameStartsAt: 6,
-              attribNameEndsAt: 11,
-              attribOpeningQuoteAt: 12,
-              attribClosingQuoteAt: 18,
-              attribValueRaw: "rgb()",
-              attribValue: [
-                {
-                  type: "text",
-                  start: 13,
-                  end: 18,
-                  value: "rgb()",
-                },
-              ],
-              attribValueStartsAt: 13,
-              attribValueEndsAt: 18,
-              attribStarts: 6,
-              attribEnd: 19,
-            },
-          ],
-        },
-      ],
-      "05"
-    );
-    t.end();
-  }
-);
+tap.test(`06 - space instead of equal`, (t) => {
+  const gathered = [];
+  ct(`<a class "c" id 'e' href "www">`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
 
-tap.test(
-  `06 - ${`\u001b[${36}m${`broken`}\u001b[${39}m`} - space instead of equal`,
-  (t) => {
-    const gathered = [];
-    ct(`<a class "c" id 'e' href "www">`, {
-      tagCb: (obj) => {
-        gathered.push(obj);
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 31,
+        value: `<a class "c" id 'e' href "www">`,
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 2,
+        tagName: "a",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [
+          {
+            attribName: "class",
+            attribNameRecognised: true,
+            attribNameStartsAt: 3,
+            attribNameEndsAt: 8,
+            attribOpeningQuoteAt: 9,
+            attribClosingQuoteAt: 11,
+            attribValueRaw: "c",
+            attribValue: [
+              {
+                type: "text",
+                start: 10,
+                end: 11,
+                value: "c",
+              },
+            ],
+            attribValueStartsAt: 10,
+            attribValueEndsAt: 11,
+            attribStarts: 3,
+            attribEnd: 12,
+          },
+          {
+            attribName: "id",
+            attribNameRecognised: true,
+            attribNameStartsAt: 13,
+            attribNameEndsAt: 15,
+            attribOpeningQuoteAt: 16,
+            attribClosingQuoteAt: 18,
+            attribValueRaw: "e",
+            attribValue: [
+              {
+                type: "text",
+                start: 17,
+                end: 18,
+                value: "e",
+              },
+            ],
+            attribValueStartsAt: 17,
+            attribValueEndsAt: 18,
+            attribStarts: 13,
+            attribEnd: 19,
+          },
+          {
+            attribName: "href",
+            attribNameRecognised: true,
+            attribNameStartsAt: 20,
+            attribNameEndsAt: 24,
+            attribOpeningQuoteAt: 25,
+            attribClosingQuoteAt: 29,
+            attribValueRaw: "www",
+            attribValue: [
+              {
+                type: "text",
+                start: 26,
+                end: 29,
+                value: "www",
+              },
+            ],
+            attribValueStartsAt: 26,
+            attribValueEndsAt: 29,
+            attribStarts: 20,
+            attribEnd: 30,
+          },
+        ],
       },
-    });
-
-    t.match(
-      gathered,
-      [
-        {
-          type: "tag",
-          start: 0,
-          end: 31,
-          value: `<a class "c" id 'e' href "www">`,
-          tagNameStartsAt: 1,
-          tagNameEndsAt: 2,
-          tagName: "a",
-          recognised: true,
-          closing: false,
-          void: false,
-          pureHTML: true,
-          kind: null,
-          attribs: [
-            {
-              attribName: "class",
-              attribNameRecognised: true,
-              attribNameStartsAt: 3,
-              attribNameEndsAt: 8,
-              attribOpeningQuoteAt: 9,
-              attribClosingQuoteAt: 11,
-              attribValueRaw: "c",
-              attribValue: [
-                {
-                  type: "text",
-                  start: 10,
-                  end: 11,
-                  value: "c",
-                },
-              ],
-              attribValueStartsAt: 10,
-              attribValueEndsAt: 11,
-              attribStarts: 3,
-              attribEnd: 12,
-            },
-            {
-              attribName: "id",
-              attribNameRecognised: true,
-              attribNameStartsAt: 13,
-              attribNameEndsAt: 15,
-              attribOpeningQuoteAt: 16,
-              attribClosingQuoteAt: 18,
-              attribValueRaw: "e",
-              attribValue: [
-                {
-                  type: "text",
-                  start: 17,
-                  end: 18,
-                  value: "e",
-                },
-              ],
-              attribValueStartsAt: 17,
-              attribValueEndsAt: 18,
-              attribStarts: 13,
-              attribEnd: 19,
-            },
-            {
-              attribName: "href",
-              attribNameRecognised: true,
-              attribNameStartsAt: 20,
-              attribNameEndsAt: 24,
-              attribOpeningQuoteAt: 25,
-              attribClosingQuoteAt: 29,
-              attribValueRaw: "www",
-              attribValue: [
-                {
-                  type: "text",
-                  start: 26,
-                  end: 29,
-                  value: "www",
-                },
-              ],
-              attribValueStartsAt: 26,
-              attribValueEndsAt: 29,
-              attribStarts: 20,
-              attribEnd: 30,
-            },
-          ],
-        },
-      ],
-      "06"
-    );
-    t.end();
-  }
-);
+    ],
+    "06"
+  );
+  t.end();
+});
 
 tap.test(
   `07 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - opening quote repeated`,
   (t) => {
     const gathered = [];
+    // <table width=""100">
     ct(
       `<table width="${doubleQuotes}100">
   zzz
@@ -472,18 +455,18 @@ tap.test(
               attribNameRecognised: true,
               attribNameStartsAt: 7,
               attribNameEndsAt: 12,
-              attribOpeningQuoteAt: 14,
+              attribOpeningQuoteAt: 13,
               attribClosingQuoteAt: 18,
-              attribValueRaw: "100",
+              attribValueRaw: `"100`,
               attribValue: [
                 {
                   type: "text",
-                  start: 15,
+                  start: 14,
                   end: 18,
-                  value: "100",
+                  value: `"100`,
                 },
               ],
-              attribValueStartsAt: 15,
+              attribValueStartsAt: 14,
               attribValueEndsAt: 18,
               attribStarts: 7,
               attribEnd: 19,
@@ -550,18 +533,18 @@ tap.test(
               attribNameRecognised: true,
               attribNameStartsAt: 6,
               attribNameEndsAt: 11,
-              attribOpeningQuoteAt: 13,
+              attribOpeningQuoteAt: 12,
               attribClosingQuoteAt: 18,
               attribValueRaw: " 100",
               attribValue: [
                 {
                   type: "text",
-                  start: 14,
+                  start: 13,
                   end: 18,
-                  value: " 100",
+                  value: `" 100`,
                 },
               ],
-              attribValueStartsAt: 14,
+              attribValueStartsAt: 13,
               attribValueEndsAt: 18,
               attribStarts: 6,
               attribEnd: 19,
@@ -611,18 +594,18 @@ tap.test(
               attribNameRecognised: true,
               attribNameStartsAt: 6,
               attribNameEndsAt: 11,
-              attribOpeningQuoteAt: 13,
+              attribOpeningQuoteAt: 12,
               attribClosingQuoteAt: 18,
               attribValueRaw: " 100",
               attribValue: [
                 {
                   type: "text",
-                  start: 14,
+                  start: 13,
                   end: 18,
-                  value: " 100",
+                  value: `" 100`,
                 },
               ],
-              attribValueStartsAt: 14,
+              attribValueStartsAt: 13,
               attribValueEndsAt: 18,
               attribStarts: 6,
               attribEnd: 19,
@@ -693,18 +676,18 @@ tap.test(
               attribNameRecognised: true,
               attribNameStartsAt: 6,
               attribNameEndsAt: 11,
-              attribOpeningQuoteAt: 13,
+              attribOpeningQuoteAt: 12,
               attribClosingQuoteAt: 18,
               attribValueRaw: " 100",
               attribValue: [
                 {
                   type: "text",
-                  start: 14,
+                  start: 13,
                   end: 18,
                   value: " 100",
                 },
               ],
-              attribValueStartsAt: 14,
+              attribValueStartsAt: 13,
               attribValueEndsAt: 18,
               attribStarts: 6,
               attribEnd: 19,
@@ -1805,3 +1788,57 @@ tap.test(
     t.end();
   }
 );
+
+tap.test(`27 - two layers of quotes`, (t) => {
+  const gathered = [];
+  ct(`<span width="'100'">`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 20,
+        value: "<span width=\"'100'\">",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 5,
+        tagName: "span",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [
+          {
+            attribName: "width",
+            attribNameRecognised: true,
+            attribNameStartsAt: 6,
+            attribNameEndsAt: 11,
+            attribOpeningQuoteAt: 12,
+            attribClosingQuoteAt: 18,
+            attribValueRaw: "'100'",
+            attribValue: [
+              {
+                type: "text",
+                start: 13,
+                end: 18,
+                value: "'100'",
+              },
+            ],
+            attribValueStartsAt: 13,
+            attribValueEndsAt: 18,
+            attribStarts: 6,
+            attribEnd: 19,
+            attribLeft: 4,
+          },
+        ],
+      },
+    ],
+    "27"
+  );
+  t.end();
+});

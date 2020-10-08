@@ -956,7 +956,7 @@ tap.test(
   }
 );
 
-tap.todo(
+tap.test(
   `12 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - semi instead of a colon #1`,
   (t) => {
     const gathered = [];
@@ -965,12 +965,90 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.strictSame(gathered, [], "12");
+    t.strictSame(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 24,
+          value: '<div style="float;left">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 4,
+          tagName: "div",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [
+            {
+              attribName: "style",
+              attribNameRecognised: true,
+              attribNameStartsAt: 5,
+              attribNameEndsAt: 10,
+              attribOpeningQuoteAt: 11,
+              attribClosingQuoteAt: 22,
+              attribValueRaw: "float;left",
+              attribValue: [
+                {
+                  property: "float",
+                  propertyStarts: 12,
+                  propertyEnds: 17,
+                  colon: null,
+                  value: null,
+                  valueStarts: null,
+                  valueEnds: null,
+                  semi: 17,
+                },
+                {
+                  property: "left",
+                  propertyStarts: 18,
+                  propertyEnds: 22,
+                  colon: null,
+                  value: null,
+                  valueStarts: null,
+                  valueEnds: null,
+                  semi: null,
+                },
+              ],
+              attribValueStartsAt: 12,
+              attribValueEndsAt: 22,
+              attribStarts: 5,
+              attribEnd: 23,
+              attribLeft: 3,
+            },
+          ],
+        },
+        {
+          type: "text",
+          start: 24,
+          end: 25,
+          value: "z",
+        },
+        {
+          type: "tag",
+          start: 25,
+          end: 31,
+          value: "</div>",
+          tagNameStartsAt: 27,
+          tagNameEndsAt: 30,
+          tagName: "div",
+          recognised: true,
+          closing: true,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [],
+        },
+      ],
+      "12"
+    );
     t.end();
   }
 );
 
-tap.todo(
+tap.test(
   `13 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - semi instead of a colon #2`,
   (t) => {
     const gathered = [];
@@ -979,12 +1057,93 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.strictSame(gathered, [], "13");
+    t.strictSame(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 25,
+          value: '<div style="float;left;">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 4,
+          tagName: "div",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [
+            {
+              attribName: "style",
+              attribNameRecognised: true,
+              attribNameStartsAt: 5,
+              attribNameEndsAt: 10,
+              attribOpeningQuoteAt: 11,
+              attribClosingQuoteAt: 23,
+              attribValueRaw: "float;left;",
+              attribValue: [
+                {
+                  property: "float",
+                  propertyStarts: 12,
+                  propertyEnds: 17,
+                  colon: null,
+                  value: null,
+                  valueStarts: null,
+                  valueEnds: null,
+                  semi: 17,
+                },
+                {
+                  property: "left",
+                  propertyStarts: 18,
+                  propertyEnds: 22,
+                  colon: null,
+                  value: null,
+                  valueStarts: null,
+                  valueEnds: null,
+                  semi: 22,
+                },
+              ],
+              attribValueStartsAt: 12,
+              attribValueEndsAt: 23,
+              attribStarts: 5,
+              attribEnd: 24,
+              attribLeft: 3,
+            },
+          ],
+        },
+        {
+          type: "text",
+          start: 25,
+          end: 26,
+          value: "z",
+        },
+        {
+          type: "tag",
+          start: 26,
+          end: 32,
+          value: "</div>",
+          tagNameStartsAt: 28,
+          tagNameEndsAt: 31,
+          tagName: "div",
+          recognised: true,
+          closing: true,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [],
+        },
+      ],
+      "13"
+    );
     t.end();
   }
 );
 
-tap.todo(
+// quoted
+// -----------------------------------------------------------------------------
+
+tap.test(
   `14 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - quoted property value, no semi #1`,
   (t) => {
     const gathered = [];
@@ -993,7 +1152,75 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.strictSame(gathered, [], "14");
+    t.strictSame(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 26,
+          value: `<div style="float:"left"">`,
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 4,
+          tagName: "div",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [
+            {
+              attribName: "style",
+              attribNameRecognised: true,
+              attribNameStartsAt: 5,
+              attribNameEndsAt: 10,
+              attribOpeningQuoteAt: 11,
+              attribClosingQuoteAt: 24,
+              attribValueRaw: `float:"left"`,
+              attribValue: [
+                {
+                  property: "float",
+                  propertyStarts: 12,
+                  propertyEnds: 17,
+                  colon: 17,
+                  value: `"left"`,
+                  valueStarts: 18,
+                  valueEnds: 24,
+                  semi: null,
+                },
+              ],
+              attribValueStartsAt: 12,
+              attribValueEndsAt: 24,
+              attribStarts: 5,
+              attribEnd: 25,
+              attribLeft: 3,
+            },
+          ],
+        },
+        {
+          type: "text",
+          start: 26,
+          end: 27,
+          value: "z",
+        },
+        {
+          type: "tag",
+          start: 27,
+          end: 33,
+          value: "</div>",
+          tagNameStartsAt: 29,
+          tagNameEndsAt: 32,
+          tagName: "div",
+          recognised: true,
+          closing: true,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [],
+        },
+      ],
+      "14"
+    );
     t.end();
   }
 );

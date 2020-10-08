@@ -3249,89 +3249,7 @@ tap.test(
 );
 
 tap.test(
-  `41 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - two layers of quotes`,
-  (t) => {
-    const gathered = [];
-    ct(
-      `<span width="'100'">
-  zzz
-</span>`,
-      {
-        tagCb: (obj) => {
-          gathered.push(obj);
-        },
-      }
-    );
-    t.match(
-      gathered,
-      [
-        {
-          type: "tag",
-          start: 0,
-          end: 20,
-          value: `<span width="'100'">`,
-          tagNameStartsAt: 1,
-          tagNameEndsAt: 5,
-          tagName: "span",
-          recognised: true,
-          closing: false,
-          void: false,
-          pureHTML: true,
-          kind: null,
-          attribs: [
-            {
-              attribName: "width",
-              attribNameRecognised: true,
-              attribNameStartsAt: 6,
-              attribNameEndsAt: 11,
-              attribOpeningQuoteAt: 12,
-              attribClosingQuoteAt: 18,
-              attribValueRaw: `'100'`,
-              attribValue: [
-                {
-                  type: "text",
-                  start: 13,
-                  end: 18,
-                  value: `'100'`,
-                },
-              ],
-              attribValueStartsAt: 13,
-              attribValueEndsAt: 18,
-              attribStarts: 6,
-              attribEnd: 19,
-            },
-          ],
-        },
-        {
-          type: "text",
-          start: 20,
-          end: 27,
-          value: "\n  zzz\n",
-        },
-        {
-          type: "tag",
-          start: 27,
-          end: 34,
-          value: "</span>",
-          tagNameStartsAt: 29,
-          tagNameEndsAt: 33,
-          tagName: "span",
-          recognised: true,
-          closing: true,
-          void: false,
-          pureHTML: true,
-          kind: null,
-          attribs: [],
-        },
-      ],
-      "41"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `42 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - rogue character`,
+  `41 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - rogue character`,
   (t) => {
     const gathered = [];
     ct(
@@ -3406,14 +3324,14 @@ tap.test(
           attribs: [],
         },
       ],
-      "42"
+      "41"
     );
     t.end();
   }
 );
 
 tap.test(
-  `43 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - many dots`,
+  `42 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - many dots`,
   (t) => {
     const gathered = [];
     ct(
@@ -3479,14 +3397,14 @@ tap.test(
           value: "</span>",
         },
       ],
-      "43"
+      "42"
     );
     t.end();
   }
 );
 
 tap.test(
-  `44 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - all spaced`,
+  `43 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - all spaced`,
   (t) => {
     const gathered = [];
     ct(
@@ -3561,14 +3479,14 @@ tap.test(
           attribs: [],
         },
       ],
-      "44"
+      "43"
     );
     t.end();
   }
 );
 
 tap.test(
-  `45 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, word, slash`,
+  `44 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing completely, word, slash`,
   (t) => {
     const gathered = [];
     ct(
@@ -3643,14 +3561,14 @@ tap.test(
           attribs: [],
         },
       ],
-      "45"
+      "44"
     );
     t.end();
   }
 );
 
 tap.test(
-  `46 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing, one attr`,
+  `45 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - quotes missing, one attr`,
   (t) => {
     const gathered = [];
     ct(
@@ -3716,14 +3634,14 @@ tap.test(
           value: "</span>",
         },
       ],
-      "46"
+      "45"
     );
     t.end();
   }
 );
 
 tap.test(
-  `47 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quotes and equal missing`,
+  `46 - ${`\u001b[${33}m${`broken opening`}\u001b[${39}m`} - mismatching quotes and equal missing`,
   (t) => {
     const gathered = [];
     ct(`<a class"c' id"e'>`, {
@@ -3795,7 +3713,7 @@ tap.test(
           ],
         },
       ],
-      "47"
+      "46"
     );
     t.end();
   }
@@ -3805,7 +3723,7 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `48 - ${`\u001b[${33}m${`broken closing`}\u001b[${39}m`} - missing closing quote, one attr`,
+  `47 - ${`\u001b[${33}m${`broken closing`}\u001b[${39}m`} - missing closing quote, one attr`,
   (t) => {
     const gathered = [];
     ct(`<span width="100>zzz</span>`, {
@@ -3875,14 +3793,14 @@ tap.test(
           attribs: [],
         },
       ],
-      "48"
+      "47"
     );
     t.end();
   }
 );
 
 tap.test(
-  `49 - ${`\u001b[${33}m${`broken closing`}\u001b[${39}m`} - missing closing quote, two attrs`,
+  `48 - ${`\u001b[${33}m${`broken closing`}\u001b[${39}m`} - missing closing quote, two attrs`,
   (t) => {
     const gathered = [];
     ct(`<a href="xyz border="0">`, {
@@ -3952,7 +3870,7 @@ tap.test(
           ],
         },
       ],
-      "49"
+      "48"
     );
     t.end();
   }

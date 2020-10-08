@@ -2513,6 +2513,7 @@
     var lastMatchedQuotesPairsStartIsAt = false;
     var lastMatchedQuotesPairsEndIsAt = false;
     var lastCapturedChunk;
+    var secondLastCapturedChunk;
     var lastChunkWasCapturedAfterSuspectedClosing = false;
     var closingBracketMet = false;
     var openingBracketMet = false;
@@ -2537,7 +2538,8 @@
         var E41 = "/>".includes(str[right(str, i)]) && i === isThisClosingIdx;
         var E42 = charSuitableForHTMLAttrName(str[right(str, i)]);
         var E43 = lastQuoteWasMatched && i !== isThisClosingIdx;
-        return E1 && E2 && (E31 || E32 || E33 || E34) && (E41 || E42 || E43);
+        var E5 = !(i >= isThisClosingIdx && str[left(str, isThisClosingIdx)] === ":");
+        return E1 && E2 && (E31 || E32 || E33 || E34) && (E41 || E42 || E43) && E5;
       }
 
       if ("'\"".includes(str[i])) {
@@ -2577,16 +2579,18 @@
           chunkStartsAt = i;
         }
       } else if (chunkStartsAt && !charSuitableForHTMLAttrName(str[i])) {
+        secondLastCapturedChunk = lastCapturedChunk;
         lastCapturedChunk = str.slice(chunkStartsAt, i);
         lastChunkWasCapturedAfterSuspectedClosing = chunkStartsAt >= isThisClosingIdx;
 
-        if ("'\"".includes(str[i]) && quotesCount.get("matchedPairs") === 0 && totalQuotesCount === 3 && str[idxOfAttrOpening] === str[i] && allHtmlAttribs.has(lastCapturedChunk)) {
+        if ("'\"".includes(str[i]) && quotesCount.get("matchedPairs") === 0 && totalQuotesCount === 3 && str[idxOfAttrOpening] === str[i] && allHtmlAttribs.has(lastCapturedChunk) && !"'\"".includes(str[right(str, i)])) {
           var A1 = i > isThisClosingIdx;
           var A21 = !lastQuoteAt;
           var A22 = lastQuoteAt + 1 >= i;
           var A23 = str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(function (chunk) {
             return allHtmlAttribs.has(chunk);
           });
+          var A3 = !lastCapturedChunk || !secondLastCapturedChunk || !secondLastCapturedChunk.endsWith(":");
           var B1 = i === isThisClosingIdx;
           var B21 = totalQuotesCount < 3;
           var B22 = !!lastQuoteWasMatched;
@@ -2595,7 +2599,7 @@
           var B25 = !str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(function (chunk) {
             return allHtmlAttribs.has(chunk);
           });
-          return A1 && (A21 || A22 || A23) || B1 && (B21 || B22 || B23 || B24 || B25);
+          return A1 && (A21 || A22 || A23) && A3 || B1 && (B21 || B22 || B23 || B24 || B25);
         }
 
         if (lastCapturedChunk && allHtmlAttribs.has(lastCapturedChunk) && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt === isThisClosingIdx) {
@@ -2603,7 +2607,7 @@
         }
       }
 
-      if ("'\"".includes(str[i]) && (!(quotesCount.get("\"") % 2) || !(quotesCount.get("'") % 2)) && (quotesCount.get("\"") + quotesCount.get("'")) % 2 && (lastCapturedChunk && allHtmlAttribs.has(lastCapturedChunk) || i > isThisClosingIdx + 1 && allHtmlAttribs.has(str.slice(isThisClosingIdx + 1, i).trim()))) {
+      if ("'\"".includes(str[i]) && (!(quotesCount.get("\"") % 2) || !(quotesCount.get("'") % 2)) && (quotesCount.get("\"") + quotesCount.get("'")) % 2 && (lastCapturedChunk && allHtmlAttribs.has(lastCapturedChunk) || i > isThisClosingIdx + 1 && allHtmlAttribs.has(str.slice(isThisClosingIdx + 1, i).trim())) && !(str[i + 1] === str[i] && str[i] === str[idxOfAttrOpening]) && !(i > isThisClosingIdx + 1 && str[left(str, isThisClosingIdx)] === ":") && !(lastCapturedChunk && secondLastCapturedChunk && secondLastCapturedChunk.trim().endsWith(":"))) {
         var R0 = i > isThisClosingIdx;
         var R1 = !!openingQuote;
         var R2 = str[idxOfAttrOpening] !== str[isThisClosingIdx];
@@ -2627,7 +2631,8 @@
             return allHtmlAttribs.has(chunk);
           });
           var Y5 = i >= isThisClosingIdx;
-          return Y1 && Y2 && Y3 && Y4 && Y5;
+          var Y6 = !str[right(str, i)] || !"'\"".includes(str[right(str, i)]);
+          return Y1 && Y2 && Y3 && Y4 && Y5 && Y6;
         }
 
         if (openingQuote && str[isThisClosingIdx] === oppositeToOpeningQuote && str[i] === oppositeToOpeningQuote) {
@@ -2690,6 +2695,10 @@
 
         if (i < isThisClosingIdx && "'\"".includes(str[i]) && lastCapturedChunk && str[left(str, idxOfAttrOpening)] && str[left(str, idxOfAttrOpening)] !== "=" && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && allHtmlAttribs.has(lastCapturedChunk)) {
           return false;
+        }
+
+        if (i === isThisClosingIdx && "'\"".includes(str[i]) && lastCapturedChunk && secondLastCapturedChunk && totalQuotesCount % 2 === 0 && secondLastCapturedChunk.endsWith(":")) {
+          return true;
         }
       }
 
@@ -3687,6 +3696,18 @@
       // we mutate the object on the parent scope, so no Object.assign here
       propertyReset();
       property.propertyStarts = propertyStarts;
+    }
+
+    function ifQuoteThenAttrClosingQuote(idx) {
+      // either it's not a quote:
+      return !"'\"".includes(str[idx]) || // precaution when both attrib.attribOpeningQuoteAt and
+      // attrib.attribValueStartsAt are missing and thus unusable - just
+      // skip this clause in that case... (but it should not ever happen)
+      !(attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt) || // or it's real closing quote, because if not, let's keep it within
+      // the value, it will be easier to validate, imagine:
+      // <div style="float:"left"">
+      //
+      isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, idx);
     } //
     //
     //
@@ -3854,19 +3875,28 @@
           if (["\"", "'", "(", ")"].includes(str[_i]) && !( // below, we have insurance against single quotes, wrapped with quotes:
           // "'" or '"' - templating languages might put single quote as a sttring
           // character, not meaning wrapped-something.
-          ["\"", "'", "`"].includes(str[left(str, _i)]) && str[left(str, _i)] === str[right(str, _i)])) {
-            if ( // maybe it's the closing counterpart?
-            Array.isArray(layers) && layers.length && layers[~-layers.length].type === "simple" && layers[~-layers.length].value === flipEspTag(str[_i])) {
-              layers.pop();
-            } else {
-              // it's opening then
-              layers.push({
-                type: "simple",
-                value: str[_i],
-                position: _i
-              });
+          ["\"", "'", "`"].includes(str[left(str, _i)]) && str[left(str, _i)] === str[right(str, _i)]) && // protection against double-wrapped values, like
+          // <div style="float:"left"">
+          //
+          //
+          // it's not a quote or a real attr ending
+          ifQuoteThenAttrClosingQuote(_i) // because if it's not really a closing quote, it's a rogue-one and
+          // it belongs to the current attribute's value so that later we
+          // can catch it, validating values, imagine "float" value "left" comes
+          // with quotes, as in ""left""
+          ) {
+              if ( // maybe it's the closing counterpart?
+              Array.isArray(layers) && layers.length && layers[~-layers.length].type === "simple" && layers[~-layers.length].value === flipEspTag(str[_i])) {
+                layers.pop();
+              } else {
+                // it's opening then
+                layers.push({
+                  type: "simple",
+                  value: str[_i],
+                  position: _i
+                });
+              }
             }
-          }
         } else if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
           if (["[", "]"].includes(str[_i])) {
             if ( // maybe it's the closing counterpart?
@@ -4424,7 +4454,8 @@
       property && property.valueStarts && !property.valueEnds) {
         if ( // normal head css styles:
         ";}".includes(str[_i]) && (!attrib || !attrib.attribName || attrib.attribName !== "style") || // inline css styles within html
-        ";'\"".includes(str[_i]) && attrib && attrib.attribName === "style" || // erroneous code:
+        ";'\"".includes(str[_i]) && attrib && attrib.attribName === "style" && // it's real quote, not rogue double-wrapping around the value
+        ifQuoteThenAttrClosingQuote(_i) || // erroneous code:
         !str[_i].trim()) {
           property.valueEnds = lastNonWhitespaceCharAt + 1;
           property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
@@ -4462,8 +4493,6 @@
             // we don't put the /[\w-]/ regex validation here to catch-net
             // more errors - let the bad characters enter property names,
             // they'll be validated later down the line!
-            // don't push to "attrib.attribValue" because in DRY fashion
-            // we'll tap the existing "property" clauses that head CSS uses
           }
         } else if (str[_i] === ":" && Number.isInteger(property.colon) && property.colon < _i && lastNonWhitespaceCharAt && property.colon + 1 < lastNonWhitespaceCharAt) {
           // .a{b:c d:e;}
@@ -4498,8 +4527,9 @@
 
       if (!doNothing && // token.type === "rule" &&
       property && property.colon && !property.valueStarts && str[_i].trim()) {
-        if (";}".includes(str[_i])) {
-          // broken code!
+        if ( // stopper character met:
+        ";}'\"".includes(str[_i]) && // either it's real closing quote or not a quote
+        ifQuoteThenAttrClosingQuote(_i)) {
           if (str[_i] === ";") {
             property.semi = _i;
           } // push and init and patch up to resume
@@ -4593,6 +4623,26 @@
       // attrNameRegexp.test(str[i]) &&
       //
       token.selectorsEnd && token.openingCurlyAt && (!property || !property.propertyStarts)) {
+        initProperty(_i);
+      } // catch the start a property
+      // -------------------------------------------------------------------------
+      // Mostly happens in dirty code cases - the start is normally being triggered
+      // not from here, the first character, but earlier, from previous clauses.
+      // But imagine <div style="float;left">z</div>
+      //                              ^
+      //                            wrong
+      //
+      // in case like above, "l" would not have the beginning of a property
+      // triggered, hence this clause here
+
+
+      if (!doNothing && // style attribute is being processed at the moment
+      attrib && attrib.attribName === "style" && // it's not done yet
+      attrib.attribOpeningQuoteAt && !attrib.attribClosingQuoteAt && // but property hasn't been initiated
+      !property && // yet the character is suitable:
+      // it's not a whitespace
+      str[_i].trim() && // it's not some separator
+      !"'\";".includes(str[_i])) {
         initProperty(_i);
       } // in comment type, "only" kind tokens, submit square brackets to layers
       // -------------------------------------------------------------------------
@@ -4894,34 +4944,9 @@
           var R1 = !layers.some(function (layerObj) {
             return layerObj.type === "esp";
           });
-          var R2 = isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, _i); //
+          var R2 = isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, _i);
 
-          if (str[left(str, _i)] === str[_i] && // str[i + 1].trim() &&
-          !"/>".concat(espChars).includes(str[right(str, _i)]) && !xBeforeYOnTheRight$1(str, _i, "=", "\"") && !xBeforeYOnTheRight$1(str, _i, "=", "'") && (xBeforeYOnTheRight$1(str, _i, "\"", ">") || xBeforeYOnTheRight$1(str, _i, "'", ">")) && ( // and either "<" doesn't follow:
-          !str.slice(_i + 1).includes("<") || // or there's no equal leading up to it:
-          !str.slice(0, str.indexOf("<")).includes("="))) {
-            // 1. offset the opening quote marker to this index because
-            // we extract the value of an attribute by slicing between
-            // "from" and "to" markers; if "from" was one character too early
-            // and included quotes, those quotes would end up in the reported value
-            attrib.attribOpeningQuoteAt = _i;
-            attrib.attribValueStartsAt = _i + 1; // 2. make correction to last start index on last attrib.attribValue
-
-            if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && // start is present
-            attrib.attribValue[~-attrib.attribValue.length].start && // but not closing
-            !attrib.attribValue[~-attrib.attribValue.length].end && // and it starts too early,
-            attrib.attribValueStartsAt > attrib.attribValue[~-attrib.attribValue.length].start) {
-              attrib.attribValue[~-attrib.attribValue.length].start = attrib.attribValueStartsAt;
-            } // 3. restore layers, push this opening quote again, because
-            // it has been just popped
-
-
-            layers.push({
-              type: "simple",
-              value: str[_i],
-              position: _i
-            });
-          } else if ( // so we're on a single/double quote,
+          if ( // so we're on a single/double quote,
           // (str[i], the current character is a quote)
           // and...
           // we're not inside some ESP tag - ESP layers are not pending:
@@ -5210,9 +5235,10 @@
             if (!attrib.attribOpeningQuoteAt) {
               attrib.attribOpeningQuoteAt = _i;
 
-              if ( // non-whitespace character exists on the right
-              str[_i + 1] && // it's not the same as opening quote we're currently on
-              str[_i + 1] !== str[_i]) {
+              if ( // character exists on the right
+              str[_i + 1] && ( // EITHER it's not the same as opening quote we're currently on
+              str[_i + 1] !== str[_i] || // OR it's a rogue quote, part of the value
+              !ifQuoteThenAttrClosingQuote(_i + 1))) {
                 attrib.attribValueStartsAt = _i + 1;
 
                 if ( // if attribValue array is empty, no object has been placed yet,
@@ -5231,7 +5257,9 @@
                     // they'll be validated later down the line!
                     // don't push to "attrib.attribValue" because in DRY fashion
                     // we'll tap the existing "property" clauses that head CSS uses
-                  } else {
+                  } else if ( // either the next character is not a quote
+                  // or it's not a closing quote
+                  !ifQuoteThenAttrClosingQuote(_i + 1)) {
                     attrib.attribValue.push({
                       type: "text",
                       start: attrib.attribValueStartsAt,
@@ -5242,30 +5270,15 @@
                 }
               }
             } else {
-              // one quote exists. Either is clean closing:
+              // One quote exists.
               // <table width="100">
               //                  ^
               //
+
+              /* istanbul ignore else */
               if (isAttrClosing(str, attrib.attribOpeningQuoteAt, _i)) {
                 attrib.attribClosingQuoteAt = _i;
-              } // or another, dirty opening
-              // <table width=""100">
-              //               ^
-              else {
-                  attrib.attribOpeningQuoteAt = _i; // push layer again because it has been popped just before
-
-                  layers.push({
-                    type: "simple",
-                    value: str[_i],
-                    position: _i
-                  });
-
-                  if ( // character exists on the right
-                  str[_i + 1] && // it's not the same as opening quote we're currently on
-                  str[_i + 1] !== str[_i]) {
-                    attrib.attribValueStartsAt = _i + 1;
-                  }
-                }
+              }
               /* istanbul ignore else */
 
 

@@ -591,6 +591,11 @@ function tokenizer(str, originalOpts) {
     propertyReset();
     property.propertyStarts = propertyStarts;
   }
+  function ifQuoteThenAttrClosingQuote(idx) {
+    return !"'\"".includes(str[idx]) ||
+    !(attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt) ||
+    attributeEnds__default['default'](str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, idx);
+  }
   var _loop = function _loop(_i) {
     if (!doNothing && str[_i] && opts.reportProgressFunc) {
       if (len > 1000 && len < 2000) {
@@ -677,18 +682,20 @@ function tokenizer(str, originalOpts) {
     if (!doNothing) {
       if (["tag", "rule", "at"].includes(token.type) && token.kind !== "cdata") {
         if (["\"", "'", "(", ")"].includes(str[_i]) && !(
-        ["\"", "'", "`"].includes(str[stringLeftRight.left(str, _i)]) && str[stringLeftRight.left(str, _i)] === str[stringLeftRight.right(str, _i)])) {
-          if (
-          Array.isArray(layers) && layers.length && layers[~-layers.length].type === "simple" && layers[~-layers.length].value === flipEspTag(str[_i])) {
-            layers.pop();
-          } else {
-            layers.push({
-              type: "simple",
-              value: str[_i],
-              position: _i
-            });
+        ["\"", "'", "`"].includes(str[stringLeftRight.left(str, _i)]) && str[stringLeftRight.left(str, _i)] === str[stringLeftRight.right(str, _i)]) &&
+        ifQuoteThenAttrClosingQuote(_i)
+        ) {
+            if (
+            Array.isArray(layers) && layers.length && layers[~-layers.length].type === "simple" && layers[~-layers.length].value === flipEspTag(str[_i])) {
+              layers.pop();
+            } else {
+              layers.push({
+                type: "simple",
+                value: str[_i],
+                position: _i
+              });
+            }
           }
-        }
       } else if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
         if (["[", "]"].includes(str[_i])) {
           if (
@@ -968,7 +975,8 @@ function tokenizer(str, originalOpts) {
     property && property.valueStarts && !property.valueEnds) {
       if (
       ";}".includes(str[_i]) && (!attrib || !attrib.attribName || attrib.attribName !== "style") ||
-      ";'\"".includes(str[_i]) && attrib && attrib.attribName === "style" ||
+      ";'\"".includes(str[_i]) && attrib && attrib.attribName === "style" &&
+      ifQuoteThenAttrClosingQuote(_i) ||
       !str[_i].trim()) {
         property.valueEnds = lastNonWhitespaceCharAt + 1;
         property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
@@ -1001,7 +1009,9 @@ function tokenizer(str, originalOpts) {
     }
     if (!doNothing &&
     property && property.colon && !property.valueStarts && str[_i].trim()) {
-      if (";}".includes(str[_i])) {
+      if (
+      ";}'\"".includes(str[_i]) &&
+      ifQuoteThenAttrClosingQuote(_i)) {
         if (str[_i] === ";") {
           property.semi = _i;
         }
@@ -1052,6 +1062,14 @@ function tokenizer(str, originalOpts) {
     if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() &&
     !"{};".includes(str[_i]) &&
     token.selectorsEnd && token.openingCurlyAt && (!property || !property.propertyStarts)) {
+      initProperty(_i);
+    }
+    if (!doNothing &&
+    attrib && attrib.attribName === "style" &&
+    attrib.attribOpeningQuoteAt && !attrib.attribClosingQuoteAt &&
+    !property &&
+    str[_i].trim() &&
+    !"'\";".includes(str[_i])) {
       initProperty(_i);
     }
     if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
@@ -1219,24 +1237,7 @@ function tokenizer(str, originalOpts) {
           return layerObj.type === "esp";
         });
         var R2 = attributeEnds__default['default'](str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, _i);
-        if (str[stringLeftRight.left(str, _i)] === str[_i] &&
-        !"/>".concat(espChars).includes(str[stringLeftRight.right(str, _i)]) && !xBeforeYOnTheRight(str, _i, "=", "\"") && !xBeforeYOnTheRight(str, _i, "=", "'") && (xBeforeYOnTheRight(str, _i, "\"", ">") || xBeforeYOnTheRight(str, _i, "'", ">")) && (
-        !str.slice(_i + 1).includes("<") ||
-        !str.slice(0, str.indexOf("<")).includes("="))) {
-          attrib.attribOpeningQuoteAt = _i;
-          attrib.attribValueStartsAt = _i + 1;
-          if (Array.isArray(attrib.attribValue) && attrib.attribValue.length &&
-          attrib.attribValue[~-attrib.attribValue.length].start &&
-          !attrib.attribValue[~-attrib.attribValue.length].end &&
-          attrib.attribValueStartsAt > attrib.attribValue[~-attrib.attribValue.length].start) {
-            attrib.attribValue[~-attrib.attribValue.length].start = attrib.attribValueStartsAt;
-          }
-          layers.push({
-            type: "simple",
-            value: str[_i],
-            position: _i
-          });
-        } else if (
+        if (
         !layers.some(function (layerObj) {
           return layerObj.type === "esp";
         }) &&
@@ -1401,15 +1402,17 @@ function tokenizer(str, originalOpts) {
           if (!attrib.attribOpeningQuoteAt) {
             attrib.attribOpeningQuoteAt = _i;
             if (
-            str[_i + 1] &&
-            str[_i + 1] !== str[_i]) {
+            str[_i + 1] && (
+            str[_i + 1] !== str[_i] ||
+            !ifQuoteThenAttrClosingQuote(_i + 1))) {
               attrib.attribValueStartsAt = _i + 1;
               if (
               Array.isArray(attrib.attribValue) && (!attrib.attribValue.length ||
               attrib.attribValue[~-attrib.attribValue.length].end)) {
                 if (attrib.attribName === "style") {
                   initProperty(stringLeftRight.right(str, _i));
-                } else {
+                } else if (
+                !ifQuoteThenAttrClosingQuote(_i + 1)) {
                   attrib.attribValue.push({
                     type: "text",
                     start: attrib.attribValueStartsAt,
@@ -1420,22 +1423,10 @@ function tokenizer(str, originalOpts) {
               }
             }
           } else {
+            /* istanbul ignore else */
             if (attributeEnds__default['default'](str, attrib.attribOpeningQuoteAt, _i)) {
               attrib.attribClosingQuoteAt = _i;
             }
-            else {
-                attrib.attribOpeningQuoteAt = _i;
-                layers.push({
-                  type: "simple",
-                  value: str[_i],
-                  position: _i
-                });
-                if (
-                str[_i + 1] &&
-                str[_i + 1] !== str[_i]) {
-                  attrib.attribValueStartsAt = _i + 1;
-                }
-              }
             /* istanbul ignore else */
             if (attrib.attribOpeningQuoteAt && attrib.attribClosingQuoteAt) {
               if (attrib.attribOpeningQuoteAt < ~-attrib.attribClosingQuoteAt) {
