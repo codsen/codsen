@@ -1049,7 +1049,8 @@ function tokenizer(str, originalOpts) {
     !str[_i].trim() ||
     !attrNameRegexp.test(str[_i]) && (
     str[_i] === ":" ||
-    str[stringLeftRight.right(str, _i)] !== ":"))) {
+    !stringLeftRight.right(str, _i) || !":/".includes(str[stringLeftRight.right(str, _i)]))) && (
+    str[_i] !== "/" || str[_i - 1] !== "/")) {
       property.propertyEnds = _i;
       property.property = str.slice(property.propertyStarts, _i);
       if ("};".includes(str[_i]) || !str[_i].trim() && str[stringLeftRight.right(str, _i)] === "}") {

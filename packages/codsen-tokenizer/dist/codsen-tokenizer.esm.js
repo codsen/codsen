@@ -1533,7 +1533,9 @@ function tokenizer(str, originalOpts) {
       (!str[i].trim() ||
         (!attrNameRegexp.test(str[i]) &&
           (str[i] === ":" ||
-            str[right(str, i)] !== ":")))
+            !right(str, i) ||
+            !`:/`.includes(str[right(str, i)])))) &&
+      (str[i] !== "/" || str[i - 1] !== "/")
     ) {
       property.propertyEnds = i;
       property.property = str.slice(property.propertyStarts, i);

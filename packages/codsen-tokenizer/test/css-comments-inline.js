@@ -4,7 +4,7 @@ import ct from "../dist/codsen-tokenizer.esm";
 // css comments within inline HTML styles
 // -----------------------------------------------------------------------------
 
-tap.only(
+tap.test(
   `01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - body inline style`,
   (t) => {
     const gathered = [];
@@ -104,7 +104,7 @@ tap.only(
   }
 );
 
-tap.todo(
+tap.test(
   `02 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - body inline style, more`,
   (t) => {
     const gathered = [];
@@ -149,10 +149,14 @@ tap.todo(
                   language: "css",
                 },
                 {
-                  type: "text",
-                  start: 14,
-                  end: 25,
-                  value: "color: red;",
+                  property: "color",
+                  propertyStarts: 14,
+                  propertyEnds: 19,
+                  colon: 19,
+                  value: "red",
+                  valueStarts: 21,
+                  valueEnds: 24,
+                  semi: 24,
                 },
                 {
                   type: "comment",
@@ -164,23 +168,14 @@ tap.todo(
                   language: "css",
                 },
                 {
-                  type: "text",
-                  start: 27,
-                  end: 28,
-                  value: " ",
-                },
-                {
-                  type: "rule",
-                  start: 28,
-                  end: 45,
-                  value: "text-align: left;",
-                  left: 26,
-                  nested: false,
-                  openingCurlyAt: null,
-                  closingCurlyAt: null,
-                  selectorsStart: 28,
-                  selectorsEnd: null,
-                  selectors: [],
+                  property: "text-align",
+                  propertyStarts: 28,
+                  propertyEnds: 38,
+                  colon: 38,
+                  value: "left",
+                  valueStarts: 40,
+                  valueEnds: 44,
+                  semi: 44,
                 },
               ],
               attribValueStartsAt: 12,
@@ -219,7 +214,7 @@ tap.todo(
   }
 );
 
-tap.todo(
+tap.only(
   `03 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - body inline css, erroneous line comment`,
   (t) => {
     const gathered = [];
@@ -228,7 +223,75 @@ tap.todo(
         gathered.push(obj);
       },
     });
-    t.match(gathered, [], "03");
+    t.match(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 27,
+          value: '<div style="//color: red;">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 4,
+          tagName: "div",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [
+            {
+              attribName: "style",
+              attribNameRecognised: true,
+              attribNameStartsAt: 5,
+              attribNameEndsAt: 10,
+              attribOpeningQuoteAt: 11,
+              attribClosingQuoteAt: 25,
+              attribValueRaw: "//color: red;",
+              attribValue: [
+                {
+                  property: "//color",
+                  propertyStarts: 12,
+                  propertyEnds: 19,
+                  colon: 19,
+                  value: "red",
+                  valueStarts: 21,
+                  valueEnds: 24,
+                  semi: 24,
+                },
+              ],
+              attribValueStartsAt: 12,
+              attribValueEndsAt: 25,
+              attribStarts: 5,
+              attribEnd: 26,
+              attribLeft: 3,
+            },
+          ],
+        },
+        {
+          type: "text",
+          start: 27,
+          end: 28,
+          value: "z",
+        },
+        {
+          type: "tag",
+          start: 28,
+          end: 34,
+          value: "</div>",
+          tagNameStartsAt: 30,
+          tagNameEndsAt: 33,
+          tagName: "div",
+          recognised: true,
+          closing: true,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [],
+        },
+      ],
+      "03"
+    );
     t.end();
   }
 );

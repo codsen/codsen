@@ -4485,7 +4485,7 @@
           // and EITHER it's html inline css
           attrib && attrib.attribName === "style" && !"\"'<>".includes(str[nextChar]) || // OR it's head css style
           token.type === "rule" && !";{}@".includes(str[nextChar]))) {
-            // but check, maybe it's comment
+            // but check, maybe it's a comment
             if (str[nextChar] === "*" && str[nextChar + 1] === "/") {
               attrib.attribValue.push({
                 type: "comment",
@@ -4591,7 +4591,13 @@
       //                  ^
       //                include this dot within property name
       //                so that we can catch it later validating prop names
-      str[right(str, _i)] !== ":"))) {
+      //
+      !right(str, _i) || !":/".includes(str[right(str, _i)]))) && ( // also, regarding the slash,
+      // <div style="//color: red;">
+      //              ^
+      //            don't close here, continue, gather "//color"
+      //
+      str[_i] !== "/" || str[_i - 1] !== "/")) {
         property.propertyEnds = _i;
         property.property = str.slice(property.propertyStarts, _i); // missing colon and onwards:
         // <style>.b{c}</style>
