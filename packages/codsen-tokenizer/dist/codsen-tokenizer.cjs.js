@@ -994,7 +994,20 @@ function tokenizer(str, originalOpts) {
         str[nextChar].trim() && (
         attrib && attrib.attribName === "style" && !"\"'<>".includes(str[nextChar]) ||
         token.type === "rule" && !";{}@".includes(str[nextChar]))) {
-          initProperty(nextChar);
+          if (str[nextChar] === "*" && str[nextChar + 1] === "/") {
+            attrib.attribValue.push({
+              type: "comment",
+              start: nextChar,
+              end: nextChar + 2,
+              value: "*/",
+              closing: true,
+              kind: "block",
+              language: "css"
+            });
+            doNothing = nextChar + 2;
+          } else {
+            initProperty(nextChar);
+          }
         }
       } else if (str[_i] === ":" && Number.isInteger(property.colon) && property.colon < _i && lastNonWhitespaceCharAt && property.colon + 1 < lastNonWhitespaceCharAt) {
         var split = str.slice(stringLeftRight.right(str, property.colon), lastNonWhitespaceCharAt + 1).split(/\s+/);
@@ -1410,7 +1423,21 @@ function tokenizer(str, originalOpts) {
               Array.isArray(attrib.attribValue) && (!attrib.attribValue.length ||
               attrib.attribValue[~-attrib.attribValue.length].end)) {
                 if (attrib.attribName === "style") {
-                  initProperty(stringLeftRight.right(str, _i));
+                  var charOnTheRight = stringLeftRight.right(str, _i);
+                  if (str[charOnTheRight] === "/" && str[charOnTheRight + 1] === "*") {
+                    attrib.attribValue.push({
+                      type: "comment",
+                      start: charOnTheRight,
+                      end: charOnTheRight + 2,
+                      value: "/*",
+                      closing: false,
+                      kind: "block",
+                      language: "css"
+                    });
+                    doNothing = charOnTheRight + 2;
+                  } else {
+                    initProperty(stringLeftRight.right(str, _i));
+                  }
                 } else if (
                 !ifQuoteThenAttrClosingQuote(_i + 1)) {
                   attrib.attribValue.push({

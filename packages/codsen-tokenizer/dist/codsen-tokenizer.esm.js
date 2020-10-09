@@ -1451,7 +1451,20 @@ function tokenizer(str, originalOpts) {
             !`"'<>`.includes(str[nextChar])) ||
             (token.type === "rule" && !`;{}@`.includes(str[nextChar])))
         ) {
-          initProperty(nextChar);
+          if (str[nextChar] === "*" && str[nextChar + 1] === "/") {
+            attrib.attribValue.push({
+              type: "comment",
+              start: nextChar,
+              end: nextChar + 2,
+              value: "*/",
+              closing: true,
+              kind: "block",
+              language: "css",
+            });
+            doNothing = nextChar + 2;
+          } else {
+            initProperty(nextChar);
+          }
         }
       } else if (
         str[i] === ":" &&
@@ -2135,7 +2148,24 @@ function tokenizer(str, originalOpts) {
                   attrib.attribValue[~-attrib.attribValue.length].end)
               ) {
                 if (attrib.attribName === "style") {
-                  initProperty(right(str, i));
+                  const charOnTheRight = right(str, i);
+                  if (
+                    str[charOnTheRight] === "/" &&
+                    str[charOnTheRight + 1] === "*"
+                  ) {
+                    attrib.attribValue.push({
+                      type: "comment",
+                      start: charOnTheRight,
+                      end: charOnTheRight + 2,
+                      value: "/*",
+                      closing: false,
+                      kind: "block",
+                      language: "css",
+                    });
+                    doNothing = charOnTheRight + 2;
+                  } else {
+                    initProperty(right(str, i));
+                  }
                 } else if (
                   !ifQuoteThenAttrClosingQuote(i + 1)
                 ) {

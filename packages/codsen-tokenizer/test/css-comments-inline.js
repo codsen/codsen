@@ -4,7 +4,7 @@ import ct from "../dist/codsen-tokenizer.esm";
 // css comments within inline HTML styles
 // -----------------------------------------------------------------------------
 
-tap.todo(
+tap.only(
   `01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - body inline style`,
   (t) => {
     const gathered = [];
@@ -49,10 +49,14 @@ tap.todo(
                   language: "css",
                 },
                 {
-                  type: "text",
-                  start: 14,
-                  end: 25,
-                  value: "color: red;",
+                  property: "color",
+                  propertyStarts: 14,
+                  propertyEnds: 19,
+                  colon: 19,
+                  value: "red",
+                  valueStarts: 21,
+                  valueEnds: 24,
+                  semi: 24,
                 },
                 {
                   type: "comment",

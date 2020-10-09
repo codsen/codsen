@@ -4485,14 +4485,28 @@
           // and EITHER it's html inline css
           attrib && attrib.attribName === "style" && !"\"'<>".includes(str[nextChar]) || // OR it's head css style
           token.type === "rule" && !";{}@".includes(str[nextChar]))) {
-            initProperty(nextChar); // attrib.attribValueStartsAt starts right after opening
-            // quotes, regardless of inner whitespace, so that we can
-            // slice and extract the contents.
-            // "property.propertyStarts" on other hand, minds the whitespace,
-            // we start it from the first non-whitespace character
-            // we don't put the /[\w-]/ regex validation here to catch-net
-            // more errors - let the bad characters enter property names,
-            // they'll be validated later down the line!
+            // but check, maybe it's comment
+            if (str[nextChar] === "*" && str[nextChar + 1] === "/") {
+              attrib.attribValue.push({
+                type: "comment",
+                start: nextChar,
+                end: nextChar + 2,
+                value: "*/",
+                closing: true,
+                kind: "block",
+                language: "css"
+              });
+              doNothing = nextChar + 2;
+            } else {
+              initProperty(nextChar); // attrib.attribValueStartsAt starts right after opening
+              // quotes, regardless of inner whitespace, so that we can
+              // slice and extract the contents.
+              // "property.propertyStarts" on other hand, minds the whitespace,
+              // we start it from the first non-whitespace character
+              // we don't put the /[\w-]/ regex validation here to catch-net
+              // more errors - let the bad characters enter property names,
+              // they'll be validated later down the line!
+            }
           }
         } else if (str[_i] === ":" && Number.isInteger(property.colon) && property.colon < _i && lastNonWhitespaceCharAt && property.colon + 1 < lastNonWhitespaceCharAt) {
           // .a{b:c d:e;}
@@ -5247,16 +5261,32 @@
                 attrib.attribValue[~-attrib.attribValue.length].end)) {
                   // if depends, is it inline style or anything else?
                   if (attrib.attribName === "style") {
-                    initProperty(right(str, _i)); // attrib.attribValueStartsAt starts right after opening
-                    // quotes, regardless of inner whitespace, so that we can
-                    // slice and extract the contents.
-                    // "property.propertyStarts" on other hand, minds the whitespace,
-                    // we start it from the first non-whitespace character
-                    // we don't put the /[\w-]/ regex validation here to catch-net
-                    // more errors - let the bad characters enter property names,
-                    // they'll be validated later down the line!
-                    // don't push to "attrib.attribValue" because in DRY fashion
-                    // we'll tap the existing "property" clauses that head CSS uses
+                    // it depends, is it comment or not
+                    var charOnTheRight = right(str, _i);
+
+                    if (str[charOnTheRight] === "/" && str[charOnTheRight + 1] === "*") {
+                      attrib.attribValue.push({
+                        type: "comment",
+                        start: charOnTheRight,
+                        end: charOnTheRight + 2,
+                        value: "/*",
+                        closing: false,
+                        kind: "block",
+                        language: "css"
+                      });
+                      doNothing = charOnTheRight + 2;
+                    } else {
+                      initProperty(right(str, _i)); // attrib.attribValueStartsAt starts right after opening
+                      // quotes, regardless of inner whitespace, so that we can
+                      // slice and extract the contents.
+                      // "property.propertyStarts" on other hand, minds the whitespace,
+                      // we start it from the first non-whitespace character
+                      // we don't put the /[\w-]/ regex validation here to catch-net
+                      // more errors - let the bad characters enter property names,
+                      // they'll be validated later down the line!
+                      // don't push to "attrib.attribValue" because in DRY fashion
+                      // we'll tap the existing "property" clauses that head CSS uses
+                    }
                   } else if ( // either the next character is not a quote
                   // or it's not a closing quote
                   !ifQuoteThenAttrClosingQuote(_i + 1)) {
