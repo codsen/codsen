@@ -22,7 +22,6 @@ tap.test(`01 - ${`\u001b[${33}m${`style`}\u001b[${39}m`} - two tags`, (t) => {
         closing: false,
         void: false,
         pureHTML: true,
-
         kind: null,
         attribs: [],
         children: [
@@ -48,6 +47,18 @@ tap.test(`01 - ${`\u001b[${33}m${`style`}\u001b[${39}m`} - two tags`, (t) => {
                 value: ".red",
                 selectorStarts: 8,
                 selectorEnds: 12,
+              },
+            ],
+            properties: [
+              {
+                property: "color",
+                propertyStarts: 13,
+                propertyEnds: 18,
+                colon: 18,
+                value: "red",
+                valueStarts: 20,
+                valueEnds: 23,
+                semi: 23,
               },
             ],
           },
@@ -161,6 +172,7 @@ tap.test(
                       selectorEnds: 34,
                     },
                   ],
+                  properties: [],
                 },
                 {
                   type: "text",

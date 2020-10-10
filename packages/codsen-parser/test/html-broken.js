@@ -26,8 +26,7 @@ tap.test(
           closing: true,
           void: true,
           pureHTML: true,
-
-          kind: null,
+          kind: "inline",
           attribs: [],
           children: [],
         },

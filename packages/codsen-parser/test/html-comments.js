@@ -575,6 +575,7 @@ tap.test(
           end: 19,
           value: "<!--[if !mso]><!-->",
           kind: "not",
+          language: "html",
           closing: false,
           children: [
             {
@@ -589,7 +590,7 @@ tap.test(
               closing: false,
               void: true,
               pureHTML: true,
-              kind: null,
+              kind: "inline",
               attribs: [
                 {
                   attribName: "src",
@@ -609,7 +610,7 @@ tap.test(
                   ],
                   attribValueStartsAt: 29,
                   attribValueEndsAt: 32,
-                  attribStart: 24,
+                  attribStarts: 24,
                   attribEnd: 33,
                   attribLeft: 22,
                 },
@@ -624,6 +625,7 @@ tap.test(
           end: 50,
           value: "!--<![endif]-->",
           kind: "not",
+          language: "html",
           closing: true,
           children: [],
         },
@@ -651,6 +653,7 @@ tap.test(
           end: 19,
           value: "<!--[if !mso]><!-->",
           kind: "not",
+          language: "html",
           closing: false,
           children: [
             {
@@ -665,8 +668,7 @@ tap.test(
               closing: false,
               void: true,
               pureHTML: true,
-
-              kind: null,
+              kind: "inline",
               attribs: [
                 {
                   attribName: "src",
@@ -686,7 +688,7 @@ tap.test(
                   ],
                   attribValueStartsAt: 29,
                   attribValueEndsAt: 32,
-                  attribStart: 24,
+                  attribStarts: 24,
                   attribEnd: 33,
                   attribLeft: 22,
                 },
@@ -707,6 +709,7 @@ tap.test(
           end: 53,
           value: "!--<![endif]-->",
           kind: "not",
+          language: "html",
           closing: true,
           children: [],
         },
@@ -742,8 +745,7 @@ tap.test(`17 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - false alarm`, (t) => {
             closing: false,
             void: true,
             pureHTML: true,
-
-            kind: null,
+            kind: "inline",
             attribs: [
               {
                 attribName: "src",
@@ -763,7 +765,7 @@ tap.test(`17 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - false alarm`, (t) => {
                 ],
                 attribValueStartsAt: 29,
                 attribValueEndsAt: 32,
-                attribStart: 24,
+                attribStarts: 24,
                 attribEnd: 33,
                 attribLeft: 22,
               },
@@ -777,6 +779,7 @@ tap.test(`17 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - false alarm`, (t) => {
             value: "zzz-",
           },
         ],
+        language: "html",
       },
       {
         type: "comment",
@@ -786,6 +789,7 @@ tap.test(`17 - ${`\u001b[${33}m${`not`}\u001b[${39}m`} - false alarm`, (t) => {
         kind: "only",
         closing: true,
         children: [],
+        language: "html",
       },
     ],
     "17"
@@ -814,6 +818,7 @@ tap.test(
           kind: "only",
           closing: true,
           children: [],
+          language: "html",
         },
       ],
       "18"

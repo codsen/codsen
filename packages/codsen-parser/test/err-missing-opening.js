@@ -23,7 +23,6 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [],
         },
@@ -40,7 +39,6 @@ tap.test(
           closing: true,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [],
         },
@@ -77,7 +75,6 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [],
         },
@@ -94,7 +91,6 @@ tap.test(
           closing: true,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [],
         },
@@ -131,7 +127,6 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [],
         },
@@ -148,7 +143,6 @@ tap.test(
           closing: true,
           void: false,
           pureHTML: true,
-
           kind: null,
           attribs: [],
         },
@@ -254,6 +248,7 @@ tap.test(
           value: `-->`,
           kind: "simple",
           closing: true,
+          language: "html",
         },
         {
           type: "text",
@@ -304,6 +299,7 @@ tap.test(
           end: 13,
           value: `<![endif]-->`,
           kind: "only",
+          language: "html",
           closing: true,
         },
         {
@@ -355,6 +351,7 @@ tap.test(
           end: 17,
           value: `<!--<![endif]-->`,
           kind: "not",
+          language: "html",
           closing: true,
         },
         {
