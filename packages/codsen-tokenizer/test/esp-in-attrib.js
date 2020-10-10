@@ -29,7 +29,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false, // <---- means there are ESP bits inside this tag
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "b",
@@ -108,7 +108,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "b",
@@ -178,7 +178,7 @@ tap.test(
           closing: false,
           void: true,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "src",
@@ -269,7 +269,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "b",
@@ -356,7 +356,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "z",
@@ -519,7 +519,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "b",
@@ -569,7 +569,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [],
         },
       ],
@@ -603,7 +603,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "href",
@@ -653,7 +653,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [],
         },
       ],
@@ -690,7 +690,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "href",
@@ -740,7 +740,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [],
         },
       ],
@@ -774,7 +774,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "b",
@@ -837,7 +837,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "b",
@@ -906,7 +906,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "b",
@@ -975,7 +975,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "b",
@@ -1038,7 +1038,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "b",
@@ -1108,7 +1108,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "b",
@@ -1178,7 +1178,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "b",
@@ -1254,7 +1254,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "b",
@@ -1318,7 +1318,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "b",
@@ -1388,7 +1388,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "b",
@@ -1458,7 +1458,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "b",
@@ -1537,7 +1537,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "b",
@@ -1649,7 +1649,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "b",
@@ -1761,7 +1761,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "b",
@@ -1873,7 +1873,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "b",
@@ -1985,7 +1985,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "b",
@@ -2097,7 +2097,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "b",

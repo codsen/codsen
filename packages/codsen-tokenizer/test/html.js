@@ -4,40 +4,51 @@ import ct from "../dist/codsen-tokenizer.esm";
 // 01. healthy html, no tricks
 // -----------------------------------------------------------------------------
 
-tap.test("01 - text-tag-text", (t) => {
+tap.test(`01 - text-tag-text`, (t) => {
   const gathered = [];
-  ct("  <a>z", {
+  ct(`  <a>z`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
 
-  t.match(
+  t.strictSame(
     gathered,
     [
       {
         type: "text",
         start: 0,
         end: 2,
+        value: "  ",
       },
       {
         type: "tag",
         start: 2,
         end: 5,
+        value: "<a>",
+        tagNameStartsAt: 3,
+        tagNameEndsAt: 4,
+        tagName: "a",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: "inline",
+        attribs: [],
       },
       {
         type: "text",
         start: 5,
         end: 6,
+        value: "z",
       },
     ],
-    "01.01"
+    "01"
   );
-  t.is(gathered.length, 3, "01.02");
   t.end();
 });
 
-tap.test("02 - text only", (t) => {
+tap.test(`02 - text only`, (t) => {
   const gathered = [];
   ct("  ", {
     tagCb: (obj) => {
@@ -59,7 +70,7 @@ tap.test("02 - text only", (t) => {
   t.end();
 });
 
-tap.test("03 - opening tag only", (t) => {
+tap.test(`03 - opening tag only`, (t) => {
   const gathered = [];
   ct("<a>", {
     tagCb: (obj) => {
@@ -81,8 +92,7 @@ tap.test("03 - opening tag only", (t) => {
         closing: false,
         void: false,
         pureHTML: true,
-
-        kind: null,
+        kind: "inline",
         attribs: [],
       },
     ],
@@ -91,7 +101,7 @@ tap.test("03 - opening tag only", (t) => {
   t.end();
 });
 
-tap.test("04 - closing tag only", (t) => {
+tap.test(`04 - closing tag only`, (t) => {
   const gathered = [];
   ct("</a>", {
     tagCb: (obj) => {
@@ -113,8 +123,7 @@ tap.test("04 - closing tag only", (t) => {
         closing: true,
         void: false,
         pureHTML: true,
-
-        kind: null,
+        kind: "inline",
         attribs: [],
       },
     ],
@@ -124,88 +133,153 @@ tap.test("04 - closing tag only", (t) => {
 });
 
 // notice the tag name case is upper:
-tap.test("05 - self-closing tag only", (t) => {
+tap.test(`05 - self-closing tag only`, (t) => {
   const gathered = [];
   ct("<BR/>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
+  t.strictSame(
     gathered,
     [
       {
         type: "tag",
+        start: 0,
+        end: 5,
+        value: "<BR/>",
         tagNameStartsAt: 1,
         tagNameEndsAt: 3,
         tagName: "br",
+        recognised: true,
         closing: false,
         void: true,
-        start: 0,
-        end: 5,
+        pureHTML: true,
+        kind: "inline",
+        attribs: [],
       },
     ],
-    "05.01"
+    "05"
   );
-  t.is(gathered.length, 1, "05.02");
   t.end();
 });
 
-tap.test("06 - multiple tags", (t) => {
+tap.test(`06 - multiple tags`, (t) => {
   const gathered = [];
   ct("<a><b><c>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
+  t.strictSame(
     gathered,
     [
       {
         type: "tag",
         start: 0,
         end: 3,
+        value: "<a>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 2,
+        tagName: "a",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: "inline",
+        attribs: [],
       },
       {
         type: "tag",
         start: 3,
         end: 6,
+        value: "<b>",
+        tagNameStartsAt: 4,
+        tagNameEndsAt: 5,
+        tagName: "b",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: "inline",
+        attribs: [],
       },
       {
         type: "tag",
         start: 6,
         end: 9,
+        value: "<c>",
+        tagNameStartsAt: 7,
+        tagNameEndsAt: 8,
+        tagName: "c",
+        recognised: false, // <---
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
       },
     ],
-    "06.01"
+    "06"
   );
-  t.is(gathered.length, 3, "06.02");
   t.end();
 });
 
-tap.test("07 - closing bracket in the attribute's value", (t) => {
+tap.test(`07 - closing bracket in the attribute's value`, (t) => {
   const gathered = [];
   ct(`<a alt=">">`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
+  t.strictSame(
     gathered,
     [
       {
         type: "tag",
         start: 0,
         end: 11,
+        value: '<a alt=">">',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 2,
+        tagName: "a",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: "inline",
+        attribs: [
+          {
+            attribName: "alt",
+            attribNameRecognised: true,
+            attribNameStartsAt: 3,
+            attribNameEndsAt: 6,
+            attribOpeningQuoteAt: 7,
+            attribClosingQuoteAt: 9,
+            attribValueRaw: ">",
+            attribValue: [
+              {
+                type: "text",
+                start: 8,
+                end: 9,
+                value: ">",
+              },
+            ],
+            attribValueStartsAt: 8,
+            attribValueEndsAt: 9,
+            attribStarts: 3,
+            attribEnd: 10,
+            attribLeft: 1,
+          },
+        ],
       },
     ],
-    "07.01"
+    "07"
   );
-  t.is(gathered.length, 1, "07.02");
   t.end();
 });
 
-tap.test("08 - closing bracket layers of nested quotes", (t) => {
+tap.test(`08 - closing bracket layers of nested quotes`, (t) => {
   const gathered = [];
   ct(`<a alt='"'">"'"'>`, {
     tagCb: (obj) => {
@@ -221,35 +295,34 @@ tap.test("08 - closing bracket layers of nested quotes", (t) => {
         end: 17,
       },
     ],
-    "08.01"
+    "08"
   );
-  t.is(gathered.length, 1, "08.02");
   t.end();
 });
 
-tap.test("09 - bracket as text", (t) => {
+tap.test(`09 - bracket as text`, (t) => {
   const gathered = [];
   ct("a < b", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.match(
+  t.strictSame(
     gathered,
     [
       {
         type: "text",
         start: 0,
         end: 5,
+        value: "a < b",
       },
     ],
-    "09.01"
+    "09"
   );
-  t.is(gathered.length, 1, "09.02");
   t.end();
 });
 
-tap.test("10 - tag followed by brackets", (t) => {
+tap.test(`10 - tag followed by brackets`, (t) => {
   const gathered = [];
   ct(`<a>"something"<span>'here'</span></a>`, {
     tagCb: (obj, next) => {
@@ -302,13 +375,12 @@ tap.test("10 - tag followed by brackets", (t) => {
         end: 37,
       },
     ],
-    "10.01"
+    "10"
   );
-  t.is(gathered.length, 6, "10.02");
   t.end();
 });
 
-tap.test("11 - html5 doctype", (t) => {
+tap.test(`11 - html5 doctype`, (t) => {
   const gathered = [];
   ct("a<!DOCTYPE html>b", {
     tagCb: (obj) => {
@@ -322,26 +394,52 @@ tap.test("11 - html5 doctype", (t) => {
         type: "text",
         start: 0,
         end: 1,
+        value: "a",
       },
       {
         type: "tag",
         start: 1,
         end: 16,
+        value: "<!DOCTYPE html>",
+        tagNameStartsAt: 3,
+        tagNameEndsAt: 10,
+        tagName: "doctype",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
         kind: "doctype",
+        attribs: [
+          {
+            attribName: "html",
+            attribNameRecognised: false,
+            attribNameStartsAt: 11,
+            attribNameEndsAt: 15,
+            attribOpeningQuoteAt: null,
+            attribClosingQuoteAt: null,
+            attribValueRaw: null,
+            attribValue: [],
+            attribValueStartsAt: null,
+            attribValueEndsAt: null,
+            attribStarts: 11,
+            attribEnd: 15,
+            attribLeft: 9,
+          },
+        ],
       },
       {
         type: "text",
         start: 16,
         end: 17,
+        value: "b",
       },
     ],
-    "11.01"
+    "11"
   );
-  t.is(gathered.length, 3, "11.02");
   t.end();
 });
 
-tap.test("12 - xhtml doctype", (t) => {
+tap.test(`12 - xhtml doctype`, (t) => {
   const gathered = [];
   ct(
     `z<!DOCTYPE html PUBLIC
@@ -384,13 +482,12 @@ tap.test("12 - xhtml doctype", (t) => {
         end: 191,
       },
     ],
-    "12.01"
+    "12"
   );
-  t.is(gathered.length, 5, "12.02");
   t.end();
 });
 
-tap.test("13 - xhtml DTD doctype", (t) => {
+tap.test(`13 - xhtml DTD doctype`, (t) => {
   const gathered = [];
   ct(
     `z<?xml version="1.0" encoding="UTF-8"?>
@@ -445,13 +542,12 @@ tap.test("13 - xhtml DTD doctype", (t) => {
         end: 230,
       },
     ],
-    "13.01"
+    "13"
   );
-  t.is(gathered.length, 7, "13.02");
   t.end();
 });
 
-tap.test("14 - void tags", (t) => {
+tap.test(`14 - void tags`, (t) => {
   const gathered = [];
   ct("<br>", {
     tagCb: (obj) => {
@@ -468,13 +564,12 @@ tap.test("14 - void tags", (t) => {
         void: true,
       },
     ],
-    "14.01"
+    "14"
   );
-  t.is(gathered.length, 1, "14.02");
   t.end();
 });
 
-tap.test("15 - recognised tags", (t) => {
+tap.test(`15 - recognised tags`, (t) => {
   const gathered = [];
   ct("<content>", {
     tagCb: (obj) => {
@@ -492,13 +587,12 @@ tap.test("15 - recognised tags", (t) => {
         recognised: true,
       },
     ],
-    "15.01"
+    "15"
   );
-  t.is(gathered.length, 1, "15.02");
   t.end();
 });
 
-tap.test("16 - unrecognised tags", (t) => {
+tap.test(`16 - unrecognised tags`, (t) => {
   const gathered = [];
   ct("<contentz>", {
     tagCb: (obj) => {
@@ -516,13 +610,12 @@ tap.test("16 - unrecognised tags", (t) => {
         recognised: false,
       },
     ],
-    "16.01"
+    "16"
   );
-  t.is(gathered.length, 1, "16.02");
   t.end();
 });
 
-tap.test("17 - wrong case but still recognised tags", (t) => {
+tap.test(`17 - wrong case but still recognised tags`, (t) => {
   const gathered = [];
   ct("</tablE>", {
     tagCb: (obj) => {
@@ -540,13 +633,12 @@ tap.test("17 - wrong case but still recognised tags", (t) => {
         recognised: true,
       },
     ],
-    "17.01"
+    "17"
   );
-  t.is(gathered.length, 1, "17.02");
   t.end();
 });
 
-tap.test("18 - correct HTML5 doctype", (t) => {
+tap.test(`18 - correct HTML5 doctype`, (t) => {
   const gathered = [];
   ct("<!DOCTYPE html>", {
     tagCb: (obj) => {
@@ -564,13 +656,12 @@ tap.test("18 - correct HTML5 doctype", (t) => {
         recognised: true,
       },
     ],
-    "18.01"
+    "18"
   );
-  t.is(gathered.length, 1, "18.02");
   t.end();
 });
 
-tap.test("19 - correct HTML5 doctype", (t) => {
+tap.test(`19 - correct HTML5 doctype`, (t) => {
   const gathered = [];
   ct(
     `<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -592,13 +683,12 @@ tap.test("19 - correct HTML5 doctype", (t) => {
         recognised: true,
       },
     ],
-    "19.01"
+    "19"
   );
-  t.is(gathered.length, 1, "19.02");
   t.end();
 });
 
-tap.test("20 - tag names with numbers", (t) => {
+tap.test(`20 - tag names with numbers`, (t) => {
   const gathered = [];
   ct("<h1>", {
     tagCb: (obj) => {
@@ -620,20 +710,19 @@ tap.test("20 - tag names with numbers", (t) => {
         end: 4,
       },
     ],
-    "20.01"
+    "20"
   );
-  t.is(gathered.length, 1, "20.02");
   t.end();
 });
 
-tap.test("21 - exact match, tag pair with whitespace", (t) => {
+tap.test(`21 - exact match, tag pair with whitespace`, (t) => {
   const gathered = [];
   ct("<a href> </a>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  t.match(
     gathered,
     [
       {
@@ -648,8 +737,7 @@ tap.test("21 - exact match, tag pair with whitespace", (t) => {
         closing: false,
         void: false,
         pureHTML: true,
-
-        kind: null,
+        kind: "inline",
         attribs: [
           {
             attribName: "href",
@@ -686,25 +774,23 @@ tap.test("21 - exact match, tag pair with whitespace", (t) => {
         closing: true,
         void: false,
         pureHTML: true,
-
-        kind: null,
+        kind: "inline",
         attribs: [],
       },
     ],
-    "21.01"
+    "21"
   );
-  t.is(gathered.length, 3, "21.02");
   t.end();
 });
 
-tap.test("22 - closing tag with attributes", (t) => {
+tap.test(`22 - closing tag with attributes`, (t) => {
   const gathered = [];
   ct(`</a class="z">`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  t.match(
     gathered,
     [
       {
@@ -719,8 +805,7 @@ tap.test("22 - closing tag with attributes", (t) => {
         closing: true,
         void: false,
         pureHTML: true,
-
-        kind: null,
+        kind: "inline",
         attribs: [
           {
             attribName: "class",
@@ -747,13 +832,12 @@ tap.test("22 - closing tag with attributes", (t) => {
         ],
       },
     ],
-    "22.01"
+    "22"
   );
-  t.is(gathered.length, 1, "22.02");
   t.end();
 });
 
-tap.test("23 - empty style tag pair", (t) => {
+tap.test(`23 - empty style tag pair`, (t) => {
   const gathered = [];
   ct(`<style>\n\n</style>`, {
     tagCb: (obj) => {
@@ -792,13 +876,12 @@ tap.test("23 - empty style tag pair", (t) => {
         void: false,
       },
     ],
-    "23.01"
+    "23"
   );
-  t.is(gathered.length, 3, "23.02");
   t.end();
 });
 
-tap.test("24 - line break", (t) => {
+tap.test(`24 - line break`, (t) => {
   const gathered = [];
   ct(`a<a>\nb`, {
     tagCb: (obj) => {
@@ -827,8 +910,7 @@ tap.test("24 - line break", (t) => {
         closing: false,
         void: false,
         pureHTML: true,
-
-        kind: null,
+        kind: "inline",
         attribs: [],
       },
       {
@@ -838,13 +920,12 @@ tap.test("24 - line break", (t) => {
         value: "\nb",
       },
     ],
-    "24.01"
+    "24"
   );
-  t.is(gathered.length, 3, "24.02");
   t.end();
 });
 
-tap.test("25 - dir attribute is also a known valid tag name", (t) => {
+tap.test(`25 - dir attribute is also a known valid tag name`, (t) => {
   const gathered = [];
   ct(`<html dir="ltr">`, {
     tagCb: (obj) => {
@@ -862,251 +943,7 @@ tap.test("25 - dir attribute is also a known valid tag name", (t) => {
         value: `<html dir="ltr">`,
       },
     ],
-    "25.01"
-  );
-  t.is(gathered.length, 1, "25.02");
-  t.end();
-});
-
-// 02. CDATA
-// -----------------------------------------------------------------------------
-
-tap.test("26 - CDATA - correct", (t) => {
-  const gathered = [];
-  ct(`<![CDATA[x<y]]>`, {
-    tagCb: (obj) => {
-      gathered.push(obj);
-    },
-  });
-  t.match(
-    gathered,
-    [
-      {
-        type: "tag",
-        start: 0,
-        end: 15,
-        void: false,
-        recognised: true,
-        kind: "cdata",
-      },
-    ],
-    "26.01"
-  );
-  t.is(gathered.length, 1, "26.02");
-  t.end();
-});
-
-tap.test("27 - CDATA - messed up 1", (t) => {
-  const gathered = [];
-  ct(`<[CDATA[x<y]]>`, {
-    tagCb: (obj) => {
-      gathered.push(obj);
-    },
-  });
-  t.match(
-    gathered,
-    [
-      {
-        type: "tag",
-        start: 0,
-        end: 14,
-        void: false,
-        recognised: true,
-        kind: "cdata",
-      },
-    ],
-    "27.01"
-  );
-  t.is(gathered.length, 1, "27.02");
-  t.end();
-});
-
-tap.test("28 - CDATA - messed up 2", (t) => {
-  const gathered = [];
-  ct(`<!CDATA[x<y]]>`, {
-    tagCb: (obj) => {
-      gathered.push(obj);
-    },
-  });
-  t.match(
-    gathered,
-    [
-      {
-        type: "tag",
-        start: 0,
-        end: 14,
-        void: false,
-        recognised: true,
-        kind: "cdata",
-      },
-    ],
-    "28.01"
-  );
-  t.is(gathered.length, 1, "28.02");
-  t.end();
-});
-
-tap.test("29 - CDATA - messed up 3", (t) => {
-  const gathered = [];
-  ct(`<![ CData[x<y]]>`, {
-    tagCb: (obj) => {
-      gathered.push(obj);
-    },
-  });
-  t.match(
-    gathered,
-    [
-      {
-        type: "tag",
-        start: 0,
-        end: 16,
-        void: false,
-        recognised: true,
-        kind: "cdata",
-      },
-    ],
-    "29.01"
-  );
-  t.is(gathered.length, 1, "29.02");
-  t.end();
-});
-
-tap.test("30 - CDATA - with line breaks", (t) => {
-  const gathered = [];
-  ct(
-    `a\n<![CDATA[
-  The <, &, ', and " can be used,
-  *and* %MyParamEntity; can be expanded.
-]]>\nb`,
-    {
-      tagCb: (obj) => {
-        gathered.push(obj);
-      },
-    }
-  );
-  t.match(
-    gathered,
-    [
-      {
-        type: "text",
-        start: 0,
-        end: 2,
-      },
-      {
-        type: "tag",
-        start: 2,
-        end: 90,
-        void: false,
-        recognised: true,
-        kind: "cdata",
-      },
-      {
-        type: "text",
-        start: 90,
-        end: 92,
-      },
-    ],
-    "30.01"
-  );
-  t.is(gathered.length, 3, "30.02");
-  t.end();
-});
-
-// 03. XML
-// -----------------------------------------------------------------------------
-
-tap.test("31 - XML - correct", (t) => {
-  const gathered = [];
-  ct(`<?xml version="1.0" encoding="UTF-8"?>`, {
-    tagCb: (obj) => {
-      gathered.push(obj);
-    },
-  });
-  t.match(
-    gathered,
-    [
-      {
-        type: "tag",
-        start: 0,
-        end: 38,
-        void: false,
-        recognised: true,
-        kind: "xml",
-      },
-    ],
-    "31"
-  );
-  t.end();
-});
-
-tap.test("32 - XML - incorrect 1", (t) => {
-  const gathered = [];
-  ct(`< ?xml version="1.0" encoding="UTF-8"?>`, {
-    tagCb: (obj) => {
-      gathered.push(obj);
-    },
-  });
-  t.match(
-    gathered,
-    [
-      {
-        type: "tag",
-        start: 0,
-        end: 39,
-        void: false,
-        recognised: true,
-        kind: "xml",
-      },
-    ],
-    "32"
-  );
-  t.end();
-});
-
-tap.test("33 - XML - incorrect 2", (t) => {
-  const gathered = [];
-  ct(`<? xml version="1.0" encoding="UTF-8"?>`, {
-    tagCb: (obj) => {
-      gathered.push(obj);
-    },
-  });
-  t.match(
-    gathered,
-    [
-      {
-        type: "tag",
-        start: 0,
-        end: 39,
-        void: false,
-        recognised: true,
-        kind: "xml",
-      },
-    ],
-    "33"
-  );
-  t.end();
-});
-
-tap.test("34 - XML - incorrect 3", (t) => {
-  const gathered = [];
-  ct(`< ?XML version="1.0" encoding="UTF-8"?>`, {
-    tagCb: (obj) => {
-      gathered.push(obj);
-    },
-  });
-  t.match(
-    gathered,
-    [
-      {
-        type: "tag",
-        start: 0,
-        end: 39,
-        void: false,
-        recognised: true,
-        kind: "xml",
-      },
-    ],
-    "34"
+    "25"
   );
   t.end();
 });
@@ -1114,14 +951,14 @@ tap.test("34 - XML - incorrect 3", (t) => {
 // 04. custom tags
 // -----------------------------------------------------------------------------
 
-tap.test("35 - unrecognised tag name", (t) => {
+tap.test("26 - unrecognised tag name", (t) => {
   const gathered = [];
   ct("<something>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  t.match(
     gathered,
     [
       {
@@ -1141,19 +978,19 @@ tap.test("35 - unrecognised tag name", (t) => {
         attribs: [],
       },
     ],
-    "35"
+    "26"
   );
   t.end();
 });
 
-tap.test("36 - unrecognised tag name with dash", (t) => {
+tap.test("27 - unrecognised tag name with dash", (t) => {
   const gathered = [];
   ct("<something-here>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(
+  t.match(
     gathered,
     [
       {
@@ -1173,7 +1010,7 @@ tap.test("36 - unrecognised tag name with dash", (t) => {
         attribs: [],
       },
     ],
-    "36"
+    "27"
   );
   t.end();
 });
@@ -1181,7 +1018,7 @@ tap.test("36 - unrecognised tag name with dash", (t) => {
 // 05. lookaheads
 // -----------------------------------------------------------------------------
 
-tap.test(`37 - lookaheads - tag followed by brackets - without next`, (t) => {
+tap.test(`28 - lookaheads - tag followed by brackets - without next`, (t) => {
   const gathered = [];
   ct(`<a>"something"<span>'here'</span></a>`, {
     tagCb: (obj) => {
@@ -1239,13 +1076,12 @@ tap.test(`37 - lookaheads - tag followed by brackets - without next`, (t) => {
         end: 37,
       },
     ],
-    "37.01"
+    "28"
   );
-  t.is(gathered.length, 6, "37.02");
   t.end();
 });
 
-tap.test(`38 - lookaheads - tag followed by brackets - with next`, (t) => {
+tap.test(`29 - lookaheads - tag followed by brackets - with next`, (t) => {
   const gathered = [];
   ct(`<a>"something"<span>'here'</span></a>`, {
     tagCb: (obj, next) => {
@@ -1393,13 +1229,12 @@ tap.test(`38 - lookaheads - tag followed by brackets - with next`, (t) => {
         end: 37,
       },
     ],
-    "38.01"
+    "29"
   );
-  t.is(gathered.length, 6, "38.02");
   t.end();
 });
 
-tap.test(`39 - lookaheads - html5 doctype`, (t) => {
+tap.test(`30 - lookaheads - html5 doctype`, (t) => {
   const gathered = [];
   ct("a<!DOCTYPE html>b", {
     tagCb: (obj, next) => {
@@ -1447,8 +1282,7 @@ tap.test(`39 - lookaheads - html5 doctype`, (t) => {
         end: 17,
       },
     ],
-    "39.01"
+    "30"
   );
-  t.is(gathered.length, 3, "39.02");
   t.end();
 });

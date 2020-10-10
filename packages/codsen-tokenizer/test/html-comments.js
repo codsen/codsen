@@ -1355,8 +1355,7 @@ tap.test(
           closing: false,
           void: true,
           pureHTML: true,
-
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "src",

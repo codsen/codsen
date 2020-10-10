@@ -29,7 +29,7 @@ tap.test(
           void: false,
           pureHTML: true,
           type: "tag",
-          kind: null,
+          kind: "inline",
           attribs: [],
         },
         {
@@ -50,8 +50,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-
-          kind: null,
+          kind: "inline",
           attribs: [],
         },
       ],
@@ -85,7 +84,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "href",
@@ -129,7 +128,7 @@ tap.test(
           closing: true,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [],
         },
       ],
@@ -273,8 +272,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-
-          kind: null,
+          kind: "inline",
           attribs: [],
         },
         {
@@ -289,8 +287,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-
-          kind: null,
+          kind: "inline",
           attribs: [],
         },
         {
@@ -311,8 +308,7 @@ tap.test(
           closing: true,
           void: false,
           pureHTML: true,
-
-          kind: null,
+          kind: "inline",
           attribs: [],
         },
         {
@@ -327,8 +323,7 @@ tap.test(
           closing: true,
           void: false,
           pureHTML: true,
-
-          kind: null,
+          kind: "inline",
           attribs: [],
         },
       ],
@@ -362,7 +357,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [],
         },
         {
@@ -411,7 +406,7 @@ tap.test(
           closing: false,
           void: true,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [],
         },
         {
@@ -460,7 +455,7 @@ tap.test(
           closing: false,
           void: true,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [],
         },
         {

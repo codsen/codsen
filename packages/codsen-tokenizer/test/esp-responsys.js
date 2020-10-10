@@ -102,7 +102,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "href",
@@ -151,7 +151,7 @@ tap.test(
           closing: true,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [],
         },
         {

@@ -3097,21 +3097,7 @@
       allowCustomTagNames: false,
       // <-- stricter requirements for missing opening bracket tags
       skipOpeningBracket: true
-    })) && ( // (
-    //   (str[i] === "<" &&
-    //   (
-    //     str[right(str, i)] === ">" ||
-    //     isTagOpening(str, i, {
-    //       allowCustomTagNames: true
-    //     }) ||
-    //     matchRight(str, i, ["doctype", "xml", "cdata"], {
-    //       i: true,
-    //       trimBeforeMatching: true,
-    //       trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
-    //     })
-    //   ))
-    // ) &&
-    token.type !== "esp" || token.tail && token.tail.includes(str[i]));
+    })) && (token.type !== "esp" || token.tail && token.tail.includes(str[i]));
   }
 
   // starts. Previously it sat within if() clauses but became unwieldy and
@@ -3161,7 +3147,10 @@
   } // https://html.spec.whatwg.org/multipage/syntax.html#elements-2
 
 
-  var voidTags = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"]; // Rules which might wrap the media queries, for example:
+  var voidTags = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"]; // https://developer.mozilla.org/en-US/docs/Web/HTML/Element#Inline_text_semantics
+  // https://developer.mozilla.org/en-US/docs/Web/HTML/Element#Image_and_multimedia
+
+  var inlineTags = new Set(["a", "abbr", "acronym", "audio", "b", "bdi", "bdo", "big", "br", "button", "canvas", "cite", "code", "data", "datalist", "del", "dfn", "em", "embed", "i", "iframe", "img", "input", "ins", "kbd", "label", "map", "mark", "meter", "noscript", "object", "output", "picture", "progress", "q", "ruby", "s", "samp", "script", "select", "slot", "small", "span", "strong", "sub", "sup", "svg", "template", "textarea", "time", "u", "tt", "var", "video", "wbr"]); // Rules which might wrap the media queries, for example:
   // @supports (display: grid) {...
   // const atRulesWhichMightWrapStyles = ["media", "supports", "document"];
 
@@ -4072,24 +4061,44 @@
 
           if (withinStyle) {
             withinStyle = false;
+          } // extract the tag name:
+
+
+          var badCharacters = "?![-/";
+          var extractedTagName = "";
+          var letterMet = false;
+
+          for (var y = right(str, _i); y < len; y++) {
+            if (!letterMet && str[y].trim() && str[y].toUpperCase() !== str[y].toLowerCase()) {
+              letterMet = true;
+            }
+
+            if ( // at least one letter has been met, to cater
+            // <? xml ...
+            letterMet && ( // it's whitespace
+            !str[y].trim() || // or symbol which definitely does not belong to a tag,
+            // considering we want to catch some rogue characters to
+            // validate and flag them up later
+            !/\w/.test(str[y]) && !badCharacters.includes(str[y]) || str[y] === "[") // if letter has been met, "[" is also terminating character
+            // think <![CDATA[x<y]]>
+            //               ^
+            //             this
+            ) {
+                break;
+              } else if (!badCharacters.includes(str[y])) {
+              extractedTagName += str[y].trim().toLowerCase();
+            }
           } // set the kind:
 
 
-          if (matchRight(str, _i, "doctype", {
-            i: true,
-            trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
-          })) {
+          if (extractedTagName === "doctype") {
             token.kind = "doctype";
-          } else if (matchRight(str, _i, "cdata", {
-            i: true,
-            trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
-          })) {
+          } else if (extractedTagName === "cdata") {
             token.kind = "cdata";
-          } else if (matchRight(str, _i, "xml", {
-            i: true,
-            trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
-          })) {
+          } else if (extractedTagName === "xml") {
             token.kind = "xml";
+          } else if (inlineTags.has(extractedTagName)) {
+            token.kind = "inline";
           }
         } else if (startsHtmlComment(str, _i, token, layers)) {
           //
@@ -4766,9 +4775,9 @@
           // extract the whole lump of ESP tag characters:
           var wholeEspTagClosing = "";
 
-          for (var y = _i; y < len; y++) {
-            if (espChars.includes(str[y])) {
-              wholeEspTagClosing += str[y];
+          for (var _y = _i; _y < len; _y++) {
+            if (espChars.includes(str[_y])) {
+              wholeEspTagClosing += str[_y];
             } else {
               break;
             }
@@ -5046,14 +5055,14 @@
           var whitespaceFound;
           var attribClosingQuoteAt;
 
-          for (var _y = left(str, _i); _y >= attrib.attribValueStartsAt; _y--) {
+          for (var _y2 = left(str, _i); _y2 >= attrib.attribValueStartsAt; _y2--) {
             // catch where whitespace starts
-            if (!whitespaceFound && str[_y] && !str[_y].trim()) {
+            if (!whitespaceFound && str[_y2] && !str[_y2].trim()) {
               whitespaceFound = true;
 
               if (attribClosingQuoteAt) {
                 // slice the captured chunk
-                var extractedChunksVal = str.slice(_y, attribClosingQuoteAt);
+                var extractedChunksVal = str.slice(_y2, attribClosingQuoteAt);
               }
             } // where that caught whitespace ends, that's the default location
             // of double quotes.
@@ -5064,12 +5073,12 @@
             //         to here
 
 
-            if (whitespaceFound && str[_y] && str[_y].trim()) {
+            if (whitespaceFound && str[_y2] && str[_y2].trim()) {
               whitespaceFound = false;
 
               if (!attribClosingQuoteAt) {
                 // that's the first, default location
-                attribClosingQuoteAt = _y + 1;
+                attribClosingQuoteAt = _y2 + 1;
               }
             }
           }
@@ -5358,25 +5367,25 @@
 
         if (str[_i + 1]) {
           // Traverse then
-          for (var _y2 = _i + 1; _y2 < len; _y2++) {
+          for (var _y3 = _i + 1; _y3 < len; _y3++) {
             // if we reach the closing counterpart of the quotes, terminate
-            if (attrib.attribOpeningQuoteAt && str[_y2] === str[attrib.attribOpeningQuoteAt]) {
-              if (_y2 !== _i + 1 && str[~-_y2] !== "=") {
+            if (attrib.attribOpeningQuoteAt && str[_y3] === str[attrib.attribOpeningQuoteAt]) {
+              if (_y3 !== _i + 1 && str[~-_y3] !== "=") {
                 thisIsRealEnding = true;
               }
 
               break;
-            } else if (str[_y2] === ">") {
+            } else if (str[_y3] === ">") {
               // must be real tag closing, we just tackle missing quotes
               // TODO - missing closing quotes
               break;
-            } else if (str[_y2] === "<") {
+            } else if (str[_y3] === "<") {
               thisIsRealEnding = true; // TODO - pop only if type === "simple" and it's the same opening
               // quotes of this attribute
 
               layers.pop();
               break;
-            } else if (!str[_y2 + 1]) {
+            } else if (!str[_y3 + 1]) {
               // if end was reached and nothing caught, that's also positive sign
               thisIsRealEnding = true;
               break;

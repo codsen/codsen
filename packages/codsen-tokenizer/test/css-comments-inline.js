@@ -214,7 +214,7 @@ tap.test(
   }
 );
 
-tap.only(
+tap.test(
   `03 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - body inline css, erroneous line comment`,
   (t) => {
     const gathered = [];

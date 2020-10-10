@@ -814,7 +814,7 @@ tap.test(`15 - unescaped bracket as value, more tags`, (t) => {
         closing: false,
         void: true,
         pureHTML: true,
-        kind: null,
+        kind: "inline",
         attribs: [
           {
             attribName: "alt",
@@ -1006,7 +1006,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "width",
@@ -1049,7 +1049,7 @@ tap.test(
           closing: true,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [],
         },
       ],
@@ -1083,7 +1083,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "width",
@@ -1121,7 +1121,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "width",
@@ -1178,7 +1178,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "abc",
@@ -1257,7 +1257,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "width",
@@ -1295,7 +1295,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "width",
@@ -1446,7 +1446,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "width",
@@ -1484,7 +1484,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "width",
@@ -1546,7 +1546,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "width",
@@ -1589,7 +1589,7 @@ tap.test(
           closing: true,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [],
         },
       ],
@@ -1628,7 +1628,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "width",
@@ -1671,7 +1671,7 @@ tap.test(
           closing: true,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [],
         },
       ],
@@ -1710,7 +1710,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "width",
@@ -1753,7 +1753,7 @@ tap.test(
           closing: true,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [],
         },
       ],
@@ -1792,7 +1792,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "width",
@@ -1856,7 +1856,7 @@ tap.test(
           closing: true,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [],
         },
       ],
@@ -1895,7 +1895,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "width",
@@ -1959,7 +1959,7 @@ tap.test(
           closing: true,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [],
         },
       ],
@@ -1993,7 +1993,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "width",
@@ -2051,7 +2051,7 @@ tap.test(
           closing: true,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [],
         },
       ],
@@ -2090,7 +2090,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "width",
@@ -2147,7 +2147,7 @@ tap.test(
           closing: true,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [],
         },
       ],
@@ -2186,7 +2186,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "width",
@@ -2273,7 +2273,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "width",
@@ -2346,7 +2346,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "width",
@@ -2403,7 +2403,7 @@ tap.test(
           closing: true,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [],
         },
       ],
@@ -2442,7 +2442,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "width",
@@ -2529,7 +2529,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "width",
@@ -3204,7 +3204,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "width",
@@ -3277,7 +3277,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "width",
@@ -3320,7 +3320,7 @@ tap.test(
           closing: true,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [],
         },
       ],
@@ -3359,7 +3359,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "width",
@@ -3432,7 +3432,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "width",
@@ -3475,7 +3475,7 @@ tap.test(
           closing: true,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [],
         },
       ],
@@ -3514,7 +3514,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "width",
@@ -3557,7 +3557,7 @@ tap.test(
           closing: true,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [],
         },
       ],
@@ -3596,7 +3596,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "width",
@@ -3664,7 +3664,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "class",
@@ -3746,7 +3746,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "width",
@@ -3789,7 +3789,7 @@ tap.test(
           closing: true,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [],
         },
       ],
@@ -3823,7 +3823,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "href",

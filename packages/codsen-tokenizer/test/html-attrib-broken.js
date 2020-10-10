@@ -30,7 +30,7 @@ tap.test(`01 - no equals but quotes present`, (t) => {
         closing: false,
         void: false,
         pureHTML: true,
-        kind: null,
+        kind: "inline",
         attribs: [
           {
             attribName: "href",
@@ -105,7 +105,7 @@ tap.test(`02 - no opening quotes but equals present`, (t) => {
         closing: false,
         void: false,
         pureHTML: true,
-        kind: null,
+        kind: "inline",
         attribs: [
           {
             attribName: "href",
@@ -345,7 +345,7 @@ tap.test(`06 - space instead of equal`, (t) => {
         closing: false,
         void: false,
         pureHTML: true,
-        kind: null,
+        kind: "inline",
         attribs: [
           {
             attribName: "class",
@@ -526,7 +526,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "width",
@@ -587,7 +587,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "width",
@@ -630,7 +630,7 @@ tap.test(
           closing: true,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [],
         },
       ],
@@ -669,7 +669,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "width",
@@ -712,7 +712,7 @@ tap.test(
           closing: true,
           void: false,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [],
         },
       ],
@@ -1084,7 +1084,7 @@ tap.test(
           closing: false,
           void: true,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "alt",
@@ -1142,7 +1142,7 @@ tap.test(
           closing: false,
           void: true,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "alt",
@@ -1222,7 +1222,7 @@ tap.test(
           closing: false,
           void: true,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "alt",
@@ -1280,7 +1280,7 @@ tap.test(
           closing: false,
           void: true,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "alt",
@@ -1362,7 +1362,7 @@ tap.test(
           closing: false,
           void: true,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "alt",
@@ -1419,7 +1419,7 @@ tap.test(
           closing: false,
           void: true,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "alt",
@@ -1476,7 +1476,7 @@ tap.test(
           closing: false,
           void: true,
           pureHTML: true,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "alt",
@@ -1670,7 +1670,7 @@ tap.test(
           pureHTML: true,
           start: 0,
           end: 31,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "type",
@@ -1738,7 +1738,7 @@ tap.test(
           pureHTML: true,
           start: 0,
           end: 31,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "type",
@@ -1811,7 +1811,7 @@ tap.test(`27 - two layers of quotes`, (t) => {
         closing: false,
         void: false,
         pureHTML: true,
-        kind: null,
+        kind: "inline",
         attribs: [
           {
             attribName: "width",

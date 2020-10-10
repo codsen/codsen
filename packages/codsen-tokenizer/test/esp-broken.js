@@ -33,7 +33,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "b",
@@ -96,7 +96,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "b",
@@ -183,7 +183,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "b",
@@ -506,7 +506,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "b",
@@ -619,7 +619,7 @@ tap.test(
           closing: false,
           void: false,
           pureHTML: false,
-          kind: null,
+          kind: "inline",
           attribs: [
             {
               attribName: "b",

@@ -281,8 +281,7 @@ function startsTag(str, i, token, layers) {
   })) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH].includes(str[stringLeftRight.left(str, i)])) && isTagOpening__default['default'](str, i, {
     allowCustomTagNames: false,
     skipOpeningBracket: true
-  })) && (
-  token.type !== "esp" || token.tail && token.tail.includes(str[i]));
+  })) && (token.type !== "esp" || token.tail && token.tail.includes(str[i]));
 }
 
 function startsEsp(str, i, token, layers, styleStarts) {
@@ -306,6 +305,7 @@ function isObj(something) {
   return something && _typeof(something) === "object" && !Array.isArray(something);
 }
 var voidTags = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"];
+var inlineTags = new Set(["a", "abbr", "acronym", "audio", "b", "bdi", "bdo", "big", "br", "button", "canvas", "cite", "code", "data", "datalist", "del", "dfn", "em", "embed", "i", "iframe", "img", "input", "ins", "kbd", "label", "map", "mark", "meter", "noscript", "object", "output", "picture", "progress", "q", "ruby", "s", "samp", "script", "select", "slot", "small", "span", "strong", "sub", "sup", "svg", "template", "textarea", "time", "u", "tt", "var", "video", "wbr"]);
 var charsThatEndCSSChunks = ["{", "}", ","];
 var BACKTICK = "\x60";
 var attrNameRegexp = /[\w-]/;
@@ -778,21 +778,31 @@ function tokenizer(str, originalOpts) {
         if (withinStyle) {
           withinStyle = false;
         }
-        if (stringMatchLeftRight.matchRight(str, _i, "doctype", {
-          i: true,
-          trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
-        })) {
+        var badCharacters = "?![-/";
+        var extractedTagName = "";
+        var letterMet = false;
+        for (var y = stringLeftRight.right(str, _i); y < len; y++) {
+          if (!letterMet && str[y].trim() && str[y].toUpperCase() !== str[y].toLowerCase()) {
+            letterMet = true;
+          }
+          if (
+          letterMet && (
+          !str[y].trim() ||
+          !/\w/.test(str[y]) && !badCharacters.includes(str[y]) || str[y] === "[")
+          ) {
+              break;
+            } else if (!badCharacters.includes(str[y])) {
+            extractedTagName += str[y].trim().toLowerCase();
+          }
+        }
+        if (extractedTagName === "doctype") {
           token.kind = "doctype";
-        } else if (stringMatchLeftRight.matchRight(str, _i, "cdata", {
-          i: true,
-          trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
-        })) {
+        } else if (extractedTagName === "cdata") {
           token.kind = "cdata";
-        } else if (stringMatchLeftRight.matchRight(str, _i, "xml", {
-          i: true,
-          trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
-        })) {
+        } else if (extractedTagName === "xml") {
           token.kind = "xml";
+        } else if (inlineTags.has(extractedTagName)) {
+          token.kind = "inline";
         }
       } else if (startsHtmlComment(str, _i, token, layers)) {
         if (token.start != null) {
@@ -1149,9 +1159,9 @@ function tokenizer(str, originalOpts) {
         token.value = str.slice(token.start, token.end);
       } else if (token.type === "esp" && token.end === null && isStr(token.tail) && token.tail.includes(str[_i])) {
         var wholeEspTagClosing = "";
-        for (var y = _i; y < len; y++) {
-          if (espChars.includes(str[y])) {
-            wholeEspTagClosing += str[y];
+        for (var _y = _i; _y < len; _y++) {
+          if (espChars.includes(str[_y])) {
+            wholeEspTagClosing += str[_y];
           } else {
             break;
           }
@@ -1297,17 +1307,17 @@ function tokenizer(str, originalOpts) {
       } else if (str[_i] === "=" && ("'\"".includes(str[stringLeftRight.right(str, _i)]) || str[~-_i] && isLatinLetter(str[~-_i]))) {
         var whitespaceFound;
         var attribClosingQuoteAt;
-        for (var _y = stringLeftRight.left(str, _i); _y >= attrib.attribValueStartsAt; _y--) {
-          if (!whitespaceFound && str[_y] && !str[_y].trim()) {
+        for (var _y2 = stringLeftRight.left(str, _i); _y2 >= attrib.attribValueStartsAt; _y2--) {
+          if (!whitespaceFound && str[_y2] && !str[_y2].trim()) {
             whitespaceFound = true;
             if (attribClosingQuoteAt) {
-              var extractedChunksVal = str.slice(_y, attribClosingQuoteAt);
+              var extractedChunksVal = str.slice(_y2, attribClosingQuoteAt);
             }
           }
-          if (whitespaceFound && str[_y] && str[_y].trim()) {
+          if (whitespaceFound && str[_y2] && str[_y2].trim()) {
             whitespaceFound = false;
             if (!attribClosingQuoteAt) {
-              attribClosingQuoteAt = _y + 1;
+              attribClosingQuoteAt = _y2 + 1;
             }
           }
         }
@@ -1470,19 +1480,19 @@ function tokenizer(str, originalOpts) {
     if (str[_i] === ">" && token.type === "tag" && attrib.attribStarts && !attrib.attribEnd) {
       var thisIsRealEnding = false;
       if (str[_i + 1]) {
-        for (var _y2 = _i + 1; _y2 < len; _y2++) {
-          if (attrib.attribOpeningQuoteAt && str[_y2] === str[attrib.attribOpeningQuoteAt]) {
-            if (_y2 !== _i + 1 && str[~-_y2] !== "=") {
+        for (var _y3 = _i + 1; _y3 < len; _y3++) {
+          if (attrib.attribOpeningQuoteAt && str[_y3] === str[attrib.attribOpeningQuoteAt]) {
+            if (_y3 !== _i + 1 && str[~-_y3] !== "=") {
               thisIsRealEnding = true;
             }
             break;
-          } else if (str[_y2] === ">") {
+          } else if (str[_y3] === ">") {
             break;
-          } else if (str[_y2] === "<") {
+          } else if (str[_y3] === "<") {
             thisIsRealEnding = true;
             layers.pop();
             break;
-          } else if (!str[_y2 + 1]) {
+          } else if (!str[_y3 + 1]) {
             thisIsRealEnding = true;
             break;
           }

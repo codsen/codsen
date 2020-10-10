@@ -44,20 +44,6 @@ function startsTag(str, i, token, layers) {
           allowCustomTagNames: false, // <-- stricter requirements for missing opening bracket tags
           skipOpeningBracket: true,
         }))) &&
-    // (
-    //   (str[i] === "<" &&
-    //   (
-    //     str[right(str, i)] === ">" ||
-    //     isTagOpening(str, i, {
-    //       allowCustomTagNames: true
-    //     }) ||
-    //     matchRight(str, i, ["doctype", "xml", "cdata"], {
-    //       i: true,
-    //       trimBeforeMatching: true,
-    //       trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
-    //     })
-    //   ))
-    // ) &&
     (token.type !== "esp" || (token.tail && token.tail.includes(str[i])))
   );
 }

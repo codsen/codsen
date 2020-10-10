@@ -941,7 +941,7 @@ tap.test(`12 - ${`\u001b[${36}m${`basics`}\u001b[${39}m`} - @media`, (t) => {
         closing: false,
         void: false,
         pureHTML: true,
-        kind: null,
+        kind: "inline",
         attribs: [
           {
             attribName: "class",
@@ -985,7 +985,7 @@ tap.test(`12 - ${`\u001b[${36}m${`basics`}\u001b[${39}m`} - @media`, (t) => {
         closing: true,
         void: false,
         pureHTML: true,
-        kind: null,
+        kind: "inline",
         attribs: [],
       },
       {

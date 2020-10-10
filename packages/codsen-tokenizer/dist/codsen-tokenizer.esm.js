@@ -468,6 +468,63 @@ const voidTags = [
   "track",
   "wbr",
 ];
+const inlineTags = new Set([
+  "a",
+  "abbr",
+  "acronym",
+  "audio",
+  "b",
+  "bdi",
+  "bdo",
+  "big",
+  "br",
+  "button",
+  "canvas",
+  "cite",
+  "code",
+  "data",
+  "datalist",
+  "del",
+  "dfn",
+  "em",
+  "embed",
+  "i",
+  "iframe",
+  "img",
+  "input",
+  "ins",
+  "kbd",
+  "label",
+  "map",
+  "mark",
+  "meter",
+  "noscript",
+  "object",
+  "output",
+  "picture",
+  "progress",
+  "q",
+  "ruby",
+  "s",
+  "samp",
+  "script",
+  "select",
+  "slot",
+  "small",
+  "span",
+  "strong",
+  "sub",
+  "sup",
+  "svg",
+  "template",
+  "textarea",
+  "time",
+  "u",
+  "tt",
+  "var",
+  "video",
+  "wbr",
+]);
 const charsThatEndCSSChunks = ["{", "}", ","];
 const BACKTICK = "\x60";
 const attrNameRegexp = /[\w-]/;
@@ -1128,27 +1185,36 @@ function tokenizer(str, originalOpts) {
         if (withinStyle) {
           withinStyle = false;
         }
-        if (
-          matchRight(str, i, "doctype", {
-            i: true,
-            trimCharsBeforeMatching: ["?", "!", "[", " ", "-"],
-          })
-        ) {
+        const badCharacters = `?![-/`;
+        let extractedTagName = "";
+        let letterMet = false;
+        for (let y = right(str, i); y < len; y++) {
+          if (
+            !letterMet &&
+            str[y].trim() &&
+            str[y].toUpperCase() !== str[y].toLowerCase()
+          ) {
+            letterMet = true;
+          }
+          if (
+            letterMet &&
+            (!str[y].trim() ||
+              (!/\w/.test(str[y]) && !badCharacters.includes(str[y])) ||
+              str[y] === "[")
+          ) {
+            break;
+          } else if (!badCharacters.includes(str[y])) {
+            extractedTagName += str[y].trim().toLowerCase();
+          }
+        }
+        if (extractedTagName === "doctype") {
           token.kind = "doctype";
-        } else if (
-          matchRight(str, i, "cdata", {
-            i: true,
-            trimCharsBeforeMatching: ["?", "!", "[", " ", "-"],
-          })
-        ) {
+        } else if (extractedTagName === "cdata") {
           token.kind = "cdata";
-        } else if (
-          matchRight(str, i, "xml", {
-            i: true,
-            trimCharsBeforeMatching: ["?", "!", "[", " ", "-"],
-          })
-        ) {
+        } else if (extractedTagName === "xml") {
           token.kind = "xml";
+        } else if (inlineTags.has(extractedTagName)) {
+          token.kind = "inline";
         }
       } else if (startsHtmlComment(str, i, token, layers)) {
         if (token.start != null) {
