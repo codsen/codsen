@@ -637,7 +637,7 @@ function tokenizer(str, originalOpts) {
     attribValueStartsAt: null,
     attribValueEndsAt: null,
     attribStarts: null,
-    attribEnd: null,
+    attribEnds: null,
     attribLeft: null,
   };
   function attribReset() {
@@ -722,7 +722,7 @@ function tokenizer(str, originalOpts) {
             i2++
           ) {
             if (incomingToken.attribs[i2].attribNameRecognised) {
-              cutOffIndex = incomingToken.attribs[i2].attribEnd;
+              cutOffIndex = incomingToken.attribs[i2].attribEnds;
               if (
                 str[cutOffIndex + 1] &&
                 !str[cutOffIndex].trim() &&
@@ -1257,7 +1257,7 @@ function tokenizer(str, originalOpts) {
           !layers.length ||
           layers[~-layers.length].type !== "simple" ||
           ![`'`, `"`].includes(layers[~-layers.length].value) ||
-          (attrib && attrib.attribStarts && !attrib.attribEnd))
+          (attrib && attrib.attribStarts && !attrib.attribEnds))
       ) {
         const wholeEspTagLumpOnTheRight = getWholeEspTagLumpOnTheRight(
           str,
@@ -1392,7 +1392,7 @@ function tokenizer(str, originalOpts) {
                   token.recognised = isTagNameRecognised(token.tagName);
                 }
                 parentTokenToBackup = clone(token);
-                if (attrib.attribStarts && !attrib.attribEnd) {
+                if (attrib.attribStarts && !attrib.attribEnds) {
                   attribToBackup = clone(attrib);
                 }
               } else if (!attribToBackup) {
@@ -1880,7 +1880,7 @@ function tokenizer(str, originalOpts) {
         (str[i] === "/" && str[right(str, i)] === ">")
       ) {
         if (`'"`.includes(str[right(str, i)])) ; else {
-          attrib.attribEnd = i;
+          attrib.attribEnds = i;
           token.attribs.push(clone(attrib));
           attribReset();
         }
@@ -1949,7 +1949,7 @@ function tokenizer(str, originalOpts) {
           if (attrib.attribValueStartsAt) {
             attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, i);
           }
-          attrib.attribEnd = i + 1;
+          attrib.attribEnds = i + 1;
           if (property) {
             attrib.attribValue.push(clone(property));
             property = null;
@@ -1993,7 +1993,7 @@ function tokenizer(str, originalOpts) {
             attrib.attribValue[~-attrib.attribValue.length].end
           );
         }
-        attrib.attribEnd = i;
+        attrib.attribEnds = i;
         token.attribs.push(clone(attrib));
         attribReset();
         layers.pop();
@@ -2042,7 +2042,7 @@ function tokenizer(str, originalOpts) {
               );
             }
           }
-          attrib.attribEnd = attribClosingQuoteAt;
+          attrib.attribEnds = attribClosingQuoteAt;
           if (str[attrib.attribOpeningQuoteAt] !== str[i]) {
             layers.pop();
           }
@@ -2058,7 +2058,7 @@ function tokenizer(str, originalOpts) {
             ))
         ) {
           i = attrib.attribOpeningQuoteAt;
-          attrib.attribEnd = attrib.attribOpeningQuoteAt + 1;
+          attrib.attribEnds = attrib.attribOpeningQuoteAt + 1;
           attrib.attribValueStartsAt = null;
           layers.pop();
           token.attribs.push(clone(attrib));
@@ -2069,7 +2069,7 @@ function tokenizer(str, originalOpts) {
         attrib &&
         attrib.attribName !== "style" &&
         attrib.attribStarts &&
-        !attrib.attribEnd &&
+        !attrib.attribEnds &&
         !property &&
         (!Array.isArray(attrib.attribValue) ||
           !attrib.attribValue.length ||
@@ -2104,7 +2104,7 @@ function tokenizer(str, originalOpts) {
         i
       );
       attribToBackup.attribClosingQuoteAt = i;
-      attribToBackup.attribEnd = i + 1;
+      attribToBackup.attribEnds = i + 1;
       token = clone(parentTokenToBackup);
       token.attribs.push(attribToBackup);
       attribToBackup = undefined;
@@ -2153,7 +2153,7 @@ function tokenizer(str, originalOpts) {
               .toLowerCase()
           )
         ) {
-          attrib.attribEnd = i + 1;
+          attrib.attribEnds = i + 1;
           token.attribs.push({ ...attrib });
           attribReset();
         } else if (
@@ -2270,7 +2270,7 @@ function tokenizer(str, originalOpts) {
       str[i] === ">" &&
       token.type === "tag" &&
       attrib.attribStarts &&
-      !attrib.attribEnd
+      !attrib.attribEnds
     ) {
       let thisIsRealEnding = false;
       if (str[i + 1]) {
@@ -2322,7 +2322,7 @@ function tokenizer(str, originalOpts) {
         } else {
           attrib.attribValueStartsAt = null;
         }
-        attrib.attribEnd = i;
+        attrib.attribEnds = i;
         token.attribs.push(clone(attrib));
         attribReset();
       }

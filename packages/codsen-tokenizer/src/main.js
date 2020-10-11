@@ -283,7 +283,7 @@ function tokenizer(str, originalOpts) {
     attribValueStartsAt: null,
     attribValueEndsAt: null,
     attribStarts: null,
-    attribEnd: null,
+    attribEnds: null,
     attribLeft: null,
   };
   function attribReset() {
@@ -629,7 +629,7 @@ function tokenizer(str, originalOpts) {
               )}`
             );
             if (incomingToken.attribs[i2].attribNameRecognised) {
-              cutOffIndex = incomingToken.attribs[i2].attribEnd;
+              cutOffIndex = incomingToken.attribs[i2].attribEnds;
               console.log(
                 `634 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`cutOffIndex`}\u001b[${39}m`} = ${cutOffIndex}`
               );
@@ -1899,7 +1899,7 @@ function tokenizer(str, originalOpts) {
           layers[~-layers.length].type !== "simple" ||
           ![`'`, `"`].includes(layers[~-layers.length].value) ||
           // or we're within an attribute (so quotes are HTML tag's not esp tag's)
-          (attrib && attrib.attribStarts && !attrib.attribEnd))
+          (attrib && attrib.attribStarts && !attrib.attribEnds))
       ) {
         //
         //
@@ -2344,7 +2344,7 @@ function tokenizer(str, originalOpts) {
                   )}`
                 );
 
-                if (attrib.attribStarts && !attrib.attribEnd) {
+                if (attrib.attribStarts && !attrib.attribEnds) {
                   attribToBackup = clone(attrib);
                   console.log(
                     `2350 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attribToBackup`}\u001b[${39}m`} = ${JSON.stringify(
@@ -3650,10 +3650,10 @@ function tokenizer(str, originalOpts) {
           console.log(
             `3651 ${`\u001b[${31}m${`a value-less attribute detected`}\u001b[${39}m`}`
           );
-          attrib.attribEnd = i;
+          attrib.attribEnds = i;
           console.log(
-            `3655 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribEnd`}\u001b[${39}m`} = ${
-              attrib.attribEnd
+            `3655 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribEnds`}\u001b[${39}m`} = ${
+              attrib.attribEnds
             }`
           );
 
@@ -3818,7 +3818,7 @@ function tokenizer(str, originalOpts) {
           if (attrib.attribValueStartsAt) {
             attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, i);
           }
-          attrib.attribEnd = i + 1;
+          attrib.attribEnds = i + 1;
 
           if (property) {
             attrib.attribValue.push(clone(property));
@@ -3901,7 +3901,7 @@ function tokenizer(str, originalOpts) {
             attrib.attribValue[~-attrib.attribValue.length].end
           );
         }
-        attrib.attribEnd = i;
+        attrib.attribEnds = i;
         console.log(
           `3906 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValueEndsAt`}\u001b[${39}m`} = ${
             attrib.attribValueEndsAt
@@ -3909,8 +3909,8 @@ function tokenizer(str, originalOpts) {
             attrib.attribValueRaw
           }; ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`} = ${
             attrib.attribValue
-          }; ${`\u001b[${33}m${`attrib.attribEnd`}\u001b[${39}m`} = ${
-            attrib.attribEnd
+          }; ${`\u001b[${33}m${`attrib.attribEnds`}\u001b[${39}m`} = ${
+            attrib.attribEnds
           }`
         );
 
@@ -4046,7 +4046,7 @@ function tokenizer(str, originalOpts) {
               );
             }
           }
-          attrib.attribEnd = attribClosingQuoteAt;
+          attrib.attribEnds = attribClosingQuoteAt;
           console.log(
             `4051 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribClosingQuoteAt`}\u001b[${39}m`} = ${
               attrib.attribClosingQuoteAt
@@ -4056,8 +4056,8 @@ function tokenizer(str, originalOpts) {
               attrib.attribValueRaw
             }; ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`} = ${
               attrib.attribValue
-            }; ${`\u001b[${33}m${`attrib.attribEnd`}\u001b[${39}m`} = ${
-              attrib.attribEnd
+            }; ${`\u001b[${33}m${`attrib.attribEnds`}\u001b[${39}m`} = ${
+              attrib.attribEnds
             }`
           );
 
@@ -4095,10 +4095,10 @@ function tokenizer(str, originalOpts) {
           i = attrib.attribOpeningQuoteAt;
 
           // 2. end the attribute
-          attrib.attribEnd = attrib.attribOpeningQuoteAt + 1;
+          attrib.attribEnds = attrib.attribOpeningQuoteAt + 1;
           console.log(
-            `4100 SET ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribEnd`}\u001b[${39}m`} = ${
-              attrib.attribEnd
+            `4100 SET ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribEnds`}\u001b[${39}m`} = ${
+              attrib.attribEnds
             }`
           );
 
@@ -4120,7 +4120,7 @@ function tokenizer(str, originalOpts) {
         attrib &&
         attrib.attribName !== "style" &&
         attrib.attribStarts &&
-        !attrib.attribEnd &&
+        !attrib.attribEnds &&
         !property &&
         //
         // AND,
@@ -4201,7 +4201,7 @@ function tokenizer(str, originalOpts) {
         i
       );
       attribToBackup.attribClosingQuoteAt = i;
-      attribToBackup.attribEnd = i + 1;
+      attribToBackup.attribEnds = i + 1;
 
       // 4. restore parent token
       token = clone(parentTokenToBackup);
@@ -4317,7 +4317,7 @@ function tokenizer(str, originalOpts) {
           // <span width=height=100>
 
           // 1. end the attribute
-          attrib.attribEnd = i + 1;
+          attrib.attribEnds = i + 1;
 
           // 2. push and wipe
           console.log(
@@ -4604,7 +4604,7 @@ function tokenizer(str, originalOpts) {
       str[i] === ">" &&
       token.type === "tag" &&
       attrib.attribStarts &&
-      !attrib.attribEnd
+      !attrib.attribEnds
     ) {
       console.log(
         `4610 ${`\u001b[${31}m${`██`}\u001b[${39}m`} bracket within attribute's value`
@@ -4735,10 +4735,10 @@ function tokenizer(str, originalOpts) {
           attrib.attribValueStartsAt = null;
         }
 
-        attrib.attribEnd = i;
+        attrib.attribEnds = i;
         console.log(
-          `4740 ${`\u001b[${32}m${`SET`}\u001b[${39}m`}  ${`\u001b[${33}m${`attrib.attribEnd`}\u001b[${39}m`} = ${
-            attrib.attribEnd
+          `4740 ${`\u001b[${32}m${`SET`}\u001b[${39}m`}  ${`\u001b[${33}m${`attrib.attribEnds`}\u001b[${39}m`} = ${
+            attrib.attribEnds
           }`
         );
 

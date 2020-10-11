@@ -374,7 +374,7 @@ function tokenizer(str, originalOpts) {
     attribValueStartsAt: null,
     attribValueEndsAt: null,
     attribStarts: null,
-    attribEnd: null,
+    attribEnds: null,
     attribLeft: null
   };
   function attribReset() {
@@ -444,7 +444,7 @@ function tokenizer(str, originalOpts) {
         if (Array.isArray(incomingToken.attribs) && incomingToken.attribs.length) {
           for (var i2 = 0, len2 = incomingToken.attribs.length; i2 < len2; i2++) {
             if (incomingToken.attribs[i2].attribNameRecognised) {
-              cutOffIndex = incomingToken.attribs[i2].attribEnd;
+              cutOffIndex = incomingToken.attribs[i2].attribEnds;
               if (str[cutOffIndex + 1] && !str[cutOffIndex].trim() && str[cutOffIndex + 1].trim()) {
                 cutOffIndex += 1;
               }
@@ -840,7 +840,7 @@ function tokenizer(str, originalOpts) {
       } else if (startsEsp(str, _i, token, layers, withinStyle) && (
       !Array.isArray(layers) || !layers.length ||
       layers[~-layers.length].type !== "simple" || !["'", "\""].includes(layers[~-layers.length].value) ||
-      attrib && attrib.attribStarts && !attrib.attribEnd)) {
+      attrib && attrib.attribStarts && !attrib.attribEnds)) {
         var wholeEspTagLumpOnTheRight = getWholeEspTagLumpOnTheRight(str, _i, layers);
         if (!espLumpBlacklist.includes(wholeEspTagLumpOnTheRight)) {
           var lengthOfClosingEspChunk;
@@ -936,7 +936,7 @@ function tokenizer(str, originalOpts) {
                   token.recognised = isTagNameRecognised(token.tagName);
                 }
                 parentTokenToBackup = clone__default['default'](token);
-                if (attrib.attribStarts && !attrib.attribEnd) {
+                if (attrib.attribStarts && !attrib.attribEnds) {
                   attribToBackup = clone__default['default'](attrib);
                 }
               } else if (!attribToBackup) {
@@ -1230,7 +1230,7 @@ function tokenizer(str, originalOpts) {
       attrib.attribNameRecognised = htmlAllKnownAttributes.allHtmlAttribs.has(attrib.attribName);
       if (str[_i] && !str[_i].trim() && str[stringLeftRight.right(str, _i)] === "=") ; else if (str[_i] && !str[_i].trim() || str[_i] === ">" || str[_i] === "/" && str[stringLeftRight.right(str, _i)] === ">") {
         if ("'\"".includes(str[stringLeftRight.right(str, _i)])) ; else {
-          attrib.attribEnd = _i;
+          attrib.attribEnds = _i;
           token.attribs.push(clone__default['default'](attrib));
           attribReset();
         }
@@ -1271,7 +1271,7 @@ function tokenizer(str, originalOpts) {
           if (attrib.attribValueStartsAt) {
             attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i);
           }
-          attrib.attribEnd = _i + 1;
+          attrib.attribEnds = _i + 1;
           if (property) {
             attrib.attribValue.push(clone__default['default'](property));
             property = null;
@@ -1296,7 +1296,7 @@ function tokenizer(str, originalOpts) {
           attrib.attribValue[~-attrib.attribValue.length].end = _i;
           attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, attrib.attribValue[~-attrib.attribValue.length].end);
         }
-        attrib.attribEnd = _i;
+        attrib.attribEnds = _i;
         token.attribs.push(clone__default['default'](attrib));
         attribReset();
         layers.pop();
@@ -1330,7 +1330,7 @@ function tokenizer(str, originalOpts) {
               attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, attrib.attribValueEndsAt);
             }
           }
-          attrib.attribEnd = attribClosingQuoteAt;
+          attrib.attribEnds = attribClosingQuoteAt;
           if (str[attrib.attribOpeningQuoteAt] !== str[_i]) {
             layers.pop();
           }
@@ -1341,7 +1341,7 @@ function tokenizer(str, originalOpts) {
           return "continue";
         } else if (attrib.attribOpeningQuoteAt && ("'\"".includes(str[stringLeftRight.right(str, _i)]) || htmlAllKnownAttributes.allHtmlAttribs.has(str.slice(attrib.attribOpeningQuoteAt + 1, _i).trim()))) {
           _i = attrib.attribOpeningQuoteAt;
-          attrib.attribEnd = attrib.attribOpeningQuoteAt + 1;
+          attrib.attribEnds = attrib.attribOpeningQuoteAt + 1;
           attrib.attribValueStartsAt = null;
           layers.pop();
           token.attribs.push(clone__default['default'](attrib));
@@ -1349,7 +1349,7 @@ function tokenizer(str, originalOpts) {
           i = _i;
           return "continue";
         }
-      } else if (attrib && attrib.attribName !== "style" && attrib.attribStarts && !attrib.attribEnd && !property && (
+      } else if (attrib && attrib.attribName !== "style" && attrib.attribStarts && !attrib.attribEnds && !property && (
       !Array.isArray(attrib.attribValue) ||
       !attrib.attribValue.length ||
       attrib.attribValue[~-attrib.attribValue.length].end && attrib.attribValue[~-attrib.attribValue.length].end <= _i)) {
@@ -1370,7 +1370,7 @@ function tokenizer(str, originalOpts) {
       attribToBackup.attribValueEndsAt = _i;
       attribToBackup.attribValueRaw = str.slice(attribToBackup.attribValueStartsAt, _i);
       attribToBackup.attribClosingQuoteAt = _i;
-      attribToBackup.attribEnd = _i + 1;
+      attribToBackup.attribEnds = _i + 1;
       token = clone__default['default'](parentTokenToBackup);
       token.attribs.push(attribToBackup);
       attribToBackup = undefined;
@@ -1392,7 +1392,7 @@ function tokenizer(str, originalOpts) {
           firstCharOnTheRight &&
           str.slice(firstCharOnTheRight).includes("=") &&
           htmlAllKnownAttributes.allHtmlAttribs.has(str.slice(firstCharOnTheRight, firstCharOnTheRight + str.slice(firstCharOnTheRight).indexOf("=")).trim().toLowerCase())) {
-            attrib.attribEnd = _i + 1;
+            attrib.attribEnds = _i + 1;
             token.attribs.push(_objectSpread2({}, attrib));
             attribReset();
           } else if (
@@ -1477,7 +1477,7 @@ function tokenizer(str, originalOpts) {
         }
       }
     }
-    if (str[_i] === ">" && token.type === "tag" && attrib.attribStarts && !attrib.attribEnd) {
+    if (str[_i] === ">" && token.type === "tag" && attrib.attribStarts && !attrib.attribEnds) {
       var thisIsRealEnding = false;
       if (str[_i + 1]) {
         for (var _y3 = _i + 1; _y3 < len; _y3++) {
@@ -1513,7 +1513,7 @@ function tokenizer(str, originalOpts) {
         } else {
           attrib.attribValueStartsAt = null;
         }
-        attrib.attribEnd = _i;
+        attrib.attribEnds = _i;
         token.attribs.push(clone__default['default'](attrib));
         attribReset();
       }

@@ -3274,7 +3274,7 @@
       attribValueStartsAt: null,
       attribValueEndsAt: null,
       attribStarts: null,
-      attribEnd: null,
+      attribEnds: null,
       attribLeft: null
     };
 
@@ -3495,7 +3495,7 @@
             // with each validated attribute, push the cutOffIndex forward:
             for (var i2 = 0, len2 = incomingToken.attribs.length; i2 < len2; i2++) {
               if (incomingToken.attribs[i2].attribNameRecognised) {
-                cutOffIndex = incomingToken.attribs[i2].attribEnd; // small tweak - consider this:
+                cutOffIndex = incomingToken.attribs[i2].attribEnds; // small tweak - consider this:
                 // <a href="z" click here</a>
                 //            ^
                 //         this space in particular
@@ -4165,7 +4165,7 @@
         //
         !Array.isArray(layers) || !layers.length || // last layer is not quotes
         layers[~-layers.length].type !== "simple" || !["'", "\""].includes(layers[~-layers.length].value) || // or we're within an attribute (so quotes are HTML tag's not esp tag's)
-        attrib && attrib.attribStarts && !attrib.attribEnd)) {
+        attrib && attrib.attribStarts && !attrib.attribEnds)) {
           //
           //
           //
@@ -4372,7 +4372,7 @@
 
                   parentTokenToBackup = lodash_clonedeep(token);
 
-                  if (attrib.attribStarts && !attrib.attribEnd) {
+                  if (attrib.attribStarts && !attrib.attribEnds) {
                     attribToBackup = lodash_clonedeep(attrib);
                   }
                 } else if (!attribToBackup) {
@@ -4930,7 +4930,7 @@
 
         if (str[_i] && !str[_i].trim() && str[right(str, _i)] === "=") ; else if (str[_i] && !str[_i].trim() || str[_i] === ">" || str[_i] === "/" && str[right(str, _i)] === ">") {
           if ("'\"".includes(str[right(str, _i)])) ; else {
-            attrib.attribEnd = _i; // push and wipe
+            attrib.attribEnds = _i; // push and wipe
 
             token.attribs.push(lodash_clonedeep(attrib));
             attribReset();
@@ -4998,7 +4998,7 @@
               attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i);
             }
 
-            attrib.attribEnd = _i + 1;
+            attrib.attribEnds = _i + 1;
 
             if (property) {
               attrib.attribValue.push(lodash_clonedeep(property));
@@ -5034,7 +5034,7 @@
             attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, attrib.attribValue[~-attrib.attribValue.length].end);
           }
 
-          attrib.attribEnd = _i; // 2. push and wipe
+          attrib.attribEnds = _i; // 2. push and wipe
 
           token.attribs.push(lodash_clonedeep(attrib));
           attribReset(); // 3. pop layers
@@ -5095,7 +5095,7 @@
               }
             }
 
-            attrib.attribEnd = attribClosingQuoteAt; // 2. if the pair was mismatching, wipe layers' last element
+            attrib.attribEnds = attribClosingQuoteAt; // 2. if the pair was mismatching, wipe layers' last element
 
             if (str[attrib.attribOpeningQuoteAt] !== str[_i]) {
               layers.pop();
@@ -5118,7 +5118,7 @@
             // 1. pull back the index, go backwards, read this new attribute again
             _i = attrib.attribOpeningQuoteAt; // 2. end the attribute
 
-            attrib.attribEnd = attrib.attribOpeningQuoteAt + 1; // 3. value doesn't start, this needs correction
+            attrib.attribEnds = attrib.attribOpeningQuoteAt + 1; // 3. value doesn't start, this needs correction
 
             attrib.attribValueStartsAt = null; // 4. pop the opening quotes layer
 
@@ -5130,7 +5130,7 @@
             i = _i;
             return "continue";
           }
-        } else if (attrib && attrib.attribName !== "style" && attrib.attribStarts && !attrib.attribEnd && !property && ( //
+        } else if (attrib && attrib.attribName !== "style" && attrib.attribStarts && !attrib.attribEnds && !property && ( //
         // AND,
         //
         // either there are no attributes recorded under attrib.attribValue:
@@ -5164,7 +5164,7 @@
         attribToBackup.attribValueEndsAt = _i;
         attribToBackup.attribValueRaw = str.slice(attribToBackup.attribValueStartsAt, _i);
         attribToBackup.attribClosingQuoteAt = _i;
-        attribToBackup.attribEnd = _i + 1; // 4. restore parent token
+        attribToBackup.attribEnds = _i + 1; // 4. restore parent token
 
         token = lodash_clonedeep(parentTokenToBackup);
         token.attribs.push(attribToBackup); // 5. reset all
@@ -5217,7 +5217,7 @@
               // we have something like:
               // <span width=height=100>
               // 1. end the attribute
-              attrib.attribEnd = _i + 1; // 2. push and wipe
+              attrib.attribEnds = _i + 1; // 2. push and wipe
 
               token.attribs.push(_objectSpread2({}, attrib));
               attribReset();
@@ -5354,7 +5354,7 @@
       // mean the tag ending and maybe the closing quotes are missing?
 
 
-      if (str[_i] === ">" && token.type === "tag" && attrib.attribStarts && !attrib.attribEnd) {
+      if (str[_i] === ">" && token.type === "tag" && attrib.attribStarts && !attrib.attribEnds) {
         // Idea is simple: we have to situations:
         // 1. this closing bracket is real, closing bracket
         // 2. this closing bracket is unencoded raw text
@@ -5421,7 +5421,7 @@
             attrib.attribValueStartsAt = null;
           }
 
-          attrib.attribEnd = _i; // 2. push and wipe
+          attrib.attribEnds = _i; // 2. push and wipe
 
           token.attribs.push(lodash_clonedeep(attrib));
           attribReset();
