@@ -335,3 +335,35 @@ tap.test(
     t.end();
   }
 );
+
+tap.test(
+  `12 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - repeated and dodgy`,
+  (t) => {
+    t.true(is(`<a class="" class= class"">`, 9, 10), "12");
+    t.end();
+  }
+);
+
+tap.test(
+  `13 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - repeated and dodgy`,
+  (t) => {
+    t.false(is(`<a class="" class= class"">`, 9, 24), "13");
+    t.end();
+  }
+);
+
+tap.test(
+  `14 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - repeated and dodgy`,
+  (t) => {
+    t.false(is(`<a class="" class= class"">`, 9, 25), "14");
+    t.end();
+  }
+);
+
+tap.test(
+  `15 - ${`\u001b[${33}m${`cheeky cases`}\u001b[${39}m`} - repeated and dodgy`,
+  (t) => {
+    t.true(is(`<a class="" class= class"">`, 24, 25), "15");
+    t.end();
+  }
+);
