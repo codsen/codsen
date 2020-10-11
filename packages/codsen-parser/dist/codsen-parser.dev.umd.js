@@ -3247,7 +3247,7 @@
       attribValueStartsAt: null,
       attribValueEndsAt: null,
       attribStarts: null,
-      attribEnd: null,
+      attribEnds: null,
       attribLeft: null
     };
 
@@ -3332,7 +3332,7 @@
           if (Array.isArray(incomingToken.attribs) && incomingToken.attribs.length) {
             for (var i2 = 0, len2 = incomingToken.attribs.length; i2 < len2; i2++) {
               if (incomingToken.attribs[i2].attribNameRecognised) {
-                cutOffIndex = incomingToken.attribs[i2].attribEnd;
+                cutOffIndex = incomingToken.attribs[i2].attribEnds;
 
                 if (str[cutOffIndex + 1] && !str[cutOffIndex].trim() && str[cutOffIndex + 1].trim()) {
                   cutOffIndex += 1;
@@ -3771,7 +3771,7 @@
           }
 
           doNothing = _i + 2;
-        } else if (startsEsp(str, _i, token, layers, withinStyle) && (!Array.isArray(layers) || !layers.length || layers[~-layers.length].type !== "simple" || !["'", "\""].includes(layers[~-layers.length].value) || attrib && attrib.attribStarts && !attrib.attribEnd)) {
+        } else if (startsEsp(str, _i, token, layers, withinStyle) && (!Array.isArray(layers) || !layers.length || layers[~-layers.length].type !== "simple" || !["'", "\""].includes(layers[~-layers.length].value) || attrib && attrib.attribStarts && !attrib.attribEnds)) {
           var wholeEspTagLumpOnTheRight = getWholeEspTagLumpOnTheRight(str, _i, layers);
 
           if (!espLumpBlacklist.includes(wholeEspTagLumpOnTheRight)) {
@@ -3877,7 +3877,7 @@
 
                   parentTokenToBackup = lodash_clonedeep(token);
 
-                  if (attrib.attribStarts && !attrib.attribEnd) {
+                  if (attrib.attribStarts && !attrib.attribEnds) {
                     attribToBackup = lodash_clonedeep(attrib);
                   }
                 } else if (!attribToBackup) {
@@ -4175,7 +4175,7 @@
         attrib.attribNameRecognised = allHtmlAttribs.has(attrib.attribName);
         if (str[_i] && !str[_i].trim() && str[right(str, _i)] === "=") ;else if (str[_i] && !str[_i].trim() || str[_i] === ">" || str[_i] === "/" && str[right(str, _i)] === ">") {
           if ("'\"".includes(str[right(str, _i)])) ;else {
-            attrib.attribEnd = _i;
+            attrib.attribEnds = _i;
             token.attribs.push(lodash_clonedeep(attrib));
             attribReset();
           }
@@ -4222,7 +4222,7 @@
               attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i);
             }
 
-            attrib.attribEnd = _i + 1;
+            attrib.attribEnds = _i + 1;
 
             if (property) {
               attrib.attribValue.push(lodash_clonedeep(property));
@@ -4253,7 +4253,7 @@
             attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, attrib.attribValue[~-attrib.attribValue.length].end);
           }
 
-          attrib.attribEnd = _i;
+          attrib.attribEnds = _i;
           token.attribs.push(lodash_clonedeep(attrib));
           attribReset();
           layers.pop();
@@ -4296,7 +4296,7 @@
               }
             }
 
-            attrib.attribEnd = attribClosingQuoteAt;
+            attrib.attribEnds = attribClosingQuoteAt;
 
             if (str[attrib.attribOpeningQuoteAt] !== str[_i]) {
               layers.pop();
@@ -4309,7 +4309,7 @@
             return "continue";
           } else if (attrib.attribOpeningQuoteAt && ("'\"".includes(str[right(str, _i)]) || allHtmlAttribs.has(str.slice(attrib.attribOpeningQuoteAt + 1, _i).trim()))) {
             _i = attrib.attribOpeningQuoteAt;
-            attrib.attribEnd = attrib.attribOpeningQuoteAt + 1;
+            attrib.attribEnds = attrib.attribOpeningQuoteAt + 1;
             attrib.attribValueStartsAt = null;
             layers.pop();
             token.attribs.push(lodash_clonedeep(attrib));
@@ -4317,7 +4317,7 @@
             i = _i;
             return "continue";
           }
-        } else if (attrib && attrib.attribName !== "style" && attrib.attribStarts && !attrib.attribEnd && !property && (!Array.isArray(attrib.attribValue) || !attrib.attribValue.length || attrib.attribValue[~-attrib.attribValue.length].end && attrib.attribValue[~-attrib.attribValue.length].end <= _i)) {
+        } else if (attrib && attrib.attribName !== "style" && attrib.attribStarts && !attrib.attribEnds && !property && (!Array.isArray(attrib.attribValue) || !attrib.attribValue.length || attrib.attribValue[~-attrib.attribValue.length].end && attrib.attribValue[~-attrib.attribValue.length].end <= _i)) {
           attrib.attribValue.push({
             type: "text",
             start: _i,
@@ -4337,7 +4337,7 @@
         attribToBackup.attribValueEndsAt = _i;
         attribToBackup.attribValueRaw = str.slice(attribToBackup.attribValueStartsAt, _i);
         attribToBackup.attribClosingQuoteAt = _i;
-        attribToBackup.attribEnd = _i + 1;
+        attribToBackup.attribEnds = _i + 1;
         token = lodash_clonedeep(parentTokenToBackup);
         token.attribs.push(attribToBackup);
         attribToBackup = undefined;
@@ -4357,7 +4357,7 @@
           }))) : undefined;
 
           if (firstCharOnTheRight && str.slice(firstCharOnTheRight).includes("=") && allHtmlAttribs.has(str.slice(firstCharOnTheRight, firstCharOnTheRight + str.slice(firstCharOnTheRight).indexOf("=")).trim().toLowerCase())) {
-            attrib.attribEnd = _i + 1;
+            attrib.attribEnds = _i + 1;
             token.attribs.push(_objectSpread2({}, attrib));
             attribReset();
           } else if (!firstQuoteOnTheRightIdx || str.slice(firstCharOnTheRight, firstQuoteOnTheRightIdx).includes("=") || !str.includes(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1) || Array.from(str.slice(firstQuoteOnTheRightIdx + 1, str.indexOf(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1))).some(function (char) {
@@ -4432,7 +4432,7 @@
         }
       }
 
-      if (str[_i] === ">" && token.type === "tag" && attrib.attribStarts && !attrib.attribEnd) {
+      if (str[_i] === ">" && token.type === "tag" && attrib.attribStarts && !attrib.attribEnds) {
         var thisIsRealEnding = false;
 
         if (str[_i + 1]) {
@@ -4474,7 +4474,7 @@
             attrib.attribValueStartsAt = null;
           }
 
-          attrib.attribEnd = _i;
+          attrib.attribEnds = _i;
           token.attribs.push(lodash_clonedeep(attrib));
           attribReset();
         }
