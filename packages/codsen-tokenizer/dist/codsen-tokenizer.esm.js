@@ -2261,6 +2261,9 @@ function tokenizer(str, originalOpts) {
               } else {
                 attrib.attribValueRaw = "";
               }
+              attrib.attribEnds = i + 1;
+              token.attribs.push(clone(attrib));
+              attribReset();
             }
           }
         }
@@ -2322,9 +2325,13 @@ function tokenizer(str, originalOpts) {
         } else {
           attrib.attribValueStartsAt = null;
         }
-        attrib.attribEnds = i;
-        token.attribs.push(clone(attrib));
-        attribReset();
+        if (attrib.attribEnds === null) {
+          attrib.attribEnds = i;
+        }
+        if (attrib) {
+          token.attribs.push(clone(attrib));
+          attribReset();
+        }
       }
     }
     if (str[i] && opts.charCb) {

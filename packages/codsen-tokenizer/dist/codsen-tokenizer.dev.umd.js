@@ -5333,6 +5333,11 @@
                 } else {
                   attrib.attribValueRaw = "";
                 }
+
+                attrib.attribEnds = _i + 1; // push and wipe
+
+                token.attribs.push(lodash_clonedeep(attrib));
+                attribReset();
               }
             }
           }
@@ -5421,10 +5426,15 @@
             attrib.attribValueStartsAt = null;
           }
 
-          attrib.attribEnds = _i; // 2. push and wipe
+          if (attrib.attribEnds === null) {
+            attrib.attribEnds = _i;
+          }
 
-          token.attribs.push(lodash_clonedeep(attrib));
-          attribReset();
+          if (attrib) {
+            // 2. push and wipe
+            token.attribs.push(lodash_clonedeep(attrib));
+            attribReset();
+          }
         }
       } //
       //

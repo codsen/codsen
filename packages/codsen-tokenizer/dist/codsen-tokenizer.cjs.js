@@ -1472,6 +1472,9 @@ function tokenizer(str, originalOpts) {
               } else {
                 attrib.attribValueRaw = "";
               }
+              attrib.attribEnds = _i + 1;
+              token.attribs.push(clone__default['default'](attrib));
+              attribReset();
             }
           }
         }
@@ -1513,9 +1516,13 @@ function tokenizer(str, originalOpts) {
         } else {
           attrib.attribValueStartsAt = null;
         }
-        attrib.attribEnds = _i;
-        token.attribs.push(clone__default['default'](attrib));
-        attribReset();
+        if (attrib.attribEnds === null) {
+          attrib.attribEnds = _i;
+        }
+        if (attrib) {
+          token.attribs.push(clone__default['default'](attrib));
+          attribReset();
+        }
       }
     }
     if (str[_i] && opts.charCb) {

@@ -3876,6 +3876,75 @@ tap.test(
   }
 );
 
+tap.test(`49 - last attr empty, XHML`, (t) => {
+  const gathered = [];
+  ct(`<input type="radio" checked=""/>`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 32,
+        value: '<input type="radio" checked=""/>',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
+        tagName: "input",
+        recognised: true,
+        closing: false,
+        void: true,
+        pureHTML: true,
+        kind: "inline",
+        attribs: [
+          {
+            attribName: "type",
+            attribNameRecognised: true,
+            attribNameStartsAt: 7,
+            attribNameEndsAt: 11,
+            attribOpeningQuoteAt: 12,
+            attribClosingQuoteAt: 18,
+            attribValueRaw: "radio",
+            attribValue: [
+              {
+                type: "text",
+                start: 13,
+                end: 18,
+                value: "radio",
+              },
+            ],
+            attribValueStartsAt: 13,
+            attribValueEndsAt: 18,
+            attribStarts: 7,
+            attribEnds: 19,
+            attribLeft: 5,
+          },
+          {
+            attribName: "checked",
+            attribNameRecognised: true,
+            attribNameStartsAt: 20,
+            attribNameEndsAt: 27,
+            attribOpeningQuoteAt: 28,
+            attribClosingQuoteAt: 29,
+            attribValueRaw: "",
+            attribValue: [],
+            attribValueStartsAt: null,
+            attribValueEndsAt: null,
+            attribStarts: 20,
+            attribEnds: 30,
+            attribLeft: 18,
+          },
+        ],
+      },
+    ],
+    "49"
+  );
+  t.end();
+});
+
 // TODO
 // -----------------------------------------------------------------------------
 

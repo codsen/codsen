@@ -8803,8 +8803,16 @@
           }, {});
         };
 
-        function hasShallowProperty(obj, prop) {
-          return options.includeInheritedProps || typeof prop === 'number' && Array.isArray(obj) || hasOwnProperty(obj, prop);
+        var hasShallowProperty;
+
+        if (options.includeInheritedProps) {
+          hasShallowProperty = function hasShallowProperty() {
+            return true;
+          };
+        } else {
+          hasShallowProperty = function hasShallowProperty(obj, prop) {
+            return typeof prop === 'number' && Array.isArray(obj) || hasOwnProperty(obj, prop);
+          };
         }
 
         function getShallowProperty(obj, prop) {
@@ -8828,6 +8836,10 @@
 
           var currentPath = path[0];
           var currentValue = getShallowProperty(obj, currentPath);
+
+          if (options.includeInheritedProps && (currentPath === '__proto__' || currentPath === 'constructor' && typeof currentValue === 'function')) {
+            throw new Error('For security reasons, object\'s magic properties cannot be set');
+          }
 
           if (path.length === 1) {
             if (currentValue === void 0 || !doNotReplace) {

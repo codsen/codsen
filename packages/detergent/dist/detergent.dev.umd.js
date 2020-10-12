@@ -18653,6 +18653,7 @@
         })) {
           var _loop = function _loop(y) {
             if (rangedOpeningTags[y].name === tag.name) {
+              /* istanbul ignore else */
               if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
                 filteredTagLocations = filteredTagLocations.filter(function (_ref) {
                   var _ref2 = _slicedToArray(_ref, 2),
@@ -18969,6 +18970,7 @@
           var whiteSpaceCompensation = calculateWhitespaceToInsert(str, _i, tag.leftOuterWhitespace, _i, tag.lastOpeningBracketAt, _i);
 
           if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
+            /* istanbul ignore next */
             filteredTagLocations = filteredTagLocations.filter(function (_ref4) {
               var _ref5 = _slicedToArray(_ref4, 2),
                   from = _ref5[0],
@@ -19112,10 +19114,13 @@
                 var lastRangedOpeningTag;
 
                 for (var z = rangedOpeningTags.length; z--;) {
+                  /* istanbul ignore else */
                   if (rangedOpeningTags[z].name === tag.name) {
                     lastRangedOpeningTag = rangedOpeningTags[z];
                   }
                 }
+                /* istanbul ignore else */
+
 
                 if (lastRangedOpeningTag) {
                   filteredTagLocations = filteredTagLocations.filter(function (_ref6) {

@@ -4426,6 +4426,10 @@
                 } else {
                   attrib.attribValueRaw = "";
                 }
+
+                attrib.attribEnds = _i + 1;
+                token.attribs.push(lodash_clonedeep(attrib));
+                attribReset();
               }
             }
           }
@@ -4474,9 +4478,14 @@
             attrib.attribValueStartsAt = null;
           }
 
-          attrib.attribEnds = _i;
-          token.attribs.push(lodash_clonedeep(attrib));
-          attribReset();
+          if (attrib.attribEnds === null) {
+            attrib.attribEnds = _i;
+          }
+
+          if (attrib) {
+            token.attribs.push(lodash_clonedeep(attrib));
+            attribReset();
+          }
         }
       }
 
