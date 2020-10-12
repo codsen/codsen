@@ -30,9 +30,19 @@ function attributeValidateHeaders(context, ...opts) {
         if (!["td", "th"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-headers",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        }
+        // if value is empty or otherwise does not exist
+        else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -41,7 +51,7 @@ function attributeValidateHeaders(context, ...opts) {
             node.attribValueStartsAt
           );
           console.log(
-            `044 \n${`\u001b[${33}m${`node.attribValueStartsAt + charStart`}\u001b[${39}m`} = ${JSON.stringify(
+            `054 \n${`\u001b[${33}m${`node.attribValueStartsAt + charStart`}\u001b[${39}m`} = ${JSON.stringify(
               node.attribValueStartsAt + charStart,
               null,
               4
@@ -57,7 +67,7 @@ function attributeValidateHeaders(context, ...opts) {
           );
 
           console.log(
-            `060 ${`\u001b[${36}m${`traverse and extract id's`}\u001b[${39}m`}`
+            `070 ${`\u001b[${36}m${`traverse and extract id's`}\u001b[${39}m`}`
           );
 
           checkClassOrIdValue(
@@ -72,7 +82,7 @@ function attributeValidateHeaders(context, ...opts) {
           );
 
           console.log(
-            `075 ███████████████████████████████████████\nFINALLY,\n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`}:\n${JSON.stringify(
+            `085 ███████████████████████████████████████\nFINALLY,\n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`}:\n${JSON.stringify(
               errorArr,
               null,
               4
@@ -80,7 +90,7 @@ function attributeValidateHeaders(context, ...opts) {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`083 RAISE ERROR`);
+            console.log(`093 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-headers",

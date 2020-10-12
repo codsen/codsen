@@ -233,8 +233,8 @@ tap.test(`10 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - empty`, (t) => {
     [
       {
         ruleId: "attribute-validate-charset",
-        idxFrom: 17,
-        idxTo: 17,
+        idxFrom: 8,
+        idxTo: 18,
         message: `Missing value.`,
         fix: null,
       },

@@ -52,9 +52,19 @@ function attributeValidateOndblclick(context, ...originalOpts) {
         ) {
           context.report({
             ruleId: "attribute-validate-ondblclick",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        }
+        // if value is empty or otherwise does not exist
+        else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -64,7 +74,7 @@ function attributeValidateOndblclick(context, ...originalOpts) {
             node.attribValueStartsAt
           );
           console.log(
-            `067 attributeValidateOndblclick(): received errorArr = ${JSON.stringify(
+            `077 attributeValidateOndblclick(): received errorArr = ${JSON.stringify(
               errorArr,
               null,
               4
@@ -72,7 +82,7 @@ function attributeValidateOndblclick(context, ...originalOpts) {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`075 attributeValidateOndblclick(): RAISE ERROR`);
+            console.log(`085 attributeValidateOndblclick(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-ondblclick",

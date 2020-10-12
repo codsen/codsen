@@ -44,13 +44,13 @@ function attributeValidateCompact(context, ...originalOpts) {
         // validate the parent
         if (!["dir", "dl", "menu", "ol", "ul"].includes(node.parent.tagName)) {
           errorArr.push({
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         } else {
-          // validate the value (or absence thereof)
+          // validate the value
           validateVoid(node, context, errorArr, {
             ...opts,
             enforceSiblingAttributes: null,

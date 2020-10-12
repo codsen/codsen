@@ -25,8 +25,8 @@ function attributeValidateCellspacing(context, ...opts) {
         if (node.parent.tagName !== "table") {
           context.report({
             ruleId: "attribute-validate-cellspacing",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });

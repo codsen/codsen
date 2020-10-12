@@ -164,8 +164,8 @@ tap.test(
       [
         {
           ruleId: "attribute-validate-alt",
-          idxFrom: 10,
-          idxTo: 10,
+          idxFrom: 5,
+          idxTo: 11,
           message: `Missing value.`,
           fix: null,
         },

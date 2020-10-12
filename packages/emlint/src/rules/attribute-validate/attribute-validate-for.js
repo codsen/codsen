@@ -27,9 +27,19 @@ function attributeValidateFor(context, ...opts) {
         if (node.parent.tagName !== "label") {
           context.report({
             ruleId: "attribute-validate-for",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        }
+        // if value is empty or otherwise does not exist
+        else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -38,7 +48,7 @@ function attributeValidateFor(context, ...opts) {
             node.attribValueStartsAt
           );
           console.log(
-            `041 \n${`\u001b[${33}m${`node.attribValueStartsAt + charStart`}\u001b[${39}m`} = ${JSON.stringify(
+            `051 \n${`\u001b[${33}m${`node.attribValueStartsAt + charStart`}\u001b[${39}m`} = ${JSON.stringify(
               node.attribValueStartsAt + charStart,
               null,
               4
@@ -54,7 +64,7 @@ function attributeValidateFor(context, ...opts) {
           );
 
           console.log(
-            `057 ${`\u001b[${36}m${`traverse and extract id's`}\u001b[${39}m`}`
+            `067 ${`\u001b[${36}m${`traverse and extract id's`}\u001b[${39}m`}`
           );
 
           const extractedValue = node.attribValueRaw.slice(charStart, charEnd);
@@ -94,7 +104,7 @@ function attributeValidateFor(context, ...opts) {
           }
 
           console.log(
-            `097 ███████████████████████████████████████\nFINALLY,\n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`}:\n${JSON.stringify(
+            `107 ███████████████████████████████████████\nFINALLY,\n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`}:\n${JSON.stringify(
               errorArr,
               null,
               4
@@ -102,7 +112,7 @@ function attributeValidateFor(context, ...opts) {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`105 RAISE ERROR`);
+            console.log(`115 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-for" });
           });
         }

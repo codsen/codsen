@@ -259,8 +259,8 @@ tap.test(
       [
         {
           ruleId: "attribute-validate-charoff",
-          idxFrom: 24,
-          idxTo: 24,
+          idxFrom: 15,
+          idxTo: 25,
           message: `Missing value.`,
           fix: null,
         },

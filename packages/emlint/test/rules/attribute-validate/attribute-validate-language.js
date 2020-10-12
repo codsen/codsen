@@ -148,8 +148,8 @@ tap.test(
       [
         {
           ruleId: "attribute-validate-language",
-          idxFrom: 18,
-          idxTo: 18,
+          idxFrom: 8,
+          idxTo: 19,
           message: `Missing value.`,
           fix: null,
         },

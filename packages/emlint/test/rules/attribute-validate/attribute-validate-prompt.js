@@ -148,8 +148,8 @@ tap.test(
       [
         {
           ruleId: "attribute-validate-prompt",
-          idxFrom: 17,
-          idxTo: 17,
+          idxFrom: 9,
+          idxTo: 18,
           message: `Missing value.`,
           fix: null,
         },

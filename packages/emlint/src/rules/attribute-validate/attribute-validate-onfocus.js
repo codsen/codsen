@@ -42,9 +42,19 @@ function attributeValidateOnfocus(context, ...originalOpts) {
         ) {
           context.report({
             ruleId: "attribute-validate-onfocus",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        }
+        // if value is empty or otherwise does not exist
+        else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -54,7 +64,7 @@ function attributeValidateOnfocus(context, ...originalOpts) {
             node.attribValueStartsAt
           );
           console.log(
-            `057 attributeValidateOnfocus(): received errorArr = ${JSON.stringify(
+            `067 attributeValidateOnfocus(): received errorArr = ${JSON.stringify(
               errorArr,
               null,
               4
@@ -62,7 +72,7 @@ function attributeValidateOnfocus(context, ...originalOpts) {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`065 attributeValidateOnfocus(): RAISE ERROR`);
+            console.log(`075 attributeValidateOnfocus(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-onfocus",

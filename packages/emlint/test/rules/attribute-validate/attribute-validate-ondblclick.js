@@ -137,8 +137,8 @@ tap.test(
       [
         {
           ruleId: "attribute-validate-ondblclick",
-          idxFrom: 19,
-          idxTo: 19,
+          idxFrom: 7,
+          idxTo: 20,
           message: `Missing value.`,
           fix: null,
         },

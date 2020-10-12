@@ -137,8 +137,8 @@ tap.test(
       [
         {
           ruleId: "attribute-validate-onkeydown",
-          idxFrom: 18,
-          idxTo: 18,
+          idxFrom: 7,
+          idxTo: 19,
           message: `Missing value.`,
           fix: null,
         },

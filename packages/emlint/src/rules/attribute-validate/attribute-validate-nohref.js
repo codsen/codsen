@@ -40,8 +40,8 @@ function attributeValidateNohref(context, ...originalOpts) {
         // validate the parent
         if (node.parent.tagName !== "area") {
           errorArr.push({
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });

@@ -38,9 +38,20 @@ function attributeValidateClass(context, ...opts) {
         ) {
           context.report({
             ruleId: "attribute-validate-class",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        }
+
+        // if value is empty or otherwise does not exist
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: "attribute-validate-class",
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -49,7 +60,7 @@ function attributeValidateClass(context, ...opts) {
             node.attribValueStartsAt
           );
           console.log(
-            `052 \n${`\u001b[${33}m${`node.attribValueStartsAt + charStart`}\u001b[${39}m`} = ${JSON.stringify(
+            `063 \n${`\u001b[${33}m${`node.attribValueStartsAt + charStart`}\u001b[${39}m`} = ${JSON.stringify(
               node.attribValueStartsAt + charStart,
               null,
               4
@@ -76,7 +87,7 @@ function attributeValidateClass(context, ...opts) {
           );
 
           console.log(
-            `079 ███████████████████████████████████████\nFINALLY,\n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`}:\n${JSON.stringify(
+            `090 ███████████████████████████████████████\nFINALLY,\n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`}:\n${JSON.stringify(
               errorArr,
               null,
               4
@@ -84,7 +95,7 @@ function attributeValidateClass(context, ...opts) {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`087 RAISE ERROR`);
+            console.log(`098 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-class" });
           });
         }

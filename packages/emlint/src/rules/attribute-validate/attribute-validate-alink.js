@@ -25,33 +25,44 @@ function attributeValidateAlink(context, ...opts) {
         if (node.parent.tagName !== "body") {
           context.report({
             ruleId: "attribute-validate-alink",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
 
-        const errorArr = validateColor(
-          node.attribValueRaw,
-          node.attribValueStartsAt,
-          {
-            namedCssLevel1OK: true,
-            namedCssLevel2PlusOK: true,
-            hexThreeOK: false,
-            hexFourOK: false,
-            hexSixOK: true,
-            hexEightOK: false,
-          }
-        );
-        console.log(
-          `048 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
-        );
+        // if value is empty or otherwise does not exist
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: "attribute-validate-alink",
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
+          });
+        } else {
+          const errorArr = validateColor(
+            node.attribValueRaw,
+            node.attribValueStartsAt,
+            {
+              namedCssLevel1OK: true,
+              namedCssLevel2PlusOK: true,
+              hexThreeOK: false,
+              hexFourOK: false,
+              hexSixOK: true,
+              hexEightOK: false,
+            }
+          );
+          console.log(
+            `058 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+          );
 
-        errorArr.forEach((errorObj) => {
-          console.log(`052 RAISE ERROR`);
-          context.report({ ...errorObj, ruleId: "attribute-validate-alink" });
-        });
+          errorArr.forEach((errorObj) => {
+            console.log(`062 RAISE ERROR`);
+            context.report({ ...errorObj, ruleId: "attribute-validate-alink" });
+          });
+        }
       }
     },
   };

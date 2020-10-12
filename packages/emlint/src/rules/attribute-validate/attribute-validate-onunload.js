@@ -32,9 +32,18 @@ function attributeValidateOnunload(context, ...originalOpts) {
         if (!["frameset", "body"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-onunload",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        } // if value is empty or otherwise does not exist
+        else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -44,7 +53,7 @@ function attributeValidateOnunload(context, ...originalOpts) {
             node.attribValueStartsAt
           );
           console.log(
-            `047 attributeValidateOnunload(): received errorArr = ${JSON.stringify(
+            `056 attributeValidateOnunload(): received errorArr = ${JSON.stringify(
               errorArr,
               null,
               4
@@ -52,7 +61,7 @@ function attributeValidateOnunload(context, ...originalOpts) {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`055 attributeValidateOnunload(): RAISE ERROR`);
+            console.log(`064 attributeValidateOnunload(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-onunload",

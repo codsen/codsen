@@ -30,38 +30,52 @@ function attributeValidateCharset(context, ...opts) {
         if (!["a", "link", "script"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-charset",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
 
-        // validate against the charsets list from IANA:
-        // https://www.iana.org/assignments/character-sets/character-sets.xhtml
-        // https://www.w3.org/TR/html4/interact/forms.html#adef-charset
-        const errorArr = validateString(
-          node.attribValueRaw,
-          node.attribValueStartsAt,
-          {
-            canBeCommaSeparated: false,
-            noSpaceAfterComma: false,
-            quickPermittedValues: [],
-            permittedValues: knownCharsets,
-          }
-        );
-        console.log(
-          `054 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
-            errorArr,
-            null,
-            4
-          )}`
-        );
+        // if value is empty or otherwise does not exist
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: "attribute-validate-charset",
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
+          });
+        } else {
+          // validate against the charsets list from IANA:
+          // https://www.iana.org/assignments/character-sets/character-sets.xhtml
+          // https://www.w3.org/TR/html4/interact/forms.html#adef-charset
+          const errorArr = validateString(
+            node.attribValueRaw,
+            node.attribValueStartsAt,
+            {
+              canBeCommaSeparated: false,
+              noSpaceAfterComma: false,
+              quickPermittedValues: [],
+              permittedValues: knownCharsets,
+            }
+          );
+          console.log(
+            `064 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
 
-        errorArr.forEach((errorObj) => {
-          console.log(`062 RAISE ERROR`);
-          context.report({ ...errorObj, ruleId: "attribute-validate-charset" });
-        });
+          errorArr.forEach((errorObj) => {
+            console.log(`072 RAISE ERROR`);
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-charset",
+            });
+          });
+        }
       }
     },
   };

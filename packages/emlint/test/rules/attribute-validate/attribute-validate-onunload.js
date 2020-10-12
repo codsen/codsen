@@ -164,8 +164,8 @@ tap.test(
       [
         {
           ruleId: "attribute-validate-onunload",
-          idxFrom: 20,
-          idxTo: 20,
+          idxFrom: 10,
+          idxTo: 21,
           message: `Missing value.`,
           fix: null,
         },

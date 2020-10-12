@@ -258,7 +258,7 @@ tap.test(
           idxTo: 19,
           message: `Delete repeated opening quotes.`,
           fix: {
-            ranges: [[13, 14]],
+            ranges: [[14, 15]],
           },
         },
       ],
@@ -290,7 +290,7 @@ tap.test(
           idxTo: 19,
           message: `Delete repeated opening quotes.`,
           fix: {
-            ranges: [[13, 14]],
+            ranges: [[14, 15]],
           },
         },
       ],
@@ -334,31 +334,46 @@ tap.test(
   }
 );
 
-// 04. rogue quotes
-// -----------------------------------------------------------------------------
-
-tap.test(
-  `15 - ${`\u001b[${32}m${`repeated opening`}\u001b[${39}m`} - rogue single`,
+tap.only(
+  `15 - ${`\u001b[${32}m${`repeated closing`}\u001b[${39}m`} - double`,
   (t) => {
-    const str = `<table width='"100">zzz</table>`;
-    const fixed = `<table width="100">zzz</table>`;
+    const str = `<table width="100"">\n  zzz\n</table>`;
+    const fixed = `<table width="100">\n  zzz\n</table>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
-        "attribute-malformed": 2,
+        "attribute-malformed": 1,
       },
     });
     // will fix:
-    t.equal(applyFixes(str, messages), fixed, "15");
+    t.equal(applyFixes(str, messages), fixed, "15.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "attribute-malformed",
+          idxFrom: 7,
+          idxTo: 19,
+          message: `Delete repeated closing quotes.`,
+          fix: {
+            ranges: [[17, 18]],
+          },
+        },
+      ],
+      "15.02"
+    );
     t.end();
   }
 );
 
+// 04. rogue quotes
+// -----------------------------------------------------------------------------
+
 tap.test(
-  `16 - ${`\u001b[${32}m${`repeated opening`}\u001b[${39}m`} - rogue double`,
+  `16 - ${`\u001b[${32}m${`repeated opening`}\u001b[${39}m`} - rogue single`,
   (t) => {
-    const str = `<table width="'100'>zzz</table>`;
-    const fixed = `<table width='100'>zzz</table>`;
+    const str = `<table width='"100">zzz</table>`;
+    const fixed = `<table width="100">zzz</table>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
@@ -371,14 +386,11 @@ tap.test(
   }
 );
 
-// 05. rogue characters
-// -----------------------------------------------------------------------------
-
 tap.test(
-  `17 - ${`\u001b[${32}m${`repeated opening`}\u001b[${39}m`} - rogue characters around equal`,
+  `17 - ${`\u001b[${32}m${`repeated opening`}\u001b[${39}m`} - rogue double`,
   (t) => {
-    const str = `<span width...=....."100"></span>`;
-    const fixed = `<span width="100"></span>`;
+    const str = `<table width="'100'>zzz</table>`;
+    const fixed = `<table width='100'>zzz</table>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
@@ -391,14 +403,14 @@ tap.test(
   }
 );
 
-// 06. equal missing
+// 05. rogue characters
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `18 - ${`\u001b[${32}m${`equal missing`}\u001b[${39}m`} - equal is missing, tight`,
+  `18 - ${`\u001b[${32}m${`repeated opening`}\u001b[${39}m`} - rogue characters around equal`,
   (t) => {
-    const str = `<a class"c" id'e'>`;
-    const fixed = `<a class="c" id='e'>`;
+    const str = `<span width...=....."100"></span>`;
+    const fixed = `<span width="100"></span>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
@@ -411,11 +423,14 @@ tap.test(
   }
 );
 
+// 06. equal missing
+// -----------------------------------------------------------------------------
+
 tap.test(
-  `19 - ${`\u001b[${32}m${`equal missing`}\u001b[${39}m`} - space instead of equal, recognised attr names followed by quoted value`,
+  `19 - ${`\u001b[${32}m${`equal missing`}\u001b[${39}m`} - equal is missing, tight`,
   (t) => {
-    const str = `<a class "c" id 'e' href "www">`;
-    const fixed = `<a class="c" id='e' href="www">`;
+    const str = `<a class"c" id'e'>`;
+    const fixed = `<a class="c" id='e'>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
@@ -429,10 +444,10 @@ tap.test(
 );
 
 tap.test(
-  `20 - ${`\u001b[${32}m${`equal missing`}\u001b[${39}m`} - mismatching quotes - A,B; A,B`,
+  `20 - ${`\u001b[${32}m${`equal missing`}\u001b[${39}m`} - space instead of equal, recognised attr names followed by quoted value`,
   (t) => {
-    const str = `<a class"c' id"e'>`;
-    const fixed = `<a class="c" id="e">`;
+    const str = `<a class "c" id 'e' href "www">`;
+    const fixed = `<a class="c" id='e' href="www">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
@@ -446,9 +461,9 @@ tap.test(
 );
 
 tap.test(
-  `21 - ${`\u001b[${32}m${`equal missing`}\u001b[${39}m`} - mismatching quotes - A,B; B,A`,
+  `21 - ${`\u001b[${32}m${`equal missing`}\u001b[${39}m`} - mismatching quotes - A,B; A,B`,
   (t) => {
-    const str = `<a class"c' id'e">`;
+    const str = `<a class"c' id"e'>`;
     const fixed = `<a class="c" id="e">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
@@ -462,14 +477,11 @@ tap.test(
   }
 );
 
-// 07. mismatching quotes
-// -----------------------------------------------------------------------------
-
 tap.test(
-  `22 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - no quotes in the value, A-B`,
+  `22 - ${`\u001b[${32}m${`equal missing`}\u001b[${39}m`} - mismatching quotes - A,B; B,A`,
   (t) => {
-    const str = `<div class="c'>.</div>`;
-    const fixed = `<div class="c">.</div>`;
+    const str = `<a class"c' id'e">`;
+    const fixed = `<a class="c" id="e">`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
@@ -477,32 +489,18 @@ tap.test(
       },
     });
     // will fix:
-    t.equal(applyFixes(str, messages), fixed, "22.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-malformed",
-          severity: 2,
-          idxFrom: 5,
-          idxTo: 14,
-          message: `Closing quote should be double.`,
-          fix: {
-            ranges: [[13, 14, `"`]],
-          },
-        },
-      ],
-      "22.02"
-    );
-    t.equal(messages.length, 1, "22.03");
+    t.equal(applyFixes(str, messages), fixed, "22");
     t.end();
   }
 );
 
+// 07. mismatching quotes
+// -----------------------------------------------------------------------------
+
 tap.test(
-  `23 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - no quotes in the value, B-A`,
+  `23 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - no quotes in the value, A-B`,
   (t) => {
-    const str = `<div class='c">.</div>`;
+    const str = `<div class="c'>.</div>`;
     const fixed = `<div class="c">.</div>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
@@ -520,9 +518,9 @@ tap.test(
           severity: 2,
           idxFrom: 5,
           idxTo: 14,
-          message: `Opening quote should be double.`,
+          message: `Closing quote should be double.`,
           fix: {
-            ranges: [[11, 12, `"`]],
+            ranges: [[13, 14, `"`]],
           },
         },
       ],
@@ -534,10 +532,10 @@ tap.test(
 );
 
 tap.test(
-  `24 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - double quotes in the value, A-B`,
+  `24 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - no quotes in the value, B-A`,
   (t) => {
-    const str = `<img alt='so-called "artists"!"/>`;
-    const fixed = `<img alt='so-called "artists"!'/>`;
+    const str = `<div class='c">.</div>`;
+    const fixed = `<div class="c">.</div>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
@@ -553,10 +551,10 @@ tap.test(
           ruleId: "attribute-malformed",
           severity: 2,
           idxFrom: 5,
-          idxTo: 31,
-          message: `Closing quote should be single.`,
+          idxTo: 14,
+          message: `Opening quote should be double.`,
           fix: {
-            ranges: [[30, 31, `'`]],
+            ranges: [[11, 12, `"`]],
           },
         },
       ],
@@ -568,9 +566,9 @@ tap.test(
 );
 
 tap.test(
-  `25 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - double quotes in the value, B-A`,
+  `25 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - double quotes in the value, A-B`,
   (t) => {
-    const str = `<img alt="so-called "artists"!'/>`;
+    const str = `<img alt='so-called "artists"!"/>`;
     const fixed = `<img alt='so-called "artists"!'/>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
@@ -588,9 +586,9 @@ tap.test(
           severity: 2,
           idxFrom: 5,
           idxTo: 31,
-          message: `Opening quote should be single.`,
+          message: `Closing quote should be single.`,
           fix: {
-            ranges: [[9, 10, `'`]],
+            ranges: [[30, 31, `'`]],
           },
         },
       ],
@@ -602,10 +600,10 @@ tap.test(
 );
 
 tap.test(
-  `26 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - single quotes in the value, A-B`,
+  `26 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - double quotes in the value, B-A`,
   (t) => {
-    const str = `<img alt="Deal is your's!'/>`;
-    const fixed = `<img alt="Deal is your's!"/>`;
+    const str = `<img alt="so-called "artists"!'/>`;
+    const fixed = `<img alt='so-called "artists"!'/>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
       rules: {
@@ -621,10 +619,10 @@ tap.test(
           ruleId: "attribute-malformed",
           severity: 2,
           idxFrom: 5,
-          idxTo: 26,
-          message: `Closing quote should be double.`,
+          idxTo: 31,
+          message: `Opening quote should be single.`,
           fix: {
-            ranges: [[25, 26, `"`]],
+            ranges: [[9, 10, `'`]],
           },
         },
       ],
@@ -636,9 +634,9 @@ tap.test(
 );
 
 tap.test(
-  `27 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - single quotes in the value, B-A`,
+  `27 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - single quotes in the value, A-B`,
   (t) => {
-    const str = `<img alt='Deal is your's!"/>`;
+    const str = `<img alt="Deal is your's!'/>`;
     const fixed = `<img alt="Deal is your's!"/>`;
     const linter = new Linter();
     const messages = linter.verify(str, {
@@ -656,15 +654,49 @@ tap.test(
           severity: 2,
           idxFrom: 5,
           idxTo: 26,
-          message: `Opening quote should be double.`,
+          message: `Closing quote should be double.`,
           fix: {
-            ranges: [[9, 10, `"`]],
+            ranges: [[25, 26, `"`]],
           },
         },
       ],
       "27.02"
     );
     t.equal(messages.length, 1, "27.03");
+    t.end();
+  }
+);
+
+tap.test(
+  `28 - ${`\u001b[${32}m${`mismatching quotes`}\u001b[${39}m`} - single quotes in the value, B-A`,
+  (t) => {
+    const str = `<img alt='Deal is your's!"/>`;
+    const fixed = `<img alt="Deal is your's!"/>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-malformed": 2,
+      },
+    });
+    // will fix:
+    t.equal(applyFixes(str, messages), fixed, "28.01");
+    t.match(
+      messages,
+      [
+        {
+          ruleId: "attribute-malformed",
+          severity: 2,
+          idxFrom: 5,
+          idxTo: 26,
+          message: `Opening quote should be double.`,
+          fix: {
+            ranges: [[9, 10, `"`]],
+          },
+        },
+      ],
+      "28.02"
+    );
+    t.equal(messages.length, 1, "28.03");
     t.end();
   }
 );

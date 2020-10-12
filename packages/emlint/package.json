@@ -135,6 +135,7 @@
     "mime-db": "^1.44.0",
     "object-path": "^0.11.4",
     "p-reduce": "^2.1.0",
+    "ranges-merge": "^5.0.3",
     "rgba-regex": "^1.0.0",
     "string-find-malformed": "^1.1.16",
     "string-fix-broken-named-entities": "^3.0.11",

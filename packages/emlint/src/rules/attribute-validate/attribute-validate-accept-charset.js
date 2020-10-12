@@ -30,8 +30,8 @@ function attributeValidateAcceptCharset(context, ...opts) {
         if (!["form"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-accept-charset",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });

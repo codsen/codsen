@@ -180,8 +180,8 @@ tap.test(
       [
         {
           ruleId: "attribute-validate-longdesc",
-          idxFrom: 15,
-          idxTo: 15,
+          idxFrom: 5,
+          idxTo: 16,
           message: `Missing value.`,
           fix: null,
         },

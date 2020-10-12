@@ -137,8 +137,8 @@ tap.test(
       [
         {
           ruleId: "attribute-validate-onmousemove",
-          idxFrom: 20,
-          idxTo: 20,
+          idxFrom: 7,
+          idxTo: 21,
           message: `Missing value.`,
           fix: null,
         },

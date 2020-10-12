@@ -244,8 +244,8 @@ tap.test(
       [
         {
           ruleId: "attribute-validate-color",
-          idxFrom: 13,
-          idxTo: 13,
+          idxFrom: 6,
+          idxTo: 14,
           message: `Missing value.`,
           fix: null,
         },

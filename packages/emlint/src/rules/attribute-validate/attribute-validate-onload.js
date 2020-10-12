@@ -28,9 +28,18 @@ function attributeValidateOnload(context, ...originalOpts) {
         if (!["frameset", "body"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-onload",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        } // if value is empty or otherwise does not exist
+        else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -40,7 +49,7 @@ function attributeValidateOnload(context, ...originalOpts) {
             node.attribValueStartsAt
           );
           console.log(
-            `043 attributeValidateOnload(): received errorArr = ${JSON.stringify(
+            `052 attributeValidateOnload(): received errorArr = ${JSON.stringify(
               errorArr,
               null,
               4
@@ -48,7 +57,7 @@ function attributeValidateOnload(context, ...originalOpts) {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`051 attributeValidateOnload(): RAISE ERROR`);
+            console.log(`060 attributeValidateOnload(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-onload",

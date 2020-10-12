@@ -17,6 +17,7 @@ import defineLazyProp from 'define-lazy-prop';
 import processCommaSeparated from 'string-process-comma-separated';
 import { right, left, leftStopAtNewLines } from 'string-left-right';
 import isRegExp from 'lodash.isregexp';
+import merge from 'ranges-merge';
 import { allHtmlAttribs } from 'html-all-known-attributes';
 import leven from 'leven';
 import db from 'mime-db';
@@ -3312,33 +3313,53 @@ function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
 }
 
 function attributeDuplicate(context, ...opts) {
-  const attributesWhichCanBeMerged = ["id", "class"];
+  const attributesWhichCanBeMerged = new Set(["id", "class"]);
+  function prepLast(ranges) {
+    if (!Array.isArray(ranges) || !ranges.length) {
+      return ranges;
+    }
+    if (!context.str[ranges[ranges.length - 1][1]].trim()) {
+      const charOnTheRightIdx = right(
+        context.str,
+        ranges[ranges.length - 1][1]
+      );
+      if (`/>`.includes(context.str[charOnTheRightIdx])) {
+        ranges[ranges.length - 1][1] = charOnTheRightIdx;
+      }
+    }
+    return ranges;
+  }
   return {
     tag(node) {
       if (Array.isArray(node.attribs) && node.attribs.length > 1) {
-        const attrsGatheredSoFar = [];
-        const mergeableAttrsCaught = [];
+        const attrsGatheredSoFar = new Set();
+        const mergeableAttrsCaught = new Set();
         for (let i = 0, len = node.attribs.length; i < len; i++) {
-          if (!attrsGatheredSoFar.includes(node.attribs[i].attribName)) {
-            attrsGatheredSoFar.push(node.attribs[i].attribName);
+          if (!attrsGatheredSoFar.has(node.attribs[i].attribName)) {
+            attrsGatheredSoFar.add(node.attribs[i].attribName);
           } else if (
-            !attributesWhichCanBeMerged.includes(node.attribs[i].attribName)
+            !attributesWhichCanBeMerged.has(node.attribs[i].attribName) ||
+            (Array.isArray(node.attribs[i].attribValue) &&
+              node.attribs[i].attribValue.length &&
+              node.attribs[i].attribValue.some(
+                (obj) =>
+                  obj.value &&
+                  (obj.value.includes(`'`) || obj.value.includes(`"`))
+              ))
           ) {
             context.report({
               ruleId: "attribute-duplicate",
               message: `Duplicate attribute "${node.attribs[i].attribName}".`,
-              idxFrom: node.attribs[i].attribStart,
-              idxTo: node.attribs[i].attribEnd,
+              idxFrom: node.attribs[i].attribStarts,
+              idxTo: node.attribs[i].attribEnds,
               fix: null,
             });
-          } else if (
-            !mergeableAttrsCaught.includes(node.attribs[i].attribName)
-          ) {
-            mergeableAttrsCaught.push(node.attribs[i].attribName);
+          } else {
+            mergeableAttrsCaught.add(node.attribs[i].attribName);
           }
         }
-        if (mergeableAttrsCaught.length) {
-          mergeableAttrsCaught.forEach((attrNameBeingMerged) => {
+        if (mergeableAttrsCaught && mergeableAttrsCaught.size) {
+          [...mergeableAttrsCaught].forEach((attrNameBeingMerged) => {
             const theFirstRange = [];
             const extractedValues = [];
             const allOtherRanges = [];
@@ -3346,37 +3367,63 @@ function attributeDuplicate(context, ...opts) {
               if (node.attribs[i].attribName === attrNameBeingMerged) {
                 if (!theFirstRange.length) {
                   theFirstRange.push(
-                    node.attribs[i].attribValueStartsAt,
-                    node.attribs[i].attribValueEndsAt
+                    node.attribs[i].attribLeft + 1,
+                    node.attribs[i].attribEnds
                   );
                 } else {
                   allOtherRanges.push([
                     i
-                      ? left(context.str, node.attribs[i].attribStart) + 1
-                      : node.attribs[i].attribStart,
-                    node.attribs[i].attribEnd,
+                      ? node.attribs[i].attribLeft + 1
+                      : node.attribs[i].attribStarts,
+                    node.attribs[i].attribEnds,
                   ]);
                 }
-                splitByWhitespace(
-                  node.attribs[i].attribValueRaw,
-                  ([from, to]) => {
-                    extractedValues.push(
-                      node.attribs[i].attribValueRaw.slice(from, to)
-                    );
-                  }
-                );
+                if (node.attribs[i].attribValueStartsAt) {
+                  splitByWhitespace(
+                    node.attribs[i].attribValueRaw,
+                    ([from, to]) => {
+                      extractedValues.push(
+                        node.attribs[i].attribValueRaw.slice(from, to)
+                      );
+                    }
+                  );
+                }
               }
             }
             const mergedValue = extractedValues.sort().join(" ");
-            context.report({
-              ruleId: "attribute-duplicate",
-              message: `Duplicate attribute "${attrNameBeingMerged}".`,
-              idxFrom: node.start,
-              idxTo: node.end,
-              fix: {
-                ranges: [[...theFirstRange, mergedValue], ...allOtherRanges],
-              },
-            });
+            if (mergedValue && mergedValue.length) {
+              const ranges = prepLast(
+                merge([
+                  [
+                    ...theFirstRange,
+                    ` ${attrNameBeingMerged}="${mergedValue}"`,
+                  ],
+                  ...allOtherRanges,
+                ])
+              );
+              context.report({
+                ruleId: "attribute-duplicate",
+                message: `Duplicate attribute "${attrNameBeingMerged}".`,
+                idxFrom: node.start,
+                idxTo: node.end,
+                fix: {
+                  ranges,
+                },
+              });
+            } else {
+              const ranges = prepLast(
+                merge([[...theFirstRange], ...allOtherRanges])
+              );
+              context.report({
+                ruleId: "attribute-duplicate",
+                message: `Duplicate attribute "${attrNameBeingMerged}".`,
+                idxFrom: node.start,
+                idxTo: node.end,
+                fix: {
+                  ranges,
+                },
+              });
+            }
           });
         }
       }
@@ -3440,15 +3487,6 @@ function attributeMalformed(context, ...opts) {
               .includes("=")
           ) {
             message = `Equal is missing.`;
-          } else if (
-            [`="`, `='`].includes(
-              context.str.slice(
-                node.attribNameEndsAt,
-                node.attribOpeningQuoteAt
-              )
-            )
-          ) {
-            message = `Delete repeated opening quotes.`;
           }
           let fromRange = node.attribNameEndsAt;
           const toRange = node.attribOpeningQuoteAt;
@@ -3460,8 +3498,8 @@ function attributeMalformed(context, ...opts) {
           context.report({
             ruleId: "attribute-malformed",
             message,
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             fix: {
               ranges: whatToAdd
                 ? [[fromRange, toRange, "="]]
@@ -3469,6 +3507,44 @@ function attributeMalformed(context, ...opts) {
             },
           });
         }
+      }
+      if (
+        (node.attribValueRaw.startsWith(`"`) ||
+          node.attribValueRaw.startsWith(`'`)) &&
+        node.attribValueStartsAt &&
+        node.attribOpeningQuoteAt &&
+        context.str[node.attribValueStartsAt] ===
+          context.str[node.attribOpeningQuoteAt]
+      ) {
+        const message = `Delete repeated opening quotes.`;
+        context.report({
+          ruleId: "attribute-malformed",
+          message,
+          idxFrom: node.attribStarts,
+          idxTo: node.attribEnds,
+          fix: {
+            ranges: [[node.attribValueStartsAt, node.attribValueStartsAt + 1]],
+          },
+        });
+      }
+      if (
+        (node.attribValueRaw.endsWith(`"`) ||
+          node.attribValueRaw.endsWith(`'`)) &&
+        node.attribValueEndsAt &&
+        node.attribClosingQuoteAt &&
+        context.str[node.attribValueEndsAt] ===
+          context.str[node.attribClosingQuoteAt]
+      ) {
+        const message = `Delete repeated closing quotes.`;
+        context.report({
+          ruleId: "attribute-malformed",
+          message,
+          idxFrom: node.attribStarts,
+          idxTo: node.attribEnds,
+          fix: {
+            ranges: [[node.attribValueEndsAt - 1, node.attribValueEndsAt]],
+          },
+        });
       }
       const ranges = [];
       if (
@@ -3499,8 +3575,8 @@ function attributeMalformed(context, ...opts) {
         context.report({
           ruleId: "attribute-malformed",
           message: `Quote${ranges.length > 1 ? "s are" : " is"} missing.`,
-          idxFrom: node.attribStart,
-          idxTo: node.attribEnd,
+          idxFrom: node.attribStarts,
+          idxTo: node.attribEnds,
           fix: { ranges },
         });
       }
@@ -3518,8 +3594,8 @@ function attributeMalformed(context, ...opts) {
                 ? "Opening"
                 : "Closing"
             } quote should be double.`,
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             fix: {
               ranges: [
                 context.str[node.attribClosingQuoteAt] === `"`
@@ -3544,8 +3620,8 @@ function attributeMalformed(context, ...opts) {
                 ? "Opening"
                 : "Closing"
             } quote should be single.`,
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             fix: {
               ranges: [
                 context.str[node.attribClosingQuoteAt] === `'`
@@ -3575,8 +3651,8 @@ function attributeValidateAbbr(context, ...opts) {
         if (!["td", "th"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-abbr",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -4047,8 +4123,8 @@ function attributeValidateAcceptCharset(context, ...opts) {
         if (!["form"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-accept-charset",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -4081,8 +4157,8 @@ function attributeValidateAccept(context, ...opts) {
         if (!["form", "input"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-accept",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -4133,8 +4209,8 @@ function attributeValidateAccesskey(context, ...opts) {
         ) {
           context.report({
             ruleId: "attribute-validate-accesskey",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -4200,8 +4276,8 @@ function validateValue$1(str, originalOpts, errorArr) {
     multipleOK: false,
     from: 0,
     to: str.length,
-    attribStart: 0,
-    attribEnd: str.length,
+    attribStarts: 0,
+    attribEnds: str.length,
   };
   const opts = { ...defaults, ...originalOpts };
   const extractedValue = str.slice(opts.from, opts.to);
@@ -4265,8 +4341,8 @@ function validateValue$1(str, originalOpts, errorArr) {
       } else {
         message = `URI's should be separated with a single space.`;
       }
-      idxFrom = opts.offset + opts.attribStart;
-      idxTo = opts.offset + opts.attribEnd;
+      idxFrom = opts.offset + opts.attribStarts;
+      idxTo = opts.offset + opts.attribEnds;
     }
     errorArr.push({
       idxFrom,
@@ -4308,8 +4384,8 @@ function validateUri(str, originalOpts) {
                   ...opts,
                   from: charFrom,
                   to: charTo,
-                  attribStart: charStart,
-                  attribEnd: charEnd,
+                  attribStarts: charStart,
+                  attribEnds: charEnd,
                   offset: opts.offset,
                 },
                 errorArr
@@ -4348,8 +4424,8 @@ function validateUri(str, originalOpts) {
                 ...opts,
                 from: idxFrom - opts.offset,
                 to: idxTo - opts.offset,
-                attribStart: charStart,
-                attribEnd: charEnd,
+                attribStarts: charStart,
+                attribEnds: charEnd,
                 offset: opts.offset,
               },
               errorArr
@@ -4396,8 +4472,8 @@ function attributeValidateAction(context, ...opts) {
         if (node.parent.tagName !== "form") {
           context.report({
             ruleId: "attribute-validate-action",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -4452,8 +4528,8 @@ function attributeValidateAlign(context, ...opts) {
         ) {
           context.report({
             ruleId: "attribute-validate-align",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -4628,27 +4704,37 @@ function attributeValidateAlink(context, ...opts) {
         if (node.parent.tagName !== "body") {
           context.report({
             ruleId: "attribute-validate-alink",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
-        const errorArr = validateColor(
-          node.attribValueRaw,
-          node.attribValueStartsAt,
-          {
-            namedCssLevel1OK: true,
-            namedCssLevel2PlusOK: true,
-            hexThreeOK: false,
-            hexFourOK: false,
-            hexSixOK: true,
-            hexEightOK: false,
-          }
-        );
-        errorArr.forEach((errorObj) => {
-          context.report({ ...errorObj, ruleId: "attribute-validate-alink" });
-        });
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: "attribute-validate-alink",
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
+          });
+        } else {
+          const errorArr = validateColor(
+            node.attribValueRaw,
+            node.attribValueStartsAt,
+            {
+              namedCssLevel1OK: true,
+              namedCssLevel2PlusOK: true,
+              hexThreeOK: false,
+              hexFourOK: false,
+              hexSixOK: true,
+              hexEightOK: false,
+            }
+          );
+          errorArr.forEach((errorObj) => {
+            context.report({ ...errorObj, ruleId: "attribute-validate-alink" });
+          });
+        }
       }
     },
   };
@@ -4661,19 +4747,29 @@ function attributeValidateAlt(context, ...opts) {
         if (!["applet", "area", "img", "input"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-alt",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
-        const { errorArr } = checkForWhitespace(
-          node.attribValueRaw,
-          node.attribValueStartsAt
-        );
-        errorArr.forEach((errorObj) => {
-          context.report({ ...errorObj, ruleId: "attribute-validate-alt" });
-        });
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: "attribute-validate-alt",
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
+          });
+        } else {
+          const { errorArr } = checkForWhitespace(
+            node.attribValueRaw,
+            node.attribValueStartsAt
+          );
+          errorArr.forEach((errorObj) => {
+            context.report({ ...errorObj, ruleId: "attribute-validate-alt" });
+          });
+        }
       }
     },
   };
@@ -4686,9 +4782,17 @@ function attributeValidateArchive(context, ...opts) {
         if (!["applet", "object"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-archive",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        } else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         }
@@ -4727,19 +4831,29 @@ function attributeValidateAxis(context, ...opts) {
         if (!["td", "th"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-axis",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
-        const { errorArr } = checkForWhitespace(
-          node.attribValueRaw,
-          node.attribValueStartsAt
-        );
-        errorArr.forEach((errorObj) => {
-          context.report({ ...errorObj, ruleId: "attribute-validate-axis" });
-        });
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: "attribute-validate-axis",
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
+          });
+        } else {
+          const { errorArr } = checkForWhitespace(
+            node.attribValueRaw,
+            node.attribValueStartsAt
+          );
+          errorArr.forEach((errorObj) => {
+            context.report({ ...errorObj, ruleId: "attribute-validate-axis" });
+          });
+        }
       }
     },
   };
@@ -4752,8 +4866,8 @@ function attributeValidateBackground(context, ...opts) {
         if (!["body", "td"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-background",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -4782,27 +4896,40 @@ function attributeValidateBgcolor(context, ...opts) {
         ) {
           context.report({
             ruleId: "attribute-validate-bgcolor",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
-        const errorArr = validateColor(
-          node.attribValueRaw,
-          node.attribValueStartsAt,
-          {
-            namedCssLevel1OK: true,
-            namedCssLevel2PlusOK: true,
-            hexThreeOK: false,
-            hexFourOK: false,
-            hexSixOK: true,
-            hexEightOK: false,
-          }
-        );
-        errorArr.forEach((errorObj) => {
-          context.report({ ...errorObj, ruleId: "attribute-validate-bgcolor" });
-        });
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: "attribute-validate-bgcolor",
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
+          });
+        } else {
+          const errorArr = validateColor(
+            node.attribValueRaw,
+            node.attribValueStartsAt,
+            {
+              namedCssLevel1OK: true,
+              namedCssLevel2PlusOK: true,
+              hexThreeOK: false,
+              hexFourOK: false,
+              hexSixOK: true,
+              hexEightOK: false,
+            }
+          );
+          errorArr.forEach((errorObj) => {
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-bgcolor",
+            });
+          });
+        }
       }
     },
   };
@@ -5084,8 +5211,8 @@ function attributeValidateBorder(context, ...opts) {
         if (!["table", "img", "object"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-border",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -5114,8 +5241,8 @@ function attributeValidateCellpadding(context, ...opts) {
         if (node.parent.tagName !== "table") {
           context.report({
             ruleId: "attribute-validate-cellpadding",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -5150,8 +5277,8 @@ function attributeValidateCellspacing(context, ...opts) {
         if (node.parent.tagName !== "table") {
           context.report({
             ruleId: "attribute-validate-cellspacing",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -5197,32 +5324,44 @@ function attributeValidateChar(context, ...opts) {
         ) {
           context.report({
             ruleId: "attribute-validate-char",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
-        const { charStart, charEnd, errorArr, trimmedVal } = checkForWhitespace(
-          node.attribValueRaw,
-          node.attribValueStartsAt
-        );
-        if (Number.isInteger(charStart)) {
-          if (
-            trimmedVal.length > 1 &&
-            !(trimmedVal.startsWith("&") && trimmedVal.endsWith(";"))
-          ) {
-            errorArr.push({
-              idxFrom: node.attribValueStartsAt + charStart,
-              idxTo: node.attribValueStartsAt + charEnd,
-              message: `Should be a single character.`,
-              fix: null,
-            });
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: "attribute-validate-char",
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
+          });
+        } else {
+          const {
+            charStart,
+            charEnd,
+            errorArr,
+            trimmedVal,
+          } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
+          if (Number.isInteger(charStart)) {
+            if (
+              trimmedVal.length > 1 &&
+              !(trimmedVal.startsWith("&") && trimmedVal.endsWith(";"))
+            ) {
+              errorArr.push({
+                idxFrom: node.attribValueStartsAt + charStart,
+                idxTo: node.attribValueStartsAt + charEnd,
+                message: `Should be a single character.`,
+                fix: null,
+              });
+            }
           }
+          errorArr.forEach((errorObj) => {
+            context.report({ ...errorObj, ruleId: "attribute-validate-char" });
+          });
         }
-        errorArr.forEach((errorObj) => {
-          context.report({ ...errorObj, ruleId: "attribute-validate-char" });
-        });
       }
     },
   };
@@ -5246,37 +5385,50 @@ function attributeValidateCharoff(context, ...opts) {
         ) {
           context.report({
             ruleId: "attribute-validate-charoff",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
-        const errorArr = validateDigitAndUnit(
-          node.attribValueRaw,
-          node.attribValueStartsAt,
-          {
-            type: "integer",
-            negativeOK: true,
-            theOnlyGoodUnits: [],
-            customGenericValueError: "Should be integer, no units.",
-          }
-        );
-        if (
-          !node.parent.attribs.some(
-            (attribObj) => attribObj.attribName === "char"
-          )
-        ) {
-          errorArr.push({
-            idxFrom: node.parent.start,
-            idxTo: node.parent.end,
-            message: `Attribute "char" missing.`,
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: "attribute-validate-charoff",
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
+        } else {
+          const errorArr = validateDigitAndUnit(
+            node.attribValueRaw,
+            node.attribValueStartsAt,
+            {
+              type: "integer",
+              negativeOK: true,
+              theOnlyGoodUnits: [],
+              customGenericValueError: "Should be integer, no units.",
+            }
+          );
+          if (
+            !node.parent.attribs.some(
+              (attribObj) => attribObj.attribName === "char"
+            )
+          ) {
+            errorArr.push({
+              idxFrom: node.parent.start,
+              idxTo: node.parent.end,
+              message: `Attribute "char" missing.`,
+              fix: null,
+            });
+          }
+          errorArr.forEach((errorObj) => {
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-charoff",
+            });
+          });
         }
-        errorArr.forEach((errorObj) => {
-          context.report({ ...errorObj, ruleId: "attribute-validate-charoff" });
-        });
       }
     },
   };
@@ -5289,25 +5441,38 @@ function attributeValidateCharset(context, ...opts) {
         if (!["a", "link", "script"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-charset",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
-        const errorArr = validateString(
-          node.attribValueRaw,
-          node.attribValueStartsAt,
-          {
-            canBeCommaSeparated: false,
-            noSpaceAfterComma: false,
-            quickPermittedValues: [],
-            permittedValues: knownCharsets,
-          }
-        );
-        errorArr.forEach((errorObj) => {
-          context.report({ ...errorObj, ruleId: "attribute-validate-charset" });
-        });
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: "attribute-validate-charset",
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
+          });
+        } else {
+          const errorArr = validateString(
+            node.attribValueRaw,
+            node.attribValueStartsAt,
+            {
+              canBeCommaSeparated: false,
+              noSpaceAfterComma: false,
+              quickPermittedValues: [],
+              permittedValues: knownCharsets,
+            }
+          );
+          errorArr.forEach((errorObj) => {
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-charset",
+            });
+          });
+        }
       }
     },
   };
@@ -5334,7 +5499,7 @@ function validateVoid(node, context, errorArr, originalOpts) {
     }
     if (
       node.attribValueRaw !== node.attribName ||
-      context.str.slice(node.attribNameEndsAt, node.attribEnd) !==
+      context.str.slice(node.attribNameEndsAt, node.attribEnds) !==
         `=${quotesType}${node.attribName}${quotesType}`
     ) {
       errorArr.push({
@@ -5345,7 +5510,7 @@ function validateVoid(node, context, errorArr, originalOpts) {
           ranges: [
             [
               node.attribNameEndsAt,
-              node.attribEnd,
+              node.attribEnds,
               `=${quotesType}${node.attribName}${quotesType}`,
             ],
           ],
@@ -5355,10 +5520,10 @@ function validateVoid(node, context, errorArr, originalOpts) {
   } else if (node.attribValueRaw !== null) {
     errorArr.push({
       idxFrom: node.attribNameEndsAt,
-      idxTo: node.attribEnd,
+      idxTo: node.attribEnds,
       message: `Should have no value.`,
       fix: {
-        ranges: [[node.attribNameEndsAt, node.attribEnd]],
+        ranges: [[node.attribNameEndsAt, node.attribEnds]],
       },
     });
   }
@@ -5431,8 +5596,8 @@ function attributeValidateChecked(context, ...originalOpts) {
       if (node.attribName === "checked") {
         if (node.parent.tagName !== "input") {
           errorArr.push({
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -5464,8 +5629,8 @@ function attributeValidateCite(context, ...opts) {
         if (!["blockquote", "q", "del", "ins"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-cite",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -5561,9 +5726,18 @@ function attributeValidateClass(context, ...opts) {
         ) {
           context.report({
             ruleId: "attribute-validate-class",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        }
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: "attribute-validate-class",
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -5597,8 +5771,8 @@ function attributeValidateClassid(context, ...opts) {
         if (node.parent.tagName !== "object") {
           context.report({
             ruleId: "attribute-validate-classid",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -5625,8 +5799,8 @@ function attributeValidateClassid$1(context, ...opts) {
         if (node.parent.tagName !== "br") {
           context.report({
             ruleId: "attribute-validate-clear",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -5665,19 +5839,29 @@ function attributeValidateCode(context, ...opts) {
         if (node.parent.tagName !== "applet") {
           context.report({
             ruleId: "attribute-validate-code",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
-        const { charStart, charEnd, errorArr } = checkForWhitespace(
-          node.attribValueRaw,
-          node.attribValueStartsAt
-        );
-        errorArr.forEach((errorObj) => {
-          context.report({ ...errorObj, ruleId: "attribute-validate-code" });
-        });
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: "attribute-validate-code",
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
+          });
+        } else {
+          const { charStart, charEnd, errorArr } = checkForWhitespace(
+            node.attribValueRaw,
+            node.attribValueStartsAt
+          );
+          errorArr.forEach((errorObj) => {
+            context.report({ ...errorObj, ruleId: "attribute-validate-code" });
+          });
+        }
       }
     },
   };
@@ -5690,8 +5874,8 @@ function attributeValidateCodebase(context, ...opts) {
         if (!["applet", "object"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-codebase",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -5718,8 +5902,8 @@ function attributeValidateCodetype(context, ...opts) {
         if (node.parent.tagName !== "object") {
           context.report({
             ruleId: "attribute-validate-codetype",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -5782,27 +5966,37 @@ function attributeValidateColor(context, ...opts) {
         if (!["basefont", "font"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-color",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
-        const errorArr = validateColor(
-          node.attribValueRaw,
-          node.attribValueStartsAt,
-          {
-            namedCssLevel1OK: true,
-            namedCssLevel2PlusOK: true,
-            hexThreeOK: false,
-            hexFourOK: false,
-            hexSixOK: true,
-            hexEightOK: false,
-          }
-        );
-        errorArr.forEach((errorObj) => {
-          context.report({ ...errorObj, ruleId: "attribute-validate-color" });
-        });
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: "attribute-validate-color",
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
+          });
+        } else {
+          const errorArr = validateColor(
+            node.attribValueRaw,
+            node.attribValueStartsAt,
+            {
+              namedCssLevel1OK: true,
+              namedCssLevel2PlusOK: true,
+              hexThreeOK: false,
+              hexFourOK: false,
+              hexSixOK: true,
+              hexEightOK: false,
+            }
+          );
+          errorArr.forEach((errorObj) => {
+            context.report({ ...errorObj, ruleId: "attribute-validate-color" });
+          });
+        }
       }
     },
   };
@@ -5815,42 +6009,55 @@ function attributeValidateCols(context, ...opts) {
         if (!["frameset", "textarea"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-cols",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
-        let errorArr = [];
-        if (node.parent.tagName === "frameset") {
-          errorArr = validateDigitAndUnit(
-            node.attribValueRaw,
-            node.attribValueStartsAt,
-            {
-              whitelistValues: ["*"],
-              theOnlyGoodUnits: ["%"],
-              badUnits: ["px"],
-              noUnitsIsFine: true,
-              canBeCommaSeparated: true,
-              type: "rational",
-              customGenericValueError: "Should be: pixels|%|*.",
-            }
-          );
-        } else if (node.parent.tagName === "textarea") {
-          errorArr = validateDigitAndUnit(
-            node.attribValueRaw,
-            node.attribValueStartsAt,
-            {
-              type: "integer",
-              theOnlyGoodUnits: [],
-              customGenericValueError: "Should be integer, no units.",
-            }
-          );
-        }
-        if (Array.isArray(errorArr) && errorArr.length) {
-          errorArr.forEach((errorObj) => {
-            context.report({ ...errorObj, ruleId: "attribute-validate-cols" });
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
           });
+        } else {
+          let errorArr = [];
+          if (node.parent.tagName === "frameset") {
+            errorArr = validateDigitAndUnit(
+              node.attribValueRaw,
+              node.attribValueStartsAt,
+              {
+                whitelistValues: ["*"],
+                theOnlyGoodUnits: ["%"],
+                badUnits: ["px"],
+                noUnitsIsFine: true,
+                canBeCommaSeparated: true,
+                type: "rational",
+                customGenericValueError: "Should be: pixels|%|*.",
+              }
+            );
+          } else if (node.parent.tagName === "textarea") {
+            errorArr = validateDigitAndUnit(
+              node.attribValueRaw,
+              node.attribValueStartsAt,
+              {
+                type: "integer",
+                theOnlyGoodUnits: [],
+                customGenericValueError: "Should be integer, no units.",
+              }
+            );
+          }
+          if (Array.isArray(errorArr) && errorArr.length) {
+            errorArr.forEach((errorObj) => {
+              context.report({
+                ...errorObj,
+                ruleId: "attribute-validate-cols",
+              });
+            });
+          }
         }
       }
     },
@@ -5864,8 +6071,8 @@ function attributeValidateColspan(context, ...opts) {
         if (!["th", "td"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-colspan",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -5904,8 +6111,8 @@ function attributeValidateCompact(context, ...originalOpts) {
       if (node.attribName === "compact") {
         if (!["dir", "dl", "menu", "ol", "ul"].includes(node.parent.tagName)) {
           errorArr.push({
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -5935,8 +6142,8 @@ function attributeValidateContent(context, ...opts) {
         if (node.parent.tagName !== "meta") {
           context.report({
             ruleId: "attribute-validate-content",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -5960,8 +6167,8 @@ function attributeValidateCoords(context, ...opts) {
         if (!["area", "a"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-coords",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -6028,8 +6235,8 @@ function attributeValidateData(context, ...opts) {
         if (node.parent.tagName !== "object") {
           context.report({
             ruleId: "attribute-validate-data",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -6053,8 +6260,8 @@ function attributeValidateDatetime(context, ...opts) {
         if (!["del", "ins"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-datetime",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -6097,8 +6304,8 @@ function attributeValidateDeclare(context, ...originalOpts) {
       if (node.attribName === "declare") {
         if (node.parent.tagName !== "object") {
           errorArr.push({
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -6138,8 +6345,8 @@ function attributeValidateDefer(context, ...originalOpts) {
       if (node.attribName === "defer") {
         if (node.parent.tagName !== "script") {
           errorArr.push({
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -6151,7 +6358,10 @@ function attributeValidateDefer(context, ...originalOpts) {
         }
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
-            context.report({ ...errorObj, ruleId: "attribute-validate-defer" });
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-defer",
+            });
           });
         }
       }
@@ -6178,8 +6388,8 @@ function attributeValidateDir(context, ...opts) {
         ) {
           context.report({
             ruleId: "attribute-validate-dir",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -6226,8 +6436,8 @@ function attributeValidateDisabled(context, ...originalOpts) {
           ].includes(node.parent.tagName)
         ) {
           errorArr.push({
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -6257,8 +6467,8 @@ function attributeValidateEnctype(context, ...opts) {
         if (node.parent.tagName !== "form") {
           context.report({
             ruleId: "attribute-validate-enctype",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -6291,8 +6501,8 @@ function attributeValidateFace(context, ...opts) {
         if (node.parent.tagName !== "font") {
           context.report({
             ruleId: "attribute-validate-face",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -6316,9 +6526,18 @@ function attributeValidateFor(context, ...opts) {
         if (node.parent.tagName !== "label") {
           context.report({
             ruleId: "attribute-validate-for",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        }
+        else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -6375,8 +6594,8 @@ function attributeValidateFrame(context, ...opts) {
         if (node.parent.tagName !== "table") {
           context.report({
             ruleId: "attribute-validate-frame",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -6414,8 +6633,8 @@ function attributeValidateFrameborder(context, ...opts) {
         if (!["frame", "iframe"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-frameborder",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -6446,9 +6665,18 @@ function attributeValidateHeaders(context, ...opts) {
         if (!["td", "th"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-headers",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        }
+        else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -6489,8 +6717,8 @@ function attributeValidateHeight(context, ...opts) {
         ) {
           context.report({
             ruleId: "attribute-validate-height",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -6520,8 +6748,8 @@ function attributeValidateHref(context, ...opts) {
         if (!["a", "area", "link", "base"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-href",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -6545,8 +6773,8 @@ function attributeValidateHreflang(context, ...opts) {
         if (!["a", "link"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-hreflang",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -6584,8 +6812,8 @@ function attributeValidateHspace(context, ...opts) {
         if (!["applet", "img", "object"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-hspace",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -6613,8 +6841,8 @@ function attributeValidateHttpequiv(context, ...opts) {
         if (node.parent.tagName !== "meta") {
           context.report({
             ruleId: "attribute-validate-http-equiv",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -6655,9 +6883,18 @@ function attributeValidateId(context, ...opts) {
         ) {
           context.report({
             ruleId: "attribute-validate-id",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        }
+        else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -6701,8 +6938,8 @@ function attributeValidateIsmap(context, ...originalOpts) {
       if (node.attribName === "ismap") {
         if (!["img", "input"].includes(node.parent.tagName)) {
           errorArr.push({
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -6714,7 +6951,10 @@ function attributeValidateIsmap(context, ...originalOpts) {
         }
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
-            context.report({ ...errorObj, ruleId: "attribute-validate-ismap" });
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-ismap",
+            });
           });
         }
       }
@@ -6729,19 +6969,29 @@ function attributeValidateLabel(context, ...opts) {
         if (!["option", "optgroup"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-label",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
-        const { errorArr } = checkForWhitespace(
-          node.attribValueRaw,
-          node.attribValueStartsAt
-        );
-        errorArr.forEach((errorObj) => {
-          context.report({ ...errorObj, ruleId: "attribute-validate-label" });
-        });
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
+          });
+        } else {
+          const { errorArr } = checkForWhitespace(
+            node.attribValueRaw,
+            node.attribValueStartsAt
+          );
+          errorArr.forEach((errorObj) => {
+            context.report({ ...errorObj, ruleId: "attribute-validate-label" });
+          });
+        }
       }
     },
   };
@@ -6766,8 +7016,8 @@ function attributeValidateLang(context, ...opts) {
         ) {
           context.report({
             ruleId: "attribute-validate-lang",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -6802,22 +7052,32 @@ function attributeValidateLanguage(context, ...opts) {
         if (node.parent.tagName !== "script") {
           context.report({
             ruleId: "attribute-validate-language",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
-        const { errorArr } = checkForWhitespace(
-          node.attribValueRaw,
-          node.attribValueStartsAt
-        );
-        errorArr.forEach((errorObj) => {
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
-            ...errorObj,
-            ruleId: "attribute-validate-language",
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
           });
-        });
+        } else {
+          const { errorArr } = checkForWhitespace(
+            node.attribValueRaw,
+            node.attribValueStartsAt
+          );
+          errorArr.forEach((errorObj) => {
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-language",
+            });
+          });
+        }
       }
     },
   };
@@ -6830,27 +7090,37 @@ function attributeValidateLink(context, ...opts) {
         if (node.parent.tagName !== "body") {
           context.report({
             ruleId: "attribute-validate-link",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
-        const errorArr = validateColor(
-          node.attribValueRaw,
-          node.attribValueStartsAt,
-          {
-            namedCssLevel1OK: true,
-            namedCssLevel2PlusOK: true,
-            hexThreeOK: false,
-            hexFourOK: false,
-            hexSixOK: true,
-            hexEightOK: false,
-          }
-        );
-        errorArr.forEach((errorObj) => {
-          context.report({ ...errorObj, ruleId: "attribute-validate-link" });
-        });
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
+          });
+        } else {
+          const errorArr = validateColor(
+            node.attribValueRaw,
+            node.attribValueStartsAt,
+            {
+              namedCssLevel1OK: true,
+              namedCssLevel2PlusOK: true,
+              hexThreeOK: false,
+              hexFourOK: false,
+              hexSixOK: true,
+              hexEightOK: false,
+            }
+          );
+          errorArr.forEach((errorObj) => {
+            context.report({ ...errorObj, ruleId: "attribute-validate-link" });
+          });
+        }
       }
     },
   };
@@ -6863,22 +7133,32 @@ function attributeValidateLongdesc(context, ...opts) {
         if (!["img", "frame", "iframe"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-longdesc",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
-        const { errorArr } = checkForWhitespace(
-          node.attribValueRaw,
-          node.attribValueStartsAt
-        );
-        errorArr.forEach((errorObj) => {
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
-            ...errorObj,
-            ruleId: "attribute-validate-longdesc",
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
           });
-        });
+        } else {
+          const { errorArr } = checkForWhitespace(
+            node.attribValueRaw,
+            node.attribValueStartsAt
+          );
+          errorArr.forEach((errorObj) => {
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-longdesc",
+            });
+          });
+        }
       }
     },
   };
@@ -6891,8 +7171,8 @@ function attributeValidateMarginheight(context, ...opts) {
         if (!["frame", "iframe"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-marginheight",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -6923,8 +7203,8 @@ function attributeValidateMarginwidth(context, ...opts) {
         if (!["frame", "iframe"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-marginwidth",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -6955,8 +7235,8 @@ function attributeValidateMaxlength(context, ...opts) {
         if (node.parent.tagName !== "input") {
           context.report({
             ruleId: "attribute-validate-maxlength",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -6988,8 +7268,8 @@ function attributeValidateMedia(context, ...opts) {
         if (!["style", "link"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-media",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -7019,8 +7299,8 @@ function attributeValidateMethod(context, ...opts) {
         if (node.parent.tagName !== "form") {
           context.report({
             ruleId: "attribute-validate-method",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -7058,8 +7338,8 @@ function attributeValidateMultiple(context, ...originalOpts) {
       if (node.attribName === "multiple") {
         if (node.parent.tagName !== "select") {
           errorArr.push({
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -7106,19 +7386,29 @@ function attributeValidateName(context, ...opts) {
         ) {
           context.report({
             ruleId: "attribute-validate-name",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
-        const { errorArr } = checkForWhitespace(
-          node.attribValueRaw,
-          node.attribValueStartsAt
-        );
-        errorArr.forEach((errorObj) => {
-          context.report({ ...errorObj, ruleId: "attribute-validate-name" });
-        });
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
+          });
+        } else {
+          const { errorArr } = checkForWhitespace(
+            node.attribValueRaw,
+            node.attribValueStartsAt
+          );
+          errorArr.forEach((errorObj) => {
+            context.report({ ...errorObj, ruleId: "attribute-validate-name" });
+          });
+        }
       }
     },
   };
@@ -7141,8 +7431,8 @@ function attributeValidateNohref(context, ...originalOpts) {
       if (node.attribName === "nohref") {
         if (node.parent.tagName !== "area") {
           errorArr.push({
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -7182,8 +7472,8 @@ function attributeValidateNoresize(context, ...originalOpts) {
       if (node.attribName === "noresize") {
         if (node.parent.tagName !== "frame") {
           errorArr.push({
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -7223,8 +7513,8 @@ function attributeValidateNoshade(context, ...originalOpts) {
       if (node.attribName === "noshade") {
         if (node.parent.tagName !== "hr") {
           errorArr.push({
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -7264,8 +7554,8 @@ function attributeValidateNowrap(context, ...originalOpts) {
       if (node.attribName === "nowrap") {
         if (!["td", "th"].includes(node.parent.tagName)) {
           errorArr.push({
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -7295,19 +7585,32 @@ function attributeValidateObject(context, ...opts) {
         if (node.parent.tagName !== "applet") {
           context.report({
             ruleId: "attribute-validate-object",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
-        const { errorArr } = checkForWhitespace(
-          node.attribValueRaw,
-          node.attribValueStartsAt
-        );
-        errorArr.forEach((errorObj) => {
-          context.report({ ...errorObj, ruleId: "attribute-validate-object" });
-        });
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
+          });
+        } else {
+          const { errorArr } = checkForWhitespace(
+            node.attribValueRaw,
+            node.attribValueStartsAt
+          );
+          errorArr.forEach((errorObj) => {
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-object",
+            });
+          });
+        }
       }
     },
   };
@@ -7335,9 +7638,18 @@ function attributeValidateOnblur(context, ...originalOpts) {
         ) {
           context.report({
             ruleId: "attribute-validate-onblur",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        }
+        else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -7364,9 +7676,18 @@ function attributeValidateOnchange(context, ...originalOpts) {
         if (!["input", "select", "textarea"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-onchange",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        }
+        else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -7413,9 +7734,18 @@ function attributeValidateOnclick(context, ...originalOpts) {
         ) {
           context.report({
             ruleId: "attribute-validate-onclick",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        }
+        else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -7462,9 +7792,18 @@ function attributeValidateOndblclick(context, ...originalOpts) {
         ) {
           context.report({
             ruleId: "attribute-validate-ondblclick",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        }
+        else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -7501,9 +7840,18 @@ function attributeValidateOnfocus(context, ...originalOpts) {
         ) {
           context.report({
             ruleId: "attribute-validate-onfocus",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        }
+        else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -7550,9 +7898,18 @@ function attributeValidateOnkeydown(context, ...originalOpts) {
         ) {
           context.report({
             ruleId: "attribute-validate-onkeydown",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        }
+        else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -7599,9 +7956,18 @@ function attributeValidateOnkeypress(context, ...originalOpts) {
         ) {
           context.report({
             ruleId: "attribute-validate-onkeypress",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        }
+        else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -7648,9 +8014,18 @@ function attributeValidateOnkeyup(context, ...originalOpts) {
         ) {
           context.report({
             ruleId: "attribute-validate-onkeyup",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        }
+        else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -7677,9 +8052,18 @@ function attributeValidateOnload(context, ...originalOpts) {
         if (!["frameset", "body"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-onload",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        }
+        else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -7726,9 +8110,18 @@ function attributeValidateOnmousedown(context, ...originalOpts) {
         ) {
           context.report({
             ruleId: "attribute-validate-onmousedown",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        }
+        else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -7775,9 +8168,18 @@ function attributeValidateOnmousemove(context, ...originalOpts) {
         ) {
           context.report({
             ruleId: "attribute-validate-onmousemove",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        }
+        else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -7824,9 +8226,18 @@ function attributeValidateOnmouseout(context, ...originalOpts) {
         ) {
           context.report({
             ruleId: "attribute-validate-onmouseout",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        }
+        else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -7873,9 +8284,18 @@ function attributeValidateOnmouseover(context, ...originalOpts) {
         ) {
           context.report({
             ruleId: "attribute-validate-onmouseover",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        }
+        else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -7922,9 +8342,18 @@ function attributeValidateOnmouseup(context, ...originalOpts) {
         ) {
           context.report({
             ruleId: "attribute-validate-onmouseup",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        }
+        else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -7951,9 +8380,18 @@ function attributeValidateOnreset(context, ...originalOpts) {
         if (node.parent.tagName !== "form") {
           context.report({
             ruleId: "attribute-validate-onreset",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        }
+        else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -7980,9 +8418,18 @@ function attributeValidateOnsubmit(context, ...originalOpts) {
         if (node.parent.tagName !== "form") {
           context.report({
             ruleId: "attribute-validate-onsubmit",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        }
+        else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -8009,9 +8456,18 @@ function attributeValidateOnselect(context, ...originalOpts) {
         if (!["input", "textarea"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-onselect",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        }
+        else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -8038,9 +8494,18 @@ function attributeValidateOnunload(context, ...originalOpts) {
         if (!["frameset", "body"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-onunload",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        }
+        else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -8067,8 +8532,8 @@ function attributeValidateProfile(context, ...opts) {
         if (node.parent.tagName !== "head") {
           context.report({
             ruleId: "attribute-validate-profile",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -8095,19 +8560,32 @@ function attributeValidatePrompt(context, ...opts) {
         if (node.parent.tagName !== "isindex") {
           context.report({
             ruleId: "attribute-validate-prompt",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
-        const { errorArr } = checkForWhitespace(
-          node.attribValueRaw,
-          node.attribValueStartsAt
-        );
-        errorArr.forEach((errorObj) => {
-          context.report({ ...errorObj, ruleId: "attribute-validate-prompt" });
-        });
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
+          });
+        } else {
+          const { errorArr } = checkForWhitespace(
+            node.attribValueRaw,
+            node.attribValueStartsAt
+          );
+          errorArr.forEach((errorObj) => {
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-prompt",
+            });
+          });
+        }
       }
     },
   };
@@ -8130,8 +8608,8 @@ function attributeValidateReadonly(context, ...originalOpts) {
       if (node.attribName === "readonly") {
         if (!["textarea", "input"].includes(node.parent.tagName)) {
           errorArr.push({
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -8163,8 +8641,8 @@ function attributeValidateRel(context, ...opts) {
         if (!["a", "link"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-rel",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -8195,8 +8673,8 @@ function attributeValidateRev(context, ...opts) {
         if (!["a", "link"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-rev",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -8225,14 +8703,22 @@ function attributeValidateRows(context, ...opts) {
         if (!["frameset", "textarea"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-rows",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
         let errorArr = [];
-        if (node.parent.tagName === "frameset") {
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
+          });
+        } else if (node.parent.tagName === "frameset") {
           errorArr = validateDigitAndUnit(
             node.attribValueRaw,
             node.attribValueStartsAt,
@@ -8274,8 +8760,8 @@ function attributeValidateRowspan(context, ...opts) {
         if (!["th", "td"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-rowspan",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -8304,8 +8790,8 @@ function attributeValidateRules(context, ...opts) {
         if (node.parent.tagName !== "table") {
           context.report({
             ruleId: "attribute-validate-rules",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -8333,19 +8819,32 @@ function attributeValidateScheme(context, ...opts) {
         if (node.parent.tagName !== "meta") {
           context.report({
             ruleId: "attribute-validate-scheme",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
-        const { errorArr } = checkForWhitespace(
-          node.attribValueRaw,
-          node.attribValueStartsAt
-        );
-        errorArr.forEach((errorObj) => {
-          context.report({ ...errorObj, ruleId: "attribute-validate-scheme" });
-        });
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
+          });
+        } else {
+          const { errorArr } = checkForWhitespace(
+            node.attribValueRaw,
+            node.attribValueStartsAt
+          );
+          errorArr.forEach((errorObj) => {
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-scheme",
+            });
+          });
+        }
       }
     },
   };
@@ -8358,8 +8857,8 @@ function attributeValidateScope(context, ...opts) {
         if (!["td", "th"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-scope",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -8387,8 +8886,8 @@ function attributeValidateScrolling(context, ...opts) {
         if (!["frame", "iframe"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-scrolling",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -8429,8 +8928,8 @@ function attributeValidateSelected(context, ...originalOpts) {
       if (node.attribName === "selected") {
         if (node.parent.tagName !== "option") {
           errorArr.push({
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -8460,8 +8959,8 @@ function attributeValidateShape(context, ...opts) {
         if (!["area", "a"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-shape",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -8493,8 +8992,8 @@ function attributeValidateSize(context, ...opts) {
         ) {
           context.report({
             ruleId: "attribute-validate-size",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -8567,8 +9066,8 @@ function attributeValidateSpan(context, ...opts) {
         if (!["col", "colgroup"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-span",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -8603,8 +9102,8 @@ function attributeValidateSrc(context, ...opts) {
         ) {
           context.report({
             ruleId: "attribute-validate-src",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -8628,19 +9127,32 @@ function attributeValidateStandby(context, ...opts) {
         if (node.parent.tagName !== "object") {
           context.report({
             ruleId: "attribute-validate-standby",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
-        const { errorArr } = checkForWhitespace(
-          node.attribValueRaw,
-          node.attribValueStartsAt
-        );
-        errorArr.forEach((errorObj) => {
-          context.report({ ...errorObj, ruleId: "attribute-validate-standby" });
-        });
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
+          });
+        } else {
+          const { errorArr } = checkForWhitespace(
+            node.attribValueRaw,
+            node.attribValueStartsAt
+          );
+          errorArr.forEach((errorObj) => {
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-standby",
+            });
+          });
+        }
       }
     },
   };
@@ -8653,8 +9165,8 @@ function attributeValidateStart(context, ...opts) {
         if (node.parent.tagName !== "ol") {
           context.report({
             ruleId: "attribute-validate-start",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -8702,8 +9214,8 @@ function attributeValidateStyle(context, ...opts) {
         ) {
           context.report({
             ruleId: "attribute-validate-style",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -8726,19 +9238,32 @@ function attributeValidateSummary(context, ...opts) {
         if (node.parent.tagName !== "table") {
           context.report({
             ruleId: "attribute-validate-summary",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
-        const { errorArr } = checkForWhitespace(
-          node.attribValueRaw,
-          node.attribValueStartsAt
-        );
-        errorArr.forEach((errorObj) => {
-          context.report({ ...errorObj, ruleId: "attribute-validate-summary" });
-        });
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
+          });
+        } else {
+          const { errorArr } = checkForWhitespace(
+            node.attribValueRaw,
+            node.attribValueStartsAt
+          );
+          errorArr.forEach((errorObj) => {
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-summary",
+            });
+          });
+        }
       }
     },
   };
@@ -8761,8 +9286,8 @@ function attributeValidateTabindex(context, ...opts) {
         ) {
           context.report({
             ruleId: "attribute-validate-tabindex",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -8799,19 +9324,32 @@ function attributeValidateTarget(context, ...opts) {
         ) {
           context.report({
             ruleId: "attribute-validate-target",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
-        const { errorArr } = checkForWhitespace(
-          node.attribValueRaw,
-          node.attribValueStartsAt
-        );
-        errorArr.forEach((errorObj) => {
-          context.report({ ...errorObj, ruleId: "attribute-validate-target" });
-        });
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
+          });
+        } else {
+          const { errorArr } = checkForWhitespace(
+            node.attribValueRaw,
+            node.attribValueStartsAt
+          );
+          errorArr.forEach((errorObj) => {
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-target",
+            });
+          });
+        }
       }
     },
   };
@@ -8824,27 +9362,37 @@ function attributeValidateText(context, ...opts) {
         if (node.parent.tagName !== "body") {
           context.report({
             ruleId: "attribute-validate-text",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
-        const errorArr = validateColor(
-          node.attribValueRaw,
-          node.attribValueStartsAt,
-          {
-            namedCssLevel1OK: true,
-            namedCssLevel2PlusOK: true,
-            hexThreeOK: false,
-            hexFourOK: false,
-            hexSixOK: true,
-            hexEightOK: false,
-          }
-        );
-        errorArr.forEach((errorObj) => {
-          context.report({ ...errorObj, ruleId: "attribute-validate-text" });
-        });
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
+          });
+        } else {
+          const errorArr = validateColor(
+            node.attribValueRaw,
+            node.attribValueStartsAt,
+            {
+              namedCssLevel1OK: true,
+              namedCssLevel2PlusOK: true,
+              hexThreeOK: false,
+              hexFourOK: false,
+              hexSixOK: true,
+              hexEightOK: false,
+            }
+          );
+          errorArr.forEach((errorObj) => {
+            context.report({ ...errorObj, ruleId: "attribute-validate-text" });
+          });
+        }
       }
     },
   };
@@ -8868,19 +9416,29 @@ function attributeValidateTitle(context, ...opts) {
         ) {
           context.report({
             ruleId: "attribute-validate-title",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
-        const { errorArr } = checkForWhitespace(
-          node.attribValueRaw,
-          node.attribValueStartsAt
-        );
-        errorArr.forEach((errorObj) => {
-          context.report({ ...errorObj, ruleId: "attribute-validate-title" });
-        });
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
+          });
+        } else {
+          const { errorArr } = checkForWhitespace(
+            node.attribValueRaw,
+            node.attribValueStartsAt
+          );
+          errorArr.forEach((errorObj) => {
+            context.report({ ...errorObj, ruleId: "attribute-validate-title" });
+          });
+        }
       }
     },
   };
@@ -8907,8 +9465,8 @@ function attributeValidateType(context, ...opts) {
         ) {
           context.report({
             ruleId: "attribute-validate-type",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -9076,8 +9634,8 @@ function attributeValidateUsemap(context, ...opts) {
         if (!["img", "input", "object"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-usemap",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -9115,8 +9673,8 @@ function attributeValidateValign(context, ...opts) {
         ) {
           context.report({
             ruleId: "attribute-validate-valign",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -9151,8 +9709,8 @@ function attributeValidateValue(context, ...opts) {
         ) {
           context.report({
             ruleId: "attribute-validate-value",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -9194,8 +9752,8 @@ function attributeValidateValuetype(context, ...opts) {
         if (node.parent.tagName !== "param") {
           context.report({
             ruleId: "attribute-validate-valuetype",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -9226,19 +9784,32 @@ function attributeValidateVersion(context, ...opts) {
         if (node.parent.tagName !== "html") {
           context.report({
             ruleId: "attribute-validate-version",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
-        const { errorArr } = checkForWhitespace(
-          node.attribValueRaw,
-          node.attribValueStartsAt
-        );
-        errorArr.forEach((errorObj) => {
-          context.report({ ...errorObj, ruleId: "attribute-validate-version" });
-        });
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
+          });
+        } else {
+          const { errorArr } = checkForWhitespace(
+            node.attribValueRaw,
+            node.attribValueStartsAt
+          );
+          errorArr.forEach((errorObj) => {
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-version",
+            });
+          });
+        }
       }
     },
   };
@@ -9251,27 +9822,37 @@ function attributeValidateVlink(context, ...opts) {
         if (node.parent.tagName !== "body") {
           context.report({
             ruleId: "attribute-validate-vlink",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
-        const errorArr = validateColor(
-          node.attribValueRaw,
-          node.attribValueStartsAt,
-          {
-            namedCssLevel1OK: true,
-            namedCssLevel2PlusOK: true,
-            hexThreeOK: false,
-            hexFourOK: false,
-            hexSixOK: true,
-            hexEightOK: false,
-          }
-        );
-        errorArr.forEach((errorObj) => {
-          context.report({ ...errorObj, ruleId: "attribute-validate-vlink" });
-        });
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
+          });
+        } else {
+          const errorArr = validateColor(
+            node.attribValueRaw,
+            node.attribValueStartsAt,
+            {
+              namedCssLevel1OK: true,
+              namedCssLevel2PlusOK: true,
+              hexThreeOK: false,
+              hexFourOK: false,
+              hexSixOK: true,
+              hexEightOK: false,
+            }
+          );
+          errorArr.forEach((errorObj) => {
+            context.report({ ...errorObj, ruleId: "attribute-validate-vlink" });
+          });
+        }
       }
     },
   };
@@ -9284,8 +9865,8 @@ function attributeValidateVspace(context, ...opts) {
         if (!["applet", "img", "object"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-vspace",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -9327,8 +9908,8 @@ function attributeValidateWidth(context, ...opts) {
         ) {
           context.report({
             ruleId: "attribute-validate-width",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });

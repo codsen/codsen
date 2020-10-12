@@ -25,8 +25,8 @@ function attributeValidateUsemap(context, ...opts) {
         if (!["img", "input", "object"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-usemap",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });

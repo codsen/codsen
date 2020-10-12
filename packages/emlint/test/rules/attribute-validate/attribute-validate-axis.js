@@ -148,8 +148,8 @@ tap.test(
       [
         {
           ruleId: "attribute-validate-axis",
-          idxFrom: 10,
-          idxTo: 10,
+          idxFrom: 4,
+          idxTo: 11,
           message: `Missing value.`,
           fix: null,
         },

@@ -15,8 +15,8 @@ function validateValue(str, originalOpts, errorArr) {
     multipleOK: false,
     from: 0,
     to: str.length,
-    attribStart: 0,
-    attribEnd: str.length,
+    attribStarts: 0,
+    attribEnds: str.length,
   };
   const opts = { ...defaults, ...originalOpts };
 
@@ -169,8 +169,8 @@ function validateValue(str, originalOpts, errorArr) {
       } else {
         message = `URI's should be separated with a single space.`;
       }
-      idxFrom = opts.offset + opts.attribStart;
-      idxTo = opts.offset + opts.attribEnd;
+      idxFrom = opts.offset + opts.attribStarts;
+      idxTo = opts.offset + opts.attribEnds;
     }
 
     console.log(
@@ -273,8 +273,8 @@ function validateUri(str, originalOpts) {
                   ...opts,
                   from: charFrom,
                   to: charTo,
-                  attribStart: charStart,
-                  attribEnd: charEnd,
+                  attribStarts: charStart,
+                  attribEnds: charEnd,
                   offset: opts.offset,
                 },
                 errorArr
@@ -330,8 +330,8 @@ function validateUri(str, originalOpts) {
                 ...opts,
                 from: idxFrom - opts.offset,
                 to: idxTo - opts.offset,
-                attribStart: charStart,
-                attribEnd: charEnd,
+                attribStarts: charStart,
+                attribEnds: charEnd,
                 offset: opts.offset,
               },
               errorArr

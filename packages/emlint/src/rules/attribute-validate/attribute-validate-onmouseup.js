@@ -52,9 +52,18 @@ function attributeValidateOnmouseup(context, ...originalOpts) {
         ) {
           context.report({
             ruleId: "attribute-validate-onmouseup",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        } // if value is empty or otherwise does not exist
+        else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -64,7 +73,7 @@ function attributeValidateOnmouseup(context, ...originalOpts) {
             node.attribValueStartsAt
           );
           console.log(
-            `067 attributeValidateOnmouseup(): received errorArr = ${JSON.stringify(
+            `076 attributeValidateOnmouseup(): received errorArr = ${JSON.stringify(
               errorArr,
               null,
               4
@@ -72,7 +81,7 @@ function attributeValidateOnmouseup(context, ...originalOpts) {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`075 attributeValidateOnmouseup(): RAISE ERROR`);
+            console.log(`084 attributeValidateOnmouseup(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-onmouseup",

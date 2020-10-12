@@ -30,8 +30,8 @@ function attributeValidateEnctype(context, ...opts) {
         if (node.parent.tagName !== "form") {
           context.report({
             ruleId: "attribute-validate-enctype",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });

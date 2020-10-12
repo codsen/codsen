@@ -25,8 +25,8 @@ function attributeValidateRows(context, ...opts) {
         if (!["frameset", "textarea"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-rows",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -41,7 +41,16 @@ function attributeValidateRows(context, ...opts) {
         );
 
         let errorArr = [];
-        if (node.parent.tagName === "frameset") {
+        // if value is empty or otherwise does not exist
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
+          });
+        } else if (node.parent.tagName === "frameset") {
           errorArr = validateDigitAndUnit(
             node.attribValueRaw,
             node.attribValueStartsAt,
@@ -56,7 +65,7 @@ function attributeValidateRows(context, ...opts) {
             }
           );
           console.log(
-            `059 attributeValidateRows(): received errorArr = ${JSON.stringify(
+            `068 attributeValidateRows(): received errorArr = ${JSON.stringify(
               errorArr,
               null,
               4
@@ -74,7 +83,7 @@ function attributeValidateRows(context, ...opts) {
             }
           );
           console.log(
-            `077 attributeValidateRows(): received errorArr = ${JSON.stringify(
+            `086 attributeValidateRows(): received errorArr = ${JSON.stringify(
               errorArr,
               null,
               4
@@ -84,7 +93,7 @@ function attributeValidateRows(context, ...opts) {
 
         if (Array.isArray(errorArr) && errorArr.length) {
           errorArr.forEach((errorObj) => {
-            console.log(`087 RAISE ERROR`);
+            console.log(`096 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-rows" });
           });
         }

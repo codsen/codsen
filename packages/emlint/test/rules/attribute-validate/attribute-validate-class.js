@@ -262,8 +262,8 @@ tap.test(
       [
         {
           ruleId: "attribute-validate-class",
-          idxFrom: 14,
-          idxTo: 14,
+          idxFrom: 7,
+          idxTo: 15,
           message: `Missing value.`,
           fix: null,
         },

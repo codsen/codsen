@@ -16,9 +16,9 @@ function attributeValidateWidth(context, ...opts) {
           4
         )}`
       );
-      // console.log(
-      //   `015 attributeValidateWidth(): node = ${JSON.stringify(node, null, 4)}`
-      // );
+      console.log(
+        `020 attributeValidateWidth(): node = ${JSON.stringify(node, null, 4)}`
+      );
 
       if (node.attribName === "width") {
         // validate the parent
@@ -39,8 +39,8 @@ function attributeValidateWidth(context, ...opts) {
         ) {
           context.report({
             ruleId: "attribute-validate-width",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });

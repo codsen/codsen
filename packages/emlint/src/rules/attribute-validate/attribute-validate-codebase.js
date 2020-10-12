@@ -29,8 +29,8 @@ function attributeValidateCodebase(context, ...opts) {
         if (!["applet", "object"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-codebase",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });

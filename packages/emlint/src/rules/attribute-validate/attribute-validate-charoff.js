@@ -40,45 +40,59 @@ function attributeValidateCharoff(context, ...opts) {
         ) {
           context.report({
             ruleId: "attribute-validate-charoff",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
 
-        const errorArr = validateDigitAndUnit(
-          node.attribValueRaw,
-          node.attribValueStartsAt,
-          {
-            type: "integer",
-            negativeOK: true,
-            theOnlyGoodUnits: [],
-            customGenericValueError: "Should be integer, no units.",
-          }
-        );
-        console.log(
-          `061 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
-        );
-
-        // tag has to have "char" attribute:
-        if (
-          !node.parent.attribs.some(
-            (attribObj) => attribObj.attribName === "char"
-          )
-        ) {
-          errorArr.push({
-            idxFrom: node.parent.start,
-            idxTo: node.parent.end,
-            message: `Attribute "char" missing.`,
+        // if value is empty or otherwise does not exist
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: "attribute-validate-charoff",
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
-        }
+        } else {
+          const errorArr = validateDigitAndUnit(
+            node.attribValueRaw,
+            node.attribValueStartsAt,
+            {
+              type: "integer",
+              negativeOK: true,
+              theOnlyGoodUnits: [],
+              customGenericValueError: "Should be integer, no units.",
+            }
+          );
+          console.log(
+            `071 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+          );
 
-        errorArr.forEach((errorObj) => {
-          console.log(`079 RAISE ERROR`);
-          context.report({ ...errorObj, ruleId: "attribute-validate-charoff" });
-        });
+          // tag has to have "char" attribute:
+          if (
+            !node.parent.attribs.some(
+              (attribObj) => attribObj.attribName === "char"
+            )
+          ) {
+            errorArr.push({
+              idxFrom: node.parent.start,
+              idxTo: node.parent.end,
+              message: `Attribute "char" missing.`,
+              fix: null,
+            });
+          }
+
+          errorArr.forEach((errorObj) => {
+            console.log(`089 RAISE ERROR`);
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-charoff",
+            });
+          });
+        }
       }
     },
   };

@@ -25,8 +25,8 @@ function attributeValidateCols(context, ...opts) {
         if (!["frameset", "textarea"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-cols",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -40,53 +40,67 @@ function attributeValidateCols(context, ...opts) {
           )}`
         );
 
-        let errorArr = [];
-        if (node.parent.tagName === "frameset") {
-          errorArr = validateDigitAndUnit(
-            node.attribValueRaw,
-            node.attribValueStartsAt,
-            {
-              whitelistValues: ["*"],
-              theOnlyGoodUnits: ["%"],
-              badUnits: ["px"],
-              noUnitsIsFine: true,
-              canBeCommaSeparated: true,
-              type: "rational",
-              customGenericValueError: "Should be: pixels|%|*.",
-            }
-          );
-          console.log(
-            `059 attributeValidateCols(): received errorArr = ${JSON.stringify(
-              errorArr,
-              null,
-              4
-            )}`
-          );
-        } else if (node.parent.tagName === "textarea") {
-          // each character must be a digit
-          errorArr = validateDigitAndUnit(
-            node.attribValueRaw,
-            node.attribValueStartsAt,
-            {
-              type: "integer",
-              theOnlyGoodUnits: [],
-              customGenericValueError: "Should be integer, no units.",
-            }
-          );
-          console.log(
-            `077 attributeValidateCols(): received errorArr = ${JSON.stringify(
-              errorArr,
-              null,
-              4
-            )}`
-          );
-        }
-
-        if (Array.isArray(errorArr) && errorArr.length) {
-          errorArr.forEach((errorObj) => {
-            console.log(`087 RAISE ERROR`);
-            context.report({ ...errorObj, ruleId: "attribute-validate-cols" });
+        // if value is empty or otherwise does not exist
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
           });
+        } else {
+          let errorArr = [];
+          if (node.parent.tagName === "frameset") {
+            errorArr = validateDigitAndUnit(
+              node.attribValueRaw,
+              node.attribValueStartsAt,
+              {
+                whitelistValues: ["*"],
+                theOnlyGoodUnits: ["%"],
+                badUnits: ["px"],
+                noUnitsIsFine: true,
+                canBeCommaSeparated: true,
+                type: "rational",
+                customGenericValueError: "Should be: pixels|%|*.",
+              }
+            );
+            console.log(
+              `069 attributeValidateCols(): received errorArr = ${JSON.stringify(
+                errorArr,
+                null,
+                4
+              )}`
+            );
+          } else if (node.parent.tagName === "textarea") {
+            // each character must be a digit
+            errorArr = validateDigitAndUnit(
+              node.attribValueRaw,
+              node.attribValueStartsAt,
+              {
+                type: "integer",
+                theOnlyGoodUnits: [],
+                customGenericValueError: "Should be integer, no units.",
+              }
+            );
+            console.log(
+              `087 attributeValidateCols(): received errorArr = ${JSON.stringify(
+                errorArr,
+                null,
+                4
+              )}`
+            );
+          }
+
+          if (Array.isArray(errorArr) && errorArr.length) {
+            errorArr.forEach((errorObj) => {
+              console.log(`097 RAISE ERROR`);
+              context.report({
+                ...errorObj,
+                ruleId: "attribute-validate-cols",
+              });
+            });
+          }
         }
       }
     },

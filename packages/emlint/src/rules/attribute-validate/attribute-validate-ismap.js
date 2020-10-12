@@ -40,8 +40,8 @@ function attributeValidateIsmap(context, ...originalOpts) {
         // validate the parent
         if (!["img", "input"].includes(node.parent.tagName)) {
           errorArr.push({
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
@@ -57,7 +57,10 @@ function attributeValidateIsmap(context, ...originalOpts) {
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
             console.log(`059 RAISE ERROR`);
-            context.report({ ...errorObj, ruleId: "attribute-validate-ismap" });
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-ismap",
+            });
           });
         }
       }

@@ -211,7 +211,7 @@ tap.test(
 // 02. merging values
 // -----------------------------------------------------------------------------
 
-tap.test(`10 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - on`, (t) => {
+tap.test(`10 - on`, (t) => {
   const str = `<a class="" class=" ll  \t nn " class="" class=" mm  kk  " id="" class="oo" id="uu" class="">`;
   const fixed = `<a class="kk ll mm nn oo" id="uu">`;
   const linter = new Linter();
@@ -222,5 +222,76 @@ tap.test(`10 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - on`, (t) => {
   });
   // will fix:
   t.equal(applyFixes(str, messages), fixed, "10");
+  t.end();
+});
+
+tap.test(`11 - first one is dodgy`, (t) => {
+  const str = `<a class= class=" aa " class="" class=" bb  " class="cc"  class="">`;
+  const fixed = `<a class="aa bb cc">`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "attribute-duplicate": 2,
+    },
+  });
+  // will fix:
+  t.equal(applyFixes(str, messages), fixed, "11");
+  t.end();
+});
+
+tap.test(`12 - merging empty`, (t) => {
+  const str = `<a class= class="  " class="" class=" \t\t  " class=" "  class="">`;
+  const fixed = `<a>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "attribute-duplicate": 2,
+    },
+  });
+  // will fix:
+  t.equal(applyFixes(str, messages), fixed, "12");
+  t.end();
+});
+
+tap.test(`13 - merging dodgy, no closing slash`, (t) => {
+  const str = `<a class= class= class="" class= class""  >`;
+  const fixed = `<a>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "attribute-duplicate": 2,
+    },
+  });
+  // will fix:
+  t.equal(applyFixes(str, messages), fixed, "13");
+  t.end();
+});
+
+tap.test(`14 - merging dodgy, with closing slash`, (t) => {
+  const str = `<br class= class= class="" class= class""  />`;
+  const fixed = `<br/>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "attribute-duplicate": 2,
+    },
+  });
+  // will fix:
+  t.equal(applyFixes(str, messages), fixed, "14");
+  t.end();
+});
+
+tap.test(`15 - dodgy values with quotes`, (t) => {
+  const str = `<img class="someone's" class='jar of "cookies"'  >`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "attribute-duplicate": 2,
+    },
+  });
+  // there were some errors raised:
+  t.ok(messages.length, "15.01");
+  // but won't fix:
+  t.equal(applyFixes(str, messages), str, "15.02");
   t.end();
 });

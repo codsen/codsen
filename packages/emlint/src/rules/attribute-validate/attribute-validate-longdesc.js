@@ -29,35 +29,46 @@ function attributeValidateLongdesc(context, ...opts) {
         if (!["img", "frame", "iframe"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-longdesc",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });
         }
 
-        // only check for rogue whitespace -
-        // TODO - add more rules, https://www.w3schools.com/TagS/att_img_longdesc.asp
-
-        const { errorArr } = checkForWhitespace(
-          node.attribValueRaw,
-          node.attribValueStartsAt
-        );
-        console.log(
-          `047 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
-            errorArr,
-            null,
-            4
-          )}`
-        );
-
-        errorArr.forEach((errorObj) => {
-          console.log(`055 RAISE ERROR`);
+        // if value is empty or otherwise does not exist
+        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
-            ...errorObj,
-            ruleId: "attribute-validate-longdesc",
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
+            fix: null,
           });
-        });
+        } else {
+          // only check for rogue whitespace -
+          // TODO - add more rules, https://www.w3schools.com/TagS/att_img_longdesc.asp
+
+          const { errorArr } = checkForWhitespace(
+            node.attribValueRaw,
+            node.attribValueStartsAt
+          );
+          console.log(
+            `057 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+              errorArr,
+              null,
+              4
+            )}`
+          );
+
+          errorArr.forEach((errorObj) => {
+            console.log(`065 RAISE ERROR`);
+            context.report({
+              ...errorObj,
+              ruleId: "attribute-validate-longdesc",
+            });
+          });
+        }
       }
     },
   };

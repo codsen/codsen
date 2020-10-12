@@ -29,9 +29,18 @@ function attributeValidateArchive(context, ...opts) {
         if (!["applet", "object"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-archive",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        } else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          // maybe value is missing anyway?
+          context.report({
+            ruleId: `attribute-validate-${node.attribName}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         }
@@ -45,7 +54,7 @@ function attributeValidateArchive(context, ...opts) {
             separator: "comma",
             multipleOK: true,
           }).forEach((errorObj) => {
-            console.log(`048 RAISE ERROR`);
+            console.log(`057 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-archive",
@@ -60,7 +69,7 @@ function attributeValidateArchive(context, ...opts) {
             separator: "space", // or "comma"
             multipleOK: true,
           }).forEach((errorObj) => {
-            console.log(`063 RAISE ERROR`);
+            console.log(`072 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-archive",

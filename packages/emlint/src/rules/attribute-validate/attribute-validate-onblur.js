@@ -38,9 +38,19 @@ function attributeValidateOnblur(context, ...originalOpts) {
         ) {
           context.report({
             ruleId: "attribute-validate-onblur",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            fix: null,
+          });
+        }
+        // if value is empty or otherwise does not exist
+        else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          context.report({
+            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
+            message: `Missing value.`,
             fix: null,
           });
         } else {
@@ -50,7 +60,7 @@ function attributeValidateOnblur(context, ...originalOpts) {
             node.attribValueStartsAt
           );
           console.log(
-            `053 attributeValidateOnblur(): received errorArr = ${JSON.stringify(
+            `063 attributeValidateOnblur(): received errorArr = ${JSON.stringify(
               errorArr,
               null,
               4
@@ -58,7 +68,7 @@ function attributeValidateOnblur(context, ...originalOpts) {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`061 attributeValidateOnblur(): RAISE ERROR`);
+            console.log(`071 attributeValidateOnblur(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-onblur",

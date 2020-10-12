@@ -26,8 +26,8 @@ function attributeValidateAccept(context, ...opts) {
         if (!["form", "input"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-accept",
-            idxFrom: node.attribStart,
-            idxTo: node.attribEnd,
+            idxFrom: node.attribStarts,
+            idxTo: node.attribEnds,
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null,
           });

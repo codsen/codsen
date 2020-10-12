@@ -31,18 +31,18 @@ function validateVoid(node, context, errorArr, originalOpts) {
     // for example - only value check is not enough
     if (
       node.attribValueRaw !== node.attribName ||
-      context.str.slice(node.attribNameEndsAt, node.attribEnd) !==
+      context.str.slice(node.attribNameEndsAt, node.attribEnds) !==
         `=${quotesType}${node.attribName}${quotesType}`
     ) {
       console.log(
-        `038 ${`\u001b[${31}m${`XHTML requested`}\u001b[${39}m`} - attrib value is missing!`
+        `038 validateVoid(): ${`\u001b[${31}m${`XHTML requested`}\u001b[${39}m`} - attrib value is missing!`
       );
 
       console.log(
-        `042 ${`\u001b[${32}m${`██ FINAL RANGES ██`}\u001b[${39}m`}: ${JSON.stringify(
+        `042 validateVoid(): ${`\u001b[${32}m${`██ FINAL RANGES ██`}\u001b[${39}m`}: ${JSON.stringify(
           [
             node.attribNameEndsAt,
-            node.attribEnd,
+            node.attribEnds,
             `=${quotesType}${node.attribName}${quotesType}`,
           ],
           null,
@@ -58,7 +58,7 @@ function validateVoid(node, context, errorArr, originalOpts) {
           ranges: [
             [
               node.attribNameEndsAt,
-              node.attribEnd,
+              node.attribEnds,
               `=${quotesType}${node.attribName}${quotesType}`,
             ],
           ],
@@ -68,10 +68,10 @@ function validateVoid(node, context, errorArr, originalOpts) {
   } else if (node.attribValueRaw !== null) {
     errorArr.push({
       idxFrom: node.attribNameEndsAt,
-      idxTo: node.attribEnd,
+      idxTo: node.attribEnds,
       message: `Should have no value.`,
       fix: {
-        ranges: [[node.attribNameEndsAt, node.attribEnd]],
+        ranges: [[node.attribNameEndsAt, node.attribEnds]],
       },
     });
   }
