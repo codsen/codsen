@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.19.0](https://gitlab.com/codsen/codsen/compare/emlint@2.18.17...emlint@2.19.0) (2020-10-12)
+
+
+### Features
+
+* update to the latest tokenizer, improve attribute-* rules ([deea2ce](https://gitlab.com/codsen/codsen/commit/deea2ce963c253a9d0ba8aa55c8e62a7f2eb9c63))
+
+
+
+
+
 ## 2.18.0 (2020-05-06)
 
 ### Features

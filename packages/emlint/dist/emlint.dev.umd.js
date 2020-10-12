@@ -1,7 +1,7 @@
 /**
  * emlint
  * Pluggable email template code linter
- * Version: 2.18.17
+ * Version: 2.19.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/emlint/
@@ -11035,7 +11035,7 @@
 	/**
 	 * is-html-attribute-closing
 	 * Is a character on a given index a closing of an HTML attribute?
-	 * Version: 1.2.8
+	 * Version: 1.3.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/is-html-attribute-closing/
@@ -11401,7 +11401,7 @@
 	/**
 	 * codsen-tokenizer
 	 * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
-	 * Version: 2.17.7
+	 * Version: 3.0.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/codsen-tokenizer/
@@ -13240,7 +13240,7 @@
 	/**
 	 * codsen-parser
 	 * Parser aiming at broken or mixed code, especially HTML & CSS
-	 * Version: 0.7.7
+	 * Version: 0.7.8
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/codsen-parser/
@@ -45060,7 +45060,7 @@
 
 	}
 
-	var version = "2.18.17";
+	var version = "2.19.0";
 
 	exports.Linter = Linter;
 	exports.version = version;

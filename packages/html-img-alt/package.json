@@ -1,6 +1,6 @@
 {
   "name": "html-img-alt",
-  "version": "1.4.64",
+  "version": "1.4.65",
   "description": "Adds missing alt attributes to img tags. Non-parsing.",
   "keywords": [
     "add",
@@ -102,7 +102,7 @@
     }
   },
   "dependencies": {
-    "check-types-mini": "^5.8.0",
+    "check-types-mini": "^5.8.1",
     "lodash.isplainobject": "^4.0.6",
     "ranges-apply": "^3.2.3",
     "ranges-push": "^3.7.22",
@@ -121,7 +121,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.11.0",
-    "lect": "^0.14.5",
+    "lect": "^0.14.6",
     "rollup": "^2.29.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

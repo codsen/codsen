@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://gitlab.com/codsen/codsen/compare/is-html-attribute-closing@1.2.8...is-html-attribute-closing@1.3.0) (2020-10-12)
+
+
+### Features
+
+* algorithm improvements ([e2b2471](https://gitlab.com/codsen/codsen/commit/e2b2471cd069ca242f3c906542750016ce5f2385))
+* recognise nested rogue quote pairs inside attr values ([7366a63](https://gitlab.com/codsen/codsen/commit/7366a6300f8ce2a4b6d5df63c9a910f505c64116))
+
+
+
+
+
 ## 1.2.0 (2020-05-17)
 
 ### Features

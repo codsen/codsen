@@ -1,6 +1,6 @@
 {
   "name": "string-strip-html",
-  "version": "6.0.4",
+  "version": "6.0.5",
   "description": "Strips HTML tags from strings. No parser, accepts mixed sources.",
   "keywords": [
     "code",
@@ -127,7 +127,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.11.0",
-    "lect": "^0.14.5",
+    "lect": "^0.14.6",
     "ranges-invert": "^2.1.49",
     "rollup": "^2.29.0",
     "rollup-plugin-ascii": "^0.0.3",
