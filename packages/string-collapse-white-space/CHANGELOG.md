@@ -3,21 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [6.0.0](https://gitlab.com/codsen/codsen/compare/string-collapse-white-space@5.2.31...string-collapse-white-space@6.0.0) (2020-10-12)
-
+## 6.0.0 (2020-10-12)
 
 ### Features
 
-* returns a plain object with both string and ranges ([275b940](https://gitlab.com/codsen/codsen/commit/275b940178b35f20c421c5461e5379961b95d4f3))
-
+- returns a plain object with both string and ranges ([275b940](https://gitlab.com/codsen/codsen/commit/275b940178b35f20c421c5461e5379961b95d4f3))
 
 ### BREAKING CHANGES
 
-* returns a plain object with both string and ranges
-
-
-
-
+- returns a plain object with both string and ranges
 
 ## 5.2.0 (2019-10-26)
 

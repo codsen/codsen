@@ -3,34 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.0.0](https://gitlab.com/codsen/codsen/compare/codsen-tokenizer@2.17.7...codsen-tokenizer@3.0.0) (2020-10-12)
-
+## 3.0.0 (2020-10-12)
 
 ### Features
 
-* better inline css recognition ([b1b67b3](https://gitlab.com/codsen/codsen/commit/b1b67b371e75f628cf1d8e1d1f9fa8a1294108fc))
-* better recognition of rogue characters around inline css rules ([3243b5c](https://gitlab.com/codsen/codsen/commit/3243b5cdfa7d7dd3c860d6e48337ad8ef20a3e32))
-* better regognition of a sequence of inline styles ([de9b327](https://gitlab.com/codsen/codsen/commit/de9b3274cc3910ed5b9f56572ef9a710e353b67f))
-* css comments in head styles ([a217543](https://gitlab.com/codsen/codsen/commit/a217543dbdb263886d8ac6e9b1d6efdc85598b8b))
-* dRY the property pushing, add more tests ([e6ed023](https://gitlab.com/codsen/codsen/commit/e6ed0230e62b1219822a6a891e80d8a9205d67f5))
-* head CSS style properties ([9128dcb](https://gitlab.com/codsen/codsen/commit/9128dcb028e0fc6fcedddedf4d09af3c6ebe5eac))
-* html inline css style comments ([b2379e4](https://gitlab.com/codsen/codsen/commit/b2379e4699e25ed4397506c4704d32562f471052))
-* improvements to missing semicol between two properties ([cdb3423](https://gitlab.com/codsen/codsen/commit/cdb3423430612c6a5a4f647e674e2c3b7a6c4a8c))
-* new html tag kind - inline ([a5f8b94](https://gitlab.com/codsen/codsen/commit/a5f8b9480f45e5774d7c528f63f6cb37487e2c44))
-* recognise a missing semicol between two properties in css ([a8ef72a](https://gitlab.com/codsen/codsen/commit/a8ef72a9bde83ad21178d6259ec9105514eff658))
-* recognise double-wrapped attribute values ([08e8dc6](https://gitlab.com/codsen/codsen/commit/08e8dc64c4b2b297030ebce75e4d12a3fb4fadef))
-* recognise erroneous inline css comments with slash-slash ([061e84a](https://gitlab.com/codsen/codsen/commit/061e84a66a5eae911f755f8bec9ee5c30854b8ea))
-* recognise rogue characters within inline css styles ([252eb07](https://gitlab.com/codsen/codsen/commit/252eb07215a66c1e15b520019a2435fef12de423))
-* recognise rogue extra closing curlies in CSS rules ([9bb1e7a](https://gitlab.com/codsen/codsen/commit/9bb1e7af876455112df8ca090eb3fb4cb299eec6))
-
+- better inline css recognition ([b1b67b3](https://gitlab.com/codsen/codsen/commit/b1b67b371e75f628cf1d8e1d1f9fa8a1294108fc))
+- better recognition of rogue characters around inline css rules ([3243b5c](https://gitlab.com/codsen/codsen/commit/3243b5cdfa7d7dd3c860d6e48337ad8ef20a3e32))
+- better regognition of a sequence of inline styles ([de9b327](https://gitlab.com/codsen/codsen/commit/de9b3274cc3910ed5b9f56572ef9a710e353b67f))
+- css comments in head styles ([a217543](https://gitlab.com/codsen/codsen/commit/a217543dbdb263886d8ac6e9b1d6efdc85598b8b))
+- dRY the property pushing, add more tests ([e6ed023](https://gitlab.com/codsen/codsen/commit/e6ed0230e62b1219822a6a891e80d8a9205d67f5))
+- head CSS style properties ([9128dcb](https://gitlab.com/codsen/codsen/commit/9128dcb028e0fc6fcedddedf4d09af3c6ebe5eac))
+- html inline css style comments ([b2379e4](https://gitlab.com/codsen/codsen/commit/b2379e4699e25ed4397506c4704d32562f471052))
+- improvements to missing semicol between two properties ([cdb3423](https://gitlab.com/codsen/codsen/commit/cdb3423430612c6a5a4f647e674e2c3b7a6c4a8c))
+- new html tag kind - inline ([a5f8b94](https://gitlab.com/codsen/codsen/commit/a5f8b9480f45e5774d7c528f63f6cb37487e2c44))
+- recognise a missing semicol between two properties in css ([a8ef72a](https://gitlab.com/codsen/codsen/commit/a8ef72a9bde83ad21178d6259ec9105514eff658))
+- recognise double-wrapped attribute values ([08e8dc6](https://gitlab.com/codsen/codsen/commit/08e8dc64c4b2b297030ebce75e4d12a3fb4fadef))
+- recognise erroneous inline css comments with slash-slash ([061e84a](https://gitlab.com/codsen/codsen/commit/061e84a66a5eae911f755f8bec9ee5c30854b8ea))
+- recognise rogue characters within inline css styles ([252eb07](https://gitlab.com/codsen/codsen/commit/252eb07215a66c1e15b520019a2435fef12de423))
+- recognise rogue extra closing curlies in CSS rules ([9bb1e7a](https://gitlab.com/codsen/codsen/commit/9bb1e7af876455112df8ca090eb3fb4cb299eec6))
 
 ### BREAKING CHANGES
 
-* better inline css recognition
-
-
-
-
+- better inline css recognition
 
 ## 2.17.0 (2020-05-24)
 
