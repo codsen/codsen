@@ -105,16 +105,16 @@
     "ansi-diff-stream": "^1.2.1",
     "edit-package-json": "^0.1.36",
     "globby": "^11.0.1",
-    "is-online": "^8.4.0",
+    "is-online": "^8.5.0",
     "lodash.isplainobject": "^4.0.6",
     "log-update": "^4.0.0",
     "meow": "^7.1.1",
-    "object-path": "^0.11.4",
+    "object-path": "^0.11.5",
     "p-map": "^4.0.0",
     "p-progress": "^0.4.2",
     "p-reduce": "^2.1.0",
     "pacote": "^11.1.11",
-    "update-notifier": "^4.1.1",
+    "update-notifier": "^5.0.0",
     "write-file-atomic": "^3.0.3"
   },
   "devDependencies": {
@@ -129,14 +129,14 @@
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
     "@rollup/plugin-strip": "^2.0.0",
-    "eslint": "^7.9.0",
+    "eslint": "^7.11.0",
     "execa": "^4.0.3",
     "fs-extra": "^9.0.1",
     "lect": "^0.14.5",
     "lodash.clonedeep": "^4.5.0",
     "prettier": "^2.1.2",
     "tap": "^14.10.8",
-    "tempy": "^0.7.0",
+    "tempy": "^1.0.0",
     "tsd": "^0.13.1"
   }
 }

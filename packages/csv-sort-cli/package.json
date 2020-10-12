@@ -103,7 +103,7 @@
     "lodash.pullall": "^4.2.0",
     "lodash.uniq": "^4.5.0",
     "meow": "^7.1.1",
-    "update-notifier": "^4.1.1"
+    "update-notifier": "^5.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
@@ -117,13 +117,13 @@
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
     "@rollup/plugin-strip": "^2.0.0",
-    "eslint": "^7.9.0",
+    "eslint": "^7.11.0",
     "execa": "^4.0.3",
     "fs-extra": "^9.0.1",
     "lect": "^0.14.5",
     "prettier": "^2.1.2",
     "tap": "^14.10.8",
-    "tempy": "^0.7.0",
+    "tempy": "^1.0.0",
     "tsd": "^0.13.1"
   }
 }
