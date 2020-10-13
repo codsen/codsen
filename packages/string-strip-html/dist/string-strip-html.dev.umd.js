@@ -8742,11 +8742,15 @@
                 });
               }
 
-              var endingIdx = i; // correction for missing closing bracket cases
+              var endingIdx = i + 1;
 
-              if (str[i] !== "<" && str[i - 1] !== ">") {
-                endingIdx++;
-              }
+              if (tag.lastClosingBracketAt) {
+                endingIdx = tag.lastClosingBracketAt + 1;
+              } // correction for missing closing bracket cases
+              // if (str[i] !== "<" && str[i - 1] !== ">") {
+              //   endingIdx++;
+              // }
+
 
               filteredTagLocations.push([rangedOpeningTags[y].lastOpeningBracketAt, endingIdx]);
 

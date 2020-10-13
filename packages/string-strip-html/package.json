@@ -100,7 +100,8 @@
       "devDependencies": [
         "@rollup/plugin-json",
         "ranges-invert",
-        "rollup-plugin-node-builtins"
+        "rollup-plugin-node-builtins",
+        "title"
       ]
     }
   },
@@ -136,6 +137,7 @@
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-terser": "^7.0.2",
     "tap": "^14.10.8",
+    "title": "^3.4.2",
     "tsd": "^0.13.1"
   }
 }

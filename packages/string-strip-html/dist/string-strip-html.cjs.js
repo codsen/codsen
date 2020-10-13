@@ -226,9 +226,9 @@ function stripHtml(str, originalOpts) {
                 return (from < rangedOpeningTags[y].lastOpeningBracketAt || from >= i + 1) && (upto <= rangedOpeningTags[y].lastOpeningBracketAt || upto > i + 1);
               });
             }
-            var endingIdx = i;
-            if (str[i] !== "<" && str[i - 1] !== ">") {
-              endingIdx++;
+            var endingIdx = i + 1;
+            if (tag.lastClosingBracketAt) {
+              endingIdx = tag.lastClosingBracketAt + 1;
             }
             filteredTagLocations.push([rangedOpeningTags[y].lastOpeningBracketAt, endingIdx]);
             if (punctuation.has(str[i])) {

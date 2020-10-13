@@ -211,9 +211,9 @@ function stripHtml(str, originalOpts) {
                     upto > i + 1)
               );
             }
-            let endingIdx = i;
-            if (str[i] !== "<" && str[i - 1] !== ">") {
-              endingIdx++;
+            let endingIdx = i + 1;
+            if (tag.lastClosingBracketAt) {
+              endingIdx = tag.lastClosingBracketAt + 1;
             }
             filteredTagLocations.push([
               rangedOpeningTags[y].lastOpeningBracketAt,
