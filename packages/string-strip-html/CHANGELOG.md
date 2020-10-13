@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.1.0](https://gitlab.com/codsen/codsen/compare/string-strip-html@6.0.5...string-strip-html@6.1.0) (2020-10-13)
+
+
+### Bug Fixes
+
+* fix filteredTagLocations closing location on paired tags ([43ce393](https://gitlab.com/codsen/codsen/commit/43ce393391f81dcc8de4e3de70e463356f4d0af5))
+
+
+### Features
+
+* wildcard ALL option for opts.stripTogetherWithTheirContents ([d2031ab](https://gitlab.com/codsen/codsen/commit/d2031ab11260a24f436cef64ca5d8d43b9ae10e1))
+
+
+
+
+
 ## 6.0.0 (2020-09-15)
 
 ### Bug Fixes

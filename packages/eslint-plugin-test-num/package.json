@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-test-num",
-  "version": "1.3.10",
+  "version": "1.3.11",
   "description": "ESLint plugin to update unit test numbers automatically",
   "keywords": [
     "automatically",

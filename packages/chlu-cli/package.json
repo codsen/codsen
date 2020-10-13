@@ -1,6 +1,6 @@
 {
   "name": "chlu-cli",
-  "version": "1.16.82",
+  "version": "1.16.83",
   "description": "CH-ange-L-og U-pdate - Automatically fix errors in your changelog file",
   "keywords": [
     "automated",
@@ -95,7 +95,7 @@
     }
   },
   "dependencies": {
-    "chlu": "^3.7.76",
+    "chlu": "^3.7.77",
     "fs-extra": "^9.0.1",
     "meow": "^7.1.1",
     "simple-git": "^2.21.0",
