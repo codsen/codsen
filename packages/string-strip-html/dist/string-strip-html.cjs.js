@@ -211,14 +211,14 @@ function stripHtml(str, originalOpts) {
     return typeof something === "string";
   }
   function treatRangedTags(i, opts, rangesToDelete) {
-    if (Array.isArray(opts.stripTogetherWithTheirContents) && opts.stripTogetherWithTheirContents.includes(tag.name)) {
+    if (Array.isArray(opts.stripTogetherWithTheirContents) && (opts.stripTogetherWithTheirContents.includes(tag.name) || opts.stripTogetherWithTheirContents.includes("*"))) {
       if (Array.isArray(rangedOpeningTags) && rangedOpeningTags.some(function (obj) {
         return obj.name === tag.name && obj.lastClosingBracketAt < i;
       })) {
         var _loop = function _loop(y) {
           if (rangedOpeningTags[y].name === tag.name) {
             /* istanbul ignore else */
-            if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
+            if (opts.stripTogetherWithTheirContents.includes(tag.name) || opts.stripTogetherWithTheirContents.includes("*")) {
               filteredTagLocations = filteredTagLocations.filter(function (_ref) {
                 var _ref2 = _slicedToArray(_ref, 2),
                     from = _ref2[0],
@@ -488,7 +488,7 @@ function stripHtml(str, originalOpts) {
       if (str[_i] === "<") {
         calculateHrefToBeInserted(opts);
         var whiteSpaceCompensation = calculateWhitespaceToInsert(str, _i, tag.leftOuterWhitespace, _i, tag.lastOpeningBracketAt, _i);
-        if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
+        if (opts.stripTogetherWithTheirContents.includes(tag.name) || opts.stripTogetherWithTheirContents.includes("*")) {
           /* istanbul ignore next */
           filteredTagLocations = filteredTagLocations.filter(function (_ref4) {
             var _ref5 = _slicedToArray(_ref4, 2),
@@ -611,7 +611,7 @@ function stripHtml(str, originalOpts) {
           }
           /* istanbul ignore else */
           if (!filteredTagLocations.length || filteredTagLocations[filteredTagLocations.length - 1][0] !== tag.lastOpeningBracketAt && filteredTagLocations[filteredTagLocations.length - 1][1] !== _i + 1) {
-            if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
+            if (opts.stripTogetherWithTheirContents.includes(tag.name) || opts.stripTogetherWithTheirContents.includes("*")) {
               var lastRangedOpeningTag;
               for (var z = rangedOpeningTags.length; z--;) {
                 /* istanbul ignore else */

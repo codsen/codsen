@@ -191,7 +191,8 @@ function stripHtml(str, originalOpts) {
   function treatRangedTags(i, opts, rangesToDelete) {
     if (
       Array.isArray(opts.stripTogetherWithTheirContents) &&
-      opts.stripTogetherWithTheirContents.includes(tag.name)
+      (opts.stripTogetherWithTheirContents.includes(tag.name) ||
+        opts.stripTogetherWithTheirContents.includes("*"))
     ) {
       if (
         Array.isArray(rangedOpeningTags) &&
@@ -202,7 +203,10 @@ function stripHtml(str, originalOpts) {
         for (let y = rangedOpeningTags.length; y--; ) {
           if (rangedOpeningTags[y].name === tag.name) {
             /* istanbul ignore else */
-            if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
+            if (
+              opts.stripTogetherWithTheirContents.includes(tag.name) ||
+              opts.stripTogetherWithTheirContents.includes("*")
+            ) {
               filteredTagLocations = filteredTagLocations.filter(
                 ([from, upto]) =>
                   (from < rangedOpeningTags[y].lastOpeningBracketAt ||
@@ -593,7 +597,10 @@ function stripHtml(str, originalOpts) {
           tag.lastOpeningBracketAt,
           i
         );
-        if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
+        if (
+          opts.stripTogetherWithTheirContents.includes(tag.name) ||
+          opts.stripTogetherWithTheirContents.includes("*")
+        ) {
           /* istanbul ignore next */
           filteredTagLocations = filteredTagLocations.filter(
             ([from, upto]) => !(from === tag.leftOuterWhitespace && upto === i)
@@ -802,7 +809,10 @@ function stripHtml(str, originalOpts) {
               filteredTagLocations[filteredTagLocations.length - 1][1] !==
                 i + 1)
           ) {
-            if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
+            if (
+              opts.stripTogetherWithTheirContents.includes(tag.name) ||
+              opts.stripTogetherWithTheirContents.includes("*")
+            ) {
               let lastRangedOpeningTag;
               for (let z = rangedOpeningTags.length; z--; ) {
                 /* istanbul ignore else */

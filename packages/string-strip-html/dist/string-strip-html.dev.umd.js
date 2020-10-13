@@ -8705,7 +8705,7 @@
     }
 
     function treatRangedTags(i, opts, rangesToDelete) {
-      if (Array.isArray(opts.stripTogetherWithTheirContents) && opts.stripTogetherWithTheirContents.includes(tag.name)) {
+      if (Array.isArray(opts.stripTogetherWithTheirContents) && (opts.stripTogetherWithTheirContents.includes(tag.name) || opts.stripTogetherWithTheirContents.includes("*"))) {
         // it depends, is it opening or closing range tag:
         // We could try to distinguish opening from closing tags by presence of
         // slash, but that would be a liability for dirty code cases where clash
@@ -8732,7 +8732,7 @@
               // filteredTagLocations - from opening to closing - not two ranges
 
               /* istanbul ignore else */
-              if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
+              if (opts.stripTogetherWithTheirContents.includes(tag.name) || opts.stripTogetherWithTheirContents.includes("*")) {
                 filteredTagLocations = filteredTagLocations.filter(function (_ref) {
                   var _ref2 = _slicedToArray(_ref, 2),
                       from = _ref2[0],
@@ -9136,7 +9136,7 @@
           var whiteSpaceCompensation = calculateWhitespaceToInsert(str, _i, tag.leftOuterWhitespace, _i, tag.lastOpeningBracketAt, _i); // only on pair tags, exclude the opening counterpart and closing
           // counterpart if whole pair is to be deleted
 
-          if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
+          if (opts.stripTogetherWithTheirContents.includes(tag.name) || opts.stripTogetherWithTheirContents.includes("*")) {
             /* istanbul ignore next */
             filteredTagLocations = filteredTagLocations.filter(function (_ref4) {
               var _ref5 = _slicedToArray(_ref4, 2),
@@ -9339,7 +9339,7 @@
             if (!filteredTagLocations.length || filteredTagLocations[filteredTagLocations.length - 1][0] !== tag.lastOpeningBracketAt && filteredTagLocations[filteredTagLocations.length - 1][1] !== _i + 1) {
               // filter out opening/closing tag pair because whole chunk
               // from opening's opening to closing's closing will be pushed
-              if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
+              if (opts.stripTogetherWithTheirContents.includes(tag.name) || opts.stripTogetherWithTheirContents.includes("*")) {
                 // get the last opening counterpart of the pair
                 // iterate rangedOpeningTags from the, pick the first
                 // ranged opening tag whose name is same like current, closing's
