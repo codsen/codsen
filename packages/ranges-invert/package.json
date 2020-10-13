@@ -107,7 +107,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.11.0",
-    "lect": "^0.14.5",
+    "lect": "^0.14.6",
     "rollup": "^2.29.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

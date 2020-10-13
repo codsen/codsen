@@ -51,19 +51,20 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-no-unsanitized": "^3.1.4",
     "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-test-num": "^1.3.9",
+    "eslint-plugin-test-num": "^1.3.10",
     "eslint-plugin-row-num": "^1.2.15",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "execa": "^4.0.3",
     "simple-git": "^2.21.0",
-    "lect": "^0.14.5",
+    "lect": "^0.14.6",
     "lerna": "^3.22.1",
     "lerna-clean-changelogs-cli": "^1.2.70",
     "npm-watch": "^0.7.0",
     "object-path": "^0.11.5",
     "prettier": "^2.1.2",
     "esm": "^3.2.25",
+    "title": "^3.4.2",
     "tap-parse-string-to-object": "^1.2.23"
   }
 }
