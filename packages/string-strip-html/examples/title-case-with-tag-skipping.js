@@ -1,6 +1,6 @@
 /* eslint import/extensions:0, import/no-extraneous-dependencies:0 */
 
-// Set the title case using "title" package from npm,
+// Set the title case using `title` package
 // https://www.npmjs.com/package/title
 
 // This program will not touch any single tags (<br class="z"/> for example)
