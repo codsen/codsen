@@ -13,7 +13,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.match(
+    t.strictSame(
       gathered,
       [
         {
@@ -49,14 +49,10 @@ tap.test(
                   language: "css",
                 },
                 {
-                  property: "color",
-                  propertyStarts: 14,
-                  propertyEnds: 19,
-                  colon: 19,
-                  value: "red",
-                  valueStarts: 21,
-                  valueEnds: 24,
-                  semi: 24,
+                  type: "text", // <--- it's not a property token
+                  start: 14,
+                  end: 25,
+                  value: "color: red;",
                 },
                 {
                   type: "comment",
@@ -113,7 +109,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.match(
+    t.strictSame(
       gathered,
       [
         {
@@ -149,14 +145,10 @@ tap.test(
                   language: "css",
                 },
                 {
-                  property: "color",
-                  propertyStarts: 14,
-                  propertyEnds: 19,
-                  colon: 19,
-                  value: "red",
-                  valueStarts: 21,
-                  valueEnds: 24,
-                  semi: 24,
+                  type: "text",
+                  start: 14,
+                  end: 25,
+                  value: "color: red;",
                 },
                 {
                   type: "comment",
@@ -168,6 +160,12 @@ tap.test(
                   language: "css",
                 },
                 {
+                  type: "text",
+                  start: 27,
+                  end: 28,
+                  value: " ",
+                },
+                {
                   property: "text-align",
                   propertyStarts: 28,
                   propertyEnds: 38,
@@ -176,6 +174,8 @@ tap.test(
                   valueStarts: 40,
                   valueEnds: 44,
                   semi: 44,
+                  start: 28,
+                  end: 45,
                 },
               ],
               attribValueStartsAt: 12,
@@ -223,7 +223,7 @@ tap.test(
         gathered.push(obj);
       },
     });
-    t.match(
+    t.strictSame(
       gathered,
       [
         {
@@ -258,6 +258,8 @@ tap.test(
                   valueStarts: 21,
                   valueEnds: 24,
                   semi: 24,
+                  start: 12,
+                  end: 25,
                 },
               ],
               attribValueStartsAt: 12,
@@ -291,6 +293,384 @@ tap.test(
         },
       ],
       "03"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `04 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - text comment`,
+  (t) => {
+    const gathered = [];
+    ct(`<a style="/* zzz */color: red">`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.strictSame(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 31,
+          value: '<a style="/* zzz */color: red">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: "inline",
+          attribs: [
+            {
+              attribName: "style",
+              attribNameRecognised: true,
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 8,
+              attribOpeningQuoteAt: 9,
+              attribClosingQuoteAt: 29,
+              attribValueRaw: "/* zzz */color: red",
+              attribValue: [
+                {
+                  type: "comment",
+                  start: 10,
+                  end: 12,
+                  value: "/*",
+                  closing: false,
+                  kind: "block",
+                  language: "css",
+                },
+                {
+                  type: "text",
+                  start: 12,
+                  end: 17,
+                  value: " zzz ",
+                },
+                {
+                  type: "comment",
+                  start: 17,
+                  end: 19,
+                  value: "*/",
+                  closing: true,
+                  kind: "block",
+                  language: "css",
+                },
+                {
+                  property: "color",
+                  propertyStarts: 19,
+                  propertyEnds: 24,
+                  colon: 24,
+                  value: "red",
+                  valueStarts: 26,
+                  valueEnds: 29,
+                  semi: null,
+                  start: 19,
+                  end: 29,
+                },
+              ],
+              attribValueStartsAt: 10,
+              attribValueEndsAt: 29,
+              attribStarts: 3,
+              attribEnds: 30,
+              attribLeft: 1,
+            },
+          ],
+        },
+      ],
+      "04"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `05 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - property terminates comment`,
+  (t) => {
+    const gathered = [];
+    ct(`<a style="  /* zzz */color: red;  ">`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.strictSame(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 36,
+          value: '<a style="  /* zzz */color: red;  ">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: "inline",
+          attribs: [
+            {
+              attribName: "style",
+              attribNameRecognised: true,
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 8,
+              attribOpeningQuoteAt: 9,
+              attribClosingQuoteAt: 34,
+              attribValueRaw: "  /* zzz */color: red;  ",
+              attribValue: [
+                {
+                  type: "text",
+                  start: 10,
+                  end: 12,
+                  value: "  ",
+                },
+                {
+                  type: "comment",
+                  start: 12,
+                  end: 14,
+                  value: "/*",
+                  closing: false,
+                  kind: "block",
+                  language: "css",
+                },
+                {
+                  type: "text",
+                  start: 14,
+                  end: 19,
+                  value: " zzz ",
+                },
+                {
+                  type: "comment",
+                  start: 19,
+                  end: 21,
+                  value: "*/",
+                  closing: true,
+                  kind: "block",
+                  language: "css",
+                },
+                {
+                  property: "color",
+                  propertyStarts: 21,
+                  propertyEnds: 26,
+                  colon: 26,
+                  value: "red",
+                  valueStarts: 28,
+                  valueEnds: 31,
+                  semi: 31,
+                  start: 21,
+                  end: 32,
+                },
+                {
+                  type: "text",
+                  start: 32,
+                  end: 34,
+                  value: "  ",
+                },
+              ],
+              attribValueStartsAt: 10,
+              attribValueEndsAt: 34,
+              attribStarts: 3,
+              attribEnds: 35,
+              attribLeft: 1,
+            },
+          ],
+        },
+      ],
+      "05"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `06 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - property terminates text`,
+  (t) => {
+    const gathered = [];
+    ct(`<a style="  /* zzz */ color: red;  ">`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.strictSame(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 37,
+          value: '<a style="  /* zzz */ color: red;  ">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: "inline",
+          attribs: [
+            {
+              attribName: "style",
+              attribNameRecognised: true,
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 8,
+              attribOpeningQuoteAt: 9,
+              attribClosingQuoteAt: 35,
+              attribValueRaw: "  /* zzz */ color: red;  ",
+              attribValue: [
+                {
+                  type: "text",
+                  start: 10,
+                  end: 12,
+                  value: "  ",
+                },
+                {
+                  type: "comment",
+                  start: 12,
+                  end: 14,
+                  value: "/*",
+                  closing: false,
+                  kind: "block",
+                  language: "css",
+                },
+                {
+                  type: "text",
+                  start: 14,
+                  end: 19,
+                  value: " zzz ",
+                },
+                {
+                  type: "comment",
+                  start: 19,
+                  end: 21,
+                  value: "*/",
+                  closing: true,
+                  kind: "block",
+                  language: "css",
+                },
+                {
+                  type: "text",
+                  start: 21,
+                  end: 22,
+                  value: " ",
+                },
+                {
+                  property: "color",
+                  propertyStarts: 22,
+                  propertyEnds: 27,
+                  colon: 27,
+                  value: "red",
+                  valueStarts: 29,
+                  valueEnds: 32,
+                  semi: 32,
+                  start: 22,
+                  end: 33,
+                },
+                {
+                  type: "text",
+                  start: 33,
+                  end: 35,
+                  value: "  ",
+                },
+              ],
+              attribValueStartsAt: 10,
+              attribValueEndsAt: 35,
+              attribStarts: 3,
+              attribEnds: 36,
+              attribLeft: 1,
+            },
+          ],
+        },
+      ],
+      "06"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `07 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - property (no semi), then comment`,
+  (t) => {
+    const gathered = [];
+    ct(`<a style="color: red/* zzz */">`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.strictSame(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 31,
+          value: '<a style="color: red/* zzz */">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 2,
+          tagName: "a",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: "inline",
+          attribs: [
+            {
+              attribName: "style",
+              attribNameRecognised: true,
+              attribNameStartsAt: 3,
+              attribNameEndsAt: 8,
+              attribOpeningQuoteAt: 9,
+              attribClosingQuoteAt: 29,
+              attribValueRaw: "color: red/* zzz */",
+              attribValue: [
+                {
+                  property: "color",
+                  propertyStarts: 10,
+                  propertyEnds: 15,
+                  colon: 15,
+                  value: "red",
+                  valueStarts: 17,
+                  valueEnds: 20,
+                  semi: null,
+                  start: 10,
+                  end: 20,
+                },
+                {
+                  type: "comment",
+                  start: 20,
+                  end: 22,
+                  value: "/*",
+                  closing: false,
+                  kind: "block",
+                  language: "css",
+                },
+                {
+                  type: "text",
+                  start: 22,
+                  end: 27,
+                  value: " zzz ",
+                },
+                {
+                  type: "comment",
+                  start: 27,
+                  end: 29,
+                  value: "*/",
+                  closing: true,
+                  kind: "block",
+                  language: "css",
+                },
+              ],
+              attribValueStartsAt: 10,
+              attribValueEndsAt: 29,
+              attribStarts: 3,
+              attribEnds: 30,
+              attribLeft: 1,
+            },
+          ],
+        },
+      ],
+      "07"
     );
     t.end();
   }

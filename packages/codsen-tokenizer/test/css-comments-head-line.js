@@ -1,11 +1,11 @@
 import tap from "tap";
 import ct from "../dist/codsen-tokenizer.esm";
 
-// line
+// whole line
 // -----------------------------------------------------------------------------
 
-tap.todo(
-  `01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - line comment`,
+tap.test(
+  `01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - first line commented out`,
   (t) => {
     const gathered = [];
     ct(`<style>// something\na{text-decoration: none;}</style>`, {
@@ -18,7 +18,7 @@ tap.todo(
   }
 );
 
-tap.todo(
+tap.test(
   `02 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - line comment`,
   (t) => {
     const gathered = [];
@@ -28,6 +28,23 @@ tap.todo(
       },
     });
     t.match(gathered, [], "02");
+    t.end();
+  }
+);
+
+// mixed
+// -----------------------------------------------------------------------------
+
+tap.only(
+  `03 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - first line commented out`,
+  (t) => {
+    const gathered = [];
+    ct(`<style>a { color: red; }</style>`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.match(gathered, [], "03");
     t.end();
   }
 );

@@ -3282,6 +3282,25 @@
       // object-assign is basically cloning - objects are passed by reference,
       // we can't risk mutating the default object:
       attrib = lodash_clonedeep(attribDefault);
+    }
+
+    function attribPush(tokenObj) {
+      // 1. clean up any existing tokens first
+
+      /* istanbul ignore else */
+      if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && attrib.attribValue[~-attrib.attribValue.length].start && !attrib.attribValue[~-attrib.attribValue.length].end) {
+        attrib.attribValue[~-attrib.attribValue.length].end = tokenObj.start;
+        attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, tokenObj.start);
+      } // 2. initiate new sub-token for comment
+
+      /* istanbul ignore else */
+
+
+      if (!Array.isArray(attrib.attribValue)) {
+        attrib.attribValue = [];
+      }
+
+      attrib.attribValue.push(tokenObj);
     } // same for property:
 
 
@@ -3294,7 +3313,11 @@
       value: null,
       valueStarts: null,
       valueEnds: null,
-      semi: null
+      semi: null,
+      start: null,
+      // convenience value, mirroring "propertyStarts"
+      end: null // // convenience value, mirroring whatever was last
+
     };
 
     function propertyReset() {
@@ -3403,7 +3426,32 @@
     // know exact ESP tails but we know set of characters that suspected "tail"
     // should match.
     //
-    // used by both tag and character callbacks:
+
+    function lastLayerIs(something) {
+      return Array.isArray(layers) && layers.length && layers[~-layers.length].type === something;
+    } // processes closing comment - it's DRY'ed here because it's in multiple places
+    // considering broken code like stray closing inline css comment blocks etc.
+
+
+    function closingComment(i) {
+      attribPush({
+        type: "comment",
+        start: i,
+        end: right(str, i) + 1,
+        value: str.slice(i, right(str, i) + 1),
+        // think of broken cases with whitespace, / *
+        closing: true,
+        kind: "block",
+        language: "css"
+      }); // skip next character
+
+      doNothing = right(str, i) + 1; // pop the block comment layer
+
+      if (lastLayerIs("block")) {
+        layers.pop();
+      }
+    } // used by both tag and character callbacks:
+
 
     function reportFirstFromStash(stash, cb, lookaheadLength) {
       // start to assemble node we're report to the callback cb1()
@@ -3562,7 +3610,7 @@
         if (token.start !== null && token.end) {
           // if it's a text token inside "at" rule, nest it, push into that
           // "at" rule pending in layers - otherwise, ping as standalone
-          if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "at") {
+          if (lastLayerIs("at")) {
             layers[~-layers.length].token.rules.push(token);
           } else {
             pingTagCb(token);
@@ -3574,7 +3622,7 @@
     }
 
     function atRuleWaitingForClosingCurlie() {
-      return layers.length && layers[~-layers.length].type === "at" && isObj$1(layers[~-layers.length].token) && layers[~-layers.length].token.openingCurlyAt && !layers[~-layers.length].token.closingCurlyAt;
+      return lastLayerIs("at") && isObj$1(layers[~-layers.length].token) && layers[~-layers.length].token.openingCurlyAt && !layers[~-layers.length].token.closingCurlyAt;
     }
 
     function getNewToken(type) {
@@ -3685,6 +3733,7 @@
       // we mutate the object on the parent scope, so no Object.assign here
       propertyReset();
       property.propertyStarts = propertyStarts;
+      property.start = propertyStarts;
     }
 
     function ifQuoteThenAttrClosingQuote(idx) {
@@ -3780,7 +3829,7 @@
               pingTagCb(token); // if it's a text token inside "at" rule, nest it, push into that
               // "at" rule pending in layers - otherwise, ping as standalone
 
-              if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "at") {
+              if (lastLayerIs("at")) {
                 layers[~-layers.length].token.rules.push(token);
               }
 
@@ -3801,7 +3850,7 @@
             pingTagCb(token); // if it's a "rule" token and a parent "at" rule is pending in layers,
             // also put this "rule" into that parent in layers
 
-            if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "at") {
+            if (lastLayerIs("at")) {
               layers[~-layers.length].token.rules.push(token);
             }
 
@@ -3815,7 +3864,7 @@
           token.value = str.slice(token.start, token.end); // if it's a text token inside "at" rule, nest it, push into that
           // "at" rule pending in layers - otherwise, ping as standalone
 
-          if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "at") {
+          if (lastLayerIs("at")) {
             layers[~-layers.length].token.rules.push(token);
           } else {
             pingTagCb(token);
@@ -3875,7 +3924,7 @@
           // with quotes, as in ""left""
           ) {
               if ( // maybe it's the closing counterpart?
-              Array.isArray(layers) && layers.length && layers[~-layers.length].type === "simple" && layers[~-layers.length].value === flipEspTag(str[_i])) {
+              lastLayerIs("simple") && layers[~-layers.length].value === flipEspTag(str[_i])) {
                 layers.pop();
               } else {
                 // it's opening then
@@ -3889,7 +3938,7 @@
         } else if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
           if (["[", "]"].includes(str[_i])) {
             if ( // maybe it's the closing counterpart?
-            Array.isArray(layers) && layers.length && layers[~-layers.length].type === "simple" && layers[~-layers.length].value === flipEspTag(str[_i])) {
+            lastLayerIs("simple") && layers[~-layers.length].value === flipEspTag(str[_i])) {
               // maybe it's the closing counterpart?
               layers.pop();
             } else {
@@ -3906,7 +3955,7 @@
         // character, not meaning wrapped-something.
         ["\"", "'", "`"].includes(str[left(str, _i)]) && str[left(str, _i)] === str[right(str, _i)])) {
           if ( // maybe it's the closing counterpart?
-          Array.isArray(layers) && layers.length && layers[~-layers.length].type === "simple" && layers[~-layers.length].value === flipEspTag(str[_i])) {
+          lastLayerIs("simple") && layers[~-layers.length].value === flipEspTag(str[_i])) {
             // maybe it's the closing counterpart?
             layers.pop();
             doNothing = _i + 1;
@@ -4163,8 +4212,7 @@
         //    ^
         //   we could be here - notice quotes wrapping all around
         //
-        !Array.isArray(layers) || !layers.length || // last layer is not quotes
-        layers[~-layers.length].type !== "simple" || !["'", "\""].includes(layers[~-layers.length].value) || // or we're within an attribute (so quotes are HTML tag's not esp tag's)
+        !lastLayerIs("simple") || !["'", "\""].includes(layers[~-layers.length].value) || // or we're within an attribute (so quotes are HTML tag's not esp tag's)
         attrib && attrib.attribStarts && !attrib.attribEnds)) {
           //
           //
@@ -4336,7 +4384,7 @@
               // If we've got an unclosed heads and here new heads are starting,
               // pop the last heads in layers - they will never be matched anyway.
               // Let parser/linter deal with it
-              if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "esp") {
+              if (lastLayerIs("esp")) {
                 layers.pop();
               } // if we're within a tag attribute, push the last esp token there
 
@@ -4475,48 +4523,19 @@
           !str[_i].trim() && // semicolon follows
           str[right(str, _i)] === ";") {
             property.semi = right(str, _i);
+          }
+
+          if (property.semi) {
+            property.end = property.semi + 1; // happy path, clean code has "end" at semi
+          }
+
+          if (!property.end) {
+            property.end = _i;
           } // push and init and patch up to resume
 
 
           pushProperty(property);
-          property = null; // initiate the next property if it exists
-
-          var nextChar = right(str, _i);
-
-          if (nextChar && //
-          // don't do proper validation:
-          // attrNameRegexp.test(str[nextChar])
-          //
-          // let's let in all the crap, then validate later, rather than
-          // omit it here and then later try to catch it from AST (more difficult)
-          //
-          str[nextChar].trim() && ( //
-          // and EITHER it's html inline css
-          attrib && attrib.attribName === "style" && !"\"'<>".includes(str[nextChar]) || // OR it's head css style
-          token.type === "rule" && !";{}@".includes(str[nextChar]))) {
-            // but check, maybe it's a comment
-            if (str[nextChar] === "*" && str[nextChar + 1] === "/") {
-              attrib.attribValue.push({
-                type: "comment",
-                start: nextChar,
-                end: nextChar + 2,
-                value: "*/",
-                closing: true,
-                kind: "block",
-                language: "css"
-              });
-              doNothing = nextChar + 2;
-            } else {
-              initProperty(nextChar); // attrib.attribValueStartsAt starts right after opening
-              // quotes, regardless of inner whitespace, so that we can
-              // slice and extract the contents.
-              // "property.propertyStarts" on other hand, minds the whitespace,
-              // we start it from the first non-whitespace character
-              // we don't put the /[\w-]/ regex validation here to catch-net
-              // more errors - let the bad characters enter property names,
-              // they'll be validated later down the line!
-            }
-          }
+          property = null;
         } else if (str[_i] === ":" && Number.isInteger(property.colon) && property.colon < _i && lastNonWhitespaceCharAt && property.colon + 1 < lastNonWhitespaceCharAt) {
           // .a{b:c d:e;}
           //         ^
@@ -4537,19 +4556,44 @@
             //                                 |gap| we split
             //
             property.valueEnds = property.valueStarts + split[0].length;
-            property.value = str.slice(property.valueStarts, property.valueEnds); // push and init and patch up to resume
+            property.value = str.slice(property.valueStarts, property.valueEnds);
+            property.end = property.valueEnds; // push and init and patch up to resume
 
             pushProperty(property);
             propertyReset();
             property.propertyStarts = lastNonWhitespaceCharAt + 1 - split[1].length;
           }
+        } else if (str[_i] === "/" && str[right(str, _i)] === "*") {
+          // comment starts
+          // <a style="color: red/* zzz */">
+          //                     ^
+          //                we're here
+
+          /* istanbul ignore else */
+          if (property.valueStarts && !property.valueEnds) {
+            property.valueEnds = _i;
+            property.value = str.slice(property.valueStarts, _i);
+          }
+          /* istanbul ignore else */
+
+
+          if (!property.end) {
+            property.end = _i;
+          } // push and init and patch up to resume
+
+
+          pushProperty(property);
+          property = null;
         }
       } // catch the start of a css property's value
       // -------------------------------------------------------------------------
 
+      /* istanbul ignore else */
+
 
       if (!doNothing && // token.type === "rule" &&
       property && property.colon && !property.valueStarts && str[_i].trim()) {
+        /* istanbul ignore else */
         if ( // stopper character met:
         ";}'\"".includes(str[_i]) && // either it's real closing quote or not a quote
         ifQuoteThenAttrClosingQuote(_i)) {
@@ -4671,8 +4715,47 @@
       !property && // yet the character is suitable:
       // it's not a whitespace
       str[_i].trim() && // it's not some separator
-      !"'\";".includes(str[_i])) {
-        initProperty(_i);
+      !"'\";".includes(str[_i]) && // it's not inside CSS block comment
+      !lastLayerIs("block")) {
+        // It's either css comment or a css property.
+        // Dirty characters go as property name, then later we validate and
+        // catch them.
+        // Empty space goes as text token, see separate clauses above.
+        if (str[_i] === "/" && ( // clean case, asterisk follows right away
+        str[_i + 1] === "*" || // dirty case, there's whitespace between slash and asterisk
+        !str[_i + 1].trim() && str[right(str, _i)] === "*")) {
+          attribPush({
+            type: "comment",
+            start: _i,
+            end: right(str, _i) + 1,
+            value: str.slice(_i, right(str, _i) + 1),
+            // think of broken cases with whitespace, / *
+            closing: false,
+            kind: "block",
+            language: "css"
+          }); // push a new layer, comment
+
+          layers.push({
+            type: "block",
+            value: str.slice(_i, right(str, _i) + 1),
+            // think of broken cases with whitespace, / *
+            position: _i
+          }); // skip the next char, consider there might be whitespace in front
+
+          doNothing = right(str, _i) + 1;
+        } // if it's a closing comment
+        else if (str[_i] === "*" && str[right(str, _i)] === "/") {
+            closingComment(_i);
+          } else {
+            // first, close the text token if it's not ended
+            if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
+              attrib.attribValue[~-attrib.attribValue.length].end = _i;
+              attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i);
+            } // initiate a property
+
+
+            initProperty(_i);
+          }
       } // in comment type, "only" kind tokens, submit square brackets to layers
       // -------------------------------------------------------------------------
       // ps. it's so that we can rule out greater-than signs
@@ -4871,7 +4954,7 @@
             token.end = _i + wholeEspTagClosing.length;
             token.value = str.slice(token.start, token.end); // if last layer is ESP tag and we've got its closing, pop the layer
 
-            if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "esp") {
+            if (lastLayerIs("esp")) {
               layers.pop();
             }
 
@@ -4958,11 +5041,54 @@
           pingTagCb(token); // if it's a "rule" token and a parent "at" rule is pending in layers,
           // also put this "rule" into that parent in layers
 
-          if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "at") {
+          if (lastLayerIs("at")) {
             layers[~-layers.length].token.rules.push(token);
           }
 
           tokenReset();
+        }
+      } // catch the ending of a attribute sub-token value
+      // -------------------------------------------------------------------------
+
+
+      if (!doNothing && attrib && Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
+        // TODO
+        // if it's a closing comment
+        if (str[_i] === "*" && str[right(str, _i)] === "/") {
+          closingComment(_i);
+        }
+      } // catch the beginning of a attribute sub-token value
+      // -------------------------------------------------------------------------
+
+
+      if (!doNothing && // attribute has been recording
+      attrib && // and it's not finished
+      attrib.attribValueStartsAt && !attrib.attribValueEndsAt && // and it's property hasn't been recording
+      !property && // we're inside the value
+      _i >= attrib.attribValueStartsAt && // if attribValue array is empty, no object has been placed yet,
+      Array.isArray(attrib.attribValue) && (!attrib.attribValue.length || // or there is one but it's got ending (prevention from submitting
+      // another text type object on top, before previous has been closed)
+      attrib.attribValue[~-attrib.attribValue.length].end && // and that end is less than current index i
+      attrib.attribValue[~-attrib.attribValue.length].end <= _i)) {
+        // if it's suitable for property, start a property
+        // if it's whitespace, for example,
+        // <a style="  /* zzz */color: red;  ">
+        //           ^
+        //         this
+        //
+        // rogue text will go as property, for example:
+        //
+        // <a style="  z color: red;  ">
+        if ( // whitespace is automatically text token
+        !str[_i].trim() || // if comment layer has been started, it's also a text token, no matter even
+        // if it's a property, because it's comment's contents.
+        lastLayerIs("block")) {
+          attrib.attribValue.push({
+            type: "text",
+            start: _i,
+            end: null,
+            value: null
+          });
         }
       } // Catch the end of a tag attribute's value:
       // -------------------------------------------------------------------------
@@ -5269,50 +5395,6 @@
               str[_i + 1] !== str[_i] || // OR it's a rogue quote, part of the value
               !ifQuoteThenAttrClosingQuote(_i + 1))) {
                 attrib.attribValueStartsAt = _i + 1;
-
-                if ( // if attribValue array is empty, no object has been placed yet,
-                Array.isArray(attrib.attribValue) && (!attrib.attribValue.length || // of there is one but it's got ending (prevention from submitting
-                // another text type object on top, before previous has been closed)
-                attrib.attribValue[~-attrib.attribValue.length].end)) {
-                  // if depends, is it inline style or anything else?
-                  if (attrib.attribName === "style") {
-                    // it depends, is it comment or not
-                    var charOnTheRight = right(str, _i);
-
-                    if (str[charOnTheRight] === "/" && str[charOnTheRight + 1] === "*") {
-                      attrib.attribValue.push({
-                        type: "comment",
-                        start: charOnTheRight,
-                        end: charOnTheRight + 2,
-                        value: "/*",
-                        closing: false,
-                        kind: "block",
-                        language: "css"
-                      });
-                      doNothing = charOnTheRight + 2;
-                    } else {
-                      initProperty(right(str, _i)); // attrib.attribValueStartsAt starts right after opening
-                      // quotes, regardless of inner whitespace, so that we can
-                      // slice and extract the contents.
-                      // "property.propertyStarts" on other hand, minds the whitespace,
-                      // we start it from the first non-whitespace character
-                      // we don't put the /[\w-]/ regex validation here to catch-net
-                      // more errors - let the bad characters enter property names,
-                      // they'll be validated later down the line!
-                      // don't push to "attrib.attribValue" because in DRY fashion
-                      // we'll tap the existing "property" clauses that head CSS uses
-                    }
-                  } else if ( // either the next character is not a quote
-                  // or it's not a closing quote
-                  !ifQuoteThenAttrClosingQuote(_i + 1)) {
-                    attrib.attribValue.push({
-                      type: "text",
-                      start: attrib.attribValueStartsAt,
-                      end: null,
-                      value: null
-                    });
-                  }
-                }
               }
             } else {
               // One quote exists.
