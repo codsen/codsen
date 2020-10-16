@@ -4525,17 +4525,30 @@
             property.semi = right(str, _i);
           }
 
-          if (property.semi) {
+          if ( // if semicolon has been spotted...
+          property.semi) {
+            // set the ending too
             property.end = property.semi + 1; // happy path, clean code has "end" at semi
           }
 
-          if (!property.end) {
+          if ( // if there's no semicolon in the view
+          !property.semi && // and semi is not coming next
+          str[right(str, _i)] !== ";" && // and property hasn't ended
+          !property.end) {
+            // we need to end it because this is it
             property.end = _i;
-          } // push and init and patch up to resume
+          }
 
+          if (property.end) {
+            // push and init and patch up to resume
+            if (property.end > _i) {
+              // if ending is in the future, skip everything up to it
+              doNothing = property.end;
+            }
 
-          pushProperty(property);
-          property = null;
+            pushProperty(property);
+            property = null;
+          }
         } else if (str[_i] === ":" && Number.isInteger(property.colon) && property.colon < _i && lastNonWhitespaceCharAt && property.colon + 1 < lastNonWhitespaceCharAt) {
           // .a{b:c d:e;}
           //         ^
@@ -4599,6 +4612,11 @@
         ifQuoteThenAttrClosingQuote(_i)) {
           if (str[_i] === ";") {
             property.semi = _i;
+          } // patch missing .end
+
+
+          if (!property.end) {
+            property.end = property.semi ? property.semi + 1 : _i;
           } // push and init and patch up to resume
 
 
@@ -4652,30 +4670,36 @@
       //
       str[_i] !== "/" || str[_i - 1] !== "/")) {
         property.propertyEnds = _i;
-        property.property = str.slice(property.propertyStarts, _i); // missing colon and onwards:
+        property.property = str.slice(property.propertyStarts, _i);
+
+        if (property.valueStarts) {
+          // it's needed to safeguard against case like:
+          // <style>.a{b:c d:e;}</style>
+          //                ^
+          //            imagine we're here - valueStarts is not set!
+          property.end = _i;
+        } // missing colon and onwards:
         // <style>.b{c}</style>
         // <style>.b{c;d}</style>
 
-        if ("};".includes(str[_i]) || !str[_i].trim() && str[right(str, _i)] === "}") {
+
+        if ("};".includes(str[_i]) || // it's whitespace and it's not leading up to a colon
+        !str[_i].trim() && str[right(str, _i)] !== ":") {
           if (str[_i] === ";") {
             property.semi = _i;
+          } // precaution against broken code:
+          // .a{x}}
+          //
+
+
+          if (!property.end) {
+            property.end = property.semi ? property.semi + 1 : _i;
           } // push and init and patch up to resume
 
 
           pushProperty(property);
           property = null;
-        } // rubbish - line break - new property
-        // <div style="]\nfloat:left;">z</div>
-        else if ("\r\n".includes(str[_i])) {
-            var nextCharIdx = right(str, _i);
-
-            if (!":}'\"".includes(str[nextCharIdx])) {
-              // terminate the property
-              pushProperty(property);
-              property = null;
-              initProperty(nextCharIdx);
-            }
-          }
+        }
       } // catch the colon of a css property
       // -------------------------------------------------------------------------
 
@@ -4696,6 +4720,12 @@
       // attrNameRegexp.test(str[i]) &&
       //
       token.selectorsEnd && token.openingCurlyAt && (!property || !property.propertyStarts)) {
+        // first, check maybe there's unfinished text token before it
+        if (Array.isArray(token.properties) && token.properties.length && !token.properties[~-token.properties.length].end) {
+          token.properties[~-token.properties.length].end = _i;
+          token.properties[~-token.properties.length].value = str.slice(token.properties[~-token.properties.length].start, _i);
+        }
+
         initProperty(_i);
       } // catch the start a property
       // -------------------------------------------------------------------------
@@ -5037,7 +5067,13 @@
         } else if (str[_i] === "}" && token.openingCurlyAt && !token.closingCurlyAt) {
           token.closingCurlyAt = _i;
           token.end = _i + 1;
-          token.value = str.slice(token.start, token.end);
+          token.value = str.slice(token.start, token.end); // check is the property's last text token closed:
+
+          if (Array.isArray(token.properties) && token.properties.length && token.properties[~-token.properties.length].start && !token.properties[~-token.properties.length].end) {
+            token.properties[~-token.properties.length].end = _i;
+            token.properties[~-token.properties.length].value = str.slice(token.properties[~-token.properties.length].start, _i);
+          }
+
           pingTagCb(token); // if it's a "rule" token and a parent "at" rule is pending in layers,
           // also put this "rule" into that parent in layers
 
@@ -5051,7 +5087,7 @@
       // -------------------------------------------------------------------------
 
 
-      if (!doNothing && attrib && Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
+      if (!doNothing && attrib.attribName && Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
         // TODO
         // if it's a closing comment
         if (str[_i] === "*" && str[right(str, _i)] === "/") {
@@ -5061,7 +5097,8 @@
       // -------------------------------------------------------------------------
 
 
-      if (!doNothing && // attribute has been recording
+      if ( // EITHER IT'S INLINE CSS:
+      !doNothing && // attribute has been recording
       attrib && // and it's not finished
       attrib.attribValueStartsAt && !attrib.attribValueEndsAt && // and it's property hasn't been recording
       !property && // we're inside the value
@@ -5069,7 +5106,12 @@
       Array.isArray(attrib.attribValue) && (!attrib.attribValue.length || // or there is one but it's got ending (prevention from submitting
       // another text type object on top, before previous has been closed)
       attrib.attribValue[~-attrib.attribValue.length].end && // and that end is less than current index i
-      attrib.attribValue[~-attrib.attribValue.length].end <= _i)) {
+      attrib.attribValue[~-attrib.attribValue.length].end <= _i) || // OR IT'S HEAD CSS
+      !doNothing && // css rule token has been recording
+      token.type === "rule" && // token started:
+      token.openingCurlyAt && // but not ended:
+      !token.closingCurlyAt && // there is no unfinished property being recorded
+      !property) {
         // if it's suitable for property, start a property
         // if it's whitespace, for example,
         // <a style="  /* zzz */color: red;  ">
@@ -5083,12 +5125,24 @@
         !str[_i].trim() || // if comment layer has been started, it's also a text token, no matter even
         // if it's a property, because it's comment's contents.
         lastLayerIs("block")) {
-          attrib.attribValue.push({
-            type: "text",
-            start: _i,
-            end: null,
-            value: null
-          });
+          // depends where to push, is it inline css or head css rule
+          if (attrib.attribName) {
+            attrib.attribValue.push({
+              type: "text",
+              start: _i,
+              end: null,
+              value: null
+            });
+          } else if (token.type === "rule" && ( // we don't want to push over the properties in-progress
+          !Array.isArray(token.properties) || !token.properties.length || // last property should have ended
+          token.properties[~-token.properties.length].end)) {
+            token.properties.push({
+              type: "text",
+              start: _i,
+              end: null,
+              value: null
+            });
+          }
         }
       } // Catch the end of a tag attribute's value:
       // -------------------------------------------------------------------------
@@ -5096,11 +5150,22 @@
 
       if (!doNothing && token.type === "tag" && attrib.attribValueStartsAt && _i >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
         if ("'\"".includes(str[_i])) {
-          var R1 = !layers.some(function (layerObj) {
-            return layerObj.type === "esp";
-          });
-          var R2 = isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, _i);
-
+          // const R1 = !layers.some((layerObj) => layerObj.type === "esp");
+          // const R2 = attributeEnds(
+          //   str,
+          //   attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt,
+          //   i
+          // );
+          // console.log(
+          //   `${`\u001b[${33}m${`R1`}\u001b[${39}m`} = ${`\u001b[${
+          //     R1 ? 32 : 31
+          //   }m${R1}\u001b[${39}m`}`
+          // );
+          // console.log(
+          //   `${`\u001b[${33}m${`R2`}\u001b[${39}m`} = ${`\u001b[${
+          //     R2 ? 32 : 31
+          //   }m${R2}\u001b[${39}m`}`
+          // );
           if ( // so we're on a single/double quote,
           // (str[i], the current character is a quote)
           // and...
@@ -5143,11 +5208,34 @@
             if (str[attrib.attribOpeningQuoteAt] !== str[_i]) {
               layers.pop();
               layers.pop();
-            } // 3. push and wipe
+            } // 3. last check for the last attribValue's .end - in some broken code
+            // cases it might be still null:
+            // <div style="float:left;x">
+            //                         ^
+            //                       we're here
+
+
+            if (attrib.attribValue[~-attrib.attribValue.length] && !attrib.attribValue[~-attrib.attribValue.length].end) {
+              attrib.attribValue[~-attrib.attribValue.length].end = _i;
+            } // 4. push and wipe
 
 
             token.attribs.push(lodash_clonedeep(attrib));
             attribReset();
+          } else if ((!Array.isArray(attrib.attribValue) || !attrib.attribValue.length || // last attrib value should not be a text token
+          attrib.attribValue[~-attrib.attribValue.length].type !== "text") && !property) {
+            // quotes not matched, so it's unencoded, raw quote, part of the value
+            // for example
+            // <table width=""100">
+            //               ^
+            //            rogue quote
+            // let's initiate a next token
+            attrib.attribValue.push({
+              type: "text",
+              start: _i,
+              end: null,
+              value: null
+            });
           }
         } else if (attrib.attribOpeningQuoteAt === null && (str[_i] && !str[_i].trim() || ["/", ">"].includes(str[_i]) || espChars.includes(str[_i]) && espChars.includes(str[_i + 1]))) {
           // ^ either whitespace or tag's closing or ESP literal's start ends
@@ -5367,17 +5455,17 @@
             }
           } else if ("'\"".includes(str[_i])) {
           // maybe it's <span width='"100"> and it's a false opening quote, '
-          var _nextCharIdx = right(str, _i);
+          var nextCharIdx = right(str, _i);
 
           if ( // a non-whitespace character exists on the right of index i
-          _nextCharIdx && // if it is a quote character
-          "'\"".includes(str[_nextCharIdx]) && // but opposite kind,
-          str[_i] !== str[_nextCharIdx] && // and string is long enough
-          str.length > _nextCharIdx + 2 && // and remaining string contains that quote like the one on the right
-          str.slice(_nextCharIdx + 1).includes(str[_nextCharIdx]) && ( // and to the right of it we don't have str[i] quote,
+          nextCharIdx && // if it is a quote character
+          "'\"".includes(str[nextCharIdx]) && // but opposite kind,
+          str[_i] !== str[nextCharIdx] && // and string is long enough
+          str.length > nextCharIdx + 2 && // and remaining string contains that quote like the one on the right
+          str.slice(nextCharIdx + 1).includes(str[nextCharIdx]) && ( // and to the right of it we don't have str[i] quote,
           // case: <span width="'100'">
-          !str.indexOf(str[_nextCharIdx], _nextCharIdx + 1) || !right(str, str.indexOf(str[_nextCharIdx], _nextCharIdx + 1)) || str[_i] !== str[right(str, str.indexOf(str[_nextCharIdx], _nextCharIdx + 1))]) && // and that slice does not contain equal or brackets or quote of other kind
-          !Array.from(str.slice(_nextCharIdx + 1, str.indexOf(str[_nextCharIdx]))).some(function (char) {
+          !str.indexOf(str[nextCharIdx], nextCharIdx + 1) || !right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1)) || str[_i] !== str[right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1))]) && // and that slice does not contain equal or brackets or quote of other kind
+          !Array.from(str.slice(nextCharIdx + 1, str.indexOf(str[nextCharIdx]))).some(function (char) {
             return "<>=".concat(str[_i]).includes(char);
           })) {
             // pop the layers

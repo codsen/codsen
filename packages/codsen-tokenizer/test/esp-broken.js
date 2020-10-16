@@ -435,6 +435,8 @@ tap.test(
                   valueStarts: null,
                   valueEnds: null,
                   semi: null,
+                  start: 28,
+                  end: 29,
                 },
               ],
               attribValueStartsAt: 28,

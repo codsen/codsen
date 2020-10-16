@@ -1029,14 +1029,23 @@ function tokenizer(str, originalOpts) {
         str[stringLeftRight.right(str, _i)] === ";") {
           property.semi = stringLeftRight.right(str, _i);
         }
-        if (property.semi) {
+        if (
+        property.semi) {
           property.end = property.semi + 1;
         }
-        if (!property.end) {
+        if (
+        !property.semi &&
+        str[stringLeftRight.right(str, _i)] !== ";" &&
+        !property.end) {
           property.end = _i;
         }
-        pushProperty(property);
-        property = null;
+        if (property.end) {
+          if (property.end > _i) {
+            doNothing = property.end;
+          }
+          pushProperty(property);
+          property = null;
+        }
       } else if (str[_i] === ":" && Number.isInteger(property.colon) && property.colon < _i && lastNonWhitespaceCharAt && property.colon + 1 < lastNonWhitespaceCharAt) {
         var split = str.slice(stringLeftRight.right(str, property.colon), lastNonWhitespaceCharAt + 1).split(/\s+/);
         if (split.length === 2) {
@@ -1071,6 +1080,9 @@ function tokenizer(str, originalOpts) {
         if (str[_i] === ";") {
           property.semi = _i;
         }
+        if (!property.end) {
+          property.end = property.semi ? property.semi + 1 : _i;
+        }
         pushProperty(property);
         property = null;
       } else {
@@ -1096,21 +1108,20 @@ function tokenizer(str, originalOpts) {
     str[_i] !== "/" || str[_i - 1] !== "/")) {
       property.propertyEnds = _i;
       property.property = str.slice(property.propertyStarts, _i);
-      if ("};".includes(str[_i]) || !str[_i].trim() && str[stringLeftRight.right(str, _i)] === "}") {
+      if (property.valueStarts) {
+        property.end = _i;
+      }
+      if ("};".includes(str[_i]) ||
+      !str[_i].trim() && str[stringLeftRight.right(str, _i)] !== ":") {
         if (str[_i] === ";") {
           property.semi = _i;
+        }
+        if (!property.end) {
+          property.end = property.semi ? property.semi + 1 : _i;
         }
         pushProperty(property);
         property = null;
       }
-      else if ("\r\n".includes(str[_i])) {
-          var nextCharIdx = stringLeftRight.right(str, _i);
-          if (!":}'\"".includes(str[nextCharIdx])) {
-            pushProperty(property);
-            property = null;
-            initProperty(nextCharIdx);
-          }
-        }
     }
     if (!doNothing &&
     property && property.propertyEnds && !property.valueStarts && str[_i] === ":") {
@@ -1119,6 +1130,10 @@ function tokenizer(str, originalOpts) {
     if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() &&
     !"{};".includes(str[_i]) &&
     token.selectorsEnd && token.openingCurlyAt && (!property || !property.propertyStarts)) {
+      if (Array.isArray(token.properties) && token.properties.length && !token.properties[~-token.properties.length].end) {
+        token.properties[~-token.properties.length].end = _i;
+        token.properties[~-token.properties.length].value = str.slice(token.properties[~-token.properties.length].start, _i);
+      }
       initProperty(_i);
     }
     if (!doNothing &&
@@ -1309,6 +1324,10 @@ function tokenizer(str, originalOpts) {
         token.closingCurlyAt = _i;
         token.end = _i + 1;
         token.value = str.slice(token.start, token.end);
+        if (Array.isArray(token.properties) && token.properties.length && token.properties[~-token.properties.length].start && !token.properties[~-token.properties.length].end) {
+          token.properties[~-token.properties.length].end = _i;
+          token.properties[~-token.properties.length].value = str.slice(token.properties[~-token.properties.length].start, _i);
+        }
         pingTagCb(token);
         if (lastLayerIs("at")) {
           layers[~-layers.length].token.rules.push(token);
@@ -1316,36 +1335,49 @@ function tokenizer(str, originalOpts) {
         tokenReset();
       }
     }
-    if (!doNothing && attrib && Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
+    if (!doNothing && attrib.attribName && Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
       if (str[_i] === "*" && str[stringLeftRight.right(str, _i)] === "/") {
         closingComment(_i);
       }
     }
-    if (!doNothing &&
+    if (
+    !doNothing &&
     attrib &&
     attrib.attribValueStartsAt && !attrib.attribValueEndsAt &&
     !property &&
     _i >= attrib.attribValueStartsAt &&
     Array.isArray(attrib.attribValue) && (!attrib.attribValue.length ||
     attrib.attribValue[~-attrib.attribValue.length].end &&
-    attrib.attribValue[~-attrib.attribValue.length].end <= _i)) {
+    attrib.attribValue[~-attrib.attribValue.length].end <= _i) ||
+    !doNothing &&
+    token.type === "rule" &&
+    token.openingCurlyAt &&
+    !token.closingCurlyAt &&
+    !property) {
       if (
       !str[_i].trim() ||
       lastLayerIs("block")) {
-        attrib.attribValue.push({
-          type: "text",
-          start: _i,
-          end: null,
-          value: null
-        });
+        if (attrib.attribName) {
+          attrib.attribValue.push({
+            type: "text",
+            start: _i,
+            end: null,
+            value: null
+          });
+        } else if (token.type === "rule" && (
+        !Array.isArray(token.properties) || !token.properties.length ||
+        token.properties[~-token.properties.length].end)) {
+          token.properties.push({
+            type: "text",
+            start: _i,
+            end: null,
+            value: null
+          });
+        }
       }
     }
     if (!doNothing && token.type === "tag" && attrib.attribValueStartsAt && _i >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
       if ("'\"".includes(str[_i])) {
-        var R1 = !layers.some(function (layerObj) {
-          return layerObj.type === "esp";
-        });
-        var R2 = attributeEnds__default['default'](str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, _i);
         if (
         !layers.some(function (layerObj) {
           return layerObj.type === "esp";
@@ -1371,8 +1403,19 @@ function tokenizer(str, originalOpts) {
             layers.pop();
             layers.pop();
           }
+          if (attrib.attribValue[~-attrib.attribValue.length] && !attrib.attribValue[~-attrib.attribValue.length].end) {
+            attrib.attribValue[~-attrib.attribValue.length].end = _i;
+          }
           token.attribs.push(clone__default['default'](attrib));
           attribReset();
+        } else if ((!Array.isArray(attrib.attribValue) || !attrib.attribValue.length ||
+        attrib.attribValue[~-attrib.attribValue.length].type !== "text") && !property) {
+          attrib.attribValue.push({
+            type: "text",
+            start: _i,
+            end: null,
+            value: null
+          });
         }
       } else if (attrib.attribOpeningQuoteAt === null && (str[_i] && !str[_i].trim() || ["/", ">"].includes(str[_i]) || espChars.includes(str[_i]) && espChars.includes(str[_i + 1]))) {
         attrib.attribValueEndsAt = _i;
@@ -1495,15 +1538,15 @@ function tokenizer(str, originalOpts) {
             });
           }
         } else if ("'\"".includes(str[_i])) {
-        var _nextCharIdx = stringLeftRight.right(str, _i);
+        var nextCharIdx = stringLeftRight.right(str, _i);
         if (
-        _nextCharIdx &&
-        "'\"".includes(str[_nextCharIdx]) &&
-        str[_i] !== str[_nextCharIdx] &&
-        str.length > _nextCharIdx + 2 &&
-        str.slice(_nextCharIdx + 1).includes(str[_nextCharIdx]) && (
-        !str.indexOf(str[_nextCharIdx], _nextCharIdx + 1) || !stringLeftRight.right(str, str.indexOf(str[_nextCharIdx], _nextCharIdx + 1)) || str[_i] !== str[stringLeftRight.right(str, str.indexOf(str[_nextCharIdx], _nextCharIdx + 1))]) &&
-        !Array.from(str.slice(_nextCharIdx + 1, str.indexOf(str[_nextCharIdx]))).some(function (char) {
+        nextCharIdx &&
+        "'\"".includes(str[nextCharIdx]) &&
+        str[_i] !== str[nextCharIdx] &&
+        str.length > nextCharIdx + 2 &&
+        str.slice(nextCharIdx + 1).includes(str[nextCharIdx]) && (
+        !str.indexOf(str[nextCharIdx], nextCharIdx + 1) || !stringLeftRight.right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1)) || str[_i] !== str[stringLeftRight.right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1))]) &&
+        !Array.from(str.slice(nextCharIdx + 1, str.indexOf(str[nextCharIdx]))).some(function (char) {
           return "<>=".concat(str[_i]).includes(char);
         })) {
           layers.pop();
