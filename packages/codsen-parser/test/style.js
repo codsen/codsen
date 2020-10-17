@@ -59,6 +59,8 @@ tap.test(`01 - ${`\u001b[${33}m${`style`}\u001b[${39}m`} - two tags`, (t) => {
                 valueStarts: 20,
                 valueEnds: 23,
                 semi: 23,
+                start: 13,
+                end: 24,
               },
             ],
           },
