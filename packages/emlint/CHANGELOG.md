@@ -7,7 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- update to the latest tokenizer, improve attribute-* rules ([deea2ce](https://gitlab.com/codsen/codsen/commit/deea2ce963c253a9d0ba8aa55c8e62a7f2eb9c63))
+- update to the latest tokenizer, improve attribute-\* rules ([deea2ce](https://gitlab.com/codsen/codsen/commit/deea2ce963c253a9d0ba8aa55c8e62a7f2eb9c63))
 
 ## 2.18.0 (2020-05-06)
 

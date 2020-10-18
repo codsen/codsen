@@ -11664,6 +11664,22 @@
 	    attrib = lodash_clonedeep(attribDefault);
 	  }
 
+	  function attribPush(tokenObj) {
+	    /* istanbul ignore else */
+	    if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && attrib.attribValue[~-attrib.attribValue.length].start && !attrib.attribValue[~-attrib.attribValue.length].end) {
+	      attrib.attribValue[~-attrib.attribValue.length].end = tokenObj.start;
+	      attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, tokenObj.start);
+	    }
+	    /* istanbul ignore else */
+
+
+	    if (!Array.isArray(attrib.attribValue)) {
+	      attrib.attribValue = [];
+	    }
+
+	    attrib.attribValue.push(tokenObj);
+	  }
+
 	  let property = null;
 	  const propertyDefault = {
 	    property: null,
@@ -11673,7 +11689,9 @@
 	    value: null,
 	    valueStarts: null,
 	    valueEnds: null,
-	    semi: null
+	    semi: null,
+	    start: null,
+	    end: null
 	  };
 
 	  function propertyReset() {
@@ -11694,6 +11712,27 @@
 	  let attribToBackup;
 	  let lastNonWhitespaceCharAt;
 	  const layers = [];
+
+	  function lastLayerIs(something) {
+	    return Array.isArray(layers) && layers.length && layers[~-layers.length].type === something;
+	  }
+
+	  function closingComment(i) {
+	    attribPush({
+	      type: "comment",
+	      start: i,
+	      end: right(str, i) + 1,
+	      value: str.slice(i, right(str, i) + 1),
+	      closing: true,
+	      kind: "block",
+	      language: "css"
+	    });
+	    doNothing = right(str, i) + 1;
+
+	    if (lastLayerIs("block")) {
+	      layers.pop();
+	    }
+	  }
 
 	  function reportFirstFromStash(stash, cb, lookaheadLength) {
 	    const currentElem = stash.shift();
@@ -11789,7 +11828,7 @@
 	      }
 
 	      if (token.start !== null && token.end) {
-	        if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "at") {
+	        if (lastLayerIs("at")) {
 	          layers[~-layers.length].token.rules.push(token);
 	        } else {
 	          pingTagCb(token);
@@ -11801,7 +11840,7 @@
 	  }
 
 	  function atRuleWaitingForClosingCurlie() {
-	    return layers.length && layers[~-layers.length].type === "at" && isObj$4(layers[~-layers.length].token) && layers[~-layers.length].token.openingCurlyAt && !layers[~-layers.length].token.closingCurlyAt;
+	    return lastLayerIs("at") && isObj$4(layers[~-layers.length].token) && layers[~-layers.length].token.openingCurlyAt && !layers[~-layers.length].token.closingCurlyAt;
 	  }
 
 	  function getNewToken(type, startVal = null) {
@@ -11905,6 +11944,7 @@
 	  function initProperty(propertyStarts) {
 	    propertyReset();
 	    property.propertyStarts = propertyStarts;
+	    property.start = propertyStarts;
 	  }
 
 	  function ifQuoteThenAttrClosingQuote(idx) {
@@ -11951,7 +11991,7 @@
 	            token.value = str.slice(token.start, token.end);
 	            pingTagCb(token);
 
-	            if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "at") {
+	            if (lastLayerIs("at")) {
 	              layers[~-layers.length].token.rules.push(token);
 	            }
 
@@ -11970,7 +12010,7 @@
 	          token.value = str.slice(token.start, token.end);
 	          pingTagCb(token);
 
-	          if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "at") {
+	          if (lastLayerIs("at")) {
 	            layers[~-layers.length].token.rules.push(token);
 	          }
 
@@ -11981,7 +12021,7 @@
 	        token.end = i;
 	        token.value = str.slice(token.start, token.end);
 
-	        if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "at") {
+	        if (lastLayerIs("at")) {
 	          layers[~-layers.length].token.rules.push(token);
 	        } else {
 	          pingTagCb(token);
@@ -12011,7 +12051,7 @@
 	    if (!doNothing) {
 	      if (["tag", "rule", "at"].includes(token.type) && token.kind !== "cdata") {
 	        if ([`"`, `'`, `(`, `)`].includes(str[i]) && !([`"`, `'`, "`"].includes(str[left(str, i)]) && str[left(str, i)] === str[right(str, i)]) && ifQuoteThenAttrClosingQuote(i)) {
-	          if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "simple" && layers[~-layers.length].value === flipEspTag(str[i])) {
+	          if (lastLayerIs("simple") && layers[~-layers.length].value === flipEspTag(str[i])) {
 	            layers.pop();
 	          } else {
 	            layers.push({
@@ -12023,7 +12063,7 @@
 	        }
 	      } else if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
 	        if ([`[`, `]`].includes(str[i])) {
-	          if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "simple" && layers[~-layers.length].value === flipEspTag(str[i])) {
+	          if (lastLayerIs("simple") && layers[~-layers.length].value === flipEspTag(str[i])) {
 	            layers.pop();
 	          } else {
 	            layers.push({
@@ -12034,7 +12074,7 @@
 	          }
 	        }
 	      } else if (token.type === "esp" && `'"${BACKTICK}()`.includes(str[i]) && !([`"`, `'`, "`"].includes(str[left(str, i)]) && str[left(str, i)] === str[right(str, i)])) {
-	        if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "simple" && layers[~-layers.length].value === flipEspTag(str[i])) {
+	        if (lastLayerIs("simple") && layers[~-layers.length].value === flipEspTag(str[i])) {
 	          layers.pop();
 	          doNothing = i + 1;
 	        } else if (!`]})>`.includes(str[i])) {
@@ -12176,7 +12216,7 @@
 	        }
 
 	        doNothing = i + 2;
-	      } else if (startsEsp(str, i, token, layers, withinStyle) && (!Array.isArray(layers) || !layers.length || layers[~-layers.length].type !== "simple" || ![`'`, `"`].includes(layers[~-layers.length].value) || attrib && attrib.attribStarts && !attrib.attribEnds)) {
+	      } else if (startsEsp(str, i, token, layers, withinStyle) && (!lastLayerIs("simple") || ![`'`, `"`].includes(layers[~-layers.length].value) || attrib && attrib.attribStarts && !attrib.attribEnds)) {
 	        const wholeEspTagLumpOnTheRight = getWholeEspTagLumpOnTheRight(str, i, layers);
 
 	        if (!espLumpBlacklist.includes(wholeEspTagLumpOnTheRight)) {
@@ -12250,7 +12290,7 @@
 	              attrib.attribValue[~-attrib.attribValue.length] = newTokenToPutInstead;
 	            }
 	          } else {
-	            if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "esp") {
+	            if (lastLayerIs("esp")) {
 	              layers.pop();
 	            }
 
@@ -12335,25 +12375,21 @@
 	          property.semi = right(str, i);
 	        }
 
-	        pushProperty(property);
-	        property = null;
-	        const nextChar = right(str, i);
+	        if (property.semi) {
+	          property.end = property.semi + 1;
+	        }
 
-	        if (nextChar && str[nextChar].trim() && (attrib && attrib.attribName === "style" && !`"'<>`.includes(str[nextChar]) || token.type === "rule" && !`;{}@`.includes(str[nextChar]))) {
-	          if (str[nextChar] === "*" && str[nextChar + 1] === "/") {
-	            attrib.attribValue.push({
-	              type: "comment",
-	              start: nextChar,
-	              end: nextChar + 2,
-	              value: "*/",
-	              closing: true,
-	              kind: "block",
-	              language: "css"
-	            });
-	            doNothing = nextChar + 2;
-	          } else {
-	            initProperty(nextChar);
+	        if (!property.semi && str[right(str, i)] !== ";" && !property.end) {
+	          property.end = i;
+	        }
+
+	        if (property.end) {
+	          if (property.end > i) {
+	            doNothing = property.end;
 	          }
+
+	          pushProperty(property);
+	          property = null;
 	        }
 	      } else if (str[i] === ":" && Number.isInteger(property.colon) && property.colon < i && lastNonWhitespaceCharAt && property.colon + 1 < lastNonWhitespaceCharAt) {
 	        const split = str.slice(right(str, property.colon), lastNonWhitespaceCharAt + 1).split(/\s+/);
@@ -12361,17 +12397,40 @@
 	        if (split.length === 2) {
 	          property.valueEnds = property.valueStarts + split[0].length;
 	          property.value = str.slice(property.valueStarts, property.valueEnds);
+	          property.end = property.valueEnds;
 	          pushProperty(property);
 	          propertyReset();
 	          property.propertyStarts = lastNonWhitespaceCharAt + 1 - split[1].length;
 	        }
+	      } else if (str[i] === "/" && str[right(str, i)] === "*") {
+	        /* istanbul ignore else */
+	        if (property.valueStarts && !property.valueEnds) {
+	          property.valueEnds = i;
+	          property.value = str.slice(property.valueStarts, i);
+	        }
+	        /* istanbul ignore else */
+
+
+	        if (!property.end) {
+	          property.end = i;
+	        }
+
+	        pushProperty(property);
+	        property = null;
 	      }
 	    }
+	    /* istanbul ignore else */
+
 
 	    if (!doNothing && property && property.colon && !property.valueStarts && str[i].trim()) {
+	      /* istanbul ignore else */
 	      if (`;}'"`.includes(str[i]) && ifQuoteThenAttrClosingQuote(i)) {
 	        if (str[i] === ";") {
 	          property.semi = i;
+	        }
+
+	        if (!property.end) {
+	          property.end = property.semi ? property.semi + 1 : i;
 	        }
 
 	        pushProperty(property);
@@ -12397,21 +12456,21 @@
 	      property.propertyEnds = i;
 	      property.property = str.slice(property.propertyStarts, i);
 
-	      if (`};`.includes(str[i]) || !str[i].trim() && str[right(str, i)] === "}") {
+	      if (property.valueStarts) {
+	        property.end = i;
+	      }
+
+	      if (`};`.includes(str[i]) || !str[i].trim() && str[right(str, i)] !== ":") {
 	        if (str[i] === ";") {
 	          property.semi = i;
 	        }
 
+	        if (!property.end) {
+	          property.end = property.semi ? property.semi + 1 : i;
+	        }
+
 	        pushProperty(property);
 	        property = null;
-	      } else if (`\r\n`.includes(str[i])) {
-	        const nextCharIdx = right(str, i);
-
-	        if (!`:}'"`.includes(str[nextCharIdx])) {
-	          pushProperty(property);
-	          property = null;
-	          initProperty(nextCharIdx);
-	        }
 	      }
 	    }
 
@@ -12420,11 +12479,41 @@
 	    }
 
 	    if (!doNothing && token.type === "rule" && str[i] && str[i].trim() && !"{};".includes(str[i]) && token.selectorsEnd && token.openingCurlyAt && (!property || !property.propertyStarts)) {
+	      if (Array.isArray(token.properties) && token.properties.length && !token.properties[~-token.properties.length].end) {
+	        token.properties[~-token.properties.length].end = i;
+	        token.properties[~-token.properties.length].value = str.slice(token.properties[~-token.properties.length].start, i);
+	      }
+
 	      initProperty(i);
 	    }
 
-	    if (!doNothing && attrib && attrib.attribName === "style" && attrib.attribOpeningQuoteAt && !attrib.attribClosingQuoteAt && !property && str[i].trim() && !`'";`.includes(str[i])) {
-	      initProperty(i);
+	    if (!doNothing && attrib && attrib.attribName === "style" && attrib.attribOpeningQuoteAt && !attrib.attribClosingQuoteAt && !property && str[i].trim() && !`'";`.includes(str[i]) && !lastLayerIs("block")) {
+	      if (str[i] === "/" && (str[i + 1] === "*" || !str[i + 1].trim() && str[right(str, i)] === "*")) {
+	        attribPush({
+	          type: "comment",
+	          start: i,
+	          end: right(str, i) + 1,
+	          value: str.slice(i, right(str, i) + 1),
+	          closing: false,
+	          kind: "block",
+	          language: "css"
+	        });
+	        layers.push({
+	          type: "block",
+	          value: str.slice(i, right(str, i) + 1),
+	          position: i
+	        });
+	        doNothing = right(str, i) + 1;
+	      } else if (str[i] === "*" && str[right(str, i)] === "/") {
+	        closingComment(i);
+	      } else {
+	        if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
+	          attrib.attribValue[~-attrib.attribValue.length].end = i;
+	          attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, i);
+	        }
+
+	        initProperty(i);
+	      }
 	    }
 
 	    if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
@@ -12529,7 +12618,7 @@
 	          token.end = i + wholeEspTagClosing.length;
 	          token.value = str.slice(token.start, token.end);
 
-	          if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "esp") {
+	          if (lastLayerIs("esp")) {
 	            layers.pop();
 	          }
 
@@ -12593,9 +12682,15 @@
 	        token.closingCurlyAt = i;
 	        token.end = i + 1;
 	        token.value = str.slice(token.start, token.end);
+
+	        if (Array.isArray(token.properties) && token.properties.length && token.properties[~-token.properties.length].start && !token.properties[~-token.properties.length].end) {
+	          token.properties[~-token.properties.length].end = i;
+	          token.properties[~-token.properties.length].value = str.slice(token.properties[~-token.properties.length].start, i);
+	        }
+
 	        pingTagCb(token);
 
-	        if (Array.isArray(layers) && layers.length && layers[~-layers.length].type === "at") {
+	        if (lastLayerIs("at")) {
 	          layers[~-layers.length].token.rules.push(token);
 	        }
 
@@ -12603,11 +12698,34 @@
 	      }
 	    }
 
+	    if (!doNothing && attrib.attribName && Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
+	      if (str[i] === "*" && str[right(str, i)] === "/") {
+	        closingComment(i);
+	      }
+	    }
+
+	    if (!doNothing && attrib && attrib.attribValueStartsAt && !attrib.attribValueEndsAt && !property && i >= attrib.attribValueStartsAt && Array.isArray(attrib.attribValue) && (!attrib.attribValue.length || attrib.attribValue[~-attrib.attribValue.length].end && attrib.attribValue[~-attrib.attribValue.length].end <= i) || !doNothing && token.type === "rule" && token.openingCurlyAt && !token.closingCurlyAt && !property) {
+	      if (!str[i].trim() || lastLayerIs("block")) {
+	        if (attrib.attribName) {
+	          attrib.attribValue.push({
+	            type: "text",
+	            start: i,
+	            end: null,
+	            value: null
+	          });
+	        } else if (token.type === "rule" && (!Array.isArray(token.properties) || !token.properties.length || token.properties[~-token.properties.length].end)) {
+	          token.properties.push({
+	            type: "text",
+	            start: i,
+	            end: null,
+	            value: null
+	          });
+	        }
+	      }
+	    }
+
 	    if (!doNothing && token.type === "tag" && attrib.attribValueStartsAt && i >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
 	      if (`'"`.includes(str[i])) {
-	        const R1 = !layers.some(layerObj => layerObj.type === "esp");
-	        const R2 = isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, i);
-
 	        if (!layers.some(layerObj => layerObj.type === "esp") && isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, i)) {
 	          attrib.attribClosingQuoteAt = i;
 	          attrib.attribValueEndsAt = i;
@@ -12635,8 +12753,19 @@
 	            layers.pop();
 	          }
 
+	          if (attrib.attribValue[~-attrib.attribValue.length] && !attrib.attribValue[~-attrib.attribValue.length].end) {
+	            attrib.attribValue[~-attrib.attribValue.length].end = i;
+	          }
+
 	          token.attribs.push(lodash_clonedeep(attrib));
 	          attribReset();
+	        } else if ((!Array.isArray(attrib.attribValue) || !attrib.attribValue.length || attrib.attribValue[~-attrib.attribValue.length].type !== "text") && !property) {
+	          attrib.attribValue.push({
+	            type: "text",
+	            start: i,
+	            end: null,
+	            value: null
+	          });
 	        }
 	      } else if (attrib.attribOpeningQuoteAt === null && (str[i] && !str[i].trim() || ["/", ">"].includes(str[i]) || espChars.includes(str[i]) && espChars.includes(str[i + 1]))) {
 	        attrib.attribValueEndsAt = i;
@@ -12768,34 +12897,6 @@
 
 	            if (str[i + 1] && (str[i + 1] !== str[i] || !ifQuoteThenAttrClosingQuote(i + 1))) {
 	              attrib.attribValueStartsAt = i + 1;
-
-	              if (Array.isArray(attrib.attribValue) && (!attrib.attribValue.length || attrib.attribValue[~-attrib.attribValue.length].end)) {
-	                if (attrib.attribName === "style") {
-	                  const charOnTheRight = right(str, i);
-
-	                  if (str[charOnTheRight] === "/" && str[charOnTheRight + 1] === "*") {
-	                    attrib.attribValue.push({
-	                      type: "comment",
-	                      start: charOnTheRight,
-	                      end: charOnTheRight + 2,
-	                      value: "/*",
-	                      closing: false,
-	                      kind: "block",
-	                      language: "css"
-	                    });
-	                    doNothing = charOnTheRight + 2;
-	                  } else {
-	                    initProperty(right(str, i));
-	                  }
-	                } else if (!ifQuoteThenAttrClosingQuote(i + 1)) {
-	                  attrib.attribValue.push({
-	                    type: "text",
-	                    start: attrib.attribValueStartsAt,
-	                    end: null,
-	                    value: null
-	                  });
-	                }
-	              }
 	            }
 	          } else {
 	            /* istanbul ignore else */
@@ -30977,6 +31078,7 @@
 		"song",
 		"sony",
 		"soy",
+		"spa",
 		"space",
 		"sport",
 		"spot",
