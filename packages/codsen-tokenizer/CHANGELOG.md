@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://gitlab.com/codsen/codsen/compare/codsen-tokenizer@3.0.0...codsen-tokenizer@3.1.0) (2020-10-19)
+
+
+### Features
+
+* improve inline css and head css recognition ([e7a288c](https://gitlab.com/codsen/codsen/commit/e7a288cc6f67b2e202e8f56a296c28018eca7cca))
+* improved inline css style recognition: comments, whitespace, properties - WIP ([795ccc7](https://gitlab.com/codsen/codsen/commit/795ccc7ae2b0ce2fd1285341887301e67baaf9ed))
+
+
+
+
+
 ## 3.0.0 (2020-10-12)
 
 ### Features

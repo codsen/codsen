@@ -1,6 +1,6 @@
 {
   "name": "json-comb",
-  "version": "0.2.64",
+  "version": "0.2.65",
   "description": "Command line app to manage sets of JSON files",
   "keywords": [
     "app",
@@ -96,7 +96,7 @@
     "fs-extra": "^9.0.1",
     "globby": "^11.0.1",
     "is-d": "^1.0.0",
-    "json-comb-core": "^6.6.34",
+    "json-comb-core": "^6.6.35",
     "meow": "^7.1.1",
     "p-map": "^4.0.0",
     "p-reduce": "^2.1.0",
