@@ -9293,8 +9293,8 @@
   var sortKeys = function sortKeys(object) {
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-    if (!isPlainObj(object)) {
-      throw new TypeError('Expected a plain object');
+    if (!isPlainObj(object) && !Array.isArray(object)) {
+      throw new TypeError('Expected a plain object or array');
     }
 
     var deep = options.deep;
@@ -9360,6 +9360,10 @@
 
       return result;
     };
+
+    if (Array.isArray(object)) {
+      return deep ? deepSortArray(object) : object.slice();
+    }
 
     return sortKeys(object);
   };
