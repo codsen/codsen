@@ -24,7 +24,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### BREAKING CHANGES
 
-- better inline css recognition
+- the API surface anywhere within CSS styles, both inline and in head `<style>`, have been improved
 
 ## 2.17.0 (2020-05-24)
 
