@@ -55,8 +55,8 @@ function collapse(str, originalOpts) {
     trimnbsp: false, // non-breaking spaces are trimmed too
     recogniseHTML: true, // collapses whitespace around HTML brackets
     removeEmptyLines: false, // if line trim()'s to an empty string, it's removed
-    returnRangesOnly: false, // if on, only ranges array is returned
-    limitConsecutiveEmptyLinesTo: 0, // zero lines are allowed (if opts.removeEmptyLines is on)
+    limitConsecutiveEmptyLinesTo: 0, // zero lines are allowed (if opts.removeEmptyLines is on),
+    rangesOffset: 0, // add this number to all range indexes
   };
 
   // fill any settings with defaults if missing:
@@ -854,11 +854,19 @@ function collapse(str, originalOpts) {
     );
   }
 
+  let ranges = finalIndexesToDelete.length ? merge(finalIndexesToDelete) : null;
+  if (opts.rangesOffset && ranges && ranges.length) {
+    ranges = ranges.map(([from, to]) => [
+      from + opts.rangesOffset,
+      to + opts.rangesOffset,
+    ]);
+  }
+
   return {
     result: finalIndexesToDelete.length
       ? apply(str, finalIndexesToDelete)
       : str,
-    ranges: finalIndexesToDelete.length ? merge(finalIndexesToDelete) : null,
+    ranges,
   };
 }
 

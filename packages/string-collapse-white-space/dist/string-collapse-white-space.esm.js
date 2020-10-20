@@ -52,8 +52,8 @@ function collapse(str, originalOpts) {
     trimnbsp: false,
     recogniseHTML: true,
     removeEmptyLines: false,
-    returnRangesOnly: false,
     limitConsecutiveEmptyLinesTo: 0,
+    rangesOffset: 0,
   };
   const opts = { ...defaults, ...originalOpts };
   let preliminaryIndexesToDelete;
@@ -530,11 +530,18 @@ function collapse(str, originalOpts) {
       }
     }
   }
+  let ranges = finalIndexesToDelete.length ? merge(finalIndexesToDelete) : null;
+  if (opts.rangesOffset && ranges && ranges.length) {
+    ranges = ranges.map(([from, to]) => [
+      from + opts.rangesOffset,
+      to + opts.rangesOffset,
+    ]);
+  }
   return {
     result: finalIndexesToDelete.length
       ? apply(str, finalIndexesToDelete)
       : str,
-    ranges: finalIndexesToDelete.length ? merge(finalIndexesToDelete) : null,
+    ranges,
   };
 }
 

@@ -47,7 +47,28 @@ tap.test(
 );
 
 tap.test(
-  `04 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - defaults`,
+  `04 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - opts.rangesOffset`,
+  (t) => {
+    t.strictSame(
+      collapse("aaa     bbb    ccc   dddd", {
+        rangesOffset: 100,
+      }),
+      {
+        result: "aaa bbb ccc dddd",
+        ranges: [
+          [103, 107],
+          [111, 114],
+          [118, 120],
+        ],
+      },
+      "04"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `05 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - defaults`,
   (t) => {
     t.strictSame(
       collapse("  a b  "),
@@ -58,16 +79,8 @@ tap.test(
           [5, 7],
         ],
       },
-      "04 - nothing to collapse, only trim"
+      "05 - nothing to collapse, only trim"
     );
-    t.end();
-  }
-);
-
-tap.test(
-  `05 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - defaults`,
-  (t) => {
-    t.strictSame(collapse(" a b ").result, "a b", "05 - trims single spaces");
     t.end();
   }
 );
@@ -75,7 +88,7 @@ tap.test(
 tap.test(
   `06 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - defaults`,
   (t) => {
-    t.strictSame(collapse("\ta b\t").result, "a b", "06 - trims single tabs");
+    t.strictSame(collapse(" a b ").result, "a b", "06 - trims single spaces");
     t.end();
   }
 );
@@ -83,7 +96,7 @@ tap.test(
 tap.test(
   `07 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - defaults`,
   (t) => {
-    t.strictSame(collapse("  a  b  ").result, "a b", "07");
+    t.strictSame(collapse("\ta b\t").result, "a b", "07 - trims single tabs");
     t.end();
   }
 );
@@ -91,23 +104,18 @@ tap.test(
 tap.test(
   `08 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - defaults`,
   (t) => {
-    t.strictSame(
-      collapse("  aaa     bbb    ccc   dddd  ").result,
-      "aaa bbb ccc dddd",
-      "08"
-    );
+    t.strictSame(collapse("  a  b  ").result, "a b", "08");
     t.end();
   }
 );
 
 tap.test(
-  `09 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`,
+  `09 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - defaults`,
   (t) => {
-    // opts.trimStart
     t.strictSame(
-      collapse("  a b  ", { trimStart: false }).result,
-      " a b",
-      "09 - nothing to collapse, only trim"
+      collapse("  aaa     bbb    ccc   dddd  ").result,
+      "aaa bbb ccc dddd",
+      "09"
     );
     t.end();
   }
@@ -116,10 +124,11 @@ tap.test(
 tap.test(
   `10 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`,
   (t) => {
+    // opts.trimStart
     t.strictSame(
-      collapse(" a b ", { trimStart: false }).result,
+      collapse("  a b  ", { trimStart: false }).result,
       " a b",
-      "10 - trims single spaces"
+      "10 - nothing to collapse, only trim"
     );
     t.end();
   }
@@ -129,9 +138,9 @@ tap.test(
   `11 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`,
   (t) => {
     t.strictSame(
-      collapse("\ta b\t", { trimStart: false }).result,
-      "\ta b",
-      "11 - trims single tabs"
+      collapse(" a b ", { trimStart: false }).result,
+      " a b",
+      "11 - trims single spaces"
     );
     t.end();
   }
@@ -139,6 +148,18 @@ tap.test(
 
 tap.test(
   `12 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`,
+  (t) => {
+    t.strictSame(
+      collapse("\ta b\t", { trimStart: false }).result,
+      "\ta b",
+      "12 - trims single tabs"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `13 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.strictSame(
@@ -154,23 +175,11 @@ tap.test(
 );
 
 tap.test(
-  `13 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`,
+  `14 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`,
   (t) => {
     t.strictSame(
       collapse("  a  b  ", { trimStart: false }).result,
       " a b",
-      "13"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `14 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`,
-  (t) => {
-    t.strictSame(
-      collapse("  aaa     bbb    ccc   dddd  ", { trimStart: false }).result,
-      " aaa bbb ccc dddd",
       "14"
     );
     t.end();
@@ -178,13 +187,12 @@ tap.test(
 );
 
 tap.test(
-  `15 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
+  `15 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`,
   (t) => {
-    // opts.trimEnd
     t.strictSame(
-      collapse("  a b  ", { trimEnd: false }).result,
-      "a b ",
-      "15 - nothing to collapse, only trim"
+      collapse("  aaa     bbb    ccc   dddd  ", { trimStart: false }).result,
+      " aaa bbb ccc dddd",
+      "15"
     );
     t.end();
   }
@@ -193,10 +201,11 @@ tap.test(
 tap.test(
   `16 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
   (t) => {
+    // opts.trimEnd
     t.strictSame(
-      collapse(" a b ", { trimEnd: false }).result,
+      collapse("  a b  ", { trimEnd: false }).result,
       "a b ",
-      "16 - trims single spaces"
+      "16 - nothing to collapse, only trim"
     );
     t.end();
   }
@@ -206,9 +215,9 @@ tap.test(
   `17 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
   (t) => {
     t.strictSame(
-      collapse("\ta b\t", { trimEnd: false }).result,
-      "a b\t",
-      "17 - trims single tabs"
+      collapse(" a b ", { trimEnd: false }).result,
+      "a b ",
+      "17 - trims single spaces"
     );
     t.end();
   }
@@ -216,6 +225,18 @@ tap.test(
 
 tap.test(
   `18 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
+  (t) => {
+    t.strictSame(
+      collapse("\ta b\t", { trimEnd: false }).result,
+      "a b\t",
+      "18 - trims single tabs"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `19 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.strictSame(
@@ -231,7 +252,7 @@ tap.test(
 );
 
 tap.test(
-  `19 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
+  `20 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.strictSame(
@@ -247,27 +268,27 @@ tap.test(
 );
 
 tap.test(
-  `20 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
+  `21 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
   (t) => {
-    t.strictSame(collapse(`  a  b  `, { trimEnd: false }).result, `a b `, "20");
+    t.strictSame(collapse(`  a  b  `, { trimEnd: false }).result, `a b `, "21");
     t.end();
   }
 );
 
 tap.test(
-  `21 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
+  `22 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
   (t) => {
     t.strictSame(
       collapse(`  aaa     bbb    ccc   dddd  `, { trimEnd: false }).result,
       `aaa bbb ccc dddd `,
-      "21"
+      "22"
     );
     t.end();
   }
 );
 
 tap.test(
-  `22 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of line breaks`,
+  `23 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of line breaks`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.strictSame(
@@ -283,7 +304,7 @@ tap.test(
 );
 
 tap.test(
-  `23 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of line breaks`,
+  `24 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of line breaks`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.strictSame(
@@ -299,7 +320,7 @@ tap.test(
 );
 
 tap.test(
-  `24 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - tag and linebreak chain`,
+  `25 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - tag and linebreak chain`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.strictSame(
@@ -313,7 +334,7 @@ tap.test(
 );
 
 tap.test(
-  `25 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - tag and linebreak chain`,
+  `26 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - tag and linebreak chain`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.strictSame(
@@ -327,7 +348,7 @@ tap.test(
 );
 
 tap.test(
-  `26 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - tag and linebreak chain`,
+  `27 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - tag and linebreak chain`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
       t.strictSame(

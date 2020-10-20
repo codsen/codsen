@@ -844,9 +844,9 @@
       // collapses whitespace around HTML brackets
       removeEmptyLines: false,
       // if line trim()'s to an empty string, it's removed
-      returnRangesOnly: false,
-      // if on, only ranges array is returned
-      limitConsecutiveEmptyLinesTo: 0 // zero lines are allowed (if opts.removeEmptyLines is on)
+      limitConsecutiveEmptyLinesTo: 0,
+      // zero lines are allowed (if opts.removeEmptyLines is on),
+      rangesOffset: 0 // add this number to all range indexes
 
     }; // fill any settings with defaults if missing:
 
@@ -1258,9 +1258,21 @@
       }
     }
 
+    var ranges = finalIndexesToDelete.length ? mergeRanges(finalIndexesToDelete) : null;
+
+    if (opts.rangesOffset && ranges && ranges.length) {
+      ranges = ranges.map(function (_ref3) {
+        var _ref4 = _slicedToArray(_ref3, 2),
+            from = _ref4[0],
+            to = _ref4[1];
+
+        return [from + opts.rangesOffset, to + opts.rangesOffset];
+      });
+    }
+
     return {
       result: finalIndexesToDelete.length ? rangesApply(str, finalIndexesToDelete) : str,
-      ranges: finalIndexesToDelete.length ? mergeRanges(finalIndexesToDelete) : null
+      ranges: ranges
     };
   }
 

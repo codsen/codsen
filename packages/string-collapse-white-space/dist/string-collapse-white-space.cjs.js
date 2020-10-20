@@ -166,8 +166,8 @@ function collapse(str, originalOpts) {
     trimnbsp: false,
     recogniseHTML: true,
     removeEmptyLines: false,
-    returnRangesOnly: false,
-    limitConsecutiveEmptyLinesTo: 0
+    limitConsecutiveEmptyLinesTo: 0,
+    rangesOffset: 0
   };
   var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
   var preliminaryIndexesToDelete;
@@ -482,9 +482,18 @@ function collapse(str, originalOpts) {
       }
     }
   }
+  var ranges = finalIndexesToDelete.length ? merge__default['default'](finalIndexesToDelete) : null;
+  if (opts.rangesOffset && ranges && ranges.length) {
+    ranges = ranges.map(function (_ref3) {
+      var _ref4 = _slicedToArray(_ref3, 2),
+          from = _ref4[0],
+          to = _ref4[1];
+      return [from + opts.rangesOffset, to + opts.rangesOffset];
+    });
+  }
   return {
     result: finalIndexesToDelete.length ? apply__default['default'](str, finalIndexesToDelete) : str,
-    ranges: finalIndexesToDelete.length ? merge__default['default'](finalIndexesToDelete) : null
+    ranges: ranges
   };
 }
 
