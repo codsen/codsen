@@ -1739,7 +1739,7 @@ function stripHtml(str, originalOpts) {
 
     // catch an opening bracket
     // -------------------------------------------------------------------------
-    if (str[i] === "<" && str[i - 1] !== "<") {
+    if (str[i] === "<" && str[i - 1] !== "<" && !`'"`.includes(str[i + 1])) {
       console.log(`1743 caught opening bracket`);
       // cater sequences of opening brackets "<<<<div>>>"
       if (str[right(str, i)] === ">") {

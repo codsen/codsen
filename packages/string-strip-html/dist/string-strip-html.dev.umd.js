@@ -9467,7 +9467,7 @@
       // -------------------------------------------------------------------------
 
 
-      if (str[_i] === "<" && str[_i - 1] !== "<") {
+      if (str[_i] === "<" && str[_i - 1] !== "<" && !"'\"".includes(str[_i + 1])) {
         // cater sequences of opening brackets "<<<<div>>>"
         if (str[right(str, _i)] === ">") {
           i = _i;

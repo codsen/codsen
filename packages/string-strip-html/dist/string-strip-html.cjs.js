@@ -698,7 +698,7 @@ function stripHtml(str, originalOpts) {
         }
       }
     }
-    if (str[_i] === "<" && str[_i - 1] !== "<") {
+    if (str[_i] === "<" && str[_i - 1] !== "<" && !"'\"".includes(str[_i + 1])) {
       if (str[stringLeftRight.right(str, _i)] === ">") {
         i = _i;
         return "continue";
