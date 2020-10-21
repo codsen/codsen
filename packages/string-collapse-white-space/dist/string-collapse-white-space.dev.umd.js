@@ -846,7 +846,9 @@
       // if line trim()'s to an empty string, it's removed
       limitConsecutiveEmptyLinesTo: 0,
       // zero lines are allowed (if opts.removeEmptyLines is on),
-      rangesOffset: 0 // add this number to all range indexes
+      rangesOffset: 0,
+      // add this number to all range indexes
+      enforceSpacesOnly: false // nothing else than space allowed (like tabs)
 
     }; // fill any settings with defaults if missing:
 
@@ -892,17 +894,17 @@
       // line break counting
       if (str[i] === "\n" || str[i] === "\r" && str[i + 1] !== "\n") {
         consecutiveLineBreakCount += 1;
-      } else if (str[i].trim()) {
+      } else if (consecutiveLineBreakCount && str[i].trim()) {
         consecutiveLineBreakCount = 0;
       } //
       // space clauses
 
 
-      if (str[i] === " ") {
+      if (!opts.enforceSpacesOnly && str[i] === " ") {
         if (spacesEndAt === null) {
           spacesEndAt = i;
         }
-      } else if (spacesEndAt !== null) {
+      } else if (!opts.enforceSpacesOnly && spacesEndAt !== null) {
         // it's not a space character
         // if we have a sequence of spaces, this character terminates that sequence
         if (i + 1 !== spacesEndAt) {
@@ -913,8 +915,7 @@
       } // white space clauses
 
 
-      if (str[i].trim() === "" && (!opts.trimnbsp && str[i] !== "\xa0" || opts.trimnbsp)) {
-        // it's some sort of white space character, but not a non-breaking space
+      if (str[i].trim() === "" && (opts.trimnbsp || str[i] !== "\xa0")) {
         if (whiteSpaceEndsAt === null) {
           whiteSpaceEndsAt = i;
         } // line trimming:
@@ -960,10 +961,18 @@
           lastLineBreaksLastCharIndex = i;
         }
       } else {
-        // it's not white space character
         if (whiteSpaceEndsAt !== null) {
-          if (i + 1 !== whiteSpaceEndsAt + 1 && whiteSpaceEndsAt === str.length - 1 && opts.trimEnd) {
+          if ( // the chunk has some length
+          i + 1 !== whiteSpaceEndsAt + 1 && // EITHER it's ending whitespace, which we trim whole
+          whiteSpaceEndsAt === str.length - 1 && opts.trimEnd) {
             finalIndexesToDelete.push([i + 1, whiteSpaceEndsAt + 1]);
+          } else if ( // the chunk has some length
+          i + 1 !== whiteSpaceEndsAt + 1 && // the chunk is not a single linebreak
+          str[i + 1] !== "\r" && str[i + 1] !== "\n" && str[whiteSpaceEndsAt] !== "\r" && str[whiteSpaceEndsAt] !== "\n" && // OR opts.enforceSpacesOnly is on
+          opts.enforceSpacesOnly && ( // EITHER length is more than 1
+          i + 1 < whiteSpaceEndsAt || // OR (length is one but) it's not a space
+          str[i + 1] !== " ")) {
+            finalIndexesToDelete.push([i + 1, whiteSpaceEndsAt + 1, " "]);
           }
 
           whiteSpaceEndsAt = null;
