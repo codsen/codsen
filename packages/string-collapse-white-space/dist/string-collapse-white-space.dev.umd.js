@@ -829,8 +829,7 @@
       };
     }
 
-    var finalIndexesToDelete = []; // declare defaults, so we can enforce types later:
-
+    var finalIndexesToDelete = [];
     var defaults = {
       trimStart: true,
       // otherwise, leading whitespace will be collapsed to a single space
@@ -848,7 +847,7 @@
       // zero lines are allowed (if opts.removeEmptyLines is on),
       rangesOffset: 0,
       // add this number to all range indexes
-      enforceSpacesOnly: false // nothing else than space allowed (like tabs)
+      enforceSpacesOnly: false // nothing else than space allowed (linebreaks not touched)
 
     }; // fill any settings with defaults if missing:
 
@@ -1065,8 +1064,7 @@
 
 
           if (whiteSpaceWithinTagEndsAt !== null) {
-            preliminaryIndexesToDelete.push([i + 1, whiteSpaceWithinTagEndsAt]); // finalIndexesToDelete.push([i + 1, whiteSpaceWithinTagEndsAt])
-
+            preliminaryIndexesToDelete.push([i + 1, whiteSpaceWithinTagEndsAt]);
             whiteSpaceWithinTagEndsAt = null;
           } // =========
           // html detection bits:
