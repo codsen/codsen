@@ -171,3 +171,51 @@ tap.test(`14`, (t) => {
 });
 
 // -----------------------------------------------------------------------------
+
+tap.test(`15`, (t) => {
+  t.strictSame(
+    collapse(`a\n\nb`, {
+      enforceSpacesOnly: false,
+    }),
+    { result: `a\n\nb`, ranges: null },
+    "15"
+  );
+  t.end();
+});
+
+tap.test(`16`, (t) => {
+  t.strictSame(
+    collapse(`a\n\nb`, {
+      enforceSpacesOnly: true,
+    }),
+    { result: `a\n\nb`, ranges: null },
+    "16"
+  );
+  t.end();
+});
+
+tap.test(`17`, (t) => {
+  t.strictSame(
+    collapse(`a\n\nb`, {
+      enforceSpacesOnly: false,
+      removeEmptyLines: true,
+    }),
+    { result: `a\nb`, ranges: [[2, 3]] },
+    "17"
+  );
+  t.end();
+});
+
+tap.test(`18`, (t) => {
+  t.strictSame(
+    collapse(`a\n\nb`, {
+      enforceSpacesOnly: true,
+      removeEmptyLines: true,
+    }),
+    { result: `a\nb`, ranges: [[2, 3]] },
+    "18"
+  );
+  t.end();
+});
+
+// -----------------------------------------------------------------------------
