@@ -494,11 +494,9 @@ function collapse(str, originalOpts) {
   }
   var ranges = finalIndexesToDelete.length ? merge__default['default'](finalIndexesToDelete) : null;
   if (opts.rangesOffset && ranges && ranges.length) {
-    ranges = ranges.map(function (_ref3) {
-      var _ref4 = _slicedToArray(_ref3, 2),
-          from = _ref4[0],
-          to = _ref4[1];
-      return [from + opts.rangesOffset, to + opts.rangesOffset];
+    ranges.forEach(function (val, idx) {
+      ranges[idx][0] += opts.rangesOffset;
+      ranges[idx][1] += opts.rangesOffset;
     });
   }
   return {

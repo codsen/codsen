@@ -869,17 +869,20 @@ function collapse(str, originalOpts) {
     );
   }
 
-  let ranges = finalIndexesToDelete.length ? merge(finalIndexesToDelete) : null;
+  const ranges = finalIndexesToDelete.length
+    ? merge(finalIndexesToDelete)
+    : null;
   if (opts.rangesOffset && ranges && ranges.length) {
-    ranges = ranges.map(([from, to]) => [
-      from + opts.rangesOffset,
-      to + opts.rangesOffset,
-    ]);
+    // beware there can be third element in the array, a value to add
+    ranges.forEach((val, idx) => {
+      ranges[idx][0] += opts.rangesOffset;
+      ranges[idx][1] += opts.rangesOffset;
+    });
   }
 
-  console.log(`880 --------`);
+  console.log(`883 --------`);
   console.log(
-    `882 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
+    `885 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
       ranges,
       null,
       4
