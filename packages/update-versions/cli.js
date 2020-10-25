@@ -20,7 +20,6 @@ const pacote = require("pacote");
 const objectPath = require("object-path");
 const diff = require("ansi-diff-stream")();
 
-const isArr = Array.isArray;
 const { set, del } = require("edit-package-json");
 const isOnline = require("is-online");
 
@@ -231,7 +230,7 @@ if (cli.flags) {
             // ---------------------
             if (
               objectPath.has(parsedContents, `lect.various.devDependencies`) &&
-              isArr(parsedContents.lect.various.devDependencies) &&
+              Array.isArray(parsedContents.lect.various.devDependencies) &&
               parsedContents.lect.various.devDependencies.includes(keys[y])
             ) {
               let foundIdx;
