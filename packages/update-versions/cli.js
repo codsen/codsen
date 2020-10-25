@@ -259,16 +259,19 @@ if (cli.flags) {
             if (singleDepValue.startsWith("file:")) {
               continue;
             }
+            const workspacePrefix = singleDepValue.startsWith("workspace:")
+              ? "workspace:"
+              : "";
 
             if (
               compiledDepNameVersionPairs[singleDepName] !== null &&
               singleDepValue !==
-                `^${compiledDepNameVersionPairs[singleDepName]}`
+                `${workspacePrefix}^${compiledDepNameVersionPairs[singleDepName]}`
             ) {
               stringContents = set(
                 stringContents,
                 `dependencies.${singleDepName}`,
-                `^${compiledDepNameVersionPairs[singleDepName]}`
+                `${workspacePrefix}^${compiledDepNameVersionPairs[singleDepName]}`
               );
               amended = true;
               if (
@@ -333,16 +336,19 @@ if (cli.flags) {
             if (singleDepValue.startsWith("file:")) {
               continue;
             }
+            const workspacePrefix = singleDepValue.startsWith("workspace:")
+              ? "workspace:"
+              : "";
 
             if (
               compiledDepNameVersionPairs[singleDepName] !== null &&
               singleDepValue !==
-                `^${compiledDepNameVersionPairs[singleDepName]}`
+                `${workspacePrefix}^${compiledDepNameVersionPairs[singleDepName]}`
             ) {
               stringContents = set(
                 stringContents,
                 `devDependencies.${singleDepName}`,
-                `^${compiledDepNameVersionPairs[singleDepName]}`
+                `${workspacePrefix}^${compiledDepNameVersionPairs[singleDepName]}`
               );
               amended = true;
 

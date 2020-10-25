@@ -66,7 +66,7 @@ const packBefore = {
     "@pectin/cli": "^3.0.1",
     commitizen: "*", // notice glob flag asterisk
     slfjdlkjglkdflgjdlkjljf: "^1.0.0",
-    "cz-conventional-changelog": "^2.1.0",
+    "cz-conventional-changelog": "workspace:^2.1.0",
     eslint: "^5.12.1",
     "eslint-config-prettier": "^3.6.0",
     "eslint-plugin-import": "^2.15.0",
@@ -163,6 +163,12 @@ tap.test("01 - monorepo", async (t) => {
       t.match(contents[1].devDependencies.husky, /\^\d+\.\d+\.\d+/);
       t.match(contents[1].devDependencies.commitizen, /\^\d+\.\d+\.\d+/);
       t.match(contents[1].devDependencies.prettier, /\^\d+\.\d+\.\d+/);
+
+      // workspace: should be retained
+      t.match(
+        contents[1].devDependencies["cz-conventional-changelog"],
+        /workspace:\^\d+\.\d+\.\d+/
+      );
 
       // lib3 in node_modules should be intact:
       t.equal(contents[2].dependencies["check-types-mini"], "*");
