@@ -12350,8 +12350,9 @@
       trimnbsp: false,
       recogniseHTML: true,
       removeEmptyLines: false,
-      returnRangesOnly: false,
-      limitConsecutiveEmptyLinesTo: 0
+      limitConsecutiveEmptyLinesTo: 0,
+      rangesOffset: 0,
+      enforceSpacesOnly: false
     };
 
     var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
@@ -12393,15 +12394,15 @@
     for (var i = str.length; i--;) {
       if (str[i] === "\n" || str[i] === "\r" && str[i + 1] !== "\n") {
         consecutiveLineBreakCount += 1;
-      } else if (str[i].trim()) {
+      } else if (consecutiveLineBreakCount && str[i].trim()) {
         consecutiveLineBreakCount = 0;
       }
 
-      if (str[i] === " ") {
+      if (!opts.enforceSpacesOnly && str[i] === " ") {
         if (spacesEndAt === null) {
           spacesEndAt = i;
         }
-      } else if (spacesEndAt !== null) {
+      } else if (!opts.enforceSpacesOnly && spacesEndAt !== null) {
         if (i + 1 !== spacesEndAt) {
           finalIndexesToDelete.push([i + 1, spacesEndAt]);
         }
@@ -12409,7 +12410,7 @@
         spacesEndAt = null;
       }
 
-      if (str[i].trim() === "" && (!opts.trimnbsp && str[i] !== "\xa0" || opts.trimnbsp)) {
+      if (str[i].trim() === "" && (opts.trimnbsp || str[i] !== "\xa0")) {
         if (whiteSpaceEndsAt === null) {
           whiteSpaceEndsAt = i;
         }
@@ -12453,6 +12454,8 @@
         if (whiteSpaceEndsAt !== null) {
           if (i + 1 !== whiteSpaceEndsAt + 1 && whiteSpaceEndsAt === str.length - 1 && opts.trimEnd) {
             finalIndexesToDelete.push([i + 1, whiteSpaceEndsAt + 1]);
+          } else if (i + 1 !== whiteSpaceEndsAt + 1 && str[i + 1] !== "\r" && str[i + 1] !== "\n" && str[whiteSpaceEndsAt] !== "\r" && str[whiteSpaceEndsAt] !== "\n" && opts.enforceSpacesOnly && (i + 1 < whiteSpaceEndsAt || str[i + 1] !== " ")) {
+            finalIndexesToDelete.push([i + 1, whiteSpaceEndsAt + 1, " "]);
           }
 
           whiteSpaceEndsAt = null;
@@ -12711,9 +12714,18 @@
       }
     }
 
+    var ranges = finalIndexesToDelete.length ? mergeRanges(finalIndexesToDelete) : null;
+
+    if (opts.rangesOffset && ranges && ranges.length) {
+      ranges.forEach(function (val, idx) {
+        ranges[idx][0] += opts.rangesOffset;
+        ranges[idx][1] += opts.rangesOffset;
+      });
+    }
+
     return {
       result: finalIndexesToDelete.length ? rangesApply(str, finalIndexesToDelete) : str,
-      ranges: finalIndexesToDelete.length ? mergeRanges(finalIndexesToDelete) : null
+      ranges: ranges
     };
   }
 
@@ -19210,7 +19222,7 @@
         }
       }
 
-      if (str[_i] === "<" && str[_i - 1] !== "<") {
+      if (str[_i] === "<" && str[_i - 1] !== "<" && !"'\"".includes(str[_i + 1])) {
         if (str[right(str, _i)] === ">") {
           i = _i;
           return "continue";

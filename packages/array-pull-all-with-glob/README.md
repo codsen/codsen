@@ -1,6 +1,6 @@
 # array-pull-all-with-glob
 
-> pullAllWithGlob - like \_.pullAll but pulling stronger, with globs
+> PullAllWithGlob - like \_.pullAll but pulling stronger, with globs
 
 <div class="package-badges">
   <a href="https://www.npmjs.com/package/array-pull-all-with-glob" rel="nofollow noreferrer noopener">

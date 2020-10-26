@@ -1,6 +1,6 @@
 /**
  * lerna-clean-changelogs
- * Removes frivolous changelog entries from commitizen-generated changelogs
+ * Removes frivolous entries from commitizen generated changelogs
  * Version: 1.3.60
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT

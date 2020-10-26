@@ -1,6 +1,6 @@
 # lerna-clean-changelogs
 
-> Removes frivolous changelog entries from commitizen-generated changelogs
+> Removes frivolous entries from commitizen generated changelogs
 
 <div class="package-badges">
   <a href="https://www.npmjs.com/package/lerna-clean-changelogs" rel="nofollow noreferrer noopener">

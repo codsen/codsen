@@ -1,6 +1,6 @@
 # array-of-arrays-sort-by-col
 
-> sort array of arrays by column, rippling the sorting outwards from that column
+> Sort array of arrays by column, rippling the sorting outwards from that column
 
 <div class="package-badges">
   <a href="https://www.npmjs.com/package/array-of-arrays-sort-by-col" rel="nofollow noreferrer noopener">

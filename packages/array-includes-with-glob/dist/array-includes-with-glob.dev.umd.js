@@ -1,6 +1,6 @@
 /**
  * array-includes-with-glob
- * like _.includes but with wildcards
+ * Like _.includes but with wildcards
  * Version: 2.12.42
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT

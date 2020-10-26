@@ -10316,8 +10316,14 @@
 	  return toString.call(arr) == '[object Array]';
 	};
 
+	var toString$1 = {}.toString;
+
+	var isarray$1 = Array.isArray || function (arr) {
+	  return toString$1.call(arr) == '[object Array]';
+	};
+
 	var isobject = function isObject(val) {
-	  return val != null && typeof val === 'object' && isarray(val) === false;
+	  return val != null && typeof val === 'object' && isarray$1(val) === false;
 	};
 
 	var lineColumn = LineColumnFinder;

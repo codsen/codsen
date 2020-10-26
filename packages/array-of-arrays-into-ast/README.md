@@ -1,6 +1,6 @@
 # array-of-arrays-into-ast
 
-> turns an array of arrays of data into a nested tree of plain objects
+> Turns an array of arrays of data into a nested tree of plain objects
 
 <div class="package-badges">
   <a href="https://www.npmjs.com/package/array-of-arrays-into-ast" rel="nofollow noreferrer noopener">
