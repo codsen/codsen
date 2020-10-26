@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [6.2.0](https://gitlab.com/codsen/codsen/compare/string-strip-html@6.1.1...string-strip-html@6.2.0) (2020-10-26)
-
+## 6.2.0 (2020-10-26)
 
 ### Features
 
-* better recognise some JSON patterns ([450d30a](https://gitlab.com/codsen/codsen/commit/450d30a9a662ab9097da9661c515979ae35651a7))
-
-
-
-
+- better recognise some JSON patterns ([450d30a](https://gitlab.com/codsen/codsen/commit/450d30a9a662ab9097da9661c515979ae35651a7))
 
 ## 6.1.0 (2020-10-13)
 

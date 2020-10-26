@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.19.2](https://gitlab.com/codsen/codsen/compare/emlint@2.19.1...emlint@2.19.2) (2020-10-26)
-
-**Note:** Version bump only for package emlint
-
-
-
-
-
 ## 2.19.0 (2020-10-12)
 
 ### Features
