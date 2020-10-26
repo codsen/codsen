@@ -183,6 +183,17 @@ async function step14(receivedPack) {
 
   receivedPack.homepage = `https://codsen.com/os/${receivedPack.name}/`;
 
+  if (
+    typeof receivedPack.description === "string" &&
+    receivedPack.description[0].toLowerCase() !==
+      receivedPack.description[0].toUpperCase() &&
+    receivedPack.description[0] !== receivedPack.description[0].toUpperCase()
+  ) {
+    receivedPack.description = `${receivedPack.description[0].toUpperCase()}${receivedPack.description.slice(
+      1
+    )}`;
+  }
+
   if (!receivedPack) {
     process.exit(1);
   }
@@ -790,7 +801,7 @@ async function writePackageJson(receivedPackageJsonObj) {
           (pack.name.startsWith("gulp-") || pack.name.startsWith("eleventy-")))
       )
     ) {
-      console.log(`793 lect: we'll delete key "${key}" from dev dependencies`);
+      console.log(`804 lect: we'll delete key "${key}" from dev dependencies`);
       delete receivedPackageJsonObj.devDependencies[key];
     } else if (
       Object.prototype.hasOwnProperty.call(lectrcDevDeps, key) &&

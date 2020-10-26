@@ -1,7 +1,7 @@
 {
   "name": "array-includes-with-glob",
   "version": "2.12.42",
-  "description": "like _.includes but with wildcards",
+  "description": "Like _.includes but with wildcards",
   "keywords": [
     "array",
     "arrays",

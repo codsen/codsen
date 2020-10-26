@@ -1,6 +1,6 @@
 /* eslint import/extensions:0 */
 
-// Replace all null's in in keys "amount" with zero, but only under "orders"
+// Replace all null's in keys `amount` with zero, but only under `orders`
 
 import { strict as assert } from "assert";
 import getAllValuesByKey from "../dist/ast-get-values-by-key.esm.js";
