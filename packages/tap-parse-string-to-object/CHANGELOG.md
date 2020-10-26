@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.24](https://gitlab.com/codsen/codsen/compare/tap-parse-string-to-object@1.2.23...tap-parse-string-to-object@1.2.24) (2020-10-26)
+
+**Note:** Version bump only for package tap-parse-string-to-object
+
+
+
+
+
 ## 1.2.0 (2019-12-14)
 
 ### Features

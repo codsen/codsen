@@ -1,7 +1,7 @@
 /**
  * object-fill-missing-keys
  * Add missing keys into plain objects, according to a reference object
- * Version: 7.10.28
+ * Version: 7.10.29
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-fill-missing-keys/

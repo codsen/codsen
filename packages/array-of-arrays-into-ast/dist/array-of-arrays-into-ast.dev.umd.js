@@ -1,7 +1,7 @@
 /**
  * array-of-arrays-into-ast
  * Turns an array of arrays of data into a nested tree of plain objects
- * Version: 1.9.51
+ * Version: 1.9.52
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/array-of-arrays-into-ast/

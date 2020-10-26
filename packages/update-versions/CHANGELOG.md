@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0](https://gitlab.com/codsen/codsen/compare/update-versions@2.4.24...update-versions@2.5.0) (2020-10-26)
+
+
+### Features
+
+* recognise and retain pnpm `workspace:` value prefixes ([47f34aa](https://gitlab.com/codsen/codsen/commit/47f34aae7602e59fad8bf83043c309ec29eb2f4a))
+
+
+
+
+
 ## 2.4.0 (2020-02-09)
 
 ### Features

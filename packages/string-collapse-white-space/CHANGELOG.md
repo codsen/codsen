@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.1.0](https://gitlab.com/codsen/codsen/compare/string-collapse-white-space@6.0.0...string-collapse-white-space@6.1.0) (2020-10-26)
+
+
+### Features
+
+* `opts.enforceSpacesOnly` ([154de62](https://gitlab.com/codsen/codsen/commit/154de623241cdced9d418f2815ae3befe9684534))
+* `opts.rangesOffset` ([fd5852f](https://gitlab.com/codsen/codsen/commit/fd5852f4f50b49f121bab2bb0cc30e2d23790e5c))
+
+
+
+
+
 ## 6.0.0 (2020-10-12)
 
 ### Features

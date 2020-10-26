@@ -1,6 +1,6 @@
 {
   "name": "emlint",
-  "version": "2.19.1",
+  "version": "2.19.2",
   "description": "Pluggable email template code linter",
   "keywords": [
     "analysis",
@@ -160,7 +160,7 @@
     "ast-deep-contains": "^1.1.22",
     "benchmark": "^2.1.4",
     "eslint": "^7.12.0",
-    "lect": "^0.14.6",
+    "lect": "^0.14.7",
     "prettier": "^2.1.2",
     "ranges-apply": "^3.2.3",
     "rollup": "^2.32.1",
