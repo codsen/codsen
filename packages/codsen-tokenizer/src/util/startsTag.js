@@ -9,18 +9,18 @@ const BACKSLASH = "\u005C";
 // starts. Previously it sat within if() clauses but became unwieldy and
 // so we extracted into a function.
 
-function startsTag(str, i, token, layers) {
-  // console.log(
-  //   `013 ██ startsTag() isTagOpening1: ${isTagOpening(str, i, {
-  //     allowCustomTagNames: true
-  //   })}`
-  // );
-  // console.log(
-  //   `018 ██ startsTag() isTagOpening2: ${isTagOpening(str, i, {
-  //     allowCustomTagNames: false,
-  //     skipOpeningBracket: true
-  //   })}`
-  // );
+function startsTag(str, i, token, layers, withinStyle) {
+  console.log(
+    `014 ██ startsTag() isTagOpening1: ${isTagOpening(str, i, {
+      allowCustomTagNames: true,
+    })}`
+  );
+  console.log(
+    `019 ██ startsTag() isTagOpening2: ${isTagOpening(str, i, {
+      allowCustomTagNames: false,
+      skipOpeningBracket: true,
+    })}`
+  );
   return (
     str[i] &&
     str[i].trim().length &&
@@ -44,7 +44,9 @@ function startsTag(str, i, token, layers) {
           allowCustomTagNames: false, // <-- stricter requirements for missing opening bracket tags
           skipOpeningBracket: true,
         }))) &&
-    (token.type !== "esp" || (token.tail && token.tail.includes(str[i])))
+    (token.type !== "esp" || (token.tail && token.tail.includes(str[i]))) &&
+    // within CSS styles, initiate tags only on opening bracket:
+    (!withinStyle || str[i] === "<")
   );
 }
 

@@ -3075,18 +3075,7 @@
   // starts. Previously it sat within if() clauses but became unwieldy and
   // so we extracted into a function.
 
-  function startsTag(str, i, token, layers) {
-    // console.log(
-    //   `013 ██ startsTag() isTagOpening1: ${isTagOpening(str, i, {
-    //     allowCustomTagNames: true
-    //   })}`
-    // );
-    // console.log(
-    //   `018 ██ startsTag() isTagOpening2: ${isTagOpening(str, i, {
-    //     allowCustomTagNames: false,
-    //     skipOpeningBracket: true
-    //   })}`
-    // );
+  function startsTag(str, i, token, layers, withinStyle) {
     return str[i] && str[i].trim().length && (!layers.length || token.type === "text") && !["doctype", "xml"].includes(token.kind) && (str[i] === "<" && (isOpening(str, i, {
       allowCustomTagNames: true
     }) || str[right(str, i)] === ">" || matchRight(str, i, ["doctype", "xml", "cdata"], {
@@ -3097,7 +3086,8 @@
       allowCustomTagNames: false,
       // <-- stricter requirements for missing opening bracket tags
       skipOpeningBracket: true
-    })) && (token.type !== "esp" || token.tail && token.tail.includes(str[i]));
+    })) && (token.type !== "esp" || token.tail && token.tail.includes(str[i])) && ( // within CSS styles, initiate tags only on opening bracket:
+    !withinStyle || str[i] === "<");
   }
 
   // starts. Previously it sat within if() clauses but became unwieldy and
@@ -4065,7 +4055,7 @@
 
       if (!doNothing && str[_i]) {
         // console.log(
-        //   `1260 ███████████████████████████████████████ IS TAG STARTING? ${startsTag(
+        //   `1707 ███████████████████████████████████████ IS COMMENT STARTING? ${startsHtmlComment(
         //     str,
         //     i,
         //     token,
@@ -4074,7 +4064,7 @@
         //   )}`
         // );
         // console.log(
-        //   `1276 ███████████████████████████████████████ IS COMMENT STARTING? ${startsHtmlComment(
+        //   `1717 ███████████████████████████████████████ IS ESP TAG STARTING? ${startsEsp(
         //     str,
         //     i,
         //     token,
@@ -4082,16 +4072,7 @@
         //     withinStyle
         //   )}`
         // );
-        // console.log(
-        //   `1533 ███████████████████████████████████████ IS ESP TAG STARTING? ${startsEsp(
-        //     str,
-        //     i,
-        //     token,
-        //     layers,
-        //     withinStyle
-        //   )}`
-        // );
-        if (startsTag(str, _i, token, layers)) {
+        if (startsTag(str, _i, token, layers, withinStyle)) {
           //
           //
           //

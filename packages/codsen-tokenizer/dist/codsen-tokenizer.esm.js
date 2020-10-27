@@ -370,7 +370,7 @@ function matchLayerLast(wholeEspTagLump, layers, matchFirstInstead) {
 }
 
 const BACKSLASH = "\u005C";
-function startsTag(str, i, token, layers) {
+function startsTag(str, i, token, layers, withinStyle) {
   return (
     str[i] &&
     str[i].trim().length &&
@@ -394,7 +394,8 @@ function startsTag(str, i, token, layers) {
           allowCustomTagNames: false,
           skipOpeningBracket: true,
         }))) &&
-    (token.type !== "esp" || (token.tail && token.tail.includes(str[i])))
+    (token.type !== "esp" || (token.tail && token.tail.includes(str[i]))) &&
+    (!withinStyle || str[i] === "<")
   );
 }
 
@@ -1198,7 +1199,7 @@ function tokenizer(str, originalOpts) {
       token.selectorsEnd = i;
     }
     if (!doNothing && str[i]) {
-      if (startsTag(str, i, token, layers)) {
+      if (startsTag(str, i, token, layers, withinStyle)) {
         if (token.type && token.start !== null) {
           dumpCurrentToken(token, i);
           tokenReset();

@@ -1693,8 +1693,18 @@ function tokenizer(str, originalOpts) {
     // catch the beginning of a token
     // -------------------------------------------------------------------------
     if (!doNothing && str[i]) {
+      console.log(
+        `1697 ███████████████████████████████████████ IS TAG STARTING? ${startsTag(
+          str,
+          i,
+          token,
+          layers,
+          withinStyle
+        )}`
+      );
+
       // console.log(
-      //   `1260 ███████████████████████████████████████ IS TAG STARTING? ${startsTag(
+      //   `1707 ███████████████████████████████████████ IS COMMENT STARTING? ${startsHtmlComment(
       //     str,
       //     i,
       //     token,
@@ -1704,17 +1714,7 @@ function tokenizer(str, originalOpts) {
       // );
 
       // console.log(
-      //   `1276 ███████████████████████████████████████ IS COMMENT STARTING? ${startsHtmlComment(
-      //     str,
-      //     i,
-      //     token,
-      //     layers,
-      //     withinStyle
-      //   )}`
-      // );
-
-      // console.log(
-      //   `1533 ███████████████████████████████████████ IS ESP TAG STARTING? ${startsEsp(
+      //   `1717 ███████████████████████████████████████ IS ESP TAG STARTING? ${startsEsp(
       //     str,
       //     i,
       //     token,

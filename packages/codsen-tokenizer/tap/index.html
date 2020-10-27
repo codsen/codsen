@@ -64,7 +64,7 @@
             // update the "out" text area:
             if (typeof this.text1 === "string") {
               const gathered = [];
-              tokenizer(this.text1, {
+              tokenizer(this.text1.replace(/\\n/, "\n").replace(/\\r/, "\r"), {
                 tagCb: (obj) => {
                   gathered.push(obj);
                 },

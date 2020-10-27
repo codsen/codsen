@@ -271,7 +271,7 @@ function matchLayerLast(wholeEspTagLump, layers, matchFirstInstead) {
 }
 
 var BACKSLASH = "\\";
-function startsTag(str, i, token, layers) {
+function startsTag(str, i, token, layers, withinStyle) {
   return str[i] && str[i].trim().length && (!layers.length || token.type === "text") && !["doctype", "xml"].includes(token.kind) && (str[i] === "<" && (isTagOpening__default['default'](str, i, {
     allowCustomTagNames: true
   }) || str[stringLeftRight.right(str, i)] === ">" || stringMatchLeftRight.matchRight(str, i, ["doctype", "xml", "cdata"], {
@@ -281,7 +281,8 @@ function startsTag(str, i, token, layers) {
   })) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH].includes(str[stringLeftRight.left(str, i)])) && isTagOpening__default['default'](str, i, {
     allowCustomTagNames: false,
     skipOpeningBracket: true
-  })) && (token.type !== "esp" || token.tail && token.tail.includes(str[i]));
+  })) && (token.type !== "esp" || token.tail && token.tail.includes(str[i])) && (
+  !withinStyle || str[i] === "<");
 }
 
 function startsEsp(str, i, token, layers, styleStarts) {
@@ -802,7 +803,7 @@ function tokenizer(str, originalOpts) {
       token.selectorsEnd = _i;
     }
     if (!doNothing && str[_i]) {
-      if (startsTag(str, _i, token, layers)) {
+      if (startsTag(str, _i, token, layers, withinStyle)) {
         if (token.type && token.start !== null) {
           dumpCurrentToken(token, _i);
           tokenReset();
