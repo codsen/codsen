@@ -26,6 +26,8 @@ function startsTag(str, i, token, layers, withinStyle) {
     str[i].trim().length &&
     (!layers.length || token.type === "text") &&
     !["doctype", "xml"].includes(token.kind) &&
+    // within CSS styles, initiate tags only on opening bracket:
+    (!withinStyle || str[i] === "<") &&
     ((str[i] === "<" &&
       (isTagOpening(str, i, {
         allowCustomTagNames: true,
@@ -44,9 +46,7 @@ function startsTag(str, i, token, layers, withinStyle) {
           allowCustomTagNames: false, // <-- stricter requirements for missing opening bracket tags
           skipOpeningBracket: true,
         }))) &&
-    (token.type !== "esp" || (token.tail && token.tail.includes(str[i]))) &&
-    // within CSS styles, initiate tags only on opening bracket:
-    (!withinStyle || str[i] === "<")
+    (token.type !== "esp" || (token.tail && token.tail.includes(str[i])))
   );
 }
 

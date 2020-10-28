@@ -272,7 +272,8 @@ function matchLayerLast(wholeEspTagLump, layers, matchFirstInstead) {
 
 var BACKSLASH = "\\";
 function startsTag(str, i, token, layers, withinStyle) {
-  return str[i] && str[i].trim().length && (!layers.length || token.type === "text") && !["doctype", "xml"].includes(token.kind) && (str[i] === "<" && (isTagOpening__default['default'](str, i, {
+  return str[i] && str[i].trim().length && (!layers.length || token.type === "text") && !["doctype", "xml"].includes(token.kind) && (
+  !withinStyle || str[i] === "<") && (str[i] === "<" && (isTagOpening__default['default'](str, i, {
     allowCustomTagNames: true
   }) || str[stringLeftRight.right(str, i)] === ">" || stringMatchLeftRight.matchRight(str, i, ["doctype", "xml", "cdata"], {
     i: true,
@@ -281,8 +282,7 @@ function startsTag(str, i, token, layers, withinStyle) {
   })) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH].includes(str[stringLeftRight.left(str, i)])) && isTagOpening__default['default'](str, i, {
     allowCustomTagNames: false,
     skipOpeningBracket: true
-  })) && (token.type !== "esp" || token.tail && token.tail.includes(str[i])) && (
-  !withinStyle || str[i] === "<");
+  })) && (token.type !== "esp" || token.tail && token.tail.includes(str[i]));
 }
 
 function startsEsp(str, i, token, layers, styleStarts) {

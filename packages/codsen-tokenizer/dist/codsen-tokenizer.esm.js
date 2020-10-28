@@ -376,6 +376,7 @@ function startsTag(str, i, token, layers, withinStyle) {
     str[i].trim().length &&
     (!layers.length || token.type === "text") &&
     !["doctype", "xml"].includes(token.kind) &&
+    (!withinStyle || str[i] === "<") &&
     ((str[i] === "<" &&
       (isTagOpening(str, i, {
         allowCustomTagNames: true,
@@ -394,8 +395,7 @@ function startsTag(str, i, token, layers, withinStyle) {
           allowCustomTagNames: false,
           skipOpeningBracket: true,
         }))) &&
-    (token.type !== "esp" || (token.tail && token.tail.includes(str[i]))) &&
-    (!withinStyle || str[i] === "<")
+    (token.type !== "esp" || (token.tail && token.tail.includes(str[i])))
   );
 }
 

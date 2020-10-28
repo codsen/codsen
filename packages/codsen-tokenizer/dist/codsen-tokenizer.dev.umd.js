@@ -3076,7 +3076,8 @@
   // so we extracted into a function.
 
   function startsTag(str, i, token, layers, withinStyle) {
-    return str[i] && str[i].trim().length && (!layers.length || token.type === "text") && !["doctype", "xml"].includes(token.kind) && (str[i] === "<" && (isOpening(str, i, {
+    return str[i] && str[i].trim().length && (!layers.length || token.type === "text") && !["doctype", "xml"].includes(token.kind) && ( // within CSS styles, initiate tags only on opening bracket:
+    !withinStyle || str[i] === "<") && (str[i] === "<" && (isOpening(str, i, {
       allowCustomTagNames: true
     }) || str[right(str, i)] === ">" || matchRight(str, i, ["doctype", "xml", "cdata"], {
       i: true,
@@ -3086,8 +3087,7 @@
       allowCustomTagNames: false,
       // <-- stricter requirements for missing opening bracket tags
       skipOpeningBracket: true
-    })) && (token.type !== "esp" || token.tail && token.tail.includes(str[i])) && ( // within CSS styles, initiate tags only on opening bracket:
-    !withinStyle || str[i] === "<");
+    })) && (token.type !== "esp" || token.tail && token.tail.includes(str[i]));
   }
 
   // starts. Previously it sat within if() clauses but became unwieldy and
