@@ -7851,200 +7851,202 @@
         // ================
 
 
-        if (!doNothing && stateWithinBody && !stateWithinStyleTag && !currentlyWithinQuotes && str[i] === "c" && str[i + 1] === "l" && str[i + 2] === "a" && str[i + 3] === "s" && str[i + 4] === "s" && badChars.includes(str[i - 1]) // this is to prevent false positives like attribute superclass=...
-        ) {
-            // TODO: record which double quote it was exactly, single or double
-            var valuesStart = void 0;
-            var quoteless = false;
+        if (!doNothing && stateWithinBody && !stateWithinStyleTag && !currentlyWithinQuotes && str[i] === "c" && str[i + 1] === "l" && str[i + 2] === "a" && str[i + 3] === "s" && str[i + 4] === "s" && // a character in front exists
+        str[i - 1] && // it's a whitespace character
+        !str[i - 1].trim()) {
+          // TODO: record which double quote it was exactly, single or double
+          var valuesStart = void 0;
+          var quoteless = false;
 
-            if (str[i + 5] === "=") {
-              if (str[i + 6] === '"' || str[i + 6] === "'") {
-                valuesStart = i + 7;
-              } else if (characterSuitableForNames(str[i + 6])) {
-                valuesStart = i + 6;
-                quoteless = true;
-              } else if (str[i + 6] && (!str[i + 6].trim() || "/>".includes(str[i + 6]))) {
-                var calculatedRange = expander({
-                  str: str,
-                  from: i,
-                  to: i + 6,
-                  ifRightSideIncludesThisThenCropTightly: "/>",
-                  wipeAllWhitespaceOnLeft: true
-                });
-                finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(calculatedRange));
-              }
-            } else if (!str[i + 5].trim()) {
-              // loop forward:
-              for (var _y6 = i + 5; _y6 < len; _y6++) {
-                totalCounter += 1;
+          if (str[i + 5] === "=") {
+            if (str[i + 6] === '"' || str[i + 6] === "'") {
+              valuesStart = i + 7;
+            } else if (characterSuitableForNames(str[i + 6])) {
+              valuesStart = i + 6;
+              quoteless = true;
+            } else if (str[i + 6] && (!str[i + 6].trim() || "/>".includes(str[i + 6]))) {
+              var calculatedRange = expander({
+                str: str,
+                from: i,
+                to: i + 6,
+                ifRightSideIncludesThisThenCropTightly: "/>",
+                wipeAllWhitespaceOnLeft: true
+              });
+              finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(calculatedRange));
+            }
+          } else if (!str[i + 5].trim()) {
+            // loop forward:
+            for (var _y6 = i + 5; _y6 < len; _y6++) {
+              totalCounter += 1;
 
-                if (str[_y6].trim()) {
-                  // 1. is it the "equals" character?
-                  if (str[_y6] === "=") {
-                    // 1-1. remove this gap:
-                    if (_y6 > i + 5 && round === 1) {
-                      finalIndexesToDelete.push(i + 5, _y6);
-                    } // 1-2. check what's next:
+              if (str[_y6].trim()) {
+                // 1. is it the "equals" character?
+                if (str[_y6] === "=") {
+                  // 1-1. remove this gap:
+                  if (_y6 > i + 5 && round === 1) {
+                    finalIndexesToDelete.push(i + 5, _y6);
+                  } // 1-2. check what's next:
 
 
-                    if ((str[_y6 + 1] === '"' || str[_y6 + 1] === "'") && str[_y6 + 2]) {
-                      // 1-2-1. we found where values start:
-                      valuesStart = _y6 + 2;
-                    } else if (str[_y6 + 1] && !str[_y6 + 1].trim()) {
-                      // 1-2-2. traverse even more forward:
-                      for (var _z = _y6 + 1; _z < len; _z++) {
-                        totalCounter += 1;
+                  if ((str[_y6 + 1] === '"' || str[_y6 + 1] === "'") && str[_y6 + 2]) {
+                    // 1-2-1. we found where values start:
+                    valuesStart = _y6 + 2;
+                  } else if (str[_y6 + 1] && !str[_y6 + 1].trim()) {
+                    // 1-2-2. traverse even more forward:
+                    for (var _z = _y6 + 1; _z < len; _z++) {
+                      totalCounter += 1;
 
-                        if (str[_z].trim()) {
-                          if (_z > _y6 + 1 && round === 1) {
-                            finalIndexesToDelete.push(_y6 + 1, _z);
-                          }
-
-                          if ((str[_z] === '"' || str[_z] === "'") && str[_z + 1]) {
-                            valuesStart = _z + 1;
-                          }
-
-                          break;
+                      if (str[_z].trim()) {
+                        if (_z > _y6 + 1 && round === 1) {
+                          finalIndexesToDelete.push(_y6 + 1, _z);
                         }
+
+                        if ((str[_z] === '"' || str[_z] === "'") && str[_z + 1]) {
+                          valuesStart = _z + 1;
+                        }
+
+                        break;
                       }
                     }
-                  } // // not equals is followed by "class" attribute's name
-                  // else if (round === 1) {
-                  //   const calculatedRange = expander({
-                  //     str,
-                  //     from: i,
-                  //     to: y - 1, // leave that space in front
-                  //     ifRightSideIncludesThisThenCropTightly: "/>",
-                  //     wipeAllWhitespaceOnLeft: true,
-                  //   });
-                  //   console.log(
-                  //     `1856 PUSH ${JSON.stringify(calculatedRange, null, 0)}`
-                  //   );
-                  //   finalIndexesToDelete.push(...calculatedRange);
-                  // }
-                  // 2. stop anyway
+                  }
+                } // // not equals is followed by "class" attribute's name
+                // else if (round === 1) {
+                //   const calculatedRange = expander({
+                //     str,
+                //     from: i,
+                //     to: y - 1, // leave that space in front
+                //     ifRightSideIncludesThisThenCropTightly: "/>",
+                //     wipeAllWhitespaceOnLeft: true,
+                //   });
+                //   console.log(
+                //     `1856 PUSH ${JSON.stringify(calculatedRange, null, 0)}`
+                //   );
+                //   finalIndexesToDelete.push(...calculatedRange);
+                // }
+                // 2. stop anyway
 
 
-                  break;
-                }
+                break;
               }
             }
+          }
 
-            if (valuesStart) {
-              // 1. mark it
-              bodyClass = resetBodyClassOrId({
-                valuesStart: valuesStart,
-                quoteless: quoteless,
-                nameStart: i
-              }); // 2. resets:
+          if (valuesStart) {
+            // 1. mark it
+            bodyClass = resetBodyClassOrId({
+              valuesStart: valuesStart,
+              quoteless: quoteless,
+              nameStart: i
+            }); // 2. resets:
 
-              if (round === 1) {
-                bodyItsTheFirstClassOrId = true;
-              } else if (round === 2) {
-                // 2. reset the we-can-delete-whole-class/id marker:
-                bodyClassOrIdCanBeDeleted = true;
-              }
+            if (round === 1) {
+              bodyItsTheFirstClassOrId = true;
+            } else if (round === 2) {
+              // 2. reset the we-can-delete-whole-class/id marker:
+              bodyClassOrIdCanBeDeleted = true;
             }
-          } // catch the start of an id attribute within body
+          }
+        } // catch the start of an id attribute within body
         // ================
 
 
-        if (!doNothing && stateWithinBody && !stateWithinStyleTag && !currentlyWithinQuotes && str[i] === "i" && str[i + 1] === "d" && badChars.includes(str[i - 1]) // this is to prevent false positives like attribute "urlid=..."
-        ) {
-            var _valuesStart = void 0;
+        if (!doNothing && stateWithinBody && !stateWithinStyleTag && !currentlyWithinQuotes && str[i] === "i" && str[i + 1] === "d" && // a character in front exists
+        str[i - 1] && // it's a whitespace character
+        !str[i - 1].trim()) {
+          var _valuesStart = void 0;
 
-            var _quoteless = false;
+          var _quoteless = false;
 
-            if (str[i + 2] === "=") {
-              if (str[i + 3] === '"' || str[i + 3] === "'") {
-                _valuesStart = i + 4;
-              } else if (characterSuitableForNames(str[i + 3])) {
-                _valuesStart = i + 3;
-                _quoteless = true;
-              } else if (str[i + 3] && (!str[i + 3].trim() || "/>".includes(str[i + 3]))) {
-                var _calculatedRange = expander({
-                  str: str,
-                  from: i,
-                  to: i + 3,
-                  ifRightSideIncludesThisThenCropTightly: "/>",
-                  wipeAllWhitespaceOnLeft: true
-                });
+          if (str[i + 2] === "=") {
+            if (str[i + 3] === '"' || str[i + 3] === "'") {
+              _valuesStart = i + 4;
+            } else if (characterSuitableForNames(str[i + 3])) {
+              _valuesStart = i + 3;
+              _quoteless = true;
+            } else if (str[i + 3] && (!str[i + 3].trim() || "/>".includes(str[i + 3]))) {
+              var _calculatedRange = expander({
+                str: str,
+                from: i,
+                to: i + 3,
+                ifRightSideIncludesThisThenCropTightly: "/>",
+                wipeAllWhitespaceOnLeft: true
+              });
 
-                finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange));
-              }
-            } else if (!str[i + 2].trim()) {
-              // loop forward:
-              for (var _y7 = i + 2; _y7 < len; _y7++) {
-                totalCounter += 1;
+              finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange));
+            }
+          } else if (!str[i + 2].trim()) {
+            // loop forward:
+            for (var _y7 = i + 2; _y7 < len; _y7++) {
+              totalCounter += 1;
 
-                if (str[_y7].trim()) {
-                  // 1. is it the "equals" character?
-                  if (str[_y7] === "=") {
-                    // 1-1. remove this gap:
-                    if (_y7 > i + 2 && round === 1) {
-                      finalIndexesToDelete.push(i + 2, _y7);
-                    } // 1-2. check what's next:
+              if (str[_y7].trim()) {
+                // 1. is it the "equals" character?
+                if (str[_y7] === "=") {
+                  // 1-1. remove this gap:
+                  if (_y7 > i + 2 && round === 1) {
+                    finalIndexesToDelete.push(i + 2, _y7);
+                  } // 1-2. check what's next:
 
 
-                    if ((str[_y7 + 1] === '"' || str[_y7 + 1] === "'") && str[_y7 + 2]) {
-                      // 1-2-1. we found where values start:
-                      _valuesStart = _y7 + 2;
-                    } else if (str[_y7 + 1] && !str[_y7 + 1].trim()) {
-                      // 1-2-2. traverse even more forward:
-                      for (var _z2 = _y7 + 1; _z2 < len; _z2++) {
-                        totalCounter += 1;
+                  if ((str[_y7 + 1] === '"' || str[_y7 + 1] === "'") && str[_y7 + 2]) {
+                    // 1-2-1. we found where values start:
+                    _valuesStart = _y7 + 2;
+                  } else if (str[_y7 + 1] && !str[_y7 + 1].trim()) {
+                    // 1-2-2. traverse even more forward:
+                    for (var _z2 = _y7 + 1; _z2 < len; _z2++) {
+                      totalCounter += 1;
 
-                        if (str[_z2].trim()) {
-                          if (_z2 > _y7 + 1 && round === 1) {
-                            finalIndexesToDelete.push(_y7 + 1, _z2);
-                          }
-
-                          if ((str[_z2] === '"' || str[_z2] === "'") && str[_z2 + 1]) {
-                            _valuesStart = _z2 + 1;
-                          }
-
-                          break;
+                      if (str[_z2].trim()) {
+                        if (_z2 > _y7 + 1 && round === 1) {
+                          finalIndexesToDelete.push(_y7 + 1, _z2);
                         }
+
+                        if ((str[_z2] === '"' || str[_z2] === "'") && str[_z2 + 1]) {
+                          _valuesStart = _z2 + 1;
+                        }
+
+                        break;
                       }
                     }
-                  } // // not equals is followed by "id" attribute's name
-                  // else if (round === 1) {
-                  //   const calculatedRange = expander({
-                  //     str,
-                  //     from: i,
-                  //     to: y - 1, // leave that space in front
-                  //     ifRightSideIncludesThisThenCropTightly: "/>",
-                  //     wipeAllWhitespaceOnLeft: true,
-                  //   });
-                  //   console.log(
-                  //     `1987 PUSH ${JSON.stringify(calculatedRange, null, 0)}`
-                  //   );
-                  //   finalIndexesToDelete.push(...calculatedRange);
-                  // }
-                  // 2. stop anyway
+                  }
+                } // // not equals is followed by "id" attribute's name
+                // else if (round === 1) {
+                //   const calculatedRange = expander({
+                //     str,
+                //     from: i,
+                //     to: y - 1, // leave that space in front
+                //     ifRightSideIncludesThisThenCropTightly: "/>",
+                //     wipeAllWhitespaceOnLeft: true,
+                //   });
+                //   console.log(
+                //     `1987 PUSH ${JSON.stringify(calculatedRange, null, 0)}`
+                //   );
+                //   finalIndexesToDelete.push(...calculatedRange);
+                // }
+                // 2. stop anyway
 
 
-                  break;
-                }
+                break;
               }
             }
+          }
 
-            if (_valuesStart) {
-              // 1. mark it
-              bodyId = resetBodyClassOrId({
-                valuesStart: _valuesStart,
-                quoteless: _quoteless,
-                nameStart: i
-              }); // 2. resets:
+          if (_valuesStart) {
+            // 1. mark it
+            bodyId = resetBodyClassOrId({
+              valuesStart: _valuesStart,
+              quoteless: _quoteless,
+              nameStart: i
+            }); // 2. resets:
 
-              if (round === 1) {
-                bodyItsTheFirstClassOrId = true;
-              } else if (round === 2) {
-                // 2. reset the we-can-delete-whole-class/id marker:
-                bodyClassOrIdCanBeDeleted = true;
-              }
+            if (round === 1) {
+              bodyItsTheFirstClassOrId = true;
+            } else if (round === 2) {
+              // 2. reset the we-can-delete-whole-class/id marker:
+              bodyClassOrIdCanBeDeleted = true;
             }
-          } // body: catch the first letter within each class attribute
+          }
+        } // body: catch the first letter within each class attribute
         // ================
 
 

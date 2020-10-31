@@ -392,3 +392,39 @@ tap.test("17 - bug #36", (t) => {
   t.strictSame(deletedFromBody, [], "17.05");
   t.end();
 });
+
+tap.test("18 - bug #45 - id", (t) => {
+  const input = `<body><div>https://x?id=z</div>`;
+  const {
+    allInBody,
+    allInHead,
+    result,
+    deletedFromHead,
+    deletedFromBody,
+  } = comb(input);
+
+  t.strictSame(allInBody, [], "18.01");
+  t.strictSame(allInHead, [], "18.02");
+  t.strictSame(result, input, "18.03");
+  t.strictSame(deletedFromHead, [], "18.04");
+  t.strictSame(deletedFromBody, [], "18.05");
+  t.end();
+});
+
+tap.test("19 - bug #45 - class", (t) => {
+  const input = `<body><div>https://x?class=z</div>`;
+  const {
+    allInBody,
+    allInHead,
+    result,
+    deletedFromHead,
+    deletedFromBody,
+  } = comb(input);
+
+  t.strictSame(allInBody, [], "19.01");
+  t.strictSame(allInHead, [], "19.02");
+  t.strictSame(result, input, "19.03");
+  t.strictSame(deletedFromHead, [], "19.04");
+  t.strictSame(deletedFromBody, [], "19.05");
+  t.end();
+});

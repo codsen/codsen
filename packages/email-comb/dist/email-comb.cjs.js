@@ -720,130 +720,132 @@ function comb(str, opts) {
       ) {
           if ("\"'".includes(str[i + 6])) ;
         }
-      if (!doNothing && stateWithinBody && !stateWithinStyleTag && !currentlyWithinQuotes && str[i] === "c" && str[i + 1] === "l" && str[i + 2] === "a" && str[i + 3] === "s" && str[i + 4] === "s" && badChars.includes(str[i - 1])
-      ) {
-          var valuesStart = void 0;
-          var quoteless = false;
-          if (str[i + 5] === "=") {
-            if (str[i + 6] === '"' || str[i + 6] === "'") {
-              valuesStart = i + 7;
-            } else if (characterSuitableForNames(str[i + 6])) {
-              valuesStart = i + 6;
-              quoteless = true;
-            } else if (str[i + 6] && (!str[i + 6].trim() || "/>".includes(str[i + 6]))) {
-              var calculatedRange = expander__default['default']({
-                str: str,
-                from: i,
-                to: i + 6,
-                ifRightSideIncludesThisThenCropTightly: "/>",
-                wipeAllWhitespaceOnLeft: true
-              });
-              finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(calculatedRange));
-            }
-          } else if (!str[i + 5].trim()) {
-            for (var _y6 = i + 5; _y6 < len; _y6++) {
-              totalCounter += 1;
-              if (str[_y6].trim()) {
-                if (str[_y6] === "=") {
-                  if (_y6 > i + 5 && round === 1) {
-                    finalIndexesToDelete.push(i + 5, _y6);
-                  }
-                  if ((str[_y6 + 1] === '"' || str[_y6 + 1] === "'") && str[_y6 + 2]) {
-                    valuesStart = _y6 + 2;
-                  } else if (str[_y6 + 1] && !str[_y6 + 1].trim()) {
-                    for (var _z = _y6 + 1; _z < len; _z++) {
-                      totalCounter += 1;
-                      if (str[_z].trim()) {
-                        if (_z > _y6 + 1 && round === 1) {
-                          finalIndexesToDelete.push(_y6 + 1, _z);
-                        }
-                        if ((str[_z] === '"' || str[_z] === "'") && str[_z + 1]) {
-                          valuesStart = _z + 1;
-                        }
-                        break;
+      if (!doNothing && stateWithinBody && !stateWithinStyleTag && !currentlyWithinQuotes && str[i] === "c" && str[i + 1] === "l" && str[i + 2] === "a" && str[i + 3] === "s" && str[i + 4] === "s" &&
+      str[i - 1] &&
+      !str[i - 1].trim()) {
+        var valuesStart = void 0;
+        var quoteless = false;
+        if (str[i + 5] === "=") {
+          if (str[i + 6] === '"' || str[i + 6] === "'") {
+            valuesStart = i + 7;
+          } else if (characterSuitableForNames(str[i + 6])) {
+            valuesStart = i + 6;
+            quoteless = true;
+          } else if (str[i + 6] && (!str[i + 6].trim() || "/>".includes(str[i + 6]))) {
+            var calculatedRange = expander__default['default']({
+              str: str,
+              from: i,
+              to: i + 6,
+              ifRightSideIncludesThisThenCropTightly: "/>",
+              wipeAllWhitespaceOnLeft: true
+            });
+            finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(calculatedRange));
+          }
+        } else if (!str[i + 5].trim()) {
+          for (var _y6 = i + 5; _y6 < len; _y6++) {
+            totalCounter += 1;
+            if (str[_y6].trim()) {
+              if (str[_y6] === "=") {
+                if (_y6 > i + 5 && round === 1) {
+                  finalIndexesToDelete.push(i + 5, _y6);
+                }
+                if ((str[_y6 + 1] === '"' || str[_y6 + 1] === "'") && str[_y6 + 2]) {
+                  valuesStart = _y6 + 2;
+                } else if (str[_y6 + 1] && !str[_y6 + 1].trim()) {
+                  for (var _z = _y6 + 1; _z < len; _z++) {
+                    totalCounter += 1;
+                    if (str[_z].trim()) {
+                      if (_z > _y6 + 1 && round === 1) {
+                        finalIndexesToDelete.push(_y6 + 1, _z);
                       }
+                      if ((str[_z] === '"' || str[_z] === "'") && str[_z + 1]) {
+                        valuesStart = _z + 1;
+                      }
+                      break;
                     }
                   }
                 }
-                break;
               }
-            }
-          }
-          if (valuesStart) {
-            bodyClass = resetBodyClassOrId({
-              valuesStart: valuesStart,
-              quoteless: quoteless,
-              nameStart: i
-            });
-            if (round === 1) {
-              bodyItsTheFirstClassOrId = true;
-            } else if (round === 2) {
-              bodyClassOrIdCanBeDeleted = true;
+              break;
             }
           }
         }
-      if (!doNothing && stateWithinBody && !stateWithinStyleTag && !currentlyWithinQuotes && str[i] === "i" && str[i + 1] === "d" && badChars.includes(str[i - 1])
-      ) {
-          var _valuesStart = void 0;
-          var _quoteless = false;
-          if (str[i + 2] === "=") {
-            if (str[i + 3] === '"' || str[i + 3] === "'") {
-              _valuesStart = i + 4;
-            } else if (characterSuitableForNames(str[i + 3])) {
-              _valuesStart = i + 3;
-              _quoteless = true;
-            } else if (str[i + 3] && (!str[i + 3].trim() || "/>".includes(str[i + 3]))) {
-              var _calculatedRange = expander__default['default']({
-                str: str,
-                from: i,
-                to: i + 3,
-                ifRightSideIncludesThisThenCropTightly: "/>",
-                wipeAllWhitespaceOnLeft: true
-              });
-              finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange));
-            }
-          } else if (!str[i + 2].trim()) {
-            for (var _y7 = i + 2; _y7 < len; _y7++) {
-              totalCounter += 1;
-              if (str[_y7].trim()) {
-                if (str[_y7] === "=") {
-                  if (_y7 > i + 2 && round === 1) {
-                    finalIndexesToDelete.push(i + 2, _y7);
-                  }
-                  if ((str[_y7 + 1] === '"' || str[_y7 + 1] === "'") && str[_y7 + 2]) {
-                    _valuesStart = _y7 + 2;
-                  } else if (str[_y7 + 1] && !str[_y7 + 1].trim()) {
-                    for (var _z2 = _y7 + 1; _z2 < len; _z2++) {
-                      totalCounter += 1;
-                      if (str[_z2].trim()) {
-                        if (_z2 > _y7 + 1 && round === 1) {
-                          finalIndexesToDelete.push(_y7 + 1, _z2);
-                        }
-                        if ((str[_z2] === '"' || str[_z2] === "'") && str[_z2 + 1]) {
-                          _valuesStart = _z2 + 1;
-                        }
-                        break;
+        if (valuesStart) {
+          bodyClass = resetBodyClassOrId({
+            valuesStart: valuesStart,
+            quoteless: quoteless,
+            nameStart: i
+          });
+          if (round === 1) {
+            bodyItsTheFirstClassOrId = true;
+          } else if (round === 2) {
+            bodyClassOrIdCanBeDeleted = true;
+          }
+        }
+      }
+      if (!doNothing && stateWithinBody && !stateWithinStyleTag && !currentlyWithinQuotes && str[i] === "i" && str[i + 1] === "d" &&
+      str[i - 1] &&
+      !str[i - 1].trim()) {
+        var _valuesStart = void 0;
+        var _quoteless = false;
+        if (str[i + 2] === "=") {
+          if (str[i + 3] === '"' || str[i + 3] === "'") {
+            _valuesStart = i + 4;
+          } else if (characterSuitableForNames(str[i + 3])) {
+            _valuesStart = i + 3;
+            _quoteless = true;
+          } else if (str[i + 3] && (!str[i + 3].trim() || "/>".includes(str[i + 3]))) {
+            var _calculatedRange = expander__default['default']({
+              str: str,
+              from: i,
+              to: i + 3,
+              ifRightSideIncludesThisThenCropTightly: "/>",
+              wipeAllWhitespaceOnLeft: true
+            });
+            finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange));
+          }
+        } else if (!str[i + 2].trim()) {
+          for (var _y7 = i + 2; _y7 < len; _y7++) {
+            totalCounter += 1;
+            if (str[_y7].trim()) {
+              if (str[_y7] === "=") {
+                if (_y7 > i + 2 && round === 1) {
+                  finalIndexesToDelete.push(i + 2, _y7);
+                }
+                if ((str[_y7 + 1] === '"' || str[_y7 + 1] === "'") && str[_y7 + 2]) {
+                  _valuesStart = _y7 + 2;
+                } else if (str[_y7 + 1] && !str[_y7 + 1].trim()) {
+                  for (var _z2 = _y7 + 1; _z2 < len; _z2++) {
+                    totalCounter += 1;
+                    if (str[_z2].trim()) {
+                      if (_z2 > _y7 + 1 && round === 1) {
+                        finalIndexesToDelete.push(_y7 + 1, _z2);
                       }
+                      if ((str[_z2] === '"' || str[_z2] === "'") && str[_z2 + 1]) {
+                        _valuesStart = _z2 + 1;
+                      }
+                      break;
                     }
                   }
                 }
-                break;
               }
-            }
-          }
-          if (_valuesStart) {
-            bodyId = resetBodyClassOrId({
-              valuesStart: _valuesStart,
-              quoteless: _quoteless,
-              nameStart: i
-            });
-            if (round === 1) {
-              bodyItsTheFirstClassOrId = true;
-            } else if (round === 2) {
-              bodyClassOrIdCanBeDeleted = true;
+              break;
             }
           }
         }
+        if (_valuesStart) {
+          bodyId = resetBodyClassOrId({
+            valuesStart: _valuesStart,
+            quoteless: _quoteless,
+            nameStart: i
+          });
+          if (round === 1) {
+            bodyItsTheFirstClassOrId = true;
+          } else if (round === 2) {
+            bodyClassOrIdCanBeDeleted = true;
+          }
+        }
+      }
       if (!doNothing && bodyClass.valuesStart !== null && i >= bodyClass.valuesStart && bodyClass.valueStart === null) {
         if (allHeads && stringMatchLeftRight.matchRightIncl(str, i, allHeads)) {
           (function () {

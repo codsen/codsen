@@ -859,7 +859,8 @@ function comb(str, opts) {
         str[i + 2] === "a" &&
         str[i + 3] === "s" &&
         str[i + 4] === "s" &&
-        badChars.includes(str[i - 1])
+        str[i - 1] &&
+        !str[i - 1].trim()
       ) {
         let valuesStart;
         let quoteless = false;
@@ -931,7 +932,8 @@ function comb(str, opts) {
         !currentlyWithinQuotes &&
         str[i] === "i" &&
         str[i + 1] === "d" &&
-        badChars.includes(str[i - 1])
+        str[i - 1] &&
+        !str[i - 1].trim()
       ) {
         let valuesStart;
         let quoteless = false;
