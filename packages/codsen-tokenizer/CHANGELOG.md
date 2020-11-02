@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.2.0](https://gitlab.com/codsen/codsen/compare/codsen-tokenizer@3.1.0...codsen-tokenizer@3.2.0) (2020-11-02)
-
+## 3.2.0 (2020-11-02)
 
 ### Features
 
-* improve head CSS parent rule selector recognition ([d9373d8](https://gitlab.com/codsen/codsen/commit/d9373d80838f104b9dea00d27a3e0f2ed0c31923))
-
-
-
-
+- improve head CSS parent rule selector recognition ([d9373d8](https://gitlab.com/codsen/codsen/commit/d9373d80838f104b9dea00d27a3e0f2ed0c31923))
 
 ## 3.1.0 (2020-10-19)
 

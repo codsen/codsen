@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.10.6](https://gitlab.com/codsen/codsen/compare/email-comb@3.10.5...email-comb@3.10.6) (2020-11-02)
-
+## 3.10.6 (2020-11-02)
 
 ### Bug Fixes
 
-* recognise id= or class= in URLs as text ([547cf93](https://gitlab.com/codsen/codsen/commit/547cf9345b7c9406f778d9988e0e3384aabb5d8b)), closes [#45](https://gitlab.com/codsen/codsen/issues/45)
-
-
-
-
+- recognise id= or class= in URLs as text ([547cf93](https://gitlab.com/codsen/codsen/commit/547cf9345b7c9406f778d9988e0e3384aabb5d8b)), closes [#45](https://gitlab.com/codsen/codsen/issues/45)
 
 ## 3.10.0 (2020-09-15)
 
