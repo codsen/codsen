@@ -19,3 +19,4 @@ lerna-debug.log
 *.lerna_backup
 ideas.md
 testStats.md
+deps-graph.png

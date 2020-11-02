@@ -10316,14 +10316,8 @@
 	  return toString.call(arr) == '[object Array]';
 	};
 
-	var toString$1 = {}.toString;
-
-	var isarray$1 = Array.isArray || function (arr) {
-	  return toString$1.call(arr) == '[object Array]';
-	};
-
 	var isobject = function isObject(val) {
-	  return val != null && typeof val === 'object' && isarray$1(val) === false;
+	  return val != null && typeof val === 'object' && isarray(val) === false;
 	};
 
 	var lineColumn = LineColumnFinder;
@@ -11559,8 +11553,8 @@
 
 	const BACKSLASH$1 = "\u005C";
 
-	function startsTag(str, i, token, layers) {
-	  return str[i] && str[i].trim().length && (!layers.length || token.type === "text") && !["doctype", "xml"].includes(token.kind) && (str[i] === "<" && (isOpening(str, i, {
+	function startsTag(str, i, token, layers, withinStyle) {
+	  return str[i] && str[i].trim().length && (!layers.length || token.type === "text") && !["doctype", "xml"].includes(token.kind) && (!withinStyle || str[i] === "<") && (str[i] === "<" && (isOpening(str, i, {
 	    allowCustomTagNames: true
 	  }) || str[right(str, i)] === ">" || matchRight(str, i, ["doctype", "xml", "cdata"], {
 	    i: true,
@@ -12146,7 +12140,7 @@
 	    }
 
 	    if (!doNothing && str[i]) {
-	      if (startsTag(str, i, token, layers)) {
+	      if (startsTag(str, i, token, layers, withinStyle)) {
 	        if (token.type && token.start !== null) {
 	          dumpCurrentToken(token, i);
 	          tokenReset();

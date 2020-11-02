@@ -34,7 +34,8 @@
     "test:full": "FORCE_COLOR=1 lerna run test --stream --concurrency 1 && npm run readme:generate && npm run info",
     "test:only": "FORCE_COLOR=1 lerna run unittest --stream --concurrency 1 && npm run readme:generate && npm run info",
     "test:examples": "FORCE_COLOR=1 lerna run test:examples",
-    "wipe": "rm package-lock.json || true && rm -rf node_modules && FORCE_COLOR=1 npx lerna clean -y"
+    "wipe": "rm package-lock.json || true && rm -rf node_modules && FORCE_COLOR=1 npx lerna clean -y",
+    "graph": "lerna-dependency-graph -f 'png' -o './deps-graph.png'"
   },
   "watch": {
     "readme:generate": "scripts/generate-readme.js"
@@ -43,28 +44,29 @@
   "dependencies": {},
   "devDependencies": {
     "benchmark": "^2.1.4",
-    "edit-package-json": "^0.1.36",
     "commitizen": "^4.2.2",
     "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^7.12.0",
-    "eslint-config-prettier": "^6.14.0",
+    "edit-package-json": "^0.1.37",
+    "eslint": "^7.12.1",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-no-unsanitized": "^3.1.4",
     "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-test-num": "^1.3.11",
     "eslint-plugin-row-num": "^1.2.15",
-    "eslint-config-airbnb": "^18.2.0",
-    "eslint-config-airbnb-base": "^14.2.0",
-    "execa": "^4.0.3",
-    "simple-git": "^2.21.0",
-    "lect": "^0.14.6",
+    "eslint-plugin-test-num": "^1.3.11",
+    "esm": "^3.2.25",
+    "execa": "^4.1.0",
+    "lect": "^0.14.7",
     "lerna": "^3.22.1",
-    "lerna-clean-changelogs-cli": "^1.2.70",
+    "lerna-clean-changelogs-cli": "^1.2.71",
+    "lerna-dependency-graph": "^1.0.2",
     "npm-watch": "^0.7.0",
     "object-path": "^0.11.5",
     "prettier": "^2.1.2",
-    "esm": "^3.2.25",
-    "title": "^3.4.2",
-    "tap-parse-string-to-object": "^1.2.23"
+    "simple-git": "^2.21.0",
+    "tap-parse-string-to-object": "^1.2.24",
+    "title": "^3.4.2"
   }
 }

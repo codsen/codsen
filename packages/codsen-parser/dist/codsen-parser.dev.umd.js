@@ -3144,8 +3144,8 @@
 
   var BACKSLASH$1 = "\\";
 
-  function startsTag(str, i, token, layers) {
-    return str[i] && str[i].trim().length && (!layers.length || token.type === "text") && !["doctype", "xml"].includes(token.kind) && (str[i] === "<" && (isOpening(str, i, {
+  function startsTag(str, i, token, layers, withinStyle) {
+    return str[i] && str[i].trim().length && (!layers.length || token.type === "text") && !["doctype", "xml"].includes(token.kind) && (!withinStyle || str[i] === "<") && (str[i] === "<" && (isOpening(str, i, {
       allowCustomTagNames: true
     }) || str[right(str, i)] === ">" || matchRight(str, i, ["doctype", "xml", "cdata"], {
       i: true,
@@ -3735,7 +3735,7 @@
       }
 
       if (!doNothing && str[_i]) {
-        if (startsTag(str, _i, token, layers)) {
+        if (startsTag(str, _i, token, layers, withinStyle)) {
           if (token.type && token.start !== null) {
             dumpCurrentToken(token, _i);
             tokenReset();
