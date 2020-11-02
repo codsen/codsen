@@ -1,7 +1,7 @@
 /**
  * emlint
  * Pluggable email template code linter
- * Version: 2.19.2
+ * Version: 2.19.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/emlint/
@@ -11407,7 +11407,7 @@
 	/**
 	 * codsen-tokenizer
 	 * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
-	 * Version: 3.1.0
+	 * Version: 3.2.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/codsen-tokenizer/
@@ -13347,7 +13347,7 @@
 	/**
 	 * codsen-parser
 	 * Parser aiming at broken or mixed code, especially HTML & CSS
-	 * Version: 0.7.9
+	 * Version: 0.7.10
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/codsen-parser/
@@ -45168,7 +45168,7 @@
 
 	}
 
-	var version = "2.19.2";
+	var version = "2.19.3";
 
 	exports.Linter = Linter;
 	exports.version = version;

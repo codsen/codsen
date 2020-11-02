@@ -1,7 +1,7 @@
 /**
  * ranges-offset
  * Increment or decrement each index in every range
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-offset/

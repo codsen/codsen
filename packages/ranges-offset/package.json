@@ -1,6 +1,6 @@
 {
   "name": "ranges-offset",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Increment or decrement each index in every range",
   "keywords": [
     "array",

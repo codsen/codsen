@@ -1,6 +1,6 @@
 {
   "name": "codsen-tokenizer",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages",
   "keywords": [
     "ast",
