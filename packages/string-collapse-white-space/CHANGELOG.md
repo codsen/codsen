@@ -3,21 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [7.0.0](https://gitlab.com/codsen/codsen/compare/string-collapse-white-space@6.1.0...string-collapse-white-space@7.0.0) (2020-11-06)
-
+## 7.0.0 (2020-11-06)
 
 ### Features
 
-* complete rewrite ([0040bc5](https://gitlab.com/codsen/codsen/commit/0040bc502a7714010cc0ef3aef978e326998482e))
-
+- complete rewrite ([0040bc5](https://gitlab.com/codsen/codsen/commit/0040bc502a7714010cc0ef3aef978e326998482e))
 
 ### BREAKING CHANGES
 
-* see changelog
-
-
-
-
+- see changelog
 
 ## 7.0.0 (2020-11-06)
 
@@ -42,11 +36,9 @@ assert.equal(
   collapse(`div > span`, {
     cb: ({ suggested, whiteSpaceStartsAt, whiteSpaceEndsAt, str }) => {
       if (str[whiteSpaceStartsAt - 1] === ">") {
-        // console.log(`> on the left! - wipe this whitespace`);
         return [whiteSpaceStartsAt, whiteSpaceEndsAt];
       }
       if (str[whiteSpaceEndsAt] === ">") {
-        // console.log(`> on the right! - wipe this whitespace`);
         return [whiteSpaceStartsAt, whiteSpaceEndsAt];
       }
       return suggested;
