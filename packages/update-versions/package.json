@@ -113,7 +113,7 @@
     "p-map": "^4.0.0",
     "p-progress": "^0.4.2",
     "p-reduce": "^2.1.0",
-    "pacote": "^11.1.11",
+    "pacote": "^11.1.13",
     "update-notifier": "^5.0.1",
     "write-file-atomic": "^3.0.3"
   },
