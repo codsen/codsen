@@ -10896,10 +10896,6 @@
     return false;
   }
 
-  function matchLeftIncl(str, position, whatToMatch, opts) {
-    return main("matchLeftIncl", str, position, whatToMatch, opts);
-  }
-
   function matchRightIncl(str, position, whatToMatch, opts) {
     return main("matchRightIncl", str, position, whatToMatch, opts);
   }
@@ -12318,15 +12314,23 @@
     }
   }
 
+  var cb = function cb(_ref) {
+    var suggested = _ref.suggested;
+    return suggested;
+  };
+
+  var defaultOpts$1 = {
+    trimStart: true,
+    trimEnd: true,
+    trimLines: false,
+    trimnbsp: false,
+    removeEmptyLines: false,
+    limitConsecutiveEmptyLinesTo: 0,
+    enforceSpacesOnly: false,
+    cb: cb
+  };
+
   function collapse(str, originalOpts) {
-    function charCodeBetweenInclusive(character, from, end) {
-      return character.charCodeAt(0) >= from && character.charCodeAt(0) <= end;
-    }
-
-    function isSpaceOrLeftBracket(character) {
-      return typeof character === "string" && (character === "<" || !character.trim());
-    }
-
     if (typeof str !== "string") {
       throw new Error("string-collapse-white-space/collapse(): [THROW_ID_01] The input is not string but ".concat(_typeof(str), ", equal to: ").concat(JSON.stringify(str, null, 4)));
     }
@@ -12342,390 +12346,204 @@
       };
     }
 
-    var finalIndexesToDelete = [];
-    var defaults = {
-      trimStart: true,
-      trimEnd: true,
-      trimLines: false,
-      trimnbsp: false,
-      recogniseHTML: true,
-      removeEmptyLines: false,
-      limitConsecutiveEmptyLinesTo: 0,
-      rangesOffset: 0,
-      enforceSpacesOnly: false
-    };
+    var finalIndexesToDelete = new Ranges();
+    var NBSP = "\xA0";
 
-    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
+    var opts = _objectSpread2(_objectSpread2({}, defaultOpts$1), originalOpts);
 
-    var preliminaryIndexesToDelete;
+    function push(something) {
+      var final = opts.cb(_objectSpread2({
+        suggested: something
+      }, arguments.length <= 1 ? undefined : arguments[1]));
 
-    if (opts.recogniseHTML) {
-      preliminaryIndexesToDelete = [];
+      if (Array.isArray(final)) {
+        finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(final));
+      }
     }
 
-    var spacesEndAt = null;
-    var whiteSpaceEndsAt = null;
-    var lineWhiteSpaceEndsAt = null;
-    var endingOfTheLine = false;
-    var stateWithinTag = false;
-    var whiteSpaceWithinTagEndsAt = null;
-    var tagMatched = false;
-    var tagCanEndHere = false;
-    var count = {};
-    var bail = false;
-
-    var resetCounts = function resetCounts(obj) {
-      obj.equalDoubleQuoteCombo = 0;
-      obj.equalOnly = 0;
-      obj.doubleQuoteOnly = 0;
-      obj.spacesBetweenLetterChunks = 0;
-      obj.linebreaks = 0;
-    };
-
-    var bracketJustFound = false;
-
-    if (opts.recogniseHTML) {
-      resetCounts(count);
-    }
-
-    var lastLineBreaksLastCharIndex;
+    var spacesStartAt = null;
+    var whiteSpaceStartsAt = null;
+    var lineWhiteSpaceStartsAt = null;
+    var linebreaksStartAt = null;
+    var linebreaksEndAt = null;
+    var nbspPresent = false;
+    var staging = [];
     var consecutiveLineBreakCount = 0;
 
-    for (var i = str.length; i--;) {
-      if (str[i] === "\n" || str[i] === "\r" && str[i + 1] !== "\n") {
+    for (var i = 0, len = str.length; i <= len; i++) {
+      if (str[i] === "\r" || str[i] === "\n" && str[i - 1] !== "\r") {
         consecutiveLineBreakCount += 1;
-      } else if (consecutiveLineBreakCount && str[i].trim()) {
-        consecutiveLineBreakCount = 0;
+
+        if (linebreaksStartAt === null) {
+          linebreaksStartAt = i;
+        }
+
+        linebreaksEndAt = str[i] === "\r" && str[i + 1] === "\n" ? i + 2 : i + 1;
       }
 
-      if (!opts.enforceSpacesOnly && str[i] === " ") {
-        if (spacesEndAt === null) {
-          spacesEndAt = i;
-        }
-      } else if (!opts.enforceSpacesOnly && spacesEndAt !== null) {
-        if (i + 1 !== spacesEndAt) {
-          finalIndexesToDelete.push([i + 1, spacesEndAt]);
-        }
-
-        spacesEndAt = null;
+      if (!opts.trimnbsp && str[i] === NBSP && !nbspPresent) {
+        nbspPresent = true;
       }
 
-      if (str[i].trim() === "" && (opts.trimnbsp || str[i] !== "\xa0")) {
-        if (whiteSpaceEndsAt === null) {
-          whiteSpaceEndsAt = i;
-        }
+      if (spacesStartAt !== null && str[i] !== " ") {
+        var a1 = spacesStartAt && whiteSpaceStartsAt || !whiteSpaceStartsAt && (!opts.trimStart || !opts.trimnbsp && (str[i] === NBSP || str[spacesStartAt - 1] === NBSP));
+        var a2 = str[i] || !opts.trimEnd || !opts.trimnbsp && (str[i] === NBSP || str[spacesStartAt - 1] === NBSP);
+        var a3 = !opts.enforceSpacesOnly || (!str[spacesStartAt - 1] || str[spacesStartAt - 1].trim()) && (!str[i] || str[i].trim());
 
-        if (str[i] !== "\n" && str[i] !== "\r" && lineWhiteSpaceEndsAt === null) {
-          lineWhiteSpaceEndsAt = i + 1;
-        }
+        if (spacesStartAt < i - 1 && a1 && a2 && a3) {
+          var startIdx = spacesStartAt;
+          var endIdx = i;
+          var whatToAdd = " ";
 
-        if (str[i] === "\n" || str[i] === "\r") {
-          if (lineWhiteSpaceEndsAt !== null) {
-            if (opts.trimLines) {
-              finalIndexesToDelete.push([i + 1, lineWhiteSpaceEndsAt]);
-            }
-
-            lineWhiteSpaceEndsAt = null;
+          if (opts.trimLines && (!spacesStartAt || !str[i] || str[spacesStartAt - 1] && "\r\n".includes(str[spacesStartAt - 1]) || str[i] && "\r\n".includes(str[i]))) {
+            whatToAdd = null;
           }
 
-          if (str[i - 1] !== "\n" && str[i - 1] !== "\r") {
-            lineWhiteSpaceEndsAt = i;
-            endingOfTheLine = true;
-          }
-        }
-
-        if (str[i] === "\n" || str[i] === "\r" && str[i + 1] !== "\n") {
-          var sliceFrom = i + 1;
-          var sliceTo = void 0;
-
-          if (Number.isInteger(lastLineBreaksLastCharIndex)) {
-            sliceTo = lastLineBreaksLastCharIndex + 1;
-
-            if (opts.removeEmptyLines && lastLineBreaksLastCharIndex !== undefined && str.slice(sliceFrom, sliceTo).trim() === "") {
-              if (consecutiveLineBreakCount > opts.limitConsecutiveEmptyLinesTo + 1) {
-                finalIndexesToDelete.push([i + 1, lastLineBreaksLastCharIndex + 1]);
-              }
-            }
+          if (whatToAdd && str[spacesStartAt] === " ") {
+            endIdx -= 1;
+            whatToAdd = null;
           }
 
-          lastLineBreaksLastCharIndex = i;
-        }
-      } else {
-        if (whiteSpaceEndsAt !== null) {
-          if (i + 1 !== whiteSpaceEndsAt + 1 && whiteSpaceEndsAt === str.length - 1 && opts.trimEnd) {
-            finalIndexesToDelete.push([i + 1, whiteSpaceEndsAt + 1]);
-          } else if (i + 1 !== whiteSpaceEndsAt + 1 && str[i + 1] !== "\r" && str[i + 1] !== "\n" && str[whiteSpaceEndsAt] !== "\r" && str[whiteSpaceEndsAt] !== "\n" && opts.enforceSpacesOnly && (i + 1 < whiteSpaceEndsAt || str[i + 1] !== " ")) {
-            finalIndexesToDelete.push([i + 1, whiteSpaceEndsAt + 1, " "]);
+          if (!spacesStartAt && opts.trimStart) {
+            endIdx = i;
+          } else if (!str[i] && opts.trimEnd) {
+            endIdx = i;
           }
 
-          whiteSpaceEndsAt = null;
-        }
-
-        if (lineWhiteSpaceEndsAt !== null) {
-          if (endingOfTheLine && opts.trimLines) {
-            endingOfTheLine = false;
-
-            if (lineWhiteSpaceEndsAt !== i + 1) {
-              finalIndexesToDelete.push([i + 1, lineWhiteSpaceEndsAt]);
-            }
-          }
-
-          lineWhiteSpaceEndsAt = null;
+          staging.push([
+          /* istanbul ignore next */
+          whatToAdd ? [startIdx, endIdx, whatToAdd] : [startIdx, endIdx], {
+            whiteSpaceStartsAt: whiteSpaceStartsAt,
+            whiteSpaceEndsAt: right(i - 1) || i,
+            str: str
+          }]);
         }
       }
 
-      if (i === 0) {
-        if (whiteSpaceEndsAt !== null && opts.trimStart) {
-          finalIndexesToDelete.push([0, whiteSpaceEndsAt + 1]);
-        } else if (spacesEndAt !== null) {
-          finalIndexesToDelete.push([i + 1, spacesEndAt + 1]);
-        }
+      if (spacesStartAt === null && str[i] === " ") {
+        spacesStartAt = i;
       }
 
-      if (opts.recogniseHTML) {
-        if (str[i].trim() === "") {
-          if (stateWithinTag && !tagCanEndHere) {
-            tagCanEndHere = true;
+      if (whiteSpaceStartsAt === null && str[i] && !str[i].trim()) {
+        whiteSpaceStartsAt = i;
+      }
+
+      if (lineWhiteSpaceStartsAt !== null && ("\n\r".includes(str[i]) || !str[i] || str[i].trim() || !(opts.trimnbsp || opts.enforceSpacesOnly) && str[i] === NBSP) && (lineWhiteSpaceStartsAt || !opts.trimStart || opts.enforceSpacesOnly && nbspPresent) && (str[i] || !opts.trimEnd || opts.enforceSpacesOnly && nbspPresent)) {
+        if (opts.enforceSpacesOnly && (i > lineWhiteSpaceStartsAt + 1 || str[lineWhiteSpaceStartsAt] !== " ")) {
+          var _startIdx = lineWhiteSpaceStartsAt;
+          var _endIdx = i;
+          var _whatToAdd = " ";
+
+          if (str[_endIdx - 1] === " ") {
+            _endIdx -= 1;
+            _whatToAdd = null;
+          } else if (str[lineWhiteSpaceStartsAt] === " ") {
+            _startIdx += 1;
+            _whatToAdd = null;
           }
 
-          if (tagMatched && !whiteSpaceWithinTagEndsAt) {
-            whiteSpaceWithinTagEndsAt = i + 1;
+          if ((opts.trimStart || opts.trimLines) && !lineWhiteSpaceStartsAt || (opts.trimEnd || opts.trimLines) && !str[i]) {
+            _whatToAdd = null;
           }
 
-          if (tagMatched && str[i - 1] !== undefined && str[i - 1].trim() !== "" && str[i - 1] !== "<" && str[i - 1] !== "/") {
-            tagMatched = false;
-            stateWithinTag = false;
-            preliminaryIndexesToDelete = [];
-          }
+          push(_whatToAdd ? [_startIdx, _endIdx, _whatToAdd] : [_startIdx, _endIdx], {
+            whiteSpaceStartsAt: whiteSpaceStartsAt,
+            whiteSpaceEndsAt: i,
+            str: str
+          });
+        }
 
-          if (!bail && !bracketJustFound && str[i].trim() === "" && str[i - 1] !== "<" && (str[i + 1] === undefined || str[i + 1].trim() !== "" && str[i + 1].trim() !== "/")) {
-            if (str[i - 1] === undefined || str[i - 1].trim() !== "" && str[i - 1] !== "<" && str[i - 1] !== "/") {
-              count.spacesBetweenLetterChunks += 1;
-            } else {
-              for (var y = i - 1; y--;) {
-                if (str[y].trim() !== "") {
-                  if (str[y] === "<") {
-                    bail = true;
-                  } else if (str[y] !== "/") {
-                    count.spacesBetweenLetterChunks += i - y;
-                  }
+        if (opts.trimLines && (!lineWhiteSpaceStartsAt || "\r\n".includes(str[lineWhiteSpaceStartsAt - 1]) || !str[i] || "\r\n".includes(str[i])) && (opts.trimnbsp || !nbspPresent)) {
+          push([lineWhiteSpaceStartsAt, i], {
+            whiteSpaceStartsAt: whiteSpaceStartsAt,
+            whiteSpaceEndsAt: right(str, i - 1) || i,
+            str: str
+          });
+        }
 
-                  break;
-                }
-              }
-            }
-          }
+        lineWhiteSpaceStartsAt = null;
+      }
+
+      if (lineWhiteSpaceStartsAt === null && !"\r\n".includes(str[i]) && str[i] && !str[i].trim() && (opts.trimnbsp || str[i] !== NBSP || opts.enforceSpacesOnly)) {
+        lineWhiteSpaceStartsAt = i;
+      }
+
+      if (whiteSpaceStartsAt !== null && (!str[i] || str[i].trim())) {
+        if ((!whiteSpaceStartsAt && (opts.trimStart || opts.trimLines && linebreaksStartAt === null) || !str[i] && (opts.trimEnd || opts.trimLines && linebreaksStartAt === null)) && (opts.trimnbsp || !nbspPresent || opts.enforceSpacesOnly)) {
+          push([whiteSpaceStartsAt, i], {
+            whiteSpaceStartsAt: whiteSpaceStartsAt,
+            whiteSpaceEndsAt: i,
+            str: str
+          });
         } else {
-          if (str[i] === "=") {
-            count.equalOnly += 1;
+          var somethingPushed = false;
 
-            if (str[i + 1] === '"') {
-              count.equalDoubleQuoteCombo += 1;
+          if (opts.removeEmptyLines && linebreaksStartAt !== null && consecutiveLineBreakCount > opts.limitConsecutiveEmptyLinesTo + 1) {
+            somethingPushed = true;
+            var _startIdx2 = linebreaksStartAt;
+            var _endIdx2 = linebreaksEndAt;
+
+            var _whatToAdd2 = "".concat(str[linebreaksStartAt] === "\r" && str[linebreaksStartAt + 1] === "\n" ? "\r\n" : str[linebreaksStartAt]).repeat(opts.limitConsecutiveEmptyLinesTo + 1);
+            /* istanbul ignore else */
+
+
+            if (str.endsWith(_whatToAdd2, linebreaksEndAt)) {
+              _endIdx2 -= _whatToAdd2.length;
+              _whatToAdd2 = null;
+            } else if (str.startsWith(_whatToAdd2, linebreaksStartAt)) {
+              _startIdx2 += _whatToAdd2.length;
+              _whatToAdd2 = null;
             }
-          } else if (str[i] === '"') {
-            count.doubleQuoteOnly += 1;
+            /* istanbul ignore next */
+
+
+            push(_whatToAdd2 ? [_startIdx2, _endIdx2, _whatToAdd2] : [_startIdx2, _endIdx2], {
+              whiteSpaceStartsAt: whiteSpaceStartsAt,
+              whiteSpaceEndsAt: i,
+              str: str
+            });
           }
 
-          if (bracketJustFound) {
-            bracketJustFound = false;
+          if (staging.length) {
+            while (staging.length) {
+              push.apply(void 0, _toConsumableArray(staging.shift()).concat([{
+                whiteSpaceStartsAt: whiteSpaceStartsAt,
+                whiteSpaceEndsAt: i,
+                str: str
+              }]));
+            }
+
+            somethingPushed = true;
           }
 
-          if (whiteSpaceWithinTagEndsAt !== null) {
-            preliminaryIndexesToDelete.push([i + 1, whiteSpaceWithinTagEndsAt]);
-            whiteSpaceWithinTagEndsAt = null;
-          }
-
-          if (str[i] === ">") {
-            resetCounts(count);
-            bracketJustFound = true;
-
-            if (stateWithinTag) {
-              preliminaryIndexesToDelete = [];
-            } else {
-              stateWithinTag = true;
-
-              if (str[i - 1] !== undefined && str[i - 1].trim() === "" && !whiteSpaceWithinTagEndsAt) {
-                whiteSpaceWithinTagEndsAt = i;
-              }
-            }
-
-            if (!tagCanEndHere) {
-              tagCanEndHere = true;
-            }
-          } else if (str[i] === "<") {
-            stateWithinTag = false;
-
-            if (bail) {
-              bail = false;
-            }
-
-            if (count.spacesBetweenLetterChunks > 0 && count.equalDoubleQuoteCombo === 0) {
-              tagMatched = false;
-              preliminaryIndexesToDelete = [];
-            }
-
-            if (tagMatched) {
-              if (preliminaryIndexesToDelete.length) {
-                preliminaryIndexesToDelete.forEach(function (_ref) {
-                  var _ref2 = _slicedToArray(_ref, 2),
-                      rangeStart = _ref2[0],
-                      rangeEnd = _ref2[1];
-
-                  return finalIndexesToDelete.push([rangeStart, rangeEnd]);
-                });
-              }
-
-              tagMatched = false;
-            }
-
-            resetCounts(count);
-          } else if (stateWithinTag && str[i] === "/") {
-            whiteSpaceWithinTagEndsAt = i;
-          } else if (stateWithinTag && !tagMatched) {
-            if (tagCanEndHere && charCodeBetweenInclusive(str[i], 97, 122)) {
-              tagCanEndHere = false;
-
-              if (charCodeBetweenInclusive(str[i], 97, 110)) {
-                if (str[i] === "a" && (str[i - 1] === "e" && matchLeftIncl(str, i, ["area", "textarea"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || str[i - 1] === "t" && matchLeftIncl(str, i, ["data", "meta"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || isSpaceOrLeftBracket(str[i - 1])) || str[i] === "b" && (matchLeftIncl(str, i, ["rb", "sub"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || isSpaceOrLeftBracket(str[i - 1])) || str[i] === "c" && matchLeftIncl(str, i, "rtc", {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || str[i] === "d" && (str[i - 1] === "a" && matchLeftIncl(str, i, ["head", "thead"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || matchLeftIncl(str, i, ["kbd", "dd", "embed", "legend", "td"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                })) || str[i] === "e" && (matchLeftIncl(str, i, "source", {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || str[i - 1] === "d" && matchLeftIncl(str, i, ["aside", "code"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || str[i - 1] === "l" && matchLeftIncl(str, i, ["table", "article", "title", "style"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || str[i - 1] === "m" && matchLeftIncl(str, i, ["iframe", "time"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || str[i - 1] === "r" && matchLeftIncl(str, i, ["pre", "figure", "picture"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || str[i - 1] === "t" && matchLeftIncl(str, i, ["template", "cite", "blockquote"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || matchLeftIncl(str, i, "base", {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || isSpaceOrLeftBracket(str[i - 1])) || str[i] === "g" && matchLeftIncl(str, i, ["img", "strong", "dialog", "svg"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || str[i] === "h" && matchLeftIncl(str, i, ["th", "math"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || str[i] === "i" && (matchLeftIncl(str, i, ["bdi", "li"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || isSpaceOrLeftBracket(str[i - 1])) || str[i] === "k" && matchLeftIncl(str, i, ["track", "link", "mark"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || str[i] === "l" && matchLeftIncl(str, i, ["html", "ol", "ul", "dl", "label", "del", "small", "col"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || str[i] === "m" && matchLeftIncl(str, i, ["param", "em", "menuitem", "form"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || str[i] === "n" && (str[i - 1] === "o" && matchLeftIncl(str, i, ["section", "caption", "figcaption", "option", "button"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }) || matchLeftIncl(str, i, ["span", "keygen", "dfn", "main"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true
-                }))) {
-                  tagMatched = true;
-                }
-              } else if (str[i] === "o" && matchLeftIncl(str, i, ["bdo", "video", "audio"], {
-                cb: isSpaceOrLeftBracket,
-                i: true
-              }) || str[i] === "p" && (isSpaceOrLeftBracket(str[i - 1]) || str[i - 1] === "u" && matchLeftIncl(str, i, ["hgroup", "colgroup", "optgroup", "sup"], {
-                cb: isSpaceOrLeftBracket,
-                i: true
-              }) || matchLeftIncl(str, i, ["map", "samp", "rp"], {
-                cb: isSpaceOrLeftBracket,
-                i: true
-              })) || str[i] === "q" && isSpaceOrLeftBracket(str[i - 1]) || str[i] === "r" && (str[i - 1] === "e" && matchLeftIncl(str, i, ["header", "meter", "footer"], {
-                cb: isSpaceOrLeftBracket,
-                i: true
-              }) || matchLeftIncl(str, i, ["var", "br", "abbr", "wbr", "hr", "tr"], {
-                cb: isSpaceOrLeftBracket,
-                i: true
-              })) || str[i] === "s" && (str[i - 1] === "s" && matchLeftIncl(str, i, ["address", "progress"], {
-                cb: isSpaceOrLeftBracket,
-                i: true
-              }) || matchLeftIncl(str, i, ["canvas", "details", "ins"], {
-                cb: isSpaceOrLeftBracket,
-                i: true
-              }) || isSpaceOrLeftBracket(str[i - 1])) || str[i] === "t" && (str[i - 1] === "c" && matchLeftIncl(str, i, ["object", "select"], {
-                cb: isSpaceOrLeftBracket,
-                i: true
-              }) || str[i - 1] === "o" && matchLeftIncl(str, i, ["slot", "tfoot"], {
-                cb: isSpaceOrLeftBracket,
-                i: true
-              }) || str[i - 1] === "p" && matchLeftIncl(str, i, ["script", "noscript"], {
-                cb: isSpaceOrLeftBracket,
-                i: true
-              }) || str[i - 1] === "u" && matchLeftIncl(str, i, ["input", "output"], {
-                cb: isSpaceOrLeftBracket,
-                i: true
-              }) || matchLeftIncl(str, i, ["fieldset", "rt", "datalist", "dt"], {
-                cb: isSpaceOrLeftBracket,
-                i: true
-              })) || str[i] === "u" && (isSpaceOrLeftBracket(str[i - 1]) || matchLeftIncl(str, i, "menu", {
-                cb: isSpaceOrLeftBracket,
-                i: true
-              })) || str[i] === "v" && matchLeftIncl(str, i, ["nav", "div"], {
-                cb: isSpaceOrLeftBracket,
-                i: true
-              }) || str[i] === "y" && matchLeftIncl(str, i, ["ruby", "body", "tbody", "summary"], {
-                cb: isSpaceOrLeftBracket,
-                i: true
-              })) {
-                tagMatched = true;
-              }
-            } else if (tagCanEndHere && charCodeBetweenInclusive(str[i], 49, 54)) {
-              tagCanEndHere = false;
-
-              if (str[i - 1] === "h" && (str[i - 2] === "<" || str[i - 2].trim() === "")) {
-                tagMatched = true;
-              }
-            } else if (str[i] === "=" || str[i] === '"') {
-              tagCanEndHere = false;
-            }
+          if (!somethingPushed) {
+            push(null, {
+              whiteSpaceStartsAt: whiteSpaceStartsAt,
+              whiteSpaceEndsAt: i,
+              str: str
+            });
           }
         }
+
+        whiteSpaceStartsAt = null;
+        lineWhiteSpaceStartsAt = null;
+        nbspPresent = false;
+
+        if (consecutiveLineBreakCount) {
+          consecutiveLineBreakCount = 0;
+          linebreaksStartAt = null;
+          linebreaksEndAt = null;
+        }
       }
-    }
 
-    var ranges = finalIndexesToDelete.length ? mergeRanges(finalIndexesToDelete) : null;
-
-    if (opts.rangesOffset && ranges && ranges.length) {
-      ranges.forEach(function (val, idx) {
-        ranges[idx][0] += opts.rangesOffset;
-        ranges[idx][1] += opts.rangesOffset;
-      });
+      if (spacesStartAt !== null && str[i] !== " ") {
+        spacesStartAt = null;
+      }
     }
 
     return {
-      result: finalIndexesToDelete.length ? rangesApply(str, finalIndexesToDelete) : str,
-      ranges: ranges
+      result: rangesApply(str, finalIndexesToDelete.current()),
+      ranges: finalIndexesToDelete.current()
     };
   }
 
@@ -25781,7 +25599,7 @@
 
   /* eslint no-unused-vars:0 */
 
-  var defaultOpts$1 = {
+  var defaultOpts$2 = {
     fixBrokenEntities: true,
     removeWidows: true,
     convertEntities: true,
@@ -26764,7 +26582,7 @@
       throw new Error("detergent(): [THROW_ID_03] Options callback, opts.cb must be a function, not ".concat(_typeof(inputOpts.cb), " (value was given as:\n").concat(JSON.stringify(inputOpts.cb, null, 0), ")"));
     }
 
-    var opts = _objectSpread2(_objectSpread2({}, defaultOpts$1), inputOpts);
+    var opts = _objectSpread2(_objectSpread2({}, defaultOpts$2), inputOpts);
 
     if (!["lf", "crlf", "cr"].includes(opts.eol)) {
       opts.eol = "lf";
@@ -26776,7 +26594,7 @@
 
 
     var applicableOpts = {};
-    Object.keys(defaultOpts$1).sort().filter(function (val) {
+    Object.keys(defaultOpts$2).sort().filter(function (val) {
       return !["stripHtmlAddNewLine", "stripHtmlButIgnoreTags", "cb"].includes(val);
     }).forEach(function (singleOption) {
       applicableOpts[singleOption] = false;
@@ -27182,7 +27000,7 @@
    // -----------------------------------------------------------------------------
 
   exports.det = det;
-  exports.opts = defaultOpts$1;
+  exports.opts = defaultOpts$2;
   exports.version = version$1;
 
   Object.defineProperty(exports, '__esModule', { value: true });

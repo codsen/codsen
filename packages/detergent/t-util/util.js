@@ -20,8 +20,6 @@ function mixer(ref) {
     return [defaultOpts];
   }
 
-  // clone and delete defaultOptsWithoutStripHtmlButIgnoreTags
-  // key from the defaults obj
   const preppedDefaults = clone(defaultOpts);
   delete preppedDefaults.stripHtmlButIgnoreTags;
   delete preppedDefaults.stripHtmlAddNewLine;
