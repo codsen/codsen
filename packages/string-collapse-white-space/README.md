@@ -1,6 +1,6 @@
 # string-collapse-white-space
 
-> Efficient collapsing of white space with optional outer- and/or line-trimming and HTML tag recognition
+> Replace chunks of whitespace with a single spaces
 
 <div class="package-badges">
   <a href="https://www.npmjs.com/package/string-collapse-white-space" rel="nofollow noreferrer noopener">

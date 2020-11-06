@@ -1,37 +1,678 @@
 import tap from "tap";
 import collapse from "../dist/string-collapse-white-space.esm";
-
-const key = ["crlf", "cr", "lf"];
+import { mixer, allCombinations } from "./util/util";
+import { cbSchema } from "../src/util";
 
 // -----------------------------------------------------------------------------
 // 02. normal use
 // -----------------------------------------------------------------------------
 
-tap.test(
-  `01 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - simple sequences of spaces within string`,
-  (t) => {
+tap.test(`01 - simple sequences of spaces within string`, (t) => {
+  allCombinations.forEach((opt) => {
     t.strictSame(
-      collapse("a b"),
+      collapse("a b", {
+        ...opt,
+        cb: ({ ...props }) => {
+          t.strictSame(Object.keys(props), cbSchema);
+          Object.keys(props).forEach((key) => {
+            if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
+              t.is(typeof props[key], "number");
+            } else if (key === "suggested") {
+              t.true(
+                Array.isArray(props.suggested) || props.suggested === null
+              );
+            } else {
+              t.is(typeof props[key], "string");
+            }
+          });
+          return props.suggested;
+        },
+      }),
       { result: "a b", ranges: null },
-      "01 - nothing to collapse"
+      JSON.stringify(opt, null, 0)
     );
-    t.end();
-  }
-);
+  });
+  t.end();
+});
 
-tap.test(
-  `02 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - simple sequences of spaces within string`,
-  (t) => {
-    t.strictSame(collapse("a  b"), { result: "a b", ranges: [[1, 2]] }, "02");
-    t.end();
-  }
-);
-
-tap.test(
-  `03 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - simple sequences of spaces within string`,
-  (t) => {
+tap.test(`02 - simple sequences of spaces within string`, (t) => {
+  allCombinations.forEach((opt) => {
     t.strictSame(
-      collapse("aaa     bbb    ccc   dddd"),
+      collapse("a  b", {
+        ...opt,
+        cb: ({ ...props }) => {
+          t.strictSame(Object.keys(props), cbSchema);
+          Object.keys(props).forEach((key) => {
+            if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
+              t.is(typeof props[key], "number");
+            } else if (key === "suggested") {
+              t.true(
+                Array.isArray(props.suggested) || props.suggested === null
+              );
+            } else {
+              t.is(typeof props[key], "string");
+            }
+          });
+          return props.suggested;
+        },
+      }),
+      { result: "a b", ranges: [[1, 2]] },
+      JSON.stringify(opt, null, 0)
+    );
+  });
+  t.end();
+});
+
+tap.test(`03 - simple sequences of spaces within string`, (t) => {
+  t.strictSame(
+    allCombinations.forEach((opt) => {
+      t.strictSame(
+        collapse("aaa     bbb    ccc   dddd", {
+          ...opt,
+          cb: ({ ...props }) => {
+            t.strictSame(Object.keys(props), cbSchema);
+            Object.keys(props).forEach((key) => {
+              if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
+                t.is(typeof props[key], "number");
+              } else if (key === "suggested") {
+                t.true(
+                  Array.isArray(props.suggested) || props.suggested === null
+                );
+              } else {
+                t.is(typeof props[key], "string");
+              }
+            });
+            return props.suggested;
+          },
+        }),
+        {
+          result: "aaa bbb ccc dddd",
+          ranges: [
+            [3, 7],
+            [11, 14],
+            [18, 20],
+          ],
+        },
+        JSON.stringify(opt, null, 0)
+      );
+    })
+  );
+  t.end();
+});
+
+tap.test(`04 - sequences of spaces outside of string - defaults`, (t) => {
+  mixer({
+    trimStart: 1,
+    trimEnd: 1,
+    trimLines: 0,
+  }).forEach((opt) => {
+    t.strictSame(
+      collapse("  a b  ", {
+        ...opt,
+        cb: ({ ...props }) => {
+          t.strictSame(Object.keys(props), cbSchema);
+          Object.keys(props).forEach((key) => {
+            if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
+              t.is(typeof props[key], "number");
+            } else if (key === "suggested") {
+              t.true(
+                Array.isArray(props.suggested) || props.suggested === null
+              );
+            } else {
+              t.is(typeof props[key], "string");
+            }
+          });
+          return props.suggested;
+        },
+      }),
+      {
+        result: "a b",
+        ranges: [
+          [0, 2],
+          [5, 7],
+        ],
+      },
+      JSON.stringify(opt, null, 0)
+    );
+  });
+  mixer({
+    trimStart: 0,
+    trimEnd: 1,
+    trimLines: 0,
+  }).forEach((opt) => {
+    t.strictSame(
+      collapse("  a b  ", {
+        ...opt,
+        cb: ({ ...props }) => {
+          t.strictSame(Object.keys(props), cbSchema);
+          Object.keys(props).forEach((key) => {
+            if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
+              t.is(typeof props[key], "number");
+            } else if (key === "suggested") {
+              t.true(
+                Array.isArray(props.suggested) || props.suggested === null
+              );
+            } else {
+              t.is(typeof props[key], "string");
+            }
+          });
+          return props.suggested;
+        },
+      }),
+      {
+        result: " a b",
+        ranges: [
+          [0, 1],
+          [5, 7],
+        ],
+      },
+      JSON.stringify(opt, null, 0)
+    );
+  });
+  mixer({
+    trimStart: 1,
+    trimEnd: 0,
+    trimLines: 0,
+  }).forEach((opt) => {
+    t.strictSame(
+      collapse("  a b  ", {
+        ...opt,
+        cb: ({ ...props }) => {
+          t.strictSame(Object.keys(props), cbSchema);
+          Object.keys(props).forEach((key) => {
+            if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
+              t.is(typeof props[key], "number");
+            } else if (key === "suggested") {
+              t.true(
+                Array.isArray(props.suggested) || props.suggested === null
+              );
+            } else {
+              t.is(typeof props[key], "string");
+            }
+          });
+          return props.suggested;
+        },
+      }),
+      {
+        result: "a b ",
+        ranges: [
+          [0, 2],
+          [5, 6],
+        ],
+      },
+      JSON.stringify(opt, null, 0)
+    );
+  });
+  mixer({
+    trimStart: 0,
+    trimEnd: 0,
+    trimLines: 0,
+  }).forEach((opt) => {
+    t.strictSame(
+      collapse("  a b  ", {
+        ...opt,
+        cb: ({ ...props }) => {
+          t.strictSame(Object.keys(props), cbSchema);
+          Object.keys(props).forEach((key) => {
+            if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
+              t.is(typeof props[key], "number");
+            } else if (key === "suggested") {
+              t.true(
+                Array.isArray(props.suggested) || props.suggested === null
+              );
+            } else {
+              t.is(typeof props[key], "string");
+            }
+          });
+          return props.suggested;
+        },
+      }),
+      {
+        result: " a b ",
+        ranges: [
+          [0, 1],
+          [5, 6],
+        ],
+      },
+      JSON.stringify(opt, null, 0)
+    );
+  });
+  t.end();
+});
+
+tap.test(`05 - sequences of spaces outside of string - defaults`, (t) => {
+  mixer({
+    trimStart: 1,
+    trimEnd: 1,
+    trimLines: 0,
+  }).forEach((opt) => {
+    t.strictSame(
+      collapse(" a b ", {
+        ...opt,
+        cb: ({ ...props }) => {
+          t.strictSame(Object.keys(props), cbSchema);
+          Object.keys(props).forEach((key) => {
+            if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
+              t.is(typeof props[key], "number");
+            } else if (key === "suggested") {
+              t.true(
+                Array.isArray(props.suggested) || props.suggested === null
+              );
+            } else {
+              t.is(typeof props[key], "string");
+            }
+          });
+          return props.suggested;
+        },
+      }),
+      {
+        result: "a b",
+        ranges: [
+          [0, 1],
+          [4, 5],
+        ],
+      },
+      JSON.stringify(opt, null, 0)
+    );
+  });
+  mixer({
+    trimStart: 1,
+    trimEnd: 0,
+    trimLines: 0,
+  }).forEach((opt) => {
+    t.strictSame(
+      collapse(" a b ", {
+        ...opt,
+        cb: ({ ...props }) => {
+          t.strictSame(Object.keys(props), cbSchema);
+          Object.keys(props).forEach((key) => {
+            if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
+              t.is(typeof props[key], "number");
+            } else if (key === "suggested") {
+              t.true(
+                Array.isArray(props.suggested) || props.suggested === null
+              );
+            } else {
+              t.is(typeof props[key], "string");
+            }
+          });
+          return props.suggested;
+        },
+      }),
+      {
+        result: "a b ",
+        ranges: [[0, 1]],
+      },
+      JSON.stringify(opt, null, 0)
+    );
+  });
+  mixer({
+    trimStart: 0,
+    trimEnd: 1,
+    trimLines: 0,
+  }).forEach((opt) => {
+    t.strictSame(
+      collapse(" a b ", {
+        ...opt,
+        cb: ({ ...props }) => {
+          t.strictSame(Object.keys(props), cbSchema);
+          Object.keys(props).forEach((key) => {
+            if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
+              t.is(typeof props[key], "number");
+            } else if (key === "suggested") {
+              t.true(
+                Array.isArray(props.suggested) || props.suggested === null
+              );
+            } else {
+              t.is(typeof props[key], "string");
+            }
+          });
+          return props.suggested;
+        },
+      }),
+      {
+        result: " a b",
+        ranges: [[4, 5]],
+      },
+      JSON.stringify(opt, null, 0)
+    );
+  });
+  mixer({
+    trimStart: 0,
+    trimEnd: 0,
+    trimLines: 0,
+  }).forEach((opt) => {
+    t.strictSame(
+      collapse(" a b ", {
+        ...opt,
+        cb: ({ ...props }) => {
+          t.strictSame(Object.keys(props), cbSchema);
+          Object.keys(props).forEach((key) => {
+            if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
+              t.is(typeof props[key], "number");
+            } else if (key === "suggested") {
+              t.true(
+                Array.isArray(props.suggested) || props.suggested === null
+              );
+            } else {
+              t.is(typeof props[key], "string");
+            }
+          });
+          return props.suggested;
+        },
+      }),
+      {
+        result: " a b ",
+        ranges: null,
+      },
+      JSON.stringify(opt, null, 0)
+    );
+  });
+  t.end();
+});
+
+tap.test(`06 - sequences of spaces outside of string - defaults`, (t) => {
+  //
+  // enforceSpacesOnly off
+  // =====================
+
+  mixer({
+    trimStart: 1,
+    trimEnd: 1,
+    trimLines: 0,
+    // enforceSpacesOnly doesn't matter in this case
+  }).forEach((opt) => {
+    t.strictSame(
+      collapse("\ta b\t", {
+        ...opt,
+        cb: ({ ...props }) => {
+          t.strictSame(Object.keys(props), cbSchema);
+          Object.keys(props).forEach((key) => {
+            if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
+              t.is(typeof props[key], "number");
+            } else if (key === "suggested") {
+              t.true(
+                Array.isArray(props.suggested) || props.suggested === null
+              );
+            } else {
+              t.is(typeof props[key], "string");
+            }
+          });
+          return props.suggested;
+        },
+      }),
+      {
+        result: "a b",
+        ranges: [
+          [0, 1],
+          [4, 5],
+        ],
+      },
+      JSON.stringify(opt, null, 0)
+    );
+  });
+
+  mixer({
+    trimStart: 1,
+    trimEnd: 0,
+    trimLines: 0,
+    enforceSpacesOnly: 0,
+  }).forEach((opt) => {
+    t.strictSame(
+      collapse("\ta b\t", {
+        ...opt,
+        cb: ({ ...props }) => {
+          t.strictSame(Object.keys(props), cbSchema);
+          Object.keys(props).forEach((key) => {
+            if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
+              t.is(typeof props[key], "number");
+            } else if (key === "suggested") {
+              t.true(
+                Array.isArray(props.suggested) || props.suggested === null
+              );
+            } else {
+              t.is(typeof props[key], "string");
+            }
+          });
+          return props.suggested;
+        },
+      }),
+      {
+        result: "a b\t",
+        ranges: [[0, 1]],
+      },
+      JSON.stringify(opt, null, 0)
+    );
+  });
+  mixer({
+    trimStart: 0,
+    trimEnd: 1,
+    trimLines: 0,
+    enforceSpacesOnly: 0,
+  }).forEach((opt) => {
+    t.strictSame(
+      collapse("\ta b\t", {
+        ...opt,
+        cb: ({ ...props }) => {
+          t.strictSame(Object.keys(props), cbSchema);
+          Object.keys(props).forEach((key) => {
+            if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
+              t.is(typeof props[key], "number");
+            } else if (key === "suggested") {
+              t.true(
+                Array.isArray(props.suggested) || props.suggested === null
+              );
+            } else {
+              t.is(typeof props[key], "string");
+            }
+          });
+          return props.suggested;
+        },
+      }),
+      {
+        result: "\ta b",
+        ranges: [[4, 5]],
+      },
+      JSON.stringify(opt, null, 0)
+    );
+  });
+  mixer({
+    trimStart: 0,
+    trimEnd: 0,
+    trimLines: 0,
+    enforceSpacesOnly: 0,
+  }).forEach((opt) => {
+    t.strictSame(
+      collapse("\ta b\t", {
+        ...opt,
+        cb: ({ ...props }) => {
+          t.strictSame(Object.keys(props), cbSchema);
+          Object.keys(props).forEach((key) => {
+            if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
+              t.is(typeof props[key], "number");
+            } else if (key === "suggested") {
+              t.true(
+                Array.isArray(props.suggested) || props.suggested === null
+              );
+            } else {
+              t.is(typeof props[key], "string");
+            }
+          });
+          return props.suggested;
+        },
+      }),
+      {
+        result: "\ta b\t",
+        ranges: null,
+      },
+      JSON.stringify(opt, null, 0)
+    );
+  });
+
+  //
+  // enforceSpacesOnly on
+  // ====================
+
+  mixer({
+    trimStart: 1,
+    trimEnd: 0,
+    trimLines: 0,
+    enforceSpacesOnly: 1,
+  }).forEach((opt) => {
+    t.strictSame(
+      collapse("\ta b\t", {
+        ...opt,
+        cb: ({ ...props }) => {
+          t.strictSame(Object.keys(props), cbSchema);
+          Object.keys(props).forEach((key) => {
+            if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
+              t.is(typeof props[key], "number");
+            } else if (key === "suggested") {
+              t.true(
+                Array.isArray(props.suggested) || props.suggested === null
+              );
+            } else {
+              t.is(typeof props[key], "string");
+            }
+          });
+          return props.suggested;
+        },
+      }),
+      {
+        result: "a b ",
+        ranges: [
+          [0, 1],
+          [4, 5, " "],
+        ],
+      },
+      JSON.stringify(opt, null, 0)
+    );
+  });
+  mixer({
+    trimStart: 0,
+    trimEnd: 1,
+    trimLines: 0,
+    enforceSpacesOnly: 1,
+  }).forEach((opt) => {
+    t.strictSame(
+      collapse("\ta b\t", {
+        ...opt,
+        cb: ({ ...props }) => {
+          t.strictSame(Object.keys(props), cbSchema);
+          Object.keys(props).forEach((key) => {
+            if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
+              t.is(typeof props[key], "number");
+            } else if (key === "suggested") {
+              t.true(
+                Array.isArray(props.suggested) || props.suggested === null
+              );
+            } else {
+              t.is(typeof props[key], "string");
+            }
+          });
+          return props.suggested;
+        },
+      }),
+      {
+        result: " a b",
+        ranges: [
+          [0, 1, " "],
+          [4, 5],
+        ],
+      },
+      JSON.stringify(opt, null, 0)
+    );
+  });
+  mixer({
+    trimStart: 0,
+    trimEnd: 0,
+    trimLines: 0,
+    enforceSpacesOnly: 1,
+  }).forEach((opt) => {
+    t.strictSame(
+      collapse("\ta b\t", {
+        ...opt,
+        cb: ({ ...props }) => {
+          t.strictSame(Object.keys(props), cbSchema);
+          Object.keys(props).forEach((key) => {
+            if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
+              t.is(typeof props[key], "number");
+            } else if (key === "suggested") {
+              t.true(
+                Array.isArray(props.suggested) || props.suggested === null
+              );
+            } else {
+              t.is(typeof props[key], "string");
+            }
+          });
+          return props.suggested;
+        },
+      }),
+      {
+        result: " a b ",
+        ranges: [
+          [0, 1, " "],
+          [4, 5, " "],
+        ],
+      },
+      JSON.stringify(opt, null, 0)
+    );
+  });
+  t.end();
+});
+
+tap.test(`07 - double inner space`, (t) => {
+  allCombinations.forEach((opt) => {
+    t.strictSame(
+      collapse("a  b", {
+        ...opt,
+        cb: ({ ...props }) => {
+          t.strictSame(Object.keys(props), cbSchema);
+          Object.keys(props).forEach((key) => {
+            if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
+              t.is(typeof props[key], "number");
+            } else if (key === "suggested") {
+              t.true(
+                Array.isArray(props.suggested) || props.suggested === null
+              );
+            } else {
+              t.is(typeof props[key], "string");
+            }
+          });
+          return props.suggested;
+        },
+      }),
+      {
+        result: "a b",
+        ranges: [[1, 2]],
+      },
+      JSON.stringify(opt, null, 0)
+    );
+  });
+  t.end();
+});
+
+tap.test(`08 - sequences of spaces outside of string - defaults`, (t) => {
+  allCombinations.forEach((opt) => {
+    t.strictSame(
+      collapse("aaa     bbb    ccc   dddd", {
+        ...opt,
+        cb: ({ ...props }) => {
+          t.strictSame(Object.keys(props), cbSchema);
+          Object.keys(props).forEach((key) => {
+            if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
+              t.is(typeof props[key], "number");
+            } else if (key === "suggested") {
+              t.true(
+                Array.isArray(props.suggested) || props.suggested === null
+              );
+            } else {
+              t.is(typeof props[key], "string");
+            }
+          });
+          return props.suggested;
+        },
+      }),
       {
         result: "aaa bbb ccc dddd",
         ranges: [
@@ -40,325 +681,406 @@ tap.test(
           [18, 20],
         ],
       },
-      "03"
+      JSON.stringify(opt, null, 0)
     );
-    t.end();
-  }
-);
+  });
+  t.end();
+});
 
-tap.test(
-  `04 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - opts.rangesOffset`,
-  (t) => {
-    t.strictSame(
-      collapse("aaa     bbb    ccc   dddd", {
-        rangesOffset: 100,
-      }),
-      {
-        result: "aaa bbb ccc dddd",
-        ranges: [
-          [103, 107],
-          [111, 114],
-          [118, 120],
-        ],
-      },
-      "04"
-    );
-    t.end();
-  }
-);
+tap.test(`09 - sequences of spaces outside of string - opts.trimStart`, (t) => {
+  ["\r\n", "\r", "\n"].forEach((eol) => {
+    //
+    // trims 0-0
 
-tap.test(
-  `05 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - defaults`,
-  (t) => {
-    t.strictSame(
-      collapse("  a b  "),
-      {
-        result: "a b",
-        ranges: [
-          [0, 2],
-          [5, 7],
-        ],
-      },
-      "05 - nothing to collapse, only trim"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `06 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - defaults`,
-  (t) => {
-    t.strictSame(collapse(" a b ").result, "a b", "06 - trims single spaces");
-    t.end();
-  }
-);
-
-tap.test(
-  `07 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - defaults`,
-  (t) => {
-    t.strictSame(collapse("\ta b\t").result, "a b", "07 - trims single tabs");
-    t.end();
-  }
-);
-
-tap.test(
-  `08 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - defaults`,
-  (t) => {
-    t.strictSame(collapse("  a  b  ").result, "a b", "08");
-    t.end();
-  }
-);
-
-tap.test(
-  `09 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - defaults`,
-  (t) => {
-    t.strictSame(
-      collapse("  aaa     bbb    ccc   dddd  ").result,
-      "aaa bbb ccc dddd",
-      "09"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `10 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`,
-  (t) => {
-    // opts.trimStart
-    t.strictSame(
-      collapse("  a b  ", { trimStart: false }).result,
-      " a b",
-      "10 - nothing to collapse, only trim"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `11 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`,
-  (t) => {
-    t.strictSame(
-      collapse(" a b ", { trimStart: false }).result,
-      " a b",
-      "11 - trims single spaces"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `12 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`,
-  (t) => {
-    t.strictSame(
-      collapse("\ta b\t", { trimStart: false }).result,
-      "\ta b",
-      "12 - trims single tabs"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `13 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`,
-  (t) => {
-    ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    mixer({
+      trimStart: 0,
+      trimEnd: 0,
+      trimLines: 0,
+      enforceSpacesOnly: 0,
+    }).forEach((opt) => {
+      // ". :a b: ."
       t.strictSame(
-        collapse(`${presentEolType} \ta b\t ${presentEolType}`, {
-          trimStart: false,
-        }).result,
-        `${presentEolType} \ta b`,
-        `EOL ${key[idx]}`
+        collapse(`${eol} \ta b\t ${eol}`, {
+          ...opt,
+          cb: ({ ...props }) => {
+            t.strictSame(Object.keys(props), cbSchema);
+            Object.keys(props).forEach((key) => {
+              if (["whiteSpaceStartsAt", "whiteSpaceEndsAt"].includes(key)) {
+                t.is(typeof props[key], "number");
+              } else if (key === "suggested") {
+                t.true(
+                  Array.isArray(props.suggested) || props.suggested === null
+                );
+              } else {
+                t.is(typeof props[key], "string");
+              }
+            });
+            return props.suggested;
+          },
+        }),
+        {
+          result: `${eol} \ta b\t ${eol}`,
+          ranges: null,
+        },
+        JSON.stringify(opt, null, 0)
       );
     });
-    t.end();
-  }
-);
-
-tap.test(
-  `14 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`,
-  (t) => {
-    t.strictSame(
-      collapse("  a  b  ", { trimStart: false }).result,
-      " a b",
-      "14"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `15 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimStart`,
-  (t) => {
-    t.strictSame(
-      collapse("  aaa     bbb    ccc   dddd  ", { trimStart: false }).result,
-      " aaa bbb ccc dddd",
-      "15"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `16 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
-  (t) => {
-    // opts.trimEnd
-    t.strictSame(
-      collapse("  a b  ", { trimEnd: false }).result,
-      "a b ",
-      "16 - nothing to collapse, only trim"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `17 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
-  (t) => {
-    t.strictSame(
-      collapse(" a b ", { trimEnd: false }).result,
-      "a b ",
-      "17 - trims single spaces"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `18 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
-  (t) => {
-    t.strictSame(
-      collapse("\ta b\t", { trimEnd: false }).result,
-      "a b\t",
-      "18 - trims single tabs"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `19 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
-  (t) => {
-    ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    mixer({
+      trimStart: 0,
+      trimEnd: 0,
+      trimLines: 0,
+      enforceSpacesOnly: 1,
+    }).forEach((opt) => {
+      // ". :a b: ."
       t.strictSame(
-        collapse(`${presentEolType} \ta b\t ${presentEolType}`, {
-          trimEnd: false,
-        }).result,
-        `a b\t ${presentEolType}`,
-        `EOL ${key[idx]}`
+        collapse(`${eol} \ta b\t ${eol}`, opt).result,
+        `${eol} a b ${eol}`,
+        JSON.stringify(opt, null, 0)
       );
     });
-    t.end();
-  }
-);
 
-tap.test(
-  `20 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
-  (t) => {
-    ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    // trims 0-1
+
+    mixer({
+      trimStart: 0,
+      trimEnd: 1,
+      trimLines: 0,
+      enforceSpacesOnly: 0,
+    }).forEach((opt) => {
+      // ". :a b: ."
       t.strictSame(
-        collapse(`${presentEolType} \ta b\t    ${presentEolType}`, {
-          trimEnd: false,
-        }).result,
-        `a b\t ${presentEolType}`,
-        `EOL ${key[idx]}`
+        collapse(`${eol} \ta b\t ${eol}`, opt).result,
+        `${eol} \ta b`,
+        JSON.stringify(opt, null, 0)
       );
     });
-    t.end();
-  }
-);
-
-tap.test(
-  `21 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
-  (t) => {
-    t.strictSame(collapse(`  a  b  `, { trimEnd: false }).result, `a b `, "21");
-    t.end();
-  }
-);
-
-tap.test(
-  `22 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of spaces outside of string - opts.trimEnd`,
-  (t) => {
-    t.strictSame(
-      collapse(`  aaa     bbb    ccc   dddd  `, { trimEnd: false }).result,
-      `aaa bbb ccc dddd `,
-      "22"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `23 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of line breaks`,
-  (t) => {
-    ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    mixer({
+      trimStart: 0,
+      trimEnd: 1,
+      trimLines: 0,
+      enforceSpacesOnly: 1,
+    }).forEach((opt) => {
+      // ". :a b: ."
       t.strictSame(
-        collapse(
-          `a${presentEolType}b${presentEolType}c${presentEolType}${presentEolType}${presentEolType}${presentEolType}${presentEolType}d`
-        ).result,
-        `a${presentEolType}b${presentEolType}c${presentEolType}${presentEolType}${presentEolType}${presentEolType}${presentEolType}d`,
-        `EOL ${key[idx]}`
+        collapse(`${eol} \ta b\t ${eol}`, opt).result,
+        `${eol} a b`,
+        JSON.stringify(opt, null, 0)
       );
     });
-    t.end();
-  }
-);
 
-tap.test(
-  `24 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - sequences of line breaks`,
-  (t) => {
-    ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    // trims 1-0
+
+    mixer({
+      trimStart: 1,
+      trimEnd: 0,
+      trimLines: 0,
+      enforceSpacesOnly: 0,
+    }).forEach((opt) => {
+      // ". :a b: ."
       t.strictSame(
-        collapse(
-          `a${presentEolType}b${presentEolType}c${presentEolType}   ${presentEolType}${presentEolType}${presentEolType}${presentEolType}d`
-        ).result,
-        `a${presentEolType}b${presentEolType}c${presentEolType} ${presentEolType}${presentEolType}${presentEolType}${presentEolType}d`,
-        `EOL ${key[idx]}`
+        collapse(`${eol} \ta b\t ${eol}`, opt).result,
+        `a b\t ${eol}`,
+        JSON.stringify(opt, null, 0)
       );
     });
-    t.end();
-  }
-);
-
-tap.test(
-  `25 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - tag and linebreak chain`,
-  (t) => {
-    ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+    mixer({
+      trimStart: 1,
+      trimEnd: 0,
+      trimLines: 0,
+      enforceSpacesOnly: 1,
+    }).forEach((opt) => {
+      // ". :a b: ."
       t.strictSame(
-        collapse(`a<br>${presentEolType}b`).result,
+        collapse(`${eol} \ta b\t ${eol}`, opt).result,
+        `a b ${eol}`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+
+    // trims 1-1
+
+    mixer({
+      trimStart: 1,
+      trimEnd: 1,
+    }).forEach((opt) => {
+      // ". :a b: ."
+      t.strictSame(
+        collapse(`${eol} \ta b\t ${eol}`, opt).result,
+        `a b`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+  });
+  t.end();
+});
+
+tap.test(`10 - sequences of line breaks`, (t) => {
+  ["\r\n", "\r", "\n"].forEach((eol) => {
+    mixer({
+      removeEmptyLines: 0,
+    }).forEach((opt) => {
+      t.strictSame(
+        collapse(`a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`, opt).result,
+        `a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+    mixer({
+      removeEmptyLines: 1,
+    }).forEach((opt) => {
+      t.strictSame(
+        collapse(`a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`, opt).result,
+        `a${eol}b${eol}c${eol}d`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+    mixer({
+      removeEmptyLines: 1,
+      limitConsecutiveEmptyLinesTo: 0, // hardcoded default
+    }).forEach((opt) => {
+      t.strictSame(
+        collapse(`a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`, opt).result,
+        `a${eol}b${eol}c${eol}d`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+    mixer({
+      removeEmptyLines: 1,
+      limitConsecutiveEmptyLinesTo: 1,
+    }).forEach((opt) => {
+      t.strictSame(
+        collapse(`a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`, opt).result,
+        `a${eol}b${eol}c${eol}${eol}d`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+    mixer({
+      removeEmptyLines: 1,
+      limitConsecutiveEmptyLinesTo: 2,
+    }).forEach((opt) => {
+      t.strictSame(
+        collapse(`a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`, opt).result,
+        `a${eol}b${eol}c${eol}${eol}${eol}d`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+    mixer({
+      removeEmptyLines: 1,
+      limitConsecutiveEmptyLinesTo: 3,
+    }).forEach((opt) => {
+      t.strictSame(
+        collapse(`a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`, opt).result,
+        `a${eol}b${eol}c${eol}${eol}${eol}${eol}d`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+    mixer({
+      removeEmptyLines: 1,
+      limitConsecutiveEmptyLinesTo: 4,
+    }).forEach((opt) => {
+      t.strictSame(
+        collapse(`a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`, opt).result,
+        `a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+    mixer({
+      removeEmptyLines: 1,
+      limitConsecutiveEmptyLinesTo: 5,
+    }).forEach((opt) => {
+      t.strictSame(
+        collapse(`a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`, opt).result,
+        `a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+    mixer({
+      removeEmptyLines: 1,
+      limitConsecutiveEmptyLinesTo: 99,
+    }).forEach((opt) => {
+      t.strictSame(
+        collapse(`a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`, opt).result,
+        `a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+  });
+  t.end();
+});
+
+tap.test(`11 - sequences of line breaks`, (t) => {
+  ["\r\n", "\r", "\n"].forEach((eol) => {
+    mixer({
+      removeEmptyLines: 0,
+      trimLines: 0,
+    }).forEach((opt) => {
+      t.strictSame(
+        collapse(`a${eol}b${eol}c${eol}   ${eol}${eol}${eol}${eol}d`, opt)
+          .result,
+        `a${eol}b${eol}c${eol} ${eol}${eol}${eol}${eol}d`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+    mixer({
+      removeEmptyLines: 0,
+      trimLines: 1,
+    }).forEach((opt) => {
+      t.strictSame(
+        collapse(`a${eol}b${eol}c${eol}   ${eol}${eol}${eol}${eol}d`, opt)
+          .result,
+        `a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+    mixer({
+      removeEmptyLines: 1,
+      trimLines: 1,
+    }).forEach((opt) => {
+      t.strictSame(
+        collapse(`a${eol}b${eol}c${eol}   ${eol}${eol}${eol}${eol}d`, opt)
+          .result,
+        `a${eol}b${eol}c${eol}d`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+    mixer({
+      removeEmptyLines: 1,
+      trimLines: 1,
+      limitConsecutiveEmptyLinesTo: 0, // hardcoded default
+    }).forEach((opt) => {
+      t.strictSame(
+        collapse(`a${eol}b${eol}c${eol}   ${eol}${eol}${eol}${eol}d`, opt)
+          .result,
+        `a${eol}b${eol}c${eol}d`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+    mixer({
+      removeEmptyLines: 1,
+      trimLines: 1,
+      limitConsecutiveEmptyLinesTo: 1,
+    }).forEach((opt) => {
+      t.strictSame(
+        collapse(`a${eol}b${eol}c${eol}   ${eol}${eol}${eol}${eol}d`, opt)
+          .result,
+        `a${eol}b${eol}c${eol}${eol}d`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+    mixer({
+      removeEmptyLines: 1,
+      trimLines: 1,
+      limitConsecutiveEmptyLinesTo: 2,
+    }).forEach((opt) => {
+      t.strictSame(
+        collapse(`a${eol}b${eol}c${eol}   ${eol}${eol}${eol}${eol}d`, opt)
+          .result,
+        `a${eol}b${eol}c${eol}${eol}${eol}d`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+    mixer({
+      removeEmptyLines: 1,
+      trimLines: 1,
+      limitConsecutiveEmptyLinesTo: 3,
+    }).forEach((opt) => {
+      t.strictSame(
+        collapse(`a${eol}b${eol}c${eol}   ${eol}${eol}${eol}${eol}d`, opt)
+          .result,
+        `a${eol}b${eol}c${eol}${eol}${eol}${eol}d`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+    mixer({
+      removeEmptyLines: 1,
+      trimLines: 0,
+      limitConsecutiveEmptyLinesTo: 4,
+    }).forEach((opt) => {
+      t.strictSame(
+        collapse(`a${eol}b${eol}c${eol}   ${eol}${eol}${eol}${eol}d`, opt)
+          .result,
+        `a${eol}b${eol}c${eol} ${eol}${eol}${eol}${eol}d`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+    mixer({
+      removeEmptyLines: 1,
+      trimLines: 1,
+      limitConsecutiveEmptyLinesTo: 4,
+    }).forEach((opt) => {
+      t.strictSame(
+        collapse(`a${eol}b${eol}c${eol}   ${eol}${eol}${eol}${eol}d`, opt)
+          .result,
+        `a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+    mixer({
+      removeEmptyLines: 1,
+      trimLines: 1,
+      limitConsecutiveEmptyLinesTo: 5,
+    }).forEach((opt) => {
+      t.strictSame(
+        collapse(`a${eol}b${eol}c${eol}   ${eol}${eol}${eol}${eol}d`, opt)
+          .result,
+        `a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+    mixer({
+      removeEmptyLines: 1,
+      trimLines: 1,
+      limitConsecutiveEmptyLinesTo: 99,
+    }).forEach((opt) => {
+      t.strictSame(
+        collapse(`a${eol}b${eol}c${eol}   ${eol}${eol}${eol}${eol}d`, opt)
+          .result,
+        `a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`,
+        JSON.stringify(opt, null, 0)
+      );
+    });
+  });
+  t.end();
+});
+
+tap.test(`12 - tag and linebreak chain`, (t) => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType) => {
+    allCombinations.forEach((opt) => {
+      t.strictSame(
+        collapse(`a<br>${presentEolType}b`, opt).result,
         `a<br>${presentEolType}b`,
-        `EOL ${key[idx]}`
+        JSON.stringify(opt, null, 0)
       );
     });
-    t.end();
-  }
-);
+  });
+  t.end();
+});
 
-tap.test(
-  `26 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - tag and linebreak chain`,
-  (t) => {
-    ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+tap.test(`13 - tag and linebreak chain`, (t) => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType) => {
+    allCombinations.forEach((opt) => {
       t.strictSame(
-        collapse(`a<br>${presentEolType}b<br>${presentEolType}c`).result,
+        collapse(`a<br>${presentEolType}b<br>${presentEolType}c`, opt).result,
         `a<br>${presentEolType}b<br>${presentEolType}c`,
-        `EOL ${key[idx]}`
+        JSON.stringify(opt, null, 0)
       );
     });
-    t.end();
-  }
-);
+  });
+  t.end();
+});
 
-tap.test(
-  `27 - ${`\u001b[${33}m${`normal use`}\u001b[${39}m`} - tag and linebreak chain`,
-  (t) => {
-    ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+tap.test(`14 - tag and linebreak chain`, (t) => {
+  ["\r\n", "\r", "\n"].forEach((presentEolType) => {
+    allCombinations.forEach((opt) => {
       t.strictSame(
         collapse(
-          `a<br>${presentEolType}b<br>${presentEolType}c<br>${presentEolType}d`
+          `a<br>${presentEolType}b<br>${presentEolType}c<br>${presentEolType}d`,
+          opt
         ).result,
         `a<br>${presentEolType}b<br>${presentEolType}c<br>${presentEolType}d`,
-        `EOL ${key[idx]}`
+        JSON.stringify(opt, null, 0)
       );
     });
-    t.end();
-  }
-);
+  });
+  t.end();
+});

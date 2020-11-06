@@ -1,10 +1,11 @@
 import apply from "ranges-apply";
-import merge from "ranges-merge";
-import { matchLeftIncl } from "string-match-left-right";
+import Ranges from "ranges-push";
+import { right } from "string-left-right";
+import { defaultOpts } from "./util";
 
 function collapse(str, originalOpts) {
   console.log(
-    `007 ██ string-collapse-whitespace called: str = ${JSON.stringify(
+    `008 ██ string-collapse-whitespace called: str = ${JSON.stringify(
       str,
       null,
       4
@@ -12,14 +13,6 @@ function collapse(str, originalOpts) {
   );
 
   // f's
-  function charCodeBetweenInclusive(character, from, end) {
-    return character.charCodeAt(0) >= from && character.charCodeAt(0) <= end;
-  }
-  function isSpaceOrLeftBracket(character) {
-    return (
-      typeof character === "string" && (character === "<" || !character.trim())
-    );
-  }
   if (typeof str !== "string") {
     throw new Error(
       `string-collapse-white-space/collapse(): [THROW_ID_01] The input is not string but ${typeof str}, equal to: ${JSON.stringify(
@@ -45,59 +38,95 @@ function collapse(str, originalOpts) {
     };
   }
 
-  const finalIndexesToDelete = [];
+  const finalIndexesToDelete = new Ranges();
 
-  const defaults = {
-    trimStart: true, // otherwise, leading whitespace will be collapsed to a single space
-    trimEnd: true, // otherwise, trailing whitespace will be collapsed to a single space
-    trimLines: false, // activates trim per-line basis
-    trimnbsp: false, // non-breaking spaces are trimmed too
-    recogniseHTML: true, // collapses whitespace around HTML brackets
-    removeEmptyLines: false, // if line trim()'s to an empty string, it's removed
-    limitConsecutiveEmptyLinesTo: 0, // zero lines are allowed (if opts.removeEmptyLines is on),
-    rangesOffset: 0, // add this number to all range indexes
-    enforceSpacesOnly: false, // nothing else than space allowed (linebreaks not touched)
-  };
+  const NBSP = `\xa0`;
 
   // fill any settings with defaults if missing:
-  const opts = { ...defaults, ...originalOpts };
+  const opts = { ...defaultOpts, ...originalOpts };
+  console.log(` `);
+  console.log(
+    `049 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+      opts,
+      null,
+      4
+    )}`
+  );
 
-  let preliminaryIndexesToDelete;
-  if (opts.recogniseHTML) {
-    preliminaryIndexesToDelete = [];
+  function push(something, ...extras) {
+    console.log(`---- push() ----`);
+    console.log(
+      `059 ${`\u001b[${35}m${`push()`}\u001b[${39}m`} ${`\u001b[${32}m${`extras`}\u001b[${39}m`} = ${JSON.stringify(
+        extras,
+        null,
+        4
+      )}`
+    );
+
+    const final = opts.cb({ suggested: something, ...extras[0] });
+    console.log(
+      `068 ${`\u001b[${35}m${`push():`}\u001b[${39}m`} ${`\u001b[${33}m${`final`}\u001b[${39}m`} = ${JSON.stringify(
+        final,
+        null,
+        4
+      )}`
+    );
+    if (Array.isArray(final)) {
+      console.log(
+        `076 ${`\u001b[${35}m${`push():`}\u001b[${39}m`} ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`
+      );
+      finalIndexesToDelete.push(...final);
+    }
   }
 
   // -----------------------------------------------------------------------------
 
-  let spacesEndAt = null;
-  let whiteSpaceEndsAt = null;
-  let lineWhiteSpaceEndsAt = null;
-  let endingOfTheLine = false;
-  let stateWithinTag = false;
-  let whiteSpaceWithinTagEndsAt = null;
-  let tagMatched = false;
-  let tagCanEndHere = false;
-  const count = {};
-  let bail = false; // bool flag to notify when false positive detected, used in HTML detection
-  const resetCounts = (obj) => {
-    obj.equalDoubleQuoteCombo = 0;
-    obj.equalOnly = 0;
-    obj.doubleQuoteOnly = 0;
-    obj.spacesBetweenLetterChunks = 0;
-    obj.linebreaks = 0;
-  };
-  let bracketJustFound = false; // dumb state switch, activated by > and terminated by
-  // first non-whitespace char
+  let spacesStartAt = null;
+  let whiteSpaceStartsAt = null;
+  let lineWhiteSpaceStartsAt = null;
+  let linebreaksStartAt = null;
+  let linebreaksEndAt = null;
+  let nbspPresent = false;
 
-  if (opts.recogniseHTML) {
-    resetCounts(count); // initiates the count object, assigning all keys to zero
-  }
+  // Logic clauses for spaces, per-line whitespace and general whitespace
+  // overlap somewhat and are not aware of each other. For example, mixed chunk
+  // "\xa0   a   \xa0"
+  //             ^line whitespace ends here - caught by per-line clauses
+  //
+  // "\xa0   a   \xa0"
+  //                 ^non-breaking space ends here, 1 character further
+  //                  that's caught by general whitespace clauses
+  //
+  // as a solution, we stage all whitespace pushing ranges into this array,
+  // then general whitespace clauses release all what's gathered and can
+  // adjust the logic depending what's in staging.
+  // Alternatively we could dig in already staged ranges, but that's slower.
+  const staging = [];
 
-  let lastLineBreaksLastCharIndex;
   let consecutiveLineBreakCount = 0;
 
-  // looping backwards for better efficiency
-  for (let i = str.length; i--; ) {
+  for (let i = 0, len = str.length; i <= len; i++) {
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //                        LOOP STARTS - THE TOP PART
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
     console.log(
       `${`\u001b[${36}m${`-----------------------------------------------`}\u001b[${39}m`} str[${`\u001b[${35}m${i}\u001b[${39}m`}] = ${JSON.stringify(
         str[i],
@@ -106,794 +135,639 @@ function collapse(str, originalOpts) {
       )}`
     );
     // line break counting
-    if (str[i] === "\n" || (str[i] === "\r" && str[i + 1] !== "\n")) {
+    if (str[i] === "\r" || (str[i] === "\n" && str[i - 1] !== "\r")) {
       consecutiveLineBreakCount += 1;
       console.log(
-        `112 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} consecutiveLineBreakCount = ${consecutiveLineBreakCount}`
+        `141 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} consecutiveLineBreakCount = ${consecutiveLineBreakCount}`
       );
-    } else if (consecutiveLineBreakCount && str[i].trim()) {
-      consecutiveLineBreakCount = 0;
+      if (linebreaksStartAt === null) {
+        linebreaksStartAt = i;
+        console.log(
+          `146 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} linebreaksStartAt = ${linebreaksStartAt}`
+        );
+      }
+
+      linebreaksEndAt = str[i] === "\r" && str[i + 1] === "\n" ? i + 2 : i + 1;
       console.log(
-        `117 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} consecutiveLineBreakCount = ${consecutiveLineBreakCount}`
+        `152 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} linebreaksEndAt = ${linebreaksEndAt}`
+      );
+    }
+
+    // catch raw non-breaking spaces
+    if (!opts.trimnbsp && str[i] === NBSP && !nbspPresent) {
+      nbspPresent = true;
+      console.log(
+        `160 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} nbspPresent = ${nbspPresent}`
       );
     }
 
     //
-    // space clauses
-    if (!opts.enforceSpacesOnly && str[i] === " ") {
-      if (spacesEndAt === null) {
-        spacesEndAt = i;
-        console.log(
-          `127 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`spacesEndAt`}\u001b[${39}m`} = ${spacesEndAt}`
-        );
-      }
-    } else if (!opts.enforceSpacesOnly && spacesEndAt !== null) {
-      // it's not a space character
-      // if we have a sequence of spaces, this character terminates that sequence
-      if (i + 1 !== spacesEndAt) {
-        finalIndexesToDelete.push([i + 1, spacesEndAt]);
-        console.log(
-          `136 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
-            i + 1
-          }, ${spacesEndAt}]`
-        );
-      }
-      spacesEndAt = null;
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //                             LOOP'S MIDDLE
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+
+    // catch the end of space character (" ") sequences
+    if (
+      // spaces sequence hasn't started yet
+      spacesStartAt !== null &&
+      // it's a space
+      str[i] !== " "
+    ) {
+      console.log(`.`);
+      console.log(`194 space sequence`);
+      const a1 = // it's not a beginning of the string (more general whitespace clauses
+        // will take care of trimming, taking into account opts.trimStart etc)
+        // either it's not leading whitespace
+        (spacesStartAt && whiteSpaceStartsAt) ||
+        // it is within frontal whitespace and
+        (!whiteSpaceStartsAt &&
+          (!opts.trimStart ||
+            (!opts.trimnbsp && // we can't trim NBSP
+              // and there's NBSP on one side
+              (str[i] === NBSP || str[spacesStartAt - 1] === NBSP))));
+
+      const a2 = // it is not a trailing whitespace
+        str[i] ||
+        !opts.trimEnd ||
+        (!opts.trimnbsp && // we can't trim NBSP
+          // and there's NBSP on one side
+          (str[i] === NBSP || str[spacesStartAt - 1] === NBSP));
+
+      const a3 = // beware that there might be whitespace characters (like tabs, \t)
+        // before or after this chunk of spaces - if opts.enforceSpacesOnly
+        // is enabled, we need to skip this clause because wider, general
+        // whitespace chunk clauses will take care of the whole chunk, larger
+        // than this [spacesStartAt, i - 1], it will be
+        // [whiteSpaceStartsAt, ..., " "]
+        //
+        // either spaces-only setting is off,
+        !opts.enforceSpacesOnly ||
+        // neither of surrounding characters (if present) is not whitespace
+        ((!str[spacesStartAt - 1] ||
+          // or it's not whitespace
+          str[spacesStartAt - 1].trim()) &&
+          // either it's end of string
+          (!str[i] ||
+            // it's not a whitespace
+            str[i].trim()));
+
       console.log(
-        `143 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`spacesEndAt`}\u001b[${39}m`} = ${spacesEndAt}`
+        `232 space char seq. clause: a1=${`\u001b[${
+          a1 ? 32 : 31
+        }m${!!a1}\u001b[${39}m`} && a2=${`\u001b[${
+          a2 ? 32 : 31
+        }m${!!a2}\u001b[${39}m`} && a3=${`\u001b[${
+          a3 ? 32 : 31
+        }m${!!a3}\u001b[${39}m`} ===> ${`\u001b[${
+          spacesStartAt < i - 1 && a1 && a2 && a3 ? 32 : 31
+        }m${!!(spacesStartAt < i - 1 && a1 && a2 && a3)}\u001b[${39}m`}`
+      );
+
+      if (
+        // length of spaces sequence is more than 1
+        spacesStartAt < i - 1 &&
+        a1 &&
+        a2 &&
+        a3
+      ) {
+        console.log(`250 inside space seq. removal clauses`);
+        const startIdx = spacesStartAt;
+        let endIdx = i;
+        let whatToAdd = " ";
+
+        if (
+          opts.trimLines &&
+          // touches the start
+          (!spacesStartAt ||
+            // touches the end
+            !str[i] ||
+            // linebreak before
+            (str[spacesStartAt - 1] &&
+              `\r\n`.includes(str[spacesStartAt - 1])) ||
+            // linebreak after
+            (str[i] && `\r\n`.includes(str[i])))
+        ) {
+          whatToAdd = null;
+        }
+
+        console.log(
+          `271 initial range: [${startIdx}, ${endIdx}, ${JSON.stringify(
+            whatToAdd,
+            null,
+            0
+          )}]`
+        );
+        // the plan is to reuse existing spaces - for example, imagine:
+        // "a   b" - three space gap.
+        // Instead of overwriting all three spaces with single space, range:
+        // [1, 4, " "], we leave the last space, only deleting other two:
+        // range [1, 3] (notice the third element, "what to add" missing).
+        if (whatToAdd && str[spacesStartAt] === " ") {
+          console.log(`283 contract ending index`);
+          endIdx -= 1;
+          whatToAdd = null;
+          console.log(`286 new range: [${startIdx}, ${endIdx}, " "]`);
+        }
+
+        // if nbsp trimming is disabled and we have a situation like:
+        // "    \xa0     a"
+        //      ^
+        // we're here
+        //
+        // we need to still trim the spaces chunk, in whole
+        if (!spacesStartAt && opts.trimStart) {
+          console.log(`296 - frontal chunk`);
+          endIdx = i;
+          console.log(`298 new range: [${startIdx}, ${endIdx}, " "]`);
+        } else if (!str[i] && opts.trimEnd) {
+          console.log(`300 - trailing chunk`);
+          endIdx = i;
+          console.log(`302 new range: [${startIdx}, ${endIdx}, " "]`);
+        }
+
+        console.log(
+          `306 suggested range: ${`\u001b[${35}m${JSON.stringify(
+            whatToAdd ? [startIdx, endIdx, whatToAdd] : [startIdx, endIdx],
+            null,
+            0
+          )}\u001b[${39}m`}`
+        );
+
+        // Notice we could push ranges to final, using standalone push()
+        // but here we stage because general whitespace clauses need to be
+        // aware what was "booked" so far.
+        staging.push([
+          /* istanbul ignore next */
+          whatToAdd ? [startIdx, endIdx, whatToAdd] : [startIdx, endIdx],
+          {
+            whiteSpaceStartsAt,
+            whiteSpaceEndsAt: right(i - 1) || i,
+            str,
+          },
+        ]);
+      }
+
+      // resets are at the bottom
+    }
+
+    // catch the start of space character (" ") sequences
+    if (
+      // spaces sequence hasn't started yet
+      spacesStartAt === null &&
+      // it's a space
+      str[i] === " "
+    ) {
+      spacesStartAt = i;
+      console.log(
+        `339 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`spacesStartAt`}\u001b[${39}m`} = ${JSON.stringify(
+          spacesStartAt,
+          null,
+          4
+        )}`
       );
     }
 
-    // white space clauses
-    if (str[i].trim() === "" && (opts.trimnbsp || str[i] !== "\xa0")) {
-      console.log(`149 it's a whitespace character, suitable for collapsing`);
-      if (whiteSpaceEndsAt === null) {
-        whiteSpaceEndsAt = i;
-        console.log(
-          `153 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whiteSpaceEndsAt`}\u001b[${39}m`} = ${whiteSpaceEndsAt}`
-        );
-      }
-      // line trimming:
-      if (str[i] !== "\n" && str[i] !== "\r" && lineWhiteSpaceEndsAt === null) {
-        lineWhiteSpaceEndsAt = i + 1;
-        console.log(
-          `160 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lineWhiteSpaceEndsAt`}\u001b[${39}m`} = ${lineWhiteSpaceEndsAt}`
-        );
-      }
-
-      // per-line trimming:
-      if (str[i] === "\n" || str[i] === "\r") {
-        if (lineWhiteSpaceEndsAt !== null) {
-          if (opts.trimLines) {
-            console.log(
-              `169 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
-                i + 1
-              }, ${lineWhiteSpaceEndsAt}]`
-            );
-            finalIndexesToDelete.push([i + 1, lineWhiteSpaceEndsAt]);
-          }
-          lineWhiteSpaceEndsAt = null;
-          console.log(
-            `177 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lineWhiteSpaceEndsAt`}\u001b[${39}m`} = ${lineWhiteSpaceEndsAt}`
-          );
-        }
-        if (str[i - 1] !== "\n" && str[i - 1] !== "\r") {
-          lineWhiteSpaceEndsAt = i;
-          endingOfTheLine = true;
-          console.log(
-            `184 ${`\u001b[${33}m${`lineWhiteSpaceEndsAt`}\u001b[${39}m`} = ${lineWhiteSpaceEndsAt}`
-          );
-          console.log(
-            `187 ${`\u001b[${33}m${`endingOfTheLine`}\u001b[${39}m`} = ${endingOfTheLine}`
-          );
-        }
-      }
-
-      // empty line deletion:
-      // PS. remember we're traversing backwards, so CRLF indexes go in order LF, CR
-      if (str[i] === "\n" || (str[i] === "\r" && str[i + 1] !== "\n")) {
-        const sliceFrom = i + 1;
-        console.log(
-          `197 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`sliceFrom`}\u001b[${39}m`} = ${sliceFrom}`
-        );
-        console.log(
-          `200 ${`\u001b[${33}m${`lastLineBreaksLastCharIndex`}\u001b[${39}m`} = ${JSON.stringify(
-            lastLineBreaksLastCharIndex,
-            null,
-            4
-          )}`
-        );
-        let sliceTo;
-
-        if (Number.isInteger(lastLineBreaksLastCharIndex)) {
-          sliceTo = lastLineBreaksLastCharIndex + 1;
-          console.log(
-            `211 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`sliceTo`}\u001b[${39}m`} = ${sliceTo}`
-          );
-          console.log(
-            `214 \u001b[${33}m [${sliceFrom}, ${sliceTo}] >>>${JSON.stringify(
-              str.slice(sliceFrom, sliceTo),
-              null,
-              4
-            )}<<<\u001b[${39}m`
-          );
-          if (
-            opts.removeEmptyLines &&
-            lastLineBreaksLastCharIndex !== undefined &&
-            str.slice(sliceFrom, sliceTo).trim() === ""
-          ) {
-            // push only if limit has been reached
-            if (
-              consecutiveLineBreakCount >
-              opts.limitConsecutiveEmptyLinesTo + 1
-            ) {
-              console.log(
-                `231 consecutiveLineBreakCount=${consecutiveLineBreakCount} > opts.limitConsecutiveEmptyLinesTo + 1=${
-                  opts.limitConsecutiveEmptyLinesTo + 1
-                }`
-              );
-              finalIndexesToDelete.push([
-                i + 1,
-                lastLineBreaksLastCharIndex + 1,
-              ]);
-              console.log(
-                `240 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} \u001b[${33}m${`[i=${
-                  i + 1
-                }, lastLineBreaksLastCharIndex + 1=${
-                  lastLineBreaksLastCharIndex + 1
-                }]`}\u001b[${39}m\n`
-              );
-            } else {
-              console.log(
-                `248 DIDN'T PUSH, because consecutiveLineBreakCount=${consecutiveLineBreakCount} <= opts.limitConsecutiveEmptyLinesTo + 1=${
-                  opts.limitConsecutiveEmptyLinesTo + 1
-                }`
-              );
-            }
-          }
-        }
-        lastLineBreaksLastCharIndex = i;
-        console.log(
-          `257 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${35}m${`lastLineBreaksLastCharIndex`}\u001b[${39}m`} = ${lastLineBreaksLastCharIndex}`
-        );
-      }
-    } else {
-      console.log(`261 it's not white space character`);
-      if (whiteSpaceEndsAt !== null) {
-        if (
-          // the chunk has some length
-          i + 1 !== whiteSpaceEndsAt + 1 &&
-          // EITHER it's ending whitespace, which we trim whole
-          whiteSpaceEndsAt === str.length - 1 &&
-          opts.trimEnd
-        ) {
-          console.log(
-            `271 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i + 1}, ${
-              whiteSpaceEndsAt + 1
-            }]`
-          );
-          finalIndexesToDelete.push([i + 1, whiteSpaceEndsAt + 1]);
-        } else if (
-          // the chunk has some length
-          i + 1 !== whiteSpaceEndsAt + 1 &&
-          // the chunk is not a single linebreak
-          str[i + 1] !== "\r" &&
-          str[i + 1] !== "\n" &&
-          str[whiteSpaceEndsAt] !== "\r" &&
-          str[whiteSpaceEndsAt] !== "\n" &&
-          // OR opts.enforceSpacesOnly is on
-          opts.enforceSpacesOnly &&
-          // EITHER length is more than 1
-          (i + 1 < whiteSpaceEndsAt ||
-            // OR (length is one but) it's not a space
-            str[i + 1] !== " ")
-        ) {
-          console.log(
-            `292 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${`\u001b[${35}m${`[${
-              i + 1
-            }, ${whiteSpaceEndsAt + 1}]`}\u001b[${39}m`}`
-          );
-          finalIndexesToDelete.push([i + 1, whiteSpaceEndsAt + 1, " "]);
-        }
-        whiteSpaceEndsAt = null;
-        console.log(
-          `300 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whiteSpaceEndsAt`}\u001b[${39}m`} = ${whiteSpaceEndsAt}`
-        );
-      }
-
-      // encountered letter resets line trim counters:
-      if (lineWhiteSpaceEndsAt !== null) {
-        if (endingOfTheLine && opts.trimLines) {
-          endingOfTheLine = false; // apply either way
-          console.log(
-            `309 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`endingOfTheLine`}\u001b[${39}m`} = ${endingOfTheLine}`
-          );
-          if (lineWhiteSpaceEndsAt !== i + 1) {
-            console.log(
-              `313 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${`\u001b[${35}m${`[${
-                i + 1
-              }, ${lineWhiteSpaceEndsAt}]`}\u001b[${39}m`}`
-            );
-            finalIndexesToDelete.push([i + 1, lineWhiteSpaceEndsAt]);
-          }
-        }
-        lineWhiteSpaceEndsAt = null;
-        console.log(
-          `322 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lineWhiteSpaceEndsAt`}\u001b[${39}m`} = ${lineWhiteSpaceEndsAt}`
-        );
-      }
+    // catch the start of whitespace chunks
+    if (
+      // chunk hasn't been recording
+      whiteSpaceStartsAt === null &&
+      // it's whitespace
+      str[i] &&
+      !str[i].trim()
+    ) {
+      whiteSpaceStartsAt = i;
+      console.log(
+        `357 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whiteSpaceStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+          whiteSpaceStartsAt,
+          null,
+          4
+        )}`
+      );
     }
 
-    // this chunk could be ported to the (str[i].trim() === '') clause for example,
-    // but it depends on the flags that aforementioned's "else" is setting,
-    // (whiteSpaceEndsAt !== null),
-    // therefore it's less code if we put zero index clauses here.
-    if (i === 0) {
-      if (whiteSpaceEndsAt !== null && opts.trimStart) {
-        finalIndexesToDelete.push([0, whiteSpaceEndsAt + 1]);
-        console.log(`334 PUSH [0, ${whiteSpaceEndsAt + 1}]`);
-      } else if (spacesEndAt !== null) {
-        finalIndexesToDelete.push([i + 1, spacesEndAt + 1]);
-        console.log(`337 PUSH [${i + 1}, ${spacesEndAt + 1}]`);
-      }
-    }
+    // catch the end of line whitespace (chunk of whitespace characters execept LF / CR)
+    if (
+      // chunk has been recording
+      lineWhiteSpaceStartsAt !== null &&
+      // and end has been met:
+      //
+      // either line break has been reached
+      (`\n\r`.includes(str[i]) ||
+        // or
+        // it's not whitespace
+        !str[i] ||
+        str[i].trim() ||
+        // either we don't care about non-breaking spaces and trim/replace them
+        (!(opts.trimnbsp || opts.enforceSpacesOnly) &&
+          // and we do care and it's not a non-breaking space
+          str[i] === NBSP)) &&
+      // also, mind the trim-able whitespace at the edges...
+      //
+      // it's not beginning of the string (more general whitespace clauses
+      // will take care of trimming, taking into account opts.trimStart etc)
+      (lineWhiteSpaceStartsAt ||
+        !opts.trimStart ||
+        (opts.enforceSpacesOnly && nbspPresent)) &&
+      // it's not the ending of the string - we traverse upto and including
+      // str.length, which means last str[i] is undefined
+      (str[i] || !opts.trimEnd || (opts.enforceSpacesOnly && nbspPresent))
+    ) {
+      console.log(`.`);
+      console.log(`393 line whitespace clauses`);
 
-    if (opts.recogniseHTML) {
-      if (str[i].trim() === "") {
-        // W H I T E S P A C E
-        if (stateWithinTag && !tagCanEndHere) {
-          tagCanEndHere = true;
-          console.log(
-            `347 SET ${`\u001b[${33}m${`tagCanEndHere`}\u001b[${39}m`} = ${tagCanEndHere}`
-          );
+      // tend opts.enforceSpacesOnly
+      // ---------------------------
+      if (
+        // setting is on
+        opts.enforceSpacesOnly &&
+        // either chunk's longer than 1
+        (i > lineWhiteSpaceStartsAt + 1 ||
+          // or it's single character but not a space (yet still whitespace)
+          str[lineWhiteSpaceStartsAt] !== " ")
+      ) {
+        console.log(`405 opts.enforceSpacesOnly clauses`);
+        // also whole whitespace chunk goes, only we replace with a single space
+        // but maybe we can reuse existing characters to reduce the footprint
+        let startIdx = lineWhiteSpaceStartsAt;
+        let endIdx = i;
+        let whatToAdd = " ";
+
+        if (str[endIdx - 1] === " ") {
+          endIdx -= 1;
+          whatToAdd = null;
+        } else if (str[lineWhiteSpaceStartsAt] === " ") {
+          startIdx += 1;
+          whatToAdd = null;
         }
-        if (tagMatched && !whiteSpaceWithinTagEndsAt) {
-          // cases where there's space between opening bracket and a confirmed HTML tag name
-          whiteSpaceWithinTagEndsAt = i + 1;
-          console.log(
-            `354 SET ${`\u001b[${33}m${`whiteSpaceWithinTagEndsAt`}\u001b[${39}m`} = ${whiteSpaceWithinTagEndsAt}`
-          );
-        }
+
+        // make sure it's not on the edge of string with trim options enabled,
+        // in that case don't add the space!
         if (
-          tagMatched &&
-          str[i - 1] !== undefined &&
-          str[i - 1].trim() !== "" &&
-          str[i - 1] !== "<" &&
-          str[i - 1] !== "/"
+          ((opts.trimStart || opts.trimLines) && !lineWhiteSpaceStartsAt) ||
+          ((opts.trimEnd || opts.trimLines) && !str[i])
         ) {
-          // bail, something's wrong, there's non-whitespace character to the left of a
-          // recognised HTML tag. For example: "< zzz div ...>"
-          tagMatched = false;
-          stateWithinTag = false;
-          console.log("368 SET tagMatched = false; stateWithinTag = false;");
-
-          preliminaryIndexesToDelete = [];
-          console.log("371 WIPE preliminaryIndexesToDelete");
-        }
-        if (
-          !bail &&
-          !bracketJustFound &&
-          str[i].trim() === "" &&
-          str[i - 1] !== "<" &&
-          (str[i + 1] === undefined ||
-            (str[i + 1].trim() !== "" && str[i + 1].trim() !== "/"))
-        ) {
-          if (
-            str[i - 1] === undefined ||
-            (str[i - 1].trim() !== "" &&
-              str[i - 1] !== "<" &&
-              str[i - 1] !== "/")
-          ) {
-            console.log(
-              `388: count.spacesBetweenLetterChunks was ${count.spacesBetweenLetterChunks}`
-            );
-            count.spacesBetweenLetterChunks += 1;
-            console.log(
-              `392: count.spacesBetweenLetterChunks became ${count.spacesBetweenLetterChunks}`
-            );
-          } else {
-            // loop backwards and check, is the first non-space char being "<".
-            console.log(
-              `397 ${`\u001b[${31}m${`LOOP BACKWARDS`}\u001b[${39}m`}`
-            );
-            for (let y = i - 1; y--; ) {
-              console.log(
-                `401 ${`\u001b[${31}m ======= ${str[y]} ======= \u001b[${39}m`}`
-              );
-              if (str[y].trim() !== "") {
-                if (str[y] === "<") {
-                  bail = true;
-                } else if (str[y] !== "/") {
-                  console.log(
-                    `408 ${`\u001b[${31}m${`██`}\u001b[${39}m`} count.spacesBetweenLetterChunks was ${
-                      count.spacesBetweenLetterChunks
-                    }`
-                  );
-                  count.spacesBetweenLetterChunks += i - y;
-                  console.log(
-                    `414 ${`\u001b[${31}m${`██`}\u001b[${39}m`} count.spacesBetweenLetterChunks became ${
-                      count.spacesBetweenLetterChunks
-                    }`
-                  );
-                }
-                console.log(`419 ${`\u001b[${31}m${`██ BREAK`}\u001b[${39}m`}`);
-                break;
-              }
-            }
-            console.log(`423 ${`\u001b[${31}mEND OF A LOOP\u001b[${39}m`}`);
-          }
-        }
-      } else {
-        // N O T   W H I T E S P A C E
-
-        // =========
-        // count equal characters and double quotes
-        if (str[i] === "=") {
-          count.equalOnly += 1;
+          whatToAdd = null;
           console.log(
-            `434 SET ${`\u001b[${33}m${`count.equalOnly`}\u001b[${39}m`} = ${
-              count.equalOnly
-            }`
-          );
-          if (str[i + 1] === '"') {
-            count.equalDoubleQuoteCombo += 1;
-            console.log(
-              `441 SET ${`\u001b[${33}m${`count.equalDoubleQuoteCombo`}\u001b[${39}m`} = ${
-                count.equalDoubleQuoteCombo
-              }`
-            );
-          }
-        } else if (str[i] === '"') {
-          count.doubleQuoteOnly += 1;
-          console.log(
-            `449 SET ${`\u001b[${33}m${`count.doubleQuoteOnly`}\u001b[${39}m`} = ${
-              count.doubleQuoteOnly
-            }`
-          );
-        }
-
-        // if the dumb flag is on, turn it off.
-        // first non-whitespace character deactivates it.
-        if (bracketJustFound) {
-          bracketJustFound = false;
-          console.log(
-            `460 SET ${`\u001b[${33}m${`bracketJustFound`}\u001b[${39}m`} = ${bracketJustFound}`
-          );
-        }
-
-        // =========
-        // terminate existing range, push the captured range into preliminaries' array
-        if (whiteSpaceWithinTagEndsAt !== null) {
-          console.log(`467 PUSH [${i + 1}, ${whiteSpaceWithinTagEndsAt}]`);
-          preliminaryIndexesToDelete.push([i + 1, whiteSpaceWithinTagEndsAt]);
-          whiteSpaceWithinTagEndsAt = null;
-          console.log(
-            `471 SET ${`\u001b[${33}m${`whiteSpaceWithinTagEndsAt`}\u001b[${39}m`} = ${whiteSpaceWithinTagEndsAt}`
-          );
-        }
-
-        // =========
-        // html detection bits:
-        // mind you, we're iterating backwards, so tag starts with ">"
-        if (str[i] === ">") {
-          // first, reset the count obj.
-          resetCounts(count);
-          console.log(
-            `482 REST COUNT: NOW, count = ${JSON.stringify(count, null, 0)}`
-          );
-          // set dumb bracket flag to on
-          bracketJustFound = true;
-          console.log(
-            `487 SET ${`\u001b[${33}m${`bracketJustFound`}\u001b[${39}m`} = ${bracketJustFound}`
-          );
-          // two cases:
-          if (stateWithinTag) {
-            // this is bad, another closing bracket
-            preliminaryIndexesToDelete = [];
-            console.log("493 WIPE preliminaryIndexesToDelete");
-          } else {
-            stateWithinTag = true;
-            console.log(
-              `497 SET ${`\u001b[${33}m${`stateWithinTag`}\u001b[${39}m`} = ${stateWithinTag}`
-            );
-            if (
-              str[i - 1] !== undefined &&
-              str[i - 1].trim() === "" &&
-              !whiteSpaceWithinTagEndsAt
-            ) {
-              whiteSpaceWithinTagEndsAt = i;
-              console.log(
-                `506 SET ${`\u001b[${33}m${`whiteSpaceWithinTagEndsAt`}\u001b[${39}m`} = ${whiteSpaceWithinTagEndsAt}`
-              );
-            }
-          }
-          if (!tagCanEndHere) {
-            tagCanEndHere = true;
-            console.log(
-              `513 SET ${`\u001b[${33}m${`tagCanEndHere`}\u001b[${39}m`} = ${tagCanEndHere}`
-            );
-            // tag name might be ending with bracket: <br>
-          }
-        } else if (str[i] === "<") {
-          console.log(
-            `519 preliminaryIndexesToDelete = ${JSON.stringify(
-              preliminaryIndexesToDelete,
+            `428 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whatToAdd`}\u001b[${39}m`} = ${JSON.stringify(
+              whatToAdd,
               null,
               4
             )}`
           );
-          // the rest of calculations:
-          stateWithinTag = false;
+        }
+
+        console.log(
+          `437 suggested range: ${`\u001b[${35}m${`[${lineWhiteSpaceStartsAt}, ${i}, " "]`}\u001b[${39}m`}`
+        );
+        push(whatToAdd ? [startIdx, endIdx, whatToAdd] : [startIdx, endIdx], {
+          whiteSpaceStartsAt,
+          whiteSpaceEndsAt: i,
+          str,
+        });
+      }
+
+      // tend opts.trimLines
+      // -------------------
+      if (
+        // setting is on
+        opts.trimLines &&
+        // it is on the edge of a line
+        (!lineWhiteSpaceStartsAt ||
+          `\r\n`.includes(str[lineWhiteSpaceStartsAt - 1]) ||
+          !str[i] ||
+          `\r\n`.includes(str[i])) &&
+        // and we don't care about non-breaking spaces
+        (opts.trimnbsp ||
+          // this chunk doesn't contain any
+          !nbspPresent)
+      ) {
+        console.log(
+          `462 suggested range: ${`\u001b[${35}m${`[${lineWhiteSpaceStartsAt}, ${i}, " "]`}\u001b[${39}m`}`
+        );
+        push([lineWhiteSpaceStartsAt, i], {
+          whiteSpaceStartsAt,
+          whiteSpaceEndsAt: right(str, i - 1) || i,
+          str,
+        });
+      }
+
+      lineWhiteSpaceStartsAt = null;
+      console.log(
+        `473 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`lineWhiteSpaceStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+          lineWhiteSpaceStartsAt,
+          null,
+          4
+        )}`
+      );
+    }
+
+    // Catch the start of a sequence of line whitespace (chunk of whitespace characters execept LF / CR)
+    if (
+      // chunk hasn't been recording
+      lineWhiteSpaceStartsAt === null &&
+      // we're currently not on CR or LF
+      !`\r\n`.includes(str[i]) &&
+      // and it's whitespace
+      str[i] &&
+      !str[i].trim() &&
+      // mind the raw non-breaking spaces
+      (opts.trimnbsp || str[i] !== NBSP || opts.enforceSpacesOnly)
+    ) {
+      lineWhiteSpaceStartsAt = i;
+      console.log(
+        `495 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lineWhiteSpaceStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+          lineWhiteSpaceStartsAt,
+          null,
+          4
+        )}`
+      );
+    }
+
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //                             LOOP'S BOTTOM
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+
+    // Catch the end of whitespace chunks
+
+    // This clause is deliberately under the catch clauses of the end of line
+    // whitespace chunks because the empty, null ranges are the last thing to
+    // be pinged to the callback. "pushed" flag must not be triggered too early.
+    if (
+      // whitespace chunk has been recording
+      whiteSpaceStartsAt !== null &&
+      // it's EOL
+      (!str[i] ||
+        // or non-whitespace character
+        str[i].trim())
+    ) {
+      console.log(`.`);
+      console.log(`539 general whitespace clauses`);
+      // If there's anything staged, that must be string-only or per-line
+      // whitespace chunks (possibly even multiple) gathered while we've been
+      // traversing this (one) whitespace chunk.
+
+      if (
+        // whitespace is frontal
+        ((!whiteSpaceStartsAt &&
+          // frontal trimming is enabled
+          (opts.trimStart ||
+            // or per-line trimming is enabled
+            (opts.trimLines &&
+              // and we're on the same line (we don't want to remove linebreaks)
+              linebreaksStartAt === null))) ||
+          // whitespace is trailing
+          (!str[i] &&
+            // trailing part's trimming is enabled
+            (opts.trimEnd ||
+              // or per-line trimming is enabled
+              (opts.trimLines &&
+                // and we're on the same line (we don't want to remove linebreaks)
+                linebreaksStartAt === null)))) &&
+        // either we don't care about non-breaking spaces
+        (opts.trimnbsp ||
+          // or there are no raw non-breaking spaces in this trim-suitable chunk
+          !nbspPresent ||
+          // or there are non-breaking spaces but they don't matter because
+          // we want spaces-only everywhere
+          opts.enforceSpacesOnly)
+      ) {
+        console.log(
+          `570 suggested range: ${`\u001b[${35}m${`[${whiteSpaceStartsAt}, ${i}]`}\u001b[${39}m`}`
+        );
+        push([whiteSpaceStartsAt, i], {
+          whiteSpaceStartsAt,
+          whiteSpaceEndsAt: i,
+          str,
+        });
+      } else {
+        console.log(`578 - neither frontal nor rear`);
+        let somethingPushed = false;
+
+        // tackle the line breaks
+        // ----------------------
+        if (
+          opts.removeEmptyLines &&
+          // there were some linebreaks recorded
+          linebreaksStartAt !== null &&
+          // there are too many
+          consecutiveLineBreakCount > opts.limitConsecutiveEmptyLinesTo + 1
+        ) {
+          somethingPushed = true;
+          console.log(`591 remove the linebreak sequence`);
+
+          // try to salvage some of the existing linebreaks - don't replace the
+          // same with the same
+          let startIdx = linebreaksStartAt;
+          let endIdx = linebreaksEndAt;
+          let whatToAdd = `${
+            str[linebreaksStartAt] === "\r" &&
+            str[linebreaksStartAt + 1] === "\n"
+              ? "\r\n"
+              : str[linebreaksStartAt]
+          }`.repeat(opts.limitConsecutiveEmptyLinesTo + 1);
+
           console.log(
-            `528 SET ${`\u001b[${33}m${`stateWithinTag`}\u001b[${39}m`} = ${stateWithinTag}`
+            `605 FIY, ${`\u001b[${33}m${`whatToAdd`}\u001b[${39}m`} = ${JSON.stringify(
+              whatToAdd,
+              null,
+              4
+            )}`
           );
-          // reset bail flag
-          if (bail) {
-            bail = false;
-            console.log(
-              `534 SET ${`\u001b[${33}m${`bail`}\u001b[${39}m`} = ${bail}`
-            );
+
+          /* istanbul ignore else */
+          if (str.endsWith(whatToAdd, linebreaksEndAt)) {
+            console.log(`614 reuse the ending`);
+            endIdx -= whatToAdd.length;
+            whatToAdd = null;
+          } else if (str.startsWith(whatToAdd, linebreaksStartAt)) {
+            console.log(`618 reuse the beginning`);
+            startIdx += whatToAdd.length;
+            whatToAdd = null;
           }
-          // bail clause, when false positives are detected, such as "a < b and c > d" -
-          // the part: < b and c > looks really deceptive, b is valid tag name...
-          // this bail will detect such cases, freak out and bail, wiping preliminary ranges.
-          if (
-            count.spacesBetweenLetterChunks > 0 &&
-            count.equalDoubleQuoteCombo === 0
-          ) {
-            tagMatched = false;
-            console.log(
-              `546 SET ${`\u001b[${33}m${`tagMatched`}\u001b[${39}m`} = ${tagMatched}`
-            );
-            preliminaryIndexesToDelete = [];
-            console.log("549 WIPE preliminaryIndexesToDelete");
-          }
-          // if somehow we're within a tag and there are already provisional ranges
-          if (tagMatched) {
-            if (preliminaryIndexesToDelete.length) {
-              preliminaryIndexesToDelete.forEach(([rangeStart, rangeEnd]) =>
-                finalIndexesToDelete.push([rangeStart, rangeEnd])
-              );
-            }
-            tagMatched = false;
-            console.log(
-              `560 SET ${`\u001b[${33}m${`tagMatched`}\u001b[${39}m`} = ${tagMatched}`
-            );
-          }
-          // finally, reset the count obj.
-          resetCounts(count);
+
           console.log(
-            `566 SET ${`\u001b[${33}m${`count`}\u001b[${39}m`} = ${JSON.stringify(
-              count,
+            `624 suggested range: ${`\u001b[${35}m${`[${startIdx}, ${endIdx}, ${JSON.stringify(
+              whatToAdd,
               null,
               0
-            )}`
+            )}]`}\u001b[${39}m`}`
           );
-        } else if (stateWithinTag && str[i] === "/") {
-          whiteSpaceWithinTagEndsAt = i;
-          console.log(
-            `575 SET ${`\u001b[${33}m${`whiteSpaceWithinTagEndsAt`}\u001b[${39}m`} = ${whiteSpaceWithinTagEndsAt}`
-          );
-        } else if (stateWithinTag && !tagMatched) {
-          if (tagCanEndHere && charCodeBetweenInclusive(str[i], 97, 122)) {
-            // if letters a-z, inclusive:
-            // ---------------------------------------------------------------
-            tagCanEndHere = false;
-            console.log(
-              `583 SET ${`\u001b[${33}m${`tagCanEndHere`}\u001b[${39}m`} = ${tagCanEndHere}`
-            );
-            if (charCodeBetweenInclusive(str[i], 97, 110)) {
-              // if letters a-n, inclusive:
-              if (
-                (str[i] === "a" &&
-                  ((str[i - 1] === "e" &&
-                    matchLeftIncl(str, i, ["area", "textarea"], {
-                      cb: isSpaceOrLeftBracket,
-                      i: true,
-                    })) ||
-                    (str[i - 1] === "t" &&
-                      matchLeftIncl(str, i, ["data", "meta"], {
-                        cb: isSpaceOrLeftBracket,
-                        i: true,
-                      })) ||
-                    isSpaceOrLeftBracket(str[i - 1]))) ||
-                (str[i] === "b" &&
-                  (matchLeftIncl(str, i, ["rb", "sub"], {
-                    cb: isSpaceOrLeftBracket,
-                    i: true,
-                  }) ||
-                    isSpaceOrLeftBracket(str[i - 1]))) ||
-                (str[i] === "c" &&
-                  matchLeftIncl(str, i, "rtc", {
-                    cb: isSpaceOrLeftBracket,
-                    i: true,
-                  })) ||
-                (str[i] === "d" &&
-                  ((str[i - 1] === "a" &&
-                    matchLeftIncl(str, i, ["head", "thead"], {
-                      cb: isSpaceOrLeftBracket,
-                      i: true,
-                    })) ||
-                    matchLeftIncl(
-                      str,
-                      i,
-                      ["kbd", "dd", "embed", "legend", "td"],
-                      {
-                        cb: isSpaceOrLeftBracket,
-                        i: true,
-                      }
-                    ))) ||
-                (str[i] === "e" &&
-                  (matchLeftIncl(str, i, "source", {
-                    cb: isSpaceOrLeftBracket,
-                    i: true,
-                  }) ||
-                    (str[i - 1] === "d" &&
-                      matchLeftIncl(str, i, ["aside", "code"], {
-                        cb: isSpaceOrLeftBracket,
-                        i: true,
-                      })) ||
-                    (str[i - 1] === "l" &&
-                      matchLeftIncl(
-                        str,
-                        i,
-                        ["table", "article", "title", "style"],
-                        {
-                          cb: isSpaceOrLeftBracket,
-                          i: true,
-                        }
-                      )) ||
-                    (str[i - 1] === "m" &&
-                      matchLeftIncl(str, i, ["iframe", "time"], {
-                        cb: isSpaceOrLeftBracket,
-                        i: true,
-                      })) ||
-                    (str[i - 1] === "r" &&
-                      matchLeftIncl(str, i, ["pre", "figure", "picture"], {
-                        cb: isSpaceOrLeftBracket,
-                        i: true,
-                      })) ||
-                    (str[i - 1] === "t" &&
-                      matchLeftIncl(
-                        str,
-                        i,
-                        ["template", "cite", "blockquote"],
-                        {
-                          cb: isSpaceOrLeftBracket,
-                          i: true,
-                        }
-                      )) ||
-                    matchLeftIncl(str, i, "base", {
-                      cb: isSpaceOrLeftBracket,
-                      i: true,
-                    }) ||
-                    isSpaceOrLeftBracket(str[i - 1]))) ||
-                (str[i] === "g" &&
-                  matchLeftIncl(str, i, ["img", "strong", "dialog", "svg"], {
-                    cb: isSpaceOrLeftBracket,
-                    i: true,
-                  })) ||
-                (str[i] === "h" &&
-                  matchLeftIncl(str, i, ["th", "math"], {
-                    cb: isSpaceOrLeftBracket,
-                    i: true,
-                  })) ||
-                (str[i] === "i" &&
-                  (matchLeftIncl(str, i, ["bdi", "li"], {
-                    cb: isSpaceOrLeftBracket,
-                    i: true,
-                  }) ||
-                    isSpaceOrLeftBracket(str[i - 1]))) ||
-                (str[i] === "k" &&
-                  matchLeftIncl(str, i, ["track", "link", "mark"], {
-                    cb: isSpaceOrLeftBracket,
-                    i: true,
-                  })) ||
-                (str[i] === "l" &&
-                  matchLeftIncl(
-                    str,
-                    i,
-                    ["html", "ol", "ul", "dl", "label", "del", "small", "col"],
-                    {
-                      cb: isSpaceOrLeftBracket,
-                      i: true,
-                    }
-                  )) ||
-                (str[i] === "m" &&
-                  matchLeftIncl(str, i, ["param", "em", "menuitem", "form"], {
-                    cb: isSpaceOrLeftBracket,
-                    i: true,
-                  })) ||
-                (str[i] === "n" &&
-                  ((str[i - 1] === "o" &&
-                    matchLeftIncl(
-                      str,
-                      i,
-                      ["section", "caption", "figcaption", "option", "button"],
-                      {
-                        cb: isSpaceOrLeftBracket,
-                        i: true,
-                      }
-                    )) ||
-                    matchLeftIncl(str, i, ["span", "keygen", "dfn", "main"], {
-                      cb: isSpaceOrLeftBracket,
-                      i: true,
-                    })))
-              ) {
-                tagMatched = true;
-                console.log(
-                  `725 SET ${`\u001b[${33}m${`tagMatched`}\u001b[${39}m`} = ${tagMatched}`
-                );
-              }
-            }
-            // o-z, inclusive. codes 111-122, inclusive
-            else if (
-              (str[i] === "o" &&
-                matchLeftIncl(str, i, ["bdo", "video", "audio"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true,
-                })) ||
-              (str[i] === "p" &&
-                (isSpaceOrLeftBracket(str[i - 1]) ||
-                  (str[i - 1] === "u" &&
-                    matchLeftIncl(
-                      str,
-                      i,
-                      ["hgroup", "colgroup", "optgroup", "sup"],
-                      {
-                        cb: isSpaceOrLeftBracket,
-                        i: true,
-                      }
-                    )) ||
-                  matchLeftIncl(str, i, ["map", "samp", "rp"], {
-                    cb: isSpaceOrLeftBracket,
-                    i: true,
-                  }))) ||
-              (str[i] === "q" && isSpaceOrLeftBracket(str[i - 1])) ||
-              (str[i] === "r" &&
-                ((str[i - 1] === "e" &&
-                  matchLeftIncl(str, i, ["header", "meter", "footer"], {
-                    cb: isSpaceOrLeftBracket,
-                    i: true,
-                  })) ||
-                  matchLeftIncl(
-                    str,
-                    i,
-                    ["var", "br", "abbr", "wbr", "hr", "tr"],
-                    {
-                      cb: isSpaceOrLeftBracket,
-                      i: true,
-                    }
-                  ))) ||
-              (str[i] === "s" &&
-                ((str[i - 1] === "s" &&
-                  matchLeftIncl(str, i, ["address", "progress"], {
-                    cb: isSpaceOrLeftBracket,
-                    i: true,
-                  })) ||
-                  matchLeftIncl(str, i, ["canvas", "details", "ins"], {
-                    cb: isSpaceOrLeftBracket,
-                    i: true,
-                  }) ||
-                  isSpaceOrLeftBracket(str[i - 1]))) ||
-              (str[i] === "t" &&
-                ((str[i - 1] === "c" &&
-                  matchLeftIncl(str, i, ["object", "select"], {
-                    cb: isSpaceOrLeftBracket,
-                    i: true,
-                  })) ||
-                  (str[i - 1] === "o" &&
-                    matchLeftIncl(str, i, ["slot", "tfoot"], {
-                      cb: isSpaceOrLeftBracket,
-                      i: true,
-                    })) ||
-                  (str[i - 1] === "p" &&
-                    matchLeftIncl(str, i, ["script", "noscript"], {
-                      cb: isSpaceOrLeftBracket,
-                      i: true,
-                    })) ||
-                  (str[i - 1] === "u" &&
-                    matchLeftIncl(str, i, ["input", "output"], {
-                      cb: isSpaceOrLeftBracket,
-                      i: true,
-                    })) ||
-                  matchLeftIncl(str, i, ["fieldset", "rt", "datalist", "dt"], {
-                    cb: isSpaceOrLeftBracket,
-                    i: true,
-                  }))) ||
-              (str[i] === "u" &&
-                (isSpaceOrLeftBracket(str[i - 1]) ||
-                  matchLeftIncl(str, i, "menu", {
-                    cb: isSpaceOrLeftBracket,
-                    i: true,
-                  }))) ||
-              (str[i] === "v" &&
-                matchLeftIncl(str, i, ["nav", "div"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true,
-                })) ||
-              (str[i] === "y" &&
-                matchLeftIncl(str, i, ["ruby", "body", "tbody", "summary"], {
-                  cb: isSpaceOrLeftBracket,
-                  i: true,
-                }))
-            ) {
-              tagMatched = true;
-              console.log(
-                `823 SET ${`\u001b[${33}m${`tagMatched`}\u001b[${39}m`} = ${tagMatched}`
-              );
-            }
-
-            // ---------------------------------------------------------------
-          } else if (
-            tagCanEndHere &&
-            charCodeBetweenInclusive(str[i], 49, 54)
-          ) {
-            // if digits 1-6
-            tagCanEndHere = false;
-            console.log(
-              `835 SET ${`\u001b[${33}m${`tagCanEndHere`}\u001b[${39}m`} = ${tagCanEndHere}`
-            );
-            if (
-              str[i - 1] === "h" &&
-              (str[i - 2] === "<" || str[i - 2].trim() === "")
-            ) {
-              tagMatched = true;
-              console.log(
-                `843 SET ${`\u001b[${33}m${`tagMatched`}\u001b[${39}m`} = ${tagMatched}`
-              );
-            }
-          } else if (str[i] === "=" || str[i] === '"') {
-            tagCanEndHere = false;
-            console.log(
-              `849 SET ${`\u001b[${33}m${`tagCanEndHere`}\u001b[${39}m`} = ${`\u001b[${35}m${tagCanEndHere}\u001b[${39}m`}`
-            );
-          }
+          /* istanbul ignore next */
+          push(whatToAdd ? [startIdx, endIdx, whatToAdd] : [startIdx, endIdx], {
+            whiteSpaceStartsAt,
+            whiteSpaceEndsAt: i,
+            str,
+          });
         }
+
+        // push the staging if it exists
+        // -----------------------------
+        if (staging.length) {
+          console.log(`641 push all staged ranges into final`);
+          while (staging.length) {
+            // FIFO - first in, first out
+            push(...staging.shift(), {
+              whiteSpaceStartsAt,
+              whiteSpaceEndsAt: i,
+              str,
+            });
+          }
+          somethingPushed = true;
+        }
+
+        // if nothing has been pushed so far, push nothing to cb()
+        // -------------------------------------------------------
+        if (!somethingPushed) {
+          console.log(
+            `657 suggested range: ${`\u001b[${35}m${`null`}\u001b[${39}m`}`
+          );
+          push(null, {
+            whiteSpaceStartsAt,
+            whiteSpaceEndsAt: i,
+            str,
+          });
+        }
+      }
+
+      whiteSpaceStartsAt = null;
+      lineWhiteSpaceStartsAt = null;
+      console.log(
+        `670 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`whiteSpaceStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+          whiteSpaceStartsAt,
+          null,
+          4
+        )}; ${`\u001b[${33}m${`lineWhiteSpaceStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+          lineWhiteSpaceStartsAt,
+          null,
+          4
+        )}`
+      );
+
+      nbspPresent = false;
+      console.log(
+        `683 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nbspPresent`}\u001b[${39}m`} = ${nbspPresent}`
+      );
+
+      // reset line break counts
+      if (consecutiveLineBreakCount) {
+        consecutiveLineBreakCount = 0;
+        console.log(
+          `690 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} consecutiveLineBreakCount = ${consecutiveLineBreakCount}`
+        );
+        linebreaksStartAt = null;
+        console.log(
+          `694 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} linebreaksStartAt = ${linebreaksStartAt}`
+        );
+        linebreaksEndAt = null;
+        console.log(
+          `698 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} linebreaksEndAt = ${linebreaksEndAt}`
+        );
       }
     }
 
-    console.log(`\u001b[${90}m${`============================`}\u001b[${39}m`);
+    // rest spaces chunk starting record
+    if (spacesStartAt !== null && str[i] !== " ") {
+      spacesStartAt = null;
+      console.log(
+        `707 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`spacesStartAt`}\u001b[${39}m`} = ${JSON.stringify(
+          spacesStartAt,
+          null,
+          4
+        )}`
+      );
+    }
+
+    // -------------------------------------------------------------------------
+
+    console.log(`${`\u001b[${90}m${`.`}\u001b[${39}m`}`);
+    console.log(`\u001b[${90}m${`██  ██  ██  ██  ██`}\u001b[${39}m`);
     console.log(
-      `\u001b[${36}m${`spacesEndAt`}\u001b[${39}m = ${spacesEndAt};
-\u001b[${36}m${`whiteSpaceEndsAt`}\u001b[${39}m = ${whiteSpaceEndsAt};
-\u001b[${36}m${`lineWhiteSpaceEndsAt`}\u001b[${39}m = ${lineWhiteSpaceEndsAt};
-\u001b[${36}m${`endingOfTheLine`}\u001b[${39}m = ${endingOfTheLine};
+      `\u001b[${36}m${`spacesStartAt`}\u001b[${39}m = ${spacesStartAt};
+\u001b[${36}m${`whiteSpaceStartsAt`}\u001b[${39}m = ${whiteSpaceStartsAt};
+\u001b[${36}m${`lineWhiteSpaceStartsAt`}\u001b[${39}m = ${lineWhiteSpaceStartsAt};
+\u001b[${36}m${`linebreaksStartAt`}\u001b[${39}m = ${linebreaksStartAt};
+\u001b[${36}m${`linebreaksEndAt`}\u001b[${39}m = ${linebreaksEndAt};
+\u001b[${36}m${`nbspPresent`}\u001b[${39}m = ${nbspPresent};
 \u001b[${36}m${`consecutiveLineBreakCount`}\u001b[${39}m = ${consecutiveLineBreakCount}`
     );
     console.log(
-      `\n\u001b[${36}m${`stateWithinTag`}\u001b[${39}m = ${stateWithinTag};
-\u001b[${36}m${`whiteSpaceWithinTagEndsAt`}\u001b[${39}m = ${whiteSpaceWithinTagEndsAt};
-\u001b[${36}m${`tagMatched`}\u001b[${39}m = ${tagMatched};
-\u001b[${36}m${`tagCanEndHere`}\u001b[${39}m = ${tagCanEndHere}`
+      `${`\u001b[${36}m${`staging`}\u001b[${39}m`} = ${JSON.stringify(
+        staging,
+        null,
+        4
+      )}`
     );
+
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //                             LOOP ENDS
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
   }
 
-  const ranges = finalIndexesToDelete.length
-    ? merge(finalIndexesToDelete)
-    : null;
-  if (opts.rangesOffset && ranges && ranges.length) {
-    // beware there can be third element in the array, a value to add
-    ranges.forEach((val, idx) => {
-      ranges[idx][0] += opts.rangesOffset;
-      ranges[idx][1] += opts.rangesOffset;
-    });
-  }
-
-  console.log(`883 --------`);
+  console.log(`759 ----------------------------`);
   console.log(
-    `885 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
-      ranges,
+    `761 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`finalIndexesToDelete`}\u001b[${39}m`} = ${JSON.stringify(
+      finalIndexesToDelete.current(),
       null,
       4
     )}`
   );
 
   return {
-    result: finalIndexesToDelete.length
-      ? apply(str, finalIndexesToDelete)
-      : str,
-    ranges,
+    result: apply(str, finalIndexesToDelete.current()),
+    ranges: finalIndexesToDelete.current(),
   };
 }
 

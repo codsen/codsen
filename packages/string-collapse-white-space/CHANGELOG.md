@@ -3,12 +3,59 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.0.0 (2020-11-06)
+
+**A major rewrite.**
+
+Each whitespace chunk is needed is passed through a callback (even when there is no action needed). This allows you to granularly control the collapsing. For example, you can delete the single spaces between two characters under certain circumstances (a thing not available by existing options' settings) - for example, minify css selectors:
+
+```css
+div > span {
+  color: red;
+}
+```
+
+Imagine you are minifying the code above and parser extracted the `div > span` part. Now you want to collapse excessive whitespace like `div \t > \t span` (spaces with tabs), but also remove even single spaces, to turn it into `div>span`.
+
+Easy!
+
+```js
+import { strict as assert } from "assert";
+import collapse from "../dist/string-collapse-white-space.esm.js";
+assert.equal(
+  collapse(`div > span`, {
+    cb: ({ suggested, whiteSpaceStartsAt, whiteSpaceEndsAt, str }) => {
+      if (str[whiteSpaceStartsAt - 1] === ">") {
+        // console.log(`> on the left! - wipe this whitespace`);
+        return [whiteSpaceStartsAt, whiteSpaceEndsAt];
+      }
+      if (str[whiteSpaceEndsAt] === ">") {
+        // console.log(`> on the right! - wipe this whitespace`);
+        return [whiteSpaceStartsAt, whiteSpaceEndsAt];
+      }
+      return suggested;
+    },
+  }).result,
+  "div>span"
+);
+```
+
+### Features
+
+- `opts.cb`
+
+### BREAKING CHANGES
+
+- removed `opts.recogniseHTML`
+- removed `opts.rangesOffset` (use [`ranges-offset`](/os/ranges-offset/))
+
+Also, properly tested and fixed `opts.enforceSpacesOnly`. It now works as intended, considering all edge cases and interaction with other options.
+
 ## 6.1.0 (2020-10-26)
 
 ### Features
 
 - `opts.enforceSpacesOnly` ([154de62](https://gitlab.com/codsen/codsen/commit/154de623241cdced9d418f2815ae3befe9684534))
-- `opts.rangesOffset` ([fd5852f](https://gitlab.com/codsen/codsen/commit/fd5852f4f50b49f121bab2bb0cc30e2d23790e5c))
 
 ## 6.0.0 (2020-10-12)
 
