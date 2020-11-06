@@ -1,6 +1,6 @@
 {
   "name": "detergent",
-  "version": "5.11.11",
+  "version": "5.11.12",
   "description": "Extracts, cleans and encodes text",
   "keywords": [
     "brief",
@@ -115,7 +115,7 @@
     "ranges-process-outside": "^2.2.35",
     "ranges-push": "^3.7.22",
     "string-apostrophes": "^1.2.30",
-    "string-collapse-white-space": "^6.1.0",
+    "string-collapse-white-space": "^7.0.0",
     "string-fix-broken-named-entities": "^3.0.11",
     "string-left-right": "^2.3.31",
     "string-range-expander": "^1.11.11",
