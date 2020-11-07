@@ -11,8 +11,8 @@
         "ast-contains-only-empty-space": 3,
         "ast-get-values-by-key": 1,
         "ast-is-empty": 2,
-        "ast-monkey": 2,
-        "ast-monkey-traverse": 9,
+        "ast-monkey": 1,
+        "ast-monkey-traverse": 10,
         "ast-monkey-traverse-with-lookahead": 1,
         "ast-monkey-util": 2,
         "chalk": 6,
@@ -38,10 +38,12 @@
         "generate-atomic-css": 1,
         "get-pkg-repo": 2,
         "globby": 10,
+        "grapheme-splitter": 1,
         "he": 4,
         "hex-color-regex": 1,
         "html-all-known-attributes": 3,
         "html-comment-regex": 1,
+        "html-crush": 1,
         "html-entities-not-email-friendly": 2,
         "inquirer": 3,
         "is-char-suitable-for-html-attr-name": 2,
@@ -84,6 +86,7 @@
         "meow": 13,
         "mime-db": 1,
         "object-all-values-equal-to": 1,
+        "object-boolean-combinations": 1,
         "object-delete-key": 1,
         "object-fill-missing-keys": 1,
         "object-flatten-all-arrays": 1,
@@ -105,7 +108,7 @@
         "ranges-is-index-within": 2,
         "ranges-merge": 7,
         "ranges-process-outside": 1,
-        "ranges-push": 11,
+        "ranges-push": 12,
         "ranges-sort": 1,
         "regex-empty-conditional-comments": 1,
         "rgba-regex": 1,
@@ -126,8 +129,8 @@
         "string-find-heads-tails": 1,
         "string-find-malformed": 2,
         "string-fix-broken-named-entities": 2,
-        "string-left-right": 15,
-        "string-match-left-right": 11,
+        "string-left-right": 16,
+        "string-match-left-right": 10,
         "string-process-comma-separated": 2,
         "string-range-expander": 3,
         "string-remove-duplicate-heads-tails": 1,
@@ -149,31 +152,31 @@
         "write-json-file": 1
     },
     "devDependencies": {
-        "@babel/core": 115,
-        "@babel/plugin-proposal-class-properties": 115,
-        "@babel/plugin-proposal-nullish-coalescing-operator": 115,
-        "@babel/plugin-proposal-object-rest-spread": 115,
-        "@babel/plugin-proposal-optional-chaining": 115,
+        "@babel/core": 116,
+        "@babel/plugin-proposal-class-properties": 116,
+        "@babel/plugin-proposal-nullish-coalescing-operator": 116,
+        "@babel/plugin-proposal-object-rest-spread": 116,
+        "@babel/plugin-proposal-optional-chaining": 116,
         "@babel/polyfill": 1,
-        "@babel/preset-env": 115,
-        "@rollup/plugin-babel": 115,
-        "@rollup/plugin-commonjs": 115,
+        "@babel/preset-env": 116,
+        "@rollup/plugin-babel": 116,
+        "@rollup/plugin-commonjs": 116,
         "@rollup/plugin-json": 32,
-        "@rollup/plugin-node-resolve": 115,
-        "@rollup/plugin-strip": 115,
+        "@rollup/plugin-node-resolve": 116,
+        "@rollup/plugin-strip": 116,
         "array-shuffle": 1,
         "ast-deep-contains": 1,
         "ast-monkey-traverse": 1,
-        "benchmark": 103,
+        "benchmark": 104,
         "deep-equal": 1,
-        "eslint": 115,
+        "eslint": 116,
         "eslint-plugin-node": 1,
         "execa": 10,
         "fs-extra": 3,
         "globby": 1,
-        "is-ci": 1,
-        "lect": 115,
-        "lodash.clonedeep": 5,
+        "is-ci": 2,
+        "lect": 116,
+        "lodash.clonedeep": 6,
         "lodash.isequal": 3,
         "map-stream": 1,
         "node-fetch": 1,
@@ -185,17 +188,18 @@
         "ranges-apply": 6,
         "ranges-invert": 1,
         "ranges-merge": 1,
-        "rollup": 102,
-        "rollup-plugin-ascii": 102,
+        "rollup": 103,
+        "rollup-plugin-ascii": 103,
         "rollup-plugin-babel": 1,
-        "rollup-plugin-banner": 102,
-        "rollup-plugin-cleanup": 102,
+        "rollup-plugin-banner": 103,
+        "rollup-plugin-cleanup": 103,
         "rollup-plugin-node-builtins": 9,
-        "rollup-plugin-terser": 102,
+        "rollup-plugin-terser": 103,
         "string-find-heads-tails": 1,
-        "tap": 115,
+        "tap": 116,
         "tempy": 13,
-        "tsd": 115,
+        "title": 1,
+        "tsd": 116,
         "vinyl-string": 1
     },
     "top10ExternalDeps": [
@@ -235,19 +239,19 @@
             "ranges-apply": 16
         },
         {
-            "string-left-right": 15
+            "string-left-right": 16
         },
         {
-            "string-match-left-right": 11
+            "ranges-push": 12
         },
         {
-            "ranges-push": 11
+            "ast-monkey-traverse": 10
         },
         {
             "arrayiffy-if-string": 10
         },
         {
-            "ast-monkey-traverse": 9
+            "string-match-left-right": 10
         },
         {
             "ranges-merge": 7

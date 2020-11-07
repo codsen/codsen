@@ -57,7 +57,7 @@
     },
     {
         "name": "ast-delete-object",
-        "size": 1934,
+        "size": 1943,
         "imports": [
             "ast-compare",
             "ast-monkey-traverse"
@@ -72,14 +72,14 @@
     },
     {
         "name": "ast-get-values-by-key",
-        "size": 2535,
+        "size": 2463,
         "imports": [
             "ast-monkey-traverse"
         ]
     },
     {
         "name": "ast-is-empty",
-        "size": 1160,
+        "size": 1161,
         "imports": []
     },
     {
@@ -111,7 +111,7 @@
     },
     {
         "name": "ast-monkey-util",
-        "size": 1427,
+        "size": 1428,
         "imports": []
     },
     {
@@ -123,7 +123,7 @@
     },
     {
         "name": "check-types-mini",
-        "size": 10987,
+        "size": 10986,
         "imports": [
             "arrayiffy-if-string",
             "ast-monkey-traverse"
@@ -146,7 +146,7 @@
     },
     {
         "name": "codsen-parser",
-        "size": 19493,
+        "size": 19494,
         "imports": [
             "ast-monkey-util",
             "codsen-tokenizer",
@@ -156,7 +156,7 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 59942,
+        "size": 71728,
         "imports": [
             "html-all-known-attributes",
             "is-char-suitable-for-html-attr-name",
@@ -168,7 +168,7 @@
     },
     {
         "name": "csv-sort",
-        "size": 14113,
+        "size": 14903,
         "imports": [
             "csv-split-easy"
         ]
@@ -182,14 +182,14 @@
     },
     {
         "name": "csv-split-easy",
-        "size": 4867,
+        "size": 4866,
         "imports": [
             "string-remove-thousand-separators"
         ]
     },
     {
         "name": "detergent",
-        "size": 53898,
+        "size": 53914,
         "imports": [
             "all-named-html-entities",
             "html-entities-not-email-friendly",
@@ -209,7 +209,7 @@
     },
     {
         "name": "easy-replace",
-        "size": 9466,
+        "size": 9527,
         "imports": []
     },
     {
@@ -236,10 +236,11 @@
     },
     {
         "name": "email-comb",
-        "size": 60515,
+        "size": 59888,
         "imports": [
             "array-pull-all-with-glob",
             "ast-is-empty",
+            "html-crush",
             "ranges-apply",
             "ranges-push",
             "regex-empty-conditional-comments",
@@ -252,7 +253,7 @@
     },
     {
         "name": "emlint",
-        "size": 307976,
+        "size": 328416,
         "imports": [
             "ast-monkey-traverse",
             "ast-monkey-util",
@@ -262,6 +263,7 @@
             "is-language-code",
             "is-media-descriptor",
             "is-relative-uri",
+            "ranges-merge",
             "string-find-malformed",
             "string-fix-broken-named-entities",
             "string-left-right",
@@ -278,7 +280,7 @@
     },
     {
         "name": "eslint-plugin-test-num",
-        "size": 12593,
+        "size": 12594,
         "imports": [
             "string-left-right"
         ]
@@ -312,7 +314,7 @@
     },
     {
         "name": "html-crush",
-        "size": 31616,
+        "size": 31653,
         "imports": [
             "ranges-apply",
             "ranges-push",
@@ -338,7 +340,7 @@
     },
     {
         "name": "html-table-patcher",
-        "size": 6537,
+        "size": 6539,
         "imports": [
             "ast-monkey-traverse-with-lookahead",
             "codsen-parser",
@@ -353,7 +355,7 @@
     },
     {
         "name": "is-html-attribute-closing",
-        "size": 13853,
+        "size": 15174,
         "imports": [
             "html-all-known-attributes",
             "is-char-suitable-for-html-attr-name",
@@ -428,7 +430,7 @@
     },
     {
         "name": "json-variables",
-        "size": 20497,
+        "size": 20520,
         "imports": [
             "arrayiffy-if-string",
             "ast-get-values-by-key",
@@ -442,7 +444,7 @@
     },
     {
         "name": "lect",
-        "size": 37448,
+        "size": 42695,
         "imports": [
             "array-pull-all-with-glob",
             "arrayiffy-if-string",
@@ -452,7 +454,7 @@
     },
     {
         "name": "lerna-clean-changelogs",
-        "size": 2901,
+        "size": 2887,
         "imports": []
     },
     {
@@ -464,7 +466,12 @@
     },
     {
         "name": "object-all-values-equal-to",
-        "size": 2137,
+        "size": 2061,
+        "imports": []
+    },
+    {
+        "name": "object-boolean-combinations",
+        "size": 2407,
         "imports": []
     },
     {
@@ -478,7 +485,7 @@
     },
     {
         "name": "object-fill-missing-keys",
-        "size": 5255,
+        "size": 5250,
         "imports": [
             "arrayiffy-if-string",
             "object-all-values-equal-to",
@@ -508,7 +515,7 @@
     },
     {
         "name": "object-no-new-keys",
-        "size": 3344,
+        "size": 3345,
         "imports": []
     },
     {
@@ -547,7 +554,7 @@
     },
     {
         "name": "ranges-is-index-within",
-        "size": 1023,
+        "size": 1262,
         "imports": []
     },
     {
@@ -593,7 +600,7 @@
     },
     {
         "name": "str-indexes-of-plus",
-        "size": 2244,
+        "size": 2217,
         "imports": []
     },
     {
@@ -610,23 +617,24 @@
     },
     {
         "name": "string-collapse-leading-whitespace",
-        "size": 3280,
+        "size": 2836,
         "imports": []
     },
     {
         "name": "string-collapse-white-space",
-        "size": 18415,
+        "size": 8708,
         "imports": [
+            "object-boolean-combinations",
             "ranges-apply",
-            "ranges-merge",
-            "string-match-left-right"
+            "ranges-push",
+            "string-left-right"
         ]
     },
     {
         "name": "string-convert-indexes",
-        "size": 5008,
+        "size": 4577,
         "imports": [
-            "ast-monkey"
+            "ast-monkey-traverse"
         ]
     },
     {
@@ -653,7 +661,7 @@
     },
     {
         "name": "string-fix-broken-named-entities",
-        "size": 27084,
+        "size": 27085,
         "imports": [
             "all-named-html-entities",
             "string-left-right"
@@ -661,12 +669,12 @@
     },
     {
         "name": "string-left-right",
-        "size": 10719,
+        "size": 10728,
         "imports": []
     },
     {
         "name": "string-match-left-right",
-        "size": 13161,
+        "size": 13190,
         "imports": [
             "arrayiffy-if-string",
             "string-character-is-astral-surrogate"
@@ -679,7 +687,7 @@
     },
     {
         "name": "string-range-expander",
-        "size": 8409,
+        "size": 8410,
         "imports": []
     },
     {
@@ -721,7 +729,7 @@
     },
     {
         "name": "string-strip-html",
-        "size": 34248,
+        "size": 36795,
         "imports": [
             "ranges-apply",
             "ranges-push",
@@ -745,7 +753,7 @@
     },
     {
         "name": "update-versions",
-        "size": 12625,
+        "size": 12926,
         "imports": [
             "edit-package-json"
         ]
