@@ -5,17 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 7.0.0 (2020-11-06)
 
-### Features
+**A major rewrite.**
 
 - complete rewrite ([0040bc5](https://gitlab.com/codsen/codsen/commit/0040bc502a7714010cc0ef3aef978e326998482e))
-
-### BREAKING CHANGES
-
-- see changelog
-
-## 7.0.0 (2020-11-06)
-
-**A major rewrite.**
 
 Each whitespace chunk is needed is passed through a callback (even when there is no action needed). This allows you to granularly control the collapsing. For example, you can delete the single spaces between two characters under certain circumstances (a thing not available by existing options' settings) - for example, minify css selectors:
 
