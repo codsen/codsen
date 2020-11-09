@@ -20,7 +20,7 @@
   "author": {
     "name": "Roy Revelt",
     "email": "roy@codsen.com",
-    "url": "codsen.com"
+    "url": "https://codsen.com"
   },
   "main": "dist/array-of-arrays-sort-by-col.cjs.js",
   "module": "dist/array-of-arrays-sort-by-col.esm.js",
@@ -111,7 +111,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "array-shuffle": "^1.0.1",
     "benchmark": "^2.1.4",
-    "eslint": "^7.12.1",
+    "eslint": "^7.13.0",
     "lect": "^0.14.7",
     "rollup": "^2.33.1",
     "rollup-plugin-ascii": "^0.0.3",

@@ -22,7 +22,7 @@
   "author": {
     "name": "Roy Revelt",
     "email": "roy@codsen.com",
-    "url": "codsen.com"
+    "url": "https://codsen.com"
   },
   "main": "index.js",
   "scripts": {
@@ -108,7 +108,7 @@
     "@rollup/plugin-node-resolve": "^10.0.0",
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
-    "eslint": "^7.12.1",
+    "eslint": "^7.13.0",
     "lect": "^0.14.7",
     "map-stream": "^0.0.7",
     "prettier": "^2.1.2",

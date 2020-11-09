@@ -15,7 +15,7 @@
   "author": {
     "name": "Roy Revelt",
     "email": "roy@codsen.com",
-    "url": "codsen.com"
+    "url": "https://codsen.com"
   },
   "main": "dist/ranges-invert.cjs.js",
   "module": "dist/ranges-invert.esm.js",
@@ -106,7 +106,7 @@
     "@rollup/plugin-node-resolve": "^10.0.0",
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
-    "eslint": "^7.12.1",
+    "eslint": "^7.13.0",
     "lect": "^0.14.7",
     "rollup": "^2.33.1",
     "rollup-plugin-ascii": "^0.0.3",

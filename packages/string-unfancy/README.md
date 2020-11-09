@@ -19,6 +19,9 @@
     <img src="https://img.shields.io/badge/code_style-prettier-brightgreen.svg?style=flat-square" alt="Code style: prettier">
   </a>
   <img src="https://img.shields.io/badge/licence-MIT-brightgreen.svg?style=flat-square" alt="MIT License">
+  <a href="https://liberamanifesto.com" rel="nofollow noreferrer noopener" target="_blank">
+    <img src="https://img.shields.io/badge/libera-manifesto-lightgrey.svg?style=flat-square" alt="libera manifesto">
+  </a>
 </div>
 
 ## Install

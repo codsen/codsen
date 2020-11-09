@@ -24,7 +24,7 @@
   "author": {
     "name": "Roy Revelt",
     "email": "roy@codsen.com",
-    "url": "codsen.com"
+    "url": "https://codsen.com"
   },
   "main": "dist/is-media-descriptor.cjs.js",
   "module": "dist/is-media-descriptor.esm.js",
@@ -117,7 +117,7 @@
     "@rollup/plugin-node-resolve": "^10.0.0",
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
-    "eslint": "^7.12.1",
+    "eslint": "^7.13.0",
     "lect": "^0.14.7",
     "ranges-apply": "^3.2.3",
     "rollup": "^2.33.1",
