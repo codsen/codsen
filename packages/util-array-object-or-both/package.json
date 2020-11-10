@@ -1,6 +1,6 @@
 {
   "name": "util-array-object-or-both",
-  "version": "2.7.67",
+  "version": "2.7.68",
   "description": "Validate and normalise user choice: array, object or both?",
   "keywords": [
     "array",
@@ -111,7 +111,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.13.0",
-    "lect": "^0.14.7",
+    "lect": "^0.14.8",
     "rollup": "^2.33.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

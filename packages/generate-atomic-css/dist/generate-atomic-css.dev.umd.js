@@ -1,7 +1,7 @@
 /**
  * generate-atomic-css
  * Generate Atomic CSS
- * Version: 1.2.52
+ * Version: 1.2.53
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/generate-atomic-css/
@@ -2369,7 +2369,7 @@
     return seq("right", str, idx, opts, args);
   }
 
-  var version = "1.2.52";
+  var version = "1.2.53";
 
   var isArr = Array.isArray;
 

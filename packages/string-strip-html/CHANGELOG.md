@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.3.0](https://gitlab.com/codsen/codsen/compare/string-strip-html@6.2.0...string-strip-html@6.3.0) (2020-11-10)
+
+
+### Features
+
+* algorithm improvements ([5c2a45f](https://gitlab.com/codsen/codsen/commit/5c2a45f176cbb3ff200668ab2357571ccec4ba09))
+
+
+
+
+
 ## 6.2.0 (2020-10-26)
 
 ### Features

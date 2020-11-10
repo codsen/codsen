@@ -1,7 +1,7 @@
 /**
  * ranges-push
  * Gather string index ranges
- * Version: 3.7.22
+ * Version: 3.7.23
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-push/
@@ -136,7 +136,7 @@
   /**
    * string-collapse-leading-whitespace
    * Collapse the leading and trailing whitespace of a string
-   * Version: 3.0.2
+   * Version: 3.0.3
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
@@ -230,7 +230,7 @@
   /**
    * ranges-sort
    * Sort string index ranges
-   * Version: 3.13.3
+   * Version: 3.13.4
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/ranges-sort/

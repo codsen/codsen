@@ -1,7 +1,7 @@
 /**
  * ranges-is-index-within
  * Checks if index is within any of the given string index ranges
- * Version: 1.15.2
+ * Version: 1.15.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-is-index-within/

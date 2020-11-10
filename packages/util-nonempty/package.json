@@ -1,6 +1,6 @@
 {
   "name": "util-nonempty",
-  "version": "2.9.65",
+  "version": "2.9.66",
   "description": "Is the input (plain object, array, string or whatever) not empty?",
   "keywords": [
     "array",
@@ -108,7 +108,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.13.0",
-    "lect": "^0.14.7",
+    "lect": "^0.14.8",
     "rollup": "^2.33.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

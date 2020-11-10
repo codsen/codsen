@@ -1,7 +1,7 @@
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.1.11
+ * Version: 1.1.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/

@@ -1,7 +1,7 @@
 /**
  * ranges-process-outside
  * Iterate string considering ranges, as if they were already applied
- * Version: 2.2.35
+ * Version: 2.2.36
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-process-outside/
@@ -153,7 +153,7 @@
   /**
    * ranges-sort
    * Sort string index ranges
-   * Version: 3.13.3
+   * Version: 3.13.4
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/ranges-sort/

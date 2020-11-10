@@ -1,7 +1,7 @@
 /**
  * json-comb-core
  * The inner core of json-comb
- * Version: 6.6.36
+ * Version: 6.6.37
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/json-comb-core/
@@ -6421,7 +6421,7 @@
   /**
    * arrayiffy-if-string
    * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-   * Version: 3.11.38
+   * Version: 3.11.39
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -6441,7 +6441,7 @@
   /**
    * util-nonempty
    * Is the input (plain object, array, string or whatever) not empty?
-   * Version: 2.9.65
+   * Version: 2.9.66
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/util-nonempty/
@@ -9051,7 +9051,7 @@
   /**
    * object-set-all-values-to
    * Recursively walk the input and set all found values in plain objects to something
-   * Version: 3.9.67
+   * Version: 3.9.68
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/object-set-all-values-to/
@@ -9195,7 +9195,7 @@
   /**
    * object-no-new-keys
    * Check, does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON)
-   * Version: 2.9.11
+   * Version: 2.9.12
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/object-no-new-keys/

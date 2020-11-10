@@ -1,7 +1,7 @@
 /**
  * helga
  * Your next best friend when editing complex nested code
- * Version: 1.1.39
+ * Version: 1.1.40
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/helga/
@@ -66,7 +66,7 @@ function _objectSpread2(target) {
   return target;
 }
 
-var version = "1.1.39";
+var version = "1.1.40";
 
 var defaults = {
   targetJSON: false

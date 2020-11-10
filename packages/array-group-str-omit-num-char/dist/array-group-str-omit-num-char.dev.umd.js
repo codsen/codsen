@@ -1,7 +1,7 @@
 /**
  * array-group-str-omit-num-char
  * Groups array of strings by omitting number characters
- * Version: 2.1.48
+ * Version: 2.1.49
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/array-group-str-omit-num-char/
@@ -1065,7 +1065,7 @@
   /**
    * ranges-sort
    * Sort string index ranges
-   * Version: 3.13.3
+   * Version: 3.13.4
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/ranges-sort/

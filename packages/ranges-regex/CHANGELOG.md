@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.5](https://gitlab.com/codsen/codsen/compare/ranges-regex@2.1.4...ranges-regex@2.1.5) (2020-11-10)
+
+**Note:** Version bump only for package ranges-regex
+
+
+
+
+
 ## 2.1.0 (2020-09-07)
 
 ### Features
