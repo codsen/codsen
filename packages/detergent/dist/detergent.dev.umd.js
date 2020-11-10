@@ -19040,7 +19040,7 @@
         }
       }
 
-      if (str[_i] === "<" && str[_i - 1] !== "<" && !"'\"".includes(str[_i + 1])) {
+      if (str[_i] === "<" && str[_i - 1] !== "<" && !"'\"".includes(str[_i + 1]) && (!"'\"".includes(str[_i + 2]) || /\w/.test(str[_i + 1]))) {
         if (str[right(str, _i)] === ">") {
           i = _i;
           return "continue";
