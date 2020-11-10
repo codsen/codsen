@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.10.1](https://gitlab.com/codsen/codsen/compare/detect-is-it-html-or-xhtml@3.10.0...detect-is-it-html-or-xhtml@3.10.1) (2020-11-10)
-
-**Note:** Version bump only for package detect-is-it-html-or-xhtml
-
-
-
-
-
 ## 3.10.0 (2020-09-27)
 
 ### Features
