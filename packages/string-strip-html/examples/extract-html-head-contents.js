@@ -1,6 +1,6 @@
 /* eslint import/extensions:0 */
 
-// Extract HTML head contents
+// Extract HTML `<head>` contents
 
 import { strict as assert } from "assert";
 import stripHtml from "../dist/string-strip-html.esm.js";

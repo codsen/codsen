@@ -314,7 +314,7 @@
     },
     {
         "name": "html-crush",
-        "size": 31653,
+        "size": 31655,
         "imports": [
             "ranges-apply",
             "ranges-push",
@@ -325,7 +325,7 @@
     },
     {
         "name": "html-entities-not-email-friendly",
-        "size": 83455,
+        "size": 83456,
         "imports": []
     },
     {
@@ -350,7 +350,7 @@
     },
     {
         "name": "is-char-suitable-for-html-attr-name",
-        "size": 622,
+        "size": 623,
         "imports": []
     },
     {
@@ -444,7 +444,7 @@
     },
     {
         "name": "lect",
-        "size": 42695,
+        "size": 42911,
         "imports": [
             "array-pull-all-with-glob",
             "arrayiffy-if-string",
@@ -729,7 +729,7 @@
     },
     {
         "name": "string-strip-html",
-        "size": 36795,
+        "size": 36882,
         "imports": [
             "ranges-apply",
             "ranges-push",

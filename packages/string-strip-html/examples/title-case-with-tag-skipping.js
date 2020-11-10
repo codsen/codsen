@@ -1,7 +1,6 @@
 /* eslint import/extensions:0, import/no-extraneous-dependencies:0 */
 
 // Set the title case using `title` package
-// https://www.npmjs.com/package/title
 
 // This program will not touch any single tags (<br class="z"/> for example)
 // or in case of paired tags, paired tags and content between
@@ -19,13 +18,6 @@ function tagAwareTitle(str) {
   const { filteredTagLocations } = stripHtml(str, {
     stripTogetherWithTheirContents: ["*"],
   });
-  // console.log(
-  //   `020 tagAwareTitle(): ${`\u001b[${33}m${`filteredTagLocations`}\u001b[${39}m`} = ${JSON.stringify(
-  //     filteredTagLocations,
-  //     null,
-  //     4
-  //   )}`
-  // );
   const inverted = invertRanges(
     filteredTagLocations.concat(
       whitelist.reduce((acc, curr) => {
@@ -38,13 +30,6 @@ function tagAwareTitle(str) {
     ),
     str.length
   );
-  // console.log(
-  //   `028 tagAwareTitle(): ${`\u001b[${33}m${`inverted`}\u001b[${39}m`} = ${JSON.stringify(
-  //     inverted,
-  //     null,
-  //     4
-  //   )}`
-  // );
 
   if (Array.isArray(inverted) && inverted.length) {
     // take inverted ranges, for example, [[3, 4], [10, 15]]

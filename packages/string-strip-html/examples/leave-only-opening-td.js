@@ -1,6 +1,6 @@
 /* eslint import/extensions:0, no-unused-vars:0 */
 
-// Leave only opening td tags
+// Leave only opening `td` tags
 
 import { strict as assert } from "assert";
 import stripHtml from "../dist/string-strip-html.esm.js";

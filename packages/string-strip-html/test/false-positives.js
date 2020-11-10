@@ -232,31 +232,31 @@ tap.test("26 - tag name with closing bracket in front", (t) => {
   t.end();
 });
 
-tap.only("27", (t) => {
+tap.test("27", (t) => {
   const input = `{"Operator":"<=","IsValid":true}`;
   t.match(stripHtml(input), { result: input }, "27");
   t.end();
 });
 
-tap.only("28", (t) => {
+tap.test("28", (t) => {
   const input = `<a">`;
   t.match(stripHtml(input), { result: "" }, "28");
   t.end();
 });
 
-tap.only("29", (t) => {
+tap.test("29", (t) => {
   const input = `<a"">`;
   t.match(stripHtml(input), { result: "" }, "29");
   t.end();
 });
 
-tap.only("30", (t) => {
+tap.test("30", (t) => {
   const input = `<a'>`;
   t.match(stripHtml(input), { result: "" }, "30");
   t.end();
 });
 
-tap.only("31", (t) => {
+tap.test("31", (t) => {
   const input = `<a''>`;
   t.match(stripHtml(input), { result: "" }, "31");
   t.end();
