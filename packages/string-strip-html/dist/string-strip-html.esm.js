@@ -940,7 +940,12 @@ function stripHtml(str, originalOpts) {
         }
       }
     }
-    if (str[i] === "<" && str[i - 1] !== "<" && !`'"`.includes(str[i + 1])) {
+    if (
+      str[i] === "<" &&
+      str[i - 1] !== "<" &&
+      !`'"`.includes(str[i + 1]) &&
+      (!`'"`.includes(str[i + 2]) || /\w/.test(str[i + 1]))
+    ) {
       if (str[right(str, i)] === ">") {
         continue;
       } else {
