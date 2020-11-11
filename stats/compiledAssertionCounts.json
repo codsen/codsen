@@ -15,7 +15,7 @@
         "ast-get-values-by-key": 43,
         "ast-is-empty": 22,
         "ast-loose-compare": 75,
-        "ast-monkey": 112,
+        "ast-monkey": 25,
         "ast-monkey-traverse": 51,
         "ast-monkey-traverse-with-lookahead": 24,
         "ast-monkey-util": 22,
@@ -72,7 +72,7 @@
         "object-fill-missing-keys": 47,
         "object-flatten-all-arrays": 26,
         "object-flatten-referencing": 97,
-        "object-merge-advanced": 236,
+        "object-merge-advanced": 240,
         "object-no-new-keys": 29,
         "object-set-all-values-to": 25,
         "ranges-apply": 87,
@@ -118,12 +118,12 @@
         "util-nonempty": 17
     },
     "totalPackageCount": 116,
-    "totalAssertsCount": 813692,
+    "totalAssertsCount": 813609,
     "minAssertsCount": 4,
     "minAssertsName": "csv-sort-cli",
     "maxAssertsCount": 741600,
     "maxAssertsName": "detergent",
-    "assertsCountMedian": 51.5,
-    "assertsCountArithmeticMean": 7015,
-    "assertsCountGeometricMean": 73
+    "assertsCountMedian": 50.5,
+    "assertsCountArithmeticMean": 7014,
+    "assertsCountGeometricMean": 72
 }
