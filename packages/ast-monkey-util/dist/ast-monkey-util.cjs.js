@@ -13,7 +13,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 function pathNext(str) {
   if (typeof str !== "string" || !str.length) {
-    return str;
+    return null;
   }
   if (str.includes(".") && /^\d*$/.test(str.slice(str.lastIndexOf(".") + 1))) {
     return "".concat(str.slice(0, str.lastIndexOf(".") + 1)).concat(+str.slice(str.lastIndexOf(".") + 1) + 1);
@@ -56,9 +56,28 @@ function pathUp(str) {
       }
     }
   }
-  return str;
+  return "0";
 }
 
+function parent(str) {
+  if (typeof str === "string") {
+    if (!str.includes(".")) {
+      return null;
+    }
+    var lastDotAt = str.lastIndexOf(".");
+    if (!str.slice(0, lastDotAt).includes(".")) {
+      return str.slice(0, lastDotAt);
+    }
+    for (var i = lastDotAt - 1; i--;) {
+      if (str[i] === ".") {
+        return str.slice(i + 1, lastDotAt);
+      }
+    }
+  }
+  return null;
+}
+
+exports.parent = parent;
 exports.pathNext = pathNext;
 exports.pathPrev = pathPrev;
 exports.pathUp = pathUp;

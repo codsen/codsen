@@ -17,7 +17,7 @@ function pathUp(str) {
       }
     }
   }
-  return str;
+  return "0";
 }
 
 export default pathUp;

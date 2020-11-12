@@ -9,7 +9,7 @@
 
 function pathNext(str) {
   if (typeof str !== "string" || !str.length) {
-    return str;
+    return null;
   }
   if (str.includes(".") && /^\d*$/.test(str.slice(str.lastIndexOf(".") + 1))) {
     return `${str.slice(0, str.lastIndexOf(".") + 1)}${
@@ -56,7 +56,25 @@ function pathUp(str) {
       }
     }
   }
-  return str;
+  return "0";
 }
 
-export { pathNext, pathPrev, pathUp };
+function parent(str) {
+  if (typeof str === "string") {
+    if (!str.includes(".")) {
+      return null;
+    }
+    const lastDotAt = str.lastIndexOf(".");
+    if (!str.slice(0, lastDotAt).includes(".")) {
+      return str.slice(0, lastDotAt);
+    }
+    for (let i = lastDotAt - 1; i--; ) {
+      if (str[i] === ".") {
+        return str.slice(i + 1, lastDotAt);
+      }
+    }
+  }
+  return null;
+}
+
+export { parent, pathNext, pathPrev, pathUp };
