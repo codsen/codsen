@@ -1,11 +1,6 @@
 import clone from "lodash.clonedeep";
+import { parent } from "ast-monkey-util";
 
-function trimFirstDot(str) {
-  if (typeof str === "string" && str.length && str[0] === ".") {
-    return str.slice(1);
-  }
-  return str;
-}
 function isObj(something) {
   return (
     something && typeof something === "object" && !Array.isArray(something)
@@ -17,7 +12,7 @@ function astMonkeyTraverse(tree1, cb1) {
   // traverseInner() needs a wrapper to shield the internal last argument and simplify external API.
   //
   function traverseInner(treeOriginal, callback, originalInnerObj, stop) {
-    console.log(`020 ======= traverseInner() =======`);
+    console.log(`015 ======= traverseInner() =======`);
     const tree = clone(treeOriginal);
 
     let i;
@@ -26,29 +21,39 @@ function astMonkeyTraverse(tree1, cb1) {
     const innerObj = { depth: -1, path: "", ...originalInnerObj };
     innerObj.depth += 1;
     if (Array.isArray(tree)) {
-      console.log(`029 tree is array!`);
+      console.log(`024 tree is array!`);
       for (i = 0, len = tree.length; i < len; i++) {
         console.log(
-          `032 a ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`
+          `027 a ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`
         );
         if (stop.now) {
-          console.log(`035 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+          console.log(`030 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
           break;
         }
-        const path = `${innerObj.path}.${i}`;
+        const path = innerObj.path ? `${innerObj.path}.${i}` : `${i}`;
+        console.log(
+          `035 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
+            path,
+            null,
+            4
+          )}`
+        );
         if (tree[i] !== undefined) {
           innerObj.parent = clone(tree);
           innerObj.parentType = "array";
+          innerObj.parentKey = parent(path);
+          console.log(
+            `046 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`innerObj.parentKey`}\u001b[${39}m`} = ${JSON.stringify(
+              innerObj.parentKey,
+              null,
+              4
+            )}`
+          );
           // innerObj.path = `${innerObj.path}[${i}]`
           res = traverseInner(
-            callback(
-              tree[i],
-              undefined,
-              { ...innerObj, path: trimFirstDot(path) },
-              stop
-            ),
+            callback(tree[i], undefined, { ...innerObj, path }, stop),
             callback,
-            { ...innerObj, path: trimFirstDot(path) },
+            { ...innerObj, path },
             stop
           );
           if (Number.isNaN(res) && i < tree.length) {
@@ -62,31 +67,48 @@ function astMonkeyTraverse(tree1, cb1) {
         }
       }
     } else if (isObj(tree)) {
-      console.log(`065 tree is object`);
+      console.log(`070 tree is object`);
       // eslint-disable-next-line guard-for-in, no-restricted-syntax
       for (const key in tree) {
         console.log(
-          `069 ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`
+          `074 ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`
         );
         if (stop.now && key != null) {
-          console.log(`072 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+          console.log(`077 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
           break;
         }
-        const path = `${innerObj.path}.${key}`;
+        console.log(
+          `081 FIY, ${`\u001b[${33}m${`innerObj.path`}\u001b[${39}m`} = ${JSON.stringify(
+            innerObj.path,
+            null,
+            4
+          )}`
+        );
+        const path = innerObj.path ? `${innerObj.path}.${key}` : key;
+        console.log(
+          `089 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
+            path,
+            null,
+            4
+          )}`
+        );
         if (innerObj.depth === 0 && key != null) {
           innerObj.topmostKey = key;
         }
         innerObj.parent = clone(tree);
         innerObj.parentType = "object";
+        innerObj.parentKey = parent(path);
+        console.log(
+          `102 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`innerObj.parentKey`}\u001b[${39}m`} = ${JSON.stringify(
+            innerObj.parentKey,
+            null,
+            4
+          )}`
+        );
         res = traverseInner(
-          callback(
-            key,
-            tree[key],
-            { ...innerObj, path: trimFirstDot(path) },
-            stop
-          ),
+          callback(key, tree[key], { ...innerObj, path }, stop),
           callback,
-          { ...innerObj, path: trimFirstDot(path) },
+          { ...innerObj, path },
           stop
         );
         if (Number.isNaN(res)) {
@@ -96,7 +118,7 @@ function astMonkeyTraverse(tree1, cb1) {
         }
       }
     }
-    console.log(`099 just returning tree, ${JSON.stringify(tree, null, 4)}`);
+    console.log(`121 just returning tree, ${JSON.stringify(tree, null, 4)}`);
     return tree;
   }
   return traverseInner(tree1, cb1, {}, stop2);

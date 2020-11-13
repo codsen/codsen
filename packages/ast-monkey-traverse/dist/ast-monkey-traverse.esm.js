@@ -8,13 +8,8 @@
  */
 
 import clone from 'lodash.clonedeep';
+import { parent } from 'ast-monkey-util';
 
-function trimFirstDot(str) {
-  if (typeof str === "string" && str.length && str[0] === ".") {
-    return str.slice(1);
-  }
-  return str;
-}
 function isObj(something) {
   return (
     something && typeof something === "object" && !Array.isArray(something)
@@ -34,19 +29,15 @@ function astMonkeyTraverse(tree1, cb1) {
         if (stop.now) {
           break;
         }
-        const path = `${innerObj.path}.${i}`;
+        const path = innerObj.path ? `${innerObj.path}.${i}` : `${i}`;
         if (tree[i] !== undefined) {
           innerObj.parent = clone(tree);
           innerObj.parentType = "array";
+          innerObj.parentKey = parent(path);
           res = traverseInner(
-            callback(
-              tree[i],
-              undefined,
-              { ...innerObj, path: trimFirstDot(path) },
-              stop
-            ),
+            callback(tree[i], undefined, { ...innerObj, path }, stop),
             callback,
-            { ...innerObj, path: trimFirstDot(path) },
+            { ...innerObj, path },
             stop
           );
           if (Number.isNaN(res) && i < tree.length) {
@@ -64,21 +55,17 @@ function astMonkeyTraverse(tree1, cb1) {
         if (stop.now && key != null) {
           break;
         }
-        const path = `${innerObj.path}.${key}`;
+        const path = innerObj.path ? `${innerObj.path}.${key}` : key;
         if (innerObj.depth === 0 && key != null) {
           innerObj.topmostKey = key;
         }
         innerObj.parent = clone(tree);
         innerObj.parentType = "object";
+        innerObj.parentKey = parent(path);
         res = traverseInner(
-          callback(
-            key,
-            tree[key],
-            { ...innerObj, path: trimFirstDot(path) },
-            stop
-          ),
+          callback(key, tree[key], { ...innerObj, path }, stop),
           callback,
-          { ...innerObj, path: trimFirstDot(path) },
+          { ...innerObj, path },
           stop
         );
         if (Number.isNaN(res)) {

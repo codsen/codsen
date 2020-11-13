@@ -63,7 +63,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: ["lodash.clonedeep"],
+      external: ["ast-monkey-util", "lodash.clonedeep"],
       plugins: [
         strip({
           sourceMap: false,
@@ -80,7 +80,7 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: ["lodash.clonedeep"],
+      external: ["ast-monkey-util", "lodash.clonedeep"],
       plugins: [
         strip({
           sourceMap: false,

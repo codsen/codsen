@@ -10,6 +10,7 @@
 'use strict';
 
 var clone = require('lodash.clonedeep');
+var astMonkeyUtil = require('ast-monkey-util');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -80,12 +81,6 @@ function _objectSpread2(target) {
   return target;
 }
 
-function trimFirstDot(str) {
-  if (typeof str === "string" && str.length && str[0] === ".") {
-    return str.slice(1);
-  }
-  return str;
-}
 function isObj(something) {
   return something && _typeof(something) === "object" && !Array.isArray(something);
 }
@@ -108,14 +103,15 @@ function astMonkeyTraverse(tree1, cb1) {
         if (stop.now) {
           break;
         }
-        var path = "".concat(innerObj.path, ".").concat(i);
+        var path = innerObj.path ? "".concat(innerObj.path, ".").concat(i) : "".concat(i);
         if (tree[i] !== undefined) {
           innerObj.parent = clone__default['default'](tree);
           innerObj.parentType = "array";
+          innerObj.parentKey = astMonkeyUtil.parent(path);
           res = traverseInner(callback(tree[i], undefined, _objectSpread2(_objectSpread2({}, innerObj), {}, {
-            path: trimFirstDot(path)
+            path: path
           }), stop), callback, _objectSpread2(_objectSpread2({}, innerObj), {}, {
-            path: trimFirstDot(path)
+            path: path
           }), stop);
           if (Number.isNaN(res) && i < tree.length) {
             tree.splice(i, 1);
@@ -132,16 +128,17 @@ function astMonkeyTraverse(tree1, cb1) {
         if (stop.now && key != null) {
           break;
         }
-        var _path = "".concat(innerObj.path, ".").concat(key);
+        var _path = innerObj.path ? "".concat(innerObj.path, ".").concat(key) : key;
         if (innerObj.depth === 0 && key != null) {
           innerObj.topmostKey = key;
         }
         innerObj.parent = clone__default['default'](tree);
         innerObj.parentType = "object";
+        innerObj.parentKey = astMonkeyUtil.parent(_path);
         res = traverseInner(callback(key, tree[key], _objectSpread2(_objectSpread2({}, innerObj), {}, {
-          path: trimFirstDot(_path)
+          path: _path
         }), stop), callback, _objectSpread2(_objectSpread2({}, innerObj), {}, {
-          path: trimFirstDot(_path)
+          path: _path
         }), stop);
         if (Number.isNaN(res)) {
           delete tree[key];

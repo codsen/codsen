@@ -400,6 +400,7 @@ tap.test(
               },
             ],
             parentType: "array",
+            parentKey: null,
           },
         ],
         // ===================
@@ -413,6 +414,7 @@ tap.test(
               a: "b",
             },
             parentType: "object",
+            parentKey: "0",
           },
         ],
         // ===================
@@ -436,6 +438,7 @@ tap.test(
               },
             ],
             parentType: "array",
+            parentKey: null,
           },
         ],
         // ===================
@@ -449,6 +452,7 @@ tap.test(
               c: "d",
             },
             parentType: "object",
+            parentKey: "1",
           },
         ],
         // ===================
@@ -472,6 +476,7 @@ tap.test(
               },
             ],
             parentType: "array",
+            parentKey: null,
           },
         ],
         // ===================
@@ -485,6 +490,7 @@ tap.test(
               e: "f",
             },
             parentType: "object",
+            parentKey: "2",
           },
         ],
         // ===================
@@ -523,6 +529,7 @@ tap.todo(
             path: "0",
             parent: ["a", undefined, "b"],
             parentType: "array",
+            parentKey: null,
           },
         ],
         [
@@ -533,6 +540,7 @@ tap.todo(
             path: "1",
             parent: ["a", undefined, "b"],
             parentType: "array",
+            parentKey: null,
           },
         ],
       ],
@@ -588,6 +596,7 @@ tap.test(
               c: "m",
             },
             parentType: "object",
+            parentKey: null,
           },
         ],
         [
@@ -603,6 +612,7 @@ tap.test(
               c: "m",
             },
             parentType: "object",
+            parentKey: null,
           },
         ],
         [
@@ -618,6 +628,7 @@ tap.test(
               c: "m",
             },
             parentType: "object",
+            parentKey: null,
           },
         ],
       ],
@@ -660,6 +671,7 @@ tap.test(
               a: ["1", "2", "3"],
             },
             parentType: "object",
+            parentKey: null,
           },
         ],
         [
@@ -671,6 +683,7 @@ tap.test(
             topmostKey: "a",
             parent: ["1", "2", "3"],
             parentType: "array",
+            parentKey: "a",
           },
         ],
         [
@@ -682,6 +695,7 @@ tap.test(
             topmostKey: "a",
             parent: ["1", "2", "3"],
             parentType: "array",
+            parentKey: "a",
           },
         ],
         [
@@ -693,6 +707,7 @@ tap.test(
             topmostKey: "a",
             parent: ["1", "2", "3"],
             parentType: "array",
+            parentKey: "a",
           },
         ],
       ],
@@ -770,6 +785,7 @@ tap.test(
             depth: 0,
             path: "a",
             topmostKey: "a",
+            parentKey: null,
             parent: {
               a: {
                 b: {
@@ -807,6 +823,7 @@ tap.test(
             depth: 1,
             path: "a.b",
             topmostKey: "a",
+            parentKey: "a",
             parent: {
               b: {
                 c: "c_val",
@@ -838,6 +855,7 @@ tap.test(
             depth: 2,
             path: "a.b.c",
             topmostKey: "a",
+            parentKey: "b",
             parent: {
               c: "c_val",
               d: "d_val",
@@ -854,6 +872,7 @@ tap.test(
             depth: 2,
             path: "a.b.d",
             topmostKey: "a",
+            parentKey: "b",
             parent: {
               c: "c_val",
               d: "d_val",
@@ -870,6 +889,7 @@ tap.test(
             depth: 2,
             path: "a.b.e",
             topmostKey: "a",
+            parentKey: "b",
             parent: {
               c: "c_val",
               d: "d_val",
@@ -898,6 +918,7 @@ tap.test(
             depth: 1,
             path: "a.f",
             topmostKey: "a",
+            parentKey: "a",
             parent: {
               b: {
                 c: "c_val",
@@ -939,6 +960,7 @@ tap.test(
             depth: 2,
             path: "a.f.g",
             topmostKey: "a",
+            parentKey: "f",
             parent: {
               g: {
                 h: ["1", "2", "3"],
@@ -963,6 +985,7 @@ tap.test(
             depth: 3,
             path: "a.f.g.h",
             topmostKey: "a",
+            parentKey: "g",
             parent: {
               h: ["1", "2", "3"],
               i: [
@@ -985,6 +1008,7 @@ tap.test(
             depth: 4,
             path: "a.f.g.h.0",
             topmostKey: "a",
+            parentKey: "h",
             parent: ["1", "2", "3"],
             parentType: "array",
           },
@@ -997,6 +1021,7 @@ tap.test(
             depth: 4,
             path: "a.f.g.h.1",
             topmostKey: "a",
+            parentKey: "h",
             parent: ["1", "2", "3"],
             parentType: "array",
           },
@@ -1009,6 +1034,7 @@ tap.test(
             depth: 4,
             path: "a.f.g.h.2",
             topmostKey: "a",
+            parentKey: "h",
             parent: ["1", "2", "3"],
             parentType: "array",
           },
@@ -1027,6 +1053,7 @@ tap.test(
             depth: 3,
             path: "a.f.g.i",
             topmostKey: "a",
+            parentKey: "g",
             parent: {
               h: ["1", "2", "3"],
               i: [
@@ -1049,6 +1076,7 @@ tap.test(
             depth: 4,
             path: "a.f.g.i.0",
             topmostKey: "a",
+            parentKey: "i",
             parent: [
               "4",
               "5",
@@ -1067,6 +1095,7 @@ tap.test(
             depth: 4,
             path: "a.f.g.i.1",
             topmostKey: "a",
+            parentKey: "i",
             parent: [
               "4",
               "5",
@@ -1087,6 +1116,7 @@ tap.test(
             depth: 4,
             path: "a.f.g.i.2",
             topmostKey: "a",
+            parentKey: "i",
             parent: [
               "4",
               "5",
@@ -1105,6 +1135,7 @@ tap.test(
             depth: 5,
             path: "a.f.g.i.2.j",
             topmostKey: "a",
+            parentKey: "2",
             parent: {
               j: "k",
             },
@@ -1119,6 +1150,7 @@ tap.test(
             depth: 3,
             path: "a.f.g.l",
             topmostKey: "a",
+            parentKey: "g",
             parent: {
               h: ["1", "2", "3"],
               i: [
@@ -1141,6 +1173,7 @@ tap.test(
             depth: 4,
             path: "a.f.g.l.0",
             topmostKey: "a",
+            parentKey: "l",
             parent: ["7", "8", "9"],
             parentType: "array",
           },
@@ -1153,6 +1186,7 @@ tap.test(
             depth: 4,
             path: "a.f.g.l.1",
             topmostKey: "a",
+            parentKey: "l",
             parent: ["7", "8", "9"],
             parentType: "array",
           },
@@ -1165,6 +1199,7 @@ tap.test(
             depth: 4,
             path: "a.f.g.l.2",
             topmostKey: "a",
+            parentKey: "l",
             parent: ["7", "8", "9"],
             parentType: "array",
           },
@@ -1211,6 +1246,7 @@ tap.test(
               },
             ],
             parentType: "array",
+            parentKey: null,
           },
         ],
         [
@@ -1227,6 +1263,7 @@ tap.test(
               },
             ],
             parentType: "array",
+            parentKey: null,
           },
         ],
         [
@@ -1245,6 +1282,7 @@ tap.test(
               },
             ],
             parentType: "array",
+            parentKey: null,
           },
         ],
         [
@@ -1257,6 +1295,7 @@ tap.test(
               a: "3",
             },
             parentType: "object",
+            parentKey: "2",
           },
         ],
       ],
