@@ -10212,6 +10212,96 @@
 	}
 
 	/**
+	 * ast-monkey-util
+	 * Utility library of AST helper functions
+	 * Version: 1.1.12
+	 * Author: Roy Revelt, Codsen Ltd
+	 * License: MIT
+	 * Homepage: https://codsen.com/os/ast-monkey-util/
+	 */
+	function pathNext(str) {
+	  if (typeof str !== "string" || !str.length) {
+	    return null;
+	  }
+
+	  if (str.includes(".") && /^\d*$/.test(str.slice(str.lastIndexOf(".") + 1))) {
+	    return `${str.slice(0, str.lastIndexOf(".") + 1)}${+str.slice(str.lastIndexOf(".") + 1) + 1}`;
+	  }
+
+	  if (/^\d*$/.test(str)) {
+	    return `${+str + 1}`;
+	  }
+
+	  return str;
+	}
+
+	function pathPrev(str) {
+	  if (typeof str !== "string" || !str.length) {
+	    return null;
+	  }
+
+	  const extractedValue = str.slice(str.lastIndexOf(".") + 1);
+
+	  if (extractedValue === "0") {
+	    return null;
+	  }
+
+	  if (str.includes(".") && /^\d*$/.test(extractedValue)) {
+	    return `${str.slice(0, str.lastIndexOf(".") + 1)}${+str.slice(str.lastIndexOf(".") + 1) - 1}`;
+	  }
+
+	  if (/^\d*$/.test(str)) {
+	    return `${+str - 1}`;
+	  }
+
+	  return null;
+	}
+
+	function pathUp(str) {
+	  if (typeof str === "string") {
+	    if (!str.includes(".") || !str.slice(str.indexOf(".") + 1).includes(".")) {
+	      return "0";
+	    }
+
+	    let dotsCount = 0;
+
+	    for (let i = str.length; i--;) {
+	      if (str[i] === ".") {
+	        dotsCount += 1;
+	      }
+
+	      if (dotsCount === 2) {
+	        return str.slice(0, i);
+	      }
+	    }
+	  }
+
+	  return "0";
+	}
+
+	function parent(str) {
+	  if (typeof str === "string") {
+	    if (!str.includes(".")) {
+	      return null;
+	    }
+
+	    const lastDotAt = str.lastIndexOf(".");
+
+	    if (!str.slice(0, lastDotAt).includes(".")) {
+	      return str.slice(0, lastDotAt);
+	    }
+
+	    for (let i = lastDotAt - 1; i--;) {
+	      if (str[i] === ".") {
+	        return str.slice(i + 1, lastDotAt);
+	      }
+	    }
+	  }
+
+	  return null;
+	}
+
+	/**
 	 * ast-monkey-traverse
 	 * Utility library to traverse AST
 	 * Version: 1.12.21
@@ -10219,14 +10309,6 @@
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/ast-monkey-traverse/
 	 */
-
-	function trimFirstDot(str) {
-	  if (typeof str === "string" && str.length && str[0] === ".") {
-	    return str.slice(1);
-	  }
-
-	  return str;
-	}
 
 	function isObj$1(something) {
 	  return something && typeof something === "object" && !Array.isArray(something);
@@ -10255,15 +10337,16 @@
 	          break;
 	        }
 
-	        const path = `${innerObj.path}.${i}`;
+	        const path = innerObj.path ? `${innerObj.path}.${i}` : `${i}`;
 
 	        if (tree[i] !== undefined) {
 	          innerObj.parent = lodash_clonedeep(tree);
 	          innerObj.parentType = "array";
+	          innerObj.parentKey = parent(path);
 	          res = traverseInner(callback(tree[i], undefined, { ...innerObj,
-	            path: trimFirstDot(path)
+	            path
 	          }, stop), callback, { ...innerObj,
-	            path: trimFirstDot(path)
+	            path
 	          }, stop);
 
 	          if (Number.isNaN(res) && i < tree.length) {
@@ -10282,7 +10365,7 @@
 	          break;
 	        }
 
-	        const path = `${innerObj.path}.${key}`;
+	        const path = innerObj.path ? `${innerObj.path}.${key}` : key;
 
 	        if (innerObj.depth === 0 && key != null) {
 	          innerObj.topmostKey = key;
@@ -10290,10 +10373,11 @@
 
 	        innerObj.parent = lodash_clonedeep(tree);
 	        innerObj.parentType = "object";
+	        innerObj.parentKey = parent(path);
 	        res = traverseInner(callback(key, tree[key], { ...innerObj,
-	          path: trimFirstDot(path)
+	          path
 	        }, stop), callback, { ...innerObj,
-	          path: trimFirstDot(path)
+	          path
 	        }, stop);
 
 	        if (Number.isNaN(res)) {
@@ -10475,74 +10559,6 @@
 	  }
 
 	  return min;
-	}
-
-	/**
-	 * ast-monkey-util
-	 * Utility library of AST helper functions
-	 * Version: 1.1.12
-	 * Author: Roy Revelt, Codsen Ltd
-	 * License: MIT
-	 * Homepage: https://codsen.com/os/ast-monkey-util/
-	 */
-	function pathNext(str) {
-	  if (typeof str !== "string" || !str.length) {
-	    return str;
-	  }
-
-	  if (str.includes(".") && /^\d*$/.test(str.slice(str.lastIndexOf(".") + 1))) {
-	    return `${str.slice(0, str.lastIndexOf(".") + 1)}${+str.slice(str.lastIndexOf(".") + 1) + 1}`;
-	  }
-
-	  if (/^\d*$/.test(str)) {
-	    return `${+str + 1}`;
-	  }
-
-	  return str;
-	}
-
-	function pathPrev(str) {
-	  if (typeof str !== "string" || !str.length) {
-	    return null;
-	  }
-
-	  const extractedValue = str.slice(str.lastIndexOf(".") + 1);
-
-	  if (extractedValue === "0") {
-	    return null;
-	  }
-
-	  if (str.includes(".") && /^\d*$/.test(extractedValue)) {
-	    return `${str.slice(0, str.lastIndexOf(".") + 1)}${+str.slice(str.lastIndexOf(".") + 1) - 1}`;
-	  }
-
-	  if (/^\d*$/.test(str)) {
-	    return `${+str - 1}`;
-	  }
-
-	  return null;
-	}
-
-	function pathUp(str) {
-	  if (typeof str === "string") {
-	    if (!str.includes(".") || !str.slice(str.indexOf(".") + 1).includes(".")) {
-	      return "0";
-	    }
-
-	    let dotsCount = 0;
-
-	    for (let i = str.length; i--;) {
-	      if (str[i] === ".") {
-	        dotsCount += 1;
-	      }
-
-	      if (dotsCount === 2) {
-	        return str.slice(0, i);
-	      }
-	    }
-	  }
-
-	  return str;
 	}
 
 	/**
@@ -44120,8 +44136,7 @@
 	            });
 	          }
 	        }
-	      } // Add a space.
-
+	      }
 	    }
 
 	  };
@@ -44886,7 +44901,9 @@
 	    } else {
 	      // falsey config => early return
 	      return [];
-	    } // filter out all applicable values and make them listen for events that
+	    } // detect the language
+	    // const lang = detectLanguage(str);
+	    // filter out all applicable values and make them listen for events that
 	    // tokenizer emits
 
 
@@ -44908,9 +44925,6 @@
 
 	      return false;
 	    }).forEach(rule => {
-	      // console.log(
-	      //   `086 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: filtering rule ${rule}`
-	      // );
 	      // extract all the options, second array element onwards - the length is indeterminable
 	      let rulesFunction;
 
@@ -44958,7 +44972,7 @@
 	        // We call the character-level callback from raw characters, coming
 	        // if from parser which comes straight from tokenizer.
 	        // console.log(
-	        //   `147 ██ ${`\u001b[${35}m${`linter/charCb():`}\u001b[${39}m`} incoming ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
+	        //   `160 ██ ${`\u001b[${35}m${`linter/charCb():`}\u001b[${39}m`} incoming ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
 	        //     obj,
 	        //     null,
 	        //     4
@@ -44985,21 +44999,13 @@
 	          });
 	        }
 	      }
-	    }), // (key, val, innerObj, stop) => {
-	    (key, val) => {
+	    }), (key, val, innerObj) => {
 	      const current = val !== undefined ? val : key;
 
-	      if (isObj$6(current)) {
+	      if (isObj$6(current) && (!innerObj.parentKey || !innerObj.parentKey.startsWith("attrib"))) {
 	        // monkey will traverse every key, every string within.
 	        // We need to pick the objects of a type we need: "tag", "comment" etc.
 	        // tag-level callback
-	        // console.log(
-	        //   `210 ██ ${`\u001b[${35}m${`linter/tagCb():`}\u001b[${39}m`} PING ${`\u001b[${33}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
-	        //     current,
-	        //     null,
-	        //     4
-	        //   )}`
-	        // );
 	        this.emit(current.type, current); // plus, for type:html also ping each attribute
 
 	        if (current.type === "tag" && Array.isArray(current.attribs) && current.attribs.length) {

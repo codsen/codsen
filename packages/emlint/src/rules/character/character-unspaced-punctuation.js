@@ -79,10 +79,10 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
       // plan: iterate each character from this text chunk/node, query each
       // caught character's surroundings as per config
       for (let i = node.start; i < node.end; i++) {
-        console.log(`082 ███████████████████████████████████████ i = ${i}`);
+        console.log(`082 i = ${i}`);
         const charCode = context.str[i].charCodeAt(0);
         if (charCodeMapping[String(charCode)]) {
-          console.log(`caught ${charCodeMapping[String(charCode)]}!`);
+          console.log(`085 caught ${charCodeMapping[String(charCode)]}!`);
           const charName = charCodeMapping[String(charCode)];
 
           // precautions first.
@@ -174,8 +174,6 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
           }
         }
       }
-
-      // Add a space.
     },
   };
 }

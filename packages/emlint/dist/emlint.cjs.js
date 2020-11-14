@@ -9441,10 +9441,9 @@ class Linter extends EventEmitter {
           });
         }
       }
-    }),
-    (key, val) => {
+    }), (key, val, innerObj) => {
       const current = val !== undefined ? val : key;
-      if (isObj(current)) {
+      if (isObj(current) && (!innerObj.parentKey || !innerObj.parentKey.startsWith("attrib"))) {
         this.emit(current.type, current);
         if (current.type === "tag" && Array.isArray(current.attribs) && current.attribs.length) {
           current.attribs.forEach(attribObj => {
