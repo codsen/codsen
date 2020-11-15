@@ -101,8 +101,10 @@
     },
     {
         "name": "ast-monkey-traverse",
-        "size": 2494,
-        "imports": []
+        "size": 2322,
+        "imports": [
+            "ast-monkey-util"
+        ]
     },
     {
         "name": "ast-monkey-traverse-with-lookahead",
@@ -111,7 +113,7 @@
     },
     {
         "name": "ast-monkey-util",
-        "size": 1428,
+        "size": 1835,
         "imports": []
     },
     {
@@ -253,7 +255,7 @@
     },
     {
         "name": "emlint",
-        "size": 328416,
+        "size": 328531,
         "imports": [
             "ast-monkey-traverse",
             "ast-monkey-util",

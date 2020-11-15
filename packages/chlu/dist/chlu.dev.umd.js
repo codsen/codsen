@@ -3642,12 +3642,35 @@
     module.exports = cloneDeep;
   });
 
-  function trimFirstDot(str) {
-    if (typeof str === "string" && str.length && str[0] === ".") {
-      return str.slice(1);
+  /**
+   * ast-monkey-util
+   * Utility library of AST helper functions
+   * Version: 1.1.12
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://codsen.com/os/ast-monkey-util/
+   */
+
+  function parent(str) {
+    if (typeof str === "string") {
+      if (!str.includes(".")) {
+        return null;
+      }
+
+      var lastDotAt = str.lastIndexOf(".");
+
+      if (!str.slice(0, lastDotAt).includes(".")) {
+        return str.slice(0, lastDotAt);
+      }
+
+      for (var i = lastDotAt - 1; i--;) {
+        if (str[i] === ".") {
+          return str.slice(i + 1, lastDotAt);
+        }
+      }
     }
 
-    return str;
+    return null;
   }
 
   function isObj(something) {
@@ -3678,15 +3701,16 @@
             break;
           }
 
-          var path = "".concat(innerObj.path, ".").concat(i);
+          var path = innerObj.path ? "".concat(innerObj.path, ".").concat(i) : "".concat(i);
 
           if (tree[i] !== undefined) {
             innerObj.parent = lodash_clonedeep(tree);
             innerObj.parentType = "array";
+            innerObj.parentKey = parent(path);
             res = traverseInner(callback(tree[i], undefined, _objectSpread2(_objectSpread2({}, innerObj), {}, {
-              path: trimFirstDot(path)
+              path: path
             }), stop), callback, _objectSpread2(_objectSpread2({}, innerObj), {}, {
-              path: trimFirstDot(path)
+              path: path
             }), stop);
 
             if (Number.isNaN(res) && i < tree.length) {
@@ -3705,7 +3729,7 @@
             break;
           }
 
-          var _path = "".concat(innerObj.path, ".").concat(key);
+          var _path = innerObj.path ? "".concat(innerObj.path, ".").concat(key) : key;
 
           if (innerObj.depth === 0 && key != null) {
             innerObj.topmostKey = key;
@@ -3713,10 +3737,11 @@
 
           innerObj.parent = lodash_clonedeep(tree);
           innerObj.parentType = "object";
+          innerObj.parentKey = parent(_path);
           res = traverseInner(callback(key, tree[key], _objectSpread2(_objectSpread2({}, innerObj), {}, {
-            path: trimFirstDot(_path)
+            path: _path
           }), stop), callback, _objectSpread2(_objectSpread2({}, innerObj), {}, {
-            path: trimFirstDot(_path)
+            path: _path
           }), stop);
 
           if (Number.isNaN(res)) {

@@ -14,7 +14,7 @@
         "ast-monkey": 1,
         "ast-monkey-traverse": 10,
         "ast-monkey-traverse-with-lookahead": 1,
-        "ast-monkey-util": 2,
+        "ast-monkey-util": 3,
         "chalk": 6,
         "check-types-mini": 4,
         "chlu": 1,

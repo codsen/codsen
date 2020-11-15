@@ -121,7 +121,7 @@
    */
   function pathNext(str) {
     if (typeof str !== "string" || !str.length) {
-      return str;
+      return null;
     }
 
     if (str.includes(".") && /^\d*$/.test(str.slice(str.lastIndexOf(".") + 1))) {
@@ -176,7 +176,7 @@
       }
     }
 
-    return str;
+    return "0";
   }
 
   /** Used for built-in method references. */

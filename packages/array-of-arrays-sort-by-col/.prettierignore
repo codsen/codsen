@@ -1,5 +1,6 @@
 dist/
-test/fixtures
+*.json
+*.mdes
 fixtures/
 *.json
 testStats.md
