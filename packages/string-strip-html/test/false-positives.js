@@ -268,7 +268,7 @@ tap.test("32", (t) => {
   t.end();
 });
 
-tap.only("33", (t) => {
+tap.test("33", (t) => {
   const input = `kl <c:when test="\${ab < cd}"> mn`;
   t.match(stripHtml(input), { result: "kl mn" }, "33");
   t.end();
