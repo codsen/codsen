@@ -17,4 +17,37 @@ function prepHopefullyAnArray(something, name) {
   );
 }
 
-export { characterSuitableForNames, prepHopefullyAnArray };
+function xBeforeYOnTheRight(str, startingIdx, x, y) {
+  for (let i = startingIdx, len = str.length; i < len; i++) {
+    if (str.startsWith(x, i)) {
+      return true;
+    }
+
+    if (str.startsWith(y, i)) {
+      return false;
+    }
+  }
+
+  return false;
+}
+
+//
+// precaution against JSP comparison
+// kl <c:when test="${!empty ab.cd && ab.cd > 0.00}"> mn
+//                                          ^
+//                                        we're here, it's false ending
+//
+function notWithinAttrQuotes(tag, str, i) {
+  return (
+    !tag ||
+    !tag.quotes ||
+    !xBeforeYOnTheRight(str, i + 1, tag.quotes.value, ">")
+  );
+}
+
+export {
+  characterSuitableForNames,
+  prepHopefullyAnArray,
+  xBeforeYOnTheRight,
+  notWithinAttrQuotes,
+};

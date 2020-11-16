@@ -32,6 +32,24 @@ function prepHopefullyAnArray(something, name) {
     `string-strip-html/stripHtml(): [THROW_ID_03] ${name} must be array containing zero or more strings or something falsey. Currently it's equal to: ${something}, that a type of ${typeof something}.`
   );
 }
+function xBeforeYOnTheRight(str, startingIdx, x, y) {
+  for (let i = startingIdx, len = str.length; i < len; i++) {
+    if (str.startsWith(x, i)) {
+      return true;
+    }
+    if (str.startsWith(y, i)) {
+      return false;
+    }
+  }
+  return false;
+}
+function notWithinAttrQuotes(tag, str, i) {
+  return (
+    !tag ||
+    !tag.quotes ||
+    !xBeforeYOnTheRight(str, i + 1, tag.quotes.value, ">")
+  );
+}
 
 function stripHtml(str, originalOpts) {
   const start = Date.now();
@@ -726,8 +744,11 @@ function stripHtml(str, originalOpts) {
     ) {
       tag.nameContainsLetters = true;
     }
-    if (str[i] === ">") {
-      if (tag.lastOpeningBracketAt !== undefined) {
+    if (
+      str[i] === ">" &&
+      notWithinAttrQuotes(tag, str, i)
+    ) {
+      if ( tag.lastOpeningBracketAt !== undefined) {
         tag.lastClosingBracketAt = i;
         spacesChunkWhichFollowsTheClosingBracketEndsAt = null;
         if (Object.keys(attrObj).length) {
@@ -944,7 +965,8 @@ function stripHtml(str, originalOpts) {
       str[i] === "<" &&
       str[i - 1] !== "<" &&
       !`'"`.includes(str[i + 1]) &&
-      (!`'"`.includes(str[i + 2]) || /\w/.test(str[i + 1]))
+      (!`'"`.includes(str[i + 2]) || /\w/.test(str[i + 1])) &&
+      notWithinAttrQuotes(tag, str, i)
     ) {
       if (str[right(str, i)] === ">") {
         continue;

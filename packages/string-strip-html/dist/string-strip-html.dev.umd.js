@@ -8647,6 +8647,30 @@
     throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_03] ".concat(name, " must be array containing zero or more strings or something falsey. Currently it's equal to: ").concat(something, ", that a type of ").concat(_typeof(something), "."));
   }
 
+  function xBeforeYOnTheRight(str, startingIdx, x, y) {
+    for (var i = startingIdx, len = str.length; i < len; i++) {
+      if (str.startsWith(x, i)) {
+        return true;
+      }
+
+      if (str.startsWith(y, i)) {
+        return false;
+      }
+    }
+
+    return false;
+  } //
+  // precaution against JSP comparison
+  // kl <c:when test="${!empty ab.cd && ab.cd > 0.00}"> mn
+  //                                          ^
+  //                                        we're here, it's false ending
+  //
+
+
+  function notWithinAttrQuotes(tag, str, i) {
+    return !tag || !tag.quotes || !xBeforeYOnTheRight(str, i + 1, tag.quotes.value, ">");
+  }
+
   function stripHtml(str, originalOpts) {
     // const
     // ===========================================================================
@@ -9265,8 +9289,17 @@
       // -------------------------------------------------------------------------
 
 
-      if (str[_i] === ">") {
-        if (tag.lastOpeningBracketAt !== undefined) {
+      if ( // it's closing bracket
+      str[_i] === ">" && //
+      // precaution against JSP comparison
+      // kl <c:when test="${!empty ab.cd && ab.cd > 0.00}"> mn
+      //                                          ^
+      //                                        we're here, it's false ending
+      //
+      notWithinAttrQuotes(tag, str, _i)) {
+        var itIsClosing = true;
+
+        if (itIsClosing && tag.lastOpeningBracketAt !== undefined) {
           // 1. mark the index
           tag.lastClosingBracketAt = _i; // 2. reset the spacesChunkWhichFollowsTheClosingBracketEndsAt
 
@@ -9467,7 +9500,13 @@
       // -------------------------------------------------------------------------
 
 
-      if (str[_i] === "<" && str[_i - 1] !== "<" && !"'\"".includes(str[_i + 1]) && (!"'\"".includes(str[_i + 2]) || /\w/.test(str[_i + 1]))) {
+      if (str[_i] === "<" && str[_i - 1] !== "<" && !"'\"".includes(str[_i + 1]) && (!"'\"".includes(str[_i + 2]) || /\w/.test(str[_i + 1])) && //
+      // precaution against JSP comparison
+      // kl <c:when test="${!empty ab.cd && ab.cd < 0.00}"> mn
+      //                                          ^
+      //                                        we're here, it's false alarm
+      //
+      notWithinAttrQuotes(tag, str, _i)) {
         // cater sequences of opening brackets "<<<<div>>>"
         if (str[right(str, _i)] === ">") {
           i = _i;
