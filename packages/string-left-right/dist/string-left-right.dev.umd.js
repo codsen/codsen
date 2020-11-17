@@ -2120,6 +2120,8 @@
     module.exports = cloneDeep;
   });
 
+  var RAWNBSP = "\xA0"; // separates the value from flags
+
   function x(something) {
     // console.log(
     //   `007 ${`\u001b[${35}m${`x() incoming "${something}"`}\u001b[${39}m`}`
@@ -2264,7 +2266,8 @@
   function leftMain(_ref2) {
     var str = _ref2.str,
         idx = _ref2.idx,
-        stopAtNewlines = _ref2.stopAtNewlines;
+        stopAtNewlines = _ref2.stopAtNewlines,
+        stopAtRawNbsp = _ref2.stopAtRawNbsp;
 
     if (typeof str !== "string" || !str.length) {
       return null;
@@ -2279,19 +2282,40 @@
     }
 
     if ( // ~- means minus one, in bitwise
-    str[~-idx] && (!stopAtNewlines && str[~-idx].trim() || stopAtNewlines && (str[~-idx].trim() || "\n\r".includes(str[~-idx])))) {
+    str[~-idx] && ( // either it's not a whitespace
+    str[~-idx].trim() || // or it is whitespace, but...
+    // stop at newlines is on
+    stopAtNewlines && // and it's a newline
+    "\n\r".includes(str[~-idx]) || // stop at raw nbsp is on
+    stopAtRawNbsp && // and it's a raw nbsp
+    str[~-idx] === RAWNBSP)) {
       // best case scenario - next character is non-whitespace:
       return ~-idx;
-    }
+    } // if we reached this point, this means character on the left is whitespace -
+    // fine - check the next character on the left, str[idx - 2]
 
-    if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
+
+    if ( // second character exists
+    str[idx - 2] && ( // either it's not whitespace so Bob's your uncle here's non-whitespace character
+    str[idx - 2].trim() || // it is whitespace, but...
+    // stop at newlines is on
+    stopAtNewlines && // it's some sort of a newline
+    "\n\r".includes(str[idx - 2]) || // stop at raw nbsp is on
+    stopAtRawNbsp && // and it's a raw nbsp
+    str[idx - 2] === RAWNBSP)) {
       // second best case scenario - second next character is non-whitespace:
       return idx - 2;
     } // worst case scenario - traverse backwards
 
 
     for (var i = idx; i--;) {
-      if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
+      if (str[i] && ( // it's non-whitespace character
+      str[i].trim() || // or it is whitespace character, but...
+      // stop at newlines is on
+      stopAtNewlines && // it's some sort of a newline
+      "\n\r".includes(str[i]) || // stop at raw nbsp is on
+      stopAtRawNbsp && // and it's a raw nbsp
+      str[i] === RAWNBSP)) {
         return i;
       }
     }
@@ -2303,7 +2327,8 @@
     return leftMain({
       str: str,
       idx: idx,
-      stopAtNewlines: false
+      stopAtNewlines: false,
+      stopAtRawNbsp: false
     });
   }
 
@@ -2311,7 +2336,17 @@
     return leftMain({
       str: str,
       idx: idx,
-      stopAtNewlines: true
+      stopAtNewlines: true,
+      stopAtRawNbsp: false
+    });
+  }
+
+  function leftStopAtRawNbsp(str, idx) {
+    return leftMain({
+      str: str,
+      idx: idx,
+      stopAtNewlines: false,
+      stopAtRawNbsp: true
     });
   } //
   //
@@ -2885,6 +2920,7 @@
   exports.left = left;
   exports.leftSeq = leftSeq;
   exports.leftStopAtNewLines = leftStopAtNewLines;
+  exports.leftStopAtRawNbsp = leftStopAtRawNbsp;
   exports.right = right;
   exports.rightSeq = rightSeq;
   exports.rightStopAtNewLines = rightStopAtNewLines;

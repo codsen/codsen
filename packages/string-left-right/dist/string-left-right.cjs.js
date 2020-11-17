@@ -117,6 +117,7 @@ function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
+var RAWNBSP = "\xA0";
 function x(something) {
   var res = {
     value: something,
@@ -185,7 +186,8 @@ function rightStopAtNewLines(str, idx) {
 function leftMain(_ref2) {
   var str = _ref2.str,
       idx = _ref2.idx,
-      stopAtNewlines = _ref2.stopAtNewlines;
+      stopAtNewlines = _ref2.stopAtNewlines,
+      stopAtRawNbsp = _ref2.stopAtRawNbsp;
   if (typeof str !== "string" || !str.length) {
     return null;
   }
@@ -196,14 +198,30 @@ function leftMain(_ref2) {
     return null;
   }
   if (
-  str[~-idx] && (!stopAtNewlines && str[~-idx].trim() || stopAtNewlines && (str[~-idx].trim() || "\n\r".includes(str[~-idx])))) {
+  str[~-idx] && (
+  str[~-idx].trim() ||
+  stopAtNewlines &&
+  "\n\r".includes(str[~-idx]) ||
+  stopAtRawNbsp &&
+  str[~-idx] === RAWNBSP)) {
     return ~-idx;
   }
-  if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
+  if (
+  str[idx - 2] && (
+  str[idx - 2].trim() ||
+  stopAtNewlines &&
+  "\n\r".includes(str[idx - 2]) ||
+  stopAtRawNbsp &&
+  str[idx - 2] === RAWNBSP)) {
     return idx - 2;
   }
   for (var i = idx; i--;) {
-    if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
+    if (str[i] && (
+    str[i].trim() ||
+    stopAtNewlines &&
+    "\n\r".includes(str[i]) ||
+    stopAtRawNbsp &&
+    str[i] === RAWNBSP)) {
       return i;
     }
   }
@@ -213,14 +231,24 @@ function left(str, idx) {
   return leftMain({
     str: str,
     idx: idx,
-    stopAtNewlines: false
+    stopAtNewlines: false,
+    stopAtRawNbsp: false
   });
 }
 function leftStopAtNewLines(str, idx) {
   return leftMain({
     str: str,
     idx: idx,
-    stopAtNewlines: true
+    stopAtNewlines: true,
+    stopAtRawNbsp: false
+  });
+}
+function leftStopAtRawNbsp(str, idx) {
+  return leftMain({
+    str: str,
+    idx: idx,
+    stopAtNewlines: false,
+    stopAtRawNbsp: true
   });
 }
 function seq(direction, str, idx, opts, args) {
@@ -477,6 +505,7 @@ exports.chompRight = chompRight;
 exports.left = left;
 exports.leftSeq = leftSeq;
 exports.leftStopAtNewLines = leftStopAtNewLines;
+exports.leftStopAtRawNbsp = leftStopAtRawNbsp;
 exports.right = right;
 exports.rightSeq = rightSeq;
 exports.rightStopAtNewLines = rightStopAtNewLines;

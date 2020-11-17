@@ -10,6 +10,7 @@
 import isObj from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';
 
+const RAWNBSP = "\u00A0";
 function x(something) {
   const res = {
     value: something,
@@ -81,7 +82,7 @@ function right(str, idx) {
 function rightStopAtNewLines(str, idx) {
   return rightMain({ str, idx, stopAtNewlines: true });
 }
-function leftMain({ str, idx, stopAtNewlines }) {
+function leftMain({ str, idx, stopAtNewlines, stopAtRawNbsp }) {
   if (typeof str !== "string" || !str.length) {
     return null;
   }
@@ -93,24 +94,32 @@ function leftMain({ str, idx, stopAtNewlines }) {
   }
   if (
     str[~-idx] &&
-    ((!stopAtNewlines && str[~-idx].trim()) ||
-      (stopAtNewlines && (str[~-idx].trim() || "\n\r".includes(str[~-idx]))))
+    (str[~-idx].trim() ||
+      (stopAtNewlines &&
+        "\n\r".includes(str[~-idx])) ||
+      (stopAtRawNbsp &&
+        str[~-idx] === RAWNBSP))
   ) {
     return ~-idx;
   }
   if (
     str[idx - 2] &&
-    ((!stopAtNewlines && str[idx - 2].trim()) ||
+    (str[idx - 2].trim() ||
       (stopAtNewlines &&
-        (str[idx - 2].trim() || "\n\r".includes(str[idx - 2]))))
+        "\n\r".includes(str[idx - 2])) ||
+      (stopAtRawNbsp &&
+        str[idx - 2] === RAWNBSP))
   ) {
     return idx - 2;
   }
   for (let i = idx; i--; ) {
     if (
       str[i] &&
-      ((!stopAtNewlines && str[i].trim()) ||
-        (stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i]))))
+      (str[i].trim() ||
+        (stopAtNewlines &&
+          "\n\r".includes(str[i])) ||
+        (stopAtRawNbsp &&
+          str[i] === RAWNBSP))
     ) {
       return i;
     }
@@ -118,10 +127,13 @@ function leftMain({ str, idx, stopAtNewlines }) {
   return null;
 }
 function left(str, idx) {
-  return leftMain({ str, idx, stopAtNewlines: false });
+  return leftMain({ str, idx, stopAtNewlines: false, stopAtRawNbsp: false });
 }
 function leftStopAtNewLines(str, idx) {
-  return leftMain({ str, idx, stopAtNewlines: true });
+  return leftMain({ str, idx, stopAtNewlines: true, stopAtRawNbsp: false });
+}
+function leftStopAtRawNbsp(str, idx) {
+  return leftMain({ str, idx, stopAtNewlines: false, stopAtRawNbsp: true });
 }
 function seq(direction, str, idx, opts, args) {
   if (typeof str !== "string" || !str.length) {
@@ -398,4 +410,4 @@ function chompRight(str, idx, ...args) {
   return chomp("right", str, idx, defaults, clone(args));
 }
 
-export { chompLeft, chompRight, left, leftSeq, leftStopAtNewLines, right, rightSeq, rightStopAtNewLines };
+export { chompLeft, chompRight, left, leftSeq, leftStopAtNewLines, leftStopAtRawNbsp, right, rightSeq, rightStopAtNewLines };
