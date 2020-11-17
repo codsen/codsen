@@ -38,7 +38,7 @@ function isNum(something) {
 function isStr(something) {
   return typeof something === "string";
 }
-function rightMain(str, idx, stopAtNewlines) {
+function rightMain({ str, idx, stopAtNewlines }) {
   if (typeof str !== "string" || !str.length) {
     return null;
   }
@@ -76,12 +76,12 @@ function rightMain(str, idx, stopAtNewlines) {
   return null;
 }
 function right(str, idx) {
-  return rightMain(str, idx, false);
+  return rightMain({ str, idx, stopAtNewlines: false });
 }
 function rightStopAtNewLines(str, idx) {
-  return rightMain(str, idx, true);
+  return rightMain({ str, idx, stopAtNewlines: true });
 }
-function leftMain(str, idx, stopAtNewlines) {
+function leftMain({ str, idx, stopAtNewlines }) {
   if (typeof str !== "string" || !str.length) {
     return null;
   }
@@ -118,10 +118,10 @@ function leftMain(str, idx, stopAtNewlines) {
   return null;
 }
 function left(str, idx) {
-  return leftMain(str, idx, false);
+  return leftMain({ str, idx, stopAtNewlines: false });
 }
 function leftStopAtNewLines(str, idx) {
-  return leftMain(str, idx, true);
+  return leftMain({ str, idx, stopAtNewlines: true });
 }
 function seq(direction, str, idx, opts, args) {
   if (typeof str !== "string" || !str.length) {

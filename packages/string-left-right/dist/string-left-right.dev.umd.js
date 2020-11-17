@@ -2187,7 +2187,11 @@
   // on string "str". Returns index of that first non-whitespace character.
 
 
-  function rightMain(str, idx, stopAtNewlines) {
+  function rightMain(_ref) {
+    var str = _ref.str,
+        idx = _ref.idx,
+        stopAtNewlines = _ref.stopAtNewlines;
+
     if (typeof str !== "string" || !str.length) {
       return null;
     }
@@ -2221,11 +2225,19 @@
   }
 
   function right(str, idx) {
-    return rightMain(str, idx, false);
+    return rightMain({
+      str: str,
+      idx: idx,
+      stopAtNewlines: false
+    });
   }
 
   function rightStopAtNewLines(str, idx) {
-    return rightMain(str, idx, true);
+    return rightMain({
+      str: str,
+      idx: idx,
+      stopAtNewlines: true
+    });
   } //
   //
   //       lllllll                        ffffffffffffffff           tttt                    ((((((       ))))))
@@ -2249,7 +2261,11 @@
   // Finds the index of the first non-whitespace character on the left
 
 
-  function leftMain(str, idx, stopAtNewlines) {
+  function leftMain(_ref2) {
+    var str = _ref2.str,
+        idx = _ref2.idx,
+        stopAtNewlines = _ref2.stopAtNewlines;
+
     if (typeof str !== "string" || !str.length) {
       return null;
     }
@@ -2284,11 +2300,19 @@
   }
 
   function left(str, idx) {
-    return leftMain(str, idx, false);
+    return leftMain({
+      str: str,
+      idx: idx,
+      stopAtNewlines: false
+    });
   }
 
   function leftStopAtNewLines(str, idx) {
-    return leftMain(str, idx, true);
+    return leftMain({
+      str: str,
+      idx: idx,
+      stopAtNewlines: true
+    });
   } //
   //
   //                                                                           ((((((       ))))))
