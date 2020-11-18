@@ -39,7 +39,7 @@ function isNum(something) {
 function isStr(something) {
   return typeof something === "string";
 }
-function rightMain({ str, idx, stopAtNewlines }) {
+function rightMain({ str, idx, stopAtNewlines, stopAtRawNbsp }) {
   if (typeof str !== "string" || !str.length) {
     return null;
   }
@@ -51,25 +51,31 @@ function rightMain({ str, idx, stopAtNewlines }) {
   }
   if (
     str[idx + 1] &&
-    ((!stopAtNewlines && str[idx + 1].trim()) ||
+    (str[idx + 1].trim() ||
       (stopAtNewlines &&
-        (str[idx + 1].trim() || "\n\r".includes(str[idx + 1]))))
+        "\n\r".includes(str[idx + 1])) ||
+      (stopAtRawNbsp &&
+        str[idx + 1] === RAWNBSP))
   ) {
     return idx + 1;
   }
   if (
     str[idx + 2] &&
-    ((!stopAtNewlines && str[idx + 2].trim()) ||
+    (str[idx + 2].trim() ||
       (stopAtNewlines &&
-        (str[idx + 2].trim() || "\n\r".includes(str[idx + 2]))))
+        "\n\r".includes(str[idx + 2])) ||
+      (stopAtRawNbsp &&
+        str[idx + 2] === RAWNBSP))
   ) {
     return idx + 2;
   }
   for (let i = idx + 1, len = str.length; i < len; i++) {
     if (
-      str[i] &&
-      ((!stopAtNewlines && str[i].trim()) ||
-        (stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i]))))
+      str[i].trim() ||
+      (stopAtNewlines &&
+        "\n\r".includes(str[i])) ||
+      (stopAtRawNbsp &&
+        str[i] === RAWNBSP)
     ) {
       return i;
     }
@@ -77,10 +83,13 @@ function rightMain({ str, idx, stopAtNewlines }) {
   return null;
 }
 function right(str, idx) {
-  return rightMain({ str, idx, stopAtNewlines: false });
+  return rightMain({ str, idx, stopAtNewlines: false, stopAtRawNbsp: false });
 }
 function rightStopAtNewLines(str, idx) {
-  return rightMain({ str, idx, stopAtNewlines: true });
+  return rightMain({ str, idx, stopAtNewlines: true, stopAtRawNbsp: false });
+}
+function rightStopAtRawNbsp(str, idx) {
+  return rightMain({ str, idx, stopAtNewlines: false, stopAtRawNbsp: true });
 }
 function leftMain({ str, idx, stopAtNewlines, stopAtRawNbsp }) {
   if (typeof str !== "string" || !str.length) {
@@ -410,4 +419,4 @@ function chompRight(str, idx, ...args) {
   return chomp("right", str, idx, defaults, clone(args));
 }
 
-export { chompLeft, chompRight, left, leftSeq, leftStopAtNewLines, leftStopAtRawNbsp, right, rightSeq, rightStopAtNewLines };
+export { chompLeft, chompRight, left, leftSeq, leftStopAtNewLines, leftStopAtRawNbsp, right, rightSeq, rightStopAtNewLines, rightStopAtRawNbsp };

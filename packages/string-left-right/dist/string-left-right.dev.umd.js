@@ -2192,7 +2192,8 @@
   function rightMain(_ref) {
     var str = _ref.str,
         idx = _ref.idx,
-        stopAtNewlines = _ref.stopAtNewlines;
+        stopAtNewlines = _ref.stopAtNewlines,
+        stopAtRawNbsp = _ref.stopAtRawNbsp;
 
     if (typeof str !== "string" || !str.length) {
       return null;
@@ -2206,19 +2207,41 @@
       return null;
     }
 
-    if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
+    if ( // next character exists
+    str[idx + 1] && ( // and...
+    // it's solid
+    str[idx + 1].trim() || // or it's a whitespace character, but...
+    // stop at newlines is on
+    stopAtNewlines && // and it's a newline
+    "\n\r".includes(str[idx + 1]) || // stop at raw nbsp is on
+    stopAtRawNbsp && // and it's a raw nbsp
+    str[idx + 1] === RAWNBSP)) {
       // best case scenario - next character is non-whitespace:
       return idx + 1;
     }
 
-    if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
+    if ( // second next character exists
+    str[idx + 2] && ( // and...
+    // it's solid
+    str[idx + 2].trim() || // it's a whitespace character and...
+    // stop at newlines is on
+    stopAtNewlines && // and it's a newline
+    "\n\r".includes(str[idx + 2]) || // stop at raw nbsp is on
+    stopAtRawNbsp && // and it's a raw nbsp
+    str[idx + 2] === RAWNBSP)) {
       // second best case scenario - second next character is non-whitespace:
       return idx + 2;
     } // worst case scenario - traverse forwards
 
 
     for (var i = idx + 1, len = str.length; i < len; i++) {
-      if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
+      if ( // it's solid
+      str[i].trim() || // it's a whitespace character and...
+      // stop at newlines is on
+      stopAtNewlines && // and it's a newline
+      "\n\r".includes(str[i]) || // stop at raw nbsp is on
+      stopAtRawNbsp && // and it's a raw nbsp
+      str[i] === RAWNBSP) {
         return i;
       }
     }
@@ -2230,7 +2253,8 @@
     return rightMain({
       str: str,
       idx: idx,
-      stopAtNewlines: false
+      stopAtNewlines: false,
+      stopAtRawNbsp: false
     });
   }
 
@@ -2238,7 +2262,17 @@
     return rightMain({
       str: str,
       idx: idx,
-      stopAtNewlines: true
+      stopAtNewlines: true,
+      stopAtRawNbsp: false
+    });
+  }
+
+  function rightStopAtRawNbsp(str, idx) {
+    return rightMain({
+      str: str,
+      idx: idx,
+      stopAtNewlines: false,
+      stopAtRawNbsp: true
     });
   } //
   //
@@ -2924,6 +2958,7 @@
   exports.right = right;
   exports.rightSeq = rightSeq;
   exports.rightStopAtNewLines = rightStopAtNewLines;
+  exports.rightStopAtRawNbsp = rightStopAtRawNbsp;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
