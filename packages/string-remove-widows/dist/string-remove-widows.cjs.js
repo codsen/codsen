@@ -331,9 +331,6 @@ function removeWidows(str, originalOpts) {
     if (!doNothingUntil && str[_i] === rawnbsp) {
       lastEncodedNbspStartedAt = _i;
       lastEncodedNbspEndedAt = _i + 1;
-      if (str[_i + 2] && str[_i + 2].trim()) {
-        bumpWordCountAt = _i + 2;
-      }
       if (opts.convertEntities) {
         rangesArr.push(_i, _i + 1, opts.targetLanguage === "css" ? encodedNbspCss : opts.targetLanguage === "js" ? encodedNbspJs : encodedNbspHtml);
       }
@@ -436,6 +433,7 @@ function removeWidows(str, originalOpts) {
   for (var i = 0; i <= len; i++) {
     _loop(i);
   }
+  apply__default['default'](str, rangesArr.current()).split("").forEach(function (key, i) {});
   return {
     res: apply__default['default'](str, rangesArr.current(), opts.reportProgressFunc ? function (incomingPerc) {
       currentPercentageDone = Math.floor((opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * (1 - leavePercForLastStage) + incomingPerc / 100 * (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage);

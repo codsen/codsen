@@ -461,9 +461,6 @@ function removeWidows(str, originalOpts) {
     if (!doNothingUntil && str[i] === rawnbsp) {
       lastEncodedNbspStartedAt = i;
       lastEncodedNbspEndedAt = i + 1;
-      if (str[i + 2] && str[i + 2].trim()) {
-        bumpWordCountAt = i + 2;
-      }
       if (opts.convertEntities) {
         rangesArr.push(
           i,
@@ -635,6 +632,10 @@ function removeWidows(str, originalOpts) {
       })
     ) ;
   }
+  apply(str, rangesArr.current())
+    .split("")
+    .forEach((key, i) => {
+    });
   return {
     res: apply(
       str,
