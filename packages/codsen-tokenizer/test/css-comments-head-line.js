@@ -35,7 +35,7 @@ tap.test(
 // mixed
 // -----------------------------------------------------------------------------
 
-tap.only(
+tap.test(
   `03 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - first line commented out`,
   (t) => {
     const gathered = [];

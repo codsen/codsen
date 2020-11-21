@@ -21,7 +21,7 @@ tap.test("02 - non-emoji indexes match completely", (t) => {
 // multiple-length characters
 // -----------------------------------------------------------------------------
 
-tap.only("03 - 2-long emojis", (t) => {
+tap.test("03 - 2-long emojis", (t) => {
   t.is(nativeToUnicode("👍", 0), 0, "03.01");
   t.is(nativeToUnicode("👍", 1), 0, "03.02");
 

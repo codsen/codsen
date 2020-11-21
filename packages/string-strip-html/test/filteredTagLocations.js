@@ -4,7 +4,7 @@ import stripHtml from "../dist/string-strip-html.esm";
 // tag pairs vs content
 // -----------------------------------------------------------------------------
 
-tap.only("01 - tag pair among defaults", (t) => {
+tap.test("01 - tag pair among defaults", (t) => {
   t.match(
     stripHtml("abc<script>const x = 1;</script>xyz"),
     {

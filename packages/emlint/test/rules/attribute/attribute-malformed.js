@@ -334,7 +334,7 @@ tap.test(
   }
 );
 
-tap.only(
+tap.test(
   `15 - ${`\u001b[${32}m${`repeated closing`}\u001b[${39}m`} - double`,
   (t) => {
     const str = `<table width="100"">\n  zzz\n</table>`;

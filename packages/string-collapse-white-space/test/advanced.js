@@ -259,7 +259,7 @@ tap.test(`01 - trimming mixed lumps of trimmable characters`, (t) => {
   t.end();
 });
 
-tap.only("02", (t) => {
+tap.test("02", (t) => {
   t.strictSame(
     collapse(`\t\t\t   \t\t\taaa\t\t\t   \t\t\t`, {
       trimStart: 0,
