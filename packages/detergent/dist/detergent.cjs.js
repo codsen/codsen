@@ -210,6 +210,12 @@ function isUppercaseLetter(str) {
   }
   return str === str.toUpperCase() && str !== str.toLowerCase();
 }
+function removeTrailingSlash(str) {
+  if (typeof str === "string" && str.length && str.endsWith("/")) {
+    return str.slice(0, -1).trim();
+  }
+  return str;
+}
 
 function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracketIndexesArr, state, applicableOpts, endOfLine) {
   var len = str.length;
@@ -930,8 +936,12 @@ function det(str, inputOpts) {
         applicableOpts.stripHtml = true;
         skipArr.push(tag.lastOpeningBracketAt, tag.lastClosingBracketAt ? tag.lastClosingBracketAt + 1 : str.length);
         if (opts.stripHtml && !opts.stripHtmlButIgnoreTags.includes(tag.name.toLowerCase())) {
-          if (opts.stripHtmlAddNewLine.length && opts.stripHtmlAddNewLine.some(function (tagName) {
-            return tagName.startsWith("/") && tag.slashPresent && tag.name.toLowerCase() === tagName.slice(1) || !tagName.startsWith("/") && !tag.slashPresent && tag.name.toLowerCase() === tagName;
+          if (Array.isArray(opts.stripHtmlAddNewLine) && opts.stripHtmlAddNewLine.length && opts.stripHtmlAddNewLine.some(function (tagName) {
+            return tagName.startsWith("/") &&
+            tag.slashPresent &&
+            tag.slashPresent < tag.nameEnds && tag.name.toLowerCase() === tagName.slice(1) || !tagName.startsWith("/") && !(
+            tag.slashPresent &&
+            tag.slashPresent < tag.nameEnds) && tag.name.toLowerCase() === removeTrailingSlash(tagName);
           })) {
             applicableOpts.removeLineBreaks = true;
             if (!opts.removeLineBreaks) {
@@ -971,8 +981,15 @@ function det(str, inputOpts) {
                     mode: 2
                   }, "/"), tag.lastClosingBracketAt, opts.useXHTML ? "/" : undefined);
                 }
-              } else if (!opts.useXHTML || str.slice(tag.slashPresent, tag.lastClosingBracketAt) !== "/") {
-                finalIndexesToDelete.push(tag.slashPresent, tag.lastClosingBracketAt);
+              } else if (!opts.useXHTML || str.slice(stringLeftRight.left(str, tag.slashPresent) + 1, tag.lastClosingBracketAt) !== "/") {
+                var calculatedFrom = stringLeftRight.left(str, tag.slashPresent) + 1;
+                var calculatedTo = tag.lastClosingBracketAt;
+                var whatToInsert = opts.useXHTML ? "/" : null;
+                if (whatToInsert) {
+                  finalIndexesToDelete.push(calculatedFrom, calculatedTo, whatToInsert);
+                } else {
+                  finalIndexesToDelete.push(calculatedFrom, calculatedTo);
+                }
               }
             }
           }

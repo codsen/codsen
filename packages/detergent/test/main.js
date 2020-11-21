@@ -1721,34 +1721,6 @@ tap.test(
         JSON.stringify(opt, null, 0)
       );
     });
-
-    t.match(
-      det1("z <ul><li>y", {
-        removeLineBreaks: 0,
-        removeWidows: 0,
-        replaceLineBreaks: 0,
-        stripHtml: 1,
-      }),
-      {
-        res: "z\ny",
-        applicableOpts: {
-          fixBrokenEntities: false,
-          removeWidows: false,
-          convertEntities: false,
-          convertDashes: false,
-          convertApostrophes: false,
-          replaceLineBreaks: true,
-          removeLineBreaks: true,
-          useXHTML: false,
-          dontEncodeNonLatin: false,
-          addMissingSpaces: false,
-          convertDotsToEllipsis: false,
-          stripHtml: true,
-          eol: false,
-        },
-      },
-      "90"
-    );
     t.end();
   }
 );
@@ -1772,36 +1744,6 @@ tap.test(
         JSON.stringify(opt, null, 0)
       );
     });
-
-    t.match(
-      det1(
-        "Text <ul><li>First point</li><li>Second point</li><li>Third point</li></ul>Text straight after",
-        {
-          removeLineBreaks: 1,
-          removeWidows: 0,
-          stripHtml: 1,
-        }
-      ),
-      {
-        res: "Text First point Second point Third point Text straight after",
-        applicableOpts: {
-          fixBrokenEntities: false,
-          removeWidows: true,
-          convertEntities: false,
-          convertDashes: false,
-          convertApostrophes: false,
-          replaceLineBreaks: false,
-          removeLineBreaks: true,
-          useXHTML: false,
-          dontEncodeNonLatin: false,
-          addMissingSpaces: false,
-          convertDotsToEllipsis: false,
-          stripHtml: true,
-          eol: false,
-        },
-      },
-      "91"
-    );
     t.end();
   }
 );

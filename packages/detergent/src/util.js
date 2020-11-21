@@ -520,7 +520,16 @@ function isUppercaseLetter(str) {
   return str === str.toUpperCase() && str !== str.toLowerCase();
 }
 
+function removeTrailingSlash(str) {
+  if (typeof str === "string" && str.length && str.endsWith("/")) {
+    return str.slice(0, -1).trim();
+  }
+  // default return - does nothing
+  return str;
+}
+
 export {
+  removeTrailingSlash,
   isLowercaseLetter,
   isUppercaseLetter,
   doConvertEntities,

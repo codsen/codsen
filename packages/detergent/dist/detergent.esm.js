@@ -488,6 +488,12 @@ function isUppercaseLetter(str) {
   }
   return str === str.toUpperCase() && str !== str.toLowerCase();
 }
+function removeTrailingSlash(str) {
+  if (typeof str === "string" && str.length && str.endsWith("/")) {
+    return str.slice(0, -1).trim();
+  }
+  return str;
+}
 
 function processCharacter(
   str,
@@ -1618,15 +1624,22 @@ function det(str, inputOpts) {
           !opts.stripHtmlButIgnoreTags.includes(tag.name.toLowerCase())
         ) {
           if (
+            Array.isArray(opts.stripHtmlAddNewLine) &&
             opts.stripHtmlAddNewLine.length &&
             opts.stripHtmlAddNewLine.some(
               (tagName) =>
                 (tagName.startsWith("/") &&
                   tag.slashPresent &&
+                  tag.slashPresent < tag.nameEnds &&
                   tag.name.toLowerCase() === tagName.slice(1)) ||
                 (!tagName.startsWith("/") &&
-                  !tag.slashPresent &&
-                  tag.name.toLowerCase() === tagName)
+                  !(
+                    (
+                      tag.slashPresent &&
+                      tag.slashPresent < tag.nameEnds
+                    )
+                  ) &&
+                  tag.name.toLowerCase() === removeTrailingSlash(tagName))
             )
           ) {
             applicableOpts.removeLineBreaks = true;
@@ -1702,12 +1715,23 @@ function det(str, inputOpts) {
                 }
               } else if (
                 !opts.useXHTML ||
-                str.slice(tag.slashPresent, tag.lastClosingBracketAt) !== "/"
-              ) {
-                finalIndexesToDelete.push(
-                  tag.slashPresent,
+                str.slice(
+                  left(str, tag.slashPresent) + 1,
                   tag.lastClosingBracketAt
-                );
+                ) !== "/"
+              ) {
+                const calculatedFrom = left(str, tag.slashPresent) + 1;
+                const calculatedTo = tag.lastClosingBracketAt;
+                const whatToInsert = opts.useXHTML ? "/" : null;
+                if (whatToInsert) {
+                  finalIndexesToDelete.push(
+                    calculatedFrom,
+                    calculatedTo,
+                    whatToInsert
+                  );
+                } else {
+                  finalIndexesToDelete.push(calculatedFrom, calculatedTo);
+                }
               }
             }
           }

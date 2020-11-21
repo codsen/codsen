@@ -25773,6 +25773,15 @@
     return str === str.toUpperCase() && str !== str.toLowerCase();
   }
 
+  function removeTrailingSlash(str) {
+    if (typeof str === "string" && str.length && str.endsWith("/")) {
+      return str.slice(0, -1).trim();
+    } // default return - does nothing
+
+
+    return str;
+  }
+
   // It is used by processOutside() which skips already processed ranges and
   // iterates over the remaining indexes. Also, it is used to validate the
   // encode entities - those are decoded and ran through this function as well.
@@ -26896,8 +26905,14 @@
           if (opts.stripHtml && !opts.stripHtmlButIgnoreTags.includes(tag.name.toLowerCase())) {
             // 1. strip tag
             // take care of tags listed under opts.stripHtmlAddNewLine
-            if (opts.stripHtmlAddNewLine.length && opts.stripHtmlAddNewLine.some(function (tagName) {
-              return tagName.startsWith("/") && tag.slashPresent && tag.name.toLowerCase() === tagName.slice(1) || !tagName.startsWith("/") && !tag.slashPresent && tag.name.toLowerCase() === tagName;
+            if (Array.isArray(opts.stripHtmlAddNewLine) && opts.stripHtmlAddNewLine.length && opts.stripHtmlAddNewLine.some(function (tagName) {
+              return tagName.startsWith("/") && // present slash will be reported for both frontal and
+              // self-closing cases: </td> and <br/> but we want only
+              // frontal, so...
+              tag.slashPresent && // additional check, is slash frontal
+              tag.slashPresent < tag.nameEnds && tag.name.toLowerCase() === tagName.slice(1) || !tagName.startsWith("/") && !( // slash is present
+              tag.slashPresent && // and it's frontal (slash as in </td> not <br/>)
+              tag.slashPresent < tag.nameEnds) && tag.name.toLowerCase() === removeTrailingSlash(tagName);
             })) {
               applicableOpts.removeLineBreaks = true;
 
@@ -26956,8 +26971,16 @@
                       mode: 2
                     }, "/"), tag.lastClosingBracketAt, opts.useXHTML ? "/" : undefined);
                   }
-                } else if (!opts.useXHTML || str.slice(tag.slashPresent, tag.lastClosingBracketAt) !== "/") {
-                  finalIndexesToDelete.push(tag.slashPresent, tag.lastClosingBracketAt);
+                } else if (!opts.useXHTML || str.slice(left(str, tag.slashPresent) + 1, tag.lastClosingBracketAt) !== "/") {
+                  var calculatedFrom = left(str, tag.slashPresent) + 1;
+                  var calculatedTo = tag.lastClosingBracketAt;
+                  var whatToInsert = opts.useXHTML ? "/" : null;
+
+                  if (whatToInsert) {
+                    finalIndexesToDelete.push(calculatedFrom, calculatedTo, whatToInsert);
+                  } else {
+                    finalIndexesToDelete.push(calculatedFrom, calculatedTo);
+                  }
                 }
               }
             } //
