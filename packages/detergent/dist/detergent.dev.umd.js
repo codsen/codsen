@@ -2196,6 +2196,8 @@
     module.exports = cloneDeep;
   });
 
+  var RAWNBSP = "\xA0";
+
   function x(something) {
     var res = {
       value: something,
@@ -2226,7 +2228,12 @@
     return typeof something === "string";
   }
 
-  function rightMain(str, idx, stopAtNewlines) {
+  function rightMain(_ref) {
+    var str = _ref.str,
+        idx = _ref.idx,
+        stopAtNewlines = _ref.stopAtNewlines,
+        stopAtRawNbsp = _ref.stopAtRawNbsp;
+
     if (typeof str !== "string" || !str.length) {
       return null;
     }
@@ -2239,16 +2246,16 @@
       return null;
     }
 
-    if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
+    if (str[idx + 1] && (str[idx + 1].trim() || stopAtNewlines && "\n\r".includes(str[idx + 1]) || stopAtRawNbsp && str[idx + 1] === RAWNBSP)) {
       return idx + 1;
     }
 
-    if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
+    if (str[idx + 2] && (str[idx + 2].trim() || stopAtNewlines && "\n\r".includes(str[idx + 2]) || stopAtRawNbsp && str[idx + 2] === RAWNBSP)) {
       return idx + 2;
     }
 
     for (var i = idx + 1, len = str.length; i < len; i++) {
-      if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
+      if (str[i].trim() || stopAtNewlines && "\n\r".includes(str[i]) || stopAtRawNbsp && str[i] === RAWNBSP) {
         return i;
       }
     }
@@ -2257,14 +2264,38 @@
   }
 
   function right(str, idx) {
-    return rightMain(str, idx, false);
+    return rightMain({
+      str: str,
+      idx: idx,
+      stopAtNewlines: false,
+      stopAtRawNbsp: false
+    });
   }
 
   function rightStopAtNewLines(str, idx) {
-    return rightMain(str, idx, true);
+    return rightMain({
+      str: str,
+      idx: idx,
+      stopAtNewlines: true,
+      stopAtRawNbsp: false
+    });
   }
 
-  function leftMain(str, idx, stopAtNewlines) {
+  function rightStopAtRawNbsp(str, idx) {
+    return rightMain({
+      str: str,
+      idx: idx,
+      stopAtNewlines: false,
+      stopAtRawNbsp: true
+    });
+  }
+
+  function leftMain(_ref2) {
+    var str = _ref2.str,
+        idx = _ref2.idx,
+        stopAtNewlines = _ref2.stopAtNewlines,
+        stopAtRawNbsp = _ref2.stopAtRawNbsp;
+
     if (typeof str !== "string" || !str.length) {
       return null;
     }
@@ -2277,16 +2308,16 @@
       return null;
     }
 
-    if (str[~-idx] && (!stopAtNewlines && str[~-idx].trim() || stopAtNewlines && (str[~-idx].trim() || "\n\r".includes(str[~-idx])))) {
+    if (str[~-idx] && (str[~-idx].trim() || stopAtNewlines && "\n\r".includes(str[~-idx]) || stopAtRawNbsp && str[~-idx] === RAWNBSP)) {
       return ~-idx;
     }
 
-    if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
+    if (str[idx - 2] && (str[idx - 2].trim() || stopAtNewlines && "\n\r".includes(str[idx - 2]) || stopAtRawNbsp && str[idx - 2] === RAWNBSP)) {
       return idx - 2;
     }
 
     for (var i = idx; i--;) {
-      if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
+      if (str[i] && (str[i].trim() || stopAtNewlines && "\n\r".includes(str[i]) || stopAtRawNbsp && str[i] === RAWNBSP)) {
         return i;
       }
     }
@@ -2295,11 +2326,30 @@
   }
 
   function left(str, idx) {
-    return leftMain(str, idx, false);
+    return leftMain({
+      str: str,
+      idx: idx,
+      stopAtNewlines: false,
+      stopAtRawNbsp: false
+    });
   }
 
   function leftStopAtNewLines(str, idx) {
-    return leftMain(str, idx, true);
+    return leftMain({
+      str: str,
+      idx: idx,
+      stopAtNewlines: true,
+      stopAtRawNbsp: false
+    });
+  }
+
+  function leftStopAtRawNbsp(str, idx) {
+    return leftMain({
+      str: str,
+      idx: idx,
+      stopAtNewlines: false,
+      stopAtRawNbsp: true
+    });
   }
 
   function seq(direction, str, idx, opts, args) {
@@ -11789,10 +11839,6 @@
         lastEncodedNbspStartedAt = _i;
         lastEncodedNbspEndedAt = _i + 1;
 
-        if (str[_i + 2] && str[_i + 2].trim()) {
-          bumpWordCountAt = _i + 2;
-        }
-
         if (opts.convertEntities) {
           rangesArr.push(_i, _i + 1, opts.targetLanguage === "css" ? encodedNbspCss : opts.targetLanguage === "js" ? encodedNbspJs : encodedNbspHtml);
         }
@@ -11913,6 +11959,7 @@
       _loop(i);
     }
 
+    rangesApply(str, rangesArr.current()).split("").forEach(function (key, i) {});
     return {
       res: rangesApply(str, rangesArr.current(), opts.reportProgressFunc ? function (incomingPerc) {
         currentPercentageDone = Math.floor((opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * (1 - leavePercForLastStage) + incomingPerc / 100 * (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage);
@@ -18442,6 +18489,24 @@
     throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_03] ".concat(name, " must be array containing zero or more strings or something falsey. Currently it's equal to: ").concat(something, ", that a type of ").concat(_typeof(something), "."));
   }
 
+  function xBeforeYOnTheRight(str, startingIdx, x, y) {
+    for (var i = startingIdx, len = str.length; i < len; i++) {
+      if (str.startsWith(x, i)) {
+        return true;
+      }
+
+      if (str.startsWith(y, i)) {
+        return false;
+      }
+    }
+
+    return false;
+  }
+
+  function notWithinAttrQuotes(tag, str, i) {
+    return !tag || !tag.quotes || !xBeforeYOnTheRight(str, i + 1, tag.quotes.value, ">");
+  }
+
   function stripHtml(str, originalOpts) {
     var start = Date.now();
     var definitelyTagNames = new Set(["!doctype", "abbr", "address", "area", "article", "aside", "audio", "base", "bdi", "bdo", "blockquote", "body", "br", "button", "canvas", "caption", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "param", "picture", "pre", "progress", "rb", "rp", "rt", "rtc", "ruby", "samp", "script", "section", "select", "slot", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "ul", "var", "video", "wbr", "xml"]);
@@ -18887,7 +18952,7 @@
         tag.nameContainsLetters = true;
       }
 
-      if (str[_i] === ">") {
+      if (str[_i] === ">" && notWithinAttrQuotes(tag, str, _i)) {
         if (tag.lastOpeningBracketAt !== undefined) {
           tag.lastClosingBracketAt = _i;
           spacesChunkWhichFollowsTheClosingBracketEndsAt = null;
@@ -19040,7 +19105,7 @@
         }
       }
 
-      if (str[_i] === "<" && str[_i - 1] !== "<" && !"'\"".includes(str[_i + 1]) && (!"'\"".includes(str[_i + 2]) || /\w/.test(str[_i + 1]))) {
+      if (str[_i] === "<" && str[_i - 1] !== "<" && !"'\"".includes(str[_i + 1]) && (!"'\"".includes(str[_i + 2]) || /\w/.test(str[_i + 1])) && notWithinAttrQuotes(tag, str, _i)) {
         if (str[right(str, _i)] === ">") {
           i = _i;
           return "continue";
@@ -25718,7 +25783,7 @@
   // represents ("charcode").
 
   function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracketIndexesArr, state, applicableOpts, endOfLine) {
-    var len = str.length;
+    var len = str.length; // console.log(`075 received endOfLine = ${JSON.stringify(endOfLine, null, 0)}`);
 
     if (/[\uD800-\uDFFF]/g.test(str[i]) && !(str.charCodeAt(i + 1) >= 0xdc00 && str.charCodeAt(i + 1) <= 0xdfff || str.charCodeAt(i - 1) >= 0xd800 && str.charCodeAt(i - 1) <= 0xdbff)) {
       // if it's a surrogate and another surrogate doesn't come in front or
@@ -26275,6 +26340,45 @@
             // so it comes second:
             applicableOpts.removeLineBreaks = true;
             rangesArr.push(i, y, opts.removeLineBreaks ? "" : "\n");
+          }
+        } else if (charcode === 160) {
+          // IF RAW non-breaking space
+          applicableOpts.removeWidows = true; // if opts.removeWidows is disabled, replace all non-breaking spaces
+          // with spaces
+
+          if (!opts.removeWidows) {
+            // we need to remove this nbsp
+            // thing to consider - edges, like "&nbsp; a b"
+            var calculatedFrom = i;
+            var calculatedTo = y;
+            var calculatedValue = " ";
+            var charOnTheLeft = leftStopAtRawNbsp(str, i);
+            var charOnTheRight = rightStopAtRawNbsp(str, calculatedTo - 1);
+
+            if ( // if there's only whitespace on the left
+            !charOnTheLeft) {
+              calculatedFrom = 0;
+              calculatedTo = charOnTheRight || str.length;
+              calculatedValue = null;
+            } else if ( // if there's only whitespace on the right
+            !charOnTheRight) {
+              calculatedFrom = charOnTheLeft !== null ? charOnTheLeft + 1 : 0;
+              calculatedTo = str.length;
+              calculatedValue = null;
+            }
+
+            if (calculatedValue) {
+              rangesArr.push(calculatedFrom, calculatedTo, calculatedValue);
+            } else {
+              rangesArr.push(calculatedFrom, calculatedTo);
+            }
+          } else {
+            applicableOpts.convertEntities = true;
+
+            if (opts.convertEntities) {
+              // push "&nbsp;" to retain in
+              rangesArr.push(i, y, "&nbsp;");
+            }
           }
         } else if (charcode === 173) {
           // IF SOFT HYPHEN, '\u00AD'
@@ -26992,6 +27096,7 @@
     }).result; // ---------------------------------------------------------------------------
     // NEXT STEP.
 
+    rangesApply(str, finalIndexesToDelete.current()).split("").forEach(function (key, idx) {});
     return {
       res: rangesApply(str, finalIndexesToDelete.current()),
       applicableOpts: applicableOpts

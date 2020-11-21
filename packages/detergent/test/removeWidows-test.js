@@ -1,5 +1,6 @@
 import tap from "tap";
 import { det, mixer, allCombinations } from "../t-util/util";
+// import { det as detergent } from "../dist/detergent.esm";
 import {
   // rawReplacementMark,
   // rawNDash,
@@ -721,3 +722,30 @@ tap.test(
     t.end();
   }
 );
+
+tap.test(`31`, (t) => {
+  mixer({
+    removeWidows: 0,
+  }).forEach((opt, n) => {
+    t.equal(
+      det(t, n, `The quick brown&nbsp;fox. What an amazing animal!`, opt).res,
+      `The quick brown fox. What an amazing animal!`,
+      `02.06`
+    );
+  });
+  t.end();
+});
+
+tap.test(`32`, (t) => {
+  mixer({
+    removeWidows: 0,
+  }).forEach((opt, n) => {
+    t.equal(
+      det(t, n, `The quick brown&nbsp;fox. What an amazing&nbsp;animal!`, opt)
+        .res,
+      `The quick brown fox. What an amazing animal!`,
+      `02.06`
+    );
+  });
+  t.end();
+});

@@ -7,7 +7,7 @@
  * Homepage: https://codsen.com/os/detergent/
  */
 
-import { left, right, leftStopAtNewLines, rightStopAtNewLines, chompLeft } from 'string-left-right';
+import { left, right, leftStopAtNewLines, rightStopAtNewLines, leftStopAtRawNbsp, rightStopAtRawNbsp, chompLeft } from 'string-left-right';
 import fixBrokenEntities from 'string-fix-broken-named-entities';
 import { removeWidows } from 'string-remove-widows';
 import processOutside from 'ranges-process-outside';
@@ -1097,6 +1097,38 @@ function processCharacter(
           applicableOpts.removeLineBreaks = true;
           rangesArr.push(i, y, opts.removeLineBreaks ? "" : "\n");
         }
+      } else if (charcode === 160) {
+        applicableOpts.removeWidows = true;
+        if (!opts.removeWidows) {
+          let calculatedFrom = i;
+          let calculatedTo = y;
+          let calculatedValue = " ";
+          const charOnTheLeft = leftStopAtRawNbsp(str, i);
+          const charOnTheRight = rightStopAtRawNbsp(str, calculatedTo - 1);
+          if (
+            !charOnTheLeft
+          ) {
+            calculatedFrom = 0;
+            calculatedTo = charOnTheRight || str.length;
+            calculatedValue = null;
+          } else if (
+            !charOnTheRight
+          ) {
+            calculatedFrom = charOnTheLeft !== null ? charOnTheLeft + 1 : 0;
+            calculatedTo = str.length;
+            calculatedValue = null;
+          }
+          if (calculatedValue) {
+            rangesArr.push(calculatedFrom, calculatedTo, calculatedValue);
+          } else {
+            rangesArr.push(calculatedFrom, calculatedTo);
+          }
+        } else {
+          applicableOpts.convertEntities = true;
+          if (opts.convertEntities) {
+            rangesArr.push(i, y, "&nbsp;");
+          }
+        }
       } else if (charcode === 173) {
         rangesArr.push(i, y);
       } else if (charcode === 8232 || charcode === 8233) {
@@ -1824,6 +1856,10 @@ function det(str, inputOpts) {
     trimLines: true,
     recogniseHTML: false,
   }).result;
+  rangesApply(str, finalIndexesToDelete.current())
+    .split("")
+    .forEach((key, idx) => {
+    });
   return {
     res: rangesApply(str, finalIndexesToDelete.current()),
     applicableOpts,

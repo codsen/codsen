@@ -1,9 +1,9 @@
 /* eslint no-template-curly-in-string: 0 */
 
 import tap from "tap";
-// import { det as det1 } from "../dist/detergent.esm";
+import { det as det1 } from "../dist/detergent.esm";
 import { det, mixer, allCombinations } from "../t-util/util";
-import { rawNDash } from "../src/util";
+import { rawNDash, rawNbsp } from "../src/util";
 
 // -----------------------------------------------------------------------------
 
@@ -349,7 +349,7 @@ tap.test(
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "This is http://detergent.io.This is cool.", opt).res,
-        "This is http://detergent.io. This is\u00A0cool.",
+        `This is http://detergent.io. This is${rawNbsp}cool.`,
         JSON.stringify(opt, null, 4)
       );
     });
@@ -455,7 +455,7 @@ tap.test(
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "This is http://detergent.io.This is cool.", opt).res,
-        "This is http://detergent.io.This is\u00A0cool.",
+        `This is http://detergent.io.This is${rawNbsp}cool.`,
         JSON.stringify(opt, null, 4)
       );
     });
@@ -1115,7 +1115,7 @@ tap.test(
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "10am&nbsp;&ndash;11am", opt).res,
-        `10am\u00A0${rawNDash}\u00A011am`,
+        `10am${rawNbsp}${rawNDash}${rawNbsp}11am`,
         JSON.stringify(opt, null, 4)
       );
     });
@@ -1128,13 +1128,25 @@ tap.test(
   (t) => {
     mixer({
       convertDashes: 1,
+      removeWidows: 1,
+      convertEntities: 0,
+      addMissingSpaces: 1,
+    }).forEach((opt, n) => {
+      t.equal(
+        det(t, n, "10am&nbsp;&ndash;11am", opt).res,
+        `10am${rawNbsp}${rawNDash}${rawNbsp}11am`,
+        JSON.stringify(opt, null, 4)
+      );
+    });
+    mixer({
+      convertDashes: 1,
       removeWidows: 0,
       convertEntities: 0,
       addMissingSpaces: 1,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "10am&nbsp;&ndash;11am", opt).res,
-        `10am\u00A0${rawNDash} 11am`,
+        `10am ${rawNDash} 11am`,
         JSON.stringify(opt, null, 4)
       );
     });
@@ -1234,21 +1246,60 @@ tap.test(`67 - jinja/nunjucks code chunk with double quotes`, (t) => {
   t.end();
 });
 
-tap.test(`68 - sanity check #01`, (t) => {
+tap.test(`68`, (t) => {
+  t.equal(
+    det1(`Abc;${rawNbsp}de fghij klmnop.`, {
+      convertEntities: 1,
+      removeWidows: 1,
+    }).res,
+    `Abc;&nbsp;de fghij&nbsp;klmnop.`,
+    "68"
+  );
+  t.end();
+});
+
+tap.test(`69`, (t) => {
   mixer({
-    convertEntities: 0,
-    removeWidows: 0,
+    convertEntities: 1,
+    removeWidows: 1,
   }).forEach((opt, n) => {
     t.equal(
-      det(t, n, "Semicolon;\u00A0is cool.", opt).res,
-      "Semicolon;\u00A0is cool.",
+      det(t, n, `Abc;${rawNbsp}de fghij klmnop.`, opt).res,
+      `Abc;&nbsp;de fghij&nbsp;klmnop.`,
       JSON.stringify(opt, null, 4)
     );
   });
   t.end();
 });
 
-tap.test(`69 - sanity check #02`, (t) => {
+tap.test(`70`, (t) => {
+  mixer({
+    convertEntities: 0,
+    removeWidows: 1,
+  }).forEach((opt, n) => {
+    t.equal(
+      det(t, n, `Abc;${rawNbsp}fghij klm nop.`, opt).res,
+      `Abc;${rawNbsp}fghij klm${rawNbsp}nop.`,
+      JSON.stringify(opt, null, 4)
+    );
+  });
+  t.end();
+});
+
+tap.test(`71`, (t) => {
+  mixer({
+    removeWidows: 0,
+  }).forEach((opt, n) => {
+    t.equal(
+      det(t, n, `Abc;${rawNbsp}de fg.`, opt).res,
+      `Abc; de fg.`,
+      JSON.stringify(opt, null, 4)
+    );
+  });
+  t.end();
+});
+
+tap.test(`72 - sanity check #02`, (t) => {
   mixer({
     convertEntities: 0,
   }).forEach((opt, n) => {
@@ -1261,7 +1312,7 @@ tap.test(`69 - sanity check #02`, (t) => {
   t.end();
 });
 
-tap.test(`70 - sanity check #03`, (t) => {
+tap.test(`73 - sanity check #03`, (t) => {
   mixer({
     dontEncodeNonLatin: 1,
     keepBoldEtc: 1,

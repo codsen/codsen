@@ -587,6 +587,36 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
           applicableOpts.removeLineBreaks = true;
           rangesArr.push(i, y, opts.removeLineBreaks ? "" : "\n");
         }
+      } else if (charcode === 160) {
+        applicableOpts.removeWidows = true;
+        if (!opts.removeWidows) {
+          var calculatedFrom = i;
+          var calculatedTo = y;
+          var calculatedValue = " ";
+          var charOnTheLeft = stringLeftRight.leftStopAtRawNbsp(str, i);
+          var charOnTheRight = stringLeftRight.rightStopAtRawNbsp(str, calculatedTo - 1);
+          if (
+          !charOnTheLeft) {
+            calculatedFrom = 0;
+            calculatedTo = charOnTheRight || str.length;
+            calculatedValue = null;
+          } else if (
+          !charOnTheRight) {
+            calculatedFrom = charOnTheLeft !== null ? charOnTheLeft + 1 : 0;
+            calculatedTo = str.length;
+            calculatedValue = null;
+          }
+          if (calculatedValue) {
+            rangesArr.push(calculatedFrom, calculatedTo, calculatedValue);
+          } else {
+            rangesArr.push(calculatedFrom, calculatedTo);
+          }
+        } else {
+          applicableOpts.convertEntities = true;
+          if (opts.convertEntities) {
+            rangesArr.push(i, y, "&nbsp;");
+          }
+        }
       } else if (charcode === 173) {
         rangesArr.push(i, y);
       } else if (charcode === 8232 || charcode === 8233) {
@@ -1024,6 +1054,7 @@ function det(str, inputOpts) {
     trimLines: true,
     recogniseHTML: false
   }).result;
+  rangesApply__default['default'](str, finalIndexesToDelete.current()).split("").forEach(function (key, idx) {});
   return {
     res: rangesApply__default['default'](str, finalIndexesToDelete.current()),
     applicableOpts: applicableOpts

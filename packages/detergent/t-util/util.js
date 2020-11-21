@@ -11,7 +11,7 @@ const exportedOptsObj = detergent.opts;
 function mixer(ref) {
   // for quick testing, you can short-wire to test only one set of options, instead
   // of 512, 2024, or whatever count mixer produced.
-  const quickie = false;
+  const quickie = true;
 
   if (!isCI && quickie) {
     if (ref) {

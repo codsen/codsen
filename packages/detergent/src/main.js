@@ -1060,21 +1060,34 @@ function det(str, inputOpts) {
   );
 
   console.log(`1062 str before collapsing: ${JSON.stringify(str, null, 0)}`);
+
   str = collapse(str, {
     trimLines: true,
     recogniseHTML: false,
   }).result;
-  console.log(`1067 str after collapsing: ${JSON.stringify(str, null, 0)}`);
+  console.log(`1068 str after collapsing: ${JSON.stringify(str, null, 0)}`);
 
   // ---------------------------------------------------------------------------
   // NEXT STEP.
 
   console.log(
-    `1073 ${`\u001b[${90}m${`================= NEXT STEP. final =================`}\u001b[${39}m`}`
+    `1074 ${`\u001b[${90}m${`================= NEXT STEP. final =================`}\u001b[${39}m`}`
   );
 
+  rangesApply(str, finalIndexesToDelete.current())
+    .split("")
+    .forEach((key, idx) => {
+      console.log(
+        `1081 - #${idx}: ${`\u001b[${33}m${`key`}\u001b[${39}m`} = ${JSON.stringify(
+          key,
+          null,
+          4
+        )} (charcode ${`\u001b[${35}m${key.charCodeAt(0)}\u001b[${39}m`})`
+      );
+    });
+
   console.log(
-    `1077 FINAL RESULT:\n${JSON.stringify(
+    `1090 FINAL RESULT:\n${JSON.stringify(
       {
         res: rangesApply(str, finalIndexesToDelete.current()),
       },
