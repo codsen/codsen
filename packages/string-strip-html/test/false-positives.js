@@ -261,27 +261,3 @@ tap.test("31", (t) => {
   t.match(stripHtml(input), { result: "" }, "31");
   t.end();
 });
-
-tap.test("32", (t) => {
-  const input = `kl <c:when test="\${ab > cd}"> mn`;
-  t.match(stripHtml(input), { result: "kl mn" }, "32");
-  t.end();
-});
-
-tap.test("33", (t) => {
-  const input = `kl <c:when test="\${ab < cd}"> mn`;
-  t.match(stripHtml(input), { result: "kl mn" }, "33");
-  t.end();
-});
-
-tap.test("34", (t) => {
-  const input = `kl <c:when test="\${!empty ab.cd && ab.cd > 0.00}"> mn`;
-  t.match(stripHtml(input), { result: "kl mn" }, "34");
-  t.end();
-});
-
-tap.test("35", (t) => {
-  const input = `kl <c:when test="\${!empty ab.cd && ab.cd < 0.00}"> mn`;
-  t.match(stripHtml(input), { result: "kl mn" }, "35");
-  t.end();
-});

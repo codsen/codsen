@@ -15,9 +15,11 @@ import without from 'lodash.without';
 import ent from 'ent';
 import { right } from 'string-left-right';
 
+/* istanbul ignore next */
 function characterSuitableForNames(char) {
   return /[-_A-Za-z0-9]/.test(char);
 }
+/* istanbul ignore next */
 function prepHopefullyAnArray(something, name) {
   if (!something) {
     return [];
@@ -32,6 +34,7 @@ function prepHopefullyAnArray(something, name) {
     `string-strip-html/stripHtml(): [THROW_ID_03] ${name} must be array containing zero or more strings or something falsey. Currently it's equal to: ${something}, that a type of ${typeof something}.`
   );
 }
+/* istanbul ignore next */
 function xBeforeYOnTheRight(str, startingIdx, x, y) {
   for (let i = startingIdx, len = str.length; i < len; i++) {
     if (str.startsWith(x, i)) {
@@ -43,6 +46,7 @@ function xBeforeYOnTheRight(str, startingIdx, x, y) {
   }
   return false;
 }
+/* istanbul ignore next */
 function notWithinAttrQuotes(tag, str, i) {
   return (
     !tag ||
@@ -966,6 +970,22 @@ function stripHtml(str, originalOpts) {
       str[i - 1] !== "<" &&
       !`'"`.includes(str[i + 1]) &&
       (!`'"`.includes(str[i + 2]) || /\w/.test(str[i + 1])) &&
+      !(str[i + 1] === "c" && str[i + 2] === ":") &&
+      !(str[i + 1] === "%" && str[i + 2] === "@") &&
+      !(
+        str[i + 1] === "f" &&
+        str[i + 2] === "m" &&
+        str[i + 3] === "t" &&
+        str[i + 4] === ":"
+      ) &&
+      !(
+        str[i + 1] === "s" &&
+        str[i + 2] === "q" &&
+        str[i + 3] === "l" &&
+        str[i + 4] === ":"
+      ) &&
+      !(str[i + 1] === "x" && str[i + 2] === ":") &&
+      !(str[i + 1] === "f" && str[i + 2] === "n" && str[i + 3] === ":") &&
       notWithinAttrQuotes(tag, str, i)
     ) {
       if (str[right(str, i)] === ">") {

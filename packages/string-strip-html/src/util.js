@@ -1,7 +1,9 @@
+/* istanbul ignore next */
 function characterSuitableForNames(char) {
   return /[-_A-Za-z0-9]/.test(char);
 }
 
+/* istanbul ignore next */
 function prepHopefullyAnArray(something, name) {
   if (!something) {
     return [];
@@ -17,6 +19,7 @@ function prepHopefullyAnArray(something, name) {
   );
 }
 
+/* istanbul ignore next */
 function xBeforeYOnTheRight(str, startingIdx, x, y) {
   for (let i = startingIdx, len = str.length; i < len; i++) {
     if (str.startsWith(x, i)) {
@@ -37,6 +40,7 @@ function xBeforeYOnTheRight(str, startingIdx, x, y) {
 //                                          ^
 //                                        we're here, it's false ending
 //
+/* istanbul ignore next */
 function notWithinAttrQuotes(tag, str, i) {
   return (
     !tag ||

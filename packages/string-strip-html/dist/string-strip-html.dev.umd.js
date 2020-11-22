@@ -8591,7 +8591,14 @@
     module.exports = cloneDeep;
   });
 
-  function rightMain(str, idx, stopAtNewlines) {
+  var RAWNBSP = "\xA0";
+
+  function rightMain(_ref) {
+    var str = _ref.str,
+        idx = _ref.idx,
+        stopAtNewlines = _ref.stopAtNewlines,
+        stopAtRawNbsp = _ref.stopAtRawNbsp;
+
     if (typeof str !== "string" || !str.length) {
       return null;
     }
@@ -8604,16 +8611,16 @@
       return null;
     }
 
-    if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
+    if (str[idx + 1] && (str[idx + 1].trim() || stopAtNewlines && "\n\r".includes(str[idx + 1]) || stopAtRawNbsp && str[idx + 1] === RAWNBSP)) {
       return idx + 1;
     }
 
-    if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
+    if (str[idx + 2] && (str[idx + 2].trim() || stopAtNewlines && "\n\r".includes(str[idx + 2]) || stopAtRawNbsp && str[idx + 2] === RAWNBSP)) {
       return idx + 2;
     }
 
     for (var i = idx + 1, len = str.length; i < len; i++) {
-      if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
+      if (str[i].trim() || stopAtNewlines && "\n\r".includes(str[i]) || stopAtRawNbsp && str[i] === RAWNBSP) {
         return i;
       }
     }
@@ -8622,12 +8629,20 @@
   }
 
   function right(str, idx) {
-    return rightMain(str, idx, false);
+    return rightMain({
+      str: str,
+      idx: idx,
+      stopAtNewlines: false,
+      stopAtRawNbsp: false
+    });
   }
 
+  /* istanbul ignore next */
   function characterSuitableForNames(char) {
     return /[-_A-Za-z0-9]/.test(char);
   }
+  /* istanbul ignore next */
+
 
   function prepHopefullyAnArray(something, name) {
     if (!something) {
@@ -8646,6 +8661,8 @@
 
     throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_03] ".concat(name, " must be array containing zero or more strings or something falsey. Currently it's equal to: ").concat(something, ", that a type of ").concat(_typeof(something), "."));
   }
+  /* istanbul ignore next */
+
 
   function xBeforeYOnTheRight(str, startingIdx, x, y) {
     for (var i = startingIdx, len = str.length; i < len; i++) {
@@ -8665,6 +8682,8 @@
   //                                          ^
   //                                        we're here, it's false ending
   //
+
+  /* istanbul ignore next */
 
 
   function notWithinAttrQuotes(tag, str, i) {
@@ -9501,11 +9520,17 @@
 
 
       if (str[_i] === "<" && str[_i - 1] !== "<" && !"'\"".includes(str[_i + 1]) && (!"'\"".includes(str[_i + 2]) || /\w/.test(str[_i + 1])) && //
-      // precaution against JSP comparison
+      // precaution JSP,
+      // against <c:
+      !(str[_i + 1] === "c" && str[_i + 2] === ":") && // against <%@
+      !(str[_i + 1] === "%" && str[_i + 2] === "@") && // against <fmt:
+      !(str[_i + 1] === "f" && str[_i + 2] === "m" && str[_i + 3] === "t" && str[_i + 4] === ":") && // against <sql:
+      !(str[_i + 1] === "s" && str[_i + 2] === "q" && str[_i + 3] === "l" && str[_i + 4] === ":") && // against <x:
+      !(str[_i + 1] === "x" && str[_i + 2] === ":") && // against <fn:
+      !(str[_i + 1] === "f" && str[_i + 2] === "n" && str[_i + 3] === ":") && //
       // kl <c:when test="${!empty ab.cd && ab.cd < 0.00}"> mn
       //                                          ^
-      //                                        we're here, it's false alarm
-      //
+      //                                  we're here, it's false alarm
       notWithinAttrQuotes(tag, str, _i)) {
         // cater sequences of opening brackets "<<<<div>>>"
         if (str[right(str, _i)] === ">") {
