@@ -23,13 +23,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- wildcard ALL option for opts.stripTogetherWithTheirContents ([d2031ab](https://gitlab.com/codsen/codsen/commit/d2031ab11260a24f436cef64ca5d8d43b9ae10e1))
+- wildcard ALL option for `opts.stripTogetherWithTheirContents` ([d2031ab](https://gitlab.com/codsen/codsen/commit/d2031ab11260a24f436cef64ca5d8d43b9ae10e1))
 
 ## 6.0.0 (2020-09-15)
 
 ### Bug Fixes
 
-- correct filteredTagLocations for pair tags which are stripped with content ([6bd6f4c](https://gitlab.com/codsen/codsen/commit/6bd6f4c8639571089bb3baa3b8146045ca891375))
+- correct `filteredTagLocations` for pair tags which are stripped with content ([6bd6f4c](https://gitlab.com/codsen/codsen/commit/6bd6f4c8639571089bb3baa3b8146045ca891375))
 
 ### BREAKING CHANGES
 
