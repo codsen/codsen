@@ -6,7 +6,7 @@ import { strict as assert } from "assert";
 import cleanChangelogs from "../dist/lerna-clean-changelogs.esm.js";
 
 // are all values equal to null:
-assert.deepEqual(
+assert.equal(
   cleanChangelogs(`# Change Log
 
 All notable changes to this project will be documented in this file.
@@ -38,14 +38,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 * bbb
 
-`),
+`).res,
   //
   //
   //
   // output:
-  {
-    version: "1.3.59",
-    res: `# Change Log
+  `# Change Log
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
@@ -59,6 +57,5 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Features
 
 - bbb
-`,
-  }
+`
 );
