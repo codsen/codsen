@@ -16,7 +16,8 @@
     "tags",
     "templating",
     "text",
-    "xhtml"
+    "xhtml",
+    "jsp"
   ],
   "homepage": "https://codsen.com/os/string-strip-html/",
   "repository": "https://gitlab.com/codsen/codsen/",
