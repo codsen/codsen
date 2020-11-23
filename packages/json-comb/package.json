@@ -103,22 +103,22 @@
     "update-notifier": "^5.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.3",
+    "@babel/core": "^7.12.7",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.12.1",
     "@babel/plugin-proposal-object-rest-spread": "^7.12.1",
-    "@babel/plugin-proposal-optional-chaining": "^7.12.1",
-    "@babel/preset-env": "^7.12.1",
+    "@babel/plugin-proposal-optional-chaining": "^7.12.7",
+    "@babel/preset-env": "^7.12.7",
     "@rollup/plugin-babel": "^5.2.1",
     "@rollup/plugin-commonjs": "^16.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^10.0.0",
     "@rollup/plugin-strip": "^2.0.0",
-    "eslint": "^7.13.0",
+    "eslint": "^7.14.0",
     "execa": "^4.1.0",
     "lect": "^0.14.8",
-    "prettier": "^2.1.2",
-    "tap": "^14.10.8",
+    "prettier": "^2.2.0",
+    "tap": "^14.11.0",
     "tempy": "^1.0.0",
     "tsd": "^0.13.1"
   }

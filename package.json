@@ -47,7 +47,7 @@
     "commitizen": "^4.2.2",
     "cz-conventional-changelog": "^3.3.0",
     "edit-package-json": "^0.1.38",
-    "eslint": "^7.13.0",
+    "eslint": "^7.14.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^6.15.0",
@@ -64,8 +64,8 @@
     "lerna-dependency-graph": "^1.0.2",
     "npm-watch": "^0.7.0",
     "object-path": "^0.11.5",
-    "prettier": "^2.1.2",
-    "simple-git": "^2.22.0",
+    "prettier": "^2.2.0",
+    "simple-git": "^2.23.0",
     "tap-parse-string-to-object": "^1.2.25",
     "title": "^3.4.2"
   }
