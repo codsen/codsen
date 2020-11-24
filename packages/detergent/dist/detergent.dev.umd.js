@@ -18467,9 +18467,13 @@
     decode: decode$3
   };
 
+  /* istanbul ignore next */
+
   function characterSuitableForNames(char) {
     return /[-_A-Za-z0-9]/.test(char);
   }
+  /* istanbul ignore next */
+
 
   function prepHopefullyAnArray(something, name) {
     if (!something) {
@@ -18488,6 +18492,8 @@
 
     throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_03] ".concat(name, " must be array containing zero or more strings or something falsey. Currently it's equal to: ").concat(something, ", that a type of ").concat(_typeof(something), "."));
   }
+  /* istanbul ignore next */
+
 
   function xBeforeYOnTheRight(str, startingIdx, x, y) {
     for (var i = startingIdx, len = str.length; i < len; i++) {
@@ -18502,6 +18508,8 @@
 
     return false;
   }
+  /* istanbul ignore next */
+
 
   function notWithinAttrQuotes(tag, str, i) {
     return !tag || !tag.quotes || !xBeforeYOnTheRight(str, i + 1, tag.quotes.value, ">");
@@ -19105,7 +19113,7 @@
         }
       }
 
-      if (str[_i] === "<" && str[_i - 1] !== "<" && !"'\"".includes(str[_i + 1]) && (!"'\"".includes(str[_i + 2]) || /\w/.test(str[_i + 1])) && notWithinAttrQuotes(tag, str, _i)) {
+      if (str[_i] === "<" && str[_i - 1] !== "<" && !"'\"".includes(str[_i + 1]) && (!"'\"".includes(str[_i + 2]) || /\w/.test(str[_i + 1])) && !(str[_i + 1] === "c" && str[_i + 2] === ":") && !(str[_i + 1] === "%" && str[_i + 2] === "@") && !(str[_i + 1] === "f" && str[_i + 2] === "m" && str[_i + 3] === "t" && str[_i + 4] === ":") && !(str[_i + 1] === "s" && str[_i + 2] === "q" && str[_i + 3] === "l" && str[_i + 4] === ":") && !(str[_i + 1] === "x" && str[_i + 2] === ":") && !(str[_i + 1] === "f" && str[_i + 2] === "n" && str[_i + 3] === ":") && notWithinAttrQuotes(tag, str, _i)) {
         if (str[right(str, _i)] === ">") {
           i = _i;
           return "continue";
