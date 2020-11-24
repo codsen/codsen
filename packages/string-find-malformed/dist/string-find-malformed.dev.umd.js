@@ -1985,7 +1985,14 @@
     module.exports = cloneDeep;
   });
 
-  function rightMain(str, idx, stopAtNewlines) {
+  var RAWNBSP = "\xA0";
+
+  function rightMain(_ref) {
+    var str = _ref.str,
+        idx = _ref.idx,
+        stopAtNewlines = _ref.stopAtNewlines,
+        stopAtRawNbsp = _ref.stopAtRawNbsp;
+
     if (typeof str !== "string" || !str.length) {
       return null;
     }
@@ -1998,16 +2005,16 @@
       return null;
     }
 
-    if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
+    if (str[idx + 1] && (str[idx + 1].trim() || stopAtNewlines && "\n\r".includes(str[idx + 1]) || stopAtRawNbsp && str[idx + 1] === RAWNBSP)) {
       return idx + 1;
     }
 
-    if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
+    if (str[idx + 2] && (str[idx + 2].trim() || stopAtNewlines && "\n\r".includes(str[idx + 2]) || stopAtRawNbsp && str[idx + 2] === RAWNBSP)) {
       return idx + 2;
     }
 
     for (var i = idx + 1, len = str.length; i < len; i++) {
-      if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
+      if (str[i].trim() || stopAtNewlines && "\n\r".includes(str[i]) || stopAtRawNbsp && str[i] === RAWNBSP) {
         return i;
       }
     }
@@ -2016,7 +2023,12 @@
   }
 
   function right(str, idx) {
-    return rightMain(str, idx, false);
+    return rightMain({
+      str: str,
+      idx: idx,
+      stopAtNewlines: false,
+      stopAtRawNbsp: false
+    });
   }
 
   function isObj(something) {
