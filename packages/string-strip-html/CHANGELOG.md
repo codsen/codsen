@@ -3,53 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 7.0.0 (2020-11-28)
-
-### Bug Fixes
-
-- correct filteredTagLocations for pair tags which are stripped with content ([6bd6f4c](https://git.sr.ht/~royston/codsen/commits/6bd6f4c8639571089bb3baa3b8146045ca891375))
-- fix filteredTagLocations closing location on paired tags ([43ce393](https://git.sr.ht/~royston/codsen/commits/43ce393391f81dcc8de4e3de70e463356f4d0af5))
-- Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
-- throwing case when tag is the last in string and has closing bracket missing ([ef44f63](https://git.sr.ht/~royston/codsen/commits/ef44f63729275c9fd40496ba1922a9be0ed3c968))
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
-- add previously missing tag.lastClosingBracketAt on ignored tags ([f35e595](https://git.sr.ht/~royston/codsen/commits/f35e5954eed7b9b0e9c8df54e1680607f7ef0718))
-- algorithm improvements ([5c2a45f](https://git.sr.ht/~royston/codsen/commits/5c2a45f176cbb3ff200668ab2357571ccec4ba09))
-- algorithm improvements ([8a82b8e](https://git.sr.ht/~royston/codsen/commits/8a82b8e61e9851d520ea7bfd4a0f6e26e6e8c258))
-- align applied opts.returnRangesOnly output to default returned string ([d32096d](https://git.sr.ht/~royston/codsen/commits/d32096d0b763b88ba36c40da4935d62ee9041ead))
-- better recognise some JSON patterns ([450d30a](https://git.sr.ht/~royston/codsen/commits/450d30a9a662ab9097da9661c515979ae35651a7))
-- delete trailing whitespace after dirty code chunk: tag + missing opening bracket tag ([71f720c](https://git.sr.ht/~royston/codsen/commits/71f720cbd7dbb3a3e650088cbcdb54307e316ae0))
-- harden the linting rules and make them all pass ([812d17e](https://git.sr.ht/~royston/codsen/commits/812d17e02f2d2e1d45e05e94c64ef28a4b3eb017))
-- implement callback interface, opts.cb() ([79bc8dc](https://git.sr.ht/~royston/codsen/commits/79bc8dc7f5bdcebf6ba8d4ba677b9f137d0f1eb7))
-- improve the algorithm, if tag's name starts with a digit that's not a tag ([d548cdb](https://git.sr.ht/~royston/codsen/commits/d548cdb129b95ae784aeda00d59d7e2f020dd8ad))
-- improvements for JSP recognition ([1fa513c](https://git.sr.ht/~royston/codsen/commits/1fa513c1d9aec37ad17d0c09193a1875fdb4177d))
-- improvements to exclamation mark punctuation ([e31fd3b](https://git.sr.ht/~royston/codsen/commits/e31fd3b2b0903c4643b64a4ac0fd67d557810de1))
-- Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
-- make the callback (opts.cb) ping the ignored tags too ([d9302e7](https://git.sr.ht/~royston/codsen/commits/d9302e7e49e38ae704f1d005f08abb22acbce615))
-- Merge modes via opts.mergeType ([7fb1c5f](https://git.sr.ht/~royston/codsen/commits/7fb1c5f319aa41ea54c68eed004ab2dfdc7425bf))
-- now returns keys: result, ranges, allTagLocations, filteredTagLocations ([567a0bd](https://git.sr.ht/~royston/codsen/commits/567a0bdfd2a7663c656f8b7615b048e11f28f4c2))
-- opts.dumpLinkHrefsNearby and algorithm improvements ([777407e](https://git.sr.ht/~royston/codsen/commits/777407eb1807af72a9469e0a0399334d1716fc63))
-- opts.onlyStripTags ([7bb49c8](https://git.sr.ht/~royston/codsen/commits/7bb49c8eddec216782e9b52a83f42916eb2e5cfa))
-- opts.trimOnlySpaces ([b8c6f29](https://git.sr.ht/~royston/codsen/commits/b8c6f293f62c013df47d44e13a679dd5c9496674))
-- punctuation doesn't terminate the tag ([64e7628](https://git.sr.ht/~royston/codsen/commits/64e76283c79be9a52a20e1594c3ca2839d3cb024))
-- recognise greater than signs followed by numbers only ([418a689](https://git.sr.ht/~royston/codsen/commits/418a689e1eeb88e8dda84ec4614fd1589eb7cc0c)), closes [#32](https://git.sr.ht/~royston/codsen/issues/32)
-- report tag.slashPresent as index of the slash, not as a boolean ([96ce6c8](https://git.sr.ht/~royston/codsen/commits/96ce6c80b8a33078258687ca2a6fb14010d6c2b9))
-- respect double line breaks ([2c09d59](https://git.sr.ht/~royston/codsen/commits/2c09d59479e32cc5b5d499510f4d877c63fa1c95)), closes [#15](https://git.sr.ht/~royston/codsen/issues/15)
-- skip JSP tags ([733fe9f](https://git.sr.ht/~royston/codsen/commits/733fe9f0d00f721fe7f1940df00514e875ffe2f7))
-- wildcard ALL option for opts.stripTogetherWithTheirContents ([d2031ab](https://git.sr.ht/~royston/codsen/commits/d2031ab11260a24f436cef64ca5d8d43b9ae10e1))
-
-### BREAKING CHANGES
-
-- now filteredTagLocations shows only one range for pair tags which are to be
-stripped with their contents
-- now returns keys: result, ranges, allTagLocations, filteredTagLocations - no more
-opts.returnRangesOnly
-- align applied opts.returnRangesOnly output to default returned string
-- Second input argument, progressFn, was moved into opts.progressFn and opts was
-placed into second input argument instead
-
 ## 6.3.0 (2020-11-10)
 
 ### Features

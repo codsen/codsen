@@ -3,19 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 5.10.0 (2020-11-28)
-
-### Bug Fixes
-
-- Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
-- complete rewrite, now allowing to request array of ranges as well. Removed all deps. ([4d888dc](https://git.sr.ht/~royston/codsen/commits/4d888dca5d2f9577654fbe644000453eab96ca79))
-- extract class and id names from bracket notation ([11032db](https://git.sr.ht/~royston/codsen/commits/11032db904173c2ee5b2356610b68bdbf80d1f77))
-- Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
-
 ## 5.9.0 (2019-09-04)
 
 ### Features

@@ -3,30 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 4.0.0 (2020-11-28)
-
-### Bug Fixes
-
-- Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
-- fixture mangling prevention using SHA hashes, 100% cov and some rebase ([0973579](https://git.sr.ht/~royston/codsen/commits/0973579ca57df0d2f641ff4a4fea2f6951b4f6fe))
-- Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
-- Merge modes via opts.mergeType ([7fb1c5f](https://git.sr.ht/~royston/codsen/commits/7fb1c5f319aa41ea54c68eed004ab2dfdc7425bf))
-- rebase to point to es modules builds ([8d4635e](https://git.sr.ht/~royston/codsen/commits/8d4635edc84933f584a85112f14dabc33f0c51da))
-- Switch to currency.js ([8a97e38](https://git.sr.ht/~royston/codsen/commits/8a97e3827babd03ccbf0ba3aa997df6a627dfce2))
-
-### Performance Improvements
-
-- removal dependency ordinal ([e8cd758](https://git.sr.ht/~royston/codsen/commits/e8cd758405f08e4250b5ccd3c2dab8e85c880a8b))
-
-### BREAKING CHANGES
-
-- Second input argument, progressFn, was moved into opts.progressFn and opts was
-placed into second input argument instead
-
 ## 3.1.0 (2020-09-27)
 
 ### Features

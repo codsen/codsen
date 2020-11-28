@@ -3,38 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 4.0.0 (2020-11-28)
-
-### Bug Fixes
-
-- Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
-
-### Features
-
-- accept nulls among pushed values, do not throw, just do nothing ([4badda3](https://git.sr.ht/~royston/codsen/commits/4badda381aa08f260dffaec17311f14e50d79ed2))
-- Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
-- hardening the type checks just in case ([106ae7a](https://git.sr.ht/~royston/codsen/commits/106ae7a969a2ecfc2ab3704d9195460aff9930a2))
-- implement throw pinning in unit tests ([6b8c789](https://git.sr.ht/~royston/codsen/commits/6b8c7897b292c8d4cb50121fa171ed24e48bda1a))
-- improved whitespace insertion algorithm ([b8c4463](https://git.sr.ht/~royston/codsen/commits/b8c4463eb3a20dd1b750a33c9a97e404aa3197f2))
-- Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
-- Merge modes via opts.mergeType ([7fb1c5f](https://git.sr.ht/~royston/codsen/commits/7fb1c5f319aa41ea54c68eed004ab2dfdc7425bf))
-- non-breaking spaces are now retained when pushing with whitespace limiter option on ([2de001d](https://git.sr.ht/~royston/codsen/commits/2de001d0b7f3c2282a64f760060f483274e31c6d))
-- omit the 3rd argument when it's equal to an empty string ([343c153](https://git.sr.ht/~royston/codsen/commits/343c1538e849479bf55f9ed861bedc2cdb2bbd9b))
-- opts.limitLinebreaksCount ([55eedfa](https://git.sr.ht/~royston/codsen/commits/55eedfa687ea7bebf55ab6ca042070d533ce3905))
-- opts.mergeType ([7efa4db](https://git.sr.ht/~royston/codsen/commits/7efa4dbc2346ab17256858ff1118d304a9ac9d0e))
-- ranges.replace() ([f0a2de0](https://git.sr.ht/~royston/codsen/commits/f0a2de0af157d97b3876c4bfd8f6ee60b67e867f))
-- Remove check-types-mini for perf reasons and also to reduce Lerna ECYCLE warnings ([50be5d8](https://git.sr.ht/~royston/codsen/commits/50be5d83152910d65c4cf50f1c06b8078fdc4dae))
-- remove couple dependencies and rebase a little bit ([616b47d](https://git.sr.ht/~royston/codsen/commits/616b47df0ef6a5a72f766d690b0169608e39a4d9))
-
-### Reverts
-
-- restores back as it was before, no changes to opts.limitToBeAddedWhitespace ([f0b36f3](https://git.sr.ht/~royston/codsen/commits/f0b36f3fd6cc7ac4f307e4f00867e03ccf1b5038))
-
-### BREAKING CHANGES
-
-- Second input argument, progressFn, was moved into opts.progressFn and opts was
-placed into second input argument instead
-
 ## 3.7.0 (2020-02-01)
 
 ### Features

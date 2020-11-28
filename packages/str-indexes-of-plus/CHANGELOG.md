@@ -3,18 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 2.11.0 (2020-11-28)
-
-### Bug Fixes
-
-- Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
-- Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
-- remove the last dependency ([d2e66d1](https://git.sr.ht/~royston/codsen/commits/d2e66d1c7c82bbf18cf2d4e4c01d4299f75092ce))
-
 ## 2.10.0 (2020-02-01)
 
 ### Features

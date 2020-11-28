@@ -3,22 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 4.9.0 (2020-11-28)
-
-### Bug Fixes
-
-- Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
-- Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
-- remove check-types-mini and replace type-detect with lodash.isplainobject ([31936bf](https://git.sr.ht/~royston/codsen/commits/31936bff765cdeb3832e1a79e015be35cd0faa27))
-
-### Performance Improvements
-
-- remove unused check-types-mini from deps list ([53f78a6](https://git.sr.ht/~royston/codsen/commits/53f78a688bd049f4d90521534548554098290569))
-
 ## 4.8.1 (2019-10-05)
 
 ### Performance Improvements

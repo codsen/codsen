@@ -3,23 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 1.17.0 (2020-11-28)
-
-### Bug Fixes
-
-- fix the CLI to make it read package.json files properly ([6caaffc](https://git.sr.ht/~royston/codsen/commits/6caaffc89720aecdf9d6862d8406f42e53f570a2))
-- Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
-- update to the latest v4 meow api, fix aliases ([66fda3d](https://git.sr.ht/~royston/codsen/commits/66fda3dc8973938f0b947cef684cc0c16c2d95ad))
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
-- add unit tests ([0692e46](https://git.sr.ht/~royston/codsen/commits/0692e4647cd05e5ecff882ee80c82d682db70ed5))
-- atomic file writing ([82f1065](https://git.sr.ht/~royston/codsen/commits/82f106512f60c08d0c3cbee5abdbb0a3f6c2715d))
-- bitbucket support ([ea95929](https://git.sr.ht/~royston/codsen/commits/ea95929d3897d0722628521405bc10d692932c11))
-- Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
-- recognises Bitbucket and more ([d541303](https://git.sr.ht/~royston/codsen/commits/d541303f9cea244de8795241d6a8126832bcdae8))
-
 ## 1.16.50 (2019-11-20)
 
 ### Bug Fixes

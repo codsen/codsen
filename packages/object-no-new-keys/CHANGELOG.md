@@ -3,19 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 2.10.0 (2020-11-28)
-
-### Bug Fixes
-
-- Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
-- Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
-- rebase a little bit, remove a dependency, improve the input arg validation ([7718957](https://git.sr.ht/~royston/codsen/commits/77189572e18e032c74c95a909144636c9a9f96af))
-- remove option type checking to make program run around 54 times faster ([5acc5f6](https://git.sr.ht/~royston/codsen/commits/5acc5f6c020684d9dc357c2f44fe44ecbd7423f3))
-
 ## 2.9.0 (2020-02-01)
 
 ### Features

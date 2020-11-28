@@ -3,19 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 3.0.0 (2020-11-28)
-
-### Features
-
-- add two html attributes used in edialog tracking links in emails ([4644703](https://git.sr.ht/~royston/codsen/commits/46447036e0bfdb5c5357ae510e6ac0e0dce6db75))
-- add xmlns ([7154f5f](https://git.sr.ht/~royston/codsen/commits/7154f5f29f3cdc16a8a561eb5724b537300366d4))
-- export Set instead of Array and remove JSON source file ([d09e5b7](https://git.sr.ht/~royston/codsen/commits/d09e5b7a592ef7b2bd5faef0eef0f7a78038a74f))
-- init ([2b332dd](https://git.sr.ht/~royston/codsen/commits/2b332dd351aabfe6e284f50eba9a8b45471fbcd3))
-
-### BREAKING CHANGES
-
-- For perf reasons, export Set instead of Array and remove JSON source file
-
 ## 2.0.0 (2020-04-13)
 
 ### Features

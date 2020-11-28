@@ -3,29 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 9.0.0 (2020-11-28)
-
-### Bug Fixes
-
-- Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
-
-### Features
-
-- `opts.allowUnresolved` can be supplied as string ([ada2a42](https://git.sr.ht/~royston/codsen/commits/ada2a42031a8cd2aa0fdf11c6e1a62812e0e5b74))
-- Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
-- Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
-- Merge modes via opts.mergeType ([7fb1c5f](https://git.sr.ht/~royston/codsen/commits/7fb1c5f319aa41ea54c68eed004ab2dfdc7425bf))
-- some rebasing, two dependencies removed ([05e9346](https://git.sr.ht/~royston/codsen/commits/05e93460cee8a02ab80bbd94f0bfa174ca785142))
-
-### Performance Improvements
-
-- remove check-types-mini which gaves 6x times speed gain ([21a1cb0](https://git.sr.ht/~royston/codsen/commits/21a1cb06fa4b35a694f712e6a8790a20509417a4))
-
-### BREAKING CHANGES
-
-- Second input argument, progressFn, was moved into opts.progressFn and opts was
-placed into second input argument instead
-
 ## 8.2.0 (2020-04-19)
 
 ### Features
