@@ -1,0 +1,40 @@
+image: alpine/edge
+packages:
+  - git
+  - nodejs
+  - npm
+secrets:
+  - bce89f30-642f-422c-b7f9-08e655b447aa
+  - bfb68f29-f23e-4733-85a2-a3c19c0bb729
+  - eeb496e6-af72-40d1-b4b0-94878c7f6c66
+tasks:
+  - npm-setup: |
+      echo "npm user:"
+      npm whoami
+  - git-setup: |
+      cd codsen
+      git remote set-url origin git@git.sr.ht:~royston/codsen
+      echo "git user:"
+      git config user.name
+      git status
+      git checkout master
+  - bootstrap: |
+      set +x
+      npm run fresh
+  - readme: |
+      npm run readme:generate
+  - first-git-add: |
+      git status
+      git add packages
+      git add stats
+      git add README.md
+      "git add package-lock.json || echo 'no package-lock.json'"
+      "git diff-index --quiet HEAD || git commit -m '[skip ci] chore: automated build tasks' --no-verify"
+      npm run pub:vers
+  - second-git-add: |
+      git status
+      git add packages
+      git add README.md
+      "git commit -m '[skip ci] chore: automated build tasks' --no-verify"
+      git status
+      git log

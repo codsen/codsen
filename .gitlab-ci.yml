@@ -1,4 +1,3 @@
-
 #
 #    C O D S E N
 #
@@ -17,7 +16,7 @@ thy_pipeline:
     ## Install ssh-agent if not already installed, it is required by Docker.
     ## (change apt-get to yum if you use an RPM-based image)
     ##
-    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )'
+    - "which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )"
 
     ##
     ## Write the private key
