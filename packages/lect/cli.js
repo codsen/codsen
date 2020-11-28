@@ -859,7 +859,7 @@ async function writePackageJson(receivedPackageJsonObj) {
 
   // "package_keys": {
   //   "write_hard": {
-  //     "repository": "https://gitlab.com/codsen/codsen/"
+  //     "repository": "https://git.sr.ht/~royston/codsen/"
   //   },
   //   "write_soft": {},
   //   "delete": ["", ""]
@@ -1108,12 +1108,12 @@ function step6() {
   <a href="https://codsen.com/os/${
     pack.name
   }" rel="nofollow noreferrer noopener">
-    <img src="https://img.shields.io/badge/-Codsen-blue?style=flat-square" alt="page on npm">
+    <img src="https://img.shields.io/badge/-codsen-blue?style=flat-square" alt="page on codsen.com">
   </a>
-  <a href="https://gitlab.com/codsen/codsen/tree/master/packages/${
+  <a href="https://git.sr.ht/~royston/codsen/tree/master/packages/${
     pack.name
   }" rel="nofollow noreferrer noopener">
-    <img src="https://img.shields.io/badge/-GitLab-blue?style=flat-square" alt="page on GitLab">
+    <img src="https://img.shields.io/badge/-sourcehut-blue?style=flat-square" alt="page on sourcehut">
   </a>
   <a href="https://npmcharts.com/compare/${
     pack.name

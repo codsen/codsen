@@ -24,7 +24,7 @@
     "versions"
   ],
   "homepage": "https://codsen.com/os/update-versions/",
-  "repository": "https://gitlab.com/codsen/codsen/",
+  "repository": "https://git.sr.ht/~royston/codsen",
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",

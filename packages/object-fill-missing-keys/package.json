@@ -19,7 +19,7 @@
     "unify"
   ],
   "homepage": "https://codsen.com/os/object-fill-missing-keys/",
-  "repository": "https://gitlab.com/codsen/codsen/",
+  "repository": "https://git.sr.ht/~royston/codsen",
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",

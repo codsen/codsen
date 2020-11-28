@@ -18,7 +18,7 @@
     "unit"
   ],
   "homepage": "https://codsen.com/os/tap-parse-string-to-object/",
-  "repository": "https://gitlab.com/codsen/codsen/",
+  "repository": "https://git.sr.ht/~royston/codsen",
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",

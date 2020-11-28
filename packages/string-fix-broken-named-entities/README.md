@@ -7,10 +7,10 @@
     <img src="https://img.shields.io/badge/-npm-blue?style=flat-square" alt="page on npm">
   </a>
   <a href="https://codsen.com/os/string-fix-broken-named-entities" rel="nofollow noreferrer noopener">
-    <img src="https://img.shields.io/badge/-Codsen-blue?style=flat-square" alt="page on npm">
+    <img src="https://img.shields.io/badge/-codsen-blue?style=flat-square" alt="page on codsen.com">
   </a>
-  <a href="https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities" rel="nofollow noreferrer noopener">
-    <img src="https://img.shields.io/badge/-GitLab-blue?style=flat-square" alt="page on GitLab">
+  <a href="https://git.sr.ht/~royston/codsen/tree/master/packages/string-fix-broken-named-entities" rel="nofollow noreferrer noopener">
+    <img src="https://img.shields.io/badge/-sourcehut-blue?style=flat-square" alt="page on sourcehut">
   </a>
   <a href="https://npmcharts.com/compare/string-fix-broken-named-entities?interval=30" rel="nofollow noreferrer noopener" target="_blank">
     <img src="https://img.shields.io/npm/dm/string-fix-broken-named-entities.svg?style=flat-square" alt="Downloads per month">

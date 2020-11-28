@@ -16,7 +16,7 @@
     "variations"
   ],
   "homepage": "https://codsen.com/os/object-boolean-combinations/",
-  "repository": "https://gitlab.com/codsen/codsen/",
+  "repository": "https://git.sr.ht/~royston/codsen",
   "license": "MIT",
   "author": "Roy Revelt <roy@codsen.com> (http://codsen.com/)",
   "main": "dist/object-boolean-combinations.cjs.js",

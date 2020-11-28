@@ -3,7 +3,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const lectrc = JSON.parse(fs.readFileSync("./packages/.lectrc.json"));
+// const lectrc = JSON.parse(fs.readFileSync("./packages/.lectrc.json"));
 const today = new Date();
 const year = today.getFullYear();
 
@@ -31,14 +31,11 @@ const allPackages = fs
 
 const template = `# Codsen
 
-> A lerna monorepo for our ${allPackages.length} npm libraries 📦📦📦
+> A lerna monorepo for our ${allPackages.length} npm packages 📦📦📦
 
 ## 📚 Documentation
 
 Please [visit codsen.com](https://codsen.com/os/) for an overview and full documentation of all packages.
-
-## 🤝 Contributing
-${lectrc.contributing.restofit}
 
 **[⬆ back to top](#codsen)**
 
@@ -57,7 +54,7 @@ fs.writeFile(
     .replace(/the_link_to_npm/g, "The&nbsp;link&nbsp;to&nbsp;npm")
     .replace(
       /%ISSUELINK%/gm,
-      "https://gitlab.com/codsen/codsen/issues/new?title=put%20package%20name%20here%20-%20put%20issue%20title%20here"
+      "https://todo.sr.ht/~royston/codsen-issue-tracker"
     )
     .replace(/ - /gm, " — "),
   (err) => {

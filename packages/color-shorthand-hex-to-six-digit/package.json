@@ -18,7 +18,7 @@
     "six"
   ],
   "homepage": "https://codsen.com/os/color-shorthand-hex-to-six-digit/",
-  "repository": "https://gitlab.com/codsen/codsen/",
+  "repository": "https://git.sr.ht/~royston/codsen",
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",

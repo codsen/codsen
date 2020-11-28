@@ -14,7 +14,7 @@
     "validate"
   ],
   "homepage": "https://codsen.com/os/util-array-object-or-both/",
-  "repository": "https://gitlab.com/codsen/codsen/",
+  "repository": "https://git.sr.ht/~royston/codsen",
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",

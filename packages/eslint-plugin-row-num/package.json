@@ -16,7 +16,7 @@
     "update"
   ],
   "homepage": "https://codsen.com/os/eslint-plugin-row-num/",
-  "repository": "https://gitlab.com/codsen/codsen/",
+  "repository": "https://git.sr.ht/~royston/codsen",
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",

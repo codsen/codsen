@@ -20,7 +20,7 @@
     "update"
   ],
   "homepage": "https://codsen.com/os/generate-atomic-css-cli/",
-  "repository": "https://gitlab.com/codsen/codsen/",
+  "repository": "https://git.sr.ht/~royston/codsen",
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",

@@ -19,7 +19,7 @@
     "whitelist"
   ],
   "homepage": "https://codsen.com/os/array-pull-all-with-glob/",
-  "repository": "https://gitlab.com/codsen/codsen/",
+  "repository": "https://git.sr.ht/~royston/codsen",
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",

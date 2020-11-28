@@ -18,7 +18,7 @@
     "utility"
   ],
   "homepage": "https://codsen.com/os/is-html-tag-opening/",
-  "repository": "https://gitlab.com/codsen/codsen/",
+  "repository": "https://git.sr.ht/~royston/codsen",
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",

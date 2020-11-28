@@ -17,7 +17,7 @@
     "validate"
   ],
   "homepage": "https://codsen.com/os/object-no-new-keys/",
-  "repository": "https://gitlab.com/codsen/codsen/",
+  "repository": "https://git.sr.ht/~royston/codsen",
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",

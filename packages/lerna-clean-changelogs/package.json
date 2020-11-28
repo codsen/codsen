@@ -17,7 +17,7 @@
     "utility"
   ],
   "homepage": "https://codsen.com/os/lerna-clean-changelogs/",
-  "repository": "https://gitlab.com/codsen/codsen/",
+  "repository": "https://git.sr.ht/~royston/codsen",
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",

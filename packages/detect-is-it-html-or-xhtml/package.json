@@ -19,7 +19,7 @@
     "xhtml"
   ],
   "homepage": "https://codsen.com/os/detect-is-it-html-or-xhtml/",
-  "repository": "https://gitlab.com/codsen/codsen/",
+  "repository": "https://git.sr.ht/~royston/codsen",
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",

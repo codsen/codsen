@@ -16,7 +16,7 @@
     "write"
   ],
   "homepage": "https://codsen.com/os/object-all-values-equal-to/",
-  "repository": "https://gitlab.com/codsen/codsen/",
+  "repository": "https://git.sr.ht/~royston/codsen",
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",

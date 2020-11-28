@@ -14,7 +14,7 @@
     "whitespace"
   ],
   "homepage": "https://codsen.com/os/string-collapse-white-space/",
-  "repository": "https://gitlab.com/codsen/codsen/",
+  "repository": "https://git.sr.ht/~royston/codsen",
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",
