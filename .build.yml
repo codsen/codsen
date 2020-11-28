@@ -31,18 +31,18 @@ tasks:
       git add stats
       git add README.md
       git add package-lock.json || echo 'no package-lock.json'
-      git diff-index --quiet HEAD || git commit -m '[skip ci] chore: automated build tasks' --no-verify
+      git diff-index --quiet HEAD || git commit -m 'chore: automated build tasks' --no-verify
       npm run pub:vers
   - second-git-add: |
       cd codsen
       git status
       git add packages
       git add README.md
-      git commit -m '[skip ci] chore: automated build tasks' --no-verify
+      git commit -m 'chore: automated build tasks' --no-verify
   - publish: |
       cd codsen
       npm run republish
-      git push origin master
+      git push -o skip-ci
   - purge-jsdelivr: |
       curl https://purge.jsdelivr.net/npm/detergent/dist/detergent.umd.js || echo 'detergent unreachable on jsdelivr'
       curl https://purge.jsdelivr.net/npm/html-crush/dist/html-crush.umd.js || echo 'html-crush unreachable on jsdelivr'
