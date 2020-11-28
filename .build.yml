@@ -19,7 +19,6 @@ tasks:
       git status
       git checkout master
   - bootstrap: |
-      set +x
       npm run fresh
   - readme: |
       npm run readme:generate
