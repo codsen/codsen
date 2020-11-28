@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.10.0 (2020-11-28)
+
+
+### Bug Fixes
+
+* fix failing unit test ([c46da2e](https://git.sr.ht/~royston/codsen/commits/c46da2e8398d53004b996d3d7b8f7f56758ef866))
+* Fix one of logical clauses ([961a972](https://git.sr.ht/~royston/codsen/commits/961a972cec97c4a3bdfde04ddbbc7d3954efe878))
+* Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
+* update the api to follow meow v4 - fixes aliases ([a878008](https://git.sr.ht/~royston/codsen/commits/a878008cbb291466382d8a9256fde189b11bef6c))
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
+* add unit tests for CLI operations ([3676894](https://git.sr.ht/~royston/codsen/commits/3676894526a4187d2aee476d792c8b8ff0144b46))
+* Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
+
+
+
+
+
 ## 1.9.51 (2019-11-20)
 
 ### Bug Fixes

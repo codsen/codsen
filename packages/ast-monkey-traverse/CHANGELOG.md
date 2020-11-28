@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.13.0 (2020-11-28)
+
+
+### Bug Fixes
+
+* Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
+
+
+### Features
+
+* add `innerObj.parentKey` ([cc4ff6e](https://git.sr.ht/~royston/codsen/commits/cc4ff6ef6007f144574a29f9c42783462459cacc))
+* Add a new key, parentType in a callback innerObj ([6e16b99](https://git.sr.ht/~royston/codsen/commits/6e16b996bc6d15319403d4ad6ab3e8eda15c249a))
+* Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
+* Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
+* stopping functionality ([ca17aa1](https://git.sr.ht/~royston/codsen/commits/ca17aa105824d1dc26bd2a23eae6a3c5aa2a5f24))
+
+
+
+
+
 ## 1.12.0 (2019-11-27)
 
 ### Features

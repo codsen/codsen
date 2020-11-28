@@ -1,6 +1,6 @@
 {
   "name": "csv-sort-cli",
-  "version": "1.9.85",
+  "version": "1.10.0",
   "description": "Command line app to sort double-entry CSVs coming from internet banking statements",
   "keywords": [
     "accountancy",
@@ -97,7 +97,7 @@
   },
   "dependencies": {
     "chalk": "^4.1.0",
-    "csv-sort": "^3.1.1",
+    "csv-sort": "^4.0.0",
     "globby": "^11.0.1",
     "inquirer": "^7.3.3",
     "lodash.pullall": "^4.2.0",
@@ -120,7 +120,7 @@
     "eslint": "^7.14.0",
     "execa": "^4.1.0",
     "fs-extra": "^9.0.1",
-    "lect": "^0.14.8",
+    "lect": "^0.15.0",
     "prettier": "^2.2.0",
     "tap": "^14.11.0",
     "tempy": "^1.0.0",

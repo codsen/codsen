@@ -1,7 +1,7 @@
 /**
  * object-flatten-referencing
  * Flatten complex nested objects according to a reference objects
- * Version: 4.11.28
+ * Version: 4.12.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-flatten-referencing/
@@ -2018,7 +2018,7 @@
   /**
    * str-indexes-of-plus
    * Like indexOf but returns array and counts per-grapheme
-   * Version: 2.10.12
+   * Version: 2.11.0
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/str-indexes-of-plus/

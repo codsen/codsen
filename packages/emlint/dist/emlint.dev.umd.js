@@ -1,7 +1,7 @@
 /**
  * emlint
  * Pluggable email template code linter
- * Version: 2.19.4
+ * Version: 3.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/emlint/
@@ -92,7 +92,7 @@
 	/**
 	 * all-named-html-entities
 	 * List of all named HTML entities
-	 * Version: 1.3.8
+	 * Version: 1.4.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/all-named-html-entities/
@@ -9427,11 +9427,12 @@
 	/**
 	 * string-left-right
 	 * Looks up the first non-whitespace character to the left/right of a given index
-	 * Version: 2.3.32
+	 * Version: 3.0.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/string-left-right/
 	 */
+	const RAWNBSP = "\u00A0";
 
 	function x$2(something) {
 	  const res = {
@@ -9459,7 +9460,12 @@
 	  return typeof something === "string";
 	}
 
-	function rightMain(str, idx, stopAtNewlines) {
+	function rightMain({
+	  str,
+	  idx,
+	  stopAtNewlines,
+	  stopAtRawNbsp
+	}) {
 	  if (typeof str !== "string" || !str.length) {
 	    return null;
 	  }
@@ -9472,16 +9478,16 @@
 	    return null;
 	  }
 
-	  if (str[idx + 1] && (!stopAtNewlines && str[idx + 1].trim() || stopAtNewlines && (str[idx + 1].trim() || "\n\r".includes(str[idx + 1])))) {
+	  if (str[idx + 1] && (str[idx + 1].trim() || stopAtNewlines && "\n\r".includes(str[idx + 1]) || stopAtRawNbsp && str[idx + 1] === RAWNBSP)) {
 	    return idx + 1;
 	  }
 
-	  if (str[idx + 2] && (!stopAtNewlines && str[idx + 2].trim() || stopAtNewlines && (str[idx + 2].trim() || "\n\r".includes(str[idx + 2])))) {
+	  if (str[idx + 2] && (str[idx + 2].trim() || stopAtNewlines && "\n\r".includes(str[idx + 2]) || stopAtRawNbsp && str[idx + 2] === RAWNBSP)) {
 	    return idx + 2;
 	  }
 
 	  for (let i = idx + 1, len = str.length; i < len; i++) {
-	    if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
+	    if (str[i].trim() || stopAtNewlines && "\n\r".includes(str[i]) || stopAtRawNbsp && str[i] === RAWNBSP) {
 	      return i;
 	    }
 	  }
@@ -9490,10 +9496,20 @@
 	}
 
 	function right(str, idx) {
-	  return rightMain(str, idx, false);
+	  return rightMain({
+	    str,
+	    idx,
+	    stopAtNewlines: false,
+	    stopAtRawNbsp: false
+	  });
 	}
 
-	function leftMain(str, idx, stopAtNewlines) {
+	function leftMain({
+	  str,
+	  idx,
+	  stopAtNewlines,
+	  stopAtRawNbsp
+	}) {
 	  if (typeof str !== "string" || !str.length) {
 	    return null;
 	  }
@@ -9506,16 +9522,16 @@
 	    return null;
 	  }
 
-	  if (str[~-idx] && (!stopAtNewlines && str[~-idx].trim() || stopAtNewlines && (str[~-idx].trim() || "\n\r".includes(str[~-idx])))) {
+	  if (str[~-idx] && (str[~-idx].trim() || stopAtNewlines && "\n\r".includes(str[~-idx]) || stopAtRawNbsp && str[~-idx] === RAWNBSP)) {
 	    return ~-idx;
 	  }
 
-	  if (str[idx - 2] && (!stopAtNewlines && str[idx - 2].trim() || stopAtNewlines && (str[idx - 2].trim() || "\n\r".includes(str[idx - 2])))) {
+	  if (str[idx - 2] && (str[idx - 2].trim() || stopAtNewlines && "\n\r".includes(str[idx - 2]) || stopAtRawNbsp && str[idx - 2] === RAWNBSP)) {
 	    return idx - 2;
 	  }
 
 	  for (let i = idx; i--;) {
-	    if (str[i] && (!stopAtNewlines && str[i].trim() || stopAtNewlines && (str[i].trim() || "\n\r".includes(str[i])))) {
+	    if (str[i] && (str[i].trim() || stopAtNewlines && "\n\r".includes(str[i]) || stopAtRawNbsp && str[i] === RAWNBSP)) {
 	      return i;
 	    }
 	  }
@@ -9524,11 +9540,21 @@
 	}
 
 	function left(str, idx) {
-	  return leftMain(str, idx, false);
+	  return leftMain({
+	    str,
+	    idx,
+	    stopAtNewlines: false,
+	    stopAtRawNbsp: false
+	  });
 	}
 
 	function leftStopAtNewLines(str, idx) {
-	  return leftMain(str, idx, true);
+	  return leftMain({
+	    str,
+	    idx,
+	    stopAtNewlines: true,
+	    stopAtRawNbsp: false
+	  });
 	}
 
 	function seq(direction, str, idx, opts, args) {
@@ -9662,7 +9688,7 @@
 	/**
 	 * string-fix-broken-named-entities
 	 * Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes
-	 * Version: 3.0.12
+	 * Version: 4.0.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/string-fix-broken-named-entities/
@@ -10214,7 +10240,7 @@
 	/**
 	 * ast-monkey-util
 	 * Utility library of AST helper functions
-	 * Version: 1.1.12
+	 * Version: 1.2.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/ast-monkey-util/
@@ -10304,7 +10330,7 @@
 	/**
 	 * ast-monkey-traverse
 	 * Utility library to traverse AST
-	 * Version: 1.12.21
+	 * Version: 1.13.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/ast-monkey-traverse/
@@ -10564,7 +10590,7 @@
 	/**
 	 * string-find-malformed
 	 * Search for a malformed string. Think of Levenshtein distance but in search.
-	 * Version: 1.1.17
+	 * Version: 1.2.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/string-find-malformed/
@@ -10683,7 +10709,7 @@
 	/**
 	 * arrayiffy-if-string
 	 * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-	 * Version: 3.11.39
+	 * Version: 3.12.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -10703,7 +10729,7 @@
 	/**
 	 * string-match-left-right
 	 * Match substrings on the left or right of a given index, ignoring whitespace
-	 * Version: 4.0.15
+	 * Version: 5.0.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/string-match-left-right/
@@ -11029,7 +11055,7 @@
 	/**
 	 * html-all-known-attributes
 	 * All HTML attributes known to the Humanity
-	 * Version: 2.0.9
+	 * Version: 3.0.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/html-all-known-attributes/
@@ -11039,7 +11065,7 @@
 	/**
 	 * is-char-suitable-for-html-attr-name
 	 * Is given character suitable to be in an HTML attribute's name?
-	 * Version: 1.1.10
+	 * Version: 1.2.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/is-char-suitable-for-html-attr-name/
@@ -11051,7 +11077,7 @@
 	/**
 	 * is-html-attribute-closing
 	 * Is a character on a given index a closing of an HTML attribute?
-	 * Version: 1.3.1
+	 * Version: 1.4.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/is-html-attribute-closing/
@@ -11334,7 +11360,7 @@
 	/**
 	 * is-html-tag-opening
 	 * Is given opening bracket a beginning of a tag?
-	 * Version: 1.8.4
+	 * Version: 1.9.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/is-html-tag-opening/
@@ -11417,7 +11443,7 @@
 	/**
 	 * codsen-tokenizer
 	 * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
-	 * Version: 3.2.1
+	 * Version: 4.0.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/codsen-tokenizer/
@@ -13357,7 +13383,7 @@
 	/**
 	 * codsen-parser
 	 * Parser aiming at broken or mixed code, especially HTML & CSS
-	 * Version: 0.7.11
+	 * Version: 0.8.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/codsen-parser/
@@ -14397,7 +14423,7 @@
 	/**
 	 * string-process-comma-separated
 	 * Extracts chunks from possibly comma or whatever-separated string
-	 * Version: 1.2.15
+	 * Version: 1.3.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/string-process-comma-separated/
@@ -18432,7 +18458,7 @@
 	/**
 	 * ranges-sort
 	 * Sort string index ranges
-	 * Version: 3.13.4
+	 * Version: 3.14.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/ranges-sort/
@@ -18506,7 +18532,7 @@
 	/**
 	 * ranges-merge
 	 * Merge and sort string index ranges
-	 * Version: 5.0.4
+	 * Version: 6.0.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/ranges-merge/
@@ -29741,7 +29767,7 @@
 	/**
 	 * is-relative-uri
 	 * Is given string a relative URI?
-	 * Version: 1.0.21
+	 * Version: 2.0.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/is-relative-uri/
@@ -30598,7 +30624,6 @@
 		"jaguar",
 		"java",
 		"jcb",
-		"jcp",
 		"je",
 		"jeep",
 		"jetzt",
@@ -31064,7 +31089,6 @@
 		"shouji",
 		"show",
 		"showtime",
-		"shriram",
 		"si",
 		"silk",
 		"sina",
@@ -34116,7 +34140,7 @@
 	/**
 	 * is-language-code
 	 * Is given string a language code (as per IANA)
-	 * Version: 1.0.13
+	 * Version: 2.0.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/is-language-code/
@@ -34942,7 +34966,7 @@
 	/**
 	 * is-media-descriptor
 	 * Is given string a valid media descriptor (including media query)?
-	 * Version: 1.2.20
+	 * Version: 2.0.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/is-media-descriptor/
@@ -37940,7 +37964,7 @@
 	/**
 	 * html-entities-not-email-friendly
 	 * All HTML entities which are not email template friendly
-	 * Version: 0.2.10
+	 * Version: 0.3.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/html-entities-not-email-friendly/
@@ -45168,7 +45192,7 @@
 
 	}
 
-	var version = "2.19.4";
+	var version = "3.0.0";
 
 	exports.Linter = Linter;
 	exports.version = version;

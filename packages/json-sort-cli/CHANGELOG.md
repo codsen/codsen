@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.17.0 (2020-11-28)
+
+
+### Bug Fixes
+
+* Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
+* update to the latest meow api, no more short aliases ([412bdd4](https://git.sr.ht/~royston/codsen/commits/412bdd432dbcc9e23a585132f8d24d2e95efa08e))
+* update to the v4 meow api, aliases were broken until now ([5c80a05](https://git.sr.ht/~royston/codsen/commits/5c80a05ad29bd0a3d489ecaaee5c9ab39db1eaaa))
+
+
+### Features
+
+* -s (--silent) flag ([294dc8b](https://git.sr.ht/~royston/codsen/commits/294dc8b951467d810736d901cbf9eea98956dfe8))
+* address single/plural cases in unsortable files ([345d3d1](https://git.sr.ht/~royston/codsen/commits/345d3d1b2cf0de96bd90e00abe62b0aee8ca0ffa))
+* Allow JSON files to contain topmost element as array not just plain object ([09e066f](https://git.sr.ht/~royston/codsen/commits/09e066fb09c2e6cc59a91e7b7ea05173169098c1))
+* cI mode - fixes [#21](https://git.sr.ht/~royston/codsen/issues/21) - plus few more tweaks ([bc93a0f](https://git.sr.ht/~royston/codsen/commits/bc93a0fd011073db2da87744b219e24983d9fa8d))
+* exclude DS_Store and other system files by default ([02f0b31](https://git.sr.ht/~royston/codsen/commits/02f0b31086071cf3a00beebab214a689fef8ac72))
+* Flag -a instructs to sort all arrays which contain only string elements ([7fb34ac](https://git.sr.ht/~royston/codsen/commits/7fb34ac78aa0ccec2853a006b7c7dfb68b03d710))
+* implement custom sorting, considering tap and lect custom keys ([10a1647](https://git.sr.ht/~royston/codsen/commits/10a1647322331caeea9b861f5bef773ac4034d09))
+* Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
+* labeling improvement ([f81653d](https://git.sr.ht/~royston/codsen/commits/f81653d94993f4f06249765e05b03742a5844d1b))
+* setup improvements, unit tests and deep sort ([5dff488](https://git.sr.ht/~royston/codsen/commits/5dff488d597d6307fec493c60f788234b29baf25))
+* silent mode, more unit tests and improved reporting ([f43fcca](https://git.sr.ht/~royston/codsen/commits/f43fcca959dfd5bfb6598ef40a9bf97ea00cf04b))
+* skip all package.json files if -p/--pack flag is given ([0e7d5e1](https://git.sr.ht/~royston/codsen/commits/0e7d5e1aa22e994bf16420c354eeda572d146263)), closes [#13](https://git.sr.ht/~royston/codsen/issues/13)
+* Sorts package.json keeping recommended key order ([edb7f1d](https://git.sr.ht/~royston/codsen/commits/edb7f1d0caac20c0429413734e966ce36256fb10))
+* swap a dependency, format-package with sort-package-json ([ba5c390](https://git.sr.ht/~royston/codsen/commits/ba5c3902eb130abe2d17023a7b89dce0aeccba1d))
+
+
+
+
+
 ## 1.16.0 (2020-09-15)
 
 ### Features

@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.13.0 (2020-11-28)
+
+
+### Bug Fixes
+
+* Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
+* Add perf measurement, recording and historical comparison ([eb6fb04](https://git.sr.ht/~royston/codsen/commits/eb6fb0416b293a27c8ddc69709c726458f5962af))
+* cater null values too ([38fa255](https://git.sr.ht/~royston/codsen/commits/38fa2557d669fef608ea9be7c0ece7d80ebf4fc7))
+* Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
+* remove all dependencies ([1536b15](https://git.sr.ht/~royston/codsen/commits/1536b15b5870727cc3de2b90de079dd027db895b))
+* rippling sort from arbitrary axis column ([38d850f](https://git.sr.ht/~royston/codsen/commits/38d850f3f74d71ad69993f4a076f6584354625da))
+
+
+
+
+
 ## 2.12.0 (2020-01-26)
 
 ### Features

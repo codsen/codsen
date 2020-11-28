@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 10.12.0 (2020-11-28)
+
+
+### Bug Fixes
+
+* Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
+* fourth argument in the callback ([306e3da](https://git.sr.ht/~royston/codsen/commits/306e3dad02c4b1d5fe2c7fb29af66dc2c73ab3f1))
+* Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
+* remove options checking to make program run around 128 times faster ([9ce7714](https://git.sr.ht/~royston/codsen/commits/9ce771433c64517c0bd590d6d07cf2941acc06ba))
+
+
+### Performance Improvements
+
+* tap Array.isArray directly, gaining around 124 times more speed ([13cd986](https://git.sr.ht/~royston/codsen/commits/13cd98642b0ee31ffac8aa1f9908806d982b7c0d))
+
+
+
+
+
 ## 10.11.0 (2019-10-02)
 
 ### Features

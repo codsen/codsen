@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.3.0 (2020-11-28)
+
+
+### Features
+
+* `opts.cb` ([95f873b](https://git.sr.ht/~royston/codsen/commits/95f873b1379bc4ad0cfff36ec79338709d417fd3))
+* `opts.throwIfEmpty` ([76154ae](https://git.sr.ht/~royston/codsen/commits/76154ae9b23a42a94ef8d65b4d5c075900c266af))
+* init ([6764160](https://git.sr.ht/~royston/codsen/commits/676416064a037f8b7f21a6e20a0e291849b77897))
+
+
+
+
+
 ## 1.2.0 (2020-04-26)
 
 ### Features

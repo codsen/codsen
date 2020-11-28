@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 5.0.0 (2020-11-28)
+
+
+### Bug Fixes
+
+* `opts.maxMismatches` higher than one ([c0a416a](https://git.sr.ht/~royston/codsen/commits/c0a416afd32aa39698703437aed36b81cb04abd6))
+* add insurance against the variable being not string ([e53f435](https://git.sr.ht/~royston/codsen/commits/e53f435206b1b2daf1e7d9c45c8373933d09eca9))
+* fix `opts.firstMustMatch` ([195350b](https://git.sr.ht/~royston/codsen/commits/195350b56c26d3e856b5cd3d1a2abb947c9ada3d))
+* fix `opts.matchRight` ([ba40509](https://git.sr.ht/~royston/codsen/commits/ba40509c63463e2579efd9ebfdd21b97e6faa665))
+* fix maxMismatches ([be34351](https://git.sr.ht/~royston/codsen/commits/be34351d02b683b191af669a33e896c04f49aacf))
+* Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
+* fix the excessive skipping ([e97899d](https://git.sr.ht/~royston/codsen/commits/e97899d92ff5794e817ff2b24ece83e1b4d3b327))
+* insurance against undefined value ([a0d5193](https://git.sr.ht/~royston/codsen/commits/a0d519349b1b53852b1e6ce1948c24eb1f855667))
+
+
+### Features
+
+* `opts.maxMismatches` ([5288fe9](https://git.sr.ht/~royston/codsen/commits/5288fe9667a34a3f447c3c13a63629bc9132b4ff))
+* Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
+* case when character is omitted from the source and maxMismatches allows that ([1b47eba](https://git.sr.ht/~royston/codsen/commits/1b47eba3683b77511c45d02b4f2553db729ff401))
+* EOL matching and code refresh ([ca834a7](https://git.sr.ht/~royston/codsen/commits/ca834a7ded4ac5ba9025b1f44b9761b5193ec95c))
+* Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
+* merge marchForward and marchBackward into one, simplify the API ([e873ee6](https://git.sr.ht/~royston/codsen/commits/e873ee652da54e352c52419042e0327b3a49cdd5))
+* opts.lastMustMatch ([12ad597](https://git.sr.ht/~royston/codsen/commits/12ad597c9b84d34208be620f1a8ef605b62beceb))
+* opts.relaxedApi ([f30626c](https://git.sr.ht/~royston/codsen/commits/f30626cdd8066e7a8997bd67324b9157c2bc3c7c))
+* opts.skipWhitespace ([6d9c847](https://git.sr.ht/~royston/codsen/commits/6d9c8479f090b22bee4d70230d2d069f198e7e81))
+* rebase to make twice as fast ([4530b9f](https://git.sr.ht/~royston/codsen/commits/4530b9f98357654f1a35552b80810ce158dce3bd))
+* remove opts.skipInnerWhitespace ([541c1c5](https://git.sr.ht/~royston/codsen/commits/541c1c5b47e1667e77328ba586e1e5cc725fcad9))
+* second callback's argument returns empty string when EOL is reached (previously - undefined) ([b480821](https://git.sr.ht/~royston/codsen/commits/b4808214499837de3ae3d53b8ed4a82ff40f4f54))
+
+
+### BREAKING CHANGES
+
+* no more opts.relaxedApi - it's relaxed as much as possible by default, no
+emoji-related code
+
+
+
+
+
 ## 4.0.1 (2020-03-24)
 
 ### Bug Fixes

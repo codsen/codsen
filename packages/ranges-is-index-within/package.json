@@ -1,6 +1,6 @@
 {
   "name": "ranges-is-index-within",
-  "version": "1.15.3",
+  "version": "1.16.0",
   "description": "Checks if index is within any of the given string index ranges",
   "keywords": [
     "index",
@@ -105,7 +105,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.14.0",
-    "lect": "^0.14.8",
+    "lect": "^0.15.0",
     "rollup": "^2.33.3",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

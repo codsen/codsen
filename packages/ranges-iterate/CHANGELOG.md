@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.2.0 (2020-11-28)
+
+
+### Features
+
+* Iterates given string considering given ranges ([44dd179](https://git.sr.ht/~royston/codsen/commits/44dd1794797790bc826a3f527d54dda046a21e51))
+* Pushing ([3a5c38d](https://git.sr.ht/~royston/codsen/commits/3a5c38dee844fdda02ceade01f4f3c5c10633277))
+
+
+
+
+
 ## 1.1.0 (2019-06-01)
 
 ### Features

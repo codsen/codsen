@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 4.0.0 (2020-11-28)
+
+
+### Bug Fixes
+
+* Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
+* Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
+* Merge modes via opts.mergeType ([7fb1c5f](https://git.sr.ht/~royston/codsen/commits/7fb1c5f319aa41ea54c68eed004ab2dfdc7425bf))
+* rebase, split tests into separate files and add examples ([18e0373](https://git.sr.ht/~royston/codsen/commits/18e0373c01f4e2cd4af2ceaf1b4719954b054291))
+
+
+### Performance Improvements
+
+* remove check-types-mini ([4eae010](https://git.sr.ht/~royston/codsen/commits/4eae010e3ddc8ddbf2a210a1c7cbb4ef808493aa))
+
+
+### BREAKING CHANGES
+
+* Second input argument, progressFn, was moved into opts.progressFn and opts was
+placed into second input argument instead
+
+
+
+
+
 ## 3.1.0 (2020-09-27)
 
 ### Features

@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.14.0 (2020-11-28)
+
+
+### Bug Fixes
+
+* Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
+* Add perf measurement, recording and historical comparison ([8266d21](https://git.sr.ht/~royston/codsen/commits/8266d21eb9878be36ee9f5224660ad6ae32d1648))
+* Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
+* make the run 11 times faster ([a9ea3f0](https://git.sr.ht/~royston/codsen/commits/a9ea3f0da6aa752dac9987aef81cbd047d965ced))
+* opts.useWildcards ([d541cab](https://git.sr.ht/~royston/codsen/commits/d541cab621d2710280d95c236f84500af4c96045))
+
+
+### Performance Improvements
+
+* remove check-types-mini ([0503752](https://git.sr.ht/~royston/codsen/commits/05037526324b569fa1142eba8cb182d3a16a7a5b))
+
+
+
+
+
 ## 1.13.0 (2020-01-26)
 
 ### Features

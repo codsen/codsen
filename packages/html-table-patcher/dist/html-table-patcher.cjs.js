@@ -1,7 +1,7 @@
 /**
  * html-table-patcher
  * Visual helper to place templating code around table tags into correct places
- * Version: 2.0.16
+ * Version: 3.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/html-table-patcher/
@@ -90,7 +90,7 @@ function _objectSpread2(target) {
   return target;
 }
 
-var version = "2.0.16";
+var version = "3.0.0";
 
 var ranges = new Ranges__default['default']();
 function isStr(something) {

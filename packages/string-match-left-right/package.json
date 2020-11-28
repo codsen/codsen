@@ -1,6 +1,6 @@
 {
   "name": "string-match-left-right",
-  "version": "4.0.15",
+  "version": "5.0.0",
   "description": "Match substrings on the left or right of a given index, ignoring whitespace",
   "keywords": [
     "left",
@@ -94,9 +94,9 @@
     }
   },
   "dependencies": {
-    "arrayiffy-if-string": "^3.11.39",
+    "arrayiffy-if-string": "^3.12.0",
     "lodash.isplainobject": "^4.0.6",
-    "string-character-is-astral-surrogate": "^1.10.65"
+    "string-character-is-astral-surrogate": "^1.11.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.7",
@@ -111,7 +111,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.14.0",
-    "lect": "^0.14.8",
+    "lect": "^0.15.0",
     "rollup": "^2.33.3",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

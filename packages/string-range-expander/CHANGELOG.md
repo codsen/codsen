@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.12.0 (2020-11-28)
+
+
+### Bug Fixes
+
+* fix for opts.wipeAllWhitespaceOnRight and left too ([72c26e6](https://git.sr.ht/~royston/codsen/commits/72c26e692371c5c97be39663211e6200c7ee88d7))
+* Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
+* if****SideIncludesThisCropItToo algorithm tweaks when there is no whitespace ([d4676d8](https://git.sr.ht/~royston/codsen/commits/d4676d82b0cb554633ba5a9b4e471b225fdc7cc8))
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
+* improvements to opts.addSingleSpaceToPreventAccidentalConcatenation ([8bb929a](https://git.sr.ht/~royston/codsen/commits/8bb929af4e8df8324ca85fa42b8de0e4f1f15ae1))
+* Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
+* opts.addSingleSpaceToPreventAccidentalConcatenation ([19b1390](https://git.sr.ht/~royston/codsen/commits/19b1390a128cb81850cf2463c0dbe478467008dc))
+* opts.addSingleSpaceToPreventAccidentalConcatenation improvements ([47df5be](https://git.sr.ht/~royston/codsen/commits/47df5be345a88b1bf695a7a2ae9668419ef55716))
+* opts.wipeAllWhitespaceOnLeft and opts.wipeAllWhitespaceOnRight ([73d763b](https://git.sr.ht/~royston/codsen/commits/73d763ba609277982e05aead598f469348d389ca))
+* refactor, remove all dependencies (there was only one) ([6e49b8b](https://git.sr.ht/~royston/codsen/commits/6e49b8b7c5a031f650f779d68480d91891aea66d))
+
+
+### Performance Improvements
+
+* remove check-types-mini to improve speed by around 500x ([5e219a8](https://git.sr.ht/~royston/codsen/commits/5e219a8f3a401b7a5fc7d05e5d75cde3e4119f02))
+
+
+
+
+
 ## 1.11.0 (2020-04-18)
 
 ### Features

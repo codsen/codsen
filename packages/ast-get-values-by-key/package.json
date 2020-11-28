@@ -1,6 +1,6 @@
 {
   "name": "ast-get-values-by-key",
-  "version": "2.7.2",
+  "version": "2.8.0",
   "description": "Read or edit parsed HTML (or AST in general)",
   "keywords": [
     "ast",
@@ -108,7 +108,7 @@
     }
   },
   "dependencies": {
-    "ast-monkey-traverse": "^1.12.21",
+    "ast-monkey-traverse": "^1.13.0",
     "lodash.clonedeep": "^4.5.0",
     "matcher": "^3.0.0"
   },
@@ -125,7 +125,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.14.0",
-    "lect": "^0.14.8",
+    "lect": "^0.15.0",
     "object-path": "^0.11.5",
     "rollup": "^2.33.3",
     "rollup-plugin-ascii": "^0.0.3",

@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.3.0 (2020-11-28)
+
+
+### Features
+
+* init ([be118a3](https://git.sr.ht/~royston/codsen/commits/be118a3fe66f84b19425571dd2da76d3d4e86fa1))
+* recognise raw tap with single suite, no curlies ([d7daf96](https://git.sr.ht/~royston/codsen/commits/d7daf96e62661022b2bdee00e0ae5029d9c697b6))
+* support stream inputs, in which case, return promise of an object ([70a34cf](https://git.sr.ht/~royston/codsen/commits/70a34cf6c07c5674b7f20f723ba0b098ffa3a9b1))
+
+
+
+
+
 ## 1.2.0 (2019-12-14)
 
 ### Features

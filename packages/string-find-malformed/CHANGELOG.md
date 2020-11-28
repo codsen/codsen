@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.2.0 (2020-11-28)
+
+
+### Bug Fixes
+
+* correction to the algorithm ([f1f4a00](https://git.sr.ht/~royston/codsen/commits/f1f4a00c2a7dc43fbb13c1eff209beb12dfb0bd9))
+* harden the eslint rules set and make all unit tests pass again and rebase a little ([52328ea](https://git.sr.ht/~royston/codsen/commits/52328ea1f1a691513676d5bac259705ed61444d4))
+
+
+### Features
+
+* init ([8199031](https://git.sr.ht/~royston/codsen/commits/81990319e699bfc0e3ecf8a7ee38ca8ce46c46a9))
+* tweak the matching algorithm to jump to next character if not matched ([f4b0e40](https://git.sr.ht/~royston/codsen/commits/f4b0e40729390b950adf7ebc45e01f0d75a34a4a))
+
+
+
+
+
 ## 1.1.5 (2020-04-26)
 
 ### Bug Fixes

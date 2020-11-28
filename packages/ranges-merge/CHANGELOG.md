@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 6.0.0 (2020-11-28)
+
+
+### Bug Fixes
+
+* Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
+* discard any null ranges when merging ([ae51bce](https://git.sr.ht/~royston/codsen/commits/ae51bce0bcbdb4012548887a31633eaafda5dfdc))
+* improvements against input argument mutation ([924c7ae](https://git.sr.ht/~royston/codsen/commits/924c7ae85cc553ca54b8f5bbf38c443b91183239))
+* Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
+* Merge modes via opts.mergeType ([7fb1c5f](https://git.sr.ht/~royston/codsen/commits/7fb1c5f319aa41ea54c68eed004ab2dfdc7425bf))
+* Move progressFn, second argument into to opts object ([f9889b2](https://git.sr.ht/~royston/codsen/commits/f9889b25ea9c4baf5402484d37a1d5f0552588c4))
+* opts.joinRangesThatTouchEdges ([40cf7e6](https://git.sr.ht/~royston/codsen/commits/40cf7e6dca31e56db01b2f3671f0f5ae19e54e6a))
+* remove a dependency, rebase a little ([625ba18](https://git.sr.ht/~royston/codsen/commits/625ba1871fe12efe1f36fbbb4f67b7025d5905a9))
+* removes ranges with no third arg with identical start and end points ([707553b](https://git.sr.ht/~royston/codsen/commits/707553bb084dd80db15bb33f1d8f8b66d1c9e5c7))
+* return null instead of empty array ([27fa708](https://git.sr.ht/~royston/codsen/commits/27fa70879ef0fb65594ffa55de17a26d64353186))
+* Tweak API to correctly interpret opts.processFn given as an empty plain object ([bcedd6e](https://git.sr.ht/~royston/codsen/commits/bcedd6edf043d4446f90fc66bd52f5764a235310))
+
+
+### BREAKING CHANGES
+
+* return null instead of empty array
+* Second input argument, progressFn, was moved into opts.progressFn and opts was
+placed into second input argument instead
+
+
+
+
+
 ## 5.0.0 (2020-09-07)
 
 ### Features
