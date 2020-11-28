@@ -14,6 +14,7 @@ tasks:
   - git-setup: |
       cd codsen
       git remote set-url origin git@git.sr.ht:~royston/codsen
+      ssh-keyscan -H 'git.sr.ht' >> ~/.ssh/known_hosts
       echo "git user:"
       git config user.name
       git status
