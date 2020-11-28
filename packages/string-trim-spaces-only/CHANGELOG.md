@@ -3,24 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 2.9.0 (2020-11-28)
-
+## 2.9.0 (2020-11-28)
 
 ### Bug Fixes
 
-* Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
-
+- Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
 
 ### Features
 
-* add granular options to trim (or not) each whitespace type ([c12e5b3](https://git.sr.ht/~royston/codsen/commits/c12e5b3c1a9ae41fb80a38591dad6ea02ffc6153))
-* Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
-* Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
-* opts.classicTrim, returns plain object now ([0fe61a1](https://git.sr.ht/~royston/codsen/commits/0fe61a1a1f52e8490b492c646a5fa9d70bc87aad))
-
-
-
-
+- add granular options to trim (or not) each whitespace type ([c12e5b3](https://git.sr.ht/~royston/codsen/commits/c12e5b3c1a9ae41fb80a38591dad6ea02ffc6153))
+- Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
+- Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
+- opts.classicTrim, returns plain object now ([0fe61a1](https://git.sr.ht/~royston/codsen/commits/0fe61a1a1f52e8490b492c646a5fa9d70bc87aad))
 
 ## 2.8.0 (2019-09-11)
 

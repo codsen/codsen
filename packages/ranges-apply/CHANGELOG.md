@@ -3,37 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 4.0.0 (2020-11-28)
-
+## 4.0.0 (2020-11-28)
 
 ### Bug Fixes
 
-* actually rename files ([0a32cb8](https://git.sr.ht/~royston/codsen/commits/0a32cb81b273a97cdb5ed325e6951525e0ce673d))
-* Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
-* harden the eslint rules set and make all tests pass ([3b593b4](https://git.sr.ht/~royston/codsen/commits/3b593b495f645005780a26ab8d719aa7d1846dd0))
-* make all tests pass ([d86cf1b](https://git.sr.ht/~royston/codsen/commits/d86cf1bca9b0ac38e5bf141ed4ffd44c935ef51c))
-
+- actually rename files ([0a32cb8](https://git.sr.ht/~royston/codsen/commits/0a32cb81b273a97cdb5ed325e6951525e0ce673d))
+- Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
+- harden the eslint rules set and make all tests pass ([3b593b4](https://git.sr.ht/~royston/codsen/commits/3b593b495f645005780a26ab8d719aa7d1846dd0))
+- make all tests pass ([d86cf1b](https://git.sr.ht/~royston/codsen/commits/d86cf1bca9b0ac38e5bf141ed4ffd44c935ef51c))
 
 ### Features
 
-* 3rd input arg - progressFn ([f6735e2](https://git.sr.ht/~royston/codsen/commits/f6735e29be61bf10ff181c951ca74beec59afad4))
-* accept null as second input argument, instead of ranges ([0c59484](https://git.sr.ht/~royston/codsen/commits/0c59484cbe402c8f29559dacc058441432a17a83))
-* Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
-* discard any nulls among ranges ([2a09e88](https://git.sr.ht/~royston/codsen/commits/2a09e88fb3a7b50be255b4cfb265bf0b8542e4ee))
-* Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
-* Merge modes via opts.mergeType ([7fb1c5f](https://git.sr.ht/~royston/codsen/commits/7fb1c5f319aa41ea54c68eed004ab2dfdc7425bf))
-* ranges-merge (sort + merge) is applied by default now to prevent errors on unsorted ranges ([35e3c4b](https://git.sr.ht/~royston/codsen/commits/35e3c4b1e15c65b0a1bfa3c96f18f6ead07fd19d))
-* remove a dependency, speed up the program by 130% ([b787194](https://git.sr.ht/~royston/codsen/commits/b787194c39e2e688fc50d63795412ba5339692fd))
-
+- 3rd input arg - progressFn ([f6735e2](https://git.sr.ht/~royston/codsen/commits/f6735e29be61bf10ff181c951ca74beec59afad4))
+- accept null as second input argument, instead of ranges ([0c59484](https://git.sr.ht/~royston/codsen/commits/0c59484cbe402c8f29559dacc058441432a17a83))
+- Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
+- discard any nulls among ranges ([2a09e88](https://git.sr.ht/~royston/codsen/commits/2a09e88fb3a7b50be255b4cfb265bf0b8542e4ee))
+- Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
+- Merge modes via opts.mergeType ([7fb1c5f](https://git.sr.ht/~royston/codsen/commits/7fb1c5f319aa41ea54c68eed004ab2dfdc7425bf))
+- ranges-merge (sort + merge) is applied by default now to prevent errors on unsorted ranges ([35e3c4b](https://git.sr.ht/~royston/codsen/commits/35e3c4b1e15c65b0a1bfa3c96f18f6ead07fd19d))
+- remove a dependency, speed up the program by 130% ([b787194](https://git.sr.ht/~royston/codsen/commits/b787194c39e2e688fc50d63795412ba5339692fd))
 
 ### BREAKING CHANGES
 
-* Second input argument, progressFn, was moved into opts.progressFn and opts was
+- Second input argument, progressFn, was moved into opts.progressFn and opts was
 placed into second input argument instead
-
-
-
-
 
 ## 3.2.0 (2020-09-07)
 

@@ -3,23 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 4.13.0 (2020-11-28)
-
+## 4.13.0 (2020-11-28)
 
 ### Bug Fixes
 
-* Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
-
+- Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
 
 ### Features
 
-* Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
-* Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
-* second input arg. can now be a string ([fd68131](https://git.sr.ht/~royston/codsen/commits/fd6813190de2193591a5edca7f6918875a68ba76))
-
-
-
-
+- Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
+- Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
+- second input arg. can now be a string ([fd68131](https://git.sr.ht/~royston/codsen/commits/fd6813190de2193591a5edca7f6918875a68ba76))
 
 ## 4.12.0 (2019-01-20)
 

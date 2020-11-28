@@ -3,41 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 8.0.0 (2020-11-28)
-
+## 8.0.0 (2020-11-28)
 
 ### Bug Fixes
 
-* Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
-* string boundary won't throw now, sorry about that ([94639dd](https://git.sr.ht/~royston/codsen/commits/94639dd14b0be8767003e0de4a3b35548c1f8cac))
-
+- Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
+- string boundary won't throw now, sorry about that ([94639dd](https://git.sr.ht/~royston/codsen/commits/94639dd14b0be8767003e0de4a3b35548c1f8cac))
 
 ### Features
 
-* `opts.enforceSpacesOnly` ([154de62](https://git.sr.ht/~royston/codsen/commits/154de623241cdced9d418f2815ae3befe9684534))
-* `opts.rangesOffset` ([fd5852f](https://git.sr.ht/~royston/codsen/commits/fd5852f4f50b49f121bab2bb0cc30e2d23790e5c))
-* add generated tests - 10000 random strings are checked to catch any false-positives ([43d7dc4](https://git.sr.ht/~royston/codsen/commits/43d7dc45dcdc01af73c686e7e23c11a12a098101))
-* Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
-* complete rewrite ([0040bc5](https://git.sr.ht/~royston/codsen/commits/0040bc502a7714010cc0ef3aef978e326998482e))
-* Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
-* Merge modes via opts.mergeType ([7fb1c5f](https://git.sr.ht/~royston/codsen/commits/7fb1c5f319aa41ea54c68eed004ab2dfdc7425bf))
-* opts.limitConsecutiveEmptyLinesTo ([ece9334](https://git.sr.ht/~royston/codsen/commits/ece9334766a6a70ccecec299ff7a89e38aad7f38))
-* opts.removeEmptyLines ([75e0671](https://git.sr.ht/~royston/codsen/commits/75e0671d02d4a13ecadf2e1a75c724b841e09037))
-* proper support for all possible kinds of line end symbols ([5a49049](https://git.sr.ht/~royston/codsen/commits/5a49049212afe0d9585f9592701e1d88a89c88e1))
-* returns a plain object with both string and ranges ([275b940](https://git.sr.ht/~royston/codsen/commits/275b940178b35f20c421c5461e5379961b95d4f3))
-* wIP - opts.limitConsecutiveEmptyLinesTo, 12 failing ([a179337](https://git.sr.ht/~royston/codsen/commits/a1793375369646613bd37277a0628dda1fb5cdc7))
-
+- `opts.enforceSpacesOnly` ([154de62](https://git.sr.ht/~royston/codsen/commits/154de623241cdced9d418f2815ae3befe9684534))
+- `opts.rangesOffset` ([fd5852f](https://git.sr.ht/~royston/codsen/commits/fd5852f4f50b49f121bab2bb0cc30e2d23790e5c))
+- add generated tests - 10000 random strings are checked to catch any false-positives ([43d7dc4](https://git.sr.ht/~royston/codsen/commits/43d7dc45dcdc01af73c686e7e23c11a12a098101))
+- Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
+- complete rewrite ([0040bc5](https://git.sr.ht/~royston/codsen/commits/0040bc502a7714010cc0ef3aef978e326998482e))
+- Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
+- Merge modes via opts.mergeType ([7fb1c5f](https://git.sr.ht/~royston/codsen/commits/7fb1c5f319aa41ea54c68eed004ab2dfdc7425bf))
+- opts.limitConsecutiveEmptyLinesTo ([ece9334](https://git.sr.ht/~royston/codsen/commits/ece9334766a6a70ccecec299ff7a89e38aad7f38))
+- opts.removeEmptyLines ([75e0671](https://git.sr.ht/~royston/codsen/commits/75e0671d02d4a13ecadf2e1a75c724b841e09037))
+- proper support for all possible kinds of line end symbols ([5a49049](https://git.sr.ht/~royston/codsen/commits/5a49049212afe0d9585f9592701e1d88a89c88e1))
+- returns a plain object with both string and ranges ([275b940](https://git.sr.ht/~royston/codsen/commits/275b940178b35f20c421c5461e5379961b95d4f3))
 
 ### BREAKING CHANGES
 
-* see changelog
-* returns a plain object with both string and ranges
-* Second input argument, progressFn, was moved into opts.progressFn and opts was
+- see changelog
+- returns a plain object with both string and ranges
+- Second input argument, progressFn, was moved into opts.progressFn and opts was
 placed into second input argument instead
-
-
-
-
 
 ## 7.0.0 (2020-11-06)
 

@@ -3,34 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 5.9.0 (2020-11-28)
-
+## 5.9.0 (2020-11-28)
 
 ### Bug Fixes
 
-* Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
-* pull pullAllWithGlob inline because it was causing circular dependency clashes ([2948a28](https://git.sr.ht/~royston/codsen/commits/2948a28558c6d16130736a826eabb72e527890f2))
-
+- Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
+- pull pullAllWithGlob inline because it was causing circular dependency clashes ([2948a28](https://git.sr.ht/~royston/codsen/commits/2948a28558c6d16130736a826eabb72e527890f2))
 
 ### Features
 
-* add examples ([803507b](https://git.sr.ht/~royston/codsen/commits/803507b6e1057cab0d19aad26d0757487801d89f))
-* Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
-* Correctly behave if object has a key which has a value equal to literal undefined ([5c28021](https://git.sr.ht/~royston/codsen/commits/5c28021aaa4d752c85357934199b4a648c21aa48))
-* Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
-* matcher under opts.ignorePaths and opts.ignoreKeys ([4648ad5](https://git.sr.ht/~royston/codsen/commits/4648ad57379dcd3d963e365457d1be5ef1ef09f6))
-* opts.ignorePaths and nested opts support ([c1128d6](https://git.sr.ht/~royston/codsen/commits/c1128d61bd9ac8e385ba3da6f66330241a8f1350))
-* opts.schema can now be given in nested formatting too ([d102784](https://git.sr.ht/~royston/codsen/commits/d1027846591dcf06deacbf9d0f7efd3494bb0b93))
-* schema ignores with types 'any' and 'whatever' now apply to all children nodes of that path ([568eb33](https://git.sr.ht/~royston/codsen/commits/568eb33ca5550be142fbb05599e7bd913064d91c))
-
+- add examples ([803507b](https://git.sr.ht/~royston/codsen/commits/803507b6e1057cab0d19aad26d0757487801d89f))
+- Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
+- Correctly behave if object has a key which has a value equal to literal undefined ([5c28021](https://git.sr.ht/~royston/codsen/commits/5c28021aaa4d752c85357934199b4a648c21aa48))
+- Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
+- matcher under opts.ignorePaths and opts.ignoreKeys ([4648ad5](https://git.sr.ht/~royston/codsen/commits/4648ad57379dcd3d963e365457d1be5ef1ef09f6))
+- opts.ignorePaths and nested opts support ([c1128d6](https://git.sr.ht/~royston/codsen/commits/c1128d61bd9ac8e385ba3da6f66330241a8f1350))
+- opts.schema can now be given in nested formatting too ([d102784](https://git.sr.ht/~royston/codsen/commits/d1027846591dcf06deacbf9d0f7efd3494bb0b93))
+- schema ignores with types 'any' and 'whatever' now apply to all children nodes of that path ([568eb33](https://git.sr.ht/~royston/codsen/commits/568eb33ca5550be142fbb05599e7bd913064d91c))
 
 ### Performance Improvements
 
-* remove dependency cardinal ([ed20231](https://git.sr.ht/~royston/codsen/commits/ed20231affa3724a3d2106d9aba43a6987741efa))
-
-
-
-
+- remove dependency cardinal ([ed20231](https://git.sr.ht/~royston/codsen/commits/ed20231affa3724a3d2106d9aba43a6987741efa))
 
 ## 5.8.0 (2020-09-27)
 

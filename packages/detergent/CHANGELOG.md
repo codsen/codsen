@@ -3,49 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 6.0.0 (2020-11-28)
-
+## 6.0.0 (2020-11-28)
 
 ### Bug Fixes
 
-* apostrophes algorithm improvements ([3415b17](https://git.sr.ht/~royston/codsen/commits/3415b1704b9b9e1b33d8ec234ba6ea20cd57d1ba))
-* characters are index zero were not included in the clause ([6ad8f5f](https://git.sr.ht/~royston/codsen/commits/6ad8f5f7e4d84dd8205392c1882e9b007501d81f))
-* fix last false alerts, tests were not updated properly ([d990e45](https://git.sr.ht/~royston/codsen/commits/d990e45d7152fcb0b970567827901ace8939ca91))
-* fix long dashes between numbers ([88523e1](https://git.sr.ht/~royston/codsen/commits/88523e13c1a29ca667c9b3ad991e60cd824fa91d))
-* fix some edge cases of malformed self-closing br tags ([0977f76](https://git.sr.ht/~royston/codsen/commits/0977f762d456d0f41ef4d0990ca2e782e6957aac))
-* fix the html tag skipping during widow removal ([2fd262b](https://git.sr.ht/~royston/codsen/commits/2fd262bc8fecdaa376406f42fc750571af8379c8))
-* making all tests pass ([e1f332b](https://git.sr.ht/~royston/codsen/commits/e1f332bd61714cac672f1ec3cadb32fbadde06bd))
-* remove cb from reported applicable opts ([f79c469](https://git.sr.ht/~royston/codsen/commits/f79c4694580fbd0020a4013bfe403b459745688f))
-
+- apostrophes algorithm improvements ([3415b17](https://git.sr.ht/~royston/codsen/commits/3415b1704b9b9e1b33d8ec234ba6ea20cd57d1ba))
+- characters are index zero were not included in the clause ([6ad8f5f](https://git.sr.ht/~royston/codsen/commits/6ad8f5f7e4d84dd8205392c1882e9b007501d81f))
+- fix last false alerts, tests were not updated properly ([d990e45](https://git.sr.ht/~royston/codsen/commits/d990e45d7152fcb0b970567827901ace8939ca91))
+- fix long dashes between numbers ([88523e1](https://git.sr.ht/~royston/codsen/commits/88523e13c1a29ca667c9b3ad991e60cd824fa91d))
+- fix some edge cases of malformed self-closing br tags ([0977f76](https://git.sr.ht/~royston/codsen/commits/0977f762d456d0f41ef4d0990ca2e782e6957aac))
+- fix the html tag skipping during widow removal ([2fd262b](https://git.sr.ht/~royston/codsen/commits/2fd262bc8fecdaa376406f42fc750571af8379c8))
+- making all tests pass ([e1f332b](https://git.sr.ht/~royston/codsen/commits/e1f332bd61714cac672f1ec3cadb32fbadde06bd))
+- remove cb from reported applicable opts ([f79c469](https://git.sr.ht/~royston/codsen/commits/f79c4694580fbd0020a4013bfe403b459745688f))
 
 ### Features
 
-* a complete rebase ([6cfe646](https://git.sr.ht/~royston/codsen/commits/6cfe646af383ea1832b03e4ce0f73701638bddd9))
-* add few previously missing invisible space-like characters ([33ee0ed](https://git.sr.ht/~royston/codsen/commits/33ee0ed1dc151cd03e4d52ff1f99037eed3ad82b))
-* algorithm improvements around empty whitespace blocks ([0dcb178](https://git.sr.ht/~royston/codsen/commits/0dcb178760e561aa66606bdb304f07d8eab06c73))
-* applicableOpts - WIP - extended to all test files ([3f51f9c](https://git.sr.ht/~royston/codsen/commits/3f51f9cadb44e9fba272dca865a39adae992d290))
-* applicableOpts - WIP - only 3 failing ([b9d3a71](https://git.sr.ht/~royston/codsen/commits/b9d3a713f2ba3e0b498c10d555bfefd748ce741c))
-* harden the eslint rules set and rebase a little ([5f5e0a8](https://git.sr.ht/~royston/codsen/commits/5f5e0a877cadc370baa8d415fac3174476bb1248))
-* make known html tag ranges to be ignored during the widow removal ([f7992a7](https://git.sr.ht/~royston/codsen/commits/f7992a7a86b0420dfbeaae8008df16b3245d3b1a))
-* opts.cb ([17f232d](https://git.sr.ht/~royston/codsen/commits/17f232df0ed6b05803a4da1da3cfd5278a5e6cab))
-* opts.eol ([3ee6701](https://git.sr.ht/~royston/codsen/commits/3ee670145b0f18b01e798932d33e0e750507fdc9))
-* remove few dependencies to reduce the build size, add more unit tests ([5e836c8](https://git.sr.ht/~royston/codsen/commits/5e836c85bb7037a96a4f7ebe73c66dae3a462666))
-* report applicableOpts ([a03644a](https://git.sr.ht/~royston/codsen/commits/a03644a78aff7ad4b0b3d4c363d15738997988be))
-* report applicableOpts in the output ([ad9e8e6](https://git.sr.ht/~royston/codsen/commits/ad9e8e6c3dcbcb6e9ee285a1dd9d9c8b38826c95))
-* return applicableOpts ([75178ef](https://git.sr.ht/~royston/codsen/commits/75178efd0cce47f972160fb3a326efa52c73364d))
-* some improvements around the dash recognition, reporting and surrounding ESP tags ([f7ee1a1](https://git.sr.ht/~royston/codsen/commits/f7ee1a1d524bc2c65ed193a0f3297c19cf76191a))
-* treat `convertEntities:false` setting as an explicit instruction to decode all entities ([77ec181](https://git.sr.ht/~royston/codsen/commits/77ec1819a0fe5df9591f03b22ae89d3ab4b79ec9))
-* update to the latest deps ([bfd94e8](https://git.sr.ht/~royston/codsen/commits/bfd94e88adbd9c3258c4a8f730f84f5a3ebd4882))
-* update to the latest string-strip-html v.5 ([230e35b](https://git.sr.ht/~royston/codsen/commits/230e35b557f112eeb07c4ee9825da909163fcbbc))
-
+- a complete rebase ([6cfe646](https://git.sr.ht/~royston/codsen/commits/6cfe646af383ea1832b03e4ce0f73701638bddd9))
+- add few previously missing invisible space-like characters ([33ee0ed](https://git.sr.ht/~royston/codsen/commits/33ee0ed1dc151cd03e4d52ff1f99037eed3ad82b))
+- algorithm improvements around empty whitespace blocks ([0dcb178](https://git.sr.ht/~royston/codsen/commits/0dcb178760e561aa66606bdb304f07d8eab06c73))
+- harden the eslint rules set and rebase a little ([5f5e0a8](https://git.sr.ht/~royston/codsen/commits/5f5e0a877cadc370baa8d415fac3174476bb1248))
+- make known html tag ranges to be ignored during the widow removal ([f7992a7](https://git.sr.ht/~royston/codsen/commits/f7992a7a86b0420dfbeaae8008df16b3245d3b1a))
+- opts.cb ([17f232d](https://git.sr.ht/~royston/codsen/commits/17f232df0ed6b05803a4da1da3cfd5278a5e6cab))
+- opts.eol ([3ee6701](https://git.sr.ht/~royston/codsen/commits/3ee670145b0f18b01e798932d33e0e750507fdc9))
+- remove few dependencies to reduce the build size, add more unit tests ([5e836c8](https://git.sr.ht/~royston/codsen/commits/5e836c85bb7037a96a4f7ebe73c66dae3a462666))
+- report applicableOpts ([a03644a](https://git.sr.ht/~royston/codsen/commits/a03644a78aff7ad4b0b3d4c363d15738997988be))
+- report applicableOpts in the output ([ad9e8e6](https://git.sr.ht/~royston/codsen/commits/ad9e8e6c3dcbcb6e9ee285a1dd9d9c8b38826c95))
+- return applicableOpts ([75178ef](https://git.sr.ht/~royston/codsen/commits/75178efd0cce47f972160fb3a326efa52c73364d))
+- some improvements around the dash recognition, reporting and surrounding ESP tags ([f7ee1a1](https://git.sr.ht/~royston/codsen/commits/f7ee1a1d524bc2c65ed193a0f3297c19cf76191a))
+- treat `convertEntities:false` setting as an explicit instruction to decode all entities ([77ec181](https://git.sr.ht/~royston/codsen/commits/77ec1819a0fe5df9591f03b22ae89d3ab4b79ec9))
+- update to the latest deps ([bfd94e8](https://git.sr.ht/~royston/codsen/commits/bfd94e88adbd9c3258c4a8f730f84f5a3ebd4882))
+- update to the latest string-strip-html v.5 ([230e35b](https://git.sr.ht/~royston/codsen/commits/230e35b557f112eeb07c4ee9825da909163fcbbc))
 
 ### BREAKING CHANGES
 
-* A complete rebase
-
-
-
-
+- A complete rebase
 
 ## 5.11.0 (2020-08-16)
 

@@ -3,30 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 3.8.0 (2020-11-28)
-
+## 3.8.0 (2020-11-28)
 
 ### Bug Fixes
 
-* Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
-* remove accidentally added chlu-cli from deps ([d671eb9](https://git.sr.ht/~royston/codsen/commits/d671eb98bd59206cfd3a77aed08338bbef804f50))
-
+- Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
+- remove accidentally added chlu-cli from deps ([d671eb9](https://git.sr.ht/~royston/codsen/commits/d671eb98bd59206cfd3a77aed08338bbef804f50))
 
 ### Features
 
-* Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
-* Bitbucket support ([c3ff18e](https://git.sr.ht/~royston/codsen/commits/c3ff18e02862dacec949902618811d66fc7ae027))
-* Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
-* support only changelog data, no package.json or git tags ([142b047](https://git.sr.ht/~royston/codsen/commits/142b0474f5ab00966ec3198b9c07bf3b038868c3))
-
+- Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
+- Bitbucket support ([c3ff18e](https://git.sr.ht/~royston/codsen/commits/c3ff18e02862dacec949902618811d66fc7ae027))
+- Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
+- support only changelog data, no package.json or git tags ([142b047](https://git.sr.ht/~royston/codsen/commits/142b0474f5ab00966ec3198b9c07bf3b038868c3))
 
 ### Performance Improvements
 
-* remove dependency lodash.reverse and switch to native ([121abc0](https://git.sr.ht/~royston/codsen/commits/121abc07a8ffe730c980550422cda9f06f32f670))
-
-
-
-
+- remove dependency lodash.reverse and switch to native ([121abc0](https://git.sr.ht/~royston/codsen/commits/121abc07a8ffe730c980550422cda9f06f32f670))
 
 ## 3.7.46 (2019-10-05)
 

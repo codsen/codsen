@@ -3,29 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 7.11.0 (2020-11-28)
-
+## 7.11.0 (2020-11-28)
 
 ### Bug Fixes
 
-* Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
-
+- Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
 
 ### Features
 
-* Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
-* Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
-* opts.doNotFillThesePathsIfTheyContainPlaceholders ([8c6080e](https://git.sr.ht/~royston/codsen/commits/8c6080e25734a8f072aa136c4b3a40f067a357f4))
-* remove options validation, to make operation 540% faster ([dab767a](https://git.sr.ht/~royston/codsen/commits/dab767a6e6e875edf52dc1f7af0f4244615201e3))
-
+- Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
+- Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
+- opts.doNotFillThesePathsIfTheyContainPlaceholders ([8c6080e](https://git.sr.ht/~royston/codsen/commits/8c6080e25734a8f072aa136c4b3a40f067a357f4))
+- remove options validation, to make operation 540% faster ([dab767a](https://git.sr.ht/~royston/codsen/commits/dab767a6e6e875edf52dc1f7af0f4244615201e3))
 
 ### Performance Improvements
 
-* tap native Array.isArray to gain around 140 times more speed ([35af347](https://git.sr.ht/~royston/codsen/commits/35af3470779392ac71c899b0153fe7eee6e5ae45))
-
-
-
-
+- tap native Array.isArray to gain around 140 times more speed ([35af347](https://git.sr.ht/~royston/codsen/commits/35af3470779392ac71c899b0153fe7eee6e5ae45))
 
 ## 7.10.0 (2019-10-02)
 

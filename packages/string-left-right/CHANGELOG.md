@@ -3,39 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 3.0.0 (2020-11-28)
-
+## 3.0.0 (2020-11-28)
 
 ### Bug Fixes
 
-* Tweak the algorithm and add more unit tests ([1008482](https://git.sr.ht/~royston/codsen/commits/1008482b6e230d3199792100fb970e1c04dec339))
-* Tweak the chompRight algorithm to match two characters repeated vs more ([8403566](https://git.sr.ht/~royston/codsen/commits/84035668eca4a9ac96baf93fbcc4743f1a9de85d))
-
+- Tweak the algorithm and add more unit tests ([1008482](https://git.sr.ht/~royston/codsen/commits/1008482b6e230d3199792100fb970e1c04dec339))
+- Tweak the chompRight algorithm to match two characters repeated vs more ([8403566](https://git.sr.ht/~royston/codsen/commits/84035668eca4a9ac96baf93fbcc4743f1a9de85d))
 
 ### Features
 
-* `opts.leftStopAtRawNbsp` ([8578392](https://git.sr.ht/~royston/codsen/commits/8578392c727b460a17a111085a8296e96106f602))
-* `opts.rightStopAtRawNbsp` ([3abda38](https://git.sr.ht/~royston/codsen/commits/3abda381f4f481a624b5520ded8529130ab00f34))
-* API tweaks ([2ce37c3](https://git.sr.ht/~royston/codsen/commits/2ce37c3e1766a351e41f7436b6c5a23a6c734ade))
-* Case insensitive opts to seqLeft and seqRight ([fafbf19](https://git.sr.ht/~royston/codsen/commits/fafbf19f63f602b5241fa4935fdd968779fcf1c0))
-* chompLeft() ([81e44f0](https://git.sr.ht/~royston/codsen/commits/81e44f0e43b1ab02fe5396b63e68a04ba66abd14))
-* chompRight() ([e02a16f](https://git.sr.ht/~royston/codsen/commits/e02a16f5fe9e07c65356f9d6b3de464e2d2fdfd0))
-* Hungry chomp ([fd07afd](https://git.sr.ht/~royston/codsen/commits/fd07afdbda27df873add48493a880b703c44fabf))
-* Initial release ([6a3394b](https://git.sr.ht/~royston/codsen/commits/6a3394bfb849ab172f8dff169e722914b374ccfd))
-* leftSeq and rightSeq ([f5e075e](https://git.sr.ht/~royston/codsen/commits/f5e075ec9495895b2f77dfe39cde4562d2fb8843))
-* Merge modes via opts.mergeType ([7fb1c5f](https://git.sr.ht/~royston/codsen/commits/7fb1c5f319aa41ea54c68eed004ab2dfdc7425bf))
-* Optional arguments via appended ? character ([90efa04](https://git.sr.ht/~royston/codsen/commits/90efa04bc7373d1fbba1e23cb3356178ec245216))
-* two new methods: rightStopAtNewLines() and leftStopAtNewLines() ([cfb7557](https://git.sr.ht/~royston/codsen/commits/cfb7557a1f61390ab8282cd0a59f135b56d310bc))
-
+- `opts.leftStopAtRawNbsp` ([8578392](https://git.sr.ht/~royston/codsen/commits/8578392c727b460a17a111085a8296e96106f602))
+- `opts.rightStopAtRawNbsp` ([3abda38](https://git.sr.ht/~royston/codsen/commits/3abda381f4f481a624b5520ded8529130ab00f34))
+- API tweaks ([2ce37c3](https://git.sr.ht/~royston/codsen/commits/2ce37c3e1766a351e41f7436b6c5a23a6c734ade))
+- Case insensitive opts to seqLeft and seqRight ([fafbf19](https://git.sr.ht/~royston/codsen/commits/fafbf19f63f602b5241fa4935fdd968779fcf1c0))
+- chompLeft() ([81e44f0](https://git.sr.ht/~royston/codsen/commits/81e44f0e43b1ab02fe5396b63e68a04ba66abd14))
+- chompRight() ([e02a16f](https://git.sr.ht/~royston/codsen/commits/e02a16f5fe9e07c65356f9d6b3de464e2d2fdfd0))
+- Hungry chomp ([fd07afd](https://git.sr.ht/~royston/codsen/commits/fd07afdbda27df873add48493a880b703c44fabf))
+- Initial release ([6a3394b](https://git.sr.ht/~royston/codsen/commits/6a3394bfb849ab172f8dff169e722914b374ccfd))
+- leftSeq and rightSeq ([f5e075e](https://git.sr.ht/~royston/codsen/commits/f5e075ec9495895b2f77dfe39cde4562d2fb8843))
+- Merge modes via opts.mergeType ([7fb1c5f](https://git.sr.ht/~royston/codsen/commits/7fb1c5f319aa41ea54c68eed004ab2dfdc7425bf))
+- Optional arguments via appended ? character ([90efa04](https://git.sr.ht/~royston/codsen/commits/90efa04bc7373d1fbba1e23cb3356178ec245216))
+- two new methods: rightStopAtNewLines() and leftStopAtNewLines() ([cfb7557](https://git.sr.ht/~royston/codsen/commits/cfb7557a1f61390ab8282cd0a59f135b56d310bc))
 
 ### BREAKING CHANGES
 
-* Second input argument, progressFn, was moved into opts.progressFn and opts was
+- Second input argument, progressFn, was moved into opts.progressFn and opts was
 placed into second input argument instead
-
-
-
-
 
 ## 2.3.0 (2019-09-04)
 

@@ -3,29 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 2.0.0 (2020-11-28)
-
+## 2.0.0 (2020-11-28)
 
 ### Bug Fixes
 
-* add requirement for loose array contents object matching - there must be more than 1 obj ([e90ee45](https://git.sr.ht/~royston/codsen/commits/e90ee453df8c3924dbaa6401a70824ba9ab03600))
-* fix score calculation ([3601ce2](https://git.sr.ht/~royston/codsen/commits/3601ce282fb3f186531198ffb61ad41c1bb3e31b))
-
+- add requirement for loose array contents object matching - there must be more than 1 obj ([e90ee45](https://git.sr.ht/~royston/codsen/commits/e90ee453df8c3924dbaa6401a70824ba9ab03600))
+- fix score calculation ([3601ce2](https://git.sr.ht/~royston/codsen/commits/3601ce282fb3f186531198ffb61ad41c1bb3e31b))
 
 ### Features
 
-* init ([d388611](https://git.sr.ht/~royston/codsen/commits/d38861123f7c305e8e34a338fbbfa2c6b1e5a930))
-* opts.arrayStrictComparison (set to false by default) ([ef8fcdd](https://git.sr.ht/~royston/codsen/commits/ef8fcdd63ec2e31a8ed673e56e64f88171ffe275))
-* pass the path as the third argument to cb() ([85574cd](https://git.sr.ht/~royston/codsen/commits/85574cd26daf82bb65325529c1d3faa9fd348005))
-
+- init ([d388611](https://git.sr.ht/~royston/codsen/commits/d38861123f7c305e8e34a338fbbfa2c6b1e5a930))
+- opts.arrayStrictComparison (set to false by default) ([ef8fcdd](https://git.sr.ht/~royston/codsen/commits/ef8fcdd63ec2e31a8ed673e56e64f88171ffe275))
+- pass the path as the third argument to cb() ([85574cd](https://git.sr.ht/~royston/codsen/commits/85574cd26daf82bb65325529c1d3faa9fd348005))
 
 ### BREAKING CHANGES
 
-* initial release
-
-
-
-
+- initial release
 
 ## 1.1.0 (2019-11-27)
 

@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 1.5.0 (2020-11-28)
-
+## 1.5.0 (2020-11-28)
 
 ### Features
 
-* Migrate to monorepo and some rebasing ([2015845](https://git.sr.ht/~royston/codsen/commits/2015845ad6240ca01eefd9d57a345bece17c4623))
-
-
-
-
+- Migrate to monorepo and some rebasing ([2015845](https://git.sr.ht/~royston/codsen/commits/2015845ad6240ca01eefd9d57a345bece17c4623))
 
 ## 1.4.0 (2019-06-01)
 

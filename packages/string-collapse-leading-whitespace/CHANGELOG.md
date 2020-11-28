@@ -3,31 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 4.0.0 (2020-11-28)
-
+## 4.0.0 (2020-11-28)
 
 ### Bug Fixes
 
-* Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
-
+- Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
 
 ### Features
 
-* Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
-* Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
-* keep raw non-breaking spaces, gather line breaks and non-breaking spaces ([fae52f8](https://git.sr.ht/~royston/codsen/commits/fae52f853514c7237659aee57ab5138af3c7c43e))
-* properly treat all kinds of line endings ([aa197c2](https://git.sr.ht/~royston/codsen/commits/aa197c22315f748ee3a4719d9a815af0963f72fd))
-* second argument - originalLimitLinebreaksCount - max ceiling count of consecutive line breaks ([74e2458](https://git.sr.ht/~royston/codsen/commits/74e24586526a8a3db28750bd9d4cfe881384b7a1))
-
+- Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
+- Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
+- keep raw non-breaking spaces, gather line breaks and non-breaking spaces ([fae52f8](https://git.sr.ht/~royston/codsen/commits/fae52f853514c7237659aee57ab5138af3c7c43e))
+- properly treat all kinds of line endings ([aa197c2](https://git.sr.ht/~royston/codsen/commits/aa197c22315f748ee3a4719d9a815af0963f72fd))
+- second argument - originalLimitLinebreaksCount - max ceiling count of consecutive line breaks ([74e2458](https://git.sr.ht/~royston/codsen/commits/74e24586526a8a3db28750bd9d4cfe881384b7a1))
 
 ### BREAKING CHANGES
 
-* it's a fix to support Windows line endings, CRLF, but no changes API-wise
-* Nonbreaking spaces are not removed any more
-
-
-
-
+- it's a fix to support Windows line endings, CRLF, but no changes API-wise
+- Nonbreaking spaces are not removed any more
 
 ## 3.0.0 (2020-09-24)
 

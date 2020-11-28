@@ -3,64 +3,56 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 3.0.0 (2020-11-28)
-
+## 3.0.0 (2020-11-28)
 
 ### Bug Fixes
 
-* adding one more breaking point for insurance, thanks Mark Robbins ([b21651b](https://git.sr.ht/~royston/codsen/commits/b21651b6492aec418e0845e91d89d3f0a492041b))
-* Algorithm improvement not to break in front of </a to prevent accidentally adding new spaces ([8939654](https://git.sr.ht/~royston/codsen/commits/8939654fa57c37f7082dc8d6ad94c637ba14a9f1))
-* Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
-* Fix the rare cases where state of being within style tag was not terminated properly ([fefc206](https://git.sr.ht/~royston/codsen/commits/fefc206fa012749f67b1f337d45c998fa92bcd94)), closes [#11](https://git.sr.ht/~royston/codsen/issues/11)
-* fix typo in the output, in log.timeTakenInMilliseconds ([48debda](https://git.sr.ht/~royston/codsen/commits/48debda98858aa83d6f7df4a3b7f85895756d67e))
-* fixes the pre, code, CDATA and other code chunk skipping ([ec0408a](https://git.sr.ht/~royston/codsen/commits/ec0408afee0b1a09cd711549cab6fefdc55efde8)), closes [#29](https://git.sr.ht/~royston/codsen/issues/29)
-* improve CRLF line ending recognition ([ff3e3e7](https://git.sr.ht/~royston/codsen/commits/ff3e3e7d7943a52e2339fb78e0cbd4677b72a11a))
-* previously inner tag whitespace removal was too lax, risking false positives ([ab59492](https://git.sr.ht/~royston/codsen/commits/ab5949273c20131174356160eabbe7ad6936c63d))
-* stop breaking <!--<![endif]--> into two parts, in front of <![endif] ([af421c7](https://git.sr.ht/~royston/codsen/commits/af421c7548e58593fc9d2ec158baf42b84fdbe81))
-* update the program's name on throw error reports ([abd093a](https://git.sr.ht/~royston/codsen/commits/abd093aa14c0e4efda20df33cb35c7fa3d8b58d2))
-
+- adding one more breaking point for insurance, thanks Mark Robbins ([b21651b](https://git.sr.ht/~royston/codsen/commits/b21651b6492aec418e0845e91d89d3f0a492041b))
+- Algorithm improvement not to break in front of </a to prevent accidentally adding new spaces ([8939654](https://git.sr.ht/~royston/codsen/commits/8939654fa57c37f7082dc8d6ad94c637ba14a9f1))
+- Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
+- Fix the rare cases where state of being within style tag was not terminated properly ([fefc206](https://git.sr.ht/~royston/codsen/commits/fefc206fa012749f67b1f337d45c998fa92bcd94)), closes [#11](https://git.sr.ht/~royston/codsen/issues/11)
+- fix typo in the output, in log.timeTakenInMilliseconds ([48debda](https://git.sr.ht/~royston/codsen/commits/48debda98858aa83d6f7df4a3b7f85895756d67e))
+- fixes the pre, code, CDATA and other code chunk skipping ([ec0408a](https://git.sr.ht/~royston/codsen/commits/ec0408afee0b1a09cd711549cab6fefdc55efde8)), closes [#29](https://git.sr.ht/~royston/codsen/issues/29)
+- improve CRLF line ending recognition ([ff3e3e7](https://git.sr.ht/~royston/codsen/commits/ff3e3e7d7943a52e2339fb78e0cbd4677b72a11a))
+- previously inner tag whitespace removal was too lax, risking false positives ([ab59492](https://git.sr.ht/~royston/codsen/commits/ab5949273c20131174356160eabbe7ad6936c63d))
+- stop breaking <!--<![endif]--> into two parts, in front of <![endif] ([af421c7](https://git.sr.ht/~royston/codsen/commits/af421c7548e58593fc9d2ec158baf42b84fdbe81))
+- update the program's name on throw error reports ([abd093a](https://git.sr.ht/~royston/codsen/commits/abd093aa14c0e4efda20df33cb35c7fa3d8b58d2))
 
 ### Features
 
-* `opts.removeHTMLComments` ([2e51439](https://git.sr.ht/~royston/codsen/commits/2e514393a3d25c9ebcc858435598964a1171f7d0))
-* add licence block at the top of built files in dist/ folder ([cb2c259](https://git.sr.ht/~royston/codsen/commits/cb2c259a3cf3e925fa269f5d38b033bb87e6a22e))
-* add more logging for doNothing state ([25262e5](https://git.sr.ht/~royston/codsen/commits/25262e5b75be7abe8e68e0cc245beceb6efd03f9))
-* Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
-* add recognition for outlook conditionals ([61f61c1](https://git.sr.ht/~royston/codsen/commits/61f61c1ec5769e27f2ddd9a7d849a3b65c75d5d8))
-* Break to the right of opening style tag if breaking on the left is turned on ([67ca84a](https://git.sr.ht/~royston/codsen/commits/67ca84a2b5335cd203d3390e65c980ef41b1fccf))
-* crop tighter around conditional comments ([cbc7383](https://git.sr.ht/~royston/codsen/commits/cbc7383b702607e0b889d578433d78c838596b9f))
-* Delete leading whitespace inside inline CSS ([614d11b](https://git.sr.ht/~royston/codsen/commits/614d11b0898d7d7f2087bff308e0e1061c95e3d6))
-* do not touch CDATA blocks ([920e9d9](https://git.sr.ht/~royston/codsen/commits/920e9d9c677c7efa6397c219836e3b4dc327a55e))
-* Don't delete whitespace between closing curly brace and opening curly brace ([ef5efaa](https://git.sr.ht/~royston/codsen/commits/ef5efaafdab2bd8ede74bed8a240eaa4df1a6f65))
-* don't minify script tags contents ([557e8fa](https://git.sr.ht/~royston/codsen/commits/557e8fa23268ae471a99902a9921c495a57472a4))
-* don't minify whitespace around brackets if there is a number on either side ([21ea2ff](https://git.sr.ht/~royston/codsen/commits/21ea2ff7e79360c94b69e93fbfae4f3b0493e079))
-* don't remove space in front of !important within HTML conditionals ([e997f51](https://git.sr.ht/~royston/codsen/commits/e997f51d07e2586c00ff64c1543884935b1f2977))
-* don't touch code within pre-code blocks ([d32c092](https://git.sr.ht/~royston/codsen/commits/d32c092f37e5a374dde461441098cf317658129a))
-* fetch handful of real websites and minify them for tests ([f7e8153](https://git.sr.ht/~royston/codsen/commits/f7e8153416ccbbd213a5a9f3f4016caad44d69db))
-* Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
-* Inline CSS minification ([0518f05](https://git.sr.ht/~royston/codsen/commits/0518f05f279970a92b95c71fa316166753c36412))
-* Inline tag recognition and proper spacing ([ad97faf](https://git.sr.ht/~royston/codsen/commits/ad97faff38266c3b0d1d00a484c4233915d8c286))
-* Merge modes via opts.mergeType ([7fb1c5f](https://git.sr.ht/~royston/codsen/commits/7fb1c5f319aa41ea54c68eed004ab2dfdc7425bf))
-* Only replace linebreaks when result will be smaller in size, not the same ([a431686](https://git.sr.ht/~royston/codsen/commits/a431686abbc9d754d03a1caf511ce2799604772e))
-* opts.reportProgressFuncFrom and opts.reportProgressFuncTo ([4ebf439](https://git.sr.ht/~royston/codsen/commits/4ebf4393df3e1b609a71dfc0601585b6cb9c14ed))
-* Re-distribute the ratio of progress reported during main and final tasks ([1e80408](https://git.sr.ht/~royston/codsen/commits/1e80408158a8623cd342cbf759664ed4ccf0b474))
-* remove whitespace within <script> blocks, in front of </script> ([d1efb20](https://git.sr.ht/~royston/codsen/commits/d1efb207ff241528a7f27db7d9ff79f8de5c6463))
-* report `applicableOpts` in the output ([fd3c879](https://git.sr.ht/~royston/codsen/commits/fd3c8799d299b65ecdd090d964174fe7bd028f22))
-* Set up perf checks ([c3ff0bf](https://git.sr.ht/~royston/codsen/commits/c3ff0bffc95bfb6bba626bcf68af26066c320fa2))
-* treat the whitespace in front of <script> ([75d85dc](https://git.sr.ht/~royston/codsen/commits/75d85dc968fb1cbd9bdaf5eac36b5c481f334fa2))
-* WIP - only 4 failing - minding the inline tags ([7275e38](https://git.sr.ht/~royston/codsen/commits/7275e38cd92cfd89b429ee0a8a1d19f2a88ff2cc))
-
+- `opts.removeHTMLComments` ([2e51439](https://git.sr.ht/~royston/codsen/commits/2e514393a3d25c9ebcc858435598964a1171f7d0))
+- add licence block at the top of built files in dist/ folder ([cb2c259](https://git.sr.ht/~royston/codsen/commits/cb2c259a3cf3e925fa269f5d38b033bb87e6a22e))
+- add more logging for doNothing state ([25262e5](https://git.sr.ht/~royston/codsen/commits/25262e5b75be7abe8e68e0cc245beceb6efd03f9))
+- Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
+- add recognition for outlook conditionals ([61f61c1](https://git.sr.ht/~royston/codsen/commits/61f61c1ec5769e27f2ddd9a7d849a3b65c75d5d8))
+- Break to the right of opening style tag if breaking on the left is turned on ([67ca84a](https://git.sr.ht/~royston/codsen/commits/67ca84a2b5335cd203d3390e65c980ef41b1fccf))
+- crop tighter around conditional comments ([cbc7383](https://git.sr.ht/~royston/codsen/commits/cbc7383b702607e0b889d578433d78c838596b9f))
+- Delete leading whitespace inside inline CSS ([614d11b](https://git.sr.ht/~royston/codsen/commits/614d11b0898d7d7f2087bff308e0e1061c95e3d6))
+- do not touch CDATA blocks ([920e9d9](https://git.sr.ht/~royston/codsen/commits/920e9d9c677c7efa6397c219836e3b4dc327a55e))
+- Don't delete whitespace between closing curly brace and opening curly brace ([ef5efaa](https://git.sr.ht/~royston/codsen/commits/ef5efaafdab2bd8ede74bed8a240eaa4df1a6f65))
+- don't minify script tags contents ([557e8fa](https://git.sr.ht/~royston/codsen/commits/557e8fa23268ae471a99902a9921c495a57472a4))
+- don't minify whitespace around brackets if there is a number on either side ([21ea2ff](https://git.sr.ht/~royston/codsen/commits/21ea2ff7e79360c94b69e93fbfae4f3b0493e079))
+- don't remove space in front of !important within HTML conditionals ([e997f51](https://git.sr.ht/~royston/codsen/commits/e997f51d07e2586c00ff64c1543884935b1f2977))
+- don't touch code within pre-code blocks ([d32c092](https://git.sr.ht/~royston/codsen/commits/d32c092f37e5a374dde461441098cf317658129a))
+- fetch handful of real websites and minify them for tests ([f7e8153](https://git.sr.ht/~royston/codsen/commits/f7e8153416ccbbd213a5a9f3f4016caad44d69db))
+- Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
+- Inline CSS minification ([0518f05](https://git.sr.ht/~royston/codsen/commits/0518f05f279970a92b95c71fa316166753c36412))
+- Inline tag recognition and proper spacing ([ad97faf](https://git.sr.ht/~royston/codsen/commits/ad97faff38266c3b0d1d00a484c4233915d8c286))
+- Merge modes via opts.mergeType ([7fb1c5f](https://git.sr.ht/~royston/codsen/commits/7fb1c5f319aa41ea54c68eed004ab2dfdc7425bf))
+- Only replace linebreaks when result will be smaller in size, not the same ([a431686](https://git.sr.ht/~royston/codsen/commits/a431686abbc9d754d03a1caf511ce2799604772e))
+- opts.reportProgressFuncFrom and opts.reportProgressFuncTo ([4ebf439](https://git.sr.ht/~royston/codsen/commits/4ebf4393df3e1b609a71dfc0601585b6cb9c14ed))
+- Re-distribute the ratio of progress reported during main and final tasks ([1e80408](https://git.sr.ht/~royston/codsen/commits/1e80408158a8623cd342cbf759664ed4ccf0b474))
+- remove whitespace within <script> blocks, in front of </script> ([d1efb20](https://git.sr.ht/~royston/codsen/commits/d1efb207ff241528a7f27db7d9ff79f8de5c6463))
+- report `applicableOpts` in the output ([fd3c879](https://git.sr.ht/~royston/codsen/commits/fd3c8799d299b65ecdd090d964174fe7bd028f22))
+- Set up perf checks ([c3ff0bf](https://git.sr.ht/~royston/codsen/commits/c3ff0bffc95bfb6bba626bcf68af26066c320fa2))
+- treat the whitespace in front of <script> ([75d85dc](https://git.sr.ht/~royston/codsen/commits/75d85dc968fb1cbd9bdaf5eac36b5c481f334fa2))
 
 ### BREAKING CHANGES
 
-* in output, log.timeTakenInMiliseconds is now called log.timeTakenInMilliseconds
+- in output, log.timeTakenInMiliseconds is now called log.timeTakenInMilliseconds
 (two l's)
-* Second input argument, progressFn, was moved into opts.progressFn and opts was
+- Second input argument, progressFn, was moved into opts.progressFn and opts was
 placed into second input argument instead
-
-
-
-
 
 ## 2.0.5 (2020-09-15)
 

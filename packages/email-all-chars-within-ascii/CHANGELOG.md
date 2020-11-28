@@ -3,28 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 2.10.0 (2020-11-28)
-
+## 2.10.0 (2020-11-28)
 
 ### Bug Fixes
 
-* Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
-
+- Fix the Create New Issue URLs ([c5ee4a6](https://git.sr.ht/~royston/codsen/commits/c5ee4a61e9436099b0e20d20bca043c1b2c93f55))
 
 ### Features
 
-* Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
-* Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
-* opts.messageOnly ([d20b191](https://git.sr.ht/~royston/codsen/commits/d20b1914a4d9a198e23d07c2063bf024c653e4ee))
-
+- Add one more tag before which there will be a line break ([4f00871](https://git.sr.ht/~royston/codsen/commits/4f008715dcc2de7b2b52b67ce2e27728d5ffec37))
+- Initial release ([4f35bfb](https://git.sr.ht/~royston/codsen/commits/4f35bfb167e54b1a0e5e8f01871293b262c67a76))
+- opts.messageOnly ([d20b191](https://git.sr.ht/~royston/codsen/commits/d20b1914a4d9a198e23d07c2063bf024c653e4ee))
 
 ### Performance Improvements
 
-* remove check-types-mini ([a76b12d](https://git.sr.ht/~royston/codsen/commits/a76b12d11e1ef90ddf3edb527f810e8f3668dfca))
-
-
-
-
+- remove check-types-mini ([a76b12d](https://git.sr.ht/~royston/codsen/commits/a76b12d11e1ef90ddf3edb527f810e8f3668dfca))
 
 ## 2.9.45 (2019-10-05)
 
