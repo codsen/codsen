@@ -5,8 +5,7 @@
   "license": "MIT",
   "private": true,
   "engines": {
-    "node": ">=8.9",
-    "npm": ">=5.6.0"
+    "node": ">=10"
   },
   "repository": "https://gitlab.com/codsen/codsen/",
   "homepage": "https://codsen.com",
