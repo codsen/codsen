@@ -10,9 +10,6 @@
 import sortRanges from 'ranges-sort';
 
 function mergeRanges(arrOfRanges, originalOpts) {
-  function isStr(something) {
-    return typeof something === "string";
-  }
   function isObj(something) {
     return (
       something && typeof something === "object" && !Array.isArray(something)
@@ -45,20 +42,14 @@ function mergeRanges(arrOfRanges, originalOpts) {
           )}`
         );
       }
-      if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
-        if (isStr(opts.mergeType) && opts.mergeType.trim() === "1") {
-          opts.mergeType = 1;
-        } else if (isStr(opts.mergeType) && opts.mergeType.trim() === "2") {
-          opts.mergeType = 2;
-        } else {
-          throw new Error(
-            `ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof opts.mergeType}", equal to ${JSON.stringify(
-              opts.mergeType,
-              null,
-              4
-            )}`
-          );
-        }
+      if (opts.mergeType && +opts.mergeType !== 1 && +opts.mergeType !== 2) {
+        throw new Error(
+          `ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof opts.mergeType}", equal to ${JSON.stringify(
+            opts.mergeType,
+            null,
+            4
+          )}`
+        );
       }
       if (typeof opts.joinRangesThatTouchEdges !== "boolean") {
         throw new Error(
@@ -140,7 +131,7 @@ function mergeRanges(arrOfRanges, originalOpts) {
             sortedRanges[i - 1][2] = null;
           } else if (sortedRanges[i - 1][2] !== undefined) {
             if (
-              opts.mergeType === 2 &&
+              +opts.mergeType === 2 &&
               sortedRanges[i - 1][0] === sortedRanges[i][0]
             ) {
               sortedRanges[i - 1][2] = sortedRanges[i][2];
