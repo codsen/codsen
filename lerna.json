@@ -6,7 +6,7 @@
       "message": "chore: release"
     }
   },
-  "ignoreChanges": ["**/CHANGELOG.md", "**/node_modules/**", "**/package.json", "**/perf/**"],
+  "ignoreChanges": ["**/*.md", "**/node_modules/**", "**/package.json", "**/perf/**", "**/.npmignore"],
   "lifecycle": {
     "version": "git add ."
   },

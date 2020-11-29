@@ -1,0 +1,55 @@
+image: alpine/edge
+packages:
+  - git
+  - nodejs
+  - npm
+secrets:
+  - bce89f30-642f-422c-b7f9-08e655b447aa
+  - bfb68f29-f23e-4733-85a2-a3c19c0bb729
+  - eeb496e6-af72-40d1-b4b0-94878c7f6c66
+tasks:
+  - npm-setup: |
+      echo "npm user:"
+      npm whoami
+  - git-setup: |
+      cd codsen
+      git remote set-url origin git@git.sr.ht:~royston/codsen
+      ssh-keyscan -H 'git.sr.ht' >> ~/.ssh/known_hosts
+      echo "git user:"
+      git config user.name
+      git status
+      git checkout master
+  - bootstrap: |
+      cd codsen
+      npm run fresh
+  - readme: |
+      cd codsen
+      npm run readme:generate
+  - first-git-add: |
+      cd codsen
+      git status
+      git add packages
+      git add stats
+      git add README.md
+      git add package-lock.json || echo 'no package-lock.json'
+      git diff-index --quiet HEAD || git commit -m 'chore: automated build tasks' --no-verify
+      npm run pub:vers
+  - second-git-add: |
+      cd codsen
+      git status
+      git add packages
+      git add README.md
+      git commit -m 'chore: automated build tasks' --no-verify
+  - publish: |
+      cd codsen
+      npm run republish
+      git push -o skip-ci
+  - purge-jsdelivr: |
+      curl https://purge.jsdelivr.net/npm/detergent/dist/detergent.umd.js || echo 'detergent unreachable on jsdelivr'
+      curl https://purge.jsdelivr.net/npm/html-crush/dist/html-crush.umd.js || echo 'html-crush unreachable on jsdelivr'
+      curl https://purge.jsdelivr.net/npm/email-comb/dist/email-comb.umd.js || echo 'email-comb unreachable on jsdelivr'
+      curl https://purge.jsdelivr.net/npm/string-strip-html/dist/string-strip-html.umd.js || echo 'string-strip-html unreachable on jsdelivr'
+      curl https://purge.jsdelivr.net/npm/emlint/dist/emlint.umd.js || echo 'emlint unreachable on jsdelivr'
+      curl https://purge.jsdelivr.net/npm/codsen-tokenizer/dist/codsen-tokenizer.umd.js || echo 'codsen-tokenizer unreachable on jsdelivr'
+      curl https://purge.jsdelivr.net/npm/codsen-parser/dist/codsen-parser.umd.js || echo 'codsen-parser unreachable on jsdelivr'
+      curl https://purge.jsdelivr.net/npm/json-variables/dist/json-variables.umd.js || echo 'json-variables unreachable on jsdelivr'
