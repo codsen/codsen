@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.5.1](https://git.sr.ht/~royston/codsen/compare/html-img-alt@1.5.0...html-img-alt@1.5.1) (2020-11-29)
-
-**Note:** Version bump only for package html-img-alt
-
-
-
-
-
 ## 1.5.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

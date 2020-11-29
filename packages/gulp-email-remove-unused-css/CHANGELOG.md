@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.7.1](https://git.sr.ht/~royston/codsen/compare/gulp-email-remove-unused-css@3.7.0...gulp-email-remove-unused-css@3.7.1) (2020-11-29)
-
-**Note:** Version bump only for package gulp-email-remove-unused-css
-
-
-
-
-
 ## 3.7.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.
