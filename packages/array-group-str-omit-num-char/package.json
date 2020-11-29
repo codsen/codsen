@@ -1,6 +1,6 @@
 {
   "name": "array-group-str-omit-num-char",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Groups array of strings by omitting number characters",
   "keywords": [
     "array",
@@ -100,7 +100,7 @@
   },
   "dependencies": {
     "lodash.uniq": "^4.5.0",
-    "ranges-apply": "^4.0.0"
+    "ranges-apply": "^4.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.7",

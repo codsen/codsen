@@ -1,6 +1,6 @@
 {
   "name": "js-row-num",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Update all row numbers in all console.logs in JS code",
   "keywords": [
     "alt",
@@ -100,8 +100,8 @@
     }
   },
   "dependencies": {
-    "ranges-apply": "^4.0.0",
-    "ranges-push": "^4.0.0"
+    "ranges-apply": "^4.0.1",
+    "ranges-push": "^4.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.7",

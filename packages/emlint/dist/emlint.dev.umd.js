@@ -1,7 +1,7 @@
 /**
  * emlint
  * Pluggable email template code linter
- * Version: 3.0.0
+ * Version: 3.0.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/emlint/
@@ -18532,17 +18532,13 @@
 	/**
 	 * ranges-merge
 	 * Merge and sort string index ranges
-	 * Version: 6.0.0
+	 * Version: 6.1.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/ranges-merge/
 	 */
 
 	function mergeRanges(arrOfRanges, originalOpts) {
-	  function isStr(something) {
-	    return typeof something === "string";
-	  }
-
 	  function isObj(something) {
 	    return something && typeof something === "object" && !Array.isArray(something);
 	  }
@@ -18570,14 +18566,8 @@
 	        throw new Error(`ranges-merge: [THROW_ID_01] opts.progressFn must be a function! It was given of a type: "${typeof opts.progressFn}", equal to ${JSON.stringify(opts.progressFn, null, 4)}`);
 	      }
 
-	      if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
-	        if (isStr(opts.mergeType) && opts.mergeType.trim() === "1") {
-	          opts.mergeType = 1;
-	        } else if (isStr(opts.mergeType) && opts.mergeType.trim() === "2") {
-	          opts.mergeType = 2;
-	        } else {
-	          throw new Error(`ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof opts.mergeType}", equal to ${JSON.stringify(opts.mergeType, null, 4)}`);
-	        }
+	      if (opts.mergeType && +opts.mergeType !== 1 && +opts.mergeType !== 2) {
+	        throw new Error(`ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof opts.mergeType}", equal to ${JSON.stringify(opts.mergeType, null, 4)}`);
 	      }
 
 	      if (typeof opts.joinRangesThatTouchEdges !== "boolean") {
@@ -18632,7 +18622,7 @@
 	          if (sortedRanges[i][2] === null && sortedRanges[i - 1][2] !== null) {
 	            sortedRanges[i - 1][2] = null;
 	          } else if (sortedRanges[i - 1][2] !== undefined) {
-	            if (opts.mergeType === 2 && sortedRanges[i - 1][0] === sortedRanges[i][0]) {
+	            if (+opts.mergeType === 2 && sortedRanges[i - 1][0] === sortedRanges[i][0]) {
 	              sortedRanges[i - 1][2] = sortedRanges[i][2];
 	            } else {
 	              sortedRanges[i - 1][2] += sortedRanges[i][2];
@@ -29767,7 +29757,7 @@
 	/**
 	 * is-relative-uri
 	 * Is given string a relative URI?
-	 * Version: 2.0.0
+	 * Version: 2.0.1
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/is-relative-uri/
@@ -34966,7 +34956,7 @@
 	/**
 	 * is-media-descriptor
 	 * Is given string a valid media descriptor (including media query)?
-	 * Version: 2.0.0
+	 * Version: 2.0.1
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/is-media-descriptor/
@@ -45192,7 +45182,7 @@
 
 	}
 
-	var version = "3.0.0";
+	var version = "3.0.1";
 
 	exports.Linter = Linter;
 	exports.version = version;
