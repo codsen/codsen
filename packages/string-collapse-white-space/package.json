@@ -1,6 +1,6 @@
 {
   "name": "string-collapse-white-space",
-  "version": "8.0.1",
+  "version": "8.0.2",
   "description": "Replace chunks of whitespace with a single spaces",
   "keywords": [
     "chunk",
@@ -99,8 +99,8 @@
   },
   "dependencies": {
     "object-boolean-combinations": "^2.12.0",
-    "ranges-apply": "^4.0.1",
-    "ranges-push": "^4.0.1",
+    "ranges-apply": "^4.0.2",
+    "ranges-push": "^4.0.2",
     "string-left-right": "^3.0.0"
   },
   "devDependencies": {

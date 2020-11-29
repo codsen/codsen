@@ -1,6 +1,6 @@
 {
   "name": "ranges-merge",
-  "version": "6.1.0",
+  "version": "6.2.0",
   "description": "Merge and sort string index ranges",
   "keywords": [
     "index",

@@ -1,6 +1,6 @@
 {
   "name": "ranges-apply",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "Take an array of string index ranges, delete/replace the string according to them",
   "keywords": [
     "delete",
@@ -96,7 +96,7 @@
     }
   },
   "dependencies": {
-    "ranges-merge": "^6.1.0"
+    "ranges-merge": "^6.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.7",

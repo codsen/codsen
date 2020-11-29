@@ -1,7 +1,7 @@
 /**
  * ranges-ent-decode
  * Recursive HTML entity decoding for Ranges workflow
- * Version: 3.0.1
+ * Version: 3.0.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-ent-decode/

@@ -1,7 +1,7 @@
 /**
  * emlint
  * Pluggable email template code linter
- * Version: 3.0.1
+ * Version: 3.0.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/emlint/
@@ -18532,7 +18532,7 @@
 	/**
 	 * ranges-merge
 	 * Merge and sort string index ranges
-	 * Version: 6.1.0
+	 * Version: 6.2.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/ranges-merge/
@@ -29757,7 +29757,7 @@
 	/**
 	 * is-relative-uri
 	 * Is given string a relative URI?
-	 * Version: 2.0.1
+	 * Version: 2.0.2
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/is-relative-uri/
@@ -34956,7 +34956,7 @@
 	/**
 	 * is-media-descriptor
 	 * Is given string a valid media descriptor (including media query)?
-	 * Version: 2.0.1
+	 * Version: 2.0.2
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/is-media-descriptor/
@@ -45182,7 +45182,7 @@
 
 	}
 
-	var version = "3.0.1";
+	var version = "3.0.2";
 
 	exports.Linter = Linter;
 	exports.version = version;

@@ -1,6 +1,6 @@
 {
   "name": "string-remove-widows",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "description": "Helps to prevent widow words in a text",
   "keywords": [
     "against",
@@ -105,8 +105,8 @@
   "dependencies": {
     "arrayiffy-if-string": "^3.12.0",
     "lodash.isplainobject": "^4.0.6",
-    "ranges-apply": "^4.0.1",
-    "ranges-push": "^4.0.1",
+    "ranges-apply": "^4.0.2",
+    "ranges-push": "^4.0.2",
     "string-left-right": "^3.0.0",
     "string-match-left-right": "^5.0.0"
   },

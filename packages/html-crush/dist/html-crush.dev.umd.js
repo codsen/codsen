@@ -1,7 +1,7 @@
 /**
  * html-crush
  * Minifies HTML/CSS: valid or broken, pure or mixed with other languages
- * Version: 3.0.1
+ * Version: 3.0.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/html-crush/
@@ -3368,7 +3368,7 @@
     });
   }
 
-  var version = "3.0.1";
+  var version = "3.0.2";
 
   var finalIndexesToDelete = new Ranges({
     limitToBeAddedWhitespace: true

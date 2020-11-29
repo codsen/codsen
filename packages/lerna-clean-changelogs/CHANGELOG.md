@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://git.sr.ht/~royston/codsen/compare/lerna-clean-changelogs@1.4.0...lerna-clean-changelogs@1.5.0) (2020-11-29)
+
+
+### Features
+
+* fix for sourcehut deep links ([d3bb023](https://git.sr.ht/~royston/codsen/commits/d3bb0235c7bfe507847399544c55ae29808629ed))
+
+
+
+
+
 ## 1.4.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

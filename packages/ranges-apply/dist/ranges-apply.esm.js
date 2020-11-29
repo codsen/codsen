@@ -1,7 +1,7 @@
 /**
  * ranges-apply
  * Take an array of string index ranges, delete/replace the string according to them
- * Version: 4.0.1
+ * Version: 4.0.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/

@@ -1,6 +1,6 @@
 {
   "name": "edit-package-json",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Edit package.json without parsing, as string, to keep the formatting intact",
   "keywords": [
     "changes",
@@ -104,7 +104,7 @@
     }
   },
   "dependencies": {
-    "ranges-apply": "^4.0.1",
+    "ranges-apply": "^4.0.2",
     "string-left-right": "^3.0.0"
   },
   "devDependencies": {

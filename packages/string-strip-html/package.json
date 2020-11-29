@@ -1,6 +1,6 @@
 {
   "name": "string-strip-html",
-  "version": "7.0.1",
+  "version": "7.0.2",
   "description": "Strips HTML tags from strings. No parser, accepts mixed sources.",
   "keywords": [
     "code",
@@ -111,8 +111,8 @@
     "lodash.isplainobject": "^4.0.6",
     "lodash.trim": "^4.5.1",
     "lodash.without": "^4.4.0",
-    "ranges-apply": "^4.0.1",
-    "ranges-push": "^4.0.1",
+    "ranges-apply": "^4.0.2",
+    "ranges-push": "^4.0.2",
     "string-left-right": "^3.0.0"
   },
   "devDependencies": {
@@ -130,7 +130,7 @@
     "benchmark": "^2.1.4",
     "eslint": "^7.14.0",
     "lect": "^0.15.0",
-    "ranges-invert": "^3.0.1",
+    "ranges-invert": "^3.0.2",
     "rollup": "^2.33.3",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",
