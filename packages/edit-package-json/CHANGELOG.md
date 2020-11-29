@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.2.2](https://git.sr.ht/~royston/codsen/compare/edit-package-json@0.2.0...edit-package-json@0.2.2) (2020-11-29)
-
-**Note:** Version bump only for package edit-package-json
-
-
-
-
-
 ## 0.2.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.
