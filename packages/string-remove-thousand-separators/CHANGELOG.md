@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 4.0.0 (2020-11-28)
+
+Accidental version bump during migration to sourcehut. Sorry about that.
+
 ## 2.6.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

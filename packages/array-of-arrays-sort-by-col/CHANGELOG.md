@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.13.0 (2020-11-28)
+
+Accidental version bump during migration to sourcehut. Sorry about that.
+
 ## 2.12.0 (2020-01-26)
 
 ### Features
