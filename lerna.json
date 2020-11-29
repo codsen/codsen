@@ -7,7 +7,9 @@
     }
   },
   "ignoreChanges": ["**/*.md", "**/node_modules/**", "**/package.json", "**/perf/**", "**/.npmignore"],
-  "lifecycle": {},
+  "lifecycle": {
+    "version": "git add ."
+  },
   "packages": ["packages/*"],
   "version": "independent"
 }
