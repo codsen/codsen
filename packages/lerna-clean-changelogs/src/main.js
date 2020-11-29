@@ -33,7 +33,12 @@ function c(changelogContents) {
         changelogContents[changelogContents.length - 1] === "\r");
 
     // eslint-disable-next-line no-param-reassign
-    changelogContents = changelogContents.trim();
+    changelogContents = changelogContents
+      .trim()
+      .replace(
+        /(https:\/\/git\.sr\.ht\/~[^/]+\/[^/]+\/)commits\//g,
+        "$1commit/"
+      );
     const linesArr = changelogContents.split(/\r?\n/);
     // console.log(
     //   `${`\u001b[${33}m${`linesArr`}\u001b[${39}m`} = ${JSON.stringify(
@@ -112,7 +117,7 @@ function c(changelogContents) {
           newLinesArr.unshift(linesArr[i].trim());
           lastLineWasEmpty = true;
           console.log(
-            `115 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
+            `120 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
           );
         }
       }
@@ -127,7 +132,7 @@ function c(changelogContents) {
       if (linesArr[i].trim()) {
         lastLineWasEmpty = false;
         console.log(
-          `130 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
+          `135 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
         );
       }
     }

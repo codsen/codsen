@@ -36,7 +36,12 @@ function c(changelogContents) {
       changelogContents.length &&
       (changelogContents[changelogContents.length - 1] === "\n" ||
         changelogContents[changelogContents.length - 1] === "\r");
-    changelogContents = changelogContents.trim();
+    changelogContents = changelogContents
+      .trim()
+      .replace(
+        /(https:\/\/git\.sr\.ht\/~[^/]+\/[^/]+\/)commits\//g,
+        "$1commit/"
+      );
     const linesArr = changelogContents.split(/\r?\n/);
     linesArr.forEach((line, i) => {
       if (line.startsWith("#")) {

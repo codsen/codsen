@@ -40,7 +40,7 @@ function c(changelogContents) {
   var lastLineWasEmpty = false;
   if (typeof changelogContents === "string" && changelogContents.length && (!changelogContents.includes("\n") || !changelogContents.includes("\r"))) {
     var changelogEndedWithLinebreak = isStr(changelogContents) && changelogContents.length && (changelogContents[changelogContents.length - 1] === "\n" || changelogContents[changelogContents.length - 1] === "\r");
-    changelogContents = changelogContents.trim();
+    changelogContents = changelogContents.trim().replace(/(https:\/\/git\.sr\.ht\/~[^/]+\/[^/]+\/)commits\//g, "$1commit/");
     var linesArr = changelogContents.split(/\r?\n/);
     linesArr.forEach(function (line, i) {
       if (line.startsWith("#")) {

@@ -109,3 +109,11 @@ tap.test(
     t.end();
   }
 );
+
+tap.test(
+  `08 - ${`\u001b[${35}m${`cleaning`}\u001b[${39}m`} - fixes plural in sourcehut links`,
+  (t) => {
+    compare(t, "05_sourcehut");
+    t.end();
+  }
+);
