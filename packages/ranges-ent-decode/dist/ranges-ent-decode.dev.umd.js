@@ -4337,10 +4337,6 @@
   }
 
   function mergeRanges(arrOfRanges, originalOpts) {
-    function isStr(something) {
-      return typeof something === "string";
-    }
-
     function isObj(something) {
       return something && _typeof(something) === "object" && !Array.isArray(something);
     }
@@ -4366,14 +4362,8 @@
           throw new Error("ranges-merge: [THROW_ID_01] opts.progressFn must be a function! It was given of a type: \"".concat(_typeof(opts.progressFn), "\", equal to ").concat(JSON.stringify(opts.progressFn, null, 4)));
         }
 
-        if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
-          if (isStr(opts.mergeType) && opts.mergeType.trim() === "1") {
-            opts.mergeType = 1;
-          } else if (isStr(opts.mergeType) && opts.mergeType.trim() === "2") {
-            opts.mergeType = 2;
-          } else {
-            throw new Error("ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"".concat(_typeof(opts.mergeType), "\", equal to ").concat(JSON.stringify(opts.mergeType, null, 4)));
-          }
+        if (opts.mergeType && +opts.mergeType !== 1 && +opts.mergeType !== 2) {
+          throw new Error("ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"".concat(_typeof(opts.mergeType), "\", equal to ").concat(JSON.stringify(opts.mergeType, null, 4)));
         }
 
         if (typeof opts.joinRangesThatTouchEdges !== "boolean") {
@@ -4433,7 +4423,7 @@
             if (sortedRanges[i][2] === null && sortedRanges[i - 1][2] !== null) {
               sortedRanges[i - 1][2] = null;
             } else if (sortedRanges[i - 1][2] !== undefined) {
-              if (opts.mergeType === 2 && sortedRanges[i - 1][0] === sortedRanges[i][0]) {
+              if (+opts.mergeType === 2 && sortedRanges[i - 1][0] === sortedRanges[i][0]) {
                 sortedRanges[i - 1][2] = sortedRanges[i][2];
               } else {
                 sortedRanges[i - 1][2] += sortedRanges[i][2];
