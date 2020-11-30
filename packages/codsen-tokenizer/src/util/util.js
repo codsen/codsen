@@ -149,8 +149,8 @@ const allHTMLTagsKnownToHumanity = new Set([
 
 // contains all common templating language head/tail marker characters:
 const espChars = `{}%-$_()*|#`;
-const veryEspChars = `{}()|#`;
-const notVeryEspChars = `%$_*#`;
+const veryEspChars = `{}|#`;
+const notVeryEspChars = `%()$_*#`;
 
 const espLumpBlacklist = [")|(", "|(", ")(", "()", "}{", "{}", "%)", "*)"];
 

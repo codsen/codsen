@@ -163,8 +163,8 @@ const allHTMLTagsKnownToHumanity = new Set([
   "xmp",
 ]);
 const espChars = `{}%-$_()*|#`;
-const veryEspChars = `{}()|#`;
-const notVeryEspChars = `%$_*#`;
+const veryEspChars = `{}|#`;
+const notVeryEspChars = `%()$_*#`;
 const espLumpBlacklist = [")|(", "|(", ")(", "()", "}{", "{}", "%)", "*)"];
 const punctuationChars = `.,;!?`;
 function isStr(something) {

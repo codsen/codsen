@@ -1430,7 +1430,7 @@ function tokenizer(str, originalOpts) {
         ) {
           // maybe it's the closing counterpart?
           layers.pop();
-          console.log(`1433 ${`\u001b[${32}m${`POP`}\u001b[${39}m`} layers`);
+          console.log(`1433 ${`\u001b[${32}m${`POP LAYERS`}\u001b[${39}m`}`);
 
           console.log(
             `1436 ${`\u001b[${31}m${`skip the remaining of the program clauses for this index`}\u001b[${39}m`}`
@@ -1444,7 +1444,7 @@ function tokenizer(str, originalOpts) {
             position: i,
           });
           console.log(
-            `1447 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
+            `1447 ${`\u001b[${32}m${`PUSH LAYER`}\u001b[${39}m`} ${JSON.stringify(
               {
                 type: "simple",
                 value: str[i],
