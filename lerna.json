@@ -3,7 +3,7 @@
     "publish": {
       "conventionalCommits": true,
       "noPush": true,
-      "message": "chore: release"
+      "message": "[skip ci] chore: release"
     }
   },
   "ignoreChanges": ["**/*.md", "**/node_modules/**", "**/package.json", "**/perf/**", "**/.npmignore"],
