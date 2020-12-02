@@ -165,6 +165,8 @@ const allHTMLTagsKnownToHumanity = new Set([
 const espChars = `{}%-$_()*|#`;
 const veryEspChars = `{}|#`;
 const notVeryEspChars = `%()$_*#`;
+const leftyChars = `({`;
+const rightyChars = `})`;
 const espLumpBlacklist = [")|(", "|(", ")(", "()", "}{", "{}", "%)", "*)"];
 const punctuationChars = `.,;!?`;
 function isStr(something) {
@@ -228,6 +230,9 @@ function getWholeEspTagLumpOnTheRight(str, i, layers) {
   let wholeEspTagLumpOnTheRight = str[i];
   const len = str.length;
   for (let y = i + 1; y < len; y++) {
+    if (leftyChars.includes(str[y]) && rightyChars.includes(str[y - 1])) {
+      break;
+    }
     if (
       wholeEspTagLumpOnTheRight.length > 1 &&
       (wholeEspTagLumpOnTheRight.includes(`{`) ||

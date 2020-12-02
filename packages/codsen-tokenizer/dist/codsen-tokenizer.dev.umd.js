@@ -2750,6 +2750,8 @@
   var espChars = "{}%-$_()*|#";
   var veryEspChars = "{}|#";
   var notVeryEspChars = "%()$_*#";
+  var leftyChars = "({";
+  var rightyChars = "})";
   var espLumpBlacklist = [")|(", "|(", ")(", "()", "}{", "{}", "%)", "*)"];
   var punctuationChars = ".,;!?";
 
@@ -2830,6 +2832,22 @@
     var len = str.length;
 
     for (var y = i + 1; y < len; y++) {
+      // if righty character is on the left and now it's lefty,
+      // we have a situation like:
+      // {{ abc }}{% endif %}
+      //        ^^^^
+      //        lump
+      //
+      // {{ abc }}{% endif %}
+      //         ^^
+      //         ||
+      //    lefty  righty
+      //
+      // we clice off where righty starts
+      if (leftyChars.includes(str[y]) && rightyChars.includes(str[y - 1])) {
+        break;
+      }
+
       if ( // consider:
       // ${(y/4)?int}
       //   ^

@@ -1,4 +1,4 @@
-import { espChars } from "./util";
+import { espChars, leftyChars, rightyChars } from "./util";
 
 function getWholeEspTagLumpOnTheRight(str, i, layers) {
   let wholeEspTagLumpOnTheRight = str[i];
@@ -12,6 +12,26 @@ function getWholeEspTagLumpOnTheRight(str, i, layers) {
     console.log(
       `013 getWholeEspTagLumpOnTheRight(): ${`\u001b[${36}m${`str[${y}]=${str[y]}`}\u001b[${39}m`}`
     );
+
+    // if righty character is on the left and now it's lefty,
+    // we have a situation like:
+    // {{ abc }}{% endif %}
+    //        ^^^^
+    //        lump
+    //
+    // {{ abc }}{% endif %}
+    //         ^^
+    //         ||
+    //    lefty  righty
+    //
+    // we clice off where righty starts
+    if (leftyChars.includes(str[y]) && rightyChars.includes(str[y - 1])) {
+      console.log(
+        `030 getWholeEspTagLumpOnTheRight(): ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
+      );
+      break;
+    }
+
     if (
       // consider:
       // ${(y/4)?int}
@@ -28,7 +48,7 @@ function getWholeEspTagLumpOnTheRight(str, i, layers) {
       str[y] === "("
     ) {
       console.log(
-        `031 getWholeEspTagLumpOnTheRight(): ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
+        `051 getWholeEspTagLumpOnTheRight(): ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
       );
       break;
     }
@@ -48,7 +68,7 @@ function getWholeEspTagLumpOnTheRight(str, i, layers) {
     ) {
       wholeEspTagLumpOnTheRight += str[y];
     } else {
-      console.log(`051 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+      console.log(`071 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
       break;
     }
   }
@@ -127,7 +147,7 @@ function getWholeEspTagLumpOnTheRight(str, i, layers) {
     }
   }
 
-  console.log(`130 getWholeEspTagLumpOnTheRight(): final return`);
+  console.log(`150 getWholeEspTagLumpOnTheRight(): final return`);
 
   return wholeEspTagLumpOnTheRight;
 }

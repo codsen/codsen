@@ -292,7 +292,135 @@ tap.test(`07 - different set, *|zzz|*`, (t) => {
   t.end();
 });
 
-tap.test(`08 - nunjucks, brackets`, (t) => {
+tap.test(`08 - two nunjucks tags in vicinity, minimal`, (t) => {
+  const gathered = [];
+  ct(`{{ abc }}{% endif %}`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "esp",
+        start: 0,
+        end: 9,
+        value: "{{ abc }}",
+        head: "{{",
+        headStartsAt: 0,
+        headEndsAt: 2,
+        tail: "}}",
+        tailStartsAt: 7,
+        tailEndsAt: 9,
+      },
+      {
+        type: "esp",
+        start: 9,
+        end: 20,
+        value: "{% endif %}",
+        head: "{%",
+        headStartsAt: 9,
+        headEndsAt: 11,
+        tail: "%}",
+        tailStartsAt: 18,
+        tailEndsAt: 20,
+      },
+    ],
+    "08"
+  );
+  t.end();
+});
+
+tap.test(`09 - two nunjucks tags in vicinity, realistic`, (t) => {
+  const gathered = [];
+  ct(`{% if xyz %}Abc&nbsp;{{ def }}{% else %}Abc {{ def }}{% endif %}`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "esp",
+        start: 0,
+        end: 12,
+        value: "{% if xyz %}",
+        head: "{%",
+        headStartsAt: 0,
+        headEndsAt: 2,
+        tail: "%}",
+        tailStartsAt: 10,
+        tailEndsAt: 12,
+      },
+      {
+        type: "text",
+        start: 12,
+        end: 21,
+        value: "Abc&nbsp;",
+      },
+      {
+        type: "esp",
+        start: 21,
+        end: 30,
+        value: "{{ def }}",
+        head: "{{",
+        headStartsAt: 21,
+        headEndsAt: 23,
+        tail: "}}",
+        tailStartsAt: 28,
+        tailEndsAt: 30,
+      },
+      {
+        type: "esp",
+        start: 30,
+        end: 40,
+        value: "{% else %}",
+        head: "{%",
+        headStartsAt: 30,
+        headEndsAt: 32,
+        tail: "%}",
+        tailStartsAt: 38,
+        tailEndsAt: 40,
+      },
+      {
+        type: "text",
+        start: 40,
+        end: 44,
+        value: "Abc ",
+      },
+      {
+        type: "esp",
+        start: 44,
+        end: 53,
+        value: "{{ def }}",
+        head: "{{",
+        headStartsAt: 44,
+        headEndsAt: 46,
+        tail: "}}",
+        tailStartsAt: 51,
+        tailEndsAt: 53,
+      },
+      {
+        type: "esp",
+        start: 53,
+        end: 64,
+        value: "{% endif %}",
+        head: "{%",
+        headStartsAt: 53,
+        headEndsAt: 55,
+        tail: "%}",
+        tailStartsAt: 62,
+        tailEndsAt: 64,
+      },
+    ],
+    "09"
+  );
+  t.end();
+});
+
+tap.test(`10 - nunjucks, brackets`, (t) => {
   [
     `{%- if ((a | length) > 0) -%}`,
     `{%- if ((a | length) < 0) -%}`,

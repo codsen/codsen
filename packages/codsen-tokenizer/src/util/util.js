@@ -151,6 +151,8 @@ const allHTMLTagsKnownToHumanity = new Set([
 const espChars = `{}%-$_()*|#`;
 const veryEspChars = `{}|#`;
 const notVeryEspChars = `%()$_*#`;
+const leftyChars = `({`;
+const rightyChars = `})`;
 
 const espLumpBlacklist = [")|(", "|(", ")(", "()", "}{", "{}", "%)", "*)"];
 
@@ -322,7 +324,9 @@ export {
   isNumOrNumStr,
   isLatinLetter,
   veryEspChars,
+  rightyChars,
   isLowercase,
+  leftyChars,
   flipEspTag,
   secondChar,
   firstChar,
