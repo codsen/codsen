@@ -5271,16 +5271,6 @@
 
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-  function createCommonjsModule(fn, basedir, module) {
-  	return module = {
-  		path: basedir,
-  		exports: {},
-  		require: function (path, base) {
-  			return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
-  		}
-  	}, fn(module, module.exports), module.exports;
-  }
-
   function getAugmentedNamespace(n) {
   	if (n.__esModule) return n;
   	var a = Object.defineProperty({}, '__esModule', {value: true});
@@ -5296,8 +5286,9 @@
   	return a;
   }
 
-  function commonjsRequire () {
-  	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
+  function createCommonjsModule(fn) {
+    var module = { exports: {} };
+  	return fn(module, module.exports), module.exports;
   }
 
   var Stream$1 = /*@__PURE__*/getAugmentedNamespace(stream);
@@ -6671,8 +6662,8 @@
     }
   });
 
+  /* eslint-disable node/no-deprecated-api */
   var safeBuffer = createCommonjsModule(function (module, exports) {
-    /* eslint-disable node/no-deprecated-api */
     var Buffer = require$$1.Buffer; // alternative to using Object.keys for old browsers
 
     function copyProps(src, dst) {

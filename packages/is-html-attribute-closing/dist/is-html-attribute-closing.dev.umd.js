@@ -113,30 +113,12 @@
 
   var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-  function createCommonjsModule(fn, basedir, module) {
-  	return module = {
-  		path: basedir,
-  		exports: {},
-  		require: function (path, base) {
-  			return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
-  		}
-  	}, fn(module, module.exports), module.exports;
-  }
-
-  function commonjsRequire () {
-  	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
+  function createCommonjsModule(fn) {
+    var module = { exports: {} };
+  	return fn(module, module.exports), module.exports;
   }
 
   var lodash_clonedeep = createCommonjsModule(function (module, exports) {
-    /**
-     * lodash (Custom Build) <https://lodash.com/>
-     * Build: `lodash modularize exports="npm" -o ./`
-     * Copyright jQuery Foundation and other contributors <https://jquery.org/>
-     * Released under MIT license <https://lodash.com/license>
-     * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
-     * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
-     */
-
     /** Used as the size to enable large array optimizations. */
     var LARGE_ARRAY_SIZE = 200;
     /** Used to stand-in for `undefined` hash values. */
