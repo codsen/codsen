@@ -1,7 +1,7 @@
 /**
  * json-comb-core
  * The inner core of json-comb
- * Version: 6.7.0
+ * Version: 6.7.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/json-comb-core/
@@ -9006,7 +9006,7 @@
   /**
    * object-set-all-values-to
    * Recursively walk the input and set all found values in plain objects to something
-   * Version: 3.10.0
+   * Version: 3.10.1
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/object-set-all-values-to/

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.3](https://git.sr.ht/~royston/codsen/compare/ranges-ent-decode@3.0.2...ranges-ent-decode@3.0.3) (2020-12-03)
+
+**Note:** Version bump only for package ranges-ent-decode
+
+
+
+
+
 ## 3.0.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

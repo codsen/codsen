@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.1](https://git.sr.ht/~royston/codsen/compare/bitbucket-slug@1.11.0...bitbucket-slug@1.11.1) (2020-12-03)
+
+**Note:** Version bump only for package bitbucket-slug
+
+
+
+
+
 ## 1.11.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

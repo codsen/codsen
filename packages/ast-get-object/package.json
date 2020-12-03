@@ -1,6 +1,6 @@
 {
   "name": "ast-get-object",
-  "version": "1.10.0",
+  "version": "1.10.1",
   "description": "Getter/setter for nested parsed HTML AST's, querying objects by key/value pairs",
   "keywords": [
     "ast",
@@ -105,7 +105,7 @@
     }
   },
   "dependencies": {
-    "ast-compare": "^1.14.0",
+    "ast-compare": "^1.14.1",
     "lodash.clonedeep": "^4.5.0"
   },
   "devDependencies": {
@@ -121,7 +121,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.14.0",
-    "lect": "^0.15.0",
+    "lect": "^0.15.1",
     "rollup": "^2.34.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

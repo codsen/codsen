@@ -1,6 +1,6 @@
 {
   "name": "color-shorthand-hex-to-six-digit",
-  "version": "2.11.0",
+  "version": "2.11.1",
   "description": "Convert shorthand hex color codes into full",
   "keywords": [
     "characters",
@@ -116,7 +116,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.14.0",
-    "lect": "^0.15.0",
+    "lect": "^0.15.1",
     "rollup": "^2.34.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

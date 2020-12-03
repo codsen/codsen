@@ -1,6 +1,6 @@
 {
   "name": "ranges-regex",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Integrate regex operations into Ranges workflow",
   "keywords": [
     "array",
@@ -116,7 +116,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.14.0",
-    "lect": "^0.15.0",
+    "lect": "^0.15.1",
     "ranges-apply": "^4.0.2",
     "rollup": "^2.34.1",
     "rollup-plugin-ascii": "^0.0.3",

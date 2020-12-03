@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.1](https://git.sr.ht/~royston/codsen/compare/email-all-chars-within-ascii@2.10.0...email-all-chars-within-ascii@2.10.1) (2020-12-03)
+
+**Note:** Version bump only for package email-all-chars-within-ascii
+
+
+
+
+
 ## 2.10.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

@@ -1,6 +1,6 @@
 {
   "name": "string-left-right",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Looks up the first non-whitespace character to the left/right of a given index",
   "keywords": [
     "check",
@@ -115,7 +115,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.14.0",
-    "lect": "^0.15.0",
+    "lect": "^0.15.1",
     "rollup": "^2.34.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

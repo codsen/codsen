@@ -1,7 +1,7 @@
 /**
  * ranges-regex
  * Integrate regex operations into Ranges workflow
- * Version: 3.0.2
+ * Version: 3.0.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-regex/

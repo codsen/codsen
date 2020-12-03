@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.1.0](https://git.sr.ht/~royston/codsen/compare/codsen-tokenizer@4.0.0...codsen-tokenizer@4.1.0) (2020-12-03)
+
+
+### Features
+
+* add concept of lefty and righty characters to improve recognition ([dd4b8cb](https://git.sr.ht/~royston/codsen/commits/dd4b8cb66a1c49a9ceb9236c4f0b15cb175e4a7a))
+* improve the templating tag detection, exclude double parentheses better ([724e827](https://git.sr.ht/~royston/codsen/commits/724e827724ff5efb44fe5d8363743e4d32fc2dae))
+
+
+
+
+
 ## 4.0.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

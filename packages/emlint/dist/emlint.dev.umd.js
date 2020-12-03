@@ -1,7 +1,7 @@
 /**
  * emlint
  * Pluggable email template code linter
- * Version: 3.0.2
+ * Version: 3.0.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/emlint/
@@ -7565,30 +7565,20 @@
 
 	var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-	function createCommonjsModule(fn, basedir, module) {
-		return module = {
-			path: basedir,
-			exports: {},
-			require: function (path, base) {
-				return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
-			}
-		}, fn(module, module.exports), module.exports;
+	function createCommonjsModule(fn) {
+	  var module = { exports: {} };
+		return fn(module, module.exports), module.exports;
 	}
 
-	function commonjsRequire () {
-		throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
-	}
-
+	/**
+	 * lodash (Custom Build) <https://lodash.com/>
+	 * Build: `lodash modularize exports="npm" -o ./`
+	 * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+	 * Released under MIT license <https://lodash.com/license>
+	 * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+	 * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+	 */
 	var lodash_clonedeep = createCommonjsModule(function (module, exports) {
-	  /**
-	   * lodash (Custom Build) <https://lodash.com/>
-	   * Build: `lodash modularize exports="npm" -o ./`
-	   * Copyright jQuery Foundation and other contributors <https://jquery.org/>
-	   * Released under MIT license <https://lodash.com/license>
-	   * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
-	   * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
-	   */
-
 	  /** Used as the size to enable large array optimizations. */
 	  var LARGE_ARRAY_SIZE = 200;
 	  /** Used to stand-in for `undefined` hash values. */
@@ -9427,7 +9417,7 @@
 	/**
 	 * string-left-right
 	 * Looks up the first non-whitespace character to the left/right of a given index
-	 * Version: 3.0.0
+	 * Version: 3.0.1
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/string-left-right/
@@ -9688,7 +9678,7 @@
 	/**
 	 * string-fix-broken-named-entities
 	 * Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes
-	 * Version: 4.0.0
+	 * Version: 4.0.1
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/string-fix-broken-named-entities/
@@ -10330,7 +10320,7 @@
 	/**
 	 * ast-monkey-traverse
 	 * Utility library to traverse AST
-	 * Version: 1.13.0
+	 * Version: 1.13.1
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/ast-monkey-traverse/
@@ -10426,10 +10416,22 @@
 	  return toString.call(arr) == '[object Array]';
 	};
 
+	/*!
+	 * isobject <https://github.com/jonschlinkert/isobject>
+	 *
+	 * Copyright (c) 2014-2015, Jon Schlinkert.
+	 * Licensed under the MIT License.
+	 */
+
 	var isobject = function isObject(val) {
 	  return val != null && typeof val === 'object' && isarray(val) === false;
 	};
 
+	/**
+	 * line-column - Convert efficiently index to/from line-column in a string
+	 * @module  lineColumn
+	 * @license MIT
+	 */
 	var lineColumn = LineColumnFinder;
 	/**
 	 * Finder for index and line-column from given string.
@@ -10590,7 +10592,7 @@
 	/**
 	 * string-find-malformed
 	 * Search for a malformed string. Think of Levenshtein distance but in search.
-	 * Version: 1.2.0
+	 * Version: 1.2.1
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/string-find-malformed/
@@ -11077,7 +11079,7 @@
 	/**
 	 * is-html-attribute-closing
 	 * Is a character on a given index a closing of an HTML attribute?
-	 * Version: 1.4.0
+	 * Version: 1.4.1
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/is-html-attribute-closing/
@@ -11443,15 +11445,17 @@
 	/**
 	 * codsen-tokenizer
 	 * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
-	 * Version: 4.0.0
+	 * Version: 4.1.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/codsen-tokenizer/
 	 */
 	const allHTMLTagsKnownToHumanity = new Set(["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "bgsound", "big", "blink", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "command", "content", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "dt", "element", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "image", "img", "input", "ins", "isindex", "kbd", "keygen", "label", "legend", "li", "link", "listing", "main", "map", "mark", "marquee", "menu", "menuitem", "meta", "meter", "multicol", "nav", "nextid", "nobr", "noembed", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "plaintext", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "shadow", "slot", "small", "source", "spacer", "span", "strike", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xmp"]);
 	const espChars = `{}%-$_()*|#`;
-	const veryEspChars = `{}()|#`;
-	const notVeryEspChars = `%$_*#`;
+	const veryEspChars = `{}|#`;
+	const notVeryEspChars = `%()$_*#`;
+	const leftyChars = `({`;
+	const rightyChars = `})`;
 	const espLumpBlacklist = [")|(", "|(", ")(", "()", "}{", "{}", "%)", "*)"];
 	const punctuationChars = `.,;!?`;
 
@@ -11518,6 +11522,10 @@
 	  const len = str.length;
 
 	  for (let y = i + 1; y < len; y++) {
+	    if (leftyChars.includes(str[y]) && rightyChars.includes(str[y - 1])) {
+	      break;
+	    }
+
 	    if (wholeEspTagLumpOnTheRight.length > 1 && (wholeEspTagLumpOnTheRight.includes(`{`) || wholeEspTagLumpOnTheRight.includes(`[`) || wholeEspTagLumpOnTheRight.includes(`(`)) && str[y] === "(") {
 	      break;
 	    }
@@ -13383,7 +13391,7 @@
 	/**
 	 * codsen-parser
 	 * Parser aiming at broken or mixed code, especially HTML & CSS
-	 * Version: 0.8.0
+	 * Version: 0.8.1
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/codsen-parser/
@@ -14641,16 +14649,15 @@
 	  };
 	}
 
+	/**
+	 * lodash (Custom Build) <https://lodash.com/>
+	 * Build: `lodash modularize exports="npm" -o ./`
+	 * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+	 * Released under MIT license <https://lodash.com/license>
+	 * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+	 * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+	 */
 	var lodash_isregexp = createCommonjsModule(function (module, exports) {
-	  /**
-	   * lodash (Custom Build) <https://lodash.com/>
-	   * Build: `lodash modularize exports="npm" -o ./`
-	   * Copyright jQuery Foundation and other contributors <https://jquery.org/>
-	   * Released under MIT license <https://lodash.com/license>
-	   * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
-	   * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
-	   */
-
 	  /** `Object#toString` result references. */
 	  var regexpTag = '[object RegExp]';
 	  /** Detect free variable `global` from Node.js. */
@@ -29657,7 +29664,6 @@
 	 * Copyright(c) 2014 Jonathan Ong
 	 * MIT Licensed
 	 */
-
 	/**
 	 * Module exports.
 	 */
@@ -39827,6 +39833,7 @@
 	  };
 	}
 
+	/*! https://mths.be/he v1.2.0 by @mathias | MIT license */
 	var he = createCommonjsModule(function (module, exports) {
 
 	  (function (root) {
@@ -45182,7 +45189,7 @@
 
 	}
 
-	var version = "3.0.2";
+	var version = "3.0.3";
 
 	exports.Linter = Linter;
 	exports.version = version;

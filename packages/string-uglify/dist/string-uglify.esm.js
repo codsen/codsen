@@ -1,13 +1,13 @@
 /**
  * string-uglify
  * Shorten sets of strings deterministically, to be git-friendly
- * Version: 1.3.1
+ * Version: 1.3.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-uglify/
  */
 
-var version = "1.3.1";
+var version = "1.3.2";
 
 const isArr = Array.isArray;
 function tellcp(str, idNum) {

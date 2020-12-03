@@ -1,7 +1,7 @@
 /**
  * object-all-values-equal-to
  * Does the AST/nested-plain-object/array/whatever contain only one kind of value?
- * Version: 1.9.0
+ * Version: 1.9.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-all-values-equal-to/

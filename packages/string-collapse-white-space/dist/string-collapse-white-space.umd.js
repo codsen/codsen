@@ -1,7 +1,7 @@
 /**
  * string-collapse-white-space
  * Replace chunks of whitespace with a single spaces
- * Version: 8.0.2
+ * Version: 8.0.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-collapse-white-space/

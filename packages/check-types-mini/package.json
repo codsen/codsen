@@ -1,6 +1,6 @@
 {
   "name": "check-types-mini",
-  "version": "5.9.0",
+  "version": "5.9.1",
   "description": "Check the types of your options object's values after user has customised them",
   "keywords": [
     "compare",
@@ -99,7 +99,7 @@
   },
   "dependencies": {
     "arrayiffy-if-string": "^3.12.0",
-    "ast-monkey-traverse": "^1.13.0",
+    "ast-monkey-traverse": "^1.13.1",
     "lodash.intersection": "^4.4.0",
     "lodash.pullall": "^4.2.0",
     "matcher": "^3.0.0",
@@ -119,7 +119,7 @@
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.14.0",
-    "lect": "^0.15.0",
+    "lect": "^0.15.1",
     "rollup": "^2.34.1",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",
