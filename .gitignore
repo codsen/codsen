@@ -20,3 +20,4 @@ lerna-debug.log
 ideas.md
 testStats.md
 deps-graph.png
+package-lock.json
