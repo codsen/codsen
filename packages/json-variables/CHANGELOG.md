@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [9.0.3](https://git.sr.ht/~royston/codsen/compare/json-variables@9.0.2...json-variables@9.0.3) (2020-12-03)
-
-**Note:** Version bump only for package json-variables
-
-
-
-
-
 ## 9.0.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

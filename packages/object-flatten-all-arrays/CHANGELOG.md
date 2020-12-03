@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [4.9.1](https://git.sr.ht/~royston/codsen/compare/object-flatten-all-arrays@4.9.0...object-flatten-all-arrays@4.9.1) (2020-12-03)
-
-**Note:** Version bump only for package object-flatten-all-arrays
-
-
-
-
-
 ## 4.9.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

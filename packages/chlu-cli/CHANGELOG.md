@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.17.1](https://git.sr.ht/~royston/codsen/compare/chlu-cli@1.17.0...chlu-cli@1.17.1) (2020-12-03)
-
-**Note:** Version bump only for package chlu-cli
-
-
-
-
-
 ## 1.17.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [5.9.1](https://git.sr.ht/~royston/codsen/compare/check-types-mini@5.9.0...check-types-mini@5.9.1) (2020-12-03)
-
-**Note:** Version bump only for package check-types-mini
-
-
-
-
-
 ## 5.9.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

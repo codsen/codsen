@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.11.1](https://git.sr.ht/~royston/codsen/compare/color-shorthand-hex-to-six-digit@2.11.0...color-shorthand-hex-to-six-digit@2.11.1) (2020-12-03)
-
-**Note:** Version bump only for package color-shorthand-hex-to-six-digit
-
-
-
-
-
 ## 2.11.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

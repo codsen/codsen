@@ -7,7 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- fix for sourcehut deep links ([d3bb023](https://git.sr.ht/~royston/codsen/commits/d3bb0235c7bfe507847399544c55ae29808629ed))
+- fix for sourcehut deep links ([d3bb023](https://git.sr.ht/~royston/codsen/commit/d3bb0235c7bfe507847399544c55ae29808629ed))
 
 ## 1.4.0 (2020-11-28)
 

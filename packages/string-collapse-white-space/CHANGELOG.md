@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [8.0.3](https://git.sr.ht/~royston/codsen/compare/string-collapse-white-space@8.0.2...string-collapse-white-space@8.0.3) (2020-12-03)
-
-**Note:** Version bump only for package string-collapse-white-space
-
-
-
-
-
 ## 8.0.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.
