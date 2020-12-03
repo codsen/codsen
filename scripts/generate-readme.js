@@ -37,30 +37,19 @@ const template = `# Codsen
 
 Please [visit codsen.com](https://codsen.com/os/) for an overview and full documentation of all packages.
 
-**[⬆ back to top](#codsen)**
+## 🐛 Issue Tracker
+
+For bugs, feature requests and so on use the [Issue Tracker](https://todo.sr.ht/~royston/codsen-issue-tracker).
 
 ## 💼 Licence
 
 MIT License
 
 Copyright (c) 2010-${year} Roy Revelt and other contributors
-
-**[⬆ back to top](#codsen)**
 `;
 
-fs.writeFile(
-  "README.md",
-  template
-    .replace(/the_link_to_npm/g, "The&nbsp;link&nbsp;to&nbsp;npm")
-    .replace(
-      /%ISSUELINK%/gm,
-      "https://todo.sr.ht/~royston/codsen-issue-tracker"
-    )
-    .replace(/ - /gm, " — "),
-  (err) => {
-    if (err) {
-      throw err;
-    }
-    console.log(`\u001b[${32}m${`monorepo readme OK`}\u001b[${39}m`);
+fs.writeFile("README.md", template, (err) => {
+  if (err) {
+    throw err;
   }
-);
+});
