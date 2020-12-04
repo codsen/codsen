@@ -2734,7 +2734,7 @@
   var notVeryEspChars = "%()$_*#";
   var leftyChars = "({";
   var rightyChars = "})";
-  var espLumpBlacklist = [")|(", "|(", ")(", "()", "}{", "{}", "%)", "*)"];
+  var espLumpBlacklist = [")|(", "|(", ")(", "()", "}{", "{}", "%)", "*)", "||"];
   var punctuationChars = ".,;!?";
 
   function isStr$1(something) {
@@ -2809,9 +2809,25 @@
     return false;
   }
 
+  // returns found object's index in "layers" array
+  function getLastEspLayerObjIdx(layers) {
+    if (layers && layers.length) {
+      // traverse layers backwards
+      for (var z = layers.length; z--;) {
+        if (layers[z].type === "esp") {
+          return z;
+        }
+      }
+    }
+
+    return undefined;
+  }
+
   function getWholeEspTagLumpOnTheRight(str, i, layers) {
     var wholeEspTagLumpOnTheRight = str[i];
-    var len = str.length;
+    var len = str.length; // getLastEspLayerObj()
+
+    var lastEspLayerObj = layers[getLastEspLayerObjIdx(layers)];
 
     for (var y = i + 1; y < len; y++) {
       // if righty character is on the left and now it's lefty,
@@ -2834,15 +2850,27 @@
       // ${(y/4)?int}
       //   ^
       //   we're here - is this opening bracket part of heads?!?
+      //
+      // or JSP:
+      // <%=(new java.util.Date()).toLocaleString()%>
+      //    ^
       // if lump already is two chars long
       wholeEspTagLumpOnTheRight.length > 1 && ( // contains one of opening-polarity characters
-      wholeEspTagLumpOnTheRight.includes("{") || wholeEspTagLumpOnTheRight.includes("[") || wholeEspTagLumpOnTheRight.includes("(")) && // bail if it's a bracket
+      wholeEspTagLumpOnTheRight.includes("<") || wholeEspTagLumpOnTheRight.includes("{") || wholeEspTagLumpOnTheRight.includes("[") || wholeEspTagLumpOnTheRight.includes("(")) && // bail if it's a bracket
       str[y] === "(") {
         break;
       }
 
-      if (espChars.includes(str[y]) || str[i] === "<" && str[y] === "/" || // accept closing bracket if it's RPL comment, tails of: <#-- z -->
-      str[y] === ">" && wholeEspTagLumpOnTheRight === "--" && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-") {
+      if (espChars.includes(str[y]) || // in case it's XML tag-like templating tag, such as JSP,
+      // we check, is it in the last guessed lump's character's list
+      lastEspLayerObj && lastEspLayerObj.guessedClosingLump.includes(str[y]) || str[i] === "<" && str[y] === "/" || // accept closing bracket if it's RPL comment, tails of: <#-- z -->
+      str[y] === ">" && wholeEspTagLumpOnTheRight === "--" && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-" || // we do exception for extra characters, such as JSP's
+      // exclamation mark: <%! yo %>
+      //                     ^
+      // which is legit...
+      //
+      // at least one character must have been caught already
+      !lastEspLayerObj && y > i && "!=@".includes(str[y])) {
         wholeEspTagLumpOnTheRight += str[y];
       } else {
         break;
@@ -3133,7 +3161,9 @@
     //             ^
     //      we're here
     str[i] === "%" && str[i + 1] === "%" && "0123456789".includes(str[i - 1]) && (!str[i + 2] || punctuationChars.includes(str[i + 2]) || !str[i + 2].trim().length)) && !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[right(str, i)]))) || //
-    // 2. html-like syntax - Responsys RPL and similar
+    // 2. html-like syntax
+    //
+    // 2.1 - Responsys RPL and similar
     // <#if z> or </#if> and so on
     // normal opening tag
     str[i] === "<" && ( // and
@@ -3141,7 +3171,14 @@
     str[i + 1] === "/" && espChars.includes(str[i + 2]) || // or
     // it's not closing and esp char follows right away
     espChars.includes(str[i + 1]) && // but no cheating, character must not be second-grade
-    !["-"].includes(str[i + 1])) || //
+    !["-"].includes(str[i + 1])) || // 2.2 - JSP (Java Server Pages)
+    // <%@ page blablabla %>
+    // <c:set var="someList" value="${jspProp.someList}" />
+    str[i] === "<" && ( // covers majority of JSP tag cases
+    str[i + 1] === "%" || // <jsp:
+    str.startsWith("jsp:", i + 1) || // <cms:
+    str.startsWith("cms:", i + 1) || // <c:
+    str.startsWith("c:", i + 1)) || str.startsWith("${jspProp", i) || //
     // 3. single character tails, for example RPL's closing curlies: ${zzz}
     // it's specifically a closing-kind character
     ">})".includes(str[i]) && // heads include the opposite of it
@@ -4073,7 +4110,29 @@
         token.selectorsEnd = _i;
       } // catch the beginning of a token
       // -------------------------------------------------------------------------
+      // imagine layers are like this:
+      // [
+      //   {
+      //     type: "esp",
+      //     openingLump: "<%@",
+      //     guessedClosingLump: "@%>",
+      //     position: 0,
+      //   },
+      //   {
+      //     type: "simple",
+      //     value: '"',
+      //     position: 17,
+      //   },
+      //   {
+      //     type: "simple",
+      //     value: "'",
+      //     position: 42,
+      //   },
+      // ];
+      // we extract the last type="esp" layer to simplify calculations
 
+
+      var lastEspLayerObjIdx = getLastEspLayerObjIdx(layers);
 
       if (!doNothing && str[_i]) {
         // console.log(
@@ -4210,7 +4269,37 @@
           }
 
           doNothing = _i + 2;
-        } else if (startsEsp(str, _i, token, layers, withinStyle) && ( // ensure we're not inside quotes, so it's not an expression within a value
+        } else if ( // if we encounter two consecutive characters of guessed lump
+        layers[lastEspLayerObjIdx] && layers[lastEspLayerObjIdx].type === "esp" && layers[lastEspLayerObjIdx].openingLump && layers[lastEspLayerObjIdx].guessedClosingLump && layers[lastEspLayerObjIdx].guessedClosingLump.length > 1 && // current character is among guessed lump's characters
+        layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[_i]) && // ...and the following character too...
+        layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[_i + 1]) && // since we "jump" over layers, that is, passed quotes
+        // and what not, we have to ensure we don't skip
+        // legit cases like:
+        // ${"${name}${name}${name}${name}"}
+        //          ^
+        //          here
+        // Responsys expression can be within a value! we have
+        // to respect those quotes!
+        //
+        // these are erroneous quotes representing layers
+        // which we do ignore (JSP example):
+        //
+        // <%@taglib prefix="t' tagdir='/WEB-INF/tags"%>
+        //                  ^ ^        ^             ^
+        //                  errors
+        !( // we excluse the same case,
+        // ${"${name}${name}${name}${name}"}
+        //          ^
+        //        false ending
+        // we ensure that quote doesn't follow the esp layer
+        // "lastEspLayerObjIdx" and there's counterpart of it
+        // on the right, and there's ESP char on the right of it
+        // next layer after esp's follows
+        layers[lastEspLayerObjIdx + 1] && // and it's quote
+        "'\"".includes(layers[lastEspLayerObjIdx + 1].value) && // matching quote on the right has ESP character following
+        // it exists (>-1)
+        str.indexOf(layers[lastEspLayerObjIdx + 1].value, _i) > 0 && layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[right(str, str.indexOf(layers[lastEspLayerObjIdx + 1].value, _i))])) || // hard check
+        startsEsp(str, _i, token, layers, withinStyle) && ( // ensure we're not inside quotes, so it's not an expression within a value
         // ${"${name}${name}${name}${name}"}
         //    ^
         //   we could be here - notice quotes wrapping all around
@@ -4252,7 +4341,14 @@
                   token.value = str.slice(token.start, token.end);
                   token.tail = str.slice(_i, _i + lengthOfClosingEspChunk);
                   token.tailStartsAt = _i;
-                  token.tailEndsAt = token.end;
+                  token.tailEndsAt = token.end; // correction for XML-like templating tags, closing can
+                  // have a slash, <c:set zzz/>
+                  //                         ^
+
+                  if (str[_i] === ">" && str[left(str, _i)] === "/") {
+                    token.tailStartsAt = left(str, _i);
+                    token.tail = str.slice(token.tailStartsAt, _i + 1);
+                  }
                 } // activate doNothing until the end of tails because otherwise,
                 // mid-tail characters will initiate new tail start clauses
                 // and we'll have overlap/false result
@@ -4307,6 +4403,15 @@
                 if (!token.end) {
                   token.end = _i + lengthOfClosingEspChunk;
                   token.value = str.slice(token.start, token.end);
+                }
+
+                if (!token.tailStartsAt) {
+                  token.tailStartsAt = _i;
+                }
+
+                if (!token.tailEndsAt && lengthOfClosingEspChunk) {
+                  token.tailEndsAt = token.tailStartsAt + lengthOfClosingEspChunk;
+                  token.tail = str.slice(_i, _i + lengthOfClosingEspChunk);
                 }
 
                 dumpCurrentToken(token, _i);

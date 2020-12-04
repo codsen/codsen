@@ -154,7 +154,17 @@ const notVeryEspChars = `%()$_*#`;
 const leftyChars = `({`;
 const rightyChars = `})`;
 
-const espLumpBlacklist = [")|(", "|(", ")(", "()", "}{", "{}", "%)", "*)"];
+const espLumpBlacklist = [
+  ")|(",
+  "|(",
+  ")(",
+  "()",
+  "}{",
+  "{}",
+  "%)",
+  "*)",
+  "||",
+];
 
 const punctuationChars = `.,;!?`;
 

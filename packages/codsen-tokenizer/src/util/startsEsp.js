@@ -56,7 +56,9 @@ function startsEsp(str, i, token, layers, styleStarts) {
         ("{}".includes(str[i]) || "{}".includes(str[right(str, i)]))
       )) ||
     //
-    // 2. html-like syntax - Responsys RPL and similar
+    // 2. html-like syntax
+    //
+    // 2.1 - Responsys RPL and similar
     // <#if z> or </#if> and so on
 
     // normal opening tag
@@ -69,6 +71,19 @@ function startsEsp(str, i, token, layers, styleStarts) {
         (espChars.includes(str[i + 1]) &&
           // but no cheating, character must not be second-grade
           !["-"].includes(str[i + 1])))) ||
+    // 2.2 - JSP (Java Server Pages)
+    // <%@ page blablabla %>
+    // <c:set var="someList" value="${jspProp.someList}" />
+    (str[i] === "<" &&
+      // covers majority of JSP tag cases
+      (str[i + 1] === "%" ||
+        // <jsp:
+        str.startsWith("jsp:", i + 1) ||
+        // <cms:
+        str.startsWith("cms:", i + 1) ||
+        // <c:
+        str.startsWith("c:", i + 1))) ||
+    str.startsWith("${jspProp", i) ||
     //
     // 3. single character tails, for example RPL's closing curlies: ${zzz}
     // it's specifically a closing-kind character
@@ -94,7 +109,7 @@ function startsEsp(str, i, token, layers, styleStarts) {
       layers[layers.length - 1].openingLump[2] === "-" &&
       layers[layers.length - 1].openingLump[3] === "-");
 
-  console.log(`097 startsEsp(): RETURNS ${res}`);
+  console.log(`112 startsEsp(): RETURNS ${res}`);
   return res;
 }
 

@@ -1,16 +1,20 @@
 import { espChars, leftyChars, rightyChars } from "./util";
+import getLastEspLayerObjIdx from "./getLastEspLayerObjIdx";
 
 function getWholeEspTagLumpOnTheRight(str, i, layers) {
   let wholeEspTagLumpOnTheRight = str[i];
   const len = str.length;
 
+  // getLastEspLayerObj()
+  const lastEspLayerObj = layers[getLastEspLayerObjIdx(layers)];
+
   console.log(
-    `008 getWholeEspTagLumpOnTheRight(): ${`\u001b[${32}m${`START`}\u001b[${39}m`}`
+    `012 getWholeEspTagLumpOnTheRight(): ${`\u001b[${32}m${`START`}\u001b[${39}m`}`
   );
 
   for (let y = i + 1; y < len; y++) {
     console.log(
-      `013 getWholeEspTagLumpOnTheRight(): ${`\u001b[${36}m${`str[${y}]=${str[y]}`}\u001b[${39}m`}`
+      `017 getWholeEspTagLumpOnTheRight(): ${`\u001b[${36}m${`str[${y}]=${str[y]}`}\u001b[${39}m`}`
     );
 
     // if righty character is on the left and now it's lefty,
@@ -27,7 +31,7 @@ function getWholeEspTagLumpOnTheRight(str, i, layers) {
     // we clice off where righty starts
     if (leftyChars.includes(str[y]) && rightyChars.includes(str[y - 1])) {
       console.log(
-        `030 getWholeEspTagLumpOnTheRight(): ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
+        `034 getWholeEspTagLumpOnTheRight(): ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
       );
       break;
     }
@@ -37,24 +41,33 @@ function getWholeEspTagLumpOnTheRight(str, i, layers) {
       // ${(y/4)?int}
       //   ^
       //   we're here - is this opening bracket part of heads?!?
+      //
+      // or JSP:
+      // <%=(new java.util.Date()).toLocaleString()%>
+      //    ^
 
       // if lump already is two chars long
       wholeEspTagLumpOnTheRight.length > 1 &&
       // contains one of opening-polarity characters
-      (wholeEspTagLumpOnTheRight.includes(`{`) ||
+      (wholeEspTagLumpOnTheRight.includes(`<`) ||
+        wholeEspTagLumpOnTheRight.includes(`{`) ||
         wholeEspTagLumpOnTheRight.includes(`[`) ||
         wholeEspTagLumpOnTheRight.includes(`(`)) &&
       // bail if it's a bracket
       str[y] === "("
     ) {
       console.log(
-        `051 getWholeEspTagLumpOnTheRight(): ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
+        `060 getWholeEspTagLumpOnTheRight(): ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
       );
       break;
     }
 
     if (
       espChars.includes(str[y]) ||
+      // in case it's XML tag-like templating tag, such as JSP,
+      // we check, is it in the last guessed lump's character's list
+      (lastEspLayerObj &&
+        lastEspLayerObj.guessedClosingLump.includes(str[y])) ||
       (str[i] === "<" && str[y] === "/") ||
       // accept closing bracket if it's RPL comment, tails of: <#-- z -->
       (str[y] === ">" &&
@@ -64,11 +77,18 @@ function getWholeEspTagLumpOnTheRight(str, i, layers) {
         layers[layers.length - 1].type === "esp" &&
         layers[layers.length - 1].openingLump[0] === "<" &&
         layers[layers.length - 1].openingLump[2] === "-" &&
-        layers[layers.length - 1].openingLump[3] === "-")
+        layers[layers.length - 1].openingLump[3] === "-") ||
+      // we do exception for extra characters, such as JSP's
+      // exclamation mark: <%! yo %>
+      //                     ^
+      // which is legit...
+      //
+      // at least one character must have been caught already
+      (!lastEspLayerObj && y > i && `!=@`.includes(str[y]))
     ) {
       wholeEspTagLumpOnTheRight += str[y];
     } else {
-      console.log(`071 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+      console.log(`091 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
       break;
     }
   }
@@ -147,7 +167,7 @@ function getWholeEspTagLumpOnTheRight(str, i, layers) {
     }
   }
 
-  console.log(`150 getWholeEspTagLumpOnTheRight(): final return`);
+  console.log(`170 getWholeEspTagLumpOnTheRight(): final return`);
 
   return wholeEspTagLumpOnTheRight;
 }
