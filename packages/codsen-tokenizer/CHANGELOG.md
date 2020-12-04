@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [4.2.0](https://git.sr.ht/~royston/codsen/compare/codsen-tokenizer@4.1.0...codsen-tokenizer@4.2.0) (2020-12-04)
-
+## 4.2.0 (2020-12-04)
 
 ### Features
 
-* recognise JSP (Java Server Pages) ([68fa3c2](https://git.sr.ht/~royston/codsen/commits/68fa3c25cee47996126af3b6ea4bb0a88f3cb788))
-
-
-
-
+- recognise JSP (Java Server Pages) ([68fa3c2](https://git.sr.ht/~royston/codsen/commit/68fa3c25cee47996126af3b6ea4bb0a88f3cb788))
 
 ## 4.1.0 (2020-12-03)
 
