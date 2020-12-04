@@ -1,0 +1,5 @@
+dist/
+test/fixtures
+fixtures/
+*.json
+testStats.md
