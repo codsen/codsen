@@ -1,0 +1,64 @@
+# detect-templating-language
+
+> Detects various templating languages present in string
+
+<div class="package-badges">
+  <a href="https://www.npmjs.com/package/detect-templating-language" rel="nofollow noreferrer noopener">
+    <img src="https://img.shields.io/badge/-npm-blue?style=flat-square" alt="page on npm">
+  </a>
+  <a href="https://codsen.com/os/detect-templating-language" rel="nofollow noreferrer noopener">
+    <img src="https://img.shields.io/badge/-codsen-blue?style=flat-square" alt="page on codsen.com">
+  </a>
+  <a href="https://git.sr.ht/~royston/codsen/tree/master/packages/detect-templating-language" rel="nofollow noreferrer noopener">
+    <img src="https://img.shields.io/badge/-sourcehut-blue?style=flat-square" alt="page on sourcehut">
+  </a>
+  <a href="https://npmcharts.com/compare/detect-templating-language?interval=30" rel="nofollow noreferrer noopener" target="_blank">
+    <img src="https://img.shields.io/npm/dm/detect-templating-language.svg?style=flat-square" alt="Downloads per month">
+  </a>
+  <a href="https://prettier.io" rel="nofollow noreferrer noopener" target="_blank">
+    <img src="https://img.shields.io/badge/code_style-prettier-brightgreen.svg?style=flat-square" alt="Code style: prettier">
+  </a>
+  <img src="https://img.shields.io/badge/licence-MIT-brightgreen.svg?style=flat-square" alt="MIT License">
+  <a href="https://liberamanifesto.com" rel="nofollow noreferrer noopener" target="_blank">
+    <img src="https://img.shields.io/badge/libera-manifesto-lightgrey.svg?style=flat-square" alt="libera manifesto">
+  </a>
+</div>
+
+## Install
+
+```bash
+npm i detect-templating-language
+```
+
+## Quick Take
+
+```js
+import { strict as assert } from "assert";
+import detectLang from "detect-templating-language";
+
+// detects Nunjucks
+assert.deepEqual(
+  detectLang(`<div>{% if something %}x{% else %}y{% endif %}</div>`),
+  { name: "Nunjucks" }
+);
+
+// detects JSP (Java Server Pages)
+assert.deepEqual(
+  detectLang(
+    `<div><c:set var="someList" value="\${jspProp.someList}" /></div>`
+  ),
+  { name: "JSP" }
+);
+```
+
+## Documentation
+
+Please [visit codsen.com](https://codsen.com/os/detect-templating-language/) for a full description of the API and examples.
+
+## Licence
+
+MIT License
+
+Copyright (c) 2010-2020 Roy Revelt and other contributors
+
+<img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center"> <img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">
