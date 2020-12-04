@@ -1,7 +1,7 @@
 /**
  * detect-templating-language
  * Detects various templating languages present in string
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/detect-templating-language/
@@ -32,7 +32,7 @@
   /**
    * regex-is-jinja-nunjucks
    * Regular expression for detecting Jinja or Nunjucks code
-   * Version: 1.0.0
+   * Version: 1.1.0
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/regex-is-jinja-nunjucks/
@@ -44,7 +44,7 @@
   /**
    * regex-is-jsp
    * Regular expression for detecting JSP (Java Server Pages) code
-   * Version: 1.0.0
+   * Version: 1.1.0
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/regex-is-jsp/

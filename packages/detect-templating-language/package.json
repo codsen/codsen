@@ -1,6 +1,6 @@
 {
   "name": "detect-templating-language",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Detects various templating languages present in string",
   "keywords": [
     "check",
@@ -92,8 +92,8 @@
     }
   },
   "dependencies": {
-    "regex-is-jinja-nunjucks": "^1.0.0",
-    "regex-is-jsp": "^1.0.0"
+    "regex-is-jinja-nunjucks": "^1.1.0",
+    "regex-is-jsp": "^1.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
