@@ -17,7 +17,8 @@ import clone from "lodash.clonedeep";
  */
 function objectBooleanCombinations(
   originalIncomingObject,
-  originalOverrideObject
+  originalOverrideObject,
+  forceBool = false
 ) {
   //
   // FUNCTIONS
@@ -39,9 +40,6 @@ function objectBooleanCombinations(
     }
     return r;
   }
-  function existy(x) {
-    return x != null;
-  }
 
   // VARIABLES
   // =========
@@ -49,7 +47,7 @@ function objectBooleanCombinations(
   // CHECKS
   // ======
 
-  if (!existy(originalIncomingObject)) {
+  if (!originalIncomingObject) {
     throw new Error("[THROW_ID_01] missing input object");
   }
   if (!isObject(originalIncomingObject)) {
@@ -57,7 +55,7 @@ function objectBooleanCombinations(
       "[THROW_ID_02] the first input object must be a true object"
     );
   }
-  if (existy(originalOverrideObject) && !isObject(originalOverrideObject)) {
+  if (originalOverrideObject && !isObject(originalOverrideObject)) {
     throw new Error(
       "[THROW_ID_03] the second override object must be a true object"
     );
@@ -77,7 +75,7 @@ function objectBooleanCombinations(
   // ----------------------------------------------------------------------------
 
   let override = false;
-  if (existy(overrideObject) && Object.keys(overrideObject).length !== 0) {
+  if (overrideObject && Object.keys(overrideObject).length !== 0) {
     override = true;
   }
 
@@ -100,7 +98,14 @@ function objectBooleanCombinations(
   boolCombinations.forEach((elem1, index1) => {
     tempObject = {};
     propertiesToMix.forEach((elem2, index2) => {
-      tempObject[elem2] = boolCombinations[index1][index2] === 1 ? 1 : 0;
+      tempObject[elem2] =
+        boolCombinations[index1][index2] === 1
+          ? forceBool
+            ? true
+            : 1
+          : forceBool
+          ? false
+          : 0;
     });
     outcomingObjectsArray.push(tempObject);
   });

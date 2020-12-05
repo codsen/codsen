@@ -3474,6 +3474,8 @@
    */
 
   function objectBooleanCombinations(originalIncomingObject, originalOverrideObject) {
+    var forceBool = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
     //
     // FUNCTIONS
     // =========
@@ -3497,17 +3499,13 @@
       }
 
       return r;
-    }
-
-    function existy(x) {
-      return x != null;
     } // VARIABLES
     // =========
     // CHECKS
     // ======
 
 
-    if (!existy(originalIncomingObject)) {
+    if (!originalIncomingObject) {
       throw new Error("[THROW_ID_01] missing input object");
     }
 
@@ -3515,7 +3513,7 @@
       throw new Error("[THROW_ID_02] the first input object must be a true object");
     }
 
-    if (existy(originalOverrideObject) && !lodash_isplainobject(originalOverrideObject)) {
+    if (originalOverrideObject && !lodash_isplainobject(originalOverrideObject)) {
       throw new Error("[THROW_ID_03] the second override object must be a true object");
     }
 
@@ -3530,7 +3528,7 @@
 
     var override = false;
 
-    if (existy(overrideObject) && Object.keys(overrideObject).length !== 0) {
+    if (overrideObject && Object.keys(overrideObject).length !== 0) {
       override = true;
     }
 
@@ -3551,7 +3549,7 @@
     boolCombinations.forEach(function (elem1, index1) {
       tempObject = {};
       propertiesToMix.forEach(function (elem2, index2) {
-        tempObject[elem2] = boolCombinations[index1][index2] === 1 ? 1 : 0;
+        tempObject[elem2] = boolCombinations[index1][index2] === 1 ? forceBool ? true : 1 : forceBool ? false : 0;
       });
       outcomingObjectsArray.push(tempObject);
     }); // if there's override, append the static override values on each property of the

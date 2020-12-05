@@ -22,6 +22,7 @@ var isObject__default = /*#__PURE__*/_interopDefaultLegacy(isObject);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 
 function objectBooleanCombinations(originalIncomingObject, originalOverrideObject) {
+  var forceBool = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
   function combinations(n) {
     var r = [];
     for (var i = 0; i < 1 << n; i++) {
@@ -33,16 +34,13 @@ function objectBooleanCombinations(originalIncomingObject, originalOverrideObjec
     }
     return r;
   }
-  function existy(x) {
-    return x != null;
-  }
-  if (!existy(originalIncomingObject)) {
+  if (!originalIncomingObject) {
     throw new Error("[THROW_ID_01] missing input object");
   }
   if (!isObject__default['default'](originalIncomingObject)) {
     throw new Error("[THROW_ID_02] the first input object must be a true object");
   }
-  if (existy(originalOverrideObject) && !isObject__default['default'](originalOverrideObject)) {
+  if (originalOverrideObject && !isObject__default['default'](originalOverrideObject)) {
     throw new Error("[THROW_ID_03] the second override object must be a true object");
   }
   var incomingObject = clone__default['default'](originalIncomingObject);
@@ -51,7 +49,7 @@ function objectBooleanCombinations(originalIncomingObject, originalOverrideObjec
   var outcomingObjectsArray = [];
   var propertiesToBeOverridden;
   var override = false;
-  if (existy(overrideObject) && Object.keys(overrideObject).length !== 0) {
+  if (overrideObject && Object.keys(overrideObject).length !== 0) {
     override = true;
   }
   if (override) {
@@ -65,7 +63,7 @@ function objectBooleanCombinations(originalIncomingObject, originalOverrideObjec
   boolCombinations.forEach(function (elem1, index1) {
     tempObject = {};
     propertiesToMix.forEach(function (elem2, index2) {
-      tempObject[elem2] = boolCombinations[index1][index2] === 1 ? 1 : 0;
+      tempObject[elem2] = boolCombinations[index1][index2] === 1 ? forceBool ? true : 1 : forceBool ? false : 0;
     });
     outcomingObjectsArray.push(tempObject);
   });
