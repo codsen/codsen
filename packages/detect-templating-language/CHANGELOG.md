@@ -8,7 +8,3 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Features
 
 - initial release ([cae57f9](https://git.sr.ht/~royston/codsen/commit/cae57f9bc879a144a28e9e94d13364e3634d7c9f))
-
-## 1.0.0 (2020-12-04)
-
-- Initial release
