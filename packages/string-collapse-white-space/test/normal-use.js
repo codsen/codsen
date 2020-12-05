@@ -1,6 +1,6 @@
 import tap from "tap";
 import collapse from "../dist/string-collapse-white-space.esm";
-import { mixer, allCombinations } from "./util/util";
+import { mixer } from "./util/util";
 import { cbSchema } from "../src/util";
 
 // -----------------------------------------------------------------------------
@@ -8,7 +8,7 @@ import { cbSchema } from "../src/util";
 // -----------------------------------------------------------------------------
 
 tap.test(`01 - simple sequences of spaces within string`, (t) => {
-  allCombinations.forEach((opt) => {
+  mixer().forEach((opt) => {
     t.strictSame(
       collapse("a b", {
         ...opt,
@@ -36,7 +36,7 @@ tap.test(`01 - simple sequences of spaces within string`, (t) => {
 });
 
 tap.test(`02 - simple sequences of spaces within string`, (t) => {
-  allCombinations.forEach((opt) => {
+  mixer().forEach((opt) => {
     t.strictSame(
       collapse("a  b", {
         ...opt,
@@ -65,7 +65,7 @@ tap.test(`02 - simple sequences of spaces within string`, (t) => {
 
 tap.test(`03 - simple sequences of spaces within string`, (t) => {
   t.strictSame(
-    allCombinations.forEach((opt) => {
+    mixer().forEach((opt) => {
       t.strictSame(
         collapse("aaa     bbb    ccc   dddd", {
           ...opt,
@@ -102,9 +102,9 @@ tap.test(`03 - simple sequences of spaces within string`, (t) => {
 
 tap.test(`04 - sequences of spaces outside of string - defaults`, (t) => {
   mixer({
-    trimStart: 1,
-    trimEnd: 1,
-    trimLines: 0,
+    trimStart: true,
+    trimEnd: true,
+    trimLines: false,
   }).forEach((opt) => {
     t.strictSame(
       collapse("  a b  ", {
@@ -136,9 +136,9 @@ tap.test(`04 - sequences of spaces outside of string - defaults`, (t) => {
     );
   });
   mixer({
-    trimStart: 0,
-    trimEnd: 1,
-    trimLines: 0,
+    trimStart: false,
+    trimEnd: true,
+    trimLines: false,
   }).forEach((opt) => {
     t.strictSame(
       collapse("  a b  ", {
@@ -170,9 +170,9 @@ tap.test(`04 - sequences of spaces outside of string - defaults`, (t) => {
     );
   });
   mixer({
-    trimStart: 1,
-    trimEnd: 0,
-    trimLines: 0,
+    trimStart: true,
+    trimEnd: false,
+    trimLines: false,
   }).forEach((opt) => {
     t.strictSame(
       collapse("  a b  ", {
@@ -204,9 +204,9 @@ tap.test(`04 - sequences of spaces outside of string - defaults`, (t) => {
     );
   });
   mixer({
-    trimStart: 0,
-    trimEnd: 0,
-    trimLines: 0,
+    trimStart: false,
+    trimEnd: false,
+    trimLines: false,
   }).forEach((opt) => {
     t.strictSame(
       collapse("  a b  ", {
@@ -242,9 +242,9 @@ tap.test(`04 - sequences of spaces outside of string - defaults`, (t) => {
 
 tap.test(`05 - sequences of spaces outside of string - defaults`, (t) => {
   mixer({
-    trimStart: 1,
-    trimEnd: 1,
-    trimLines: 0,
+    trimStart: true,
+    trimEnd: true,
+    trimLines: false,
   }).forEach((opt) => {
     t.strictSame(
       collapse(" a b ", {
@@ -276,9 +276,9 @@ tap.test(`05 - sequences of spaces outside of string - defaults`, (t) => {
     );
   });
   mixer({
-    trimStart: 1,
-    trimEnd: 0,
-    trimLines: 0,
+    trimStart: true,
+    trimEnd: false,
+    trimLines: false,
   }).forEach((opt) => {
     t.strictSame(
       collapse(" a b ", {
@@ -307,9 +307,9 @@ tap.test(`05 - sequences of spaces outside of string - defaults`, (t) => {
     );
   });
   mixer({
-    trimStart: 0,
-    trimEnd: 1,
-    trimLines: 0,
+    trimStart: false,
+    trimEnd: true,
+    trimLines: false,
   }).forEach((opt) => {
     t.strictSame(
       collapse(" a b ", {
@@ -338,9 +338,9 @@ tap.test(`05 - sequences of spaces outside of string - defaults`, (t) => {
     );
   });
   mixer({
-    trimStart: 0,
-    trimEnd: 0,
-    trimLines: 0,
+    trimStart: false,
+    trimEnd: false,
+    trimLines: false,
   }).forEach((opt) => {
     t.strictSame(
       collapse(" a b ", {
@@ -377,9 +377,9 @@ tap.test(`06 - sequences of spaces outside of string - defaults`, (t) => {
   // =====================
 
   mixer({
-    trimStart: 1,
-    trimEnd: 1,
-    trimLines: 0,
+    trimStart: true,
+    trimEnd: true,
+    trimLines: false,
     // enforceSpacesOnly doesn't matter in this case
   }).forEach((opt) => {
     t.strictSame(
@@ -413,10 +413,10 @@ tap.test(`06 - sequences of spaces outside of string - defaults`, (t) => {
   });
 
   mixer({
-    trimStart: 1,
-    trimEnd: 0,
-    trimLines: 0,
-    enforceSpacesOnly: 0,
+    trimStart: true,
+    trimEnd: false,
+    trimLines: false,
+    enforceSpacesOnly: false,
   }).forEach((opt) => {
     t.strictSame(
       collapse("\ta b\t", {
@@ -445,10 +445,10 @@ tap.test(`06 - sequences of spaces outside of string - defaults`, (t) => {
     );
   });
   mixer({
-    trimStart: 0,
-    trimEnd: 1,
-    trimLines: 0,
-    enforceSpacesOnly: 0,
+    trimStart: false,
+    trimEnd: true,
+    trimLines: false,
+    enforceSpacesOnly: false,
   }).forEach((opt) => {
     t.strictSame(
       collapse("\ta b\t", {
@@ -477,10 +477,10 @@ tap.test(`06 - sequences of spaces outside of string - defaults`, (t) => {
     );
   });
   mixer({
-    trimStart: 0,
-    trimEnd: 0,
-    trimLines: 0,
-    enforceSpacesOnly: 0,
+    trimStart: false,
+    trimEnd: false,
+    trimLines: false,
+    enforceSpacesOnly: false,
   }).forEach((opt) => {
     t.strictSame(
       collapse("\ta b\t", {
@@ -514,10 +514,10 @@ tap.test(`06 - sequences of spaces outside of string - defaults`, (t) => {
   // ====================
 
   mixer({
-    trimStart: 1,
-    trimEnd: 0,
-    trimLines: 0,
-    enforceSpacesOnly: 1,
+    trimStart: true,
+    trimEnd: false,
+    trimLines: false,
+    enforceSpacesOnly: true,
   }).forEach((opt) => {
     t.strictSame(
       collapse("\ta b\t", {
@@ -549,10 +549,10 @@ tap.test(`06 - sequences of spaces outside of string - defaults`, (t) => {
     );
   });
   mixer({
-    trimStart: 0,
-    trimEnd: 1,
-    trimLines: 0,
-    enforceSpacesOnly: 1,
+    trimStart: false,
+    trimEnd: true,
+    trimLines: false,
+    enforceSpacesOnly: true,
   }).forEach((opt) => {
     t.strictSame(
       collapse("\ta b\t", {
@@ -584,10 +584,10 @@ tap.test(`06 - sequences of spaces outside of string - defaults`, (t) => {
     );
   });
   mixer({
-    trimStart: 0,
-    trimEnd: 0,
-    trimLines: 0,
-    enforceSpacesOnly: 1,
+    trimStart: false,
+    trimEnd: false,
+    trimLines: false,
+    enforceSpacesOnly: true,
   }).forEach((opt) => {
     t.strictSame(
       collapse("\ta b\t", {
@@ -622,7 +622,7 @@ tap.test(`06 - sequences of spaces outside of string - defaults`, (t) => {
 });
 
 tap.test(`07 - double inner space`, (t) => {
-  allCombinations.forEach((opt) => {
+  mixer().forEach((opt) => {
     t.strictSame(
       collapse("a  b", {
         ...opt,
@@ -653,7 +653,7 @@ tap.test(`07 - double inner space`, (t) => {
 });
 
 tap.test(`08 - sequences of spaces outside of string - defaults`, (t) => {
-  allCombinations.forEach((opt) => {
+  mixer().forEach((opt) => {
     t.strictSame(
       collapse("aaa     bbb    ccc   dddd", {
         ...opt,
@@ -693,10 +693,10 @@ tap.test(`09 - sequences of spaces outside of string - opts.trimStart`, (t) => {
     // trims 0-0
 
     mixer({
-      trimStart: 0,
-      trimEnd: 0,
-      trimLines: 0,
-      enforceSpacesOnly: 0,
+      trimStart: false,
+      trimEnd: false,
+      trimLines: false,
+      enforceSpacesOnly: false,
     }).forEach((opt) => {
       // ". :a b: ."
       t.strictSame(
@@ -726,10 +726,10 @@ tap.test(`09 - sequences of spaces outside of string - opts.trimStart`, (t) => {
       );
     });
     mixer({
-      trimStart: 0,
-      trimEnd: 0,
-      trimLines: 0,
-      enforceSpacesOnly: 1,
+      trimStart: false,
+      trimEnd: false,
+      trimLines: false,
+      enforceSpacesOnly: true,
     }).forEach((opt) => {
       // ". :a b: ."
       t.strictSame(
@@ -742,10 +742,10 @@ tap.test(`09 - sequences of spaces outside of string - opts.trimStart`, (t) => {
     // trims 0-1
 
     mixer({
-      trimStart: 0,
-      trimEnd: 1,
-      trimLines: 0,
-      enforceSpacesOnly: 0,
+      trimStart: false,
+      trimEnd: true,
+      trimLines: false,
+      enforceSpacesOnly: false,
     }).forEach((opt) => {
       // ". :a b: ."
       t.strictSame(
@@ -755,10 +755,10 @@ tap.test(`09 - sequences of spaces outside of string - opts.trimStart`, (t) => {
       );
     });
     mixer({
-      trimStart: 0,
-      trimEnd: 1,
-      trimLines: 0,
-      enforceSpacesOnly: 1,
+      trimStart: false,
+      trimEnd: true,
+      trimLines: false,
+      enforceSpacesOnly: true,
     }).forEach((opt) => {
       // ". :a b: ."
       t.strictSame(
@@ -771,10 +771,10 @@ tap.test(`09 - sequences of spaces outside of string - opts.trimStart`, (t) => {
     // trims 1-0
 
     mixer({
-      trimStart: 1,
-      trimEnd: 0,
-      trimLines: 0,
-      enforceSpacesOnly: 0,
+      trimStart: true,
+      trimEnd: false,
+      trimLines: false,
+      enforceSpacesOnly: false,
     }).forEach((opt) => {
       // ". :a b: ."
       t.strictSame(
@@ -784,10 +784,10 @@ tap.test(`09 - sequences of spaces outside of string - opts.trimStart`, (t) => {
       );
     });
     mixer({
-      trimStart: 1,
-      trimEnd: 0,
-      trimLines: 0,
-      enforceSpacesOnly: 1,
+      trimStart: true,
+      trimEnd: false,
+      trimLines: false,
+      enforceSpacesOnly: true,
     }).forEach((opt) => {
       // ". :a b: ."
       t.strictSame(
@@ -800,8 +800,8 @@ tap.test(`09 - sequences of spaces outside of string - opts.trimStart`, (t) => {
     // trims 1-1
 
     mixer({
-      trimStart: 1,
-      trimEnd: 1,
+      trimStart: true,
+      trimEnd: true,
     }).forEach((opt) => {
       // ". :a b: ."
       t.strictSame(
@@ -817,7 +817,7 @@ tap.test(`09 - sequences of spaces outside of string - opts.trimStart`, (t) => {
 tap.test(`10 - sequences of line breaks`, (t) => {
   ["\r\n", "\r", "\n"].forEach((eol) => {
     mixer({
-      removeEmptyLines: 0,
+      removeEmptyLines: false,
     }).forEach((opt) => {
       t.strictSame(
         collapse(`a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`, opt).result,
@@ -826,7 +826,7 @@ tap.test(`10 - sequences of line breaks`, (t) => {
       );
     });
     mixer({
-      removeEmptyLines: 1,
+      removeEmptyLines: true,
     }).forEach((opt) => {
       t.strictSame(
         collapse(`a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`, opt).result,
@@ -835,7 +835,7 @@ tap.test(`10 - sequences of line breaks`, (t) => {
       );
     });
     mixer({
-      removeEmptyLines: 1,
+      removeEmptyLines: true,
       limitConsecutiveEmptyLinesTo: 0, // hardcoded default
     }).forEach((opt) => {
       t.strictSame(
@@ -845,8 +845,8 @@ tap.test(`10 - sequences of line breaks`, (t) => {
       );
     });
     mixer({
-      removeEmptyLines: 1,
-      limitConsecutiveEmptyLinesTo: 1,
+      removeEmptyLines: true,
+      limitConsecutiveEmptyLinesTo: true,
     }).forEach((opt) => {
       t.strictSame(
         collapse(`a${eol}b${eol}c${eol}${eol}${eol}${eol}${eol}d`, opt).result,
@@ -855,7 +855,7 @@ tap.test(`10 - sequences of line breaks`, (t) => {
       );
     });
     mixer({
-      removeEmptyLines: 1,
+      removeEmptyLines: true,
       limitConsecutiveEmptyLinesTo: 2,
     }).forEach((opt) => {
       t.strictSame(
@@ -865,7 +865,7 @@ tap.test(`10 - sequences of line breaks`, (t) => {
       );
     });
     mixer({
-      removeEmptyLines: 1,
+      removeEmptyLines: true,
       limitConsecutiveEmptyLinesTo: 3,
     }).forEach((opt) => {
       t.strictSame(
@@ -875,7 +875,7 @@ tap.test(`10 - sequences of line breaks`, (t) => {
       );
     });
     mixer({
-      removeEmptyLines: 1,
+      removeEmptyLines: true,
       limitConsecutiveEmptyLinesTo: 4,
     }).forEach((opt) => {
       t.strictSame(
@@ -885,7 +885,7 @@ tap.test(`10 - sequences of line breaks`, (t) => {
       );
     });
     mixer({
-      removeEmptyLines: 1,
+      removeEmptyLines: true,
       limitConsecutiveEmptyLinesTo: 5,
     }).forEach((opt) => {
       t.strictSame(
@@ -895,7 +895,7 @@ tap.test(`10 - sequences of line breaks`, (t) => {
       );
     });
     mixer({
-      removeEmptyLines: 1,
+      removeEmptyLines: true,
       limitConsecutiveEmptyLinesTo: 99,
     }).forEach((opt) => {
       t.strictSame(
@@ -911,8 +911,8 @@ tap.test(`10 - sequences of line breaks`, (t) => {
 tap.test(`11 - sequences of line breaks`, (t) => {
   ["\r\n", "\r", "\n"].forEach((eol) => {
     mixer({
-      removeEmptyLines: 0,
-      trimLines: 0,
+      removeEmptyLines: false,
+      trimLines: false,
     }).forEach((opt) => {
       t.strictSame(
         collapse(`a${eol}b${eol}c${eol}   ${eol}${eol}${eol}${eol}d`, opt)
@@ -922,8 +922,8 @@ tap.test(`11 - sequences of line breaks`, (t) => {
       );
     });
     mixer({
-      removeEmptyLines: 0,
-      trimLines: 1,
+      removeEmptyLines: false,
+      trimLines: true,
     }).forEach((opt) => {
       t.strictSame(
         collapse(`a${eol}b${eol}c${eol}   ${eol}${eol}${eol}${eol}d`, opt)
@@ -933,8 +933,8 @@ tap.test(`11 - sequences of line breaks`, (t) => {
       );
     });
     mixer({
-      removeEmptyLines: 1,
-      trimLines: 1,
+      removeEmptyLines: true,
+      trimLines: true,
     }).forEach((opt) => {
       t.strictSame(
         collapse(`a${eol}b${eol}c${eol}   ${eol}${eol}${eol}${eol}d`, opt)
@@ -944,8 +944,8 @@ tap.test(`11 - sequences of line breaks`, (t) => {
       );
     });
     mixer({
-      removeEmptyLines: 1,
-      trimLines: 1,
+      removeEmptyLines: true,
+      trimLines: true,
       limitConsecutiveEmptyLinesTo: 0, // hardcoded default
     }).forEach((opt) => {
       t.strictSame(
@@ -956,9 +956,9 @@ tap.test(`11 - sequences of line breaks`, (t) => {
       );
     });
     mixer({
-      removeEmptyLines: 1,
-      trimLines: 1,
-      limitConsecutiveEmptyLinesTo: 1,
+      removeEmptyLines: true,
+      trimLines: true,
+      limitConsecutiveEmptyLinesTo: true,
     }).forEach((opt) => {
       t.strictSame(
         collapse(`a${eol}b${eol}c${eol}   ${eol}${eol}${eol}${eol}d`, opt)
@@ -968,8 +968,8 @@ tap.test(`11 - sequences of line breaks`, (t) => {
       );
     });
     mixer({
-      removeEmptyLines: 1,
-      trimLines: 1,
+      removeEmptyLines: true,
+      trimLines: true,
       limitConsecutiveEmptyLinesTo: 2,
     }).forEach((opt) => {
       t.strictSame(
@@ -980,8 +980,8 @@ tap.test(`11 - sequences of line breaks`, (t) => {
       );
     });
     mixer({
-      removeEmptyLines: 1,
-      trimLines: 1,
+      removeEmptyLines: true,
+      trimLines: true,
       limitConsecutiveEmptyLinesTo: 3,
     }).forEach((opt) => {
       t.strictSame(
@@ -992,8 +992,8 @@ tap.test(`11 - sequences of line breaks`, (t) => {
       );
     });
     mixer({
-      removeEmptyLines: 1,
-      trimLines: 0,
+      removeEmptyLines: true,
+      trimLines: false,
       limitConsecutiveEmptyLinesTo: 4,
     }).forEach((opt) => {
       t.strictSame(
@@ -1004,8 +1004,8 @@ tap.test(`11 - sequences of line breaks`, (t) => {
       );
     });
     mixer({
-      removeEmptyLines: 1,
-      trimLines: 1,
+      removeEmptyLines: true,
+      trimLines: true,
       limitConsecutiveEmptyLinesTo: 4,
     }).forEach((opt) => {
       t.strictSame(
@@ -1016,8 +1016,8 @@ tap.test(`11 - sequences of line breaks`, (t) => {
       );
     });
     mixer({
-      removeEmptyLines: 1,
-      trimLines: 1,
+      removeEmptyLines: true,
+      trimLines: true,
       limitConsecutiveEmptyLinesTo: 5,
     }).forEach((opt) => {
       t.strictSame(
@@ -1028,8 +1028,8 @@ tap.test(`11 - sequences of line breaks`, (t) => {
       );
     });
     mixer({
-      removeEmptyLines: 1,
-      trimLines: 1,
+      removeEmptyLines: true,
+      trimLines: true,
       limitConsecutiveEmptyLinesTo: 99,
     }).forEach((opt) => {
       t.strictSame(
@@ -1045,7 +1045,7 @@ tap.test(`11 - sequences of line breaks`, (t) => {
 
 tap.test(`12 - tag and linebreak chain`, (t) => {
   ["\r\n", "\r", "\n"].forEach((presentEolType) => {
-    allCombinations.forEach((opt) => {
+    mixer().forEach((opt) => {
       t.strictSame(
         collapse(`a<br>${presentEolType}b`, opt).result,
         `a<br>${presentEolType}b`,
@@ -1058,7 +1058,7 @@ tap.test(`12 - tag and linebreak chain`, (t) => {
 
 tap.test(`13 - tag and linebreak chain`, (t) => {
   ["\r\n", "\r", "\n"].forEach((presentEolType) => {
-    allCombinations.forEach((opt) => {
+    mixer().forEach((opt) => {
       t.strictSame(
         collapse(`a<br>${presentEolType}b<br>${presentEolType}c`, opt).result,
         `a<br>${presentEolType}b<br>${presentEolType}c`,
@@ -1071,7 +1071,7 @@ tap.test(`13 - tag and linebreak chain`, (t) => {
 
 tap.test(`14 - tag and linebreak chain`, (t) => {
   ["\r\n", "\r", "\n"].forEach((presentEolType) => {
-    allCombinations.forEach((opt) => {
+    mixer().forEach((opt) => {
       t.strictSame(
         collapse(
           `a<br>${presentEolType}b<br>${presentEolType}c<br>${presentEolType}d`,

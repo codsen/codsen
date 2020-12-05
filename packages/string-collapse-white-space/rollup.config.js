@@ -64,10 +64,10 @@ export default (commandLineArgs) => {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
-        "object-boolean-combinations",
         "ranges-apply",
         "ranges-push",
         "string-left-right",
+        "test-mixer",
       ],
       plugins: [
         strip({
@@ -86,10 +86,10 @@ export default (commandLineArgs) => {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
       external: [
-        "object-boolean-combinations",
         "ranges-apply",
         "ranges-push",
         "string-left-right",
+        "test-mixer",
       ],
       plugins: [
         strip({

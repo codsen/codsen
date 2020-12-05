@@ -1,12 +1,12 @@
 import tap from "tap";
 import collapse from "../dist/string-collapse-white-space.esm";
-import { mixer, allCombinations } from "./util/util";
+import { mixer } from "./util/util";
 
 // opts.enforceSpacesOnly
 // -----------------------------------------------------------------------------
 
 tap.test(`01`, (t) => {
-  allCombinations.forEach((opt) => {
+  mixer().forEach((opt) => {
     t.strictSame(
       collapse(`a b`, opt),
       {
@@ -21,7 +21,7 @@ tap.test(`01`, (t) => {
 
 tap.test(`02`, (t) => {
   mixer({
-    enforceSpacesOnly: 0,
+    enforceSpacesOnly: false,
   }).forEach((opt) => {
     t.strictSame(
       collapse(`a \tb`, opt),
@@ -30,7 +30,7 @@ tap.test(`02`, (t) => {
     );
   });
   mixer({
-    enforceSpacesOnly: 1,
+    enforceSpacesOnly: true,
   }).forEach((opt) => {
     t.strictSame(
       collapse(`a \tb`, opt),
@@ -43,7 +43,7 @@ tap.test(`02`, (t) => {
 
 tap.test(`03`, (t) => {
   mixer({
-    enforceSpacesOnly: 0,
+    enforceSpacesOnly: false,
   }).forEach((opt) => {
     t.strictSame(
       collapse(`a \t\tb`, opt),
@@ -52,7 +52,7 @@ tap.test(`03`, (t) => {
     );
   });
   mixer({
-    enforceSpacesOnly: 1,
+    enforceSpacesOnly: true,
   }).forEach((opt) => {
     t.strictSame(
       collapse(`a \t\tb`, opt),
@@ -65,7 +65,7 @@ tap.test(`03`, (t) => {
 
 tap.test(`04`, (t) => {
   mixer({
-    enforceSpacesOnly: 0,
+    enforceSpacesOnly: false,
   }).forEach((opt) => {
     t.strictSame(
       collapse(`a\t\tb`, opt),
@@ -74,7 +74,7 @@ tap.test(`04`, (t) => {
     );
   });
   mixer({
-    enforceSpacesOnly: 1,
+    enforceSpacesOnly: true,
   }).forEach((opt) => {
     t.strictSame(
       collapse(`a\t\tb`, opt),
@@ -89,7 +89,7 @@ tap.test(`04`, (t) => {
 
 tap.test(`05`, (t) => {
   mixer({
-    enforceSpacesOnly: 0,
+    enforceSpacesOnly: false,
   }).forEach((opt) => {
     t.strictSame(
       collapse(`a  \tb`, opt),
@@ -98,7 +98,7 @@ tap.test(`05`, (t) => {
     );
   });
   mixer({
-    enforceSpacesOnly: 1,
+    enforceSpacesOnly: true,
   }).forEach((opt) => {
     t.strictSame(
       collapse(`a  \tb`, opt),
@@ -111,7 +111,7 @@ tap.test(`05`, (t) => {
 
 tap.test(`06 - reuse the last space`, (t) => {
   mixer({
-    enforceSpacesOnly: 0,
+    enforceSpacesOnly: false,
   }).forEach((opt) => {
     t.strictSame(
       collapse(`a\t  b`, opt),
@@ -120,7 +120,7 @@ tap.test(`06 - reuse the last space`, (t) => {
     );
   });
   mixer({
-    enforceSpacesOnly: 1,
+    enforceSpacesOnly: true,
   }).forEach((opt) => {
     t.strictSame(
       collapse(`a\t  b`, opt),
@@ -133,7 +133,7 @@ tap.test(`06 - reuse the last space`, (t) => {
 
 tap.test(`07`, (t) => {
   mixer({
-    enforceSpacesOnly: 0,
+    enforceSpacesOnly: false,
   }).forEach((opt) => {
     t.strictSame(
       collapse(`a\t\t\tb`, opt),
@@ -142,7 +142,7 @@ tap.test(`07`, (t) => {
     );
   });
   mixer({
-    enforceSpacesOnly: 1,
+    enforceSpacesOnly: true,
   }).forEach((opt) => {
     t.strictSame(
       collapse(`a\t\t\tb`, opt),
@@ -436,7 +436,7 @@ tap.test(`30`, (t) => {
 
 tap.test(`31`, (t) => {
   mixer({
-    removeEmptyLines: 0,
+    removeEmptyLines: false,
   }).forEach((opt) => {
     t.strictSame(
       collapse(`a\n\nb`, opt),
@@ -445,7 +445,7 @@ tap.test(`31`, (t) => {
     );
   });
   mixer({
-    removeEmptyLines: 1,
+    removeEmptyLines: true,
   }).forEach((opt) => {
     t.strictSame(
       collapse(`a\n\nb`, opt),
@@ -460,8 +460,8 @@ tap.test(`31`, (t) => {
 
 tap.test(`32`, (t) => {
   mixer({
-    enforceSpacesOnly: 0,
-    trimLines: 0,
+    enforceSpacesOnly: false,
+    trimLines: false,
   }).forEach((opt) => {
     t.strictSame(
       collapse(`a \t \n \t b`, opt),
@@ -470,13 +470,13 @@ tap.test(`32`, (t) => {
     );
   });
   mixer({
-    enforceSpacesOnly: 1,
-    trimLines: 0,
+    enforceSpacesOnly: true,
+    trimLines: false,
   }).forEach((opt) => {
     t.strictSame(collapse(`a \t \n \t b`, opt).result, `a \n b`, "32");
   });
   mixer({
-    trimLines: 1,
+    trimLines: true,
   }).forEach((opt) => {
     t.strictSame(collapse(`a \t \n \t b`, opt).result, `a\nb`, "32");
   });
@@ -485,19 +485,19 @@ tap.test(`32`, (t) => {
 
 tap.test(`33`, (t) => {
   mixer({
-    enforceSpacesOnly: 0,
-    trimLines: 0,
+    enforceSpacesOnly: false,
+    trimLines: false,
   }).forEach((opt) => {
     t.strictSame(collapse(`a \n \t b`, opt).result, `a \n \t b`, "33");
   });
   mixer({
-    enforceSpacesOnly: 1,
-    trimLines: 0,
+    enforceSpacesOnly: true,
+    trimLines: false,
   }).forEach((opt) => {
     t.strictSame(collapse(`a \n \t b`, opt).result, `a \n b`, "33");
   });
   mixer({
-    trimLines: 1,
+    trimLines: true,
   }).forEach((opt) => {
     t.strictSame(collapse(`a \n \t b`, opt).result, `a\nb`, "33");
   });

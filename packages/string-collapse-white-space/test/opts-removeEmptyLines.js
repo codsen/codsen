@@ -1,6 +1,6 @@
 import tap from "tap";
 import collapse from "../dist/string-collapse-white-space.esm";
-import { mixer, allCombinations } from "./util/util";
+import { mixer } from "./util/util";
 
 const key = ["crlf", "cr", "lf"];
 
@@ -9,7 +9,7 @@ const key = ["crlf", "cr", "lf"];
 
 tap.test(`01`, (t) => {
   ["\r\n", "\r", "\n"].forEach((eol) => {
-    allCombinations.forEach((opt) => {
+    mixer().forEach((opt) => {
       t.strictSame(
         collapse(`a${eol}b`, opt).result,
         `a${eol}b`,
@@ -23,7 +23,7 @@ tap.test(`01`, (t) => {
 tap.test(`02`, (t) => {
   ["\r\n", "\r", "\n"].forEach((eol) => {
     mixer({
-      removeEmptyLines: 0,
+      removeEmptyLines: false,
     }).forEach((opt) => {
       t.strictSame(
         collapse(`a${eol}${eol}b`, opt).result,
@@ -32,7 +32,7 @@ tap.test(`02`, (t) => {
       );
     });
     mixer({
-      removeEmptyLines: 1,
+      removeEmptyLines: true,
     }).forEach((opt) => {
       t.strictSame(
         collapse(`a${eol}${eol}b`, opt).result,
@@ -60,9 +60,9 @@ tap.test(`03`, (t) => {
 tap.test(`04`, (t) => {
   t.strictSame(
     collapse(`a \r\n \r\n b`, {
-      removeEmptyLines: 0,
+      removeEmptyLines: false,
       limitConsecutiveEmptyLinesTo: 0,
-      trimLines: 1,
+      trimLines: true,
     }).result,
     `a\r\n\r\nb`,
     "04"
@@ -72,11 +72,11 @@ tap.test(`04`, (t) => {
 
 tap.test(`05`, (t) => {
   ["\r\n", "\r", "\n"].forEach((eol) => {
-    // 0-0
+    // false-0-?
     mixer({
-      removeEmptyLines: 0,
+      removeEmptyLines: false,
       limitConsecutiveEmptyLinesTo: 0,
-      trimLines: 0,
+      trimLines: false,
     }).forEach((opt) => {
       t.strictSame(
         collapse(`a ${eol} ${eol} b`, opt).result,
@@ -85,9 +85,9 @@ tap.test(`05`, (t) => {
       );
     });
     mixer({
-      removeEmptyLines: 0,
+      removeEmptyLines: false,
       limitConsecutiveEmptyLinesTo: 0,
-      trimLines: 1,
+      trimLines: true,
     }).forEach((opt) => {
       t.strictSame(
         collapse(`a ${eol} ${eol} b`, opt).result,
@@ -96,11 +96,11 @@ tap.test(`05`, (t) => {
       );
     });
 
-    // 1-0
+    // true-0-?
     mixer({
-      removeEmptyLines: 1,
+      removeEmptyLines: true,
       limitConsecutiveEmptyLinesTo: 0,
-      trimLines: 0,
+      trimLines: false,
     }).forEach((opt) => {
       t.strictSame(
         collapse(`a ${eol} ${eol} b`, opt).result,
@@ -109,9 +109,9 @@ tap.test(`05`, (t) => {
       );
     });
     mixer({
-      removeEmptyLines: 1,
+      removeEmptyLines: true,
       limitConsecutiveEmptyLinesTo: 0,
-      trimLines: 1,
+      trimLines: true,
     }).forEach((opt) => {
       t.strictSame(
         collapse(`a ${eol} ${eol} b`, opt).result,
@@ -120,11 +120,11 @@ tap.test(`05`, (t) => {
       );
     });
 
-    // 0-1
+    // false-1-?
     mixer({
-      removeEmptyLines: 0,
+      removeEmptyLines: false,
       limitConsecutiveEmptyLinesTo: 1,
-      trimLines: 0,
+      trimLines: false,
     }).forEach((opt) => {
       t.strictSame(
         collapse(`a ${eol} ${eol} b`, opt).result,
@@ -133,9 +133,9 @@ tap.test(`05`, (t) => {
       );
     });
     mixer({
-      removeEmptyLines: 0,
+      removeEmptyLines: false,
       limitConsecutiveEmptyLinesTo: 1,
-      trimLines: 1,
+      trimLines: true,
     }).forEach((opt) => {
       t.strictSame(
         collapse(`a ${eol} ${eol} b`, opt).result,
@@ -144,11 +144,11 @@ tap.test(`05`, (t) => {
       );
     });
 
-    // 1-1
+    // true-1-?
     mixer({
-      removeEmptyLines: 1,
+      removeEmptyLines: true,
       limitConsecutiveEmptyLinesTo: 1,
-      trimLines: 0,
+      trimLines: false,
     }).forEach((opt) => {
       t.strictSame(
         collapse(`a ${eol} ${eol} b`, opt).result,
@@ -157,9 +157,9 @@ tap.test(`05`, (t) => {
       );
     });
     mixer({
-      removeEmptyLines: 1,
+      removeEmptyLines: true,
       limitConsecutiveEmptyLinesTo: 1,
-      trimLines: 1,
+      trimLines: true,
     }).forEach((opt) => {
       t.strictSame(
         collapse(`a ${eol} ${eol} b`, opt).result,
@@ -184,6 +184,15 @@ tap.test(
         `a${presentEolType}b`,
         `EOL ${key[idx]}`
       );
+      t.equal(
+        collapse(`a${presentEolType}${presentEolType}b`, {
+          trimLines: true,
+          trimnbsp: false,
+          removeEmptyLines: true,
+        }).result,
+        `a${presentEolType}b`,
+        `EOL ${key[idx]}`
+      );
     });
     t.end();
   }
@@ -197,6 +206,15 @@ tap.test(
         collapse(`a${presentEolType}${presentEolType}b`, {
           trimLines: true,
           trimnbsp: true,
+          removeEmptyLines: false,
+        }).result,
+        `a${presentEolType}${presentEolType}b`,
+        `EOL ${key[idx]}`
+      );
+      t.equal(
+        collapse(`a${presentEolType}${presentEolType}b`, {
+          trimLines: true,
+          trimnbsp: false,
           removeEmptyLines: false,
         }).result,
         `a${presentEolType}${presentEolType}b`,
@@ -220,6 +238,15 @@ tap.test(
         `a${presentEolType}b`,
         `EOL ${key[idx]}`
       );
+      t.equal(
+        collapse(` a ${presentEolType} ${presentEolType} b `, {
+          trimLines: true,
+          trimnbsp: false,
+          removeEmptyLines: true,
+        }).result,
+        `a${presentEolType}b`,
+        `EOL ${key[idx]}`
+      );
     });
     t.end();
   }
@@ -233,6 +260,15 @@ tap.test(
         collapse(` a ${presentEolType} ${presentEolType} b `, {
           trimLines: true,
           trimnbsp: true,
+          removeEmptyLines: false,
+        }).result,
+        `a${presentEolType}${presentEolType}b`,
+        `EOL ${key[idx]}`
+      );
+      t.equal(
+        collapse(` a ${presentEolType} ${presentEolType} b `, {
+          trimLines: true,
+          trimnbsp: false,
           removeEmptyLines: false,
         }).result,
         `a${presentEolType}${presentEolType}b`,
@@ -256,6 +292,15 @@ tap.test(
         `a ${presentEolType} ${presentEolType} b`,
         `EOL ${key[idx]}`
       );
+      t.equal(
+        collapse(` a ${presentEolType} ${presentEolType} b `, {
+          trimLines: false,
+          trimnbsp: false,
+          removeEmptyLines: false,
+        }).result,
+        `a ${presentEolType} ${presentEolType} b`,
+        `EOL ${key[idx]}`
+      );
     });
     t.end();
   }
@@ -265,6 +310,15 @@ tap.test(
   `11 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - \\n - empty lines removal off + per-line trimming off - multiple spaces`,
   (t) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx) => {
+      t.equal(
+        collapse(`  a  ${presentEolType}  ${presentEolType}  b  `, {
+          trimLines: false,
+          trimnbsp: false,
+          removeEmptyLines: false,
+        }).result,
+        `a ${presentEolType} ${presentEolType} b`,
+        `EOL ${key[idx]}`
+      );
       t.equal(
         collapse(`  a  ${presentEolType}  ${presentEolType}  b  `, {
           trimLines: false,

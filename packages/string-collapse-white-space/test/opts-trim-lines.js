@@ -8,9 +8,9 @@ import { mixer } from "./util/util";
 tap.test(`01`, (t) => {
   ["\r\n", "\r", "\n"].forEach((eol) => {
     mixer({
-      trimStart: 0,
-      trimEnd: 0,
-      trimLines: 0,
+      trimStart: false,
+      trimEnd: false,
+      trimLines: false,
     }).forEach((opt) => {
       t.strictSame(
         collapse(`   a   bbb  ${eol}   c   d   `, opt).result,
@@ -20,9 +20,9 @@ tap.test(`01`, (t) => {
     });
 
     mixer({
-      trimStart: 1,
-      trimEnd: 1,
-      trimLines: 0,
+      trimStart: true,
+      trimEnd: true,
+      trimLines: false,
     }).forEach((opt) => {
       t.strictSame(
         collapse(`   a   bbb  ${eol}   c   d   `, opt).result,
@@ -31,7 +31,7 @@ tap.test(`01`, (t) => {
       );
     });
     mixer({
-      trimLines: 1,
+      trimLines: true,
     }).forEach((opt) => {
       t.strictSame(
         collapse(`   a   bbb  ${eol}   c   d   `, opt).result,
@@ -46,11 +46,11 @@ tap.test(`01`, (t) => {
 tap.test(`02`, (t) => {
   ["\r\n", "\r", "\n"].forEach((eol) => {
     mixer({
-      trimStart: 0,
-      trimEnd: 0,
-      trimLines: 0,
-      trimnbsp: 0,
-      enforceSpacesOnly: 0,
+      trimStart: false,
+      trimEnd: false,
+      trimLines: false,
+      trimnbsp: false,
+      enforceSpacesOnly: false,
     }).forEach((opt) => {
       t.strictSame(
         collapse(
@@ -62,11 +62,11 @@ tap.test(`02`, (t) => {
       );
     });
     mixer({
-      trimStart: 0,
-      trimEnd: 0,
-      trimLines: 1,
-      trimnbsp: 0,
-      enforceSpacesOnly: 0,
+      trimStart: false,
+      trimEnd: false,
+      trimLines: true,
+      trimnbsp: false,
+      enforceSpacesOnly: false,
     }).forEach((opt) => {
       t.strictSame(
         collapse(
@@ -87,12 +87,12 @@ tap.test("03", (t) => {
     collapse(
       `     \xa0    aaa   bbb    \xa0    \n     \xa0     ccc   ddd   \xa0   `,
       {
-        removeEmptyLines: 0,
-        trimStart: 0,
-        trimEnd: 0,
-        trimLines: 1,
-        trimnbsp: 0,
-        enforceSpacesOnly: 0,
+        removeEmptyLines: false,
+        trimStart: false,
+        trimEnd: false,
+        trimLines: true,
+        trimnbsp: false,
+        enforceSpacesOnly: false,
         limitConsecutiveEmptyLinesTo: 0,
       }
     ),
@@ -120,12 +120,12 @@ tap.test("04", (t) => {
   // "a  .  -  .  b"
   t.strictSame(
     collapse(`a  \xa0  \n  \xa0  b`, {
-      removeEmptyLines: 0,
-      trimStart: 0,
-      trimEnd: 0,
-      trimLines: 1,
-      trimnbsp: 0,
-      enforceSpacesOnly: 0,
+      removeEmptyLines: false,
+      trimStart: false,
+      trimEnd: false,
+      trimLines: true,
+      trimnbsp: false,
+      enforceSpacesOnly: false,
       limitConsecutiveEmptyLinesTo: 0,
     }),
     {
@@ -146,11 +146,11 @@ tap.test("05", (t) => {
   // "   .   aaa   .   "
   t.strictSame(
     collapse(`   \xa0   aaa   \xa0   `, {
-      trimStart: 0,
-      trimEnd: 0,
-      trimLines: 1,
-      trimnbsp: 0,
-      enforceSpacesOnly: 0,
+      trimStart: false,
+      trimEnd: false,
+      trimLines: true,
+      trimnbsp: false,
+      enforceSpacesOnly: false,
     }).result,
     `\xa0 aaa \xa0`,
     "05"
@@ -188,11 +188,11 @@ tap.test(`06`, (t) => {
 tap.test(`07`, (t) => {
   ["\r\n", "\r", "\n"].forEach((eol) => {
     mixer({
-      trimStart: 1,
-      trimEnd: 1,
-      trimLines: 1,
-      trimnbsp: 0,
-      removeEmptyLines: 0,
+      trimStart: true,
+      trimEnd: true,
+      trimLines: true,
+      trimnbsp: false,
+      removeEmptyLines: false,
     }).forEach((opt) => {
       t.strictSame(
         collapse(
@@ -210,8 +210,8 @@ tap.test(`07`, (t) => {
 tap.test("08", (t) => {
   // removeEmptyLines=0
   mixer({
-    removeEmptyLines: 0,
-    trimLines: 0,
+    removeEmptyLines: false,
+    trimLines: false,
   }).forEach((opt) => {
     t.strictSame(
       collapse(`a \n \n b`, opt).result,
@@ -220,8 +220,8 @@ tap.test("08", (t) => {
     );
   });
   mixer({
-    removeEmptyLines: 0,
-    trimLines: 1,
+    removeEmptyLines: false,
+    trimLines: true,
   }).forEach((opt) => {
     t.strictSame(
       collapse(`a \n \n b`, opt).result,
@@ -231,8 +231,8 @@ tap.test("08", (t) => {
   });
   // removeEmptyLines=1
   mixer({
-    removeEmptyLines: 1,
-    trimLines: 0,
+    removeEmptyLines: true,
+    trimLines: false,
   }).forEach((opt) => {
     t.strictSame(
       collapse(`a \n \n b`, opt).result,
@@ -241,8 +241,8 @@ tap.test("08", (t) => {
     );
   });
   mixer({
-    removeEmptyLines: 1,
-    trimLines: 1,
+    removeEmptyLines: true,
+    trimLines: true,
   }).forEach((opt) => {
     t.strictSame(
       collapse(`a \n \n b`, opt).result,
