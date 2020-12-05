@@ -1,6 +1,6 @@
 import tap from "tap";
 import { det as det1 } from "../dist/detergent.esm";
-// const { det, mixer, allCombinations } from "../t-util/util";
+// const { det, mixer } from "../t-util/util";
 
 // ================================================
 // 01. Only real applicable rules keys are reported
@@ -12,7 +12,7 @@ tap.test(
     t.strictSame(
       Object.keys(
         det1(`&nbsp;&nbsp;&nbsp; a &nbsp;&nbsp;&nbsp;`, {
-          convertEntities: 1,
+          convertEntities: true,
         }).applicableOpts
       ).sort(),
       [

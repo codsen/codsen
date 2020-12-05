@@ -1,5 +1,5 @@
 import tap from "tap";
-import { det, mixer, allCombinations } from "../t-util/util";
+import { det, mixer } from "../t-util/util";
 // import { det as detergent } from "../dist/detergent.esm";
 import {
   // rawReplacementMark,
@@ -20,8 +20,8 @@ import {
 tap.test(`01 - minimal samples`, (t) => {
   t.equal(
     det(t, 0, `aaa bbb ccc ddd`, {
-      removeWidows: 1,
-      convertEntities: 1,
+      removeWidows: true,
+      convertEntities: true,
     }).res,
     `aaa bbb ccc&nbsp;ddd`,
     `01 - remove widows - entities, one line string no full stop`
@@ -32,9 +32,9 @@ tap.test(`01 - minimal samples`, (t) => {
 tap.test(`02 - ETX processed twice, 2nd time during widow removal`, (t) => {
   t.equal(
     det(t, 0, `aaa bbb ccc\u0003ddd`, {
-      removeWidows: 1,
-      convertEntities: 1,
-      removeLineBreaks: 1,
+      removeWidows: true,
+      convertEntities: true,
+      removeLineBreaks: true,
     }).res,
     `aaa bbb ccc&nbsp;ddd`,
     `02 - remove widows - entities, one line string no full stop`
@@ -49,8 +49,8 @@ tap.test(
   `03 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - four chunks of text #1 - convertEntities on`,
   (t) => {
     mixer({
-      removeWidows: 1,
-      convertEntities: 1,
+      removeWidows: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `aaa bbb ccc ddd`, opt).res,
@@ -71,8 +71,8 @@ tap.test(
   `04 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - four chunks of text #1 - convertEntities off`,
   (t) => {
     mixer({
-      removeWidows: 1,
-      convertEntities: 0,
+      removeWidows: true,
+      convertEntities: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `aaa bbb ccc ddd`, opt).res,
@@ -93,7 +93,7 @@ tap.test(
   `05 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - four chunks of text #1 - removeWidows off`,
   (t) => {
     mixer({
-      removeWidows: 0,
+      removeWidows: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `aaa bbb ccc ddd`, opt).res,
@@ -114,11 +114,11 @@ tap.test(
   `06 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with line breaks - useXHTML on`,
   (t) => {
     mixer({
-      removeWidows: 1,
-      convertEntities: 1,
-      replaceLineBreaks: 1,
-      removeLineBreaks: 0,
-      useXHTML: 1,
+      removeWidows: true,
+      convertEntities: true,
+      replaceLineBreaks: true,
+      removeLineBreaks: false,
+      useXHTML: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `aaa bbb ccc ddd\n\neee fff ggg hhh`, opt).res,
@@ -134,11 +134,11 @@ tap.test(
   `07 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with line breaks - useXHTML off`,
   (t) => {
     mixer({
-      removeWidows: 1,
-      convertEntities: 1,
-      replaceLineBreaks: 1,
-      removeLineBreaks: 0,
-      useXHTML: 0,
+      removeWidows: true,
+      convertEntities: true,
+      replaceLineBreaks: true,
+      removeLineBreaks: false,
+      useXHTML: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `aaa bbb ccc ddd\n\neee fff ggg hhh`, opt).res,
@@ -154,10 +154,10 @@ tap.test(
   `08 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with line breaks - replaceLineBreaks off`,
   (t) => {
     mixer({
-      removeWidows: 1,
-      convertEntities: 1,
-      replaceLineBreaks: 0,
-      removeLineBreaks: 0,
+      removeWidows: true,
+      convertEntities: true,
+      replaceLineBreaks: false,
+      removeLineBreaks: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `aaa bbb ccc ddd\n\neee fff ggg hhh`, opt).res,
@@ -173,10 +173,10 @@ tap.test(
   `09 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with line breaks - convertEntities off`,
   (t) => {
     mixer({
-      removeWidows: 1,
-      convertEntities: 0,
-      replaceLineBreaks: 0,
-      removeLineBreaks: 0,
+      removeWidows: true,
+      convertEntities: false,
+      replaceLineBreaks: false,
+      removeLineBreaks: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `aaa bbb ccc ddd\n\neee fff ggg hhh`, opt).res,
@@ -192,10 +192,10 @@ tap.test(
   `10 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with line breaks - convertEntities on`,
   (t) => {
     mixer({
-      removeWidows: 1,
-      convertEntities: 1,
-      replaceLineBreaks: 0,
-      removeLineBreaks: 0,
+      removeWidows: true,
+      convertEntities: true,
+      replaceLineBreaks: false,
+      removeLineBreaks: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `aaa bbb ccc ddd\neee fff ggg hhh.`, opt).res,
@@ -216,11 +216,11 @@ tap.test(
   `11 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - with trailing whitespace`,
   (t) => {
     mixer({
-      removeWidows: 1,
-      convertEntities: 1,
-      replaceLineBreaks: 1,
-      removeLineBreaks: 0,
-      useXHTML: 0,
+      removeWidows: true,
+      convertEntities: true,
+      replaceLineBreaks: true,
+      removeLineBreaks: false,
+      useXHTML: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `aaa bbb ccc ddd. \n\neee fff ggg hhh`, opt).res,
@@ -236,8 +236,8 @@ tap.test(
   `12 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes - convertEntities on`,
   (t) => {
     mixer({
-      removeWidows: 1,
-      convertEntities: 1,
+      removeWidows: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `Some text SW1A 1AA and some more text.`, opt).res,
@@ -298,8 +298,8 @@ tap.test(
   `13 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes - convertEntities off`,
   (t) => {
     mixer({
-      removeWidows: 1,
-      convertEntities: 0,
+      removeWidows: true,
+      convertEntities: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `Some text SW1A 1AA and some more text.`, opt).res,
@@ -360,8 +360,8 @@ tap.test(
   `14 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - glues UK postcodes - removeWidows off`,
   (t) => {
     mixer({
-      removeWidows: 0,
-      convertEntities: 0,
+      removeWidows: false,
+      convertEntities: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `Some text SW1A 1AA and some more text.`, opt).res,
@@ -421,7 +421,7 @@ tap.test(
 tap.test(
   `15 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - nbsp's not added within hidden HTML tags`,
   (t) => {
-    allCombinations.forEach((opt, n) => {
+    mixer().forEach((opt, n) => {
       t.equal(
         det(
           t,
@@ -440,7 +440,7 @@ tap.test(
 tap.test(
   `16 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - nbsp's not added within hidden HTML tags`,
   (t) => {
-    allCombinations.forEach((opt, n) => {
+    mixer().forEach((opt, n) => {
       t.equal(
         det(
           t,
@@ -459,7 +459,7 @@ tap.test(
 tap.test(
   `17 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - nbsp's not added within hidden HTML tags`,
   (t) => {
-    allCombinations.forEach((opt, n) => {
+    mixer().forEach((opt, n) => {
       t.equal(
         det(
           t,
@@ -478,7 +478,7 @@ tap.test(
 tap.test(
   `18 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - nbsp's not added within hidden HTML tags`,
   (t) => {
-    allCombinations.forEach((opt, n) => {
+    mixer().forEach((opt, n) => {
       t.equal(
         det(
           t,
@@ -497,7 +497,7 @@ tap.test(
 tap.test(
   `19 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widow removal detects template code (Jinja/Nunjucks)`,
   (t) => {
-    allCombinations.forEach((opt, n) => {
+    mixer().forEach((opt, n) => {
       t.equal(
         det(t, n, `{% if something %}`, opt).res,
         `{% if something %}`,
@@ -527,8 +527,8 @@ tap.test(
   `20 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widows and dashes between letters and numbers - removeWidows off`,
   (t) => {
     mixer({
-      removeWidows: 0,
-      convertDashes: 0,
+      removeWidows: false,
+      convertDashes: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `AA Some text And Some Text - 9999`, opt).res,
@@ -544,9 +544,9 @@ tap.test(
   `21 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widows and dashes between letters and numbers - removeWidows on`,
   (t) => {
     mixer({
-      removeWidows: 1,
-      convertDashes: 1,
-      convertEntities: 1,
+      removeWidows: true,
+      convertDashes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `AA Some text And Some Text - 9999`, opt).res,
@@ -562,9 +562,9 @@ tap.test(
   `22 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widows and dashes between letters and numbers - removeWidows on`,
   (t) => {
     mixer({
-      removeWidows: 1,
-      convertDashes: 1,
-      convertEntities: 0,
+      removeWidows: true,
+      convertDashes: true,
+      convertEntities: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `AA Some text And Some Text - 9999`, opt).res,
@@ -580,9 +580,9 @@ tap.test(
   `23 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widows and dashes between letters and numbers - removeWidows on`,
   (t) => {
     mixer({
-      removeWidows: 0,
-      convertDashes: 1,
-      convertEntities: 1,
+      removeWidows: false,
+      convertDashes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `AA Some text And Some Text - 9999`, opt).res,
@@ -598,9 +598,9 @@ tap.test(
   `24 - \u001b[${35}m${`opts.removeWidows`}\u001b[${39}m - widows and dashes between letters and numbers - removeWidows off`,
   (t) => {
     mixer({
-      removeWidows: 0,
-      convertDashes: 1,
-      convertEntities: 0,
+      removeWidows: false,
+      convertDashes: true,
+      convertEntities: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `AA Some text And Some Text - 9999`, opt).res,
@@ -619,9 +619,9 @@ tap.test(
   `25 - \u001b[${35}m${`HTML tags`}\u001b[${39}m - tag in the end`,
   (t) => {
     mixer({
-      removeWidows: 1,
-      convertEntities: 1,
-      stripHtml: 0,
+      removeWidows: true,
+      convertEntities: true,
+      stripHtml: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `a a<a something="whatever" and="here">`, opt).res,
@@ -637,9 +637,9 @@ tap.test(
   `26 - \u001b[${35}m${`HTML tags`}\u001b[${39}m - tag in the end`,
   (t) => {
     mixer({
-      removeWidows: 1,
-      convertEntities: 1,
-      stripHtml: 0,
+      removeWidows: true,
+      convertEntities: true,
+      stripHtml: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `a a <a something="whatever" and="here">`, opt).res,
@@ -655,9 +655,9 @@ tap.test(
   `27 - \u001b[${35}m${`HTML tags`}\u001b[${39}m - tag in the end`,
   (t) => {
     mixer({
-      removeWidows: 1,
-      convertEntities: 1,
-      stripHtml: 0,
+      removeWidows: true,
+      convertEntities: true,
+      stripHtml: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `a a a<a something="whatever" and="here">`, opt).res,
@@ -673,9 +673,9 @@ tap.test(
   `28 - \u001b[${35}m${`HTML tags`}\u001b[${39}m - tag in the end`,
   (t) => {
     mixer({
-      removeWidows: 1,
-      convertEntities: 1,
-      stripHtml: 0,
+      removeWidows: true,
+      convertEntities: true,
+      stripHtml: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `a a a <a something="whatever" and="here">`, opt).res,
@@ -691,9 +691,9 @@ tap.test(
   `29 - \u001b[${35}m${`HTML tags`}\u001b[${39}m - tag in the end`,
   (t) => {
     mixer({
-      removeWidows: 1,
-      convertEntities: 1,
-      stripHtml: 0,
+      removeWidows: true,
+      convertEntities: true,
+      stripHtml: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `a a a a<a something="whatever" and="here">`, opt).res,
@@ -709,9 +709,9 @@ tap.test(
   `30 - \u001b[${35}m${`HTML tags`}\u001b[${39}m - tag in the end`,
   (t) => {
     mixer({
-      removeWidows: 1,
-      convertEntities: 1,
-      stripHtml: 0,
+      removeWidows: true,
+      convertEntities: true,
+      stripHtml: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `a a a a <a something="whatever" and="here">`, opt).res,
@@ -725,7 +725,7 @@ tap.test(
 
 tap.test(`31`, (t) => {
   mixer({
-    removeWidows: 0,
+    removeWidows: false,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `The quick brown&nbsp;fox. What an amazing animal!`, opt).res,
@@ -738,7 +738,7 @@ tap.test(`31`, (t) => {
 
 tap.test(`32`, (t) => {
   mixer({
-    removeWidows: 0,
+    removeWidows: false,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `The quick brown&nbsp;fox. What an amazing&nbsp;animal!`, opt)

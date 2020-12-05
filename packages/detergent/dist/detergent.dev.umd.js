@@ -2263,15 +2263,6 @@
     });
   }
 
-  function rightStopAtRawNbsp(str, idx) {
-    return rightMain({
-      str: str,
-      idx: idx,
-      stopAtNewlines: false,
-      stopAtRawNbsp: true
-    });
-  }
-
   function leftMain(_ref2) {
     var str = _ref2.str,
         idx = _ref2.idx,
@@ -2322,15 +2313,6 @@
       idx: idx,
       stopAtNewlines: true,
       stopAtRawNbsp: false
-    });
-  }
-
-  function leftStopAtRawNbsp(str, idx) {
-    return leftMain({
-      str: str,
-      idx: idx,
-      stopAtNewlines: false,
-      stopAtRawNbsp: true
     });
   }
 
@@ -26314,28 +26296,31 @@
           }
         } else if (charcode === 160) {
           // IF RAW non-breaking space
-          applicableOpts.removeWidows = true; // if opts.removeWidows is disabled, replace all non-breaking spaces
+          // if opts.removeWidows is disabled, replace all non-breaking spaces
           // with spaces
-
           if (!opts.removeWidows) {
             // we need to remove this nbsp
             // thing to consider - edges, like "&nbsp; a b"
             var calculatedFrom = i;
             var calculatedTo = y;
-            var calculatedValue = " ";
-            var charOnTheLeft = leftStopAtRawNbsp(str, i);
-            var charOnTheRight = rightStopAtRawNbsp(str, calculatedTo - 1);
+            var calculatedValue = " "; // const charOnTheLeft = leftStopAtRawNbsp(str, i);
 
-            if ( // if there's only whitespace on the left
-            !charOnTheLeft) {
-              calculatedFrom = 0;
-              calculatedTo = charOnTheRight || str.length;
-              calculatedValue = null;
-            } else if ( // if there's only whitespace on the right
-            !charOnTheRight) {
-              calculatedFrom = charOnTheLeft !== null ? charOnTheLeft + 1 : 0;
-              calculatedTo = str.length;
-              calculatedValue = null;
+            var charOnTheLeft = left(str, i); // const charOnTheRight = rightStopAtRawNbsp(str, calculatedTo - 1);
+
+            var charOnTheRight = right(str, calculatedTo - 1);
+
+            if (charOnTheLeft === null || charOnTheRight === null) {
+              // this means, this raw nbsp is around the edge of the string,
+              // for example:
+              // <raw nbsp> a b
+              // ^^^^^^^^^^
+              // might be decoded &nbsp; - single character
+              // restore it back:
+              calculatedValue = opts.convertEntities ? "&nbsp;" : rawNbsp$1;
+              applicableOpts.convertEntities = true;
+            } else {
+              // if it's deleted, it's applicable
+              applicableOpts.removeWidows = true;
             }
 
             if (calculatedValue) {
@@ -26345,6 +26330,7 @@
             }
           } else {
             applicableOpts.convertEntities = true;
+            applicableOpts.removeWidows = true;
 
             if (opts.convertEntities) {
               // push "&nbsp;" to retain in

@@ -1,10 +1,6 @@
 import tap from "tap";
 import { det as det1 } from "../dist/detergent.esm";
-import {
-  det,
-  mixer,
-  // allCombinations
-} from "../t-util/util";
+import { det, mixer } from "../t-util/util";
 
 // task is to ensure HTML and XHTML-style (self-closing) br tags are
 // stripped, ignored and/or replaced with line breaks
@@ -74,85 +70,77 @@ tap.test(`01`, (t) => {
 
 tap.test(`02`, (t) => {
   mixer({
-    stripHtml: 1,
-    replaceLineBreaks: 0,
+    stripHtml: true,
+    removeLineBreaks: false,
+    replaceLineBreaks: false,
+    stripHtmlButIgnoreTags: [],
+    stripHtmlAddNewLine: ["br"], // <---
   }).forEach((opt, n) => {
     t.equal(
-      det(t, n, `abc<br>def`, {
-        ...opt,
-        stripHtmlButIgnoreTags: [],
-        stripHtmlAddNewLine: ["br"], // <---
-      }).res,
+      det(t, n, `abc<br>def`, opt).res,
       `abc\ndef`,
       JSON.stringify(opt, null, 4)
     );
   });
   mixer({
-    stripHtml: 1,
-    replaceLineBreaks: 1,
-    useXHTML: 0,
+    stripHtml: true,
+    removeLineBreaks: false,
+    replaceLineBreaks: true,
+    useXHTML: false,
+    stripHtmlButIgnoreTags: [],
+    stripHtmlAddNewLine: ["br"],
   }).forEach((opt, n) => {
     t.equal(
-      det(t, n, `abc<br>def`, {
-        ...opt,
-        stripHtmlButIgnoreTags: [],
-        stripHtmlAddNewLine: ["br"], // <---
-      }).res,
+      det(t, n, `abc<br>def`, opt).res,
       `abc<br>\ndef`,
       JSON.stringify(opt, null, 4)
     );
   });
   mixer({
-    stripHtml: 1,
-    replaceLineBreaks: 1,
-    useXHTML: 1,
+    stripHtml: true,
+    removeLineBreaks: false,
+    replaceLineBreaks: true,
+    useXHTML: true,
+    stripHtmlButIgnoreTags: [],
+    stripHtmlAddNewLine: ["br"], // <---
   }).forEach((opt, n) => {
     t.equal(
-      det(t, n, `abc<br>def`, {
-        ...opt,
-        stripHtmlButIgnoreTags: [],
-        stripHtmlAddNewLine: ["br"], // <---
-      }).res,
+      det(t, n, `abc<br>def`, opt).res,
       `abc<br/>\ndef`,
       JSON.stringify(opt, null, 4)
     );
   });
 
   mixer({
-    stripHtml: 1,
-    replaceLineBreaks: 0,
+    stripHtml: true,
+    removeLineBreaks: false,
+    replaceLineBreaks: false,
+    stripHtmlButIgnoreTags: [],
+    stripHtmlAddNewLine: [], // <---
   }).forEach((opt, n) => {
     t.equal(
-      det(t, n, `abc<br>def`, {
-        ...opt,
-        stripHtmlButIgnoreTags: [],
-        stripHtmlAddNewLine: [], // <---
-      }).res,
+      det(t, n, `abc<br>def`, opt).res,
       `abc def`,
       JSON.stringify(opt, null, 4)
     );
   });
 
   mixer({
-    stripHtml: 0,
-    useXHTML: 0,
+    stripHtml: false,
+    useXHTML: false,
   }).forEach((opt, n) => {
     t.equal(
-      det(t, n, `abc<br>def`, {
-        ...opt,
-      }).res,
+      det(t, n, `abc<br>def`, opt).res,
       `abc<br>def`,
       JSON.stringify(opt, null, 4)
     );
   });
   mixer({
-    stripHtml: 0,
-    useXHTML: 1,
+    stripHtml: false,
+    useXHTML: true,
   }).forEach((opt, n) => {
     t.equal(
-      det(t, n, `abc<br>def`, {
-        ...opt,
-      }).res,
+      det(t, n, `abc<br>def`, opt).res,
       `abc<br/>def`,
       JSON.stringify(opt, null, 4)
     );
@@ -175,44 +163,40 @@ tap.test(`03`, (t) => {
 });
 
 tap.test(`04`, (t) => {
-  t.equal(
-    det1(`abc<br/>def`, {
-      stripHtml: true,
-      replaceLineBreaks: false,
-      stripHtmlButIgnoreTags: [],
-      stripHtmlAddNewLine: [], // <---
-    }).res,
-    "abc def",
-    "04"
-  );
-  t.end();
-});
-
-tap.test(`05`, (t) => {
   mixer({
-    stripHtml: 1,
-    replaceLineBreaks: 0,
+    stripHtml: true,
+    removeLineBreaks: false,
+    replaceLineBreaks: false,
+    stripHtmlButIgnoreTags: [],
+    stripHtmlAddNewLine: ["br"], // <---
   }).forEach((opt, n) => {
     t.equal(
-      det(t, n, `abc<br/>def`, {
-        ...opt,
-        stripHtmlButIgnoreTags: [],
-        stripHtmlAddNewLine: ["br"], // <---
-      }).res,
+      det(t, n, `abc<br/>def`, opt).res,
       `abc\ndef`,
       JSON.stringify(opt, null, 4)
     );
   });
   mixer({
-    stripHtml: 1,
-    replaceLineBreaks: 0,
+    stripHtml: true,
+    removeLineBreaks: true,
+    replaceLineBreaks: false,
+    stripHtmlButIgnoreTags: [],
+    stripHtmlAddNewLine: ["br"], // <---
   }).forEach((opt, n) => {
     t.equal(
-      det(t, n, `abc<br/>def`, {
-        ...opt,
-        stripHtmlButIgnoreTags: [],
-        stripHtmlAddNewLine: [], // <---
-      }).res,
+      det(t, n, `abc<br/>def`, opt).res,
+      `abc def`,
+      JSON.stringify(opt, null, 4)
+    );
+  });
+  mixer({
+    stripHtml: true,
+    replaceLineBreaks: false,
+    stripHtmlButIgnoreTags: [],
+    stripHtmlAddNewLine: [], // <---
+  }).forEach((opt, n) => {
+    t.equal(
+      det(t, n, `abc<br/>def`, opt).res,
       `abc def`,
       JSON.stringify(opt, null, 4)
     );

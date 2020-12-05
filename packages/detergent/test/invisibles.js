@@ -1,9 +1,6 @@
 import tap from "tap";
 // import { det as det1 } from "../dist/detergent.esm";
-import {
-  det,
-  mixer, // , allCombinations
-} from "../t-util/util";
+import { det, mixer } from "../t-util/util";
 import {
   // rawReplacementMark,
   // rawNDash,
@@ -37,7 +34,7 @@ tap.test(`02 - all low ASCII invisible characters are removed`, (t) => {
 
 tap.test(`03 - hairspace - tight - hairspace changed to space`, (t) => {
   mixer({
-    removeWidows: 0,
+    removeWidows: false,
   }).forEach((opt, n) => {
     t.equal(
       det(
@@ -57,7 +54,7 @@ tap.test(
   `04 - hairspace - tight - hairspace changed to space (lots of spaces)`,
   (t) => {
     mixer({
-      removeWidows: 0,
+      removeWidows: false,
     }).forEach((opt, n) => {
       t.equal(
         det(
@@ -78,8 +75,8 @@ tap.test(
   `05 - hairspace - tight - hairspace changed to space: +widows+entities`,
   (t) => {
     mixer({
-      removeWidows: 1,
-      convertEntities: 1,
+      removeWidows: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(
@@ -98,8 +95,8 @@ tap.test(
 
 tap.test("06 - invisible breaks - raw", (t) => {
   mixer({
-    replaceLineBreaks: 0,
-    removeLineBreaks: 0,
+    replaceLineBreaks: false,
+    removeLineBreaks: false,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, "a\u000Ab\u000Bc\u000Cd\u000De\u2028f\u2029g\u0003h", opt).res,
@@ -112,8 +109,8 @@ tap.test("06 - invisible breaks - raw", (t) => {
 
 tap.test("07 - invisible breaks - encoded decimal HTML entities", (t) => {
   mixer({
-    replaceLineBreaks: 0,
-    removeLineBreaks: 0,
+    replaceLineBreaks: false,
+    removeLineBreaks: false,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, "a&#10;b&#11;c&#12;&#13;&#8232;&#8233;&#3;d", opt).res,
@@ -126,7 +123,7 @@ tap.test("07 - invisible breaks - encoded decimal HTML entities", (t) => {
 
 tap.test("08 - invisible breaks - remove all line breaks on", (t) => {
   mixer({
-    removeLineBreaks: 1,
+    removeLineBreaks: true,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, "a\u000Eb\u000C\u000D\u0085c\u2028\u2029d", opt).res,
@@ -139,9 +136,9 @@ tap.test("08 - invisible breaks - remove all line breaks on", (t) => {
 
 tap.test("09 - invisible breaks - replace breaks into XHTML BR's", (t) => {
   mixer({
-    replaceLineBreaks: 1,
-    removeLineBreaks: 0,
-    useXHTML: 1,
+    replaceLineBreaks: true,
+    removeLineBreaks: false,
+    useXHTML: true,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, "a\u000Ab\u000Bc\u000C\u000D\u0085\u2028\u2029d", opt).res,
@@ -154,9 +151,9 @@ tap.test("09 - invisible breaks - replace breaks into XHTML BR's", (t) => {
 
 tap.test("10 - invisible breaks - replace breaks into HTML BR's", (t) => {
   mixer({
-    replaceLineBreaks: 1,
-    removeLineBreaks: 0,
-    useXHTML: 0,
+    replaceLineBreaks: true,
+    removeLineBreaks: false,
+    useXHTML: false,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, "a\u000Ab\u000Bc\u000C\u000D\u0085\u2028\u2029d", opt).res,
@@ -169,8 +166,8 @@ tap.test("10 - invisible breaks - replace breaks into HTML BR's", (t) => {
 
 tap.test("11 - line feed \\u000A (LF) and o.removeLineBreaks", (t) => {
   mixer({
-    replaceLineBreaks: 0,
-    removeLineBreaks: 1,
+    replaceLineBreaks: false,
+    removeLineBreaks: true,
   }).forEach((opt, n) => {
     t.equal(det(t, n, "aaa\u000Abbb", opt).res, "aaa bbb", "10");
   });
@@ -179,9 +176,9 @@ tap.test("11 - line feed \\u000A (LF) and o.removeLineBreaks", (t) => {
 
 tap.test("12 - line feed \\u000A (LF) and no o.removeLineBreaks", (t) => {
   mixer({
-    replaceLineBreaks: 0,
-    removeLineBreaks: 0,
-    convertEntities: 0,
+    replaceLineBreaks: false,
+    removeLineBreaks: false,
+    convertEntities: false,
   }).forEach((opt, n) => {
     t.equal(det(t, n, "aaa\u000Abbb", opt).res, "aaa\nbbb", "11");
   });
@@ -190,12 +187,12 @@ tap.test("12 - line feed \\u000A (LF) and no o.removeLineBreaks", (t) => {
 
 tap.test("13 - narrow no break space", (t) => {
   mixer({
-    convertEntities: 0,
+    convertEntities: false,
   }).forEach((opt, n) => {
     t.equal(det(t, n, "a\u202Fb", opt).res, "a b", "12");
   });
   mixer({
-    convertEntities: 1,
+    convertEntities: true,
   }).forEach((opt, n) => {
     t.equal(det(t, n, "a\u202Fb", opt).res, "a b", "12");
   });

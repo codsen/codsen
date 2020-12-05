@@ -594,23 +594,17 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
           rangesArr.push(i, y, opts.removeLineBreaks ? "" : "\n");
         }
       } else if (charcode === 160) {
-        applicableOpts.removeWidows = true;
         if (!opts.removeWidows) {
           var calculatedFrom = i;
           var calculatedTo = y;
           var calculatedValue = " ";
-          var charOnTheLeft = stringLeftRight.leftStopAtRawNbsp(str, i);
-          var charOnTheRight = stringLeftRight.rightStopAtRawNbsp(str, calculatedTo - 1);
-          if (
-          !charOnTheLeft) {
-            calculatedFrom = 0;
-            calculatedTo = charOnTheRight || str.length;
-            calculatedValue = null;
-          } else if (
-          !charOnTheRight) {
-            calculatedFrom = charOnTheLeft !== null ? charOnTheLeft + 1 : 0;
-            calculatedTo = str.length;
-            calculatedValue = null;
+          var charOnTheLeft = stringLeftRight.left(str, i);
+          var charOnTheRight = stringLeftRight.right(str, calculatedTo - 1);
+          if (charOnTheLeft === null || charOnTheRight === null) {
+            calculatedValue = opts.convertEntities ? "&nbsp;" : rawNbsp;
+            applicableOpts.convertEntities = true;
+          } else {
+            applicableOpts.removeWidows = true;
           }
           if (calculatedValue) {
             rangesArr.push(calculatedFrom, calculatedTo, calculatedValue);
@@ -619,6 +613,7 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
           }
         } else {
           applicableOpts.convertEntities = true;
+          applicableOpts.removeWidows = true;
           if (opts.convertEntities) {
             rangesArr.push(i, y, "&nbsp;");
           }

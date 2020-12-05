@@ -1,9 +1,6 @@
 import tap from "tap";
 // import { det as det1 } from "../dist/detergent.esm";
-import {
-  det,
-  mixer, // , allCombinations
-} from "../t-util/util";
+import { det, mixer } from "../t-util/util";
 import {
   // rawReplacementMark,
   // rawNDash,
@@ -23,7 +20,7 @@ tap.test(
   `01 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - horizontal ellipsis sanity check - convert off - raw`,
   (t) => {
     mixer({
-      convertDotsToEllipsis: 0,
+      convertDotsToEllipsis: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `${rawEllipsis}`, opt).res,
@@ -39,7 +36,7 @@ tap.test(
   `02 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - horizontal ellipsis sanity check - convert off - encoded`,
   (t) => {
     mixer({
-      convertDotsToEllipsis: 0,
+      convertDotsToEllipsis: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "&hellip;", opt).res,
@@ -55,7 +52,7 @@ tap.test(
   `03 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - horizontal ellipsis sanity check - convert off - wrongly encoded`,
   (t) => {
     mixer({
-      convertDotsToEllipsis: 0,
+      convertDotsToEllipsis: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "&mldr;", opt).res,
@@ -71,8 +68,8 @@ tap.test(
   `04 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - encodes the ellipsis when it has to`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      convertDotsToEllipsis: 1,
+      convertEntities: true,
+      convertDotsToEllipsis: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `${rawEllipsis}`, opt).res,
@@ -88,8 +85,8 @@ tap.test(
   `05 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - correctly encoded - converts`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      convertDotsToEllipsis: 1,
+      convertEntities: true,
+      convertDotsToEllipsis: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "&hellip;", opt).res,
@@ -105,8 +102,8 @@ tap.test(
   `06 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - wrongly encoded - convert on`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      convertDotsToEllipsis: 1,
+      convertEntities: true,
+      convertDotsToEllipsis: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "&mldr;", opt).res,
@@ -122,7 +119,7 @@ tap.test(
   `07 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - siwtched off setting converts explicitly`,
   (t) => {
     mixer({
-      convertDotsToEllipsis: 0,
+      convertDotsToEllipsis: false,
     }).forEach((opt, n) => {
       t.equal(det(t, n, "...", opt).res, "...", JSON.stringify(opt, null, 4));
     });
@@ -134,7 +131,7 @@ tap.test(
   `08 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - siwtched off setting converts explicitly`,
   (t) => {
     mixer({
-      convertDotsToEllipsis: 0,
+      convertDotsToEllipsis: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "And then...", opt).res,
@@ -150,7 +147,7 @@ tap.test(
   `09 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - siwtched off setting converts explicitly`,
   (t) => {
     mixer({
-      convertDotsToEllipsis: 0,
+      convertDotsToEllipsis: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `${rawEllipsis}`, opt).res,
@@ -166,7 +163,7 @@ tap.test(
   `10 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - siwtched off setting converts explicitly`,
   (t) => {
     mixer({
-      convertDotsToEllipsis: 0,
+      convertDotsToEllipsis: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "&hellip;", opt).res,
@@ -182,7 +179,7 @@ tap.test(
   `11 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - siwtched off setting converts explicitly`,
   (t) => {
     mixer({
-      convertDotsToEllipsis: 0,
+      convertDotsToEllipsis: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "&mldr;", opt).res,
@@ -198,8 +195,8 @@ tap.test(
   `12 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - convert off`,
   (t) => {
     mixer({
-      convertEntities: 0,
-      convertDotsToEllipsis: 1,
+      convertEntities: false,
+      convertDotsToEllipsis: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `${rawEllipsis}`, opt).res,
@@ -215,8 +212,8 @@ tap.test(
   `13 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - convert off`,
   (t) => {
     mixer({
-      convertEntities: 0,
-      convertDotsToEllipsis: 1,
+      convertEntities: false,
+      convertDotsToEllipsis: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "&hellip;", opt).res,
@@ -232,8 +229,8 @@ tap.test(
   `14 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - raw - convert off`,
   (t) => {
     mixer({
-      convertEntities: 0,
-      convertDotsToEllipsis: 1,
+      convertEntities: false,
+      convertDotsToEllipsis: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "&mldr;", opt).res,
@@ -249,8 +246,8 @@ tap.test(
   `15 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - three dots to unencoded hellip`,
   (t) => {
     mixer({
-      convertEntities: 0,
-      convertDotsToEllipsis: 1,
+      convertEntities: false,
+      convertDotsToEllipsis: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "...", opt).res,
@@ -266,9 +263,9 @@ tap.test(
   `16 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - three dots to unencoded hellip`,
   (t) => {
     mixer({
-      removeWidows: 0,
-      convertEntities: 0,
-      convertDotsToEllipsis: 1,
+      removeWidows: false,
+      convertEntities: false,
+      convertDotsToEllipsis: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "Aaaaa... Bbbbb... C...", opt).res,
@@ -284,9 +281,9 @@ tap.test(
   `17 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - encoded hellip to unencoded hellip`,
   (t) => {
     mixer({
-      removeWidows: 0,
-      convertEntities: 0,
-      convertDotsToEllipsis: 1,
+      removeWidows: false,
+      convertEntities: false,
+      convertDotsToEllipsis: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "&hellip;", opt).res,
@@ -302,9 +299,9 @@ tap.test(
   `18 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - encoded mldr to unencoded hellip`,
   (t) => {
     mixer({
-      removeWidows: 0,
-      convertEntities: 0,
-      convertDotsToEllipsis: 1,
+      removeWidows: false,
+      convertEntities: false,
+      convertDotsToEllipsis: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "&mldr;", opt).res,
@@ -320,9 +317,9 @@ tap.test(
   `19 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - hexidecimal to unencoded hellip`,
   (t) => {
     mixer({
-      removeWidows: 0,
-      convertEntities: 0,
-      convertDotsToEllipsis: 1,
+      removeWidows: false,
+      convertEntities: false,
+      convertDotsToEllipsis: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "&#x02026;", opt).res,
@@ -338,9 +335,9 @@ tap.test(
   `20 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - decimal to unencoded hellip`,
   (t) => {
     mixer({
-      removeWidows: 0,
-      convertEntities: 0,
-      convertDotsToEllipsis: 1,
+      removeWidows: false,
+      convertEntities: false,
+      convertDotsToEllipsis: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "&#8230;", opt).res,
@@ -356,9 +353,9 @@ tap.test(
   `21 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - three dots to encoded hellip`,
   (t) => {
     mixer({
-      removeWidows: 0,
-      convertEntities: 1,
-      convertDotsToEllipsis: 1,
+      removeWidows: false,
+      convertEntities: true,
+      convertDotsToEllipsis: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "...", opt).res,
@@ -374,8 +371,8 @@ tap.test(
   `22 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - three dots to encoded hellip`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      convertDotsToEllipsis: 1,
+      convertEntities: true,
+      convertDotsToEllipsis: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "Aaaaa... Bbbbb... C...", opt).res,
@@ -391,8 +388,8 @@ tap.test(
   `23 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - encoded hellip to encoded hellip`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      convertDotsToEllipsis: 1,
+      convertEntities: true,
+      convertDotsToEllipsis: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "&hellip;", opt).res,
@@ -408,8 +405,8 @@ tap.test(
   `24 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - encoded mldr to encoded hellip`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      convertDotsToEllipsis: 1,
+      convertEntities: true,
+      convertDotsToEllipsis: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "&mldr;", opt).res,
@@ -425,8 +422,8 @@ tap.test(
   `25 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - hexidecimal to encoded hellip`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      convertDotsToEllipsis: 1,
+      convertEntities: true,
+      convertDotsToEllipsis: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "&#x02026;", opt).res,
@@ -442,9 +439,9 @@ tap.test(
   `26 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - decimal to encoded hellip`,
   (t) => {
     mixer({
-      removeWidows: 0,
-      convertEntities: 1,
-      convertDotsToEllipsis: 1,
+      removeWidows: false,
+      convertEntities: true,
+      convertDotsToEllipsis: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "&#8230;", opt).res,
@@ -460,9 +457,9 @@ tap.test(
   `27 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert on - unencoded to encoded`,
   (t) => {
     mixer({
-      removeWidows: 0,
-      convertEntities: 1,
-      convertDotsToEllipsis: 1,
+      removeWidows: false,
+      convertEntities: true,
+      convertDotsToEllipsis: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `${rawEllipsis}`, opt).res,
@@ -478,8 +475,8 @@ tap.test(
   `28 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - three dots`,
   (t) => {
     mixer({
-      removeWidows: 0,
-      convertDotsToEllipsis: 0,
+      removeWidows: false,
+      convertDotsToEllipsis: false,
     }).forEach((opt, n) => {
       t.equal(det(t, n, "...", opt).res, "...", JSON.stringify(opt, null, 4));
     });
@@ -491,8 +488,8 @@ tap.test(
   `29 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - single letters`,
   (t) => {
     mixer({
-      removeWidows: 0,
-      convertDotsToEllipsis: 0,
+      removeWidows: false,
+      convertDotsToEllipsis: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "Aaaaa... Bbbbb... C...", opt).res,
@@ -508,8 +505,8 @@ tap.test(
   `30 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - hellip entity`,
   (t) => {
     mixer({
-      removeWidows: 0,
-      convertDotsToEllipsis: 0,
+      removeWidows: false,
+      convertDotsToEllipsis: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "&hellip;", opt).res,
@@ -525,8 +522,8 @@ tap.test(
   `31 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - mldr entity`,
   (t) => {
     mixer({
-      removeWidows: 0,
-      convertDotsToEllipsis: 0,
+      removeWidows: false,
+      convertDotsToEllipsis: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "&mldr;", opt).res,
@@ -542,8 +539,8 @@ tap.test(
   `32 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - hex entity`,
   (t) => {
     mixer({
-      removeWidows: 0,
-      convertDotsToEllipsis: 0,
+      removeWidows: false,
+      convertDotsToEllipsis: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "&#x02026;", opt).res,
@@ -559,8 +556,8 @@ tap.test(
   `33 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - dots - convert off - numeric entity`,
   (t) => {
     mixer({
-      removeWidows: 0,
-      convertDotsToEllipsis: 0,
+      removeWidows: false,
+      convertDotsToEllipsis: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "&#8230;", opt).res,
@@ -578,10 +575,10 @@ tap.test(
     const source =
       "Chapter 01 ..................... page 21\nChapter 02 ..................... page 43";
     mixer({
-      replaceLineBreaks: 0,
-      removeLineBreaks: 0,
-      removeWidows: 0,
-      convertEntities: 0,
+      replaceLineBreaks: false,
+      removeLineBreaks: false,
+      removeWidows: false,
+      convertEntities: false,
     }).forEach((opt, n) => {
       t.equal(det(t, n, source, opt).res, source, JSON.stringify(opt, null, 4));
     });
@@ -593,11 +590,11 @@ tap.test(
   `35 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - ellipsis - mix of false positives and a real deal`,
   (t) => {
     mixer({
-      replaceLineBreaks: 0,
-      removeLineBreaks: 0,
-      removeWidows: 0,
-      convertEntities: 0,
-      convertDotsToEllipsis: 1, // <---------
+      replaceLineBreaks: false,
+      removeLineBreaks: false,
+      removeWidows: false,
+      convertEntities: false,
+      convertDotsToEllipsis: true, // <---------
     }).forEach((opt, n) => {
       t.equal(
         det(
@@ -611,11 +608,11 @@ tap.test(
       );
     });
     mixer({
-      replaceLineBreaks: 0,
-      removeLineBreaks: 0,
-      removeWidows: 0,
-      convertEntities: 0,
-      convertDotsToEllipsis: 0, // <---------
+      replaceLineBreaks: false,
+      removeLineBreaks: false,
+      removeWidows: false,
+      convertEntities: false,
+      convertDotsToEllipsis: false, // <---------
     }).forEach((opt, n) => {
       t.equal(
         det(
@@ -636,11 +633,11 @@ tap.test(
   `36 - \u001b[${32}m${`ellipsis`}\u001b[${39}m - ellipsis - mix of dots`,
   (t) => {
     mixer({
-      replaceLineBreaks: 0,
-      removeLineBreaks: 0,
-      removeWidows: 0,
-      convertEntities: 0,
-      convertDotsToEllipsis: 1, // <---------
+      replaceLineBreaks: false,
+      removeLineBreaks: false,
+      removeWidows: false,
+      convertEntities: false,
+      convertDotsToEllipsis: true, // <---------
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "..... ... . ..", opt).res,
@@ -649,11 +646,11 @@ tap.test(
       );
     });
     mixer({
-      replaceLineBreaks: 0,
-      removeLineBreaks: 0,
-      removeWidows: 0,
-      convertEntities: 0,
-      convertDotsToEllipsis: 0, // <---------
+      replaceLineBreaks: false,
+      removeLineBreaks: false,
+      removeWidows: false,
+      convertEntities: false,
+      convertDotsToEllipsis: false, // <---------
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, "..... ... . ..", opt).res,
@@ -670,10 +667,10 @@ tap.test(
   (t) => {
     const source = "Contents.......page 01";
     mixer({
-      replaceLineBreaks: 0,
-      removeLineBreaks: 0,
-      removeWidows: 0,
-      convertEntities: 0,
+      replaceLineBreaks: false,
+      removeLineBreaks: false,
+      removeWidows: false,
+      convertEntities: false,
     }).forEach((opt, n) => {
       t.equal(det(t, n, source, opt).res, source, JSON.stringify(opt, null, 4));
     });

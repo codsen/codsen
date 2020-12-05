@@ -1,6 +1,6 @@
 import tap from "tap";
 import { det as det1 } from "../dist/detergent.esm";
-import { det, mixer, allCombinations } from "../t-util/util";
+import { det, mixer } from "../t-util/util";
 
 // ==============================
 // 01. main functionality
@@ -49,7 +49,7 @@ tap.test(
 tap.test(
   `04 - ${`\u001b[${33}m${`change letter case`}\u001b[${39}m`} - with strip HTML option`,
   (t) => {
-    allCombinations.forEach((opt, n) => {
+    mixer().forEach((opt, n) => {
       t.equal(
         det(
           t,

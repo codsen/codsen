@@ -1,9 +1,6 @@
 import tap from "tap";
 import { det as det1 } from "../dist/detergent.esm";
-import {
-  det,
-  mixer, // , allCombinations
-} from "../t-util/util";
+import { det, mixer } from "../t-util/util";
 
 const key = ["crlf", "cr", "lf"];
 
@@ -14,10 +11,10 @@ tap.test(`01 - minimal example - correct existing linebreaks`, (t) => {
   ["\r\n", "\r", "\n"].forEach((requestedEolType, idx1) => {
     ["\r\n", "\r", "\n"].forEach((presentEolType, idx2) => {
       mixer({
-        replaceLineBreaks: 1,
-        removeLineBreaks: 0,
-        useXHTML: 1,
-        convertEntities: 1,
+        replaceLineBreaks: true,
+        removeLineBreaks: false,
+        useXHTML: true,
+        convertEntities: true,
         eol: key[idx1],
       }).forEach((opt, n) => {
         t.equal(
@@ -37,10 +34,10 @@ tap.test(`01 - minimal example - correct existing linebreaks`, (t) => {
 
 tap.test(`02 - minimal example - br`, (t) => {
   mixer({
-    replaceLineBreaks: 1,
-    removeLineBreaks: 0,
-    useXHTML: 1,
-    convertEntities: 1,
+    replaceLineBreaks: true,
+    removeLineBreaks: false,
+    useXHTML: true,
+    convertEntities: true,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `a<br/>b`, opt).res,
@@ -54,10 +51,10 @@ tap.test(`02 - minimal example - br`, (t) => {
 tap.test(`03 - replace \\n line breaks with BR - useXHTML=on`, (t) => {
   ["\r\n", "\r", "\n"].forEach((eolType, i) => {
     mixer({
-      replaceLineBreaks: 1,
-      removeLineBreaks: 0,
-      useXHTML: 1,
-      convertEntities: 1,
+      replaceLineBreaks: true,
+      removeLineBreaks: false,
+      useXHTML: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(
@@ -77,10 +74,10 @@ tap.test(`03 - replace \\n line breaks with BR - useXHTML=on`, (t) => {
 tap.test(`04 - replace \\n line breaks with BR - useXHTML=off`, (t) => {
   ["\r\n", "\r", "\n"].forEach((eolType) => {
     mixer({
-      replaceLineBreaks: 1,
-      removeLineBreaks: 0,
-      useXHTML: 0,
-      convertEntities: 1,
+      replaceLineBreaks: true,
+      removeLineBreaks: false,
+      useXHTML: false,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(
@@ -100,10 +97,10 @@ tap.test(`04 - replace \\n line breaks with BR - useXHTML=off`, (t) => {
 tap.test(`05 - br with attribute, line break present`, (t) => {
   ["\r\n", "\r", "\n"].forEach((eolType) => {
     mixer({
-      replaceLineBreaks: 1,
-      removeLineBreaks: 0,
-      useXHTML: 0,
-      convertEntities: 1,
+      replaceLineBreaks: true,
+      removeLineBreaks: false,
+      useXHTML: false,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `a<br class="z">${eolType}b`, opt).res,
@@ -118,10 +115,10 @@ tap.test(`05 - br with attribute, line break present`, (t) => {
   });
   t.equal(
     det1(`a<br class="z">\r\nb`, {
-      replaceLineBreaks: 1,
-      removeLineBreaks: 0,
-      useXHTML: 0,
-      convertEntities: 1,
+      replaceLineBreaks: true,
+      removeLineBreaks: false,
+      useXHTML: false,
+      convertEntities: true,
     }).res,
     `a<br class="z">\nb`,
     "05"
@@ -132,10 +129,10 @@ tap.test(`05 - br with attribute, line break present`, (t) => {
 tap.test(`06 - only adds a slash, respects existing attrs`, (t) => {
   ["\r\n", "\r", "\n"].forEach((eolType) => {
     mixer({
-      replaceLineBreaks: 1,
-      removeLineBreaks: 0,
-      useXHTML: 1,
-      convertEntities: 1,
+      replaceLineBreaks: true,
+      removeLineBreaks: false,
+      useXHTML: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `a<br class="z">${eolType}b`, opt).res,
@@ -153,10 +150,10 @@ tap.test(`06 - only adds a slash, respects existing attrs`, (t) => {
 
 tap.test(`07 - br with attribute, no line break, HTML`, (t) => {
   mixer({
-    replaceLineBreaks: 1,
-    removeLineBreaks: 0,
-    useXHTML: 0,
-    convertEntities: 1,
+    replaceLineBreaks: true,
+    removeLineBreaks: false,
+    useXHTML: false,
+    convertEntities: true,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `a<br class="z">b`, opt).res,
@@ -169,10 +166,10 @@ tap.test(`07 - br with attribute, no line break, HTML`, (t) => {
 
 tap.test(`08 - br with attribute, no line break, XHTML`, (t) => {
   mixer({
-    replaceLineBreaks: 1,
-    removeLineBreaks: 0,
-    useXHTML: 1,
-    convertEntities: 1,
+    replaceLineBreaks: true,
+    removeLineBreaks: false,
+    useXHTML: true,
+    convertEntities: true,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `a<br class="z">b`, opt).res,
@@ -188,9 +185,9 @@ tap.test(`08 - br with attribute, no line break, XHTML`, (t) => {
 
 tap.test(`09 - multiple consecutive line breaks`, (t) => {
   mixer({
-    replaceLineBreaks: 1,
-    removeLineBreaks: 0,
-    useXHTML: 1,
+    replaceLineBreaks: true,
+    removeLineBreaks: false,
+    useXHTML: true,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `abcd\n\n\n\n\n\n\nefgh`, opt).res,
@@ -203,9 +200,9 @@ tap.test(`09 - multiple consecutive line breaks`, (t) => {
 
 tap.test(`10 - multiple consecutive line breaks`, (t) => {
   mixer({
-    replaceLineBreaks: 1,
-    removeLineBreaks: 0,
-    useXHTML: 0,
+    replaceLineBreaks: true,
+    removeLineBreaks: false,
+    useXHTML: false,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `abcd\n\n\n\n\n\n\nefgh`, opt).res,
@@ -218,8 +215,8 @@ tap.test(`10 - multiple consecutive line breaks`, (t) => {
 
 tap.test(`11 - multiple consecutive line breaks`, (t) => {
   mixer({
-    replaceLineBreaks: 0,
-    removeLineBreaks: 0,
+    replaceLineBreaks: false,
+    removeLineBreaks: false,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `abcd\n\n\n\n\n\n\nefgh`, opt).res,
@@ -232,7 +229,7 @@ tap.test(`11 - multiple consecutive line breaks`, (t) => {
 
 tap.test(`12 - multiple consecutive line breaks`, (t) => {
   mixer({
-    removeLineBreaks: 1,
+    removeLineBreaks: true,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `abcd\n\n\n\n\n\n\nefgh`, opt).res,

@@ -1,7 +1,7 @@
 import tap from "tap";
 import he from "he";
 import { det as det1 } from "../dist/detergent.esm";
-import { det, mixer, allCombinations } from "../t-util/util";
+import { det, mixer } from "../t-util/util";
 import {
   rawReplacementMark,
   rightSingleQuote,
@@ -18,7 +18,7 @@ tap.test(
   `01 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - pound - convertEntities=on`,
   (t) => {
     mixer({
-      convertEntities: 1,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `\u00A3`, opt).res,
@@ -34,7 +34,7 @@ tap.test(
   `02 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - pound - convertEntities=off`,
   (t) => {
     mixer({
-      convertEntities: 0,
+      convertEntities: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `\u00A3`, opt).res,
@@ -50,8 +50,8 @@ tap.test(
   `03 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - m-dash`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      convertDashes: 1,
+      convertEntities: true,
+      convertDashes: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `${rawMDash}`, opt).res,
@@ -67,7 +67,7 @@ tap.test(
   `04 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - m-dash`,
   (t) => {
     mixer({
-      convertDashes: 0,
+      convertDashes: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `${rawMDash}`, opt).res,
@@ -83,8 +83,8 @@ tap.test(
   `05 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - m-dash`,
   (t) => {
     mixer({
-      convertEntities: 0,
-      convertDashes: 1,
+      convertEntities: false,
+      convertDashes: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `${rawMDash}`, opt).res,
@@ -100,7 +100,7 @@ tap.test(
   `06 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - m-dash`,
   (t) => {
     mixer({
-      convertDashes: 0,
+      convertDashes: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `${rawMDash}`, opt).res,
@@ -116,9 +116,9 @@ tap.test(
   `07 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - hairspace`,
   (t) => {
     mixer({
-      convertEntities: 0,
-      removeWidows: 0,
-      convertDashes: 1,
+      convertEntities: false,
+      removeWidows: false,
+      convertDashes: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `a${rawhairspace}&mdash;${rawhairspace}a`, opt).res,
@@ -134,8 +134,8 @@ tap.test(
   `08 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - hairspace`,
   (t) => {
     mixer({
-      convertDashes: 0,
-      removeWidows: 0,
+      convertDashes: false,
+      removeWidows: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `a${rawhairspace}&mdash;${rawhairspace}a`, opt).res,
@@ -151,7 +151,7 @@ tap.test(
   `09 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - ad hoc 1`,
   (t) => {
     t.equal(
-      det1('"', { convertApostrophes: 0, convertEntities: 1 }).res,
+      det1('"', { convertApostrophes: false, convertEntities: true }).res,
       "&quot;",
       "09"
     );
@@ -163,7 +163,7 @@ tap.test(
   `10 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - ad hoc 1`,
   (t) => {
     t.equal(
-      det1('^"', { convertApostrophes: 0, convertEntities: 1 }).res,
+      det1('^"', { convertApostrophes: false, convertEntities: true }).res,
       "^&quot;",
       "10"
     );
@@ -175,7 +175,7 @@ tap.test(
   `11 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - ad hoc 1`,
   (t) => {
     t.equal(
-      det1('^`"', { convertApostrophes: 0, convertEntities: 1 }).res,
+      det1('^`"', { convertApostrophes: false, convertEntities: true }).res,
       "^`&quot;",
       "11"
     );
@@ -187,8 +187,8 @@ tap.test(
   `12 - ${`\u001b[${31}m${`opts.convertEntities`}\u001b[${39}m`} - ad hoc 1`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      convertApostrophes: 0,
+      convertEntities: true,
+      convertApostrophes: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, '^`"', opt).res,
@@ -197,8 +197,8 @@ tap.test(
       );
     });
     mixer({
-      convertEntities: 1,
-      convertApostrophes: 1,
+      convertEntities: true,
+      convertApostrophes: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, '^`"', opt).res,
@@ -217,10 +217,10 @@ tap.test(
   `13 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #1 - convertApostrophes=on, right single q.`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      convertApostrophes: 1,
-      convertDashes: 1,
-      removeWidows: 0,
+      convertEntities: true,
+      convertApostrophes: true,
+      convertDashes: true,
+      removeWidows: false,
     }).forEach((opt, n) => {
       t.equal(
         det(
@@ -241,10 +241,10 @@ tap.test(
   `14 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #1 - convertApostrophes=on, left single q.`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      convertApostrophes: 1,
-      convertDashes: 1,
-      removeWidows: 0,
+      convertEntities: true,
+      convertApostrophes: true,
+      convertDashes: true,
+      removeWidows: false,
     }).forEach((opt, n) => {
       t.equal(
         det(
@@ -265,10 +265,10 @@ tap.test(
   `15 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #1 - convertApostrophes=off`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      convertApostrophes: 0,
-      convertDashes: 1,
-      removeWidows: 0,
+      convertEntities: true,
+      convertApostrophes: false,
+      convertDashes: true,
+      removeWidows: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `HOORAY  ${rawMDash}  IT'S HERE ${rawhairspace}`, opt).res,
@@ -284,10 +284,10 @@ tap.test(
   `16 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #2 - convertApostrophes=on - right single q.`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      convertApostrophes: 1,
-      convertDashes: 1,
-      removeWidows: 0,
+      convertEntities: true,
+      convertApostrophes: true,
+      convertDashes: true,
+      removeWidows: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `HOORAY  -  IT${rightSingleQuote}S HERE ${rawhairspace}`, opt)
@@ -304,10 +304,10 @@ tap.test(
   `17 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #2 - convertApostrophes=on - left single q.`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      convertApostrophes: 1,
-      convertDashes: 1,
-      removeWidows: 0,
+      convertEntities: true,
+      convertApostrophes: true,
+      convertDashes: true,
+      removeWidows: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt)
@@ -324,10 +324,10 @@ tap.test(
   `18 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #2 - convertApostrophes=off - left single q.`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      convertApostrophes: 0,
-      convertDashes: 1,
-      removeWidows: 0,
+      convertEntities: true,
+      convertApostrophes: false,
+      convertDashes: true,
+      removeWidows: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt)
@@ -344,10 +344,10 @@ tap.test(
   `19 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #2 - convertApostrophes=off - right single q.`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      convertApostrophes: 0,
-      convertDashes: 1,
-      removeWidows: 0,
+      convertEntities: true,
+      convertApostrophes: false,
+      convertDashes: true,
+      removeWidows: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `HOORAY  -  IT${rightSingleQuote}S HERE ${rawhairspace}`, opt)
@@ -364,10 +364,10 @@ tap.test(
   `20 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #3 - convertApostrophes=on - left single q.`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      convertApostrophes: 1,
-      convertDashes: 0,
-      removeWidows: 0,
+      convertEntities: true,
+      convertApostrophes: true,
+      convertDashes: false,
+      removeWidows: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt)
@@ -384,10 +384,10 @@ tap.test(
   `21 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #3 - convertApostrophes=off - left single q.`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      convertApostrophes: 0,
-      convertDashes: 0,
-      removeWidows: 0,
+      convertEntities: true,
+      convertApostrophes: false,
+      convertDashes: false,
+      removeWidows: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt)
@@ -404,10 +404,10 @@ tap.test(
   `22 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #3 - convertApostrophes=on - right single q.`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      convertApostrophes: 1,
-      convertDashes: 0,
-      removeWidows: 0,
+      convertEntities: true,
+      convertApostrophes: true,
+      convertDashes: false,
+      removeWidows: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `HOORAY  -  IT${rightSingleQuote}S HERE ${rawhairspace}`, opt)
@@ -424,10 +424,10 @@ tap.test(
   `23 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #3 - convertApostrophes=off - right single q.`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      convertApostrophes: 0,
-      convertDashes: 0,
-      removeWidows: 0,
+      convertEntities: true,
+      convertApostrophes: false,
+      convertDashes: false,
+      removeWidows: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `HOORAY  -  IT${rightSingleQuote}S HERE ${rawhairspace}`, opt)
@@ -444,10 +444,10 @@ tap.test(
   `24 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #4 - convertApostrophes=on`,
   (t) => {
     mixer({
-      convertEntities: 1, // <-----
-      convertApostrophes: 1,
-      convertDashes: 0,
-      removeWidows: 1,
+      convertEntities: true, // <-----
+      convertApostrophes: true,
+      convertDashes: false,
+      removeWidows: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt)
@@ -457,10 +457,10 @@ tap.test(
       );
     });
     mixer({
-      convertEntities: 0, // <-----
-      convertApostrophes: 1,
-      convertDashes: 0,
-      removeWidows: 1,
+      convertEntities: false, // <-----
+      convertApostrophes: true,
+      convertDashes: false,
+      removeWidows: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt)
@@ -477,10 +477,10 @@ tap.test(
   `25 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #4 - convertApostrophes=off`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      convertApostrophes: 0,
-      convertDashes: 0, // <-----
-      removeWidows: 1,
+      convertEntities: true,
+      convertApostrophes: false,
+      convertDashes: false, // <-----
+      removeWidows: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt)
@@ -490,10 +490,10 @@ tap.test(
       );
     });
     mixer({
-      convertEntities: 1,
-      convertApostrophes: 0,
-      convertDashes: 1, // <-----
-      removeWidows: 1,
+      convertEntities: true,
+      convertApostrophes: false,
+      convertDashes: true, // <-----
+      removeWidows: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `HOORAY  -  IT${leftSingleQuote}S HERE ${rawhairspace}`, opt)
@@ -510,10 +510,10 @@ tap.test(
   `26 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #4 - convertApostrophes=off`,
   (t) => {
     mixer({
-      convertEntities: 1, // <-----
-      convertApostrophes: 0,
-      convertDashes: 0,
-      removeWidows: 1,
+      convertEntities: true, // <-----
+      convertApostrophes: false,
+      convertDashes: false,
+      removeWidows: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `HOORAY  -  IT${rightSingleQuote}S HERE ${rawhairspace}`, opt)
@@ -523,10 +523,10 @@ tap.test(
       );
     });
     mixer({
-      convertEntities: 0, // <-----
-      convertApostrophes: 0,
-      convertDashes: 0,
-      removeWidows: 1,
+      convertEntities: false, // <-----
+      convertApostrophes: false,
+      convertDashes: false,
+      removeWidows: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `HOORAY  -  IT${rightSingleQuote}S HERE ${rawhairspace}`, opt)
@@ -543,10 +543,10 @@ tap.test(
   `27 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #5 - convertApostrophes=on`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      convertApostrophes: 1,
-      convertDashes: 1,
-      removeWidows: 1,
+      convertEntities: true,
+      convertApostrophes: true,
+      convertDashes: true,
+      removeWidows: true,
     }).forEach((opt, n) => {
       t.equal(
         det(
@@ -567,10 +567,10 @@ tap.test(
   `28 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #5 - convertApostrophes=on`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      convertApostrophes: 1,
-      convertDashes: 1,
-      removeWidows: 1,
+      convertEntities: true,
+      convertApostrophes: true,
+      convertDashes: true,
+      removeWidows: true,
     }).forEach((opt, n) => {
       t.equal(
         det(
@@ -591,10 +591,10 @@ tap.test(
   `29 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #5 - convertApostrophes=off`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      convertApostrophes: 0,
-      convertDashes: 1,
-      removeWidows: 1,
+      convertEntities: true,
+      convertApostrophes: false,
+      convertDashes: true,
+      removeWidows: true,
     }).forEach((opt, n) => {
       t.equal(
         det(
@@ -615,10 +615,10 @@ tap.test(
   `30 - ${`\u001b[${33}m${`opts.convertApostrophes`}\u001b[${39}m`} - mixed #5 - convertApostrophes=off`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      convertApostrophes: 0,
-      convertDashes: 1,
-      removeWidows: 1,
+      convertEntities: true,
+      convertApostrophes: false,
+      convertDashes: true,
+      removeWidows: true,
     }).forEach((opt, n) => {
       t.equal(
         det(
@@ -640,9 +640,9 @@ tap.test(
 
 tap.test(`31 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
-    convertDashes: 1,
-    convertEntities: 1,
-    removeWidows: 1,
+    convertDashes: true,
+    convertEntities: true,
+    removeWidows: true,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `aaaaaaaaaaa - aaaaaaaaaaaa`, opt).res,
@@ -655,9 +655,9 @@ tap.test(`31 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
 
 tap.test(`32 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
-    convertDashes: 0,
-    removeWidows: 1,
-    convertEntities: 1,
+    convertDashes: false,
+    removeWidows: true,
+    convertEntities: true,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `aaaaaaaaaaa - aaaaaaaaaaaa`, opt).res,
@@ -670,8 +670,8 @@ tap.test(`32 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
 
 tap.test(`33 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
-    convertDashes: 0,
-    removeWidows: 0,
+    convertDashes: false,
+    removeWidows: false,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `aaaaaaaaaaa - aaaaaaaaaaaa`, opt).res,
@@ -684,9 +684,9 @@ tap.test(`33 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
 
 tap.test(`34 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
-    convertDashes: 1,
-    convertEntities: 1,
-    removeWidows: 1,
+    convertDashes: true,
+    convertEntities: true,
+    removeWidows: true,
   }).forEach((opt, n) => {
     t.equal(
       det(
@@ -702,9 +702,9 @@ tap.test(`34 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
 
   t.equal(
     det1(`aaaaaaaaaaa ${rawMDash} aaaaaaaaaaaa &mdash; aaaaaaaaaaaa`, {
-      convertDashes: 1,
-      convertEntities: 1,
-      removeWidows: 1,
+      convertDashes: true,
+      convertEntities: true,
+      removeWidows: true,
     }).res,
     `aaaaaaaaaaa&nbsp;&mdash; aaaaaaaaaaaa&nbsp;&mdash;&nbsp;aaaaaaaaaaaa`,
     "34"
@@ -715,10 +715,10 @@ tap.test(`34 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
 
 tap.test(`35 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
-    convertDashes: 1,
-    convertEntities: 1,
-    removeWidows: 1,
-    addMissingSpaces: 0,
+    convertDashes: true,
+    convertEntities: true,
+    removeWidows: true,
+    addMissingSpaces: false,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `a ${rawMDash}a`, opt).res,
@@ -732,10 +732,10 @@ tap.test(`35 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
 
 tap.test(`36 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
-    convertDashes: 1,
-    convertEntities: 1,
-    removeWidows: 1,
-    addMissingSpaces: 1,
+    convertDashes: true,
+    convertEntities: true,
+    removeWidows: true,
+    addMissingSpaces: true,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `a ${rawMDash}a`, opt).res,
@@ -749,10 +749,10 @@ tap.test(`36 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
 
 tap.test(`37 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
-    convertDashes: 1,
-    convertEntities: 1,
-    removeWidows: 0,
-    addMissingSpaces: 0,
+    convertDashes: true,
+    convertEntities: true,
+    removeWidows: false,
+    addMissingSpaces: false,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `a ${rawMDash}a`, opt).res,
@@ -766,10 +766,10 @@ tap.test(`37 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
 
 tap.test(`38 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
-    convertDashes: 1,
-    convertEntities: 1,
-    removeWidows: 0,
-    addMissingSpaces: 1,
+    convertDashes: true,
+    convertEntities: true,
+    removeWidows: false,
+    addMissingSpaces: true,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `a ${rawMDash}a`, opt).res,
@@ -783,10 +783,10 @@ tap.test(`38 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
 
 tap.test(`39 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
-    convertDashes: 1,
-    convertEntities: 0,
-    removeWidows: 1,
-    addMissingSpaces: 0,
+    convertDashes: true,
+    convertEntities: false,
+    removeWidows: true,
+    addMissingSpaces: false,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `a ${rawMDash}a`, opt).res,
@@ -800,10 +800,10 @@ tap.test(`39 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
 
 tap.test(`40 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
-    convertDashes: 1,
-    convertEntities: 0,
-    removeWidows: 1,
-    addMissingSpaces: 1,
+    convertDashes: true,
+    convertEntities: false,
+    removeWidows: true,
+    addMissingSpaces: true,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `a ${rawMDash}a`, opt).res,
@@ -817,10 +817,10 @@ tap.test(`40 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
 
 tap.test(`41 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
-    convertDashes: 1,
-    convertEntities: 0,
-    removeWidows: 0,
-    addMissingSpaces: 0,
+    convertDashes: true,
+    convertEntities: false,
+    removeWidows: false,
+    addMissingSpaces: false,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `a ${rawMDash}a`, opt).res,
@@ -834,10 +834,10 @@ tap.test(`41 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
 
 tap.test(`42 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
-    convertDashes: 1,
-    convertEntities: 0,
-    removeWidows: 0,
-    addMissingSpaces: 1,
+    convertDashes: true,
+    convertEntities: false,
+    removeWidows: false,
+    addMissingSpaces: true,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `a ${rawMDash}a`, opt).res,
@@ -851,10 +851,10 @@ tap.test(`42 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
 
 tap.test(`43 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
-    convertDashes: 1,
-    convertEntities: 1,
-    removeWidows: 1,
-    addMissingSpaces: 0,
+    convertDashes: true,
+    convertEntities: true,
+    removeWidows: true,
+    addMissingSpaces: false,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `a${rawhairspace}${rawMDash}a`, opt).res,
@@ -868,10 +868,10 @@ tap.test(`43 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
 
 tap.test(`44 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
-    convertDashes: 1,
-    convertEntities: 1,
-    removeWidows: 1,
-    addMissingSpaces: 1,
+    convertDashes: true,
+    convertEntities: true,
+    removeWidows: true,
+    addMissingSpaces: true,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `a${rawhairspace}${rawMDash}a`, opt).res,
@@ -885,10 +885,10 @@ tap.test(`44 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
 
 tap.test(`45 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
-    convertDashes: 1,
-    convertEntities: 1,
-    removeWidows: 0,
-    addMissingSpaces: 0,
+    convertDashes: true,
+    convertEntities: true,
+    removeWidows: false,
+    addMissingSpaces: false,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `a${rawhairspace}${rawMDash}a`, opt).res,
@@ -902,10 +902,10 @@ tap.test(`45 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
 
 tap.test(`46 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
-    convertDashes: 1,
-    convertEntities: 1,
-    removeWidows: 0,
-    addMissingSpaces: 1,
+    convertDashes: true,
+    convertEntities: true,
+    removeWidows: false,
+    addMissingSpaces: true,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `a${rawhairspace}${rawMDash}a`, opt).res,
@@ -919,10 +919,10 @@ tap.test(`46 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
 
 tap.test(`47 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
-    convertDashes: 1,
-    convertEntities: 0,
-    removeWidows: 1,
-    addMissingSpaces: 0,
+    convertDashes: true,
+    convertEntities: false,
+    removeWidows: true,
+    addMissingSpaces: false,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `a${rawhairspace}${rawMDash}a`, opt).res,
@@ -936,10 +936,10 @@ tap.test(`47 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
 
 tap.test(`48 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
-    convertDashes: 1,
-    convertEntities: 0,
-    removeWidows: 1,
-    addMissingSpaces: 1,
+    convertDashes: true,
+    convertEntities: false,
+    removeWidows: true,
+    addMissingSpaces: true,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `a${rawhairspace}${rawMDash}a`, opt).res,
@@ -953,10 +953,10 @@ tap.test(`48 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
 
 tap.test(`49 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
-    convertDashes: 1,
-    convertEntities: 0,
-    removeWidows: 0,
-    addMissingSpaces: 0,
+    convertDashes: true,
+    convertEntities: false,
+    removeWidows: false,
+    addMissingSpaces: false,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `a${rawhairspace}${rawMDash}a`, opt).res,
@@ -970,8 +970,8 @@ tap.test(`49 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
 
 tap.test(`50 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
-    convertDashes: 0,
-    removeWidows: 0,
+    convertDashes: false,
+    removeWidows: false,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `a${rawhairspace}${rawMDash} a`, opt).res,
@@ -987,8 +987,8 @@ tap.test(
   `51 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - false positives`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      removeWidows: 0,
+      convertEntities: true,
+      removeWidows: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `Discount: -£10.00`, opt).res,
@@ -999,8 +999,8 @@ tap.test(
 
     t.equal(
       det1(`Discount: -£10.00`, {
-        convertEntities: 1,
-        removeWidows: 0,
+        convertEntities: true,
+        removeWidows: false,
       }).res,
       "Discount: -&pound;10.00",
       "51"
@@ -1014,8 +1014,8 @@ tap.test(
   `52 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - false positives`,
   (t) => {
     mixer({
-      convertEntities: 0,
-      removeWidows: 0,
+      convertEntities: false,
+      removeWidows: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `Discount: -£10.00`, opt).res,
@@ -1030,7 +1030,7 @@ tap.test(
 tap.test(
   `53 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - false positives`,
   (t) => {
-    allCombinations.forEach((opt, n) => {
+    mixer().forEach((opt, n) => {
       t.equal(
         det(t, n, `-10.00`, opt).res,
         "-10.00",
@@ -1045,9 +1045,9 @@ tap.test(
   `54 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - letters, convertEntities=on, removeWidows=on`,
   (t) => {
     mixer({
-      convertDashes: 1,
-      convertEntities: 1,
-      removeWidows: 1,
+      convertDashes: true,
+      convertEntities: true,
+      removeWidows: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `a${rawhairspace}a a a a a a a a a ${rawMDash} a a a a `, opt)
@@ -1064,9 +1064,9 @@ tap.test(
   `55 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - letters, convertEntities=on, removeWidows=off`,
   (t) => {
     mixer({
-      convertDashes: 1,
-      convertEntities: 1,
-      removeWidows: 0,
+      convertDashes: true,
+      convertEntities: true,
+      removeWidows: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `a a a a a a${rawhairspace}a a a a ${rawMDash} a a a a `, opt)
@@ -1083,9 +1083,9 @@ tap.test(
   `56 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - letters, convertEntities=off, removeWidows=on`,
   (t) => {
     mixer({
-      convertDashes: 1,
-      convertEntities: 0,
-      removeWidows: 1,
+      convertDashes: true,
+      convertEntities: false,
+      removeWidows: true,
     }).forEach((opt, n) => {
       t.equal(
         det(
@@ -1106,9 +1106,9 @@ tap.test(
   `57 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`} - letters, convertEntities=off, removeWidows=off`,
   (t) => {
     mixer({
-      convertDashes: 1,
-      convertEntities: 0,
-      removeWidows: 0,
+      convertDashes: true,
+      convertEntities: false,
+      removeWidows: false,
     }).forEach((opt, n) => {
       t.equal(
         det(
@@ -1127,10 +1127,10 @@ tap.test(
 
 tap.test(`58 - ${`\u001b[${32}m${`m-dash`}\u001b[${39}m`}`, (t) => {
   mixer({
-    convertDashes: 1,
-    convertEntities: 0,
-    removeWidows: 0,
-    addMissingSpaces: 1,
+    convertDashes: true,
+    convertEntities: false,
+    removeWidows: false,
+    addMissingSpaces: true,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `a${rawhairspace}${rawMDash}a`, opt).res,
@@ -1149,7 +1149,7 @@ tap.test(
   `59 - ${`\u001b[${36}m${`astral chars`}\u001b[${39}m`} - trigram char converted into entity, convertEntities=on`,
   (t) => {
     mixer({
-      convertEntities: 1,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `\uD834\uDF06`, opt).res,
@@ -1165,7 +1165,7 @@ tap.test(
   `60 - ${`\u001b[${36}m${`astral chars`}\u001b[${39}m`} - trigram char converted into entity, convertEntities=off`,
   (t) => {
     mixer({
-      convertEntities: 0,
+      convertEntities: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `\uD834\uDF06`, opt).res,
@@ -1181,7 +1181,7 @@ tap.test(
   `61 - ${`\u001b[${36}m${`astral chars`}\u001b[${39}m`} - paired surrogate encoding, convertEntities=on`,
   (t) => {
     mixer({
-      convertEntities: 1,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `\uD83D\uDE0A`, opt).res,
@@ -1197,7 +1197,7 @@ tap.test(
   `62 - ${`\u001b[${36}m${`astral chars`}\u001b[${39}m`} - paired surrogate encoding, convertEntities=off`,
   (t) => {
     mixer({
-      convertEntities: 0,
+      convertEntities: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `\uD83D\uDE0A`, opt).res,
@@ -1212,7 +1212,7 @@ tap.test(
 tap.test(
   `63 - ${`\u001b[${36}m${`astral chars`}\u001b[${39}m`} - stray low surrogates removed`,
   (t) => {
-    allCombinations.forEach((opt, n) => {
+    mixer().forEach((opt, n) => {
       t.equal(
         det(t, n, `${rawReplacementMark}a\uD800a\uD83Da\uDBFF`, opt).res,
         "aaa",
@@ -1226,7 +1226,7 @@ tap.test(
 tap.test(
   `64 - ${`\u001b[${36}m${`astral chars`}\u001b[${39}m`} - stray low surrogates removed`,
   (t) => {
-    allCombinations.forEach((opt, n) => {
+    mixer().forEach((opt, n) => {
       t.equal(
         det(t, n, `\uDC00a\uDE0Aa\uDFFF`, opt).res,
         "aa",
@@ -1240,7 +1240,7 @@ tap.test(
 tap.test(
   `65 - ${`\u001b[${36}m${`astral chars`}\u001b[${39}m`} - stray low surrogates removed`,
   (t) => {
-    allCombinations.forEach((opt, n) => {
+    mixer().forEach((opt, n) => {
       t.equal(det(t, n, `\uD835`, opt).res, "", JSON.stringify(opt, null, 4));
     });
     t.end();
@@ -1250,7 +1250,7 @@ tap.test(
 tap.test(
   `66 - ${`\u001b[${36}m${`astral chars`}\u001b[${39}m`} - stray low surrogates removed`,
   (t) => {
-    allCombinations.forEach((opt, n) => {
+    mixer().forEach((opt, n) => {
       t.equal(det(t, n, `\uDFD8`, opt).res, "", JSON.stringify(opt, null, 4));
     });
     t.end();
@@ -1261,7 +1261,7 @@ tap.test(
   `67 - ${`\u001b[${36}m${`astral chars`}\u001b[${39}m`} - stray low surrogates removed`,
   (t) => {
     mixer({
-      convertEntities: 0,
+      convertEntities: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `gr\u00F6\u00DFer`, opt).res,
@@ -1280,7 +1280,7 @@ tap.test(
   `68 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - German characters`,
   (t) => {
     mixer({
-      convertEntities: 1,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `gr\u00F6\u00DFer`, opt).res,
@@ -1296,7 +1296,7 @@ tap.test(
   `69 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - single raw apostrophes are not encoded`,
   (t) => {
     mixer({
-      convertApostrophes: 0,
+      convertApostrophes: false,
     }).forEach((opt, n) => {
       t.equal(det(t, n, `'`, opt).res, "'", JSON.stringify(opt, null, 4));
     });
@@ -1308,7 +1308,7 @@ tap.test(
   `70 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - single encoded apostrophes are decoded`,
   (t) => {
     mixer({
-      convertApostrophes: 0,
+      convertApostrophes: false,
     }).forEach((opt, n) => {
       t.equal(det(t, n, `&apos;`, opt).res, "'", JSON.stringify(opt, null, 4));
       t.equal(det(t, n, `&#x27;`, opt).res, "'", JSON.stringify(opt, null, 4));
@@ -1321,8 +1321,8 @@ tap.test(
   `71 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - single apostrophes`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 0,
+      convertApostrophes: true,
+      convertEntities: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `It&apos;s Monday.`, opt).res,
@@ -1343,8 +1343,8 @@ tap.test(
   `72 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - single apostrophes`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 1,
+      convertApostrophes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `It&apos;s Monday.`, opt).res,
@@ -1365,7 +1365,7 @@ tap.test(
   `73 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - single apostrophes`,
   (t) => {
     mixer({
-      convertApostrophes: 0,
+      convertApostrophes: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `It&apos;s Monday.`, opt).res,
@@ -1386,8 +1386,8 @@ tap.test(
   `74 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks - case of "wouldn't"`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 1,
+      convertApostrophes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `wouldn${rawReplacementMark}t`, opt).res,
@@ -1403,8 +1403,8 @@ tap.test(
   `75 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks - case of "wouldn't"`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 0,
+      convertApostrophes: true,
+      convertEntities: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `wouldn${rawReplacementMark}t`, opt).res,
@@ -1420,7 +1420,7 @@ tap.test(
   `76 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks - case of "wouldn't"`,
   (t) => {
     mixer({
-      convertApostrophes: 0,
+      convertApostrophes: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `wouldn${rawReplacementMark}t`, opt).res,
@@ -1436,8 +1436,8 @@ tap.test(
   `77 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks - case of "wouldn't" - caps`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 1,
+      convertApostrophes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `WOULDN${rawReplacementMark}T`, opt).res,
@@ -1453,8 +1453,8 @@ tap.test(
   `78 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks - case of "wouldn't" - caps`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 0,
+      convertApostrophes: true,
+      convertEntities: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `WOULDN${rawReplacementMark}T`, opt).res,
@@ -1470,7 +1470,7 @@ tap.test(
   `79 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks - case of "wouldn't" - caps`,
   (t) => {
     mixer({
-      convertApostrophes: 0,
+      convertApostrophes: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `WOULDN${rawReplacementMark}T`, opt).res,
@@ -1487,8 +1487,8 @@ tap.test(
   `80 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks - case of "one's"`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 1,
+      convertApostrophes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `one${rawReplacementMark}s`, opt).res,
@@ -1504,8 +1504,8 @@ tap.test(
   `81 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks - case of "one's"`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 0,
+      convertApostrophes: true,
+      convertEntities: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `one${rawReplacementMark}s`, opt).res,
@@ -1521,7 +1521,7 @@ tap.test(
   `82 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - converts to non-fancy which is never encoded`,
   (t) => {
     mixer({
-      convertApostrophes: 0,
+      convertApostrophes: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `one${rawReplacementMark}s`, opt).res,
@@ -1537,8 +1537,8 @@ tap.test(
   `83 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - converts to fancy, encoded`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 1,
+      convertApostrophes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `ONE${rawReplacementMark}S`, opt).res,
@@ -1554,8 +1554,8 @@ tap.test(
   `84 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - converts to fancy but leaves unencoded`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 0,
+      convertApostrophes: true,
+      convertEntities: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `ONE${rawReplacementMark}S`, opt).res,
@@ -1571,7 +1571,7 @@ tap.test(
   `85 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - converts to non-fancy which is never encoded`,
   (t) => {
     mixer({
-      convertApostrophes: 0,
+      convertApostrophes: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `ONE${rawReplacementMark}S`, opt).res,
@@ -1591,8 +1591,8 @@ tap.test(
   `86 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 1,
+      convertApostrophes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `couldn${rawReplacementMark}t`, opt).res,
@@ -1608,8 +1608,8 @@ tap.test(
   `87 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 1,
+      convertApostrophes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `we${rawReplacementMark}re`, opt).res,
@@ -1625,8 +1625,8 @@ tap.test(
   `88 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 1,
+      convertApostrophes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `you${rawReplacementMark}re`, opt).res,
@@ -1642,8 +1642,8 @@ tap.test(
   `89 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 1,
+      convertApostrophes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `they${rawReplacementMark}re`, opt).res,
@@ -1659,8 +1659,8 @@ tap.test(
   `90 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 1,
+      convertApostrophes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `YOU${rawReplacementMark}RE`, opt).res,
@@ -1676,8 +1676,8 @@ tap.test(
   `91 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 1,
+      convertApostrophes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `I${rawReplacementMark}ll`, opt).res,
@@ -1693,8 +1693,8 @@ tap.test(
   `92 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 1,
+      convertApostrophes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `you${rawReplacementMark}ll`, opt).res,
@@ -1710,8 +1710,8 @@ tap.test(
   `93 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 1,
+      convertApostrophes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `he${rawReplacementMark}ll`, opt).res,
@@ -1727,8 +1727,8 @@ tap.test(
   `94 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 1,
+      convertApostrophes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `she${rawReplacementMark}ll`, opt).res,
@@ -1744,8 +1744,8 @@ tap.test(
   `95 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 1,
+      convertApostrophes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `we${rawReplacementMark}ll`, opt).res,
@@ -1761,8 +1761,8 @@ tap.test(
   `96 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 1,
+      convertApostrophes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `they${rawReplacementMark}ll`, opt).res,
@@ -1778,8 +1778,8 @@ tap.test(
   `97 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 1,
+      convertApostrophes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `YOU${rawReplacementMark}LL`, opt).res,
@@ -1795,8 +1795,8 @@ tap.test(
   `98 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 1,
+      convertApostrophes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `HE${rawReplacementMark}LL`, opt).res,
@@ -1812,8 +1812,8 @@ tap.test(
   `99 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 1,
+      convertApostrophes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `SHE${rawReplacementMark}LL`, opt).res,
@@ -1829,8 +1829,8 @@ tap.test(
   `100 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 1,
+      convertApostrophes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `WE${rawReplacementMark}LL`, opt).res,
@@ -1846,8 +1846,8 @@ tap.test(
   `101 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 1,
+      convertApostrophes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `THEY${rawReplacementMark}LL`, opt).res,
@@ -1863,8 +1863,8 @@ tap.test(
   `102 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 1,
+      convertApostrophes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `might${rawReplacementMark}ve`, opt).res,
@@ -1880,8 +1880,8 @@ tap.test(
   `103 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 1,
+      convertApostrophes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `she${rawReplacementMark}s`, opt).res,
@@ -1897,8 +1897,8 @@ tap.test(
   `104 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 1,
+      convertApostrophes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `they${rawReplacementMark}re`, opt).res,
@@ -1914,8 +1914,8 @@ tap.test(
   `105 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 1,
+      convertApostrophes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `they${rawReplacementMark}ve`, opt).res,
@@ -1931,8 +1931,8 @@ tap.test(
   `106 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 1,
+      convertApostrophes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `they${rawReplacementMark}ll`, opt).res,
@@ -1948,8 +1948,8 @@ tap.test(
   `107 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 1,
+      convertApostrophes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `peoples${rawReplacementMark}`, opt).res,
@@ -1965,8 +1965,8 @@ tap.test(
   `108 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertApostrophes: 1,
-      convertEntities: 1,
+      convertApostrophes: true,
+      convertEntities: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `Mr. Brown${rawReplacementMark}s`, opt).res,
@@ -1982,9 +1982,9 @@ tap.test(
   `109 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      removeWidows: 0,
-      convertDashes: 1,
+      convertEntities: true,
+      removeWidows: false,
+      convertDashes: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `minutes ${rawReplacementMark} we`, opt).res,
@@ -2000,9 +2000,9 @@ tap.test(
   `110 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      removeWidows: 1,
-      convertDashes: 1,
+      convertEntities: true,
+      removeWidows: true,
+      convertDashes: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `minutes ${rawReplacementMark} we`, opt).res,
@@ -2018,9 +2018,9 @@ tap.test(
   `111 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertEntities: 0,
-      removeWidows: 1,
-      convertDashes: 1,
+      convertEntities: false,
+      removeWidows: true,
+      convertDashes: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `minutes ${rawReplacementMark} we`, opt).res,
@@ -2036,9 +2036,9 @@ tap.test(
   `112 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertEntities: 0,
-      removeWidows: 0,
-      convertDashes: 1,
+      convertEntities: false,
+      removeWidows: false,
+      convertDashes: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `minutes ${rawReplacementMark} we`, opt).res,
@@ -2054,9 +2054,9 @@ tap.test(
   `113 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      removeWidows: 0,
-      convertDashes: 0,
+      convertEntities: true,
+      removeWidows: false,
+      convertDashes: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `minutes ${rawReplacementMark} we`, opt).res,
@@ -2072,9 +2072,9 @@ tap.test(
   `114 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      removeWidows: 1,
-      convertDashes: 0,
+      convertEntities: true,
+      removeWidows: true,
+      convertDashes: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `minutes ${rawReplacementMark} we`, opt).res,
@@ -2090,9 +2090,9 @@ tap.test(
   `115 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertEntities: 0,
-      removeWidows: 1,
-      convertDashes: 0,
+      convertEntities: false,
+      removeWidows: true,
+      convertDashes: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `minutes ${rawReplacementMark} we`, opt).res,
@@ -2108,9 +2108,9 @@ tap.test(
   `116 - ${`\u001b[${34}m${`opts.convertApostrophes`}\u001b[${39}m`} - replacement marks`,
   (t) => {
     mixer({
-      convertEntities: 0,
-      removeWidows: 0,
-      convertDashes: 0,
+      convertEntities: false,
+      removeWidows: false,
+      convertDashes: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `minutes ${rawReplacementMark} we`, opt).res,
@@ -2224,8 +2224,8 @@ tap.test(
   `125 - ${`\u001b[${35}m${`erroneous entities`}\u001b[${39}m`} - precaution against false positives`,
   (t) => {
     mixer({
-      convertEntities: 0,
-      removeWidows: 1,
+      convertEntities: false,
+      removeWidows: true,
     }).forEach((opt, n) => {
       t.equal(
         det(
@@ -2354,7 +2354,7 @@ tap.test(
   `135 - ${`\u001b[${90}m${`sanity checks`}\u001b[${39}m`} - precaution against false positives`,
   (t) => {
     mixer({
-      removeWidows: 0,
+      removeWidows: false,
     }).forEach((opt, n) => {
       t.equal(
         det(
@@ -2375,8 +2375,8 @@ tap.test(
   `136 - ${`\u001b[${90}m${`sanity checks`}\u001b[${39}m`} - precaution against false positives`,
   (t) => {
     mixer({
-      convertEntities: 1,
-      removeWidows: 1,
+      convertEntities: true,
+      removeWidows: true,
     }).forEach((opt, n) => {
       t.equal(
         det(
@@ -2398,18 +2398,26 @@ tap.test(
 // ============================================================================
 
 tap.test(`137 - email-not-friendly entities`, (t) => {
-  t.equal(det(t, 0, `&Breve;`, { convertEntities: 1 }).res, "&#x2D8;", "137");
+  t.equal(
+    det(t, 0, `&Breve;`, { convertEntities: true }).res,
+    "&#x2D8;",
+    "137"
+  );
   t.end();
 });
 
 tap.test(`138 - email-not-friendly entities`, (t) => {
-  t.equal(det(t, 0, `&Breve;`, { convertEntities: 0 }).res, "\u02D8", "138");
+  t.equal(
+    det(t, 0, `&Breve;`, { convertEntities: false }).res,
+    "\u02D8",
+    "138"
+  );
   t.end();
 });
 
 tap.test(`139 - numeric entities`, (t) => {
   mixer({
-    convertEntities: 1,
+    convertEntities: true,
   }).forEach((opt, n) => {
     t.equal(
       det(
@@ -2428,7 +2436,7 @@ tap.test(`139 - numeric entities`, (t) => {
 
 tap.test(`140 - wrong named entity QUOT into quot`, (t) => {
   mixer({
-    convertEntities: 1,
+    convertEntities: true,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `&QUOT;`, opt).res,
@@ -2444,7 +2452,7 @@ tap.test(
   `141 - enforce spaces after semicolons - semicol between letters, addMissingSpaces=on`,
   (t) => {
     mixer({
-      addMissingSpaces: 1,
+      addMissingSpaces: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `aaa;aaa`, opt).res,
@@ -2460,7 +2468,7 @@ tap.test(
   `142 - enforce spaces after semicolons - semicol between letters, addMissingSpaces=off`,
   (t) => {
     mixer({
-      addMissingSpaces: 0,
+      addMissingSpaces: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `aaa;aaa`, opt).res,
@@ -2476,7 +2484,7 @@ tap.test(
   `143 - enforce spaces after semicolons - semicol between letters, ends with semicol`,
   (t) => {
     mixer({
-      addMissingSpaces: 1,
+      addMissingSpaces: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `aaa;aaa;`, opt).res,
@@ -2492,7 +2500,7 @@ tap.test(
   `144 - enforce spaces after semicolons - semicol between letters, ends with semicol`,
   (t) => {
     mixer({
-      addMissingSpaces: 0,
+      addMissingSpaces: false,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `aaa;aaa;`, opt).res,
@@ -2508,7 +2516,8 @@ tap.test(
   `145 - enforce spaces after semicolons - semicol fixes must not affect HTML entities`,
   (t) => {
     mixer({
-      convertEntities: 1,
+      convertEntities: true,
+      removeWidows: true,
     }).forEach((opt, n) => {
       t.equal(
         det(t, n, `aaa&nbsp;aaa`, opt).res,
@@ -2522,7 +2531,7 @@ tap.test(
 
 tap.test(`146 - enforce spaces after dot if upper-case letter follows`, (t) => {
   mixer({
-    addMissingSpaces: 1,
+    addMissingSpaces: true,
   }).forEach((opt, n) => {
     t.equal(
       det(t, n, `aaa.Aaa`, opt).res,
@@ -2535,7 +2544,7 @@ tap.test(`146 - enforce spaces after dot if upper-case letter follows`, (t) => {
 });
 
 tap.test(`147 - does not touch dots among lowercase letters`, (t) => {
-  allCombinations.forEach((opt, n) => {
+  mixer().forEach((opt, n) => {
     t.equal(
       det(t, n, `aaa.aaa`, opt).res,
       "aaa.aaa",
@@ -2547,7 +2556,7 @@ tap.test(`147 - does not touch dots among lowercase letters`, (t) => {
 });
 
 tap.test(`148 - letters within ASCII are decoded if come encoded`, (t) => {
-  allCombinations.forEach((opt, n) => {
+  mixer().forEach((opt, n) => {
     t.equal(det(t, n, `&#x61;`, opt).res, "a", JSON.stringify(opt, null, 4));
   });
   t.end();

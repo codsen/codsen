@@ -86,6 +86,7 @@ export default (commandLineArgs) => {
         "string-remove-widows",
         "string-strip-html",
         "string-trim-spaces-only",
+        "test-mixer",
       ],
       plugins: [
         strip({
@@ -122,6 +123,7 @@ export default (commandLineArgs) => {
         "string-remove-widows",
         "string-strip-html",
         "string-trim-spaces-only",
+        "test-mixer",
       ],
       plugins: [
         strip({

@@ -1,80 +1,11 @@
-import obc from "object-boolean-combinations";
 import clone from "lodash.clonedeep";
-import isCI from "is-ci";
 import objectPath from "object-path";
+import mixer from "test-mixer";
 import { defaultOpts } from "../src/util";
 import { det as det1, opts as exportedOptsObj } from "../dist/detergent.esm";
 
-function mixer(ref) {
-  // for quick testing, you can short-wire to test only one set of options, instead
-  // of 512, 2024, or whatever count mixer produced.
-  const quickie = true;
-
-  if (!isCI && quickie) {
-    if (ref) {
-      return [ref];
-    }
-    return [defaultOpts];
-  }
-
-  const preppedDefaults = clone(defaultOpts);
-  delete preppedDefaults.stripHtmlButIgnoreTags;
-  delete preppedDefaults.stripHtmlAddNewLine;
-  delete preppedDefaults.eol;
-  delete preppedDefaults.cb;
-
-  const res = obc(preppedDefaults, ref);
-  // restore keys in stripHtmlButIgnoreTags:
-  if (
-    ref &&
-    ref.stripHtmlButIgnoreTags &&
-    Array.isArray(ref.stripHtmlButIgnoreTags) &&
-    ref.stripHtmlButIgnoreTags.length
-  ) {
-    res.forEach((obj) => {
-      obj.stripHtmlButIgnoreTags = clone(ref.stripHtmlButIgnoreTags);
-    });
-  } else {
-    res.forEach((obj) => {
-      obj.stripHtmlButIgnoreTags = clone(defaultOpts.stripHtmlButIgnoreTags);
-    });
-  }
-  // restore keys in stripHtmlAddNewLine:
-  if (
-    ref &&
-    ref.stripHtmlAddNewLine &&
-    Array.isArray(ref.stripHtmlAddNewLine) &&
-    ref.stripHtmlAddNewLine.length
-  ) {
-    res.forEach((obj) => {
-      obj.stripHtmlAddNewLine = clone(ref.stripHtmlAddNewLine);
-    });
-  } else {
-    res.forEach((obj) => {
-      obj.stripHtmlAddNewLine = clone(defaultOpts.stripHtmlAddNewLine);
-    });
-  }
-  // restore keys in eol:
-  if (ref && ref.eol) {
-    res.forEach((obj) => {
-      obj.eol = ref.eol;
-    });
-  } else {
-    res.forEach((obj) => {
-      obj.eol = defaultOpts.eol;
-    });
-  }
-  // restore keys in cb:
-  if (ref && ref.cb) {
-    res.forEach((obj) => {
-      obj.cb = ref.cb;
-    });
-  } else {
-    res.forEach((obj) => {
-      obj.cb = defaultOpts.cb;
-    });
-  }
-  return res;
+function mixerToExport(ref) {
+  return mixer(ref, defaultOpts);
 }
 
 // // set a different eol, cycle the list of eol's from "settledObj1Eol":
@@ -82,7 +13,7 @@ function mixer(ref) {
 // const obj1Idx = allEols.indexOf(settledObj1Eol);
 // objectPath.set(obj2, "eol", allEols[(obj1Idx + 1) % 3]);
 
-// t is passed AVA test instance
+// t is passed node-tap test instance
 // n is index number of a test - we need to run the resource-heavy applicable
 // test calculations only for the n === 0
 function det(t, n, src, opts = {}) {
@@ -341,6 +272,4 @@ function det(t, n, src, opts = {}) {
   return det1(src, opts);
 }
 
-const allCombinations = clone(mixer());
-
-export { det, mixer, allCombinations };
+export { det, mixerToExport as mixer };

@@ -1118,6 +1118,7 @@ function det(str, inputOpts) {
     `1118 FINAL RESULT:\n${JSON.stringify(
       {
         res: rangesApply(str, finalIndexesToDelete.current()),
+        applicableOpts,
       },
       null,
       4

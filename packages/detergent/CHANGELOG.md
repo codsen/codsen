@@ -5,7 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 6.0.0 (2020-11-28)
 
-Accidental version bump during migration to sourcehut. Sorry about that.
+### Breaking Changes
+
+- when `opts.removeWidows` is off, it's interpreted as explicit request to turn `&nbsp;` and raw non-breaking space characters into normal spaces
 
 ## 5.11.0 (2020-08-16)
 

@@ -7,7 +7,7 @@
  * Homepage: https://codsen.com/os/detergent/
  */
 
-import { left, right, leftStopAtNewLines, rightStopAtNewLines, leftStopAtRawNbsp, rightStopAtRawNbsp, chompLeft } from 'string-left-right';
+import { left, right, leftStopAtNewLines, rightStopAtNewLines, chompLeft } from 'string-left-right';
 import fixBrokenEntities from 'string-fix-broken-named-entities';
 import { removeWidows } from 'string-remove-widows';
 import processOutside from 'ranges-process-outside';
@@ -1104,25 +1104,17 @@ function processCharacter(
           rangesArr.push(i, y, opts.removeLineBreaks ? "" : "\n");
         }
       } else if (charcode === 160) {
-        applicableOpts.removeWidows = true;
         if (!opts.removeWidows) {
-          let calculatedFrom = i;
-          let calculatedTo = y;
+          const calculatedFrom = i;
+          const calculatedTo = y;
           let calculatedValue = " ";
-          const charOnTheLeft = leftStopAtRawNbsp(str, i);
-          const charOnTheRight = rightStopAtRawNbsp(str, calculatedTo - 1);
-          if (
-            !charOnTheLeft
-          ) {
-            calculatedFrom = 0;
-            calculatedTo = charOnTheRight || str.length;
-            calculatedValue = null;
-          } else if (
-            !charOnTheRight
-          ) {
-            calculatedFrom = charOnTheLeft !== null ? charOnTheLeft + 1 : 0;
-            calculatedTo = str.length;
-            calculatedValue = null;
+          const charOnTheLeft = left(str, i);
+          const charOnTheRight = right(str, calculatedTo - 1);
+          if (charOnTheLeft === null || charOnTheRight === null) {
+            calculatedValue = opts.convertEntities ? "&nbsp;" : rawNbsp;
+            applicableOpts.convertEntities = true;
+          } else {
+            applicableOpts.removeWidows = true;
           }
           if (calculatedValue) {
             rangesArr.push(calculatedFrom, calculatedTo, calculatedValue);
@@ -1131,6 +1123,7 @@ function processCharacter(
           }
         } else {
           applicableOpts.convertEntities = true;
+          applicableOpts.removeWidows = true;
           if (opts.convertEntities) {
             rangesArr.push(i, y, "&nbsp;");
           }

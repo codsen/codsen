@@ -1,10 +1,6 @@
 import tap from "tap";
 // import { det as det1 } from "../dist/detergent.esm";
-import {
-  det,
-  mixer,
-  // allCombinations
-} from "../t-util/util";
+import { det, mixer } from "../t-util/util";
 
 // ==============================
 // opts.stripHtmlButIgnoreTags
@@ -747,6 +743,7 @@ tap.test(`37 - br variations, ignored`, (t) => {
 tap.test(`38 - br variations, not ignored - stripHtmlAddNewLine br`, (t) => {
   mixer({
     stripHtml: true,
+    removeLineBreaks: false,
     replaceLineBreaks: false,
   }).forEach((opt, n) => {
     t.equal(
@@ -1107,6 +1104,7 @@ tap.test(`39 - br variations, ignored - stripHtmlAddNewLine br`, (t) => {
 tap.test(`40 - br variations, not ignored - stripHtmlAddNewLine br/`, (t) => {
   mixer({
     stripHtml: true,
+    removeLineBreaks: false,
     replaceLineBreaks: false,
   }).forEach((opt, n) => {
     t.equal(
