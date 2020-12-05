@@ -1,12 +1,9 @@
-const obc = require("object-boolean-combinations");
-const clone = require("lodash.clonedeep");
-const isCI = require("is-ci");
-const objectPath = require("object-path");
-const { defaultOpts } = require("../src/util.js");
-const detergent = require("../dist/detergent.cjs");
-
-const det1 = detergent.det;
-const exportedOptsObj = detergent.opts;
+import obc from "object-boolean-combinations";
+import clone from "lodash.clonedeep";
+import isCI from "is-ci";
+import objectPath from "object-path";
+import { defaultOpts } from "../src/util";
+import { det as det1, opts as exportedOptsObj } from "../dist/detergent.esm";
 
 function mixer(ref) {
   // for quick testing, you can short-wire to test only one set of options, instead
@@ -346,4 +343,4 @@ function det(t, n, src, opts = {}) {
 
 const allCombinations = clone(mixer());
 
-module.exports = { det, mixer, allCombinations };
+export { det, mixer, allCombinations };
