@@ -22,7 +22,6 @@ var isObject__default = /*#__PURE__*/_interopDefaultLegacy(isObject);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 
 function objectBooleanCombinations(originalIncomingObject, originalOverrideObject) {
-  var forceBool = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
   function combinations(n) {
     var r = [];
     for (var i = 0; i < 1 << n; i++) {
@@ -63,7 +62,7 @@ function objectBooleanCombinations(originalIncomingObject, originalOverrideObjec
   boolCombinations.forEach(function (elem1, index1) {
     tempObject = {};
     propertiesToMix.forEach(function (elem2, index2) {
-      tempObject[elem2] = boolCombinations[index1][index2] === 1 ? forceBool ? true : 1 : forceBool ? false : 0;
+      tempObject[elem2] = boolCombinations[index1][index2] === 1;
     });
     outcomingObjectsArray.push(tempObject);
   });

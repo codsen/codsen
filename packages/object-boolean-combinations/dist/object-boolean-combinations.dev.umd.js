@@ -3474,8 +3474,6 @@
    */
 
   function objectBooleanCombinations(originalIncomingObject, originalOverrideObject) {
-    var forceBool = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-
     //
     // FUNCTIONS
     // =========
@@ -3549,7 +3547,7 @@
     boolCombinations.forEach(function (elem1, index1) {
       tempObject = {};
       propertiesToMix.forEach(function (elem2, index2) {
-        tempObject[elem2] = boolCombinations[index1][index2] === 1 ? forceBool ? true : 1 : forceBool ? false : 0;
+        tempObject[elem2] = boolCombinations[index1][index2] === 1;
       });
       outcomingObjectsArray.push(tempObject);
     }); // if there's override, append the static override values on each property of the

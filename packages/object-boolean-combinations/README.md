@@ -38,19 +38,19 @@ import combinations from "object-boolean-combinations";
 
 assert.deepEqual(
   combinations({
-    a: true, // values don't matter as long as they're boolean
+    a: true,
     b: false,
     c: true,
   }),
   [
-    { a: 0, b: 0, c: 0 },
-    { a: 1, b: 0, c: 0 },
-    { a: 0, b: 1, c: 0 },
-    { a: 1, b: 1, c: 0 },
-    { a: 0, b: 0, c: 1 },
-    { a: 1, b: 0, c: 1 },
-    { a: 0, b: 1, c: 1 },
-    { a: 1, b: 1, c: 1 },
+    { a: false, b: false, c: false },
+    { a: true, b: false, c: false },
+    { a: false, b: true, c: false },
+    { a: true, b: true, c: false },
+    { a: false, b: false, c: true },
+    { a: true, b: false, c: true },
+    { a: false, b: true, c: true },
+    { a: true, b: true, c: true },
   ]
 );
 // you get 2^n plain objects in an array

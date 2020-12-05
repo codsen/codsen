@@ -17,8 +17,7 @@ import clone from "lodash.clonedeep";
  */
 function objectBooleanCombinations(
   originalIncomingObject,
-  originalOverrideObject,
-  forceBool = false
+  originalOverrideObject
 ) {
   //
   // FUNCTIONS
@@ -98,14 +97,7 @@ function objectBooleanCombinations(
   boolCombinations.forEach((elem1, index1) => {
     tempObject = {};
     propertiesToMix.forEach((elem2, index2) => {
-      tempObject[elem2] =
-        boolCombinations[index1][index2] === 1
-          ? forceBool
-            ? true
-            : 1
-          : forceBool
-          ? false
-          : 0;
+      tempObject[elem2] = boolCombinations[index1][index2] === 1;
     });
     outcomingObjectsArray.push(tempObject);
   });

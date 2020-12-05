@@ -9,19 +9,15 @@ tap.test("01 - one property - 1, no override", (t) => {
   // non-boolean is supplied:
   t.strictSame(
     objectBooleanCombinations({
-      a: 1,
+      a: 0,
     }),
-    [{ a: 0 }, { a: 1 }],
+    [{ a: false }, { a: true }],
     "01.01"
   );
   t.strictSame(
-    objectBooleanCombinations(
-      {
-        a: 1,
-      },
-      undefined,
-      true
-    ),
+    objectBooleanCombinations({
+      a: 1,
+    }),
     [{ a: false }, { a: true }],
     "01.02"
   );
@@ -29,69 +25,22 @@ tap.test("01 - one property - 1, no override", (t) => {
   // boolean is supplied:
   t.strictSame(
     objectBooleanCombinations({
-      a: true,
+      a: false,
     }),
-    [{ a: 0 }, { a: 1 }],
+    [{ a: false }, { a: true }],
     "01.03"
   );
   t.strictSame(
-    objectBooleanCombinations(
-      {
-        a: true,
-      },
-      undefined,
-      true
-    ),
+    objectBooleanCombinations({
+      a: true,
+    }),
     [{ a: false }, { a: true }],
     "01.04"
   );
   t.end();
 });
 
-tap.test("02 - one property - 0, no override", (t) => {
-  // non-boolean is supplied:
-  t.strictSame(
-    objectBooleanCombinations({
-      a: 0,
-    }),
-    [{ a: 0 }, { a: 1 }],
-    "02.01"
-  );
-  t.strictSame(
-    objectBooleanCombinations(
-      {
-        a: 0,
-      },
-      undefined,
-      true
-    ),
-    [{ a: false }, { a: true }],
-    "02.02"
-  );
-
-  // boolean is supplied:
-  t.strictSame(
-    objectBooleanCombinations({
-      a: false,
-    }),
-    [{ a: 0 }, { a: 1 }],
-    "02.03"
-  );
-  t.strictSame(
-    objectBooleanCombinations(
-      {
-        a: true,
-      },
-      undefined,
-      true
-    ),
-    [{ a: false }, { a: true }],
-    "02.04"
-  );
-  t.end();
-});
-
-tap.test("03 - three properties, no override", (t) => {
+tap.test("02 - three properties, no override", (t) => {
   // default - don't force bool
 
   t.strictSame(
@@ -101,16 +50,16 @@ tap.test("03 - three properties, no override", (t) => {
       c: 1,
     }),
     [
-      { a: 0, b: 0, c: 0 },
-      { a: 1, b: 0, c: 0 },
-      { a: 0, b: 1, c: 0 },
-      { a: 1, b: 1, c: 0 },
-      { a: 0, b: 0, c: 1 },
-      { a: 1, b: 0, c: 1 },
-      { a: 0, b: 1, c: 1 },
-      { a: 1, b: 1, c: 1 },
+      { a: false, b: false, c: false },
+      { a: true, b: false, c: false },
+      { a: false, b: true, c: false },
+      { a: true, b: true, c: false },
+      { a: false, b: false, c: true },
+      { a: true, b: false, c: true },
+      { a: false, b: true, c: true },
+      { a: true, b: true, c: true },
     ],
-    "03.01"
+    "02.01"
   );
   t.strictSame(
     objectBooleanCombinations({
@@ -119,78 +68,6 @@ tap.test("03 - three properties, no override", (t) => {
       c: true,
     }),
     [
-      { a: 0, b: 0, c: 0 },
-      { a: 1, b: 0, c: 0 },
-      { a: 0, b: 1, c: 0 },
-      { a: 1, b: 1, c: 0 },
-      { a: 0, b: 0, c: 1 },
-      { a: 1, b: 0, c: 1 },
-      { a: 0, b: 1, c: 1 },
-      { a: 1, b: 1, c: 1 },
-    ],
-    "03.02"
-  );
-
-  // default hardcoded - don't force bool
-
-  t.strictSame(
-    objectBooleanCombinations(
-      {
-        a: 1,
-        b: 1,
-        c: 1,
-      },
-      undefined,
-      false // <---- !!!
-    ),
-    [
-      { a: 0, b: 0, c: 0 },
-      { a: 1, b: 0, c: 0 },
-      { a: 0, b: 1, c: 0 },
-      { a: 1, b: 1, c: 0 },
-      { a: 0, b: 0, c: 1 },
-      { a: 1, b: 0, c: 1 },
-      { a: 0, b: 1, c: 1 },
-      { a: 1, b: 1, c: 1 },
-    ],
-    "03.03"
-  );
-  t.strictSame(
-    objectBooleanCombinations(
-      {
-        a: true,
-        b: true,
-        c: true,
-      },
-      undefined,
-      false // <---- !!!
-    ),
-    [
-      { a: 0, b: 0, c: 0 },
-      { a: 1, b: 0, c: 0 },
-      { a: 0, b: 1, c: 0 },
-      { a: 1, b: 1, c: 0 },
-      { a: 0, b: 0, c: 1 },
-      { a: 1, b: 0, c: 1 },
-      { a: 0, b: 1, c: 1 },
-      { a: 1, b: 1, c: 1 },
-    ],
-    "03.04"
-  );
-
-  // force bool
-
-  t.strictSame(
-    objectBooleanCombinations(
-      {
-        a: 1,
-        b: 1,
-        c: 1,
-      },
-      undefined,
-      true // <---- !!!
-    ),
-    [
       { a: false, b: false, c: false },
       { a: true, b: false, c: false },
       { a: false, b: true, c: false },
@@ -200,49 +77,27 @@ tap.test("03 - three properties, no override", (t) => {
       { a: false, b: true, c: true },
       { a: true, b: true, c: true },
     ],
-    "03.05"
-  );
-  t.strictSame(
-    objectBooleanCombinations(
-      {
-        a: true,
-        b: true,
-        c: true,
-      },
-      undefined,
-      true // <---- !!!
-    ),
-    [
-      { a: false, b: false, c: false },
-      { a: true, b: false, c: false },
-      { a: false, b: true, c: false },
-      { a: true, b: true, c: false },
-      { a: false, b: false, c: true },
-      { a: true, b: false, c: true },
-      { a: false, b: true, c: true },
-      { a: true, b: true, c: true },
-    ],
-    "03.06"
+    "02.02"
   );
   t.end();
 });
 
-tap.test("04 - non-boolean object overrides", (t) => {
+tap.test("03 - non-boolean object overrides", (t) => {
   t.strictSame(
     objectBooleanCombinations(
       {
-        a: 1,
-        b: 0,
-        c: 0,
-        d: 0,
+        a: true,
+        b: false,
+        c: false,
+        d: false,
       },
       { a: "1", b: "1", c: "1" }
     ),
     [
-      { a: "1", b: "1", c: "1", d: 0 },
-      { a: "1", b: "1", c: "1", d: 1 },
+      { a: "1", b: "1", c: "1", d: false },
+      { a: "1", b: "1", c: "1", d: true },
     ],
-    "04"
+    "03"
   );
   t.end();
 });
