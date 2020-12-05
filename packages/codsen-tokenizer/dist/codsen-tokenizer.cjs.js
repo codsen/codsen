@@ -128,7 +128,7 @@ var veryEspChars = "{}|#";
 var notVeryEspChars = "%()$_*#";
 var leftyChars = "({";
 var rightyChars = "})";
-var espLumpBlacklist = [")|(", "|(", ")(", "()", "}{", "{}", "%)", "*)", "||"];
+var espLumpBlacklist = [")|(", "|(", ")(", "()", "}{", "{}", "%)", "*)", "||", "--"];
 var punctuationChars = ".,;!?";
 function isStr(something) {
   return typeof something === "string";

@@ -177,6 +177,7 @@ const espLumpBlacklist = [
   "%)",
   "*)",
   "||",
+  "--",
 ];
 const punctuationChars = `.,;!?`;
 function isStr(something) {
