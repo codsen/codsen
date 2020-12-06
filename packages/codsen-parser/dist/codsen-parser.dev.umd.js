@@ -2995,7 +2995,7 @@
   var notVeryEspChars = "%()$_*#";
   var leftyChars = "({";
   var rightyChars = "})";
-  var espLumpBlacklist = [")|(", "|(", ")(", "()", "}{", "{}", "%)", "*)", "||"];
+  var espLumpBlacklist = [")|(", "|(", ")(", "()", "}{", "{}", "%)", "*)", "||", "--"];
   var punctuationChars = ".,;!?";
 
   function isStr$2(something) {
