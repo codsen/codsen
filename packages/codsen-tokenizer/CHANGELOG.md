@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [4.3.0](https://git.sr.ht/~royston/codsen/compare/codsen-tokenizer@4.2.0...codsen-tokenizer@4.3.0) (2020-12-06)
-
+## 4.3.0 (2020-12-06)
 
 ### Features
 
-* add another lump blacklist pattern ([6b3b87d](https://git.sr.ht/~royston/codsen/commits/6b3b87d631b3ca8b5e3bb97a8ca17585a83b2e46))
-
-
-
-
+- add another lump blacklist pattern ([6b3b87d](https://git.sr.ht/~royston/codsen/commit/6b3b87d631b3ca8b5e3bb97a8ca17585a83b2e46))
 
 ## 4.2.0 (2020-12-04)
 
