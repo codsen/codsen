@@ -24,6 +24,7 @@ tasks:
       npm run fresh
   - readme: |
       cd codsen
+      npm run info
       npm run readme:generate
   - first-git-add: |
       cd codsen

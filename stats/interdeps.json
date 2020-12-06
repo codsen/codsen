@@ -6,14 +6,14 @@
     },
     {
         "name": "array-group-str-omit-num-char",
-        "size": 2865,
+        "size": 2864,
         "imports": [
             "ranges-apply"
         ]
     },
     {
         "name": "array-includes-with-glob",
-        "size": 2536,
+        "size": 2535,
         "imports": []
     },
     {
@@ -26,17 +26,17 @@
     },
     {
         "name": "array-pull-all-with-glob",
-        "size": 2922,
+        "size": 2921,
         "imports": []
     },
     {
         "name": "arrayiffy-if-string",
-        "size": 470,
+        "size": 469,
         "imports": []
     },
     {
         "name": "ast-compare",
-        "size": 7614,
+        "size": 7613,
         "imports": [
             "ast-contains-only-empty-space"
         ]
@@ -50,14 +50,14 @@
     },
     {
         "name": "ast-deep-contains",
-        "size": 5049,
+        "size": 5048,
         "imports": [
             "ast-monkey-traverse"
         ]
     },
     {
         "name": "ast-delete-object",
-        "size": 1943,
+        "size": 1944,
         "imports": [
             "ast-compare",
             "ast-monkey-traverse"
@@ -79,19 +79,19 @@
     },
     {
         "name": "ast-is-empty",
-        "size": 1161,
+        "size": 1160,
         "imports": []
     },
     {
         "name": "ast-loose-compare",
-        "size": 3015,
+        "size": 3014,
         "imports": [
             "ast-contains-only-empty-space"
         ]
     },
     {
         "name": "ast-monkey",
-        "size": 8470,
+        "size": 8469,
         "imports": [
             "ast-compare",
             "ast-monkey-traverse",
@@ -101,24 +101,24 @@
     },
     {
         "name": "ast-monkey-traverse",
-        "size": 2322,
+        "size": 2321,
         "imports": [
             "ast-monkey-util"
         ]
     },
     {
         "name": "ast-monkey-traverse-with-lookahead",
-        "size": 2711,
+        "size": 2710,
         "imports": []
     },
     {
         "name": "ast-monkey-util",
-        "size": 1835,
+        "size": 1834,
         "imports": []
     },
     {
         "name": "charcode-is-valid-xml-name-character",
-        "size": 1563,
+        "size": 1562,
         "imports": [
             "ranges-is-index-within"
         ]
@@ -133,7 +133,7 @@
     },
     {
         "name": "chlu",
-        "size": 19602,
+        "size": 19601,
         "imports": [
             "ast-contains-only-empty-space",
             "easy-replace"
@@ -148,7 +148,7 @@
     },
     {
         "name": "codsen-parser",
-        "size": 19494,
+        "size": 19493,
         "imports": [
             "ast-monkey-util",
             "codsen-tokenizer",
@@ -158,7 +158,7 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 71728,
+        "size": 74158,
         "imports": [
             "html-all-known-attributes",
             "is-char-suitable-for-html-attr-name",
@@ -190,8 +190,16 @@
         ]
     },
     {
+        "name": "detect-templating-language",
+        "size": 839,
+        "imports": [
+            "regex-is-jinja-nunjucks",
+            "regex-is-jsp"
+        ]
+    },
+    {
         "name": "detergent",
-        "size": 53914,
+        "size": 55868,
         "imports": [
             "all-named-html-entities",
             "html-entities-not-email-friendly",
@@ -216,7 +224,7 @@
     },
     {
         "name": "edit-package-json",
-        "size": 18060,
+        "size": 18059,
         "imports": [
             "ranges-apply",
             "string-left-right"
@@ -238,7 +246,7 @@
     },
     {
         "name": "email-comb",
-        "size": 59888,
+        "size": 59886,
         "imports": [
             "array-pull-all-with-glob",
             "ast-is-empty",
@@ -255,7 +263,7 @@
     },
     {
         "name": "emlint",
-        "size": 328531,
+        "size": 328529,
         "imports": [
             "ast-monkey-traverse",
             "ast-monkey-util",
@@ -275,21 +283,21 @@
     },
     {
         "name": "eslint-plugin-row-num",
-        "size": 3440,
+        "size": 3439,
         "imports": [
             "js-row-num"
         ]
     },
     {
         "name": "eslint-plugin-test-num",
-        "size": 12594,
+        "size": 12593,
         "imports": [
             "string-left-right"
         ]
     },
     {
         "name": "generate-atomic-css",
-        "size": 20667,
+        "size": 20665,
         "imports": [
             "ranges-apply",
             "string-left-right"
@@ -316,7 +324,7 @@
     },
     {
         "name": "html-crush",
-        "size": 31655,
+        "size": 31653,
         "imports": [
             "ranges-apply",
             "ranges-push",
@@ -327,12 +335,12 @@
     },
     {
         "name": "html-entities-not-email-friendly",
-        "size": 83456,
+        "size": 83455,
         "imports": []
     },
     {
         "name": "html-img-alt",
-        "size": 10576,
+        "size": 10575,
         "imports": [
             "check-types-mini",
             "ranges-apply",
@@ -342,7 +350,7 @@
     },
     {
         "name": "html-table-patcher",
-        "size": 6539,
+        "size": 6537,
         "imports": [
             "ast-monkey-traverse-with-lookahead",
             "codsen-parser",
@@ -352,7 +360,7 @@
     },
     {
         "name": "is-char-suitable-for-html-attr-name",
-        "size": 623,
+        "size": 622,
         "imports": []
     },
     {
@@ -374,24 +382,24 @@
     },
     {
         "name": "is-language-code",
-        "size": 79018,
+        "size": 79017,
         "imports": []
     },
     {
         "name": "is-media-descriptor",
-        "size": 14291,
+        "size": 14290,
         "imports": [
             "string-process-comma-separated"
         ]
     },
     {
         "name": "is-relative-uri",
-        "size": 8336,
+        "size": 8335,
         "imports": []
     },
     {
         "name": "js-row-num",
-        "size": 6639,
+        "size": 6638,
         "imports": [
             "ranges-apply",
             "ranges-push"
@@ -414,7 +422,7 @@
     },
     {
         "name": "json-comb-core",
-        "size": 13557,
+        "size": 13556,
         "imports": [
             "object-fill-missing-keys",
             "object-flatten-all-arrays",
@@ -432,7 +440,7 @@
     },
     {
         "name": "json-variables",
-        "size": 20520,
+        "size": 20519,
         "imports": [
             "arrayiffy-if-string",
             "ast-get-values-by-key",
@@ -446,7 +454,7 @@
     },
     {
         "name": "lect",
-        "size": 42911,
+        "size": 42926,
         "imports": [
             "array-pull-all-with-glob",
             "arrayiffy-if-string",
@@ -456,7 +464,7 @@
     },
     {
         "name": "lerna-clean-changelogs",
-        "size": 2887,
+        "size": 2998,
         "imports": []
     },
     {
@@ -468,12 +476,12 @@
     },
     {
         "name": "object-all-values-equal-to",
-        "size": 2061,
+        "size": 2060,
         "imports": []
     },
     {
         "name": "object-boolean-combinations",
-        "size": 2407,
+        "size": 2324,
         "imports": []
     },
     {
@@ -487,7 +495,7 @@
     },
     {
         "name": "object-fill-missing-keys",
-        "size": 5250,
+        "size": 5249,
         "imports": [
             "arrayiffy-if-string",
             "object-all-values-equal-to",
@@ -496,19 +504,19 @@
     },
     {
         "name": "object-flatten-all-arrays",
-        "size": 1966,
+        "size": 1965,
         "imports": []
     },
     {
         "name": "object-flatten-referencing",
-        "size": 11197,
+        "size": 11196,
         "imports": [
             "str-indexes-of-plus"
         ]
     },
     {
         "name": "object-merge-advanced",
-        "size": 14764,
+        "size": 14763,
         "imports": [
             "array-includes-with-glob",
             "arrayiffy-if-string",
@@ -548,7 +556,7 @@
     },
     {
         "name": "ranges-invert",
-        "size": 4216,
+        "size": 4215,
         "imports": [
             "ranges-crop",
             "ranges-merge"
@@ -561,14 +569,14 @@
     },
     {
         "name": "ranges-merge",
-        "size": 5041,
+        "size": 4720,
         "imports": [
             "ranges-sort"
         ]
     },
     {
         "name": "ranges-process-outside",
-        "size": 2560,
+        "size": 2559,
         "imports": [
             "ranges-crop",
             "ranges-invert"
@@ -576,7 +584,7 @@
     },
     {
         "name": "ranges-push",
-        "size": 7366,
+        "size": 7365,
         "imports": [
             "ranges-merge",
             "string-collapse-leading-whitespace",
@@ -597,24 +605,34 @@
     },
     {
         "name": "regex-empty-conditional-comments",
-        "size": 337,
+        "size": 336,
+        "imports": []
+    },
+    {
+        "name": "regex-is-jinja-nunjucks",
+        "size": 279,
+        "imports": []
+    },
+    {
+        "name": "regex-is-jsp",
+        "size": 292,
         "imports": []
     },
     {
         "name": "str-indexes-of-plus",
-        "size": 2217,
+        "size": 2216,
         "imports": []
     },
     {
         "name": "string-apostrophes",
-        "size": 18114,
+        "size": 18113,
         "imports": [
             "ranges-apply"
         ]
     },
     {
         "name": "string-character-is-astral-surrogate",
-        "size": 1165,
+        "size": 1164,
         "imports": []
     },
     {
@@ -626,7 +644,6 @@
         "name": "string-collapse-white-space",
         "size": 8708,
         "imports": [
-            "object-boolean-combinations",
             "ranges-apply",
             "ranges-push",
             "string-left-right"
@@ -648,7 +665,7 @@
     },
     {
         "name": "string-find-heads-tails",
-        "size": 12510,
+        "size": 12509,
         "imports": [
             "arrayiffy-if-string",
             "string-match-left-right"
@@ -656,14 +673,14 @@
     },
     {
         "name": "string-find-malformed",
-        "size": 4548,
+        "size": 4547,
         "imports": [
             "string-left-right"
         ]
     },
     {
         "name": "string-fix-broken-named-entities",
-        "size": 27085,
+        "size": 27084,
         "imports": [
             "all-named-html-entities",
             "string-left-right"
@@ -671,12 +688,12 @@
     },
     {
         "name": "string-left-right",
-        "size": 10728,
+        "size": 11336,
         "imports": []
     },
     {
         "name": "string-match-left-right",
-        "size": 13190,
+        "size": 13189,
         "imports": [
             "arrayiffy-if-string",
             "string-character-is-astral-surrogate"
@@ -684,17 +701,17 @@
     },
     {
         "name": "string-process-comma-separated",
-        "size": 6264,
+        "size": 6263,
         "imports": []
     },
     {
         "name": "string-range-expander",
-        "size": 8410,
+        "size": 8409,
         "imports": []
     },
     {
         "name": "string-remove-duplicate-heads-tails",
-        "size": 8108,
+        "size": 8107,
         "imports": [
             "arrayiffy-if-string",
             "ranges-apply",
@@ -705,7 +722,7 @@
     },
     {
         "name": "string-remove-thousand-separators",
-        "size": 3574,
+        "size": 3573,
         "imports": [
             "ranges-apply",
             "ranges-push"
@@ -713,7 +730,7 @@
     },
     {
         "name": "string-remove-widows",
-        "size": 17365,
+        "size": 17361,
         "imports": [
             "arrayiffy-if-string",
             "ranges-apply",
@@ -724,14 +741,14 @@
     },
     {
         "name": "string-split-by-whitespace",
-        "size": 1941,
+        "size": 1940,
         "imports": [
             "ranges-is-index-within"
         ]
     },
     {
         "name": "string-strip-html",
-        "size": 36882,
+        "size": 38000,
         "imports": [
             "ranges-apply",
             "ranges-push",
@@ -740,18 +757,36 @@
     },
     {
         "name": "string-trim-spaces-only",
-        "size": 2084,
+        "size": 2083,
         "imports": []
     },
     {
         "name": "string-uglify",
-        "size": 5617,
+        "size": 5615,
         "imports": []
     },
     {
         "name": "string-unfancy",
         "size": 1310,
         "imports": []
+    },
+    {
+        "name": "stristri",
+        "size": 5177,
+        "imports": [
+            "codsen-tokenizer",
+            "detect-templating-language",
+            "ranges-apply",
+            "ranges-merge",
+            "string-collapse-white-space"
+        ]
+    },
+    {
+        "name": "test-mixer",
+        "size": 1675,
+        "imports": [
+            "object-boolean-combinations"
+        ]
     },
     {
         "name": "update-versions",
@@ -762,7 +797,7 @@
     },
     {
         "name": "util-array-object-or-both",
-        "size": 2283,
+        "size": 2282,
         "imports": []
     },
     {
