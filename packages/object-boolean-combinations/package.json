@@ -1,6 +1,6 @@
 {
   "name": "object-boolean-combinations",
-  "version": "2.12.1",
+  "version": "3.0.0",
   "description": "Consumes a defaults object with booleans, generates all possible variations of it",
   "keywords": [
     "all",

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.3](https://git.sr.ht/~royston/codsen/compare/string-uglify@1.3.2...string-uglify@1.3.3) (2020-12-06)
+
+**Note:** Version bump only for package string-uglify
+
+
+
+
+
 ## 1.3.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

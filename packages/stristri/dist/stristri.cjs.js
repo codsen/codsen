@@ -1,7 +1,7 @@
 /**
  * stristri
  * Extracts or deletes HTML, CSS, text and/or templating tags from string
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/stristri/
@@ -97,7 +97,7 @@ var defaultOpts = {
   templatingTags: false
 };
 
-var version = "1.0.0";
+var version = "1.1.0";
 
 function returnHelper(result, ranges, applicableOpts, templatingLang) {
   /* istanbul ignore next */

@@ -1,7 +1,7 @@
 /**
  * emlint
  * Pluggable email template code linter
- * Version: 3.0.4
+ * Version: 3.0.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/emlint/
@@ -11445,7 +11445,7 @@
 	/**
 	 * codsen-tokenizer
 	 * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
-	 * Version: 4.2.0
+	 * Version: 4.3.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/codsen-tokenizer/
@@ -11456,7 +11456,7 @@
 	const notVeryEspChars = `%()$_*#`;
 	const leftyChars = `({`;
 	const rightyChars = `})`;
-	const espLumpBlacklist = [")|(", "|(", ")(", "()", "}{", "{}", "%)", "*)", "||"];
+	const espLumpBlacklist = [")|(", "|(", ")(", "()", "}{", "{}", "%)", "*)", "||", "--"];
 	const punctuationChars = `.,;!?`;
 
 	function isStr$4(something) {
@@ -13420,7 +13420,7 @@
 	/**
 	 * codsen-parser
 	 * Parser aiming at broken or mixed code, especially HTML & CSS
-	 * Version: 0.8.2
+	 * Version: 0.8.3
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/codsen-parser/
@@ -45218,7 +45218,7 @@
 
 	}
 
-	var version = "3.0.4";
+	var version = "3.0.5";
 
 	exports.Linter = Linter;
 	exports.version = version;

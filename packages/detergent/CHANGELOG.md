@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.1.0](https://git.sr.ht/~royston/codsen/compare/detergent@6.0.3...detergent@6.1.0) (2020-12-06)
+
+
+### Features
+
+* separate mixer test util into standalone lib and tap it, some more tweaks ([3021a6f](https://git.sr.ht/~royston/codsen/commits/3021a6f24dbc5b0d0ae910700324fdd06515b763))
+
+
+
+
+
 ## 6.0.0 (2020-11-28)
 
 ### Breaking Changes
