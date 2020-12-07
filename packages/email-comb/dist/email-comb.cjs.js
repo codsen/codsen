@@ -1361,6 +1361,7 @@ function comb(str, opts) {
   return {
     log: {
       timeTakenInMiliseconds: Date.now() - start,
+      timeTakenInMilliseconds: Date.now() - start,
       traversedTotalCharacters: totalCounter,
       traversedTimesInputLength: len ? Math.round(totalCounter / len * 100) / 100 : 0,
       originalLength: len,
