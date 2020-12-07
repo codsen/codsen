@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 3.0.0 (2020-12-06)
 
-### Features
-
-- always return boolean values, don't use numbers 0/1 ([dbb2f05](https://git.sr.ht/~royston/codsen/commit/dbb2f05129e0e8b7b95593c6cc19b8ebd859ecad))
-- optional third input arg to force bool values in the output ([9e31c52](https://git.sr.ht/~royston/codsen/commit/9e31c523f5e394ef5c5cfe97f980f20ca2a2e9b7))
-
 ### BREAKING CHANGES
 
-- now all combinations' values are booleans, no more digits 0 or 1
+- now all combinations' values are booleans, no more digits `0` or `1` ([dbb2f05](https://git.sr.ht/~royston/codsen/commit/dbb2f05129e0e8b7b95593c6cc19b8ebd859ecad)). Type safety, you know.
 
 ## 2.12.0 (2020-11-28)
 
