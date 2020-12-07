@@ -7,7 +7,7 @@ import { cbSchema } from "../src/util";
 // 02. normal use
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - simple sequences of spaces within string`, (t) => {
+tap.test(`01`, (t) => {
   mixer().forEach((opt) => {
     t.strictSame(
       collapse("a b", {
@@ -35,7 +35,7 @@ tap.test(`01 - simple sequences of spaces within string`, (t) => {
   t.end();
 });
 
-tap.test(`02 - simple sequences of spaces within string`, (t) => {
+tap.test(`02`, (t) => {
   mixer().forEach((opt) => {
     t.strictSame(
       collapse("a  b", {
@@ -63,7 +63,7 @@ tap.test(`02 - simple sequences of spaces within string`, (t) => {
   t.end();
 });
 
-tap.test(`03 - simple sequences of spaces within string`, (t) => {
+tap.test(`03`, (t) => {
   t.strictSame(
     mixer().forEach((opt) => {
       t.strictSame(
