@@ -99,9 +99,9 @@ var defaultOpts = {
 
 var version = "1.1.0";
 
-function returnHelper(result, ranges, applicableOpts, templatingLang) {
+function returnHelper(result, ranges, applicableOpts, templatingLang, start) {
   /* istanbul ignore next */
-  if (arguments.length !== 4) {
+  if (arguments.length !== 5) {
     throw new Error("stristri/returnHelper(): should be 3 input args but ".concat(arguments.length, " were given!"));
   }
   /* istanbul ignore next */
@@ -113,6 +113,9 @@ function returnHelper(result, ranges, applicableOpts, templatingLang) {
     throw new Error("stristri/returnHelper(): second arg missing!");
   }
   return {
+    log: {
+      timeTakenInMilliseconds: Date.now() - start
+    },
     result: result,
     ranges: ranges,
     applicableOpts: applicableOpts,
@@ -120,6 +123,7 @@ function returnHelper(result, ranges, applicableOpts, templatingLang) {
   };
 }
 function stri(input, originalOpts) {
+  var start = Date.now();
   if (typeof input !== "string") {
     throw new Error("stristri: [THROW_ID_01] the first input arg must be string! It was given as ".concat(JSON.stringify(input, null, 4), " (").concat(_typeof(input), ")"));
   }
@@ -135,7 +139,7 @@ function stri(input, originalOpts) {
     return acc;
   }, {});
   if (!input) {
-    returnHelper("", null, applicableOpts, detectLang__default['default'](input));
+    returnHelper("", null, applicableOpts, detectLang__default['default'](input), start);
   }
   var gatheredRanges = [];
   var withinHTMLComment = false;
@@ -217,7 +221,7 @@ function stri(input, originalOpts) {
     trimLines: true,
     removeEmptyLines: true,
     limitConsecutiveEmptyLinesTo: 1
-  }).result, mergeR__default['default'](gatheredRanges), applicableOpts, detectLang__default['default'](input));
+  }).result, mergeR__default['default'](gatheredRanges), applicableOpts, detectLang__default['default'](input), start);
 }
 
 exports.defaults = defaultOpts;

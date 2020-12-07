@@ -22,9 +22,9 @@ const defaultOpts = {
 
 var version = "1.1.0";
 
-function returnHelper(result, ranges, applicableOpts, templatingLang) {
+function returnHelper(result, ranges, applicableOpts, templatingLang, start) {
   /* istanbul ignore next */
-  if (arguments.length !== 4) {
+  if (arguments.length !== 5) {
     throw new Error(
       `stristri/returnHelper(): should be 3 input args but ${arguments.length} were given!`
     );
@@ -38,6 +38,9 @@ function returnHelper(result, ranges, applicableOpts, templatingLang) {
     throw new Error("stristri/returnHelper(): second arg missing!");
   }
   return {
+    log: {
+      timeTakenInMilliseconds: Date.now() - start,
+    },
     result,
     ranges,
     applicableOpts,
@@ -45,6 +48,7 @@ function returnHelper(result, ranges, applicableOpts, templatingLang) {
   };
 }
 function stri(input, originalOpts) {
+  const start = Date.now();
   if (typeof input !== "string") {
     throw new Error(
       `stristri: [THROW_ID_01] the first input arg must be string! It was given as ${JSON.stringify(
@@ -75,7 +79,7 @@ function stri(input, originalOpts) {
     return acc;
   }, {});
   if (!input) {
-    returnHelper("", null, applicableOpts, detectLang(input));
+    returnHelper("", null, applicableOpts, detectLang(input), start);
   }
   const gatheredRanges = [];
   let withinHTMLComment = false;
@@ -177,7 +181,8 @@ function stri(input, originalOpts) {
     }).result,
     mergeR(gatheredRanges),
     applicableOpts,
-    detectLang(input)
+    detectLang(input),
+    start
   );
 }
 

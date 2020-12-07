@@ -5403,9 +5403,9 @@
 
   // discrepancies in API when returning from multiple places
 
-  function returnHelper(result, ranges, applicableOpts, templatingLang) {
+  function returnHelper(result, ranges, applicableOpts, templatingLang, start) {
     /* istanbul ignore next */
-    if (arguments.length !== 4) {
+    if (arguments.length !== 5) {
       throw new Error("stristri/returnHelper(): should be 3 input args but ".concat(arguments.length, " were given!"));
     }
     /* istanbul ignore next */
@@ -5422,6 +5422,9 @@
     }
 
     return {
+      log: {
+        timeTakenInMilliseconds: Date.now() - start
+      },
       result: result,
       ranges: ranges,
       applicableOpts: applicableOpts,
@@ -5430,7 +5433,8 @@
   }
 
   function stri(input, originalOpts) {
-    // insurance
+    var start = Date.now(); // insurance
+
     if (typeof input !== "string") {
       throw new Error("stristri: [THROW_ID_01] the first input arg must be string! It was given as ".concat(JSON.stringify(input, null, 4), " (").concat(_typeof(input), ")"));
     }
@@ -5453,7 +5457,7 @@
     }, {}); // quick ending
 
     if (!input) {
-      returnHelper("", null, applicableOpts, detectLang(input));
+      returnHelper("", null, applicableOpts, detectLang(input), start);
     }
 
     var gatheredRanges = []; // comments like CSS comment
@@ -5558,7 +5562,7 @@
       trimLines: true,
       removeEmptyLines: true,
       limitConsecutiveEmptyLinesTo: 1
-    }).result, mergeRanges(gatheredRanges), applicableOpts, detectLang(input));
+    }).result, mergeRanges(gatheredRanges), applicableOpts, detectLang(input), start);
   }
 
   exports.defaults = defaultOpts$1;

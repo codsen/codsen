@@ -8,9 +8,9 @@ import { version } from "../package.json";
 
 // return function is in single place to ensure no
 // discrepancies in API when returning from multiple places
-function returnHelper(result, ranges, applicableOpts, templatingLang) {
+function returnHelper(result, ranges, applicableOpts, templatingLang, start) {
   /* istanbul ignore next */
-  if (arguments.length !== 4) {
+  if (arguments.length !== 5) {
     throw new Error(
       `stristri/returnHelper(): should be 3 input args but ${arguments.length} were given!`
     );
@@ -34,6 +34,9 @@ function returnHelper(result, ranges, applicableOpts, templatingLang) {
     )}`
   );
   return {
+    log: {
+      timeTakenInMilliseconds: Date.now() - start,
+    },
     result,
     ranges,
     applicableOpts,
@@ -42,8 +45,9 @@ function returnHelper(result, ranges, applicableOpts, templatingLang) {
 }
 
 function stri(input, originalOpts) {
+  const start = Date.now();
   console.log(
-    `046 ${`\u001b[${32}m${`INITIAL`}\u001b[${39}m`} ${`\u001b[${33}m${`input`}\u001b[${39}m`} = ${JSON.stringify(
+    `050 ${`\u001b[${32}m${`INITIAL`}\u001b[${39}m`} ${`\u001b[${33}m${`input`}\u001b[${39}m`} = ${JSON.stringify(
       input,
       null,
       4
@@ -75,7 +79,7 @@ function stri(input, originalOpts) {
     ...originalOpts,
   };
   console.log(
-    `078 ${`\u001b[${32}m${`INITIAL`}\u001b[${39}m`} ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+    `082 ${`\u001b[${32}m${`INITIAL`}\u001b[${39}m`} ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
       opts,
       null,
       4
@@ -92,7 +96,7 @@ function stri(input, originalOpts) {
     return acc;
   }, {});
   console.log(
-    `095 ${`\u001b[${32}m${`INITIAL`}\u001b[${39}m`} ${`\u001b[${33}m${`applicableOpts`}\u001b[${39}m`} = ${JSON.stringify(
+    `099 ${`\u001b[${32}m${`INITIAL`}\u001b[${39}m`} ${`\u001b[${33}m${`applicableOpts`}\u001b[${39}m`} = ${JSON.stringify(
       applicableOpts,
       null,
       4
@@ -101,8 +105,8 @@ function stri(input, originalOpts) {
 
   // quick ending
   if (!input) {
-    console.log(`104 quick ending, empty input`);
-    returnHelper("", null, applicableOpts, detectLang(input));
+    console.log(`108 quick ending, empty input`);
+    returnHelper("", null, applicableOpts, detectLang(input), start);
   }
 
   const gatheredRanges = [];
@@ -215,7 +219,7 @@ function stri(input, originalOpts) {
   });
 
   console.log(
-    `218 ${`\u001b[${32}m${`END`}\u001b[${39}m`} ${`\u001b[${33}m${`gatheredRanges`}\u001b[${39}m`} = ${JSON.stringify(
+    `222 ${`\u001b[${32}m${`END`}\u001b[${39}m`} ${`\u001b[${33}m${`gatheredRanges`}\u001b[${39}m`} = ${JSON.stringify(
       gatheredRanges,
       null,
       4
@@ -230,7 +234,8 @@ function stri(input, originalOpts) {
     }).result,
     mergeR(gatheredRanges),
     applicableOpts,
-    detectLang(input)
+    detectLang(input),
+    start
   );
 }
 

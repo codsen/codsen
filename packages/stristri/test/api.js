@@ -46,9 +46,11 @@ tap.test(`05 - the second input arg is wrong`, (t) => {
 // -----------------------------------------------------------------------------
 
 tap.test(`06 - testing api directly`, (t) => {
+  const res = stri2("");
   t.match(
-    stri2(""),
+    res,
     {
+      log: {},
       result: "",
       ranges: null,
       applicableOpts: {
@@ -59,8 +61,10 @@ tap.test(`06 - testing api directly`, (t) => {
       },
       templatingLang: { name: null },
     },
-    "06"
+    "06.01"
   );
+  // exact duration is unpredictable, so we check for truthiness only
+  t.ok(res.log.timeTakenInMilliseconds, "06.02");
   t.end();
 });
 
