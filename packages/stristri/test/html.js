@@ -2,7 +2,7 @@ import tap from "tap";
 import { stri as stri2 } from "../dist/stristri.esm";
 import { stri, mixer } from "./util/util";
 
-tap.only(`01 - testing api directly`, (t) => {
+tap.test(`01 - testing api directly`, (t) => {
   t.equal(stri2("<div>").result, "", "01");
   t.end();
 });

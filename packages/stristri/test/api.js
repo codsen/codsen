@@ -1,6 +1,9 @@
 import tap from "tap";
-import { stri as stri2 } from "../dist/stristri.esm";
-// import { stri, mixer } from "./util/util";
+import { stri as stri2, defaults } from "../dist/stristri.esm";
+import {
+  // stri,
+  mixer,
+} from "./util/util";
 
 const fn = () => {};
 
@@ -75,5 +78,16 @@ tap.test(`07`, (t) => {
 
 tap.test(`08`, (t) => {
   t.equal(stri2("\n\n\n").result, "", "08");
+  t.end();
+});
+
+tap.test(`09 - ensure mixer is generating variations`, (t) => {
+  t.equal(
+    mixer({}, defaults).length,
+    2 **
+      Object.keys(defaults).filter((key) => typeof defaults[key] === "boolean")
+        .length,
+    "09"
+  );
   t.end();
 });

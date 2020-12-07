@@ -5396,16 +5396,19 @@
     html: true,
     css: true,
     text: false,
-    templatingTags: false
+    templatingTags: false,
+    reportProgressFunc: null,
+    reportProgressFuncFrom: 0,
+    reportProgressFuncTo: 100
   };
 
   var version = "1.1.0";
 
   // discrepancies in API when returning from multiple places
 
-  function returnHelper(result, ranges, applicableOpts, templatingLang, start) {
+  function returnHelper(result, applicableOpts, templatingLang, start) {
     /* istanbul ignore next */
-    if (arguments.length !== 5) {
+    if (arguments.length !== 4) {
       throw new Error("stristri/returnHelper(): should be 3 input args but ".concat(arguments.length, " were given!"));
     }
     /* istanbul ignore next */
@@ -5426,7 +5429,6 @@
         timeTakenInMilliseconds: Date.now() - start
       },
       result: result,
-      ranges: ranges,
       applicableOpts: applicableOpts,
       templatingLang: templatingLang
     };
@@ -5457,7 +5459,7 @@
     }, {}); // quick ending
 
     if (!input) {
-      returnHelper("", null, applicableOpts, detectLang(input), start);
+      returnHelper("", applicableOpts, detectLang(input), start);
     }
 
     var gatheredRanges = []; // comments like CSS comment
@@ -5556,13 +5558,17 @@
             gatheredRanges.push([token.start, token.end, " "]);
           }
         }
-      }
+      },
+      reportProgressFunc: opts.reportProgressFunc,
+      reportProgressFuncFrom: opts.reportProgressFuncFrom,
+      reportProgressFuncTo: opts.reportProgressFuncTo * 0.95 // leave the last 5% for collapsing etc.
+
     });
     return returnHelper(collapse(rangesApply(input, gatheredRanges), {
       trimLines: true,
       removeEmptyLines: true,
       limitConsecutiveEmptyLinesTo: 1
-    }).result, mergeRanges(gatheredRanges), applicableOpts, detectLang(input), start);
+    }).result, applicableOpts, detectLang(input), start);
   }
 
   exports.defaults = defaultOpts$1;

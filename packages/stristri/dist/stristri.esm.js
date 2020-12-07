@@ -10,7 +10,6 @@
 import tokenizer from 'codsen-tokenizer';
 import collapse from 'string-collapse-white-space';
 import applyR from 'ranges-apply';
-import mergeR from 'ranges-merge';
 import detectLang from 'detect-templating-language';
 
 const defaultOpts = {
@@ -18,13 +17,16 @@ const defaultOpts = {
   css: true,
   text: false,
   templatingTags: false,
+  reportProgressFunc: null,
+  reportProgressFuncFrom: 0,
+  reportProgressFuncTo: 100,
 };
 
 var version = "1.1.0";
 
-function returnHelper(result, ranges, applicableOpts, templatingLang, start) {
+function returnHelper(result, applicableOpts, templatingLang, start) {
   /* istanbul ignore next */
-  if (arguments.length !== 5) {
+  if (arguments.length !== 4) {
     throw new Error(
       `stristri/returnHelper(): should be 3 input args but ${arguments.length} were given!`
     );
@@ -42,7 +44,6 @@ function returnHelper(result, ranges, applicableOpts, templatingLang, start) {
       timeTakenInMilliseconds: Date.now() - start,
     },
     result,
-    ranges,
     applicableOpts,
     templatingLang,
   };
@@ -79,7 +80,7 @@ function stri(input, originalOpts) {
     return acc;
   }, {});
   if (!input) {
-    returnHelper("", null, applicableOpts, detectLang(input), start);
+    returnHelper("", applicableOpts, detectLang(input), start);
   }
   const gatheredRanges = [];
   let withinHTMLComment = false;
@@ -172,6 +173,9 @@ function stri(input, originalOpts) {
         }
       }
     },
+    reportProgressFunc: opts.reportProgressFunc,
+    reportProgressFuncFrom: opts.reportProgressFuncFrom,
+    reportProgressFuncTo: opts.reportProgressFuncTo * 0.95,
   });
   return returnHelper(
     collapse(applyR(input, gatheredRanges), {
@@ -179,7 +183,6 @@ function stri(input, originalOpts) {
       removeEmptyLines: true,
       limitConsecutiveEmptyLinesTo: 1,
     }).result,
-    mergeR(gatheredRanges),
     applicableOpts,
     detectLang(input),
     start

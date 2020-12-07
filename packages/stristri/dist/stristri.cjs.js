@@ -14,7 +14,6 @@ Object.defineProperty(exports, '__esModule', { value: true });
 var tokenizer = require('codsen-tokenizer');
 var collapse = require('string-collapse-white-space');
 var applyR = require('ranges-apply');
-var mergeR = require('ranges-merge');
 var detectLang = require('detect-templating-language');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -22,7 +21,6 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var tokenizer__default = /*#__PURE__*/_interopDefaultLegacy(tokenizer);
 var collapse__default = /*#__PURE__*/_interopDefaultLegacy(collapse);
 var applyR__default = /*#__PURE__*/_interopDefaultLegacy(applyR);
-var mergeR__default = /*#__PURE__*/_interopDefaultLegacy(mergeR);
 var detectLang__default = /*#__PURE__*/_interopDefaultLegacy(detectLang);
 
 function _typeof(obj) {
@@ -94,14 +92,17 @@ var defaultOpts = {
   html: true,
   css: true,
   text: false,
-  templatingTags: false
+  templatingTags: false,
+  reportProgressFunc: null,
+  reportProgressFuncFrom: 0,
+  reportProgressFuncTo: 100
 };
 
 var version = "1.1.0";
 
-function returnHelper(result, ranges, applicableOpts, templatingLang, start) {
+function returnHelper(result, applicableOpts, templatingLang, start) {
   /* istanbul ignore next */
-  if (arguments.length !== 5) {
+  if (arguments.length !== 4) {
     throw new Error("stristri/returnHelper(): should be 3 input args but ".concat(arguments.length, " were given!"));
   }
   /* istanbul ignore next */
@@ -117,7 +118,6 @@ function returnHelper(result, ranges, applicableOpts, templatingLang, start) {
       timeTakenInMilliseconds: Date.now() - start
     },
     result: result,
-    ranges: ranges,
     applicableOpts: applicableOpts,
     templatingLang: templatingLang
   };
@@ -139,7 +139,7 @@ function stri(input, originalOpts) {
     return acc;
   }, {});
   if (!input) {
-    returnHelper("", null, applicableOpts, detectLang__default['default'](input), start);
+    returnHelper("", applicableOpts, detectLang__default['default'](input), start);
   }
   var gatheredRanges = [];
   var withinHTMLComment = false;
@@ -215,13 +215,16 @@ function stri(input, originalOpts) {
           gatheredRanges.push([token.start, token.end, " "]);
         }
       }
-    }
+    },
+    reportProgressFunc: opts.reportProgressFunc,
+    reportProgressFuncFrom: opts.reportProgressFuncFrom,
+    reportProgressFuncTo: opts.reportProgressFuncTo * 0.95
   });
   return returnHelper(collapse__default['default'](applyR__default['default'](input, gatheredRanges), {
     trimLines: true,
     removeEmptyLines: true,
     limitConsecutiveEmptyLinesTo: 1
-  }).result, mergeR__default['default'](gatheredRanges), applicableOpts, detectLang__default['default'](input), start);
+  }).result, applicableOpts, detectLang__default['default'](input), start);
 }
 
 exports.defaults = defaultOpts;
