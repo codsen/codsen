@@ -191,10 +191,11 @@
     },
     {
         "name": "detect-templating-language",
-        "size": 839,
+        "size": 958,
         "imports": [
             "regex-is-jinja-nunjucks",
-            "regex-is-jsp"
+            "regex-is-jsp",
+            "regex-jinja-specific"
         ]
     },
     {
@@ -246,7 +247,7 @@
     },
     {
         "name": "email-comb",
-        "size": 59886,
+        "size": 59937,
         "imports": [
             "array-pull-all-with-glob",
             "ast-is-empty",
@@ -619,6 +620,11 @@
         "imports": []
     },
     {
+        "name": "regex-jinja-specific",
+        "size": 366,
+        "imports": []
+    },
+    {
         "name": "str-indexes-of-plus",
         "size": 2216,
         "imports": []
@@ -772,7 +778,7 @@
     },
     {
         "name": "stristri",
-        "size": 5177,
+        "size": 5462,
         "imports": [
             "codsen-tokenizer",
             "detect-templating-language",

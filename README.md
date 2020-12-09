@@ -1,6 +1,6 @@
 # Codsen
 
-> A lerna monorepo for our 121 npm packages 📦📦📦
+> A lerna monorepo for our 122 npm packages 📦📦📦
 
 ## 📚 Documentation
 
