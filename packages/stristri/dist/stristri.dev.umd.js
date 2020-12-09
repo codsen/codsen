@@ -1,7 +1,7 @@
 /**
  * stristri
  * Extracts or deletes HTML, CSS, text and/or templating tags from string
- * Version: 1.1.0
+ * Version: 2.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/stristri/
@@ -5347,7 +5347,7 @@
   /**
    * regex-is-jinja-nunjucks
    * Regular expression for detecting Jinja or Nunjucks code
-   * Version: 1.1.0
+   * Version: 1.1.1
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/regex-is-jinja-nunjucks/
@@ -5359,7 +5359,7 @@
   /**
    * regex-is-jsp
    * Regular expression for detecting JSP (Java Server Pages) code
-   * Version: 1.1.0
+   * Version: 1.1.1
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/regex-is-jsp/
@@ -5371,7 +5371,7 @@
   /**
    * regex-jinja-specific
    * Regular expression for detecting Python-specific Jinja code
-   * Version: 1.0.0
+   * Version: 1.0.1
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/regex-jinja-specific/
@@ -5418,7 +5418,7 @@
     reportProgressFuncTo: 100
   };
 
-  var version = "1.1.0";
+  var version = "2.0.0";
 
   // discrepancies in API when returning from multiple places
 

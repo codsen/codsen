@@ -1,6 +1,6 @@
 {
   "name": "string-collapse-white-space",
-  "version": "8.0.4",
+  "version": "8.0.5",
   "description": "Replace chunks of whitespace with a single spaces",
   "keywords": [
     "chunk",

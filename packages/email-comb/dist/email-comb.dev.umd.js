@@ -1,7 +1,7 @@
 /**
  * email-comb
  * Remove unused CSS from email templates
- * Version: 4.0.4
+ * Version: 4.0.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/email-comb/
@@ -570,7 +570,7 @@
   /**
    * regex-empty-conditional-comments
    * Regular expression for matching HTML empty conditional comments
-   * Version: 1.9.0
+   * Version: 1.9.1
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/regex-empty-conditional-comments/
@@ -4192,7 +4192,7 @@
   /**
    * string-uglify
    * Shorten sets of strings deterministically, to be git-friendly
-   * Version: 1.3.3
+   * Version: 1.3.4
    * Author: Roy Revelt, Codsen Ltd
    * License: MIT
    * Homepage: https://codsen.com/os/string-uglify/
@@ -6864,7 +6864,7 @@
 
   var lodash_uniq = uniq;
 
-  var version = "4.0.4";
+  var version = "4.0.5";
 
   var regexEmptyStyleTag = /[\n]?\s*<style[^>]*>\s*<\/style\s*>/g;
   var regexEmptyMediaQuery = /[\n]?\s*@(media|supports|document)[^{]*{\s*}/g;
