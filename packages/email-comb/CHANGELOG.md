@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [4.0.5](https://git.sr.ht/~royston/codsen/compare/email-comb@4.0.4...email-comb@4.0.5) (2020-12-09)
-
+## 4.0.5 (2020-12-09)
 
 ### Bug Fixes
 
-* correct the typo in the log.timeTakenInMilliseconds ([ddc2dec](https://git.sr.ht/~royston/codsen/commits/ddc2decbe0997e0704db781e5bdc97f0b53d5054))
-
-
-
-
+- correct the typo in the log.timeTakenInMilliseconds ([ddc2dec](https://git.sr.ht/~royston/codsen/commit/ddc2decbe0997e0704db781e5bdc97f0b53d5054))
 
 ## 4.0.0 (2020-11-28)
 

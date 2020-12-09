@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [6.1.1](https://git.sr.ht/~royston/codsen/compare/detergent@6.1.0...detergent@6.1.1) (2020-12-09)
-
-**Note:** Version bump only for package detergent
-
-
-
-
-
 ## 6.1.0 (2020-12-06)
 
 ### Features
