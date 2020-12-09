@@ -41,11 +41,34 @@ tap.test("03 - Nunjucks", (t) => {
   t.end();
 });
 
-tap.test("04 - JSP", (t) => {
+tap.test("04 - Jinja - with Python namespaces", (t) => {
+  t.match(
+    detect(`<div>{%- set ns1 = namespace(utility_providers=0) -%}</div>`),
+    { name: "Jinja" },
+    "04"
+  );
+  t.end();
+});
+
+tap.test("05 - Jinja - with Python backwards declarations", (t) => {
+  t.match(
+    detect(`<div>{{'oodles' if crambles else 'brambles'}}</div>`),
+    { name: "Jinja" },
+    "05.01"
+  );
+  t.match(
+    detect(`<div>{{"oodles" if crambles else "brambles"}}</div>`),
+    { name: "Jinja" },
+    "05.02"
+  );
+  t.end();
+});
+
+tap.test("06 - JSP", (t) => {
   t.match(
     detect(`<c:set var="someList" value="\${jspProp.someList}" />`),
     { name: "JSP" },
-    "04"
+    "06"
   );
   t.end();
 });

@@ -32,7 +32,7 @@
     "ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",
     "clean_cov": "../../scripts/leaveCoverageTotalOnly.js",
     "dev": "rollup -c --dev",
-    "devunittest": "npm run dev && ./node_modules/.bin/tap --only -R 'base' && npm run clean_cov",
+    "devunittest": "npm run dev && ./node_modules/.bin/tap --only -R 'base' && npm run tsd && npm run clean_cov",
     "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",
     "lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --config \"../../.eslintrc.json\" --quiet",
@@ -44,8 +44,8 @@
     "pretest": "npm run build",
     "test": "npm run lint && npm run unittest && npm run test:examples && npm run clean_cov && npm run format",
     "test:examples": "../../scripts/test-examples.js && npm run lect && npm run prettier",
-    "tsd": "tsd",
-    "unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md && npm run clean_cov && npm run perf",
+    "tsd": "test ! -f index.d.ts || tsd",
+    "unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md && npm run tsd && npm run clean_cov && npm run perf",
     "version": "npm run build && git add ."
   },
   "husky": {

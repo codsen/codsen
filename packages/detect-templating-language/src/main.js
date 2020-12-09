@@ -1,5 +1,6 @@
 import isJinjaNunjucksRegex from "regex-is-jinja-nunjucks";
 import isJSP from "regex-is-jsp";
+import isJinjaSpecific from "regex-jinja-specific";
 
 function detectLang(str) {
   let name = null;
@@ -26,6 +27,9 @@ function detectLang(str) {
 
   if (isJinjaNunjucksRegex().test(str)) {
     name = "Nunjucks";
+    if (isJinjaSpecific().test(str)) {
+      name = "Jinja";
+    }
   } else if (isJSP().test(str)) {
     name = "JSP";
   }

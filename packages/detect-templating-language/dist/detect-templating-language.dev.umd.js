@@ -70,7 +70,16 @@
 
 
     if (main().test(str)) {
-      name = "Nunjucks";
+      name = "Nunjucks"; // It can also be Jinja.
+      // Let's check for Python-specific code patterns.
+
+      var namespaces = /set\s*[\w]+\s*=\s*namespace\(/g; //
+
+      var backwardsPattern = /{{['"][w]+['"]\s+if/g; // Digit padding like '%.2f'|format(
+
+      if (namespaces.test(str) || backwardsPattern.test(str)) {
+        name = "Jinja";
+      }
     } else if (main$1().test(str)) {
       name = "JSP";
     }

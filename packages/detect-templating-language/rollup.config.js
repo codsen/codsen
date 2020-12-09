@@ -63,7 +63,11 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: ["regex-is-jinja-nunjucks", "regex-is-jsp"],
+      external: [
+        "regex-is-jinja-nunjucks",
+        "regex-is-jsp",
+        "regex-jinja-specific",
+      ],
       plugins: [
         strip({
           sourceMap: false,
@@ -80,7 +84,11 @@ export default (commandLineArgs) => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: ["regex-is-jinja-nunjucks", "regex-is-jsp"],
+      external: [
+        "regex-is-jinja-nunjucks",
+        "regex-is-jsp",
+        "regex-jinja-specific",
+      ],
       plugins: [
         strip({
           sourceMap: false,

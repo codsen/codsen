@@ -28,6 +28,11 @@ function detectLang(str) {
   }
   if (isJinjaNunjucksRegex().test(str)) {
     name = "Nunjucks";
+    const namespaces = /set\s*[\w]+\s*=\s*namespace\(/g;
+    const backwardsPattern = /{{['"][w]+['"]\s+if/g;
+    if (namespaces.test(str) || backwardsPattern.test(str)) {
+      name = "Jinja";
+    }
   } else if (isJSP().test(str)) {
     name = "JSP";
   }

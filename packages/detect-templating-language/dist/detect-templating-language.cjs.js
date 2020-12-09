@@ -45,6 +45,11 @@ function detectLang(str) {
   }
   if (isJinjaNunjucksRegex__default['default']().test(str)) {
     name = "Nunjucks";
+    var namespaces = /set\s*[\w]+\s*=\s*namespace\(/g;
+    var backwardsPattern = /{{['"][w]+['"]\s+if/g;
+    if (namespaces.test(str) || backwardsPattern.test(str)) {
+      name = "Jinja";
+    }
   } else if (isJSP__default['default']().test(str)) {
     name = "JSP";
   }
