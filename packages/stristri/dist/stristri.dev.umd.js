@@ -5368,6 +5368,18 @@
     return /<%|%>|<\s*jsp:|<\s*cms:|<\s*c:|\${\s*jsp/gi;
   };
 
+  /**
+   * regex-jinja-specific
+   * Regular expression for detecting Python-specific Jinja code
+   * Version: 1.0.0
+   * Author: Roy Revelt, Codsen Ltd
+   * License: MIT
+   * Homepage: https://codsen.com/os/regex-jinja-specific/
+   */
+  var main$3 = function main() {
+    return /(set\s*[\w]+\s*=\s*namespace\()|({{['"][\w]+['"]\s+if)|(['"]%x?[+0]?[.>^<]?\d+[\w%]['"]\|format\()/gi;
+  };
+
   function detectLang(str) {
     var name = null;
 
@@ -5383,6 +5395,10 @@
 
     if (main$1().test(str)) {
       name = "Nunjucks";
+
+      if (main$3().test(str)) {
+        name = "Jinja";
+      }
     } else if (main$2().test(str)) {
       name = "JSP";
     }

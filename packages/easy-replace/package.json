@@ -44,7 +44,7 @@
     "test": "npm run lint && npm run unittest && npm run test:examples && npm run clean_cov && npm run format",
     "test:examples": "../../scripts/test-examples.js && npm run lect && npm run prettier",
     "tsd": "test ! -f index.d.ts || tsd",
-    "unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md && npm run tsd && npm run clean_cov && npm run perf",
+    "unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md --reporter=terse && npm run tsd && npm run clean_cov && npm run perf",
     "version": "npm run build && git add ."
   },
   "husky": {
@@ -108,9 +108,9 @@
     "@rollup/plugin-node-resolve": "^11.0.0",
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
-    "eslint": "^7.14.0",
-    "lect": "^0.15.0",
-    "rollup": "^2.34.1",
+    "eslint": "^7.15.0",
+    "lect": "^0.15.1",
+    "rollup": "^2.34.2",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",
     "rollup-plugin-cleanup": "^3.2.1",

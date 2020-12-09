@@ -9,6 +9,7 @@
 
 import isJinjaNunjucksRegex from 'regex-is-jinja-nunjucks';
 import isJSP from 'regex-is-jsp';
+import isJinjaSpecific from 'regex-jinja-specific';
 
 function detectLang(str) {
   let name = null;
@@ -28,9 +29,7 @@ function detectLang(str) {
   }
   if (isJinjaNunjucksRegex().test(str)) {
     name = "Nunjucks";
-    const namespaces = /set\s*[\w]+\s*=\s*namespace\(/g;
-    const backwardsPattern = /{{['"][w]+['"]\s+if/g;
-    if (namespaces.test(str) || backwardsPattern.test(str)) {
+    if (isJinjaSpecific().test(str)) {
       name = "Jinja";
     }
   } else if (isJSP().test(str)) {

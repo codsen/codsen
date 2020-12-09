@@ -11,11 +11,13 @@
 
 var isJinjaNunjucksRegex = require('regex-is-jinja-nunjucks');
 var isJSP = require('regex-is-jsp');
+var isJinjaSpecific = require('regex-jinja-specific');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var isJinjaNunjucksRegex__default = /*#__PURE__*/_interopDefaultLegacy(isJinjaNunjucksRegex);
 var isJSP__default = /*#__PURE__*/_interopDefaultLegacy(isJSP);
+var isJinjaSpecific__default = /*#__PURE__*/_interopDefaultLegacy(isJinjaSpecific);
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -45,9 +47,7 @@ function detectLang(str) {
   }
   if (isJinjaNunjucksRegex__default['default']().test(str)) {
     name = "Nunjucks";
-    var namespaces = /set\s*[\w]+\s*=\s*namespace\(/g;
-    var backwardsPattern = /{{['"][w]+['"]\s+if/g;
-    if (namespaces.test(str) || backwardsPattern.test(str)) {
+    if (isJinjaSpecific__default['default']().test(str)) {
       name = "Jinja";
     }
   } else if (isJSP__default['default']().test(str)) {

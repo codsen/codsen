@@ -44,7 +44,7 @@
     "republish": "npm publish || :",
     "tap": "tap",
     "test": "npm run lint && npm run unittest && npm run format",
-    "unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md && npm run clean_cov"
+    "unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md --reporter=terse && npm run clean_cov"
   },
   "husky": {
     "hooks": {
@@ -115,8 +115,8 @@
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
     "@rollup/plugin-strip": "^2.0.0",
-    "eslint": "^7.14.0",
-    "lect": "^0.15.0",
+    "eslint": "^7.15.0",
+    "lect": "^0.15.1",
     "prettier": "^2.2.1",
     "tap": "^14.11.0",
     "tempy": "^1.0.0",
