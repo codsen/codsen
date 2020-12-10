@@ -1028,9 +1028,6 @@ function comb(str, opts) {
         } else if (characterSuitableForNames(chr)) {
           bodyClass.valueStart = i;
           if (round === 1) {
-            if (bodyClass.quoteless) {
-              finalIndexesToDelete.push(i, i, `"`);
-            }
             if (
               bodyItsTheFirstClassOrId &&
               bodyClass.valuesStart !== null &&
@@ -1069,11 +1066,6 @@ function comb(str, opts) {
           const carvedClass = `${str.slice(bodyClass.valueStart, i)}`;
           if (round === 1) {
             bodyClassesArr.push(`.${carvedClass}`);
-            if (bodyClass.quoteless) {
-              if (!`"'`.includes(str[i])) {
-                finalIndexesToDelete.push(i, i, `"`);
-              }
-            }
           }
           else if (
             bodyClass.valueStart != null &&
@@ -1132,11 +1124,6 @@ function comb(str, opts) {
         const carvedId = str.slice(bodyId.valueStart, i);
         if (round === 1) {
           bodyIdsArr.push(`#${carvedId}`);
-          if (bodyId.quoteless) {
-            if (!`"'`.includes(str[i])) {
-              finalIndexesToDelete.push(i, i, `"`);
-            }
-          }
         }
         else if (
           bodyId.valueStart != null &&
@@ -1206,7 +1193,7 @@ function comb(str, opts) {
             const expandedRange = expander({
               str,
               from: bodyClass.valuesStart - 7,
-              to: i + 1,
+              to: `'"`.includes(str[i]) ? i + 1 : i,
               ifRightSideIncludesThisThenCropTightly: "/>",
               wipeAllWhitespaceOnLeft: true,
             });
@@ -1304,9 +1291,6 @@ function comb(str, opts) {
         } else if (characterSuitableForNames(chr)) {
           bodyId.valueStart = i;
           if (round === 1) {
-            if (bodyId.quoteless) {
-              finalIndexesToDelete.push(i, i, `"`);
-            }
             if (
               bodyItsTheFirstClassOrId &&
               bodyId.valuesStart !== null &&

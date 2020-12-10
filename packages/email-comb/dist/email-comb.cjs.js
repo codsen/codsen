@@ -873,9 +873,6 @@ function comb(str, opts) {
         } else if (characterSuitableForNames(chr)) {
           bodyClass.valueStart = i;
           if (round === 1) {
-            if (bodyClass.quoteless) {
-              finalIndexesToDelete.push(i, i, "\"");
-            }
             if (bodyItsTheFirstClassOrId && bodyClass.valuesStart !== null && !str.slice(bodyClass.valuesStart, i).trim() && bodyClass.valuesStart < i) {
               finalIndexesToDelete.push(bodyClass.valuesStart, i);
               nonIndentationsWhitespaceLength += i - bodyClass.valuesStart;
@@ -902,11 +899,6 @@ function comb(str, opts) {
           var carvedClass = "".concat(str.slice(bodyClass.valueStart, i));
           if (round === 1) {
             bodyClassesArr.push(".".concat(carvedClass));
-            if (bodyClass.quoteless) {
-              if (!"\"'".includes(str[i])) {
-                finalIndexesToDelete.push(i, i, "\"");
-              }
-            }
           }
           else if (bodyClass.valueStart != null && bodyClassesToDelete.includes(carvedClass)) {
               var expandedRange = expander__default['default']({
@@ -935,11 +927,6 @@ function comb(str, opts) {
         var carvedId = str.slice(bodyId.valueStart, i);
         if (round === 1) {
           bodyIdsArr.push("#".concat(carvedId));
-          if (bodyId.quoteless) {
-            if (!"\"'".includes(str[i])) {
-              finalIndexesToDelete.push(i, i, "\"");
-            }
-          }
         }
         else if (bodyId.valueStart != null && bodyIdsToDelete.includes(carvedId)) {
             var _expandedRange = expander__default['default']({
@@ -977,7 +964,7 @@ function comb(str, opts) {
             var _expandedRange2 = expander__default['default']({
               str: str,
               from: bodyClass.valuesStart - 7,
-              to: i + 1,
+              to: "'\"".includes(str[i]) ? i + 1 : i,
               ifRightSideIncludesThisThenCropTightly: "/>",
               wipeAllWhitespaceOnLeft: true
             });
@@ -1054,9 +1041,6 @@ function comb(str, opts) {
         } else if (characterSuitableForNames(chr)) {
           bodyId.valueStart = i;
           if (round === 1) {
-            if (bodyId.quoteless) {
-              finalIndexesToDelete.push(i, i, "\"");
-            }
             if (bodyItsTheFirstClassOrId && bodyId.valuesStart !== null && !str.slice(bodyId.valuesStart, i).trim() && bodyId.valuesStart < i) {
               finalIndexesToDelete.push(bodyId.valuesStart, i);
               nonIndentationsWhitespaceLength += i - bodyId.valuesStart;

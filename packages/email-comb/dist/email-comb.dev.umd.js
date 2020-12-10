@@ -8062,12 +8062,6 @@
 
             if (round === 1) {
               //
-              // also, add quotes if needed
-              if (bodyClass.quoteless) {
-                finalIndexesToDelete.push(i, i, "\"");
-              } //
-
-
               if (bodyItsTheFirstClassOrId && bodyClass.valuesStart !== null && !str.slice(bodyClass.valuesStart, i).trim() && bodyClass.valuesStart < i) {
                 // 1. submit the whitespace characters in the range for deletion:
                 finalIndexesToDelete.push(bodyClass.valuesStart, i);
@@ -8110,13 +8104,7 @@
             // );
 
             if (round === 1) {
-              bodyClassesArr.push(".".concat(carvedClass)); // also, if it's quoteless value, push closing double quote
-
-              if (bodyClass.quoteless) {
-                if (!"\"'".includes(str[i])) {
-                  finalIndexesToDelete.push(i, i, "\"");
-                }
-              }
+              bodyClassesArr.push(".".concat(carvedClass));
             } // round 2
             else if (bodyClass.valueStart != null && bodyClassesToDelete.includes(carvedClass)) {
                 // submit this class for deletion
@@ -8155,13 +8143,7 @@
           var carvedId = str.slice(bodyId.valueStart, i);
 
           if (round === 1) {
-            bodyIdsArr.push("#".concat(carvedId)); // also, if it's quoteless value, push closing double quote
-
-            if (bodyId.quoteless) {
-              if (!"\"'".includes(str[i])) {
-                finalIndexesToDelete.push(i, i, "\"");
-              }
-            }
+            bodyIdsArr.push("#".concat(carvedId));
           } // round 2
           else if (bodyId.valueStart != null && bodyIdsToDelete.includes(carvedId)) {
               // submit this id for deletion
@@ -8215,7 +8197,7 @@
               var _expandedRange2 = expander({
                 str: str,
                 from: bodyClass.valuesStart - 7,
-                to: i + 1,
+                to: "'\"".includes(str[i]) ? i + 1 : i,
                 ifRightSideIncludesThisThenCropTightly: "/>",
                 wipeAllWhitespaceOnLeft: true
               }); // precaution against too tight crop when backend markers are involved
@@ -8333,12 +8315,6 @@
 
             if (round === 1) {
               //
-              // also, add quotes if needed
-              if (bodyId.quoteless) {
-                finalIndexesToDelete.push(i, i, "\"");
-              } //
-
-
               if (bodyItsTheFirstClassOrId && bodyId.valuesStart !== null && !str.slice(bodyId.valuesStart, i).trim() && bodyId.valuesStart < i) {
                 // 1. submit the whitespace characters in the range for deletion:
                 finalIndexesToDelete.push(bodyId.valuesStart, i);
