@@ -1,5 +1,6 @@
 import tap from "tap";
 import is from "../dist/is-html-attribute-closing.esm";
+import { combinations } from "./util/util";
 // const BACKSLASH = "\u005C";
 
 // healthy code
@@ -8,48 +9,43 @@ import is from "../dist/is-html-attribute-closing.esm";
 tap.test(
   `01 - ${`\u001b[${36}m${`healthy code`}\u001b[${39}m`} - one tag, one attr, double quotes`,
   (t) => {
-    const str = `<a href="zzz">`;
-    t.true(is(str, 8, 12), "01");
+    combinations(`<a href="zzz">`).forEach((str) => {
+      t.true(is(str, 8, 12), "01");
+    });
     t.end();
   }
 );
 
 tap.test(
-  `02 - ${`\u001b[${36}m${`healthy code`}\u001b[${39}m`} - one tag, one attr, single quotes`,
+  `02 - ${`\u001b[${36}m${`healthy code`}\u001b[${39}m`} - one tag, few attrs, double quotes`,
   (t) => {
-    const str = `<a href='zzz'>`;
-    t.true(is(str, 8, 12), "02");
-    t.end();
-  }
-);
+    combinations(
+      `<a href="zzz" target="_blank" style="color: black;">`
+    ).forEach((str) => {
+      // 1. starting at the opening of "href":
+      t.false(is(str, 8, 8), "02.01");
+      t.true(is(str, 8, 12), "02.02"); // <--
+      t.false(is(str, 8, 21), "02.03");
+      t.false(is(str, 8, 28), "02.04");
+      t.false(is(str, 8, 36), "02.05");
+      t.false(is(str, 8, 50), "02.06");
 
-tap.test(
-  `03 - ${`\u001b[${36}m${`healthy code`}\u001b[${39}m`} - one tag, few attrs, double quotes`,
-  (t) => {
-    const str = `<a href="zzz" target="_blank" style="color: black;">`;
-    // 1. starting at the opening of "href":
-    t.false(is(str, 8, 8), "03.01");
-    t.true(is(str, 8, 12), "03.02"); // <--
-    t.false(is(str, 8, 21), "03.03");
-    t.false(is(str, 8, 28), "03.04");
-    t.false(is(str, 8, 36), "03.05");
-    t.false(is(str, 8, 50), "03.06");
+      // 2. starting at the opening of "target":
+      t.false(is(str, 21, 8), "02.07");
+      t.false(is(str, 21, 12), "02.08");
+      t.false(is(str, 21, 21), "02.09");
+      t.true(is(str, 21, 28), "02.10"); // <--
+      t.false(is(str, 21, 36), "02.11");
+      t.false(is(str, 21, 50), "02.12");
 
-    // 2. starting at the opening of "target":
-    t.false(is(str, 21, 8), "03.07");
-    t.false(is(str, 21, 12), "03.08");
-    t.false(is(str, 21, 21), "03.09");
-    t.true(is(str, 21, 28), "03.10"); // <--
-    t.false(is(str, 21, 36), "03.11");
-    t.false(is(str, 21, 50), "03.12");
-
-    // 3. starting at the opening of "style":
-    t.false(is(str, 36, 8), "03.13");
-    t.false(is(str, 36, 12), "03.14");
-    t.false(is(str, 36, 21), "03.15");
-    t.false(is(str, 36, 28), "03.16");
-    t.false(is(str, 36, 36), "03.17");
-    t.true(is(str, 36, 50), "03.18"); // <--
+      // 3. starting at the opening of "style":
+      t.false(is(str, 36, 8), "02.13");
+      t.false(is(str, 36, 12), "02.14");
+      t.false(is(str, 36, 21), "02.15");
+      t.false(is(str, 36, 28), "02.16");
+      t.false(is(str, 36, 36), "02.17");
+      t.true(is(str, 36, 50), "02.18"); // <--
+    });
 
     // fin.
     t.end();
@@ -57,64 +53,97 @@ tap.test(
 );
 
 tap.test(
-  `04 - ${`\u001b[${36}m${`healthy code`}\u001b[${39}m`} - one tag, few attrs, single quotes`,
+  `03 - ${`\u001b[${36}m${`healthy code`}\u001b[${39}m`} - repeated singles inside doubles`,
   (t) => {
-    const str = `<a href='zzz' target='_blank' style='color: black;'>`;
-    // 1. starting at the opening of "href":
-    t.false(is(str, 8, 8), "04.01");
-    t.true(is(str, 8, 12), "04.02"); // <--
-    t.false(is(str, 8, 21), "04.03");
-    t.false(is(str, 8, 28), "04.04");
-    t.false(is(str, 8, 36), "04.05");
-    t.false(is(str, 8, 50), "04.06");
+    [
+      `<img src="spacer.gif" alt="'''''" width="1" height="1" border="0" style="display:block;"/>`,
+      `<img src="spacer.gif" alt='"""""' width="1" height="1" border="0" style="display:block;"/>`,
+    ].forEach((str) => {
+      // 0. warmup
+      t.true(is(str, 9, 20), "03.01");
 
-    // 2. starting at the opening of "target":
-    t.false(is(str, 21, 8), "04.07");
-    t.false(is(str, 21, 12), "04.08");
-    t.false(is(str, 21, 21), "04.09");
-    t.true(is(str, 21, 28), "04.10"); // <--
-    t.false(is(str, 21, 36), "04.11");
-    t.false(is(str, 21, 50), "04.12");
-
-    // 3. starting at the opening of "style":
-    t.false(is(str, 36, 8), "04.13");
-    t.false(is(str, 36, 12), "04.14");
-    t.false(is(str, 36, 21), "04.15");
-    t.false(is(str, 36, 28), "04.16");
-    t.false(is(str, 36, 36), "04.17");
-    t.true(is(str, 36, 50), "04.18"); // <--
+      // 1. the bizness
+      t.false(is(str, 26, 9), "03.02");
+      t.false(is(str, 26, 20), "03.03");
+      t.false(is(str, 26, 26), "03.04");
+      t.false(is(str, 26, 27), "03.05");
+      t.false(is(str, 26, 28), "03.06");
+      t.false(is(str, 26, 29), "03.07");
+      t.false(is(str, 26, 30), "03.08");
+      t.false(is(str, 26, 31), "03.09");
+      t.true(is(str, 26, 32), "03.10"); // <--
+      t.false(is(str, 26, 40), "03.11");
+    });
 
     // fin.
     t.end();
   }
 );
 
-tap.test(
-  `05 - ${`\u001b[${36}m${`healthy code`}\u001b[${39}m`} - repeated singles inside doubles`,
-  (t) => {
-    const str = `<img src="spacer.gif" alt="'''''" width="1" height="1" border="0" style="display:block;"/>`;
-    // 0. warmup
-    t.true(is(str, 9, 20), "05.01");
+tap.test(`04`, (t) => {
+  combinations(`<body alink="">`).forEach((str) => {
+    t.true(is(str, 12, 13), "06");
+  });
+  t.end();
+});
 
-    // 1. the bizness
-    t.false(is(str, 26, 9), "05.02");
-    t.false(is(str, 26, 20), "05.03");
-    t.false(is(str, 26, 26), "05.04");
-    t.false(is(str, 26, 27), "05.05");
-    t.false(is(str, 26, 28), "05.06");
-    t.false(is(str, 26, 29), "05.07");
-    t.false(is(str, 26, 30), "05.08");
-    t.false(is(str, 26, 31), "05.09");
-    t.true(is(str, 26, 32), "05.10"); // <--
-    t.false(is(str, 26, 40), "05.11");
+tap.test(`05 links with redirects hardcoded`, (t) => {
+  combinations(`<a
+ href="http://a.b.c/d/EDF/HIJ/KLM/NOP/q?r=https://www.codsen.com/st/uv-wx-yz-123.html&b=456" style="color:#000; text-decoration:none;" target="_blank">x</a>
+>`).forEach((str) => {
+    t.true(is(str, 9, 94), "07.01");
+    t.false(is(str, 9, 102), "07.02");
+    t.false(is(str, 9, 136), "07.03");
+    t.false(is(str, 9, 145), "07.04");
+    t.false(is(str, 9, 152), "07.05");
 
-    // fin.
-    t.end();
-  }
-);
+    t.true(is(str, 102, 136), "07.06");
+    t.false(is(str, 102, 145), "07.07");
+    t.false(is(str, 102, 152), "07.08");
 
-tap.test(`06`, (t) => {
-  const str = `<body alink="">`;
-  t.true(is(str, 12, 13), "06");
+    t.true(is(str, 145, 152), "07.09");
+  });
+  t.end();
+});
+
+tap.test(`06 url attribs within src`, (t) => {
+  [
+    `<img src="https://z.com/r.png?a=" />`,
+    `<img src="https://z.com/r.png?a=b" />`,
+    `<img src="https://z.com/r.png?a=b=" />`,
+    `<img src="https://z.com/r.png?a===" />`,
+    `<img src="https://z.com/r.png?a=1&b=2" />`,
+    `<img src="https://z.com/r.png?a=1&b=2&" />`,
+    `<img src="https://z.com/r.png?a=1&b=2&=" />`,
+  ]
+    .reduce((acc, curr) => acc.concat(combinations(curr)), [])
+    .forEach((str) => {
+      t.true(is(str, 9, str.length - 4), "07");
+    });
+  t.end();
+});
+
+tap.test(`07 no equal char in mailto`, (t) => {
+  combinations(
+    `<a href="mailto:frank@wwdcdemo.example.com">John Frank</a>`
+  ).forEach((str) => {
+    t.true(is(str, 8, 42), "09");
+  });
+  t.end();
+});
+
+tap.test(`08 href with mailto and equal`, (t) => {
+  combinations(
+    `<a href="mailto:foo@example.com?cc=bar@example.com&subject=Greetings%20from%20Cupertino!&body=Wish%20you%20were%20here!">John Frank</a>`
+  ).forEach((str) => {
+    t.true(is(str, 8, 119), "10");
+  });
+  t.end();
+});
+
+tap.test(`09 text quotes`, (t) => {
+  combinations(`abc "d" efg`).forEach((str) => {
+    t.false(is(str, 4, 6), "10");
+  });
   t.end();
 });

@@ -3131,7 +3131,13 @@
         // name on the left of equal (if it's a real
         // attribute name its name characters must pass
         // the charSuitableForHTMLAttrName()...)
-        charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft])) {
+        charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft]) && // ensure it's not
+        // <img src="https://z.com/r.png?a=" />
+        //                                ^
+        //                              here
+        //
+        // in which case it's a false positive!!!
+        !str.slice(idxOfAttrOpening + 1).startsWith("http")) {
           return false;
         }
 

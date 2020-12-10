@@ -1315,18 +1315,25 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         // name on the left of equal (if it's a real
         // attribute name its name characters must pass
         // the charSuitableForHTMLAttrName()...)
-        charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft])
+        charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft]) &&
+        // ensure it's not
+        // <img src="https://z.com/r.png?a=" />
+        //                                ^
+        //                              here
+        //
+        // in which case it's a false positive!!!
+        !str.slice(idxOfAttrOpening + 1).startsWith("http")
       ) {
         console.log(
-          `1321 new attribute starts - ${`\u001b[${31}m${`RETURN FALSE`}\u001b[${39}m`}`
+          `1328 new attribute starts - ${`\u001b[${31}m${`RETURN FALSE`}\u001b[${39}m`}`
         );
         return false;
       }
 
-      console.log(`1326 new attr didn't start`);
+      console.log(`1333 new attr didn't start`);
 
       if (i === isThisClosingIdx && guaranteedAttrStartsAtX(str, i + 1)) {
-        console.log(`1329 another attribute starts on the right!`);
+        console.log(`1336 another attribute starts on the right!`);
         return true;
       }
 
@@ -1340,7 +1347,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       // catch this pattern where initial equal to the left of start is missing
       // and this pattern implies equals will be missing further
       console.log(
-        `1343 ${`\u001b[${35}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`lastCapturedChunk`}\u001b[${39}m`} = ${JSON.stringify(
+        `1350 ${`\u001b[${35}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`lastCapturedChunk`}\u001b[${39}m`} = ${JSON.stringify(
           lastCapturedChunk,
           null,
           4
@@ -1357,7 +1364,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         allHtmlAttribs.has(lastCapturedChunk)
       ) {
         console.log(
-          `1360 freak out clause, it seems an attribute started in between start and suspected`
+          `1367 freak out clause, it seems an attribute started in between start and suspected`
         );
         return false;
       }
@@ -1376,12 +1383,12 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         secondLastCapturedChunk.endsWith(":")
       ) {
         console.log(
-          `1379 it's ending of an attribute with a double-wrapped value - RETURN ${`\u001b[${32}m${`true`}\u001b[${39}m`}`
+          `1386 it's ending of an attribute with a double-wrapped value - RETURN ${`\u001b[${32}m${`true`}\u001b[${39}m`}`
         );
         return true;
       }
 
-      console.log(`1384 end of i <= isThisClosingIdx clauses`);
+      console.log(`1391 end of i <= isThisClosingIdx clauses`);
     }
 
     //
@@ -1419,7 +1426,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       // ("lastChunkWasCapturedAfterSuspectedClosing" flag)
       // or there was but it's not recognised, that's falsey result
       console.log(
-        `1422 FIY, ${`\u001b[${33}m${`lastCapturedChunk`}\u001b[${39}m`} = ${JSON.stringify(
+        `1429 FIY, ${`\u001b[${33}m${`lastCapturedChunk`}\u001b[${39}m`} = ${JSON.stringify(
           lastCapturedChunk,
           null,
           4
@@ -1434,7 +1441,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         !allHtmlAttribs.has(lastCapturedChunk)
       ) {
         console.log(
-          `1437 the slice "${str.slice(
+          `1444 the slice "${str.slice(
             isThisClosingIdx,
             i
           )}" does not contain a new attribute name, ${`\u001b[${31}m${`RETURN FALSE`}\u001b[${39}m`}`
@@ -1442,7 +1449,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         return false;
       }
       // ELSE - it does match, so it seems legit
-      console.log(`1445 ${`\u001b[${32}m${`RETURN TRUE`}\u001b[${39}m`}`);
+      console.log(`1452 ${`\u001b[${32}m${`RETURN TRUE`}\u001b[${39}m`}`);
       return true;
     }
 
@@ -1450,7 +1457,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     if (`'"`.includes(str[i])) {
       lastQuoteAt = i;
       console.log(
-        `1453 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastQuoteAt`}\u001b[${39}m`} = ${JSON.stringify(
+        `1460 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastQuoteAt`}\u001b[${39}m`} = ${JSON.stringify(
           lastQuoteAt,
           null,
           4
@@ -1461,7 +1468,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     // at the bottom, PART II of reset chunk
     if (chunkStartsAt && !charSuitableForHTMLAttrName(str[i])) {
       console.log(
-        `1464 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`}`
+        `1471 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`}`
       );
       chunkStartsAt = null;
     }
@@ -1494,7 +1501,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
 
   // if this point was reached and loop didn't exit...
   // default is false
-  console.log(`1497 ${`\u001b[${31}m${`RETURN DEFAULT FALSE`}\u001b[${39}m`}`);
+  console.log(`1504 ${`\u001b[${31}m${`RETURN DEFAULT FALSE`}\u001b[${39}m`}`);
   return false;
 }
 

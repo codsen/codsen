@@ -323,7 +323,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         trimBeforeMatching: true,
         trimCharsBeforeMatching: ["="]
       }) &&
-      charSuitableForHTMLAttrName__default['default'](str[firstNonWhitespaceCharOnTheLeft])) {
+      charSuitableForHTMLAttrName__default['default'](str[firstNonWhitespaceCharOnTheLeft]) &&
+      !str.slice(idxOfAttrOpening + 1).startsWith("http")) {
         return false;
       }
       if (i === isThisClosingIdx && guaranteedAttrStartsAtX(str, i + 1)) {

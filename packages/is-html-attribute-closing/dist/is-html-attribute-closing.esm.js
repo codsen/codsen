@@ -417,7 +417,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
           trimBeforeMatching: true,
           trimCharsBeforeMatching: ["="],
         }) &&
-        charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft])
+        charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft]) &&
+        !str.slice(idxOfAttrOpening + 1).startsWith("http")
       ) {
         return false;
       }
