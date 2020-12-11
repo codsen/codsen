@@ -180,6 +180,9 @@ const espLumpBlacklist = [
   "--",
 ];
 const punctuationChars = `.,;!?`;
+const BACKTICK = "\x60";
+const LEFTDOUBLEQUOTMARK = `\u201C`;
+const RIGHTDOUBLEQUOTMARK = `\u201D`;
 function isStr(something) {
   return typeof something === "string";
 }
@@ -213,6 +216,10 @@ function flipEspTag(str) {
       res = `>${res}`;
     } else if (str[i] === ">") {
       res = `<${res}`;
+    } else if (str[i] === LEFTDOUBLEQUOTMARK) {
+      res = `${RIGHTDOUBLEQUOTMARK}${res}`;
+    } else if (str[i] === RIGHTDOUBLEQUOTMARK) {
+      res = `${LEFTDOUBLEQUOTMARK}${res}`;
     } else {
       res = `${str[i]}${res}`;
     }
@@ -565,7 +572,7 @@ const inlineTags = new Set([
   "wbr",
 ]);
 const charsThatEndCSSChunks = ["{", "}", ","];
-const BACKTICK = "\x60";
+const SOMEQUOTE = `'"${LEFTDOUBLEQUOTMARK}${RIGHTDOUBLEQUOTMARK}`;
 const attrNameRegexp = /[\w-]/;
 function tokenizer(str, originalOpts) {
   const start = Date.now();
@@ -1090,10 +1097,10 @@ function tokenizer(str, originalOpts) {
         token.kind !== "cdata"
       ) {
         if (
-          [`"`, `'`, `(`, `)`].includes(str[i]) &&
+          (SOMEQUOTE.includes(str[i]) || `()`.includes(str[i])) &&
           !(
             (
-              [`"`, `'`, "`"].includes(str[left(str, i)]) &&
+              SOMEQUOTE.includes(str[left(str, i)]) &&
               str[left(str, i)] === str[right(str, i)]
             )
           ) &&
@@ -2016,6 +2023,9 @@ function tokenizer(str, originalOpts) {
       attrib.attribNameEndsAt = i;
       attrib.attribName = str.slice(attrib.attribNameStartsAt, i);
       attrib.attribNameRecognised = allHtmlAttribs.has(attrib.attribName);
+      if (attrib.attribName.startsWith("mc:")) {
+        token.pureHTML = false;
+      }
       if (str[i] && !str[i].trim() && str[right(str, i)] === "=") ; else if (
         (str[i] && !str[i].trim()) ||
         str[i] === ">" ||
@@ -2133,7 +2143,7 @@ function tokenizer(str, originalOpts) {
       i >= attrib.attribValueStartsAt &&
       attrib.attribValueEndsAt === null
     ) {
-      if (`'"`.includes(str[i])) {
+      if (SOMEQUOTE.includes(str[i])) {
         if (
           !layers.some((layerObj) => layerObj.type === "esp") &&
           attributeEnds(
@@ -2220,7 +2230,13 @@ function tokenizer(str, originalOpts) {
       } else if (
         str[i] === "=" &&
         (`'"`.includes(str[right(str, i)]) ||
-          (str[~-i] && isLatinLetter(str[~-i])))
+          (str[~-i] && isLatinLetter(str[~-i]))) &&
+        !(
+          attrib &&
+          attrib.attribOpeningQuoteAt &&
+          (/:\/\//.test(str.slice(attrib.attribOpeningQuoteAt + 1, i)) ||
+            /mailto:/.test(str.slice(attrib.attribOpeningQuoteAt + 1, i)))
+        )
       ) {
         let whitespaceFound;
         let attribClosingQuoteAt;
@@ -2340,19 +2356,18 @@ function tokenizer(str, originalOpts) {
     ) {
       if (
         str[i] === "=" &&
-        !`'"=`.includes(str[right(str, i)]) &&
+        !SOMEQUOTE.includes(str[right(str, i)]) &&
+        !`=`.includes(str[right(str, i)]) &&
         !espChars.includes(str[right(str, i)])
       ) {
         const firstCharOnTheRight = right(str, i);
-        const firstQuoteOnTheRightIdx = [
-          str.indexOf(`'`, firstCharOnTheRight),
-          str.indexOf(`"`, firstCharOnTheRight),
-        ].filter((val) => val > 0).length
+        const firstQuoteOnTheRightIdx = SOMEQUOTE.split("")
+          .map((quote) => str.indexOf(quote, firstCharOnTheRight))
+          .filter((val) => val > 0).length
           ? Math.min(
-              ...[
-                str.indexOf(`'`, firstCharOnTheRight),
-                str.indexOf(`"`, firstCharOnTheRight),
-              ].filter((val) => val > 0)
+              ...SOMEQUOTE.split("")
+                .map((quote) => str.indexOf(quote, firstCharOnTheRight))
+                .filter((val) => val > 0)
             )
           : undefined;
         if (
@@ -2398,11 +2413,11 @@ function tokenizer(str, originalOpts) {
             position: attrib.attribValueStartsAt,
           });
         }
-      } else if (`'"`.includes(str[i])) {
+      } else if (SOMEQUOTE.includes(str[i])) {
         const nextCharIdx = right(str, i);
         if (
           nextCharIdx &&
-          `'"`.includes(str[nextCharIdx]) &&
+          SOMEQUOTE.includes(str[nextCharIdx]) &&
           str[i] !== str[nextCharIdx] &&
           str.length > nextCharIdx + 2 &&
           str.slice(nextCharIdx + 1).includes(str[nextCharIdx]) &&

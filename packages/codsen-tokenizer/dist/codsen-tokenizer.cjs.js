@@ -130,6 +130,9 @@ var leftyChars = "({";
 var rightyChars = "})";
 var espLumpBlacklist = [")|(", "|(", ")(", "()", "}{", "{}", "%)", "*)", "||", "--"];
 var punctuationChars = ".,;!?";
+var BACKTICK = "\x60";
+var LEFTDOUBLEQUOTMARK = "\u201C";
+var RIGHTDOUBLEQUOTMARK = "\u201D";
 function isStr(something) {
   return typeof something === "string";
 }
@@ -158,6 +161,10 @@ function flipEspTag(str) {
       res = ">".concat(res);
     } else if (str[i] === ">") {
       res = "<".concat(res);
+    } else if (str[i] === LEFTDOUBLEQUOTMARK) {
+      res = "".concat(RIGHTDOUBLEQUOTMARK).concat(res);
+    } else if (str[i] === RIGHTDOUBLEQUOTMARK) {
+      res = "".concat(LEFTDOUBLEQUOTMARK).concat(res);
     } else {
       res = "".concat(str[i]).concat(res);
     }
@@ -332,7 +339,7 @@ function isObj(something) {
 var voidTags = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"];
 var inlineTags = new Set(["a", "abbr", "acronym", "audio", "b", "bdi", "bdo", "big", "br", "button", "canvas", "cite", "code", "data", "datalist", "del", "dfn", "em", "embed", "i", "iframe", "img", "input", "ins", "kbd", "label", "map", "mark", "meter", "noscript", "object", "output", "picture", "progress", "q", "ruby", "s", "samp", "script", "select", "slot", "small", "span", "strong", "sub", "sup", "svg", "template", "textarea", "time", "u", "tt", "var", "video", "wbr"]);
 var charsThatEndCSSChunks = ["{", "}", ","];
-var BACKTICK = "\x60";
+var SOMEQUOTE = "'\"".concat(LEFTDOUBLEQUOTMARK).concat(RIGHTDOUBLEQUOTMARK);
 var attrNameRegexp = /[\w-]/;
 function tokenizer(str, originalOpts) {
   var start = Date.now();
@@ -739,8 +746,8 @@ function tokenizer(str, originalOpts) {
     }
     if (!doNothing) {
       if (["tag", "rule", "at"].includes(token.type) && token.kind !== "cdata") {
-        if (["\"", "'", "(", ")"].includes(str[_i]) && !(
-        ["\"", "'", "`"].includes(str[stringLeftRight.left(str, _i)]) && str[stringLeftRight.left(str, _i)] === str[stringLeftRight.right(str, _i)]) &&
+        if ((SOMEQUOTE.includes(str[_i]) || "()".includes(str[_i])) && !(
+        SOMEQUOTE.includes(str[stringLeftRight.left(str, _i)]) && str[stringLeftRight.left(str, _i)] === str[stringLeftRight.right(str, _i)]) &&
         ifQuoteThenAttrClosingQuote(_i)
         ) {
             if (
@@ -1349,6 +1356,9 @@ function tokenizer(str, originalOpts) {
       attrib.attribNameEndsAt = _i;
       attrib.attribName = str.slice(attrib.attribNameStartsAt, _i);
       attrib.attribNameRecognised = htmlAllKnownAttributes.allHtmlAttribs.has(attrib.attribName);
+      if (attrib.attribName.startsWith("mc:")) {
+        token.pureHTML = false;
+      }
       if (str[_i] && !str[_i].trim() && str[stringLeftRight.right(str, _i)] === "=") ; else if (str[_i] && !str[_i].trim() || str[_i] === ">" || str[_i] === "/" && str[stringLeftRight.right(str, _i)] === ">") {
         if ("'\"".includes(str[stringLeftRight.right(str, _i)])) ; else {
           attrib.attribEnds = _i;
@@ -1422,7 +1432,7 @@ function tokenizer(str, originalOpts) {
       }
     }
     if (!doNothing && token.type === "tag" && attrib.attribValueStartsAt && _i >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
-      if ("'\"".includes(str[_i])) {
+      if (SOMEQUOTE.includes(str[_i])) {
         if (
         !layers.some(function (layerObj) {
           return layerObj.type === "esp";
@@ -1477,7 +1487,10 @@ function tokenizer(str, originalOpts) {
           token.end = _i + 1;
           token.value = str.slice(token.start, token.end);
         }
-      } else if (str[_i] === "=" && ("'\"".includes(str[stringLeftRight.right(str, _i)]) || str[~-_i] && isLatinLetter(str[~-_i]))) {
+      } else if (str[_i] === "=" && ("'\"".includes(str[stringLeftRight.right(str, _i)]) || str[~-_i] && isLatinLetter(str[~-_i])) &&
+      !(attrib && attrib.attribOpeningQuoteAt && (
+      /:\/\//.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i)) ||
+      /mailto:/.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i))))) {
         var whitespaceFound;
         var attribClosingQuoteAt;
         for (var _y2 = stringLeftRight.left(str, _i); _y2 >= attrib.attribValueStartsAt; _y2--) {
@@ -1553,12 +1566,16 @@ function tokenizer(str, originalOpts) {
       layers.pop();
     }
     if (!doNothing && token.type === "tag" && !attrib.attribValueStartsAt && attrib.attribNameEndsAt && attrib.attribNameEndsAt <= _i && str[_i] && str[_i].trim()) {
-      if (str[_i] === "=" && !"'\"=".includes(str[stringLeftRight.right(str, _i)]) && !espChars.includes(str[stringLeftRight.right(str, _i)])
+      if (str[_i] === "=" && !SOMEQUOTE.includes(str[stringLeftRight.right(str, _i)]) && !"=".includes(str[stringLeftRight.right(str, _i)]) && !espChars.includes(str[stringLeftRight.right(str, _i)])
       ) {
           var firstCharOnTheRight = stringLeftRight.right(str, _i);
-          var firstQuoteOnTheRightIdx = [str.indexOf("'", firstCharOnTheRight), str.indexOf("\"", firstCharOnTheRight)].filter(function (val) {
+          var firstQuoteOnTheRightIdx = SOMEQUOTE.split("").map(function (quote) {
+            return str.indexOf(quote, firstCharOnTheRight);
+          }).filter(function (val) {
             return val > 0;
-          }).length ? Math.min.apply(Math, _toConsumableArray([str.indexOf("'", firstCharOnTheRight), str.indexOf("\"", firstCharOnTheRight)].filter(function (val) {
+          }).length ? Math.min.apply(Math, _toConsumableArray(SOMEQUOTE.split("").map(function (quote) {
+            return str.indexOf(quote, firstCharOnTheRight);
+          }).filter(function (val) {
             return val > 0;
           }))) : undefined;
           if (
@@ -1582,11 +1599,11 @@ function tokenizer(str, originalOpts) {
               position: attrib.attribValueStartsAt
             });
           }
-        } else if ("'\"".includes(str[_i])) {
+        } else if (SOMEQUOTE.includes(str[_i])) {
         var nextCharIdx = stringLeftRight.right(str, _i);
         if (
         nextCharIdx &&
-        "'\"".includes(str[nextCharIdx]) &&
+        SOMEQUOTE.includes(str[nextCharIdx]) &&
         str[_i] !== str[nextCharIdx] &&
         str.length > nextCharIdx + 2 &&
         str.slice(nextCharIdx + 1).includes(str[nextCharIdx]) && (

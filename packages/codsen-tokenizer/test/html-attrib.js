@@ -3945,6 +3945,60 @@ tap.test(`49 - last attr empty, XHML`, (t) => {
   t.end();
 });
 
+tap.only(`50 - uri with query params`, (t) => {
+  const gathered = [];
+  ct(`<img src="https://example.com/my-image.png?query=" />`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 53,
+        value: '<img src="https://example.com/my-image.png?query=" />',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 4,
+        tagName: "img",
+        recognised: true,
+        closing: false,
+        void: true,
+        pureHTML: true,
+        kind: "inline",
+        attribs: [
+          {
+            attribName: "src",
+            attribNameRecognised: true,
+            attribNameStartsAt: 5,
+            attribNameEndsAt: 8,
+            attribOpeningQuoteAt: 9,
+            attribClosingQuoteAt: 49,
+            attribValueRaw: "https://example.com/my-image.png?query=",
+            attribValue: [
+              {
+                type: "text",
+                start: 10,
+                end: 49,
+                value: "https://example.com/my-image.png?query=",
+              },
+            ],
+            attribValueStartsAt: 10,
+            attribValueEndsAt: 49,
+            attribStarts: 5,
+            attribEnds: 50,
+            attribLeft: 3,
+          },
+        ],
+      },
+    ],
+    "50"
+  );
+  t.end();
+});
+
 // TODO
 // -----------------------------------------------------------------------------
 

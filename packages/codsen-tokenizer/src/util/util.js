@@ -169,6 +169,10 @@ const espLumpBlacklist = [
 
 const punctuationChars = `.,;!?`;
 
+const BACKTICK = "\x60";
+const LEFTDOUBLEQUOTMARK = `\u201C`;
+const RIGHTDOUBLEQUOTMARK = `\u201D`;
+
 function lastChar(str) {
   if (!isStr(str) || !str.length) {
     return "";
@@ -271,6 +275,10 @@ function flipEspTag(str) {
       res = `>${res}`;
     } else if (str[i] === ">") {
       res = `<${res}`;
+    } else if (str[i] === LEFTDOUBLEQUOTMARK) {
+      res = `${RIGHTDOUBLEQUOTMARK}${res}`;
+    } else if (str[i] === RIGHTDOUBLEQUOTMARK) {
+      res = `${LEFTDOUBLEQUOTMARK}${res}`;
     } else {
       res = `${str[i]}${res}`;
     }
@@ -344,4 +352,7 @@ export {
   lastChar,
   espChars,
   isStr,
+  BACKTICK,
+  LEFTDOUBLEQUOTMARK,
+  RIGHTDOUBLEQUOTMARK,
 };

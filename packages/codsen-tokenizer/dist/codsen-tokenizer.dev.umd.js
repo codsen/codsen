@@ -2689,7 +2689,7 @@
           },
           trimBeforeMatching: true,
           trimCharsBeforeMatching: ["="]
-        }) && charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft])) {
+        }) && charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft]) && !str.slice(idxOfAttrOpening + 1).startsWith("http")) {
           return false;
         }
 
@@ -2736,6 +2736,9 @@
   var rightyChars = "})";
   var espLumpBlacklist = [")|(", "|(", ")(", "()", "}{", "{}", "%)", "*)", "||", "--"];
   var punctuationChars = ".,;!?";
+  var BACKTICK = "\x60";
+  var LEFTDOUBLEQUOTMARK = "\u201C";
+  var RIGHTDOUBLEQUOTMARK = "\u201D";
 
   function isStr$1(something) {
     return typeof something === "string";
@@ -2776,6 +2779,10 @@
         res = ">".concat(res);
       } else if (str[i] === ">") {
         res = "<".concat(res);
+      } else if (str[i] === LEFTDOUBLEQUOTMARK) {
+        res = "".concat(RIGHTDOUBLEQUOTMARK).concat(res);
+      } else if (str[i] === RIGHTDOUBLEQUOTMARK) {
+        res = "".concat(LEFTDOUBLEQUOTMARK).concat(res);
       } else {
         res = "".concat(str[i]).concat(res);
       }
@@ -3204,7 +3211,7 @@
   // const atRulesWhichMightWrapStyles = ["media", "supports", "document"];
 
   var charsThatEndCSSChunks = ["{", "}", ","];
-  var BACKTICK = "\x60";
+  var SOMEQUOTE = "'\"".concat(LEFTDOUBLEQUOTMARK).concat(RIGHTDOUBLEQUOTMARK);
   var attrNameRegexp = /[\w-]/; // TODO remove:
   // same as used in string-extract-class-names
   // const badChars = `.# ~\\!@$%^&*()+=,/';:"?><[]{}|\`\t\n`;
@@ -3959,10 +3966,10 @@
 
       if (!doNothing) {
         if (["tag", "rule", "at"].includes(token.type) && token.kind !== "cdata") {
-          if (["\"", "'", "(", ")"].includes(str[_i]) && !( // below, we have insurance against single quotes, wrapped with quotes:
+          if ((SOMEQUOTE.includes(str[_i]) || "()".includes(str[_i])) && !( // below, we have insurance against single quotes, wrapped with quotes:
           // "'" or '"' - templating languages might put single quote as a sttring
           // character, not meaning wrapped-something.
-          ["\"", "'", "`"].includes(str[left(str, _i)]) && str[left(str, _i)] === str[right(str, _i)]) && // protection against double-wrapped values, like
+          SOMEQUOTE.includes(str[left(str, _i)]) && str[left(str, _i)] === str[right(str, _i)]) && // protection against double-wrapped values, like
           // <div style="float:"left"">
           //
           //
@@ -5147,7 +5154,13 @@
       if (!doNothing && token.type === "tag" && token.kind !== "cdata" && attrib.attribNameStartsAt && _i > attrib.attribNameStartsAt && attrib.attribNameEndsAt === null && !charSuitableForHTMLAttrName(str[_i])) {
         attrib.attribNameEndsAt = _i;
         attrib.attribName = str.slice(attrib.attribNameStartsAt, _i);
-        attrib.attribNameRecognised = allHtmlAttribs.has(attrib.attribName); // maybe there's a space in front of equal, <div class= "">
+        attrib.attribNameRecognised = allHtmlAttribs.has(attrib.attribName);
+
+        if (attrib.attribName.startsWith("mc:")) {
+          // that's a mailchimp attribute
+          token.pureHTML = false;
+        } // maybe there's a space in front of equal, <div class= "">
+
 
         if (str[_i] && !str[_i].trim() && str[right(str, _i)] === "=") ; else if (str[_i] && !str[_i].trim() || str[_i] === ">" || str[_i] === "/" && str[right(str, _i)] === ">") {
           if ("'\"".includes(str[right(str, _i)])) ; else {
@@ -5257,7 +5270,7 @@
 
 
       if (!doNothing && token.type === "tag" && attrib.attribValueStartsAt && _i >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
-        if ("'\"".includes(str[_i])) {
+        if (SOMEQUOTE.includes(str[_i])) {
           // const R1 = !layers.some((layerObj) => layerObj.type === "esp");
           // const R2 = attributeEnds(
           //   str,
@@ -5367,7 +5380,15 @@
             token.end = _i + 1;
             token.value = str.slice(token.start, token.end);
           }
-        } else if (str[_i] === "=" && ("'\"".includes(str[right(str, _i)]) || str[~-_i] && isLatinLetter(str[~-_i]))) {
+        } else if (str[_i] === "=" && ("'\"".includes(str[right(str, _i)]) || str[~-_i] && isLatinLetter(str[~-_i])) && // this will catch url params like
+        // <img src="https://z.png?query=" />
+        //                              ^
+        //                            false alarm
+        //
+        // let's exclude anything URL-related
+        !(attrib && attrib.attribOpeningQuoteAt && ( // check for presence of ://
+        /:\/\//.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i)) || // check for mailto:
+        /mailto:/.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i))))) {
           // all depends, are there whitespace characters:
           // imagine
           // <a href="border="0">
@@ -5521,13 +5542,17 @@
 
 
       if (!doNothing && token.type === "tag" && !attrib.attribValueStartsAt && attrib.attribNameEndsAt && attrib.attribNameEndsAt <= _i && str[_i] && str[_i].trim()) {
-        if (str[_i] === "=" && !"'\"=".includes(str[right(str, _i)]) && !espChars.includes(str[right(str, _i)]) // it might be an ESP literal
+        if (str[_i] === "=" && !SOMEQUOTE.includes(str[right(str, _i)]) && !"=".includes(str[right(str, _i)]) && !espChars.includes(str[right(str, _i)]) // it might be an ESP literal
         ) {
             var firstCharOnTheRight = right(str, _i); // find the index of the next quote, single or double
 
-            var firstQuoteOnTheRightIdx = [str.indexOf("'", firstCharOnTheRight), str.indexOf("\"", firstCharOnTheRight)].filter(function (val) {
+            var firstQuoteOnTheRightIdx = SOMEQUOTE.split("").map(function (quote) {
+              return str.indexOf(quote, firstCharOnTheRight);
+            }).filter(function (val) {
               return val > 0;
-            }).length ? Math.min.apply(Math, _toConsumableArray([str.indexOf("'", firstCharOnTheRight), str.indexOf("\"", firstCharOnTheRight)].filter(function (val) {
+            }).length ? Math.min.apply(Math, _toConsumableArray(SOMEQUOTE.split("").map(function (quote) {
+              return str.indexOf(quote, firstCharOnTheRight);
+            }).filter(function (val) {
               return val > 0;
             }))) : undefined; // catch attribute name - equal - attribute name - equal
             // <span width=height=100>
@@ -5545,7 +5570,7 @@
               attribReset();
             } else if ( // try to stop this clause:
             //
-            // if there are no quote in the remaining string
+            // if there are no quotes in the remaining string
             !firstQuoteOnTheRightIdx || // there is one but there are equal character between here and its location
             str.slice(firstCharOnTheRight, firstQuoteOnTheRightIdx).includes("=") || // if there is no second quote of that type in the remaining string
             !str.includes(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1) || // if string slice from quote to quote includes equal or brackets
@@ -5561,13 +5586,13 @@
                 position: attrib.attribValueStartsAt
               });
             }
-          } else if ("'\"".includes(str[_i])) {
+          } else if (SOMEQUOTE.includes(str[_i])) {
           // maybe it's <span width='"100"> and it's a false opening quote, '
           var nextCharIdx = right(str, _i);
 
           if ( // a non-whitespace character exists on the right of index i
           nextCharIdx && // if it is a quote character
-          "'\"".includes(str[nextCharIdx]) && // but opposite kind,
+          SOMEQUOTE.includes(str[nextCharIdx]) && // but opposite kind,
           str[_i] !== str[nextCharIdx] && // and string is long enough
           str.length > nextCharIdx + 2 && // and remaining string contains that quote like the one on the right
           str.slice(nextCharIdx + 1).includes(str[nextCharIdx]) && ( // and to the right of it we don't have str[i] quote,
