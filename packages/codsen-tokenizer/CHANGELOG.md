@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.4.0](https://git.sr.ht/~royston/codsen/compare/codsen-tokenizer@4.3.0...codsen-tokenizer@4.4.0) (2020-12-11)
+
+
+### Features
+
+* improve the recognition of equal chars in uri's ([8d041b7](https://git.sr.ht/~royston/codsen/commits/8d041b7a4d017fdc73ad8882d587cebc4714bae4))
+* recognise attributes with certain curly quotes ([4e43cc7](https://git.sr.ht/~royston/codsen/commits/4e43cc708b944a8b1cad7416932b73b9a3ea84e2))
+
+
+
+
+
 ## 4.3.0 (2020-12-06)
 
 ### Features

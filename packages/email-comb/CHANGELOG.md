@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.1.0](https://git.sr.ht/~royston/codsen/compare/email-comb@4.0.5...email-comb@4.1.0) (2020-12-11)
+
+
+### Features
+
+* leave quoteless attributes intact, don't try to restore quotes ([cf591db](https://git.sr.ht/~royston/codsen/commits/cf591dbbb91251cdfcfe640bfab2b82b6dc95d74))
+
+
+
+
+
 ## 4.0.5 (2020-12-09)
 
 ### Bug Fixes

@@ -1,7 +1,7 @@
 /**
  * emlint
  * Pluggable email template code linter
- * Version: 3.0.6
+ * Version: 3.0.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/emlint/
@@ -11079,7 +11079,7 @@
 	/**
 	 * is-html-attribute-closing
 	 * Is a character on a given index a closing of an HTML attribute?
-	 * Version: 1.4.1
+	 * Version: 1.5.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/is-html-attribute-closing/
@@ -11322,7 +11322,7 @@
 	        cb: char => !`/>`.includes(char),
 	        trimBeforeMatching: true,
 	        trimCharsBeforeMatching: ["="]
-	      }) && charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft]) && !str.slice(idxOfAttrOpening + 1).startsWith("http")) {
+	      }) && charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft]) && !str.slice(idxOfAttrOpening + 1).startsWith("http") && !str.slice(idxOfAttrOpening + 1, i).includes("/") && !str.endsWith("src=", idxOfAttrOpening) && !str.endsWith("href=", idxOfAttrOpening)) {
 	        return false;
 	      }
 
@@ -11445,7 +11445,7 @@
 	/**
 	 * codsen-tokenizer
 	 * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
-	 * Version: 4.3.0
+	 * Version: 4.4.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/codsen-tokenizer/
@@ -12876,7 +12876,7 @@
 	          token.end = i + 1;
 	          token.value = str.slice(token.start, token.end);
 	        }
-	      } else if (str[i] === "=" && (`'"`.includes(str[right(str, i)]) || str[~-i] && isLatinLetter$1(str[~-i])) && !(attrib && attrib.attribOpeningQuoteAt && (/:\/\//.test(str.slice(attrib.attribOpeningQuoteAt + 1, i)) || /mailto:/.test(str.slice(attrib.attribOpeningQuoteAt + 1, i))))) {
+	      } else if (str[i] === "=" && (`'"`.includes(str[right(str, i)]) || str[~-i] && isLatinLetter$1(str[~-i])) && !(attrib && attrib.attribOpeningQuoteAt && (/\//.test(str.slice(attrib.attribOpeningQuoteAt + 1, i)) || /mailto:/.test(str.slice(attrib.attribOpeningQuoteAt + 1, i)) || /\w\?\w/.test(str.slice(attrib.attribOpeningQuoteAt + 1, i))))) {
 	        let whitespaceFound;
 	        let attribClosingQuoteAt;
 
@@ -13432,7 +13432,7 @@
 	/**
 	 * codsen-parser
 	 * Parser aiming at broken or mixed code, especially HTML & CSS
-	 * Version: 0.8.3
+	 * Version: 0.8.4
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/codsen-parser/
@@ -30775,7 +30775,6 @@
 		"ltda",
 		"lu",
 		"lundbeck",
-		"lupin",
 		"luxe",
 		"luxury",
 		"lv",
@@ -45229,7 +45228,7 @@
 
 	}
 
-	var version = "3.0.6";
+	var version = "3.0.7";
 
 	exports.Linter = Linter;
 	exports.version = version;

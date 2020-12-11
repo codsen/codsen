@@ -1,6 +1,6 @@
 {
   "name": "is-html-attribute-closing",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "Is a character on a given index a closing of an HTML attribute?",
   "keywords": [
     "attribute",

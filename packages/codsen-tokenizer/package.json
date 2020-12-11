@@ -1,6 +1,6 @@
 {
   "name": "codsen-tokenizer",
-  "version": "4.3.0",
+  "version": "4.4.0",
   "description": "HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages",
   "keywords": [
     "ast",
@@ -100,7 +100,7 @@
   "dependencies": {
     "html-all-known-attributes": "^3.0.0",
     "is-char-suitable-for-html-attr-name": "^1.2.0",
-    "is-html-attribute-closing": "^1.4.1",
+    "is-html-attribute-closing": "^1.5.0",
     "is-html-tag-opening": "^1.9.0",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6",
