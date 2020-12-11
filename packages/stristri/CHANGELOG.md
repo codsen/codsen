@@ -13,7 +13,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### BREAKING CHANGES
 
 - ranges are not reported in result any more because it's too resource taxing to
-calculate the collapsed result ranges on top of del
+  calculate the collapsed result ranges on top of del
 
 ## 1.1.0 (2020-12-06)
 

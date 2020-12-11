@@ -2711,7 +2711,7 @@
           },
           trimBeforeMatching: true,
           trimCharsBeforeMatching: ["="]
-        }) && charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft])) {
+        }) && charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft]) && !str.slice(idxOfAttrOpening + 1).startsWith("http") && !str.slice(idxOfAttrOpening + 1, i).includes("/") && !str.endsWith("src=", idxOfAttrOpening) && !str.endsWith("href=", idxOfAttrOpening)) {
           return false;
         }
 
@@ -2834,6 +2834,9 @@
   var rightyChars = "})";
   var espLumpBlacklist = [")|(", "|(", ")(", "()", "}{", "{}", "%)", "*)", "||", "--"];
   var punctuationChars = ".,;!?";
+  var BACKTICK = "\x60";
+  var LEFTDOUBLEQUOTMARK = "\u201C";
+  var RIGHTDOUBLEQUOTMARK = "\u201D";
 
   function isStr$1(something) {
     return typeof something === "string";
@@ -2867,6 +2870,10 @@
         res = ">".concat(res);
       } else if (str[i] === ">") {
         res = "<".concat(res);
+      } else if (str[i] === LEFTDOUBLEQUOTMARK) {
+        res = "".concat(RIGHTDOUBLEQUOTMARK).concat(res);
+      } else if (str[i] === RIGHTDOUBLEQUOTMARK) {
+        res = "".concat(LEFTDOUBLEQUOTMARK).concat(res);
       } else {
         res = "".concat(str[i]).concat(res);
       }
@@ -3029,7 +3036,7 @@
   var voidTags = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"];
   var inlineTags = new Set(["a", "abbr", "acronym", "audio", "b", "bdi", "bdo", "big", "br", "button", "canvas", "cite", "code", "data", "datalist", "del", "dfn", "em", "embed", "i", "iframe", "img", "input", "ins", "kbd", "label", "map", "mark", "meter", "noscript", "object", "output", "picture", "progress", "q", "ruby", "s", "samp", "script", "select", "slot", "small", "span", "strong", "sub", "sup", "svg", "template", "textarea", "time", "u", "tt", "var", "video", "wbr"]);
   var charsThatEndCSSChunks = ["{", "}", ","];
-  var BACKTICK = "\x60";
+  var SOMEQUOTE = "'\"".concat(LEFTDOUBLEQUOTMARK).concat(RIGHTDOUBLEQUOTMARK);
   var attrNameRegexp = /[\w-]/;
 
   function tokenizer(str, originalOpts) {
@@ -3505,7 +3512,7 @@
 
       if (!doNothing) {
         if (["tag", "rule", "at"].includes(token.type) && token.kind !== "cdata") {
-          if (["\"", "'", "(", ")"].includes(str[_i]) && !(["\"", "'", "`"].includes(str[left(str, _i)]) && str[left(str, _i)] === str[right(str, _i)]) && ifQuoteThenAttrClosingQuote(_i)) {
+          if ((SOMEQUOTE.includes(str[_i]) || "()".includes(str[_i])) && !(SOMEQUOTE.includes(str[left(str, _i)]) && str[left(str, _i)] === str[right(str, _i)]) && ifQuoteThenAttrClosingQuote(_i)) {
             if (lastLayerIs("simple") && layers[~-layers.length].value === flipEspTag(str[_i])) {
               layers.pop();
             } else {
@@ -4138,6 +4145,11 @@
         attrib.attribNameEndsAt = _i;
         attrib.attribName = str.slice(attrib.attribNameStartsAt, _i);
         attrib.attribNameRecognised = allHtmlAttribs.has(attrib.attribName);
+
+        if (attrib.attribName.startsWith("mc:")) {
+          token.pureHTML = false;
+        }
+
         if (str[_i] && !str[_i].trim() && str[right(str, _i)] === "=") ;else if (str[_i] && !str[_i].trim() || str[_i] === ">" || str[_i] === "/" && str[right(str, _i)] === ">") {
           if ("'\"".includes(str[right(str, _i)])) ;else {
             attrib.attribEnds = _i;
@@ -4203,7 +4215,7 @@
       }
 
       if (!doNothing && token.type === "tag" && attrib.attribValueStartsAt && _i >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
-        if ("'\"".includes(str[_i])) {
+        if (SOMEQUOTE.includes(str[_i])) {
           if (!layers.some(function (layerObj) {
             return layerObj.type === "esp";
           }) && isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, _i)) {
@@ -4265,7 +4277,7 @@
             token.end = _i + 1;
             token.value = str.slice(token.start, token.end);
           }
-        } else if (str[_i] === "=" && ("'\"".includes(str[right(str, _i)]) || str[~-_i] && isLatinLetter(str[~-_i]))) {
+        } else if (str[_i] === "=" && ("'\"".includes(str[right(str, _i)]) || str[~-_i] && isLatinLetter(str[~-_i])) && !(attrib && attrib.attribOpeningQuoteAt && (/\//.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i)) || /mailto:/.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i)) || /\w\?\w/.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i))))) {
           var whitespaceFound;
           var attribClosingQuoteAt;
 
@@ -4351,11 +4363,15 @@
       }
 
       if (!doNothing && token.type === "tag" && !attrib.attribValueStartsAt && attrib.attribNameEndsAt && attrib.attribNameEndsAt <= _i && str[_i] && str[_i].trim()) {
-        if (str[_i] === "=" && !"'\"=".includes(str[right(str, _i)]) && !espChars.includes(str[right(str, _i)])) {
+        if (str[_i] === "=" && !SOMEQUOTE.includes(str[right(str, _i)]) && !"=".includes(str[right(str, _i)]) && !espChars.includes(str[right(str, _i)])) {
           var firstCharOnTheRight = right(str, _i);
-          var firstQuoteOnTheRightIdx = [str.indexOf("'", firstCharOnTheRight), str.indexOf("\"", firstCharOnTheRight)].filter(function (val) {
+          var firstQuoteOnTheRightIdx = SOMEQUOTE.split("").map(function (quote) {
+            return str.indexOf(quote, firstCharOnTheRight);
+          }).filter(function (val) {
             return val > 0;
-          }).length ? Math.min.apply(Math, _toConsumableArray([str.indexOf("'", firstCharOnTheRight), str.indexOf("\"", firstCharOnTheRight)].filter(function (val) {
+          }).length ? Math.min.apply(Math, _toConsumableArray(SOMEQUOTE.split("").map(function (quote) {
+            return str.indexOf(quote, firstCharOnTheRight);
+          }).filter(function (val) {
             return val > 0;
           }))) : undefined;
 
@@ -4373,10 +4389,10 @@
               position: attrib.attribValueStartsAt
             });
           }
-        } else if ("'\"".includes(str[_i])) {
+        } else if (SOMEQUOTE.includes(str[_i])) {
           var nextCharIdx = right(str, _i);
 
-          if (nextCharIdx && "'\"".includes(str[nextCharIdx]) && str[_i] !== str[nextCharIdx] && str.length > nextCharIdx + 2 && str.slice(nextCharIdx + 1).includes(str[nextCharIdx]) && (!str.indexOf(str[nextCharIdx], nextCharIdx + 1) || !right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1)) || str[_i] !== str[right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1))]) && !Array.from(str.slice(nextCharIdx + 1, str.indexOf(str[nextCharIdx]))).some(function (char) {
+          if (nextCharIdx && SOMEQUOTE.includes(str[nextCharIdx]) && str[_i] !== str[nextCharIdx] && str.length > nextCharIdx + 2 && str.slice(nextCharIdx + 1).includes(str[nextCharIdx]) && (!str.indexOf(str[nextCharIdx], nextCharIdx + 1) || !right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1)) || str[_i] !== str[right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1))]) && !Array.from(str.slice(nextCharIdx + 1, str.indexOf(str[nextCharIdx]))).some(function (char) {
             return "<>=".concat(str[_i]).includes(char);
           })) {
             layers.pop();

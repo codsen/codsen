@@ -2874,7 +2874,7 @@
           },
           trimBeforeMatching: true,
           trimCharsBeforeMatching: ["="]
-        }) && charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft]) && !str.slice(idxOfAttrOpening + 1).startsWith("http")) {
+        }) && charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft]) && !str.slice(idxOfAttrOpening + 1).startsWith("http") && !str.slice(idxOfAttrOpening + 1, i).includes("/") && !str.endsWith("src=", idxOfAttrOpening) && !str.endsWith("href=", idxOfAttrOpening)) {
           return false;
         }
 
@@ -4440,7 +4440,7 @@
             token.end = _i + 1;
             token.value = str.slice(token.start, token.end);
           }
-        } else if (str[_i] === "=" && ("'\"".includes(str[right(str, _i)]) || str[~-_i] && isLatinLetter(str[~-_i])) && !(attrib && attrib.attribOpeningQuoteAt && (/:\/\//.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i)) || /mailto:/.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i))))) {
+        } else if (str[_i] === "=" && ("'\"".includes(str[right(str, _i)]) || str[~-_i] && isLatinLetter(str[~-_i])) && !(attrib && attrib.attribOpeningQuoteAt && (/\//.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i)) || /mailto:/.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i)) || /\w\?\w/.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i))))) {
           var whitespaceFound;
           var attribClosingQuoteAt;
 
