@@ -324,7 +324,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         trimCharsBeforeMatching: ["="]
       }) &&
       charSuitableForHTMLAttrName__default['default'](str[firstNonWhitespaceCharOnTheLeft]) &&
-      !str.slice(idxOfAttrOpening + 1).startsWith("http")) {
+      !str.slice(idxOfAttrOpening + 1).startsWith("http") && !str.slice(idxOfAttrOpening + 1, i).includes("/") && !str.endsWith("src=", idxOfAttrOpening) && !str.endsWith("href=", idxOfAttrOpening)) {
         return false;
       }
       if (i === isThisClosingIdx && guaranteedAttrStartsAtX(str, i + 1)) {

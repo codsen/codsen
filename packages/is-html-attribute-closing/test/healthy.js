@@ -141,7 +141,44 @@ tap.test(`08 href with mailto and equal`, (t) => {
   t.end();
 });
 
-tap.test(`09 text quotes`, (t) => {
+tap.test(`09`, (t) => {
+  combinations(`<img src="codsen.com/my-image.png?query=" />`).forEach(
+    (str) => {
+      t.true(is(str, 9, 40));
+    }
+  );
+  t.end();
+});
+
+tap.test(`10`, (t) => {
+  combinations(`<a href="codsen.com/my-image.png?query=">`).forEach((str) => {
+    t.true(is(str, 8, 39));
+  });
+  t.end();
+});
+
+tap.test(`11`, (t) => {
+  combinations(`<a zz="codsen.com/my-image.png?query=">`).forEach((str) => {
+    t.true(is(str, 6, 37));
+  });
+  t.end();
+});
+
+tap.test(`12`, (t) => {
+  combinations(`<a zz="codsen.com/my-image.png?a=1&b=">`).forEach((str) => {
+    t.true(is(str, 6, 37));
+  });
+  t.end();
+});
+
+tap.test(`13`, (t) => {
+  combinations(`<a zz="codsen.com/my-image.png?a=1&b=2">`).forEach((str) => {
+    t.true(is(str, 6, 38));
+  });
+  t.end();
+});
+
+tap.test(`14 text quotes`, (t) => {
   combinations(`abc "d" efg`).forEach((str) => {
     t.false(is(str, 4, 6), "10");
   });

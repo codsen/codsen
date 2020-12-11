@@ -3137,7 +3137,7 @@
         //                              here
         //
         // in which case it's a false positive!!!
-        !str.slice(idxOfAttrOpening + 1).startsWith("http")) {
+        !str.slice(idxOfAttrOpening + 1).startsWith("http") && !str.slice(idxOfAttrOpening + 1, i).includes("/") && !str.endsWith("src=", idxOfAttrOpening) && !str.endsWith("href=", idxOfAttrOpening)) {
           return false;
         }
 
