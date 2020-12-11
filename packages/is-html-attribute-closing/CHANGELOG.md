@@ -3,21 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.5.0](https://git.sr.ht/~royston/codsen/compare/is-html-attribute-closing@1.4.1...is-html-attribute-closing@1.5.0) (2020-12-11)
-
+## 1.5.0 (2020-12-11)
 
 ### Bug Fixes
 
-* correctly interpret equal chars inside urls ([71f8dcf](https://git.sr.ht/~royston/codsen/commits/71f8dcf33eb1df1e6781979720ae5e0420a062f8))
-
+- correctly interpret equal chars inside urls ([71f8dcf](https://git.sr.ht/~royston/codsen/commit/71f8dcf33eb1df1e6781979720ae5e0420a062f8))
 
 ### Features
 
-* improve the safeguards against legit equal characters ([d1b34fa](https://git.sr.ht/~royston/codsen/commits/d1b34fa89bd07e03bdb407477a02fa1bc6f119b9))
-
-
-
-
+- improve the safeguards against legit equal characters ([d1b34fa](https://git.sr.ht/~royston/codsen/commit/d1b34fa89bd07e03bdb407477a02fa1bc6f119b9))
 
 ## 1.4.0 (2020-11-28)
 
