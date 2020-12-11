@@ -2689,7 +2689,7 @@
           },
           trimBeforeMatching: true,
           trimCharsBeforeMatching: ["="]
-        }) && charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft]) && !str.slice(idxOfAttrOpening + 1).startsWith("http")) {
+        }) && charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft]) && !str.slice(idxOfAttrOpening + 1).startsWith("http") && !str.slice(idxOfAttrOpening + 1, i).includes("/") && !str.endsWith("src=", idxOfAttrOpening) && !str.endsWith("href=", idxOfAttrOpening)) {
           return false;
         }
 
@@ -5386,9 +5386,12 @@
         //                            false alarm
         //
         // let's exclude anything URL-related
-        !(attrib && attrib.attribOpeningQuoteAt && ( // check for presence of ://
-        /:\/\//.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i)) || // check for mailto:
-        /mailto:/.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i))))) {
+        !(attrib && attrib.attribOpeningQuoteAt && ( // check for presence of slash, /
+        /\//.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i)) || // check for mailto:
+        /mailto:/.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i)) || // check for /\w?\w/ like
+        // <img src="codsen.com?query=" />
+        //                     ^
+        /\w\?\w/.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i))))) {
           // all depends, are there whitespace characters:
           // imagine
           // <a href="border="0">

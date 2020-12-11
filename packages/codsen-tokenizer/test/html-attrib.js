@@ -3945,7 +3945,7 @@ tap.test(`49 - last attr empty, XHML`, (t) => {
   t.end();
 });
 
-tap.only(`50 - uri with query params`, (t) => {
+tap.test(`50 - uri with query params`, (t) => {
   const gathered = [];
   ct(`<img src="https://example.com/my-image.png?query=" />`, {
     tagCb: (obj) => {
@@ -3995,6 +3995,36 @@ tap.only(`50 - uri with query params`, (t) => {
       },
     ],
     "50"
+  );
+  t.end();
+});
+
+tap.only(`51 - more uris with query params`, (t) => {
+  const gathered = [];
+  ct(`<img src="codsen.com/my-image.png?query=" />`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 44,
+        attribs: [
+          {
+            attribName: "src",
+            attribStarts: 5,
+            attribEnds: 41,
+            attribValueStartsAt: 10,
+            attribValueEndsAt: 40,
+          },
+        ],
+      },
+    ],
+    "51"
   );
   t.end();
 });

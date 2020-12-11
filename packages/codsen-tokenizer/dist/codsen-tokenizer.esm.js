@@ -2234,8 +2234,9 @@ function tokenizer(str, originalOpts) {
         !(
           attrib &&
           attrib.attribOpeningQuoteAt &&
-          (/:\/\//.test(str.slice(attrib.attribOpeningQuoteAt + 1, i)) ||
-            /mailto:/.test(str.slice(attrib.attribOpeningQuoteAt + 1, i)))
+          (/\//.test(str.slice(attrib.attribOpeningQuoteAt + 1, i)) ||
+            /mailto:/.test(str.slice(attrib.attribOpeningQuoteAt + 1, i)) ||
+            /\w\?\w/.test(str.slice(attrib.attribOpeningQuoteAt + 1, i)))
         )
       ) {
         let whitespaceFound;

@@ -1489,8 +1489,9 @@ function tokenizer(str, originalOpts) {
         }
       } else if (str[_i] === "=" && ("'\"".includes(str[stringLeftRight.right(str, _i)]) || str[~-_i] && isLatinLetter(str[~-_i])) &&
       !(attrib && attrib.attribOpeningQuoteAt && (
-      /:\/\//.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i)) ||
-      /mailto:/.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i))))) {
+      /\//.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i)) ||
+      /mailto:/.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i)) ||
+      /\w\?\w/.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i))))) {
         var whitespaceFound;
         var attribClosingQuoteAt;
         for (var _y2 = stringLeftRight.left(str, _i); _y2 >= attrib.attribValueStartsAt; _y2--) {
