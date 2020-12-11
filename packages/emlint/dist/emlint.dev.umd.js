@@ -11322,7 +11322,7 @@
 	        cb: char => !`/>`.includes(char),
 	        trimBeforeMatching: true,
 	        trimCharsBeforeMatching: ["="]
-	      }) && charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft])) {
+	      }) && charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft]) && !str.slice(idxOfAttrOpening + 1).startsWith("http")) {
 	        return false;
 	      }
 
@@ -11458,6 +11458,9 @@
 	const rightyChars = `})`;
 	const espLumpBlacklist = [")|(", "|(", ")(", "()", "}{", "{}", "%)", "*)", "||", "--"];
 	const punctuationChars = `.,;!?`;
+	const BACKTICK = "\x60";
+	const LEFTDOUBLEQUOTMARK = `\u201C`;
+	const RIGHTDOUBLEQUOTMARK = `\u201D`;
 
 	function isStr$4(something) {
 	  return typeof something === "string";
@@ -11491,6 +11494,10 @@
 	      res = `>${res}`;
 	    } else if (str[i] === ">") {
 	      res = `<${res}`;
+	    } else if (str[i] === LEFTDOUBLEQUOTMARK) {
+	      res = `${RIGHTDOUBLEQUOTMARK}${res}`;
+	    } else if (str[i] === RIGHTDOUBLEQUOTMARK) {
+	      res = `${LEFTDOUBLEQUOTMARK}${res}`;
 	    } else {
 	      res = `${str[i]}${res}`;
 	    }
@@ -11641,7 +11648,7 @@
 	const voidTags = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"];
 	const inlineTags = new Set(["a", "abbr", "acronym", "audio", "b", "bdi", "bdo", "big", "br", "button", "canvas", "cite", "code", "data", "datalist", "del", "dfn", "em", "embed", "i", "iframe", "img", "input", "ins", "kbd", "label", "map", "mark", "meter", "noscript", "object", "output", "picture", "progress", "q", "ruby", "s", "samp", "script", "select", "slot", "small", "span", "strong", "sub", "sup", "svg", "template", "textarea", "time", "u", "tt", "var", "video", "wbr"]);
 	const charsThatEndCSSChunks = ["{", "}", ","];
-	const BACKTICK = "\x60";
+	const SOMEQUOTE = `'"${LEFTDOUBLEQUOTMARK}${RIGHTDOUBLEQUOTMARK}`;
 	const attrNameRegexp = /[\w-]/;
 
 	function tokenizer(str, originalOpts) {
@@ -12113,7 +12120,7 @@
 
 	    if (!doNothing) {
 	      if (["tag", "rule", "at"].includes(token.type) && token.kind !== "cdata") {
-	        if ([`"`, `'`, `(`, `)`].includes(str[i]) && !([`"`, `'`, "`"].includes(str[left(str, i)]) && str[left(str, i)] === str[right(str, i)]) && ifQuoteThenAttrClosingQuote(i)) {
+	        if ((SOMEQUOTE.includes(str[i]) || `()`.includes(str[i])) && !(SOMEQUOTE.includes(str[left(str, i)]) && str[left(str, i)] === str[right(str, i)]) && ifQuoteThenAttrClosingQuote(i)) {
 	          if (lastLayerIs("simple") && layers[~-layers.length].value === flipEspTag(str[i])) {
 	            layers.pop();
 	          } else {
@@ -12739,6 +12746,11 @@
 	      attrib.attribNameEndsAt = i;
 	      attrib.attribName = str.slice(attrib.attribNameStartsAt, i);
 	      attrib.attribNameRecognised = allHtmlAttribs.has(attrib.attribName);
+
+	      if (attrib.attribName.startsWith("mc:")) {
+	        token.pureHTML = false;
+	      }
+
 	      if (str[i] && !str[i].trim() && str[right(str, i)] === "=") ;else if (str[i] && !str[i].trim() || str[i] === ">" || str[i] === "/" && str[right(str, i)] === ">") {
 	        if (`'"`.includes(str[right(str, i)])) ;else {
 	          attrib.attribEnds = i;
@@ -12804,7 +12816,7 @@
 	    }
 
 	    if (!doNothing && token.type === "tag" && attrib.attribValueStartsAt && i >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
-	      if (`'"`.includes(str[i])) {
+	      if (SOMEQUOTE.includes(str[i])) {
 	        if (!layers.some(layerObj => layerObj.type === "esp") && isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, i)) {
 	          attrib.attribClosingQuoteAt = i;
 	          attrib.attribValueEndsAt = i;
@@ -12864,7 +12876,7 @@
 	          token.end = i + 1;
 	          token.value = str.slice(token.start, token.end);
 	        }
-	      } else if (str[i] === "=" && (`'"`.includes(str[right(str, i)]) || str[~-i] && isLatinLetter$1(str[~-i]))) {
+	      } else if (str[i] === "=" && (`'"`.includes(str[right(str, i)]) || str[~-i] && isLatinLetter$1(str[~-i])) && !(attrib && attrib.attribOpeningQuoteAt && (/:\/\//.test(str.slice(attrib.attribOpeningQuoteAt + 1, i)) || /mailto:/.test(str.slice(attrib.attribOpeningQuoteAt + 1, i))))) {
 	        let whitespaceFound;
 	        let attribClosingQuoteAt;
 
@@ -12948,9 +12960,9 @@
 	    }
 
 	    if (!doNothing && token.type === "tag" && !attrib.attribValueStartsAt && attrib.attribNameEndsAt && attrib.attribNameEndsAt <= i && str[i] && str[i].trim()) {
-	      if (str[i] === "=" && !`'"=`.includes(str[right(str, i)]) && !espChars.includes(str[right(str, i)])) {
+	      if (str[i] === "=" && !SOMEQUOTE.includes(str[right(str, i)]) && !`=`.includes(str[right(str, i)]) && !espChars.includes(str[right(str, i)])) {
 	        const firstCharOnTheRight = right(str, i);
-	        const firstQuoteOnTheRightIdx = [str.indexOf(`'`, firstCharOnTheRight), str.indexOf(`"`, firstCharOnTheRight)].filter(val => val > 0).length ? Math.min(...[str.indexOf(`'`, firstCharOnTheRight), str.indexOf(`"`, firstCharOnTheRight)].filter(val => val > 0)) : undefined;
+	        const firstQuoteOnTheRightIdx = SOMEQUOTE.split("").map(quote => str.indexOf(quote, firstCharOnTheRight)).filter(val => val > 0).length ? Math.min(...SOMEQUOTE.split("").map(quote => str.indexOf(quote, firstCharOnTheRight)).filter(val => val > 0)) : undefined;
 
 	        if (firstCharOnTheRight && str.slice(firstCharOnTheRight).includes("=") && allHtmlAttribs.has(str.slice(firstCharOnTheRight, firstCharOnTheRight + str.slice(firstCharOnTheRight).indexOf("=")).trim().toLowerCase())) {
 	          attrib.attribEnds = i + 1;
@@ -12965,10 +12977,10 @@
 	            position: attrib.attribValueStartsAt
 	          });
 	        }
-	      } else if (`'"`.includes(str[i])) {
+	      } else if (SOMEQUOTE.includes(str[i])) {
 	        const nextCharIdx = right(str, i);
 
-	        if (nextCharIdx && `'"`.includes(str[nextCharIdx]) && str[i] !== str[nextCharIdx] && str.length > nextCharIdx + 2 && str.slice(nextCharIdx + 1).includes(str[nextCharIdx]) && (!str.indexOf(str[nextCharIdx], nextCharIdx + 1) || !right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1)) || str[i] !== str[right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1))]) && !Array.from(str.slice(nextCharIdx + 1, str.indexOf(str[nextCharIdx]))).some(char => `<>=${str[i]}`.includes(char))) {
+	        if (nextCharIdx && SOMEQUOTE.includes(str[nextCharIdx]) && str[i] !== str[nextCharIdx] && str.length > nextCharIdx + 2 && str.slice(nextCharIdx + 1).includes(str[nextCharIdx]) && (!str.indexOf(str[nextCharIdx], nextCharIdx + 1) || !right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1)) || str[i] !== str[right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1))]) && !Array.from(str.slice(nextCharIdx + 1, str.indexOf(str[nextCharIdx]))).some(char => `<>=${str[i]}`.includes(char))) {
 	          layers.pop();
 	        } else {
 	          if (!attrib.attribOpeningQuoteAt) {
