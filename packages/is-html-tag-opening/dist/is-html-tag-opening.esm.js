@@ -1,6 +1,6 @@
 /**
  * is-html-tag-opening
- * Is given opening bracket a beginning of a tag?
+ * Does an HTML tag start at given position?
  * Version: 1.9.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
@@ -8,7 +8,12 @@
  */
 
 import { matchRightIncl, matchRight } from 'string-match-left-right';
+import { left } from 'string-left-right';
 
+const defaultOpts = {
+  allowCustomTagNames: false,
+  skipOpeningBracket: false,
+};
 const BACKSLASH = "\u005C";
 const knownHtmlTags = [
   "a",
@@ -145,14 +150,23 @@ const knownHtmlTags = [
   "wbr",
   "xml",
 ];
+
 function isNotLetter(char) {
   return (
     char === undefined ||
     (char.toUpperCase() === char.toLowerCase() &&
-      !`0123456789`.includes(char) &&
+      !/\d/.test(char) &&
       char !== "=")
   );
 }
+
+function extraRequirements(str, idx) {
+  return (
+    str[idx] === "<" ||
+    str[left(str, idx)] === "<"
+  );
+}
+
 function isOpening(str, idx = 0, originalOpts) {
   if (typeof str !== "string") {
     throw new Error(
@@ -172,57 +186,59 @@ function isOpening(str, idx = 0, originalOpts) {
       )}`
     );
   }
-  const defaults = {
-    allowCustomTagNames: false,
-    skipOpeningBracket: false,
-  };
-  const opts = { ...defaults, ...originalOpts };
+  const opts = { ...defaultOpts, ...originalOpts };
   const whitespaceChunk = `[\\\\ \\t\\r\\n/]*`;
   const generalChar = `._a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF`;
   const r1 = new RegExp(
-    `^${
-      opts.skipOpeningBracket ? "" : "<"
-    }${whitespaceChunk}\\w+${whitespaceChunk}>`,
+    `^<${
+      opts.skipOpeningBracket ? "?" : ""
+    }${whitespaceChunk}\\w+${whitespaceChunk}\\/?${whitespaceChunk}>`,
     "g"
   );
   const r5 = new RegExp(
-    `^${
-      opts.skipOpeningBracket ? "" : "<"
+    `^<${
+      opts.skipOpeningBracket ? "?" : ""
     }${whitespaceChunk}[${generalChar}]+[-${generalChar}]*${whitespaceChunk}>`,
     "g"
   );
   const r2 = new RegExp(
-    `^${
-      opts.skipOpeningBracket ? "" : "<"
+    `^<${
+      opts.skipOpeningBracket ? "?" : ""
     }\\s*\\w+\\s+\\w+(?:-\\w+)?\\s*=\\s*['"\\w]`,
     "g"
   );
   const r6 = new RegExp(
-    `^${
-      opts.skipOpeningBracket ? "" : "<"
+    `^<${
+      opts.skipOpeningBracket ? "?" : ""
     }\\s*\\w+\\s+[${generalChar}]+[-${generalChar}]*(?:-\\w+)?\\s*=\\s*['"\\w]`
   );
   const r3 = new RegExp(
-    `^${opts.skipOpeningBracket ? "" : "<"}\\s*\\/?\\s*\\w+\\s*\\/?\\s*>`,
+    `^<${opts.skipOpeningBracket ? "?" : ""}\\s*\\/?\\s*\\w+\\s*\\/?\\s*>`,
     "g"
   );
   const r7 = new RegExp(
-    `^${
-      opts.skipOpeningBracket ? "" : "<"
+    `^<${
+      opts.skipOpeningBracket ? "?" : ""
     }\\s*\\/?\\s*[${generalChar}]+[-${generalChar}]*\\s*\\/?\\s*>`,
     "g"
   );
   const r4 = new RegExp(
-    `^${
-      opts.skipOpeningBracket ? "" : "<"
+    `^<${
+      opts.skipOpeningBracket ? "?" : ""
     }${whitespaceChunk}\\w+(?:\\s*\\w+)*\\s*\\w+=['"]`,
     "g"
   );
   const r8 = new RegExp(
-    `^${
-      opts.skipOpeningBracket ? "" : "<"
-    }${whitespaceChunk}[${generalChar}]+[-${generalChar}]*(?:\\s*\\w+)*\\s*\\w+=['"]`,
+    `^<${
+      opts.skipOpeningBracket ? "?" : ""
+    }${whitespaceChunk}[${generalChar}]+[-${generalChar}]*\\s+(?:\\s*\\w+)*\\s*\\w+=['"]`,
     "g"
+  );
+  const r9 = new RegExp(
+    `^<${
+      opts.skipOpeningBracket ? `?\\/?` : ""
+    }(${whitespaceChunk}[${generalChar}]+)+${whitespaceChunk}[\\\\/=>]`,
+    ""
   );
   const whatToTest = idx ? str.slice(idx) : str;
   let passed = false;
@@ -231,19 +247,44 @@ function isOpening(str, idx = 0, originalOpts) {
     i: true,
     trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"],
   };
-  if (opts.allowCustomTagNames) {
-    if (r5.test(whatToTest)) {
+  if (!passed && opts.allowCustomTagNames) {
+    if (
+      ((opts.skipOpeningBracket &&
+        (str[idx - 1] === "<" ||
+          (str[idx - 1] === "/" && str[left(str, left(str, idx))] === "<"))) ||
+        (whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim())) &&
+      (r9.test(whatToTest) || /^<\w+$/.test(whatToTest))
+    ) {
+      passed = true;
+    }
+    if (r5.test(whatToTest) && extraRequirements(str, idx)) {
       passed = true;
     } else if (r6.test(whatToTest)) {
       passed = true;
-    } else if (r7.test(whatToTest)) {
+    } else if (r7.test(whatToTest) && extraRequirements(str, idx)) {
       passed = true;
     } else if (r8.test(whatToTest)) {
       passed = true;
     }
   } else if (
+    !passed &&
     matchRightIncl(str, idx, knownHtmlTags, {
-      cb: isNotLetter,
+      cb: (char) => {
+        if (char === undefined) {
+          if (
+            (str[idx] === "<" && str[idx + 1] && str[idx + 1].trim()) ||
+            str[idx - 1] === "<"
+          ) {
+            passed = true;
+          }
+          return true;
+        }
+        return (
+          char.toUpperCase() === char.toLowerCase() &&
+          !/\d/.test(char) &&
+          char !== "="
+        );
+      },
       i: true,
       trimCharsBeforeMatching: [
         "<",
@@ -257,11 +298,20 @@ function isOpening(str, idx = 0, originalOpts) {
       ],
     })
   ) {
-    if (r1.test(whatToTest)) {
+    if (
+      ((opts.skipOpeningBracket &&
+        (str[idx - 1] === "<" ||
+          (str[idx - 1] === "/" && str[left(str, left(str, idx))] === "<"))) ||
+        (whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim())) &&
+      r9.test(whatToTest)
+    ) {
+      passed = true;
+    }
+    if (r1.test(whatToTest) && extraRequirements(str, idx)) {
       passed = true;
     } else if (r2.test(whatToTest)) {
       passed = true;
-    } else if (r3.test(whatToTest)) {
+    } else if (r3.test(whatToTest) && extraRequirements(str, idx)) {
       passed = true;
     } else if (r4.test(whatToTest)) {
       passed = true;

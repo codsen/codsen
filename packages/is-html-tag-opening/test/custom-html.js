@@ -31,8 +31,8 @@ tap.test(
   `03 - ${`\u001b[${36}m${`custom`}\u001b[${39}m`} - dash between chars`,
   (t) => {
     const s1 = `<a-b>`;
-    t.ok(is(s1, 0), "03.01");
-    t.ok(
+    t.true(is(s1, 0), "03.01");
+    t.true(
       is(s1, 0, {
         allowCustomTagNames: true,
       }),
@@ -60,7 +60,7 @@ tap.test(
   `05 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - one letter tag, allowCustomTagNames=on`,
   (t) => {
     const s1 = `<c>`;
-    t.ok(
+    t.true(
       is(s1, 0, {
         allowCustomTagNames: true,
       }),

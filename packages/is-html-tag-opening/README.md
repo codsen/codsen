@@ -1,6 +1,6 @@
 # is-html-tag-opening
 
-> Is given opening bracket a beginning of a tag?
+> Does an HTML tag start at given position?
 
 <div class="package-badges">
   <a href="https://www.npmjs.com/package/is-html-tag-opening" rel="nofollow noreferrer noopener">

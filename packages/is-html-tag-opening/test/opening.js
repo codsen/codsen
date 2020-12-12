@@ -1,212 +1,485 @@
 import tap from "tap";
 import is from "../dist/is-html-tag-opening.esm";
+import { mixer } from "./util/util";
 
 // opening tag
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, (t) => {
-  const str = `<a>`;
-  t.ok(is(str), "01.01");
-  t.ok(is(str, 0), "01.02");
-  t.ok(
-    is(str, 0, {
-      allowCustomTagNames: true,
-    }),
-    "01.03"
-  );
+tap.test(`01 - recognised opening tag`, (t) => {
+  [
+    // opening
+    `<a>`,
+    `<p>`,
+    `<img>`,
+    `<img alt>`,
+    `<img alt=>`,
+    `<img alt=">`,
+    `<img alt="">`,
+    `<img alt="z">`,
+    `<img alt="zz">`,
+    `<img alt='>`,
+    `<img alt=''>`,
+    `<img alt='z'>`,
 
-  t.false(is(str, 1), "01.04");
-  t.ok(
-    is(str, 1, {
+    // self closing
+    `<a/>`,
+    `<p/>`,
+    `<img/>`,
+    `<img alt/>`,
+    `<img alt=/>`,
+    `<img alt="/>`,
+    `<img alt=""/>`,
+    `<img alt="z"/>`,
+    `<img alt="zz"/>`,
+    `<img alt='/>`,
+    `<img alt=''/>`,
+    `<img alt='z'/>`,
+
+    // boolean attributes
+    `<td nowrap>`,
+    `<td nowrap nowrap>`,
+    `<td class="a" nowrap>`,
+    `<td class="a" nowrap nowrap>`,
+    `<td class="a" nowrap nowrap nowrap>`,
+    `<td nowrap class="a">`,
+    `<td nowrap nowrap class="a">`,
+    `<td nowrap nowrap nowrap class="a">`,
+    `<td nowrap/>`,
+    `<td nowrap nowrap/>`,
+    `<td class="a" nowrap/>`,
+    `<td class="a" nowrap nowrap/>`,
+    `<td class="a" nowrap nowrap nowrap/>`,
+    `<td nowrap class="a"/>`,
+    `<td nowrap nowrap class="a"/>`,
+    `<td nowrap nowrap nowrap class="a"/>`,
+
+    // mismatching quote pairs
+    `<img alt="'>`,
+    `<img alt='">`,
+    `<img alt="z'>`,
+    `<img alt='z">`,
+    `<img alt="'/>`,
+    `<img alt='"/>`,
+    `<img alt="z'/>`,
+    `<img alt='z"/>`,
+  ].forEach((str) => {
+    mixer({
+      skipOpeningBracket: false,
+    }).forEach((opt) => {
+      t.false(
+        is(str, 1, opt),
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
+      );
+    });
+    mixer({
       skipOpeningBracket: true,
-    }),
-    "01.05"
-  );
+    }).forEach((opt) => {
+      t.true(
+        is(str, 1, opt),
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
+      );
+    });
+  });
   t.end();
 });
 
-tap.test(`02 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, (t) => {
-  const str = `<img>`;
-  t.ok(is(str), "02.01");
-  t.ok(is(str, 0), "02.02");
-  t.ok(
-    is(str, 0, {
-      allowCustomTagNames: true,
-    }),
-    "02.03"
-  );
+tap.test(`02 - recognised closing tag`, (t) => {
+  [
+    `</a>`,
+    `</a >`,
+    `</ a>`,
+    `</ a >`,
+    `</p>`,
+    `</p >`,
+    `</ p>`,
+    `</ p >`,
+    `</a/>`,
+    `</a />`,
+    `</ a/>`,
+    `</ a />`,
+    `</img>`,
+    `</img/>`,
+    `</ img/>`,
+    `</ img />`,
+    `</img alt>`,
+    `</img alt >`,
+    `</img alt=>`,
+    `</img alt= >`,
+    `</img alt=">`,
+    `</img alt=" >`,
+    `</img alt="">`,
+    `</img alt="" >`,
+    `</img alt="z">`,
+    `</img alt="z" >`,
+    `</img alt="zz">`,
+    `</img alt="zz" >`,
+    `</img alt='>`,
+    `</img alt=' >`,
+    `</img alt=''>`,
+    `</img alt='' >`,
+    `</img alt='z'>`,
+    `</img alt='z' >`,
 
-  t.false(is(str, 1), "02.04");
-  t.ok(
-    is(str, 1, {
+    // boolean attributes
+    `</td nowrap>`,
+    `</td nowrap >`,
+    `</td nowrap nowrap>`,
+    `</td nowrap nowrap >`,
+    `</td class="a" nowrap>`,
+    `</td class="a" nowrap >`,
+    `</td class="a" nowrap nowrap>`,
+    `</td class="a" nowrap nowrap >`,
+    `</td class="a" nowrap nowrap nowrap>`,
+    `</td class="a" nowrap nowrap nowrap >`,
+    `</td class='a' nowrap>`,
+    `</td class='a' nowrap >`,
+    `</td class='a' nowrap nowrap>`,
+    `</td class='a' nowrap nowrap >`,
+    `</td class='a' nowrap nowrap nowrap>`,
+    `</td class='a' nowrap nowrap nowrap >`,
+
+    `</td nowrap class="a">`,
+    `</td nowrap class="a" >`,
+    `</td nowrap nowrap class="a">`,
+    `</td nowrap nowrap class="a" >`,
+    `</td nowrap nowrap nowrap class="a">`,
+    `</td nowrap nowrap nowrap class="a" >`,
+    `</td nowrap class='a'>`,
+    `</td nowrap class='a' >`,
+    `</td nowrap nowrap class='a'>`,
+    `</td nowrap nowrap class='a' >`,
+    `</td nowrap nowrap nowrap class='a'>`,
+    `</td nowrap nowrap nowrap class='a' >`,
+
+    // mismatching quote pairs
+    `</img alt="'>`,
+    `</img alt='">`,
+    `</img alt="z'>`,
+    `</img alt='z">`,
+  ].forEach((str) => {
+    mixer().forEach((opt) => {
+      t.true(
+        is(str, undefined, opt),
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = undefined`
+      );
+    });
+    mixer().forEach((opt) => {
+      t.true(
+        is(str, 0, opt),
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`
+      );
+    });
+
+    mixer({
+      skipOpeningBracket: false,
+    }).forEach((opt) => {
+      t.false(
+        is(str, 1, opt),
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
+      );
+    });
+    mixer({
       skipOpeningBracket: true,
-    }),
-    "02.05"
-  );
+    }).forEach((opt) => {
+      t.true(
+        is(str, 1, opt),
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
+      );
+    });
+
+    mixer({
+      skipOpeningBracket: false,
+    }).forEach((opt) => {
+      t.false(
+        is(str, 2, opt),
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 2`
+      );
+    });
+    mixer({
+      skipOpeningBracket: true,
+    }).forEach((opt) => {
+      t.true(
+        is(str, 2, opt),
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 2`
+      );
+    });
+  });
   t.end();
 });
 
-tap.test(`03 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, (t) => {
-  const str = `<img alt="">`;
-  t.ok(is(str), "03.01");
-  t.ok(is(str, 0), "03.02");
-  t.ok(
-    is(str, 0, {
-      allowCustomTagNames: true,
-    }),
-    "03.03"
-  );
+tap.test(`03 - unrecognised opening tag`, (t) => {
+  [
+    `<x>`,
+    `<xy>`,
 
-  t.false(is(str, 1), "03.04");
-  t.ok(
-    is(str, 1, {
+    // recognised attr name
+    `<xy alt>`,
+    `<xy alt=>`,
+    `<xy alt=">`,
+    `<xy alt="">`,
+    `<xy alt="z">`,
+    `<xy alt="zz">`,
+    `<xy alt='>`,
+    `<xy alt=''>`,
+    `<xy alt='z'>`,
+
+    // unrecognised attr name
+    `<xy klm>`,
+    `<xy klm=>`,
+    `<xy klm=">`,
+    `<xy klm="">`,
+    `<xy klm="z">`,
+    `<xy klm="zz">`,
+    `<xy klm='>`,
+    `<xy klm=''>`,
+    `<xy klm='z'>`,
+
+    // boolean attributes
+    `<xy nowrap>`,
+    `<xy nowrap nowrap>`,
+    `<xy class="a" nowrap>`,
+    `<xy class="a" nowrap nowrap>`,
+    `<xy class="a" nowrap nowrap nowrap>`,
+    `<xy nowrap class="a">`,
+    `<xy nowrap nowrap class="a">`,
+    `<xy nowrap nowrap nowrap class="a">`,
+
+    // mismatching quote pairs, recognised attr name
+    `<xy alt="'>`,
+    `<xy alt='">`,
+    `<xy alt="z'>`,
+    `<xy alt='z">`,
+
+    // mismatching quote pairs, unrecognised attr name
+    `<xy alt="'>`,
+    `<xy alt='">`,
+    `<xy alt="z'>`,
+    `<xy alt='z">`,
+  ].forEach((str) => {
+    mixer({
+      allowCustomTagNames: true,
+    }).forEach((opt) => {
+      t.true(
+        is(str, undefined, opt),
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = undefined`
+      );
+    });
+    mixer({
+      allowCustomTagNames: false,
+    }).forEach((opt) => {
+      t.false(
+        is(str, undefined, opt),
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = undefined`
+      );
+    });
+    mixer({
+      allowCustomTagNames: true,
+    }).forEach((opt) => {
+      t.true(
+        is(str, 0, opt),
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`
+      );
+    });
+    mixer({
+      allowCustomTagNames: false,
+    }).forEach((opt) => {
+      t.false(
+        is(str, 0, opt),
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`
+      );
+    });
+
+    mixer({
+      skipOpeningBracket: false,
+    }).forEach((opt) => {
+      t.false(
+        is(str, 1, opt),
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
+      );
+    });
+    mixer({
+      allowCustomTagNames: false,
+    }).forEach((opt) => {
+      t.false(
+        is(str, 1, opt),
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
+      );
+    });
+    mixer({
+      allowCustomTagNames: true,
       skipOpeningBracket: true,
-    }),
-    "03.05"
-  );
+    }).forEach((opt) => {
+      t.true(
+        is(str, 1, opt),
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
+      );
+    });
+  });
   t.end();
 });
 
-tap.test(`04 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, (t) => {
-  const str = `<img alt="zzz">`;
-  t.ok(is(str), "04.01");
-  t.ok(is(str, 0), "04.02");
-  t.ok(
-    is(str, 0, {
-      allowCustomTagNames: true,
-    }),
-    "04.03"
-  );
+tap.test(`04 - unrecognised closing tag`, (t) => {
+  [
+    `</x>`,
+    `</xy>`,
 
-  t.false(is(str, 1), "04.04");
-  t.ok(
-    is(str, 1, {
+    // recognised attr name
+    `</xy alt>`,
+    `</xy alt=>`,
+    `</xy alt=">`,
+    `</xy alt="">`,
+    `</xy alt="z">`,
+    `</xy alt="zz">`,
+    `</xy alt='>`,
+    `</xy alt=''>`,
+    `</xy alt='z'>`,
+
+    // unrecognised attr name
+    `</xy klm>`,
+    `</xy klm=>`,
+    `</xy klm=">`,
+    `</xy klm="">`,
+    `</xy klm="z">`,
+    `</xy klm="zz">`,
+    `</xy klm='>`,
+    `</xy klm=''>`,
+    `</xy klm='z'>`,
+
+    // boolean attributes
+    `</xy nowrap>`,
+    `</xy nowrap nowrap>`,
+    `</xy class="a" nowrap>`,
+    `</xy class="a" nowrap nowrap>`,
+    `</xy class="a" nowrap nowrap nowrap>`,
+    `</xy nowrap class="a">`,
+    `</xy nowrap nowrap class="a">`,
+    `</xy nowrap nowrap nowrap class="a">`,
+
+    // mismatching quote pairs, recognised attr name
+    `</xy alt="'>`,
+    `</xy alt='">`,
+    `</xy alt="z'>`,
+    `</xy alt='z">`,
+
+    // mismatching quote pairs, unrecognised attr name
+    `</xy alt="'>`,
+    `</xy alt='">`,
+    `</xy alt="z'>`,
+    `</xy alt='z">`,
+  ].forEach((str) => {
+    mixer({
+      allowCustomTagNames: true,
+    }).forEach((opt) => {
+      t.true(
+        is(str, undefined, opt),
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = undefined`
+      );
+    });
+    mixer({
+      allowCustomTagNames: true,
+    }).forEach((opt) => {
+      t.true(
+        is(str, 0, opt),
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 0`
+      );
+    });
+
+    mixer({
+      skipOpeningBracket: false,
+    }).forEach((opt) => {
+      t.false(
+        is(str, 1, opt),
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
+      );
+    });
+    mixer({
+      allowCustomTagNames: false,
+    }).forEach((opt) => {
+      t.false(
+        is(str, 1, opt),
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
+      );
+    });
+    mixer({
+      allowCustomTagNames: true,
       skipOpeningBracket: true,
-    }),
-    "04.05"
-  );
+    }).forEach((opt) => {
+      t.true(
+        is(str, 1, opt),
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 1`
+      );
+    });
+
+    mixer({
+      skipOpeningBracket: false,
+    }).forEach((opt) => {
+      t.false(
+        is(str, 2, opt),
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 2`
+      );
+    });
+    mixer({
+      allowCustomTagNames: false,
+    }).forEach((opt) => {
+      t.false(
+        is(str, 2, opt),
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 2`
+      );
+    });
+    mixer({
+      allowCustomTagNames: true,
+      skipOpeningBracket: true,
+    }).forEach((opt) => {
+      t.true(
+        is(str, 2, opt),
+        `str=${str} - opt=${JSON.stringify(opt, null, 0)} - idx = 2`
+      );
+    });
+  });
   t.end();
 });
 
-tap.test(`05 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, (t) => {
-  const str = `<td nowrap>`;
-  t.ok(is(str), "05.01"); // <---- true because tag name was recognised
-  t.ok(is(str, 0), "05.02");
-  t.ok(
-    is(str, 0, {
-      allowCustomTagNames: true,
-    }),
-    "05.03"
-  );
-
-  t.false(is(str, 1), "05.04");
-  t.false(
-    is(str, 1, {
-      skipOpeningBracket: true,
-    }),
-    "05.05"
-  );
-  t.end();
-});
-
-tap.test(`06 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, (t) => {
-  const str = `<zzz nowrap>`;
-  t.false(is(str), "06.01"); // <---- false because tag name was not recognised and there were no attrs
-  t.false(is(str, 0), "06.02");
-  t.false(
-    is(str, 0, {
-      allowCustomTagNames: true,
-    }),
-    "06.03"
-  );
-
-  t.false(is(str, 1), "06.04");
-  t.false(
-    is(str, 1, {
-      skipOpeningBracket: true,
-    }),
-    "06.05"
-  );
-  t.end();
-});
-
-tap.test(`07 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, (t) => {
-  const str = `<td class="klm" nowrap>`;
-  t.ok(is(str), "07.01");
-  t.ok(is(str, 0), "07.02");
-  t.ok(
-    is(str, 0, {
-      allowCustomTagNames: true,
-    }),
-    "07.03"
-  );
-
-  t.false(is(str, 1), "07.04");
-  t.ok(
-    is(str, 1, {
-      skipOpeningBracket: true,
-    }),
-    "07.05"
-  );
-  t.end();
-});
-
-tap.test(`08 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, (t) => {
-  const str = `<td nowrap class="klm">`;
-  t.ok(is(str), "08.01");
-  t.ok(is(str, 0), "08.02");
-  t.ok(
-    is(str, 0, {
-      allowCustomTagNames: true,
-    }),
-    "08.03"
-  );
-
-  t.false(is(str, 1), "08.04");
-  t.ok(
-    is(str, 1, {
-      skipOpeningBracket: true,
-    }),
-    "08.05"
-  );
-  t.end();
-});
-
-tap.test(`09 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, (t) => {
-  const str = `<td nowrap nowrap nowrap nowrap nowrap nowrap nowrap nowrap nowrap nowrap class="klm"`;
-  t.ok(is(str), "09.01");
-  t.ok(is(str, 0), "09.02");
-  t.ok(
-    is(str, 0, {
-      allowCustomTagNames: true,
-    }),
-    "09.03"
-  );
-
-  t.false(is(str, 1), "09.04");
-  t.ok(
-    is(str, 1, {
-      skipOpeningBracket: true,
-    }),
-    "09.05"
-  );
-  t.end();
-});
-
-tap.test(`10 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - tag`, (t) => {
+tap.test(`05`, (t) => {
   const str = `<html dir="ltr">`;
-  t.false(is(str, 6), "10.01");
-  t.false(
-    is(str, 6, {
-      allowCustomTagNames: true,
-    }),
-    "10.02"
-  );
-  t.false(
-    is(str, 6, {
-      skipOpeningBracket: true,
-    }),
-    "10.03"
-  );
+  mixer().forEach((opt) => {
+    t.true(is(str, 0, opt), opt);
+  });
+  mixer().forEach((opt) => {
+    t.false(is(str, 6, opt), opt);
+  });
+  t.end();
+});
+
+tap.test(`06`, (t) => {
+  const str = `<img alt="click here >">`;
+  mixer().forEach((opt) => {
+    t.true(is(str, 0, opt), opt);
+  });
+  mixer().forEach((opt) => {
+    t.false(is(str, 5, opt), opt);
+  });
+
+  const str2 = str + str;
+  mixer().forEach((opt) => {
+    t.true(is(str2, str.length + 0, opt), opt);
+  });
+  mixer().forEach((opt) => {
+    t.false(is(str2, str.length + 5, opt), opt);
+  });
+
+  t.end();
+});
+
+tap.test(`07`, (t) => {
+  const str = `<img alt="< click here">`;
+  mixer().forEach((opt) => {
+    t.true(is(str, 0, opt), opt);
+  });
+  mixer().forEach((opt) => {
+    t.false(is(str, 5, opt), opt);
+  });
+  mixer().forEach((opt) => {
+    t.false(is(str, 10, opt), opt);
+  });
   t.end();
 });

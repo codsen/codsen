@@ -1,150 +1,8 @@
 import { matchRight, matchRightIncl } from "string-match-left-right";
-
-const BACKSLASH = "\u005C";
-const knownHtmlTags = [
-  "a",
-  "abbr",
-  "acronym",
-  "address",
-  "applet",
-  "area",
-  "article",
-  "aside",
-  "audio",
-  "b",
-  "base",
-  "basefont",
-  "bdi",
-  "bdo",
-  "big",
-  "blockquote",
-  "body",
-  "br",
-  "button",
-  "canvas",
-  "caption",
-  "center",
-  "cite",
-  "code",
-  "col",
-  "colgroup",
-  "data",
-  "datalist",
-  "dd",
-  "del",
-  "details",
-  "dfn",
-  "dialog",
-  "dir",
-  "div",
-  "dl",
-  "doctype", // matching is not case-sensitive and we skip ! and slashes
-  "dt",
-  "em",
-  "embed",
-  "fieldset",
-  "figcaption",
-  "figure",
-  "font",
-  "footer",
-  "form",
-  "frame",
-  "frameset",
-  "h1",
-  "h1 - h6",
-  "h2",
-  "h3",
-  "h4",
-  "h5",
-  "h6",
-  "head",
-  "header",
-  "hgroup",
-  "hr",
-  "html",
-  "i",
-  "iframe",
-  "img",
-  "input",
-  "ins",
-  "kbd",
-  "keygen",
-  "label",
-  "legend",
-  "li",
-  "link",
-  "main",
-  "map",
-  "mark",
-  "math",
-  "menu",
-  "menuitem",
-  "meta",
-  "meter",
-  "nav",
-  "noframes",
-  "noscript",
-  "object",
-  "ol",
-  "optgroup",
-  "option",
-  "output",
-  "p",
-  "param",
-  "picture",
-  "pre",
-  "progress",
-  "q",
-  "rb",
-  "rp",
-  "rt",
-  "rtc",
-  "ruby",
-  "s",
-  "samp",
-  "script",
-  "section",
-  "select",
-  "slot",
-  "small",
-  "source",
-  "span",
-  "strike",
-  "strong",
-  "style",
-  "sub",
-  "summary",
-  "sup",
-  "svg",
-  "table",
-  "tbody",
-  "td",
-  "template",
-  "textarea",
-  "tfoot",
-  "th",
-  "thead",
-  "time",
-  "title",
-  "tr",
-  "track",
-  "tt",
-  "u",
-  "ul",
-  "var",
-  "video",
-  "wbr",
-  "xml",
-];
-
-function isNotLetter(char) {
-  return (
-    char === undefined ||
-    (char.toUpperCase() === char.toLowerCase() &&
-      !`0123456789`.includes(char) &&
-      char !== "=")
-  );
-}
+import { left } from "string-left-right";
+import { BACKSLASH, knownHtmlTags, defaultOpts as defaults } from "./util";
+import { isNotLetter } from "./isNotLetter";
+import { extraRequirements } from "./extraRequirements";
 
 function isOpening(str, idx = 0, originalOpts) {
   // insurance
@@ -167,10 +25,6 @@ function isOpening(str, idx = 0, originalOpts) {
     );
   }
 
-  const defaults = {
-    allowCustomTagNames: false,
-    skipOpeningBracket: false,
-  };
   const opts = { ...defaults, ...originalOpts };
 
   // =======
@@ -184,15 +38,15 @@ function isOpening(str, idx = 0, originalOpts) {
   // r1. tag without attributes
   // for example <br>, <br/>
   const r1 = new RegExp(
-    `^${
-      opts.skipOpeningBracket ? "" : "<"
-    }${whitespaceChunk}\\w+${whitespaceChunk}>`,
+    `^<${
+      opts.skipOpeningBracket ? "?" : ""
+    }${whitespaceChunk}\\w+${whitespaceChunk}\\/?${whitespaceChunk}>`,
     "g"
   );
   // its custom-html tag version:
   const r5 = new RegExp(
-    `^${
-      opts.skipOpeningBracket ? "" : "<"
+    `^<${
+      opts.skipOpeningBracket ? "?" : ""
     }${whitespaceChunk}[${generalChar}]+[-${generalChar}]*${whitespaceChunk}>`,
     "g"
   );
@@ -206,28 +60,28 @@ function isOpening(str, idx = 0, originalOpts) {
   // =======
   // r2. tag with one healthy attribute (no closing slash or whatever follow afterwards is matched)
   const r2 = new RegExp(
-    `^${
-      opts.skipOpeningBracket ? "" : "<"
+    `^<${
+      opts.skipOpeningBracket ? "?" : ""
     }\\s*\\w+\\s+\\w+(?:-\\w+)?\\s*=\\s*['"\\w]`,
     "g"
   );
   // its custom-html tag version:
   const r6 = new RegExp(
-    `^${
-      opts.skipOpeningBracket ? "" : "<"
+    `^<${
+      opts.skipOpeningBracket ? "?" : ""
     }\\s*\\w+\\s+[${generalChar}]+[-${generalChar}]*(?:-\\w+)?\\s*=\\s*['"\\w]`
   );
 
   // =======
   // r3. closing/self-closing tags
   const r3 = new RegExp(
-    `^${opts.skipOpeningBracket ? "" : "<"}\\s*\\/?\\s*\\w+\\s*\\/?\\s*>`,
+    `^<${opts.skipOpeningBracket ? "?" : ""}\\s*\\/?\\s*\\w+\\s*\\/?\\s*>`,
     "g"
   );
   // its custom-html tag version:
   const r7 = new RegExp(
-    `^${
-      opts.skipOpeningBracket ? "" : "<"
+    `^<${
+      opts.skipOpeningBracket ? "?" : ""
     }\\s*\\/?\\s*[${generalChar}]+[-${generalChar}]*\\s*\\/?\\s*>`,
     "g"
   );
@@ -235,20 +89,29 @@ function isOpening(str, idx = 0, originalOpts) {
   // =======
   // r4. opening tag with attributes,
   const r4 = new RegExp(
-    `^${
-      opts.skipOpeningBracket ? "" : "<"
+    `^<${
+      opts.skipOpeningBracket ? "?" : ""
     }${whitespaceChunk}\\w+(?:\\s*\\w+)*\\s*\\w+=['"]`,
     "g"
   );
   // its custom-html tag version:
   const r8 = new RegExp(
-    `^${
-      opts.skipOpeningBracket ? "" : "<"
-    }${whitespaceChunk}[${generalChar}]+[-${generalChar}]*(?:\\s*\\w+)*\\s*\\w+=['"]`,
+    `^<${
+      opts.skipOpeningBracket ? "?" : ""
+    }${whitespaceChunk}[${generalChar}]+[-${generalChar}]*\\s+(?:\\s*\\w+)*\\s*\\w+=['"]`,
     "g"
   );
 
   // =======
+  // lesser requirements when opening bracket precedes index "idx"
+  const r9 = new RegExp(
+    `^<${
+      opts.skipOpeningBracket ? `?\\/?` : ""
+    }(${whitespaceChunk}[${generalChar}]+)+${whitespaceChunk}[\\\\/=>]`,
+    ""
+  );
+  // =======
+
   const whatToTest = idx ? str.slice(idx) : str;
   let passed = false;
   // if the result is still falsey, we match against the known HTML tag names list
@@ -259,27 +122,59 @@ function isOpening(str, idx = 0, originalOpts) {
   };
 
   console.log(
-    `262 ██ ${`\u001b[${33}m${`whatToTest`}\u001b[${39}m`} = "${whatToTest}"`
+    `125 ██ ${`\u001b[${33}m${`whatToTest`}\u001b[${39}m`} = "${whatToTest}"`
   );
 
-  if (opts.allowCustomTagNames) {
-    console.log(`266 inside opts.allowCustomTagNames clauses`);
-    if (r5.test(whatToTest)) {
-      console.log(`268 ${`\u001b[${31}m${`R5`}\u001b[${39}m`} passed`);
+  if (!passed && opts.allowCustomTagNames) {
+    console.log(`129 entering the custom tag name clauses`);
+    if (
+      ((opts.skipOpeningBracket &&
+        (str[idx - 1] === "<" ||
+          (str[idx - 1] === "/" && str[left(str, left(str, idx))] === "<"))) ||
+        (whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim())) &&
+      (r9.test(whatToTest) || /^<\w+$/.test(whatToTest))
+    ) {
+      console.log(`137 ${`\u001b[${31}m${`R9`}\u001b[${39}m`} passed`);
+      passed = true;
+    }
+
+    console.log(`141 inside opts.allowCustomTagNames clauses`);
+    if (r5.test(whatToTest) && extraRequirements(str, idx)) {
+      console.log(`143 ${`\u001b[${31}m${`R5`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r6.test(whatToTest)) {
-      console.log(`271 ${`\u001b[${31}m${`R6`}\u001b[${39}m`} passed`);
+      console.log(`146 ${`\u001b[${31}m${`R6`}\u001b[${39}m`} passed`);
       passed = true;
-    } else if (r7.test(whatToTest)) {
-      console.log(`274 ${`\u001b[${31}m${`R7`}\u001b[${39}m`} passed`);
+    } else if (r7.test(whatToTest) && extraRequirements(str, idx)) {
+      console.log(`149 ${`\u001b[${31}m${`R7`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r8.test(whatToTest)) {
-      console.log(`277 ${`\u001b[${31}m${`R8`}\u001b[${39}m`} passed`);
+      console.log(`152 ${`\u001b[${31}m${`R8`}\u001b[${39}m`} passed`);
       passed = true;
     }
   } else if (
+    !passed &&
     matchRightIncl(str, idx, knownHtmlTags, {
-      cb: isNotLetter,
+      cb: (char) => {
+        if (char === undefined) {
+          console.log(`160`);
+          if (
+            (str[idx] === "<" && str[idx + 1] && str[idx + 1].trim()) ||
+            str[idx - 1] === "<"
+          ) {
+            passed = true;
+            console.log(
+              `167 ${`\u001b[${31}m${`EOL after tag name`}\u001b[${39}m`}`
+            );
+          }
+          return true;
+        }
+        return (
+          char.toUpperCase() === char.toLowerCase() &&
+          !/\d/.test(char) &&
+          char !== "="
+        );
+      },
       i: true,
       trimCharsBeforeMatching: [
         "<",
@@ -293,24 +188,38 @@ function isOpening(str, idx = 0, originalOpts) {
       ],
     })
   ) {
-    console.log(`296 outside opts.allowCustomTagNames clauses`);
-    if (r1.test(whatToTest)) {
-      console.log(`298 ${`\u001b[${31}m${`R1`}\u001b[${39}m`} passed`);
+    console.log(`191 ${`\u001b[${32}m${`TAG NAME RECOGNISED`}\u001b[${39}m`}`);
+
+    if (
+      ((opts.skipOpeningBracket &&
+        (str[idx - 1] === "<" ||
+          (str[idx - 1] === "/" && str[left(str, left(str, idx))] === "<"))) ||
+        (whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim())) &&
+      r9.test(whatToTest)
+    ) {
+      console.log(`200 ${`\u001b[${31}m${`R9`}\u001b[${39}m`} passed`);
+      passed = true;
+    }
+
+    console.log(`204 ██ r2.test(whatToTest) = ${r2.test(whatToTest)}`);
+
+    if (r1.test(whatToTest) && extraRequirements(str, idx)) {
+      console.log(`207 ${`\u001b[${31}m${`R1`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r2.test(whatToTest)) {
-      console.log(`301 ${`\u001b[${31}m${`R2`}\u001b[${39}m`} passed`);
+      console.log(`210 ${`\u001b[${31}m${`R2`}\u001b[${39}m`} passed`);
       passed = true;
-    } else if (r3.test(whatToTest)) {
-      console.log(`304 ${`\u001b[${31}m${`R3`}\u001b[${39}m`} passed`);
+    } else if (r3.test(whatToTest) && extraRequirements(str, idx)) {
+      console.log(`213 ${`\u001b[${31}m${`R3`}\u001b[${39}m`} passed`);
       passed = true;
     } else if (r4.test(whatToTest)) {
-      console.log(`307 ${`\u001b[${31}m${`R4`}\u001b[${39}m`} passed`);
+      console.log(`216 ${`\u001b[${31}m${`R4`}\u001b[${39}m`} passed`);
       passed = true;
     }
   }
 
   console.log(
-    `313 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
+    `222 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
       passed,
       null,
       4
@@ -326,11 +235,11 @@ function isOpening(str, idx = 0, originalOpts) {
     matchRight(str, idx, knownHtmlTags, matchingOptions)
   ) {
     passed = true;
-    console.log(`329 SET passed = true`);
+    console.log(`238 SET passed = true`);
   }
 
   console.log(
-    `333 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
+    `242 ${`\u001b[${33}m${`passed`}\u001b[${39}m`} = ${JSON.stringify(
       passed,
       null,
       4
@@ -339,7 +248,7 @@ function isOpening(str, idx = 0, originalOpts) {
 
   //
   console.log(
-    `342 ${`\u001b[${33}m${`isNotLetter(str[${
+    `251 ${`\u001b[${33}m${`isNotLetter(str[${
       idx + 1
     }])`}\u001b[${39}m`} = ${JSON.stringify(
       isNotLetter(str[idx + 1]),
@@ -348,7 +257,7 @@ function isOpening(str, idx = 0, originalOpts) {
     )}`
   );
   const res = typeof str === "string" && idx < str.length && passed;
-  console.log(`351 return ${`\u001b[${36}m${res}\u001b[${39}m`}`);
+  console.log(`260 return ${`\u001b[${36}m${res}\u001b[${39}m`}`);
   return res;
 }
 

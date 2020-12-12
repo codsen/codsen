@@ -9,7 +9,7 @@ tap.test(
   (t) => {
     const s1 = `<abc de=fg hi="jkl">`;
     t.false(is(s1, 0), "01.01");
-    t.ok(
+    t.true(
       is(s1, 0, {
         allowCustomTagNames: true,
       }),

@@ -8,9 +8,9 @@ tap.test(
   `01 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - self-closing tag`,
   (t) => {
     const str = `<br/>`;
-    t.ok(is(str), "01.01");
-    t.ok(is(str, 0), "01.02");
-    t.ok(
+    t.true(is(str), "01.01");
+    t.true(is(str, 0), "01.02");
+    t.true(
       is(str, 0, {
         allowCustomTagNames: true,
       }),
@@ -18,7 +18,7 @@ tap.test(
     );
 
     t.false(is(str, 1), "01.04");
-    t.ok(
+    t.true(
       is(str, 1, {
         skipOpeningBracket: true,
       }),
@@ -32,9 +32,9 @@ tap.test(
   `02 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - self-closing tag`,
   (t) => {
     const str = `< br/>`;
-    t.ok(is(str), "02.01");
-    t.ok(is(str, 0), "02.02");
-    t.ok(
+    t.true(is(str), "02.01");
+    t.true(is(str, 0), "02.02");
+    t.true(
       is(str, 0, {
         allowCustomTagNames: true,
       }),
@@ -42,7 +42,7 @@ tap.test(
     );
 
     t.false(is(str, 2), "02.04");
-    t.ok(
+    t.true(
       is(str, 2, {
         skipOpeningBracket: true,
       }),
@@ -56,9 +56,9 @@ tap.test(
   `03 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - self-closing tag`,
   (t) => {
     const str = `<br />`;
-    t.ok(is(str), "03.01");
-    t.ok(is(str, 0), "03.02");
-    t.ok(
+    t.true(is(str), "03.01");
+    t.true(is(str, 0), "03.02");
+    t.true(
       is(str, 0, {
         allowCustomTagNames: true,
       }),
@@ -66,7 +66,7 @@ tap.test(
     );
 
     t.false(is(str, 1), "03.04");
-    t.ok(
+    t.true(
       is(str, 1, {
         skipOpeningBracket: true,
       }),
@@ -80,9 +80,9 @@ tap.test(
   `04 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - self-closing tag`,
   (t) => {
     const str = `<br/ >`;
-    t.ok(is(str), "04.01");
-    t.ok(is(str, 0), "04.02");
-    t.ok(
+    t.true(is(str), "04.01");
+    t.true(is(str, 0), "04.02");
+    t.true(
       is(str, 0, {
         allowCustomTagNames: true,
       }),
@@ -90,7 +90,7 @@ tap.test(
     );
 
     t.false(is(str, 1), "04.04");
-    t.ok(
+    t.true(
       is(str, 1, {
         skipOpeningBracket: true,
       }),
@@ -104,9 +104,9 @@ tap.test(
   `05 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - self-closing tag`,
   (t) => {
     const str = `<br / >`;
-    t.ok(is(str), "05.01");
-    t.ok(is(str, 0), "05.02");
-    t.ok(
+    t.true(is(str), "05.01");
+    t.true(is(str, 0), "05.02");
+    t.true(
       is(str, 0, {
         allowCustomTagNames: true,
       }),
@@ -114,7 +114,7 @@ tap.test(
     );
 
     t.false(is(str, 1), "05.04");
-    t.ok(
+    t.true(
       is(str, 1, {
         skipOpeningBracket: true,
       }),
@@ -128,9 +128,9 @@ tap.test(
   `06 - ${`\u001b[${32}m${`is()`}\u001b[${39}m`} - self-closing tag`,
   (t) => {
     const str = `< br / >`;
-    t.ok(is(str), "06.01");
-    t.ok(is(str, 0), "06.02");
-    t.ok(
+    t.true(is(str), "06.01");
+    t.true(is(str, 0), "06.02");
+    t.true(
       is(str, 0, {
         allowCustomTagNames: true,
       }),
@@ -138,7 +138,7 @@ tap.test(
     );
 
     t.false(is(str, 1), "06.04");
-    t.ok(
+    t.true(
       is(str, 1, {
         skipOpeningBracket: true,
       }),
