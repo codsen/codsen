@@ -3999,7 +3999,7 @@ tap.test(`50 - uri with query params`, (t) => {
   t.end();
 });
 
-tap.only(`51 - more uris with query params`, (t) => {
+tap.test(`51 - more uris with query params`, (t) => {
   const gathered = [];
   ct(`<img src="codsen.com/my-image.png?query=" />`, {
     tagCb: (obj) => {
