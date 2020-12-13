@@ -1248,6 +1248,17 @@ function tokenizer(str, originalOpts) {
     if (!doNothing && str[i]) {
       if (startsTag(str, i, token, layers, withinStyle)) {
         if (token.type && token.start !== null) {
+          if (token.type === "rule") {
+            if (property && property.propertyStarts) {
+              property.propertyEnds = i;
+              property.property = str.slice(property.propertyStarts, i);
+              if (!property.end) {
+                property.end = i;
+              }
+              pushProperty(property);
+              property = null;
+            }
+          }
           dumpCurrentToken(token, i);
           tokenReset();
         }
@@ -1584,13 +1595,14 @@ function tokenizer(str, originalOpts) {
       !property.valueEnds
     ) {
       if (
+        !str[i] ||
+        (str[i] && !str[i].trim()) ||
         (`;}`.includes(str[i]) &&
           (!attrib || !attrib.attribName || attrib.attribName !== "style")) ||
         (`;'"`.includes(str[i]) &&
           attrib &&
           attrib.attribName === "style" &&
-          ifQuoteThenAttrClosingQuote(i)) ||
-        (str[i] && !str[i].trim())
+          ifQuoteThenAttrClosingQuote(i))
       ) {
         property.valueEnds = lastNonWhitespaceCharAt + 1;
         property.value = str.slice(
@@ -1708,8 +1720,8 @@ function tokenizer(str, originalOpts) {
       property.propertyStarts &&
       property.propertyStarts < i &&
       !property.propertyEnds &&
-      str[i] &&
-      (!str[i].trim() ||
+      (!str[i] ||
+        !str[i].trim() ||
         (!attrNameRegexp.test(str[i]) &&
           (str[i] === ":" ||
             !right(str, i) ||
@@ -2153,11 +2165,13 @@ function tokenizer(str, originalOpts) {
       if (SOMEQUOTE.includes(str[i])) {
         if (
           !layers.some((layerObj) => layerObj.type === "esp") &&
-          attributeEnds(
-            str,
-            attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt,
-            i
-          )
+          (!str[i] ||
+            !str.includes(">", i) ||
+            attributeEnds(
+              str,
+              attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt,
+              i
+            ))
         ) {
           attrib.attribClosingQuoteAt = i;
           attrib.attribValueEndsAt = i;
@@ -2548,6 +2562,20 @@ function tokenizer(str, originalOpts) {
     if (!str[i] && token.start !== null) {
       token.end = i;
       token.value = str.slice(token.start, token.end);
+      if (attrib && attrib.attribName) {
+        if (!attrib.attribEnds) {
+          attrib.attribEnds = i;
+        }
+        token.attribs.push(clone(attrib));
+        attribReset();
+      }
+      if (property && property.propertyStarts) {
+        if (!property.end) {
+          property.end = i;
+        }
+        pushProperty(property);
+        property = null;
+      }
       pingTagCb(token);
     }
     if (str[i] && str[i].trim()) {

@@ -714,3 +714,192 @@ tap.test(`11 - semi instead of a colon, tight`, (t) => {
   );
   t.end();
 });
+
+tap.test(`12 - abrupty ended code`, (t) => {
+  const gathered = [];
+  ct(`<style>.a{color: red`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(
+    gathered[1],
+    {
+      type: "rule",
+      start: 7,
+      end: 20,
+      value: ".a{color: red",
+      left: 6,
+      nested: false,
+      openingCurlyAt: 9,
+      closingCurlyAt: null,
+      selectorsStart: 7,
+      selectorsEnd: 9,
+      selectors: [
+        {
+          value: ".a",
+          selectorStarts: 7,
+          selectorEnds: 9,
+        },
+      ],
+      properties: [
+        {
+          property: "color",
+          propertyStarts: 10,
+          propertyEnds: 15,
+          colon: 15,
+          value: "red",
+          valueStarts: 17,
+          valueEnds: 20,
+          semi: null,
+          start: 10,
+          end: 20,
+        },
+      ],
+    },
+    "12"
+  );
+  t.end();
+});
+
+tap.test(`13 - abrupty ended second css rule`, (t) => {
+  const gathered = [];
+  ct(`<style>.a{color:red; text-align`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(
+    gathered[1],
+    {
+      type: "rule",
+      start: 7,
+      end: 31,
+      value: ".a{color:red; text-align",
+      left: 6,
+      nested: false,
+      openingCurlyAt: 9,
+      closingCurlyAt: null,
+      selectorsStart: 7,
+      selectorsEnd: 9,
+      selectors: [
+        {
+          value: ".a",
+          selectorStarts: 7,
+          selectorEnds: 9,
+        },
+      ],
+      properties: [
+        {
+          property: "color",
+          propertyStarts: 10,
+          propertyEnds: 15,
+          colon: 15,
+          value: "red",
+          valueStarts: 16,
+          valueEnds: 19,
+          semi: 19,
+          start: 10,
+          end: 20,
+        },
+        {
+          type: "text",
+          start: 20,
+          end: 21,
+          value: " ",
+        },
+        {
+          property: "text-align",
+          propertyStarts: 21,
+          propertyEnds: 31,
+          colon: null,
+          value: null,
+          valueStarts: null,
+          valueEnds: null,
+          semi: null,
+          start: 21,
+          end: 31,
+        },
+      ],
+    },
+    "13"
+  );
+  t.end();
+});
+
+tap.test(`14 - abrupty ended second css rule`, (t) => {
+  const gathered = [];
+  ct(`<style>.a{color:red; text-align</style>`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+      },
+      {
+        type: "rule",
+        start: 7,
+        end: 31,
+        value: ".a{color:red; text-align",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: null,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            property: "color",
+            propertyStarts: 10,
+            propertyEnds: 15,
+            colon: 15,
+            value: "red",
+            valueStarts: 16,
+            valueEnds: 19,
+            semi: 19,
+            start: 10,
+            end: 20,
+          },
+          {
+            type: "text",
+            start: 20,
+            end: 21,
+            value: " ",
+          },
+          {
+            property: "text-align",
+            propertyStarts: 21,
+            propertyEnds: 31,
+            colon: null,
+            value: null,
+            valueStarts: null,
+            valueEnds: null,
+            semi: null,
+            start: 21,
+            end: 31,
+          },
+        ],
+      },
+      {
+        type: "tag",
+        start: 31,
+        end: 39,
+      },
+    ],
+    "14"
+  );
+  t.end();
+});

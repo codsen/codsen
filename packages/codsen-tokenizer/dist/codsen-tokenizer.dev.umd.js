@@ -4191,6 +4191,20 @@
           //
           //
           if (token.type && token.start !== null) {
+            if (token.type === "rule") {
+              if (property && property.propertyStarts) {
+                property.propertyEnds = _i;
+                property.property = str.slice(property.propertyStarts, _i);
+
+                if (!property.end) {
+                  property.end = _i;
+                }
+
+                pushProperty(property);
+                property = null;
+              }
+            }
+
             dumpCurrentToken(token, _i);
             tokenReset();
           } // add other HTML-specific keys onto the object
@@ -4646,11 +4660,12 @@
 
       if (!doNothing && // token.type === "rule" &&
       property && property.valueStarts && !property.valueEnds) {
-        if ( // normal head css styles:
+        if ( // either end was reached
+        !str[_i] || // or it's erroneous whitespace:
+        str[_i] && !str[_i].trim() || // normal head css styles:
         ";}".includes(str[_i]) && (!attrib || !attrib.attribName || attrib.attribName !== "style") || // inline css styles within html
         ";'\"".includes(str[_i]) && attrib && attrib.attribName === "style" && // it's real quote, not rogue double-wrapping around the value
-        ifQuoteThenAttrClosingQuote(_i) || // erroneous code:
-        str[_i] && !str[_i].trim()) {
+        ifQuoteThenAttrClosingQuote(_i)) {
           property.valueEnds = lastNonWhitespaceCharAt + 1;
           property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
 
@@ -4783,8 +4798,9 @@
 
 
       if (!doNothing && // token.type === "rule" &&
-      property && property.propertyStarts && property.propertyStarts < _i && !property.propertyEnds && // it's whitespace
-      str[_i] && (!str[_i].trim() || // or
+      property && property.propertyStarts && property.propertyStarts < _i && !property.propertyEnds && ( // end was reached
+      !str[_i] || // or it's whitespace
+      !str[_i].trim() || // or
       // it's not suitable
       !attrNameRegexp.test(str[_i]) && ( // and
       // it's a colon (clean code)
@@ -5315,7 +5331,7 @@
           // we're not inside some ESP tag - ESP layers are not pending:
           !layers.some(function (layerObj) {
             return layerObj.type === "esp";
-          }) && // and the current character passed the
+          }) && ( // and the current character passed the
           // attribute closing quote validation by
           // "is-html-attribute-closing"
           //
@@ -5324,7 +5340,12 @@
           // character for attribute closing (quotes typically,
           // but can be mismatching)...
           // see the package "is-html-attribute-closing" on npm:
-          isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, _i)) {
+          //
+          //
+          // either end was reached,
+          !str[_i] || // or there is no closing bracket further
+          !str.includes(">", _i) || // further checks confirm it looks like legit closing
+          isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, _i))) {
             attrib.attribClosingQuoteAt = _i;
             attrib.attribValueEndsAt = _i;
 
@@ -5804,7 +5825,33 @@
 
       if (!str[_i] && token.start !== null) {
         token.end = _i;
-        token.value = str.slice(token.start, token.end);
+        token.value = str.slice(token.start, token.end); // if there is unfinished "attrib" object, submit it
+        // as is, that's abruptly ended attribute
+
+        if (attrib && attrib.attribName) {
+          // push and wipe
+          // patch the attr ending if it's missing
+          if (!attrib.attribEnds) {
+            attrib.attribEnds = _i;
+          }
+
+          token.attribs.push(lodash_clonedeep(attrib));
+          attribReset();
+        } // if there is unfinished css property that has been
+        // recording, end it and push it as is. That's an
+        // abruptly ended css chunk.
+
+
+        if (property && property.propertyStarts) {
+          // patch property.end
+          if (!property.end) {
+            property.end = _i;
+          }
+
+          pushProperty(property);
+          property = null;
+        }
+
         pingTagCb(token);
       } //
       //

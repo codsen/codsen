@@ -89,7 +89,7 @@ tap.test(
 // 03. Various
 // -----------------------------------------------------------------------------
 
-tap.test(`04 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - xml`, (t) => {
+tap.test(`04 - xml`, (t) => {
   const gathered = [];
   ct(
     `a<!--[if]><z>
@@ -142,6 +142,144 @@ tap.test(`04 - ${`\u001b[${33}m${`various`}\u001b[${39}m`} - xml`, (t) => {
       },
     ],
     "04"
+  );
+  t.end();
+});
+
+tap.test(`05 - abrupty ended code`, (t) => {
+  const gathered = [];
+  ct(`<body id="l" style`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 18,
+        value: '<body id="l" style',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 5,
+        tagName: "body",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [
+          {
+            attribName: "id",
+            attribNameRecognised: true,
+            attribNameStartsAt: 6,
+            attribNameEndsAt: 8,
+            attribOpeningQuoteAt: 9,
+            attribClosingQuoteAt: 11,
+            attribValueRaw: "l",
+            attribValue: [
+              {
+                type: "text",
+                start: 10,
+                end: 11,
+                value: "l",
+              },
+            ],
+            attribValueStartsAt: 10,
+            attribValueEndsAt: 11,
+            attribStarts: 6,
+            attribEnds: 12,
+            attribLeft: 4,
+          },
+          {
+            attribName: "style",
+            attribNameRecognised: true,
+            attribNameStartsAt: 13,
+            attribNameEndsAt: 18,
+            attribOpeningQuoteAt: null,
+            attribClosingQuoteAt: null,
+            attribValueRaw: null,
+            attribValue: [],
+            attribValueStartsAt: null,
+            attribValueEndsAt: null,
+            attribStarts: 13,
+            attribEnds: 18,
+            attribLeft: 11,
+          },
+        ],
+      },
+    ],
+    "05"
+  );
+  t.end();
+});
+
+tap.test(`06 - abrupty ended code`, (t) => {
+  const gathered = [];
+  ct(`<body id="l" style="`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 20,
+        value: '<body id="l" style="',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 5,
+        tagName: "body",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [
+          {
+            attribName: "id",
+            attribNameRecognised: true,
+            attribNameStartsAt: 6,
+            attribNameEndsAt: 8,
+            attribOpeningQuoteAt: 9,
+            attribClosingQuoteAt: 11,
+            attribValueRaw: "l",
+            attribValue: [
+              {
+                type: "text",
+                start: 10,
+                end: 11,
+                value: "l",
+              },
+            ],
+            attribValueStartsAt: 10,
+            attribValueEndsAt: 11,
+            attribStarts: 6,
+            attribEnds: 12,
+            attribLeft: 4,
+          },
+          {
+            attribName: "style",
+            attribNameRecognised: true,
+            attribNameStartsAt: 13,
+            attribNameEndsAt: 18,
+            attribOpeningQuoteAt: 19,
+            attribClosingQuoteAt: null,
+            attribValueRaw: null,
+            attribValue: [],
+            attribValueStartsAt: null,
+            attribValueEndsAt: null,
+            attribStarts: 13,
+            attribEnds: 20,
+            attribLeft: 11,
+          },
+        ],
+      },
+    ],
+    "06"
   );
   t.end();
 });

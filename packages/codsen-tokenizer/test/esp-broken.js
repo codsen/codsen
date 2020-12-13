@@ -729,3 +729,17 @@ tap.todo(
     t.end();
   }
 );
+
+tap.todo(
+  `14 - ${`\u001b[${35}m${`broken ESP tags`}\u001b[${39}m`} - abrupt ending`,
+  (t) => {
+    const gathered = [];
+    ct(`<a>{% if something\n</a>`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.strictSame(gathered, [], "14");
+    t.end();
+  }
+);
