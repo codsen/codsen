@@ -2111,7 +2111,7 @@ function tokenizer(str, originalOpts) {
         !property)
     ) {
       if (
-        !str[i].trim() ||
+        (str[i] && !str[i].trim()) ||
         lastLayerIs("block")
       ) {
         if (attrib.attribName) {

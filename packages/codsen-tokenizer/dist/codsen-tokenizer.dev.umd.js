@@ -5265,7 +5265,7 @@
         //
         // <a style="  z color: red;  ">
         if ( // whitespace is automatically text token
-        !str[_i].trim() || // if comment layer has been started, it's also a text token, no matter even
+        str[_i] && !str[_i].trim() || // if comment layer has been started, it's also a text token, no matter even
         // if it's a property, because it's comment's contents.
         lastLayerIs("block")) {
           // depends where to push, is it inline css or head css rule

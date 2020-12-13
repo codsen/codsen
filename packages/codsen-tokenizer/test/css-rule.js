@@ -1232,3 +1232,54 @@ tap.test(`14 - parent selector ">" - 2`, (t) => {
   );
   t.end();
 });
+
+tap.test(`15 unfinished code`, (t) => {
+  const gathered = [];
+  ct(`<style>sup{`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: "<style>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
+        tagName: "style",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+      {
+        type: "rule",
+        start: 7,
+        end: 11,
+        value: "sup{",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 10,
+        closingCurlyAt: null,
+        selectorsStart: 7,
+        selectorsEnd: 10,
+        selectors: [
+          {
+            value: "sup",
+            selectorStarts: 7,
+            selectorEnds: 10,
+          },
+        ],
+        properties: [],
+      },
+    ],
+    "15"
+  );
+  t.end();
+});

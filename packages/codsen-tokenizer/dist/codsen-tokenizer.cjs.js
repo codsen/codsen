@@ -1410,7 +1410,7 @@ function tokenizer(str, originalOpts) {
     !token.closingCurlyAt &&
     !property) {
       if (
-      !str[_i].trim() ||
+      str[_i] && !str[_i].trim() ||
       lastLayerIs("block")) {
         if (attrib.attribName) {
           attrib.attribValue.push({
