@@ -1,7 +1,7 @@
 /**
  * is-html-tag-opening
  * Does an HTML tag start at given position?
- * Version: 1.9.0
+ * Version: 1.10.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-html-tag-opening/

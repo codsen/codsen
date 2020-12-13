@@ -1,7 +1,7 @@
 /**
  * emlint
  * Pluggable email template code linter
- * Version: 3.0.7
+ * Version: 3.0.8
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/emlint/
@@ -11361,17 +11361,25 @@
 
 	/**
 	 * is-html-tag-opening
-	 * Is given opening bracket a beginning of a tag?
-	 * Version: 1.9.0
+	 * Does an HTML tag start at given position?
+	 * Version: 1.10.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/is-html-tag-opening/
 	 */
+	const defaultOpts = {
+	  allowCustomTagNames: false,
+	  skipOpeningBracket: false
+	};
 	const BACKSLASH = "\u005C";
 	const knownHtmlTags = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h1 - h6", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "slot", "small", "source", "span", "strike", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xml"];
 
 	function isNotLetter(char) {
-	  return char === undefined || char.toUpperCase() === char.toLowerCase() && !`0123456789`.includes(char) && char !== "=";
+	  return char === undefined || char.toUpperCase() === char.toLowerCase() && !/\d/.test(char) && char !== "=";
+	}
+
+	function extraRequirements(str, idx) {
+	  return str[idx] === "<" || str[left(str, idx)] === "<";
 	}
 
 	function isOpening(str, idx = 0, originalOpts) {
@@ -11383,23 +11391,20 @@
 	    throw new Error(`is-html-tag-opening: [THROW_ID_02] the second input argument should have been a natural number string index but it was given as "${typeof idx}", value being ${JSON.stringify(idx, null, 4)}`);
 	  }
 
-	  const defaults = {
-	    allowCustomTagNames: false,
-	    skipOpeningBracket: false
-	  };
-	  const opts = { ...defaults,
+	  const opts = { ...defaultOpts,
 	    ...originalOpts
 	  };
 	  const whitespaceChunk = `[\\\\ \\t\\r\\n/]*`;
 	  const generalChar = `._a-z0-9\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF`;
-	  const r1 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}${whitespaceChunk}\\w+${whitespaceChunk}>`, "g");
-	  const r5 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}${whitespaceChunk}[${generalChar}]+[-${generalChar}]*${whitespaceChunk}>`, "g");
-	  const r2 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}\\s*\\w+\\s+\\w+(?:-\\w+)?\\s*=\\s*['"\\w]`, "g");
-	  const r6 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}\\s*\\w+\\s+[${generalChar}]+[-${generalChar}]*(?:-\\w+)?\\s*=\\s*['"\\w]`);
-	  const r3 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}\\s*\\/?\\s*\\w+\\s*\\/?\\s*>`, "g");
-	  const r7 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}\\s*\\/?\\s*[${generalChar}]+[-${generalChar}]*\\s*\\/?\\s*>`, "g");
-	  const r4 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}${whitespaceChunk}\\w+(?:\\s*\\w+)*\\s*\\w+=['"]`, "g");
-	  const r8 = new RegExp(`^${opts.skipOpeningBracket ? "" : "<"}${whitespaceChunk}[${generalChar}]+[-${generalChar}]*(?:\\s*\\w+)*\\s*\\w+=['"]`, "g");
+	  const r1 = new RegExp(`^<${opts.skipOpeningBracket ? "?" : ""}${whitespaceChunk}\\w+${whitespaceChunk}\\/?${whitespaceChunk}>`, "g");
+	  const r5 = new RegExp(`^<${opts.skipOpeningBracket ? "?" : ""}${whitespaceChunk}[${generalChar}]+[-${generalChar}]*${whitespaceChunk}>`, "g");
+	  const r2 = new RegExp(`^<${opts.skipOpeningBracket ? "?" : ""}\\s*\\w+\\s+\\w+(?:-\\w+)?\\s*=\\s*['"\\w]`, "g");
+	  const r6 = new RegExp(`^<${opts.skipOpeningBracket ? "?" : ""}\\s*\\w+\\s+[${generalChar}]+[-${generalChar}]*(?:-\\w+)?\\s*=\\s*['"\\w]`);
+	  const r3 = new RegExp(`^<${opts.skipOpeningBracket ? "?" : ""}\\s*\\/?\\s*\\w+\\s*\\/?\\s*>`, "g");
+	  const r7 = new RegExp(`^<${opts.skipOpeningBracket ? "?" : ""}\\s*\\/?\\s*[${generalChar}]+[-${generalChar}]*\\s*\\/?\\s*>`, "g");
+	  const r4 = new RegExp(`^<${opts.skipOpeningBracket ? "?" : ""}${whitespaceChunk}\\w+(?:\\s*\\w+)*\\s*\\w+=['"]`, "g");
+	  const r8 = new RegExp(`^<${opts.skipOpeningBracket ? "?" : ""}${whitespaceChunk}[${generalChar}]+[-${generalChar}]*\\s+(?:\\s*\\w+)*\\s*\\w+=['"]`, "g");
+	  const r9 = new RegExp(`^<${opts.skipOpeningBracket ? `?\\/?` : ""}(${whitespaceChunk}[${generalChar}]+)+${whitespaceChunk}[\\\\/=>]`, "");
 	  const whatToTest = idx ? str.slice(idx) : str;
 	  let passed = false;
 	  const matchingOptions = {
@@ -11408,26 +11413,44 @@
 	    trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
 	  };
 
-	  if (opts.allowCustomTagNames) {
-	    if (r5.test(whatToTest)) {
+	  if (!passed && opts.allowCustomTagNames) {
+	    if ((opts.skipOpeningBracket && (str[idx - 1] === "<" || str[idx - 1] === "/" && str[left(str, left(str, idx))] === "<") || whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim()) && (r9.test(whatToTest) || /^<\w+$/.test(whatToTest))) {
+	      passed = true;
+	    }
+
+	    if (r5.test(whatToTest) && extraRequirements(str, idx)) {
 	      passed = true;
 	    } else if (r6.test(whatToTest)) {
 	      passed = true;
-	    } else if (r7.test(whatToTest)) {
+	    } else if (r7.test(whatToTest) && extraRequirements(str, idx)) {
 	      passed = true;
 	    } else if (r8.test(whatToTest)) {
 	      passed = true;
 	    }
-	  } else if (matchRightIncl(str, idx, knownHtmlTags, {
-	    cb: isNotLetter,
+	  } else if (!passed && matchRightIncl(str, idx, knownHtmlTags, {
+	    cb: char => {
+	      if (char === undefined) {
+	        if (str[idx] === "<" && str[idx + 1] && str[idx + 1].trim() || str[idx - 1] === "<") {
+	          passed = true;
+	        }
+
+	        return true;
+	      }
+
+	      return char.toUpperCase() === char.toLowerCase() && !/\d/.test(char) && char !== "=";
+	    },
 	    i: true,
 	    trimCharsBeforeMatching: ["<", "/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
 	  })) {
-	    if (r1.test(whatToTest)) {
+	    if ((opts.skipOpeningBracket && (str[idx - 1] === "<" || str[idx - 1] === "/" && str[left(str, left(str, idx))] === "<") || whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim()) && r9.test(whatToTest)) {
+	      passed = true;
+	    }
+
+	    if (r1.test(whatToTest) && extraRequirements(str, idx)) {
 	      passed = true;
 	    } else if (r2.test(whatToTest)) {
 	      passed = true;
-	    } else if (r3.test(whatToTest)) {
+	    } else if (r3.test(whatToTest) && extraRequirements(str, idx)) {
 	      passed = true;
 	    } else if (r4.test(whatToTest)) {
 	      passed = true;
@@ -11445,7 +11468,7 @@
 	/**
 	 * codsen-tokenizer
 	 * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
-	 * Version: 4.4.0
+	 * Version: 4.5.0
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/codsen-tokenizer/
@@ -12120,7 +12143,7 @@
 
 	    if (!doNothing) {
 	      if (["tag", "rule", "at"].includes(token.type) && token.kind !== "cdata") {
-	        if ((SOMEQUOTE.includes(str[i]) || `()`.includes(str[i])) && !(SOMEQUOTE.includes(str[left(str, i)]) && str[left(str, i)] === str[right(str, i)]) && ifQuoteThenAttrClosingQuote(i)) {
+	        if (str[i] && (SOMEQUOTE.includes(str[i]) || `()`.includes(str[i])) && !(SOMEQUOTE.includes(str[left(str, i)]) && str[left(str, i)] === str[right(str, i)]) && ifQuoteThenAttrClosingQuote(i)) {
 	          if (lastLayerIs("simple") && layers[~-layers.length].value === flipEspTag(str[i])) {
 	            layers.pop();
 	          } else {
@@ -12214,6 +12237,20 @@
 	    if (!doNothing && str[i]) {
 	      if (startsTag(str, i, token, layers, withinStyle)) {
 	        if (token.type && token.start !== null) {
+	          if (token.type === "rule") {
+	            if (property && property.propertyStarts) {
+	              property.propertyEnds = i;
+	              property.property = str.slice(property.propertyStarts, i);
+
+	              if (!property.end) {
+	                property.end = i;
+	              }
+
+	              pushProperty(property);
+	              property = null;
+	            }
+	          }
+
 	          dumpCurrentToken(token, i);
 	          tokenReset();
 	        }
@@ -12229,11 +12266,11 @@
 	        let letterMet = false;
 
 	        for (let y = right(str, i); y < len; y++) {
-	          if (!letterMet && str[y].trim() && str[y].toUpperCase() !== str[y].toLowerCase()) {
+	          if (!letterMet && str[y] && str[y].trim() && str[y].toUpperCase() !== str[y].toLowerCase()) {
 	            letterMet = true;
 	          }
 
-	          if (letterMet && (!str[y].trim() || !/\w/.test(str[y]) && !badCharacters.includes(str[y]) || str[y] === "[")) {
+	          if (letterMet && str[y] && (!str[y].trim() || !/\w/.test(str[y]) && !badCharacters.includes(str[y]) || str[y] === "[")) {
 	            break;
 	          } else if (!badCharacters.includes(str[y])) {
 	            extractedTagName += str[y].trim().toLowerCase();
@@ -12451,13 +12488,13 @@
 	    }
 
 	    if (!doNothing && property && property.valueStarts && !property.valueEnds) {
-	      if (`;}`.includes(str[i]) && (!attrib || !attrib.attribName || attrib.attribName !== "style") || `;'"`.includes(str[i]) && attrib && attrib.attribName === "style" && ifQuoteThenAttrClosingQuote(i) || !str[i].trim()) {
+	      if (!str[i] || str[i] && !str[i].trim() || `;}`.includes(str[i]) && (!attrib || !attrib.attribName || attrib.attribName !== "style") || `;'"`.includes(str[i]) && attrib && attrib.attribName === "style" && ifQuoteThenAttrClosingQuote(i)) {
 	        property.valueEnds = lastNonWhitespaceCharAt + 1;
 	        property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
 
 	        if (str[i] === ";") {
 	          property.semi = i;
-	        } else if (!str[i].trim() && str[right(str, i)] === ";") {
+	        } else if (str[i] && !str[i].trim() && str[right(str, i)] === ";") {
 	          property.semi = right(str, i);
 	        }
 
@@ -12508,7 +12545,7 @@
 	    /* istanbul ignore else */
 
 
-	    if (!doNothing && property && property.colon && !property.valueStarts && str[i].trim()) {
+	    if (!doNothing && property && property.colon && !property.valueStarts && str[i] && str[i].trim()) {
 	      /* istanbul ignore else */
 	      if (`;}'"`.includes(str[i]) && ifQuoteThenAttrClosingQuote(i)) {
 	        if (str[i] === ";") {
@@ -12538,7 +12575,7 @@
 	      }
 	    }
 
-	    if (!doNothing && property && property.propertyStarts && property.propertyStarts < i && !property.propertyEnds && (!str[i].trim() || !attrNameRegexp.test(str[i]) && (str[i] === ":" || !right(str, i) || !`:/`.includes(str[right(str, i)]))) && (str[i] !== "/" || str[i - 1] !== "/")) {
+	    if (!doNothing && property && property.propertyStarts && property.propertyStarts < i && !property.propertyEnds && (!str[i] || !str[i].trim() || !attrNameRegexp.test(str[i]) && (str[i] === ":" || !right(str, i) || !`:/`.includes(str[right(str, i)]))) && (str[i] !== "/" || str[i - 1] !== "/")) {
 	      property.propertyEnds = i;
 	      property.property = str.slice(property.propertyStarts, i);
 
@@ -12546,7 +12583,7 @@
 	        property.end = i;
 	      }
 
-	      if (`};`.includes(str[i]) || !str[i].trim() && str[right(str, i)] !== ":") {
+	      if (`};`.includes(str[i]) || str[i] && !str[i].trim() && str[right(str, i)] !== ":") {
 	        if (str[i] === ";") {
 	          property.semi = i;
 	        }
@@ -12573,7 +12610,7 @@
 	      initProperty(i);
 	    }
 
-	    if (!doNothing && attrib && attrib.attribName === "style" && attrib.attribOpeningQuoteAt && !attrib.attribClosingQuoteAt && !property && str[i].trim() && !`'";`.includes(str[i]) && !lastLayerIs("block")) {
+	    if (!doNothing && attrib && attrib.attribName === "style" && attrib.attribOpeningQuoteAt && !attrib.attribClosingQuoteAt && !property && str[i] && str[i].trim() && !`'";`.includes(str[i]) && !lastLayerIs("block")) {
 	      if (str[i] === "/" && (str[i + 1] === "*" || !str[i + 1].trim() && str[right(str, i)] === "*")) {
 	        attribPush({
 	          type: "comment",
@@ -12796,7 +12833,7 @@
 	    }
 
 	    if (!doNothing && attrib && attrib.attribValueStartsAt && !attrib.attribValueEndsAt && !property && i >= attrib.attribValueStartsAt && Array.isArray(attrib.attribValue) && (!attrib.attribValue.length || attrib.attribValue[~-attrib.attribValue.length].end && attrib.attribValue[~-attrib.attribValue.length].end <= i) || !doNothing && token.type === "rule" && token.openingCurlyAt && !token.closingCurlyAt && !property) {
-	      if (!str[i].trim() || lastLayerIs("block")) {
+	      if (str[i] && !str[i].trim() || lastLayerIs("block")) {
 	        if (attrib.attribName) {
 	          attrib.attribValue.push({
 	            type: "text",
@@ -12817,7 +12854,7 @@
 
 	    if (!doNothing && token.type === "tag" && attrib.attribValueStartsAt && i >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
 	      if (SOMEQUOTE.includes(str[i])) {
-	        if (!layers.some(layerObj => layerObj.type === "esp") && isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, i)) {
+	        if (!layers.some(layerObj => layerObj.type === "esp") && (!str[i] || !str.includes(">", i) || isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, i))) {
 	          attrib.attribClosingQuoteAt = i;
 	          attrib.attribValueEndsAt = i;
 
@@ -13077,6 +13114,25 @@
 	    if (!str[i] && token.start !== null) {
 	      token.end = i;
 	      token.value = str.slice(token.start, token.end);
+
+	      if (attrib && attrib.attribName) {
+	        if (!attrib.attribEnds) {
+	          attrib.attribEnds = i;
+	        }
+
+	        token.attribs.push(lodash_clonedeep(attrib));
+	        attribReset();
+	      }
+
+	      if (property && property.propertyStarts) {
+	        if (!property.end) {
+	          property.end = i;
+	        }
+
+	        pushProperty(property);
+	        property = null;
+	      }
+
 	      pingTagCb(token);
 	    }
 
@@ -13432,7 +13488,7 @@
 	/**
 	 * codsen-parser
 	 * Parser aiming at broken or mixed code, especially HTML & CSS
-	 * Version: 0.8.4
+	 * Version: 0.8.5
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/codsen-parser/
@@ -45228,7 +45284,7 @@
 
 	}
 
-	var version = "3.0.7";
+	var version = "3.0.8";
 
 	exports.Linter = Linter;
 	exports.version = version;

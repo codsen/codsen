@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.10.0](https://git.sr.ht/~royston/codsen/compare/is-html-tag-opening@1.9.0...is-html-tag-opening@1.10.0) (2020-12-13)
+
+
+### Features
+
+* improve the broken tag recognition, set up more exhaustive tests ([811a166](https://git.sr.ht/~royston/codsen/commits/811a16616851db6b379966de6da7c99c5b36f195)), closes [#1](https://git.sr.ht/~royston/codsen/issues/1)
+
+
+
+
+
 ## 1.9.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

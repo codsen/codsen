@@ -1,6 +1,6 @@
 {
   "name": "emlint",
-  "version": "3.0.7",
+  "version": "3.0.8",
   "description": "Pluggable email template code linter",
   "keywords": [
     "analysis",
@@ -115,7 +115,7 @@
   "dependencies": {
     "ast-monkey-traverse": "^1.13.1",
     "ast-monkey-util": "^1.2.0",
-    "codsen-parser": "^0.8.4",
+    "codsen-parser": "^0.8.5",
     "define-lazy-prop": "^2.0.0",
     "globby": "^11.0.1",
     "he": "^1.2.0",
