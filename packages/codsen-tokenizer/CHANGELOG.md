@@ -3,22 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [4.5.0](https://git.sr.ht/~royston/codsen/compare/codsen-tokenizer@4.4.0...codsen-tokenizer@4.5.0) (2020-12-13)
-
+## 4.5.0 (2020-12-13)
 
 ### Bug Fixes
 
-* add checks and prevent throwing in certain unfinished code cases ([aa63861](https://git.sr.ht/~royston/codsen/commits/aa6386199014d507725dfc64320ee09ddd708a1e))
-* fix a case of unfinished css style blocks ([755ce98](https://git.sr.ht/~royston/codsen/commits/755ce982f0beee5602809840a9a07d093f74c0e3)), closes [#2](https://git.sr.ht/~royston/codsen/issues/2)
-
+- add checks and prevent throwing in certain unfinished code cases ([aa63861](https://git.sr.ht/~royston/codsen/commit/aa6386199014d507725dfc64320ee09ddd708a1e))
+- fix a case of unfinished css style blocks ([755ce98](https://git.sr.ht/~royston/codsen/commit/755ce982f0beee5602809840a9a07d093f74c0e3)), closes [#2](https://git.sr.ht/~royston/codsen/issues/2)
 
 ### Features
 
-* improvements to abruptly ended chunk recognition ([1728753](https://git.sr.ht/~royston/codsen/commits/17287533a413206d212517912bf60373a58eb83a))
-
-
-
-
+- improvements to abruptly ended chunk recognition ([1728753](https://git.sr.ht/~royston/codsen/commit/17287533a413206d212517912bf60373a58eb83a))
 
 ## 4.4.0 (2020-12-11)
 

@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.0.7](https://git.sr.ht/~royston/codsen/compare/html-table-patcher@3.0.6...html-table-patcher@3.0.7) (2020-12-13)
-
-**Note:** Version bump only for package html-table-patcher
-
-
-
-
-
 ## 3.0.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.
