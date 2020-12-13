@@ -133,7 +133,7 @@
         "string-find-heads-tails": 1,
         "string-find-malformed": 2,
         "string-fix-broken-named-entities": 2,
-        "string-left-right": 16,
+        "string-left-right": 17,
         "string-match-left-right": 10,
         "string-process-comma-separated": 2,
         "string-range-expander": 3,
@@ -200,7 +200,7 @@
         "string-find-heads-tails": 1,
         "tap": 122,
         "tempy": 13,
-        "test-mixer": 3,
+        "test-mixer": 4,
         "title": 1,
         "tsd": 122,
         "vinyl-string": 1
@@ -242,7 +242,7 @@
             "ranges-apply": 17
         },
         {
-            "string-left-right": 16
+            "string-left-right": 17
         },
         {
             "ranges-push": 12

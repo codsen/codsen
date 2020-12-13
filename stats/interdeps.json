@@ -158,7 +158,7 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 74924,
+        "size": 75943,
         "imports": [
             "html-all-known-attributes",
             "is-char-suitable-for-html-attr-name",
@@ -376,8 +376,9 @@
     },
     {
         "name": "is-html-tag-opening",
-        "size": 5347,
+        "size": 6841,
         "imports": [
+            "string-left-right",
             "string-match-left-right"
         ]
     },
