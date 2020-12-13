@@ -3988,7 +3988,7 @@
 
       if (!doNothing) {
         if (["tag", "rule", "at"].includes(token.type) && token.kind !== "cdata") {
-          if ((SOMEQUOTE.includes(str[_i]) || "()".includes(str[_i])) && !( // below, we have insurance against single quotes, wrapped with quotes:
+          if (str[_i] && (SOMEQUOTE.includes(str[_i]) || "()".includes(str[_i])) && !( // below, we have insurance against single quotes, wrapped with quotes:
           // "'" or '"' - templating languages might put single quote as a sttring
           // character, not meaning wrapped-something.
           SOMEQUOTE.includes(str[left(str, _i)]) && str[left(str, _i)] === str[right(str, _i)]) && // protection against double-wrapped values, like
@@ -4209,13 +4209,13 @@
           var letterMet = false;
 
           for (var y = right(str, _i); y < len; y++) {
-            if (!letterMet && str[y].trim() && str[y].toUpperCase() !== str[y].toLowerCase()) {
+            if (!letterMet && str[y] && str[y].trim() && str[y].toUpperCase() !== str[y].toLowerCase()) {
               letterMet = true;
             }
 
             if ( // at least one letter has been met, to cater
             // <? xml ...
-            letterMet && ( // it's whitespace
+            letterMet && str[y] && ( // it's whitespace
             !str[y].trim() || // or symbol which definitely does not belong to a tag,
             // considering we want to catch some rogue characters to
             // validate and flag them up later
@@ -4650,14 +4650,14 @@
         ";}".includes(str[_i]) && (!attrib || !attrib.attribName || attrib.attribName !== "style") || // inline css styles within html
         ";'\"".includes(str[_i]) && attrib && attrib.attribName === "style" && // it's real quote, not rogue double-wrapping around the value
         ifQuoteThenAttrClosingQuote(_i) || // erroneous code:
-        !str[_i].trim()) {
+        str[_i] && !str[_i].trim()) {
           property.valueEnds = lastNonWhitespaceCharAt + 1;
           property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
 
           if (str[_i] === ";") {
             property.semi = _i;
           } else if ( // it's whitespace
-          !str[_i].trim() && // semicolon follows
+          str[_i] && !str[_i].trim() && // semicolon follows
           str[right(str, _i)] === ";") {
             property.semi = right(str, _i);
           }
@@ -4742,7 +4742,7 @@
 
 
       if (!doNothing && // token.type === "rule" &&
-      property && property.colon && !property.valueStarts && str[_i].trim()) {
+      property && property.colon && !property.valueStarts && str[_i] && str[_i].trim()) {
         /* istanbul ignore else */
         if ( // stopper character met:
         ";}'\"".includes(str[_i]) && // either it's real closing quote or not a quote
@@ -4783,8 +4783,8 @@
 
 
       if (!doNothing && // token.type === "rule" &&
-      property && property.propertyStarts && property.propertyStarts < _i && !property.propertyEnds && ( // it's whitespace
-      !str[_i].trim() || // or
+      property && property.propertyStarts && property.propertyStarts < _i && !property.propertyEnds && // it's whitespace
+      str[_i] && (!str[_i].trim() || // or
       // it's not suitable
       !attrNameRegexp.test(str[_i]) && ( // and
       // it's a colon (clean code)
@@ -4821,7 +4821,7 @@
 
 
         if ("};".includes(str[_i]) || // it's whitespace and it's not leading up to a colon
-        !str[_i].trim() && str[right(str, _i)] !== ":") {
+        str[_i] && !str[_i].trim() && str[right(str, _i)] !== ":") {
           if (str[_i] === ";") {
             property.semi = _i;
           } // precaution against broken code:
@@ -4881,7 +4881,7 @@
       attrib.attribOpeningQuoteAt && !attrib.attribClosingQuoteAt && // but property hasn't been initiated
       !property && // yet the character is suitable:
       // it's not a whitespace
-      str[_i].trim() && // it's not some separator
+      str[_i] && str[_i].trim() && // it's not some separator
       !"'\";".includes(str[_i]) && // it's not inside CSS block comment
       !lastLayerIs("block")) {
         // It's either css comment or a css property.

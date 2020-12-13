@@ -746,7 +746,7 @@ function tokenizer(str, originalOpts) {
     }
     if (!doNothing) {
       if (["tag", "rule", "at"].includes(token.type) && token.kind !== "cdata") {
-        if ((SOMEQUOTE.includes(str[_i]) || "()".includes(str[_i])) && !(
+        if (str[_i] && (SOMEQUOTE.includes(str[_i]) || "()".includes(str[_i])) && !(
         SOMEQUOTE.includes(str[stringLeftRight.left(str, _i)]) && str[stringLeftRight.left(str, _i)] === str[stringLeftRight.right(str, _i)]) &&
         ifQuoteThenAttrClosingQuote(_i)
         ) {
@@ -848,11 +848,11 @@ function tokenizer(str, originalOpts) {
         var extractedTagName = "";
         var letterMet = false;
         for (var y = stringLeftRight.right(str, _i); y < len; y++) {
-          if (!letterMet && str[y].trim() && str[y].toUpperCase() !== str[y].toLowerCase()) {
+          if (!letterMet && str[y] && str[y].trim() && str[y].toUpperCase() !== str[y].toLowerCase()) {
             letterMet = true;
           }
           if (
-          letterMet && (
+          letterMet && str[y] && (
           !str[y].trim() ||
           !/\w/.test(str[y]) && !badCharacters.includes(str[y]) || str[y] === "[")
           ) {
@@ -1071,13 +1071,13 @@ function tokenizer(str, originalOpts) {
       ";}".includes(str[_i]) && (!attrib || !attrib.attribName || attrib.attribName !== "style") ||
       ";'\"".includes(str[_i]) && attrib && attrib.attribName === "style" &&
       ifQuoteThenAttrClosingQuote(_i) ||
-      !str[_i].trim()) {
+      str[_i] && !str[_i].trim()) {
         property.valueEnds = lastNonWhitespaceCharAt + 1;
         property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
         if (str[_i] === ";") {
           property.semi = _i;
         } else if (
-        !str[_i].trim() &&
+        str[_i] && !str[_i].trim() &&
         str[stringLeftRight.right(str, _i)] === ";") {
           property.semi = stringLeftRight.right(str, _i);
         }
@@ -1124,7 +1124,7 @@ function tokenizer(str, originalOpts) {
     }
     /* istanbul ignore else */
     if (!doNothing &&
-    property && property.colon && !property.valueStarts && str[_i].trim()) {
+    property && property.colon && !property.valueStarts && str[_i] && str[_i].trim()) {
       /* istanbul ignore else */
       if (
       ";}'\"".includes(str[_i]) &&
@@ -1152,8 +1152,8 @@ function tokenizer(str, originalOpts) {
       }
     }
     if (!doNothing &&
-    property && property.propertyStarts && property.propertyStarts < _i && !property.propertyEnds && (
-    !str[_i].trim() ||
+    property && property.propertyStarts && property.propertyStarts < _i && !property.propertyEnds &&
+    str[_i] && (!str[_i].trim() ||
     !attrNameRegexp.test(str[_i]) && (
     str[_i] === ":" ||
     !stringLeftRight.right(str, _i) || !":/".includes(str[stringLeftRight.right(str, _i)]))) && (
@@ -1164,7 +1164,7 @@ function tokenizer(str, originalOpts) {
         property.end = _i;
       }
       if ("};".includes(str[_i]) ||
-      !str[_i].trim() && str[stringLeftRight.right(str, _i)] !== ":") {
+      str[_i] && !str[_i].trim() && str[stringLeftRight.right(str, _i)] !== ":") {
         if (str[_i] === ";") {
           property.semi = _i;
         }
@@ -1192,7 +1192,7 @@ function tokenizer(str, originalOpts) {
     attrib && attrib.attribName === "style" &&
     attrib.attribOpeningQuoteAt && !attrib.attribClosingQuoteAt &&
     !property &&
-    str[_i].trim() &&
+    str[_i] && str[_i].trim() &&
     !"'\";".includes(str[_i]) &&
     !lastLayerIs("block")) {
       if (str[_i] === "/" && (

@@ -1097,6 +1097,7 @@ function tokenizer(str, originalOpts) {
         token.kind !== "cdata"
       ) {
         if (
+          str[i] &&
           (SOMEQUOTE.includes(str[i]) || `()`.includes(str[i])) &&
           !(
             (
@@ -1260,6 +1261,7 @@ function tokenizer(str, originalOpts) {
         for (let y = right(str, i); y < len; y++) {
           if (
             !letterMet &&
+            str[y] &&
             str[y].trim() &&
             str[y].toUpperCase() !== str[y].toLowerCase()
           ) {
@@ -1267,6 +1269,7 @@ function tokenizer(str, originalOpts) {
           }
           if (
             letterMet &&
+            str[y] &&
             (!str[y].trim() ||
               (!/\w/.test(str[y]) && !badCharacters.includes(str[y])) ||
               str[y] === "[")
@@ -1587,7 +1590,7 @@ function tokenizer(str, originalOpts) {
           attrib &&
           attrib.attribName === "style" &&
           ifQuoteThenAttrClosingQuote(i)) ||
-        !str[i].trim()
+        (str[i] && !str[i].trim())
       ) {
         property.valueEnds = lastNonWhitespaceCharAt + 1;
         property.value = str.slice(
@@ -1597,6 +1600,7 @@ function tokenizer(str, originalOpts) {
         if (str[i] === ";") {
           property.semi = i;
         } else if (
+          str[i] &&
           !str[i].trim() &&
           str[right(str, i)] === ";"
         ) {
@@ -1660,6 +1664,7 @@ function tokenizer(str, originalOpts) {
       property &&
       property.colon &&
       !property.valueStarts &&
+      str[i] &&
       str[i].trim()
     ) {
       /* istanbul ignore else */
@@ -1703,6 +1708,7 @@ function tokenizer(str, originalOpts) {
       property.propertyStarts &&
       property.propertyStarts < i &&
       !property.propertyEnds &&
+      str[i] &&
       (!str[i].trim() ||
         (!attrNameRegexp.test(str[i]) &&
           (str[i] === ":" ||
@@ -1717,7 +1723,7 @@ function tokenizer(str, originalOpts) {
       }
       if (
         `};`.includes(str[i]) ||
-        (!str[i].trim() && str[right(str, i)] !== ":")
+        (str[i] && !str[i].trim() && str[right(str, i)] !== ":")
       ) {
         if (str[i] === ";") {
           property.semi = i;
@@ -1768,6 +1774,7 @@ function tokenizer(str, originalOpts) {
       attrib.attribOpeningQuoteAt &&
       !attrib.attribClosingQuoteAt &&
       !property &&
+      str[i] &&
       str[i].trim() &&
       !`'";`.includes(str[i]) &&
       !lastLayerIs("block")
