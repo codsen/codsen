@@ -225,13 +225,13 @@ function isOpening(str, idx = 0, originalOpts) {
   const r4 = new RegExp(
     `^<${
       opts.skipOpeningBracket ? "?" : ""
-    }${whitespaceChunk}\\w+(?:\\s*\\w+)*\\s*\\w+=['"]`,
+    }${whitespaceChunk}\\w+(?:\\s*\\w+)?\\s*\\w+=['"]`,
     "g"
   );
   const r8 = new RegExp(
     `^<${
       opts.skipOpeningBracket ? "?" : ""
-    }${whitespaceChunk}[${generalChar}]+[-${generalChar}]*\\s+(?:\\s*\\w+)*\\s*\\w+=['"]`,
+    }${whitespaceChunk}[${generalChar}]+[-${generalChar}]*\\s+(?:\\s*\\w+)?\\s*\\w+=['"]`,
     "g"
   );
   const r9 = new RegExp(
@@ -241,13 +241,14 @@ function isOpening(str, idx = 0, originalOpts) {
     ""
   );
   const whatToTest = idx ? str.slice(idx) : str;
+  let qualified = false;
   let passed = false;
   const matchingOptions = {
     cb: isNotLetter,
     i: true,
     trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"],
   };
-  if (!passed && opts.allowCustomTagNames) {
+  if (opts.allowCustomTagNames) {
     if (
       ((opts.skipOpeningBracket &&
         (str[idx - 1] === "<" ||
@@ -256,8 +257,7 @@ function isOpening(str, idx = 0, originalOpts) {
       (r9.test(whatToTest) || /^<\w+$/.test(whatToTest))
     ) {
       passed = true;
-    }
-    if (r5.test(whatToTest) && extraRequirements(str, idx)) {
+    } else if (r5.test(whatToTest) && extraRequirements(str, idx)) {
       passed = true;
     } else if (r6.test(whatToTest)) {
       passed = true;
@@ -266,38 +266,7 @@ function isOpening(str, idx = 0, originalOpts) {
     } else if (r8.test(whatToTest)) {
       passed = true;
     }
-  } else if (
-    !passed &&
-    matchRightIncl(str, idx, knownHtmlTags, {
-      cb: (char) => {
-        if (char === undefined) {
-          if (
-            (str[idx] === "<" && str[idx + 1] && str[idx + 1].trim()) ||
-            str[idx - 1] === "<"
-          ) {
-            passed = true;
-          }
-          return true;
-        }
-        return (
-          char.toUpperCase() === char.toLowerCase() &&
-          !/\d/.test(char) &&
-          char !== "="
-        );
-      },
-      i: true,
-      trimCharsBeforeMatching: [
-        "<",
-        "/",
-        BACKSLASH,
-        "!",
-        " ",
-        "\t",
-        "\n",
-        "\r",
-      ],
-    })
-  ) {
+  } else {
     if (
       ((opts.skipOpeningBracket &&
         (str[idx - 1] === "<" ||
@@ -305,21 +274,53 @@ function isOpening(str, idx = 0, originalOpts) {
         (whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim())) &&
       r9.test(whatToTest)
     ) {
-      passed = true;
-    }
-    if (r1.test(whatToTest) && extraRequirements(str, idx)) {
-      passed = true;
+      qualified = true;
+    } else if (r1.test(whatToTest) && extraRequirements(str, idx)) {
+      qualified = true;
     } else if (r2.test(whatToTest)) {
-      passed = true;
+      qualified = true;
     } else if (r3.test(whatToTest) && extraRequirements(str, idx)) {
-      passed = true;
+      qualified = true;
     } else if (r4.test(whatToTest)) {
+      qualified = true;
+    }
+    if (
+      qualified &&
+      matchRightIncl(str, idx, knownHtmlTags, {
+        cb: (char) => {
+          if (char === undefined) {
+            if (
+              (str[idx] === "<" && str[idx + 1] && str[idx + 1].trim()) ||
+              str[idx - 1] === "<"
+            ) {
+              passed = true;
+            }
+            return true;
+          }
+          return (
+            char.toUpperCase() === char.toLowerCase() &&
+            !/\d/.test(char) &&
+            char !== "="
+          );
+        },
+        i: true,
+        trimCharsBeforeMatching: [
+          "<",
+          "/",
+          BACKSLASH,
+          "!",
+          " ",
+          "\t",
+          "\n",
+          "\r",
+        ],
+      })
+    ) {
       passed = true;
     }
   }
   if (
     !passed &&
-    !opts.skipOpeningBracket &&
     str[idx] === "<" &&
     str[idx + 1] &&
     str[idx + 1].trim() &&

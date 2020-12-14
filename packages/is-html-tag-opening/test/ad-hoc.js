@@ -314,3 +314,15 @@ tap.test(
     t.end();
   }
 );
+
+tap.test(`17 - perf test`, (t) => {
+  t.false(
+    is("<div>Script says hello world and sky and sea</div>", 5, {
+      allowCustomTagNames: false,
+      skipOpeningBracket: true,
+    }),
+    "17"
+  );
+
+  t.end();
+});

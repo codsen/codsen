@@ -2337,7 +2337,7 @@
     var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
     var originalOpts = arguments.length > 2 ? arguments[2] : undefined;
 
-    // insurance
+    // -----------------------------------------------------------------------------
     if (typeof str !== "string") {
       throw new Error("is-html-tag-opening: [THROW_ID_01] the first input argument should have been a string but it was given as \"".concat(_typeof(str), "\", value being ").concat(JSON.stringify(str, null, 4)));
     }
@@ -2346,7 +2346,7 @@
       throw new Error("is-html-tag-opening: [THROW_ID_02] the second input argument should have been a natural number string index but it was given as \"".concat(_typeof(idx), "\", value being ").concat(JSON.stringify(idx, null, 4)));
     }
 
-    var opts = _objectSpread2(_objectSpread2({}, defaultOpts), originalOpts); // =======
+    var opts = _objectSpread2(_objectSpread2({}, defaultOpts), originalOpts); // -----------------------------------------------------------------------------
 
 
     var whitespaceChunk = "[\\\\ \\t\\r\\n/]*"; // generalChar does not include the dash, -
@@ -2376,28 +2376,27 @@
     var r7 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?" : "", "\\s*\\/?\\s*[").concat(generalChar, "]+[-").concat(generalChar, "]*\\s*\\/?\\s*>"), "g"); // =======
     // r4. opening tag with attributes,
 
-    var r4 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?" : "").concat(whitespaceChunk, "\\w+(?:\\s*\\w+)*\\s*\\w+=['\"]"), "g"); // its custom-html tag version:
+    var r4 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?" : "").concat(whitespaceChunk, "\\w+(?:\\s*\\w+)?\\s*\\w+=['\"]"), "g"); // its custom-html tag version:
 
-    var r8 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?" : "").concat(whitespaceChunk, "[").concat(generalChar, "]+[-").concat(generalChar, "]*\\s+(?:\\s*\\w+)*\\s*\\w+=['\"]"), "g"); // =======
+    var r8 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?" : "").concat(whitespaceChunk, "[").concat(generalChar, "]+[-").concat(generalChar, "]*\\s+(?:\\s*\\w+)?\\s*\\w+=['\"]"), "g"); // =======
     // lesser requirements when opening bracket precedes index "idx"
 
     var r9 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?\\/?" : "", "(").concat(whitespaceChunk, "[").concat(generalChar, "]+)+").concat(whitespaceChunk, "[\\\\/=>]"), ""); // =======
 
     var whatToTest = idx ? str.slice(idx) : str;
+    var qualified = false;
     var passed = false; // if the result is still falsey, we match against the known HTML tag names list
 
     var matchingOptions = {
       cb: isNotLetter,
       i: true,
       trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
-    };
+    }; // -----------------------------------------------------------------------------
 
-    if (!passed && opts.allowCustomTagNames) {
+    if (opts.allowCustomTagNames) {
       if ((opts.skipOpeningBracket && (str[idx - 1] === "<" || str[idx - 1] === "/" && str[left(str, left(str, idx))] === "<") || whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim()) && (r9.test(whatToTest) || /^<\w+$/.test(whatToTest))) {
         passed = true;
-      }
-
-      if (r5.test(whatToTest) && extraRequirements(str, idx)) {
+      } else if (r5.test(whatToTest) && extraRequirements(str, idx)) {
         passed = true;
       } else if (r6.test(whatToTest)) {
         passed = true;
@@ -2406,37 +2405,39 @@
       } else if (r8.test(whatToTest)) {
         passed = true;
       }
-    } else if (!passed && matchRightIncl(str, idx, knownHtmlTags, {
-      cb: function cb(char) {
-        if (char === undefined) {
-          if (str[idx] === "<" && str[idx + 1] && str[idx + 1].trim() || str[idx - 1] === "<") {
-            passed = true;
-          }
-
-          return true;
-        }
-
-        return char.toUpperCase() === char.toLowerCase() && !/\d/.test(char) && char !== "=";
-      },
-      i: true,
-      trimCharsBeforeMatching: ["<", "/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
-    })) {
+    } else {
       if ((opts.skipOpeningBracket && (str[idx - 1] === "<" || str[idx - 1] === "/" && str[left(str, left(str, idx))] === "<") || whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim()) && r9.test(whatToTest)) {
-        passed = true;
+        qualified = true;
+      } else if (r1.test(whatToTest) && extraRequirements(str, idx)) {
+        qualified = true;
+      } else if (r2.test(whatToTest)) {
+        qualified = true;
+      } else if (r3.test(whatToTest) && extraRequirements(str, idx)) {
+        qualified = true;
+      } else if (r4.test(whatToTest)) {
+        qualified = true;
       }
 
-      if (r1.test(whatToTest) && extraRequirements(str, idx)) {
-        passed = true;
-      } else if (r2.test(whatToTest)) {
-        passed = true;
-      } else if (r3.test(whatToTest) && extraRequirements(str, idx)) {
-        passed = true;
-      } else if (r4.test(whatToTest)) {
+      if (qualified && matchRightIncl(str, idx, knownHtmlTags, {
+        cb: function cb(char) {
+          if (char === undefined) {
+            if (str[idx] === "<" && str[idx + 1] && str[idx + 1].trim() || str[idx - 1] === "<") {
+              passed = true;
+            }
+
+            return true;
+          }
+
+          return char.toUpperCase() === char.toLowerCase() && !/\d/.test(char) && char !== "=";
+        },
+        i: true,
+        trimCharsBeforeMatching: ["<", "/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+      })) {
         passed = true;
       }
     }
 
-    if (!passed && !opts.skipOpeningBracket && str[idx] === "<" && str[idx + 1] && str[idx + 1].trim() && matchRight(str, idx, knownHtmlTags, matchingOptions)) {
+    if (!passed && str[idx] === "<" && str[idx + 1] && str[idx + 1].trim() && matchRight(str, idx, knownHtmlTags, matchingOptions)) {
       passed = true;
     } //
 
