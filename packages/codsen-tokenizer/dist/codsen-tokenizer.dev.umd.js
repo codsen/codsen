@@ -3087,10 +3087,11 @@
     var r6 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?" : "", "\\s*\\w+\\s+[").concat(generalChar, "]+[-").concat(generalChar, "]*(?:-\\w+)?\\s*=\\s*['\"\\w]"));
     var r3 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?" : "", "\\s*\\/?\\s*\\w+\\s*\\/?\\s*>"), "g");
     var r7 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?" : "", "\\s*\\/?\\s*[").concat(generalChar, "]+[-").concat(generalChar, "]*\\s*\\/?\\s*>"), "g");
-    var r4 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?" : "").concat(whitespaceChunk, "\\w+(?:\\s*\\w+)*\\s*\\w+=['\"]"), "g");
-    var r8 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?" : "").concat(whitespaceChunk, "[").concat(generalChar, "]+[-").concat(generalChar, "]*\\s+(?:\\s*\\w+)*\\s*\\w+=['\"]"), "g");
+    var r4 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?" : "").concat(whitespaceChunk, "\\w+(?:\\s*\\w+)?\\s*\\w+=['\"]"), "g");
+    var r8 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?" : "").concat(whitespaceChunk, "[").concat(generalChar, "]+[-").concat(generalChar, "]*\\s+(?:\\s*\\w+)?\\s*\\w+=['\"]"), "g");
     var r9 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?\\/?" : "", "(").concat(whitespaceChunk, "[").concat(generalChar, "]+)+").concat(whitespaceChunk, "[\\\\/=>]"), "");
     var whatToTest = idx ? str.slice(idx) : str;
+    var qualified = false;
     var passed = false;
     var matchingOptions = {
       cb: isNotLetter,
@@ -3098,12 +3099,10 @@
       trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
     };
 
-    if (!passed && opts.allowCustomTagNames) {
+    if (opts.allowCustomTagNames) {
       if ((opts.skipOpeningBracket && (str[idx - 1] === "<" || str[idx - 1] === "/" && str[left(str, left(str, idx))] === "<") || whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim()) && (r9.test(whatToTest) || /^<\w+$/.test(whatToTest))) {
         passed = true;
-      }
-
-      if (r5.test(whatToTest) && extraRequirements(str, idx)) {
+      } else if (r5.test(whatToTest) && extraRequirements(str, idx)) {
         passed = true;
       } else if (r6.test(whatToTest)) {
         passed = true;
@@ -3112,37 +3111,39 @@
       } else if (r8.test(whatToTest)) {
         passed = true;
       }
-    } else if (!passed && matchRightIncl(str, idx, knownHtmlTags, {
-      cb: function cb(char) {
-        if (char === undefined) {
-          if (str[idx] === "<" && str[idx + 1] && str[idx + 1].trim() || str[idx - 1] === "<") {
-            passed = true;
-          }
-
-          return true;
-        }
-
-        return char.toUpperCase() === char.toLowerCase() && !/\d/.test(char) && char !== "=";
-      },
-      i: true,
-      trimCharsBeforeMatching: ["<", "/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
-    })) {
+    } else {
       if ((opts.skipOpeningBracket && (str[idx - 1] === "<" || str[idx - 1] === "/" && str[left(str, left(str, idx))] === "<") || whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim()) && r9.test(whatToTest)) {
-        passed = true;
+        qualified = true;
+      } else if (r1.test(whatToTest) && extraRequirements(str, idx)) {
+        qualified = true;
+      } else if (r2.test(whatToTest)) {
+        qualified = true;
+      } else if (r3.test(whatToTest) && extraRequirements(str, idx)) {
+        qualified = true;
+      } else if (r4.test(whatToTest)) {
+        qualified = true;
       }
 
-      if (r1.test(whatToTest) && extraRequirements(str, idx)) {
-        passed = true;
-      } else if (r2.test(whatToTest)) {
-        passed = true;
-      } else if (r3.test(whatToTest) && extraRequirements(str, idx)) {
-        passed = true;
-      } else if (r4.test(whatToTest)) {
+      if (qualified && matchRightIncl(str, idx, knownHtmlTags, {
+        cb: function cb(char) {
+          if (char === undefined) {
+            if (str[idx] === "<" && str[idx + 1] && str[idx + 1].trim() || str[idx - 1] === "<") {
+              passed = true;
+            }
+
+            return true;
+          }
+
+          return char.toUpperCase() === char.toLowerCase() && !/\d/.test(char) && char !== "=";
+        },
+        i: true,
+        trimCharsBeforeMatching: ["<", "/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+      })) {
         passed = true;
       }
     }
 
-    if (!passed && !opts.skipOpeningBracket && str[idx] === "<" && str[idx + 1] && str[idx + 1].trim() && matchRight(str, idx, knownHtmlTags, matchingOptions)) {
+    if (!passed && str[idx] === "<" && str[idx + 1] && str[idx + 1].trim() && matchRight(str, idx, knownHtmlTags, matchingOptions)) {
       passed = true;
     }
 
