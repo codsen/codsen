@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.1](https://git.sr.ht/~royston/codsen/compare/is-html-tag-opening@1.10.0...is-html-tag-opening@1.10.1) (2020-12-15)
+
+
+### Performance Improvements
+
+* improve from 1.91 opts/sec to 186.179 opts/sec in one branch ([eadc8ee](https://git.sr.ht/~royston/codsen/commits/eadc8eeabb6d2ddbd3fb0fdbaef50aab0608e3c3))
+
+
+
+
+
 ## 1.10.0 (2020-12-13)
 
 ### Features

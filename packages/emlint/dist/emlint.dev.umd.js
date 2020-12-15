@@ -1,7 +1,7 @@
 /**
  * emlint
  * Pluggable email template code linter
- * Version: 3.0.8
+ * Version: 3.0.9
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/emlint/
@@ -11362,7 +11362,7 @@
 	/**
 	 * is-html-tag-opening
 	 * Does an HTML tag start at given position?
-	 * Version: 1.10.0
+	 * Version: 1.10.1
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/is-html-tag-opening/
@@ -11402,10 +11402,11 @@
 	  const r6 = new RegExp(`^<${opts.skipOpeningBracket ? "?" : ""}\\s*\\w+\\s+[${generalChar}]+[-${generalChar}]*(?:-\\w+)?\\s*=\\s*['"\\w]`);
 	  const r3 = new RegExp(`^<${opts.skipOpeningBracket ? "?" : ""}\\s*\\/?\\s*\\w+\\s*\\/?\\s*>`, "g");
 	  const r7 = new RegExp(`^<${opts.skipOpeningBracket ? "?" : ""}\\s*\\/?\\s*[${generalChar}]+[-${generalChar}]*\\s*\\/?\\s*>`, "g");
-	  const r4 = new RegExp(`^<${opts.skipOpeningBracket ? "?" : ""}${whitespaceChunk}\\w+(?:\\s*\\w+)*\\s*\\w+=['"]`, "g");
-	  const r8 = new RegExp(`^<${opts.skipOpeningBracket ? "?" : ""}${whitespaceChunk}[${generalChar}]+[-${generalChar}]*\\s+(?:\\s*\\w+)*\\s*\\w+=['"]`, "g");
+	  const r4 = new RegExp(`^<${opts.skipOpeningBracket ? "?" : ""}${whitespaceChunk}\\w+(?:\\s*\\w+)?\\s*\\w+=['"]`, "g");
+	  const r8 = new RegExp(`^<${opts.skipOpeningBracket ? "?" : ""}${whitespaceChunk}[${generalChar}]+[-${generalChar}]*\\s+(?:\\s*\\w+)?\\s*\\w+=['"]`, "g");
 	  const r9 = new RegExp(`^<${opts.skipOpeningBracket ? `?\\/?` : ""}(${whitespaceChunk}[${generalChar}]+)+${whitespaceChunk}[\\\\/=>]`, "");
 	  const whatToTest = idx ? str.slice(idx) : str;
+	  let qualified = false;
 	  let passed = false;
 	  const matchingOptions = {
 	    cb: isNotLetter,
@@ -11413,12 +11414,10 @@
 	    trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
 	  };
 
-	  if (!passed && opts.allowCustomTagNames) {
+	  if (opts.allowCustomTagNames) {
 	    if ((opts.skipOpeningBracket && (str[idx - 1] === "<" || str[idx - 1] === "/" && str[left(str, left(str, idx))] === "<") || whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim()) && (r9.test(whatToTest) || /^<\w+$/.test(whatToTest))) {
 	      passed = true;
-	    }
-
-	    if (r5.test(whatToTest) && extraRequirements(str, idx)) {
+	    } else if (r5.test(whatToTest) && extraRequirements(str, idx)) {
 	      passed = true;
 	    } else if (r6.test(whatToTest)) {
 	      passed = true;
@@ -11427,37 +11426,39 @@
 	    } else if (r8.test(whatToTest)) {
 	      passed = true;
 	    }
-	  } else if (!passed && matchRightIncl(str, idx, knownHtmlTags, {
-	    cb: char => {
-	      if (char === undefined) {
-	        if (str[idx] === "<" && str[idx + 1] && str[idx + 1].trim() || str[idx - 1] === "<") {
-	          passed = true;
-	        }
-
-	        return true;
-	      }
-
-	      return char.toUpperCase() === char.toLowerCase() && !/\d/.test(char) && char !== "=";
-	    },
-	    i: true,
-	    trimCharsBeforeMatching: ["<", "/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
-	  })) {
+	  } else {
 	    if ((opts.skipOpeningBracket && (str[idx - 1] === "<" || str[idx - 1] === "/" && str[left(str, left(str, idx))] === "<") || whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim()) && r9.test(whatToTest)) {
-	      passed = true;
+	      qualified = true;
+	    } else if (r1.test(whatToTest) && extraRequirements(str, idx)) {
+	      qualified = true;
+	    } else if (r2.test(whatToTest)) {
+	      qualified = true;
+	    } else if (r3.test(whatToTest) && extraRequirements(str, idx)) {
+	      qualified = true;
+	    } else if (r4.test(whatToTest)) {
+	      qualified = true;
 	    }
 
-	    if (r1.test(whatToTest) && extraRequirements(str, idx)) {
-	      passed = true;
-	    } else if (r2.test(whatToTest)) {
-	      passed = true;
-	    } else if (r3.test(whatToTest) && extraRequirements(str, idx)) {
-	      passed = true;
-	    } else if (r4.test(whatToTest)) {
+	    if (qualified && matchRightIncl(str, idx, knownHtmlTags, {
+	      cb: char => {
+	        if (char === undefined) {
+	          if (str[idx] === "<" && str[idx + 1] && str[idx + 1].trim() || str[idx - 1] === "<") {
+	            passed = true;
+	          }
+
+	          return true;
+	        }
+
+	        return char.toUpperCase() === char.toLowerCase() && !/\d/.test(char) && char !== "=";
+	      },
+	      i: true,
+	      trimCharsBeforeMatching: ["<", "/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+	    })) {
 	      passed = true;
 	    }
 	  }
 
-	  if (!passed && !opts.skipOpeningBracket && str[idx] === "<" && str[idx + 1] && str[idx + 1].trim() && matchRight(str, idx, knownHtmlTags, matchingOptions)) {
+	  if (!passed && str[idx] === "<" && str[idx + 1] && str[idx + 1].trim() && matchRight(str, idx, knownHtmlTags, matchingOptions)) {
 	    passed = true;
 	  }
 
@@ -11468,7 +11469,7 @@
 	/**
 	 * codsen-tokenizer
 	 * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
-	 * Version: 4.5.0
+	 * Version: 4.5.1
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/codsen-tokenizer/
@@ -13488,7 +13489,7 @@
 	/**
 	 * codsen-parser
 	 * Parser aiming at broken or mixed code, especially HTML & CSS
-	 * Version: 0.8.5
+	 * Version: 0.8.6
 	 * Author: Roy Revelt, Codsen Ltd
 	 * License: MIT
 	 * Homepage: https://codsen.com/os/codsen-parser/
@@ -45284,7 +45285,7 @@
 
 	}
 
-	var version = "3.0.8";
+	var version = "3.0.9";
 
 	exports.Linter = Linter;
 	exports.version = version;
