@@ -5562,6 +5562,7 @@
     var withinXML = false; // used for children nodes of XML or HTML comment tags
 
     var withinCSS = false;
+    var withinScript = false;
     tokenizer(input, {
       tagCb: function tagCb(token) {
         /* istanbul ignore else */
@@ -5614,6 +5615,12 @@
               withinXML = false;
             }
           }
+
+          if (token.tagName === "script" && !token.closing) {
+            withinScript = true;
+          } else if (withinScript && token.tagName === "script" && token.closing) {
+            withinScript = false;
+          }
         } else if (["at", "rule"].includes(token.type)) {
           // mark applicable opts
           if (!applicableOpts.css) {
@@ -5625,11 +5632,11 @@
           }
         } else if (token.type === "text") {
           // mark applicable opts
-          if (!withinCSS && !withinHTMLComment && !withinXML && !applicableOpts.text && token.value.trim()) {
+          if (!withinCSS && !withinHTMLComment && !withinXML && !withinScript && !applicableOpts.text && token.value.trim()) {
             applicableOpts.text = true;
           }
 
-          if (withinCSS && opts.css || withinHTMLComment && opts.html || !withinCSS && !withinHTMLComment && !withinXML && opts.text) {
+          if (withinCSS && opts.css || (withinHTMLComment || withinScript) && opts.html || !withinCSS && !withinHTMLComment && !withinXML && !withinScript && opts.text) {
             if (token.value.includes("\n")) {
               gatheredRanges.push([token.start, token.end, "\n"]);
             } else {

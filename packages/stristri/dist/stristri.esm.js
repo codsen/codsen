@@ -86,6 +86,7 @@ function stri(input, originalOpts) {
   let withinHTMLComment = false;
   let withinXML = false;
   let withinCSS = false;
+  let withinScript = false;
   tokenizer(input, {
     tagCb: (token) => {
       /* istanbul ignore else */
@@ -136,6 +137,15 @@ function stri(input, originalOpts) {
             withinXML = false;
           }
         }
+        if (token.tagName === "script" && !token.closing) {
+          withinScript = true;
+        } else if (
+          withinScript &&
+          token.tagName === "script" &&
+          token.closing
+        ) {
+          withinScript = false;
+        }
       } else if (["at", "rule"].includes(token.type)) {
         if (!applicableOpts.css) {
           applicableOpts.css = true;
@@ -148,6 +158,7 @@ function stri(input, originalOpts) {
           !withinCSS &&
           !withinHTMLComment &&
           !withinXML &&
+          !withinScript &&
           !applicableOpts.text &&
           token.value.trim()
         ) {
@@ -155,8 +166,12 @@ function stri(input, originalOpts) {
         }
         if (
           (withinCSS && opts.css) ||
-          (withinHTMLComment && opts.html) ||
-          (!withinCSS && !withinHTMLComment && !withinXML && opts.text)
+          ((withinHTMLComment || withinScript) && opts.html) ||
+          (!withinCSS &&
+            !withinHTMLComment &&
+            !withinXML &&
+            !withinScript &&
+            opts.text)
         ) {
           if (token.value.includes("\n")) {
             gatheredRanges.push([token.start, token.end, "\n"]);

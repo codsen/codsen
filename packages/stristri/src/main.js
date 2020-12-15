@@ -119,9 +119,17 @@ function stri(input, originalOpts) {
   let withinHTMLComment = false; // used for children nodes of XML or HTML comment tags
   let withinXML = false; // used for children nodes of XML or HTML comment tags
   let withinCSS = false;
+  let withinScript = false;
 
   tokenizer(input, {
     tagCb: (token) => {
+      console.log(
+        `${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
+          token,
+          null,
+          4
+        )}`
+      );
       /* istanbul ignore else */
       if (token.type === "comment") {
         if (withinCSS) {
@@ -174,6 +182,16 @@ function stri(input, originalOpts) {
             withinXML = false;
           }
         }
+
+        if (token.tagName === "script" && !token.closing) {
+          withinScript = true;
+        } else if (
+          withinScript &&
+          token.tagName === "script" &&
+          token.closing
+        ) {
+          withinScript = false;
+        }
       } else if (["at", "rule"].includes(token.type)) {
         // mark applicable opts
         if (!applicableOpts.css) {
@@ -188,6 +206,7 @@ function stri(input, originalOpts) {
           !withinCSS &&
           !withinHTMLComment &&
           !withinXML &&
+          !withinScript &&
           !applicableOpts.text &&
           token.value.trim()
         ) {
@@ -195,8 +214,12 @@ function stri(input, originalOpts) {
         }
         if (
           (withinCSS && opts.css) ||
-          (withinHTMLComment && opts.html) ||
-          (!withinCSS && !withinHTMLComment && !withinXML && opts.text)
+          ((withinHTMLComment || withinScript) && opts.html) ||
+          (!withinCSS &&
+            !withinHTMLComment &&
+            !withinXML &&
+            !withinScript &&
+            opts.text)
         ) {
           if (token.value.includes("\n")) {
             gatheredRanges.push([token.start, token.end, "\n"]);
@@ -220,7 +243,7 @@ function stri(input, originalOpts) {
   });
 
   console.log(
-    `223 ${`\u001b[${32}m${`END`}\u001b[${39}m`} ${`\u001b[${33}m${`gatheredRanges`}\u001b[${39}m`} = ${JSON.stringify(
+    `246 ${`\u001b[${32}m${`END`}\u001b[${39}m`} ${`\u001b[${33}m${`gatheredRanges`}\u001b[${39}m`} = ${JSON.stringify(
       gatheredRanges,
       null,
       4
