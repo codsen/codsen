@@ -118,3 +118,23 @@ tap.test(`04 - ensure no accidental text concat`, (t) => {
 
   t.end();
 });
+
+tap.test(`05`, (t) => {
+  t.match(
+    stri2(`<div>Script says hello world and sky and sea</div>`),
+    {
+      result: `Script says hello world and sky and sea`,
+      applicableOpts: {
+        html: true,
+        css: false,
+        text: true,
+        templatingTags: false,
+      },
+      templatingLang: {
+        name: null,
+      },
+    },
+    "05"
+  );
+  t.end();
+});
