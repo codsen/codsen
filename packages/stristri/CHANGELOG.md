@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.0.3](https://git.sr.ht/~royston/codsen/compare/stristri@2.0.2...stristri@2.0.3) (2020-12-15)
-
-**Note:** Version bump only for package stristri
-
-
-
-
-
 ## 2.0.0 (2020-12-09)
 
 ### Features
