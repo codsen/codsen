@@ -3198,96 +3198,16 @@
   var BACKSLASH$1 = "\\";
 
   function startsTag(str, i, token, layers, withinStyle) {
-    function f01() {
-      var res = str[i];
-      return res;
-    }
-
-    function f02() {
-      var res = str[i].trim().length;
-      return res;
-    }
-
-    function f03() {
-      var res = !layers.length || token.type === "text";
-      return res;
-    }
-
-    function f04() {
-      var res = !["doctype", "xml"].includes(token.kind);
-      return res;
-    }
-
-    function f05() {
-      var res = !withinStyle || str[i] === "<";
-      return res;
-    }
-
-    function f06() {
-      var res = str[i] === "<";
-      return res;
-    }
-
-    function f07() {
-      var res = isOpening(str, i, {
-        allowCustomTagNames: true
-      });
-      return res;
-    }
-
-    function f08() {
-      var res = str[right(str, i)] === ">";
-      return res;
-    }
-
-    function f09() {
-      var res = matchRight(str, i, ["doctype", "xml", "cdata"], {
-        i: true,
-        trimBeforeMatching: true,
-        trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
-      });
-      return res;
-    }
-
-    function f10() {
-      var res = isLatinLetter(str[i]);
-      return res;
-    }
-
-    function f11() {
-      var res = !str[i - 1];
-      return res;
-    }
-
-    function f12() {
-      var res = !isLatinLetter(str[i - 1]);
-      return res;
-    }
-
-    function f13() {
-      var res = !["<", "/", "!", BACKSLASH$1].includes(str[left(str, i)]);
-      return res;
-    }
-
-    function f14() {
-      var res = isOpening(str, i, {
-        allowCustomTagNames: false,
-        skipOpeningBracket: true
-      });
-      return res;
-    }
-
-    function f15() {
-      var res = token.type !== "esp";
-      return res;
-    }
-
-    function f16() {
-      var res = token.tail && token.tail.includes(str[i]);
-      return res;
-    }
-
-    return f01() && f02() && f03() && f04() && f05() && (f06() && (f07() || f08() || f09()) || f10() && (f11() || f12() && f13()) && f14()) && (f15() || f16());
+    return str[i] && str[i].trim().length && (!layers.length || token.type === "text") && !["doctype", "xml"].includes(token.kind) && (!withinStyle || str[i] === "<") && (str[i] === "<" && (isOpening(str, i, {
+      allowCustomTagNames: true
+    }) || str[right(str, i)] === ">" || matchRight(str, i, ["doctype", "xml", "cdata"], {
+      i: true,
+      trimBeforeMatching: true,
+      trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
+    })) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH$1].includes(str[left(str, i)])) && isOpening(str, i, {
+      allowCustomTagNames: false,
+      skipOpeningBracket: true
+    })) && (token.type !== "esp" || token.tail && token.tail.includes(str[i]));
   }
 
   function startsEsp(str, i, token, layers, styleStarts) {

@@ -376,7 +376,7 @@
     },
     {
         "name": "is-html-tag-opening",
-        "size": 6841,
+        "size": 6938,
         "imports": [
             "string-left-right",
             "string-match-left-right"
