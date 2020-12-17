@@ -223,14 +223,6 @@
 			""
 		]
 	},
-	"rollup": {
-		"infoTable": {
-			"cjsTitle": "Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`",
-			"esmTitle": "**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.",
-			"umdTitle": "**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in"
-		},
-		"infoTitle": "Here's what you'll get:"
-	},
 	"scripts": {
 		"cli": {
 			"ci_test": "tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",

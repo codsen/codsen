@@ -26,9 +26,10 @@ export default (commandLineArgs) => {
         name: "stristri",
       },
       plugins: [
-        strip({
-          sourceMap: false,
-        }),
+        !commandLineArgs.dev &&
+          strip({
+            sourceMap: false,
+          }),
         resolve(),
         json(),
         commonjs(),
@@ -49,9 +50,10 @@ export default (commandLineArgs) => {
         name: "stristri",
       },
       plugins: [
-        strip({
-          sourceMap: false,
-        }),
+        !commandLineArgs.dev &&
+          strip({
+            sourceMap: false,
+          }),
         resolve(),
         json(),
         commonjs(),
@@ -74,9 +76,10 @@ export default (commandLineArgs) => {
         "string-collapse-white-space",
       ],
       plugins: [
-        strip({
-          sourceMap: false,
-        }),
+        !commandLineArgs.dev &&
+          strip({
+            sourceMap: false,
+          }),
         json(),
         babel({
           rootMode: "upward",
@@ -98,9 +101,10 @@ export default (commandLineArgs) => {
         "string-collapse-white-space",
       ],
       plugins: [
-        strip({
-          sourceMap: false,
-        }),
+        !commandLineArgs.dev &&
+          strip({
+            sourceMap: false,
+          }),
         json(),
         cleanup({ comments: "istanbul" }),
         banner(licensePiece),
@@ -109,16 +113,12 @@ export default (commandLineArgs) => {
   ];
 
   if (commandLineArgs.dev) {
-    // if rollup was called without a --dev flag,
-    // dispose of a comment removal, strip():
-    finalConfig.forEach((singleConfigVal, i) => {
-      finalConfig[i].plugins.shift();
-    });
-    // https://github.com/rollup/rollup/issues/2694#issuecomment-463915954
-    delete commandLineArgs.dev;
-
     // don't build minified UMD in dev, it takes too long
     finalConfig.shift();
   }
+
+  // clean up this custom "dev" flag, otherwise Rollup will complain
+  // https://github.com/rollup/rollup/issues/2694#issuecomment-463915954
+  delete commandLineArgs.dev;
   return finalConfig;
 };

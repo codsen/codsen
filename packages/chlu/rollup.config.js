@@ -27,9 +27,10 @@ export default (commandLineArgs) => {
         name: "chlu",
       },
       plugins: [
-        strip({
-          sourceMap: false,
-        }),
+        !commandLineArgs.dev &&
+          strip({
+            sourceMap: false,
+          }),
         builtins(),
         resolve(),
         json(),
@@ -51,9 +52,10 @@ export default (commandLineArgs) => {
         name: "chlu",
       },
       plugins: [
-        strip({
-          sourceMap: false,
-        }),
+        !commandLineArgs.dev &&
+          strip({
+            sourceMap: false,
+          }),
         builtins(),
         resolve(),
         json(),
@@ -82,9 +84,10 @@ export default (commandLineArgs) => {
         "semver-compare",
       ],
       plugins: [
-        strip({
-          sourceMap: false,
-        }),
+        !commandLineArgs.dev &&
+          strip({
+            sourceMap: false,
+          }),
         builtins(),
         json(),
         babel({
@@ -112,9 +115,10 @@ export default (commandLineArgs) => {
         "semver-compare",
       ],
       plugins: [
-        strip({
-          sourceMap: false,
-        }),
+        !commandLineArgs.dev &&
+          strip({
+            sourceMap: false,
+          }),
         builtins(),
         json(),
         cleanup({ comments: "istanbul" }),
@@ -124,16 +128,12 @@ export default (commandLineArgs) => {
   ];
 
   if (commandLineArgs.dev) {
-    // if rollup was called without a --dev flag,
-    // dispose of a comment removal, strip():
-    finalConfig.forEach((singleConfigVal, i) => {
-      finalConfig[i].plugins.shift();
-    });
-    // https://github.com/rollup/rollup/issues/2694#issuecomment-463915954
-    delete commandLineArgs.dev;
-
     // don't build minified UMD in dev, it takes too long
     finalConfig.shift();
   }
+
+  // clean up this custom "dev" flag, otherwise Rollup will complain
+  // https://github.com/rollup/rollup/issues/2694#issuecomment-463915954
+  delete commandLineArgs.dev;
   return finalConfig;
 };

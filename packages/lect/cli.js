@@ -299,9 +299,10 @@ function step13() {
         name: "${camelCase(pack.name)}",
       },
       plugins: [
-        strip({
-          sourceMap: false,
-        })${rollupPluginsStrToInsert}${
+        !commandLineArgs.dev &&
+          strip({
+            sourceMap: false,
+          })${rollupPluginsStrToInsert}${
       pack.devDependencies["rollup-plugin-node-builtins"]
         ? ",\n        builtins()"
         : ""
@@ -337,9 +338,10 @@ function step13() {
         name: "${camelCase(pack.name)}",
       },
       plugins: [
-        strip({
-          sourceMap: false,
-        })${rollupPluginsStrToInsert}${
+        !commandLineArgs.dev &&
+          strip({
+            sourceMap: false,
+          })${rollupPluginsStrToInsert}${
       pack.devDependencies["rollup-plugin-node-builtins"]
         ? ",\n        builtins()"
         : ""
@@ -378,15 +380,16 @@ function step13() {
           : ""
       }],
       plugins: [
-        strip({
-          sourceMap: false,
-        })${
-          isObj(pack) &&
-          pack.devDependencies &&
-          pack.devDependencies["rollup-plugin-node-builtins"]
-            ? ",\n        builtins()"
-            : ""
-        }${
+        !commandLineArgs.dev &&
+          strip({
+            sourceMap: false,
+          })${
+            isObj(pack) &&
+            pack.devDependencies &&
+            pack.devDependencies["rollup-plugin-node-builtins"]
+              ? ",\n        builtins()"
+              : ""
+          }${
       isObj(pack) &&
       pack.devDependencies &&
       pack.devDependencies["rollup-plugin-node-globals"]
@@ -422,13 +425,14 @@ function step13() {
           : ""
       }],
       plugins: [
-        strip({
-          sourceMap: false,
-        })${
-          pack.devDependencies["rollup-plugin-node-builtins"]
-            ? ",\n        builtins()"
-            : ""
-        }${
+        !commandLineArgs.dev &&
+          strip({
+            sourceMap: false,
+          })${
+            pack.devDependencies["rollup-plugin-node-builtins"]
+              ? ",\n        builtins()"
+              : ""
+          }${
       pack.devDependencies["rollup-plugin-node-globals"]
         ? ",\n        globals()"
         : ""
@@ -476,17 +480,13 @@ export default (commandLineArgs) => {
   ];
 
   if (commandLineArgs.dev) {
-    // if rollup was called without a --dev flag,
-    // dispose of a comment removal, strip():
-    finalConfig.forEach((singleConfigVal, i) => {
-      finalConfig[i].plugins.shift();
-    });
-    // https://github.com/rollup/rollup/issues/2694#issuecomment-463915954
-    delete commandLineArgs.dev;
-
     // don't build minified UMD in dev, it takes too long
     finalConfig.shift();
   }
+
+  // clean up this custom "dev" flag, otherwise Rollup will complain
+  // https://github.com/rollup/rollup/issues/2694#issuecomment-463915954
+  delete commandLineArgs.dev;
   return finalConfig;
 };
 `;
