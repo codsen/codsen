@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.16.0 (2020-12-16)
+
+We edited the lect CLI sporadically over years and never had a rebasing, a reorganisation. Well, that time has came. All functions were separated into files within `./src/`. Also, all file writes are now [atomic](https://www.npmjs.com/package/write-file-atomic).
+
+Removed:
+
+- various package.json-based lect settings — now package.json is used mainly for whitelisting `devdeps` and setting the import example string for instructions.
+- many packages, both unused and (previously) used
+
+Added:
+
+- the whole pipeline is now tailored for TypeScript, Rollup config is generated accordingly
+
 ## 0.15.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.
@@ -11,7 +24,7 @@ Accidental version bump during migration to sourcehut. Sorry about that.
 
 ### Features
 
-- switch to sort-package-json (from format-package) ([4c0df1c](https://gitlab.com/codsen/codsen/commit/4c0df1c25d4cdf85c40d497965f0f968eec006a1))
+- switch from `format-package` to `sort-package-json` ([4c0df1c](https://gitlab.com/codsen/codsen/commit/4c0df1c25d4cdf85c40d497965f0f968eec006a1))
 
 ## 0.13.0 (2020-05-06)
 
