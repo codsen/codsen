@@ -7,9 +7,9 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { arrayiffy } = require("..");
 
-const testme = () => f("aaa");
+const testme = () => arrayiffy("aaa");
 
 // action
 runPerf(testme, callerDir);

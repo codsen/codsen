@@ -3,7 +3,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
-import arrayiffy from "../dist/arrayiffy-if-string.esm.js";
+import { arrayiffy } from "../dist/arrayiffy-if-string.esm.js";
 
 assert.deepEqual(arrayiffy("aaa"), ["aaa"]);
 

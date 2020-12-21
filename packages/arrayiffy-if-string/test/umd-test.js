@@ -1,5 +1,5 @@
 import tap from "tap";
-import a1 from "../dist/arrayiffy-if-string.umd";
+import { arrayiffy as a1 } from "../dist/arrayiffy-if-string.umd";
 
 const source = "aaa";
 const res = ["aaa"];

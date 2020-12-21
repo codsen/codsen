@@ -8,24 +8,26 @@
  */
 
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-  typeof define === 'function' && define.amd ? define(factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.arrayiffyIfString = factory());
-}(this, (function () { 'use strict';
+typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+typeof define === 'function' && define.amd ? define(['exports'], factory) :
+(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.arrayiffyIfString = {}));
+}(this, (function (exports) { 'use strict';
 
-  // If a string is given, put it into an array. Bypass everything else.
-  function arrayiffyString(something) {
-    if (typeof something === "string") {
-      if (something.length > 0) {
-        return [something];
-      }
-
-      return [];
+// If a string is given, put it into an array. Bypass everything else.
+function arrayiffy(something) {
+  if (typeof something === "string") {
+    if (something.length > 0) {
+      return [something];
     }
 
-    return something;
+    return [];
   }
 
-  return arrayiffyString;
+  return something;
+}
+
+exports.arrayiffy = arrayiffy;
+
+Object.defineProperty(exports, '__esModule', { value: true });
 
 })));

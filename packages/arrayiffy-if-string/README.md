@@ -34,7 +34,7 @@ npm i arrayiffy-if-string
 
 ```js
 import { strict as assert } from "assert";
-import arrayiffy from "arrayiffy-if-string";
+import { arrayiffy } from "arrayiffy-if-string";
 
 assert.deepEqual(arrayiffy("aaa"), ["aaa"]);
 

@@ -1,5 +1,5 @@
 // If a string is given, put it into an array. Bypass everything else.
-function arrayiffyString(something) {
+function arrayiffy(something: any) {
   if (typeof something === "string") {
     if (something.length > 0) {
       return [something];
@@ -9,4 +9,4 @@ function arrayiffyString(something) {
   return something;
 }
 
-export default arrayiffyString;
+export { arrayiffy };
