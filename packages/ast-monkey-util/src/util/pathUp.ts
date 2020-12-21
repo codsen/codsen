@@ -1,10 +1,6 @@
-function pathUp(str) {
-  if (typeof str === "string") {
-    // input must have at least two dots:
-    if (!str.includes(".") || !str.slice(str.indexOf(".") + 1).includes(".")) {
-      // zero is the root level's first element
-      return "0";
-    }
+function pathUp(str: string): string {
+  // input must have at least two dots:
+  if (str.includes(".") && str.slice(str.indexOf(".") + 1).includes(".")) {
     // go up, for example, from "a.children.2" to "a"
     let dotsCount = 0;
     for (let i = str.length; i--; ) {
@@ -17,6 +13,8 @@ function pathUp(str) {
       }
     }
   }
+
+  // zero is the root level's first element
   return "0";
 }
 

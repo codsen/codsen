@@ -3,8 +3,8 @@
 // to
 // 9.children.2
 // the path notation is object-path
-function pathPrev(str) {
-  if (typeof str !== "string" || !str.length) {
+function pathPrev(str: string): null | string {
+  if (!str) {
     return null;
   }
   const extractedValue = str.slice(str.lastIndexOf(".") + 1);

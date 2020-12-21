@@ -3,8 +3,8 @@
 // to
 // 9.children.4
 // the path notation is object-path
-function pathNext(str) {
-  if (typeof str !== "string" || !str.length) {
+function pathNext(str: string): null | string {
+  if (!str) {
     return null;
   }
   if (str.includes(".") && /^\d*$/.test(str.slice(str.lastIndexOf(".") + 1))) {
