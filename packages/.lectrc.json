@@ -1,263 +1,265 @@
 {
-	"badges": [
-		{
-			"sourcehut": {
-				"alt": "Repository is on sourcehut",
-				"img": "https://img.shields.io/badge/repo-on%20sourcehut-brightgreen.svg?style=flat-square",
-				"url": "https://git.sr.ht/~royston/codsen/tree/master/packages/%REPONAME%"
-			}
-		},
-		{
-			"cov": {
-				"alt": "Coverage",
-				"img": "https://img.shields.io/badge/coverage-%COVPERC%-%COVBADGECOLOR%.svg?style=flat-square",
-				"url": "https://git.sr.ht/~royston/codsen/tree/master/packages/%REPONAME%"
-			}
-		},
-		{
-			"deps2d": {
-				"alt": "View dependencies as 2D chart",
-				"img": "https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square",
-				"url": "http://npm.anvaka.com/#/view/2d/%REPONAME%"
-			}
-		},
-		{
-			"downloads": {
-				"alt": "Downloads/Month",
-				"img": "https://img.shields.io/npm/dm/%REPONAME%.svg?style=flat-square",
-				"url": "https://npmcharts.com/compare/%REPONAME%"
-			}
-		},
-		{
-			"runkit": {
-				"alt": "Test in browser",
-				"img": "https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square",
-				"url": "https://npm.runkit.com/%REPONAME%"
-			}
-		},
-		{
-			"prettier": {
-				"alt": "Code style: prettier",
-				"img": "https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square",
-				"url": "https://prettier.io"
-			}
-		},
-		{
-			"license": {
-				"alt": "MIT License",
-				"img": "https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square",
-				"url": "https://git.sr.ht/~royston/codsen/tree/master/LICENSE"
-			}
-		}
-	],
-	"contributing": {
-		"header": "## Contributing",
-		"restofit": "- If you see an error, [raise an issue](<%ISSUELINK%>).\n- If you want a new feature but can't code it up yourself, also [raise an issue](<%ISSUELINK%>). Let's discuss it.\n- If you tried to use this package, but something didn't work out, also [raise an issue](<%ISSUELINK%>). We'll try to help.\n- If you want to contribute some code, fork the [monorepo](https://git.sr.ht/~royston/codsen) via sourcehut, then write code, then file a pull request on GitLab. We'll merge it in and release.\n\nIn monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command-line application).\n\nThe npm script \"`dev`\", the `\"dev\": \"rollup -c --dev\"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s."
-	},
-	"files": {
-		"delete": [
-			".babelrc",
-			".gitignore",
-			".editorconfig",
-			".gitattributes",
-			".bithoundrc",
-			".eslintrc.json",
-			".travis.yml",
-			"bitbucket-pipelines.yml",
-			"package-lock.json",
-			"yarn.lock",
-			".DS_Store",
-			"util.esm.js",
-			"testStats.json"
-		],
-		"write_hard": [
-			{
-				"contents": "",
-				"name": ""
-			},
-			{
-				"contents": "dist/\ntest/fixtures\nfixtures/\n*.json\ntestStats.md\n",
-				"name": ".prettierignore"
-			},
-			{
-				"contents": "package-lock=false\n",
-				"name": ".npmrc"
-			},
-			{
-				"contents": "MIT License\n\nCopyright (c) 2010-%YEAR% Roy Revelt and other contributors\n\nPermission is hereby granted, free of charge, to any person obtaining\na copy of this software and associated documentation files (the\n\"Software\"), to deal in the Software without restriction, including\nwithout limitation the rights to use, copy, modify, merge, publish,\ndistribute, sublicense, and/or sell copies of the Software, and to\npermit persons to whom the Software is furnished to do so, subject to\nthe following conditions:\n\nThe above copyright notice and this permission notice shall be\nincluded in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,\nEXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\nMERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND\nNONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE\nLIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION\nOF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION\nWITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.",
-				"name": "LICENSE"
-			}
-		],
-		"write_soft": [
-			{
-				"contents": "",
-				"name": ""
-			}
-		]
-	},
-	"footer": {
-		"alwaysAddTheseLinks": {}
-	},
-	"header": {
-		"dontQuoteDescription": true,
-		"rightFloatedBadge": []
-	},
-	"licence": {
-		"extras": [],
-		"header": "## Licence",
-		"restofit": "MIT License\n\nCopyright (c) 2010-%YEAR% Roy Revelt and other contributors"
-	},
-	"npmignore": {
-		"badFiles": [
-			".babelrc",
-			".editorconfig",
-			".eslintrc",
-			".eslintrc.json",
-			".gitattributes",
-			".gitignore",
-			".npmignore",
-			".prettierignore",
-			".travis.yml",
-			"benchmark.js",
-			"bitbucket-pipelines.yml",
-			"chlu_adds_missing_diff_links.gif",
-			"cli_bak.js",
-			"contributing.md",
-			"feature1.gif",
-			"ideas.md",
-			"package.json.lerna_backup",
-			"rollup.config.js",
-			"test.js",
-			"test.zip",
-			"test_bak.js",
-			"testStats.json",
-			"testStats.md",
-			"travis.js"
-		],
-		"badFolders": [
-			".idea",
-			".nyc_output",
-			"coverage",
-			"docs",
-			"fixtures",
-			"media",
-			"perf",
-			"reference",
-			"src",
-			"tap",
-			"temp",
-			"test",
-			"test_alt",
-			"test-folder",
-			"test-util",
-			"t-util"
-		],
-		"goodFiles": [
-			"cli-es5.js",
-			"cli.js",
-			"index-es5.js",
-			"index.js",
-			"index.d.ts",
-			"index.test-d.ts",
-			"init-npmignore.js",
-			"runkit_example.js",
-			"util.js"
-		],
-		"goodFolders": [
-			"bin",
-			"dist",
-			"examples",
-			"lib",
-			"rules"
-		]
-	},
-	"package": {
-		"browserslist": "> 0.25%, not dead",
-		"devDependencies": {
-			"@babel/core": "^7.12.10",
-			"@babel/preset-env": "^7.12.10",
-			"@babel/plugin-proposal-nullish-coalescing-operator": "^7.12.1",
-			"@babel/plugin-proposal-object-rest-spread": "^7.12.1",
-			"@babel/plugin-proposal-optional-chaining": "^7.12.7",
-			"@babel/plugin-proposal-class-properties": "^7.12.1",
-			"@rollup/plugin-babel": "^5.2.2",
-			"@rollup/plugin-commonjs": "^17.0.0",
-			"@rollup/plugin-node-resolve": "^11.0.1",
-			"@rollup/plugin-strip": "^2.0.0",
-			"benchmark": "^2.1.4",
-			"eslint": "^7.15.0",
-			"lect": "^0.15.1",
-			"rollup": "^2.35.1",
-			"rollup-plugin-ascii": "^0.0.3",
-			"rollup-plugin-banner": "^0.2.1",
-			"rollup-plugin-cleanup": "^3.2.1",
-			"rollup-plugin-terser": "^7.0.2",
-			"tap": "^14.11.0",
-			"tsd": "^0.14.0"
-		},
-		"tap": {
-			"coverage-report": [
-				"text",
-				"json-summary"
-			],
-			"nyc-arg": [
-				"--exclude=**/*.cjs.js",
-				"--exclude=**/*.umd.js"
-			],
-			"timeout": 0
-		},
-		"husky": {
-			"hooks": {
-				"pre-commit": "npm run format && npm test"
-			}
-		},
-		"license": "MIT"
-	},
-	"package_keys": {
-		"write_hard": {
-			"repository": "https://git.sr.ht/~royston/codsen"
-		},
-		"write_soft": {},
-		"delete": [
-			"",
-			""
-		]
-	},
-	"scripts": {
-		"cli": {
-			"ci_test": "tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",
-			"dev": "echo\"\"",
-			"devunittest": "npm run dev && ./node_modules/.bin/tap --only -R 'base' && npm run clean_cov",
-			"format": "npm run lect && npm run prettier && npm run lint",
-			"lect": "lect",
-			"lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --config \"../../.eslintrc.json\" --quiet",
-			"prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md,ts}' --write --loglevel silent",
-			"republish": "npm publish || :",
-			"tap": "tap",
-			"test": "npm run lint && npm run unittest && npm run format",
-			"unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md --reporter=terse && npm run clean_cov",
-			"clean_cov": "../../scripts/leaveCoverageTotalOnly.js"
-		},
-		"rollup": {
-			"build": "rollup -c",
-			"ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",
-			"dev": "rollup -c --dev",
-			"devunittest": "npm run dev && ./node_modules/.bin/tap --only -R 'base' && npm run tsd && npm run clean_cov",
-			"format": "npm run lect && npm run prettier && npm run lint",
-			"lect": "lect",
-			"lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --config \"../../.eslintrc.json\" --quiet",
-			"perf": "node perf/check",
-			"prepare": "npm run build",
-			"prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md,ts}' --write --loglevel silent",
-			"republish": "npm publish || :",
-			"tap": "tap",
-			"tsd": "test ! -f index.d.ts || tsd",
-			"pretest": "npm run build",
-			"test": "npm run lint && npm run unittest && npm run test:examples && npm run clean_cov && npm run format",
-			"test:examples": "../../scripts/test-examples.js && npm run lect && npm run prettier",
-			"unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md --reporter=terse && npm run tsd && npm run clean_cov && npm run perf",
-			"version": "npm run build && git add .",
-			"clean_cov": "../../scripts/leaveCoverageTotalOnly.js"
-		}
-	}
+  "badges": [
+    {
+      "sourcehut": {
+        "alt": "Repository is on sourcehut",
+        "img": "https://img.shields.io/badge/repo-on%20sourcehut-brightgreen.svg?style=flat-square",
+        "url": "https://git.sr.ht/~royston/codsen/tree/master/packages/%REPONAME%"
+      }
+    },
+    {
+      "cov": {
+        "alt": "Coverage",
+        "img": "https://img.shields.io/badge/coverage-%COVPERC%-%COVBADGECOLOR%.svg?style=flat-square",
+        "url": "https://git.sr.ht/~royston/codsen/tree/master/packages/%REPONAME%"
+      }
+    },
+    {
+      "deps2d": {
+        "alt": "View dependencies as 2D chart",
+        "img": "https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square",
+        "url": "http://npm.anvaka.com/#/view/2d/%REPONAME%"
+      }
+    },
+    {
+      "downloads": {
+        "alt": "Downloads/Month",
+        "img": "https://img.shields.io/npm/dm/%REPONAME%.svg?style=flat-square",
+        "url": "https://npmcharts.com/compare/%REPONAME%"
+      }
+    },
+    {
+      "runkit": {
+        "alt": "Test in browser",
+        "img": "https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square",
+        "url": "https://npm.runkit.com/%REPONAME%"
+      }
+    },
+    {
+      "prettier": {
+        "alt": "Code style: prettier",
+        "img": "https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square",
+        "url": "https://prettier.io"
+      }
+    },
+    {
+      "license": {
+        "alt": "MIT License",
+        "img": "https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square",
+        "url": "https://git.sr.ht/~royston/codsen/tree/master/LICENSE"
+      }
+    }
+  ],
+  "contributing": {
+    "header": "## Contributing",
+    "restofit": "- If you see an error, [raise an issue](<%ISSUELINK%>).\n- If you want a new feature but can't code it up yourself, also [raise an issue](<%ISSUELINK%>). Let's discuss it.\n- If you tried to use this package, but something didn't work out, also [raise an issue](<%ISSUELINK%>). We'll try to help.\n- If you want to contribute some code, fork the [monorepo](https://git.sr.ht/~royston/codsen) via sourcehut, then write code, then file a pull request on GitLab. We'll merge it in and release.\n\nIn monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command-line application).\n\nThe npm script \"`dev`\", the `\"dev\": \"rollup -c --dev\"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s."
+  },
+  "files": {
+    "delete": [
+      ".babelrc",
+      ".gitignore",
+      ".editorconfig",
+      ".gitattributes",
+      ".bithoundrc",
+      ".eslintrc.json",
+      ".travis.yml",
+      "bitbucket-pipelines.yml",
+      "package-lock.json",
+      "yarn.lock",
+      ".DS_Store",
+      "util.esm.js",
+      "testStats.json",
+      "tsconfig.build.json"
+    ],
+    "write_hard": [
+      {
+        "contents": "",
+        "name": ""
+      },
+      {
+        "contents": "dist/\ntest/fixtures\nfixtures/\n*.json\ntestStats.md\n",
+        "name": ".prettierignore"
+      },
+      {
+        "contents": "package-lock=false\n",
+        "name": ".npmrc"
+      },
+      {
+        "contents": "MIT License\n\nCopyright (c) 2010-%YEAR% Roy Revelt and other contributors\n\nPermission is hereby granted, free of charge, to any person obtaining\na copy of this software and associated documentation files (the\n\"Software\"), to deal in the Software without restriction, including\nwithout limitation the rights to use, copy, modify, merge, publish,\ndistribute, sublicense, and/or sell copies of the Software, and to\npermit persons to whom the Software is furnished to do so, subject to\nthe following conditions:\n\nThe above copyright notice and this permission notice shall be\nincluded in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,\nEXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\nMERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND\nNONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE\nLIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION\nOF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION\nWITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.",
+        "name": "LICENSE"
+      }
+    ]
+  },
+  "footer": {
+    "alwaysAddTheseLinks": {}
+  },
+  "header": {
+    "dontQuoteDescription": true,
+    "rightFloatedBadge": []
+  },
+  "licence": {
+    "extras": [],
+    "header": "## Licence",
+    "restofit": "MIT License\n\nCopyright (c) 2010-%YEAR% Roy Revelt and other contributors"
+  },
+  "npmignore": {
+    "badFiles": [
+      ".babelrc",
+      "tsconfig.json",
+      "tsconfig.build.json",
+      ".editorconfig",
+      ".eslintrc",
+      ".eslintrc.json",
+      ".gitattributes",
+      ".gitignore",
+      ".npmignore",
+      ".prettierignore",
+      ".travis.yml",
+      "benchmark.js",
+      "bitbucket-pipelines.yml",
+      "chlu_adds_missing_diff_links.gif",
+      "cli_bak.js",
+      "contributing.md",
+      "feature1.gif",
+      "ideas.md",
+      "package.json.lerna_backup",
+      "rollup.config.js",
+      "test.js",
+      "test.zip",
+      "test_bak.js",
+      "testStats.json",
+      "testStats.md",
+      "travis.js"
+    ],
+    "badFolders": [
+      ".idea",
+      ".nyc_output",
+      "coverage",
+      "docs",
+      "fixtures",
+      "media",
+      "perf",
+      "reference",
+      "src",
+      "tap",
+      "temp",
+      "test",
+      "test_alt",
+      "test-folder",
+      "test-util",
+      "t-util"
+    ],
+    "goodFiles": [
+      "cli-es5.js",
+      "cli.js",
+      "index-es5.js",
+      "index.js",
+      "index.d.ts",
+      "index.test-d.ts",
+      "init-npmignore.js",
+      "runkit_example.js",
+      "util.js"
+    ],
+    "goodFolders": ["bin", "dist", "examples", "lib", "rules", "types"]
+  },
+  "package": {
+    "devDependencies": {
+      "@babel/cli": "^7.12.10",
+      "@babel/core": "^7.12.10",
+      "@babel/node": "^7.12.10",
+      "@babel/plugin-external-helpers": "^7.12.1",
+      "@babel/plugin-proposal-nullish-coalescing-operator": "^7.12.1",
+      "@babel/plugin-proposal-object-rest-spread": "^7.12.1",
+      "@babel/plugin-proposal-optional-chaining": "^7.12.7",
+      "@babel/plugin-proposal-class-properties": "^7.12.1",
+      "@babel/preset-env": "^7.12.10",
+      "@babel/plugin-transform-runtime": "^7.12.10",
+      "@babel/preset-typescript": "^7.12.7",
+      "@babel/register": "^7.12.10",
+      "@rollup/plugin-babel": "^5.2.2",
+      "@rollup/plugin-commonjs": "^17.0.0",
+      "@rollup/plugin-node-resolve": "^11.0.1",
+      "@rollup/plugin-replace": "^2.3.4",
+      "@rollup/plugin-strip": "^2.0.0",
+      "@rollup/plugin-typescript": "^8.1.0",
+      "@types/node": "^13.13.4",
+      "@types/tap": "^14.10.1",
+      "eslint": "^7.15.0",
+      "fs-extra": "^9.0.1",
+      "lect": "^0.15.1",
+      "rollup": "^2.35.1",
+      "rollup-plugin-ascii": "^0.0.3",
+      "rollup-plugin-banner": "^0.2.1",
+      "rollup-plugin-cleanup": "^3.2.1",
+      "rollup-plugin-terser": "^7.0.2",
+      "tap": "^14.11.0",
+      "tsd": "^0.14.0",
+      "tslib": "^2.0.3",
+      "typescript": "^4.2.0-dev.20201222"
+    },
+    "tap": {
+      "coverage-report": ["text", "json-summary"],
+      "nyc-arg": ["--exclude=**/*.cjs.js", "--exclude=**/*.umd.js"],
+      "timeout": 0
+    },
+    "husky": {
+      "hooks": {
+        "pre-commit": "npm run format && npm test"
+      }
+    },
+    "license": "MIT"
+  },
+  "package_keys": {
+    "write_hard": {
+      "repository": "https://git.sr.ht/~royston/codsen"
+    },
+    "delete": [
+      "gitHead",
+      "browserslist",
+      "husky",
+      "files",
+      "lect.defaultExported",
+      "lect.files",
+      "lect.npmignore"
+    ]
+  },
+  "scripts": {
+    "cli": {
+      "ci_test": "tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",
+      "dev": "echo\"\"",
+      "devunittest": "npm run dev && ./node_modules/.bin/tap --only -R 'base' && npm run clean_cov",
+      "format": "npm run lect && npm run prettier && npm run lint",
+      "lect": "lect",
+      "lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --config \"../../.eslintrc.json\" --quiet",
+      "prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md,ts}' --write --loglevel silent",
+      "republish": "npm publish || :",
+      "tap": "tap",
+      "test": "npm run lint && npm run unittest && npm run format",
+      "unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md --reporter=terse && npm run clean_cov",
+      "clean_cov": "../../scripts/leaveCoverageTotalOnly.js"
+    },
+    "rollup": {
+      "build": "npm run clean_types -- --pt1 && rollup -c && npm run clean_types -- --pt2",
+      "ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",
+      "dev": "npm run clean_types -- --pt1 && rollup -c --dev && npm run clean_types -- --pt2",
+      "devunittest": "npm run dev && ./node_modules/.bin/tap --only -R 'base' && npm run tsd && npm run clean_cov",
+      "format": "npm run lect && npm run prettier && npm run lint",
+      "lect": "lect",
+      "lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --config \"../../.eslintrc.json\" --quiet",
+      "perf": "node perf/check",
+      "prepare": "npm run build",
+      "prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md,ts}' --write --loglevel silent",
+      "republish": "npm publish || :",
+      "tap": "tap",
+      "tsc": "tsc",
+      "tsd": "test ! -f index.d.ts || tsd",
+      "pretest": "npm run build",
+      "test": "npm run lint && npm run unittest && npm run test:examples && npm run clean_cov && npm run format",
+      "test:examples": "../../scripts/test-examples.js && npm run lect && npm run prettier",
+      "unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md --reporter=terse && npm run tsd && npm run clean_cov && npm run perf",
+      "version": "npm run build && git add .",
+      "clean_cov": "../../scripts/leaveCoverageTotalOnly.js",
+      "clean_types": "../../scripts/cleanTypes.js"
+    }
+  }
 }
