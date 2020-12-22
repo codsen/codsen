@@ -3,7 +3,7 @@
 // Quick Take
 
 import { strict as assert } from "assert";
-import traverse from "../dist/ast-monkey-traverse.esm.js";
+import { traverse } from "../dist/ast-monkey-traverse.esm.js";
 
 const paths = [];
 const source = {

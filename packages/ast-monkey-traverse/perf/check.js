@@ -7,7 +7,7 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { traverse } = require("..");
 
 const input = {
   a: {
@@ -32,7 +32,7 @@ const input = {
   },
 };
 const testme = () =>
-  f(input, (key1, val1) => {
+  traverse(input, (key1, val1) => {
     const current = val1 !== undefined ? val1 : key1;
     return current;
   });

@@ -4,7 +4,7 @@
 
 import { strict as assert } from "assert";
 import op from "object-path";
-import traverse from "../dist/ast-monkey-traverse.esm.js";
+import { traverse } from "../dist/ast-monkey-traverse.esm.js";
 
 const input = { a: "1", b: [{ c: "2" }] };
 Object.freeze(input); // let's freeze it, just for fun

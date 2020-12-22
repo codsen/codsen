@@ -3,7 +3,7 @@
 // Stop
 
 import { strict as assert } from "assert";
-import traverse from "../dist/ast-monkey-traverse.esm.js";
+import { traverse } from "../dist/ast-monkey-traverse.esm.js";
 
 const input = { a: "1", b: { c: "2" } };
 const result1 = [];

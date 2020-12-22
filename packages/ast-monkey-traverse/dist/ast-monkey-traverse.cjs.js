@@ -9,110 +9,60 @@
 
 'use strict';
 
-var clone = require('lodash.clonedeep');
+Object.defineProperty(exports, '__esModule', { value: true });
+
+var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var clone = require('lodash.clone');
+var isObj = require('lodash.isplainobject');
 var astMonkeyUtil = require('ast-monkey-util');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
+var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
+var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
-function _typeof(obj) {
-  "@babel/helpers - typeof";
+var version = "1.13.1";
 
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof = function (obj) {
-      return typeof obj;
-    };
-  } else {
-    _typeof = function (obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return _typeof(obj);
-}
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    if (enumerableOnly) symbols = symbols.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    });
-    keys.push.apply(keys, symbols);
-  }
-
-  return keys;
-}
-
-function _objectSpread2(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-
-    if (i % 2) {
-      ownKeys(Object(source), true).forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
-    } else if (Object.getOwnPropertyDescriptors) {
-      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-    } else {
-      ownKeys(Object(source)).forEach(function (key) {
-        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-      });
-    }
-  }
-
-  return target;
-}
-
-function isObj(something) {
-  return something && _typeof(something) === "object" && !Array.isArray(something);
-}
-function astMonkeyTraverse(tree1, cb1) {
+function traverse(tree1, cb1) {
   var stop2 = {
     now: false
-  };
+  }; //
+  // traverseInner() needs a wrapper to shield the last two input args from the outside
+  //
+
   function traverseInner(treeOriginal, callback, originalInnerObj, stop) {
     var tree = clone__default['default'](treeOriginal);
-    var i;
-    var len;
     var res;
-    var innerObj = _objectSpread2({
+
+    var innerObj = _objectSpread__default['default']({
       depth: -1,
       path: ""
     }, originalInnerObj);
+
     innerObj.depth += 1;
+
     if (Array.isArray(tree)) {
-      for (i = 0, len = tree.length; i < len; i++) {
+
+      for (var i = 0, len = tree.length; i < len; i++) {
+
         if (stop.now) {
           break;
         }
-        var path = innerObj.path ? "".concat(innerObj.path, ".").concat(i) : "".concat(i);
+
+        var path = innerObj.path ? innerObj.path + "." + i : "" + i;
+
         if (tree[i] !== undefined) {
           innerObj.parent = clone__default['default'](tree);
           innerObj.parentType = "array";
-          innerObj.parentKey = astMonkeyUtil.parent(path);
-          res = traverseInner(callback(tree[i], undefined, _objectSpread2(_objectSpread2({}, innerObj), {}, {
+          innerObj.parentKey = astMonkeyUtil.parent(path); // innerObj.path = `${innerObj.path}[${i}]`
+
+          res = traverseInner(callback(tree[i], undefined, _objectSpread__default['default'](_objectSpread__default['default']({}, innerObj), {}, {
             path: path
-          }), stop), callback, _objectSpread2(_objectSpread2({}, innerObj), {}, {
+          }), stop), callback, _objectSpread__default['default'](_objectSpread__default['default']({}, innerObj), {}, {
             path: path
           }), stop);
+
           if (Number.isNaN(res) && i < tree.length) {
             tree.splice(i, 1);
             i -= 1;
@@ -123,23 +73,29 @@ function astMonkeyTraverse(tree1, cb1) {
           tree.splice(i, 1);
         }
       }
-    } else if (isObj(tree)) {
+    } else if (isObj__default['default'](tree)) { // eslint-disable-next-line guard-for-in, no-restricted-syntax
+
       for (var key in tree) {
+
         if (stop.now && key != null) {
           break;
         }
-        var _path = innerObj.path ? "".concat(innerObj.path, ".").concat(key) : key;
+
+        var _path = innerObj.path ? innerObj.path + "." + key : key;
+
         if (innerObj.depth === 0 && key != null) {
           innerObj.topmostKey = key;
         }
+
         innerObj.parent = clone__default['default'](tree);
         innerObj.parentType = "object";
         innerObj.parentKey = astMonkeyUtil.parent(_path);
-        res = traverseInner(callback(key, tree[key], _objectSpread2(_objectSpread2({}, innerObj), {}, {
+        res = traverseInner(callback(key, tree[key], _objectSpread__default['default'](_objectSpread__default['default']({}, innerObj), {}, {
           path: _path
-        }), stop), callback, _objectSpread2(_objectSpread2({}, innerObj), {}, {
+        }), stop), callback, _objectSpread__default['default'](_objectSpread__default['default']({}, innerObj), {}, {
           path: _path
         }), stop);
+
         if (Number.isNaN(res)) {
           delete tree[key];
         } else {
@@ -149,7 +105,9 @@ function astMonkeyTraverse(tree1, cb1) {
     }
     return tree;
   }
-  return traverseInner(tree1, cb1, {}, stop2);
-}
 
-module.exports = astMonkeyTraverse;
+  return traverseInner(tree1, cb1, {}, stop2);
+} // -----------------------------------------------------------------------------
+
+exports.traverse = traverse;
+exports.version = version;

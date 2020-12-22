@@ -1,5 +1,5 @@
 import tap from "tap";
-import traverse1 from "../dist/ast-monkey-traverse.umd";
+import { traverse } from "../dist/ast-monkey-traverse.umd";
 
 const input = {
   a: "a",
@@ -12,7 +12,7 @@ const intended = {
 };
 
 tap.test("UMD build works fine", (t) => {
-  const actual = traverse1({ ...input }, (key1, val1) => {
+  const actual = traverse({ ...input }, (key1, val1) => {
     const current = val1 !== undefined ? val1 : key1;
     if (current === "a") {
       return NaN;

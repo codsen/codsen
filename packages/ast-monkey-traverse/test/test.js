@@ -1,7 +1,7 @@
 import tap from "tap";
 import isEqual from "lodash.isequal";
 import objectPath from "object-path";
-import traverse from "../dist/ast-monkey-traverse.esm";
+import { traverse } from "../dist/ast-monkey-traverse.esm";
 
 // -----------------------------------------------------------------------------
 // traverse

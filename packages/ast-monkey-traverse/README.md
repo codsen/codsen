@@ -34,7 +34,7 @@ npm i ast-monkey-traverse
 
 ```js
 import { strict as assert } from "assert";
-import traverse from "ast-monkey-traverse";
+import { traverse } from "ast-monkey-traverse";
 
 const paths = [];
 const source = {

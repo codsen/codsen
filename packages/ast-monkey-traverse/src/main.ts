@@ -1,28 +1,43 @@
-import clone from "lodash.clonedeep";
+import clone from "lodash.clone";
+import isObj from "lodash.isplainobject";
 import { parent } from "ast-monkey-util";
+import { version } from "../package.json";
 
-function isObj(something) {
-  return (
-    something && typeof something === "object" && !Array.isArray(something)
-  );
+interface Stop {
+  now: boolean;
 }
-function astMonkeyTraverse(tree1, cb1) {
-  const stop2 = { now: false };
-  //
-  // traverseInner() needs a wrapper to shield the internal last argument and simplify external API.
-  //
-  function traverseInner(treeOriginal, callback, originalInnerObj, stop) {
-    console.log(`015 ======= traverseInner() =======`);
-    const tree = clone(treeOriginal);
 
-    let i;
-    let len;
+interface InnerObj {
+  depth?: number;
+  path?: string;
+  topmostKey?: string;
+  parent?: any;
+  parentType?: string;
+  parentKey?: string | null;
+}
+
+type Callback = (key: string, val: any, innerObj: InnerObj, stop: Stop) => any;
+
+function traverse(tree1: any, cb1: Callback) {
+  const stop2: Stop = { now: false };
+  //
+  // traverseInner() needs a wrapper to shield the last two input args from the outside
+  //
+  function traverseInner(
+    treeOriginal: any,
+    callback: Callback,
+    originalInnerObj: InnerObj,
+    stop: Stop
+  ) {
+    console.log(`015 ======= traverseInner() =======`);
+    const tree: any = clone(treeOriginal);
+
     let res;
     const innerObj = { depth: -1, path: "", ...originalInnerObj };
     innerObj.depth += 1;
     if (Array.isArray(tree)) {
       console.log(`024 tree is array!`);
-      for (i = 0, len = tree.length; i < len; i++) {
+      for (let i = 0, len = tree.length; i < len; i++) {
         console.log(
           `027 a ${`\u001b[${36}m${`--------------------------------------------`}\u001b[${39}m`}`
         );
@@ -126,4 +141,4 @@ function astMonkeyTraverse(tree1, cb1) {
 
 // -----------------------------------------------------------------------------
 
-export default astMonkeyTraverse;
+export { traverse, version };
