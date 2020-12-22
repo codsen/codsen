@@ -109,10 +109,13 @@ function parent(str) {
   return null;
 }
 
+var version = "1.2.0";
+
 exports.parent = parent;
 exports.pathNext = pathNext;
 exports.pathPrev = pathPrev;
 exports.pathUp = pathUp;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

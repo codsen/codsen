@@ -1,4 +1,4 @@
-import nodeResolve from "@rollup/plugin-node-resolve";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
 import commonjs from "@rollup/plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
@@ -7,6 +7,7 @@ import cleanup from "rollup-plugin-cleanup";
 import banner from "rollup-plugin-banner";
 import babel from "@rollup/plugin-babel";
 import strip from "@rollup/plugin-strip";
+import json from "@rollup/plugin-json";
 import pkg from "./package.json";
 
 const licensePiece = `${pkg.name}
@@ -16,7 +17,7 @@ Author: Roy Revelt, Codsen Ltd
 License: ${pkg.license}
 Homepage: ${pkg.homepage}`;
 
-const extensions = [".ts"];
+const extensions = [".mjs", ".js", ".json", ".node", ".ts"];
 const babelRuntimeVersion = pkg.dependencies["@babel/runtime"].replace(
   /^[^0-9]*/,
   ""
@@ -45,8 +46,12 @@ export default (commandLineArgs) => {
         nodeResolve({
           extensions,
         }),
+        json(),
         commonjs(),
-        typescript({ declaration: false }),
+        typescript({
+          tsconfig: "../../tsconfig.build.json",
+          declaration: false,
+        }),
         babel({
           extensions,
           exclude: "node_modules/**",
@@ -87,7 +92,11 @@ export default (commandLineArgs) => {
         nodeResolve({
           extensions,
         }),
-        typescript({ declaration: false }),
+        json(),
+        typescript({
+          tsconfig: "../../tsconfig.build.json",
+          declaration: false,
+        }),
         commonjs(),
         babel({
           extensions,
@@ -111,7 +120,9 @@ export default (commandLineArgs) => {
     // CommonJS
     {
       input: "src/main.ts",
-      output: [{ file: pkg.main, format: "cjs", indent: false }],
+      output: [
+        { dir: "./", entryFileNames: pkg.main, format: "cjs", indent: false },
+      ],
       external: makeExternalPredicate([
         ...Object.keys(pkg.dependencies || {}),
         ...Object.keys(pkg.peerDependencies || {}),
@@ -120,7 +131,9 @@ export default (commandLineArgs) => {
         nodeResolve({
           extensions,
         }),
+        json(),
         typescript({
+          tsconfig: "../../tsconfig.build.json",
           declaration: true,
           declarationDir: "./types",
         }),
@@ -158,7 +171,11 @@ export default (commandLineArgs) => {
         nodeResolve({
           extensions,
         }),
-        typescript({ declaration: false }),
+        json(),
+        typescript({
+          tsconfig: "../../tsconfig.build.json",
+          declaration: false,
+        }),
         babel({
           extensions,
           plugins: [
@@ -192,10 +209,14 @@ export default (commandLineArgs) => {
         nodeResolve({
           extensions,
         }),
+        json(),
         replace({
           "process.env.NODE_ENV": JSON.stringify("production"),
         }),
-        typescript({ declaration: false }),
+        typescript({
+          tsconfig: "../../tsconfig.build.json",
+          declaration: false,
+        }),
         babel({
           extensions,
           exclude: "node_modules/**",

@@ -103,4 +103,6 @@ function parent(str) {
   return null;
 }
 
-export { parent, pathNext, pathPrev, pathUp };
+var version = "1.2.0";
+
+export { parent, pathNext, pathPrev, pathUp, version };
