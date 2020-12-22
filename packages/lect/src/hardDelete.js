@@ -22,15 +22,14 @@ async function hardDelete({ lectrc }) {
       fs
         .access(path.resolve(fileName), constants.F_OK)
         .then(() =>
-          fs
-            .unlink(fileName)
-            .then(
-              console.log(
-                `lect ${fileName} ${`\u001b[${31}m${"DELETED"}\u001b[${39}m`}`
-              )
-            )
+          fs.unlink(fileName).then(() => {
+            console.log(
+              `lect ${fileName} ${`\u001b[${31}m${"DELETED"}\u001b[${39}m`}`
+            );
+            return Promise.resolve(null);
+          })
         )
-        .catch(() => {})
+        .catch(() => Promise.resolve(null))
     )
   );
 }

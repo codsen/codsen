@@ -33,7 +33,10 @@ async function rollupConfig({ state }) {
         : ""
     },
         commonjs(),
-        typescript({ declaration: false }),
+        typescript({
+          tsconfig: "../../tsconfig.build.json",
+          declaration: false,
+        }),
         babel({
           extensions,
           exclude: "node_modules/**",
@@ -92,7 +95,10 @@ async function rollupConfig({ state }) {
         ? ",\n        json()"
         : ""
     },
-        typescript({ declaration: false }),
+        typescript({
+          tsconfig: "../../tsconfig.build.json",
+          declaration: false,
+        }),
         commonjs(),
         babel({
           extensions,
@@ -115,13 +121,16 @@ async function rollupConfig({ state }) {
 `;
   }
 
+  // Partial solution to put definitions into types/ folder:
+  // https://github.com/rollup/plugins/issues/61#issuecomment-597090769
+  // tldr: use "dir" and "entryFileNames" instead of usual "file"
   let defaultCommonJSBit = "";
   if (objectPath.has(state.pack, "main")) {
     defaultCommonJSBit = `
     // CommonJS
     {
       input: "src/main.ts",
-      output: [{ file: pkg.main, format: "cjs", indent: false }],
+      output: [{ dir: "./", entryFileNames: pkg.main, format: "cjs", indent: false }],
       external: makeExternalPredicate([
         ...Object.keys(pkg.dependencies || {}),
         ...Object.keys(pkg.peerDependencies || {}),
@@ -143,6 +152,7 @@ async function rollupConfig({ state }) {
         : ""
     },
         typescript({
+          tsconfig: "../../tsconfig.build.json",
           declaration: true,
           declarationDir: "./types",
         }),
@@ -197,7 +207,10 @@ async function rollupConfig({ state }) {
         ? ",\n        json()"
         : ""
     },
-        typescript({ declaration: false }),
+        typescript({
+          tsconfig: "../../tsconfig.build.json",
+          declaration: false,
+        }),
         babel({
           extensions,
           plugins: [
@@ -251,7 +264,10 @@ async function rollupConfig({ state }) {
         replace({
           "process.env.NODE_ENV": JSON.stringify("production"),
         }),
-        typescript({ declaration: false }),
+        typescript({
+          tsconfig: "../../tsconfig.build.json",
+          declaration: false,
+        }),
         babel({
           extensions,
           exclude: "node_modules/**",
@@ -286,7 +302,7 @@ async function rollupConfig({ state }) {
     state.pack.devDependencies["rollup-plugin-node-globals"]
       ? `import globals from "rollup-plugin-node-globals";\n`
       : ""
-  }import nodeResolve from "@rollup/plugin-node-resolve";
+  }import { nodeResolve } from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
 import commonjs from "@rollup/plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
@@ -308,7 +324,7 @@ Author: Roy Revelt, Codsen Ltd
 License: \${pkg.license}
 Homepage: \${pkg.homepage}\`;
 
-const extensions = [".ts"];
+const extensions = [".mjs", ".js", ".json", ".node", ".ts"];
 const babelRuntimeVersion = pkg.dependencies["@babel/runtime"].replace(
   /^[^0-9]*/,
   ""
@@ -323,8 +339,7 @@ const makeExternalPredicate = (externalArr) => {
 };
 
 export default (commandLineArgs) => {
-  const finalConfig = [${defaultUmdBit}${defaultDevUmdBit}${defaultCommonJSBit}${defaultESMBit}${defaultESBrowsersBit}
-  ];
+  const finalConfig = [${defaultUmdBit}${defaultDevUmdBit}${defaultCommonJSBit}${defaultESMBit}${defaultESBrowsersBit}  ];
 
   if (commandLineArgs.dev) {
     // don't build minified UMD in dev, it takes too long

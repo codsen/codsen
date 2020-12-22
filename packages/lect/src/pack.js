@@ -19,6 +19,13 @@ async function packageJson({ state, lectrc }) {
   const cliDevDeps = ["execa", "tempy", "tap"];
   const content = { ...state.pack };
 
+  // common, optional Rollup devdeps are permanently whitelisted
+  const devDepsWhitelist = [
+    "@rollup/plugin-json",
+    "rollup-plugin-node-builtins",
+    "rollup-plugin-node-globals",
+  ];
+
   function format(obj) {
     if (typeof obj !== "object") {
       return obj;
@@ -48,17 +55,19 @@ async function packageJson({ state, lectrc }) {
     state.isCLI ? "scripts.cli" : "scripts.rollup"
   );
 
-  const whitelistedDevDeps =
+  const officialDevDeps =
     objectPath.get(content, "lect.various.devDependencies") || [];
   const lectDevDeps = objectPath.get(lectrc, "package.devDependencies") || {};
 
   // 2. delete dev deps
   Object.keys(content.devDependencies).forEach((devDep) => {
     if (
-      // if package has a devdep which doesn't exist in .lectrc.package.devDependencies
-      // and it's not whitelisted via package.json key
-      (!lectDevDeps[devDep] &&
-        !whitelistedDevDeps.includes(devDep) &&
+      // it's not a whitelisted dev dependency
+      (!devDepsWhitelist.includes(devDep) &&
+        // if package has a devdep which doesn't exist in .lectrc.package.devDependencies
+        // and it's not whitelisted via package.json key
+        !lectDevDeps[devDep] &&
+        !officialDevDeps.includes(devDep) &&
         // either it's not a CLI so we don't care
         (!state.isCLI ||
           // dependency is not whitelisted
@@ -68,7 +77,7 @@ async function packageJson({ state, lectrc }) {
         // and it's a rogue, a program-specific devdep
         programDevDeps.some((dep) => devDep.startsWith(dep)))
     ) {
-      console.log(`071 ██ deleted devDependencies.${devDep}`);
+      console.log(`lect: deleted devDependencies.${devDep}`);
       objectPath.del(content, `devDependencies.${devDep}`);
     }
   });
@@ -84,7 +93,7 @@ async function packageJson({ state, lectrc }) {
         // or it's not among known program-specific devdeps
         !programDevDeps.some((dep) => devDep.startsWith(dep)))
     ) {
-      console.log(`087 ██ add ${devDep}`);
+      console.log(`lect: added devdep ${devDep}`);
       content.devDependencies[devDep] = lectDevDeps[devDep];
     }
   });
@@ -95,23 +104,26 @@ async function packageJson({ state, lectrc }) {
   Object.keys(lectKeysHardWrite).forEach((key) => {
     if (content[key] !== lectKeysHardWrite[key]) {
       content[key] = lectKeysHardWrite[key];
-      console.log(`098 ██ write key ${key} to package.json`);
+      console.log(`lect: wrote key ${key} to package.json`);
     }
   });
 
   // 5. delete adhoc keys
   const lectKeysDelete = objectPath.get(lectrc, "package_keys.delete") || [];
   lectKeysDelete.forEach((key) => {
-    if (content[key]) {
-      console.log(`106 ██ deleted key "${key}" from package.json`);
+    if (objectPath.has(content, key)) {
+      console.log(`lect: deleted key "${key}" from package.json`);
       objectPath.del(content, key);
     }
   });
 
   // 6. set various keys
-  objectPath.set(content, "main", `dist/${state.pack.name}.cjs.js`);
-  objectPath.set(content, "module", `dist/${state.pack.name}.esm.js`);
-  objectPath.set(content, "browser", `dist/${state.pack.name}.umd.js`);
+  if (!state.isCLI) {
+    objectPath.set(content, "main", `dist/${state.pack.name}.cjs.js`);
+    objectPath.set(content, "module", `dist/${state.pack.name}.esm.js`);
+    objectPath.set(content, "browser", `dist/${state.pack.name}.umd.js`);
+    objectPath.set(content, "types", `types/main.d.ts`);
+  }
 
   // 7. capitalise first letter in description
   if (
@@ -124,6 +136,21 @@ async function packageJson({ state, lectrc }) {
     content.description = `${content.description[0].toUpperCase()}${content.description.slice(
       1
     )}`;
+  }
+
+  // 8. remove whitelisted devdeps from package.json lect key dev deps ignore
+  if (objectPath.get(content, `lect.various.devDependencies`)) {
+    objectPath.set(
+      content,
+      `lect.various.devDependencies`,
+      objectPath.get(content, `lect.various.devDependencies`).filter(
+        (devDep) =>
+          // if it's among whitelisted-ones, don't keep it
+          !devDepsWhitelist.includes(devDep) &&
+          // if it's abandoned, not in the devdeps list in package.json, don't keep it
+          Object.keys(content.devDependencies).includes(devDep)
+      )
+    );
   }
 
   // WRITE IT
