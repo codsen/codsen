@@ -34,10 +34,10 @@ npm i array-pull-all-with-glob
 
 ```js
 import { strict as assert } from "assert";
-import pullAllWithGlob from "array-pull-all-with-glob";
+import { pull } from "array-pull-all-with-glob";
 
 assert.deepEqual(
-  pullAllWithGlob(
+  pull(
     ["keep_me", "name-1", "name-2", "name-jhkgdhgkhdfghdkghfdk"],
     ["name-*"]
   ),

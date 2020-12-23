@@ -7,10 +7,10 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { pull } = require("..");
 
 const testme = () =>
-  f(
+  pull(
     [
       "Module-1",
       "only this left",

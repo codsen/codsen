@@ -9,94 +9,30 @@
 
 import matcher from 'matcher';
 
-function pullAllWithGlob(originalInput, originalToBeRemoved, originalOpts) {
-  function isStr(something) {
-    return typeof something === "string";
-  }
-  if (!Array.isArray(originalInput)) {
-    throw new Error(
-      `array-pull-all-with-glob: [THROW_ID_01] first argument must be an array! Currently it's ${typeof originalInput}, equal to: ${JSON.stringify(
-        originalInput,
-        null,
-        4
-      )}`
-    );
-  } else if (!originalInput.length) {
+var version = "4.13.0";
+
+function pull(originalInput, originalToBeRemoved, originalOpts) {
+  // insurance
+  if (!originalInput.length) {
     return [];
   }
-  if (originalToBeRemoved == null) {
-    throw new Error(
-      "array-pull-all-with-glob: [THROW_ID_02] second argument is missing!"
-    );
+
+  if (!originalInput.length || !originalToBeRemoved.length) {
+    return Array.from(originalInput);
   }
-  let toBeRemoved;
-  if (typeof originalToBeRemoved === "string") {
-    if (originalToBeRemoved.length === 0) {
-      return originalInput;
-    }
-    toBeRemoved = [originalToBeRemoved];
-  } else if (Array.isArray(originalToBeRemoved)) {
-    if (originalToBeRemoved.length === 0) {
-      return originalInput;
-    }
-    toBeRemoved = Array.from(originalToBeRemoved);
-  } else if (!Array.isArray(originalToBeRemoved)) {
-    throw new Error(
-      `array-pull-all-with-glob: [THROW_ID_04] first argument must be an array! Currently it's ${typeof originalToBeRemoved}, equal to: ${JSON.stringify(
-        originalToBeRemoved,
-        null,
-        4
-      )}`
-    );
-  }
-  if (originalInput.length === 0 || originalToBeRemoved.length === 0) {
-    return originalInput;
-  }
-  if (!originalInput.every((el) => isStr(el))) {
-    throw new Error(
-      `array-pull-all-with-glob: [THROW_ID_05] first argument array contains non-string elements: ${JSON.stringify(
-        originalInput,
-        null,
-        4
-      )}`
-    );
-  }
-  if (!toBeRemoved.every((el) => isStr(el))) {
-    throw new Error(
-      `array-pull-all-with-glob: [THROW_ID_06] first argument array contains non-string elements: ${JSON.stringify(
-        toBeRemoved,
-        null,
-        4
-      )}`
-    );
-  }
-  if (
-    originalOpts &&
-    (Array.isArray(originalOpts) || typeof originalOpts !== "object")
-  ) {
-    throw new Error(
-      `array-pull-all-with-glob: [THROW_ID_07] third argument, options object is not a plain object but ${
-        Array.isArray(originalOpts) ? "array" : typeof originalOpts
-      }`
-    );
-  }
-  let opts;
+
+  const toBeRemoved = typeof originalToBeRemoved === "string" ? [originalToBeRemoved] : Array.from(originalToBeRemoved); // opts are mirroring matcher's at the moment, can't promise that for the future
+
   const defaults = {
-    caseSensitive: true,
+    caseSensitive: true
   };
-  if (originalOpts === null) {
-    opts = { ...defaults };
-  } else {
-    opts = { ...defaults, ...originalOpts };
-  }
-  return Array.from(originalInput).filter(
-    (originalVal) =>
-      !toBeRemoved.some((remVal) =>
-        matcher.isMatch(originalVal, remVal, {
-          caseSensitive: opts.caseSensitive,
-        })
-      )
-  );
+  const opts = { ...defaults,
+    ...originalOpts
+  };
+  const res = Array.from(originalInput).filter(originalVal => !toBeRemoved.some(remVal => matcher.isMatch(originalVal, remVal, {
+    caseSensitive: opts.caseSensitive
+  })));
+  return res;
 }
 
-export default pullAllWithGlob;
+export { pull, version };

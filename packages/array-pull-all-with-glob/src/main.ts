@@ -1,0 +1,42 @@
+import matcher from "matcher";
+import { version } from "../package.json";
+
+interface Opts {
+  caseSensitive?: boolean;
+}
+
+function pull(
+  originalInput: string[],
+  originalToBeRemoved: string | string[],
+  originalOpts?: Opts
+): string[] {
+  // insurance
+  if (!originalInput.length) {
+    return [];
+  }
+  if (!originalInput.length || !originalToBeRemoved.length) {
+    return Array.from(originalInput);
+  }
+  const toBeRemoved: string[] =
+    typeof originalToBeRemoved === "string"
+      ? [originalToBeRemoved]
+      : Array.from(originalToBeRemoved);
+
+  // opts are mirroring matcher's at the moment, can't promise that for the future
+  const defaults: Opts = {
+    caseSensitive: true,
+  };
+  const opts: Opts = { ...defaults, ...originalOpts };
+
+  const res = Array.from(originalInput).filter(
+    (originalVal) =>
+      !toBeRemoved.some((remVal) =>
+        matcher.isMatch(originalVal, remVal, {
+          caseSensitive: opts.caseSensitive,
+        })
+      )
+  );
+  return res;
+}
+
+export { pull, version };
