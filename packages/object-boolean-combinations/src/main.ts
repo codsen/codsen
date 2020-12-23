@@ -4,6 +4,7 @@ import intersection from "lodash.intersection";
 import pull from "lodash.pull";
 import isObj from "lodash.isplainobject";
 import clone from "lodash.clonedeep";
+import { version } from "../package.json";
 
 interface BoolValueObj {
   [key: string]: boolean;
@@ -108,4 +109,4 @@ function combinations(
   return outcomingObjectsArray;
 }
 
-export { combinations };
+export { combinations, version };

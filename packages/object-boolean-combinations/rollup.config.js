@@ -7,6 +7,7 @@ import cleanup from "rollup-plugin-cleanup";
 import banner from "rollup-plugin-banner";
 import babel from "@rollup/plugin-babel";
 import strip from "@rollup/plugin-strip";
+import json from "@rollup/plugin-json";
 import pkg from "./package.json";
 
 const licensePiece = `${pkg.name}
@@ -45,6 +46,7 @@ export default (commandLineArgs) => {
         nodeResolve({
           extensions,
         }),
+        json(),
         commonjs(),
         typescript({
           tsconfig: "../../tsconfig.build.json",
@@ -90,6 +92,7 @@ export default (commandLineArgs) => {
         nodeResolve({
           extensions,
         }),
+        json(),
         typescript({
           tsconfig: "../../tsconfig.build.json",
           declaration: false,
@@ -128,6 +131,7 @@ export default (commandLineArgs) => {
         nodeResolve({
           extensions,
         }),
+        json(),
         typescript({
           tsconfig: "../../tsconfig.build.json",
           declaration: true,
@@ -167,6 +171,7 @@ export default (commandLineArgs) => {
         nodeResolve({
           extensions,
         }),
+        json(),
         typescript({
           tsconfig: "../../tsconfig.build.json",
           declaration: false,
@@ -204,6 +209,7 @@ export default (commandLineArgs) => {
         nodeResolve({
           extensions,
         }),
+        json(),
         replace({
           "process.env.NODE_ENV": JSON.stringify("production"),
         }),
