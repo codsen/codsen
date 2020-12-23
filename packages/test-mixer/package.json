@@ -64,7 +64,7 @@
         ""
       ]
     },
-    "req": "mixer",
+    "req": "{ mixer }",
     "various": {
       "devDependencies": [
         "@types/lodash.clonedeep"
