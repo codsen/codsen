@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import traverse from "../dist/ast-monkey-traverse-with-lookahead.esm.js";
+import { traverse } from "../dist/ast-monkey-traverse-with-lookahead.esm.js";
 
 const input = [
   {

@@ -1,17 +1,41 @@
 import clone from "lodash.clonedeep";
+import isObj from "lodash.isplainobject";
+import { version } from "../package.json";
 
-function trimFirstDot(str) {
-  if (typeof str === "string" && str[0] === ".") {
-    return str.slice(1);
+type NextToken = [
+  key: "string",
+  value: any,
+  innerObj: {
+    depth: number;
+    path: string;
+    parent: any;
+    parentType: string;
   }
-  return str;
+];
+
+interface InnerObj {
+  depth: number;
+  path: string;
+  topmostKey?: string;
+  parent?: any;
+  parentType?: string;
+  next?: NextToken[];
 }
-function isObj(something) {
-  return (
-    something && typeof something === "object" && !Array.isArray(something)
-  );
-}
-function astMonkeyTraverseWithLookahead(tree1, cb1, lookahead = 0) {
+
+type Callback = (
+  key?: string,
+  val?: any,
+  innerObj?: InnerObj,
+  stop?: { now: boolean }
+) => any;
+
+function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
+  function trimFirstDot(str: any) {
+    if (typeof str === "string" && str[0] === ".") {
+      return str.slice(1);
+    }
+    return str;
+  }
   console.log(
     `016 ${`\u001b[${33}m${`lookahead`}\u001b[${39}m`} = ${JSON.stringify(
       lookahead,
@@ -24,13 +48,18 @@ function astMonkeyTraverseWithLookahead(tree1, cb1, lookahead = 0) {
   // that's where we stash the arguments that the callback function tries
   // to ping; we keep them until enough of them is gathered to set them as
   // "future" values:
-  const stash = [];
+  const stash: any[] = [];
   // ^ LIFO STACK
 
   //
   // traverseInner() needs a wrapper to shield the internal arguments and simplify external API.
   //
-  function traverseInner(tree, callback, innerObj, stop) {
+  function traverseInner(
+    tree: any,
+    callback: Callback,
+    innerObj: InnerObj,
+    stop: { now: boolean }
+  ) {
     console.log(`034 ======= traverseInner() =======`);
     console.log(
       `036 ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} ${`\u001b[${33}m${`tree`}\u001b[${39}m`} = ${JSON.stringify(
@@ -40,7 +69,7 @@ function astMonkeyTraverseWithLookahead(tree1, cb1, lookahead = 0) {
       )}`
     );
 
-    innerObj = { depth: -1, path: "", ...innerObj };
+    innerObj = { ...innerObj };
     innerObj.depth += 1;
 
     if (Array.isArray(tree)) {
@@ -134,7 +163,7 @@ function astMonkeyTraverseWithLookahead(tree1, cb1, lookahead = 0) {
       `134 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ██ ${`\u001b[${33}m${`START`}\u001b[${39}m`}`
     );
     // start to assemble node we're report to the callback cb1()
-    const currentElem = stash.shift();
+    const currentElem: any = stash.shift();
     // ^ shift removes it from stash
     // now we need the "future" nodes, as many as "lookahead" of them
 
@@ -176,7 +205,7 @@ function astMonkeyTraverseWithLookahead(tree1, cb1, lookahead = 0) {
 
   // used to buffer "lookahead"-amount of results and report them as "future"
   // nodes
-  function intermediary(...incoming) {
+  function intermediary(...incoming: any) {
     console.log(
       `181 ${`\u001b[${36}m${`intermediary()`}\u001b[${39}m`}: INCOMING ${JSON.stringify(
         incoming,
@@ -226,7 +255,15 @@ function astMonkeyTraverseWithLookahead(tree1, cb1, lookahead = 0) {
     }
   }
 
-  traverseInner(tree1, intermediary, {}, stop1);
+  traverseInner(
+    tree1,
+    intermediary,
+    {
+      depth: -1,
+      path: "",
+    },
+    stop1
+  );
 
   console.log(`231 ███████████████████████████████████████`);
   console.log(`232 ███████████████████████████████████████`);
@@ -254,4 +291,4 @@ function astMonkeyTraverseWithLookahead(tree1, cb1, lookahead = 0) {
 
 // -----------------------------------------------------------------------------
 
-export default astMonkeyTraverseWithLookahead;
+export { traverse, version };

@@ -1,5 +1,5 @@
 import tap from "tap";
-import traverse1 from "../dist/ast-monkey-traverse-with-lookahead.umd";
+import { traverse } from "../dist/ast-monkey-traverse-with-lookahead.umd";
 
 tap.test(`"UMD build works fine"`, (t) => {
   const input = [
@@ -15,7 +15,7 @@ tap.test(`"UMD build works fine"`, (t) => {
   ];
   const gathered = [];
 
-  traverse1(
+  traverse(
     input,
     (key1, val1, innerObj) => {
       gathered.push([key1, val1, innerObj]);

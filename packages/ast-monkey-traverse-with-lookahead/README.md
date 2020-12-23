@@ -34,7 +34,7 @@ npm i ast-monkey-traverse-with-lookahead
 
 ```js
 import { strict as assert } from "assert";
-import traverse from "ast-monkey-traverse-with-lookahead";
+import { traverse } from "ast-monkey-traverse-with-lookahead";
 
 const input = [
   {

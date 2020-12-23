@@ -1,9 +1,7 @@
 /* eslint no-param-reassign:0 */
 
 import tap from "tap";
-// import isEqual from "lodash.isequal");
-// import objectPath from "object-path");
-import traverse from "../dist/ast-monkey-traverse-with-lookahead.esm";
+import { traverse } from "../dist/ast-monkey-traverse-with-lookahead.esm";
 
 // -----------------------------------------------------------------------------
 // traverse
