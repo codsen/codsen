@@ -7,9 +7,9 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { arrObjOrBoth } = require("..");
 
-const testme = () => f("any");
+const testme = () => arrObjOrBoth("any");
 
 // action
 runPerf(testme, callerDir);

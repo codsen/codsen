@@ -1,66 +1,40 @@
 import tap from "tap";
-import aoob from "../dist/util-array-object-or-both.esm";
-
-// ===========
-// precautions
-// ===========
-
-tap.test("01 - wrong/missing inputs - throws", (t) => {
-  t.throws(() => {
-    aoob();
-  }, /THROW_ID_01/g);
-  t.throws(() => {
-    aoob(1);
-  }, /THROW_ID_02/g);
-  t.throws(() => {
-    aoob(["a"]);
-  }, /THROW_ID_02/g);
-  t.doesNotThrow(() => {
-    aoob("any");
-  }, "01.04");
-  t.throws(() => {
-    aoob("any", 1);
-  }, /THROW_ID_03/g);
-  t.doesNotThrow(() => {
-    aoob("any", null);
-  }, "01.06");
-  t.end();
-});
+import { arrObjOrBoth } from "../dist/util-array-object-or-both.esm";
 
 // ===
 // BAU
 // ===
 
 tap.test("02 - arrays", (t) => {
-  t.strictSame(aoob("array"), "array", "02.01");
-  t.strictSame(aoob("Array"), "array", "02.02");
-  t.strictSame(aoob("\n\nArray\t \t"), "array", "02.03");
-  t.strictSame(aoob("\n\n   a \t"), "array", "02.04");
-  t.strictSame(aoob("\n\n   arr \t"), "array", "02.05");
-  t.strictSame(aoob("\n\n   ARR \t"), "array", "02.06");
+  t.strictSame(arrObjOrBoth("array"), "array", "02.01");
+  t.strictSame(arrObjOrBoth("Array"), "array", "02.02");
+  t.strictSame(arrObjOrBoth("\n\nArray\t \t"), "array", "02.03");
+  t.strictSame(arrObjOrBoth("\n\n   a \t"), "array", "02.04");
+  t.strictSame(arrObjOrBoth("\n\n   arr \t"), "array", "02.05");
+  t.strictSame(arrObjOrBoth("\n\n   ARR \t"), "array", "02.06");
   t.end();
 });
 
 tap.test("03 - objects", (t) => {
-  t.strictSame(aoob("object"), "object", "03.01");
-  t.strictSame(aoob("Object"), "object", "03.02");
-  t.strictSame(aoob("obj"), "object", "03.03");
-  t.strictSame(aoob("o"), "object", "03.04");
-  t.strictSame(aoob("  object"), "object", "03.05");
-  t.strictSame(aoob("Object   "), "object", "03.06");
-  t.strictSame(aoob("\nobj"), "object", "03.07");
-  t.strictSame(aoob("o\n\n "), "object", "03.08");
-  t.strictSame(aoob(" OBJ"), "object", "03.09");
+  t.strictSame(arrObjOrBoth("object"), "object", "03.01");
+  t.strictSame(arrObjOrBoth("Object"), "object", "03.02");
+  t.strictSame(arrObjOrBoth("obj"), "object", "03.03");
+  t.strictSame(arrObjOrBoth("o"), "object", "03.04");
+  t.strictSame(arrObjOrBoth("  object"), "object", "03.05");
+  t.strictSame(arrObjOrBoth("Object   "), "object", "03.06");
+  t.strictSame(arrObjOrBoth("\nobj"), "object", "03.07");
+  t.strictSame(arrObjOrBoth("o\n\n "), "object", "03.08");
+  t.strictSame(arrObjOrBoth(" OBJ"), "object", "03.09");
   t.end();
 });
 
 tap.test("04 - any", (t) => {
-  t.strictSame(aoob("any"), "any", "04.01");
-  t.strictSame(aoob("all"), "any", "04.02");
-  t.strictSame(aoob("Everything"), "any", "04.03");
-  t.strictSame(aoob("e"), "any", "04.04");
-  t.strictSame(aoob("ANY"), "any", "04.05");
-  t.strictSame(aoob("\n\n all"), "any", "04.06");
+  t.strictSame(arrObjOrBoth("any"), "any", "04.01");
+  t.strictSame(arrObjOrBoth("all"), "any", "04.02");
+  t.strictSame(arrObjOrBoth("Everything"), "any", "04.03");
+  t.strictSame(arrObjOrBoth("e"), "any", "04.04");
+  t.strictSame(arrObjOrBoth("ANY"), "any", "04.05");
+  t.strictSame(arrObjOrBoth("\n\n all"), "any", "04.06");
   t.end();
 });
 
@@ -70,24 +44,24 @@ tap.test("04 - any", (t) => {
 
 tap.test("05 - opts.msg", (t) => {
   t.strictSame(
-    aoob("object", {
+    arrObjOrBoth("object", {
       msg: "z",
     }),
     "object",
     "05.01"
   );
   t.throws(() => {
-    aoob("aaa", {
+    arrObjOrBoth("aaa", {
       msg: "z",
     });
   }, "z The given variable was customised to an unrecognised value: aaa. Please check it against the API documentation.");
   t.throws(() => {
-    aoob("aaa", {
+    arrObjOrBoth("aaa", {
       msg: "some-library/some-function(): [THROW_ID_99]",
     });
   }, "some-library/some-function(): [THROW_ID_99] The given variable was customised to an unrecognised value: aaa. Please check it against the API documentation.");
   t.throws(() => {
-    aoob("bbb", {
+    arrObjOrBoth("bbb", {
       msg: "some-library/some-function(): [THROW_ID_99]",
       optsVarName: "only",
     });

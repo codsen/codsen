@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import arrObjOrBoth from "../dist/util-array-object-or-both.esm.js";
+import { arrObjOrBoth } from "../dist/util-array-object-or-both.esm.js";
 
 // normalises string, a user preference:
 

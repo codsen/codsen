@@ -34,7 +34,7 @@ npm i util-array-object-or-both
 
 ```js
 import { strict as assert } from "assert";
-import arrObjOrBoth from "util-array-object-or-both";
+import { arrObjOrBoth } from "util-array-object-or-both";
 
 // normalises string, a user preference:
 
