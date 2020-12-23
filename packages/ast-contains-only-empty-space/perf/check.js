@@ -7,10 +7,10 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { empty } = require("..");
 
 const testme = () =>
-  f([
+  empty([
     "   ",
     {
       key2: "   ",

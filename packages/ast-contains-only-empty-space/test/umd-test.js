@@ -1,5 +1,5 @@
 import tap from "tap";
-import empty1 from "../dist/ast-contains-only-empty-space.umd";
+import { empty } from "../dist/ast-contains-only-empty-space.umd";
 
 const source = [
   "   ",
@@ -12,6 +12,6 @@ const source = [
 ];
 
 tap.test("UMD build works fine", (t) => {
-  t.ok(empty1(source), "01");
+  t.ok(empty(source), "01");
   t.end();
 });

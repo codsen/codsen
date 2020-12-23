@@ -1,6 +1,6 @@
-import traverse from "ast-monkey-traverse";
+import { traverse } from "ast-monkey-traverse";
 
-function containsOnlyEmptySpace(input) {
+function empty(input: any): boolean {
   if (typeof input === "string") {
     console.log(`005 return ${!input.trim()}`);
     return !input.trim();
@@ -46,4 +46,4 @@ function containsOnlyEmptySpace(input) {
   return found;
 }
 
-export default containsOnlyEmptySpace;
+export { empty };

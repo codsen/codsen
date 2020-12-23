@@ -34,10 +34,10 @@ npm i ast-contains-only-empty-space
 
 ```js
 import { strict as assert } from "assert";
-import containsOnlyEmptySpace from "ast-contains-only-empty-space";
+import { empty } from "ast-contains-only-empty-space";
 
 assert.equal(
-  containsOnlyEmptySpace({
+  empty({
     a: [
       {
         x: {

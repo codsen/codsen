@@ -1,12 +1,10 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import containsOnlyEmptySpace from "../dist/ast-contains-only-empty-space.esm.js";
+import { empty } from "../dist/ast-contains-only-empty-space.esm.js";
 
 assert.equal(
-  containsOnlyEmptySpace({
+  empty({
     a: [
       {
         x: {
