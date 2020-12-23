@@ -1,5 +1,5 @@
 import tap from "tap";
-import objectBooleanCombinations from "../dist/object-boolean-combinations.esm";
+import { combinations } from "../dist/object-boolean-combinations.esm";
 
 // ==============================
 // Edge cases
@@ -8,35 +8,35 @@ import objectBooleanCombinations from "../dist/object-boolean-combinations.esm";
 tap.test("01 - both inputs missing - throws", (t) => {
   t.throws(
     () => {
-      objectBooleanCombinations();
+      combinations();
     },
     /THROW_ID_01/,
     "01.01"
   );
   t.throws(
     () => {
-      objectBooleanCombinations(undefined);
+      combinations(undefined);
     },
     /THROW_ID_01/,
     "01.02"
   );
   t.throws(
     () => {
-      objectBooleanCombinations(undefined, undefined);
+      combinations(undefined, undefined);
     },
     /THROW_ID_01/,
     "01.03"
   );
   t.throws(
     () => {
-      objectBooleanCombinations(undefined, undefined, undefined);
+      combinations(undefined, undefined, undefined);
     },
     /THROW_ID_01/,
     "01.04"
   );
   t.throws(
     () => {
-      objectBooleanCombinations(undefined, undefined, true);
+      combinations(undefined, undefined, true);
     },
     /THROW_ID_01/,
     "01.05"
@@ -44,7 +44,7 @@ tap.test("01 - both inputs missing - throws", (t) => {
 
   t.throws(
     () => {
-      objectBooleanCombinations(null);
+      combinations(null);
     },
     /THROW_ID_01/,
     "01.06"
@@ -52,7 +52,7 @@ tap.test("01 - both inputs missing - throws", (t) => {
 
   t.throws(
     () => {
-      objectBooleanCombinations(null, null);
+      combinations(null, null);
     },
     /THROW_ID_01/,
     "01.07"
@@ -63,16 +63,17 @@ tap.test("01 - both inputs missing - throws", (t) => {
 tap.test("02 - first input is not an object - throws", (t) => {
   t.throws(
     () => {
-      objectBooleanCombinations("a");
+      combinations("a");
     },
     /THROW_ID_02/,
     "02.01"
   );
 
+  // eslint-disable-next-line
   const fn = () => {};
   t.throws(
     () => {
-      objectBooleanCombinations(fn);
+      combinations(fn);
     },
     /THROW_ID_02/,
     "02.02"
@@ -80,7 +81,7 @@ tap.test("02 - first input is not an object - throws", (t) => {
 
   t.throws(
     () => {
-      objectBooleanCombinations("a", "a");
+      combinations("a", "a");
     },
     /THROW_ID_02/,
     "02.03"
@@ -88,7 +89,7 @@ tap.test("02 - first input is not an object - throws", (t) => {
 
   t.throws(
     () => {
-      objectBooleanCombinations("a", "a", true);
+      combinations("a", "a", true);
     },
     /THROW_ID_02/,
     "02.04"
@@ -99,7 +100,7 @@ tap.test("02 - first input is not an object - throws", (t) => {
 tap.test("03 - second input is not an object - throws", (t) => {
   t.throws(
     () => {
-      objectBooleanCombinations({ a: "a" }, "a");
+      combinations({ a: "a" }, "a");
     },
     /THROW_ID_03/,
     "03"

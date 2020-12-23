@@ -34,7 +34,7 @@ npm i object-boolean-combinations
 
 ```js
 import { strict as assert } from "assert";
-import combinations from "object-boolean-combinations";
+import { combinations } from "object-boolean-combinations";
 
 assert.deepEqual(
   combinations({

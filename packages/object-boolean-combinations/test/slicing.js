@@ -1,5 +1,5 @@
 import tap from "tap";
-import objectBooleanCombinations from "../dist/object-boolean-combinations.esm";
+import { combinations } from "../dist/object-boolean-combinations.esm";
 
 // ==============================
 // Overrides or slicing
@@ -9,10 +9,7 @@ tap.test("01 - three properties two overrides", (t) => {
   // default, truthy/falsy numbers are output
 
   t.strictSame(
-    objectBooleanCombinations(
-      { a: false, b: false, c: false },
-      { a: true, b: true }
-    ),
+    combinations({ a: false, b: false, c: false }, { a: true, b: true }),
     [
       { a: true, b: true, c: false },
       { a: true, b: true, c: true },
@@ -20,10 +17,7 @@ tap.test("01 - three properties two overrides", (t) => {
     "01.01"
   );
   t.strictSame(
-    objectBooleanCombinations(
-      { a: false, b: false, c: false },
-      { a: "z", b: "y" }
-    ),
+    combinations({ a: false, b: false, c: false }, { a: "z", b: "y" }),
     [
       { a: "z", b: "y", c: false },
       { a: "z", b: "y", c: true },
@@ -31,10 +25,7 @@ tap.test("01 - three properties two overrides", (t) => {
     "01.02 - override key values are strings"
   );
   t.strictSame(
-    objectBooleanCombinations(
-      { a: false, b: false, c: false },
-      { a: null, b: null }
-    ),
+    combinations({ a: false, b: false, c: false }, { a: null, b: null }),
     [
       { a: null, b: null, c: false },
       { a: null, b: null, c: true },
@@ -42,10 +33,7 @@ tap.test("01 - three properties two overrides", (t) => {
     "01.03 - override key values are strings"
   );
   t.strictSame(
-    objectBooleanCombinations(
-      { a: false, b: false, c: false },
-      { a: ["x"], b: ["y"] }
-    ),
+    combinations({ a: false, b: false, c: false }, { a: ["x"], b: ["y"] }),
     [
       { a: ["x"], b: ["y"], c: false },
       { a: ["x"], b: ["y"], c: true },
@@ -57,7 +45,7 @@ tap.test("01 - three properties two overrides", (t) => {
 
 tap.test("02 - four properties three overrides", (t) => {
   t.strictSame(
-    objectBooleanCombinations(
+    combinations(
       {
         a: true,
         b: false,
@@ -90,7 +78,7 @@ tap.test("02 - four properties three overrides", (t) => {
 
 tap.test("03 - empty override object", (t) => {
   t.strictSame(
-    objectBooleanCombinations({ a: true, b: false, c: false }, {}),
+    combinations({ a: true, b: false, c: false }, {}),
     [
       { a: false, b: false, c: false },
       { a: true, b: false, c: false },
@@ -106,25 +94,7 @@ tap.test("03 - empty override object", (t) => {
   t.end();
 });
 
-tap.test("04 - override object is null", (t) => {
-  t.strictSame(
-    objectBooleanCombinations({ a: true, b: false, c: false }, null),
-    [
-      { a: false, b: false, c: false },
-      { a: true, b: false, c: false },
-      { a: false, b: true, c: false },
-      { a: true, b: true, c: false },
-      { a: false, b: false, c: true },
-      { a: true, b: false, c: true },
-      { a: false, b: true, c: true },
-      { a: true, b: true, c: true },
-    ],
-    "04"
-  );
-  t.end();
-});
-
 tap.test("05 - both input and override objects empty", (t) => {
-  t.strictSame(objectBooleanCombinations({}, {}), [{}], "05");
+  t.strictSame(combinations({}, {}), [{}], "05");
   t.end();
 });

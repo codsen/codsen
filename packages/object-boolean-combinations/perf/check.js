@@ -7,10 +7,10 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { combinations } = require("..");
 
 const testme = () =>
-  f({
+  combinations({
     a: 1,
     b: 1,
     c: 1,

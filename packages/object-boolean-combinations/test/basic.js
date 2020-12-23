@@ -1,5 +1,5 @@
 import tap from "tap";
-import objectBooleanCombinations from "../dist/object-boolean-combinations.esm";
+import { combinations } from "../dist/object-boolean-combinations.esm";
 
 // ==============================
 // Basic, no overrides
@@ -8,14 +8,14 @@ import objectBooleanCombinations from "../dist/object-boolean-combinations.esm";
 tap.test("01 - one property - 1, no override", (t) => {
   // non-boolean is supplied:
   t.strictSame(
-    objectBooleanCombinations({
+    combinations({
       a: 0,
     }),
     [{ a: false }, { a: true }],
     "01.01"
   );
   t.strictSame(
-    objectBooleanCombinations({
+    combinations({
       a: 1,
     }),
     [{ a: false }, { a: true }],
@@ -24,14 +24,14 @@ tap.test("01 - one property - 1, no override", (t) => {
 
   // boolean is supplied:
   t.strictSame(
-    objectBooleanCombinations({
+    combinations({
       a: false,
     }),
     [{ a: false }, { a: true }],
     "01.03"
   );
   t.strictSame(
-    objectBooleanCombinations({
+    combinations({
       a: true,
     }),
     [{ a: false }, { a: true }],
@@ -44,7 +44,7 @@ tap.test("02 - three properties, no override", (t) => {
   // default - don't force bool
 
   t.strictSame(
-    objectBooleanCombinations({
+    combinations({
       a: 1,
       b: 1,
       c: 1,
@@ -62,7 +62,7 @@ tap.test("02 - three properties, no override", (t) => {
     "02.01"
   );
   t.strictSame(
-    objectBooleanCombinations({
+    combinations({
       a: true,
       b: true,
       c: true,
@@ -84,7 +84,7 @@ tap.test("02 - three properties, no override", (t) => {
 
 tap.test("03 - non-boolean object overrides", (t) => {
   t.strictSame(
-    objectBooleanCombinations(
+    combinations(
       {
         a: true,
         b: false,

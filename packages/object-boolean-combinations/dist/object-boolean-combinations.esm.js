@@ -9,70 +9,86 @@
 
 import intersection from 'lodash.intersection';
 import pull from 'lodash.pull';
-import isObject from 'lodash.isplainobject';
+import isObj from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';
 
-function objectBooleanCombinations(
-  originalIncomingObject,
-  originalOverrideObject
-) {
-  function combinations(n) {
+/* eslint no-bitwise:0, @typescript-eslint/explicit-module-boundary-types:0, @typescript-eslint/ban-types:0 */
+
+function combinations(originalIncomingObject, originalOverrideObject = {}) {
+  //
+  // FUNCTIONS
+  // =========
+  function combi(n) {
     const r = [];
+
     for (let i = 0; i < 1 << n; i++) {
       const c = [];
+
       for (let j = 0; j < n; j++) {
-        c.push(i & (1 << j) ? 1 : 0);
+        c.push(i & 1 << j ? 1 : 0);
       }
+
       r.push(c);
     }
+
     return r;
-  }
+  } // CHECKS
+  // ======
+
+
   if (!originalIncomingObject) {
     throw new Error("[THROW_ID_01] missing input object");
   }
-  if (!isObject(originalIncomingObject)) {
-    throw new Error(
-      "[THROW_ID_02] the first input object must be a true object"
-    );
+
+  if (!isObj(originalIncomingObject)) {
+    throw new Error("[THROW_ID_02] the first input object must be a true object");
   }
-  if (originalOverrideObject && !isObject(originalOverrideObject)) {
-    throw new Error(
-      "[THROW_ID_03] the second override object must be a true object"
-    );
+
+  if (originalOverrideObject && !isObj(originalOverrideObject)) {
+    throw new Error("[THROW_ID_03] the second override object must be a true object");
   }
+
   const incomingObject = clone(originalIncomingObject);
-  const overrideObject = clone(originalOverrideObject);
+  const overrideObject = clone(originalOverrideObject); // START
+  // =====
+
   const propertiesToMix = Object.keys(incomingObject);
   const outcomingObjectsArray = [];
-  let propertiesToBeOverridden;
-  let override = false;
-  if (overrideObject && Object.keys(overrideObject).length !== 0) {
-    override = true;
-  }
-  if (override) {
-    propertiesToBeOverridden = intersection(
-      Object.keys(overrideObject),
-      Object.keys(incomingObject)
-    );
-    propertiesToBeOverridden.forEach((elem) => pull(propertiesToMix, elem));
-  }
-  const boolCombinations = combinations(Object.keys(propertiesToMix).length);
-  let tempObject = {};
-  boolCombinations.forEach((elem1, index1) => {
+  let propertiesToBeOverridden = []; // if there's override, prepare an alternative (a subset) array propertiesToMix
+  // ----------------------------------------------------------------------------
+
+  if (isObj(overrideObject) && Object.keys(overrideObject).length) {
+    // find legitimate properties from the overrideObject:
+    // enforce that override object had just a subset of incomingObject properties, nothing else
+    propertiesToBeOverridden = intersection(Object.keys(overrideObject), Object.keys(incomingObject)); // propertiesToMix = all incoming object's properties MINUS properties to override
+
+    propertiesToBeOverridden.forEach(elem => pull(propertiesToMix, elem));
+  } // mix up whatever propertiesToMix has came to this point
+  // ------------------------------------------------------
+
+
+  const boolCombinations = combi(Object.keys(propertiesToMix).length);
+  let tempObject;
+  boolCombinations.forEach((_elem1, index1) => {
     tempObject = {};
     propertiesToMix.forEach((elem2, index2) => {
       tempObject[elem2] = boolCombinations[index1][index2] === 1;
     });
     outcomingObjectsArray.push(tempObject);
-  });
-  if (override) {
-    outcomingObjectsArray.forEach((elem3) =>
-      propertiesToBeOverridden.forEach((elem4) => {
-        elem3[elem4] = overrideObject[elem4];
-      })
-    );
-  }
+  }); // if there's override, append the static override values on each property of the
+  // propertiesToMix array:
+  // ------------------------------------------------------------------------------
+
+  if (isObj(overrideObject) && Object.keys(overrideObject).length) {
+    outcomingObjectsArray.forEach(elem3 => propertiesToBeOverridden.forEach(elem4 => {
+      // eslint-disable-next-line no-param-reassign
+      elem3[elem4] = overrideObject[elem4];
+    }));
+  } // RETURN
+  // ======
+
+
   return outcomingObjectsArray;
 }
 
-export default objectBooleanCombinations;
+export { combinations };

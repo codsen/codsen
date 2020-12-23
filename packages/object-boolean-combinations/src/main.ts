@@ -1,34 +1,29 @@
-/* eslint no-bitwise:0 */
+/* eslint no-bitwise:0, @typescript-eslint/explicit-module-boundary-types:0, @typescript-eslint/ban-types:0 */
 
 import intersection from "lodash.intersection";
 import pull from "lodash.pull";
-import isObject from "lodash.isplainobject";
+import isObj from "lodash.isplainobject";
 import clone from "lodash.clonedeep";
 
-/**
- * Checks if input is a true Object (checking against null and Array)
- * @param {Object} a reference object to use the properties from. Values don't
- * matter. For example, {a:true, b:true, c:false}
- * @param [Object] an optional override object. For example, you want all
- * properties 'a' to be true - pass {a:true}
- * @returns {Array} of objects with all possible combinations optionally including
- * override. In our examle, an array of 2^(3-1) objects, each containing a:true.
- * Without override we would have got 2^3 objects array
- */
-function objectBooleanCombinations(
-  originalIncomingObject,
-  originalOverrideObject
-) {
+interface BoolValueObj {
+  [key: string]: boolean;
+}
+interface UnknownValueObj {
+  [key: string]: any;
+}
+
+function combinations(
+  originalIncomingObject: UnknownValueObj,
+  originalOverrideObject: undefined | UnknownValueObj = {}
+): BoolValueObj[] {
   //
   // FUNCTIONS
   // =========
 
-  /**
-   * Creates an n-length array with all possible combinations of true/false
-   * @param {number} input integer
-   * @returns {Array} Array of arrays each containing one possible combination of true/false
-   */
-  function combinations(n) {
+  // Creates an n-length array with all possible combinations of true/false
+  type Combi = Array<number[]>;
+
+  function combi(n: number): Combi {
     const r = [];
     for (let i = 0; i < 1 << n; i++) {
       const c = [];
@@ -40,21 +35,18 @@ function objectBooleanCombinations(
     return r;
   }
 
-  // VARIABLES
-  // =========
-
   // CHECKS
   // ======
 
   if (!originalIncomingObject) {
     throw new Error("[THROW_ID_01] missing input object");
   }
-  if (!isObject(originalIncomingObject)) {
+  if (!isObj(originalIncomingObject)) {
     throw new Error(
       "[THROW_ID_02] the first input object must be a true object"
     );
   }
-  if (originalOverrideObject && !isObject(originalOverrideObject)) {
+  if (originalOverrideObject && !isObj(originalOverrideObject)) {
     throw new Error(
       "[THROW_ID_03] the second override object must be a true object"
     );
@@ -67,18 +59,13 @@ function objectBooleanCombinations(
   // =====
 
   const propertiesToMix = Object.keys(incomingObject);
-  const outcomingObjectsArray = [];
-  let propertiesToBeOverridden;
+  const outcomingObjectsArray: BoolValueObj[] = [];
+  let propertiesToBeOverridden: string[] = [];
 
   // if there's override, prepare an alternative (a subset) array propertiesToMix
   // ----------------------------------------------------------------------------
 
-  let override = false;
-  if (overrideObject && Object.keys(overrideObject).length !== 0) {
-    override = true;
-  }
-
-  if (override) {
+  if (isObj(overrideObject) && Object.keys(overrideObject).length) {
     // find legitimate properties from the overrideObject:
     // enforce that override object had just a subset of incomingObject properties, nothing else
     propertiesToBeOverridden = intersection(
@@ -92,9 +79,10 @@ function objectBooleanCombinations(
   // mix up whatever propertiesToMix has came to this point
   // ------------------------------------------------------
 
-  const boolCombinations = combinations(Object.keys(propertiesToMix).length);
-  let tempObject = {};
-  boolCombinations.forEach((elem1, index1) => {
+  const boolCombinations = combi(Object.keys(propertiesToMix).length);
+
+  let tempObject: BoolValueObj;
+  boolCombinations.forEach((_elem1, index1) => {
     tempObject = {};
     propertiesToMix.forEach((elem2, index2) => {
       tempObject[elem2] = boolCombinations[index1][index2] === 1;
@@ -105,7 +93,7 @@ function objectBooleanCombinations(
   // if there's override, append the static override values on each property of the
   // propertiesToMix array:
   // ------------------------------------------------------------------------------
-  if (override) {
+  if (isObj(overrideObject) && Object.keys(overrideObject).length) {
     outcomingObjectsArray.forEach((elem3) =>
       propertiesToBeOverridden.forEach((elem4) => {
         // eslint-disable-next-line no-param-reassign
@@ -120,4 +108,4 @@ function objectBooleanCombinations(
   return outcomingObjectsArray;
 }
 
-export default objectBooleanCombinations;
+export { combinations };

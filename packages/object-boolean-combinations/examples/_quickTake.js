@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import combinations from "../dist/object-boolean-combinations.esm.js";
+import { combinations } from "../dist/object-boolean-combinations.esm.js";
 
 assert.deepEqual(
   combinations({
