@@ -1,9 +1,11 @@
 import tap from "tap";
-import i1 from "../dist/array-includes-with-glob.umd";
+import { includesWithGlob } from "../dist/array-includes-with-glob.umd";
 
 tap.test("UMD build works fine", (t) => {
   t.equal(
-    i1("something", ["*thing", "zzz"], { arrayVsArrayAllMustBeFound: "all" }),
+    includesWithGlob("something", ["*thing", "zzz"], {
+      arrayVsArrayAllMustBeFound: "all",
+    }),
     false,
     "01"
   );

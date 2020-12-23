@@ -7,12 +7,16 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { includesWithGlob } = require("..");
 
 const testme = () =>
-  f(["something", "anything", "everything"], ["anything", "zzz"], {
-    arrayVsArrayAllMustBeFound: "any",
-  });
+  includesWithGlob(
+    ["something", "anything", "everything"],
+    ["anything", "zzz"],
+    {
+      arrayVsArrayAllMustBeFound: "any",
+    }
+  );
 
 // action
 runPerf(testme, callerDir);

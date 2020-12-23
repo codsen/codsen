@@ -34,7 +34,7 @@ npm i array-includes-with-glob
 
 ```js
 import { strict as assert } from "assert";
-import includesWithGlob from "array-includes-with-glob";
+import { includesWithGlob } from "array-includes-with-glob";
 
 assert.equal(includesWithGlob(["xc", "yc", "zc"], "*c"), true);
 // (all 3)

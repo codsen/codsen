@@ -9,74 +9,40 @@
 
 import matcher from 'matcher';
 
-const isArr = Array.isArray;
-function arrayIncludesWithGlob(originalInput, stringToFind, originalOpts) {
-  function existy(x) {
-    return x != null;
+var version = "2.13.0";
+
+const defaults = {
+  arrayVsArrayAllMustBeFound: "any",
+  caseSensitive: true
+};
+
+function includesWithGlob(originalInput, stringToFind, originalOpts) {
+  // maybe we can end prematurely:
+  if (!originalInput.length || !stringToFind.length) {
+    return false; // because nothing can be found in it
   }
-  function isStr(something) {
-    return typeof something === "string";
-  }
-  const defaults = {
-    arrayVsArrayAllMustBeFound: "any",
+
+  const opts = { ...defaults,
+    ...originalOpts
   };
-  const opts = { ...defaults, ...originalOpts };
-  if (arguments.length === 0) {
-    throw new Error(
-      "array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_01] all inputs missing!"
-    );
-  }
-  if (arguments.length === 1) {
-    throw new Error(
-      "array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_02] second argument missing!"
-    );
-  }
-  if (!isArr(originalInput)) {
-    if (isStr(originalInput)) {
-      originalInput = [originalInput];
-    } else {
-      throw new Error(
-        `array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_03] first argument must be an array! It was given as ${typeof originalInput}`
-      );
-    }
-  }
-  if (!isStr(stringToFind) && !isArr(stringToFind)) {
-    throw new Error(
-      `array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_04] second argument must be a string or array of strings! It was given as ${typeof stringToFind}`
-    );
-  }
-  if (
-    opts.arrayVsArrayAllMustBeFound !== "any" &&
-    opts.arrayVsArrayAllMustBeFound !== "all"
-  ) {
-    throw new Error(
-      `array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_05] opts.arrayVsArrayAllMustBeFound was customised to an unrecognised value, ${opts.arrayVsArrayAllMustBeFound}. It must be equal to either "any" or "all".`
-    );
-  }
-  if (originalInput.length === 0) {
-    return false;
-  }
-  const input = originalInput.filter((elem) => existy(elem));
-  if (input.length === 0) {
-    return false;
-  }
-  if (isStr(stringToFind)) {
-    return input.some((val) =>
-      matcher.isMatch(val, stringToFind, { caseSensitive: true })
-    );
-  }
+  const input = typeof originalInput === "string" ? [originalInput] : Array.from(originalInput);
+
+  if (typeof stringToFind === "string") {
+    return input.some(val => matcher.isMatch(val, stringToFind, {
+      caseSensitive: opts.caseSensitive
+    }));
+  } // array then.
+
+
   if (opts.arrayVsArrayAllMustBeFound === "any") {
-    return stringToFind.some((stringToFindVal) =>
-      input.some((val) =>
-        matcher.isMatch(val, stringToFindVal, { caseSensitive: true })
-      )
-    );
+    return stringToFind.some(stringToFindVal => input.some(val => matcher.isMatch(val, stringToFindVal, {
+      caseSensitive: opts.caseSensitive
+    })));
   }
-  return stringToFind.every((stringToFindVal) =>
-    input.some((val) =>
-      matcher.isMatch(val, stringToFindVal, { caseSensitive: true })
-    )
-  );
+
+  return stringToFind.every(stringToFindVal => input.some(val => matcher.isMatch(val, stringToFindVal, {
+    caseSensitive: opts.caseSensitive
+  })));
 }
 
-export default arrayIncludesWithGlob;
+export { defaults, includesWithGlob, version };
