@@ -2,18 +2,9 @@
 
 import tap from "tap";
 import clone from "lodash.clonedeep";
-import mergeAdvanced from "../dist/object-merge-advanced.esm";
-// import equal from "deep-equal");
+import { mergeAdvanced } from "../dist/object-merge-advanced.esm";
 
-//
-//                           ____
-//          massive hammer  |    |
-//        O=================|    |
-//          upon all bugs   |____|
-//
-//                         .=O=.
-
-// !!! There should be two (or more) tests in each, with input args swapped, in order to
+// There should be two (or more) tests in each, with input args swapped, in order to
 // guarantee that there are no sneaky things happening when argument order is backwards
 
 // ==============================
@@ -68,13 +59,6 @@ tap.test("04 - various, mixed", (t) => {
   t.strictSame(mergeAdvanced(true, false), true, "04.03");
   t.strictSame(mergeAdvanced(["a"], ["b"]), ["a", "b"], "04.04");
   t.strictSame(mergeAdvanced([], []), [], "04.05");
-  t.end();
-});
-
-tap.test("05 - third arg is not a plain object - throws", (t) => {
-  t.throws(() => {
-    mergeAdvanced({ a: "a" }, { b: "b" }, "c");
-  }, /THROW_ID_02/g);
   t.end();
 });
 
@@ -965,6 +949,28 @@ tap.test("27 - number - #81-90", (t) => {
   t.end();
 });
 
+tap.test("36 - case #90 cb", (t) => {
+  t.strictSame(
+    mergeAdvanced([], 1, {
+      cb: (inp1) => {
+        return inp1;
+      },
+    }),
+    [],
+    "36.01"
+  );
+  t.strictSame(
+    mergeAdvanced([], 1, {
+      cb: (inp1, inp2) => {
+        return inp2;
+      },
+    }),
+    1,
+    "36.02"
+  );
+  t.end();
+});
+
 tap.test("28 - empty string vs undefined #60", (t) => {
   t.strictSame(mergeAdvanced("", undefined), "", "28.01");
   t.strictSame(mergeAdvanced(undefined, ""), "", "28.02");
@@ -1394,6 +1400,36 @@ tap.test("36 - case #91", (t) => {
   t.end();
 });
 
+tap.test("36 - case #91 cb", (t) => {
+  t.strictSame(
+    mergeAdvanced(
+      { a: undefined },
+      { a: ["a"] },
+      {
+        cb: (inp1) => {
+          return inp1;
+        },
+      }
+    ),
+    { a: undefined },
+    "36.01"
+  );
+  t.strictSame(
+    mergeAdvanced(
+      { a: undefined },
+      { a: ["a"] },
+      {
+        cb: (inp1, inp2) => {
+          return inp2;
+        },
+      }
+    ),
+    { a: ["a"] },
+    "36.02"
+  );
+  t.end();
+});
+
 tap.test("37 - case #81", (t) => {
   t.strictSame(
     mergeAdvanced({ a: null }, { a: ["a"] }, { hardMergeKeys: "*" }),
@@ -1745,9 +1781,6 @@ tap.test(
 tap.test(
   "45 - \u001b[33mOPTS\u001b[39m - third argument is not a plain object",
   (t) => {
-    t.throws(() => {
-      mergeAdvanced({ a: "a" }, { b: "b" }, 1);
-    }, "45.01");
     t.doesNotThrow(() => {
       mergeAdvanced({ a: "a" }, { b: "b" }, {});
     }, "45.02");

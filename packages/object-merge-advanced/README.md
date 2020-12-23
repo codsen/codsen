@@ -34,7 +34,7 @@ npm i object-merge-advanced
 
 ```js
 import { strict as assert } from "assert";
-import mergeAdvanced from "object-merge-advanced";
+import { mergeAdvanced } from "object-merge-advanced";
 
 assert.deepEqual(
   mergeAdvanced(

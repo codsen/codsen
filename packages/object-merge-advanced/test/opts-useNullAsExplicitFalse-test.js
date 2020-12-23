@@ -2,7 +2,7 @@
 
 import tap from "tap";
 // import clone from "lodash.clonedeep";
-import mergeAdvanced from "../dist/object-merge-advanced.esm";
+import { mergeAdvanced } from "../dist/object-merge-advanced.esm";
 // import equal from "deep-equal";
 
 tap.test(
