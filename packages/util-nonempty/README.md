@@ -34,7 +34,7 @@ npm i util-nonempty
 
 ```js
 import { strict as assert } from "assert";
-import nonEmpty from "util-nonempty";
+import { nonEmpty } from "util-nonempty";
 
 assert.equal(nonEmpty("z"), true);
 assert.equal(nonEmpty(""), false);

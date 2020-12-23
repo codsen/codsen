@@ -1,5 +1,5 @@
 import tap from "tap";
-import nonEmpty from "../dist/util-nonempty.esm";
+import { nonEmpty } from "../dist/util-nonempty.esm";
 
 // ==============================
 // Precautions
