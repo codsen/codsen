@@ -1,5 +1,5 @@
 import tap from "tap";
-import mixer from "../dist/test-mixer.esm";
+import { mixer } from "../dist/test-mixer.esm";
 
 tap.test("01", (t) => {
   t.strictSame(

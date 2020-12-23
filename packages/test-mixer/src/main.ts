@@ -1,5 +1,6 @@
-import obc from "object-boolean-combinations";
+import { combinations } from "object-boolean-combinations";
 import clone from "lodash.clonedeep";
+import { version } from "../package.json";
 
 // takes subset of of opts object, ref
 // and whole default opts
@@ -28,7 +29,13 @@ import clone from "lodash.clonedeep";
 // which be passed as reference - we have to break any references
 // to the original values in both "ref" and "opts".
 
-function mixer(ref = {}, defaultsObj = {}) {
+type PlainObject = { [name: string]: any };
+type PlainObjectOfBool = { [name: string]: boolean };
+
+function mixer(
+  ref: PlainObject = {},
+  defaultsObj: PlainObject = {}
+): PlainObjectOfBool[] {
   if (ref && typeof ref !== "object") {
     throw new Error(
       `test-mixer: [THROW_ID_01] the first input arg is missing!`
@@ -63,7 +70,7 @@ function mixer(ref = {}, defaultsObj = {}) {
 
   const refClone = clone(ref);
   const defaultsObjClone = clone(defaultsObj);
-  const optsWithBoolValues = {};
+  const optsWithBoolValues: PlainObjectOfBool = {};
 
   // 1. find out, what boolean-value keys are there in defaultsObj that
   // are missing in ref. If there are n keys, we'll generate 2^n objects.
@@ -100,9 +107,9 @@ function mixer(ref = {}, defaultsObj = {}) {
     )}`
   );
 
-  // calculate combinations using obc() - object-boolean-combinations
+  // calculate combinations using combinations() - object-boolean-combinations
   // then restore the non-bool keys
-  const res = obc(optsWithBoolValues).map((obj) => ({
+  const res = combinations(optsWithBoolValues).map((obj) => ({
     ...defaultsObj,
     ...refClone,
     ...obj,
@@ -113,4 +120,4 @@ function mixer(ref = {}, defaultsObj = {}) {
   return res;
 }
 
-export default mixer;
+export { mixer, version };

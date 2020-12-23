@@ -34,35 +34,121 @@ npm i test-mixer
 
 ```js
 import { strict as assert } from "assert";
-import mixer from "test-mixer";
+import { mixer } from "test-mixer";
 
-// generates 2^n combinations
+// check all possible combinations of all boolean opts:
+const defaultOpts = {
+  scrapeWindshield: true,
+  checkOil: true,
+  inflateTires: false,
+  extinguishersCount: 1, // as non-boolean will be ignored
+};
+
+// generates 2^3 = 8 combinations all possible bools
 assert.deepEqual(
   mixer(
     {
-      foo: true, // override
-      baz: 1, // not a boolean
+      // empty first arg object means you want all combinations
     },
-    {
-      // defaults or reference object:
-      foo: true,
-      bar: false,
-      baz: 0, // default is not a boolean either
-    }
+    defaultOpts
   ),
   [
     {
-      foo: true, // static, as per 1st arg
-      bar: false, // combination #1
-      baz: 1, // non-bools get copied over
+      scrapeWindshield: false,
+      checkOil: false,
+      inflateTires: false,
+      extinguishersCount: 1,
     },
     {
-      foo: true, // static, as per 1st arg
-      bar: true, // combination #2
-      baz: 1, // non-bools get copied over
+      scrapeWindshield: true,
+      checkOil: false,
+      inflateTires: false,
+      extinguishersCount: 1,
+    },
+    {
+      scrapeWindshield: false,
+      checkOil: true,
+      inflateTires: false,
+      extinguishersCount: 1,
+    },
+    {
+      scrapeWindshield: true,
+      checkOil: true,
+      inflateTires: false,
+      extinguishersCount: 1,
+    },
+    {
+      scrapeWindshield: false,
+      checkOil: false,
+      inflateTires: true,
+      extinguishersCount: 1,
+    },
+    {
+      scrapeWindshield: true,
+      checkOil: false,
+      inflateTires: true,
+      extinguishersCount: 1,
+    },
+    {
+      scrapeWindshield: false,
+      checkOil: true,
+      inflateTires: true,
+      extinguishersCount: 1,
+    },
+    {
+      scrapeWindshield: true,
+      checkOil: true,
+      inflateTires: true,
+      extinguishersCount: 1,
     },
   ]
 );
+
+// let's "pin" a value, prepare two sets of options objects,
+// one where scrapeWindshield === true and another with "false"
+
+// you'll get 2 ^ (3-1) = 4 variations:
+const variationsWithScrapeWindshieldOn = mixer(
+  {
+    scrapeWindshield: true,
+  },
+  defaultOpts
+);
+assert.deepEqual(variationsWithScrapeWindshieldOn, [
+  {
+    scrapeWindshield: true, // <--- pinned
+    checkOil: false,
+    inflateTires: false,
+    extinguishersCount: 1,
+  },
+  {
+    scrapeWindshield: true, // <--- pinned
+    checkOil: true,
+    inflateTires: false,
+    extinguishersCount: 1,
+  },
+  {
+    scrapeWindshield: true, // <--- pinned
+    checkOil: false,
+    inflateTires: true,
+    extinguishersCount: 1,
+  },
+  {
+    scrapeWindshield: true, // <--- pinned
+    checkOil: true,
+    inflateTires: true,
+    extinguishersCount: 1,
+  },
+]);
+
+// also 4 variations, similar but with scrapeWindshield === false pinned:
+const variationsWithScrapeWindshieldOff = mixer(
+  {
+    scrapeWindshield: false,
+  },
+  defaultOpts
+);
+assert.equal(variationsWithScrapeWindshieldOff.length, 4);
 ```
 
 ## Documentation
