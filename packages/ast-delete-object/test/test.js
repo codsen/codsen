@@ -1,6 +1,6 @@
 import tap from "tap";
 import clone from "lodash.clonedeep";
-import deleteObj from "../dist/ast-delete-object.esm";
+import { deleteObj } from "../dist/ast-delete-object.esm";
 
 // (input, objToDelete, strictOrNot)
 

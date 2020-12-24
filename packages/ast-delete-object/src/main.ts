@@ -1,14 +1,30 @@
-import clone from "lodash.clonedeep";
-import compare from "ast-compare";
-import traverse from "ast-monkey-traverse";
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
-function isObj(something) {
-  return (
-    something && typeof something === "object" && !Array.isArray(something)
-  );
+import clone from "lodash.clonedeep";
+import { compare } from "ast-compare";
+import { traverse } from "ast-monkey-traverse";
+import isObj from "lodash.isplainobject";
+import { version } from "../package.json";
+
+interface UnknownValueObj {
+  [key: string]: any;
 }
 
-function deleteObj(originalInput, objToDelete, originalOpts) {
+interface Opts {
+  matchKeysStrictly?: boolean;
+  hungryForWhitespace?: boolean;
+}
+
+const defaults: Opts = {
+  matchKeysStrictly: false,
+  hungryForWhitespace: false,
+};
+
+function deleteObj(
+  originalInput: any,
+  objToDelete: UnknownValueObj,
+  originalOpts?: Opts
+): any {
   if (!originalInput) {
     throw new Error(
       "ast-delete-object/deleteObj(): [THROW_ID_01] Missing input!"
@@ -25,10 +41,6 @@ function deleteObj(originalInput, objToDelete, originalOpts) {
     );
   }
 
-  const defaults = {
-    matchKeysStrictly: false,
-    hungryForWhitespace: false,
-  };
   const opts = { ...defaults, ...originalOpts };
 
   let input = clone(originalInput);
@@ -70,4 +82,4 @@ function deleteObj(originalInput, objToDelete, originalOpts) {
   return input;
 }
 
-export default deleteObj;
+export { deleteObj, defaults, version };

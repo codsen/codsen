@@ -1,5 +1,5 @@
 import tap from "tap";
-import del1 from "../dist/ast-delete-object.umd";
+import { deleteObj } from "../dist/ast-delete-object.umd";
 
 const source = [
   "elem1",
@@ -18,6 +18,6 @@ const opts = { matchKeysStrictly: false, hungryForWhitespace: false };
 const res = ["elem1", "elem4"];
 
 tap.test("UMD build works fine", (t) => {
-  t.strictSame(del1(source, target, opts), res, "01");
+  t.strictSame(deleteObj(source, target, opts), res, "01");
   t.end();
 });

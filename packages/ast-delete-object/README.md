@@ -34,7 +34,7 @@ npm i ast-delete-object
 
 ```js
 import { strict as assert } from "assert";
-import deleteObj from "ast-delete-object";
+import { deleteObj } from "ast-delete-object";
 
 // if all keys in source object match target object's keys, the
 // source object gets deleted:
