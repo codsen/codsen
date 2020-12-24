@@ -34,7 +34,7 @@ npm i ast-deep-contains
 
 ```js
 import { strict as assert } from "assert";
-import deepContains from "ast-deep-contains";
+import { deepContains } from "ast-deep-contains";
 
 const gathered = [];
 const errors = [];

@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import deepContains from "../dist/ast-deep-contains.esm.js";
+import { deepContains } from "../dist/ast-deep-contains.esm.js";
 
 const gathered = [];
 const errors = [];

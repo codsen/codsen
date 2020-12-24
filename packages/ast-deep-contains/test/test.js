@@ -1,5 +1,5 @@
 import tap from "tap";
-import deepContains from "../dist/ast-deep-contains.esm";
+import { deepContains } from "../dist/ast-deep-contains.esm";
 
 // 01. basic functionality
 // -----------------------------------------------------------------------------
@@ -152,7 +152,7 @@ tap.test(
   }
 );
 
-tap.test(
+tap.only(
   `06 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - arrays with objects, opts.skipContainers=on (default)`,
   (t) => {
     const gathered = [];

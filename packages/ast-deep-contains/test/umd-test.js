@@ -1,11 +1,11 @@
 import tap from "tap";
-import deepContains1 from "../dist/ast-deep-contains.umd";
+import { deepContains } from "../dist/ast-deep-contains.umd";
 
 tap.test("UMD build works fine", (t) => {
   const gathered = [];
   const errors = [];
 
-  deepContains1(
+  deepContains(
     { a: "1", b: "2", c: "3" },
     { a: "1", b: "2" },
     (leftSideVal, rightSideVal) => {

@@ -7,12 +7,12 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { deepContains } = require("..");
 
 const testme = () => {
   const gathered = [];
   const errors = [];
-  f(
+  deepContains(
     { a: "1", b: "2" },
     { a: "1", b: "2", c: "3" },
     (leftSideVal, rightSideVal) => {
