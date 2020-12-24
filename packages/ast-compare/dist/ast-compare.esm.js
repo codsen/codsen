@@ -12,11 +12,7 @@ import { empty } from 'ast-contains-only-empty-space';
 import isObj from 'lodash.isplainobject';
 import matcher from 'matcher';
 
-function existy(x) {
-  return x != null;
-}
 /* istanbul ignore next */
-
 
 function isBlank(something) {
   if (isObj(something)) {
@@ -158,7 +154,7 @@ function compare(b, s, originalOpts) {
         return `The given object has key "${sKey}" which the other-one does not have.`;
       }
 
-      if (existy(b[sKey]) && typeDetect(b[sKey]) !== typeDetect(s[sKey])) { // Types mismatch. Probably falsey result, unless comparing with
+      if (b[sKey] != null && typeDetect(b[sKey]) !== typeDetect(s[sKey])) { // Types mismatch. Probably falsey result, unless comparing with
         // empty/blank things. Let's check.
         // it might be blank array vs blank object:
 

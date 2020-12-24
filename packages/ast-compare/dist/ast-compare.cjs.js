@@ -26,11 +26,7 @@ var typeDetect__default = /*#__PURE__*/_interopDefaultLegacy(typeDetect);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 var matcher__default = /*#__PURE__*/_interopDefaultLegacy(matcher);
 
-function existy(x) {
-  return x != null;
-}
 /* istanbul ignore next */
-
 
 function isBlank(something) {
   if (isObj__default['default'](something)) {
@@ -187,7 +183,7 @@ function compare(b, s, originalOpts) {
         };
       }
 
-      if (existy(b[sKey]) && typeDetect__default['default'](b[sKey]) !== typeDetect__default['default'](s[sKey])) { // Types mismatch. Probably falsey result, unless comparing with
+      if (b[sKey] != null && typeDetect__default['default'](b[sKey]) !== typeDetect__default['default'](s[sKey])) { // Types mismatch. Probably falsey result, unless comparing with
         // empty/blank things. Let's check.
         // it might be blank array vs blank object:
 

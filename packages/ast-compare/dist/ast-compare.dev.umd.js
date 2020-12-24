@@ -2735,11 +2735,7 @@ var isMatch = function isMatch(input, pattern, options) {
 };
 matcher.isMatch = isMatch;
 
-function existy(x) {
-  return x != null;
-}
 /* istanbul ignore next */
-
 
 function isBlank(something) {
   if (lodash_isplainobject(something)) {
@@ -2896,7 +2892,7 @@ function compare(b, s, originalOpts) {
         };
       }
 
-      if (existy(b[sKey]) && typeDetect(b[sKey]) !== typeDetect(s[sKey])) { // Types mismatch. Probably falsey result, unless comparing with
+      if (b[sKey] != null && typeDetect(b[sKey]) !== typeDetect(s[sKey])) { // Types mismatch. Probably falsey result, unless comparing with
         // empty/blank things. Let's check.
         // it might be blank array vs blank object:
 

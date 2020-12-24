@@ -10,9 +10,6 @@ interface AnyObject {
 
 // -----------------------------------------------------------------------------
 
-function existy(x: any) {
-  return x != null;
-}
 /* istanbul ignore next */
 function isBlank(something: any) {
   if (isObj(something)) {
@@ -262,7 +259,7 @@ function compare(
         return `The given object has key "${sKey}" which the other-one does not have.`;
       }
       if (
-        existy((b as AnyObject)[sKey]) &&
+        (b as AnyObject)[sKey] != null &&
         typeDetect((b as AnyObject)[sKey]) !==
           typeDetect((s as AnyObject)[sKey])
       ) {
