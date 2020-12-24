@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // `opts.verboseWhenMismatches`
 
 import { strict as assert } from "assert";
-import compare from "../dist/ast-compare.esm.js";
+import { compare } from "../dist/ast-compare.esm.js";
 
 // by default, returns a boolean without explanation
 assert.equal(

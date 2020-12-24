@@ -7,10 +7,10 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { compare } = require("..");
 
 const testme = () =>
-  f(
+  compare(
     [{ a: "a" }, { b: "b" }, { c1: "c1", c2: "c2" }, { d2: "d2" }, { e: "e" }],
     [
       { c2: "c2", c1: "c1" },

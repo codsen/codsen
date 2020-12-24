@@ -1,5 +1,5 @@
 import tap from "tap";
-import compare from "../dist/ast-compare.esm";
+import { compare } from "../dist/ast-compare.esm";
 
 const f = () => "zzz";
 
@@ -93,13 +93,6 @@ tap.test("03 - real-life #2", (t) => {
     true,
     "03.02"
   );
-  t.end();
-});
-
-tap.test("04 - function as input", (t) => {
-  t.throws(() => {
-    compare(f, f);
-  }, /THROW_ID_03/g);
   t.end();
 });
 

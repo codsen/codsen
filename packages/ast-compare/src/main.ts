@@ -1,99 +1,54 @@
 import typeDetect from "type-detect";
-import empty from "ast-contains-only-empty-space";
+import { empty } from "ast-contains-only-empty-space";
+import isObj from "lodash.isplainobject";
 import matcher from "matcher";
+import { JsonValue } from "type-fest";
+
+interface AnyObject {
+  [key: string]: any;
+}
 
 // -----------------------------------------------------------------------------
 
-const isArr = Array.isArray;
-
-function existy(x) {
+function existy(x: any) {
   return x != null;
 }
-function isObj(something) {
-  return (
-    something && typeof something === "object" && !Array.isArray(something)
-  );
-}
-function isStr(something) {
-  return typeof something === "string";
-}
-function isNum(something) {
-  return typeof something === "number";
-}
-function isBool(something) {
-  return typeof something === "boolean";
-}
-function isNull(something) {
-  return something === null;
-}
 /* istanbul ignore next */
-function isBlank(something) {
+function isBlank(something: any) {
   if (isObj(something)) {
     return !Object.keys(something).length;
   }
-  if (isArr(something) || isStr(something)) {
+  if (Array.isArray(something) || typeof something === "string") {
     return !something.length;
   }
   return false;
 }
-function isTheTypeLegit(something) {
-  // same as JSON spec:
-  return (
-    isObj(something) ||
-    isStr(something) ||
-    isNum(something) ||
-    isBool(something) ||
-    isArr(something) ||
-    isNull(something)
-  );
+
+interface Opts {
+  hungryForWhitespace?: boolean;
+  matchStrictly?: boolean;
+  verboseWhenMismatches?: boolean;
+  useWildcards?: boolean;
 }
 
 // -----------------------------------------------------------------------------
 
 // bo = bigObject original; so = smallObject original
-function compare(b, s, originalOpts) {
+function compare(
+  b: JsonValue,
+  s: JsonValue,
+  originalOpts?: Opts
+): boolean | string {
   console.log(" \n███████████████████████████████████████\n ");
   console.log(`056 compare() CALLED`);
-  if (b === undefined) {
-    throw new TypeError(
-      "ast-compare/compare(): [THROW_ID_01] first argument is missing!"
-    );
-  }
-  if (s === undefined) {
-    throw new TypeError(
-      "ast-compare/compare(): [THROW_ID_02] second argument is missing!"
-    );
-  }
 
-  if (existy(b) && !isTheTypeLegit(b)) {
-    throw new TypeError(
-      `ast-compare/compare(): [THROW_ID_03] first input argument is of a wrong type, ${typeDetect(
-        b
-      )}, equal to: ${JSON.stringify(b, null, 4)}`
-    );
-  }
-  if (existy(s) && !isTheTypeLegit(s)) {
-    throw new TypeError(
-      `ast-compare/compare(): [THROW_ID_04] second input argument is of a wrong type, ${typeDetect(
-        s
-      )}, equal to: ${JSON.stringify(s, null, 4)}`
-    );
-  }
-  if (existy(originalOpts) && !isObj(originalOpts)) {
-    throw new TypeError(
-      `ast-compare/compare(): [THROW_ID_05] third argument, options object, must, well, be an object! Currently it's: ${typeDetect(
-        originalOpts
-      )} and equal to: ${JSON.stringify(originalOpts, null, 4)}`
-    );
-  }
-
-  let sKeys;
-  let bKeys;
-  let found;
+  let sKeys: Set<string>;
+  let bKeys: Set<string>;
+  let found: boolean;
   let bOffset = 0;
 
   // prep opts
-  const defaults = {
+  const defaults: Opts = {
     hungryForWhitespace: false,
     matchStrictly: false,
     verboseWhenMismatches: false,
@@ -115,7 +70,7 @@ function compare(b, s, originalOpts) {
     isObj(b) &&
     empty(b) &&
     isObj(s) &&
-    !Object.keys(s).length
+    !Object.keys(s as AnyObject).length
   ) {
     console.log(`120 return true`);
     return true;
@@ -126,9 +81,9 @@ function compare(b, s, originalOpts) {
     ((!opts.hungryForWhitespace ||
       (opts.hungryForWhitespace && !empty(b) && empty(s))) &&
       isObj(b) &&
-      Object.keys(b).length !== 0 &&
+      Object.keys(b as AnyObject).length !== 0 &&
       isObj(s) &&
-      Object.keys(s).length === 0) ||
+      Object.keys(s as AnyObject).length === 0) ||
     (typeDetect(b) !== typeDetect(s) &&
       (!opts.hungryForWhitespace || (opts.hungryForWhitespace && !empty(b))))
   ) {
@@ -138,7 +93,7 @@ function compare(b, s, originalOpts) {
 
   // A C T I O N
 
-  if (isStr(b) && isStr(s)) {
+  if (typeof b === "string" && typeof s === "string") {
     console.log(
       `143 ${`\u001b[${33}m${`big`}\u001b[${39}m`}: ${JSON.stringify(
         b,
@@ -176,7 +131,7 @@ function compare(b, s, originalOpts) {
       ? matcher.isMatch(b, s, { caseSensitive: true })
       : b === s;
   }
-  if (isArr(b) && isArr(s)) {
+  if (Array.isArray(b) && Array.isArray(s)) {
     console.log(`180 both arrays`);
     if (
       opts.hungryForWhitespace &&
@@ -248,8 +203,8 @@ function compare(b, s, originalOpts) {
       }
     }
   } else if (isObj(b) && isObj(s)) {
-    sKeys = new Set(Object.keys(s));
-    bKeys = new Set(Object.keys(b));
+    sKeys = new Set(Object.keys(s as AnyObject));
+    bKeys = new Set(Object.keys(b as AnyObject));
     if (opts.matchStrictly && sKeys.size !== bKeys.size) {
       if (!opts.verboseWhenMismatches) {
         console.log(`255 return false`);
@@ -279,7 +234,6 @@ function compare(b, s, originalOpts) {
     // eslint-disable-next-line
     for (const sKey of sKeys) {
       console.log(`281 ${`\u001b[${35}m${`sKey = ${sKey}`}\u001b[${39}m`}`);
-      // if (!existy(b[sKey])) {
       if (!Object.prototype.hasOwnProperty.call(b, sKey)) {
         console.log(`284 case #1.`);
         if (!opts.useWildcards || (opts.useWildcards && !sKey.includes("*"))) {
@@ -292,7 +246,7 @@ function compare(b, s, originalOpts) {
         }
         // so wildcards are on and sKeys[i] contains a wildcard
         if (
-          Object.keys(b).some((bKey) =>
+          Object.keys(b as AnyObject).some((bKey) =>
             matcher.isMatch(bKey, sKey, { caseSensitive: true })
           )
         ) {
@@ -307,34 +261,46 @@ function compare(b, s, originalOpts) {
         console.log(`307 return`);
         return `The given object has key "${sKey}" which the other-one does not have.`;
       }
-      if (existy(b[sKey]) && typeDetect(b[sKey]) !== typeDetect(s[sKey])) {
+      if (
+        existy((b as AnyObject)[sKey]) &&
+        typeDetect((b as AnyObject)[sKey]) !==
+          typeDetect((s as AnyObject)[sKey])
+      ) {
         console.log(`311 case #2.`);
         console.log(`312 types mismatch`);
         // Types mismatch. Probably falsey result, unless comparing with
         // empty/blank things. Let's check.
         // it might be blank array vs blank object:
-        if (!(empty(b[sKey]) && empty(s[sKey]) && opts.hungryForWhitespace)) {
+        if (
+          !(
+            empty((b as AnyObject)[sKey]) &&
+            empty((s as AnyObject)[sKey]) &&
+            opts.hungryForWhitespace
+          )
+        ) {
           if (!opts.verboseWhenMismatches) {
             console.log(`318 return false`);
             return false;
           }
           console.log(`321 return`);
           return `The given key ${sKey} is of a different type on both objects. On the first-one, it's ${typeDetect(
-            s[sKey]
-          )}, on the second-one, it's ${typeDetect(b[sKey])}`;
+            (s as AnyObject)[sKey]
+          )}, on the second-one, it's ${typeDetect((b as AnyObject)[sKey])}`;
         }
-      } else if (compare(b[sKey], s[sKey], opts) !== true) {
+      } else if (
+        compare((b as AnyObject)[sKey], (s as AnyObject)[sKey], opts) !== true
+      ) {
         console.log(`327 case #3. - recursion returned false`);
         console.log(
           `329 ██ ${`\u001b[${33}m${`b[sKey]`}\u001b[${39}m`} = ${JSON.stringify(
-            b[sKey],
+            (b as AnyObject)[sKey],
             null,
             4
           )}`
         );
         console.log(
           `336 ██ ${`\u001b[${33}m${`s[sKey]`}\u001b[${39}m`} = ${JSON.stringify(
-            s[sKey],
+            (s as AnyObject)[sKey],
             null,
             4
           )}`
@@ -346,10 +312,10 @@ function compare(b, s, originalOpts) {
         }
         console.log(`347 return`);
         return `The given piece ${JSON.stringify(
-          s[sKey],
+          (s as AnyObject)[sKey],
           null,
           4
-        )} and ${JSON.stringify(b[sKey], null, 4)} don't match.`;
+        )} and ${JSON.stringify((b as AnyObject)[sKey], null, 4)} don't match.`;
       }
       console.log(`354 end reached, case #4.`);
     }
@@ -371,4 +337,4 @@ function compare(b, s, originalOpts) {
   return true;
 }
 
-export default compare;
+export { compare };

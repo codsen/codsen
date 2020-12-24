@@ -1,5 +1,5 @@
 import tap from "tap";
-import compare from "../dist/ast-compare.esm";
+import { compare } from "../dist/ast-compare.esm";
 
 const f = () => "zzz";
 
@@ -584,27 +584,6 @@ tap.test("47 - Boolean and numeric values", (t) => {
     true,
     "47"
   );
-  t.end();
-});
-
-tap.test("48 - Boolean and numeric values", (t) => {
-  t.throws(() => {
-    compare({ a: false, b: 2, c: "3" }, f);
-  }, /THROW_ID_04/g);
-  t.end();
-});
-
-tap.test("49 - Boolean and numeric values", (t) => {
-  t.throws(() => {
-    compare(f, { a: false, b: 2, c: "3" });
-  }, /THROW_ID_03/g);
-  t.end();
-});
-
-tap.test("50 - Boolean and numeric values", (t) => {
-  t.throws(() => {
-    compare({ a: false, b: 2, c: "3" }, { a: false, b: 2 }, f);
-  }, /THROW_ID_05/g);
   t.end();
 });
 

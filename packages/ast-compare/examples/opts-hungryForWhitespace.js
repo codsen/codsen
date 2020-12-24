@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // `opts.hungryForWhitespace`
 
 import { strict as assert } from "assert";
-import compare from "../dist/ast-compare.esm.js";
+import { compare } from "../dist/ast-compare.esm.js";
 
 // by default, key values will be strictly matched using `===`
 assert.equal(

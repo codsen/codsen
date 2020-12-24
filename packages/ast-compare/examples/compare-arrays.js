@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // Compare Arrays
 
 import { strict as assert } from "assert";
-import compare from "../dist/ast-compare.esm.js";
+import { compare } from "../dist/ast-compare.esm.js";
 
 assert.equal(compare(["a", "b", "c"], ["a", "b"]), true);
 // true, because second is a subset of first
