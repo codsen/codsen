@@ -1,9 +1,12 @@
-import traverse from "ast-monkey-traverse";
+/* eslint @typescript-eslint/explicit-module-boundary-types:0 */
+
+import { traverse } from "ast-monkey-traverse";
 import GraphemeSplitter from "grapheme-splitter";
+import { version } from "../package.json";
 
 // inner function, common for both external API's methods that does the job:
-function strConvertIndexes(mode, str, indexes) {
-  function isItOk(something) {
+function strConvertIndexes(mode: "n" | "u", str: string, indexes: any) {
+  function isItOk(something: any) {
     if (
       !["string", "number"].includes(typeof something) ||
       (typeof something === "string" && !/^\d*$/.test(something)) ||
@@ -16,7 +19,7 @@ function strConvertIndexes(mode, str, indexes) {
     }
     return true;
   }
-  function oneNativeToUnicode(graphemeStrArr, idx) {
+  function oneNativeToUnicode(graphemeStrArr: string[], idx: number) {
     // we count what is the range of indexes current grapheme covers,
     // then return if given index falls in-between
     let currLowerIdx = 0;
@@ -44,7 +47,7 @@ function strConvertIndexes(mode, str, indexes) {
     );
   }
 
-  function oneUnicodeToNative(graphemeStrArr, idx) {
+  function oneUnicodeToNative(graphemeStrArr: string[], idx: number) {
     if (idx >= graphemeStrArr.length) {
       throw new Error(
         `string-convert-indexes: [THROW_ID_06] the index to convert, ${idx}, is not covered by graphemes length!`
@@ -156,12 +159,12 @@ function strConvertIndexes(mode, str, indexes) {
   }
 }
 
-function nativeToUnicode(str, indexes) {
+function nativeToUnicode(str: string, indexes: any): number | string {
   return strConvertIndexes("n", str, indexes);
 }
 
-function unicodeToNative(str, indexes) {
+function unicodeToNative(str: string, indexes: any): number | string {
   return strConvertIndexes("u", str, indexes);
 }
 
-export { nativeToUnicode, unicodeToNative };
+export { nativeToUnicode, unicodeToNative, version };
