@@ -9,31 +9,22 @@
 
 'use strict';
 
+Object.defineProperty(exports, '__esModule', { value: true });
+
 var he = require('he');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var he__default = /*#__PURE__*/_interopDefaultLegacy(he);
 
-function _typeof(obj) {
-  "@babel/helpers - typeof";
+var version = "3.10.1";
 
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof = function (obj) {
-      return typeof obj;
-    };
-  } else {
-    _typeof = function (obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return _typeof(obj);
-}
+/* eslint quote-props:0 */
 
 function existy(x) {
   return x != null;
 }
+
 function unfancy(str) {
   var CHARS = {
     "\xB4": "'",
@@ -59,22 +50,30 @@ function unfancy(str) {
     "\uFE49": "-",
     "\xA0": " "
   };
+
   if (!existy(str)) {
     throw new Error("string-unfancy/unfancy(): [THROW_ID_01] The input is missing!");
   }
+
   if (typeof str !== "string") {
-    throw new Error("string-unfancy/unfancy(): [THROW_ID_02] The input is not a string! It's: ".concat(_typeof(str)));
-  }
+    throw new Error("string-unfancy/unfancy(): [THROW_ID_02] The input is not a string! It's: " + typeof str);
+  } // decode anticipating multiple encoding on top of one another
+
+
   var res = str;
+
   while (he__default['default'].decode(res) !== res) {
     res = he__default['default'].decode(res);
   }
+
   for (var i = 0, len = res.length; i < len; i++) {
     if (Object.prototype.hasOwnProperty.call(CHARS, res[i])) {
       res = res.slice(0, i) + CHARS[res[i]] + res.slice(i + 1);
     }
   }
+
   return res;
 }
 
-module.exports = unfancy;
+exports.unfancy = unfancy;
+exports.version = version;

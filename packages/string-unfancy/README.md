@@ -34,7 +34,7 @@ npm i string-unfancy
 
 ```js
 import { strict as assert } from "assert";
-import unfancy from "string-unfancy";
+import { unfancy } from "string-unfancy";
 
 // U+2019
 // https://www.fileformat.info/info/unicode/char/2019/index.htm

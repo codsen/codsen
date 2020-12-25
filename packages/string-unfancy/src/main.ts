@@ -1,13 +1,18 @@
 /* eslint quote-props:0 */
 
 import he from "he";
+import { version } from "../package.json";
 
-function existy(x) {
+function existy(x: any): boolean {
   return x != null;
 }
 
-function unfancy(str) {
-  const CHARS = {
+interface UnknownValueObj {
+  [key: string]: any;
+}
+
+function unfancy(str: string): string {
+  const CHARS: UnknownValueObj = {
     "\u00B4": "'",
     ʻ: "'",
     ʼ: "'",
@@ -54,4 +59,4 @@ function unfancy(str) {
   return res;
 }
 
-export default unfancy;
+export { unfancy, version };
