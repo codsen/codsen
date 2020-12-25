@@ -34,7 +34,7 @@ npm i ast-get-object
 
 ```js
 import { strict as assert } from "assert";
-import getObj from "ast-get-object";
+import { getObj } from "ast-get-object";
 
 // get - two input arguments
 assert.deepEqual(

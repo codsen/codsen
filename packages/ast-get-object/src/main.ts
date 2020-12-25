@@ -1,23 +1,26 @@
-import compare from "ast-compare";
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+
 import clone from "lodash.clonedeep";
+import isObj from "lodash.isplainobject";
+import { compare } from "ast-compare";
+import { version } from "../package.json";
+
+interface UnknownValueObj {
+  [key: string]: any;
+}
 
 // ===================================
 // F U N C T I O N S
 
-function existy(x) {
+function existy(x: any): boolean {
   return x != null;
 }
-function truthy(x) {
+function truthy(x: any): boolean {
   return x !== false && existy(x);
-}
-function isObj(something) {
-  return (
-    something && typeof something === "object" && !Array.isArray(something)
-  );
 }
 
 /**
- * getObj - This is a walker-function for querying/writing PostHTML-parsed AST.
+ * getObj - This is a walker-function for querying/writing parsed AST.
  * Pass something (array or object, possibly nested) and a plain object with
  * key-value pair (or pairs) you want to search.
  * This library will traverse the nested object and array tree (AST) and look
@@ -36,7 +39,12 @@ function isObj(something) {
  *                                      * in WRITE mode (4 args given),
  * mutated ast (first parameter)
  */
-function getObj(originalAst, keyValPair, replacementContentsArr, result = []) {
+function internalApi(
+  originalAst: any,
+  keyValPair: UnknownValueObj,
+  replacementContentsArr?: UnknownValueObj[],
+  result: any[] = []
+) {
   if (!existy(originalAst)) {
     throw new Error("ast-get-object: [THROW_ID_01] First argument is missing!");
   }
@@ -52,15 +60,17 @@ function getObj(originalAst, keyValPair, replacementContentsArr, result = []) {
   }
   let ast = clone(originalAst);
   // if object is passed, crawl it, checking for keyValPair:
+  /* istanbul ignore else */
   if (isObj(ast)) {
     // console.log('\nwill compare:')
     // console.log('ast = ' + JSON.stringify(ast, null, 4))
     // console.log('keyValPair = ' + JSON.stringify(keyValPair, null, 4))
     if (compare(ast, keyValPair)) {
       if (set) {
-        if (replacementContentsArr.length > 0) {
-          ast = replacementContentsArr[0];
-          replacementContentsArr.shift();
+        /* istanbul ignore else */
+        if ((replacementContentsArr as UnknownValueObj[]).length > 0) {
+          ast = (replacementContentsArr as UnknownValueObj[])[0];
+          (replacementContentsArr as UnknownValueObj[]).shift();
         }
       } else {
         result.push(ast);
@@ -70,27 +80,33 @@ function getObj(originalAst, keyValPair, replacementContentsArr, result = []) {
         if (Array.isArray(ast[key]) || isObj(ast[key])) {
           // console.log('ast[key] = ' + JSON.stringify(ast[key], null, 4))
           if (set) {
-            ast[key] = getObj(
+            ast[key] = internalApi(
               ast[key],
               keyValPair,
               replacementContentsArr,
               result
             );
           } else {
-            getObj(ast[key], keyValPair, replacementContentsArr, result);
+            internalApi(ast[key], keyValPair, replacementContentsArr, result);
           }
         }
       });
     }
   } else if (Array.isArray(ast)) {
     // else, it's an array. Iterate each key, if it's an obj, call findTag()
-    ast.forEach((el, i) => {
+    ast.forEach((_el, i) => {
       // console.log('array el[' + i + ']=' + JSON.stringify(el, null, 4))
+      /* istanbul ignore else */
       if (isObj(ast[i]) || Array.isArray(ast[i])) {
         if (set) {
-          ast[i] = getObj(ast[i], keyValPair, replacementContentsArr, result);
+          ast[i] = internalApi(
+            ast[i],
+            keyValPair,
+            replacementContentsArr,
+            result
+          );
         } else {
-          getObj(ast[i], keyValPair, replacementContentsArr, result);
+          internalApi(ast[i], keyValPair, replacementContentsArr, result);
         }
       }
     });
@@ -106,8 +122,12 @@ function getObj(originalAst, keyValPair, replacementContentsArr, result = []) {
 
 // second function is necessary to shielf the 4th input argument which is
 // for internal use only.
-function externalApi(originalAst, keyValPair, replacementContentsArr) {
-  return getObj(originalAst, keyValPair, replacementContentsArr);
+function getObj(
+  originalAst: any,
+  keyValPair: UnknownValueObj,
+  replacementContentsArr?: UnknownValueObj[]
+) {
+  return internalApi(originalAst, keyValPair, replacementContentsArr);
 }
 
-export default externalApi;
+export { getObj, version };

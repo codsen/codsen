@@ -1,5 +1,5 @@
 import tap from "tap";
-import get1 from "../dist/ast-get-object.umd";
+import { getObj } from "../dist/ast-get-object.umd";
 
 const source = [
   {
@@ -24,6 +24,6 @@ const res = [
 ];
 
 tap.test("UMD build works fine", (t) => {
-  t.strictSame(get1(source, target), res, "01");
+  t.strictSame(getObj(source, target), res, "01");
   t.end();
 });
