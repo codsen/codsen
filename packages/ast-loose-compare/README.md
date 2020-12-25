@@ -34,7 +34,7 @@ npm i ast-loose-compare
 
 ```js
 import { strict as assert } from "assert";
-import looseCompare from "ast-loose-compare";
+import { looseCompare } from "ast-loose-compare";
 
 assert.equal(
   looseCompare(

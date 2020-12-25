@@ -1,5 +1,5 @@
 import tap from "tap";
-import looseCompare from "../dist/ast-loose-compare.esm";
+import { looseCompare } from "../dist/ast-loose-compare.esm";
 
 // ==============================
 // Precautions

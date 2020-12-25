@@ -9,116 +9,123 @@
 
 'use strict';
 
-var empty = require('ast-contains-only-empty-space');
+Object.defineProperty(exports, '__esModule', { value: true });
+
+var astContainsOnlyEmptySpace = require('ast-contains-only-empty-space');
+var isObj = require('lodash.isplainobject');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-var empty__default = /*#__PURE__*/_interopDefaultLegacy(empty);
+var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
-function _typeof(obj) {
-  "@babel/helpers - typeof";
+var version = "1.9.1";
 
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof = function (obj) {
-      return typeof obj;
-    };
-  } else {
-    _typeof = function (obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return _typeof(obj);
-}
-
-function isObj(something) {
-  return something && _typeof(something) === "object" && !Array.isArray(something);
-}
-function looseCompare(bigObj, smallObj, res) {
+function internalCompare(bigObj, smallObj, res) {
   function existy(x) {
     return x != null;
   }
+
   var i;
-  var len;
+  var len; // precautions
+
   if (res === undefined) {
+    // means original cycle, function is called first time from outside
     if (!existy(bigObj) || !existy(smallObj)) {
       return undefined;
     }
   } else if (!existy(bigObj) || !existy(smallObj)) {
+    // means it's inner cycle, outside doesn't use res
+    // false because it's for recursion
     return false;
   }
+
   res = res || true;
-  if (_typeof(bigObj) !== _typeof(smallObj)) {
-    if (empty__default['default'](bigObj) && empty__default['default'](smallObj)) {
+
+  if (typeof bigObj !== typeof smallObj) {
+    if (astContainsOnlyEmptySpace.empty(bigObj) && astContainsOnlyEmptySpace.empty(smallObj)) {
       return true;
     }
+
     return false;
-  }
+  } // if both are arrays
+
+
   if (Array.isArray(bigObj) && Array.isArray(smallObj)) {
     if (smallObj.length > 0) {
       for (i = 0, len = smallObj.length; i < len; i++) {
-        if (Array.isArray(smallObj[i]) || isObj(smallObj[i])) {
-          res = looseCompare(bigObj[i], smallObj[i], res);
+        if (Array.isArray(smallObj[i]) || isObj__default['default'](smallObj[i])) {
+          res = internalCompare(bigObj[i], smallObj[i], res);
+
           if (!res) {
             return false;
           }
         } else if (smallObj[i] !== bigObj[i]) {
-          if (empty__default['default'](smallObj[i]) && empty__default['default'](bigObj[i])) {
+          if (astContainsOnlyEmptySpace.empty(smallObj[i]) && astContainsOnlyEmptySpace.empty(bigObj[i])) {
             return true;
           }
-          res = false;
+
           return false;
         }
       }
     } else {
-      if (smallObj.length === 0 && bigObj.length === 0 || empty__default['default'](smallObj) && empty__default['default'](bigObj)) {
+      if (smallObj.length === 0 && bigObj.length === 0 || astContainsOnlyEmptySpace.empty(smallObj) && astContainsOnlyEmptySpace.empty(bigObj)) {
         return true;
       }
-      res = false;
+
       return false;
     }
-  } else if (isObj(bigObj) && isObj(smallObj)) {
+  } else if (isObj__default['default'](bigObj) && isObj__default['default'](smallObj)) {
+    // if both are plain objects
     if (Object.keys(smallObj).length > 0) {
       var keysArr = Object.keys(smallObj);
+
       for (i = 0, len = keysArr.length; i < len; i++) {
-        if (Array.isArray(smallObj[keysArr[i]]) || isObj(smallObj[keysArr[i]]) || typeof smallObj[keysArr[i]] === "string") {
-          res = looseCompare(bigObj[keysArr[i]], smallObj[keysArr[i]], res);
+        /* istanbul ignore else */
+        if (Array.isArray(smallObj[keysArr[i]]) || isObj__default['default'](smallObj[keysArr[i]]) || typeof smallObj[keysArr[i]] === "string") {
+          res = internalCompare(bigObj[keysArr[i]], smallObj[keysArr[i]], res);
+
           if (!res) {
             return false;
           }
         } else if (smallObj[keysArr[i]] !== bigObj[keysArr[i]]) {
-          if (!empty__default['default'](smallObj[keysArr[i]]) || !empty__default['default'](bigObj[keysArr[i]])) {
-            res = false;
+          if (!astContainsOnlyEmptySpace.empty(smallObj[keysArr[i]]) || !astContainsOnlyEmptySpace.empty(bigObj[keysArr[i]])) {
             return false;
           }
         }
       }
     } else {
-      if (Object.keys(smallObj).length === 0 && Object.keys(bigObj).length === 0 || empty__default['default'](smallObj) && empty__default['default'](bigObj)) {
+      if (Object.keys(smallObj).length === 0 && Object.keys(bigObj).length === 0 || astContainsOnlyEmptySpace.empty(smallObj) && astContainsOnlyEmptySpace.empty(bigObj)) {
         return true;
       }
-      res = false;
+
       return false;
     }
   } else if (typeof bigObj === "string" && typeof smallObj === "string") {
+    // if both are strings
+
+    /* istanbul ignore else */
     if (bigObj !== smallObj) {
-      if (empty__default['default'](smallObj) && empty__default['default'](bigObj)) {
+      if (astContainsOnlyEmptySpace.empty(smallObj) && astContainsOnlyEmptySpace.empty(bigObj)) {
         return true;
       }
-      res = false;
+
       return false;
     }
   } else {
-    if (empty__default['default'](smallObj) && empty__default['default'](bigObj)) {
+    // or if both are empty
+    if (astContainsOnlyEmptySpace.empty(smallObj) && astContainsOnlyEmptySpace.empty(bigObj)) {
       return true;
     }
-    res = false;
+
     return false;
   }
+
   return res;
 }
-function externalApi(bigObj, smallObj) {
-  return looseCompare(bigObj, smallObj);
+
+function looseCompare(bigObj, smallObj) {
+  return internalCompare(bigObj, smallObj);
 }
 
-module.exports = externalApi;
+exports.looseCompare = looseCompare;
+exports.version = version;

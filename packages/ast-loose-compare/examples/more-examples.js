@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // More Examples
 
 import { strict as assert } from "assert";
-import looseCompare from "../dist/ast-loose-compare.esm.js";
+import { looseCompare } from "../dist/ast-loose-compare.esm.js";
 
 assert.equal(
   looseCompare({ a: "1", b: "2", c: "3" }, { a: "1", b: "2" }),

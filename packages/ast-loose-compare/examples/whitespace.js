@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // Empty Values
 
 import { strict as assert } from "assert";
-import looseCompare from "../dist/ast-loose-compare.esm.js";
+import { looseCompare } from "../dist/ast-loose-compare.esm.js";
 
 // both values are empty - they trim() to zero-length
 assert.equal(
