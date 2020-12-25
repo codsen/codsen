@@ -1,5 +1,5 @@
 import tap from "tap";
-import check1 from "../dist/check-types-mini.umd";
+import { checkTypesMini } from "../dist/check-types-mini.umd";
 
 const obj1 = {
   option1: "setting1",
@@ -9,7 +9,7 @@ const obj1 = {
 
 const obj2 = {
   option1: "setting1",
-  option2: "setting2",
+  option2: false,
   option3: false,
 };
 
@@ -19,9 +19,9 @@ const opts = {
 };
 
 tap.test("UMD build works fine", (t) => {
-  const err = t.throws(() => {
-    check1(obj1, obj2, opts);
-  });
-  t.match(err.message, /opts\.msg/g, "01");
+  t.throws(() => {
+    checkTypesMini(obj1, obj2, opts);
+  }, /zzz\.option2 was customised to "setting2" which is not boolean but string/g);
+
   t.end();
 });

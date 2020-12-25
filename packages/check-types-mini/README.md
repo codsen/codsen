@@ -34,7 +34,7 @@ npm i check-types-mini
 
 ```js
 import { strict as assert } from "assert";
-import checkTypesMini from "check-types-mini";
+import { checkTypesMini } from "check-types-mini";
 
 assert.throws(() => {
   checkTypesMini(

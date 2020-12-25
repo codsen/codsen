@@ -1,62 +1,71 @@
 import typ from "type-detect";
 import pullAll from "lodash.pullall";
-import traverse from "ast-monkey-traverse";
+import { traverse } from "ast-monkey-traverse";
 import intersection from "lodash.intersection";
-import arrayiffyIfString from "arrayiffy-if-string";
+import { arrayiffy } from "arrayiffy-if-string";
 import objectPath from "object-path";
 import matcher from "matcher";
 
-// fourth input argument is shielded from an external API:
-function checkTypesMini(
-  obj,
-  ref,
-  originalOptions,
-  shouldWeCheckTheOpts = true
-) {
-  console.log(
-    "\n███████████████████████████████████████ 017 checkTypesMini() called with arguments:"
-  );
-  console.log("█████████\n");
+interface UnknownValueObj {
+  [key: string]: any;
+}
 
+interface Opts {
+  ignoreKeys?: string[];
+  ignorePaths?: string[];
+  acceptArrays?: boolean;
+  acceptArraysIgnore?: string | string[];
+  enforceStrictKeyset?: boolean;
+  schema?: UnknownValueObj;
+  msg?: string;
+  optsVarName?: string;
+}
+
+const defaults: Opts = {
+  ignoreKeys: [],
+  ignorePaths: [],
+  acceptArrays: false,
+  acceptArraysIgnore: [],
+  enforceStrictKeyset: true,
+  schema: {},
+  msg: "check-types-mini",
+  optsVarName: "opts",
+};
+
+// fourth input argument is shielded from an external API:
+function internalApi(
+  obj: UnknownValueObj,
+  ref: UnknownValueObj,
+  originalOptions?: Opts
+) {
   //
   // Functions
   // =========
 
-  const hasKey = Object.prototype.hasOwnProperty;
-  function escapeRegExp(inp) {
-    if (typeof inp !== "string" || !inp.length) {
-      return inp;
-    }
-    return inp.replace(/[{}().^*$+?|[\\\]]/g, "\\$&");
-  }
-  function existy(something) {
+  function existy(something: any): boolean {
     return something != null; // deliberate !=
   }
-  function isObj(something) {
+
+  function isObj(something: any): boolean {
     return typ(something) === "Object";
   }
-  function pullAllWithGlob(originalInput, toBeRemoved) {
+
+  function pullAllWithGlob(
+    originalInput: string[],
+    toBeRemoved: string | string[]
+  ) {
     // eslint-disable-next-line no-param-reassign
-    toBeRemoved = arrayiffyIfString(toBeRemoved);
+    toBeRemoved = arrayiffy(toBeRemoved);
     return Array.from(originalInput).filter(
       (originalVal) =>
-        !toBeRemoved.some((remVal) =>
+        !(toBeRemoved as string[]).some((remVal) =>
           matcher.isMatch(originalVal, remVal, {
             caseSensitive: true,
           })
         )
     );
   }
-
-  // consumes path like "opts.parent.child" and yields "opts.parent"
-  // function goUpByOneLevel(path) {
-  //   if (path.includes(".")) {
-  //     const split = path.split(".");
-  //     split.pop();
-  //     return split.join(".");
-  //   }
-  //   return path;
-  // }
+  const hasKey = Object.prototype.hasOwnProperty;
 
   // Variables
   // =========
@@ -70,8 +79,6 @@ function checkTypesMini(
     "whatever",
     "whatevs",
   ];
-  const isArr = Array.isArray;
-
   if (!existy(obj)) {
     throw new Error(
       "check-types-mini: [THROW_ID_01] First argument is missing!"
@@ -81,44 +88,40 @@ function checkTypesMini(
   // Prep our own opts
   // =================
 
-  const defaults = {
-    ignoreKeys: [],
-    ignorePaths: [],
-    acceptArrays: false,
-    acceptArraysIgnore: [],
-    enforceStrictKeyset: true,
-    schema: {},
-    msg: "check-types-mini",
-    optsVarName: "opts",
-  };
-  let opts;
-  if (existy(originalOptions) && isObj(originalOptions)) {
-    opts = { ...defaults, ...originalOptions };
-  } else {
-    opts = { ...defaults };
-  }
+  const opts = { ...defaults, ...originalOptions };
 
-  if (!existy(opts.ignoreKeys) || !opts.ignoreKeys) {
+  if (
+    !existy(opts.ignoreKeys) ||
+    (typeof opts.ignoreKeys !== "string" && !Array.isArray(opts.ignoreKeys))
+  ) {
     opts.ignoreKeys = [];
   } else {
-    opts.ignoreKeys = arrayiffyIfString(opts.ignoreKeys);
+    opts.ignoreKeys = arrayiffy(opts.ignoreKeys);
   }
-  if (!existy(opts.ignorePaths) || !opts.ignorePaths) {
+  if (
+    !existy(opts.ignorePaths) ||
+    (typeof opts.ignorePaths !== "string" && !Array.isArray(opts.ignorePaths))
+  ) {
     opts.ignorePaths = [];
   } else {
-    opts.ignorePaths = arrayiffyIfString(opts.ignorePaths);
+    opts.ignorePaths = arrayiffy(opts.ignorePaths);
   }
-  if (!existy(opts.acceptArraysIgnore) || !opts.acceptArraysIgnore) {
+  if (
+    !existy(opts.acceptArraysIgnore) ||
+    (typeof opts.acceptArraysIgnore !== "string" &&
+      !Array.isArray(opts.acceptArraysIgnore))
+  ) {
     opts.acceptArraysIgnore = [];
   } else {
-    opts.acceptArraysIgnore = arrayiffyIfString(opts.acceptArraysIgnore);
+    opts.acceptArraysIgnore = arrayiffy(opts.acceptArraysIgnore);
   }
-  opts.msg = typeof opts.msg === "string" ? opts.msg.trim() : opts.msg;
+  opts.msg = `${opts.msg}`.trim();
+
   if (opts.msg[opts.msg.length - 1] === ":") {
     opts.msg = opts.msg.slice(0, opts.msg.length - 1).trim();
   }
   // now, since we let users type the allowed types, we have to normalise the letter case:
-  if (opts.schema) {
+  if (isObj(opts.schema)) {
     // 1. if schema is given as nested AST tree, for example:
     // {
     //   schema: {
@@ -137,24 +140,27 @@ function checkTypesMini(
     //     option2: "whatever"
     //   }
     // }
-    Object.keys(opts.schema).forEach((oneKey) => {
-      if (isObj(opts.schema[oneKey])) {
+    Object.keys(opts.schema as UnknownValueObj).forEach((oneKey) => {
+      if (isObj((opts.schema as UnknownValueObj)[oneKey])) {
         // 1. extract all unique AST branches leading to their tips
-        const tempObj = {};
-        traverse(opts.schema[oneKey], (key, val, innerObj) => {
-          const current = val !== undefined ? val : key;
-          console.log(
-            `147 ${`\u001b[${33}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
-              current,
-              null,
-              4
-            )} at ${innerObj.path}`
-          );
-          if (!isArr(current) && !isObj(current)) {
-            tempObj[`${oneKey}.${innerObj.path}`] = current;
+        const tempObj: UnknownValueObj = {};
+        traverse(
+          (opts.schema as UnknownValueObj)[oneKey],
+          (key, val, innerObj) => {
+            const current = val !== undefined ? val : key;
+            console.log(
+              `147 ${`\u001b[${33}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
+                current,
+                null,
+                4
+              )} at ${innerObj.path}`
+            );
+            if (!Array.isArray(current) && !isObj(current)) {
+              tempObj[`${oneKey}.${innerObj.path}`] = current;
+            }
+            return current;
           }
-          return current;
-        });
+        );
 
         console.log(
           `160 FINAL ${`\u001b[${33}m${`tempObj`}\u001b[${39}m`} = ${JSON.stringify(
@@ -165,10 +171,10 @@ function checkTypesMini(
         );
 
         // 2. delete that key which leads to object:
-        delete opts.schema[oneKey];
+        delete (opts.schema as UnknownValueObj)[oneKey];
 
         // 3. merge in all paths-as-keys into schema opts object:
-        opts.schema = Object.assign(opts.schema, tempObj);
+        opts.schema = { ...opts.schema, ...tempObj };
 
         console.log(
           `174 FINALLY, ${`\u001b[${33}m${`opts.schema`}\u001b[${39}m`} = ${JSON.stringify(
@@ -187,34 +193,32 @@ function checkTypesMini(
     //
 
     // 2. arrayiffy
-    Object.keys(opts.schema).forEach((oneKey) => {
-      if (!isArr(opts.schema[oneKey])) {
-        opts.schema[oneKey] = [opts.schema[oneKey]];
+    Object.keys(opts.schema as UnknownValueObj).forEach((oneKey) => {
+      if (!Array.isArray((opts.schema as UnknownValueObj)[oneKey])) {
+        (opts.schema as UnknownValueObj)[oneKey] = [
+          (opts.schema as UnknownValueObj)[oneKey],
+        ];
       }
       // then turn all keys into strings and trim and lowercase them:
-      opts.schema[oneKey] = opts.schema[oneKey]
-        .map(String)
-        .map((el) => el.toLowerCase())
-        .map((el) => el.trim());
+      (opts.schema as UnknownValueObj)[
+        oneKey
+      ] = (opts.schema as UnknownValueObj)[oneKey].map((el: any) =>
+        `${el}`.toLowerCase().trim()
+      );
     });
+  } else if (opts.schema != null) {
+    throw new Error(
+      `check-types-mini: opts.schema was customised to ${JSON.stringify(
+        opts.schema,
+        null,
+        0
+      )} which is not object but ${typeof opts.schema}`
+    );
   }
 
   if (!existy(ref)) {
     // eslint-disable-next-line no-param-reassign
     ref = {};
-  }
-
-  // Recursively check our own opts =)
-  // =================================
-
-  // The fourth argument is shielded from outside API, it's instructing not to
-  // validate the opts. Otherwise, we would get a recursion. But we know opts
-  // are fine anyway when we're calling them internally :)
-  if (shouldWeCheckTheOpts) {
-    console.log(
-      `215 check-types-mini/main.js: about to call itself recursively because "shouldWeCheckTheOpts" = ${shouldWeCheckTheOpts}:`
-    );
-    checkTypesMini(opts, defaults, { enforceStrictKeyset: false }, false);
   }
 
   // ---------------------------------------------------------------------------
@@ -239,20 +243,23 @@ function checkTypesMini(
     console.log(
       `240 so \u001b[${31}m${`opts.enforceStrictKeyset is ON`}\u001b[${39}m`
     );
-    if (existy(opts.schema) && Object.keys(opts.schema).length > 0) {
+    if (
+      existy(opts.schema) &&
+      Object.keys(opts.schema as UnknownValueObj).length > 0
+    ) {
       if (
         pullAllWithGlob(
           pullAll(
             Object.keys(obj),
-            Object.keys(ref).concat(Object.keys(opts.schema))
+            Object.keys(ref).concat(Object.keys(opts.schema as UnknownValueObj))
           ),
-          opts.ignoreKeys
-        ).length !== 0
+          opts.ignoreKeys as string[]
+        ).length
       ) {
-        console.log("252");
+        console.log("271");
         const keys = pullAll(
           Object.keys(obj),
-          Object.keys(ref).concat(Object.keys(opts.schema))
+          Object.keys(ref).concat(Object.keys(opts.schema as UnknownValueObj))
         );
         throw new TypeError(
           `${opts.msg}: ${
@@ -268,7 +275,7 @@ function checkTypesMini(
       if (
         pullAllWithGlob(
           pullAll(Object.keys(obj), Object.keys(ref)),
-          opts.ignoreKeys
+          opts.ignoreKeys as string[]
         ).length !== 0
       ) {
         const keys = pullAll(Object.keys(obj), Object.keys(ref));
@@ -282,7 +289,7 @@ function checkTypesMini(
       } else if (
         pullAllWithGlob(
           pullAll(Object.keys(ref), Object.keys(obj)),
-          opts.ignoreKeys
+          opts.ignoreKeys as string[]
         ).length !== 0
       ) {
         const keys = pullAll(Object.keys(ref), Object.keys(obj));
@@ -303,12 +310,6 @@ function checkTypesMini(
   }
 
   console.log("305:");
-  console.log(
-    shouldWeCheckTheOpts
-      ? `\u001b[${32}m${`\n\n██████████████████████████████████████████████████████████████████████████████
-██████████████████████████████████████████████████████████████████████████████\n\n1st stage done`}\u001b[${39}m`
-      : ""
-  );
 
   // 2. Call the monkey and traverse the schema object, checking each value-as-object
   // or value-as-array separately, if opts.enforceStrictKeyset is on. Root level
@@ -346,7 +347,7 @@ function checkTypesMini(
   // speaking, do their path strings start with any of the strings in aforementioned
   // paths array strings).
 
-  const ignoredPathsArr = [];
+  const ignoredPathsArr: string[] = [];
 
   console.log(`351 TRAVERSAL STARTS`);
   traverse(obj, (key, val, innerObj) => {
@@ -354,7 +355,7 @@ function checkTypesMini(
     console.log(`\n${`${`\u001b[${32}m${`█`}\u001b[${39}m`} `.repeat(39)}\n`);
     // Here what we have been given:
     let current = val;
-    let objKey = key;
+    let objKey: any = key;
     if (innerObj.parentType === "array") {
       objKey = undefined;
       current = key;
@@ -391,7 +392,7 @@ function checkTypesMini(
 
     // if current path is a children of any paths in "ignoredPathsArr", skip it:
     if (
-      isArr(ignoredPathsArr) &&
+      Array.isArray(ignoredPathsArr) &&
       ignoredPathsArr.length &&
       ignoredPathsArr.some((path) => innerObj.path.startsWith(path))
     ) {
@@ -404,7 +405,7 @@ function checkTypesMini(
     // if this key is ignored, skip it:
     if (
       objKey &&
-      opts.ignoreKeys.some((oneOfKeysToIgnore) =>
+      (opts.ignoreKeys as string[]).some((oneOfKeysToIgnore) =>
         matcher.isMatch(objKey, oneOfKeysToIgnore)
       )
     ) {
@@ -419,7 +420,7 @@ function checkTypesMini(
     }
     console.log(
       `421 key "${objKey}" was not skipped because it was not matcher-matched against ${JSON.stringify(
-        escapeRegExp(opts.ignoreKeys),
+        opts.ignoreKeys,
         null,
         4
       )}`
@@ -427,7 +428,7 @@ function checkTypesMini(
 
     // if this path is ignored, skip it:
     if (
-      opts.ignorePaths.some((oneOfPathsToIgnore) =>
+      (opts.ignorePaths as string[]).some((oneOfPathsToIgnore) =>
         matcher.isMatch(innerObj.path, oneOfPathsToIgnore)
       )
     ) {
@@ -454,8 +455,8 @@ function checkTypesMini(
 
     const isNotAnArrayChild = !(
       !isObj(current) &&
-      !isArr(current) &&
-      isArr(innerObj.parent)
+      !Array.isArray(current) &&
+      Array.isArray(innerObj.parent)
     );
 
     // ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  ██  █
@@ -508,22 +509,11 @@ function checkTypesMini(
     );
 
     let optsSchemaHasThisPathDefined = false;
-    if (
-      isObj(opts.schema) &&
-      hasKey.call(opts.schema, objectPath.get(innerObj.path))
-    ) {
+    if (isObj(opts.schema) && hasKey.call(opts.schema, innerObj.path)) {
       optsSchemaHasThisPathDefined = true;
-    } else {
-      console.log(
-        `518 optsSchemaHasThisPathDefined was not set because objectPath reported that "${JSON.stringify(
-          objectPath.get(innerObj.path),
-          null,
-          4
-        )}" is not present in ${JSON.stringify(opts.schema, null, 4)}`
-      );
     }
     console.log(
-      `${`\u001b[${33}m${`optsSchemaHasThisPathDefined`}\u001b[${39}m`} = ${JSON.stringify(
+      `510 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`optsSchemaHasThisPathDefined`}\u001b[${39}m`} = ${JSON.stringify(
         optsSchemaHasThisPathDefined,
         null,
         4
@@ -531,11 +521,11 @@ function checkTypesMini(
     );
 
     let refHasThisPathDefined = false;
-    if (isObj(ref) && objectPath.has(ref, objectPath.get(innerObj.path))) {
+    if (isObj(ref) && objectPath.has(ref, innerObj.path)) {
       refHasThisPathDefined = true;
     }
     console.log(
-      `${`\u001b[${33}m${`refHasThisPathDefined`}\u001b[${39}m`} = ${JSON.stringify(
+      `528 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`refHasThisPathDefined`}\u001b[${39}m`} = ${JSON.stringify(
         refHasThisPathDefined,
         null,
         4
@@ -590,14 +580,14 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
       // be raw null/undefined, which would be arrayified and turned into string.
       console.log(
         `592 ${`\u001b[${33}m${`objectPath.get(opts.schema, innerObj.path)`}\u001b[${39}m`} = ${JSON.stringify(
-          objectPath.get(opts.schema, innerObj.path),
+          objectPath.get(opts.schema as UnknownValueObj, innerObj.path),
           null,
           4
         )}`
       );
-      const currentKeysSchema = arrayiffyIfString(opts.schema[innerObj.path])
-        .map(String)
-        .map((el) => el.toLowerCase());
+      const currentKeysSchema = arrayiffy(
+        (opts.schema as UnknownValueObj)[innerObj.path]
+      ).map((el: any) => `${el}`.toLowerCase());
       console.log(
         `602 ${`\u001b[${33}m${`currentKeysSchema`}\u001b[${39}m`} = ${JSON.stringify(
           currentKeysSchema,
@@ -606,7 +596,11 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
         )}`
       );
 
-      objectPath.set(opts.schema, innerObj.path, currentKeysSchema);
+      objectPath.set(
+        opts.schema as UnknownValueObj,
+        innerObj.path,
+        currentKeysSchema
+      );
 
       // step 2. First check does our schema contain any blanket names, "any", "whatever" etc.
       if (!intersection(currentKeysSchema, NAMESFORANYTYPE).length) {
@@ -635,7 +629,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
           // Check if key's value is array. Then, if it is, check if opts.acceptArrays is on.
           // If it is, then iterate through the array, checking does each value conform to the
           // types listed in that key's schema entry.
-          if (isArr(current) && opts.acceptArrays) {
+          if (Array.isArray(current) && opts.acceptArrays) {
             console.log("639 1-1: check acceptArrays");
             // check each key:
             for (let i = 0, len = current.length; i < len; i++) {
@@ -714,8 +708,8 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
 
       if (
         opts.acceptArrays &&
-        isArr(current) &&
-        !opts.acceptArraysIgnore.includes(key)
+        Array.isArray(current) &&
+        !(opts.acceptArraysIgnore as string[]).includes(key)
       ) {
         console.log("720 2-1: check accept arrays");
         const allMatch = current.every(
@@ -758,8 +752,12 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
   );
 }
 
-function externalApi(obj, ref, originalOptions) {
-  return checkTypesMini(obj, ref, originalOptions);
+function checkTypesMini(
+  obj: UnknownValueObj,
+  ref: UnknownValueObj,
+  originalOptions?: Opts
+): void {
+  return internalApi(obj, ref, originalOptions);
 }
 
-export default externalApi;
+export { checkTypesMini };
