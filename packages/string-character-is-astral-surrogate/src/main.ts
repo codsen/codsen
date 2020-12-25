@@ -1,6 +1,6 @@
 // high surrogate goes first, low goes second
 
-function isHighSurrogate(something) {
+function isHighSurrogate(something: string | undefined): boolean {
   // [\uD800-\uDBFF]
   if (typeof something === "string") {
     if (something.length === 0) {
@@ -17,7 +17,7 @@ function isHighSurrogate(something) {
     `string-character-is-astral-surrogate/isHighSurrogate(): the input is not string but ${typeof something}`
   );
 }
-function isLowSurrogate(something) {
+function isLowSurrogate(something: string | undefined): boolean {
   // [\uDC00-\uDFFF]
   if (typeof something === "string") {
     if (something.length === 0) {

@@ -8,69 +8,53 @@
  */
 
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-  typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.stringCharacterIsAstralSurrogate = {}));
+typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+typeof define === 'function' && define.amd ? define(['exports'], factory) :
+(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.stringCharacterIsAstralSurrogate = {}));
 }(this, (function (exports) { 'use strict';
 
-  function _typeof(obj) {
-    "@babel/helpers - typeof";
-
-    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-      _typeof = function (obj) {
-        return typeof obj;
-      };
-    } else {
-      _typeof = function (obj) {
-        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-      };
-    }
-
-    return _typeof(obj);
-  }
-
-  // high surrogate goes first, low goes second
-  function isHighSurrogate(something) {
-    // [\uD800-\uDBFF]
-    if (typeof something === "string") {
-      if (something.length === 0) {
-        return false;
-      } // \uD800 charCode is 55296
-      // \uDBFF charCode is 56319
-
-
-      return something.charCodeAt(0) >= 55296 && something.charCodeAt(0) <= 56319;
-    }
-
-    if (something === undefined) {
+// high surrogate goes first, low goes second
+function isHighSurrogate(something) {
+  // [\uD800-\uDBFF]
+  if (typeof something === "string") {
+    if (something.length === 0) {
       return false;
-    }
+    } // \uD800 charCode is 55296
+    // \uDBFF charCode is 56319
 
-    throw new TypeError("string-character-is-astral-surrogate/isHighSurrogate(): the input is not string but ".concat(_typeof(something)));
+
+    return something.charCodeAt(0) >= 55296 && something.charCodeAt(0) <= 56319;
   }
 
-  function isLowSurrogate(something) {
-    // [\uDC00-\uDFFF]
-    if (typeof something === "string") {
-      if (something.length === 0) {
-        return false;
-      } // \uDC00 charCode is 56320
-      // \uDFFF charCode is 57343
+  if (something === undefined) {
+    return false;
+  }
 
+  throw new TypeError("string-character-is-astral-surrogate/isHighSurrogate(): the input is not string but " + typeof something);
+}
 
-      return something.charCodeAt(0) >= 56320 && something.charCodeAt(0) <= 57343;
-    }
-
-    if (something === undefined) {
+function isLowSurrogate(something) {
+  // [\uDC00-\uDFFF]
+  if (typeof something === "string") {
+    if (something.length === 0) {
       return false;
-    }
+    } // \uDC00 charCode is 56320
+    // \uDFFF charCode is 57343
 
-    throw new TypeError("string-character-is-astral-surrogate/isLowSurrogate(): the input is not string but ".concat(_typeof(something)));
+
+    return something.charCodeAt(0) >= 56320 && something.charCodeAt(0) <= 57343;
   }
 
-  exports.isHighSurrogate = isHighSurrogate;
-  exports.isLowSurrogate = isLowSurrogate;
+  if (something === undefined) {
+    return false;
+  }
 
-  Object.defineProperty(exports, '__esModule', { value: true });
+  throw new TypeError("string-character-is-astral-surrogate/isLowSurrogate(): the input is not string but " + typeof something);
+}
+
+exports.isHighSurrogate = isHighSurrogate;
+exports.isLowSurrogate = isLowSurrogate;
+
+Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
