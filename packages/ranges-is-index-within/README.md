@@ -34,7 +34,7 @@ npm i ranges-is-index-within
 
 ```js
 import { strict as assert } from "assert";
-import isIndexWithin from "ranges-is-index-within";
+import { isIndexWithin } from "ranges-is-index-within";
 
 assert.equal(
   isIndexWithin(8, [

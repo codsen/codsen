@@ -1,9 +1,21 @@
-function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
-  const defaults = {
-    inclusiveRangeEnds: false,
-    returnMatchedRangeInsteadOfTrue: false,
-  };
+import { version } from "../package.json";
+import { Range, Ranges } from "../../../scripts/common";
 
+interface Opts {
+  inclusiveRangeEnds?: boolean;
+  returnMatchedRangeInsteadOfTrue?: boolean;
+}
+
+const defaults: Opts = {
+  inclusiveRangeEnds: false,
+  returnMatchedRangeInsteadOfTrue: false,
+};
+
+function isIndexWithin(
+  originalIndex: number,
+  rangesArr: Ranges,
+  originalOpts?: Opts
+): boolean | Range {
   const opts = { ...defaults, ...originalOpts };
   // insurance
   if (!Number.isInteger(originalIndex)) {
@@ -32,4 +44,4 @@ function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
   );
 }
 
-export default rangesIsIndexWithin;
+export { isIndexWithin, defaults, version };

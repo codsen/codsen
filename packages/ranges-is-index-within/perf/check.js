@@ -7,10 +7,10 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { isIndexWithin } = require("..");
 
 const testme = () =>
-  f(
+  isIndexWithin(
     5,
     [
       [2, 4],

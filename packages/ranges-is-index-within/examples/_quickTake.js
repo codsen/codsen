@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import isIndexWithin from "../dist/ranges-is-index-within.esm.js";
+import { isIndexWithin } from "../dist/ranges-is-index-within.esm.js";
 
 assert.equal(
   isIndexWithin(8, [
