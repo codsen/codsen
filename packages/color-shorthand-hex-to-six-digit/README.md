@@ -34,7 +34,7 @@ npm i color-shorthand-hex-to-six-digit
 
 ```js
 import { strict as assert } from "assert";
-import conv from "color-shorthand-hex-to-six-digit";
+import { conv } from "color-shorthand-hex-to-six-digit";
 
 // converts shorthand hex color codes within strings (imagine that could be
 // email template source code):

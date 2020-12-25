@@ -1,15 +1,23 @@
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+
 import r from "hex-color-regex";
 import isPlainObject from "lodash.isplainobject";
 import clone from "lodash.clonedeep";
+import { version } from "../package.json";
 
-function conv(originalInput) {
+function conv(originalInput: any): any {
   // prevent any input argument mutation:
   let input = clone(originalInput);
 
   // f's
   // ====================
 
-  function toFullHex(hex, findings, offset, string) {
+  function toFullHex(
+    hex: string,
+    _findings: any,
+    offset: number,
+    string: string
+  ) {
     if (
       string[offset - 1] !== "&" && // consider false positives like &#124;
       hex.length === 4 &&
@@ -41,4 +49,4 @@ function conv(originalInput) {
   return input;
 }
 
-export default conv;
+export { conv, version };

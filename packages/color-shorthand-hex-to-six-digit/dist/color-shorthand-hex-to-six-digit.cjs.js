@@ -9,6 +9,8 @@
 
 'use strict';
 
+Object.defineProperty(exports, '__esModule', { value: true });
+
 var r = require('hex-color-regex');
 var isPlainObject = require('lodash.isplainobject');
 var clone = require('lodash.clonedeep');
@@ -19,15 +21,26 @@ var r__default = /*#__PURE__*/_interopDefaultLegacy(r);
 var isPlainObject__default = /*#__PURE__*/_interopDefaultLegacy(isPlainObject);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 
+var version = "2.11.1";
+
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+
 function conv(originalInput) {
-  var input = clone__default['default'](originalInput);
-  function toFullHex(hex, findings, offset, string) {
-    if (string[offset - 1] !== "&" &&
+  // prevent any input argument mutation:
+  var input = clone__default['default'](originalInput); // f's
+  // ====================
+
+  function toFullHex(hex, _findings, offset, string) {
+    if (string[offset - 1] !== "&" && // consider false positives like &#124;
     hex.length === 4 && hex.charAt(0) === "#") {
-      return "#".concat(hex.charAt(1)).concat(hex.charAt(1)).concat(hex.charAt(2)).concat(hex.charAt(2)).concat(hex.charAt(3)).concat(hex.charAt(3)).toLowerCase();
+      return ("#" + hex.charAt(1) + hex.charAt(1) + hex.charAt(2) + hex.charAt(2) + hex.charAt(3) + hex.charAt(3)).toLowerCase();
     }
+
     return hex.toLowerCase();
-  }
+  } // action
+  // ====================
+
+
   if (typeof originalInput === "string") {
     input = input.replace(r__default['default'](), toFullHex);
   } else if (Array.isArray(input)) {
@@ -41,7 +54,9 @@ function conv(originalInput) {
   } else {
     return originalInput;
   }
+
   return input;
 }
 
-module.exports = conv;
+exports.conv = conv;
+exports.version = version;

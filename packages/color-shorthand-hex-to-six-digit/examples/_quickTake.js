@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import conv from "../dist/color-shorthand-hex-to-six-digit.esm.js";
+import { conv } from "../dist/color-shorthand-hex-to-six-digit.esm.js";
 
 // converts shorthand hex color codes within strings (imagine that could be
 // email template source code):
