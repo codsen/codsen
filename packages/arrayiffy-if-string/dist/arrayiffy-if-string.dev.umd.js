@@ -13,10 +13,12 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.arrayiffyIfString = {}));
 }(this, (function (exports) { 'use strict';
 
-// If a string is given, put it into an array. Bypass everything else.
+// If a non-empty string is given, put it into an array.
+// If an empty string is given, return an empty array.
+// Bypass everything else.
 function arrayiffy(something) {
   if (typeof something === "string") {
-    if (something.length > 0) {
+    if (something.length) {
       return [something];
     }
 

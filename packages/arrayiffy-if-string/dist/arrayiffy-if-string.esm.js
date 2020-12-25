@@ -7,10 +7,12 @@
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
  */
 
-// If a string is given, put it into an array. Bypass everything else.
+// If a non-empty string is given, put it into an array.
+// If an empty string is given, return an empty array.
+// Bypass everything else.
 function arrayiffy(something) {
   if (typeof something === "string") {
-    if (something.length > 0) {
+    if (something.length) {
       return [something];
     }
 

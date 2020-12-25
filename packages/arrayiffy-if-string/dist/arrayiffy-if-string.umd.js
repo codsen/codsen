@@ -7,4 +7,4 @@
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
  */
 
-!function(e,t){"object"==typeof exports&&"undefined"!=typeof module?t(exports):"function"==typeof define&&define.amd?define(["exports"],t):t((e="undefined"!=typeof globalThis?globalThis:e||self).arrayiffyIfString={})}(this,(function(e){"use strict";e.arrayiffy=function(e){return"string"==typeof e?e.length>0?[e]:[]:e},Object.defineProperty(e,"__esModule",{value:!0})}));
+!function(e,t){"object"==typeof exports&&"undefined"!=typeof module?t(exports):"function"==typeof define&&define.amd?define(["exports"],t):t((e="undefined"!=typeof globalThis?globalThis:e||self).arrayiffyIfString={})}(this,(function(e){"use strict";e.arrayiffy=function(e){return"string"==typeof e?e.length?[e]:[]:e},Object.defineProperty(e,"__esModule",{value:!0})}));

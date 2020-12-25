@@ -7,4 +7,4 @@
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
  */
 
-function t(t){return"string"==typeof t?t.length>0?[t]:[]:t}export{t as arrayiffy};
+function t(t){return"string"==typeof t?t.length?[t]:[]:t}export{t as arrayiffy};
