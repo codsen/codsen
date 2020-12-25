@@ -34,10 +34,10 @@ npm i array-of-arrays-sort-by-col
 
 ```js
 import { strict as assert } from "assert";
-import sortBySubarray from "array-of-arrays-sort-by-col";
+import { sortByCol } from "array-of-arrays-sort-by-col";
 
 // sort by second column, index number 1
-assert.deepEqual(sortBySubarray([[1, 9, 4], [1], [1, 9, 3], [1, 9, 2]], 1), [
+assert.deepEqual(sortByCol([[1, 9, 4], [1], [1, 9, 3], [1, 9, 2]], 1), [
   [1, 9, 2],
   [1, 9, 3],
   [1, 9, 4],
