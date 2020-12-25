@@ -1,5 +1,5 @@
 import tap from "tap";
-import a1 from "../dist/array-of-arrays-into-ast.umd";
+import { generateAst } from "../dist/array-of-arrays-into-ast.umd";
 
 const source = [[5], [1, 2, 3], [1, 2]];
 const result = {
@@ -17,6 +17,6 @@ const result = {
 };
 
 tap.test("UMD build works fine", (t) => {
-  t.strictSame(a1(source), result, "01");
+  t.strictSame(generateAst(source), result, "01");
   t.end();
 });

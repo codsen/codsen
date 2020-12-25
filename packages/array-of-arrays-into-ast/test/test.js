@@ -1,9 +1,9 @@
 import tap from "tap";
-import a from "../dist/array-of-arrays-into-ast.esm";
+import { generateAst } from "../dist/array-of-arrays-into-ast.esm";
 
 tap.test("01 - three elements", (t) => {
   t.strictSame(
-    a([[1, 2, 3], [1, 2], [5]]),
+    generateAst([[1, 2, 3], [1, 2], [5]]),
     {
       1: [
         {
@@ -20,7 +20,7 @@ tap.test("01 - three elements", (t) => {
     "01.01"
   );
   t.strictSame(
-    a([[5], [1, 2, 3], [1, 2]]),
+    generateAst([[5], [1, 2, 3], [1, 2]]),
     {
       1: [
         {
@@ -37,7 +37,7 @@ tap.test("01 - three elements", (t) => {
     "01.02"
   );
   t.strictSame(
-    a([[1, 2], [5], [1, 2, 3]]),
+    generateAst([[1, 2], [5], [1, 2, 3]]),
     {
       1: [
         {
@@ -54,7 +54,7 @@ tap.test("01 - three elements", (t) => {
     "01.03"
   );
   t.strictSame(
-    a([[1], [5], [1, 2, 3]]),
+    generateAst([[1], [5], [1, 2, 3]]),
     {
       1: [
         null,
@@ -75,14 +75,14 @@ tap.test("01 - three elements", (t) => {
 
 tap.test("02 - opts.dedupe", (t) => {
   t.strictSame(
-    a([[1], [1], [1]]),
+    generateAst([[1], [1], [1]]),
     {
       1: [null],
     },
     "02.01"
   );
   t.strictSame(
-    a([[1], [1], [1]], { dedupe: false }),
+    generateAst([[1], [1], [1]], { dedupe: false }),
     {
       1: [null, null, null],
     },
@@ -93,13 +93,13 @@ tap.test("02 - opts.dedupe", (t) => {
 
 tap.test("03 - throws", (t) => {
   t.throws(() => {
-    a(true);
+    generateAst(true);
   }, /THROW_ID_01/g);
   t.end();
 });
 
 tap.test("04 - empty input ends the operation quick", (t) => {
-  t.strictSame(a([]), {}, "04.01");
-  t.strictSame(a([], { dedupe: false }), {}, "04.02");
+  t.strictSame(generateAst([]), {}, "04.01");
+  t.strictSame(generateAst([], { dedupe: false }), {}, "04.02");
   t.end();
 });

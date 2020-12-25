@@ -34,7 +34,7 @@ npm i array-of-arrays-into-ast
 
 ```js
 import { strict as assert } from "assert";
-import generateAst from "array-of-arrays-into-ast";
+import { generateAst } from "array-of-arrays-into-ast";
 
 assert.deepEqual(generateAst([[1, 2, 3], [1, 2], [5]]), {
   1: [

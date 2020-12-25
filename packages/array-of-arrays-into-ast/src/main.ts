@@ -1,22 +1,29 @@
-/* eslint no-console:0 */
+import { mergeAdvanced } from "object-merge-advanced";
+import { version } from "../package.json";
 
-import checkTypes from "check-types-mini";
-import mergeAdvanced from "object-merge-advanced";
+interface UnknownValueObj {
+  [key: string]: any;
+}
 
-const isArr = Array.isArray;
+interface Opts {
+  dedupe?: boolean;
+}
 
-function sortObject(obj) {
+const defaults: Opts = {
+  dedupe: true,
+};
+
+function sortObject(obj: UnknownValueObj): UnknownValueObj {
   return Object.keys(obj)
     .sort()
-    .reduce((result, key) => {
-      // eslint-disable-next-line no-param-reassign
+    .reduce((result: UnknownValueObj, key) => {
       result[key] = obj[key];
       return result;
     }, {});
 }
 
-function generateAst(input, originalOpts) {
-  if (!isArr(input)) {
+function generateAst(input: any[], originalOpts?: Opts): UnknownValueObj {
+  if (!Array.isArray(input)) {
     throw new Error(
       `array-of-arrays-into-ast: [THROW_ID_01] input must be array. Currently it's of a type ${typeof input} equal to:\n${JSON.stringify(
         input,
@@ -28,15 +35,7 @@ function generateAst(input, originalOpts) {
     return {};
   }
 
-  const defaults = {
-    dedupe: true,
-  };
   const opts = { ...defaults, ...originalOpts };
-
-  checkTypes(opts, defaults, {
-    msg: "array-of-arrays-into-ast: [THROW_ID_02*]",
-    optsVarName: "opts",
-  });
 
   let res = {};
 
@@ -74,4 +73,4 @@ function generateAst(input, originalOpts) {
   return sortObject(res);
 }
 
-export default generateAst;
+export { generateAst, defaults, version };
