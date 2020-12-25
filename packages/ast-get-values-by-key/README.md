@@ -34,14 +34,14 @@ npm i ast-get-values-by-key
 
 ```js
 import { strict as assert } from "assert";
-import getAllValuesByKey from "ast-get-values-by-key";
+import { getByKey } from "ast-get-values-by-key";
 
 // GETTER
 // ======
 
 // returns "object-path" notation paths where arrays use dots:
 assert.deepEqual(
-  getAllValuesByKey(
+  getByKey(
     {
       parsed: [
         {
@@ -58,7 +58,7 @@ assert.deepEqual(
 // ======
 
 assert.deepEqual(
-  getAllValuesByKey(
+  getByKey(
     {
       parsed: [
         {

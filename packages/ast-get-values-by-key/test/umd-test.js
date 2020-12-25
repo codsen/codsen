@@ -1,5 +1,5 @@
 import tap from "tap";
-import get1 from "../dist/ast-get-values-by-key.umd";
+import { getByKey } from "../dist/ast-get-values-by-key.umd";
 
 const source = [
   {
@@ -32,6 +32,6 @@ const res = [
 ];
 
 tap.test("UMD build works fine", (t) => {
-  t.strictSame(get1(source, target), res, "01");
+  t.strictSame(getByKey(source, target), res, "01");
   t.end();
 });

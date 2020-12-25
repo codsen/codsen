@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // Replace all null's in keys `amount` with zero, but only under `orders`
 
 import { strict as assert } from "assert";
-import getAllValuesByKey from "../dist/ast-get-values-by-key.esm.js";
+import { getByKey } from "../dist/ast-get-values-by-key.esm.js";
 
 const source = {
   orders: [
@@ -26,7 +24,7 @@ const source = {
 };
 
 // first GET
-const findings = getAllValuesByKey(
+const findings = getByKey(
   source, // what to process
   "amount" // what to look for
 );
@@ -41,7 +39,7 @@ const replacement = findings.map(({ val }) => +val);
 assert.deepEqual(replacement, [0, 2, 0]);
 
 // then SET
-const result = getAllValuesByKey(
+const result = getByKey(
   source, // what to process
   "amount", // what to look for
   replacement // pot of replacement values to consume (single-use, FIFO stack)

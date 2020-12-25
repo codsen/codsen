@@ -1,9 +1,9 @@
 import tap from "tap";
-import get from "../dist/ast-get-values-by-key.esm";
+import { getByKey } from "../dist/ast-get-values-by-key.esm";
 
 tap.test("01 - string replaced", (t) => {
   t.strictSame(
-    get(
+    getByKey(
       {
         tag: "html",
       },
@@ -20,7 +20,7 @@ tap.test("01 - string replaced", (t) => {
 
 tap.test("02 - string within array replaced", (t) => {
   t.strictSame(
-    get(
+    getByKey(
       {
         tag: ["html"],
       },
@@ -37,7 +37,7 @@ tap.test("02 - string within array replaced", (t) => {
 
 tap.test("03 - value is object and is replaced", (t) => {
   t.strictSame(
-    get(
+    getByKey(
       {
         tag: {
           a: "b",
@@ -62,7 +62,7 @@ tap.test("03 - value is object and is replaced", (t) => {
 
 tap.test("04 - two objects replaced", (t) => {
   t.strictSame(
-    get(
+    getByKey(
       [
         {
           tag: {
@@ -104,7 +104,7 @@ tap.test("04 - two objects replaced", (t) => {
 
 tap.test("05 - simple edit", (t) => {
   t.strictSame(
-    get(
+    getByKey(
       [
         {
           tag: "html1",
@@ -147,7 +147,7 @@ tap.test("05 - simple edit", (t) => {
 
 tap.test("06 - replaced to an empty string", (t) => {
   t.strictSame(
-    get(
+    getByKey(
       {
         tag: "html",
       },
@@ -164,7 +164,7 @@ tap.test("06 - replaced to an empty string", (t) => {
 
 tap.test("07 - not enough replacement values given", (t) => {
   t.strictSame(
-    get(
+    getByKey(
       {
         meta: [
           {
@@ -201,7 +201,7 @@ tap.test("07 - not enough replacement values given", (t) => {
 
 tap.test("08 - no results replacement", (t) => {
   t.strictSame(
-    get(
+    getByKey(
       {
         style: "html",
       },

@@ -1,10 +1,10 @@
 import tap from "tap";
 import objectPath from "object-path";
-import get from "../dist/ast-get-values-by-key.esm";
+import { getByKey } from "../dist/ast-get-values-by-key.esm";
 
 tap.test("01 - input is plain object, replacement is string", (t) => {
   t.strictSame(
-    get(
+    getByKey(
       {
         style: "html",
       },
@@ -28,7 +28,7 @@ tap.test("02 - paths match object-paht paths", (t) => {
     ],
   };
   t.strictSame(
-    get(source, "style"),
+    getByKey(source, "style"),
     [
       {
         val: "html",

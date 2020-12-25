@@ -1,16 +1,14 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import getAllValuesByKey from "../dist/ast-get-values-by-key.esm.js";
+import { getByKey } from "../dist/ast-get-values-by-key.esm.js";
 
 // GETTER
 // ======
 
 // returns "object-path" notation paths where arrays use dots:
 assert.deepEqual(
-  getAllValuesByKey(
+  getByKey(
     {
       parsed: [
         {
@@ -27,7 +25,7 @@ assert.deepEqual(
 // ======
 
 assert.deepEqual(
-  getAllValuesByKey(
+  getByKey(
     {
       parsed: [
         {

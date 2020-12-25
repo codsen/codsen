@@ -1,6 +1,6 @@
 import tap from "tap";
 import objectPath from "object-path";
-import get from "../dist/ast-get-values-by-key.esm";
+import { getByKey } from "../dist/ast-get-values-by-key.esm";
 
 tap.test("01 - just a plain object", (t) => {
   const source = {
@@ -8,7 +8,7 @@ tap.test("01 - just a plain object", (t) => {
   };
 
   t.strictSame(
-    get(source, "tag"),
+    getByKey(source, "tag"),
     [
       {
         val: "html",
@@ -22,7 +22,7 @@ tap.test("01 - just a plain object", (t) => {
   t.equal(objectPath.get(source, "tag"), "html", "01.02");
 
   t.strictSame(
-    get(
+    getByKey(
       {
         Tag: "html",
       },
@@ -41,7 +41,7 @@ tap.test("02 - single plain object within array", (t) => {
     },
   ];
   t.strictSame(
-    get(source, "tag"),
+    getByKey(source, "tag"),
     [
       {
         val: "html",
@@ -66,7 +66,7 @@ tap.test("03 - string in array as result", (t) => {
       path: "tag",
     },
   ];
-  t.strictSame(get(source, "tag"), res, "03.01");
+  t.strictSame(getByKey(source, "tag"), res, "03.01");
   // double check, is the result's path pointing to exactly the same value if
   // queries via object-path library:
   t.strictSame(objectPath.get(source, "tag"), ["html"], "03.02");
@@ -75,7 +75,7 @@ tap.test("03 - string in array as result", (t) => {
 
 tap.test("04 - two strings as result", (t) => {
   t.strictSame(
-    get(
+    getByKey(
       [
         {
           tag: "html1",
@@ -108,7 +108,7 @@ tap.test("04 - two strings as result", (t) => {
 
 tap.test("05 - query by key, returns mixed results", (t) => {
   t.strictSame(
-    get(
+    getByKey(
       [
         {
           tag: ["html1"],
@@ -176,7 +176,7 @@ tap.test("06 - deep tree", (t) => {
   ];
   const retrievedPath = "0.a.b.0.c.d.0.e.f.0.g.h.tag";
   t.strictSame(
-    get(source, "tag"),
+    getByKey(source, "tag"),
     [{ val: "html", path: retrievedPath }],
     "06.01"
   );
@@ -189,7 +189,7 @@ tap.test("06 - deep tree", (t) => {
 
 tap.test("07 - query returns an array", (t) => {
   t.strictSame(
-    get(
+    getByKey(
       [
         {
           tag: ["z"],
@@ -205,7 +205,7 @@ tap.test("07 - query returns an array", (t) => {
 
 tap.test("08 - query returns a string", (t) => {
   t.strictSame(
-    get(
+    getByKey(
       [
         {
           tag: "z",
@@ -245,7 +245,7 @@ tap.test("09 - query returns array with two objects", (t) => {
     },
   ];
   t.strictSame(
-    get(source, "tag"),
+    getByKey(source, "tag"),
     [
       {
         val: retrievedValue,
@@ -263,7 +263,7 @@ tap.test("09 - query returns array with two objects", (t) => {
 
 tap.test("10 - no results query", (t) => {
   t.strictSame(
-    get(
+    getByKey(
       {
         style: "html",
       },
