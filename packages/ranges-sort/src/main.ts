@@ -1,3 +1,6 @@
+import { version } from "../package.json";
+import { Ranges } from "../../../scripts/common";
+
 //
 //                              /\___/\
 //                             ( o   o )
@@ -10,24 +13,29 @@
 // does this: [ [2, 5], [1, 6] ] => [ [1, 6], [2, 5] ]
 // sorts first by first element, then by second. Retains possible third element.
 
-function rangesSort(arrOfRanges, originalOptions) {
+type Callback = (percentage: number) => void;
+
+interface Opts {
+  strictlyTwoElementsInRangeArrays?: boolean;
+  progressFn?: undefined | null | Callback;
+}
+const defaults: Opts = {
+  strictlyTwoElementsInRangeArrays: false,
+  progressFn: null,
+};
+
+function rSort(arrOfRanges: Ranges, originalOptions?: Opts): Ranges {
   // quick ending
   if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
     return arrOfRanges;
   }
 
-  // declare defaults, so we can enforce types later:
-  const defaults = {
-    strictlyTwoElementsInRangeArrays: false,
-    progressFn: null,
-  };
-
   // fill any settings with defaults if missing:
   const opts = { ...defaults, ...originalOptions };
 
   // arrOfRanges validation
-  let culpritsIndex;
-  let culpritsLen;
+  let culpritsIndex: any;
+  let culpritsLen: any;
   // validate does every range consist of exactly two indexes:
   if (
     opts.strictlyTwoElementsInRangeArrays &&
@@ -105,4 +113,4 @@ function rangesSort(arrOfRanges, originalOptions) {
     });
 }
 
-export default rangesSort;
+export { rSort, defaults, version };

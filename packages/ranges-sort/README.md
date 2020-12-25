@@ -34,11 +34,11 @@ npm i ranges-sort
 
 ```js
 import { strict as assert } from "assert";
-import rsort from "ranges-sort";
+import { rSort } from "ranges-sort";
 
 // Ranges (see codsen.com/ranges/) are sorted:
 assert.deepEqual(
-  rsort([
+  rSort([
     [2, 3],
     [9, 10, "bad grey wolf"],
     [1, 2],
