@@ -34,7 +34,7 @@ npm i regex-is-jinja-nunjucks
 
 ```js
 import { strict as assert } from "assert";
-import isJinjaNunjucksRegex from "regex-is-jinja-nunjucks";
+import { isJinjaNunjucksRegex } from "regex-is-jinja-nunjucks";
 
 // detects Jinja/Nunjucks code
 assert.equal(

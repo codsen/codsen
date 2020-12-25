@@ -9,8 +9,13 @@
 
 'use strict';
 
-var main = (function () {
-  return /{%|{{|%}|}}/gi;
-});
+Object.defineProperty(exports, '__esModule', { value: true });
 
-module.exports = main;
+var version = "1.1.1";
+
+function isJinjaNunjucksRegex() {
+  return /{%|{{|%}|}}/gi;
+}
+
+exports.isJinjaNunjucksRegex = isJinjaNunjucksRegex;
+exports.version = version;

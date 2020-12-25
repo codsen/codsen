@@ -7,10 +7,4 @@
  * Homepage: https://codsen.com/os/regex-is-jinja-nunjucks/
  */
 
-var version = "1.1.1";
-
-function isJinjaNunjucksRegex() {
-  return /{%|{{|%}|}}/gi;
-}
-
-export { isJinjaNunjucksRegex, version };
+var r="1.1.1";function n(){return/{%|{{|%}|}}/gi}export{n as isJinjaNunjucksRegex,r as version};
