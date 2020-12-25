@@ -1,9 +1,12 @@
-import isJinjaNunjucksRegex from "regex-is-jinja-nunjucks";
-import isJSP from "regex-is-jsp";
-import isJinjaSpecific from "regex-jinja-specific";
+import { isJinjaNunjucksRegex } from "regex-is-jinja-nunjucks";
+import { isJSP } from "regex-is-jsp";
+import { isJinjaSpecific } from "regex-jinja-specific";
+import { version } from "../package.json";
 
-function detectLang(str) {
-  let name = null;
+type Output = "Nunjucks" | "Jinja" | "JSP" | null;
+
+function detectLang(str: string): { name: Output } {
+  let name: Output = null;
 
   if (typeof str !== "string") {
     throw new TypeError(
@@ -39,4 +42,4 @@ function detectLang(str) {
   };
 }
 
-export default detectLang;
+export { detectLang, version };

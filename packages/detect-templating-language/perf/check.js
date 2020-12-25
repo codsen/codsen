@@ -7,10 +7,10 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { detectLang } = require("..");
 
 const testme = () =>
-  f(`<div>
+  detectLang(`<div>
 <table width="100" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td>

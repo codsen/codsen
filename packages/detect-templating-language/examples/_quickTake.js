@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import detectLang from "../dist/detect-templating-language.esm.js";
+import { detectLang } from "../dist/detect-templating-language.esm.js";
 
 // detects Nunjucks
 assert.deepEqual(

@@ -34,7 +34,7 @@ npm i detect-templating-language
 
 ```js
 import { strict as assert } from "assert";
-import detectLang from "detect-templating-language";
+import { detectLang } from "detect-templating-language";
 
 // detects Nunjucks
 assert.deepEqual(
