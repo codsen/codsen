@@ -1,5 +1,5 @@
 import tap from "tap";
-import detect from "../dist/detect-is-it-html-or-xhtml.esm";
+import { detectIsItHTMLOrXhtml as detect } from "../dist/detect-is-it-html-or-xhtml.esm";
 
 tap.test("01 - detects by image tags only, one closed image", (t) => {
   t.equal(

@@ -34,7 +34,7 @@ npm i detect-is-it-html-or-xhtml
 
 ```js
 import { strict as assert } from "assert";
-import detectIsItHTMLOrXhtml from "detect-is-it-html-or-xhtml";
+import { detectIsItHTMLOrXhtml } from "detect-is-it-html-or-xhtml";
 
 assert.equal(
   detectIsItHTMLOrXhtml(

@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import detectIsItHTMLOrXhtml from "../dist/detect-is-it-html-or-xhtml.esm.js";
+import { detectIsItHTMLOrXhtml } from "../dist/detect-is-it-html-or-xhtml.esm.js";
 
 assert.equal(
   detectIsItHTMLOrXhtml(

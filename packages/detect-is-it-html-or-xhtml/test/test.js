@@ -1,5 +1,5 @@
 import tap from "tap";
-import detect from "../dist/detect-is-it-html-or-xhtml.esm";
+import { detectIsItHTMLOrXhtml as detect } from "../dist/detect-is-it-html-or-xhtml.esm";
 
 tap.test("01 - real-life code", (t) => {
   t.equal(

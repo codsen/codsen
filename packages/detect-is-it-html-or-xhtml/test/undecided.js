@@ -1,5 +1,5 @@
 import tap from "tap";
-import detect from "../dist/detect-is-it-html-or-xhtml.esm";
+import { detectIsItHTMLOrXhtml as detect } from "../dist/detect-is-it-html-or-xhtml.esm";
 
 // ==============================
 // Undecided and can't-identify cases
