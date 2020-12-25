@@ -8,15 +8,20 @@
  */
 
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
-	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.regexEmptyConditionalComments = factory());
-}(this, (function () { 'use strict';
+typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+typeof define === 'function' && define.amd ? define(['exports'], factory) :
+(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.regexEmptyConditionalComments = {}));
+}(this, (function (exports) { 'use strict';
 
-	var main = (function () {
-	  return /<!(--)?\[if[^\]]*]>[<>!-\s]*<!\[endif\]\1>/gi;
-	});
+var version = "1.9.1";
 
-	return main;
+function emptyCondCommentRegex() {
+  return /<!(--)?\[if[^\]]*]>[<>!-\s]*<!\[endif\]\1>/gi;
+}
+
+exports.emptyCondCommentRegex = emptyCondCommentRegex;
+exports.version = version;
+
+Object.defineProperty(exports, '__esModule', { value: true });
 
 })));

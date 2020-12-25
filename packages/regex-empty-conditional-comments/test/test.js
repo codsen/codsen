@@ -1,5 +1,5 @@
 import tap from "tap";
-import r from "../dist/regex-empty-conditional-comments.esm";
+import { emptyCondCommentRegex } from "../dist/regex-empty-conditional-comments.esm";
 
 const fixture = [
   // outlook-only:
@@ -35,17 +35,25 @@ const fixture = [
 tap.test("matches each of comments", (t) => {
   // eslint-disable-next-line
   for (const comment of fixture) {
-    t.match(comment, r());
+    t.match(comment, emptyCondCommentRegex());
   }
 
-  t.notMatch(`<!--a-->`, r(), "01.01");
-  t.notMatch(`<!--[if (gte mso 9)|(IE)]>z<![endif]-->`, r(), "01.02");
-  t.notMatch("<!--[if (gte mso 9)|(IE)]>\n\t\tz\n<![endif]-->", r(), "01.03");
+  t.notMatch(`<!--a-->`, emptyCondCommentRegex(), "01.01");
+  t.notMatch(
+    `<!--[if (gte mso 9)|(IE)]>z<![endif]-->`,
+    emptyCondCommentRegex(),
+    "01.02"
+  );
+  t.notMatch(
+    "<!--[if (gte mso 9)|(IE)]>\n\t\tz\n<![endif]-->",
+    emptyCondCommentRegex(),
+    "01.03"
+  );
   t.notMatch(
     `<!--[if !mso]><!-- -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <!--<![endif]-->`,
-    r(),
+    emptyCondCommentRegex(),
     "01.04"
   );
   t.notMatch(
@@ -60,7 +68,7 @@ zzz
     </tr>
   </table>
 <![endif]-->`,
-    r(),
+    emptyCondCommentRegex(),
     "01.05"
   );
 
@@ -69,7 +77,7 @@ zzz
     `<!--[if !mso]><!-- -->
   content targeted at non-outlook users goes here...
 <!--<![endif]-->`,
-    r(),
+    emptyCondCommentRegex(),
     "01.06"
   );
 
@@ -78,21 +86,23 @@ zzz
 
 tap.test("returns comment on match", (t) => {
   t.strictSame(
-    "<html> <!--[if (gte mso 9)|(IE)]><![endif]--> <title>".match(r()),
+    "<html> <!--[if (gte mso 9)|(IE)]><![endif]--> <title>".match(
+      emptyCondCommentRegex()
+    ),
     ["<!--[if (gte mso 9)|(IE)]><![endif]-->"],
     "02.01"
   );
   t.strictSame(
     `<html> <!--[if !mso]><![endif]--> <title>text</title> <!--[if gte mso 9]>
   <xml>
-  <![endif]-->`.match(r()),
+  <![endif]-->`.match(emptyCondCommentRegex()),
     ["<!--[if !mso]><![endif]-->"],
     "02.02"
   );
   t.strictSame(
     `<html> <!--[if !mso]><![endif]--> <title>text</title> <!--[if !mso]><!-- -->
 
-<!--<![endif]-->`.match(r()),
+<!--<![endif]-->`.match(emptyCondCommentRegex()),
     [
       "<!--[if !mso]><![endif]-->",
       `<!--[if !mso]><!-- -->
@@ -107,7 +117,7 @@ tap.test("returns comment on match", (t) => {
 tap.test("deletes comments from code", (t) => {
   t.equal(
     `zzz <!--[if (gte mso 9)|(IE)]>\t<![endif]--> yyy <!-- does not touch this -->`.replace(
-      r(),
+      emptyCondCommentRegex(),
       ""
     ),
     "zzz  yyy <!-- does not touch this -->",

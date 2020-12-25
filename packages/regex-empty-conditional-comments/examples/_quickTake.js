@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import emptyCondCommentRegex from "../dist/regex-empty-conditional-comments.esm.js";
+import { emptyCondCommentRegex } from "../dist/regex-empty-conditional-comments.esm.js";
 
 // empty comment which was meant to target Outlook-only
 assert.equal(

@@ -9,8 +9,13 @@
 
 'use strict';
 
-var main = (function () {
-  return /<!(--)?\[if[^\]]*]>[<>!-\s]*<!\[endif\]\1>/gi;
-});
+Object.defineProperty(exports, '__esModule', { value: true });
 
-module.exports = main;
+var version = "1.9.1";
+
+function emptyCondCommentRegex() {
+  return /<!(--)?\[if[^\]]*]>[<>!-\s]*<!\[endif\]\1>/gi;
+}
+
+exports.emptyCondCommentRegex = emptyCondCommentRegex;
+exports.version = version;

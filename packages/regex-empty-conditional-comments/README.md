@@ -34,7 +34,7 @@ npm i regex-empty-conditional-comments
 
 ```js
 import { strict as assert } from "assert";
-import emptyCondCommentRegex from "regex-empty-conditional-comments";
+import { emptyCondCommentRegex } from "regex-empty-conditional-comments";
 
 // empty comment which was meant to target Outlook-only
 assert.equal(
