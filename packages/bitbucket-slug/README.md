@@ -34,7 +34,7 @@ npm i bitbucket-slug
 
 ```js
 import { strict as assert } from "assert";
-import bSlug from "bitbucket-slug";
+import { bSlug } from "bitbucket-slug";
 
 assert.equal(
   bSlug("# Let's backwards-engineer BitBucket anchor link slug algorithm"),

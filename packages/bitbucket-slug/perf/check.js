@@ -7,10 +7,10 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { bSlug } = require("..");
 
 const testme = () =>
-  f("# Let's backwards-engineer BitBucket anchor link slug algorithm");
+  bSlug("# Let's backwards-engineer BitBucket anchor link slug algorithm");
 
 // action
 runPerf(testme, callerDir);

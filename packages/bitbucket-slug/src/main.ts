@@ -1,15 +1,8 @@
 import deburr from "lodash.deburr";
-import ent from "ent";
 
-function bSlug(str) {
+function bSlug(str: string): string {
   if (typeof str !== "string") {
     return "";
-  }
-
-  // decode entities
-  while (str !== ent.decode(str)) {
-    // eslint-disable-next-line no-param-reassign
-    str = ent.decode(str);
   }
 
   // characters which will be deleted:
@@ -23,4 +16,4 @@ function bSlug(str) {
     .replace(/ /g, "-")}`; // replace spaces with dashes
 }
 
-export default bSlug;
+export { bSlug };

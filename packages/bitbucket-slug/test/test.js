@@ -1,5 +1,5 @@
 import tap from "tap";
-import s from "../dist/bitbucket-slug.esm";
+import { bSlug as s } from "../dist/bitbucket-slug.esm";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
@@ -376,24 +376,6 @@ tap.test("52 - No space around ampersand", (t) => {
     s("## Something&something"),
     "markdown-header-somethingsomething",
     "52"
-  );
-  t.end();
-});
-
-tap.test("53 - Standalone ampersand", (t) => {
-  t.equal(
-    s("## Ampersand &amp; ampersand"),
-    "markdown-header-ampersand-ampersand",
-    "53 - encoded"
-  );
-  t.end();
-});
-
-tap.test("54 - No space around ampersand", (t) => {
-  t.equal(
-    s("## Something&amp;something"),
-    "markdown-header-somethingsomething",
-    "54 - encoded"
   );
   t.end();
 });
