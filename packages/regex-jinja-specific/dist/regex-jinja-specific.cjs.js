@@ -9,8 +9,13 @@
 
 'use strict';
 
-var main = (function () {
-  return /(set\s*[\w]+\s*=\s*namespace\()|({{['"][\w]+['"]\s+if)|(['"]%x?[+0]?[.>^<]?\d+[\w%]['"]\|format\()/gi;
-});
+Object.defineProperty(exports, '__esModule', { value: true });
 
-module.exports = main;
+var version = "1.0.1";
+
+function isJinjaSpecific() {
+  return /(set\s*[\w]+\s*=\s*namespace\()|({{['"][\w]+['"]\s+if)|(['"]%x?[+0]?[.>^<]?\d+[\w%]['"]\|format\()/gi;
+}
+
+exports.isJinjaSpecific = isJinjaSpecific;
+exports.version = version;

@@ -8,15 +8,20 @@
  */
 
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-  typeof define === 'function' && define.amd ? define(factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.regexJinjaSpecific = factory());
-}(this, (function () { 'use strict';
+typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+typeof define === 'function' && define.amd ? define(['exports'], factory) :
+(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.regexJinjaSpecific = {}));
+}(this, (function (exports) { 'use strict';
 
-  var main = (function () {
-    return /(set\s*[\w]+\s*=\s*namespace\()|({{['"][\w]+['"]\s+if)|(['"]%x?[+0]?[.>^<]?\d+[\w%]['"]\|format\()/gi;
-  });
+var version = "1.0.1";
 
-  return main;
+function isJinjaSpecific() {
+  return /(set\s*[\w]+\s*=\s*namespace\()|({{['"][\w]+['"]\s+if)|(['"]%x?[+0]?[.>^<]?\d+[\w%]['"]\|format\()/gi;
+}
+
+exports.isJinjaSpecific = isJinjaSpecific;
+exports.version = version;
+
+Object.defineProperty(exports, '__esModule', { value: true });
 
 })));

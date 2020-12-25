@@ -7,9 +7,9 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { isJinjaSpecific } = require("..");
 
-const testme = () => f();
+const testme = () => isJinjaSpecific();
 
 // action
 runPerf(testme, callerDir);

@@ -34,7 +34,7 @@ npm i regex-jinja-specific
 
 ```js
 import { strict as assert } from "assert";
-import isJinjaSpecific from "regex-jinja-specific";
+import { isJinjaSpecific } from "regex-jinja-specific";
 
 assert.equal(
   isJinjaSpecific().test(`<div>{{ '%.2f'|format(3.1415926) }}</div>`),

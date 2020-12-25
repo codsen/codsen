@@ -7,10 +7,4 @@
  * Homepage: https://codsen.com/os/regex-jinja-specific/
  */
 
-var version = "1.0.1";
-
-function isJinjaSpecific() {
-  return /(set\s*[\w]+\s*=\s*namespace\()|({{['"][\w]+['"]\s+if)|(['"]%x?[+0]?[.>^<]?\d+[\w%]['"]\|format\()/gi;
-}
-
-export { isJinjaSpecific, version };
+var s="1.0.1";function e(){return/(set\s*[\w]+\s*=\s*namespace\()|({{['"][\w]+['"]\s+if)|(['"]%x?[+0]?[.>^<]?\d+[\w%]['"]\|format\()/gi}export{e as isJinjaSpecific,s as version};
