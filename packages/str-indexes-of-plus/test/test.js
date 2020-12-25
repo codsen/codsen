@@ -1,41 +1,46 @@
 import tap from "tap";
-import strIndexesOfPlus from "../dist/str-indexes-of-plus.esm";
+import { strIndexesOfPlus } from "../dist/str-indexes-of-plus.esm";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-tap.test("01 - throws when there's no input", (t) => {
-  t.throws(() => {
-    strIndexesOfPlus();
-  }, /inputs missing/);
+tap.test("01 - throws when the first argument is not string", (t) => {
+  t.throws(
+    () => {
+      strIndexesOfPlus(1);
+    },
+    /first input argument must be a string/,
+    "01"
+  );
   t.end();
 });
 
-tap.test("02 - throws when the first argument is not string", (t) => {
-  t.throws(() => {
-    strIndexesOfPlus(1);
-  }, /first input argument must be a string/);
+tap.test("02 - throws when the second argument is not string", (t) => {
+  t.throws(
+    () => {
+      strIndexesOfPlus("a", 1);
+    },
+    /second input argument/,
+    "02"
+  );
   t.end();
 });
 
-tap.test("03 - throws when the second argument is not string", (t) => {
-  t.throws(() => {
-    strIndexesOfPlus("a", 1);
-  }, /second input argument/);
-  t.end();
-});
-
-tap.test("04 - throws when the third argument is not natural number", (t) => {
-  t.throws(() => {
-    strIndexesOfPlus("a", "a", "a");
-  }, /third input argument must be a natural number/);
+tap.test("03 - throws when the third argument is not natural number", (t) => {
+  t.throws(
+    () => {
+      strIndexesOfPlus("a", "a", "a");
+    },
+    /third input argument must be a natural number/,
+    "03.01"
+  );
   t.doesNotThrow(() => {
     strIndexesOfPlus("a", "a", "1");
-  }, "04.02");
+  }, "03.02");
   t.doesNotThrow(() => {
     strIndexesOfPlus("a", "a", 1);
-  }, "04.03");
+  }, "03.03");
   t.end();
 });
 
