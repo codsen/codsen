@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import isJSP from "../dist/regex-is-jsp.esm.js";
+import { isJSP } from "../dist/regex-is-jsp.esm.js";
 
 // detects JSP code
 assert.equal(isJSP().test(`<div><% out.println("Hi!"); %></div>`), true);

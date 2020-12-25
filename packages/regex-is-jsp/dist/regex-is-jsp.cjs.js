@@ -9,8 +9,13 @@
 
 'use strict';
 
-var main = (function () {
-  return /<%|%>|<\s*jsp:|<\s*cms:|<\s*c:|\${\s*jsp/gi;
-});
+Object.defineProperty(exports, '__esModule', { value: true });
 
-module.exports = main;
+var version = "1.1.1";
+
+function isJSP() {
+  return /<%|%>|<\s*jsp:|<\s*cms:|<\s*c:|\${\s*jsp/gi;
+}
+
+exports.isJSP = isJSP;
+exports.version = version;

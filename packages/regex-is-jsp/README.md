@@ -34,7 +34,7 @@ npm i regex-is-jsp
 
 ```js
 import { strict as assert } from "assert";
-import isJSP from "regex-is-jsp";
+import { isJSP } from "regex-is-jsp";
 
 // detects JSP code
 assert.equal(isJSP().test(`<div><% out.println("Hi!"); %></div>`), true);

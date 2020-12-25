@@ -8,15 +8,20 @@
  */
 
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
-	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.regexIsJsp = factory());
-}(this, (function () { 'use strict';
+typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+typeof define === 'function' && define.amd ? define(['exports'], factory) :
+(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.regexIsJsp = {}));
+}(this, (function (exports) { 'use strict';
 
-	var main = (function () {
-	  return /<%|%>|<\s*jsp:|<\s*cms:|<\s*c:|\${\s*jsp/gi;
-	});
+var version = "1.1.1";
 
-	return main;
+function isJSP() {
+  return /<%|%>|<\s*jsp:|<\s*cms:|<\s*c:|\${\s*jsp/gi;
+}
+
+exports.isJSP = isJSP;
+exports.version = version;
+
+Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
