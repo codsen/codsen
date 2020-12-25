@@ -1,8 +1,9 @@
-import rangesIsIndexWithin from "ranges-is-index-within";
+import { isIndexWithin } from "ranges-is-index-within";
+import { Ranges } from "../../../scripts/common";
 
 // https://www.w3.org/TR/REC-xml/#NT-NameStartChar
 // Production 4 - except lowercase letters are missing
-const nameStartChar = [
+const nameStartChar: Ranges = [
   [58, 58], // ":"
   [65, 90], // [A-Z]
   [95, 95], // "_"
@@ -23,7 +24,7 @@ const nameStartChar = [
 // https://www.w3.org/TR/REC-xml/#NT-NameChar
 // Production 4a - addition to Production 4, except lowercase letters are missing
 
-const nameChar = [
+const nameChar: Ranges = [
   [45, 45], // "-"
   [46, 46], // "."
   [48, 57], // [0-9]
@@ -47,7 +48,7 @@ const nameChar = [
   [65536, 983039], // [#x10000-#xEFFFF]
 ];
 
-const priorityNameChar = [
+const priorityNameChar: Ranges = [
   [97, 122], // [a-z]
 ];
 
@@ -57,17 +58,29 @@ const opts = {
 };
 
 // first checking the letters, then the rest
-function isProduction4(char) {
+function isProduction4(char: string): boolean {
   return (
-    rangesIsIndexWithin(char.codePointAt(0), priorityNameChar, opts) ||
-    rangesIsIndexWithin(char.codePointAt(0), nameStartChar, opts)
+    (isIndexWithin(
+      char.codePointAt(0) as number,
+      priorityNameChar as Ranges,
+      opts
+    ) as boolean) ||
+    (isIndexWithin(
+      char.codePointAt(0) as number,
+      nameStartChar as Ranges,
+      opts
+    ) as boolean)
   );
 }
 
-function isProduction4a(char) {
+function isProduction4a(char: string): boolean {
   return (
-    rangesIsIndexWithin(char.codePointAt(0), priorityNameChar, opts) ||
-    rangesIsIndexWithin(char.codePointAt(0), nameChar, opts)
+    (isIndexWithin(
+      char.codePointAt(0) as number,
+      priorityNameChar,
+      opts
+    ) as boolean) ||
+    (isIndexWithin(char.codePointAt(0) as number, nameChar, opts) as boolean)
   );
 }
 
