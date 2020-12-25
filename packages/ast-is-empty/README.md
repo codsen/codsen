@@ -34,7 +34,7 @@ npm i ast-is-empty
 
 ```js
 import { strict as assert } from "assert";
-import isEmpty from "ast-is-empty";
+import { isEmpty } from "ast-is-empty";
 
 assert.equal(
   isEmpty({
@@ -78,4 +78,6 @@ MIT License
 
 Copyright (c) 2010-2020 Roy Revelt and other contributors
 
+
 <img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center"> <img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">
+

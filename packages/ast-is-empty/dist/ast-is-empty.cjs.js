@@ -9,51 +9,51 @@
 
 'use strict';
 
-function _typeof(obj) {
-  "@babel/helpers - typeof";
+Object.defineProperty(exports, '__esModule', { value: true });
 
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof = function (obj) {
-      return typeof obj;
-    };
-  } else {
-    _typeof = function (obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
+var isObj = require('lodash.isplainobject');
 
-  return _typeof(obj);
-}
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-function isObj(something) {
-  return something && _typeof(something) === "object" && !Array.isArray(something);
-}
+var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
+
+var version = "1.11.0";
+
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+
 function isEmpty(input) {
   var i;
   var len;
   var res = true;
+
   if (Array.isArray(input)) {
     if (input.length === 0) {
       return true;
     }
+
     for (i = 0, len = input.length; i < len; i++) {
       res = isEmpty(input[i]);
+
       if (res === null) {
         return null;
       }
+
       if (!res) {
         return false;
       }
     }
-  } else if (isObj(input)) {
+  } else if (isObj__default['default'](input)) {
     if (Object.keys(input).length === 0) {
       return true;
     }
+
     for (i = 0, len = Object.keys(input).length; i < len; i++) {
       res = isEmpty(input[Object.keys(input)[i]]);
+
       if (res === null) {
         return null;
       }
+
       if (!res) {
         return false;
       }
@@ -65,7 +65,9 @@ function isEmpty(input) {
   } else {
     return null;
   }
+
   return res;
 }
 
-module.exports = isEmpty;
+exports.isEmpty = isEmpty;
+exports.version = version;

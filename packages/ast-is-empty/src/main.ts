@@ -1,13 +1,12 @@
-function isObj(something) {
-  return (
-    something && typeof something === "object" && !Array.isArray(something)
-  );
-}
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
-function isEmpty(input) {
+import isObj from "lodash.isplainobject";
+import { version } from "../package.json";
+
+function isEmpty(input: any): boolean | null {
   let i;
   let len;
-  let res = true;
+  let res: boolean | null = true;
   if (Array.isArray(input)) {
     if (input.length === 0) {
       return true;
@@ -44,4 +43,4 @@ function isEmpty(input) {
   return res;
 }
 
-export default isEmpty;
+export { isEmpty, version };

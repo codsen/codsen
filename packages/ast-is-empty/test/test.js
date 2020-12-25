@@ -1,5 +1,5 @@
 import tap from "tap";
-import isEmpty from "../dist/ast-is-empty.esm";
+import { isEmpty } from "../dist/ast-is-empty.esm";
 
 function dummyFunction() {
   return true;

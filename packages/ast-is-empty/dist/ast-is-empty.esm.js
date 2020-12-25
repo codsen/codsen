@@ -7,24 +7,29 @@
  * Homepage: https://codsen.com/os/ast-is-empty/
  */
 
-function isObj(something) {
-  return (
-    something && typeof something === "object" && !Array.isArray(something)
-  );
-}
+import isObj from 'lodash.isplainobject';
+
+var version = "1.11.0";
+
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+
 function isEmpty(input) {
   let i;
   let len;
   let res = true;
+
   if (Array.isArray(input)) {
     if (input.length === 0) {
       return true;
     }
+
     for (i = 0, len = input.length; i < len; i++) {
       res = isEmpty(input[i]);
+
       if (res === null) {
         return null;
       }
+
       if (!res) {
         return false;
       }
@@ -33,11 +38,14 @@ function isEmpty(input) {
     if (Object.keys(input).length === 0) {
       return true;
     }
+
     for (i = 0, len = Object.keys(input).length; i < len; i++) {
       res = isEmpty(input[Object.keys(input)[i]]);
+
       if (res === null) {
         return null;
       }
+
       if (!res) {
         return false;
       }
@@ -49,7 +57,8 @@ function isEmpty(input) {
   } else {
     return null;
   }
+
   return res;
 }
 
-export default isEmpty;
+export { isEmpty, version };
