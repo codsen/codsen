@@ -1,6 +1,6 @@
 # ast-get-values-by-key
 
-> Read or edit parsed HTML (or AST in general)
+> Extract values and paths from AST by keys OR set them by keys
 
 <div class="package-badges">
   <a href="https://www.npmjs.com/package/ast-get-values-by-key" rel="nofollow noreferrer noopener">

@@ -1,7 +1,7 @@
 {
   "name": "ast-get-values-by-key",
   "version": "2.8.1",
-  "description": "Read or edit parsed HTML (or AST in general)",
+  "description": "Extract values and paths from AST by keys OR set them by keys",
   "keywords": [
     "ast",
     "by",

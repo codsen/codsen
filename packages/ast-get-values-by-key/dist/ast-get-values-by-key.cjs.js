@@ -1,6 +1,6 @@
 /**
  * ast-get-values-by-key
- * Read or edit parsed HTML (or AST in general)
+ * Extract values and paths from AST by keys OR set them by keys
  * Version: 2.8.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
@@ -43,7 +43,7 @@ function getByKey(originalInput, whatToFind, originalReplacement) {
           val: val,
           path: innerObj.path
         });
-      } else if (replacement.length > 0) {
+      } else if (replacement.length) {
         return replacement.shift();
       }
     }

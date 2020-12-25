@@ -5,6 +5,11 @@ import matcher from "matcher";
 import clone from "lodash.clonedeep";
 import { version } from "../package.json";
 
+interface Findings {
+  val: any;
+  path: string;
+}
+
 function getByKey(
   originalInput: any,
   whatToFind: string | string[],
@@ -18,7 +23,7 @@ function getByKey(
       : [clone(originalReplacement)];
   }
 
-  const findings: any[] = [];
+  const findings: Findings[] = [];
   const amended = traverse(originalInput, (key, val, innerObj) => {
     const current = val !== undefined ? val : key;
     if (
@@ -30,7 +35,7 @@ function getByKey(
           val,
           path: innerObj.path,
         });
-      } else if (replacement.length > 0) {
+      } else if (replacement.length) {
         return replacement.shift();
       }
     }
