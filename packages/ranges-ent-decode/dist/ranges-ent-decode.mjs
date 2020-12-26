@@ -1,0 +1,10 @@
+/**
+ * ranges-ent-decode
+ * Recursive HTML entity decoding for Ranges workflow
+ * Version: 3.0.3
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/ranges-ent-decode/
+ */
+
+import e from"he";import{rMerge as t}from"ranges-merge";import r from"lodash.isplainobject";var i="3.0.3";function a(e){return e=e.replace(/(amp;)|(#x26;)/gi,"")}function c(i,c){if("string"!=typeof i)throw new TypeError(`ranges-ent-decode/decode(): [THROW_ID_01] Expected a String! Currently it's given as ${i}, type ${typeof i}`);if(!i.trim())return null;if(null!=c&&!r(c))throw new TypeError(`ranges-ent-decode/decode(): [THROW_ID_02] Optional Options Object, the second in put argument, must be a plain object! Currently it's given as ${c}, type ${typeof c}`);const n={isAttributeValue:!1,strict:!1};let l;l=c?{...n,...c}:n;const o=/&(#?[^;\W]+;)+|&#([0-9]+)(;?)|&#[xX]([a-fA-F0-9]+)(;?)|&([0-9a-zA-Z]+);|&(Aacute|Agrave|Atilde|Ccedil|Eacute|Egrave|Iacute|Igrave|Ntilde|Oacute|Ograve|Oslash|Otilde|Uacute|Ugrave|Yacute|aacute|agrave|atilde|brvbar|ccedil|curren|divide|eacute|egrave|frac12|frac14|frac34|iacute|igrave|iquest|middot|ntilde|oacute|ograve|oslash|otilde|plusmn|uacute|ugrave|yacute|AElig|Acirc|Aring|Ecirc|Icirc|Ocirc|THORN|Ucirc|acirc|acute|aelig|aring|cedil|ecirc|icirc|iexcl|laquo|micro|ocirc|pound|raquo|szlig|thorn|times|ucirc|Auml|COPY|Euml|Iuml|Ouml|QUOT|Uuml|auml|cent|copy|euml|iuml|macr|nbsp|ordf|ordm|ouml|para|quot|sect|sup1|sup2|sup3|uuml|yuml|AMP|ETH|REG|amp|deg|eth|not|reg|shy|uml|yen|GT|LT|gt|lt)([=a-zA-Z0-9])?/g,u=[];let s;if(l.strict){const e=i.match(/&#(?:[xX][^a-fA-F0-9]|[^0-9xX])/);if(e)throw Error("ranges-ent-decode/decode(): [THROW_ID_04] Parse error - strict mode is on and input contains an invalid entity. Here are all the invalid entities: "+JSON.stringify(e,null,4))}for(;null!==(s=o.exec(i));){const t=a(s[0]);if("&"===t)u.push([o.lastIndex-s[0].length,o.lastIndex,"&"]);else{const r=e.decode(t,l);r!==t&&u.push([o.lastIndex-s[0].length,o.lastIndex,r])}}return t(u)}export{c as rEntDecode,i as version};

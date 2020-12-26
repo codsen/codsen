@@ -1,14 +1,10 @@
 import he from "he";
-import mergeRanges from "ranges-merge";
+import { rMerge } from "ranges-merge";
 import isObj from "lodash.isplainobject";
+import { Ranges } from "../../../scripts/common";
+import { version } from "../package.json";
 
-/**
- * chomp - leaves only last #x26; or amp; between ampersand and string
- *
- * @param  {string} str input
- * @return {string}     output
- */
-function chomp(str) {
+function chomp(str: string): string {
   // eslint-disable-next-line no-param-reassign
   str = str.replace(/(amp;)|(#x26;)/gi, "");
   console.log(
@@ -21,7 +17,12 @@ function chomp(str) {
   return str;
 }
 
-function decode(str, originalOpts) {
+interface Opts {
+  isAttributeValue?: boolean;
+  strict?: boolean;
+}
+
+function rEntDecode(str: string, originalOpts?: Opts): Ranges {
   // insurance:
   // ---------------------------------------------------------------------------
   if (typeof str !== "string") {
@@ -29,7 +30,7 @@ function decode(str, originalOpts) {
       `ranges-ent-decode/decode(): [THROW_ID_01] Expected a String! Currently it's given as ${str}, type ${typeof str}`
     );
   } else if (!str.trim()) {
-    // fast ending, matching Ranges notation — absence is marked by falsy null
+    // fast ending, matching Ranges notation - absence is marked by falsy null
     return null;
   }
   if (originalOpts != null && !isObj(originalOpts)) {
@@ -41,7 +42,7 @@ function decode(str, originalOpts) {
     isAttributeValue: false,
     strict: false,
   };
-  let opts;
+  let opts: Opts;
   if (!originalOpts) {
     opts = defaults;
   } else {
@@ -141,7 +142,7 @@ function decode(str, originalOpts) {
     }
   }
 
-  return mergeRanges(rangesArr);
+  return rMerge(rangesArr as Ranges);
 }
 
-export default decode;
+export { rEntDecode, version };

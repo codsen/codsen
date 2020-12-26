@@ -1,5 +1,5 @@
 import tap from "tap";
-import decode from "../dist/ranges-ent-decode.esm";
+import { rEntDecode as decode } from "../dist/ranges-ent-decode.esm";
 
 /**
 The following tests were adapted from he.js

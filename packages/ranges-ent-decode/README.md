@@ -34,10 +34,10 @@ npm i ranges-ent-decode
 
 ```js
 import { strict as assert } from "assert";
-import decode from "ranges-ent-decode";
+import { rEntDecode } from "ranges-ent-decode";
 
 // see codsen.com/ranges/
-assert.deepEqual(decode("a &#x26; b &amp; c"), [
+assert.deepEqual(rEntDecode("a &#x26; b &amp; c"), [
   [2, 8, "&"], // <--- that's Ranges notation, instructing to replace
   [11, 16, "&"],
 ]);
