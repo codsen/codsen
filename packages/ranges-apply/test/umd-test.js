@@ -1,5 +1,5 @@
 import tap from "tap";
-import r1 from "../dist/ranges-apply.umd";
+import { rApply } from "../dist/ranges-apply.umd";
 
 const str = "delete me bbb and me too ccc";
 const ranges = [
@@ -9,6 +9,6 @@ const ranges = [
 const res = "bbb ccc";
 
 tap.test("UMD build works fine", (t) => {
-  t.strictSame(r1(str, ranges), res, "01");
+  t.strictSame(rApply(str, ranges), res, "01");
   t.end();
 });

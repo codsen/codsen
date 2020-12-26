@@ -1,20 +1,21 @@
-import rangesMerge from "ranges-merge";
+/* eslint @typescript-eslint/ban-ts-comment:1 */
 
-function existy(x) {
-  return x != null;
-}
-function isStr(something) {
-  return typeof something === "string";
-}
+import { rMerge } from "ranges-merge";
+import { version } from "../package.json";
+import { Range, Ranges } from "../../../scripts/common";
 
-function rangesApply(str, originalRangesArr, progressFn) {
+function rApply(
+  str: string,
+  originalRangesArr: Range | Ranges,
+  progressFn?: (percentageDone: number) => void
+): string {
   let percentageDone = 0;
   let lastPercentageDone = 0;
 
   if (arguments.length === 0) {
     throw new Error("ranges-apply: [THROW_ID_01] inputs missing!");
   }
-  if (!isStr(str)) {
+  if (typeof str !== "string") {
     throw new TypeError(
       `ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof str}, equal to: ${JSON.stringify(
         str,
@@ -43,23 +44,24 @@ function rangesApply(str, originalRangesArr, progressFn) {
   }
   if (
     !originalRangesArr ||
-    !originalRangesArr.filter((range) => range).length
+    !(originalRangesArr as any[]).filter((range: any) => range).length
   ) {
     // quick ending - no ranges passed
     return str;
   }
 
-  let rangesArr;
+  let rangesArr: Range[];
   if (
     Array.isArray(originalRangesArr) &&
-    ((Number.isInteger(originalRangesArr[0]) && originalRangesArr[0] >= 0) ||
-      /^\d*$/.test(originalRangesArr[0])) &&
-    ((Number.isInteger(originalRangesArr[1]) && originalRangesArr[1] >= 0) ||
-      /^\d*$/.test(originalRangesArr[1]))
+    Number.isInteger(+originalRangesArr[0]) &&
+    +originalRangesArr[0] >= 0 &&
+    Number.isInteger(+originalRangesArr[1]) &&
+    +originalRangesArr[1] >= 0
   ) {
+    // @ts-ignore
     rangesArr = [Array.from(originalRangesArr)];
   } else {
-    rangesArr = Array.from(originalRangesArr);
+    rangesArr = Array.from(originalRangesArr as Range[]);
   }
 
   // allocate first 10% of progress to this stage
@@ -87,45 +89,46 @@ function rangesApply(str, originalRangesArr, progressFn) {
           )}, which is ${typeof el}`
         );
       }
-      if (!Number.isInteger(el[0]) || el[0] < 0) {
-        if (/^\d*$/.test(el[0])) {
-          rangesArr[i][0] = Number.parseInt(rangesArr[i][0], 10);
-        } else {
+      if (!Number.isInteger(el[0])) {
+        if (!Number.isInteger(+el[0]) || +el[0] < 0) {
           throw new TypeError(
-            `ranges-apply: [THROW_ID_06] ranges array, second input arg. has ${i}th element, array [${
-              el[0]
-            },${
-              el[1]
-            }]. That array has first element not an integer, but ${typeof el[0]}, equal to: ${JSON.stringify(
+            `ranges-apply: [THROW_ID_06] ranges array, second input arg. has ${i}th element, array ${JSON.stringify(
+              el,
+              null,
+              0
+            )}. Its first element is not an integer, string index, but ${typeof el[0]}, equal to: ${JSON.stringify(
               el[0],
               null,
               4
-            )}. Computer doesn't like this.`
+            )}.`
           );
+        } else {
+          rangesArr[i][0] = +rangesArr[i][0];
         }
       }
       if (!Number.isInteger(el[1])) {
-        if (/^\d*$/.test(el[1])) {
-          rangesArr[i][1] = Number.parseInt(rangesArr[i][1], 10);
-        } else {
+        if (!Number.isInteger(+el[1]) || +el[1] < 0) {
           throw new TypeError(
-            `ranges-apply: [THROW_ID_07] ranges array, second input arg. has ${i}th element, array [${
-              el[0]
-            },${
-              el[1]
-            }]. That array has second element not an integer, but ${typeof el[1]}, equal to: ${JSON.stringify(
+            `ranges-apply: [THROW_ID_07] ranges array, second input arg. has ${i}th element, array ${JSON.stringify(
+              el,
+              null,
+              0
+            )}. Its second element is not an integer, string index, but ${typeof el[1]}, equal to: ${JSON.stringify(
               el[1],
               null,
               4
-            )}. Computer doesn't like this.`
+            )}.`
           );
+        } else {
+          rangesArr[i][1] = +rangesArr[i][1];
         }
       }
+
       counter += 1;
     });
 
   // allocate another 10% of the progress indicator length to the rangesMerge step:
-  const workingRanges = rangesMerge(rangesArr, {
+  const workingRanges = rMerge(rangesArr, {
     progressFn: (perc) => {
       if (progressFn) {
         // since "perc" is already from zero to hundred, we just divide by 10 and
@@ -140,18 +143,13 @@ function rangesApply(str, originalRangesArr, progressFn) {
     },
   });
 
-  // can be null
-  if (!workingRanges) {
-    return str;
-  }
-
   // allocate the rest 80% to the actual string assembly:
-  const len2 = workingRanges.length;
+  const len2 = (workingRanges as any[]).length;
   /* istanbul ignore else */
   if (len2 > 0) {
-    const tails = str.slice(workingRanges[len2 - 1][1]);
+    const tails = str.slice((workingRanges as any[])[len2 - 1][1]);
     // eslint-disable-next-line no-param-reassign
-    str = workingRanges.reduce((acc, val, i, arr) => {
+    str = (workingRanges as any[]).reduce((acc, _val, i, arr) => {
       if (progressFn) {
         // since "perc" is already from zero to hundred, we just divide by 10 and
         // get the range from zero to ten:
@@ -165,11 +163,7 @@ function rangesApply(str, originalRangesArr, progressFn) {
 
       const beginning = i === 0 ? 0 : arr[i - 1][1];
       const ending = arr[i][0];
-      return (
-        acc +
-        str.slice(beginning, ending) +
-        (existy(arr[i][2]) ? arr[i][2] : "")
-      );
+      return acc + str.slice(beginning, ending) + (arr[i][2] || "");
     }, "");
     // eslint-disable-next-line no-param-reassign
     str += tails;
@@ -177,4 +171,4 @@ function rangesApply(str, originalRangesArr, progressFn) {
   return str;
 }
 
-export default rangesApply;
+export { rApply, version };

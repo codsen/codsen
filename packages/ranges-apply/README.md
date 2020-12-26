@@ -34,7 +34,7 @@ npm i ranges-apply
 
 ```js
 import { strict as assert } from "assert";
-import applyR from "ranges-apply";
+import { rApply } from "ranges-apply";
 
 const oldString = `The quick brown fox jumps over the lazy dog.`;
 const ranges = [
@@ -42,7 +42,7 @@ const ranges = [
   [35, 43, "little Red Riding Hood"],
 ];
 assert.equal(
-  applyR(oldString, ranges),
+  rApply(oldString, ranges),
   "The bad grey wolf jumps over the little Red Riding Hood."
 );
 ```

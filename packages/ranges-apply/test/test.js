@@ -1,5 +1,5 @@
 import tap from "tap";
-import repl from "../dist/ranges-apply.esm";
+import { rApply } from "../dist/ranges-apply.esm";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
@@ -8,66 +8,66 @@ import repl from "../dist/ranges-apply.esm";
 tap.test("01 - wrong inputs", (t) => {
   // no input
   t.throws(() => {
-    repl();
+    rApply();
   }, /THROW_ID_01/g);
 
   // first arg not string
   t.throws(() => {
-    repl(1);
+    rApply(1);
   }, /THROW_ID_02/g);
 
   t.throws(() => {
-    repl(1, [[4, 13]]);
+    rApply(1, [[4, 13]]);
   }, /THROW_ID_02/g);
 
   // second arg not array
   t.throws(() => {
-    repl("aaa", 1);
+    rApply("aaa", 1);
   }, /THROW_ID_03/g);
 
   // ranges array contain something else than arrays
   t.throws(() => {
-    repl("aaa", [1]);
+    rApply("aaa", [1]);
   }, /THROW_ID_05/g);
 
   t.throws(() => {
-    repl("aaa", [[1, "a"]]);
+    rApply("aaa", [[1, "a"]]);
   }, /THROW_ID_07/g);
 
   t.doesNotThrow(() => {
-    repl("aaa", [["1", 2]]);
+    rApply("aaa", [["1", 2]]);
   }, "01.07");
   t.doesNotThrow(() => {
-    repl("aaa", [[1, "2"]]);
+    rApply("aaa", [[1, "2"]]);
   }, "01.08");
   t.doesNotThrow(() => {
-    repl("aaa", [
+    rApply("aaa", [
       [1, "2"],
       ["3", "4"],
     ]);
   }, "01.09");
   t.doesNotThrow(() => {
-    repl("aaa", [[1, 2]]);
+    rApply("aaa", [[1, 2]]);
   }, "01.10");
 
   t.throws(() => {
-    repl("aaa", [[1], [10, 20]]);
+    rApply("aaa", [[1], [10, 20]]);
   }, /THROW_ID_07/g);
 
   t.throws(() => {
-    repl("aaa", [[10, 20], [30]]);
+    rApply("aaa", [[10, 20], [30]]);
   }, /THROW_ID_07/g);
 
   t.throws(() => {
-    repl("aaa", [[10.1, 20]]);
+    rApply("aaa", [[10.1, 20]]);
   }, /THROW_ID_06/g);
 
   t.throws(() => {
-    repl("aaa", [["10.1", "20"]]);
+    rApply("aaa", [["10.1", "20"]]);
   }, /THROW_ID_06/g);
 
   t.throws(() => {
-    repl(
+    rApply(
       "sldfsljfldjfgldflgkdjlgjlkgjhlfjglhjflgh",
       [
         [10, 20],
@@ -78,7 +78,7 @@ tap.test("01 - wrong inputs", (t) => {
   }, /THROW_ID_04/g);
 
   t.throws(() => {
-    repl(
+    rApply(
       "sldfsljfldjfgldflgkdjlgjlkgjhlfjglhjflgh",
       [
         [10, 20],
@@ -95,31 +95,31 @@ tap.test("02 - correct inputs", (t) => {
 
   // str, originalRangesArr, progressFn
 
-  t.strictSame(repl("", null), "", "02.01");
-  t.strictSame(repl(" ", null), " ", "02.02");
-  t.strictSame(repl("abc", null), "abc", "02.03");
+  t.strictSame(rApply("", null), "", "02.01");
+  t.strictSame(rApply(" ", null), " ", "02.02");
+  t.strictSame(rApply("abc", null), "abc", "02.03");
 
-  t.strictSame(repl("", []), "", "02.04");
-  t.strictSame(repl(" ", []), " ", "02.05");
-  t.strictSame(repl("abc", []), "abc", "02.06");
+  t.strictSame(rApply("", []), "", "02.04");
+  t.strictSame(rApply(" ", []), " ", "02.05");
+  t.strictSame(rApply("abc", []), "abc", "02.06");
 
-  t.strictSame(repl("", [null, null]), "", "02.07");
-  t.strictSame(repl(" ", [null, null]), " ", "02.08");
-  t.strictSame(repl("abc", [null, null]), "abc", "02.09");
+  t.strictSame(rApply("", [null, null]), "", "02.07");
+  t.strictSame(rApply(" ", [null, null]), " ", "02.08");
+  t.strictSame(rApply("abc", [null, null]), "abc", "02.09");
 
   // progressFn as null
 
-  t.strictSame(repl("", null, null), "", "02.10");
-  t.strictSame(repl(" ", null, null), " ", "02.11");
-  t.strictSame(repl("abc", null, null), "abc", "02.12");
+  t.strictSame(rApply("", null, null), "", "02.10");
+  t.strictSame(rApply(" ", null, null), " ", "02.11");
+  t.strictSame(rApply("abc", null, null), "abc", "02.12");
 
-  t.strictSame(repl("", [], null), "", "02.13");
-  t.strictSame(repl(" ", [], null), " ", "02.14");
-  t.strictSame(repl("abc", [], null), "abc", "02.15");
+  t.strictSame(rApply("", [], null), "", "02.13");
+  t.strictSame(rApply(" ", [], null), " ", "02.14");
+  t.strictSame(rApply("abc", [], null), "abc", "02.15");
 
-  t.strictSame(repl("", [null, null], null), "", "02.16");
-  t.strictSame(repl(" ", [null, null], null), " ", "02.17");
-  t.strictSame(repl("abc", [null, null], null), "abc", "02.18");
+  t.strictSame(rApply("", [null, null], null), "", "02.16");
+  t.strictSame(rApply(" ", [null, null], null), " ", "02.17");
+  t.strictSame(rApply("abc", [null, null], null), "abc", "02.18");
 
   t.end();
 });
@@ -134,7 +134,7 @@ tap.test("03 - deletes multiple chunks correctly", (t) => {
   // console.log('slice 1: >>>' + str.slice(4, 14) + '<<<')
   // console.log('slice 2: >>>' + str.slice(18, 29) + '<<<\n')
   t.strictSame(
-    repl(str, [
+    rApply(str, [
       [4, 14],
       [18, 29],
     ]),
@@ -144,13 +144,13 @@ tap.test("03 - deletes multiple chunks correctly", (t) => {
   t.end();
 });
 
-tap.test("04 - replaces multiple chunks correctly", (t) => {
+tap.test("04 - rApplyaces multiple chunks correctly", (t) => {
   const str = "aaa delete me bbb and me too ccc";
   // console.log('\n===============\n131.02')
   // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
   // console.log('slice 2: >>>' + str.slice(18, 28) + '<<<\n')
   t.strictSame(
-    repl(str, [
+    rApply(str, [
       [4, 13, "zzz"],
       [18, 28, "yyy"],
     ]),
@@ -166,7 +166,7 @@ tap.test("05 - deletes and replaces multiple chunks correctly", (t) => {
   // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
   // console.log('slice 2: >>>' + str.slice(18, 28) + '<<<\n')
   t.strictSame(
-    repl(str, [
+    rApply(str, [
       [4, 13],
       [18, 28, "zzz"],
     ]),
@@ -177,7 +177,7 @@ tap.test("05 - deletes and replaces multiple chunks correctly", (t) => {
 });
 
 tap.test("06 - empty ranges array", (t) => {
-  t.strictSame(repl("some text", []), "some text", "06");
+  t.strictSame(rApply("some text", []), "some text", "06");
   t.end();
 });
 
@@ -187,7 +187,7 @@ tap.test("07 - deletes multiple chunks with zero indexes correctly", (t) => {
   // console.log('slice 1: >>>' + str.slice(0, 10) + '<<<')
   // console.log('slice 2: >>>' + str.slice(14, 25) + '<<<\n')
   t.strictSame(
-    repl(str, [
+    rApply(str, [
       [0, 10],
       [14, 25],
     ]),
@@ -197,13 +197,13 @@ tap.test("07 - deletes multiple chunks with zero indexes correctly", (t) => {
   t.end();
 });
 
-tap.test("08 - replaces multiple chunks with zero indexes correctly", (t) => {
+tap.test("08 - rApplyaces multiple chunks with zero indexes correctly", (t) => {
   const str = "delete me bbb and me too ccc";
   // console.log('\n===============\n184.06')
   // console.log('slice 1: >>>' + str.slice(0, 9) + '<<<')
   // console.log('slice 2: >>>' + str.slice(14, 25) + '<<<\n')
   t.strictSame(
-    repl(str, [
+    rApply(str, [
       [0, 9, "aaa"],
       [14, 25],
     ]),
@@ -213,15 +213,15 @@ tap.test("08 - replaces multiple chunks with zero indexes correctly", (t) => {
   t.end();
 });
 
-tap.test("09 - replace with ending index zero", (t) => {
+tap.test("09 - rApplyace with ending index zero", (t) => {
   const str = "bbb ccc";
   t.strictSame(
-    repl(str, [[0, 0, "aaa "]]),
+    rApply(str, [[0, 0, "aaa "]]),
     "aaa bbb ccc",
     "09.01 - both from and to indexes are zeros, because we're adding content in front"
   );
   t.strictSame(
-    repl(str, [0, 0, "aaa "]),
+    rApply(str, [0, 0, "aaa "]),
     "aaa bbb ccc",
     "09.02 - single range, put straight into argument"
   );
@@ -234,7 +234,7 @@ tap.test("10 - null in third arg does nothing", (t) => {
   // console.log('slice 1: >>>' + str.slice(4, 14) + '<<<')
   // console.log('slice 2: >>>' + str.slice(18, 29) + '<<<\n')
   t.strictSame(
-    repl(str, [
+    rApply(str, [
       [4, 14, null],
       [18, 29],
     ]),
@@ -242,7 +242,7 @@ tap.test("10 - null in third arg does nothing", (t) => {
     "10.01"
   );
   t.strictSame(
-    repl(str, [
+    rApply(str, [
       [4, 14],
       [18, 29, null],
     ]),
@@ -250,7 +250,7 @@ tap.test("10 - null in third arg does nothing", (t) => {
     "10.02"
   );
   t.strictSame(
-    repl(str, [
+    rApply(str, [
       [4, 14, null],
       [18, 29, null],
     ]),
@@ -260,13 +260,13 @@ tap.test("10 - null in third arg does nothing", (t) => {
   t.end();
 });
 
-tap.test("11 - replaces multiple chunks correctly", (t) => {
+tap.test("11 - rApplyaces multiple chunks correctly", (t) => {
   const str = "aaa delete me bbb and me too ccc";
   // console.log('\n===============\n247.09')
   // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
   // console.log('slice 2: >>>' + str.slice(18, 28) + '<<<\n')
   t.strictSame(
-    repl(str, [[4, 13, "zzz"], null, [18, 28, null]]),
+    rApply(str, [[4, 13, "zzz"], null, [18, 28, null]]),
     "aaa zzz bbb  ccc",
     "11"
   );
@@ -274,14 +274,14 @@ tap.test("11 - replaces multiple chunks correctly", (t) => {
 });
 
 tap.test(
-  "12 - replaces multiple chunks correctly given in a wrong order",
+  "12 - rApplyaces multiple chunks correctly given in a wrong order",
   (t) => {
     const str = "aaa delete me bbb and me too ccc";
     // console.log('\n===============\n265.10')
     // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
     // console.log('slice 2: >>>' + str.slice(18, 28) + '<<<\n')
     t.strictSame(
-      repl(str, [
+      rApply(str, [
         [18, 28, "yyy"],
         [4, 13, "zzz"],
       ]),
@@ -292,28 +292,28 @@ tap.test(
   }
 );
 
-tap.test("13 - null as replacement range - does nothing", (t) => {
+tap.test("13 - null as rApplyacement range - does nothing", (t) => {
   const str = "zzzzzzzz";
-  t.strictSame(repl(str, null), str, "13");
+  t.strictSame(rApply(str, null), str, "13");
   t.end();
 });
 
 // -----------------------------------------------------------------------------
-// 03. replacement - both "from" and "to" markers are equal
+// 03. rApplyacement - both "from" and "to" markers are equal
 // -----------------------------------------------------------------------------
 
-tap.test("14 - basic replacement", (t) => {
-  t.strictSame(repl("aaa  ccc", [[4, 4, "bbb"]]), "aaa bbb ccc", "14.01");
-  t.strictSame(repl("aaa  ccc", [4, 4, "bbb"]), "aaa bbb ccc", "14.02");
+tap.test("14 - basic rApplyacement", (t) => {
+  t.strictSame(rApply("aaa  ccc", [[4, 4, "bbb"]]), "aaa bbb ccc", "14.01");
+  t.strictSame(rApply("aaa  ccc", [4, 4, "bbb"]), "aaa bbb ccc", "14.02");
   t.end();
 });
 
-tap.test("15 - multiple replacement pieces", (t) => {
+tap.test("15 - multiple rApplyacement pieces", (t) => {
   // let str = 'aaa  ccc  eee'
   // console.log('previewing: >>>' + str.slice(4, 15) + '<<<')
   // console.log('previewing: >>>' + str.slice(9, 15) + '<<<')
   t.strictSame(
-    repl("aaa  ccc  eee", [
+    rApply("aaa  ccc  eee", [
       [4, 4, "bbb"],
       [9, 9, "ddd"],
     ]),
@@ -323,9 +323,9 @@ tap.test("15 - multiple replacement pieces", (t) => {
   t.end();
 });
 
-tap.test("16 - null in replacement op - does nothing", (t) => {
-  t.strictSame(repl("aaa  ccc", [[4, 4, null]]), "aaa  ccc", "16.01");
-  t.strictSame(repl("aaa  ccc", [4, 4, null]), "aaa  ccc", "16.02");
+tap.test("16 - null in rApplyacement op - does nothing", (t) => {
+  t.strictSame(rApply("aaa  ccc", [[4, 4, null]]), "aaa  ccc", "16.01");
+  t.strictSame(rApply("aaa  ccc", [4, 4, null]), "aaa  ccc", "16.02");
   t.end();
 });
 
@@ -333,10 +333,10 @@ tap.test("16 - null in replacement op - does nothing", (t) => {
 // 04. progressFn
 // -----------------------------------------------------------------------------
 
-tap.test("17 - progressFn - basic replacement", (t) => {
+tap.test("17 - progressFn - basic rApplyacement", (t) => {
   let count = 0;
   t.strictSame(
-    repl("lkg jdlg dfljhlfgjlkhjf;gjh ;jsdlfj sldf lsjfldksj", [
+    rApply("lkg jdlg dfljhlfgjlkhjf;gjh ;jsdlfj sldf lsjfldksj", [
       [40, 40, "rrrr"],
       [20, 25, "yyy"],
       [5, 5],
@@ -360,7 +360,7 @@ tap.test("17 - progressFn - basic replacement", (t) => {
     "17.01 - baseline"
   );
   t.strictSame(
-    repl(
+    rApply(
       "lkg jdlg dfljhlfgjlkhjf;gjh ;jsdlfj sldf lsjfldksj",
       [
         [40, 40, "rrrr"],
