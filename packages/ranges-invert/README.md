@@ -34,10 +34,10 @@ npm i ranges-invert
 
 ```js
 import { strict as assert } from "assert";
-import invert from "ranges-invert";
+import { rInvert } from "ranges-invert";
 
 assert.deepEqual(
-  invert(
+  rInvert(
     [
       [3, 5],
       [5, 7],

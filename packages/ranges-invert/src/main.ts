@@ -1,7 +1,18 @@
-import mergeRanges from "ranges-merge";
-import rangesCrop from "ranges-crop";
+import { rMerge } from "ranges-merge";
+import { rCrop } from "ranges-crop";
+import { Range, Ranges } from "../../../scripts/common";
+import { version } from "../package.json";
 
-function rangesInvert(arrOfRanges, strLen, originalOptions) {
+interface Opts {
+  strictlyTwoElementsInRangeArrays?: boolean;
+  skipChecks?: boolean;
+}
+
+function rInvert(
+  arrOfRanges: Ranges,
+  strLen: number,
+  originalOptions?: Opts
+): Ranges {
   if (!Array.isArray(arrOfRanges) && arrOfRanges !== null) {
     throw new TypeError(
       `ranges-invert: [THROW_ID_01] Input's first argument must be an array, consisting of range arrays! Currently its type is: ${typeof arrOfRanges}, equal to: ${JSON.stringify(
@@ -55,7 +66,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
 
   console.log("███████████████████████████████████████");
   // declare defaults, so we can enforce types later:
-  const defaults = {
+  const defaults: Opts = {
     strictlyTwoElementsInRangeArrays: false,
     skipChecks: false,
   };
@@ -63,7 +74,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
   const opts = { ...defaults, ...originalOptions };
   // arrOfRanges validation
 
-  let culpritsIndex;
+  let culpritsIndex = 0;
   let culpritsLen;
 
   // validate does every range consist of exactly two indexes:
@@ -83,7 +94,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
   ) {
     throw new TypeError(
       `ranges-invert: [THROW_ID_04] Because opts.strictlyTwoElementsInRangeArrays was enabled, all ranges must be strictly two-element-long. However, the ${culpritsIndex}th range (${JSON.stringify(
-        arrOfRanges[culpritsIndex],
+        (arrOfRanges as Range[])[culpritsIndex],
         null,
         0
       )}) has not two but ${culpritsLen} elements!`
@@ -116,7 +127,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     );
   }
 
-  let prep;
+  let prep: Range[];
 
   if (!opts.skipChecks) {
     // if checks are enabled, filter merged ranges.
@@ -127,9 +138,9 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     // example: [[1, 3], [0, 4]] -> it's impossible because order is messed up
     // and there's overlap. In reality, merged result is simply [[0, 4]].
     // Then, we invert from 4 onwards to the end of reference string length.
-    prep = mergeRanges(
+    prep = rMerge(
       arrOfRanges.filter((rangeArr) => rangeArr[0] !== rangeArr[1])
-    );
+    ) as Range[];
   } else {
     // but if checks are turned off, filter straight away:
     prep = arrOfRanges.filter((rangeArr) => rangeArr[0] !== rangeArr[1]);
@@ -144,7 +155,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     )}`
   );
 
-  const res = prep.reduce((accum, currArr, i, arr) => {
+  const res: Range[] = (prep as any[]).reduce((accum, currArr, i, arr) => {
     console.log(`\u001b[${35}m${`=====================`}\u001b[${39}m`);
     console.log(
       `accum = ${accum.length ? JSON.stringify(accum, null, 0) : "[]"}`
@@ -184,8 +195,8 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
       res2.push([currArr[1], endingIndex]);
     }
 
-    return accum.concat(res2);
-  }, []);
+    return (accum as any[]).concat(res2 as any[]);
+  }, []) as any[];
 
   console.log(
     `${`\u001b[${33}m${`about to return ${`\u001b[${32}m${`res`}\u001b[${39}m`}`}\u001b[${39}m`} = ${JSON.stringify(
@@ -195,7 +206,7 @@ function rangesInvert(arrOfRanges, strLen, originalOptions) {
     )}\n\n\n`
   );
 
-  return rangesCrop(res, strLen);
+  return rCrop(res as Ranges, strLen);
 }
 
-export default rangesInvert;
+export { rInvert, version };

@@ -7,10 +7,10 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { rInvert } = require("..");
 
 const testme = () =>
-  f(
+  rInvert(
     [
       [0, 1],
       [1, 2],

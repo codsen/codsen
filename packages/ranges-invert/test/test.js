@@ -1,5 +1,5 @@
 import tap from "tap";
-import i from "../dist/ranges-invert.esm";
+import { rInvert as i } from "../dist/ranges-invert.esm";
 // import fs from "fs";
 
 // ==============================
