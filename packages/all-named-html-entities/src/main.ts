@@ -1,13 +1,30 @@
-import allNamedEntities from "./allNamedEntities.json";
-import brokenNamedEntities from "./brokenNamedEntities.json";
+import { version } from "../package.json";
+import { JsonObject } from "type-fest";
 
-import entStartsWith from "./startsWith.json";
-import entEndsWith from "./endsWith.json";
+import allNamedEntitiesJson from "./allNamedEntities.json";
+const allNamedEntities: JsonObject = allNamedEntitiesJson;
 
-import entStartsWithCaseInsensitive from "./startsWithCaseInsensitive.json";
-import entEndsWithCaseInsensitive from "./endsWithCaseInsensitive.json";
+import brokenNamedEntitiesJson from "./brokenNamedEntities.json";
+const brokenNamedEntities: JsonObject = brokenNamedEntitiesJson;
 
-import uncertain from "./uncertain.json";
+import entStartsWithJson from "./startsWith.json";
+const entStartsWith: JsonObject = entStartsWithJson;
+
+import entEndsWithJson from "./endsWith.json";
+const entEndsWith: JsonObject = entEndsWithJson;
+
+import entStartsWithCaseInsensitiveJson from "./startsWithCaseInsensitive.json";
+const entStartsWithCaseInsensitive: JsonObject = entStartsWithCaseInsensitiveJson;
+
+import entEndsWithCaseInsensitiveJson from "./endsWithCaseInsensitive.json";
+const entEndsWithCaseInsensitive: JsonObject = entEndsWithCaseInsensitiveJson;
+
+import uncertainJson from "./uncertain.json";
+const uncertain: JsonObject = uncertainJson;
+
+interface UnknownValueObj {
+  [key: string]: any;
+}
 
 const allNamedEntitiesSetOnly = new Set([
   "Aacute",
@@ -3938,7 +3955,7 @@ const allNamedEntitiesSetOnlyCaseInsensitive = new Set([
 //   JSON.stringify(endsWithCaseInsensitive, null, 4)
 // );
 
-function decode(ent) {
+function decode(ent: string): string | null {
   if (
     typeof ent !== "string" ||
     !ent.length ||
@@ -3950,7 +3967,9 @@ function decode(ent) {
     );
   }
   const val = ent.slice(1, ent.length - 1);
-  return allNamedEntities[val] ? allNamedEntities[val] : null;
+  return (allNamedEntities as UnknownValueObj)[val]
+    ? (allNamedEntities as UnknownValueObj)[val]
+    : null;
 }
 
 // -----------------------------------------------------------------------------
@@ -3968,15 +3987,16 @@ const maxLength = 31;
 
 export {
   allNamedEntities,
-  allNamedEntitiesSetOnly,
-  allNamedEntitiesSetOnlyCaseInsensitive,
   entStartsWith,
   entEndsWith,
   entStartsWithCaseInsensitive,
   entEndsWithCaseInsensitive,
   brokenNamedEntities,
+  uncertain,
+  allNamedEntitiesSetOnly,
+  allNamedEntitiesSetOnlyCaseInsensitive,
   decode,
   minLength,
   maxLength,
-  uncertain,
+  version,
 };
