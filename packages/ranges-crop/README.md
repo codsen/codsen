@@ -34,10 +34,10 @@ npm i ranges-crop
 
 ```js
 import { strict as assert } from "assert";
-import crop from "ranges-crop";
+import { rCrop } from "ranges-crop";
 
 assert.deepEqual(
-  crop(
+  rCrop(
     [
       [2, 3],
       [9, 10, "bad grey wolf"],

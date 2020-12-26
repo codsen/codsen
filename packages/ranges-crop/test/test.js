@@ -1,57 +1,56 @@
 import tap from "tap";
-import rangesApply from "ranges-apply";
+import { rApply } from "ranges-apply";
 import clone from "lodash.clonedeep";
-import crop from "../dist/ranges-crop.esm";
+import { rCrop } from "../dist/ranges-crop.esm";
 
 // ==============================
 // 0. THROWS
 // ==============================
 
-tap.test("01 - ranges array is not array", (t) => {
-  // throw pinning:
+tap.test("01 - not ranges", (t) => {
   t.throws(() => {
-    crop(null);
+    rCrop(NaN, null);
   }, /THROW_ID_01/);
   t.end();
 });
 
 tap.test("02 - str len is not a number", (t) => {
   t.throws(() => {
-    crop([[1, 2]], null);
+    rCrop([[1, 2]], null);
   }, /THROW_ID_02/);
 
   t.throws(() => {
-    crop([[1, 2]], "2");
+    rCrop([[1, 2]], "2");
   }, /THROW_ID_02/);
 
   t.throws(() => {
-    crop([[1, 2]], [2]);
+    rCrop([[1, 2]], [2]);
   }, /THROW_ID_02/);
 
   t.throws(() => {
-    crop([[1, 2]], false);
+    rCrop([[1, 2]], false);
   }, /THROW_ID_02/);
   t.end();
 });
 
 tap.test("03 - array of ranges is actually a single range", (t) => {
   t.throws(() => {
-    crop([1, 2], 3);
+    rCrop([1, 2], 3);
   }, /THROW_ID_03/);
 
   t.throws(() => {
-    crop([1, 2, "zzzz"], 3);
+    rCrop([1, 2, "zzzz"], 3);
   }, /THROW_ID_03/);
   t.end();
 });
 
 tap.test("04 - something's wrong with range arrays's contents", (t) => {
   t.throws(() => {
-    crop([[1, "2"]], 3);
+    rCrop([[1, "2"]], 3);
   }, /THROW_ID_04/);
 
   t.throws(() => {
-    crop(
+    rCrop(
       [
         [1, 2],
         ["4", 5],
@@ -61,11 +60,11 @@ tap.test("04 - something's wrong with range arrays's contents", (t) => {
   }, /THROW_ID_04/);
 
   t.throws(() => {
-    crop([[1, 2], [4, 5], "zzz"], 3);
+    rCrop([[1, 2], [4, 5], "zzz"], 3);
   }, /THROW_ID_04/);
 
   t.throws(() => {
-    crop(
+    rCrop(
       [
         [1, 2],
         [null, 5],
@@ -75,7 +74,7 @@ tap.test("04 - something's wrong with range arrays's contents", (t) => {
   }, /THROW_ID_04/);
 
   t.throws(() => {
-    crop([[1, 2], [true]], 3);
+    rCrop([[1, 2], [true]], 3);
   }, /THROW_ID_04/);
   t.end();
 });
@@ -84,11 +83,18 @@ tap.test(
   "05 - third argument within one of given ranges if of a wrong type",
   (t) => {
     t.throws(() => {
-      crop([[1, 2, 1]], 3);
+      rCrop([[1, 2, 1]], 3);
     }, /THROW_ID_05/);
     t.end();
   }
 );
+
+tap.test("06 - null means absence of ranges", (t) => {
+  t.is(rCrop(null), null);
+  t.is(rCrop(null, 0), null);
+  t.is(rCrop(null, 1), null);
+  t.end();
+});
 
 // ==============================
 // 01. crop, two arguments only
@@ -105,14 +111,10 @@ tap.test(`06 - crops out few ranges outside the strlen`, (t) => {
   ];
   const resRangeBackup = clone(resRange);
 
-  t.strictSame(crop(sourceRange, length), resRange, "06.01");
+  t.strictSame(rCrop(sourceRange, length), resRange, "06.01");
 
   // control:
-  t.equal(
-    rangesApply(testStr, sourceRange),
-    rangesApply(testStr, resRange),
-    "06.02"
-  );
+  t.equal(rApply(testStr, sourceRange), rApply(testStr, resRange), "06.02");
 
   // no mutation happened:
   t.strictSame(sourceRange, sourceRangeBackup, "06.03");
@@ -133,14 +135,10 @@ tap.test(`07 - overlap on one of ranges`, (t) => {
     [5, 8],
   ];
   const resRangeBackup = clone(resRange);
-  t.strictSame(crop(sourceRange, length), resRange, "07.01");
+  t.strictSame(rCrop(sourceRange, length), resRange, "07.01");
 
   // control:
-  t.equal(
-    rangesApply(testStr, sourceRange),
-    rangesApply(testStr, resRange),
-    "07.02"
-  );
+  t.equal(rApply(testStr, sourceRange), rApply(testStr, resRange), "07.02");
 
   // no mutation happened:
   t.strictSame(sourceRange, sourceRangeBackup, "07.03");
@@ -165,14 +163,10 @@ tap.test(`08 - overlap on one of ranges plus some extra ranges`, (t) => {
   ];
   const resRangeBackup = clone(resRange);
 
-  t.strictSame(crop(sourceRange, length), resRange, "08.01");
+  t.strictSame(rCrop(sourceRange, length), resRange, "08.01");
 
   // control:
-  t.equal(
-    rangesApply(testStr, sourceRange),
-    rangesApply(testStr, resRange),
-    "08.02"
-  );
+  t.equal(rApply(testStr, sourceRange), rApply(testStr, resRange), "08.02");
 
   // no mutation happened:
   t.strictSame(sourceRange, sourceRangeBackup, "08.03");
@@ -197,14 +191,10 @@ tap.test(`09 - string length on the beginning of one of ranges`, (t) => {
   ];
   const resRangeBackup = clone(resRange);
 
-  t.strictSame(crop(sourceRange, length), resRange, "09.01");
+  t.strictSame(rCrop(sourceRange, length), resRange, "09.01");
 
   // control:
-  t.equal(
-    rangesApply(testStr, sourceRange),
-    rangesApply(testStr, resRange),
-    "09.02"
-  );
+  t.equal(rApply(testStr, sourceRange), rApply(testStr, resRange), "09.02");
 
   // no mutation happened:
   t.strictSame(sourceRange, sourceRangeBackup, "09.03");
@@ -230,14 +220,10 @@ tap.test(`10 - string length on the ending of one of ranges`, (t) => {
   ];
   const resRangeBackup = clone(resRange);
 
-  t.strictSame(crop(sourceRange, length), resRange, "10.01");
+  t.strictSame(rCrop(sourceRange, length), resRange, "10.01");
 
   // control:
-  t.equal(
-    rangesApply(testStr, sourceRange),
-    rangesApply(testStr, resRange),
-    "10.02"
-  );
+  t.equal(rApply(testStr, sourceRange), rApply(testStr, resRange), "10.02");
 
   // no mutation happened:
   t.strictSame(sourceRange, sourceRangeBackup, "10.03");
@@ -259,14 +245,10 @@ tap.test(`11 - string length beyond any of given ranges`, (t) => {
   const resRange = clone(sourceRange); // <--------------- !
   const resRangeBackup = clone(resRange);
 
-  t.strictSame(crop(sourceRange, length), resRange, "11.01");
+  t.strictSame(rCrop(sourceRange, length), resRange, "11.01");
 
   // control:
-  t.equal(
-    rangesApply(testStr, sourceRange),
-    rangesApply(testStr, resRange),
-    "11.02"
-  );
+  t.equal(rApply(testStr, sourceRange), rApply(testStr, resRange), "11.02");
 
   // no mutation happened:
   t.strictSame(sourceRange, sourceRangeBackup, "11.03");
@@ -283,14 +265,10 @@ tap.test(`12 - no ranges`, (t) => {
   const resRange = clone(sourceRange); // <--------------- !
   const resRangeBackup = clone(resRange);
 
-  t.strictSame(crop(sourceRange, length), resRange, "12.01");
+  t.strictSame(rCrop(sourceRange, length), resRange, "12.01");
 
   // control:
-  t.equal(
-    rangesApply(testStr, sourceRange),
-    rangesApply(testStr, resRange),
-    "12.02"
-  );
+  t.equal(rApply(testStr, sourceRange), rApply(testStr, resRange), "12.02");
 
   // no mutation happened:
   t.strictSame(sourceRange, sourceRangeBackup, "12.03");
@@ -314,14 +292,10 @@ tap.test(`13 - unsorted ranges`, (t) => {
     [5, 8],
   ];
   const resRangeBackup = clone(resRange);
-  t.strictSame(crop(sourceRange, length), resRange, "13.01");
+  t.strictSame(rCrop(sourceRange, length), resRange, "13.01");
 
   // control:
-  t.equal(
-    rangesApply(testStr, sourceRange),
-    rangesApply(testStr, resRange),
-    "13.02"
-  );
+  t.equal(rApply(testStr, sourceRange), rApply(testStr, resRange), "13.02");
 
   // no mutation happened:
   t.strictSame(sourceRange, sourceRangeBackup, "13.03");
@@ -353,14 +327,10 @@ tap.test(`14 - lots of overlapping, unsorted and futile ranges`, (t) => {
   ];
   const resRangeBackup = clone(resRange);
 
-  t.strictSame(crop(sourceRange, length), resRange, "14.01");
+  t.strictSame(rCrop(sourceRange, length), resRange, "14.01");
 
   // control:
-  t.equal(
-    rangesApply(testStr, sourceRange),
-    rangesApply(testStr, resRange),
-    "14.02"
-  );
+  t.equal(rApply(testStr, sourceRange), rApply(testStr, resRange), "14.02");
 
   // no mutation happened:
   t.strictSame(sourceRange, sourceRangeBackup, "14.03");
@@ -392,14 +362,10 @@ tap.test(
     ];
     const resRangeBackup = clone(resRange);
 
-    t.strictSame(crop(sourceRange, length), resRange, "15.01");
+    t.strictSame(rCrop(sourceRange, length), resRange, "15.01");
 
     // control:
-    t.equal(
-      rangesApply(testStr, sourceRange),
-      rangesApply(testStr, resRange),
-      "15.02"
-    );
+    t.equal(rApply(testStr, sourceRange), rApply(testStr, resRange), "15.02");
 
     // no mutation happened:
     t.strictSame(sourceRange, sourceRangeBackup, "15.03");
@@ -428,14 +394,10 @@ tap.test(
     ];
     const resRangeBackup = clone(resRange);
 
-    t.strictSame(crop(sourceRange, length), resRange, "16.01");
+    t.strictSame(rCrop(sourceRange, length), resRange, "16.01");
 
     // control:
-    t.equal(
-      rangesApply(testStr, sourceRange),
-      rangesApply(testStr, resRange),
-      "16.02"
-    );
+    t.equal(rApply(testStr, sourceRange), rApply(testStr, resRange), "16.02");
 
     // no mutation happened:
     t.strictSame(sourceRange, sourceRangeBackup, "16.03");
@@ -464,14 +426,10 @@ tap.test(
     ];
     const resRangeBackup = clone(resRange);
 
-    t.strictSame(crop(sourceRange, length), resRange, "17.01");
+    t.strictSame(rCrop(sourceRange, length), resRange, "17.01");
 
     // control:
-    t.equal(
-      rangesApply(testStr, sourceRange),
-      rangesApply(testStr, resRange),
-      "17.02"
-    );
+    t.equal(rApply(testStr, sourceRange), rApply(testStr, resRange), "17.02");
 
     // no mutation happened:
     t.strictSame(sourceRange, sourceRangeBackup, "17.03");

@@ -1,11 +1,11 @@
-import mergeRanges from "ranges-merge";
+import { rMerge } from "ranges-merge";
+import { version } from "../package.json";
+import { Ranges } from "../../../scripts/common";
 
-function isStr(something) {
-  return typeof something === "string";
-}
-
-function rangesCrop(arrOfRanges, strLen) {
-  // arrOfRanges validation
+function rCrop(arrOfRanges: Ranges, strLen: number): Ranges {
+  if (arrOfRanges === null) {
+    return null;
+  }
   if (!Array.isArray(arrOfRanges)) {
     throw new TypeError(
       `ranges-crop: [THROW_ID_01] The first input's argument must be an array, consisting of range arrays! Currently its type is: ${typeof arrOfRanges}, equal to: ${JSON.stringify(
@@ -29,7 +29,7 @@ function rangesCrop(arrOfRanges, strLen) {
     return arrOfRanges.filter((range) => range);
   }
 
-  let culpritsIndex;
+  let culpritsIndex = 0;
 
   // validate are range indexes natural numbers:
   if (
@@ -58,9 +58,7 @@ function rangesCrop(arrOfRanges, strLen) {
     }
 
     throw new TypeError(
-      `ranges-crop: [THROW_ID_04] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ${
-        culpritsIndex + 1
-      }th range (${JSON.stringify(
+      `ranges-crop: [THROW_ID_04] The first argument should be AN ARRAY OF ARRAYS! Each sub-array means string slice indexes. In our case, here ${culpritsIndex}th range (${JSON.stringify(
         arrOfRanges[culpritsIndex],
         null,
         0
@@ -73,8 +71,7 @@ function rangesCrop(arrOfRanges, strLen) {
     !arrOfRanges
       .filter((range) => range)
       .every((rangeArr, indx) => {
-        // != below is existy()
-        if (rangeArr[2] != null && !isStr(rangeArr[2])) {
+        if (rangeArr[2] != null && typeof rangeArr[2] !== "string") {
           culpritsIndex = indx;
           return false;
         }
@@ -102,18 +99,18 @@ function rangesCrop(arrOfRanges, strLen) {
       4
     )}`
   );
-  const res = mergeRanges(arrOfRanges)
+  const res = (rMerge(arrOfRanges) || [])
     .filter(
       (singleRangeArr) =>
         singleRangeArr[0] <= strLen &&
-        (singleRangeArr[2] !== undefined || singleRangeArr[0] < strLen)
+        (singleRangeArr[2] != undefined || singleRangeArr[0] < strLen)
     )
     .map((singleRangeArr) => {
       if (singleRangeArr[1] > strLen) {
         console.log(
           `114 - we will process the ${JSON.stringify(singleRangeArr, null, 0)}`
         );
-        if (singleRangeArr[2] !== undefined) {
+        if (singleRangeArr[2] != undefined) {
           console.log(
             `118 - third argument detected! RETURN [${singleRangeArr[0]}, ${strLen}, ${singleRangeArr[2]}]`
           );
@@ -137,7 +134,7 @@ function rangesCrop(arrOfRanges, strLen) {
     )}\n\n\n`
   );
 
-  return res;
+  return res === [] ? null : (res as Ranges);
 }
 
-export default rangesCrop;
+export { rCrop, version };

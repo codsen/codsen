@@ -1,12 +1,10 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import crop from "../dist/ranges-crop.esm.js";
+import { rCrop } from "../dist/ranges-crop.esm.js";
 
 assert.deepEqual(
-  crop(
+  rCrop(
     [
       [2, 3],
       [9, 10, "bad grey wolf"],

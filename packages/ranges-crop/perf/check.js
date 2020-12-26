@@ -7,10 +7,10 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { rCrop } = require("..");
 
 const testme = () =>
-  f(
+  rCrop(
     [
       [1, 3],
       [5, 10],
