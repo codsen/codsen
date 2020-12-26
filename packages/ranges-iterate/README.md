@@ -34,7 +34,7 @@ npm i ranges-iterate
 
 ```js
 import { strict as assert } from "assert";
-import iterate from "ranges-iterate";
+import { rIterate } from "ranges-iterate";
 
 // Ranges in the following example "punches out" a "hole" from `a` to `g`
 // (included), replacing it with `xyz`. That's what gets iterated.
@@ -42,7 +42,7 @@ import iterate from "ranges-iterate";
 const gathered = [];
 
 // a callback-based interface:
-iterate("abcdefghij", [[0, 7, "xyz"]], ({ i, val }) => {
+rIterate("abcdefghij", [[0, 7, "xyz"]], ({ i, val }) => {
   gathered.push(`i = ${i}; val = ${val}`);
 });
 

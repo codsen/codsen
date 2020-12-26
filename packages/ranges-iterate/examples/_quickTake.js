@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import iterate from "../dist/ranges-iterate.esm.js";
+import { rIterate } from "../dist/ranges-iterate.esm.js";
 
 // Ranges in the following example "punches out" a "hole" from `a` to `g`
 // (included), replacing it with `xyz`. That's what gets iterated.
@@ -11,7 +9,7 @@ import iterate from "../dist/ranges-iterate.esm.js";
 const gathered = [];
 
 // a callback-based interface:
-iterate("abcdefghij", [[0, 7, "xyz"]], ({ i, val }) => {
+rIterate("abcdefghij", [[0, 7, "xyz"]], ({ i, val }) => {
   gathered.push(`i = ${i}; val = ${val}`);
 });
 

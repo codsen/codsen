@@ -1,5 +1,5 @@
 import tap from "tap";
-import iterate from "../dist/ranges-iterate.esm";
+import { rIterate as iterate } from "../dist/ranges-iterate.esm";
 // import apply from "ranges-apply";
 
 // ==============================

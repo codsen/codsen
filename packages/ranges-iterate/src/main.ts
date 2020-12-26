@@ -1,6 +1,18 @@
-const isArr = Array.isArray;
+import { Ranges } from "../../../scripts/common";
+import { version } from "../package.json";
 
-function rangesIterate(str, originalRanges, cb, offset = 0) {
+interface Obj {
+  i: number;
+  val: any;
+}
+type Callback = (obj: Obj) => void;
+
+function rIterate(
+  str: string,
+  originalRanges: Ranges,
+  cb: Callback,
+  offset = 0
+): void {
   if (typeof str !== "string") {
     throw new TypeError(
       `ranges-iterate: [THROW_ID_01] Input string must be a string! It was given as ${typeof str}, equal to: ${JSON.stringify(
@@ -14,7 +26,7 @@ function rangesIterate(str, originalRanges, cb, offset = 0) {
       `ranges-iterate: [THROW_ID_02] Input string must be non-empty!`
     );
   }
-  if (originalRanges !== null && !isArr(originalRanges)) {
+  if (originalRanges && !Array.isArray(originalRanges)) {
     throw new TypeError(
       `ranges-iterate: [THROW_ID_03] Input ranges must be an array, consisting of zero or more arrays! Currently its type is: ${typeof originalRanges}, equal to: ${JSON.stringify(
         originalRanges,
@@ -180,4 +192,4 @@ function rangesIterate(str, originalRanges, cb, offset = 0) {
   }
 }
 
-export default rangesIterate;
+export { rIterate, version };
