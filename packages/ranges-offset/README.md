@@ -34,10 +34,10 @@ npm i ranges-offset
 
 ```js
 import { strict as assert } from "assert";
-import offset from "ranges-offset";
+import { rOffset } from "ranges-offset";
 
 assert.deepEqual(
-  offset(
+  rOffset(
     [
       [3, 5],
       [8, 7],
@@ -51,10 +51,10 @@ assert.deepEqual(
 );
 
 // ranges are empty, nothing happens:
-assert.deepEqual(offset(null, 10), null);
+assert.deepEqual(rOffset(null, 10), null);
 
 // if input does not resemble ranges, nothing happens:
-assert.deepEqual(offset(true, 10), true);
+assert.deepEqual(rOffset(true, 10), true);
 ```
 
 ## Documentation

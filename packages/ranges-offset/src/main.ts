@@ -1,4 +1,7 @@
-function rangesOffset(arrOfRanges, offset = 0) {
+import { version } from "../package.json";
+import { Ranges } from "../../../scripts/common";
+
+function rOffset(arrOfRanges: Ranges, offset = 0): Ranges {
   // empty Ranges are null!
   if (Array.isArray(arrOfRanges) && arrOfRanges.length) {
     return arrOfRanges.map(([...elem]) => {
@@ -14,4 +17,4 @@ function rangesOffset(arrOfRanges, offset = 0) {
   return arrOfRanges;
 }
 
-export default rangesOffset;
+export { rOffset, version };

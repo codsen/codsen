@@ -8,80 +8,41 @@
  */
 
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-  typeof define === 'function' && define.amd ? define(factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.rangesOffset = factory());
-}(this, (function () { 'use strict';
+typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+typeof define === 'function' && define.amd ? define(['exports'], factory) :
+(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.rangesOffset = {}));
+}(this, (function (exports) { 'use strict';
 
-  function _toArray(arr) {
-    return _arrayWithHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableRest();
+var version = "1.0.3";
+
+function rOffset(arrOfRanges, offset) {
+  if (offset === void 0) {
+    offset = 0;
   }
 
-  function _toConsumableArray(arr) {
-    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+  // empty Ranges are null!
+  if (Array.isArray(arrOfRanges) && arrOfRanges.length) {
+    return arrOfRanges.map(function (_ref) {
+      var elem = _ref.slice(0);
+
+      if (typeof elem[0] === "number") {
+        elem[0] += offset;
+      }
+
+      if (typeof elem[1] === "number") {
+        elem[1] += offset;
+      }
+
+      return [].concat(elem);
+    });
   }
 
-  function _arrayWithoutHoles(arr) {
-    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
-  }
+  return arrOfRanges;
+}
 
-  function _arrayWithHoles(arr) {
-    if (Array.isArray(arr)) return arr;
-  }
+exports.rOffset = rOffset;
+exports.version = version;
 
-  function _iterableToArray(iter) {
-    if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
-  }
-
-  function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-  }
-
-  function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-
-    for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
-
-    return arr2;
-  }
-
-  function _nonIterableSpread() {
-    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-  }
-
-  function _nonIterableRest() {
-    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-  }
-
-  function rangesOffset(arrOfRanges) {
-    var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-
-    // empty Ranges are null!
-    if (Array.isArray(arrOfRanges) && arrOfRanges.length) {
-      return arrOfRanges.map(function (_ref) {
-        var _ref2 = _toArray(_ref),
-            elem = _ref2.slice(0);
-
-        if (typeof elem[0] === "number") {
-          elem[0] += offset;
-        }
-
-        if (typeof elem[1] === "number") {
-          elem[1] += offset;
-        }
-
-        return _toConsumableArray(elem);
-      });
-    }
-
-    return arrOfRanges;
-  }
-
-  return rangesOffset;
+Object.defineProperty(exports, '__esModule', { value: true });
 
 })));

@@ -7,10 +7,10 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { rOffset } = require("..");
 
 const testme = () =>
-  f(
+  rOffset(
     [
       [0, 1],
       [1, 2],
