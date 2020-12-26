@@ -1,5 +1,5 @@
 import tap from "tap";
-import group from "../dist/array-group-str-omit-num-char.umd";
+import { groupStr as group } from "../dist/array-group-str-omit-num-char.umd";
 
 // ==============
 // 00. Edge cases

@@ -1,10 +1,24 @@
 import uniq from "lodash.uniq";
-import rangesApply from "ranges-apply";
+import { rApply } from "ranges-apply";
+import { Range } from "../../../scripts/common";
+import { version } from "../package.json";
 
-const isArr = Array.isArray;
+interface UnknownValueObj {
+  [key: string]: any;
+}
 
-function groupStr(originalArr, originalOpts) {
-  if (!isArr(originalArr)) {
+interface Opts {
+  wildcard?: string;
+  dedupePlease?: boolean;
+}
+
+const defaults: Opts = {
+  wildcard: "*",
+  dedupePlease: true,
+};
+
+function groupStr(originalArr: any[], originalOpts?: Opts): UnknownValueObj {
+  if (!Array.isArray(originalArr)) {
     return originalArr;
   }
   if (!originalArr.length) {
@@ -12,29 +26,12 @@ function groupStr(originalArr, originalOpts) {
     return {};
   }
 
-  let opts;
-  const defaults = {
-    wildcard: "*",
-    dedupePlease: true,
-  };
-  // deliberate != below, we check for undefined and null:
-  if (originalOpts != null) {
-    opts = { ...defaults, ...originalOpts };
-  } else {
-    opts = { ...defaults };
-  }
-
-  let arr;
-  if (opts.dedupePlease) {
-    arr = uniq(originalArr);
-  } else {
-    arr = Array.from(originalArr);
-  }
+  const opts = { ...defaults, ...originalOpts };
+  const arr = opts.dedupePlease ? uniq(originalArr) : Array.from(originalArr);
 
   // traverse the given array
-  const len = arr.length;
-  const compiledObj = {};
-  for (let i = 0; i < len; i++) {
+  const compiledObj: UnknownValueObj = {};
+  for (let i = 0, len = arr.length; i < len; i++) {
     console.log(
       `${`\u001b[${36}m${`-1--------------------`}\u001b[${39}m`}  ${`\u001b[${33}m${`arr[${i}]`}\u001b[${39}m`} = ${`\u001b[${35}m${
         arr[i]
@@ -43,7 +40,14 @@ function groupStr(originalArr, originalOpts) {
 
     // compile an array of digit chunks, consisting of at least one digit
     // (will return null when there are no digits found):
-    const digitChunks = arr[i].match(/\d+/gm);
+    const digitChunks: string[] = arr[i].match(/\d+/gm);
+    console.log(
+      `043 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`digitChunks`}\u001b[${39}m`} = ${JSON.stringify(
+        digitChunks,
+        null,
+        4
+      )}`
+    );
 
     if (!digitChunks) {
       // if there were no digits, there's nothing to group, so this string goes
@@ -132,7 +136,7 @@ function groupStr(originalArr, originalOpts) {
     )}\n`
   );
 
-  const resObj = {};
+  const resObj: UnknownValueObj = {};
   Object.keys(compiledObj).forEach((key) => {
     console.log(
       `\u001b[${36}m${`------------------------------------------`}\u001b[${39}m`
@@ -158,9 +162,9 @@ function groupStr(originalArr, originalOpts) {
     // if not all digit chunks are to be replaced, that is, compiledObj[key].elementsWhichWeCanReplaceWithWildcards
     // contains some constant values we harvested from the set:
     if (
-      isArr(compiledObj[key].elementsWhichWeCanReplaceWithWildcards) &&
+      Array.isArray(compiledObj[key].elementsWhichWeCanReplaceWithWildcards) &&
       compiledObj[key].elementsWhichWeCanReplaceWithWildcards.some(
-        (val) => val !== false
+        (val: any) => val !== false
       )
     ) {
       console.log(`166 ██ PREP ${key}`);
@@ -179,8 +183,8 @@ function groupStr(originalArr, originalOpts) {
         console.log(z === 0 ? "" : "\n-------------\n");
         console.log(`180 ${`\u001b[${33}m${`z`}\u001b[${39}m`} = ${z}`);
         nThIndex = newKey.indexOf(
-          opts.wildcard,
-          nThIndex + opts.wildcard.length
+          `${opts.wildcard || ""}`,
+          nThIndex + (opts.wildcard || "").length
         );
         console.log(
           `${`\u001b[${33}m${`nThIndex`}\u001b[${39}m`} = ${JSON.stringify(
@@ -194,12 +198,12 @@ function groupStr(originalArr, originalOpts) {
         ) {
           rangesArr.push([
             nThIndex,
-            nThIndex + opts.wildcard.length,
+            nThIndex + (opts.wildcard || "").length,
             compiledObj[key].elementsWhichWeCanReplaceWithWildcards[z],
           ]);
         }
       }
-      newKey = rangesApply(newKey, rangesArr);
+      newKey = rApply(newKey, rangesArr as Range[]);
       console.log(`\u001b[${32}m${`\n==== while ends ====`}\u001b[${39}m`);
     }
     resObj[newKey] = compiledObj[key].count;
@@ -210,4 +214,4 @@ function groupStr(originalArr, originalOpts) {
   return resObj;
 }
 
-export default groupStr;
+export { groupStr, version };

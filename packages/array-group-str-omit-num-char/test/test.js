@@ -1,5 +1,5 @@
 import tap from "tap";
-import group from "../dist/array-group-str-omit-num-char.esm";
+import { groupStr as group } from "../dist/array-group-str-omit-num-char.esm";
 
 // ==============
 // 00. Edge cases
@@ -78,7 +78,7 @@ tap.test(
   }
 );
 
-tap.test("05 - all contain digits and all are unique", (t) => {
+tap.only("05 - all contain digits and all are unique", (t) => {
   t.strictSame(
     group(["a1-1", "b2-2", "c3-3", "d4-4"]),
     {

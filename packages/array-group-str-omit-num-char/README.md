@@ -34,7 +34,7 @@ npm i array-group-str-omit-num-char
 
 ```js
 import { strict as assert } from "assert";
-import groupStr from "array-group-str-omit-num-char";
+import { groupStr } from "array-group-str-omit-num-char";
 
 assert.deepEqual(groupStr(["a1-1", "a2-2", "b3-3", "c4-4"]), {
   "a*-*": 2,
