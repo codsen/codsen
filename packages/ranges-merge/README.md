@@ -34,11 +34,11 @@ npm i ranges-merge
 
 ```js
 import { strict as assert } from "assert";
-import mergeR from "ranges-merge";
+import { rMerge } from "ranges-merge";
 
 // joining edges:
 assert.deepEqual(
-  mergeR([
+  rMerge([
     [1, 2],
     [2, 3],
     [9, 10],
@@ -51,7 +51,7 @@ assert.deepEqual(
 
 // an overlap:
 assert.deepEqual(
-  mergeR([
+  rMerge([
     [1, 5],
     [2, 10],
   ]),
