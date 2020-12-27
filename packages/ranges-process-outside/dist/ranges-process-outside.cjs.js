@@ -9,133 +9,82 @@
 
 'use strict';
 
-var invert = require('ranges-invert');
-var crop = require('ranges-crop');
+Object.defineProperty(exports, '__esModule', { value: true });
+
 var runes = require('runes');
+var rangesInvert = require('ranges-invert');
+var rangesCrop = require('ranges-crop');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-var invert__default = /*#__PURE__*/_interopDefaultLegacy(invert);
-var crop__default = /*#__PURE__*/_interopDefaultLegacy(crop);
 var runes__default = /*#__PURE__*/_interopDefaultLegacy(runes);
 
-function _typeof(obj) {
-  "@babel/helpers - typeof";
+var version = "3.0.2";
 
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof = function (obj) {
-      return typeof obj;
-    };
-  } else {
-    _typeof = function (obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
+function rProcessOutside(originalStr, originalRanges, cb, skipChecks) {
+  if (skipChecks === void 0) {
+    skipChecks = false;
   }
 
-  return _typeof(obj);
-}
-
-function _slicedToArray(arr, i) {
-  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-}
-
-function _arrayWithHoles(arr) {
-  if (Array.isArray(arr)) return arr;
-}
-
-function _iterableToArrayLimit(arr, i) {
-  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
-  var _arr = [];
-  var _n = true;
-  var _d = false;
-  var _e = undefined;
-
-  try {
-    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-      _arr.push(_s.value);
-
-      if (i && _arr.length === i) break;
-    }
-  } catch (err) {
-    _d = true;
-    _e = err;
-  } finally {
-    try {
-      if (!_n && _i["return"] != null) _i["return"]();
-    } finally {
-      if (_d) throw _e;
-    }
-  }
-
-  return _arr;
-}
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-
-  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
-
-  return arr2;
-}
-
-function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-
-function processOutside(originalStr, originalRanges, cb) {
-  var skipChecks = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
-  function isFunction(functionToCheck) {
-    return functionToCheck && {}.toString.call(functionToCheck) === "[object Function]";
-  }
+  //
+  // insurance:
+  //
   if (typeof originalStr !== "string") {
     if (originalStr === undefined) {
       throw new Error("ranges-process-outside: [THROW_ID_01] the first input argument must be string! It's missing currently (undefined)!");
     } else {
-      throw new Error("ranges-process-outside: [THROW_ID_02] the first input argument must be string! It was given as:\n".concat(JSON.stringify(originalStr, null, 4), " (type ").concat(_typeof(originalStr), ")"));
+      throw new Error("ranges-process-outside: [THROW_ID_02] the first input argument must be string! It was given as:\n" + JSON.stringify(originalStr, null, 4) + " (type " + typeof originalStr + ")");
     }
   }
+
   if (originalRanges && (!Array.isArray(originalRanges) || originalRanges.length && !Array.isArray(originalRanges[0]))) {
-    throw new Error("ranges-process-outside: [THROW_ID_03] the second input argument must be array of ranges or null! It was given as:\n".concat(JSON.stringify(originalRanges, null, 4), " (type ").concat(_typeof(originalRanges), ")"));
+    throw new Error("ranges-process-outside: [THROW_ID_03] the second input argument must be array of ranges or null! It was given as:\n" + JSON.stringify(originalRanges, null, 4) + " (type " + typeof originalRanges + ")");
   }
-  if (!isFunction(cb)) {
-    throw new Error("ranges-process-outside: [THROW_ID_04] the third input argument must be a function! It was given as:\n".concat(JSON.stringify(cb, null, 4), " (type ").concat(_typeof(cb), ")"));
-  }
+
+  if (typeof cb !== "function") {
+    throw new Error("ranges-process-outside: [THROW_ID_04] the third input argument must be a function! It was given as:\n" + JSON.stringify(cb, null, 4) + " (type " + typeof cb + ")");
+  } // separate the iterator because it might be called with inverted ranges or
+  // with separately calculated "everything" if the ranges are empty/falsey
+
+
   function iterator(str, arrOfArrays) {
-    arrOfArrays.forEach(function (_ref) {
-      var _ref2 = _slicedToArray(_ref, 2),
-          fromIdx = _ref2[0],
-          toIdx = _ref2[1];
-      for (var i = fromIdx; i < toIdx; i++) {
-        var charLength = runes__default['default'](str.slice(i))[0].length;
-        cb(i, i + charLength, function (offsetValue) {
+    (arrOfArrays || []).forEach(function (_ref) {
+      var fromIdx = _ref[0],
+          toIdx = _ref[1];
+
+      var _loop = function _loop(_i) {
+        var charLength = runes__default['default'](str.slice(_i))[0].length;
+        cb(_i, _i + charLength, function (offsetValue) {
           /* istanbul ignore else */
           if (offsetValue != null) {
-            i += offsetValue;
+            _i += offsetValue;
           }
         });
+
         if (charLength && charLength > 1) {
-          i += charLength - 1;
+          _i += charLength - 1;
         }
+
+        i = _i;
+      };
+
+      for (var i = fromIdx; i < toIdx; i++) {
+        _loop(i);
       }
     });
   }
+
   if (originalRanges && originalRanges.length) {
-    var temp = crop__default['default'](invert__default['default'](skipChecks ? originalRanges : originalRanges, originalStr.length, {
+    // if ranges are given, invert and run callback against each character
+    var temp = rangesCrop.rCrop(rangesInvert.rInvert(skipChecks ? originalRanges : originalRanges, originalStr.length, {
       skipChecks: !!skipChecks
     }), originalStr.length);
     iterator(originalStr, temp);
   } else {
+    // otherwise, run callback on everything
     iterator(originalStr, [[0, originalStr.length]]);
   }
 }
 
-module.exports = processOutside;
+exports.rProcessOutside = rProcessOutside;
+exports.version = version;

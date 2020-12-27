@@ -1,17 +1,22 @@
-import invert from "ranges-invert";
-import crop from "ranges-crop";
 import runes from "runes";
+import { rInvert } from "ranges-invert";
+import { rCrop } from "ranges-crop";
+import { version } from "../package.json";
+import { Ranges } from "../../../scripts/common";
 
-function processOutside(originalStr, originalRanges, cb, skipChecks = false) {
-  //
-  // internal functions:
-  //
-  function isFunction(functionToCheck) {
-    return (
-      functionToCheck &&
-      {}.toString.call(functionToCheck) === "[object Function]"
-    );
-  }
+type OffsetValueCb = (amountToOffset: number) => void;
+type Callback = (
+  fromIdx: number,
+  toIdx: number,
+  offsetValueCb: OffsetValueCb
+) => void;
+
+function rProcessOutside(
+  originalStr: string,
+  originalRanges: Ranges,
+  cb: Callback,
+  skipChecks = false
+): void {
   //
   // insurance:
   //
@@ -43,7 +48,7 @@ function processOutside(originalStr, originalRanges, cb, skipChecks = false) {
       )} (type ${typeof originalRanges})`
     );
   }
-  if (!isFunction(cb)) {
+  if (typeof cb !== "function") {
     throw new Error(
       `ranges-process-outside: [THROW_ID_04] the third input argument must be a function! It was given as:\n${JSON.stringify(
         cb,
@@ -55,7 +60,7 @@ function processOutside(originalStr, originalRanges, cb, skipChecks = false) {
 
   // separate the iterator because it might be called with inverted ranges or
   // with separately calculated "everything" if the ranges are empty/falsey
-  function iterator(str, arrOfArrays) {
+  function iterator(str: string, arrOfArrays: Ranges) {
     console.log(
       `060 iterator called with ${JSON.stringify(arrOfArrays, null, 0)}`
     );
@@ -66,7 +71,7 @@ function processOutside(originalStr, originalRanges, cb, skipChecks = false) {
         0
       )}]`}\u001b[${39}m`}`
     );
-    arrOfArrays.forEach(([fromIdx, toIdx]) => {
+    (arrOfArrays || []).forEach(([fromIdx, toIdx]) => {
       console.log(
         `071 ${`\u001b[${36}m${`----------------------- [${fromIdx}, ${toIdx}]`}\u001b[${39}m`}`
       );
@@ -99,10 +104,14 @@ function processOutside(originalStr, originalRanges, cb, skipChecks = false) {
 
   if (originalRanges && originalRanges.length) {
     // if ranges are given, invert and run callback against each character
-    const temp = crop(
-      invert(skipChecks ? originalRanges : originalRanges, originalStr.length, {
-        skipChecks: !!skipChecks,
-      }),
+    const temp = rCrop(
+      rInvert(
+        skipChecks ? originalRanges : originalRanges,
+        originalStr.length,
+        {
+          skipChecks: !!skipChecks,
+        }
+      ),
       originalStr.length
     );
     console.log(
@@ -120,4 +129,4 @@ function processOutside(originalStr, originalRanges, cb, skipChecks = false) {
   }
 }
 
-export default processOutside;
+export { rProcessOutside, version };

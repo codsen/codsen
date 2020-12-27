@@ -1,14 +1,12 @@
-/* eslint import/extensions:0, no-unused-vars:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import processOutside from "../dist/ranges-process-outside.esm.js";
+import { rProcessOutside } from "../dist/ranges-process-outside.esm.js";
 
 const gathered = [];
 
 // a callback interface:
-processOutside(
+rProcessOutside(
   "abcdefghij",
   [
     [1, 5], // delete from "b" to "f"

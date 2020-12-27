@@ -7,11 +7,11 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { rProcessOutside } = require("..");
 
 const gather = [];
 const testme = () =>
-  f("abcdefghij", [[1, 5]], (idx) => {
+  rProcessOutside("abcdefghij", [[1, 5]], (idx) => {
     gather.push(idx);
   });
 

@@ -34,12 +34,12 @@ npm i ranges-process-outside
 
 ```js
 import { strict as assert } from "assert";
-import processOutside from "ranges-process-outside";
+import { rProcessOutside } from "ranges-process-outside";
 
 const gathered = [];
 
 // a callback interface:
-processOutside(
+rProcessOutside(
   "abcdefghij",
   [
     [1, 5], // delete from "b" to "f"
