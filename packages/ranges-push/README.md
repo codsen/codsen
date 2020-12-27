@@ -34,8 +34,8 @@ npm i ranges-push
 
 ```js
 import { strict as assert } from "assert";
-import Ranges from "ranges-push";
-import applyR from "ranges-apply";
+import { Ranges } from "ranges-push";
+import { rApply } from "ranges-apply";
 
 const gatheredRanges = new Ranges();
 
@@ -52,7 +52,7 @@ assert.deepEqual(gatheredRanges.current(), [
 ]);
 
 assert.equal(
-  applyR(oldString, gatheredRanges.current()),
+  rApply(oldString, gatheredRanges.current()),
   "The bad grey wolf jumps over the little Red Riding Hood."
 );
 

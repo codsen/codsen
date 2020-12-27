@@ -1,5 +1,5 @@
 import tap from "tap";
-import Ranges from "../dist/ranges-push.esm";
+import { Ranges } from "../dist/ranges-push.esm";
 
 const nbsp = "\xA0";
 
@@ -107,14 +107,6 @@ tap.test("13  -  ADD() - third input arg is not string", (t) => {
   t.end();
 });
 
-tap.test("14  -  ADD() - overloading", (t) => {
-  t.throws(() => {
-    const ranges = new Ranges();
-    ranges.add(1, 2, "aaa", 1);
-  }, /THROW_ID_03/);
-  t.end();
-});
-
 tap.test("15  -  PUSH() - wrong inputs", (t) => {
   t.throws(() => {
     const ranges = new Ranges();
@@ -209,17 +201,6 @@ tap.test(
     const ranges = new Ranges();
     ranges.add([[1, 2, 3]]);
     t.strictSame(ranges.current(), [[1, 2, "3"]], "26");
-    t.end();
-  }
-);
-
-tap.test(
-  "27  -  ADD() - first argument is .current() output of ranges",
-  (t) => {
-    t.throws(() => {
-      const ranges = new Ranges();
-      ranges.add([[1, 2, "z", 1]]);
-    }, /THROW_ID_03/);
     t.end();
   }
 );

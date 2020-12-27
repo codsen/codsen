@@ -1,10 +1,8 @@
-/* eslint import/extensions:0, no-unused-vars:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import Ranges from "../dist/ranges-push.esm.js";
-import applyR from "../../ranges-apply";
+import { Ranges } from "../dist/ranges-push.esm.js";
+import { rApply } from "../../ranges-apply";
 
 const gatheredRanges = new Ranges();
 
@@ -21,7 +19,7 @@ assert.deepEqual(gatheredRanges.current(), [
 ]);
 
 assert.equal(
-  applyR(oldString, gatheredRanges.current()),
+  rApply(oldString, gatheredRanges.current()),
   "The bad grey wolf jumps over the little Red Riding Hood."
 );
 

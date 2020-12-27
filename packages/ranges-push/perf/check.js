@@ -7,7 +7,7 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const Ranges = require("..");
+const { Ranges } = require("..");
 
 const testme = () => {
   const ranges = new Ranges();
