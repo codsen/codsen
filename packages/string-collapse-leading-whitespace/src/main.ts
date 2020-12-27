@@ -1,17 +1,18 @@
-const rawNbsp = "\u00A0";
+import { version } from "../package.json";
 
-function collapseLeadingWhitespace(str, originallineBreakLimit = 1) {
+function collWhitespace(str: string, originallineBreakLimit = 1): string {
+  const rawNbsp = "\u00A0";
   // helpers
 
-  function reverse(s) {
+  function reverse(s: string): string {
     return Array.from(s).reverse().join("");
   }
 
   // replaces the leading/trailing whitespace chunks with final strings
-  function prep(whitespaceChunk, limit, trailing) {
-    console.log(`.`);
-    console.log(`.`);
-    console.log(`.`);
+  function prep(whitespaceChunk: string, limit: number, trailing: boolean) {
+    console.log(` `);
+    console.log(` `);
+    console.log(` `);
     console.log(
       `${`\u001b[${34}m${`============== prep() ==============`}\u001b[${39}m`}`
     );
@@ -251,4 +252,4 @@ function collapseLeadingWhitespace(str, originallineBreakLimit = 1) {
   return str;
 }
 
-export default collapseLeadingWhitespace;
+export { collWhitespace, version };

@@ -1,5 +1,5 @@
 import tap from "tap";
-import c from "../dist/string-collapse-leading-whitespace.esm";
+import { collWhitespace as c } from "../dist/string-collapse-leading-whitespace.esm";
 
 tap.test("01 - not a string input", (t) => {
   t.equal(c(1), 1, "01");

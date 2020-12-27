@@ -1,5 +1,5 @@
 import tap from "tap";
-import c from "../dist/string-collapse-leading-whitespace.esm";
+import { collWhitespace as c } from "../dist/string-collapse-leading-whitespace.esm";
 
 const rawNbsp = "\u00A0";
 
