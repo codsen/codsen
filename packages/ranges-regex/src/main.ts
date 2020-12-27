@@ -1,7 +1,13 @@
-import mergeRanges from "ranges-merge";
+import { rMerge } from "ranges-merge";
 import isregexp from "lodash.isregexp";
+import { Range, Ranges } from "../../../scripts/common";
+import { version } from "../package.json";
 
-function rangesRegex(regx, str, replacement) {
+function rRegex(
+  regx: RegExp,
+  str: string,
+  replacement?: string | null | undefined
+): Ranges {
   // given regx validation
   if (regx === undefined) {
     throw new TypeError(
@@ -46,7 +52,7 @@ function rangesRegex(regx, str, replacement) {
 
   let tempArr;
 
-  const resRange = [];
+  const resRange: Range[] = [];
   if (
     replacement === null ||
     (typeof replacement === "string" && replacement.length)
@@ -67,9 +73,9 @@ function rangesRegex(regx, str, replacement) {
   }
 
   if (resRange.length) {
-    return mergeRanges(resRange);
+    return rMerge(resRange);
   }
   return null;
 }
 
-export default rangesRegex;
+export { rRegex, version };

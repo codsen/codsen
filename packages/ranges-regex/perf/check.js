@@ -7,9 +7,9 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { rRegex } = require("..");
 
-const testme = () => f(/def/g, "abcdefghij_abcdefghij", "");
+const testme = () => rRegex(/def/g, "abcdefghij_abcdefghij", "");
 
 // action
 runPerf(testme, callerDir);

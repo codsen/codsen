@@ -9,60 +9,63 @@
 
 'use strict';
 
-var mergeRanges = require('ranges-merge');
+Object.defineProperty(exports, '__esModule', { value: true });
+
+var rangesMerge = require('ranges-merge');
 var isregexp = require('lodash.isregexp');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-var mergeRanges__default = /*#__PURE__*/_interopDefaultLegacy(mergeRanges);
 var isregexp__default = /*#__PURE__*/_interopDefaultLegacy(isregexp);
 
-function _typeof(obj) {
-  "@babel/helpers - typeof";
+var version = "3.0.3";
 
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof = function (obj) {
-      return typeof obj;
-    };
-  } else {
-    _typeof = function (obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return _typeof(obj);
-}
-
-function rangesRegex(regx, str, replacement) {
+function rRegex(regx, str, replacement) {
+  // given regx validation
   if (regx === undefined) {
     throw new TypeError("ranges-regex: [THROW_ID_01] The first input's argument must be a regex object! Currently it is missing!");
   } else if (!isregexp__default['default'](regx)) {
-    throw new TypeError("ranges-regex: [THROW_ID_02] The first input's argument must be a regex object! Currently its type is: ".concat(_typeof(regx), ", equal to: ").concat(JSON.stringify(regx, null, 4)));
-  }
+    throw new TypeError("ranges-regex: [THROW_ID_02] The first input's argument must be a regex object! Currently its type is: " + typeof regx + ", equal to: " + JSON.stringify(regx, null, 4));
+  } // str validation
+
+
   if (typeof str !== "string") {
-    throw new TypeError("ranges-regex: [THROW_ID_03] The second input's argument must be a string! Currently its type is: ".concat(_typeof(str), ", equal to: ").concat(JSON.stringify(str, null, 4)));
-  }
+    throw new TypeError("ranges-regex: [THROW_ID_03] The second input's argument must be a string! Currently its type is: " + typeof str + ", equal to: " + JSON.stringify(str, null, 4));
+  } // replacement validation
+
+
   if (replacement && typeof replacement !== "string") {
-    throw new TypeError("ranges-regex: [THROW_ID_04] The third input's argument must be a string or null! Currently its type is: ".concat(_typeof(replacement), ", equal to: ").concat(JSON.stringify(replacement, null, 4)));
-  }
+    throw new TypeError("ranges-regex: [THROW_ID_04] The third input's argument must be a string or null! Currently its type is: " + typeof replacement + ", equal to: " + JSON.stringify(replacement, null, 4));
+  } // if an empty string was given, return an empty (ranges) array:
+
+
   if (!str.length) {
     return null;
-  }
+  } //                       finally, the real action
+  // ---------------------------------------------------------------------------
+
+
   var tempArr;
   var resRange = [];
+
   if (replacement === null || typeof replacement === "string" && replacement.length) {
+    // eslint-disable-next-line no-cond-assign
     while ((tempArr = regx.exec(str)) !== null) {
       resRange.push([regx.lastIndex - tempArr[0].length, regx.lastIndex, replacement]);
     }
   } else {
+    // eslint-disable-next-line no-cond-assign
     while ((tempArr = regx.exec(str)) !== null) {
       resRange.push([regx.lastIndex - tempArr[0].length, regx.lastIndex]);
     }
   }
+
   if (resRange.length) {
-    return mergeRanges__default['default'](resRange);
+    return rangesMerge.rMerge(resRange);
   }
+
   return null;
 }
 
-module.exports = rangesRegex;
+exports.rRegex = rRegex;
+exports.version = version;

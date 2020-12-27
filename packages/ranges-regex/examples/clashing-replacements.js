@@ -1,11 +1,9 @@
-/* eslint import/extensions:0, no-unused-vars:0 */
-
 // Clashing replacement values
 
 import { strict as assert } from "assert";
-import raReg from "../dist/ranges-regex.esm.js";
-import apply from "../../ranges-apply";
-import Ranges from "../../ranges-push";
+import { rRegex } from "../dist/ranges-regex.esm.js";
+import { rApply } from "../../ranges-apply";
+import { Ranges } from "../../ranges-push";
 
 // Two tasks:
 // 1. replace numbers with asterisks (*)
@@ -20,7 +18,7 @@ const gatheredRanges = new Ranges();
 // 1.
 
 // conceal number chunks:
-const fix1 = raReg(/\d/g, source, "*");
+const fix1 = rRegex(/\d/g, source, "*");
 // \d matches digit
 assert.deepEqual(fix1, [
   [10, 14, "****"],
@@ -32,17 +30,17 @@ assert.deepEqual(fix1, [
   [25, 29, "****"],
 ]);
 // replacement is correct:
-assert.equal(apply(source, fix1), "sequence: **** **** **** ****");
+assert.equal(rApply(source, fix1), "sequence: **** **** **** ****");
 // push it in:
 gatheredRanges.push(fix1);
 
 // 2.
 
 // delete zero chunks:
-const fix2 = raReg(/\b[0]+\b/g, source);
+const fix2 = rRegex(/\b[0]+\b/g, source);
 assert.deepEqual(fix2, [[20, 24]]);
 // deletion is correct:
-assert.equal(apply(source, fix2), "sequence: 1234 5678  1234");
+assert.equal(rApply(source, fix2), "sequence: 1234 5678  1234");
 // push it in:
 gatheredRanges.push(fix2);
 
@@ -62,7 +60,7 @@ assert.deepEqual(gatheredRanges.current(), [
 
 // apply both fixes in one go:
 assert.equal(
-  apply(source, gatheredRanges.current()),
+  rApply(source, gatheredRanges.current()),
   "sequence: **** **** **** ****"
 );
 
@@ -76,10 +74,10 @@ assert.equal(
 // deletion.
 
 // insert null as replacement:
-const fix3 = raReg(/\b[0]+\b/g, source, null);
+const fix3 = rRegex(/\b[0]+\b/g, source, null);
 assert.deepEqual(fix3, [[20, 24, null]]);
 // deletion is correct:
-assert.equal(apply(source, fix3), "sequence: 1234 5678  1234");
+assert.equal(rApply(source, fix3), "sequence: 1234 5678  1234");
 
 // wipe the "gatheredRanges"
 gatheredRanges.wipe();
@@ -90,7 +88,7 @@ gatheredRanges.push(fix3); // zero chunk
 
 // apply again:
 assert.equal(
-  apply(source, gatheredRanges.current()),
+  rApply(source, gatheredRanges.current()),
   "sequence: **** ****  ****"
 );
 // null in [20, 24, null] overrode the insertion instruction [20, 24, "****"]

@@ -34,10 +34,10 @@ npm i ranges-regex
 
 ```js
 import { strict as assert } from "assert";
-import raReg from "ranges-regex";
+import { rRegex } from "ranges-regex";
 
 const oldString = `The quick brown fox jumps over the lazy dog.`;
-const result = raReg(/the/gi, oldString);
+const result = rRegex(/the/gi, oldString);
 
 // all regex matches, but in Ranges notation (see codsen.com/ranges/):
 assert.deepEqual(result, [

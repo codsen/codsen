@@ -1,6 +1,6 @@
 import tap from "tap";
-import rangesApply from "ranges-apply";
-import rare from "../dist/ranges-regex.esm";
+import { rApply } from "ranges-apply";
+import { rRegex } from "../dist/ranges-regex.esm";
 
 // ==============================
 // 0. THROWS
@@ -9,22 +9,22 @@ import rare from "../dist/ranges-regex.esm";
 tap.test("01 - first input argument is missing", (t) => {
   // throw pinning:
   t.throws(() => {
-    rare();
+    rRegex();
   }, /THROW_ID_01/);
 
   // with second arg:
   t.throws(() => {
-    rare(undefined, "zzzzz");
+    rRegex(undefined, "zzzzz");
   }, /THROW_ID_01/);
 
   // with third arg:
   t.throws(() => {
-    rare(undefined, undefined, "zzzzz");
+    rRegex(undefined, undefined, "zzzzz");
   }, /THROW_ID_01/);
 
   // with both second and third arg:
   t.throws(() => {
-    rare(undefined, "yyyyy", "zzzzz");
+    rRegex(undefined, "yyyyy", "zzzzz");
   }, /THROW_ID_01/);
 
   t.end();
@@ -33,12 +33,12 @@ tap.test("01 - first input argument is missing", (t) => {
 tap.test("02 - first input argument is not a regex", (t) => {
   // throw pinning:
   t.throws(() => {
-    rare("zzzz", "yyyy");
+    rRegex("zzzz", "yyyy");
   }, /THROW_ID_02/);
 
   // with third arg:
   t.throws(() => {
-    rare("zzzz", "yyyy", "xxxxx");
+    rRegex("zzzz", "yyyy", "xxxxx");
   }, /THROW_ID_02/);
 
   t.end();
@@ -47,12 +47,12 @@ tap.test("02 - first input argument is not a regex", (t) => {
 tap.test("03 - second input argument is missing", (t) => {
   // throw pinning:
   t.throws(() => {
-    rare(/z/g);
+    rRegex(/z/g);
   }, /THROW_ID_03/);
 
   // plus third arg:
   t.throws(() => {
-    rare(/z/g, undefined, "zzzz");
+    rRegex(/z/g, undefined, "zzzz");
   }, /THROW_ID_03/);
 
   t.end();
@@ -61,12 +61,12 @@ tap.test("03 - second input argument is missing", (t) => {
 tap.test("04 - second input argument is not string", (t) => {
   // throw pinning:
   t.throws(() => {
-    rare(/z/g, true);
+    rRegex(/z/g, true);
   }, /THROW_ID_03/);
 
   // with third arg:
   t.throws(() => {
-    rare(/z/g, true, "zzzzzz");
+    rRegex(/z/g, true, "zzzzzz");
   }, /THROW_ID_03/);
 
   t.end();
@@ -75,7 +75,7 @@ tap.test("04 - second input argument is not string", (t) => {
 tap.test("05 - third input argument is present and is not string", (t) => {
   // throw pinning:
   t.throws(() => {
-    rare(/def/g, "abcdefghij_abcdefghij", true);
+    rRegex(/def/g, "abcdefghij_abcdefghij", true);
   }, /THROW_ID_04/);
 
   t.end();
@@ -87,7 +87,7 @@ tap.test("05 - third input argument is present and is not string", (t) => {
 
 tap.test(`06 - crops out few ranges outside the strlen`, (t) => {
   t.strictSame(
-    rare(/def/g, "abcdefghij_abcdefghij"),
+    rRegex(/def/g, "abcdefghij_abcdefghij"),
     [
       [3, 6],
       [14, 17],
@@ -95,7 +95,7 @@ tap.test(`06 - crops out few ranges outside the strlen`, (t) => {
     "06.01"
   );
   t.strictSame(
-    rare(/def/g, "abcdefghij_abcdefghij", "yo"),
+    rRegex(/def/g, "abcdefghij_abcdefghij", "yo"),
     [
       [3, 6, "yo"],
       [14, 17, "yo"],
@@ -103,7 +103,7 @@ tap.test(`06 - crops out few ranges outside the strlen`, (t) => {
     "06.02"
   );
   t.strictSame(
-    rare(/def/g, "abcdefghij_abcdefghij", null),
+    rRegex(/def/g, "abcdefghij_abcdefghij", null),
     [
       [3, 6, null],
       [14, 17, null],
@@ -111,7 +111,7 @@ tap.test(`06 - crops out few ranges outside the strlen`, (t) => {
     "06.03"
   );
   t.strictSame(
-    rare(/def/g, "abcdefghij_abcdefghij", ""),
+    rRegex(/def/g, "abcdefghij_abcdefghij", ""),
     [
       [3, 6],
       [14, 17],
@@ -123,9 +123,9 @@ tap.test(`06 - crops out few ranges outside the strlen`, (t) => {
 });
 
 tap.test(`07 - nothing found`, (t) => {
-  t.strictSame(rare(/def/g, ""), null, "07.01");
-  t.strictSame(rare(/def/g, "", "yo"), null, "07.02");
-  t.strictSame(rare(/def/g, "", null), null, "07.03");
+  t.strictSame(rRegex(/def/g, ""), null, "07.01");
+  t.strictSame(rRegex(/def/g, "", "yo"), null, "07.02");
+  t.strictSame(rRegex(/def/g, "", null), null, "07.03");
   t.end();
 });
 
@@ -135,14 +135,14 @@ tap.test(
     const reg = /def/g;
     const str = "abcdefdefghij_abcdefghij";
     t.strictSame(
-      rare(reg, str),
+      rRegex(reg, str),
       [
         [3, 9],
         [17, 20],
       ],
       "08.01"
     );
-    t.equal(rangesApply(str, rare(reg, str)), str.replace(reg, ""), "08.02");
+    t.equal(rApply(str, rRegex(reg, str)), str.replace(reg, ""), "08.02");
     t.end();
   }
 );
@@ -150,7 +150,7 @@ tap.test(
 tap.test(`09 - no findings - returns null`, (t) => {
   const reg = /yyy/g;
   const str = "zzzzzzzz";
-  t.equal(rare(reg, str), null, "09.01");
-  t.equal(rare(reg, str, "yo"), null, "09.02");
+  t.equal(rRegex(reg, str), null, "09.01");
+  t.equal(rRegex(reg, str, "yo"), null, "09.02");
   t.end();
 });
