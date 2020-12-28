@@ -7,10 +7,10 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { extractVars } = require("..");
 
 const testme = () =>
-  f(
+  extractVars(
     `// test file 01
 // ------------------------------------------
 $red:

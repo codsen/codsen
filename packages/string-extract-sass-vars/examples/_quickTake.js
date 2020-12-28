@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import extractVars from "../dist/string-extract-sass-vars.esm.js";
+import { extractVars } from "../dist/string-extract-sass-vars.esm.js";
 
 assert.deepEqual(
   extractVars(`// all variables are here!!!

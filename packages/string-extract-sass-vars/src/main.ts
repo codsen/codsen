@@ -1,9 +1,23 @@
+import { version } from "../package.json";
+
 // Takes string, SASS variables file and extracts the plain object of variables: key-value pairs
 // As a bonus, it turns digit-only value strings into numbers.
 
 const BACKSLASH = "\u005C";
 
-function extractVars(str, originalOpts) {
+interface UnknownValueObj {
+  [key: string]: any;
+}
+interface Opts {
+  throwIfEmpty?: boolean;
+  cb?: null | ((varValue: string) => any);
+}
+const defaults: Opts = {
+  throwIfEmpty: false,
+  cb: null,
+};
+
+function extractVars(str: string, originalOpts?: Opts): UnknownValueObj {
   if (typeof str !== "string") {
     return {};
   }
@@ -16,10 +30,6 @@ function extractVars(str, originalOpts) {
       )} (type ${typeof originalOpts})`
     );
   }
-  const defaults = {
-    throwIfEmpty: false,
-    cb: null,
-  };
   const opts = { ...defaults, ...originalOpts };
   console.log(
     `025 ${`\u001b[${33}m${`opts`}\u001b[${39}m`}: ${JSON.stringify(
@@ -51,7 +61,7 @@ function extractVars(str, originalOpts) {
   let withinSlashSlashComment = false;
   let withinSlashAsteriskComment = false;
 
-  const res = {};
+  const res: UnknownValueObj = {};
 
   for (let i = 0; i < len; i++) {
     //
@@ -200,7 +210,7 @@ function extractVars(str, originalOpts) {
         !`"'`.includes(str[varValueStartsAt])
           ? varValueStartsAt
           : varValueStartsAt + 1,
-        lastNonQuoteCharAt + 1
+        (lastNonQuoteCharAt || 0) + 1
       );
       console.log(
         `206 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`varValue`}\u001b[${39}m`} = ${JSON.stringify(
@@ -215,7 +225,7 @@ function extractVars(str, originalOpts) {
       }
 
       // if the callback has been given, run the value past it:
-      res[varName] = opts.cb ? opts.cb(varValue) : varValue;
+      res[varName as string] = opts.cb ? opts.cb(varValue as string) : varValue;
 
       varNameStartsAt = null;
       varValueStartsAt = null;
@@ -344,4 +354,4 @@ function extractVars(str, originalOpts) {
   return res;
 }
 
-export default extractVars;
+export { extractVars, defaults, version };

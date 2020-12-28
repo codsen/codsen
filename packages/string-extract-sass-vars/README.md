@@ -34,7 +34,7 @@ npm i string-extract-sass-vars
 
 ```js
 import { strict as assert } from "assert";
-import extractVars from "string-extract-sass-vars";
+import { extractVars } from "string-extract-sass-vars";
 
 assert.deepEqual(
   extractVars(`// all variables are here!!!
