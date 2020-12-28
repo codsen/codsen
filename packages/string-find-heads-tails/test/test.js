@@ -1,5 +1,5 @@
 import tap from "tap";
-import strFindHeadsTails from "../dist/string-find-heads-tails.esm";
+import { strFindHeadsTails } from "../dist/string-find-heads-tails.esm";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws

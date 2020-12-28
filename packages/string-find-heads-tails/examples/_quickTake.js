@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import strFindHeadsTails from "../dist/string-find-heads-tails.esm.js";
+import { strFindHeadsTails } from "../dist/string-find-heads-tails.esm.js";
 
 // processing an arbitrary, custom templating markup:
 assert.deepEqual(

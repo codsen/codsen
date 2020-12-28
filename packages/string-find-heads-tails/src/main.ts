@@ -1,16 +1,47 @@
 import { matchRightIncl } from "string-match-left-right";
-import arrayiffy from "arrayiffy-if-string";
+import { arrayiffy } from "arrayiffy-if-string";
+import { version } from "../package.json";
 
-function isObj(something) {
+function isObj(something: any): boolean {
   return (
     something && typeof something === "object" && !Array.isArray(something)
   );
 }
-function isStr(something) {
+function isStr(something: any): boolean {
   return typeof something === "string";
 }
 
-function strFindHeadsTails(str, heads, tails, originalOpts) {
+interface Opts {
+  fromIndex?: number;
+  throwWhenSomethingWrongIsDetected?: boolean;
+  allowWholeValueToBeOnlyHeadsOrTails?: boolean;
+  source?: string;
+  matchHeadsAndTailsStrictlyInPairsByTheirOrder?: boolean;
+  relaxedAPI?: boolean;
+}
+
+const defaults = {
+  fromIndex: 0,
+  throwWhenSomethingWrongIsDetected: true,
+  allowWholeValueToBeOnlyHeadsOrTails: true,
+  source: "string-find-heads-tails",
+  matchHeadsAndTailsStrictlyInPairsByTheirOrder: false,
+  relaxedAPI: false,
+};
+
+interface ResObj {
+  headsStartAt: number;
+  headsEndAt: number;
+  tailsStartAt: number;
+  tailsEndAt: number;
+}
+
+function strFindHeadsTails(
+  str: string,
+  heads: string | string[],
+  tails: string | string[],
+  originalOpts?: Opts
+): ResObj[] {
   // prep opts
   if (originalOpts && !isObj(originalOpts)) {
     throw new TypeError(
@@ -18,14 +49,6 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
     );
   }
 
-  const defaults = {
-    fromIndex: 0,
-    throwWhenSomethingWrongIsDetected: true,
-    allowWholeValueToBeOnlyHeadsOrTails: true,
-    source: "string-find-heads-tails",
-    matchHeadsAndTailsStrictlyInPairsByTheirOrder: false,
-    relaxedAPI: false,
-  };
   const opts = { ...defaults, ...originalOpts };
 
   if (typeof opts.fromIndex === "string" && /^\d*$/.test(opts.fromIndex)) {
@@ -306,8 +329,8 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
 
   const res = [];
   let oneHeadFound = false;
-  let tempResObj = {};
-  let tailSuspicionRaised = false;
+  let tempResObj: Partial<ResObj> = {};
+  let tailSuspicionRaised = "";
 
   // if opts.opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder is on and heads
   // matched was i-th in the array, we will record its index "i" and later match
@@ -347,7 +370,7 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
           // again for subsequent, false detections:
           i += matchedHeads.length - 1;
           if (tailSuspicionRaised) {
-            tailSuspicionRaised = false;
+            tailSuspicionRaised = "";
             console.log(
               `352 !!! tailSuspicionRaised = ${!!tailSuspicionRaised}`
             );
@@ -456,7 +479,7 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
     }
   }
   console.log(`458 final res = ${JSON.stringify(res, null, 4)}`);
-  return res;
+  return res as ResObj[];
 }
 
-export default strFindHeadsTails;
+export { strFindHeadsTails, defaults, version };

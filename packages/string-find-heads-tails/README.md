@@ -34,7 +34,7 @@ npm i string-find-heads-tails
 
 ```js
 import { strict as assert } from "assert";
-import strFindHeadsTails from "string-find-heads-tails";
+import { strFindHeadsTails } from "string-find-heads-tails";
 
 // processing an arbitrary, custom templating markup:
 assert.deepEqual(
