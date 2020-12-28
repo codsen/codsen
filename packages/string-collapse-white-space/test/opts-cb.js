@@ -1,5 +1,5 @@
 import tap from "tap";
-import collapse from "../dist/string-collapse-white-space.esm";
+import { collapse } from "../dist/string-collapse-white-space.esm";
 
 // opts.cb
 // -----------------------------------------------------------------------------

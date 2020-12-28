@@ -1,7 +1,6 @@
 import tap from "tap";
-import collapse from "../dist/string-collapse-white-space.esm";
+import { collapse, cbSchema } from "../dist/string-collapse-white-space.esm";
 import { mixer } from "./util/util";
-import { cbSchema } from "../src/util";
 
 // More tests on trimming, targetting algorithm's weakest spots
 // -----------------------------------------------------------------------------

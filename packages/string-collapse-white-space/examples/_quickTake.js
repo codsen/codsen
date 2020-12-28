@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import collapse from "../dist/string-collapse-white-space.esm.js";
+import { collapse } from "../dist/string-collapse-white-space.esm.js";
 
 assert.equal(
   collapse("  aaa     bbb    ccc   dddd  ").result,

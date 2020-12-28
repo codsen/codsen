@@ -1,9 +1,64 @@
-import apply from "ranges-apply";
-import Ranges from "ranges-push";
-import { right } from "string-left-right";
-import { defaultOpts } from "./util";
+/* eslint @typescript-eslint/ban-ts-comment:1 */
 
-function collapse(str, originalOpts) {
+import { rApply } from "ranges-apply";
+import { Ranges } from "ranges-push";
+import { right } from "string-left-right";
+import { version } from "../package.json";
+import { Range, Ranges as RangesType } from "../../../scripts/common";
+
+interface Extras {
+  whiteSpaceStartsAt: number;
+  whiteSpaceEndsAt: number;
+  str: string;
+}
+
+interface CbObj extends Extras {
+  suggested: Range;
+}
+
+type Callback = (cbObj: CbObj) => any;
+
+interface Opts {
+  trimStart?: boolean;
+  trimEnd?: boolean;
+  trimLines?: boolean;
+  trimnbsp?: boolean;
+  removeEmptyLines?: boolean;
+  limitConsecutiveEmptyLinesTo?: number;
+  enforceSpacesOnly?: boolean;
+  cb?: Callback;
+}
+
+// default set of options
+const defaults: Opts = {
+  trimStart: true,
+  trimEnd: true,
+  trimLines: false,
+  trimnbsp: false,
+  removeEmptyLines: false,
+  limitConsecutiveEmptyLinesTo: 0,
+  enforceSpacesOnly: false,
+  cb: ({ suggested }) => {
+    // console.log(`default CB called`);
+    // console.log(
+    //   `${`\u001b[${33}m${`suggested`}\u001b[${39}m`} = ${JSON.stringify(
+    //     suggested,
+    //     null,
+    //     4
+    //   )}`
+    // );
+    return suggested;
+  },
+};
+
+interface Res {
+  result: string;
+  ranges: RangesType;
+}
+
+const cbSchema = ["suggested", "whiteSpaceStartsAt", "whiteSpaceEndsAt", "str"];
+
+function collapse(str: string, originalOpts?: Opts): Res {
   console.log(
     `008 ██ string-collapse-whitespace called: str = ${JSON.stringify(
       str,
@@ -43,7 +98,7 @@ function collapse(str, originalOpts) {
   const NBSP = `\xa0`;
 
   // fill any settings with defaults if missing:
-  const opts = { ...defaultOpts, ...originalOpts };
+  const opts = { ...defaults, ...originalOpts };
   console.log(` `);
   console.log(
     `049 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
@@ -53,7 +108,7 @@ function collapse(str, originalOpts) {
     )}`
   );
 
-  function push(something, ...extras) {
+  function push(something: Range | null, extras: Extras) {
     console.log(`---- push() ----`);
     console.log(
       `059 ${`\u001b[${35}m${`push()`}\u001b[${39}m`} ${`\u001b[${32}m${`extras`}\u001b[${39}m`} = ${JSON.stringify(
@@ -63,19 +118,25 @@ function collapse(str, originalOpts) {
       )}`
     );
 
-    const final = opts.cb({ suggested: something, ...extras[0] });
-    console.log(
-      `068 ${`\u001b[${35}m${`push():`}\u001b[${39}m`} ${`\u001b[${33}m${`final`}\u001b[${39}m`} = ${JSON.stringify(
-        final,
-        null,
-        4
-      )}`
-    );
-    if (Array.isArray(final)) {
+    if (typeof opts.cb === "function") {
+      const final = opts.cb({ suggested: something as Range, ...extras });
       console.log(
-        `076 ${`\u001b[${35}m${`push():`}\u001b[${39}m`} ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`
+        `068 ${`\u001b[${35}m${`push():`}\u001b[${39}m`} ${`\u001b[${33}m${`final`}\u001b[${39}m`} = ${JSON.stringify(
+          final,
+          null,
+          4
+        )}`
       );
-      finalIndexesToDelete.push(...final);
+      if (Array.isArray(final)) {
+        console.log(
+          `076 ${`\u001b[${35}m${`push():`}\u001b[${39}m`} ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`
+        );
+        // @ts-ignore
+        finalIndexesToDelete.push(...final);
+      }
+    } else {
+      // @ts-ignore
+      finalIndexesToDelete.push(...something);
     }
   }
 
@@ -250,7 +311,7 @@ function collapse(str, originalOpts) {
         console.log(`250 inside space seq. removal clauses`);
         const startIdx = spacesStartAt;
         let endIdx = i;
-        let whatToAdd = " ";
+        let whatToAdd: string | null = " ";
 
         if (
           opts.trimLines &&
@@ -318,7 +379,7 @@ function collapse(str, originalOpts) {
           whatToAdd ? [startIdx, endIdx, whatToAdd] : [startIdx, endIdx],
           {
             whiteSpaceStartsAt,
-            whiteSpaceEndsAt: right(i - 1) || i,
+            whiteSpaceEndsAt: right(str, i - 1) || i,
             str,
           },
         ]);
@@ -407,7 +468,7 @@ function collapse(str, originalOpts) {
         // but maybe we can reuse existing characters to reduce the footprint
         let startIdx = lineWhiteSpaceStartsAt;
         let endIdx = i;
-        let whatToAdd = " ";
+        let whatToAdd: string | null = " ";
 
         if (str[endIdx - 1] === " ") {
           endIdx -= 1;
@@ -437,7 +498,7 @@ function collapse(str, originalOpts) {
           `437 suggested range: ${`\u001b[${35}m${`[${lineWhiteSpaceStartsAt}, ${i}, " "]`}\u001b[${39}m`}`
         );
         push(whatToAdd ? [startIdx, endIdx, whatToAdd] : [startIdx, endIdx], {
-          whiteSpaceStartsAt,
+          whiteSpaceStartsAt: whiteSpaceStartsAt as number,
           whiteSpaceEndsAt: i,
           str,
         });
@@ -462,7 +523,7 @@ function collapse(str, originalOpts) {
           `462 suggested range: ${`\u001b[${35}m${`[${lineWhiteSpaceStartsAt}, ${i}, " "]`}\u001b[${39}m`}`
         );
         push([lineWhiteSpaceStartsAt, i], {
-          whiteSpaceStartsAt,
+          whiteSpaceStartsAt: whiteSpaceStartsAt as number,
           whiteSpaceEndsAt: right(str, i - 1) || i,
           str,
         });
@@ -585,7 +646,8 @@ function collapse(str, originalOpts) {
           // there were some linebreaks recorded
           linebreaksStartAt !== null &&
           // there are too many
-          consecutiveLineBreakCount > opts.limitConsecutiveEmptyLinesTo + 1
+          consecutiveLineBreakCount >
+            (opts.limitConsecutiveEmptyLinesTo || 0) + 1
         ) {
           somethingPushed = true;
           console.log(`591 remove the linebreak sequence`);
@@ -593,13 +655,13 @@ function collapse(str, originalOpts) {
           // try to salvage some of the existing linebreaks - don't replace the
           // same with the same
           let startIdx = linebreaksStartAt;
-          let endIdx = linebreaksEndAt;
-          let whatToAdd = `${
+          let endIdx = linebreaksEndAt || str.length;
+          let whatToAdd: string | null = `${
             str[linebreaksStartAt] === "\r" &&
             str[linebreaksStartAt + 1] === "\n"
               ? "\r\n"
               : str[linebreaksStartAt]
-          }`.repeat(opts.limitConsecutiveEmptyLinesTo + 1);
+          }`.repeat((opts.limitConsecutiveEmptyLinesTo || 0) + 1);
 
           console.log(
             `605 FIY, ${`\u001b[${33}m${`whatToAdd`}\u001b[${39}m`} = ${JSON.stringify(
@@ -610,9 +672,9 @@ function collapse(str, originalOpts) {
           );
 
           /* istanbul ignore else */
-          if (str.endsWith(whatToAdd, linebreaksEndAt)) {
+          if (str.endsWith(whatToAdd, linebreaksEndAt as number)) {
             console.log(`614 reuse the ending`);
-            endIdx -= whatToAdd.length;
+            endIdx -= whatToAdd.length || 0;
             whatToAdd = null;
           } else if (str.startsWith(whatToAdd, linebreaksStartAt)) {
             console.log(`618 reuse the beginning`);
@@ -641,6 +703,7 @@ function collapse(str, originalOpts) {
           console.log(`641 push all staged ranges into final`);
           while (staging.length) {
             // FIFO - first in, first out
+            // @ts-ignore
             push(...staging.shift(), {
               whiteSpaceStartsAt,
               whiteSpaceEndsAt: i,
@@ -766,9 +829,9 @@ function collapse(str, originalOpts) {
   );
 
   return {
-    result: apply(str, finalIndexesToDelete.current()),
+    result: rApply(str, finalIndexesToDelete.current()),
     ranges: finalIndexesToDelete.current(),
   };
 }
 
-export default collapse;
+export { collapse, cbSchema, defaults, version };

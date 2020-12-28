@@ -1,5 +1,5 @@
 import tap from "tap";
-import collapse from "../dist/string-collapse-white-space.esm";
+import { collapse } from "../dist/string-collapse-white-space.esm";
 
 // various throws
 // -----------------------------------------------------------------------------
@@ -96,3 +96,12 @@ tap.test(
     t.end();
   }
 );
+
+tap.test(`05 - cb is null`, (t) => {
+  t.strictSame(
+    collapse("aaa", { cb: null }),
+    { result: "aaa", ranges: null },
+    "04"
+  );
+  t.end();
+});

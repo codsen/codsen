@@ -1,8 +1,8 @@
-import mixer from "test-mixer";
-import { defaultOpts } from "../../src/util";
+import { mixer } from "test-mixer";
+import { defaults } from "../../dist/string-collapse-white-space.esm";
 
 function mixerToExport(ref) {
-  return mixer(ref, defaultOpts);
+  return mixer(ref, defaults);
 }
 
 // -----------------------------------------------------------------------------

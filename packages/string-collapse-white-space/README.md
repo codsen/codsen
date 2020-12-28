@@ -34,7 +34,7 @@ npm i string-collapse-white-space
 
 ```js
 import { strict as assert } from "assert";
-import collapse from "string-collapse-white-space";
+import { collapse } from "string-collapse-white-space";
 
 assert.equal(
   collapse("  aaa     bbb    ccc   dddd  ").result,
