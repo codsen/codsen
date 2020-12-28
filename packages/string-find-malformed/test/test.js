@@ -1,5 +1,5 @@
 import tap from "tap";
-import strFindMalformed from "../dist/string-find-malformed.esm";
+import { findMalformed } from "../dist/string-find-malformed.esm";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
@@ -9,12 +9,12 @@ tap.test(
   "01 - throws when the first argument, source string, is not a string",
   (t) => {
     t.throws(() => {
-      strFindMalformed(1);
+      findMalformed(1);
     }, /THROW_ID_01/);
 
     // more resembling real-life:
     t.throws(() => {
-      strFindMalformed(
+      findMalformed(
         1,
         "a",
         () => {
@@ -31,12 +31,12 @@ tap.test(
   "02 - throws when the second argument, ref string, is not a string",
   (t) => {
     t.throws(() => {
-      strFindMalformed("aaa", 1);
+      findMalformed("aaa", 1);
     }, /THROW_ID_02/);
 
     // more resembling real-life:
     t.throws(() => {
-      strFindMalformed(
+      findMalformed(
         "a",
         1,
         () => {
@@ -53,11 +53,11 @@ tap.test(
   "03 - throws when the third argument, callback, is not a function",
   (t) => {
     t.throws(() => {
-      strFindMalformed("aaa", "zzz", 1);
+      findMalformed("aaa", "zzz", 1);
     }, /THROW_ID_03/);
 
     t.throws(() => {
-      strFindMalformed("a", "b", "c", null);
+      findMalformed("a", "b", "c", null);
     }, /THROW_ID_03/);
     t.end();
   }
@@ -67,7 +67,7 @@ tap.test(
   "04 - throws when the fourth argument, optional options object, is not a plain object",
   (t) => {
     t.throws(() => {
-      strFindMalformed("aaa", "bbb", () => {}, "ccc");
+      findMalformed("aaa", "bbb", () => {}, "ccc");
     }, /THROW_ID_04/);
     t.end();
   }
@@ -75,14 +75,14 @@ tap.test(
 
 tap.test("05 - throws when opts.stringOffset is not a number", (t) => {
   t.throws(() => {
-    strFindMalformed("aaa", "bbb", () => {}, { stringOffset: "ccc" });
+    findMalformed("aaa", "bbb", () => {}, { stringOffset: "ccc" });
   }, /THROW_ID_05/);
   t.end();
 });
 
 tap.test(`06 - empty string`, (t) => {
   const gathered = [];
-  strFindMalformed("", "bde", (obj) => {
+  findMalformed("", "bde", (obj) => {
     gathered.push(obj);
   });
   t.strictSame(gathered, [], "06");
@@ -91,7 +91,7 @@ tap.test(`06 - empty string`, (t) => {
 
 tap.test(`07 - empty string`, (t) => {
   const gathered = [];
-  strFindMalformed("abc", "", (obj) => {
+  findMalformed("abc", "", (obj) => {
     gathered.push(obj);
   });
   t.strictSame(gathered, [], "07");
@@ -104,7 +104,7 @@ tap.test(`07 - empty string`, (t) => {
 
 tap.test(`08 - rogue character, "c"`, (t) => {
   const gathered = [];
-  strFindMalformed("abcdef", "bde", (obj) => {
+  findMalformed("abcdef", "bde", (obj) => {
     gathered.push(obj);
   });
   t.strictSame(
@@ -122,7 +122,7 @@ tap.test(`08 - rogue character, "c"`, (t) => {
 
 tap.test(`09 - overlapping and extended maxDistance`, (t) => {
   const gathered = [];
-  strFindMalformed(
+  findMalformed(
     "abcabcd.f",
     "abcdef",
     (obj) => {
@@ -147,7 +147,7 @@ tap.test(`09 - overlapping and extended maxDistance`, (t) => {
 
 tap.test(`10 - with opts.stringOffset`, (t) => {
   const gathered = [];
-  strFindMalformed(
+  findMalformed(
     "<div><!-something--></div>",
     "<!--",
     (obj) => {
@@ -173,7 +173,7 @@ tap.test(`10 - with opts.stringOffset`, (t) => {
 
 tap.test(`11 - correct, fully matching value is not pinged`, (t) => {
   const gathered = [];
-  strFindMalformed(
+  findMalformed(
     "<div><!--something--></div>",
     "<!--",
     (obj) => {
@@ -190,7 +190,7 @@ tap.test(`11 - correct, fully matching value is not pinged`, (t) => {
 
 tap.test(`12 - like before but strings in opts`, (t) => {
   const gathered = [];
-  strFindMalformed(
+  findMalformed(
     "<div><!-\n\n\n-something--></div>",
     "<!--",
     (obj) => {
@@ -216,7 +216,7 @@ tap.test(`12 - like before but strings in opts`, (t) => {
 
 tap.test(`13 - whitespace`, (t) => {
   const gathered = [];
-  strFindMalformed(
+  findMalformed(
     "<div>< ! - -something--></div>",
     "<!--",
     (obj) => {
@@ -239,7 +239,7 @@ tap.test(`13 - whitespace`, (t) => {
 
 tap.test(`14 - repeated characters after failed match`, (t) => {
   const gathered = [];
-  strFindMalformed(
+  findMalformed(
     "<--z",
     "<!--",
     (obj) => {
@@ -262,7 +262,7 @@ tap.test(`14 - repeated characters after failed match`, (t) => {
 
 tap.test(`15 - repeated characters after failed match`, (t) => {
   const gathered = [];
-  strFindMalformed(
+  findMalformed(
     "<!-[if mso]>",
     "<!--[",
     (obj) => {

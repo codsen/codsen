@@ -34,11 +34,11 @@ npm i string-find-malformed
 
 ```js
 import { strict as assert } from "assert";
-import strFindMalformed from "string-find-malformed";
+import { findMalformed } from "string-find-malformed";
 
 // Below, we look for dodgy cases of `<!--`
 const gathered = [];
-strFindMalformed(
+findMalformed(
   "<div><!-something--></div>",
   "<!--",
   // your callback function:

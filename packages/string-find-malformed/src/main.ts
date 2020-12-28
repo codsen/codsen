@@ -1,15 +1,37 @@
 import { right } from "string-left-right";
+import { version } from "../package.json";
 
-function isObj(something) {
+function isObj(something: any): boolean {
   return (
     something && typeof something === "object" && !Array.isArray(something)
   );
 }
-function isStr(something) {
+function isStr(something: any): boolean {
   return typeof something === "string";
 }
 
-function strFindMalformed(str, refStr, cb, originalOpts) {
+interface Opts {
+  stringOffset?: number;
+  maxDistance?: number;
+  ignoreWhitespace?: boolean;
+}
+const defaults: Opts = {
+  stringOffset: 0,
+  maxDistance: 1,
+  ignoreWhitespace: true,
+};
+
+interface DataObj {
+  idxFrom: number;
+  idxTo: number;
+}
+
+function findMalformed(
+  str: string,
+  refStr: string,
+  cb: (obj: DataObj) => void,
+  originalOpts?: Opts | undefined | null
+): void {
   console.log(`013 strFindMalformed() START:`);
   console.log(
     `* ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
@@ -58,11 +80,6 @@ function strFindMalformed(str, refStr, cb, originalOpts) {
     );
   }
 
-  const defaults = {
-    stringOffset: 0,
-    maxDistance: 1,
-    ignoreWhitespace: true,
-  };
   const opts = { ...defaults, ...originalOpts };
 
   // we perform the validation upon Object-assigned "opts" instead
@@ -77,9 +94,12 @@ function strFindMalformed(str, refStr, cb, originalOpts) {
     /^\d*$/.test(opts.stringOffset)
   ) {
     opts.stringOffset = Number(opts.stringOffset);
-  } else if (!Number.isInteger(opts.stringOffset) || opts.stringOffset < 0) {
+  } else if (
+    !Number.isInteger(opts.stringOffset) ||
+    (opts.stringOffset as number) < 0
+  ) {
     throw new TypeError(
-      `${opts.source} [THROW_ID_05] opts.stringOffset must be a natural number or zero! Currently it's: ${opts.fromIndex}`
+      `[THROW_ID_05] opts.stringOffset must be a natural number or zero! Currently it's: ${opts.stringOffset}`
     );
   }
   console.log(
@@ -102,12 +122,18 @@ function strFindMalformed(str, refStr, cb, originalOpts) {
   // second character of "refStr" - this time, "patience" is subtracted
   // by amount of skipped characters, in this case, by 1... and so on...
   // That matching chain is a "for" loop and that loop's length is below:
-  const len2 = Math.min(refStr.length, opts.maxDistance + 1);
+  const len2 = Math.min(refStr.length, (opts.maxDistance || 0) + 1);
 
-  let pendingMatchesArr = [];
+  interface MatchesObj {
+    startsAt: number;
+    patienceLeft: number;
+    pendingToCheck: string[];
+  }
+
+  let pendingMatchesArr: MatchesObj[] = [];
 
   // when it attempts to dip below zero, match is failed
-  const patience = opts.maxDistance;
+  const patience: number = opts.maxDistance || 1;
 
   let wasThisLetterMatched;
 
@@ -221,10 +247,13 @@ function strFindMalformed(str, refStr, cb, originalOpts) {
         );
 
         // we look up the next character, if it matches, we don't pop it
-        if (str[right(str, i)] !== pendingMatchesArr[z].pendingToCheck[0]) {
+        if (
+          str[right(str, i) as number] !==
+          pendingMatchesArr[z].pendingToCheck[0]
+        ) {
           console.log(
             `226 ██ str[${right(str, i)}] = "${
-              str[right(str, i)]
+              str[right(str, i) as number]
             }" DIDN'T MATCH pendingMatchesArr[${z}].pendingToCheck[0] = "${
               pendingMatchesArr[z].pendingToCheck[0]
             }"`
@@ -286,8 +315,9 @@ function strFindMalformed(str, refStr, cb, originalOpts) {
       console.log(
         `287 ${`\u001b[${32}m${`PING CB`}\u001b[${39}m`} with ${JSON.stringify(
           {
-            idxFrom: Math.min(...tempArr) + opts.stringOffset,
-            idxTo: i + (wasThisLetterMatched ? 1 : 0) + opts.stringOffset,
+            idxFrom: Math.min(...tempArr) + (opts.stringOffset || 0),
+            idxTo:
+              i + (wasThisLetterMatched ? 1 : 0) + (opts.stringOffset || 0),
           },
           null,
           4
@@ -298,8 +328,8 @@ function strFindMalformed(str, refStr, cb, originalOpts) {
       if (str.slice(idxFrom, idxTo) !== refStr) {
         // only ping malformed values, don't ping those exactly matching "refStr"
         cb({
-          idxFrom: idxFrom + opts.stringOffset,
-          idxTo: idxTo + opts.stringOffset,
+          idxFrom: idxFrom + (opts.stringOffset || 0),
+          idxTo: idxTo + (opts.stringOffset || 0),
         });
       }
 
@@ -320,7 +350,7 @@ function strFindMalformed(str, refStr, cb, originalOpts) {
       if (str[i] === refStr[y]) {
         const whatToPush = {
           startsAt: i,
-          patienceLeft: patience - y,
+          patienceLeft: (patience as number) - y,
           pendingToCheck: Array.from(refStr.slice(y + 1)),
         };
         console.log(
@@ -358,4 +388,4 @@ function strFindMalformed(str, refStr, cb, originalOpts) {
   }
 }
 
-export default strFindMalformed;
+export { findMalformed, defaults, version };

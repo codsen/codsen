@@ -1,13 +1,11 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import strFindMalformed from "../dist/string-find-malformed.esm.js";
+import { findMalformed } from "../dist/string-find-malformed.esm.js";
 
 // Below, we look for dodgy cases of `<!--`
 const gathered = [];
-strFindMalformed(
+findMalformed(
   "<div><!-something--></div>",
   "<!--",
   // your callback function:
