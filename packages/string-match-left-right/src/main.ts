@@ -1,30 +1,60 @@
 /* eslint no-plusplus:0 */
 
-import arrayiffy from "arrayiffy-if-string";
+import { arrayiffy } from "arrayiffy-if-string";
 
-function isObj(something) {
+interface Obj {
+  [key: string]: any;
+}
+
+function isObj(something: any): boolean {
   return (
     something && typeof something === "object" && !Array.isArray(something)
   );
 }
-function isStr(something) {
+function isStr(something: any): boolean {
   return typeof something === "string";
 }
 
+interface Opts {
+  cb?:
+    | undefined
+    | null
+    | ((
+        wholeCharacterOutside: string,
+        theRemainderOfTheString: string,
+        firstCharOutsideIndex: number
+      ) => string);
+  i?: boolean;
+  trimBeforeMatching?: boolean;
+  trimCharsBeforeMatching?: string[];
+  maxMismatches?: number;
+  firstMustMatch?: boolean;
+  lastMustMatch?: boolean;
+}
+const defaults: Opts = {
+  cb: undefined,
+  i: false,
+  trimBeforeMatching: false,
+  trimCharsBeforeMatching: [],
+  maxMismatches: 0,
+  firstMustMatch: false,
+  lastMustMatch: false,
+};
+
 // eslint-disable-next-line consistent-return
 function march(
-  str,
-  fromIndexInclusive,
-  whatToMatchVal,
-  opts,
-  special,
-  getNextIdx
+  str: string,
+  position: number,
+  whatToMatchVal: (() => string) | string,
+  opts: Opts,
+  special: boolean,
+  getNextIdx: (index: number) => number
 ) {
   console.log(`023 \u001b[${35}m${"CALLED march()"}\u001b[${39}m`);
   console.log(
     `======\nargs:
 ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${str}
-${`\u001b[${33}m${`fromIndexInclusive`}\u001b[${39}m`} = ${fromIndexInclusive}
+${`\u001b[${33}m${`position`}\u001b[${39}m`} = ${position}
 ${`\u001b[${33}m${`whatToMatchVal`}\u001b[${39}m`} = ${whatToMatchVal}
 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(opts, null, 4)}
 ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
@@ -35,20 +65,20 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
     typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal;
 
   // early ending case if matching EOL being at 0-th index:
-  if (fromIndexInclusive < 0 && special && whatToMatchValVal === "EOL") {
+  if (position < 0 && special && whatToMatchValVal === "EOL") {
     console.log("039 EARLY ENDING, return true");
     return whatToMatchValVal;
   }
 
   console.log(
-    `044 ${`\u001b[${33}m${"fromIndexInclusive"}\u001b[${39}m`} = ${JSON.stringify(
-      fromIndexInclusive,
+    `044 ${`\u001b[${33}m${"position"}\u001b[${39}m`} = ${JSON.stringify(
+      position,
       null,
       4
     )}`
   );
 
-  if (fromIndexInclusive >= str.length && !special) {
+  if (position >= str.length && !special) {
     console.log(
       `053 starting index is beyond the string length so RETURN FALSE`
     );
@@ -57,7 +87,7 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
   let charsToCheckCount = special ? 1 : whatToMatchVal.length;
   console.log(`058 starting charsToCheckCount = ${charsToCheckCount}`);
 
-  let lastWasMismatched = false; // value is "false" or index of where it was activated
+  let lastWasMismatched: false | number = false; // value is "false" or index of where it was activated
 
   // if no character was ever matched, even through if opts.maxMismatches
   // would otherwise allow to skip characters, this will act as a last
@@ -67,7 +97,7 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
 
   let patience = opts.maxMismatches;
 
-  let i = fromIndexInclusive;
+  let i = position;
   console.log(
     `072 FIY, ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${JSON.stringify(
       i,
@@ -119,15 +149,20 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
     );
     console.log(
       `121 ${`\u001b[${33}m${`opts.trimCharsBeforeMatching.includes("${str[i]}")`}\u001b[${39}m`} = ${JSON.stringify(
-        opts.trimCharsBeforeMatching.includes(str[i]),
+        (opts as Obj).trimCharsBeforeMatching.includes(str[i]),
         null,
         4
       )}`
     );
 
     if (
-      (!opts.i && opts.trimCharsBeforeMatching.includes(str[i])) ||
-      (opts.i &&
+      (opts &&
+        !opts.i &&
+        opts.trimCharsBeforeMatching &&
+        opts.trimCharsBeforeMatching.includes(str[i])) ||
+      (opts &&
+        opts.i &&
+        opts.trimCharsBeforeMatching &&
         opts.trimCharsBeforeMatching
           .map((val) => val.toLowerCase())
           .includes(str[i].toLowerCase()))
@@ -153,20 +188,20 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
     console.log(
       `154 whatToMatchVal[charsToCheckCount - 1] = whatToMatchVal[${
         charsToCheckCount - 1
-      }] = ${whatToMatchVal[charsToCheckCount - 1]}`
+      }] = ${(whatToMatchVal as string)[charsToCheckCount - 1]}`
     );
     console.log(
       `159 whatToMatchVal[charsToCheckCount - 2]whatToMatchVal[charsToCheckCount - 1] = whatToMatchVal[${
         charsToCheckCount - 2
       }]whatToMatchVal[${charsToCheckCount - 1}] = ${
-        whatToMatchVal[charsToCheckCount - 2]
-      }${whatToMatchVal[charsToCheckCount - 1]}`
+        (whatToMatchVal as string)[charsToCheckCount - 2]
+      }${(whatToMatchVal as string)[charsToCheckCount - 1]}`
     );
 
     const charToCompareAgainst =
       nextIdx > i
-        ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount]
-        : whatToMatchVal[charsToCheckCount - 1];
+        ? (whatToMatchVal as string)[whatToMatchVal.length - charsToCheckCount]
+        : (whatToMatchVal as string)[charsToCheckCount - 1];
 
     console.log(" ");
     console.log(`172 \u001b[${35}m${"██ str[i]"}\u001b[${39}m = ${str[i]}`);
@@ -230,7 +265,7 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
         `230 whatToMatchVal[whatToMatchVal.length - charsToCheckCount = ${
           whatToMatchVal.length - charsToCheckCount
         }] = ${JSON.stringify(
-          whatToMatchVal[whatToMatchVal.length - charsToCheckCount],
+          (whatToMatchVal as string)[whatToMatchVal.length - charsToCheckCount],
           null,
           4
         )}`
@@ -252,10 +287,10 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
           // maybe str[i] will match against next charToCompareAgainst?
           const nextCharToCompareAgainst =
             nextIdx > i
-              ? whatToMatchVal[
+              ? (whatToMatchVal as string)[
                   whatToMatchVal.length - charsToCheckCount + 1 + y
                 ]
-              : whatToMatchVal[charsToCheckCount - 2 - y];
+              : (whatToMatchVal as string)[charsToCheckCount - 2 - y];
 
           console.log(" ");
           console.log(
@@ -468,7 +503,11 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
       );
       return true;
     }
-    if (opts.maxMismatches >= charsToCheckCount && atLeastSomethingWasMatched) {
+    if (
+      opts &&
+      (opts as Obj).maxMismatches >= charsToCheckCount &&
+      atLeastSomethingWasMatched
+    ) {
       console.log(`472 RETURN ${lastWasMismatched || 0}`);
       return lastWasMismatched || 0;
     }
@@ -517,26 +556,22 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
 //
 // Real deal
 
-function main(mode, str, position, originalWhatToMatch, originalOpts) {
-  const defaults = {
-    cb: undefined,
-    i: false,
-    trimBeforeMatching: false,
-    trimCharsBeforeMatching: [],
-    maxMismatches: 0,
-    firstMustMatch: false,
-    lastMustMatch: false,
-  };
-
+function main(
+  mode: "matchLeftIncl" | "matchLeft" | "matchRightIncl" | "matchRight",
+  str: string,
+  position: number,
+  originalWhatToMatch: (() => string) | string | string[],
+  originalOpts?: Opts
+): false | string {
   // insurance
   if (
     isObj(originalOpts) &&
     Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") &&
-    typeof originalOpts.trimBeforeMatching !== "boolean"
+    typeof (originalOpts as Obj).trimBeforeMatching !== "boolean"
   ) {
     throw new Error(
       `string-match-left-right/${mode}(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!${
-        Array.isArray(originalOpts.trimBeforeMatching)
+        Array.isArray((originalOpts as Obj).trimBeforeMatching)
           ? ` Did you mean to use opts.trimCharsBeforeMatching?`
           : ""
       }`
@@ -544,9 +579,9 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   }
 
   const opts = { ...defaults, ...originalOpts };
-  opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching);
-  opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map((el) =>
-    isStr(el) ? el : String(el)
+  opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching) || [];
+  opts.trimCharsBeforeMatching = (opts as Obj).trimCharsBeforeMatching.map(
+    (el: any) => (isStr(el) ? el : String(el))
   );
 
   if (!isStr(str)) {
@@ -610,9 +645,11 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     );
   }
 
-  let culpritsIndex;
-  let culpritsVal;
+  let culpritsIndex = 0;
+  let culpritsVal = "";
   if (
+    opts &&
+    opts.trimCharsBeforeMatching &&
     opts.trimCharsBeforeMatching.some((el, i) => {
       if (el.length > 1) {
         culpritsIndex = i;
@@ -639,7 +676,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     (Array.isArray(whatToMatch) &&
       whatToMatch.length === 1 &&
       isStr(whatToMatch[0]) &&
-      !whatToMatch[0].trim()) // [""]
+      !(whatToMatch[0] as string).trim()) // [""]
   ) {
     if (typeof opts.cb === "function") {
       console.log("645");
@@ -661,7 +698,8 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
               (opts.trimBeforeMatching &&
                 currentChar !== undefined &&
                 currentChar.trim())) &&
-            (!opts.trimCharsBeforeMatching.length ||
+            (!opts.trimCharsBeforeMatching ||
+              !opts.trimCharsBeforeMatching.length ||
               (currentChar !== undefined &&
                 !opts.trimCharsBeforeMatching.includes(currentChar)))
           ) {
@@ -684,7 +722,8 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
           if (
             (!opts.trimBeforeMatching ||
               (opts.trimBeforeMatching && currentChar.trim())) &&
-            (!opts.trimCharsBeforeMatching.length ||
+            (!opts.trimCharsBeforeMatching ||
+              !opts.trimCharsBeforeMatching.length ||
               !opts.trimCharsBeforeMatching.includes(currentChar))
           ) {
             console.log("690 breaking!");
@@ -784,7 +823,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     const found = march(
       str,
       startingPosition,
-      whatToMatchVal,
+      whatToMatchVal as string,
       opts,
       special,
       (i2) => (mode[5] === "L" ? i2 - 1 : i2 + 1)
@@ -812,9 +851,9 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       return whatToMatchVal() &&
         (opts.cb
           ? opts.cb(
-              fullCharacterInFront,
+              fullCharacterInFront as string,
               restOfStringInFront,
-              indexOfTheCharacterInFront
+              indexOfTheCharacterInFront as number
             )
           : true)
         ? whatToMatchVal()
@@ -826,23 +865,23 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
 
     if (Number.isInteger(found)) {
       indexOfTheCharacterInFront = mode.startsWith("matchLeft")
-        ? found - 1
-        : found + 1;
+        ? (found as number) - 1
+        : (found as number) + 1;
 
       //
       if (mode[5] === "L") {
-        restOfStringInFront = str.slice(0, found);
+        restOfStringInFront = str.slice(0, found as number);
       } else {
         restOfStringInFront = str.slice(indexOfTheCharacterInFront);
       }
     }
 
-    if (indexOfTheCharacterInFront < 0) {
+    if ((indexOfTheCharacterInFront as number) < 0) {
       indexOfTheCharacterInFront = undefined;
     }
 
-    if (str[indexOfTheCharacterInFront]) {
-      fullCharacterInFront = str[indexOfTheCharacterInFront];
+    if (str[indexOfTheCharacterInFront as number]) {
+      fullCharacterInFront = str[indexOfTheCharacterInFront as number];
     }
 
     console.log(
@@ -867,9 +906,9 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       Number.isInteger(found) &&
       (opts.cb
         ? opts.cb(
-            fullCharacterInFront,
+            fullCharacterInFront as string,
             restOfStringInFront,
-            indexOfTheCharacterInFront
+            indexOfTheCharacterInFront as number
           )
         : true)
     ) {
@@ -880,7 +919,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
           4
         )}`
       );
-      return whatToMatchVal;
+      return whatToMatchVal as string;
     }
   }
   console.log(`886 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} false`);
@@ -889,19 +928,39 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
 
 // External API functions
 
-function matchLeftIncl(str, position, whatToMatch, opts) {
+function matchLeftIncl(
+  str: string,
+  position: number,
+  whatToMatch: (() => string) | string | string[],
+  opts: Opts
+): false | string {
   return main("matchLeftIncl", str, position, whatToMatch, opts);
 }
 
-function matchLeft(str, position, whatToMatch, opts) {
+function matchLeft(
+  str: string,
+  position: number,
+  whatToMatch: (() => string) | string | string[],
+  opts: Opts
+): false | string {
   return main("matchLeft", str, position, whatToMatch, opts);
 }
 
-function matchRightIncl(str, position, whatToMatch, opts) {
+function matchRightIncl(
+  str: string,
+  position: number,
+  whatToMatch: (() => string) | string | string[],
+  opts: Opts
+): false | string {
   return main("matchRightIncl", str, position, whatToMatch, opts);
 }
 
-function matchRight(str, position, whatToMatch, opts) {
+function matchRight(
+  str: string,
+  position: number,
+  whatToMatch: (() => string) | string | string[],
+  opts: Opts
+): false | string {
   return main("matchRight", str, position, whatToMatch, opts);
 }
 
