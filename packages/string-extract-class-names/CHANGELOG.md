@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.0.0 (2020-12-31)
+
+Rewrote in TypeScript and simplified the API.
+
+BREAKING CHANGES:
+
+1. Default is not exported any more. Consume destructured:
+
+`import { extract } from "string-extract-class-names"`
+
+2. Result now returns both string and index ranges:
+
+```js
+import { extract, version } from "string-extract-class-names";
+const res = extract("div.first-class.second-class");
+console.log(res);
+// => {
+//      res: [".first-class", ".second-class"],
+//      ranges: [
+//        [3, 15],
+//        [15, 28],
+//      ],
+//    }
+```
+
+What was the default output is now under plain object's key `res`.
+
+When program exports a plain object, more goodies can be bundled, like current version or defaults.
+
+Equally, when a plain object is exported, different flavours of output can be included. Also, there's headroom for various stats and logs under different keys, in the same output's plain object.
+
 ## 5.10.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

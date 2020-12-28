@@ -9,82 +9,133 @@
 
 'use strict';
 
+Object.defineProperty(exports, '__esModule', { value: true });
+
 var stringLeftRight = require('string-left-right');
 
-function _typeof(obj) {
-  "@babel/helpers - typeof";
+var version = "5.10.1";
 
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof = function (obj) {
-      return typeof obj;
-    };
-  } else {
-    _typeof = function (obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
+/* eslint @typescript-eslint/ban-ts-comment:1 */
+
+function extract(str) {
+  // insurance
+  // =========
+  if (typeof str !== "string") {
+    throw new TypeError("string-extract-class-names: [THROW_ID_01] first str should be string, not " + typeof str + ", currently equal to " + JSON.stringify(str, null, 4));
   }
 
-  return _typeof(obj);
-}
-
-function stringExtractClassNames(input) {
-  var returnRangesInstead = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  if (typeof input !== "string") {
-    throw new TypeError("string-extract-class-names: [THROW_ID_02] first input should be string, not ".concat(_typeof(input), ", currently equal to ").concat(JSON.stringify(input, null, 4)));
-  }
-  if (typeof returnRangesInstead !== "boolean") {
-    throw new TypeError("string-extract-class-names: [THROW_ID_03] second input argument should be a Boolean, not ".concat(_typeof(input), ", currently equal to ").concat(JSON.stringify(input, null, 4)));
-  }
   var badChars = ".# ~\\!@$%^&*()+=,/';:\"?><[]{}|`";
-  var stateCurrentlyIs;
+  var stateCurrentlyIs; // "." or "#"
+  // functions
+  // =========
+
   function isLatinLetter(char) {
-    return typeof char === "string" && char.length && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
-  }
+    // we mean Latin letters A-Z, a-z
+    return typeof char === "string" && !!char.length && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
+  } // action
+  // ======
+
+
   var selectorStartsAt = null;
-  var result = [];
-  for (var i = 0, len = input.length; i < len; i++) {
-    if (selectorStartsAt !== null && i >= selectorStartsAt && (badChars.includes(input[i]) || !input[i].trim())) {
+  var result = {
+    res: [],
+    ranges: []
+  }; // we iterate upto and including str.length - last element will be undefined
+  // at cost of extra protective clauses (if not undefined) we simplify the
+  // algorithm ending clauses - things' ending at string's end can now be
+  // tackled in the same logic as things' that end in the middle of the string
+
+  for (var i = 0, len = str.length; i <= len; i++) { // catch the ending of a selector's name:
+
+    if (selectorStartsAt !== null && i >= selectorStartsAt && ( // and...
+    // either the end of string has been reached
+    !str[i] || // or it's a whitespace
+    !str[i].trim() || // or it's a character, unsuitable for class/id names
+    badChars.includes(str[i]))) {
+      // if selector is more than dot or hash:
       if (i > selectorStartsAt + 1) {
-        if (returnRangesInstead) {
-          result.push([selectorStartsAt, i]);
-        } else {
-          result.push("".concat(stateCurrentlyIs || "").concat(input.slice(selectorStartsAt, i)));
-        }
+        // If we reached the last character and selector's beginning has not been
+        // interrupted, extend the slice's ending by 1 character. If we terminate
+        // the selector because of illegal character, slice right here, at index "i".
+        result.ranges.push([selectorStartsAt, i]);
+        result.res.push("" + (stateCurrentlyIs || "") + str.slice(selectorStartsAt, i));
+
         if (stateCurrentlyIs) {
           stateCurrentlyIs = undefined;
         }
       }
+
       selectorStartsAt = null;
-    }
-    if (selectorStartsAt === null && (input[i] === "." || input[i] === "#")) {
+    } // catch dot or hash:
+
+
+    if (str[i] && selectorStartsAt === null && (str[i] === "." || str[i] === "#")) {
       selectorStartsAt = i;
-    }
-    if (input.startsWith("class", i) && input[stringLeftRight.left(input, i)] === "[" && input[stringLeftRight.right(input, i + 4)] === "=") {
+    } // catch zzz[class=]
+
+
+    var temp1 = stringLeftRight.right(str, i + 4);
+
+    if (str.startsWith("class", i) && typeof stringLeftRight.left(str, i) === "number" && str[stringLeftRight.left(str, i)] === "[" && typeof temp1 === "number" && str[temp1] === "=") { // if it's zzz[class=something] (without quotes)
+
       /* istanbul ignore else */
-      if (isLatinLetter(input[stringLeftRight.right(input, stringLeftRight.right(input, i + 4))])) {
-        selectorStartsAt = stringLeftRight.right(input, stringLeftRight.right(input, i + 4));
-      } else if ("'\"".includes(input[stringLeftRight.right(input, stringLeftRight.right(input, i + 4))]) && isLatinLetter(input[stringLeftRight.right(input, stringLeftRight.right(input, stringLeftRight.right(input, i + 4)))])) {
-        selectorStartsAt = stringLeftRight.right(input, stringLeftRight.right(input, stringLeftRight.right(input, i + 4)));
+
+      if (stringLeftRight.right(str, temp1) && isLatinLetter(str[stringLeftRight.right(str, temp1)])) {
+        selectorStartsAt = stringLeftRight.right(str, temp1);
+      } else if ( // @ts-ignore
+      "'\"".includes(str[stringLeftRight.right(str, temp1)]) && // @ts-ignore
+      isLatinLetter(str[stringLeftRight.right(str, stringLeftRight.right(str, temp1))])) {
+        selectorStartsAt = stringLeftRight.right(str, stringLeftRight.right(str, temp1));
       }
+
       stateCurrentlyIs = ".";
-    }
-    if (input.startsWith("id", i) && input[stringLeftRight.left(input, i)] === "[" && input[stringLeftRight.right(input, i + 1)] === "=") {
-      if (isLatinLetter(input[stringLeftRight.right(input, stringLeftRight.right(input, i + 1))])) {
-        selectorStartsAt = stringLeftRight.right(input, stringLeftRight.right(input, i + 1));
-      } else if ("'\"".includes(input[stringLeftRight.right(input, stringLeftRight.right(input, i + 1))]) && isLatinLetter(input[stringLeftRight.right(input, stringLeftRight.right(input, stringLeftRight.right(input, i + 1)))])) {
-        selectorStartsAt = stringLeftRight.right(input, stringLeftRight.right(input, stringLeftRight.right(input, i + 1)));
+    } // catch zzz[id=]
+
+
+    var temp2 = stringLeftRight.right(str, i + 1);
+
+    if (str.startsWith("id", i) && // @ts-ignore
+    str[stringLeftRight.left(str, i)] === "[" && // @ts-ignore
+    str[temp2] === "=") { // if it's zzz[id=something] (without quotes)
+      // @ts-ignore
+
+      if (isLatinLetter(str[stringLeftRight.right(str, temp2)])) {
+        selectorStartsAt = stringLeftRight.right(str, temp2);
+      } else if ( // @ts-ignore
+      "'\"".includes(str[stringLeftRight.right(str, temp2)]) && // @ts-ignore
+      isLatinLetter(str[stringLeftRight.right(str, stringLeftRight.right(str, temp2))])) {
+        selectorStartsAt = stringLeftRight.right(str, stringLeftRight.right(str, temp2));
       }
+
       stateCurrentlyIs = "#";
-    }
-    if (i + 1 === len && selectorStartsAt !== null && i > selectorStartsAt) {
-      if (returnRangesInstead) {
-        result.push([selectorStartsAt, len]);
-      } else {
-        result.push(input.slice(selectorStartsAt, len));
-      }
-    }
+    } // catch the end of input:
+    // if (i + 1 === len && selectorStartsAt !== null && i > selectorStartsAt) {
+    //   if (returnRangesInstead) {
+    //     result.push([selectorStartsAt, len]);
+    //     console.log(
+    //       `160 ${`\u001b[${33}m${`PUSH`}\u001b[${39}m`} [${selectorStartsAt}, ${len}] to result[]`
+    //     );
+    //   } else {
+    //     result.push(input.slice(selectorStartsAt, len));
+    //     console.log(
+    //       `165 ${`\u001b[${33}m${`PUSH`}\u001b[${39}m`} [${selectorStartsAt}, ${len}] = "${input.slice(
+    //         selectorStartsAt,
+    //         len
+    //       )}" to result[]`
+    //     );
+    //   }
+    // }
+  } // absence of ranges is falsy "null", not truthy empty array, so
+  // if nothing was extracted and empty array is in result.ranges,
+  // overwrite it to falsy "null"
+
+
+  if (!result.ranges.length) {
+    result.ranges = null;
   }
+
   return result;
 }
 
-module.exports = stringExtractClassNames;
+exports.extract = extract;
+exports.version = version;

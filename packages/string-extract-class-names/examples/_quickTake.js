@@ -1,25 +1,20 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import extract from "../dist/string-extract-class-names.esm.js";
+import { extract } from "../dist/string-extract-class-names.esm.js";
 
-// extracts classes
-assert.deepEqual(extract("div.first-class.second-class"), [
-  ".first-class",
-  ".second-class",
+// extracts classes and/or id's
+const str = "div#brambles.nushes#croodles";
+const { res, ranges } = extract(str);
+assert.deepEqual(res, ["#brambles", ".nushes", "#croodles"]);
+assert.deepEqual(ranges, [
+  [3, 12],
+  [12, 19],
+  [19, 28],
 ]);
 
-// and id's
-assert.deepEqual(extract("div#brambles.gramples#croodles"), [
-  "#brambles",
-  ".gramples",
-  "#croodles",
-]);
-
-// optionally, you can request ranges (see codsen.com/ranges/):
-assert.deepEqual(extract("div.first-class.second-class", true), [
-  [3, 15],
-  [15, 28],
-]);
+// `res` can be produced by slicing `ranges`:
+assert.deepEqual(
+  res,
+  ranges.map(([from, to]) => str.slice(from, to))
+);
