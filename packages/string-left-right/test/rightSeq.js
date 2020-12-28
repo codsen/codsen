@@ -68,13 +68,6 @@ tap.test(`03 - absent skips to right()`, (t) => {
   t.end();
 });
 
-tap.test(`04 - no sequence arguments - turns into right()`, (t) => {
-  t.equal(rightSeq("abcdefghijklmnop", 0), 1, "04.01");
-  t.equal(rightSeq("abcdefghijklmnop", 1), 2, "04.02");
-  t.equal(rightSeq("ab  cdefghijklmnop", 1), 4, "04.03");
-  t.end();
-});
-
 tap.test(`05 - starting point outside of the range`, (t) => {
   t.equal(rightSeq("abcdefghijklmnop", 99, "d", "e", "f"), null, "05");
   t.end();

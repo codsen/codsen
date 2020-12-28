@@ -82,15 +82,6 @@ tap.test(`02 - no findings`, (t) => {
   t.end();
 });
 
-tap.test(`03 - no sequence arguments`, (t) => {
-  t.equal(leftSeq("abcdefghijklmnop", 0), null, "03.01");
-  t.equal(leftSeq("abcdefghijklmnop", 15), 14, "03.02");
-  t.strictSame(leftSeq("abcdefghijklmn p", 15), 13, "03.03");
-  t.equal(leftSeq("abcdefghijklmnop", 1), 0, "03.04");
-  t.equal(leftSeq("ab  cdefghijklmnop", 4), 1, "03.05");
-  t.end();
-});
-
 tap.test(`04 - starting point outside of the range`, (t) => {
   t.equal(leftSeq("abcdefghijklmnop", 99, "d", "e", "f"), null, "04");
   t.end();

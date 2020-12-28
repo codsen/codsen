@@ -16,8 +16,6 @@ import {
 tap.test(`01`, (t) => {
   t.equal(left(), null, "01.01");
   t.equal(right(), null, "01.02");
-  t.equal(leftSeq(), null, "01.03");
-  t.equal(rightSeq(), null, "01.04");
   t.end();
 });
 
@@ -34,9 +32,5 @@ tap.test(`03`, (t) => {
   t.equal(left(null, 1), null, "03.02");
   t.equal(right(null), null, "03.03");
   t.equal(right(null, 1), null, "03.04");
-  t.equal(leftSeq(null), null, "03.05");
-  t.equal(leftSeq(null, 1), null, "03.06");
-  t.equal(rightSeq(null), null, "03.07");
-  t.equal(rightSeq(null, 1), null, "03.08");
   t.end();
 });

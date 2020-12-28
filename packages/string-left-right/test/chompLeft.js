@@ -5,6 +5,11 @@ import { chompLeft } from "../dist/string-left-right.esm";
 // -----------------------------------------------------------------------------
 
 tap.test(`01`, (t) => {
+  t.equal(chompLeft("a  b c b c  x y", 12, "b", "c"), 2, "01.03");
+  t.end();
+});
+
+tap.test(`01`, (t) => {
   t.equal(chompLeft("ab c b c  x y", 10, "b", "c"), 1, "01.01");
   t.equal(chompLeft("a b c b c  x y", 11, "b", "c"), 2, "01.02");
   t.equal(chompLeft("a  b c b c  x y", 12, "b", "c"), 2, "01.03");
@@ -212,35 +217,35 @@ tap.test(`13`, (t) => {
   t.equal(chompLeft(`<a bcd=="ef">`, 7, "="), 6, "13.02");
   t.equal(chompLeft(`<a bcd==="ef">`, 8, "="), 6, "13.03");
   t.equal(chompLeft(`<a bcd= ="ef">`, 8, "="), 6, "13.04");
-  t.equal(chompLeft(`<a bcd= = ="ef">`, 8, "="), 6, "13.05");
+  t.equal(chompLeft(`<a bcd= = ="ef">`, 10, "="), 6, "13.05");
 
   // hardcoded default, mode === 0
   t.equal(chompLeft(`<a bcd="ef">`, 6, { mode: 0 }, "="), null, "13.06");
   t.equal(chompLeft(`<a bcd=="ef">`, 7, { mode: 0 }, "="), 6, "13.07");
   t.equal(chompLeft(`<a bcd==="ef">`, 8, { mode: 0 }, "="), 6, "13.08");
   t.equal(chompLeft(`<a bcd= ="ef">`, 8, { mode: 0 }, "="), 6, "13.09");
-  t.equal(chompLeft(`<a bcd= = ="ef">`, 8, { mode: 0 }, "="), 6, "13.10");
+  t.equal(chompLeft(`<a bcd= = ="ef">`, 10, { mode: 0 }, "="), 6, "13.10");
 
   // mode === 1
   t.equal(chompLeft(`<a bcd="ef">`, 6, { mode: 1 }, "="), null, "13.11");
   t.equal(chompLeft(`<a bcd=="ef">`, 7, { mode: 1 }, "="), 6, "13.12");
   t.equal(chompLeft(`<a bcd==="ef">`, 8, { mode: 1 }, "="), 6, "13.13");
   t.equal(chompLeft(`<a bcd= ="ef">`, 8, { mode: 1 }, "="), 6, "13.14");
-  t.equal(chompLeft(`<a bcd= = ="ef">`, 8, { mode: 1 }, "="), 6, "13.15");
+  t.equal(chompLeft(`<a bcd= = ="ef">`, 10, { mode: 1 }, "="), 6, "13.15");
 
   // mode === 2
   t.equal(chompLeft(`<a bcd="ef">`, 6, { mode: 2 }, "="), null, "13.16");
   t.equal(chompLeft(`<a bcd=="ef">`, 7, { mode: 2 }, "="), 6, "13.17");
   t.equal(chompLeft(`<a bcd==="ef">`, 8, { mode: 2 }, "="), 6, "13.18");
   t.equal(chompLeft(`<a bcd= ="ef">`, 8, { mode: 2 }, "="), 6, "13.19");
-  t.equal(chompLeft(`<a bcd= = ="ef">`, 8, { mode: 2 }, "="), 6, "13.20");
+  t.equal(chompLeft(`<a bcd= = ="ef">`, 10, { mode: 2 }, "="), 6, "13.20");
 
   // mode === 3
   t.equal(chompLeft(`<a bcd="ef">`, 6, { mode: 3 }, "="), null, "13.21");
   t.equal(chompLeft(`<a bcd=="ef">`, 7, { mode: 3 }, "="), 6, "13.22");
   t.equal(chompLeft(`<a bcd==="ef">`, 8, { mode: 3 }, "="), 6, "13.23");
   t.equal(chompLeft(`<a bcd= ="ef">`, 8, { mode: 3 }, "="), 6, "13.24");
-  t.equal(chompLeft(`<a bcd= = ="ef">`, 8, { mode: 3 }, "="), 6, "13.25");
+  t.equal(chompLeft(`<a bcd= = ="ef">`, 10, { mode: 3 }, "="), 6, "13.25");
   t.end();
 });
 
