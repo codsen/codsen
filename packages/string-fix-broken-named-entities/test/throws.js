@@ -1,5 +1,5 @@
 import tap from "tap";
-import fix from "../dist/string-fix-broken-named-entities.esm";
+import { fixEnt as fix } from "../dist/string-fix-broken-named-entities.esm";
 
 tap.test(
   `01 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - 1st input arg is wrong`,

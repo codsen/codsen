@@ -1,5 +1,5 @@
 import tap from "tap";
-import fix from "../dist/string-fix-broken-named-entities.esm";
+import { fixEnt as fix } from "../dist/string-fix-broken-named-entities.esm";
 
 // -----------------------------------------------------------------------------
 // 03. nothing to fix

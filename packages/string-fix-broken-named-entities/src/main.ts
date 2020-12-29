@@ -1,4 +1,4 @@
-/* eslint no-cond-assign: 0 */
+/* eslint @typescript-eslint/ban-ts-comment:1 */
 
 import leven from "leven";
 import {
@@ -15,21 +15,35 @@ import { left, right, rightSeq, leftSeq } from "string-left-right";
 import {
   isObj,
   isStr,
-  isNumber,
+  isNumeric,
   resemblesNumericEntity,
   removeGappedFromMixedCases,
   isLatinLetterOrNumberOrHash,
 } from "./util";
+import { version } from "../package.json";
+import { Ranges } from "../../../scripts/common";
 
-/**
- * stringFixBrokenNamedEntities - fixes broken named HTML entities
- *
- * @param  {string} inputString
- * @return {array}  ranges array OR null
- */
-function stringFixBrokenNamedEntities(str, originalOpts) {
+interface Obj {
+  [key: string]: any;
+}
+interface cbObj {
+  rangeFrom: number;
+  rangeTo: number;
+  rangeValEncoded: string | null;
+  rangeValDecoded: string | null;
+  ruleName: string;
+  entityName: string | null;
+}
+interface Opts {
+  decode?: boolean;
+  cb: (obj: cbObj) => void;
+  entityCatcherCb?: undefined | null | ((from: number, to: number) => void);
+  progressFn?: undefined | null | ((percDone: number) => void);
+}
+
+function fixEnt(str: string, originalOpts?: Opts): Ranges {
   console.log(
-    `032 stringFixBrokenNamedEntities: ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
+    `032 fixEnt: ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
       str,
       null,
       0
@@ -63,14 +77,15 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       )} (${typeof str}-type)`
     );
   }
-  const defaults = {
+
+  const defaults: Opts = {
     decode: false,
-    cb: ({ rangeFrom, rangeTo, rangeValEncoded, rangeValDecoded }) =>
+    cb: ({ rangeFrom, rangeTo, rangeValEncoded, rangeValDecoded }: cbObj) =>
       rangeValDecoded || rangeValEncoded
         ? [
             rangeFrom,
             rangeTo,
-            isObj(originalOpts) && originalOpts.decode
+            isObj(originalOpts) && (originalOpts as Obj).decode
               ? rangeValDecoded
               : rangeValEncoded,
           ]
@@ -78,30 +93,26 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     progressFn: null,
     entityCatcherCb: null,
   };
-  let opts;
 
-  if (originalOpts != null) {
-    if (!isObj(originalOpts)) {
-      throw new Error(
-        `string-fix-broken-named-entities: [THROW_ID_02] the second input argument must be a plain object! I was given as:\n${JSON.stringify(
-          originalOpts,
-          null,
-          4
-        )} (${typeof originalOpts}-type)`
-      );
-    } else {
-      opts = { ...defaults, ...originalOpts };
-      console.log(
-        `095 stringFixBrokenNamedEntities: new ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
-          opts,
-          null,
-          4
-        )}`
-      );
-    }
-  } else {
-    opts = defaults;
+  if (originalOpts && !isObj(originalOpts)) {
+    throw new Error(
+      `string-fix-broken-named-entities: [THROW_ID_02] the second input argument must be a plain object! I was given as:\n${JSON.stringify(
+        originalOpts,
+        null,
+        4
+      )} (${typeof originalOpts}-type)`
+    );
   }
+
+  const opts = { ...defaults, ...originalOpts };
+  console.log(
+    `095 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+      opts,
+      null,
+      4
+    )}`
+  );
+
   if (opts.cb && typeof opts.cb !== "function") {
     throw new TypeError(
       `string-fix-broken-named-entities: [THROW_ID_03] opts.cb must be a function (or falsey)! Currently it's: ${typeof opts.cb}, equal to: ${JSON.stringify(
@@ -130,7 +141,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     );
   }
   console.log(
-    `133 stringFixBrokenNamedEntities: FINAL ${`\u001b[${33}m${`opts`}\u001b[${39}m`} used: ${JSON.stringify(
+    `133 fixEnt: FINAL ${`\u001b[${33}m${`opts`}\u001b[${39}m`} used: ${JSON.stringify(
       opts,
       null,
       4
@@ -141,10 +152,10 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   // ---------------------------------------------------------------------------
 
   // this is what we'll return, process by default callback or user's custom-one
-  const rangesArr2 = [];
+  const rangesArr2: cbObj[] = [];
 
-  let percentageDone;
-  let lastPercentageDone;
+  let percentageDone: number | undefined;
+  let lastPercentageDone: number | undefined;
 
   // allocate all 100 of progress to the main loop below
   const len = str.length + 1;
@@ -154,12 +165,12 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   // If it's number, it's instruction to avoid actions until that index is
   // reached when traversing. If it's boolean, it means we don't know when we'll
   // stop, we just turn on the flag (permanently, for now).
-  let doNothingUntil = null;
+  let doNothingUntil: number | null | boolean = null;
 
   // catch letter sequences, possibly separated with whitespace. Non-letter
   // breaks the sequence. Main aim is to catch names of encoded HTML entities
   // for example, nbsp from "&nbsp;"
-  let letterSeqStartAt = null;
+  let letterSeqStartAt: number | null = null;
 
   let brokenNumericEntityStartAt = null;
 
@@ -202,7 +213,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     //            |
     //            |
     console.log(
-      `205 stringFixBrokenNamedEntities: \n\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
+      `205 fixEnt: \n\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
         str[i] && str[i].trim().length
           ? str[i]
           : JSON.stringify(str[i], null, 4)
@@ -222,13 +233,14 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     //            |
 
     if (doNothingUntil) {
+      // @ts-ignore
       if (doNothingUntil !== true && i >= doNothingUntil) {
         doNothingUntil = null;
         console.log(
-          `228 stringFixBrokenNamedEntities: RESET ${`\u001b[${33}m${`doNothingUntil`}\u001b[${39}m`} = null`
+          `228 fixEnt: RESET ${`\u001b[${33}m${`doNothingUntil`}\u001b[${39}m`} = null`
         );
       } else {
-        console.log(`231 stringFixBrokenNamedEntities: continue`);
+        console.log(`231 fixEnt: continue`);
         counter += 1;
         continue;
       }
@@ -261,12 +273,12 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         (str[i].trim().length && !isLatinLetterOrNumberOrHash(str[i])))
     ) {
       console.log(
-        `264 stringFixBrokenNamedEntities: ${`\u001b[${36}m${`██ letterSeqStartAt = ${letterSeqStartAt}`}\u001b[${39}m`}`
+        `264 fixEnt: ${`\u001b[${36}m${`██ letterSeqStartAt = ${letterSeqStartAt}`}\u001b[${39}m`}`
       );
       if (i > letterSeqStartAt + 1) {
         const potentialEntity = str.slice(letterSeqStartAt, i);
         console.log(
-          `269 stringFixBrokenNamedEntities: ${`\u001b[${35}m${`██ CARVED A SEQUENCE: ${potentialEntity}`}\u001b[${39}m`}`
+          `269 fixEnt: ${`\u001b[${35}m${`██ CARVED A SEQUENCE: ${potentialEntity}`}\u001b[${39}m`}`
         );
 
         const whatsOnTheLeft = left(str, letterSeqStartAt);
@@ -284,19 +296,24 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         //
         //
 
-        if (str[whatsOnTheLeft] === "&" && (!str[i] || str[i] !== ";")) {
+        if (
+          str[whatsOnTheLeft as number] === "&" &&
+          (!str[i] || str[i] !== ";")
+        ) {
           console.log(
             `289 ${`\u001b[${35}m${`semicol might be missing`}\u001b[${39}m`}`
           );
           // check, what's the index of the character to the right of
           // str[whatsOnTheLeft], is it any of the known named HTML entities.
-          const firstChar = letterSeqStartAt;
+          const firstChar: number | null = letterSeqStartAt;
           /* istanbul ignore next */
-          const secondChar = letterSeqStartAt
+          const secondChar: number | null = letterSeqStartAt
             ? right(str, letterSeqStartAt)
             : null;
           console.log(
-            `299 firstChar = str[${firstChar}] = ${str[firstChar]}; secondChar = str[${secondChar}] = ${str[secondChar]}`
+            `299 firstChar = str[${firstChar}] = ${
+              str[firstChar]
+            }; secondChar = str[${secondChar}] = ${str[secondChar as number]}`
           );
           // we'll tap the "entStartsWith" from npm package "all-named-html-entities"
           // which gives a plain object of named entities, all grouped by first
@@ -329,36 +346,35 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           if (
             Object.prototype.hasOwnProperty.call(
               entStartsWith,
-              str[firstChar]
+              str[firstChar as number]
             ) &&
             Object.prototype.hasOwnProperty.call(
               entStartsWith[str[firstChar]],
-              str[secondChar]
+              str[secondChar as number]
             )
           ) {
             console.log(`339`);
             let tempEnt;
             let tempRes;
 
-            let temp1 = entStartsWith[str[firstChar]][str[secondChar]].reduce(
-              (gatheredSoFar, oneOfKnownEntities) => {
-                // find all entities that match on the right of here
-                // rightSeq could theoretically give positive answer, zero index,
-                // but it's impossible here, so we're fine to match "if true".
-                tempRes = rightSeq(
-                  str,
-                  letterSeqStartAt - 1,
-                  ...oneOfKnownEntities.split("")
-                );
-                if (tempRes) {
-                  return gatheredSoFar.concat([
-                    { tempEnt: oneOfKnownEntities, tempRes },
-                  ]);
-                }
-                return gatheredSoFar;
-              },
-              []
-            );
+            let temp1 = (entStartsWith as Obj)[str[firstChar as number]][
+              str[secondChar as number] as string
+            ].reduce((gatheredSoFar: any[], oneOfKnownEntities: string) => {
+              // find all entities that match on the right of here
+              // rightSeq could theoretically give positive answer, zero index,
+              // but it's impossible here, so we're fine to match "if true".
+              tempRes = rightSeq(
+                str,
+                (letterSeqStartAt as number) - 1,
+                ...oneOfKnownEntities.split("")
+              );
+              if (tempRes) {
+                return gatheredSoFar.concat([
+                  { tempEnt: oneOfKnownEntities, tempRes },
+                ]);
+              }
+              return gatheredSoFar;
+            }, []);
             console.log(
               `363 ${`\u001b[${35}m${`temp1 BEFORE filtering = ${JSON.stringify(
                 temp1,
@@ -403,8 +419,8 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               (!Object.keys(uncertain).includes(tempEnt) ||
                 !str[tempRes.rightmostChar + 1] ||
                 ["&"].includes(str[tempRes.rightmostChar + 1]) ||
-                ((uncertain[tempEnt].addSemiIfAmpPresent === true ||
-                  (uncertain[tempEnt].addSemiIfAmpPresent &&
+                (((uncertain[tempEnt] as Obj).addSemiIfAmpPresent === true ||
+                  ((uncertain[tempEnt] as Obj).addSemiIfAmpPresent &&
                     (!str[tempRes.rightmostChar + 1] ||
                       !str[tempRes.rightmostChar + 1].trim().length))) &&
                   str[tempRes.leftmostChar - 1] === "&"))
@@ -421,19 +437,21 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
 
               console.log(`422 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
               rangesArr2.push({
-                ruleName: `bad-named-html-entity-malformed-${tempEnt}`,
+                ruleName: `bad-named-html-entity-malformed-${
+                  tempEnt as string
+                }`,
                 entityName: tempEnt,
-                rangeFrom: whatsOnTheLeft,
+                rangeFrom: whatsOnTheLeft || 0,
                 rangeTo: tempRes.rightmostChar + 1,
                 rangeValEncoded: `&${tempEnt};`,
-                rangeValDecoded: decodedEntity,
+                rangeValDecoded: decodedEntity as string,
               });
             }
             // ELSE, it was just a legit ampersand
           }
         } else if (
-          str[whatsOnTheLeft] !== "&" &&
-          str[whatsEvenMoreToTheLeft] !== "&" &&
+          str[whatsOnTheLeft as number] !== "&" &&
+          str[whatsEvenMoreToTheLeft as number] !== "&" &&
           str[i] === ";"
         ) {
           //
@@ -461,9 +479,12 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
 
           if (
             secondToLast !== null &&
-            Object.prototype.hasOwnProperty.call(entEndsWith, str[lastChar]) &&
             Object.prototype.hasOwnProperty.call(
-              entEndsWith[str[lastChar]],
+              entEndsWith,
+              str[lastChar as number]
+            ) &&
+            Object.prototype.hasOwnProperty.call(
+              entEndsWith[str[lastChar as number]],
               str[secondToLast]
             )
           ) {
@@ -471,27 +492,26 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             let tempEnt;
             let tempRes;
 
-            let temp1 = entEndsWith[str[lastChar]][str[secondToLast]].reduce(
-              (gatheredSoFar, oneOfKnownEntities) => {
-                // find all entities that match on the right of here
-                // rightSeq could theoretically give positive answer, zero index,
-                // but it's impossible here, so we're fine to match "if true".
-                tempRes = leftSeq(str, i, ...oneOfKnownEntities.split(""));
-                if (
-                  tempRes &&
-                  !(
-                    oneOfKnownEntities === "block" &&
-                    str[left(str, letterSeqStartAt)] === ":"
-                  )
-                ) {
-                  return gatheredSoFar.concat([
-                    { tempEnt: oneOfKnownEntities, tempRes },
-                  ]);
-                }
-                return gatheredSoFar;
-              },
-              []
-            );
+            let temp1 = (entEndsWith as Obj)[str[lastChar as number] as string][
+              str[secondToLast as number] as string
+            ].reduce((gatheredSoFar: any[], oneOfKnownEntities: string) => {
+              // find all entities that match on the right of here
+              // rightSeq could theoretically give positive answer, zero index,
+              // but it's impossible here, so we're fine to match "if true".
+              tempRes = leftSeq(str, i, ...oneOfKnownEntities.split(""));
+              if (
+                tempRes &&
+                !(
+                  oneOfKnownEntities === "block" &&
+                  str[left(str, letterSeqStartAt) as number] === ":"
+                )
+              ) {
+                return gatheredSoFar.concat([
+                  { tempEnt: oneOfKnownEntities, tempRes },
+                ]);
+              }
+              return gatheredSoFar;
+            }, []);
 
             console.log(
               `497 ${`\u001b[${35}m${`temp1 BEFORE filtering = ${JSON.stringify(
@@ -537,8 +557,8 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             if (
               tempEnt &&
               (!Object.keys(uncertain).includes(tempEnt) ||
-                uncertain[tempEnt].addAmpIfSemiPresent === true ||
-                (uncertain[tempEnt].addAmpIfSemiPresent &&
+                (uncertain as Obj)[tempEnt].addAmpIfSemiPresent === true ||
+                ((uncertain as Obj)[tempEnt].addAmpIfSemiPresent &&
                   (!tempRes.leftmostChar ||
                     (isStr(str[tempRes.leftmostChar - 1]) &&
                       !str[tempRes.leftmostChar - 1].trim().length))))
@@ -560,7 +580,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                 rangeFrom: tempRes.leftmostChar,
                 rangeTo: i + 1,
                 rangeValEncoded: `&${tempEnt};`,
-                rangeValDecoded: decodedEntity,
+                rangeValDecoded: decodedEntity as string,
               });
             } else {
               console.log(
@@ -589,9 +609,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             );
           }
         } else if (
-          (str[whatsOnTheLeft] === "&" ||
-            (str[whatsOnTheLeft] === ";" &&
-              str[whatsEvenMoreToTheLeft] === "&")) &&
+          (str[whatsOnTheLeft as number] === "&" ||
+            (str[whatsOnTheLeft as number] === ";" &&
+              str[whatsEvenMoreToTheLeft as number] === "&")) &&
           str[i] === ";"
         ) {
           //
@@ -609,7 +629,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           // find out more: is it legit, unrecognised or numeric...
 
           /* istanbul ignore else */
-          if (str.slice(whatsOnTheLeft + 1, i).trim().length > 1) {
+          if (str.slice((whatsOnTheLeft as number) + 1, i).trim().length > 1) {
             console.log(
               `614 ${`\u001b[${90}m${`so there are some characters in between: & and ;`}\u001b[${39}m`}`
             );
@@ -638,7 +658,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
 
             const situation = resemblesNumericEntity(
               str,
-              whatsOnTheLeft + 1,
+              (whatsOnTheLeft as number) + 1,
               i
             );
             console.log(
@@ -692,7 +712,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                   rangesArr2.push({
                     ruleName: `bad-malformed-numeric-character-entity`,
                     entityName: null,
-                    rangeFrom: whatsOnTheLeft,
+                    rangeFrom: whatsOnTheLeft || 0,
                     rangeTo: i + 1,
                     rangeValEncoded: null,
                     rangeValDecoded: null,
@@ -703,7 +723,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                   rangesArr2.push({
                     ruleName: `encoded-numeric-html-entity-reference`,
                     entityName: situation.charTrimmed,
-                    rangeFrom: whatsOnTheLeft,
+                    rangeFrom: whatsOnTheLeft || 0,
                     rangeTo: i + 1,
                     rangeValEncoded: `&${situation.charTrimmed};`,
                     rangeValDecoded: decodedEntitysValue,
@@ -715,7 +735,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                 rangesArr2.push({
                   ruleName: `bad-malformed-numeric-character-entity`,
                   entityName: null,
-                  rangeFrom: whatsOnTheLeft,
+                  rangeFrom: whatsOnTheLeft || 0,
                   rangeTo: i + 1,
                   rangeValEncoded: null,
                   rangeValDecoded: null,
@@ -725,7 +745,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               // also call the general entity callback if it's given
               if (opts.entityCatcherCb) {
                 console.log(`727 call opts.entityCatcherCb()`);
-                opts.entityCatcherCb(whatsOnTheLeft, i + 1);
+                opts.entityCatcherCb(whatsOnTheLeft as number, i + 1);
               }
             } else {
               console.log(
@@ -798,7 +818,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                     rangesArr2.push({
                       ruleName: `bad-named-html-entity-malformed-${matchingEntitiesOfCorrectCaseArr[0]}`,
                       entityName: matchingEntitiesOfCorrectCaseArr[0],
-                      rangeFrom: whatsOnTheLeft,
+                      rangeFrom: whatsOnTheLeft as number,
                       rangeTo: i + 1,
                       rangeValEncoded: `&${matchingEntitiesOfCorrectCaseArr[0]};`,
                       rangeValDecoded: decode(
@@ -810,7 +830,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                     rangesArr2.push({
                       ruleName: `bad-named-html-entity-unrecognised`,
                       entityName: null,
-                      rangeFrom: whatsOnTheLeft,
+                      rangeFrom: whatsOnTheLeft as number,
                       rangeTo: i + 1,
                       rangeValEncoded: null,
                       rangeValDecoded: null,
@@ -819,16 +839,16 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                 } else if (
                   // is it really healthy? measuring distance is a way to find out
                   // any present whitespace characters will bloat the length...
-                  i - whatsOnTheLeft - 1 !==
+                  i - (whatsOnTheLeft as number) - 1 !==
                     potentialEntityOnlyNonWhitespaceChars.length ||
-                  str[whatsOnTheLeft] !== "&"
+                  str[whatsOnTheLeft as number] !== "&"
                 ) {
                   console.log(
                     `827 ${`\u001b[${31}m${`whitespace present!`}\u001b[${39}m`}`
                   );
 
                   const rangeFrom =
-                    str[whatsOnTheLeft] === "&"
+                    str[whatsOnTheLeft as number] === "&"
                       ? whatsOnTheLeft
                       : whatsEvenMoreToTheLeft;
 
@@ -838,7 +858,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                       potentialEntityOnlyNonWhitespaceChars
                     ) &&
                     // and there's space after ampersand
-                    !str[rangeFrom + 1].trim().length
+                    !str[(rangeFrom as number) + 1].trim().length
                   ) {
                     console.log(
                       `844 ${`\u001b[${31}m${`BAIL EARLY`}\u001b[${39}m`} - reset and continue - it's a known uncertain entity!`
@@ -851,7 +871,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                   rangesArr2.push({
                     ruleName: `bad-named-html-entity-malformed-${potentialEntityOnlyNonWhitespaceChars}`,
                     entityName: potentialEntityOnlyNonWhitespaceChars,
-                    rangeFrom,
+                    rangeFrom: rangeFrom as number,
                     rangeTo: i + 1,
                     rangeValEncoded: `&${potentialEntityOnlyNonWhitespaceChars};`,
                     rangeValDecoded: decode(
@@ -868,7 +888,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                   rangesArr2.push({
                     ruleName: `encoded-html-entity-${potentialEntityOnlyNonWhitespaceChars}`,
                     entityName: potentialEntityOnlyNonWhitespaceChars,
-                    rangeFrom: whatsOnTheLeft,
+                    rangeFrom: whatsOnTheLeft as number,
                     rangeTo: i + 1,
                     rangeValEncoded: `&${potentialEntityOnlyNonWhitespaceChars};`,
                     rangeValDecoded: decode(
@@ -878,7 +898,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                 } else if (opts.entityCatcherCb) {
                   // it's healthy - so at least ping the entity catcher
                   console.log(`880 call opts.entityCatcherCb()`);
-                  opts.entityCatcherCb(whatsOnTheLeft, i + 1);
+                  opts.entityCatcherCb(whatsOnTheLeft as number, i + 1);
                 }
 
                 console.log(`884 reset and continue`);
@@ -899,11 +919,15 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                 ? right(str, letterSeqStartAt)
                 : null;
               console.log(
-                `902 firstChar = str[${firstChar}] = ${str[firstChar]}; secondChar = str[${secondChar}] = ${str[secondChar]}`
+                `902 firstChar = str[${firstChar}] = ${
+                  str[firstChar]
+                }; secondChar = str[${secondChar}] = ${
+                  str[secondChar as number]
+                }`
               );
 
-              let tempEnt;
-              let temp;
+              let tempEnt: string;
+              let temp: any[];
 
               console.log(
                 `909 FIY, situation.charTrimmed.toLowerCase() = "${situation.charTrimmed.toLowerCase()}"`
@@ -939,9 +963,10 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                   ruleName: `bad-named-html-entity-malformed-${
                     brokenNamedEntities[situation.charTrimmed.toLowerCase()]
                   }`,
-                  entityName:
-                    brokenNamedEntities[situation.charTrimmed.toLowerCase()],
-                  rangeFrom: whatsOnTheLeft,
+                  entityName: brokenNamedEntities[
+                    situation.charTrimmed.toLowerCase()
+                  ] as string,
+                  rangeFrom: whatsOnTheLeft as number,
                   rangeTo: i + 1,
                   rangeValEncoded: `&${
                     brokenNamedEntities[situation.charTrimmed.toLowerCase()]
@@ -983,62 +1008,16 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                   rangesArr2.push({
                     ruleName: `bad-named-html-entity-malformed-${tempEnt}`,
                     entityName: tempEnt,
-                    rangeFrom: whatsOnTheLeft,
+                    rangeFrom: whatsOnTheLeft as number,
                     rangeTo: i + 1,
                     rangeValEncoded: `&${tempEnt};`,
                     rangeValDecoded: decode(`&${tempEnt};`),
                   });
                 }
-
-                // TODO - remove if really not reachable:
-
-                // else {
-                //   // we've got problem
-                //   console.log(
-                //     `980 ${`\u001b[${31}m${`!!! multiple matched`}\u001b[${39}m`}: ${JSON.stringify(
-                //       temp,
-                //       null,
-                //       4
-                //     )}`
-                //   );
-                //
-                //   // find longest, drop all shorter than longest
-                //   const lengthOfLongestCaughtEnt = temp.reduce((acc, curr) => {
-                //     return curr.length > acc ? curr.length : acc;
-                //   }, 0);
-                //   console.log(
-                //     `992 ${`\u001b[${33}m${`lengthOfLongestCaughtEnt`}\u001b[${39}m`} = ${JSON.stringify(
-                //       lengthOfLongestCaughtEnt,
-                //       null,
-                //       4
-                //     )}`
-                //   );
-                //
-                //   // filter only max-length-ones
-                //   temp = temp.filter(
-                //     (ent) => ent.length === lengthOfLongestCaughtEnt
-                //   );
-                //
-                //   // again, if there's one left, Bob's your uncle here's the result
-                //   if (temp.length === 1) {
-                //     console.log(
-                //       `1007 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`
-                //     );
-                //     rangesArr2.push({
-                //       ruleName: `bad-named-html-entity-malformed-${temp[0]}`,
-                //       entityName: temp[0],
-                //       rangeFrom: whatsOnTheLeft,
-                //       rangeTo: i + 1,
-                //       rangeValEncoded: `&${temp[0]};`,
-                //       rangeValDecoded: decode(`&${temp[0]};`),
-                //     });
-                //   } else {
-                //     // TODO
-                //   }
-                // }
               }
 
               // if "tempEnt" was not set by now, it is not a known HTML entity
+              // @ts-ignore
               if (!tempEnt) {
                 console.log(
                   `1044 ${`\u001b[${90}m${`so it's not one of known named HTML entities`}\u001b[${39}m`}`
@@ -1052,7 +1031,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                 rangesArr2.push({
                   ruleName: `bad-named-html-entity-unrecognised`,
                   entityName: null,
-                  rangeFrom: whatsOnTheLeft,
+                  rangeFrom: whatsOnTheLeft as number,
                   rangeTo: i + 1,
                   rangeValEncoded: null,
                   rangeValDecoded: null,
@@ -1071,9 +1050,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             }
           }
         } else if (
-          str[whatsEvenMoreToTheLeft] === "&" &&
+          str[whatsEvenMoreToTheLeft as number] === "&" &&
           str[i] === ";" &&
-          i - whatsEvenMoreToTheLeft < maxLength
+          i - (whatsEvenMoreToTheLeft as number) < maxLength
         ) {
           //
           //
@@ -1086,13 +1065,13 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           //
           console.log(
             `1088 ${`\u001b[${32}m${`██`}\u001b[${39}m`} might be a messy entity. We have "${str.slice(
-              whatsEvenMoreToTheLeft,
+              whatsEvenMoreToTheLeft as number,
               i + 1
             )}"`
           );
           const situation = resemblesNumericEntity(
             str,
-            whatsEvenMoreToTheLeft + 1,
+            (whatsEvenMoreToTheLeft as number) + 1,
             i
           );
           console.log(
@@ -1121,7 +1100,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                 : "bad-named-html-entity-unrecognised"
             }`,
             entityName: null,
-            rangeFrom: whatsEvenMoreToTheLeft,
+            rangeFrom: whatsEvenMoreToTheLeft as number,
             rangeTo: i + 1,
             rangeValEncoded: null,
             rangeValDecoded: null,
@@ -1232,15 +1211,18 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         // text&   amp  ;  a  m   p   ;     a  m   p   ;    nbsp;text
         // this would be index 49, the "n" from "nbsp;"
 
-        const firstCharThatFollows = right(str, toDeleteAllAmpEndHere - 1);
+        const firstCharThatFollows: number | null = right(
+          str,
+          toDeleteAllAmpEndHere - 1
+        );
         const secondCharThatFollows = firstCharThatFollows
           ? right(str, firstCharThatFollows)
           : null;
         console.log(
           `1240 SET initial ${`\u001b[${33}m${`firstCharThatFollows`}\u001b[${39}m`} = str[${firstCharThatFollows}] = ${
-            str[firstCharThatFollows]
+            str[firstCharThatFollows as number]
           }; ${`\u001b[${33}m${`secondCharThatFollows`}\u001b[${39}m`} = str[${secondCharThatFollows}] = ${
-            str[secondCharThatFollows]
+            str[secondCharThatFollows as number]
           }`
         );
 
@@ -1248,26 +1230,26 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         // text&   amp  ;  a  m   p   ;     a  m   p   ;    nbsp;text
         // we delete from the first ampersand to the beginning of that entity.
         // Otherwise, we delete only repetitions of amp; + whitespaces in between.
-        let matchedTemp;
+        let matchedTemp = "";
         let matchedVal;
         if (
           secondCharThatFollows &&
           Object.prototype.hasOwnProperty.call(
             entStartsWith,
-            str[firstCharThatFollows]
+            str[firstCharThatFollows as number]
           ) &&
           Object.prototype.hasOwnProperty.call(
-            entStartsWith[str[firstCharThatFollows]],
+            entStartsWith[str[firstCharThatFollows as number]],
             str[secondCharThatFollows]
           ) &&
-          entStartsWith[str[firstCharThatFollows]][
+          (entStartsWith as Obj)[str[firstCharThatFollows as number]][
             str[secondCharThatFollows]
-          ].some((entity) => {
+          ].some((entity: string) => {
             // if (str.entStartsWith(`${entity};`, firstCharThatFollows)) {
             const matchEntityOnTheRight = rightSeq(
               str,
               toDeleteAllAmpEndHere - 1,
-              ...entity.slice("")
+              ...entity.split("")
             );
             /* istanbul ignore else */
             if (matchEntityOnTheRight) {
@@ -1277,7 +1259,8 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             }
           })
         ) {
-          doNothingUntil = firstCharThatFollows + matchedTemp.length + 1;
+          doNothingUntil =
+            (firstCharThatFollows as number) + matchedTemp.length + 1;
           console.log(
             `1282 ${`\u001b[${31}m${`██ ACTIVATE doNothingUntil = ${doNothingUntil}`}\u001b[${39}m`}`
           );
@@ -1289,7 +1272,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           const whatsOnTheLeft = left(str, i);
 
           /* istanbul ignore else */
-          if (str[whatsOnTheLeft] === "&") {
+          if (str[whatsOnTheLeft as number] === "&") {
             console.log(`1293 ampersand on the left`);
             console.log(
               `1295 ${`\u001b[${33}m${`matchedTemp`}\u001b[${39}m`} = ${JSON.stringify(
@@ -1306,7 +1289,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             rangesArr2.push({
               ruleName: "bad-named-html-entity-multiple-encoding",
               entityName: matchedTemp,
-              rangeFrom: whatsOnTheLeft,
+              rangeFrom: whatsOnTheLeft || 0,
               rangeTo: doNothingUntil,
               rangeValEncoded: `&${matchedTemp};`,
               rangeValDecoded: decode(`&${matchedTemp};`),
@@ -1326,6 +1309,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             }
             console.log(`1327 final rangeFrom = ${rangeFrom}`);
 
+            // @ts-ignore
             if (opts.cb) {
               console.log(`1330 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
               rangesArr2.push({
@@ -1348,13 +1332,13 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     if (
       str[i] === "#" &&
       right(str, i) &&
-      str[right(str, i)].toLowerCase() === "x" &&
-      (!str[i - 1] || !left(str, i) || str[left(str, i)] !== "&")
+      str[right(str, i) as number].toLowerCase() === "x" &&
+      (!str[i - 1] || !left(str, i) || str[left(str, i) as number] !== "&")
     ) {
       console.log(
         `1355 ${`\u001b[${31}m${`██`}\u001b[${39}m`} #x pattern caught`
       );
-      if (isNumber(str[right(str, right(str, i))])) {
+      if (isNumeric(str[right(str, right(str, i) as number) as number])) {
         brokenNumericEntityStartAt = i;
       }
     }
@@ -1422,7 +1406,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   //     "rangeValDecoded": "&"
   // },
   // so instead of [4, 8] that would be [rangeFrom, rangeTo]...
-  const res = rangesArr2
+  const res: any = rangesArr2
     .filter((filteredRangeObj, i) => {
       return rangesArr2.every((oneOfEveryObj, y) => {
         return (
@@ -1434,26 +1418,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         );
       });
     })
-    // .filter((filteredRangeObj, i, allRangesArr) => {
-    //   if (
-    //     filteredRangeObj.ruleName === "bad-named-html-entity-unrecognised" &&
-    //     allRangesArr.some((oneRangeObj, y) => {
-    //       return (
-    //         i !== y && // prevent matching itself
-    //         oneRangeObj.rangeFrom <= filteredRangeObj.rangeFrom &&
-    //         oneRangeObj.rangeTo === filteredRangeObj.rangeTo
-    //       );
-    //     })
-    //   ) {
-    //     return false;
-    //   }
-    //   // ELSE
-    //   return true;
-    // })
     .map(opts.cb);
-
-  // filteredRangeObj.rangeFrom !== oneOfEveryObj.rangeFrom ||
-  // filteredRangeObj.rangeTo > oneOfEveryObj.rangeTo
 
   console.log(
     `1459 RETURN ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
@@ -1465,4 +1430,4 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   return res;
 }
 
-export default stringFixBrokenNamedEntities;
+export { fixEnt, version };

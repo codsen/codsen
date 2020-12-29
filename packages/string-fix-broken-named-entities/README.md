@@ -34,8 +34,8 @@ npm i string-fix-broken-named-entities
 
 ```js
 import { strict as assert } from "assert";
-import fixEnt from "string-fix-broken-named-entities";
-import applyR from "ranges-apply";
+import { fixEnt } from "string-fix-broken-named-entities";
+import { rApply } from "ranges-apply";
 
 const source = "&nsp;x&nsp;y&nsp;";
 
@@ -47,7 +47,7 @@ assert.deepEqual(fixEnt(source), [
 ]);
 
 // render result from ranges using "ranges-apply":
-assert.equal(applyR(source, fixEnt(source)), "&nbsp;x&nbsp;y&nbsp;");
+assert.equal(rApply(source, fixEnt(source)), "&nbsp;x&nbsp;y&nbsp;");
 ```
 
 ## Documentation

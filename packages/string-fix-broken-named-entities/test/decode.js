@@ -1,6 +1,6 @@
 import tap from "tap";
 import { decode, allNamedEntities } from "all-named-html-entities";
-import fix from "../dist/string-fix-broken-named-entities.esm";
+import { fixEnt as fix } from "../dist/string-fix-broken-named-entities.esm";
 
 // -----------------------------------------------------------------------------
 // programmatic tests

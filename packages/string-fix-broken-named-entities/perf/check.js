@@ -7,9 +7,9 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { fixEnt } = require("..");
 
-const testme = () => f("&&NbSpzzz&&NbSpzzz\ny &isindot; z\n&nsp;\n&pound");
+const testme = () => fixEnt("&&NbSpzzz&&NbSpzzz\ny &isindot; z\n&nsp;\n&pound");
 
 // action
 runPerf(testme, callerDir);

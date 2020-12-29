@@ -1,10 +1,8 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import fixEnt from "../dist/string-fix-broken-named-entities.esm.js";
-import applyR from "../../ranges-apply";
+import { fixEnt } from "../dist/string-fix-broken-named-entities.esm.js";
+import { rApply } from "../../ranges-apply";
 
 const source = "&nsp;x&nsp;y&nsp;";
 
@@ -16,4 +14,4 @@ assert.deepEqual(fixEnt(source), [
 ]);
 
 // render result from ranges using "ranges-apply":
-assert.equal(applyR(source, fixEnt(source)), "&nbsp;x&nbsp;y&nbsp;");
+assert.equal(rApply(source, fixEnt(source)), "&nbsp;x&nbsp;y&nbsp;");

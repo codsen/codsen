@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>string-fix-broken-named-entities linked tap</title>
     <style type="text/css">
       * {
@@ -29,23 +29,45 @@
     </style>
   </head>
   <body>
-
     <div id="app">
       <div>
-        <textarea ref="in" class="w50p" v-model="text1" rows="10" placeholder="put dirty html here" style="font-family: monospace;"></textarea>
+        <textarea
+          ref="in"
+          class="w50p"
+          v-model="text1"
+          rows="10"
+          placeholder="put dirty html here"
+          style="font-family: monospace"
+        ></textarea>
         <!-- let's disable "cleaned" module for the MVP -->
-        <textarea class="w50p" v-model="text2" rows="10" style="font-family: monospace;"></textarea>
+        <textarea
+          class="w50p"
+          v-model="text2"
+          rows="10"
+          style="font-family: monospace"
+        ></textarea>
         <!-- <textarea class="w50p" v-model="cleaned" rows="10" style="font-family: monospace;"></textarea> -->
       </div>
-      <br>
+      <br />
       <center>
-        <input type="checkbox" id="checkbox" v-model="decode">
+        <input type="checkbox" id="checkbox" v-model="decode" />
         <label for="checkbox">Decoding: {{ decode ? "on" : "off" }}</label>
       </center>
-      <br>
+      <br />
       <div>
-        output:<br>
-        <textarea v-model="output" rows="30" style="width: 98%; height: 25%; font-family: monospace; font-size: 16px;">no issues</textarea>
+        output:<br />
+        <textarea
+          v-model="output"
+          rows="30"
+          style="
+            width: 98%;
+            height: 25%;
+            font-family: monospace;
+            font-size: 16px;
+          "
+        >
+no issues</textarea
+        >
       </div>
     </div>
 
@@ -54,79 +76,89 @@
     <script src="../dist/string-fix-broken-named-entities.umd.js"></script>
     <!-- <script src="https://unpkg.com/string-fix-broken-named-entities"></script> -->
     <script>
-    // main global is stringFixBrokenNamedEntities()
-    const myStorage = window.localStorage;
-    window.Event = new Vue();
-    new Vue({
-      el: '#app',
-      data: {
-        text1: "",
-        res: [],
-        decode: false
-      },
-      mounted: function () {
-        const retrieved = myStorage.getItem("storage_for_string_fix_broken")
-        if (typeof retrieved === "string" && retrieved.length) {
-          const {text1, decodeFlipSwitch} = JSON.parse(retrieved);
-          this.text1 = text1;
-          this.decode = decodeFlipSwitch;
-        };
-        this.$refs.in.focus();
-      },
-      computed: {
-        output: function () {
-          if (this.res) {
-            return JSON.stringify(this.res, null, 4)
-          }
-          return "no issues"
+      const { apply } = rangesApply;
+      const { fixEnt } = stringFixBrokenNamedEntities;
+      // main global is fixEnt()
+      const myStorage = window.localStorage;
+      window.Event = new Vue();
+      new Vue({
+        el: "#app",
+        data: {
+          text1: "",
+          res: [],
+          decode: false,
         },
-        text2: function () {
-          let ranges;
-          if (this.res) {
-            ranges = this.res.map(obj => {
-              return [
-                obj.rangeFrom,
-                obj.rangeTo,
-                this.decode ? obj.rangeValDecoded : obj.rangeValEncoded
-              ]
+        mounted: function () {
+          const retrieved = myStorage.getItem("storage_for_string_fix_broken");
+          if (typeof retrieved === "string" && retrieved.length) {
+            const { text1, decodeFlipSwitch } = JSON.parse(retrieved);
+            this.text1 = text1;
+            this.decode = decodeFlipSwitch;
+          }
+          this.$refs.in.focus();
+        },
+        computed: {
+          output: function () {
+            if (this.res) {
+              return JSON.stringify(this.res, null, 4);
+            }
+            return "no issues";
+          },
+          text2: function () {
+            let ranges;
+            if (this.res) {
+              ranges = this.res.map((obj) => {
+                return [
+                  obj.rangeFrom,
+                  obj.rangeTo,
+                  this.decode ? obj.rangeValDecoded : obj.rangeValEncoded,
+                ];
+              });
+            }
+            console.log(
+              `${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
+                ranges,
+                null,
+                4
+              )}`
+            );
+            const temp = apply(this.text1, ranges ? ranges : null);
+            // console.log(`${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(temp, null, 4)}`)
+            return ranges ? temp : "all fine";
+          },
+        },
+        watch: {
+          text1: function () {
+            // console.log(`${`\u001b[${33}m${`this.text1`}\u001b[${39}m`} = ${JSON.stringify(this.text1, null, 4)}`);
+            this.res = fixEnt(this.text1, {
+              cb: (obj) => obj,
+              decode: this.decode,
             });
-          }
-          console.log(`${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(ranges, null, 4)}`);
-          const temp = rangesApply(this.text1, ranges ? ranges : null);
-          // console.log(`${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(temp, null, 4)}`)
-          return ranges ? temp : "all fine";
-        }
-      },
-      watch: {
-        text1: function () {
-          // console.log(`${`\u001b[${33}m${`this.text1`}\u001b[${39}m`} = ${JSON.stringify(this.text1, null, 4)}`);
-          this.res = stringFixBrokenNamedEntities(
-            this.text1,
-            {
-              cb: obj => obj,
-              decode: this.decode
-            }
-          );
-          myStorage.setItem(
-            "storage_for_string_fix_broken",
-            JSON.stringify({text1: this.text1, decodeFlipSwitch: this.decode}, null, 0)
-          );
+            myStorage.setItem(
+              "storage_for_string_fix_broken",
+              JSON.stringify(
+                { text1: this.text1, decodeFlipSwitch: this.decode },
+                null,
+                0
+              )
+            );
+          },
+          decode: function () {
+            this.res = fixEnt(this.text1, {
+              cb: (obj) => obj,
+              decode: this.decode,
+            });
+            myStorage.setItem(
+              "storage_for_string_fix_broken",
+              JSON.stringify(
+                { text1: this.text1, decodeFlipSwitch: this.decode },
+                null,
+                0
+              )
+            );
+          },
         },
-        decode: function () {
-          this.res = stringFixBrokenNamedEntities(
-            this.text1,
-            {
-              cb: obj => obj,
-              decode: this.decode
-            }
-          );
-          myStorage.setItem(
-            "storage_for_string_fix_broken",
-            JSON.stringify({text1: this.text1, decodeFlipSwitch: this.decode}, null, 0)
-          );
-        }
-      }
-    });
+      });
     </script>
   </body>
 </html>

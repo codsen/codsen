@@ -1,12 +1,14 @@
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+
 import { right } from "string-left-right";
 
-function isObj(something) {
+function isObj(something: any): boolean {
   return (
     something && typeof something === "object" && !Array.isArray(something)
   );
 }
 
-function isLatinLetterOrNumberOrHash(char) {
+function isLatinLetterOrNumberOrHash(char: string): boolean {
   // we mean:
   // - Latin letters a-z or
   // - numbers 0-9 or
@@ -21,7 +23,7 @@ function isLatinLetterOrNumberOrHash(char) {
       char.charCodeAt(0) === 35)
   );
 }
-function isNumber(something) {
+function isNumeric(something: any): boolean {
   return (
     isStr(something) &&
     something.charCodeAt(0) > 47 &&
@@ -29,10 +31,10 @@ function isNumber(something) {
   );
 }
 
-function isStr(something) {
+function isStr(something: any): boolean {
   return typeof something === "string";
 }
-function isLatinLetter(something) {
+function isLatinLetter(something: any): boolean {
   return (
     typeof something === "string" &&
     ((something.charCodeAt(0) > 96 && something.charCodeAt(0) < 123) ||
@@ -40,7 +42,7 @@ function isLatinLetter(something) {
   );
 }
 
-function resemblesNumericEntity(str2, from, to) {
+function resemblesNumericEntity(str2: string, from: number, to: number) {
   // plan: loop characters, count types, judge what's given
   let lettersCount = 0;
   let numbersCount = 0;
@@ -61,7 +63,7 @@ function resemblesNumericEntity(str2, from, to) {
     }
     if (isLatinLetter(str2[i])) {
       lettersCount += 1;
-    } else if (isNumber(str2[i])) {
+    } else if (isNumeric(str2[i])) {
       numbersCount += 1;
       numbersValue += String(str2[i]);
     } else if (str2[i] === "#") {
@@ -72,7 +74,7 @@ function resemblesNumericEntity(str2, from, to) {
   }
   // if there are more numbers than letters (or equal) then it's more likely
   // to be a numeric entity
-  let probablyNumeric = false;
+  let probablyNumeric: string | boolean = false;
 
   console.log(
     `078 stringFixBrokenNamedEntities: ${`\u001b[${33}m${`charTrimmed[0]`}\u001b[${39}m`} = ${JSON.stringify(
@@ -94,7 +96,7 @@ function resemblesNumericEntity(str2, from, to) {
     (numbersCount || lettersCount) &&
     ((charTrimmed[0] === "#" &&
       charTrimmed[1].toLowerCase() === "x" &&
-      (isNumber(charTrimmed[2]) || isLatinLetter(charTrimmed[2]))) ||
+      (isNumeric(charTrimmed[2]) || isLatinLetter(charTrimmed[2]))) ||
       (charTrimmed[0].toLowerCase() === "x" && numbersCount && !othersCount))
   ) {
     // hexidecimal, for example, &#xA3;
@@ -114,7 +116,16 @@ function resemblesNumericEntity(str2, from, to) {
   };
 }
 
-function findLongest(temp1) {
+interface TempObj {
+  tempEnt: string;
+  tempRes: {
+    gaps: [number, number][];
+    leftmostChar: number;
+    rightmostChar: number;
+  };
+}
+
+function findLongest(temp1: TempObj[]) {
   // we are filtering something like this:
   // [
   //   {
@@ -154,7 +165,7 @@ function findLongest(temp1) {
   return temp1;
 }
 
-function removeGappedFromMixedCases(str, temp1) {
+function removeGappedFromMixedCases(str: string, temp1: TempObj[]) {
   /* istanbul ignore if */
   if (arguments.length !== 2) {
     throw new Error("removeGappedFromMixedCases(): wrong amount of inputs!");
@@ -238,15 +249,18 @@ function removeGappedFromMixedCases(str, temp1) {
     if (
       copy.length > 1 &&
       copy.some(
-        (entityObj) => str[right(str, entityObj.tempRes.rightmostChar)] === ";"
+        (entityObj) =>
+          str[right(str, entityObj.tempRes.rightmostChar) as number] === ";"
       ) &&
       copy.some(
-        (entityObj) => str[right(str, entityObj.tempRes.rightmostChar)] !== ";"
+        (entityObj) =>
+          str[right(str, entityObj.tempRes.rightmostChar) as number] !== ";"
       )
     ) {
       // filter out those with semicolon to the right of the last character:
       copy = copy.filter(
-        (entityObj) => str[right(str, entityObj.tempRes.rightmostChar)] === ";"
+        (entityObj) =>
+          str[right(str, entityObj.tempRes.rightmostChar) as number] === ";"
       );
       console.log(
         `252 stringFixBrokenNamedEntities: we filtered only entities with semicolons to the right: ${JSON.stringify(
@@ -298,7 +312,7 @@ function removeGappedFromMixedCases(str, temp1) {
 export {
   isObj,
   isStr,
-  isNumber,
+  isNumeric,
   resemblesNumericEntity,
   removeGappedFromMixedCases,
   isLatinLetterOrNumberOrHash,
