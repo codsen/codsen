@@ -34,7 +34,7 @@ npm i string-overlap-one-on-another
 
 ```js
 import { strict as assert } from "assert";
-import overlap from "string-overlap-one-on-another";
+import { overlap } from "string-overlap-one-on-another";
 
 assert.equal(overlap("aaa", "bbb", { offset: -2 }), "bbbaa");
 ```

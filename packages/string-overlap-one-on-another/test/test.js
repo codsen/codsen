@@ -1,5 +1,5 @@
 import tap from "tap";
-import overlap from "../dist/string-overlap-one-on-another.esm";
+import { overlap } from "../dist/string-overlap-one-on-another.esm";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws

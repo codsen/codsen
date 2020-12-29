@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // Empty Strings
 
 import { strict as assert } from "assert";
-import overlap from "../dist/string-overlap-one-on-another.esm.js";
+import { overlap } from "../dist/string-overlap-one-on-another.esm.js";
 
 assert.equal(
   overlap("", "456", { offset: 99, offsetFillerCharacter: "zzzz" }),

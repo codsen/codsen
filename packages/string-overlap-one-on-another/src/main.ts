@@ -1,4 +1,16 @@
-function overlap(str1, str2, originalOpts) {
+import { version } from "../package.json";
+
+interface Opts {
+  offset: number;
+  offsetFillerCharacter: string;
+}
+
+const defaults: Opts = {
+  offset: 0, // how many characters str2 is to the right? (negative means it's off to the left)
+  offsetFillerCharacter: " ", // how many characters str2 is to the right? (negative means it's off to the left)
+};
+
+function overlap(str1: string, str2: string, originalOpts?: Opts): string {
   if (typeof str1 !== "string") {
     throw new Error(
       `string-overlap-one-on-another: [THROW_ID_01] The first input argument must be a string but it was given as ${JSON.stringify(
@@ -18,12 +30,7 @@ function overlap(str1, str2, originalOpts) {
     );
   }
 
-  let opts;
-  const defaults = {
-    offset: 0, // how many characters str2 is to the right? (negative means it's off to the left)
-    offsetFillerCharacter: " ", // how many characters str2 is to the right? (negative means it's off to the left)
-  };
-
+  let opts: Opts;
   if (!originalOpts) {
     // it's fine because we won't overwrite opts:
     opts = defaults;
@@ -91,4 +98,4 @@ function overlap(str1, str2, originalOpts) {
   return str2 + (str1.length > str2.length ? str1.slice(str2.length) : "");
 }
 
-export default overlap;
+export { overlap, version };

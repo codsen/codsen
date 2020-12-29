@@ -7,9 +7,10 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { overlap } = require("..");
 
-const testme = () => f("123", "b", { offset: 5, offsetFillerCharacter: "" });
+const testme = () =>
+  overlap("123", "b", { offset: 5, offsetFillerCharacter: "" });
 
 // action
 runPerf(testme, callerDir);
