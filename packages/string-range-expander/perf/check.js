@@ -7,10 +7,10 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { expander } = require("..");
 
 const testme = () =>
-  f({
+  expander({
     str: "aaaaaaaaaaaa",
     from: 2,
     to: 5,

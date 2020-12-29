@@ -1,16 +1,47 @@
-function expander(originalOpts) {
+import { version } from "../package.json";
+import { Range } from "../../../scripts/common";
+
+interface Opts {
+  str: string;
+  from: number;
+  to: number;
+  ifLeftSideIncludesThisThenCropTightly: string;
+  ifLeftSideIncludesThisCropItToo: string;
+  ifRightSideIncludesThisThenCropTightly: string;
+  ifRightSideIncludesThisCropItToo: string;
+  extendToOneSide: false | "left" | "right";
+  wipeAllWhitespaceOnLeft: boolean;
+  wipeAllWhitespaceOnRight: boolean;
+  addSingleSpaceToPreventAccidentalConcatenation: boolean;
+}
+
+const defaults: Opts = {
+  str: "",
+  from: 0,
+  to: 0,
+  ifLeftSideIncludesThisThenCropTightly: "",
+  ifLeftSideIncludesThisCropItToo: "",
+  ifRightSideIncludesThisThenCropTightly: "",
+  ifRightSideIncludesThisCropItToo: "",
+  extendToOneSide: false,
+  wipeAllWhitespaceOnLeft: false,
+  wipeAllWhitespaceOnRight: false,
+  addSingleSpaceToPreventAccidentalConcatenation: false,
+};
+
+function expander(originalOpts: Opts): Range {
   const letterOrDigit = /^[0-9a-zA-Z]+$/;
 
   // Internal functions
   // ---------------------------------------------------------------------------
 
-  function isWhitespace(char) {
+  function isWhitespace(char: any): boolean {
     if (!char || typeof char !== "string") {
       return false;
     }
     return !char.trim();
   }
-  function isStr(something) {
+  function isStr(something: any): boolean {
     return typeof something === "string";
   }
 
@@ -105,20 +136,7 @@ function expander(originalOpts) {
   // Prepare the opts
   // ---------------------------------------------------------------------------
 
-  const defaults = {
-    str: "",
-    from: 0,
-    to: 0,
-    ifLeftSideIncludesThisThenCropTightly: "",
-    ifLeftSideIncludesThisCropItToo: "",
-    ifRightSideIncludesThisThenCropTightly: "",
-    ifRightSideIncludesThisCropItToo: "",
-    extendToOneSide: false,
-    wipeAllWhitespaceOnLeft: false,
-    wipeAllWhitespaceOnRight: false,
-    addSingleSpaceToPreventAccidentalConcatenation: false,
-  };
-  const opts = { ...defaults, ...originalOpts };
+  const opts: Opts = { ...defaults, ...originalOpts };
   if (Array.isArray(opts.ifLeftSideIncludesThisThenCropTightly)) {
     let culpritsIndex;
     let culpritsValue;
@@ -150,7 +168,7 @@ function expander(originalOpts) {
     }
   }
 
-  // Real deal
+  // Action
   // ---------------------------------------------------------------------------
 
   const str = opts.str; // convenience
@@ -298,4 +316,4 @@ function expander(originalOpts) {
   return [from, to];
 }
 
-export default expander;
+export { expander, defaults, version };

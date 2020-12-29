@@ -34,7 +34,7 @@ npm i string-range-expander
 
 ```js
 import { strict as assert } from "assert";
-import expander from "string-range-expander";
+import { expander } from "string-range-expander";
 
 // let's say we have picked the "zzzz" index range - [16, 20]
 // "something>\n\t    zzzz <here"

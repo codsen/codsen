@@ -1,5 +1,5 @@
 import tap from "tap";
-import e from "../dist/string-range-expander.esm";
+import { expander as e } from "../dist/string-range-expander.esm";
 
 // 00. THROWS.
 // -----------------------------------------------------------------------------
