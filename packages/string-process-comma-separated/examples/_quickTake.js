@@ -1,16 +1,14 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import processCommaSeparated from "../dist/string-process-comma-separated.esm.js";
+import { processCommaSep } from "../dist/string-process-comma-separated.esm.js";
 
 const gatheredChunks = [];
 const gatheredErrors = [];
 const rawnbsp = "\u00a0";
 
 // it's a callback-interface:
-processCommaSeparated(`<FRAMESET rows=" ,,\t50% ,${rawnbsp} 50% ,\t\t,">`, {
+processCommaSep(`<FRAMESET rows=" ,,\t50% ,${rawnbsp} 50% ,\t\t,">`, {
   from: 16, // <- beginning of the attribute's value
   to: 35, // <- ending of the attribute's value
   separator: ",",

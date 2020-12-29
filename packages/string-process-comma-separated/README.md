@@ -34,14 +34,14 @@ npm i string-process-comma-separated
 
 ```js
 import { strict as assert } from "assert";
-import processCommaSeparated from "string-process-comma-separated";
+import { processCommaSep } from "string-process-comma-separated";
 
 const gatheredChunks = [];
 const gatheredErrors = [];
 const rawnbsp = "\u00a0";
 
 // it's a callback-interface:
-processCommaSeparated(`<FRAMESET rows=" ,,\t50% ,${rawnbsp} 50% ,\t\t,">`, {
+processCommaSep(`<FRAMESET rows=" ,,\t50% ,${rawnbsp} 50% ,\t\t,">`, {
   from: 16, // <- beginning of the attribute's value
   to: 35, // <- ending of the attribute's value
   separator: ",",

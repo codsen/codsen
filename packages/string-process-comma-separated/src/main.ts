@@ -1,14 +1,39 @@
-function processCommaSeparated(str, originalOpts) {
+import { version } from "../package.json";
+
+type ErrCb = (
+  indexes: [from: number, to: number][],
+  explanation: string,
+  isFixable: boolean
+) => void;
+
+interface Obj {
+  [key: string]: any;
+}
+
+interface Opts {
+  from: number;
+  to: number;
+  offset: number;
+  leadingWhitespaceOK: boolean;
+  trailingWhitespaceOK: boolean;
+  oneSpaceAfterCommaOK: boolean;
+  innerWhitespaceAllowed: boolean;
+  separator: string;
+  cb: null | ((from: number, to: number) => void);
+  errCb: null | ErrCb;
+}
+
+function processCommaSep(str: string, originalOpts?: Opts) {
   console.log(
-    `003 processCommaSeparated: INCOMING ${`\u001b[${33}m${`str`}\u001b[${39}m`}: ${JSON.stringify(
+    `003 processCommaSep: INCOMING ${`\u001b[${33}m${`str`}\u001b[${39}m`}: ${JSON.stringify(
       str,
       null,
       0
     )}`
   );
   console.log(
-    `010 processCommaSeparated: INCOMING ${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} keys: ${JSON.stringify(
-      Object.keys(originalOpts),
+    `010 processCommaSep: INCOMING ${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} keys: ${JSON.stringify(
+      originalOpts,
       null,
       0
     )}`
@@ -23,12 +48,16 @@ function processCommaSeparated(str, originalOpts) {
         4
       )}`
     );
-  } else if (!str.length || (!originalOpts.cb && !originalOpts.errCb)) {
+  } else if (
+    !str.length ||
+    !originalOpts ||
+    (!originalOpts.cb && !originalOpts.errCb)
+  ) {
     // if input str is empty or there are no callbacks, exit early
     return;
   }
   // opts preparation:
-  const defaults = {
+  const defaults: Opts = {
     from: 0,
     to: str.length,
     offset: 0,
@@ -54,7 +83,7 @@ function processCommaSeparated(str, originalOpts) {
   }
 
   console.log(
-    `057 processCommaSeparated: FINAL ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+    `057 processCommaSep: FINAL ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
       opts,
       null,
       4
@@ -62,11 +91,11 @@ function processCommaSeparated(str, originalOpts) {
   );
 
   // action:
-  let chunkStartsAt = null;
-  let whitespaceStartsAt = null;
+  let chunkStartsAt: number | null = null;
+  let whitespaceStartsAt: number | null = null;
   let firstNonwhitespaceNonseparatorCharFound = false;
   let separatorsArr = []; // needed to catch trailing separators
-  let lastNonWhitespaceCharAt = null;
+  let lastNonWhitespaceCharAt: number | null = null;
   let fixable = true;
 
   for (let i = opts.from; i < opts.to; i++) {
@@ -105,7 +134,7 @@ function processCommaSeparated(str, originalOpts) {
           // eslint-disable-next-line no-loop-func
           separatorsArr.forEach((separatorsIdx, orderNumber) => {
             if (orderNumber) {
-              opts.errCb(
+              (opts as Obj).errCb(
                 [
                   [
                     separatorsIdx + opts.offset,
@@ -133,12 +162,14 @@ function processCommaSeparated(str, originalOpts) {
     // catch the ending of a chunk
     if (
       Number.isInteger(chunkStartsAt) &&
-      ((i > chunkStartsAt && opts.separator && str[i] === opts.separator) ||
+      ((i > (chunkStartsAt as number) &&
+        opts.separator &&
+        str[i] === opts.separator) ||
         i + 1 === opts.to)
     ) {
       console.log(`139 chunk ends`);
       const chunk = str.slice(
-        chunkStartsAt,
+        chunkStartsAt as number,
         i + 1 === opts.to && str[i] !== opts.separator && str[i].trim()
           ? i + 1
           : i
@@ -152,20 +183,20 @@ function processCommaSeparated(str, originalOpts) {
         console.log(
           `153 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} ${JSON.stringify(
             [
-              chunkStartsAt + opts.offset,
+              (chunkStartsAt as number) + opts.offset,
               (i + 1 === opts.to && str[i] !== opts.separator && str[i].trim()
                 ? i + 1
-                : lastNonWhitespaceCharAt + 1) + opts.offset,
+                : (lastNonWhitespaceCharAt as number) + 1) + opts.offset,
             ],
             null,
             4
           )}`
         );
         opts.cb(
-          chunkStartsAt + opts.offset,
+          (chunkStartsAt as number) + opts.offset,
           (i + 1 === opts.to && str[i] !== opts.separator && str[i].trim()
             ? i + 1
-            : lastNonWhitespaceCharAt + 1) + opts.offset
+            : (lastNonWhitespaceCharAt as number) + 1) + opts.offset
         );
       }
 
@@ -327,13 +358,13 @@ function processCommaSeparated(str, originalOpts) {
         );
 
         if (whatToAdd.length) {
-          opts.errCb(
+          (opts as Obj).errCb(
             [[startingIdx + opts.offset, endingIdx + opts.offset, whatToAdd]],
             message,
             fixable
           );
         } else {
-          opts.errCb(
+          (opts as Obj).errCb(
             [[startingIdx + opts.offset, endingIdx + opts.offset]],
             message,
             fixable
@@ -359,7 +390,7 @@ function processCommaSeparated(str, originalOpts) {
             4
           )}`
         );
-        opts.errCb(
+        (opts as Obj).errCb(
           [[i + opts.offset, i + 1 + opts.offset]],
           "Remove separator.",
           fixable
@@ -393,7 +424,7 @@ function processCommaSeparated(str, originalOpts) {
     if (i + 1 === opts.to) {
       // eslint-disable-next-line no-loop-func
       separatorsArr.forEach((separatorsIdx) => {
-        opts.errCb(
+        (opts as Obj).errCb(
           [[separatorsIdx + opts.offset, separatorsIdx + 1 + opts.offset]],
           "Remove separator.",
           fixable
@@ -413,4 +444,4 @@ function processCommaSeparated(str, originalOpts) {
   }
 }
 
-export default processCommaSeparated;
+export { processCommaSep, version };

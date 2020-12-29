@@ -1,7 +1,7 @@
 /* eslint no-param-reassign:0 */
 
 import tap from "tap";
-import processCommaSeparated from "../dist/string-process-comma-separated.esm";
+import { processCommaSep } from "../dist/string-process-comma-separated.esm";
 
 const rawnbsp = "\u00a0";
 
@@ -22,7 +22,7 @@ function helper(str, opts, gatheredChunks, gatheredErrors) {
     gatheredErrors.push({ ranges, message, fixable });
   };
 
-  processCommaSeparated(str, opts);
+  processCommaSep(str, opts);
 }
 
 // 01. edge cases - unusual, broken or strange inputs
@@ -54,7 +54,7 @@ tap.test(
   `02 - ${`\u001b[${36}m${`edge cases`}\u001b[${39}m`} - empty string, empty opts`,
   (t) => {
     t.doesNotThrow(() => {
-      processCommaSeparated("");
+      processCommaSep("");
     }, "02");
     t.end();
   }
@@ -64,7 +64,7 @@ tap.test(
   `03 - ${`\u001b[${36}m${`edge cases`}\u001b[${39}m`} - not a string`,
   (t) => {
     t.throws(() => {
-      processCommaSeparated(true);
+      processCommaSep(true);
     }, /THROW_ID_01/);
     t.end();
   }

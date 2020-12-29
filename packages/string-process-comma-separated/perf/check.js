@@ -7,12 +7,12 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { processCommaSep } = require("..");
 
 const testme = () => {
   const gatheredChunks = [];
   const gatheredErrors = [];
-  f(`<FRAMESET rows="50%,,  50%">`, {
+  processCommaSep(`<FRAMESET rows="50%,,  50%">`, {
     from: 16,
     to: 26,
     cb: (idxFrom, idxTo) => {
