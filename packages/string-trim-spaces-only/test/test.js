@@ -1,5 +1,5 @@
 import tap from "tap";
-import trim from "../dist/string-trim-spaces-only.esm";
+import { trimSpaces as trim } from "../dist/string-trim-spaces-only.esm";
 
 const rawnbsp = "\u00a0";
 

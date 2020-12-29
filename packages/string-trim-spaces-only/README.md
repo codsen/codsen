@@ -34,7 +34,7 @@ npm i string-trim-spaces-only
 
 ```js
 import { strict as assert } from "assert";
-import trimSpaces from "string-trim-spaces-only";
+import { trimSpaces } from "string-trim-spaces-only";
 
 assert.deepEqual(trimSpaces("  aaa   "), {
   res: "aaa",

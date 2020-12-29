@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import trimSpaces from "../dist/string-trim-spaces-only.esm.js";
+import { trimSpaces } from "../dist/string-trim-spaces-only.esm.js";
 
 assert.deepEqual(trimSpaces("  aaa   "), {
   res: "aaa",

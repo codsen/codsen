@@ -9,139 +9,113 @@
 
 'use strict';
 
-function _typeof(obj) {
-  "@babel/helpers - typeof";
+Object.defineProperty(exports, '__esModule', { value: true });
 
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof = function (obj) {
-      return typeof obj;
-    };
-  } else {
-    _typeof = function (obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
+var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
 
-  return _typeof(obj);
-}
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
+var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
-  return obj;
-}
+var version = "2.9.0";
 
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
+var defaults = {
+  classicTrim: false,
+  cr: false,
+  lf: false,
+  tab: false,
+  space: true,
+  nbsp: false
+};
 
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    if (enumerableOnly) symbols = symbols.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    });
-    keys.push.apply(keys, symbols);
-  }
+function trimSpaces(str, originalOpts) {
+  // insurance:
+  if (typeof str !== "string") {
+    throw new Error("string-trim-spaces-only: [THROW_ID_01] input must be string! It was given as " + typeof str + ", equal to:\n" + JSON.stringify(str, null, 4));
+  } // opts preparation:
 
-  return keys;
-}
 
-function _objectSpread2(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
+  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
 
-    if (i % 2) {
-      ownKeys(Object(source), true).forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
-    } else if (Object.getOwnPropertyDescriptors) {
-      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-    } else {
-      ownKeys(Object(source)).forEach(function (key) {
-        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-      });
-    }
-  }
-
-  return target;
-}
-
-function trimSpaces(s, originalOpts) {
-  if (typeof s !== "string") {
-    throw new Error("string-trim-spaces-only: [THROW_ID_01] input must be string! It was given as ".concat(_typeof(s), ", equal to:\n").concat(JSON.stringify(s, null, 4)));
-  }
-  var defaults = {
-    classicTrim: false,
-    cr: false,
-    lf: false,
-    tab: false,
-    space: true,
-    nbsp: false
-  };
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
   function check(char) {
     return opts.classicTrim && !char.trim() || !opts.classicTrim && (opts.space && char === " " || opts.cr && char === "\r" || opts.lf && char === "\n" || opts.tab && char === "\t" || opts.nbsp && char === "\xA0");
-  }
+  } // action:
+
+
   var newStart;
   var newEnd;
-  if (s.length) {
-    if (check(s[0])) {
-      for (var i = 0, len = s.length; i < len; i++) {
-        if (!check(s[i])) {
+
+  if (str.length) {
+    if (check(str[0])) {
+
+      for (var i = 0, len = str.length; i < len; i++) {
+
+        if (!check(str[i])) {
           newStart = i;
           break;
-        }
-        if (i === s.length - 1) {
+        } // if we traversed the whole string this way and didn't stumble on a non-
+        // space/whitespace character (depending on opts.classicTrim), this means
+        // whole thing can be trimmed:
+
+
+        if (i === str.length - 1) {
+          // this means there are only spaces/whitespace from beginning to the end
           return {
             res: "",
-            ranges: [[0, s.length]]
+            ranges: [[0, str.length]]
           };
         }
       }
-    }
-    if (check(s[s.length - 1])) {
-      for (var _i = s.length; _i--;) {
-        if (!check(s[_i])) {
+    } // if we reached this far, check the last character - find out, is it worth
+    // trimming the end of the given string:
+
+
+    if (check(str[str.length - 1])) {
+
+      for (var _i = str.length; _i--;) {
+
+        if (!check(str[_i])) {
           newEnd = _i + 1;
           break;
         }
       }
     }
+
     if (newStart) {
       if (newEnd) {
         return {
-          res: s.slice(newStart, newEnd),
-          ranges: [[0, newStart], [newEnd, s.length]]
+          res: str.slice(newStart, newEnd),
+          ranges: [[0, newStart], [newEnd, str.length]]
         };
       }
       return {
-        res: s.slice(newStart),
+        res: str.slice(newStart),
         ranges: [[0, newStart]]
       };
     }
+
     if (newEnd) {
       return {
-        res: s.slice(0, newEnd),
-        ranges: [[newEnd, s.length]]
+        res: str.slice(0, newEnd),
+        ranges: [[newEnd, str.length]]
       };
-    }
+    } // if we reached this far, there was nothing to trim:
+
+
     return {
-      res: s,
+      res: str,
       ranges: []
     };
-  }
+  } // if we reached this far, this means it's an empty string. In which case,
+  // return empty values:
+
+
   return {
     res: "",
     ranges: []
   };
 }
 
-module.exports = trimSpaces;
+exports.defaults = defaults;
+exports.trimSpaces = trimSpaces;
+exports.version = version;
