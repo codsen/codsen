@@ -9,166 +9,163 @@
 
 'use strict';
 
-var replaceSlicesArr = require('ranges-apply');
-var Slices = require('ranges-push');
-var isObj = require('lodash.isplainobject');
-var isNum = require('is-numeric');
+Object.defineProperty(exports, '__esModule', { value: true });
+
+var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var rangesApply = require('ranges-apply');
+var rangesPush = require('ranges-push');
 var trimChars = require('lodash.trim');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-var replaceSlicesArr__default = /*#__PURE__*/_interopDefaultLegacy(replaceSlicesArr);
-var Slices__default = /*#__PURE__*/_interopDefaultLegacy(Slices);
-var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
-var isNum__default = /*#__PURE__*/_interopDefaultLegacy(isNum);
+var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var trimChars__default = /*#__PURE__*/_interopDefaultLegacy(trimChars);
 
-function _typeof(obj) {
-  "@babel/helpers - typeof";
-
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof = function (obj) {
-      return typeof obj;
-    };
-  } else {
-    _typeof = function (obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return _typeof(obj);
-}
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    if (enumerableOnly) symbols = symbols.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    });
-    keys.push.apply(keys, symbols);
-  }
-
-  return keys;
-}
-
-function _objectSpread2(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-
-    if (i % 2) {
-      ownKeys(Object(source), true).forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
-    } else if (Object.getOwnPropertyDescriptors) {
-      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-    } else {
-      ownKeys(Object(source)).forEach(function (key) {
-        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-      });
-    }
-  }
-
-  return target;
-}
+var version = "4.0.3";
 
 function remSep(str, originalOpts) {
-  var allOK = true;
+  // vars
+  var allOK = true; // used to bail somewhere down the line. It's a killswitch.
+
   var knownSeparatorsArray = [".", ",", "'", " "];
-  var firstSeparator;
+  var firstSeparator; // validation
+
   if (typeof str !== "string") {
-    throw new TypeError("string-remove-thousand-separators/remSep(): [THROW_ID_01] Input must be string! Currently it's: ".concat(_typeof(str), ", equal to:\n").concat(JSON.stringify(str, null, 4)));
+    throw new TypeError("string-remove-thousand-separators/remSep(): [THROW_ID_01] Input must be string! Currently it's: " + typeof str + ", equal to:\n" + JSON.stringify(str, null, 4));
   }
-  if (originalOpts !== undefined && originalOpts !== null && !isObj__default['default'](originalOpts)) {
-    throw new TypeError("string-remove-thousand-separators/remSep(): [THROW_ID_02] Options object must be a plain object! Currently it's: ".concat(_typeof(originalOpts), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
-  }
+
+  if (originalOpts && typeof originalOpts !== "object") {
+    throw new TypeError("string-remove-thousand-separators/remSep(): [THROW_ID_02] Options object must be a plain object! Currently it's: " + typeof originalOpts + ", equal to:\n" + JSON.stringify(originalOpts, null, 4));
+  } // prep opts
+
+
   var defaults = {
     removeThousandSeparatorsFromNumbers: true,
     padSingleDecimalPlaceNumbers: true,
     forceUKStyle: false
   };
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
-  var res = trimChars__default['default'](str.trim(), '"');
+
+  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts); // trim whitespace and wrapping double quotes:
+
+
+  var res = trimChars__default['default'](str.trim(), '"'); // end sooner if it's an empty string:
+
   if (res === "") {
     return res;
-  }
-  var rangesToDelete = new Slices__default['default']();
+  } // we'll manage the TO-DELETE string slice ranges using this:
+
+
+  var rangesToDelete = new rangesPush.Ranges(); // traverse the string indexes
+
   for (var i = 0, len = res.length; i < len; i++) {
+    // -------------------------------------------------------------------------
+    // catch empty space for Russian-style thousand separators (spaces):
     if (opts.removeThousandSeparatorsFromNumbers && res[i].trim() === "") {
       rangesToDelete.add(i, i + 1);
-    }
+    } // -------------------------------------------------------------------------
+    // catch single quotes for Swiss-style thousand separators:
+    // (safe to delete instantly because they're not commas or dots)
+
+
     if (opts.removeThousandSeparatorsFromNumbers && res[i] === "'") {
-      rangesToDelete.add(i, i + 1);
+      rangesToDelete.add(i, i + 1); // but if single quote follows this, that's dodgy and let's bail
+
       if (res[i + 1] === "'") {
+        // bail!
         allOK = false;
-        break;
+        break; // That's very weird case by the way. We're talking about CSV contents here after all...
       }
-    }
+    } // -------------------------------------------------------------------------
+    // catch thousand separators
+
+
     if (knownSeparatorsArray.includes(res[i])) {
-      if (res[i + 1] !== undefined && isNum__default['default'](res[i + 1])) {
+      // check three characters to the right
+      if (res[i + 1] !== undefined && /^\d*$/.test(res[i + 1])) {
         if (res[i + 2] !== undefined) {
-          if (isNum__default['default'](res[i + 2])) {
+          if (/^\d*$/.test(res[i + 2])) {
+            //
+            // thousands separator followed by two digits...
             if (res[i + 3] !== undefined) {
-              if (isNum__default['default'](res[i + 3])) {
-                if (res[i + 4] !== undefined && isNum__default['default'](res[i + 4])) {
+              if (/^\d*$/.test(res[i + 3])) {
+                if (res[i + 4] !== undefined && /^\d*$/.test(res[i + 4])) {
+                  // four digits after thousands separator
+                  // bail!
                   allOK = false;
                   break;
                 } else {
+                  //
+                  // thousands separator followed by three digits...
+                  // =============
+                  // 1. submit for deletion
                   if (opts.removeThousandSeparatorsFromNumbers) {
                     rangesToDelete.add(i, i + 1);
-                  }
+                  } // 2. enforce the thousands separator consistency:
+
+
                   if (!firstSeparator) {
+                    // It's the first encountered thousand separator. Make a record of it.
                     firstSeparator = res[i];
                   } else if (res[i] !== firstSeparator) {
+                    // Check against the previous separator. These have to be consistent,
+                    // of we'll bail.
                     allOK = false;
                     break;
-                  }
+                  } //
+                  //
+
                 }
               } else {
+                // bail!
                 allOK = false;
                 break;
               }
             } else if (opts.removeThousandSeparatorsFromNumbers && opts.forceUKStyle && res[i] === ",") {
+              //
+              // Stuff like "100,01" (Russian notation) or "100.01" (UK notation).
+              // A Separator followed by two digits and string ends.
+              //
+              // If Russian notation:
               rangesToDelete.add(i, i + 1, ".");
             }
           } else {
+            // stuff like "1,0a" - bail
             allOK = false;
             break;
           }
         } else {
+          // second digit IS UNDEFINED
+          //
+          // Stuff like "10.1" (UK notation) or "10,1" (Russian notation).
+          // Thousands separator followed by only one digit and then string ends.
+          // =============
+          // Convert Russian notation if requested:
           if (opts.forceUKStyle && res[i] === ",") {
             rangesToDelete.add(i, i + 1, ".");
-          }
+          } // Pad it with zero if requested:
+
+
           if (opts.padSingleDecimalPlaceNumbers) {
             rangesToDelete.add(i + 2, i + 2, "0");
           }
         }
-      }
-    } else if (!isNum__default['default'](res[i])) {
+      } // when we have one decimal place, like "100.2", we pad it to two places, like "100.20"
+      // -------------------------------------------------------------------------
+
+    } else if (!/^\d*$/.test(res[i])) {
+      // catch unrecognised characters,
+      // then turn off the killswitch and break the loop
       allOK = false;
       break;
     }
   }
+
   if (allOK && rangesToDelete.current()) {
-    return replaceSlicesArr__default['default'](res, rangesToDelete.current());
+    return rangesApply.rApply(res, rangesToDelete.current());
   }
+
   return res;
 }
 
-module.exports = remSep;
+exports.remSep = remSep;
+exports.version = version;

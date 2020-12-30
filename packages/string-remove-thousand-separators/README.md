@@ -34,7 +34,7 @@ npm i string-remove-thousand-separators
 
 ```js
 import { strict as assert } from "assert";
-import remSep from "string-remove-thousand-separators";
+import { remSep } from "string-remove-thousand-separators";
 
 // 🇬🇧 🇺🇸 thousand separators:
 assert.equal(remSep("1,000,000.00"), "1000000.00");

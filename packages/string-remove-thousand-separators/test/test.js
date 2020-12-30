@@ -1,5 +1,5 @@
 import tap from "tap";
-import r from "../dist/string-remove-thousand-separators.esm";
+import { remSep as r } from "../dist/string-remove-thousand-separators.esm";
 
 // ==============================
 // normal use cases
@@ -423,12 +423,6 @@ tap.test("12 - throws when second arg is not a plain object", (t) => {
   }, /THROW_ID_02/g);
   t.throws(() => {
     r("aaa", true);
-  }, /THROW_ID_02/g);
-  t.throws(() => {
-    r("aaa", [true]);
-  }, /THROW_ID_02/g);
-  t.throws(() => {
-    r("aaa", ["aaa"]);
   }, /THROW_ID_02/g);
   t.end();
 });

@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import remSep from "../dist/string-remove-thousand-separators.esm.js";
+import { remSep } from "../dist/string-remove-thousand-separators.esm.js";
 
 // 🇬🇧 🇺🇸 thousand separators:
 assert.equal(remSep("1,000,000.00"), "1000000.00");

@@ -1,10 +1,15 @@
-import replaceSlicesArr from "ranges-apply";
-import Slices from "ranges-push";
-import isObj from "lodash.isplainobject";
-import isNum from "is-numeric";
+import { rApply } from "ranges-apply";
+import { Ranges } from "ranges-push";
 import trimChars from "lodash.trim";
+import { version } from "../package.json";
 
-function remSep(str, originalOpts) {
+interface Opts {
+  removeThousandSeparatorsFromNumbers: boolean;
+  padSingleDecimalPlaceNumbers: boolean;
+  forceUKStyle: boolean;
+}
+
+function remSep(str: string, originalOpts?: Opts): string {
   // vars
   let allOK = true; // used to bail somewhere down the line. It's a killswitch.
   const knownSeparatorsArray = [".", ",", "'", " "];
@@ -20,11 +25,7 @@ function remSep(str, originalOpts) {
       )}`
     );
   }
-  if (
-    originalOpts !== undefined &&
-    originalOpts !== null &&
-    !isObj(originalOpts)
-  ) {
+  if (originalOpts && typeof originalOpts !== "object") {
     throw new TypeError(
       `string-remove-thousand-separators/remSep(): [THROW_ID_02] Options object must be a plain object! Currently it's: ${typeof originalOpts}, equal to:\n${JSON.stringify(
         originalOpts,
@@ -35,12 +36,12 @@ function remSep(str, originalOpts) {
   }
 
   // prep opts
-  const defaults = {
+  const defaults: Opts = {
     removeThousandSeparatorsFromNumbers: true,
     padSingleDecimalPlaceNumbers: true,
     forceUKStyle: false,
   };
-  const opts = { ...defaults, ...originalOpts };
+  const opts: Opts = { ...defaults, ...originalOpts };
 
   // trim whitespace and wrapping double quotes:
   const res = trimChars(str.trim(), '"');
@@ -51,7 +52,7 @@ function remSep(str, originalOpts) {
   }
 
   // we'll manage the TO-DELETE string slice ranges using this:
-  const rangesToDelete = new Slices();
+  const rangesToDelete = new Ranges();
 
   // traverse the string indexes
   for (let i = 0, len = res.length; i < len; i++) {
@@ -77,14 +78,14 @@ function remSep(str, originalOpts) {
     // catch thousand separators
     if (knownSeparatorsArray.includes(res[i])) {
       // check three characters to the right
-      if (res[i + 1] !== undefined && isNum(res[i + 1])) {
+      if (res[i + 1] !== undefined && /^\d*$/.test(res[i + 1])) {
         if (res[i + 2] !== undefined) {
-          if (isNum(res[i + 2])) {
+          if (/^\d*$/.test(res[i + 2])) {
             //
             // thousands separator followed by two digits...
             if (res[i + 3] !== undefined) {
-              if (isNum(res[i + 3])) {
-                if (res[i + 4] !== undefined && isNum(res[i + 4])) {
+              if (/^\d*$/.test(res[i + 3])) {
+                if (res[i + 4] !== undefined && /^\d*$/.test(res[i + 4])) {
                   // four digits after thousands separator
                   // bail!
                   allOK = false;
@@ -151,7 +152,7 @@ function remSep(str, originalOpts) {
       }
       // when we have one decimal place, like "100.2", we pad it to two places, like "100.20"
       // -------------------------------------------------------------------------
-    } else if (!isNum(res[i])) {
+    } else if (!/^\d*$/.test(res[i])) {
       // catch unrecognised characters,
       // then turn off the killswitch and break the loop
       allOK = false;
@@ -160,9 +161,9 @@ function remSep(str, originalOpts) {
   }
 
   if (allOK && rangesToDelete.current()) {
-    return replaceSlicesArr(res, rangesToDelete.current());
+    return rApply(res, rangesToDelete.current());
   }
   return res;
 }
 
-export default remSep;
+export { remSep, version };
