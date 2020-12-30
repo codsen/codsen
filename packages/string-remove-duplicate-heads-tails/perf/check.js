@@ -7,10 +7,10 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { remDup } = require("..");
 
 const testme = () =>
-  f("{{ Hi {{ first_name }}! }}", {
+  remDup("{{ Hi {{ first_name }}! }}", {
     heads: "   {{     ",
     tails: "    }}       ",
   });

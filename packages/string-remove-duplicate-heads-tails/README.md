@@ -34,10 +34,10 @@ npm i string-remove-duplicate-heads-tails
 
 ```js
 import { strict as assert } from "assert";
-import removeDuplicateHeadsTails from "string-remove-duplicate-heads-tails";
+import { remDup } from "string-remove-duplicate-heads-tails";
 
 assert.equal(
-  removeDuplicateHeadsTails("{{ Hi {{ first_name }}! }}", {
+  remDup("{{ Hi {{ first_name }}! }}", {
     heads: "{{ ",
     tails: " }}",
   }),
