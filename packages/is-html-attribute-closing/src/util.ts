@@ -1,7 +1,16 @@
-import charSuitableForHTMLAttrName from "is-char-suitable-for-html-attr-name";
+import { isAttrNameChar } from "is-char-suitable-for-html-attr-name";
 import { left } from "string-left-right";
 
-function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x, y = []) {
+function makeTheQuoteOpposite(quoteChar: string): string {
+  return quoteChar === `'` ? `"` : `'`;
+}
+
+function ensureXIsNotPresentBeforeOneOfY(
+  str: string,
+  startingIdx: number,
+  x: string,
+  y: string[] = []
+): boolean {
   console.log(`005e ensureXIsNotPresentBeforeOneOfY() called`);
   for (let i = startingIdx, len = str.length; i < len; i++) {
     console.log(`007e str[i] = ${str[i]}`);
@@ -25,7 +34,12 @@ function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x, y = []) {
 // Tells, if substring x goes before substring y on the right
 // side of "str", starting at index "startingIdx".
 // Used to troubleshoot dirty broken code.
-function xBeforeYOnTheRight(str, startingIdx, x, y) {
+function xBeforeYOnTheRight(
+  str: string,
+  startingIdx: number,
+  x: string,
+  y: string
+): boolean {
   for (let i = startingIdx, len = str.length; i < len; i++) {
     if (str.startsWith(x, i)) {
       // if x was first, Bob's your uncle, that's truthy result
@@ -45,11 +59,11 @@ function xBeforeYOnTheRight(str, startingIdx, x, y) {
 // <img alt="so-called "artists"class='yo'/>
 //                              ^
 //                            start
-function plausibleAttrStartsAtX(str, start) {
+function plausibleAttrStartsAtX(str: string, start: number): boolean {
   console.log(
     `${`\u001b[${35}m${`plausibleAttrStartsAtX()`}\u001b[${39}m`} called, start = ${start}`
   );
-  if (!charSuitableForHTMLAttrName(str[start]) || !start) {
+  if (!isAttrNameChar(str[start]) || !start) {
     return false;
   }
   // const regex = /^[a-zA-Z0-9:-]*[=]?((?:'[^']*')|(?:"[^"]*"))/;
@@ -58,11 +72,11 @@ function plausibleAttrStartsAtX(str, start) {
 }
 
 // difference is equal is required
-function guaranteedAttrStartsAtX(str, start) {
+function guaranteedAttrStartsAtX(str: string, start: number): boolean {
   console.log(
     `${`\u001b[${35}m${`guaranteedAttrStartsAtX()`}\u001b[${39}m`} called, start = ${start}`
   );
-  if (!charSuitableForHTMLAttrName(str[start]) || !start) {
+  if (!start || !isAttrNameChar(str[start])) {
     console.log(`066g return false`);
     return false;
   }
@@ -73,8 +87,11 @@ function guaranteedAttrStartsAtX(str, start) {
   return regex.test(str.slice(start));
 }
 
-function findAttrNameCharsChunkOnTheLeft(str, i) {
-  if (!charSuitableForHTMLAttrName(str[left(str, i)])) {
+function findAttrNameCharsChunkOnTheLeft(
+  str: string,
+  i: number
+): undefined | string {
+  if (!isAttrNameChar(str[left(str, i) as number])) {
     return;
   }
   for (let y = i; y--; ) {
@@ -85,7 +102,7 @@ function findAttrNameCharsChunkOnTheLeft(str, i) {
         4
       )}`
     );
-    if (str[y].trim().length && !charSuitableForHTMLAttrName(str[y])) {
+    if (str[y].trim().length && !isAttrNameChar(str[y])) {
       return str.slice(y + 1, i);
     }
   }
@@ -97,4 +114,5 @@ export {
   plausibleAttrStartsAtX,
   guaranteedAttrStartsAtX,
   findAttrNameCharsChunkOnTheLeft,
+  makeTheQuoteOpposite,
 };

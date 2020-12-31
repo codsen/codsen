@@ -1,6 +1,8 @@
 function generateVariations(parts, n) {
   const arr = [];
-  while (n--) arr.push(parts);
+  while (n--) {
+    arr.push(parts);
+  }
   const result = arr.reduce((acc1, val1) =>
     acc1.reduce(
       (acc2, val2) => acc2.concat(val1.map((val) => [].concat(val2, val))),

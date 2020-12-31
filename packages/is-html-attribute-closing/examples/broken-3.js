@@ -1,9 +1,7 @@
-/* eslint import/extensions:0, no-unused-vars:0 */
-
 // Broken #3
 
 import { strict as assert } from "assert";
-import isAttrClosing from "../dist/is-html-attribute-closing.esm";
+import { isAttrClosing } from "../dist/is-html-attribute-closing.esm";
 
 // Correct code:
 // <img class="so-called" alt="!" border='10'/>

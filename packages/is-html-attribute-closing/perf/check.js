@@ -7,10 +7,10 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const is = require("..");
+const { isAttrClosing } = require("..");
 
 const testme = () => {
-  is(`<a href="zzz" target="_blank" style="color: black;">`, 21, 28);
+  isAttrClosing(`<a href="zzz" target="_blank" style="color: black;">`, 21, 28);
 };
 
 // action

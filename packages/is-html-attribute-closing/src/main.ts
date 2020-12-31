@@ -1,5 +1,5 @@
 import { allHtmlAttribs } from "html-all-known-attributes";
-import charSuitableForHTMLAttrName from "is-char-suitable-for-html-attr-name";
+import { isAttrNameChar } from "is-char-suitable-for-html-attr-name";
 import { left, right } from "string-left-right";
 import { matchRight } from "string-match-left-right";
 import {
@@ -8,13 +8,15 @@ import {
   plausibleAttrStartsAtX,
   guaranteedAttrStartsAtX,
   findAttrNameCharsChunkOnTheLeft,
+  makeTheQuoteOpposite,
 } from "./util";
+import { version } from "../package.json";
 
-function makeTheQuoteOpposite(quoteChar) {
-  return quoteChar === `'` ? `"` : `'`;
-}
-
-function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
+function isAttrClosing(
+  str: string,
+  idxOfAttrOpening: number,
+  isThisClosingIdx: number
+): boolean {
   if (
     typeof str !== "string" ||
     !str.trim() ||
@@ -44,11 +46,11 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
   let chunkStartsAt;
   const quotesCount = new Map().set(`'`, 0).set(`"`, 0).set(`matchedPairs`, 0);
 
-  let lastQuoteAt = null;
+  let lastQuoteAt: number | null = null;
   let totalQuotesCount = 0;
   let lastQuoteWasMatched = false;
-  let lastMatchedQuotesPairsStartIsAt = false;
-  let lastMatchedQuotesPairsEndIsAt = false;
+  let lastMatchedQuotesPairsStartIsAt: undefined | number;
+  let lastMatchedQuotesPairsEndIsAt: undefined | number;
 
   // when suspected attribute name chunks end, we wipe them, but here
   // we store the last extracted chunk - then later, for example, when we
@@ -137,6 +139,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       //         ^
       //        this if to reuse the example..
       //
+      lastMatchedQuotesPairsEndIsAt !== undefined &&
       lastMatchedQuotesPairsEndIsAt < i &&
       // rule must not trigger before the suspected quote index
       i >= isThisClosingIdx
@@ -189,8 +192,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       //
       const E1 =
         i !== isThisClosingIdx ||
-        guaranteedAttrStartsAtX(str, right(str, isThisClosingIdx)) ||
-        `/>`.includes(str[right(str, i)]);
+        guaranteedAttrStartsAtX(str, right(str, isThisClosingIdx) as number) ||
+        `/>`.includes(str[right(str, i) as number]);
 
       // ███████████████████████████████████████ E2
       //
@@ -254,7 +257,10 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
 
       // there's a whitespace in front of last chunk ("ddd" in example above)
 
-      const plausibleAttrName = str.slice(chunkStartsAt, i).trim();
+      let plausibleAttrName;
+      if (chunkStartsAt) {
+        plausibleAttrName = str.slice(chunkStartsAt, i).trim();
+      }
       console.log(
         `259 ${`\u001b[${33}m${`plausibleAttrName`}\u001b[${39}m`} = ${JSON.stringify(
           plausibleAttrName,
@@ -269,11 +275,11 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         !str[chunkStartsAt - 1].trim() &&
         // and whole chunk is a plausible attribute name
         Array.from(str.slice(chunkStartsAt, i).trim()).every((char) =>
-          charSuitableForHTMLAttrName(char)
+          isAttrNameChar(char)
         ) &&
         // known opening and suspected closing are both singles or doubles
         str[idxOfAttrOpening] === str[isThisClosingIdx] &&
-        !`/>`.includes(str[right(str, i)]) &&
+        !`/>`.includes(str[right(str, i) as number]) &&
         ensureXIsNotPresentBeforeOneOfY(str, i + 1, "=", [`'`, `"`]);
 
       // anti-rule - it's fine if we're on suspected ending and to the left
@@ -303,22 +309,22 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         // we're on suspected
         i === isThisClosingIdx &&
         // it's not a character suitable for attr name,
-        (!charSuitableForHTMLAttrName(str[left(str, i)]) ||
+        (!isAttrNameChar(str[left(str, i) as number]) ||
           // or it is, but whatever we extracted is not recognised attr name
           (attrNameCharsChunkOnTheLeft &&
             !allHtmlAttribs.has(attrNameCharsChunkOnTheLeft))) &&
         // rule out equal
-        str[left(str, i)] !== "=";
+        str[left(str, i) as number] !== "=";
 
       // ███████████████████████████████████████ E4
 
       const E41 =
         // either it's a tag ending and we're at the suspected quote
-        `/>`.includes(str[right(str, i)]) && i === isThisClosingIdx;
+        `/>`.includes(str[right(str, i) as number]) && i === isThisClosingIdx;
 
       const E42 =
         // or next character is suitable for a tag name:
-        charSuitableForHTMLAttrName(str[right(str, i)]);
+        isAttrNameChar(str[right(str, i) as number]);
 
       const E43 =
         // or in case of:
@@ -348,7 +354,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
           (
             i >= isThisClosingIdx &&
             // there's colon to the left of a suspected quote
-            str[left(str, isThisClosingIdx)] === ":"
+            str[left(str, isThisClosingIdx) as number] === ":"
           )
         );
 
@@ -377,8 +383,12 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       );
       console.log(`E5: ${`\u001b[${E5 ? 32 : 31}m${E5}\u001b[${39}m`}`);
 
-      return (
-        E1 && E2 && (E31 || E32 || E33 || E34) && (E41 || E42 || E43) && E5
+      return !!(
+        E1 &&
+        E2 &&
+        (E31 || E32 || E33 || E34) &&
+        (E41 || E42 || E43) &&
+        E5
       );
     }
 
@@ -405,7 +415,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
           null,
           4
         )}; ${`\u001b[${33}m${`str[lastQuoteAt]`}\u001b[${39}m`}: ${
-          str[lastQuoteAt]
+          str[lastQuoteAt as any]
         }`
       );
       if (lastQuoteAt && str[i] === str[lastQuoteAt]) {
@@ -539,7 +549,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       // <img alt="so-called "artists"!' class='yo'/>
       //                              ^
       //                         we land here, on excl. mark
-      if (charSuitableForHTMLAttrName(str[i])) {
+      if (isAttrNameChar(str[i])) {
         console.log(
           `544 ${`\u001b[${32}m${`██ new attribute name starts`}\u001b[${39}m`}`
         );
@@ -552,7 +562,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
           )}`
         );
       }
-    } else if (chunkStartsAt && !charSuitableForHTMLAttrName(str[i])) {
+    } else if (chunkStartsAt && !isAttrNameChar(str[i])) {
       console.log(`556 inside the attr name END catching clauses`);
 
       // ending of an attr name chunk
@@ -598,7 +608,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         totalQuotesCount === 3 &&
         str[idxOfAttrOpening] === str[i] &&
         allHtmlAttribs.has(lastCapturedChunk) &&
-        !`'"`.includes(str[right(str, i)])
+        !`'"`.includes(str[right(str, i) as number])
       ) {
         console.log(
           `604 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${
@@ -616,7 +626,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         console.log(
           `SPLIT: ${JSON.stringify(
             str
-              .slice(lastQuoteAt + 1, i)
+              .slice((lastQuoteAt as number) + 1, i)
               .trim()
               .split(/\s+/),
             null,
@@ -629,9 +639,9 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         // ensure that all continuous chunks since the last quote are
         // recognised attribute names
         const A21 = !lastQuoteAt;
-        const A22 = lastQuoteAt + 1 >= i;
+        const A22 = (lastQuoteAt as number) + 1 >= i;
         const A23 = str
-          .slice(lastQuoteAt + 1, i)
+          .slice((lastQuoteAt as number) + 1, i)
           .trim()
           .split(/\s+/)
           .every((chunk) => allHtmlAttribs.has(chunk));
@@ -648,9 +658,9 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         const B21 = totalQuotesCount < 3;
         const B22 = !!lastQuoteWasMatched;
         const B23 = !lastQuoteAt;
-        const B24 = lastQuoteAt + 1 >= i;
+        const B24 = (lastQuoteAt as number) + 1 >= i;
         const B25 = !str
-          .slice(lastQuoteAt + 1, i)
+          .slice((lastQuoteAt as number) + 1, i)
           .trim()
           .split(/\s+/)
           .every((chunk) => allHtmlAttribs.has(chunk));
@@ -782,7 +792,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         (
           i > isThisClosingIdx + 1 &&
           // colon is to the left of suspected
-          str[left(str, isThisClosingIdx)] === ":"
+          str[left(str, isThisClosingIdx) as number] === ":"
         )
       ) &&
       //
@@ -891,7 +901,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         // it's whitespace
         (!str[i].length &&
           // and next non-whitespace character is "equal" character
-          str[right(str, i)] === "=")) &&
+          str[right(str, i) as number] === "=")) &&
       // last chunk is not falsey (thus a string)
       lastCapturedChunk &&
       // and finally, perf resource-taxing evaluation, is it recognised:
@@ -923,13 +933,13 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
               // or quotes can be mismatching, but last chunk's start should
               // match a confirmed attribute regex (with matching quotes and
               // equal present)
-              guaranteedAttrStartsAtX(str, chunkStartsAt)
+              guaranteedAttrStartsAtX(str, chunkStartsAt as number)
             )
           ) &&
           //
           // continuing with catch clauses of the insurance case:
           lastQuoteWasMatched &&
-          lastMatchedQuotesPairsStartIsAt &&
+          lastMatchedQuotesPairsStartIsAt !== undefined &&
           lastMatchedQuotesPairsStartIsAt <= isThisClosingIdx
         );
 
@@ -990,16 +1000,20 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         const Y2 = lastQuoteAt === isThisClosingIdx;
 
         // ensure there's some content between suspected and "here":
-        const Y3 = lastQuoteAt + 1 < i && str.slice(lastQuoteAt + 1, i).trim();
+        const Y3 =
+          (lastQuoteAt as number) + 1 < i &&
+          str.slice((lastQuoteAt as number) + 1, i).trim();
 
         const Y4 = str
-          .slice(lastQuoteAt + 1, i)
+          .slice((lastQuoteAt as number) + 1, i)
           .trim()
           .split(/\s+/)
           .every((chunk) => allHtmlAttribs.has(chunk));
         const Y5 = i >= isThisClosingIdx;
 
-        const Y6 = !str[right(str, i)] || !`'"`.includes(str[right(str, i)]);
+        const Y6 =
+          !str[right(str, i) as number] ||
+          !`'"`.includes(str[right(str, i) as number]);
 
         console.log(`Y1: ${`\u001b[${Y1 ? 32 : 31}m${Y1}\u001b[${39}m`}`);
         console.log(`Y2: ${`\u001b[${Y2 ? 32 : 31}m${Y2}\u001b[${39}m`}`);
@@ -1015,7 +1029,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
           }m${Y1 && Y2 && Y3 && Y4 && Y5 && Y6}\u001b[${39}m`}`
         );
 
-        return Y1 && Y2 && Y3 && Y4 && Y5 && Y6;
+        return !!(Y1 && Y2 && Y3 && Y4 && Y5 && Y6);
       }
 
       // if we have passed the suspected closing quote
@@ -1094,7 +1108,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
             // <img alt='so-called "artists"!"/>
             //          ^                    ^^
             //        start         suspected  currently we're on slash
-            `/>`.includes(str[right(str, i)]));
+            `/>`.includes(str[right(str, i) as number]));
 
         const R2 =
           totalQuotesCount < 3 ||
@@ -1108,12 +1122,12 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
           !lastQuoteWasMatched ||
           (lastQuoteWasMatched &&
             !(
-              lastMatchedQuotesPairsStartIsAt &&
+              lastMatchedQuotesPairsStartIsAt !== undefined &&
               Array.from(
                 str
                   .slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt)
                   .trim()
-              ).every((char) => charSuitableForHTMLAttrName(char)) &&
+              ).every((char) => isAttrNameChar(char)) &&
               allHtmlAttribs.has(
                 str
                   .slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt)
@@ -1126,7 +1140,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         const R33 =
           str[idxOfAttrOpening - 2] &&
           str[idxOfAttrOpening - 1] === "=" &&
-          charSuitableForHTMLAttrName(str[idxOfAttrOpening - 2]);
+          isAttrNameChar(str[idxOfAttrOpening - 2]);
 
         const R34 = !ensureXIsNotPresentBeforeOneOfY(str, i + 1, "<", [
           `='`,
@@ -1314,8 +1328,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         // ensure it's a character suitable for attribute
         // name on the left of equal (if it's a real
         // attribute name its name characters must pass
-        // the charSuitableForHTMLAttrName()...)
-        charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft]) &&
+        // the isAttrNameChar()...)
+        isAttrNameChar(str[firstNonWhitespaceCharOnTheLeft as number]) &&
         // ensure it's not
         // <img src="https://z.com/r.png?a=" />
         //                                ^
@@ -1361,8 +1375,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
         i < isThisClosingIdx &&
         `'"`.includes(str[i]) &&
         lastCapturedChunk &&
-        str[left(str, idxOfAttrOpening)] &&
-        str[left(str, idxOfAttrOpening)] !== "=" &&
+        str[left(str, idxOfAttrOpening) as number] &&
+        str[left(str, idxOfAttrOpening) as number] !== "=" &&
         lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening &&
         allHtmlAttribs.has(lastCapturedChunk)
       ) {
@@ -1469,7 +1483,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     }
 
     // at the bottom, PART II of reset chunk
-    if (chunkStartsAt && !charSuitableForHTMLAttrName(str[i])) {
+    if (chunkStartsAt && !isAttrNameChar(str[i])) {
       console.log(
         `1474 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`}`
       );
@@ -1508,4 +1522,4 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
   return false;
 }
 
-export default isAttrClosing;
+export { isAttrClosing, version };
