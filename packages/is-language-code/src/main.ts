@@ -1,28 +1,42 @@
-import language from "./tag_language.json";
-import extlang from "./tag_extlang.json";
-import grandfathered from "./tag_grandfathered.json";
+import { version } from "../package.json";
+import languageJson from "./tag_language.json";
+import extlangJson from "./tag_extlang.json";
+import grandfatheredJson from "./tag_grandfathered.json";
 // import redundant from "./tag_redundant.json";
-import region from "./tag_region.json";
-import script from "./tag_script.json";
-import variant from "./tag_variant.json";
+import regionJson from "./tag_region.json";
+import scriptJson from "./tag_script.json";
+import variantJson from "./tag_variant.json";
 // import ranged from "./tag_ranged.json";
 
-function isRegExp(something) {
+const language: (string | RegExp)[] = languageJson;
+const extlang: string[] = extlangJson;
+const grandfathered: string[] = grandfatheredJson;
+const region: (string | RegExp)[] = regionJson;
+const script: (string | RegExp)[] = scriptJson;
+const variant: string[] = variantJson;
+
+function isRegExp(something: any): boolean {
   return something instanceof RegExp;
 }
 
-function includes(arr, whatToMatch) {
+// Array.prototype.includes() beefed up to support regexp too
+function includes(arr: string[] | any, whatToMatch: string | RegExp) {
   if (!Array.isArray(arr) || !arr.length) {
     return false;
   }
   return arr.some(
     (val) =>
-      (isRegExp(val) && whatToMatch.match(val)) ||
+      (isRegExp(val) && (whatToMatch as string).match(val)) ||
       (typeof val === "string" && whatToMatch === val)
   );
 }
 
-function isLangCode(str) {
+interface Res {
+  res: boolean;
+  message: string | null;
+}
+
+function isLangCode(str: string): Res {
   if (typeof str !== "string") {
     return {
       res: false,
@@ -102,11 +116,11 @@ function isLangCode(str) {
   let type; // private|normal - used as a "global" marker among rules, when iterating
 
   // will help to enforce the sequence:
-  let languageMatched = false;
-  let scriptMatched = false;
-  let regionMatched = false;
-  let variantMatched = false;
-  let extlangMatched = false;
+  let languageMatched: string | undefined;
+  let scriptMatched: string | undefined;
+  let regionMatched: string | undefined;
+  let variantMatched: string | undefined;
+  let extlangMatched: string | undefined;
 
   // the plan: we split by dash ("-") and get array. We iterate it and each
   // time variable "ok" is set to "true" by some logic rules OR if end of
@@ -114,8 +128,8 @@ function isLangCode(str) {
   let allOK;
 
   // track repeated variant subtags
-  const variantGathered = [];
-  const singletonGathered = [];
+  const variantGathered: string[] = [];
+  const singletonGathered: string[] = [];
 
   // iterate through every chunk:
   console.log("isLangCode() loop");
@@ -680,4 +694,4 @@ function isLangCode(str) {
   return { res: true, message: null };
 }
 
-export default isLangCode;
+export { isLangCode, version };

@@ -1,5 +1,5 @@
 import tap from "tap";
-import isLangCode from "../dist/is-language-code.esm";
+import { isLangCode } from "../dist/is-language-code.esm";
 
 // https://datahub.io/core/language-codes
 const datahubLangCodes = [

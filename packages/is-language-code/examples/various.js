@@ -1,9 +1,7 @@
-/* eslint import/extensions:0, no-unused-vars:0 */
-
-// Quick Take
+// Various examples
 
 import { strict as assert } from "assert";
-import isLangCode from "../dist/is-language-code.esm";
+import { isLangCode } from "../dist/is-language-code.esm";
 
 assert.equal(isLangCode("de").res, true);
 // => true because it's a German language code

@@ -7,9 +7,9 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { isLangCode } = require("..");
 
-const testme = () => f("zzz<img           /    >zzz");
+const testme = () => isLangCode("zzz<img           /    >zzz");
 
 // action
 runPerf(testme, callerDir);
