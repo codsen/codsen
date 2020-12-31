@@ -34,19 +34,19 @@ npm i object-all-values-equal-to
 
 ```js
 import { strict as assert } from "assert";
-import allEqualTo from "object-all-values-equal-to";
+import { allEq } from "object-all-values-equal-to";
 
 // are all values equal to null:
-assert.equal(allEqualTo({ a: null, c: null }, null), true);
+assert.equal(allEq({ a: null, c: null }, null), true);
 // yes
 
 // are all values equal to "false":
-assert.equal(allEqualTo({ a: false, c: "zzz" }, false), false);
+assert.equal(allEq({ a: false, c: "zzz" }, false), false);
 // no
 
 // are all values equal to "false"?
 assert.equal(
-  allEqualTo(
+  allEq(
     {
       a: {
         b: false,

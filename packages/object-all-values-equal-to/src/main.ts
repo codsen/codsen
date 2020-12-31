@@ -1,9 +1,16 @@
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+
 import isObj from "lodash.isplainobject";
 import isEq from "lodash.isequal";
+import { version } from "../package.json";
+
+interface Opts {
+  arraysMustNotContainPlaceholders: boolean;
+}
 
 // T H E   M A I N   F U N C T I O N   T H A T   D O E S   T H E   J O B
 // -----------------------------------------------------------------------------
-function allValuesEqualTo(input, value, opts) {
+function allValuesEqualTo(input: any, value: any, opts: Opts): boolean {
   if (Array.isArray(input)) {
     if (input.length === 0) {
       return true;
@@ -44,7 +51,11 @@ function allValuesEqualTo(input, value, opts) {
 // we use this wrapper function because there will be recursive calls and it would
 // be a waste of resources to perform the input checks each time within recursion
 
-function allValuesEqualToWrapper(inputOriginal, valueOriginal, originalOpts) {
+function allEq(
+  inputOriginal: any,
+  valueOriginal: any,
+  originalOpts?: Opts
+): boolean {
   // precautions:
   if (inputOriginal === undefined) {
     throw new Error(
@@ -67,13 +78,13 @@ function allValuesEqualToWrapper(inputOriginal, valueOriginal, originalOpts) {
   }
 
   // prep opts
-  const defaults = {
+  const defaults: Opts = {
     arraysMustNotContainPlaceholders: true,
   };
-  const opts = { ...defaults, ...originalOpts };
+  const opts: Opts = { ...defaults, ...originalOpts };
 
   // and finally,
   return allValuesEqualTo(inputOriginal, valueOriginal, opts);
 }
 
-export default allValuesEqualToWrapper;
+export { allEq, version };
