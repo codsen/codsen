@@ -1,4 +1,7 @@
-function charSuitableForHTMLAttrName(char) {
+// Follows the spec:
+// https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
+
+function isAttrNameChar(char: any | string): boolean {
   return (
     typeof char === "string" &&
     //
@@ -13,4 +16,4 @@ function charSuitableForHTMLAttrName(char) {
   );
 }
 
-export default charSuitableForHTMLAttrName;
+export { isAttrNameChar };

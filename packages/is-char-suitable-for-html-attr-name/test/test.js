@@ -1,5 +1,5 @@
 import tap from "tap";
-import is from "../dist/is-char-suitable-for-html-attr-name.esm";
+import { isAttrNameChar as is } from "../dist/is-char-suitable-for-html-attr-name.esm";
 
 const BACKSLASH = "\u005C";
 

@@ -7,10 +7,10 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const is = require("..");
+const { isAttrNameChar } = require("..");
 
 const testme = () => {
-  is("A");
+  isAttrNameChar("A");
 };
 
 // action
