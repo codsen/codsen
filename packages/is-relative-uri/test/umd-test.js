@@ -1,5 +1,5 @@
 import tap from "tap";
-import isRel from "../dist/is-relative-uri.umd";
+import { isRel } from "../dist/is-relative-uri.umd";
 
 tap.test("UMD build works fine", (t) => {
   [

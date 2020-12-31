@@ -1,3 +1,5 @@
+import { version } from "../package.json";
+
 // Reference used:
 // https://en.wikipedia.org/wiki/Uniform_Resource_Identifier#URI_references
 
@@ -315,7 +317,17 @@ const knownSchemes = [
   "z39.50s",
 ];
 
-function isRel(str, originalOpts) {
+interface Opts {
+  flagUpUrisWithSchemes?: boolean;
+  offset?: 0;
+}
+
+interface Res {
+  res: boolean;
+  message: string | null;
+}
+
+function isRel(str: string, originalOpts?: Opts): Res {
   // insurance first
   // ---------------------------------------------------------------------------
   if (typeof str !== "string") {
@@ -330,6 +342,7 @@ function isRel(str, originalOpts) {
   }
   const defaults = {
     flagUpUrisWithSchemes: true,
+    offset: 0,
   };
   let opts;
   if (originalOpts) {
@@ -505,4 +518,4 @@ function isRel(str, originalOpts) {
   };
 }
 
-export default isRel;
+export { isRel, version };

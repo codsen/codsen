@@ -1,1 +1,1 @@
-{"_quickTake.js":{"title":"Quick Take","content":"import &#x7B; strict as assert &#x7D; from \"assert\";\nimport isRel from \"dist/is-relative-uri.esm\";\n\nassert.deepEqual(isRel(\".../resource.txt\"), &#x7B;\n  res: false,\n  message: `Three consecutive dots.`,\n&#x7D;);"}}
+{"_quickTake.js":{"title":"Quick Take","content":"import &#x7B; strict as assert &#x7D; from \"assert\";\nimport &#x7B; isRel &#x7D; from \"dist/is-relative-uri.esm\";\n\nassert.deepEqual(isRel(\".../resource.txt\"), &#x7B;\n  res: false,\n  message: `Three consecutive dots.`,\n&#x7D;);"}}

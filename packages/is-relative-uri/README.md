@@ -34,7 +34,7 @@ npm i is-relative-uri
 
 ```js
 import { strict as assert } from "assert";
-import isRel from "dist/is-relative-uri.esm";
+import { isRel } from "dist/is-relative-uri.esm";
 
 assert.deepEqual(isRel(".../resource.txt"), {
   res: false,
