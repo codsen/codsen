@@ -1,9 +1,7 @@
-/* eslint import/extensions:0, no-unused-vars:0 */
-
 // `opts.allowCustomTagNames`
 
 import { strict as assert } from "assert";
-import isOpening from "../dist/is-html-tag-opening.esm";
+import { isOpening } from "../dist/is-html-tag-opening.esm";
 
 // recognised tag
 assert.equal(isOpening(`abc <div>`, 4), true);

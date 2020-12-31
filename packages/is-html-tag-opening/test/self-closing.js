@@ -1,5 +1,5 @@
 import tap from "tap";
-import is from "../dist/is-html-tag-opening.esm";
+import { isOpening as is } from "../dist/is-html-tag-opening.esm";
 
 // self-closing tag
 // -----------------------------------------------------------------------------

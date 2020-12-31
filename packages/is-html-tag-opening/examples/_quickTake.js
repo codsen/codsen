@@ -1,9 +1,7 @@
-/* eslint import/extensions:0, no-unused-vars:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import isOpening from "../dist/is-html-tag-opening.esm";
+import { isOpening } from "../dist/is-html-tag-opening.esm";
 
 const text = `<span>a < b<span>`;
 

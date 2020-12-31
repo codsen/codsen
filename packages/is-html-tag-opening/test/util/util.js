@@ -1,8 +1,8 @@
-import mixer from "test-mixer";
-import { defaultOpts } from "../../src/util";
+import { mixer } from "test-mixer";
+import { defaults } from "../../dist/is-html-tag-opening.esm";
 
 function mixerToExport(ref) {
-  return mixer(ref, defaultOpts);
+  return mixer({ ...ref }, defaults);
 }
 
 // -----------------------------------------------------------------------------

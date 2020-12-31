@@ -3,8 +3,14 @@ import { left } from "string-left-right";
 import { BACKSLASH, knownHtmlTags, defaultOpts as defaults } from "./util";
 import { isNotLetter } from "./isNotLetter";
 import { extraRequirements } from "./extraRequirements";
+import { version } from "../package.json";
 
-function isOpening(str, idx = 0, originalOpts) {
+interface Opts {
+  allowCustomTagNames: boolean;
+  skipOpeningBracket: boolean;
+}
+
+function isOpening(str: string, idx = 0, originalOpts?: Opts): boolean {
   // -----------------------------------------------------------------------------
 
   console.time("p01 - setup");
@@ -140,7 +146,8 @@ function isOpening(str, idx = 0, originalOpts) {
     if (
       ((opts.skipOpeningBracket &&
         (str[idx - 1] === "<" ||
-          (str[idx - 1] === "/" && str[left(str, left(str, idx))] === "<"))) ||
+          (str[idx - 1] === "/" &&
+            str[left(str, left(str, idx) as number) as number] === "<"))) ||
         (whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim())) &&
       (r9.test(whatToTest) || /^<\w+$/.test(whatToTest))
     ) {
@@ -165,7 +172,8 @@ function isOpening(str, idx = 0, originalOpts) {
     if (
       ((opts.skipOpeningBracket &&
         (str[idx - 1] === "<" ||
-          (str[idx - 1] === "/" && str[left(str, left(str, idx))] === "<"))) ||
+          (str[idx - 1] === "/" &&
+            str[left(str, left(str, idx) as number) as number] === "<"))) ||
         (whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim())) &&
       r9.test(whatToTest)
     ) {
@@ -281,4 +289,4 @@ function isOpening(str, idx = 0, originalOpts) {
   return res;
 }
 
-export default isOpening;
+export { isOpening, defaults, version };
