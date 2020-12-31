@@ -1,5 +1,5 @@
 import fs from "fs";
-import rangesApply from "ranges-apply";
+import { rApply } from "ranges-apply";
 
 function applyFixes(str, messages, offset = 0) {
   if (!Array.isArray(messages) || !messages.length) {
@@ -7,7 +7,7 @@ function applyFixes(str, messages, offset = 0) {
   }
   // So there are ranges. Let's rather all the ranges from all the
   // objects in "messages"
-  return rangesApply(
+  return rApply(
     str,
     messages.reduce((acc, curr) => {
       if (curr.fix && Array.isArray(curr.fix.ranges)) {

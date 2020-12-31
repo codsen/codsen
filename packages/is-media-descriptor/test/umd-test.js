@@ -1,5 +1,5 @@
 import tap from "tap";
-import isMediaD from "../dist/is-media-descriptor.umd";
+import { isMediaD } from "../dist/is-media-descriptor.umd";
 
 tap.test("UMD build works fine", (t) => {
   [

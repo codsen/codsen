@@ -1,3 +1,9 @@
+import { Range, Ranges } from "../../../scripts/common";
+
+interface Opts {
+  offset: number;
+}
+
 const recognisedMediaTypes = [
   "all",
   "aural",
@@ -46,22 +52,34 @@ const recognisedMediaFeatures = [
   "any-hover",
 ];
 
-// eslint-disable-next-line no-unused-vars
-const deprecatedMediaFeatures = [
-  "device-width",
-  "min-device-width",
-  "max-device-width",
-  "device-height",
-  "min-device-height",
-  "max-device-height",
-  "device-aspect-ratio",
-  "min-device-aspect-ratio",
-  "max-device-aspect-ratio",
-];
+// TODO:
+// const deprecatedMediaFeatures = [
+//   "device-width",
+//   "min-device-width",
+//   "max-device-width",
+//   "device-height",
+//   "min-device-height",
+//   "max-device-height",
+//   "device-aspect-ratio",
+//   "min-device-aspect-ratio",
+//   "max-device-aspect-ratio",
+// ];
 
 const lettersOnlyRegex = /^\w+$/g;
 
-function loop(str, opts, res) {
+interface LoopOpts extends Opts {
+  idxFrom: number;
+  idxTo: number;
+}
+
+interface ResObj {
+  idxFrom: number;
+  idxTo: number;
+  message: string;
+  fix: { ranges: Ranges } | null;
+}
+
+function loop(str: string, opts: LoopOpts, res: ResObj[]): void {
   // opts.offset is passed but we don't Object.assign for perf reasons
 
   let chunkStartsAt = null;
@@ -121,7 +139,10 @@ function loop(str, opts, res) {
         `121 caught closing bracket, ${`\u001b[${31}m${`POP`}\u001b[${39}m`}`
       );
       const lastOpening = bracketOpeningIndexes.pop();
-      const extractedValueWithinBrackets = str.slice(lastOpening + 1, i);
+      const extractedValueWithinBrackets = str.slice(
+        (lastOpening as number) + 1,
+        i
+      );
       console.log(
         `126 extracted last bracket contents: "${extractedValueWithinBrackets}"`
       );
@@ -146,11 +167,11 @@ function loop(str, opts, res) {
           ) {
             console.log(
               `148 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
-                lastOpening + 1
+                (lastOpening as number) + 1
               }, ${i}]`
             );
             res.push({
-              idxFrom: lastOpening + 1 + opts.offset,
+              idxFrom: (lastOpening as number) + 1 + (opts.offset as number),
               idxTo: i + opts.offset,
               message: `Unrecognised "${extractedValueWithinBrackets.trim()}".`,
               fix: null,
@@ -204,7 +225,9 @@ function loop(str, opts, res) {
           idxTo: i + opts.offset, // reporting is always whole whitespace
           message: `Bad whitespace.`,
           fix: {
-            ranges: [[whitespaceStartsAt + opts.offset, i + opts.offset]],
+            ranges: [
+              [whitespaceStartsAt + opts.offset, i + opts.offset] as Range,
+            ],
           },
         });
       } else if (whitespaceStartsAt < i - 1 || str[i - 1] !== " ") {
@@ -220,7 +243,7 @@ function loop(str, opts, res) {
         // defaults is whole thing replacement:
         let rangesFrom = whitespaceStartsAt + opts.offset;
         let rangesTo = i + opts.offset;
-        let rangesInsert = " ";
+        let rangesInsert: string | null = " ";
         // if whitespace chunk is longer than one, let's try to cut corners:
         if (whitespaceStartsAt !== i - 1) {
           console.log(`226 A MULTIPLE WHITESPACE CHARS`);
@@ -321,7 +344,7 @@ function loop(str, opts, res) {
             fix: {
               ranges: [
                 [
-                  str.slice(0, chunkStartsAt).trimEnd().length + opts.offset,
+                  str.slice(0, chunkStartsAt).trim().length + opts.offset,
                   i + opts.offset,
                 ],
               ],
@@ -481,7 +504,7 @@ function loop(str, opts, res) {
               idxFrom: chunkStartsAt + opts.offset,
               idxTo,
               message,
-              fix,
+              fix: fix as any,
             });
 
             console.log(`487 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
@@ -629,4 +652,4 @@ function loop(str, opts, res) {
   }
 }
 
-export { loop, recognisedMediaTypes, lettersOnlyRegex };
+export { loop, recognisedMediaTypes, lettersOnlyRegex, Opts, ResObj };

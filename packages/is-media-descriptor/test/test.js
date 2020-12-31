@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 
 import tap from "tap";
-import isMediaD from "../dist/is-media-descriptor.esm";
+import { isMediaD } from "../dist/is-media-descriptor.esm";
 import { applyFixes, writeSample } from "../t-util/util";
 
 // first, remove all files from test/samples subfolder - think of test renames

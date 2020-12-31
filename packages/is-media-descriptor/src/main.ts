@@ -1,15 +1,23 @@
 import leven from "leven";
-import processCommaSep from "string-process-comma-separated";
-import { loop, recognisedMediaTypes, lettersOnlyRegex } from "./util";
+import { processCommaSep } from "string-process-comma-separated";
+import {
+  loop,
+  recognisedMediaTypes,
+  lettersOnlyRegex,
+  Opts,
+  ResObj,
+} from "./util";
+import { version } from "../package.json";
+import { Ranges } from "../../../scripts/common";
+
+const defaults = {
+  offset: 0,
+};
 
 // See https://drafts.csswg.org/mediaqueries/
 // Also https://csstree.github.io/docs/validator.html
 // Also, test in Chrome yourself
-function isMediaD(originalStr, originalOpts) {
-  const defaults = {
-    offset: 0,
-  };
-
+function isMediaD(originalStr: string, originalOpts?: Opts): ResObj[] {
   const opts = { ...defaults, ...originalOpts };
   // insurance first
   if (opts.offset && !Number.isInteger(opts.offset)) {
@@ -38,7 +46,7 @@ function isMediaD(originalStr, originalOpts) {
     return [];
   }
 
-  const res = [];
+  const res: ResObj[] = [];
 
   // We pay extra attention to whitespace. These two below
   // mark the known index of the first and last non-whitespace
@@ -96,7 +104,7 @@ function isMediaD(originalStr, originalOpts) {
       idxTo: ranges[ranges.length - 1][1],
       message: "Remove whitespace.",
       fix: {
-        ranges,
+        ranges: ranges as Ranges,
       },
     });
   }
@@ -333,7 +341,7 @@ function isMediaD(originalStr, originalOpts) {
         if (str[i] === "(") {
           lastOpening = i;
           nonWhitespaceFound = false;
-        } else if (str[i] === ")") {
+        } else if (str[i] === ")" && lastOpening) {
           if (!nonWhitespaceFound) {
             console.log(
               `339 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${lastOpening}, ${
@@ -377,7 +385,7 @@ function isMediaD(originalStr, originalOpts) {
       oneSpaceAfterCommaOK: true,
       innerWhitespaceAllowed: true,
       separator: ",",
-      cb: (idxFrom, idxTo) => {
+      cb: (idxFrom: number, idxTo: number) => {
         console.log(
           `382 isMediaD(): chunk [${idxFrom - opts.offset}, ${
             idxTo - opts.offset
@@ -393,7 +401,7 @@ function isMediaD(originalStr, originalOpts) {
           res
         );
       },
-      errCb: (ranges, message) => {
+      errCb: (ranges: Ranges, message: string) => {
         console.log(
           `398 isMediaD(): received error range ${JSON.stringify(
             ranges,
@@ -436,4 +444,4 @@ function isMediaD(originalStr, originalOpts) {
   return res;
 }
 
-export default isMediaD;
+export { isMediaD, defaults, version };
