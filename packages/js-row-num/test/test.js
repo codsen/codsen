@@ -1,7 +1,5 @@
-/* eslint no-template-curly-in-string: 0 */
-
 import tap from "tap";
-import fixRowNums from "../dist/js-row-num.esm";
+import { fixRowNums } from "../dist/js-row-num.esm";
 
 const BACKSLASH = `\u005C`;
 // we need to escape to prevent accidental "fixing" of this file through

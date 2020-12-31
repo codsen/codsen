@@ -1,9 +1,27 @@
-import Ranges from "ranges-push";
-import apply from "ranges-apply";
+import { Ranges } from "ranges-push";
+import { rApply } from "ranges-apply";
+import { version } from "../package.json";
+import { Ranges as RangesType } from "../../../scripts/common";
 
 const BACKSLASH = `\u005C`;
 
-function fixRowNums(str, originalOpts) {
+interface Opts {
+  padStart?: number;
+  overrideRowNum?: null | number;
+  returnRangesOnly?: boolean;
+  triggerKeywords?: string[];
+  extractedLogContentsWereGiven?: boolean;
+}
+
+const defaults: Opts = {
+  padStart: 3,
+  overrideRowNum: null,
+  returnRangesOnly: false,
+  triggerKeywords: ["console.log"],
+  extractedLogContentsWereGiven: false,
+};
+
+function fixRowNums(str: string, originalOpts?: Opts): string | RangesType {
   console.log(
     `008 ${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} = ${JSON.stringify(
       originalOpts,
@@ -14,26 +32,19 @@ function fixRowNums(str, originalOpts) {
   if (typeof str !== "string" || !str.length) {
     return str;
   }
-  function isDigit(something) {
+  function isDigit(something: any): boolean {
     return /[0-9]/.test(something);
   }
-  function isAZ(something) {
+  function isAZ(something: any): boolean {
     return /[A-Za-z]/.test(something);
   }
-  function isObj(something) {
+  function isObj(something: any): boolean {
     return (
       something && typeof something === "object" && !Array.isArray(something)
     );
   }
 
-  const defaults = {
-    padStart: 3,
-    overrideRowNum: null,
-    returnRangesOnly: false,
-    triggerKeywords: ["console.log"],
-    extractedLogContentsWereGiven: false,
-  };
-  const opts = Object.assign(defaults, originalOpts);
+  const opts = { ...defaults, ...originalOpts };
 
   if (
     !opts.padStart ||
@@ -47,11 +58,11 @@ function fixRowNums(str, originalOpts) {
 
   let i;
   const len = str.length;
-  let quotes = null;
+  let quotes: { start: number; type: string } | null = null;
   let consoleStartsAt = null;
   let bracketOpensAt = null;
   let currentRow = 1;
-  let wasLetterDetected = false;
+  let wasLetterDetected: undefined | boolean = false;
   let digitStartsAt = null;
 
   if (opts.padStart && len > 45000) {
@@ -119,9 +130,10 @@ function fixRowNums(str, originalOpts) {
 
       if (str[i] === '"' || str[i] === "'" || str[i] === "`") {
         console.log(`121 clause #1 - quotes`);
-        quotes = {};
-        quotes.start = i;
-        quotes.type = str[i];
+        quotes = {
+          start: i,
+          type: str[i],
+        };
         wasLetterDetected = false;
         console.log(
           `127 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`wasLetterDetected`}\u001b[${39}m`} = ${JSON.stringify(
@@ -183,7 +195,7 @@ function fixRowNums(str, originalOpts) {
     if (
       Number.isInteger(digitStartsAt) &&
       (!isDigit(str[i]) || !str[i + 1]) &&
-      (i > digitStartsAt || !str[i + 1])
+      (i > (digitStartsAt as number) || !str[i + 1])
     ) {
       // replace the digits:
       console.log(
@@ -248,7 +260,7 @@ function fixRowNums(str, originalOpts) {
       // PS. finalIndexesToDelete is a Ranges class so we can push
       // two/three arguments and it will understand it's (range) array...
       finalIndexesToDelete.push(
-        digitStartsAt,
+        digitStartsAt as number,
         !isDigit(str[i]) ? i : i + 1,
         opts.padStart
           ? String(
@@ -350,11 +362,11 @@ function fixRowNums(str, originalOpts) {
 
         // find out where does this (possibly a sequence) of number(s) end:
         let numbersSequenceEndsAt;
-        if (startMarchingForwFrom) {
+        if (startMarchingForwFrom as number) {
           console.log(
             `355 \u001b[${36}m${`startMarchingForwFrom`}\u001b[${39}m was set so marching forward`
           );
-          for (let y = startMarchingForwFrom; y < len; y++) {
+          for (let y = startMarchingForwFrom as number; y < len; y++) {
             console.log(`\u001b[${36}m${`str[${y}] = ${str[y]}`}\u001b[${39}m`);
             if (!isDigit(str[y])) {
               numbersSequenceEndsAt = y;
@@ -367,7 +379,9 @@ function fixRowNums(str, originalOpts) {
 
         // answer: at "numbersSequenceEndsAt".
         console.log(
-          `370 \u001b[${32}m${`str[${numbersSequenceEndsAt}] = ${str[numbersSequenceEndsAt]}`}\u001b[${39}m`
+          `370 \u001b[${32}m${`str[${numbersSequenceEndsAt}] = ${
+            str[numbersSequenceEndsAt as number]
+          }`}\u001b[${39}m`
         );
 
         // We're at the next character where digits end. That is:
@@ -382,10 +396,14 @@ function fixRowNums(str, originalOpts) {
 
         let ansiSequencesLetterMAt;
 
-        if (str[numbersSequenceEndsAt] === "m") {
+        if (
+          numbersSequenceEndsAt !== undefined &&
+          str[numbersSequenceEndsAt] === "m"
+        ) {
           // if number follows "m", this is it:
           ansiSequencesLetterMAt = numbersSequenceEndsAt;
         } else if (
+          numbersSequenceEndsAt !== undefined &&
           str[numbersSequenceEndsAt] === "}" &&
           str[numbersSequenceEndsAt + 1] === "m"
         ) {
@@ -521,10 +539,10 @@ function fixRowNums(str, originalOpts) {
   }
   if (finalIndexesToDelete.current()) {
     console.log(`523`);
-    return apply(str, finalIndexesToDelete.current());
+    return rApply(str, finalIndexesToDelete.current());
   }
   console.log(`526`);
   return str;
 }
 
-export default fixRowNums;
+export { fixRowNums, defaults, version };
