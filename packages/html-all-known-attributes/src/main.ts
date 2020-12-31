@@ -1,3 +1,5 @@
+import { version } from "../package.json";
+
 const allHtmlAttribs = new Set([
   "abbr",
   "accept",
@@ -703,4 +705,4 @@ const allHtmlAttribs = new Set([
   "z-index",
 ]);
 
-export { allHtmlAttribs };
+export { allHtmlAttribs, version };
