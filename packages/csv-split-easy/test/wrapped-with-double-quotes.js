@@ -1,5 +1,5 @@
 import tap from "tap";
-import splitEasy from "../dist/csv-split-easy.esm";
+import { splitEasy } from "../dist/csv-split-easy.esm";
 
 tap.test("01 - breaks lines correctly leaving no empty lines", (t) => {
   t.strictSame(

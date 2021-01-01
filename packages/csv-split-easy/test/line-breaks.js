@@ -1,5 +1,5 @@
 import tap from "tap";
-import splitEasy from "../dist/csv-split-easy.esm";
+import { splitEasy } from "../dist/csv-split-easy.esm";
 
 // some art first
 //

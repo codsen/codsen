@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import splitEasy from "../dist/csv-split-easy.esm.js";
+import { splitEasy } from "../dist/csv-split-easy.esm.js";
 
 assert.deepEqual(
   splitEasy(

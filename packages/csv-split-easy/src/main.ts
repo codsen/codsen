@@ -1,8 +1,21 @@
 /* eslint no-param-reassign:0 */
 
-import remSep from "string-remove-thousand-separators";
+import { version } from "../package.json";
+import { remSep } from "string-remove-thousand-separators";
 
-function splitEasy(str, originalOpts) {
+interface Opts {
+  removeThousandSeparatorsFromNumbers: boolean;
+  padSingleDecimalPlaceNumbers: boolean;
+  forceUKStyle: boolean;
+}
+
+const defaults: Opts = {
+  removeThousandSeparatorsFromNumbers: true,
+  padSingleDecimalPlaceNumbers: true,
+  forceUKStyle: false,
+};
+
+function splitEasy(str: string, originalOpts?: Opts): string[][] {
   // traverse the string and push each column into array
   // when line break is detected, push what's gathered into main array
   let colStarts = 0;
@@ -24,11 +37,6 @@ function splitEasy(str, originalOpts) {
   }
 
   // prep opts
-  const defaults = {
-    removeThousandSeparatorsFromNumbers: true,
-    padSingleDecimalPlaceNumbers: true,
-    forceUKStyle: false,
-  };
   const opts = { ...defaults, ...originalOpts };
 
   if (typeof str !== "string") {
@@ -213,4 +221,4 @@ function splitEasy(str, originalOpts) {
   return resArray;
 }
 
-export default splitEasy;
+export { splitEasy, defaults, version };

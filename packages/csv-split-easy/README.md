@@ -34,7 +34,7 @@ npm i csv-split-easy
 
 ```js
 import { strict as assert } from "assert";
-import splitEasy from "csv-split-easy";
+import { splitEasy } from "csv-split-easy";
 
 assert.deepEqual(
   splitEasy(
@@ -56,6 +56,6 @@ Please [visit codsen.com](https://codsen.com/os/csv-split-easy/) for a full desc
 
 MIT License
 
-Copyright (c) 2010-2020 Roy Revelt and other contributors
+Copyright (c) 2010-2021 Roy Revelt and other contributors
 
 <img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center"> <img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">

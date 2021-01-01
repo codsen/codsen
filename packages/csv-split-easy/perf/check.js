@@ -7,9 +7,9 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { splitEasy } = require("..");
 
-const testme = () => f("a,b,c\n\r,,\n\r,,\n,,\n,,\r,,\n,,\n,d,");
+const testme = () => splitEasy("a,b,c\n\r,,\n\r,,\n,,\n,,\r,,\n,,\n,d,");
 
 // action
 runPerf(testme, callerDir);
