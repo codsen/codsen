@@ -1,5 +1,5 @@
 import tap from "tap";
-import er from "../dist/easy-replace.esm";
+import { er } from "../dist/easy-replace.esm";
 
 // ==============================
 // missing searchFor value

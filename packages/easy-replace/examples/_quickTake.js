@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import er from "../dist/easy-replace.esm.js";
+import { er } from "../dist/easy-replace.esm.js";
 
 assert.equal(
   er(

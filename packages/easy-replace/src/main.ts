@@ -1,12 +1,31 @@
-/**
- * astralAwareSearch - searches for strings and returns the findings in an array
- *
- * @param  {String} whereToLook    string upon which to perform the search
- * @param  {String} whatToLookFor  string depicting what we are looking for
- * @return {Array}                 findings array, indexes of each first "letter" found
- */
-function astralAwareSearch(whereToLook, whatToLookFor, opts) {
-  function existy(something) {
+import { version } from "../package.json";
+
+interface Opts {
+  leftOutsideNot: string | string[];
+  leftOutside: string | string[];
+  leftMaybe: string | string[];
+  searchFor: string | string[];
+  rightMaybe: string | string[];
+  rightOutside: string | string[];
+  rightOutsideNot: string | string[];
+  i: {
+    leftOutsideNot: boolean;
+    leftOutside: boolean;
+    leftMaybe: boolean;
+    searchFor: boolean;
+    rightMaybe: boolean;
+    rightOutside: boolean;
+    rightOutsideNot: boolean;
+  };
+}
+
+// astralAwareSearch() - searches for strings, returns the findings in an array
+function astralAwareSearch(
+  whereToLook: string,
+  whatToLookFor: string,
+  opts?: { i?: boolean }
+) {
+  function existy(something: any): boolean {
     return something != null;
   }
   if (
@@ -24,7 +43,7 @@ function astralAwareSearch(whereToLook, whatToLookFor, opts) {
 
   for (let i = 0; i < arrWhereToLook.length; i++) {
     // check if current source character matches the first char of what we're looking for
-    if (opts.i) {
+    if (opts && opts.i) {
       if (
         arrWhereToLook[i].toLowerCase() === arrWhatToLookFor[0].toLowerCase()
       ) {
@@ -74,8 +93,8 @@ function astralAwareSearch(whereToLook, whatToLookFor, opts) {
  * @param  {whatever} incoming     can be anything
  * @return {String/Array}          string or array of strings
  */
-function stringise(incoming) {
-  function existy(something) {
+function stringise(incoming: any): string[] {
+  function existy(something: any): boolean {
     return something != null;
   }
   if (!existy(incoming) || typeof incoming === "boolean") {
@@ -92,7 +111,12 @@ function stringise(incoming) {
 
 // ===========================
 
-function iterateLeft(elem, arrSource, foundBeginningIndex, i) {
+function iterateLeft(
+  elem: string,
+  arrSource: string[],
+  foundBeginningIndex: number,
+  i: boolean
+): boolean {
   let matched = true;
   const charsArray = Array.from(elem);
   for (let i2 = 0, len = charsArray.length; i2 < len; i2++) {
@@ -118,7 +142,12 @@ function iterateLeft(elem, arrSource, foundBeginningIndex, i) {
   return matched;
 }
 
-function iterateRight(elem, arrSource, foundEndingIndex, i) {
+function iterateRight(
+  elem: string,
+  arrSource: string[],
+  foundEndingIndex: number,
+  i: boolean
+): boolean {
   let matched = true;
   const charsArray = Array.from(elem);
   for (let i2 = 0, len = charsArray.length; i2 < len; i2++) {
@@ -150,7 +179,11 @@ function iterateRight(elem, arrSource, foundEndingIndex, i) {
 // M A I N   F U N C T I O N
 // =========================
 
-function er(originalSource, options, originalReplacement) {
+function er(
+  originalSource: string,
+  options: Opts,
+  originalReplacement: string
+): string {
   const defaults = {
     i: {
       leftOutsideNot: false,
@@ -180,7 +213,7 @@ function er(originalSource, options, originalReplacement) {
   let foundEndingIndex;
   let matched;
   let found;
-  const replacementRecipe = [];
+  const replacementRecipe: [number, number][] = [];
   let result = "";
 
   //  T H E   L O O P
@@ -372,7 +405,7 @@ function er(originalSource, options, originalReplacement) {
   // first we need to remove any overlaps in the recipe, cases like:
   // [ [0,10], [2,12] ] => [ [0,10], [10,12] ]
   if (replacementRecipe.length > 0) {
-    replacementRecipe.forEach((elem, i) => {
+    replacementRecipe.forEach((_elem, i) => {
       // iterate through all replacement-recipe-array's elements:
       if (
         replacementRecipe[i + 1] !== undefined &&
@@ -397,7 +430,7 @@ function er(originalSource, options, originalReplacement) {
   if (replacementRecipe.length > 0 && replacementRecipe[0][0] !== 0) {
     result += arrSource.slice(0, replacementRecipe[0][0]).join("");
   }
-  replacementRecipe.forEach((elem, i) => {
+  replacementRecipe.forEach((_elem, i) => {
     // first position is replacement string:
     result += replacement.join("");
     if (replacementRecipe[i + 1] !== undefined) {
@@ -414,4 +447,4 @@ function er(originalSource, options, originalReplacement) {
   return result;
 }
 
-export default er;
+export { er, version };
