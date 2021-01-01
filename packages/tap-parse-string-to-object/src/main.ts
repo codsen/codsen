@@ -1,17 +1,34 @@
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+
 import isStream from "isstream";
 import split2 from "split2";
 import through2 from "through2";
 import { stringPingLineByLine, Counter } from "./util";
+import { version } from "../package.json";
 
-function externalApi(something) {
-  console.log(`007 externalApi called!`);
+interface Res {
+  ok: boolean;
+  assertsTotal: number;
+  assertsPassed: number;
+  assertsFailed: number;
+  suitesTotal: number;
+  suitesPassed: number;
+  suitesFailed: number;
+}
+
+interface StreamInterface extends NodeJS.ReadWriteStream {
+  read(size?: number): any;
+}
+
+function parseTap(something: string | StreamInterface): Res | Promise<Res> {
+  console.log(`007 parseTap called!`);
   if (isStream(something)) {
     console.log(`stream was given`);
     return new Promise((resolve, reject) => {
       const counter = new Counter();
 
-      something.pipe(split2()).pipe(
-        through2.obj((line, encoding, next) => {
+      (something as StreamInterface).pipe(split2()).pipe(
+        through2.obj((line, _encoding, next) => {
           // console.log(
           //   `${`\u001b[${33}m${`line`}\u001b[${39}m`} = ${JSON.stringify(
           //     line,
@@ -24,14 +41,13 @@ function externalApi(something) {
         })
       );
 
-      something.on("end", () => {
+      (something as StreamInterface).on("end", () => {
         return resolve(counter.getTotal());
       });
 
-      something.on("error", reject);
+      (something as StreamInterface).on("error", reject);
     });
-  }
-  if (typeof something === "string") {
+  } else if (typeof something === "string") {
     console.log(`not a stream but string was given`);
     if (!something.length) {
       return {
@@ -59,4 +75,4 @@ function externalApi(something) {
   );
 }
 
-export default externalApi;
+export { parseTap, version };

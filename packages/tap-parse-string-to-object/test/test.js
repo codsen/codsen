@@ -2,7 +2,7 @@ import tap from "tap";
 import tempy from "tempy";
 import fs from "fs-extra";
 import path from "path";
-import parse from "../dist/tap-parse-string-to-object.esm";
+import { parseTap as parse } from "../dist/tap-parse-string-to-object.esm";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws

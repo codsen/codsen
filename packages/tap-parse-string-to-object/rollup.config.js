@@ -1,11 +1,14 @@
 import builtins from "rollup-plugin-node-builtins";
-import resolve from "@rollup/plugin-node-resolve";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
+import typescript from "@rollup/plugin-typescript";
 import commonjs from "@rollup/plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
+import replace from "@rollup/plugin-replace";
 import cleanup from "rollup-plugin-cleanup";
 import banner from "rollup-plugin-banner";
 import babel from "@rollup/plugin-babel";
 import strip from "@rollup/plugin-strip";
+import json from "@rollup/plugin-json";
 import pkg from "./package.json";
 
 const licensePiece = `${pkg.name}
@@ -15,86 +18,145 @@ Author: Roy Revelt, Codsen Ltd
 License: ${pkg.license}
 Homepage: ${pkg.homepage}`;
 
+const extensions = [".mjs", ".js", ".json", ".node", ".ts"];
+const babelRuntimeVersion = pkg.dependencies["@babel/runtime"].replace(
+  /^[^0-9]*/,
+  ""
+);
+
+const makeExternalPredicate = (externalArr) => {
+  if (externalArr.length === 0) {
+    return () => false;
+  }
+  const pattern = new RegExp(`^(${externalArr.join("|")})($|/)`);
+  return (id) => pattern.test(id);
+};
+
 export default (commandLineArgs) => {
   const finalConfig = [
-    // browser-friendly UMD build
+    // CommonJS
     {
-      input: "src/main.js",
-      output: {
-        file: pkg.browser,
-        format: "umd",
-        name: "tapParseStringToObject",
-      },
-      plugins: [
-        !commandLineArgs.dev &&
-          strip({
-            sourceMap: false,
-          }),
-        builtins(),
-        resolve(),
-        commonjs(),
-        babel({
-          rootMode: "upward",
-        }),
-        terser(),
-        banner(licensePiece),
+      input: "src/main.ts",
+      output: [
+        { dir: "./", entryFileNames: pkg.main, format: "cjs", indent: false },
       ],
-    },
-
-    // browser-friendly UMD build, non-minified, for dev purposes
-    {
-      input: "src/main.js",
-      output: {
-        file: `dist/${pkg.name}.dev.umd.js`,
-        format: "umd",
-        name: "tapParseStringToObject",
-      },
+      external: makeExternalPredicate([
+        ...Object.keys(pkg.dependencies || {}),
+        ...Object.keys(pkg.peerDependencies || {}),
+      ]),
       plugins: [
-        !commandLineArgs.dev &&
-          strip({
-            sourceMap: false,
-          }),
-        builtins(),
-        resolve(),
-        commonjs(),
-        babel({
-          rootMode: "upward",
+        nodeResolve({
+          extensions,
         }),
-        banner(licensePiece),
-      ],
-    },
-
-    // CommonJS build (for Node)
-    {
-      input: "src/main.js",
-      output: [{ file: pkg.main, format: "cjs" }],
-      external: ["isstream", "split2", "through2"],
-      plugins: [
-        !commandLineArgs.dev &&
-          strip({
-            sourceMap: false,
-          }),
         builtins(),
+        json(),
+        typescript({
+          tsconfig: "../../tsconfig.build.json",
+          declaration: true,
+          declarationDir: "./types",
+        }),
         babel({
+          extensions,
           rootMode: "upward",
+          plugins: [
+            [
+              "@babel/plugin-transform-runtime",
+              { version: babelRuntimeVersion },
+            ],
+          ],
+          babelHelpers: "runtime",
         }),
         cleanup({ comments: "istanbul" }),
+        !commandLineArgs.dev &&
+          strip({
+            sourceMap: false,
+            include: ["src/**/*.(js|ts)"],
+            functions: ["console.*"],
+          }),
         banner(licensePiece),
       ],
     },
 
-    // ES module build (for bundlers)
+    // ES
     {
-      input: "src/main.js",
-      output: [{ file: pkg.module, format: "es" }],
-      external: ["isstream", "split2", "through2"],
+      input: "src/main.ts",
+      output: [{ file: pkg.module, format: "es", indent: false }],
+      external: makeExternalPredicate([
+        ...Object.keys(pkg.dependencies || {}),
+        ...Object.keys(pkg.peerDependencies || {}),
+      ]),
       plugins: [
+        nodeResolve({
+          extensions,
+        }),
+        builtins(),
+        json(),
+        typescript({
+          tsconfig: "../../tsconfig.build.json",
+          declaration: false,
+        }),
+        babel({
+          extensions,
+          plugins: [
+            [
+              "@babel/plugin-transform-runtime",
+              { version: babelRuntimeVersion, useESModules: true },
+            ],
+          ],
+          babelHelpers: "runtime",
+        }),
+        cleanup({ comments: "istanbul" }),
         !commandLineArgs.dev &&
           strip({
             sourceMap: false,
+            include: ["src/**/*.(js|ts)"],
+            functions: ["console.*"],
           }),
+        banner(licensePiece),
+      ],
+    },
+
+    // ES for Browsers
+    {
+      input: "src/main.ts",
+      output: [{ file: `dist/${pkg.name}.mjs`, format: "es", indent: false }],
+      external: makeExternalPredicate([
+        ...Object.keys(pkg.dependencies || {}),
+        ...Object.keys(pkg.peerDependencies || {}),
+      ]),
+      plugins: [
+        nodeResolve({
+          extensions,
+        }),
         builtins(),
+        json(),
+        replace({
+          "process.env.NODE_ENV": JSON.stringify("production"),
+        }),
+        typescript({
+          tsconfig: "../../tsconfig.build.json",
+          declaration: false,
+        }),
+        babel({
+          extensions,
+          exclude: "node_modules/**",
+          babelHelpers: "bundled",
+        }),
+        !commandLineArgs.dev &&
+          strip({
+            sourceMap: false,
+            include: ["src/**/*.(js|ts)"],
+            functions: ["console.*"],
+          }),
         cleanup({ comments: "istanbul" }),
+        terser({
+          compress: {
+            pure_getters: true,
+            unsafe: true,
+            unsafe_comps: true,
+            warnings: false,
+          },
+        }),
         banner(licensePiece),
       ],
     },

@@ -7,10 +7,10 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { parseTap } = require("..");
 
 const testme = () =>
-  f(`TAP version 13
+  parseTap(`TAP version 13
 ok 1 - test/test.js # time=22.582ms { # Subtest: 01.01 - string input
 ok 1 - 01.01.01
 ok 2 - 01.01.02

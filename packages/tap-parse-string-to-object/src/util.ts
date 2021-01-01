@@ -1,5 +1,5 @@
 // pings each line to the callback cb()
-function stringPingLineByLine(str, cb) {
+function stringPingLineByLine(str: string, cb: (str: string) => void): void {
   // console.log(
   //   `004 ${`\u001b[${33}m${`█`}\u001b[${39}m`} stringPingLineByLine() called!`
   // );
@@ -42,7 +42,22 @@ function stringPingLineByLine(str, cb) {
   }
 }
 
+interface Total {
+  ok: boolean;
+  assertsTotal: number;
+  assertsPassed: number;
+  assertsFailed: number;
+  suitesTotal: number;
+  suitesPassed: number;
+  suitesFailed: number;
+}
+
 class Counter {
+  canCount: boolean;
+  doNothing: boolean;
+  thereWereFailuresInThisSuite: null | boolean;
+  total: Total;
+
   constructor() {
     this.canCount = false;
     this.doNothing = false;
@@ -58,7 +73,7 @@ class Counter {
     };
   }
 
-  readLine(lineStr) {
+  readLine(lineStr: string): void {
     console.log(
       !this.doNothing
         ? `${`\u001b[${90}m${`======================================== readLine() start`}\u001b[${39}m`}`
@@ -255,7 +270,7 @@ class Counter {
     );
   }
 
-  getTotal() {
+  getTotal(): Total {
     if (this.thereWereFailuresInThisSuite) {
       this.total.suitesFailed += 1;
       this.thereWereFailuresInThisSuite = false;

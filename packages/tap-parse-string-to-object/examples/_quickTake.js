@@ -1,13 +1,11 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import parseRawTap from "../dist/tap-parse-string-to-object.esm.js";
+import { parseTap } from "../dist/tap-parse-string-to-object.esm.js";
 
 // synchronous parsing (there's also async, see in examples)
 assert.deepEqual(
-  parseRawTap(`TAP version 13
+  parseTap(`TAP version 13
 ok 1 - test/test.js # time=22.582ms { # Subtest: 01.01 - string input
 ok 1 - 01.01.01
 ok 2 - 01.01.02
