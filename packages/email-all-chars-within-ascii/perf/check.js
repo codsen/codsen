@@ -7,10 +7,10 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { within } = require("..");
 
 const testme = () =>
-  f(
+  within(
     "skjglk djjflgkhjjlsjh fshdfh klahl\n jsldfj ldkjgl dkfjgldjlhj;gfkjljlsdflhs"
   );
 

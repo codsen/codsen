@@ -1,20 +1,27 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import within from "../dist/email-all-chars-within-ascii.esm.js";
+import { within } from "../dist/email-all-chars-within-ascii.esm.js";
 
-// that emoji should have been HTML-encoded (using Detergent.io for example)
-assert.throws(() => {
-  within(`<!DOCTYPE html>
-  <html lang="en" dir="ltr">
-    <head>
-      <meta charset="utf-8">
-      <title></title>
-    </head>
-    <body>
-      🧢
-    </body>
-  </html>`);
-});
+// enforces all characters to be within ASCII:
+assert.deepEqual(within(`<div>Motörhead</div>`), [
+  {
+    type: "character",
+    line: 1,
+    column: 9,
+    positionIdx: 8,
+    value: "ö",
+    codePoint: 246,
+  },
+]);
+
+// enforces line lengths (500 is best for email):
+assert.deepEqual(within(`abcde`, { lineLength: 3 }), [
+  {
+    type: "line length",
+    line: 1,
+    column: 5,
+    positionIdx: 5,
+    value: 5,
+  },
+]);
