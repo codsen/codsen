@@ -1,19 +1,83 @@
-/* eslint no-nested-ternary: 0 */
-
-import rangesApply from "ranges-apply";
-import Ranges from "ranges-push";
 import isObj from "lodash.isplainobject";
 import trim from "lodash.trim";
 import without from "lodash.without";
-import ent from "ent";
+import { decode } from "html-entities";
+import { rApply } from "ranges-apply";
+import { Ranges } from "ranges-push";
 import { right } from "string-left-right";
 import {
   characterSuitableForNames,
   prepHopefullyAnArray,
   notWithinAttrQuotes,
+  trimEnd,
+  Obj,
 } from "./util";
+import { version } from "../package.json";
+import { Range, Ranges as RangesType } from "../../../scripts/common";
 
-function stripHtml(str, originalOpts) {
+interface Tag {
+  attributes: string[];
+  lastClosingBracketAt: number;
+  lastOpeningBracketAt: number;
+  slashPresent: number;
+  leftOuterWhitespace: number;
+  onlyPlausible: boolean;
+  nameStarts: number;
+  nameContainsLetters: boolean;
+  nameEnds: number;
+  name: string;
+}
+
+interface CbObj {
+  tag: Tag;
+  deleteFrom: null | number;
+  deleteTo: null | number;
+  insert: null | string;
+  rangesArr: Range[] | null;
+  proposedReturn: Range | null;
+}
+
+interface Opts {
+  ignoreTags: string[];
+  onlyStripTags: string[];
+  stripTogetherWithTheirContents: string[];
+  skipHtmlDecoding: boolean;
+  trimOnlySpaces: boolean;
+  dumpLinkHrefsNearby: {
+    enabled: boolean;
+    putOnNewLine: boolean;
+    wrapHeads: string;
+    wrapTails: string;
+  };
+  cb: null | ((cbObj: CbObj) => void);
+}
+
+const defaults = {
+  ignoreTags: [],
+  onlyStripTags: [],
+  stripTogetherWithTheirContents: ["script", "style", "xml"],
+  skipHtmlDecoding: false,
+  trimOnlySpaces: false,
+  dumpLinkHrefsNearby: {
+    enabled: false,
+    putOnNewLine: false,
+    wrapHeads: "",
+    wrapTails: "",
+  },
+  cb: null,
+};
+
+interface Res {
+  log: {
+    timeTakenInMilliseconds: number;
+  };
+  result: string;
+  ranges: RangesType;
+  allTagLocations: [number, number][];
+  filteredTagLocations: [number, number][];
+}
+
+function stripHtml(str: string, originalOpts?: Opts): Res {
   // const
   // ===========================================================================
   const start = Date.now();
@@ -149,24 +213,18 @@ function stripHtml(str, originalOpts) {
   // \u00BB is &raquo; - guillemet - right angled quote
   // \u2026 is &hellip; - ellipsis
 
-  const stripTogetherWithTheirContentsDefaults = new Set([
-    "script",
-    "style",
-    "xml",
-  ]);
-
   // we'll gather opening tags from ranged-pairs here:
-  const rangedOpeningTags = [];
+  const rangedOpeningTags: Obj[] = [];
 
   // we'll put tag locations here
-  const allTagLocations = [];
-  let filteredTagLocations = [];
+  const allTagLocations: [number, number][] = [];
+  let filteredTagLocations: [number, number][] = [];
 
   // variables
   // ===========================================================================
 
   // records the info about the suspected tag:
-  let tag;
+  let tag: Obj = {};
   function resetTag() {
     tag = { attributes: [] };
   }
@@ -179,16 +237,24 @@ function stripHtml(str, originalOpts) {
   let chunkOfSpacesStartsAt = null;
 
   // temporary variable to assemble the attribute pieces:
-  let attrObj = {};
+  let attrObj: Obj = {};
 
   // marker to store captured href, used in opts.dumpLinkHrefsNearby.enabled
-  let hrefDump = {}; // 2 keys: "tagName" - where href was spotted, "hrefValue" - URL
+  let hrefDump: {
+    tagName: string;
+    hrefValue: string;
+    openingTagEnds: number | undefined;
+  } = {
+    tagName: "",
+    hrefValue: "",
+    openingTagEnds: undefined,
+  };
 
   // used to insert extra things when pushing into ranges array
   let stringToInsertAfter = "";
 
   // state flag
-  let hrefInsertionActive;
+  let hrefInsertionActive = false;
 
   // marker to keep a note where does the whitespace chunk that follows closing bracket end.
   // It's necessary for opts.trimOnlySpaces when there's closing bracket, whitespace, non-space
@@ -201,14 +267,14 @@ function stripHtml(str, originalOpts) {
   // functions
   // ===========================================================================
 
-  function existy(x) {
+  function existy(x: any): boolean {
     return x != null;
   }
-  function isStr(something) {
+  function isStr(something: any): boolean {
     return typeof something === "string";
   }
 
-  function treatRangedTags(i, opts, rangesToDelete) {
+  function treatRangedTags(i: number, opts: Opts, rangesToDelete: Ranges) {
     console.log(`212 treatRangedTags(${i}) called`);
     console.log(
       `214 opts.stripTogetherWithTheirContents = ${JSON.stringify(
@@ -333,13 +399,13 @@ function stripHtml(str, originalOpts) {
               endingIdx,
             ]);
 
-            if (punctuation.has(str[i])) {
+            if (punctuation.has(str[i]) && opts.cb) {
               opts.cb({
-                tag,
+                tag: tag as Tag,
                 deleteFrom: rangedOpeningTags[y].lastOpeningBracketAt,
                 deleteTo: i + 1,
                 insert: null,
-                rangesArr: rangesToDelete,
+                rangesArr: rangesToDelete as any,
                 proposedReturn: [
                   rangedOpeningTags[y].lastOpeningBracketAt,
                   i,
@@ -349,13 +415,13 @@ function stripHtml(str, originalOpts) {
               // null will remove any spaces added so far. Opening and closing range tags might
               // have received spaces as separate entities, but those might not be necessary for range:
               // "text <script>deleteme</script>."
-            } else {
+            } else if (opts.cb) {
               opts.cb({
-                tag,
+                tag: tag as any,
                 deleteFrom: rangedOpeningTags[y].lastOpeningBracketAt,
                 deleteTo: i,
                 insert: "",
-                rangesArr: rangesToDelete,
+                rangesArr: rangesToDelete as any,
                 proposedReturn: [
                   rangedOpeningTags[y].lastOpeningBracketAt,
                   i,
@@ -397,12 +463,12 @@ function stripHtml(str, originalOpts) {
   }
 
   function calculateWhitespaceToInsert(
-    str2, // whole string
-    currCharIdx, // current index
-    fromIdx, // leftmost whitespace edge around tag
-    toIdx, // rightmost whitespace edge around tag
-    lastOpeningBracketAt, // tag actually starts here (<)
-    lastClosingBracketAt // tag actually ends here (>)
+    str2: string, // whole string
+    currCharIdx: number, // current index
+    fromIdx: null | number, // leftmost whitespace edge around tag
+    toIdx: null | number, // rightmost whitespace edge around tag
+    lastOpeningBracketAt: number, // tag actually starts here (<)
+    lastClosingBracketAt: number // tag actually ends here (>)
   ) {
     console.log(
       `408 \u001b[${35}m${`calculateWhitespaceToInsert() called`}\u001b[${39}m`
@@ -435,8 +501,14 @@ function stripHtml(str, originalOpts) {
       )}`
     );
     let strToEvaluateForLineBreaks = "";
-    if (fromIdx < lastOpeningBracketAt) {
-      strToEvaluateForLineBreaks += str2.slice(fromIdx, lastOpeningBracketAt);
+    if (
+      Number.isInteger(fromIdx) &&
+      (fromIdx as number) < lastOpeningBracketAt
+    ) {
+      strToEvaluateForLineBreaks += str2.slice(
+        fromIdx as number,
+        lastOpeningBracketAt
+      );
       console.log(
         `441 strToEvaluateForLineBreaks = ${JSON.stringify(
           strToEvaluateForLineBreaks,
@@ -447,11 +519,14 @@ function stripHtml(str, originalOpts) {
         }; sliced [${fromIdx}, ${lastOpeningBracketAt}])`
       );
     }
-    if (toIdx > lastClosingBracketAt + 1) {
+    if (
+      Number.isInteger(toIdx) &&
+      (toIdx as number) > lastClosingBracketAt + 1
+    ) {
       // limit whitespace that follows the tag, stop at linebreak. That's to make
       // the algorithm composable - we include linebreaks in front but not after.
-      const temp = str2.slice(lastClosingBracketAt + 1, toIdx);
-      if (temp.includes("\n") && str2[toIdx] === "<") {
+      const temp = str2.slice(lastClosingBracketAt + 1, toIdx as number);
+      if (temp.includes("\n") && str2[toIdx as number] === "<") {
         strToEvaluateForLineBreaks += " ";
       } else {
         strToEvaluateForLineBreaks += temp;
@@ -492,10 +567,10 @@ function stripHtml(str, originalOpts) {
     return "";
   }
 
-  function calculateHrefToBeInserted(opts) {
+  function calculateHrefToBeInserted(opts: Opts) {
     if (
       opts.dumpLinkHrefsNearby.enabled &&
-      Object.keys(hrefDump).length &&
+      hrefDump.tagName &&
       hrefDump.tagName === tag.name &&
       tag.lastOpeningBracketAt &&
       ((hrefDump.openingTagEnds &&
@@ -542,28 +617,18 @@ function stripHtml(str, originalOpts) {
   function resetHrefMarkers() {
     // reset the hrefDump
     if (hrefInsertionActive) {
-      hrefDump = {};
+      hrefDump = {
+        tagName: "",
+        hrefValue: "",
+        openingTagEnds: undefined,
+      };
       hrefInsertionActive = false;
     }
   }
 
   // prep opts
   // ===========================================================================
-  const defaults = {
-    ignoreTags: [],
-    onlyStripTags: [],
-    stripTogetherWithTheirContents: [...stripTogetherWithTheirContentsDefaults],
-    skipHtmlDecoding: false,
-    trimOnlySpaces: false,
-    dumpLinkHrefsNearby: {
-      enabled: false,
-      putOnNewLine: false,
-      wrapHeads: "",
-      wrapTails: "",
-    },
-    cb: null,
-  };
-  const opts = { ...defaults, ...originalOpts };
+  const opts: Opts = { ...defaults, ...originalOpts };
 
   if (Object.prototype.hasOwnProperty.call(opts, "returnRangesOnly")) {
     throw new TypeError(
@@ -596,7 +661,7 @@ function stripHtml(str, originalOpts) {
   // Object.assign doesn't deep merge, so we take care of opts.dumpLinkHrefsNearby:
   opts.dumpLinkHrefsNearby = defaults.dumpLinkHrefsNearby;
   if (
-    isObj(originalOpts) &&
+    originalOpts &&
     Object.prototype.hasOwnProperty.call(originalOpts, "dumpLinkHrefsNearby") &&
     existy(originalOpts.dumpLinkHrefsNearby)
   ) {
@@ -622,12 +687,12 @@ function stripHtml(str, originalOpts) {
     opts.stripTogetherWithTheirContents = [];
   } else if (
     typeof opts.stripTogetherWithTheirContents === "string" &&
-    opts.stripTogetherWithTheirContents.length > 0
+    (opts.stripTogetherWithTheirContents as string).length
   ) {
     opts.stripTogetherWithTheirContents = [opts.stripTogetherWithTheirContents];
   }
 
-  const somethingCaught = {};
+  const somethingCaught: Obj = {};
   if (
     opts.stripTogetherWithTheirContents &&
     Array.isArray(opts.stripTogetherWithTheirContents) &&
@@ -654,7 +719,9 @@ function stripHtml(str, originalOpts) {
   console.log(`654 opts.cb type = ${typeof opts.cb}`);
   if (!opts.cb) {
     opts.cb = ({ rangesArr, proposedReturn }) => {
-      rangesArr.push(...proposedReturn);
+      if (proposedReturn) {
+        (rangesArr as Range[]).push(...(proposedReturn as any));
+      }
     };
   }
 
@@ -674,12 +741,12 @@ function stripHtml(str, originalOpts) {
     limitLinebreaksCount: 2,
   });
 
-  // TODO - that's crummy
+  // TODO: it's chummy - ranges will be unreliable if initial str has changed
   // use ranges-ent-decode
   if (!opts.skipHtmlDecoding) {
-    while (str !== ent.decode(str)) {
+    while (str !== decode(str)) {
       // eslint-disable-next-line no-param-reassign
-      str = ent.decode(str);
+      str = decode(str);
     }
   }
 
@@ -689,7 +756,7 @@ function stripHtml(str, originalOpts) {
   for (let i = 0, len = str.length; i < len; i++) {
     console.log(
       `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${`\u001b[${31}m${
-        str[i].trim() === ""
+        str[i] && str[i].trim() === ""
           ? str[i] === null
             ? "null"
             : str[i] === "\n"
@@ -745,11 +812,11 @@ function stripHtml(str, originalOpts) {
 
             console.log(
               `747 "${trim(
-                culprit
+                (culprit as any)
                   .trim()
                   .split(/\s+/)
-                  .filter((val2) => val2.trim())
-                  .filter((val3, i3) => i3 === 0),
+                  .filter((val2: string) => val2.trim())
+                  .filter((_val3: string, i3: number) => i3 === 0),
                 "/>"
               )}"`
             );
@@ -759,11 +826,11 @@ function stripHtml(str, originalOpts) {
               [...definitelyTagNames].some(
                 (val) =>
                   trim(
-                    culprit
+                    (culprit as any)
                       .trim()
                       .split(/\s+/)
-                      .filter((val2) => val2.trim())
-                      .filter((val3, i3) => i3 === 0),
+                      .filter((val2: string) => val2.trim())
+                      .filter((_val3: string, i3: number) => i3 === 0),
                     "/>"
                   ).toLowerCase() === val
               ) &&
@@ -823,11 +890,11 @@ function stripHtml(str, originalOpts) {
                 `823 cb()-PUSHING [${startingPoint}, ${deleteUpTo}, "${whiteSpaceCompensation}"]`
               );
               opts.cb({
-                tag,
+                tag: tag as any,
                 deleteFrom: startingPoint,
                 deleteTo: deleteUpTo,
                 insert: whiteSpaceCompensation,
-                rangesArr: rangesToDelete,
+                rangesArr: rangesToDelete as any,
                 proposedReturn: [
                   startingPoint,
                   deleteUpTo,
@@ -882,7 +949,7 @@ function stripHtml(str, originalOpts) {
         if (
           opts.dumpLinkHrefsNearby.enabled &&
           // eslint-disable-next-line
-          tag.attributes.some((obj) => {
+          tag.attributes.some((obj: Obj) => {
             if (obj.name && obj.name.toLowerCase() === "href") {
               hrefVal = `${opts.dumpLinkHrefsNearby.wrapHeads || ""}${
                 obj.value
@@ -893,7 +960,8 @@ function stripHtml(str, originalOpts) {
         ) {
           hrefDump = {
             tagName: tag.name,
-            hrefValue: hrefVal,
+            hrefValue: hrefVal as any,
+            openingTagEnds: undefined,
           };
           console.log(
             `899 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`hrefDump`}\u001b[${39}m`} = ${JSON.stringify(
@@ -1053,11 +1121,11 @@ function stripHtml(str, originalOpts) {
         // filteredTagLocations.push([tag.leftOuterWhitespace, i]);
 
         opts.cb({
-          tag,
+          tag: tag as Tag,
           deleteFrom: tag.leftOuterWhitespace,
           deleteTo: i,
           insert: `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`,
-          rangesArr: rangesToDelete,
+          rangesArr: rangesToDelete as any,
           proposedReturn: [
             tag.leftOuterWhitespace,
             i,
@@ -1335,7 +1403,7 @@ function stripHtml(str, originalOpts) {
 
     // catch the ending of the tag
     // -------------------------------------------------------------------------
-    // the tag is "released" into "rangesApply":
+    // the tag is "released" into "rApply":
 
     if (tag.lastOpeningBracketAt !== undefined) {
       console.log(`1341 opening bracket has been met`);
@@ -1440,11 +1508,11 @@ function stripHtml(str, originalOpts) {
             );
 
             opts.cb({
-              tag,
+              tag: tag as Tag,
               deleteFrom: tag.leftOuterWhitespace,
               deleteTo: i + 1,
               insert: `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`,
-              rangesArr: rangesToDelete,
+              rangesArr: rangesToDelete as any,
               proposedReturn: [
                 tag.leftOuterWhitespace,
                 i + 1,
@@ -1485,7 +1553,7 @@ function stripHtml(str, originalOpts) {
               // get the last opening counterpart of the pair
               // iterate rangedOpeningTags from the, pick the first
               // ranged opening tag whose name is same like current, closing's
-              let lastRangedOpeningTag;
+              let lastRangedOpeningTag: any;
               for (let z = rangedOpeningTags.length; z--; ) {
                 /* istanbul ignore else */
                 if (rangedOpeningTags[z].name === tag.name) {
@@ -1617,12 +1685,12 @@ function stripHtml(str, originalOpts) {
         ) {
           // ping the callback with nulls:
           opts.cb({
-            tag,
+            tag: tag as Tag,
             deleteFrom: null,
             deleteTo: null,
             insert: null,
-            rangesArr: rangesToDelete,
-            proposedReturn: [],
+            rangesArr: rangesToDelete as any,
+            proposedReturn: null,
           });
 
           // don't submit the tag onto "filteredTagLocations"
@@ -1643,7 +1711,7 @@ function stripHtml(str, originalOpts) {
               singleLetterTags.has(tag.name.toLowerCase()))) ||
           // OR there is at least one equals that follow the attribute's name:
           (tag.attributes &&
-            tag.attributes.some((attrObj2) => attrObj2.equalsAt))
+            tag.attributes.some((attrObj2: any) => attrObj2.equalsAt))
         ) {
           // submit tag to filteredTagLocations
           /* istanbul ignore else */
@@ -1744,11 +1812,11 @@ function stripHtml(str, originalOpts) {
             )}]`}\u001b[${39}m`
           );
           opts.cb({
-            tag,
+            tag: tag as Tag,
             deleteFrom: tag.leftOuterWhitespace,
             deleteTo: endingRangeIndex,
             insert,
-            rangesArr: rangesToDelete,
+            rangesArr: rangesToDelete as any,
             proposedReturn: [tag.leftOuterWhitespace, endingRangeIndex, insert],
           });
           resetHrefMarkers();
@@ -1807,7 +1875,7 @@ function stripHtml(str, originalOpts) {
     ) {
       console.log(`1808 caught opening bracket`);
       // cater sequences of opening brackets "<<<<div>>>"
-      if (str[right(str, i)] === ">") {
+      if (str[right(str, i) as number] === ">") {
         // cater cases like: "<><><>"
         console.log(`1812 cases like <><><>`);
         continue;
@@ -1851,11 +1919,11 @@ function stripHtml(str, originalOpts) {
               `1851 cb()-PUSH range [${tag.leftOuterWhitespace}, ${i}, "${whiteSpaceCompensation}"]`
             );
             opts.cb({
-              tag,
+              tag: tag as Tag,
               deleteFrom: tag.leftOuterWhitespace,
               deleteTo: i,
               insert: whiteSpaceCompensation,
-              rangesArr: rangesToDelete,
+              rangesArr: rangesToDelete as any,
               proposedReturn: [
                 tag.leftOuterWhitespace,
                 i,
@@ -2022,11 +2090,11 @@ function stripHtml(str, originalOpts) {
                   `2022 cb()-PUSH range [${tag.leftOuterWhitespace}, ${rangeEnd}, "${whiteSpaceCompensation}"]`
                 );
                 opts.cb({
-                  tag,
+                  tag: tag as Tag,
                   deleteFrom: tag.leftOuterWhitespace,
                   deleteTo: rangeEnd,
                   insert: whiteSpaceCompensation,
-                  rangesArr: rangesToDelete,
+                  rangesArr: rangesToDelete as any,
                   proposedReturn: [
                     tag.leftOuterWhitespace,
                     rangeEnd,
@@ -2265,23 +2333,24 @@ function stripHtml(str, originalOpts) {
   }
 
   // last correction, imagine we've got text-whitespace-tag.
-  // That last part "tag" was removed but "whitespace" in between is left.
+  // That last part "tag" was removed but "whitespace" in between is on the left.
   // We need to trim() that too if applicable.
   // By now we'll be able to tell, is starting/ending range array touching
   // the start (index 0) or end (str.length - 1) character indexes, and if so,
   // their inner sides will need to be trimmed accordingly, considering the
   // "opts.trimOnlySpaces" of course.
-  if ((!originalOpts || !originalOpts.cb) && rangesToDelete.current()) {
+  const curr = rangesToDelete.current();
+  if ((!originalOpts || !originalOpts.cb) && curr) {
     // check front - the first range of gathered ranges, does it touch start (0)
-    if (rangesToDelete.current()[0] && !rangesToDelete.current()[0][0]) {
+    if (curr[0] && !curr[0][0]) {
       console.log(
         `2278 ${`\u001b[${33}m${`the first range`}\u001b[${39}m`} = ${JSON.stringify(
-          rangesToDelete.current()[0],
+          curr[0],
           null,
           4
         )}`
       );
-      const startingIdx = rangesToDelete.current()[0][1];
+      const startingIdx = curr[0][1];
       // check the character at str[startingIdx]
       console.log(
         `2287 ${`\u001b[${33}m${`startingIdx`}\u001b[${39}m`} = ${JSON.stringify(
@@ -2291,33 +2360,25 @@ function stripHtml(str, originalOpts) {
         )}`
       );
 
-      // call to current() merges and sorts, mutating but cleaning array.
-      rangesToDelete.current();
-      // hard edit:
-      rangesToDelete.ranges[0] = [
-        rangesToDelete.ranges[0][0],
-        rangesToDelete.ranges[0][1],
+      // manually edit Ranges class:
+      (rangesToDelete.ranges as any)[0] = [
+        (rangesToDelete.ranges as any)[0][0],
+        (rangesToDelete.ranges as any)[0][1],
       ];
     }
 
     // check end - the last range of gathered ranges, does it touch the end (str.length)
     // PS. remember ending is not inclusive, so ranges covering the whole ending
     // would go up to str.length, not up to str.length - 1!
-    if (
-      rangesToDelete.current()[rangesToDelete.current().length - 1] &&
-      rangesToDelete.current()[rangesToDelete.current().length - 1][1] ===
-        str.length
-    ) {
+    if (curr[curr.length - 1] && curr[curr.length - 1][1] === str.length) {
       console.log(
         `2312 ${`\u001b[${33}m${`the last range`}\u001b[${39}m`} = ${JSON.stringify(
-          rangesToDelete.current()[rangesToDelete.current().length - 1],
+          curr[curr.length - 1],
           null,
           4
         )}; str.length = ${str.length}`
       );
-      const startingIdx = rangesToDelete.current()[
-        rangesToDelete.current().length - 1
-      ][0];
+      const startingIdx = curr[curr.length - 1][0];
       // check character at str[startingIdx - 1]
       console.log(
         `2323 ${`\u001b[${33}m${`startingIdx`}\u001b[${39}m`} = ${JSON.stringify(
@@ -2332,43 +2393,43 @@ function stripHtml(str, originalOpts) {
       // We already have tight crop, we just need to remove that "what to add"
       // third element.
 
-      // call to current() merges and sorts, mutating but cleaning array.
-      rangesToDelete.current();
       // hard edit:
 
-      let startingIdx2 =
-        rangesToDelete.ranges[rangesToDelete.ranges.length - 1][0];
+      if (rangesToDelete.ranges) {
+        let startingIdx2 =
+          rangesToDelete.ranges[rangesToDelete.ranges.length - 1][0];
 
-      if (
-        str[startingIdx2 - 1] &&
-        ((opts.trimOnlySpaces && str[startingIdx2 - 1] === " ") ||
-          (!opts.trimOnlySpaces && !str[startingIdx2 - 1].trim()))
-      ) {
-        startingIdx2 -= 1;
-      }
+        if (
+          str[startingIdx2 - 1] &&
+          ((opts.trimOnlySpaces && str[startingIdx2 - 1] === " ") ||
+            (!opts.trimOnlySpaces && !str[startingIdx2 - 1].trim()))
+        ) {
+          startingIdx2 -= 1;
+        }
 
-      const backupWhatToAdd =
-        rangesToDelete.ranges[rangesToDelete.ranges.length - 1][2];
+        const backupWhatToAdd =
+          rangesToDelete.ranges[rangesToDelete.ranges.length - 1][2];
 
-      rangesToDelete.ranges[rangesToDelete.ranges.length - 1] = [
-        startingIdx2,
-        rangesToDelete.ranges[rangesToDelete.ranges.length - 1][1],
-      ];
+        rangesToDelete.ranges[rangesToDelete.ranges.length - 1] = [
+          startingIdx2,
+          rangesToDelete.ranges[rangesToDelete.ranges.length - 1][1],
+        ];
 
-      // for cases of opts.dumpLinkHrefsNearby
-      if (backupWhatToAdd && backupWhatToAdd.trim()) {
-        rangesToDelete.ranges[rangesToDelete.ranges.length - 1].push(
-          backupWhatToAdd.trimEnd()
-        );
+        // for cases of opts.dumpLinkHrefsNearby
+        if (backupWhatToAdd && backupWhatToAdd.trim()) {
+          rangesToDelete.ranges[rangesToDelete.ranges.length - 1].push(
+            trimEnd(backupWhatToAdd) as any
+          );
+        }
       }
     }
   }
 
-  const res = {
+  const res: Res = {
     log: {
       timeTakenInMilliseconds: Date.now() - start,
     },
-    result: rangesApply(str, rangesToDelete.current()),
+    result: rApply(str, rangesToDelete.current()),
     ranges: rangesToDelete.current(),
     allTagLocations,
     filteredTagLocations,
@@ -2384,4 +2445,4 @@ function stripHtml(str, originalOpts) {
   return res;
 }
 
-export default stripHtml;
+export { stripHtml, defaults, version };

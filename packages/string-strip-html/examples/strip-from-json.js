@@ -1,10 +1,8 @@
-/* eslint import/extensions:0, import/no-extraneous-dependencies:0 */
-
 // Strip HTML from a raw JSON string
 
 import { strict as assert } from "assert";
-import stripHtml from "../dist/string-strip-html.esm.js";
-import traverse from "../../ast-monkey-traverse";
+import { stripHtml } from "../dist/string-strip-html.esm.js";
+import { traverse } from "../../ast-monkey-traverse";
 
 const stripFromJsonStr = (str) => {
   return traverse(JSON.parse(str), (key, val) => {

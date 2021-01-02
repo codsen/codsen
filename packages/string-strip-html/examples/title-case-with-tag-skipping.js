@@ -1,5 +1,3 @@
-/* eslint import/extensions:0, import/no-extraneous-dependencies:0 */
-
 // Set the title case using `title` package
 
 // This program will not touch any single tags (<br class="z"/> for example)
@@ -7,21 +5,20 @@
 
 import { strict as assert } from "assert";
 import title from "title";
-import invertRanges from "../../ranges-invert";
-import applyRanges from "../../ranges-apply";
-import stripHtml from "../dist/string-strip-html.esm.js";
-
-const rangesRegex = require("../../ranges-regex");
+import { rInvert } from "../../ranges-invert";
+import { rApply } from "../../ranges-apply";
+import { rRegex } from "../../ranges-regex";
+import { stripHtml } from "../dist/string-strip-html.esm.js";
 
 function tagAwareTitle(str) {
   const whitelist = ["eslint", "readme", "npm"];
   const { filteredTagLocations } = stripHtml(str, {
     stripTogetherWithTheirContents: ["*"],
   });
-  const inverted = invertRanges(
+  const inverted = rInvert(
     filteredTagLocations.concat(
       whitelist.reduce((acc, curr) => {
-        const rangesFindings = rangesRegex(new RegExp(curr, "gi"), str);
+        const rangesFindings = rRegex(new RegExp(curr, "gi"), str);
         if (rangesFindings) {
           return acc.concat(rangesFindings);
         }
@@ -35,7 +32,7 @@ function tagAwareTitle(str) {
     // take inverted ranges, for example, [[3, 4], [10, 15]]
     // and add third element, replacement, which is same character
     // indexes only processed through "title":
-    return applyRanges(
+    return rApply(
       str,
       inverted.map(([from, to]) => [from, to, title(str.slice(from, to))])
     );

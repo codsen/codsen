@@ -1,10 +1,16 @@
+/* eslint @typescript-eslint/explicit-module-boundary-types:0 */
+
+interface Obj {
+  [key: string]: any;
+}
+
 /* istanbul ignore next */
-function characterSuitableForNames(char) {
+function characterSuitableForNames(char: string): boolean {
   return /[-_A-Za-z0-9]/.test(char);
 }
 
 /* istanbul ignore next */
-function prepHopefullyAnArray(something, name) {
+function prepHopefullyAnArray(something: any, name: string): string[] {
   if (!something) {
     return [];
   }
@@ -20,7 +26,12 @@ function prepHopefullyAnArray(something, name) {
 }
 
 /* istanbul ignore next */
-function xBeforeYOnTheRight(str, startingIdx, x, y) {
+function xBeforeYOnTheRight(
+  str: string,
+  startingIdx: number,
+  x: string,
+  y: string
+): boolean {
   for (let i = startingIdx, len = str.length; i < len; i++) {
     if (str.startsWith(x, i)) {
       return true;
@@ -41,11 +52,25 @@ function xBeforeYOnTheRight(str, startingIdx, x, y) {
 //                                        we're here, it's false ending
 //
 /* istanbul ignore next */
-function notWithinAttrQuotes(tag, str, i) {
+function notWithinAttrQuotes(tag: Obj, str: string, i: number) {
   return (
     !tag ||
     !tag.quotes ||
     !xBeforeYOnTheRight(str, i + 1, tag.quotes.value, ">")
+  );
+}
+
+/* eslint no-control-regex: 0 */
+function trimEnd(str: string): string {
+  return str.replace(
+    new RegExp(
+      `${
+        /[\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF]+/
+          .source
+      }$`,
+      "g"
+    ),
+    ""
   );
 }
 
@@ -54,4 +79,6 @@ export {
   prepHopefullyAnArray,
   xBeforeYOnTheRight,
   notWithinAttrQuotes,
+  trimEnd,
+  Obj,
 };

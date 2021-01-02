@@ -1,7 +1,7 @@
 import tap from "tap";
-import invert from "ranges-invert";
-import apply from "ranges-apply";
-import stripHtml from "../dist/string-strip-html.esm";
+import { rInvert } from "ranges-invert";
+import { rApply } from "ranges-apply";
+import { stripHtml } from "../dist/string-strip-html.esm";
 import validateTagLocations from "./util/validateTagLocations";
 
 // 1. Remove HTML tags, give me a clean string.
@@ -110,7 +110,7 @@ The promo is still on!
     "02.04"
   );
   t.is(
-    apply(input, invert(allTagLocations, input.length)),
+    rApply(input, rInvert(allTagLocations, input.length)),
     `<div class="module-container"></div>`,
     "02.05"
   );

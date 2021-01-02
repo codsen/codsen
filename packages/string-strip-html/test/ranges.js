@@ -1,6 +1,6 @@
 import tap from "tap";
-import applyR from "ranges-apply";
-import stripHtml from "../dist/string-strip-html.esm";
+import { rApply } from "ranges-apply";
+import { stripHtml } from "../dist/string-strip-html.esm";
 import validateTagLocations from "./util/validateTagLocations";
 
 // concentrating on ranges output
@@ -67,7 +67,7 @@ tap.test("02 - consistency with ranges-apply", (t) => {
     `02.01`
   );
 
-  t.strictSame(applyR(input, stripHtml(input).ranges), result, `02.02`);
+  t.strictSame(rApply(input, stripHtml(input).ranges), result, `02.02`);
   t.end();
 });
 
@@ -165,7 +165,7 @@ tap.test("03 - consistency with ranges-apply", (t) => {
   inputs.forEach((input, idx) => {
     t.strictSame(
       stripHtml(input, { trimOnlySpaces: false }).result,
-      applyR(
+      rApply(
         input,
         stripHtml(input, {
           trimOnlySpaces: false, // <----------- trim all whitespace!
@@ -175,7 +175,7 @@ tap.test("03 - consistency with ranges-apply", (t) => {
     );
     t.strictSame(
       stripHtml(input, { trimOnlySpaces: true }).result,
-      applyR(
+      rApply(
         input,
         stripHtml(input, {
           trimOnlySpaces: true, // <----------- trim only spaces!

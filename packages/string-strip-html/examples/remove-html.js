@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // Remove all HTML from a string
 
 import { strict as assert } from "assert";
-import stripHtml from "../dist/string-strip-html.esm.js";
+import { stripHtml } from "../dist/string-strip-html.esm.js";
 
 const someHtml = `<!DOCTYPE html>
 <html lang="en" dir="ltr">

@@ -1,7 +1,7 @@
 import tap from "tap";
-import strip1 from "../dist/string-strip-html.umd";
-import strip2 from "../dist/string-strip-html.dev.umd";
-import strip3 from "../dist/string-strip-html.cjs";
+import { stripHtml as strip1 } from "../dist/string-strip-html.umd";
+import { stripHtml as strip2 } from "../dist/string-strip-html.dev.umd";
+import { stripHtml as strip3 } from "../dist/string-strip-html.cjs";
 
 const source = "a<custom-tag /></ custom-tag>< /custom-tag>b";
 const result = "a b";

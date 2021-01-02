@@ -1,5 +1,5 @@
 import tap from "tap";
-import stripHtml from "../dist/string-strip-html.esm";
+import { stripHtml } from "../dist/string-strip-html.esm";
 
 tap.test(
   "01 - opts.trimOnlySpaces - unencoded non-breaking spaces - no HTML at all",
