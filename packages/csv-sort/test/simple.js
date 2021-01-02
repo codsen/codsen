@@ -1,13 +1,7 @@
 /* eslint no-unused-vars:0 */
 
-import { readFileSync } from "fs";
 import tap from "tap";
-import path from "path";
-import split from "csv-split-easy";
-import csvSort from "../dist/csv-sort.esm";
 import compare from "./util";
-
-const fixtures = path.join(__dirname, "fixtures");
 
 // Simple file, concentrate on row sorting, Balance, Credit & Debit col detection
 // -------------------------------------------------------------------

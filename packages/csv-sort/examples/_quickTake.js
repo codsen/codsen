@@ -1,15 +1,13 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import cSort from "../dist/csv-sort.esm.js";
+import { sort } from "../dist/csv-sort.esm.js";
 
 // Sorts double-entry bookkeeping CSV's - bank statements for example
 // see https://en.wikipedia.org/wiki/Double-entry_bookkeeping
 
 assert.deepEqual(
-  cSort(`Acc Number,Description,Debit Amount,Credit Amount,Balance,
+  sort(`Acc Number,Description,Debit Amount,Credit Amount,Balance,
 123456,Client #1 payment,,1000,1940
 123456,Bought carpet,30,,950
 123456,Bought table,10,,940

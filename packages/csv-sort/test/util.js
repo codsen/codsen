@@ -2,9 +2,9 @@
 
 import { readFileSync } from "fs";
 import path from "path";
-import split from "csv-split-easy";
+import { splitEasy } from "csv-split-easy";
 import crypto from "crypto";
-import csvSort from "../dist/csv-sort.esm";
+import { sort } from "../dist/csv-sort.esm";
 
 const sha256 = (x) =>
   crypto.createHash("sha256").update(x, "utf8").digest("hex");
@@ -62,15 +62,15 @@ function compare(t, name, throws) {
   // then get onto real bizness
   if (throws) {
     return t.throws(() => {
-      csvSort(testSource, "utf8");
+      sort(testSource, "utf8");
     });
   }
-  const actual = csvSort(testSource, "utf8").res;
+  const actual = sort(testSource, "utf8").res;
   const expected = readFileSync(
     path.join(fixtures, `${name}.expected.csv`),
     "utf8"
   );
-  return t.strictSame(actual, split(expected));
+  return t.strictSame(actual, splitEasy(expected));
 }
 
 export default compare;

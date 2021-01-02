@@ -1,4 +1,13 @@
-import isNumeric from "is-numeric";
+function isNumeric(str: string): boolean {
+  // if (typeof str === "number") {
+  //   return true;
+  // }
+  // if (!String(str).trim()) {
+  if (!str.trim()) {
+    return false;
+  }
+  return Number(str) === Number(str);
+}
 
 const currencySigns = [
   "د.إ",
@@ -138,7 +147,7 @@ const currencySigns = [
   "Z$",
 ];
 
-function findType(something) {
+function findType(something: string): string {
   /* istanbul ignore next */
   if (typeof something !== "string") {
     throw new Error(

@@ -1,13 +1,8 @@
 /* eslint no-unused-vars:0 */
 
-import { readFileSync } from "fs";
 import tap from "tap";
-import path from "path";
-import split from "csv-split-easy";
-import csvSort from "../dist/csv-sort.esm";
+import { sort } from "../dist/csv-sort.esm";
 import compare from "./util";
-
-const fixtures = path.join(__dirname, "fixtures");
 
 // Blank row cases
 // -------------------------------------------------------------------
@@ -56,7 +51,15 @@ tap.test(
 tap.test(
   "08. extra column with data there, then an extra empty column everywhere (will trim it)",
   (t) => {
-    t.strictSame(csvSort(""), [[""]], "08");
+    t.strictSame(
+      sort(""),
+      {
+        res: [[""]],
+        msgContent: null,
+        msgType: null,
+      },
+      "08"
+    );
     t.end();
   }
 );

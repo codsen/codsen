@@ -7,7 +7,7 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { sort } = require("..");
 
 const source = `
 Acc Number,Description,Debit Amount,Credit Amount,Balance,
@@ -17,7 +17,7 @@ Acc Number,Description,Debit Amount,Credit Amount,Balance,
 123456,Bought pens,10,,1000
 123456,Bought chairs,20,,980
 `;
-const testme = () => f(source);
+const testme = () => sort(source);
 
 // action
 runPerf(testme, callerDir);

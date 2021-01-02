@@ -34,13 +34,13 @@ npm i csv-sort
 
 ```js
 import { strict as assert } from "assert";
-import cSort from "csv-sort";
+import { sort } from "csv-sort";
 
 // Sorts double-entry bookkeeping CSV's - bank statements for example
 // see https://en.wikipedia.org/wiki/Double-entry_bookkeeping
 
 assert.deepEqual(
-  cSort(`Acc Number,Description,Debit Amount,Credit Amount,Balance,
+  sort(`Acc Number,Description,Debit Amount,Credit Amount,Balance,
 123456,Client #1 payment,,1000,1940
 123456,Bought carpet,30,,950
 123456,Bought table,10,,940
@@ -71,7 +71,7 @@ Please [visit codsen.com](https://codsen.com/os/csv-sort/) for a full descriptio
 
 MIT License
 
-Copyright (c) 2010-2020 Roy Revelt and other contributors
+Copyright (c) 2010-2021 Roy Revelt and other contributors
 
 List of [currency signs](https://github.com/bengourley/currency-symbol-map) - Copyright © 2017 Ben Gourley - see its [BSD-2-Clause disclaimer](https://opensource.org/licenses/BSD-2-Clause)
 

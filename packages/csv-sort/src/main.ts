@@ -1,52 +1,34 @@
-import split from "csv-split-easy";
 import pull from "lodash.pull";
+import { splitEasy } from "csv-split-easy";
 import currency from "currency.js";
 import findType from "./util/findType";
 
-function csvSort(input) {
-  let content;
+interface Res {
+  res: string[][];
+  msgContent: null | string;
+  msgType: null | string;
+}
+
+function sort(input: string): Res {
   let msgContent = null;
   let msgType = null;
 
   // step 1.
   // ===========================
   // depends what was passed in,
-  if (typeof input === "string") {
-    if (input.length === 0) {
-      return [[""]];
-    }
-    content = split(input);
-  } else if (Array.isArray(input)) {
-    let culpritVal;
-    let culpritIndex;
-    /* istanbul ignore else */
-    if (
-      !input.every((val, index) => {
-        /* istanbul ignore else */
-        if (!Array.isArray(val)) {
-          culpritVal = val;
-          culpritIndex = index;
-        }
-        return Array.isArray(val);
-      })
-    ) {
-      throw new TypeError(
-        `csv-sort/csvSort(): [THROW_ID_01] the input is array as expected, but not all of its children are arrays! For example, the element at index ${culpritIndex} is not array but: ${typeof culpritVal}, equal to:\n${JSON.stringify(
-          culpritVal,
-          null,
-          4
-        )}`
-      );
-    }
-  } else {
+  if (typeof input !== "string") {
     throw new TypeError(
-      `csv-sort/csvSort(): [THROW_ID_02] The input is of a wrong type! We accept either string of array of arrays. We got instead: ${typeof input}, equal to:\n${JSON.stringify(
+      `csv-sort/csvSort(): [THROW_ID_01] The input is of a wrong type! We accept either string of array of arrays. We got instead: ${typeof input}, equal to:\n${JSON.stringify(
         input,
         null,
         4
       )}`
     );
+  } else if (!input.trim()) {
+    return { res: [[""]], msgContent, msgType };
   }
+
+  let content = splitEasy(input);
 
   // step 2.
   // ===========================
@@ -55,21 +37,20 @@ function csvSort(input) {
   // - first row can have different amount of columns
   // - think about 2D trim feature
 
-  let schema = null;
+  let schema: (string | string[])[] = [];
   let stateHeaderRowPresent = false;
   let stateDataColumnRowLengthIsConsistent = true;
   const stateColumnsContainingSameValueEverywhere = [];
 
   // used for 2D trimming:
-  let indexAtWhichEmptyCellsStart = null;
+  let indexAtWhichEmptyCellsStart: number | null = null;
 
   for (let i = content.length - 1; i >= 0; i--) {
     console.log(`067 content[${i}] = ${content[i]}`);
-    if (!schema) {
+    if (!schema.length) {
       // prevention against last blank row:
       /* istanbul ignore next */
       if (content[i].length !== 1 || content[i][0] !== "") {
-        schema = [];
         for (let y = 0, len = content[i].length; y < len; y++) {
           schema.push(findType(content[i][y].trim()));
           if (
@@ -133,13 +114,13 @@ function csvSort(input) {
           /* istanbul ignore else */
           if (Array.isArray(schema[y])) {
             if (!schema[y].includes(toAdd)) {
-              schema[y].push(findType(content[i][y].trim()));
+              (schema[y] as string[]).push(findType(content[i][y].trim()));
             }
           } else if (schema[y] !== toAdd) {
             const temp = schema[y];
             schema[y] = [];
-            schema[y].push(temp);
-            schema[y].push(toAdd);
+            (schema[y] as string[]).push(temp as string);
+            (schema[y] as string[]).push(toAdd);
           }
         }
       }
@@ -173,7 +154,7 @@ function csvSort(input) {
 
   /* istanbul ignore else */
   if (!indexAtWhichEmptyCellsStart) {
-    indexAtWhichEmptyCellsStart = schema.length;
+    indexAtWhichEmptyCellsStart = (schema as string[]).length;
   }
 
   // find out at which index non-empty columns start. This is effectively left-side trimming.
@@ -190,7 +171,7 @@ function csvSort(input) {
   /* istanbul ignore else */
   if (nonEmptyColsStartAt !== 0) {
     content = content.map((arr) =>
-      arr.slice(nonEmptyColsStartAt + 1, indexAtWhichEmptyCellsStart)
+      arr.slice(nonEmptyColsStartAt + 1, indexAtWhichEmptyCellsStart as number)
     );
     schema = schema.slice(nonEmptyColsStartAt + 1, indexAtWhichEmptyCellsStart);
   }
@@ -208,7 +189,7 @@ function csvSort(input) {
 
   // swoop in traversing the schema array to get "numeric" columns:
   // ----------------
-  const numericSchemaColumns = [];
+  const numericSchemaColumns: number[] = [];
   let balanceColumnIndex;
   schema.forEach((colType, i) => {
     if (colType === "numeric") {
@@ -364,12 +345,12 @@ function csvSort(input) {
           (typeof el === "string" && el === "numeric") ||
           (Array.isArray(el) && el.includes("numeric"))
         ) {
-          result.push(index);
+          (result as any).push(index);
         }
         return result;
       }, [])
     ),
-    balanceColumnIndex,
+    balanceColumnIndex as any,
     ...stateColumnsContainingSameValueEverywhere
   );
 
@@ -398,7 +379,7 @@ function csvSort(input) {
     )}`
   );
 
-  const usedUpRows = [];
+  const usedUpRows: number[] = [];
 
   const bottom = stateHeaderRowPresent ? 1 : 0;
   for (let y = content.length - 2; y >= bottom; y--) {
@@ -542,7 +523,8 @@ function csvSort(input) {
           /* istanbul ignore else */
           if (
             diffVal &&
-            totalVal.add(diffVal).format() === topmostResContentBalance
+            (totalVal as currency).add(diffVal).format() ===
+              topmostResContentBalance
           ) {
             console.log(`547 ADD THIS ROW ABOVE EVERYTHING`);
             // ADD THIS ROW ABOVE EVERYTHING
@@ -555,7 +537,8 @@ function csvSort(input) {
             break;
           } else if (
             diffVal &&
-            totalVal.subtract(diffVal).format() === topmostResContentBalance
+            (totalVal as currency).subtract(diffVal).format() ===
+              topmostResContentBalance
           ) {
             // ADD THIS ROW ABOVE EVERYTHING
             resContent.unshift(
@@ -566,8 +549,9 @@ function csvSort(input) {
             break;
           } else if (
             currentRowsDiffVal &&
-            lastResContentRowsBalance.add(currentRowsDiffVal).format() ===
-              totalVal.format()
+            (lastResContentRowsBalance as currency)
+              .add(currentRowsDiffVal)
+              .format() === (totalVal as currency).format()
           ) {
             // ADD THIS ROW BELOW EVERYTHING
             resContent.push(
@@ -578,8 +562,9 @@ function csvSort(input) {
             break;
           } else if (
             currentRowsDiffVal &&
-            lastResContentRowsBalance.subtract(currentRowsDiffVal).format() ===
-              totalVal.format()
+            (lastResContentRowsBalance as currency)
+              .subtract(currentRowsDiffVal)
+              .format() === (totalVal as currency).format()
           ) {
             // ADD THIS ROW BELOW EVERYTHING
             resContent.push(
@@ -643,4 +628,4 @@ function csvSort(input) {
   };
 }
 
-export default csvSort;
+export { sort };
