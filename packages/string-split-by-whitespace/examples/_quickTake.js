@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import splitByW from "../dist/string-split-by-whitespace.esm.js";
+import { splitByW } from "../dist/string-split-by-whitespace.esm.js";
 
 // Split by whitespace is easy - use native String.prototype.split()
 assert.deepEqual("abc  def ghi".split(/\s+/), ["abc", "def", "ghi"]);

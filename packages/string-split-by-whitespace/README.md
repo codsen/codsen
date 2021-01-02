@@ -34,7 +34,7 @@ npm i string-split-by-whitespace
 
 ```js
 import { strict as assert } from "assert";
-import splitByW from "string-split-by-whitespace";
+import { splitByW } from "string-split-by-whitespace";
 
 // Split by whitespace is easy - use native String.prototype.split()
 assert.deepEqual("abc  def ghi".split(/\s+/), ["abc", "def", "ghi"]);
@@ -65,6 +65,6 @@ Please [visit codsen.com](https://codsen.com/os/string-split-by-whitespace/) for
 
 MIT License
 
-Copyright (c) 2010-2020 Roy Revelt and other contributors
+Copyright (c) 2010-2021 Roy Revelt and other contributors
 
 <img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center"> <img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">

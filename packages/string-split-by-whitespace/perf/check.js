@@ -7,10 +7,10 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { splitByW } = require("..");
 
 const testme = () =>
-  f("some interesting {{text}} {% and %} {{ some more }} text.", {
+  splitByW("some interesting {{text}} {% and %} {{ some more }} text.", {
     ignoreRanges: [
       [17, 25],
       [26, 35],

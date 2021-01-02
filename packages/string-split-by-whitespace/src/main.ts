@@ -1,6 +1,12 @@
-import within from "ranges-is-index-within";
+import { isIndexWithin } from "ranges-is-index-within";
+import { version } from "../package.json";
+import { Range } from "../../../scripts/common";
 
-function split(str, originalOpts) {
+interface Opts {
+  ignoreRanges: Range[];
+}
+
+function splitByW(str: string, originalOpts?: Opts): string[] {
   if (str === undefined) {
     throw new Error(
       "string-split-by-whitespace: [THROW_ID_01] The input is missing!"
@@ -34,11 +40,13 @@ function split(str, originalOpts) {
     if (
       nonWhitespaceSubStringStartsAt === null &&
       str[i].trim() &&
-      (!opts.ignoreRanges.length ||
+      (!opts ||
+        !opts.ignoreRanges ||
+        !opts.ignoreRanges.length ||
         (opts.ignoreRanges.length &&
-          !within(
+          !isIndexWithin(
             i,
-            opts.ignoreRanges.map((arr) => [arr[0], arr[1] - 1]),
+            (opts.ignoreRanges as Range[]).map((arr) => [arr[0], arr[1] - 1]),
             {
               inclusiveRangeEnds: true,
             }
@@ -51,7 +59,10 @@ function split(str, originalOpts) {
       if (!str[i].trim()) {
         res.push(str.slice(nonWhitespaceSubStringStartsAt, i));
         nonWhitespaceSubStringStartsAt = null;
-      } else if (opts.ignoreRanges.length && within(i, opts.ignoreRanges)) {
+      } else if (
+        opts.ignoreRanges.length &&
+        isIndexWithin(i, opts.ignoreRanges)
+      ) {
         res.push(str.slice(nonWhitespaceSubStringStartsAt, i - 1));
         nonWhitespaceSubStringStartsAt = null;
       } else if (str[i + 1] === undefined) {
@@ -62,4 +73,4 @@ function split(str, originalOpts) {
   return res;
 }
 
-export default split;
+export { splitByW, version };
