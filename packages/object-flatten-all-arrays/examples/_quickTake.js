@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import flattenAllArrays from "../dist/object-flatten-all-arrays.esm.js";
+import { flattenAllArrays } from "../dist/object-flatten-all-arrays.esm.js";
 
 assert.deepEqual(
   flattenAllArrays({

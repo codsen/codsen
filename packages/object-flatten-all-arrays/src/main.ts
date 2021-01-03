@@ -1,25 +1,31 @@
 import merge from "lodash.merge";
 import clone from "lodash.clonedeep";
 import isObj from "lodash.isplainobject";
+import { version } from "../package.json";
 
-const isArr = Array.isArray;
+interface Obj {
+  [key: string]: any;
+}
+interface Opts {
+  flattenArraysContainingStringsToBeEmpty: boolean;
+}
 
-function flattenAllArrays(originalIncommingObj, originalOpts) {
+function flattenAllArrays(originalIncommingObj: Obj, originalOpts?: Opts): Obj {
   //
   // internal functions
   // ==================
 
-  function arrayContainsStr(arr) {
+  function arrayContainsStr(arr: any[]): boolean {
     return arr.some((val) => typeof val === "string");
   }
 
   // setup
   // =====
 
-  const defaults = {
+  const defaults: Opts = {
     flattenArraysContainingStringsToBeEmpty: false,
   };
-  const opts = { ...defaults, ...originalOpts };
+  const opts: Opts = { ...defaults, ...originalOpts };
 
   const incommingObj = clone(originalIncommingObj);
   let isFirstObj;
@@ -30,7 +36,7 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
   // ======
 
   // 1. check current
-  if (isArr(incommingObj)) {
+  if (Array.isArray(incommingObj)) {
     if (
       opts.flattenArraysContainingStringsToBeEmpty &&
       arrayContainsStr(incommingObj)
@@ -59,13 +65,13 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
   // 2. traverse deeper
   if (isObj(incommingObj)) {
     Object.keys(incommingObj).forEach((key) => {
-      if (isObj(incommingObj[key]) || isArr(incommingObj[key])) {
+      if (isObj(incommingObj[key]) || Array.isArray(incommingObj[key])) {
         incommingObj[key] = flattenAllArrays(incommingObj[key], opts);
       }
     });
-  } else if (isArr(incommingObj)) {
-    incommingObj.forEach((el, i) => {
-      if (isObj(incommingObj[i]) || isArr(incommingObj[i])) {
+  } else if (Array.isArray(incommingObj)) {
+    incommingObj.forEach((_el, i) => {
+      if (isObj(incommingObj[i]) || Array.isArray(incommingObj[i])) {
         incommingObj[i] = flattenAllArrays(incommingObj[i], opts);
       }
     });
@@ -73,4 +79,4 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
   return incommingObj;
 }
 
-export default flattenAllArrays;
+export { flattenAllArrays, version };
