@@ -1,24 +1,33 @@
-import arrayObjectOrBoth from "util-array-object-or-both";
-import checkTypes from "check-types-mini";
-import astCompare from "ast-compare";
-import traverse from "ast-monkey-traverse";
+import { arrObjOrBoth } from "util-array-object-or-both";
+import { checkTypesMini } from "check-types-mini";
+import { compare } from "ast-compare";
+import { traverse } from "ast-monkey-traverse";
+import { JsonValue } from "type-fest";
+import { version } from "../package.json";
 
 // -----------------------------------------------------------------------------
 
-function existy(x) {
+interface InternalOpts {
+  key?: null | string;
+  val?: any;
+  only?: string | null | undefined;
+  index?: number;
+  mode: "find" | "get" | "set" | "drop" | "del" | "arrayFirstOnly";
+}
+function existy(x: any): boolean {
   return x != null;
 }
-function notUndef(x) {
+function notUndef(x: any): boolean {
   return x !== undefined;
 }
 // function isStr(x) { return typeof x === 'string' }
-function compareIsEqual(a, b) {
+function compareIsEqual(a: any, b: any): boolean {
   if (typeof a !== typeof b) {
     return false;
   }
-  return astCompare(a, b, { matchStrictly: true, useWildcards: true });
+  return !!compare(a, b, { matchStrictly: true, useWildcards: true });
 }
-function isObj(something) {
+function isObj(something: any): boolean {
   return (
     something && typeof something === "object" && !Array.isArray(something)
   );
@@ -26,7 +35,7 @@ function isObj(something) {
 
 // -----------------------------------------------------------------------------
 
-function monkey(originalInput, originalOpts) {
+function monkey(originalInput: JsonValue, originalOpts: InternalOpts) {
   // -----------------------------------
   // precautions
   if (!existy(originalInput)) {
@@ -34,16 +43,26 @@ function monkey(originalInput, originalOpts) {
       "ast-monkey/main.js/monkey(): [THROW_ID_01] Please provide an input"
     );
   }
-  const opts = {
-    key: null,
-    val: undefined,
+  const opts: InternalOpts = {
     ...originalOpts,
   };
   // ---------------------------------------------------------------------------
   // action
 
-  const data = { count: 0, gatherPath: [], finding: null };
-  const findings = [];
+  interface Data {
+    count: number;
+    gatherPath: number[];
+    finding: any;
+  }
+  const data: Data = { count: 0, gatherPath: [], finding: null };
+
+  interface Finding {
+    index: number;
+    key: string;
+    val: any;
+    path: number[];
+  }
+  const findings: Finding[] = [];
 
   let ko = false; // key only
   let vo = false; // value only
@@ -68,7 +87,7 @@ function monkey(originalInput, originalOpts) {
   //
 
   input = traverse(input, (key, val, innerObj) => {
-    let temp;
+    let temp: Finding;
     data.count += 1;
     data.gatherPath.length = innerObj.depth;
     data.gatherPath.push(data.count);
@@ -95,11 +114,12 @@ function monkey(originalInput, originalOpts) {
             compareIsEqual(val, opts.val)))
       ) {
         if (opts.mode === "find") {
-          temp = {};
-          temp.index = data.count;
-          temp.key = key;
-          temp.val = val; // can be also undefined!
-          temp.path = [...data.gatherPath];
+          temp = {
+            index: data.count,
+            key,
+            val,
+            path: [...data.gatherPath],
+          };
           findings.push(temp);
         } else {
           // del() then!
@@ -141,7 +161,12 @@ function monkey(originalInput, originalOpts) {
 // -----------------------------------------------------------------------------
 // Validate and prep all the options right here
 
-function find(input, originalOpts) {
+interface FindOpts {
+  key: null | string;
+  val: any;
+  only: undefined | null | "any" | "array" | "object";
+}
+function find(input: JsonValue, originalOpts: FindOpts): null | number[] {
   if (!existy(input)) {
     throw new Error(
       "ast-monkey/main.js/find(): [THROW_ID_02] Please provide the input"
@@ -156,7 +181,7 @@ function find(input, originalOpts) {
     );
   }
   const opts = { ...originalOpts };
-  checkTypes(opts, null, {
+  checkTypesMini(opts, null, {
     schema: {
       key: ["null", "string"],
       val: "any",
@@ -165,7 +190,7 @@ function find(input, originalOpts) {
     msg: "ast-monkey/get(): [THROW_ID_04*]",
   });
   if (typeof opts.only === "string" && opts.only.length > 0) {
-    opts.only = arrayObjectOrBoth(opts.only, {
+    opts.only = arrObjOrBoth(opts.only, {
       optsVarName: "opts.only",
       msg: "ast-monkey/find(): [THROW_ID_05*]",
     });
@@ -175,7 +200,13 @@ function find(input, originalOpts) {
   return monkey(input, { ...opts, mode: "find" });
 }
 
-function get(input, originalOpts) {
+interface GetOpts {
+  key: null | string;
+  val: any;
+  index: number; // obligatory for get()
+  only: undefined | null | "any" | "array" | "object";
+}
+function get(input: JsonValue, originalOpts: GetOpts): GetOpts {
   if (!existy(input)) {
     throw new Error(
       "ast-monkey/main.js/get(): [THROW_ID_06] Please provide the input"
@@ -193,7 +224,7 @@ function get(input, originalOpts) {
   }
   const opts = { ...originalOpts };
   if (typeof opts.index === "string" && /^\d*$/.test(opts.index)) {
-    opts.index = parseInt(opts.index, 10);
+    opts.index = +opts.index;
   } else if (!Number.isInteger(opts.index)) {
     throw new Error(
       `ast-monkey/main.js/get(): [THROW_ID_11] opts.index must be a natural number. It was given as: ${
@@ -204,7 +235,13 @@ function get(input, originalOpts) {
   return monkey(input, { ...opts, mode: "get" });
 }
 
-function set(input, originalOpts) {
+interface SetOpts {
+  key: null | string;
+  val: any;
+  index: number; // obligatory for get()
+  only: undefined | null | "any" | "array" | "object";
+}
+function set(input: JsonValue, originalOpts: SetOpts): JsonValue {
   if (!existy(input)) {
     throw new Error(
       "ast-monkey/main.js/set(): [THROW_ID_12] Please provide the input"
@@ -227,7 +264,7 @@ function set(input, originalOpts) {
   }
   const opts = { ...originalOpts };
   if (typeof opts.index === "string" && /^\d*$/.test(opts.index)) {
-    opts.index = parseInt(opts.index, 10);
+    opts.index = +opts.index;
   } else if (!Number.isInteger(opts.index)) {
     throw new Error(
       `ast-monkey/main.js/set(): [THROW_ID_17] opts.index must be a natural number. It was given as: ${opts.index}`
@@ -236,7 +273,7 @@ function set(input, originalOpts) {
   if (existy(opts.key) && !notUndef(opts.val)) {
     opts.val = opts.key;
   }
-  checkTypes(opts, null, {
+  checkTypesMini(opts, null, {
     schema: {
       key: [null, "string"],
       val: "any",
@@ -247,7 +284,13 @@ function set(input, originalOpts) {
   return monkey(input, { ...opts, mode: "set" });
 }
 
-function drop(input, originalOpts) {
+interface DropOpts {
+  key: null | string;
+  val: any;
+  index: number; // obligatory for get()
+  only: undefined | null | "any" | "array" | "object";
+}
+function drop(input: JsonValue, originalOpts: DropOpts): JsonValue {
   if (!existy(input)) {
     throw new Error(
       "ast-monkey/main.js/drop(): [THROW_ID_19] Please provide the input"
@@ -265,7 +308,7 @@ function drop(input, originalOpts) {
   }
   const opts = { ...originalOpts };
   if (typeof opts.index === "string" && /^\d*$/.test(opts.index)) {
-    opts.index = parseInt(opts.index, 10);
+    opts.index = +opts.index;
   } else if (!Number.isInteger(opts.index)) {
     throw new Error(
       `ast-monkey/main.js/drop(): [THROW_ID_23] opts.index must be a natural number. It was given as: ${opts.index}`
@@ -274,7 +317,12 @@ function drop(input, originalOpts) {
   return monkey(input, { ...opts, mode: "drop" });
 }
 
-function del(input, originalOpts) {
+interface DelOpts {
+  key: null | string;
+  val: any;
+  only: undefined | null | "any" | "array" | "object";
+}
+function del(input: JsonValue, originalOpts: DelOpts): JsonValue {
   if (!existy(input)) {
     throw new Error(
       "ast-monkey/main.js/del(): [THROW_ID_26] Please provide the input"
@@ -291,7 +339,7 @@ function del(input, originalOpts) {
     );
   }
   const opts = { ...originalOpts };
-  checkTypes(opts, null, {
+  checkTypesMini(opts, null, {
     schema: {
       key: [null, "string"],
       val: "any",
@@ -300,7 +348,7 @@ function del(input, originalOpts) {
     msg: "ast-monkey/drop(): [THROW_ID_29*]",
   });
   if (typeof opts.only === "string" && opts.only.length > 0) {
-    opts.only = arrayObjectOrBoth(opts.only, {
+    opts.only = arrObjOrBoth(opts.only, {
       msg: "ast-monkey/del(): [THROW_ID_30*]",
       optsVarName: "opts.only",
     });
@@ -310,7 +358,7 @@ function del(input, originalOpts) {
   return monkey(input, { ...opts, mode: "del" });
 }
 
-function arrayFirstOnly(input) {
+function arrayFirstOnly(input: JsonValue): JsonValue {
   if (!existy(input)) {
     throw new Error(
       "ast-monkey/main.js/arrayFirstOnly(): [THROW_ID_31] Please provide the input"
@@ -321,4 +369,4 @@ function arrayFirstOnly(input) {
 
 // -----------------------------------------------------------------------------
 
-export { find, get, set, drop, del, arrayFirstOnly, traverse };
+export { find, get, set, drop, del, arrayFirstOnly, traverse, version };
