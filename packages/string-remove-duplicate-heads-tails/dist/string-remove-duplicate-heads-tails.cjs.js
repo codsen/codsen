@@ -50,25 +50,28 @@ function remDup(str, originalOpts) {
 
   if (originalOpts && !isObj__default['default'](originalOpts)) {
     throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_03] The given options are not a plain object but " + typeof originalOpts + "!");
-  }
+  } // at this point, we can clone the originalOpts
 
-  if (originalOpts && has.call(originalOpts, "heads")) {
-    if (!arrayiffyIfString.arrayiffy(originalOpts.heads).every(function (val) {
+
+  var clonedOriginalOpts = _objectSpread__default['default']({}, originalOpts);
+
+  if (clonedOriginalOpts && has.call(clonedOriginalOpts, "heads")) {
+    if (!arrayiffyIfString.arrayiffy(clonedOriginalOpts.heads).every(function (val) {
       return isStr(val);
     })) {
       throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_04] The opts.heads contains elements which are not string-type!");
-    } else if (isStr(originalOpts.heads)) {
-      originalOpts.heads = arrayiffyIfString.arrayiffy(originalOpts.heads);
+    } else if (isStr(clonedOriginalOpts.heads)) {
+      clonedOriginalOpts.heads = arrayiffyIfString.arrayiffy(clonedOriginalOpts.heads);
     }
   }
 
-  if (originalOpts && has.call(originalOpts, "tails")) {
-    if (!arrayiffyIfString.arrayiffy(originalOpts.tails).every(function (val) {
+  if (clonedOriginalOpts && has.call(clonedOriginalOpts, "tails")) {
+    if (!arrayiffyIfString.arrayiffy(clonedOriginalOpts.tails).every(function (val) {
       return isStr(val);
     })) {
       throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_05] The opts.tails contains elements which are not string-type!");
-    } else if (isStr(originalOpts.tails)) {
-      originalOpts.tails = arrayiffyIfString.arrayiffy(originalOpts.tails);
+    } else if (isStr(clonedOriginalOpts.tails)) {
+      clonedOriginalOpts.tails = arrayiffyIfString.arrayiffy(clonedOriginalOpts.tails);
     }
   } // trim but only if it's not trimmable to zero length (in that case return intact)
 
@@ -85,7 +88,7 @@ function remDup(str, originalOpts) {
     tails: ["}}"]
   };
 
-  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts); // first, let's trim heads and tails' array elements:
+  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), clonedOriginalOpts); // first, let's trim heads and tails' array elements:
 
 
   opts.heads = opts.heads.map(function (el) {

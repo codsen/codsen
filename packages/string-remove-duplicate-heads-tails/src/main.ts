@@ -11,12 +11,18 @@ interface Opts {
   tails: string[];
 }
 
-const defaults = {
+// allows strings as well (which will end up arrayiffied)
+interface LenientOpts {
+  heads: string | string[];
+  tails: string | string[];
+}
+
+const defaults: Opts = {
   heads: ["{{"],
   tails: ["}}"],
 };
 
-function remDup(str: string, originalOpts?: Opts): string {
+function remDup(str: string, originalOpts?: LenientOpts): string {
   //
 
   const has = Object.prototype.hasOwnProperty;
@@ -39,22 +45,25 @@ function remDup(str: string, originalOpts?: Opts): string {
       `string-remove-duplicate-heads-tails: [THROW_ID_03] The given options are not a plain object but ${typeof originalOpts}!`
     );
   }
-  if (originalOpts && has.call(originalOpts, "heads")) {
-    if (!arrayiffy(originalOpts.heads).every((val: any) => isStr(val))) {
+  // at this point, we can clone the originalOpts
+  const clonedOriginalOpts: Opts = { ...originalOpts } as Opts;
+
+  if (clonedOriginalOpts && has.call(clonedOriginalOpts, "heads")) {
+    if (!arrayiffy(clonedOriginalOpts.heads).every((val: any) => isStr(val))) {
       throw new Error(
         "string-remove-duplicate-heads-tails: [THROW_ID_04] The opts.heads contains elements which are not string-type!"
       );
-    } else if (isStr(originalOpts.heads)) {
-      originalOpts.heads = arrayiffy(originalOpts.heads);
+    } else if (isStr(clonedOriginalOpts.heads)) {
+      clonedOriginalOpts.heads = arrayiffy(clonedOriginalOpts.heads);
     }
   }
-  if (originalOpts && has.call(originalOpts, "tails")) {
-    if (!arrayiffy(originalOpts.tails).every((val: any) => isStr(val))) {
+  if (clonedOriginalOpts && has.call(clonedOriginalOpts, "tails")) {
+    if (!arrayiffy(clonedOriginalOpts.tails).every((val: any) => isStr(val))) {
       throw new Error(
         "string-remove-duplicate-heads-tails: [THROW_ID_05] The opts.tails contains elements which are not string-type!"
       );
-    } else if (isStr(originalOpts.tails)) {
-      originalOpts.tails = arrayiffy(originalOpts.tails);
+    } else if (isStr(clonedOriginalOpts.tails)) {
+      clonedOriginalOpts.tails = arrayiffy(clonedOriginalOpts.tails);
     }
   }
 
@@ -69,7 +78,7 @@ function remDup(str: string, originalOpts?: Opts): string {
     heads: ["{{"],
     tails: ["}}"],
   };
-  const opts: Opts = { ...defaults, ...originalOpts };
+  const opts: Opts = { ...defaults, ...clonedOriginalOpts };
 
   // first, let's trim heads and tails' array elements:
   opts.heads = opts.heads.map((el) => el.trim());

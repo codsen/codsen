@@ -621,14 +621,34 @@ tap.test("34 - leading line break", (t) => {
   t.end();
 });
 
-tap.test("35 - leading line break", (t) => {
+tap.test("35", (t) => {
   t.strictSame(
-    rem("{{ items[0].prepayPin }}", {
+    rem("{{ items[0].abc }}", {
       heads: ["{{"],
       tails: ["}}"],
     }),
-    "{{ items[0].prepayPin }}",
+    "{{ items[0].abc }}",
     "35"
+  );
+  t.end();
+});
+
+tap.test("36 - opts are not mutated", (t) => {
+  const opts = {
+    heads: "{{",
+    tails: "}}",
+  };
+  // 1. run the function, hopefully it won't mutate the opts,
+  // arrayiffying the "heads" and "tails" keys
+  t.strictSame(rem("{{ hi {{ name }}! }}", opts), "hi {{ name }}!", "05.01");
+  // 2. assert that opts keys were not arrayiffied
+  t.strictSame(
+    opts,
+    {
+      heads: "{{",
+      tails: "}}",
+    },
+    "36 - opts were mutated!"
   );
   t.end();
 });

@@ -40,21 +40,25 @@ function remDup(str, originalOpts) {
 
   if (originalOpts && !isObj(originalOpts)) {
     throw new Error(`string-remove-duplicate-heads-tails: [THROW_ID_03] The given options are not a plain object but ${typeof originalOpts}!`);
-  }
+  } // at this point, we can clone the originalOpts
 
-  if (originalOpts && has.call(originalOpts, "heads")) {
-    if (!arrayiffy(originalOpts.heads).every(val => isStr(val))) {
+
+  const clonedOriginalOpts = { ...originalOpts
+  };
+
+  if (clonedOriginalOpts && has.call(clonedOriginalOpts, "heads")) {
+    if (!arrayiffy(clonedOriginalOpts.heads).every(val => isStr(val))) {
       throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_04] The opts.heads contains elements which are not string-type!");
-    } else if (isStr(originalOpts.heads)) {
-      originalOpts.heads = arrayiffy(originalOpts.heads);
+    } else if (isStr(clonedOriginalOpts.heads)) {
+      clonedOriginalOpts.heads = arrayiffy(clonedOriginalOpts.heads);
     }
   }
 
-  if (originalOpts && has.call(originalOpts, "tails")) {
-    if (!arrayiffy(originalOpts.tails).every(val => isStr(val))) {
+  if (clonedOriginalOpts && has.call(clonedOriginalOpts, "tails")) {
+    if (!arrayiffy(clonedOriginalOpts.tails).every(val => isStr(val))) {
       throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_05] The opts.tails contains elements which are not string-type!");
-    } else if (isStr(originalOpts.tails)) {
-      originalOpts.tails = arrayiffy(originalOpts.tails);
+    } else if (isStr(clonedOriginalOpts.tails)) {
+      clonedOriginalOpts.tails = arrayiffy(clonedOriginalOpts.tails);
     }
   } // trim but only if it's not trimmable to zero length (in that case return intact)
 
@@ -71,7 +75,7 @@ function remDup(str, originalOpts) {
     tails: ["}}"]
   };
   const opts = { ...defaults,
-    ...originalOpts
+    ...clonedOriginalOpts
   }; // first, let's trim heads and tails' array elements:
 
   opts.heads = opts.heads.map(el => el.trim());

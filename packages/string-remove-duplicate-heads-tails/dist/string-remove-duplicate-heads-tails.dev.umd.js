@@ -547,7 +547,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
         }
 
         if (mode[5] === "L") {
-          return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex) || false;
+          return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
         } // ELSE matchRight & matchRightIncl
 
 
@@ -555,7 +555,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
           theRemainderOfTheString = str.slice(firstCharOutsideIndex);
         }
 
-        return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex) || false;
+        return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
       }
 
       var extraNote = "";
@@ -1101,6 +1101,7 @@ var Ranges = /*#__PURE__*/function () {
   };
 
   _proto.push = function push(originalFrom, originalTo, addVal) {
+    // @ts-ignore
     this.add(originalFrom, originalTo, addVal);
   } // C U R R E N T () - kindof a getter
   // ==================================
@@ -1419,25 +1420,28 @@ function remDup(str, originalOpts) {
 
   if (originalOpts && !lodash_isplainobject(originalOpts)) {
     throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_03] The given options are not a plain object but " + typeof originalOpts + "!");
-  }
+  } // at this point, we can clone the originalOpts
 
-  if (originalOpts && has.call(originalOpts, "heads")) {
-    if (!arrayiffy(originalOpts.heads).every(function (val) {
+
+  var clonedOriginalOpts = _objectSpread2({}, originalOpts);
+
+  if (clonedOriginalOpts && has.call(clonedOriginalOpts, "heads")) {
+    if (!arrayiffy(clonedOriginalOpts.heads).every(function (val) {
       return isStr(val);
     })) {
       throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_04] The opts.heads contains elements which are not string-type!");
-    } else if (isStr(originalOpts.heads)) {
-      originalOpts.heads = arrayiffy(originalOpts.heads);
+    } else if (isStr(clonedOriginalOpts.heads)) {
+      clonedOriginalOpts.heads = arrayiffy(clonedOriginalOpts.heads);
     }
   }
 
-  if (originalOpts && has.call(originalOpts, "tails")) {
-    if (!arrayiffy(originalOpts.tails).every(function (val) {
+  if (clonedOriginalOpts && has.call(clonedOriginalOpts, "tails")) {
+    if (!arrayiffy(clonedOriginalOpts.tails).every(function (val) {
       return isStr(val);
     })) {
       throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_05] The opts.tails contains elements which are not string-type!");
-    } else if (isStr(originalOpts.tails)) {
-      originalOpts.tails = arrayiffy(originalOpts.tails);
+    } else if (isStr(clonedOriginalOpts.tails)) {
+      clonedOriginalOpts.tails = arrayiffy(clonedOriginalOpts.tails);
     }
   } // trim but only if it's not trimmable to zero length (in that case return intact)
 
@@ -1454,7 +1458,7 @@ function remDup(str, originalOpts) {
     tails: ["}}"]
   };
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); // first, let's trim heads and tails' array elements:
+  var opts = _objectSpread2(_objectSpread2({}, defaults), clonedOriginalOpts); // first, let's trim heads and tails' array elements:
 
 
   opts.heads = opts.heads.map(function (el) {
