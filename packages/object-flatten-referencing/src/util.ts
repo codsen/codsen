@@ -1,27 +1,45 @@
 import clone from "lodash.clonedeep";
 import isObj from "lodash.isplainobject";
-import isStringInt from "is-string-int";
 
-const isArr = Array.isArray;
+interface Obj {
+  [key: string]: any;
+}
 
-function isStr(something) {
+interface Opts {
+  wrapHeadsWith: string;
+  wrapTailsWith: string;
+  dontWrapKeys: string[];
+  dontWrapPaths: string[];
+  xhtml: boolean;
+  preventDoubleWrapping: boolean;
+  preventWrappingIfContains: string[];
+  objectKeyAndValueJoinChar: string;
+  wrapGlobalFlipSwitch: boolean;
+  ignore: string[];
+  whatToDoWhenReferenceIsMissing: 0 | 1 | 2;
+  mergeArraysWithLineBreaks: boolean;
+  mergeWithoutTrailingBrIfLineContainsBr: boolean;
+  enforceStrictKeyset: boolean;
+}
+
+function isStr(something: any): boolean {
   return typeof something === "string";
 }
 
-function flattenObject(objOrig, opts) {
+function flattenObject(objOrig: Obj, opts: Opts): any[] {
   if (arguments.length === 0 || Object.keys(objOrig).length === 0) {
     return [];
   }
   const obj = clone(objOrig);
-  let res = [];
+  let res: any[] = [];
   if (isObj(obj)) {
     Object.keys(obj).forEach((key) => {
       if (isObj(obj[key])) {
         obj[key] = flattenObject(obj[key], opts);
       }
-      if (isArr(obj[key])) {
+      if (Array.isArray(obj[key])) {
         res = res.concat(
-          obj[key].map((el) => key + opts.objectKeyAndValueJoinChar + el)
+          obj[key].map((el: any) => key + opts.objectKeyAndValueJoinChar + el)
         );
       }
       if (isStr(obj[key])) {
@@ -32,11 +50,16 @@ function flattenObject(objOrig, opts) {
   return res;
 }
 
-function flattenArr(arrOrig, opts, wrap, joinArraysUsingBrs) {
+function flattenArr(
+  arrOrig: any[],
+  opts: Opts,
+  wrap: boolean,
+  joinArraysUsingBrs: boolean
+): string {
   if (arguments.length === 0 || arrOrig.length === 0) {
     return "";
   }
-  const arr = clone(arrOrig);
+  const arr: any[] = clone(arrOrig);
   let res = "";
   if (arr.length > 0) {
     if (joinArraysUsingBrs) {
@@ -60,27 +83,29 @@ function flattenArr(arrOrig, opts, wrap, joinArraysUsingBrs) {
             (wrap ? opts.wrapHeadsWith : "") +
             arr[i] +
             (wrap ? opts.wrapTailsWith : "");
-        } else if (isArr(arr[i])) {
-          // there's an array among elements
+        } else if (Array.isArray(arr[i])) {
           if (arr[i].length > 0 && arr[i].every(isStr)) {
             let lineBreak = "";
             if (opts.mergeArraysWithLineBreaks && res.length > 0) {
               lineBreak = `<br${opts.xhtml ? " /" : ""}>`;
             }
-            res = arr[i].reduce((acc, val, i2, arr2) => {
-              let trailingSpace = "";
-              if (i2 !== arr2.length - 1) {
-                trailingSpace = " ";
-              }
-              return (
-                acc +
-                (i2 === 0 ? lineBreak : "") +
-                (wrap ? opts.wrapHeadsWith : "") +
-                val +
-                (wrap ? opts.wrapTailsWith : "") +
-                trailingSpace
-              );
-            }, res);
+            res = arr[i].reduce(
+              (acc: string, val: string, i2: number, arr2: any[]) => {
+                let trailingSpace = "";
+                if (i2 !== arr2.length - 1) {
+                  trailingSpace = " ";
+                }
+                return (
+                  acc +
+                  (i2 === 0 ? lineBreak : "") +
+                  (wrap ? opts.wrapHeadsWith : "") +
+                  val +
+                  (wrap ? opts.wrapTailsWith : "") +
+                  trailingSpace
+                );
+              },
+              res
+            );
           }
         }
       }
@@ -108,7 +133,7 @@ function flattenArr(arrOrig, opts, wrap, joinArraysUsingBrs) {
   return res;
 }
 
-function arrayiffyString(something) {
+function arrayiffyString(something: string | any): any {
   if (isStr(something)) {
     if (something.length > 0) {
       return [something];
@@ -118,11 +143,4 @@ function arrayiffyString(something) {
   return something;
 }
 
-function reclaimIntegerString(something) {
-  if (isStr(something) && isStringInt(something.trim())) {
-    return parseInt(something.trim(), 10);
-  }
-  return something;
-}
-
-export { flattenObject, flattenArr, arrayiffyString, reclaimIntegerString };
+export { flattenObject, flattenArr, arrayiffyString, Obj, Opts };

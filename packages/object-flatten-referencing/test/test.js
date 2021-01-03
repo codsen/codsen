@@ -1,13 +1,10 @@
-/* eslint no-template-curly-in-string: 0 */
-
 import tap from "tap";
-import ofr from "../dist/object-flatten-referencing.esm";
 import {
+  flattenReferencing as ofr,
   flattenObject,
   flattenArr,
   arrayiffyString,
-  reclaimIntegerString,
-} from "../src/util";
+} from "../dist/object-flatten-referencing.esm";
 
 // -----------------------------------------------------------------------------
 // 01. various throws
@@ -1704,39 +1701,6 @@ tap.test(
     t.end();
   }
 );
-
-// -----------------------------------------------------------------------------
-// 95. util.reclaimIntegerString
-// -----------------------------------------------------------------------------
-
-tap.test(
-  "21 - util.reclaimIntegerString - does what it says on strings",
-  (t) => {
-    t.strictSame(reclaimIntegerString("1"), 1, "21");
-    t.end();
-  }
-);
-
-tap.test(
-  "22 - util.reclaimIntegerString - doesn't parse non-integer strings",
-  (t) => {
-    t.strictSame(reclaimIntegerString("1.1"), "1.1", "22");
-    t.end();
-  }
-);
-
-tap.test(
-  "23 - util.reclaimIntegerString - doesn't parse non-number strings either",
-  (t) => {
-    t.strictSame(reclaimIntegerString("zz"), "zz", "23");
-    t.end();
-  }
-);
-
-tap.test("24 - util.reclaimIntegerString - doesn't parse booleans", (t) => {
-  t.strictSame(reclaimIntegerString(true), true, "24");
-  t.end();
-});
 
 // -----------------------------------------------------------------------------
 // 96. util.arrayiffyString

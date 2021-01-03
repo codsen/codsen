@@ -1,12 +1,10 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import ofr from "../dist/object-flatten-referencing.esm.js";
+import { flattenReferencing } from "../dist/object-flatten-referencing.esm.js";
 
 assert.deepEqual(
-  ofr(
+  flattenReferencing(
     {
       key1: "val11.val12",
       key2: "val21.val22",

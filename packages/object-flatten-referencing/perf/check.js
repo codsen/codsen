@@ -7,10 +7,10 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { flattenReferencing } = require("..");
 
 const testme = () =>
-  f(
+  flattenReferencing(
     {
       key1: {
         key2: ["val1", "val2", "val3"],

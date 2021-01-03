@@ -9,140 +9,90 @@
 
 'use strict';
 
+Object.defineProperty(exports, '__esModule', { value: true });
+
+var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
 var clone = require('lodash.clonedeep');
-var search = require('str-indexes-of-plus');
+var strIndexesOfPlus = require('str-indexes-of-plus');
 var matcher = require('matcher');
 var isObj = require('lodash.isplainobject');
-var isStringInt = require('is-string-int');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
+var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
-var search__default = /*#__PURE__*/_interopDefaultLegacy(search);
 var matcher__default = /*#__PURE__*/_interopDefaultLegacy(matcher);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
-var isStringInt__default = /*#__PURE__*/_interopDefaultLegacy(isStringInt);
 
-function _typeof(obj) {
-  "@babel/helpers - typeof";
-
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof = function (obj) {
-      return typeof obj;
-    };
-  } else {
-    _typeof = function (obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return _typeof(obj);
-}
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    if (enumerableOnly) symbols = symbols.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    });
-    keys.push.apply(keys, symbols);
-  }
-
-  return keys;
-}
-
-function _objectSpread2(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-
-    if (i % 2) {
-      ownKeys(Object(source), true).forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
-    } else if (Object.getOwnPropertyDescriptors) {
-      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-    } else {
-      ownKeys(Object(source)).forEach(function (key) {
-        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-      });
-    }
-  }
-
-  return target;
-}
-
-var isArr = Array.isArray;
 function isStr(something) {
   return typeof something === "string";
 }
+
 function flattenObject(objOrig, opts) {
   if (arguments.length === 0 || Object.keys(objOrig).length === 0) {
     return [];
   }
+
   var obj = clone__default['default'](objOrig);
   var res = [];
+
   if (isObj__default['default'](obj)) {
     Object.keys(obj).forEach(function (key) {
       if (isObj__default['default'](obj[key])) {
         obj[key] = flattenObject(obj[key], opts);
       }
-      if (isArr(obj[key])) {
+
+      if (Array.isArray(obj[key])) {
         res = res.concat(obj[key].map(function (el) {
           return key + opts.objectKeyAndValueJoinChar + el;
         }));
       }
+
       if (isStr(obj[key])) {
         res.push(key + opts.objectKeyAndValueJoinChar + obj[key]);
       }
     });
   }
+
   return res;
 }
+
 function flattenArr(arrOrig, opts, wrap, joinArraysUsingBrs) {
   if (arguments.length === 0 || arrOrig.length === 0) {
     return "";
   }
+
   var arr = clone__default['default'](arrOrig);
   var res = "";
+
   if (arr.length > 0) {
     if (joinArraysUsingBrs) {
       for (var i = 0, len = arr.length; i < len; i++) {
         if (isStr(arr[i])) {
           var lineBreak = void 0;
           lineBreak = "";
+
           if (opts.mergeArraysWithLineBreaks && i > 0 && (!opts.mergeWithoutTrailingBrIfLineContainsBr || typeof arr[i - 1] !== "string" || opts.mergeWithoutTrailingBrIfLineContainsBr && arr[i - 1] !== undefined && !arr[i - 1].toLowerCase().includes("<br"))) {
-            lineBreak = "<br".concat(opts.xhtml ? " /" : "", ">");
+            lineBreak = "<br" + (opts.xhtml ? " /" : "") + ">";
           }
+
           res += lineBreak + (wrap ? opts.wrapHeadsWith : "") + arr[i] + (wrap ? opts.wrapTailsWith : "");
-        } else if (isArr(arr[i])) {
+        } else if (Array.isArray(arr[i])) {
           if (arr[i].length > 0 && arr[i].every(isStr)) {
             (function () {
               var lineBreak = "";
+
               if (opts.mergeArraysWithLineBreaks && res.length > 0) {
-                lineBreak = "<br".concat(opts.xhtml ? " /" : "", ">");
+                lineBreak = "<br" + (opts.xhtml ? " /" : "") + ">";
               }
+
               res = arr[i].reduce(function (acc, val, i2, arr2) {
                 var trailingSpace = "";
+
                 if (i2 !== arr2.length - 1) {
                   trailingSpace = " ";
                 }
+
                 return acc + (i2 === 0 ? lineBreak : "") + (wrap ? opts.wrapHeadsWith : "") + val + (wrap ? opts.wrapTailsWith : "") + trailingSpace;
               }, res);
             })();
@@ -152,89 +102,124 @@ function flattenArr(arrOrig, opts, wrap, joinArraysUsingBrs) {
     } else {
       res = arr.reduce(function (acc, val, i, arr2) {
         var lineBreak = "";
+
         if (opts.mergeArraysWithLineBreaks && i > 0) {
-          lineBreak = "<br".concat(opts.xhtml ? " /" : "", ">");
+          lineBreak = "<br" + (opts.xhtml ? " /" : "") + ">";
         }
+
         var trailingSpace = "";
+
         if (i !== arr2.length - 1) {
           trailingSpace = " ";
         }
+
         return acc + (i === 0 ? lineBreak : "") + (wrap ? opts.wrapHeadsWith : "") + val + (wrap ? opts.wrapTailsWith : "") + trailingSpace;
       }, res);
     }
   }
+
   return res;
 }
+
 function arrayiffyString(something) {
   if (isStr(something)) {
     if (something.length > 0) {
       return [something];
     }
+
     return [];
   }
-  return something;
-}
-function reclaimIntegerString(something) {
-  if (isStr(something) && isStringInt__default['default'](something.trim())) {
-    return parseInt(something.trim(), 10);
-  }
+
   return something;
 }
 
-var isArr$1 = Array.isArray;
+var version = "4.12.1";
+
 function existy(x) {
   return x != null;
 }
+
 function isStr$1(something) {
   return typeof something === "string";
 }
-function outer(originalInput1, originalReference1, opts1) {
+
+var defaults = {
+  wrapHeadsWith: "%%_",
+  wrapTailsWith: "_%%",
+  dontWrapKeys: [],
+  dontWrapPaths: [],
+  // paths exactly like for exampl: "modules[0].part2[0].ccc[0].kkk". Remember to
+  // put the index if it's an array, like modules[0] if key "modules" is equal to
+  // array and you want its first element (0-th index), hence "modules[0]".
+  xhtml: true,
+  preventDoubleWrapping: true,
+  preventWrappingIfContains: [],
+  objectKeyAndValueJoinChar: ".",
+  wrapGlobalFlipSwitch: true,
+  ignore: [],
+  whatToDoWhenReferenceIsMissing: 0,
+  // 1 = throw, 2 = flatten to string & wrap if wrapping feature is enabled
+  mergeArraysWithLineBreaks: true,
+  // add <br /> between the rows?
+  mergeWithoutTrailingBrIfLineContainsBr: true,
+  // don't add another, trailing-one
+  enforceStrictKeyset: true
+};
+
+function flattenReferencing(originalInput1, originalReference1, opts1) {
   if (arguments.length === 0) {
     throw new Error("object-flatten-referencing/ofr(): [THROW_ID_01] all inputs missing!");
   }
+
   if (arguments.length === 1) {
     throw new Error("object-flatten-referencing/ofr(): [THROW_ID_02] reference object missing!");
   }
+
   if (existy(opts1) && !isObj__default['default'](opts1)) {
-    throw new Error("object-flatten-referencing/ofr(): [THROW_ID_03] third input, options object must be a plain object. Currently it's: ".concat(_typeof(opts1)));
+    throw new Error("object-flatten-referencing/ofr(): [THROW_ID_03] third input, options object must be a plain object. Currently it's: " + typeof opts1);
   }
-  function ofr(originalInput, originalReference, originalOpts) {
-    var wrap = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
-    var joinArraysUsingBrs = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : true;
-    var currentRoot = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : "";
+
+  var originalOpts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), opts1);
+
+  originalOpts.dontWrapKeys = arrayiffyString(originalOpts.dontWrapKeys);
+  originalOpts.preventWrappingIfContains = arrayiffyString(originalOpts.preventWrappingIfContains);
+  originalOpts.dontWrapPaths = arrayiffyString(originalOpts.dontWrapPaths);
+  originalOpts.ignore = arrayiffyString(originalOpts.ignore);
+
+  if (typeof originalOpts.whatToDoWhenReferenceIsMissing !== "number") {
+    originalOpts.whatToDoWhenReferenceIsMissing = +originalOpts.whatToDoWhenReferenceIsMissing || 0;
+  }
+
+  function ofr(originalInput, originalReference, opts, wrap, joinArraysUsingBrs, currentRoot) {
+    if (wrap === void 0) {
+      wrap = true;
+    }
+
+    if (joinArraysUsingBrs === void 0) {
+      joinArraysUsingBrs = true;
+    }
+
+    if (currentRoot === void 0) {
+      currentRoot = "";
+    }
+
+    // console.log(`\n\n* originalInput = ${JSON.stringify(originalInput, null, 4)}`)
+    // console.log(`* originalReference = ${JSON.stringify(originalReference, null, 4)}`)
     var input = clone__default['default'](originalInput);
     var reference = clone__default['default'](originalReference);
-    var defaults = {
-      wrapHeadsWith: "%%_",
-      wrapTailsWith: "_%%",
-      dontWrapKeys: [],
-      dontWrapPaths: [],
-      xhtml: true,
-      preventDoubleWrapping: true,
-      preventWrappingIfContains: [],
-      objectKeyAndValueJoinChar: ".",
-      wrapGlobalFlipSwitch: true,
-      ignore: [],
-      whatToDoWhenReferenceIsMissing: 0,
-      mergeArraysWithLineBreaks: true,
-      mergeWithoutTrailingBrIfLineContainsBr: true,
-      enforceStrictKeyset: true
-    };
-    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
-    opts.dontWrapKeys = arrayiffyString(opts.dontWrapKeys);
-    opts.preventWrappingIfContains = arrayiffyString(opts.preventWrappingIfContains);
-    opts.dontWrapPaths = arrayiffyString(opts.dontWrapPaths);
-    opts.ignore = arrayiffyString(opts.ignore);
-    opts.whatToDoWhenReferenceIsMissing = reclaimIntegerString(opts.whatToDoWhenReferenceIsMissing);
+
     if (!opts.wrapGlobalFlipSwitch) {
       wrap = false;
     }
+
     if (isObj__default['default'](input)) {
       Object.keys(input).forEach(function (key) {
-        var currentPath = currentRoot + (currentRoot.length === 0 ? key : ".".concat(key));
+        var currentPath = currentRoot + (currentRoot.length === 0 ? key : "." + key); // console.log(`* currentPath = ${JSON.stringify(currentPath, null, 4)}\n\n`)
+
         if (opts.ignore.length === 0 || !opts.ignore.includes(key)) {
           if (opts.wrapGlobalFlipSwitch) {
-            wrap = true;
+            wrap = true; // reset it for the new key.
+
             if (opts.dontWrapKeys.length > 0) {
               wrap = wrap && !opts.dontWrapKeys.some(function (elem) {
                 return matcher__default['default'].isMatch(key, elem, {
@@ -242,42 +227,78 @@ function outer(originalInput1, originalReference1, opts1) {
                 });
               });
             }
+
             if (opts.dontWrapPaths.length > 0) {
               wrap = wrap && !opts.dontWrapPaths.some(function (elem) {
                 return elem === currentPath;
               });
             }
+
             if (opts.preventWrappingIfContains.length > 0 && typeof input[key] === "string") {
               wrap = wrap && !opts.preventWrappingIfContains.some(function (elem) {
                 return input[key].includes(elem);
               });
             }
           }
+
           if (existy(reference[key]) || !existy(reference[key]) && opts.whatToDoWhenReferenceIsMissing === 2) {
-            if (isArr$1(input[key])) {
+            if (Array.isArray(input[key])) {
               if (opts.whatToDoWhenReferenceIsMissing === 2 || isStr$1(reference[key])) {
+                // reference is string
+                // that's array vs. string clash:
                 input[key] = flattenArr(input[key], opts, wrap, joinArraysUsingBrs);
               } else {
+                // reference is array as well
+                // that's array vs. array clash, for example
+                // so input[key] is array. Let's check, does it contain only strings, or
+                // do some elements contain array of strings? Because if so, those deeper-level
+                // arrays must be joined with spaces. Outermost arrays must be joined by BR's.
+                // We're talking about ['1111', '2222', '3333'] in:
+                // {
+                //   k_key: 'k_val',
+                //   l_key: 'l_val',
+                //   m_key: [
+                //     'xxxx',
+                //     ['1111', '2222', '3333'],
+                //     'yyyy',
+                //     'zzzz'
+                //   ]
+                // }
+                //
+                // referencing above,
+                // ['1111', '2222', '3333'] should be joined by spaces.
+                // ['xxxx', [...], 'yyyy', 'zzzz'] should be joined by BR's
                 if (input[key].every(function (el) {
                   return typeof el === "string" || Array.isArray(el);
                 })) {
+                  // check that those array elements contain only string elements:
                   var allOK = true;
                   input[key].forEach(function (oneOfElements) {
+                    // check that child arrays contain only string elements
                     if (Array.isArray(oneOfElements) && !oneOfElements.every(isStr$1)) {
                       allOK = false;
                     }
                   });
+
                   if (allOK) {
                     joinArraysUsingBrs = false;
                   }
                 }
+
                 input[key] = ofr(input[key], reference[key], opts, wrap, joinArraysUsingBrs, currentPath);
               }
             } else if (isObj__default['default'](input[key])) {
               if (opts.whatToDoWhenReferenceIsMissing === 2 || isStr$1(reference[key])) {
                 input[key] = flattenArr(flattenObject(input[key], opts), opts, wrap, joinArraysUsingBrs);
               } else if (!wrap) {
-                input[key] = ofr(input[key], reference[key], _objectSpread2(_objectSpread2({}, opts), {}, {
+                // when calling recursively, the parent key might get
+                // identified (wrap=true) to be wrapped.
+                // however, that flag might get lost as its children will
+                // calculate the new "wrap" on its own keys, often turning off the wrap function.
+                // to prevent that, we flip the switch on the global wrap
+                // setting for all deeper child nodes.
+                // we also clone the options object so as not to mutate it.
+                input[key] = ofr(input[key], reference[key], _objectSpread__default['default'](_objectSpread__default['default']({}, opts), {}, {
                   wrapGlobalFlipSwitch: false
                 }), wrap, joinArraysUsingBrs, currentPath);
               } else {
@@ -286,20 +307,22 @@ function outer(originalInput1, originalReference1, opts1) {
             } else if (isStr$1(input[key])) {
               input[key] = ofr(input[key], reference[key], opts, wrap, joinArraysUsingBrs, currentPath);
             }
-          } else if (_typeof(input[key]) !== _typeof(reference[key])) {
+          } else if (typeof input[key] !== typeof reference[key]) {
             if (opts.whatToDoWhenReferenceIsMissing === 1) {
-              throw new Error("object-flatten-referencing/ofr(): [THROW_ID_06] reference object does not have the key ".concat(key, " and we need it. TIP: Turn off throwing via opts.whatToDoWhenReferenceIsMissing."));
-            }
+              throw new Error("object-flatten-referencing/ofr(): [THROW_ID_06] reference object does not have the key " + key + " and we need it. TIP: Turn off throwing via opts.whatToDoWhenReferenceIsMissing.");
+            } // when opts.whatToDoWhenReferenceIsMissing === 2, library does nothing,
+            // so we simply let it slip through.
+
           }
         }
       });
-    } else if (isArr$1(input)) {
-      if (isArr$1(reference)) {
-        input.forEach(function (el, i) {
+    } else if (Array.isArray(input)) {
+      if (Array.isArray(reference)) {
+        input.forEach(function (_el, i) {
           if (existy(input[i]) && existy(reference[i])) {
-            input[i] = ofr(input[i], reference[i], opts, wrap, joinArraysUsingBrs, "".concat(currentRoot, "[").concat(i, "]"));
+            input[i] = ofr(input[i], reference[i], opts, wrap, joinArraysUsingBrs, currentRoot + "[" + i + "]");
           } else {
-            input[i] = ofr(input[i], reference[0], opts, wrap, joinArraysUsingBrs, "".concat(currentRoot, "[").concat(i, "]"));
+            input[i] = ofr(input[i], reference[0], opts, wrap, joinArraysUsingBrs, currentRoot + "[" + i + "]");
           }
         });
       } else if (isStr$1(reference)) {
@@ -307,14 +330,21 @@ function outer(originalInput1, originalReference1, opts1) {
       }
     } else if (isStr$1(input)) {
       if (input.length > 0 && (opts.wrapHeadsWith || opts.wrapTailsWith)) {
-        if (!opts.preventDoubleWrapping || (opts.wrapHeadsWith === "" || !search__default['default'](input, opts.wrapHeadsWith.trim()).length) && (opts.wrapTailsWith === "" || !search__default['default'](input, opts.wrapTailsWith.trim()).length)) {
+        if (!opts.preventDoubleWrapping || (opts.wrapHeadsWith === "" || !strIndexesOfPlus.strIndexesOfPlus(input, opts.wrapHeadsWith.trim()).length) && (opts.wrapTailsWith === "" || !strIndexesOfPlus.strIndexesOfPlus(input, opts.wrapTailsWith.trim()).length)) {
           input = (wrap ? opts.wrapHeadsWith : "") + input + (wrap ? opts.wrapTailsWith : "");
         }
       }
     }
+
     return input;
   }
-  return ofr(originalInput1, originalReference1, opts1);
+
+  return ofr(originalInput1, originalReference1, originalOpts);
 }
 
-module.exports = outer;
+exports.arrayiffyString = arrayiffyString;
+exports.defaults = defaults;
+exports.flattenArr = flattenArr;
+exports.flattenObject = flattenObject;
+exports.flattenReferencing = flattenReferencing;
+exports.version = version;

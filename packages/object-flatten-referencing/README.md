@@ -34,10 +34,10 @@ npm i object-flatten-referencing
 
 ```js
 import { strict as assert } from "assert";
-import ofr from "object-flatten-referencing";
+import { flattenReferencing } from "object-flatten-referencing";
 
 assert.deepEqual(
-  ofr(
+  flattenReferencing(
     {
       key1: "val11.val12",
       key2: "val21.val22",
@@ -62,6 +62,6 @@ Please [visit codsen.com](https://codsen.com/os/object-flatten-referencing/) for
 
 MIT License
 
-Copyright (c) 2010-2020 Roy Revelt and other contributors
+Copyright (c) 2010-2021 Roy Revelt and other contributors
 
 <img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center"> <img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">
