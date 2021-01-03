@@ -1,5 +1,5 @@
 import tap from "tap";
-import fillMissingKeys from "../dist/object-fill-missing-keys.esm";
+import { fillMissing } from "../dist/object-fill-missing-keys.esm";
 
 // ==============================
 // 1. Adds missing keys
@@ -7,7 +7,7 @@ import fillMissingKeys from "../dist/object-fill-missing-keys.esm";
 
 tap.test("01 - filling in missing keys, simple plain object", (t) => {
   t.strictSame(
-    fillMissingKeys(
+    fillMissing(
       {
         a: "a",
       },
@@ -29,7 +29,7 @@ tap.test("01 - filling in missing keys, simple plain object", (t) => {
 
 tap.test("02 - filling in missing keys, nested, with arrays", (t) => {
   t.strictSame(
-    fillMissingKeys(
+    fillMissing(
       {
         a: "a",
       },
@@ -59,7 +59,7 @@ tap.test("02 - filling in missing keys, nested, with arrays", (t) => {
     "02.01"
   );
   t.strictSame(
-    fillMissingKeys(
+    fillMissing(
       {
         a: "a",
       },
@@ -93,7 +93,7 @@ tap.test("02 - filling in missing keys, nested, with arrays", (t) => {
 
 tap.test("03 - multiple values, sorting as well", (t) => {
   t.strictSame(
-    fillMissingKeys(
+    fillMissing(
       {
         b: "b",
         a: "a",
@@ -118,7 +118,7 @@ tap.test(
   "04 - nested arrays as values (array in schema overwrites Boolean)",
   (t) => {
     t.strictSame(
-      fillMissingKeys(
+      fillMissing(
         {
           a: false,
         },
@@ -145,7 +145,7 @@ tap.test(
 
 tap.test("05 - more complex nested arrays", (t) => {
   t.strictSame(
-    fillMissingKeys(
+    fillMissing(
       {
         c: "c",
       },
@@ -177,7 +177,7 @@ tap.test("05 - more complex nested arrays", (t) => {
 
 tap.test("06 - ridiculously deep nesting", (t) => {
   t.strictSame(
-    fillMissingKeys(
+    fillMissing(
       {
         a: false,
       },
@@ -277,7 +277,7 @@ tap.test(
   "07 - cheeky case, custom placeholder on schema has value null",
   (t) => {
     t.strictSame(
-      fillMissingKeys(
+      fillMissing(
         {
           d: null,
         },
@@ -305,7 +305,7 @@ tap.test(
 
 tap.test("08 - array one level-deep", (t) => {
   t.strictSame(
-    fillMissingKeys(
+    fillMissing(
       {
         a: [
           {
@@ -368,7 +368,7 @@ tap.test("08 - array one level-deep", (t) => {
 
 tap.test("09 - multiple levels of nested arrays", (t) => {
   t.strictSame(
-    fillMissingKeys(
+    fillMissing(
       {
         c: "c",
       },
@@ -416,7 +416,7 @@ tap.test("09 - multiple levels of nested arrays", (t) => {
 
 tap.test("10 - string vs array clash", (t) => {
   t.strictSame(
-    fillMissingKeys(
+    fillMissing(
       {
         a: "a",
       },
@@ -442,7 +442,7 @@ tap.test("10 - string vs array clash", (t) => {
 
 tap.test("11 - string vs object clash", (t) => {
   t.strictSame(
-    fillMissingKeys(
+    fillMissing(
       {
         a: "a",
       },
@@ -464,7 +464,7 @@ tap.test("11 - string vs object clash", (t) => {
 
 tap.test("12 - object vs array clash", (t) => {
   t.strictSame(
-    fillMissingKeys(
+    fillMissing(
       {
         a: {
           c: "ccc",
@@ -492,7 +492,7 @@ tap.test("12 - object vs array clash", (t) => {
 
 tap.test("13 - array vs empty array", (t) => {
   t.strictSame(
-    fillMissingKeys(
+    fillMissing(
       {
         a: [],
         b: "b",
@@ -525,7 +525,7 @@ tap.test("13 - array vs empty array", (t) => {
 
 tap.test("14 - array vs string", (t) => {
   t.strictSame(
-    fillMissingKeys(
+    fillMissing(
       {
         a: "a",
         b: "b",
@@ -558,7 +558,7 @@ tap.test("14 - array vs string", (t) => {
 
 tap.test("15 - array vs bool", (t) => {
   t.strictSame(
-    fillMissingKeys(
+    fillMissing(
       {
         a: true,
         b: "b",
@@ -591,7 +591,7 @@ tap.test("15 - array vs bool", (t) => {
 
 tap.test("16 - multiple levels of nested arrays #1", (t) => {
   t.strictSame(
-    fillMissingKeys(
+    fillMissing(
       {
         a: false,
         c: "c",
@@ -636,7 +636,7 @@ tap.test("16 - multiple levels of nested arrays #1", (t) => {
 
 tap.test("17 - multiple levels of nested arrays #2", (t) => {
   t.strictSame(
-    fillMissingKeys(
+    fillMissing(
       {
         b: [
           {
@@ -701,7 +701,7 @@ tap.test("17 - multiple levels of nested arrays #2", (t) => {
 
 tap.test("18 - number as input", (t) => {
   t.throws(() => {
-    fillMissingKeys(1, {
+    fillMissing(1, {
       a: {
         b: false,
       },
@@ -712,7 +712,7 @@ tap.test("18 - number as input", (t) => {
 
 tap.test("19 - boolean as input", (t) => {
   t.throws(() => {
-    fillMissingKeys(true, {
+    fillMissing(true, {
       a: {
         b: false,
       },
@@ -723,7 +723,7 @@ tap.test("19 - boolean as input", (t) => {
 
 tap.test("20 - null as input", (t) => {
   t.throws(() => {
-    fillMissingKeys(null, {
+    fillMissing(null, {
       a: {
         b: false,
       },
@@ -734,38 +734,38 @@ tap.test("20 - null as input", (t) => {
 
 tap.test("21 - both args missing (as in hardcoded undefined)", (t) => {
   t.throws(() => {
-    fillMissingKeys(undefined, undefined);
+    fillMissing(undefined, undefined);
   }, /THROW_ID_02/g);
   t.end();
 });
 
 tap.test("22 - both args completely missing", (t) => {
   t.throws(() => {
-    fillMissingKeys();
+    fillMissing();
   }, /THROW_ID_01/g);
   t.end();
 });
 
 tap.test("23 - second arg is not a plain object", (t) => {
   t.throws(() => {
-    fillMissingKeys({ a: "b" }, 1);
+    fillMissing({ a: "b" }, 1);
   }, /THROW_ID_03/g);
   t.end();
 });
 
 tap.test("24 - opts is not a plain object", (t) => {
   t.throws(() => {
-    fillMissingKeys({ a: "c" }, { a: "b" }, 1);
+    fillMissing({ a: "c" }, { a: "b" }, 1);
   }, /THROW_ID_04/g);
   t.doesNotThrow(() => {
-    fillMissingKeys({ a: "c" }, { a: "b" }, null);
+    fillMissing({ a: "c" }, { a: "b" }, null);
   }, "24.02");
   t.end();
 });
 
 tap.test("25 - opts.doNotFillThesePathsIfTheyContainPlaceholders", (t) => {
   t.throws(() => {
-    fillMissingKeys(
+    fillMissing(
       { a: "c" },
       { a: "b" },
       {
@@ -774,12 +774,12 @@ tap.test("25 - opts.doNotFillThesePathsIfTheyContainPlaceholders", (t) => {
     );
   }, /THROW_ID_06/g);
   t.throws(() => {
-    fillMissingKeys({ a: "c" }, [{ a: "b" }], {
+    fillMissing({ a: "c" }, [{ a: "b" }], {
       doNotFillThesePathsIfTheyContainPlaceholders: ["aa.aaa", { a: 1 }],
     });
   }, /THROW_ID_03/g);
   t.throws(() => {
-    fillMissingKeys(
+    fillMissing(
       { a: "c" },
       { a: "b" },
       {
@@ -798,7 +798,7 @@ tap.test("26 - does not mutate the input args", (t) => {
   const testObj = {
     a: "a",
   };
-  const tempRes = fillMissingKeys(testObj, {
+  const tempRes = fillMissing(testObj, {
     a: false,
     b: false,
     c: false,
@@ -824,7 +824,7 @@ tap.test(
     // baseline behaviour
 
     t.strictSame(
-      fillMissingKeys(
+      fillMissing(
         {
           a: {
             b: false,
@@ -857,7 +857,7 @@ tap.test(
     );
 
     t.strictSame(
-      fillMissingKeys(
+      fillMissing(
         {
           a: {
             b: false,
@@ -890,7 +890,7 @@ tap.test(
     );
 
     t.strictSame(
-      fillMissingKeys(
+      fillMissing(
         {
           a: {
             b: true, // <-- not placeholder but lower in data hierarchy (boolean)
@@ -927,7 +927,7 @@ tap.test(
     );
 
     t.strictSame(
-      fillMissingKeys(
+      fillMissing(
         {
           a: {
             x: "x",
@@ -959,7 +959,7 @@ tap.test(
     );
 
     t.strictSame(
-      fillMissingKeys(
+      fillMissing(
         {
           a: "zzz",
           b: false,
@@ -981,7 +981,7 @@ tap.test(
 
     // will also truncate the already normalised branches if they're on the path:
     t.strictSame(
-      fillMissingKeys(
+      fillMissing(
         {
           a: {
             b: {
@@ -1024,7 +1024,7 @@ tap.test(
 
     // will also truncate the already normalised branches if they're on the path:
     t.strictSame(
-      fillMissingKeys(
+      fillMissing(
         {
           a: {
             b: {
@@ -1077,7 +1077,7 @@ tap.test(
 
 tap.test("28 - opts.useNullAsExplicitFalse - case #1", (t) => {
   t.strictSame(
-    fillMissingKeys(
+    fillMissing(
       {
         a: {
           b: null,
@@ -1113,7 +1113,7 @@ tap.test("28 - opts.useNullAsExplicitFalse - case #1", (t) => {
   );
 
   t.strictSame(
-    fillMissingKeys(
+    fillMissing(
       {
         a: {
           b: null,
@@ -1149,7 +1149,7 @@ tap.test("28 - opts.useNullAsExplicitFalse - case #1", (t) => {
 
 tap.test("29 - opts.useNullAsExplicitFalse - case #2", (t) => {
   t.strictSame(
-    fillMissingKeys(
+    fillMissing(
       {
         a: null,
       },
@@ -1166,7 +1166,7 @@ tap.test("29 - opts.useNullAsExplicitFalse - case #2", (t) => {
     "29.01"
   );
   t.strictSame(
-    fillMissingKeys(
+    fillMissing(
       {
         a: null,
       },
@@ -1187,7 +1187,7 @@ tap.test("29 - opts.useNullAsExplicitFalse - case #2", (t) => {
 
 tap.test("30 - opts.useNullAsExplicitFalse - case #3", (t) => {
   t.strictSame(
-    fillMissingKeys(
+    fillMissing(
       {
         a: null,
       },
@@ -1204,7 +1204,7 @@ tap.test("30 - opts.useNullAsExplicitFalse - case #3", (t) => {
     "30.01"
   );
   t.strictSame(
-    fillMissingKeys(
+    fillMissing(
       {
         a: null,
       },

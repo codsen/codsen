@@ -7,10 +7,10 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { fillMissing } = require("..");
 
 const testme = () =>
-  f(
+  fillMissing(
     {
       a: {
         x: "x",

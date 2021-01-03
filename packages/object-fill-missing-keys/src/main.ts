@@ -1,18 +1,28 @@
-/* eslint no-prototype-builtins:0, max-len:0, no-param-reassign:0 */
-
-// ===================================
-// V A R S
-
 import clone from "lodash.clonedeep";
-import merge from "object-merge-advanced";
-import arrayiffyIfString from "arrayiffy-if-string";
-import allValuesEqualTo from "object-all-values-equal-to";
+import { mergeAdvanced } from "object-merge-advanced";
+import { arrayiffy } from "arrayiffy-if-string";
+import { allEq } from "object-all-values-equal-to";
 import isObj from "lodash.isplainobject";
+import { version } from "../package.json";
+
+interface Obj {
+  [key: string]: any;
+}
+interface Opts {
+  placeholder: boolean;
+  doNotFillThesePathsIfTheyContainPlaceholders: string[];
+  useNullAsExplicitFalse: boolean;
+}
+const defaults: Opts = {
+  placeholder: false, // value which is being used as a placeholder
+  doNotFillThesePathsIfTheyContainPlaceholders: [],
+  useNullAsExplicitFalse: true,
+};
 
 // ===================================
-// I N T E R N A L   F U N C T I O N S
+// F ( )
 
-function typ(something) {
+function typ(something: any): "plain object" | "array" | string {
   if (isObj(something)) {
     return "plain object";
   }
@@ -21,24 +31,29 @@ function typ(something) {
   }
   return typeof something;
 }
-function isStr(something) {
+function isStr(something: any): boolean {
   return typeof something === "string";
 }
-function existy(x) {
+function existy(x: any): boolean {
   return x != null;
 }
 
 // this function does the job, but it is not exposed because its first argument
 // requirements are loose - it can be anything since it will be calling itself recursively
 // with potentially AST contents (objects containing arrays containing objects etc.)
-function fillMissingKeys(incompleteOriginal, schema, opts, path = "") {
+function fillMissingKeys(
+  incompleteOriginal: Obj,
+  schema: Obj,
+  opts: Opts,
+  path = ""
+) {
   const incomplete = clone(incompleteOriginal);
   if (
     existy(incomplete) ||
     !(
       path.length &&
       opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(path) &&
-      allValuesEqualTo(incomplete, opts.placeholder)
+      allEq(incomplete, opts.placeholder)
     )
   ) {
     if (isObj(schema) && isObj(incomplete)) {
@@ -53,7 +68,7 @@ function fillMissingKeys(incompleteOriginal, schema, opts, path = "") {
           )
         ) {
           if (existy(incomplete[key])) {
-            if (allValuesEqualTo(incomplete[key], opts.placeholder)) {
+            if (allEq(incomplete[key], opts.placeholder)) {
               incomplete[key] = opts.placeholder;
             }
           } else {
@@ -67,7 +82,7 @@ function fillMissingKeys(incompleteOriginal, schema, opts, path = "") {
           !(
             opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(
               currentPath
-            ) && allValuesEqualTo(incomplete[key], opts.placeholder)
+            ) && allEq(incomplete[key], opts.placeholder)
           )
         ) {
           incomplete[key] = fillMissingKeys(
@@ -96,7 +111,7 @@ function fillMissingKeys(incompleteOriginal, schema, opts, path = "") {
         }
       }
     } else {
-      return merge(schema, incomplete, {
+      return mergeAdvanced(schema, incomplete, {
         useNullAsExplicitFalse: opts.useNullAsExplicitFalse,
       });
     }
@@ -107,11 +122,11 @@ function fillMissingKeys(incompleteOriginal, schema, opts, path = "") {
 // =================================================
 // T H E   E X P O S E D   F U N C T I O N
 
-function fillMissingKeysWrapper(
-  originalIncompleteWrapper,
-  originalSchemaWrapper,
-  originalOptsWrapper
-) {
+function fillMissing(
+  originalIncompleteWrapper: Obj,
+  originalSchemaWrapper: Obj,
+  originalOptsWrapper?: Opts
+): Obj {
   // first argument must be an object. However, we're going to call recursively,
   // so we have to wrap the main function with another, wrapper-one, and perform
   // object-checks only on that wrapper. This way, only objects can come in,
@@ -142,30 +157,18 @@ function fillMissingKeysWrapper(
       )}" and it's equal to: ${JSON.stringify(originalSchemaWrapper, null, 4)}`
     );
   }
-  if (
-    originalOptsWrapper !== undefined &&
-    originalOptsWrapper !== null &&
-    !isObj(originalOptsWrapper)
-  ) {
+  if (originalOptsWrapper && !isObj(originalOptsWrapper)) {
     throw new Error(
       `object-fill-missing-keys: [THROW_ID_04] Third argument, schema object, must be a plain object. Currently it's type is "${typ(
         originalOptsWrapper
       )}" and it's equal to: ${JSON.stringify(originalOptsWrapper, null, 4)}`
     );
   }
-  if (originalOptsWrapper === null) {
-    originalOptsWrapper = {};
-  }
 
-  const defaults = {
-    placeholder: false, // value which is being used as a placeholder
-    doNotFillThesePathsIfTheyContainPlaceholders: [],
-    useNullAsExplicitFalse: true,
-  };
   // fill any settings with defaults if missing:
-  const opts = { ...defaults, ...originalOptsWrapper };
+  const opts = { ...defaults, ...(originalOptsWrapper || {}) };
 
-  opts.doNotFillThesePathsIfTheyContainPlaceholders = arrayiffyIfString(
+  opts.doNotFillThesePathsIfTheyContainPlaceholders = arrayiffy(
     opts.doNotFillThesePathsIfTheyContainPlaceholders
   );
 
@@ -196,4 +199,4 @@ function fillMissingKeysWrapper(
   );
 }
 
-export default fillMissingKeysWrapper;
+export { fillMissing, version };

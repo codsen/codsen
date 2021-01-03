@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // Truncation upon request, to minimize the object footprint
 
 import { strict as assert } from "assert";
-import fillMissing from "../dist/object-fill-missing-keys.esm.js";
+import { fillMissing } from "../dist/object-fill-missing-keys.esm.js";
 
 assert.deepEqual(
   fillMissing(

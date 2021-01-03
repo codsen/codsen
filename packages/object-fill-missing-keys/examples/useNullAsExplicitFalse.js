@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // `opts.useNullAsExplicitFalse`
 
 import { strict as assert } from "assert";
-import fillMissing from "../dist/object-fill-missing-keys.esm.js";
+import { fillMissing } from "../dist/object-fill-missing-keys.esm.js";
 
 // on
 assert.deepEqual(
