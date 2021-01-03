@@ -1,15 +1,12 @@
 import { left, right, chompLeft } from "string-left-right";
-import apply from "ranges-apply";
+import { rApply } from "ranges-apply";
+import { version } from "../package.json";
 
-const isArr = Array.isArray;
-function isStr(something) {
+function isStr(something: any): boolean {
   return typeof something === "string";
 }
-function isNum(something) {
-  return typeof something === "number";
-}
-function stringifyPath(something) {
-  if (isArr(something)) {
+function stringifyPath(something: any): string {
+  if (Array.isArray(something)) {
     return something.join(".");
   }
   if (isStr(something)) {
@@ -17,7 +14,7 @@ function stringifyPath(something) {
   }
   return String(something);
 }
-function stringifyAndEscapeValue(something) {
+function stringifyAndEscapeValue(something: any): string {
   console.log(
     `022 ██ stringifyAndEscapeValue() called with ${JSON.stringify(
       something,
@@ -41,7 +38,8 @@ function stringifyAndEscapeValue(something) {
   return JSON.stringify(something, null, 0);
 }
 
-function isNotEscape(str, idx) {
+/* istanbul ignore next */
+function isNotEscape(str: string, idx: number): boolean {
   if (str[idx] !== "\\") {
     // log(`045 yes, it's not excaped`);
     return true;
@@ -56,7 +54,7 @@ function isNotEscape(str, idx) {
   //   )}; ${`\u001b[${33}m${`(idx - temp) % 2`}\u001b[${39}m`} = ${(idx - temp) %
   //     2}`
   // );
-  if (isNum(temp) && (idx - temp) % 2 !== 0) {
+  if (typeof temp === "number" && (idx - temp) % 2 !== 0) {
     // log(`059 yes, it's not excaped`);
     return true;
   }
@@ -64,9 +62,17 @@ function isNotEscape(str, idx) {
   return false;
 }
 
-function main({ str, path, valToInsert, mode }) {
-  let i;
-  function log(something) {
+interface Inputs {
+  str: string;
+  path: string;
+  valToInsert?: string | number;
+  mode: "set" | "del";
+}
+
+function main({ str, path, valToInsert, mode }: Inputs) {
+  let i = 0;
+
+  function log(something: any) {
     // if (i > 80 && str[i] && str[i].trim()) {
     // if (str[i] && str[i].trim()) {
     if (str[i] !== " ") {
@@ -84,8 +90,8 @@ function main({ str, path, valToInsert, mode }) {
   // we must wrap it with quotes, we can't write it to JSON like that!
   if (
     isStr(valToInsert) &&
-    !valToInsert.startsWith(`"`) &&
-    !valToInsert.startsWith(`{`)
+    !(valToInsert as string).startsWith(`"`) &&
+    !(valToInsert as string).startsWith(`{`)
   ) {
     calculatedValueToInsert = `"${valToInsert}"`;
   }
@@ -108,15 +114,15 @@ function main({ str, path, valToInsert, mode }) {
   // the whole value.
   let replaceThisValue = false;
 
-  let keyStartedAt;
-  let keyEndedAt;
-  let valueStartedAt;
-  let valueEndedAt;
-  let keyName;
-  let keyValue;
-  let withinQuotesSince;
+  let keyStartedAt: number | null = null;
+  let keyEndedAt: number | null = null;
+  let valueStartedAt: number | null = null;
+  let valueEndedAt: number | null = null;
+  let keyName: string | null = null;
+  let keyValue: string | null = null;
+  let withinQuotesSince: number | undefined;
   function withinQuotes() {
-    return isNum(withinQuotesSince);
+    return typeof withinQuotesSince === "number";
   }
 
   let itsTheFirstElem = false;
@@ -133,8 +139,10 @@ function main({ str, path, valToInsert, mode }) {
   }
   reset();
 
+  // it's object-path notation - arrays are joined with dots too -
+  // "arr.0.el.1.val" - instead of - "arr[0].el[1].val"
   // we keep it as array so that we can array.push/array.pop to go levels up and down
-  const currentPath = [];
+  const currentPath: (string | number)[] = [];
 
   for (i = 0; i < len; i++) {
     //
@@ -158,7 +166,7 @@ function main({ str, path, valToInsert, mode }) {
     // "within X" stage toggles
 
     // openings are easy:
-    if (!isNum(withinQuotesSince) && str[i - 1] === "[") {
+    if (typeof withinQuotesSince !== "number" && str[i - 1] === "[") {
       currentlyWithinArray = true;
       if (str[i] !== "]") {
         currentlyWithinObject = false;
@@ -168,7 +176,7 @@ function main({ str, path, valToInsert, mode }) {
       }
     }
 
-    if (!isNum(withinQuotesSince) && str[i - 1] === "{") {
+    if (typeof withinQuotesSince !== "number" && str[i - 1] === "{") {
       currentlyWithinObject = true;
       if (str[i] !== "}") {
         currentlyWithinArray = false;
@@ -179,7 +187,7 @@ function main({ str, path, valToInsert, mode }) {
     }
 
     if (
-      !isNum(withinQuotesSince) &&
+      typeof withinQuotesSince !== "number" &&
       str[i] === "{" &&
       isNotEscape(str, i - 1) &&
       !replaceThisValue
@@ -201,7 +209,7 @@ function main({ str, path, valToInsert, mode }) {
             )}`
           );
           currentPath[currentPath.length - 1] =
-            currentPath[currentPath.length - 1] + 1;
+            (currentPath[currentPath.length - 1] as number) + 1;
           log(
             `207 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentPath[${
               currentPath.length - 1
@@ -221,7 +229,7 @@ function main({ str, path, valToInsert, mode }) {
     }
 
     if (
-      !isNum(withinQuotesSince) &&
+      typeof withinQuotesSince !== "number" &&
       str[i] === "}" &&
       isNotEscape(str, i - 1) &&
       !replaceThisValue
@@ -237,7 +245,7 @@ function main({ str, path, valToInsert, mode }) {
     }
 
     if (
-      !isNum(withinQuotesSince) &&
+      typeof withinQuotesSince !== "number" &&
       str[i] === "]" &&
       isNotEscape(str, i - 1) &&
       !replaceThisValue
@@ -269,7 +277,7 @@ function main({ str, path, valToInsert, mode }) {
       }
     }
 
-    if (!isNum(withinQuotesSince) && str[i] === "]") {
+    if (typeof withinQuotesSince !== "number" && str[i] === "]") {
       console.log(`273`);
       if (!withinArrayIndexes.length) {
         currentlyWithinArray = false;
@@ -295,7 +303,7 @@ function main({ str, path, valToInsert, mode }) {
       }
     }
 
-    if (!isNum(withinQuotesSince) && str[i] === "}") {
+    if (typeof withinQuotesSince !== "number" && str[i] === "}") {
       if (!withinObjectIndexes.length) {
         console.log(
           `301 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentlyWithinObject`}\u001b[${39}m`} = ${currentlyWithinObject}`
@@ -336,7 +344,7 @@ function main({ str, path, valToInsert, mode }) {
     }
 
     if (
-      !isNum(withinQuotesSince) &&
+      typeof withinQuotesSince !== "number" &&
       str[i] === "[" &&
       isNotEscape(str, i - 1) &&
       !replaceThisValue
@@ -370,7 +378,7 @@ function main({ str, path, valToInsert, mode }) {
       currentlyWithinArray &&
       str[i] === "," &&
       itsTheFirstElem &&
-      !(valueStartedAt && !valueEndedAt) // precaution against comma within a string value
+      !(typeof valueStartedAt === "number" && valueEndedAt === null) // precaution against comma within a string value
     ) {
       // that empty array will have itsTheFirstElem still on:
       // "e": [{}, ...],
@@ -407,10 +415,10 @@ function main({ str, path, valToInsert, mode }) {
     // by the time we'd reach its end, we'd have new keys and values recorded.
     if (
       !replaceThisValue &&
-      !valueStartedAt &&
+      valueStartedAt === null &&
       str[i].trim() &&
       !badChars.includes(str[i]) &&
-      (currentlyWithinArray || (!currentlyWithinArray && keyName))
+      (currentlyWithinArray || (!currentlyWithinArray && keyName !== null))
     ) {
       log(`415 catching the start of a value clauses`);
       valueStartedAt = i;
@@ -425,9 +433,9 @@ function main({ str, path, valToInsert, mode }) {
           log(
             `426 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`itsTheFirstElem`}\u001b[${39}m`} = ${itsTheFirstElem}`
           );
-        } else {
+        } else if (typeof currentPath[currentPath.length - 1] === "number") {
           currentPath[currentPath.length - 1] =
-            currentPath[currentPath.length - 1] + 1;
+            (currentPath[currentPath.length - 1] as number) + 1;
           log(
             `432 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`currentPath[${
               currentPath.length - 1
@@ -440,11 +448,11 @@ function main({ str, path, valToInsert, mode }) {
     // catch the end of a value
     if (
       !replaceThisValue &&
-      !isNum(withinQuotesSince) &&
-      (currentlyWithinArray || (!currentlyWithinArray && keyName)) &&
-      valueStartedAt &&
+      typeof withinQuotesSince !== "number" &&
+      (currentlyWithinArray || (!currentlyWithinArray && keyName !== null)) &&
+      typeof valueStartedAt === "number" &&
       valueStartedAt < i &&
-      !valueEndedAt &&
+      valueEndedAt === null &&
       ((str[valueStartedAt] === `"` && str[i] === `"` && str[i - 1] !== `\\`) ||
         (str[valueStartedAt] !== `"` && !str[i].trim()) ||
         ["}", ","].includes(str[i]))
@@ -469,9 +477,9 @@ function main({ str, path, valToInsert, mode }) {
       !currentlyWithinArray &&
       str[i] === `"` &&
       str[i - 1] !== `\\` &&
-      !keyName &&
-      !keyStartedAt &&
-      !keyEndedAt &&
+      keyName === null &&
+      keyStartedAt === null &&
+      keyEndedAt === null &&
       str[i + 1]
     ) {
       keyStartedAt = i + 1;
@@ -491,9 +499,9 @@ function main({ str, path, valToInsert, mode }) {
       !currentlyWithinArray &&
       str[i] === `"` &&
       str[i - 1] !== `\\` &&
-      !keyEndedAt &&
-      keyStartedAt &&
-      !valueStartedAt &&
+      keyEndedAt === null &&
+      typeof keyStartedAt === "number" &&
+      valueStartedAt === null &&
       keyStartedAt < i
     ) {
       keyEndedAt = i + 1;
@@ -520,7 +528,7 @@ function main({ str, path, valToInsert, mode }) {
 
     if (
       !replaceThisValue &&
-      !isNum(withinQuotesSince) &&
+      typeof withinQuotesSince !== "number" &&
       str[i] === "," &&
       currentlyWithinObject
     ) {
@@ -543,21 +551,24 @@ function main({ str, path, valToInsert, mode }) {
 
     if (
       !replaceThisValue &&
-      ((valueEndedAt && i >= valueEndedAt) ||
-        (["}", "]"].includes(str[left(str, i)]) &&
+      ((typeof valueEndedAt === "number" && i >= valueEndedAt) ||
+        (["}", "]"].includes(str[left(str, i) as number]) &&
           ["}", "]"].includes(str[i])) ||
-        (str[i] === "}" && str[left(str, i)] === "{")) &&
+        (str[i] === "}" && str[left(str, i) as number] === "{")) &&
       str[i].trim()
     ) {
       log(
         `552 ${`\u001b[${36}m${`██`}\u001b[${39}m`} catch the end of a key-value pair clauses`
       );
-      if (str[i] === "," && !["}", "]"].includes(str[right(str, i)])) {
+      if (
+        str[i] === "," &&
+        !["}", "]"].includes(str[right(str, i) as number])
+      ) {
         log(`555 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`}`);
         reset();
       } else if (str[i] === "}") {
         log(`558 closing curlie caught`);
-        if (valueEndedAt || str[left(str, i)] !== "{") {
+        if (valueEndedAt || str[left(str, i) as number] !== "{") {
           console.log(
             `562 before popping, ${`\u001b[${33}m${`currentPath`}\u001b[${39}m`} = ${JSON.stringify(
               currentPath,
@@ -591,28 +602,6 @@ function main({ str, path, valToInsert, mode }) {
           );
         }
 
-        // TODO - cleanup below
-        // if (
-        //   !currentlyWithinArray &&
-        //   !(str[i] === "}" && str[left(str, i)] === "{") // not empty obj
-        // ) {
-        //   console.log(
-        //     `599 before popping, ${`\u001b[${33}m${`currentPath`}\u001b[${39}m`} = ${JSON.stringify(
-        //       currentPath,
-        //       null,
-        //       0
-        //     )}`
-        //   );
-        //   currentPath.pop();
-        //   log(
-        //     `607 POP(), now ${`\u001b[${33}m${`currentPath`}\u001b[${39}m`} = ${JSON.stringify(
-        //       currentPath,
-        //       null,
-        //       0
-        //     )}`
-        //   );
-        // }
-
         // also reset but don't touch the path - rabbit hole goes deeper
         log(`616 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`}`);
         reset();
@@ -624,8 +613,8 @@ function main({ str, path, valToInsert, mode }) {
       !replaceThisValue &&
       str[i] === "{" &&
       isStr(keyName) &&
-      !valueStartedAt &&
-      !keyValue
+      valueStartedAt === null &&
+      keyValue === null
     ) {
       // also reset but don't touch the path - rabbit hole goes deeper
       log(`630 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`}`);
@@ -636,7 +625,8 @@ function main({ str, path, valToInsert, mode }) {
     if (
       str[i].trim() &&
       replaceThisValue &&
-      !valueStartedAt &&
+      valueStartedAt === null &&
+      typeof keyEndedAt === "number" &&
       i > keyEndedAt &&
       ![":"].includes(str[i])
     ) {
@@ -650,9 +640,9 @@ function main({ str, path, valToInsert, mode }) {
     if (
       str[i] === `"` &&
       isNotEscape(str, i - 1) &&
-      ((isNum(keyStartedAt) && !keyEndedAt) ||
-        (isNum(valueStartedAt) && !valueEndedAt)) &&
-      !isNum(withinQuotesSince)
+      ((typeof keyStartedAt === "number" && keyEndedAt === null) ||
+        (typeof valueStartedAt === "number" && valueEndedAt === null)) &&
+      typeof withinQuotesSince !== "number"
     ) {
       withinQuotesSince = i;
       log(
@@ -682,11 +672,10 @@ function main({ str, path, valToInsert, mode }) {
         )}`
       );
     } else if (
-      (!withinQuotesSince || withinQuotesSince === i) &&
+      (typeof withinQuotesSince !== "number" || withinQuotesSince === i) &&
       replaceThisValue &&
-      // !skipUntilTheFollowingIsMet.length &&
       !currentlyWithinArray &&
-      valueStartedAt
+      typeof valueStartedAt === "number"
     ) {
       console.log(`691 about to catch various opening brackets/quotes`);
       if (str[i] === "{" && isNotEscape(str, i - 1)) {
@@ -746,7 +735,7 @@ function main({ str, path, valToInsert, mode }) {
     if (
       str[i] === `"` &&
       isNotEscape(str, i - 1) &&
-      isNum(withinQuotesSince) &&
+      typeof withinQuotesSince === "number" &&
       withinQuotesSince !== i
     ) {
       withinQuotesSince = undefined;
@@ -758,9 +747,9 @@ function main({ str, path, valToInsert, mode }) {
     // catch the end of the value when replaceThisValue is on
     if (
       replaceThisValue &&
-      isArr(skipUntilTheFollowingIsMet) &&
+      Array.isArray(skipUntilTheFollowingIsMet) &&
       !skipUntilTheFollowingIsMet.length &&
-      valueStartedAt &&
+      typeof valueStartedAt === "number" &&
       i > valueStartedAt
     ) {
       log(
@@ -768,7 +757,7 @@ function main({ str, path, valToInsert, mode }) {
       );
 
       if (
-        !withinQuotesSince &&
+        typeof withinQuotesSince !== "number" &&
         ((str[valueStartedAt] === "[" && str[i] === "]") ||
           (str[valueStartedAt] === "{" && str[i] === "}") ||
           (str[valueStartedAt] === `"` && str[i] === `"`) ||
@@ -809,7 +798,7 @@ function main({ str, path, valToInsert, mode }) {
           if (
             (currentlyWithinArray &&
               ![`"`, `[`, `{`].includes(str[valueStartedAt]) &&
-              str[right(str, endingPartsBeginning - 1)] !== "]") ||
+              str[right(str, endingPartsBeginning - 1) as number] !== "]") ||
             (str[endingPartsBeginning - 1] === "," &&
               str[valueStartedAt - 1] !== `"`)
           ) {
@@ -824,7 +813,7 @@ function main({ str, path, valToInsert, mode }) {
 
           if (currentlyWithinArray && str[valueStartedAt - 1] === `"`) {
             console.log(`826 valueStartedAt before = ${valueStartedAt}`);
-            valueStartedAt -= 1;
+            valueStartedAt = valueStartedAt - 1;
             console.log(`828 valueStartedAt after = ${valueStartedAt}`);
           }
 
@@ -857,21 +846,27 @@ function main({ str, path, valToInsert, mode }) {
               null,
               4
             )}; val = ${
-              (currentlyWithinArray ? valueStartedAt : keyStartedAt) - 1
+              ((currentlyWithinArray
+                ? valueStartedAt
+                : keyStartedAt) as number) - 1
             }`
           );
-          let startingPoint =
-            left(
-              str,
-              (currentlyWithinArray ? valueStartedAt : keyStartedAt) - 1
-            ) + 1;
+          let startingPoint = left(
+            str,
+            ((currentlyWithinArray ? valueStartedAt : keyStartedAt) as number) -
+              1
+          );
+          if (typeof startingPoint === "number") {
+            startingPoint++;
+          }
           log(
             `864 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} initial ${`\u001b[${33}m${`startingPoint`}\u001b[${39}m`} = ${startingPoint}`
           );
           let endingPoint = i + (str[i].trim() ? 1 : 0);
           if (
+            typeof startingPoint === "number" &&
             str[startingPoint - 1] === "," &&
-            ["}", "]"].includes(str[right(str, endingPoint - 1)])
+            ["}", "]"].includes(str[right(str, endingPoint - 1) as number])
           ) {
             startingPoint -= 1;
             log(
@@ -913,7 +908,7 @@ function main({ str, path, valToInsert, mode }) {
 
     log(
       `${`\u001b[${withinQuotesSince ? 32 : 31}m${`withinQuotesSince${
-        isNum(withinQuotesSince) ? `=${withinQuotesSince}` : ""
+        typeof withinQuotesSince === "number" ? `=${withinQuotesSince}` : ""
       }`}\u001b[${39}m`}; ${`\u001b[${
         currentlyWithinObject ? 32 : 31
       }m${`currentlyWithinObject`}\u001b[${39}m`}; ${`\u001b[${
@@ -949,11 +944,13 @@ function main({ str, path, valToInsert, mode }) {
   }
   log(`\n\u001b[${36}m${`=============================== FIN.`}\u001b[${39}m`);
 
-  log(`947 RETURN applied ${JSON.stringify(apply(str, ranges), null, 4)}`);
-  return apply(str, ranges);
+  log(
+    `947 RETURN applied ${JSON.stringify(rApply(str, ranges as any), null, 4)}`
+  );
+  return rApply(str, ranges as any);
 }
 
-function set(str, path, valToInsert) {
+function set(str: string, path: string, valToInsert: string | number): string {
   console.log(`957 set()`);
   if (!isStr(str) || !str.length) {
     throw new Error(
@@ -967,7 +964,7 @@ function set(str, path, valToInsert) {
   return main({ str, path, valToInsert, mode: "set" });
 }
 
-function del(str, path) {
+function del(str: string, path: string): string {
   console.log(`971 del()`);
   if (!isStr(str) || !str.length) {
     throw new Error(
@@ -982,4 +979,4 @@ function del(str, path) {
   return main({ str, path, mode: "del" });
 }
 
-export { set, del };
+export { set, del, version };

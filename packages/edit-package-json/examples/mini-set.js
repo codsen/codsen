@@ -1,5 +1,3 @@
-/* eslint import/extensions:0 */
-
 // Minimal example, `set()`
 
 import { strict as assert } from "assert";
