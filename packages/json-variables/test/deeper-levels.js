@@ -1,11 +1,11 @@
 /* eslint no-template-curly-in-string: 0 */
 
 import tap from "tap";
-import jv from "../dist/json-variables.esm";
+import { jVar } from "../dist/json-variables.esm";
 
 tap.test("01 - variables resolve being in deeper levels", (t) => {
   t.strictSame(
-    jv({
+    jVar({
       a: [
         {
           b: "zzz %%_c_%% yyy",
@@ -32,7 +32,7 @@ tap.test(
   "02 - deeper level variables not found, bubble up and are found",
   (t) => {
     t.strictSame(
-      jv({
+      jVar({
         a: [
           {
             b: "zzz %%_c_%% yyy",
@@ -58,7 +58,7 @@ tap.test(
 
 tap.test("03 - third level resolves at its level", (t) => {
   t.strictSame(
-    jv({
+    jVar({
       a: [
         {
           b: [
@@ -91,7 +91,7 @@ tap.test("03 - third level resolves at its level", (t) => {
 
 tap.test("04 - third level falls back to root", (t) => {
   t.strictSame(
-    jv({
+    jVar({
       a: [
         {
           b: [
@@ -124,7 +124,7 @@ tap.test("04 - third level falls back to root", (t) => {
 
 tap.test("05 - third level uses data container key", (t) => {
   t.strictSame(
-    jv({
+    jVar({
       a: [
         {
           b: [
@@ -167,7 +167,7 @@ tap.test(
   "06 - third level uses data container key, but there's nothing there so falls back to root (successfully)",
   (t) => {
     t.strictSame(
-      jv({
+      jVar({
         a: [
           {
             b: [
@@ -209,7 +209,7 @@ tap.test(
   "07 - third level uses data container key, but there's nothing there so falls back to root data container (successfully)",
   (t) => {
     t.strictSame(
-      jv({
+      jVar({
         a: [
           {
             b: [
@@ -248,7 +248,7 @@ tap.test(
       "07.01 - defaults - root has normal container, a_data, named by topmost parent key"
     );
     t.strictSame(
-      jv({
+      jVar({
         a: [
           {
             b: [

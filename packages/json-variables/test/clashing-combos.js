@@ -1,13 +1,13 @@
 /* eslint no-template-curly-in-string: 0 */
 
 import tap from "tap";
-import jv from "../dist/json-variables.esm";
+import { jVar } from "../dist/json-variables.esm";
 
 tap.test(
   "01 - surrounding underscores - sneaky similarity with wrong side brackets #1",
   (t) => {
     t.strictSame(
-      jv({
+      jVar({
         a: "joined with an underscores: %%_var1_%%_%%_var2_%%",
         b: "something",
         var1: "value1",
@@ -29,7 +29,7 @@ tap.test(
   "02 - surrounding underscores - sneaky similarity with wrong side brackets #2",
   (t) => {
     t.strictSame(
-      jv({
+      jVar({
         a: "joined with an dashes: %%-var1-%%-%%-var2-%%",
         b: "something",
         var1: "value1",
@@ -51,7 +51,7 @@ tap.test(
   "03 - surrounding underscores - sneaky similarity with wrong side brackets #3",
   (t) => {
     t.strictSame(
-      jv({
+      jVar({
         a: "zzz_%%-var1-%%_%%-var2-%%_yyy",
         b: "something",
         var1: "value1",
@@ -73,7 +73,7 @@ tap.test(
   "04 - surrounding underscores - sneaky similarity with wrong side brackets #4",
   (t) => {
     t.strictSame(
-      jv({
+      jVar({
         a: "zzz_%%-var1-%%_%%-var2-%%",
         b: "something",
         var1: "value1",
@@ -95,7 +95,7 @@ tap.test(
   "05 - surrounding dashes - sneaky similarity with wrong side brackets #1",
   (t) => {
     t.strictSame(
-      jv({
+      jVar({
         a: "zzz-%%_var1_%%-%%_var2_%%-yyy",
         b: "something",
         var1: "value1",
@@ -117,7 +117,7 @@ tap.test(
   "06 - surrounding dashes - sneaky similarity with wrong side brackets #2",
   (t) => {
     t.strictSame(
-      jv({
+      jVar({
         a: "zzz-%%_var1_%%-%%_var2_%%",
         b: "something",
         var1: "value1",

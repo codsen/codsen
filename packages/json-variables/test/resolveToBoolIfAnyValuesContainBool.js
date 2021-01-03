@@ -1,7 +1,7 @@
 /* eslint no-template-curly-in-string: 0 */
 
 import tap from "tap";
-import jv from "../dist/json-variables.esm";
+import { jVar } from "../dist/json-variables.esm";
 
 tap.test(
   "01 - opts.resolveToBoolIfAnyValuesContainBool, Bools and Strings mix",
@@ -9,7 +9,7 @@ tap.test(
     // False
 
     t.strictSame(
-      jv({
+      jVar({
         a: "zzz %%_b_%% zzz",
         b: false,
       }),
@@ -20,7 +20,7 @@ tap.test(
       "01.01 - false - default (opts on)"
     );
     t.strictSame(
-      jv(
+      jVar(
         {
           a: "zzz %%_b_%% zzz",
           b: false,
@@ -36,7 +36,7 @@ tap.test(
       "01.02 - false - hardcoded (opts on)"
     );
     t.strictSame(
-      jv(
+      jVar(
         {
           a: "zzz %%_b_%% zzz",
           b: false,
@@ -55,7 +55,7 @@ tap.test(
     // True
 
     t.strictSame(
-      jv(
+      jVar(
         {
           a: "zzz %%_b_%% zzz %%_c_%%",
           b: true,
@@ -73,7 +73,7 @@ tap.test(
       "01.04 - relying on default, opts.resolveToFalseIfAnyValuesContainBool does not matter"
     );
     t.strictSame(
-      jv(
+      jVar(
         {
           a: "zzz %%_b_%% zzz %%_c_%%",
           b: true,
@@ -92,7 +92,7 @@ tap.test(
       "01.05 - Bools hardcoded default, not forcing false"
     );
     t.strictSame(
-      jv(
+      jVar(
         {
           a: "zzz %%_b_%% zzz %%_c_%%",
           b: true,

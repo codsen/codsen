@@ -1,11 +1,11 @@
 /* eslint no-template-curly-in-string: 0 */
 
 import tap from "tap";
-import jv from "../dist/json-variables.esm";
+import { jVar } from "../dist/json-variables.esm";
 
 tap.test("01 - wrap flipswitch works", (t) => {
   t.strictSame(
-    jv(
+    jVar(
       {
         a: "%%_b_%%",
         b: "%%_c_%%",
@@ -21,7 +21,7 @@ tap.test("01 - wrap flipswitch works", (t) => {
     "01.01"
   );
   t.strictSame(
-    jv(
+    jVar(
       {
         a: "%%_b_%%",
         b: "%%_c_%%",
@@ -41,7 +41,7 @@ tap.test("01 - wrap flipswitch works", (t) => {
 
 tap.test("02 - global wrap flipswitch and dontWrapVars combo", (t) => {
   t.strictSame(
-    jv(
+    jVar(
       {
         a: "%%_b_%%",
         b: "%%_c_%%",
@@ -62,7 +62,7 @@ tap.test("02 - global wrap flipswitch and dontWrapVars combo", (t) => {
     "02.01"
   );
   t.strictSame(
-    jv(
+    jVar(
       {
         a: "%%_b_%%",
         b: "%%_c_%%",
@@ -83,7 +83,7 @@ tap.test("02 - global wrap flipswitch and dontWrapVars combo", (t) => {
     "02.02"
   );
   t.strictSame(
-    jv(
+    jVar(
       {
         a: "%%_b_%%",
         b: "%%_c_%%",
@@ -104,7 +104,7 @@ tap.test("02 - global wrap flipswitch and dontWrapVars combo", (t) => {
     "02.03"
   );
   t.strictSame(
-    jv(
+    jVar(
       {
         a: "%%_b_%%",
         b: "%%_c_%%",
@@ -129,7 +129,7 @@ tap.test("02 - global wrap flipswitch and dontWrapVars combo", (t) => {
 
 tap.test("03 - opts.dontWrapVars", (t) => {
   t.strictSame(
-    jv(
+    jVar(
       {
         a: "%%_b_%%",
         b: "%%_c_%%",
@@ -145,7 +145,7 @@ tap.test("03 - opts.dontWrapVars", (t) => {
     "03.01"
   );
   t.strictSame(
-    jv(
+    jVar(
       {
         a: "%%_b_%%",
         b: "%%_c_%%",
@@ -161,7 +161,7 @@ tap.test("03 - opts.dontWrapVars", (t) => {
     "03.02"
   );
   t.strictSame(
-    jv(
+    jVar(
       {
         a: "%%_b_%%",
         b: "%%_c_%%",
@@ -177,7 +177,7 @@ tap.test("03 - opts.dontWrapVars", (t) => {
     "03.03"
   );
   t.strictSame(
-    jv(
+    jVar(
       {
         a: "%%_b_%%",
         b: "%%_c_%%",
@@ -193,7 +193,7 @@ tap.test("03 - opts.dontWrapVars", (t) => {
     "03.04"
   );
   t.throws(() => {
-    jv(
+    jVar(
       {
         a: "%%_b_%%",
         b: "%%_c_%%",
@@ -207,7 +207,7 @@ tap.test("03 - opts.dontWrapVars", (t) => {
 
 tap.test("04 - opts.dontWrapVars, real key names", (t) => {
   t.strictSame(
-    jv(
+    jVar(
       {
         title_front: "Some text %%_title_sub_%% and more text.",
         title_sub: "%%_subtitle_%%",
@@ -223,7 +223,7 @@ tap.test("04 - opts.dontWrapVars, real key names", (t) => {
     "04.01"
   );
   t.strictSame(
-    jv(
+    jVar(
       {
         title_front: "Some text %%_title_sub_%% and more text.",
         title_sub: "%%_subtitle_%%",
@@ -239,7 +239,7 @@ tap.test("04 - opts.dontWrapVars, real key names", (t) => {
     "04.02"
   );
   t.strictSame(
-    jv(
+    jVar(
       {
         title_front: "Some text %%_title_sub_%% and more text.",
         title_sub: "%%_subtitle_%%",
@@ -259,7 +259,7 @@ tap.test("04 - opts.dontWrapVars, real key names", (t) => {
 
 tap.test("05 - multiple dontWrapVars values", (t) => {
   t.strictSame(
-    jv(
+    jVar(
       {
         front_title: "%%_lower_title_%%",
         lower_title: "%%_subtitle_%%",
@@ -283,7 +283,7 @@ tap.test("05 - multiple dontWrapVars values", (t) => {
 
 tap.test("06 - one level var querying and whitelisting", (t) => {
   t.strictSame(
-    jv(
+    jVar(
       {
         key: "Some text %%_otherkey_%%",
         otherkey: "variable",
@@ -302,7 +302,7 @@ tap.test("06 - one level var querying and whitelisting", (t) => {
     "06.01"
   );
   t.strictSame(
-    jv(
+    jVar(
       {
         key: "Some text %%_otherkey_%%",
         otherkey: "variable",
@@ -325,7 +325,7 @@ tap.test("06 - one level var querying and whitelisting", (t) => {
 
 tap.test("07 - opts.dontWrapVars, real key names", (t) => {
   t.strictSame(
-    jv(
+    jVar(
       {
         title_front: "Some text %%_title_sub_%% and more text.",
         title_sub: "%%_subtitle_%%",
@@ -341,7 +341,7 @@ tap.test("07 - opts.dontWrapVars, real key names", (t) => {
     "07.01"
   );
   t.strictSame(
-    jv(
+    jVar(
       {
         title_front: "Some text %%_title_sub_%% and more text.",
         title_sub: "%%_subtitle_%%",
@@ -361,7 +361,7 @@ tap.test("07 - opts.dontWrapVars, real key names", (t) => {
     "07.02"
   );
   t.strictSame(
-    jv(
+    jVar(
       {
         title_front: "Some text %%_title_sub_%% and more text.",
         title_sub: "%%_subtitle_%%",

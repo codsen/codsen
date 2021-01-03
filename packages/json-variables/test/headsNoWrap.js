@@ -1,13 +1,13 @@
 /* eslint no-template-curly-in-string: 0 */
 
 import tap from "tap";
-import jv from "../dist/json-variables.esm";
+import { jVar } from "../dist/json-variables.esm";
 
 tap.test(
   "01 - opts.headsNoWrap & opts.tailsNoWrap work on single level vars",
   (t) => {
     t.strictSame(
-      jv(
+      jVar(
         {
           a: "some text %%-var1-%% more text %%_var2_%%",
           b: "something",
@@ -28,7 +28,7 @@ tap.test(
       "01.01 - defaults"
     );
     t.strictSame(
-      jv(
+      jVar(
         {
           a: "some text (( var1 )) more text %%_var2_%%",
           b: "something",
@@ -51,7 +51,7 @@ tap.test(
       "01.02 - custom opts.headsNoWrap & opts.tailsNoWrap"
     );
     t.strictSame(
-      jv(
+      jVar(
         {
           a: "some text (( var1 )) more text %%_var2_%%",
           b: "something",
@@ -74,7 +74,7 @@ tap.test(
       "01.03 - left side wrapped only, custom opts.headsNoWrap & opts.tailsNoWrap"
     );
     t.strictSame(
-      jv(
+      jVar(
         {
           a: "some text (( var1 )) more text %%_var2_%%",
           b: "something",
@@ -104,7 +104,7 @@ tap.test(
   "02 - opts.headsNoWrap & opts.tailsNoWrap work on multi-level vars",
   (t) => {
     t.strictSame(
-      jv(
+      jVar(
         {
           a:
             "text %%-b-%% more text %%_c_%% and more %%-b-%% text %%_b_%% more text %%-c-%%",
@@ -124,7 +124,7 @@ tap.test(
       "02.01 - two level redirects, default opts.headsNoWrap & opts.tailsNoWrap, matching var key lengths"
     );
     t.strictSame(
-      jv(
+      jVar(
         {
           a: "text %%-bbb-%% more text %%_c_%% and more %%-bbb-%% text",
           bbb: "%%_c_%%",
@@ -143,7 +143,7 @@ tap.test(
       "02.02 - two level redirects, default opts.headsNoWrap & opts.tailsNoWrap, mismatching var key lengths"
     );
     t.strictSame(
-      jv(
+      jVar(
         {
           a:
             "text -yyy-bbb-zzz- more text -www-c-xxx- and more -yyy-bbb-zzz- text",
@@ -174,7 +174,7 @@ tap.test(
   "03 - triple linking with resolving arrays and trailing new lines",
   (t) => {
     t.strictSame(
-      jv(
+      jVar(
         {
           aaa: "%%-bbb-%%",
           bbb: "ccc\n",
@@ -192,7 +192,7 @@ tap.test(
     );
 
     t.strictSame(
-      jv(
+      jVar(
         {
           aaa: "%%-bbb-%%",
           bbb: ["%%-kkk-%%", "%%-lll-%%"],
@@ -218,7 +218,7 @@ tap.test(
     );
 
     t.strictSame(
-      jv(
+      jVar(
         {
           aaa: "%%-bbb-%%",
           bbb: ["%%-kkk-%%\n", "%%-lll-%%\n"],
@@ -244,7 +244,7 @@ tap.test(
     );
 
     t.strictSame(
-      jv(
+      jVar(
         {
           aaa: "%%_bbb_%%", // <----- regular heads/tails
           bbb: ["%%_kkk_%%", "%%_lll_%%"],
@@ -270,7 +270,7 @@ tap.test(
     );
 
     t.strictSame(
-      jv(
+      jVar(
         {
           aaa: "%%-bbb-%%", // <-----  notice no-wrap heads/tails
           bbb: ["%%_kkk_%%", "%%_lll_%%"],
@@ -296,7 +296,7 @@ tap.test(
     );
 
     t.strictSame(
-      jv(
+      jVar(
         {
           aaa: "%%-bbb-%%",
           bbb: ["%%-kkk-%%", "%%-lll-%%"],
@@ -330,7 +330,7 @@ tap.test(
     );
 
     t.strictSame(
-      jv(
+      jVar(
         {
           shop_info_text: "%%-shop_info_global-%%",
           shop_info_global: [

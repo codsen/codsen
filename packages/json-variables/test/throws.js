@@ -1,7 +1,7 @@
 /* eslint no-template-curly-in-string: 0 */
 
 import tap from "tap";
-import jv from "../dist/json-variables.esm";
+import { jVar } from "../dist/json-variables.esm";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
@@ -9,22 +9,22 @@ import jv from "../dist/json-variables.esm";
 
 tap.test("01 - basic throws related to wrong input", (t) => {
   t.throws(() => {
-    jv();
+    jVar();
   }, /THROW_ID_01/);
 
   t.throws(() => {
-    jv("zzzz");
+    jVar("zzzz");
   }, /THROW_ID_02/);
 
   t.throws(() => {
-    jv("{}"); // string curlies...
+    jVar("{}"); // string curlies...
   }, /THROW_ID_02/);
 
   // empty plain object does not throw
-  t.strictSame(jv({}), {}, "empty plain object");
+  t.strictSame(jVar({}), {}, "empty plain object");
 
   t.throws(() => {
-    jv([]); // empty array
+    jVar([]); // empty array
   }, /THROW_ID_02/);
 
   t.end();
@@ -32,7 +32,7 @@ tap.test("01 - basic throws related to wrong input", (t) => {
 
 tap.test("02 - throws when options heads and/or tails are empty", (t) => {
   t.throws(() => {
-    jv(
+    jVar(
       {
         a: "a",
       },
@@ -41,7 +41,7 @@ tap.test("02 - throws when options heads and/or tails are empty", (t) => {
   }, /THROW_ID_06/);
 
   t.throws(() => {
-    jv(
+    jVar(
       {
         a: "a",
       },
@@ -50,7 +50,7 @@ tap.test("02 - throws when options heads and/or tails are empty", (t) => {
   }, /THROW_ID_07/);
 
   t.throws(() => {
-    jv(
+    jVar(
       {
         a: "a",
       },
@@ -65,7 +65,7 @@ tap.test(
   "03 - throws when data container key lookup is enabled and container tails are given blank",
   (t) => {
     t.throws(() => {
-      jv(
+      jVar(
         {
           a: "a",
         },
@@ -74,7 +74,7 @@ tap.test(
     }, /THROW_ID_08/);
 
     t.strictSame(
-      jv(
+      jVar(
         {
           a: "a",
         },
@@ -87,7 +87,7 @@ tap.test(
     );
 
     t.throws(() => {
-      jv(
+      jVar(
         {
           a: "a",
         },
@@ -101,7 +101,7 @@ tap.test(
 
 tap.test("04 - throws when heads and tails are equal", (t) => {
   t.throws(() => {
-    jv(
+    jVar(
       {
         a: "a",
       },
@@ -114,7 +114,7 @@ tap.test("04 - throws when heads and tails are equal", (t) => {
 
 tap.test("05 - throws when input is not a plain object", (t) => {
   t.throws(() => {
-    jv(["zzz"], { heads: "%%", tails: "%%" });
+    jVar(["zzz"], { heads: "%%", tails: "%%" });
   }, /THROW_ID_02/);
 
   t.end();
@@ -122,7 +122,7 @@ tap.test("05 - throws when input is not a plain object", (t) => {
 
 tap.test("06 - throws when keys contain variables", (t) => {
   const err1 = t.throws(() => {
-    jv({
+    jVar({
       a: "some text %%_var1_%% more text",
       "%%_var2_%%": "something",
       var1: "value1",
@@ -132,7 +132,7 @@ tap.test("06 - throws when keys contain variables", (t) => {
   t.match(err1.message, /THROW_ID_15/, "06.01");
 
   const err2 = t.throws(() => {
-    jv(
+    jVar(
       {
         a: "some text zzvar1yy more text",
         zzvar2yy: "something",
@@ -150,7 +150,7 @@ tap.test(
   "07 - throws when there are unequal number of marker heads and tails",
   (t) => {
     t.strictSame(
-      jv({
+      jVar({
         a: "some text %%_var1_%% more %%_text",
         b: "something",
         var1: "value1",
@@ -166,7 +166,7 @@ tap.test(
     );
 
     t.strictSame(
-      jv({
+      jVar({
         a: "some text %%_var1_%% more text_%%",
         b: "%%_something",
         var1: "value1",
@@ -187,14 +187,14 @@ tap.test(
 
 tap.test("08 - throws when data is missing", (t) => {
   const err1 = t.throws(() => {
-    jv({
+    jVar({
       a: "some text %%_var1_%% more text",
       b: "something",
     });
   });
   t.match(err1.message, /THROW_ID_18/, "08.01");
   const err2 = t.throws(() => {
-    jv({
+    jVar({
       a: "some text %%_var1_%% more text",
       b: "something",
       a_data: "zzz",
@@ -204,7 +204,7 @@ tap.test("08 - throws when data is missing", (t) => {
 
   // however, it does not throw when opts.allowUnresolved is on
   t.strictSame(
-    jv(
+    jVar(
       {
         a: "some text %%_var1_%% more text",
         b: "something",
@@ -224,7 +224,7 @@ tap.test("08 - throws when data is missing", (t) => {
 
   // when opts.allowUnresolved is string, that is used
   t.strictSame(
-    jv(
+    jVar(
       {
         a: "some text %%_var1_%% more text",
         b: "something",
@@ -244,7 +244,7 @@ tap.test("08 - throws when data is missing", (t) => {
 
   // when opts.allowUnresolved is empty string, that is used
   t.strictSame(
-    jv(
+    jVar(
       {
         a: "some text %%_var1_%% more text",
         b: "something",
@@ -264,7 +264,7 @@ tap.test("08 - throws when data is missing", (t) => {
 
   // also, consider the cases when only some variables can't be resolved
   t.strictSame(
-    jv(
+    jVar(
       {
         a: "some text %%_var1_%% more text%%_var2_%%",
         b: "something",
@@ -293,7 +293,7 @@ tap.test(
   "09 - throws when data container lookup is turned off and var is missing",
   (t) => {
     const err1 = t.throws(() => {
-      jv(
+      jVar(
         {
           a: "some text %%_var1_%% more text",
           b: "something",
@@ -311,7 +311,7 @@ tap.test(
       },
     };
     t.strictSame(
-      jv(input1, { lookForDataContainers: false }),
+      jVar(input1, { lookForDataContainers: false }),
       {
         a: "some text something more text",
         a_data: {
@@ -358,7 +358,7 @@ tap.test(
       var1: "222",
     };
     t.strictSame(
-      jv(input2, { lookForDataContainers: false }),
+      jVar(input2, { lookForDataContainers: false }),
       {
         a: {
           b: {
@@ -403,7 +403,7 @@ tap.test(
       var1: "222",
     };
     t.strictSame(
-      jv(input3, { lookForDataContainers: true }),
+      jVar(input3, { lookForDataContainers: true }),
       {
         a: {
           b: {
@@ -441,7 +441,7 @@ tap.test(
   "10 - not throws when data container name append is given empty, but data container lookup is turned off",
   (t) => {
     t.doesNotThrow(() => {
-      jv(
+      jVar(
         {
           a: "some text, more text",
           b: "something",
@@ -455,7 +455,7 @@ tap.test(
 
 tap.test("11 - throws when data container name append is given empty", (t) => {
   const err1 = t.throws(() => {
-    jv(
+    jVar(
       {
         a: "some text %%_var1_%% more text",
         b: "something",
@@ -465,7 +465,7 @@ tap.test("11 - throws when data container name append is given empty", (t) => {
   });
   t.match(err1.message, /THROW_ID_08/, "11.01");
   const err2 = t.throws(() => {
-    jv(
+    jVar(
       {
         a: "some text, more text",
         b: "something",
@@ -481,7 +481,7 @@ tap.test(
   "12 - throws when opts.wrapHeadsWith is customised to anything other than string",
   (t) => {
     const err1 = t.throws(() => {
-      jv(
+      jVar(
         {
           a: "some text %%_var1_%% more text",
           b: "something",
@@ -496,7 +496,7 @@ tap.test(
 
 tap.test("13 - opts.wrapHeadsWith does not affect failing resolving", (t) => {
   const err1 = t.throws(() => {
-    jv(
+    jVar(
       {
         a: "some text %%_var1_%% more text",
         b: "something",
@@ -512,7 +512,7 @@ tap.test(
   "14 - throws when opts.wrapTailsWith is customised to anything other than string",
   (t) => {
     const err1 = t.throws(() => {
-      jv(
+      jVar(
         {
           a: "some text %%_var1_%% more text",
           b: "something",
@@ -529,7 +529,7 @@ tap.test(
   "15 - not throws when opts.wrapTailsWith is customised to an empty string",
   (t) => {
     t.doesNotThrow(() => {
-      jv(
+      jVar(
         {
           a: "some text %%_var1_%% more text",
           var1: "something",
@@ -543,7 +543,7 @@ tap.test(
 
 tap.test("16 - throws when opts.heads is not string", (t) => {
   const err1 = t.throws(() => {
-    jv(
+    jVar(
       {
         a: "some text %%_var1_%% more text",
         b: "something",
@@ -557,7 +557,7 @@ tap.test("16 - throws when opts.heads is not string", (t) => {
 
 tap.test("17 - throws when opts.tails is not string", (t) => {
   const err1 = t.throws(() => {
-    jv(
+    jVar(
       {
         a: "some text %%_var1_%% more text",
         b: "something",
@@ -571,7 +571,7 @@ tap.test("17 - throws when opts.tails is not string", (t) => {
 
 tap.test("18 - throws when all args are missing", (t) => {
   const err1 = t.throws(() => {
-    jv();
+    jVar();
   });
   t.match(err1.message, /THROW_ID_01/, "18");
   t.end();
@@ -579,14 +579,14 @@ tap.test("18 - throws when all args are missing", (t) => {
 
 tap.test("19 - throws when key references itself", (t) => {
   const err1 = t.throws(() => {
-    jv({
+    jVar({
       a: "%%_a_%%",
     });
   });
   t.match(err1.message, /THROW_ID_19/, "19.01");
 
   const err2 = t.throws(() => {
-    jv({
+    jVar({
       a: "something %%_a_%% aaaa %%_a_%%",
     });
   });
@@ -596,7 +596,7 @@ tap.test("19 - throws when key references itself", (t) => {
 
 tap.test("20 - throws when key references itself", (t) => {
   const err1 = t.throws(() => {
-    jv({
+    jVar({
       a: "a",
       b: "%%_a_%%",
       c: "%%_c_%%",
@@ -608,7 +608,7 @@ tap.test("20 - throws when key references itself", (t) => {
 
 tap.test("21 - throws when key references key which references itself", (t) => {
   const err1 = t.throws(() => {
-    jv({
+    jVar({
       b: "%%_a_%%",
       a: "%%_a_%%",
     });
@@ -619,7 +619,7 @@ tap.test("21 - throws when key references key which references itself", (t) => {
 
 tap.test("22 - throws when there's recursion (with distraction)", (t) => {
   const err1 = t.throws(() => {
-    jv({
+    jVar({
       b: "%%_a_%%",
       a: "%%_b_%%",
     });
@@ -627,7 +627,7 @@ tap.test("22 - throws when there's recursion (with distraction)", (t) => {
   t.match(err1.message, /THROW_ID_19/, "22.01");
 
   const err2 = t.throws(() => {
-    jv({
+    jVar({
       longerKeyName: "%%_shorterKeyN_%%",
       shorterKeyN: "%%_longerKeyName_%%",
     });
@@ -635,7 +635,7 @@ tap.test("22 - throws when there's recursion (with distraction)", (t) => {
   t.match(err2.message, /THROW_ID_19/, "22.02");
 
   const err3 = t.throws(() => {
-    jv({
+    jVar({
       k: {
         l: {
           m: {
@@ -652,7 +652,7 @@ tap.test("22 - throws when there's recursion (with distraction)", (t) => {
   t.match(err3.message, /THROW_ID_19/, "22.03");
 
   const err4 = t.throws(() => {
-    jv({
+    jVar({
       k: {
         l: {
           m: {
@@ -675,7 +675,7 @@ tap.test("22 - throws when there's recursion (with distraction)", (t) => {
 
 tap.test("23 - throws when there's a longer recursion", (t) => {
   const err1 = t.throws(() => {
-    jv({
+    jVar({
       a: "%%_b_%%",
       b: "%%_c_%%",
       c: "%%_d_%%",
@@ -691,7 +691,7 @@ tap.test(
   "24 - throws when opts.heads and opts.headsNoWrap are customised to be equal",
   (t) => {
     const err1 = t.throws(() => {
-      jv(
+      jVar(
         {
           a: "some text %%_var1_%% more text",
           b: "something",
@@ -705,7 +705,7 @@ tap.test(
     t.match(err1.message, /THROW_ID_10/, "24.01");
 
     const err2 = t.throws(() => {
-      jv(
+      jVar(
         {
           a: "some text %%_var1_%% more text",
           b: "something",
@@ -719,7 +719,7 @@ tap.test(
     t.match(err2.message, /THROW_ID_10/, "24.02");
 
     const err3 = t.throws(() => {
-      jv(
+      jVar(
         {
           a: "some text %%_var1_%% more text",
           b: "something",
@@ -739,7 +739,7 @@ tap.test(
   "25 - throws when opts.tails and opts.tailsNoWrap are customised to be equal",
   (t) => {
     const err1 = t.throws(() => {
-      jv(
+      jVar(
         {
           a: "some text %%_var1_%% more text",
           b: "something",
@@ -753,7 +753,7 @@ tap.test(
     t.match(err1.message, /THROW_ID_11/, "25.01");
 
     const err2 = t.throws(() => {
-      jv(
+      jVar(
         {
           a: "some text %%_var1_%% more text",
           b: "something",
@@ -767,7 +767,7 @@ tap.test(
     t.match(err2.message, /THROW_ID_11/, "25.02");
 
     const err3 = t.throws(() => {
-      jv(
+      jVar(
         {
           a: "some text %%_var1_%% more text",
           b: "something",
@@ -785,7 +785,7 @@ tap.test(
 
 tap.test("26 - empty nowraps", (t) => {
   const err1 = t.throws(() => {
-    jv(
+    jVar(
       {
         a: "some text %%_var1_%% more text",
         b: "something",
@@ -799,7 +799,7 @@ tap.test("26 - empty nowraps", (t) => {
   t.match(err1.message, /THROW_ID_12/, "26.01");
 
   const err2 = t.throws(() => {
-    jv(
+    jVar(
       {
         a: "some text %%_var1_%% more text",
         b: "something",
@@ -813,7 +813,7 @@ tap.test("26 - empty nowraps", (t) => {
   t.match(err2.message, /THROW_ID_13/, "26.02");
 
   const err3 = t.throws(() => {
-    jv(
+    jVar(
       {
         a: "some text %%_var1_%% more text",
         b: "something",
@@ -826,7 +826,7 @@ tap.test("26 - empty nowraps", (t) => {
   t.match(err3.message, /THROW_ID_12/, "26.03");
 
   const err4 = t.throws(() => {
-    jv(
+    jVar(
       {
         a: "some text %%_var1_%% more text",
         b: "something",
@@ -842,7 +842,7 @@ tap.test("26 - empty nowraps", (t) => {
 
 tap.test("27 - equal nowraps", (t) => {
   const err1 = t.throws(() => {
-    jv(
+    jVar(
       {
         a: "some text %%_var1_%% more text",
         b: "something",
@@ -856,7 +856,7 @@ tap.test("27 - equal nowraps", (t) => {
   t.match(err1.message, /THROW_ID_14/, "27.01");
 
   const err2 = t.throws(() => {
-    jv(
+    jVar(
       {
         a: "some text %%_var1_%% more text",
         b: "something",
@@ -870,7 +870,7 @@ tap.test("27 - equal nowraps", (t) => {
   t.match(err2.message, /THROW_ID_14/, "27.02");
 
   const err3 = t.throws(() => {
-    jv(
+    jVar(
       {
         a: "some text %%_var1_%% more text",
         b: "something",
@@ -886,28 +886,28 @@ tap.test("27 - equal nowraps", (t) => {
 
 tap.test("28 - throws there's simple recursion loop in array", (t) => {
   const err1 = t.throws(() => {
-    jv({
+    jVar({
       a: "%%_a_%%",
     });
   });
   t.match(err1.message, /THROW_ID_19/, "28.01");
 
   const err2 = t.throws(() => {
-    jv({
+    jVar({
       a: { b: "%%_a_%%" },
     });
   });
   t.match(err2.message, /THROW_ID_20/, "28.02");
 
   const err3 = t.throws(() => {
-    jv({
+    jVar({
       a: ["%%_a_%%"],
     });
   });
   t.match(err3.message, /THROW_ID_20/, "28.03");
 
   const err4 = t.throws(() => {
-    jv({
+    jVar({
       a: ["%%_b_%%"],
       b: ["%%_a_%%"],
     });
@@ -915,14 +915,14 @@ tap.test("28 - throws there's simple recursion loop in array", (t) => {
   t.match(err4.message, /THROW_ID_20/, "28.04");
 
   const err5 = t.throws(() => {
-    jv({
+    jVar({
       a: ["%%_b_%%", "%%_b_%%"],
     });
   });
   t.match(err5.message, /THROW_ID_18/, "28.05");
 
   const err6 = t.throws(() => {
-    jv({ z: ["%%_a_%%"] });
+    jVar({ z: ["%%_a_%%"] });
   });
   t.match(err6.message, /THROW_ID_18/, "28.06");
   t.end();
@@ -930,13 +930,13 @@ tap.test("28 - throws there's simple recursion loop in array", (t) => {
 
 tap.test("29 - throws referencing what does not exist", (t) => {
   const err1 = t.throws(() => {
-    jv({
+    jVar({
       a: "%%_b_%%",
     });
   });
   t.match(err1.message, /THROW_ID_18/, "29.01");
   const err2 = t.throws(() => {
-    jv({
+    jVar({
       a: ["%%_b_%%"],
     });
   });
@@ -948,7 +948,7 @@ tap.test(
   "30 - throws when referencing the multi-level object keys that don't exist",
   (t) => {
     const err1 = t.throws(() => {
-      jv({
+      jVar({
         a: "some text %%_var1.key99_%% more text %%_var2.key99_%%",
         b: "something",
         var1: { key1: "value1" },
@@ -958,7 +958,7 @@ tap.test(
     t.match(err1.message, /THROW_ID_18/, "30.01");
 
     const err2 = t.throws(() => {
-      jv({
+      jVar({
         a: "some text %%_var1.key99_%% more text %%_var2.key99_%%",
         b: "something",
         var1: { key1: "value1", key2: "value2", key3: "value3" },
@@ -968,7 +968,7 @@ tap.test(
     t.match(err2.message, /THROW_ID_18/, "30.02");
 
     const err3 = t.throws(() => {
-      jv(
+      jVar(
         {
           a: "some text %%_var1.key99_%% more text %%_var2.key99_%%",
           b: "something",
@@ -990,7 +990,7 @@ tap.test(
   "31 - throws when opts are given truthy but not a plain object",
   (t) => {
     const err1 = t.throws(() => {
-      jv(
+      jVar(
         {
           a: "aaa",
           b: "bbb",

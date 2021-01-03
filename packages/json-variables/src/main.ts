@@ -1,46 +1,97 @@
 /* eslint max-len:0 */
 
-import traverse from "ast-monkey-traverse";
+import { traverse } from "ast-monkey-traverse";
 import matcher from "matcher";
 import objectPath from "object-path";
-import arrayiffyIfString from "arrayiffy-if-string";
-import strFindHeadsTails from "string-find-heads-tails";
-import get from "ast-get-values-by-key";
-import Ranges from "ranges-push";
-import rangesApply from "ranges-apply";
-import removeDuplicateHeadsTails from "string-remove-duplicate-heads-tails";
+import { arrayiffy } from "arrayiffy-if-string";
+import { strFindHeadsTails } from "string-find-heads-tails";
+import { getByKey } from "ast-get-values-by-key";
+import { Ranges } from "ranges-push";
+import { rApply } from "ranges-apply";
+import { remDup } from "string-remove-duplicate-heads-tails";
 import { matchLeftIncl, matchRightIncl } from "string-match-left-right";
+import { version } from "../package.json";
 
 const has = Object.prototype.hasOwnProperty;
+
+interface Obj {
+  [key: string]: any;
+}
+
+interface Opts {
+  heads: string;
+  tails: string;
+  headsNoWrap: string;
+  tailsNoWrap: string;
+  lookForDataContainers: boolean;
+  dataContainerIdentifierTails: string;
+  wrapHeadsWith: string | string[];
+  wrapTailsWith: string | string[];
+  dontWrapVars: string[];
+  preventDoubleWrapping: boolean;
+  wrapGlobalFlipSwitch: boolean;
+  noSingleMarkers: boolean;
+  resolveToBoolIfAnyValuesContainBool: boolean;
+  resolveToFalseIfAnyValuesContainBool: boolean;
+  throwWhenNonStringInsertedInString: boolean;
+  allowUnresolved: boolean;
+}
+
+const defaults: Opts = {
+  heads: "%%_",
+  tails: "_%%",
+  headsNoWrap: "%%-",
+  tailsNoWrap: "-%%",
+  lookForDataContainers: true,
+  dataContainerIdentifierTails: "_data",
+  wrapHeadsWith: "",
+  wrapTailsWith: "",
+  dontWrapVars: [],
+  preventDoubleWrapping: true,
+  wrapGlobalFlipSwitch: true, // is wrap function on?
+  noSingleMarkers: false, // if value has only and exactly heads or tails,
+  // don't throw mismatched marker error.
+  resolveToBoolIfAnyValuesContainBool: true, // if variable is resolved into
+  // anything that contains or is equal to Boolean false, set the whole thing to false
+  resolveToFalseIfAnyValuesContainBool: true, // resolve whole value to false,
+  // even if some values contain Boolean true. Otherwise, the whole value will
+  // resolve to the first encountered Boolean.
+  throwWhenNonStringInsertedInString: false,
+  allowUnresolved: false, // Allow value to not have a resolved variable
+};
 
 // -----------------------------------------------------------------------------
 //                       H E L P E R   F U N C T I O N S
 // -----------------------------------------------------------------------------
 
-function isStr(something) {
+function isStr(something: any): boolean {
   return typeof something === "string";
 }
-function isNum(something) {
+function isNum(something: any): boolean {
   return typeof something === "number";
 }
-function isBool(something) {
+function isBool(something: any): boolean {
   return typeof something === "boolean";
 }
-function isNull(something) {
+function isNull(something: any): boolean {
   return something === null;
 }
-function isObj(something) {
+function isObj(something: any): boolean {
   return (
     something && typeof something === "object" && !Array.isArray(something)
   );
 }
-function existy(x) {
+function existy(x: any): boolean {
   return x != null;
 }
-function trimIfString(something) {
+
+// TS overloading
+function trimIfString(something: string): string;
+function trimIfString(something: any): any {
   return isStr(something) ? something.trim() : something;
 }
-function getTopmostKey(str) {
+
+function getTopmostKey(str: string): string {
   if (typeof str === "string" && str.length > 0 && str.indexOf(".") !== -1) {
     for (let i = 0, len = str.length; i < len; i++) {
       if (str[i] === ".") {
@@ -50,7 +101,7 @@ function getTopmostKey(str) {
   }
   return str;
 }
-function withoutTopmostKey(str) {
+function withoutTopmostKey(str: string): string {
   if (typeof str === "string" && str.length > 0 && str.indexOf(".") !== -1) {
     for (let i = 0, len = str.length; i < len; i++) {
       if (str[i] === ".") {
@@ -60,7 +111,7 @@ function withoutTopmostKey(str) {
   }
   return str;
 }
-function goLevelUp(str) {
+function goLevelUp(str: string): string {
   if (typeof str === "string" && str.length > 0 && str.indexOf(".") !== -1) {
     for (let i = str.length; i--; ) {
       if (str[i] === ".") {
@@ -70,7 +121,7 @@ function goLevelUp(str) {
   }
   return str;
 }
-function getLastKey(str) {
+function getLastKey(str: string): string {
   if (typeof str === "string" && str.length > 0 && str.indexOf(".") !== -1) {
     for (let i = str.length; i--; ) {
       if (str[i] === ".") {
@@ -80,7 +131,7 @@ function getLastKey(str) {
   }
   return str;
 }
-function containsHeadsOrTails(str, opts) {
+function containsHeadsOrTails(str: string, opts: Opts): boolean {
   if (typeof str !== "string" || !str.trim()) {
     return false;
   }
@@ -98,7 +149,11 @@ function containsHeadsOrTails(str, opts) {
   }
   return false;
 }
-function removeWrappingHeadsAndTails(str, heads, tails) {
+function removeWrappingHeadsAndTails(
+  str: string,
+  heads: string | string[],
+  tails: string | string[]
+) {
   let tempFrom;
   let tempTo;
   if (
@@ -106,14 +161,14 @@ function removeWrappingHeadsAndTails(str, heads, tails) {
     str.length > 0 &&
     matchRightIncl(str, 0, heads, {
       trimBeforeMatching: true,
-      cb: (char, theRemainderOfTheString, index) => {
+      cb: (_c, _t, index) => {
         tempFrom = index;
         return true;
       },
     }) &&
     matchLeftIncl(str, str.length - 1, tails, {
       trimBeforeMatching: true,
-      cb: (char, theRemainderOfTheString, index) => {
+      cb: (_c, _t, index) => {
         tempTo = index + 1;
         return true;
       },
@@ -124,12 +179,12 @@ function removeWrappingHeadsAndTails(str, heads, tails) {
   return str;
 }
 function wrap(
-  placementValue,
-  opts,
+  placementValue: string,
+  opts: Opts,
   dontWrapTheseVars = false,
-  breadCrumbPath,
-  newPath,
-  oldVarName
+  breadCrumbPath: string[],
+  newPath: string,
+  oldVarName: string
 ) {
   console.log(
     `135 >>>>>>>>>> WRAP(): placementValue = ${JSON.stringify(
@@ -176,8 +231,8 @@ function wrap(
     (!opts.preventDoubleWrapping ||
       (opts.preventDoubleWrapping &&
         isStr(placementValue) &&
-        !placementValue.includes(opts.wrapHeadsWith) &&
-        !placementValue.includes(opts.wrapTailsWith)))
+        !placementValue.includes(opts.wrapHeadsWith as string) &&
+        !placementValue.includes(opts.wrapTailsWith as string)))
   ) {
     console.log("182 +++ WE GONNA WRAP THIS!");
     return opts.wrapHeadsWith + placementValue + opts.wrapTailsWith;
@@ -196,7 +251,7 @@ function wrap(
 
     console.log(
       `198 about to return:\n${JSON.stringify(
-        removeDuplicateHeadsTails(placementValue, {
+        remDup(placementValue, {
           heads: opts.wrapHeadsWith,
           tails: opts.wrapTailsWith,
         }),
@@ -215,7 +270,7 @@ function wrap(
       console.log(`215 Returning placementValue = ${placementValue}`);
       return placementValue;
     }
-    const tempValue = removeDuplicateHeadsTails(placementValue, {
+    const tempValue = remDup(placementValue, {
       heads: opts.wrapHeadsWith,
       tails: opts.wrapTailsWith,
     });
@@ -231,7 +286,7 @@ function wrap(
   console.log("231 +++ NO WRAP");
   return placementValue;
 }
-function findValues(input, varName, path, opts) {
+function findValues(input: any, varName: string, path: string, opts: Opts) {
   console.log(
     `236 findValues(): looking for varName = ${JSON.stringify(
       varName,
@@ -357,11 +412,11 @@ function findValues(input, varName, path, opts) {
     // parts: first find topmost key, then query it's children path part via
     // object-path.
     // - If it does not have a dot, it's straightforward, pick first string
-    // finding out of get().
+    // finding out of getByKey().
 
     // it's not a path (does not contain dots)
     if (varName.indexOf(".") === -1) {
-      const gotPathArr = get(input, varName);
+      const gotPathArr = getByKey(input, varName);
       console.log(
         `366 *** gotPathArr = ${JSON.stringify(gotPathArr, null, 4)}`
       );
@@ -402,7 +457,7 @@ function findValues(input, varName, path, opts) {
       }
     } else {
       // it's a path (contains dots)
-      const gotPath = get(input, getTopmostKey(varName));
+      const gotPath = getByKey(input, getTopmostKey(varName));
       console.log(`406 *** gotPath = ${JSON.stringify(gotPath, null, 4)}`);
       if (gotPath.length > 0) {
         for (let y = 0, len2 = gotPath.length; y < len2; y++) {
@@ -429,7 +484,13 @@ function findValues(input, varName, path, opts) {
 // all keys visited so far and always check, was the current key not been
 // traversed already (present in breadCrumbPath). Otherwise, we might get into a
 // closed loop.
-function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
+function resolveString(
+  input: any,
+  string: string,
+  path: string,
+  opts: Opts,
+  incomingBreadCrumbPath: string[] = []
+) {
   console.log(
     `\u001b[${33}m${`\n\n429 CALLED resolveString() on "${string}". Path = "${path}"`}\u001b[${39}m`
   );
@@ -467,7 +528,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
   // values, saving resources. It can't be on the root because it would get retained
   // between different calls on the library, potentially giving wrong results (from
   // the previous resolved variable, from the previous function call).
-  const secretResolvedVarsStash = {};
+  const secretResolvedVarsStash: Obj = {};
 
   console.log(
     `=============================\n468 string = ${JSON.stringify(
@@ -486,9 +547,13 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
   // 1. First, extract all vars
   // ==========================
 
-  let finalRangesArr = new Ranges();
+  const finalRangesArr = new Ranges();
 
-  function processHeadsAndTails(arr, dontWrapTheseVars, wholeValueIsVariable) {
+  function processHeadsAndTails(
+    arr: Obj[],
+    dontWrapTheseVars: boolean,
+    wholeValueIsVariable: boolean
+  ) {
     for (let i = 0, len = arr.length; i < len; i++) {
       const obj = arr[i];
       console.log(
@@ -563,7 +628,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
 
         if (isBool(resolvedValue)) {
           if (opts.resolveToBoolIfAnyValuesContainBool) {
-            finalRangesArr = undefined;
+            finalRangesArr.wipe();
             if (!opts.resolveToFalseIfAnyValuesContainBool) {
               return resolvedValue;
             }
@@ -571,7 +636,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
           }
           resolvedValue = "";
         } else if (isNull(resolvedValue) && wholeValueIsVariable) {
-          finalRangesArr = undefined;
+          finalRangesArr.wipe();
           return resolvedValue;
         } else if (Array.isArray(resolvedValue)) {
           resolvedValue = String(resolvedValue.join(""));
@@ -676,7 +741,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
 
   if (
     foundHeadsAndTails.length === 1 &&
-    rangesApply(string, [
+    rApply(string, [
       foundHeadsAndTails[0].headsStartAt,
       foundHeadsAndTails[0].tailsEndAt,
     ]).trim() === ""
@@ -717,7 +782,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
 
   if (
     foundHeadsAndTails.length === 1 &&
-    rangesApply(string, [
+    rApply(string, [
       foundHeadsAndTails[0].headsStartAt,
       foundHeadsAndTails[0].tailsEndAt,
     ]).trim() === ""
@@ -742,7 +807,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
   // 3. Then, work the finalRangesArr list
   // ================================
   console.log(
-    `\u001b[${33}m${`\n729 END OF rangesApply: finalRangesArr.current() = ${JSON.stringify(
+    `\u001b[${33}m${`\n729 END OF rApply: finalRangesArr.current() = ${JSON.stringify(
       finalRangesArr.current(),
       null,
       4
@@ -757,7 +822,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
   );
 
   if (finalRangesArr && finalRangesArr.current()) {
-    return rangesApply(string, finalRangesArr.current());
+    return rApply(string, finalRangesArr.current());
   }
   return string;
 }
@@ -766,54 +831,32 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
 //                         M A I N   F U N C T I O N
 // -----------------------------------------------------------------------------
 
-function jsonVariables(input, originalOpts = {}) {
+function jVar(input: Obj, originalOpts?: Opts): Obj {
   if (!arguments.length) {
     throw new Error(
-      "json-variables/jsonVariables(): [THROW_ID_01] Alas! Inputs are missing!"
+      "json-variables/jVar(): [THROW_ID_01] Alas! Inputs are missing!"
     );
   }
   if (!isObj(input)) {
     throw new TypeError(
-      `json-variables/jsonVariables(): [THROW_ID_02] Alas! The input must be a plain object! Currently it's: ${
+      `json-variables/jVar(): [THROW_ID_02] Alas! The input must be a plain object! Currently it's: ${
         Array.isArray(input) ? "array" : typeof input
       }`
     );
   }
-  if (!isObj(originalOpts)) {
+  if (originalOpts && !isObj(originalOpts)) {
     throw new TypeError(
-      `json-variables/jsonVariables(): [THROW_ID_03] Alas! An Optional Options Object must be a plain object! Currently it's: ${
+      `json-variables/jVar(): [THROW_ID_03] Alas! An Optional Options Object must be a plain object! Currently it's: ${
         Array.isArray(originalOpts) ? "array" : typeof originalOpts
       }`
     );
   }
-  const defaults = {
-    heads: "%%_",
-    tails: "_%%",
-    headsNoWrap: "%%-",
-    tailsNoWrap: "-%%",
-    lookForDataContainers: true,
-    dataContainerIdentifierTails: "_data",
-    wrapHeadsWith: "",
-    wrapTailsWith: "",
-    dontWrapVars: [],
-    preventDoubleWrapping: true,
-    wrapGlobalFlipSwitch: true, // is wrap function on?
-    noSingleMarkers: false, // if value has only and exactly heads or tails,
-    // don't throw mismatched marker error.
-    resolveToBoolIfAnyValuesContainBool: true, // if variable is resolved into
-    // anything that contains or is equal to Boolean false, set the whole thing to false
-    resolveToFalseIfAnyValuesContainBool: true, // resolve whole value to false,
-    // even if some values contain Boolean true. Otherwise, the whole value will
-    // resolve to the first encountered Boolean.
-    throwWhenNonStringInsertedInString: false,
-    allowUnresolved: false, // Allow value to not have a resolved variable
-  };
   const opts = { ...defaults, ...originalOpts };
 
   if (!opts.dontWrapVars) {
     opts.dontWrapVars = [];
   } else if (!Array.isArray(opts.dontWrapVars)) {
-    opts.dontWrapVars = arrayiffyIfString(opts.dontWrapVars);
+    opts.dontWrapVars = arrayiffy(opts.dontWrapVars);
   }
 
   let culpritVal;
@@ -830,7 +873,7 @@ function jsonVariables(input, originalOpts = {}) {
     })
   ) {
     throw new Error(
-      `json-variables/jsonVariables(): [THROW_ID_05] Alas! All variable names set in opts.dontWrapVars should be of a string type. Computer detected a value "${culpritVal}" at index ${culpritIndex}, which is not string but ${
+      `json-variables/jVar(): [THROW_ID_05] Alas! All variable names set in opts.dontWrapVars should be of a string type. Computer detected a value "${culpritVal}" at index ${culpritIndex}, which is not string but ${
         Array.isArray(culpritVal) ? "array" : typeof culpritVal
       }!`
     );
@@ -838,47 +881,47 @@ function jsonVariables(input, originalOpts = {}) {
 
   if (opts.heads === "") {
     throw new Error(
-      "json-variables/jsonVariables(): [THROW_ID_06] Alas! opts.heads are empty!"
+      "json-variables/jVar(): [THROW_ID_06] Alas! opts.heads are empty!"
     );
   }
   if (opts.tails === "") {
     throw new Error(
-      "json-variables/jsonVariables(): [THROW_ID_07] Alas! opts.tails are empty!"
+      "json-variables/jVar(): [THROW_ID_07] Alas! opts.tails are empty!"
     );
   }
   if (opts.lookForDataContainers && opts.dataContainerIdentifierTails === "") {
     throw new Error(
-      "json-variables/jsonVariables(): [THROW_ID_08] Alas! opts.dataContainerIdentifierTails is empty!"
+      "json-variables/jVar(): [THROW_ID_08] Alas! opts.dataContainerIdentifierTails is empty!"
     );
   }
   if (opts.heads === opts.tails) {
     throw new Error(
-      "json-variables/jsonVariables(): [THROW_ID_09] Alas! opts.heads and opts.tails can't be equal!"
+      "json-variables/jVar(): [THROW_ID_09] Alas! opts.heads and opts.tails can't be equal!"
     );
   }
   if (opts.heads === opts.headsNoWrap) {
     throw new Error(
-      "json-variables/jsonVariables(): [THROW_ID_10] Alas! opts.heads and opts.headsNoWrap can't be equal!"
+      "json-variables/jVar(): [THROW_ID_10] Alas! opts.heads and opts.headsNoWrap can't be equal!"
     );
   }
   if (opts.tails === opts.tailsNoWrap) {
     throw new Error(
-      "json-variables/jsonVariables(): [THROW_ID_11] Alas! opts.tails and opts.tailsNoWrap can't be equal!"
+      "json-variables/jVar(): [THROW_ID_11] Alas! opts.tails and opts.tailsNoWrap can't be equal!"
     );
   }
   if (opts.headsNoWrap === "") {
     throw new Error(
-      "json-variables/jsonVariables(): [THROW_ID_12] Alas! opts.headsNoWrap is an empty string!"
+      "json-variables/jVar(): [THROW_ID_12] Alas! opts.headsNoWrap is an empty string!"
     );
   }
   if (opts.tailsNoWrap === "") {
     throw new Error(
-      "json-variables/jsonVariables(): [THROW_ID_13] Alas! opts.tailsNoWrap is an empty string!"
+      "json-variables/jVar(): [THROW_ID_13] Alas! opts.tailsNoWrap is an empty string!"
     );
   }
   if (opts.headsNoWrap === opts.tailsNoWrap) {
     throw new Error(
-      "json-variables/jsonVariables(): [THROW_ID_14] Alas! opts.headsNoWrap and opts.tailsNoWrap can't be equal!"
+      "json-variables/jVar(): [THROW_ID_14] Alas! opts.headsNoWrap and opts.tailsNoWrap can't be equal!"
     );
   }
 
@@ -901,7 +944,7 @@ function jsonVariables(input, originalOpts = {}) {
     console.log("\n========================================");
     if (existy(val) && containsHeadsOrTails(key, opts)) {
       throw new Error(
-        `json-variables/jsonVariables(): [THROW_ID_15] Alas! Object keys can't contain variables!\nPlease check the following key: ${key}`
+        `json-variables/jVar(): [THROW_ID_15] Alas! Object keys can't contain variables!\nPlease check the following key: ${key}`
       );
     }
     // * * *
@@ -945,7 +988,7 @@ function jsonVariables(input, originalOpts = {}) {
         return current;
       }
       throw new Error(
-        `json-variables/jsonVariables(): [THROW_ID_16] Alas! While processing the input, we stumbled upon ${trimIfString(
+        `json-variables/jVar(): [THROW_ID_16] Alas! While processing the input, we stumbled upon ${trimIfString(
           current
         )} which is equal to ${
           trimIfString(current) === trimIfString(opts.heads) ? "heads" : ""
@@ -983,4 +1026,4 @@ function jsonVariables(input, originalOpts = {}) {
   });
 }
 
-export default jsonVariables;
+export { jVar, defaults, version };

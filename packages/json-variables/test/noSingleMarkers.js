@@ -1,17 +1,17 @@
 /* eslint no-template-curly-in-string: 0 */
 
 import tap from "tap";
-import jv from "../dist/json-variables.esm";
+import { jVar } from "../dist/json-variables.esm";
 
 tap.test("01 - UTIL > single markers in the values", (t) => {
   t.doesNotThrow(() => {
-    jv({
+    jVar({
       a: "z",
       b: "%%_",
     });
   }, "01.01");
   t.doesNotThrow(() => {
-    jv(
+    jVar(
       {
         a: "z",
         b: "%%_",
@@ -23,7 +23,7 @@ tap.test("01 - UTIL > single markers in the values", (t) => {
   }, "01.02");
 
   const err1 = t.throws(() => {
-    jv(
+    jVar(
       {
         a: "z",
         b: "%%_",
@@ -36,13 +36,13 @@ tap.test("01 - UTIL > single markers in the values", (t) => {
   t.match(err1.message, /THROW_ID_16/, "01.03");
 
   t.doesNotThrow(() => {
-    jv({
+    jVar({
       a: "z",
       b: "%%-",
     });
   }, "01.04");
   t.doesNotThrow(() => {
-    jv(
+    jVar(
       {
         a: "z",
         b: "%%-",
@@ -54,7 +54,7 @@ tap.test("01 - UTIL > single markers in the values", (t) => {
   }, "01.05");
 
   const err2 = t.throws(() => {
-    jv(
+    jVar(
       {
         a: "z",
         b: "%%-",

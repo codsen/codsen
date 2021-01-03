@@ -1,11 +1,11 @@
 /* eslint no-template-curly-in-string: 0 */
 
 import tap from "tap";
-import jv from "../dist/json-variables.esm";
+import { jVar } from "../dist/json-variables.esm";
 
 tap.test("01 - two variables in an object's key", (t) => {
   t.strictSame(
-    jv({
+    jVar({
       a: "some text %%_var1_%% more text %%_var2_%%",
       b: "something",
       var1: "value1",
@@ -24,7 +24,7 @@ tap.test("01 - two variables in an object's key", (t) => {
 
 tap.test("02 - two variables with paths in an object's key", (t) => {
   t.strictSame(
-    jv({
+    jVar({
       a: "some text %%_var1.key1.0_%% more text %%_var2.key2.key3.1_%%",
       b: "something",
       var1: { key1: ["value1"] },
@@ -43,7 +43,7 @@ tap.test("02 - two variables with paths in an object's key", (t) => {
 
 tap.test("03 - two variables, with wrapping", (t) => {
   t.strictSame(
-    jv(
+    jVar(
       {
         a: "some text %%_var1_%% more text %%_var2_%%",
         b: "something",
@@ -68,7 +68,7 @@ tap.test("03 - two variables, with wrapping", (t) => {
 
 tap.test("04 - variables with paths being wrapped", (t) => {
   t.strictSame(
-    jv(
+    jVar(
       {
         a: "some text %%_var1.key1_%% more text %%_var2.key2_%%",
         b: "something",
@@ -93,7 +93,7 @@ tap.test("04 - variables with paths being wrapped", (t) => {
 
 tap.test("05 - custom heads and tails", (t) => {
   t.strictSame(
-    jv(
+    jVar(
       {
         a: "some text {var1} more text {var2}",
         b: "something",
@@ -118,7 +118,7 @@ tap.test("05 - custom heads and tails", (t) => {
 
 tap.test("06 - custom heads and tails being wrapped", (t) => {
   t.strictSame(
-    jv(
+    jVar(
       {
         a: "some text {var1.key1} more text {var2.key2}",
         b: "something",
@@ -143,7 +143,7 @@ tap.test("06 - custom heads and tails being wrapped", (t) => {
 
 tap.test("07 - whitespace within custom heads and tails", (t) => {
   t.strictSame(
-    jv(
+    jVar(
       {
         a: "some text {  var1  } more text {  var2  }",
         b: "something",
@@ -170,7 +170,7 @@ tap.test(
   "08 - whitespace within variables containing paths and custom heads/tails",
   (t) => {
     t.strictSame(
-      jv(
+      jVar(
         {
           a: "some text {  var1.key1  } more text {  var2.key2  }",
           b: "something",
@@ -196,7 +196,7 @@ tap.test(
 
 tap.test("09 - some values are equal to heads or tails", (t) => {
   t.strictSame(
-    jv({
+    jVar({
       a: "some text %%_var1_%% more text %%_var2_%%",
       b: "something",
       var1: "value1",
@@ -221,7 +221,7 @@ tap.test("09 - some values are equal to heads or tails", (t) => {
 
 tap.test("10 - opts.noSingleMarkers - off", (t) => {
   t.strictSame(
-    jv(
+    jVar(
       {
         a: "some text %%_var1_%% more text %%_var2_%%",
         b: "something",
@@ -251,7 +251,7 @@ tap.test("10 - opts.noSingleMarkers - off", (t) => {
 
 tap.test("11 - opts.noSingleMarkers - on", (t) => {
   const err1 = t.throws(() => {
-    jv(
+    jVar(
       {
         a: "some text %%_var1_%% more text %%_var2_%%",
         b: "something",
@@ -272,7 +272,7 @@ tap.test("11 - opts.noSingleMarkers - on", (t) => {
 
 tap.test("12 - opts.noSingleMarkers - off - more throw tests", (t) => {
   const err1 = t.throws(() => {
-    jv(
+    jVar(
       {
         a: "some text %%_var1_%% more text %%_var2_%%",
         b: "something",
@@ -293,7 +293,7 @@ tap.test(
   "13 - custom heads/tails, values equal to them are present in data",
   (t) => {
     t.strictSame(
-      jv(
+      jVar(
         {
           a: "some text {var1} more text {var2}",
           b: "something",
@@ -325,7 +325,7 @@ tap.test(
 
 tap.test("14 - custom heads/tails - noSingleMarkers = false", (t) => {
   t.strictSame(
-    jv(
+    jVar(
       {
         a: "some text {var1} more text {var2}",
         b: "something",
@@ -357,7 +357,7 @@ tap.test("14 - custom heads/tails - noSingleMarkers = false", (t) => {
 
 tap.test("15 - value in an array", (t) => {
   t.strictSame(
-    jv({
+    jVar({
       z: {
         a: ["some text %%_var1_%% more text %%_var2_%%"],
         b: "something",
@@ -380,7 +380,7 @@ tap.test("15 - value in an array", (t) => {
 
 tap.test("16 - data stores #1", (t) => {
   t.strictSame(
-    jv({
+    jVar({
       a: "some text %%_var1_%% more text %%_var3_%%.",
       b: "something",
       a_data: {
@@ -399,7 +399,7 @@ tap.test("16 - data stores #1", (t) => {
     "16.01"
   );
   t.strictSame(
-    jv(
+    jVar(
       {
         a: "some text %%_var1_%% more text %%_var3_%%.",
         b: "something",
@@ -421,7 +421,7 @@ tap.test("16 - data stores #1", (t) => {
     "16.02"
   );
   t.strictSame(
-    jv({
+    jVar({
       a: "some text %%_var1.key1_%% more text %%_var3.key3_%%.",
       b: "something",
       a_data: {
@@ -440,7 +440,7 @@ tap.test("16 - data stores #1", (t) => {
     "16.03 - data stash and multi-level, all default"
   );
   t.strictSame(
-    jv(
+    jVar(
       {
         a: "some text %%_var1.key1_%% more text %%_var3.key3_%%.",
         b: "something",
@@ -466,7 +466,7 @@ tap.test("16 - data stores #1", (t) => {
 
 tap.test("17 - top-level key and data stash clash", (t) => {
   t.strictSame(
-    jv({
+    jVar({
       a: "some text %%_var1_%% more text %%_var3_%%.",
       b: "something",
       var1: "value2",
@@ -487,7 +487,7 @@ tap.test("17 - top-level key and data stash clash", (t) => {
     "17.01 - default, no wrap"
   );
   t.strictSame(
-    jv(
+    jVar(
       {
         a: "some text %%_var1_%% more text %%_var3_%%.",
         b: "something",
@@ -511,7 +511,7 @@ tap.test("17 - top-level key and data stash clash", (t) => {
     "17.02 - wrap"
   );
   t.strictSame(
-    jv({
+    jVar({
       a: "some text %%_var1.key1_%% more text %%_var3.key3_%%.",
       b: "something",
       var1: "value2",
@@ -532,7 +532,7 @@ tap.test("17 - top-level key and data stash clash", (t) => {
     "17.03 - root key would take precedence, but it's of a wrong format and therefore algorithm chooses data storage instead (which is correct type)"
   );
   t.strictSame(
-    jv({
+    jVar({
       a: "some text %%_var1_%% more text %%_var3.key3_%%.",
       b: "something",
       var1: "value2",
@@ -557,7 +557,7 @@ tap.test("17 - top-level key and data stash clash", (t) => {
 
 tap.test("18 - emoji in values", (t) => {
   t.strictSame(
-    jv({
+    jVar({
       a: "some🦄 text %%_var1_%% more text %%_var2_%%.",
       b: "something",
       var1: "value1",
@@ -580,7 +580,7 @@ tap.test("18 - emoji in values", (t) => {
 
 tap.test("19 - emoji in keys", (t) => {
   t.strictSame(
-    jv({
+    jVar({
       a: "some🦄 text %%_var🐴_%% more text %%_var2_%%.",
       b: "something",
       "var🐴": "value1",
@@ -603,7 +603,7 @@ tap.test("19 - emoji in keys", (t) => {
 
 tap.test("20 - emoji in variable keys", (t) => {
   t.strictSame(
-    jv({
+    jVar({
       a: "some🦄 text %%_var🐴_%% more text %%_var2_%%.",
       b: "something",
       "var🐴": "value1💘",
@@ -626,7 +626,7 @@ tap.test("20 - emoji in variable keys", (t) => {
 
 tap.test("21 - empty strings in the input AST", (t) => {
   t.strictSame(
-    jv({
+    jVar({
       a: "some text %%_var1_%% more text %%_var2_%%",
       b: "something",
       c: "",
@@ -647,7 +647,7 @@ tap.test("21 - empty strings in the input AST", (t) => {
 
 tap.test("22 - fetching variables from parent node's level", (t) => {
   t.strictSame(
-    jv({
+    jVar({
       a: {
         b: {
           c: {
@@ -687,7 +687,7 @@ tap.test("23 - fetching variables from two levels above", (t) => {
     },
   };
   t.strictSame(
-    jv(input),
+    jVar(input),
     {
       a: {
         b: {
@@ -733,7 +733,7 @@ tap.test("24 - fetching variables from root, three levels above", (t) => {
     var2: "yyy",
   };
   t.strictSame(
-    jv(input),
+    jVar(input),
     {
       a: {
         b: {
@@ -768,7 +768,7 @@ tap.test("24 - fetching variables from root, three levels above", (t) => {
 
 tap.test("25 - fetching variables from parent node's level data store", (t) => {
   t.strictSame(
-    jv({
+    jVar({
       a: {
         b: {
           c: {
@@ -801,7 +801,7 @@ tap.test("25 - fetching variables from parent node's level data store", (t) => {
 
 tap.test("26 - fetching variables from data store two levels above", (t) => {
   t.strictSame(
-    jv({
+    jVar({
       a: {
         b: {
           c: {
@@ -834,7 +834,7 @@ tap.test("26 - fetching variables from data store two levels above", (t) => {
 
 tap.test("27 - fetching variables from data store as high as the root", (t) => {
   t.strictSame(
-    jv({
+    jVar({
       a: {
         b: {
           c: {
@@ -869,7 +869,7 @@ tap.test("27 - fetching variables from data store as high as the root", (t) => {
 // parent keys in the path to make keys unique
 tap.test("28 - three level references", (t) => {
   t.strictSame(
-    jv({
+    jVar({
       aaa: {
         bbb: {
           ccc: "some text %%_ddd_%%",
@@ -910,7 +910,7 @@ tap.test("28 - three level references", (t) => {
 
 tap.test("29 - resolves to a string", (t) => {
   t.strictSame(
-    jv({
+    jVar({
       a: "%%_b_%%",
       b: 1,
     }),
@@ -922,7 +922,7 @@ tap.test("29 - resolves to a string", (t) => {
   );
 
   t.strictSame(
-    jv({
+    jVar({
       a: "%%_b_%%",
       a_data: {
         b: 1,
