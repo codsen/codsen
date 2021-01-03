@@ -7,11 +7,13 @@
  * Homepage: https://codsen.com/os/ast-monkey-traverse/
  */
 
-import clone from 'lodash.clone';
+import clone from 'lodash.clonedeep';
 import isObj from 'lodash.isplainobject';
 import { parent } from 'ast-monkey-util';
 
 var version = "1.13.1";
+
+/* eslint @typescript-eslint/explicit-module-boundary-types:0 */
 
 function traverse(tree1, cb1) {
   const stop2 = {

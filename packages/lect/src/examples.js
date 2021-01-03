@@ -76,18 +76,20 @@ async function examples({ state }) {
     return Promise.resolve(null);
   }
 
-  try {
-    await writeFileAtomic(
-      "./examples/api.json",
-      JSON.stringify(examplesContents, null, 0)
-    );
-    // console.log(`lect api.json ${`\u001b[${32}m${`OK`}\u001b[${39}m`}`);
-    // happy path end - return all examples - readme will
-    // need to show the Quick Take section with the primary example
-    return Promise.resolve(examplesContents);
-  } catch (err) {
-    console.log(`lect: could not write examples api.json - ${err}`);
-    return Promise.reject(err);
+  if (examplesContents) {
+    try {
+      await writeFileAtomic(
+        "./examples/api.json",
+        JSON.stringify(examplesContents, null, 0)
+      );
+      // console.log(`lect api.json ${`\u001b[${32}m${`OK`}\u001b[${39}m`}`);
+      // happy path end - return all examples - readme will
+      // need to show the Quick Take section with the primary example
+      return Promise.resolve(examplesContents);
+    } catch (err) {
+      console.log(`lect: could not write examples api.json - ${err}`);
+      return Promise.reject(err);
+    }
   }
 }
 

@@ -6,7 +6,7 @@ import { arrayiffy } from "arrayiffy-if-string";
 import objectPath from "object-path";
 import matcher from "matcher";
 
-interface UnknownValueObj {
+interface Obj {
   [key: string]: any;
 }
 
@@ -16,7 +16,7 @@ interface Opts {
   acceptArrays?: boolean;
   acceptArraysIgnore?: string | string[];
   enforceStrictKeyset?: boolean;
-  schema?: UnknownValueObj;
+  schema?: Obj;
   msg?: string;
   optsVarName?: string;
 }
@@ -33,11 +33,7 @@ const defaults: Opts = {
 };
 
 // fourth input argument is shielded from an external API:
-function internalApi(
-  obj: UnknownValueObj,
-  ref: UnknownValueObj,
-  originalOptions?: Opts
-) {
+function internalApi(obj: Obj, ref: Obj | null, originalOptions?: Opts) {
   //
   // Functions
   // =========
@@ -140,27 +136,24 @@ function internalApi(
     //     option2: "whatever"
     //   }
     // }
-    Object.keys(opts.schema as UnknownValueObj).forEach((oneKey) => {
-      if (isObj((opts.schema as UnknownValueObj)[oneKey])) {
+    Object.keys(opts.schema as Obj).forEach((oneKey) => {
+      if (isObj((opts.schema as Obj)[oneKey])) {
         // 1. extract all unique AST branches leading to their tips
-        const tempObj: UnknownValueObj = {};
-        traverse(
-          (opts.schema as UnknownValueObj)[oneKey],
-          (key, val, innerObj) => {
-            const current = val !== undefined ? val : key;
-            console.log(
-              `147 ${`\u001b[${33}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
-                current,
-                null,
-                4
-              )} at ${innerObj.path}`
-            );
-            if (!Array.isArray(current) && !isObj(current)) {
-              tempObj[`${oneKey}.${innerObj.path}`] = current;
-            }
-            return current;
+        const tempObj: Obj = {};
+        traverse((opts.schema as Obj)[oneKey], (key, val, innerObj) => {
+          const current = val !== undefined ? val : key;
+          console.log(
+            `147 ${`\u001b[${33}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
+              current,
+              null,
+              4
+            )} at ${innerObj.path}`
+          );
+          if (!Array.isArray(current) && !isObj(current)) {
+            tempObj[`${oneKey}.${innerObj.path}`] = current;
           }
-        );
+          return current;
+        });
 
         console.log(
           `160 FINAL ${`\u001b[${33}m${`tempObj`}\u001b[${39}m`} = ${JSON.stringify(
@@ -171,7 +164,7 @@ function internalApi(
         );
 
         // 2. delete that key which leads to object:
-        delete (opts.schema as UnknownValueObj)[oneKey];
+        delete (opts.schema as Obj)[oneKey];
 
         // 3. merge in all paths-as-keys into schema opts object:
         opts.schema = { ...opts.schema, ...tempObj };
@@ -193,18 +186,14 @@ function internalApi(
     //
 
     // 2. arrayiffy
-    Object.keys(opts.schema as UnknownValueObj).forEach((oneKey) => {
-      if (!Array.isArray((opts.schema as UnknownValueObj)[oneKey])) {
-        (opts.schema as UnknownValueObj)[oneKey] = [
-          (opts.schema as UnknownValueObj)[oneKey],
-        ];
+    Object.keys(opts.schema as Obj).forEach((oneKey) => {
+      if (!Array.isArray((opts.schema as Obj)[oneKey])) {
+        (opts.schema as Obj)[oneKey] = [(opts.schema as Obj)[oneKey]];
       }
       // then turn all keys into strings and trim and lowercase them:
-      (opts.schema as UnknownValueObj)[
+      (opts.schema as Obj)[oneKey] = (opts.schema as Obj)[
         oneKey
-      ] = (opts.schema as UnknownValueObj)[oneKey].map((el: any) =>
-        `${el}`.toLowerCase().trim()
-      );
+      ].map((el: any) => `${el}`.toLowerCase().trim());
     });
   } else if (opts.schema != null) {
     throw new Error(
@@ -243,15 +232,13 @@ function internalApi(
     console.log(
       `240 so \u001b[${31}m${`opts.enforceStrictKeyset is ON`}\u001b[${39}m`
     );
-    if (
-      existy(opts.schema) &&
-      Object.keys(opts.schema as UnknownValueObj).length > 0
-    ) {
+    if (existy(opts.schema) && Object.keys(opts.schema as Obj).length > 0) {
       if (
+        ref &&
         pullAllWithGlob(
           pullAll(
             Object.keys(obj),
-            Object.keys(ref).concat(Object.keys(opts.schema as UnknownValueObj))
+            Object.keys(ref).concat(Object.keys(opts.schema as Obj))
           ),
           opts.ignoreKeys as string[]
         ).length
@@ -259,7 +246,7 @@ function internalApi(
         console.log("271");
         const keys = pullAll(
           Object.keys(obj),
-          Object.keys(ref).concat(Object.keys(opts.schema as UnknownValueObj))
+          Object.keys(ref).concat(Object.keys(opts.schema as Obj))
         );
         throw new TypeError(
           `${opts.msg}: ${
@@ -271,14 +258,14 @@ function internalApi(
           } not covered by schema and/or reference objects: ${keys.join(", ")}`
         );
       }
-    } else if (existy(ref) && Object.keys(ref).length > 0) {
+    } else if (isObj(ref) && Object.keys(ref as Obj).length > 0) {
       if (
         pullAllWithGlob(
-          pullAll(Object.keys(obj), Object.keys(ref)),
+          pullAll(Object.keys(obj), Object.keys(ref as Obj)),
           opts.ignoreKeys as string[]
         ).length !== 0
       ) {
-        const keys = pullAll(Object.keys(obj), Object.keys(ref));
+        const keys = pullAll(Object.keys(obj), Object.keys(ref as Obj));
         throw new TypeError(
           `${opts.msg}: The input object has key${
             keys.length > 1 ? "s" : ""
@@ -288,11 +275,11 @@ function internalApi(
         );
       } else if (
         pullAllWithGlob(
-          pullAll(Object.keys(ref), Object.keys(obj)),
+          pullAll(Object.keys(ref as Obj), Object.keys(obj)),
           opts.ignoreKeys as string[]
         ).length !== 0
       ) {
-        const keys = pullAll(Object.keys(ref), Object.keys(obj));
+        const keys = pullAll(Object.keys(ref as Obj), Object.keys(obj));
         throw new TypeError(
           `${opts.msg}: The reference object has key${
             keys.length > 1 ? "s" : ""
@@ -521,7 +508,7 @@ function internalApi(
     );
 
     let refHasThisPathDefined = false;
-    if (isObj(ref) && objectPath.has(ref, innerObj.path)) {
+    if (isObj(ref) && objectPath.has(ref as Obj, innerObj.path)) {
       refHasThisPathDefined = true;
     }
     console.log(
@@ -580,13 +567,13 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
       // be raw null/undefined, which would be arrayified and turned into string.
       console.log(
         `592 ${`\u001b[${33}m${`objectPath.get(opts.schema, innerObj.path)`}\u001b[${39}m`} = ${JSON.stringify(
-          objectPath.get(opts.schema as UnknownValueObj, innerObj.path),
+          objectPath.get(opts.schema as Obj, innerObj.path),
           null,
           4
         )}`
       );
       const currentKeysSchema = arrayiffy(
-        (opts.schema as UnknownValueObj)[innerObj.path]
+        (opts.schema as Obj)[innerObj.path]
       ).map((el: any) => `${el}`.toLowerCase());
       console.log(
         `602 ${`\u001b[${33}m${`currentKeysSchema`}\u001b[${39}m`} = ${JSON.stringify(
@@ -596,11 +583,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
         )}`
       );
 
-      objectPath.set(
-        opts.schema as UnknownValueObj,
-        innerObj.path,
-        currentKeysSchema
-      );
+      objectPath.set(opts.schema as Obj, innerObj.path, currentKeysSchema);
 
       // step 2. First check does our schema contain any blanket names, "any", "whatever" etc.
       if (!intersection(currentKeysSchema, NAMESFORANYTYPE).length) {
@@ -686,7 +669,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
           )}`
         );
       }
-    } else if (refHasThisPathDefined) {
+    } else if (ref && isObj(ref) && refHasThisPathDefined) {
       console.log(
         `\u001b[${31}m${`696 II. matching against ref.`}\u001b[${39}m`
       );
@@ -713,7 +696,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
       ) {
         console.log("720 2-1: check accept arrays");
         const allMatch = current.every(
-          (el) => typ(el).toLowerCase() === typ(ref[key]).toLowerCase()
+          (el) => typ(el).toLowerCase() === typ((ref as Obj)[key]).toLowerCase()
         );
         if (!allMatch) {
           throw new TypeError(
@@ -753,8 +736,8 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
 }
 
 function checkTypesMini(
-  obj: UnknownValueObj,
-  ref: UnknownValueObj,
+  obj: Obj,
+  ref: Obj | null,
   originalOptions?: Opts
 ): void {
   return internalApi(obj, ref, originalOptions);

@@ -1,5 +1,3 @@
-/* eslint import/extensions:0, import/no-extraneous-dependencies:0 */
-
 // Compatible With `object-path`
 
 import { strict as assert } from "assert";

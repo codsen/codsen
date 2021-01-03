@@ -1,5 +1,3 @@
-/* eslint import/extensions:0 */
-
 // Stop
 
 import { strict as assert } from "assert";

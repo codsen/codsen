@@ -4,15 +4,11 @@ const { statSync } = require("fs");
 const objectPath = require("object-path");
 const partition = require("lodash.partition");
 // const isEqual = require("lodash.isequal");
-const pull1 = require("array-pull-all-with-glob");
+const { pull } = require("array-pull-all-with-glob");
 // const { red, grey, yellow, green } = require("colorette");
 const writeFileAtomic = require("write-file-atomic");
 // const inquirer = require("inquirer");
 // const mergeAdvanced = require("object-merge-advanced");
-
-function pull(arg1, arg2) {
-  return pull1(arg1, arg2, { caseSensitive: false });
-}
 
 // writes .npmignore
 async function npmIgnore({ lectrc }) {
@@ -111,15 +107,21 @@ async function npmIgnore({ lectrc }) {
   let filesList = [];
   let foldersList = [];
   for (let i = files.length; i--; ) {
-    if (statSync(files[i]).isDirectory()) {
-      foldersList.push(files[i]);
-    } else {
-      filesList.push(files[i]);
+    try {
+      if (statSync(files[i]).isDirectory()) {
+        foldersList.push(files[i]);
+      } else {
+        filesList.push(files[i]);
+      }
+    } catch (e) {
+      //
     }
   }
 
-  foldersList = pull(foldersList, npmWillTakeCareOfThese);
-  filesList = pull(filesList, npmWillTakeCareOfThese);
+  foldersList = pull(foldersList, npmWillTakeCareOfThese, {
+    caseSensitive: false,
+  });
+  filesList = pull(filesList, npmWillTakeCareOfThese, { caseSensitive: false });
 
   // F O L D E R S   F I R S T
 
@@ -128,7 +130,9 @@ async function npmIgnore({ lectrc }) {
   [badFolders, unclearFolders] = partition(foldersList, (foldersName) =>
     get("npmignore.badFolders").includes(foldersName)
   );
-  unclearFolders = pull(unclearFolders, get("npmignore.goodFolders"));
+  unclearFolders = pull(unclearFolders, get("npmignore.goodFolders"), {
+    caseSensitive: false,
+  });
   // let foldersToAddToGlobalList = [];
 
   if (Array.isArray(unclearFolders) && unclearFolders.length > 0) {
@@ -156,7 +160,9 @@ async function npmIgnore({ lectrc }) {
   [badFiles, unclearFiles] = partition(filesList, (filesName) =>
     get("npmignore.badFiles").includes(filesName)
   );
-  unclearFiles = pull(unclearFiles, get("npmignore.goodFiles"));
+  unclearFiles = pull(unclearFiles, get("npmignore.goodFiles"), {
+    caseSensitive: false,
+  });
   // let filesToAddToGlobalList = [];
 
   if (Array.isArray(unclearFiles) && unclearFiles.length) {

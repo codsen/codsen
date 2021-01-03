@@ -1,4 +1,6 @@
-import clone from "lodash.clone";
+/* eslint @typescript-eslint/explicit-module-boundary-types:0 */
+
+import clone from "lodash.clonedeep";
 import isObj from "lodash.isplainobject";
 import { parent } from "ast-monkey-util";
 import { version } from "../package.json";
@@ -8,17 +10,17 @@ interface Stop {
 }
 
 interface InnerObj {
-  depth?: number;
-  path?: string;
-  topmostKey?: string;
-  parent?: any;
-  parentType?: string;
-  parentKey?: string | null;
+  depth: number;
+  path: string;
+  topmostKey: string;
+  parent: any;
+  parentType: string;
+  parentKey: string | null;
 }
 
 type Callback = (key: string, val: any, innerObj: InnerObj, stop: Stop) => any;
 
-function traverse(tree1: any, cb1: Callback) {
+function traverse(tree1: any, cb1: Callback): any {
   const stop2: Stop = { now: false };
   //
   // traverseInner() needs a wrapper to shield the last two input args from the outside
@@ -26,9 +28,9 @@ function traverse(tree1: any, cb1: Callback) {
   function traverseInner(
     treeOriginal: any,
     callback: Callback,
-    originalInnerObj: InnerObj,
+    originalInnerObj: Partial<InnerObj>,
     stop: Stop
-  ) {
+  ): any {
     console.log(`015 ======= traverseInner() =======`);
     const tree: any = clone(treeOriginal);
 
@@ -66,7 +68,12 @@ function traverse(tree1: any, cb1: Callback) {
           );
           // innerObj.path = `${innerObj.path}[${i}]`
           res = traverseInner(
-            callback(tree[i], undefined, { ...innerObj, path }, stop),
+            callback(
+              tree[i],
+              undefined,
+              { ...innerObj, path } as InnerObj,
+              stop
+            ),
             callback,
             { ...innerObj, path },
             stop
@@ -121,7 +128,7 @@ function traverse(tree1: any, cb1: Callback) {
           )}`
         );
         res = traverseInner(
-          callback(key, tree[key], { ...innerObj, path }, stop),
+          callback(key, tree[key], { ...innerObj, path } as InnerObj, stop),
           callback,
           { ...innerObj, path },
           stop

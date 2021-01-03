@@ -120,9 +120,7 @@ export default (commandLineArgs) => {
     // CommonJS
     {
       input: "src/main.ts",
-      output: [
-        { dir: "./", entryFileNames: pkg.main, format: "cjs", indent: false },
-      ],
+      output: [{ dir: "./", entryFileNames: pkg.main, format: "cjs", indent: false }],
       external: makeExternalPredicate([
         ...Object.keys(pkg.dependencies || {}),
         ...Object.keys(pkg.peerDependencies || {}),

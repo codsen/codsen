@@ -399,7 +399,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
         }
 
         if (mode[5] === "L") {
-          return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
+          return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex) || false;
         } // ELSE matchRight & matchRightIncl
 
 
@@ -407,7 +407,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
           theRemainderOfTheString = str.slice(firstCharOutsideIndex);
         }
 
-        return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
+        return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex) || false;
       }
 
       var extraNote = "";

@@ -55,26 +55,41 @@ const tsconfig = require("./src/tsconfig");
       // For the record, npm ignores are being updated in lectrc via inquirer.
       state.originalLectrc = { ...lectrc };
 
-      return Promise.all([
-        // write README.md
-        readme({ state, examples: received[0], lectrc }),
-        // write new files
-        hardWrite({ lectrc }),
-        // delete bad files
-        hardDelete({ lectrc }),
-        // write package.json
-        pack({ state, lectrc }),
-        // write .npmignore
-        npmIgnore({ state, lectrc }),
-        // write rollup.config.js
-        rollupConfig({ state }),
-        // write tsconfig.json
-        tsconfig({ state }),
-      ]);
+      // return Promise.all([
+      //   // write README.md
+      //   readme({ state, examples: received[0], lectrc }),
+      //   // write new files
+      //   hardWrite({ lectrc }),
+      //   // delete bad files
+      //   hardDelete({ lectrc }),
+      //   // write package.json
+      //   pack({ state, lectrc }),
+      //   // write .npmignore
+      //   npmIgnore({ state, lectrc }),
+      //   // write rollup.config.js
+      //   rollupConfig({ state }),
+      //   // write tsconfig.json
+      //   tsconfig({ state }),
+      // ]);
+
+      // write README.md
+      readme({ state, examples: received[0], lectrc });
+      // write new files
+      hardWrite({ lectrc });
+      // delete bad files
+      hardDelete({ lectrc });
+      // write package.json
+      pack({ state, lectrc });
+      // write .npmignore
+      npmIgnore({ state, lectrc });
+      // write rollup.config.js
+      rollupConfig({ state });
+      // write tsconfig.json
+      tsconfig({ state });
     })
     .catch((e) => {
       console.log(
-        `077 lect: ${`\u001b[${31}m${`failure`}\u001b[${39}m`}: ${JSON.stringify(
+        `092 lect: ${`\u001b[${31}m${`failure`}\u001b[${39}m`}: ${JSON.stringify(
           Object.keys(e),
           null,
           4

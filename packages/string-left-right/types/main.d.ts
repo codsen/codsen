@@ -1,8 +1,8 @@
 import { version } from "../package.json";
-declare function right(str: string, idx: number): number | null;
+declare function right(str: string, idx: number | null): number | null;
 declare function rightStopAtNewLines(str: string, idx: number): number | null;
 declare function rightStopAtRawNbsp(str: string, idx: number): number | null;
-declare function left(str: string, idx: number): number | null;
+declare function left(str: string, idx: number | null): number | null;
 declare function leftStopAtNewLines(str: string, idx: number): number | null;
 declare function leftStopAtRawNbsp(str: string, idx: number): number | null;
 interface SeqOutput {

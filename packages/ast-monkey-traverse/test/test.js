@@ -285,10 +285,51 @@ tap.test(
     const gathered = [];
     traverse(input, (key1, val1, innerObj) => {
       const current = val1 !== undefined ? val1 : key1;
-      gathered.push(innerObj.path);
+      gathered.push(innerObj);
       return current;
     });
-    t.strictSame(gathered, ["a", "b", "b.c"], "09");
+    t.strictSame(
+      gathered,
+      [
+        {
+          depth: 0,
+          path: "a",
+          topmostKey: "a",
+          parent: {
+            a: "1",
+            b: {
+              c: "2",
+            },
+          },
+          parentType: "object",
+          parentKey: null,
+        },
+        {
+          depth: 0,
+          path: "b",
+          topmostKey: "b",
+          parent: {
+            a: "1",
+            b: {
+              c: "2",
+            },
+          },
+          parentType: "object",
+          parentKey: null,
+        },
+        {
+          depth: 1,
+          path: "b.c",
+          topmostKey: "b",
+          parent: {
+            c: "2",
+          },
+          parentType: "object",
+          parentKey: "b",
+        },
+      ],
+      "09"
+    );
     t.end();
   }
 );

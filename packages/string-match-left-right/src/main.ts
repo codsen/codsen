@@ -20,10 +20,10 @@ interface Opts {
     | undefined
     | null
     | ((
-        wholeCharacterOutside: string,
+        wholeCharacterOutside: string | undefined,
         theRemainderOfTheString: string,
         firstCharOutsideIndex: number
-      ) => string);
+      ) => string | boolean);
   i?: boolean;
   trimBeforeMatching?: boolean;
   trimCharsBeforeMatching?: string[];
@@ -562,7 +562,7 @@ function main(
   position: number,
   originalWhatToMatch: (() => string) | string | string[],
   originalOpts?: Opts
-): false | string {
+): boolean | string {
   // insurance
   if (
     isObj(originalOpts) &&
@@ -932,8 +932,8 @@ function matchLeftIncl(
   str: string,
   position: number,
   whatToMatch: (() => string) | string | string[],
-  opts: Opts
-): false | string {
+  opts?: Opts
+): boolean | string {
   return main("matchLeftIncl", str, position, whatToMatch, opts);
 }
 
@@ -941,8 +941,8 @@ function matchLeft(
   str: string,
   position: number,
   whatToMatch: (() => string) | string | string[],
-  opts: Opts
-): false | string {
+  opts?: Opts
+): boolean | string {
   return main("matchLeft", str, position, whatToMatch, opts);
 }
 
@@ -950,8 +950,8 @@ function matchRightIncl(
   str: string,
   position: number,
   whatToMatch: (() => string) | string | string[],
-  opts: Opts
-): false | string {
+  opts?: Opts
+): boolean | string {
   return main("matchRightIncl", str, position, whatToMatch, opts);
 }
 
@@ -959,8 +959,8 @@ function matchRight(
   str: string,
   position: number,
   whatToMatch: (() => string) | string | string[],
-  opts: Opts
-): false | string {
+  opts?: Opts
+): boolean | string {
   return main("matchRight", str, position, whatToMatch, opts);
 }
 

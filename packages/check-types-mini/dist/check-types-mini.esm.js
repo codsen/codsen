@@ -163,11 +163,11 @@ function internalApi(obj, ref, originalOptions) {
   if (opts.enforceStrictKeyset) {
 
     if (existy(opts.schema) && Object.keys(opts.schema).length > 0) {
-      if (pullAllWithGlob(pullAll(Object.keys(obj), Object.keys(ref).concat(Object.keys(opts.schema))), opts.ignoreKeys).length) {
+      if (ref && pullAllWithGlob(pullAll(Object.keys(obj), Object.keys(ref).concat(Object.keys(opts.schema))), opts.ignoreKeys).length) {
         const keys = pullAll(Object.keys(obj), Object.keys(ref).concat(Object.keys(opts.schema)));
         throw new TypeError(`${opts.msg}: ${opts.optsVarName}.enforceStrictKeyset is on and the following key${keys.length > 1 ? "s" : ""} ${keys.length > 1 ? "are" : "is"} not covered by schema and/or reference objects: ${keys.join(", ")}`);
       }
-    } else if (existy(ref) && Object.keys(ref).length > 0) {
+    } else if (isObj(ref) && Object.keys(ref).length > 0) {
       if (pullAllWithGlob(pullAll(Object.keys(obj), Object.keys(ref)), opts.ignoreKeys).length !== 0) {
         const keys = pullAll(Object.keys(obj), Object.keys(ref));
         throw new TypeError(`${opts.msg}: The input object has key${keys.length > 1 ? "s" : ""} which ${keys.length > 1 ? "are" : "is"} not covered by the reference object: ${keys.join(", ")}`);
@@ -287,7 +287,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
       } else {
         ignoredPathsArr.push(innerObj.path);
       }
-    } else if (refHasThisPathDefined) {
+    } else if (ref && isObj(ref) && refHasThisPathDefined) {
       const compareTo = objectPath.get(ref, innerObj.path);
 
       if (opts.acceptArrays && Array.isArray(current) && !opts.acceptArraysIgnore.includes(key)) {

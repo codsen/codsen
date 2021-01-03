@@ -14,6 +14,12 @@ interface InternalOpts {
   index?: number;
   mode: "find" | "get" | "set" | "drop" | "del" | "arrayFirstOnly";
 }
+interface Finding {
+  index: number;
+  key: string;
+  val: any;
+  path: number[];
+}
 function existy(x: any): boolean {
   return x != null;
 }
@@ -56,12 +62,6 @@ function monkey(originalInput: JsonValue, originalOpts: InternalOpts) {
   }
   const data: Data = { count: 0, gatherPath: [], finding: null };
 
-  interface Finding {
-    index: number;
-    key: string;
-    val: any;
-    path: number[];
-  }
   const findings: Finding[] = [];
 
   let ko = false; // key only
@@ -153,7 +153,7 @@ function monkey(originalInput: JsonValue, originalOpts: InternalOpts) {
     return data.finding;
   }
   if (opts.mode === "find") {
-    return findings.length > 0 ? findings : null;
+    return findings;
   }
   return input;
 }
@@ -164,9 +164,9 @@ function monkey(originalInput: JsonValue, originalOpts: InternalOpts) {
 interface FindOpts {
   key: null | string;
   val: any;
-  only: undefined | null | "any" | "array" | "object";
+  only?: undefined | null | "any" | "array" | "object";
 }
-function find(input: JsonValue, originalOpts: FindOpts): null | number[] {
+function find(input: JsonValue, originalOpts: FindOpts): Finding[] {
   if (!existy(input)) {
     throw new Error(
       "ast-monkey/main.js/find(): [THROW_ID_02] Please provide the input"
@@ -201,10 +201,8 @@ function find(input: JsonValue, originalOpts: FindOpts): null | number[] {
 }
 
 interface GetOpts {
-  key: null | string;
-  val: any;
   index: number; // obligatory for get()
-  only: undefined | null | "any" | "array" | "object";
+  only?: undefined | null | "any" | "array" | "object";
 }
 function get(input: JsonValue, originalOpts: GetOpts): GetOpts {
   if (!existy(input)) {
@@ -239,7 +237,7 @@ interface SetOpts {
   key: null | string;
   val: any;
   index: number; // obligatory for get()
-  only: undefined | null | "any" | "array" | "object";
+  only?: undefined | null | "any" | "array" | "object";
 }
 function set(input: JsonValue, originalOpts: SetOpts): JsonValue {
   if (!existy(input)) {
@@ -285,10 +283,8 @@ function set(input: JsonValue, originalOpts: SetOpts): JsonValue {
 }
 
 interface DropOpts {
-  key: null | string;
-  val: any;
   index: number; // obligatory for get()
-  only: undefined | null | "any" | "array" | "object";
+  only?: undefined | null | "any" | "array" | "object";
 }
 function drop(input: JsonValue, originalOpts: DropOpts): JsonValue {
   if (!existy(input)) {
@@ -320,7 +316,7 @@ function drop(input: JsonValue, originalOpts: DropOpts): JsonValue {
 interface DelOpts {
   key: null | string;
   val: any;
-  only: undefined | null | "any" | "array" | "object";
+  only?: undefined | null | "any" | "array" | "object";
 }
 function del(input: JsonValue, originalOpts: DelOpts): JsonValue {
   if (!existy(input)) {

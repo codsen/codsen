@@ -1,4 +1,4 @@
-/* eslint import/extensions:0 */
+
 
 // Quick Take
 

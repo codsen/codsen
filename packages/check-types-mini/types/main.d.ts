@@ -1,4 +1,4 @@
-interface UnknownValueObj {
+interface Obj {
     [key: string]: any;
 }
 interface Opts {
@@ -7,9 +7,9 @@ interface Opts {
     acceptArrays?: boolean;
     acceptArraysIgnore?: string | string[];
     enforceStrictKeyset?: boolean;
-    schema?: UnknownValueObj;
+    schema?: Obj;
     msg?: string;
     optsVarName?: string;
 }
-declare function checkTypesMini(obj: UnknownValueObj, ref: UnknownValueObj, originalOptions?: Opts): void;
+declare function checkTypesMini(obj: Obj, ref: Obj | null, originalOptions?: Opts): void;
 export { checkTypesMini };

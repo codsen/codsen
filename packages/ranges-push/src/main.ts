@@ -1,4 +1,4 @@
-/* eslint @typescript-eslint/ban-ts-comment:1 */
+/* eslint @typescript-eslint/ban-ts-comment:1, @typescript-eslint/explicit-module-boundary-types: 0, prefer-rest-params: 0 */
 
 import { collWhitespace } from "string-collapse-leading-whitespace";
 import { rMerge } from "ranges-merge";
@@ -73,17 +73,22 @@ class Ranges implements RangesInstance {
 
   // A D D ()
   // ========
+
   add(
-    originalFrom: null | number | Range,
-    originalTo: number,
+    originalFrom: number,
+    originalTo?: number,
     addVal?: undefined | null | string
-  ): void {
+  ): void;
+  add(originalFrom: Range): void;
+  add(originalFrom: () => Range): void;
+  add(originalFrom: null): void;
+  add(originalFrom?: any, originalTo?: any, addVal?: any): void {
     console.log(`\n\n\n${`\u001b[${32}m${`=`.repeat(80)}\u001b[${39}m`}`);
     console.log(
       `059 ${`\u001b[${35}m${`ADD()`}\u001b[${39}m`} called; originalFrom = ${originalFrom}; originalTo = ${originalTo}; addVal = ${addVal}`
     );
 
-    if (!existy(originalFrom) && !existy(originalTo)) {
+    if (originalFrom == null && originalTo == null) {
       // absent ranges are marked as null - instead of array of arrays we can receive a null
       console.log(`072 nothing happens`);
       return;
@@ -302,16 +307,28 @@ class Ranges implements RangesInstance {
   // P U S H  ()  -  A L I A S   F O R   A D D ()
   // ============================================
   push(
-    originalFrom: null | number | Range,
-    originalTo: number,
-    addVal: undefined | null | string
-  ): void {
+    originalFrom: number,
+    originalTo?: number,
+    addVal?: undefined | null | string
+  ): void;
+  push(originalFrom: Range): void;
+  push(originalFrom: () => Range): void;
+  push(originalFrom: null): void;
+  push(originalFrom?: any, originalTo?: any, addVal?: any): void {
+    // @ts-ignore
     this.add(originalFrom, originalTo, addVal);
   }
 
   // C U R R E N T () - kindof a getter
   // ==================================
-  current(): RangesType {
+  current(): null | RangesType {
+    console.log(
+      `326 ranges-push/current(): ${`\u001b[${33}m${`this.ranges`}\u001b[${39}m`} = ${JSON.stringify(
+        this.ranges,
+        null,
+        4
+      )}`
+    );
     if (this.ranges != null) {
       // beware, merging can return null
       this.ranges = rMerge(this.ranges, {
@@ -329,6 +346,13 @@ class Ranges implements RangesInstance {
           return val;
         });
       }
+      console.log(
+        `350 ranges-push/current(): ${`\u001b[${33}m${`this.ranges`}\u001b[${39}m`} = ${JSON.stringify(
+          this.ranges,
+          null,
+          4
+        )}`
+      );
       return this.ranges;
     }
     return null;

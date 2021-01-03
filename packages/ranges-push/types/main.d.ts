@@ -14,9 +14,15 @@ declare class Ranges implements RangesInstance {
     constructor(originalOpts?: Opts);
     ranges: RangesType;
     opts: Opts;
-    add(originalFrom: null | number | Range, originalTo: number, addVal?: undefined | null | string): void;
-    push(originalFrom: null | number | Range, originalTo: number, addVal: undefined | null | string): void;
-    current(): RangesType;
+    add(originalFrom: number, originalTo?: number, addVal?: undefined | null | string): void;
+    add(originalFrom: Range): void;
+    add(originalFrom: () => Range): void;
+    add(originalFrom: null): void;
+    push(originalFrom: number, originalTo?: number, addVal?: undefined | null | string): void;
+    push(originalFrom: Range): void;
+    push(originalFrom: () => Range): void;
+    push(originalFrom: null): void;
+    current(): null | RangesType;
     wipe(): void;
     replace(givenRanges: RangesType): void;
     last(): Range | null;

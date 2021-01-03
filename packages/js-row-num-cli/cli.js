@@ -11,7 +11,7 @@ const { promisify } = require("util");
 const write = promisify(writeFileAtomic);
 const arrayiffy = require("arrayiffy-if-string");
 
-const fixRowNums = require("js-row-num");
+const { fixRowNums } = require("js-row-num");
 const updateNotifier = require("update-notifier");
 
 function existy(x) {

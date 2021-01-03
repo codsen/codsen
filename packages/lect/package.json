@@ -47,11 +47,6 @@
     "test": "npm run lint && npm run unittest && npm run format",
     "unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md --reporter=terse && npm run clean_cov"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run format && npm test"
-    }
-  },
   "tap": {
     "coverage-report": [
       "json-summary",
@@ -64,32 +59,10 @@
     "timeout": 0
   },
   "lect": {
-    "defaultExported": false,
-    "files": {
-      "delete": [],
-      "write_hard": [
-        {
-          "contents": "",
-          "name": ""
-        }
-      ],
-      "write_soft": [
-        {
-          "contents": "",
-          "name": ""
-        }
-      ]
-    },
     "licence": {
       "extras": [
         ""
       ]
-    },
-    "npmignore": {
-      "badFiles": [],
-      "badFolders": [],
-      "goodFiles": [],
-      "goodFolders": []
     },
     "various": {
       "devDependencies": []
@@ -97,25 +70,28 @@
   },
   "dependencies": {
     "array-pull-all-with-glob": "^4.13.0",
-    "inquirer": "^7.3.3",
     "colorette": "^1.2.1",
+    "inquirer": "^7.3.3",
     "lodash.camelcase": "^4.3.0",
     "lodash.clonedeep": "^4.5.0",
+    "lodash.isequal": "^4.5.0",
     "lodash.isplainobject": "^4.0.6",
     "lodash.partition": "^4.6.0",
-    "lodash.isequal": "^4.5.0",
     "lodash.trim": "^4.5.1",
     "matcher": "^3.0.0",
     "object-merge-advanced": "^10.12.1",
     "object-path": "^0.11.5",
+    "pacote": "^11.1.13",
     "prettier": "^2.2.1",
     "sort-package-json": "^1.48.0",
     "write-file-atomic": "^3.0.3"
   },
   "devDependencies": {
     "eslint": "^7.15.0",
+    "fs-extra": "^9.0.1",
     "lect": "^0.15.1",
     "tap": "^14.11.0",
-    "tempy": "^1.0.0"
+    "tempy": "^1.0.0",
+    "tslib": "^2.0.3"
   }
 }

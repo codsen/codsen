@@ -152,7 +152,7 @@ tap.test(
   }
 );
 
-tap.only(
+tap.test(
   `06 - ${`\u001b[${34}m${`basics`}\u001b[${39}m`} - arrays with objects, opts.skipContainers=on (default)`,
   (t) => {
     const gathered = [];

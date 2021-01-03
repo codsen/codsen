@@ -11,19 +11,19 @@ interface Obj {
 }
 
 interface Opts {
-  from: number;
-  to: number;
+  from?: number;
+  to?: number;
   offset: number;
   leadingWhitespaceOK: boolean;
   trailingWhitespaceOK: boolean;
   oneSpaceAfterCommaOK: boolean;
   innerWhitespaceAllowed: boolean;
-  separator: string;
-  cb: null | ((from: number, to: number) => void);
-  errCb: null | ErrCb;
+  separator?: string;
+  cb?: null | ((from: number, to: number) => void);
+  errCb?: null | ErrCb;
 }
 
-function processCommaSep(str: string, originalOpts?: Opts) {
+function processCommaSep(str: string, originalOpts?: Opts): void {
   console.log(
     `003 processCommaSep: INCOMING ${`\u001b[${33}m${`str`}\u001b[${39}m`}: ${JSON.stringify(
       str,
@@ -98,7 +98,7 @@ function processCommaSep(str: string, originalOpts?: Opts) {
   let lastNonWhitespaceCharAt: number | null = null;
   let fixable = true;
 
-  for (let i = opts.from; i < opts.to; i++) {
+  for (let i = opts.from as number; i < (opts.to as number); i++) {
     console.log(
       `${`\u001b[${36}m${`----------------------------------- str[${i}] = ${JSON.stringify(
         str[i],
@@ -270,7 +270,7 @@ function processCommaSep(str: string, originalOpts?: Opts) {
         (!opts.oneSpaceAfterCommaOK ||
           !(
             str[i].trim() &&
-            i > opts.from + 1 &&
+            i > (opts.from as number) + 1 &&
             str[i - 1] === " " &&
             str[i - 2] === ","
           )) &&

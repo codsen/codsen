@@ -19,14 +19,21 @@ import {
 // opts.convertEntities
 // -----------------------------------------------------------------------------
 
-tap.test(
+tap.only(
   `01 - \u001b[${33}m${`opts.convertEntities`}\u001b[${39}m - four chunks of text - entities, one line string no full stop`,
   (t) => {
-    t.equal(
+    t.match(
       removeWidows(`aaa bbb ccc ddd`, {
         minCharCount: 5,
-      }).res,
-      `aaa bbb ccc${encodedNbspHtml}ddd`,
+      }),
+      {
+        res: `aaa bbb ccc${encodedNbspHtml}ddd`,
+        ranges: [[11, 12, encodedNbspHtml]],
+        whatWasDone: {
+          removeWidows: true,
+          convertEntities: false,
+        },
+      },
       "01"
     );
     t.end();

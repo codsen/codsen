@@ -18,7 +18,7 @@ import { version } from "../package.json";
 // and ref object is:
 //
 // {
-//   foo: true
+//    foo: true
 // }
 //
 // we extract all other boolean keys, calculate array of

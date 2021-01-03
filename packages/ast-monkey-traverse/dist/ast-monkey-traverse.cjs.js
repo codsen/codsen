@@ -12,7 +12,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
-var clone = require('lodash.clone');
+var clone = require('lodash.clonedeep');
 var isObj = require('lodash.isplainobject');
 var astMonkeyUtil = require('ast-monkey-util');
 

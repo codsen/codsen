@@ -13,11 +13,11 @@ import { Ranges } from "../../../scripts/common";
 // does this: [ [2, 5], [1, 6] ] => [ [1, 6], [2, 5] ]
 // sorts first by first element, then by second. Retains possible third element.
 
-type Callback = (percentage: number) => void;
+type ProgressFn = (percentageDone: number) => void;
 
 interface Opts {
   strictlyTwoElementsInRangeArrays?: boolean;
-  progressFn?: undefined | null | Callback;
+  progressFn?: undefined | null | ProgressFn;
 }
 const defaults: Opts = {
   strictlyTwoElementsInRangeArrays: false,

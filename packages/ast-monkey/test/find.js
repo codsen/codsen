@@ -39,11 +39,7 @@ tap.test("01.pt1 - finds by key in a simple object #1", (t) => {
   t.strictSame(find(input, { key: "a" }), intended, "01.02");
 
   // null would mean actual null being there (which is not), so it's not going to find any:
-  t.strictSame(
-    find(input, { key: "a", val: null }),
-    null, // <---- !!!! null means no findings !!!!
-    "01.03"
-  );
+  t.strictSame(find(input, { key: "a", val: null }), [], "01.03");
   t.end();
 });
 
@@ -83,11 +79,7 @@ tap.test("02.pt2 - finds by key in a simple object, with glob", (t) => {
   t.strictSame(find(input, { key: "a*" }), intended, "02.02");
 
   // null would mean actual null being there (which is not), so it's not going to find any:
-  t.strictSame(
-    find(input, { key: "a*", val: null }),
-    null, // <---- !!!! null means no findings !!!!
-    "02.03"
-  );
+  t.strictSame(find(input, { key: "a*", val: null }), [], "02.03");
   t.end();
 });
 
@@ -106,7 +98,7 @@ tap.test("03.pt1 - finds by key in a simple object #2", (t) => {
     },
   ];
   // second arg hardcoded null - won't find any because input has no null's:
-  t.strictSame(find(input, { key: "b", val: null }), null, "03.01");
+  t.strictSame(find(input, { key: "b", val: null }), [], "03.01");
 
   // absence of the second arg:
   t.strictSame(find(input, { key: "b" }), intended, "03.02");
@@ -139,7 +131,7 @@ tap.test("04.pt2 - finds by key in a simple object, with glob", (t) => {
     },
   ];
   // second arg hardcoded null - won't find any because input has no null's:
-  t.strictSame(find(input, { key: "b*", val: null }), null, "04.01");
+  t.strictSame(find(input, { key: "b*", val: null }), [], "04.01");
 
   // absence of the second arg:
   t.strictSame(find(input, { key: "b*" }), intended, "04.02");
@@ -157,7 +149,7 @@ tap.test("05.pt1 - does not find by key in a simple object", (t) => {
   };
   const key = "z";
   const actual = find(input, { key });
-  const intended = null;
+  const intended = [];
 
   t.strictSame(actual, intended, "05");
   t.end();
@@ -171,7 +163,7 @@ tap.test("06.pt2 - does not find by key in a simple object, with glob", (t) => {
   };
   const key = "z*";
   const actual = find(input, { key });
-  const intended = null;
+  const intended = [];
 
   t.strictSame(actual, intended, "06");
   t.end();
@@ -295,7 +287,7 @@ tap.test("13.pt1 - does not find by key in simple arrays", (t) => {
   const input = ["a", [["b"], "c"]];
   const key = "d";
   const actual = find(input, { key });
-  const intended = null;
+  const intended = [];
   t.strictSame(actual, intended, "13");
   t.end();
 });
@@ -304,7 +296,7 @@ tap.test("14.pt2 - does not find by key in simple arrays, with globs", (t) => {
   const input = ["a", [["b"], "c"]];
   const key = "lexicographer*";
   const actual = find(input, { key });
-  const intended = null;
+  const intended = [];
   t.strictSame(actual, intended, "14");
   t.end();
 });
@@ -523,7 +515,7 @@ tap.test(
     // ---------------------------
     t.strictSame(
       find(input, { key: "d", val: null }),
-      null,
+      [],
       "23.01 - Null is a valid value! It's not found in the input!"
     );
     // ---------------------------

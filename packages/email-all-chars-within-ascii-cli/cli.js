@@ -4,7 +4,7 @@
 // -----------------------------------------------------------------------------
 
 const chalk = require("chalk");
-const within = require("email-all-chars-within-ascii");
+const { within } = require("email-all-chars-within-ascii");
 const fs = require("fs-extra");
 const globby = require("globby");
 const inquirer = require("inquirer");

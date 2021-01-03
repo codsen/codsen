@@ -4,23 +4,17 @@
     "node": true
   },
   "extends": [
-    "airbnb/base",
     "eslint:recommended",
     "plugin:prettier/recommended",
-    "plugin:import/errors",
-    "plugin:import/warnings",
-    "plugin:row-num/recommended",
-    "plugin:test-num/recommended"
+    "plugin:@typescript-eslint/recommended"
   ],
-  "parserOptions": {
-    "ecmaVersion": 11,
-    "sourceType": "module"
-  },
-  "plugins": ["row-num", "test-num"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
   "ignorePatterns": [
     "**/eslint-plugin-row-num/rules/utils/**",
     "**/dist/**",
-    "**/tap/**"
+    "**/tap/**",
+    "**/types/**"
   ],
   "rules": {
     "array-callback-return": 0,
@@ -32,7 +26,6 @@
         "checkLoops": false
       }
     ],
-    "import/prefer-default-export": 0,
     "no-bitwise": 0,
     "no-else-return": "error",
     "no-inner-declarations": "error",
@@ -42,34 +35,15 @@
     "no-use-before-define": ["error", { "functions": false }],
     "no-param-reassign": 0,
     "no-plusplus": 0,
-    "import/no-extraneous-dependencies": [
-      "error",
-      {
-        "devDependencies": [
-          "**/rollup.config.js",
-          "**/test/**",
-          "**/t-util/**",
-          "**/*test.js",
-          "**/*.spec.js",
-          "**/perf/**",
-          "scripts/run-perf*.js"
-        ]
-      }
-    ],
     "no-restricted-syntax": 0,
     "no-unneeded-ternary": "error",
     "no-useless-return": "error",
     "no-var": "error",
-    "one-var": [
-      "error",
-      "never"
-    ],
+    "one-var": ["error", "never"],
     "prefer-arrow-callback": "error",
     "prefer-const": "error",
     "prefer-destructuring": 0,
     "prefer-template": "error",
-    "row-num/correct-row-num": "error",
-    "test-num/correct-test-num": "error",
     "strict": "error",
     "symbol-description": "error",
     "yoda": [
@@ -78,6 +52,9 @@
       {
         "exceptRange": true
       }
-    ]
+    ],
+    "@typescript-eslint/no-var-requires": 0,
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/no-empty-function": 0
   }
 }

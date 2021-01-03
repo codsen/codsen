@@ -55,8 +55,8 @@ async function rollupConfig({ state }) {
         terser({
           compress: {
             pure_getters: true,
-            unsafe: true,
-            unsafe_comps: true,
+            unsafe: false,
+            unsafe_comps: false,
             warnings: false,
           },
         }),
@@ -283,8 +283,8 @@ async function rollupConfig({ state }) {
         terser({
           compress: {
             pure_getters: true,
-            unsafe: true,
-            unsafe_comps: true,
+            unsafe: false,
+            unsafe_comps: false,
             warnings: false,
           },
         }),

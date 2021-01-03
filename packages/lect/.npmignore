@@ -1,4 +1,4 @@
-# .... generated using www.npmjs.com/package/lect ....
+# generated using codsen.com/os/lect 
 #
 #
 #       __         ______     ______     ______  
@@ -15,7 +15,7 @@
 coverage
 docs
 media
-reference
+src
 test
 
 # files:

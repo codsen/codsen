@@ -148,7 +148,7 @@ function monkey(originalInput, originalOpts) {
   }
 
   if (opts.mode === "find") {
-    return findings.length > 0 ? findings : null;
+    return findings;
   }
 
   return input;

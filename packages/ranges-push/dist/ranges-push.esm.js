@@ -12,7 +12,7 @@ import { rMerge } from 'ranges-merge';
 
 var version = "4.0.2";
 
-/* eslint @typescript-eslint/ban-ts-comment:1 */
+/* eslint @typescript-eslint/ban-ts-comment:1, @typescript-eslint/explicit-module-boundary-types: 0, prefer-rest-params: 0 */
 
 function existy(x) {
   return x != null;
@@ -52,13 +52,11 @@ class Ranges {
     } // so it's correct, let's get it in:
     this.opts = opts;
     this.ranges = null;
-  } // A D D ()
-  // ========
-
+  }
 
   add(originalFrom, originalTo, addVal) {
 
-    if (!existy(originalFrom) && !existy(originalTo)) {
+    if (originalFrom == null && originalTo == null) {
       // absent ranges are marked as null - instead of array of arrays we can receive a null
       return;
     }
@@ -148,17 +146,17 @@ class Ranges {
         throw new TypeError(`ranges-push/Ranges/add(): [THROW_ID_10] "to" value, the second input argument, must be a natural number or zero! Currently it's of a type "${typeof to}" equal to: ${JSON.stringify(to, null, 4)}`);
       }
     }
-  } // P U S H  ()  -  A L I A S   F O R   A D D ()
-  // ============================================
-
+  }
 
   push(originalFrom, originalTo, addVal) {
+    // @ts-ignore
     this.add(originalFrom, originalTo, addVal);
   } // C U R R E N T () - kindof a getter
   // ==================================
 
 
   current() {
+
     if (this.ranges != null) {
       // beware, merging can return null
       this.ranges = rMerge(this.ranges, {
@@ -174,7 +172,6 @@ class Ranges {
           return val;
         });
       }
-
       return this.ranges;
     }
 

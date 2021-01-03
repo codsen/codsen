@@ -46,7 +46,7 @@
     "devunittest": "npm run dev && ./node_modules/.bin/tap --only -R 'base' && npm run tsd && npm run clean_cov",
     "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",
-    "lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --config \"../../.eslintrc.json\" --quiet",
+    "lint": "../../node_modules/eslint/bin/eslint.js . --ext .js --ext .ts --fix --config \"../../.eslintrc.json\" --quiet",
     "perf": "node perf/check",
     "prepare": "npm run build",
     "prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md,ts}' --write --loglevel silent",
@@ -57,7 +57,7 @@
     "test:examples": "../../scripts/test-examples.js && npm run lect && npm run prettier",
     "tsc": "tsc",
     "tsd": "test ! -f index.d.ts || tsd",
-    "unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md --reporter=terse && npm run tsd && npm run clean_cov && npm run perf",
+    "unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md --reporter=terse && tsc --noEmit && npm run tsd && npm run clean_cov && npm run perf",
     "version": "npm run build && git add ."
   },
   "tap": {
@@ -80,17 +80,16 @@
     "req": "{ traverse }",
     "various": {
       "devDependencies": [
-        "object-path",
+        "@types/lodash.isplainobject",
         "lodash.isequal",
-        "@types/lodash.clone",
-        "@types/lodash.isplainobject"
+        "object-path"
       ]
     }
   },
   "dependencies": {
     "@babel/runtime": "^7.9.2",
     "ast-monkey-util": "^1.2.0",
-    "lodash.clone": "^4.5.0",
+    "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6"
   },
   "devDependencies": {
@@ -113,10 +112,12 @@
     "@rollup/plugin-replace": "^2.3.4",
     "@rollup/plugin-strip": "^2.0.0",
     "@rollup/plugin-typescript": "^8.1.0",
-    "@types/lodash.clone": "^4.5.6",
+    "@types/lodash.clonedeep": "^4.5.6",
     "@types/lodash.isplainobject": "^4.0.6",
     "@types/node": "^13.13.4",
     "@types/tap": "^14.10.1",
+    "@typescript-eslint/eslint-plugin": "^4.11.0",
+    "@typescript-eslint/parser": "^4.11.0",
     "eslint": "^7.15.0",
     "fs-extra": "^9.0.1",
     "lect": "^0.15.1",

@@ -79,7 +79,7 @@ function isStr(something: any): boolean {
 
 interface MainInputs {
   str: string;
-  idx?: number;
+  idx?: number | null;
   stopAtNewlines?: boolean;
   stopAtRawNbsp?: boolean;
 }
@@ -158,7 +158,7 @@ function rightMain({
   return null;
 }
 
-function right(str: string, idx: number): number | null {
+function right(str: string, idx: number | null): number | null {
   return rightMain({ str, idx, stopAtNewlines: false, stopAtRawNbsp: false });
 }
 
@@ -264,7 +264,7 @@ function leftMain({ str, idx, stopAtNewlines, stopAtRawNbsp }: MainInputs) {
   return null;
 }
 
-function left(str: string, idx: number): number | null {
+function left(str: string, idx: number | null): number | null {
   return leftMain({ str, idx, stopAtNewlines: false, stopAtRawNbsp: false });
 }
 

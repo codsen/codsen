@@ -395,9 +395,9 @@ tap.test(
   (t) => {
     const inputStr = "some text and some more text";
     function testMe(char, theRemainderOfTheString, index) {
-      t.equal(char, "r");
-      t.equal(theRemainderOfTheString, "re text");
-      t.equal(index, 21);
+      t.sameStrict(char, "r");
+      t.sameStrict(theRemainderOfTheString, "re text");
+      t.sameStrict(index, 21);
     }
     matchRight(inputStr, 18, ["z", "mo"], { cb: testMe });
     matchRight(inputStr, 18, ["z", "mo"], { cb: testMe });
@@ -406,6 +406,20 @@ tap.test(
     matchRight(inputStr, 18, ["z", "mo"], { i: true, cb: testMe });
     matchRight(inputStr, 18, ["z", "mo"], { i: true, cb: testMe });
     matchRight(inputStr, 18, ["z", "mo"], { i: true, cb: testMe });
+    t.end();
+  }
+);
+
+tap.test(
+  `06 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            matchRight - third callback argument null`,
+  (t) => {
+    const inputStr = "abc";
+    function testMe(char, theRemainderOfTheString, index) {
+      t.sameStrict(char, undefined);
+      t.sameStrict(theRemainderOfTheString, "");
+      t.sameStrict(index, 3);
+    }
+    matchRight(inputStr, 0, ["z", "bc"], { cb: testMe });
     t.end();
   }
 );

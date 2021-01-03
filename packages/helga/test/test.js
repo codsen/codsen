@@ -28,16 +28,16 @@ tap.test("02 - converts line breaks - JSON off", (t) => {
   t.end();
 });
 
-tap.only("03 - converts line breaks - JSON on", (t) => {
+tap.test("03 - converts line breaks - JSON on", (t) => {
   // beautified as input:
-  // t.strictSame(
-  //   helga("abc\ndef", { targetJSON: true }),
-  //   {
-  //     minified: "abc\\ndef",
-  //     beautified: "abc\ndef",
-  //   },
-  //   "03.01"
-  // );
+  t.strictSame(
+    helga("abc\ndef", { targetJSON: true }),
+    {
+      minified: "abc\\ndef",
+      beautified: "abc\ndef",
+    },
+    "03.01"
+  );
 
   // minified as input:
   t.strictSame(

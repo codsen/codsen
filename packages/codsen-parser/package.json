@@ -22,6 +22,7 @@
   "main": "dist/codsen-parser.cjs.js",
   "module": "dist/codsen-parser.esm.js",
   "browser": "dist/codsen-parser.umd.js",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c",
     "ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",
@@ -93,6 +94,7 @@
     }
   },
   "dependencies": {
+    "@babel/runtime": "^7.9.2",
     "ast-monkey-util": "^1.2.0",
     "codsen-tokenizer": "^4.5.1",
     "object-path": "^0.11.5",
@@ -109,6 +111,7 @@
     "@rollup/plugin-babel": "^5.2.2",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.1",
+    "@rollup/plugin-replace": "^2.3.4",
     "@rollup/plugin-strip": "^2.0.0",
     "benchmark": "^2.1.4",
     "eslint": "^7.15.0",
@@ -118,7 +121,9 @@
     "rollup-plugin-banner": "^0.2.1",
     "rollup-plugin-cleanup": "^3.2.1",
     "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.29.0",
     "tap": "^14.11.0",
-    "tsd": "^0.14.0"
+    "tsd": "^0.14.0",
+    "typescript": "^4.1.3"
   }
 }

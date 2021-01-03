@@ -1,6 +1,7 @@
 const objectPath = require("object-path");
 const writeFileAtomic = require("write-file-atomic");
 const sortPackageJson = require("sort-package-json");
+const pacote = require("pacote");
 // const decodeContent = require("./decodeContent");
 // const arrayiffy = require("./arrayiffy");
 
@@ -121,8 +122,12 @@ async function packageJson({ state, lectrc }) {
   if (!state.isCLI) {
     objectPath.set(content, "main", `dist/${state.pack.name}.cjs.js`);
     objectPath.set(content, "module", `dist/${state.pack.name}.esm.js`);
-    objectPath.set(content, "browser", `dist/${state.pack.name}.umd.js`);
     objectPath.set(content, "types", `types/main.d.ts`);
+  }
+  if (objectPath.has(content, "browser")) {
+    // beware, some Node-only packages don't build UMD's, like
+    // "tap-parse-string-to-object" which consumes streams
+    objectPath.set(content, "browser", `dist/${state.pack.name}.umd.js`);
   }
 
   // 7. capitalise first letter in description
@@ -150,6 +155,60 @@ async function packageJson({ state, lectrc }) {
           // if it's abandoned, not in the devdeps list in package.json, don't keep it
           Object.keys(content.devDependencies).includes(devDep)
       )
+    );
+  }
+
+  // 9. if there are any lodash deps, add the latest corresponding types
+  const lodashDeps = Object.keys(content.dependencies).filter((dep) =>
+    dep.startsWith("lodash.")
+  );
+
+  for (let i = 0, len = lodashDeps.length; i < len; i++) {
+    if (!content.devDependencies[`@types/${lodashDeps[i]}`]) {
+      const pkg = await pacote.manifest(`@types/${lodashDeps[i]}`);
+      if (pkg.version) {
+        console.log(`@types/${lodashDeps[i]}: ^${pkg.version}`);
+        content.devDependencies[`@types/${lodashDeps[i]}`] = `^${pkg.version}`;
+      }
+
+      // add it to lect devdep whitelist
+      if (
+        !content.lect.various.devDependencies.includes(
+          `@types/${lodashDeps[i]}`
+        )
+      ) {
+        content.lect.various.devDependencies.push(`@types/${lodashDeps[i]}`);
+      }
+    }
+  }
+
+  // 10. leave only used dev deps in lect devdep whitelist, plus sort the result
+  if (
+    content.lect &&
+    content.lect.various &&
+    content.lect.various.devDependencies &&
+    Array.isArray(content.lect.various.devDependencies)
+  ) {
+    content.lect.various.devDependencies = content.lect.various.devDependencies
+      .filter((val) => val !== "benchmark")
+      .sort();
+  }
+
+  // 11. ensure "req" template uses named exports
+  if (!state.isCLI && !content.lect.req.includes("{")) {
+    console.log(
+      `lect: ${`\u001b[${31}m${`ERROR`}\u001b[${39}m`} req does not use named exports: ${JSON.stringify(
+        content.lect.req,
+        null,
+        0
+      )}`
+    );
+    return Promise.reject(
+      `lect: ${`\u001b[${31}m${`ERROR`}\u001b[${39}m`} req does not use named exports: ${JSON.stringify(
+        content.lect.req,
+        null,
+        0
+      )}`
     );
   }
 
