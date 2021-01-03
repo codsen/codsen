@@ -1,13 +1,25 @@
 import { find, get, drop, del } from "ast-monkey";
-import isEmpty from "ast-is-empty";
+import { isEmpty } from "ast-is-empty";
 import clone from "lodash.clonedeep";
-import validateTheOnly from "util-array-object-or-both";
+import { arrObjOrBoth } from "util-array-object-or-both";
+import { version } from "../package.json";
 
 // ---------------------------------------------------------------------
 // MAIN:
 
-function deleteKey(originalInput, originalOpts) {
-  function existy(x) {
+interface Obj {
+  [key: string]: any;
+}
+
+interface Opts {
+  key: null | string;
+  val: any;
+  cleanup: boolean;
+  only: "array" | "object" | "any";
+}
+
+function deleteKey(originalInput: Obj, originalOpts: Opts): Obj {
+  function existy(x: any): boolean {
     return x != null;
   }
   if (!existy(originalInput)) {
@@ -22,7 +34,7 @@ function deleteKey(originalInput, originalOpts) {
     only: "any",
   };
   const opts = { ...defaults, ...originalOpts };
-  opts.only = validateTheOnly(opts.only, {
+  opts.only = arrObjOrBoth(opts.only, {
     msg: "object-delete-key/deleteKey(): [THROW_ID_03]",
     optsVarName: "opts.only",
   });
@@ -55,16 +67,16 @@ function deleteKey(originalInput, originalOpts) {
         4
       )}`
     );
-    let currentIndex;
-    let nodeToDelete;
-    while (findings) {
+    let currentIndex: number;
+    let nodeToDelete: number;
+    while (Array.isArray(findings) && findings.length) {
       console.log(`061 ███████████████████████████████████████ LOOP`);
       nodeToDelete = findings[0].index;
       for (let i = 1, len = findings[0].path.length; i < len; i++) {
         currentIndex = findings[0].path[len - 1 - i];
         if (
           isEmpty(
-            del(get(input, { index: currentIndex }), {
+            del(get(input, { index: currentIndex }) as Obj, {
               key: opts.key,
               val: opts.val,
               only: opts.only,
@@ -74,7 +86,7 @@ function deleteKey(originalInput, originalOpts) {
           nodeToDelete = currentIndex;
         }
       }
-      input = drop(input, { index: nodeToDelete });
+      input = drop(input, { index: nodeToDelete }) as Obj;
       findings = find(input, { key: opts.key, val: opts.val, only: opts.only });
     }
     console.log(`080 ███████████████████████████████████████ END OF A LOOP`);
@@ -87,7 +99,7 @@ function deleteKey(originalInput, originalOpts) {
     );
     return input;
   }
-  return del(input, { key: opts.key, val: opts.val, only: opts.only });
+  return del(input, { key: opts.key, val: opts.val, only: opts.only }) as Obj;
 }
 
-export default deleteKey;
+export { deleteKey, version };

@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import deleteKey from "../dist/object-delete-key.esm.js";
+import { deleteKey } from "../dist/object-delete-key.esm.js";
 
 // deleting key 'c', with value 'd'
 assert.deepEqual(

@@ -9,88 +9,50 @@
 
 'use strict';
 
+Object.defineProperty(exports, '__esModule', { value: true });
+
+var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
 var astMonkey = require('ast-monkey');
-var isEmpty = require('ast-is-empty');
+var astIsEmpty = require('ast-is-empty');
 var clone = require('lodash.clonedeep');
-var validateTheOnly = require('util-array-object-or-both');
+var utilArrayObjectOrBoth = require('util-array-object-or-both');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-var isEmpty__default = /*#__PURE__*/_interopDefaultLegacy(isEmpty);
+var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
-var validateTheOnly__default = /*#__PURE__*/_interopDefaultLegacy(validateTheOnly);
 
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    if (enumerableOnly) symbols = symbols.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    });
-    keys.push.apply(keys, symbols);
-  }
-
-  return keys;
-}
-
-function _objectSpread2(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-
-    if (i % 2) {
-      ownKeys(Object(source), true).forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
-    } else if (Object.getOwnPropertyDescriptors) {
-      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-    } else {
-      ownKeys(Object(source)).forEach(function (key) {
-        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-      });
-    }
-  }
-
-  return target;
-}
+var version = "1.10.1";
 
 function deleteKey(originalInput, originalOpts) {
   function existy(x) {
     return x != null;
   }
+
   if (!existy(originalInput)) {
     throw new Error("object-delete-key/deleteKey(): [THROW_ID_01] Please provide the first argument, something to work upon.");
   }
+
   var defaults = {
     key: null,
     val: undefined,
     cleanup: true,
     only: "any"
   };
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
-  opts.only = validateTheOnly__default['default'](opts.only, {
+
+  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
+
+  opts.only = utilArrayObjectOrBoth.arrObjOrBoth(opts.only, {
     msg: "object-delete-key/deleteKey(): [THROW_ID_03]",
     optsVarName: "opts.only"
-  });
+  }); // after this, opts.only is equal to either: 1) object, 2) array OR 3) any
+
   if (!existy(opts.key) && !existy(opts.val)) {
     throw new Error("object-delete-key/deleteKey(): [THROW_ID_04] Please provide at least a key or a value.");
   }
+
   var input = clone__default['default'](originalInput);
+
   if (opts.cleanup) {
     var findings = astMonkey.find(input, {
       key: opts.key,
@@ -99,11 +61,14 @@ function deleteKey(originalInput, originalOpts) {
     });
     var currentIndex;
     var nodeToDelete;
-    while (findings) {
+
+    while (Array.isArray(findings) && findings.length) {
       nodeToDelete = findings[0].index;
+
       for (var i = 1, len = findings[0].path.length; i < len; i++) {
         currentIndex = findings[0].path[len - 1 - i];
-        if (isEmpty__default['default'](astMonkey.del(astMonkey.get(input, {
+
+        if (astIsEmpty.isEmpty(astMonkey.del(astMonkey.get(input, {
           index: currentIndex
         }), {
           key: opts.key,
@@ -113,6 +78,7 @@ function deleteKey(originalInput, originalOpts) {
           nodeToDelete = currentIndex;
         }
       }
+
       input = astMonkey.drop(input, {
         index: nodeToDelete
       });
@@ -124,6 +90,7 @@ function deleteKey(originalInput, originalOpts) {
     }
     return input;
   }
+
   return astMonkey.del(input, {
     key: opts.key,
     val: opts.val,
@@ -131,4 +98,5 @@ function deleteKey(originalInput, originalOpts) {
   });
 }
 
-module.exports = deleteKey;
+exports.deleteKey = deleteKey;
+exports.version = version;

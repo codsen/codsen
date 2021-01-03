@@ -2,7 +2,7 @@
 
 import tap from "tap";
 import parser from "posthtml-parser";
-import deleteKey from "../dist/object-delete-key.esm";
+import { deleteKey } from "../dist/object-delete-key.esm";
 
 // ==============================
 // One-level plain objects

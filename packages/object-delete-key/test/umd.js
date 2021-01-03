@@ -1,5 +1,5 @@
 import tap from "tap";
-import deleteKey from "../dist/object-delete-key.umd";
+import { deleteKey } from "../dist/object-delete-key.umd";
 
 tap.test("01 - general sanity check", (t) => {
   const actual = deleteKey(

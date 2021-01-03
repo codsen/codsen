@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // Wildcards
 
 import { strict as assert } from "assert";
-import deleteKey from "../dist/object-delete-key.esm.js";
+import { deleteKey } from "../dist/object-delete-key.esm.js";
 
 assert.deepEqual(
   deleteKey(

@@ -1,9 +1,7 @@
-/* eslint import/extensions:0 */
-
 // Disable the cleanup which would otherwise happen after deletion
 
 import { strict as assert } from "assert";
-import deleteKey from "../dist/object-delete-key.esm.js";
+import { deleteKey } from "../dist/object-delete-key.esm.js";
 
 assert.deepEqual(
   deleteKey(
