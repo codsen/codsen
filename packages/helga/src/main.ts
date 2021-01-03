@@ -1,11 +1,42 @@
-import unescapeJs from "unescape-js";
 import { version } from "../package.json";
 
+interface Obj {
+  [key: string]: any;
+}
+interface Opts {
+  targetJSON: boolean;
+}
 const defaults = {
   targetJSON: false,
 };
 
-function helga(str, originalOpts) {
+const escapes: Obj = {
+  b: "\b",
+  f: "\f",
+  n: "\n",
+  r: "\r",
+  t: "\t",
+  v: "\v",
+  "'": "'",
+  '"': '"',
+  "\\": "\\",
+  "0": "\0",
+};
+
+function unescape(str: string): string {
+  return str.replace(/\\([bfnrtv'"\\0])/g, (match) => {
+    console.log(`${`\u001b[${33}m${`match`}\u001b[${39}m`} = ${match}`);
+    return (
+      escapes[match] ||
+      (match && (match.startsWith(`\\`) ? escapes[match.slice(1)] : ""))
+    );
+  });
+}
+
+function helga(
+  str: string,
+  originalOpts?: Opts
+): { minified: string; beautified: string } {
   const opts = { ...defaults, ...originalOpts };
   // console.log(
   //   `011 using ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
@@ -17,11 +48,11 @@ function helga(str, originalOpts) {
 
   // 1. beautification:
   // ---------------------------------------------------------------------------
-  const beautified = unescapeJs(str);
+  const beautified = unescape(str);
 
   // 2. minification:
   // ---------------------------------------------------------------------------
-  let minified = unescapeJs(str);
+  let minified = unescape(str);
   if (opts.targetJSON) {
     // if target is JSON, replace all tabs with two spaces, then JSON stringify
     minified = JSON.stringify(minified.replace(/\t/g, "  "), null, 0);
