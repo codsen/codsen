@@ -3239,16 +3239,11 @@ var defaults$4 = {
   tagRanges: []
 };
 
-function removeWidows(str, originalOpts) {
-
-  function isStr(something) {
-    return typeof something === "string";
-  } // track time taken
-
+function removeWidows(str, originalOpts) { // track time taken
 
   var start = Date.now(); // insurance:
 
-  if (!isStr(str)) {
+  if (typeof str !== "string") {
     if (str === undefined) {
       throw new Error("string-remove-widows: [THROW_ID_01] the first input argument is completely missing! It should be given as string.");
     } else {
@@ -3261,6 +3256,7 @@ function removeWidows(str, originalOpts) {
   } // consts
 
 
+  var isArr = Array.isArray;
   var len = str.length;
   var rangesArr = new Ranges({
     mergeType: 2
@@ -3300,7 +3296,7 @@ function removeWidows(str, originalOpts) {
     convertEntities: false
   };
 
-  if (!opts.ignore || !Array.isArray(opts.ignore) && !isStr(opts.ignore)) {
+  if (!opts.ignore || !isArr(opts.ignore) && typeof opts.ignore !== "string") {
     opts.ignore = [];
   } else {
     opts.ignore = arrayiffy(opts.ignore);
@@ -3309,7 +3305,7 @@ function removeWidows(str, originalOpts) {
       // hugo heads tails and included in jinja's list, so can be omitted
       opts.ignore = opts.ignore.concat(headsAndTailsJinja.concat(headsAndTailsHexo));
     } else if (opts.ignore.some(function (val) {
-      return isStr(val);
+      return typeof val === "string";
     })) {
       // if some values are strings, we need to either remove them or expand them
       // from string to recognised list of heads/tails
@@ -3322,7 +3318,7 @@ function removeWidows(str, originalOpts) {
       // );
 
       opts.ignore = opts.ignore.filter(function (val) {
-        if (isStr(val) && val.length) {
+        if (typeof val === "string" && val.length) {
           if (["nunjucks", "jinja", "liquid"].includes(val.trim().toLowerCase())) {
             temp = temp.concat(headsAndTailsJinja);
           } else if (["hugo"].includes(val.trim().toLowerCase())) {
@@ -3346,7 +3342,7 @@ function removeWidows(str, originalOpts) {
     }
   }
 
-  var ceil = 100;
+  var ceil;
 
   if (opts.reportProgressFunc) {
     // ceil is the top the range [0, 100], or whatever it was customised to,
@@ -3364,7 +3360,7 @@ function removeWidows(str, originalOpts) {
     } else if (opts.convertEntities) {
       finalWhatToInsert = encodedNbspHtml;
 
-      if (isStr(opts.targetLanguage)) {
+      if (typeof opts.targetLanguage === "string") {
         if (opts.targetLanguage.trim().toLowerCase() === "css") {
           finalWhatToInsert = encodedNbspCss;
         } else if (opts.targetLanguage.trim().toLowerCase() === "js") {
@@ -3386,7 +3382,7 @@ function removeWidows(str, originalOpts) {
     lastWhitespaceStartedAt = undefined;
     lastWhitespaceEndedAt = undefined;
     lastEncodedNbspStartedAt = undefined;
-    lastEncodedNbspEndedAt = undefined;
+    lastEncodedNbspEndedAt = undefined; // lineBreakCount = undefined;
   }
 
   resetAll(); // iterate the string
@@ -3404,11 +3400,11 @@ function removeWidows(str, originalOpts) {
     // Logging:
     // ███████████████████████████████████████ // detect templating language heads and tails
 
-    if (!doNothingUntil && Array.isArray(opts.ignore) && opts.ignore.length) {
+    if (!doNothingUntil && isArr(opts.ignore) && opts.ignore.length) {
       opts.ignore.some(function (valObj, y) {
-        if (Array.isArray(valObj.heads) && valObj.heads.some(function (oneOfHeads) {
+        if (isArr(valObj.heads) && valObj.heads.some(function (oneOfHeads) {
           return str.startsWith(oneOfHeads, _i);
-        }) || isStr(valObj.heads) && str.startsWith(valObj.heads, _i)) {
+        }) || typeof valObj.heads === "string" && str.startsWith(valObj.heads, _i)) {
           wordCount += 1;
           doNothingUntil = opts.ignore[y].tails;
           i = _i;
@@ -3429,7 +3425,7 @@ function removeWidows(str, originalOpts) {
       // defaults:
       // opts.reportProgressFuncFrom = 0
       // opts.reportProgressFuncTo = 100
-      currentPercentageDone = opts.reportProgressFuncFrom + Math.floor(_i / len * ceil); // console.log(
+      currentPercentageDone = opts.reportProgressFuncFrom + Math.floor(_i / len * (ceil || 1)); // console.log(
       //   `309 ${`\u001b[${33}m${`currentPercentageDone`}\u001b[${39}m`} = ${currentPercentageDone}; ${`\u001b[${33}m${`lastPercentage`}\u001b[${39}m`} = ${lastPercentage};`
       // );
 
@@ -3551,7 +3547,7 @@ function removeWidows(str, originalOpts) {
     } // catch the ending of paragraphs or the EOL - here's where the action happens
 
 
-    if (!doNothingUntil && (!str[_i] || "\r\n".includes(str[_i]) || (str[_i] === "\n" || str[_i] === "\r" || str[_i] === "\r" && str[_i + 1] === "\n") && str[_i - 1] && punctuationCharsToConsiderWidowIssue.includes(str[left(str, _i)]))) {
+    if (!doNothingUntil && (!str[_i] || "\r\n".includes(str[_i]) || (str[_i] === "\n" || str[_i] === "\r" || str[_i] === "\r" && str[_i + 1] === "\n") && left(str, _i) && punctuationCharsToConsiderWidowIssue.includes(str[left(str, _i)]))) {
 
       if ((!opts.minWordCount || wordCount >= opts.minWordCount) && (!opts.minCharCount || charCount >= opts.minCharCount)) {
         var finalStart;
@@ -3638,12 +3634,12 @@ function removeWidows(str, originalOpts) {
     } // look for templating tails
 
 
-    var tempTailFinding = "";
+    var tempTailFinding = void 0;
 
     if (doNothingUntil) {
-      if (isStr(doNothingUntil) && (!doNothingUntil.length || str.startsWith(doNothingUntil, _i))) {
+      if (typeof doNothingUntil === "string" && (!doNothingUntil.length || str.startsWith(doNothingUntil, _i))) {
         doNothingUntil = undefined;
-      } else if (Array.isArray(doNothingUntil) && (!doNothingUntil.length || doNothingUntil.some(function (val) {
+      } else if (isArr(doNothingUntil) && (!doNothingUntil.length || doNothingUntil.some(function (val) {
         if (str.startsWith(val, _i)) {
           tempTailFinding = val;
           i = _i;
@@ -3655,7 +3651,7 @@ function removeWidows(str, originalOpts) {
         // {% if something %} some text and more text {% endif %}
         // we need to tackle the "%}" that follows.
 
-        if (Array.isArray(opts.ignore) && opts.ignore.length && str[_i + 1]) {
+        if (isArr(opts.ignore) && opts.ignore.length && str[_i + 1]) {
           opts.ignore.some(function (oneOfHeadsTailsObjs) {
             i = _i;
             // console.log("\n\n\n");
@@ -3696,7 +3692,7 @@ function removeWidows(str, originalOpts) {
     } // skip known tag ranges
 
 
-    if (Array.isArray(opts.tagRanges) && opts.tagRanges.length && opts.tagRanges.some(function (rangeArr) {
+    if (isArr(opts.tagRanges) && opts.tagRanges.length && opts.tagRanges.some(function (rangeArr) {
 
       if (_i >= rangeArr[0] && _i <= rangeArr[1] && rangeArr[1] - 1 > _i) {
         _i = rangeArr[1] - 1;
@@ -3715,21 +3711,20 @@ function removeWidows(str, originalOpts) {
   for (var i = 0; i <= len; i++) {
     _loop(i);
   }
-  var res = rApply(str, rangesArr.current(), opts.reportProgressFunc ? function (incomingPerc) {
-    currentPercentageDone = Math.floor((opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * (1 - leavePercForLastStage) + incomingPerc / 100 * (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage);
-
-    if (currentPercentageDone !== lastPercentage) {
-      lastPercentage = currentPercentageDone;
-      opts.reportProgressFunc(currentPercentageDone);
-    }
-  } : undefined);
-  res.split("").forEach(function (key, i) {
+  rApply(str, rangesArr.current()).split("").forEach(function (key, i) {
   });
   return {
-    res: res,
+    res: rApply(str, rangesArr.current(), opts.reportProgressFunc ? function (incomingPerc) {
+      currentPercentageDone = Math.floor((opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * (1 - leavePercForLastStage) + incomingPerc / 100 * (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage);
+
+      if (currentPercentageDone !== lastPercentage) {
+        lastPercentage = currentPercentageDone;
+        opts.reportProgressFunc(currentPercentageDone);
+      }
+    } : undefined),
     ranges: rangesArr.current(),
     log: {
-      timeTakenInMiliseconds: Date.now() - start
+      timeTakenInMilliseconds: Date.now() - start
     },
     whatWasDone: whatWasDone
   };

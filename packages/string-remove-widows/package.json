@@ -73,9 +73,7 @@
     },
     "req": "{ removeWidows, defaults, version }",
     "various": {
-      "devDependencies": [
-        "@types/lodash.isplainobject"
-      ]
+      "devDependencies": []
     }
   },
   "dependencies": {
@@ -106,13 +104,11 @@
     "@rollup/plugin-replace": "^2.3.4",
     "@rollup/plugin-strip": "^2.0.0",
     "@rollup/plugin-typescript": "^8.1.0",
-    "@types/lodash.isplainobject": "^4.0.6",
     "@types/node": "^13.13.4",
     "@types/tap": "^14.10.1",
     "@typescript-eslint/eslint-plugin": "^4.11.0",
     "@typescript-eslint/parser": "^4.11.0",
     "eslint": "^7.15.0",
-    "fs-extra": "^9.0.1",
     "lect": "^0.15.1",
     "rollup": "^2.35.1",
     "rollup-plugin-ascii": "^0.0.3",

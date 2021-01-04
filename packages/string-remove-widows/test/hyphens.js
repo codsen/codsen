@@ -10,7 +10,7 @@ import {
   encodedNbspJs,
   rawNdash,
   rawMdash,
-} from "../src/util";
+} from "./util";
 
 const languages = ["html`, `css`, `js"];
 const encodedNbsps = [encodedNbspHtml, encodedNbspCss, encodedNbspJs];

@@ -7,7 +7,7 @@ import { removeWidows } from "../dist/string-remove-widows.esm";
 //   encodedNbspJs,
 //   rawNdash,
 //   rawMdash,
-// } from "../src/util";
+// } from "./util";
 
 // const languages = ["html`, `css`, `js"];
 // const encodedNbsps = [encodedNbspHtml, encodedNbspCss, encodedNbspJs];

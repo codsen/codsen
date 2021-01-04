@@ -36,22 +36,12 @@ npm i string-remove-widows
 import { strict as assert } from "assert";
 import { removeWidows } from "string-remove-widows";
 
-const result = removeWidows("Some text with many words on one line.");
+const { ranges, res } = removeWidows("Some text with many words on one line.");
 
-// time taken can vary so we'll set it to zero:
-result.log.timeTakenInMiliseconds = 0;
+// see codsen.com/ranges/
+assert.deepEqual(ranges, [[32, 33, "&nbsp;"]]);
 
-assert.deepEqual(result, {
-  log: {
-    timeTakenInMiliseconds: 0,
-  },
-  ranges: [[32, 33, "&nbsp;"]], // see codsen.com/ranges/
-  res: "Some text with many words on one&nbsp;line.",
-  whatWasDone: {
-    convertEntities: false,
-    removeWidows: true,
-  },
-});
+assert.equal(res, "Some text with many words on one&nbsp;line.");
 ```
 
 ## Documentation
@@ -62,8 +52,6 @@ Please [visit codsen.com](https://codsen.com/os/string-remove-widows/) for a ful
 
 MIT License
 
-Copyright (c) 2010-2020 Roy Revelt and other contributors
-
+Copyright (c) 2010-2021 Roy Revelt and other contributors
 
 <img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center"> <img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">
-

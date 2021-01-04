@@ -1,9 +1,8 @@
 import { matchRightIncl } from "string-match-left-right";
-import arrayiffyIfStr from "arrayiffy-if-string";
+import { arrayiffy } from "arrayiffy-if-string";
 import { left, right } from "string-left-right";
-import isObj from "lodash.isplainobject";
-import Ranges from "ranges-push";
-import apply from "ranges-apply";
+import { Ranges } from "ranges-push";
+import { rApply } from "ranges-apply";
 import { version } from "../package.json";
 import {
   rawnbsp,
@@ -23,8 +22,28 @@ import {
   headsAndTailsHexo,
   knownHTMLTags,
 } from "./util";
+import { Ranges as RangesType } from "../../../scripts/common";
 
-const defaultOpts = {
+interface Obj {
+  [key: string]: any;
+}
+
+interface Opts {
+  removeWidowPreventionMeasures: boolean;
+  convertEntities: boolean;
+  targetLanguage: "html" | "css" | "js";
+  UKPostcodes: boolean;
+  hyphens: boolean;
+  minWordCount: number;
+  minCharCount: number;
+  ignore: { heads: string | string[]; tails: string | string[] }[] | string;
+  reportProgressFunc: null | ((percDone: number) => void);
+  reportProgressFuncFrom: number;
+  reportProgressFuncTo: number;
+  tagRanges: [from: number, to: number][];
+}
+
+const defaults: Opts = {
   removeWidowPreventionMeasures: false,
   convertEntities: true, // encode?
   targetLanguage: "html", // encode in what? [html, css, js]
@@ -39,7 +58,19 @@ const defaultOpts = {
   tagRanges: [],
 };
 
-function removeWidows(str, originalOpts) {
+interface Res {
+  res: string;
+  ranges: RangesType;
+  log: {
+    timeTakenInMilliseconds: number;
+  };
+  whatWasDone: {
+    removeWidows: boolean;
+    convertEntities: boolean;
+  };
+}
+
+function removeWidows(str: string, originalOpts?: Opts): Res {
   console.log(
     `044 called removeWidows() on\n"${str}"\nusing originalOpts = ${JSON.stringify(
       originalOpts,
@@ -47,14 +78,11 @@ function removeWidows(str, originalOpts) {
       4
     )}`
   );
-  function isStr(something) {
-    return typeof something === "string";
-  }
   // track time taken
   const start = Date.now();
 
   // insurance:
-  if (!isStr(str)) {
+  if (typeof str !== "string") {
     if (str === undefined) {
       throw new Error(
         "string-remove-widows: [THROW_ID_01] the first input argument is completely missing! It should be given as string."
@@ -70,7 +98,7 @@ function removeWidows(str, originalOpts) {
     }
   }
 
-  if (originalOpts && !isObj(originalOpts)) {
+  if (originalOpts && typeof originalOpts !== "object") {
     throw new Error(
       `string-remove-widows: [THROW_ID_03] the second input argument, options object, should be a plain object but it was given as type ${typeof originalOpts}, equal to ${JSON.stringify(
         originalOpts,
@@ -95,8 +123,8 @@ function removeWidows(str, originalOpts) {
 
   let currentPercentageDone;
   let lastPercentage = 0;
-  let wordCount; // counted per-chunk (paragraph)
-  let charCount; // counted per-character, per chunk (paragraph)
+  let wordCount = 0; // counted per-chunk (paragraph)
+  let charCount = 0; // counted per-character, per chunk (paragraph)
 
   let secondToLastWhitespaceStartedAt; // necessary to support whitespace at line ends
   let secondToLastWhitespaceEndedAt; // necessary to support whitespace at line ends
@@ -111,7 +139,7 @@ function removeWidows(str, originalOpts) {
   let bumpWordCountAt;
 
   // prep the opts
-  const opts = { ...defaultOpts, ...originalOpts };
+  const opts: Opts = { ...defaults, ...originalOpts };
 
   // Now, strictly speaking, this program can remove widow words but also
   // it will decode any entities it encounters if option convertEntities is off.
@@ -121,25 +149,24 @@ function removeWidows(str, originalOpts) {
     convertEntities: false,
   };
 
-  // tackle alternative name for hyphens, "dashes"
-  if (opts.dashes) {
-    opts.hyphens = true;
-    delete opts.dashes;
-  }
-
-  if (!opts.ignore || (!isArr(opts.ignore) && !isStr(opts.ignore))) {
+  if (
+    !opts.ignore ||
+    (!isArr(opts.ignore) && typeof opts.ignore !== "string")
+  ) {
     opts.ignore = [];
   } else {
-    opts.ignore = arrayiffyIfStr(opts.ignore);
-    if (opts.ignore.includes("all")) {
+    opts.ignore = arrayiffy(opts.ignore);
+    if ((opts.ignore as any).includes("all")) {
       // hugo heads tails and included in jinja's list, so can be omitted
       opts.ignore = opts.ignore.concat(
-        headsAndTailsJinja.concat(headsAndTailsHexo)
+        (headsAndTailsJinja as any).concat(headsAndTailsHexo)
       );
-    } else if (opts.ignore.some((val) => isStr(val))) {
+    } else if (
+      (opts.ignore as any).some((val: any) => typeof val === "string")
+    ) {
       // if some values are strings, we need to either remove them or expand them
       // from string to recognised list of heads/tails
-      let temp = [];
+      let temp: { heads: string | string[]; tails: string | string[] }[] = [];
       // console.log(
       //   `166 ${`\u001b[${31}m${`OLD`}\u001b[${39}m`} ${`\u001b[${33}m${`opts.ignore`}\u001b[${39}m`} = ${JSON.stringify(
       //     opts.ignore,
@@ -147,8 +174,8 @@ function removeWidows(str, originalOpts) {
       //     0
       //   )}`
       // );
-      opts.ignore = opts.ignore.filter((val) => {
-        if (isStr(val) && val.length) {
+      opts.ignore = (opts.ignore as any[]).filter((val) => {
+        if (typeof val === "string" && val.length) {
           if (
             ["nunjucks", "jinja", "liquid"].includes(val.trim().toLowerCase())
           ) {
@@ -193,14 +220,14 @@ function removeWidows(str, originalOpts) {
     );
   }
 
-  function push(finalStart, finalEnd) {
+  function push(finalStart: number, finalEnd: number): void {
     let finalWhatToInsert = rawnbsp;
     // calculate what to insert
     if (opts.removeWidowPreventionMeasures) {
       finalWhatToInsert = " ";
     } else if (opts.convertEntities) {
       finalWhatToInsert = encodedNbspHtml;
-      if (isStr(opts.targetLanguage)) {
+      if (typeof opts.targetLanguage === "string") {
         if (opts.targetLanguage.trim().toLowerCase() === "css") {
           finalWhatToInsert = encodedNbspCss;
         } else if (opts.targetLanguage.trim().toLowerCase() === "js") {
@@ -264,13 +291,13 @@ function removeWidows(str, originalOpts) {
         if (
           (isArr(valObj.heads) &&
             valObj.heads.some((oneOfHeads) => str.startsWith(oneOfHeads, i))) ||
-          (isStr(valObj.heads) && str.startsWith(valObj.heads, i))
+          (typeof valObj.heads === "string" && str.startsWith(valObj.heads, i))
         ) {
           console.log(
             `270 ${`\u001b[${31}m${`heads detected!`}\u001b[${39}m`}`
           );
           wordCount += 1;
-          doNothingUntil = opts.ignore[y].tails;
+          doNothingUntil = (opts.ignore[y] as Obj).tails;
           console.log(
             `275 ${`\u001b[${90}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`doNothingUntil`}\u001b[${39}m`} = ${doNothingUntil}`
           );
@@ -304,7 +331,7 @@ function removeWidows(str, originalOpts) {
       // opts.reportProgressFuncTo = 100
 
       currentPercentageDone =
-        opts.reportProgressFuncFrom + Math.floor((i / len) * ceil);
+        opts.reportProgressFuncFrom + Math.floor((i / len) * (ceil || 1));
       // console.log(
       //   `309 ${`\u001b[${33}m${`currentPercentageDone`}\u001b[${39}m`} = ${currentPercentageDone}; ${`\u001b[${33}m${`lastPercentage`}\u001b[${39}m`} = ${lastPercentage};`
       // );
@@ -367,9 +394,9 @@ function removeWidows(str, originalOpts) {
       (!str[i + 1].trim() || str[i] === "&")
     ) {
       console.log(`369 dash starts here`);
-      if (str[i - 1] && !str[i - 1].trim() && str[left(str, i)]) {
-        push(left(str, i) + 1, i);
-        console.log(`372 push [${left(str, i) + 1}, ${i}]`);
+      if (str[i - 1] && !str[i - 1].trim() && str[left(str, i) as number]) {
+        push((left(str, i) as number) + 1, i);
+        console.log(`372 push [${(left(str, i) as number) + 1}, ${i}]`);
 
         // report what was done:
         whatWasDone.removeWidows = true;
@@ -615,8 +642,10 @@ function removeWidows(str, originalOpts) {
         ((str[i] === "\n" ||
           str[i] === "\r" ||
           (str[i] === "\r" && str[i + 1] === "\n")) &&
-          str[i - 1] &&
-          punctuationCharsToConsiderWidowIssue.includes(str[left(str, i)])))
+          left(str, i) &&
+          punctuationCharsToConsiderWidowIssue.includes(
+            str[left(str, i) as number]
+          )))
     ) {
       console.log(
         `622 ${`\u001b[${32}m${`██`}\u001b[${39}m`} PARAGRAPH ENDING!`
@@ -701,11 +730,11 @@ function removeWidows(str, originalOpts) {
       str[i - 1] &&
       str[i - 1].trim() &&
       postcodeRegexFront.test(str.slice(0, i)) &&
-      str[right(str, i)] &&
-      postcodeRegexEnd.test(str.slice(right(str, i)))
+      str[right(str, i) as number] &&
+      postcodeRegexEnd.test(str.slice(right(str, i) as number))
     ) {
       console.log(`707 POSTCODE caught: [${i}, ${right(str, i)}]`);
-      push(i, right(str, i));
+      push(i, right(str, i) as number);
 
       whatWasDone.removeWidows = true;
       console.log(
@@ -745,12 +774,14 @@ function removeWidows(str, originalOpts) {
       (lastWhitespaceStartedAt === undefined ||
         (str[lastWhitespaceStartedAt - 1] &&
           str[lastWhitespaceStartedAt - 1].trim())) &&
-      !"/>".includes(str[right(str, i)]) &&
+      !"/>".includes(str[right(str, i) as number]) &&
       !str.slice(0, i).trim().endsWith("br") &&
       !str.slice(0, i).trim().endsWith("hr") &&
       !(
         str.slice(0, i).endsWith("<") &&
-        knownHTMLTags.some((tag) => str.startsWith(tag, right(str, i)))
+        knownHTMLTags.some((tag) =>
+          str.startsWith(tag, right(str, i) as number)
+        )
       )
     ) {
       console.log(`756`);
@@ -812,14 +843,14 @@ function removeWidows(str, originalOpts) {
     let tempTailFinding;
     if (doNothingUntil) {
       if (
-        isStr(doNothingUntil) &&
+        typeof doNothingUntil === "string" &&
         (!doNothingUntil.length || str.startsWith(doNothingUntil, i))
       ) {
         doNothingUntil = undefined;
       } else if (
         isArr(doNothingUntil) &&
-        (!doNothingUntil.length ||
-          doNothingUntil.some((val) => {
+        (!(doNothingUntil as any[]).length ||
+          (doNothingUntil as any[]).some((val) => {
             if (str.startsWith(val, i)) {
               tempTailFinding = val;
               return true;
@@ -832,11 +863,11 @@ function removeWidows(str, originalOpts) {
         );
         console.log(
           `834 ${`\u001b[${32}m${`BUMP`}\u001b[${39}m`} i: ${`\u001b[${33}m${i}\u001b[${39}m`}=>${`\u001b[${33}m${
-            i + tempTailFinding.length
+            i + (tempTailFinding as any).length
           }\u001b[${39}m`}`
         );
 
-        i += tempTailFinding.length;
+        i += (tempTailFinding as any).length;
 
         // imagine we caught "{% endif" of the following string:
         // {% if something %} some text and more text {% endif %}
@@ -861,7 +892,7 @@ function removeWidows(str, originalOpts) {
             // );
             return matchRightIncl(str, i, oneOfHeadsTailsObjs.tails, {
               trimBeforeMatching: true,
-              cb: (char, theRemainderOfTheString, index) => {
+              cb: (_char, _theRemainderOfTheString, index) => {
                 if (index) {
                   console.log(`866 RECEIVED by CB() index = ${index}`);
                   i = index - 1;
@@ -955,7 +986,7 @@ function removeWidows(str, originalOpts) {
   console.log(
     `956 string-remove-widows: ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}:`
   );
-  apply(str, rangesArr.current())
+  rApply(str, rangesArr.current())
     .split("")
     .forEach((key, i) => {
       console.log(
@@ -966,7 +997,7 @@ function removeWidows(str, originalOpts) {
     });
 
   return {
-    res: apply(
+    res: rApply(
       str,
       rangesArr.current(),
       opts.reportProgressFunc
@@ -987,18 +1018,18 @@ function removeWidows(str, originalOpts) {
             );
             if (currentPercentageDone !== lastPercentage) {
               lastPercentage = currentPercentageDone;
-              opts.reportProgressFunc(currentPercentageDone);
+              (opts as Obj).reportProgressFunc(currentPercentageDone);
             }
           }
-        : null
+        : undefined
     ),
     ranges: rangesArr.current(),
     log: {
-      timeTakenInMiliseconds: Date.now() - start,
+      timeTakenInMilliseconds: Date.now() - start,
     },
     whatWasDone,
   };
 }
 
 // main export
-export { removeWidows, defaultOpts, version };
+export { removeWidows, defaults, version };
