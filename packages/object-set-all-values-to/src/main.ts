@@ -1,37 +1,35 @@
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+
 import clone from "lodash.clonedeep";
 import isObj from "lodash.isplainobject";
+import { version } from "../package.json";
 
-const isArr = Array.isArray;
+interface Obj {
+  [key: string]: any;
+}
 
-/**
- * setAllValuesTo - sets all keys of all plain objects (no matter how deep-nested) to
- * a certain value
- *
- * @param  {Whatever} obj incoming object, array or whatever
- * @return {Object}       returned object
- */
-function setAllValuesTo(inputOriginal, valueOriginal) {
-  let value;
+function setAllValuesTo(inputOriginal: Obj, valueOriginal?: any): Obj {
+  let value: any;
   const input = clone(inputOriginal);
 
   if (arguments.length < 2) {
     value = false;
-  } else if (isObj(valueOriginal) || isArr(valueOriginal)) {
+  } else if (isObj(valueOriginal) || Array.isArray(valueOriginal)) {
     value = clone(valueOriginal);
   } else {
     // needed for functions as values - we can't clone them!
     value = valueOriginal;
   }
 
-  if (isArr(input)) {
-    input.forEach((el, i) => {
-      if (isObj(input[i]) || isArr(input[i])) {
+  if (Array.isArray(input)) {
+    input.forEach((_el, i) => {
+      if (isObj(input[i]) || Array.isArray(input[i])) {
         input[i] = setAllValuesTo(input[i], value);
       }
     });
   } else if (isObj(input)) {
     Object.keys(input).forEach((key) => {
-      if (isArr(input[key]) || isObj(input[key])) {
+      if (Array.isArray(input[key]) || isObj(input[key])) {
         input[key] = setAllValuesTo(input[key], value);
       } else {
         input[key] = value;
@@ -41,4 +39,4 @@ function setAllValuesTo(inputOriginal, valueOriginal) {
   return input;
 }
 
-export default setAllValuesTo;
+export { setAllValuesTo, version };

@@ -1,5 +1,5 @@
 import tap from "tap";
-import setAllValuesTo from "../dist/object-set-all-values-to.esm";
+import { setAllValuesTo } from "../dist/object-set-all-values-to.esm";
 
 // ==============================
 // Normal assignments with default value, false

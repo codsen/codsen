@@ -10,33 +10,40 @@
 import clone from 'lodash.clonedeep';
 import isObj from 'lodash.isplainobject';
 
-const isArr = Array.isArray;
+var version = "3.10.1";
+
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+
 function setAllValuesTo(inputOriginal, valueOriginal) {
   let value;
   const input = clone(inputOriginal);
+
   if (arguments.length < 2) {
     value = false;
-  } else if (isObj(valueOriginal) || isArr(valueOriginal)) {
+  } else if (isObj(valueOriginal) || Array.isArray(valueOriginal)) {
     value = clone(valueOriginal);
   } else {
+    // needed for functions as values - we can't clone them!
     value = valueOriginal;
   }
-  if (isArr(input)) {
-    input.forEach((el, i) => {
-      if (isObj(input[i]) || isArr(input[i])) {
+
+  if (Array.isArray(input)) {
+    input.forEach((_el, i) => {
+      if (isObj(input[i]) || Array.isArray(input[i])) {
         input[i] = setAllValuesTo(input[i], value);
       }
     });
   } else if (isObj(input)) {
-    Object.keys(input).forEach((key) => {
-      if (isArr(input[key]) || isObj(input[key])) {
+    Object.keys(input).forEach(key => {
+      if (Array.isArray(input[key]) || isObj(input[key])) {
         input[key] = setAllValuesTo(input[key], value);
       } else {
         input[key] = value;
       }
     });
   }
+
   return input;
 }
 
-export default setAllValuesTo;
+export { setAllValuesTo, version };
