@@ -7,7 +7,7 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const f = require("..");
+const { cleanChangelogs } = require("..");
 
 const source = `# Change Log
 
@@ -24,7 +24,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - bbb
 `;
-const testme = () => f(source);
+const testme = () => cleanChangelogs(source);
 
 // action
 runPerf(testme, callerDir);

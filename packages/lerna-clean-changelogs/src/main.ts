@@ -1,10 +1,12 @@
 import { version } from "../package.json";
 
-function isStr(something) {
+function isStr(something: string): any {
   return typeof something === "string";
 }
 
-function c(changelogContents) {
+function cleanChangelogs(
+  changelogContents: string
+): { version: string; res: string } {
   // validate the first input argument:
   if (changelogContents === undefined) {
     throw new Error(
@@ -148,4 +150,4 @@ function c(changelogContents) {
   };
 }
 
-export default c;
+export { cleanChangelogs, version };

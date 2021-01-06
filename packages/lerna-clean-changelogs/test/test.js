@@ -1,7 +1,7 @@
 import { readFileSync } from "fs";
 import path from "path";
 import tap from "tap";
-import c from "../dist/lerna-clean-changelogs.esm";
+import { cleanChangelogs as c } from "../dist/lerna-clean-changelogs.esm";
 import { version } from "../package.json";
 
 const fixtures = path.join(__dirname, "fixtures");
