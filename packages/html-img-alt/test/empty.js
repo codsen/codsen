@@ -1,12 +1,12 @@
 import tap from "tap";
-import alt from "../dist/html-img-alt.esm";
+import { alts } from "../dist/html-img-alt.esm";
 
 // alt attr is present, but without equal and double quotes.
 // -----------------------------------------------------------------------------
 
 tap.test("01 - alt without equal", (t) => {
   t.strictSame(
-    alt("zzz<img alt>zzz"),
+    alts("zzz<img alt>zzz"),
     'zzz<img alt="" >zzz',
     "01 - html - tight"
   );
@@ -15,7 +15,7 @@ tap.test("01 - alt without equal", (t) => {
 
 tap.test("02 - alt without equal", (t) => {
   t.strictSame(
-    alt("zzz<img    alt>zzz"),
+    alts("zzz<img    alt>zzz"),
     'zzz<img alt="" >zzz',
     "02 - html - excessive white space"
   );
@@ -24,7 +24,7 @@ tap.test("02 - alt without equal", (t) => {
 
 tap.test("03 - alt without equal", (t) => {
   t.strictSame(
-    alt("zzz<img alt >zzz"),
+    alts("zzz<img alt >zzz"),
     'zzz<img alt="" >zzz',
     "03 - html - one trailing space"
   );
@@ -33,7 +33,7 @@ tap.test("03 - alt without equal", (t) => {
 
 tap.test("04 - alt without equal", (t) => {
   t.strictSame(
-    alt("zzz<img      alt      >zzz"),
+    alts("zzz<img      alt      >zzz"),
     'zzz<img alt="" >zzz',
     "04 - html - excessive white space on both sides"
   );
@@ -42,7 +42,7 @@ tap.test("04 - alt without equal", (t) => {
 
 tap.test("05 - alt without equal", (t) => {
   t.strictSame(
-    alt("zzz<img alt/>zzz"),
+    alts("zzz<img alt/>zzz"),
     'zzz<img alt="" />zzz',
     "05 - xhtml - tight"
   );
@@ -51,7 +51,7 @@ tap.test("05 - alt without equal", (t) => {
 
 tap.test("06 - alt without equal", (t) => {
   t.strictSame(
-    alt("zzz<img alt />zzz"),
+    alts("zzz<img alt />zzz"),
     'zzz<img alt="" />zzz',
     "06 - xhtml - single space on both sides"
   );
@@ -60,7 +60,7 @@ tap.test("06 - alt without equal", (t) => {
 
 tap.test("07 - alt without equal", (t) => {
   t.strictSame(
-    alt("zzz<img      alt   />zzz"),
+    alts("zzz<img      alt   />zzz"),
     'zzz<img alt="" />zzz',
     "07 - xhtml - excessive white space on both sides"
   );
@@ -69,7 +69,7 @@ tap.test("07 - alt without equal", (t) => {
 
 tap.test("08 - alt without equal", (t) => {
   t.strictSame(
-    alt("zzz<img      alt   /   >zzz"),
+    alts("zzz<img      alt   /   >zzz"),
     'zzz<img alt="" />zzz',
     "08 - xhtml - excessive white space everywhere"
   );

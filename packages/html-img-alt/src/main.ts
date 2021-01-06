@@ -1,14 +1,14 @@
-import unfancy from "string-unfancy";
-import apply from "ranges-apply";
-import Ranges from "ranges-push";
-import checkTypes from "check-types-mini";
-import isObj from "lodash.isplainobject";
+import { unfancy } from "string-unfancy";
+import { rApply } from "ranges-apply";
+import { Ranges } from "ranges-push";
+import { checkTypesMini } from "check-types-mini";
+import { version } from "../package.json";
 
-function alts(str, originalOpts) {
-  function existy(x) {
-    return x != null;
-  }
+interface Opts {
+  unfancyTheAltContents: boolean;
+}
 
+function alts(str: string, originalOpts?: Opts): string {
   // validate
   // ================
   if (typeof str !== "string") {
@@ -20,7 +20,10 @@ function alts(str, originalOpts) {
       )}`
     );
   }
-  if (existy(originalOpts) && !isObj(originalOpts)) {
+  if (
+    originalOpts &&
+    Object.prototype.toString.call(originalOpts) !== "[object Object]"
+  ) {
     throw new TypeError(
       `html-img-alt/alts(): [THROW_ID_02] Options object must be a plain object! Currently its type is: ${typeof originalOpts}, equal to: ${JSON.stringify(
         originalOpts,
@@ -63,7 +66,7 @@ function alts(str, originalOpts) {
     unfancyTheAltContents: true,
   };
   const opts = { ...defaults, ...originalOpts };
-  checkTypes(opts, defaults, { msg: "html-img-alt/alts(): [THROW_ID_03]" });
+  checkTypesMini(opts, defaults, { msg: "html-img-alt/alts(): [THROW_ID_03]" });
 
   // traverse the string
   // ================
@@ -147,7 +150,7 @@ function alts(str, originalOpts) {
       // which negates the case.
       if (
         plausibleWithinQuotesRanges.current() &&
-        plausibleWithinQuotesRanges.current().length
+        (plausibleWithinQuotesRanges.current() as any[]).length
       ) {
         console.log("152 wiping plausibleWithinQuotesRanges");
         plausibleWithinQuotesRanges.wipe();
@@ -435,7 +438,6 @@ function alts(str, originalOpts) {
       } else if (slashStartedAt && thereShouldBeEqualCharacterHere === i - 1) {
         // if ALT has no equal and is right before closing bracket
         // XHTML
-        console.log(`434 add no.6 - adding >>>="" <<< at i-1=${i}` - 1);
         rangesArr.add(i - 1, i - 1, '="" ');
         console.log("440 SETTING finalSpaceNeeded = false");
         finalSpaceNeeded = false;
@@ -456,7 +458,6 @@ function alts(str, originalOpts) {
         thereShouldBeTheFirstDoubleQuoteHere <= i
       ) {
         // XHTML
-        console.log(`455 add no.8 - adding >>>="" <<< at i-1=${i}` - 1);
         rangesArr.add(i - 1, i - 1, '"" ');
         addSpaceInTheFutureBeforeSlashOrBracket = false;
       } else if (
@@ -482,7 +483,7 @@ function alts(str, originalOpts) {
 
         // and now the actual merging of plausible ranges:
         if (plausibleWithinQuotesRanges.current()) {
-          plausibleWithinQuotesRanges.current().forEach((key) => {
+          (plausibleWithinQuotesRanges.current() as any[]).forEach((key) => {
             rangesArr.add(key[0], key[1], key[2]);
           });
         }
@@ -518,7 +519,7 @@ function alts(str, originalOpts) {
 
         // so if the second double quote is missing, merge in the plausible ranges, if any
         if (plausibleWithinQuotesRanges.current()) {
-          plausibleWithinQuotesRanges.current().forEach((key) => {
+          (plausibleWithinQuotesRanges.current() as any[]).forEach((key) => {
             rangesArr.add(key[0], key[1], key[2]);
           });
         }
@@ -608,10 +609,10 @@ ${`\u001b[${90}m${`plausibleWithinQuotesRanges.current() = ${plausibleWithinQuot
       4
     )}\n\n\n\n\n\n`
   );
-  if (existy(rangesArr.current()) && rangesArr.current().length > 0) {
-    return apply(str, rangesArr.current());
+  if (rangesArr.current() && (rangesArr.current() as any[]).length > 0) {
+    return rApply(str, rangesArr.current());
   }
   return str;
 }
 
-export default alts;
+export { alts, version };

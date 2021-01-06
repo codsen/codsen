@@ -1,5 +1,5 @@
 import tap from "tap";
-import alt from "../dist/html-img-alt.esm";
+import { alts } from "../dist/html-img-alt.esm";
 
 // missing ALT, other attributes present
 // -----------------------------------------------------------------------------
@@ -9,7 +9,7 @@ tap.test(
   (t) => {
     // HTML
     t.strictSame(
-      alt('zzz<img class="">zzz'),
+      alts('zzz<img class="">zzz'),
       'zzz<img class="" alt="" >zzz',
       "01"
     );
@@ -21,7 +21,7 @@ tap.test(
   "02 - alt attribute is missing, there are other attributes too - HTML - #2",
   (t) => {
     t.strictSame(
-      alt('zzz<img    class="">zzz'),
+      alts('zzz<img    class="">zzz'),
       'zzz<img class="" alt="" >zzz',
       "02"
     );
@@ -33,7 +33,9 @@ tap.test(
   "03 - alt attribute is missing, there are other attributes too - HTML - #3",
   (t) => {
     t.strictSame(
-      alt('zzz<img class=""    >zzz<img class=""    >zzz<img class=""    >zzz'),
+      alts(
+        'zzz<img class=""    >zzz<img class=""    >zzz<img class=""    >zzz'
+      ),
       'zzz<img class="" alt="" >zzz<img class="" alt="" >zzz<img class="" alt="" >zzz',
       "03"
     );
@@ -46,7 +48,7 @@ tap.test(
   (t) => {
     // XHTML
     t.strictSame(
-      alt('zzz<img class=""/>zzz'),
+      alts('zzz<img class=""/>zzz'),
       'zzz<img class="" alt="" />zzz',
       "04"
     );
@@ -58,7 +60,7 @@ tap.test(
   "05 - alt attribute is missing, there are other attributes too - XHTML - #1",
   (t) => {
     t.strictSame(
-      alt('zzz<img    class=""/>zzz'),
+      alts('zzz<img    class=""/>zzz'),
       'zzz<img class="" alt="" />zzz',
       "05"
     );
@@ -70,7 +72,7 @@ tap.test(
   "06 - alt attribute is missing, there are other attributes too - XHTML - #2",
   (t) => {
     t.strictSame(
-      alt('zzz<img class=""    />zzz'),
+      alts('zzz<img class=""    />zzz'),
       'zzz<img class="" alt="" />zzz',
       "06"
     );
@@ -82,7 +84,7 @@ tap.test(
   "07 - alt attribute is missing, there are other attributes too - XHTML - #3",
   (t) => {
     t.strictSame(
-      alt('zzz<img    class=""   />zzz'),
+      alts('zzz<img    class=""   />zzz'),
       'zzz<img class="" alt="" />zzz',
       "07"
     );
@@ -94,7 +96,7 @@ tap.test(
   "08 - alt attribute is missing, there are other attributes too - XHTML - #4",
   (t) => {
     t.strictSame(
-      alt(
+      alts(
         'zzz<img class=""       />zzz<img class=""       />zzz<img class=""       />zzz'
       ),
       'zzz<img class="" alt="" />zzz<img class="" alt="" />zzz<img class="" alt="" />zzz',
@@ -108,7 +110,7 @@ tap.test(
   "09 - alt attribute is missing, there are other attributes too - XHTML - #5",
   (t) => {
     t.strictSame(
-      alt('zzz<img class=""/   >zzz'),
+      alts('zzz<img class=""/   >zzz'),
       'zzz<img class="" alt="" />zzz',
       "09"
     );
@@ -120,7 +122,7 @@ tap.test(
   "10 - alt attribute is missing, there are other attributes too - XHTML - #6",
   (t) => {
     t.strictSame(
-      alt('zzz<img    class=""/   >zzz'),
+      alts('zzz<img    class=""/   >zzz'),
       'zzz<img class="" alt="" />zzz',
       "10"
     );
@@ -132,7 +134,7 @@ tap.test(
   "11 - alt attribute is missing, there are other attributes too - XHTML - #7",
   (t) => {
     t.strictSame(
-      alt(
+      alts(
         'zzz<img class=""    /   >zzz<img class=""    /   >zzz<img class=""    /   >zzz'
       ),
       'zzz<img class="" alt="" />zzz<img class="" alt="" />zzz<img class="" alt="" />zzz',

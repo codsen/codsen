@@ -1,18 +1,18 @@
 import tap from "tap";
-import alt from "../dist/html-img-alt.esm";
+import { alts } from "../dist/html-img-alt.esm";
 
 // GROUP FIFTEEN.
 // -----------------------------------------------------------------------------
 // alt with two single quotes, HTML
 
 tap.test("01 - alt with two single quotes, HTML", (t) => {
-  t.strictSame(alt("zzz<img     alt=''    >zzz"), 'zzz<img alt="" >zzz', "01");
+  t.strictSame(alts("zzz<img     alt=''    >zzz"), 'zzz<img alt="" >zzz', "01");
   t.end();
 });
 
 tap.test("02 - alt with two single quotes, HTML", (t) => {
   t.strictSame(
-    alt("zzz<img     alt    =''    >zzz"),
+    alts("zzz<img     alt    =''    >zzz"),
     'zzz<img alt="" >zzz',
     "02"
   );
@@ -21,7 +21,7 @@ tap.test("02 - alt with two single quotes, HTML", (t) => {
 
 tap.test("03 - alt with two single quotes, HTML", (t) => {
   t.strictSame(
-    alt("zzz<img     alt    =    ''    >zzz"),
+    alts("zzz<img     alt    =    ''    >zzz"),
     'zzz<img alt="" >zzz',
     "03"
   );
@@ -30,7 +30,7 @@ tap.test("03 - alt with two single quotes, HTML", (t) => {
 
 tap.test("04 - alt with two single quotes, HTML", (t) => {
   t.strictSame(
-    alt("zzz<img     alt    =    ''>zzz"),
+    alts("zzz<img     alt    =    ''>zzz"),
     'zzz<img alt="" >zzz',
     "04"
   );
@@ -39,7 +39,7 @@ tap.test("04 - alt with two single quotes, HTML", (t) => {
 
 tap.test("05 - alt with two single quotes, HTML", (t) => {
   t.strictSame(
-    alt("zzz<img     alt='   '    >zzz"),
+    alts("zzz<img     alt='   '    >zzz"),
     'zzz<img alt="" >zzz',
     "05"
   );
@@ -48,7 +48,7 @@ tap.test("05 - alt with two single quotes, HTML", (t) => {
 
 tap.test("06 - alt with two single quotes, HTML", (t) => {
   t.strictSame(
-    alt("zzz<img     alt    ='   '    >zzz"),
+    alts("zzz<img     alt    ='   '    >zzz"),
     'zzz<img alt="" >zzz',
     "06"
   );
@@ -57,7 +57,7 @@ tap.test("06 - alt with two single quotes, HTML", (t) => {
 
 tap.test("07 - alt with two single quotes, HTML", (t) => {
   t.strictSame(
-    alt("zzz<img     alt    =    '   '    >zzz"),
+    alts("zzz<img     alt    =    '   '    >zzz"),
     'zzz<img alt="" >zzz',
     "07"
   );
@@ -66,7 +66,7 @@ tap.test("07 - alt with two single quotes, HTML", (t) => {
 
 tap.test("08 - alt with two single quotes, HTML", (t) => {
   t.strictSame(
-    alt("zzz<img     alt    =    '   '>zzz"),
+    alts("zzz<img     alt    =    '   '>zzz"),
     'zzz<img alt="" >zzz',
     "08"
   );

@@ -1,12 +1,12 @@
 import tap from "tap";
-import alt from "../dist/html-img-alt.esm";
+import { alts } from "../dist/html-img-alt.esm";
 
 // no alt attr is missing, only whitespace control
 // -----------------------------------------------------------------------------
 
 tap.test("01 - nothing is missing", (t) => {
   t.strictSame(
-    alt('zzz<img        alt="123" >zzz'),
+    alts('zzz<img        alt="123" >zzz'),
     'zzz<img alt="123" >zzz',
     "01 - one HTML tag, only excessive whitespace"
   );
@@ -15,7 +15,7 @@ tap.test("01 - nothing is missing", (t) => {
 
 tap.test("02 - nothing is missing", (t) => {
   t.strictSame(
-    alt('<img   alt="123"    >'),
+    alts('<img   alt="123"    >'),
     '<img alt="123" >',
     "02 - whitespace on both sides, one tag"
   );
@@ -24,7 +24,7 @@ tap.test("02 - nothing is missing", (t) => {
 
 tap.test("03 - nothing is missing", (t) => {
   t.strictSame(
-    alt('xxx<img        alt="123" >yyy<img   alt="123"    >zzz'),
+    alts('xxx<img        alt="123" >yyy<img   alt="123"    >zzz'),
     'xxx<img alt="123" >yyy<img alt="123" >zzz',
     "03 - multiple HTML tags, only excessive whitespace"
   );
@@ -33,7 +33,7 @@ tap.test("03 - nothing is missing", (t) => {
 
 tap.test("04 - nothing is missing", (t) => {
   t.strictSame(
-    alt('zzz<img        alt="123" />zzz'),
+    alts('zzz<img        alt="123" />zzz'),
     'zzz<img alt="123" />zzz',
     "04 - one XHTML tag, only excessive whitespace"
   );
@@ -42,7 +42,7 @@ tap.test("04 - nothing is missing", (t) => {
 
 tap.test("05 - nothing is missing", (t) => {
   t.strictSame(
-    alt('xxx<img        alt="123" />yyy<img   alt="123"    />zzz'),
+    alts('xxx<img        alt="123" />yyy<img   alt="123"    />zzz'),
     'xxx<img alt="123" />yyy<img alt="123" />zzz',
     "05 - multiple XHTML tags, only excessive whitespace"
   );
@@ -51,7 +51,7 @@ tap.test("05 - nothing is missing", (t) => {
 
 tap.test("06 - nothing is missing", (t) => {
   t.strictSame(
-    alt("aaaa        bbbbb"),
+    alts("aaaa        bbbbb"),
     "aaaa        bbbbb",
     "06 - excessive whitespace, no tags at all"
   );
@@ -60,7 +60,7 @@ tap.test("06 - nothing is missing", (t) => {
 
 tap.test("07 - nothing is missing", (t) => {
   t.strictSame(
-    alt("aaaa alt bbbbb"),
+    alts("aaaa alt bbbbb"),
     "aaaa alt bbbbb",
     "07 - suspicious alt within copy but not IMG tag"
   );
@@ -69,7 +69,7 @@ tap.test("07 - nothing is missing", (t) => {
 
 tap.test("08 - nothing is missing", (t) => {
   t.strictSame(
-    alt("aaaa alt= bbbbb"),
+    alts("aaaa alt= bbbbb"),
     "aaaa alt= bbbbb",
     "08 - suspicious alt= within copy but not IMG tag"
   );
@@ -78,7 +78,7 @@ tap.test("08 - nothing is missing", (t) => {
 
 tap.test("09 - nothing is missing", (t) => {
   t.strictSame(
-    alt("aaaa alt = bbbbb"),
+    alts("aaaa alt = bbbbb"),
     "aaaa alt = bbbbb",
     "09 - suspicious alt= within copy but not IMG tag"
   );
@@ -87,7 +87,7 @@ tap.test("09 - nothing is missing", (t) => {
 
 tap.test("10 - nothing is missing", (t) => {
   t.strictSame(
-    alt('<img alt="1   23" >'),
+    alts('<img alt="1   23" >'),
     '<img alt="1   23" >',
     "10 - does nothing"
   );
@@ -96,7 +96,7 @@ tap.test("10 - nothing is missing", (t) => {
 
 tap.test("11 - nothing is missing", (t) => {
   t.strictSame(
-    alt('<img    class="zzz"   alt="123"    >'),
+    alts('<img    class="zzz"   alt="123"    >'),
     '<img class="zzz" alt="123" >',
     "11 - whitespace on both sides, one tag"
   );
@@ -105,7 +105,7 @@ tap.test("11 - nothing is missing", (t) => {
 
 tap.test("12 - nothing is missing", (t) => {
   t.strictSame(
-    alt('zzz<img        alt="123"    /  >yyy'),
+    alts('zzz<img        alt="123"    /  >yyy'),
     'zzz<img alt="123" />yyy',
     "12"
   );
@@ -114,7 +114,7 @@ tap.test("12 - nothing is missing", (t) => {
 
 tap.test("13 - nothing is missing", (t) => {
   t.strictSame(
-    alt('z/zz<img        alt="/123/"    /  >y/yy'),
+    alts('z/zz<img        alt="/123/"    /  >y/yy'),
     'z/zz<img alt="/123/" />y/yy',
     "13"
   );
@@ -123,7 +123,7 @@ tap.test("13 - nothing is missing", (t) => {
 
 tap.test("14 - nothing is missing", (t) => {
   t.strictSame(
-    alt('zzz<img     alt    =     ""    /     >zzz'),
+    alts('zzz<img     alt    =     ""    /     >zzz'),
     'zzz<img alt="" />zzz',
     "14"
   );
@@ -132,7 +132,7 @@ tap.test("14 - nothing is missing", (t) => {
 
 tap.test("15 - nothing is missing", (t) => {
   t.strictSame(
-    alt('zzz<img        alt="123"   class="test" >zzz'),
+    alts('zzz<img        alt="123"   class="test" >zzz'),
     'zzz<img alt="123" class="test" >zzz',
     "15"
   );
