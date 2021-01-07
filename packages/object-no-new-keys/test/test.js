@@ -1,5 +1,5 @@
 import tap from "tap";
-import nnk from "../dist/object-no-new-keys.esm";
+import { noNewKeys } from "../dist/object-no-new-keys.esm";
 
 // ==========
 // 01. B.A.U.
@@ -7,7 +7,7 @@ import nnk from "../dist/object-no-new-keys.esm";
 
 tap.test("01 - first level keys", (t) => {
   t.strictSame(
-    nnk(
+    noNewKeys(
       {
         a: "a",
         b: "b",
@@ -25,7 +25,7 @@ tap.test("01 - first level keys", (t) => {
 
 tap.test("02 - two level object", (t) => {
   t.strictSame(
-    nnk(
+    noNewKeys(
       {
         a: {
           b: "b",
@@ -47,7 +47,7 @@ tap.test("02 - two level object", (t) => {
 
 tap.test("03 - object does not even exist on a reference", (t) => {
   t.strictSame(
-    nnk(
+    noNewKeys(
       {
         a: {
           b: "b",
@@ -67,7 +67,7 @@ tap.test("03 - object does not even exist on a reference", (t) => {
 
 tap.test("04 - same as 01.03 but deeper levels", (t) => {
   t.strictSame(
-    nnk(
+    noNewKeys(
       {
         a: {
           b: {
@@ -98,7 +98,7 @@ tap.test("04 - same as 01.03 but deeper levels", (t) => {
 
 tap.test("05 - objects within arrays", (t) => {
   t.strictSame(
-    nnk(
+    noNewKeys(
       {
         a: [
           {
@@ -119,7 +119,7 @@ tap.test("05 - objects within arrays", (t) => {
     "05.01 - basic"
   );
   t.strictSame(
-    nnk(
+    noNewKeys(
       {
         a: [
           {
@@ -151,7 +151,7 @@ tap.test("05 - objects within arrays", (t) => {
     "05.02 - proper"
   );
   t.strictSame(
-    nnk(
+    noNewKeys(
       {
         a: [
           {
@@ -179,7 +179,7 @@ tap.test("05 - objects within arrays", (t) => {
     "05.03 - array in the reference has lesser number of elements (default, MODE #2)"
   );
   t.strictSame(
-    nnk(
+    noNewKeys(
       {
         a: [
           {
@@ -208,7 +208,7 @@ tap.test("05 - objects within arrays", (t) => {
     "05.04 - MODE #1 - array in the reference has lesser number of elements"
   );
   t.strictSame(
-    nnk(
+    noNewKeys(
       {
         a: [
           {
@@ -241,7 +241,7 @@ tap.test("05 - objects within arrays", (t) => {
 
 tap.test("06 - other cases", (t) => {
   t.strictSame(
-    nnk(
+    noNewKeys(
       [
         {
           b: "aaa",
@@ -254,7 +254,7 @@ tap.test("06 - other cases", (t) => {
     "06.01"
   );
   t.strictSame(
-    nnk(
+    noNewKeys(
       {
         a: [
           {
@@ -269,7 +269,7 @@ tap.test("06 - other cases", (t) => {
     "06.02"
   );
   t.strictSame(
-    nnk(
+    noNewKeys(
       {
         a: [
           {
@@ -292,22 +292,22 @@ tap.test("06 - other cases", (t) => {
 
 tap.test("07 - array vs ..., can be inner recursion situation", (t) => {
   t.strictSame(
-    nnk(["a", "b", "c"]),
+    noNewKeys(["a", "b", "c"]),
     ["[0]", "[1]", "[2]"],
     "07.01 - array vs undefined"
   );
   t.strictSame(
-    nnk(["a", "b", "c"], "zzz"),
+    noNewKeys(["a", "b", "c"], "zzz"),
     ["[0]", "[1]", "[2]"],
     "07.02 - array vs string"
   );
   t.strictSame(
-    nnk(["a", "b", "c"], { z: "zzz" }),
+    noNewKeys(["a", "b", "c"], { z: "zzz" }),
     ["[0]", "[1]", "[2]"],
     "07.03 - array vs plain object"
   );
   t.strictSame(
-    nnk(
+    noNewKeys(
       [
         {
           b: "aaa",
@@ -324,7 +324,7 @@ tap.test("07 - array vs ..., can be inner recursion situation", (t) => {
 
 tap.test("08 - plain object vs ..., can be inner recursion situation", (t) => {
   t.strictSame(
-    nnk({
+    noNewKeys({
       a: "a",
       b: "b",
       c: "c",
@@ -333,7 +333,7 @@ tap.test("08 - plain object vs ..., can be inner recursion situation", (t) => {
     "08.01 - object vs undefined"
   );
   t.strictSame(
-    nnk(
+    noNewKeys(
       {
         a: "a",
         b: "b",
@@ -351,7 +351,7 @@ tap.test(
   "09 - more complex plain object vs undefined (deeper levels won't be traversed if parents are not matching)",
   (t) => {
     t.strictSame(
-      nnk({
+      noNewKeys({
         a: "a",
         b: ["b"],
         c: {
@@ -367,7 +367,7 @@ tap.test(
 
 tap.test("10 - more complex plain object vs empty object", (t) => {
   t.strictSame(
-    nnk(
+    noNewKeys(
       {
         a: "a",
         b: ["b"],
@@ -384,7 +384,7 @@ tap.test("10 - more complex plain object vs empty object", (t) => {
 });
 
 tap.test("11 - string vs string", (t) => {
-  t.strictSame(nnk("a", "b"), [], "11");
+  t.strictSame(noNewKeys("a", "b"), [], "11");
   t.end();
 });
 
@@ -394,23 +394,23 @@ tap.test("11 - string vs string", (t) => {
 
 tap.test("12 - mode.opts customised to a wrong type - throws", (t) => {
   t.throws(() => {
-    nnk({ a: "a" }, { b: "b" }, { mode: "z" });
+    noNewKeys({ a: "a" }, { b: "b" }, { mode: "z" });
   }, /THROW_ID_01/);
   t.throws(() => {
-    nnk({ a: "a" }, { b: "b" }, { mode: 1.5 });
+    noNewKeys({ a: "a" }, { b: "b" }, { mode: 1.5 });
   }, /THROW_ID_01/);
   t.end();
 });
 
 tap.test("13 - mode is given as integer - throws", (t) => {
   t.throws(() => {
-    nnk({ a: "a" }, { b: "b" }, 1);
+    noNewKeys({ a: "a" }, { b: "b" }, 1);
   }, /THROW_ID_02/);
   t.throws(() => {
-    nnk({ a: "a" }, { b: "b" }, 2);
+    noNewKeys({ a: "a" }, { b: "b" }, 2);
   }, /THROW_ID_02/);
   t.throws(() => {
-    nnk({ a: "a" }, { b: "b" }, 2.5);
+    noNewKeys({ a: "a" }, { b: "b" }, 2.5);
   }, /THROW_ID_02/);
   t.end();
 });

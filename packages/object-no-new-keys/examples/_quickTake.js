@@ -1,12 +1,10 @@
-
-
 // Quick Take
 
 import { strict as assert } from "assert";
-import nnk from "../dist/object-no-new-keys.esm.js";
+import { noNewKeys } from "../dist/object-no-new-keys.esm.js";
 
 assert.deepEqual(
-  nnk(
+  noNewKeys(
     {
       a: {
         b: "b",

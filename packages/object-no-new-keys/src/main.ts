@@ -1,15 +1,28 @@
-/* eslint no-param-reassign:0 */
+import { JsonValue } from "type-fest";
+import { version } from "../package.json";
 
-function isObj(something) {
+interface Obj {
+  [key: string]: any;
+}
+
+function isObj(something: any): boolean {
   return (
     something && typeof something === "object" && !Array.isArray(something)
   );
 }
 
-function objectNoNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
+interface Opts {
+  mode: 1 | 2;
+}
+
+function noNewKeys(
+  inputOuter: JsonValue,
+  referenceOuter: JsonValue,
+  originalOptsOuter: Opts
+): JsonValue {
   if (originalOptsOuter && !isObj(originalOptsOuter)) {
     throw new TypeError(
-      `object-no-new-keys/objectNoNewKeys(): [THROW_ID_02] opts should be a plain object. It was given as ${JSON.stringify(
+      `object-no-new-keys/noNewKeys(): [THROW_ID_02] opts should be a plain object. It was given as ${JSON.stringify(
         originalOptsOuter,
         null,
         4
@@ -24,22 +37,20 @@ function objectNoNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
     typeof optsOuter.mode === "string" &&
     ["1", "2"].includes(optsOuter.mode)
   ) {
-    if (optsOuter.mode === "1") {
-      optsOuter.mode = 1;
-    } else {
-      optsOuter.mode = 2;
-    }
+    (optsOuter as Obj).mode = +optsOuter.mode;
   } else if (![1, 2].includes(optsOuter.mode)) {
     throw new TypeError(
       `object-no-new-keys/objectNoNewKeys(): [THROW_ID_01] opts.mode should be "1" or "2" (string or number).`
     );
   }
 
-  function objectNoNewKeysInternal(input, reference, opts, innerVar) {
+  function objectNoNewKeysInternal(
+    input: any,
+    reference: any,
+    opts: Opts,
+    innerVar: any
+  ): any {
     let temp;
-    if (innerVar === undefined) {
-      innerVar = { path: "", res: [] };
-    }
     if (isObj(input)) {
       if (isObj(reference)) {
         // input and reference both are objects.
@@ -101,14 +112,17 @@ function objectNoNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
         // traverse all elements of the input and put their locations to innerVar.res
         innerVar.res = innerVar.res.concat(
           input.map(
-            (el, i) => `${innerVar.path.length > 0 ? innerVar.path : ""}[${i}]`
+            (_el, i) => `${innerVar.path.length > 0 ? innerVar.path : ""}[${i}]`
           )
         );
       }
     }
     return innerVar;
   }
-  return objectNoNewKeysInternal(inputOuter, referenceOuter, optsOuter).res;
+  return objectNoNewKeysInternal(inputOuter, referenceOuter, optsOuter, {
+    path: "",
+    res: [],
+  }).res;
 }
 
-export default objectNoNewKeys;
+export { noNewKeys, version };
