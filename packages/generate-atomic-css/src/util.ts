@@ -1,8 +1,12 @@
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+
 import { left, right, leftSeq, rightSeq } from "string-left-right";
 
-const isArr = Array.isArray;
+interface Obj {
+  [key: string]: any;
+}
 
-function isStr(something) {
+function isStr(something: any): boolean {
   return typeof something === "string";
 }
 
@@ -34,7 +38,23 @@ const { CONFIGHEAD, CONFIGTAIL, CONTENTHEAD, CONTENTTAIL } = headsAndTails;
 
 const padLeftIfTheresOnTheLeft = [":"];
 
-function extractConfig(str) {
+/* eslint no-control-regex: 0 */
+function trimEnd(str: string): string {
+  return str.replace(
+    new RegExp(
+      `${
+        /[\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF]+/
+          .source
+      }$`,
+      "g"
+    ),
+    ""
+  );
+}
+
+function extractConfig(
+  str: string
+): [extractedConfig: string, rawContentAbove: string, rawContentBelow: string] {
   console.log(
     `039 util ███████████████████████████████████████ extractConfig() ███████████████████████████████████████`
   );
@@ -58,28 +78,23 @@ function extractConfig(str) {
     let sliceTo = str.indexOf(CONFIGTAIL);
     // if there are opening CSS comments, include them:
     if (
-      str[right(str, sliceFrom)] === "*" &&
-      str[right(str, right(str, sliceFrom))] === "/"
+      str[right(str, sliceFrom) as number] === "*" &&
+      str[right(str, right(str, sliceFrom) as number) as number] === "/"
     ) {
-      sliceFrom = right(str, right(str, sliceFrom)) + 1;
+      sliceFrom = (right(str, right(str, sliceFrom) as number) as number) + 1;
     }
     // if there are closing CSS comments include them too:
     if (
-      str[left(str, sliceTo)] === "*" &&
-      str[left(str, left(str, sliceTo))] === "/"
+      str[left(str, sliceTo) as number] === "*" &&
+      str[left(str, left(str, sliceTo) as number) as number] === "/"
     ) {
-      sliceTo = left(str, left(str, sliceTo));
+      sliceTo = left(str, left(str, sliceTo) as number) as number;
     }
 
     extractedConfig = str.slice(sliceFrom, sliceTo).trim();
     if (!isStr(extractedConfig) || !extractedConfig.trim().length) {
       console.log(`076 util: return empty`);
-      return {
-        log: {
-          count: 0,
-        },
-        result: "",
-      };
+      return [extractedConfig, rawContentAbove, rawContentBelow];
     }
     console.log(
       `085 util: ${`\u001b[${36}m${`extractedConfig.trim()`}\u001b[${39}m`} = "${extractedConfig.trim()}"`
@@ -119,7 +134,7 @@ function extractConfig(str) {
         // if there are opening or closing comments, don't include those
         if (leftSeq(str, sliceTo, "/", "*")) {
           console.log(`121`);
-          sliceTo = leftSeq(str, sliceTo, "/", "*").leftmostChar;
+          sliceTo = (leftSeq(str, sliceTo, "/", "*") as Obj).leftmostChar;
         }
         rawContentAbove = sliceTo === 0 ? "" : str.slice(0, sliceTo);
         console.log(
@@ -145,7 +160,8 @@ function extractConfig(str) {
       );
       if (rightSeq(extractedConfig, sliceFrom - 1, "*", "/")) {
         sliceFrom =
-          rightSeq(extractedConfig, sliceFrom - 1, "*", "/").rightmostChar + 1;
+          (rightSeq(extractedConfig, sliceFrom - 1, "*", "/") as Obj)
+            .rightmostChar + 1;
       }
       let sliceTo = null;
 
@@ -161,8 +177,8 @@ function extractConfig(str) {
         );
         // don't include comment on the left
         if (
-          str[left(str, sliceTo)] === "*" &&
-          str[left(str, left(str, sliceTo))] === "/"
+          str[left(str, sliceTo) as number] === "*" &&
+          str[left(str, left(str, sliceTo) as number) as number] === "/"
         ) {
           sliceTo = left(str, left(str, sliceTo));
           console.log(
@@ -185,11 +201,16 @@ function extractConfig(str) {
           )}; slice: "${str.slice(contentAfterStartsAt)}"`
         );
         if (
-          str[right(str, contentAfterStartsAt - 1)] === "*" &&
-          str[right(str, right(str, contentAfterStartsAt - 1))] === "/"
+          str[right(str, contentAfterStartsAt - 1) as number] === "*" &&
+          str[
+            right(str, right(str, contentAfterStartsAt - 1) as number) as number
+          ] === "/"
         ) {
           contentAfterStartsAt =
-            right(str, right(str, contentAfterStartsAt - 1)) + 1;
+            (right(
+              str,
+              right(str, contentAfterStartsAt - 1) as number
+            ) as number) + 1;
           console.log(
             `194 ${`\u001b[${33}m${`contentAfterStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
               contentAfterStartsAt,
@@ -223,7 +244,7 @@ function extractConfig(str) {
     else if (extractedConfig.includes(CONTENTTAIL)) {
       console.log(`224 CONTENTTAIL present`);
 
-      const contentInFront = [];
+      const contentInFront: string[] = [];
       let stopFilteringAndPassAllLines = false;
       extractedConfig = extractedConfig
         .split("\n")
@@ -246,7 +267,8 @@ function extractConfig(str) {
       let sliceTo = extractedConfig.indexOf(CONTENTTAIL);
 
       if (leftSeq(extractedConfig, sliceTo, "/", "*")) {
-        sliceTo = leftSeq(extractedConfig, sliceTo, "/", "*").leftmostChar;
+        sliceTo = (leftSeq(extractedConfig, sliceTo, "/", "*") as Obj)
+          .leftmostChar;
       }
       extractedConfig = extractedConfig.slice(0, sliceTo).trim();
 
@@ -260,11 +282,14 @@ function extractConfig(str) {
         console.log(`260 content after CONTENTTAIL detected`);
         contentAfterStartsAt = str.indexOf(CONTENTTAIL) + CONTENTTAIL.length;
         if (
-          str[right(str, contentAfterStartsAt)] === "*" &&
-          str[right(str, right(str, contentAfterStartsAt))] === "/"
+          str[right(str, contentAfterStartsAt) as number] === "*" &&
+          str[
+            right(str, right(str, contentAfterStartsAt) as number) as number
+          ] === "/"
         ) {
           contentAfterStartsAt =
-            right(str, right(str, contentAfterStartsAt)) + 1;
+            (right(str, right(str, contentAfterStartsAt) as number) as number) +
+            1;
           if (right(str, contentAfterStartsAt)) {
             rawContentBelow = str.slice(contentAfterStartsAt);
           }
@@ -301,12 +326,12 @@ function extractConfig(str) {
       `(\\/\\s*\\*\\s*)*${CONTENTTAIL}(\\s*\\*\\s*\\/)*`
     );
     let stopFiltering = false;
-    const gatheredLinesAboveTopmostConfigLine = [];
-    const gatheredLinesBelowLastConfigLine = [];
+    const gatheredLinesAboveTopmostConfigLine: string[] = [];
+    const gatheredLinesBelowLastConfigLine: string[] = [];
 
     // remove all lines above the first line which contains $$$
 
-    const configLines = str.split("\n").filter((rowStr) => {
+    const configLines: string[] = str.split("\n").filter((rowStr) => {
       if (stopFiltering) {
         return true;
       }
@@ -330,7 +355,7 @@ function extractConfig(str) {
         !configLines[i].includes("}") &&
         !configLines[i].includes(":")
       ) {
-        gatheredLinesBelowLastConfigLine.unshift(configLines.pop());
+        gatheredLinesBelowLastConfigLine.unshift(configLines.pop() as string);
       } else {
         break;
       }
@@ -355,7 +380,7 @@ function extractConfig(str) {
   return [extractedConfig, rawContentAbove, rawContentBelow];
 }
 
-function trimBlankLinesFromLinesArray(lineArr, trim = true) {
+function trimBlankLinesFromLinesArray(lineArr: string[], trim = true) {
   // killswitch is activated, do nothing
   if (!trim) {
     return lineArr;
@@ -386,7 +411,11 @@ function trimBlankLinesFromLinesArray(lineArr, trim = true) {
 // and extracts the parts after the pipe
 // also, we use it for simpler format sources that come from wizard on the
 // webapp, format .mt|0|500 - same business, extract digits between pipes
-function extractFromToSource(str, fromDefault = 0, toDefault = 500) {
+function extractFromToSource(
+  str: string,
+  fromDefault = 0,
+  toDefault = 500
+): [from: number, to: number, source: string] {
   let from = fromDefault;
   let to = toDefault;
   let source = str;
@@ -427,7 +456,7 @@ function extractFromToSource(str, fromDefault = 0, toDefault = 500) {
       4
     )}`
   );
-  if (isArr(tempArr)) {
+  if (Array.isArray(tempArr)) {
     if (tempArr.length === 1) {
       to = Number.parseInt(tempArr[0], 10);
     } else if (tempArr.length > 1) {
@@ -444,11 +473,11 @@ function extractFromToSource(str, fromDefault = 0, toDefault = 500) {
     str.lastIndexOf("}") > 0 &&
     str.slice(str.lastIndexOf("}") + 1).includes("|")
   ) {
-    source = str.slice(0, str.indexOf("|", str.lastIndexOf("}") + 1)).trimEnd();
+    source = trimEnd(str.slice(0, str.indexOf("|", str.lastIndexOf("}") + 1)));
     if (source.trim().startsWith("|")) {
       console.log(`449 util: crop leading pipe`);
       while (source.trim().startsWith("|")) {
-        source = source.trimStart().slice(1);
+        source = source.trim().slice(1);
       }
     }
   } else {
@@ -485,7 +514,7 @@ function extractFromToSource(str, fromDefault = 0, toDefault = 500) {
       }
 
       // catch the last character
-      if (!str[i + 1] && onlyDigitsAndWhitespaceBeenMet) {
+      if (!str[i + 1] && onlyDigitsAndWhitespaceBeenMet && lastPipeWasAt) {
         endTo = lastPipeWasAt;
         console.log(
           `491 SET ${`\u001b[${33}m${`endTo`}\u001b[${39}m`} = ${endTo}`
@@ -495,7 +524,7 @@ function extractFromToSource(str, fromDefault = 0, toDefault = 500) {
       // catch pipe
       if (str[i] === "|") {
         console.log(`497 ${`\u001b[${33}m${`pipe caught`}\u001b[${39}m`}`);
-        if (onlyDigitsAndWhitespaceBeenMet) {
+        if (onlyDigitsAndWhitespaceBeenMet && lastPipeWasAt) {
           endTo = lastPipeWasAt;
           console.log(
             `501 set endTo = ${endTo}; ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
@@ -532,7 +561,7 @@ lastPipeWasAt = ${lastPipeWasAt}
       );
     }
     console.log(`534 startFrom = ${startFrom}; endTo = ${endTo}`);
-    source = str.slice(startFrom, endTo).trimEnd();
+    source = trimEnd(str.slice(startFrom, endTo));
     console.log(
       `537 FINAL ${`\u001b[${33}m${`source`}\u001b[${39}m`} = ${source}`
     );
@@ -541,7 +570,14 @@ lastPipeWasAt = ${lastPipeWasAt}
   return [from, to, source];
 }
 
-function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
+function prepLine(
+  str: string,
+  progressFn: null | ((percDone: number) => void),
+  subsetFrom: number,
+  subsetTo: number,
+  generatedCount: Obj,
+  pad: boolean
+) {
   //
   //
   //
@@ -633,15 +669,19 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
               return true;
             }
           }) &&
-          (source[right(source, y + unitFound.length)] === "{" ||
-            !source[y + unitFound.length + 1].trim().length)
+          (source[right(source, y + (unitFound as any).length) as number] ===
+            "{" ||
+            !source[y + (unitFound as any).length + 1].trim().length)
         ) {
           console.log(`639 push: "${source.slice(startPoint, y - 2)}"`);
           console.log(
             `641 push also: "${
               pad
                 ? String(i).padStart(
-                    String(to).length - String(i).length + unitFound.length + 1
+                    String(to).length -
+                      String(i).length +
+                      (unitFound as any).length +
+                      1
                   )
                 : i
             }"`
@@ -649,7 +689,10 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
           res += `${source.slice(startPoint, y - 2)}${
             pad
               ? String(i).padStart(
-                  String(to).length - String(i).length + unitFound.length + 1
+                  String(to).length -
+                    String(i).length +
+                    (unitFound as any).length +
+                    1
                 )
               : i
           }`;
@@ -719,7 +762,9 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
               pad
                 ? String(i).padStart(
                     String(to).length +
-                      (i === 0 && unitThatFollow ? unitThatFollow.length : 0)
+                      (i === 0 && unitThatFollow
+                        ? (unitThatFollow as string).length
+                        : 0)
                   )
                 : i
             }`;
@@ -728,14 +773,16 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
             );
           } else if (
             !source[y + 1].trim().length ||
-            source[right(source, y)] === "{"
+            source[right(source, y) as number] === "{"
           ) {
             console.log(
               `734 push ${`${source.slice(startPoint, y - 2)}${
                 pad
                   ? String(i).padEnd(
                       String(to).length +
-                        (i === 0 && unitThatFollow ? unitThatFollow.length : 0)
+                        (i === 0 && unitThatFollow
+                          ? (unitThatFollow as any).length
+                          : 0)
                     )
                   : i
               }`}`
@@ -745,7 +792,9 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
               pad
                 ? String(i).padEnd(
                     String(to).length +
-                      (i === 0 && unitThatFollow ? unitThatFollow.length : 0)
+                      (i === 0 && unitThatFollow
+                        ? (unitThatFollow as any).length
+                        : 0)
                   )
                 : i
             }`;
@@ -822,9 +871,9 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
           })
         ) {
           console.log(
-            `825 push "${source.slice(startPoint + unitFound.length)}"`
+            `825 push "${source.slice(startPoint + (unitFound as any).length)}"`
           );
-          res += `${source.slice(startPoint + unitFound.length)}`;
+          res += `${source.slice(startPoint + (unitFound as any).length)}`;
           console.log(`828 ${`\u001b[${32}m${`res = "${res}"`}\u001b[${39}m`}`);
         } else {
           console.log(`830 last char - submit "${source.slice(startPoint)}"`);
@@ -855,7 +904,7 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
   return res;
 }
 
-function bump(str, thingToBump) {
+function bump(str: string, thingToBump: Obj) {
   if (/\.\w/g.test(str)) {
     // eslint-disable-next-line no-param-reassign
     thingToBump.count += 1;
@@ -864,13 +913,13 @@ function bump(str, thingToBump) {
 }
 
 function prepConfig(
-  str,
-  progressFn,
-  progressFrom,
-  progressTo,
+  str: string,
+  progressFn: null | ((percDone: number) => void),
+  progressFrom: number,
+  progressTo: number,
   trim = true,
-  generatedCount,
-  pad
+  generatedCount: Obj,
+  pad: boolean
 ) {
   // all rows will report the progress from progressFrom to progressTo.
   // For example, defaults 0 to 100.
@@ -898,10 +947,10 @@ function prepConfig(
 }
 
 export {
+  Obj,
   prepLine,
   prepConfig,
   isStr,
-  isArr,
   extractFromToSource,
   extractConfig,
   headsAndTails,
