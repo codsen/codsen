@@ -1,4 +1,8 @@
-const notEmailFriendly = {
+interface Obj {
+  [key: string]: any;
+}
+
+const notEmailFriendly: Obj = {
   AMP: "amp",
   Abreve: "#x102",
   Acy: "#x410",
