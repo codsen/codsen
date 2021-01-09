@@ -1,5 +1,3 @@
-/* eslint import/extensions:0, no-unused-vars:0 */
-
 // Synchronous `noNewKeysSync()` - example #1
 
 import { strict as assert } from "assert";

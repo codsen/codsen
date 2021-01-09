@@ -1,34 +1,38 @@
-import flattenAllArrays from "object-flatten-all-arrays";
-import fillMissingKeys from "object-fill-missing-keys";
-import setAllValuesTo from "object-set-all-values-to";
-import mergeAdvanced from "object-merge-advanced";
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+
+import { flattenAllArrays } from "object-flatten-all-arrays";
+import { fillMissing } from "object-fill-missing-keys";
+import { setAllValuesTo } from "object-set-all-values-to";
+import { mergeAdvanced } from "object-merge-advanced";
 import compareVersions from "compare-versions";
 import includes from "lodash.includes";
-import nnk from "object-no-new-keys";
+import { noNewKeys } from "object-no-new-keys";
 import clone from "lodash.clonedeep";
 import sortKeys from "sort-keys";
 import pReduce from "p-reduce";
 import typ from "type-detect";
 import pOne from "p-one";
+import { version } from "../package.json";
 
 // -----------------------------------------------------------------------------
 
-function existy(x) {
+interface Obj {
+  [key: string]: any;
+}
+
+function existy(x: any): boolean {
   return x != null;
 }
-function truthy(x) {
-  return x !== false && existy(x);
-}
-function isObj(something) {
+function isObj(something: any): boolean {
   return typ(something) === "Object";
 }
-function isStr(something) {
+function isStr(something: any): boolean {
   return typeof something === "string";
 }
 const isArr = Array.isArray;
 
 // ECMA specification: http://www.ecma-international.org/ecma-262/6.0/#sec-tostring
-function toString(obj) {
+function toString(obj: any): string {
   if (obj === null) {
     return "null";
   }
@@ -50,7 +54,7 @@ function toString(obj) {
 // INFO: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
 // ECMA specification: http://www.ecma-international.org/ecma-262/6.0/#sec-sortcompare
 // from https://stackoverflow.com/a/47349064/3943954
-function defaultCompare(x, y) {
+function defaultCompare(x: any, y: any) {
   if (x === undefined && y === undefined) {
     return 0;
   }
@@ -73,7 +77,7 @@ function defaultCompare(x, y) {
 
 // compareFunction
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#Parameters
-function compare(firstEl, secondEl) {
+function compare(firstEl: string, secondEl: string) {
   const semverRegex = /^\d+\.\d+\.\d+$/g;
   if (firstEl.match(semverRegex) && secondEl.match(semverRegex)) {
     return compareVersions(firstEl, secondEl);
@@ -81,7 +85,7 @@ function compare(firstEl, secondEl) {
   return defaultCompare(firstEl, secondEl);
 }
 
-function sortAllObjectsSync(input) {
+function sortAllObjectsSync(input: any): any {
   if (isObj(input) || isArr(input)) {
     return sortKeys(input, { deep: true, compare });
   }
@@ -90,7 +94,10 @@ function sortAllObjectsSync(input) {
 
 // -----------------------------------------------------------------------------
 
-function getKeyset(arrOfPromises, originalOpts) {
+function getKeyset<ValueType>(
+  arrOfPromises: Iterable<PromiseLike<ValueType> | ValueType>,
+  originalOpts?: { placeholder?: boolean }
+): Promise<Obj> {
   if (arguments.length === 0) {
     throw new Error(
       "json-comb-core/getKeyset(): [THROW_ID_11] Inputs missing!"
@@ -129,8 +136,8 @@ function getKeyset(arrOfPromises, originalOpts) {
       4
     )}`
   );
-  let culpritIndex;
-  let culpritVal;
+  let culpritIndex: any;
+  let culpritVal: any;
 
   return new Promise((resolve, reject) => {
     // Map over input array of promises. If any resolve to non-plain-object,
@@ -158,7 +165,7 @@ function getKeyset(arrOfPromises, originalOpts) {
       }
       return pReduce(
         arrOfPromises, // input
-        (previousValue, currentValue) =>
+        (previousValue, currentValue: Obj) =>
           mergeAdvanced(
             flattenAllArrays(previousValue, {
               flattenArraysContainingStringsToBeEmpty: true,
@@ -180,7 +187,10 @@ function getKeyset(arrOfPromises, originalOpts) {
 
 // -----------------------------------------------------------------------------
 
-function getKeysetSync(arrOriginal, originalOpts) {
+function getKeysetSync(
+  arrOriginal: Obj[],
+  originalOpts?: { placeholder?: any }
+) {
   if (arguments.length === 0) {
     throw new Error(
       "json-comb-core/getKeysetSync(): [THROW_ID_21] Inputs missing!"
@@ -241,7 +251,17 @@ function getKeysetSync(arrOriginal, originalOpts) {
 
 // -----------------------------------------------------------------------------
 
-function enforceKeyset(obj, schemaKeyset, originalOpts) {
+interface EnforceKeysetOpts {
+  doNotFillThesePathsIfTheyContainPlaceholders: string[];
+  placeholder: boolean;
+  useNullAsExplicitFalse: boolean;
+}
+
+function enforceKeyset(
+  obj: Obj,
+  schemaKeyset: Obj,
+  originalOpts?: EnforceKeysetOpts
+): Promise<Obj> {
   if (arguments.length === 0) {
     throw new Error(
       "json-comb-core/enforceKeyset(): [THROW_ID_31] Inputs missing!"
@@ -300,11 +320,7 @@ function enforceKeyset(obj, schemaKeyset, originalOpts) {
         return resolve(
           sortAllObjectsSync(
             clone(
-              fillMissingKeys(
-                clone(objResolved),
-                clone(schemaKeysetResolved),
-                opts
-              )
+              fillMissing(clone(objResolved), clone(schemaKeysetResolved), opts)
             )
           )
         );
@@ -315,7 +331,11 @@ function enforceKeyset(obj, schemaKeyset, originalOpts) {
 
 // -----------------------------------------------------------------------------
 
-function enforceKeysetSync(obj, schemaKeyset, originalOpts) {
+function enforceKeysetSync(
+  obj: Obj,
+  schemaKeyset: Obj,
+  originalOpts?: EnforceKeysetOpts
+) {
   if (arguments.length === 0) {
     throw new Error(
       "json-comb-core/enforceKeysetSync(): [THROW_ID_41] Inputs missing!"
@@ -364,14 +384,14 @@ function enforceKeysetSync(obj, schemaKeyset, originalOpts) {
       )}`
     );
   }
-  return sortAllObjectsSync(fillMissingKeys(clone(obj), schemaKeyset, opts));
+  return sortAllObjectsSync(fillMissing(clone(obj), schemaKeyset, opts));
 }
 
 // -----------------------------------------------------------------------------
 
 // no news is good news - when keyset is ok, empty array is returned
 // when there are rogue keys, array of paths is returned
-function noNewKeysSync(obj, schemaKeyset) {
+function noNewKeysSync(obj: Obj, schemaKeyset: Obj) {
   if (arguments.length === 0) {
     throw new Error(
       "json-comb-core/noNewKeysSync(): [THROW_ID_51] All inputs missing!"
@@ -400,12 +420,15 @@ function noNewKeysSync(obj, schemaKeyset) {
       )}`
     );
   }
-  return nnk(obj, schemaKeyset);
+  return noNewKeys(obj, schemaKeyset);
 }
 
 // -----------------------------------------------------------------------------
 
-function findUnusedSync(arrOriginal, originalOpts) {
+function findUnusedSync(
+  arrOriginal: any[],
+  originalOpts?: { placeholder?: boolean; comments?: string }
+) {
   //
   // PREPARATIONS AND TYPE CHECKS
   // ============================
@@ -429,37 +452,29 @@ function findUnusedSync(arrOriginal, originalOpts) {
     comments: "__comment__",
   };
   const opts = { ...defaults, ...originalOpts };
-  if (opts.comments === 1 || opts.comments === "1") {
-    throw new TypeError(
-      "json-comb-core/findUnusedSync(): [THROW_ID_63] opts.comments was set to Number 1, but it does not make sense. Either it's string or falsey. Please fix."
-    );
-  }
-  if (opts.comments === true || opts.comments === "true") {
-    throw new TypeError(
-      'json-comb-core/findUnusedSync(): [THROW_ID_63] opts.comments was set to Boolean "true", but it does not make sense. Either it\'s string or falsey. Please fix.'
-    );
-  }
-  if (!truthy(opts.comments) || opts.comments === 0) {
-    opts.comments = false;
-  }
-  if (opts.comments === "") {
-    opts.comments = false;
+  if (!opts.comments) {
+    opts.comments = "";
   }
   const arr = clone(arrOriginal);
 
   // ---------------------------------------------------------------------------
 
-  function removeLeadingDot(something) {
+  function removeLeadingDot(something: string[]) {
     return something.map((finding) =>
       finding.charAt(0) === "." ? finding.slice(1) : finding
     );
   }
 
-  function findUnusedSyncInner(arr1, opts1, res = [], path = "") {
+  function findUnusedSyncInner(
+    arr1: Obj[],
+    opts1?: { placeholder?: boolean; comments?: string },
+    res: string[] = [],
+    path = ""
+  ) {
     if (isArr(arr1) && arr1.length === 0) {
       return res;
     }
-    let keySet;
+    let keySet: Obj;
     if (arr1.every((el) => isObj(el))) {
       keySet = getKeysetSync(arr1);
       //
@@ -470,8 +485,9 @@ function findUnusedSync(arrOriginal, originalOpts) {
         const unusedKeys = Object.keys(keySet).filter((key) =>
           arr1.every(
             (obj) =>
-              (obj[key] === opts1.placeholder || obj[key] === undefined) &&
-              (!opts1.comments || !includes(key, opts1.comments))
+              ((opts1 && obj[key] === opts1.placeholder) ||
+                obj[key] === undefined) &&
+              (!opts1 || !opts1.comments || !includes(key, opts1.comments))
           )
         );
         // console.log(`unusedKeys = ${JSON.stringify(unusedKeys, null, 4)}`)
@@ -482,8 +498,8 @@ function findUnusedSync(arrOriginal, originalOpts) {
       // no matter how many objects are there within our array, if any values
       // contain objects or arrays, traverse them recursively
       //
-      const keys = [].concat(
-        ...Object.keys(keySet).filter(
+      const keys: string[] = [].concat(
+        ...(Object.keys(keySet) as any[]).filter(
           (key) => isObj(keySet[key]) || isArr(keySet[key])
         )
       );
@@ -493,9 +509,17 @@ function findUnusedSync(arrOriginal, originalOpts) {
       // hence the reduce() contraption
       const extras = keys.map((el) =>
         [].concat(
-          ...arr1.reduce((res1, obj) => {
-            if (existy(obj[el]) && obj[el] !== opts1.placeholder) {
-              if (!opts1.comments || !includes(obj[el], opts1.comments)) {
+          ...(arr1 as any[]).reduce((res1, obj) => {
+            if (
+              obj &&
+              existy(obj[el]) &&
+              (!opts1 || obj[el] !== opts1.placeholder)
+            ) {
+              if (
+                !opts1 ||
+                !opts1.comments ||
+                !includes(obj[el], opts1.comments)
+              ) {
                 res1.push(obj[el]);
               }
             }
@@ -521,7 +545,7 @@ function findUnusedSync(arrOriginal, originalOpts) {
         });
       }
     } else if (arr1.every((el) => isArr(el))) {
-      arr1.forEach((singleArray, i) => {
+      (arr1 as any[][]).forEach((singleArray, i) => {
         res = findUnusedSyncInner(singleArray, opts1, res, `${path}[${i}]`);
       });
     }
@@ -542,4 +566,5 @@ export {
   sortAllObjectsSync,
   noNewKeysSync,
   findUnusedSync,
+  version,
 };

@@ -1,5 +1,3 @@
-/* eslint import/extensions:0, no-unused-vars:0 */
-
 // Asynchronous `getKeyset()`
 
 import { strict as assert } from "assert";
