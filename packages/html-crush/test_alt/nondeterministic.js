@@ -1,4 +1,3 @@
-/* eslint import/no-extraneous-dependencies:0 */
 const tap = require("tap");
 const { crush } = require("../dist/html-crush.umd");
 
