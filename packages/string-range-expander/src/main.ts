@@ -5,17 +5,17 @@ interface Opts {
   str: string;
   from: number;
   to: number;
-  ifLeftSideIncludesThisThenCropTightly: string;
-  ifLeftSideIncludesThisCropItToo: string;
-  ifRightSideIncludesThisThenCropTightly: string;
-  ifRightSideIncludesThisCropItToo: string;
-  extendToOneSide: false | "left" | "right";
-  wipeAllWhitespaceOnLeft: boolean;
-  wipeAllWhitespaceOnRight: boolean;
-  addSingleSpaceToPreventAccidentalConcatenation: boolean;
+  ifLeftSideIncludesThisThenCropTightly?: string;
+  ifLeftSideIncludesThisCropItToo?: string;
+  ifRightSideIncludesThisThenCropTightly?: string;
+  ifRightSideIncludesThisCropItToo?: string;
+  extendToOneSide?: false | "left" | "right";
+  wipeAllWhitespaceOnLeft?: boolean;
+  wipeAllWhitespaceOnRight?: boolean;
+  addSingleSpaceToPreventAccidentalConcatenation?: boolean;
 }
 
-const defaults: Opts = {
+const defaults: Required<Opts> = {
   str: "",
   from: 0,
   to: 0,
@@ -136,7 +136,7 @@ function expander(originalOpts: Opts): Range {
   // Prepare the opts
   // ---------------------------------------------------------------------------
 
-  const opts: Opts = { ...defaults, ...originalOpts };
+  const opts: Required<Opts> = { ...defaults, ...originalOpts };
   if (Array.isArray(opts.ifLeftSideIncludesThisThenCropTightly)) {
     let culpritsIndex;
     let culpritsValue;
