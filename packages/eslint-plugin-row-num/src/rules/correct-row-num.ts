@@ -1,13 +1,19 @@
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+
 // import stringify from "json-stringify-safe";
-import fixRowNums from "js-row-num";
+import { fixRowNums } from "js-row-num";
 // console.log(`\n\n\n005 ███████████████████████████████████████`);
 
-const create = (context) => {
+interface Obj {
+  [key: string]: any;
+}
+
+const create = (context: Obj): Obj => {
   // console.log(
   //   `007 ${`\u001b[${33}m${`███████████████████████████████████████`}\u001b[${39}m`}`
   // );
   return {
-    CallExpression(node) {
+    CallExpression(node: Obj) {
       // console.log(stringify(node, null, 4));
       // console.log(`012 node.callee.type = ${node.callee.type}`);
 
@@ -51,7 +57,7 @@ const create = (context) => {
             context.report({
               node,
               messageId: "correctRowNum",
-              fix: (fixerObj) => {
+              fix: (fixerObj: Obj) => {
                 const ranges = fixRowNums(arg.raw, {
                   overrideRowNum: arg.loc.start.line,
                   returnRangesOnly: true, // <------ now we request ranges
@@ -72,18 +78,20 @@ const create = (context) => {
                 //   )} (type ${typeof arg.start})`
                 // );
                 // console.log(`074 arg.start = ${arg.start}`);
-                const preppedRanges = [
-                  arg.start + ranges[0][0],
-                  arg.start + ranges[0][1],
-                ];
-                // console.log(
-                //   `080 ${`\u001b[${33}m${`preppedRanges`}\u001b[${39}m`} = ${JSON.stringify(
-                //     preppedRanges,
-                //     null,
-                //     4
-                //   )}`
-                // );
-                return fixerObj.replaceTextRange(preppedRanges, ranges[0][2]);
+                if (ranges) {
+                  const preppedRanges = [
+                    arg.start + ranges[0][0],
+                    arg.start + ranges[0][1],
+                  ];
+                  // console.log(
+                  //   `080 ${`\u001b[${33}m${`preppedRanges`}\u001b[${39}m`} = ${JSON.stringify(
+                  //     preppedRanges,
+                  //     null,
+                  //     4
+                  //   )}`
+                  // );
+                  return fixerObj.replaceTextRange(preppedRanges, ranges[0][2]);
+                }
               },
             });
           } else if (
@@ -112,17 +120,19 @@ const create = (context) => {
             context.report({
               node,
               messageId: "correctRowNum",
-              fix: (fixerObj) => {
+              fix: (fixerObj: Obj) => {
                 const ranges = fixRowNums(arg.quasis[0].value.raw, {
                   overrideRowNum: arg.loc.start.line,
                   returnRangesOnly: true, // <------ now we request ranges
                   extractedLogContentsWereGiven: true,
                 });
-                const preppedRanges = [
-                  arg.start + 1 + ranges[0][0],
-                  arg.start + 1 + ranges[0][1],
-                ];
-                return fixerObj.replaceTextRange(preppedRanges, ranges[0][2]);
+                if (ranges) {
+                  const preppedRanges = [
+                    arg.start + 1 + ranges[0][0],
+                    arg.start + 1 + ranges[0][1],
+                  ];
+                  return fixerObj.replaceTextRange(preppedRanges, ranges[0][2]);
+                }
               },
             });
           }

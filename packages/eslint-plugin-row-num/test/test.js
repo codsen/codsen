@@ -3,10 +3,9 @@
 import tap from "tap";
 import { Linter } from "eslint";
 import api from "../dist/eslint-plugin-row-num.esm";
-import rule from "../src/rules/correct-row-num";
 
 const linter = new Linter();
-linter.defineRule("row-num/correct-row-num", rule);
+linter.defineRule("row-num/correct-row-num", api.rules["correct-row-num"]);
 
 // we need to escape to prevent accidental "fixing" of this file through
 // build scripts
