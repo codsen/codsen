@@ -1,11 +1,15 @@
-function prep(str, originalOpts) {
+interface Obj {
+  [key: string]: any;
+}
+
+function prep(str: string, originalOpts?: Obj): Obj {
   // console.log(
   //   `003 prep(): ${`\u001b[${32}m${`RECEIVED`}\u001b[${39}m`} >>>${str}<<<`
   // );
 
   /* istanbul ignore if */
   if (typeof str !== "string" || !str.length) {
-    return;
+    return {};
   }
 
   const defaults = {
@@ -42,6 +46,7 @@ function prep(str, originalOpts) {
     if (
       // if chunk has been recorded as already started
       digitsChunkStartsAt !== null &&
+      lastDigitAt &&
       // and
       // a) it's not a whitespace
       ((str[i] &&
@@ -103,12 +108,12 @@ function prep(str, originalOpts) {
       digitsChunkStartsAt === null &&
       // it's not whitespace:
       str[i] &&
-      str[i].trim().length &&
+      str[i].trim() &&
       // it's not dot or digit or some kind of quote:
       !/[\d.'"`]/.test(str[i])
     ) {
       // console.log(`109 ${`\u001b[${31}m${`early bail`}\u001b[${39}m`}`);
-      return;
+      return {};
     }
 
     // logging
@@ -123,6 +128,8 @@ function prep(str, originalOpts) {
     // );
     // console.log(`${`\u001b[${90}m${`----------------`}\u001b[${39}m`}`);
   }
+
+  return {};
 }
 
 export default prep;

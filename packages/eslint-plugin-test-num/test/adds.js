@@ -1,8 +1,6 @@
-/* eslint no-prototype-builtins: 0 */
-
 import tap from "tap";
 import { Linter } from "eslint";
-import rule from "../src/rules/correct-test-num";
+import api from "../dist/eslint-plugin-test-num.esm";
 import {
   c,
   read,
@@ -13,7 +11,8 @@ import {
 } from "./util/util";
 
 const linter = new Linter();
-linter.defineRule("test-num/correct-test-num", rule);
+
+linter.defineRule("test-num/correct-test-num", api.rules["correct-test-num"]);
 
 // test, does it add a message argument!!!
 // -----------------------------------------------------------------------------
@@ -58,11 +57,11 @@ tap.test(
   (t) => {
     // ensure "in" is fixed
     const resIn = linter.verifyAndFix(read("09-in"), c);
-    t.is(resIn.output, read("09-out"), "03");
+    t.is(resIn.output, read("09-out"), "03.01");
 
-    // // ensure no more errors are raised about "out"
-    // const messages = linter.verify(read("09-out"), c);
-    // t.strictSame(messages, [], `03.02`);
+    // ensure no more errors are raised about "out"
+    const messages = linter.verify(read("09-out"), c);
+    t.strictSame(messages, [], `03.02`);
     t.end();
   }
 );

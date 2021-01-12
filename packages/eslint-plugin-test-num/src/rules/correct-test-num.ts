@@ -1,10 +1,12 @@
-/* eslint no-cond-assign: 0 */
-
 // import stringify from "json-stringify-safe";
 import op from "object-path";
 import { left } from "string-left-right";
 import prep from "../util/prep";
 import getNewValue from "../util/getNewValue";
+
+interface Obj {
+  [key: string]: any;
+}
 
 // console.log(`\n\n\n005 ███████████████████████████████████████`);
 
@@ -114,15 +116,15 @@ const messageIsThirdArg = new Set([
   "isA",
 ]);
 
-const create = (context) => {
-  // console.log(
-  //   `119 ${`\u001b[${33}m${`███████████████████████████████████████`}\u001b[${39}m`}`
-  // );
+const create = (context: Obj): Obj => {
+  console.log(
+    `123 ${`\u001b[${33}m${`███████████████████████████████████████`}\u001b[${39}m`}`
+  );
 
   let counter = 0;
 
   return {
-    ExpressionStatement(node) {
+    ExpressionStatement(node: Obj) {
       if (
         op.get(node, "expression.type") === "CallExpression" &&
         ["test", "only", "skip", "todo"].includes(
@@ -132,16 +134,16 @@ const create = (context) => {
           op.get(node, "expression.arguments.0.type")
         )
       ) {
-        // console.log(" ");
-        // console.log("-------------------------------");
-        // console.log(" ");
+        console.log(" ");
+        console.log("-------------------------------");
+        console.log(" ");
         counter += 1;
-        // console.log(
-        //   `${`\u001b[${33}m${`node.expression`}\u001b[${39}m`} #${`${counter}`.padStart(
-        //     2,
-        //     "0"
-        //   )}: ${node.expression.start}-${node.expression.end}`
-        // );
+        console.log(
+          `${`\u001b[${33}m${`node.expression`}\u001b[${39}m`} #${`${counter}`.padStart(
+            2,
+            "0"
+          )}: ${node.expression.start}-${node.expression.end}`
+        );
         const testOrderNumber = `${counter}`.padStart(2, "0");
 
         // TACKLE THE FIRST ARG
@@ -156,45 +158,40 @@ const create = (context) => {
         // for example:
         // t.test("09 - something", (t) => ...)
 
-        let finalDigitChunk;
+        let finalDigitChunk: Obj = {};
 
         if (
-          !finalDigitChunk &&
+          !finalDigitChunk.value &&
           op.get(node, "expression.arguments.0.type") === "TemplateLiteral" &&
           op.has(node, "expression.arguments.0.quasis.0.value.raw")
         ) {
-          // console.log(" ");
-          // console.log(" ");
-          // console.log(
-          //   `169 ${`\u001b[${34}m${`██ TemplateLiteral caught!`}\u001b[${39}m`}`
-          // );
-          //
-          // console.log(
-          //   `173 node.expression.arguments[0].quasis[0].value.raw: "${node.expression.arguments[0].quasis[0].value.raw}"`
-          // );
+          console.log(" ");
+          console.log(" ");
+          console.log(
+            `173 ${`\u001b[${34}m${`██ TemplateLiteral caught!`}\u001b[${39}m`}`
+          );
+
+          console.log(
+            `177 node.expression.arguments[0].quasis[0].value.raw: "${node.expression.arguments[0].quasis[0].value.raw}"`
+          );
 
           const { start, end, value } =
             prep(op.get(node, "expression.arguments.0.quasis.0.value.raw"), {
               offset: op.get(node, "expression.arguments.0.quasis.0.start"),
               returnRangesOnly: true,
             }) || {};
+          console.log(
+            `186 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`start`}\u001b[${39}m`} = ${start}; ${`\u001b[${33}m${`end`}\u001b[${39}m`} = ${end}; ${`\u001b[${33}m${`value`}\u001b[${39}m`} = ${value} --- ${`\u001b[${33}m${`testOrderNumber`}\u001b[${39}m`} = ${testOrderNumber}`
+          );
 
           if (start && end && value && value !== testOrderNumber) {
-            // console.log(
-            //   `184 ${`\u001b[${33}m${`value`}\u001b[${39}m`} = ${stringify(
-            //     value,
-            //     null,
-            //     4
-            //   )}`
-            // );
-            // console.log("!==");
-            // console.log(
-            //   `192 ${`\u001b[${33}m${`testOrderNumber`}\u001b[${39}m`} = ${stringify(
-            //     testOrderNumber,
-            //     null,
-            //     4
-            //   )}`
-            // );
+            console.log(
+              `184 ${`\u001b[${33}m${`value`}\u001b[${39}m`} = ${value}`
+            );
+            console.log("!==");
+            console.log(
+              `192 ${`\u001b[${33}m${`testOrderNumber`}\u001b[${39}m`} = ${testOrderNumber}`
+            );
 
             finalDigitChunk = {
               start,
@@ -213,15 +210,15 @@ const create = (context) => {
         }
 
         if (
-          !finalDigitChunk &&
+          !finalDigitChunk.value &&
           node.expression.arguments[0].type === "Literal" &&
           node.expression.arguments[0].raw
         ) {
-          // console.log(" ");
-          // console.log(" ");
-          // console.log(
-          //   `223 ${`\u001b[${34}m${`██ Literal caught!`}\u001b[${39}m`}`
-          // );
+          console.log(" ");
+          console.log(" ");
+          console.log(
+            `244 ${`\u001b[${34}m${`██ Literal caught!`}\u001b[${39}m`}`
+          );
 
           const { start, end, value } =
             prep(node.expression.arguments[0].raw, {
@@ -258,28 +255,28 @@ const create = (context) => {
         // );
 
         if (
-          !finalDigitChunk &&
+          !finalDigitChunk.value &&
           op.get(node, "expression.arguments.1.type") ===
             "ArrowFunctionExpression" &&
           op.get(node, "expression.arguments.1.body.type") ===
             "BlockStatement" &&
           op.get(node, "expression.arguments.1.body.body").length
         ) {
-          // console.log(" ");
-          // console.log(" ");
-          // console.log(
-          //   `271 ${`\u001b[${34}m${`██ Third arg literal found!`}\u001b[${39}m`}`
-          // );
+          console.log(" ");
+          console.log(" ");
+          console.log(
+            `292 ${`\u001b[${34}m${`██ Third arg literal found!`}\u001b[${39}m`}`
+          );
 
           // let's find out, is it a single test clause or there are multiple
           let subTestCount = "multiple";
 
-          let filteredExpressionStatements = {};
+          let filteredExpressionStatements = [];
           if (
             (filteredExpressionStatements = op
               .get(node, "expression.arguments.1.body.body")
               .filter(
-                (nodeObj) =>
+                (nodeObj: Obj) =>
                   nodeObj.type === "ExpressionStatement" &&
                   op.get(nodeObj, "expression.callee.object.name") === "t"
               )).length === 2 &&
@@ -396,7 +393,7 @@ const create = (context) => {
                 // TemplateLiteral (backticks)
 
                 let pathToMsgArgValue;
-                let rawPathToMsgArgValue; // used later in eslint reporting
+                let rawPathToMsgArgValue = ""; // used later in eslint reporting
                 let pathToMsgArgStart;
                 /* istanbul ignore else */
                 if (
@@ -465,14 +462,17 @@ const create = (context) => {
                 //   `465 new: ${`\u001b[${35}m${newValue}\u001b[${39}m`}  range: ${`\u001b[${35}m${`[${start}, ${end}]`}\u001b[${39}m`}`
                 // );
 
-                if (prep(pathToMsgArgValue).value !== newValue) {
+                if (
+                  rawPathToMsgArgValue &&
+                  prep(pathToMsgArgValue).value !== newValue
+                ) {
                   // console.log(
                   //   `470 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${start}, ${end}] to replace with a new value "${`\u001b[${35}m${newValue}\u001b[${39}m`}"`
                   // );
                   context.report({
                     node: op.get(exprStatements[i], rawPathToMsgArgValue),
                     messageId: "correctTestNum",
-                    fix: (fixerObj) => {
+                    fix: (fixerObj: Obj) => {
                       return fixerObj.replaceTextRange([start, end], newValue);
                     },
                   });
@@ -538,7 +538,7 @@ const create = (context) => {
 
                   // left() finds the index of the first non-whitespace on the
                   // left, then we add +1 to not include it
-                  const startIdx = left(wholeSourceStr, endIdx) + 1;
+                  const startIdx = (left(wholeSourceStr, endIdx) || 0) + 1;
 
                   // console.log(
                   //   `544 SET ${`\u001b[${33}m${`startIdx`}\u001b[${39}m`} = ${JSON.stringify(
@@ -572,7 +572,7 @@ const create = (context) => {
                     const frontalIndentation = Array.from(
                       wholeSourceStr.slice(startIdx, endIdx)
                     )
-                      .filter((char) => !`\r\n`.includes(char))
+                      .filter((char) => !`\r\n`.includes(char as string))
                       .join("");
                     valueToInsert = `,\n${frontalIndentation}  "${newValue}"\n${frontalIndentation}`;
                   }
@@ -588,7 +588,7 @@ const create = (context) => {
                   context.report({
                     node: exprStatements[i],
                     messageId: "correctTestNum",
-                    fix: (fixerObj) => {
+                    fix: (fixerObj: Obj) => {
                       return fixerObj.replaceTextRange(
                         [startIdx, endIdx],
                         valueToInsert
@@ -610,22 +610,22 @@ const create = (context) => {
 
         // console.log(" ");
 
-        if (finalDigitChunk) {
-          // console.log(
-          //   `615 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${
-          //     finalDigitChunk.start
-          //   }, ${
-          //     finalDigitChunk.end
-          //   }] to replace with a new value "${`\u001b[${35}m${
-          //     finalDigitChunk.value
-          //   }\u001b[${39}m`}"`
-          // );
+        if (finalDigitChunk.value) {
+          console.log(
+            `639 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${
+              finalDigitChunk.start
+            }, ${
+              finalDigitChunk.end
+            }] to replace with a new value "${`\u001b[${35}m${
+              finalDigitChunk.value
+            }\u001b[${39}m`}"`
+          );
 
           /* istanbul ignore next */
           context.report({
             messageId: "correctTestNum",
             node: finalDigitChunk.node || node,
-            fix: (fixerObj) => {
+            fix: (fixerObj: Obj) => {
               return fixerObj.replaceTextRange(
                 [finalDigitChunk.start, finalDigitChunk.end],
                 finalDigitChunk.value
