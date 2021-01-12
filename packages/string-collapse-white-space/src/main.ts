@@ -7,8 +7,8 @@ import { version } from "../package.json";
 import { Range, Ranges as RangesType } from "../../../scripts/common";
 
 interface Extras {
-  whiteSpaceStartsAt: number;
-  whiteSpaceEndsAt: number;
+  whiteSpaceStartsAt: null | number;
+  whiteSpaceEndsAt: null | number;
   str: string;
 }
 
@@ -19,14 +19,14 @@ interface CbObj extends Extras {
 type Callback = (cbObj: CbObj) => any;
 
 interface Opts {
-  trimStart?: boolean;
-  trimEnd?: boolean;
-  trimLines?: boolean;
-  trimnbsp?: boolean;
-  removeEmptyLines?: boolean;
-  limitConsecutiveEmptyLinesTo?: number;
-  enforceSpacesOnly?: boolean;
-  cb?: Callback;
+  trimStart: boolean;
+  trimEnd: boolean;
+  trimLines: boolean;
+  trimnbsp: boolean;
+  removeEmptyLines: boolean;
+  limitConsecutiveEmptyLinesTo: number;
+  enforceSpacesOnly: boolean;
+  cb: Callback;
 }
 
 // default set of options
@@ -58,7 +58,7 @@ interface Res {
 
 const cbSchema = ["suggested", "whiteSpaceStartsAt", "whiteSpaceEndsAt", "str"];
 
-function collapse(str: string, originalOpts?: Opts): Res {
+function collapse(str: string, originalOpts?: Partial<Opts>): Res {
   console.log(
     `008 ██ string-collapse-whitespace called: str = ${JSON.stringify(
       str,
@@ -98,7 +98,7 @@ function collapse(str: string, originalOpts?: Opts): Res {
   const NBSP = `\xa0`;
 
   // fill any settings with defaults if missing:
-  const opts = { ...defaults, ...originalOpts };
+  const opts: Opts = { ...defaults, ...originalOpts };
   console.log(` `);
   console.log(
     `049 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
@@ -108,7 +108,7 @@ function collapse(str: string, originalOpts?: Opts): Res {
     )}`
   );
 
-  function push(something: Range | null, extras: Extras) {
+  function push(something?: any, extras?: Extras) {
     console.log(`---- push() ----`);
     console.log(
       `059 ${`\u001b[${35}m${`push()`}\u001b[${39}m`} ${`\u001b[${32}m${`extras`}\u001b[${39}m`} = ${JSON.stringify(
@@ -119,7 +119,10 @@ function collapse(str: string, originalOpts?: Opts): Res {
     );
 
     if (typeof opts.cb === "function") {
-      const final = opts.cb({ suggested: something as Range, ...extras });
+      const final: Range | null = opts.cb({
+        suggested: something as any,
+        ...(extras as any),
+      });
       console.log(
         `068 ${`\u001b[${35}m${`push():`}\u001b[${39}m`} ${`\u001b[${33}m${`final`}\u001b[${39}m`} = ${JSON.stringify(
           final,
@@ -131,12 +134,10 @@ function collapse(str: string, originalOpts?: Opts): Res {
         console.log(
           `076 ${`\u001b[${35}m${`push():`}\u001b[${39}m`} ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`
         );
-        // @ts-ignore
-        finalIndexesToDelete.push(...final);
+        (finalIndexesToDelete as any).push(...final);
       }
-    } else {
-      // @ts-ignore
-      finalIndexesToDelete.push(...something);
+    } else if (something) {
+      (finalIndexesToDelete as any).push(...something);
     }
   }
 
@@ -162,7 +163,9 @@ function collapse(str: string, originalOpts?: Opts): Res {
   // then general whitespace clauses release all what's gathered and can
   // adjust the logic depending what's in staging.
   // Alternatively we could dig in already staged ranges, but that's slower.
-  const staging = [];
+
+  type Staged = [Range, Extras];
+  const staging: Staged[] = [];
 
   let consecutiveLineBreakCount = 0;
 
@@ -703,12 +706,8 @@ function collapse(str: string, originalOpts?: Opts): Res {
           console.log(`641 push all staged ranges into final`);
           while (staging.length) {
             // FIFO - first in, first out
-            // @ts-ignore
-            push(...staging.shift(), {
-              whiteSpaceStartsAt,
-              whiteSpaceEndsAt: i,
-              str,
-            });
+            // @tsx-ignore
+            push(...(staging.shift() as Staged));
           }
           somethingPushed = true;
         }

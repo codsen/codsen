@@ -71,12 +71,10 @@ function collapse(str, originalOpts) { // f's
         ...extras
       });
 
-      if (Array.isArray(final)) { // @ts-ignore
-
+      if (Array.isArray(final)) {
         finalIndexesToDelete.push(...final);
       }
-    } else {
-      // @ts-ignore
+    } else if (something) {
       finalIndexesToDelete.push(...something);
     }
   } // -----------------------------------------------------------------------------
@@ -87,20 +85,7 @@ function collapse(str, originalOpts) { // f's
   let lineWhiteSpaceStartsAt = null;
   let linebreaksStartAt = null;
   let linebreaksEndAt = null;
-  let nbspPresent = false; // Logic clauses for spaces, per-line whitespace and general whitespace
-  // overlap somewhat and are not aware of each other. For example, mixed chunk
-  // "\xa0   a   \xa0"
-  //             ^line whitespace ends here - caught by per-line clauses
-  //
-  // "\xa0   a   \xa0"
-  //                 ^non-breaking space ends here, 1 character further
-  //                  that's caught by general whitespace clauses
-  //
-  // as a solution, we stage all whitespace pushing ranges into this array,
-  // then general whitespace clauses release all what's gathered and can
-  // adjust the logic depending what's in staging.
-  // Alternatively we could dig in already staged ranges, but that's slower.
-
+  let nbspPresent = false;
   const staging = [];
   let consecutiveLineBreakCount = 0;
 
@@ -415,12 +400,8 @@ function collapse(str, originalOpts) { // f's
 
           while (staging.length) {
             // FIFO - first in, first out
-            // @ts-ignore
-            push(...staging.shift(), {
-              whiteSpaceStartsAt,
-              whiteSpaceEndsAt: i,
-              str
-            });
+            // @tsx-ignore
+            push(...staging.shift());
           }
 
           somethingPushed = true;

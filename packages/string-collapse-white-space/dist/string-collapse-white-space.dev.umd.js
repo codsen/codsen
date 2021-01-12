@@ -524,7 +524,7 @@ function collWhitespace(str, originallineBreakLimit) {
   return str;
 }
 
-/* eslint @typescript-eslint/ban-ts-comment:1 */
+/* eslint @typescript-eslint/ban-ts-comment:1, @typescript-eslint/explicit-module-boundary-types: 0, prefer-rest-params: 0 */
 
 function existy(x) {
   return x != null;
@@ -564,16 +564,14 @@ var Ranges = /*#__PURE__*/function () {
 
     this.opts = opts;
     this.ranges = null;
-  } // A D D ()
-  // ========
-
+  }
 
   var _proto = Ranges.prototype;
 
   _proto.add = function add(originalFrom, originalTo, addVal) {
     var _this = this;
 
-    if (!existy(originalFrom) && !existy(originalTo)) {
+    if (originalFrom == null && originalTo == null) {
       // absent ranges are marked as null - instead of array of arrays we can receive a null
       return;
     }
@@ -663,11 +661,10 @@ var Ranges = /*#__PURE__*/function () {
         throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_10] \"to\" value, the second input argument, must be a natural number or zero! Currently it's of a type \"" + typeof to + "\" equal to: " + JSON.stringify(to, null, 4));
       }
     }
-  } // P U S H  ()  -  A L I A S   F O R   A D D ()
-  // ============================================
-  ;
+  };
 
   _proto.push = function push(originalFrom, originalTo, addVal) {
+    // @ts-ignore
     this.add(originalFrom, originalTo, addVal);
   } // C U R R E N T () - kindof a getter
   // ==================================
@@ -2732,12 +2729,10 @@ function collapse(str, originalOpts) { // f's
         suggested: something
       }, extras));
 
-      if (Array.isArray(final)) { // @ts-ignore
-
+      if (Array.isArray(final)) {
         finalIndexesToDelete.push.apply(finalIndexesToDelete, final);
       }
-    } else {
-      // @ts-ignore
+    } else if (something) {
       finalIndexesToDelete.push.apply(finalIndexesToDelete, something);
     }
   } // -----------------------------------------------------------------------------
@@ -2748,20 +2743,7 @@ function collapse(str, originalOpts) { // f's
   var lineWhiteSpaceStartsAt = null;
   var linebreaksStartAt = null;
   var linebreaksEndAt = null;
-  var nbspPresent = false; // Logic clauses for spaces, per-line whitespace and general whitespace
-  // overlap somewhat and are not aware of each other. For example, mixed chunk
-  // "\xa0   a   \xa0"
-  //             ^line whitespace ends here - caught by per-line clauses
-  //
-  // "\xa0   a   \xa0"
-  //                 ^non-breaking space ends here, 1 character further
-  //                  that's caught by general whitespace clauses
-  //
-  // as a solution, we stage all whitespace pushing ranges into this array,
-  // then general whitespace clauses release all what's gathered and can
-  // adjust the logic depending what's in staging.
-  // Alternatively we could dig in already staged ranges, but that's slower.
-
+  var nbspPresent = false;
   var staging = [];
   var consecutiveLineBreakCount = 0;
 
@@ -3078,12 +3060,8 @@ function collapse(str, originalOpts) { // f's
 
           while (staging.length) {
             // FIFO - first in, first out
-            // @ts-ignore
-            push.apply(void 0, staging.shift().concat([{
-              whiteSpaceStartsAt: whiteSpaceStartsAt,
-              whiteSpaceEndsAt: i,
-              str: str
-            }]));
+            // @tsx-ignore
+            push.apply(void 0, staging.shift());
           }
 
           somethingPushed = true;
