@@ -32,7 +32,7 @@ interface Opts {
         wrapHeads: string;
         wrapTails: string;
     };
-    cb: null | ((cbObj: CbObj) => void);
+    cb: null | ((cbObj: Partial<CbObj>) => void);
 }
 declare const defaults: {
     ignoreTags: never[];
@@ -57,5 +57,5 @@ interface Res {
     allTagLocations: [number, number][];
     filteredTagLocations: [number, number][];
 }
-declare function stripHtml(str: string, originalOpts?: Opts): Res;
+declare function stripHtml(str: string, originalOpts?: Partial<Opts>): Res;
 export { stripHtml, defaults, version };

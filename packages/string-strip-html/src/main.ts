@@ -49,7 +49,7 @@ interface Opts {
     wrapHeads: string;
     wrapTails: string;
   };
-  cb: null | ((cbObj: CbObj) => void);
+  cb: null | ((cbObj: Partial<CbObj>) => void);
 }
 
 const defaults = {
@@ -77,7 +77,7 @@ interface Res {
   filteredTagLocations: [number, number][];
 }
 
-function stripHtml(str: string, originalOpts?: Opts): Res {
+function stripHtml(str: string, originalOpts?: Partial<Opts>): Res {
   // const
   // ===========================================================================
   const start = Date.now();
