@@ -9,10 +9,10 @@ interface cbObj {
     entityName: string | null;
 }
 interface Opts {
-    decode?: boolean;
+    decode: boolean;
     cb: (obj: cbObj) => void;
-    entityCatcherCb?: undefined | null | ((from: number, to: number) => void);
-    progressFn?: undefined | null | ((percDone: number) => void);
+    entityCatcherCb: null | ((from: number, to: number) => void);
+    progressFn: null | ((percDone: number) => void);
 }
-declare function fixEnt(str: string, originalOpts?: Opts): Ranges;
+declare function fixEnt(str: string, originalOpts?: Partial<Opts>): Ranges;
 export { fixEnt, version };

@@ -370,8 +370,7 @@ function fixEnt(str, originalOpts) { //
     //            |
 
     if (doNothingUntil) {
-      // @ts-ignore
-      if (doNothingUntil !== true && i >= doNothingUntil) {
+      if (typeof doNothingUntil === "number" && i >= doNothingUntil) {
         doNothingUntil = null;
       } else {
         counter += 1;
@@ -432,7 +431,7 @@ function fixEnt(str, originalOpts) { //
           /* istanbul ignore else */
 
           if (Object.prototype.hasOwnProperty.call(allNamedHtmlEntities.entStartsWith, str[firstChar]) && Object.prototype.hasOwnProperty.call(allNamedHtmlEntities.entStartsWith[str[firstChar]], str[secondChar])) {
-            var tempEnt;
+            var tempEnt = "";
             var tempRes;
             var temp1 = allNamedHtmlEntities.entStartsWith[str[firstChar]][str[secondChar]].reduce(function (gatheredSoFar, oneOfKnownEntities) {
               // find all entities that match on the right of here
@@ -491,8 +490,7 @@ function fixEnt(str, originalOpts) { //
           // and second character first. This reduces amount of matching needed.
 
           if (secondToLast !== null && Object.prototype.hasOwnProperty.call(allNamedHtmlEntities.entEndsWith, str[lastChar]) && Object.prototype.hasOwnProperty.call(allNamedHtmlEntities.entEndsWith[str[lastChar]], str[secondToLast])) {
-
-            var _tempEnt;
+            var _tempEnt = "";
 
             var _tempRes;
 
@@ -706,9 +704,7 @@ function fixEnt(str, originalOpts) { //
               /* istanbul ignore next */
 
               var _secondChar = letterSeqStartAt ? stringLeftRight.right(str, letterSeqStartAt) : null;
-
-              var _tempEnt2;
-
+              var _tempEnt2 = "";
               var temp;
 
               if (Object.prototype.hasOwnProperty.call(allNamedHtmlEntities.brokenNamedEntities, situation.charTrimmed.toLowerCase())) {
@@ -757,7 +753,6 @@ function fixEnt(str, originalOpts) { //
                   });
                 }
               } // if "tempEnt" was not set by now, it is not a known HTML entity
-              // @ts-ignore
 
 
               if (!_tempEnt2) { // it's an unrecognised entity:
@@ -891,9 +886,10 @@ function fixEnt(str, originalOpts) { //
             var _rangeFrom = i;
             var spaceReplacement = "";
 
-            if (str[i - 1] === " ") ; // @ts-ignore
+            if (str[i - 1] === " ") ;
+            /* istanbul ignore else */
 
-            if (opts.cb) {
+            if (typeof opts.cb === "function") {
               rangesArr2.push({
                 ruleName: "bad-named-html-entity-multiple-encoding",
                 entityName: matchedTemp,

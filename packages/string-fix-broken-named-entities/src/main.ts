@@ -35,13 +35,13 @@ interface cbObj {
   entityName: string | null;
 }
 interface Opts {
-  decode?: boolean;
+  decode: boolean;
   cb: (obj: cbObj) => void;
-  entityCatcherCb?: undefined | null | ((from: number, to: number) => void);
-  progressFn?: undefined | null | ((percDone: number) => void);
+  entityCatcherCb: null | ((from: number, to: number) => void);
+  progressFn: null | ((percDone: number) => void);
 }
 
-function fixEnt(str: string, originalOpts?: Opts): Ranges {
+function fixEnt(str: string, originalOpts?: Partial<Opts>): Ranges {
   console.log(
     `032 fixEnt: ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
       str,
@@ -233,8 +233,7 @@ function fixEnt(str: string, originalOpts?: Opts): Ranges {
     //            |
 
     if (doNothingUntil) {
-      // @ts-ignore
-      if (doNothingUntil !== true && i >= doNothingUntil) {
+      if (typeof doNothingUntil === "number" && i >= doNothingUntil) {
         doNothingUntil = null;
         console.log(
           `228 fixEnt: RESET ${`\u001b[${33}m${`doNothingUntil`}\u001b[${39}m`} = null`
@@ -354,7 +353,7 @@ function fixEnt(str: string, originalOpts?: Opts): Ranges {
             )
           ) {
             console.log(`339`);
-            let tempEnt;
+            let tempEnt = "";
             let tempRes;
 
             let temp1 = (entStartsWith as Obj)[str[firstChar as number]][
@@ -437,9 +436,7 @@ function fixEnt(str: string, originalOpts?: Opts): Ranges {
 
               console.log(`422 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
               rangesArr2.push({
-                ruleName: `bad-named-html-entity-malformed-${
-                  tempEnt as string
-                }`,
+                ruleName: `bad-named-html-entity-malformed-${tempEnt}`,
                 entityName: tempEnt,
                 rangeFrom: whatsOnTheLeft || 0,
                 rangeTo: tempRes.rightmostChar + 1,
@@ -489,7 +486,7 @@ function fixEnt(str: string, originalOpts?: Opts): Ranges {
             )
           ) {
             console.log(`470`);
-            let tempEnt;
+            let tempEnt = "";
             let tempRes;
 
             let temp1 = (entEndsWith as Obj)[str[lastChar as number] as string][
@@ -926,7 +923,7 @@ function fixEnt(str: string, originalOpts?: Opts): Ranges {
                 }`
               );
 
-              let tempEnt: string;
+              let tempEnt = "";
               let temp: any[];
 
               console.log(
@@ -1017,7 +1014,6 @@ function fixEnt(str: string, originalOpts?: Opts): Ranges {
               }
 
               // if "tempEnt" was not set by now, it is not a known HTML entity
-              // @ts-ignore
               if (!tempEnt) {
                 console.log(
                   `1044 ${`\u001b[${90}m${`so it's not one of known named HTML entities`}\u001b[${39}m`}`
@@ -1309,8 +1305,8 @@ function fixEnt(str: string, originalOpts?: Opts): Ranges {
             }
             console.log(`1327 final rangeFrom = ${rangeFrom}`);
 
-            // @ts-ignore
-            if (opts.cb) {
+            /* istanbul ignore else */
+            if (typeof opts.cb === "function") {
               console.log(`1330 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
               rangesArr2.push({
                 ruleName: "bad-named-html-entity-multiple-encoding",
