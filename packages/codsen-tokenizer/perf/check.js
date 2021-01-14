@@ -7,11 +7,11 @@ const callerDir = path.resolve(".");
 const runPerf = require("../../../scripts/run-perf.js");
 
 // setup
-const ct = require("..");
+const { tokenizer } = require("..");
 
 const testme = () => {
   const gathered = [];
-  ct(`<a>"something"<span>'here'</span></a>`, {
+  tokenizer(`<a>"something"<span>'here'</span></a>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },

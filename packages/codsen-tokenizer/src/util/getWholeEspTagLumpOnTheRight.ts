@@ -1,12 +1,17 @@
 import { espChars, leftyChars, rightyChars } from "./util";
 import getLastEspLayerObjIdx from "./getLastEspLayerObjIdx";
+import { Layer, LayerEsp } from "./util";
 
-function getWholeEspTagLumpOnTheRight(str, i, layers) {
+function getWholeEspTagLumpOnTheRight(
+  str: string,
+  i: number,
+  layers: Layer[]
+): string {
   let wholeEspTagLumpOnTheRight = str[i];
   const len = str.length;
 
   // getLastEspLayerObj()
-  const lastEspLayerObj = layers[getLastEspLayerObjIdx(layers)];
+  const lastEspLayerObj = layers[getLastEspLayerObjIdx(layers) as number];
 
   console.log(
     `012 getWholeEspTagLumpOnTheRight(): ${`\u001b[${32}m${`START`}\u001b[${39}m`}`
@@ -67,7 +72,7 @@ function getWholeEspTagLumpOnTheRight(str, i, layers) {
       // in case it's XML tag-like templating tag, such as JSP,
       // we check, is it in the last guessed lump's character's list
       (lastEspLayerObj &&
-        lastEspLayerObj.guessedClosingLump.includes(str[y])) ||
+        (lastEspLayerObj as LayerEsp).guessedClosingLump.includes(str[y])) ||
       (str[i] === "<" && str[y] === "/") ||
       // accept closing bracket if it's RPL comment, tails of: <#-- z -->
       (str[y] === ">" &&
@@ -75,9 +80,9 @@ function getWholeEspTagLumpOnTheRight(str, i, layers) {
         Array.isArray(layers) &&
         layers.length &&
         layers[layers.length - 1].type === "esp" &&
-        layers[layers.length - 1].openingLump[0] === "<" &&
-        layers[layers.length - 1].openingLump[2] === "-" &&
-        layers[layers.length - 1].openingLump[3] === "-") ||
+        (layers[layers.length - 1] as LayerEsp).openingLump[0] === "<" &&
+        (layers[layers.length - 1] as LayerEsp).openingLump[2] === "-" &&
+        (layers[layers.length - 1] as LayerEsp).openingLump[3] === "-") ||
       // we do exception for extra characters, such as JSP's
       // exclamation mark: <%! yo %>
       //                     ^
@@ -102,15 +107,17 @@ function getWholeEspTagLumpOnTheRight(str, i, layers) {
     Array.isArray(layers) &&
     layers.length &&
     layers[layers.length - 1].type === "esp" &&
-    layers[layers.length - 1].guessedClosingLump &&
+    (layers[layers.length - 1] as LayerEsp).guessedClosingLump &&
     wholeEspTagLumpOnTheRight.length >
-      layers[layers.length - 1].guessedClosingLump.length
+      (layers[layers.length - 1] as LayerEsp).guessedClosingLump.length
   ) {
     //
     // case I.
     //
     if (
-      wholeEspTagLumpOnTheRight.endsWith(layers[layers.length - 1].openingLump)
+      wholeEspTagLumpOnTheRight.endsWith(
+        (layers[layers.length - 1] as LayerEsp).openingLump
+      )
     ) {
       // no need to extract tails, heads "{%-" were confirmed in example:
       // {%- a -%}{%- b -%}
@@ -121,7 +128,7 @@ function getWholeEspTagLumpOnTheRight(str, i, layers) {
       return wholeEspTagLumpOnTheRight.slice(
         0,
         wholeEspTagLumpOnTheRight.length -
-          layers[layers.length - 1].openingLump.length
+          (layers[layers.length - 1] as LayerEsp).openingLump.length
       );
     }
 
@@ -138,7 +145,7 @@ function getWholeEspTagLumpOnTheRight(str, i, layers) {
     // guessed closing lump.
 
     let uniqueCharsListFromGuessedClosingLumpArr = new Set(
-      layers[layers.length - 1].guessedClosingLump
+      (layers[layers.length - 1] as LayerEsp).guessedClosingLump
     );
 
     let found = 0;

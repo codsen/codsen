@@ -1,5 +1,5 @@
 import tap from "tap";
-import ct from "../dist/codsen-tokenizer.esm";
+import { tokenizer as ct } from "../dist/codsen-tokenizer.esm";
 
 // ESP stands for Email Service Provider
 // in practice, we cover all other templating languages too, for example,

@@ -1,7 +1,7 @@
-import isTagOpening from "is-html-tag-opening";
+import { isOpening } from "is-html-tag-opening";
 import { left, right } from "string-left-right";
 import { matchRight } from "string-match-left-right";
-import { isLatinLetter } from "./util";
+import { isLatinLetter, Token, Layer } from "./util";
 
 const BACKSLASH = "\u005C";
 
@@ -9,30 +9,37 @@ const BACKSLASH = "\u005C";
 // starts. Previously it sat within if() clauses but became unwieldy and
 // so we extracted into a function.
 
-function startsTag(str, i, token, layers, withinStyle) {
+function startsTag(
+  str: string,
+  i: number,
+  token: Token,
+  layers: Layer[],
+  withinStyle: boolean
+): boolean {
   console.log(
-    `014 ██ startsTag() isTagOpening1: ${isTagOpening(str, i, {
+    `014 ██ startsTag() isOpening1: ${isOpening(str, i, {
       allowCustomTagNames: true,
     })}`
   );
   console.log(
-    `019 ██ startsTag() isTagOpening2: ${isTagOpening(str, i, {
+    `019 ██ startsTag() isOpening2: ${isOpening(str, i, {
       allowCustomTagNames: false,
       skipOpeningBracket: true,
     })}`
   );
-  return (
+  return !!(
     str[i] &&
     str[i].trim().length &&
     (!layers.length || token.type === "text") &&
-    !["doctype", "xml"].includes(token.kind) &&
+    (!(token as any).kind ||
+      !["doctype", "xml"].includes((token as any).kind)) &&
     // within CSS styles, initiate tags only on opening bracket:
     (!withinStyle || str[i] === "<") &&
     ((str[i] === "<" &&
-      (isTagOpening(str, i, {
+      (isOpening(str, i, {
         allowCustomTagNames: true,
       }) ||
-        str[right(str, i)] === ">" ||
+        str[right(str, i) as number] === ">" ||
         matchRight(str, i, ["doctype", "xml", "cdata"], {
           i: true,
           trimBeforeMatching: true,
@@ -41,8 +48,10 @@ function startsTag(str, i, token, layers, withinStyle) {
       (isLatinLetter(str[i]) &&
         (!str[i - 1] ||
           (!isLatinLetter(str[i - 1]) &&
-            !["<", "/", "!", BACKSLASH].includes(str[left(str, i)]))) &&
-        isTagOpening(str, i, {
+            !["<", "/", "!", BACKSLASH].includes(
+              str[left(str, i) as number]
+            ))) &&
+        isOpening(str, i, {
           allowCustomTagNames: false, // <-- stricter requirements for missing opening bracket tags
           skipOpeningBracket: true,
         }))) &&

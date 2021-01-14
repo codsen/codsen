@@ -1,7 +1,7 @@
 /* eslint no-template-curly-in-string:0 */
 
 import tap from "tap";
-import ct from "../dist/codsen-tokenizer.esm";
+import { tokenizer as ct } from "../dist/codsen-tokenizer.esm";
 
 // JSP (Java Server Pages) templating tags
 

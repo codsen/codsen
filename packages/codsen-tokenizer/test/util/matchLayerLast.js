@@ -1,5 +1,6 @@
 import tap from "tap";
-import matchLayerLast from "../../src/util/matchLayerLast";
+import { util } from "../../dist/codsen-tokenizer.esm";
+const { matchLayerLast } = util;
 
 // match last
 // -----------------------------------------------------------------------------

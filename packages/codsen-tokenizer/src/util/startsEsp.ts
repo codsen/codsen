@@ -1,5 +1,8 @@
 import { right } from "string-left-right";
 import {
+  Token,
+  Layer,
+  LayerEsp,
   espChars,
   flipEspTag,
   veryEspChars,
@@ -12,7 +15,13 @@ import {
 // starts. Previously it sat within if() clauses but became unwieldy and
 // so we extracted into a function.
 
-function startsEsp(str, i, token, layers, styleStarts) {
+function startsEsp(
+  str: string,
+  i: number,
+  token: Token,
+  layers: Layer[],
+  withinStyle: boolean
+): boolean {
   const res =
     // 1. two consecutive esp characters - Liquid, Mailchimp etc.
     // {{ or |* and so on
@@ -52,8 +61,8 @@ function startsEsp(str, i, token, layers, styleStarts) {
         )
       ) &&
       !(
-        styleStarts &&
-        ("{}".includes(str[i]) || "{}".includes(str[right(str, i)]))
+        withinStyle &&
+        ("{}".includes(str[i]) || "{}".includes(str[right(str, i) as number]))
       )) ||
     //
     // 2. html-like syntax
@@ -92,7 +101,9 @@ function startsEsp(str, i, token, layers, styleStarts) {
       Array.isArray(layers) &&
       layers.length &&
       layers[layers.length - 1].type === "esp" &&
-      layers[layers.length - 1].openingLump.includes(flipEspTag(str[i])) &&
+      (layers[layers.length - 1] as LayerEsp).openingLump.includes(
+        flipEspTag(str[i])
+      ) &&
       // insurance against "greater than", as in:
       // <#if product.weight > 100>
       (str[i] !== ">" || !xBeforeYOnTheRight(str, i + 1, ">", "<"))) ||
@@ -105,12 +116,12 @@ function startsEsp(str, i, token, layers, styleStarts) {
       Array.isArray(layers) &&
       layers.length &&
       layers[layers.length - 1].type === "esp" &&
-      layers[layers.length - 1].openingLump[0] === "<" &&
-      layers[layers.length - 1].openingLump[2] === "-" &&
-      layers[layers.length - 1].openingLump[3] === "-");
+      (layers[layers.length - 1] as LayerEsp).openingLump[0] === "<" &&
+      (layers[layers.length - 1] as LayerEsp).openingLump[2] === "-" &&
+      (layers[layers.length - 1] as LayerEsp).openingLump[3] === "-");
 
-  console.log(`112 startsEsp(): RETURNS ${res}`);
-  return res;
+  console.log(`112 startsEsp(): RETURNS ${!!res}`);
+  return !!res;
 }
 
 export default startsEsp;

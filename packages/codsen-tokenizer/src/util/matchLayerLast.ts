@@ -10,8 +10,14 @@
 // Quotes could be checked here but are not at the moment, here currently
 // we deal with ESP tokens only
 
+import { Layer } from "./util";
+
 // RETURNS: undefined or integer, length of a matched ESP lump.
-function matchLayerLast(wholeEspTagLump, layers, matchFirstInstead) {
+function matchLayerLast(
+  wholeEspTagLump: string,
+  layers: Layer[],
+  matchFirstInstead = false
+): undefined | number {
   if (!layers.length) {
     return;
   }

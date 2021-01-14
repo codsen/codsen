@@ -1,5 +1,5 @@
 import tap from "tap";
-import ct from "../dist/codsen-tokenizer.esm";
+import { tokenizer as ct } from "../dist/codsen-tokenizer.esm";
 // const BACKSLASH = "\u005C";
 
 // 01. general tests, exact matching via t.strictDeepEqual

@@ -1,5 +1,3 @@
-/* eslint no-return-assign: 0, no-bitwise: 0 */
-
 import {
   matchLeft,
   matchRight,
@@ -8,9 +6,9 @@ import {
 } from "string-match-left-right";
 import clone from "lodash.clonedeep";
 import { left, right } from "string-left-right";
-import attributeEnds from "is-html-attribute-closing";
+import { isAttrClosing } from "is-html-attribute-closing";
 import { allHtmlAttribs } from "html-all-known-attributes";
-import charSuitableForHTMLAttrName from "is-char-suitable-for-html-attr-name";
+import { isAttrNameChar } from "is-char-suitable-for-html-attr-name";
 import getWholeEspTagLumpOnTheRight from "./util/getWholeEspTagLumpOnTheRight";
 import startsHtmlComment from "./util/startsHtmlComment";
 import startsCssComment from "./util/startsCssComment";
@@ -19,9 +17,6 @@ import startsTag from "./util/startsTag";
 import startsEsp from "./util/startsEsp";
 import getLastEspLayerObjIdx from "./util/getLastEspLayerObjIdx";
 import {
-  BACKTICK,
-  LEFTDOUBLEQUOTMARK,
-  RIGHTDOUBLEQUOTMARK,
   charSuitableForTagName,
   isTagNameRecognised,
   xBeforeYOnTheRight,
@@ -30,108 +25,48 @@ import {
   veryEspChars,
   flipEspTag,
   espChars,
-  isStr,
+  isObj,
+  Token,
+  voidTags,
+  inlineTags,
+  BACKTICK,
+  charsThatEndCSSChunks,
+  SOMEQUOTE,
+  attrNameRegexp,
+  Attrib,
+  TokenType,
+  TextToken,
+  RuleToken,
+  CommentToken,
+  CharacterToken,
+  TagToken,
+  Property,
+  LayerType,
+  LayerSimple,
+  LayerEsp,
+  EspToken,
+  Layer,
+  LayerKindAt,
+  Opts,
 } from "./util/util";
+import { version as v } from "../package.json";
+const version: string = v;
 
-function isObj(something) {
-  return (
-    something && typeof something === "object" && !Array.isArray(something)
-  );
+const defaults: Opts = {
+  tagCb: null,
+  tagCbLookahead: 0,
+  charCb: null,
+  charCbLookahead: 0,
+  reportProgressFunc: null,
+  reportProgressFuncFrom: 0,
+  reportProgressFuncTo: 100,
+};
+
+interface Res {
+  timeTakenInMilliseconds: number;
 }
 
-// https://html.spec.whatwg.org/multipage/syntax.html#elements-2
-const voidTags = [
-  "area",
-  "base",
-  "br",
-  "col",
-  "embed",
-  "hr",
-  "img",
-  "input",
-  "link",
-  "meta",
-  "param",
-  "source",
-  "track",
-  "wbr",
-];
-
-// https://developer.mozilla.org/en-US/docs/Web/HTML/Element#Inline_text_semantics
-// https://developer.mozilla.org/en-US/docs/Web/HTML/Element#Image_and_multimedia
-const inlineTags = new Set([
-  "a",
-  "abbr",
-  "acronym",
-  "audio",
-  "b",
-  "bdi",
-  "bdo",
-  "big",
-  "br",
-  "button",
-  "canvas",
-  "cite",
-  "code",
-  "data",
-  "datalist",
-  "del",
-  "dfn",
-  "em",
-  "embed",
-  "i",
-  "iframe",
-  "img",
-  "input",
-  "ins",
-  "kbd",
-  "label",
-  "map",
-  "mark",
-  "meter",
-  "noscript",
-  "object",
-  "output",
-  "picture",
-  "progress",
-  "q",
-  "ruby",
-  "s",
-  "samp",
-  "script",
-  "select",
-  "slot",
-  "small",
-  "span",
-  "strong",
-  "sub",
-  "sup",
-  "svg",
-  "template",
-  "textarea",
-  "time",
-  "u",
-  "tt",
-  "var",
-  "video",
-  "wbr",
-]);
-
-// Rules which might wrap the media queries, for example:
-// @supports (display: grid) {...
-// const atRulesWhichMightWrapStyles = ["media", "supports", "document"];
-
-const charsThatEndCSSChunks = ["{", "}", ","];
-
-const SOMEQUOTE = `'"${LEFTDOUBLEQUOTMARK}${RIGHTDOUBLEQUOTMARK}`;
-
-const attrNameRegexp = /[\w-]/;
-
-// TODO remove:
-// same as used in string-extract-class-names
-// const badChars = `.# ~\\!@$%^&*()+=,/';:"?><[]{}|\`\t\n`;
-
-function tokenizer(str, originalOpts) {
+function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
   const start = Date.now();
   //
   //
@@ -142,7 +77,7 @@ function tokenizer(str, originalOpts) {
   //
   // INSURANCE
   // ---------------------------------------------------------------------------
-  if (!isStr(str)) {
+  if (typeof str !== "string") {
     if (str === undefined) {
       throw new Error(
         "codsen-tokenizer: [THROW_ID_01] the first input argument is completely missing! It should be given as string."
@@ -167,6 +102,7 @@ function tokenizer(str, originalOpts) {
     );
   }
   if (
+    originalOpts &&
     isObj(originalOpts) &&
     originalOpts.tagCb &&
     typeof originalOpts.tagCb !== "function"
@@ -180,6 +116,7 @@ function tokenizer(str, originalOpts) {
     );
   }
   if (
+    originalOpts &&
     isObj(originalOpts) &&
     originalOpts.charCb &&
     typeof originalOpts.charCb !== "function"
@@ -193,6 +130,7 @@ function tokenizer(str, originalOpts) {
     );
   }
   if (
+    originalOpts &&
     isObj(originalOpts) &&
     originalOpts.reportProgressFunc &&
     typeof originalOpts.reportProgressFunc !== "function"
@@ -216,16 +154,7 @@ function tokenizer(str, originalOpts) {
   // OPTS
   // ---------------------------------------------------------------------------
 
-  const defaults = {
-    tagCb: null,
-    tagCbLookahead: 0,
-    charCb: null,
-    charCbLookahead: 0,
-    reportProgressFunc: null,
-    reportProgressFuncFrom: 0,
-    reportProgressFuncTo: 100,
-  };
-  const opts = { ...defaults, ...originalOpts };
+  const opts: Opts = { ...defaults, ...originalOpts };
 
   //
   //
@@ -237,11 +166,11 @@ function tokenizer(str, originalOpts) {
   // VARS
   // ---------------------------------------------------------------------------
 
-  let currentPercentageDone;
+  let currentPercentageDone = 0;
   let lastPercentage = 0;
   const len = str.length;
   const midLen = Math.floor(len / 2);
-  let doNothing; // normally set to a number, index until where to do nothing
+  let doNothing = 0; // index until where to do nothing
   let withinStyle = false; // flag used to instruct content after <style> to toggle type="css"
   let withinStyleComment = false;
 
@@ -253,33 +182,30 @@ function tokenizer(str, originalOpts) {
   // we clean up stashes and report only as many as we have.
 
   // The stashes will be LIFO (last in first out) style arrays:
-  const tagStash = [];
-  const charStash = [];
+  const tagStash: Token[] = [];
+  const charStash: CharacterToken[] = [];
 
   // when we compile the token, we fill this object:
-  let token = {};
-  const tokenDefault = {
-    type: null,
-    start: null,
-    end: null,
-    value: null,
-  };
+  let token: Token = {} as Token;
   function tokenReset() {
     // object-assign is basically cloning - objects are passed by reference,
     // we can't risk mutating the default object:
     console.log(
       `271 ${`\u001b[${36}m${`██ tokenReset():`}\u001b[${39}m`} tokenReset() called`
     );
-    token = clone(tokenDefault);
+    token = {
+      type: null,
+      start: null,
+      end: null,
+      value: null,
+    } as any;
     attribReset();
-    return token;
   }
 
   // same for attributes:
-  let attrib = {};
-  const attribDefault = {
+  const attribDefaults: Attrib = {
     attribName: null,
-    attribNameRecognised: null,
+    attribNameRecognised: false,
     attribNameStartsAt: null,
     attribNameEndsAt: null,
     attribOpeningQuoteAt: null,
@@ -292,24 +218,26 @@ function tokenizer(str, originalOpts) {
     attribEnds: null,
     attribLeft: null,
   };
+  let attrib: Attrib = { ...attribDefaults };
   function attribReset() {
     // object-assign is basically cloning - objects are passed by reference,
     // we can't risk mutating the default object:
-    attrib = clone(attribDefault);
+    attrib = clone(attribDefaults);
   }
-  function attribPush(tokenObj) {
+
+  function attribPush(tokenObj: TextToken | CommentToken | Property): void {
+    console.log(`201`);
     // 1. clean up any existing tokens first
     /* istanbul ignore else */
     if (
-      Array.isArray(attrib.attribValue) &&
       attrib.attribValue.length &&
       attrib.attribValue[~-attrib.attribValue.length].start &&
       !attrib.attribValue[~-attrib.attribValue.length].end
     ) {
       attrib.attribValue[~-attrib.attribValue.length].end = tokenObj.start;
       attrib.attribValue[~-attrib.attribValue.length].value = str.slice(
-        attrib.attribValue[~-attrib.attribValue.length].start,
-        tokenObj.start
+        attrib.attribValue[~-attrib.attribValue.length].start as number,
+        tokenObj.start as number
       );
       console.log(
         `315 complete previous attr, ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} = ${JSON.stringify(
@@ -318,12 +246,6 @@ function tokenizer(str, originalOpts) {
           4
         )}`
       );
-    }
-
-    // 2. initiate new sub-token for comment
-    /* istanbul ignore else */
-    if (!Array.isArray(attrib.attribValue)) {
-      attrib.attribValue = [];
     }
 
     attrib.attribValue.push(tokenObj);
@@ -336,35 +258,35 @@ function tokenizer(str, originalOpts) {
     );
   }
 
-  // same for property:
-  let property = null;
-  const propertyDefault = {
+  // same for property
+  const propertyDefault: Property = {
+    start: null as any, // a convenience value, mirroring "propertyStarts"
+    end: null as any, // a convenience value, mirroring whatever was last
+    value: null as any,
     property: null,
     propertyStarts: null,
     propertyEnds: null,
     colon: null,
-    value: null,
     valueStarts: null,
     valueEnds: null,
     semi: null,
-    start: null, // convenience value, mirroring "propertyStarts"
-    end: null, // // convenience value, mirroring whatever was last
   };
+  let property: Property = { ...propertyDefault };
   function propertyReset() {
-    property = clone(propertyDefault);
+    property = { ...propertyDefault };
   }
 
   // The CSS properties can be in <style> blocks or inline, <div style="">.
   // When we process the code, we have to address both places. This "push"
   // is used in handful of places so we DRY'ed it to a function.
-  function pushProperty(p) {
+  function pushProperty(p: Property) {
     // push and init and patch up to resume
     if (attrib && attrib.attribName === "style") {
       console.log(`363 push property`);
-      attrib.attribValue.push(clone(p));
-    } else if (token && Array.isArray(token.properties)) {
+      attrib.attribValue.push({ ...p });
+    } else if (token && Array.isArray((token as RuleToken).properties)) {
       console.log(`366 push property`);
-      token.properties.push(clone(p));
+      (token as RuleToken).properties.push({ ...p });
     }
   }
 
@@ -433,7 +355,7 @@ function tokenizer(str, originalOpts) {
   //   },
   // ],
 
-  let lastNonWhitespaceCharAt;
+  let lastNonWhitespaceCharAt = null;
 
   // ---------------------------------------------------------------------------
 
@@ -451,7 +373,7 @@ function tokenizer(str, originalOpts) {
   // ignore all findings until the "layer" is exited. Here we keep note of the
   // closing strings which exit the current "layer". There can be many of them,
   // nested and escaped and so on.
-  const layers = [];
+  const layers: Layer[] = [];
   // example of contents:
   // [
   //     {
@@ -468,8 +390,8 @@ function tokenizer(str, originalOpts) {
   // know exact ESP tails but we know set of characters that suspected "tail"
   // should match.
   //
-  function lastLayerIs(something) {
-    return (
+  function lastLayerIs(something: LayerType): boolean {
+    return !!(
       Array.isArray(layers) &&
       layers.length &&
       layers[~-layers.length].type === something
@@ -478,22 +400,23 @@ function tokenizer(str, originalOpts) {
 
   // processes closing comment - it's DRY'ed here because it's in multiple places
   // considering broken code like stray closing inline css comment blocks etc.
-  function closingComment(i) {
+  function closingComment(i: number): void {
     console.log(
       `483 closingComment(): ${`\u001b[${32}m${`closing comment`}\u001b[${39}m`}`
     );
+    const end = (right(str, i) || i) + 1;
     attribPush({
       type: "comment",
       start: i,
-      end: right(str, i) + 1,
-      value: str.slice(i, right(str, i) + 1), // think of broken cases with whitespace, / *
+      end,
+      value: str.slice(i, end), // think of broken cases with whitespace, / *
       closing: true,
       kind: "block",
       language: "css",
     });
 
     // skip next character
-    doNothing = right(str, i) + 1;
+    doNothing = end;
     console.log(
       `498 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
         doNothing,
@@ -516,7 +439,14 @@ function tokenizer(str, originalOpts) {
   }
 
   // used by both tag and character callbacks:
-  function reportFirstFromStash(stash, cb, lookaheadLength) {
+  type CharCb = (token: CharacterToken, next: CharacterToken[]) => void;
+  type TokenCb = (token: Token, next: Token[]) => void;
+
+  function reportFirstFromStash(
+    stash: (CharacterToken | Token)[],
+    cb: null | CharCb | TokenCb,
+    lookaheadLength: number
+  ) {
     console.time("reportFirstFromStash()");
     console.log(
       `522 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ██ ${`\u001b[${33}m${`START`}\u001b[${39}m`}`
@@ -535,15 +465,7 @@ function tokenizer(str, originalOpts) {
       // not enough there
       if (stash[i]) {
         next.push(clone(stash[i]));
-        console.log(
-          `539 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} currentElem[2].next now = ${JSON.stringify(
-            currentElem[2] && currentElem[2].next
-              ? currentElem[2].next
-              : undefined,
-            null,
-            4
-          )}`
-        );
+        console.log(`434`);
       } else {
         console.log(
           `549 ${`\u001b[${35}m${`reportFirstFromStash()`}\u001b[${39}m`}: ${`\u001b[${31}m${`STOP`}\u001b[${39}m`} - there are not enough elements in stash`
@@ -560,11 +482,13 @@ function tokenizer(str, originalOpts) {
         4
       )}`
     );
-    cb(currentElem, next);
+    if (typeof cb === "function") {
+      cb(currentElem as any, next as any[]);
+    }
     console.timeEnd("reportFirstFromStash()");
   }
 
-  function pingCharCb(incomingToken) {
+  function pingCharCb(incomingToken: CharacterToken) {
     console.time("pingCharCb()");
     // no cloning, no reset
     if (opts.charCb) {
@@ -596,7 +520,7 @@ function tokenizer(str, originalOpts) {
     console.timeEnd("pingCharCb()");
   }
 
-  function pingTagCb(incomingToken) {
+  function pingTagCb(incomingToken: Token) {
     console.time("pingTagCb()");
     if (opts.tagCb) {
       // console.log(
@@ -633,7 +557,7 @@ function tokenizer(str, originalOpts) {
     console.timeEnd("pingTagCb()");
   }
 
-  function dumpCurrentToken(incomingToken, i) {
+  function dumpCurrentToken(incomingToken: Token, i: number): void {
     console.log(
       `638 ${`\u001b[${35}m${`dumpCurrentToken()`}\u001b[${39}m`}; incoming incomingToken=${JSON.stringify(
         incomingToken,
@@ -659,7 +583,13 @@ function tokenizer(str, originalOpts) {
       // in some cases, this token.end will be only end of a second token,
       // we'll need to find where this last chunk started and terminate the
       // previous token (one which started at the current token.start) there.
-      incomingToken.end = left(str, i) + 1;
+      if (left(str, i) !== null) {
+        console.log(`561`);
+        incomingToken.end = (left(str, i) as number) + 1;
+      } else {
+        console.log(`564`);
+        incomingToken.end = i;
+      }
       incomingToken.value = str.slice(incomingToken.start, incomingToken.end);
       console.log(
         `665 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`incomingToken.end`}\u001b[${39}m`} = ${
@@ -720,8 +650,11 @@ function tokenizer(str, originalOpts) {
                 4
               )}`
             );
-            if (incomingToken.attribs[i2].attribNameRecognised) {
-              cutOffIndex = incomingToken.attribs[i2].attribEnds;
+            if (
+              incomingToken.attribs[i2].attribNameRecognised &&
+              incomingToken.attribs[i2].attribEnds
+            ) {
+              cutOffIndex = incomingToken.attribs[i2].attribEnds as number;
               console.log(
                 `726 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`cutOffIndex`}\u001b[${39}m`} = ${cutOffIndex}`
               );
@@ -753,7 +686,7 @@ function tokenizer(str, originalOpts) {
                 // not suitable, for example:
                 // <a click here</a>
                 // all attributes ("click", "here") are removed:
-                incomingToken.attribs.length = 0;
+                incomingToken.attribs = [];
               } else {
                 // leave only attributes up to i2-th
                 incomingToken.attribs = incomingToken.attribs.splice(0, i2);
@@ -816,7 +749,7 @@ function tokenizer(str, originalOpts) {
         // if there was whitespace after token's end:
         if (str[~-i] && !str[~-i].trim()) {
           console.log(`818 indeed there was whitespace after token's end`);
-          initToken("text", left(str, i) + 1);
+          initToken("text", (left(str, i) as number) + 1);
           console.log(
             `821 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.start`}\u001b[${39}m`} = ${
               token.start
@@ -860,7 +793,9 @@ function tokenizer(str, originalOpts) {
         // if it's a text token inside "at" rule, nest it, push into that
         // "at" rule pending in layers - otherwise, ping as standalone
         if (lastLayerIs("at")) {
-          layers[~-layers.length].token.rules.push(token);
+          (layers[~-layers.length] as LayerKindAt).token.rules.push(
+            token as any
+          );
           console.log(
             `865 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} into layers AT rule`
           );
@@ -882,19 +817,19 @@ function tokenizer(str, originalOpts) {
   function atRuleWaitingForClosingCurlie() {
     return (
       lastLayerIs("at") &&
-      isObj(layers[~-layers.length].token) &&
-      layers[~-layers.length].token.openingCurlyAt &&
-      !layers[~-layers.length].token.closingCurlyAt
+      isObj((layers[~-layers.length] as LayerKindAt).token) &&
+      (layers[~-layers.length] as LayerKindAt).token.openingCurlyAt &&
+      !(layers[~-layers.length] as LayerKindAt).token.closingCurlyAt
     );
   }
 
-  function getNewToken(type, startVal = null) {
+  function getNewToken(type: TokenType, startVal: number | null = null): Token {
     if (type === "tag") {
       return {
         type,
-        start: startVal,
-        end: null,
-        value: null,
+        start: startVal as any,
+        end: null as any,
+        value: null as any,
         tagNameStartsAt: null,
         tagNameEndsAt: null,
         tagName: null,
@@ -909,9 +844,9 @@ function tokenizer(str, originalOpts) {
     if (type === "comment") {
       return {
         type,
-        start: startVal,
-        end: null,
-        value: null,
+        start: startVal as any,
+        end: null as any,
+        value: null as any,
         closing: false,
         kind: "simple", // or "only" or "not" (HTML) - OR  - "block" or "line" (CSS)
         language: "html", // or "css"
@@ -920,9 +855,9 @@ function tokenizer(str, originalOpts) {
     if (type === "rule") {
       return {
         type,
-        start: startVal,
-        end: null,
-        value: null,
+        start: startVal as any,
+        end: null as any,
+        value: null as any,
         left: null,
         nested: false,
         openingCurlyAt: null,
@@ -936,9 +871,9 @@ function tokenizer(str, originalOpts) {
     if (type === "at") {
       return {
         type,
-        start: startVal,
-        end: null,
-        value: null,
+        start: startVal as any,
+        end: null as any,
+        value: null as any,
         left: null,
         nested: false,
         openingCurlyAt: null,
@@ -952,20 +887,12 @@ function tokenizer(str, originalOpts) {
         rules: [],
       };
     }
-    if (type === "text") {
-      return {
-        type,
-        start: startVal,
-        end: null,
-        value: null,
-      };
-    }
     if (type === "esp") {
       return {
         type,
-        start: startVal,
-        end: null,
-        value: null,
+        start: startVal as any,
+        end: null as any,
+        value: null as any,
         head: null,
         headStartsAt: null,
         headEndsAt: null,
@@ -974,9 +901,16 @@ function tokenizer(str, originalOpts) {
         tailEndsAt: null,
       };
     }
+    // a default is text token
+    return {
+      type: "text",
+      start: startVal as any,
+      end: null as any,
+      value: null as any,
+    };
   }
 
-  function initToken(type, startVal) {
+  function initToken(type: TokenType, startVal: number | null): void {
     console.time("initToken()");
     // we mutate the object on the parent scope, so no Object.assign here
     attribReset();
@@ -984,7 +918,7 @@ function tokenizer(str, originalOpts) {
     console.timeEnd("initToken()");
   }
 
-  function initProperty(propertyStarts) {
+  function initProperty(propertyStarts: number): void {
     console.time("initProperty()");
     // we mutate the object on the parent scope, so no Object.assign here
     propertyReset();
@@ -993,7 +927,7 @@ function tokenizer(str, originalOpts) {
     console.timeEnd("initProperty()");
   }
 
-  function ifQuoteThenAttrClosingQuote(idx) {
+  function ifQuoteThenAttrClosingQuote(idx: number): boolean {
     // either it's not a quote:
     return (
       !`'"`.includes(str[idx]) ||
@@ -1005,9 +939,9 @@ function tokenizer(str, originalOpts) {
       // the value, it will be easier to validate, imagine:
       // <div style="float:"left"">
       //
-      attributeEnds(
+      isAttrClosing(
         str,
-        attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt,
+        (attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt) as number,
         idx
       )
     );
@@ -1077,6 +1011,12 @@ function tokenizer(str, originalOpts) {
       }
     }
 
+    // Left/Right helpers
+    // -------------------------------------------------------------------------
+
+    const leftVal = left(str, i);
+    const rightVal = right(str, i);
+
     // Turn off doNothing if marker passed
     // -------------------------------------------------------------------------
 
@@ -1099,7 +1039,7 @@ function tokenizer(str, originalOpts) {
     }
 
     if (doNothing && i >= doNothing) {
-      doNothing = false;
+      doNothing = 0;
       console.log(`1103 TURN OFF doNothing`);
     }
 
@@ -1141,14 +1081,14 @@ function tokenizer(str, originalOpts) {
       // if (str[i] === "}") {
       if (str[i] === "}") {
         if (
-          token.type === null ||
+          !token.type ||
           token.type === "text" ||
           (token.type === "rule" && token.openingCurlyAt === null)
         ) {
           // rule token must end earlier
           if (token.type === "rule") {
             console.log(`1150 complete the "rule" token`);
-            token.end = left(str, i) + 1;
+            token.end = (leftVal as number) + 1;
             token.value = str.slice(token.start, token.end);
             console.log(
               `1154 ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
@@ -1162,7 +1102,7 @@ function tokenizer(str, originalOpts) {
             // if it's a text token inside "at" rule, nest it, push into that
             // "at" rule pending in layers - otherwise, ping as standalone
             if (lastLayerIs("at")) {
-              layers[~-layers.length].token.rules.push(token);
+              (layers[~-layers.length] as LayerKindAt).token.rules.push(token);
               console.log(
                 `1167 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} into layers AT rule`
               );
@@ -1172,11 +1112,11 @@ function tokenizer(str, originalOpts) {
             tokenReset();
 
             // if there was trailing whitespace, initiate it
-            if (left(str, i) < ~-i) {
+            if (leftVal !== null && leftVal < ~-i) {
               console.log(
-                `1177 initiate whitespace from [${left(str, i) + 1}, ${i}]`
+                `1177 initiate whitespace from [${leftVal + 1}, ${i}]`
               );
-              initToken("text", left(str, i) + 1);
+              initToken("text", leftVal + 1);
               console.log(
                 `1181 ${`\u001b[${33}m${`token`}\u001b[${39}m`} now = ${JSON.stringify(
                   token,
@@ -1193,7 +1133,7 @@ function tokenizer(str, originalOpts) {
           console.log(
             `1194 ${`\u001b[${35}m${`██`}\u001b[${39}m`} restore at rule from layers`
           );
-          const poppedToken = layers.pop();
+          const poppedToken = layers.pop() as LayerKindAt;
           token = poppedToken.token;
           console.log(`1198 new token: ${JSON.stringify(token, null, 4)}`);
 
@@ -1217,7 +1157,9 @@ function tokenizer(str, originalOpts) {
             console.log(
               `1218 ${`\u001b[${32}m${`PUSH this rule into last AT layer`}\u001b[${39}m`}`
             );
-            layers[~-layers.length].token.rules.push(token);
+            (layers[~-layers.length] as LayerKindAt).token.rules.push(
+              token as any
+            );
           }
 
           console.log(`1223 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`}`);
@@ -1244,7 +1186,7 @@ function tokenizer(str, originalOpts) {
         // if it's a text token inside "at" rule, nest it, push into that
         // "at" rule pending in layers - otherwise, ping as standalone
         if (lastLayerIs("at")) {
-          layers[~-layers.length].token.rules.push(token);
+          (layers[~-layers.length] as LayerKindAt).token.rules.push(token);
           console.log(
             `1249 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} into layers AT rule`
           );
@@ -1261,7 +1203,7 @@ function tokenizer(str, originalOpts) {
 
     if (token.end && token.end === i) {
       console.log(`1263 token was captured in the past, so push it now`);
-      if (token.tagName === "style" && !token.closing) {
+      if ((token as any).tagName === "style" && !(token as any).closing) {
         withinStyle = true;
         console.log(
           `1267 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinStyle`}\u001b[${39}m`} = true`
@@ -1285,10 +1227,10 @@ function tokenizer(str, originalOpts) {
         console.log(
           `1286 PUSH token to be inside ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`}`
         );
-        attrib.attribValue.push(token);
+        attrib.attribValue.push(token as any);
 
         // 3. restore real token
-        token = clone(parentTokenToBackup);
+        token = clone(parentTokenToBackup) as TagToken;
 
         // 4. reset
         attribToBackup = undefined;
@@ -1310,6 +1252,14 @@ function tokenizer(str, originalOpts) {
       }
     }
 
+    console.log(
+      `1314 ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`} = ${JSON.stringify(
+        attrib.attribValue,
+        null,
+        4
+      )}`
+    );
+
     //
     //
     //
@@ -1326,7 +1276,7 @@ function tokenizer(str, originalOpts) {
     if (!doNothing) {
       if (
         ["tag", "rule", "at"].includes(token.type) &&
-        token.kind !== "cdata"
+        (token as any).kind !== "cdata"
       ) {
         console.log(
           `1332 ${`\u001b[${36}m${`LAYERS CLAUSES`}\u001b[${39}m`} ("tag", "rule" or "at")`
@@ -1339,8 +1289,8 @@ function tokenizer(str, originalOpts) {
             // "'" or '"' - templating languages might put single quote as a sttring
             // character, not meaning wrapped-something.
             (
-              SOMEQUOTE.includes(str[left(str, i)]) &&
-              str[left(str, i)] === str[right(str, i)]
+              SOMEQUOTE.includes(str[leftVal as number]) &&
+              str[leftVal as number] === str[rightVal as number]
             )
           ) &&
           // protection against double-wrapped values, like
@@ -1357,13 +1307,15 @@ function tokenizer(str, originalOpts) {
           console.log(`1357`);
           console.log(
             `1359 last layer's value: ${
-              lastLayerIs("simple") && layers[~-layers.length].value
+              lastLayerIs("simple") &&
+              (layers[~-layers.length] as LayerSimple).value
             }`
           );
           if (
             // maybe it's the closing counterpart?
             lastLayerIs("simple") &&
-            layers[~-layers.length].value === flipEspTag(str[i])
+            (layers[~-layers.length] as LayerSimple).value ===
+              flipEspTag(str[i])
           ) {
             layers.pop();
             console.log(`1369 ${`\u001b[${32}m${`POP`}\u001b[${39}m`} layers`);
@@ -1397,7 +1349,8 @@ function tokenizer(str, originalOpts) {
           if (
             // maybe it's the closing counterpart?
             lastLayerIs("simple") &&
-            layers[~-layers.length].value === flipEspTag(str[i])
+            (layers[~-layers.length] as LayerSimple).value ===
+              flipEspTag(str[i])
           ) {
             // maybe it's the closing counterpart?
             layers.pop();
@@ -1429,8 +1382,8 @@ function tokenizer(str, originalOpts) {
           // "'" or '"' - templating languages might put single quote as a sttring
           // character, not meaning wrapped-something.
           (
-            [`"`, `'`, "`"].includes(str[left(str, i)]) &&
-            str[left(str, i)] === str[right(str, i)]
+            [`"`, `'`, "`"].includes(str[leftVal as number]) &&
+            str[leftVal as number] === str[rightVal as number]
           )
         )
       ) {
@@ -1438,7 +1391,7 @@ function tokenizer(str, originalOpts) {
         if (
           // maybe it's the closing counterpart?
           lastLayerIs("simple") &&
-          layers[~-layers.length].value === flipEspTag(str[i])
+          (layers[~-layers.length] as LayerSimple).value === flipEspTag(str[i])
         ) {
           // maybe it's the closing counterpart?
           layers.pop();
@@ -1508,7 +1461,7 @@ function tokenizer(str, originalOpts) {
     if (
       !doNothing &&
       token.type === "at" &&
-      token.queryStartsAt != null &&
+      token.queryStartsAt &&
       !token.queryEndsAt &&
       `{;`.includes(str[i])
     ) {
@@ -1529,7 +1482,7 @@ function tokenizer(str, originalOpts) {
           //                          ^
           //                        this
           //
-          token.queryEndsAt = left(str, i) + 1;
+          token.queryEndsAt = leftVal !== null ? leftVal + 1 : i;
           // left() stops "to the left" of a character, if you used that index
           // for slicing, that character would be included, in our case,
           // @media (max-width: 600px) {
@@ -1559,17 +1512,19 @@ function tokenizer(str, originalOpts) {
         );
       }
 
-      token.query = str.slice(token.queryStartsAt, token.queryEndsAt);
-      console.log(
-        `1564 ${`\u001b[${33}m${`token.query`}\u001b[${39}m`} = ${JSON.stringify(
-          token.query,
-          null,
-          4
-        )}`
-      );
+      if (token.queryStartsAt && token.queryEndsAt) {
+        token.query = str.slice(token.queryStartsAt, token.queryEndsAt);
+        console.log(
+          `1564 ${`\u001b[${33}m${`token.query`}\u001b[${39}m`} = ${JSON.stringify(
+            token.query,
+            null,
+            4
+          )}`
+        );
+      }
 
       token.end = str[i] === ";" ? i + 1 : i;
-      token.value = str.slice(token.start, token.end);
+      token.value = str.slice(token.start as number, token.end);
 
       if (str[i] === ";") {
         // if code is clean, that would be @charset for example, no curlies
@@ -1639,9 +1594,10 @@ function tokenizer(str, originalOpts) {
 
     if (
       !doNothing &&
+      token &&
       token.type === "at" &&
-      token.identifierStartsAt != null &&
-      i >= token.start &&
+      token.identifierStartsAt &&
+      i >= (token.start as number) &&
       str[i] &&
       (!str[i].trim() || "()".includes(str[i])) &&
       !token.identifierEndsAt
@@ -1667,7 +1623,7 @@ function tokenizer(str, originalOpts) {
       (charsThatEndCSSChunks.includes(str[i]) ||
         (str[i] &&
           !str[i].trim() &&
-          charsThatEndCSSChunks.includes(str[right(str, i)])))
+          charsThatEndCSSChunks.includes(str[rightVal as number])))
     ) {
       console.log(
         `1673 FIY, ${`\u001b[${33}m${`selectorChunkStartedAt`}\u001b[${39}m`} was ${selectorChunkStartedAt}`
@@ -1796,7 +1752,7 @@ function tokenizer(str, originalOpts) {
               }
 
               pushProperty(property);
-              property = null;
+              propertyReset();
               console.log(
                 `1801 push, then ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`}`
               );
@@ -1835,85 +1791,89 @@ function tokenizer(str, originalOpts) {
         console.log(
           `1836 ${`\u001b[${36}m${`extract the tag name`}\u001b[${39}m`}`
         );
-        for (let y = right(str, i); y < len; y++) {
-          console.log(
-            `${`\u001b[${36}m${`str[y]`}\u001b[${39}m`} = ${JSON.stringify(
-              str[y],
-              null,
-              4
-            )}`
-          );
-          if (
-            !letterMet &&
-            str[y] &&
-            str[y].trim() &&
-            str[y].toUpperCase() !== str[y].toLowerCase()
-          ) {
-            letterMet = true;
-          }
-          if (
-            // at least one letter has been met, to cater
-            // <? xml ...
-            letterMet &&
-            str[y] &&
-            // it's whitespace
-            (!str[y].trim() ||
-              // or symbol which definitely does not belong to a tag,
-              // considering we want to catch some rogue characters to
-              // validate and flag them up later
-              (!/\w/.test(str[y]) && !badCharacters.includes(str[y])) ||
-              str[y] === "[")
-            // if letter has been met, "[" is also terminating character
-            // think <![CDATA[x<y]]>
-            //               ^
-            //             this
-          ) {
+
+        if (rightVal) {
+          for (let y = rightVal as number; y < len; y++) {
             console.log(
-              `1872 SET ${`\u001b[${33}m${`extractedTagName`}\u001b[${39}m`} = ${JSON.stringify(
-                extractedTagName,
+              `${`\u001b[${36}m${`str[y]`}\u001b[${39}m`} = ${JSON.stringify(
+                str[y],
                 null,
                 4
               )}`
             );
-            break;
-          } else if (!badCharacters.includes(str[y])) {
-            extractedTagName += str[y].trim().toLowerCase();
+            if (
+              !letterMet &&
+              str[y] &&
+              str[y].trim() &&
+              str[y].toUpperCase() !== str[y].toLowerCase()
+            ) {
+              letterMet = true;
+            }
+            if (
+              // at least one letter has been met, to cater
+              // <? xml ...
+              letterMet &&
+              str[y] &&
+              // it's whitespace
+              (!str[y].trim() ||
+                // or symbol which definitely does not belong to a tag,
+                // considering we want to catch some rogue characters to
+                // validate and flag them up later
+                (!/\w/.test(str[y]) && !badCharacters.includes(str[y])) ||
+                str[y] === "[")
+              // if letter has been met, "[" is also terminating character
+              // think <![CDATA[x<y]]>
+              //               ^
+              //             this
+            ) {
+              console.log(
+                `1872 SET ${`\u001b[${33}m${`extractedTagName`}\u001b[${39}m`} = ${JSON.stringify(
+                  extractedTagName,
+                  null,
+                  4
+                )}`
+              );
+              break;
+            } else if (!badCharacters.includes(str[y])) {
+              extractedTagName += str[y].trim().toLowerCase();
+            }
           }
         }
+
         console.log(".");
 
         // set the kind:
 
         if (extractedTagName === "doctype") {
-          token.kind = "doctype";
+          (token as TagToken).kind = "doctype";
           console.log(
             `1890 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
-              token.kind
+              (token as TagToken).kind
             }`
           );
         } else if (extractedTagName === "cdata") {
-          token.kind = "cdata";
+          (token as TagToken).kind = "cdata";
           console.log(
             `1897 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
-              token.kind
+              (token as TagToken).kind
             }`
           );
         } else if (extractedTagName === "xml") {
-          token.kind = "xml";
+          (token as TagToken).kind = "xml";
           console.log(
             `1904 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
-              token.kind
+              (token as TagToken).kind
             }`
           );
         } else if (inlineTags.has(extractedTagName)) {
-          token.kind = "inline";
+          (token as TagToken).kind = "inline";
           console.log(
             `1911 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
-              token.kind
+              (token as TagToken).kind
             }`
           );
         }
-      } else if (startsHtmlComment(str, i, token, layers, withinStyle)) {
+      } else if (startsHtmlComment(str, i, token, layers)) {
         //
         //
         //
@@ -1941,10 +1901,10 @@ function tokenizer(str, originalOpts) {
 
         // set "closing"
         if (str[i] === "-") {
-          token.closing = true;
+          (token as CommentToken).closing = true;
           console.log(
             `1946 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closing`}\u001b[${39}m`} = ${
-              token.closing
+              (token as CommentToken).closing
             }`
           );
         } else if (
@@ -1954,12 +1914,14 @@ function tokenizer(str, originalOpts) {
             maxMismatches: 2,
           })
         ) {
-          token.closing = true;
-          token.kind = "only";
+          (token as CommentToken).closing = true;
+          (token as CommentToken).kind = "only";
           console.log(
             `1960 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.closing`}\u001b[${39}m`} = ${
-              token.closing
-            }; ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${token.kind}`
+              (token as CommentToken).closing
+            }; ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${
+              (token as CommentToken).kind
+            }`
           );
         }
 
@@ -1988,20 +1950,21 @@ function tokenizer(str, originalOpts) {
         // second arg is "start" key:
         initToken("comment", i);
 
-        token.language = "css";
+        (token as CommentToken).language = "css";
         console.log(
           `1993 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.language`}\u001b[${39}m`} = ${
-            token.language
+            (token as CommentToken).language
           }`
         );
-        token.kind = str[i] === "/" && str[i + 1] === "/" ? "line" : "block";
+        (token as CommentToken).kind =
+          str[i] === "/" && str[i + 1] === "/" ? "line" : "block";
         token.value = str.slice(i, i + 2);
         token.end = i + 2;
-        token.closing = str[i] === "*" && str[i + 1] === "/";
+        (token as CommentToken).closing = str[i] === "*" && str[i + 1] === "/";
 
         withinStyleComment = true;
 
-        if (token.closing) {
+        if ((token as CommentToken).closing) {
           withinStyleComment = false;
         }
 
@@ -2020,15 +1983,21 @@ function tokenizer(str, originalOpts) {
         );
       } else if (
         // if we encounter two consecutive characters of guessed lump
-        (layers[lastEspLayerObjIdx] &&
+        (typeof lastEspLayerObjIdx === "number" &&
+          layers[lastEspLayerObjIdx] &&
           layers[lastEspLayerObjIdx].type === "esp" &&
-          layers[lastEspLayerObjIdx].openingLump &&
-          layers[lastEspLayerObjIdx].guessedClosingLump &&
-          layers[lastEspLayerObjIdx].guessedClosingLump.length > 1 &&
+          (layers[lastEspLayerObjIdx] as LayerEsp).openingLump &&
+          (layers[lastEspLayerObjIdx] as LayerEsp).guessedClosingLump &&
+          (layers[lastEspLayerObjIdx] as LayerEsp).guessedClosingLump.length >
+            1 &&
           // current character is among guessed lump's characters
-          layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[i]) &&
+          (layers[lastEspLayerObjIdx] as LayerEsp).guessedClosingLump.includes(
+            str[i]
+          ) &&
           // ...and the following character too...
-          layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[i + 1]) &&
+          (layers[lastEspLayerObjIdx] as LayerEsp).guessedClosingLump.includes(
+            str[i + 1]
+          ) &&
           // since we "jump" over layers, that is, passed quotes
           // and what not, we have to ensure we don't skip
           // legit cases like:
@@ -2057,16 +2026,22 @@ function tokenizer(str, originalOpts) {
             (
               layers[lastEspLayerObjIdx + 1] &&
               // and it's quote
-              `'"`.includes(layers[lastEspLayerObjIdx + 1].value) &&
+              `'"`.includes((layers[lastEspLayerObjIdx + 1] as any).value) &&
               // matching quote on the right has ESP character following
               // it exists (>-1)
-              str.indexOf(layers[lastEspLayerObjIdx + 1].value, i) > 0 &&
-              layers[lastEspLayerObjIdx].guessedClosingLump.includes(
+              str.indexOf((layers[lastEspLayerObjIdx + 1] as any).value, i) >
+                0 &&
+              (layers[
+                lastEspLayerObjIdx
+              ] as LayerEsp).guessedClosingLump.includes(
                 str[
                   right(
                     str,
-                    str.indexOf(layers[lastEspLayerObjIdx + 1].value, i)
-                  )
+                    str.indexOf(
+                      (layers[lastEspLayerObjIdx + 1] as any).value,
+                      i
+                    )
+                  ) as number
                 ]
               )
             )
@@ -2079,7 +2054,9 @@ function tokenizer(str, originalOpts) {
           //   we could be here - notice quotes wrapping all around
           //
           (!lastLayerIs("simple") ||
-            ![`'`, `"`].includes(layers[~-layers.length].value) ||
+            ![`'`, `"`].includes(
+              (layers[~-layers.length] as LayerSimple).value
+            ) ||
             // or we're within an attribute (so quotes are HTML tag's not esp tag's)
             (attrib && attrib.attribStarts && !attrib.attribEnds)))
       ) {
@@ -2159,7 +2136,10 @@ function tokenizer(str, originalOpts) {
             if (token.type === "esp") {
               if (!token.end) {
                 token.end = i + lengthOfClosingEspChunk;
-                token.value = str.slice(token.start, token.end);
+                token.value = str.slice(
+                  token.start as number,
+                  token.end as number
+                );
                 token.tail = str.slice(i, i + lengthOfClosingEspChunk);
                 token.tailStartsAt = i;
                 token.tailEndsAt = token.end;
@@ -2167,14 +2147,14 @@ function tokenizer(str, originalOpts) {
                 // correction for XML-like templating tags, closing can
                 // have a slash, <c:set zzz/>
                 //                         ^
-                if (str[i] === ">" && str[left(str, i)] === "/") {
-                  token.tailStartsAt = left(str, i);
+                if (str[i] === ">" && str[leftVal as number] === "/") {
+                  token.tailStartsAt = leftVal;
                   console.log(
                     `2173 closing slash correction, ${`\u001b[${32}m${`SET`}\u001b[${39}m`} token.tailStartsAt=${
                       token.tailStartsAt
                     }`
                   );
-                  token.tail = str.slice(token.tailStartsAt, i + 1);
+                  token.tail = str.slice(token.tailStartsAt as number, i + 1);
                 }
 
                 console.log(
@@ -2192,7 +2172,7 @@ function tokenizer(str, originalOpts) {
               console.log(
                 `2193 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
               );
-              doNothing = token.tailEndsAt;
+              doNothing = token.tailEndsAt as number;
 
               console.log(
                 `2198 ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
@@ -2211,7 +2191,7 @@ function tokenizer(str, originalOpts) {
 
                 // 1. ensure key "attribs" exist (thinking about comment tokens etc)
                 if (!Array.isArray(parentTokenToBackup.attribs)) {
-                  parentTokenToBackup.attribs.length = 0;
+                  parentTokenToBackup.attribs = [];
                 }
 
                 // 2. push somewhere
@@ -2230,13 +2210,13 @@ function tokenizer(str, originalOpts) {
                   console.log(
                     `2231 PUSH token to be inside ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`}`
                   );
-                  attrib.attribValue.push(clone(token));
+                  attrib.attribValue.push({ ...token } as any);
 
                   // 3. attribToBackup is reset in all cases, below
                 } else {
                   // push to attribs
                   console.log(`2238 PUSH token to be among attribs`);
-                  parentTokenToBackup.attribs.push(clone(token));
+                  parentTokenToBackup.attribs.push({ ...token } as any);
                 }
 
                 // 3. parentTokenToBackup becomes token
@@ -2286,7 +2266,7 @@ function tokenizer(str, originalOpts) {
             (lengthOfClosingEspChunk = matchLayerLast(
               wholeEspTagLumpOnTheRight,
               layers,
-              "matchFirst"
+              true
             ))
           ) {
             console.log(
@@ -2307,8 +2287,11 @@ function tokenizer(str, originalOpts) {
             // it to the cb()
             if (token.type === "esp") {
               if (!token.end) {
-                token.end = i + lengthOfClosingEspChunk;
-                token.value = str.slice(token.start, token.end);
+                token.end = i + (lengthOfClosingEspChunk || 0);
+                token.value = str.slice(
+                  token.start as number,
+                  token.end as number
+                );
                 console.log(
                   `2313 ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
                     token,
@@ -2351,6 +2334,7 @@ function tokenizer(str, originalOpts) {
             attrib &&
             attrib.attribValue &&
             attrib.attribValue.length &&
+            attrib.attribValue[~-attrib.attribValue.length].start &&
             Array.from(
               str.slice(
                 attrib.attribValue[~-attrib.attribValue.length].start,
@@ -2394,7 +2378,8 @@ function tokenizer(str, originalOpts) {
             // imagine, the { x from <a b="{ x %}"> would be
             // such unrecognised text:
             attrib.attribValue[~-attrib.attribValue.length] &&
-            attrib.attribValue[~-attrib.attribValue.length].type === "text"
+            (attrib.attribValue[~-attrib.attribValue.length] as any).type ===
+              "text"
           ) {
             console.log(
               `2400 ${`\u001b[${31}m${`██`}\u001b[${39}m`} seems like a stray lump`
@@ -2427,10 +2412,10 @@ function tokenizer(str, originalOpts) {
             // getNewToken() just creates a new token according
             // the latest (DRY) reference, it doesn't reset
             // the "token" unlike initToken()
-            const newTokenToPutInstead = getNewToken(
+            const newTokenToPutInstead: EspToken = getNewToken(
               "esp",
               lastAttrValueObj.start
-            );
+            ) as EspToken;
 
             // for remaining values, we need to consider, is there
             // text in front:
@@ -2443,7 +2428,7 @@ function tokenizer(str, originalOpts) {
               console.log(
                 `2444 ${`\u001b[${33}m${`ESP tag is this whole text token`}\u001b[${39}m`}`
               );
-              newTokenToPutInstead.head = disposableVar.char;
+              newTokenToPutInstead.head = (disposableVar as any).char;
               newTokenToPutInstead.headStartsAt = lastAttrValueObj.start;
               newTokenToPutInstead.headEndsAt =
                 newTokenToPutInstead.headStartsAt + 1;
@@ -2452,7 +2437,7 @@ function tokenizer(str, originalOpts) {
                 i + wholeEspTagLumpOnTheRight.length;
               newTokenToPutInstead.tail = wholeEspTagLumpOnTheRight;
 
-              attrib.attribValue[
+              (attrib.attribValue as any[])[
                 ~-attrib.attribValue.length
               ] = newTokenToPutInstead;
             } else {
@@ -2478,9 +2463,10 @@ function tokenizer(str, originalOpts) {
             // if we're within a tag attribute, push the last esp token there
             if (attribToBackup) {
               if (!Array.isArray(attribToBackup.attribValue)) {
-                attribToBackup.attribValue.length = 0;
+                attribToBackup.attribValue = [];
               }
-              attribToBackup.attribValue.push(token);
+              console.log(`2431 push token to attribValue`);
+              attribToBackup.attribValue.push(token as any);
             }
 
             console.log(`2486 push new layer`);
@@ -2524,7 +2510,10 @@ function tokenizer(str, originalOpts) {
                 );
                 // instead of dumping the tag token and starting a new-one,
                 // save the parent token, then nest all ESP tags among attributes
-                if (!token.tagName || !token.tagNameEndsAt) {
+                if (
+                  token.tagNameStartsAt &&
+                  (!token.tagName || !token.tagNameEndsAt)
+                ) {
                   token.tagNameEndsAt = i;
                   token.tagName = str.slice(token.tagNameStartsAt, i);
                   token.recognised = isTagNameRecognised(token.tagName);
@@ -2565,8 +2554,9 @@ function tokenizer(str, originalOpts) {
                 attribToBackup &&
                 Array.isArray(attribToBackup.attribValue) &&
                 attribToBackup.attribValue.length &&
-                attribToBackup.attribValue[~-attribToBackup.attribValue.length]
-                  .type === "esp" &&
+                (attribToBackup.attribValue[
+                  ~-attribToBackup.attribValue.length
+                ] as any).type === "esp" &&
                 !attribToBackup.attribValue[~-attribToBackup.attribValue.length]
                   .end
               ) {
@@ -2603,9 +2593,10 @@ function tokenizer(str, originalOpts) {
                 token.start
               }; ${`\u001b[${33}m${`token.type`}\u001b[${39}m`} = ${token.type}`
             );
-            token.head = wholeEspTagLumpOnTheRight;
-            token.headStartsAt = i;
-            token.headEndsAt = i + wholeEspTagLumpOnTheRight.length;
+            (token as EspToken).head = wholeEspTagLumpOnTheRight;
+            (token as EspToken).headStartsAt = i;
+            (token as EspToken).headEndsAt =
+              i + wholeEspTagLumpOnTheRight.length;
 
             // toggle parentTokenToBackup.pureHTML
             if (parentTokenToBackup && parentTokenToBackup.pureHTML) {
@@ -2657,11 +2648,13 @@ function tokenizer(str, originalOpts) {
               } else if (
                 // if the "text" type object is the last in "attribValue" and
                 // it's not closed, let's close it and calculate its value:
-                attribToBackup.attribValue[~-attribToBackup.attribValue.length]
-                  .type === "text" &&
+                (attribToBackup.attribValue[
+                  ~-attribToBackup.attribValue.length
+                ] as any).type === "text" &&
                 !attribToBackup.attribValue[~-attribToBackup.attribValue.length]
                   .end
               ) {
+                console.log(`2621`);
                 attribToBackup.attribValue[
                   ~-attribToBackup.attribValue.length
                 ].end = i;
@@ -2734,18 +2727,18 @@ function tokenizer(str, originalOpts) {
         }
 
         initToken(str[i] === "@" ? "at" : "rule", i);
-        token.left = lastNonWhitespaceCharAt;
+        (token as RuleToken).left = lastNonWhitespaceCharAt;
         console.log(
           `2739 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.left`}\u001b[${39}m`} = ${JSON.stringify(
-            token.left,
+            (token as RuleToken).left,
             null,
             4
           )}`
         );
-        token.nested = layers.some((o) => o.type === "at");
+        (token as RuleToken).nested = layers.some((o) => o.type === "at");
         console.log(
           `2747 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.nested`}\u001b[${39}m`} = ${JSON.stringify(
-            token.nested,
+            (token as RuleToken).nested,
             null,
             4
           )}`
@@ -2800,11 +2793,13 @@ function tokenizer(str, originalOpts) {
             4
           )}`
         );
-        property.valueEnds = lastNonWhitespaceCharAt + 1;
-        property.value = str.slice(
-          property.valueStarts,
-          lastNonWhitespaceCharAt + 1
-        );
+        if (lastNonWhitespaceCharAt) {
+          property.valueEnds = lastNonWhitespaceCharAt + 1;
+          property.value = str.slice(
+            property.valueStarts,
+            lastNonWhitespaceCharAt + 1
+          );
+        }
         if (str[i] === ";") {
           property.semi = i;
           console.log(
@@ -2819,9 +2814,9 @@ function tokenizer(str, originalOpts) {
           str[i] &&
           !str[i].trim() &&
           // semicolon follows
-          str[right(str, i)] === ";"
+          str[rightVal as number] === ";"
         ) {
-          property.semi = right(str, i);
+          property.semi = rightVal;
           console.log(
             `2826 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`property.semi`}\u001b[${39}m`} = ${JSON.stringify(
               property.semi,
@@ -2850,7 +2845,7 @@ function tokenizer(str, originalOpts) {
           // if there's no semicolon in the view
           !property.semi &&
           // and semi is not coming next
-          str[right(str, i)] !== ";" &&
+          str[rightVal as number] !== ";" &&
           // and property hasn't ended
           !property.end
         ) {
@@ -2887,14 +2882,15 @@ function tokenizer(str, originalOpts) {
             );
           }
           pushProperty(property);
-          property = null;
+          propertyReset();
           console.log(
             `2892 push, then ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`}`
           );
         }
       } else if (
         str[i] === ":" &&
-        Number.isInteger(property.colon) &&
+        property &&
+        property.colon &&
         property.colon < i &&
         lastNonWhitespaceCharAt &&
         property.colon + 1 < lastNonWhitespaceCharAt
@@ -2922,20 +2918,27 @@ function tokenizer(str, originalOpts) {
 
         console.log(
           `2924 ██ "${str.slice(
-            right(str, property.colon),
+            right(str, property.colon) as any,
             lastNonWhitespaceCharAt + 1
           )}"`
         );
-        const split = str
-          .slice(right(str, property.colon), lastNonWhitespaceCharAt + 1)
-          .split(/\s+/);
-        console.log(
-          `${`\u001b[${33}m${`split`}\u001b[${39}m`} = ${JSON.stringify(
-            split,
-            null,
-            4
-          )}`
-        );
+        let split: string[] = [];
+
+        if (right(str, property.colon)) {
+          split = str
+            .slice(
+              right(str, property.colon) as number,
+              lastNonWhitespaceCharAt + 1
+            )
+            .split(/\s+/);
+          console.log(
+            `${`\u001b[${33}m${`split`}\u001b[${39}m`} = ${JSON.stringify(
+              split,
+              null,
+              4
+            )}`
+          );
+        }
         if (split.length === 2) {
           // it's missing semicol, like: .a{b:c d:e;}
           //                                 ^   ^
@@ -2969,7 +2972,7 @@ function tokenizer(str, originalOpts) {
             )}`
           );
         }
-      } else if (str[i] === "/" && str[right(str, i)] === "*") {
+      } else if (str[i] === "/" && str[rightVal as number] === "*") {
         // comment starts
         // <a style="color: red/* zzz */">
         //                     ^
@@ -2996,7 +2999,7 @@ function tokenizer(str, originalOpts) {
 
         // push and init and patch up to resume
         pushProperty(property);
-        property = null;
+        propertyReset();
         console.log(
           `3001 push, then ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`}`
         );
@@ -3049,7 +3052,7 @@ function tokenizer(str, originalOpts) {
 
         // push and init and patch up to resume
         pushProperty(property);
-        property = null;
+        propertyReset();
         console.log(
           `3054 push, then ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`}`
         );
@@ -3136,8 +3139,8 @@ function tokenizer(str, originalOpts) {
             //                include this dot within property name
             //                so that we can catch it later validating prop names
             //
-            !right(str, i) ||
-            !`:/`.includes(str[right(str, i)])))) &&
+            !rightVal ||
+            !`:/`.includes(str[rightVal as number])))) &&
       // also, regarding the slash,
       // <div style="//color: red;">
       //              ^
@@ -3178,7 +3181,7 @@ function tokenizer(str, originalOpts) {
       if (
         `};`.includes(str[i]) ||
         // it's whitespace and it's not leading up to a colon
-        (str[i] && !str[i].trim() && str[right(str, i)] !== ":")
+        (str[i] && !str[i].trim() && str[rightVal as number] !== ":")
       ) {
         if (str[i] === ";") {
           property.semi = i;
@@ -3207,7 +3210,7 @@ function tokenizer(str, originalOpts) {
 
         // push and init and patch up to resume
         pushProperty(property);
-        property = null;
+        propertyReset();
         console.log(
           `3212 push, then ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`}`
         );
@@ -3253,7 +3256,7 @@ function tokenizer(str, originalOpts) {
       //
       token.selectorsEnd &&
       token.openingCurlyAt &&
-      (!property || !property.propertyStarts)
+      !property.propertyStarts
     ) {
       console.log(
         `3259 ${`\u001b[${32}m${`css property's name starts`}\u001b[${39}m`}`
@@ -3263,11 +3266,12 @@ function tokenizer(str, originalOpts) {
       if (
         Array.isArray(token.properties) &&
         token.properties.length &&
+        token.properties[~-token.properties.length].start &&
         !token.properties[~-token.properties.length].end
       ) {
         token.properties[~-token.properties.length].end = i;
         token.properties[~-token.properties.length].value = str.slice(
-          token.properties[~-token.properties.length].start,
+          token.properties[~-token.properties.length].start as number,
           i
         );
         console.log(
@@ -3308,7 +3312,7 @@ function tokenizer(str, originalOpts) {
       attrib.attribOpeningQuoteAt &&
       !attrib.attribClosingQuoteAt &&
       // but property hasn't been initiated
-      !property &&
+      !property.propertyStarts &&
       // yet the character is suitable:
       // it's not a whitespace
       str[i] &&
@@ -3325,11 +3329,10 @@ function tokenizer(str, originalOpts) {
       // Empty space goes as text token, see separate clauses above.
 
       if (
+        // currently it's slash
         str[i] === "/" &&
-        // clean case, asterisk follows right away
-        (str[i + 1] === "*" ||
-          // dirty case, there's whitespace between slash and asterisk
-          (!str[i + 1].trim() && str[right(str, i)] === "*"))
+        // asterisk follows, straight away or after whitespace
+        str[rightVal as number] === "*"
       ) {
         console.log(
           `3335 ${`\u001b[${32}m${`BLOCK COMMENT OPENING`}\u001b[${39}m`}`
@@ -3338,8 +3341,8 @@ function tokenizer(str, originalOpts) {
         attribPush({
           type: "comment",
           start: i,
-          end: right(str, i) + 1,
-          value: str.slice(i, right(str, i) + 1), // think of broken cases with whitespace, / *
+          end: (rightVal as number) + 1,
+          value: str.slice(i, (rightVal as number) + 1), // think of broken cases with whitespace, / *
           closing: false,
           kind: "block",
           language: "css",
@@ -3348,7 +3351,7 @@ function tokenizer(str, originalOpts) {
         // push a new layer, comment
         layers.push({
           type: "block",
-          value: str.slice(i, right(str, i) + 1), // think of broken cases with whitespace, / *
+          value: str.slice(i, (rightVal as number) + 1), // think of broken cases with whitespace, / *
           position: i,
         });
         console.log(
@@ -3364,7 +3367,7 @@ function tokenizer(str, originalOpts) {
         );
 
         // skip the next char, consider there might be whitespace in front
-        doNothing = right(str, i) + 1;
+        doNothing = (rightVal as number) + 1;
         console.log(
           `3369 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${JSON.stringify(
             doNothing,
@@ -3374,7 +3377,7 @@ function tokenizer(str, originalOpts) {
         );
       }
       // if it's a closing comment
-      else if (str[i] === "*" && str[right(str, i)] === "/") {
+      else if (str[i] === "*" && str[rightVal as number] === "/") {
         console.log(`3378 call closingComment()`);
         closingComment(i);
       } else {
@@ -3521,12 +3524,12 @@ function tokenizer(str, originalOpts) {
           token.kind === "simple" &&
           token.language === "html" &&
           !token.closing &&
-          str[right(str, i)] === ">"
+          str[rightVal as number] === ">"
         ) {
           console.log(
             `3527 ${`\u001b[${32}m${`simplet-kind comment token's ending caught`}\u001b[${39}m`}`
           );
-          token.end = right(str, i) + 1;
+          token.end = (rightVal as number) + 1;
           token.kind = "simplet";
           token.closing = null;
           console.log(
@@ -3553,8 +3556,11 @@ function tokenizer(str, originalOpts) {
 
           // tokenizer will catch <!- as opening, so we need to extend
           // for correct cases with two dashes <!--
-          if (str[left(str, i)] === "!" && str[right(str, i)] === "-") {
-            token.end = right(str, i) + 1;
+          if (
+            str[leftVal as number] === "!" &&
+            str[rightVal as number] === "-"
+          ) {
+            token.end = (rightVal as number) + 1;
             console.log(
               `3559 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.end`}\u001b[${39}m`} = ${
                 token.end
@@ -3575,7 +3581,7 @@ function tokenizer(str, originalOpts) {
         token.type === "comment" &&
         token.language === "html" &&
         str[i] === ">" &&
-        (!layers.length || str[right(str, i)] === "<")
+        (!layers.length || str[rightVal as number] === "<")
       ) {
         // if last layer was for square bracket, this means closing
         // counterpart is missing so we need to remove it now
@@ -3584,7 +3590,7 @@ function tokenizer(str, originalOpts) {
         if (
           Array.isArray(layers) &&
           layers.length &&
-          layers[~-layers.length].value === "["
+          (layers[~-layers.length] as any).value === "["
         ) {
           layers.pop();
           console.log(`3590 ${`\u001b[${31}m${`POP`}\u001b[${39}m`} layers`);
@@ -3623,7 +3629,7 @@ function tokenizer(str, originalOpts) {
         }
       } else if (
         token.type === "comment" &&
-        token.language === "CSS" &&
+        token.language === "css" &&
         str[i] === "*" &&
         str[i + 1] === "/"
       ) {
@@ -3637,7 +3643,8 @@ function tokenizer(str, originalOpts) {
       } else if (
         token.type === "esp" &&
         token.end === null &&
-        isStr(token.tail) &&
+        typeof token.head === "string" &&
+        typeof token.tail === "string" &&
         token.tail.includes(str[i])
       ) {
         console.log(`3643 POSSIBLE ESP TAILS`);
@@ -3951,7 +3958,7 @@ function tokenizer(str, originalOpts) {
       attrib.attribNameStartsAt &&
       i > attrib.attribNameStartsAt &&
       attrib.attribNameEndsAt === null &&
-      !charSuitableForHTMLAttrName(str[i])
+      !isAttrNameChar(str[i])
     ) {
       console.log(`3956 inside catch the tag attribute name end clauses`);
       attrib.attribNameEndsAt = i;
@@ -3974,14 +3981,14 @@ function tokenizer(str, originalOpts) {
       );
 
       // maybe there's a space in front of equal, <div class= "">
-      if (str[i] && !str[i].trim() && str[right(str, i)] === "=") {
+      if (str[i] && !str[i].trim() && str[rightVal as number] === "=") {
         console.log(`3978 equal on the right`);
       } else if (
         (str[i] && !str[i].trim()) ||
         str[i] === ">" ||
-        (str[i] === "/" && str[right(str, i)] === ">")
+        (str[i] === "/" && str[rightVal as number] === ">")
       ) {
-        if (`'"`.includes(str[right(str, i)])) {
+        if (`'"`.includes(str[rightVal as number])) {
           console.log(
             `3986 ${`\u001b[${31}m${`space instead of equal`}\u001b[${39}m`}`
           );
@@ -4016,7 +4023,7 @@ function tokenizer(str, originalOpts) {
       token.tagNameEndsAt &&
       i > token.tagNameEndsAt &&
       attrib.attribStarts === null &&
-      charSuitableForHTMLAttrName(str[i])
+      isAttrNameChar(str[i])
     ) {
       console.log(`4021 inside catch the tag attribute name start clauses`);
       attrib.attribStarts = i;
@@ -4030,6 +4037,14 @@ function tokenizer(str, originalOpts) {
         }; ${`\u001b[${33}m${`attrib.attribNameStartsAt`}\u001b[${39}m`} = ${
           attrib.attribNameStartsAt
         }`
+      );
+
+      console.log(
+        `4036 ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`} = ${JSON.stringify(
+          attrib.attribValue,
+          null,
+          4
+        )}`
       );
     }
 
@@ -4088,7 +4103,7 @@ function tokenizer(str, originalOpts) {
           console.log(
             `4089 ${`\u001b[${32}m${`PUSH this rule into last AT layer`}\u001b[${39}m`}`
           );
-          layers[~-layers.length].token.rules.push(token);
+          (layers[~-layers.length] as LayerKindAt).token.rules.push(token);
         }
 
         console.log(`4094 ${`\u001b[${32}m${`RESET`}\u001b[${39}m`}`);
@@ -4112,7 +4127,7 @@ function tokenizer(str, originalOpts) {
       );
 
       // if it's a closing comment
-      if (str[i] === "*" && str[right(str, i)] === "/") {
+      if (str[i] === "*" && str[rightVal as number] === "/") {
         closingComment(i);
       }
     }
@@ -4128,8 +4143,8 @@ function tokenizer(str, originalOpts) {
         // and it's not finished
         attrib.attribValueStartsAt &&
         !attrib.attribValueEndsAt &&
-        // and it's property hasn't been recording
-        !property &&
+        // and its property hasn't been recording
+        !property.propertyStarts &&
         // we're inside the value
         i >= attrib.attribValueStartsAt &&
         // if attribValue array is empty, no object has been placed yet,
@@ -4149,7 +4164,7 @@ function tokenizer(str, originalOpts) {
         // but not ended:
         !token.closingCurlyAt &&
         // there is no unfinished property being recorded
-        !property)
+        !property.propertyStarts)
     ) {
       console.log(
         `4155 ${`\u001b[${36}m${`██`}\u001b[${39}m`} inside attribute sub-token start clauses`
@@ -4175,7 +4190,7 @@ function tokenizer(str, originalOpts) {
         console.log(`4175`);
         // depends where to push, is it inline css or head css rule
         if (attrib.attribName) {
-          attrib.attribValue.push({
+          (attrib.attribValue as any).push({
             type: "text",
             start: i,
             end: null,
@@ -4199,8 +4214,8 @@ function tokenizer(str, originalOpts) {
           token.properties.push({
             type: "text",
             start: i,
-            end: null,
-            value: null,
+            end: null as any,
+            value: null as any,
           });
           console.log(
             `4206 PUSH to ${`\u001b[${33}m${`token.properties`}\u001b[${39}m`}, now = ${JSON.stringify(
@@ -4228,9 +4243,9 @@ function tokenizer(str, originalOpts) {
         console.log(`4228 currently on a quote`);
 
         console.log(
-          `4231 ███████████████████████████████████████ attributeEnds(str, ${
+          `4231 ███████████████████████████████████████ isAttrClosing(str, ${
             attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt
-          }, ${i}) = ${attributeEnds(
+          }, ${i}) = ${isAttrClosing(
             str,
             attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt,
             i
@@ -4238,7 +4253,7 @@ function tokenizer(str, originalOpts) {
         );
 
         // const R1 = !layers.some((layerObj) => layerObj.type === "esp");
-        // const R2 = attributeEnds(
+        // const R2 = isAttrClosing(
         //   str,
         //   attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt,
         //   i
@@ -4264,7 +4279,7 @@ function tokenizer(str, originalOpts) {
           // attribute closing quote validation by
           // "is-html-attribute-closing"
           //
-          // the attributeEnds() api is the following:
+          // the isAttrClosing() api is the following:
           // 1. str, 2. opening quotes index, 3. suspected
           // character for attribute closing (quotes typically,
           // but can be mismatching)...
@@ -4276,7 +4291,7 @@ function tokenizer(str, originalOpts) {
             // or there is no closing bracket further
             !str.includes(">", i) ||
             // further checks confirm it looks like legit closing
-            attributeEnds(
+            isAttrClosing(
               str,
               attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt,
               i
@@ -4300,12 +4315,12 @@ function tokenizer(str, originalOpts) {
           }
           attrib.attribEnds = i + 1;
 
-          if (property) {
+          if (property.propertyStarts) {
             attrib.attribValue.push(clone(property));
             console.log(
               `4306 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} property into ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`}`
             );
-            property = null;
+            propertyReset();
             console.log(
               `4310 ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} property`
             );
@@ -4320,7 +4335,9 @@ function tokenizer(str, originalOpts) {
               `4320 set the ending on the last object within "attribValue"`
             );
             // if it's not a property (of inline style), set its "end"
-            if (!attrib.attribValue[~-attrib.attribValue.length].property) {
+            if (
+              !(attrib.attribValue[~-attrib.attribValue.length] as any).property
+            ) {
               attrib.attribValue[~-attrib.attribValue.length].end = i;
               attrib.attribValue[~-attrib.attribValue.length].value = str.slice(
                 attrib.attribValue[~-attrib.attribValue.length].start,
@@ -4346,7 +4363,7 @@ function tokenizer(str, originalOpts) {
           );
 
           // 2. if the pair was mismatching, wipe layers' last element
-          if (str[attrib.attribOpeningQuoteAt] !== str[i]) {
+          if (str[attrib.attribOpeningQuoteAt as number] !== str[i]) {
             layers.pop();
             layers.pop();
             console.log(
@@ -4387,8 +4404,9 @@ function tokenizer(str, originalOpts) {
           (!Array.isArray(attrib.attribValue) ||
             !attrib.attribValue.length ||
             // last attrib value should not be a text token
-            attrib.attribValue[~-attrib.attribValue.length].type !== "text") &&
-          !property
+            (attrib.attribValue[~-attrib.attribValue.length] as any).type !==
+              "text") &&
+          !property.propertyStarts
         ) {
           // quotes not matched, so it's unencoded, raw quote, part of the value
           // for example
@@ -4400,8 +4418,8 @@ function tokenizer(str, originalOpts) {
           attrib.attribValue.push({
             type: "text",
             start: i,
-            end: null,
-            value: null,
+            end: null as any,
+            value: null as any,
           });
 
           console.log(
@@ -4443,9 +4461,11 @@ function tokenizer(str, originalOpts) {
             attrib.attribValueEndsAt
           }; ${`\u001b[${33}m${`attrib.attribValueRaw`}\u001b[${39}m`} = ${
             attrib.attribValueRaw
-          }; ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`} = ${
-            attrib.attribValue
-          }; ${`\u001b[${33}m${`attrib.attribEnds`}\u001b[${39}m`} = ${
+          }; ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`} = ${JSON.stringify(
+            attrib.attribValue,
+            null,
+            4
+          )}; ${`\u001b[${33}m${`attrib.attribEnds`}\u001b[${39}m`} = ${
             attrib.attribEnds
           }`
         );
@@ -4476,7 +4496,9 @@ function tokenizer(str, originalOpts) {
         }
       } else if (
         str[i] === "=" &&
-        (`'"`.includes(str[right(str, i)]) ||
+        leftVal !== null &&
+        rightVal &&
+        (`'"`.includes(str[rightVal]) ||
           (str[~-i] && isLatinLetter(str[~-i]))) &&
         // this will catch url params like
         // <img src="https://z.png?query=" />
@@ -4514,7 +4536,7 @@ function tokenizer(str, originalOpts) {
         let whitespaceFound;
         let attribClosingQuoteAt;
 
-        for (let y = left(str, i); y >= attrib.attribValueStartsAt; y--) {
+        for (let y = leftVal; y >= attrib.attribValueStartsAt; y--) {
           console.log(
             `4519 ${`\u001b[${36}m${`------- str[${y}] = ${str[y]} -------`}\u001b[${39}m`}`
           );
@@ -4609,15 +4631,17 @@ function tokenizer(str, originalOpts) {
               attrib.attribValueEndsAt
             }; ${`\u001b[${33}m${`attrib.attribValueRaw`}\u001b[${39}m`} = ${
               attrib.attribValueRaw
-            }; ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`} = ${
-              attrib.attribValue
-            }; ${`\u001b[${33}m${`attrib.attribEnds`}\u001b[${39}m`} = ${
+            }; ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`} = ${JSON.stringify(
+              attrib.attribValue,
+              null,
+              4
+            )}; ${`\u001b[${33}m${`attrib.attribEnds`}\u001b[${39}m`} = ${
               attrib.attribEnds
             }`
           );
 
           // 2. if the pair was mismatching, wipe layers' last element
-          if (str[attrib.attribOpeningQuoteAt] !== str[i]) {
+          if (str[attrib.attribOpeningQuoteAt as number] !== str[i]) {
             layers.pop();
             console.log(
               `4623 POP x 1, now layers = ${JSON.stringify(layers, null, 4)}`
@@ -4628,13 +4652,21 @@ function tokenizer(str, originalOpts) {
           token.attribs.push(clone(attrib));
           attribReset();
 
+          console.log(
+            `4652 ██ ${`\u001b[${33}m${`attrib`}\u001b[${39}m`} = ${JSON.stringify(
+              attrib,
+              null,
+              4
+            )}`
+          );
+
           // 4. pull the i back to the position where the attribute ends
           i = ~-attribClosingQuoteAt;
           console.timeEnd(`\u001b[${90}m${`loop iteration`}\u001b[${39}m`);
           continue;
         } else if (
           attrib.attribOpeningQuoteAt &&
-          (`'"`.includes(str[right(str, i)]) ||
+          (`'"`.includes(str[rightVal as number]) ||
             allHtmlAttribs.has(
               str.slice(attrib.attribOpeningQuoteAt + 1, i).trim()
             ))
@@ -4676,7 +4708,7 @@ function tokenizer(str, originalOpts) {
         attrib.attribName !== "style" &&
         attrib.attribStarts &&
         !attrib.attribEnds &&
-        !property &&
+        !property.propertyStarts &&
         //
         // AND,
         //
@@ -4695,8 +4727,8 @@ function tokenizer(str, originalOpts) {
         attrib.attribValue.push({
           type: "text",
           start: i,
-          end: null,
-          value: null,
+          end: null as any,
+          value: null as any,
         });
 
         console.log(
@@ -4712,9 +4744,10 @@ function tokenizer(str, originalOpts) {
       attribToBackup &&
       parentTokenToBackup &&
       attribToBackup.attribOpeningQuoteAt &&
+      attribToBackup.attribValueStartsAt &&
       `'"`.includes(str[i]) &&
       str[attribToBackup.attribOpeningQuoteAt] === str[i] &&
-      attributeEnds(str, attribToBackup.attribOpeningQuoteAt, i)
+      isAttrClosing(str, attribToBackup.attribOpeningQuoteAt, i)
     ) {
       console.log(
         `4720 ${`\u001b[${31}m${`██`}\u001b[${39}m`} emergency catching tag attr closing quotes inside attribute, with ESP tag unclosed`
@@ -4745,14 +4778,15 @@ function tokenizer(str, originalOpts) {
 
       // 2. push token into attribToBackup.attribValue
       if (attribToBackup && !Array.isArray(attribToBackup.attribValue)) {
-        attribToBackup.attribValue.length = 0;
+        attribToBackup.attribValue = [];
       }
+      console.log(`4725 push token to attribValue`);
       attribToBackup.attribValue.push(token);
 
       // 3. patch up missing values in attribToBackup
       attribToBackup.attribValueEndsAt = i;
       attribToBackup.attribValueRaw = str.slice(
-        attribToBackup.attribValueStartsAt,
+        attribToBackup.attribValueStartsAt as number,
         i
       );
       attribToBackup.attribClosingQuoteAt = i;
@@ -4815,26 +4849,17 @@ function tokenizer(str, originalOpts) {
       console.log(`4815 inside catching attr value start clauses`);
       if (
         str[i] === "=" &&
-        !SOMEQUOTE.includes(str[right(str, i)]) &&
-        !`=`.includes(str[right(str, i)]) &&
-        !espChars.includes(str[right(str, i)]) // it might be an ESP literal
+        !SOMEQUOTE.includes(str[rightVal as number]) &&
+        !`=`.includes(str[rightVal as number]) &&
+        !espChars.includes(str[rightVal as number]) // it might be an ESP literal
       ) {
-        const firstCharOnTheRight = right(str, i);
-        console.log(
-          `4824 ${`\u001b[${33}m${`firstCharOnTheRight`}\u001b[${39}m`} = ${JSON.stringify(
-            firstCharOnTheRight,
-            null,
-            4
-          )}; str[${firstCharOnTheRight}]: ${str[firstCharOnTheRight]}`
-        );
-
         // find the index of the next quote, single or double
         const firstQuoteOnTheRightIdx = SOMEQUOTE.split("")
-          .map((quote) => str.indexOf(quote, firstCharOnTheRight))
+          .map((quote) => str.indexOf(quote, rightVal as number))
           .filter((val) => val > 0).length
           ? Math.min(
               ...SOMEQUOTE.split("")
-                .map((quote) => str.indexOf(quote, firstCharOnTheRight))
+                .map((quote) => str.indexOf(quote, rightVal as number))
                 .filter((val) => val > 0)
             )
           : undefined;
@@ -4851,17 +4876,13 @@ function tokenizer(str, originalOpts) {
         // <span width=height=100>
         if (
           // there is a character on the right (otherwise value would be null)
-          firstCharOnTheRight &&
+          rightVal &&
           // there is equal character in the remaining chunk
-          str.slice(firstCharOnTheRight).includes("=") &&
+          str.slice(rightVal).includes("=") &&
           // characters upto first equals form a known attribute value
           allHtmlAttribs.has(
             str
-              .slice(
-                firstCharOnTheRight,
-                firstCharOnTheRight +
-                  str.slice(firstCharOnTheRight).indexOf("=")
-              )
+              .slice(rightVal, rightVal + str.slice(rightVal).indexOf("="))
               .trim()
               .toLowerCase()
           )
@@ -4886,7 +4907,7 @@ function tokenizer(str, originalOpts) {
           !firstQuoteOnTheRightIdx ||
           // there is one but there are equal character between here and its location
           str
-            .slice(firstCharOnTheRight, firstQuoteOnTheRightIdx)
+            .slice(rightVal as number, firstQuoteOnTheRightIdx)
             .includes("=") ||
           // if there is no second quote of that type in the remaining string
           !str.includes(
@@ -4908,7 +4929,7 @@ function tokenizer(str, originalOpts) {
             `4908 case of missing opening quotes - attribute continues`
           );
           // case of missing opening quotes
-          attrib.attribValueStartsAt = firstCharOnTheRight;
+          attrib.attribValueStartsAt = rightVal;
           console.log(
             `4913 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribValueStartsAt`}\u001b[${39}m`} = ${
               attrib.attribValueStartsAt
@@ -4918,8 +4939,8 @@ function tokenizer(str, originalOpts) {
           // push missing entry into layers
           layers.push({
             type: "simple",
-            value: null,
-            position: attrib.attribValueStartsAt,
+            value: null as any,
+            position: attrib.attribValueStartsAt as any,
           });
           console.log(
             `4925 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
@@ -4935,7 +4956,7 @@ function tokenizer(str, originalOpts) {
         }
       } else if (SOMEQUOTE.includes(str[i])) {
         // maybe it's <span width='"100"> and it's a false opening quote, '
-        const nextCharIdx = right(str, i);
+        const nextCharIdx = rightVal;
         if (
           // a non-whitespace character exists on the right of index i
           nextCharIdx &&
@@ -4953,7 +4974,10 @@ function tokenizer(str, originalOpts) {
             !right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1)) ||
             str[i] !==
               str[
-                right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1))
+                right(
+                  str,
+                  str.indexOf(str[nextCharIdx], nextCharIdx + 1)
+                ) as number
               ]) &&
           // and that slice does not contain equal or brackets or quote of other kind
           !Array.from(
@@ -4999,7 +5023,7 @@ function tokenizer(str, originalOpts) {
             //                  ^
             //
             /* istanbul ignore else */
-            if (attributeEnds(str, attrib.attribOpeningQuoteAt, i)) {
+            if (isAttrClosing(str, attrib.attribOpeningQuoteAt, i)) {
               console.log(`5003`);
               attrib.attribClosingQuoteAt = i;
               console.log(
@@ -5202,6 +5226,7 @@ function tokenizer(str, originalOpts) {
             attrib.attribValue.length &&
             !attrib.attribValue[~-attrib.attribValue.length].end
           ) {
+            console.log(`5173`);
             attrib.attribValue[~-attrib.attribValue.length].end = i;
             attrib.attribValue[~-attrib.attribValue.length].value = str.slice(
               attrib.attribValue[~-attrib.attribValue.length].start,
@@ -5305,7 +5330,7 @@ function tokenizer(str, originalOpts) {
         if (!attrib.attribEnds) {
           attrib.attribEnds = i;
         }
-        token.attribs.push(clone(attrib));
+        (token as any).attribs.push({ ...attrib });
         attribReset();
       }
 
@@ -5318,7 +5343,7 @@ function tokenizer(str, originalOpts) {
           property.end = i;
         }
         pushProperty(property);
-        property = null;
+        propertyReset();
         console.log(
           `5323 push, then ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`}`
         );
@@ -5358,7 +5383,9 @@ function tokenizer(str, originalOpts) {
         null,
         4
       )}${
-        property ? `\n██ property: ${JSON.stringify(property, null, 4)}` : ""
+        property.propertyStarts
+          ? `\n██ property: ${JSON.stringify(property, null, 4)}`
+          : ""
       }${
         attrib.attribStarts
           ? `\n██ attrib: ${JSON.stringify(attrib, null, 4)}`
@@ -5460,4 +5487,8 @@ function tokenizer(str, originalOpts) {
 
 // -----------------------------------------------------------------------------
 
-export default tokenizer;
+// export some util functions for testing purposes because sources are in TS
+// and unit test runners can't read TS
+const util = { matchLayerLast };
+
+export { tokenizer, defaults, version, util };

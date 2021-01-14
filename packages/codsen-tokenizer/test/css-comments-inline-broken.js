@@ -1,5 +1,5 @@
 import tap from "tap";
-import ct from "../dist/codsen-tokenizer.esm";
+import { tokenizer as ct } from "../dist/codsen-tokenizer.esm";
 
 tap.test(
   `01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - stray closing closing block comment`,

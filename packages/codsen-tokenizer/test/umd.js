@@ -1,5 +1,5 @@
 import tap from "tap";
-import ct from "../dist/codsen-tokenizer.umd";
+import { tokenizer as ct } from "../dist/codsen-tokenizer.umd";
 
 tap.test("UMD build works fine", (t) => {
   const gathered = [];
