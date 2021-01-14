@@ -1,7 +1,8 @@
 import tap from "tap";
 // import { det as det1 } from "../dist/detergent.esm";
-import { det, mixer } from "../t-util/util";
 import {
+  det,
+  mixer,
   // rawReplacementMark,
   // rawNDash,
   // rawMDash,
@@ -12,7 +13,7 @@ import {
   // rightDoubleQuote,
   // leftDoubleQuote,
   // leftSingleQuote
-} from "../src/util";
+} from "../t-util/util";
 
 tap.test(`01 - empty string input`, (t) => {
   t.equal(det(t, 0, "").res, "", "01");

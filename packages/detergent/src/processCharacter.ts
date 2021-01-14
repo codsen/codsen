@@ -1,6 +1,6 @@
 import { notEmailFriendly } from "html-entities-not-email-friendly";
 import { allNamedEntities } from "all-named-html-entities";
-import rangesExpander from "string-range-expander";
+import { expander } from "string-range-expander";
 import { convertOne } from "string-apostrophes";
 import he from "he";
 import {
@@ -11,6 +11,7 @@ import {
   leftStopAtNewLines,
   rightStopAtNewLines,
 } from "string-left-right";
+import { Ranges } from "ranges-push";
 import {
   doConvertEntities,
   isUppercaseLetter,
@@ -21,6 +22,8 @@ import {
   leftSingleQuote,
   leftDoubleQuote,
   widowRegexTest,
+  ApplicableOpts,
+  EndOfLineVal,
   rawEllipsis,
   isLetter,
   isNumber,
@@ -28,6 +31,8 @@ import {
   rawNDash,
   isQuote,
   rawNbsp,
+  State,
+  Opts,
 } from "./util";
 
 // This function gets from-to indexes and numeric character code.
@@ -40,22 +45,22 @@ import {
 // (which could be expressed as string.slice(i, y)) and the value it
 // represents ("charcode").
 function processCharacter(
-  str,
-  opts,
-  rangesArr,
-  i,
-  y,
-  offsetBy,
-  brClosingBracketIndexesArr,
-  state,
-  applicableOpts,
-  endOfLine
-) {
+  str: string,
+  opts: Opts,
+  rangesArr: Ranges,
+  i: number,
+  y: number,
+  offsetBy: (amount: number) => void,
+  brClosingBracketIndexesArr: number[],
+  state: State,
+  applicableOpts: ApplicableOpts,
+  endOfLineVal: EndOfLineVal
+): void {
   const len = str.length;
 
   console.log(
     `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[i] at ${i} = ${
-      str[i].trim().length ? str.slice(i, y) : JSON.stringify(str[i], null, 0)
+      str[i].trim() ? str.slice(i, y) : JSON.stringify(str[i], null, 0)
     }`}\u001b[${39}m ${`\u001b[${90}m (${str
       .slice(i, y)
       .split("")
@@ -72,7 +77,7 @@ function processCharacter(
       4
     )}`}\u001b[${39}m`}`
   );
-  // console.log(`075 received endOfLine = ${JSON.stringify(endOfLine, null, 0)}`);
+  // console.log(`075 received endOfLineVal = ${JSON.stringify(endOfLineVal, null, 0)}`);
 
   if (
     /[\uD800-\uDFFF]/g.test(str[i]) &&
@@ -252,7 +257,7 @@ function processCharacter(
             // EOL ending, not Windows CRLF, because CR would have already
             // been replaced and replacing here would result in two spaces added
             let whatToInsert = " ";
-            if (punctuationChars.includes(str[right(str, i)])) {
+            if (punctuationChars.includes(str[right(str, i) as number])) {
               whatToInsert = "";
             }
             console.log(
@@ -277,33 +282,43 @@ function processCharacter(
             // there can be ESP tags in non-HTML
 
             let startingIdx = i;
-            if (str[i - 1] === " ") {
-              startingIdx = leftStopAtNewLines(str, i) + 1;
+            if (
+              str[i - 1] === " " &&
+              typeof leftStopAtNewLines(str, i) === "number"
+            ) {
+              startingIdx = (leftStopAtNewLines(str, i) as number) + 1;
             }
             rangesArr.push(
               startingIdx,
-              i + (endOfLine === "\r" ? 1 : 0),
+              i + (endOfLineVal === "\r" ? 1 : 0),
               `<br${opts.useXHTML ? "/" : ""}>${
-                endOfLine === "\r\n" ? "\r" : ""
-              }${endOfLine === "\r" ? "\r" : ""}`
+                endOfLineVal === "\r\n" ? "\r" : ""
+              }${endOfLineVal === "\r" ? "\r" : ""}`
             );
             console.log(
               `291 processCharacter.js: ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${startingIdx}, ${
-                i + (endOfLine === "\r" ? 1 : 0)
+                i + (endOfLineVal === "\r" ? 1 : 0)
               }, ${`<br${opts.useXHTML ? "/" : ""}>${JSON.stringify(
-                endOfLine === "\r\n" ? "\r" : "",
+                endOfLineVal === "\r\n" ? "\r" : "",
                 null,
                 4
-              )}${JSON.stringify(endOfLine === "\r" ? "\r" : "", null, 4)}`}]`
+              )}${JSON.stringify(
+                endOfLineVal === "\r" ? "\r" : "",
+                null,
+                4
+              )}`}]`
             );
           } else {
             //
             //
             // delete any whitespace to the left
-            if (str[leftStopAtNewLines(str, i)].trim().length) {
+            if (
+              str[leftStopAtNewLines(str, i) as number] &&
+              str[leftStopAtNewLines(str, i) as number].trim()
+            ) {
               // delete trailing whitespace at the end of each line
               const tempIdx = leftStopAtNewLines(str, i);
-              if (tempIdx < i - 1) {
+              if (typeof tempIdx === "number" && tempIdx < i - 1) {
                 console.log(
                   `308 processCharacter.js: ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
                     tempIdx + 1
@@ -312,17 +327,17 @@ function processCharacter(
                 rangesArr.push(
                   tempIdx + 1,
                   i,
-                  `${endOfLine === "\r\n" ? "\r" : ""}`
+                  `${endOfLineVal === "\r\n" ? "\r" : ""}`
                 );
               }
             }
 
-            if (endOfLine === "\r\n" && str[i - 1] !== "\r") {
+            if (endOfLineVal === "\r\n" && str[i - 1] !== "\r") {
               rangesArr.push(i, i, "\r");
               console.log(
                 `323 processCharacter.js: ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} missing CR for this Windows EOL [${i}, ${i}, "\\r"]`
               );
-            } else if (endOfLine === "\r") {
+            } else if (endOfLineVal === "\r") {
               rangesArr.push(i, i + 1);
               console.log(
                 `328 processCharacter.js: delete this LF ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${i}, ${
@@ -332,15 +347,15 @@ function processCharacter(
             }
 
             // either way, delete any whitespace to the right
-            if (str[rightStopAtNewLines(str, i)].trim().length) {
-              const tempIdx = rightStopAtNewLines(str, i);
-              if (tempIdx > i + 1) {
+            const temp = rightStopAtNewLines(str, i);
+            if (temp && str[temp].trim()) {
+              if (temp > i + 1) {
                 console.log(
                   `339 processCharacter.js: ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
                     i + 1
-                  }, ${tempIdx}]`
+                  }, ${temp}]`
                 );
-                rangesArr.push(i + 1, tempIdx);
+                rangesArr.push(i + 1, temp);
               }
             }
           }
@@ -425,7 +440,7 @@ function processCharacter(
           if (opts.removeLineBreaks) {
             let whatToInsert = " ";
             if (
-              punctuationChars.includes(str[right(str, i)]) ||
+              punctuationChars.includes(str[right(str, i) as number]) ||
               ["\n", "\r"].includes(str[i + 1])
             ) {
               whatToInsert = "";
@@ -448,16 +463,19 @@ function processCharacter(
           ) {
             console.log(`449`);
             let startingIdx = i;
-            if (str[i - 1] === " ") {
-              startingIdx = leftStopAtNewLines(str, i) + 1;
+            if (
+              str[i - 1] === " " &&
+              typeof leftStopAtNewLines(str, i) === "number"
+            ) {
+              startingIdx = (leftStopAtNewLines(str, i) as number) + 1;
             }
             let endingIdx = i;
             let whatToInsert = "";
 
             if (str[i + 1] !== "\n") {
-              if (endOfLine === "\n") {
+              if (endOfLineVal === "\n") {
                 whatToInsert = "\n";
-              } else if (endOfLine === "\r\n") {
+              } else if (endOfLineVal === "\r\n") {
                 // add missing LF after current CR
                 rangesArr.push(i + 1, i + 1, "\n");
                 console.log(
@@ -468,10 +486,10 @@ function processCharacter(
               }
             }
 
-            if (endOfLine === "\n") {
+            if (endOfLineVal === "\n") {
               // extend this range to also delete this CR
               endingIdx = i + 1;
-            } else if (endOfLine === "\r" && str[i + 1] === "\n") {
+            } else if (endOfLineVal === "\r" && str[i + 1] === "\n") {
               // delete that LF from wrong CRLF set which is present
               rangesArr.push(i + 1, i + 2);
               console.log(
@@ -500,7 +518,7 @@ function processCharacter(
             }
           } else {
             console.log(`502`);
-            if (endOfLine === "\n") {
+            if (endOfLineVal === "\n") {
               rangesArr.push(i, i + 1, str[i + 1] === "\n" ? "" : "\n");
               console.log(
                 `506 PUSH [${i}, ${i + 1}, ${JSON.stringify(
@@ -509,29 +527,29 @@ function processCharacter(
                   0
                 )}]`
               );
-            } else if (endOfLine === "\r" && str[i + 1] === "\n") {
+            } else if (endOfLineVal === "\r" && str[i + 1] === "\n") {
               // delete the LF that follows
               rangesArr.push(i + 1, i + 2);
               console.log(`515 PUSH [${i + 1}, ${i + 2}]`);
-            } else if (endOfLine === "\r\n" && str[i + 1] !== "\n") {
+            } else if (endOfLineVal === "\r\n" && str[i + 1] !== "\n") {
               // add LF afterwards
               rangesArr.push(i, i + 1, "\n");
               console.log(`519 PUSH [${i}, ${i + 1}, "\\n"]`);
             }
 
             // delete whitespace at the beginning and at the end of each line
-            if (str[leftStopAtNewLines(str, i)].trim().length) {
+            const tempIdx1 = leftStopAtNewLines(str, i);
+            if (typeof tempIdx1 === "number" && str[tempIdx1].trim()) {
               // delete trailing whitespace at the end of each line
               let endingIdx = i;
-              if (endOfLine === "\n") {
+              if (endOfLineVal === "\n") {
                 // extend this range to also delete this CR
                 endingIdx = i + 1;
               }
-              const tempIdx = leftStopAtNewLines(str, i);
-              if (tempIdx < i - 1) {
+              if (tempIdx1 < i - 1) {
                 console.log(
                   `533 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
-                    tempIdx + 1
+                    tempIdx1 + 1
                   }, ${endingIdx}, ${JSON.stringify(
                     `${str[i + 1] === "\n" ? "" : "\n"}`,
                     null,
@@ -539,7 +557,7 @@ function processCharacter(
                   )}]`
                 );
                 rangesArr.push(
-                  tempIdx + 1,
+                  tempIdx1 + 1,
                   endingIdx,
                   `${str[i + 1] === "\n" ? "" : "\n"}`
                 );
@@ -547,18 +565,15 @@ function processCharacter(
             }
 
             // delete whitespace in front of each line
-            if (
-              str[rightStopAtNewLines(str, i)].trim().length &&
-              str[i + 1] !== "\n"
-            ) {
-              const tempIdx = rightStopAtNewLines(str, i);
-              if (tempIdx > i + 1) {
+            const tempIdx2 = rightStopAtNewLines(str, i);
+            if (tempIdx2 && str[tempIdx2].trim() && str[i + 1] !== "\n") {
+              if (tempIdx2 > i + 1) {
                 console.log(
                   `557 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
                     i + 1
-                  }, ${tempIdx}]`
+                  }, ${tempIdx2}]`
                 );
-                rangesArr.push(i + 1, tempIdx);
+                rangesArr.push(i + 1, tempIdx2);
               }
             }
           }
@@ -608,7 +623,7 @@ function processCharacter(
             )}`
           );
           if (tempRes && tempRes.length) {
-            rangesArr.push(tempRes);
+            rangesArr.push(tempRes as any);
           } else if (opts.convertEntities) {
             rangesArr.push(i, i + 1, "&quot;");
           }
@@ -658,7 +673,7 @@ function processCharacter(
                   offsetBy,
                 });
                 if (Array.isArray(decodedTempRes) && decodedTempRes.length) {
-                  rangesArr.push(decodedTempRes);
+                  rangesArr.push(decodedTempRes as any);
                   console.log(
                     `663 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${JSON.stringify(
                       decodedTempRes,
@@ -746,11 +761,11 @@ function processCharacter(
                 }, "&amp;"]`
               );
             }
-          } else if (str[right(str, i)] === "#") {
+          } else if (str[right(str, i) as number] === "#") {
             // it can be a numeric, a decimal or a hex entity
             console.log("751 ██ numeric, a decimal or a hex entity");
-            for (let z = right(str, i); z < len; z++) {
-              if (str[z].trim().length && !isNumber(str[z]) && str[z] !== "#") {
+            for (let z = right(str, i) as number; z < len; z++) {
+              if (str[z].trim() && !isNumber(str[z]) && str[z] !== "#") {
                 if (str[z] === ";") {
                   // it's numeric entity
                   console.log(`756 carved out "${str.slice(i, z + 1)}"`);
@@ -807,7 +822,7 @@ function processCharacter(
             convertEntities: true,
             convertApostrophes: true,
           });
-          if (temp.length) {
+          if (temp && temp.length) {
             applicableOpts.convertApostrophes = true;
             console.log(
               `813 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.convertApostrophes = ${
@@ -828,16 +843,16 @@ function processCharacter(
                 convertEntities: opts.convertEntities,
                 convertApostrophes: opts.convertApostrophes,
                 offsetBy,
-              })
+              }) as any
             );
           }
         } else if (charcode === 44 || charcode === 59) {
           // IF COMMA (,) OR SEMICOLON (;)
 
           // 1. check for whitespace leading to colon or semicolon
-          if (str[i - 1] && !str[i - 1].trim().length) {
+          if (str[i - 1] && !str[i - 1].trim()) {
             const whatsOnTheLeft = left(str, i);
-            if (whatsOnTheLeft < i - 1) {
+            if (typeof whatsOnTheLeft === "number" && whatsOnTheLeft < i - 1) {
               rangesArr.push(whatsOnTheLeft + 1, i);
               console.log(
                 `843 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
@@ -853,7 +868,7 @@ function processCharacter(
             str[y] !== undefined &&
             !state.onUrlCurrently &&
             !isNumber(str[y]) &&
-            str[y].trim().length &&
+            str[y].trim() &&
             str[y] !== " " &&
             str[y] !== "\n" &&
             str[y] !== '"' &&
@@ -885,7 +900,7 @@ function processCharacter(
             charcode === 59 &&
             str[y] !== undefined &&
             !state.onUrlCurrently &&
-            str[y].trim().length &&
+            str[y].trim() &&
             str[y] !== "&" &&
             str[y] !== '"' &&
             str[y] !== "'" &&
@@ -915,8 +930,8 @@ function processCharacter(
           if (
             str[i - 1] === " " &&
             str[y] === " " &&
-            isNumber(str[left(str, i)]) &&
-            isNumber(str[right(str, y)])
+            isNumber(str[left(str, i) as number]) &&
+            isNumber(str[right(str, y) as number])
           ) {
             console.log(`921 processCharacter.js - seems legit - skip`);
           }
@@ -989,7 +1004,7 @@ function processCharacter(
           } else if (
             str[i - 1] &&
             str[y] &&
-            ((str[i - 1].trim().length === 0 && str[y].trim().length === 0) ||
+            ((!str[i - 1].trim() && !str[y].trim()) ||
               (isLowercaseLetter(str[i - 1]) && str[y] === "'"))
           ) {
             applicableOpts.convertDashes = true;
@@ -1048,8 +1063,8 @@ function processCharacter(
           // tackle widow word setting - space in front when opts.removeWidows is on
           if (
             str[i - 2] &&
-            str[i - 2].trim().length &&
-            !str[i - 1].trim().length &&
+            str[i - 2].trim() &&
+            !str[i - 1].trim() &&
             !["\n", "\r"].includes(str[i - 1])
           ) {
             // 1. mark option as applicable
@@ -1227,8 +1242,8 @@ function processCharacter(
 
           if (
             str[y - 1] &&
-            str[right(str, y - 1)] === "/" &&
-            str[right(str, right(str, y - 1))] === "/"
+            str[right(str, y - 1) as number] === "/" &&
+            str[right(str, right(str, y - 1) as number) as number] === "/"
           ) {
             state.onUrlCurrently = true;
             console.log(
@@ -1519,7 +1534,7 @@ function processCharacter(
           );
         } else {
           // rangesArr.push(i, y, " ");
-          const expandedRange = rangesExpander({
+          const expandedRange = expander({
             str,
             from: i,
             to: y,
@@ -1534,7 +1549,7 @@ function processCharacter(
               0
             )} and then pushed it`
           );
-          rangesArr.push(...expandedRange);
+          (rangesArr as any).push(...expandedRange);
         }
       } else if (charcode === 8206) {
         // remove all left-to-right mark chars, '\u200E'
@@ -1582,9 +1597,9 @@ function processCharacter(
             // if it's space-ndash-space, put m-dash instead
             if (
               str[i - 1] &&
-              !str[i - 1].trim().length &&
+              !str[i - 1].trim() &&
               str[i + 1] &&
-              !str[i + 1].trim().length &&
+              !str[i + 1].trim() &&
               !(isNumber(str[i - 2]) && isNumber(str[i + 2]))
             ) {
               rangesArr.push(i, y, "&mdash;");
@@ -1601,9 +1616,9 @@ function processCharacter(
           } else if (charcode === 65533) {
             if (
               str[i - 1] &&
-              !str[i - 1].trim().length &&
+              !str[i - 1].trim() &&
               str[i + 1] &&
-              !str[i + 1].trim().length
+              !str[i + 1].trim()
             ) {
               rangesArr.push(i, y, rawMDash);
               console.log(
@@ -1620,11 +1635,7 @@ function processCharacter(
 
         // if there's space in front but no space after:
         // ---------------------------------------------
-        if (
-          str[i - 1] &&
-          str[i - 1].trim().length === 0 &&
-          str[y].trim().length !== 0
-        ) {
+        if (str[i - 1] && !str[i - 1].trim() && str[y].trim()) {
           console.log(`1628`);
           if (str[i - 2] && isNumber(str[i - 2]) && isNumber(str[y])) {
             rangesArr.push(i - 1, i);
@@ -1716,8 +1727,8 @@ function processCharacter(
           str[y + 1] &&
           isNumber(str[i - 2]) &&
           isNumber(str[y + 1]) &&
-          str[i - 1].trim().length === 0 &&
-          str[y].trim().length === 0
+          !str[i - 1].trim() &&
+          !str[y].trim()
         ) {
           // delete spaces around n-dash if those are number strings
           rangesArr.push(i - 1, i);
@@ -1735,9 +1746,9 @@ function processCharacter(
         if (
           str[i - 2] &&
           str[i + 1] &&
-          !str[i - 1].trim().length &&
-          str[i - 2].trim().length &&
-          !str[i + 1].trim().length &&
+          !str[i - 1].trim() &&
+          str[i - 2].trim() &&
+          !str[i + 1].trim() &&
           !(isNumber(str[i - 2]) && isNumber(str[i + 2]))
         ) {
           // 1. report as applicable
@@ -1787,20 +1798,22 @@ function processCharacter(
               }`
             );
 
-            rangesArr.push(
-              left(str, i) + 1,
-              i,
-              opts.convertEntities ? "&nbsp;" : rawNbsp
-            );
-            console.log(
-              `1796 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
-                left(str, i) + 1
-              }, ${i}, ${JSON.stringify(
-                opts.convertEntities ? "&nbsp;" : rawNbsp,
-                null,
-                4
-              )} (charCodeAt=${rawNbsp.charCodeAt(0)})]`
-            );
+            if (typeof left(str, i) === "number") {
+              rangesArr.push(
+                (left(str, i) as number) + 1,
+                i,
+                opts.convertEntities ? "&nbsp;" : rawNbsp
+              );
+              console.log(
+                `1796 processCharacter.js - ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
+                  (left(str, i) as number) + 1
+                }, ${i}, ${JSON.stringify(
+                  opts.convertEntities ? "&nbsp;" : rawNbsp,
+                  null,
+                  4
+                )} (charCodeAt=${rawNbsp.charCodeAt(0)})]`
+              );
+            }
           }
         }
 
@@ -1819,11 +1832,7 @@ function processCharacter(
             }`
           );
           // 1. if there's space in front but no space after M-dash, add one after
-          if (
-            str[i - 1] &&
-            str[i - 1].trim().length === 0 &&
-            str[y].trim().length !== 0
-          ) {
+          if (str[i - 1] && !str[i - 1].trim() && str[y].trim()) {
             applicableOpts.addMissingSpaces = true;
             console.log(
               `1829 processCharacter.js: ${`\u001b[${32}m${`SET`}\u001b[${39}m`} applicableOpts.addMissingSpaces = ${
@@ -1902,7 +1911,7 @@ function processCharacter(
                 convertEntities: opts.convertEntities,
                 convertApostrophes: opts.convertApostrophes,
                 offsetBy,
-              })
+              }) as any
             );
           }
         }
@@ -2104,8 +2113,6 @@ function processCharacter(
             }`
           );
 
-          // here
-
           if (opts.convertEntities) {
             if (convertedCharVal === "&mldr;") {
               console.log(
@@ -2130,7 +2137,7 @@ function processCharacter(
       }
     }
 
-    if (state.onUrlCurrently && !str[i].trim().length) {
+    if (state.onUrlCurrently && !str[i].trim()) {
       console.log(
         `2135 SET ${`\u001b[${33}m${`state.onUrlCurrently`}\u001b[${39}m`} = false`
       );

@@ -1,9 +1,31 @@
-/* eslint no-unused-vars:0 */
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
 import he from "he";
 
+type EndOfLine = "lf" | "crlf" | "cr";
+type EndOfLineVal = "\n" | "\r\n" | "\r";
+
+interface Opts {
+  fixBrokenEntities: boolean;
+  removeWidows: boolean;
+  convertEntities: boolean;
+  convertDashes: boolean;
+  convertApostrophes: boolean;
+  replaceLineBreaks: boolean;
+  removeLineBreaks: boolean;
+  useXHTML: boolean;
+  dontEncodeNonLatin: boolean;
+  addMissingSpaces: boolean;
+  convertDotsToEllipsis: boolean;
+  stripHtml: boolean;
+  eol: EndOfLine;
+  stripHtmlButIgnoreTags: string[];
+  stripHtmlAddNewLine: string[];
+  cb: null | ((str: string) => string);
+}
+
 // default set of options
-const defaultOpts = {
+const defaultOpts: Opts = {
   fixBrokenEntities: true,
   removeWidows: true,
   convertEntities: true,
@@ -21,6 +43,31 @@ const defaultOpts = {
   stripHtmlAddNewLine: ["li", "/ul"],
   cb: null,
 };
+
+interface ApplicableOpts {
+  fixBrokenEntities: boolean;
+  removeWidows: boolean;
+  convertEntities: boolean;
+  convertDashes: boolean;
+  convertApostrophes: boolean;
+  replaceLineBreaks: boolean;
+  removeLineBreaks: boolean;
+  useXHTML: boolean;
+  dontEncodeNonLatin: boolean;
+  addMissingSpaces: boolean;
+  convertDotsToEllipsis: boolean;
+  stripHtml: boolean;
+  eol: boolean;
+}
+
+interface Res {
+  res: string;
+  applicableOpts: ApplicableOpts;
+}
+
+interface State {
+  onUrlCurrently: boolean;
+}
 
 const leftSingleQuote = "\u2018";
 const rightSingleQuote = "\u2019";
@@ -414,14 +461,10 @@ const voidTags = [
 
 // -----------------------------------------------------------------------------
 
-/**
- * doConvertEntities - converts entities, optionally, skipping all non-latin characters.
- *
- * CHECKS AND CONSUMES o.dontEncodeNonLatin !
- * @param  {string} inputString incoming string
- * @return {string}             result
- */
-function doConvertEntities(inputString, dontEncodeNonLatin) {
+function doConvertEntities(
+  inputString: string,
+  dontEncodeNonLatin: boolean
+): string {
   if (dontEncodeNonLatin) {
     // console.log(
     //   `427 doConvertEntities() - inside if (dontEncodeNonLatin) clauses`
@@ -469,16 +512,16 @@ function doConvertEntities(inputString, dontEncodeNonLatin) {
 // -----------------------------------------------------------------------------
 
 // find postcodes, replace the space within them with '\u00a0'
-function joinPostcodes(str) {
-  return str.replace(
-    /([A-Z]{1,2}[0-9][0-9A-Z]?)\s?([0-9][A-Z]{2})/g,
-    "$1\u00a0$2"
-  );
-}
+// function joinPostcodes(str: string): string {
+//   return str.replace(
+//     /([A-Z]{1,2}[0-9][0-9A-Z]?)\s?([0-9][A-Z]{2})/g,
+//     "$1\u00a0$2"
+//   );
+// }
 
 // -----------------------------------------------------------------------------
 
-function isNumber(something) {
+function isNumber(something: any): boolean {
   return (
     (typeof something === "string" &&
       something.charCodeAt(0) >= 48 &&
@@ -487,7 +530,7 @@ function isNumber(something) {
   );
 }
 
-function isLetter(str) {
+function isLetter(str: any): boolean {
   return (
     typeof str === "string" &&
     str.length === 1 &&
@@ -495,7 +538,7 @@ function isLetter(str) {
   );
 }
 
-function isQuote(str) {
+function isQuote(str: string): boolean {
   return (
     str === '"' ||
     str === "'" ||
@@ -506,21 +549,21 @@ function isQuote(str) {
   );
 }
 
-function isLowercaseLetter(str) {
+function isLowercaseLetter(str: string): boolean {
   if (!isLetter(str)) {
     return false;
   }
   return str === str.toLowerCase() && str !== str.toUpperCase();
 }
 
-function isUppercaseLetter(str) {
+function isUppercaseLetter(str: string): boolean {
   if (!isLetter(str)) {
     return false;
   }
   return str === str.toUpperCase() && str !== str.toLowerCase();
 }
 
-function removeTrailingSlash(str) {
+function removeTrailingSlash(str: string): string {
   if (typeof str === "string" && str.length && str.endsWith("/")) {
     return str.slice(0, -1).trim();
   }
@@ -538,7 +581,13 @@ export {
   rightDoubleQuote,
   leftDoubleQuote,
   leftSingleQuote,
+  Opts,
   defaultOpts,
+  Res,
+  State,
+  EndOfLine,
+  EndOfLineVal,
+  ApplicableOpts,
   voidTags,
   isNumber,
   isLetter,

@@ -1,11 +1,9 @@
 import tap from "tap";
 // import detergent from "../dist/detergent.esm";
 // const det1 = detergent.det;
-import { det, mixer } from "../t-util/util";
-
-// -----------------------------------------------------------------------------
-
 import {
+  det,
+  mixer,
   // rawReplacementMark,
   // rawNDash,
   // rawMDash,
@@ -16,7 +14,7 @@ import {
   rightDoubleQuote,
   leftDoubleQuote,
   leftSingleQuote,
-} from "../src/util";
+} from "../t-util/util";
 
 // -----------------------------------------------------------------------------
 

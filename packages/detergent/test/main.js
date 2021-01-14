@@ -4,8 +4,9 @@ import {
   opts as exportedOptsObj,
   version,
 } from "../dist/detergent.esm";
-import { det, mixer } from "../t-util/util";
 import {
+  det,
+  mixer,
   // rawReplacementMark,
   // rawNDash,
   // rawMDash,
@@ -16,7 +17,7 @@ import {
   // rightDoubleQuote,
   // leftDoubleQuote,
   // leftSingleQuote
-} from "../src/util";
+} from "../t-util/util";
 
 // ==============================
 // 0. throws and API bits

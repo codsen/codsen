@@ -1,15 +1,16 @@
 import tap from "tap";
 import he from "he";
 import { det as det1 } from "../dist/detergent.esm";
-import { det, mixer } from "../t-util/util";
 import {
+  det,
+  mixer,
   rawReplacementMark,
   rightSingleQuote,
   leftSingleQuote,
   rawhairspace,
   rawMDash,
   rawNbsp,
-} from "../src/util";
+} from "../t-util/util";
 
 // 01. opts.convertEntities
 // -----------------------------------------------------------------------------

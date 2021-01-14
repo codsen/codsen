@@ -2,8 +2,7 @@
 
 import tap from "tap";
 import { det as det1 } from "../dist/detergent.esm";
-import { det, mixer } from "../t-util/util";
-import { rawNDash, rawNbsp } from "../src/util";
+import { det, mixer, rawNDash, rawNbsp } from "../t-util/util";
 
 // -----------------------------------------------------------------------------
 
