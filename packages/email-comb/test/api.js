@@ -145,8 +145,8 @@ tap.test("20 - wrong inputs, opts.backend", (t) => {
 });
 
 tap.test("21 - wrong inputs, opts.backend", (t) => {
-  t.doesNotThrow(() => {
-    comb("zzz", { backend: [{}] }); // empty arrays are permitted
+  t.throws(() => {
+    comb("zzz", { backend: [{}] }); // objects have to have consistent schema: "heads" and "tails" keys
   }, "21");
   t.end();
 });
