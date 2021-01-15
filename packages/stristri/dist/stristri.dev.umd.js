@@ -8,351 +8,375 @@
  */
 
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-  typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.stristri = {}));
+typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+typeof define === 'function' && define.amd ? define(['exports'], factory) :
+(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.stristri = {}));
 }(this, (function (exports) { 'use strict';
 
-  function _typeof(obj) {
-    "@babel/helpers - typeof";
-
-    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-      _typeof = function (obj) {
-        return typeof obj;
-      };
-    } else {
-      _typeof = function (obj) {
-        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-      };
-    }
-
-    return _typeof(obj);
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
   }
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
   }
 
-  function _defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }
+  return keys;
+}
 
-  function _createClass(Constructor, protoProps, staticProps) {
-    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) _defineProperties(Constructor, staticProps);
-    return Constructor;
-  }
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
 
-  function _defineProperty(obj, key, value) {
-    if (key in obj) {
-      Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
       });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
     } else {
-      obj[key] = value;
-    }
-
-    return obj;
-  }
-
-  function ownKeys(object, enumerableOnly) {
-    var keys = Object.keys(object);
-
-    if (Object.getOwnPropertySymbols) {
-      var symbols = Object.getOwnPropertySymbols(object);
-      if (enumerableOnly) symbols = symbols.filter(function (sym) {
-        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
       });
-      keys.push.apply(keys, symbols);
+    }
+  }
+
+  return target;
+}
+
+/**
+ * arrayiffy-if-string
+ * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
+ * Version: 3.12.0
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/arrayiffy-if-string/
+ */
+
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+function arrayiffy(something) {
+  if (typeof something === "string") {
+    if (something.length) {
+      return [something];
     }
 
-    return keys;
+    return [];
   }
 
-  function _objectSpread2(target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i] != null ? arguments[i] : {};
+  return something;
+}
 
-      if (i % 2) {
-        ownKeys(Object(source), true).forEach(function (key) {
-          _defineProperty(target, key, source[key]);
-        });
-      } else if (Object.getOwnPropertyDescriptors) {
-        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-      } else {
-        ownKeys(Object(source)).forEach(function (key) {
-          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-        });
+/* eslint no-plusplus:0 */
+
+function isObj(something) {
+  return something && typeof something === "object" && !Array.isArray(something);
+}
+
+function isStr(something) {
+  return typeof something === "string";
+}
+
+var defaults = {
+  cb: undefined,
+  i: false,
+  trimBeforeMatching: false,
+  trimCharsBeforeMatching: [],
+  maxMismatches: 0,
+  firstMustMatch: false,
+  lastMustMatch: false
+};
+
+var defaultGetNextIdx = function defaultGetNextIdx(index) {
+  return index + 1;
+}; // eslint-disable-next-line consistent-return
+
+
+function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx) {
+  if (special === void 0) {
+    special = false;
+  }
+
+  if (getNextIdx === void 0) {
+    getNextIdx = defaultGetNextIdx;
+  }
+
+  var whatToMatchValVal = typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal; // early ending case if matching EOL being at 0-th index:
+
+  if (+position < 0 && special && whatToMatchValVal === "EOL") {
+    return whatToMatchValVal;
+  }
+
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
+
+  if (position >= str.length && !special) {
+    return false;
+  }
+
+  var charsToCheckCount = special ? 1 : whatToMatchVal.length;
+  var lastWasMismatched = false; // value is "false" or index of where it was activated
+  // if no character was ever matched, even through if opts.maxMismatches
+  // would otherwise allow to skip characters, this will act as a last
+  // insurance - at least one character must have been matched to yield a
+  // positive result!
+
+  var atLeastSomethingWasMatched = false;
+  var patience = opts.maxMismatches;
+  var i = position;
+  var somethingFound = false; // these two drive opts.firstMustMatch and opts.lastMustMatch:
+
+  var firstCharacterMatched = false;
+  var lastCharacterMatched = false;
+
+  while (str[i]) {
+    var nextIdx = getNextIdx(i);
+
+    if (opts.trimBeforeMatching && str[i].trim() === "") {
+      if (!str[nextIdx] && special && whatToMatchVal === "EOL") {
+        return true;
       }
+
+      i = getNextIdx(i);
+      continue;
     }
 
-    return target;
-  }
-
-  function _toConsumableArray(arr) {
-    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
-  }
-
-  function _arrayWithoutHoles(arr) {
-    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
-  }
-
-  function _iterableToArray(iter) {
-    if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
-  }
-
-  function _unsupportedIterableToArray(o, minLen) {
-    if (!o) return;
-    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor) n = o.constructor.name;
-    if (n === "Map" || n === "Set") return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-  }
-
-  function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length) len = arr.length;
-
-    for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
-
-    return arr2;
-  }
-
-  function _nonIterableSpread() {
-    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-  }
-
-  /**
-   * arrayiffy-if-string
-   * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
-   * Version: 3.12.0
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://codsen.com/os/arrayiffy-if-string/
-   */
-  function arrayiffyString(something) {
-    if (typeof something === "string") {
-      if (something.length > 0) {
-        return [something];
+    if (opts && !opts.i && opts.trimCharsBeforeMatching && opts.trimCharsBeforeMatching.includes(str[i]) || opts && opts.i && opts.trimCharsBeforeMatching && opts.trimCharsBeforeMatching.map(function (val) {
+      return val.toLowerCase();
+    }).includes(str[i].toLowerCase())) {
+      if (special && whatToMatchVal === "EOL" && !str[nextIdx]) {
+        // return true because we reached the zero'th index, exactly what we're looking for
+        return true;
       }
 
-      return [];
+      i = getNextIdx(i);
+      continue;
     }
 
-    return something;
-  }
+    var charToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount] : whatToMatchVal[charsToCheckCount - 1]; // let's match
 
-  function isObj(something) {
-    return something && _typeof(something) === "object" && !Array.isArray(something);
-  }
-
-  function isStr(something) {
-    return typeof something === "string";
-  }
-
-  function march(str, fromIndexInclusive, whatToMatchVal, opts, special, getNextIdx) {
-    var whatToMatchValVal = typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal;
-
-    if (fromIndexInclusive < 0 && special && whatToMatchValVal === "EOL") {
-      return whatToMatchValVal;
-    }
-
-    if (fromIndexInclusive >= str.length && !special) {
-      return false;
-    }
-
-    var charsToCheckCount = special ? 1 : whatToMatchVal.length;
-    var lastWasMismatched = false;
-    var atLeastSomethingWasMatched = false;
-    var patience = opts.maxMismatches;
-    var i = fromIndexInclusive;
-    var somethingFound = false;
-    var firstCharacterMatched = false;
-    var lastCharacterMatched = false;
-
-    while (str[i]) {
-      var nextIdx = getNextIdx(i);
-
-      if (opts.trimBeforeMatching && str[i].trim() === "") {
-        if (!str[nextIdx] && special && whatToMatchVal === "EOL") {
-          return true;
-        }
-
-        i = getNextIdx(i);
-        continue;
+    if (!opts.i && str[i] === charToCompareAgainst || opts.i && str[i].toLowerCase() === charToCompareAgainst.toLowerCase()) {
+      if (!somethingFound) {
+        somethingFound = true;
       }
 
-      if (!opts.i && opts.trimCharsBeforeMatching.includes(str[i]) || opts.i && opts.trimCharsBeforeMatching.map(function (val) {
-        return val.toLowerCase();
-      }).includes(str[i].toLowerCase())) {
-        if (special && whatToMatchVal === "EOL" && !str[nextIdx]) {
-          return true;
-        }
+      if (!atLeastSomethingWasMatched) {
+        atLeastSomethingWasMatched = true;
+      } // if this was the first character from the "to-match" list, flip the flag
 
-        i = getNextIdx(i);
-        continue;
+
+      if (charsToCheckCount === whatToMatchVal.length) {
+        firstCharacterMatched = true;
+      } else if (charsToCheckCount === 1) {
+        lastCharacterMatched = true;
       }
 
-      var charToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount] : whatToMatchVal[charsToCheckCount - 1];
-
-      if (!opts.i && str[i] === charToCompareAgainst || opts.i && str[i].toLowerCase() === charToCompareAgainst.toLowerCase()) {
-        if (!somethingFound) {
-          somethingFound = true;
-        }
-
-        if (!atLeastSomethingWasMatched) {
-          atLeastSomethingWasMatched = true;
-        }
-
-        if (charsToCheckCount === whatToMatchVal.length) {
-          firstCharacterMatched = true;
-        } else if (charsToCheckCount === 1) {
-          lastCharacterMatched = true;
-        }
-
-        charsToCheckCount -= 1;
-
-        if (charsToCheckCount < 1) {
-          return i;
-        }
-      } else {
-        if (opts.maxMismatches && patience && i) {
-          patience -= 1;
-
-          for (var y = 0; y <= patience; y++) {
-            var nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1 + y] : whatToMatchVal[charsToCheckCount - 2 - y];
-            var nextCharInSource = str[getNextIdx(i)];
-
-            if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
-              charsToCheckCount -= 2;
-              somethingFound = true;
-              break;
-            } else if (nextCharInSource && nextCharToCompareAgainst && (!opts.i && nextCharInSource === nextCharToCompareAgainst || opts.i && nextCharInSource.toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && (!opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
-              charsToCheckCount -= 1;
-              somethingFound = true;
-              break;
-            } else if (nextCharToCompareAgainst === undefined && patience >= 0 && somethingFound && (!opts.firstMustMatch || firstCharacterMatched) && (!opts.lastMustMatch || lastCharacterMatched)) {
-              return i;
-            }
-          }
-
-          if (!somethingFound) {
-            lastWasMismatched = i;
-          }
-        } else if (i === 0 && charsToCheckCount === 1 && !opts.lastMustMatch && atLeastSomethingWasMatched) {
-          return 0;
-        } else {
-          return false;
-        }
-      }
-
-      if (lastWasMismatched !== false && lastWasMismatched !== i) {
-        lastWasMismatched = false;
-      }
+      charsToCheckCount -= 1;
 
       if (charsToCheckCount < 1) {
         return i;
       }
+    } else {
+      if (opts.maxMismatches && patience && i) {
+        patience -= 1; // the bigger the maxMismatches, the further away we must check for
+        // alternative matches
 
-      i = getNextIdx(i);
-    }
+        for (var y = 0; y <= patience; y++) {
+          // maybe str[i] will match against next charToCompareAgainst?
+          var nextCharToCompareAgainst = nextIdx > i ? whatToMatchVal[whatToMatchVal.length - charsToCheckCount + 1 + y] : whatToMatchVal[charsToCheckCount - 2 - y];
+          var nextCharInSource = str[getNextIdx(i)];
 
-    if (charsToCheckCount > 0) {
-      if (special && whatToMatchValVal === "EOL") {
-        return true;
+          if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && ( // ensure we're not skipping the first enforced character:
+          !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+            charsToCheckCount -= 2;
+            somethingFound = true;
+            break;
+          } else if (nextCharInSource && nextCharToCompareAgainst && (!opts.i && nextCharInSource === nextCharToCompareAgainst || opts.i && nextCharInSource.toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && ( // ensure we're not skipping the first enforced character:
+          !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+            charsToCheckCount -= 1;
+            somethingFound = true;
+            break;
+          } else if (nextCharToCompareAgainst === undefined && patience >= 0 && somethingFound && (!opts.firstMustMatch || firstCharacterMatched) && (!opts.lastMustMatch || lastCharacterMatched)) {
+            // If "nextCharToCompareAgainst" is undefined, this
+            // means there are no more characters left to match,
+            // this is the last character to be matched.
+            // This means, if patience >= 0, this is it,
+            // the match is still positive.
+            return i;
+          } // ███████████████████████████████████████
+
+        }
+
+        if (!somethingFound) {
+          // if the character was rogue, we mark it:
+          lastWasMismatched = i; // patience--;
+          // console.log(
+          //   `350 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`patience`}\u001b[${39}m`} = ${patience}`
+          // );
+        }
+      } else if (i === 0 && charsToCheckCount === 1 && !opts.lastMustMatch && atLeastSomethingWasMatched) {
+        return 0;
+      } else {
+        return false;
       }
+    } // turn off "lastWasMismatched" if it's on and it hasn't been activated
+    // on this current index:
 
-      if (opts.maxMismatches >= charsToCheckCount && atLeastSomethingWasMatched) {
-        return lastWasMismatched || 0;
-      }
 
-      return false;
-    }
+    if (lastWasMismatched !== false && lastWasMismatched !== i) {
+      lastWasMismatched = false;
+    } // if all was matched, happy days
+
+
+    if (charsToCheckCount < 1) {
+      return i;
+    } // iterate onto the next index, otherwise while would loop infinitely
+
+
+    i = getNextIdx(i);
   }
 
-  function main(mode, str, position, originalWhatToMatch, originalOpts) {
-    var defaults = {
-      cb: undefined,
-      i: false,
-      trimBeforeMatching: false,
-      trimCharsBeforeMatching: [],
-      maxMismatches: 0,
-      firstMustMatch: false,
-      lastMustMatch: false
-    };
-
-    if (isObj(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
-      throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!").concat(Array.isArray(originalOpts.trimBeforeMatching) ? " Did you mean to use opts.trimCharsBeforeMatching?" : ""));
+  if (charsToCheckCount > 0) {
+    if (special && whatToMatchValVal === "EOL") {
+      return true;
     }
 
-    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
-
-    opts.trimCharsBeforeMatching = arrayiffyString(opts.trimCharsBeforeMatching);
-    opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(function (el) {
-      return isStr(el) ? el : String(el);
-    });
-
-    if (!isStr(str)) {
-      return false;
+    if (opts && opts.maxMismatches >= charsToCheckCount && atLeastSomethingWasMatched) {
+      return lastWasMismatched || 0;
     }
 
-    if (!str.length) {
-      return false;
+    return false;
+  }
+} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// Real deal
+
+
+function main(mode, str, position, originalWhatToMatch, originalOpts) {
+  // insurance
+  if (isObj(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
+    throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!" + (Array.isArray(originalOpts.trimBeforeMatching) ? " Did you mean to use opts.trimCharsBeforeMatching?" : ""));
+  }
+
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
+
+  if (typeof opts.trimCharsBeforeMatching === "string") {
+    // arrayiffy if needed:
+    opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching);
+  } // stringify all:
+
+
+  opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(function (el) {
+    return isStr(el) ? el : String(el);
+  });
+
+  if (!isStr(str)) {
+    return false;
+  }
+
+  if (!str.length) {
+    return false;
+  }
+
+  if (!Number.isInteger(position) || position < 0) {
+    throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_03] the second argument should be a natural number. Currently it's of a type: " + typeof position + ", equal to:\n" + JSON.stringify(position, null, 4));
+  }
+
+  var whatToMatch;
+  var special;
+
+  if (isStr(originalWhatToMatch)) {
+    whatToMatch = [originalWhatToMatch];
+  } else if (Array.isArray(originalWhatToMatch)) {
+    whatToMatch = originalWhatToMatch;
+  } else if (!originalWhatToMatch) {
+    whatToMatch = originalWhatToMatch;
+  } else if (typeof originalWhatToMatch === "function") {
+    whatToMatch = [];
+    whatToMatch.push(originalWhatToMatch);
+  } else {
+    throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's " + typeof originalWhatToMatch + ", equal to:\n" + JSON.stringify(originalWhatToMatch, null, 4));
+  }
+
+  if (originalOpts && !isObj(originalOpts)) {
+    throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type \"" + typeof originalOpts + "\", and equal to:\n" + JSON.stringify(originalOpts, null, 4));
+  }
+
+  var culpritsIndex = 0;
+  var culpritsVal = "";
+
+  if (opts && opts.trimCharsBeforeMatching && opts.trimCharsBeforeMatching.some(function (el, i) {
+    if (el.length > 1) {
+      culpritsIndex = i;
+      culpritsVal = el;
+      return true;
     }
 
-    if (!Number.isInteger(position) || position < 0) {
-      throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_03] the second argument should be a natural number. Currently it's of a type: ").concat(_typeof(position), ", equal to:\n").concat(JSON.stringify(position, null, 4)));
-    }
+    return false;
+  })) {
+    throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index " + culpritsIndex + " is longer than 1 character, " + culpritsVal.length + " (equals to " + culpritsVal + "). Please split it into separate characters and put into array as separate elements.");
+  } // action
+  // CASE 1. If it's driven by callback-only, the 3rd input argument, what to look
+  // for - is falsey - empty string within array (or not), OR given null
 
-    var whatToMatch;
-    var special;
 
-    if (isStr(originalWhatToMatch)) {
-      whatToMatch = [originalWhatToMatch];
-    } else if (Array.isArray(originalWhatToMatch)) {
-      whatToMatch = originalWhatToMatch;
-    } else if (!originalWhatToMatch) {
-      whatToMatch = originalWhatToMatch;
-    } else if (typeof originalWhatToMatch === "function") {
-      whatToMatch = [];
-      whatToMatch.push(originalWhatToMatch);
-    } else {
-      throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's ").concat(_typeof(originalWhatToMatch), ", equal to:\n").concat(JSON.stringify(originalWhatToMatch, null, 4)));
-    }
-
-    if (originalOpts && !isObj(originalOpts)) {
-      throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type \"").concat(_typeof(originalOpts), "\", and equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
-    }
-
-    var culpritsIndex;
-    var culpritsVal;
-
-    if (opts.trimCharsBeforeMatching.some(function (el, i) {
-      if (el.length > 1) {
-        culpritsIndex = i;
-        culpritsVal = el;
-        return true;
-      }
-
-      return false;
-    })) {
-      throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ").concat(culpritsIndex, " is longer than 1 character, ").concat(culpritsVal.length, " (equals to ").concat(culpritsVal, "). Please split it into separate characters and put into array as separate elements."));
-    }
-
-    if (!whatToMatch || !Array.isArray(whatToMatch) || Array.isArray(whatToMatch) && !whatToMatch.length || Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr(whatToMatch[0]) && !whatToMatch[0].trim()) {
+  if (!whatToMatch || !Array.isArray(whatToMatch) || // 0
+  Array.isArray(whatToMatch) && !whatToMatch.length || // []
+  Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr(whatToMatch[0]) && !whatToMatch[0].trim() // [""]
+  ) {
       if (typeof opts.cb === "function") {
-        var firstCharOutsideIndex;
+        var firstCharOutsideIndex; // matchLeft() or matchRightIncl() methods start at index "position"
+
         var startingPosition = position;
 
         if (mode === "matchLeftIncl" || mode === "matchRight") {
@@ -361,18 +385,20 @@
 
         if (mode[5] === "L") {
           for (var y = startingPosition; y--;) {
-            var currentChar = str[y];
+            // assemble the value of the current character
+            var currentChar = str[y]; // do the actual evaluation, is the current character non-whitespace/non-skiped
 
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
+            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && currentChar !== undefined && currentChar.trim()) && (!opts.trimCharsBeforeMatching || !opts.trimCharsBeforeMatching.length || currentChar !== undefined && !opts.trimCharsBeforeMatching.includes(currentChar))) {
               firstCharOutsideIndex = y;
               break;
             }
           }
         } else if (mode.startsWith("matchRight")) {
           for (var _y = startingPosition; _y < str.length; _y++) {
-            var _currentChar = str[_y];
+            // assemble the value of the current character
+            var _currentChar = str[_y]; // do the actual evaluation, is the current character non-whitespace/non-skiped
 
-            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && _currentChar.trim()) && (!opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(_currentChar))) {
+            if ((!opts.trimBeforeMatching || opts.trimBeforeMatching && _currentChar.trim()) && (!opts.trimCharsBeforeMatching || !opts.trimCharsBeforeMatching.length || !opts.trimCharsBeforeMatching.includes(_currentChar))) {
               firstCharOutsideIndex = _y;
               break;
             }
@@ -393,7 +419,8 @@
 
         if (mode[5] === "L") {
           return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
-        }
+        } // ELSE matchRight & matchRightIncl
+
 
         if (firstCharOutsideIndex && firstCharOutsideIndex > 0) {
           theRemainderOfTheString = str.slice(firstCharOutsideIndex);
@@ -408,3137 +435,4296 @@
         extraNote = " More so, the whole options object, the fourth input argument, is missing!";
       }
 
-      throw new Error("string-match-left-right/".concat(mode, "(): [THROW_ID_08] the third argument, \"whatToMatch\", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key \"cb\" is not set!").concat(extraNote));
+      throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_08] the third argument, \"whatToMatch\", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key \"cb\" is not set!" + extraNote);
+    } // Case 2. Normal operation where callback may or may not be present, but it is
+  // only accompanying the matching of what was given in 3rd input argument.
+  // Then if 3rd arg's contents were matched, callback is checked and its Boolean
+  // result is merged using logical "AND" - meaning both have to be true to yield
+  // final result "true".
+
+
+  for (var i = 0, len = whatToMatch.length; i < len; i++) {
+    special = typeof whatToMatch[i] === "function"; // since input can be function, we need to grab the value explicitly:
+
+    var whatToMatchVal = whatToMatch[i];
+    var fullCharacterInFront = void 0;
+    var indexOfTheCharacterInFront = void 0;
+    var restOfStringInFront = "";
+    var _startingPosition = position;
+
+    if (mode === "matchRight") {
+      _startingPosition += 1;
+    } else if (mode === "matchLeft") {
+      _startingPosition -= 1;
     }
 
-    for (var i = 0, len = whatToMatch.length; i < len; i++) {
-      special = typeof whatToMatch[i] === "function";
-      var whatToMatchVal = whatToMatch[i];
-      var fullCharacterInFront = void 0;
-      var indexOfTheCharacterInFront = void 0;
-      var restOfStringInFront = "";
-      var _startingPosition = position;
+    var found = march(str, _startingPosition, whatToMatchVal, opts, special, function (i2) {
+      return mode[5] === "L" ? i2 - 1 : i2 + 1;
+    }); // if march() returned positive result and it was "special" case,
+    // Bob's your uncle, here's the result:
 
-      if (mode === "matchRight") {
-        _startingPosition += 1;
-      } else if (mode === "matchLeft") {
-        _startingPosition -= 1;
-      }
+    if (found && special && typeof whatToMatchVal === "function" && whatToMatchVal() === "EOL") {
+      return whatToMatchVal() && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true) ? whatToMatchVal() : false;
+    } // now, the "found" is the index of the first character of what was found.
+    // we need to calculate the character to the left/right of it:
 
-      var found = march(str, _startingPosition, whatToMatchVal, opts, special, function (i2) {
-        return mode[5] === "L" ? i2 - 1 : i2 + 1;
-      });
 
-      if (found && special && typeof whatToMatchVal === "function" && whatToMatchVal() === "EOL") {
-        return whatToMatchVal() && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true) ? whatToMatchVal() : false;
-      }
+    if (Number.isInteger(found)) {
+      indexOfTheCharacterInFront = mode.startsWith("matchLeft") ? found - 1 : found + 1; //
 
-      if (Number.isInteger(found)) {
-        indexOfTheCharacterInFront = mode.startsWith("matchLeft") ? found - 1 : found + 1;
-
-        if (mode[5] === "L") {
-          restOfStringInFront = str.slice(0, found);
-        } else {
-          restOfStringInFront = str.slice(indexOfTheCharacterInFront);
-        }
-      }
-
-      if (indexOfTheCharacterInFront < 0) {
-        indexOfTheCharacterInFront = undefined;
-      }
-
-      if (str[indexOfTheCharacterInFront]) {
-        fullCharacterInFront = str[indexOfTheCharacterInFront];
-      }
-
-      if (Number.isInteger(found) && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true)) {
-        return whatToMatchVal;
-      }
-    }
-
-    return false;
-  }
-
-  function matchLeftIncl(str, position, whatToMatch, opts) {
-    return main("matchLeftIncl", str, position, whatToMatch, opts);
-  }
-
-  function matchLeft(str, position, whatToMatch, opts) {
-    return main("matchLeft", str, position, whatToMatch, opts);
-  }
-
-  function matchRightIncl(str, position, whatToMatch, opts) {
-    return main("matchRightIncl", str, position, whatToMatch, opts);
-  }
-
-  function matchRight(str, position, whatToMatch, opts) {
-    return main("matchRight", str, position, whatToMatch, opts);
-  }
-
-  var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-  function createCommonjsModule(fn) {
-    var module = { exports: {} };
-  	return fn(module, module.exports), module.exports;
-  }
-
-  var lodash_clonedeep = createCommonjsModule(function (module, exports) {
-    /** Used as the size to enable large array optimizations. */
-    var LARGE_ARRAY_SIZE = 200;
-    /** Used to stand-in for `undefined` hash values. */
-
-    var HASH_UNDEFINED = '__lodash_hash_undefined__';
-    /** Used as references for various `Number` constants. */
-
-    var MAX_SAFE_INTEGER = 9007199254740991;
-    /** `Object#toString` result references. */
-
-    var argsTag = '[object Arguments]',
-        arrayTag = '[object Array]',
-        boolTag = '[object Boolean]',
-        dateTag = '[object Date]',
-        errorTag = '[object Error]',
-        funcTag = '[object Function]',
-        genTag = '[object GeneratorFunction]',
-        mapTag = '[object Map]',
-        numberTag = '[object Number]',
-        objectTag = '[object Object]',
-        promiseTag = '[object Promise]',
-        regexpTag = '[object RegExp]',
-        setTag = '[object Set]',
-        stringTag = '[object String]',
-        symbolTag = '[object Symbol]',
-        weakMapTag = '[object WeakMap]';
-    var arrayBufferTag = '[object ArrayBuffer]',
-        dataViewTag = '[object DataView]',
-        float32Tag = '[object Float32Array]',
-        float64Tag = '[object Float64Array]',
-        int8Tag = '[object Int8Array]',
-        int16Tag = '[object Int16Array]',
-        int32Tag = '[object Int32Array]',
-        uint8Tag = '[object Uint8Array]',
-        uint8ClampedTag = '[object Uint8ClampedArray]',
-        uint16Tag = '[object Uint16Array]',
-        uint32Tag = '[object Uint32Array]';
-    /**
-     * Used to match `RegExp`
-     * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
-     */
-
-    var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
-    /** Used to match `RegExp` flags from their coerced string values. */
-
-    var reFlags = /\w*$/;
-    /** Used to detect host constructors (Safari). */
-
-    var reIsHostCtor = /^\[object .+?Constructor\]$/;
-    /** Used to detect unsigned integer values. */
-
-    var reIsUint = /^(?:0|[1-9]\d*)$/;
-    /** Used to identify `toStringTag` values supported by `_.clone`. */
-
-    var cloneableTags = {};
-    cloneableTags[argsTag] = cloneableTags[arrayTag] = cloneableTags[arrayBufferTag] = cloneableTags[dataViewTag] = cloneableTags[boolTag] = cloneableTags[dateTag] = cloneableTags[float32Tag] = cloneableTags[float64Tag] = cloneableTags[int8Tag] = cloneableTags[int16Tag] = cloneableTags[int32Tag] = cloneableTags[mapTag] = cloneableTags[numberTag] = cloneableTags[objectTag] = cloneableTags[regexpTag] = cloneableTags[setTag] = cloneableTags[stringTag] = cloneableTags[symbolTag] = cloneableTags[uint8Tag] = cloneableTags[uint8ClampedTag] = cloneableTags[uint16Tag] = cloneableTags[uint32Tag] = true;
-    cloneableTags[errorTag] = cloneableTags[funcTag] = cloneableTags[weakMapTag] = false;
-    /** Detect free variable `global` from Node.js. */
-
-    var freeGlobal = _typeof(commonjsGlobal) == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
-    /** Detect free variable `self`. */
-
-    var freeSelf = (typeof self === "undefined" ? "undefined" : _typeof(self)) == 'object' && self && self.Object === Object && self;
-    /** Used as a reference to the global object. */
-
-    var root = freeGlobal || freeSelf || Function('return this')();
-    /** Detect free variable `exports`. */
-
-    var freeExports =  exports && !exports.nodeType && exports;
-    /** Detect free variable `module`. */
-
-    var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;
-    /** Detect the popular CommonJS extension `module.exports`. */
-
-    var moduleExports = freeModule && freeModule.exports === freeExports;
-    /**
-     * Adds the key-value `pair` to `map`.
-     *
-     * @private
-     * @param {Object} map The map to modify.
-     * @param {Array} pair The key-value pair to add.
-     * @returns {Object} Returns `map`.
-     */
-
-    function addMapEntry(map, pair) {
-      // Don't return `map.set` because it's not chainable in IE 11.
-      map.set(pair[0], pair[1]);
-      return map;
-    }
-    /**
-     * Adds `value` to `set`.
-     *
-     * @private
-     * @param {Object} set The set to modify.
-     * @param {*} value The value to add.
-     * @returns {Object} Returns `set`.
-     */
-
-
-    function addSetEntry(set, value) {
-      // Don't return `set.add` because it's not chainable in IE 11.
-      set.add(value);
-      return set;
-    }
-    /**
-     * A specialized version of `_.forEach` for arrays without support for
-     * iteratee shorthands.
-     *
-     * @private
-     * @param {Array} [array] The array to iterate over.
-     * @param {Function} iteratee The function invoked per iteration.
-     * @returns {Array} Returns `array`.
-     */
-
-
-    function arrayEach(array, iteratee) {
-      var index = -1,
-          length = array ? array.length : 0;
-
-      while (++index < length) {
-        if (iteratee(array[index], index, array) === false) {
-          break;
-        }
-      }
-
-      return array;
-    }
-    /**
-     * Appends the elements of `values` to `array`.
-     *
-     * @private
-     * @param {Array} array The array to modify.
-     * @param {Array} values The values to append.
-     * @returns {Array} Returns `array`.
-     */
-
-
-    function arrayPush(array, values) {
-      var index = -1,
-          length = values.length,
-          offset = array.length;
-
-      while (++index < length) {
-        array[offset + index] = values[index];
-      }
-
-      return array;
-    }
-    /**
-     * A specialized version of `_.reduce` for arrays without support for
-     * iteratee shorthands.
-     *
-     * @private
-     * @param {Array} [array] The array to iterate over.
-     * @param {Function} iteratee The function invoked per iteration.
-     * @param {*} [accumulator] The initial value.
-     * @param {boolean} [initAccum] Specify using the first element of `array` as
-     *  the initial value.
-     * @returns {*} Returns the accumulated value.
-     */
-
-
-    function arrayReduce(array, iteratee, accumulator, initAccum) {
-      var index = -1,
-          length = array ? array.length : 0;
-
-      if (initAccum && length) {
-        accumulator = array[++index];
-      }
-
-      while (++index < length) {
-        accumulator = iteratee(accumulator, array[index], index, array);
-      }
-
-      return accumulator;
-    }
-    /**
-     * The base implementation of `_.times` without support for iteratee shorthands
-     * or max array length checks.
-     *
-     * @private
-     * @param {number} n The number of times to invoke `iteratee`.
-     * @param {Function} iteratee The function invoked per iteration.
-     * @returns {Array} Returns the array of results.
-     */
-
-
-    function baseTimes(n, iteratee) {
-      var index = -1,
-          result = Array(n);
-
-      while (++index < n) {
-        result[index] = iteratee(index);
-      }
-
-      return result;
-    }
-    /**
-     * Gets the value at `key` of `object`.
-     *
-     * @private
-     * @param {Object} [object] The object to query.
-     * @param {string} key The key of the property to get.
-     * @returns {*} Returns the property value.
-     */
-
-
-    function getValue(object, key) {
-      return object == null ? undefined : object[key];
-    }
-    /**
-     * Checks if `value` is a host object in IE < 9.
-     *
-     * @private
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
-     */
-
-
-    function isHostObject(value) {
-      // Many host objects are `Object` objects that can coerce to strings
-      // despite having improperly defined `toString` methods.
-      var result = false;
-
-      if (value != null && typeof value.toString != 'function') {
-        try {
-          result = !!(value + '');
-        } catch (e) {}
-      }
-
-      return result;
-    }
-    /**
-     * Converts `map` to its key-value pairs.
-     *
-     * @private
-     * @param {Object} map The map to convert.
-     * @returns {Array} Returns the key-value pairs.
-     */
-
-
-    function mapToArray(map) {
-      var index = -1,
-          result = Array(map.size);
-      map.forEach(function (value, key) {
-        result[++index] = [key, value];
-      });
-      return result;
-    }
-    /**
-     * Creates a unary function that invokes `func` with its argument transformed.
-     *
-     * @private
-     * @param {Function} func The function to wrap.
-     * @param {Function} transform The argument transform.
-     * @returns {Function} Returns the new function.
-     */
-
-
-    function overArg(func, transform) {
-      return function (arg) {
-        return func(transform(arg));
-      };
-    }
-    /**
-     * Converts `set` to an array of its values.
-     *
-     * @private
-     * @param {Object} set The set to convert.
-     * @returns {Array} Returns the values.
-     */
-
-
-    function setToArray(set) {
-      var index = -1,
-          result = Array(set.size);
-      set.forEach(function (value) {
-        result[++index] = value;
-      });
-      return result;
-    }
-    /** Used for built-in method references. */
-
-
-    var arrayProto = Array.prototype,
-        funcProto = Function.prototype,
-        objectProto = Object.prototype;
-    /** Used to detect overreaching core-js shims. */
-
-    var coreJsData = root['__core-js_shared__'];
-    /** Used to detect methods masquerading as native. */
-
-    var maskSrcKey = function () {
-      var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
-      return uid ? 'Symbol(src)_1.' + uid : '';
-    }();
-    /** Used to resolve the decompiled source of functions. */
-
-
-    var funcToString = funcProto.toString;
-    /** Used to check objects for own properties. */
-
-    var hasOwnProperty = objectProto.hasOwnProperty;
-    /**
-     * Used to resolve the
-     * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
-     * of values.
-     */
-
-    var objectToString = objectProto.toString;
-    /** Used to detect if a method is native. */
-
-    var reIsNative = RegExp('^' + funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&').replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
-    /** Built-in value references. */
-
-    var Buffer = moduleExports ? root.Buffer : undefined,
-        _Symbol = root.Symbol,
-        Uint8Array = root.Uint8Array,
-        getPrototype = overArg(Object.getPrototypeOf, Object),
-        objectCreate = Object.create,
-        propertyIsEnumerable = objectProto.propertyIsEnumerable,
-        splice = arrayProto.splice;
-    /* Built-in method references for those with the same name as other `lodash` methods. */
-
-    var nativeGetSymbols = Object.getOwnPropertySymbols,
-        nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined,
-        nativeKeys = overArg(Object.keys, Object);
-    /* Built-in method references that are verified to be native. */
-
-    var DataView = getNative(root, 'DataView'),
-        Map = getNative(root, 'Map'),
-        Promise = getNative(root, 'Promise'),
-        Set = getNative(root, 'Set'),
-        WeakMap = getNative(root, 'WeakMap'),
-        nativeCreate = getNative(Object, 'create');
-    /** Used to detect maps, sets, and weakmaps. */
-
-    var dataViewCtorString = toSource(DataView),
-        mapCtorString = toSource(Map),
-        promiseCtorString = toSource(Promise),
-        setCtorString = toSource(Set),
-        weakMapCtorString = toSource(WeakMap);
-    /** Used to convert symbols to primitives and strings. */
-
-    var symbolProto = _Symbol ? _Symbol.prototype : undefined,
-        symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
-    /**
-     * Creates a hash object.
-     *
-     * @private
-     * @constructor
-     * @param {Array} [entries] The key-value pairs to cache.
-     */
-
-    function Hash(entries) {
-      var index = -1,
-          length = entries ? entries.length : 0;
-      this.clear();
-
-      while (++index < length) {
-        var entry = entries[index];
-        this.set(entry[0], entry[1]);
-      }
-    }
-    /**
-     * Removes all key-value entries from the hash.
-     *
-     * @private
-     * @name clear
-     * @memberOf Hash
-     */
-
-
-    function hashClear() {
-      this.__data__ = nativeCreate ? nativeCreate(null) : {};
-    }
-    /**
-     * Removes `key` and its value from the hash.
-     *
-     * @private
-     * @name delete
-     * @memberOf Hash
-     * @param {Object} hash The hash to modify.
-     * @param {string} key The key of the value to remove.
-     * @returns {boolean} Returns `true` if the entry was removed, else `false`.
-     */
-
-
-    function hashDelete(key) {
-      return this.has(key) && delete this.__data__[key];
-    }
-    /**
-     * Gets the hash value for `key`.
-     *
-     * @private
-     * @name get
-     * @memberOf Hash
-     * @param {string} key The key of the value to get.
-     * @returns {*} Returns the entry value.
-     */
-
-
-    function hashGet(key) {
-      var data = this.__data__;
-
-      if (nativeCreate) {
-        var result = data[key];
-        return result === HASH_UNDEFINED ? undefined : result;
-      }
-
-      return hasOwnProperty.call(data, key) ? data[key] : undefined;
-    }
-    /**
-     * Checks if a hash value for `key` exists.
-     *
-     * @private
-     * @name has
-     * @memberOf Hash
-     * @param {string} key The key of the entry to check.
-     * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
-     */
-
-
-    function hashHas(key) {
-      var data = this.__data__;
-      return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);
-    }
-    /**
-     * Sets the hash `key` to `value`.
-     *
-     * @private
-     * @name set
-     * @memberOf Hash
-     * @param {string} key The key of the value to set.
-     * @param {*} value The value to set.
-     * @returns {Object} Returns the hash instance.
-     */
-
-
-    function hashSet(key, value) {
-      var data = this.__data__;
-      data[key] = nativeCreate && value === undefined ? HASH_UNDEFINED : value;
-      return this;
-    } // Add methods to `Hash`.
-
-
-    Hash.prototype.clear = hashClear;
-    Hash.prototype['delete'] = hashDelete;
-    Hash.prototype.get = hashGet;
-    Hash.prototype.has = hashHas;
-    Hash.prototype.set = hashSet;
-    /**
-     * Creates an list cache object.
-     *
-     * @private
-     * @constructor
-     * @param {Array} [entries] The key-value pairs to cache.
-     */
-
-    function ListCache(entries) {
-      var index = -1,
-          length = entries ? entries.length : 0;
-      this.clear();
-
-      while (++index < length) {
-        var entry = entries[index];
-        this.set(entry[0], entry[1]);
-      }
-    }
-    /**
-     * Removes all key-value entries from the list cache.
-     *
-     * @private
-     * @name clear
-     * @memberOf ListCache
-     */
-
-
-    function listCacheClear() {
-      this.__data__ = [];
-    }
-    /**
-     * Removes `key` and its value from the list cache.
-     *
-     * @private
-     * @name delete
-     * @memberOf ListCache
-     * @param {string} key The key of the value to remove.
-     * @returns {boolean} Returns `true` if the entry was removed, else `false`.
-     */
-
-
-    function listCacheDelete(key) {
-      var data = this.__data__,
-          index = assocIndexOf(data, key);
-
-      if (index < 0) {
-        return false;
-      }
-
-      var lastIndex = data.length - 1;
-
-      if (index == lastIndex) {
-        data.pop();
+      if (mode[5] === "L") {
+        restOfStringInFront = str.slice(0, found);
       } else {
-        splice.call(data, index, 1);
-      }
-
-      return true;
-    }
-    /**
-     * Gets the list cache value for `key`.
-     *
-     * @private
-     * @name get
-     * @memberOf ListCache
-     * @param {string} key The key of the value to get.
-     * @returns {*} Returns the entry value.
-     */
-
-
-    function listCacheGet(key) {
-      var data = this.__data__,
-          index = assocIndexOf(data, key);
-      return index < 0 ? undefined : data[index][1];
-    }
-    /**
-     * Checks if a list cache value for `key` exists.
-     *
-     * @private
-     * @name has
-     * @memberOf ListCache
-     * @param {string} key The key of the entry to check.
-     * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
-     */
-
-
-    function listCacheHas(key) {
-      return assocIndexOf(this.__data__, key) > -1;
-    }
-    /**
-     * Sets the list cache `key` to `value`.
-     *
-     * @private
-     * @name set
-     * @memberOf ListCache
-     * @param {string} key The key of the value to set.
-     * @param {*} value The value to set.
-     * @returns {Object} Returns the list cache instance.
-     */
-
-
-    function listCacheSet(key, value) {
-      var data = this.__data__,
-          index = assocIndexOf(data, key);
-
-      if (index < 0) {
-        data.push([key, value]);
-      } else {
-        data[index][1] = value;
-      }
-
-      return this;
-    } // Add methods to `ListCache`.
-
-
-    ListCache.prototype.clear = listCacheClear;
-    ListCache.prototype['delete'] = listCacheDelete;
-    ListCache.prototype.get = listCacheGet;
-    ListCache.prototype.has = listCacheHas;
-    ListCache.prototype.set = listCacheSet;
-    /**
-     * Creates a map cache object to store key-value pairs.
-     *
-     * @private
-     * @constructor
-     * @param {Array} [entries] The key-value pairs to cache.
-     */
-
-    function MapCache(entries) {
-      var index = -1,
-          length = entries ? entries.length : 0;
-      this.clear();
-
-      while (++index < length) {
-        var entry = entries[index];
-        this.set(entry[0], entry[1]);
+        restOfStringInFront = str.slice(indexOfTheCharacterInFront);
       }
     }
-    /**
-     * Removes all key-value entries from the map.
-     *
-     * @private
-     * @name clear
-     * @memberOf MapCache
-     */
 
-
-    function mapCacheClear() {
-      this.__data__ = {
-        'hash': new Hash(),
-        'map': new (Map || ListCache)(),
-        'string': new Hash()
-      };
+    if (indexOfTheCharacterInFront < 0) {
+      indexOfTheCharacterInFront = undefined;
     }
-    /**
-     * Removes `key` and its value from the map.
-     *
-     * @private
-     * @name delete
-     * @memberOf MapCache
-     * @param {string} key The key of the value to remove.
-     * @returns {boolean} Returns `true` if the entry was removed, else `false`.
-     */
 
-
-    function mapCacheDelete(key) {
-      return getMapData(this, key)['delete'](key);
+    if (str[indexOfTheCharacterInFront]) {
+      fullCharacterInFront = str[indexOfTheCharacterInFront];
     }
-    /**
-     * Gets the map value for `key`.
-     *
-     * @private
-     * @name get
-     * @memberOf MapCache
-     * @param {string} key The key of the value to get.
-     * @returns {*} Returns the entry value.
-     */
 
-
-    function mapCacheGet(key) {
-      return getMapData(this, key).get(key);
+    if (Number.isInteger(found) && (opts.cb ? opts.cb(fullCharacterInFront, restOfStringInFront, indexOfTheCharacterInFront) : true)) {
+      return whatToMatchVal;
     }
-    /**
-     * Checks if a map value for `key` exists.
-     *
-     * @private
-     * @name has
-     * @memberOf MapCache
-     * @param {string} key The key of the entry to check.
-     * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
-     */
+  }
+
+  return false;
+} // External API functions
 
 
-    function mapCacheHas(key) {
-      return getMapData(this, key).has(key);
-    }
-    /**
-     * Sets the map `key` to `value`.
-     *
-     * @private
-     * @name set
-     * @memberOf MapCache
-     * @param {string} key The key of the value to set.
-     * @param {*} value The value to set.
-     * @returns {Object} Returns the map cache instance.
-     */
+function matchLeftIncl(str, position, whatToMatch, opts) {
+  return main("matchLeftIncl", str, position, whatToMatch, opts);
+}
+
+function matchLeft(str, position, whatToMatch, opts) {
+  return main("matchLeft", str, position, whatToMatch, opts);
+}
+
+function matchRightIncl(str, position, whatToMatch, opts) {
+  return main("matchRightIncl", str, position, whatToMatch, opts);
+}
+
+function matchRight(str, position, whatToMatch, opts) {
+  return main("matchRight", str, position, whatToMatch, opts);
+}
+
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+function createCommonjsModule(fn) {
+  var module = { exports: {} };
+	return fn(module, module.exports), module.exports;
+}
+
+/**
+ * lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+var lodash_clonedeep = createCommonjsModule(function (module, exports) {
+  /** Used as the size to enable large array optimizations. */
+  var LARGE_ARRAY_SIZE = 200;
+  /** Used to stand-in for `undefined` hash values. */
+
+  var HASH_UNDEFINED = '__lodash_hash_undefined__';
+  /** Used as references for various `Number` constants. */
+
+  var MAX_SAFE_INTEGER = 9007199254740991;
+  /** `Object#toString` result references. */
+
+  var argsTag = '[object Arguments]',
+      arrayTag = '[object Array]',
+      boolTag = '[object Boolean]',
+      dateTag = '[object Date]',
+      errorTag = '[object Error]',
+      funcTag = '[object Function]',
+      genTag = '[object GeneratorFunction]',
+      mapTag = '[object Map]',
+      numberTag = '[object Number]',
+      objectTag = '[object Object]',
+      promiseTag = '[object Promise]',
+      regexpTag = '[object RegExp]',
+      setTag = '[object Set]',
+      stringTag = '[object String]',
+      symbolTag = '[object Symbol]',
+      weakMapTag = '[object WeakMap]';
+  var arrayBufferTag = '[object ArrayBuffer]',
+      dataViewTag = '[object DataView]',
+      float32Tag = '[object Float32Array]',
+      float64Tag = '[object Float64Array]',
+      int8Tag = '[object Int8Array]',
+      int16Tag = '[object Int16Array]',
+      int32Tag = '[object Int32Array]',
+      uint8Tag = '[object Uint8Array]',
+      uint8ClampedTag = '[object Uint8ClampedArray]',
+      uint16Tag = '[object Uint16Array]',
+      uint32Tag = '[object Uint32Array]';
+  /**
+   * Used to match `RegExp`
+   * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
+   */
+
+  var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
+  /** Used to match `RegExp` flags from their coerced string values. */
+
+  var reFlags = /\w*$/;
+  /** Used to detect host constructors (Safari). */
+
+  var reIsHostCtor = /^\[object .+?Constructor\]$/;
+  /** Used to detect unsigned integer values. */
+
+  var reIsUint = /^(?:0|[1-9]\d*)$/;
+  /** Used to identify `toStringTag` values supported by `_.clone`. */
+
+  var cloneableTags = {};
+  cloneableTags[argsTag] = cloneableTags[arrayTag] = cloneableTags[arrayBufferTag] = cloneableTags[dataViewTag] = cloneableTags[boolTag] = cloneableTags[dateTag] = cloneableTags[float32Tag] = cloneableTags[float64Tag] = cloneableTags[int8Tag] = cloneableTags[int16Tag] = cloneableTags[int32Tag] = cloneableTags[mapTag] = cloneableTags[numberTag] = cloneableTags[objectTag] = cloneableTags[regexpTag] = cloneableTags[setTag] = cloneableTags[stringTag] = cloneableTags[symbolTag] = cloneableTags[uint8Tag] = cloneableTags[uint8ClampedTag] = cloneableTags[uint16Tag] = cloneableTags[uint32Tag] = true;
+  cloneableTags[errorTag] = cloneableTags[funcTag] = cloneableTags[weakMapTag] = false;
+  /** Detect free variable `global` from Node.js. */
+
+  var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+  /** Detect free variable `self`. */
+
+  var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+  /** Used as a reference to the global object. */
+
+  var root = freeGlobal || freeSelf || Function('return this')();
+  /** Detect free variable `exports`. */
+
+  var freeExports =  exports && !exports.nodeType && exports;
+  /** Detect free variable `module`. */
+
+  var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;
+  /** Detect the popular CommonJS extension `module.exports`. */
+
+  var moduleExports = freeModule && freeModule.exports === freeExports;
+  /**
+   * Adds the key-value `pair` to `map`.
+   *
+   * @private
+   * @param {Object} map The map to modify.
+   * @param {Array} pair The key-value pair to add.
+   * @returns {Object} Returns `map`.
+   */
+
+  function addMapEntry(map, pair) {
+    // Don't return `map.set` because it's not chainable in IE 11.
+    map.set(pair[0], pair[1]);
+    return map;
+  }
+  /**
+   * Adds `value` to `set`.
+   *
+   * @private
+   * @param {Object} set The set to modify.
+   * @param {*} value The value to add.
+   * @returns {Object} Returns `set`.
+   */
 
 
-    function mapCacheSet(key, value) {
-      getMapData(this, key).set(key, value);
-      return this;
-    } // Add methods to `MapCache`.
+  function addSetEntry(set, value) {
+    // Don't return `set.add` because it's not chainable in IE 11.
+    set.add(value);
+    return set;
+  }
+  /**
+   * A specialized version of `_.forEach` for arrays without support for
+   * iteratee shorthands.
+   *
+   * @private
+   * @param {Array} [array] The array to iterate over.
+   * @param {Function} iteratee The function invoked per iteration.
+   * @returns {Array} Returns `array`.
+   */
 
 
-    MapCache.prototype.clear = mapCacheClear;
-    MapCache.prototype['delete'] = mapCacheDelete;
-    MapCache.prototype.get = mapCacheGet;
-    MapCache.prototype.has = mapCacheHas;
-    MapCache.prototype.set = mapCacheSet;
-    /**
-     * Creates a stack cache object to store key-value pairs.
-     *
-     * @private
-     * @constructor
-     * @param {Array} [entries] The key-value pairs to cache.
-     */
+  function arrayEach(array, iteratee) {
+    var index = -1,
+        length = array ? array.length : 0;
 
-    function Stack(entries) {
-      this.__data__ = new ListCache(entries);
-    }
-    /**
-     * Removes all key-value entries from the stack.
-     *
-     * @private
-     * @name clear
-     * @memberOf Stack
-     */
-
-
-    function stackClear() {
-      this.__data__ = new ListCache();
-    }
-    /**
-     * Removes `key` and its value from the stack.
-     *
-     * @private
-     * @name delete
-     * @memberOf Stack
-     * @param {string} key The key of the value to remove.
-     * @returns {boolean} Returns `true` if the entry was removed, else `false`.
-     */
-
-
-    function stackDelete(key) {
-      return this.__data__['delete'](key);
-    }
-    /**
-     * Gets the stack value for `key`.
-     *
-     * @private
-     * @name get
-     * @memberOf Stack
-     * @param {string} key The key of the value to get.
-     * @returns {*} Returns the entry value.
-     */
-
-
-    function stackGet(key) {
-      return this.__data__.get(key);
-    }
-    /**
-     * Checks if a stack value for `key` exists.
-     *
-     * @private
-     * @name has
-     * @memberOf Stack
-     * @param {string} key The key of the entry to check.
-     * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
-     */
-
-
-    function stackHas(key) {
-      return this.__data__.has(key);
-    }
-    /**
-     * Sets the stack `key` to `value`.
-     *
-     * @private
-     * @name set
-     * @memberOf Stack
-     * @param {string} key The key of the value to set.
-     * @param {*} value The value to set.
-     * @returns {Object} Returns the stack cache instance.
-     */
-
-
-    function stackSet(key, value) {
-      var cache = this.__data__;
-
-      if (cache instanceof ListCache) {
-        var pairs = cache.__data__;
-
-        if (!Map || pairs.length < LARGE_ARRAY_SIZE - 1) {
-          pairs.push([key, value]);
-          return this;
-        }
-
-        cache = this.__data__ = new MapCache(pairs);
-      }
-
-      cache.set(key, value);
-      return this;
-    } // Add methods to `Stack`.
-
-
-    Stack.prototype.clear = stackClear;
-    Stack.prototype['delete'] = stackDelete;
-    Stack.prototype.get = stackGet;
-    Stack.prototype.has = stackHas;
-    Stack.prototype.set = stackSet;
-    /**
-     * Creates an array of the enumerable property names of the array-like `value`.
-     *
-     * @private
-     * @param {*} value The value to query.
-     * @param {boolean} inherited Specify returning inherited property names.
-     * @returns {Array} Returns the array of property names.
-     */
-
-    function arrayLikeKeys(value, inherited) {
-      // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
-      // Safari 9 makes `arguments.length` enumerable in strict mode.
-      var result = isArray(value) || isArguments(value) ? baseTimes(value.length, String) : [];
-      var length = result.length,
-          skipIndexes = !!length;
-
-      for (var key in value) {
-        if ((inherited || hasOwnProperty.call(value, key)) && !(skipIndexes && (key == 'length' || isIndex(key, length)))) {
-          result.push(key);
-        }
-      }
-
-      return result;
-    }
-    /**
-     * Assigns `value` to `key` of `object` if the existing value is not equivalent
-     * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
-     * for equality comparisons.
-     *
-     * @private
-     * @param {Object} object The object to modify.
-     * @param {string} key The key of the property to assign.
-     * @param {*} value The value to assign.
-     */
-
-
-    function assignValue(object, key, value) {
-      var objValue = object[key];
-
-      if (!(hasOwnProperty.call(object, key) && eq(objValue, value)) || value === undefined && !(key in object)) {
-        object[key] = value;
+    while (++index < length) {
+      if (iteratee(array[index], index, array) === false) {
+        break;
       }
     }
-    /**
-     * Gets the index at which the `key` is found in `array` of key-value pairs.
-     *
-     * @private
-     * @param {Array} array The array to inspect.
-     * @param {*} key The key to search for.
-     * @returns {number} Returns the index of the matched value, else `-1`.
-     */
 
-
-    function assocIndexOf(array, key) {
-      var length = array.length;
-
-      while (length--) {
-        if (eq(array[length][0], key)) {
-          return length;
-        }
-      }
-
-      return -1;
-    }
-    /**
-     * The base implementation of `_.assign` without support for multiple sources
-     * or `customizer` functions.
-     *
-     * @private
-     * @param {Object} object The destination object.
-     * @param {Object} source The source object.
-     * @returns {Object} Returns `object`.
-     */
-
-
-    function baseAssign(object, source) {
-      return object && copyObject(source, keys(source), object);
-    }
-    /**
-     * The base implementation of `_.clone` and `_.cloneDeep` which tracks
-     * traversed objects.
-     *
-     * @private
-     * @param {*} value The value to clone.
-     * @param {boolean} [isDeep] Specify a deep clone.
-     * @param {boolean} [isFull] Specify a clone including symbols.
-     * @param {Function} [customizer] The function to customize cloning.
-     * @param {string} [key] The key of `value`.
-     * @param {Object} [object] The parent object of `value`.
-     * @param {Object} [stack] Tracks traversed objects and their clone counterparts.
-     * @returns {*} Returns the cloned value.
-     */
-
-
-    function baseClone(value, isDeep, isFull, customizer, key, object, stack) {
-      var result;
-
-      if (customizer) {
-        result = object ? customizer(value, key, object, stack) : customizer(value);
-      }
-
-      if (result !== undefined) {
-        return result;
-      }
-
-      if (!isObject(value)) {
-        return value;
-      }
-
-      var isArr = isArray(value);
-
-      if (isArr) {
-        result = initCloneArray(value);
-
-        if (!isDeep) {
-          return copyArray(value, result);
-        }
-      } else {
-        var tag = getTag(value),
-            isFunc = tag == funcTag || tag == genTag;
-
-        if (isBuffer(value)) {
-          return cloneBuffer(value, isDeep);
-        }
-
-        if (tag == objectTag || tag == argsTag || isFunc && !object) {
-          if (isHostObject(value)) {
-            return object ? value : {};
-          }
-
-          result = initCloneObject(isFunc ? {} : value);
-
-          if (!isDeep) {
-            return copySymbols(value, baseAssign(result, value));
-          }
-        } else {
-          if (!cloneableTags[tag]) {
-            return object ? value : {};
-          }
-
-          result = initCloneByTag(value, tag, baseClone, isDeep);
-        }
-      } // Check for circular references and return its corresponding clone.
-
-
-      stack || (stack = new Stack());
-      var stacked = stack.get(value);
-
-      if (stacked) {
-        return stacked;
-      }
-
-      stack.set(value, result);
-
-      if (!isArr) {
-        var props = isFull ? getAllKeys(value) : keys(value);
-      }
-
-      arrayEach(props || value, function (subValue, key) {
-        if (props) {
-          key = subValue;
-          subValue = value[key];
-        } // Recursively populate clone (susceptible to call stack limits).
-
-
-        assignValue(result, key, baseClone(subValue, isDeep, isFull, customizer, key, value, stack));
-      });
-      return result;
-    }
-    /**
-     * The base implementation of `_.create` without support for assigning
-     * properties to the created object.
-     *
-     * @private
-     * @param {Object} prototype The object to inherit from.
-     * @returns {Object} Returns the new object.
-     */
-
-
-    function baseCreate(proto) {
-      return isObject(proto) ? objectCreate(proto) : {};
-    }
-    /**
-     * The base implementation of `getAllKeys` and `getAllKeysIn` which uses
-     * `keysFunc` and `symbolsFunc` to get the enumerable property names and
-     * symbols of `object`.
-     *
-     * @private
-     * @param {Object} object The object to query.
-     * @param {Function} keysFunc The function to get the keys of `object`.
-     * @param {Function} symbolsFunc The function to get the symbols of `object`.
-     * @returns {Array} Returns the array of property names and symbols.
-     */
-
-
-    function baseGetAllKeys(object, keysFunc, symbolsFunc) {
-      var result = keysFunc(object);
-      return isArray(object) ? result : arrayPush(result, symbolsFunc(object));
-    }
-    /**
-     * The base implementation of `getTag`.
-     *
-     * @private
-     * @param {*} value The value to query.
-     * @returns {string} Returns the `toStringTag`.
-     */
-
-
-    function baseGetTag(value) {
-      return objectToString.call(value);
-    }
-    /**
-     * The base implementation of `_.isNative` without bad shim checks.
-     *
-     * @private
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a native function,
-     *  else `false`.
-     */
-
-
-    function baseIsNative(value) {
-      if (!isObject(value) || isMasked(value)) {
-        return false;
-      }
-
-      var pattern = isFunction(value) || isHostObject(value) ? reIsNative : reIsHostCtor;
-      return pattern.test(toSource(value));
-    }
-    /**
-     * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
-     *
-     * @private
-     * @param {Object} object The object to query.
-     * @returns {Array} Returns the array of property names.
-     */
-
-
-    function baseKeys(object) {
-      if (!isPrototype(object)) {
-        return nativeKeys(object);
-      }
-
-      var result = [];
-
-      for (var key in Object(object)) {
-        if (hasOwnProperty.call(object, key) && key != 'constructor') {
-          result.push(key);
-        }
-      }
-
-      return result;
-    }
-    /**
-     * Creates a clone of  `buffer`.
-     *
-     * @private
-     * @param {Buffer} buffer The buffer to clone.
-     * @param {boolean} [isDeep] Specify a deep clone.
-     * @returns {Buffer} Returns the cloned buffer.
-     */
-
-
-    function cloneBuffer(buffer, isDeep) {
-      if (isDeep) {
-        return buffer.slice();
-      }
-
-      var result = new buffer.constructor(buffer.length);
-      buffer.copy(result);
-      return result;
-    }
-    /**
-     * Creates a clone of `arrayBuffer`.
-     *
-     * @private
-     * @param {ArrayBuffer} arrayBuffer The array buffer to clone.
-     * @returns {ArrayBuffer} Returns the cloned array buffer.
-     */
-
-
-    function cloneArrayBuffer(arrayBuffer) {
-      var result = new arrayBuffer.constructor(arrayBuffer.byteLength);
-      new Uint8Array(result).set(new Uint8Array(arrayBuffer));
-      return result;
-    }
-    /**
-     * Creates a clone of `dataView`.
-     *
-     * @private
-     * @param {Object} dataView The data view to clone.
-     * @param {boolean} [isDeep] Specify a deep clone.
-     * @returns {Object} Returns the cloned data view.
-     */
-
-
-    function cloneDataView(dataView, isDeep) {
-      var buffer = isDeep ? cloneArrayBuffer(dataView.buffer) : dataView.buffer;
-      return new dataView.constructor(buffer, dataView.byteOffset, dataView.byteLength);
-    }
-    /**
-     * Creates a clone of `map`.
-     *
-     * @private
-     * @param {Object} map The map to clone.
-     * @param {Function} cloneFunc The function to clone values.
-     * @param {boolean} [isDeep] Specify a deep clone.
-     * @returns {Object} Returns the cloned map.
-     */
-
-
-    function cloneMap(map, isDeep, cloneFunc) {
-      var array = isDeep ? cloneFunc(mapToArray(map), true) : mapToArray(map);
-      return arrayReduce(array, addMapEntry, new map.constructor());
-    }
-    /**
-     * Creates a clone of `regexp`.
-     *
-     * @private
-     * @param {Object} regexp The regexp to clone.
-     * @returns {Object} Returns the cloned regexp.
-     */
-
-
-    function cloneRegExp(regexp) {
-      var result = new regexp.constructor(regexp.source, reFlags.exec(regexp));
-      result.lastIndex = regexp.lastIndex;
-      return result;
-    }
-    /**
-     * Creates a clone of `set`.
-     *
-     * @private
-     * @param {Object} set The set to clone.
-     * @param {Function} cloneFunc The function to clone values.
-     * @param {boolean} [isDeep] Specify a deep clone.
-     * @returns {Object} Returns the cloned set.
-     */
-
-
-    function cloneSet(set, isDeep, cloneFunc) {
-      var array = isDeep ? cloneFunc(setToArray(set), true) : setToArray(set);
-      return arrayReduce(array, addSetEntry, new set.constructor());
-    }
-    /**
-     * Creates a clone of the `symbol` object.
-     *
-     * @private
-     * @param {Object} symbol The symbol object to clone.
-     * @returns {Object} Returns the cloned symbol object.
-     */
-
-
-    function cloneSymbol(symbol) {
-      return symbolValueOf ? Object(symbolValueOf.call(symbol)) : {};
-    }
-    /**
-     * Creates a clone of `typedArray`.
-     *
-     * @private
-     * @param {Object} typedArray The typed array to clone.
-     * @param {boolean} [isDeep] Specify a deep clone.
-     * @returns {Object} Returns the cloned typed array.
-     */
-
-
-    function cloneTypedArray(typedArray, isDeep) {
-      var buffer = isDeep ? cloneArrayBuffer(typedArray.buffer) : typedArray.buffer;
-      return new typedArray.constructor(buffer, typedArray.byteOffset, typedArray.length);
-    }
-    /**
-     * Copies the values of `source` to `array`.
-     *
-     * @private
-     * @param {Array} source The array to copy values from.
-     * @param {Array} [array=[]] The array to copy values to.
-     * @returns {Array} Returns `array`.
-     */
-
-
-    function copyArray(source, array) {
-      var index = -1,
-          length = source.length;
-      array || (array = Array(length));
-
-      while (++index < length) {
-        array[index] = source[index];
-      }
-
-      return array;
-    }
-    /**
-     * Copies properties of `source` to `object`.
-     *
-     * @private
-     * @param {Object} source The object to copy properties from.
-     * @param {Array} props The property identifiers to copy.
-     * @param {Object} [object={}] The object to copy properties to.
-     * @param {Function} [customizer] The function to customize copied values.
-     * @returns {Object} Returns `object`.
-     */
-
-
-    function copyObject(source, props, object, customizer) {
-      object || (object = {});
-      var index = -1,
-          length = props.length;
-
-      while (++index < length) {
-        var key = props[index];
-        var newValue = customizer ? customizer(object[key], source[key], key, object, source) : undefined;
-        assignValue(object, key, newValue === undefined ? source[key] : newValue);
-      }
-
-      return object;
-    }
-    /**
-     * Copies own symbol properties of `source` to `object`.
-     *
-     * @private
-     * @param {Object} source The object to copy symbols from.
-     * @param {Object} [object={}] The object to copy symbols to.
-     * @returns {Object} Returns `object`.
-     */
-
-
-    function copySymbols(source, object) {
-      return copyObject(source, getSymbols(source), object);
-    }
-    /**
-     * Creates an array of own enumerable property names and symbols of `object`.
-     *
-     * @private
-     * @param {Object} object The object to query.
-     * @returns {Array} Returns the array of property names and symbols.
-     */
-
-
-    function getAllKeys(object) {
-      return baseGetAllKeys(object, keys, getSymbols);
-    }
-    /**
-     * Gets the data for `map`.
-     *
-     * @private
-     * @param {Object} map The map to query.
-     * @param {string} key The reference key.
-     * @returns {*} Returns the map data.
-     */
-
-
-    function getMapData(map, key) {
-      var data = map.__data__;
-      return isKeyable(key) ? data[typeof key == 'string' ? 'string' : 'hash'] : data.map;
-    }
-    /**
-     * Gets the native function at `key` of `object`.
-     *
-     * @private
-     * @param {Object} object The object to query.
-     * @param {string} key The key of the method to get.
-     * @returns {*} Returns the function if it's native, else `undefined`.
-     */
-
-
-    function getNative(object, key) {
-      var value = getValue(object, key);
-      return baseIsNative(value) ? value : undefined;
-    }
-    /**
-     * Creates an array of the own enumerable symbol properties of `object`.
-     *
-     * @private
-     * @param {Object} object The object to query.
-     * @returns {Array} Returns the array of symbols.
-     */
-
-
-    var getSymbols = nativeGetSymbols ? overArg(nativeGetSymbols, Object) : stubArray;
-    /**
-     * Gets the `toStringTag` of `value`.
-     *
-     * @private
-     * @param {*} value The value to query.
-     * @returns {string} Returns the `toStringTag`.
-     */
-
-    var getTag = baseGetTag; // Fallback for data views, maps, sets, and weak maps in IE 11,
-    // for data views in Edge < 14, and promises in Node.js.
-
-    if (DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag || Map && getTag(new Map()) != mapTag || Promise && getTag(Promise.resolve()) != promiseTag || Set && getTag(new Set()) != setTag || WeakMap && getTag(new WeakMap()) != weakMapTag) {
-      getTag = function getTag(value) {
-        var result = objectToString.call(value),
-            Ctor = result == objectTag ? value.constructor : undefined,
-            ctorString = Ctor ? toSource(Ctor) : undefined;
-
-        if (ctorString) {
-          switch (ctorString) {
-            case dataViewCtorString:
-              return dataViewTag;
-
-            case mapCtorString:
-              return mapTag;
-
-            case promiseCtorString:
-              return promiseTag;
-
-            case setCtorString:
-              return setTag;
-
-            case weakMapCtorString:
-              return weakMapTag;
-          }
-        }
-
-        return result;
-      };
-    }
-    /**
-     * Initializes an array clone.
-     *
-     * @private
-     * @param {Array} array The array to clone.
-     * @returns {Array} Returns the initialized clone.
-     */
-
-
-    function initCloneArray(array) {
-      var length = array.length,
-          result = array.constructor(length); // Add properties assigned by `RegExp#exec`.
-
-      if (length && typeof array[0] == 'string' && hasOwnProperty.call(array, 'index')) {
-        result.index = array.index;
-        result.input = array.input;
-      }
-
-      return result;
-    }
-    /**
-     * Initializes an object clone.
-     *
-     * @private
-     * @param {Object} object The object to clone.
-     * @returns {Object} Returns the initialized clone.
-     */
-
-
-    function initCloneObject(object) {
-      return typeof object.constructor == 'function' && !isPrototype(object) ? baseCreate(getPrototype(object)) : {};
-    }
-    /**
-     * Initializes an object clone based on its `toStringTag`.
-     *
-     * **Note:** This function only supports cloning values with tags of
-     * `Boolean`, `Date`, `Error`, `Number`, `RegExp`, or `String`.
-     *
-     * @private
-     * @param {Object} object The object to clone.
-     * @param {string} tag The `toStringTag` of the object to clone.
-     * @param {Function} cloneFunc The function to clone values.
-     * @param {boolean} [isDeep] Specify a deep clone.
-     * @returns {Object} Returns the initialized clone.
-     */
-
-
-    function initCloneByTag(object, tag, cloneFunc, isDeep) {
-      var Ctor = object.constructor;
-
-      switch (tag) {
-        case arrayBufferTag:
-          return cloneArrayBuffer(object);
-
-        case boolTag:
-        case dateTag:
-          return new Ctor(+object);
-
-        case dataViewTag:
-          return cloneDataView(object, isDeep);
-
-        case float32Tag:
-        case float64Tag:
-        case int8Tag:
-        case int16Tag:
-        case int32Tag:
-        case uint8Tag:
-        case uint8ClampedTag:
-        case uint16Tag:
-        case uint32Tag:
-          return cloneTypedArray(object, isDeep);
-
-        case mapTag:
-          return cloneMap(object, isDeep, cloneFunc);
-
-        case numberTag:
-        case stringTag:
-          return new Ctor(object);
-
-        case regexpTag:
-          return cloneRegExp(object);
-
-        case setTag:
-          return cloneSet(object, isDeep, cloneFunc);
-
-        case symbolTag:
-          return cloneSymbol(object);
-      }
-    }
-    /**
-     * Checks if `value` is a valid array-like index.
-     *
-     * @private
-     * @param {*} value The value to check.
-     * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
-     * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
-     */
-
-
-    function isIndex(value, length) {
-      length = length == null ? MAX_SAFE_INTEGER : length;
-      return !!length && (typeof value == 'number' || reIsUint.test(value)) && value > -1 && value % 1 == 0 && value < length;
-    }
-    /**
-     * Checks if `value` is suitable for use as unique object key.
-     *
-     * @private
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is suitable, else `false`.
-     */
-
-
-    function isKeyable(value) {
-      var type = _typeof(value);
-
-      return type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean' ? value !== '__proto__' : value === null;
-    }
-    /**
-     * Checks if `func` has its source masked.
-     *
-     * @private
-     * @param {Function} func The function to check.
-     * @returns {boolean} Returns `true` if `func` is masked, else `false`.
-     */
-
-
-    function isMasked(func) {
-      return !!maskSrcKey && maskSrcKey in func;
-    }
-    /**
-     * Checks if `value` is likely a prototype object.
-     *
-     * @private
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
-     */
-
-
-    function isPrototype(value) {
-      var Ctor = value && value.constructor,
-          proto = typeof Ctor == 'function' && Ctor.prototype || objectProto;
-      return value === proto;
-    }
-    /**
-     * Converts `func` to its source code.
-     *
-     * @private
-     * @param {Function} func The function to process.
-     * @returns {string} Returns the source code.
-     */
-
-
-    function toSource(func) {
-      if (func != null) {
-        try {
-          return funcToString.call(func);
-        } catch (e) {}
-
-        try {
-          return func + '';
-        } catch (e) {}
-      }
-
-      return '';
-    }
-    /**
-     * This method is like `_.clone` except that it recursively clones `value`.
-     *
-     * @static
-     * @memberOf _
-     * @since 1.0.0
-     * @category Lang
-     * @param {*} value The value to recursively clone.
-     * @returns {*} Returns the deep cloned value.
-     * @see _.clone
-     * @example
-     *
-     * var objects = [{ 'a': 1 }, { 'b': 2 }];
-     *
-     * var deep = _.cloneDeep(objects);
-     * console.log(deep[0] === objects[0]);
-     * // => false
-     */
-
-
-    function cloneDeep(value) {
-      return baseClone(value, true, true);
-    }
-    /**
-     * Performs a
-     * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
-     * comparison between two values to determine if they are equivalent.
-     *
-     * @static
-     * @memberOf _
-     * @since 4.0.0
-     * @category Lang
-     * @param {*} value The value to compare.
-     * @param {*} other The other value to compare.
-     * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
-     * @example
-     *
-     * var object = { 'a': 1 };
-     * var other = { 'a': 1 };
-     *
-     * _.eq(object, object);
-     * // => true
-     *
-     * _.eq(object, other);
-     * // => false
-     *
-     * _.eq('a', 'a');
-     * // => true
-     *
-     * _.eq('a', Object('a'));
-     * // => false
-     *
-     * _.eq(NaN, NaN);
-     * // => true
-     */
-
-
-    function eq(value, other) {
-      return value === other || value !== value && other !== other;
-    }
-    /**
-     * Checks if `value` is likely an `arguments` object.
-     *
-     * @static
-     * @memberOf _
-     * @since 0.1.0
-     * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is an `arguments` object,
-     *  else `false`.
-     * @example
-     *
-     * _.isArguments(function() { return arguments; }());
-     * // => true
-     *
-     * _.isArguments([1, 2, 3]);
-     * // => false
-     */
-
-
-    function isArguments(value) {
-      // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
-      return isArrayLikeObject(value) && hasOwnProperty.call(value, 'callee') && (!propertyIsEnumerable.call(value, 'callee') || objectToString.call(value) == argsTag);
-    }
-    /**
-     * Checks if `value` is classified as an `Array` object.
-     *
-     * @static
-     * @memberOf _
-     * @since 0.1.0
-     * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is an array, else `false`.
-     * @example
-     *
-     * _.isArray([1, 2, 3]);
-     * // => true
-     *
-     * _.isArray(document.body.children);
-     * // => false
-     *
-     * _.isArray('abc');
-     * // => false
-     *
-     * _.isArray(_.noop);
-     * // => false
-     */
-
-
-    var isArray = Array.isArray;
-    /**
-     * Checks if `value` is array-like. A value is considered array-like if it's
-     * not a function and has a `value.length` that's an integer greater than or
-     * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
-     *
-     * @static
-     * @memberOf _
-     * @since 4.0.0
-     * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
-     * @example
-     *
-     * _.isArrayLike([1, 2, 3]);
-     * // => true
-     *
-     * _.isArrayLike(document.body.children);
-     * // => true
-     *
-     * _.isArrayLike('abc');
-     * // => true
-     *
-     * _.isArrayLike(_.noop);
-     * // => false
-     */
-
-    function isArrayLike(value) {
-      return value != null && isLength(value.length) && !isFunction(value);
-    }
-    /**
-     * This method is like `_.isArrayLike` except that it also checks if `value`
-     * is an object.
-     *
-     * @static
-     * @memberOf _
-     * @since 4.0.0
-     * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is an array-like object,
-     *  else `false`.
-     * @example
-     *
-     * _.isArrayLikeObject([1, 2, 3]);
-     * // => true
-     *
-     * _.isArrayLikeObject(document.body.children);
-     * // => true
-     *
-     * _.isArrayLikeObject('abc');
-     * // => false
-     *
-     * _.isArrayLikeObject(_.noop);
-     * // => false
-     */
-
-
-    function isArrayLikeObject(value) {
-      return isObjectLike(value) && isArrayLike(value);
-    }
-    /**
-     * Checks if `value` is a buffer.
-     *
-     * @static
-     * @memberOf _
-     * @since 4.3.0
-     * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a buffer, else `false`.
-     * @example
-     *
-     * _.isBuffer(new Buffer(2));
-     * // => true
-     *
-     * _.isBuffer(new Uint8Array(2));
-     * // => false
-     */
-
-
-    var isBuffer = nativeIsBuffer || stubFalse;
-    /**
-     * Checks if `value` is classified as a `Function` object.
-     *
-     * @static
-     * @memberOf _
-     * @since 0.1.0
-     * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a function, else `false`.
-     * @example
-     *
-     * _.isFunction(_);
-     * // => true
-     *
-     * _.isFunction(/abc/);
-     * // => false
-     */
-
-    function isFunction(value) {
-      // The use of `Object#toString` avoids issues with the `typeof` operator
-      // in Safari 8-9 which returns 'object' for typed array and other constructors.
-      var tag = isObject(value) ? objectToString.call(value) : '';
-      return tag == funcTag || tag == genTag;
-    }
-    /**
-     * Checks if `value` is a valid array-like length.
-     *
-     * **Note:** This method is loosely based on
-     * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
-     *
-     * @static
-     * @memberOf _
-     * @since 4.0.0
-     * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
-     * @example
-     *
-     * _.isLength(3);
-     * // => true
-     *
-     * _.isLength(Number.MIN_VALUE);
-     * // => false
-     *
-     * _.isLength(Infinity);
-     * // => false
-     *
-     * _.isLength('3');
-     * // => false
-     */
-
-
-    function isLength(value) {
-      return typeof value == 'number' && value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
-    }
-    /**
-     * Checks if `value` is the
-     * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
-     * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
-     *
-     * @static
-     * @memberOf _
-     * @since 0.1.0
-     * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is an object, else `false`.
-     * @example
-     *
-     * _.isObject({});
-     * // => true
-     *
-     * _.isObject([1, 2, 3]);
-     * // => true
-     *
-     * _.isObject(_.noop);
-     * // => true
-     *
-     * _.isObject(null);
-     * // => false
-     */
-
-
-    function isObject(value) {
-      var type = _typeof(value);
-
-      return !!value && (type == 'object' || type == 'function');
-    }
-    /**
-     * Checks if `value` is object-like. A value is object-like if it's not `null`
-     * and has a `typeof` result of "object".
-     *
-     * @static
-     * @memberOf _
-     * @since 4.0.0
-     * @category Lang
-     * @param {*} value The value to check.
-     * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
-     * @example
-     *
-     * _.isObjectLike({});
-     * // => true
-     *
-     * _.isObjectLike([1, 2, 3]);
-     * // => true
-     *
-     * _.isObjectLike(_.noop);
-     * // => false
-     *
-     * _.isObjectLike(null);
-     * // => false
-     */
-
-
-    function isObjectLike(value) {
-      return !!value && _typeof(value) == 'object';
-    }
-    /**
-     * Creates an array of the own enumerable property names of `object`.
-     *
-     * **Note:** Non-object values are coerced to objects. See the
-     * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
-     * for more details.
-     *
-     * @static
-     * @since 0.1.0
-     * @memberOf _
-     * @category Object
-     * @param {Object} object The object to query.
-     * @returns {Array} Returns the array of property names.
-     * @example
-     *
-     * function Foo() {
-     *   this.a = 1;
-     *   this.b = 2;
-     * }
-     *
-     * Foo.prototype.c = 3;
-     *
-     * _.keys(new Foo);
-     * // => ['a', 'b'] (iteration order is not guaranteed)
-     *
-     * _.keys('hi');
-     * // => ['0', '1']
-     */
-
-
-    function keys(object) {
-      return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
-    }
-    /**
-     * This method returns a new empty array.
-     *
-     * @static
-     * @memberOf _
-     * @since 4.13.0
-     * @category Util
-     * @returns {Array} Returns the new empty array.
-     * @example
-     *
-     * var arrays = _.times(2, _.stubArray);
-     *
-     * console.log(arrays);
-     * // => [[], []]
-     *
-     * console.log(arrays[0] === arrays[1]);
-     * // => false
-     */
-
-
-    function stubArray() {
-      return [];
-    }
-    /**
-     * This method returns `false`.
-     *
-     * @static
-     * @memberOf _
-     * @since 4.13.0
-     * @category Util
-     * @returns {boolean} Returns `false`.
-     * @example
-     *
-     * _.times(2, _.stubFalse);
-     * // => [false, false]
-     */
-
-
-    function stubFalse() {
-      return false;
+    return array;
+  }
+  /**
+   * Appends the elements of `values` to `array`.
+   *
+   * @private
+   * @param {Array} array The array to modify.
+   * @param {Array} values The values to append.
+   * @returns {Array} Returns `array`.
+   */
+
+
+  function arrayPush(array, values) {
+    var index = -1,
+        length = values.length,
+        offset = array.length;
+
+    while (++index < length) {
+      array[offset + index] = values[index];
     }
 
-    module.exports = cloneDeep;
-  });
+    return array;
+  }
+  /**
+   * A specialized version of `_.reduce` for arrays without support for
+   * iteratee shorthands.
+   *
+   * @private
+   * @param {Array} [array] The array to iterate over.
+   * @param {Function} iteratee The function invoked per iteration.
+   * @param {*} [accumulator] The initial value.
+   * @param {boolean} [initAccum] Specify using the first element of `array` as
+   *  the initial value.
+   * @returns {*} Returns the accumulated value.
+   */
 
+
+  function arrayReduce(array, iteratee, accumulator, initAccum) {
+    var index = -1,
+        length = array ? array.length : 0;
+
+    if (initAccum && length) {
+      accumulator = array[++index];
+    }
+
+    while (++index < length) {
+      accumulator = iteratee(accumulator, array[index], index, array);
+    }
+
+    return accumulator;
+  }
+  /**
+   * The base implementation of `_.times` without support for iteratee shorthands
+   * or max array length checks.
+   *
+   * @private
+   * @param {number} n The number of times to invoke `iteratee`.
+   * @param {Function} iteratee The function invoked per iteration.
+   * @returns {Array} Returns the array of results.
+   */
+
+
+  function baseTimes(n, iteratee) {
+    var index = -1,
+        result = Array(n);
+
+    while (++index < n) {
+      result[index] = iteratee(index);
+    }
+
+    return result;
+  }
+  /**
+   * Gets the value at `key` of `object`.
+   *
+   * @private
+   * @param {Object} [object] The object to query.
+   * @param {string} key The key of the property to get.
+   * @returns {*} Returns the property value.
+   */
+
+
+  function getValue(object, key) {
+    return object == null ? undefined : object[key];
+  }
+  /**
+   * Checks if `value` is a host object in IE < 9.
+   *
+   * @private
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
+   */
+
+
+  function isHostObject(value) {
+    // Many host objects are `Object` objects that can coerce to strings
+    // despite having improperly defined `toString` methods.
+    var result = false;
+
+    if (value != null && typeof value.toString != 'function') {
+      try {
+        result = !!(value + '');
+      } catch (e) {}
+    }
+
+    return result;
+  }
+  /**
+   * Converts `map` to its key-value pairs.
+   *
+   * @private
+   * @param {Object} map The map to convert.
+   * @returns {Array} Returns the key-value pairs.
+   */
+
+
+  function mapToArray(map) {
+    var index = -1,
+        result = Array(map.size);
+    map.forEach(function (value, key) {
+      result[++index] = [key, value];
+    });
+    return result;
+  }
+  /**
+   * Creates a unary function that invokes `func` with its argument transformed.
+   *
+   * @private
+   * @param {Function} func The function to wrap.
+   * @param {Function} transform The argument transform.
+   * @returns {Function} Returns the new function.
+   */
+
+
+  function overArg(func, transform) {
+    return function (arg) {
+      return func(transform(arg));
+    };
+  }
+  /**
+   * Converts `set` to an array of its values.
+   *
+   * @private
+   * @param {Object} set The set to convert.
+   * @returns {Array} Returns the values.
+   */
+
+
+  function setToArray(set) {
+    var index = -1,
+        result = Array(set.size);
+    set.forEach(function (value) {
+      result[++index] = value;
+    });
+    return result;
+  }
   /** Used for built-in method references. */
 
 
-  var funcProto = Function.prototype;
+  var arrayProto = Array.prototype,
+      funcProto = Function.prototype,
+      objectProto = Object.prototype;
+  /** Used to detect overreaching core-js shims. */
+
+  var coreJsData = root['__core-js_shared__'];
+  /** Used to detect methods masquerading as native. */
+
+  var maskSrcKey = function () {
+    var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
+    return uid ? 'Symbol(src)_1.' + uid : '';
+  }();
   /** Used to resolve the decompiled source of functions. */
 
+
   var funcToString = funcProto.toString;
-  /** Used to infer the `Object` constructor. */
+  /** Used to check objects for own properties. */
 
-  var objectCtorString = funcToString.call(Object);
-
-  var RAWNBSP = "\xA0";
-
-  function rightMain(_ref) {
-    var str = _ref.str,
-        idx = _ref.idx,
-        stopAtNewlines = _ref.stopAtNewlines,
-        stopAtRawNbsp = _ref.stopAtRawNbsp;
-
-    if (typeof str !== "string" || !str.length) {
-      return null;
-    }
-
-    if (!idx || typeof idx !== "number") {
-      idx = 0;
-    }
-
-    if (!str[idx + 1]) {
-      return null;
-    }
-
-    if (str[idx + 1] && (str[idx + 1].trim() || stopAtNewlines && "\n\r".includes(str[idx + 1]) || stopAtRawNbsp && str[idx + 1] === RAWNBSP)) {
-      return idx + 1;
-    }
-
-    if (str[idx + 2] && (str[idx + 2].trim() || stopAtNewlines && "\n\r".includes(str[idx + 2]) || stopAtRawNbsp && str[idx + 2] === RAWNBSP)) {
-      return idx + 2;
-    }
-
-    for (var i = idx + 1, len = str.length; i < len; i++) {
-      if (str[i].trim() || stopAtNewlines && "\n\r".includes(str[i]) || stopAtRawNbsp && str[i] === RAWNBSP) {
-        return i;
-      }
-    }
-
-    return null;
-  }
-
-  function right(str, idx) {
-    return rightMain({
-      str: str,
-      idx: idx,
-      stopAtNewlines: false,
-      stopAtRawNbsp: false
-    });
-  }
-
-  function leftMain(_ref2) {
-    var str = _ref2.str,
-        idx = _ref2.idx,
-        stopAtNewlines = _ref2.stopAtNewlines,
-        stopAtRawNbsp = _ref2.stopAtRawNbsp;
-
-    if (typeof str !== "string" || !str.length) {
-      return null;
-    }
-
-    if (!idx || typeof idx !== "number") {
-      idx = 0;
-    }
-
-    if (idx < 1) {
-      return null;
-    }
-
-    if (str[~-idx] && (str[~-idx].trim() || stopAtNewlines && "\n\r".includes(str[~-idx]) || stopAtRawNbsp && str[~-idx] === RAWNBSP)) {
-      return ~-idx;
-    }
-
-    if (str[idx - 2] && (str[idx - 2].trim() || stopAtNewlines && "\n\r".includes(str[idx - 2]) || stopAtRawNbsp && str[idx - 2] === RAWNBSP)) {
-      return idx - 2;
-    }
-
-    for (var i = idx; i--;) {
-      if (str[i] && (str[i].trim() || stopAtNewlines && "\n\r".includes(str[i]) || stopAtRawNbsp && str[i] === RAWNBSP)) {
-        return i;
-      }
-    }
-
-    return null;
-  }
-
-  function left(str, idx) {
-    return leftMain({
-      str: str,
-      idx: idx,
-      stopAtNewlines: false,
-      stopAtRawNbsp: false
-    });
-  }
-
+  var hasOwnProperty = objectProto.hasOwnProperty;
   /**
-   * html-all-known-attributes
-   * All HTML attributes known to the Humanity
-   * Version: 3.0.0
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://codsen.com/os/html-all-known-attributes/
+   * Used to resolve the
+   * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+   * of values.
    */
-  var allHtmlAttribs = new Set(["abbr", "accept", "accept-charset", "accesskey", "action", "align", "alink", "allow", "alt", "archive", "async", "autocapitalize", "autocomplete", "autofocus", "autoplay", "axis", "background", "background-attachment", "background-color", "background-image", "background-position", "background-position-x", "background-position-y", "background-repeat", "bgcolor", "border", "border-bottom", "border-bottom-color", "border-bottom-style", "border-bottom-width", "border-collapse", "border-color", "border-left", "border-left-color", "border-left-style", "border-left-width", "border-right", "border-right-color", "border-right-style", "border-right-width", "border-style", "border-top", "border-top-color", "border-top-style", "border-top-width", "border-width", "buffered", "capture", "cellpadding", "cellspacing", "challenge", "char", "charoff", "charset", "checked", "cite", "class", "classid", "clear", "clip", "code", "codebase", "codetype", "color", "cols", "colspan", "column-span", "compact", "content", "contenteditable", "contextmenu", "controls", "coords", "crossorigin", "csp", "cursor", "data", "data-*", "datetime", "declare", "decoding", "default", "defer", "dir", "direction", "dirname", "disabled", "display", "download", "draggable", "dropzone", "enctype", "enterkeyhint", "face", "filter", "float", "font", "font-color", "font-emphasize", "font-emphasize-position", "font-emphasize-style", "font-family", "font-size", "font-style", "font-variant", "font-weight", "for", "form", "formaction", "formenctype", "formmethod", "formnovalidate", "formtarget", "frame", "frameborder", "frontuid", "headers", "height", "hidden", "high", "horiz-align", "href", "hreflang", "hspace", "http-equiv", "icon", "id", "importance", "inputmode", "integrity", "intrinsicsize", "ismap", "itemprop", "keytype", "kind", "label", "lang", "language", "layout-flow", "layout-grid", "layout-grid-char", "layout-grid-line", "layout-grid-mode", "layout-grid-type", "left", "letter-spacing", "line-break", "line-height", "link", "list", "list-image-1", "list-image-2", "list-image-3", "list-style", "list-style-image", "list-style-position", "list-style-type", "loading", "longdesc", "loop", "low", "manifest", "margin", "margin-bottom", "margin-left", "margin-right", "margin-top", "marginheight", "marginwidth", "max", "maxlength", "media", "method", "min", "minlength", "mso-ansi-font-size", "mso-ansi-font-style", "mso-ansi-font-weight", "mso-ansi-language", "mso-ascii-font-family", "mso-background", "mso-background-source", "mso-baseline-position", "mso-bidi-flag", "mso-bidi-font-family", "mso-bidi-font-size", "mso-bidi-font-style", "mso-bidi-font-weight", "mso-bidi-language", "mso-bookmark", "mso-border-alt", "mso-border-between", "mso-border-between-color", "mso-border-between-style", "mso-border-between-width", "mso-border-bottom-alt", "mso-border-bottom-color-alt", "mso-border-bottom-source", "mso-border-bottom-style-alt", "mso-border-bottom-width-alt", "mso-border-color-alt", "mso-border-effect", "mso-border-left-alt", "mso-border-left-color-alt", "mso-border-left-source", "mso-border-left-style-alt", "mso-border-left-width-alt", "mso-border-right-alt", "mso-border-right-color-alt", "mso-border-right-source", "mso-border-right-style-alt", "mso-border-right-width-alt", "mso-border-shadow", "mso-border-source", "mso-border-style-alt", "mso-border-top-alt", "mso-border-top-color-alt", "mso-border-top-source", "mso-border-top-style-alt", "mso-border-top-width-alt", "mso-border-width-alt", "mso-break-type", "mso-build", "mso-build-after-action", "mso-build-after-color", "mso-build-auto-secs", "mso-build-avi", "mso-build-dual-id", "mso-build-order", "mso-build-sound-name", "mso-bullet-image", "mso-cell-special", "mso-cellspacing", "mso-char-indent", "mso-char-indent-count", "mso-char-indent-size", "mso-char-type", "mso-char-wrap", "mso-color-alt", "mso-color-index", "mso-color-source", "mso-column-break-before", "mso-column-separator", "mso-columns", "mso-comment-author", "mso-comment-continuation", "mso-comment-id", "mso-comment-reference", "mso-data-placement", "mso-default-height", "mso-default-width", "mso-diagonal-down", "mso-diagonal-down-color", "mso-diagonal-down-source", "mso-diagonal-down-style", "mso-diagonal-down-width", "mso-diagonal-up", "mso-diagonal-up-color", "mso-diagonal-up-source", "mso-diagonal-up-style", "mso-diagonal-up-width", "mso-displayed-decimal-separator", "mso-displayed-thousand-separator", "mso-element", "mso-element-anchor-horizontal", "mso-element-anchor-lock", "mso-element-anchor-vertical", "mso-element-frame-height", "mso-element-frame-hspace", "mso-element-frame-vspace", "mso-element-frame-width", "mso-element-left", "mso-element-linespan", "mso-element-top", "mso-element-wrap", "mso-endnote-continuation-notice", "mso-endnote-continuation-notice-id", "mso-endnote-continuation-notice-src", "mso-endnote-continuation-separator", "mso-endnote-continuation-separator-id", "mso-endnote-continuation-separator-src", "mso-endnote-display", "mso-endnote-id", "mso-endnote-numbering", "mso-endnote-numbering-restart", "mso-endnote-numbering-start", "mso-endnote-numbering-style", "mso-endnote-position", "mso-endnote-separator", "mso-endnote-separator-id", "mso-endnote-separator-src", "mso-even-footer", "mso-even-footer-id", "mso-even-footer-src", "mso-even-header", "mso-even-header-id", "mso-even-header-src", "mso-facing-pages", "mso-fareast-font-family", "mso-fareast-hint", "mso-fareast-language", "mso-field-change", "mso-field-change-author", "mso-field-change-time", "mso-field-change-value", "mso-field-code", "mso-field-lock", "mso-fills-color", "mso-first-footer", "mso-first-footer-id", "mso-first-footer-src", "mso-first-header", "mso-first-header-id", "mso-first-header-src", "mso-font-alt", "mso-font-charset", "mso-font-format", "mso-font-info", "mso-font-info-charset", "mso-font-info-type", "mso-font-kerning", "mso-font-pitch", "mso-font-signature", "mso-font-signature-csb-one", "mso-font-signature-csb-two", "mso-font-signature-usb-four", "mso-font-signature-usb-one", "mso-font-signature-usb-three", "mso-font-signature-usb-two", "mso-font-src", "mso-font-width", "mso-footer", "mso-footer-data", "mso-footer-id", "mso-footer-margin", "mso-footer-src", "mso-footnote-continuation-notice", "mso-footnote-continuation-notice-id", "mso-footnote-continuation-notice-src", "mso-footnote-continuation-separator", "mso-footnote-continuation-separator-id", "mso-footnote-continuation-separator-src", "mso-footnote-id", "mso-footnote-numbering", "mso-footnote-numbering-restart", "mso-footnote-numbering-start", "mso-footnote-numbering-style", "mso-footnote-position", "mso-footnote-separator", "mso-footnote-separator-id", "mso-footnote-separator-src", "mso-foreground", "mso-forms-protection", "mso-generic-font-family", "mso-grid-bottom", "mso-grid-bottom-count", "mso-grid-left", "mso-grid-left-count", "mso-grid-right", "mso-grid-right-count", "mso-grid-top", "mso-grid-top-count", "mso-gutter-direction", "mso-gutter-margin", "mso-gutter-position", "mso-hansi-font-family", "mso-header", "mso-header-data", "mso-header-id", "mso-header-margin", "mso-header-src", "mso-height-alt", "mso-height-rule", "mso-height-source", "mso-hide", "mso-highlight", "mso-horizontal-page-align", "mso-hyphenate", "mso-ignore", "mso-kinsoku-overflow", "mso-layout-grid-align", "mso-layout-grid-char-alt", "mso-layout-grid-origin", "mso-level-inherit", "mso-level-legacy", "mso-level-legacy-indent", "mso-level-legacy-space", "mso-level-legal-format", "mso-level-number-format", "mso-level-number-position", "mso-level-numbering", "mso-level-reset-level", "mso-level-start-at", "mso-level-style-link", "mso-level-suffix", "mso-level-tab-stop", "mso-level-text", "mso-line-break-override", "mso-line-grid", "mso-line-height-alt", "mso-line-height-rule", "mso-line-numbers-count-by", "mso-line-numbers-distance", "mso-line-numbers-restart", "mso-line-numbers-start", "mso-line-spacing", "mso-linked-frame", "mso-list", "mso-list-change", "mso-list-change-author", "mso-list-change-time", "mso-list-change-values", "mso-list-id", "mso-list-ins", "mso-list-ins-author", "mso-list-ins-time", "mso-list-name", "mso-list-template-ids", "mso-list-type", "mso-margin-bottom-alt", "mso-margin-left-alt", "mso-margin-top-alt", "mso-mirror-margins", "mso-negative-indent-tab", "mso-number-format", "mso-outline-level", "mso-outline-parent", "mso-outline-parent-col", "mso-outline-parent-row", "mso-outline-parent-visibility", "mso-outline-style", "mso-padding-alt", "mso-padding-between", "mso-padding-bottom-alt", "mso-padding-left-alt", "mso-padding-right-alt", "mso-padding-top-alt", "mso-page-border-aligned", "mso-page-border-art", "mso-page-border-bottom-art", "mso-page-border-display", "mso-page-border-left-art", "mso-page-border-offset-from", "mso-page-border-right-art", "mso-page-border-surround-footer", "mso-page-border-surround-header", "mso-page-border-top-art", "mso-page-border-z-order", "mso-page-numbers", "mso-page-numbers-chapter-separator", "mso-page-numbers-chapter-style", "mso-page-numbers-start", "mso-page-numbers-style", "mso-page-orientation", "mso-page-scale", "mso-pagination", "mso-panose-arm-style", "mso-panose-contrast", "mso-panose-family-type", "mso-panose-letterform", "mso-panose-midline", "mso-panose-proportion", "mso-panose-serif-style", "mso-panose-stroke-variation", "mso-panose-weight", "mso-panose-x-height", "mso-paper-source", "mso-paper-source-first-page", "mso-paper-source-other-pages", "mso-pattern", "mso-pattern-color", "mso-pattern-style", "mso-print-area", "mso-print-color", "mso-print-gridlines", "mso-print-headings", "mso-print-resolution", "mso-print-sheet-order", "mso-print-title-column", "mso-print-title-row", "mso-prop-change", "mso-prop-change-author", "mso-prop-change-time", "mso-protection", "mso-rotate", "mso-row-margin-left", "mso-row-margin-right", "mso-ruby-merge", "mso-ruby-visibility", "mso-scheme-fill-color", "mso-scheme-shadow-color", "mso-shading", "mso-shadow-color", "mso-space-above", "mso-space-below", "mso-spacerun", "mso-special-character", "mso-special-format", "mso-style-id", "mso-style-name", "mso-style-next", "mso-style-parent", "mso-style-type", "mso-style-update", "mso-subdocument", "mso-symbol-font-family", "mso-tab-count", "mso-table-anchor-horizontal", "mso-table-anchor-vertical", "mso-table-bspace", "mso-table-del-author", "mso-table-del-time", "mso-table-deleted", "mso-table-dir", "mso-table-ins-author", "mso-table-ins-time", "mso-table-inserted", "mso-table-layout-alt", "mso-table-left", "mso-table-lspace", "mso-table-overlap", "mso-table-prop-author", "mso-table-prop-change", "mso-table-prop-time", "mso-table-rspace", "mso-table-top", "mso-table-tspace", "mso-table-wrap", "mso-text-animation", "mso-text-combine-brackets", "mso-text-combine-id", "mso-text-control", "mso-text-fit-id", "mso-text-indent-alt", "mso-text-orientation", "mso-text-raise", "mso-title-page", "mso-tny-compress", "mso-unsynced", "mso-vertical-align-alt", "mso-vertical-align-special", "mso-vertical-page-align", "mso-width-alt", "mso-width-source", "mso-word-wrap", "mso-xlrowspan", "mso-zero-height", "multiple", "muted", "name", "nav-banner-image", "navbutton_background_color", "navbutton_home_hovered", "navbutton_home_normal", "navbutton_home_pushed", "navbutton_horiz_hovered", "navbutton_horiz_normal", "navbutton_horiz_pushed", "navbutton_next_hovered", "navbutton_next_normal", "navbutton_next_pushed", "navbutton_prev_hovered", "navbutton_prev_normal", "navbutton_prev_pushed", "navbutton_up_hovered", "navbutton_up_normal", "navbutton_up_pushed", "navbutton_vert_hovered", "navbutton_vert_normal", "navbutton_vert_pushed", "nohref", "noresize", "noshade", "novalidate", "nowrap", "object", "onblur", "onchange", "onclick", "ondblclick", "onfocus", "onkeydown", "onkeypress", "onkeyup", "onload", "onmousedown", "onmousemove", "onmouseout", "onmouseover", "onmouseup", "onreset", "onselect", "onsubmit", "onunload", "open", "optimum", "overflow", "padding", "padding-bottom", "padding-left", "padding-right", "padding-top", "page", "page-break-after", "page-break-before", "panose-1", "pattern", "ping", "placeholder", "position", "poster", "preload", "profile", "prompt", "punctuation-trim", "punctuation-wrap", "radiogroup", "readonly", "referrerpolicy", "rel", "required", "rev", "reversed", "right", "row-span", "rows", "rowspan", "ruby-align", "ruby-overhang", "ruby-position", "rules", "sandbox", "scheme", "scope", "scoped", "scrolling", "selected", "separator-image", "shape", "size", "sizes", "slot", "span", "spellcheck", "src", "srcdoc", "srclang", "srcset", "standby", "start", "step", "style", "summary", "tab-interval", "tab-stops", "tabindex", "table-border-color-dark", "table-border-color-light", "table-layout", "target", "text", "text-align", "text-autospace", "text-combine", "text-decoration", "text-effect", "text-fit", "text-indent", "text-justify", "text-justify-trim", "text-kashida", "text-line-through", "text-shadow", "text-transform", "text-underline", "text-underline-color", "text-underline-style", "title", "top", "top-bar-button", "translate", "type", "unicode-bidi", "urlId", "usemap", "valign", "value", "valuetype", "version", "vert-align", "vertical-align", "visibility", "vlink", "vnd.ms-excel.numberformat", "vspace", "white-space", "width", "word-break", "word-spacing", "wrap", "xmlns", "z-index"]);
 
+  var objectToString = objectProto.toString;
+  /** Used to detect if a method is native. */
+
+  var reIsNative = RegExp('^' + funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&').replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
+  /** Built-in value references. */
+
+  var Buffer = moduleExports ? root.Buffer : undefined,
+      Symbol = root.Symbol,
+      Uint8Array = root.Uint8Array,
+      getPrototype = overArg(Object.getPrototypeOf, Object),
+      objectCreate = Object.create,
+      propertyIsEnumerable = objectProto.propertyIsEnumerable,
+      splice = arrayProto.splice;
+  /* Built-in method references for those with the same name as other `lodash` methods. */
+
+  var nativeGetSymbols = Object.getOwnPropertySymbols,
+      nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined,
+      nativeKeys = overArg(Object.keys, Object);
+  /* Built-in method references that are verified to be native. */
+
+  var DataView = getNative(root, 'DataView'),
+      Map = getNative(root, 'Map'),
+      Promise = getNative(root, 'Promise'),
+      Set = getNative(root, 'Set'),
+      WeakMap = getNative(root, 'WeakMap'),
+      nativeCreate = getNative(Object, 'create');
+  /** Used to detect maps, sets, and weakmaps. */
+
+  var dataViewCtorString = toSource(DataView),
+      mapCtorString = toSource(Map),
+      promiseCtorString = toSource(Promise),
+      setCtorString = toSource(Set),
+      weakMapCtorString = toSource(WeakMap);
+  /** Used to convert symbols to primitives and strings. */
+
+  var symbolProto = Symbol ? Symbol.prototype : undefined,
+      symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
   /**
-   * is-char-suitable-for-html-attr-name
-   * Is given character suitable to be in an HTML attribute's name?
-   * Version: 1.2.0
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://codsen.com/os/is-char-suitable-for-html-attr-name/
+   * Creates a hash object.
+   *
+   * @private
+   * @constructor
+   * @param {Array} [entries] The key-value pairs to cache.
    */
-  function charSuitableForHTMLAttrName(char) {
-    return typeof char === "string" && (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123 || char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58 || char === ":" || char === "-");
+
+  function Hash(entries) {
+    var index = -1,
+        length = entries ? entries.length : 0;
+    this.clear();
+
+    while (++index < length) {
+      var entry = entries[index];
+      this.set(entry[0], entry[1]);
+    }
   }
+  /**
+   * Removes all key-value entries from the hash.
+   *
+   * @private
+   * @name clear
+   * @memberOf Hash
+   */
 
-  function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x) {
-    var y = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
 
-    var _loop = function _loop(i, len) {
-      if (y.some(function (oneOfStr) {
-        return str.startsWith(oneOfStr, i);
-      })) {
-        return {
-          v: true
-        };
-      }
+  function hashClear() {
+    this.__data__ = nativeCreate ? nativeCreate(null) : {};
+  }
+  /**
+   * Removes `key` and its value from the hash.
+   *
+   * @private
+   * @name delete
+   * @memberOf Hash
+   * @param {Object} hash The hash to modify.
+   * @param {string} key The key of the value to remove.
+   * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+   */
 
-      if (str[i] === x) {
-        return {
-          v: false
-        };
-      }
-    };
 
-    for (var i = startingIdx, len = str.length; i < len; i++) {
-      var _ret = _loop(i);
+  function hashDelete(key) {
+    return this.has(key) && delete this.__data__[key];
+  }
+  /**
+   * Gets the hash value for `key`.
+   *
+   * @private
+   * @name get
+   * @memberOf Hash
+   * @param {string} key The key of the value to get.
+   * @returns {*} Returns the entry value.
+   */
 
-      if (_typeof(_ret) === "object") return _ret.v;
+
+  function hashGet(key) {
+    var data = this.__data__;
+
+    if (nativeCreate) {
+      var result = data[key];
+      return result === HASH_UNDEFINED ? undefined : result;
+    }
+
+    return hasOwnProperty.call(data, key) ? data[key] : undefined;
+  }
+  /**
+   * Checks if a hash value for `key` exists.
+   *
+   * @private
+   * @name has
+   * @memberOf Hash
+   * @param {string} key The key of the entry to check.
+   * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+   */
+
+
+  function hashHas(key) {
+    var data = this.__data__;
+    return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);
+  }
+  /**
+   * Sets the hash `key` to `value`.
+   *
+   * @private
+   * @name set
+   * @memberOf Hash
+   * @param {string} key The key of the value to set.
+   * @param {*} value The value to set.
+   * @returns {Object} Returns the hash instance.
+   */
+
+
+  function hashSet(key, value) {
+    var data = this.__data__;
+    data[key] = nativeCreate && value === undefined ? HASH_UNDEFINED : value;
+    return this;
+  } // Add methods to `Hash`.
+
+
+  Hash.prototype.clear = hashClear;
+  Hash.prototype['delete'] = hashDelete;
+  Hash.prototype.get = hashGet;
+  Hash.prototype.has = hashHas;
+  Hash.prototype.set = hashSet;
+  /**
+   * Creates an list cache object.
+   *
+   * @private
+   * @constructor
+   * @param {Array} [entries] The key-value pairs to cache.
+   */
+
+  function ListCache(entries) {
+    var index = -1,
+        length = entries ? entries.length : 0;
+    this.clear();
+
+    while (++index < length) {
+      var entry = entries[index];
+      this.set(entry[0], entry[1]);
+    }
+  }
+  /**
+   * Removes all key-value entries from the list cache.
+   *
+   * @private
+   * @name clear
+   * @memberOf ListCache
+   */
+
+
+  function listCacheClear() {
+    this.__data__ = [];
+  }
+  /**
+   * Removes `key` and its value from the list cache.
+   *
+   * @private
+   * @name delete
+   * @memberOf ListCache
+   * @param {string} key The key of the value to remove.
+   * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+   */
+
+
+  function listCacheDelete(key) {
+    var data = this.__data__,
+        index = assocIndexOf(data, key);
+
+    if (index < 0) {
+      return false;
+    }
+
+    var lastIndex = data.length - 1;
+
+    if (index == lastIndex) {
+      data.pop();
+    } else {
+      splice.call(data, index, 1);
     }
 
     return true;
   }
+  /**
+   * Gets the list cache value for `key`.
+   *
+   * @private
+   * @name get
+   * @memberOf ListCache
+   * @param {string} key The key of the value to get.
+   * @returns {*} Returns the entry value.
+   */
 
-  function xBeforeYOnTheRight(str, startingIdx, x, y) {
-    for (var i = startingIdx, len = str.length; i < len; i++) {
-      if (str.startsWith(x, i)) {
-        return true;
-      }
 
-      if (str.startsWith(y, i)) {
-        return false;
-      }
-    }
-
-    return false;
+  function listCacheGet(key) {
+    var data = this.__data__,
+        index = assocIndexOf(data, key);
+    return index < 0 ? undefined : data[index][1];
   }
+  /**
+   * Checks if a list cache value for `key` exists.
+   *
+   * @private
+   * @name has
+   * @memberOf ListCache
+   * @param {string} key The key of the entry to check.
+   * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+   */
 
-  function plausibleAttrStartsAtX(str, start) {
-    if (!charSuitableForHTMLAttrName(str[start]) || !start) {
-      return false;
-    }
 
-    var regex = /^[a-zA-Z0-9:-]*(\s*[=]?\s*((?:'[^']*')|(?:"[^"]*")))|( [^/>'"=]*['"])/;
-    return regex.test(str.slice(start));
+  function listCacheHas(key) {
+    return assocIndexOf(this.__data__, key) > -1;
   }
+  /**
+   * Sets the list cache `key` to `value`.
+   *
+   * @private
+   * @name set
+   * @memberOf ListCache
+   * @param {string} key The key of the value to set.
+   * @param {*} value The value to set.
+   * @returns {Object} Returns the list cache instance.
+   */
 
-  function guaranteedAttrStartsAtX(str, start) {
-    if (!charSuitableForHTMLAttrName(str[start]) || !start) {
-      return false;
+
+  function listCacheSet(key, value) {
+    var data = this.__data__,
+        index = assocIndexOf(data, key);
+
+    if (index < 0) {
+      data.push([key, value]);
+    } else {
+      data[index][1] = value;
     }
 
-    var regex = /^[a-zA-Z0-9:-]*=(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
-    return regex.test(str.slice(start));
+    return this;
+  } // Add methods to `ListCache`.
+
+
+  ListCache.prototype.clear = listCacheClear;
+  ListCache.prototype['delete'] = listCacheDelete;
+  ListCache.prototype.get = listCacheGet;
+  ListCache.prototype.has = listCacheHas;
+  ListCache.prototype.set = listCacheSet;
+  /**
+   * Creates a map cache object to store key-value pairs.
+   *
+   * @private
+   * @constructor
+   * @param {Array} [entries] The key-value pairs to cache.
+   */
+
+  function MapCache(entries) {
+    var index = -1,
+        length = entries ? entries.length : 0;
+    this.clear();
+
+    while (++index < length) {
+      var entry = entries[index];
+      this.set(entry[0], entry[1]);
+    }
   }
+  /**
+   * Removes all key-value entries from the map.
+   *
+   * @private
+   * @name clear
+   * @memberOf MapCache
+   */
 
-  function findAttrNameCharsChunkOnTheLeft(str, i) {
-    if (!charSuitableForHTMLAttrName(str[left(str, i)])) {
-      return;
-    }
 
-    for (var y = i; y--;) {
-      if (str[y].trim().length && !charSuitableForHTMLAttrName(str[y])) {
-        return str.slice(y + 1, i);
-      }
-    }
-  }
-
-  function makeTheQuoteOpposite(quoteChar) {
-    return quoteChar === "'" ? "\"" : "'";
-  }
-
-  function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
-    if (typeof str !== "string" || !str.trim() || !Number.isInteger(idxOfAttrOpening) || !Number.isInteger(isThisClosingIdx) || !str[idxOfAttrOpening] || !str[isThisClosingIdx] || idxOfAttrOpening >= isThisClosingIdx) {
-      return false;
-    }
-
-    var openingQuote = "'\"".includes(str[idxOfAttrOpening]) ? str[idxOfAttrOpening] : null;
-    var oppositeToOpeningQuote = null;
-
-    if (openingQuote) {
-      oppositeToOpeningQuote = makeTheQuoteOpposite(openingQuote);
-    }
-
-    var chunkStartsAt;
-    var quotesCount = new Map().set("'", 0).set("\"", 0).set("matchedPairs", 0);
-    var lastQuoteAt = null;
-    var totalQuotesCount = 0;
-    var lastQuoteWasMatched = false;
-    var lastMatchedQuotesPairsStartIsAt = false;
-    var lastMatchedQuotesPairsEndIsAt = false;
-    var lastCapturedChunk;
-    var secondLastCapturedChunk;
-    var lastChunkWasCapturedAfterSuspectedClosing = false;
-    var closingBracketMet = false;
-    var openingBracketMet = false;
-
-    for (var i = idxOfAttrOpening, len = str.length; i < len; i++) {
-      if ("'\"".includes(str[i]) && lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt < i && i >= isThisClosingIdx) {
-        var E1 = i !== isThisClosingIdx || guaranteedAttrStartsAtX(str, right(str, isThisClosingIdx)) || "/>".includes(str[right(str, i)]);
-        var E2 = !(i > isThisClosingIdx && str[idxOfAttrOpening] === str[isThisClosingIdx] && str[idxOfAttrOpening] === str[i] && plausibleAttrStartsAtX(str, i + 1));
-        var E31 = i === isThisClosingIdx && plausibleAttrStartsAtX(str, isThisClosingIdx + 1);
-        var E32 = chunkStartsAt && chunkStartsAt < i && allHtmlAttribs.has(str.slice(chunkStartsAt, i).trim());
-        var plausibleAttrName = str.slice(chunkStartsAt, i).trim();
-        var E33 = chunkStartsAt && chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim() && Array.from(str.slice(chunkStartsAt, i).trim()).every(function (char) {
-          return charSuitableForHTMLAttrName(char);
-        }) && str[idxOfAttrOpening] === str[isThisClosingIdx] && !"/>".includes(str[right(str, i)]) && ensureXIsNotPresentBeforeOneOfY(str, i + 1, "=", ["'", "\""]);
-        var attrNameCharsChunkOnTheLeft = void 0;
-
-        if (i === isThisClosingIdx) {
-          attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);
-        }
-
-        var E34 = i === isThisClosingIdx && (!charSuitableForHTMLAttrName(str[left(str, i)]) || attrNameCharsChunkOnTheLeft && !allHtmlAttribs.has(attrNameCharsChunkOnTheLeft)) && str[left(str, i)] !== "=";
-        var E41 = "/>".includes(str[right(str, i)]) && i === isThisClosingIdx;
-        var E42 = charSuitableForHTMLAttrName(str[right(str, i)]);
-        var E43 = lastQuoteWasMatched && i !== isThisClosingIdx;
-        var E5 = !(i >= isThisClosingIdx && str[left(str, isThisClosingIdx)] === ":");
-        return E1 && E2 && (E31 || E32 || E33 || E34) && (E41 || E42 || E43) && E5;
-      }
-
-      if ("'\"".includes(str[i])) {
-        if (str[i] === "'" && str[i - 1] === "\"" && str[i + 1] === "\"" || str[i] === "\"" && str[i - 1] === "'" && str[i + 1] === "'") {
-          continue;
-        }
-
-        if (lastQuoteAt && str[i] === str[lastQuoteAt]) {
-          quotesCount.set("matchedPairs", quotesCount.get("matchedPairs") + 1);
-          lastMatchedQuotesPairsStartIsAt = lastQuoteAt;
-          lastMatchedQuotesPairsEndIsAt = i;
-          lastQuoteAt = null;
-          lastQuoteWasMatched = true;
-        } else {
-          lastQuoteWasMatched = false;
-        }
-
-        quotesCount.set(str[i], quotesCount.get(str[i]) + 1);
-        totalQuotesCount = quotesCount.get("\"") + quotesCount.get("'");
-      }
-
-      if (str[i] === ">" && !closingBracketMet) {
-        closingBracketMet = true;
-
-        if (totalQuotesCount && quotesCount.get("matchedPairs") && totalQuotesCount === quotesCount.get("matchedPairs") * 2 && i < isThisClosingIdx) {
-          return false;
-        }
-      }
-
-      if (str[i] === "<" && closingBracketMet && !openingBracketMet) {
-        openingBracketMet = true;
-        return false;
-      }
-
-      if (str[i].trim() && !chunkStartsAt) {
-        if (charSuitableForHTMLAttrName(str[i])) {
-          chunkStartsAt = i;
-        }
-      } else if (chunkStartsAt && !charSuitableForHTMLAttrName(str[i])) {
-        secondLastCapturedChunk = lastCapturedChunk;
-        lastCapturedChunk = str.slice(chunkStartsAt, i);
-        lastChunkWasCapturedAfterSuspectedClosing = chunkStartsAt >= isThisClosingIdx;
-
-        if ("'\"".includes(str[i]) && quotesCount.get("matchedPairs") === 0 && totalQuotesCount === 3 && str[idxOfAttrOpening] === str[i] && allHtmlAttribs.has(lastCapturedChunk) && !"'\"".includes(str[right(str, i)])) {
-          var A1 = i > isThisClosingIdx;
-          var A21 = !lastQuoteAt;
-          var A22 = lastQuoteAt + 1 >= i;
-          var A23 = str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(function (chunk) {
-            return allHtmlAttribs.has(chunk);
-          });
-          var A3 = !lastCapturedChunk || !secondLastCapturedChunk || !secondLastCapturedChunk.endsWith(":");
-          var B1 = i === isThisClosingIdx;
-          var B21 = totalQuotesCount < 3;
-          var B22 = !!lastQuoteWasMatched;
-          var B23 = !lastQuoteAt;
-          var B24 = lastQuoteAt + 1 >= i;
-          var B25 = !str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(function (chunk) {
-            return allHtmlAttribs.has(chunk);
-          });
-          return A1 && (A21 || A22 || A23) && A3 || B1 && (B21 || B22 || B23 || B24 || B25);
-        }
-
-        if (lastCapturedChunk && allHtmlAttribs.has(lastCapturedChunk) && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt === isThisClosingIdx) {
-          return true;
-        }
-      }
-
-      if ("'\"".includes(str[i]) && (!(quotesCount.get("\"") % 2) || !(quotesCount.get("'") % 2)) && (quotesCount.get("\"") + quotesCount.get("'")) % 2 && (lastCapturedChunk && allHtmlAttribs.has(lastCapturedChunk) || i > isThisClosingIdx + 1 && allHtmlAttribs.has(str.slice(isThisClosingIdx + 1, i).trim())) && !(str[i + 1] === str[i] && str[i] === str[idxOfAttrOpening]) && !(i > isThisClosingIdx + 1 && str[left(str, isThisClosingIdx)] === ":") && !(lastCapturedChunk && secondLastCapturedChunk && secondLastCapturedChunk.trim().endsWith(":"))) {
-        var R0 = i > isThisClosingIdx;
-        var R1 = !!openingQuote;
-        var R2 = str[idxOfAttrOpening] !== str[isThisClosingIdx];
-        var R3 = allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, isThisClosingIdx).trim());
-        var R4 = !xBeforeYOnTheRight(str, i + 1, str[isThisClosingIdx], makeTheQuoteOpposite(str[isThisClosingIdx]));
-        return R0 && !(R1 && R2 && R3 && R4);
-      }
-
-      if ((str[i] === "=" || !str[i].length && str[right(str, i)] === "=") && lastCapturedChunk && allHtmlAttribs.has(lastCapturedChunk)) {
-        var W1 = i > isThisClosingIdx;
-        var W2 = !(!(lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt === isThisClosingIdx || guaranteedAttrStartsAtX(str, chunkStartsAt)) && lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt && lastMatchedQuotesPairsStartIsAt <= isThisClosingIdx);
-        return W1 && W2;
-      }
-
-      if (i > isThisClosingIdx) {
-        if (openingQuote && str[i] === openingQuote) {
-          var Y1 = !!lastQuoteAt;
-          var Y2 = lastQuoteAt === isThisClosingIdx;
-          var Y3 = lastQuoteAt + 1 < i && str.slice(lastQuoteAt + 1, i).trim();
-          var Y4 = str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(function (chunk) {
-            return allHtmlAttribs.has(chunk);
-          });
-          var Y5 = i >= isThisClosingIdx;
-          var Y6 = !str[right(str, i)] || !"'\"".includes(str[right(str, i)]);
-          return Y1 && Y2 && Y3 && Y4 && Y5 && Y6;
-        }
-
-        if (openingQuote && str[isThisClosingIdx] === oppositeToOpeningQuote && str[i] === oppositeToOpeningQuote) {
-          return false;
-        }
-
-        if (str[i] === "/" || str[i] === ">" || str[i] === "<") {
-          var _R = str[idxOfAttrOpening] === str[isThisClosingIdx] && lastQuoteAt === isThisClosingIdx && !str.slice(idxOfAttrOpening + 1, isThisClosingIdx).includes(str[idxOfAttrOpening]);
-
-          var R11 = quotesCount.get("matchedPairs") < 2;
-
-          var _attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);
-
-          var R12 = (!_attrNameCharsChunkOnTheLeft || !allHtmlAttribs.has(_attrNameCharsChunkOnTheLeft)) && (!(i > isThisClosingIdx && quotesCount.get("'") && quotesCount.get("\"") && quotesCount.get("matchedPairs") > 1) || "/>".includes(str[right(str, i)]));
-
-          var _R2 = totalQuotesCount < 3 || quotesCount.get("\"") + quotesCount.get("'") - quotesCount.get("matchedPairs") * 2 !== 2;
-
-          var R31 = !lastQuoteWasMatched || lastQuoteWasMatched && !(lastMatchedQuotesPairsStartIsAt && Array.from(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()).every(function (char) {
-            return charSuitableForHTMLAttrName(char);
-          }) && allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()));
-          var R32 = !right(str, i) && totalQuotesCount % 2 === 0;
-          var R33 = str[idxOfAttrOpening - 2] && str[idxOfAttrOpening - 1] === "=" && charSuitableForHTMLAttrName(str[idxOfAttrOpening - 2]);
-          var R34 = !ensureXIsNotPresentBeforeOneOfY(str, i + 1, "<", ["='", "=\""]);
-          return _R || (R11 || R12) && _R2 && (R31 || R32 || R33 || R34);
-        }
-
-        if (str[i] === "=" && matchRight(str, i, ["'", "\""], {
-          trimBeforeMatching: true,
-          trimCharsBeforeMatching: ["="]
-        })) {
-          return true;
-        }
-      } else {
-        var firstNonWhitespaceCharOnTheLeft = void 0;
-
-        if (str[i - 1] && str[i - 1].trim() && str[i - 1] !== "=") {
-          firstNonWhitespaceCharOnTheLeft = i - 1;
-        } else {
-          for (var y = i; y--;) {
-            if (str[y].trim() && str[y] !== "=") {
-              firstNonWhitespaceCharOnTheLeft = y;
-              break;
-            }
-          }
-        }
-
-        if (str[i] === "=" && matchRight(str, i, ["'", "\""], {
-          cb: function cb(char) {
-            return !"/>".includes(char);
-          },
-          trimBeforeMatching: true,
-          trimCharsBeforeMatching: ["="]
-        }) && charSuitableForHTMLAttrName(str[firstNonWhitespaceCharOnTheLeft]) && !str.slice(idxOfAttrOpening + 1).startsWith("http") && !str.slice(idxOfAttrOpening + 1, i).includes("/") && !str.endsWith("src=", idxOfAttrOpening) && !str.endsWith("href=", idxOfAttrOpening)) {
-          return false;
-        }
-
-        if (i === isThisClosingIdx && guaranteedAttrStartsAtX(str, i + 1)) {
-          return true;
-        }
-
-        if (i < isThisClosingIdx && "'\"".includes(str[i]) && lastCapturedChunk && str[left(str, idxOfAttrOpening)] && str[left(str, idxOfAttrOpening)] !== "=" && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && allHtmlAttribs.has(lastCapturedChunk)) {
-          return false;
-        }
-
-        if (i === isThisClosingIdx && "'\"".includes(str[i]) && lastCapturedChunk && secondLastCapturedChunk && totalQuotesCount % 2 === 0 && secondLastCapturedChunk.endsWith(":")) {
-          return true;
-        }
-      }
-
-      if ("'\"".includes(str[i]) && i > isThisClosingIdx) {
-        if (!lastChunkWasCapturedAfterSuspectedClosing || !lastCapturedChunk || !allHtmlAttribs.has(lastCapturedChunk)) {
-          return false;
-        }
-
-        return true;
-      }
-
-      if ("'\"".includes(str[i])) {
-        lastQuoteAt = i;
-      }
-
-      if (chunkStartsAt && !charSuitableForHTMLAttrName(str[i])) {
-        chunkStartsAt = null;
-      }
-    }
-
-    return false;
-  }
-
-  var defaultOpts = {
-    allowCustomTagNames: false,
-    skipOpeningBracket: false
-  };
-  var BACKSLASH = "\\";
-  var knownHtmlTags = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h1 - h6", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "slot", "small", "source", "span", "strike", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xml"];
-
-  function isNotLetter(char) {
-    return char === undefined || char.toUpperCase() === char.toLowerCase() && !/\d/.test(char) && char !== "=";
-  }
-
-  function extraRequirements(str, idx) {
-    return str[idx] === "<" || str[left(str, idx)] === "<";
-  }
-
-  function isOpening(str) {
-    var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-    var originalOpts = arguments.length > 2 ? arguments[2] : undefined;
-
-    if (typeof str !== "string") {
-      throw new Error("is-html-tag-opening: [THROW_ID_01] the first input argument should have been a string but it was given as \"".concat(_typeof(str), "\", value being ").concat(JSON.stringify(str, null, 4)));
-    }
-
-    if (!Number.isInteger(idx) || idx < 0) {
-      throw new Error("is-html-tag-opening: [THROW_ID_02] the second input argument should have been a natural number string index but it was given as \"".concat(_typeof(idx), "\", value being ").concat(JSON.stringify(idx, null, 4)));
-    }
-
-    var opts = _objectSpread2(_objectSpread2({}, defaultOpts), originalOpts);
-
-    var whitespaceChunk = "[\\\\ \\t\\r\\n/]*";
-    var generalChar = "._a-z0-9\xB7\xC0-\xD6\xD8-\xF6\xF8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF";
-    var r1 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?" : "").concat(whitespaceChunk, "\\w+").concat(whitespaceChunk, "\\/?").concat(whitespaceChunk, ">"), "g");
-    var r5 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?" : "").concat(whitespaceChunk, "[").concat(generalChar, "]+[-").concat(generalChar, "]*").concat(whitespaceChunk, ">"), "g");
-    var r2 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?" : "", "\\s*\\w+\\s+\\w+(?:-\\w+)?\\s*=\\s*['\"\\w]"), "g");
-    var r6 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?" : "", "\\s*\\w+\\s+[").concat(generalChar, "]+[-").concat(generalChar, "]*(?:-\\w+)?\\s*=\\s*['\"\\w]"));
-    var r3 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?" : "", "\\s*\\/?\\s*\\w+\\s*\\/?\\s*>"), "g");
-    var r7 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?" : "", "\\s*\\/?\\s*[").concat(generalChar, "]+[-").concat(generalChar, "]*\\s*\\/?\\s*>"), "g");
-    var r4 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?" : "").concat(whitespaceChunk, "\\w+(?:\\s*\\w+)?\\s*\\w+=['\"]"), "g");
-    var r8 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?" : "").concat(whitespaceChunk, "[").concat(generalChar, "]+[-").concat(generalChar, "]*\\s+(?:\\s*\\w+)?\\s*\\w+=['\"]"), "g");
-    var r9 = new RegExp("^<".concat(opts.skipOpeningBracket ? "?\\/?" : "", "(").concat(whitespaceChunk, "[").concat(generalChar, "]+)+").concat(whitespaceChunk, "[\\\\/=>]"), "");
-    var whatToTest = idx ? str.slice(idx) : str;
-    var qualified = false;
-    var passed = false;
-    var matchingOptions = {
-      cb: isNotLetter,
-      i: true,
-      trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+  function mapCacheClear() {
+    this.__data__ = {
+      'hash': new Hash(),
+      'map': new (Map || ListCache)(),
+      'string': new Hash()
     };
+  }
+  /**
+   * Removes `key` and its value from the map.
+   *
+   * @private
+   * @name delete
+   * @memberOf MapCache
+   * @param {string} key The key of the value to remove.
+   * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+   */
 
-    if (opts.allowCustomTagNames) {
-      if ((opts.skipOpeningBracket && (str[idx - 1] === "<" || str[idx - 1] === "/" && str[left(str, left(str, idx))] === "<") || whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim()) && (r9.test(whatToTest) || /^<\w+$/.test(whatToTest))) {
-        passed = true;
-      } else if (r5.test(whatToTest) && extraRequirements(str, idx)) {
-        passed = true;
-      } else if (r6.test(whatToTest)) {
-        passed = true;
-      } else if (r7.test(whatToTest) && extraRequirements(str, idx)) {
-        passed = true;
-      } else if (r8.test(whatToTest)) {
-        passed = true;
+
+  function mapCacheDelete(key) {
+    return getMapData(this, key)['delete'](key);
+  }
+  /**
+   * Gets the map value for `key`.
+   *
+   * @private
+   * @name get
+   * @memberOf MapCache
+   * @param {string} key The key of the value to get.
+   * @returns {*} Returns the entry value.
+   */
+
+
+  function mapCacheGet(key) {
+    return getMapData(this, key).get(key);
+  }
+  /**
+   * Checks if a map value for `key` exists.
+   *
+   * @private
+   * @name has
+   * @memberOf MapCache
+   * @param {string} key The key of the entry to check.
+   * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+   */
+
+
+  function mapCacheHas(key) {
+    return getMapData(this, key).has(key);
+  }
+  /**
+   * Sets the map `key` to `value`.
+   *
+   * @private
+   * @name set
+   * @memberOf MapCache
+   * @param {string} key The key of the value to set.
+   * @param {*} value The value to set.
+   * @returns {Object} Returns the map cache instance.
+   */
+
+
+  function mapCacheSet(key, value) {
+    getMapData(this, key).set(key, value);
+    return this;
+  } // Add methods to `MapCache`.
+
+
+  MapCache.prototype.clear = mapCacheClear;
+  MapCache.prototype['delete'] = mapCacheDelete;
+  MapCache.prototype.get = mapCacheGet;
+  MapCache.prototype.has = mapCacheHas;
+  MapCache.prototype.set = mapCacheSet;
+  /**
+   * Creates a stack cache object to store key-value pairs.
+   *
+   * @private
+   * @constructor
+   * @param {Array} [entries] The key-value pairs to cache.
+   */
+
+  function Stack(entries) {
+    this.__data__ = new ListCache(entries);
+  }
+  /**
+   * Removes all key-value entries from the stack.
+   *
+   * @private
+   * @name clear
+   * @memberOf Stack
+   */
+
+
+  function stackClear() {
+    this.__data__ = new ListCache();
+  }
+  /**
+   * Removes `key` and its value from the stack.
+   *
+   * @private
+   * @name delete
+   * @memberOf Stack
+   * @param {string} key The key of the value to remove.
+   * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+   */
+
+
+  function stackDelete(key) {
+    return this.__data__['delete'](key);
+  }
+  /**
+   * Gets the stack value for `key`.
+   *
+   * @private
+   * @name get
+   * @memberOf Stack
+   * @param {string} key The key of the value to get.
+   * @returns {*} Returns the entry value.
+   */
+
+
+  function stackGet(key) {
+    return this.__data__.get(key);
+  }
+  /**
+   * Checks if a stack value for `key` exists.
+   *
+   * @private
+   * @name has
+   * @memberOf Stack
+   * @param {string} key The key of the entry to check.
+   * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+   */
+
+
+  function stackHas(key) {
+    return this.__data__.has(key);
+  }
+  /**
+   * Sets the stack `key` to `value`.
+   *
+   * @private
+   * @name set
+   * @memberOf Stack
+   * @param {string} key The key of the value to set.
+   * @param {*} value The value to set.
+   * @returns {Object} Returns the stack cache instance.
+   */
+
+
+  function stackSet(key, value) {
+    var cache = this.__data__;
+
+    if (cache instanceof ListCache) {
+      var pairs = cache.__data__;
+
+      if (!Map || pairs.length < LARGE_ARRAY_SIZE - 1) {
+        pairs.push([key, value]);
+        return this;
+      }
+
+      cache = this.__data__ = new MapCache(pairs);
+    }
+
+    cache.set(key, value);
+    return this;
+  } // Add methods to `Stack`.
+
+
+  Stack.prototype.clear = stackClear;
+  Stack.prototype['delete'] = stackDelete;
+  Stack.prototype.get = stackGet;
+  Stack.prototype.has = stackHas;
+  Stack.prototype.set = stackSet;
+  /**
+   * Creates an array of the enumerable property names of the array-like `value`.
+   *
+   * @private
+   * @param {*} value The value to query.
+   * @param {boolean} inherited Specify returning inherited property names.
+   * @returns {Array} Returns the array of property names.
+   */
+
+  function arrayLikeKeys(value, inherited) {
+    // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
+    // Safari 9 makes `arguments.length` enumerable in strict mode.
+    var result = isArray(value) || isArguments(value) ? baseTimes(value.length, String) : [];
+    var length = result.length,
+        skipIndexes = !!length;
+
+    for (var key in value) {
+      if ((inherited || hasOwnProperty.call(value, key)) && !(skipIndexes && (key == 'length' || isIndex(key, length)))) {
+        result.push(key);
+      }
+    }
+
+    return result;
+  }
+  /**
+   * Assigns `value` to `key` of `object` if the existing value is not equivalent
+   * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+   * for equality comparisons.
+   *
+   * @private
+   * @param {Object} object The object to modify.
+   * @param {string} key The key of the property to assign.
+   * @param {*} value The value to assign.
+   */
+
+
+  function assignValue(object, key, value) {
+    var objValue = object[key];
+
+    if (!(hasOwnProperty.call(object, key) && eq(objValue, value)) || value === undefined && !(key in object)) {
+      object[key] = value;
+    }
+  }
+  /**
+   * Gets the index at which the `key` is found in `array` of key-value pairs.
+   *
+   * @private
+   * @param {Array} array The array to inspect.
+   * @param {*} key The key to search for.
+   * @returns {number} Returns the index of the matched value, else `-1`.
+   */
+
+
+  function assocIndexOf(array, key) {
+    var length = array.length;
+
+    while (length--) {
+      if (eq(array[length][0], key)) {
+        return length;
+      }
+    }
+
+    return -1;
+  }
+  /**
+   * The base implementation of `_.assign` without support for multiple sources
+   * or `customizer` functions.
+   *
+   * @private
+   * @param {Object} object The destination object.
+   * @param {Object} source The source object.
+   * @returns {Object} Returns `object`.
+   */
+
+
+  function baseAssign(object, source) {
+    return object && copyObject(source, keys(source), object);
+  }
+  /**
+   * The base implementation of `_.clone` and `_.cloneDeep` which tracks
+   * traversed objects.
+   *
+   * @private
+   * @param {*} value The value to clone.
+   * @param {boolean} [isDeep] Specify a deep clone.
+   * @param {boolean} [isFull] Specify a clone including symbols.
+   * @param {Function} [customizer] The function to customize cloning.
+   * @param {string} [key] The key of `value`.
+   * @param {Object} [object] The parent object of `value`.
+   * @param {Object} [stack] Tracks traversed objects and their clone counterparts.
+   * @returns {*} Returns the cloned value.
+   */
+
+
+  function baseClone(value, isDeep, isFull, customizer, key, object, stack) {
+    var result;
+
+    if (customizer) {
+      result = object ? customizer(value, key, object, stack) : customizer(value);
+    }
+
+    if (result !== undefined) {
+      return result;
+    }
+
+    if (!isObject(value)) {
+      return value;
+    }
+
+    var isArr = isArray(value);
+
+    if (isArr) {
+      result = initCloneArray(value);
+
+      if (!isDeep) {
+        return copyArray(value, result);
       }
     } else {
-      if ((opts.skipOpeningBracket && (str[idx - 1] === "<" || str[idx - 1] === "/" && str[left(str, left(str, idx))] === "<") || whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim()) && r9.test(whatToTest)) {
-        qualified = true;
-      } else if (r1.test(whatToTest) && extraRequirements(str, idx)) {
-        qualified = true;
-      } else if (r2.test(whatToTest)) {
-        qualified = true;
-      } else if (r3.test(whatToTest) && extraRequirements(str, idx)) {
-        qualified = true;
-      } else if (r4.test(whatToTest)) {
-        qualified = true;
+      var tag = getTag(value),
+          isFunc = tag == funcTag || tag == genTag;
+
+      if (isBuffer(value)) {
+        return cloneBuffer(value, isDeep);
       }
 
-      if (qualified && matchRightIncl(str, idx, knownHtmlTags, {
-        cb: function cb(char) {
-          if (char === undefined) {
-            if (str[idx] === "<" && str[idx + 1] && str[idx + 1].trim() || str[idx - 1] === "<") {
-              passed = true;
-            }
+      if (tag == objectTag || tag == argsTag || isFunc && !object) {
+        if (isHostObject(value)) {
+          return object ? value : {};
+        }
 
-            return true;
-          }
+        result = initCloneObject(isFunc ? {} : value);
 
-          return char.toUpperCase() === char.toLowerCase() && !/\d/.test(char) && char !== "=";
-        },
-        i: true,
-        trimCharsBeforeMatching: ["<", "/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
-      })) {
-        passed = true;
-      }
-    }
-
-    if (!passed && str[idx] === "<" && str[idx + 1] && str[idx + 1].trim() && matchRight(str, idx, knownHtmlTags, matchingOptions)) {
-      passed = true;
-    }
-
-    var res = typeof str === "string" && idx < str.length && passed;
-    return res;
-  }
-
-  var allHTMLTagsKnownToHumanity = new Set(["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "bgsound", "big", "blink", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "command", "content", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "dt", "element", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "image", "img", "input", "ins", "isindex", "kbd", "keygen", "label", "legend", "li", "link", "listing", "main", "map", "mark", "marquee", "menu", "menuitem", "meta", "meter", "multicol", "nav", "nextid", "nobr", "noembed", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "plaintext", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "shadow", "slot", "small", "source", "spacer", "span", "strike", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xmp"]);
-  var espChars = "{}%-$_()*|#";
-  var veryEspChars = "{}|#";
-  var notVeryEspChars = "%()$_*#";
-  var leftyChars = "({";
-  var rightyChars = "})";
-  var espLumpBlacklist = [")|(", "|(", ")(", "()", "}{", "{}", "%)", "*)", "||", "--"];
-  var punctuationChars = ".,;!?";
-  var BACKTICK = "\x60";
-  var LEFTDOUBLEQUOTMARK = "\u201C";
-  var RIGHTDOUBLEQUOTMARK = "\u201D";
-
-  function isStr$1(something) {
-    return typeof something === "string";
-  }
-
-  function isLatinLetter(char) {
-    return isStr$1(char) && char.length === 1 && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
-  }
-
-  function charSuitableForTagName(char) {
-    return /[.\-_a-z0-9\u00B7\u00C0-\uFFFD]/i.test(char);
-  }
-
-  function flipEspTag(str) {
-    var res = "";
-
-    for (var i = 0, len = str.length; i < len; i++) {
-      if (str[i] === "[") {
-        res = "]".concat(res);
-      } else if (str[i] === "]") {
-        res = "[".concat(res);
-      } else if (str[i] === "{") {
-        res = "}".concat(res);
-      } else if (str[i] === "}") {
-        res = "{".concat(res);
-      } else if (str[i] === "(") {
-        res = ")".concat(res);
-      } else if (str[i] === ")") {
-        res = "(".concat(res);
-      } else if (str[i] === "<") {
-        res = ">".concat(res);
-      } else if (str[i] === ">") {
-        res = "<".concat(res);
-      } else if (str[i] === LEFTDOUBLEQUOTMARK) {
-        res = "".concat(RIGHTDOUBLEQUOTMARK).concat(res);
-      } else if (str[i] === RIGHTDOUBLEQUOTMARK) {
-        res = "".concat(LEFTDOUBLEQUOTMARK).concat(res);
+        if (!isDeep) {
+          return copySymbols(value, baseAssign(result, value));
+        }
       } else {
-        res = "".concat(str[i]).concat(res);
+        if (!cloneableTags[tag]) {
+          return object ? value : {};
+        }
+
+        result = initCloneByTag(value, tag, baseClone, isDeep);
+      }
+    } // Check for circular references and return its corresponding clone.
+
+
+    stack || (stack = new Stack());
+    var stacked = stack.get(value);
+
+    if (stacked) {
+      return stacked;
+    }
+
+    stack.set(value, result);
+
+    if (!isArr) {
+      var props = isFull ? getAllKeys(value) : keys(value);
+    }
+
+    arrayEach(props || value, function (subValue, key) {
+      if (props) {
+        key = subValue;
+        subValue = value[key];
+      } // Recursively populate clone (susceptible to call stack limits).
+
+
+      assignValue(result, key, baseClone(subValue, isDeep, isFull, customizer, key, value, stack));
+    });
+    return result;
+  }
+  /**
+   * The base implementation of `_.create` without support for assigning
+   * properties to the created object.
+   *
+   * @private
+   * @param {Object} prototype The object to inherit from.
+   * @returns {Object} Returns the new object.
+   */
+
+
+  function baseCreate(proto) {
+    return isObject(proto) ? objectCreate(proto) : {};
+  }
+  /**
+   * The base implementation of `getAllKeys` and `getAllKeysIn` which uses
+   * `keysFunc` and `symbolsFunc` to get the enumerable property names and
+   * symbols of `object`.
+   *
+   * @private
+   * @param {Object} object The object to query.
+   * @param {Function} keysFunc The function to get the keys of `object`.
+   * @param {Function} symbolsFunc The function to get the symbols of `object`.
+   * @returns {Array} Returns the array of property names and symbols.
+   */
+
+
+  function baseGetAllKeys(object, keysFunc, symbolsFunc) {
+    var result = keysFunc(object);
+    return isArray(object) ? result : arrayPush(result, symbolsFunc(object));
+  }
+  /**
+   * The base implementation of `getTag`.
+   *
+   * @private
+   * @param {*} value The value to query.
+   * @returns {string} Returns the `toStringTag`.
+   */
+
+
+  function baseGetTag(value) {
+    return objectToString.call(value);
+  }
+  /**
+   * The base implementation of `_.isNative` without bad shim checks.
+   *
+   * @private
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is a native function,
+   *  else `false`.
+   */
+
+
+  function baseIsNative(value) {
+    if (!isObject(value) || isMasked(value)) {
+      return false;
+    }
+
+    var pattern = isFunction(value) || isHostObject(value) ? reIsNative : reIsHostCtor;
+    return pattern.test(toSource(value));
+  }
+  /**
+   * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
+   *
+   * @private
+   * @param {Object} object The object to query.
+   * @returns {Array} Returns the array of property names.
+   */
+
+
+  function baseKeys(object) {
+    if (!isPrototype(object)) {
+      return nativeKeys(object);
+    }
+
+    var result = [];
+
+    for (var key in Object(object)) {
+      if (hasOwnProperty.call(object, key) && key != 'constructor') {
+        result.push(key);
       }
     }
 
-    return res;
+    return result;
   }
+  /**
+   * Creates a clone of  `buffer`.
+   *
+   * @private
+   * @param {Buffer} buffer The buffer to clone.
+   * @param {boolean} [isDeep] Specify a deep clone.
+   * @returns {Buffer} Returns the cloned buffer.
+   */
 
-  function isTagNameRecognised(tagName) {
-    return allHTMLTagsKnownToHumanity.has(tagName.toLowerCase()) || ["doctype", "cdata", "xml"].includes(tagName.toLowerCase());
-  }
 
-  function xBeforeYOnTheRight$1(str, startingIdx, x, y) {
-    for (var i = startingIdx, len = str.length; i < len; i++) {
-      if (str.startsWith(x, i)) {
-        return true;
-      }
-
-      if (str.startsWith(y, i)) {
-        return false;
-      }
+  function cloneBuffer(buffer, isDeep) {
+    if (isDeep) {
+      return buffer.slice();
     }
 
+    var result = new buffer.constructor(buffer.length);
+    buffer.copy(result);
+    return result;
+  }
+  /**
+   * Creates a clone of `arrayBuffer`.
+   *
+   * @private
+   * @param {ArrayBuffer} arrayBuffer The array buffer to clone.
+   * @returns {ArrayBuffer} Returns the cloned array buffer.
+   */
+
+
+  function cloneArrayBuffer(arrayBuffer) {
+    var result = new arrayBuffer.constructor(arrayBuffer.byteLength);
+    new Uint8Array(result).set(new Uint8Array(arrayBuffer));
+    return result;
+  }
+  /**
+   * Creates a clone of `dataView`.
+   *
+   * @private
+   * @param {Object} dataView The data view to clone.
+   * @param {boolean} [isDeep] Specify a deep clone.
+   * @returns {Object} Returns the cloned data view.
+   */
+
+
+  function cloneDataView(dataView, isDeep) {
+    var buffer = isDeep ? cloneArrayBuffer(dataView.buffer) : dataView.buffer;
+    return new dataView.constructor(buffer, dataView.byteOffset, dataView.byteLength);
+  }
+  /**
+   * Creates a clone of `map`.
+   *
+   * @private
+   * @param {Object} map The map to clone.
+   * @param {Function} cloneFunc The function to clone values.
+   * @param {boolean} [isDeep] Specify a deep clone.
+   * @returns {Object} Returns the cloned map.
+   */
+
+
+  function cloneMap(map, isDeep, cloneFunc) {
+    var array = isDeep ? cloneFunc(mapToArray(map), true) : mapToArray(map);
+    return arrayReduce(array, addMapEntry, new map.constructor());
+  }
+  /**
+   * Creates a clone of `regexp`.
+   *
+   * @private
+   * @param {Object} regexp The regexp to clone.
+   * @returns {Object} Returns the cloned regexp.
+   */
+
+
+  function cloneRegExp(regexp) {
+    var result = new regexp.constructor(regexp.source, reFlags.exec(regexp));
+    result.lastIndex = regexp.lastIndex;
+    return result;
+  }
+  /**
+   * Creates a clone of `set`.
+   *
+   * @private
+   * @param {Object} set The set to clone.
+   * @param {Function} cloneFunc The function to clone values.
+   * @param {boolean} [isDeep] Specify a deep clone.
+   * @returns {Object} Returns the cloned set.
+   */
+
+
+  function cloneSet(set, isDeep, cloneFunc) {
+    var array = isDeep ? cloneFunc(setToArray(set), true) : setToArray(set);
+    return arrayReduce(array, addSetEntry, new set.constructor());
+  }
+  /**
+   * Creates a clone of the `symbol` object.
+   *
+   * @private
+   * @param {Object} symbol The symbol object to clone.
+   * @returns {Object} Returns the cloned symbol object.
+   */
+
+
+  function cloneSymbol(symbol) {
+    return symbolValueOf ? Object(symbolValueOf.call(symbol)) : {};
+  }
+  /**
+   * Creates a clone of `typedArray`.
+   *
+   * @private
+   * @param {Object} typedArray The typed array to clone.
+   * @param {boolean} [isDeep] Specify a deep clone.
+   * @returns {Object} Returns the cloned typed array.
+   */
+
+
+  function cloneTypedArray(typedArray, isDeep) {
+    var buffer = isDeep ? cloneArrayBuffer(typedArray.buffer) : typedArray.buffer;
+    return new typedArray.constructor(buffer, typedArray.byteOffset, typedArray.length);
+  }
+  /**
+   * Copies the values of `source` to `array`.
+   *
+   * @private
+   * @param {Array} source The array to copy values from.
+   * @param {Array} [array=[]] The array to copy values to.
+   * @returns {Array} Returns `array`.
+   */
+
+
+  function copyArray(source, array) {
+    var index = -1,
+        length = source.length;
+    array || (array = Array(length));
+
+    while (++index < length) {
+      array[index] = source[index];
+    }
+
+    return array;
+  }
+  /**
+   * Copies properties of `source` to `object`.
+   *
+   * @private
+   * @param {Object} source The object to copy properties from.
+   * @param {Array} props The property identifiers to copy.
+   * @param {Object} [object={}] The object to copy properties to.
+   * @param {Function} [customizer] The function to customize copied values.
+   * @returns {Object} Returns `object`.
+   */
+
+
+  function copyObject(source, props, object, customizer) {
+    object || (object = {});
+    var index = -1,
+        length = props.length;
+
+    while (++index < length) {
+      var key = props[index];
+      var newValue = customizer ? customizer(object[key], source[key], key, object, source) : undefined;
+      assignValue(object, key, newValue === undefined ? source[key] : newValue);
+    }
+
+    return object;
+  }
+  /**
+   * Copies own symbol properties of `source` to `object`.
+   *
+   * @private
+   * @param {Object} source The object to copy symbols from.
+   * @param {Object} [object={}] The object to copy symbols to.
+   * @returns {Object} Returns `object`.
+   */
+
+
+  function copySymbols(source, object) {
+    return copyObject(source, getSymbols(source), object);
+  }
+  /**
+   * Creates an array of own enumerable property names and symbols of `object`.
+   *
+   * @private
+   * @param {Object} object The object to query.
+   * @returns {Array} Returns the array of property names and symbols.
+   */
+
+
+  function getAllKeys(object) {
+    return baseGetAllKeys(object, keys, getSymbols);
+  }
+  /**
+   * Gets the data for `map`.
+   *
+   * @private
+   * @param {Object} map The map to query.
+   * @param {string} key The reference key.
+   * @returns {*} Returns the map data.
+   */
+
+
+  function getMapData(map, key) {
+    var data = map.__data__;
+    return isKeyable(key) ? data[typeof key == 'string' ? 'string' : 'hash'] : data.map;
+  }
+  /**
+   * Gets the native function at `key` of `object`.
+   *
+   * @private
+   * @param {Object} object The object to query.
+   * @param {string} key The key of the method to get.
+   * @returns {*} Returns the function if it's native, else `undefined`.
+   */
+
+
+  function getNative(object, key) {
+    var value = getValue(object, key);
+    return baseIsNative(value) ? value : undefined;
+  }
+  /**
+   * Creates an array of the own enumerable symbol properties of `object`.
+   *
+   * @private
+   * @param {Object} object The object to query.
+   * @returns {Array} Returns the array of symbols.
+   */
+
+
+  var getSymbols = nativeGetSymbols ? overArg(nativeGetSymbols, Object) : stubArray;
+  /**
+   * Gets the `toStringTag` of `value`.
+   *
+   * @private
+   * @param {*} value The value to query.
+   * @returns {string} Returns the `toStringTag`.
+   */
+
+  var getTag = baseGetTag; // Fallback for data views, maps, sets, and weak maps in IE 11,
+  // for data views in Edge < 14, and promises in Node.js.
+
+  if (DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag || Map && getTag(new Map()) != mapTag || Promise && getTag(Promise.resolve()) != promiseTag || Set && getTag(new Set()) != setTag || WeakMap && getTag(new WeakMap()) != weakMapTag) {
+    getTag = function getTag(value) {
+      var result = objectToString.call(value),
+          Ctor = result == objectTag ? value.constructor : undefined,
+          ctorString = Ctor ? toSource(Ctor) : undefined;
+
+      if (ctorString) {
+        switch (ctorString) {
+          case dataViewCtorString:
+            return dataViewTag;
+
+          case mapCtorString:
+            return mapTag;
+
+          case promiseCtorString:
+            return promiseTag;
+
+          case setCtorString:
+            return setTag;
+
+          case weakMapCtorString:
+            return weakMapTag;
+        }
+      }
+
+      return result;
+    };
+  }
+  /**
+   * Initializes an array clone.
+   *
+   * @private
+   * @param {Array} array The array to clone.
+   * @returns {Array} Returns the initialized clone.
+   */
+
+
+  function initCloneArray(array) {
+    var length = array.length,
+        result = array.constructor(length); // Add properties assigned by `RegExp#exec`.
+
+    if (length && typeof array[0] == 'string' && hasOwnProperty.call(array, 'index')) {
+      result.index = array.index;
+      result.input = array.input;
+    }
+
+    return result;
+  }
+  /**
+   * Initializes an object clone.
+   *
+   * @private
+   * @param {Object} object The object to clone.
+   * @returns {Object} Returns the initialized clone.
+   */
+
+
+  function initCloneObject(object) {
+    return typeof object.constructor == 'function' && !isPrototype(object) ? baseCreate(getPrototype(object)) : {};
+  }
+  /**
+   * Initializes an object clone based on its `toStringTag`.
+   *
+   * **Note:** This function only supports cloning values with tags of
+   * `Boolean`, `Date`, `Error`, `Number`, `RegExp`, or `String`.
+   *
+   * @private
+   * @param {Object} object The object to clone.
+   * @param {string} tag The `toStringTag` of the object to clone.
+   * @param {Function} cloneFunc The function to clone values.
+   * @param {boolean} [isDeep] Specify a deep clone.
+   * @returns {Object} Returns the initialized clone.
+   */
+
+
+  function initCloneByTag(object, tag, cloneFunc, isDeep) {
+    var Ctor = object.constructor;
+
+    switch (tag) {
+      case arrayBufferTag:
+        return cloneArrayBuffer(object);
+
+      case boolTag:
+      case dateTag:
+        return new Ctor(+object);
+
+      case dataViewTag:
+        return cloneDataView(object, isDeep);
+
+      case float32Tag:
+      case float64Tag:
+      case int8Tag:
+      case int16Tag:
+      case int32Tag:
+      case uint8Tag:
+      case uint8ClampedTag:
+      case uint16Tag:
+      case uint32Tag:
+        return cloneTypedArray(object, isDeep);
+
+      case mapTag:
+        return cloneMap(object, isDeep, cloneFunc);
+
+      case numberTag:
+      case stringTag:
+        return new Ctor(object);
+
+      case regexpTag:
+        return cloneRegExp(object);
+
+      case setTag:
+        return cloneSet(object, isDeep, cloneFunc);
+
+      case symbolTag:
+        return cloneSymbol(object);
+    }
+  }
+  /**
+   * Checks if `value` is a valid array-like index.
+   *
+   * @private
+   * @param {*} value The value to check.
+   * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
+   * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
+   */
+
+
+  function isIndex(value, length) {
+    length = length == null ? MAX_SAFE_INTEGER : length;
+    return !!length && (typeof value == 'number' || reIsUint.test(value)) && value > -1 && value % 1 == 0 && value < length;
+  }
+  /**
+   * Checks if `value` is suitable for use as unique object key.
+   *
+   * @private
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is suitable, else `false`.
+   */
+
+
+  function isKeyable(value) {
+    var type = typeof value;
+    return type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean' ? value !== '__proto__' : value === null;
+  }
+  /**
+   * Checks if `func` has its source masked.
+   *
+   * @private
+   * @param {Function} func The function to check.
+   * @returns {boolean} Returns `true` if `func` is masked, else `false`.
+   */
+
+
+  function isMasked(func) {
+    return !!maskSrcKey && maskSrcKey in func;
+  }
+  /**
+   * Checks if `value` is likely a prototype object.
+   *
+   * @private
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
+   */
+
+
+  function isPrototype(value) {
+    var Ctor = value && value.constructor,
+        proto = typeof Ctor == 'function' && Ctor.prototype || objectProto;
+    return value === proto;
+  }
+  /**
+   * Converts `func` to its source code.
+   *
+   * @private
+   * @param {Function} func The function to process.
+   * @returns {string} Returns the source code.
+   */
+
+
+  function toSource(func) {
+    if (func != null) {
+      try {
+        return funcToString.call(func);
+      } catch (e) {}
+
+      try {
+        return func + '';
+      } catch (e) {}
+    }
+
+    return '';
+  }
+  /**
+   * This method is like `_.clone` except that it recursively clones `value`.
+   *
+   * @static
+   * @memberOf _
+   * @since 1.0.0
+   * @category Lang
+   * @param {*} value The value to recursively clone.
+   * @returns {*} Returns the deep cloned value.
+   * @see _.clone
+   * @example
+   *
+   * var objects = [{ 'a': 1 }, { 'b': 2 }];
+   *
+   * var deep = _.cloneDeep(objects);
+   * console.log(deep[0] === objects[0]);
+   * // => false
+   */
+
+
+  function cloneDeep(value) {
+    return baseClone(value, true, true);
+  }
+  /**
+   * Performs a
+   * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+   * comparison between two values to determine if they are equivalent.
+   *
+   * @static
+   * @memberOf _
+   * @since 4.0.0
+   * @category Lang
+   * @param {*} value The value to compare.
+   * @param {*} other The other value to compare.
+   * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+   * @example
+   *
+   * var object = { 'a': 1 };
+   * var other = { 'a': 1 };
+   *
+   * _.eq(object, object);
+   * // => true
+   *
+   * _.eq(object, other);
+   * // => false
+   *
+   * _.eq('a', 'a');
+   * // => true
+   *
+   * _.eq('a', Object('a'));
+   * // => false
+   *
+   * _.eq(NaN, NaN);
+   * // => true
+   */
+
+
+  function eq(value, other) {
+    return value === other || value !== value && other !== other;
+  }
+  /**
+   * Checks if `value` is likely an `arguments` object.
+   *
+   * @static
+   * @memberOf _
+   * @since 0.1.0
+   * @category Lang
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is an `arguments` object,
+   *  else `false`.
+   * @example
+   *
+   * _.isArguments(function() { return arguments; }());
+   * // => true
+   *
+   * _.isArguments([1, 2, 3]);
+   * // => false
+   */
+
+
+  function isArguments(value) {
+    // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
+    return isArrayLikeObject(value) && hasOwnProperty.call(value, 'callee') && (!propertyIsEnumerable.call(value, 'callee') || objectToString.call(value) == argsTag);
+  }
+  /**
+   * Checks if `value` is classified as an `Array` object.
+   *
+   * @static
+   * @memberOf _
+   * @since 0.1.0
+   * @category Lang
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is an array, else `false`.
+   * @example
+   *
+   * _.isArray([1, 2, 3]);
+   * // => true
+   *
+   * _.isArray(document.body.children);
+   * // => false
+   *
+   * _.isArray('abc');
+   * // => false
+   *
+   * _.isArray(_.noop);
+   * // => false
+   */
+
+
+  var isArray = Array.isArray;
+  /**
+   * Checks if `value` is array-like. A value is considered array-like if it's
+   * not a function and has a `value.length` that's an integer greater than or
+   * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
+   *
+   * @static
+   * @memberOf _
+   * @since 4.0.0
+   * @category Lang
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
+   * @example
+   *
+   * _.isArrayLike([1, 2, 3]);
+   * // => true
+   *
+   * _.isArrayLike(document.body.children);
+   * // => true
+   *
+   * _.isArrayLike('abc');
+   * // => true
+   *
+   * _.isArrayLike(_.noop);
+   * // => false
+   */
+
+  function isArrayLike(value) {
+    return value != null && isLength(value.length) && !isFunction(value);
+  }
+  /**
+   * This method is like `_.isArrayLike` except that it also checks if `value`
+   * is an object.
+   *
+   * @static
+   * @memberOf _
+   * @since 4.0.0
+   * @category Lang
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is an array-like object,
+   *  else `false`.
+   * @example
+   *
+   * _.isArrayLikeObject([1, 2, 3]);
+   * // => true
+   *
+   * _.isArrayLikeObject(document.body.children);
+   * // => true
+   *
+   * _.isArrayLikeObject('abc');
+   * // => false
+   *
+   * _.isArrayLikeObject(_.noop);
+   * // => false
+   */
+
+
+  function isArrayLikeObject(value) {
+    return isObjectLike(value) && isArrayLike(value);
+  }
+  /**
+   * Checks if `value` is a buffer.
+   *
+   * @static
+   * @memberOf _
+   * @since 4.3.0
+   * @category Lang
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is a buffer, else `false`.
+   * @example
+   *
+   * _.isBuffer(new Buffer(2));
+   * // => true
+   *
+   * _.isBuffer(new Uint8Array(2));
+   * // => false
+   */
+
+
+  var isBuffer = nativeIsBuffer || stubFalse;
+  /**
+   * Checks if `value` is classified as a `Function` object.
+   *
+   * @static
+   * @memberOf _
+   * @since 0.1.0
+   * @category Lang
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is a function, else `false`.
+   * @example
+   *
+   * _.isFunction(_);
+   * // => true
+   *
+   * _.isFunction(/abc/);
+   * // => false
+   */
+
+  function isFunction(value) {
+    // The use of `Object#toString` avoids issues with the `typeof` operator
+    // in Safari 8-9 which returns 'object' for typed array and other constructors.
+    var tag = isObject(value) ? objectToString.call(value) : '';
+    return tag == funcTag || tag == genTag;
+  }
+  /**
+   * Checks if `value` is a valid array-like length.
+   *
+   * **Note:** This method is loosely based on
+   * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
+   *
+   * @static
+   * @memberOf _
+   * @since 4.0.0
+   * @category Lang
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
+   * @example
+   *
+   * _.isLength(3);
+   * // => true
+   *
+   * _.isLength(Number.MIN_VALUE);
+   * // => false
+   *
+   * _.isLength(Infinity);
+   * // => false
+   *
+   * _.isLength('3');
+   * // => false
+   */
+
+
+  function isLength(value) {
+    return typeof value == 'number' && value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+  }
+  /**
+   * Checks if `value` is the
+   * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+   * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+   *
+   * @static
+   * @memberOf _
+   * @since 0.1.0
+   * @category Lang
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+   * @example
+   *
+   * _.isObject({});
+   * // => true
+   *
+   * _.isObject([1, 2, 3]);
+   * // => true
+   *
+   * _.isObject(_.noop);
+   * // => true
+   *
+   * _.isObject(null);
+   * // => false
+   */
+
+
+  function isObject(value) {
+    var type = typeof value;
+    return !!value && (type == 'object' || type == 'function');
+  }
+  /**
+   * Checks if `value` is object-like. A value is object-like if it's not `null`
+   * and has a `typeof` result of "object".
+   *
+   * @static
+   * @memberOf _
+   * @since 4.0.0
+   * @category Lang
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+   * @example
+   *
+   * _.isObjectLike({});
+   * // => true
+   *
+   * _.isObjectLike([1, 2, 3]);
+   * // => true
+   *
+   * _.isObjectLike(_.noop);
+   * // => false
+   *
+   * _.isObjectLike(null);
+   * // => false
+   */
+
+
+  function isObjectLike(value) {
+    return !!value && typeof value == 'object';
+  }
+  /**
+   * Creates an array of the own enumerable property names of `object`.
+   *
+   * **Note:** Non-object values are coerced to objects. See the
+   * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
+   * for more details.
+   *
+   * @static
+   * @since 0.1.0
+   * @memberOf _
+   * @category Object
+   * @param {Object} object The object to query.
+   * @returns {Array} Returns the array of property names.
+   * @example
+   *
+   * function Foo() {
+   *   this.a = 1;
+   *   this.b = 2;
+   * }
+   *
+   * Foo.prototype.c = 3;
+   *
+   * _.keys(new Foo);
+   * // => ['a', 'b'] (iteration order is not guaranteed)
+   *
+   * _.keys('hi');
+   * // => ['0', '1']
+   */
+
+
+  function keys(object) {
+    return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
+  }
+  /**
+   * This method returns a new empty array.
+   *
+   * @static
+   * @memberOf _
+   * @since 4.13.0
+   * @category Util
+   * @returns {Array} Returns the new empty array.
+   * @example
+   *
+   * var arrays = _.times(2, _.stubArray);
+   *
+   * console.log(arrays);
+   * // => [[], []]
+   *
+   * console.log(arrays[0] === arrays[1]);
+   * // => false
+   */
+
+
+  function stubArray() {
+    return [];
+  }
+  /**
+   * This method returns `false`.
+   *
+   * @static
+   * @memberOf _
+   * @since 4.13.0
+   * @category Util
+   * @returns {boolean} Returns `false`.
+   * @example
+   *
+   * _.times(2, _.stubFalse);
+   * // => [false, false]
+   */
+
+
+  function stubFalse() {
     return false;
   }
 
-  function getLastEspLayerObjIdx(layers) {
-    if (layers && layers.length) {
-      for (var z = layers.length; z--;) {
-        if (layers[z].type === "esp") {
-          return z;
-        }
-      }
-    }
+  module.exports = cloneDeep;
+});
 
-    return undefined;
+/**
+ * lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+/** Used for built-in method references. */
+
+
+var funcProto = Function.prototype;
+/** Used to resolve the decompiled source of functions. */
+
+var funcToString = funcProto.toString;
+/** Used to infer the `Object` constructor. */
+
+var objectCtorString = funcToString.call(Object);
+
+var RAWNBSP = "\xA0"; // separates the value from flags
+
+function rightMain(_ref) {
+  var str = _ref.str,
+      _ref$idx = _ref.idx,
+      idx = _ref$idx === void 0 ? 0 : _ref$idx,
+      _ref$stopAtNewlines = _ref.stopAtNewlines,
+      stopAtNewlines = _ref$stopAtNewlines === void 0 ? false : _ref$stopAtNewlines,
+      _ref$stopAtRawNbsp = _ref.stopAtRawNbsp,
+      stopAtRawNbsp = _ref$stopAtRawNbsp === void 0 ? false : _ref$stopAtRawNbsp;
+
+  if (typeof str !== "string" || !str.length) {
+    return null;
   }
 
-  function getWholeEspTagLumpOnTheRight(str, i, layers) {
-    var wholeEspTagLumpOnTheRight = str[i];
-    var len = str.length;
-    var lastEspLayerObj = layers[getLastEspLayerObjIdx(layers)];
-
-    for (var y = i + 1; y < len; y++) {
-      if (leftyChars.includes(str[y]) && rightyChars.includes(str[y - 1])) {
-        break;
-      }
-
-      if (wholeEspTagLumpOnTheRight.length > 1 && (wholeEspTagLumpOnTheRight.includes("<") || wholeEspTagLumpOnTheRight.includes("{") || wholeEspTagLumpOnTheRight.includes("[") || wholeEspTagLumpOnTheRight.includes("(")) && str[y] === "(") {
-        break;
-      }
-
-      if (espChars.includes(str[y]) || lastEspLayerObj && lastEspLayerObj.guessedClosingLump.includes(str[y]) || str[i] === "<" && str[y] === "/" || str[y] === ">" && wholeEspTagLumpOnTheRight === "--" && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-" || !lastEspLayerObj && y > i && "!=@".includes(str[y])) {
-        wholeEspTagLumpOnTheRight += str[y];
-      } else {
-        break;
-      }
-    }
-
-    if (wholeEspTagLumpOnTheRight && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].guessedClosingLump && wholeEspTagLumpOnTheRight.length > layers[layers.length - 1].guessedClosingLump.length) {
-      if (wholeEspTagLumpOnTheRight.endsWith(layers[layers.length - 1].openingLump)) {
-        return wholeEspTagLumpOnTheRight.slice(0, wholeEspTagLumpOnTheRight.length - layers[layers.length - 1].openingLump.length);
-      }
-
-      var uniqueCharsListFromGuessedClosingLumpArr = new Set(layers[layers.length - 1].guessedClosingLump);
-      var found = 0;
-
-      var _loop = function _loop(len2, _y) {
-        if (!uniqueCharsListFromGuessedClosingLumpArr.has(wholeEspTagLumpOnTheRight[_y]) && found > 1) {
-          return {
-            v: wholeEspTagLumpOnTheRight.slice(0, _y)
-          };
-        }
-
-        if (uniqueCharsListFromGuessedClosingLumpArr.has(wholeEspTagLumpOnTheRight[_y])) {
-          found += 1;
-          uniqueCharsListFromGuessedClosingLumpArr = new Set(_toConsumableArray(uniqueCharsListFromGuessedClosingLumpArr).filter(function (el) {
-            return el !== wholeEspTagLumpOnTheRight[_y];
-          }));
-        }
-      };
-
-      for (var _y = 0, len2 = wholeEspTagLumpOnTheRight.length; _y < len2; _y++) {
-        var _ret = _loop(len2, _y);
-
-        if (_typeof(_ret) === "object") return _ret.v;
-      }
-    }
-
-    return wholeEspTagLumpOnTheRight;
+  if (!idx || typeof idx !== "number") {
+    idx = 0;
   }
 
-  function startsHtmlComment(str, i, token, layers) {
-    return str[i] === "<" && (matchRight(str, i, ["!--"], {
-      maxMismatches: 1,
-      firstMustMatch: true,
-      trimBeforeMatching: true
-    }) || matchRight(str, i, ["![endif]"], {
-      i: true,
-      maxMismatches: 2,
-      trimBeforeMatching: true
-    })) && !matchRight(str, i, ["![cdata", "<"], {
-      i: true,
-      maxMismatches: 1,
-      trimBeforeMatching: true
-    }) && (token.type !== "comment" || token.kind !== "not") || str[i] === "-" && matchRight(str, i, ["->"], {
-      trimBeforeMatching: true
-    }) && (token.type !== "comment" || !token.closing && token.kind !== "not") && !matchLeft(str, i, "<", {
-      trimBeforeMatching: true,
-      trimCharsBeforeMatching: ["-", "!"]
-    }) && (!Array.isArray(layers) || !layers.length || layers[layers.length - 1].type !== "esp" || !(layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-"));
+  if (!str[idx + 1]) {
+    return null;
   }
 
-  function startsCssComment(str, i, token, layers, withinStyle) {
-    return withinStyle && (str[i] === "/" && str[i + 1] === "*" || str[i] === "*" && str[i + 1] === "/");
+  if ( // next character exists
+  str[idx + 1] && ( // and...
+  // it's solid
+  str[idx + 1].trim() || // or it's a whitespace character, but...
+  // stop at newlines is on
+  stopAtNewlines && // and it's a newline
+  "\n\r".includes(str[idx + 1]) || // stop at raw nbsp is on
+  stopAtRawNbsp && // and it's a raw nbsp
+  str[idx + 1] === RAWNBSP)) {
+    // best case scenario - next character is non-whitespace:
+    return idx + 1;
   }
 
-  function matchLayerLast(wholeEspTagLump, layers, matchFirstInstead) {
-    if (!layers.length) {
-      return;
+  if ( // second next character exists
+  str[idx + 2] && ( // and...
+  // it's solid
+  str[idx + 2].trim() || // it's a whitespace character and...
+  // stop at newlines is on
+  stopAtNewlines && // and it's a newline
+  "\n\r".includes(str[idx + 2]) || // stop at raw nbsp is on
+  stopAtRawNbsp && // and it's a raw nbsp
+  str[idx + 2] === RAWNBSP)) {
+    // second best case scenario - second next character is non-whitespace:
+    return idx + 2;
+  } // worst case scenario - traverse forwards
+
+
+  for (var i = idx + 1, len = str.length; i < len; i++) {
+    if ( // it's solid
+    str[i].trim() || // it's a whitespace character and...
+    // stop at newlines is on
+    stopAtNewlines && // and it's a newline
+    "\n\r".includes(str[i]) || // stop at raw nbsp is on
+    stopAtRawNbsp && // and it's a raw nbsp
+    str[i] === RAWNBSP) {
+      return i;
     }
+  }
 
-    var whichLayerToMatch = matchFirstInstead ? layers[0] : layers[layers.length - 1];
+  return null;
+}
 
-    if (whichLayerToMatch.type !== "esp") {
-      return;
+function right(str, idx) {
+  return rightMain({
+    str: str,
+    idx: idx,
+    stopAtNewlines: false,
+    stopAtRawNbsp: false
+  });
+}
+//
+//       lllllll                        ffffffffffffffff           tttt                    ((((((       ))))))
+//       l:::::l                       f::::::::::::::::f       ttt:::t                  ((::::::(     )::::::))
+//       l:::::l                      f::::::::::::::::::f      t:::::t                ((:::::::(       ):::::::))
+//       l:::::l                      f::::::fffffff:::::f      t:::::t               (:::::::((         )):::::::)
+//       l::::l     eeeeeeeeeeee     f:::::f       ffffffttttttt:::::ttttttt         (::::::(             )::::::)
+//       l::::l   ee::::::::::::ee   f:::::f             t:::::::::::::::::t         (:::::(               ):::::)
+//       l::::l  e::::::eeeee:::::eef:::::::ffffff       t:::::::::::::::::t         (:::::(               ):::::)
+//       l::::l e::::::e     e:::::ef::::::::::::f       tttttt:::::::tttttt         (:::::(               ):::::)
+//       l::::l e:::::::eeeee::::::ef::::::::::::f             t:::::t               (:::::(               ):::::)
+//       l::::l e:::::::::::::::::e f:::::::ffffff             t:::::t               (:::::(               ):::::)
+//       l::::l e::::::eeeeeeeeeee   f:::::f                   t:::::t               (:::::(               ):::::)
+//       l::::l e:::::::e            f:::::f                   t:::::t    tttttt     (::::::(             )::::::)
+//       l::::::le::::::::e          f:::::::f                  t::::::tttt:::::t     (:::::::((         )):::::::)
+//       l::::::l e::::::::eeeeeeee  f:::::::f                  tt::::::::::::::t      ((:::::::(       ):::::::))
+//       l::::::l  ee:::::::::::::e  f:::::::f                    tt:::::::::::tt        ((::::::(     )::::::)
+//       llllllll    eeeeeeeeeeeeee  fffffffff                      ttttttttttt            ((((((       ))))))
+//
+//
+// Finds the index of the first non-whitespace character on the left
+
+
+function leftMain(_ref2) {
+  var str = _ref2.str,
+      idx = _ref2.idx,
+      stopAtNewlines = _ref2.stopAtNewlines,
+      stopAtRawNbsp = _ref2.stopAtRawNbsp;
+
+  if (typeof str !== "string" || !str.length) {
+    return null;
+  }
+
+  if (!idx || typeof idx !== "number") {
+    idx = 0;
+  }
+
+  if (idx < 1) {
+    return null;
+  }
+
+  if ( // ~- means minus one, in bitwise
+  str[~-idx] && ( // either it's not a whitespace
+  str[~-idx].trim() || // or it is whitespace, but...
+  // stop at newlines is on
+  stopAtNewlines && // and it's a newline
+  "\n\r".includes(str[~-idx]) || // stop at raw nbsp is on
+  stopAtRawNbsp && // and it's a raw nbsp
+  str[~-idx] === RAWNBSP)) {
+    // best case scenario - next character is non-whitespace:
+    return ~-idx;
+  } // if we reached this point, this means character on the left is whitespace -
+  // fine - check the next character on the left, str[idx - 2]
+
+
+  if ( // second character exists
+  str[idx - 2] && ( // either it's not whitespace so Bob's your uncle here's non-whitespace character
+  str[idx - 2].trim() || // it is whitespace, but...
+  // stop at newlines is on
+  stopAtNewlines && // it's some sort of a newline
+  "\n\r".includes(str[idx - 2]) || // stop at raw nbsp is on
+  stopAtRawNbsp && // and it's a raw nbsp
+  str[idx - 2] === RAWNBSP)) {
+    // second best case scenario - second next character is non-whitespace:
+    return idx - 2;
+  } // worst case scenario - traverse backwards
+
+
+  for (var i = idx; i--;) {
+    if (str[i] && ( // it's non-whitespace character
+    str[i].trim() || // or it is whitespace character, but...
+    // stop at newlines is on
+    stopAtNewlines && // it's some sort of a newline
+    "\n\r".includes(str[i]) || // stop at raw nbsp is on
+    stopAtRawNbsp && // and it's a raw nbsp
+    str[i] === RAWNBSP)) {
+      return i;
     }
+  }
 
-    if (wholeEspTagLump.includes(whichLayerToMatch.guessedClosingLump) || Array.from(wholeEspTagLump).every(function (char) {
-      return whichLayerToMatch.guessedClosingLump.includes(char);
+  return null;
+}
+
+function left(str, idx) {
+  return leftMain({
+    str: str,
+    idx: idx,
+    stopAtNewlines: false,
+    stopAtRawNbsp: false
+  });
+}
+
+/**
+ * html-all-known-attributes
+ * All HTML attributes known to the Humanity
+ * Version: 3.0.0
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/html-all-known-attributes/
+ */
+var allHtmlAttribs = new Set(["abbr", "accept", "accept-charset", "accesskey", "action", "align", "alink", "allow", "alt", "archive", "async", "autocapitalize", "autocomplete", "autofocus", "autoplay", "axis", "background", "background-attachment", "background-color", "background-image", "background-position", "background-position-x", "background-position-y", "background-repeat", "bgcolor", "border", "border-bottom", "border-bottom-color", "border-bottom-style", "border-bottom-width", "border-collapse", "border-color", "border-left", "border-left-color", "border-left-style", "border-left-width", "border-right", "border-right-color", "border-right-style", "border-right-width", "border-style", "border-top", "border-top-color", "border-top-style", "border-top-width", "border-width", "buffered", "capture", "cellpadding", "cellspacing", "challenge", "char", "charoff", "charset", "checked", "cite", "class", "classid", "clear", "clip", "code", "codebase", "codetype", "color", "cols", "colspan", "column-span", "compact", "content", "contenteditable", "contextmenu", "controls", "coords", "crossorigin", "csp", "cursor", "data", "data-*", "datetime", "declare", "decoding", "default", "defer", "dir", "direction", "dirname", "disabled", "display", "download", "draggable", "dropzone", "enctype", "enterkeyhint", "face", "filter", "float", "font", "font-color", "font-emphasize", "font-emphasize-position", "font-emphasize-style", "font-family", "font-size", "font-style", "font-variant", "font-weight", "for", "form", "formaction", "formenctype", "formmethod", "formnovalidate", "formtarget", "frame", "frameborder", "frontuid", "headers", "height", "hidden", "high", "horiz-align", "href", "hreflang", "hspace", "http-equiv", "icon", "id", "importance", "inputmode", "integrity", "intrinsicsize", "ismap", "itemprop", "keytype", "kind", "label", "lang", "language", "layout-flow", "layout-grid", "layout-grid-char", "layout-grid-line", "layout-grid-mode", "layout-grid-type", "left", "letter-spacing", "line-break", "line-height", "link", "list", "list-image-1", "list-image-2", "list-image-3", "list-style", "list-style-image", "list-style-position", "list-style-type", "loading", "longdesc", "loop", "low", "manifest", "margin", "margin-bottom", "margin-left", "margin-right", "margin-top", "marginheight", "marginwidth", "max", "maxlength", "media", "method", "min", "minlength", "mso-ansi-font-size", "mso-ansi-font-style", "mso-ansi-font-weight", "mso-ansi-language", "mso-ascii-font-family", "mso-background", "mso-background-source", "mso-baseline-position", "mso-bidi-flag", "mso-bidi-font-family", "mso-bidi-font-size", "mso-bidi-font-style", "mso-bidi-font-weight", "mso-bidi-language", "mso-bookmark", "mso-border-alt", "mso-border-between", "mso-border-between-color", "mso-border-between-style", "mso-border-between-width", "mso-border-bottom-alt", "mso-border-bottom-color-alt", "mso-border-bottom-source", "mso-border-bottom-style-alt", "mso-border-bottom-width-alt", "mso-border-color-alt", "mso-border-effect", "mso-border-left-alt", "mso-border-left-color-alt", "mso-border-left-source", "mso-border-left-style-alt", "mso-border-left-width-alt", "mso-border-right-alt", "mso-border-right-color-alt", "mso-border-right-source", "mso-border-right-style-alt", "mso-border-right-width-alt", "mso-border-shadow", "mso-border-source", "mso-border-style-alt", "mso-border-top-alt", "mso-border-top-color-alt", "mso-border-top-source", "mso-border-top-style-alt", "mso-border-top-width-alt", "mso-border-width-alt", "mso-break-type", "mso-build", "mso-build-after-action", "mso-build-after-color", "mso-build-auto-secs", "mso-build-avi", "mso-build-dual-id", "mso-build-order", "mso-build-sound-name", "mso-bullet-image", "mso-cell-special", "mso-cellspacing", "mso-char-indent", "mso-char-indent-count", "mso-char-indent-size", "mso-char-type", "mso-char-wrap", "mso-color-alt", "mso-color-index", "mso-color-source", "mso-column-break-before", "mso-column-separator", "mso-columns", "mso-comment-author", "mso-comment-continuation", "mso-comment-id", "mso-comment-reference", "mso-data-placement", "mso-default-height", "mso-default-width", "mso-diagonal-down", "mso-diagonal-down-color", "mso-diagonal-down-source", "mso-diagonal-down-style", "mso-diagonal-down-width", "mso-diagonal-up", "mso-diagonal-up-color", "mso-diagonal-up-source", "mso-diagonal-up-style", "mso-diagonal-up-width", "mso-displayed-decimal-separator", "mso-displayed-thousand-separator", "mso-element", "mso-element-anchor-horizontal", "mso-element-anchor-lock", "mso-element-anchor-vertical", "mso-element-frame-height", "mso-element-frame-hspace", "mso-element-frame-vspace", "mso-element-frame-width", "mso-element-left", "mso-element-linespan", "mso-element-top", "mso-element-wrap", "mso-endnote-continuation-notice", "mso-endnote-continuation-notice-id", "mso-endnote-continuation-notice-src", "mso-endnote-continuation-separator", "mso-endnote-continuation-separator-id", "mso-endnote-continuation-separator-src", "mso-endnote-display", "mso-endnote-id", "mso-endnote-numbering", "mso-endnote-numbering-restart", "mso-endnote-numbering-start", "mso-endnote-numbering-style", "mso-endnote-position", "mso-endnote-separator", "mso-endnote-separator-id", "mso-endnote-separator-src", "mso-even-footer", "mso-even-footer-id", "mso-even-footer-src", "mso-even-header", "mso-even-header-id", "mso-even-header-src", "mso-facing-pages", "mso-fareast-font-family", "mso-fareast-hint", "mso-fareast-language", "mso-field-change", "mso-field-change-author", "mso-field-change-time", "mso-field-change-value", "mso-field-code", "mso-field-lock", "mso-fills-color", "mso-first-footer", "mso-first-footer-id", "mso-first-footer-src", "mso-first-header", "mso-first-header-id", "mso-first-header-src", "mso-font-alt", "mso-font-charset", "mso-font-format", "mso-font-info", "mso-font-info-charset", "mso-font-info-type", "mso-font-kerning", "mso-font-pitch", "mso-font-signature", "mso-font-signature-csb-one", "mso-font-signature-csb-two", "mso-font-signature-usb-four", "mso-font-signature-usb-one", "mso-font-signature-usb-three", "mso-font-signature-usb-two", "mso-font-src", "mso-font-width", "mso-footer", "mso-footer-data", "mso-footer-id", "mso-footer-margin", "mso-footer-src", "mso-footnote-continuation-notice", "mso-footnote-continuation-notice-id", "mso-footnote-continuation-notice-src", "mso-footnote-continuation-separator", "mso-footnote-continuation-separator-id", "mso-footnote-continuation-separator-src", "mso-footnote-id", "mso-footnote-numbering", "mso-footnote-numbering-restart", "mso-footnote-numbering-start", "mso-footnote-numbering-style", "mso-footnote-position", "mso-footnote-separator", "mso-footnote-separator-id", "mso-footnote-separator-src", "mso-foreground", "mso-forms-protection", "mso-generic-font-family", "mso-grid-bottom", "mso-grid-bottom-count", "mso-grid-left", "mso-grid-left-count", "mso-grid-right", "mso-grid-right-count", "mso-grid-top", "mso-grid-top-count", "mso-gutter-direction", "mso-gutter-margin", "mso-gutter-position", "mso-hansi-font-family", "mso-header", "mso-header-data", "mso-header-id", "mso-header-margin", "mso-header-src", "mso-height-alt", "mso-height-rule", "mso-height-source", "mso-hide", "mso-highlight", "mso-horizontal-page-align", "mso-hyphenate", "mso-ignore", "mso-kinsoku-overflow", "mso-layout-grid-align", "mso-layout-grid-char-alt", "mso-layout-grid-origin", "mso-level-inherit", "mso-level-legacy", "mso-level-legacy-indent", "mso-level-legacy-space", "mso-level-legal-format", "mso-level-number-format", "mso-level-number-position", "mso-level-numbering", "mso-level-reset-level", "mso-level-start-at", "mso-level-style-link", "mso-level-suffix", "mso-level-tab-stop", "mso-level-text", "mso-line-break-override", "mso-line-grid", "mso-line-height-alt", "mso-line-height-rule", "mso-line-numbers-count-by", "mso-line-numbers-distance", "mso-line-numbers-restart", "mso-line-numbers-start", "mso-line-spacing", "mso-linked-frame", "mso-list", "mso-list-change", "mso-list-change-author", "mso-list-change-time", "mso-list-change-values", "mso-list-id", "mso-list-ins", "mso-list-ins-author", "mso-list-ins-time", "mso-list-name", "mso-list-template-ids", "mso-list-type", "mso-margin-bottom-alt", "mso-margin-left-alt", "mso-margin-top-alt", "mso-mirror-margins", "mso-negative-indent-tab", "mso-number-format", "mso-outline-level", "mso-outline-parent", "mso-outline-parent-col", "mso-outline-parent-row", "mso-outline-parent-visibility", "mso-outline-style", "mso-padding-alt", "mso-padding-between", "mso-padding-bottom-alt", "mso-padding-left-alt", "mso-padding-right-alt", "mso-padding-top-alt", "mso-page-border-aligned", "mso-page-border-art", "mso-page-border-bottom-art", "mso-page-border-display", "mso-page-border-left-art", "mso-page-border-offset-from", "mso-page-border-right-art", "mso-page-border-surround-footer", "mso-page-border-surround-header", "mso-page-border-top-art", "mso-page-border-z-order", "mso-page-numbers", "mso-page-numbers-chapter-separator", "mso-page-numbers-chapter-style", "mso-page-numbers-start", "mso-page-numbers-style", "mso-page-orientation", "mso-page-scale", "mso-pagination", "mso-panose-arm-style", "mso-panose-contrast", "mso-panose-family-type", "mso-panose-letterform", "mso-panose-midline", "mso-panose-proportion", "mso-panose-serif-style", "mso-panose-stroke-variation", "mso-panose-weight", "mso-panose-x-height", "mso-paper-source", "mso-paper-source-first-page", "mso-paper-source-other-pages", "mso-pattern", "mso-pattern-color", "mso-pattern-style", "mso-print-area", "mso-print-color", "mso-print-gridlines", "mso-print-headings", "mso-print-resolution", "mso-print-sheet-order", "mso-print-title-column", "mso-print-title-row", "mso-prop-change", "mso-prop-change-author", "mso-prop-change-time", "mso-protection", "mso-rotate", "mso-row-margin-left", "mso-row-margin-right", "mso-ruby-merge", "mso-ruby-visibility", "mso-scheme-fill-color", "mso-scheme-shadow-color", "mso-shading", "mso-shadow-color", "mso-space-above", "mso-space-below", "mso-spacerun", "mso-special-character", "mso-special-format", "mso-style-id", "mso-style-name", "mso-style-next", "mso-style-parent", "mso-style-type", "mso-style-update", "mso-subdocument", "mso-symbol-font-family", "mso-tab-count", "mso-table-anchor-horizontal", "mso-table-anchor-vertical", "mso-table-bspace", "mso-table-del-author", "mso-table-del-time", "mso-table-deleted", "mso-table-dir", "mso-table-ins-author", "mso-table-ins-time", "mso-table-inserted", "mso-table-layout-alt", "mso-table-left", "mso-table-lspace", "mso-table-overlap", "mso-table-prop-author", "mso-table-prop-change", "mso-table-prop-time", "mso-table-rspace", "mso-table-top", "mso-table-tspace", "mso-table-wrap", "mso-text-animation", "mso-text-combine-brackets", "mso-text-combine-id", "mso-text-control", "mso-text-fit-id", "mso-text-indent-alt", "mso-text-orientation", "mso-text-raise", "mso-title-page", "mso-tny-compress", "mso-unsynced", "mso-vertical-align-alt", "mso-vertical-align-special", "mso-vertical-page-align", "mso-width-alt", "mso-width-source", "mso-word-wrap", "mso-xlrowspan", "mso-zero-height", "multiple", "muted", "name", "nav-banner-image", "navbutton_background_color", "navbutton_home_hovered", "navbutton_home_normal", "navbutton_home_pushed", "navbutton_horiz_hovered", "navbutton_horiz_normal", "navbutton_horiz_pushed", "navbutton_next_hovered", "navbutton_next_normal", "navbutton_next_pushed", "navbutton_prev_hovered", "navbutton_prev_normal", "navbutton_prev_pushed", "navbutton_up_hovered", "navbutton_up_normal", "navbutton_up_pushed", "navbutton_vert_hovered", "navbutton_vert_normal", "navbutton_vert_pushed", "nohref", "noresize", "noshade", "novalidate", "nowrap", "object", "onblur", "onchange", "onclick", "ondblclick", "onfocus", "onkeydown", "onkeypress", "onkeyup", "onload", "onmousedown", "onmousemove", "onmouseout", "onmouseover", "onmouseup", "onreset", "onselect", "onsubmit", "onunload", "open", "optimum", "overflow", "padding", "padding-bottom", "padding-left", "padding-right", "padding-top", "page", "page-break-after", "page-break-before", "panose-1", "pattern", "ping", "placeholder", "position", "poster", "preload", "profile", "prompt", "punctuation-trim", "punctuation-wrap", "radiogroup", "readonly", "referrerpolicy", "rel", "required", "rev", "reversed", "right", "row-span", "rows", "rowspan", "ruby-align", "ruby-overhang", "ruby-position", "rules", "sandbox", "scheme", "scope", "scoped", "scrolling", "selected", "separator-image", "shape", "size", "sizes", "slot", "span", "spellcheck", "src", "srcdoc", "srclang", "srcset", "standby", "start", "step", "style", "summary", "tab-interval", "tab-stops", "tabindex", "table-border-color-dark", "table-border-color-light", "table-layout", "target", "text", "text-align", "text-autospace", "text-combine", "text-decoration", "text-effect", "text-fit", "text-indent", "text-justify", "text-justify-trim", "text-kashida", "text-line-through", "text-shadow", "text-transform", "text-underline", "text-underline-color", "text-underline-style", "title", "top", "top-bar-button", "translate", "type", "unicode-bidi", "urlId", "usemap", "valign", "value", "valuetype", "version", "vert-align", "vertical-align", "visibility", "vlink", "vnd.ms-excel.numberformat", "vspace", "white-space", "width", "word-break", "word-spacing", "wrap", "xmlns", "z-index"]);
+
+/**
+ * is-char-suitable-for-html-attr-name
+ * Is given character suitable to be in an HTML attribute's name?
+ * Version: 1.2.0
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/is-char-suitable-for-html-attr-name/
+ */
+// Follows the spec:
+// https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
+function isAttrNameChar(char) {
+  return typeof char === "string" && ( //
+  // lowercase letters, indexes 97 - 122:
+  char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123 || // uppercase letters, indexes 65 - 90
+  char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || // digits 0 - 9, indexes 48 - 57
+  char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58 || char === ":" || char === "-");
+}
+
+/**
+ * is-html-attribute-closing
+ * Is a character on a given index a closing of an HTML attribute?
+ * Version: 1.5.0
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/is-html-attribute-closing/
+ */
+
+function makeTheQuoteOpposite(quoteChar) {
+  return quoteChar === "'" ? "\"" : "'";
+}
+
+function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x, y) {
+  if (y === void 0) {
+    y = [];
+  }
+
+  var _loop = function _loop(i, len) {
+    if (y.some(function (oneOfStr) {
+      return str.startsWith(oneOfStr, i);
     })) {
-      return wholeEspTagLump.length;
+      // it's escape clause, bracket or whatever was reached and yet,
+      // "x" hasn't been encountered yet
+      return {
+        v: true
+      };
+    }
+
+    if (str[i] === x) {
+      // if "x" was found, that's it - falsey result
+      return {
+        v: false
+      };
+    }
+  };
+
+  for (var i = startingIdx, len = str.length; i < len; i++) {
+    var _ret = _loop(i);
+
+    if (typeof _ret === "object") return _ret.v;
+  } // default result
+
+
+  return true;
+} // Tells, if substring x goes before substring y on the right
+// side of "str", starting at index "startingIdx".
+// Used to troubleshoot dirty broken code.
+
+
+function xBeforeYOnTheRight(str, startingIdx, x, y) {
+  for (var i = startingIdx, len = str.length; i < len; i++) {
+    if (str.startsWith(x, i)) {
+      // if x was first, Bob's your uncle, that's truthy result
+      return true;
+    }
+
+    if (str.startsWith(y, i)) {
+      // since we're in this clause, x failed, so if y matched,
+      // this means y precedes x
+      return false;
+    }
+  } // default result
+
+
+  return false;
+} // Tells, is this a clean plausible attribute starting at given index
+// <img alt="so-called "artists"class='yo'/>
+//                              ^
+//                            start
+
+
+function plausibleAttrStartsAtX(str, start) {
+  if (!isAttrNameChar(str[start]) || !start) {
+    return false;
+  } // const regex = /^[a-zA-Z0-9:-]*[=]?((?:'[^']*')|(?:"[^"]*"))/;
+
+
+  var regex = /^[a-zA-Z0-9:-]*(\s*[=]?\s*((?:'[^']*')|(?:"[^"]*")))|( [^/>'"=]*['"])/;
+  return regex.test(str.slice(start));
+} // difference is equal is required
+
+
+function guaranteedAttrStartsAtX(str, start) {
+  if (!start || !isAttrNameChar(str[start])) {
+    return false;
+  } // either quotes match or does not match but tag closing follows
+  // const regex = /^[a-zA-Z0-9:-]*[=]?(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
+
+
+  var regex = /^[a-zA-Z0-9:-]*=(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
+  return regex.test(str.slice(start));
+}
+
+function findAttrNameCharsChunkOnTheLeft(str, i) {
+  if (!isAttrNameChar(str[left(str, i)])) {
+    return;
+  }
+
+  for (var y = i; y--;) {
+    if (str[y].trim().length && !isAttrNameChar(str[y])) {
+      return str.slice(y + 1, i);
+    }
+  }
+}
+
+function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
+  if (typeof str !== "string" || !str.trim() || !Number.isInteger(idxOfAttrOpening) || !Number.isInteger(isThisClosingIdx) || !str[idxOfAttrOpening] || !str[isThisClosingIdx] || idxOfAttrOpening >= isThisClosingIdx) {
+    return false;
+  }
+
+  var openingQuote = "'\"".includes(str[idxOfAttrOpening]) ? str[idxOfAttrOpening] : null;
+  var oppositeToOpeningQuote = null;
+
+  if (openingQuote) {
+    oppositeToOpeningQuote = makeTheQuoteOpposite(openingQuote);
+  }
+
+  var chunkStartsAt;
+  var quotesCount = new Map().set("'", 0).set("\"", 0).set("matchedPairs", 0);
+  var lastQuoteAt = null;
+  var totalQuotesCount = 0;
+  var lastQuoteWasMatched = false;
+  var lastMatchedQuotesPairsStartIsAt;
+  var lastMatchedQuotesPairsEndIsAt; // when suspected attribute name chunks end, we wipe them, but here
+  // we store the last extracted chunk - then later, for example, when we
+  // traverse further and meet opening quote (even with equal missing),
+  // we can evaluate that chunk, was it a known attribute name (idea being,
+  // known attribute name followed by quote is probably legit attribute starting)
+
+  var lastCapturedChunk;
+  var secondLastCapturedChunk; // this boolean flag signifies, was the last chunk captured after passing
+  // "isThisClosingIdx":
+  // idea being, if you pass suspected quotes, then encounter new-ones and
+  // in-between does not resemble an attribute name, it's falsey result:
+  // <img alt="so-called "artists"!' class='yo'/>
+  //          ^                  ^
+  //        start             suspected
+  //
+  // that exclamation mark above doesn't resemble an attribute name,
+  // so single quote that follows it is not a starting of its value
+
+  var lastChunkWasCapturedAfterSuspectedClosing = false; // does what it says on the tin - flips on the first instance
+
+  var closingBracketMet = false;
+  var openingBracketMet = false; // let's traverse from opening to the end of the string, then in happy
+  // path scenarios, let's exit way earlier, upon closing quote
+
+  for (var i = idxOfAttrOpening, len = str.length; i < len; i++) {
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //                                THE TOP
+    //                                ███████
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    // Logging:
+    // -------------------------------------------------------------------------
+    if ( // Imagine we're here:
+    // <z bbb"c" ddd'e>
+    //       ^      ^
+    //   start     suspected closing
+    //
+    // this single quote at 13 is preceded by fully matched pair of quotes
+    // there's also attribute-name-like chunk preceding in front.
+    // Let's catch such case.
+    //
+    // 1. we're on a quote
+    "'\"".includes(str[i]) && // 2. we ensure that a pair of quotes was catched so far
+    lastQuoteWasMatched && // 3. lastMatchedQuotesPairsStartIsAt is our known opening
+    lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && // 4. lastMatchedQuotesPairsEndIsAt is the last matched pair's closing:
+    // <z bbb"c" ddd'e>
+    //         ^
+    //        this if to reuse the example..
+    //
+    lastMatchedQuotesPairsEndIsAt !== undefined && lastMatchedQuotesPairsEndIsAt < i && // rule must not trigger before the suspected quote index
+    i >= isThisClosingIdx) {
+      // ███████████████████████████████████████ E1
+      //
+      // consider WHERE WE ARE AT THE MOMENT in relation to
+      // the INDEX THAT'S QUESTIONED FOR BEING A CLOSING-ONE
+      // FALSEY result:
+      // <z bbb"c" ddd'e'>.<z fff"g">
+      //       ^      ^
+      //     start   suspected
+      //
+      // <z bbb"c" ddd'e'>.<z fff"g">
+      //              ^
+      //            we're here
+      // TRUTHY result:
+      // <img class="so-called "alt"!' border='10'/>
+      //            ^          ^
+      //          start      suspected
+      //
+      // where we're at:
+      // <img class="so-called "alt"!' border='10'/>
+      //                           ^
+      //
+      var E1 = i !== isThisClosingIdx || guaranteedAttrStartsAtX(str, right(str, isThisClosingIdx)) || "/>".includes(str[right(str, i)]); // ███████████████████████████████████████ E2
+      //
+      //
+      // ensure it's not a triplet of quotes:
+      // <img alt="so-called "artists"!' class='yo'/>
+      //          ^          ^       ^
+      //       start      suspected  |
+      //                             current index
+      //
+
+      var E2 = !(i > isThisClosingIdx && str[idxOfAttrOpening] === str[isThisClosingIdx] && str[idxOfAttrOpening] === str[i] && // rule out cases where plausible attribute starts:
+      // <img class="so-called "alt"!' border='10'/>
+      //            ^          ^   ^
+      //        start          |    \
+      //           suspected end    currently on
+      plausibleAttrStartsAtX(str, i + 1)); // ███████████████████████████████████████ E3
+
+      var E31 = // or a proper recognised attribute follows:
+      // <img alt="so-called "artists"class='yo'/>
+      //          ^                  ^
+      //       start              suspected and currently on
+      //
+      // we're on a suspected quote
+      i === isThisClosingIdx && // plus one because we're on a quote
+      plausibleAttrStartsAtX(str, isThisClosingIdx + 1);
+      var E32 = // or the last chunk is a known attribute name:
+      // <img class="so-called "alt"!' border='10'/>
+      //            ^          ^
+      //         start      suspected/we're currently on
+      //
+      chunkStartsAt && chunkStartsAt < i && allHtmlAttribs.has(str.slice(chunkStartsAt, i).trim()); // imagine:
+
+      if (chunkStartsAt) {
+        str.slice(chunkStartsAt, i).trim();
+      }
+
+      var E33 = chunkStartsAt && chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim() && // and whole chunk is a plausible attribute name
+      Array.from(str.slice(chunkStartsAt, i).trim()).every(function (char) {
+        return isAttrNameChar(char);
+      }) && // known opening and suspected closing are both singles or doubles
+      str[idxOfAttrOpening] === str[isThisClosingIdx] && !"/>".includes(str[right(str, i)]) && ensureXIsNotPresentBeforeOneOfY(str, i + 1, "=", ["'", "\""]); // anti-rule - it's fine if we're on suspected ending and to the left
+      // it's not an attribute start
+      // <img alt='Deal is your's!"/>
+      //          ^               ^
+      //       start            suspected/current
+      // extract attr name characters chunk on the left, "s" in the case below
+      // <img alt='Deal is your's"/>
+      //                         ^
+      //                       start
+
+      var attrNameCharsChunkOnTheLeft = void 0;
+
+      if (i === isThisClosingIdx) {
+        attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);
+      }
+
+      var E34 = // we're on suspected
+      i === isThisClosingIdx && ( // it's not a character suitable for attr name,
+      !isAttrNameChar(str[left(str, i)]) || // or it is, but whatever we extracted is not recognised attr name
+      attrNameCharsChunkOnTheLeft && !allHtmlAttribs.has(attrNameCharsChunkOnTheLeft)) && // rule out equal
+      str[left(str, i)] !== "="; // ███████████████████████████████████████ E4
+
+      var E41 = // either it's a tag ending and we're at the suspected quote
+      "/>".includes(str[right(str, i)]) && i === isThisClosingIdx;
+      var E42 = // or next character is suitable for a tag name:
+      isAttrNameChar(str[right(str, i)]);
+      var E43 = // or in case of:
+      // <img class="so-called "alt"!' border='10'/>
+      //            ^          ^
+      //          start      suspected
+      //
+      // where we're at:
+      // <img class="so-called "alt"!' border='10'/>
+      //                           ^
+      //                          here
+      lastQuoteWasMatched && i !== isThisClosingIdx;
+      var E5 = // it's not a double-wrapped attribute value:
+      //
+      // <div style="float:"left"">z</div>
+      //            ^      ^
+      //          start   suspected
+      //
+      // we're at:
+      // <div style="float:"left"">z</div>
+      //                        ^
+      //                      here
+      !( // rule must not trigger before the suspected quote index
+      i >= isThisClosingIdx && // there's colon to the left of a suspected quote
+      str[left(str, isThisClosingIdx)] === ":");
+      return !!(E1 && E2 && (E31 || E32 || E33 || E34) && (E41 || E42 || E43) && E5);
+    } // catch quotes
+
+
+    if ("'\"".includes(str[i])) {
+      // catch the non-overlapping matched pairs of quotes
+      // for example that's three pairs in total below:
+      // <z bbb"c" ddd'e'>.<z fff"g">
+      // Insurace against the Killer Triplet - a quoted quote
+      if (str[i] === "'" && str[i - 1] === "\"" && str[i + 1] === "\"" || str[i] === "\"" && str[i - 1] === "'" && str[i + 1] === "'") {
+        continue;
+      }
+
+      if (lastQuoteAt && str[i] === str[lastQuoteAt]) {
+        quotesCount.set("matchedPairs", quotesCount.get("matchedPairs") + 1);
+        lastMatchedQuotesPairsStartIsAt = lastQuoteAt;
+        lastMatchedQuotesPairsEndIsAt = i;
+        lastQuoteAt = null;
+        lastQuoteWasMatched = true;
+      } else {
+        lastQuoteWasMatched = false;
+      } // bump total counts:
+
+
+      quotesCount.set(str[i], quotesCount.get(str[i]) + 1);
+      totalQuotesCount = quotesCount.get("\"") + quotesCount.get("'"); // lastQuoteAt = i;
+      // console.log(
+      //   `325 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastQuoteAt`}\u001b[${39}m`} = ${JSON.stringify(
+      //     lastQuoteAt,
+      //     null,
+      //     4
+      //   )}`
+      // );
+    } // catch closing brackets
+
+
+    if (str[i] === ">" && !closingBracketMet) {
+      closingBracketMet = true; // if all pairs of quotes were met, that's a good indicator, imagine
+      // <z bbb"c" ddd'e'>
+      //                 ^
+
+      if (totalQuotesCount && quotesCount.get("matchedPairs") && totalQuotesCount === quotesCount.get("matchedPairs") * 2 && // we haven't reached the suspected quote and tag's already ending
+      i < isThisClosingIdx) {
+        return false;
+      }
+    } // catch opening brackets
+
+
+    if (str[i] === "<" && closingBracketMet && !openingBracketMet) {
+      openingBracketMet = true; // if it's past the "isThisClosingIdx", that's very falsey
+      // if (i > isThisClosingIdx) {
+
+      return false; // }
+    } //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //                               MIDDLE
+    //                               ██████
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    // before and after the suspected index, all the way while traversing the
+    // string from known, starting quotes (or in their absence, starting of
+    // the attribute's value, the second input argument "idxOfAttrOpening")
+    // all the way until the end, we catch the first character past the
+    // questioned attribute closing.
+    // imagine
+    // <img alt="so-called "artists"!' class='yo'/>
+    //          ^                  ^
+    //        opening          suspected closing
+
+
+    if (str[i].trim() && !chunkStartsAt) {
+      // <img alt="so-called "artists"!' class='yo'/>
+      //                              ^
+      //                         we land here, on excl. mark
+      if (isAttrNameChar(str[i])) {
+        chunkStartsAt = i;
+      }
+    } else if (chunkStartsAt && !isAttrNameChar(str[i])) {
+      // ending of an attr name chunk
+      secondLastCapturedChunk = lastCapturedChunk;
+      lastCapturedChunk = str.slice(chunkStartsAt, i);
+      lastChunkWasCapturedAfterSuspectedClosing = chunkStartsAt >= isThisClosingIdx; // console.log(
+      //   `434 ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`chunkStartsAt`}\u001b[${39}m`}`
+      // );
+      // chunkStartsAt = null;
+      // imagine:
+      // <z bbb"c' href"e>
+      //       ^ ^
+      //   start suspected ending
+      //
+      // we're here:
+      // <z bbb"c' href"e>
+      //               ^
+
+      if ("'\"".includes(str[i]) && quotesCount.get("matchedPairs") === 0 && totalQuotesCount === 3 && str[idxOfAttrOpening] === str[i] && allHtmlAttribs.has(lastCapturedChunk) && !"'\"".includes(str[right(str, i)])) {
+        var A1 = i > isThisClosingIdx; //
+        // ensure that all continuous chunks since the last quote are
+        // recognised attribute names
+
+        var A21 = !lastQuoteAt;
+        var A22 = lastQuoteAt + 1 >= i;
+        var A23 = str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(function (chunk) {
+          return allHtmlAttribs.has(chunk);
+        }); // <div style="float:'left"">z</div>
+        //            ^           ^
+        //          start      we're here
+
+        var A3 = !lastCapturedChunk || !secondLastCapturedChunk || !secondLastCapturedChunk.endsWith(":");
+        var B1 = i === isThisClosingIdx;
+        var B21 = totalQuotesCount < 3;
+        var B22 = !!lastQuoteWasMatched;
+        var B23 = !lastQuoteAt;
+        var B24 = lastQuoteAt + 1 >= i;
+        var B25 = !str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(function (chunk) {
+          return allHtmlAttribs.has(chunk);
+        });
+        return A1 && (A21 || A22 || A23) && A3 || B1 && (B21 || B22 || B23 || B24 || B25);
+      }
+
+      if ( // this is a recognised attribute
+      lastCapturedChunk && allHtmlAttribs.has(lastCapturedChunk) && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt === isThisClosingIdx) {
+        return true;
+      }
+    } // catching new attributes that follow after suspected quote.
+    // Imagine
+    // <a class "c" id 'e' href "www">
+    //                 ^            ^
+    //        known start at 16     suspected ending at 29
+
+
+    if ( // if we're currently on some quote:
+    "'\"".includes(str[i]) && ( // and if either quote count is an even number (the "!" checking is it zero)
+    !(quotesCount.get("\"") % 2) || !(quotesCount.get("'") % 2)) && // and sum of quotes is odd, for example,
+    // <a class "c" id 'e' href "www">
+    //                          ^
+    //                   reusing example above, let's say we're here
+    //
+    // in this situation, both single quotes around "e" add up to 2, then
+    // current opening quote of "www" adds up to 3.
+    //
+    // In human language, this means, we check, was there a complete
+    // set of quotes recorded by now, plus is current chunk a known
+    // attribute name - this allows us to catch an attribute with equal missing
+    (quotesCount.get("\"") + quotesCount.get("'")) % 2 && ( //
+    // last chunk is not falsey (thus a string):
+    lastCapturedChunk && // and finally, perf resource-taxing evaluation, is it recognised:
+    allHtmlAttribs.has(lastCapturedChunk) || // imagine
+    // <z bbb"c" ddd'e'>
+    //         ^
+    //        a suspected closing
+    //
+    // alternatively, check the count of remaining quotes, ensure that
+    // leading up to closing bracket, everything's neat (not overlapping
+    // at least and opened and closed)
+    // this catch is for the following attributes, for example,
+    // <z bbb"c" ddd'e'>
+    //       ^      ^
+    //     start   suspected ending
+    i > isThisClosingIdx + 1 && allHtmlAttribs.has(str.slice(isThisClosingIdx + 1, i).trim())) && //
+    // the same quote doesn't follow on the right,
+    // think <div style="float:"left"">z</div>
+    //                  ^           ^
+    //               start    suspected closing
+    !(str[i + 1] === str[i] && str[i] === str[idxOfAttrOpening]) && //
+    //
+    // and it's not this case:
+    //
+    // <div style="float:'left'">z</div>
+    //            ^      ^
+    //         start   suspected
+    //
+    // we're here:
+    // <div style="float:'left'">z</div>
+    //                        ^
+    //                       here
+    !( // we're part the suspected closing, on another closing
+    i > isThisClosingIdx + 1 && // colon is to the left of suspected
+    str[left(str, isThisClosingIdx)] === ":") && //
+    // the suspected quote is the fourth,
+    // <div style="float:'left'">z</div>
+    //            ^            ^
+    //          start        suspected
+    //
+    // we want to exclude the quote on the left:
+    // <div style="float:'left'">z</div>
+    //                        ^
+    //                       this
+    //
+    // in which case, we'd have:
+    // lastCapturedChunk = "left"
+    // secondLastCapturedChunk = "float:"
+    !(lastCapturedChunk && secondLastCapturedChunk && secondLastCapturedChunk.trim().endsWith(":"))) {
+      // rules:
+      // before suspected index this pattern is falsey, after - truthy
+      var R0 = i > isThisClosingIdx; //
+
+      var R1 = !!openingQuote;
+      var R2 = str[idxOfAttrOpening] !== str[isThisClosingIdx];
+      var R3 = allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, isThisClosingIdx).trim()); // that quote we suspected as closing, is from an opening-closing
+      // set on another attribute:
+
+      var R4 = !xBeforeYOnTheRight(str, i + 1, str[isThisClosingIdx], makeTheQuoteOpposite(str[isThisClosingIdx])); // const R5 = plausibleAttrStartsAtX(str, start) // consider:
+      // <z alt"href' www'/>
+      //       ^    ^
+      //    start   suspected ending
+      // let's rule out the case where a whole (suspected) attribute's value is
+      // a known attribute value, plus quotes mismatch plus that closing quote
+      // is on the right, before the its opposite kind
+
+      return R0 && !(R1 && R2 && R3 && R4);
+    }
+
+    if ( // imagine
+    // <a href=www" class=e'>
+    //         ^  ^
+    //     start  suspected
+    // if it's equal following attribute name
+    (str[i] === "=" || // OR
+    // it's whitespace
+    !str[i].length && // and next non-whitespace character is "equal" character
+    str[right(str, i)] === "=") && // last chunk is not falsey (thus a string)
+    lastCapturedChunk && // and finally, perf resource-taxing evaluation, is it recognised:
+    allHtmlAttribs.has(lastCapturedChunk)) {
+      // definitely that's new attribute starting
+      var W1 = i > isThisClosingIdx;
+      var W2 = // insurance against:
+      // <z alt"href' www' id=z"/>
+      //       ^         ^
+      //     start      suspected ending
+      //
+      // <z alt"href' www' id=z"/>
+      //                       ^
+      //                    we're here currently
+      !(!( //
+      // first, rule out healthy code scenarios,
+      // <a href="zzz" target="_blank" style="color: black;">
+      //         ^   ^       ^
+      //        /    |        \
+      //   start   suspected   we're here
+      lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && lastMatchedQuotesPairsEndIsAt === isThisClosingIdx || // or quotes can be mismatching, but last chunk's start should
+      // match a confirmed attribute regex (with matching quotes and
+      // equal present)
+      guaranteedAttrStartsAtX(str, chunkStartsAt)) && //
+      // continuing with catch clauses of the insurance case:
+      lastQuoteWasMatched && lastMatchedQuotesPairsStartIsAt !== undefined && lastMatchedQuotesPairsStartIsAt <= isThisClosingIdx);
+      return W1 && W2;
+    } // when index "isThisClosingIdx" has been passed...
+
+
+    if (i > isThisClosingIdx) {
+      // if current quote matches the opening
+      if (openingQuote && str[i] === openingQuote) {
+        // we want to return false as default...
+        // except if we're able to extract a clean recognised attribute name
+        // in front of here and prove that it's actually a new attribute starting
+        // here, then it's true
+        // imagine
+        // <img alt="somethin' fishy going on' class">z<a class="y">
+        //          ^                        ^      ^
+        //         start            suspected       we're here
+        var Y1 = !!lastQuoteAt;
+        var Y2 = lastQuoteAt === isThisClosingIdx; // ensure there's some content between suspected and "here":
+
+        var Y3 = lastQuoteAt + 1 < i && str.slice(lastQuoteAt + 1, i).trim();
+        var Y4 = str.slice(lastQuoteAt + 1, i).trim().split(/\s+/).every(function (chunk) {
+          return allHtmlAttribs.has(chunk);
+        });
+        var Y5 = i >= isThisClosingIdx;
+        var Y6 = !str[right(str, i)] || !"'\"".includes(str[right(str, i)]);
+        return !!(Y1 && Y2 && Y3 && Y4 && Y5 && Y6);
+      } // if we have passed the suspected closing quote
+      // and we meet another quote of the same kind,
+      // it's false result. Imagine code:
+      // <img alt='so-called "artists"!" class='yo'/>
+      //                     ^       ^
+      //               questioned    |
+      //                 index     we're here
+      //                           so it's false
+
+
+      if ( // if attribute starts with a quote
+      openingQuote && // and we're suspecting a mismatching pair:
+      str[isThisClosingIdx] === oppositeToOpeningQuote && // we're questioning, maybe current
+      // suspected closing quote is of the
+      // opposite kind (single-double, double-single)
+      str[i] === oppositeToOpeningQuote) {
+        return false;
+      } // if the tag closing was met, that's fine, imagine:
+      // <div class='c">.</div>
+      //              ^
+      //        we went past this suspected closing quote
+      //        and reached the tag ending...
+
+
+      if (str[i] === "/" || str[i] === ">" || str[i] === "<") {
+        // happy path scenario
+        var _R = // opening matches closing
+        str[idxOfAttrOpening] === str[isThisClosingIdx] && // last captured quote was the suspected ("isThisClosingIdx")
+        lastQuoteAt === isThisClosingIdx && // all is clean inside - there are no quotes of the ones used in
+        // opening/closing (there can be opposite type quotes though)
+        !str.slice(idxOfAttrOpening + 1, isThisClosingIdx).includes(str[idxOfAttrOpening]); // Not more than one pair of non-overlapping quotes should have been matched.
+
+
+        var R11 = quotesCount.get("matchedPairs") < 2; // at least it's not a recognised attribute name on the left:
+
+        var _attrNameCharsChunkOnTheLeft = findAttrNameCharsChunkOnTheLeft(str, i);
+
+        var R12 = (!_attrNameCharsChunkOnTheLeft || !allHtmlAttribs.has(_attrNameCharsChunkOnTheLeft)) && ( // avoid cases where multiple pairs of mismatching quotes were matched
+        // we're past suspected closing:
+        !(i > isThisClosingIdx && // and there were some single quotes recorded so far
+        quotesCount.get("'") && // and doubles too
+        quotesCount.get("\"") && // and there were few quote pairs matched
+        quotesCount.get("matchedPairs") > 1) || // but add escape latch for when tag closing follows:
+        // <img alt='so-called "artists"!"/>
+        //          ^                    ^^
+        //        start         suspected  currently we're on slash
+        "/>".includes(str[right(str, i)]));
+
+        var _R2 = totalQuotesCount < 3 || // there's only two quotes mismatching:
+        quotesCount.get("\"") + quotesCount.get("'") - quotesCount.get("matchedPairs") * 2 !== 2;
+
+        var R31 = !lastQuoteWasMatched || lastQuoteWasMatched && !(lastMatchedQuotesPairsStartIsAt !== undefined && Array.from(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()).every(function (char) {
+          return isAttrNameChar(char);
+        }) && allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, lastMatchedQuotesPairsStartIsAt).trim()));
+        var R32 = !right(str, i) && totalQuotesCount % 2 === 0;
+        var R33 = str[idxOfAttrOpening - 2] && str[idxOfAttrOpening - 1] === "=" && isAttrNameChar(str[idxOfAttrOpening - 2]);
+        var R34 = !ensureXIsNotPresentBeforeOneOfY(str, i + 1, "<", ["='", "=\""]);
+        return (// happy path - known opening matched suspected closing and
+          // that suspected closing was the last captured quote ("lastQuoteAt")
+          //
+          _R || // The matched pair count total has not reach or exceed two
+          //
+          // because we're talking about fully matched opening-closing quote
+          // pairs.
+          //
+          // Let me remind you the question algorithm is answering:
+          // Is quote at index y closing quote, considering opening is at x?
+          //
+          // Now, imagine we went past index y, reached index z, and up to
+          // this point two sets of quotes were caught, as in:
+          // <z bbb"c" ddd"e">
+          //       ^        ^
+          //     start     we're here, quote in question
+          //
+          // above, that's falsey result, it can't be fourth caught quote!
+          (R11 || R12) && // besides that,
+          // We need to account for mismatching quote pair. If a pair is
+          // mismatching, "matchedPairs" might not get bumped to two thus
+          // leading to a mistake.
+          // When pair is mismatching, we can tell it's so because total count
+          // minus matched count times two would be equal to two - two
+          // quotes left unmatched.
+          // Mind you, it's not more because algorithm would exit by the time
+          // we would reach 4 let's say...
+          // either there's not more than one pair:
+          _R2 && ( // also, protection against cases like:
+          // <z bbb"c" ddd'e>
+          //       ^      ^
+          //   start     suspected
+          //
+          // in case above, all the clauses up until now pass
+          //
+          // we need to check against "lastQuoteWasMatched" flag
+          //
+          //
+          // or last pair was matched:
+          R31 || // either this closing bracket is the last:
+          R32 || // or char before starting is equal and char before that
+          // satisfies attribute name requirements
+          R33 || // or it seems like it's outside rather inside a tag:
+          R34)
+        );
+      } // if the true attribute ending was met passing
+      // past the suspected one, this means that
+      // suspected one was a false guess. Correct ending
+      // is at this index "i"
+
+
+      if (str[i] === "=" && matchRight(str, i, ["'", "\""], {
+        trimBeforeMatching: true,
+        trimCharsBeforeMatching: ["="]
+      })) {
+        return true;
+      }
+    } else {
+      // this clause is meant to catch the suspected quotes
+      // which don't belong to the tag, it's where quotes
+      // in question are way beyond the actual attribute's ending.
+      // For example, consider
+      // <div class="c' id="x'>.</div>
+      //            ^        ^
+      //            |        |
+      //         known      suspected
+      //         opening    closing
+      //
+      // That equal-quote after "id" would trigger the alarm,
+      // that is the clause below..
+      // BUT mind the false positive:
+      // <img src="xyz" alt="="/>
+      //                    ^ ^
+      //                    | |
+      //      known opening/  \suspected closing
+      //
+      // by the way we use right() to jump over whitespace
+      // for example, this will also catch:
+      // <img src="xyz" alt="=   "/>
+      //
+      var firstNonWhitespaceCharOnTheLeft = void 0;
+
+      if (str[i - 1] && str[i - 1].trim() && str[i - 1] !== "=") {
+        // happy path
+        firstNonWhitespaceCharOnTheLeft = i - 1;
+      } else {
+        for (var y = i; y--;) {
+          if (str[y].trim() && str[y] !== "=") {
+            firstNonWhitespaceCharOnTheLeft = y;
+            break;
+          }
+        }
+      }
+
+      if (str[i] === "=" && matchRight(str, i, ["'", "\""], {
+        // ensure it's not tag ending on the right
+        // before freaking out:
+        cb: function cb(char) {
+          return !"/>".includes(char);
+        },
+        trimBeforeMatching: true,
+        trimCharsBeforeMatching: ["="]
+      }) && // ensure it's a character suitable for attribute
+      // name on the left of equal (if it's a real
+      // attribute name its name characters must pass
+      // the isAttrNameChar()...)
+      isAttrNameChar(str[firstNonWhitespaceCharOnTheLeft]) && // ensure it's not
+      // <img src="https://z.com/r.png?a=" />
+      //                                ^
+      //                              here
+      //
+      // in which case it's a false positive!!!
+      !str.slice(idxOfAttrOpening + 1).startsWith("http") && !str.slice(idxOfAttrOpening + 1, i).includes("/") && !str.endsWith("src=", idxOfAttrOpening) && !str.endsWith("href=", idxOfAttrOpening)) {
+        return false;
+      }
+
+      if (i === isThisClosingIdx && guaranteedAttrStartsAtX(str, i + 1)) {
+        return true;
+      } // also some insurance for crazier patterns like:
+      // <z alt"href" www'/>
+      //        ^   |    ^
+      //    start   |    suspected
+      //            |
+      //          currently on
+      //
+      // catch this pattern where initial equal to the left of start is missing
+      // and this pattern implies equals will be missing further
+
+
+      if (i < isThisClosingIdx && "'\"".includes(str[i]) && lastCapturedChunk && str[left(str, idxOfAttrOpening)] && str[left(str, idxOfAttrOpening)] !== "=" && lastMatchedQuotesPairsStartIsAt === idxOfAttrOpening && allHtmlAttribs.has(lastCapturedChunk)) {
+        return false;
+      } // catch
+      // <div style="float:"left'">z</div>
+      //            ^            ^
+      //          start       we're here, and also it's suspected too
+      //
+
+
+      if (i === isThisClosingIdx && "'\"".includes(str[i]) && lastCapturedChunk && secondLastCapturedChunk && totalQuotesCount % 2 === 0 && secondLastCapturedChunk.endsWith(":")) {
+        return true;
+      }
+    } //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //                               BOTTOM
+    //                               ██████
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    // catch quotes again - these clauses are specifically at the bottom
+    // because they're depdendent on "lastCapturedChunk" which is calculated
+    // after quote catching at the top
+
+
+    if ("'\"".includes(str[i]) && // if these quotes are after "isThisClosingIdx", a suspected closing
+    i > isThisClosingIdx) {
+      // if these quotes are after "isThisClosingIdx", if there
+      // was no chunk recorded after it until now,
+      // ("lastChunkWasCapturedAfterSuspectedClosing" flag)
+      // or there was but it's not recognised, that's falsey result
+      if ( // if there was no chunk recorded after it until now
+      !lastChunkWasCapturedAfterSuspectedClosing || !lastCapturedChunk || // or there was but lastCapturedChunk is not recognised
+      !allHtmlAttribs.has(lastCapturedChunk)) {
+        return false;
+      } // ELSE - it does match, so it seems legit
+
+
+      return true;
+    } // at the bottom, PART II of catch quotes
+
+
+    if ("'\"".includes(str[i])) {
+      lastQuoteAt = i;
+    } // at the bottom, PART II of reset chunk
+
+
+    if (chunkStartsAt && !isAttrNameChar(str[i])) {
+      chunkStartsAt = null;
+    } // logging
+    // -----------------------------------------------------------------------------
+
+  } // if this point was reached and loop didn't exit...
+  // default is false
+
+
+  return false;
+}
+
+var defaultOpts = {
+  allowCustomTagNames: false,
+  skipOpeningBracket: false
+};
+var BACKSLASH = "\\";
+var knownHtmlTags = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h1 - h6", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "slot", "small", "source", "span", "strike", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xml"];
+
+function isNotLetter(char) {
+  return char === undefined || char.toUpperCase() === char.toLowerCase() && !/\d/.test(char) && char !== "=";
+}
+
+function extraRequirements(str, idx) {
+  // either it's opening bracket
+  return str[idx] === "<" || // or there's one opening bracket to the left
+  str[left(str, idx)] === "<"; // TODO: consider adding clauses for br/> -
+  // slash-closing follows, but no opening
+}
+
+function isOpening(str, idx, originalOpts) {
+  if (idx === void 0) {
+    idx = 0;
+  }
+
+  // -----------------------------------------------------------------------------
+  if (typeof str !== "string") {
+    throw new Error("is-html-tag-opening: [THROW_ID_01] the first input argument should have been a string but it was given as \"" + typeof str + "\", value being " + JSON.stringify(str, null, 4));
+  }
+
+  if (!Number.isInteger(idx) || idx < 0) {
+    throw new Error("is-html-tag-opening: [THROW_ID_02] the second input argument should have been a natural number string index but it was given as \"" + typeof idx + "\", value being " + JSON.stringify(idx, null, 4));
+  }
+
+  var opts = _objectSpread2(_objectSpread2({}, defaultOpts), originalOpts); // -----------------------------------------------------------------------------
+
+
+  var whitespaceChunk = "[\\\\ \\t\\r\\n/]*"; // generalChar does not include the dash, -
+
+  var generalChar = "._a-z0-9\xB7\xC0-\xD6\xD8-\xF6\xF8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\uFFFF"; // =======
+  // r1. tag without attributes
+  // for example <br>, <br/>
+
+  var r1 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + whitespaceChunk + "\\w+" + whitespaceChunk + "\\/?" + whitespaceChunk + ">", "g"); // its custom-html tag version:
+
+  var r5 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + whitespaceChunk + "[" + generalChar + "]+[-" + generalChar + "]*" + whitespaceChunk + ">", "g"); // to anybody who wonders, the \u2070-\uFFFF covers all the surrogates
+  // of which emoji can be assembled. This is a very rough match, aiming to
+  // catch as much as possible, not the validation-level match.
+  // If you put bunch of opening surrogates in a sequence, for example,
+  // this program would still match them positively. It's to catch all emoji,
+  // including future, new-fangled emoji.
+  // =======
+  // r2. tag with one healthy attribute (no closing slash or whatever follow afterwards is matched)
+
+  var r2 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + "\\s*\\w+\\s+\\w+(?:-\\w+)?\\s*=\\s*['\"\\w]", "g"); // its custom-html tag version:
+
+  var r6 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + "\\s*\\w+\\s+[" + generalChar + "]+[-" + generalChar + "]*(?:-\\w+)?\\s*=\\s*['\"\\w]"); // =======
+  // r3. closing/self-closing tags
+
+  var r3 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + "\\s*\\/?\\s*\\w+\\s*\\/?\\s*>", "g"); // its custom-html tag version:
+
+  var r7 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + "\\s*\\/?\\s*[" + generalChar + "]+[-" + generalChar + "]*\\s*\\/?\\s*>", "g"); // =======
+  // r4. opening tag with attributes,
+
+  var r4 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + whitespaceChunk + "\\w+(?:\\s*\\w+)?\\s*\\w+=['\"]", "g"); // its custom-html tag version:
+
+  var r8 = new RegExp("^<" + (opts.skipOpeningBracket ? "?" : "") + whitespaceChunk + "[" + generalChar + "]+[-" + generalChar + "]*\\s+(?:\\s*\\w+)?\\s*\\w+=['\"]", "g"); // =======
+  // lesser requirements when opening bracket precedes index "idx"
+
+  var r9 = new RegExp("^<" + (opts.skipOpeningBracket ? "?\\/?" : "") + "(" + whitespaceChunk + "[" + generalChar + "]+)+" + whitespaceChunk + "[\\\\/=>]", ""); // =======
+
+  var whatToTest = idx ? str.slice(idx) : str;
+  var qualified = false;
+  var passed = false; // if the result is still falsey, we match against the known HTML tag names list
+
+  var matchingOptions = {
+    cb: isNotLetter,
+    i: true,
+    trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+  }; // -----------------------------------------------------------------------------
+
+  if (opts.allowCustomTagNames) {
+    if ((opts.skipOpeningBracket && (str[idx - 1] === "<" || str[idx - 1] === "/" && str[left(str, left(str, idx))] === "<") || whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim()) && (r9.test(whatToTest) || /^<\w+$/.test(whatToTest))) {
+      passed = true;
+    } else if (r5.test(whatToTest) && extraRequirements(str, idx)) {
+      passed = true;
+    } else if (r6.test(whatToTest)) {
+      passed = true;
+    } else if (r7.test(whatToTest) && extraRequirements(str, idx)) {
+      passed = true;
+    } else if (r8.test(whatToTest)) {
+      passed = true;
+    }
+  } else {
+    if ((opts.skipOpeningBracket && (str[idx - 1] === "<" || str[idx - 1] === "/" && str[left(str, left(str, idx))] === "<") || whatToTest[0] === "<" && whatToTest[1] && whatToTest[1].trim()) && r9.test(whatToTest)) {
+      qualified = true;
+    } else if (r1.test(whatToTest) && extraRequirements(str, idx)) {
+      qualified = true;
+    } else if (r2.test(whatToTest)) {
+      qualified = true;
+    } else if (r3.test(whatToTest) && extraRequirements(str, idx)) {
+      qualified = true;
+    } else if (r4.test(whatToTest)) {
+      qualified = true;
+    }
+
+    if (qualified && matchRightIncl(str, idx, knownHtmlTags, {
+      cb: function cb(char) {
+        if (char === undefined) {
+          if (str[idx] === "<" && str[idx + 1] && str[idx + 1].trim() || str[idx - 1] === "<") {
+            passed = true;
+          }
+
+          return true;
+        }
+
+        return char.toUpperCase() === char.toLowerCase() && !/\d/.test(char) && char !== "=";
+      },
+      i: true,
+      trimCharsBeforeMatching: ["<", "/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+    })) {
+      passed = true;
     }
   }
 
-  var BACKSLASH$1 = "\\";
+  if (!passed && str[idx] === "<" && str[idx + 1] && str[idx + 1].trim() && matchRight(str, idx, knownHtmlTags, matchingOptions)) {
+    passed = true;
+  } //
 
-  function startsTag(str, i, token, layers, withinStyle) {
-    return str[i] && str[i].trim().length && (!layers.length || token.type === "text") && !["doctype", "xml"].includes(token.kind) && (!withinStyle || str[i] === "<") && (str[i] === "<" && (isOpening(str, i, {
-      allowCustomTagNames: true
-    }) || str[right(str, i)] === ">" || matchRight(str, i, ["doctype", "xml", "cdata"], {
-      i: true,
-      trimBeforeMatching: true,
-      trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
-    })) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH$1].includes(str[left(str, i)])) && isOpening(str, i, {
-      allowCustomTagNames: false,
-      skipOpeningBracket: true
-    })) && (token.type !== "esp" || token.tail && token.tail.includes(str[i]));
+
+  var res = typeof str === "string" && idx < str.length && passed;
+  return res;
+}
+
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+// https://developer.mozilla.org/en-US/docs/Web/HTML/Element
+
+var allHTMLTagsKnownToHumanity = new Set(["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "bgsound", "big", "blink", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "command", "content", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "dt", "element", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "image", "img", "input", "ins", "isindex", "kbd", "keygen", "label", "legend", "li", "link", "listing", "main", "map", "mark", "marquee", "menu", "menuitem", "meta", "meter", "multicol", "nav", "nextid", "nobr", "noembed", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "plaintext", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "shadow", "slot", "small", "source", "spacer", "span", "strike", "strong", "style", "sub", "summary", "sup", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xmp"]); // contains all common templating language head/tail marker characters:
+
+var espChars = "{}%-$_()*|#";
+var veryEspChars = "{}|#";
+var notVeryEspChars = "%()$_*#";
+var leftyChars = "({";
+var rightyChars = "})";
+var espLumpBlacklist = [")|(", "|(", ")(", "()", "}{", "{}", "%)", "*)", "||", "--"];
+var punctuationChars = ".,;!?";
+var BACKTICK = "\x60";
+var LEFTDOUBLEQUOTMARK = "\u201C";
+var RIGHTDOUBLEQUOTMARK = "\u201D";
+
+function isLatinLetter(char) {
+  // we mean Latin letters A-Z, a-z
+  return !!(char && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123));
+} // Considering custom element name character requirements:
+// https://html.spec.whatwg.org/multipage/custom-elements.html
+// Example of Unicode character in a regex:
+// \u0041
+// "-" | "." | [0-9] | "_" | [a-z] | #xB7 | [#xC0-#xEFFFF]
+
+
+function charSuitableForTagName(char) {
+  return /[.\-_a-z0-9\u00B7\u00C0-\uFFFD]/i.test(char);
+} // it flips all brackets backwards and puts characters in the opposite order
+
+
+function flipEspTag(str) {
+  var res = "";
+
+  for (var i = 0, len = str.length; i < len; i++) {
+    if (str[i] === "[") {
+      res = "]" + res;
+    } else if (str[i] === "]") {
+      res = "[" + res;
+    } else if (str[i] === "{") {
+      res = "}" + res;
+    } else if (str[i] === "}") {
+      res = "{" + res;
+    } else if (str[i] === "(") {
+      res = ")" + res;
+    } else if (str[i] === ")") {
+      res = "(" + res;
+    } else if (str[i] === "<") {
+      res = ">" + res;
+    } else if (str[i] === ">") {
+      res = "<" + res;
+    } else if (str[i] === LEFTDOUBLEQUOTMARK) {
+      res = "" + RIGHTDOUBLEQUOTMARK + res;
+    } else if (str[i] === RIGHTDOUBLEQUOTMARK) {
+      res = "" + LEFTDOUBLEQUOTMARK + res;
+    } else {
+      res = "" + str[i] + res;
+    }
   }
 
-  function startsEsp(str, i, token, layers, styleStarts) {
-    var res = espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && !(notVeryEspChars.includes(str[i]) && notVeryEspChars.includes(str[i + 1])) && (str[i] !== str[i + 1] || veryEspChars.includes(str[i])) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && "-{(".includes(str[i + 1])) && !("})".includes(str[i]) && "-".includes(str[i + 1])) && !(str[i] === "%" && str[i + 1] === "%" && "0123456789".includes(str[i - 1]) && (!str[i + 2] || punctuationChars.includes(str[i + 2]) || !str[i + 2].trim().length)) && !(styleStarts && ("{}".includes(str[i]) || "{}".includes(str[right(str, i)]))) || str[i] === "<" && (str[i + 1] === "/" && espChars.includes(str[i + 2]) || espChars.includes(str[i + 1]) && !["-"].includes(str[i + 1])) || str[i] === "<" && (str[i + 1] === "%" || str.startsWith("jsp:", i + 1) || str.startsWith("cms:", i + 1) || str.startsWith("c:", i + 1)) || str.startsWith("${jspProp", i) || ">})".includes(str[i]) && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump.includes(flipEspTag(str[i])) && (str[i] !== ">" || !xBeforeYOnTheRight$1(str, i + 1, ">", "<")) || str[i] === "-" && str[i + 1] === "-" && str[i + 2] === ">" && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-";
-    return res;
-  }
+  return res;
+}
 
-  function isObj$1(something) {
-    return something && _typeof(something) === "object" && !Array.isArray(something);
-  }
+function isTagNameRecognised(tagName) {
+  return allHTMLTagsKnownToHumanity.has(tagName.toLowerCase()) || ["doctype", "cdata", "xml"].includes(tagName.toLowerCase());
+} // Tells, if substring x goes before substring y on the right
+// side of "str", starting at index "startingIdx".
+// Used to troubleshoot dirty broken code.
 
-  var voidTags = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"];
-  var inlineTags = new Set(["a", "abbr", "acronym", "audio", "b", "bdi", "bdo", "big", "br", "button", "canvas", "cite", "code", "data", "datalist", "del", "dfn", "em", "embed", "i", "iframe", "img", "input", "ins", "kbd", "label", "map", "mark", "meter", "noscript", "object", "output", "picture", "progress", "q", "ruby", "s", "samp", "script", "select", "slot", "small", "span", "strong", "sub", "sup", "svg", "template", "textarea", "time", "u", "tt", "var", "video", "wbr"]);
-  var charsThatEndCSSChunks = ["{", "}", ","];
-  var SOMEQUOTE = "'\"".concat(LEFTDOUBLEQUOTMARK).concat(RIGHTDOUBLEQUOTMARK);
-  var attrNameRegexp = /[\w-]/;
 
-  function tokenizer(str, originalOpts) {
-    var start = Date.now();
+function xBeforeYOnTheRight$1(str, startingIdx, x, y) {
+  for (var i = startingIdx, len = str.length; i < len; i++) {
+    if (str.startsWith(x, i)) {
+      // if x was first, Bob's your uncle, that's truthy result
+      return true;
+    }
 
-    if (!isStr$1(str)) {
-      if (str === undefined) {
-        throw new Error("codsen-tokenizer: [THROW_ID_01] the first input argument is completely missing! It should be given as string.");
-      } else {
-        throw new Error("codsen-tokenizer: [THROW_ID_02] the first input argument must be string! It was given as \"".concat(_typeof(str), "\", equal to:\n").concat(JSON.stringify(str, null, 4)));
+    if (str.startsWith(y, i)) {
+      // since we're in this clause, x failed, so if y matched,
+      // this means y precedes x
+      return false;
+    }
+  } // default result
+
+
+  return false;
+}
+
+function isObj$1(something) {
+  return something && typeof something === "object" && !Array.isArray(something);
+} // https://html.spec.whatwg.org/multipage/syntax.html#elements-2
+
+
+var voidTags = ["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"]; // https://developer.mozilla.org/en-US/docs/Web/HTML/Element#Inline_text_semantics
+// https://developer.mozilla.org/en-US/docs/Web/HTML/Element#Image_and_multimedia
+
+var inlineTags = new Set(["a", "abbr", "acronym", "audio", "b", "bdi", "bdo", "big", "br", "button", "canvas", "cite", "code", "data", "datalist", "del", "dfn", "em", "embed", "i", "iframe", "img", "input", "ins", "kbd", "label", "map", "mark", "meter", "noscript", "object", "output", "picture", "progress", "q", "ruby", "s", "samp", "script", "select", "slot", "small", "span", "strong", "sub", "sup", "svg", "template", "textarea", "time", "u", "tt", "var", "video", "wbr"]); // Rules which might wrap the media queries, for example:
+// @supports (display: grid) {...
+// const atRulesWhichMightWrapStyles = ["media", "supports", "document"];
+
+var charsThatEndCSSChunks = ["{", "}", ","];
+var SOMEQUOTE = "'\"" + LEFTDOUBLEQUOTMARK + RIGHTDOUBLEQUOTMARK;
+var attrNameRegexp = /[\w-]/; // returns found object's index in "layers" array
+
+function getLastEspLayerObjIdx(layers) {
+  if (layers && layers.length) {
+    // traverse layers backwards
+    for (var z = layers.length; z--;) {
+      if (layers[z].type === "esp") {
+        return z;
       }
     }
+  }
 
-    if (originalOpts && !isObj$1(originalOpts)) {
-      throw new Error("codsen-tokenizer: [THROW_ID_03] the second input argument, an options object, should be a plain object but it was given as type ".concat(_typeof(originalOpts), ", equal to ").concat(JSON.stringify(originalOpts, null, 4)));
+  return undefined;
+}
+
+function getWholeEspTagLumpOnTheRight(str, i, layers) {
+  var wholeEspTagLumpOnTheRight = str[i];
+  var len = str.length; // getLastEspLayerObj()
+
+  var lastEspLayerObj = layers[getLastEspLayerObjIdx(layers)];
+
+  for (var y = i + 1; y < len; y++) {
+    // if righty character is on the left and now it's lefty,
+    // we have a situation like:
+    // {{ abc }}{% endif %}
+    //        ^^^^
+    //        lump
+    //
+    // {{ abc }}{% endif %}
+    //         ^^
+    //         ||
+    //    lefty  righty
+    //
+    // we clice off where righty starts
+    if (leftyChars.includes(str[y]) && rightyChars.includes(str[y - 1])) {
+      break;
     }
 
-    if (isObj$1(originalOpts) && originalOpts.tagCb && typeof originalOpts.tagCb !== "function") {
-      throw new Error("codsen-tokenizer: [THROW_ID_04] the opts.tagCb, callback function, should be a function but it was given as type ".concat(_typeof(originalOpts.tagCb), ", equal to ").concat(JSON.stringify(originalOpts.tagCb, null, 4)));
+    if ( // consider:
+    // ${(y/4)?int}
+    //   ^
+    //   we're here - is this opening bracket part of heads?!?
+    //
+    // or JSP:
+    // <%=(new java.util.Date()).toLocaleString()%>
+    //    ^
+    // if lump already is two chars long
+    wholeEspTagLumpOnTheRight.length > 1 && ( // contains one of opening-polarity characters
+    wholeEspTagLumpOnTheRight.includes("<") || wholeEspTagLumpOnTheRight.includes("{") || wholeEspTagLumpOnTheRight.includes("[") || wholeEspTagLumpOnTheRight.includes("(")) && // bail if it's a bracket
+    str[y] === "(") {
+      break;
     }
 
-    if (isObj$1(originalOpts) && originalOpts.charCb && typeof originalOpts.charCb !== "function") {
-      throw new Error("codsen-tokenizer: [THROW_ID_05] the opts.charCb, callback function, should be a function but it was given as type ".concat(_typeof(originalOpts.charCb), ", equal to ").concat(JSON.stringify(originalOpts.charCb, null, 4)));
+    if (espChars.includes(str[y]) || // in case it's XML tag-like templating tag, such as JSP,
+    // we check, is it in the last guessed lump's character's list
+    lastEspLayerObj && lastEspLayerObj.guessedClosingLump.includes(str[y]) || str[i] === "<" && str[y] === "/" || // accept closing bracket if it's RPL comment, tails of: <#-- z -->
+    str[y] === ">" && wholeEspTagLumpOnTheRight === "--" && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-" || // we do exception for extra characters, such as JSP's
+    // exclamation mark: <%! yo %>
+    //                     ^
+    // which is legit...
+    //
+    // at least one character must have been caught already
+    !lastEspLayerObj && y > i && "!=@".includes(str[y])) {
+      wholeEspTagLumpOnTheRight += str[y];
+    } else {
+      break;
     }
+  } // if lump is tails+heads, report the length of tails only:
+  // {%- a -%}{%- b -%}
+  //        ^
+  //      we're talking about this lump of tails and heads
 
-    if (isObj$1(originalOpts) && originalOpts.reportProgressFunc && typeof originalOpts.reportProgressFunc !== "function") {
-      throw new Error("codsen-tokenizer: [THROW_ID_06] the opts.reportProgressFunc, callback function, should be a function but it was given as type ".concat(_typeof(originalOpts.reportProgressFunc), ", equal to ").concat(JSON.stringify(originalOpts.reportProgressFunc, null, 4)));
-    }
 
-    var defaults = {
-      tagCb: null,
-      tagCbLookahead: 0,
-      charCb: null,
-      charCbLookahead: 0,
-      reportProgressFunc: null,
-      reportProgressFuncFrom: 0,
-      reportProgressFuncTo: 100
+  if (wholeEspTagLumpOnTheRight && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].guessedClosingLump && wholeEspTagLumpOnTheRight.length > layers[layers.length - 1].guessedClosingLump.length) {
+    //
+    // case I.
+    //
+    if (wholeEspTagLumpOnTheRight.endsWith(layers[layers.length - 1].openingLump)) {
+      // no need to extract tails, heads "{%-" were confirmed in example:
+      // {%- a -%}{%- b -%}
+      //          ^
+      //         here
+      // return string, extracted ESP tails
+      return wholeEspTagLumpOnTheRight.slice(0, wholeEspTagLumpOnTheRight.length - layers[layers.length - 1].openingLump.length);
+    } // ELSE
+    // imagine a case like:
+    // {%- aa %}{% bb %}
+    // opening heads were {%-, flipped were -%}. Now when we take lump %}{%
+    // and match, the dash will be missing.
+    // What we're going to do is we'll split the lump where last matched
+    // continuous chunk ends (%} in example above) with condition that
+    // at least one character from ESP-list follows, which is not part of
+    // guessed closing lump.
+
+
+    var uniqueCharsListFromGuessedClosingLumpArr = new Set(layers[layers.length - 1].guessedClosingLump);
+    var found = 0;
+
+    var _loop = function _loop(len2, _y) {
+      if (!uniqueCharsListFromGuessedClosingLumpArr.has(wholeEspTagLumpOnTheRight[_y]) && found > 1) {
+        return {
+          v: wholeEspTagLumpOnTheRight.slice(0, _y)
+        };
+      }
+
+      if (uniqueCharsListFromGuessedClosingLumpArr.has(wholeEspTagLumpOnTheRight[_y])) {
+        found += 1;
+        uniqueCharsListFromGuessedClosingLumpArr = new Set([].concat(uniqueCharsListFromGuessedClosingLumpArr).filter(function (el) {
+          return el !== wholeEspTagLumpOnTheRight[_y];
+        }));
+      }
     };
 
-    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
+    for (var _y = 0, len2 = wholeEspTagLumpOnTheRight.length; _y < len2; _y++) {
+      var _ret = _loop(len2, _y);
 
-    var currentPercentageDone;
-    var lastPercentage = 0;
-    var len = str.length;
-    var midLen = Math.floor(len / 2);
-    var doNothing;
-    var withinStyle = false;
-    var withinStyleComment = false;
-    var tagStash = [];
-    var charStash = [];
-    var token = {};
-    var tokenDefault = {
+      if (typeof _ret === "object") return _ret.v;
+    }
+  }
+
+  return wholeEspTagLumpOnTheRight;
+} // starts. Previously it sat within if() clauses but became unwieldy and
+// so we extracted into a function.
+
+
+function startsHtmlComment(str, i, token, layers) {
+  // console.log(
+  //   `R1: ${!!matchRight(str, i, ["!--"], {
+  //     maxMismatches: 1,
+  //     firstMustMatch: true, // <--- FUZZY MATCH, BUT EXCL. MARK IS OBLIGATORY
+  //     trimBeforeMatching: true
+  //   }) ||
+  //     matchRight(str, i, ["![endif]"], {
+  //       i: true,
+  //       maxMismatches: 2,
+  //       trimBeforeMatching: true
+  //     })}`
+  // );
+  // console.log(
+  //   `R2: ${!matchRight(str, i, ["![cdata", "<"], {
+  //     i: true,
+  //     maxMismatches: 1,
+  //     trimBeforeMatching: true
+  //   })}`
+  // );
+  // console.log(`R3: ${!!(token.type !== "comment" || token.kind !== "not")}`);
+  // console.log(
+  //   `R3*: ${`\u001b[${33}m${`token.kind`}\u001b[${39}m`} = ${JSON.stringify(
+  //     token.kind,
+  //     null,
+  //     4
+  //   )}`
+  // );
+  return !!( // the opening is deliberately loose, with one dash missing, "!-" instead of "!--"
+  str[i] === "<" && (matchRight(str, i, ["!--"], {
+    maxMismatches: 1,
+    firstMustMatch: true,
+    trimBeforeMatching: true
+  }) || matchRight(str, i, ["![endif]"], {
+    i: true,
+    maxMismatches: 2,
+    trimBeforeMatching: true
+  })) && !matchRight(str, i, ["![cdata", "<"], {
+    i: true,
+    maxMismatches: 1,
+    trimBeforeMatching: true
+  }) && (token.type !== "comment" || token.kind !== "not") || str[i] === "-" && matchRight(str, i, ["->"], {
+    trimBeforeMatching: true
+  }) && (token.type !== "comment" || !token.closing && token.kind !== "not") && !matchLeft(str, i, "<", {
+    trimBeforeMatching: true,
+    trimCharsBeforeMatching: ["-", "!"]
+  }) && ( // insurance against ESP tag, RPL comments: <#-- z -->
+  !Array.isArray(layers) || !layers.length || layers[layers.length - 1].type !== "esp" || !(layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-")));
+} // import { matchLeft, matchRight } from "string-match-left-right";
+
+
+function startsCssComment(str, i, _token, _layers, withinStyle) {
+  return (// cast to bool
+    withinStyle && ( // match the / *
+    str[i] === "/" && str[i + 1] === "*" || // match the * /
+    str[i] === "*" && str[i + 1] === "/")
+  );
+} // We record ESP tag head and tails as we traverse code because we need to know
+// the arrangement of all pieces: start, end, nesting etc.
+//
+// Now, we keep records of each "layer" - new opening of some sorts: quotes,
+// heads of ESP tags and so on.
+//
+// This function is a helper to check, does something match as a counterpart
+// to the last/first layer.
+//
+// Quotes could be checked here but are not at the moment, here currently
+// we deal with ESP tokens only
+// RETURNS: undefined or integer, length of a matched ESP lump.
+
+
+function matchLayerLast(wholeEspTagLump, layers, matchFirstInstead) {
+  if (matchFirstInstead === void 0) {
+    matchFirstInstead = false;
+  }
+
+  if (!layers.length) {
+    return;
+  }
+
+  var whichLayerToMatch = matchFirstInstead ? layers[0] : layers[layers.length - 1]; // console.log(
+  //   `023 matchLayer(): ${`\u001b[${33}m${`whichLayerToMatch`}\u001b[${39}m`} = ${JSON.stringify(
+  //     whichLayerToMatch,
+  //     null,
+  //     4
+  //   )}`
+  // );
+
+  if (whichLayerToMatch.type !== "esp") {
+    // we aim to match ESP tag layers, so instantly it's falsey result
+    // because layer we match against is not ESP tag layer
+    // console.log(`033 matchLayer(): early return undefined`);
+    return;
+  }
+
+  if ( // imagine case of Nunjucks: heads "{%" are normal but tails "-%}" (notice dash)
+  wholeEspTagLump.includes(whichLayerToMatch.guessedClosingLump) || // match every character from the last "layers" complex-type entry must be
+  // present in the extracted lump
+  Array.from(wholeEspTagLump).every(function (char) {
+    return whichLayerToMatch.guessedClosingLump.includes(char);
+  })) {
+    // console.log(
+    //   `047 matchLayer(): ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${
+    //     wholeEspTagLump.length
+    //   }`
+    // );
+    return wholeEspTagLump.length;
+  } // console.log(`054 matchLayer(): finally, return undefined`);
+
+}
+
+var BACKSLASH$1 = "\\"; // This is an extracted logic which detects where token of a particular kind
+// starts. Previously it sat within if() clauses but became unwieldy and
+// so we extracted into a function.
+
+function startsTag(str, i, token, layers, withinStyle) {
+  return !!(str[i] && str[i].trim().length && (!layers.length || token.type === "text") && (!token.kind || !["doctype", "xml"].includes(token.kind)) && ( // within CSS styles, initiate tags only on opening bracket:
+  !withinStyle || str[i] === "<") && (str[i] === "<" && (isOpening(str, i, {
+    allowCustomTagNames: true
+  }) || str[right(str, i)] === ">" || matchRight(str, i, ["doctype", "xml", "cdata"], {
+    i: true,
+    trimBeforeMatching: true,
+    trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
+  })) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH$1].includes(str[left(str, i)])) && isOpening(str, i, {
+    allowCustomTagNames: false,
+    skipOpeningBracket: true
+  })) && (token.type !== "esp" || token.tail && token.tail.includes(str[i])));
+} // starts. Previously it sat within if() clauses but became unwieldy and
+// so we extracted into a function.
+
+
+function startsEsp(str, i, token, layers, withinStyle) {
+  var res = // 1. two consecutive esp characters - Liquid, Mailchimp etc.
+  // {{ or |* and so on
+  espChars.includes(str[i]) && str[i + 1] && espChars.includes(str[i + 1]) && // ensure our suspected lump doesn't comprise only
+  // of "notVeryEspChars" - real ESP tag |**| can
+  // contain asterisk (*) but only asterisks can't
+  // comprise an ESP tag. But curly braces can -
+  // {{ and }} are valid Nunjucks heads/tails.
+  // So not all ESP tag characters are equal.
+  !(notVeryEspChars.includes(str[i]) && notVeryEspChars.includes(str[i + 1])) && ( // only "veryEspChars" group characters can
+  // be repeated, like {{ and }} - other's can't
+  // for example, ** is not real ESP heads
+  str[i] !== str[i + 1] || veryEspChars.includes(str[i])) && token.type !== "rule" && token.type !== "at" && !(str[i] === "-" && "-{(".includes(str[i + 1])) && !("})".includes(str[i]) && "-".includes(str[i + 1])) && !( // insurance against repeated percentages
+  //
+  // imagine: "99%%."
+  //             ^
+  //      we're here
+  str[i] === "%" && str[i + 1] === "%" && "0123456789".includes(str[i - 1]) && (!str[i + 2] || punctuationChars.includes(str[i + 2]) || !str[i + 2].trim().length)) && !(withinStyle && ("{}".includes(str[i]) || "{}".includes(str[right(str, i)]))) || //
+  // 2. html-like syntax
+  //
+  // 2.1 - Responsys RPL and similar
+  // <#if z> or </#if> and so on
+  // normal opening tag
+  str[i] === "<" && ( // and
+  // either it's closing tag and what follows is ESP-char
+  str[i + 1] === "/" && espChars.includes(str[i + 2]) || // or
+  // it's not closing and esp char follows right away
+  espChars.includes(str[i + 1]) && // but no cheating, character must not be second-grade
+  !["-"].includes(str[i + 1])) || // 2.2 - JSP (Java Server Pages)
+  // <%@ page blablabla %>
+  // <c:set var="someList" value="${jspProp.someList}" />
+  str[i] === "<" && ( // covers majority of JSP tag cases
+  str[i + 1] === "%" || // <jsp:
+  str.startsWith("jsp:", i + 1) || // <cms:
+  str.startsWith("cms:", i + 1) || // <c:
+  str.startsWith("c:", i + 1)) || str.startsWith("${jspProp", i) || //
+  // 3. single character tails, for example RPL's closing curlies: ${zzz}
+  // it's specifically a closing-kind character
+  ">})".includes(str[i]) && // heads include the opposite of it
+  Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump.includes(flipEspTag(str[i])) && ( // insurance against "greater than", as in:
+  // <#if product.weight > 100>
+  str[i] !== ">" || !xBeforeYOnTheRight$1(str, i + 1, ">", "<")) || //
+  // 4. comment closing in RPL-like templating languages, for example:
+  // <#-- z -->
+  str[i] === "-" && str[i + 1] === "-" && str[i + 2] === ">" && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-";
+  return !!res;
+}
+var defaults$1 = {
+  tagCb: null,
+  tagCbLookahead: 0,
+  charCb: null,
+  charCbLookahead: 0,
+  reportProgressFunc: null,
+  reportProgressFuncFrom: 0,
+  reportProgressFuncTo: 100
+};
+
+function tokenizer(str, originalOpts) {
+  var start = Date.now(); //
+  //
+  //
+  //
+  //
+  //
+  //
+  // INSURANCE
+  // ---------------------------------------------------------------------------
+
+  if (typeof str !== "string") {
+    if (str === undefined) {
+      throw new Error("codsen-tokenizer: [THROW_ID_01] the first input argument is completely missing! It should be given as string.");
+    } else {
+      throw new Error("codsen-tokenizer: [THROW_ID_02] the first input argument must be string! It was given as \"" + typeof str + "\", equal to:\n" + JSON.stringify(str, null, 4));
+    }
+  }
+
+  if (originalOpts && !isObj$1(originalOpts)) {
+    throw new Error("codsen-tokenizer: [THROW_ID_03] the second input argument, an options object, should be a plain object but it was given as type " + typeof originalOpts + ", equal to " + JSON.stringify(originalOpts, null, 4));
+  }
+
+  if (originalOpts && isObj$1(originalOpts) && originalOpts.tagCb && typeof originalOpts.tagCb !== "function") {
+    throw new Error("codsen-tokenizer: [THROW_ID_04] the opts.tagCb, callback function, should be a function but it was given as type " + typeof originalOpts.tagCb + ", equal to " + JSON.stringify(originalOpts.tagCb, null, 4));
+  }
+
+  if (originalOpts && isObj$1(originalOpts) && originalOpts.charCb && typeof originalOpts.charCb !== "function") {
+    throw new Error("codsen-tokenizer: [THROW_ID_05] the opts.charCb, callback function, should be a function but it was given as type " + typeof originalOpts.charCb + ", equal to " + JSON.stringify(originalOpts.charCb, null, 4));
+  }
+
+  if (originalOpts && isObj$1(originalOpts) && originalOpts.reportProgressFunc && typeof originalOpts.reportProgressFunc !== "function") {
+    throw new Error("codsen-tokenizer: [THROW_ID_06] the opts.reportProgressFunc, callback function, should be a function but it was given as type " + typeof originalOpts.reportProgressFunc + ", equal to " + JSON.stringify(originalOpts.reportProgressFunc, null, 4));
+  } //
+  //
+  //
+  //
+  //
+  //
+  //
+  // OPTS
+  // ---------------------------------------------------------------------------
+
+
+  var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts); //
+  //
+  //
+  //
+  //
+  //
+  //
+  // VARS
+  // ---------------------------------------------------------------------------
+
+
+  var currentPercentageDone = 0;
+  var lastPercentage = 0;
+  var len = str.length;
+  var midLen = Math.floor(len / 2);
+  var doNothing = 0; // index until where to do nothing
+
+  var withinStyle = false; // flag used to instruct content after <style> to toggle type="css"
+
+  var withinStyleComment = false; // opts.*CbLookahead allows to request "x"-many tokens "from the future"
+  // to be reported upon each token. You can check what's coming next.
+  // To implement this, we need to stash "x"-many tokens and only when enough
+  // have been gathered, array.shift() the first one and ping the callback
+  // with it, along with "x"-many following tokens. Later, in the end,
+  // we clean up stashes and report only as many as we have.
+  // The stashes will be LIFO (last in first out) style arrays:
+
+  var tagStash = [];
+  var charStash = []; // when we compile the token, we fill this object:
+
+  var token = {};
+
+  function tokenReset() {
+    // object-assign is basically cloning - objects are passed by reference,
+    // we can't risk mutating the default object:
+    token = {
       type: null,
       start: null,
       end: null,
       value: null
     };
+    attribReset();
+  } // same for attributes:
 
-    function tokenReset() {
-      token = lodash_clonedeep(tokenDefault);
-      attribReset();
-      return token;
+
+  var attribDefaults = {
+    attribName: null,
+    attribNameRecognised: false,
+    attribNameStartsAt: null,
+    attribNameEndsAt: null,
+    attribOpeningQuoteAt: null,
+    attribClosingQuoteAt: null,
+    attribValueRaw: null,
+    attribValue: [],
+    attribValueStartsAt: null,
+    attribValueEndsAt: null,
+    attribStarts: null,
+    attribEnds: null,
+    attribLeft: null
+  };
+
+  var attrib = _objectSpread2({}, attribDefaults);
+
+  function attribReset() {
+    // object-assign is basically cloning - objects are passed by reference,
+    // we can't risk mutating the default object:
+    attrib = lodash_clonedeep(attribDefaults);
+  }
+
+  function attribPush(tokenObj) {
+    // 1. clean up any existing tokens first
+
+    /* istanbul ignore else */
+    if (attrib.attribValue.length && attrib.attribValue[~-attrib.attribValue.length].start && !attrib.attribValue[~-attrib.attribValue.length].end) {
+      attrib.attribValue[~-attrib.attribValue.length].end = tokenObj.start;
+      attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, tokenObj.start);
     }
 
-    var attrib = {};
-    var attribDefault = {
-      attribName: null,
-      attribNameRecognised: null,
-      attribNameStartsAt: null,
-      attribNameEndsAt: null,
-      attribOpeningQuoteAt: null,
-      attribClosingQuoteAt: null,
-      attribValueRaw: null,
-      attribValue: [],
-      attribValueStartsAt: null,
-      attribValueEndsAt: null,
-      attribStarts: null,
-      attribEnds: null,
-      attribLeft: null
-    };
+    attrib.attribValue.push(tokenObj);
+  } // same for property
 
-    function attribReset() {
-      attrib = lodash_clonedeep(attribDefault);
+
+  var propertyDefault = {
+    start: null,
+    end: null,
+    value: null,
+    property: null,
+    propertyStarts: null,
+    propertyEnds: null,
+    colon: null,
+    valueStarts: null,
+    valueEnds: null,
+    semi: null
+  };
+
+  var property = _objectSpread2({}, propertyDefault);
+
+  function propertyReset() {
+    property = _objectSpread2({}, propertyDefault);
+  } // The CSS properties can be in <style> blocks or inline, <div style="">.
+  // When we process the code, we have to address both places. This "push"
+  // is used in handful of places so we DRY'ed it to a function.
+
+
+  function pushProperty(p) {
+    // push and init and patch up to resume
+    if (attrib && attrib.attribName === "style") {
+      attrib.attribValue.push(_objectSpread2({}, p));
+    } else if (token && Array.isArray(token.properties)) {
+      token.properties.push(_objectSpread2({}, p));
     }
+  } // Initial resets:
 
-    function attribPush(tokenObj) {
-      /* istanbul ignore else */
-      if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && attrib.attribValue[~-attrib.attribValue.length].start && !attrib.attribValue[~-attrib.attribValue.length].end) {
-        attrib.attribValue[~-attrib.attribValue.length].end = tokenObj.start;
-        attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, tokenObj.start);
+
+  tokenReset(); // ---------------------------------------------------------------------------
+
+  var selectorChunkStartedAt; // For example:
+  //
+  //       <style type="text/css">
+  //         .unused1[z].unused2, .used[z] {a:1;}
+  //         |                 |
+  //         <-selector chunk ->
+  //
+  //
+  // ---------------------------------------------------------------------------
+
+  var parentTokenToBackup; // We use it for nested ESP tags - for example, <td{% z %}>
+  // The esp tag {% z %} is nested among the tag's attributes:
+  // {
+  //   type: "tag",
+  //   start: 0,
+  //   end: 11,
+  //   value: `<td{% z %}>`,
+  //   attribs: [
+  //     {
+  //       type: "esp",
+  //       start: 3,
+  //       end: 10,
+  //       value: "{% z %}",
+  //       head: "{%",
+  //       tail: "%}",
+  //       kind: null,
+  //     },
+  //   ],
+  // }
+  //
+  // to allow this, we have to save the current, parent token, in case above,
+  // <td...> and then initiate the ESP token, which later will get nested
+
+  var attribToBackup; // We use it when ESP tag is inside the attribute:
+  // <a b="{{ c }}d">
+  //
+  // we need to back up both tag and attrib objects, assemble esp tag, then
+  // restore both and stick it inside the "attrib"'s array "attribValue":
+  //
+  // attribValue: [
+  //   {
+  //     type: "esp",
+  //     start: 6,
+  //     end: 13,
+  //     value: "{{ c }}",
+  //     head: "{{",
+  //     tail: "}}",
+  //   },
+  //   {
+  //     type: "text",
+  //     start: 13,
+  //     end: 14,
+  //     value: "d",
+  //   },
+  // ],
+
+  var lastNonWhitespaceCharAt = null; // ---------------------------------------------------------------------------
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  // INNER FUNCTIONS
+  // ---------------------------------------------------------------------------
+  // When we enter the double quotes or any other kind of "layer", we need to
+  // ignore all findings until the "layer" is exited. Here we keep note of the
+  // closing strings which exit the current "layer". There can be many of them,
+  // nested and escaped and so on.
+
+  var layers = []; // example of contents:
+  // [
+  //     {
+  //         type: "simple",
+  //         value: "'",
+  //     },
+  //     {
+  //         type: "esp",
+  //         guessedClosingLump: "%}"
+  //     }
+  // ]
+  // there can be two types of layer values: simple strings to match html/css
+  // token types and complex, to match esp tokens heuristically, where we don't
+  // know exact ESP tails but we know set of characters that suspected "tail"
+  // should match.
+  //
+
+  function lastLayerIs(something) {
+    return !!(Array.isArray(layers) && layers.length && layers[~-layers.length].type === something);
+  } // processes closing comment - it's DRY'ed here because it's in multiple places
+  // considering broken code like stray closing inline css comment blocks etc.
+
+
+  function closingComment(i) {
+    var end = (right(str, i) || i) + 1;
+    attribPush({
+      type: "comment",
+      start: i,
+      end: end,
+      value: str.slice(i, end),
+      closing: true,
+      kind: "block",
+      language: "css"
+    }); // skip next character
+
+    doNothing = end; // pop the block comment layer
+
+    if (lastLayerIs("block")) {
+      layers.pop();
+    }
+  }
+
+  function reportFirstFromStash(stash, cb, lookaheadLength) {
+    // start to assemble node we're report to the callback cb1()
+    var currentElem = stash.shift(); // ^ shift removes it from stash
+    // now we need the "future" nodes, as many as "lookahead" of them
+    // that's the container where they'll sit:
+
+    var next = [];
+
+    for (var i = 0; i < lookaheadLength; i++) {
+      // we want as many as "lookaheadLength" from stash but there might be
+      // not enough there
+      if (stash[i]) {
+        next.push(lodash_clonedeep(stash[i]));
+      } else {
+        break;
       }
-      /* istanbul ignore else */
+    } // finally, ping the callback with assembled element:
 
 
-      if (!Array.isArray(attrib.attribValue)) {
-        attrib.attribValue = [];
-      }
-
-      attrib.attribValue.push(tokenObj);
-    }
-
-    var property = null;
-    var propertyDefault = {
-      property: null,
-      propertyStarts: null,
-      propertyEnds: null,
-      colon: null,
-      value: null,
-      valueStarts: null,
-      valueEnds: null,
-      semi: null,
-      start: null,
-      end: null
-    };
-
-    function propertyReset() {
-      property = lodash_clonedeep(propertyDefault);
-    }
-
-    function pushProperty(p) {
-      if (attrib && attrib.attribName === "style") {
-        attrib.attribValue.push(lodash_clonedeep(p));
-      } else if (token && Array.isArray(token.properties)) {
-        token.properties.push(lodash_clonedeep(p));
-      }
-    }
-
-    tokenReset();
-    var selectorChunkStartedAt;
-    var parentTokenToBackup;
-    var attribToBackup;
-    var lastNonWhitespaceCharAt;
-    var layers = [];
-
-    function lastLayerIs(something) {
-      return Array.isArray(layers) && layers.length && layers[~-layers.length].type === something;
-    }
-
-    function closingComment(i) {
-      attribPush({
-        type: "comment",
-        start: i,
-        end: right(str, i) + 1,
-        value: str.slice(i, right(str, i) + 1),
-        closing: true,
-        kind: "block",
-        language: "css"
-      });
-      doNothing = right(str, i) + 1;
-
-      if (lastLayerIs("block")) {
-        layers.pop();
-      }
-    }
-
-    function reportFirstFromStash(stash, cb, lookaheadLength) {
-      var currentElem = stash.shift();
-      var next = [];
-
-      for (var i = 0; i < lookaheadLength; i++) {
-        if (stash[i]) {
-          next.push(lodash_clonedeep(stash[i]));
-        } else {
-          break;
-        }
-      }
-
+    if (typeof cb === "function") {
       cb(currentElem, next);
     }
+  }
 
-    function pingCharCb(incomingToken) {
-      if (opts.charCb) {
-        charStash.push(incomingToken);
+  function pingCharCb(incomingToken) {
+    // no cloning, no reset
+    if (opts.charCb) {
+      // if there were no stashes, we'd call the callback like this:
+      // opts.charCb(incomingToken);
+      // 1. push to stash
+      charStash.push(incomingToken); // 2. is there are enough tokens in the stash, ping the first-one
 
-        if (charStash.length > opts.charCbLookahead) {
-          reportFirstFromStash(charStash, opts.charCb, opts.charCbLookahead);
-        }
+      if (charStash.length > opts.charCbLookahead) {
+        reportFirstFromStash(charStash, opts.charCb, opts.charCbLookahead);
       }
     }
+  }
 
-    function pingTagCb(incomingToken) {
-      if (opts.tagCb) {
-        tagStash.push(incomingToken);
+  function pingTagCb(incomingToken) {
+    if (opts.tagCb) {
+      // console.log(
+      //   `419 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} tagCb() with ${JSON.stringify(
+      //     incomingToken,
+      //     null,
+      //     4
+      //   )}`
+      // );
+      // opts.tagCb(clone(incomingToken));
+      // 1. push to stash
+      tagStash.push(incomingToken); // 2. is there are enough tokens in the stash, ping the first-one
 
-        if (tagStash.length > opts.tagCbLookahead) {
-          reportFirstFromStash(tagStash, opts.tagCb, opts.tagCbLookahead);
-        }
+      if (tagStash.length > opts.tagCbLookahead) {
+        reportFirstFromStash(tagStash, opts.tagCb, opts.tagCbLookahead);
       }
     }
+  }
 
-    function dumpCurrentToken(incomingToken, i) {
-      if (!["text", "esp"].includes(incomingToken.type) && incomingToken.start !== null && incomingToken.start < i && (str[~-i] && !str[~-i].trim() || str[i] === "<")) {
+  function dumpCurrentToken(incomingToken, i) {
+    // Let's ensure it was not a token with trailing whitespace, because now is
+    // the time to separate it and report it as a standalone token.
+    // Also, the following clause will catch the unclosed tags like
+    // <a href="z" click here</a>
+    if (!["text", "esp"].includes(incomingToken.type) && incomingToken.start !== null && incomingToken.start < i && (str[~-i] && !str[~-i].trim() || str[i] === "<")) {
+      // this ending is definitely a token ending. Now the question is,
+      // maybe we need to split all gathered token contents into two:
+      // maybe it's a tag and a whitespace? or an unclosed tag?
+      // in some cases, this token.end will be only end of a second token,
+      // we'll need to find where this last chunk started and terminate the
+      // previous token (one which started at the current token.start) there.
+      if (left(str, i) !== null) {
         incomingToken.end = left(str, i) + 1;
+      } else {
+        incomingToken.end = i;
+      }
+
+      incomingToken.value = str.slice(incomingToken.start, incomingToken.end);
+
+      if (incomingToken.type === "tag" && !"/>".includes(str[~-incomingToken.end])) {
+        // we need to potentially shift the incomingToken.end left, imagine:
+        // <a href="z" click here</a>
+        //                       ^
+        //               we are here ("i" value), that's incomingToken.end currently
+        //
+        // <a href="z" click here</a>
+        //            ^
+        //        incomingToken.end should be here
+        //
+        // PLAN: take current token, if there are attributes, validate
+        // each one of them, terminate at the point of the first smell.
+        // If there are no attributes, terminate at the end of a tag name
+        var cutOffIndex = incomingToken.tagNameEndsAt || i;
+
+        if (Array.isArray(incomingToken.attribs) && incomingToken.attribs.length) {
+          // initial cut-off point is token.tagNameEndsAt // with each validated attribute, push the cutOffIndex forward:
+          for (var i2 = 0, len2 = incomingToken.attribs.length; i2 < len2; i2++) {
+            if (incomingToken.attribs[i2].attribNameRecognised && incomingToken.attribs[i2].attribEnds) {
+              cutOffIndex = incomingToken.attribs[i2].attribEnds; // small tweak - consider this:
+              // <a href="z" click here</a>
+              //            ^
+              //         this space in particular
+              // that space above should belong to the tag's index range,
+              // unless the whitespace is bigger than 1:
+              // <a href="z"   click here</a>
+
+              if (str[cutOffIndex + 1] && !str[cutOffIndex].trim() && str[cutOffIndex + 1].trim()) {
+                cutOffIndex += 1;
+              }
+            } else {
+              // delete false attributes from incomingToken.attribs
+              if (i2 === 0) {
+                // if it's the first attribute and it's already
+                // not suitable, for example:
+                // <a click here</a>
+                // all attributes ("click", "here") are removed:
+                incomingToken.attribs = [];
+              } else {
+                // leave only attributes up to i2-th
+                incomingToken.attribs = incomingToken.attribs.splice(0, i2);
+              } // in the end stop the loop:
+
+
+              break;
+            }
+          }
+        }
+
+        incomingToken.end = cutOffIndex;
         incomingToken.value = str.slice(incomingToken.start, incomingToken.end);
 
-        if (incomingToken.type === "tag" && !"/>".includes(str[~-incomingToken.end])) {
-          var cutOffIndex = incomingToken.tagNameEndsAt || i;
+        if (!incomingToken.tagNameEndsAt) {
+          incomingToken.tagNameEndsAt = cutOffIndex;
+        }
 
-          if (Array.isArray(incomingToken.attribs) && incomingToken.attribs.length) {
-            for (var i2 = 0, len2 = incomingToken.attribs.length; i2 < len2; i2++) {
-              if (incomingToken.attribs[i2].attribNameRecognised) {
-                cutOffIndex = incomingToken.attribs[i2].attribEnds;
+        if (incomingToken.tagNameStartsAt && incomingToken.tagNameEndsAt && !incomingToken.tagName) {
+          incomingToken.tagName = str.slice(incomingToken.tagNameStartsAt, cutOffIndex);
+          incomingToken.recognised = isTagNameRecognised(incomingToken.tagName);
+        }
 
-                if (str[cutOffIndex + 1] && !str[cutOffIndex].trim() && str[cutOffIndex + 1].trim()) {
-                  cutOffIndex += 1;
-                }
-              } else {
-                if (i2 === 0) {
-                  incomingToken.attribs.length = 0;
-                } else {
-                  incomingToken.attribs = incomingToken.attribs.splice(0, i2);
-                }
+        pingTagCb(incomingToken);
+        initToken("text", cutOffIndex);
+      } else {
+        pingTagCb(incomingToken);
+        tokenReset(); // if there was whitespace after token's end:
 
-                break;
-              }
+        if (str[~-i] && !str[~-i].trim()) {
+          initToken("text", left(str, i) + 1);
+        }
+      }
+    } // if a token is already being recorded, end it
+
+
+    if (token.start !== null) {
+      if (token.end === null && token.start !== i) {
+        // (esp tags will have it set already)
+        token.end = i;
+        token.value = str.slice(token.start, token.end);
+      } // normally we'd ping the token but let's not forget we have token stashes
+      // in "attribToBackup" and "parentTokenToBackup"
+
+
+      if (token.start !== null && token.end) {
+        // if it's a text token inside "at" rule, nest it, push into that
+        // "at" rule pending in layers - otherwise, ping as standalone
+        if (lastLayerIs("at")) {
+          layers[~-layers.length].token.rules.push(token);
+        } else {
+          pingTagCb(token);
+        }
+      }
+
+      tokenReset();
+    }
+  }
+
+  function atRuleWaitingForClosingCurlie() {
+    return lastLayerIs("at") && isObj$1(layers[~-layers.length].token) && layers[~-layers.length].token.openingCurlyAt && !layers[~-layers.length].token.closingCurlyAt;
+  }
+
+  function getNewToken(type, startVal) {
+    if (startVal === void 0) {
+      startVal = null;
+    }
+
+    if (type === "tag") {
+      return {
+        type: type,
+        start: startVal,
+        end: null,
+        value: null,
+        tagNameStartsAt: null,
+        tagNameEndsAt: null,
+        tagName: null,
+        recognised: null,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: []
+      };
+    }
+
+    if (type === "comment") {
+      return {
+        type: type,
+        start: startVal,
+        end: null,
+        value: null,
+        closing: false,
+        kind: "simple",
+        language: "html"
+      };
+    }
+
+    if (type === "rule") {
+      return {
+        type: type,
+        start: startVal,
+        end: null,
+        value: null,
+        left: null,
+        nested: false,
+        openingCurlyAt: null,
+        closingCurlyAt: null,
+        selectorsStart: null,
+        selectorsEnd: null,
+        selectors: [],
+        properties: []
+      };
+    }
+
+    if (type === "at") {
+      return {
+        type: type,
+        start: startVal,
+        end: null,
+        value: null,
+        left: null,
+        nested: false,
+        openingCurlyAt: null,
+        closingCurlyAt: null,
+        identifier: null,
+        identifierStartsAt: null,
+        identifierEndsAt: null,
+        query: null,
+        queryStartsAt: null,
+        queryEndsAt: null,
+        rules: []
+      };
+    }
+
+    if (type === "esp") {
+      return {
+        type: type,
+        start: startVal,
+        end: null,
+        value: null,
+        head: null,
+        headStartsAt: null,
+        headEndsAt: null,
+        tail: null,
+        tailStartsAt: null,
+        tailEndsAt: null
+      };
+    } // a default is text token
+
+
+    return {
+      type: "text",
+      start: startVal,
+      end: null,
+      value: null
+    };
+  }
+
+  function initToken(type, startVal) {
+    // we mutate the object on the parent scope, so no Object.assign here
+    attribReset();
+    token = getNewToken(type, startVal);
+  }
+
+  function initProperty(propertyStarts) {
+    // we mutate the object on the parent scope, so no Object.assign here
+    propertyReset();
+    property.propertyStarts = propertyStarts;
+    property.start = propertyStarts;
+  }
+
+  function ifQuoteThenAttrClosingQuote(idx) {
+    // either it's not a quote:
+    return !"'\"".includes(str[idx]) || // precaution when both attrib.attribOpeningQuoteAt and
+    // attrib.attribValueStartsAt are missing and thus unusable - just
+    // skip this clause in that case... (but it should not ever happen)
+    !(attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt) || // or it's real closing quote, because if not, let's keep it within
+    // the value, it will be easier to validate, imagine:
+    // <div style="float:"left"">
+    //
+    isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, idx);
+  } //
+  //
+  //
+  //
+  //
+  //
+  //
+  // THE MAIN LOOP
+  // ---------------------------------------------------------------------------
+  // We deliberately step 1 character outside of str length
+  // to simplify the algorithm. Thusly, it's i <= len not i < len:
+
+
+  var _loop2 = function _loop2(_i) {
+    //
+    //
+    //
+    //
+    //                                THE TOP
+    //                                ███████
+    //
+    //
+    //
+    //
+    // Logging:
+    // ------------------------------------------------------------------------- // Progress:
+    // -------------------------------------------------------------------------
+    if (!doNothing && str[_i] && opts.reportProgressFunc) {
+      if (len > 1000 && len < 2000) {
+        if (_i === midLen) {
+          opts.reportProgressFunc(Math.floor((opts.reportProgressFuncTo - opts.reportProgressFuncFrom) / 2));
+        }
+      } else if (len >= 2000) {
+        // defaults:
+        // opts.reportProgressFuncFrom = 0
+        // opts.reportProgressFuncTo = 100
+        currentPercentageDone = opts.reportProgressFuncFrom + Math.floor(_i / len * (opts.reportProgressFuncTo - opts.reportProgressFuncFrom));
+
+        if (currentPercentageDone !== lastPercentage) {
+          lastPercentage = currentPercentageDone;
+          opts.reportProgressFunc(currentPercentageDone);
+        }
+      }
+    } // Left/Right helpers
+    // -------------------------------------------------------------------------
+
+
+    var leftVal = left(str, _i);
+    var rightVal = right(str, _i); // Turn off doNothing if marker passed
+    // -------------------------------------------------------------------------
+
+    if (withinStyle && token.type && !["rule", "at", "text", "comment"].includes(token.type)) {
+      withinStyle = false;
+    }
+
+    if (doNothing && _i >= doNothing) {
+      doNothing = 0;
+    } // skip chain of the same-type characters
+    // -------------------------------------------------------------------------
+
+
+    if (isLatinLetter(str[_i]) && isLatinLetter(str[~-_i]) && isLatinLetter(str[_i + 1])) {
+      i = _i;
+      return "continue";
+    }
+
+    if (" \t\r\n".includes(str[_i]) && // ~- means subtract 1
+    str[_i] === str[~-_i] && str[_i] === str[_i + 1]) {
+      i = _i;
+      return "continue";
+    } // catch the curly tails of at-rules
+    // -------------------------------------------------------------------------
+
+
+    if (!doNothing && atRuleWaitingForClosingCurlie()) {
+      // if (token.type === null && str[i] === "}") {
+      // if (str[i] === "}") {
+      if (str[_i] === "}") {
+        if (!token.type || token.type === "text" || token.type === "rule" && token.openingCurlyAt === null) {
+          // rule token must end earlier
+          if (token.type === "rule") {
+            token.end = leftVal + 1;
+            token.value = str.slice(token.start, token.end);
+            pingTagCb(token); // if it's a text token inside "at" rule, nest it, push into that
+            // "at" rule pending in layers - otherwise, ping as standalone
+
+            if (lastLayerIs("at")) {
+              layers[~-layers.length].token.rules.push(token);
+            }
+
+            tokenReset(); // if there was trailing whitespace, initiate it
+
+            if (leftVal !== null && leftVal < ~-_i) {
+              initToken("text", leftVal + 1);
             }
           }
 
-          incomingToken.end = cutOffIndex;
-          incomingToken.value = str.slice(incomingToken.start, incomingToken.end);
+          dumpCurrentToken(token, _i);
+          var poppedToken = layers.pop();
+          token = poppedToken.token; // then, continue on "at" rule's token...
 
-          if (!incomingToken.tagNameEndsAt) {
-            incomingToken.tagNameEndsAt = cutOffIndex;
-          }
-
-          if (incomingToken.tagNameStartsAt && incomingToken.tagNameEndsAt && !incomingToken.tagName) {
-            incomingToken.tagName = str.slice(incomingToken.tagNameStartsAt, cutOffIndex);
-            incomingToken.recognised = isTagNameRecognised(incomingToken.tagName);
-          }
-
-          pingTagCb(incomingToken);
-          initToken("text", cutOffIndex);
-        } else {
-          pingTagCb(incomingToken);
-          tokenReset();
-
-          if (str[~-i] && !str[~-i].trim()) {
-            initToken("text", left(str, i) + 1);
-          }
-        }
-      }
-
-      if (token.start !== null) {
-        if (token.end === null && token.start !== i) {
-          token.end = i;
+          token.closingCurlyAt = _i;
+          token.end = _i + 1;
           token.value = str.slice(token.start, token.end);
-        }
+          pingTagCb(token); // if it's a "rule" token and a parent "at" rule is pending in layers,
+          // also put this "rule" into that parent in layers
 
-        if (token.start !== null && token.end) {
           if (lastLayerIs("at")) {
             layers[~-layers.length].token.rules.push(token);
-          } else {
-            pingTagCb(token);
           }
+
+          tokenReset();
+          doNothing = _i + 1;
+        }
+      } else if (token.type === "text" && str[_i] && str[_i].trim()) {
+        // terminate the text token, all the non-whitespace characters comprise
+        // rules because we're inside the at-token, it's CSS!
+        token.end = _i;
+        token.value = str.slice(token.start, token.end); // if it's a text token inside "at" rule, nest it, push into that
+        // "at" rule pending in layers - otherwise, ping as standalone
+
+        if (lastLayerIs("at")) {
+          layers[~-layers.length].token.rules.push(token);
+        } else {
+          pingTagCb(token);
         }
 
         tokenReset();
       }
     }
 
-    function atRuleWaitingForClosingCurlie() {
-      return lastLayerIs("at") && isObj$1(layers[~-layers.length].token) && layers[~-layers.length].token.openingCurlyAt && !layers[~-layers.length].token.closingCurlyAt;
-    }
+    if (token.end && token.end === _i) {
+      if (token.tagName === "style" && !token.closing) {
+        withinStyle = true;
+      } // we need to retain the information after tag was dumped to tagCb() and wiped
 
-    function getNewToken(type) {
-      var startVal = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
-      if (type === "tag") {
-        return {
-          type: type,
-          start: startVal,
-          end: null,
-          value: null,
-          tagNameStartsAt: null,
-          tagNameEndsAt: null,
-          tagName: null,
-          recognised: null,
-          closing: false,
-          void: false,
-          pureHTML: true,
-          kind: null,
-          attribs: []
-        };
+      if (attribToBackup) {
+        // 1. restore
+        attrib = attribToBackup; // 2. push current token into attrib.attribValue
+
+        attrib.attribValue.push(token); // 3. restore real token
+
+        token = lodash_clonedeep(parentTokenToBackup); // 4. reset
+
+        attribToBackup = undefined;
+        parentTokenToBackup = undefined;
+      } else {
+        dumpCurrentToken(token, _i);
+        layers.length = 0;
       }
+    } //
+    //
+    //
+    //
+    //                               MIDDLE
+    //                               ██████
+    //
+    //
+    //
+    //
+    // record "layers" like entering double quotes
+    // -------------------------------------------------------------------------
 
-      if (type === "comment") {
-        return {
-          type: type,
-          start: startVal,
-          end: null,
-          value: null,
-          closing: false,
-          kind: "simple",
-          language: "html"
-        };
-      }
 
-      if (type === "rule") {
-        return {
-          type: type,
-          start: startVal,
-          end: null,
-          value: null,
-          left: null,
-          nested: false,
-          openingCurlyAt: null,
-          closingCurlyAt: null,
-          selectorsStart: null,
-          selectorsEnd: null,
-          selectors: [],
-          properties: []
-        };
-      }
-
-      if (type === "at") {
-        return {
-          type: type,
-          start: startVal,
-          end: null,
-          value: null,
-          left: null,
-          nested: false,
-          openingCurlyAt: null,
-          closingCurlyAt: null,
-          identifier: null,
-          identifierStartsAt: null,
-          identifierEndsAt: null,
-          query: null,
-          queryStartsAt: null,
-          queryEndsAt: null,
-          rules: []
-        };
-      }
-
-      if (type === "text") {
-        return {
-          type: type,
-          start: startVal,
-          end: null,
-          value: null
-        };
-      }
-
-      if (type === "esp") {
-        return {
-          type: type,
-          start: startVal,
-          end: null,
-          value: null,
-          head: null,
-          headStartsAt: null,
-          headEndsAt: null,
-          tail: null,
-          tailStartsAt: null,
-          tailEndsAt: null
-        };
-      }
-    }
-
-    function initToken(type, startVal) {
-      attribReset();
-      token = getNewToken(type, startVal);
-    }
-
-    function initProperty(propertyStarts) {
-      propertyReset();
-      property.propertyStarts = propertyStarts;
-      property.start = propertyStarts;
-    }
-
-    function ifQuoteThenAttrClosingQuote(idx) {
-      return !"'\"".includes(str[idx]) || !(attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt) || isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, idx);
-    }
-
-    var _loop2 = function _loop2(_i) {
-      if (!doNothing && str[_i] && opts.reportProgressFunc) {
-        if (len > 1000 && len < 2000) {
-          if (_i === midLen) {
-            opts.reportProgressFunc(Math.floor((opts.reportProgressFuncTo - opts.reportProgressFuncFrom) / 2));
-          }
-        } else if (len >= 2000) {
-          currentPercentageDone = opts.reportProgressFuncFrom + Math.floor(_i / len * (opts.reportProgressFuncTo - opts.reportProgressFuncFrom));
-
-          if (currentPercentageDone !== lastPercentage) {
-            lastPercentage = currentPercentageDone;
-            opts.reportProgressFunc(currentPercentageDone);
-          }
-        }
-      }
-
-      if (withinStyle && token.type && !["rule", "at", "text", "comment"].includes(token.type)) {
-        withinStyle = false;
-      }
-
-      if (doNothing && _i >= doNothing) {
-        doNothing = false;
-      }
-
-      if (isLatinLetter(str[_i]) && isLatinLetter(str[~-_i]) && isLatinLetter(str[_i + 1])) {
-        i = _i;
-        return "continue";
-      }
-
-      if (" \t\r\n".includes(str[_i]) && str[_i] === str[~-_i] && str[_i] === str[_i + 1]) {
-        i = _i;
-        return "continue";
-      }
-
-      if (!doNothing && atRuleWaitingForClosingCurlie()) {
-        if (str[_i] === "}") {
-          if (token.type === null || token.type === "text" || token.type === "rule" && token.openingCurlyAt === null) {
-            if (token.type === "rule") {
-              token.end = left(str, _i) + 1;
-              token.value = str.slice(token.start, token.end);
-              pingTagCb(token);
-
-              if (lastLayerIs("at")) {
-                layers[~-layers.length].token.rules.push(token);
-              }
-
-              tokenReset();
-
-              if (left(str, _i) < ~-_i) {
-                initToken("text", left(str, _i) + 1);
-              }
-            }
-
-            dumpCurrentToken(token, _i);
-            var poppedToken = layers.pop();
-            token = poppedToken.token;
-            token.closingCurlyAt = _i;
-            token.end = _i + 1;
-            token.value = str.slice(token.start, token.end);
-            pingTagCb(token);
-
-            if (lastLayerIs("at")) {
-              layers[~-layers.length].token.rules.push(token);
-            }
-
-            tokenReset();
-            doNothing = _i + 1;
-          }
-        } else if (token.type === "text" && str[_i] && str[_i].trim()) {
-          token.end = _i;
-          token.value = str.slice(token.start, token.end);
-
-          if (lastLayerIs("at")) {
-            layers[~-layers.length].token.rules.push(token);
-          } else {
-            pingTagCb(token);
-          }
-
-          tokenReset();
-        }
-      }
-
-      if (token.end && token.end === _i) {
-        if (token.tagName === "style" && !token.closing) {
-          withinStyle = true;
-        }
-
-        if (attribToBackup) {
-          attrib = attribToBackup;
-          attrib.attribValue.push(token);
-          token = lodash_clonedeep(parentTokenToBackup);
-          attribToBackup = undefined;
-          parentTokenToBackup = undefined;
-        } else {
-          dumpCurrentToken(token, _i);
-          layers.length = 0;
-        }
-      }
-
-      if (!doNothing) {
-        if (["tag", "rule", "at"].includes(token.type) && token.kind !== "cdata") {
-          if (str[_i] && (SOMEQUOTE.includes(str[_i]) || "()".includes(str[_i])) && !(SOMEQUOTE.includes(str[left(str, _i)]) && str[left(str, _i)] === str[right(str, _i)]) && ifQuoteThenAttrClosingQuote(_i)) {
-            if (lastLayerIs("simple") && layers[~-layers.length].value === flipEspTag(str[_i])) {
+    if (!doNothing) {
+      if (["tag", "rule", "at"].includes(token.type) && token.kind !== "cdata") {
+        if (str[_i] && (SOMEQUOTE.includes(str[_i]) || "()".includes(str[_i])) && !( // below, we have insurance against single quotes, wrapped with quotes:
+        // "'" or '"' - templating languages might put single quote as a sttring
+        // character, not meaning wrapped-something.
+        SOMEQUOTE.includes(str[leftVal]) && str[leftVal] === str[rightVal]) && // protection against double-wrapped values, like
+        // <div style="float:"left"">
+        //
+        //
+        // it's not a quote or a real attr ending
+        ifQuoteThenAttrClosingQuote(_i) // because if it's not really a closing quote, it's a rogue-one and
+        // it belongs to the current attribute's value so that later we
+        // can catch it, validating values, imagine "float" value "left" comes
+        // with quotes, as in ""left""
+        ) {
+            if ( // maybe it's the closing counterpart?
+            lastLayerIs("simple") && layers[~-layers.length].value === flipEspTag(str[_i])) {
               layers.pop();
             } else {
+              // it's opening then
               layers.push({
                 type: "simple",
                 value: str[_i],
@@ -3546,23 +4732,14 @@
               });
             }
           }
-        } else if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
-          if (["[", "]"].includes(str[_i])) {
-            if (lastLayerIs("simple") && layers[~-layers.length].value === flipEspTag(str[_i])) {
-              layers.pop();
-            } else {
-              layers.push({
-                type: "simple",
-                value: str[_i],
-                position: _i
-              });
-            }
-          }
-        } else if (token.type === "esp" && "'\"".concat(BACKTICK, "()").includes(str[_i]) && !(["\"", "'", "`"].includes(str[left(str, _i)]) && str[left(str, _i)] === str[right(str, _i)])) {
-          if (lastLayerIs("simple") && layers[~-layers.length].value === flipEspTag(str[_i])) {
+      } else if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
+        if (["[", "]"].includes(str[_i])) {
+          if ( // maybe it's the closing counterpart?
+          lastLayerIs("simple") && layers[~-layers.length].value === flipEspTag(str[_i])) {
+            // maybe it's the closing counterpart?
             layers.pop();
-            doNothing = _i + 1;
-          } else if (!"]})>".includes(str[_i])) {
+          } else {
+            // it's opening then
             layers.push({
               type: "simple",
               value: str[_i],
@@ -3570,806 +4747,1376 @@
             });
           }
         }
-      }
-
-      if (!doNothing && token.type === "at" && token.start != null && _i >= token.start && !token.identifierStartsAt && str[_i] && str[_i].trim() && str[_i] !== "@") {
-        token.identifierStartsAt = _i;
-      }
-
-      if (!doNothing && token.type === "at" && token.queryStartsAt != null && !token.queryEndsAt && "{;".includes(str[_i])) {
-        if (str[_i] === "{") {
-          if (str[~-_i] && str[~-_i].trim()) {
-            token.queryEndsAt = _i;
-          } else {
-            token.queryEndsAt = left(str, _i) + 1;
-          }
-        } else {
-          token.queryEndsAt = left(str, _i + 1);
-        }
-
-        token.query = str.slice(token.queryStartsAt, token.queryEndsAt);
-        token.end = str[_i] === ";" ? _i + 1 : _i;
-        token.value = str.slice(token.start, token.end);
-
-        if (str[_i] === ";") {
-          pingTagCb(token);
-        } else {
-          token.openingCurlyAt = _i;
+      } else if (token.type === "esp" && ("'\"" + BACKTICK + "()").includes(str[_i]) && !( // below, we have insurance against single quotes, wrapped with quotes:
+      // "'" or '"' - templating languages might put single quote as a sttring
+      // character, not meaning wrapped-something.
+      ["\"", "'", "`"].includes(str[leftVal]) && str[leftVal] === str[rightVal])) {
+        if ( // maybe it's the closing counterpart?
+        lastLayerIs("simple") && layers[~-layers.length].value === flipEspTag(str[_i])) {
+          // maybe it's the closing counterpart?
+          layers.pop();
+          doNothing = _i + 1;
+        } else if (!"]})>".includes(str[_i])) {
+          // it's opening then
           layers.push({
-            type: "at",
-            token: token
+            type: "simple",
+            value: str[_i],
+            position: _i
           });
         }
+      } // console.log(
+      //   `1094 FIY, currently ${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
+      //     layers,
+      //     null,
+      //     4
+      //   )}`
+      // );
 
-        tokenReset();
-        doNothing = _i + 1;
+    } // catch the start of at rule's identifierStartsAt
+    // -------------------------------------------------------------------------
+
+
+    if (!doNothing && token.type === "at" && token.start != null && _i >= token.start && !token.identifierStartsAt && str[_i] && str[_i].trim() && str[_i] !== "@") {
+      // the media identifier's "entry" requirements are deliberately loose
+      // because we want to catch errors there, imagine somebody mistakenly
+      // adds a comma, @,media
+      // or adds a space, @ media
+      token.identifierStartsAt = _i;
+    } // catch the end of the "at" rule token
+    // -------------------------------------------------------------------------
+
+
+    if (!doNothing && token.type === "at" && token.queryStartsAt && !token.queryEndsAt && "{;".includes(str[_i])) {
+      if (str[_i] === "{") {
+        if (str[~-_i] && str[~-_i].trim()) {
+          token.queryEndsAt = _i;
+        } else {
+          // trim the trailing whitespace:
+          // @media (max-width: 600px) {
+          //                          ^
+          //                        this
+          //
+          token.queryEndsAt = leftVal !== null ? leftVal + 1 : _i; // left() stops "to the left" of a character, if you used that index
+          // for slicing, that character would be included, in our case,
+          // @media (max-width: 600px) {
+          //                         ^
+          //            that would be index of this bracket
+        }
+      } else {
+        // ; closing, for example, illegal:
+        // @charset "UTF-8";
+        //                 ^
+        //          we're here
+        //
+        token.queryEndsAt = left(str, _i + 1);
       }
 
-      if (!doNothing && token.type === "at" && token.identifier && str[_i] && str[_i].trim() && !token.queryStartsAt) {
-        token.queryStartsAt = _i;
+      if (token.queryStartsAt && token.queryEndsAt) {
+        token.query = str.slice(token.queryStartsAt, token.queryEndsAt);
       }
 
-      if (!doNothing && token.type === "at" && token.identifierStartsAt != null && _i >= token.start && str[_i] && (!str[_i].trim() || "()".includes(str[_i])) && !token.identifierEndsAt) {
-        token.identifierEndsAt = _i;
-        token.identifier = str.slice(token.identifierStartsAt, _i);
-      }
+      token.end = str[_i] === ";" ? _i + 1 : _i;
+      token.value = str.slice(token.start, token.end);
 
-      if (token.type === "rule" && selectorChunkStartedAt && (charsThatEndCSSChunks.includes(str[_i]) || str[_i] && !str[_i].trim() && charsThatEndCSSChunks.includes(str[right(str, _i)]))) {
-        token.selectors.push({
-          value: str.slice(selectorChunkStartedAt, _i),
-          selectorStarts: selectorChunkStartedAt,
-          selectorEnds: _i
+      if (str[_i] === ";") {
+        // if code is clean, that would be @charset for example, no curlies
+        pingTagCb(token);
+      } else {
+        // then it's opening curlie
+        token.openingCurlyAt = _i; // push so far gathered token into layers
+
+        layers.push({
+          type: "at",
+          token: token
         });
-        selectorChunkStartedAt = undefined;
-        token.selectorsEnd = _i;
       }
 
-      var lastEspLayerObjIdx = getLastEspLayerObjIdx(layers);
+      tokenReset();
+      doNothing = _i + 1;
+    } // catch the start of the query
+    // -------------------------------------------------------------------------
 
-      if (!doNothing && str[_i]) {
-        if (startsTag(str, _i, token, layers, withinStyle)) {
-          if (token.type && token.start !== null) {
-            if (token.type === "rule") {
-              if (property && property.propertyStarts) {
-                property.propertyEnds = _i;
-                property.property = str.slice(property.propertyStarts, _i);
 
-                if (!property.end) {
-                  property.end = _i;
-                }
+    if (!doNothing && token.type === "at" && token.identifier && str[_i] && str[_i].trim() && !token.queryStartsAt) {
+      token.queryStartsAt = _i;
+    } // catch the end of at rule's identifierStartsAt
+    // -------------------------------------------------------------------------
 
-                pushProperty(property);
-                property = null;
+
+    if (!doNothing && token && token.type === "at" && token.identifierStartsAt && _i >= token.start && str[_i] && (!str[_i].trim() || "()".includes(str[_i])) && !token.identifierEndsAt) {
+      token.identifierEndsAt = _i;
+      token.identifier = str.slice(token.identifierStartsAt, _i);
+    } // catch the end of a CSS chunk
+    // -------------------------------------------------------------------------
+    // charsThatEndCSSChunks:  } , {
+
+
+    if (token.type === "rule" && selectorChunkStartedAt && (charsThatEndCSSChunks.includes(str[_i]) || str[_i] && !str[_i].trim() && charsThatEndCSSChunks.includes(str[rightVal]))) {
+      token.selectors.push({
+        value: str.slice(selectorChunkStartedAt, _i),
+        selectorStarts: selectorChunkStartedAt,
+        selectorEnds: _i
+      });
+      selectorChunkStartedAt = undefined;
+      token.selectorsEnd = _i;
+    } // catch the beginning of a token
+    // -------------------------------------------------------------------------
+    // imagine layers are like this:
+    // [
+    //   {
+    //     type: "esp",
+    //     openingLump: "<%@",
+    //     guessedClosingLump: "@%>",
+    //     position: 0,
+    //   },
+    //   {
+    //     type: "simple",
+    //     value: '"',
+    //     position: 17,
+    //   },
+    //   {
+    //     type: "simple",
+    //     value: "'",
+    //     position: 42,
+    //   },
+    // ];
+    // we extract the last type="esp" layer to simplify calculations
+
+
+    var lastEspLayerObjIdx = getLastEspLayerObjIdx(layers);
+
+    if (!doNothing && str[_i]) {
+      // console.log(
+      //   `1707 ███████████████████████████████████████ IS COMMENT STARTING? ${startsHtmlComment(
+      //     str,
+      //     i,
+      //     token,
+      //     layers,
+      //     withinStyle
+      //   )}`
+      // );
+      // console.log(
+      //   `1717 ███████████████████████████████████████ IS ESP TAG STARTING? ${startsEsp(
+      //     str,
+      //     i,
+      //     token,
+      //     layers,
+      //     withinStyle
+      //   )}`
+      // );
+      if (startsTag(str, _i, token, layers, withinStyle)) {
+        //
+        //
+        //
+        // TAG STARTING
+        //
+        //
+        //
+        if (token.type && token.start !== null) {
+          if (token.type === "rule") {
+            if (property && property.propertyStarts) {
+              property.propertyEnds = _i;
+              property.property = str.slice(property.propertyStarts, _i);
+
+              if (!property.end) {
+                property.end = _i;
               }
+
+              pushProperty(property);
+              propertyReset();
             }
-
-            dumpCurrentToken(token, _i);
-            tokenReset();
           }
 
-          initToken("tag", _i);
+          dumpCurrentToken(token, _i);
+          tokenReset();
+        } // add other HTML-specific keys onto the object
+        // second arg is "start" key:
 
-          if (withinStyle) {
-            withinStyle = false;
-          }
 
-          var badCharacters = "?![-/";
-          var extractedTagName = "";
-          var letterMet = false;
+        initToken("tag", _i);
 
-          for (var y = right(str, _i); y < len; y++) {
+        if (withinStyle) {
+          withinStyle = false;
+        } // extract the tag name:
+
+
+        var badCharacters = "?![-/";
+        var extractedTagName = "";
+        var letterMet = false;
+
+        if (rightVal) {
+          for (var y = rightVal; y < len; y++) {
             if (!letterMet && str[y] && str[y].trim() && str[y].toUpperCase() !== str[y].toLowerCase()) {
               letterMet = true;
             }
 
-            if (letterMet && str[y] && (!str[y].trim() || !/\w/.test(str[y]) && !badCharacters.includes(str[y]) || str[y] === "[")) {
-              break;
-            } else if (!badCharacters.includes(str[y])) {
+            if ( // at least one letter has been met, to cater
+            // <? xml ...
+            letterMet && str[y] && ( // it's whitespace
+            !str[y].trim() || // or symbol which definitely does not belong to a tag,
+            // considering we want to catch some rogue characters to
+            // validate and flag them up later
+            !/\w/.test(str[y]) && !badCharacters.includes(str[y]) || str[y] === "[") // if letter has been met, "[" is also terminating character
+            // think <![CDATA[x<y]]>
+            //               ^
+            //             this
+            ) {
+                break;
+              } else if (!badCharacters.includes(str[y])) {
               extractedTagName += str[y].trim().toLowerCase();
             }
           }
+        } // set the kind:
 
-          if (extractedTagName === "doctype") {
-            token.kind = "doctype";
-          } else if (extractedTagName === "cdata") {
-            token.kind = "cdata";
-          } else if (extractedTagName === "xml") {
-            token.kind = "xml";
-          } else if (inlineTags.has(extractedTagName)) {
-            token.kind = "inline";
-          }
-        } else if (startsHtmlComment(str, _i, token, layers)) {
-          if (token.start != null) {
-            dumpCurrentToken(token, _i);
-          }
 
-          initToken("comment", _i);
+        if (extractedTagName === "doctype") {
+          token.kind = "doctype";
+        } else if (extractedTagName === "cdata") {
+          token.kind = "cdata";
+        } else if (extractedTagName === "xml") {
+          token.kind = "xml";
+        } else if (inlineTags.has(extractedTagName)) {
+          token.kind = "inline";
+        }
+      } else if (startsHtmlComment(str, _i, token, layers)) {
+        //
+        //
+        //
+        // HTML COMMENT STARTING
+        //
+        //
+        //
+        if (token.start != null) {
+          dumpCurrentToken(token, _i);
+        } // add other HTML-specific keys onto the object
+        // second arg is "start" key:
 
-          if (str[_i] === "-") {
-            token.closing = true;
-          } else if (matchRightIncl(str, _i, ["<![endif]-->"], {
-            i: true,
-            trimBeforeMatching: true,
-            maxMismatches: 2
-          })) {
-            token.closing = true;
-            token.kind = "only";
-          }
 
-          if (withinStyle) {
-            withinStyle = false;
-          }
-        } else if (startsCssComment(str, _i, token, layers, withinStyle)) {
-          if (token.start != null) {
-            dumpCurrentToken(token, _i);
-          }
+        initToken("comment", _i); // the "language" default is "html" anyway so no need to set it // set "closing"
 
-          initToken("comment", _i);
-          token.language = "css";
-          token.kind = str[_i] === "/" && str[_i + 1] === "/" ? "line" : "block";
-          token.value = str.slice(_i, _i + 2);
-          token.end = _i + 2;
-          token.closing = str[_i] === "*" && str[_i + 1] === "/";
-          withinStyleComment = true;
+        if (str[_i] === "-") {
+          token.closing = true;
+        } else if (matchRightIncl(str, _i, ["<![endif]-->"], {
+          i: true,
+          trimBeforeMatching: true,
+          maxMismatches: 2
+        })) {
+          token.closing = true;
+          token.kind = "only";
+        }
 
-          if (token.closing) {
-            withinStyleComment = false;
-          }
+        if (withinStyle) {
+          withinStyle = false;
+        }
+      } else if (startsCssComment(str, _i, token, layers, withinStyle)) {
+        //
+        //
+        //
+        // CSS COMMENT STARTING
+        //
+        //
+        //
+        if (token.start != null) {
+          dumpCurrentToken(token, _i);
+        } // add other token-specific keys onto the object
+        // second arg is "start" key:
 
-          doNothing = _i + 2;
-        } else if (layers[lastEspLayerObjIdx] && layers[lastEspLayerObjIdx].type === "esp" && layers[lastEspLayerObjIdx].openingLump && layers[lastEspLayerObjIdx].guessedClosingLump && layers[lastEspLayerObjIdx].guessedClosingLump.length > 1 && layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[_i]) && layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[_i + 1]) && !(layers[lastEspLayerObjIdx + 1] && "'\"".includes(layers[lastEspLayerObjIdx + 1].value) && str.indexOf(layers[lastEspLayerObjIdx + 1].value, _i) > 0 && layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[right(str, str.indexOf(layers[lastEspLayerObjIdx + 1].value, _i))])) || startsEsp(str, _i, token, layers, withinStyle) && (!lastLayerIs("simple") || !["'", "\""].includes(layers[~-layers.length].value) || attrib && attrib.attribStarts && !attrib.attribEnds)) {
-          var wholeEspTagLumpOnTheRight = getWholeEspTagLumpOnTheRight(str, _i, layers);
 
-          if (!espLumpBlacklist.includes(wholeEspTagLumpOnTheRight)) {
-            var lengthOfClosingEspChunk;
-            var disposableVar;
+        initToken("comment", _i);
+        token.language = "css";
+        token.kind = str[_i] === "/" && str[_i + 1] === "/" ? "line" : "block";
+        token.value = str.slice(_i, _i + 2);
+        token.end = _i + 2;
+        token.closing = str[_i] === "*" && str[_i + 1] === "/";
+        withinStyleComment = true;
 
-            if (layers.length && (lengthOfClosingEspChunk = matchLayerLast(wholeEspTagLumpOnTheRight, layers))) {
-              if (token.type === "esp") {
-                if (!token.end) {
-                  token.end = _i + lengthOfClosingEspChunk;
-                  token.value = str.slice(token.start, token.end);
-                  token.tail = str.slice(_i, _i + lengthOfClosingEspChunk);
-                  token.tailStartsAt = _i;
-                  token.tailEndsAt = token.end;
+        if (token.closing) {
+          withinStyleComment = false;
+        }
 
-                  if (str[_i] === ">" && str[left(str, _i)] === "/") {
-                    token.tailStartsAt = left(str, _i);
-                    token.tail = str.slice(token.tailStartsAt, _i + 1);
-                  }
+        doNothing = _i + 2;
+      } else if ( // if we encounter two consecutive characters of guessed lump
+      typeof lastEspLayerObjIdx === "number" && layers[lastEspLayerObjIdx] && layers[lastEspLayerObjIdx].type === "esp" && layers[lastEspLayerObjIdx].openingLump && layers[lastEspLayerObjIdx].guessedClosingLump && layers[lastEspLayerObjIdx].guessedClosingLump.length > 1 && // current character is among guessed lump's characters
+      layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[_i]) && // ...and the following character too...
+      layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[_i + 1]) && // since we "jump" over layers, that is, passed quotes
+      // and what not, we have to ensure we don't skip
+      // legit cases like:
+      // ${"${name}${name}${name}${name}"}
+      //          ^
+      //          here
+      // Responsys expression can be within a value! we have
+      // to respect those quotes!
+      //
+      // these are erroneous quotes representing layers
+      // which we do ignore (JSP example):
+      //
+      // <%@taglib prefix="t' tagdir='/WEB-INF/tags"%>
+      //                  ^ ^        ^             ^
+      //                  errors
+      !( // we excluse the same case,
+      // ${"${name}${name}${name}${name}"}
+      //          ^
+      //        false ending
+      // we ensure that quote doesn't follow the esp layer
+      // "lastEspLayerObjIdx" and there's counterpart of it
+      // on the right, and there's ESP char on the right of it
+      // next layer after esp's follows
+      layers[lastEspLayerObjIdx + 1] && // and it's quote
+      "'\"".includes(layers[lastEspLayerObjIdx + 1].value) && // matching quote on the right has ESP character following
+      // it exists (>-1)
+      str.indexOf(layers[lastEspLayerObjIdx + 1].value, _i) > 0 && layers[lastEspLayerObjIdx].guessedClosingLump.includes(str[right(str, str.indexOf(layers[lastEspLayerObjIdx + 1].value, _i))])) || // hard check
+      startsEsp(str, _i, token, layers, withinStyle) && ( // ensure we're not inside quotes, so it's not an expression within a value
+      // ${"${name}${name}${name}${name}"}
+      //    ^
+      //   we could be here - notice quotes wrapping all around
+      //
+      !lastLayerIs("simple") || !["'", "\""].includes(layers[~-layers.length].value) || // or we're within an attribute (so quotes are HTML tag's not esp tag's)
+      attrib && attrib.attribStarts && !attrib.attribEnds)) {
+        //
+        //
+        //
+        // ESP TAG STARTING
+        //
+        //
+        // // ESP tags can't be entered from after CSS at-rule tokens or
+        // normal CSS rule tokens
+        //
+        //
+        //
+        // FIRST, extract the tag opening and guess the closing judging from it
+        var wholeEspTagLumpOnTheRight = getWholeEspTagLumpOnTheRight(str, _i, layers); // lump can't end with attribute's ending, that is, something like:
+        // <frameset cols="**">
+        // that's a false positive
+
+        if (!espLumpBlacklist.includes(wholeEspTagLumpOnTheRight)) {
+          // check the "layers" records - maybe it's a closing part of a set?
+          var lengthOfClosingEspChunk;
+          var disposableVar;
+
+          if (layers.length && ( //
+          // if layer match result is truthy, we take it, otherwise, move on
+          // but don't calculate twice!
+          // eslint-disable-next-line no-cond-assign
+          lengthOfClosingEspChunk = matchLayerLast(wholeEspTagLumpOnTheRight, layers))) {
+            // if this was closing of a standalone esp tag, terminate it and ping
+            // it to the cb()
+            if (token.type === "esp") {
+              if (!token.end) {
+                token.end = _i + lengthOfClosingEspChunk;
+                token.value = str.slice(token.start, token.end);
+                token.tail = str.slice(_i, _i + lengthOfClosingEspChunk);
+                token.tailStartsAt = _i;
+                token.tailEndsAt = token.end; // correction for XML-like templating tags, closing can
+                // have a slash, <c:set zzz/>
+                //                         ^
+
+                if (str[_i] === ">" && str[leftVal] === "/") {
+                  token.tailStartsAt = leftVal;
+                  token.tail = str.slice(token.tailStartsAt, _i + 1);
                 }
+              } // activate doNothing until the end of tails because otherwise,
+              // mid-tail characters will initiate new tail start clauses
+              // and we'll have overlap/false result
 
-                doNothing = token.tailEndsAt;
 
-                if (parentTokenToBackup) {
-                  if (!Array.isArray(parentTokenToBackup.attribs)) {
-                    parentTokenToBackup.attribs.length = 0;
-                  }
+              doNothing = token.tailEndsAt; // it depends will we ping it as a standalone token or will we
+              // nest inside the parent tag among attributes
 
-                  if (attribToBackup) {
-                    attrib = attribToBackup;
-                    attrib.attribValue.push(lodash_clonedeep(token));
-                  } else {
-                    parentTokenToBackup.attribs.push(lodash_clonedeep(token));
-                  }
+              if (parentTokenToBackup) {
+                // push token to parent, to be among its attributes
+                // 1. ensure key "attribs" exist (thinking about comment tokens etc)
+                if (!Array.isArray(parentTokenToBackup.attribs)) {
+                  parentTokenToBackup.attribs = [];
+                } // 2. push somewhere
 
-                  token = lodash_clonedeep(parentTokenToBackup);
-                  parentTokenToBackup = undefined;
-                  attribToBackup = undefined;
-                  layers.pop();
-                  i = _i;
-                  return "continue";
+
+                if (attribToBackup) {
+                  // 1. restore
+                  attrib = attribToBackup; // 2. push to attribValue
+
+                  attrib.attribValue.push(_objectSpread2({}, token)); // 3. attribToBackup is reset in all cases, below
                 } else {
-                  dumpCurrentToken(token, _i);
-                }
+                  // push to attribs
+                  parentTokenToBackup.attribs.push(_objectSpread2({}, token));
+                } // 3. parentTokenToBackup becomes token
 
-                tokenReset();
-              }
 
-              layers.pop();
-            } else if (layers.length && (lengthOfClosingEspChunk = matchLayerLast(wholeEspTagLumpOnTheRight, layers, "matchFirst"))) {
-              if (token.type === "esp") {
-                if (!token.end) {
-                  token.end = _i + lengthOfClosingEspChunk;
-                  token.value = str.slice(token.start, token.end);
-                }
+                token = lodash_clonedeep(parentTokenToBackup); // 4. resets
 
-                if (!token.tailStartsAt) {
-                  token.tailStartsAt = _i;
-                }
+                parentTokenToBackup = undefined;
+                attribToBackup = undefined; // 5. pop layers, remove the opening ESP tag record
 
-                if (!token.tailEndsAt && lengthOfClosingEspChunk) {
-                  token.tailEndsAt = token.tailStartsAt + lengthOfClosingEspChunk;
-                  token.tail = str.slice(_i, _i + lengthOfClosingEspChunk);
-                }
+                layers.pop(); // 6. finally, continue, bypassing the rest of the code in this loop
 
+                i = _i;
+                return "continue";
+              } else {
                 dumpCurrentToken(token, _i);
-                tokenReset();
               }
 
-              layers.length = 0;
-            } else if (attrib && attrib.attribValue && attrib.attribValue.length && Array.from(str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i)).some(function (char, idx) {
-              return wholeEspTagLumpOnTheRight.includes(flipEspTag(char)) && (veryEspChars.includes(char) || !idx) && (disposableVar = {
-                char: char,
-                idx: idx
-              });
-            }) && token.type === "tag" && attrib && attrib.attribValueStartsAt && !attrib.attribValueEndsAt && attrib.attribValue[~-attrib.attribValue.length] && attrib.attribValue[~-attrib.attribValue.length].type === "text") {
-              token.pureHTML = false;
-              var lastAttrValueObj = attrib.attribValue[~-attrib.attribValue.length];
-              var newTokenToPutInstead = getNewToken("esp", lastAttrValueObj.start);
+              tokenReset();
+            } // pop the recorded layers, at this moment record of ESP chunk
+            // will be lost:
 
-              if (!disposableVar || !disposableVar.idx) {
-                newTokenToPutInstead.head = disposableVar.char;
-                newTokenToPutInstead.headStartsAt = lastAttrValueObj.start;
-                newTokenToPutInstead.headEndsAt = newTokenToPutInstead.headStartsAt + 1;
-                newTokenToPutInstead.tailStartsAt = _i;
-                newTokenToPutInstead.tailEndsAt = _i + wholeEspTagLumpOnTheRight.length;
-                newTokenToPutInstead.tail = wholeEspTagLumpOnTheRight;
-                attrib.attribValue[~-attrib.attribValue.length] = newTokenToPutInstead;
-              }
-            } else {
-              if (lastLayerIs("esp")) {
-                layers.pop();
+
+            layers.pop();
+          } else if (layers.length && ( // eslint-disable-next-line no-cond-assign
+          lengthOfClosingEspChunk = matchLayerLast(wholeEspTagLumpOnTheRight, layers, true))) {
+            // if this was closing of a standalone esp tag, terminate it and ping
+            // it to the cb()
+            if (token.type === "esp") {
+              if (!token.end) {
+                token.end = _i + (lengthOfClosingEspChunk || 0);
+                token.value = str.slice(token.start, token.end);
               }
 
-              if (attribToBackup) {
-                if (!Array.isArray(attribToBackup.attribValue)) {
-                  attribToBackup.attribValue.length = 0;
-                }
-
-                attribToBackup.attribValue.push(token);
+              if (!token.tailStartsAt) {
+                token.tailStartsAt = _i;
               }
 
-              layers.push({
-                type: "esp",
-                openingLump: wholeEspTagLumpOnTheRight,
-                guessedClosingLump: flipEspTag(wholeEspTagLumpOnTheRight),
-                position: _i
-              });
-
-              if (token.start !== null) {
-                if (token.type === "tag") {
-                  if (!token.tagName || !token.tagNameEndsAt) {
-                    token.tagNameEndsAt = _i;
-                    token.tagName = str.slice(token.tagNameStartsAt, _i);
-                    token.recognised = isTagNameRecognised(token.tagName);
-                  }
-
-                  parentTokenToBackup = lodash_clonedeep(token);
-
-                  if (attrib.attribStarts && !attrib.attribEnds) {
-                    attribToBackup = lodash_clonedeep(attrib);
-                  }
-                } else if (!attribToBackup) {
-                  dumpCurrentToken(token, _i);
-                } else if (attribToBackup && Array.isArray(attribToBackup.attribValue) && attribToBackup.attribValue.length && attribToBackup.attribValue[~-attribToBackup.attribValue.length].type === "esp" && !attribToBackup.attribValue[~-attribToBackup.attribValue.length].end) {
-                  attribToBackup.attribValue[~-attribToBackup.attribValue.length].end = _i;
-                  attribToBackup.attribValue[~-attribToBackup.attribValue.length].value = str.slice(attribToBackup.attribValue[~-attribToBackup.attribValue.length].start, _i);
-                }
+              if (!token.tailEndsAt && lengthOfClosingEspChunk) {
+                token.tailEndsAt = token.tailStartsAt + lengthOfClosingEspChunk;
+                token.tail = str.slice(_i, _i + lengthOfClosingEspChunk);
               }
 
-              initToken("esp", _i);
-              token.head = wholeEspTagLumpOnTheRight;
-              token.headStartsAt = _i;
-              token.headEndsAt = _i + wholeEspTagLumpOnTheRight.length;
+              dumpCurrentToken(token, _i);
+              tokenReset();
+            } // pop the recorded layers, at this moment record of ESP chunk
+            // will be lost:
 
-              if (parentTokenToBackup && parentTokenToBackup.pureHTML) {
-                parentTokenToBackup.pureHTML = false;
+
+            layers.length = 0;
+          } else if ( // insurance against stray tails inside attributes:
+          // <a b="{ x %}">
+          //       ^   ^
+          //       |   |
+          //       |   we're here
+          //       |
+          //       |
+          //     this opening bracket is incomplete
+          //     and therefore not recognised as an opening
+          //
+          //
+          // if ESP character lump we extracted, for example,
+          // %} contains a closing character, in this case, a }
+          attrib && attrib.attribValue && attrib.attribValue.length && attrib.attribValue[~-attrib.attribValue.length].start && Array.from(str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i)).some(function (char, idx) {
+            return wholeEspTagLumpOnTheRight.includes(flipEspTag(char)) && ( // ensure it's not a false alarm, "notVeryEspChars"
+            // bunch, for example, % or $ can be legit characters
+            //
+            // either it's from "veryEspChars" list so
+            // it can be anywhere, not necessarily at the
+            // beginning, for example, broken mailchimp:
+            // <a b="some text | x *|">
+            //                 ^
+            //               this is
+            //
+            veryEspChars.includes(char) || // or that character must be the first character
+            // of the attribute's value, for example:
+            // <a b="% x %}">
+            //       ^
+            //     this
+            //
+            // because imagine false positive, legit %:
+            // <a b="Real 5% discount! x %}">
+            //             ^
+            //    definitely not a part of broken opening {%
+            //
+            // it's zero'th index:
+            !idx) && (disposableVar = {
+              char: char,
+              idx: idx
+            });
+          }) && // we're inside attribute
+          token.type === "tag" && attrib && attrib.attribValueStartsAt && !attrib.attribValueEndsAt && // last attribute's value element is text-type
+          // imagine, the { x from <a b="{ x %}"> would be
+          // such unrecognised text:
+          attrib.attribValue[~-attrib.attribValue.length] && attrib.attribValue[~-attrib.attribValue.length].type === "text") {
+            // token does contain ESP tags, so it's not pure HTML
+            token.pureHTML = false;
+            var lastAttrValueObj = attrib.attribValue[~-attrib.attribValue.length]; // getNewToken() just creates a new token according
+            // the latest (DRY) reference, it doesn't reset
+            // the "token" unlike initToken()
+
+            var newTokenToPutInstead = getNewToken("esp", lastAttrValueObj.start); // for remaining values, we need to consider, is there
+            // text in front:
+            //
+            // <a b="{ x %}">
+            // vs.
+            // <a b="something { x %}">
+
+            if (!disposableVar || !disposableVar.idx) {
+              newTokenToPutInstead.head = disposableVar.char;
+              newTokenToPutInstead.headStartsAt = lastAttrValueObj.start;
+              newTokenToPutInstead.headEndsAt = newTokenToPutInstead.headStartsAt + 1;
+              newTokenToPutInstead.tailStartsAt = _i;
+              newTokenToPutInstead.tailEndsAt = _i + wholeEspTagLumpOnTheRight.length;
+              newTokenToPutInstead.tail = wholeEspTagLumpOnTheRight;
+              attrib.attribValue[~-attrib.attribValue.length] = newTokenToPutInstead;
+            }
+          } else {
+            // If we've got an unclosed heads and here new heads are starting,
+            // pop the last heads in layers - they will never be matched anyway.
+            // Let parser/linter deal with it
+            if (lastLayerIs("esp")) {
+              layers.pop();
+            } // if we're within a tag attribute, push the last esp token there
+
+
+            if (attribToBackup) {
+              if (!Array.isArray(attribToBackup.attribValue)) {
+                attribToBackup.attribValue = [];
               }
 
-              if (attribToBackup && Array.isArray(attribToBackup.attribValue) && attribToBackup.attribValue.length) {
-                if (attribToBackup.attribValue[~-attribToBackup.attribValue.length].start === token.start) {
-                  attribToBackup.attribValue.pop();
-                } else if (attribToBackup.attribValue[~-attribToBackup.attribValue.length].type === "text" && !attribToBackup.attribValue[~-attribToBackup.attribValue.length].end) {
-                  attribToBackup.attribValue[~-attribToBackup.attribValue.length].end = _i;
-                  attribToBackup.attribValue[~-attribToBackup.attribValue.length].value = str.slice(attribToBackup.attribValue[~-attribToBackup.attribValue.length].start, _i);
-                }
-              }
+              attribToBackup.attribValue.push(token);
             }
 
-            doNothing = _i + (lengthOfClosingEspChunk || wholeEspTagLumpOnTheRight.length);
-          }
-        } else if (withinStyle && !withinStyleComment && str[_i] && str[_i].trim() && !"{}".includes(str[_i]) && (!token.type || ["text"].includes(token.type))) {
-          if (token.type) {
-            dumpCurrentToken(token, _i);
-          }
+            layers.push({
+              type: "esp",
+              openingLump: wholeEspTagLumpOnTheRight,
+              guessedClosingLump: flipEspTag(wholeEspTagLumpOnTheRight),
+              position: _i
+            }); // also, if it's a standalone ESP token, terminate the previous token
+            // and start recording a new-one
 
-          initToken(str[_i] === "@" ? "at" : "rule", _i);
-          token.left = lastNonWhitespaceCharAt;
-          token.nested = layers.some(function (o) {
-            return o.type === "at";
-          });
-        } else if (!token.type) {
-          initToken("text", _i);
+            if (token.start !== null) {
+              // it means token has already being recorded, we need to tackle it -
+              // the new, ESP token is incoming!
+              // we nest ESP tokens inside "tag" type attributes
+              if (token.type === "tag") {
+                // instead of dumping the tag token and starting a new-one,
+                // save the parent token, then nest all ESP tags among attributes
+                if (token.tagNameStartsAt && (!token.tagName || !token.tagNameEndsAt)) {
+                  token.tagNameEndsAt = _i;
+                  token.tagName = str.slice(token.tagNameStartsAt, _i);
+                  token.recognised = isTagNameRecognised(token.tagName);
+                }
+
+                parentTokenToBackup = lodash_clonedeep(token);
+
+                if (attrib.attribStarts && !attrib.attribEnds) {
+                  attribToBackup = lodash_clonedeep(attrib);
+                }
+              } else if (!attribToBackup) {
+                dumpCurrentToken(token, _i);
+              } else if (attribToBackup && Array.isArray(attribToBackup.attribValue) && attribToBackup.attribValue.length && attribToBackup.attribValue[~-attribToBackup.attribValue.length].type === "esp" && !attribToBackup.attribValue[~-attribToBackup.attribValue.length].end) {
+                attribToBackup.attribValue[~-attribToBackup.attribValue.length].end = _i;
+                attribToBackup.attribValue[~-attribToBackup.attribValue.length].value = str.slice(attribToBackup.attribValue[~-attribToBackup.attribValue.length].start, _i);
+              }
+            } // now, either way, if parent tag was stashed in "parentTokenToBackup"
+            // or if this is a new ESP token and there's nothing to nest,
+            // let's initiate it:
+
+
+            initToken("esp", _i);
+            token.head = wholeEspTagLumpOnTheRight;
+            token.headStartsAt = _i;
+            token.headEndsAt = _i + wholeEspTagLumpOnTheRight.length; // toggle parentTokenToBackup.pureHTML
+
+            if (parentTokenToBackup && parentTokenToBackup.pureHTML) {
+              parentTokenToBackup.pureHTML = false;
+            } // if text token has been initiated, imagine:
+            //  "attribValue": [
+            //     {
+            //         "type": "text",
+            //         "start": 6, <-------- after the initiation of this, we started ESP token at 6
+            //         "end": null,
+            //         "value": null
+            //     },
+            //     {
+            //         "type": "esp",
+            //         "start": 6, <-------- same start on real ESP token
+            //           ...
+            //  ],
+
+
+            if (attribToBackup && Array.isArray(attribToBackup.attribValue) && attribToBackup.attribValue.length) {
+              if (attribToBackup.attribValue[~-attribToBackup.attribValue.length].start === token.start) {
+                // erase it from stash
+                attribToBackup.attribValue.pop();
+              } else if ( // if the "text" type object is the last in "attribValue" and
+              // it's not closed, let's close it and calculate its value:
+              attribToBackup.attribValue[~-attribToBackup.attribValue.length].type === "text" && !attribToBackup.attribValue[~-attribToBackup.attribValue.length].end) {
+                attribToBackup.attribValue[~-attribToBackup.attribValue.length].end = _i;
+                attribToBackup.attribValue[~-attribToBackup.attribValue.length].value = str.slice(attribToBackup.attribValue[~-attribToBackup.attribValue.length].start, _i);
+              }
+            }
+          } // do nothing for the second and following characters from the lump
+
+
+          doNothing = _i + (lengthOfClosingEspChunk || wholeEspTagLumpOnTheRight.length);
         }
-      }
+      } else if (withinStyle && !withinStyleComment && str[_i] && str[_i].trim() && // insurance against rogue extra closing curlies:
+      // .a{x}}
+      // don't start new rule at closing curlie!
+      !"{}".includes(str[_i]) && ( // if at rule starts right after <style>, if we're on "@"
+      // for example:
+      // <style>@media a {.b{c}}</style>
+      // first the <style> tag token will be pushed and then tag object
+      // reset and then, still at "@"
+      !token.type || // or, there was whitespace and we started recording a text token
+      // <style>  @media a {.b{c}}</style>
+      //          ^
+      //        we're here - look at the whitespace on the left.
+      //
+      ["text"].includes(token.type))) {
+        // Text token inside styles can be either whitespace chunk
+        // or rogue characters. In either case, inside styles, when
+        // "withinStyle" is on, non-whitespace character terminates
+        // this text token and "rule" token starts
+        if (token.type) {
+          dumpCurrentToken(token, _i);
+        }
 
-      if (!doNothing && property && property.valueStarts && !property.valueEnds) {
-        if (!str[_i] || str[_i] && !str[_i].trim() || ";}".includes(str[_i]) && (!attrib || !attrib.attribName || attrib.attribName !== "style") || ";'\"".includes(str[_i]) && attrib && attrib.attribName === "style" && ifQuoteThenAttrClosingQuote(_i)) {
+        initToken(str[_i] === "@" ? "at" : "rule", _i);
+        token.left = lastNonWhitespaceCharAt;
+        token.nested = layers.some(function (o) {
+          return o.type === "at";
+        });
+      } else if (!token.type) {
+        initToken("text", _i);
+      } // END OF if (!doNothing)
+
+    } // catch the end of a css property's value
+    // -------------------------------------------------------------------------
+
+
+    if (!doNothing && // token.type === "rule" &&
+    property && property.valueStarts && !property.valueEnds) {
+      if ( // either end was reached
+      !str[_i] || // or it's erroneous whitespace:
+      str[_i] && !str[_i].trim() || // normal head css styles:
+      ";}".includes(str[_i]) && (!attrib || !attrib.attribName || attrib.attribName !== "style") || // inline css styles within html
+      ";'\"".includes(str[_i]) && attrib && attrib.attribName === "style" && // it's real quote, not rogue double-wrapping around the value
+      ifQuoteThenAttrClosingQuote(_i)) {
+        if (lastNonWhitespaceCharAt) {
           property.valueEnds = lastNonWhitespaceCharAt + 1;
           property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
-
-          if (str[_i] === ";") {
-            property.semi = _i;
-          } else if (str[_i] && !str[_i].trim() && str[right(str, _i)] === ";") {
-            property.semi = right(str, _i);
-          }
-
-          if (property.semi) {
-            property.end = property.semi + 1;
-          }
-
-          if (!property.semi && str[right(str, _i)] !== ";" && !property.end) {
-            property.end = _i;
-          }
-
-          if (property.end) {
-            if (property.end > _i) {
-              doNothing = property.end;
-            }
-
-            pushProperty(property);
-            property = null;
-          }
-        } else if (str[_i] === ":" && Number.isInteger(property.colon) && property.colon < _i && lastNonWhitespaceCharAt && property.colon + 1 < lastNonWhitespaceCharAt) {
-          var split = str.slice(right(str, property.colon), lastNonWhitespaceCharAt + 1).split(/\s+/);
-
-          if (split.length === 2) {
-            property.valueEnds = property.valueStarts + split[0].length;
-            property.value = str.slice(property.valueStarts, property.valueEnds);
-            property.end = property.valueEnds;
-            pushProperty(property);
-            propertyReset();
-            property.propertyStarts = lastNonWhitespaceCharAt + 1 - split[1].length;
-          }
-        } else if (str[_i] === "/" && str[right(str, _i)] === "*") {
-          /* istanbul ignore else */
-          if (property.valueStarts && !property.valueEnds) {
-            property.valueEnds = _i;
-            property.value = str.slice(property.valueStarts, _i);
-          }
-          /* istanbul ignore else */
-
-
-          if (!property.end) {
-            property.end = _i;
-          }
-
-          pushProperty(property);
-          property = null;
         }
-      }
-      /* istanbul ignore else */
 
-
-      if (!doNothing && property && property.colon && !property.valueStarts && str[_i] && str[_i].trim()) {
-        /* istanbul ignore else */
-        if (";}'\"".includes(str[_i]) && ifQuoteThenAttrClosingQuote(_i)) {
-          if (str[_i] === ";") {
-            property.semi = _i;
-          }
-
-          if (!property.end) {
-            property.end = property.semi ? property.semi + 1 : _i;
-          }
-
-          pushProperty(property);
-          property = null;
-        } else {
-          property.valueStarts = _i;
+        if (str[_i] === ";") {
+          property.semi = _i;
+        } else if ( // it's whitespace
+        str[_i] && !str[_i].trim() && // semicolon follows
+        str[rightVal] === ";") {
+          property.semi = rightVal;
         }
-      }
 
-      if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && !"{}".includes(str[_i]) && !selectorChunkStartedAt && !token.openingCurlyAt) {
-        if (!",".includes(str[_i])) {
-          selectorChunkStartedAt = _i;
-
-          if (token.selectorsStart === null) {
-            token.selectorsStart = _i;
-          }
-        } else {
-          token.selectorsEnd = _i + 1;
+        if ( // if semicolon has been spotted...
+        property.semi) {
+          // set the ending too
+          property.end = property.semi + 1; // happy path, clean code has "end" at semi
         }
-      }
 
-      if (!doNothing && property && property.propertyStarts && property.propertyStarts < _i && !property.propertyEnds && (!str[_i] || !str[_i].trim() || !attrNameRegexp.test(str[_i]) && (str[_i] === ":" || !right(str, _i) || !":/".includes(str[right(str, _i)]))) && (str[_i] !== "/" || str[_i - 1] !== "/")) {
-        property.propertyEnds = _i;
-        property.property = str.slice(property.propertyStarts, _i);
-
-        if (property.valueStarts) {
+        if ( // if there's no semicolon in the view
+        !property.semi && // and semi is not coming next
+        str[rightVal] !== ";" && // and property hasn't ended
+        !property.end) {
+          // we need to end it because this is it
           property.end = _i;
         }
 
-        if ("};".includes(str[_i]) || str[_i] && !str[_i].trim() && str[right(str, _i)] !== ":") {
-          if (str[_i] === ";") {
-            property.semi = _i;
-          }
-
-          if (!property.end) {
-            property.end = property.semi ? property.semi + 1 : _i;
+        if (property.end) {
+          // push and init and patch up to resume
+          if (property.end > _i) {
+            // if ending is in the future, skip everything up to it
+            doNothing = property.end;
           }
 
           pushProperty(property);
-          property = null;
+          propertyReset();
+        }
+      } else if (str[_i] === ":" && property && property.colon && property.colon < _i && lastNonWhitespaceCharAt && property.colon + 1 < lastNonWhitespaceCharAt) {
+        // .a{b:c d:e;}
+        //         ^
+        //  we're here
+        // // semicolon is missing...
+        // traverse backwards from "lastNonWhitespaceCharAt", just in case
+        // there's space before colon, .a{b:c d :e;}
+        //                                      ^
+        //                               we're here
+        //
+        // we're looking to pinpoint where one rule ends and another starts.
+        var split = [];
+
+        if (right(str, property.colon)) {
+          split = str.slice(right(str, property.colon), lastNonWhitespaceCharAt + 1).split(/\s+/);
+        }
+
+        if (split.length === 2) {
+          // it's missing semicol, like: .a{b:c d:e;}
+          //                                 ^   ^
+          //                                 |gap| we split
+          //
+          property.valueEnds = property.valueStarts + split[0].length;
+          property.value = str.slice(property.valueStarts, property.valueEnds);
+          property.end = property.valueEnds; // push and init and patch up to resume
+
+          pushProperty(property);
+          propertyReset();
+          property.propertyStarts = lastNonWhitespaceCharAt + 1 - split[1].length;
+        }
+      } else if (str[_i] === "/" && str[rightVal] === "*") {
+        // comment starts
+        // <a style="color: red/* zzz */">
+        //                     ^
+        //                we're here
+
+        /* istanbul ignore else */
+        if (property.valueStarts && !property.valueEnds) {
+          property.valueEnds = _i;
+          property.value = str.slice(property.valueStarts, _i);
+        }
+        /* istanbul ignore else */
+
+
+        if (!property.end) {
+          property.end = _i;
+        } // push and init and patch up to resume
+
+
+        pushProperty(property);
+        propertyReset();
+      }
+    } // catch the start of a css property's value
+    // -------------------------------------------------------------------------
+
+    /* istanbul ignore else */
+
+
+    if (!doNothing && // token.type === "rule" &&
+    property && property.colon && !property.valueStarts && str[_i] && str[_i].trim()) {
+      /* istanbul ignore else */
+      if ( // stopper character met:
+      ";}'\"".includes(str[_i]) && // either it's real closing quote or not a quote
+      ifQuoteThenAttrClosingQuote(_i)) {
+        if (str[_i] === ";") {
+          property.semi = _i;
+        } // patch missing .end
+
+
+        if (!property.end) {
+          property.end = property.semi ? property.semi + 1 : _i;
+        } // push and init and patch up to resume
+
+
+        pushProperty(property);
+        propertyReset();
+      } else {
+        property.valueStarts = _i;
+      }
+    } // catch the start of a css chunk
+    // -------------------------------------------------------------------------
+
+
+    if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && !"{}".includes(str[_i]) && !selectorChunkStartedAt && !token.openingCurlyAt) {
+      if (!",".includes(str[_i])) {
+        selectorChunkStartedAt = _i;
+
+        if (token.selectorsStart === null) {
+          token.selectorsStart = _i;
+        }
+      } else {
+        // this contraption is needed to catch commas and assign
+        // correctly broken chunk range, [selectorsStart, selectorsEnd]
+        token.selectorsEnd = _i + 1;
+      }
+    } // catch the end of a css property's name
+    // -------------------------------------------------------------------------
+
+
+    if (!doNothing && // token.type === "rule" &&
+    property && property.propertyStarts && property.propertyStarts < _i && !property.propertyEnds && ( // end was reached
+    !str[_i] || // or it's whitespace
+    !str[_i].trim() || // or
+    // it's not suitable
+    !attrNameRegexp.test(str[_i]) && ( // and
+    // it's a colon (clean code)
+    // <div style="float:left;">z</div>
+    //                  ^
+    //          we're here
+    //
+    str[_i] === ":" || //
+    // or
+    //
+    // <div style="float.:left;">z</div>
+    //                  ^
+    //                include this dot within property name
+    //                so that we can catch it later validating prop names
+    //
+    !rightVal || !":/".includes(str[rightVal]))) && ( // also, regarding the slash,
+    // <div style="//color: red;">
+    //              ^
+    //            don't close here, continue, gather "//color"
+    //
+    str[_i] !== "/" || str[_i - 1] !== "/")) {
+      property.propertyEnds = _i;
+      property.property = str.slice(property.propertyStarts, _i);
+
+      if (property.valueStarts) {
+        // it's needed to safeguard against case like:
+        // <style>.a{b:c d:e;}</style>
+        //                ^
+        //            imagine we're here - valueStarts is not set!
+        property.end = _i;
+      } // missing colon and onwards:
+      // <style>.b{c}</style>
+      // <style>.b{c;d}</style>
+
+
+      if ("};".includes(str[_i]) || // it's whitespace and it's not leading up to a colon
+      str[_i] && !str[_i].trim() && str[rightVal] !== ":") {
+        if (str[_i] === ";") {
+          property.semi = _i;
+        } // precaution against broken code:
+        // .a{x}}
+        //
+
+
+        if (!property.end) {
+          property.end = property.semi ? property.semi + 1 : _i;
+        } // push and init and patch up to resume
+
+
+        pushProperty(property);
+        propertyReset();
+      }
+    } // catch the colon of a css property
+    // -------------------------------------------------------------------------
+
+
+    if (!doNothing && // we don't check for token.type === "rule" because inline css will use
+    // these clauses too and token.type === "tag" there, but
+    // attrib.attribName === "style"
+    // on other hand, we don't need strict validation here either, to enter
+    // these clauses it's enough that "property" was initiated.
+    property && property.propertyEnds && !property.valueStarts && str[_i] === ":") {
+      property.colon = _i;
+    } // catch the start of a css property's name
+    // -------------------------------------------------------------------------
+
+
+    if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && // let all the crap in, filter later:
+    !"{};".includes(str[_i]) && // above is instead of a stricter clause:
+    // attrNameRegexp.test(str[i]) &&
+    //
+    token.selectorsEnd && token.openingCurlyAt && !property.propertyStarts) {
+      // first, check maybe there's unfinished text token before it
+      if (Array.isArray(token.properties) && token.properties.length && token.properties[~-token.properties.length].start && !token.properties[~-token.properties.length].end) {
+        token.properties[~-token.properties.length].end = _i;
+        token.properties[~-token.properties.length].value = str.slice(token.properties[~-token.properties.length].start, _i);
+      }
+
+      initProperty(_i);
+    } // catch the start a property
+    // -------------------------------------------------------------------------
+    // Mostly happens in dirty code cases - the start is normally being triggered
+    // not from here, the first character, but earlier, from previous clauses.
+    // But imagine <div style="float;left">z</div>
+    //                              ^
+    //                            wrong
+    //
+    // in case like above, "l" would not have the beginning of a property
+    // triggered, hence this clause here
+
+
+    if (!doNothing && // style attribute is being processed at the moment
+    attrib && attrib.attribName === "style" && // it's not done yet
+    attrib.attribOpeningQuoteAt && !attrib.attribClosingQuoteAt && // but property hasn't been initiated
+    !property.propertyStarts && // yet the character is suitable:
+    // it's not a whitespace
+    str[_i] && str[_i].trim() && // it's not some separator
+    !"'\";".includes(str[_i]) && // it's not inside CSS block comment
+    !lastLayerIs("block")) {
+      // It's either css comment or a css property.
+      // Dirty characters go as property name, then later we validate and
+      // catch them.
+      // Empty space goes as text token, see separate clauses above.
+      if ( // currently it's slash
+      str[_i] === "/" && // asterisk follows, straight away or after whitespace
+      str[rightVal] === "*") {
+        attribPush({
+          type: "comment",
+          start: _i,
+          end: rightVal + 1,
+          value: str.slice(_i, rightVal + 1),
+          closing: false,
+          kind: "block",
+          language: "css"
+        }); // push a new layer, comment
+
+        layers.push({
+          type: "block",
+          value: str.slice(_i, rightVal + 1),
+          position: _i
+        }); // skip the next char, consider there might be whitespace in front
+
+        doNothing = rightVal + 1;
+      } // if it's a closing comment
+      else if (str[_i] === "*" && str[rightVal] === "/") {
+          closingComment(_i);
+        } else {
+          // first, close the text token if it's not ended
+          if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
+            attrib.attribValue[~-attrib.attribValue.length].end = _i;
+            attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i);
+          } // initiate a property
+
+
+          initProperty(_i);
+        }
+    } // in comment type, "only" kind tokens, submit square brackets to layers
+    // -------------------------------------------------------------------------
+    // ps. it's so that we can rule out greater-than signs
+
+
+    if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
+      if (str[_i] === "[") ;
+    } // catch the ending of a token
+    // -------------------------------------------------------------------------
+
+
+    if (!doNothing) {
+      if (token.type === "tag" && !layers.length && str[_i] === ">") {
+        token.end = _i + 1;
+        token.value = str.slice(token.start, token.end); // at this point other attributes might be still not submitted yet,
+        // we can't reset it here
+      } else if (token.type === "comment" && token.language === "html" && !layers.length && token.kind === "simple" && (str[token.start] === "<" && str[_i] === "-" && (matchLeft(str, _i, "!-", {
+        trimBeforeMatching: true
+      }) || matchLeftIncl(str, _i, "!-", {
+        trimBeforeMatching: true
+      }) && str[_i + 1] !== "-") || str[token.start] === "-" && str[_i] === ">" && matchLeft(str, _i, "--", {
+        trimBeforeMatching: true,
+        maxMismatches: 1
+      }))) {
+        if (str[_i] === "-" && (matchRight(str, _i, ["[if", "(if", "{if"], {
+          i: true,
+          trimBeforeMatching: true
+        }) || matchRight(str, _i, ["if"], {
+          i: true,
+          trimBeforeMatching: true
+        }) && ( // the following case will assume closing sq. bracket is present
+        xBeforeYOnTheRight$1(str, _i, "]", ">") || // in case there are no brackets leading up to "mso" (which must exist)
+        str.includes("mso", _i) && !str.slice(_i, str.indexOf("mso")).includes("<") && !str.slice(_i, str.indexOf("mso")).includes(">")))) {
+          // don't set the token's end, leave it open until the
+          // closing bracket, for example, it might be:
+          // <!--[if gte mso 9]>
+          //     ^
+          //    we're here
+          //
+          token.kind = "only";
+        } else if ( // ensure it's not starting with closing counterpart,
+        // --><![endif]-->
+        // but with
+        // <!--<![endif]-->
+        str[token.start] !== "-" && matchRightIncl(str, _i, ["-<![endif"], {
+          i: true,
+          trimBeforeMatching: true,
+          maxMismatches: 2
+        })) {
+          // don't set the token's end, leave it open until the
+          // closing bracket, for example, it might be:
+          // <!--<![endif]-->
+          //     ^
+          //    we're here
+          //
+          token.kind = "not";
+          token.closing = true;
+        } else if (token.kind === "simple" && token.language === "html" && !token.closing && str[rightVal] === ">") {
+          token.end = rightVal + 1;
+          token.kind = "simplet";
+          token.closing = null;
+        } else if (token.language === "html") {
+          // if it's a simple HTML comment, <!--, end it right here
+          token.end = _i + 1; // tokenizer will catch <!- as opening, so we need to extend
+          // for correct cases with two dashes <!--
+
+          if (str[leftVal] === "!" && str[rightVal] === "-") {
+            token.end = rightVal + 1;
+          }
+
+          token.value = str.slice(token.start, token.end);
+        } // at this point other attributes might be still not submitted yet,
+        // we can't reset it here
+
+      } else if (token.type === "comment" && token.language === "html" && str[_i] === ">" && (!layers.length || str[rightVal] === "<")) {
+        // if last layer was for square bracket, this means closing
+        // counterpart is missing so we need to remove it now
+        // because it's the ending of the tag ("only" kind) or
+        // at least the first part of it ("not" kind)
+        if (Array.isArray(layers) && layers.length && layers[~-layers.length].value === "[") {
+          layers.pop();
+        } // the difference between opening Outlook conditional comment "only"
+        // and conditional "only not" is that <!--> follows
+
+
+        if (!["simplet", "not"].includes(token.kind) && matchRight(str, _i, ["<!-->", "<!---->"], {
+          trimBeforeMatching: true,
+          maxMismatches: 1,
+          lastMustMatch: true
+        })) {
+          token.kind = "not";
+        } else {
+          token.end = _i + 1;
+          token.value = str.slice(token.start, token.end);
+        }
+      } else if (token.type === "comment" && token.language === "css" && str[_i] === "*" && str[_i + 1] === "/") {
+        token.end = _i + 1;
+        token.value = str.slice(token.start, token.end);
+      } else if (token.type === "esp" && token.end === null && typeof token.head === "string" && typeof token.tail === "string" && token.tail.includes(str[_i])) {
+        // extract the whole lump of ESP tag characters:
+        var wholeEspTagClosing = "";
+
+        for (var _y2 = _i; _y2 < len; _y2++) {
+          if (espChars.includes(str[_y2])) {
+            wholeEspTagClosing += str[_y2];
+          } else {
+            break;
+          }
+        } // now, imagine the new heads start, for example,
+        // {%- z -%}{%-
+        //       ^
+        //   we're here
+        // find the breaking point where tails end
+
+
+        if (wholeEspTagClosing.length > token.head.length) {
+          // in order for this to be tails + new heads, the total length should be
+          // at least bigger than heads.
+          //
+          // For example: Responsys heads: $( - 2 chars. Tails = ) - 1 char.
+          // Responsys total of closing tail + head - )$( - 3 chars.
+          // That's more than head, 2 chars.
+          //
+          // For example, eDialog heads: _ - 1 char. Tails: __ - 2 chars.
+          // eDialog total of closing tail +  head = 3 chars.
+          // That's more than head, 1 char.
+          //
+          // And same applies to Nujnucks, even considering mix of diferent
+          // heads.
+          //
+          // Another important point - first character in ESP literals.
+          // Even if there are different types of literals, more often than not
+          // first character is constant. Variations are often inside of
+          // the literals pair - for example Nunjucks {{ and {% and {%-
+          // the first character is always the same.
+          //
+          var headsFirstChar = token.head[0];
+
+          if (wholeEspTagClosing.endsWith(token.head)) {
+            // we have a situation like
+            // zzz *|aaaa|**|bbb|*
+            //           ^
+            //         we're here and we extracted a chunk |**| and we're
+            //         trying to split it into two.
+            //
+            // by the way, that's very lucky because node.heads (opening *| above)
+            // is confirmed - we passed those heads and we know they are exact.
+            // Now, our chunk ends with exactly the same new heads.
+            // The only consideration is error scenario, heads intead of tails.
+            // That's why we'll check, tags excluded, that's the length left:
+            // |**| minus heads *| equals |* -- length 2 -- happy days.
+            // Bad scenario:
+            // *|aaaa*|bbb|*
+            //       ^
+            //      we're here
+            //
+            // *| minus heads *| -- length 0 -- raise an error!
+            token.end = _i + wholeEspTagClosing.length - token.head.length;
+            token.value = str.slice(token.start, token.end);
+            doNothing = token.end;
+          } else if (wholeEspTagClosing.startsWith(token.tail)) {
+            token.end = _i + token.tail.length;
+            token.value = str.slice(token.start, token.end);
+            doNothing = token.end;
+          } else if (!token.tail.includes(headsFirstChar) && wholeEspTagClosing.includes(headsFirstChar) || wholeEspTagClosing.endsWith(token.head) || wholeEspTagClosing.startsWith(token.tail)) {
+            // We're very lucky because heads and tails are using different
+            // characters, possibly opposite brackets of some kind.
+            // That's Nunjucks, Responsys (but no eDialog) patterns.
+            var firstPartOfWholeEspTagClosing = wholeEspTagClosing.slice(0, wholeEspTagClosing.indexOf(headsFirstChar));
+            var secondPartOfWholeEspTagClosing = wholeEspTagClosing.slice(wholeEspTagClosing.indexOf(headsFirstChar)); // imagine we cliced off (Nunjucks): -%}{%-
+            // if every character from anticipated tails (-%}) is present in the front
+            // chunk, Bob's your uncle, that's tails with new heads following.
+
+            if (firstPartOfWholeEspTagClosing.length && secondPartOfWholeEspTagClosing.length && token.tail.split("").every(function (char) {
+              return firstPartOfWholeEspTagClosing.includes(char);
+            })) {
+              token.end = _i + firstPartOfWholeEspTagClosing.length;
+              token.value = str.slice(token.start, token.end);
+              doNothing = token.end;
+            }
+          } else {
+            // so heads and tails don't contain unique character, and more so,
+            // starting-one, PLUS, second set is different.
+            // For example, ESP heads/tails can be *|zzz|*
+            // Imaginery example, following heads would be variation of those
+            // above, ^|zzz|^ // TODO
+            // for now, return defaults, from else scenario below:
+            // we consider this whole chunk is tails.
+            token.end = _i + wholeEspTagClosing.length;
+            token.value = str.slice(token.start, token.end);
+            doNothing = token.end;
+          }
+        } else {
+          // we consider this whole chunk is tails.
+          token.end = _i + wholeEspTagClosing.length;
+          token.value = str.slice(token.start, token.end); // if last layer is ESP tag and we've got its closing, pop the layer
+
+          if (lastLayerIs("esp")) {
+            layers.pop();
+          }
+
+          doNothing = token.end;
+        }
+      } // END OF if (!doNothing)
+
+    } // Catch the end of a tag name
+    // -------------------------------------------------------------------------
+
+
+    if (!doNothing && token.type === "tag" && token.tagNameStartsAt && !token.tagNameEndsAt) {
+      // tag names can be with numbers, h1
+      if (!str[_i] || !charSuitableForTagName(str[_i])) {
+        token.tagNameEndsAt = _i;
+        token.tagName = str.slice(token.tagNameStartsAt, _i).toLowerCase();
+
+        if (token.tagName === "xml" && token.closing && !token.kind) {
+          token.kind = "xml";
+        } // We evaluate self-closing tags not by presence of slash but evaluating
+        // is the tag name among known self-closing tags. This way, we can later
+        // catch and fix missing closing slashes.
+
+
+        if (voidTags.includes(token.tagName)) {
+          token.void = true;
+        }
+
+        token.recognised = isTagNameRecognised(token.tagName);
+      }
+    } // Catch the start of a tag name:
+    // -------------------------------------------------------------------------
+
+
+    if (!doNothing && token.type === "tag" && !token.tagNameStartsAt && token.start != null && (token.start < _i || str[token.start] !== "<")) {
+      // MULTIPLE ENTRY!
+      // Consider closing tag's slashes and tag name itself.
+      if (str[_i] === "/") {
+        token.closing = true;
+      } else if (isLatinLetter(str[_i])) {
+        token.tagNameStartsAt = _i; // if by now closing marker is still null, set it to false - there
+        // won't be any closing slashes between opening bracket and tag name
+
+        if (!token.closing) {
+          token.closing = false;
+        }
+      } else ;
+    } // catch the end of a tag attribute's name
+    // -------------------------------------------------------------------------
+
+
+    if (!doNothing && token.type === "tag" && token.kind !== "cdata" && attrib.attribNameStartsAt && _i > attrib.attribNameStartsAt && attrib.attribNameEndsAt === null && !isAttrNameChar(str[_i])) {
+      attrib.attribNameEndsAt = _i;
+      attrib.attribName = str.slice(attrib.attribNameStartsAt, _i);
+      attrib.attribNameRecognised = allHtmlAttribs.has(attrib.attribName);
+
+      if (attrib.attribName.startsWith("mc:")) {
+        // that's a mailchimp attribute
+        token.pureHTML = false;
+      } // maybe there's a space in front of equal, <div class= "">
+
+
+      if (str[_i] && !str[_i].trim() && str[rightVal] === "=") ;else if (str[_i] && !str[_i].trim() || str[_i] === ">" || str[_i] === "/" && str[rightVal] === ">") {
+        if ("'\"".includes(str[rightVal])) ;else {
+          attrib.attribEnds = _i; // push and wipe
+
+          token.attribs.push(lodash_clonedeep(attrib));
+          attribReset();
         }
       }
+    } // catch the start of a tag attribute's name
+    // -------------------------------------------------------------------------
 
-      if (!doNothing && property && property.propertyEnds && !property.valueStarts && str[_i] === ":") {
-        property.colon = _i;
-      }
 
-      if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && !"{};".includes(str[_i]) && token.selectorsEnd && token.openingCurlyAt && (!property || !property.propertyStarts)) {
-        if (Array.isArray(token.properties) && token.properties.length && !token.properties[~-token.properties.length].end) {
+    if (!doNothing && str[_i] && token.type === "tag" && token.kind !== "cdata" && token.tagNameEndsAt && _i > token.tagNameEndsAt && attrib.attribStarts === null && isAttrNameChar(str[_i])) {
+      attrib.attribStarts = _i;
+      attrib.attribLeft = lastNonWhitespaceCharAt;
+      attrib.attribNameStartsAt = _i;
+    } // catch the curlies inside CSS rule
+    // -------------------------------------------------------------------------
+
+
+    if (!doNothing && token.type === "rule") {
+      if (str[_i] === "{" && !token.openingCurlyAt) {
+        token.openingCurlyAt = _i;
+      } else if (str[_i] === "}" && token.openingCurlyAt && !token.closingCurlyAt) {
+        token.closingCurlyAt = _i;
+        token.end = _i + 1;
+        token.value = str.slice(token.start, token.end); // check is the property's last text token closed:
+
+        if (Array.isArray(token.properties) && token.properties.length && token.properties[~-token.properties.length].start && !token.properties[~-token.properties.length].end) {
           token.properties[~-token.properties.length].end = _i;
           token.properties[~-token.properties.length].value = str.slice(token.properties[~-token.properties.length].start, _i);
         }
 
-        initProperty(_i);
-      }
+        pingTagCb(token); // if it's a "rule" token and a parent "at" rule is pending in layers,
+        // also put this "rule" into that parent in layers
 
-      if (!doNothing && attrib && attrib.attribName === "style" && attrib.attribOpeningQuoteAt && !attrib.attribClosingQuoteAt && !property && str[_i] && str[_i].trim() && !"'\";".includes(str[_i]) && !lastLayerIs("block")) {
-        if (str[_i] === "/" && (str[_i + 1] === "*" || !str[_i + 1].trim() && str[right(str, _i)] === "*")) {
-          attribPush({
-            type: "comment",
+        if (lastLayerIs("at")) {
+          layers[~-layers.length].token.rules.push(token);
+        }
+
+        tokenReset();
+      }
+    } // catch the ending of a attribute sub-token value
+    // -------------------------------------------------------------------------
+
+
+    if (!doNothing && attrib.attribName && Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
+      // TODO // if it's a closing comment
+      if (str[_i] === "*" && str[rightVal] === "/") {
+        closingComment(_i);
+      }
+    } // catch the beginning of a attribute sub-token value
+    // -------------------------------------------------------------------------
+
+
+    if ( // EITHER IT'S INLINE CSS:
+    !doNothing && // attribute has been recording
+    attrib && // and it's not finished
+    attrib.attribValueStartsAt && !attrib.attribValueEndsAt && // and its property hasn't been recording
+    !property.propertyStarts && // we're inside the value
+    _i >= attrib.attribValueStartsAt && // if attribValue array is empty, no object has been placed yet,
+    Array.isArray(attrib.attribValue) && (!attrib.attribValue.length || // or there is one but it's got ending (prevention from submitting
+    // another text type object on top, before previous has been closed)
+    attrib.attribValue[~-attrib.attribValue.length].end && // and that end is less than current index i
+    attrib.attribValue[~-attrib.attribValue.length].end <= _i) || // OR IT'S HEAD CSS
+    !doNothing && // css rule token has been recording
+    token.type === "rule" && // token started:
+    token.openingCurlyAt && // but not ended:
+    !token.closingCurlyAt && // there is no unfinished property being recorded
+    !property.propertyStarts) {
+      // if it's suitable for property, start a property
+      // if it's whitespace, for example,
+      // <a style="  /* zzz */color: red;  ">
+      //           ^
+      //         this
+      //
+      // rogue text will go as property, for example:
+      //
+      // <a style="  z color: red;  ">
+      if ( // whitespace is automatically text token
+      str[_i] && !str[_i].trim() || // if comment layer has been started, it's also a text token, no matter even
+      // if it's a property, because it's comment's contents.
+      lastLayerIs("block")) {
+        // depends where to push, is it inline css or head css rule
+        if (attrib.attribName) {
+          attrib.attribValue.push({
+            type: "text",
             start: _i,
-            end: right(str, _i) + 1,
-            value: str.slice(_i, right(str, _i) + 1),
-            closing: false,
-            kind: "block",
-            language: "css"
+            end: null,
+            value: null
           });
-          layers.push({
-            type: "block",
-            value: str.slice(_i, right(str, _i) + 1),
-            position: _i
+        } else if (token.type === "rule" && ( // we don't want to push over the properties in-progress
+        !Array.isArray(token.properties) || !token.properties.length || // last property should have ended
+        token.properties[~-token.properties.length].end)) {
+          token.properties.push({
+            type: "text",
+            start: _i,
+            end: null,
+            value: null
           });
-          doNothing = right(str, _i) + 1;
-        } else if (str[_i] === "*" && str[right(str, _i)] === "/") {
-          closingComment(_i);
-        } else {
-          if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
-            attrib.attribValue[~-attrib.attribValue.length].end = _i;
-            attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i);
-          }
-
-          initProperty(_i);
         }
       }
+    } // Catch the end of a tag attribute's value:
+    // -------------------------------------------------------------------------
 
-      if (token.type === "comment" && ["only", "not"].includes(token.kind)) {
-        if (str[_i] === "[") ;
-      }
 
-      if (!doNothing) {
-        if (token.type === "tag" && !layers.length && str[_i] === ">") {
-          token.end = _i + 1;
-          token.value = str.slice(token.start, token.end);
-        } else if (token.type === "comment" && token.language === "html" && !layers.length && token.kind === "simple" && (str[token.start] === "<" && str[_i] === "-" && (matchLeft(str, _i, "!-", {
-          trimBeforeMatching: true
-        }) || matchLeftIncl(str, _i, "!-", {
-          trimBeforeMatching: true
-        }) && str[_i + 1] !== "-") || str[token.start] === "-" && str[_i] === ">" && matchLeft(str, _i, "--", {
-          trimBeforeMatching: true,
-          maxMismatches: 1
-        }))) {
-          if (str[_i] === "-" && (matchRight(str, _i, ["[if", "(if", "{if"], {
-            i: true,
-            trimBeforeMatching: true
-          }) || matchRight(str, _i, ["if"], {
-            i: true,
-            trimBeforeMatching: true
-          }) && (xBeforeYOnTheRight$1(str, _i, "]", ">") || str.includes("mso", _i) && !str.slice(_i, str.indexOf("mso")).includes("<") && !str.slice(_i, str.indexOf("mso")).includes(">")))) {
-            token.kind = "only";
-          } else if (str[token.start] !== "-" && matchRightIncl(str, _i, ["-<![endif"], {
-            i: true,
-            trimBeforeMatching: true,
-            maxMismatches: 2
-          })) {
-            token.kind = "not";
-            token.closing = true;
-          } else if (token.kind === "simple" && token.language === "html" && !token.closing && str[right(str, _i)] === ">") {
-            token.end = right(str, _i) + 1;
-            token.kind = "simplet";
-            token.closing = null;
-          } else if (token.language === "html") {
-            token.end = _i + 1;
-
-            if (str[left(str, _i)] === "!" && str[right(str, _i)] === "-") {
-              token.end = right(str, _i) + 1;
-            }
-
-            token.value = str.slice(token.start, token.end);
-          }
-        } else if (token.type === "comment" && token.language === "html" && str[_i] === ">" && (!layers.length || str[right(str, _i)] === "<")) {
-          if (Array.isArray(layers) && layers.length && layers[~-layers.length].value === "[") {
-            layers.pop();
-          }
-
-          if (!["simplet", "not"].includes(token.kind) && matchRight(str, _i, ["<!-->", "<!---->"], {
-            trimBeforeMatching: true,
-            maxMismatches: 1,
-            lastMustMatch: true
-          })) {
-            token.kind = "not";
-          } else {
-            token.end = _i + 1;
-            token.value = str.slice(token.start, token.end);
-          }
-        } else if (token.type === "comment" && token.language === "CSS" && str[_i] === "*" && str[_i + 1] === "/") {
-          token.end = _i + 1;
-          token.value = str.slice(token.start, token.end);
-        } else if (token.type === "esp" && token.end === null && isStr$1(token.tail) && token.tail.includes(str[_i])) {
-          var wholeEspTagClosing = "";
-
-          for (var _y2 = _i; _y2 < len; _y2++) {
-            if (espChars.includes(str[_y2])) {
-              wholeEspTagClosing += str[_y2];
-            } else {
-              break;
-            }
-          }
-
-          if (wholeEspTagClosing.length > token.head.length) {
-            var headsFirstChar = token.head[0];
-
-            if (wholeEspTagClosing.endsWith(token.head)) {
-              token.end = _i + wholeEspTagClosing.length - token.head.length;
-              token.value = str.slice(token.start, token.end);
-              doNothing = token.end;
-            } else if (wholeEspTagClosing.startsWith(token.tail)) {
-              token.end = _i + token.tail.length;
-              token.value = str.slice(token.start, token.end);
-              doNothing = token.end;
-            } else if (!token.tail.includes(headsFirstChar) && wholeEspTagClosing.includes(headsFirstChar) || wholeEspTagClosing.endsWith(token.head) || wholeEspTagClosing.startsWith(token.tail)) {
-              var firstPartOfWholeEspTagClosing = wholeEspTagClosing.slice(0, wholeEspTagClosing.indexOf(headsFirstChar));
-              var secondPartOfWholeEspTagClosing = wholeEspTagClosing.slice(wholeEspTagClosing.indexOf(headsFirstChar));
-
-              if (firstPartOfWholeEspTagClosing.length && secondPartOfWholeEspTagClosing.length && token.tail.split("").every(function (char) {
-                return firstPartOfWholeEspTagClosing.includes(char);
-              })) {
-                token.end = _i + firstPartOfWholeEspTagClosing.length;
-                token.value = str.slice(token.start, token.end);
-                doNothing = token.end;
-              }
-            } else {
-              token.end = _i + wholeEspTagClosing.length;
-              token.value = str.slice(token.start, token.end);
-              doNothing = token.end;
-            }
-          } else {
-            token.end = _i + wholeEspTagClosing.length;
-            token.value = str.slice(token.start, token.end);
-
-            if (lastLayerIs("esp")) {
-              layers.pop();
-            }
-
-            doNothing = token.end;
-          }
-        }
-      }
-
-      if (!doNothing && token.type === "tag" && token.tagNameStartsAt && !token.tagNameEndsAt) {
-        if (!str[_i] || !charSuitableForTagName(str[_i])) {
-          token.tagNameEndsAt = _i;
-          token.tagName = str.slice(token.tagNameStartsAt, _i).toLowerCase();
-
-          if (token.tagName === "xml" && token.closing && !token.kind) {
-            token.kind = "xml";
-          }
-
-          if (voidTags.includes(token.tagName)) {
-            token.void = true;
-          }
-
-          token.recognised = isTagNameRecognised(token.tagName);
-        }
-      }
-
-      if (!doNothing && token.type === "tag" && !token.tagNameStartsAt && token.start != null && (token.start < _i || str[token.start] !== "<")) {
-        if (str[_i] === "/") {
-          token.closing = true;
-        } else if (isLatinLetter(str[_i])) {
-          token.tagNameStartsAt = _i;
-
-          if (!token.closing) {
-            token.closing = false;
-          }
-        } else ;
-      }
-
-      if (!doNothing && token.type === "tag" && token.kind !== "cdata" && attrib.attribNameStartsAt && _i > attrib.attribNameStartsAt && attrib.attribNameEndsAt === null && !charSuitableForHTMLAttrName(str[_i])) {
-        attrib.attribNameEndsAt = _i;
-        attrib.attribName = str.slice(attrib.attribNameStartsAt, _i);
-        attrib.attribNameRecognised = allHtmlAttribs.has(attrib.attribName);
-
-        if (attrib.attribName.startsWith("mc:")) {
-          token.pureHTML = false;
-        }
-
-        if (str[_i] && !str[_i].trim() && str[right(str, _i)] === "=") ;else if (str[_i] && !str[_i].trim() || str[_i] === ">" || str[_i] === "/" && str[right(str, _i)] === ">") {
-          if ("'\"".includes(str[right(str, _i)])) ;else {
-            attrib.attribEnds = _i;
-            token.attribs.push(lodash_clonedeep(attrib));
-            attribReset();
-          }
-        }
-      }
-
-      if (!doNothing && str[_i] && token.type === "tag" && token.kind !== "cdata" && token.tagNameEndsAt && _i > token.tagNameEndsAt && attrib.attribStarts === null && charSuitableForHTMLAttrName(str[_i])) {
-        attrib.attribStarts = _i;
-        attrib.attribLeft = lastNonWhitespaceCharAt;
-        attrib.attribNameStartsAt = _i;
-      }
-
-      if (!doNothing && token.type === "rule") {
-        if (str[_i] === "{" && !token.openingCurlyAt) {
-          token.openingCurlyAt = _i;
-        } else if (str[_i] === "}" && token.openingCurlyAt && !token.closingCurlyAt) {
-          token.closingCurlyAt = _i;
-          token.end = _i + 1;
-          token.value = str.slice(token.start, token.end);
-
-          if (Array.isArray(token.properties) && token.properties.length && token.properties[~-token.properties.length].start && !token.properties[~-token.properties.length].end) {
-            token.properties[~-token.properties.length].end = _i;
-            token.properties[~-token.properties.length].value = str.slice(token.properties[~-token.properties.length].start, _i);
-          }
-
-          pingTagCb(token);
-
-          if (lastLayerIs("at")) {
-            layers[~-layers.length].token.rules.push(token);
-          }
-
-          tokenReset();
-        }
-      }
-
-      if (!doNothing && attrib.attribName && Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
-        if (str[_i] === "*" && str[right(str, _i)] === "/") {
-          closingComment(_i);
-        }
-      }
-
-      if (!doNothing && attrib && attrib.attribValueStartsAt && !attrib.attribValueEndsAt && !property && _i >= attrib.attribValueStartsAt && Array.isArray(attrib.attribValue) && (!attrib.attribValue.length || attrib.attribValue[~-attrib.attribValue.length].end && attrib.attribValue[~-attrib.attribValue.length].end <= _i) || !doNothing && token.type === "rule" && token.openingCurlyAt && !token.closingCurlyAt && !property) {
-        if (str[_i] && !str[_i].trim() || lastLayerIs("block")) {
-          if (attrib.attribName) {
-            attrib.attribValue.push({
-              type: "text",
-              start: _i,
-              end: null,
-              value: null
-            });
-          } else if (token.type === "rule" && (!Array.isArray(token.properties) || !token.properties.length || token.properties[~-token.properties.length].end)) {
-            token.properties.push({
-              type: "text",
-              start: _i,
-              end: null,
-              value: null
-            });
-          }
-        }
-      }
-
-      if (!doNothing && token.type === "tag" && attrib.attribValueStartsAt && _i >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
-        if (SOMEQUOTE.includes(str[_i])) {
-          if (!layers.some(function (layerObj) {
-            return layerObj.type === "esp";
-          }) && (!str[_i] || !str.includes(">", _i) || isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, _i))) {
-            attrib.attribClosingQuoteAt = _i;
-            attrib.attribValueEndsAt = _i;
-
-            if (attrib.attribValueStartsAt) {
-              attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i);
-            }
-
-            attrib.attribEnds = _i + 1;
-
-            if (property) {
-              attrib.attribValue.push(lodash_clonedeep(property));
-              property = null;
-            }
-
-            if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
-              if (!attrib.attribValue[~-attrib.attribValue.length].property) {
-                attrib.attribValue[~-attrib.attribValue.length].end = _i;
-                attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i);
-              }
-            }
-
-            if (str[attrib.attribOpeningQuoteAt] !== str[_i]) {
-              layers.pop();
-              layers.pop();
-            }
-
-            if (attrib.attribValue[~-attrib.attribValue.length] && !attrib.attribValue[~-attrib.attribValue.length].end) {
-              attrib.attribValue[~-attrib.attribValue.length].end = _i;
-            }
-
-            token.attribs.push(lodash_clonedeep(attrib));
-            attribReset();
-          } else if ((!Array.isArray(attrib.attribValue) || !attrib.attribValue.length || attrib.attribValue[~-attrib.attribValue.length].type !== "text") && !property) {
-            attrib.attribValue.push({
-              type: "text",
-              start: _i,
-              end: null,
-              value: null
-            });
-          }
-        } else if (attrib.attribOpeningQuoteAt === null && (str[_i] && !str[_i].trim() || ["/", ">"].includes(str[_i]) || espChars.includes(str[_i]) && espChars.includes(str[_i + 1]))) {
+    if (!doNothing && token.type === "tag" && attrib.attribValueStartsAt && _i >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
+      if (SOMEQUOTE.includes(str[_i])) {
+        // const R1 = !layers.some((layerObj) => layerObj.type === "esp");
+        // const R2 = isAttrClosing(
+        //   str,
+        //   attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt,
+        //   i
+        // );
+        // console.log(
+        //   `${`\u001b[${33}m${`R1`}\u001b[${39}m`} = ${`\u001b[${
+        //     R1 ? 32 : 31
+        //   }m${R1}\u001b[${39}m`}`
+        // );
+        // console.log(
+        //   `${`\u001b[${33}m${`R2`}\u001b[${39}m`} = ${`\u001b[${
+        //     R2 ? 32 : 31
+        //   }m${R2}\u001b[${39}m`}`
+        // );
+        if ( // so we're on a single/double quote,
+        // (str[i], the current character is a quote)
+        // and...
+        // we're not inside some ESP tag - ESP layers are not pending:
+        !layers.some(function (layerObj) {
+          return layerObj.type === "esp";
+        }) && ( // and the current character passed the
+        // attribute closing quote validation by
+        // "is-html-attribute-closing"
+        //
+        // the isAttrClosing() api is the following:
+        // 1. str, 2. opening quotes index, 3. suspected
+        // character for attribute closing (quotes typically,
+        // but can be mismatching)...
+        // see the package "is-html-attribute-closing" on npm:
+        //
+        //
+        // either end was reached,
+        !str[_i] || // or there is no closing bracket further
+        !str.includes(">", _i) || // further checks confirm it looks like legit closing
+        isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, _i))) {
+          attrib.attribClosingQuoteAt = _i;
           attrib.attribValueEndsAt = _i;
-          attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i);
 
-          if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
-            attrib.attribValue[~-attrib.attribValue.length].end = _i;
-            attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, attrib.attribValue[~-attrib.attribValue.length].end);
+          if (attrib.attribValueStartsAt) {
+            attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i);
           }
 
-          attrib.attribEnds = _i;
+          attrib.attribEnds = _i + 1;
+
+          if (property.propertyStarts) {
+            attrib.attribValue.push(lodash_clonedeep(property));
+            propertyReset();
+          }
+
+          if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
+            // if it's not a property (of inline style), set its "end"
+            if (!attrib.attribValue[~-attrib.attribValue.length].property) {
+              attrib.attribValue[~-attrib.attribValue.length].end = _i;
+              attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i);
+            }
+          } // 2. if the pair was mismatching, wipe layers' last element
+
+
+          if (str[attrib.attribOpeningQuoteAt] !== str[_i]) {
+            layers.pop();
+            layers.pop();
+          } // 3. last check for the last attribValue's .end - in some broken code
+          // cases it might be still null:
+          // <div style="float:left;x">
+          //                         ^
+          //                       we're here
+
+
+          if (attrib.attribValue[~-attrib.attribValue.length] && !attrib.attribValue[~-attrib.attribValue.length].end) {
+            attrib.attribValue[~-attrib.attribValue.length].end = _i;
+          } // 4. push and wipe
+
+
           token.attribs.push(lodash_clonedeep(attrib));
           attribReset();
-          layers.pop();
-
-          if (str[_i] === ">") {
-            token.end = _i + 1;
-            token.value = str.slice(token.start, token.end);
-          }
-        } else if (str[_i] === "=" && ("'\"".includes(str[right(str, _i)]) || str[~-_i] && isLatinLetter(str[~-_i])) && !(attrib && attrib.attribOpeningQuoteAt && (/\//.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i)) || /mailto:/.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i)) || /\w\?\w/.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i))))) {
-          var whitespaceFound;
-          var attribClosingQuoteAt;
-
-          for (var _y3 = left(str, _i); _y3 >= attrib.attribValueStartsAt; _y3--) {
-            if (!whitespaceFound && str[_y3] && !str[_y3].trim()) {
-              whitespaceFound = true;
-
-              if (attribClosingQuoteAt) {
-                var extractedChunksVal = str.slice(_y3, attribClosingQuoteAt);
-              }
-            }
-
-            if (whitespaceFound && str[_y3] && str[_y3].trim()) {
-              whitespaceFound = false;
-
-              if (!attribClosingQuoteAt) {
-                attribClosingQuoteAt = _y3 + 1;
-              }
-            }
-          }
-
-          if (attribClosingQuoteAt) {
-            attrib.attribValueEndsAt = attribClosingQuoteAt;
-
-            if (attrib.attribValueStartsAt) {
-              attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, attribClosingQuoteAt);
-
-              if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
-                attrib.attribValue[~-attrib.attribValue.length].end = attrib.attribValueEndsAt;
-                attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, attrib.attribValueEndsAt);
-              }
-            }
-
-            attrib.attribEnds = attribClosingQuoteAt;
-
-            if (str[attrib.attribOpeningQuoteAt] !== str[_i]) {
-              layers.pop();
-            }
-
-            token.attribs.push(lodash_clonedeep(attrib));
-            attribReset();
-            _i = ~-attribClosingQuoteAt;
-            i = _i;
-            return "continue";
-          } else if (attrib.attribOpeningQuoteAt && ("'\"".includes(str[right(str, _i)]) || allHtmlAttribs.has(str.slice(attrib.attribOpeningQuoteAt + 1, _i).trim()))) {
-            _i = attrib.attribOpeningQuoteAt;
-            attrib.attribEnds = attrib.attribOpeningQuoteAt + 1;
-            attrib.attribValueStartsAt = null;
-            layers.pop();
-            token.attribs.push(lodash_clonedeep(attrib));
-            attribReset();
-            i = _i;
-            return "continue";
-          }
-        } else if (attrib && attrib.attribName !== "style" && attrib.attribStarts && !attrib.attribEnds && !property && (!Array.isArray(attrib.attribValue) || !attrib.attribValue.length || attrib.attribValue[~-attrib.attribValue.length].end && attrib.attribValue[~-attrib.attribValue.length].end <= _i)) {
+        } else if ((!Array.isArray(attrib.attribValue) || !attrib.attribValue.length || // last attrib value should not be a text token
+        attrib.attribValue[~-attrib.attribValue.length].type !== "text") && !property.propertyStarts) {
+          // quotes not matched, so it's unencoded, raw quote, part of the value
+          // for example
+          // <table width=""100">
+          //               ^
+          //            rogue quote
+          // let's initiate a next token
           attrib.attribValue.push({
             type: "text",
             start: _i,
@@ -4377,49 +6124,229 @@
             value: null
           });
         }
-      } else if (token.type === "esp" && attribToBackup && parentTokenToBackup && attribToBackup.attribOpeningQuoteAt && "'\"".includes(str[_i]) && str[attribToBackup.attribOpeningQuoteAt] === str[_i] && isAttrClosing(str, attribToBackup.attribOpeningQuoteAt, _i)) {
-        token.end = _i;
-        token.value = str.slice(token.start, _i);
+      } else if (attrib.attribOpeningQuoteAt === null && (str[_i] && !str[_i].trim() || ["/", ">"].includes(str[_i]) || espChars.includes(str[_i]) && espChars.includes(str[_i + 1]))) {
+        // ^ either whitespace or tag's closing or ESP literal's start ends
+        // the attribute's value if there are no quotes
+        attrib.attribValueEndsAt = _i;
+        attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i);
 
-        if (attribToBackup && !Array.isArray(attribToBackup.attribValue)) {
-          attribToBackup.attribValue.length = 0;
+        if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
+          attrib.attribValue[~-attrib.attribValue.length].end = _i;
+          attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, attrib.attribValue[~-attrib.attribValue.length].end);
         }
 
-        attribToBackup.attribValue.push(token);
-        attribToBackup.attribValueEndsAt = _i;
-        attribToBackup.attribValueRaw = str.slice(attribToBackup.attribValueStartsAt, _i);
-        attribToBackup.attribClosingQuoteAt = _i;
-        attribToBackup.attribEnds = _i + 1;
-        token = lodash_clonedeep(parentTokenToBackup);
-        token.attribs.push(attribToBackup);
-        attribToBackup = undefined;
-        parentTokenToBackup = undefined;
-        layers.pop();
-        layers.pop();
-        layers.pop();
+        attrib.attribEnds = _i; // 2. push and wipe
+
+        token.attribs.push(lodash_clonedeep(attrib));
+        attribReset(); // 3. pop layers
+
+        layers.pop(); // 4. tackle the tag ending
+
+        if (str[_i] === ">") {
+          token.end = _i + 1;
+          token.value = str.slice(token.start, token.end);
+        }
+      } else if (str[_i] === "=" && leftVal !== null && rightVal && ("'\"".includes(str[rightVal]) || str[~-_i] && isLatinLetter(str[~-_i])) && // this will catch url params like
+      // <img src="https://z.png?query=" />
+      //                              ^
+      //                            false alarm
+      //
+      // let's exclude anything URL-related
+      !(attrib && attrib.attribOpeningQuoteAt && ( // check for presence of slash, /
+      /\//.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i)) || // check for mailto:
+      /mailto:/.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i)) || // check for /\w?\w/ like
+      // <img src="codsen.com?query=" />
+      //                     ^
+      /\w\?\w/.test(str.slice(attrib.attribOpeningQuoteAt + 1, _i))))) {
+        // all depends, are there whitespace characters:
+        // imagine
+        // <a href="border="0">
+        // vs
+        // <a href="xyz border="0">
+        // that's two different cases - there's nothing to salvage in former!
+        var whitespaceFound;
+        var attribClosingQuoteAt;
+
+        for (var _y3 = leftVal; _y3 >= attrib.attribValueStartsAt; _y3--) {
+          // catch where whitespace starts
+          if (!whitespaceFound && str[_y3] && !str[_y3].trim()) {
+            whitespaceFound = true;
+
+            if (attribClosingQuoteAt) {
+              // slice the captured chunk
+              var extractedChunksVal = str.slice(_y3, attribClosingQuoteAt);
+            }
+          } // where that caught whitespace ends, that's the default location
+          // of double quotes.
+          // <a href="xyz border="0">
+          //            ^        ^
+          //            |        |
+          //            |   we go from here
+          //         to here
+
+
+          if (whitespaceFound && str[_y3] && str[_y3].trim()) {
+            whitespaceFound = false;
+
+            if (!attribClosingQuoteAt) {
+              // that's the first, default location
+              attribClosingQuoteAt = _y3 + 1;
+            }
+          }
+        }
+
+        if (attribClosingQuoteAt) {
+          attrib.attribValueEndsAt = attribClosingQuoteAt;
+
+          if (attrib.attribValueStartsAt) {
+            attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, attribClosingQuoteAt);
+
+            if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
+              attrib.attribValue[~-attrib.attribValue.length].end = attrib.attribValueEndsAt;
+              attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, attrib.attribValueEndsAt);
+            }
+          }
+
+          attrib.attribEnds = attribClosingQuoteAt; // 2. if the pair was mismatching, wipe layers' last element
+
+          if (str[attrib.attribOpeningQuoteAt] !== str[_i]) {
+            layers.pop();
+          } // 3. push and wipe
+
+
+          token.attribs.push(lodash_clonedeep(attrib));
+          attribReset(); // 4. pull the i back to the position where the attribute ends
+
+          _i = ~-attribClosingQuoteAt;
+          i = _i;
+          return "continue";
+        } else if (attrib.attribOpeningQuoteAt && ("'\"".includes(str[rightVal]) || allHtmlAttribs.has(str.slice(attrib.attribOpeningQuoteAt + 1, _i).trim()))) {
+          // worst case scenario:
+          // <span width="height="100">
+          //
+          // traversing back from second "=" we hit only the beginning of an
+          // attribute, there was nothing to salvage.
+          // In this case, reset the attribute's calculation, go backwards to "h".
+          // 1. pull back the index, go backwards, read this new attribute again
+          _i = attrib.attribOpeningQuoteAt; // 2. end the attribute
+
+          attrib.attribEnds = attrib.attribOpeningQuoteAt + 1; // 3. value doesn't start, this needs correction
+
+          attrib.attribValueStartsAt = null; // 4. pop the opening quotes layer
+
+          layers.pop(); // 5. push and wipe
+
+          token.attribs.push(lodash_clonedeep(attrib));
+          attribReset(); // 6. continue
+
+          i = _i;
+          return "continue";
+        }
+      } else if (attrib && attrib.attribName !== "style" && attrib.attribStarts && !attrib.attribEnds && !property.propertyStarts && ( //
+      // AND,
+      //
+      // either there are no attributes recorded under attrib.attribValue:
+      !Array.isArray(attrib.attribValue) || // or it's array but empty:
+      !attrib.attribValue.length || // or is it not empty but its last attrib has ended by now
+      attrib.attribValue[~-attrib.attribValue.length].end && attrib.attribValue[~-attrib.attribValue.length].end <= _i)) {
+        attrib.attribValue.push({
+          type: "text",
+          start: _i,
+          end: null,
+          value: null
+        });
+      }
+    } else if (token.type === "esp" && attribToBackup && parentTokenToBackup && attribToBackup.attribOpeningQuoteAt && attribToBackup.attribValueStartsAt && "'\"".includes(str[_i]) && str[attribToBackup.attribOpeningQuoteAt] === str[_i] && isAttrClosing(str, attribToBackup.attribOpeningQuoteAt, _i)) {
+      // imagine unclosed ESP tag inside attr value:
+      // <tr class="{% x">
+      //                ^
+      //             we're here
+      // we need to still proactively look for closing attribute quotes,
+      // even inside ESP tags, if we're inside tag attributes // 1. patch up missing token (which is type="esp" currently) values
+      token.end = _i;
+      token.value = str.slice(token.start, _i); // 2. push token into attribToBackup.attribValue
+
+      if (attribToBackup && !Array.isArray(attribToBackup.attribValue)) {
+        attribToBackup.attribValue = [];
       }
 
-      if (!doNothing && token.type === "tag" && !attrib.attribValueStartsAt && attrib.attribNameEndsAt && attrib.attribNameEndsAt <= _i && str[_i] && str[_i].trim()) {
-        if (str[_i] === "=" && !SOMEQUOTE.includes(str[right(str, _i)]) && !"=".includes(str[right(str, _i)]) && !espChars.includes(str[right(str, _i)])) {
-          var firstCharOnTheRight = right(str, _i);
-          var firstQuoteOnTheRightIdx = SOMEQUOTE.split("").map(function (quote) {
-            return str.indexOf(quote, firstCharOnTheRight);
-          }).filter(function (val) {
-            return val > 0;
-          }).length ? Math.min.apply(Math, _toConsumableArray(SOMEQUOTE.split("").map(function (quote) {
-            return str.indexOf(quote, firstCharOnTheRight);
-          }).filter(function (val) {
-            return val > 0;
-          }))) : undefined;
+      attribToBackup.attribValue.push(token); // 3. patch up missing values in attribToBackup
 
-          if (firstCharOnTheRight && str.slice(firstCharOnTheRight).includes("=") && allHtmlAttribs.has(str.slice(firstCharOnTheRight, firstCharOnTheRight + str.slice(firstCharOnTheRight).indexOf("=")).trim().toLowerCase())) {
-            attrib.attribEnds = _i + 1;
+      attribToBackup.attribValueEndsAt = _i;
+      attribToBackup.attribValueRaw = str.slice(attribToBackup.attribValueStartsAt, _i);
+      attribToBackup.attribClosingQuoteAt = _i;
+      attribToBackup.attribEnds = _i + 1; // 4. restore parent token
+
+      token = lodash_clonedeep(parentTokenToBackup);
+      token.attribs.push(attribToBackup); // 5. reset all
+
+      attribToBackup = undefined;
+      parentTokenToBackup = undefined; // 6. pop the last 3 layers
+      // currently layers array should be like:
+      // [
+      //   {
+      //     "type": "simple",
+      //     "value": '"',
+      //     "position": 10
+      //   },
+      //   {
+      //     "type": "esp",
+      //     "openingLump": "{%",
+      //     "guessedClosingLump": "%}",
+      //     "position": 11
+      //   }
+      //   {
+      //     "type": "simple",
+      //     "value": '"',
+      //     "position": 15
+      //   },
+      // ]
+
+      layers.pop();
+      layers.pop();
+      layers.pop();
+    } // Catch the start of a tag attribute's value:
+    // -------------------------------------------------------------------------
+
+
+    if (!doNothing && token.type === "tag" && !attrib.attribValueStartsAt && attrib.attribNameEndsAt && attrib.attribNameEndsAt <= _i && str[_i] && str[_i].trim()) {
+      if (str[_i] === "=" && !SOMEQUOTE.includes(str[rightVal]) && !"=".includes(str[rightVal]) && !espChars.includes(str[rightVal]) // it might be an ESP literal
+      ) {
+          // find the index of the next quote, single or double
+          var firstQuoteOnTheRightIdx = SOMEQUOTE.split("").map(function (quote) {
+            return str.indexOf(quote, rightVal);
+          }).filter(function (val) {
+            return val > 0;
+          }).length ? Math.min.apply(Math, SOMEQUOTE.split("").map(function (quote) {
+            return str.indexOf(quote, rightVal);
+          }).filter(function (val) {
+            return val > 0;
+          })) : undefined; // catch attribute name - equal - attribute name - equal
+          // <span width=height=100>
+
+          if ( // there is a character on the right (otherwise value would be null)
+          rightVal && // there is equal character in the remaining chunk
+          str.slice(rightVal).includes("=") && // characters upto first equals form a known attribute value
+          allHtmlAttribs.has(str.slice(rightVal, rightVal + str.slice(rightVal).indexOf("=")).trim().toLowerCase())) {
+            // we have something like:
+            // <span width=height=100>
+            // 1. end the attribute
+            attrib.attribEnds = _i + 1; // 2. push and wipe
+
             token.attribs.push(_objectSpread2({}, attrib));
             attribReset();
-          } else if (!firstQuoteOnTheRightIdx || str.slice(firstCharOnTheRight, firstQuoteOnTheRightIdx).includes("=") || !str.includes(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1) || Array.from(str.slice(firstQuoteOnTheRightIdx + 1, str.indexOf(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1))).some(function (char) {
+          } else if ( // try to stop this clause:
+          //
+          // if there are no quotes in the remaining string
+          !firstQuoteOnTheRightIdx || // there is one but there are equal character between here and its location
+          str.slice(rightVal, firstQuoteOnTheRightIdx).includes("=") || // if there is no second quote of that type in the remaining string
+          !str.includes(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1) || // if string slice from quote to quote includes equal or brackets
+          Array.from(str.slice(firstQuoteOnTheRightIdx + 1, str.indexOf(str[firstQuoteOnTheRightIdx], firstQuoteOnTheRightIdx + 1))).some(function (char) {
             return "<>=".includes(char);
           })) {
-            attrib.attribValueStartsAt = firstCharOnTheRight;
+            // case of missing opening quotes
+            attrib.attribValueStartsAt = rightVal; // push missing entry into layers
+
             layers.push({
               type: "simple",
               value: null,
@@ -4427,397 +6354,610 @@
             });
           }
         } else if (SOMEQUOTE.includes(str[_i])) {
-          var nextCharIdx = right(str, _i);
+        // maybe it's <span width='"100"> and it's a false opening quote, '
+        var nextCharIdx = rightVal;
 
-          if (nextCharIdx && SOMEQUOTE.includes(str[nextCharIdx]) && str[_i] !== str[nextCharIdx] && str.length > nextCharIdx + 2 && str.slice(nextCharIdx + 1).includes(str[nextCharIdx]) && (!str.indexOf(str[nextCharIdx], nextCharIdx + 1) || !right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1)) || str[_i] !== str[right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1))]) && !Array.from(str.slice(nextCharIdx + 1, str.indexOf(str[nextCharIdx]))).some(function (char) {
-            return "<>=".concat(str[_i]).includes(char);
-          })) {
-            layers.pop();
-          } else {
-            if (!attrib.attribOpeningQuoteAt) {
-              attrib.attribOpeningQuoteAt = _i;
-
-              if (str[_i + 1] && (str[_i + 1] !== str[_i] || !ifQuoteThenAttrClosingQuote(_i + 1))) {
-                attrib.attribValueStartsAt = _i + 1;
-              }
-            } else {
-              /* istanbul ignore else */
-              if (isAttrClosing(str, attrib.attribOpeningQuoteAt, _i)) {
-                attrib.attribClosingQuoteAt = _i;
-              }
-              /* istanbul ignore else */
-
-
-              if (attrib.attribOpeningQuoteAt && attrib.attribClosingQuoteAt) {
-                if (attrib.attribOpeningQuoteAt < ~-attrib.attribClosingQuoteAt) {
-                  attrib.attribValueRaw = str.slice(attrib.attribOpeningQuoteAt + 1, attrib.attribClosingQuoteAt);
-                } else {
-                  attrib.attribValueRaw = "";
-                }
-
-                attrib.attribEnds = _i + 1;
-                token.attribs.push(lodash_clonedeep(attrib));
-                attribReset();
-              }
-            }
-          }
-        }
-      }
-
-      if (str[_i] === ">" && token.type === "tag" && attrib.attribStarts && !attrib.attribEnds) {
-        var thisIsRealEnding = false;
-
-        if (str[_i + 1]) {
-          for (var _y4 = _i + 1; _y4 < len; _y4++) {
-            if (attrib.attribOpeningQuoteAt && str[_y4] === str[attrib.attribOpeningQuoteAt]) {
-              if (_y4 !== _i + 1 && str[~-_y4] !== "=") {
-                thisIsRealEnding = true;
-              }
-
-              break;
-            } else if (str[_y4] === ">") {
-              break;
-            } else if (str[_y4] === "<") {
-              thisIsRealEnding = true;
-              layers.pop();
-              break;
-            } else if (!str[_y4 + 1]) {
-              thisIsRealEnding = true;
-              break;
-            }
-          }
+        if ( // a non-whitespace character exists on the right of index i
+        nextCharIdx && // if it is a quote character
+        SOMEQUOTE.includes(str[nextCharIdx]) && // but opposite kind,
+        str[_i] !== str[nextCharIdx] && // and string is long enough
+        str.length > nextCharIdx + 2 && // and remaining string contains that quote like the one on the right
+        str.slice(nextCharIdx + 1).includes(str[nextCharIdx]) && ( // and to the right of it we don't have str[i] quote,
+        // case: <span width="'100'">
+        !str.indexOf(str[nextCharIdx], nextCharIdx + 1) || !right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1)) || str[_i] !== str[right(str, str.indexOf(str[nextCharIdx], nextCharIdx + 1))]) && // and that slice does not contain equal or brackets or quote of other kind
+        !Array.from(str.slice(nextCharIdx + 1, str.indexOf(str[nextCharIdx]))).some(function (char) {
+          return ("<>=" + str[_i]).includes(char);
+        })) {
+          // pop the layers
+          layers.pop();
         } else {
-          thisIsRealEnding = true;
-        }
+          // OK then...
+          // has the quotes started (it's closing quote) or it's the opening quote?
 
-        if (thisIsRealEnding) {
-          token.end = _i + 1;
-          token.value = str.slice(token.start, token.end);
+          /* eslint no-lonely-if: "off" */
+          if (!attrib.attribOpeningQuoteAt) {
+            attrib.attribOpeningQuoteAt = _i;
 
-          if (attrib.attribValueStartsAt && _i && attrib.attribValueStartsAt < _i && str.slice(attrib.attribValueStartsAt, _i).trim()) {
-            attrib.attribValueEndsAt = _i;
-            attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i);
-
-            if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
-              attrib.attribValue[~-attrib.attribValue.length].end = _i;
-              attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i);
+            if ( // character exists on the right
+            str[_i + 1] && ( // EITHER it's not the same as opening quote we're currently on
+            str[_i + 1] !== str[_i] || // OR it's a rogue quote, part of the value
+            !ifQuoteThenAttrClosingQuote(_i + 1))) {
+              attrib.attribValueStartsAt = _i + 1;
             }
           } else {
-            attrib.attribValueStartsAt = null;
-          }
+            // One quote exists.
+            // <table width="100">
+            //                  ^
+            //
 
-          if (attrib.attribEnds === null) {
-            attrib.attribEnds = _i;
-          }
+            /* istanbul ignore else */
+            if (isAttrClosing(str, attrib.attribOpeningQuoteAt, _i)) {
+              attrib.attribClosingQuoteAt = _i;
+            }
+            /* istanbul ignore else */
 
-          if (attrib) {
-            token.attribs.push(lodash_clonedeep(attrib));
-            attribReset();
+
+            if (attrib.attribOpeningQuoteAt && attrib.attribClosingQuoteAt) {
+              if (attrib.attribOpeningQuoteAt < ~-attrib.attribClosingQuoteAt) {
+                attrib.attribValueRaw = str.slice(attrib.attribOpeningQuoteAt + 1, attrib.attribClosingQuoteAt);
+              } else {
+                attrib.attribValueRaw = "";
+              }
+
+              attrib.attribEnds = _i + 1; // push and wipe
+
+              token.attribs.push(lodash_clonedeep(attrib));
+              attribReset();
+            }
           }
         }
-      }
+      } // else - value we assume does not start
 
-      if (str[_i] && opts.charCb) {
-        pingCharCb({
-          type: token.type,
-          chr: str[_i],
-          i: _i
-        });
-      }
+    } //
+    //
+    //
+    //
+    //
+    //                       "PARSING" ERROR CLAUSES
+    //                       ███████████████████████
+    //
+    //
+    //
+    //
+    //
+    // Catch raw closing brackets inside attribute's contents, maybe they
+    // mean the tag ending and maybe the closing quotes are missing?
 
-      if (!str[_i] && token.start !== null) {
-        token.end = _i;
-        token.value = str.slice(token.start, token.end);
 
-        if (attrib && attrib.attribName) {
-          if (!attrib.attribEnds) {
-            attrib.attribEnds = _i;
+    if (str[_i] === ">" && token.type === "tag" && attrib.attribStarts && !attrib.attribEnds) {
+      // Idea is simple: we have to situations:
+      // 1. this closing bracket is real, closing bracket
+      // 2. this closing bracket is unencoded raw text
+      // Now, we need to distinguish these two cases.
+      // It's easiest done traversing right until the next closing bracket.
+      // If it's case #1, we'll likely encounter a new tag opening (or nothing).
+      // If it's case #2, we'll likely encounter a tag closing or attribute
+      // combo's equal+quote
+      var thisIsRealEnding = false;
+
+      if (str[_i + 1]) {
+        // Traverse then
+        for (var _y4 = _i + 1; _y4 < len; _y4++) {
+          // if we reach the closing counterpart of the quotes, terminate
+          if (attrib.attribOpeningQuoteAt && str[_y4] === str[attrib.attribOpeningQuoteAt]) {
+            if (_y4 !== _i + 1 && str[~-_y4] !== "=") {
+              thisIsRealEnding = true;
+            }
+
+            break;
+          } else if (str[_y4] === ">") {
+            // must be real tag closing, we just tackle missing quotes
+            // TODO - missing closing quotes
+            break;
+          } else if (str[_y4] === "<") {
+            thisIsRealEnding = true; // TODO - pop only if type === "simple" and it's the same opening
+            // quotes of this attribute
+
+            layers.pop();
+            break;
+          } else if (!str[_y4 + 1]) {
+            // if end was reached and nothing caught, that's also positive sign
+            thisIsRealEnding = true;
+            break;
           }
+        }
+      } else {
+        thisIsRealEnding = true;
+      } //
+      //
+      //
+      // FINALLY,
+      //
+      //
+      //
+      // if "thisIsRealEnding" was set to "true", terminate the tag here.
 
+
+      if (thisIsRealEnding) {
+        token.end = _i + 1;
+        token.value = str.slice(token.start, token.end); // set and push the attribute's records, just closing quote will be
+        // null and possibly value too
+
+        if (attrib.attribValueStartsAt && _i && attrib.attribValueStartsAt < _i && str.slice(attrib.attribValueStartsAt, _i).trim()) {
+          attrib.attribValueEndsAt = _i;
+          attrib.attribValueRaw = str.slice(attrib.attribValueStartsAt, _i);
+
+          if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
+            attrib.attribValue[~-attrib.attribValue.length].end = _i;
+            attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i);
+          } // otherwise, nulls stay
+
+        } else {
+          attrib.attribValueStartsAt = null;
+        }
+
+        if (attrib.attribEnds === null) {
+          attrib.attribEnds = _i;
+        }
+
+        if (attrib) {
+          // 2. push and wipe
           token.attribs.push(lodash_clonedeep(attrib));
           attribReset();
         }
+      }
+    } //
+    //
+    //
+    //
+    //                               BOTTOM
+    //                               ██████
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    // ping charCb
+    // -------------------------------------------------------------------------
 
-        if (property && property.propertyStarts) {
-          if (!property.end) {
-            property.end = _i;
-          }
 
-          pushProperty(property);
-          property = null;
+    if (str[_i] && opts.charCb) {
+      pingCharCb({
+        type: token.type,
+        chr: str[_i],
+        i: _i
+      });
+    } //
+    //
+    //
+    //
+    //
+    //
+    //
+    // catch end of the string
+    // -------------------------------------------------------------------------
+    // notice there's no "doNothing"
+
+
+    if (!str[_i] && token.start !== null) {
+      token.end = _i;
+      token.value = str.slice(token.start, token.end); // if there is unfinished "attrib" object, submit it
+      // as is, that's abruptly ended attribute
+
+      if (attrib && attrib.attribName) {
+        // push and wipe // patch the attr ending if it's missing
+        if (!attrib.attribEnds) {
+          attrib.attribEnds = _i;
         }
 
-        pingTagCb(token);
+        token.attribs.push(_objectSpread2({}, attrib));
+        attribReset();
+      } // if there is unfinished css property that has been
+      // recording, end it and push it as is. That's an
+      // abruptly ended css chunk.
+
+
+      if (property && property.propertyStarts) {
+        // patch property.end
+        if (!property.end) {
+          property.end = _i;
+        }
+
+        pushProperty(property);
+        propertyReset();
       }
 
-      if (str[_i] && str[_i].trim()) {
-        lastNonWhitespaceCharAt = _i;
-      }
+      pingTagCb(token);
+    } //
+    //
+    //
+    //
+    //
+    //
+    //
+    // Record last non-whitespace character
+    // -------------------------------------------------------------------------
 
-      i = _i;
-    };
 
-    for (var i = 0; i <= len; i++) {
-      var _ret2 = _loop2(i);
+    if (str[_i] && str[_i].trim()) {
+      lastNonWhitespaceCharAt = _i;
+    } //
+    //
+    //
+    //
+    //
+    //
+    //
+    // logging:
+    // -------------------------------------------------------------------------
 
-      if (_ret2 === "continue") continue;
+
+    i = _i;
+  };
+
+  for (var i = 0; i <= len; i++) {
+    var _ret2 = _loop2(i);
+
+    if (_ret2 === "continue") continue;
+  } //
+  // finally, clear stashes
+  //
+
+
+  if (charStash.length) {
+    for (var _i2 = 0, len2 = charStash.length; _i2 < len2; _i2++) {
+      reportFirstFromStash(charStash, opts.charCb, opts.charCbLookahead);
     }
-
-    if (charStash.length) {
-      for (var _i2 = 0, len2 = charStash.length; _i2 < len2; _i2++) {
-        reportFirstFromStash(charStash, opts.charCb, opts.charCbLookahead);
-      }
-    }
-
-    if (tagStash.length) {
-      for (var _i3 = 0, _len = tagStash.length; _i3 < _len; _i3++) {
-        reportFirstFromStash(tagStash, opts.tagCb, opts.tagCbLookahead);
-      }
-    }
-
-    var timeTakenInMilliseconds = Date.now() - start;
-    return {
-      timeTakenInMilliseconds: timeTakenInMilliseconds
-    };
   }
 
-  /**
-   * ranges-sort
-   * Sort string index ranges
-   * Version: 3.14.0
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://codsen.com/os/ranges-sort/
-   */
-  function rangesSort(arrOfRanges, originalOptions) {
-    if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
-      return arrOfRanges;
+  if (tagStash.length) {
+    for (var _i3 = 0, _len = tagStash.length; _i3 < _len; _i3++) {
+      reportFirstFromStash(tagStash, opts.tagCb, opts.tagCbLookahead);
+    }
+  } // return stats
+
+
+  var timeTakenInMilliseconds = Date.now() - start;
+  return {
+    timeTakenInMilliseconds: timeTakenInMilliseconds
+  };
+} // -----------------------------------------------------------------------------
+
+var defaults$2 = {
+  strictlyTwoElementsInRangeArrays: false,
+  progressFn: null
+};
+
+function rSort(arrOfRanges, originalOptions) {
+  // quick ending
+  if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
+    return arrOfRanges;
+  } // fill any settings with defaults if missing:
+
+
+  var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOptions); // arrOfRanges validation
+
+
+  var culpritsIndex;
+  var culpritsLen; // validate does every range consist of exactly two indexes:
+
+  if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.filter(function (range) {
+    return range;
+  }).every(function (rangeArr, indx) {
+    if (rangeArr.length !== 2) {
+      culpritsIndex = indx;
+      culpritsLen = rangeArr.length;
+      return false;
     }
 
-    var defaults = {
-      strictlyTwoElementsInRangeArrays: false,
-      progressFn: null
-    };
+    return true;
+  })) {
+    throw new TypeError("ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, " + culpritsIndex + "th range (" + JSON.stringify(arrOfRanges[culpritsIndex], null, 4) + ") has not two but " + culpritsLen + " elements!");
+  } // validate are range indexes natural numbers:
 
-    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOptions);
 
-    var culpritsIndex;
-    var culpritsLen;
-
-    if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.filter(function (range) {
-      return range;
-    }).every(function (rangeArr, indx) {
-      if (rangeArr.length !== 2) {
-        culpritsIndex = indx;
-        culpritsLen = rangeArr.length;
-        return false;
-      }
-
-      return true;
-    })) {
-      throw new TypeError("ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ".concat(culpritsIndex, "th range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 4), ") has not two but ").concat(culpritsLen, " elements!"));
+  if (!arrOfRanges.filter(function (range) {
+    return range;
+  }).every(function (rangeArr, indx) {
+    if (!Number.isInteger(rangeArr[0]) || rangeArr[0] < 0 || !Number.isInteger(rangeArr[1]) || rangeArr[1] < 0) {
+      culpritsIndex = indx;
+      return false;
     }
 
-    if (!arrOfRanges.filter(function (range) {
-      return range;
-    }).every(function (rangeArr, indx) {
-      if (!Number.isInteger(rangeArr[0]) || rangeArr[0] < 0 || !Number.isInteger(rangeArr[1]) || rangeArr[1] < 0) {
-        culpritsIndex = indx;
-        return false;
-      }
+    return true;
+  })) {
+    throw new TypeError("ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, " + culpritsIndex + "th range (" + JSON.stringify(arrOfRanges[culpritsIndex], null, 4) + ") does not consist of only natural numbers!");
+  } // let's assume worst case scenario is N x N.
 
-      return true;
-    })) {
-      throw new TypeError("ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ".concat(culpritsIndex, "th range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 4), ") does not consist of only natural numbers!"));
+
+  var maxPossibleIterations = Math.pow(arrOfRanges.filter(function (range) {
+    return range;
+  }).length, 2);
+  var counter = 0;
+  return Array.from(arrOfRanges).filter(function (range) {
+    return range;
+  }).sort(function (range1, range2) {
+    if (opts.progressFn) {
+      counter += 1;
+      opts.progressFn(Math.floor(counter * 100 / maxPossibleIterations));
     }
 
-    var maxPossibleIterations = Math.pow(arrOfRanges.filter(function (range) {
-      return range;
-    }).length, 2);
-    var counter = 0;
-    return Array.from(arrOfRanges).filter(function (range) {
-      return range;
-    }).sort(function (range1, range2) {
-      if (opts.progressFn) {
-        counter += 1;
-        opts.progressFn(Math.floor(counter * 100 / maxPossibleIterations));
-      }
-
-      if (range1[0] === range2[0]) {
-        if (range1[1] < range2[1]) {
-          return -1;
-        }
-
-        if (range1[1] > range2[1]) {
-          return 1;
-        }
-
-        return 0;
-      }
-
-      if (range1[0] < range2[0]) {
+    if (range1[0] === range2[0]) {
+      if (range1[1] < range2[1]) {
         return -1;
       }
 
-      return 1;
-    });
+      if (range1[1] > range2[1]) {
+        return 1;
+      }
+
+      return 0;
+    }
+
+    if (range1[0] < range2[0]) {
+      return -1;
+    }
+
+    return 1;
+  });
+}
+
+var defaults$3 = {
+  mergeType: 1,
+  progressFn: null,
+  joinRangesThatTouchEdges: true
+}; // merges the overlapping ranges
+// case #1. exact extension:
+// [ [1, 5], [5, 10] ] => [ [1, 10] ]
+// case #2. overlap:
+// [ [1, 4], [3, 5] ] => [ [1, 5] ]
+
+function rMerge(arrOfRanges, originalOpts) {
+  //
+  // internal functions:
+  // ---------------------------------------------------------------------------
+  function isObj(something) {
+    return something && typeof something === "object" && !Array.isArray(something);
+  } // quick ending:
+  // ---------------------------------------------------------------------------
+
+
+  if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
+    return null;
   }
 
-  function mergeRanges(arrOfRanges, originalOpts) {
-    function isObj(something) {
-      return something && _typeof(something) === "object" && !Array.isArray(something);
-    }
+  var opts;
 
-    if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
-      return null;
-    }
+  if (originalOpts) {
+    if (isObj(originalOpts)) {
+      opts = _objectSpread2(_objectSpread2({}, defaults$3), originalOpts); // 1. validate opts.progressFn
 
-    var defaults = {
-      mergeType: 1,
-      progressFn: null,
-      joinRangesThatTouchEdges: true
-    };
-    var opts;
+      if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
+        opts.progressFn = null;
+      } else if (opts.progressFn && typeof opts.progressFn !== "function") {
+        throw new Error("ranges-merge: [THROW_ID_01] opts.progressFn must be a function! It was given of a type: \"" + typeof opts.progressFn + "\", equal to " + JSON.stringify(opts.progressFn, null, 4));
+      } // 2. validate opts.mergeType
 
-    if (originalOpts) {
-      if (isObj(originalOpts)) {
-        opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
-        if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
-          opts.progressFn = null;
-        } else if (opts.progressFn && typeof opts.progressFn !== "function") {
-          throw new Error("ranges-merge: [THROW_ID_01] opts.progressFn must be a function! It was given of a type: \"".concat(_typeof(opts.progressFn), "\", equal to ").concat(JSON.stringify(opts.progressFn, null, 4)));
-        }
+      if (opts.mergeType && +opts.mergeType !== 1 && +opts.mergeType !== 2) {
+        throw new Error("ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"" + typeof opts.mergeType + "\", equal to " + JSON.stringify(opts.mergeType, null, 4));
+      } // 3. validate opts.joinRangesThatTouchEdges
 
-        if (opts.mergeType && +opts.mergeType !== 1 && +opts.mergeType !== 2) {
-          throw new Error("ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"".concat(_typeof(opts.mergeType), "\", equal to ").concat(JSON.stringify(opts.mergeType, null, 4)));
-        }
 
-        if (typeof opts.joinRangesThatTouchEdges !== "boolean") {
-          throw new Error("ranges-merge: [THROW_ID_04] opts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: \"".concat(_typeof(opts.joinRangesThatTouchEdges), "\", equal to ").concat(JSON.stringify(opts.joinRangesThatTouchEdges, null, 4)));
-        }
-      } else {
-        throw new Error("emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n".concat(JSON.stringify(originalOpts, null, 4), " (type ").concat(_typeof(originalOpts), ")"));
+      if (typeof opts.joinRangesThatTouchEdges !== "boolean") {
+        throw new Error("ranges-merge: [THROW_ID_04] opts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: \"" + typeof opts.joinRangesThatTouchEdges + "\", equal to " + JSON.stringify(opts.joinRangesThatTouchEdges, null, 4));
       }
     } else {
-      opts = _objectSpread2({}, defaults);
+      throw new Error("emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n" + JSON.stringify(originalOpts, null, 4) + " (type " + typeof originalOpts + ")");
     }
+  } else {
+    opts = _objectSpread2({}, defaults$3);
+  } // progress-wise, sort takes first 20%
+  // two-level-deep array clone:
 
-    var filtered = arrOfRanges.filter(function (range) {
-      return range;
-    }).map(function (subarr) {
-      return _toConsumableArray(subarr);
-    }).filter(function (rangeArr) {
-      return rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1];
-    });
-    var sortedRanges;
-    var lastPercentageDone;
-    var percentageDone;
 
-    if (opts.progressFn) {
-      sortedRanges = rangesSort(filtered, {
-        progressFn: function progressFn(percentage) {
-          percentageDone = Math.floor(percentage / 5);
+  var filtered = arrOfRanges // filter out null
+  .filter(function (range) {
+    return range;
+  }).map(function (subarr) {
+    return [].concat(subarr);
+  }).filter( // filter out futile ranges with identical starting and ending points with
+  // nothing to add (no 3rd argument)
+  function (rangeArr) {
+    return rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1];
+  });
+  var sortedRanges;
+  var lastPercentageDone;
+  var percentageDone;
 
-          if (percentageDone !== lastPercentageDone) {
-            lastPercentageDone = percentageDone;
-            opts.progressFn(percentageDone);
-          }
-        }
-      });
-    } else {
-      sortedRanges = rangesSort(filtered);
-    }
+  if (opts.progressFn) {
+    // progress already gets reported in [0,100] range, so we just need to
+    // divide by 5 in order to "compress" that into 20% range.
+    sortedRanges = rSort(filtered, {
+      progressFn: function progressFn(percentage) {
+        percentageDone = Math.floor(percentage / 5); // ensure each percent is passed only once:
 
-    var len = sortedRanges.length - 1;
-
-    for (var i = len; i > 0; i--) {
-      if (opts.progressFn) {
-        percentageDone = Math.floor((1 - i / len) * 78) + 21;
-
-        if (percentageDone !== lastPercentageDone && percentageDone > lastPercentageDone) {
+        if (percentageDone !== lastPercentageDone) {
           lastPercentageDone = percentageDone;
           opts.progressFn(percentageDone);
         }
       }
+    });
+  } else {
+    sortedRanges = rSort(filtered);
+  }
 
-      if (sortedRanges[i][0] <= sortedRanges[i - 1][0] || !opts.joinRangesThatTouchEdges && sortedRanges[i][0] < sortedRanges[i - 1][1] || opts.joinRangesThatTouchEdges && sortedRanges[i][0] <= sortedRanges[i - 1][1]) {
-        sortedRanges[i - 1][0] = Math.min(sortedRanges[i][0], sortedRanges[i - 1][0]);
-        sortedRanges[i - 1][1] = Math.max(sortedRanges[i][1], sortedRanges[i - 1][1]);
+  if (!sortedRanges) {
+    return null;
+  }
 
-        if (sortedRanges[i][2] !== undefined && (sortedRanges[i - 1][0] >= sortedRanges[i][0] || sortedRanges[i - 1][1] <= sortedRanges[i][1])) {
-          if (sortedRanges[i - 1][2] !== null) {
-            if (sortedRanges[i][2] === null && sortedRanges[i - 1][2] !== null) {
-              sortedRanges[i - 1][2] = null;
-            } else if (sortedRanges[i - 1][2] !== undefined) {
-              if (+opts.mergeType === 2 && sortedRanges[i - 1][0] === sortedRanges[i][0]) {
-                sortedRanges[i - 1][2] = sortedRanges[i][2];
-              } else {
-                sortedRanges[i - 1][2] += sortedRanges[i][2];
-              }
-            } else {
+  var len = sortedRanges.length - 1; // reset 80% of progress is this loop:
+  // loop from the end:
+
+  for (var i = len; i > 0; i--) {
+    if (opts.progressFn) {
+      percentageDone = Math.floor((1 - i / len) * 78) + 21;
+
+      if (percentageDone !== lastPercentageDone && percentageDone > lastPercentageDone) {
+        lastPercentageDone = percentageDone;
+        opts.progressFn(percentageDone); // console.log(
+        //   `153 REPORTING ${`\u001b[${33}m${`doneSoFar`}\u001b[${39}m`} = ${doneSoFar}`
+        // );
+      }
+    } // if current range is before the preceding-one
+
+
+    if (sortedRanges[i][0] <= sortedRanges[i - 1][0] || !opts.joinRangesThatTouchEdges && sortedRanges[i][0] < sortedRanges[i - 1][1] || opts.joinRangesThatTouchEdges && sortedRanges[i][0] <= sortedRanges[i - 1][1]) {
+      sortedRanges[i - 1][0] = Math.min(sortedRanges[i][0], sortedRanges[i - 1][0]);
+      sortedRanges[i - 1][1] = Math.max(sortedRanges[i][1], sortedRanges[i - 1][1]); // tend the third argument, "what to insert"
+
+      if (sortedRanges[i][2] !== undefined && (sortedRanges[i - 1][0] >= sortedRanges[i][0] || sortedRanges[i - 1][1] <= sortedRanges[i][1])) {
+        // if the value of the range before exists:
+        if (sortedRanges[i - 1][2] !== null) {
+          if (sortedRanges[i][2] === null && sortedRanges[i - 1][2] !== null) {
+            sortedRanges[i - 1][2] = null;
+          } else if (sortedRanges[i - 1][2] != null) {
+            // if there's a clash of "insert" values:
+            if (+opts.mergeType === 2 && sortedRanges[i - 1][0] === sortedRanges[i][0]) {
+              // take the value from the range that's on the right:
               sortedRanges[i - 1][2] = sortedRanges[i][2];
+            } else {
+              sortedRanges[i - 1][2] += sortedRanges[i][2];
             }
+          } else {
+            sortedRanges[i - 1][2] = sortedRanges[i][2];
           }
         }
+      } // get rid of the second element:
 
-        sortedRanges.splice(i, 1);
-        i = sortedRanges.length;
+
+      sortedRanges.splice(i, 1); // reset the traversal, start from the end again
+
+      i = sortedRanges.length;
+    }
+  }
+
+  return sortedRanges.length ? sortedRanges : null;
+}
+
+/**
+ * ranges-apply
+ * Take an array of string index ranges, delete/replace the string according to them
+ * Version: 4.0.2
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/ranges-apply/
+ */
+
+function rApply(str, originalRangesArr, _progressFn) {
+  var percentageDone = 0;
+  var lastPercentageDone = 0;
+
+  if (arguments.length === 0) {
+    throw new Error("ranges-apply: [THROW_ID_01] inputs missing!");
+  }
+
+  if (typeof str !== "string") {
+    throw new TypeError("ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: " + typeof str + ", equal to: " + JSON.stringify(str, null, 4));
+  }
+
+  if (originalRangesArr && !Array.isArray(originalRangesArr)) {
+    throw new TypeError("ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: " + typeof originalRangesArr + ", equal to: " + JSON.stringify(originalRangesArr, null, 4));
+  }
+
+  if (_progressFn && typeof _progressFn !== "function") {
+    throw new TypeError("ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: " + typeof _progressFn + ", equal to: " + JSON.stringify(_progressFn, null, 4));
+  }
+
+  if (!originalRangesArr || !originalRangesArr.filter(function (range) {
+    return range;
+  }).length) {
+    // quick ending - no ranges passed
+    return str;
+  }
+
+  var rangesArr;
+
+  if (Array.isArray(originalRangesArr) && Number.isInteger(originalRangesArr[0]) && Number.isInteger(originalRangesArr[1])) {
+    // if single array was passed, wrap it into an array
+    rangesArr = [Array.from(originalRangesArr)];
+  } else {
+    rangesArr = Array.from(originalRangesArr);
+  } // allocate first 10% of progress to this stage
+
+
+  var len = rangesArr.length;
+  var counter = 0;
+  rangesArr.filter(function (range) {
+    return range;
+  }).forEach(function (el, i) {
+    if (_progressFn) {
+      percentageDone = Math.floor(counter / len * 10);
+      /* istanbul ignore else */
+
+      if (percentageDone !== lastPercentageDone) {
+        lastPercentageDone = percentageDone;
+
+        _progressFn(percentageDone);
       }
     }
 
-    return sortedRanges.length ? sortedRanges : null;
-  }
-
-  function existy(x) {
-    return x != null;
-  }
-
-  function isStr$2(something) {
-    return typeof something === "string";
-  }
-
-  function rangesApply(str, originalRangesArr, _progressFn) {
-    var percentageDone = 0;
-    var lastPercentageDone = 0;
-
-    if (arguments.length === 0) {
-      throw new Error("ranges-apply: [THROW_ID_01] inputs missing!");
+    if (!Array.isArray(el)) {
+      throw new TypeError("ranges-apply: [THROW_ID_05] ranges array, second input arg., has " + i + "th element not an array: " + JSON.stringify(el, null, 4) + ", which is " + typeof el);
     }
 
-    if (!isStr$2(str)) {
-      throw new TypeError("ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ".concat(_typeof(str), ", equal to: ").concat(JSON.stringify(str, null, 4)));
+    if (!Number.isInteger(el[0])) {
+      if (!Number.isInteger(+el[0]) || +el[0] < 0) {
+        throw new TypeError("ranges-apply: [THROW_ID_06] ranges array, second input arg. has " + i + "th element, array " + JSON.stringify(el, null, 0) + ". Its first element is not an integer, string index, but " + typeof el[0] + ", equal to: " + JSON.stringify(el[0], null, 4) + ".");
+      } else {
+        rangesArr[i][0] = +rangesArr[i][0];
+      }
     }
 
-    if (originalRangesArr && !Array.isArray(originalRangesArr)) {
-      throw new TypeError("ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ".concat(_typeof(originalRangesArr), ", equal to: ").concat(JSON.stringify(originalRangesArr, null, 4)));
+    if (!Number.isInteger(el[1])) {
+      if (!Number.isInteger(+el[1]) || +el[1] < 0) {
+        throw new TypeError("ranges-apply: [THROW_ID_07] ranges array, second input arg. has " + i + "th element, array " + JSON.stringify(el, null, 0) + ". Its second element is not an integer, string index, but " + typeof el[1] + ", equal to: " + JSON.stringify(el[1], null, 4) + ".");
+      } else {
+        rangesArr[i][1] = +rangesArr[i][1];
+      }
     }
 
-    if (_progressFn && typeof _progressFn !== "function") {
-      throw new TypeError("ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ".concat(_typeof(_progressFn), ", equal to: ").concat(JSON.stringify(_progressFn, null, 4)));
-    }
+    counter += 1;
+  }); // allocate another 10% of the progress indicator length to the rangesMerge step:
 
-    if (!originalRangesArr || !originalRangesArr.filter(function (range) {
-      return range;
-    }).length) {
-      return str;
-    }
-
-    var rangesArr;
-
-    if (Array.isArray(originalRangesArr) && (Number.isInteger(originalRangesArr[0]) && originalRangesArr[0] >= 0 || /^\d*$/.test(originalRangesArr[0])) && (Number.isInteger(originalRangesArr[1]) && originalRangesArr[1] >= 0 || /^\d*$/.test(originalRangesArr[1]))) {
-      rangesArr = [Array.from(originalRangesArr)];
-    } else {
-      rangesArr = Array.from(originalRangesArr);
-    }
-
-    var len = rangesArr.length;
-    var counter = 0;
-    rangesArr.filter(function (range) {
-      return range;
-    }).forEach(function (el, i) {
+  var workingRanges = rMerge(rangesArr, {
+    progressFn: function progressFn(perc) {
       if (_progressFn) {
-        percentageDone = Math.floor(counter / len * 10);
+        // since "perc" is already from zero to hundred, we just divide by 10 and
+        // get the range from zero to ten:
+        percentageDone = 10 + Math.floor(perc / 10);
+        /* istanbul ignore else */
+
+        if (percentageDone !== lastPercentageDone) {
+          lastPercentageDone = percentageDone;
+
+          _progressFn(percentageDone);
+        }
+      }
+    }
+  }); // allocate the rest 80% to the actual string assembly:
+
+  var len2 = workingRanges.length;
+  /* istanbul ignore else */
+
+  if (len2 > 0) {
+    var tails = str.slice(workingRanges[len2 - 1][1]); // eslint-disable-next-line no-param-reassign
+
+    str = workingRanges.reduce(function (acc, _val, i, arr) {
+      if (_progressFn) {
+        // since "perc" is already from zero to hundred, we just divide by 10 and
+        // get the range from zero to ten:
+        percentageDone = 20 + Math.floor(i / len2 * 80);
         /* istanbul ignore else */
 
         if (percentageDone !== lastPercentageDone) {
@@ -4827,802 +6967,949 @@
         }
       }
 
-      if (!Array.isArray(el)) {
-        throw new TypeError("ranges-apply: [THROW_ID_05] ranges array, second input arg., has ".concat(i, "th element not an array: ").concat(JSON.stringify(el, null, 4), ", which is ").concat(_typeof(el)));
-      }
+      var beginning = i === 0 ? 0 : arr[i - 1][1];
+      var ending = arr[i][0];
+      return acc + str.slice(beginning, ending) + (arr[i][2] || "");
+    }, ""); // eslint-disable-next-line no-param-reassign
 
-      if (!Number.isInteger(el[0]) || el[0] < 0) {
-        if (/^\d*$/.test(el[0])) {
-          rangesArr[i][0] = Number.parseInt(rangesArr[i][0], 10);
-        } else {
-          throw new TypeError("ranges-apply: [THROW_ID_06] ranges array, second input arg. has ".concat(i, "th element, array [").concat(el[0], ",").concat(el[1], "]. That array has first element not an integer, but ").concat(_typeof(el[0]), ", equal to: ").concat(JSON.stringify(el[0], null, 4), ". Computer doesn't like this."));
-        }
-      }
-
-      if (!Number.isInteger(el[1])) {
-        if (/^\d*$/.test(el[1])) {
-          rangesArr[i][1] = Number.parseInt(rangesArr[i][1], 10);
-        } else {
-          throw new TypeError("ranges-apply: [THROW_ID_07] ranges array, second input arg. has ".concat(i, "th element, array [").concat(el[0], ",").concat(el[1], "]. That array has second element not an integer, but ").concat(_typeof(el[1]), ", equal to: ").concat(JSON.stringify(el[1], null, 4), ". Computer doesn't like this."));
-        }
-      }
-
-      counter += 1;
-    });
-    var workingRanges = mergeRanges(rangesArr, {
-      progressFn: function progressFn(perc) {
-        if (_progressFn) {
-          percentageDone = 10 + Math.floor(perc / 10);
-          /* istanbul ignore else */
-
-          if (percentageDone !== lastPercentageDone) {
-            lastPercentageDone = percentageDone;
-
-            _progressFn(percentageDone);
-          }
-        }
-      }
-    });
-
-    if (!workingRanges) {
-      return str;
-    }
-
-    var len2 = workingRanges.length;
-    /* istanbul ignore else */
-
-    if (len2 > 0) {
-      var tails = str.slice(workingRanges[len2 - 1][1]);
-      str = workingRanges.reduce(function (acc, val, i, arr) {
-        if (_progressFn) {
-          percentageDone = 20 + Math.floor(i / len2 * 80);
-          /* istanbul ignore else */
-
-          if (percentageDone !== lastPercentageDone) {
-            lastPercentageDone = percentageDone;
-
-            _progressFn(percentageDone);
-          }
-        }
-
-        var beginning = i === 0 ? 0 : arr[i - 1][1];
-        var ending = arr[i][0];
-        return acc + str.slice(beginning, ending) + (existy(arr[i][2]) ? arr[i][2] : "");
-      }, "");
-      str += tails;
-    }
-
-    return str;
+    str += tails;
   }
 
-  /**
-   * string-collapse-leading-whitespace
-   * Collapse the leading and trailing whitespace of a string
-   * Version: 4.0.0
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
-   */
-  var rawNbsp = "\xA0";
+  return str;
+}
 
-  function collapseLeadingWhitespace(str) {
-    var originallineBreakLimit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+/**
+ * string-collapse-leading-whitespace
+ * Collapse the leading and trailing whitespace of a string
+ * Version: 4.0.0
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
+ */
 
-    function reverse(s) {
-      return Array.from(s).reverse().join("");
-    }
+function collWhitespace(str, originallineBreakLimit) {
+  if (originallineBreakLimit === void 0) {
+    originallineBreakLimit = 1;
+  }
 
-    function prep(whitespaceChunk, limit, trailing) {
-      var firstBreakChar = trailing ? "\n" : "\r";
-      var secondBreakChar = trailing ? "\r" : "\n";
+  var rawNbsp = "\xA0"; // helpers
 
-      if (!whitespaceChunk) {
-        return whitespaceChunk;
+  function reverse(s) {
+    return Array.from(s).reverse().join("");
+  } // replaces the leading/trailing whitespace chunks with final strings
+
+
+  function prep(whitespaceChunk, limit, trailing) {
+    // when processing the leading whitespace, it's \n\r --- CR - LF
+    // when processing the trailing whitespace, we're processing inverted order,
+    // so it's \n\r --- LF - CR
+    // for this reason, we set first and second linebreak according to direction,
+    // the "trailing" boolean:
+    var firstBreakChar = trailing ? "\n" : "\r";
+    var secondBreakChar = trailing ? "\r" : "\n";
+
+    if (!whitespaceChunk) {
+      return whitespaceChunk;
+    } // let whitespace char count since last CR or LF
+
+
+    var crlfCount = 0;
+    var res = ""; // let beginning = true;
+
+    for (var i = 0, len = whitespaceChunk.length; i < len; i++) {
+      if (whitespaceChunk[i] === firstBreakChar || whitespaceChunk[i] === secondBreakChar && whitespaceChunk[i - 1] !== firstBreakChar) {
+        crlfCount++;
       }
 
-      var crlfCount = 0;
-      var res = "";
-
-      for (var i = 0, len = whitespaceChunk.length; i < len; i++) {
-        if (whitespaceChunk[i] === firstBreakChar || whitespaceChunk[i] === secondBreakChar && whitespaceChunk[i - 1] !== firstBreakChar) {
-          crlfCount++;
-        }
-
-        if ("\r\n".includes(whitespaceChunk[i]) || whitespaceChunk[i] === rawNbsp) {
-          if (whitespaceChunk[i] === rawNbsp) {
+      if ("\r\n".includes(whitespaceChunk[i]) || whitespaceChunk[i] === rawNbsp) {
+        if (whitespaceChunk[i] === rawNbsp) {
+          res += whitespaceChunk[i];
+        } else if (whitespaceChunk[i] === firstBreakChar) {
+          if (crlfCount <= limit) {
             res += whitespaceChunk[i];
-          } else if (whitespaceChunk[i] === firstBreakChar) {
-            if (crlfCount <= limit) {
-              res += whitespaceChunk[i];
 
-              if (whitespaceChunk[i + 1] === secondBreakChar) {
-                res += whitespaceChunk[i + 1];
-                i++;
-              }
+            if (whitespaceChunk[i + 1] === secondBreakChar) {
+              res += whitespaceChunk[i + 1];
+              i++;
             }
-          } else if (whitespaceChunk[i] === secondBreakChar && (!whitespaceChunk[i - 1] || whitespaceChunk[i - 1] !== firstBreakChar) && crlfCount <= limit) {
-            res += whitespaceChunk[i];
           }
-        } else {
-          if (!whitespaceChunk[i + 1] && !crlfCount) {
-            res += " ";
-          }
+        } else if (whitespaceChunk[i] === secondBreakChar && (!whitespaceChunk[i - 1] || whitespaceChunk[i - 1] !== firstBreakChar) && crlfCount <= limit) {
+          res += whitespaceChunk[i];
+        }
+      } else {
+        if (!whitespaceChunk[i + 1] && !crlfCount) {
+          res += " ";
         }
       }
-
-      return res;
     }
 
-    if (typeof str === "string" && str.length) {
-      var lineBreakLimit = 1;
+    return res;
+  }
 
-      if (typeof +originallineBreakLimit === "number" && Number.isInteger(+originallineBreakLimit) && +originallineBreakLimit >= 0) {
-        lineBreakLimit = +originallineBreakLimit;
-      }
+  if (typeof str === "string" && str.length) {
+    // without a fuss, set the max allowed line breaks as a leading/trailing whitespace:
+    var lineBreakLimit = 1;
 
-      var frontPart = "";
-      var endPart = "";
+    if (typeof +originallineBreakLimit === "number" && Number.isInteger(+originallineBreakLimit) && +originallineBreakLimit >= 0) {
+      lineBreakLimit = +originallineBreakLimit;
+    } // plan: extract what would String.prototype() would remove, front and back parts
 
-      if (!str.trim()) {
-        frontPart = str;
-      } else if (!str[0].trim()) {
-        for (var i = 0, len = str.length; i < len; i++) {
-          if (str[i].trim()) {
-            frontPart = str.slice(0, i);
-            break;
-          }
+
+    var frontPart = "";
+    var endPart = "";
+
+    if (!str.trim()) {
+      frontPart = str;
+    } else if (!str[0].trim()) {
+      for (var i = 0, len = str.length; i < len; i++) {
+        if (str[i].trim()) {
+          frontPart = str.slice(0, i);
+          break;
         }
       }
+    } // if whole string is whitespace, endPart is empty string
 
-      if (str.trim() && (str.slice(-1).trim() === "" || str.slice(-1) === rawNbsp)) {
-        for (var _i = str.length; _i--;) {
-          if (str[_i].trim()) {
-            endPart = str.slice(_i + 1);
-            break;
-          }
+
+    if (str.trim() && (str.slice(-1).trim() === "" || str.slice(-1) === rawNbsp)) {
+      for (var _i = str.length; _i--;) {
+        // console.log(
+        //   `${`\u001b[${36}m${`----------------------------------------------\niterating through: ${JSON.stringify(
+        //     str[i],
+        //     null,
+        //     4
+        //   )}`}\u001b[${39}m`}`
+        // );
+        if (str[_i].trim()) {
+          endPart = str.slice(_i + 1);
+          break;
         }
       }
+    } // -------------------------------------------------------------------------
 
-      return "".concat(prep(frontPart, lineBreakLimit, false)).concat(str.trim()).concat(reverse(prep(reverse(endPart), lineBreakLimit, true)));
+
+    return "" + prep(frontPart, lineBreakLimit, false) + str.trim() + reverse(prep(reverse(endPart), lineBreakLimit, true));
+  }
+
+  return str;
+}
+
+function existy(x) {
+  return x != null;
+}
+
+function isNum(something) {
+  return Number.isInteger(something) && something >= 0;
+}
+
+function isStr$1(something) {
+  return typeof something === "string";
+}
+
+var defaults$4 = {
+  limitToBeAddedWhitespace: false,
+  limitLinebreaksCount: 1,
+  mergeType: 1
+}; // -----------------------------------------------------------------------------
+
+var Ranges = /*#__PURE__*/function () {
+  //
+  // O P T I O N S
+  // =============
+  function Ranges(originalOpts) {
+    var opts = _objectSpread2(_objectSpread2({}, defaults$4), originalOpts);
+
+    if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
+      if (isStr$1(opts.mergeType) && opts.mergeType.trim() === "1") {
+        opts.mergeType = 1;
+      } else if (isStr$1(opts.mergeType) && opts.mergeType.trim() === "2") {
+        opts.mergeType = 2;
+      } else {
+        throw new Error("ranges-push: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"" + typeof opts.mergeType + "\", equal to " + JSON.stringify(opts.mergeType, null, 4));
+      }
+    } // so it's correct, let's get it in:
+
+
+    this.opts = opts;
+    this.ranges = [];
+  }
+
+  var _proto = Ranges.prototype;
+
+  _proto.add = function add(originalFrom, originalTo, addVal) {
+    var _this = this;
+
+    if (originalFrom == null && originalTo == null) {
+      // absent ranges are marked as null - instead of array of arrays we can receive a null
+      return;
     }
 
-    return str;
-  }
+    if (existy(originalFrom) && !existy(originalTo)) {
+      if (Array.isArray(originalFrom)) {
+        if (originalFrom.length) {
+          if (originalFrom.some(function (el) {
+            return Array.isArray(el);
+          })) {
+            originalFrom.forEach(function (thing) {
+              if (Array.isArray(thing)) {
+                // recursively feed this subarray, hopefully it's an array
+                _this.add.apply(_this, thing);
+              } // just skip other cases
 
-  function existy$1(x) {
-    return x != null;
-  }
-
-  function isNum(something) {
-    return Number.isInteger(something) && something >= 0;
-  }
-
-  function isStr$3(something) {
-    return typeof something === "string";
-  }
-
-  function prepNumStr(str) {
-    return /^\d*$/.test(str) ? parseInt(str, 10) : str;
-  }
-
-  var Ranges = /*#__PURE__*/function () {
-    function Ranges(originalOpts) {
-      _classCallCheck(this, Ranges);
-
-      var defaults = {
-        limitToBeAddedWhitespace: false,
-        limitLinebreaksCount: 1,
-        mergeType: 1
-      };
-
-      var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
-
-      if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
-        if (isStr$3(opts.mergeType) && opts.mergeType.trim() === "1") {
-          opts.mergeType = 1;
-        } else if (isStr$3(opts.mergeType) && opts.mergeType.trim() === "2") {
-          opts.mergeType = 2;
-        } else {
-          throw new Error("ranges-push: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"".concat(_typeof(opts.mergeType), "\", equal to ").concat(JSON.stringify(opts.mergeType, null, 4)));
-        }
-      }
-
-      this.opts = opts;
-    }
-
-    _createClass(Ranges, [{
-      key: "add",
-      value: function add(originalFrom, originalTo, addVal) {
-        var _this = this;
-
-        for (var _len = arguments.length, etc = new Array(_len > 3 ? _len - 3 : 0), _key = 3; _key < _len; _key++) {
-          etc[_key - 3] = arguments[_key];
-        }
-
-        if (etc.length > 0) {
-          throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_03] Please don't overload the add() method. From the 4th input argument onwards we see these redundant arguments: ".concat(JSON.stringify(etc, null, 4)));
-        }
-
-        if (!existy$1(originalFrom) && !existy$1(originalTo)) {
-          return;
-        }
-
-        if (existy$1(originalFrom) && !existy$1(originalTo)) {
-          if (Array.isArray(originalFrom)) {
-            if (originalFrom.length) {
-              if (originalFrom.some(function (el) {
-                return Array.isArray(el);
-              })) {
-                originalFrom.forEach(function (thing) {
-                  if (Array.isArray(thing)) {
-                    _this.add.apply(_this, _toConsumableArray(thing));
-                  }
-                });
-                return;
-              }
-
-              if (originalFrom.length > 1 && isNum(prepNumStr(originalFrom[0])) && isNum(prepNumStr(originalFrom[1]))) {
-                this.add.apply(this, _toConsumableArray(originalFrom));
-              }
-            }
-
+            });
             return;
           }
 
-          throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_12] the first input argument, \"from\" is set (".concat(JSON.stringify(originalFrom, null, 0), ") but second-one, \"to\" is not (").concat(JSON.stringify(originalTo, null, 0), ")"));
-        } else if (!existy$1(originalFrom) && existy$1(originalTo)) {
-          throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_13] the second input argument, \"to\" is set (".concat(JSON.stringify(originalTo, null, 0), ") but first-one, \"from\" is not (").concat(JSON.stringify(originalFrom, null, 0), ")"));
-        }
+          if (originalFrom.length && isNum(+originalFrom[0]) && isNum(+originalFrom[1])) {
+            // recursively pass in those values
+            this.add.apply(this, originalFrom);
+          }
+        } // else,
 
-        var from = /^\d*$/.test(originalFrom) ? parseInt(originalFrom, 10) : originalFrom;
-        var to = /^\d*$/.test(originalTo) ? parseInt(originalTo, 10) : originalTo;
 
-        if (isNum(addVal)) {
-          addVal = String(addVal);
-        }
+        return;
+      }
 
-        if (isNum(from) && isNum(to)) {
-          if (existy$1(addVal) && !isStr$3(addVal) && !isNum(addVal)) {
-            throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ".concat(_typeof(addVal), ", equal to:\n").concat(JSON.stringify(addVal, null, 4)));
+      throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_12] the first input argument, \"from\" is set (" + JSON.stringify(originalFrom, null, 0) + ") but second-one, \"to\" is not (" + JSON.stringify(originalTo, null, 0) + ")");
+    } else if (!existy(originalFrom) && existy(originalTo)) {
+      throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_13] the second input argument, \"to\" is set (" + JSON.stringify(originalTo, null, 0) + ") but first-one, \"from\" is not (" + JSON.stringify(originalFrom, null, 0) + ")");
+    }
+
+    var from = +originalFrom;
+    var to = +originalTo;
+
+    if (isNum(addVal)) {
+      // eslint-disable-next-line no-param-reassign
+      addVal = String(addVal);
+    } // validation
+
+
+    if (isNum(from) && isNum(to)) {
+      // This means two indexes were given as arguments. Business as usual.
+      if (existy(addVal) && !isStr$1(addVal) && !isNum(addVal)) {
+        throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but " + typeof addVal + ", equal to:\n" + JSON.stringify(addVal, null, 4));
+      } // Does the incoming "from" value match the existing last element's "to" value?
+
+
+      if (existy(this.ranges) && Array.isArray(this.last()) && from === this.last()[1]) {
+        // The incoming range is an exact extension of the last range, like
+        // [1, 100] gets added [100, 200] => you can merge into: [1, 200].
+        this.last()[1] = to; // console.log(`addVal = ${JSON.stringify(addVal, null, 4)}`)
+
+        if (this.last()[2] === null || addVal === null) ;
+
+        if (this.last()[2] !== null && existy(addVal)) {
+          var calculatedVal = this.last()[2] && this.last()[2].length > 0 && (!this.opts || !this.opts.mergeType || this.opts.mergeType === 1) ? this.last()[2] + addVal : addVal;
+
+          if (this.opts.limitToBeAddedWhitespace) {
+            calculatedVal = collWhitespace(calculatedVal, this.opts.limitLinebreaksCount);
           }
 
-          if (existy$1(this.ranges) && Array.isArray(this.last()) && from === this.last()[1]) {
-            this.last()[1] = to;
-            if (this.last()[2] === null || addVal === null) ;
-
-            if (this.last()[2] !== null && existy$1(addVal)) {
-              var calculatedVal = existy$1(this.last()[2]) && this.last()[2].length > 0 && (!this.opts || !this.opts.mergeType || this.opts.mergeType === 1) ? this.last()[2] + addVal : addVal;
-
-              if (this.opts.limitToBeAddedWhitespace) {
-                calculatedVal = collapseLeadingWhitespace(calculatedVal, this.opts.limitLinebreaksCount);
-              }
-
-              if (!(isStr$3(calculatedVal) && !calculatedVal.length)) {
-                this.last()[2] = calculatedVal;
-              }
-            }
-          } else {
-            if (!this.ranges) {
-              this.ranges = [];
-            }
-
-            var whatToPush = addVal !== undefined && !(isStr$3(addVal) && !addVal.length) ? [from, to, this.opts.limitToBeAddedWhitespace ? collapseLeadingWhitespace(addVal, this.opts.limitLinebreaksCount) : addVal] : [from, to];
-            this.ranges.push(whatToPush);
-          }
-        } else {
-          if (!(isNum(from) && from >= 0)) {
-            throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_09] \"from\" value, the first input argument, must be a natural number or zero! Currently it's of a type \"".concat(_typeof(from), "\" equal to: ").concat(JSON.stringify(from, null, 4)));
-          } else {
-            throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_10] \"to\" value, the second input argument, must be a natural number or zero! Currently it's of a type \"".concat(_typeof(to), "\" equal to: ").concat(JSON.stringify(to, null, 4)));
+          if (!(isStr$1(calculatedVal) && !calculatedVal.length)) {
+            // don't let the zero-length strings past
+            this.last()[2] = calculatedVal;
           }
         }
-      }
-    }, {
-      key: "push",
-      value: function push(originalFrom, originalTo, addVal) {
-        for (var _len2 = arguments.length, etc = new Array(_len2 > 3 ? _len2 - 3 : 0), _key2 = 3; _key2 < _len2; _key2++) {
-          etc[_key2 - 3] = arguments[_key2];
+      } else {
+        if (!this.ranges) {
+          this.ranges = [];
         }
 
-        this.add.apply(this, [originalFrom, originalTo, addVal].concat(etc));
+        var whatToPush = addVal !== undefined && !(isStr$1(addVal) && !addVal.length) ? [from, to, addVal && this.opts.limitToBeAddedWhitespace ? collWhitespace(addVal, this.opts.limitLinebreaksCount) : addVal] : [from, to];
+        this.ranges.push(whatToPush);
       }
-    }, {
-      key: "current",
-      value: function current() {
-        var _this2 = this;
+    } else {
+      // Error somewhere!
+      // Let's find out where.
+      // is it first arg?
+      if (!(isNum(from) && from >= 0)) {
+        throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_09] \"from\" value, the first input argument, must be a natural number or zero! Currently it's of a type \"" + typeof from + "\" equal to: " + JSON.stringify(from, null, 4));
+      } else {
+        // then it's second...
+        throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_10] \"to\" value, the second input argument, must be a natural number or zero! Currently it's of a type \"" + typeof to + "\" equal to: " + JSON.stringify(to, null, 4));
+      }
+    }
+  };
 
-        if (this.ranges != null) {
-          this.ranges = mergeRanges(this.ranges, {
-            mergeType: this.opts.mergeType
-          });
+  _proto.push = function push(originalFrom, originalTo, addVal) {
+    this.add(originalFrom, originalTo, addVal);
+  } // C U R R E N T () - kindof a getter
+  // ==================================
+  ;
 
-          if (this.ranges && this.opts.limitToBeAddedWhitespace) {
-            return this.ranges.map(function (val) {
-              if (existy$1(val[2])) {
-                return [val[0], val[1], collapseLeadingWhitespace(val[2], _this2.opts.limitLinebreaksCount)];
-              }
+  _proto.current = function current() {
+    var _this2 = this;
 
-              return val;
-            });
+    if (Array.isArray(this.ranges) && this.ranges.length) {
+      // beware, merging can return null
+      this.ranges = rMerge(this.ranges, {
+        mergeType: this.opts.mergeType
+      });
+
+      if (this.ranges && this.opts.limitToBeAddedWhitespace) {
+        return this.ranges.map(function (val) {
+          if (existy(val[2])) {
+            return [val[0], val[1], collWhitespace(val[2], _this2.opts.limitLinebreaksCount)];
           }
 
-          return this.ranges;
-        }
-
-        return null;
+          return val;
+        });
       }
-    }, {
-      key: "wipe",
-      value: function wipe() {
-        this.ranges = undefined;
-      }
-    }, {
-      key: "replace",
-      value: function replace(givenRanges) {
-        if (Array.isArray(givenRanges) && givenRanges.length) {
-          if (!(Array.isArray(givenRanges[0]) && isNum(givenRanges[0][0]))) {
-            throw new Error("ranges-push/Ranges/replace(): [THROW_ID_11] Single range was given but we expected array of arrays! The first element, ".concat(JSON.stringify(givenRanges[0], null, 4), " should be an array and its first element should be an integer, a string index."));
-          } else {
-            this.ranges = Array.from(givenRanges);
-          }
-        } else {
-          this.ranges = undefined;
-        }
-      }
-    }, {
-      key: "last",
-      value: function last() {
-        if (this.ranges !== undefined && Array.isArray(this.ranges)) {
-          return this.ranges[this.ranges.length - 1];
-        }
 
-        return null;
+      return this.ranges;
+    }
+
+    return null;
+  } // W I P E ()
+  // ==========
+  ;
+
+  _proto.wipe = function wipe() {
+    this.ranges = [];
+  } // R E P L A C E ()
+  // ==========
+  ;
+
+  _proto.replace = function replace(givenRanges) {
+    if (Array.isArray(givenRanges) && givenRanges.length) {
+      // Now, ranges can be array of arrays, correct format but also single
+      // range, an array of two natural numbers might be given.
+      // Let's put safety latch against such cases
+      if (!(Array.isArray(givenRanges[0]) && isNum(givenRanges[0][0]))) {
+        throw new Error("ranges-push/Ranges/replace(): [THROW_ID_11] Single range was given but we expected array of arrays! The first element, " + JSON.stringify(givenRanges[0], null, 4) + " should be an array and its first element should be an integer, a string index.");
+      } else {
+        this.ranges = Array.from(givenRanges);
       }
-    }]);
+    } else {
+      this.ranges = [];
+    }
+  } // L A S T ()
+  // ==========
+  ;
 
-    return Ranges;
-  }();
+  _proto.last = function last() {
+    if (Array.isArray(this.ranges) && this.ranges.length) {
+      return this.ranges[this.ranges.length - 1];
+    }
 
-  var cb = function cb(_ref) {
+    return null;
+  };
+
+  return Ranges;
+}();
+
+/* eslint @typescript-eslint/ban-ts-comment:1 */
+
+var defaults$5 = {
+  trimStart: true,
+  trimEnd: true,
+  trimLines: false,
+  trimnbsp: false,
+  removeEmptyLines: false,
+  limitConsecutiveEmptyLinesTo: 0,
+  enforceSpacesOnly: false,
+  cb: function cb(_ref) {
     var suggested = _ref.suggested;
+    // console.log(`default CB called`);
+    // console.log(
+    //   `${`\u001b[${33}m${`suggested`}\u001b[${39}m`} = ${JSON.stringify(
+    //     suggested,
+    //     null,
+    //     4
+    //   )}`
+    // );
     return suggested;
-  };
+  }
+};
 
-  var defaultOpts$1 = {
-    trimStart: true,
-    trimEnd: true,
-    trimLines: false,
-    trimnbsp: false,
-    removeEmptyLines: false,
-    limitConsecutiveEmptyLinesTo: 0,
-    enforceSpacesOnly: false,
-    cb: cb
-  };
+function collapse(str, originalOpts) {
+  // f's
+  if (typeof str !== "string") {
+    throw new Error("string-collapse-white-space/collapse(): [THROW_ID_01] The input is not string but " + typeof str + ", equal to: " + JSON.stringify(str, null, 4));
+  }
 
-  function collapse(str, originalOpts) {
-    if (typeof str !== "string") {
-      throw new Error("string-collapse-white-space/collapse(): [THROW_ID_01] The input is not string but ".concat(_typeof(str), ", equal to: ").concat(JSON.stringify(str, null, 4)));
-    }
+  if (originalOpts && typeof originalOpts !== "object") {
+    throw new Error("string-collapse-white-space/collapse(): [THROW_ID_02] The opts is not a plain object but " + typeof originalOpts + ", equal to:\n" + JSON.stringify(originalOpts, null, 4));
+  }
 
-    if (originalOpts && _typeof(originalOpts) !== "object") {
-      throw new Error("string-collapse-white-space/collapse(): [THROW_ID_02] The opts is not a plain object but ".concat(_typeof(originalOpts), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
-    }
-
-    if (!str.length) {
-      return {
-        result: "",
-        ranges: null
-      };
-    }
-
-    var finalIndexesToDelete = new Ranges();
-    var NBSP = "\xA0";
-
-    var opts = _objectSpread2(_objectSpread2({}, defaultOpts$1), originalOpts);
-
-    function push(something) {
-      var final = opts.cb(_objectSpread2({
-        suggested: something
-      }, arguments.length <= 1 ? undefined : arguments[1]));
-
-      if (Array.isArray(final)) {
-        finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(final));
-      }
-    }
-
-    var spacesStartAt = null;
-    var whiteSpaceStartsAt = null;
-    var lineWhiteSpaceStartsAt = null;
-    var linebreaksStartAt = null;
-    var linebreaksEndAt = null;
-    var nbspPresent = false;
-    var staging = [];
-    var consecutiveLineBreakCount = 0;
-
-    for (var i = 0, len = str.length; i <= len; i++) {
-      if (str[i] === "\r" || str[i] === "\n" && str[i - 1] !== "\r") {
-        consecutiveLineBreakCount += 1;
-
-        if (linebreaksStartAt === null) {
-          linebreaksStartAt = i;
-        }
-
-        linebreaksEndAt = str[i] === "\r" && str[i + 1] === "\n" ? i + 2 : i + 1;
-      }
-
-      if (!opts.trimnbsp && str[i] === NBSP && !nbspPresent) {
-        nbspPresent = true;
-      }
-
-      if (spacesStartAt !== null && str[i] !== " ") {
-        var a1 = spacesStartAt && whiteSpaceStartsAt || !whiteSpaceStartsAt && (!opts.trimStart || !opts.trimnbsp && (str[i] === NBSP || str[spacesStartAt - 1] === NBSP));
-        var a2 = str[i] || !opts.trimEnd || !opts.trimnbsp && (str[i] === NBSP || str[spacesStartAt - 1] === NBSP);
-        var a3 = !opts.enforceSpacesOnly || (!str[spacesStartAt - 1] || str[spacesStartAt - 1].trim()) && (!str[i] || str[i].trim());
-
-        if (spacesStartAt < i - 1 && a1 && a2 && a3) {
-          var startIdx = spacesStartAt;
-          var endIdx = i;
-          var whatToAdd = " ";
-
-          if (opts.trimLines && (!spacesStartAt || !str[i] || str[spacesStartAt - 1] && "\r\n".includes(str[spacesStartAt - 1]) || str[i] && "\r\n".includes(str[i]))) {
-            whatToAdd = null;
-          }
-
-          if (whatToAdd && str[spacesStartAt] === " ") {
-            endIdx -= 1;
-            whatToAdd = null;
-          }
-
-          if (!spacesStartAt && opts.trimStart) {
-            endIdx = i;
-          } else if (!str[i] && opts.trimEnd) {
-            endIdx = i;
-          }
-
-          staging.push([
-          /* istanbul ignore next */
-          whatToAdd ? [startIdx, endIdx, whatToAdd] : [startIdx, endIdx], {
-            whiteSpaceStartsAt: whiteSpaceStartsAt,
-            whiteSpaceEndsAt: right(i - 1) || i,
-            str: str
-          }]);
-        }
-      }
-
-      if (spacesStartAt === null && str[i] === " ") {
-        spacesStartAt = i;
-      }
-
-      if (whiteSpaceStartsAt === null && str[i] && !str[i].trim()) {
-        whiteSpaceStartsAt = i;
-      }
-
-      if (lineWhiteSpaceStartsAt !== null && ("\n\r".includes(str[i]) || !str[i] || str[i].trim() || !(opts.trimnbsp || opts.enforceSpacesOnly) && str[i] === NBSP) && (lineWhiteSpaceStartsAt || !opts.trimStart || opts.enforceSpacesOnly && nbspPresent) && (str[i] || !opts.trimEnd || opts.enforceSpacesOnly && nbspPresent)) {
-        if (opts.enforceSpacesOnly && (i > lineWhiteSpaceStartsAt + 1 || str[lineWhiteSpaceStartsAt] !== " ")) {
-          var _startIdx = lineWhiteSpaceStartsAt;
-          var _endIdx = i;
-          var _whatToAdd = " ";
-
-          if (str[_endIdx - 1] === " ") {
-            _endIdx -= 1;
-            _whatToAdd = null;
-          } else if (str[lineWhiteSpaceStartsAt] === " ") {
-            _startIdx += 1;
-            _whatToAdd = null;
-          }
-
-          if ((opts.trimStart || opts.trimLines) && !lineWhiteSpaceStartsAt || (opts.trimEnd || opts.trimLines) && !str[i]) {
-            _whatToAdd = null;
-          }
-
-          push(_whatToAdd ? [_startIdx, _endIdx, _whatToAdd] : [_startIdx, _endIdx], {
-            whiteSpaceStartsAt: whiteSpaceStartsAt,
-            whiteSpaceEndsAt: i,
-            str: str
-          });
-        }
-
-        if (opts.trimLines && (!lineWhiteSpaceStartsAt || "\r\n".includes(str[lineWhiteSpaceStartsAt - 1]) || !str[i] || "\r\n".includes(str[i])) && (opts.trimnbsp || !nbspPresent)) {
-          push([lineWhiteSpaceStartsAt, i], {
-            whiteSpaceStartsAt: whiteSpaceStartsAt,
-            whiteSpaceEndsAt: right(str, i - 1) || i,
-            str: str
-          });
-        }
-
-        lineWhiteSpaceStartsAt = null;
-      }
-
-      if (lineWhiteSpaceStartsAt === null && !"\r\n".includes(str[i]) && str[i] && !str[i].trim() && (opts.trimnbsp || str[i] !== NBSP || opts.enforceSpacesOnly)) {
-        lineWhiteSpaceStartsAt = i;
-      }
-
-      if (whiteSpaceStartsAt !== null && (!str[i] || str[i].trim())) {
-        if ((!whiteSpaceStartsAt && (opts.trimStart || opts.trimLines && linebreaksStartAt === null) || !str[i] && (opts.trimEnd || opts.trimLines && linebreaksStartAt === null)) && (opts.trimnbsp || !nbspPresent || opts.enforceSpacesOnly)) {
-          push([whiteSpaceStartsAt, i], {
-            whiteSpaceStartsAt: whiteSpaceStartsAt,
-            whiteSpaceEndsAt: i,
-            str: str
-          });
-        } else {
-          var somethingPushed = false;
-
-          if (opts.removeEmptyLines && linebreaksStartAt !== null && consecutiveLineBreakCount > opts.limitConsecutiveEmptyLinesTo + 1) {
-            somethingPushed = true;
-            var _startIdx2 = linebreaksStartAt;
-            var _endIdx2 = linebreaksEndAt;
-
-            var _whatToAdd2 = "".concat(str[linebreaksStartAt] === "\r" && str[linebreaksStartAt + 1] === "\n" ? "\r\n" : str[linebreaksStartAt]).repeat(opts.limitConsecutiveEmptyLinesTo + 1);
-            /* istanbul ignore else */
-
-
-            if (str.endsWith(_whatToAdd2, linebreaksEndAt)) {
-              _endIdx2 -= _whatToAdd2.length;
-              _whatToAdd2 = null;
-            } else if (str.startsWith(_whatToAdd2, linebreaksStartAt)) {
-              _startIdx2 += _whatToAdd2.length;
-              _whatToAdd2 = null;
-            }
-            /* istanbul ignore next */
-
-
-            push(_whatToAdd2 ? [_startIdx2, _endIdx2, _whatToAdd2] : [_startIdx2, _endIdx2], {
-              whiteSpaceStartsAt: whiteSpaceStartsAt,
-              whiteSpaceEndsAt: i,
-              str: str
-            });
-          }
-
-          if (staging.length) {
-            while (staging.length) {
-              push.apply(void 0, _toConsumableArray(staging.shift()).concat([{
-                whiteSpaceStartsAt: whiteSpaceStartsAt,
-                whiteSpaceEndsAt: i,
-                str: str
-              }]));
-            }
-
-            somethingPushed = true;
-          }
-
-          if (!somethingPushed) {
-            push(null, {
-              whiteSpaceStartsAt: whiteSpaceStartsAt,
-              whiteSpaceEndsAt: i,
-              str: str
-            });
-          }
-        }
-
-        whiteSpaceStartsAt = null;
-        lineWhiteSpaceStartsAt = null;
-        nbspPresent = false;
-
-        if (consecutiveLineBreakCount) {
-          consecutiveLineBreakCount = 0;
-          linebreaksStartAt = null;
-          linebreaksEndAt = null;
-        }
-      }
-
-      if (spacesStartAt !== null && str[i] !== " ") {
-        spacesStartAt = null;
-      }
-    }
-
+  if (!str.length) {
     return {
-      result: rangesApply(str, finalIndexesToDelete.current()),
-      ranges: finalIndexesToDelete.current()
+      result: "",
+      ranges: null
     };
   }
 
-  /**
-   * regex-is-jinja-nunjucks
-   * Regular expression for detecting Jinja or Nunjucks code
-   * Version: 1.1.1
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://codsen.com/os/regex-is-jinja-nunjucks/
-   */
-  var main$1 = function main() {
-    return /{%|{{|%}|}}/gi;
-  };
+  var finalIndexesToDelete = new Ranges();
+  var NBSP = "\xA0"; // fill any settings with defaults if missing:
 
-  /**
-   * regex-is-jsp
-   * Regular expression for detecting JSP (Java Server Pages) code
-   * Version: 1.1.1
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://codsen.com/os/regex-is-jsp/
-   */
-  var main$2 = function main() {
-    return /<%|%>|<\s*jsp:|<\s*cms:|<\s*c:|\${\s*jsp/gi;
-  };
+  var opts = _objectSpread2(_objectSpread2({}, defaults$5), originalOpts);
 
-  /**
-   * regex-jinja-specific
-   * Regular expression for detecting Python-specific Jinja code
-   * Version: 1.0.1
-   * Author: Roy Revelt, Codsen Ltd
-   * License: MIT
-   * Homepage: https://codsen.com/os/regex-jinja-specific/
-   */
-  var main$3 = function main() {
-    return /(set\s*[\w]+\s*=\s*namespace\()|({{['"][\w]+['"]\s+if)|(['"]%x?[+0]?[.>^<]?\d+[\w%]['"]\|format\()/gi;
-  };
+  function push(something, extras) {
+    if (typeof opts.cb === "function") {
+      var final = opts.cb(_objectSpread2({
+        suggested: something
+      }, extras));
 
-  function detectLang(str) {
-    var name = null;
-
-    if (typeof str !== "string") {
-      throw new TypeError("detect-templating-language: [THROW_ID_01] Input must be string! It was given as ".concat(JSON.stringify(str, null, 4), " (type ").concat(_typeof(str), ")."));
-    }
-
-    if (!str) {
-      return {
-        name: name
-      };
-    }
-
-    if (main$1().test(str)) {
-      name = "Nunjucks";
-
-      if (main$3().test(str)) {
-        name = "Jinja";
+      if (Array.isArray(final)) {
+        finalIndexesToDelete.push.apply(finalIndexesToDelete, final);
       }
-    } else if (main$2().test(str)) {
-      name = "JSP";
+    } else if (something) {
+      finalIndexesToDelete.push.apply(finalIndexesToDelete, something);
     }
+  } // -----------------------------------------------------------------------------
 
+
+  var spacesStartAt = null;
+  var whiteSpaceStartsAt = null;
+  var lineWhiteSpaceStartsAt = null;
+  var linebreaksStartAt = null;
+  var linebreaksEndAt = null;
+  var nbspPresent = false;
+  var staging = [];
+  var consecutiveLineBreakCount = 0;
+
+  for (var i = 0, len = str.length; i <= len; i++) {
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //                        LOOP STARTS - THE TOP PART
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    // // line break counting
+    if (str[i] === "\r" || str[i] === "\n" && str[i - 1] !== "\r") {
+      consecutiveLineBreakCount += 1;
+
+      if (linebreaksStartAt === null) {
+        linebreaksStartAt = i;
+      }
+
+      linebreaksEndAt = str[i] === "\r" && str[i + 1] === "\n" ? i + 2 : i + 1;
+    } // catch raw non-breaking spaces
+
+
+    if (!opts.trimnbsp && str[i] === NBSP && !nbspPresent) {
+      nbspPresent = true;
+    } //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //                             LOOP'S MIDDLE
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    // catch the end of space character (" ") sequences
+
+
+    if ( // spaces sequence hasn't started yet
+    spacesStartAt !== null && // it's a space
+    str[i] !== " ") {
+      var a1 = // it's not a beginning of the string (more general whitespace clauses
+      // will take care of trimming, taking into account opts.trimStart etc)
+      // either it's not leading whitespace
+      spacesStartAt && whiteSpaceStartsAt || // it is within frontal whitespace and
+      !whiteSpaceStartsAt && (!opts.trimStart || !opts.trimnbsp && ( // we can't trim NBSP
+      // and there's NBSP on one side
+      str[i] === NBSP || str[spacesStartAt - 1] === NBSP));
+      var a2 = // it is not a trailing whitespace
+      str[i] || !opts.trimEnd || !opts.trimnbsp && ( // we can't trim NBSP
+      // and there's NBSP on one side
+      str[i] === NBSP || str[spacesStartAt - 1] === NBSP);
+      var a3 = // beware that there might be whitespace characters (like tabs, \t)
+      // before or after this chunk of spaces - if opts.enforceSpacesOnly
+      // is enabled, we need to skip this clause because wider, general
+      // whitespace chunk clauses will take care of the whole chunk, larger
+      // than this [spacesStartAt, i - 1], it will be
+      // [whiteSpaceStartsAt, ..., " "]
+      //
+      // either spaces-only setting is off,
+      !opts.enforceSpacesOnly || // neither of surrounding characters (if present) is not whitespace
+      (!str[spacesStartAt - 1] || // or it's not whitespace
+      str[spacesStartAt - 1].trim()) && ( // either it's end of string
+      !str[i] || // it's not a whitespace
+      str[i].trim());
+
+      if ( // length of spaces sequence is more than 1
+      spacesStartAt < i - 1 && a1 && a2 && a3) {
+        var startIdx = spacesStartAt;
+        var endIdx = i;
+        var whatToAdd = " ";
+
+        if (opts.trimLines && ( // touches the start
+        !spacesStartAt || // touches the end
+        !str[i] || // linebreak before
+        str[spacesStartAt - 1] && "\r\n".includes(str[spacesStartAt - 1]) || // linebreak after
+        str[i] && "\r\n".includes(str[i]))) {
+          whatToAdd = null;
+        } // the plan is to reuse existing spaces - for example, imagine:
+        // "a   b" - three space gap.
+        // Instead of overwriting all three spaces with single space, range:
+        // [1, 4, " "], we leave the last space, only deleting other two:
+        // range [1, 3] (notice the third element, "what to add" missing).
+
+
+        if (whatToAdd && str[spacesStartAt] === " ") {
+          endIdx -= 1;
+          whatToAdd = null;
+        } // if nbsp trimming is disabled and we have a situation like:
+        // "    \xa0     a"
+        //      ^
+        // we're here
+        //
+        // we need to still trim the spaces chunk, in whole
+
+
+        if (!spacesStartAt && opts.trimStart) {
+          endIdx = i;
+        } else if (!str[i] && opts.trimEnd) {
+          endIdx = i;
+        } // Notice we could push ranges to final, using standalone push()
+        // but here we stage because general whitespace clauses need to be
+        // aware what was "booked" so far.
+
+
+        staging.push([
+        /* istanbul ignore next */
+        whatToAdd ? [startIdx, endIdx, whatToAdd] : [startIdx, endIdx], {
+          whiteSpaceStartsAt: whiteSpaceStartsAt,
+          whiteSpaceEndsAt: right(str, i - 1) || i,
+          str: str
+        }]);
+      } // resets are at the bottom
+
+    } // catch the start of space character (" ") sequences
+
+
+    if ( // spaces sequence hasn't started yet
+    spacesStartAt === null && // it's a space
+    str[i] === " ") {
+      spacesStartAt = i;
+    } // catch the start of whitespace chunks
+
+
+    if ( // chunk hasn't been recording
+    whiteSpaceStartsAt === null && // it's whitespace
+    str[i] && !str[i].trim()) {
+      whiteSpaceStartsAt = i;
+    } // catch the end of line whitespace (chunk of whitespace characters execept LF / CR)
+
+
+    if ( // chunk has been recording
+    lineWhiteSpaceStartsAt !== null && ( // and end has been met:
+    //
+    // either line break has been reached
+    "\n\r".includes(str[i]) || // or
+    // it's not whitespace
+    !str[i] || str[i].trim() || // either we don't care about non-breaking spaces and trim/replace them
+    !(opts.trimnbsp || opts.enforceSpacesOnly) && // and we do care and it's not a non-breaking space
+    str[i] === NBSP) && ( // also, mind the trim-able whitespace at the edges...
+    //
+    // it's not beginning of the string (more general whitespace clauses
+    // will take care of trimming, taking into account opts.trimStart etc)
+    lineWhiteSpaceStartsAt || !opts.trimStart || opts.enforceSpacesOnly && nbspPresent) && ( // it's not the ending of the string - we traverse upto and including
+    // str.length, which means last str[i] is undefined
+    str[i] || !opts.trimEnd || opts.enforceSpacesOnly && nbspPresent)) {
+      // tend opts.enforceSpacesOnly
+      // ---------------------------
+      if ( // setting is on
+      opts.enforceSpacesOnly && ( // either chunk's longer than 1
+      i > lineWhiteSpaceStartsAt + 1 || // or it's single character but not a space (yet still whitespace)
+      str[lineWhiteSpaceStartsAt] !== " ")) {
+        // also whole whitespace chunk goes, only we replace with a single space
+        // but maybe we can reuse existing characters to reduce the footprint
+        var _startIdx = lineWhiteSpaceStartsAt;
+        var _endIdx = i;
+        var _whatToAdd = " ";
+
+        if (str[_endIdx - 1] === " ") {
+          _endIdx -= 1;
+          _whatToAdd = null;
+        } else if (str[lineWhiteSpaceStartsAt] === " ") {
+          _startIdx += 1;
+          _whatToAdd = null;
+        } // make sure it's not on the edge of string with trim options enabled,
+        // in that case don't add the space!
+
+
+        if ((opts.trimStart || opts.trimLines) && !lineWhiteSpaceStartsAt || (opts.trimEnd || opts.trimLines) && !str[i]) {
+          _whatToAdd = null;
+        }
+
+        push(_whatToAdd ? [_startIdx, _endIdx, _whatToAdd] : [_startIdx, _endIdx], {
+          whiteSpaceStartsAt: whiteSpaceStartsAt,
+          whiteSpaceEndsAt: i,
+          str: str
+        });
+      } // tend opts.trimLines
+      // -------------------
+
+
+      if ( // setting is on
+      opts.trimLines && ( // it is on the edge of a line
+      !lineWhiteSpaceStartsAt || "\r\n".includes(str[lineWhiteSpaceStartsAt - 1]) || !str[i] || "\r\n".includes(str[i])) && ( // and we don't care about non-breaking spaces
+      opts.trimnbsp || // this chunk doesn't contain any
+      !nbspPresent)) {
+        push([lineWhiteSpaceStartsAt, i], {
+          whiteSpaceStartsAt: whiteSpaceStartsAt,
+          whiteSpaceEndsAt: right(str, i - 1) || i,
+          str: str
+        });
+      }
+
+      lineWhiteSpaceStartsAt = null;
+    } // Catch the start of a sequence of line whitespace (chunk of whitespace characters execept LF / CR)
+
+
+    if ( // chunk hasn't been recording
+    lineWhiteSpaceStartsAt === null && // we're currently not on CR or LF
+    !"\r\n".includes(str[i]) && // and it's whitespace
+    str[i] && !str[i].trim() && ( // mind the raw non-breaking spaces
+    opts.trimnbsp || str[i] !== NBSP || opts.enforceSpacesOnly)) {
+      lineWhiteSpaceStartsAt = i;
+    } //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //                             LOOP'S BOTTOM
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    // Catch the end of whitespace chunks
+    // This clause is deliberately under the catch clauses of the end of line
+    // whitespace chunks because the empty, null ranges are the last thing to
+    // be pinged to the callback. "pushed" flag must not be triggered too early.
+
+
+    if ( // whitespace chunk has been recording
+    whiteSpaceStartsAt !== null && ( // it's EOL
+    !str[i] || // or non-whitespace character
+    str[i].trim())) {
+      // If there's anything staged, that must be string-only or per-line
+      // whitespace chunks (possibly even multiple) gathered while we've been
+      // traversing this (one) whitespace chunk.
+      if ( // whitespace is frontal
+      (!whiteSpaceStartsAt && ( // frontal trimming is enabled
+      opts.trimStart || // or per-line trimming is enabled
+      opts.trimLines && // and we're on the same line (we don't want to remove linebreaks)
+      linebreaksStartAt === null) || // whitespace is trailing
+      !str[i] && ( // trailing part's trimming is enabled
+      opts.trimEnd || // or per-line trimming is enabled
+      opts.trimLines && // and we're on the same line (we don't want to remove linebreaks)
+      linebreaksStartAt === null)) && ( // either we don't care about non-breaking spaces
+      opts.trimnbsp || // or there are no raw non-breaking spaces in this trim-suitable chunk
+      !nbspPresent || // or there are non-breaking spaces but they don't matter because
+      // we want spaces-only everywhere
+      opts.enforceSpacesOnly)) {
+        push([whiteSpaceStartsAt, i], {
+          whiteSpaceStartsAt: whiteSpaceStartsAt,
+          whiteSpaceEndsAt: i,
+          str: str
+        });
+      } else {
+        var somethingPushed = false; // tackle the line breaks
+        // ----------------------
+
+        if (opts.removeEmptyLines && // there were some linebreaks recorded
+        linebreaksStartAt !== null && // there are too many
+        consecutiveLineBreakCount > (opts.limitConsecutiveEmptyLinesTo || 0) + 1) {
+          somethingPushed = true; // try to salvage some of the existing linebreaks - don't replace the
+          // same with the same
+
+          var _startIdx2 = linebreaksStartAt;
+
+          var _endIdx2 = linebreaksEndAt || str.length;
+
+          var _whatToAdd2 = ("" + (str[linebreaksStartAt] === "\r" && str[linebreaksStartAt + 1] === "\n" ? "\r\n" : str[linebreaksStartAt])).repeat((opts.limitConsecutiveEmptyLinesTo || 0) + 1);
+          /* istanbul ignore else */
+
+
+          if (str.endsWith(_whatToAdd2, linebreaksEndAt)) {
+            _endIdx2 -= _whatToAdd2.length || 0;
+            _whatToAdd2 = null;
+          } else if (str.startsWith(_whatToAdd2, linebreaksStartAt)) {
+            _startIdx2 += _whatToAdd2.length;
+            _whatToAdd2 = null;
+          }
+          /* istanbul ignore next */
+
+
+          push(_whatToAdd2 ? [_startIdx2, _endIdx2, _whatToAdd2] : [_startIdx2, _endIdx2], {
+            whiteSpaceStartsAt: whiteSpaceStartsAt,
+            whiteSpaceEndsAt: i,
+            str: str
+          });
+        } // push the staging if it exists
+        // -----------------------------
+
+
+        if (staging.length) {
+          while (staging.length) {
+            // FIFO - first in, first out
+            // @tsx-ignore
+            push.apply(void 0, staging.shift());
+          }
+
+          somethingPushed = true;
+        } // if nothing has been pushed so far, push nothing to cb()
+        // -------------------------------------------------------
+
+
+        if (!somethingPushed) {
+          push(null, {
+            whiteSpaceStartsAt: whiteSpaceStartsAt,
+            whiteSpaceEndsAt: i,
+            str: str
+          });
+        }
+      }
+
+      whiteSpaceStartsAt = null;
+      lineWhiteSpaceStartsAt = null;
+      nbspPresent = false; // reset line break counts
+
+      if (consecutiveLineBreakCount) {
+        consecutiveLineBreakCount = 0;
+        linebreaksStartAt = null;
+        linebreaksEndAt = null;
+      }
+    } // rest spaces chunk starting record
+
+
+    if (spacesStartAt !== null && str[i] !== " ") {
+      spacesStartAt = null;
+    } // ------------------------------------------------------------------------- //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //                             LOOP ENDS
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+
+  }
+
+  return {
+    result: rApply(str, finalIndexesToDelete.current()),
+    ranges: finalIndexesToDelete.current()
+  };
+}
+
+/**
+ * regex-is-jinja-nunjucks
+ * Regular expression for detecting Jinja or Nunjucks code
+ * Version: 1.1.1
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/regex-is-jinja-nunjucks/
+ */
+
+function isJinjaNunjucksRegex() {
+  return /{%|{{|%}|}}/gi;
+}
+
+/**
+ * regex-is-jsp
+ * Regular expression for detecting JSP (Java Server Pages) code
+ * Version: 1.1.1
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/regex-is-jsp/
+ */
+
+function isJSP() {
+  return /<%|%>|<\s*jsp:|<\s*cms:|<\s*c:|\${\s*jsp/gi;
+}
+
+/**
+ * regex-jinja-specific
+ * Regular expression for detecting Python-specific Jinja code
+ * Version: 1.0.1
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/regex-jinja-specific/
+ */
+
+function isJinjaSpecific() {
+  return /(set\s*[\w]+\s*=\s*namespace\()|({{['"][\w]+['"]\s+if)|(['"]%x?[+0]?[.>^<]?\d+[\w%]['"]\|format\()/gi;
+}
+
+/**
+ * detect-templating-language
+ * Detects various templating languages present in string
+ * Version: 1.1.1
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://codsen.com/os/detect-templating-language/
+ */
+
+function detectLang(str) {
+  var name = null;
+
+  if (typeof str !== "string") {
+    throw new TypeError("detect-templating-language: [THROW_ID_01] Input must be string! It was given as " + JSON.stringify(str, null, 4) + " (type " + typeof str + ").");
+  }
+
+  if (!str) {
+    // early ending on empty string
     return {
       name: name
     };
+  } // real action starts
+  // ---------------------------------------------------------------------------
+
+
+  if (isJinjaNunjucksRegex().test(str)) {
+    name = "Nunjucks";
+
+    if (isJinjaSpecific().test(str)) {
+      name = "Jinja";
+    }
+  } else if (isJSP().test(str)) {
+    name = "JSP";
   }
 
-  var defaultOpts$2 = {
-    html: true,
-    css: true,
-    text: false,
-    templatingTags: false,
-    reportProgressFunc: null,
-    reportProgressFuncFrom: 0,
-    reportProgressFuncTo: 100
+  return {
+    name: name
   };
+}
 
-  var version = "2.0.3";
+var defaultOpts$1 = {
+  html: true,
+  css: true,
+  text: false,
+  templatingTags: false,
+  reportProgressFunc: null,
+  reportProgressFuncFrom: 0,
+  reportProgressFuncTo: 100
+};
 
-  // discrepancies in API when returning from multiple places
+var version = "2.0.3";
 
-  function returnHelper(result, applicableOpts, templatingLang, start) {
-    /* istanbul ignore next */
-    if (arguments.length !== 4) {
-      throw new Error("stristri/returnHelper(): should be 3 input args but ".concat(arguments.length, " were given!"));
-    }
-    /* istanbul ignore next */
+var version$1 = version; // return function is in single place to ensure no
+// discrepancies in API when returning from multiple places
 
-
-    if (typeof result !== "string") {
-      throw new Error("stristri/returnHelper(): first arg missing!");
-    }
-    /* istanbul ignore next */
+function returnHelper(result, applicableOpts, templatingLang, start) {
+  /* istanbul ignore next */
+  if (arguments.length !== 4) {
+    throw new Error("stristri/returnHelper(): should be 3 input args but " + arguments.length + " were given!");
+  }
+  /* istanbul ignore next */
 
 
-    if (_typeof(applicableOpts) !== "object") {
-      throw new Error("stristri/returnHelper(): second arg missing!");
-    }
+  if (typeof result !== "string") {
+    throw new Error("stristri/returnHelper(): first arg missing!");
+  }
+  /* istanbul ignore next */
 
-    return {
-      log: {
-        timeTakenInMilliseconds: Date.now() - start
-      },
-      result: result,
-      applicableOpts: applicableOpts,
-      templatingLang: templatingLang
-    };
+
+  if (typeof applicableOpts !== "object") {
+    throw new Error("stristri/returnHelper(): second arg missing!");
+  }
+  return {
+    log: {
+      timeTakenInMilliseconds: Date.now() - start
+    },
+    result: result,
+    applicableOpts: applicableOpts,
+    templatingLang: templatingLang
+  };
+}
+
+function stri(input, originalOpts) {
+  var start = Date.now(); // insurance
+
+  if (typeof input !== "string") {
+    throw new Error("stristri: [THROW_ID_01] the first input arg must be string! It was given as " + JSON.stringify(input, null, 4) + " (" + typeof input + ")");
   }
 
-  function stri(input, originalOpts) {
-    var start = Date.now(); // insurance
+  if (originalOpts && typeof originalOpts !== "object") {
+    throw new Error("stristri: [THROW_ID_02] the second input arg must be a plain object! It was given as " + JSON.stringify(originalOpts, null, 4) + " (" + typeof originalOpts + ")");
+  }
 
-    if (typeof input !== "string") {
-      throw new Error("stristri: [THROW_ID_01] the first input arg must be string! It was given as ".concat(JSON.stringify(input, null, 4), " (").concat(_typeof(input), ")"));
-    }
+  var opts = _objectSpread2(_objectSpread2({}, defaultOpts$1), originalOpts); // Prepare blank applicable opts object, extract all bool keys,
+  // anticipate that there will be non-bool values in the future.
 
-    if (originalOpts && _typeof(originalOpts) !== "object") {
-      throw new Error("stristri: [THROW_ID_02] the second input arg must be a plain object! It was given as ".concat(JSON.stringify(originalOpts, null, 4), " (").concat(_typeof(originalOpts), ")"));
-    }
+  var applicableOpts = {
+    html: false,
+    css: false,
+    text: false,
+    templatingTags: false
+  }; // quick ending
 
-    var opts = _objectSpread2(_objectSpread2({}, defaultOpts$2), originalOpts); // Prepare blank applicable opts object, extract all bool keys,
-    // anticipate that there will be non-bool values in the future.
+  if (!input) {
+    returnHelper("", applicableOpts, detectLang(input), start);
+  }
 
+  var gatheredRanges = []; // comments like CSS comment
+  // /* some text */
+  // come as minimum 3 tokens,
+  // in case above we've got
+  // token type = comment (opening /*), token type = text, token type = comment (closing */)
+  // we need to treat the contents text tokens as either HTML or CSS, not as "text"
 
-    var applicableOpts = Object.keys(opts).reduce(function (acc, key) {
+  var withinHTMLComment = false; // used for children nodes of XML or HTML comment tags
+
+  var withinXML = false; // used for children nodes of XML or HTML comment tags
+
+  var withinCSS = false;
+  var withinScript = false;
+  tokenizer(input, {
+    tagCb: function tagCb(token) {
       /* istanbul ignore else */
-      if (typeof opts[key] === "boolean") {
-        acc[key] = false;
-      }
 
-      return acc;
-    }, {}); // quick ending
-
-    if (!input) {
-      returnHelper("", applicableOpts, detectLang(input), start);
-    }
-
-    var gatheredRanges = []; // comments like CSS comment
-    // /* some text */
-    // come as minimum 3 tokens,
-    // in case above we've got
-    // token type = comment (opening /*), token type = text, token type = comment (closing */)
-    // we need to treat the contents text tokens as either HTML or CSS, not as "text"
-
-    var withinHTMLComment = false; // used for children nodes of XML or HTML comment tags
-
-    var withinXML = false; // used for children nodes of XML or HTML comment tags
-
-    var withinCSS = false;
-    var withinScript = false;
-    tokenizer(input, {
-      tagCb: function tagCb(token) {
-        /* istanbul ignore else */
-        if (token.type === "comment") {
-          if (withinCSS) {
-            if (!applicableOpts.css) {
-              applicableOpts.css = true;
-            }
-
-            if (opts.css) {
-              gatheredRanges.push([token.start, token.end, " "]);
-            }
-          } else {
-            // it's HTML comment
-            if (!applicableOpts.html) {
-              applicableOpts.html = true;
-            }
-
-            if (!token.closing && !withinXML && !withinHTMLComment) {
-              withinHTMLComment = true;
-            } else if (token.closing && withinHTMLComment) {
-              withinHTMLComment = false;
-            }
-
-            if (opts.html) {
-              gatheredRanges.push([token.start, token.end, " "]);
-            }
-          }
-        } else if (token.type === "tag" || !withinCSS && token.type === "comment") {
-          // mark applicable opts
-          if (!applicableOpts.html) {
-            applicableOpts.html = true;
-          }
-
-          if (opts.html) {
-            gatheredRanges.push([token.start, token.end, " "]);
-          }
-
-          if (token.tagName === "style" && !token.closing) {
-            withinCSS = true;
-          } else if ( // closing CSS comment '*/' is met
-          withinCSS && token.tagName === "style" && token.closing) {
-            withinCSS = false;
-          }
-
-          if (token.tagName === "xml") {
-            if (!token.closing && !withinXML && !withinHTMLComment) {
-              withinXML = true;
-            } else if (token.closing && withinXML) {
-              withinXML = false;
-            }
-          }
-
-          if (token.tagName === "script" && !token.closing) {
-            withinScript = true;
-          } else if (withinScript && token.tagName === "script" && token.closing) {
-            withinScript = false;
-          }
-        } else if (["at", "rule"].includes(token.type)) {
-          // mark applicable opts
+      if (token.type === "comment") {
+        if (withinCSS) {
           if (!applicableOpts.css) {
             applicableOpts.css = true;
           }
@@ -5630,46 +7917,100 @@
           if (opts.css) {
             gatheredRanges.push([token.start, token.end, " "]);
           }
-        } else if (token.type === "text") {
-          // mark applicable opts
-          if (!withinCSS && !withinHTMLComment && !withinXML && !withinScript && !applicableOpts.text && token.value.trim()) {
-            applicableOpts.text = true;
+        } else {
+          // it's HTML comment
+          if (!applicableOpts.html) {
+            applicableOpts.html = true;
           }
 
-          if (withinCSS && opts.css || (withinHTMLComment || withinScript) && opts.html || !withinCSS && !withinHTMLComment && !withinXML && !withinScript && opts.text) {
-            if (token.value.includes("\n")) {
-              gatheredRanges.push([token.start, token.end, "\n"]);
-            } else {
-              gatheredRanges.push([token.start, token.end, " "]);
-            }
-          }
-        } else if (token.type === "esp") {
-          // mark applicable opts
-          if (!applicableOpts.templatingTags) {
-            applicableOpts.templatingTags = true;
+          if (!token.closing && !withinXML && !withinHTMLComment) {
+            withinHTMLComment = true;
+          } else if (token.closing && withinHTMLComment) {
+            withinHTMLComment = false;
           }
 
-          if (opts.templatingTags) {
+          if (opts.html) {
             gatheredRanges.push([token.start, token.end, " "]);
           }
         }
-      },
-      reportProgressFunc: opts.reportProgressFunc,
-      reportProgressFuncFrom: opts.reportProgressFuncFrom,
-      reportProgressFuncTo: opts.reportProgressFuncTo * 0.95 // leave the last 5% for collapsing etc.
+      } else if (token.type === "tag") {
+        // mark applicable opts
+        if (!applicableOpts.html) {
+          applicableOpts.html = true;
+        }
 
-    });
-    return returnHelper(collapse(rangesApply(input, gatheredRanges), {
-      trimLines: true,
-      removeEmptyLines: true,
-      limitConsecutiveEmptyLinesTo: 1
-    }).result, applicableOpts, detectLang(input), start);
-  }
+        if (opts.html) {
+          gatheredRanges.push([token.start, token.end, " "]);
+        }
 
-  exports.defaults = defaultOpts$2;
-  exports.stri = stri;
-  exports.version = version;
+        if (token.tagName === "style" && !token.closing) {
+          withinCSS = true;
+        } else if ( // closing CSS comment '*/' is met
+        withinCSS && token.tagName === "style" && token.closing) {
+          withinCSS = false;
+        }
 
-  Object.defineProperty(exports, '__esModule', { value: true });
+        if (token.tagName === "xml") {
+          if (!token.closing && !withinXML && !withinHTMLComment) {
+            withinXML = true;
+          } else if (token.closing && withinXML) {
+            withinXML = false;
+          }
+        }
+
+        if (token.tagName === "script" && !token.closing) {
+          withinScript = true;
+        } else if (withinScript && token.tagName === "script" && token.closing) {
+          withinScript = false;
+        }
+      } else if (["at", "rule"].includes(token.type)) {
+        // mark applicable opts
+        if (!applicableOpts.css) {
+          applicableOpts.css = true;
+        }
+
+        if (opts.css) {
+          gatheredRanges.push([token.start, token.end, " "]);
+        }
+      } else if (token.type === "text") {
+        // mark applicable opts
+        if (!withinCSS && !withinHTMLComment && !withinXML && !withinScript && !applicableOpts.text && token.value.trim()) {
+          applicableOpts.text = true;
+        }
+
+        if (withinCSS && opts.css || (withinHTMLComment || withinScript) && opts.html || !withinCSS && !withinHTMLComment && !withinXML && !withinScript && opts.text) {
+          if (token.value.includes("\n")) {
+            gatheredRanges.push([token.start, token.end, "\n"]);
+          } else {
+            gatheredRanges.push([token.start, token.end, " "]);
+          }
+        }
+      } else if (token.type === "esp") {
+        // mark applicable opts
+        if (!applicableOpts.templatingTags) {
+          applicableOpts.templatingTags = true;
+        }
+
+        if (opts.templatingTags) {
+          gatheredRanges.push([token.start, token.end, " "]);
+        }
+      }
+    },
+    reportProgressFunc: opts.reportProgressFunc,
+    reportProgressFuncFrom: opts.reportProgressFuncFrom,
+    reportProgressFuncTo: opts.reportProgressFuncTo * 0.95
+  });
+  return returnHelper(collapse(rApply(input, gatheredRanges), {
+    trimLines: true,
+    removeEmptyLines: true,
+    limitConsecutiveEmptyLinesTo: 1
+  }).result, applicableOpts, detectLang(input), start);
+}
+
+exports.defaults = defaultOpts$1;
+exports.stri = stri;
+exports.version = version$1;
+
+Object.defineProperty(exports, '__esModule', { value: true });
 
 })));

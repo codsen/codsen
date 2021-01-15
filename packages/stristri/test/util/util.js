@@ -1,11 +1,10 @@
-import mixer from "test-mixer";
+import { mixer } from "test-mixer";
 import clone from "lodash.clonedeep";
 import objectPath from "object-path";
-import { stri as striApi } from "../../dist/stristri.esm";
-import { defaultOpts } from "../../src/util";
+import { stri as striApi, defaults } from "../../dist/stristri.esm";
 
 function mixerToExport(ref) {
-  return mixer(ref, defaultOpts);
+  return mixer(ref, defaults);
 }
 
 // t is passed node-tap test instance
@@ -14,7 +13,7 @@ function mixerToExport(ref) {
 function stri(t, n, src, opts) {
   // If toggling any of the options makes a difference,
   // that option must be reported as "applicable". And on the opposite.
-  const resolvedOpts = { ...defaultOpts, ...opts };
+  const resolvedOpts = { ...defaults, ...opts };
   Object.keys(resolvedOpts).forEach((key) => {
     // only perform the check if "resolvedOpts" has the key's
     // value as boolean-type

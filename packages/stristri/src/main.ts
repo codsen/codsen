@@ -1,13 +1,20 @@
-import tokenizer from "codsen-tokenizer";
-import collapse from "string-collapse-white-space";
-import applyR from "ranges-apply";
-import detectLang from "detect-templating-language";
-import { defaultOpts } from "./util";
-import { version } from "../package.json";
+import { tokenizer } from "codsen-tokenizer";
+import { collapse } from "string-collapse-white-space";
+import { rApply } from "ranges-apply";
+import { detectLang } from "detect-templating-language";
+import { defaultOpts, Opts, ApplicableOpts, Res } from "./util";
+import { version as v } from "../package.json";
+const version: string = v;
+import { Range } from "../../../scripts/common";
 
 // return function is in single place to ensure no
 // discrepancies in API when returning from multiple places
-function returnHelper(result, applicableOpts, templatingLang, start) {
+function returnHelper(
+  result: string,
+  applicableOpts: ApplicableOpts,
+  templatingLang: { name: null | string },
+  start: number
+) {
   /* istanbul ignore next */
   if (arguments.length !== 4) {
     throw new Error(
@@ -42,7 +49,7 @@ function returnHelper(result, applicableOpts, templatingLang, start) {
   };
 }
 
-function stri(input, originalOpts) {
+function stri(input: string, originalOpts?: Partial<Opts>): Res {
   const start = Date.now();
   console.log(
     `048 ${`\u001b[${32}m${`INITIAL`}\u001b[${39}m`} ${`\u001b[${33}m${`input`}\u001b[${39}m`} = ${JSON.stringify(
@@ -86,13 +93,12 @@ function stri(input, originalOpts) {
 
   // Prepare blank applicable opts object, extract all bool keys,
   // anticipate that there will be non-bool values in the future.
-  const applicableOpts = Object.keys(opts).reduce((acc, key) => {
-    /* istanbul ignore else */
-    if (typeof opts[key] === "boolean") {
-      acc[key] = false;
-    }
-    return acc;
-  }, {});
+  const applicableOpts: ApplicableOpts = {
+    html: false,
+    css: false,
+    text: false,
+    templatingTags: false,
+  };
   console.log(
     `097 ${`\u001b[${32}m${`INITIAL`}\u001b[${39}m`} ${`\u001b[${33}m${`applicableOpts`}\u001b[${39}m`} = ${JSON.stringify(
       applicableOpts,
@@ -107,7 +113,7 @@ function stri(input, originalOpts) {
     returnHelper("", applicableOpts, detectLang(input), start);
   }
 
-  const gatheredRanges = [];
+  const gatheredRanges: Range[] = [];
 
   // comments like CSS comment
   // /* some text */
@@ -153,10 +159,7 @@ function stri(input, originalOpts) {
             gatheredRanges.push([token.start, token.end, " "]);
           }
         }
-      } else if (
-        token.type === "tag" ||
-        (!withinCSS && token.type === "comment")
-      ) {
+      } else if (token.type === "tag") {
         // mark applicable opts
         if (!applicableOpts.html) {
           applicableOpts.html = true;
@@ -251,7 +254,7 @@ function stri(input, originalOpts) {
   );
 
   return returnHelper(
-    collapse(applyR(input, gatheredRanges), {
+    collapse(rApply(input, gatheredRanges), {
       trimLines: true,
       removeEmptyLines: true,
       limitConsecutiveEmptyLinesTo: 1,

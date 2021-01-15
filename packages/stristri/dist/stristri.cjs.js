@@ -11,82 +11,15 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var tokenizer = require('codsen-tokenizer');
-var collapse = require('string-collapse-white-space');
-var applyR = require('ranges-apply');
-var detectLang = require('detect-templating-language');
+var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var codsenTokenizer = require('codsen-tokenizer');
+var stringCollapseWhiteSpace = require('string-collapse-white-space');
+var rangesApply = require('ranges-apply');
+var detectTemplatingLanguage = require('detect-templating-language');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-var tokenizer__default = /*#__PURE__*/_interopDefaultLegacy(tokenizer);
-var collapse__default = /*#__PURE__*/_interopDefaultLegacy(collapse);
-var applyR__default = /*#__PURE__*/_interopDefaultLegacy(applyR);
-var detectLang__default = /*#__PURE__*/_interopDefaultLegacy(detectLang);
-
-function _typeof(obj) {
-  "@babel/helpers - typeof";
-
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof = function (obj) {
-      return typeof obj;
-    };
-  } else {
-    _typeof = function (obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return _typeof(obj);
-}
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    if (enumerableOnly) symbols = symbols.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    });
-    keys.push.apply(keys, symbols);
-  }
-
-  return keys;
-}
-
-function _objectSpread2(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-
-    if (i % 2) {
-      ownKeys(Object(source), true).forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
-    } else if (Object.getOwnPropertyDescriptors) {
-      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-    } else {
-      ownKeys(Object(source)).forEach(function (key) {
-        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-      });
-    }
-  }
-
-  return target;
-}
+var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
 var defaultOpts = {
   html: true,
@@ -100,17 +33,24 @@ var defaultOpts = {
 
 var version = "2.0.3";
 
+var version$1 = version; // return function is in single place to ensure no
+// discrepancies in API when returning from multiple places
+
 function returnHelper(result, applicableOpts, templatingLang, start) {
   /* istanbul ignore next */
   if (arguments.length !== 4) {
-    throw new Error("stristri/returnHelper(): should be 3 input args but ".concat(arguments.length, " were given!"));
+    throw new Error("stristri/returnHelper(): should be 3 input args but " + arguments.length + " were given!");
   }
   /* istanbul ignore next */
+
+
   if (typeof result !== "string") {
     throw new Error("stristri/returnHelper(): first arg missing!");
   }
   /* istanbul ignore next */
-  if (_typeof(applicableOpts) !== "object") {
+
+
+  if (typeof applicableOpts !== "object") {
     throw new Error("stristri/returnHelper(): second arg missing!");
   }
   return {
@@ -122,67 +62,91 @@ function returnHelper(result, applicableOpts, templatingLang, start) {
     templatingLang: templatingLang
   };
 }
+
 function stri(input, originalOpts) {
-  var start = Date.now();
+  var start = Date.now(); // insurance
+
   if (typeof input !== "string") {
-    throw new Error("stristri: [THROW_ID_01] the first input arg must be string! It was given as ".concat(JSON.stringify(input, null, 4), " (").concat(_typeof(input), ")"));
+    throw new Error("stristri: [THROW_ID_01] the first input arg must be string! It was given as " + JSON.stringify(input, null, 4) + " (" + typeof input + ")");
   }
-  if (originalOpts && _typeof(originalOpts) !== "object") {
-    throw new Error("stristri: [THROW_ID_02] the second input arg must be a plain object! It was given as ".concat(JSON.stringify(originalOpts, null, 4), " (").concat(_typeof(originalOpts), ")"));
+
+  if (originalOpts && typeof originalOpts !== "object") {
+    throw new Error("stristri: [THROW_ID_02] the second input arg must be a plain object! It was given as " + JSON.stringify(originalOpts, null, 4) + " (" + typeof originalOpts + ")");
   }
-  var opts = _objectSpread2(_objectSpread2({}, defaultOpts), originalOpts);
-  var applicableOpts = Object.keys(opts).reduce(function (acc, key) {
-    /* istanbul ignore else */
-    if (typeof opts[key] === "boolean") {
-      acc[key] = false;
-    }
-    return acc;
-  }, {});
+
+  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaultOpts), originalOpts); // Prepare blank applicable opts object, extract all bool keys,
+  // anticipate that there will be non-bool values in the future.
+
+  var applicableOpts = {
+    html: false,
+    css: false,
+    text: false,
+    templatingTags: false
+  }; // quick ending
+
   if (!input) {
-    returnHelper("", applicableOpts, detectLang__default['default'](input), start);
+    returnHelper("", applicableOpts, detectTemplatingLanguage.detectLang(input), start);
   }
-  var gatheredRanges = [];
-  var withinHTMLComment = false;
-  var withinXML = false;
+
+  var gatheredRanges = []; // comments like CSS comment
+  // /* some text */
+  // come as minimum 3 tokens,
+  // in case above we've got
+  // token type = comment (opening /*), token type = text, token type = comment (closing */)
+  // we need to treat the contents text tokens as either HTML or CSS, not as "text"
+
+  var withinHTMLComment = false; // used for children nodes of XML or HTML comment tags
+
+  var withinXML = false; // used for children nodes of XML or HTML comment tags
+
   var withinCSS = false;
   var withinScript = false;
-  tokenizer__default['default'](input, {
+  codsenTokenizer.tokenizer(input, {
     tagCb: function tagCb(token) {
       /* istanbul ignore else */
+
       if (token.type === "comment") {
         if (withinCSS) {
           if (!applicableOpts.css) {
             applicableOpts.css = true;
           }
+
           if (opts.css) {
             gatheredRanges.push([token.start, token.end, " "]);
           }
         } else {
+          // it's HTML comment
           if (!applicableOpts.html) {
             applicableOpts.html = true;
           }
+
           if (!token.closing && !withinXML && !withinHTMLComment) {
             withinHTMLComment = true;
           } else if (token.closing && withinHTMLComment) {
             withinHTMLComment = false;
           }
+
           if (opts.html) {
             gatheredRanges.push([token.start, token.end, " "]);
           }
         }
-      } else if (token.type === "tag" || !withinCSS && token.type === "comment") {
+      } else if (token.type === "tag") {
+        // mark applicable opts
         if (!applicableOpts.html) {
           applicableOpts.html = true;
         }
+
         if (opts.html) {
           gatheredRanges.push([token.start, token.end, " "]);
         }
+
         if (token.tagName === "style" && !token.closing) {
           withinCSS = true;
-        } else if (
+        } else if ( // closing CSS comment '*/' is met
         withinCSS && token.tagName === "style" && token.closing) {
           withinCSS = false;
         }
+
         if (token.tagName === "xml") {
           if (!token.closing && !withinXML && !withinHTMLComment) {
             withinXML = true;
@@ -190,22 +154,27 @@ function stri(input, originalOpts) {
             withinXML = false;
           }
         }
+
         if (token.tagName === "script" && !token.closing) {
           withinScript = true;
         } else if (withinScript && token.tagName === "script" && token.closing) {
           withinScript = false;
         }
       } else if (["at", "rule"].includes(token.type)) {
+        // mark applicable opts
         if (!applicableOpts.css) {
           applicableOpts.css = true;
         }
+
         if (opts.css) {
           gatheredRanges.push([token.start, token.end, " "]);
         }
       } else if (token.type === "text") {
+        // mark applicable opts
         if (!withinCSS && !withinHTMLComment && !withinXML && !withinScript && !applicableOpts.text && token.value.trim()) {
           applicableOpts.text = true;
         }
+
         if (withinCSS && opts.css || (withinHTMLComment || withinScript) && opts.html || !withinCSS && !withinHTMLComment && !withinXML && !withinScript && opts.text) {
           if (token.value.includes("\n")) {
             gatheredRanges.push([token.start, token.end, "\n"]);
@@ -214,9 +183,11 @@ function stri(input, originalOpts) {
           }
         }
       } else if (token.type === "esp") {
+        // mark applicable opts
         if (!applicableOpts.templatingTags) {
           applicableOpts.templatingTags = true;
         }
+
         if (opts.templatingTags) {
           gatheredRanges.push([token.start, token.end, " "]);
         }
@@ -226,13 +197,13 @@ function stri(input, originalOpts) {
     reportProgressFuncFrom: opts.reportProgressFuncFrom,
     reportProgressFuncTo: opts.reportProgressFuncTo * 0.95
   });
-  return returnHelper(collapse__default['default'](applyR__default['default'](input, gatheredRanges), {
+  return returnHelper(stringCollapseWhiteSpace.collapse(rangesApply.rApply(input, gatheredRanges), {
     trimLines: true,
     removeEmptyLines: true,
     limitConsecutiveEmptyLinesTo: 1
-  }).result, applicableOpts, detectLang__default['default'](input), start);
+  }).result, applicableOpts, detectTemplatingLanguage.detectLang(input), start);
 }
 
 exports.defaults = defaultOpts;
 exports.stri = stri;
-exports.version = version;
+exports.version = version$1;
