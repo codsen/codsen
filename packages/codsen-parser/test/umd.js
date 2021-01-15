@@ -1,9 +1,9 @@
 import tap from "tap";
-import ct from "../dist/codsen-parser.umd";
+import { cparser } from "../dist/codsen-parser.umd";
 
 tap.test("UMD build works fine", (t) => {
   const gathered = [];
-  ct("<a>", {
+  cparser("<a>", {
     tagCb: (obj) => {
       gathered.push(obj);
     },
