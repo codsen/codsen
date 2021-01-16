@@ -1,30 +1,34 @@
-/* eslint no-return-assign: 0 */
-
-import parser from "codsen-parser";
-import Ranges from "ranges-push";
-import apply from "ranges-apply";
-import traverse from "ast-monkey-traverse-with-lookahead";
-import htmlCommentRegex from "html-comment-regex";
-import { version } from "../package.json";
+import { cparser } from "codsen-parser";
+import { Ranges } from "ranges-push";
+import { rApply } from "ranges-apply";
+import { traverse } from "ast-monkey-traverse-with-lookahead";
+import { version as v } from "../package.json";
+const version: string = v;
+const htmlCommentRegex = /<!--([\s\S]*?)-->/g;
 
 const ranges = new Ranges();
 
-function isStr(something) {
-  return typeof something === "string";
-}
-function isObj(something) {
+function isObj(something: any): boolean {
   return (
     something && typeof something === "object" && !Array.isArray(something)
   );
 }
 
+interface Obj {
+  [key: string]: any;
+}
+
 // the plan is to use defaults on the UI, so export them as first-class citizen
-const defaults = {
+interface Opts {
+  cssStylesContent: string;
+  alwaysCenter: boolean;
+}
+const defaults: Opts = {
   cssStylesContent: "",
   alwaysCenter: false,
 };
 
-function patcher(str, generalOpts) {
+function patcher(str: string, generalOpts?: Partial<Opts>): { result: string } {
   // insurance
   // ---------------------------------------------------------------------------
 
@@ -41,7 +45,7 @@ function patcher(str, generalOpts) {
   if (
     opts.cssStylesContent &&
     // if not a string was passed
-    (!isStr(opts.cssStylesContent) ||
+    (typeof opts.cssStylesContent !== "string" ||
       // or it was empty of full of whitespace
       !opts.cssStylesContent.trim())
   ) {
@@ -67,14 +71,14 @@ function patcher(str, generalOpts) {
   // ensure that we don't traverse inside comment tokens
   // practically we achieve that by comparing does current path start with
   // and of the known comment token paths:
-  const knownCommentTokenPaths = [];
+  const knownCommentTokenPaths: string[] = [];
 
   console.log(`072 ${`\u001b[${36}m${`COMMENCE THE TRAVERSE`}\u001b[${39}m`}`);
-  traverse(parser(str), (key, val, innerObj) => {
+  traverse(cparser(str), (token, _val, innerObj) => {
     /* istanbul ignore else */
     if (
-      isObj(key) &&
-      key.type === "comment" &&
+      isObj(token) &&
+      (token as Obj).type === "comment" &&
       !knownCommentTokenPaths.some((oneOfRecordedPaths) =>
         innerObj.path.startsWith(oneOfRecordedPaths)
       )
@@ -87,17 +91,17 @@ function patcher(str, generalOpts) {
       // would be value of the key/value pair.
       //
       // The tag itself is a plain object:
-      isObj(key) &&
+      isObj(token) &&
       // filter by type and tag name
-      key.type === "tag" &&
-      key.tagName === "table" &&
+      (token as Obj).type === "tag" &&
+      (token as Obj).tagName === "table" &&
       !knownCommentTokenPaths.some((oneOfKnownCommentPaths) =>
         innerObj.path.startsWith(oneOfKnownCommentPaths)
       ) &&
       // ensure it's not closing, otherwise closing tags will be caught too:
-      !key.closing &&
+      !(token as Obj).closing &&
       // we wrap either raw text or esp template tag nodes only:
-      key.children.some((childNodeObj) =>
+      (token as Obj).children.some((childNodeObj: Obj) =>
         ["text", "esp"].includes(childNodeObj.type)
       )
     ) {
@@ -119,11 +123,11 @@ function patcher(str, generalOpts) {
       // then slice that range and insert of every td, along the colspan
       let centered = false;
 
-      let firstTrFound;
+      let firstTrFound: Obj = {};
       if (
         // some TR's exist inside this TABLE tag
-        key.children.some(
-          (childNodeObj) =>
+        (token as Obj).children.some(
+          (childNodeObj: Obj) =>
             childNodeObj.type === "tag" &&
             childNodeObj.tagName === "tr" &&
             !childNodeObj.closing &&
@@ -152,8 +156,12 @@ function patcher(str, generalOpts) {
         //     4
         //   )}`
         // );
-        for (let i = 0, len = firstTrFound.children.length; i < len; i++) {
-          const obj = firstTrFound.children[i];
+        for (
+          let i = 0, len = (firstTrFound as any).children.length;
+          i < len;
+          i++
+        ) {
+          const obj = (firstTrFound as any).children[i];
           // console.log(
           //   `141 ---------------- ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
           //     obj,
@@ -167,7 +175,7 @@ function patcher(str, generalOpts) {
             if (!obj.closing) {
               // detect center-alignment
               centered = obj.attribs.some(
-                (attrib) =>
+                (attrib: Obj) =>
                   (attrib.attribName === "align" &&
                     attrib.attribValueRaw === "center") ||
                   (attrib.attribName === "style" &&
@@ -222,11 +230,13 @@ function patcher(str, generalOpts) {
 
       // now filter all "text" type children nodes from this TABLE tag
       // this key below is the table tag we filtered in the beginning
-      key.children
+      (token as Obj).children
         // filter out text nodes:
-        .filter((childNodeObj) => ["text", "esp"].includes(childNodeObj.type))
+        .filter((childNodeObj: Obj) =>
+          ["text", "esp"].includes(childNodeObj.type)
+        )
         // wrap each with TR+TD with colspan:
-        .forEach((obj) => {
+        .forEach((obj: Obj) => {
           console.log(
             `231 -------------------- ${`\u001b[${32}m${`PROCESSING INSIDE TABLE`}\u001b[${39}m`} --------------------`
           );
@@ -282,12 +292,13 @@ function patcher(str, generalOpts) {
       );
       console.log(" ");
 
-      key.children
+      (token as Obj).children
         // filter out text nodes:
         .filter(
-          (obj) => obj.type === "tag" && obj.tagName === "tr" && !obj.closing
+          (obj: Obj) =>
+            obj.type === "tag" && obj.tagName === "tr" && !obj.closing
         )
-        .forEach((trTag) => {
+        .forEach((trTag: Obj) => {
           // console.log(
           //   `224 ██ ${`\u001b[${33}m${`trTag`}\u001b[${39}m`} = ${JSON.stringify(
           //     trTag,
@@ -422,7 +433,7 @@ function patcher(str, generalOpts) {
   console.log(`422 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
 
   if (ranges.current()) {
-    const result = apply(str, ranges.current());
+    const result = rApply(str, ranges.current());
     ranges.wipe();
     console.log(
       `428 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${`\u001b[${33}m${`result`}\u001b[${39}m`} = ${result}`
