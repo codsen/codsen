@@ -36,23 +36,26 @@ function getLineStartIndexes(str: string): number[] {
  */
 function lineCol(
   input: string | number[],
-  idx: number
+  idx: number,
+  skipChecks = false
 ): {
   line: number;
   col: number;
 } | null {
   console.log(`044`);
   if (
-    (!Array.isArray(input) && typeof input !== "string") ||
-    ((typeof input === "string" || Array.isArray(input)) && !input.length)
+    !skipChecks &&
+    ((!Array.isArray(input) && typeof input !== "string") ||
+      ((typeof input === "string" || Array.isArray(input)) && !input.length))
   ) {
     console.log(`048 early return ${`\u001b[${31}m${`null`}\u001b[${39}m`}`);
     return null;
   }
   if (
-    typeof idx !== "number" ||
-    (typeof input === "string" && idx >= input.length) ||
-    (Array.isArray(input) && idx + 1 >= input[input.length - 1])
+    !skipChecks &&
+    (typeof idx !== "number" ||
+      (typeof input === "string" && idx >= input.length) ||
+      (Array.isArray(input) && idx + 1 >= input[input.length - 1]))
   ) {
     console.log(`052 early return ${`\u001b[${31}m${`null`}\u001b[${39}m`}`);
     return null;
@@ -83,7 +86,7 @@ function lineCol(
     };
   }
 
-  // ELSE - cached line start indexes - we don't even need string source!
+  // ELSE - cached line start indexes - we don't even need the string source!
   const line = binarySearch(idx, input);
   console.log(
     `085 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`line`}\u001b[${39}m`} = ${JSON.stringify(

@@ -156,31 +156,17 @@ tap.test("02 - all possible line endings, no caching", (t) => {
   t.end();
 });
 
-tap.only("deleteme", (t) => {
+tap.test("03 - all possible line endings, with caching", (t) => {
   const input = "abc\ndef\r\nghi\rjkl";
   const startIndexes = getLineStartIndexes(input);
-  t.strictSame(
-    lineCol(startIndexes, 5),
-    {
-      line: 2,
-      col: 2,
-    },
-    "02.07 - e"
-  );
-  t.end();
-});
-
-tap.test("02 - all possible line endings, with caching", (t) => {
-  const input = "abc\ndef\r\nghi\rjkl";
-  const startIndexes = getLineStartIndexes(input);
-  t.strictSame(startIndexes, [0, 4, 9, 13, 17], "02.01");
+  t.strictSame(startIndexes, [0, 4, 9, 13, 17], "03.01");
   t.strictSame(
     lineCol(startIndexes, 0),
     {
       line: 1,
       col: 1,
     },
-    "02.02 - a"
+    "03.02 - a"
   );
   t.strictSame(
     lineCol(startIndexes, 1),
@@ -188,7 +174,7 @@ tap.test("02 - all possible line endings, with caching", (t) => {
       line: 1,
       col: 2,
     },
-    "02.03 - b"
+    "03.03 - b"
   );
   t.strictSame(
     lineCol(startIndexes, 2),
@@ -196,7 +182,7 @@ tap.test("02 - all possible line endings, with caching", (t) => {
       line: 1,
       col: 3,
     },
-    "02.04 - c"
+    "03.04 - c"
   );
   t.strictSame(
     lineCol(startIndexes, 3),
@@ -204,7 +190,7 @@ tap.test("02 - all possible line endings, with caching", (t) => {
       line: 1,
       col: 4,
     },
-    "02.05 - \\n"
+    "03.05 - \\n"
   );
   t.strictSame(
     lineCol(startIndexes, 4),
@@ -212,7 +198,7 @@ tap.test("02 - all possible line endings, with caching", (t) => {
       line: 2,
       col: 1,
     },
-    "02.06 - d"
+    "03.06 - d"
   );
   t.strictSame(
     lineCol(startIndexes, 5),
@@ -220,7 +206,7 @@ tap.test("02 - all possible line endings, with caching", (t) => {
       line: 2,
       col: 2,
     },
-    "02.07 - e"
+    "03.07 - e"
   );
   t.strictSame(
     lineCol(startIndexes, 6),
@@ -228,7 +214,7 @@ tap.test("02 - all possible line endings, with caching", (t) => {
       line: 2,
       col: 3,
     },
-    "02.08 - f"
+    "03.08 - f"
   );
   t.strictSame(
     lineCol(startIndexes, 7),
@@ -236,7 +222,7 @@ tap.test("02 - all possible line endings, with caching", (t) => {
       line: 2,
       col: 4,
     },
-    "02.09 - \\r"
+    "03.09 - \\r"
   );
   t.strictSame(
     lineCol(startIndexes, 8),
@@ -244,7 +230,7 @@ tap.test("02 - all possible line endings, with caching", (t) => {
       line: 2,
       col: 5,
     },
-    "02.10 - \\n"
+    "03.10 - \\n"
   );
   t.strictSame(
     lineCol(startIndexes, 9),
@@ -252,7 +238,7 @@ tap.test("02 - all possible line endings, with caching", (t) => {
       line: 3,
       col: 1,
     },
-    "02.11 - g"
+    "03.11 - g"
   );
   t.strictSame(
     lineCol(startIndexes, 10),
@@ -260,7 +246,7 @@ tap.test("02 - all possible line endings, with caching", (t) => {
       line: 3,
       col: 2,
     },
-    "02.12 - h"
+    "03.12 - h"
   );
   t.strictSame(
     lineCol(startIndexes, 11),
@@ -268,7 +254,7 @@ tap.test("02 - all possible line endings, with caching", (t) => {
       line: 3,
       col: 3,
     },
-    "02.13 - i"
+    "03.13 - i"
   );
   t.strictSame(
     lineCol(startIndexes, 12),
@@ -276,7 +262,7 @@ tap.test("02 - all possible line endings, with caching", (t) => {
       line: 3,
       col: 4,
     },
-    "02.14 - \\r"
+    "03.14 - \\r"
   );
   t.strictSame(
     lineCol(startIndexes, 13),
@@ -284,7 +270,7 @@ tap.test("02 - all possible line endings, with caching", (t) => {
       line: 4,
       col: 1,
     },
-    "02.15 - j"
+    "03.15 - j"
   );
   t.strictSame(
     lineCol(startIndexes, 14),
@@ -292,7 +278,7 @@ tap.test("02 - all possible line endings, with caching", (t) => {
       line: 4,
       col: 2,
     },
-    "02.16 - k"
+    "03.16 - k"
   );
   t.strictSame(
     lineCol(startIndexes, 15),
@@ -300,9 +286,34 @@ tap.test("02 - all possible line endings, with caching", (t) => {
       line: 4,
       col: 3,
     },
-    "02.17 - l"
+    "03.17 - l"
   );
-  t.strictSame(lineCol(startIndexes, 16), null, "02.18 - on str.length");
+  t.strictSame(lineCol(startIndexes, 16), null, "03.18 - on str.length");
 
+  t.end();
+});
+
+tap.test("04 - skipChecks arg", (t) => {
+  const input = "abc\ndef\r\nghi\rjkl";
+  // without caching
+  t.strictSame(
+    lineCol(input, 5, true),
+    {
+      line: 2,
+      col: 2,
+    },
+    "02.07 - e"
+  );
+
+  // with caching
+  const startIndexes = getLineStartIndexes(input);
+  t.strictSame(
+    lineCol(startIndexes, 5, true),
+    {
+      line: 2,
+      col: 2,
+    },
+    "02.07 - e"
+  );
   t.end();
 });

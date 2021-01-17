@@ -44,13 +44,13 @@ function getLineStartIndexes(str) {
  */
 
 
-function lineCol(input, idx) {
+function lineCol(input, idx, skipChecks = false) {
 
-  if (!Array.isArray(input) && typeof input !== "string" || (typeof input === "string" || Array.isArray(input)) && !input.length) {
+  if (!skipChecks && (!Array.isArray(input) && typeof input !== "string" || (typeof input === "string" || Array.isArray(input)) && !input.length)) {
     return null;
   }
 
-  if (typeof idx !== "number" || typeof input === "string" && idx >= input.length || Array.isArray(input) && idx + 1 >= input[input.length - 1]) {
+  if (!skipChecks && (typeof idx !== "number" || typeof input === "string" && idx >= input.length || Array.isArray(input) && idx + 1 >= input[input.length - 1])) {
     return null;
   } // it depends, pre-cached input was given or a string
 
@@ -63,7 +63,7 @@ function lineCol(input, idx) {
       col: idx - startIndexesOfEachLine[line] + 1,
       line: line + 1
     };
-  } // ELSE - cached line start indexes - we don't even need string source!
+  } // ELSE - cached line start indexes - we don't even need the string source!
 
 
   const line = binarySearch(idx, input);

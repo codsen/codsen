@@ -62,7 +62,7 @@
         ""
       ]
     },
-    "req": "{ lineCol }",
+    "req": "{ lineCol, getLineStartIndexes }",
     "various": {
       "devDependencies": []
     }
