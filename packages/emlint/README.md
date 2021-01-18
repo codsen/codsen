@@ -27,13 +27,49 @@
 ## Install
 
 ```bash
-npm i -g emlint
+npm i emlint
 ```
 
-Then, call it from the command line using keyword:
+## Quick Take
 
-```bash
-emlint
+```js
+import { strict as assert } from "assert";
+import { Linter } from "emlint";
+const linter = new Linter();
+
+// Correct "not" type Outlook conditional would be:
+// <!--[if !mso]><!-->
+//   <img src="fallback"/>
+// <!--<![endif]-->
+
+// We have a "not" type opening but "only" type
+// closing:
+const messages = linter.verify(
+  `<!--[if !mso]><!-->
+  <img src="fallback"/>
+<![endif]-->`,
+  {
+    rules: {
+      all: 2,
+    },
+  }
+);
+
+assert.deepEqual(messages, [
+  {
+    line: 3,
+    column: 1,
+    severity: 2,
+    ruleId: "comment-mismatching-pair",
+    message: `Add "<!--".`,
+    idxFrom: 44,
+    idxTo: 56,
+    fix: {
+      ranges: [[44, 44, "<!--"]],
+    },
+    keepSeparateWhenFixing: true,
+  },
+]);
 ```
 
 ## Documentation
@@ -44,6 +80,6 @@ Please [visit codsen.com](https://codsen.com/os/emlint/) for a full description 
 
 MIT License
 
-Copyright (c) 2010-2020 Roy Revelt and other contributors
+Copyright (c) 2010-2021 Roy Revelt and other contributors
 
 <img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center"> <img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">

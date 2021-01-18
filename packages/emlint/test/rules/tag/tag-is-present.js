@@ -1,7 +1,7 @@
 import tap from "tap";
 import { Linter } from "../../../dist/emlint.esm";
 import { applyFixes } from "../../../t-util/util";
-// import astDeepContains from "ast-deep-contains");
+// import { deepContains } from "ast-deep-contains");
 
 // 1. no config - nothing happens
 // -----------------------------------------------------------------------------
@@ -93,7 +93,7 @@ tap.test(
   }
 );
 
-tap.test(
+tap.only(
   `05 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - flags one, match by wildcard`,
   (t) => {
     const str = "<h1><div><zzz><yo><br/><a></a><script></yo></h1>";

@@ -1,5 +1,6 @@
 import tap from "tap";
-import splitByWhitespace from "../../src/util/splitByWhitespace";
+import { util } from "../../dist/emlint.esm";
+const { splitByWhitespace } = util;
 
 // 01. no config
 // -----------------------------------------------------------------------------

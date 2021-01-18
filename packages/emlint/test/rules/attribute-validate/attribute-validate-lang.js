@@ -87,19 +87,20 @@ tap.test(
 // 02. wrong parent tag
 // -----------------------------------------------------------------------------
 
-tap.test(
+// <applet lang="de">
+tap.only(
   `05 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - recognised tag`,
   (t) => {
     const badParentTags = [
       "applet",
       "base",
-      "basefont",
-      "br",
-      "frame",
-      "frameset",
-      "iframe",
-      "param",
-      "script",
+      // "basefont",
+      // "br",
+      // "frame",
+      // "frameset",
+      // "iframe",
+      // "param",
+      // "script",
     ];
     const linter = new Linter();
     badParentTags.forEach((badParentTag) => {
@@ -111,15 +112,19 @@ tap.test(
       });
       // can't fix:
       t.equal(applyFixes(str, messages), str);
-      t.match(messages, [
-        {
-          ruleId: "attribute-validate-lang",
-          idxFrom: badParentTag.length + 2,
-          idxTo: badParentTag.length + 2 + 9,
-
-          fix: null,
-        },
-      ]);
+      t.match(
+        messages,
+        [
+          {
+            ruleId: "attribute-validate-lang",
+            idxFrom: badParentTag.length + 2,
+            idxTo: badParentTag.length + 2 + 9,
+            fix: null,
+          },
+        ],
+        badParentTag
+      );
+      t.equal(messages.length, 1);
     });
     t.end();
   }
@@ -149,6 +154,7 @@ tap.test(
       ],
       "06.02"
     );
+    t.equal(messages.length, 1);
     t.end();
   }
 );
@@ -181,6 +187,7 @@ tap.test(
       ],
       "07.02"
     );
+    t.equal(messages.length, 1);
     t.end();
   }
 );
@@ -211,6 +218,7 @@ tap.test(
       ],
       "08.02"
     );
+    t.equal(messages.length, 1);
     t.end();
   }
 );
@@ -253,6 +261,7 @@ tap.test(
       ],
       "09.02"
     );
+    t.equal(messages.length, 2);
     t.end();
   }
 );
@@ -303,6 +312,7 @@ tap.test(
       ],
       "10.02"
     );
+    t.equal(messages.length, 3);
     t.end();
   }
 );

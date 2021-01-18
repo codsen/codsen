@@ -1,7 +1,7 @@
 import tap from "tap";
 import { Linter } from "../../../dist/emlint.esm";
 import { applyFixes } from "../../../t-util/util";
-// import astDeepContains from "ast-deep-contains");
+// import { deepContains } from "ast-deep-contains");
 
 // 01. no config
 // -----------------------------------------------------------------------------

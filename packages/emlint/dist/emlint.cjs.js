@@ -11,514 +11,150 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var _objectSpread = require('@babel/runtime/helpers/objectSpread2');
+var _inheritsLoose = require('@babel/runtime/helpers/inheritsLoose');
+var tinyTypedEmitter = require('tiny-typed-emitter');
 var stringFixBrokenNamedEntities = require('string-fix-broken-named-entities');
-var traverse = require('ast-monkey-traverse');
-var lineColumn = require('line-column');
+var astMonkeyTraverse = require('ast-monkey-traverse');
+var lineColumnMini = require('line-column-mini');
 var clone = require('lodash.clonedeep');
-var parser = require('codsen-parser');
+var codsenParser = require('codsen-parser');
 var matcher = require('matcher');
 var defineLazyProp = require('define-lazy-prop');
-var processCommaSeparated = require('string-process-comma-separated');
+var stringProcessCommaSeparated = require('string-process-comma-separated');
 var stringLeftRight = require('string-left-right');
 var isRegExp = require('lodash.isregexp');
-var merge = require('ranges-merge');
+var rangesMerge = require('ranges-merge');
+var _createForOfIteratorHelperLoose = require('@babel/runtime/helpers/createForOfIteratorHelperLoose');
 var htmlAllKnownAttributes = require('html-all-known-attributes');
 var leven = require('leven');
 var db = require('mime-db');
-var isRel = require('is-relative-uri');
+var isRelativeUri = require('is-relative-uri');
 var urlRegex = require('url-regex');
-var isLangCode = require('is-language-code');
-var isMediaD = require('is-media-descriptor');
+var isLanguageCode = require('is-language-code');
+var isMediaDescriptor = require('is-media-descriptor');
 var htmlEntitiesNotEmailFriendly$1 = require('html-entities-not-email-friendly');
 var he = require('he');
-var findMalformed = require('string-find-malformed');
+var stringFindMalformed = require('string-find-malformed');
 var stringMatchLeftRight = require('string-match-left-right');
 var astMonkeyUtil = require('ast-monkey-util');
 var op = require('object-path');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-var stringFixBrokenNamedEntities__default = /*#__PURE__*/_interopDefaultLegacy(stringFixBrokenNamedEntities);
-var traverse__default = /*#__PURE__*/_interopDefaultLegacy(traverse);
-var lineColumn__default = /*#__PURE__*/_interopDefaultLegacy(lineColumn);
+var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
+var _inheritsLoose__default = /*#__PURE__*/_interopDefaultLegacy(_inheritsLoose);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
-var parser__default = /*#__PURE__*/_interopDefaultLegacy(parser);
 var matcher__default = /*#__PURE__*/_interopDefaultLegacy(matcher);
 var defineLazyProp__default = /*#__PURE__*/_interopDefaultLegacy(defineLazyProp);
-var processCommaSeparated__default = /*#__PURE__*/_interopDefaultLegacy(processCommaSeparated);
 var isRegExp__default = /*#__PURE__*/_interopDefaultLegacy(isRegExp);
-var merge__default = /*#__PURE__*/_interopDefaultLegacy(merge);
+var _createForOfIteratorHelperLoose__default = /*#__PURE__*/_interopDefaultLegacy(_createForOfIteratorHelperLoose);
 var leven__default = /*#__PURE__*/_interopDefaultLegacy(leven);
 var db__default = /*#__PURE__*/_interopDefaultLegacy(db);
-var isRel__default = /*#__PURE__*/_interopDefaultLegacy(isRel);
 var urlRegex__default = /*#__PURE__*/_interopDefaultLegacy(urlRegex);
-var isLangCode__default = /*#__PURE__*/_interopDefaultLegacy(isLangCode);
-var isMediaD__default = /*#__PURE__*/_interopDefaultLegacy(isMediaD);
 var he__default = /*#__PURE__*/_interopDefaultLegacy(he);
-var findMalformed__default = /*#__PURE__*/_interopDefaultLegacy(findMalformed);
 var op__default = /*#__PURE__*/_interopDefaultLegacy(op);
 
-var domain;
-function EventHandlers() {}
-EventHandlers.prototype = Object.create(null);
-function EventEmitter() {
-  EventEmitter.init.call(this);
-}
-EventEmitter.EventEmitter = EventEmitter;
-EventEmitter.usingDomains = false;
-EventEmitter.prototype.domain = undefined;
-EventEmitter.prototype._events = undefined;
-EventEmitter.prototype._maxListeners = undefined;
-EventEmitter.defaultMaxListeners = 10;
-EventEmitter.init = function () {
-  this.domain = null;
-  if (EventEmitter.usingDomains) {
-    if (domain.active ) ;
-  }
-  if (!this._events || this._events === Object.getPrototypeOf(this)._events) {
-    this._events = new EventHandlers();
-    this._eventsCount = 0;
-  }
-  this._maxListeners = this._maxListeners || undefined;
-};
-EventEmitter.prototype.setMaxListeners = function setMaxListeners(n) {
-  if (typeof n !== 'number' || n < 0 || isNaN(n)) throw new TypeError('"n" argument must be a positive number');
-  this._maxListeners = n;
-  return this;
-};
-function $getMaxListeners(that) {
-  if (that._maxListeners === undefined) return EventEmitter.defaultMaxListeners;
-  return that._maxListeners;
-}
-EventEmitter.prototype.getMaxListeners = function getMaxListeners() {
-  return $getMaxListeners(this);
-};
-function emitNone(handler, isFn, self) {
-  if (isFn) handler.call(self);else {
-    var len = handler.length;
-    var listeners = arrayClone(handler, len);
-    for (var i = 0; i < len; ++i) listeners[i].call(self);
-  }
-}
-function emitOne(handler, isFn, self, arg1) {
-  if (isFn) handler.call(self, arg1);else {
-    var len = handler.length;
-    var listeners = arrayClone(handler, len);
-    for (var i = 0; i < len; ++i) listeners[i].call(self, arg1);
-  }
-}
-function emitTwo(handler, isFn, self, arg1, arg2) {
-  if (isFn) handler.call(self, arg1, arg2);else {
-    var len = handler.length;
-    var listeners = arrayClone(handler, len);
-    for (var i = 0; i < len; ++i) listeners[i].call(self, arg1, arg2);
-  }
-}
-function emitThree(handler, isFn, self, arg1, arg2, arg3) {
-  if (isFn) handler.call(self, arg1, arg2, arg3);else {
-    var len = handler.length;
-    var listeners = arrayClone(handler, len);
-    for (var i = 0; i < len; ++i) listeners[i].call(self, arg1, arg2, arg3);
-  }
-}
-function emitMany(handler, isFn, self, args) {
-  if (isFn) handler.apply(self, args);else {
-    var len = handler.length;
-    var listeners = arrayClone(handler, len);
-    for (var i = 0; i < len; ++i) listeners[i].apply(self, args);
-  }
-}
-EventEmitter.prototype.emit = function emit(type) {
-  var er, handler, len, args, i, events, domain;
-  var doError = type === 'error';
-  events = this._events;
-  if (events) doError = doError && events.error == null;else if (!doError) return false;
-  domain = this.domain;
-  if (doError) {
-    er = arguments[1];
-    if (domain) {
-      if (!er) er = new Error('Uncaught, unspecified "error" event');
-      er.domainEmitter = this;
-      er.domain = domain;
-      er.domainThrown = false;
-      domain.emit('error', er);
-    } else if (er instanceof Error) {
-      throw er;
-    } else {
-      var err = new Error('Uncaught, unspecified "error" event. (' + er + ')');
-      err.context = er;
-      throw err;
-    }
-    return false;
-  }
-  handler = events[type];
-  if (!handler) return false;
-  var isFn = typeof handler === 'function';
-  len = arguments.length;
-  switch (len) {
-    case 1:
-      emitNone(handler, isFn, this);
-      break;
-    case 2:
-      emitOne(handler, isFn, this, arguments[1]);
-      break;
-    case 3:
-      emitTwo(handler, isFn, this, arguments[1], arguments[2]);
-      break;
-    case 4:
-      emitThree(handler, isFn, this, arguments[1], arguments[2], arguments[3]);
-      break;
-    default:
-      args = new Array(len - 1);
-      for (i = 1; i < len; i++) args[i - 1] = arguments[i];
-      emitMany(handler, isFn, this, args);
-  }
-  return true;
-};
-function _addListener(target, type, listener, prepend) {
-  var m;
-  var events;
-  var existing;
-  if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
-  events = target._events;
-  if (!events) {
-    events = target._events = new EventHandlers();
-    target._eventsCount = 0;
-  } else {
-    if (events.newListener) {
-      target.emit('newListener', type, listener.listener ? listener.listener : listener);
-      events = target._events;
-    }
-    existing = events[type];
-  }
-  if (!existing) {
-    existing = events[type] = listener;
-    ++target._eventsCount;
-  } else {
-    if (typeof existing === 'function') {
-      existing = events[type] = prepend ? [listener, existing] : [existing, listener];
-    } else {
-      if (prepend) {
-        existing.unshift(listener);
-      } else {
-        existing.push(listener);
-      }
-    }
-    if (!existing.warned) {
-      m = $getMaxListeners(target);
-      if (m && m > 0 && existing.length > m) {
-        existing.warned = true;
-        var w = new Error('Possible EventEmitter memory leak detected. ' + existing.length + ' ' + type + ' listeners added. ' + 'Use emitter.setMaxListeners() to increase limit');
-        w.name = 'MaxListenersExceededWarning';
-        w.emitter = target;
-        w.type = type;
-        w.count = existing.length;
-        emitWarning(w);
-      }
-    }
-  }
-  return target;
-}
-function emitWarning(e) {
-  typeof console.warn === 'function' ? console.warn(e) : console.log(e);
-}
-EventEmitter.prototype.addListener = function addListener(type, listener) {
-  return _addListener(this, type, listener, false);
-};
-EventEmitter.prototype.on = EventEmitter.prototype.addListener;
-EventEmitter.prototype.prependListener = function prependListener(type, listener) {
-  return _addListener(this, type, listener, true);
-};
-function _onceWrap(target, type, listener) {
-  var fired = false;
-  function g() {
-    target.removeListener(type, g);
-    if (!fired) {
-      fired = true;
-      listener.apply(target, arguments);
-    }
-  }
-  g.listener = listener;
-  return g;
-}
-EventEmitter.prototype.once = function once(type, listener) {
-  if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
-  this.on(type, _onceWrap(this, type, listener));
-  return this;
-};
-EventEmitter.prototype.prependOnceListener = function prependOnceListener(type, listener) {
-  if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
-  this.prependListener(type, _onceWrap(this, type, listener));
-  return this;
-};
-EventEmitter.prototype.removeListener = function removeListener(type, listener) {
-  var list, events, position, i, originalListener;
-  if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
-  events = this._events;
-  if (!events) return this;
-  list = events[type];
-  if (!list) return this;
-  if (list === listener || list.listener && list.listener === listener) {
-    if (--this._eventsCount === 0) this._events = new EventHandlers();else {
-      delete events[type];
-      if (events.removeListener) this.emit('removeListener', type, list.listener || listener);
-    }
-  } else if (typeof list !== 'function') {
-    position = -1;
-    for (i = list.length; i-- > 0;) {
-      if (list[i] === listener || list[i].listener && list[i].listener === listener) {
-        originalListener = list[i].listener;
-        position = i;
-        break;
-      }
-    }
-    if (position < 0) return this;
-    if (list.length === 1) {
-      list[0] = undefined;
-      if (--this._eventsCount === 0) {
-        this._events = new EventHandlers();
-        return this;
-      } else {
-        delete events[type];
-      }
-    } else {
-      spliceOne(list, position);
-    }
-    if (events.removeListener) this.emit('removeListener', type, originalListener || listener);
-  }
-  return this;
-};
-EventEmitter.prototype.removeAllListeners = function removeAllListeners(type) {
-  var listeners, events;
-  events = this._events;
-  if (!events) return this;
-  if (!events.removeListener) {
-    if (arguments.length === 0) {
-      this._events = new EventHandlers();
-      this._eventsCount = 0;
-    } else if (events[type]) {
-      if (--this._eventsCount === 0) this._events = new EventHandlers();else delete events[type];
-    }
-    return this;
-  }
-  if (arguments.length === 0) {
-    var keys = Object.keys(events);
-    for (var i = 0, key; i < keys.length; ++i) {
-      key = keys[i];
-      if (key === 'removeListener') continue;
-      this.removeAllListeners(key);
-    }
-    this.removeAllListeners('removeListener');
-    this._events = new EventHandlers();
-    this._eventsCount = 0;
-    return this;
-  }
-  listeners = events[type];
-  if (typeof listeners === 'function') {
-    this.removeListener(type, listeners);
-  } else if (listeners) {
-    do {
-      this.removeListener(type, listeners[listeners.length - 1]);
-    } while (listeners[0]);
-  }
-  return this;
-};
-EventEmitter.prototype.listeners = function listeners(type) {
-  var evlistener;
-  var ret;
-  var events = this._events;
-  if (!events) ret = [];else {
-    evlistener = events[type];
-    if (!evlistener) ret = [];else if (typeof evlistener === 'function') ret = [evlistener.listener || evlistener];else ret = unwrapListeners(evlistener);
-  }
-  return ret;
-};
-EventEmitter.listenerCount = function (emitter, type) {
-  if (typeof emitter.listenerCount === 'function') {
-    return emitter.listenerCount(type);
-  } else {
-    return listenerCount.call(emitter, type);
-  }
-};
-EventEmitter.prototype.listenerCount = listenerCount;
-function listenerCount(type) {
-  var events = this._events;
-  if (events) {
-    var evlistener = events[type];
-    if (typeof evlistener === 'function') {
-      return 1;
-    } else if (evlistener) {
-      return evlistener.length;
-    }
-  }
-  return 0;
-}
-EventEmitter.prototype.eventNames = function eventNames() {
-  return this._eventsCount > 0 ? Reflect.ownKeys(this._events) : [];
-};
-function spliceOne(list, index) {
-  for (var i = index, k = i + 1, n = list.length; k < n; i += 1, k += 1) list[i] = list[k];
-  list.pop();
-}
-function arrayClone(arr, i) {
-  var copy = new Array(i);
-  while (i--) copy[i] = arr[i];
-  return copy;
-}
-function unwrapListeners(arr) {
-  var ret = new Array(arr.length);
-  for (var i = 0; i < ret.length; ++i) {
-    ret[i] = arr[i].listener || arr[i];
-  }
-  return ret;
-}
+var allBadCharacterRules = ["bad-character-acknowledge", "bad-character-activate-arabic-form-shaping", "bad-character-activate-symmetric-swapping", "bad-character-application-program-command", "bad-character-backspace", "bad-character-bell", "bad-character-break-permitted-here", "bad-character-cancel", "bad-character-cancel-character", "bad-character-character-tabulation-set", "bad-character-character-tabulation-with-justification", "bad-character-control-0080", "bad-character-control-0081", "bad-character-control-0084", "bad-character-control-0099", "bad-character-control-sequence-introducer", "bad-character-data-link-escape", "bad-character-delete", "bad-character-device-control-four", "bad-character-device-control-one", "bad-character-device-control-string", "bad-character-device-control-three", "bad-character-device-control-two", "bad-character-em-quad", "bad-character-em-space", "bad-character-en-quad", "bad-character-en-space", "bad-character-end-of-medium", "bad-character-end-of-protected-area", "bad-character-end-of-selected-area", "bad-character-end-of-text", "bad-character-end-of-transmission", "bad-character-end-of-transmission-block", "bad-character-enquiry", "bad-character-escape", "bad-character-figure-space", "bad-character-first-strong-isolate", "bad-character-form-feed", "bad-character-four-per-em-space", "bad-character-function-application", "bad-character-hair-space", "bad-character-ideographic-space", "bad-character-information-separator-four", "bad-character-information-separator-one", "bad-character-information-separator-three", "bad-character-information-separator-two", "bad-character-inhibit-arabic-form-shaping", "bad-character-inhibit-symmetric-swapping", "bad-character-interlinear-annotation-anchor", "bad-character-interlinear-annotation-separator", "bad-character-interlinear-annotation-terminator", "bad-character-invisible-plus", "bad-character-invisible-separator", "bad-character-invisible-times", "bad-character-left-to-right-embedding", "bad-character-left-to-right-isolate", "bad-character-left-to-right-mark", "bad-character-left-to-right-override", "bad-character-line-separator", "bad-character-line-tabulation", "bad-character-line-tabulation-set", "bad-character-medium-mathematical-space", "bad-character-message-waiting", "bad-character-narrow-no-break-space", "bad-character-national-digit-shapes", "bad-character-negative-acknowledge", "bad-character-next-line", "bad-character-no-break-here", "bad-character-nominal-digit-shapes", "bad-character-non-breaking-space", "bad-character-null", "bad-character-ogham-space-mark", "bad-character-operating-system-command", "bad-character-paragraph-separator", "bad-character-partial-line-backward", "bad-character-partial-line-forward", "bad-character-pop-directional-formatting", "bad-character-pop-directional-isolate", "bad-character-private-message", "bad-character-private-use-1", "bad-character-private-use-2", "bad-character-punctuation-space", "bad-character-replacement-character", "bad-character-reverse-line-feed", "bad-character-right-to-left-embedding", "bad-character-right-to-left-isolate", "bad-character-right-to-left-mark", "bad-character-right-to-left-override", "bad-character-set-transmit-state", "bad-character-shift-in", "bad-character-shift-out", "bad-character-single-character-introducer", "bad-character-single-shift-three", "bad-character-single-shift-two", "bad-character-six-per-em-space", "bad-character-soft-hyphen", "bad-character-start-of-heading", "bad-character-start-of-protected-area", "bad-character-start-of-selected-area", "bad-character-start-of-string", "bad-character-start-of-text", "bad-character-string-terminator", "bad-character-substitute", "bad-character-synchronous-idle", "bad-character-tabulation", "bad-character-thin-space", "bad-character-three-per-em-space", "bad-character-word-joiner", "bad-character-zero-width-joiner", "bad-character-zero-width-no-break-space", "bad-character-zero-width-non-joiner", "bad-character-zero-width-space"];
 
-var allBadCharacterRules = [
-	"bad-character-acknowledge",
-	"bad-character-activate-arabic-form-shaping",
-	"bad-character-activate-symmetric-swapping",
-	"bad-character-application-program-command",
-	"bad-character-backspace",
-	"bad-character-bell",
-	"bad-character-break-permitted-here",
-	"bad-character-cancel",
-	"bad-character-cancel-character",
-	"bad-character-character-tabulation-set",
-	"bad-character-character-tabulation-with-justification",
-	"bad-character-control-0080",
-	"bad-character-control-0081",
-	"bad-character-control-0084",
-	"bad-character-control-0099",
-	"bad-character-control-sequence-introducer",
-	"bad-character-data-link-escape",
-	"bad-character-delete",
-	"bad-character-device-control-four",
-	"bad-character-device-control-one",
-	"bad-character-device-control-string",
-	"bad-character-device-control-three",
-	"bad-character-device-control-two",
-	"bad-character-em-quad",
-	"bad-character-em-space",
-	"bad-character-en-quad",
-	"bad-character-en-space",
-	"bad-character-end-of-medium",
-	"bad-character-end-of-protected-area",
-	"bad-character-end-of-selected-area",
-	"bad-character-end-of-text",
-	"bad-character-end-of-transmission",
-	"bad-character-end-of-transmission-block",
-	"bad-character-enquiry",
-	"bad-character-escape",
-	"bad-character-figure-space",
-	"bad-character-first-strong-isolate",
-	"bad-character-form-feed",
-	"bad-character-four-per-em-space",
-	"bad-character-function-application",
-	"bad-character-hair-space",
-	"bad-character-ideographic-space",
-	"bad-character-information-separator-four",
-	"bad-character-information-separator-one",
-	"bad-character-information-separator-three",
-	"bad-character-information-separator-two",
-	"bad-character-inhibit-arabic-form-shaping",
-	"bad-character-inhibit-symmetric-swapping",
-	"bad-character-interlinear-annotation-anchor",
-	"bad-character-interlinear-annotation-separator",
-	"bad-character-interlinear-annotation-terminator",
-	"bad-character-invisible-plus",
-	"bad-character-invisible-separator",
-	"bad-character-invisible-times",
-	"bad-character-left-to-right-embedding",
-	"bad-character-left-to-right-isolate",
-	"bad-character-left-to-right-mark",
-	"bad-character-left-to-right-override",
-	"bad-character-line-separator",
-	"bad-character-line-tabulation",
-	"bad-character-line-tabulation-set",
-	"bad-character-medium-mathematical-space",
-	"bad-character-message-waiting",
-	"bad-character-narrow-no-break-space",
-	"bad-character-national-digit-shapes",
-	"bad-character-negative-acknowledge",
-	"bad-character-next-line",
-	"bad-character-no-break-here",
-	"bad-character-nominal-digit-shapes",
-	"bad-character-non-breaking-space",
-	"bad-character-null",
-	"bad-character-ogham-space-mark",
-	"bad-character-operating-system-command",
-	"bad-character-paragraph-separator",
-	"bad-character-partial-line-backward",
-	"bad-character-partial-line-forward",
-	"bad-character-pop-directional-formatting",
-	"bad-character-pop-directional-isolate",
-	"bad-character-private-message",
-	"bad-character-private-use-1",
-	"bad-character-private-use-2",
-	"bad-character-punctuation-space",
-	"bad-character-replacement-character",
-	"bad-character-reverse-line-feed",
-	"bad-character-right-to-left-embedding",
-	"bad-character-right-to-left-isolate",
-	"bad-character-right-to-left-mark",
-	"bad-character-right-to-left-override",
-	"bad-character-set-transmit-state",
-	"bad-character-shift-in",
-	"bad-character-shift-out",
-	"bad-character-single-character-introducer",
-	"bad-character-single-shift-three",
-	"bad-character-single-shift-two",
-	"bad-character-six-per-em-space",
-	"bad-character-soft-hyphen",
-	"bad-character-start-of-heading",
-	"bad-character-start-of-protected-area",
-	"bad-character-start-of-selected-area",
-	"bad-character-start-of-string",
-	"bad-character-start-of-text",
-	"bad-character-string-terminator",
-	"bad-character-substitute",
-	"bad-character-synchronous-idle",
-	"bad-character-tabulation",
-	"bad-character-thin-space",
-	"bad-character-three-per-em-space",
-	"bad-character-word-joiner",
-	"bad-character-zero-width-joiner",
-	"bad-character-zero-width-no-break-space",
-	"bad-character-zero-width-non-joiner",
-	"bad-character-zero-width-space"
-];
+var allTagRules = ["tag-bad-self-closing", "tag-bold", "tag-closing-backslash", "tag-is-present", "tag-missing-closing", "tag-missing-opening", "tag-name-case", "tag-rogue", "tag-space-after-opening-bracket", "tag-space-before-closing-bracket", "tag-space-before-closing-slash", "tag-space-between-slash-and-bracket", "tag-void-frontal-slash", "tag-void-slash"];
 
-var allTagRules = [
-	"tag-bad-self-closing",
-	"tag-bold",
-	"tag-closing-backslash",
-	"tag-is-present",
-	"tag-missing-closing",
-	"tag-missing-opening",
-	"tag-name-case",
-	"tag-rogue",
-	"tag-space-after-opening-bracket",
-	"tag-space-before-closing-bracket",
-	"tag-space-before-closing-slash",
-	"tag-space-between-slash-and-bracket",
-	"tag-void-frontal-slash",
-	"tag-void-slash"
-];
+var allAttribRules = ["attribute-duplicate", "attribute-malformed"];
 
-var allAttribRules = [
-	"attribute-duplicate",
-	"attribute-malformed"
-];
+var allBadNamedHTMLEntityRules = ["bad-malformed-numeric-character-entity", "bad-named-html-entity-malformed-nbsp", "bad-named-html-entity-multiple-encoding", "bad-named-html-entity-not-email-friendly", "bad-named-html-entity-unrecognised"];
 
-var allBadNamedHTMLEntityRules = [
-	"bad-malformed-numeric-character-entity",
-	"bad-named-html-entity-malformed-nbsp",
-	"bad-named-html-entity-multiple-encoding",
-	"bad-named-html-entity-not-email-friendly",
-	"bad-named-html-entity-unrecognised"
-];
+function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
+  // console.log(
+  //   `003 splitByWhitespace(): ${`\u001b[${36}m${`traverse and extract`}\u001b[${39}m`}`
+  // );
+  var defaults = {
+    offset: 0,
+    from: 0,
+    to: str.length
+  };
+
+  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
+
+  var nameStartsAt = null;
+  var whitespaceStartsAt = null;
+
+  for (var i = opts.from; i < opts.to; i++) {
+    // console.log(
+    //   `018 ${`\u001b[${36}m${`------------------------------------------------\nstr[${i}]`}\u001b[${39}m`} = ${JSON.stringify(
+    //     str[i],
+    //     null,
+    //     4
+    //   )}`
+    // );
+    // catch the beginning of a whitespace
+    if (whitespaceStartsAt === null && !str[i].trim().length) {
+      whitespaceStartsAt = i; // console.log(
+      //   `029 splitByWhitespace(): ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whitespaceStartsAt`}\u001b[${39}m`} = ${whitespaceStartsAt}`
+      // );
+    } // catch the ending of a whitespace
+
+
+    if (whitespaceStartsAt !== null && (str[i].trim().length || i + 1 === opts.to)) {
+      // console.log(
+      //   `039 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} whitespace [${whitespaceStartsAt}, ${
+      //     str[i].trim().length ? i : i + 1
+      //   }]`
+      // );
+      if (typeof cbWhitespace === "function") {
+        cbWhitespace([whitespaceStartsAt + opts.offset, (str[i].trim().length ? i : i + 1) + opts.offset]);
+      }
+
+      whitespaceStartsAt = null; // console.log(
+      //   `051 splitByWhitespace(): ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`whitespaceStartsAt`}\u001b[${39}m`} = ${whitespaceStartsAt}`
+      // );
+    } // catch the beginning of a name
+
+
+    if (nameStartsAt === null && str[i].trim().length) {
+      nameStartsAt = i; // console.log(
+      //   `059 splitByWhitespace(): ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nameStartsAt`}\u001b[${39}m`} = ${nameStartsAt}`
+      // );
+    } // catch the ending of a name
+
+
+    if (nameStartsAt !== null && (!str[i].trim().length || i + 1 === opts.to)) {
+      // console.log(
+      //   `066 splitByWhitespace(): ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${32}m${`carved out ${opts.typeName} name`}\u001b[${39}m`} ${JSON.stringify(
+      //     str.slice(
+      //       nameStartsAt,
+      //       i + 1 === opts.to && str[i].trim().length ? i + 1 : i
+      //     ),
+      //     null,
+      //     0
+      //   )}`
+      // );
+      // // call CB
+      // console.log(
+      //   `078 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} chunk [${nameStartsAt}, ${
+      //     i + 1 === opts.to ? i + 1 && str[i].trim().length : i
+      //   }]`
+      // );
+      if (typeof cbValues === "function") {
+        cbValues([nameStartsAt + opts.offset, (i + 1 === opts.to && str[i].trim().length ? i + 1 : i) + opts.offset]);
+      } // reset
+
+
+      nameStartsAt = null; // console.log(
+      //   `092 splitByWhitespace(): ${`\u001b[${31}m${`RESET`}\u001b[${39}m`} ${`\u001b[${33}m${`nameStartsAt`}\u001b[${39}m`} = ${nameStartsAt}`
+      // );
+    } // console.log(" ");
+    // console.log(" ");
+    // console.log(
+    //   `${`\u001b[${90}m${`1 splitByWhitespace(): ██ nameStartsAt = ${nameStartsAt}; whitespaceStartsAt = ${whitespaceStartsAt}`}\u001b[${39}m`}`
+    // );
+    // console.log(" ");
+    // console.log(" ");
+
+  }
+}
 
 function checkForWhitespace(str, idxOffset) {
+  // insurance
   if (typeof str !== "string") {
     return {
       charStart: 0,
@@ -526,175 +162,275 @@ function checkForWhitespace(str, idxOffset) {
       errorArr: [],
       trimmedVal: ""
     };
-  }
-  let charStart = 0;
-  let charEnd = str.length;
-  let trimmedVal;
-  const gatheredRanges = [];
-  const errorArr = [];
+  } // We'll catch surrounding whitespace and validate the value in one go. This means, we need to know where non-whitespace value is:
+
+
+  var charStart = 0; // defaults
+
+  var charEnd = str.length;
+  var trimmedVal;
+  var gatheredRanges = [];
+  var errorArr = []; // tackle the inner wrapping whitespace first
+  // ...left side:
+
   if (!str.length || !str[0].trim().length) {
-    charStart = stringLeftRight.right(str);
+    charStart = stringLeftRight.right(str); // returns digit or null - index of next non whitespace char on the right
+
     if (!str.length || charStart === null) {
+      // it's just whitespace here
       charEnd = null;
       errorArr.push({
         idxFrom: +idxOffset,
         idxTo: +idxOffset + str.length,
-        message: `Missing value.`,
+        message: "Missing value.",
         fix: null
       });
     } else {
       gatheredRanges.push([idxOffset, idxOffset + charStart]);
     }
-  }
-  if (charEnd && !str[str.length - 1].trim().length) {
+  } // ...right side:
+
+
+  if (charEnd && !str[str.length - 1].trim()) {
     charEnd = stringLeftRight.left(str, str.length - 1) + 1;
     gatheredRanges.push([idxOffset + charEnd, idxOffset + str.length]);
   }
+
   if (!gatheredRanges.length) {
     trimmedVal = str;
   } else {
     errorArr.push({
       idxFrom: gatheredRanges[0][0],
       idxTo: gatheredRanges[gatheredRanges.length - 1][1],
-      message: `Remove whitespace.`,
+      message: "Remove whitespace.",
       fix: {
         ranges: clone__default['default'](gatheredRanges)
       }
-    });
+    }); // reset:
+
     gatheredRanges.length = 0;
     trimmedVal = str.trim();
   }
   return {
-    charStart,
-    charEnd,
-    errorArr,
-    trimmedVal
+    charStart: charStart,
+    charEnd: charEnd,
+    errorArr: errorArr,
+    trimmedVal: trimmedVal
   };
 }
 
-function includesWithRegex(arr, whatToMatch, opts = {}) {
+var defaults = {
+  caseInsensitive: false
+};
+
+function includesWithRegex(arr, whatToMatch, originalOpts) {
+  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
+
   if (!Array.isArray(arr) || !arr.length) {
+    // definitely does not include
     return false;
-  }
-  return arr.some(val => isRegExp__default['default'](val) && whatToMatch.match(val) || typeof val === "string" && (!opts.caseInsensitive && whatToMatch === val || opts.caseInsensitive && whatToMatch.toLowerCase() === val.toLowerCase()));
+  } // console.log(
+  //   `017 includesWithRegex(): ${`\u001b[${33}m${`whatToMatch`}\u001b[${39}m`} = ${JSON.stringify(
+  //     whatToMatch,
+  //     null,
+  //     4
+  //   )}`
+  // );
+
+
+  return arr.some(function (val) {
+    return isRegExp__default['default'](val) && whatToMatch.match(val) || typeof val === "string" && (!opts.caseInsensitive && whatToMatch === val || opts.caseInsensitive && whatToMatch.toLowerCase() === val.toLowerCase());
+  });
 }
 
+var defaults$1 = {
+  caseInsensitive: false,
+  canBeCommaSeparated: false,
+  quickPermittedValues: [],
+  permittedValues: [],
+  noSpaceAfterComma: false
+}; // if value is not comma-separated chain of values, whole thing is passed to this
+// if value is comma-separated, each extracted chunk is passed to this
+// we keep it separate to keep it DRY
+
 function validateValue(str, idxOffset, opts, charStart, charEnd, errorArr) {
-  const extractedValue = str.slice(charStart, charEnd);
+  var extractedValue = str.slice(charStart, charEnd);
+
   if (!(includesWithRegex(opts.quickPermittedValues, extractedValue, {
     caseInsensitive: opts.caseInsensitive
   }) || includesWithRegex(opts.permittedValues, extractedValue, {
     caseInsensitive: opts.caseInsensitive
   }))) {
-    let fix = null;
-    let message = `Unrecognised value: "${str.slice(charStart, charEnd)}".`;
+    var fix = null;
+    var message = "Unrecognised value: \"" + str.slice(charStart, charEnd) + "\".";
+
     if (includesWithRegex(opts.quickPermittedValues, extractedValue.toLowerCase()) || includesWithRegex(opts.permittedValues, extractedValue.toLowerCase())) {
-      message = `Should be lowercase.`;
+      message = "Should be lowercase.";
       fix = {
         ranges: [[charStart + idxOffset, charEnd + idxOffset, extractedValue.toLowerCase()]]
       };
-    } else if (Array.isArray(opts.quickPermittedValues) && opts.quickPermittedValues.length && opts.quickPermittedValues.length < 6 && opts.quickPermittedValues.every(val => typeof val === "string") && (!Array.isArray(opts.permittedValues) || !opts.permittedValues.length) && opts.quickPermittedValues.join("|").length < 40) {
-      message = `Should be "${opts.quickPermittedValues.join("|")}".`;
-    } else if (Array.isArray(opts.permittedValues) && opts.permittedValues.length && opts.permittedValues.length < 6 && opts.permittedValues.every(val => typeof val === "string") && (!Array.isArray(opts.quickPermittedValues) || !opts.quickPermittedValues.length) && opts.permittedValues.join("|").length < 40) {
-      message = `Should be "${opts.permittedValues.join("|")}".`;
+    } else if (Array.isArray(opts.quickPermittedValues) && opts.quickPermittedValues.length && opts.quickPermittedValues.length < 6 && opts.quickPermittedValues.every(function (val) {
+      return typeof val === "string";
+    }) && (!Array.isArray(opts.permittedValues) || !opts.permittedValues.length) && opts.quickPermittedValues.join("|").length < 40) {
+      // if all reference values are strings, if the case is simple,
+      // for example, <td dir="tralala">, instead of message:
+      // Unrecognised value: "tralala".
+      // we can say:
+      // Should be "rtl|ltr"
+      message = "Should be \"" + opts.quickPermittedValues.join("|") + "\".";
+    } else if (Array.isArray(opts.permittedValues) && opts.permittedValues.length && opts.permittedValues.length < 6 && opts.permittedValues.every(function (val) {
+      return typeof val === "string";
+    }) && (!Array.isArray(opts.quickPermittedValues) || !opts.quickPermittedValues.length) && opts.permittedValues.join("|").length < 40) {
+      // if all reference values are strings, if the case is simple,
+      // for example, <td dir="tralala">, instead of message:
+      // Unrecognised value: "tralala".
+      // we can say:
+      // Should be "rtl|ltr"
+      message = "Should be \"" + opts.permittedValues.join("|") + "\".";
     }
+
     errorArr.push({
       idxFrom: charStart + idxOffset,
       idxTo: charEnd + idxOffset,
-      message,
-      fix
+      message: message,
+      fix: fix
     });
   }
 }
+
 function validateString(str, idxOffset, originalOpts) {
-  const defaults = {
-    canBeCommaSeparated: false,
-    caseInsensitive: false,
-    quickPermittedValues: null,
-    permittedValues: null
-  };
-  const opts = { ...defaults,
-    ...originalOpts
-  };
-  const {
-    charStart,
-    charEnd,
-    errorArr
-  } = checkForWhitespace(str, idxOffset);
-  if (Number.isInteger(charStart)) {
+
+  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults$1), originalOpts); // we get trimmed string start and end positions, also an encountered errors array
+
+
+  var _checkForWhitespace = checkForWhitespace(str, idxOffset),
+      charStart = _checkForWhitespace.charStart,
+      charEnd = _checkForWhitespace.charEnd,
+      errorArr = _checkForWhitespace.errorArr;
+
+  if (typeof charStart === "number" && typeof charEnd === "number") {
+    // continue checks only if there are non-whitespace characters in the value
     if (opts.canBeCommaSeparated) {
-      processCommaSeparated__default['default'](str, {
+      stringProcessCommaSeparated.processCommaSep(str, {
         offset: idxOffset,
         oneSpaceAfterCommaOK: false,
         leadingWhitespaceOK: true,
         trailingWhitespaceOK: true,
-        cb: (idxFrom, idxTo) => {
-          const extractedValue = str.slice(idxFrom - idxOffset, idxTo - idxOffset);
-          validateValue(str, idxOffset, opts, idxFrom - idxOffset,
+        cb: function cb(idxFrom, idxTo) {
+          var extractedValue = str.slice(idxFrom - idxOffset, idxTo - idxOffset); // if there are errors, validateValue() mutates the passed "errorArr",
+          // pushing to it
+
+          validateValue(str, idxOffset, opts, idxFrom - idxOffset, // processCommaSep() reports offset values so we need to restore indexes to start where this "str" above starts
           idxTo - idxOffset, errorArr);
         },
-        errCb: (ranges, message) => {
+        errCb: function errCb(ranges, message) {
           errorArr.push({
             idxFrom: ranges[0][0],
             idxTo: ranges[ranges.length - 1][1],
-            message,
+            message: message,
             fix: {
-              ranges
+              ranges: ranges
             }
           });
         }
       });
     } else {
-      const extractedValue = str.slice(charStart, charEnd);
+      var extractedValue = str.slice(charStart, charEnd); // if there are errors, validateValue() mutates the passed "errorArr",
+      // pushing to it
+
       validateValue(str, idxOffset, opts, charStart, charEnd, errorArr);
     }
   }
   return errorArr;
 }
 
-const wholeExtensionRegex = /^\.\w+$/g;
-const isoDateRegex = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z/g;
-const fontSizeRegex = /^[+-]?[1-7]$/;
-const linkTypes = ["apple-touch-icon", "apple-touch-startup-image", "alternate", "archives", "appendix", "author", "bookmark", "canonical", "chapter", "contents", "copyright", "dns-prefetch", "external", "first", "glossary", "help", "icon", "import", "index", "last", "license", "manifest", "modulepreload", "next", "nofollow", "noopener", "noreferrer", "opener", "pingback", "preconnect", "prefetch", "preload", "prerender", "prev", "search", "shortlink", "section", "sidebar", "start", "stylesheet", "subsection", "tag", "up"];
-const astErrMessages = {
+var wholeExtensionRegex = /^\.\w+$/g; // Regex is not so strict, to cover variations without miliseconds.
+// Also, we don't use capturing groups because we don't extract, only validate.
+// 2019-07-09T15:03:36Z (https://www.npmjs.com/package/iso-datestring-validator)
+// 2011-10-05T14:48:00.000Z (https://www.npmjs.com/package/regex-iso-date)
+
+var isoDateRegex = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z/g;
+var fontSizeRegex = /^[+-]?[1-7]$/;
+var linkTypes = ["apple-touch-icon", "apple-touch-startup-image", "alternate", "archives", "appendix", "author", "bookmark", "canonical", "chapter", "contents", "copyright", "dns-prefetch", "external", "first", "glossary", "help", "icon", "import", "index", "last", "license", "manifest", "modulepreload", "next", "nofollow", "noopener", "noreferrer", "opener", "pingback", "preconnect", "prefetch", "preload", "prerender", "prev", "search", "shortlink", "section", "sidebar", "start", "stylesheet", "subsection", "tag", "up"];
+var astErrMessages = {
   "tag-missing-opening": "Opening tag is missing.",
   "tag-missing-closing": "Closing tag is missing.",
   "tag-void-frontal-slash": "Remove frontal slash."
-};
+}; // -----------------------------------------------------------------------------
+
 function isLetter(str) {
   return typeof str === "string" && str.length === 1 && str.toUpperCase() !== str.toLowerCase();
 }
+
 function isAnEnabledValue(maybeARulesValue) {
   if (Number.isInteger(maybeARulesValue) && maybeARulesValue > 0) {
     return maybeARulesValue;
   }
+
   if (Array.isArray(maybeARulesValue) && maybeARulesValue.length && Number.isInteger(maybeARulesValue[0]) && maybeARulesValue[0] > 0) {
     return maybeARulesValue[0];
   }
-  return 0;
-}
-function isObj(something) {
-  return something && typeof something === "object" && !Array.isArray(something);
-}
-function isAnEnabledRule(config, ruleId) {
-  if (isObj(config) && Object.prototype.hasOwnProperty.call(config, ruleId)) {
-    return config[ruleId];
-  }
-  if (ruleId.includes("-") && Object.prototype.hasOwnProperty.call(config, ruleId.split("-")[0])) {
-    return config[ruleId.split("-")[0]];
-  }
-  if (isObj(config) && Object.prototype.hasOwnProperty.call(config, "all")) {
-    return config.all;
-  }
+
   return 0;
 }
 
+function isObj(something) {
+  return !!(something && typeof something === "object" && !Array.isArray(something));
+}
+
+function isAnEnabledRule(rules, ruleId) {
+  if (!ruleId) {
+    return 0;
+  }
+
+  if (isObj(rules) && Object.prototype.hasOwnProperty.call(rules, ruleId)) {
+    return rules[ruleId];
+  }
+
+  if (ruleId.includes("-") && Object.prototype.hasOwnProperty.call(rules, ruleId.split("-")[0])) {
+    return rules[ruleId.split("-")[0]];
+  }
+
+  if (isObj(rules) && Object.prototype.hasOwnProperty.call(rules, "all")) {
+    return rules.all;
+  } // default return - rule's off:
+
+
+  return 0; // Object.keys(rules.rules).some(
+  //   ruleName =>
+  //     (ruleName === "all" || // group blanket setting
+  //     ruleName === "tag" || // group blanket setting
+  //       ruleName.startsWith(obj.ruleId)) &&
+  //     (isAnEnabledValue(rules.rules[ruleName]) ||
+  //       isAnEnabledValue(processedRulesConfig[ruleName]))
+  // )
+} // -----------------------------------------------------------------------------
+
+var util = /*#__PURE__*/Object.freeze({
+__proto__: null,
+wholeExtensionRegex: wholeExtensionRegex,
+splitByWhitespace: splitByWhitespace,
+isAnEnabledValue: isAnEnabledValue,
+isAnEnabledRule: isAnEnabledRule,
+astErrMessages: astErrMessages,
+validateString: validateString,
+fontSizeRegex: fontSizeRegex,
+isoDateRegex: isoDateRegex,
+linkTypes: linkTypes,
+isLetter: isLetter,
+isObj: isObj
+});
+
+// rule: bad-character-null
+// -----------------------------------------------------------------------------
+// Catches raw character "NULL":
+// https://www.fileformat.info/info/unicode/char/0000/index.htm
 function badCharacterNull(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 0) {
         context.report({
           ruleId: "bad-character-null",
@@ -710,12 +446,16 @@ function badCharacterNull(context) {
   };
 }
 
+// rule: bad-character-start-of-heading
+// -----------------------------------------------------------------------------
+// Catches raw character "START OF HEADING":
+// https://www.fileformat.info/info/unicode/char/0001/index.htm
 function badCharacterStartOfHeading(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 1) {
         context.report({
           ruleId: "bad-character-start-of-heading",
@@ -731,12 +471,16 @@ function badCharacterStartOfHeading(context) {
   };
 }
 
+// rule: bad-character-start-of-text
+// -----------------------------------------------------------------------------
+// Catches raw character "START OF TEXT":
+// https://www.fileformat.info/info/unicode/char/0002/index.htm
 function badCharacterStartOfText(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 2) {
         context.report({
           ruleId: "bad-character-start-of-text",
@@ -752,12 +496,16 @@ function badCharacterStartOfText(context) {
   };
 }
 
+// rule: bad-character-end-of-text
+// -----------------------------------------------------------------------------
+// Catches raw character "END OF TEXT":
+// https://www.fileformat.info/info/unicode/char/0003/index.htm
 function badCharacterEndOfText(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 3) {
         context.report({
           ruleId: "bad-character-end-of-text",
@@ -773,12 +521,16 @@ function badCharacterEndOfText(context) {
   };
 }
 
+// rule: bad-character-end-of-transmission
+// -----------------------------------------------------------------------------
+// Catches raw character "END OF TRANSMISSION":
+// https://www.fileformat.info/info/unicode/char/0004/index.htm
 function badCharacterEndOfTransmission(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 4) {
         context.report({
           ruleId: "bad-character-end-of-transmission",
@@ -794,12 +546,16 @@ function badCharacterEndOfTransmission(context) {
   };
 }
 
+// rule: bad-character-enquiry
+// -----------------------------------------------------------------------------
+// Catches raw character "ENQUIRY":
+// https://www.fileformat.info/info/unicode/char/0005/index.htm
 function badCharacterEnquiry(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 5) {
         context.report({
           ruleId: "bad-character-enquiry",
@@ -815,12 +571,16 @@ function badCharacterEnquiry(context) {
   };
 }
 
+// rule: bad-character-acknowledge
+// -----------------------------------------------------------------------------
+// Catches raw character "ACKNOWLEDGE":
+// https://www.fileformat.info/info/unicode/char/0006/index.htm
 function badCharacterAcknowledge(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 6) {
         context.report({
           ruleId: "bad-character-acknowledge",
@@ -836,12 +596,16 @@ function badCharacterAcknowledge(context) {
   };
 }
 
+// rule: bad-character-bell
+// -----------------------------------------------------------------------------
+// Catches raw character "BELL":
+// https://www.fileformat.info/info/unicode/char/0007/index.htm
 function badCharacterBell(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 7) {
         context.report({
           ruleId: "bad-character-bell",
@@ -857,12 +621,16 @@ function badCharacterBell(context) {
   };
 }
 
+// rule: bad-character-backspace
+// -----------------------------------------------------------------------------
+// Catches raw character "BACKSPACE":
+// https://www.fileformat.info/info/unicode/char/0008/index.htm
 function badCharacterBackspace(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8) {
         context.report({
           ruleId: "bad-character-backspace",
@@ -878,18 +646,31 @@ function badCharacterBackspace(context) {
   };
 }
 
-function badCharacterTabulation(context, ...originalOpts) {
-  let mode = "never";
+// rule: bad-character-tabulation
+
+var badCharacterTabulation = function badCharacterTabulation(context) {
+  for (var _len = arguments.length, originalOpts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    originalOpts[_key - 1] = arguments[_key];
+  } // indentation tabs might be OK, check config.
+  // tabs between text not OK.
+  // tabs trailing lines, leading to EOL or line break, not OK. ("right-side indentation")
+  // plan: use "leftStopAtNewLines" method, it stops at first non-whitespace
+  // character or linebreaks of both kinds: CR or LF.
+
+  var mode = "never";
+
   if (Array.isArray(originalOpts) && originalOpts[0] && typeof originalOpts[0] === "string" && originalOpts[0].toLowerCase() === "indentationisfine") {
     mode = "indentationIsFine";
   }
+
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 9) {
         if (mode === "never") {
+          // simple - there can't be any TABs, so raise it straight away
           context.report({
             ruleId: "bad-character-tabulation",
             message: "Bad character - TABULATION.",
@@ -900,7 +681,12 @@ function badCharacterTabulation(context, ...originalOpts) {
             }
           });
         } else if (mode === "indentationIsFine") {
-          const charTopOnBreaksIdx = stringLeftRight.leftStopAtNewLines(context.str, i);
+          // leftStopAtNewLines() will stop either at first non-whitespace character
+          // on the left, or LF or CR. By evaluating the trim of it, we can
+          // filter out cases where it's non-whitespace character. In other
+          // words, that's TAB in the middle of the line, between letter characters.
+          var charTopOnBreaksIdx = stringLeftRight.leftStopAtNewLines(context.str, i);
+
           if (charTopOnBreaksIdx !== null && context.str[charTopOnBreaksIdx].trim().length) {
             context.report({
               ruleId: "bad-character-tabulation",
@@ -916,14 +702,18 @@ function badCharacterTabulation(context, ...originalOpts) {
       }
     }
   };
-}
+};
 
+// rule: bad-character-line-tabulation
+// -----------------------------------------------------------------------------
+// Catches raw character "LINE TABULATION":
+// https://www.fileformat.info/info/unicode/char/000b/index.htm
 function badCharacterLineTabulation(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 11) {
         context.report({
           ruleId: "bad-character-line-tabulation",
@@ -939,12 +729,16 @@ function badCharacterLineTabulation(context) {
   };
 }
 
+// rule: bad-character-form-feed
+// -----------------------------------------------------------------------------
+// Catches raw character "FORM FEED":
+// https://www.fileformat.info/info/unicode/char/000c/index.htm
 function badCharacterFormFeed(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 12) {
         context.report({
           ruleId: "bad-character-form-feed",
@@ -960,12 +754,16 @@ function badCharacterFormFeed(context) {
   };
 }
 
+// rule: bad-character-shift-out
+// -----------------------------------------------------------------------------
+// Catches raw character "SHIFT OUT":
+// https://www.fileformat.info/info/unicode/char/000e/index.htm
 function badCharacterShiftOut(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 14) {
         context.report({
           ruleId: "bad-character-shift-out",
@@ -981,12 +779,16 @@ function badCharacterShiftOut(context) {
   };
 }
 
+// rule: bad-character-shift-in
+// -----------------------------------------------------------------------------
+// Catches raw character "SHIFT IN":
+// https://www.fileformat.info/info/unicode/char/000f/index.htm
 function badCharacterShiftIn(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 15) {
         context.report({
           ruleId: "bad-character-shift-in",
@@ -1002,12 +804,16 @@ function badCharacterShiftIn(context) {
   };
 }
 
+// rule: bad-character-data-link-escape
+// -----------------------------------------------------------------------------
+// Catches raw character "DATA LINK ESCAPE":
+// https://www.fileformat.info/info/unicode/char/0010/index.htm
 function badCharacterDataLinkEscape(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 16) {
         context.report({
           ruleId: "bad-character-data-link-escape",
@@ -1023,12 +829,16 @@ function badCharacterDataLinkEscape(context) {
   };
 }
 
+// rule: bad-character-device-control-one
+// -----------------------------------------------------------------------------
+// Catches raw character "DEVICE CONTROL ONE":
+// https://www.fileformat.info/info/unicode/char/0011/index.htm
 function badCharacterDeviceControlOne(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 17) {
         context.report({
           ruleId: "bad-character-device-control-one",
@@ -1044,12 +854,16 @@ function badCharacterDeviceControlOne(context) {
   };
 }
 
+// rule: bad-character-device-control-two
+// -----------------------------------------------------------------------------
+// Catches raw character "DEVICE CONTROL TWO":
+// https://www.fileformat.info/info/unicode/char/0012/index.htm
 function badCharacterDeviceControlTwo(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 18) {
         context.report({
           ruleId: "bad-character-device-control-two",
@@ -1065,12 +879,16 @@ function badCharacterDeviceControlTwo(context) {
   };
 }
 
+// rule: bad-character-device-control-three
+// -----------------------------------------------------------------------------
+// Catches raw character "DEVICE CONTROL THREE":
+// https://www.fileformat.info/info/unicode/char/0013/index.htm
 function badCharacterDeviceControlThree(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 19) {
         context.report({
           ruleId: "bad-character-device-control-three",
@@ -1086,12 +904,16 @@ function badCharacterDeviceControlThree(context) {
   };
 }
 
+// rule: bad-character-device-control-four
+// -----------------------------------------------------------------------------
+// Catches raw character "DEVICE CONTROL FOUR":
+// https://www.fileformat.info/info/unicode/char/0014/index.htm
 function badCharacterDeviceControlFour(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 20) {
         context.report({
           ruleId: "bad-character-device-control-four",
@@ -1107,12 +929,16 @@ function badCharacterDeviceControlFour(context) {
   };
 }
 
+// rule: bad-character-negative-acknowledge
+// -----------------------------------------------------------------------------
+// Catches raw character "NEGATIVE ACKNOWLEDGE":
+// https://www.fileformat.info/info/unicode/char/0015/index.htm
 function badCharacterNegativeAcknowledge(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 21) {
         context.report({
           ruleId: "bad-character-negative-acknowledge",
@@ -1128,12 +954,16 @@ function badCharacterNegativeAcknowledge(context) {
   };
 }
 
+// rule: bad-character-synchronous-idle
+// -----------------------------------------------------------------------------
+// Catches raw character "SYNCHRONOUS IDLE":
+// https://www.fileformat.info/info/unicode/char/0016/index.htm
 function badCharacterSynchronousIdle(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 22) {
         context.report({
           ruleId: "bad-character-synchronous-idle",
@@ -1149,12 +979,16 @@ function badCharacterSynchronousIdle(context) {
   };
 }
 
+// rule: bad-character-end-of-transmission-block
+// -----------------------------------------------------------------------------
+// Catches raw character "END OF TRANSMISSION BLOCK":
+// https://www.fileformat.info/info/unicode/char/0017/index.htm
 function badCharacterEndOfTransmissionBlock(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 23) {
         context.report({
           ruleId: "bad-character-end-of-transmission-block",
@@ -1170,12 +1004,16 @@ function badCharacterEndOfTransmissionBlock(context) {
   };
 }
 
+// rule: bad-character-cancel
+// -----------------------------------------------------------------------------
+// Catches raw character "CANCEL":
+// https://www.fileformat.info/info/unicode/char/0018/index.htm
 function badCharacterCancel(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 24) {
         context.report({
           ruleId: "bad-character-cancel",
@@ -1191,12 +1029,16 @@ function badCharacterCancel(context) {
   };
 }
 
+// rule: bad-character-end-of-medium
+// -----------------------------------------------------------------------------
+// Catches raw character "END OF MEDIUM":
+// https://www.fileformat.info/info/unicode/char/0019/index.htm
 function badCharacterEndOfMedium(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 25) {
         context.report({
           ruleId: "bad-character-end-of-medium",
@@ -1212,12 +1054,16 @@ function badCharacterEndOfMedium(context) {
   };
 }
 
+// rule: bad-character-substitute
+// -----------------------------------------------------------------------------
+// Catches raw character "SUBSTITUTE":
+// https://www.fileformat.info/info/unicode/char/001a/index.htm
 function badCharacterSubstitute(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 26) {
         context.report({
           ruleId: "bad-character-substitute",
@@ -1233,12 +1079,16 @@ function badCharacterSubstitute(context) {
   };
 }
 
+// rule: bad-character-escape
+// -----------------------------------------------------------------------------
+// Catches raw character "ESCAPE":
+// https://www.fileformat.info/info/unicode/char/001b/index.htm
 function badCharacterEscape(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 27) {
         context.report({
           ruleId: "bad-character-escape",
@@ -1254,12 +1104,16 @@ function badCharacterEscape(context) {
   };
 }
 
+// rule: bad-character-information-separator-four
+// -----------------------------------------------------------------------------
+// Catches raw character "INFORMATION SEPARATOR FOUR":
+// https://www.fileformat.info/info/unicode/char/001c/index.htm
 function badCharacterInformationSeparatorFour(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 28) {
         context.report({
           ruleId: "bad-character-information-separator-four",
@@ -1275,12 +1129,16 @@ function badCharacterInformationSeparatorFour(context) {
   };
 }
 
+// rule: bad-character-information-separator-three
+// -----------------------------------------------------------------------------
+// Catches raw character "INFORMATION SEPARATOR THREE":
+// https://www.fileformat.info/info/unicode/char/001d/index.htm
 function badCharacterInformationSeparatorThree(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 29) {
         context.report({
           ruleId: "bad-character-information-separator-three",
@@ -1296,12 +1154,16 @@ function badCharacterInformationSeparatorThree(context) {
   };
 }
 
+// rule: bad-character-information-separator-two
+// -----------------------------------------------------------------------------
+// Catches raw character "INFORMATION SEPARATOR TWO":
+// https://www.fileformat.info/info/unicode/char/001e/index.htm
 function badCharacterInformationSeparatorTwo(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 30) {
         context.report({
           ruleId: "bad-character-information-separator-two",
@@ -1317,12 +1179,16 @@ function badCharacterInformationSeparatorTwo(context) {
   };
 }
 
+// rule: bad-character-information-separator-one
+// -----------------------------------------------------------------------------
+// Catches raw character "INFORMATION SEPARATOR ONE":
+// https://www.fileformat.info/info/unicode/char/001f/index.htm
 function badCharacterInformationSeparatorTwo$1(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 31) {
         context.report({
           ruleId: "bad-character-information-separator-one",
@@ -1338,12 +1204,16 @@ function badCharacterInformationSeparatorTwo$1(context) {
   };
 }
 
+// rule: bad-character-delete
+// -----------------------------------------------------------------------------
+// Catches raw character "DELETE":
+// https://www.fileformat.info/info/unicode/char/007f/index.htm
 function badCharacterDelete(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 127) {
         context.report({
           ruleId: "bad-character-delete",
@@ -1359,12 +1229,16 @@ function badCharacterDelete(context) {
   };
 }
 
+// rule: bad-character-control-0080
+// -----------------------------------------------------------------------------
+// Catches raw character "CONTROL" (hex 80):
+// https://www.fileformat.info/info/unicode/char/0080/index.htm
 function badCharacterControl0080(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 128) {
         context.report({
           ruleId: "bad-character-control-0080",
@@ -1380,12 +1254,16 @@ function badCharacterControl0080(context) {
   };
 }
 
+// rule: bad-character-control-0081
+// -----------------------------------------------------------------------------
+// Catches raw character "CONTROL" (hex 81):
+// https://www.fileformat.info/info/unicode/char/0081/index.htm
 function badCharacterControl0081(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 129) {
         context.report({
           ruleId: "bad-character-control-0081",
@@ -1401,12 +1279,16 @@ function badCharacterControl0081(context) {
   };
 }
 
+// rule: bad-character-break-permitted-here
+// -----------------------------------------------------------------------------
+// Catches raw character "BREAK PERMITTED HERE":
+// https://www.fileformat.info/info/unicode/char/0082/index.htm
 function badCharacterBreakPermittedHere(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 130) {
         context.report({
           ruleId: "bad-character-break-permitted-here",
@@ -1422,12 +1304,16 @@ function badCharacterBreakPermittedHere(context) {
   };
 }
 
+// rule: bad-character-no-break-here
+// -----------------------------------------------------------------------------
+// Catches raw character "NO BREAK HERE":
+// https://www.fileformat.info/info/unicode/char/0083/index.htm
 function badCharacterNoBreakHere(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 131) {
         context.report({
           ruleId: "bad-character-no-break-here",
@@ -1443,12 +1329,16 @@ function badCharacterNoBreakHere(context) {
   };
 }
 
+// rule: bad-character-control-0084
+// -----------------------------------------------------------------------------
+// Catches raw character "CONTROL" (hex 84):
+// https://www.fileformat.info/info/unicode/char/0084/index.htm
 function badCharacterControl0084(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 132) {
         context.report({
           ruleId: "bad-character-control-0084",
@@ -1464,12 +1354,16 @@ function badCharacterControl0084(context) {
   };
 }
 
+// rule: bad-character-next-line
+// -----------------------------------------------------------------------------
+// Catches raw character "NEXT LINE":
+// https://www.fileformat.info/info/unicode/char/0085/index.htm
 function badCharacterNextLine(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 133) {
         context.report({
           ruleId: "bad-character-next-line",
@@ -1485,12 +1379,16 @@ function badCharacterNextLine(context) {
   };
 }
 
+// rule: bad-character-start-of-selected-area
+// -----------------------------------------------------------------------------
+// Catches raw character "START OF SELECTED AREA":
+// https://www.fileformat.info/info/unicode/char/0086/index.htm
 function badCharacterStartOfSelectedArea(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 134) {
         context.report({
           ruleId: "bad-character-start-of-selected-area",
@@ -1506,12 +1404,16 @@ function badCharacterStartOfSelectedArea(context) {
   };
 }
 
+// rule: bad-character-end-of-selected-area
+// -----------------------------------------------------------------------------
+// Catches raw character "END OF SELECTED AREA":
+// https://www.fileformat.info/info/unicode/char/0087/index.htm
 function badCharacterEndOfSelectedArea(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 135) {
         context.report({
           ruleId: "bad-character-end-of-selected-area",
@@ -1527,12 +1429,16 @@ function badCharacterEndOfSelectedArea(context) {
   };
 }
 
+// rule: bad-character-character-tabulation-set
+// -----------------------------------------------------------------------------
+// Catches raw character "CHARACTER TABULATION SET":
+// https://www.fileformat.info/info/unicode/char/0088/index.htm
 function badCharacterCharacterTabulationSet(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 136) {
         context.report({
           ruleId: "bad-character-character-tabulation-set",
@@ -1548,12 +1454,16 @@ function badCharacterCharacterTabulationSet(context) {
   };
 }
 
+// rule: bad-character-character-tabulation-with-justification
+// -----------------------------------------------------------------------------
+// Catches raw character "CHARACTER TABULATION WITH JUSTIFICATION":
+// https://www.fileformat.info/info/unicode/char/0089/index.htm
 function badCharacterCharacterTabulationWithJustification(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 137) {
         context.report({
           ruleId: "bad-character-character-tabulation-with-justification",
@@ -1569,12 +1479,16 @@ function badCharacterCharacterTabulationWithJustification(context) {
   };
 }
 
+// rule: bad-character-line-tabulation-set
+// -----------------------------------------------------------------------------
+// Catches raw character "LINE TABULATION SET":
+// https://www.fileformat.info/info/unicode/char/008a/index.htm
 function badCharacterLineTabulationSet(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 138) {
         context.report({
           ruleId: "bad-character-line-tabulation-set",
@@ -1590,12 +1504,16 @@ function badCharacterLineTabulationSet(context) {
   };
 }
 
+// rule: bad-character-partial-line-forward
+// -----------------------------------------------------------------------------
+// Catches raw character "PARTIAL LINE FORWARD":
+// https://www.fileformat.info/info/unicode/char/008b/index.htm
 function badCharacterPartialLineForward(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 139) {
         context.report({
           ruleId: "bad-character-partial-line-forward",
@@ -1611,12 +1529,16 @@ function badCharacterPartialLineForward(context) {
   };
 }
 
+// rule: bad-character-partial-line-backward
+// -----------------------------------------------------------------------------
+// Catches raw character "PARTIAL LINE BACKWARD":
+// https://www.fileformat.info/info/unicode/char/008c/index.htm
 function badCharacterPartialLineBackward(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 140) {
         context.report({
           ruleId: "bad-character-partial-line-backward",
@@ -1632,12 +1554,16 @@ function badCharacterPartialLineBackward(context) {
   };
 }
 
+// rule: bad-character-reverse-line-feed
+// -----------------------------------------------------------------------------
+// Catches raw character "REVERSE LINE FEED":
+// https://www.fileformat.info/info/unicode/char/008d/index.htm
 function badCharacterReverseLineFeed(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 141) {
         context.report({
           ruleId: "bad-character-reverse-line-feed",
@@ -1653,12 +1579,16 @@ function badCharacterReverseLineFeed(context) {
   };
 }
 
+// rule: bad-character-single-shift-two
+// -----------------------------------------------------------------------------
+// Catches raw character "SINGLE SHIFT TWO":
+// https://www.fileformat.info/info/unicode/char/008e/index.htm
 function badCharacterSingleShiftTwo(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 142) {
         context.report({
           ruleId: "bad-character-single-shift-two",
@@ -1674,12 +1604,16 @@ function badCharacterSingleShiftTwo(context) {
   };
 }
 
+// rule: bad-character-single-shift-three
+// -----------------------------------------------------------------------------
+// Catches raw character "SINGLE SHIFT THREE":
+// https://www.fileformat.info/info/unicode/char/008f/index.htm
 function badCharacterSingleShiftTwo$1(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 143) {
         context.report({
           ruleId: "bad-character-single-shift-three",
@@ -1695,12 +1629,16 @@ function badCharacterSingleShiftTwo$1(context) {
   };
 }
 
+// rule: bad-character-device-control-string
+// -----------------------------------------------------------------------------
+// Catches raw character "DEVICE CONTROL STRING":
+// https://www.fileformat.info/info/unicode/char/0090/index.htm
 function badCharacterDeviceControlString(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 144) {
         context.report({
           ruleId: "bad-character-device-control-string",
@@ -1716,12 +1654,16 @@ function badCharacterDeviceControlString(context) {
   };
 }
 
+// rule: bad-character-private-use-1
+// -----------------------------------------------------------------------------
+// Catches raw character "PRIVATE USE ONE":
+// https://www.fileformat.info/info/unicode/char/0091/index.htm
 function badCharacterPrivateUseOne(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 145) {
         context.report({
           ruleId: "bad-character-private-use-1",
@@ -1737,12 +1679,16 @@ function badCharacterPrivateUseOne(context) {
   };
 }
 
+// rule: bad-character-private-use-2
+// -----------------------------------------------------------------------------
+// Catches raw character "PRIVATE USE TWO":
+// https://www.fileformat.info/info/unicode/char/0092/index.htm
 function badCharacterPrivateUseTwo(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 146) {
         context.report({
           ruleId: "bad-character-private-use-2",
@@ -1758,12 +1704,16 @@ function badCharacterPrivateUseTwo(context) {
   };
 }
 
+// rule: bad-character-set-transmit-state
+// -----------------------------------------------------------------------------
+// Catches raw character "SET TRANSMIT STATE":
+// https://www.fileformat.info/info/unicode/char/0093/index.htm
 function badCharacterSetTransmitState(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 147) {
         context.report({
           ruleId: "bad-character-set-transmit-state",
@@ -1779,12 +1729,16 @@ function badCharacterSetTransmitState(context) {
   };
 }
 
+// rule: bad-character-cancel-character
+// -----------------------------------------------------------------------------
+// Catches raw character "CANCEL CHARACTER":
+// https://www.fileformat.info/info/unicode/char/0094/index.htm
 function badCharacterCancelCharacter(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 148) {
         context.report({
           ruleId: "bad-character-cancel-character",
@@ -1800,12 +1754,16 @@ function badCharacterCancelCharacter(context) {
   };
 }
 
+// rule: bad-character-message-waiting
+// -----------------------------------------------------------------------------
+// Catches raw character "MESSAGE WAITING":
+// https://www.fileformat.info/info/unicode/char/0095/index.htm
 function badCharacterMessageWaiting(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 149) {
         context.report({
           ruleId: "bad-character-message-waiting",
@@ -1821,12 +1779,16 @@ function badCharacterMessageWaiting(context) {
   };
 }
 
+// rule: bad-character-start-of-protected-area
+// -----------------------------------------------------------------------------
+// Catches raw character "START OF PROTECTED AREA":
+// https://www.fileformat.info/info/unicode/char/0096/index.htm
 function badCharacterStartOfProtectedArea(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 150) {
         context.report({
           ruleId: "bad-character-start-of-protected-area",
@@ -1842,12 +1804,16 @@ function badCharacterStartOfProtectedArea(context) {
   };
 }
 
+// rule: bad-character-end-of-protected-area
+// -----------------------------------------------------------------------------
+// Catches raw character "END OF PROTECTED AREA":
+// https://www.fileformat.info/info/unicode/char/0097/index.htm
 function badCharacterEndOfProtectedArea(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 151) {
         context.report({
           ruleId: "bad-character-end-of-protected-area",
@@ -1863,12 +1829,16 @@ function badCharacterEndOfProtectedArea(context) {
   };
 }
 
+// rule: bad-character-start-of-string
+// -----------------------------------------------------------------------------
+// Catches raw character "START OF STRING":
+// https://www.fileformat.info/info/unicode/char/0098/index.htm
 function badCharacterStartOfString(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 152) {
         context.report({
           ruleId: "bad-character-start-of-string",
@@ -1884,12 +1854,16 @@ function badCharacterStartOfString(context) {
   };
 }
 
+// rule: bad-character-control-0099
+// -----------------------------------------------------------------------------
+// Catches raw character "CONTROL" (hex 99):
+// https://www.fileformat.info/info/unicode/char/0099/index.htm
 function badCharacterControl0099(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 153) {
         context.report({
           ruleId: "bad-character-control-0099",
@@ -1905,12 +1879,16 @@ function badCharacterControl0099(context) {
   };
 }
 
+// rule: bad-character-single-character-introducer
+// -----------------------------------------------------------------------------
+// Catches raw character "SINGLE CHARACTER INTRODUCER":
+// https://www.fileformat.info/info/unicode/char/009a/index.htm
 function badCharacterSingleCharacterIntroducer(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 154) {
         context.report({
           ruleId: "bad-character-single-character-introducer",
@@ -1926,12 +1904,16 @@ function badCharacterSingleCharacterIntroducer(context) {
   };
 }
 
+// rule: bad-character-control-sequence-introducer
+// -----------------------------------------------------------------------------
+// Catches raw character "CONTROL SEQUENCE INTRODUCER":
+// https://www.fileformat.info/info/unicode/char/009b/index.htm
 function badCharacterControlSequenceIntroducer(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 155) {
         context.report({
           ruleId: "bad-character-control-sequence-introducer",
@@ -1947,12 +1929,16 @@ function badCharacterControlSequenceIntroducer(context) {
   };
 }
 
+// rule: bad-character-string-terminator
+// -----------------------------------------------------------------------------
+// Catches raw character "STRING TERMINATOR":
+// https://www.fileformat.info/info/unicode/char/009c/index.htm
 function badCharacterStringTerminator(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 156) {
         context.report({
           ruleId: "bad-character-string-terminator",
@@ -1968,12 +1954,16 @@ function badCharacterStringTerminator(context) {
   };
 }
 
+// rule: bad-character-operating-system-command
+// -----------------------------------------------------------------------------
+// Catches raw character "OPERATING SYSTEM COMMAND":
+// https://www.fileformat.info/info/unicode/char/009d/index.htm
 function badCharacterOperatingSystemCommand(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 157) {
         context.report({
           ruleId: "bad-character-operating-system-command",
@@ -1989,12 +1979,16 @@ function badCharacterOperatingSystemCommand(context) {
   };
 }
 
+// rule: bad-character-private-message
+// -----------------------------------------------------------------------------
+// Catches raw character "PRIVATE MESSAGE":
+// https://www.fileformat.info/info/unicode/char/009e/index.htm
 function badCharacterPrivateMessage(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 158) {
         context.report({
           ruleId: "bad-character-private-message",
@@ -2010,12 +2004,16 @@ function badCharacterPrivateMessage(context) {
   };
 }
 
+// rule: bad-character-application-program-command
+// -----------------------------------------------------------------------------
+// Catches raw character "APPLICATION PROGRAM COMMAND":
+// https://www.fileformat.info/info/unicode/char/009f/index.htm
 function badCharacterApplicationProgramCommand(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 159) {
         context.report({
           ruleId: "bad-character-application-program-command",
@@ -2031,12 +2029,16 @@ function badCharacterApplicationProgramCommand(context) {
   };
 }
 
+// rule: bad-character-soft-hyphen
+// -----------------------------------------------------------------------------
+// Catches raw character "SOFT HYPHEN":
+// https://www.fileformat.info/info/unicode/char/00ad/index.htm
 function badCharacterSoftHyphen(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 173) {
         context.report({
           ruleId: "bad-character-soft-hyphen",
@@ -2052,12 +2054,16 @@ function badCharacterSoftHyphen(context) {
   };
 }
 
+// rule: bad-character-non-breaking-space
+// -----------------------------------------------------------------------------
+// Catches raw character "NON-BREAKING SPACE":
+// https://www.fileformat.info/info/unicode/char/00a0/index.htm
 function badCharacterNonBreakingSpace(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 160) {
         context.report({
           ruleId: "bad-character-non-breaking-space",
@@ -2073,12 +2079,16 @@ function badCharacterNonBreakingSpace(context) {
   };
 }
 
+// rule: bad-character-ogham-space-mark
+// -----------------------------------------------------------------------------
+// Catches raw character "OGHAM SPACE MARK":
+// https://www.fileformat.info/info/unicode/char/1680/index.htm
 function badCharacterOghamSpaceMark(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 5760) {
         context.report({
           ruleId: "bad-character-ogham-space-mark",
@@ -2094,12 +2104,16 @@ function badCharacterOghamSpaceMark(context) {
   };
 }
 
+// rule: bad-character-en-quad
+// -----------------------------------------------------------------------------
+// Catches raw character "EN QUAD":
+// https://www.fileformat.info/info/unicode/char/2000/index.htm
 function badCharacterEnQuad(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8192) {
         context.report({
           ruleId: "bad-character-en-quad",
@@ -2115,12 +2129,16 @@ function badCharacterEnQuad(context) {
   };
 }
 
+// rule: bad-character-em-quad
+// -----------------------------------------------------------------------------
+// Catches raw character "EM QUAD":
+// https://www.fileformat.info/info/unicode/char/2001/index.htm
 function badCharacterEmQuad(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8193) {
         context.report({
           ruleId: "bad-character-em-quad",
@@ -2136,12 +2154,16 @@ function badCharacterEmQuad(context) {
   };
 }
 
+// rule: bad-character-en-space
+// -----------------------------------------------------------------------------
+// Catches raw character "EN SPACE":
+// https://www.fileformat.info/info/unicode/char/2002/index.htm
 function badCharacterEnSpace(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8194) {
         context.report({
           ruleId: "bad-character-en-space",
@@ -2157,12 +2179,16 @@ function badCharacterEnSpace(context) {
   };
 }
 
+// rule: bad-character-em-space
+// -----------------------------------------------------------------------------
+// Catches raw character "EM SPACE":
+// https://www.fileformat.info/info/unicode/char/2003/index.htm
 function badCharacterEmSpace(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8195) {
         context.report({
           ruleId: "bad-character-em-space",
@@ -2178,12 +2204,16 @@ function badCharacterEmSpace(context) {
   };
 }
 
+// rule: bad-character-three-per-em-space
+// -----------------------------------------------------------------------------
+// Catches raw character "THREE-PER-EM SPACE":
+// https://www.fileformat.info/info/unicode/char/2004/index.htm
 function badCharacterThreePerEmSpace(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8196) {
         context.report({
           ruleId: "bad-character-three-per-em-space",
@@ -2199,12 +2229,16 @@ function badCharacterThreePerEmSpace(context) {
   };
 }
 
+// rule: bad-character-four-per-em-space
+// -----------------------------------------------------------------------------
+// Catches raw character "FOUR-PER-EM SPACE":
+// https://www.fileformat.info/info/unicode/char/2005/index.htm
 function badCharacterFourPerEmSpace(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8197) {
         context.report({
           ruleId: "bad-character-four-per-em-space",
@@ -2220,12 +2254,16 @@ function badCharacterFourPerEmSpace(context) {
   };
 }
 
+// rule: bad-character-six-per-em-space
+// -----------------------------------------------------------------------------
+// Catches raw character "SIX-PER-EM SPACE":
+// https://www.fileformat.info/info/unicode/char/2006/index.htm
 function badCharacterSixPerEmSpace(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8198) {
         context.report({
           ruleId: "bad-character-six-per-em-space",
@@ -2241,12 +2279,16 @@ function badCharacterSixPerEmSpace(context) {
   };
 }
 
+// rule: bad-character-figure-space
+// -----------------------------------------------------------------------------
+// Catches raw character "FIGURE SPACE":
+// https://www.fileformat.info/info/unicode/char/2007/index.htm
 function badCharacterFigureSpace(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8199) {
         context.report({
           ruleId: "bad-character-figure-space",
@@ -2262,12 +2304,16 @@ function badCharacterFigureSpace(context) {
   };
 }
 
+// rule: bad-character-punctuation-space
+// -----------------------------------------------------------------------------
+// Catches raw character "PUNCTUATION SPACE":
+// https://www.fileformat.info/info/unicode/char/2008/index.htm
 function badCharacterPunctuationSpace(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8200) {
         context.report({
           ruleId: "bad-character-punctuation-space",
@@ -2283,12 +2329,16 @@ function badCharacterPunctuationSpace(context) {
   };
 }
 
+// rule: bad-character-thin-space
+// -----------------------------------------------------------------------------
+// Catches raw character "THIN SPACE":
+// https://www.fileformat.info/info/unicode/char/2009/index.htm
 function badCharacterThinSpace(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8201) {
         context.report({
           ruleId: "bad-character-thin-space",
@@ -2304,12 +2354,16 @@ function badCharacterThinSpace(context) {
   };
 }
 
+// rule: bad-character-hair-space
+// -----------------------------------------------------------------------------
+// Catches raw character "HAIR SPACE":
+// https://www.fileformat.info/info/unicode/char/200a/index.htm
 function badCharacterHairSpace(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8202) {
         context.report({
           ruleId: "bad-character-hair-space",
@@ -2325,12 +2379,16 @@ function badCharacterHairSpace(context) {
   };
 }
 
+// rule: bad-character-zero-width-space
+// -----------------------------------------------------------------------------
+// Catches raw character "ZERO WIDTH SPACE":
+// https://www.fileformat.info/info/unicode/char/200b/index.htm
 function badCharacterZeroWidthSpace(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8203) {
         context.report({
           ruleId: "bad-character-zero-width-space",
@@ -2346,12 +2404,16 @@ function badCharacterZeroWidthSpace(context) {
   };
 }
 
+// rule: bad-character-zero-width-non-joiner
+// -----------------------------------------------------------------------------
+// Catches raw character "ZERO WIDTH NON-JOINER":
+// https://www.fileformat.info/info/unicode/char/200c/index.htm
 function badCharacterZeroWidthNonJoiner(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8204) {
         context.report({
           ruleId: "bad-character-zero-width-non-joiner",
@@ -2367,12 +2429,16 @@ function badCharacterZeroWidthNonJoiner(context) {
   };
 }
 
+// rule: bad-character-zero-width-joiner
+// -----------------------------------------------------------------------------
+// Catches raw character "ZERO WIDTH JOINER":
+// https://www.fileformat.info/info/unicode/char/200d/index.htm
 function badCharacterZeroWidthJoiner(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8205) {
         context.report({
           ruleId: "bad-character-zero-width-joiner",
@@ -2388,12 +2454,16 @@ function badCharacterZeroWidthJoiner(context) {
   };
 }
 
+// rule: bad-character-left-to-right-mark
+// -----------------------------------------------------------------------------
+// Catches raw character "LEFT-TO-RIGHT MARK":
+// https://www.fileformat.info/info/unicode/char/200e/index.htm
 function badCharacterLeftToRightMark(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8206) {
         context.report({
           ruleId: "bad-character-left-to-right-mark",
@@ -2409,12 +2479,16 @@ function badCharacterLeftToRightMark(context) {
   };
 }
 
+// rule: bad-character-right-to-left-mark
+// -----------------------------------------------------------------------------
+// Catches raw character "RIGHT-TO-LEFT MARK":
+// https://www.fileformat.info/info/unicode/char/200f/index.htm
 function badCharacterRightToLeftMark(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8207) {
         context.report({
           ruleId: "bad-character-right-to-left-mark",
@@ -2430,12 +2504,16 @@ function badCharacterRightToLeftMark(context) {
   };
 }
 
+// rule: bad-character-left-to-right-embedding
+// -----------------------------------------------------------------------------
+// Catches raw character "LEFT-TO-RIGHT EMBEDDING":
+// https://www.fileformat.info/info/unicode/char/202a/index.htm
 function badCharacterLeftToRightEmbedding(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8234) {
         context.report({
           ruleId: "bad-character-left-to-right-embedding",
@@ -2451,12 +2529,16 @@ function badCharacterLeftToRightEmbedding(context) {
   };
 }
 
+// rule: bad-character-right-to-left-embedding
+// -----------------------------------------------------------------------------
+// Catches raw character "RIGHT-TO-LEFT EMBEDDING":
+// https://www.fileformat.info/info/unicode/char/202b/index.htm
 function badCharacterRightToLeftEmbedding(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8235) {
         context.report({
           ruleId: "bad-character-right-to-left-embedding",
@@ -2472,12 +2554,16 @@ function badCharacterRightToLeftEmbedding(context) {
   };
 }
 
+// rule: bad-character-pop-directional-formatting
+// -----------------------------------------------------------------------------
+// Catches raw character "POP DIRECTIONAL FORMATTING":
+// https://www.fileformat.info/info/unicode/char/202c/index.htm
 function badCharacterPopDirectionalFormatting(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8236) {
         context.report({
           ruleId: "bad-character-pop-directional-formatting",
@@ -2493,12 +2579,16 @@ function badCharacterPopDirectionalFormatting(context) {
   };
 }
 
+// rule: bad-character-left-to-right-override
+// -----------------------------------------------------------------------------
+// Catches raw character "LEFT-TO-RIGHT OVERRIDE":
+// https://www.fileformat.info/info/unicode/char/202d/index.htm
 function badCharacterLeftToRightOverride(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8237) {
         context.report({
           ruleId: "bad-character-left-to-right-override",
@@ -2514,12 +2604,16 @@ function badCharacterLeftToRightOverride(context) {
   };
 }
 
+// rule: bad-character-right-to-left-override
+// -----------------------------------------------------------------------------
+// Catches raw character "RIGHT-TO-LEFT OVERRIDE":
+// https://www.fileformat.info/info/unicode/char/202e/index.htm
 function badCharacterRightToLeftOverride(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8238) {
         context.report({
           ruleId: "bad-character-right-to-left-override",
@@ -2535,12 +2629,16 @@ function badCharacterRightToLeftOverride(context) {
   };
 }
 
+// rule: bad-character-word-joiner
+// -----------------------------------------------------------------------------
+// Catches raw character "WORD JOINER":
+// https://www.fileformat.info/info/unicode/char/2060/index.htm
 function badCharacterWordJoiner(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8288) {
         context.report({
           ruleId: "bad-character-word-joiner",
@@ -2556,12 +2654,16 @@ function badCharacterWordJoiner(context) {
   };
 }
 
+// rule: bad-character-function-application
+// -----------------------------------------------------------------------------
+// Catches raw character "FUNCTION APPLICATION":
+// https://www.fileformat.info/info/unicode/char/2061/index.htm
 function badCharacterFunctionApplication(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8289) {
         context.report({
           ruleId: "bad-character-function-application",
@@ -2577,12 +2679,16 @@ function badCharacterFunctionApplication(context) {
   };
 }
 
+// rule: bad-character-invisible-times
+// -----------------------------------------------------------------------------
+// Catches raw character "INVISIBLE TIMES":
+// https://www.fileformat.info/info/unicode/char/2062/index.htm
 function badCharacterInvisibleTimes(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8290) {
         context.report({
           ruleId: "bad-character-invisible-times",
@@ -2598,12 +2704,16 @@ function badCharacterInvisibleTimes(context) {
   };
 }
 
+// rule: bad-character-invisible-separator
+// -----------------------------------------------------------------------------
+// Catches raw character "INVISIBLE SEPARATOR":
+// https://www.fileformat.info/info/unicode/char/2063/index.htm
 function badCharacterInvisibleSeparator(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8291) {
         context.report({
           ruleId: "bad-character-invisible-separator",
@@ -2619,12 +2729,16 @@ function badCharacterInvisibleSeparator(context) {
   };
 }
 
+// rule: bad-character-invisible-plus
+// -----------------------------------------------------------------------------
+// Catches raw character "INVISIBLE PLUS":
+// https://www.fileformat.info/info/unicode/char/2064/index.htm
 function badCharacterInvisiblePlus(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8292) {
         context.report({
           ruleId: "bad-character-invisible-plus",
@@ -2640,12 +2754,16 @@ function badCharacterInvisiblePlus(context) {
   };
 }
 
+// rule: bad-character-left-to-right-isolate
+// -----------------------------------------------------------------------------
+// Catches raw character "LEFT-TO-RIGHT ISOLATE":
+// https://www.fileformat.info/info/unicode/char/2066/index.htm
 function badCharacterLeftToRightIsolate(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8294) {
         context.report({
           ruleId: "bad-character-left-to-right-isolate",
@@ -2661,12 +2779,16 @@ function badCharacterLeftToRightIsolate(context) {
   };
 }
 
+// rule: bad-character-right-to-left-isolate
+// -----------------------------------------------------------------------------
+// Catches raw character "RIGHT-TO-LEFT ISOLATE":
+// https://www.fileformat.info/info/unicode/char/2067/index.htm
 function badCharacterRightToLeftIsolate(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8295) {
         context.report({
           ruleId: "bad-character-right-to-left-isolate",
@@ -2682,12 +2804,16 @@ function badCharacterRightToLeftIsolate(context) {
   };
 }
 
+// rule: bad-character-first-strong-isolate
+// -----------------------------------------------------------------------------
+// Catches raw character "FIRST STRONG ISOLATE":
+// https://www.fileformat.info/info/unicode/char/2068/index.htm
 function badCharacterFirstStrongIsolate(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8296) {
         context.report({
           ruleId: "bad-character-first-strong-isolate",
@@ -2703,12 +2829,16 @@ function badCharacterFirstStrongIsolate(context) {
   };
 }
 
+// rule: bad-character-pop-directional-isolate
+// -----------------------------------------------------------------------------
+// Catches raw character "FIRST STRONG ISOLATE":
+// https://www.fileformat.info/info/unicode/char/2069/index.htm
 function badCharacterPopDirectionalIsolate(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8297) {
         context.report({
           ruleId: "bad-character-pop-directional-isolate",
@@ -2724,12 +2854,16 @@ function badCharacterPopDirectionalIsolate(context) {
   };
 }
 
+// rule: bad-character-inhibit-symmetric-swapping
+// -----------------------------------------------------------------------------
+// Catches raw character "INHIBIT SYMMETRIC SWAPPING":
+// https://www.fileformat.info/info/unicode/char/206a/index.htm
 function badCharacterInhibitSymmetricSwapping(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8298) {
         context.report({
           ruleId: "bad-character-inhibit-symmetric-swapping",
@@ -2745,12 +2879,16 @@ function badCharacterInhibitSymmetricSwapping(context) {
   };
 }
 
+// rule: bad-character-activate-symmetric-swapping
+// -----------------------------------------------------------------------------
+// Catches raw character "INHIBIT SYMMETRIC SWAPPING":
+// https://www.fileformat.info/info/unicode/char/206b/index.htm
 function badCharacterActivateSymmetricSwapping(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8299) {
         context.report({
           ruleId: "bad-character-activate-symmetric-swapping",
@@ -2766,12 +2904,16 @@ function badCharacterActivateSymmetricSwapping(context) {
   };
 }
 
+// rule: bad-character-inhibit-arabic-form-shaping
+// -----------------------------------------------------------------------------
+// Catches raw character "INHIBIT ARABIC FORM SHAPING":
+// https://www.fileformat.info/info/unicode/char/206c/index.htm
 function badCharacterInhibitArabicFormShaping(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8300) {
         context.report({
           ruleId: "bad-character-inhibit-arabic-form-shaping",
@@ -2787,12 +2929,16 @@ function badCharacterInhibitArabicFormShaping(context) {
   };
 }
 
+// rule: bad-character-activate-arabic-form-shaping
+// -----------------------------------------------------------------------------
+// Catches raw character "ACTIVATE ARABIC FORM SHAPING":
+// https://www.fileformat.info/info/unicode/char/206d/index.htm
 function badCharacterActivateArabicFormShaping(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8301) {
         context.report({
           ruleId: "bad-character-activate-arabic-form-shaping",
@@ -2808,12 +2954,16 @@ function badCharacterActivateArabicFormShaping(context) {
   };
 }
 
+// rule: bad-character-national-digit-shapes
+// -----------------------------------------------------------------------------
+// Catches raw character "NATIONAL DIGIT SHAPES":
+// https://www.fileformat.info/info/unicode/char/206e/index.htm
 function badCharacterNationalDigitShapes(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8302) {
         context.report({
           ruleId: "bad-character-national-digit-shapes",
@@ -2829,12 +2979,16 @@ function badCharacterNationalDigitShapes(context) {
   };
 }
 
+// rule: bad-character-nominal-digit-shapes
+// -----------------------------------------------------------------------------
+// Catches raw character "NOMINAL DIGIT SHAPES":
+// https://www.fileformat.info/info/unicode/char/206f/index.htm
 function badCharacterNominalDigitShapes(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8303) {
         context.report({
           ruleId: "bad-character-nominal-digit-shapes",
@@ -2850,12 +3004,16 @@ function badCharacterNominalDigitShapes(context) {
   };
 }
 
+// rule: bad-character-zero-width-no-break-space
+// -----------------------------------------------------------------------------
+// Catches raw character "ZERO WIDTH NO-BREAK SPACE":
+// https://www.fileformat.info/info/unicode/char/feff/index.htm
 function badCharacterZeroWidthNoBreakSpace(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 65279) {
         context.report({
           ruleId: "bad-character-zero-width-no-break-space",
@@ -2871,12 +3029,16 @@ function badCharacterZeroWidthNoBreakSpace(context) {
   };
 }
 
+// rule: bad-character-interlinear-annotation-anchor
+// -----------------------------------------------------------------------------
+// Catches raw character "INTERLINEAR ANNOTATION ANCHOR":
+// https://www.fileformat.info/info/unicode/char/fff9/index.htm
 function badCharacterInterlinearAnnotationAnchor(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 65529) {
         context.report({
           ruleId: "bad-character-interlinear-annotation-anchor",
@@ -2892,12 +3054,16 @@ function badCharacterInterlinearAnnotationAnchor(context) {
   };
 }
 
+// rule: bad-character-interlinear-annotation-separator
+// -----------------------------------------------------------------------------
+// Catches raw character "INTERLINEAR ANNOTATION SEPARATOR":
+// https://www.fileformat.info/info/unicode/char/fffa/index.htm
 function badCharacterInterlinearAnnotationSeparator(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 65530) {
         context.report({
           ruleId: "bad-character-interlinear-annotation-separator",
@@ -2913,12 +3079,16 @@ function badCharacterInterlinearAnnotationSeparator(context) {
   };
 }
 
+// rule: bad-character-interlinear-annotation-terminator
+// -----------------------------------------------------------------------------
+// Catches raw character "INTERLINEAR ANNOTATION TERMINATOR":
+// https://www.fileformat.info/info/unicode/char/fffb/index.htm
 function badCharacterInterlinearAnnotationTerminator(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 65531) {
         context.report({
           ruleId: "bad-character-interlinear-annotation-terminator",
@@ -2934,12 +3104,16 @@ function badCharacterInterlinearAnnotationTerminator(context) {
   };
 }
 
+// rule: bad-character-line-separator
+// -----------------------------------------------------------------------------
+// Catches raw character "LINE SEPARATOR":
+// https://www.fileformat.info/info/unicode/char/2028/index.htm
 function badCharacterLineSeparator(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8232) {
         context.report({
           ruleId: "bad-character-line-separator",
@@ -2955,12 +3129,16 @@ function badCharacterLineSeparator(context) {
   };
 }
 
+// rule: bad-character-paragraph-separator
+// -----------------------------------------------------------------------------
+// Catches raw character "PARAGRAPH SEPARATOR":
+// https://www.fileformat.info/info/unicode/char/2029/index.htm
 function badCharacterParagraphSeparator(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8233) {
         context.report({
           ruleId: "bad-character-paragraph-separator",
@@ -2976,12 +3154,16 @@ function badCharacterParagraphSeparator(context) {
   };
 }
 
+// rule: bad-character-narrow-no-break-space
+// -----------------------------------------------------------------------------
+// Catches raw character "NARROW NO-BREAK SPACE":
+// https://www.fileformat.info/info/unicode/char/202f/index.htm
 function badCharacterNarrowNoBreakSpace(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8239) {
         context.report({
           ruleId: "bad-character-narrow-no-break-space",
@@ -2997,12 +3179,16 @@ function badCharacterNarrowNoBreakSpace(context) {
   };
 }
 
+// rule: bad-character-medium-mathematical-space
+// -----------------------------------------------------------------------------
+// Catches raw character "MEDIUM MATHEMATICAL SPACE":
+// https://www.fileformat.info/info/unicode/char/205f/index.htm
 function badCharacterMediumMathematicalSpace(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 8287) {
         context.report({
           ruleId: "bad-character-medium-mathematical-space",
@@ -3018,12 +3204,16 @@ function badCharacterMediumMathematicalSpace(context) {
   };
 }
 
+// rule: bad-character-ideographic-space
+// -----------------------------------------------------------------------------
+// Catches raw character "IDEOGRAPHIC SPACE":
+// https://www.fileformat.info/info/unicode/char/3000/index.htm
 function badCharacterIdeographicSpace(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 12288) {
         context.report({
           ruleId: "bad-character-ideographic-space",
@@ -3039,12 +3229,16 @@ function badCharacterIdeographicSpace(context) {
   };
 }
 
+// rule: bad-character-replacement-character
+// -----------------------------------------------------------------------------
+// Catches raw character "REPLACEMENT CHARACTER":
+// https://www.fileformat.info/info/unicode/char/fffd/index.htm
 function badCharacterReplacementCharacter(context) {
   return {
-    character({
-      chr,
-      i
-    }) {
+    character: function character(_ref) {
+      var chr = _ref.chr,
+          i = _ref.i;
+
       if (chr.charCodeAt(0) === 65533) {
         context.report({
           ruleId: "bad-character-replacement-character",
@@ -3060,19 +3254,34 @@ function badCharacterReplacementCharacter(context) {
   };
 }
 
+// -----------------------------------------------------------------------------
+// it flags up any tags which have whitespace between opening bracket and first
+// tag name letter:
+//
+// < table>
+// <   a href="">
+// <\n\nspan>
+
 function tagSpaceAfterOpeningBracket(context) {
   return {
-    tag(node) {
-      const ranges = [];
-      if (typeof context.str[node.start + 1] === "string" && !context.str[node.start + 1].trim().length) {
-        ranges.push([node.start + 1, stringLeftRight.right(context.str, node.start + 1)]);
-      }
-      if (!context.str[node.tagNameStartsAt - 1].trim().length) {
-        const charToTheLeftOfTagNameIdx = stringLeftRight.left(context.str, node.tagNameStartsAt);
+    tag: function tag(node) {
+      var ranges = []; // const wholeGap = context.str.slice(node.start + 1, node.tagNameStartsAt);
+      // 1. if there's whitespace after opening bracket
+
+      if (typeof context.str[node.start + 1] === "string" && !context.str[node.start + 1].trim()) {
+        ranges.push([node.start + 1, stringLeftRight.right(context.str, node.start + 1) || context.str.length]);
+      } // 2. if there's whitespace before tag name
+
+
+      if (!context.str[node.tagNameStartsAt - 1].trim()) {
+        var charToTheLeftOfTagNameIdx = stringLeftRight.left(context.str, node.tagNameStartsAt) || 0;
+
         if (charToTheLeftOfTagNameIdx !== node.start) {
+          // we don't want duplication
           ranges.push([charToTheLeftOfTagNameIdx + 1, node.tagNameStartsAt]);
         }
       }
+
       if (ranges.length) {
         context.report({
           ruleId: "tag-space-after-opening-bracket",
@@ -3080,7 +3289,7 @@ function tagSpaceAfterOpeningBracket(context) {
           idxFrom: ranges[0][0],
           idxTo: ranges[ranges.length - 1][1],
           fix: {
-            ranges
+            ranges: ranges
           }
         });
       }
@@ -3088,17 +3297,31 @@ function tagSpaceAfterOpeningBracket(context) {
   };
 }
 
-const BACKSLASH = "\u005C";
+// -----------------------------------------------------------------------------
+
+var BACKSLASH = "\\"; // it flags up any tags which have whitespace between opening bracket and first
+// tag name letter:
+//
+// < table>
+// <   a href="">
+// <\n\nspan>
+
 function tagSpaceBeforeClosingBracket(context) {
   return {
-    tag(node) {
-      const ranges = [];
-      if (
-      context.str[node.end - 1] === ">" &&
-      !context.str[node.end - 2].trim().length &&
-      !`${BACKSLASH}/`.includes(context.str[stringLeftRight.left(context.str, node.end - 1)])) {
-        ranges.push([stringLeftRight.left(context.str, node.end - 1) + 1, node.end - 1]);
+    tag: function tag(node) {
+      var ranges = []; // const wholeGap = context.str.slice(node.start + 1, node.tagNameStartsAt);
+      // 1. if there's whitespace before the closing bracket
+
+      if ( // tag ends with a bracket:
+      context.str[node.end - 1] === ">" && // and there's a whitespace on the left of it:
+      !context.str[node.end - 2].trim().length && // and the next non-whitespace character on the left is not slash of
+      // any kind (we don't want to step into rule's
+      // "tag-space-between-slash-and-bracket" turf)
+      !(BACKSLASH + "/").includes(context.str[stringLeftRight.left(context.str, node.end - 1) || 0])) {
+        var from = stringLeftRight.left(context.str, node.end - 1) ? stringLeftRight.left(context.str, node.end - 1) + 1 : 0;
+        ranges.push([from, node.end - 1]);
       }
+
       if (ranges.length) {
         context.report({
           ruleId: "tag-space-before-closing-bracket",
@@ -3106,7 +3329,7 @@ function tagSpaceBeforeClosingBracket(context) {
           idxFrom: ranges[0][0],
           idxTo: ranges[ranges.length - 1][1],
           fix: {
-            ranges
+            ranges: ranges
           }
         });
       }
@@ -3114,17 +3337,27 @@ function tagSpaceBeforeClosingBracket(context) {
   };
 }
 
-function tagSpaceBeforeClosingSlash(context, ...opts) {
+// -----------------------------------------------------------------------------
+// it flags up any tags which have whitespace between opening bracket and first
+// tag name letter:
+//
+// < table>
+// <   a href="">
+// <\n\nspan>
+
+function tagSpaceBeforeClosingSlash(context, mode) {
+  if (mode === void 0) {
+    mode = "never";
+  }
+
   return {
-    tag(node) {
-      const gapValue = context.str.slice(node.start + 1, node.tagNameStartsAt);
-      let mode = "never";
-      if (Array.isArray(opts) && ["always", "never"].includes(opts[0])) {
-        mode = opts[0];
-      }
-      const closingBracketPos = node.end - 1;
-      const slashPos = stringLeftRight.left(context.str, closingBracketPos);
-      const leftOfSlashPos = stringLeftRight.left(context.str, slashPos);
+    tag: function tag(node) {
+      var gapValue = context.str.slice(node.start + 1, node.tagNameStartsAt); // PROCESSING:
+
+      var closingBracketPos = node.end - 1;
+      var slashPos = stringLeftRight.left(context.str, closingBracketPos);
+      var leftOfSlashPos = stringLeftRight.left(context.str, slashPos) || 0;
+
       if (mode === "never" && node.void && context.str[slashPos] === "/" && leftOfSlashPos < slashPos - 1) {
         context.report({
           ruleId: "tag-space-before-closing-slash",
@@ -3150,16 +3383,26 @@ function tagSpaceBeforeClosingSlash(context, ...opts) {
   };
 }
 
+// -----------------------------------------------------------------------------
+// it flags up any tags which have whitespace between opening bracket and first
+// tag name letter:
+//
+// < table>
+// <   a href="">
+// <\n\nspan>
+
 function tagSpaceBetweenSlashAndBracket(context) {
   return {
-    tag(node) {
-      if (Number.isInteger(node.end) && context.str[node.end - 1] === ">" &&
+    tag: function tag(node) {
+      // since we know the location of the closing bracket,
+      // let's look to the left, is there a slash and check the distance
+      if (Number.isInteger(node.end) && context.str[node.end - 1] === ">" && // necessary because in the future unclosed tags will be recognised!
       context.str[stringLeftRight.left(context.str, node.end - 1)] === "/" && stringLeftRight.left(context.str, node.end - 1) < node.end - 2) {
-        const idxFrom = stringLeftRight.left(context.str, node.end - 1) + 1;
+        var idxFrom = stringLeftRight.left(context.str, node.end - 1) + 1;
         context.report({
           ruleId: "tag-space-between-slash-and-bracket",
           message: "Bad whitespace.",
-          idxFrom,
+          idxFrom: idxFrom,
           idxTo: node.end - 1,
           fix: {
             ranges: [[idxFrom, node.end - 1]]
@@ -3170,52 +3413,88 @@ function tagSpaceBetweenSlashAndBracket(context) {
   };
 }
 
-const BACKSLASH$1 = "\u005C";
+// rule: tag-closing-backslash
+var BACKSLASH$1 = "\\";
+
 function tagClosingBackslash(context) {
   return {
-    tag(node) {
-      const ranges = [];
+    tag: function tag(node) { // since we know the location of the closing bracket,
+      // let's look to the left, is there a slash and check the distance
+      var ranges = []; //
+      //
+      //
+      //           PART 1 - backslash is after opening bracket
+      //
+      //
+      //
+
       if (Number.isInteger(node.start) && Number.isInteger(node.tagNameStartsAt) && context.str.slice(node.start, node.tagNameStartsAt).includes(BACKSLASH$1)) {
-        for (let i = node.start; i < node.tagNameStartsAt; i++) {
+
+        for (var i = node.start; i < node.tagNameStartsAt; i++) {
+          // fish-out all backslashes
           if (context.str[i] === BACKSLASH$1) {
+            // just delete the backslash because it doesn't belong here
+            // if there's a need for closing (left) slash, it will be added
+            // by 3rd level rules which can "see" the surrounding tag layout.
             ranges.push([i, i + 1]);
           }
         }
-      }
-      if (Number.isInteger(node.end) && context.str[node.end - 1] === ">" &&
+      } //
+      //
+      //
+      //           PART 2 - backslash is before closing bracket
+      //
+      //
+      //
+
+
+      if (Number.isInteger(node.end) && context.str[node.end - 1] === ">" && // necessary because in the future unclosed tags will be recognised!
       context.str[stringLeftRight.left(context.str, node.end - 1)] === BACKSLASH$1) {
-        let message = node.void ? "Replace backslash with slash." : "Delete this.";
-        const backSlashPos = stringLeftRight.left(context.str, node.end - 1);
-        let idxFrom = stringLeftRight.left(context.str, backSlashPos) + 1;
-        let whatToInsert = node.void ? "/" : "";
+        var message = node.void ? "Replace backslash with slash." : "Delete this.";
+        var backSlashPos = stringLeftRight.left(context.str, node.end - 1); // So we confirmed there's left slash.
+        // Is it completely rogue or is it meant to be self-closing tag's closing?
+
+        var idxFrom = stringLeftRight.left(context.str, backSlashPos) + 1;
+        var whatToInsert = node.void ? "/" : "";
+
         if (context.processedRulesConfig["tag-space-before-closing-slash"] && (Number.isInteger(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"] > 0 || Array.isArray(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"][0] > 0 && context.processedRulesConfig["tag-space-before-closing-slash"][1] === "never")) {
+          // include any and all the whitespace to the left as well
           idxFrom = stringLeftRight.left(context.str, backSlashPos) + 1;
-        }
+        } // but if spaces are requested via "tag-space-before-closing-slash",
+        // ensure they're added
+
+
         if (Array.isArray(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"][0] > 0 && context.processedRulesConfig["tag-space-before-closing-slash"][1] === "always") {
           idxFrom = stringLeftRight.left(context.str, backSlashPos) + 1;
-          whatToInsert = ` ${whatToInsert}`;
+          whatToInsert = " " + whatToInsert; // but if space is already present at the beginning of the range at
+          // index left(context.str, backSlashPos) + 1, don't add one there
+
           if (node.void && context.str[idxFrom + 1] === " ") {
             idxFrom += 1;
             whatToInsert = whatToInsert.trim();
           } else if (!node.void) {
             whatToInsert = whatToInsert.trim();
           }
-        }
+        } // maybe slashes are forbidden on void tags?
+
         if (node.void && Array.isArray(context.processedRulesConfig["tag-void-slash"]) && context.processedRulesConfig["tag-void-slash"][0] > 0 && context.processedRulesConfig["tag-void-slash"][1] === "never") {
           whatToInsert = "";
           idxFrom = stringLeftRight.left(context.str, backSlashPos) + 1;
           message = "Delete this.";
         }
+
         context.report({
           ruleId: "tag-closing-backslash",
-          message,
-          idxFrom,
+          message: message,
+          idxFrom: idxFrom,
           idxTo: node.end - 1,
           fix: {
             ranges: [[idxFrom, node.end - 1, whatToInsert]]
           }
         });
-      }
+      } // FINALLY,
+
+
       if (ranges.length) {
         context.report({
           ruleId: "tag-closing-backslash",
@@ -3223,7 +3502,7 @@ function tagClosingBackslash(context) {
           idxFrom: ranges[0][0],
           idxTo: ranges[ranges.length - 1][1],
           fix: {
-            ranges
+            ranges: ranges
           }
         });
       }
@@ -3231,18 +3510,28 @@ function tagClosingBackslash(context) {
   };
 }
 
-const BACKSLASH$2 = "\u005C";
-function tagVoidSlash(context, ...opts) {
+// -----------------------------------------------------------------------------
+// it controls, should we or should we not put the slashes on void tags,
+// such as img. Is it <img...> or is it <img.../>?
+
+var BACKSLASH$2 = "\\";
+
+function tagVoidSlash(context, mode) {
+  if (mode === void 0) {
+    mode = "always";
+  }
+
   return {
-    tag(node) {
-      let mode = "always";
-      if (Array.isArray(opts) && ["always", "never"].includes(opts[0])) {
-        mode = opts[0];
-      }
-      const closingBracketPos = node.end - 1;
-      const slashPos = stringLeftRight.left(context.str, closingBracketPos);
-      const leftOfSlashPos = stringLeftRight.left(context.str, slashPos);
+    tag: function tag(node) { // PROCESSING:
+
+      var closingBracketPos = node.end - 1;
+      var slashPos = stringLeftRight.left(context.str, closingBracketPos);
+      var leftOfSlashPos = stringLeftRight.left(context.str, slashPos) || 0;
+
       if (mode === "never" && node.void && context.str[slashPos] === "/") {
+        // if slashes are forbidden on void tags, delete the slash and all
+        // the whitespace in front, because there's never a space before
+        // non-void tag's closing bracket without a slash, for example, "<span >"
         context.report({
           ruleId: "tag-void-slash",
           message: "Remove the slash.",
@@ -3252,10 +3541,16 @@ function tagVoidSlash(context, ...opts) {
             ranges: [[leftOfSlashPos + 1, closingBracketPos]]
           }
         });
-      } else if (mode === "always" && node.void && context.str[slashPos] !== "/" && (
-      !context.processedRulesConfig["tag-closing-backslash"] || !(context.str[slashPos] === BACKSLASH$2 && (Number.isInteger(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"] > 0 || Array.isArray(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"][0] > 0 && context.processedRulesConfig["tag-closing-backslash"][1] === "always")))) {
-        if (Array.isArray(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"][1] === "always") {
+      } else if (mode === "always" && node.void && context.str[slashPos] !== "/" && ( // don't trigger if backslash rules are on:
+      !context.processedRulesConfig["tag-closing-backslash"] || !(context.str[slashPos] === BACKSLASH$2 && (Number.isInteger(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"] > 0 || Array.isArray(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"][0] > 0 && context.processedRulesConfig["tag-closing-backslash"][1] === "always")))) { // if slashes are requested on void tags, situation is more complex,
+        // because we need to take into the account the rule
+        // "tag-space-before-closing-slash"
+
+        if (Array.isArray(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"][1] === "always") { // space is needed
+          // check, maybe space is there
+
           if (context.str[slashPos + 1] === " ") {
+            // but space exists already
             context.report({
               ruleId: "tag-void-slash",
               message: "Missing slash.",
@@ -3266,6 +3561,7 @@ function tagVoidSlash(context, ...opts) {
               }
             });
           } else {
+            // space is missing so add one
             context.report({
               ruleId: "tag-void-slash",
               message: "Missing slash.",
@@ -3277,6 +3573,7 @@ function tagVoidSlash(context, ...opts) {
             });
           }
         } else if (context.processedRulesConfig["tag-space-before-closing-slash"] === undefined || Array.isArray(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"][1] === "never" || Number.isInteger(context.processedRulesConfig["tag-space-before-closing-slash"]) && context.processedRulesConfig["tag-space-before-closing-slash"] > 0) {
+          // no space needed
           context.report({
             ruleId: "tag-void-slash",
             message: "Missing slash.",
@@ -3292,34 +3589,42 @@ function tagVoidSlash(context, ...opts) {
   };
 }
 
+// rule: tag-name-case
+// -----------------------------------------------------------------------------
 function tagNameCase(context) {
-  const knownUpperCaseTags = ["CDATA"];
-  const variableCaseTagNames = ["doctype"];
+  var knownUpperCaseTags = ["CDATA"];
+  var variableCaseTagNames = ["doctype"];
   return {
-    tag(node) {
+    tag: function tag(node) { // since we know the location of the closing bracket,
+      // let's look to the left, is there a slash and check the distance
+
       if (node.tagName && node.recognised === true) {
+
         if (knownUpperCaseTags.includes(node.tagName.toUpperCase())) {
+          // node.tagName will arrive lowercased, so we have to retrieve
+          // the real characters by slicing from ranges
           if (context.str.slice(node.tagNameStartsAt, node.tagNameEndsAt) !== node.tagName.toUpperCase()) {
-            const ranges = [[node.tagNameStartsAt, node.tagNameEndsAt, node.tagName.toUpperCase()]];
+            var ranges = [[node.tagNameStartsAt, node.tagNameEndsAt, node.tagName.toUpperCase()]];
             context.report({
               ruleId: "tag-name-case",
               message: "Bad tag name case.",
               idxFrom: node.tagNameStartsAt,
               idxTo: node.tagNameEndsAt,
               fix: {
-                ranges
+                ranges: ranges
               }
             });
-          }
+          } // else - FINE
+
         } else if (context.str.slice(node.tagNameStartsAt, node.tagNameEndsAt) !== node.tagName && !variableCaseTagNames.includes(node.tagName.toLowerCase())) {
-          const ranges = [[node.tagNameStartsAt, node.tagNameEndsAt, node.tagName]];
+          var _ranges = [[node.tagNameStartsAt, node.tagNameEndsAt, node.tagName]];
           context.report({
             ruleId: "tag-name-case",
             message: "Bad tag name case.",
             idxFrom: node.tagNameStartsAt,
             idxTo: node.tagNameEndsAt,
             fix: {
-              ranges
+              ranges: _ranges
             }
           });
         }
@@ -3328,15 +3633,24 @@ function tagNameCase(context) {
   };
 }
 
-function tagIsPresent(context, ...opts) {
+// -----------------------------------------------------------------------------
+// it flags up any tags from the blacklist
+
+function tagIsPresent(context) {
+  for (var _len = arguments.length, blacklist = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    blacklist[_key - 1] = arguments[_key];
+  }
+
   return {
-    tag(node) {
-      if (Array.isArray(opts) && opts.length) {
-        const temp = matcher__default['default']([node.tagName], opts);
-        if (matcher__default['default']([node.tagName], opts).length) {
+    tag: function tag(node) {
+
+      if (Array.isArray(blacklist) && blacklist.length) {
+        var temp = matcher__default['default']([node.tagName], blacklist);
+
+        if (matcher__default['default']([node.tagName], blacklist).length) {
           context.report({
             ruleId: "tag-is-present",
-            message: `${node.tagName} is not allowed.`,
+            message: node.tagName + " is not allowed.",
             idxFrom: node.start,
             idxTo: node.end,
             fix: {
@@ -3349,17 +3663,21 @@ function tagIsPresent(context, ...opts) {
   };
 }
 
-function tagBold(context, ...opts) {
+// rule: tag-bold
+// -----------------------------------------------------------------------------
+// it flags up any <bold> tags
+function tagBold(context, suggested) {
+  if (suggested === void 0) {
+    suggested = "strong";
+  }
+
   return {
-    tag(node) {
-      let suggested = "strong";
-      if (Array.isArray(opts) && typeof opts[0] === "string" && opts[0].toLowerCase() === "b") {
-        suggested = "b";
-      }
+    tag: function tag(node) {
+
       if (node.tagName === "bold") {
         context.report({
           ruleId: "tag-bold",
-          message: `Tag "bold" does not exist in HTML.`,
+          message: "Tag \"bold\" does not exist in HTML.",
           idxFrom: node.start,
           idxTo: node.end,
           fix: {
@@ -3371,17 +3689,21 @@ function tagBold(context, ...opts) {
   };
 }
 
+// -----------------------------------------------------------------------------
+// flags up all self-closing non-void tags, for example: <table ... />
+
 function tagBadSelfClosing(context) {
   return {
-    tag(node) {
+    tag: function tag(node) {
+
       if (!node.void && node.value.endsWith(">") && node.value[stringLeftRight.left(node.value, node.value.length - 1)] === "/") {
-        const idxFrom = node.start + stringLeftRight.left(node.value, stringLeftRight.left(node.value, node.value.length - 1)) + 1;
-        const idxTo = node.start + node.value.length - 1;
+        var idxFrom = node.start + stringLeftRight.left(node.value, stringLeftRight.left(node.value, node.value.length - 1)) + 1;
+        var idxTo = node.start + node.value.length - 1;
         context.report({
           ruleId: "tag-bad-self-closing",
           message: "Remove the slash.",
-          idxFrom,
-          idxTo,
+          idxFrom: idxFrom,
+          idxTo: idxTo,
           fix: {
             ranges: [[idxFrom, idxTo]]
           }
@@ -3391,65 +3713,53 @@ function tagBadSelfClosing(context) {
   };
 }
 
-function splitByWhitespace(str, cbValues, cbWhitespace, originalOpts) {
-  const defaults = {
-    offset: 0,
-    from: 0,
-    to: str.length
-  };
-  const opts = { ...defaults,
-    ...originalOpts
-  };
-  let nameStartsAt = null;
-  let whitespaceStartsAt = null;
-  for (let i = opts.from; i < opts.to; i++) {
-    if (whitespaceStartsAt === null && !str[i].trim().length) {
-      whitespaceStartsAt = i;
-    }
-    if (whitespaceStartsAt !== null && (str[i].trim().length || i + 1 === opts.to)) {
-      if (typeof cbWhitespace === "function") {
-        cbWhitespace([whitespaceStartsAt + opts.offset, (str[i].trim().length ? i : i + 1) + opts.offset]);
-      }
-      whitespaceStartsAt = null;
-    }
-    if (nameStartsAt === null && str[i].trim().length) {
-      nameStartsAt = i;
-    }
-    if (nameStartsAt !== null && (!str[i].trim().length || i + 1 === opts.to)) {
-      if (typeof cbValues === "function") {
-        cbValues([nameStartsAt + opts.offset, (i + 1 === opts.to && str[i].trim().length ? i + 1 : i) + opts.offset]);
-      }
-      nameStartsAt = null;
-    }
-  }
-}
+// rule: attribute-duplicate
 
-function attributeDuplicate(context, ...opts) {
-  const attributesWhichCanBeMerged = new Set(["id", "class"]);
+var attributeDuplicate = function attributeDuplicate(context) {
+  var attributesWhichCanBeMerged = new Set(["id", "class"]); // imagine string:
+  // `<a class="" class=""  >`
+  // this rule will remove both classes, ending with:
+  // [[2, 20]]
+  // now these ranges don't include the trailing two spaces
+  // when applied, yielding:
+  // `<a  >` instead of `<a>`.
+  // We need to extend the ending of the last range if it's on a
+  // whitespace, leading up to / or >.
+
   function prepLast(ranges) {
     if (!Array.isArray(ranges) || !ranges.length) {
       return ranges;
     }
+
     if (!context.str[ranges[ranges.length - 1][1]].trim()) {
-      const charOnTheRightIdx = stringLeftRight.right(context.str, ranges[ranges.length - 1][1]);
-      if (`/>`.includes(context.str[charOnTheRightIdx])) {
+      var charOnTheRightIdx = stringLeftRight.right(context.str, ranges[ranges.length - 1][1]);
+
+      if ("/>".includes(context.str[charOnTheRightIdx])) {
         ranges[ranges.length - 1][1] = charOnTheRightIdx;
       }
     }
+
     return ranges;
   }
+
   return {
-    tag(node) {
+    tag: function tag(node) { // if there is more than 1 attribute
+
       if (Array.isArray(node.attribs) && node.attribs.length > 1) {
-        const attrsGatheredSoFar = new Set();
-        const mergeableAttrsCaught = new Set();
-        for (let i = 0, len = node.attribs.length; i < len; i++) {
+        var attrsGatheredSoFar = new Set(); // record unique names
+
+        var mergeableAttrsCaught = new Set(); // also unique
+
+        for (var i = 0, len = node.attribs.length; i < len; i++) {
+
           if (!attrsGatheredSoFar.has(node.attribs[i].attribName)) {
             attrsGatheredSoFar.add(node.attribs[i].attribName);
-          } else if (!attributesWhichCanBeMerged.has(node.attribs[i].attribName) || Array.isArray(node.attribs[i].attribValue) && node.attribs[i].attribValue.length && node.attribs[i].attribValue.some(obj => obj.value && (obj.value.includes(`'`) || obj.value.includes(`"`)))) {
+          } else if (!attributesWhichCanBeMerged.has(node.attribs[i].attribName) || Array.isArray(node.attribs[i].attribValue) && node.attribs[i].attribValue.length && node.attribs[i].attribValue.some(function (obj) {
+            return obj.value && (obj.value.includes("'") || obj.value.includes("\""));
+          })) {
             context.report({
               ruleId: "attribute-duplicate",
-              message: `Duplicate attribute "${node.attribs[i].attribName}".`,
+              message: "Duplicate attribute \"" + node.attribs[i].attribName + "\".",
               idxFrom: node.attribs[i].attribStarts,
               idxTo: node.attribs[i].attribEnds,
               fix: null
@@ -3457,47 +3767,74 @@ function attributeDuplicate(context, ...opts) {
           } else {
             mergeableAttrsCaught.add(node.attribs[i].attribName);
           }
-        }
+        } // process all recorded attributes which can be merged:
+
+
         if (mergeableAttrsCaught && mergeableAttrsCaught.size) {
-          [...mergeableAttrsCaught].forEach(attrNameBeingMerged => {
-            const theFirstRange = [];
-            const extractedValues = [];
-            const allOtherRanges = [];
-            for (let i = 0, len = node.attribs.length; i < len; i++) {
-              if (node.attribs[i].attribName === attrNameBeingMerged) {
+          [].concat(mergeableAttrsCaught).forEach(function (attrNameBeingMerged) { // the first attribute with its value will also be replaced,
+            // in whole, except, its value will be merged string of all
+            // extracted values of all same-name attributes
+
+            var theFirstRange = [];
+            var extractedValues = [];
+            var allOtherRanges = []; // can't use functional way with filter+reduce
+            // instead we'll loop through all attributes
+
+            var _loop = function _loop(_i, _len) {
+              if (node.attribs[_i].attribName === attrNameBeingMerged) { // make a note of the index ranges, separating the first
+                // attribute occurence from the rest:
+
                 if (!theFirstRange.length) {
-                  theFirstRange.push(node.attribs[i].attribLeft + 1, node.attribs[i].attribEnds);
+                  // whole attributes goes too, including whitespace
+                  // on the left - it's because we automaticaly tackle
+                  // all dirty code cases, imagine a tab as whitespace
+                  // character in front of class="..." or equal missing
+                  // or similar issues with the first attribute
+                  theFirstRange.push(node.attribs[_i].attribLeft + 1, node.attribs[_i].attribEnds);
                 } else {
-                  allOtherRanges.push([i ? node.attribs[i].attribLeft + 1 : node.attribs[i].attribStarts, node.attribs[i].attribEnds]);
+                  // notice we push an array into an array
+                  // include whitespace to the left, unless it's the first
+                  // attribute of a tag (i === 0, or falsey)
+                  allOtherRanges.push([_i ? node.attribs[_i].attribLeft + 1 : node.attribs[_i].attribStarts, node.attribs[_i].attribEnds]);
                 }
-                if (node.attribs[i].attribValueStartsAt) {
-                  splitByWhitespace(node.attribs[i].attribValueRaw, ([from, to]) => {
-                    extractedValues.push(node.attribs[i].attribValueRaw.slice(from, to));
+
+                if (node.attribs[_i].attribValueStartsAt) { // either way, extract the values, split by whitespace
+
+                  splitByWhitespace(node.attribs[_i].attribValueRaw, function (_ref) {
+                    var from = _ref[0],
+                        to = _ref[1];
+                    extractedValues.push(node.attribs[_i].attribValueRaw.slice(from, to));
                   });
                 }
               }
+            };
+
+            for (var _i = 0, _len = node.attribs.length; _i < _len; _i++) {
+              _loop(_i);
             }
-            const mergedValue = extractedValues.sort().join(" ");
+            var mergedValue = extractedValues.sort().join(" "); // finally, raise the error:
+
             if (mergedValue && mergedValue.length) {
-              const ranges = prepLast(merge__default['default']([[...theFirstRange, ` ${attrNameBeingMerged}="${mergedValue}"`], ...allOtherRanges]));
+              var ranges = prepLast(rangesMerge.rMerge([[].concat(theFirstRange, [" " + attrNameBeingMerged + "=\"" + mergedValue + "\""])].concat(allOtherRanges)));
               context.report({
                 ruleId: "attribute-duplicate",
-                message: `Duplicate attribute "${attrNameBeingMerged}".`,
+                message: "Duplicate attribute \"" + attrNameBeingMerged + "\".",
                 idxFrom: node.start,
                 idxTo: node.end,
                 fix: {
-                  ranges
+                  ranges: ranges
                 }
               });
-            } else {
-              const ranges = prepLast(merge__default['default']([[...theFirstRange], ...allOtherRanges]));
+            } else { // remove all attributes of this kind
+
+              var _ranges = prepLast(rangesMerge.rMerge([[].concat(theFirstRange)].concat(allOtherRanges)));
               context.report({
                 ruleId: "attribute-duplicate",
-                message: `Duplicate attribute "${attrNameBeingMerged}".`,
+                message: "Duplicate attribute \"" + attrNameBeingMerged + "\".",
                 idxFrom: node.start,
                 idxTo: node.end,
                 fix: {
-                  ranges
+                  ranges: _ranges
                 }
               });
             }
@@ -3506,19 +3843,29 @@ function attributeDuplicate(context, ...opts) {
       }
     }
   };
-}
+};
 
-function attributeMalformed(context, ...opts) {
-  const blacklist = ["doctype"];
+// rule: attribute-malformed
+// -----------------------------------------------------------------------------
+// it flags up malformed HTML attributes
+
+function attributeMalformed(context) {
+  // the following tags will be processed separately
+  var blacklist = ["doctype"];
   return {
-    attribute(node) {
+    attribute: function attribute(node) { // if Levenshtein distance is 1 and it's not among known attribute names,
+      // it's definitely mis-typed
+
       if (!node.attribNameRecognised && !node.attribName.startsWith("xmlns:") && !blacklist.includes(node.parent.tagName)) {
-        let somethingMatched = false;
-        for (const oneOfAttribs of htmlAllKnownAttributes.allHtmlAttribs.values()) {
+        var somethingMatched = false;
+
+        for (var _iterator = _createForOfIteratorHelperLoose__default['default'](htmlAllKnownAttributes.allHtmlAttribs.values()), _step; !(_step = _iterator()).done;) {
+          var oneOfAttribs = _step.value;
+
           if (leven__default['default'](oneOfAttribs, node.attribName) === 1) {
             context.report({
               ruleId: "attribute-malformed",
-              message: `Probably meant "${oneOfAttribs}".`,
+              message: "Probably meant \"" + oneOfAttribs + "\".",
               idxFrom: node.attribNameStartsAt,
               idxTo: node.attribNameEndsAt,
               fix: {
@@ -3529,33 +3876,42 @@ function attributeMalformed(context, ...opts) {
             break;
           }
         }
+
         if (!somethingMatched) {
+          // the attribute was not recognised
           context.report({
             ruleId: "attribute-malformed",
-            message: `Unrecognised attribute "${node.attribName}".`,
+            message: "Unrecognised attribute \"" + node.attribName + "\".",
             idxFrom: node.attribNameStartsAt,
             idxTo: node.attribNameEndsAt,
             fix: null
           });
         }
-      }
+      } // context.str[node.attribNameEndsAt] !== "="
+      // equal missing or something's wrong around it
+
+
       if (node.attribNameEndsAt && node.attribValueStartsAt) {
-        if (
+
+        if ( // if opening quotes are present, let's use their location
         node.attribOpeningQuoteAt !== null && context.str.slice(node.attribNameEndsAt, node.attribOpeningQuoteAt) !== "=") {
-          let message = `Malformed around equal.`;
+          var message = "Malformed around equal.";
+
           if (!context.str.slice(node.attribNameEndsAt, node.attribOpeningQuoteAt).includes("=")) {
-            message = `Equal is missing.`;
+            message = "Equal is missing.";
           }
-          let fromRange = node.attribNameEndsAt;
-          const toRange = node.attribOpeningQuoteAt;
-          let whatToAdd = "=";
+
+          var fromRange = node.attribNameEndsAt;
+          var toRange = node.attribOpeningQuoteAt;
+          var whatToAdd = "="; // if equals is in a correct place, don't replace it
+
           if (context.str[fromRange] === "=") {
             fromRange += 1;
             whatToAdd = undefined;
           }
           context.report({
             ruleId: "attribute-malformed",
-            message,
+            message: message,
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
             fix: {
@@ -3563,70 +3919,85 @@ function attributeMalformed(context, ...opts) {
             }
           });
         }
-      }
-      if (
-      (node.attribValueRaw.startsWith(`"`) || node.attribValueRaw.startsWith(`'`)) && node.attribValueStartsAt && node.attribOpeningQuoteAt && context.str[node.attribValueStartsAt] === context.str[node.attribOpeningQuoteAt]) {
-        const message = `Delete repeated opening quotes.`;
+      } // repeated opening quotes
+
+
+      if ( // value starts with a quote
+      (node.attribValueRaw.startsWith("\"") || node.attribValueRaw.startsWith("'")) && node.attribValueStartsAt && node.attribOpeningQuoteAt && context.str[node.attribValueStartsAt] === context.str[node.attribOpeningQuoteAt]) {
+        var _message = "Delete repeated opening quotes.";
         context.report({
           ruleId: "attribute-malformed",
-          message,
+          message: _message,
           idxFrom: node.attribStarts,
           idxTo: node.attribEnds,
           fix: {
+            // delete the character
             ranges: [[node.attribValueStartsAt, node.attribValueStartsAt + 1]]
           }
         });
-      }
-      if (
-      (node.attribValueRaw.endsWith(`"`) || node.attribValueRaw.endsWith(`'`)) && node.attribValueEndsAt && node.attribClosingQuoteAt && context.str[node.attribValueEndsAt] === context.str[node.attribClosingQuoteAt]) {
-        const message = `Delete repeated closing quotes.`;
+      } // repeated closing quotes
+
+
+      if ( // value ends with a quote
+      (node.attribValueRaw.endsWith("\"") || node.attribValueRaw.endsWith("'")) && node.attribValueEndsAt && node.attribClosingQuoteAt && context.str[node.attribValueEndsAt] === context.str[node.attribClosingQuoteAt]) {
+        var _message2 = "Delete repeated closing quotes.";
         context.report({
           ruleId: "attribute-malformed",
-          message,
+          message: _message2,
           idxFrom: node.attribStarts,
           idxTo: node.attribEnds,
           fix: {
+            // delete the character
             ranges: [[node.attribValueEndsAt - 1, node.attribValueEndsAt]]
           }
         });
-      }
-      const ranges = [];
+      } // maybe some quotes are missing?
+
+
+      var ranges = [];
+
       if (node.attribOpeningQuoteAt === null && node.attribValueStartsAt !== null) {
-        ranges.push([node.attribValueStartsAt, node.attribValueStartsAt, node.attribClosingQuoteAt === null ? `"` : context.str[node.attribClosingQuoteAt]]);
+        ranges.push([node.attribValueStartsAt, node.attribValueStartsAt, node.attribClosingQuoteAt === null ? "\"" : context.str[node.attribClosingQuoteAt]]);
       }
+
       if (node.attribClosingQuoteAt === null && node.attribValueEndsAt !== null) {
-        ranges.push([node.attribValueEndsAt, node.attribValueEndsAt, node.attribOpeningQuoteAt === null ? `"` : context.str[node.attribOpeningQuoteAt]]);
+        ranges.push([node.attribValueEndsAt, node.attribValueEndsAt, node.attribOpeningQuoteAt === null ? "\"" : context.str[node.attribOpeningQuoteAt]]);
       }
+
       if (ranges.length) {
         context.report({
           ruleId: "attribute-malformed",
-          message: `Quote${ranges.length > 1 ? "s are" : " is"} missing.`,
+          message: "Quote" + (ranges.length > 1 ? "s are" : " is") + " missing.",
           idxFrom: node.attribStarts,
           idxTo: node.attribEnds,
           fix: {
-            ranges
+            ranges: ranges
           }
         });
-      }
-      if (node.attribOpeningQuoteAt !== null && node.attribClosingQuoteAt !== null && context.str[node.attribOpeningQuoteAt] !== context.str[node.attribClosingQuoteAt]) {
-        if (!node.attribValueRaw.includes(`"`)) {
+      } // maybe quotes are mismatching?
+
+
+      if (node.attribOpeningQuoteAt !== null && node.attribClosingQuoteAt !== null && context.str[node.attribOpeningQuoteAt] !== context.str[node.attribClosingQuoteAt]) { // default is double quotes; if content doesn't have them, that's what
+        // we're going to use
+
+        if (!node.attribValueRaw.includes("\"")) {
           context.report({
             ruleId: "attribute-malformed",
-            message: `${context.str[node.attribClosingQuoteAt] === `"` ? "Opening" : "Closing"} quote should be double.`,
+            message: (context.str[node.attribClosingQuoteAt] === "\"" ? "Opening" : "Closing") + " quote should be double.",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
             fix: {
-              ranges: [context.str[node.attribClosingQuoteAt] === `"` ? [node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, `"`] : [node.attribClosingQuoteAt, node.attribClosingQuoteAt + 1, `"`]]
+              ranges: [context.str[node.attribClosingQuoteAt] === "\"" ? [node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, "\""] : [node.attribClosingQuoteAt, node.attribClosingQuoteAt + 1, "\""]]
             }
           });
-        } else if (!node.attribValueRaw.includes(`'`)) {
+        } else if (!node.attribValueRaw.includes("'")) {
           context.report({
             ruleId: "attribute-malformed",
-            message: `${context.str[node.attribClosingQuoteAt] === `'` ? "Opening" : "Closing"} quote should be single.`,
+            message: (context.str[node.attribClosingQuoteAt] === "'" ? "Opening" : "Closing") + " quote should be single.",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
             fix: {
-              ranges: [context.str[node.attribClosingQuoteAt] === `'` ? [node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, `'`] : [node.attribClosingQuoteAt, node.attribClosingQuoteAt + 1, `'`]]
+              ranges: [context.str[node.attribClosingQuoteAt] === "'" ? [node.attribOpeningQuoteAt, node.attribOpeningQuoteAt + 1, "'"] : [node.attribClosingQuoteAt, node.attribClosingQuoteAt + 1, "'"]]
             }
           });
         } else ;
@@ -3635,35 +4006,42 @@ function attributeMalformed(context, ...opts) {
   };
 }
 
-function attributeValidateAbbr(context, ...opts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateAbbr(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "abbr") {
+        // validate the parent
         if (!["td", "th"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-abbr",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
-        const {
-          errorArr
-        } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        } // only check for rogue whitespace - value can be any string
+
+
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+            errorArr = _checkForWhitespace.errorArr;
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-abbr"
-          });
+          }));
         });
       }
     }
   };
 }
 
-const knownUnits = ["cm", "mm", "in", "px", "pt", "pc", "em", "ex", "ch", "rem", "vw", "vh", "vmin", "vmax", "%"];
-const knownCharsets = ["adobe-standard-encoding", "adobe-symbol-encoding", "amiga-1251", "ansi_x3.110-1983", "asmo_449", "big5", "big5-hkscs", "bocu-1", "brf", "bs_4730", "bs_viewdata", "cesu-8", "cp50220", "cp51932", "csa_z243.4-1985-1", "csa_z243.4-1985-2", "csa_z243.4-1985-gr", "csn_369103", "dec-mcs", "din_66003", "dk-us", "ds_2089", "ebcdic-at-de", "ebcdic-at-de-a", "ebcdic-ca-fr", "ebcdic-dk-no", "ebcdic-dk-no-a", "ebcdic-es", "ebcdic-es-a", "ebcdic-es-s", "ebcdic-fi-se", "ebcdic-fi-se-a", "ebcdic-fr", "ebcdic-it", "ebcdic-pt", "ebcdic-uk", "ebcdic-us", "ecma-cyrillic", "es", "es2", "euc-kr", "extended_unix_code_fixed_width_for_japanese", "extended_unix_code_packed_format_for_japanese", "gb18030", "gb2312", "gb_1988-80", "gb_2312-80", "gbk", "gost_19768-74", "greek-ccitt", "greek7", "greek7-old", "hp-desktop", "hp-legal", "hp-math8", "hp-pi-font", "hp-roman8", "hz-gb-2312", "ibm-symbols", "ibm-thai", "ibm00858", "ibm00924", "ibm01140", "ibm01141", "ibm01142", "ibm01143", "ibm01144", "ibm01145", "ibm01146", "ibm01147", "ibm01148", "ibm01149", "ibm037", "ibm038", "ibm1026", "ibm1047", "ibm273", "ibm274", "ibm275", "ibm277", "ibm278", "ibm280", "ibm281", "ibm284", "ibm285", "ibm290", "ibm297", "ibm420", "ibm423", "ibm424", "ibm437", "ibm500", "ibm775", "ibm850", "ibm851", "ibm852", "ibm855", "ibm857", "ibm860", "ibm861", "ibm862", "ibm863", "ibm864", "ibm865", "ibm866", "ibm868", "ibm869", "ibm870", "ibm871", "ibm880", "ibm891", "ibm903", "ibm904", "ibm905", "ibm918", "iec_p27-1", "inis", "inis-8", "inis-cyrillic", "invariant", "iso-10646-j-1", "iso-10646-ucs-2", "iso-10646-ucs-4", "iso-10646-ucs-basic", "iso-10646-unicode-latin1", "iso-10646-utf-1", "iso-11548-1", "iso-2022-cn", "iso-2022-cn-ext", "iso-2022-jp", "iso-2022-jp-2", "iso-2022-kr", "iso-8859-1-windows-3.0-latin-1", "iso-8859-1-windows-3.1-latin-1", "iso-8859-10", "iso-8859-13", "iso-8859-14", "iso-8859-15", "iso-8859-16", "iso-8859-2-windows-latin-2", "iso-8859-9-windows-latin-5", "iso-ir-90", "iso-unicode-ibm-1261", "iso-unicode-ibm-1264", "iso-unicode-ibm-1265", "iso-unicode-ibm-1268", "iso-unicode-ibm-1276", "iso_10367-box", "iso_2033-1983", "iso_5427", "iso_5427:1981", "iso_5428:1980", "iso_646.basic:1983", "iso_646.irv:1983", "iso_6937-2-25", "iso_6937-2-add", "iso_8859-1:1987", "iso_8859-2:1987", "iso_8859-3:1988", "iso_8859-4:1988", "iso_8859-5:1988", "iso_8859-6-e", "iso_8859-6-i", "iso_8859-6:1987", "iso_8859-7:1987", "iso_8859-8-e", "iso_8859-8-i", "iso_8859-8:1988", "iso_8859-9:1989", "iso_8859-supp", "it", "jis_c6220-1969-jp", "jis_c6220-1969-ro", "jis_c6226-1978", "jis_c6226-1983", "jis_c6229-1984-a", "jis_c6229-1984-b", "jis_c6229-1984-b-add", "jis_c6229-1984-hand", "jis_c6229-1984-hand-add", "jis_c6229-1984-kana", "jis_encoding", "jis_x0201", "jis_x0212-1990", "jus_i.b1.002", "jus_i.b1.003-mac", "jus_i.b1.003-serb", "koi7-switched", "koi8-r", "koi8-u", "ks_c_5601-1987", "ksc5636", "kz-1048", "latin-greek", "latin-greek-1", "latin-lap", "macintosh", "microsoft-publishing", "mnem", "mnemonic", "msz_7795.3", "nats-dano", "nats-dano-add", "nats-sefi", "nats-sefi-add", "nc_nc00-10:81", "nf_z_62-010", "nf_z_62-010_(1973)", "ns_4551-1", "ns_4551-2", "osd_ebcdic_df03_irv", "osd_ebcdic_df04_1", "osd_ebcdic_df04_15", "pc8-danish-norwegian", "pc8-turkish", "pt", "pt2", "ptcp154", "scsu", "sen_850200_b", "sen_850200_c", "shift_jis", "t.101-g2", "t.61-7bit", "t.61-8bit", "tis-620", "tscii", "unicode-1-1", "unicode-1-1-utf-7", "unknown-8bit", "us-ascii", "us-dk", "utf-16", "utf-16be", "utf-16le", "utf-32", "utf-32be", "utf-32le", "utf-7", "utf-8", "ventura-international", "ventura-math", "ventura-us", "videotex-suppl", "viqr", "viscii", "windows-1250", "windows-1251", "windows-1252", "windows-1253", "windows-1254", "windows-1255", "windows-1256", "windows-1257", "windows-1258", "windows-31j", "windows-874"];
-const basicColorNames = {
+var knownUnits = ["cm", "mm", "in", "px", "pt", "pc", "em", "ex", "ch", "rem", "vw", "vh", "vmin", "vmax", "%"];
+var knownCharsets = ["adobe-standard-encoding", "adobe-symbol-encoding", "amiga-1251", "ansi_x3.110-1983", "asmo_449", "big5", "big5-hkscs", "bocu-1", "brf", "bs_4730", "bs_viewdata", "cesu-8", "cp50220", "cp51932", "csa_z243.4-1985-1", "csa_z243.4-1985-2", "csa_z243.4-1985-gr", "csn_369103", "dec-mcs", "din_66003", "dk-us", "ds_2089", "ebcdic-at-de", "ebcdic-at-de-a", "ebcdic-ca-fr", "ebcdic-dk-no", "ebcdic-dk-no-a", "ebcdic-es", "ebcdic-es-a", "ebcdic-es-s", "ebcdic-fi-se", "ebcdic-fi-se-a", "ebcdic-fr", "ebcdic-it", "ebcdic-pt", "ebcdic-uk", "ebcdic-us", "ecma-cyrillic", "es", "es2", "euc-kr", "extended_unix_code_fixed_width_for_japanese", "extended_unix_code_packed_format_for_japanese", "gb18030", "gb2312", "gb_1988-80", "gb_2312-80", "gbk", "gost_19768-74", "greek-ccitt", "greek7", "greek7-old", "hp-desktop", "hp-legal", "hp-math8", "hp-pi-font", "hp-roman8", "hz-gb-2312", "ibm-symbols", "ibm-thai", "ibm00858", "ibm00924", "ibm01140", "ibm01141", "ibm01142", "ibm01143", "ibm01144", "ibm01145", "ibm01146", "ibm01147", "ibm01148", "ibm01149", "ibm037", "ibm038", "ibm1026", "ibm1047", "ibm273", "ibm274", "ibm275", "ibm277", "ibm278", "ibm280", "ibm281", "ibm284", "ibm285", "ibm290", "ibm297", "ibm420", "ibm423", "ibm424", "ibm437", "ibm500", "ibm775", "ibm850", "ibm851", "ibm852", "ibm855", "ibm857", "ibm860", "ibm861", "ibm862", "ibm863", "ibm864", "ibm865", "ibm866", "ibm868", "ibm869", "ibm870", "ibm871", "ibm880", "ibm891", "ibm903", "ibm904", "ibm905", "ibm918", "iec_p27-1", "inis", "inis-8", "inis-cyrillic", "invariant", "iso-10646-j-1", "iso-10646-ucs-2", "iso-10646-ucs-4", "iso-10646-ucs-basic", "iso-10646-unicode-latin1", "iso-10646-utf-1", "iso-11548-1", "iso-2022-cn", "iso-2022-cn-ext", "iso-2022-jp", "iso-2022-jp-2", "iso-2022-kr", "iso-8859-1-windows-3.0-latin-1", "iso-8859-1-windows-3.1-latin-1", "iso-8859-10", "iso-8859-13", "iso-8859-14", "iso-8859-15", "iso-8859-16", "iso-8859-2-windows-latin-2", "iso-8859-9-windows-latin-5", "iso-ir-90", "iso-unicode-ibm-1261", "iso-unicode-ibm-1264", "iso-unicode-ibm-1265", "iso-unicode-ibm-1268", "iso-unicode-ibm-1276", "iso_10367-box", "iso_2033-1983", "iso_5427", "iso_5427:1981", "iso_5428:1980", "iso_646.basic:1983", "iso_646.irv:1983", "iso_6937-2-25", "iso_6937-2-add", "iso_8859-1:1987", "iso_8859-2:1987", "iso_8859-3:1988", "iso_8859-4:1988", "iso_8859-5:1988", "iso_8859-6-e", "iso_8859-6-i", "iso_8859-6:1987", "iso_8859-7:1987", "iso_8859-8-e", "iso_8859-8-i", "iso_8859-8:1988", "iso_8859-9:1989", "iso_8859-supp", "it", "jis_c6220-1969-jp", "jis_c6220-1969-ro", "jis_c6226-1978", "jis_c6226-1983", "jis_c6229-1984-a", "jis_c6229-1984-b", "jis_c6229-1984-b-add", "jis_c6229-1984-hand", "jis_c6229-1984-hand-add", "jis_c6229-1984-kana", "jis_encoding", "jis_x0201", "jis_x0212-1990", "jus_i.b1.002", "jus_i.b1.003-mac", "jus_i.b1.003-serb", "koi7-switched", "koi8-r", "koi8-u", "ks_c_5601-1987", "ksc5636", "kz-1048", "latin-greek", "latin-greek-1", "latin-lap", "macintosh", "microsoft-publishing", "mnem", "mnemonic", "msz_7795.3", "nats-dano", "nats-dano-add", "nats-sefi", "nats-sefi-add", "nc_nc00-10:81", "nf_z_62-010", "nf_z_62-010_(1973)", "ns_4551-1", "ns_4551-2", "osd_ebcdic_df03_irv", "osd_ebcdic_df04_1", "osd_ebcdic_df04_15", "pc8-danish-norwegian", "pc8-turkish", "pt", "pt2", "ptcp154", "scsu", "sen_850200_b", "sen_850200_c", "shift_jis", "t.101-g2", "t.61-7bit", "t.61-8bit", "tis-620", "tscii", "unicode-1-1", "unicode-1-1-utf-7", "unknown-8bit", "us-ascii", "us-dk", "utf-16", "utf-16be", "utf-16le", "utf-32", "utf-32be", "utf-32le", "utf-7", "utf-8", "ventura-international", "ventura-math", "ventura-us", "videotex-suppl", "viqr", "viscii", "windows-1250", "windows-1251", "windows-1252", "windows-1253", "windows-1254", "windows-1255", "windows-1256", "windows-1257", "windows-1258", "windows-31j", "windows-874"]; // https://www.w3.org/TR/html4/sgml/loosedtd.html#Color
+// "There are also 16 widely known color names with their sRGB values"
+
+var basicColorNames = {
   aqua: "#00ffff",
   black: "#000000",
   blue: "#0000ff",
@@ -3680,8 +4058,10 @@ const basicColorNames = {
   teal: "#008080",
   white: "#ffffff",
   yellow: "#ffff00"
-};
-const extendedColorNames = {
+}; // https://www.w3schools.com/colors/colors_names.asp
+// https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+
+var extendedColorNames = {
   aliceblue: "#f0f8ff",
   antiquewhite: "#faebd7",
   aqua: "#00ffff",
@@ -3831,102 +4211,127 @@ const extendedColorNames = {
   yellow: "#ffff00",
   yellowgreen: "#9acd32"
 };
-const sixDigitHexColorRegex = /^#([a-f0-9]{6})$/i;
-const classNameRegex = /^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/;
+var sixDigitHexColorRegex = /^#([a-f0-9]{6})$/i;
+var classNameRegex = /^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/;
 
-function attributeValidateAcceptCharset(context, ...opts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateAcceptCharset(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "accept-charset") {
+        // validate the parent
         if (!["form"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-accept-charset",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
-        const errorArr = validateString(node.attribValueRaw, node.attribValueStartsAt, {
+        } // validate against the charsets list from IANA:
+        // https://www.iana.org/assignments/character-sets/character-sets.xhtml
+        // https://www.w3.org/TR/html4/interact/forms.html#adef-accept-charset
+
+
+        var errorArr = validateString(node.attribValueRaw, node.attribValueStartsAt, {
           canBeCommaSeparated: true,
           noSpaceAfterComma: true,
           quickPermittedValues: ["UNKNOWN"],
           permittedValues: knownCharsets
         });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-accept-charset"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateAccept(context, ...opts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateAccept(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "accept") {
+        // validate the parent
         if (!["form", "input"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-accept",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
-        const errorArr = validateString(node.attribValueRaw,
-        node.attribValueStartsAt,
+        } // check in two parts, first, a quick try, match the most common values only
+
+
+        var errorArr = validateString(node.attribValueRaw, // value
+        node.attribValueStartsAt, // offset
         {
           quickPermittedValues: ["audio/*", "video/*", "image/*", "text/html", "image/png", "image/gif", "video/mpeg", "text/css", "audio/basic", wholeExtensionRegex],
           permittedValues: Object.keys(db__default['default']),
           canBeCommaSeparated: true,
           noSpaceAfterComma: true
-        });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        }); // HTML attribute accept MIME types as values. Here we reference the given
+        // value against all official MIME types, taken from IANA and other sources,
+        // https://www.npmjs.com/package/mime-db
+
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-accept"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateAccesskey(context, ...opts) {
+function attributeValidateAccesskey(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "accesskey") {
+        // validate the parent
         if (!["a", "area", "button", "input", "label", "legend", "textarea"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-accesskey",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
-        const {
-          charStart,
-          charEnd,
-          errorArr,
-          trimmedVal
-        } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-        if (Number.isInteger(charStart)) {
+        } // only check for rogue whitespace - value can be any string
+
+
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+            charStart = _checkForWhitespace.charStart,
+            charEnd = _checkForWhitespace.charEnd,
+            errorArr = _checkForWhitespace.errorArr,
+            trimmedVal = _checkForWhitespace.trimmedVal;
+
+        if (typeof charStart === "number" && typeof charEnd === "number") {
+          // the value must be a character, raw or escaped, from a document's
+          // charset
+          // https://www.w3.org/TR/html4/interact/forms.html#adef-accesskey
           if (trimmedVal.length > 1 && !(trimmedVal.startsWith("&") && trimmedVal.endsWith(";"))) {
             errorArr.push({
               idxFrom: node.attribValueStartsAt + charStart,
               idxTo: node.attribValueStartsAt + charEnd,
-              message: `Should be a single character (escaped or not).`,
+              message: "Should be a single character (escaped or not).",
               fix: null
             });
           }
         }
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-accesskey"
-          });
+          }));
         });
       }
     }
@@ -3934,36 +4339,39 @@ function attributeValidateAccesskey(context, ...opts) {
 }
 
 function isSingleSpace(str, originalOpts, errorArr) {
-  const defaults = {
+  var defaults = {
     from: 0,
     to: str.length,
     offset: 0
   };
-  const opts = { ...defaults,
-    ...originalOpts
-  };
-  if (str.slice(opts.from, opts.to) !== " ") {
-    let ranges;
+
+  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts); // whitespace starts at "from" and ends at "to"
+
+  if (str.slice(opts.from, opts.to) !== " ") { // remove the minimal amount of content - if spaces are there
+    // already, leave them
+
+    var ranges;
+
     if (str[opts.from] === " ") {
       ranges = [[opts.offset + opts.from + 1, opts.offset + opts.to]];
     } else if (str[opts.to - 1] === " ") {
       ranges = [[opts.offset + opts.from, opts.offset + opts.to - 1]];
     } else {
       ranges = [[opts.offset + opts.from, opts.offset + opts.to, " "]];
-    }
+    } // raise an error about this excessive/wrong whitespace
     errorArr.push({
       idxFrom: opts.offset + opts.from,
       idxTo: opts.offset + opts.to,
-      message: `Should be a single space.`,
+      message: "Should be a single space.",
       fix: {
-        ranges
+        ranges: ranges
       }
     });
   }
 }
 
 function validateValue$1(str, originalOpts, errorArr) {
-  const defaults = {
+  var defaults = {
     offset: 0,
     multipleOK: false,
     from: 0,
@@ -3971,73 +4379,90 @@ function validateValue$1(str, originalOpts, errorArr) {
     attribStarts: 0,
     attribEnds: str.length
   };
-  const opts = { ...defaults,
-    ...originalOpts
-  };
-  const extractedValue = str.slice(opts.from, opts.to);
-  const calcultedIsRel = isRel__default['default'](extractedValue);
-  if (Array.from(extractedValue).some(val => !val.trim().length)) {
-    const ranges = [];
-    const foundCharacterRanges = [];
-    splitByWhitespace(extractedValue, valueRangeArr => {
+
+  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
+  var extractedValue = str.slice(opts.from, opts.to);
+  var calcultedIsRel = isRelativeUri.isRel(extractedValue);
+
+  if (Array.from(extractedValue).some(function (val) {
+    return !val.trim().length;
+  })) {
+    // try to find out, is it whitespace within one URL, or is it whitespace
+    // separating two URL's:
+    var ranges = []; // whitespace ranges
+
+    var foundCharacterRanges = [];
+    splitByWhitespace(extractedValue, function (valueRangeArr) {
       foundCharacterRanges.push(valueRangeArr);
-    }, whitespaceRangeArr => {
+    }, function (whitespaceRangeArr) {
       ranges.push(whitespaceRangeArr);
     }, originalOpts);
-    const countOfURIs = foundCharacterRanges.reduce((acc, curr) => {
+    var countOfURIs = foundCharacterRanges.reduce(function (acc, curr) {
+
       if (extractedValue.slice(curr[0] - opts.offset, curr[1] - opts.offset).match(urlRegex__default['default']({
         exact: true
       }))) {
         return acc + 1;
       }
+
       return acc;
-    }, 0);
-    const valueWithoutWhitespace = foundCharacterRanges.reduce((acc, curr) => {
+    }, 0); // assemble the value without whitespace
+
+    var valueWithoutWhitespace = foundCharacterRanges.reduce(function (acc, curr) {
       return acc + extractedValue.slice(curr[0] - opts.offset, curr[1] - opts.offset);
     }, "");
+
     if (countOfURIs > 1) {
       errorArr.push({
         idxFrom: opts.from + opts.offset,
         idxTo: opts.to + opts.offset,
-        message: `There should be only one URI.`,
+        message: "There should be only one URI.",
         fix: null
       });
     } else {
       errorArr.push({
         idxFrom: opts.from + opts.offset,
         idxTo: opts.to + opts.offset,
-        message: `Remove whitespace.`,
+        message: "Remove whitespace.",
         fix: {
-          ranges
+          ranges: ranges
         }
       });
     }
   } else if (!extractedValue.startsWith("tel:") && !(urlRegex__default['default']({
     exact: true
-  }).test(extractedValue) || calcultedIsRel.res)) {
-    let message = `Should be an URI.`;
-    let idxFrom = opts.offset + opts.from;
-    let idxTo = opts.offset + opts.to;
-    const whatCouldBeExtractedAtAllFromRegex = extractedValue.match(urlRegex__default['default']());
+  }).test(extractedValue) || calcultedIsRel.res)) { // message:
+    // Should be ${opts.separator}-separated list of URI's.
+    // applies onto when multiple values are allowed and whole attribute is
+    // reported as wrong (not one of chunks):
+
+    var message = "Should be an URI.";
+    var idxFrom = opts.offset + opts.from;
+    var idxTo = opts.offset + opts.to;
+    var whatCouldBeExtractedAtAllFromRegex = extractedValue.match(urlRegex__default['default']()); // if URL's were extracted
+
     if (Array.isArray(whatCouldBeExtractedAtAllFromRegex)) {
+      // something was indeed extracted
       if (whatCouldBeExtractedAtAllFromRegex.length > 1 && !opts.multipleOK) {
-        message = `There should be only one URI.`;
+        message = "There should be only one URI.";
       } else {
-        message = `URI's should be separated with a single space.`;
+        message = "URI's should be separated with a single space.";
       }
+
       idxFrom = opts.offset + opts.attribStarts;
       idxTo = opts.offset + opts.attribEnds;
     }
     errorArr.push({
-      idxFrom,
-      idxTo,
-      message,
+      idxFrom: idxFrom,
+      idxTo: idxTo,
+      message: message,
       fix: null
     });
   }
 }
+
 function validateUri(str, originalOpts) {
-  const defaults = {
+  var defaults = {
     offset: 0,
     multipleOK: false,
     separator: "space",
@@ -4045,76 +4470,96 @@ function validateUri(str, originalOpts) {
     leadingWhitespaceOK: false,
     trailingWhitespaceOK: false
   };
-  const opts = { ...defaults,
-    ...originalOpts
-  };
-  const {
-    charStart,
-    charEnd,
-    errorArr
-  } = checkForWhitespace(str, opts.offset);
+
+  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts); // checkForWhitespace() reports index range between the
+  // first last non-whitespace character; nulls otherwise
+
+  var _checkForWhitespace = checkForWhitespace(str, opts.offset),
+      charStart = _checkForWhitespace.charStart,
+      charEnd = _checkForWhitespace.charEnd,
+      errorArr = _checkForWhitespace.errorArr; // now that we know where non-whitespace chars are, we can evaluate them
+
   if (Number.isInteger(charStart)) {
+
     if (opts.multipleOK) {
+      // depends, is it comma or space-separated format
       if (opts.separator === "space") {
-        splitByWhitespace(str, ([charFrom, charTo]) => {
-          const extractedName = str.slice(charFrom, charTo);
+        splitByWhitespace(str, function (_ref) {
+          var charFrom = _ref[0],
+              charTo = _ref[1];
+          var extractedName = str.slice(charFrom, charTo); // maybe it's comma-and-space-separated, like
+          // <object archive="https://codsen.com, https://detergent.io">
+
           if (extractedName.endsWith(",") && extractedName.length > 1) {
             errorArr.push({
               idxFrom: opts.offset + charTo - 1,
               idxTo: opts.offset + charTo,
-              message: `No commas.`,
+              message: "No commas.",
               fix: null
             });
           } else {
-            validateValue$1(str, { ...opts,
+            // Object assign needed to retain opts.multipleOK
+            validateValue$1(str, _objectSpread__default['default'](_objectSpread__default['default']({}, opts), {}, {
               from: charFrom,
               to: charTo,
               attribStarts: charStart,
               attribEnds: charEnd,
               offset: opts.offset
-            }, errorArr);
+            }), errorArr);
           }
-        }, ([whitespaceFrom, whitespaceTo]) => isSingleSpace(str, {
-          from: whitespaceFrom,
-          to: whitespaceTo,
-          offset: opts.offset
-        }, errorArr), {
+        }, function (_ref2) {
+          var whitespaceFrom = _ref2[0],
+              whitespaceTo = _ref2[1];
+          return isSingleSpace(str, {
+            from: whitespaceFrom,
+            to: whitespaceTo,
+            offset: opts.offset
+          }, errorArr);
+        }, {
           from: charStart,
           to: charEnd
         });
       } else {
-        processCommaSeparated__default['default'](str, {
+        stringProcessCommaSeparated.processCommaSep(str, {
           offset: opts.offset,
           oneSpaceAfterCommaOK: false,
           leadingWhitespaceOK: true,
           trailingWhitespaceOK: true,
-          cb: (idxFrom, idxTo) => {
-            const extractedValue = str.slice(idxFrom - opts.offset, idxTo - opts.offset);
-            validateValue$1(str, { ...opts,
+          cb: function cb(idxFrom, idxTo) {
+            var extractedValue = str.slice(idxFrom - opts.offset, idxTo - opts.offset); // if there are errors, validateValue() mutates the passed "errorArr",
+            // pushing to it
+            // Object assign needed to retain opts.multipleOK
+
+            validateValue$1(str, _objectSpread__default['default'](_objectSpread__default['default']({}, opts), {}, {
               from: idxFrom - opts.offset,
               to: idxTo - opts.offset,
               attribStarts: charStart,
               attribEnds: charEnd,
               offset: opts.offset
-            }, errorArr);
+            }), errorArr);
           },
-          errCb: (ranges, message) => {
-            let fix = {
-              ranges
-            };
+          errCb: function errCb(ranges, message) {
+            var fix = {
+              ranges: ranges
+            }; // Some bad whitespace errors like spaces in the middle or URL
+            // can't be fixed. We need to cater those cases.
+
             if (!str[ranges[0][0] - opts.offset].trim().length && str[ranges[0][0] - opts.offset - 1] && charStart < ranges[0][0] - 1 && (opts.separator === "space" || str[ranges[0][0] - opts.offset - 1] !== "," && str[ranges[0][1] - opts.offset] !== ",")) {
+              // if it's not outer whitespace, skip the fix
               fix = null;
             }
+
             errorArr.push({
               idxFrom: ranges[0][0],
               idxTo: ranges[ranges.length - 1][1],
-              message,
-              fix
+              message: message,
+              fix: fix
             });
           }
         });
       }
-    } else {
+    } else { // we pass whole value to validateValue(), "cropping" the whitespace:
+
       validateValue$1(str, {
         from: charStart,
         to: charEnd,
@@ -4122,29 +4567,34 @@ function validateUri(str, originalOpts) {
       }, errorArr);
     }
   }
+
   return errorArr;
 }
 
-function attributeValidateAction(context, ...opts) {
+function attributeValidateAction(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "action") {
+        // validate the parent
         if (node.parent.tagName !== "form") {
           context.report({
             ruleId: "attribute-validate-action",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         } else {
+          // Call validation upon whole attribute's value. Validator includes
+          // whitespace checks.
           validateUri(node.attribValueRaw, {
             offset: node.attribValueStartsAt,
             multipleOK: false
-          }).forEach(errorObj => {
-            context.report({ ...errorObj,
+          }).forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-action"
-            });
+            }));
           });
         }
       }
@@ -4152,80 +4602,108 @@ function attributeValidateAction(context, ...opts) {
   };
 }
 
-function attributeValidateAlign(context, ...opts) {
+function attributeValidateAlign(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "align") {
+        // validate the parent
         if (!["applet", "caption", "iframe", "img", "input", "object", "legend", "table", "hr", "div", "h1", "h2", "h3", "h4", "h5", "h6", "p", "col", "colgroup", "tbody", "td", "tfoot", "th", "thead", "tr"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-align",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
-        let errorArr = [];
+        } // check in two parts, first, a quick try, match the most common values only
+
+
+        var errorArr = [];
+
         if (["legend", "caption"].includes(node.parent.tagName.toLowerCase())) {
-          errorArr = validateString(node.attribValueRaw,
-          node.attribValueStartsAt,
+          // top|bottom|left|right
+          errorArr = validateString(node.attribValueRaw, // value
+          node.attribValueStartsAt, // offset
           {
             permittedValues: ["top", "bottom", "left", "right"],
             canBeCommaSeparated: false
           });
         } else if (["applet", "iframe", "img", "input", "object"].includes(node.parent.tagName.toLowerCase())) {
-          errorArr = validateString(node.attribValueRaw,
-          node.attribValueStartsAt,
+          // top|middle|bottom|left|right
+          errorArr = validateString(node.attribValueRaw, // value
+          node.attribValueStartsAt, // offset
           {
             permittedValues: ["top", "middle", "bottom", "left", "right"],
             canBeCommaSeparated: false
           });
         } else if (["table", "hr"].includes(node.parent.tagName.toLowerCase())) {
-          errorArr = validateString(node.attribValueRaw,
-          node.attribValueStartsAt,
+          // left|center|right
+          errorArr = validateString(node.attribValueRaw, // value
+          node.attribValueStartsAt, // offset
           {
             permittedValues: ["left", "center", "right"],
             canBeCommaSeparated: false
           });
         } else if (["div", "h1", "h2", "h3", "h4", "h5", "h6", "p"].includes(node.parent.tagName.toLowerCase())) {
-          errorArr = validateString(node.attribValueRaw,
-          node.attribValueStartsAt,
+          // left|center|right|justify
+          errorArr = validateString(node.attribValueRaw, // value
+          node.attribValueStartsAt, // offset
           {
             permittedValues: ["left", "center", "right", "justify"],
             canBeCommaSeparated: false
           });
         } else if (["col", "colgroup", "tbody", "td", "tfoot", "th", "thead", "tr"].includes(node.parent.tagName.toLowerCase())) {
-          errorArr = validateString(node.attribValueRaw,
-          node.attribValueStartsAt,
+          // left|center|right|justify|char
+          errorArr = validateString(node.attribValueRaw, // value
+          node.attribValueStartsAt, // offset
           {
             permittedValues: ["left", "center", "right", "justify", "char"],
             canBeCommaSeparated: false
           });
         }
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-align"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function validateColor(str, idxOffset, opts) {
-  const {
-    charStart,
-    charEnd,
-    errorArr
-  } = checkForWhitespace(str, idxOffset);
-  if (Number.isInteger(charStart)) {
-    const attrVal = errorArr.length ? str.slice(charStart, charEnd) : str;
+var defaults$2 = {
+  namedCssLevel1OK: true,
+  namedCssLevel2PlusOK: true,
+  hexThreeOK: false,
+  hexFourOK: false,
+  hexSixOK: true,
+  hexEightOK: false
+};
+
+function validateColor(str, idxOffset, originalOpts) {
+  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults$2), originalOpts); // we get trimmed string start and end positions, also an encountered errors array
+
+
+  var _checkForWhitespace = checkForWhitespace(str, idxOffset),
+      charStart = _checkForWhitespace.charStart,
+      charEnd = _checkForWhitespace.charEnd,
+      errorArr = _checkForWhitespace.errorArr; // now that we know where non-whitespace chars are, evaluate them
+
+
+  if (typeof charStart === "number" && typeof charEnd === "number") {
+    // we need to extract the trimmed attribute's value
+    // either it will be "str" (no inner whitespace) or
+    // str.slice(charStart, charEnd) (whitespace found previously)
+    var attrVal = errorArr.length ? str.slice(charStart, charEnd) : str;
+
     if (attrVal.length > 1 && isLetter(attrVal[0]) && isLetter(attrVal[1]) && Object.keys(extendedColorNames).includes(attrVal.toLowerCase())) {
+
       if (!opts.namedCssLevel1OK) {
         errorArr.push({
           idxFrom: idxOffset + charStart,
           idxTo: idxOffset + charEnd,
-          message: `Named colors (CSS Level 1) not allowed.`,
+          message: "Named colors (CSS Level 1) not allowed.",
           fix: {
             ranges: [[idxOffset + charStart, idxOffset + charEnd, extendedColorNames[attrVal.toLowerCase()]]]
           }
@@ -4234,7 +4712,7 @@ function validateColor(str, idxOffset, opts) {
         errorArr.push({
           idxFrom: idxOffset + charStart,
           idxTo: idxOffset + charEnd,
-          message: `Named colors (CSS Level 2+) not allowed.`,
+          message: "Named colors (CSS Level 2+) not allowed.",
           fix: {
             ranges: [[idxOffset + charStart, idxOffset + charEnd, extendedColorNames[attrVal.toLowerCase()]]]
           }
@@ -4245,21 +4723,21 @@ function validateColor(str, idxOffset, opts) {
         errorArr.push({
           idxFrom: idxOffset + charStart,
           idxTo: idxOffset + charEnd,
-          message: `Hex color code should be 6 digits-long.`,
+          message: "Hex color code should be 6 digits-long.",
           fix: null
         });
       } else if (!sixDigitHexColorRegex.test(attrVal)) {
         errorArr.push({
           idxFrom: idxOffset + charStart,
           idxTo: idxOffset + charEnd,
-          message: `Unrecognised hex code.`,
+          message: "Unrecognised hex code.",
           fix: null
         });
       } else if (!opts.hexSixOK) {
         errorArr.push({
           idxFrom: idxOffset + charStart,
           idxTo: idxOffset + charEnd,
-          message: `Hex colors not allowed.`,
+          message: "Hex colors not allowed.",
           fix: null
         });
       }
@@ -4267,44 +4745,51 @@ function validateColor(str, idxOffset, opts) {
       errorArr.push({
         idxFrom: idxOffset + charStart,
         idxTo: idxOffset + charEnd,
-        message: `rgb() is not allowed.`,
+        message: "rgb() is not allowed.",
         fix: null
       });
     } else {
       errorArr.push({
         idxFrom: idxOffset + charStart,
         idxTo: idxOffset + charEnd,
-        message: `Unrecognised color value.`,
+        message: "Unrecognised color value.",
         fix: null
       });
     }
   }
+
   return errorArr;
 }
 
-function attributeValidateAlink(context, ...opts) {
+function attributeValidateAlink(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) { // console.log(
+      //   `015 attributeValidateAlink(): node = ${JSON.stringify(node, null, 4)}`
+      // );
+
       if (node.attribName === "alink") {
+        // validate the parent
         if (node.parent.tagName !== "body") {
           context.report({
             ruleId: "attribute-validate-alink",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
+
+
         if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
             ruleId: "attribute-validate-alink",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Missing value.`,
+            message: "Missing value.",
             fix: null
           });
         } else {
-          const errorArr = validateColor(node.attribValueRaw, node.attribValueStartsAt, {
+          var errorArr = validateColor(node.attribValueRaw, node.attribValueStartsAt, {
             namedCssLevel1OK: true,
             namedCssLevel2PlusOK: true,
             hexThreeOK: false,
@@ -4312,10 +4797,10 @@ function attributeValidateAlink(context, ...opts) {
             hexSixOK: true,
             hexEightOK: false
           });
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-alink"
-            });
+            }));
           });
         }
       }
@@ -4323,35 +4808,39 @@ function attributeValidateAlink(context, ...opts) {
   };
 }
 
-function attributeValidateAlt(context, ...opts) {
+function attributeValidateAlt(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "alt") {
+        // validate the parent
         if (!["applet", "area", "img", "input"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-alt",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
+
+
         if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
             ruleId: "attribute-validate-alt",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Missing value.`,
+            message: "Missing value.",
             fix: null
           });
         } else {
-          const {
-            errorArr
-          } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          // only check for rogue whitespace - value can be any CDATA
+          var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+              errorArr = _checkForWhitespace.errorArr;
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-alt"
-            });
+            }));
           });
         }
       }
@@ -4359,46 +4848,55 @@ function attributeValidateAlt(context, ...opts) {
   };
 }
 
-function attributeValidateArchive(context, ...opts) {
+function attributeValidateArchive(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "archive") {
+        // validate the parent
         if (!["applet", "object"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-archive",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         } else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
+          // maybe value is missing anyway?
           context.report({
-            ruleId: `attribute-validate-${node.attribName}`,
+            ruleId: "attribute-validate-" + node.attribName,
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Missing value.`,
+            message: "Missing value.",
             fix: null
           });
-        }
+        } // it depends, which tag is this attribute on...
         else if (node.parent.tagName === "applet") {
+            // comma-separated list of archive URIs
+            // Call validation upon the whole attribute's value. Validator includes
+            // whitespace checks.
             validateUri(node.attribValueRaw, {
               offset: node.attribValueStartsAt,
               separator: "comma",
               multipleOK: true
-            }).forEach(errorObj => {
-              context.report({ ...errorObj,
+            }).forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-archive"
-              });
+              }));
             });
           } else if (node.parent.tagName === "object") {
+            // space-separated list of URIs
+            // Call validation upon the whole attribute's value. Validator includes
+            // whitespace checks.
             validateUri(node.attribValueRaw, {
               offset: node.attribValueStartsAt,
               separator: "space",
               multipleOK: true
-            }).forEach(errorObj => {
-              context.report({ ...errorObj,
+            }).forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-archive"
-              });
+              }));
             });
           }
       }
@@ -4406,35 +4904,38 @@ function attributeValidateArchive(context, ...opts) {
   };
 }
 
-function attributeValidateAxis(context, ...opts) {
+function attributeValidateAxis(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "axis") {
+        // validate the parent
         if (!["td", "th"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-axis",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         }
+
         if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
             ruleId: "attribute-validate-axis",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Missing value.`,
+            message: "Missing value.",
             fix: null
           });
         } else {
-          const {
-            errorArr
-          } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          // only check for rogue whitespace - value can be any CDATA
+          var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+              errorArr = _checkForWhitespace.errorArr;
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-axis"
-            });
+            }));
           });
         }
       }
@@ -4442,26 +4943,30 @@ function attributeValidateAxis(context, ...opts) {
   };
 }
 
-function attributeValidateBackground(context, ...opts) {
+function attributeValidateBackground(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "background") {
+        // validate the parent
         if (!["body", "td"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-background",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         } else {
+          // Call validation upon the whole attribute's value. Validator includes
+          // whitespace checks.
           validateUri(node.attribValueRaw, {
             offset: node.attribValueStartsAt,
             multipleOK: false
-          }).forEach(errorObj => {
-            context.report({ ...errorObj,
+          }).forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-background"
-            });
+            }));
           });
         }
       }
@@ -4469,29 +4974,35 @@ function attributeValidateBackground(context, ...opts) {
   };
 }
 
-function attributeValidateBgcolor(context, ...opts) {
+function attributeValidateBgcolor(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) { // console.log(
+      //   `015 attributeValidateBgcolor(): node = ${JSON.stringify(node, null, 4)}`
+      // );
+
       if (node.attribName === "bgcolor") {
+        // validate the parent
         if (!["table", "tr", "td", "th", "body"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-bgcolor",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
+
+
         if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
             ruleId: "attribute-validate-bgcolor",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Missing value.`,
+            message: "Missing value.",
             fix: null
           });
         } else {
-          const errorArr = validateColor(node.attribValueRaw, node.attribValueStartsAt, {
+          var errorArr = validateColor(node.attribValueRaw, node.attribValueStartsAt, {
             namedCssLevel1OK: true,
             namedCssLevel2PlusOK: true,
             hexThreeOK: false,
@@ -4499,10 +5010,10 @@ function attributeValidateBgcolor(context, ...opts) {
             hexSixOK: true,
             hexEightOK: false
           });
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-bgcolor"
-            });
+            }));
           });
         }
       }
@@ -4510,354 +5021,432 @@ function attributeValidateBgcolor(context, ...opts) {
   };
 }
 
-function validateValue$2({
-  str,
-  opts,
-  charStart,
-  charEnd,
-  idxOffset,
-  errorArr
-}) {
+var defaultOpts = {
+  type: "integer",
+  whitelistValues: [],
+  theOnlyGoodUnits: null,
+  plusOK: false,
+  negativeOK: false,
+  zeroOK: true,
+  badUnits: [],
+  enforceCount: null,
+  noUnitsIsFine: true,
+  canBeCommaSeparated: false,
+  customGenericValueError: null,
+  skipWhitespaceChecks: false,
+  customPxMessage: null,
+  maxValue: null
+};
+
+function validateValue$2(_ref) {
+  var str = _ref.str,
+      opts = _ref.opts,
+      charStart = _ref.charStart,
+      charEnd = _ref.charEnd,
+      idxOffset = _ref.idxOffset,
+      errorArr = _ref.errorArr;
+  // the rule is for pattern digit(s) + unit, so start from checking, does it
+  // start with a digit // insurance
+
   if (typeof str !== "string") {
     return;
-  }
+  } // applies to rational and integer types
+
+
   if (str[charStart] === "0") {
     if (charEnd === charStart + 1) {
+      // so length === 1
       if (!opts.zeroOK) {
         errorArr.push({
           idxFrom: idxOffset + charStart,
           idxTo: idxOffset + charEnd,
-          message: `Zero not allowed.`,
+          message: "Zero not allowed.",
           fix: null
         });
       }
     } else if ("0123456789".includes(str[charStart + 1])) {
+      // we have padded cases like 08
       errorArr.push({
         idxFrom: idxOffset + charStart,
         idxTo: idxOffset + charEnd,
-        message: `Number padded with zero.`,
+        message: "Number padded with zero.",
         fix: null
       });
     }
   }
-  if (!"0123456789".includes(str[charStart]) && !"0123456789".includes(str[charEnd - 1])) {
-    let message = `Digits missing.`;
+
+  if (!"0123456789".includes(str[charStart]) && !"0123456789".includes(str[charEnd - 1])) { // calculate the message
+
+    var message = "Digits missing.";
+
     if (opts.customGenericValueError) {
       message = opts.customGenericValueError;
     } else if (Array.isArray(opts.theOnlyGoodUnits) && !opts.theOnlyGoodUnits.length && opts.type === "integer") {
-      message = `Should be integer, no units.`;
+      message = "Should be integer, no units.";
     }
+
     errorArr.push({
       idxFrom: idxOffset + charStart,
       idxTo: idxOffset + charEnd,
-      message,
+      message: message,
       fix: null
     });
   } else if ("0123456789".includes(str[charStart]) && "0123456789".includes(str[charEnd - 1]) && (!opts.noUnitsIsFine || opts.type === "integer" && opts.maxValue && str.slice(charStart, charEnd).match(/^\d+$/) && Number.parseInt(str.slice(charStart, charEnd), 10) > opts.maxValue)) {
+
     if (!opts.noUnitsIsFine) {
       errorArr.push({
         idxFrom: idxOffset + charStart,
         idxTo: idxOffset + charEnd,
-        message: opts.customGenericValueError || `Units missing.`,
+        message: opts.customGenericValueError || "Units missing.",
         fix: null
       });
     } else {
       errorArr.push({
         idxFrom: idxOffset + charStart,
         idxTo: idxOffset + charEnd,
-        message: `Maximum, ${opts.maxValue} exceeded.`,
+        message: "Maximum, " + opts.maxValue + " exceeded.",
         fix: null
       });
     }
   } else {
-    for (let i = charStart; i < charEnd; i++) {
+
+    for (var i = charStart; i < charEnd; i++) {
+
       if (!"0123456789".includes(str[i]) && (str[i] !== "." || opts.type !== "rational") && (str[i] !== "-" || !(opts.negativeOK && i === 0)) && (str[i] !== "+" || !(opts.plusOK && i === 0))) {
-        const endPart = str.slice(i, charEnd);
-        if (isObj(opts) && (Array.isArray(opts.theOnlyGoodUnits) && !opts.theOnlyGoodUnits.includes(endPart) || Array.isArray(opts.badUnits) && opts.badUnits.includes(endPart))) {
+        // dash can be in the middle! For example, colspan="1-1"
+        var endPart = str.slice(i, charEnd);
+
+        if (isObj(opts) && (Array.isArray(opts.theOnlyGoodUnits) && !opts.theOnlyGoodUnits.includes(endPart) || Array.isArray(opts.badUnits) && opts.badUnits.includes(endPart))) { // special case for "px"
+
           if (endPart === "px") {
-            const message = opts.customPxMessage ? opts.customPxMessage : `Remove px.`;
+            var _message = opts.customPxMessage ? opts.customPxMessage : "Remove px.";
+
             errorArr.push({
               idxFrom: idxOffset + i,
               idxTo: idxOffset + charEnd,
-              message,
+              message: _message,
               fix: opts.customPxMessage ? null : {
                 ranges: [[idxOffset + i, idxOffset + charEnd]]
               }
             });
           } else {
-            let message = `Bad unit.`;
+            // validate against the known units and serve a separate
+            // message, depending on was it recognised
+            // calculate the message
+            var _message2 = "Bad unit.";
+
             if (str.match(/-\s*-/g)) {
-              message = `Repeated minus.`;
+              _message2 = "Repeated minus.";
             } else if (str.match(/\+\s*\+/g)) {
-              message = `Repeated plus.`;
+              _message2 = "Repeated plus.";
             } else if (Array.isArray(opts.theOnlyGoodUnits) && opts.theOnlyGoodUnits.length && opts.theOnlyGoodUnits.includes(endPart.trim())) {
-              message = "Rogue whitespace.";
+              // if trimmed end part matches "good" units, it's the whitespace
+              _message2 = "Rogue whitespace.";
             } else if (opts.customGenericValueError) {
-              message = opts.customGenericValueError;
+              _message2 = opts.customGenericValueError;
             } else if (Array.isArray(opts.theOnlyGoodUnits) && !opts.theOnlyGoodUnits.length && opts.type === "integer") {
-              message = `Should be integer, no units.`;
+              _message2 = "Should be integer, no units.";
             }
+
             errorArr.push({
               idxFrom: idxOffset + i,
               idxTo: idxOffset + charEnd,
-              message,
+              message: _message2,
               fix: null
             });
           }
         } else if (!knownUnits.includes(endPart)) {
-          let message = "Unrecognised unit.";
+          var _message3 = "Unrecognised unit.";
+
           if (/\d/.test(endPart)) {
-            message = "Messy value.";
+            _message3 = "Messy value.";
           } else if (knownUnits.includes(endPart.trim())) {
-            message = "Rogue whitespace.";
+            _message3 = "Rogue whitespace.";
           }
+
           errorArr.push({
             idxFrom: idxOffset + i,
             idxTo: idxOffset + charEnd,
-            message,
+            message: _message3,
             fix: null
           });
-        }
+        } // stop the loop
+
+
         break;
       }
     }
   }
-}
+} // function below is used to validate attribute values which contain
+// digits and a unit, for example, "100%" of an HTML attribute
+// width="100%"
+// or
+// "100%" of CSS head style "width:100%;"
+// it returns array of ready error objects, except without ruleId, something like:
+//
+// {
+//   idxFrom: 17,
+//   idxTo: 19,
+//   message: `Remove px.`,
+//   fix: {
+//     ranges: [[17, 19]]
+//   }
+// }
+//
+// if it can't fix, key "fix" value is null
+
+
 function validateDigitAndUnit(str, idxOffset, originalOpts) {
   if (typeof str !== "string") {
     return [];
   }
-  const defaultOpts = {
-    type: "integer",
-    whitelistValues: [],
-    theOnlyGoodUnits: null,
-    plusOK: false,
-    negativeOK: false,
-    zeroOK: true,
-    badUnits: [],
-    enforceCount: null,
-    noUnitsIsFine: true,
-    canBeCommaSeparated: false,
-    customGenericValueError: null,
-    skipWhitespaceChecks: false,
-    customPxMessage: null,
-    maxValue: null
-  };
-  const opts = { ...defaultOpts,
-    ...originalOpts
-  };
-  let charStart = 0;
-  let charEnd = str.length;
-  let errorArr = [];
+
+  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaultOpts), originalOpts); // we get trimmed string start and end positions, also an encountered errors array
+
+
+  var charStart = 0;
+  var charEnd = str.length;
+  var errorArr = [];
+
   if (!opts.skipWhitespaceChecks) {
-    const retrievedWhitespaceChecksObj = checkForWhitespace(str, idxOffset);
+    var retrievedWhitespaceChecksObj = checkForWhitespace(str, idxOffset);
     charStart = retrievedWhitespaceChecksObj.charStart;
     charEnd = retrievedWhitespaceChecksObj.charEnd;
     errorArr = retrievedWhitespaceChecksObj.errorArr;
-  }
+  } // now that we know where non-whitespace chars are, evaluate them
+
   if (Number.isInteger(charStart)) {
-    if (opts.canBeCommaSeparated) {
-      const extractedValues = [];
-      processCommaSeparated__default['default'](str, {
+
+    if (opts.canBeCommaSeparated) { // split by comma and process each
+
+      var extractedValues = [];
+      stringProcessCommaSeparated.processCommaSep(str, {
         offset: idxOffset,
         oneSpaceAfterCommaOK: false,
         leadingWhitespaceOK: true,
         trailingWhitespaceOK: true,
-        cb: (idxFrom, idxTo) => {
-          const extractedValue = str.slice(idxFrom - idxOffset, idxTo - idxOffset);
+        cb: function cb(idxFrom, idxTo) {
+          var extractedValue = str.slice(idxFrom - idxOffset, idxTo - idxOffset); // if the value is not whitelisted, evaluate it
+
           if (!Array.isArray(opts.whitelistValues) || !opts.whitelistValues.includes(extractedValue)) {
             validateValue$2({
-              str,
-              opts,
+              str: str,
+              opts: opts,
               charStart: idxFrom - idxOffset,
               charEnd: idxTo - idxOffset,
-              idxOffset,
-              errorArr
+              idxOffset: idxOffset,
+              errorArr: errorArr
             });
           }
+
           extractedValues.push(extractedValue);
         },
-        errCb: (ranges, message) => {
+        errCb: function errCb(ranges, message) {
           errorArr.push({
             idxFrom: ranges[0][0],
             idxTo: ranges[ranges.length - 1][1],
-            message,
+            message: message,
             fix: {
-              ranges
+              ranges: ranges
             }
           });
         }
-      });
+      }); // enforce the "extractedValues" count
+
       if (Number.isInteger(opts.enforceCount) && extractedValues.length !== opts.enforceCount) {
         errorArr.push({
           idxFrom: charStart + idxOffset,
           idxTo: charEnd + idxOffset,
-          message: `There should be ${opts.enforceCount} values.`,
+          message: "There should be " + opts.enforceCount + " values.",
           fix: null
         });
-      } else if (typeof opts.enforceCount === "string" && ["even", "odd", "uneven", "noneven"].includes(opts.enforceCount.toLowerCase())) {
+      } else if (typeof opts.enforceCount === "string" && ["even", "odd"].includes(opts.enforceCount.toLowerCase())) {
         if (opts.enforceCount.toLowerCase() === "even" && extractedValues.length % 2 !== 0) {
           errorArr.push({
             idxFrom: charStart + idxOffset,
             idxTo: charEnd + idxOffset,
-            message: `Should be an even number of values but found ${extractedValues.length}.`,
+            message: "Should be an even number of values but found " + extractedValues.length + ".",
             fix: null
           });
         } else if (opts.enforceCount.toLowerCase() !== "even" && extractedValues.length % 2 === 0) {
           errorArr.push({
             idxFrom: charStart + idxOffset,
             idxTo: charEnd + idxOffset,
-            message: `Should be an odd number of values but found ${extractedValues.length}.`,
+            message: "Should be an odd number of values but found " + extractedValues.length + ".",
             fix: null
           });
         }
       }
-    } else {
+    } else { // if the value is not whitelisted, evaluate it
+
       if (!Array.isArray(opts.whitelistValues) || !opts.whitelistValues.includes(str.slice(charStart, charEnd))) {
         validateValue$2({
-          str,
-          opts,
-          charStart,
-          charEnd,
-          idxOffset,
-          errorArr
+          str: str,
+          opts: opts,
+          charStart: charStart,
+          charEnd: charEnd,
+          idxOffset: idxOffset,
+          errorArr: errorArr
         });
       }
     }
   }
+
   return errorArr;
 }
 
-function attributeValidateBorder(context, ...opts) {
+function attributeValidateBorder(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) { // console.log(
+      //   `015 attributeValidateBorder(): node = ${JSON.stringify(node, null, 4)}`
+      // );
+
       if (node.attribName === "border") {
+        // validate the parent
         if (!["table", "img", "object"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-border",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         }
-        const errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
+
+        var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           type: "integer",
           negativeOK: false,
           theOnlyGoodUnits: []
         });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-border"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateCellpadding(context, ...opts) {
+function attributeValidateCellpadding(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) { // console.log(
+      //   `015 attributeValidateCellpadding(): node = ${JSON.stringify(node, null, 4)}`
+      // );
+
       if (node.attribName === "cellpadding") {
+        // validate the parent
         if (node.parent.tagName !== "table") {
           context.report({
             ruleId: "attribute-validate-cellpadding",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         }
-        const errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
+
+        var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           type: "integer",
           negativeOK: false,
           theOnlyGoodUnits: ["%"],
           badUnits: ["px"],
           customGenericValueError: "Should be integer, either no units or percentage."
         });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-cellpadding"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateCellspacing(context, ...opts) {
+function attributeValidateCellspacing(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) { // console.log(
+      //   `015 attributeValidateCellspacing(): node = ${JSON.stringify(node, null, 4)}`
+      // );
+
       if (node.attribName === "cellspacing") {
+        // validate the parent
         if (node.parent.tagName !== "table") {
           context.report({
             ruleId: "attribute-validate-cellspacing",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         }
-        const errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
+
+        var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           type: "integer",
           negativeOK: false,
           theOnlyGoodUnits: ["%"],
           badUnits: ["px"],
           customGenericValueError: "Should be integer, either no units or percentage."
         });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-cellspacing"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateChar(context, ...opts) {
+function attributeValidateChar(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "char") {
+        // validate the parent
         if (!["col", "colgroup", "tbody", "td", "tfoot", "th", "thead", "tr"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-char",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
+
+
         if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
             ruleId: "attribute-validate-char",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Missing value.`,
+            message: "Missing value.",
             fix: null
           });
         } else {
-          const {
-            charStart,
-            charEnd,
-            errorArr,
-            trimmedVal
-          } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-          if (Number.isInteger(charStart)) {
+          var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+              charStart = _checkForWhitespace.charStart,
+              charEnd = _checkForWhitespace.charEnd,
+              errorArr = _checkForWhitespace.errorArr,
+              trimmedVal = _checkForWhitespace.trimmedVal;
+
+          if (typeof charStart === "number" && typeof charEnd === "number") {
+            // the value must be a character, raw or escaped, from ISO10646
+            // https://www.w3.org/TR/html4/sgml/dtd.html#Character
             if (trimmedVal.length > 1 && !(trimmedVal.startsWith("&") && trimmedVal.endsWith(";"))) {
               errorArr.push({
                 idxFrom: node.attribValueStartsAt + charStart,
                 idxTo: node.attribValueStartsAt + charEnd,
-                message: `Should be a single character.`,
+                message: "Should be a single character.",
                 fix: null
               });
             }
           }
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-char"
-            });
+            }));
           });
         }
       }
@@ -4865,46 +5454,54 @@ function attributeValidateChar(context, ...opts) {
   };
 }
 
-function attributeValidateCharoff(context, ...opts) {
+function attributeValidateCharoff(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "charoff") {
+        // validate the parent
         if (!["col", "colgroup", "tbody", "td", "tfoot", "th", "thead", "tr"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-charoff",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
+
+
         if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
             ruleId: "attribute-validate-charoff",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Missing value.`,
+            message: "Missing value.",
             fix: null
           });
         } else {
-          const errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
+          var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
             type: "integer",
             negativeOK: true,
             theOnlyGoodUnits: [],
             customGenericValueError: "Should be integer, no units."
-          });
-          if (!node.parent.attribs.some(attribObj => attribObj.attribName === "char")) {
+          }); // tag has to have "char" attribute:
+
+          if (!node.parent.attribs.some(function (attribObj) {
+            return attribObj.attribName === "char";
+          })) {
             errorArr.push({
               idxFrom: node.parent.start,
               idxTo: node.parent.end,
-              message: `Attribute "char" missing.`,
+              message: "Attribute \"char\" missing.",
               fix: null
             });
           }
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-charoff"
-            });
+            }));
           });
         }
       }
@@ -4912,38 +5509,45 @@ function attributeValidateCharoff(context, ...opts) {
   };
 }
 
-function attributeValidateCharset(context, ...opts) {
+function attributeValidateCharset(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "charset") {
+        // validate the parent
         if (!["a", "link", "script"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-charset",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
+
+
         if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
             ruleId: "attribute-validate-charset",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Missing value.`,
+            message: "Missing value.",
             fix: null
           });
         } else {
-          const errorArr = validateString(node.attribValueRaw, node.attribValueStartsAt, {
+          // validate against the charsets list from IANA:
+          // https://www.iana.org/assignments/character-sets/character-sets.xhtml
+          // https://www.w3.org/TR/html4/interact/forms.html#adef-charset
+          var errorArr = validateString(node.attribValueRaw, node.attribValueStartsAt, {
             canBeCommaSeparated: false,
             noSpaceAfterComma: false,
             quickPermittedValues: [],
             permittedValues: knownCharsets
           });
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-charset"
-            });
+            }));
           });
         }
       }
@@ -4952,27 +5556,38 @@ function attributeValidateCharset(context, ...opts) {
 }
 
 function validateVoid(node, context, errorArr, originalOpts) {
-  const defaults = {
+  //
+  // prepare the opts
+  //
+  var defaults = {
     xhtml: false,
     enforceSiblingAttributes: null
   };
-  const opts = { ...defaults,
-    ...originalOpts
-  };
+
+  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts); //
+  // further validation only applicable to input tags:
+  //
+
+
   if (opts.xhtml) {
-    let quotesType = `"`;
-    if (node.attribOpeningQuoteAt !== null && context.str[node.attribOpeningQuoteAt] === `'`) {
-      quotesType = `'`;
-    } else if (node.attribClosingQuoteAt !== null && context.str[node.attribClosingQuoteAt] === `'`) {
-      quotesType = `'`;
-    }
-    if (node.attribValueRaw !== node.attribName || context.str.slice(node.attribNameEndsAt, node.attribEnds) !== `=${quotesType}${node.attribName}${quotesType}`) {
+    // XHTML mode - enforcing node.attribName="node.attribName"
+    var quotesType = "\"";
+
+    if (node.attribOpeningQuoteAt !== null && context.str[node.attribOpeningQuoteAt] === "'") {
+      quotesType = "'";
+    } else if (node.attribClosingQuoteAt !== null && context.str[node.attribClosingQuoteAt] === "'") {
+      quotesType = "'";
+    } // equal might be missing or there might be some rogue whitespace,
+    // for example - only value check is not enough
+
+
+    if (node.attribValueRaw !== node.attribName || context.str.slice(node.attribNameEndsAt, node.attribEnds) !== "=" + quotesType + node.attribName + quotesType) {
       errorArr.push({
         idxFrom: node.attribNameStartsAt,
         idxTo: node.attribNameEndsAt,
-        message: `It's XHTML, add value, ="${node.attribName}".`,
+        message: "It's XHTML, add value, =\"" + node.attribName + "\".",
         fix: {
-          ranges: [[node.attribNameEndsAt, node.attribEnds, `=${quotesType}${node.attribName}${quotesType}`]]
+          ranges: [[node.attribNameEndsAt, node.attribEnds, "=" + quotesType + node.attribName + quotesType]]
         }
       });
     }
@@ -4980,73 +5595,89 @@ function validateVoid(node, context, errorArr, originalOpts) {
     errorArr.push({
       idxFrom: node.attribNameEndsAt,
       idxTo: node.attribEnds,
-      message: `Should have no value.`,
+      message: "Should have no value.",
       fix: {
         ranges: [[node.attribNameEndsAt, node.attribEnds]]
       }
     });
   }
+
   if (isObj(opts.enforceSiblingAttributes) && Object.keys(opts.enforceSiblingAttributes).length) {
-    Object.keys(opts.enforceSiblingAttributes).forEach(siblingAttr => {
-      if (Array.isArray(node.parent.attribs) && !node.parent.attribs.some(attribObj => attribObj.attribName === siblingAttr)) {
+    Object.keys(opts.enforceSiblingAttributes).forEach(function (siblingAttr) {
+
+      if (Array.isArray(node.parent.attribs) && !node.parent.attribs.some(function (attribObj) {
+        return attribObj.attribName === siblingAttr;
+      })) {
+        // parent tag is missing the requested attribute
         errorArr.push({
           idxFrom: node.parent.start,
           idxTo: node.parent.end,
-          message: `Should have attribute "${siblingAttr}".`,
+          message: "Should have attribute \"" + siblingAttr + "\".",
           fix: null
         });
-      } else if (opts.enforceSiblingAttributes[siblingAttr] && Array.isArray(opts.enforceSiblingAttributes[siblingAttr]) && Array.isArray(node.parent.attribs) && !node.parent.attribs.some(attribObj => attribObj.attribName === siblingAttr && opts.enforceSiblingAttributes[siblingAttr].includes(attribObj.attribValueRaw))) {
-        let idxFrom;
-        let idxTo;
-        for (let i = 0, len = node.parent.attribs.length; i < len; i++) {
+      } else if (opts.enforceSiblingAttributes[siblingAttr] && Array.isArray(opts.enforceSiblingAttributes[siblingAttr]) && Array.isArray(node.parent.attribs) && !node.parent.attribs.some(function (attribObj) {
+        return attribObj.attribName === siblingAttr && opts.enforceSiblingAttributes[siblingAttr].includes(attribObj.attribValueRaw);
+      })) {
+        // enforce that, for example, "node.attribName"
+        // should be present only on input tags of types
+        // "checkbox" or "radio"
+        // find out where that "type" attribute is located
+        var idxFrom;
+        var idxTo;
+
+        for (var i = 0, len = node.parent.attribs.length; i < len; i++) {
           if (node.parent.attribs[i].attribName === siblingAttr) {
             idxFrom = node.parent.attribs[i].attribValueStartsAt;
             idxTo = node.parent.attribs[i].attribValueEndsAt;
             break;
           }
         }
+
         errorArr.push({
-          idxFrom,
-          idxTo,
-          message: `Only tags with ${opts.enforceSiblingAttributes[siblingAttr].map(val => `"${val}"`).join(" or ")} attributes can be ${node.attribName}.`,
+          idxFrom: idxFrom,
+          idxTo: idxTo,
+          message: "Only tags with " + opts.enforceSiblingAttributes[siblingAttr].map(function (val) {
+            return "\"" + val + "\"";
+          }).join(" or ") + " attributes can be " + node.attribName + ".",
           fix: null
         });
       }
     });
   }
+
   return errorArr;
 }
 
-function attributeValidateChecked(context, ...originalOpts) {
+function attributeValidateChecked(context, mode) {
   return {
-    attribute(node) {
-      const opts = {
-        xhtml: false
-      };
-      if (Array.isArray(originalOpts) && originalOpts.length && originalOpts.some(val => val.toLowerCase() === "xhtml")) {
-        opts.xhtml = true;
-      }
-      const errorArr = [];
+    attribute: function attribute(node) {
+      var errorArr = [];
+
       if (node.attribName === "checked") {
+        // validate the parent
         if (node.parent.tagName !== "input") {
           errorArr.push({
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         } else {
-          validateVoid(node, context, errorArr, { ...opts,
+          // validate the value (or absence thereof)
+          validateVoid(node, context, errorArr, {
+            xhtml: !!mode,
             enforceSiblingAttributes: {
               type: ["checkbox", "radio"]
             }
           });
-        }
+        } // finally, report gathered errors:
+
+
         if (errorArr.length) {
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-checked"
-            });
+            }));
           });
         }
       }
@@ -5054,26 +5685,30 @@ function attributeValidateChecked(context, ...originalOpts) {
   };
 }
 
-function attributeValidateCite(context, ...opts) {
+function attributeValidateCite(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "cite") {
+        // validate the parent
         if (!["blockquote", "q", "del", "ins"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-cite",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         } else {
+          // Call validation upon the whole attribute's value. Validator includes
+          // whitespace checks.
           validateUri(node.attribValueRaw, {
             offset: node.attribValueStartsAt,
             multipleOK: false
-          }).forEach(errorObj => {
-            context.report({ ...errorObj,
+          }).forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-cite"
-            });
+            }));
           });
         }
       }
@@ -5082,96 +5717,140 @@ function attributeValidateCite(context, ...opts) {
 }
 
 function checkClassOrIdValue(str, originalOpts, errorArr) {
-  const defaults = {
+  var defaults = {
     typeName: "class",
     from: 0,
     to: str.length,
     offset: 0
   };
-  const opts = { ...defaults,
-    ...originalOpts
-  };
-  const listOfUniqueNames = new Set();
-  splitByWhitespace(
-  str,
-  ([charFrom, charTo]) => {
-    const extractedName = str.slice(charFrom, charTo);
+
+  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
+  var listOfUniqueNames = new Set();
+  splitByWhitespace( //
+  //
+  //
+  //
+  //
+  //
+  //
+  str, //
+  //
+  //
+  //
+  //
+  //
+  //
+  function (_ref) {
+    var charFrom = _ref[0],
+        charTo = _ref[1];
+    // value starts at "from" and ends at "to" // evaluate
+
+    var extractedName = str.slice(charFrom, charTo);
+
     if (!classNameRegex.test(extractedName)) {
       errorArr.push({
         idxFrom: charFrom,
         idxTo: charTo,
-        message: `Wrong ${opts.typeName} name.`,
+        message: "Wrong " + opts.typeName + " name.",
         fix: null
       });
-    }
+    } // check for unique-ness
+
+
     if (!listOfUniqueNames.has(extractedName)) {
       listOfUniqueNames.add(extractedName);
     } else {
-      let deleteFrom = charFrom;
-      let deleteTo = charTo;
-      const nonWhitespaceCharOnTheRight = stringLeftRight.right(str, deleteTo);
+      var deleteFrom = charFrom;
+      var deleteTo = charTo;
+      var nonWhitespaceCharOnTheRight = stringLeftRight.right(str, deleteTo);
+
       if (deleteTo >= opts.to || !nonWhitespaceCharOnTheRight || nonWhitespaceCharOnTheRight > opts.to) {
-        deleteFrom = stringLeftRight.left(str, charFrom) + 1;
+        deleteFrom = stringLeftRight.left(str, charFrom) + 1; // +1 because left() stops
+        // to the left of the character - if it was without, that first non-
+        // whitespace character would have been included
       } else {
         deleteTo = nonWhitespaceCharOnTheRight;
       }
+
       errorArr.push({
         idxFrom: charFrom,
         idxTo: charTo,
-        message: `Duplicate ${opts.typeName} "${extractedName}".`,
+        message: "Duplicate " + opts.typeName + " \"" + extractedName + "\".",
         fix: {
           ranges: [[deleteFrom, deleteTo]]
         }
       });
     }
-  },
-  ([whitespaceFrom, whitespaceTo]) => isSingleSpace(str, {
-    from: whitespaceFrom,
-    to: whitespaceTo,
-    offset: opts.offset
-  }, errorArr),
-  opts
+  }, //
+  //
+  //
+  //
+  //
+  //
+  //
+  function (_ref2) {
+    var whitespaceFrom = _ref2[0],
+        whitespaceTo = _ref2[1];
+    return isSingleSpace(str, {
+      from: whitespaceFrom,
+      to: whitespaceTo,
+      offset: opts.offset
+    }, errorArr);
+  }, //
+  //
+  //
+  //
+  //
+  //
+  //
+  opts // whole opts object is being passed further
   );
 }
 
-function attributeValidateClass(context, ...opts) {
+function attributeValidateClass(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "class") {
+        // validate the parent
         if (["base", "basefont", "head", "html", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-class",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
+
+
         if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
             ruleId: "attribute-validate-class",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Missing value.`,
+            message: "Missing value.",
             fix: null
           });
         } else {
-          const {
-            charStart,
-            charEnd,
-            errorArr
-          } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-          checkClassOrIdValue(context.str, {
-            typeName: node.attribName,
-            from: node.attribValueStartsAt + charStart,
-            to: node.attribValueStartsAt + charEnd,
-            offset: 0
-          }, errorArr
-          );
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+              charStart = _checkForWhitespace.charStart,
+              charEnd = _checkForWhitespace.charEnd,
+              errorArr = _checkForWhitespace.errorArr;
+
+          if (typeof charStart === "number" && typeof charEnd === "number") {
+            checkClassOrIdValue(context.str, {
+              typeName: node.attribName,
+              from: node.attribValueStartsAt + charStart,
+              to: node.attribValueStartsAt + charEnd,
+              offset: 0
+            }, errorArr // might be mutated, more errors pushed into
+            );
+          }
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-class"
-            });
+            }));
           });
         }
       }
@@ -5179,26 +5858,30 @@ function attributeValidateClass(context, ...opts) {
   };
 }
 
-function attributeValidateClassid(context, ...opts) {
+function attributeValidateClassid(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "classid") {
+        // validate the parent
         if (node.parent.tagName !== "object") {
           context.report({
             ruleId: "attribute-validate-classid",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         } else {
+          // Call validation upon the whole attribute's value. Validator includes
+          // whitespace checks.
           validateUri(node.attribValueRaw, {
             offset: node.attribValueStartsAt,
             multipleOK: false
-          }).forEach(errorObj => {
-            context.report({ ...errorObj,
+          }).forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-classid"
-            });
+            }));
           });
         }
       }
@@ -5206,73 +5889,84 @@ function attributeValidateClassid(context, ...opts) {
   };
 }
 
-function attributeValidateClassid$1(context, ...opts) {
+function attributeValidateClassid$1(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "clear") {
+        // validate the parent
         if (node.parent.tagName !== "br") {
           context.report({
             ruleId: "attribute-validate-clear",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
-        const {
-          charStart,
-          charEnd,
-          errorArr
-        } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-        if (!["left", "all", "right", "none"].includes(context.str.slice(node.attribValueStartsAt + charStart, node.attribValueStartsAt + charEnd))) {
+        } // beware, the charStart and charEnd are not offset, their "zero" is
+        // start of an attribute's value, so if you use them, you need to
+        // offset to the true index, you must add "(node.attribValueStartsAt as number)" value
+
+
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+            charStart = _checkForWhitespace.charStart,
+            charEnd = _checkForWhitespace.charEnd,
+            errorArr = _checkForWhitespace.errorArr;
+
+        if (typeof charStart === "number" && typeof charEnd === "number" && !["left", "all", "right", "none"].includes(context.str.slice(node.attribValueStartsAt + charStart, node.attribValueStartsAt + charEnd))) {
           errorArr.push({
             idxFrom: node.attribValueStartsAt + charStart,
             idxTo: node.attribValueStartsAt + charEnd,
-            message: `Should be: left|all|right|none.`,
+            message: "Should be: left|all|right|none.",
             fix: null
           });
         }
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-clear"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateCode(context, ...opts) {
+function attributeValidateCode(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "code") {
+        // validate the parent
         if (node.parent.tagName !== "applet") {
           context.report({
             ruleId: "attribute-validate-code",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
+
+
         if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
             ruleId: "attribute-validate-code",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Missing value.`,
+            message: "Missing value.",
             fix: null
           });
         } else {
-          const {
-            charStart,
-            charEnd,
-            errorArr
-          } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          // only validate the whitespace
+          var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+              charStart = _checkForWhitespace.charStart,
+              charEnd = _checkForWhitespace.charEnd,
+              errorArr = _checkForWhitespace.errorArr;
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-code"
-            });
+            }));
           });
         }
       }
@@ -5280,26 +5974,28 @@ function attributeValidateCode(context, ...opts) {
   };
 }
 
-function attributeValidateCodebase(context, ...opts) {
+function attributeValidateCodebase(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "codebase") {
+        // validate the parent
         if (!["applet", "object"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-codebase",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         } else {
           validateUri(node.attribValueRaw, {
             offset: node.attribValueStartsAt,
             multipleOK: false
-          }).forEach(errorObj => {
-            context.report({ ...errorObj,
+          }).forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-codebase"
-            });
+            }));
           });
         }
       }
@@ -5307,60 +6003,73 @@ function attributeValidateCodebase(context, ...opts) {
   };
 }
 
-function attributeValidateCodetype(context, ...opts) {
+function attributeValidateCodetype(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "codetype") {
+        // validate the parent
         if (node.parent.tagName !== "object") {
           context.report({
             ruleId: "attribute-validate-codetype",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
-        const errorArr = validateString(node.attribValueRaw,
-        node.attribValueStartsAt,
+        } // check in two parts, first, a quick try, match the most common values only
+
+
+        var errorArr = validateString(node.attribValueRaw, // value
+        node.attribValueStartsAt, // offset
         {
           quickPermittedValues: ["application/javascript", "application/json", "application/x-www-form-urlencoded", "application/xml", "application/zip", "application/pdf", "application/sql", "application/graphql", "application/ld+json", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.oasis.opendocument.text", "application/zstd", "audio/mpeg", "audio/ogg", "multipart/form-data", "text/css", "text/html", "text/xml", "text/csv", "text/plain", "image/png", "image/jpeg", "image/gif", "application/vnd.api+json"],
           permittedValues: Object.keys(db__default['default']),
           canBeCommaSeparated: false,
           noSpaceAfterComma: false
-        });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        }); // HTML attribute accept MIME types as values. Here we reference the given
+        // value against all official MIME types, taken from IANA and other sources,
+        // https://www.npmjs.com/package/mime-db
+
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-codetype"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateColor(context, ...opts) {
+function attributeValidateColor(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) { // console.log(
+      //   `015 attributeValidateColor(): node = ${JSON.stringify(node, null, 4)}`
+      // );
+
       if (node.attribName === "color") {
+        // validate the parent
         if (!["basefont", "font"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-color",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
+
+
         if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
             ruleId: "attribute-validate-color",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Missing value.`,
+            message: "Missing value.",
             fix: null
           });
         } else {
-          const errorArr = validateColor(node.attribValueRaw, node.attribValueStartsAt, {
+          var errorArr = validateColor(node.attribValueRaw, node.attribValueStartsAt, {
             namedCssLevel1OK: true,
             namedCssLevel2PlusOK: true,
             hexThreeOK: false,
@@ -5368,10 +6077,10 @@ function attributeValidateColor(context, ...opts) {
             hexSixOK: true,
             hexEightOK: false
           });
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-color"
-            });
+            }));
           });
         }
       }
@@ -5379,29 +6088,35 @@ function attributeValidateColor(context, ...opts) {
   };
 }
 
-function attributeValidateCols(context, ...opts) {
+function attributeValidateCols(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) { // console.log(
+      //   `015 attributeValidateCols(): node = ${JSON.stringify(node, null, 4)}`
+      // );
+
       if (node.attribName === "cols") {
+        // validate the parent
         if (!["frameset", "textarea"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-cols",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
+
         if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
-            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Missing value.`,
+            message: "Missing value.",
             fix: null
           });
         } else {
-          let errorArr = [];
+          var errorArr = [];
+
           if (node.parent.tagName === "frameset") {
             errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
               whitelistValues: ["*"],
@@ -5413,17 +6128,19 @@ function attributeValidateCols(context, ...opts) {
               customGenericValueError: "Should be: pixels|%|*."
             });
           } else if (node.parent.tagName === "textarea") {
+            // each character must be a digit
             errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
               type: "integer",
               theOnlyGoodUnits: [],
               customGenericValueError: "Should be integer, no units."
             });
           }
+
           if (Array.isArray(errorArr) && errorArr.length) {
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
+            errorArr.forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-cols"
-              });
+              }));
             });
           }
         }
@@ -5432,62 +6149,67 @@ function attributeValidateCols(context, ...opts) {
   };
 }
 
-function attributeValidateColspan(context, ...opts) {
+function attributeValidateColspan(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) { // console.log(
+      //   `015 attributeValidateColspan(): node = ${JSON.stringify(node, null, 4)}`
+      // );
+
       if (node.attribName === "colspan") {
+        // validate the parent
         if (!["th", "td"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-colspan",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         }
-        const errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
+
+        var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           type: "integer",
           theOnlyGoodUnits: [],
           customGenericValueError: "Should be integer, no units."
         });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-colspan"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateCompact(context, ...originalOpts) {
+function attributeValidateCompact(context, mode) {
   return {
-    attribute(node) {
-      const opts = {
-        xhtml: false
-      };
-      if (Array.isArray(originalOpts) && originalOpts.length && originalOpts.some(val => val.toLowerCase() === "xhtml")) {
-        opts.xhtml = true;
-      }
-      const errorArr = [];
+    attribute: function attribute(node) {
+      var errorArr = [];
+
       if (node.attribName === "compact") {
+        // validate the parent
         if (!["dir", "dl", "menu", "ol", "ul"].includes(node.parent.tagName)) {
           errorArr.push({
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         } else {
-          validateVoid(node, context, errorArr, { ...opts,
+          // validate the value
+          validateVoid(node, context, errorArr, {
+            xhtml: !!mode,
             enforceSiblingAttributes: null
           });
-        }
+        } // finally, report gathered errors:
+
+
         if (errorArr.length) {
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-compact"
-            });
+            }));
           });
         }
       }
@@ -5495,80 +6217,100 @@ function attributeValidateCompact(context, ...originalOpts) {
   };
 }
 
-function attributeValidateContent(context, ...opts) {
+function attributeValidateContent(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "content") {
+        // validate the parent
         if (node.parent.tagName !== "meta") {
           context.report({
             ruleId: "attribute-validate-content",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
-        const {
-          charStart,
-          charEnd,
-          errorArr
-        } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        } // only validate the whitespace
+
+
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+            charStart = _checkForWhitespace.charStart,
+            charEnd = _checkForWhitespace.charEnd,
+            errorArr = _checkForWhitespace.errorArr;
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-content"
-          });
+          }));
         });
       }
     }
   };
-}
+} // TODO - add more checks from https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
 
-function attributeValidateCoords(context, ...opts) {
+function attributeValidateCoords(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) { // console.log(
+      //   `020 attributeValidateCoords(): node = ${JSON.stringify(node, null, 4)}`
+      // );
+
       if (node.attribName === "coords") {
+        // validate the parent
         if (!["area", "a"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-coords",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        } else {
-          if (!Array.isArray(node.parent.attribs) || !node.parent.attribs.length || !node.parent.attribs.some(attrObj => attrObj.attribName === "shape")) {
+        } else { // "coords" values depend on "shape" attribute's value
+
+          if (!Array.isArray(node.parent.attribs) || !node.parent.attribs.length || !node.parent.attribs.some(function (attrObj) {
+            return attrObj.attribName === "shape";
+          })) {
+            // enforce "shape" attribute
             context.report({
               ruleId: "attribute-validate-coords",
               idxFrom: node.parent.start,
               idxTo: node.parent.end,
-              message: `Missing "shape" attribute.`,
+              message: "Missing \"shape\" attribute.",
               fix: null
             });
           } else {
-            const shapeAttr = node.parent.attribs.filter(attrObj => attrObj.attribName === "shape")[0];
-            let enforceCount = null;
+            // extract "shape" attr's value
+            var shapeAttr = node.parent.attribs.filter(function (attrObj) {
+              return attrObj.attribName === "shape";
+            })[0];
+            var enforceCount = null;
+
             if (shapeAttr.attribValueRaw === "rect") {
+              // enforce the value count to be 4
               enforceCount = 4;
             } else if (shapeAttr.attribValueRaw === "circle") {
+              // enforce the value count to be 3
               enforceCount = 3;
             } else if (shapeAttr.attribValueRaw === "poly") {
+              // enforce the value count to be an even number
               enforceCount = "even";
             }
-            const errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
-              whitelistValues: null,
+
+            var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
+              whitelistValues: [],
               theOnlyGoodUnits: [],
-              badUnits: null,
+              badUnits: [],
               noUnitsIsFine: true,
               canBeCommaSeparated: true,
-              enforceCount,
+              enforceCount: enforceCount,
               type: "integer",
               customGenericValueError: "Should be integer, no units."
             });
+
             if (Array.isArray(errorArr) && errorArr.length) {
-              errorArr.forEach(errorObj => {
-                context.report({ ...errorObj,
+              errorArr.forEach(function (errorObj) {
+                context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                   ruleId: "attribute-validate-coords"
-                });
+                }));
               });
             }
           }
@@ -5578,26 +6320,28 @@ function attributeValidateCoords(context, ...opts) {
   };
 }
 
-function attributeValidateData(context, ...opts) {
+function attributeValidateData(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "data") {
+        // validate the parent
         if (node.parent.tagName !== "object") {
           context.report({
             ruleId: "attribute-validate-data",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         } else {
           validateUri(node.attribValueRaw, {
             offset: node.attribValueStartsAt,
             multipleOK: false
-          }).forEach(errorObj => {
-            context.report({ ...errorObj,
+          }).forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-data"
-            });
+            }));
           });
         }
       }
@@ -5605,65 +6349,71 @@ function attributeValidateData(context, ...opts) {
   };
 }
 
-function attributeValidateDatetime(context, ...opts) {
+function attributeValidateDatetime(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "datetime") {
+        // validate the parent
         if (!["del", "ins"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-datetime",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
-        const errorArr = validateString(node.attribValueRaw,
-        node.attribValueStartsAt,
+        } // check in two parts, first, a quick try, match the most common values only
+
+
+        var errorArr = validateString(node.attribValueRaw, // value
+        node.attribValueStartsAt, // offset
         {
           quickPermittedValues: [isoDateRegex],
-          permittedValues: null,
           canBeCommaSeparated: false,
           noSpaceAfterComma: false
-        });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        }); // HTML attribute accept MIME types as values. Here we reference the given
+        // value against all official MIME types, taken from IANA and other sources,
+        // https://www.npmjs.com/package/mime-db
+
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-datetime"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateDeclare(context, ...originalOpts) {
+function attributeValidateDeclare(context, mode) {
   return {
-    attribute(node) {
-      const opts = {
-        xhtml: false
-      };
-      if (Array.isArray(originalOpts) && originalOpts.length && originalOpts.some(val => val.toLowerCase() === "xhtml")) {
-        opts.xhtml = true;
-      }
-      const errorArr = [];
+    attribute: function attribute(node) {
+      var errorArr = [];
+
       if (node.attribName === "declare") {
+        // validate the parent
         if (node.parent.tagName !== "object") {
           errorArr.push({
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         } else {
-          validateVoid(node, context, errorArr, { ...opts,
+          // validate the value (or absence thereof)
+          validateVoid(node, context, errorArr, {
+            xhtml: !!mode,
             enforceSiblingAttributes: null
           });
-        }
+        } // finally, report gathered errors:
+
+
         if (errorArr.length) {
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-declare"
-            });
+            }));
           });
         }
       }
@@ -5671,34 +6421,34 @@ function attributeValidateDeclare(context, ...originalOpts) {
   };
 }
 
-function attributeValidateDefer(context, ...originalOpts) {
+function attributeValidateDefer(context, mode) {
   return {
-    attribute(node) {
-      const opts = {
-        xhtml: false
-      };
-      if (Array.isArray(originalOpts) && originalOpts.length && originalOpts.some(val => val.toLowerCase() === "xhtml")) {
-        opts.xhtml = true;
-      }
-      const errorArr = [];
+    attribute: function attribute(node) {
+      var errorArr = [];
+
       if (node.attribName === "defer") {
+        // validate the parent
         if (node.parent.tagName !== "script") {
           errorArr.push({
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         } else {
-          validateVoid(node, context, errorArr, { ...opts,
+          // validate the value (or absence thereof)
+          validateVoid(node, context, errorArr, {
+            xhtml: !!mode,
             enforceSiblingAttributes: null
           });
-        }
+        } // finally, report gathered errors:
+
+
         if (errorArr.length) {
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-defer"
-            });
+            }));
           });
         }
       }
@@ -5706,63 +6456,67 @@ function attributeValidateDefer(context, ...originalOpts) {
   };
 }
 
-function attributeValidateDir(context, ...opts) {
+function attributeValidateDir(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "dir") {
+        // validate the parent
         if (["applet", "base", "basefont", "br", "frame", "frameset", "iframe", "param", "script"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-dir",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
-        const errorArr = validateString(node.attribValueRaw,
-        node.attribValueStartsAt,
+        } // check in two parts, first, a quick try, match the most common values only
+
+
+        var errorArr = validateString(node.attribValueRaw, // value
+        node.attribValueStartsAt, // offset
         {
           permittedValues: ["ltr", "rtl"],
           canBeCommaSeparated: false
         });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-dir"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateDisabled(context, ...originalOpts) {
+function attributeValidateDisabled(context, mode) {
   return {
-    attribute(node) {
-      const opts = {
-        xhtml: false
-      };
-      if (Array.isArray(originalOpts) && originalOpts.length && originalOpts.some(val => val.toLowerCase() === "xhtml")) {
-        opts.xhtml = true;
-      }
-      const errorArr = [];
+    attribute: function attribute(node) {
+      var errorArr = [];
+
       if (node.attribName === "disabled") {
+        // validate the parent
         if (!["button", "input", "optgroup", "option", "select", "textarea"].includes(node.parent.tagName)) {
           errorArr.push({
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         } else {
-          validateVoid(node, context, errorArr, { ...opts,
+          // validate the value (or absence thereof)
+          validateVoid(node, context, errorArr, {
+            xhtml: !!mode,
             enforceSiblingAttributes: null
           });
-        }
+        } // finally, report gathered errors:
+
+
         if (errorArr.length) {
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-disabled"
-            });
+            }));
           });
         }
       }
@@ -5770,120 +6524,135 @@ function attributeValidateDisabled(context, ...originalOpts) {
   };
 }
 
-function attributeValidateEnctype(context, ...opts) {
+function attributeValidateEnctype(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "enctype") {
+        // validate the parent
         if (node.parent.tagName !== "form") {
           context.report({
             ruleId: "attribute-validate-enctype",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
-        const errorArr = validateString(node.attribValueRaw,
-        node.attribValueStartsAt,
+        } // check in two parts, first, a quick try, match the most common values only
+
+
+        var errorArr = validateString(node.attribValueRaw, // value
+        node.attribValueStartsAt, // offset
         {
           quickPermittedValues: ["application/x-www-form-urlencoded", "multipart/form-data", "text/plain"],
           permittedValues: Object.keys(db__default['default']),
           canBeCommaSeparated: false
         });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-enctype"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateFace(context, ...opts) {
+function attributeValidateFace(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "face") {
+        // validate the parent
         if (node.parent.tagName !== "font") {
           context.report({
             ruleId: "attribute-validate-face",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
-        const {
-          charStart,
-          charEnd,
-          errorArr
-        } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        } // only validate the whitespace
+
+
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+            charStart = _checkForWhitespace.charStart,
+            charEnd = _checkForWhitespace.charEnd,
+            errorArr = _checkForWhitespace.errorArr;
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-face"
-          });
+          }));
         });
       }
     }
   };
-}
+} // TODO - add more checks from https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
 
-function attributeValidateFor(context, ...opts) {
+function attributeValidateFor(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "for") {
+        // validate the parent
         if (node.parent.tagName !== "label") {
           context.report({
             ruleId: "attribute-validate-for",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
             context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+              ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
               idxFrom: node.attribStarts,
               idxTo: node.attribEnds,
-              message: `Missing value.`,
+              message: "Missing value.",
               fix: null
             });
           } else {
-            const {
-              charStart,
-              charEnd,
-              errorArr
-            } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-            const extractedValue = node.attribValueRaw.slice(charStart, charEnd);
-            let message = `Wrong id name.`;
-            let fix = null;
-            let idxFrom = charStart + node.attribValueStartsAt;
-            let idxTo = charEnd + node.attribValueStartsAt;
-            if (Number.isInteger(charStart) && !classNameRegex.test(extractedValue)) {
-              if (Array.from(extractedValue).some(val => !val.trim().length)) {
-                message = `Should be one value, no spaces.`;
-              } else if (extractedValue.includes("#")) {
-                message = `Remove hash.`;
-                const firstHashAt = node.attribValueRaw.indexOf("#");
-                fix = {
-                  ranges: [[node.attribValueStartsAt + firstHashAt, node.attribValueStartsAt + firstHashAt + 1]]
-                };
-                idxFrom = node.attribValueStartsAt + firstHashAt;
-                idxTo = node.attribValueStartsAt + firstHashAt + 1;
+            var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+                charStart = _checkForWhitespace.charStart,
+                charEnd = _checkForWhitespace.charEnd,
+                errorArr = _checkForWhitespace.errorArr;
+
+            if (typeof charStart === "number" && typeof charEnd === "number") {
+              var extractedValue = node.attribValueRaw.slice(charStart, charEnd);
+              var message = "Wrong id name.";
+              var fix = null;
+              var idxFrom = charStart + node.attribValueStartsAt;
+              var idxTo = charEnd + node.attribValueStartsAt;
+
+              if (Number.isInteger(charStart) && !classNameRegex.test(extractedValue)) {
+                if (Array.from(extractedValue).some(function (val) {
+                  return !val.trim().length;
+                })) {
+                  message = "Should be one value, no spaces.";
+                } else if (extractedValue.includes("#")) {
+                  message = "Remove hash.";
+                  var firstHashAt = node.attribValueRaw.indexOf("#");
+                  fix = {
+                    ranges: [[node.attribValueStartsAt + firstHashAt, node.attribValueStartsAt + firstHashAt + 1]]
+                  };
+                  idxFrom = node.attribValueStartsAt + firstHashAt;
+                  idxTo = node.attribValueStartsAt + firstHashAt + 1;
+                }
+
+                errorArr.push({
+                  ruleId: "attribute-validate-for",
+                  idxFrom: idxFrom,
+                  idxTo: idxTo,
+                  message: message,
+                  fix: fix
+                });
               }
-              errorArr.push({
-                ruleId: "attribute-validate-for",
-                idxFrom,
-                idxTo,
-                message,
-                fix
-              });
             }
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
+            errorArr.forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-for"
-              });
+              }));
             });
           }
       }
@@ -5891,111 +6660,111 @@ function attributeValidateFor(context, ...opts) {
   };
 }
 
-function attributeValidateFrame(context, ...opts) {
+function attributeValidateFrame(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "frame") {
+        // validate the parent
         if (node.parent.tagName !== "table") {
           context.report({
             ruleId: "attribute-validate-frame",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
-        const errorArr = validateString(node.attribValueRaw,
-        node.attribValueStartsAt,
+        } // https://www.w3.org/TR/html4/struct/tables.html#adef-frame
+
+
+        var errorArr = validateString(node.attribValueRaw, // value
+        node.attribValueStartsAt, // offset
         {
-          permittedValues: ["void",
-          "above",
-          "below",
-          "hsides",
-          "lhs",
-          "rhs",
-          "vsides",
-          "box",
-          "border"
-          ],
+          permittedValues: ["void", "above", "below", "hsides", "lhs", "rhs", "vsides", "box", "border"],
           canBeCommaSeparated: false
         });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-frame"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateFrameborder(context, ...opts) {
+function attributeValidateFrameborder(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "frameborder") {
+        // validate the parent
         if (!["frame", "iframe"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-frameborder",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
-        const errorArr = validateString(node.attribValueRaw,
-        node.attribValueStartsAt,
+        } // https://www.w3.org/TR/html4/present/frames.html#adef-frameborder
+
+
+        var errorArr = validateString(node.attribValueRaw, // value
+        node.attribValueStartsAt, // offset
         {
           permittedValues: ["0", "1"],
           canBeCommaSeparated: false
         });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-frameborder"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateHeaders(context, ...opts) {
+function attributeValidateHeaders(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "headers") {
+        // validate the parent
         if (!["td", "th"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-headers",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
             context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+              ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
               idxFrom: node.attribStarts,
               idxTo: node.attribEnds,
-              message: `Missing value.`,
+              message: "Missing value.",
               fix: null
             });
           } else {
-            const {
-              charStart,
-              charEnd,
-              errorArr
-            } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
+            var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+                charStart = _checkForWhitespace.charStart,
+                charEnd = _checkForWhitespace.charEnd,
+                errorArr = _checkForWhitespace.errorArr;
             checkClassOrIdValue(context.str, {
               typeName: "id",
               from: node.attribValueStartsAt + charStart,
               to: node.attribValueStartsAt + charEnd,
               offset: 0
-            }, errorArr
+            }, errorArr // might be mutated, more errors pushed into
             );
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
+            errorArr.forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-headers"
-              });
+              }));
             });
           }
       }
@@ -6003,55 +6772,60 @@ function attributeValidateHeaders(context, ...opts) {
   };
 }
 
-function attributeValidateHeight(context, ...opts) {
+function attributeValidateHeight(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "height") {
+        // validate the parent
         if (!["iframe", "td", "th", "img", "object", "applet"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-height",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         }
-        const errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
+
+        var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           badUnits: ["px"],
           theOnlyGoodUnits: ["%"],
           noUnitsIsFine: true,
-          customGenericValueError: `Should be "pixels|%".`
+          customGenericValueError: "Should be \"pixels|%\"."
         });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-height"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateHref(context, ...opts) {
+function attributeValidateHref(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "href") {
+        // validate the parent
         if (!["a", "area", "link", "base"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-href",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         } else {
           validateUri(node.attribValueRaw, {
             offset: node.attribValueStartsAt,
             multipleOK: false
-          }).forEach(errorObj => {
-            context.report({ ...errorObj,
+          }).forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-href"
-            });
+            }));
           });
         }
       }
@@ -6059,140 +6833,159 @@ function attributeValidateHref(context, ...opts) {
   };
 }
 
-function attributeValidateHreflang(context, ...opts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateHreflang(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "hreflang") {
+        // validate the parent
         if (!["a", "link"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-hreflang",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
-        const {
-          charStart,
-          charEnd,
-          errorArr
-        } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-        const {
-          message
-        } = isLangCode__default['default'](node.attribValueRaw.slice(charStart, charEnd));
+        } // beware, the charStart and charEnd are not offset, their "zero" is
+        // start of an attribute's value, so if you use them, you need to
+        // offset to the true index, you must add "(node.attribValueStartsAt as number)" value
+
+
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+            charStart = _checkForWhitespace.charStart,
+            charEnd = _checkForWhitespace.charEnd,
+            errorArr = _checkForWhitespace.errorArr; // validate using "ietf-language-tag-regex" from npm:
+
+        var _isLangCode = isLanguageCode.isLangCode(node.attribValueRaw.slice(charStart, charEnd)),
+            message = _isLangCode.message;
+
         if (message) {
           errorArr.push({
             idxFrom: node.attribValueStartsAt + charStart,
             idxTo: node.attribValueStartsAt + charEnd,
-            message,
+            message: message,
             fix: null
           });
         }
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-hreflang"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateHspace(context, ...opts) {
+function attributeValidateHspace(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) { // console.log(
+      //   `015 attributeValidateHspace(): node = ${JSON.stringify(node, null, 4)}`
+      // );
+
       if (node.attribName === "hspace") {
+        // validate the parent
         if (!["applet", "img", "object"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-hspace",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         }
-        const errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
+
+        var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           theOnlyGoodUnits: [],
           noUnitsIsFine: true
         });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-hspace"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateHttpequiv(context, ...opts) {
+function attributeValidateHttpequiv(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "http-equiv") {
+        // validate the parent
         if (node.parent.tagName !== "meta") {
           context.report({
             ruleId: "attribute-validate-http-equiv",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
-        const errorArr = validateString(node.attribValueRaw,
-        node.attribValueStartsAt,
+        } // check in two parts, first, a quick try, match the most common values only
+
+
+        var errorArr = validateString(node.attribValueRaw, // value
+        node.attribValueStartsAt, // offset
         {
           permittedValues: ["content-type", "default-style", "refresh", "X-UA-Compatible"],
           canBeCommaSeparated: false,
           caseInsensitive: true
         });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-http-equiv"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateId(context, ...opts) {
+function attributeValidateId(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "id") {
+        // validate the parent
         if (["base", "head", "html", "meta", "script", "style", "title"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-id",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
             context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+              ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
               idxFrom: node.attribStarts,
               idxTo: node.attribEnds,
-              message: `Missing value.`,
+              message: "Missing value.",
               fix: null
             });
           } else {
-            const {
-              charStart,
-              charEnd,
-              errorArr
-            } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
+            var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+                charStart = _checkForWhitespace.charStart,
+                charEnd = _checkForWhitespace.charEnd,
+                errorArr = _checkForWhitespace.errorArr;
             checkClassOrIdValue(context.str, {
               typeName: node.attribName,
               from: node.attribValueStartsAt + charStart,
               to: node.attribValueStartsAt + charEnd,
               offset: 0
-            }, errorArr
+            }, errorArr // might be mutated, more errors pushed into
             );
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
+            errorArr.forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-id"
-              });
+              }));
             });
           }
       }
@@ -6200,34 +6993,34 @@ function attributeValidateId(context, ...opts) {
   };
 }
 
-function attributeValidateIsmap(context, ...originalOpts) {
+function attributeValidateIsmap(context, mode) {
   return {
-    attribute(node) {
-      const opts = {
-        xhtml: false
-      };
-      if (Array.isArray(originalOpts) && originalOpts.length && originalOpts.some(val => val.toLowerCase() === "xhtml")) {
-        opts.xhtml = true;
-      }
-      const errorArr = [];
+    attribute: function attribute(node) {
+      var errorArr = [];
+
       if (node.attribName === "ismap") {
+        // validate the parent
         if (!["img", "input"].includes(node.parent.tagName)) {
           errorArr.push({
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         } else {
-          validateVoid(node, context, errorArr, { ...opts,
+          // validate the value (or absence thereof)
+          validateVoid(node, context, errorArr, {
+            xhtml: !!mode,
             enforceSiblingAttributes: null
           });
-        }
+        } // finally, report gathered errors:
+
+
         if (errorArr.length) {
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-ismap"
-            });
+            }));
           });
         }
       }
@@ -6235,35 +7028,39 @@ function attributeValidateIsmap(context, ...originalOpts) {
   };
 }
 
-function attributeValidateLabel(context, ...opts) {
+function attributeValidateLabel(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "label") {
+        // validate the parent
         if (!["option", "optgroup"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-label",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
+
+
         if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
-            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Missing value.`,
+            message: "Missing value.",
             fix: null
           });
         } else {
-          const {
-            errorArr
-          } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          // only check for rogue whitespace - value can be any CDATA
+          var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+              errorArr = _checkForWhitespace.errorArr;
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-label"
-            });
+            }));
           });
         }
       }
@@ -6271,74 +7068,87 @@ function attributeValidateLabel(context, ...opts) {
   };
 }
 
-function attributeValidateLang(context, ...opts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateLang(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "lang") {
+        // validate the parent
         if (["applet", "base", "basefont", "br", "frame", "frameset", "iframe", "param", "script"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-lang",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
-        const {
-          charStart,
-          charEnd,
-          errorArr
-        } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-        const {
-          message
-        } = isLangCode__default['default'](node.attribValueRaw.slice(charStart, charEnd));
+        } // beware, the charStart and charEnd are not offset, their "zero" is
+        // start of an attribute's value, so if you use them, you need to
+        // offset to the true index, you must add "node.attribValueStartsAt" value
+
+
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+            charStart = _checkForWhitespace.charStart,
+            charEnd = _checkForWhitespace.charEnd,
+            errorArr = _checkForWhitespace.errorArr; // validate using "is-language-code" from npm:
+
+        var _isLangCode = isLanguageCode.isLangCode(node.attribValueRaw.slice(charStart, charEnd)),
+            message = _isLangCode.message;
+
         if (message) {
           errorArr.push({
             idxFrom: node.attribValueStartsAt + charStart,
             idxTo: node.attribValueStartsAt + charEnd,
-            message,
+            message: message,
             fix: null
           });
         }
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-lang"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateLanguage(context, ...opts) {
+function attributeValidateLanguage(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "language") {
+        // validate the parent
         if (node.parent.tagName !== "script") {
           context.report({
             ruleId: "attribute-validate-language",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
+
+
         if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
-            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Missing value.`,
+            message: "Missing value.",
             fix: null
           });
         } else {
-          const {
-            errorArr
-          } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          // only check for rogue whitespace - value can be any CDATA
+          var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+              errorArr = _checkForWhitespace.errorArr;
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-language"
-            });
+            }));
           });
         }
       }
@@ -6346,29 +7156,35 @@ function attributeValidateLanguage(context, ...opts) {
   };
 }
 
-function attributeValidateLink(context, ...opts) {
+function attributeValidateLink(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) { // console.log(
+      //   `015 attributeValidateLink(): node = ${JSON.stringify(node, null, 4)}`
+      // );
+
       if (node.attribName === "link") {
+        // validate the parent
         if (node.parent.tagName !== "body") {
           context.report({
             ruleId: "attribute-validate-link",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
+
+
         if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
-            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Missing value.`,
+            message: "Missing value.",
             fix: null
           });
         } else {
-          const errorArr = validateColor(node.attribValueRaw, node.attribValueStartsAt, {
+          var errorArr = validateColor(node.attribValueRaw, node.attribValueStartsAt, {
             namedCssLevel1OK: true,
             namedCssLevel2PlusOK: true,
             hexThreeOK: false,
@@ -6376,10 +7192,10 @@ function attributeValidateLink(context, ...opts) {
             hexSixOK: true,
             hexEightOK: false
           });
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-link"
-            });
+            }));
           });
         }
       }
@@ -6387,35 +7203,40 @@ function attributeValidateLink(context, ...opts) {
   };
 }
 
-function attributeValidateLongdesc(context, ...opts) {
+function attributeValidateLongdesc(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "longdesc") {
+        // validate the parent
         if (!["img", "frame", "iframe"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-longdesc",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
+
+
         if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
-            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Missing value.`,
+            message: "Missing value.",
             fix: null
           });
         } else {
-          const {
-            errorArr
-          } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          // only check for rogue whitespace -
+          // TODO - add more rules, https://www.w3schools.com/TagS/att_img_longdesc.asp
+          var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+              errorArr = _checkForWhitespace.errorArr;
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-longdesc"
-            });
+            }));
           });
         }
       }
@@ -6423,175 +7244,202 @@ function attributeValidateLongdesc(context, ...opts) {
   };
 }
 
-function attributeValidateMarginheight(context, ...opts) {
+function attributeValidateMarginheight(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) { // console.log(
+      //   `015 attributeValidateMarginheight(): node = ${JSON.stringify(node, null, 4)}`
+      // );
+
       if (node.attribName === "marginheight") {
+        // validate the parent
         if (!["frame", "iframe"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-marginheight",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         }
-        const errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
+
+        var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           theOnlyGoodUnits: [],
           noUnitsIsFine: true
         });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-marginheight"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateMarginwidth(context, ...opts) {
+function attributeValidateMarginwidth(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) { // console.log(
+      //   `015 attributeValidateMarginwidth(): node = ${JSON.stringify(node, null, 4)}`
+      // );
+
       if (node.attribName === "marginwidth") {
+        // validate the parent
         if (!["frame", "iframe"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-marginwidth",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         }
-        const errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
+
+        var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           theOnlyGoodUnits: [],
           noUnitsIsFine: true
         });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-marginwidth"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateMaxlength(context, ...opts) {
+function attributeValidateMaxlength(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) { // console.log(
+      //   `015 attributeValidateMaxlength(): node = ${JSON.stringify(node, null, 4)}`
+      // );
+
       if (node.attribName === "maxlength") {
+        // validate the parent
         if (node.parent.tagName !== "input") {
           context.report({
             ruleId: "attribute-validate-maxlength",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         }
-        const errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
+
+        var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           type: "integer",
           theOnlyGoodUnits: [],
           customGenericValueError: "Should be integer, no units."
         });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-maxlength"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateMedia(context, ...opts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateMedia(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "media") {
+        // validate the parent
         if (!["style", "link"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-media",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
-        const {
-          charStart,
-          charEnd,
-          errorArr
-        } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-        errorArr.concat(isMediaD__default['default'](node.attribValueRaw.slice(charStart, charEnd), {
+        } // beware, the charStart and charEnd are not offset, their "zero" is
+        // start of an attribute's value, so if you use them, you need to
+        // offset to the true index, you must add "(node.attribValueStartsAt as number)" value
+
+
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+            charStart = _checkForWhitespace.charStart,
+            charEnd = _checkForWhitespace.charEnd,
+            errorArr = _checkForWhitespace.errorArr; // concat errors from "is-media-descriptor" and report all:
+
+        errorArr.concat(isMediaDescriptor.isMediaD(node.attribValueRaw.slice(charStart, charEnd), {
           offset: node.attribValueStartsAt
-        })).forEach(errorObj => {
-          context.report({ ...errorObj,
+        })).forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-media"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateMethod(context, ...opts) {
+function attributeValidateMethod(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "method") {
+        // validate the parent
         if (node.parent.tagName !== "form") {
           context.report({
             ruleId: "attribute-validate-method",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
-        const errorArr = validateString(node.attribValueRaw,
-        node.attribValueStartsAt,
+        } // check in two parts, first, a quick try, match the most common values only
+
+
+        var errorArr = validateString(node.attribValueRaw, // value
+        node.attribValueStartsAt, // offset
         {
           permittedValues: ["get", "post"],
           canBeCommaSeparated: false
         });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-method"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateMultiple(context, ...originalOpts) {
+function attributeValidateMultiple(context, mode) {
   return {
-    attribute(node) {
-      const opts = {
-        xhtml: false
-      };
-      if (Array.isArray(originalOpts) && originalOpts.length && originalOpts.some(val => val.toLowerCase() === "xhtml")) {
-        opts.xhtml = true;
-      }
-      const errorArr = [];
+    attribute: function attribute(node) {
+      var errorArr = [];
+
       if (node.attribName === "multiple") {
+        // validate the parent
         if (node.parent.tagName !== "select") {
           errorArr.push({
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         } else {
-          validateVoid(node, context, errorArr, { ...opts,
+          // validate the value (or absence thereof)
+          validateVoid(node, context, errorArr, {
+            xhtml: !!mode,
             enforceSiblingAttributes: null
           });
-        }
+        } // finally, report gathered errors:
+
+
         if (errorArr.length) {
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-multiple"
-            });
+            }));
           });
         }
       }
@@ -6599,35 +7447,39 @@ function attributeValidateMultiple(context, ...originalOpts) {
   };
 }
 
-function attributeValidateName(context, ...opts) {
+function attributeValidateName(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "name") {
+        // validate the parent
         if (!["button", "textarea", "applet", "select", "form", "frame", "iframe", "img", "a", "input", "object", "map", "param", "meta"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-name",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
+
+
         if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
-            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Missing value.`,
+            message: "Missing value.",
             fix: null
           });
         } else {
-          const {
-            errorArr
-          } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          // only check for rogue whitespace because value can be any CDATA
+          var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+              errorArr = _checkForWhitespace.errorArr;
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-name"
-            });
+            }));
           });
         }
       }
@@ -6635,34 +7487,36 @@ function attributeValidateName(context, ...opts) {
   };
 }
 
-function attributeValidateNohref(context, ...originalOpts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateNohref(context, mode) {
   return {
-    attribute(node) {
-      const opts = {
-        xhtml: false
-      };
-      if (Array.isArray(originalOpts) && originalOpts.length && originalOpts.some(val => val.toLowerCase() === "xhtml")) {
-        opts.xhtml = true;
-      }
-      const errorArr = [];
+    attribute: function attribute(node) {
+      var errorArr = [];
+
       if (node.attribName === "nohref") {
+        // validate the parent
         if (node.parent.tagName !== "area") {
           errorArr.push({
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         } else {
-          validateVoid(node, context, errorArr, { ...opts,
+          // validate the value (or absence thereof)
+          validateVoid(node, context, errorArr, {
+            xhtml: !!mode,
             enforceSiblingAttributes: null
           });
-        }
+        } // finally, report gathered errors:
+
+
         if (errorArr.length) {
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-nohref"
-            });
+            }));
           });
         }
       }
@@ -6670,34 +7524,36 @@ function attributeValidateNohref(context, ...originalOpts) {
   };
 }
 
-function attributeValidateNoresize(context, ...originalOpts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateNoresize(context, mode) {
   return {
-    attribute(node) {
-      const opts = {
-        xhtml: false
-      };
-      if (Array.isArray(originalOpts) && originalOpts.length && originalOpts.some(val => val.toLowerCase() === "xhtml")) {
-        opts.xhtml = true;
-      }
-      const errorArr = [];
+    attribute: function attribute(node) {
+      var errorArr = [];
+
       if (node.attribName === "noresize") {
+        // validate the parent
         if (node.parent.tagName !== "frame") {
           errorArr.push({
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         } else {
-          validateVoid(node, context, errorArr, { ...opts,
+          // validate the value (or absence thereof)
+          validateVoid(node, context, errorArr, {
+            xhtml: !!mode,
             enforceSiblingAttributes: null
           });
-        }
+        } // finally, report gathered errors:
+
+
         if (errorArr.length) {
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-noresize"
-            });
+            }));
           });
         }
       }
@@ -6705,34 +7561,36 @@ function attributeValidateNoresize(context, ...originalOpts) {
   };
 }
 
-function attributeValidateNoshade(context, ...originalOpts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateNoshade(context, mode) {
   return {
-    attribute(node) {
-      const opts = {
-        xhtml: false
-      };
-      if (Array.isArray(originalOpts) && originalOpts.length && originalOpts.some(val => val.toLowerCase() === "xhtml")) {
-        opts.xhtml = true;
-      }
-      const errorArr = [];
+    attribute: function attribute(node) {
+      var errorArr = [];
+
       if (node.attribName === "noshade") {
+        // validate the parent
         if (node.parent.tagName !== "hr") {
           errorArr.push({
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         } else {
-          validateVoid(node, context, errorArr, { ...opts,
+          // validate the value (or absence thereof)
+          validateVoid(node, context, errorArr, {
+            xhtml: !!mode,
             enforceSiblingAttributes: null
           });
-        }
+        } // finally, report gathered errors:
+
+
         if (errorArr.length) {
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-noshade"
-            });
+            }));
           });
         }
       }
@@ -6740,34 +7598,36 @@ function attributeValidateNoshade(context, ...originalOpts) {
   };
 }
 
-function attributeValidateNowrap(context, ...originalOpts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateNowrap(context, mode) {
   return {
-    attribute(node) {
-      const opts = {
-        xhtml: false
-      };
-      if (Array.isArray(originalOpts) && originalOpts.length && originalOpts.some(val => val.toLowerCase() === "xhtml")) {
-        opts.xhtml = true;
-      }
-      const errorArr = [];
+    attribute: function attribute(node) {
+      var errorArr = [];
+
       if (node.attribName === "nowrap") {
+        // validate the parent
         if (!["td", "th"].includes(node.parent.tagName)) {
           errorArr.push({
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         } else {
-          validateVoid(node, context, errorArr, { ...opts,
+          // validate the value (or absence thereof)
+          validateVoid(node, context, errorArr, {
+            xhtml: !!mode,
             enforceSiblingAttributes: null
           });
-        }
+        } // finally, report gathered errors:
+
+
         if (errorArr.length) {
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-nowrap"
-            });
+            }));
           });
         }
       }
@@ -6775,35 +7635,41 @@ function attributeValidateNowrap(context, ...originalOpts) {
   };
 }
 
-function attributeValidateObject(context, ...opts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateObject(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "object") {
+        // validate the parent
         if (node.parent.tagName !== "applet") {
           context.report({
             ruleId: "attribute-validate-object",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
+
+
         if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
-            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Missing value.`,
+            message: "Missing value.",
             fix: null
           });
         } else {
-          const {
-            errorArr
-          } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          // only check for rogue whitespace - value can be any CDATA
+          var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+              errorArr = _checkForWhitespace.errorArr;
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-object"
-            });
+            }));
           });
         }
       }
@@ -6811,40 +7677,59 @@ function attributeValidateObject(context, ...opts) {
   };
 }
 
-function validateScript(str, idxOffset, opts) {
-  const {
-    errorArr
-  } = checkForWhitespace(str, idxOffset);
+function validateScript(str, idxOffset // opts
+) {
+  // console.log(
+  //   `005 validateScript(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+  //     opts,
+  //     null,
+  //     4
+  //   )}`
+  // );
+  // we get trimmed string start and end positions, also an encountered errors array
+  // const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
+  var _checkForWhitespace = checkForWhitespace(str, idxOffset),
+      errorArr = _checkForWhitespace.errorArr; // now that we know where non-whitespace chars are, we can evaluate them
+  // if (Number.isInteger(charStart)) {
+  //   TODO: SOMETHING MORE
+  // }
+
+
   return errorArr;
 }
 
-function attributeValidateOnblur(context, ...originalOpts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateOnblur(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "onblur") {
+        // validate the parent
         if (!["a", "area", "button", "input", "label", "select", "textarea"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-onblur",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
             context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+              ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
               idxFrom: node.attribStarts,
               idxTo: node.attribEnds,
-              message: `Missing value.`,
+              message: "Missing value.",
               fix: null
             });
           } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
+            // validate the script value
+            var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+            errorArr.forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-onblur"
-              });
+              }));
             });
           }
       }
@@ -6852,33 +7737,38 @@ function attributeValidateOnblur(context, ...originalOpts) {
   };
 }
 
-function attributeValidateOnchange(context, ...originalOpts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateOnchange(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "onchange") {
+        // validate the parent
         if (!["input", "select", "textarea"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-onchange",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
             context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+              ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
               idxFrom: node.attribStarts,
               idxTo: node.attribEnds,
-              message: `Missing value.`,
+              message: "Missing value.",
               fix: null
             });
           } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
+            // validate the script value
+            var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+            errorArr.forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-onchange"
-              });
+              }));
             });
           }
       }
@@ -6886,33 +7776,38 @@ function attributeValidateOnchange(context, ...originalOpts) {
   };
 }
 
-function attributeValidateOnclick(context, ...originalOpts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateOnclick(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "onclick") {
+        // validate the parent
         if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-onclick",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
             context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+              ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
               idxFrom: node.attribStarts,
               idxTo: node.attribEnds,
-              message: `Missing value.`,
+              message: "Missing value.",
               fix: null
             });
           } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
+            // validate the script value
+            var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+            errorArr.forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-onclick"
-              });
+              }));
             });
           }
       }
@@ -6920,33 +7815,38 @@ function attributeValidateOnclick(context, ...originalOpts) {
   };
 }
 
-function attributeValidateOndblclick(context, ...originalOpts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateOndblclick(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "ondblclick") {
+        // validate the parent
         if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-ondblclick",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
             context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+              ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
               idxFrom: node.attribStarts,
               idxTo: node.attribEnds,
-              message: `Missing value.`,
+              message: "Missing value.",
               fix: null
             });
           } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
+            // validate the script value
+            var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+            errorArr.forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-ondblclick"
-              });
+              }));
             });
           }
       }
@@ -6954,33 +7854,38 @@ function attributeValidateOndblclick(context, ...originalOpts) {
   };
 }
 
-function attributeValidateOnfocus(context, ...originalOpts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateOnfocus(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "onfocus") {
+        // validate the parent
         if (!["a", "area", "button", "input", "label", "select", "textarea"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-onfocus",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
             context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+              ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
               idxFrom: node.attribStarts,
               idxTo: node.attribEnds,
-              message: `Missing value.`,
+              message: "Missing value.",
               fix: null
             });
           } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
+            // validate the script value
+            var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+            errorArr.forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-onfocus"
-              });
+              }));
             });
           }
       }
@@ -6988,33 +7893,38 @@ function attributeValidateOnfocus(context, ...originalOpts) {
   };
 }
 
-function attributeValidateOnkeydown(context, ...originalOpts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateOnkeydown(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "onkeydown") {
+        // validate the parent
         if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-onkeydown",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
             context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+              ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
               idxFrom: node.attribStarts,
               idxTo: node.attribEnds,
-              message: `Missing value.`,
+              message: "Missing value.",
               fix: null
             });
           } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
+            // validate the script value
+            var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+            errorArr.forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-onkeydown"
-              });
+              }));
             });
           }
       }
@@ -7022,33 +7932,38 @@ function attributeValidateOnkeydown(context, ...originalOpts) {
   };
 }
 
-function attributeValidateOnkeypress(context, ...originalOpts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateOnkeypress(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "onkeypress") {
+        // validate the parent
         if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-onkeypress",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
             context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+              ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
               idxFrom: node.attribStarts,
               idxTo: node.attribEnds,
-              message: `Missing value.`,
+              message: "Missing value.",
               fix: null
             });
           } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
+            // validate the script value
+            var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+            errorArr.forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-onkeypress"
-              });
+              }));
             });
           }
       }
@@ -7056,33 +7971,38 @@ function attributeValidateOnkeypress(context, ...originalOpts) {
   };
 }
 
-function attributeValidateOnkeyup(context, ...originalOpts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateOnkeyup(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "onkeyup") {
+        // validate the parent
         if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-onkeyup",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
             context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+              ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
               idxFrom: node.attribStarts,
               idxTo: node.attribEnds,
-              message: `Missing value.`,
+              message: "Missing value.",
               fix: null
             });
           } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
+            // validate the script value
+            var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+            errorArr.forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-onkeyup"
-              });
+              }));
             });
           }
       }
@@ -7090,33 +8010,38 @@ function attributeValidateOnkeyup(context, ...originalOpts) {
   };
 }
 
-function attributeValidateOnload(context, ...originalOpts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateOnload(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "onload") {
+        // validate the parent
         if (!["frameset", "body"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-onload",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
             context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+              ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
               idxFrom: node.attribStarts,
               idxTo: node.attribEnds,
-              message: `Missing value.`,
+              message: "Missing value.",
               fix: null
             });
           } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
+            // validate the script value
+            var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+            errorArr.forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-onload"
-              });
+              }));
             });
           }
       }
@@ -7124,33 +8049,38 @@ function attributeValidateOnload(context, ...originalOpts) {
   };
 }
 
-function attributeValidateOnmousedown(context, ...originalOpts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateOnmousedown(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "onmousedown") {
+        // validate the parent
         if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-onmousedown",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
             context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+              ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
               idxFrom: node.attribStarts,
               idxTo: node.attribEnds,
-              message: `Missing value.`,
+              message: "Missing value.",
               fix: null
             });
           } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
+            // validate the script value
+            var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+            errorArr.forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-onmousedown"
-              });
+              }));
             });
           }
       }
@@ -7158,33 +8088,38 @@ function attributeValidateOnmousedown(context, ...originalOpts) {
   };
 }
 
-function attributeValidateOnmousemove(context, ...originalOpts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateOnmousemove(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "onmousemove") {
+        // validate the parent
         if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-onmousemove",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
             context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+              ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
               idxFrom: node.attribStarts,
               idxTo: node.attribEnds,
-              message: `Missing value.`,
+              message: "Missing value.",
               fix: null
             });
           } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
+            // validate the script value
+            var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+            errorArr.forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-onmousemove"
-              });
+              }));
             });
           }
       }
@@ -7192,33 +8127,38 @@ function attributeValidateOnmousemove(context, ...originalOpts) {
   };
 }
 
-function attributeValidateOnmouseout(context, ...originalOpts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateOnmouseout(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "onmouseout") {
+        // validate the parent
         if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-onmouseout",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
             context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+              ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
               idxFrom: node.attribStarts,
               idxTo: node.attribEnds,
-              message: `Missing value.`,
+              message: "Missing value.",
               fix: null
             });
           } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
+            // validate the script value
+            var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+            errorArr.forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-onmouseout"
-              });
+              }));
             });
           }
       }
@@ -7226,33 +8166,38 @@ function attributeValidateOnmouseout(context, ...originalOpts) {
   };
 }
 
-function attributeValidateOnmouseover(context, ...originalOpts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateOnmouseover(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "onmouseover") {
+        // validate the parent
         if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-onmouseover",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
             context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+              ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
               idxFrom: node.attribStarts,
               idxTo: node.attribEnds,
-              message: `Missing value.`,
+              message: "Missing value.",
               fix: null
             });
           } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
+            // validate the script value
+            var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+            errorArr.forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-onmouseover"
-              });
+              }));
             });
           }
       }
@@ -7260,33 +8205,36 @@ function attributeValidateOnmouseover(context, ...originalOpts) {
   };
 }
 
-function attributeValidateOnmouseup(context, ...originalOpts) {
+function attributeValidateOnmouseup(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "onmouseup") {
+        // validate the parent
         if (["applet", "base", "basefont", "bdo", "br", "font", "frame", "frameset", "head", "html", "iframe", "isindex", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-onmouseup",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
             context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+              ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
               idxFrom: node.attribStarts,
               idxTo: node.attribEnds,
-              message: `Missing value.`,
+              message: "Missing value.",
               fix: null
             });
           } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
+            // validate the script value
+            var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+            errorArr.forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-onmouseup"
-              });
+              }));
             });
           }
       }
@@ -7294,33 +8242,38 @@ function attributeValidateOnmouseup(context, ...originalOpts) {
   };
 }
 
-function attributeValidateOnreset(context, ...originalOpts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateOnreset(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "onreset") {
+        // validate the parent
         if (node.parent.tagName !== "form") {
           context.report({
             ruleId: "attribute-validate-onreset",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
             context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+              ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
               idxFrom: node.attribStarts,
               idxTo: node.attribEnds,
-              message: `Missing value.`,
+              message: "Missing value.",
               fix: null
             });
           } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
+            // validate the script value
+            var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+            errorArr.forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-onreset"
-              });
+              }));
             });
           }
       }
@@ -7328,33 +8281,38 @@ function attributeValidateOnreset(context, ...originalOpts) {
   };
 }
 
-function attributeValidateOnsubmit(context, ...originalOpts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateOnsubmit(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "onsubmit") {
+        // validate the parent
         if (node.parent.tagName !== "form") {
           context.report({
             ruleId: "attribute-validate-onsubmit",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
             context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+              ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
               idxFrom: node.attribStarts,
               idxTo: node.attribEnds,
-              message: `Missing value.`,
+              message: "Missing value.",
               fix: null
             });
           } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
+            // validate the script value
+            var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+            errorArr.forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-onsubmit"
-              });
+              }));
             });
           }
       }
@@ -7362,33 +8320,38 @@ function attributeValidateOnsubmit(context, ...originalOpts) {
   };
 }
 
-function attributeValidateOnselect(context, ...originalOpts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateOnselect(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "onselect") {
+        // validate the parent
         if (!["input", "textarea"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-onselect",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
             context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+              ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
               idxFrom: node.attribStarts,
               idxTo: node.attribEnds,
-              message: `Missing value.`,
+              message: "Missing value.",
               fix: null
             });
           } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
+            // validate the script value
+            var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+            errorArr.forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-onselect"
-              });
+              }));
             });
           }
       }
@@ -7396,33 +8359,38 @@ function attributeValidateOnselect(context, ...originalOpts) {
   };
 }
 
-function attributeValidateOnunload(context, ...originalOpts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateOnunload(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "onunload") {
+        // validate the parent
         if (!["frameset", "body"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-onunload",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
         else if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
             context.report({
-              ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+              ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
               idxFrom: node.attribStarts,
               idxTo: node.attribEnds,
-              message: `Missing value.`,
+              message: "Missing value.",
               fix: null
             });
           } else {
-            const errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
+            // validate the script value
+            var errorArr = validateScript(node.attribValueRaw, node.attribValueStartsAt);
+            errorArr.forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-onunload"
-              });
+              }));
             });
           }
       }
@@ -7430,26 +8398,32 @@ function attributeValidateOnunload(context, ...originalOpts) {
   };
 }
 
-function attributeValidateProfile(context, ...opts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateProfile(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "profile") {
+        // validate the parent
         if (node.parent.tagName !== "head") {
           context.report({
             ruleId: "attribute-validate-profile",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         } else {
+          // Call validation upon whole attribute's value. Validator includes
+          // whitespace checks.
           validateUri(node.attribValueRaw, {
             offset: node.attribValueStartsAt,
             multipleOK: true
-          }).forEach(errorObj => {
-            context.report({ ...errorObj,
+          }).forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-profile"
-            });
+            }));
           });
         }
       }
@@ -7457,35 +8431,41 @@ function attributeValidateProfile(context, ...opts) {
   };
 }
 
-function attributeValidatePrompt(context, ...opts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidatePrompt(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "prompt") {
+        // validate the parent
         if (node.parent.tagName !== "isindex") {
           context.report({
             ruleId: "attribute-validate-prompt",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
+
+
         if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
-            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Missing value.`,
+            message: "Missing value.",
             fix: null
           });
         } else {
-          const {
-            errorArr
-          } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          // only check for rogue whitespace - value can be any CDATA
+          var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+              errorArr = _checkForWhitespace.errorArr;
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-prompt"
-            });
+            }));
           });
         }
       }
@@ -7493,34 +8473,36 @@ function attributeValidatePrompt(context, ...opts) {
   };
 }
 
-function attributeValidateReadonly(context, ...originalOpts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateReadonly(context, mode) {
   return {
-    attribute(node) {
-      const opts = {
-        xhtml: false
-      };
-      if (Array.isArray(originalOpts) && originalOpts.length && originalOpts.some(val => val.toLowerCase() === "xhtml")) {
-        opts.xhtml = true;
-      }
-      const errorArr = [];
+    attribute: function attribute(node) {
+      var errorArr = [];
+
       if (node.attribName === "readonly") {
+        // validate the parent
         if (!["textarea", "input"].includes(node.parent.tagName)) {
           errorArr.push({
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         } else {
-          validateVoid(node, context, errorArr, { ...opts,
+          // validate the value (or absence thereof)
+          validateVoid(node, context, errorArr, {
+            xhtml: !!mode,
             enforceSiblingAttributes: null
           });
-        }
+        } // finally, report gathered errors:
+
+
         if (errorArr.length) {
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-readonly"
-            });
+            }));
           });
         }
       }
@@ -7528,88 +8510,109 @@ function attributeValidateReadonly(context, ...originalOpts) {
   };
 }
 
-function attributeValidateRel(context, ...opts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateRel(context, enforceLowercase) {
+  if (enforceLowercase === void 0) {
+    enforceLowercase = false;
+  }
+
   return {
-    attribute(node) {
-      const caseInsensitive = !Array.isArray(opts) || !opts.includes(`enforceLowercase`);
+    attribute: function attribute(node) {
+
       if (node.attribName === "rel") {
+        // validate the parent
         if (!["a", "link"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-rel",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
-        const errorArr = validateString(node.attribValueRaw,
-        node.attribValueStartsAt,
+        } // check in two parts, first, a quick try, match the most common values only
+
+
+        var errorArr = validateString(node.attribValueRaw, // value
+        node.attribValueStartsAt, // offset
         {
           permittedValues: linkTypes,
           canBeCommaSeparated: false,
-          caseInsensitive
+          caseInsensitive: !enforceLowercase
         });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-rel"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateRev(context, ...opts) {
+function attributeValidateRev(context, enforceLowercase) {
+  if (enforceLowercase === void 0) {
+    enforceLowercase = false;
+  }
+
   return {
-    attribute(node) {
-      const caseInsensitive = !Array.isArray(opts) || !opts.includes(`enforceLowercase`);
+    attribute: function attribute(node) {
+
       if (node.attribName === "rev") {
+        // validate the parent
         if (!["a", "link"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-rev",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
-        const errorArr = validateString(node.attribValueRaw,
-        node.attribValueStartsAt,
+        } // check in two parts, first, a quick try, match the most common values only
+
+
+        var errorArr = validateString(node.attribValueRaw, // value
+        node.attribValueStartsAt, // offset
         {
           permittedValues: linkTypes,
           canBeCommaSeparated: false,
-          caseInsensitive
+          caseInsensitive: !enforceLowercase
         });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-rev"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateRows(context, ...opts) {
+function attributeValidateRows(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) { // console.log(
+      //   `015 attributeValidateRows(): node = ${JSON.stringify(node, null, 4)}`
+      // );
+
       if (node.attribName === "rows") {
+        // validate the parent
         if (!["frameset", "textarea"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-rows",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         }
-        let errorArr = [];
+        var errorArr = []; // if value is empty or otherwise does not exist
+
         if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
-            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Missing value.`,
+            message: "Missing value.",
             fix: null
           });
         } else if (node.parent.tagName === "frameset") {
@@ -7623,17 +8626,19 @@ function attributeValidateRows(context, ...opts) {
             customGenericValueError: "Should be: pixels|%|*."
           });
         } else if (node.parent.tagName === "textarea") {
+          // each character must be a digit
           errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
             type: "integer",
             theOnlyGoodUnits: [],
             customGenericValueError: "Should be integer, no units."
           });
         }
+
         if (Array.isArray(errorArr) && errorArr.length) {
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-rows"
-            });
+            }));
           });
         }
       }
@@ -7641,92 +8646,105 @@ function attributeValidateRows(context, ...opts) {
   };
 }
 
-function attributeValidateRowspan(context, ...opts) {
+function attributeValidateRowspan(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) { // console.log(
+      //   `015 attributeValidateRowspan(): node = ${JSON.stringify(node, null, 4)}`
+      // );
+
       if (node.attribName === "rowspan") {
+        // validate the parent
         if (!["th", "td"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-rowspan",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         }
-        const errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
+
+        var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           type: "integer",
           theOnlyGoodUnits: [],
           customGenericValueError: "Should be integer, no units."
         });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-rowspan"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateRules(context, ...opts) {
+function attributeValidateRules(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "rules") {
+        // validate the parent
         if (node.parent.tagName !== "table") {
           context.report({
             ruleId: "attribute-validate-rules",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
-        const errorArr = validateString(node.attribValueRaw,
-        node.attribValueStartsAt,
+        } // https://www.w3.org/TR/html4/struct/tables.html#adef-frame
+
+
+        var errorArr = validateString(node.attribValueRaw, // value
+        node.attribValueStartsAt, // offset
         {
           permittedValues: ["none", "groups", "rows", "cols", "all"],
           canBeCommaSeparated: false
         });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-rules"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateScheme(context, ...opts) {
+function attributeValidateScheme(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "scheme") {
+        // validate the parent
         if (node.parent.tagName !== "meta") {
           context.report({
             ruleId: "attribute-validate-scheme",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
+
+
         if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
-            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Missing value.`,
+            message: "Missing value.",
             fix: null
           });
         } else {
-          const {
-            errorArr
-          } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          // only check for rogue whitespace - value can be any CDATA
+          var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+              errorArr = _checkForWhitespace.errorArr;
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-scheme"
-            });
+            }));
           });
         }
       }
@@ -7734,92 +8752,98 @@ function attributeValidateScheme(context, ...opts) {
   };
 }
 
-function attributeValidateScope(context, ...opts) {
+function attributeValidateScope(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "scope") {
+        // validate the parent
         if (!["td", "th"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-scope",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         }
-        const errorArr = validateString(node.attribValueRaw,
-        node.attribValueStartsAt,
+
+        var errorArr = validateString(node.attribValueRaw, // value
+        node.attribValueStartsAt, // offset
         {
           permittedValues: ["row", "col", "rowgroup", "colgroup"],
           canBeCommaSeparated: false
         });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-scope"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateScrolling(context, ...opts) {
+function attributeValidateScrolling(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "scrolling") {
+        // validate the parent
         if (!["frame", "iframe"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-scrolling",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         }
-        const errorArr = validateString(node.attribValueRaw,
-        node.attribValueStartsAt,
+
+        var errorArr = validateString(node.attribValueRaw, // value
+        node.attribValueStartsAt, // offset
         {
           permittedValues: ["auto", "yes", "no"],
           canBeCommaSeparated: false
         });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-scrolling"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateSelected(context, ...originalOpts) {
+function attributeValidateSelected(context, mode) {
   return {
-    attribute(node) {
-      const opts = {
-        xhtml: false
-      };
-      if (Array.isArray(originalOpts) && originalOpts.length && originalOpts.some(val => val.toLowerCase() === "xhtml")) {
-        opts.xhtml = true;
-      }
-      const errorArr = [];
+    attribute: function attribute(node) {
+      var errorArr = [];
+
       if (node.attribName === "selected") {
+        // validate the parent
         if (node.parent.tagName !== "option") {
           errorArr.push({
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         } else {
-          validateVoid(node, context, errorArr, { ...opts,
+          // validate the value (or absence thereof)
+          validateVoid(node, context, errorArr, {
+            xhtml: !!mode,
             enforceSiblingAttributes: null
           });
-        }
+        } // finally, report gathered errors:
+
+
         if (errorArr.length) {
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-selected"
-            });
+            }));
           });
         }
       }
@@ -7827,92 +8851,116 @@ function attributeValidateSelected(context, ...originalOpts) {
   };
 }
 
-function attributeValidateShape(context, ...opts) {
+function attributeValidateShape(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "shape") {
+        // validate the parent
         if (!["area", "a"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-shape",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         }
-        const errorArr = validateString(node.attribValueRaw,
-        node.attribValueStartsAt,
+
+        var errorArr = validateString(node.attribValueRaw, // value
+        node.attribValueStartsAt, // offset
         {
           permittedValues: ["default", "rect", "circle", "poly"],
           canBeCommaSeparated: false
         });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-shape"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateSize(context, ...opts) {
+function attributeValidateSize(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) { // console.log(
+      //   `015 attributeValidateSize(): node = ${JSON.stringify(node, null, 4)}`
+      // );
+
       if (node.attribName === "size") {
+        // validate the parent
         if (!["hr", "font", "input", "basefont", "select"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-size",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         } else {
-          const {
-            charStart,
-            charEnd,
-            errorArr
-          } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+              charStart = _checkForWhitespace.charStart,
+              charEnd = _checkForWhitespace.charEnd,
+              errorArr = _checkForWhitespace.errorArr; // sort errorArr right here because some of the values will be
+          // checked with regex quickly and it would be burden to stick
+          // this whitespace reporting on every size attribute tag's case
+
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-size"
-            });
-          });
-          if (Number.isInteger(charStart)) {
-            const extractedVal = node.attribValueRaw.slice(charStart, charEnd);
-            if (["hr", "input", "select"].includes(node.parent.tagName)) {
+            }));
+          }); //
+          //
+          // now process each case of "size", depending by tag name
+          //
+          //
+
+          if (typeof charStart === "number" && typeof charEnd === "number") {
+            // the attribute's value is not empty
+            var extractedVal = node.attribValueRaw.slice(charStart, charEnd);
+
+            if (["hr", "input", "select"].includes(node.parent.tagName)) { // no need to check whitespace, opts.skipWhitespaceChecks: true
+
               validateDigitAndUnit(extractedVal, node.attribValueStartsAt + charStart, {
                 type: "integer",
                 negativeOK: false,
                 theOnlyGoodUnits: [],
                 skipWhitespaceChecks: true
-              }).forEach(errorObj => {
-                context.report({ ...errorObj,
+              }).forEach(function (errorObj) {
+                context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                   ruleId: "attribute-validate-size"
-                });
+                }));
               });
             } else if (["font", "basefont"].includes(node.parent.tagName)) {
+
               if (!extractedVal.match(fontSizeRegex)) {
-                const errorArr2 = validateDigitAndUnit(extractedVal, node.attribValueStartsAt + charStart, {
+                var errorArr2 = validateDigitAndUnit(extractedVal, node.attribValueStartsAt + charStart, {
                   type: "integer",
                   negativeOK: false,
                   theOnlyGoodUnits: [],
                   skipWhitespaceChecks: true,
-                  customGenericValueError: `Should be integer 1-7, plus/minus are optional.`
+                  customGenericValueError: "Should be integer 1-7, plus/minus are optional."
                 });
+
                 if (!errorArr2.length) {
+                  // if validateDigitAndUnit() didn't pick up any errors that
+                  // possibly because they are too specific, like <font size="8">
+                  // in which case, we raise a generic error against whole
+                  // attribute's value
                   errorArr2.push({
                     idxFrom: node.attribValueStartsAt + charStart,
                     idxTo: node.attribValueStartsAt + charEnd,
-                    message: `Should be integer 1-7, plus/minus are optional.`,
+                    message: "Should be integer 1-7, plus/minus are optional.",
                     fix: null
                   });
                 }
-                errorArr2.forEach(errorObj => {
-                  context.report({ ...errorObj,
+
+                errorArr2.forEach(function (errorObj) {
+                  context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                     ruleId: "attribute-validate-size"
-                  });
+                  }));
                 });
               }
             }
@@ -7923,56 +8971,61 @@ function attributeValidateSize(context, ...opts) {
   };
 }
 
-function attributeValidateSpan(context, ...opts) {
+function attributeValidateSpan(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "span") {
+        // validate the parent
         if (!["col", "colgroup"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-span",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         }
-        const errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
+
+        var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           type: "integer",
           theOnlyGoodUnits: [],
           customGenericValueError: "Should be integer, no units.",
           zeroOK: false,
-          customPxMessage: `Columns number is not in pixels.`
+          customPxMessage: "Columns number is not in pixels."
         });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-span"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateSrc(context, ...opts) {
+function attributeValidateSrc(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "src") {
+        // validate the parent
         if (!["script", "input", "frame", "iframe", "img"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-src",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         } else {
           validateUri(node.attribValueRaw, {
             offset: node.attribValueStartsAt,
             multipleOK: false
-          }).forEach(errorObj => {
-            context.report({ ...errorObj,
+          }).forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-src"
-            });
+            }));
           });
         }
       }
@@ -7980,35 +9033,39 @@ function attributeValidateSrc(context, ...opts) {
   };
 }
 
-function attributeValidateStandby(context, ...opts) {
+function attributeValidateStandby(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "standby") {
+        // validate the parent
         if (node.parent.tagName !== "object") {
           context.report({
             ruleId: "attribute-validate-standby",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
+
+
         if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
-            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Missing value.`,
+            message: "Missing value.",
             fix: null
           });
         } else {
-          const {
-            errorArr
-          } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          // only check for rogue whitespace - value can be any CDATA
+          var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+              errorArr = _checkForWhitespace.errorArr;
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-standby"
-            });
+            }));
           });
         }
       }
@@ -8016,96 +9073,124 @@ function attributeValidateStandby(context, ...opts) {
   };
 }
 
-function attributeValidateStart(context, ...opts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateStart(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "start") {
+        // validate the parent
         if (node.parent.tagName !== "ol") {
           context.report({
             ruleId: "attribute-validate-start",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         }
-        const errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
+
+        var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           type: "integer",
           theOnlyGoodUnits: [],
           customGenericValueError: "Should be integer, no units.",
           zeroOK: false,
-          customPxMessage: `Starting sequence number is not in pixels.`
+          customPxMessage: "Starting sequence number is not in pixels."
         });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-start"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function validateInlineStyle(str, idxOffset, opts) {
-  const {
-    errorArr
-  } = checkForWhitespace(str, idxOffset);
+function validateInlineStyle(str, idxOffset // opts
+) {
+  // console.log(
+  //   `005 validateInlineStyle(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+  //     opts,
+  //     null,
+  //     4
+  //   )}`
+  // );
+  // we get trimmed string start and end positions, also an encountered errors array
+  // const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
+  var _checkForWhitespace = checkForWhitespace(str, idxOffset),
+      errorArr = _checkForWhitespace.errorArr; // now that we know where non-whitespace chars are, we can evaluate them
+  // if (Number.isInteger(charStart)) {
+  //   TODO: SOMETHING MORE
+  // }
+
+
   return errorArr;
 }
 
-function attributeValidateStyle(context, ...opts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateStyle(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "style") {
+        // validate the parent
         if (["base", "basefont", "head", "html", "meta", "param", "script", "style", "title"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-style",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         }
-        const errorArr = validateInlineStyle(node.attribValueRaw, node.attribValueStartsAt);
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+
+        var errorArr = validateInlineStyle(node.attribValueRaw, node.attribValueStartsAt);
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-style"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateSummary(context, ...opts) {
+function attributeValidateSummary(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "summary") {
+        // validate the parent
         if (node.parent.tagName !== "table") {
           context.report({
             ruleId: "attribute-validate-summary",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
+
+
         if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
-            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Missing value.`,
+            message: "Missing value.",
             fix: null
           });
         } else {
-          const {
-            errorArr
-          } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          // only check for rogue whitespace - value can be any CDATA
+          var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+              errorArr = _checkForWhitespace.errorArr;
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-summary"
-            });
+            }));
           });
         }
       }
@@ -8113,66 +9198,73 @@ function attributeValidateSummary(context, ...opts) {
   };
 }
 
-function attributeValidateTabindex(context, ...opts) {
+function attributeValidateTabindex(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "tabindex") {
+        // validate the parent
         if (!["a", "area", "button", "input", "object", "select", "textarea"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-tabindex",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         }
-        const errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
+
+        var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           type: "integer",
           theOnlyGoodUnits: [],
           customGenericValueError: "Should be integer, no units.",
           zeroOK: true,
-          customPxMessage: `Tabbing order number should not be in pixels.`,
+          customPxMessage: "Tabbing order number should not be in pixels.",
           maxValue: 32767
         });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-tabindex"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateTarget(context, ...opts) {
+function attributeValidateTarget(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "target") {
+        // validate the parent
         if (!["a", "area", "base", "form", "link"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-target",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
+
+
         if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
-            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Missing value.`,
+            message: "Missing value.",
             fix: null
           });
         } else {
-          const {
-            errorArr
-          } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          // only check for rogue whitespace because value can be any CDATA
+          var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+              errorArr = _checkForWhitespace.errorArr;
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-target"
-            });
+            }));
           });
         }
       }
@@ -8180,29 +9272,35 @@ function attributeValidateTarget(context, ...opts) {
   };
 }
 
-function attributeValidateText(context, ...opts) {
+function attributeValidateText(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) { // console.log(
+      //   `015 attributeValidateText(): node = ${JSON.stringify(node, null, 4)}`
+      // );
+
       if (node.attribName === "text") {
+        // validate the parent
         if (node.parent.tagName !== "body") {
           context.report({
             ruleId: "attribute-validate-text",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
+
+
         if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
-            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Missing value.`,
+            message: "Missing value.",
             fix: null
           });
         } else {
-          const errorArr = validateColor(node.attribValueRaw, node.attribValueStartsAt, {
+          var errorArr = validateColor(node.attribValueRaw, node.attribValueStartsAt, {
             namedCssLevel1OK: true,
             namedCssLevel2PlusOK: true,
             hexThreeOK: false,
@@ -8210,10 +9308,10 @@ function attributeValidateText(context, ...opts) {
             hexSixOK: true,
             hexEightOK: false
           });
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-text"
-            });
+            }));
           });
         }
       }
@@ -8221,35 +9319,41 @@ function attributeValidateText(context, ...opts) {
   };
 }
 
-function attributeValidateTitle(context, ...opts) {
+// -----------------------------------------------------------------------------
+
+function attributeValidateTitle(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "title") {
+        // validate the parent
         if (["base", "basefont", "head", "html", "meta", "param", "script", "title"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-title",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
+
+
         if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
-            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Missing value.`,
+            message: "Missing value.",
             fix: null
           });
         } else {
-          const {
-            errorArr
-          } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          // only check for rogue whitespace because value can be any CDATA
+          var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+              errorArr = _checkForWhitespace.errorArr;
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-title"
-            });
+            }));
           });
         }
       }
@@ -8257,96 +9361,93 @@ function attributeValidateTitle(context, ...opts) {
   };
 }
 
-function attributeValidateType(context, ...opts) {
+function attributeValidateType(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "type") {
+        // validate the parent
         if (!["a", "link", "object", "param", "script", "style", "input", "li", "ol", "ul", "button"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-type",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // validate depending on type
         else if (["a", "link", "object", "param", "script", "style"].includes(node.parent.tagName)) {
-            validateString(node.attribValueRaw,
-            node.attribValueStartsAt,
+            validateString(node.attribValueRaw, // value
+            node.attribValueStartsAt, // offset
             {
               quickPermittedValues: ["application/javascript", "application/json", "application/x-www-form-urlencoded", "application/xml", "application/zip", "application/pdf", "application/sql", "application/graphql", "application/ld+json", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation", "application/vnd.oasis.opendocument.text", "application/zstd", "audio/mpeg", "audio/ogg", "multipart/form-data", "text/css", "text/html", "text/xml", "text/csv", "text/plain", "image/png", "image/jpeg", "image/gif", "application/vnd.api+json"],
               permittedValues: Object.keys(db__default['default']),
               canBeCommaSeparated: false,
               noSpaceAfterComma: false
-            }).forEach(errorObj => {
-              context.report({ ...errorObj,
+            }).forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-type"
-              });
+              }));
             });
           } else if (node.parent.tagName === "input") {
-            validateString(node.attribValueRaw,
-            node.attribValueStartsAt,
+            validateString(node.attribValueRaw, // value
+            node.attribValueStartsAt, // offset
             {
               quickPermittedValues: ["text", "password", "checkbox", "radio", "submit", "reset", "file", "hidden", "image", "button"],
-              permittedValues: null,
               canBeCommaSeparated: false,
               noSpaceAfterComma: false
-            }).forEach(errorObj => {
-              context.report({ ...errorObj,
+            }).forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-type"
-              });
+              }));
             });
           } else if (node.parent.tagName === "li") {
-            validateString(node.attribValueRaw,
-            node.attribValueStartsAt,
+            validateString(node.attribValueRaw, // value
+            node.attribValueStartsAt, // offset
             {
               quickPermittedValues: ["disc", "square", "circle", "1", "a", "A", "i", "I"],
-              permittedValues: null,
               canBeCommaSeparated: false,
               noSpaceAfterComma: false
-            }).forEach(errorObj => {
-              context.report({ ...errorObj,
+            }).forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-type"
-              });
+              }));
             });
           } else if (node.parent.tagName === "ol") {
-            validateString(node.attribValueRaw,
-            node.attribValueStartsAt,
+            validateString(node.attribValueRaw, // value
+            node.attribValueStartsAt, // offset
             {
               quickPermittedValues: ["1", "a", "A", "i", "I"],
-              permittedValues: null,
               canBeCommaSeparated: false,
               noSpaceAfterComma: false
-            }).forEach(errorObj => {
-              context.report({ ...errorObj,
+            }).forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-type"
-              });
+              }));
             });
           } else if (node.parent.tagName === "ul") {
-            validateString(node.attribValueRaw,
-            node.attribValueStartsAt,
+            validateString(node.attribValueRaw, // value
+            node.attribValueStartsAt, // offset
             {
               quickPermittedValues: ["disc", "square", "circle"],
-              permittedValues: null,
               canBeCommaSeparated: false,
               noSpaceAfterComma: false
-            }).forEach(errorObj => {
-              context.report({ ...errorObj,
+            }).forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-type"
-              });
+              }));
             });
           } else if (node.parent.tagName === "button") {
-            validateString(node.attribValueRaw,
-            node.attribValueStartsAt,
+            validateString(node.attribValueRaw, // value
+            node.attribValueStartsAt, // offset
             {
               quickPermittedValues: ["button", "submit", "reset"],
-              permittedValues: null,
               canBeCommaSeparated: false,
               noSpaceAfterComma: false
-            }).forEach(errorObj => {
-              context.report({ ...errorObj,
+            }).forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-type"
-              });
+              }));
             });
           }
       }
@@ -8354,26 +9455,28 @@ function attributeValidateType(context, ...opts) {
   };
 }
 
-function attributeValidateUsemap(context, ...opts) {
+function attributeValidateUsemap(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "usemap") {
+        // validate the parent
         if (!["img", "input", "object"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-usemap",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         } else {
           validateUri(node.attribValueRaw, {
             offset: node.attribValueStartsAt,
             multipleOK: false
-          }).forEach(errorObj => {
-            context.report({ ...errorObj,
+          }).forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-usemap"
-            });
+            }));
           });
         }
       }
@@ -8381,28 +9484,30 @@ function attributeValidateUsemap(context, ...opts) {
   };
 }
 
-function attributeValidateValign(context, ...opts) {
+function attributeValidateValign(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "valign") {
+        // validate the parent
         if (!["col", "colgroup", "tbody", "td", "tfoot", "th", "thead", "tr"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-valign",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         } else {
-          validateString(node.attribValueRaw,
-          node.attribValueStartsAt,
+          validateString(node.attribValueRaw, // value
+          node.attribValueStartsAt, // offset
           {
             permittedValues: ["top", "middle", "bottom", "baseline"],
             canBeCommaSeparated: false
-          }).forEach(errorObj => {
-            context.report({ ...errorObj,
+          }).forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-valign"
-            });
+            }));
           });
         }
       }
@@ -8410,39 +9515,45 @@ function attributeValidateValign(context, ...opts) {
   };
 }
 
-function attributeValidateValue(context, ...opts) {
+function attributeValidateValue(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) { // console.log(
+      //   `015 attributeValidateValue(): node = ${JSON.stringify(node, null, 4)}`
+      // );
+
       if (node.attribName === "value") {
+        // validate the parent
         if (!["input", "option", "param", "button", "li"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-value",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if parent is OK
         else if (node.parent.tagName === "li") {
+            // value is number
             validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
               type: "integer",
               theOnlyGoodUnits: [],
               customGenericValueError: "Should be integer, no units.",
               zeroOK: false,
-              customPxMessage: `Sequence number should not be in pixels.`
-            }).forEach(errorObj => {
-              context.report({ ...errorObj,
+              customPxMessage: "Sequence number should not be in pixels."
+            }).forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-value"
-              });
+              }));
             });
           } else {
-            const {
-              errorArr
-            } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-            errorArr.forEach(errorObj => {
-              context.report({ ...errorObj,
+            // all others - value is CDATA
+            var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+                errorArr = _checkForWhitespace.errorArr;
+
+            errorArr.forEach(function (errorObj) {
+              context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
                 ruleId: "attribute-validate-value"
-              });
+              }));
             });
           }
       }
@@ -8450,28 +9561,30 @@ function attributeValidateValue(context, ...opts) {
   };
 }
 
-function attributeValidateValuetype(context, ...opts) {
+function attributeValidateValuetype(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "valuetype") {
+        // validate the parent
         if (node.parent.tagName !== "param") {
           context.report({
             ruleId: "attribute-validate-valuetype",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         } else {
-          validateString(node.attribValueRaw,
-          node.attribValueStartsAt,
+          validateString(node.attribValueRaw, // value
+          node.attribValueStartsAt, // offset
           {
             permittedValues: ["data", "ref", "object"],
             canBeCommaSeparated: false
-          }).forEach(errorObj => {
-            context.report({ ...errorObj,
+          }).forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-valuetype"
-            });
+            }));
           });
         }
       }
@@ -8479,35 +9592,39 @@ function attributeValidateValuetype(context, ...opts) {
   };
 }
 
-function attributeValidateVersion(context, ...opts) {
+function attributeValidateVersion(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "version") {
+        // validate the parent
         if (node.parent.tagName !== "html") {
           context.report({
             ruleId: "attribute-validate-version",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
+
+
         if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
-            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Missing value.`,
+            message: "Missing value.",
             fix: null
           });
         } else {
-          const {
-            errorArr
-          } = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          // only check for rogue whitespace - value can be any CDATA
+          var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+              errorArr = _checkForWhitespace.errorArr;
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-version"
-            });
+            }));
           });
         }
       }
@@ -8515,29 +9632,33 @@ function attributeValidateVersion(context, ...opts) {
   };
 }
 
-function attributeValidateVlink(context, ...opts) {
+function attributeValidateVlink(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "vlink") {
+        // validate the parent
         if (node.parent.tagName !== "body") {
           context.report({
             ruleId: "attribute-validate-vlink",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
-        }
+        } // if value is empty or otherwise does not exist
+
+
         if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
           context.report({
-            ruleId: `attribute-validate-${node.attribName.toLowerCase()}`,
+            ruleId: "attribute-validate-" + node.attribName.toLowerCase(),
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Missing value.`,
+            message: "Missing value.",
             fix: null
           });
         } else {
-          const errorArr = validateColor(node.attribValueRaw, node.attribValueStartsAt, {
+          var errorArr = validateColor(node.attribValueRaw, node.attribValueStartsAt, {
             namedCssLevel1OK: true,
             namedCssLevel2PlusOK: true,
             hexThreeOK: false,
@@ -8545,10 +9666,10 @@ function attributeValidateVlink(context, ...opts) {
             hexSixOK: true,
             hexEightOK: false
           });
-          errorArr.forEach(errorObj => {
-            context.report({ ...errorObj,
+          errorArr.forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-vlink"
-            });
+            }));
           });
         }
       }
@@ -8556,72 +9677,82 @@ function attributeValidateVlink(context, ...opts) {
   };
 }
 
-function attributeValidateVspace(context, ...opts) {
+function attributeValidateVspace(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) { // console.log(
+      //   `015 attributeValidateVspace(): node = ${JSON.stringify(node, null, 4)}`
+      // );
+
       if (node.attribName === "vspace") {
+        // validate the parent
         if (!["applet", "img", "object"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-vspace",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         }
-        const errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
+
+        var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           theOnlyGoodUnits: [],
           noUnitsIsFine: true
         });
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-vspace"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function attributeValidateWidth(context, ...opts) {
+function attributeValidateWidth(context) {
   return {
-    attribute(node) {
+    attribute: function attribute(node) {
+
       if (node.attribName === "width") {
+        // validate the parent
         if (!["hr", "iframe", "img", "object", "table", "td", "th", "applet", "col", "colgroup", "pre"].includes(node.parent.tagName)) {
           context.report({
             ruleId: "attribute-validate-width",
             idxFrom: node.attribStarts,
             idxTo: node.attribEnds,
-            message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
+            message: "Tag \"" + node.parent.tagName + "\" can't have attribute \"" + node.attribName + "\".",
             fix: null
           });
         } else if (node.parent.tagName === "pre") {
+          // number only
           validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
             theOnlyGoodUnits: [],
             noUnitsIsFine: true
-          }).forEach(errorObj => {
-            context.report({ ...errorObj,
+          }).forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-width"
-            });
+            }));
           });
         } else if (["colgroup", "col"].includes(node.parent.tagName)) {
+          // multilength type
           validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
             badUnits: ["px"],
             theOnlyGoodUnits: ["*", "%"],
             noUnitsIsFine: true
-          }).forEach(errorObj => {
-            context.report({ ...errorObj,
+          }).forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-width"
-            });
+            }));
           });
         } else {
+          // normal length
           validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
             badUnits: ["px"],
             noUnitsIsFine: true
-          }).forEach(errorObj => {
-            context.report({ ...errorObj,
+          }).forEach(function (errorObj) {
+            context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-width"
-            });
+            }));
           });
         }
       }
@@ -8629,20 +9760,22 @@ function attributeValidateWidth(context, ...opts) {
   };
 }
 
+// rule: bad-named-html-entity-not-email-friendly
+
 function htmlEntitiesNotEmailFriendly(context) {
   return {
-    entity({
-      idxFrom,
-      idxTo
-    }) {
+    entity: function entity(_ref) {
+      var idxFrom = _ref.idxFrom,
+          idxTo = _ref.idxTo;
+
       if (Object.keys(htmlEntitiesNotEmailFriendly$1.notEmailFriendly).includes(context.str.slice(idxFrom + 1, idxTo - 1))) {
         context.report({
           ruleId: "bad-named-html-entity-not-email-friendly",
           message: "Email-unfriendly named HTML entity.",
-          idxFrom,
-          idxTo,
+          idxFrom: idxFrom,
+          idxTo: idxTo,
           fix: {
-            ranges: [[idxFrom, idxTo, `&${htmlEntitiesNotEmailFriendly$1.notEmailFriendly[context.str.slice(idxFrom + 1, idxTo - 1)]};`]]
+            ranges: [[idxFrom, idxTo, "&" + htmlEntitiesNotEmailFriendly$1.notEmailFriendly[context.str.slice(idxFrom + 1, idxTo - 1)] + ";"]]
           }
         });
       }
@@ -8651,15 +9784,18 @@ function htmlEntitiesNotEmailFriendly(context) {
 }
 
 function processStr(str, offset, context, mode) {
-  for (let i = 0, len = str.length; i < len; i++) {
-    if ((str[i].charCodeAt(0) > 127 || `<>"&`.includes(str[i])) && (str[i].charCodeAt(0) !== 160 || !Object.keys(context.processedRulesConfig).includes("bad-character-non-breaking-space") || !isAnEnabledValue(context.processedRulesConfig["bad-character-non-breaking-space"]))) {
-      let encodedChr = he__default['default'].encode(str[i], {
+  // traverse the value of this text node:
+  for (var i = 0, len = str.length; i < len; i++) {
+    if ((str[i].charCodeAt(0) > 127 || "<>\"&".includes(str[i])) && (str[i].charCodeAt(0) !== 160 || !Object.keys(context.processedRulesConfig).includes("bad-character-non-breaking-space") || !isAnEnabledValue(context.processedRulesConfig["bad-character-non-breaking-space"]))) {
+      var encodedChr = he__default['default'].encode(str[i], {
         useNamedReferences: mode === "named"
       });
+
       if (Object.keys(htmlEntitiesNotEmailFriendly$1.notEmailFriendly).includes(encodedChr.slice(1, encodedChr.length - 1))) {
-        encodedChr = `&${htmlEntitiesNotEmailFriendly$1.notEmailFriendly[encodedChr.slice(1, encodedChr.length - 1)]};`;
+        encodedChr = "&" + htmlEntitiesNotEmailFriendly$1.notEmailFriendly[encodedChr.slice(1, encodedChr.length - 1)] + ";";
       }
-      let charName = "";
+      var charName = "";
+
       if (str[i].charCodeAt(0) === 160) {
         charName = " no-break space";
       } else if (str[i].charCodeAt(0) === 38) {
@@ -8673,9 +9809,10 @@ function processStr(str, offset, context, mode) {
       } else if (str[i].charCodeAt(0) === 163) {
         charName = " pound sign";
       }
+
       context.report({
         ruleId: "character-encode",
-        message: `Unencoded${charName} character.`,
+        message: "Unencoded" + charName + " character.",
         idxFrom: i + offset,
         idxTo: i + 1 + offset,
         fix: {
@@ -8685,20 +9822,29 @@ function processStr(str, offset, context, mode) {
     }
   }
 }
-function characterEncode(context, ...opts) {
+
+var characterEncode = function characterEncode(context) {
+  for (var _len = arguments.length, opts = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    opts[_key - 1] = arguments[_key];
+  }
+
   return {
-    text(token) {
-      let mode = "named";
+    text: function text(token) { // settle the mode, is it "always" or a default, "never"
+
+      var mode = "named"; // opts array comes already sliced, without 1st element, so opts value
+      // is 0th (and onwards if more)
+
       if (Array.isArray(opts) && ["named", "numeric"].includes(opts[0])) {
         mode = opts[0];
-      }
+      } // ACTION
+
       processStr(token.value, token.start, context, mode);
     }
   };
-}
+};
 
-function characterUnspacedPunctuation(context, ...originalOpts) {
-  const charCodeMapping = {
+function characterUnspacedPunctuation(context, originalOpts) {
+  var charCodeMapping = {
     63: "questionMark",
     33: "exclamationMark",
     59: "semicolon",
@@ -8706,8 +9852,8 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
     171: "leftDoubleAngleQuotMark"
   };
   return {
-    text(node) {
-      const defaults = {
+    text: function text(node) {
+      var defaults = {
         questionMark: {
           whitespaceLeft: "never",
           whitespaceRight: "always"
@@ -8729,42 +9875,46 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
           whitespaceRight: "always"
         }
       };
-      let opts = { ...defaults
-      };
-      if (Array.isArray(originalOpts) && originalOpts.length && typeof originalOpts[0] === "object" && originalOpts[0] !== null) {
-        opts = { ...defaults,
-          ...originalOpts[0]
-        };
-      }
-      for (let i = node.start; i < node.end; i++) {
-        const charCode = context.str[i].charCodeAt(0);
+
+      var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts); // plan: iterate each character from this text chunk/node, query each
+      // caught character's surroundings as per config
+
+      for (var i = node.start; i < node.end; i++) {
+        var charCode = context.str[i].charCodeAt(0);
+
         if (charCodeMapping[String(charCode)]) {
-          const charName = charCodeMapping[String(charCode)];
+          var charName = charCodeMapping[String(charCode)]; // precautions first.
+          // if it's an exclamation mark and two dashes follow, we bail right away
+
           if (charName === "exclamationMark" && context.str[stringLeftRight.right(context.str, i)] === "-" && context.str[stringLeftRight.right(context.str, stringLeftRight.right(context.str, i))] === "-") {
             return;
           }
+
           if (opts[charName].whitespaceLeft === "never" && i && !context.str[i - 1].trim().length) {
+            var idxFrom = stringLeftRight.left(context.str, i) ? stringLeftRight.left(context.str, i) + 1 : 0;
             context.report({
               ruleId: "character-unspaced-punctuation",
-              idxFrom: stringLeftRight.left(context.str, i) + 1,
+              idxFrom: idxFrom,
               idxTo: i,
               message: "Remove the whitespace.",
               fix: {
-                ranges: [[stringLeftRight.left(context.str, i) + 1, i]]
+                ranges: [[idxFrom, i]]
               }
             });
           }
+
           if (opts[charName].whitespaceRight === "never" && i < node.end - 1 && !context.str[i + 1].trim().length) {
             context.report({
               ruleId: "character-unspaced-punctuation",
               idxFrom: i + 1,
-              idxTo: stringLeftRight.right(context.str, i),
+              idxTo: stringLeftRight.right(context.str, i) || context.str.length,
               message: "Remove the whitespace.",
               fix: {
-                ranges: [[i + 1, stringLeftRight.right(context.str, i)]]
+                ranges: [[i + 1, stringLeftRight.right(context.str, i) || context.str.length]]
               }
             });
           }
+
           if (opts[charName].whitespaceLeft === "always" && i && context.str[i - 1].trim().length) {
             context.report({
               ruleId: "character-unspaced-punctuation",
@@ -8776,6 +9926,7 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
               }
             });
           }
+
           if (opts[charName].whitespaceRight === "always" && i < node.end - 1 && context.str[i + 1].trim().length) {
             context.report({
               ruleId: "character-unspaced-punctuation",
@@ -8793,37 +9944,65 @@ function characterUnspacedPunctuation(context, ...originalOpts) {
   };
 }
 
-function mediaMalformed(context, ...opts) {
+// -----------------------------------------------------------------------------
+// it tap the is-media-descriptor that we already use on tags
+// to validate media query selectors, for example (rogue letter "e"):
+// @media screeen {
+//   ...
+// }
+
+function mediaMalformed(context) {
   return {
-    at(node) {
+    at: function at(node) {
+
       if (node.identifier === "media") {
-        const errors = isMediaD__default['default'](node.query, {
+        var errors = isMediaDescriptor.isMediaD(node.query, {
           offset: node.queryStartsAt
         });
-        errors.forEach(errorObj => {
-          context.report({ ...errorObj,
+        errors.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "media-malformed"
-          });
+          }));
         });
-      }
+      } // if (node.tagName === "bold") {
+      //   console.log(`037 RAISE ERROR [${node.start}, ${node.end}]`);
+      //   context.report({
+      //     ruleId: "media-malformed",
+      //     message: `Tag "bold" does not exist in HTML.`,
+      //     idxFrom: node.start,
+      //     idxTo: node.end, // second elem. from last range
+      //     fix: {
+      //       ranges: [[node.tagNameStartsAt, node.tagNameEndsAt, suggested]]
+      //     }
+      //   });
+      // }
+
     }
   };
 }
 
 function validateCommentClosing(token) {
-  const reference = {
+  var reference = {
     simple: "-->",
     only: "<![endif]-->",
     not: "<!--<![endif]-->"
-  };
+  }; // if all is fine, end quick
+
   if (token.kind === "simple" && token.value === "-->" || token.kind === "only" && token.value === "<![endif]-->" || token.kind === "not" && token.value === "<!--<![endif]-->") {
     return [];
   }
-  const errorArr = [];
-  let valueWithoutWhitespace = "";
-  splitByWhitespace(token.value, ([charFrom, charTo]) => {
-    valueWithoutWhitespace = `${valueWithoutWhitespace}${token.value.slice(charFrom, charTo)}`;
-  }, ([whitespaceFrom, whitespaceTo]) => {
+
+  var errorArr = []; // assemble string without whitespace:
+
+  var valueWithoutWhitespace = ""; // first, tackle any inner whitespace
+
+  splitByWhitespace(token.value, function (_ref) {
+    var charFrom = _ref[0],
+        charTo = _ref[1];
+    valueWithoutWhitespace = "" + valueWithoutWhitespace + token.value.slice(charFrom, charTo);
+  }, function (_ref2) {
+    var whitespaceFrom = _ref2[0],
+        whitespaceTo = _ref2[1];
     errorArr.push({
       ruleId: "comment-only-closing-malformed",
       idxFrom: token.start,
@@ -8833,10 +10012,12 @@ function validateCommentClosing(token) {
         ranges: [[whitespaceFrom + token.start, whitespaceTo + token.start]]
       }
     });
-  });
+  }); // if all it took was to remove some whitespace to get a correct value,
+  // that's the end - return the "errorArr" with only whitespace ranges:
+
   if (token.kind === "simple" && valueWithoutWhitespace === "-->" || token.kind === "only" && valueWithoutWhitespace === "<![endif]-->" || token.kind === "not" && valueWithoutWhitespace === "<!--<![endif]-->") {
     return errorArr;
-  }
+  } // if processing continues, it means something more is wrong
   errorArr.push({
     idxFrom: token.start,
     idxTo: token.end,
@@ -8848,16 +10029,21 @@ function validateCommentClosing(token) {
   return errorArr;
 }
 
-function commentClosingMalformed(context, ...opts) {
+function commentClosingMalformed(context) {
   return {
-    comment(node) {
+    comment: function comment(node) {
+
       if (node.closing) {
-        const errorArr = validateCommentClosing(node) || [];
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        // run the tag's value past the validator function
+        var errorArr = validateCommentClosing(node) || []; // Out of all raised errors, only one can have "ranges.fix" -
+        // all other fixes, if any present, will be removed.
+        // This is to simplify the rule fix clashing.
+
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             keepSeparateWhenFixing: true,
             ruleId: "comment-closing-malformed"
-          });
+          }));
         });
       }
     }
@@ -8865,20 +10051,29 @@ function commentClosingMalformed(context, ...opts) {
 }
 
 function validateCommentOpening(token) {
-  const reference = {
+  var reference = {
     simple: /<!--/g,
     only: /<!--\[[^\]]+\]>/g,
     not: /<!--\[[^\]]+\]><!-->/g
-  };
+  }; // if all is fine, end quick
+
   if (token.kind === "simple" && reference.simple.test(token.value) || token.kind === "only" && reference.only.test(token.value) || token.kind === "not" && reference.not.test(token.value)) {
     return [];
   }
-  const errorArr = [];
-  let valueWithoutWhitespace = "";
-  if (token.kind === "simple") {
-    splitByWhitespace(token.value, ([charFrom, charTo]) => {
-      valueWithoutWhitespace = `${valueWithoutWhitespace}${token.value.slice(charFrom, charTo)}`;
-    }, ([whitespaceFrom, whitespaceTo]) => {
+
+  var errorArr = []; // assemble string without whitespace:
+
+  var valueWithoutWhitespace = "";
+
+  if (token.kind === "simple") { // first, tackle any inner whitespace
+
+    splitByWhitespace(token.value, function (_ref) {
+      var charFrom = _ref[0],
+          charTo = _ref[1];
+      valueWithoutWhitespace = "" + valueWithoutWhitespace + token.value.slice(charFrom, charTo);
+    }, function (_ref2) {
+      var whitespaceFrom = _ref2[0],
+          whitespaceTo = _ref2[1];
       errorArr.push({
         idxFrom: token.start,
         idxTo: token.end,
@@ -8888,26 +10083,36 @@ function validateCommentOpening(token) {
         }
       });
     });
-  }
+  } // if all it took was to remove some whitespace to get a correct value,
+  // that's the end - return the "errorArr" with only whitespace ranges:
+
   if (token.kind === "simple" && reference.simple.test(valueWithoutWhitespace) || token.kind === "only" && reference.only.test(valueWithoutWhitespace) || token.kind === "not" && reference.not.test(valueWithoutWhitespace)) {
     return errorArr;
-  }
-  let wrongBracketType;
+  } // if processing continues, it means something more is wrong
+  var wrongBracketType = false; // check the opening tag's beginning:
+
   if (["only", "not"].includes(token.kind)) {
-    findMalformed__default['default'](token.value, "<!--[", ({
-      idxFrom,
-      idxTo
-    }) => {
-      let finalIdxTo = idxTo;
+    // if beginning is malformed:
+    stringFindMalformed.findMalformed(token.value, "<!--[", function (_ref3) {
+      var idxFrom = _ref3.idxFrom,
+          idxTo = _ref3.idxTo;
+      var finalIdxTo = idxTo; // take precaution, "not" type openings have very similar
+      // ending, <!--> which will get caught as well here!
+
       if (idxFrom === token.start) {
-        if (
-        "{(".includes(token.value[idxTo]) &&
+
+        if ( // imagine, we searched for "<!--[" in "<!--{if !mso}><!-->" -
+        // the idxTo is currently at "{" - search stopped at "{" and caught
+        // only "<!--", the frontal part.
+        // We check, maybe there's wrong type opening bracket, followed by "if"
+        "{(".includes(token.value[idxTo]) && // and "if" follows
         stringMatchLeftRight.matchRight(token.value, idxTo, "if", {
           trimBeforeMatching: true
         })) {
           wrongBracketType = true;
           finalIdxTo += 1;
         }
+
         errorArr.push({
           idxFrom: token.start,
           idxTo: token.end,
@@ -8918,14 +10123,18 @@ function validateCommentOpening(token) {
         });
       }
     });
-  }
-  if (token.kind === "not") {
-    findMalformed__default['default'](token.value, "]><!-->", ({
-      idxFrom,
-      idxTo
-    }) => {
-      let finalIdxFrom = idxFrom;
-      if ("})".includes(token.value[idxFrom - 1]) &&
+  } // check the ending part:
+
+
+  if (token.kind === "not") { // if ending of the opening is malformed:
+
+    stringFindMalformed.findMalformed(token.value, "]><!-->", function (_ref4) {
+      var idxFrom = _ref4.idxFrom,
+          idxTo = _ref4.idxTo;
+      var finalIdxFrom = idxFrom;
+
+      if ("})".includes(token.value[idxFrom - 1]) && // also require that token would start with:
+      // "<!--{if" or "<!--(if"
       wrongBracketType) {
         finalIdxFrom -= 1;
       }
@@ -8938,13 +10147,20 @@ function validateCommentOpening(token) {
         }
       });
     });
-  } else if (token.kind === "only") {
-    for (let i = token.value.length; i--;) {
+  } else if (token.kind === "only") { // plan: take the value, chomp all ">" and "]" characters
+    // from the end of it, then if anything's suspicious,
+    // replace all that with tight "]>".
+
+    for (var i = token.value.length; i--;) {
       if (token.value[i].trim().length && !">]".includes(token.value[i])) {
-        let rangeStart = i + 1;
+        // if heads already report wrong bracket type, extend by one character
+        // and remove that bracket too
+        var rangeStart = i + 1;
+
         if ("})".includes(token.value[i]) && wrongBracketType) {
           rangeStart -= 1;
         }
+
         if (token.value.slice(i + 1) !== "]>") {
           errorArr.push({
             idxFrom: token.start,
@@ -8955,67 +10171,94 @@ function validateCommentOpening(token) {
             }
           });
         }
+
         break;
       }
     }
   }
+
   return errorArr;
 }
 
-function commentOpeningMalformed(context, ...opts) {
+function commentOpeningMalformed(context) {
   return {
-    text: node => {
-      findMalformed__default['default'](node.value, "<!--", errorObj => {
-        context.report({ ...errorObj,
+    text: function text(node) {
+      stringFindMalformed.findMalformed(node.value, "<!--", function (errorObj) {
+        context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
           message: "Malformed opening comment tag.",
           ruleId: "comment-opening-malformed",
           fix: {
             ranges: [[errorObj.idxFrom, errorObj.idxTo, "<!--"]]
           }
-        });
+        }));
       }, {
         stringOffset: node.start
       });
     },
-    comment: node => {
+    comment: function comment(node) {
+
       if (!node.closing) {
-        const errorArr = validateCommentOpening(node) || [];
-        errorArr.forEach(errorObj => {
-          context.report({ ...errorObj,
+        // run the tag's value past the validator function
+        var errorArr = validateCommentOpening(node) || [];
+        errorArr.forEach(function (errorObj) {
+          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "comment-opening-malformed"
-          });
+          }));
         });
       }
     }
   };
 }
 
-function commentMismatchingPair(context, ...opts) {
+// rule: comment-mismatching-pair
+
+function commentMismatchingPair(context) {
   return {
-    ast(node) {
-      traverse__default['default'](node,
-      (key, val, innerObj) => {
-        const current = val !== undefined ? val : key;
+    ast: function ast(node) { // we have raw AST, we need to traverse it and find mismatching-kind pairs
+      // of type="comment" tokens, only-not or not-only
+
+      astMonkeyTraverse.traverse(node, // (key, val, innerObj, stop) => {
+      function (key, val, innerObj) {
+        var current = val !== undefined ? val : key;
+
         if (isObj(current)) {
+          // monkey will traverse every key, every string within.
+          // We need to pick the objects of a type we need: "comment"
+          // console.log(
+          //   `210 ██ ${`\u001b[${35}m${`linter/tagCb():`}\u001b[${39}m`} PING ${`\u001b[${33}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
+          //     current,
+          //     null,
+          //     4
+          //   )}`
+          // );
           if (current.type === "comment" && current.closing) {
-            const previousToken = op__default['default'].get(node, astMonkeyUtil.pathPrev(innerObj.path));
+            var previousToken = op__default['default'].get(node, astMonkeyUtil.pathPrev(innerObj.path));
+
             if (isObj(previousToken) && previousToken.type === "comment" && !previousToken.closing) {
-              if (previousToken.kind === "not" && current.kind === "only") {
+              if (previousToken.kind === "not" && current.kind === "only") { // turn tail into "not"-kind, add front part (<!--)
+                // Out of all raised errors, only one can have "ranges.fix" -
+                // all other fixes, if any present, will be removed.
+                // This is to simplify the rule fix clashing.
+
                 context.report({
                   ruleId: "comment-mismatching-pair",
                   keepSeparateWhenFixing: true,
-                  message: `Add "<!--".`,
+                  message: "Add \"<!--\".",
                   idxFrom: current.start,
                   idxTo: current.end,
                   fix: {
                     ranges: [[current.start, current.start, "<!--"]]
                   }
                 });
-              } else if (previousToken.kind === "only" && current.kind === "not") {
+              } else if (previousToken.kind === "only" && current.kind === "not") { // turn tail into "only"-kind, remove front part (<!--)
+                // Out of all raised errors, only one can have "ranges.fix" -
+                // all other fixes, if any present, will be removed.
+                // This is to simplify the rule fix clashing.
+
                 context.report({
                   ruleId: "comment-mismatching-pair",
                   keepSeparateWhenFixing: true,
-                  message: `Remove "<!--".`,
+                  message: "Remove \"<!--\".",
                   idxFrom: current.start,
                   idxTo: current.end,
                   fix: {
@@ -9026,459 +10269,1137 @@ function commentMismatchingPair(context, ...opts) {
             }
           }
         }
+
         return current;
       });
     }
   };
 }
 
+// rule: comment-conditional-nested
+// function commentConditionalNested(context, ...opts) {
+
 function commentConditionalNested(context) {
   return {
-    ast(node) {
-      const pathsWithOpeningComments = [];
-      traverse__default['default'](node,
-      (key, val, innerObj) => {
-        const current = val !== undefined ? val : key;
+    ast: function ast(node) {
+      var pathsWithOpeningComments = [];
+      astMonkeyTraverse.traverse(node, // (key, val, innerObj, stop) => {
+      function (key, val, innerObj) {
+        var current = val !== undefined ? val : key;
+
         if (isObj(current)) {
-          if (current.type === "comment") {
-            if (pathsWithOpeningComments.some(pathStr => innerObj.path.startsWith(pathStr))) {
+          // monkey will traverse every key, every string within.
+          // We need to pick the objects of a type we need: "comment"
+
+          if (current.type === "comment") { // first, check, does any opening comment path strings match
+            // the start of the current path - because if it is, it's nested
+            // and should be reported
+
+            if (pathsWithOpeningComments.some(function (pathStr) {
+              return innerObj.path.startsWith(pathStr);
+            })) {
               context.report({
                 ruleId: "comment-conditional-nested",
-                message: `Don't nest comments.`,
+                message: "Don't nest comments.",
                 idxFrom: current.start,
                 idxTo: current.end,
                 fix: null
               });
             }
+
             if (!current.closing) {
               pathsWithOpeningComments.push(innerObj.path);
             }
           }
         }
+
         return current;
       });
     }
   };
 }
 
-const builtInRules = {};
-defineLazyProp__default['default'](builtInRules, "bad-character-null", () => badCharacterNull);
-defineLazyProp__default['default'](builtInRules, "bad-character-start-of-heading", () => badCharacterStartOfHeading);
-defineLazyProp__default['default'](builtInRules, "bad-character-start-of-text", () => badCharacterStartOfText);
-defineLazyProp__default['default'](builtInRules, "bad-character-end-of-text", () => badCharacterEndOfText);
-defineLazyProp__default['default'](builtInRules, "bad-character-end-of-transmission", () => badCharacterEndOfTransmission);
-defineLazyProp__default['default'](builtInRules, "bad-character-enquiry", () => badCharacterEnquiry);
-defineLazyProp__default['default'](builtInRules, "bad-character-acknowledge", () => badCharacterAcknowledge);
-defineLazyProp__default['default'](builtInRules, "bad-character-bell", () => badCharacterBell);
-defineLazyProp__default['default'](builtInRules, "bad-character-backspace", () => badCharacterBackspace);
-defineLazyProp__default['default'](builtInRules, "bad-character-tabulation", () => badCharacterTabulation);
-defineLazyProp__default['default'](builtInRules, "bad-character-line-tabulation", () => badCharacterLineTabulation);
-defineLazyProp__default['default'](builtInRules, "bad-character-form-feed", () => badCharacterFormFeed);
-defineLazyProp__default['default'](builtInRules, "bad-character-shift-out", () => badCharacterShiftOut);
-defineLazyProp__default['default'](builtInRules, "bad-character-shift-in", () => badCharacterShiftIn);
-defineLazyProp__default['default'](builtInRules, "bad-character-data-link-escape", () => badCharacterDataLinkEscape);
-defineLazyProp__default['default'](builtInRules, "bad-character-device-control-one", () => badCharacterDeviceControlOne);
-defineLazyProp__default['default'](builtInRules, "bad-character-device-control-two", () => badCharacterDeviceControlTwo);
-defineLazyProp__default['default'](builtInRules, "bad-character-device-control-three", () => badCharacterDeviceControlThree);
-defineLazyProp__default['default'](builtInRules, "bad-character-device-control-four", () => badCharacterDeviceControlFour);
-defineLazyProp__default['default'](builtInRules, "bad-character-negative-acknowledge", () => badCharacterNegativeAcknowledge);
-defineLazyProp__default['default'](builtInRules, "bad-character-synchronous-idle", () => badCharacterSynchronousIdle);
-defineLazyProp__default['default'](builtInRules, "bad-character-end-of-transmission-block", () => badCharacterEndOfTransmissionBlock);
-defineLazyProp__default['default'](builtInRules, "bad-character-cancel", () => badCharacterCancel);
-defineLazyProp__default['default'](builtInRules, "bad-character-end-of-medium", () => badCharacterEndOfMedium);
-defineLazyProp__default['default'](builtInRules, "bad-character-substitute", () => badCharacterSubstitute);
-defineLazyProp__default['default'](builtInRules, "bad-character-escape", () => badCharacterEscape);
-defineLazyProp__default['default'](builtInRules, "bad-character-information-separator-four", () => badCharacterInformationSeparatorFour);
-defineLazyProp__default['default'](builtInRules, "bad-character-information-separator-three", () => badCharacterInformationSeparatorThree);
-defineLazyProp__default['default'](builtInRules, "bad-character-information-separator-two", () => badCharacterInformationSeparatorTwo);
-defineLazyProp__default['default'](builtInRules, "bad-character-information-separator-one", () => badCharacterInformationSeparatorTwo$1);
-defineLazyProp__default['default'](builtInRules, "bad-character-delete", () => badCharacterDelete);
-defineLazyProp__default['default'](builtInRules, "bad-character-control-0080", () => badCharacterControl0080);
-defineLazyProp__default['default'](builtInRules, "bad-character-control-0081", () => badCharacterControl0081);
-defineLazyProp__default['default'](builtInRules, "bad-character-break-permitted-here", () => badCharacterBreakPermittedHere);
-defineLazyProp__default['default'](builtInRules, "bad-character-no-break-here", () => badCharacterNoBreakHere);
-defineLazyProp__default['default'](builtInRules, "bad-character-control-0084", () => badCharacterControl0084);
-defineLazyProp__default['default'](builtInRules, "bad-character-next-line", () => badCharacterNextLine);
-defineLazyProp__default['default'](builtInRules, "bad-character-start-of-selected-area", () => badCharacterStartOfSelectedArea);
-defineLazyProp__default['default'](builtInRules, "bad-character-end-of-selected-area", () => badCharacterEndOfSelectedArea);
-defineLazyProp__default['default'](builtInRules, "bad-character-character-tabulation-set", () => badCharacterCharacterTabulationSet);
-defineLazyProp__default['default'](builtInRules, "bad-character-character-tabulation-with-justification", () => badCharacterCharacterTabulationWithJustification);
-defineLazyProp__default['default'](builtInRules, "bad-character-line-tabulation-set", () => badCharacterLineTabulationSet);
-defineLazyProp__default['default'](builtInRules, "bad-character-partial-line-forward", () => badCharacterPartialLineForward);
-defineLazyProp__default['default'](builtInRules, "bad-character-partial-line-backward", () => badCharacterPartialLineBackward);
-defineLazyProp__default['default'](builtInRules, "bad-character-reverse-line-feed", () => badCharacterReverseLineFeed);
-defineLazyProp__default['default'](builtInRules, "bad-character-single-shift-two", () => badCharacterSingleShiftTwo);
-defineLazyProp__default['default'](builtInRules, "bad-character-single-shift-three", () => badCharacterSingleShiftTwo$1);
-defineLazyProp__default['default'](builtInRules, "bad-character-device-control-string", () => badCharacterDeviceControlString);
-defineLazyProp__default['default'](builtInRules, "bad-character-private-use-1", () => badCharacterPrivateUseOne);
-defineLazyProp__default['default'](builtInRules, "bad-character-private-use-2", () => badCharacterPrivateUseTwo);
-defineLazyProp__default['default'](builtInRules, "bad-character-set-transmit-state", () => badCharacterSetTransmitState);
-defineLazyProp__default['default'](builtInRules, "bad-character-cancel-character", () => badCharacterCancelCharacter);
-defineLazyProp__default['default'](builtInRules, "bad-character-message-waiting", () => badCharacterMessageWaiting);
-defineLazyProp__default['default'](builtInRules, "bad-character-start-of-protected-area", () => badCharacterStartOfProtectedArea);
-defineLazyProp__default['default'](builtInRules, "bad-character-end-of-protected-area", () => badCharacterEndOfProtectedArea);
-defineLazyProp__default['default'](builtInRules, "bad-character-start-of-string", () => badCharacterStartOfString);
-defineLazyProp__default['default'](builtInRules, "bad-character-control-0099", () => badCharacterControl0099);
-defineLazyProp__default['default'](builtInRules, "bad-character-single-character-introducer", () => badCharacterSingleCharacterIntroducer);
-defineLazyProp__default['default'](builtInRules, "bad-character-control-sequence-introducer", () => badCharacterControlSequenceIntroducer);
-defineLazyProp__default['default'](builtInRules, "bad-character-string-terminator", () => badCharacterStringTerminator);
-defineLazyProp__default['default'](builtInRules, "bad-character-operating-system-command", () => badCharacterOperatingSystemCommand);
-defineLazyProp__default['default'](builtInRules, "bad-character-private-message", () => badCharacterPrivateMessage);
-defineLazyProp__default['default'](builtInRules, "bad-character-application-program-command", () => badCharacterApplicationProgramCommand);
-defineLazyProp__default['default'](builtInRules, "bad-character-soft-hyphen", () => badCharacterSoftHyphen);
-defineLazyProp__default['default'](builtInRules, "bad-character-non-breaking-space", () => badCharacterNonBreakingSpace);
-defineLazyProp__default['default'](builtInRules, "bad-character-ogham-space-mark", () => badCharacterOghamSpaceMark);
-defineLazyProp__default['default'](builtInRules, "bad-character-en-quad", () => badCharacterEnQuad);
-defineLazyProp__default['default'](builtInRules, "bad-character-em-quad", () => badCharacterEmQuad);
-defineLazyProp__default['default'](builtInRules, "bad-character-en-space", () => badCharacterEnSpace);
-defineLazyProp__default['default'](builtInRules, "bad-character-em-space", () => badCharacterEmSpace);
-defineLazyProp__default['default'](builtInRules, "bad-character-three-per-em-space", () => badCharacterThreePerEmSpace);
-defineLazyProp__default['default'](builtInRules, "bad-character-four-per-em-space", () => badCharacterFourPerEmSpace);
-defineLazyProp__default['default'](builtInRules, "bad-character-six-per-em-space", () => badCharacterSixPerEmSpace);
-defineLazyProp__default['default'](builtInRules, "bad-character-figure-space", () => badCharacterFigureSpace);
-defineLazyProp__default['default'](builtInRules, "bad-character-punctuation-space", () => badCharacterPunctuationSpace);
-defineLazyProp__default['default'](builtInRules, "bad-character-thin-space", () => badCharacterThinSpace);
-defineLazyProp__default['default'](builtInRules, "bad-character-hair-space", () => badCharacterHairSpace);
-defineLazyProp__default['default'](builtInRules, "bad-character-zero-width-space", () => badCharacterZeroWidthSpace);
-defineLazyProp__default['default'](builtInRules, "bad-character-zero-width-non-joiner", () => badCharacterZeroWidthNonJoiner);
-defineLazyProp__default['default'](builtInRules, "bad-character-zero-width-joiner", () => badCharacterZeroWidthJoiner);
-defineLazyProp__default['default'](builtInRules, "bad-character-left-to-right-mark", () => badCharacterLeftToRightMark);
-defineLazyProp__default['default'](builtInRules, "bad-character-right-to-left-mark", () => badCharacterRightToLeftMark);
-defineLazyProp__default['default'](builtInRules, "bad-character-left-to-right-embedding", () => badCharacterLeftToRightEmbedding);
-defineLazyProp__default['default'](builtInRules, "bad-character-right-to-left-embedding", () => badCharacterRightToLeftEmbedding);
-defineLazyProp__default['default'](builtInRules, "bad-character-pop-directional-formatting", () => badCharacterPopDirectionalFormatting);
-defineLazyProp__default['default'](builtInRules, "bad-character-left-to-right-override", () => badCharacterLeftToRightOverride);
-defineLazyProp__default['default'](builtInRules, "bad-character-right-to-left-override", () => badCharacterRightToLeftOverride);
-defineLazyProp__default['default'](builtInRules, "bad-character-word-joiner", () => badCharacterWordJoiner);
-defineLazyProp__default['default'](builtInRules, "bad-character-function-application", () => badCharacterFunctionApplication);
-defineLazyProp__default['default'](builtInRules, "bad-character-invisible-times", () => badCharacterInvisibleTimes);
-defineLazyProp__default['default'](builtInRules, "bad-character-invisible-separator", () => badCharacterInvisibleSeparator);
-defineLazyProp__default['default'](builtInRules, "bad-character-invisible-plus", () => badCharacterInvisiblePlus);
-defineLazyProp__default['default'](builtInRules, "bad-character-left-to-right-isolate", () => badCharacterLeftToRightIsolate);
-defineLazyProp__default['default'](builtInRules, "bad-character-right-to-left-isolate", () => badCharacterRightToLeftIsolate);
-defineLazyProp__default['default'](builtInRules, "bad-character-first-strong-isolate", () => badCharacterFirstStrongIsolate);
-defineLazyProp__default['default'](builtInRules, "bad-character-pop-directional-isolate", () => badCharacterPopDirectionalIsolate);
-defineLazyProp__default['default'](builtInRules, "bad-character-inhibit-symmetric-swapping", () => badCharacterInhibitSymmetricSwapping);
-defineLazyProp__default['default'](builtInRules, "bad-character-activate-symmetric-swapping", () => badCharacterActivateSymmetricSwapping);
-defineLazyProp__default['default'](builtInRules, "bad-character-inhibit-arabic-form-shaping", () => badCharacterInhibitArabicFormShaping);
-defineLazyProp__default['default'](builtInRules, "bad-character-activate-arabic-form-shaping", () => badCharacterActivateArabicFormShaping);
-defineLazyProp__default['default'](builtInRules, "bad-character-national-digit-shapes", () => badCharacterNationalDigitShapes);
-defineLazyProp__default['default'](builtInRules, "bad-character-nominal-digit-shapes", () => badCharacterNominalDigitShapes);
-defineLazyProp__default['default'](builtInRules, "bad-character-zero-width-no-break-space", () => badCharacterZeroWidthNoBreakSpace);
-defineLazyProp__default['default'](builtInRules, "bad-character-interlinear-annotation-anchor", () => badCharacterInterlinearAnnotationAnchor);
-defineLazyProp__default['default'](builtInRules, "bad-character-interlinear-annotation-separator", () => badCharacterInterlinearAnnotationSeparator);
-defineLazyProp__default['default'](builtInRules, "bad-character-interlinear-annotation-terminator", () => badCharacterInterlinearAnnotationTerminator);
-defineLazyProp__default['default'](builtInRules, "bad-character-line-separator", () => badCharacterLineSeparator);
-defineLazyProp__default['default'](builtInRules, "bad-character-paragraph-separator", () => badCharacterParagraphSeparator);
-defineLazyProp__default['default'](builtInRules, "bad-character-narrow-no-break-space", () => badCharacterNarrowNoBreakSpace);
-defineLazyProp__default['default'](builtInRules, "bad-character-medium-mathematical-space", () => badCharacterMediumMathematicalSpace);
-defineLazyProp__default['default'](builtInRules, "bad-character-ideographic-space", () => badCharacterIdeographicSpace);
-defineLazyProp__default['default'](builtInRules, "bad-character-replacement-character", () => badCharacterReplacementCharacter);
-defineLazyProp__default['default'](builtInRules, "tag-space-after-opening-bracket", () => tagSpaceAfterOpeningBracket);
-defineLazyProp__default['default'](builtInRules, "tag-space-before-closing-bracket", () => tagSpaceBeforeClosingBracket);
-defineLazyProp__default['default'](builtInRules, "tag-space-before-closing-slash", () => tagSpaceBeforeClosingSlash);
-defineLazyProp__default['default'](builtInRules, "tag-space-between-slash-and-bracket", () => tagSpaceBetweenSlashAndBracket);
-defineLazyProp__default['default'](builtInRules, "tag-closing-backslash", () => tagClosingBackslash);
-defineLazyProp__default['default'](builtInRules, "tag-void-slash", () => tagVoidSlash);
-defineLazyProp__default['default'](builtInRules, "tag-name-case", () => tagNameCase);
-defineLazyProp__default['default'](builtInRules, "tag-is-present", () => tagIsPresent);
-defineLazyProp__default['default'](builtInRules, "tag-bold", () => tagBold);
-defineLazyProp__default['default'](builtInRules, "tag-bad-self-closing", () => tagBadSelfClosing);
-defineLazyProp__default['default'](builtInRules, "attribute-duplicate", () => attributeDuplicate);
-defineLazyProp__default['default'](builtInRules, "attribute-malformed", () => attributeMalformed);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-abbr", () => attributeValidateAbbr);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-accept-charset", () => attributeValidateAcceptCharset);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-accept", () => attributeValidateAccept);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-accesskey", () => attributeValidateAccesskey);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-action", () => attributeValidateAction);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-align", () => attributeValidateAlign);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-alink", () => attributeValidateAlink);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-alt", () => attributeValidateAlt);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-archive", () => attributeValidateArchive);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-axis", () => attributeValidateAxis);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-background", () => attributeValidateBackground);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-bgcolor", () => attributeValidateBgcolor);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-border", () => attributeValidateBorder);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-cellpadding", () => attributeValidateCellpadding);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-cellspacing", () => attributeValidateCellspacing);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-char", () => attributeValidateChar);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-charoff", () => attributeValidateCharoff);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-charset", () => attributeValidateCharset);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-checked", () => attributeValidateChecked);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-cite", () => attributeValidateCite);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-class", () => attributeValidateClass);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-classid", () => attributeValidateClassid);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-clear", () => attributeValidateClassid$1);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-code", () => attributeValidateCode);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-codebase", () => attributeValidateCodebase);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-codetype", () => attributeValidateCodetype);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-color", () => attributeValidateColor);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-cols", () => attributeValidateCols);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-colspan", () => attributeValidateColspan);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-compact", () => attributeValidateCompact);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-content", () => attributeValidateContent);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-coords", () => attributeValidateCoords);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-data", () => attributeValidateData);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-datetime", () => attributeValidateDatetime);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-declare", () => attributeValidateDeclare);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-defer", () => attributeValidateDefer);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-dir", () => attributeValidateDir);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-disabled", () => attributeValidateDisabled);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-enctype", () => attributeValidateEnctype);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-face", () => attributeValidateFace);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-for", () => attributeValidateFor);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-frame", () => attributeValidateFrame);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-frameborder", () => attributeValidateFrameborder);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-headers", () => attributeValidateHeaders);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-height", () => attributeValidateHeight);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-href", () => attributeValidateHref);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-hreflang", () => attributeValidateHreflang);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-hspace", () => attributeValidateHspace);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-http-equiv", () => attributeValidateHttpequiv);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-id", () => attributeValidateId);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-ismap", () => attributeValidateIsmap);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-label", () => attributeValidateLabel);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-lang", () => attributeValidateLang);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-language", () => attributeValidateLanguage);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-link", () => attributeValidateLink);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-longdesc", () => attributeValidateLongdesc);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-marginheight", () => attributeValidateMarginheight);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-marginwidth", () => attributeValidateMarginwidth);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-maxlength", () => attributeValidateMaxlength);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-media", () => attributeValidateMedia);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-method", () => attributeValidateMethod);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-multiple", () => attributeValidateMultiple);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-name", () => attributeValidateName);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-nohref", () => attributeValidateNohref);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-noresize", () => attributeValidateNoresize);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-noshade", () => attributeValidateNoshade);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-nowrap", () => attributeValidateNowrap);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-object", () => attributeValidateObject);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-onblur", () => attributeValidateOnblur);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-onchange", () => attributeValidateOnchange);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-onclick", () => attributeValidateOnclick);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-ondblclick", () => attributeValidateOndblclick);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-onfocus", () => attributeValidateOnfocus);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-onkeydown", () => attributeValidateOnkeydown);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-onkeypress", () => attributeValidateOnkeypress);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-onkeyup", () => attributeValidateOnkeyup);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-onload", () => attributeValidateOnload);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-onmousedown", () => attributeValidateOnmousedown);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-onmousemove", () => attributeValidateOnmousemove);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-onmouseout", () => attributeValidateOnmouseout);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-onmouseover", () => attributeValidateOnmouseover);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-onmouseup", () => attributeValidateOnmouseup);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-onreset", () => attributeValidateOnreset);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-onsubmit", () => attributeValidateOnsubmit);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-onselect", () => attributeValidateOnselect);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-onunload", () => attributeValidateOnunload);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-profile", () => attributeValidateProfile);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-prompt", () => attributeValidatePrompt);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-readonly", () => attributeValidateReadonly);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-rel", () => attributeValidateRel);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-rev", () => attributeValidateRev);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-rows", () => attributeValidateRows);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-rowspan", () => attributeValidateRowspan);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-rules", () => attributeValidateRules);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-scheme", () => attributeValidateScheme);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-scope", () => attributeValidateScope);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-scrolling", () => attributeValidateScrolling);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-selected", () => attributeValidateSelected);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-shape", () => attributeValidateShape);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-size", () => attributeValidateSize);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-span", () => attributeValidateSpan);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-src", () => attributeValidateSrc);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-standby", () => attributeValidateStandby);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-start", () => attributeValidateStart);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-style", () => attributeValidateStyle);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-summary", () => attributeValidateSummary);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-tabindex", () => attributeValidateTabindex);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-target", () => attributeValidateTarget);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-text", () => attributeValidateText);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-title", () => attributeValidateTitle);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-type", () => attributeValidateType);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-usemap", () => attributeValidateUsemap);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-valign", () => attributeValidateValign);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-value", () => attributeValidateValue);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-valuetype", () => attributeValidateValuetype);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-version", () => attributeValidateVersion);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-vlink", () => attributeValidateVlink);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-vspace", () => attributeValidateVspace);
-defineLazyProp__default['default'](builtInRules, "attribute-validate-width", () => attributeValidateWidth);
-defineLazyProp__default['default'](builtInRules, "bad-named-html-entity-not-email-friendly", () => htmlEntitiesNotEmailFriendly);
-defineLazyProp__default['default'](builtInRules, "character-encode", () => characterEncode);
-defineLazyProp__default['default'](builtInRules, "character-unspaced-punctuation", () => characterUnspacedPunctuation);
-defineLazyProp__default['default'](builtInRules, "media-malformed", () => mediaMalformed);
-defineLazyProp__default['default'](builtInRules, "comment-closing-malformed", () => commentClosingMalformed);
-defineLazyProp__default['default'](builtInRules, "comment-opening-malformed", () => commentOpeningMalformed);
-defineLazyProp__default['default'](builtInRules, "comment-mismatching-pair", () => commentMismatchingPair);
-defineLazyProp__default['default'](builtInRules, "comment-conditional-nested", () => commentConditionalNested);
+// here we fetch the rules from all the places,
+var builtInRules = {};
+defineLazyProp__default['default'](builtInRules, "bad-character-null", function () {
+  return badCharacterNull;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-start-of-heading", function () {
+  return badCharacterStartOfHeading;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-start-of-text", function () {
+  return badCharacterStartOfText;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-end-of-text", function () {
+  return badCharacterEndOfText;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-end-of-transmission", function () {
+  return badCharacterEndOfTransmission;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-enquiry", function () {
+  return badCharacterEnquiry;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-acknowledge", function () {
+  return badCharacterAcknowledge;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-bell", function () {
+  return badCharacterBell;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-backspace", function () {
+  return badCharacterBackspace;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-tabulation", function () {
+  return badCharacterTabulation;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-line-tabulation", function () {
+  return badCharacterLineTabulation;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-form-feed", function () {
+  return badCharacterFormFeed;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-shift-out", function () {
+  return badCharacterShiftOut;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-shift-in", function () {
+  return badCharacterShiftIn;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-data-link-escape", function () {
+  return badCharacterDataLinkEscape;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-device-control-one", function () {
+  return badCharacterDeviceControlOne;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-device-control-two", function () {
+  return badCharacterDeviceControlTwo;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-device-control-three", function () {
+  return badCharacterDeviceControlThree;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-device-control-four", function () {
+  return badCharacterDeviceControlFour;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-negative-acknowledge", function () {
+  return badCharacterNegativeAcknowledge;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-synchronous-idle", function () {
+  return badCharacterSynchronousIdle;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-end-of-transmission-block", function () {
+  return badCharacterEndOfTransmissionBlock;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-cancel", function () {
+  return badCharacterCancel;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-end-of-medium", function () {
+  return badCharacterEndOfMedium;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-substitute", function () {
+  return badCharacterSubstitute;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-escape", function () {
+  return badCharacterEscape;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-information-separator-four", function () {
+  return badCharacterInformationSeparatorFour;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-information-separator-three", function () {
+  return badCharacterInformationSeparatorThree;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-information-separator-two", function () {
+  return badCharacterInformationSeparatorTwo;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-information-separator-one", function () {
+  return badCharacterInformationSeparatorTwo$1;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-delete", function () {
+  return badCharacterDelete;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-control-0080", function () {
+  return badCharacterControl0080;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-control-0081", function () {
+  return badCharacterControl0081;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-break-permitted-here", function () {
+  return badCharacterBreakPermittedHere;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-no-break-here", function () {
+  return badCharacterNoBreakHere;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-control-0084", function () {
+  return badCharacterControl0084;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-next-line", function () {
+  return badCharacterNextLine;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-start-of-selected-area", function () {
+  return badCharacterStartOfSelectedArea;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-end-of-selected-area", function () {
+  return badCharacterEndOfSelectedArea;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-character-tabulation-set", function () {
+  return badCharacterCharacterTabulationSet;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-character-tabulation-with-justification", function () {
+  return badCharacterCharacterTabulationWithJustification;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-line-tabulation-set", function () {
+  return badCharacterLineTabulationSet;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-partial-line-forward", function () {
+  return badCharacterPartialLineForward;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-partial-line-backward", function () {
+  return badCharacterPartialLineBackward;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-reverse-line-feed", function () {
+  return badCharacterReverseLineFeed;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-single-shift-two", function () {
+  return badCharacterSingleShiftTwo;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-single-shift-three", function () {
+  return badCharacterSingleShiftTwo$1;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-device-control-string", function () {
+  return badCharacterDeviceControlString;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-private-use-1", function () {
+  return badCharacterPrivateUseOne;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-private-use-2", function () {
+  return badCharacterPrivateUseTwo;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-set-transmit-state", function () {
+  return badCharacterSetTransmitState;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-cancel-character", function () {
+  return badCharacterCancelCharacter;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-message-waiting", function () {
+  return badCharacterMessageWaiting;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-start-of-protected-area", function () {
+  return badCharacterStartOfProtectedArea;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-end-of-protected-area", function () {
+  return badCharacterEndOfProtectedArea;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-start-of-string", function () {
+  return badCharacterStartOfString;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-control-0099", function () {
+  return badCharacterControl0099;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-single-character-introducer", function () {
+  return badCharacterSingleCharacterIntroducer;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-control-sequence-introducer", function () {
+  return badCharacterControlSequenceIntroducer;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-string-terminator", function () {
+  return badCharacterStringTerminator;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-operating-system-command", function () {
+  return badCharacterOperatingSystemCommand;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-private-message", function () {
+  return badCharacterPrivateMessage;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-application-program-command", function () {
+  return badCharacterApplicationProgramCommand;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-soft-hyphen", function () {
+  return badCharacterSoftHyphen;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-non-breaking-space", function () {
+  return badCharacterNonBreakingSpace;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-ogham-space-mark", function () {
+  return badCharacterOghamSpaceMark;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-en-quad", function () {
+  return badCharacterEnQuad;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-em-quad", function () {
+  return badCharacterEmQuad;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-en-space", function () {
+  return badCharacterEnSpace;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-em-space", function () {
+  return badCharacterEmSpace;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-three-per-em-space", function () {
+  return badCharacterThreePerEmSpace;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-four-per-em-space", function () {
+  return badCharacterFourPerEmSpace;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-six-per-em-space", function () {
+  return badCharacterSixPerEmSpace;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-figure-space", function () {
+  return badCharacterFigureSpace;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-punctuation-space", function () {
+  return badCharacterPunctuationSpace;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-thin-space", function () {
+  return badCharacterThinSpace;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-hair-space", function () {
+  return badCharacterHairSpace;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-zero-width-space", function () {
+  return badCharacterZeroWidthSpace;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-zero-width-non-joiner", function () {
+  return badCharacterZeroWidthNonJoiner;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-zero-width-joiner", function () {
+  return badCharacterZeroWidthJoiner;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-left-to-right-mark", function () {
+  return badCharacterLeftToRightMark;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-right-to-left-mark", function () {
+  return badCharacterRightToLeftMark;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-left-to-right-embedding", function () {
+  return badCharacterLeftToRightEmbedding;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-right-to-left-embedding", function () {
+  return badCharacterRightToLeftEmbedding;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-pop-directional-formatting", function () {
+  return badCharacterPopDirectionalFormatting;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-left-to-right-override", function () {
+  return badCharacterLeftToRightOverride;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-right-to-left-override", function () {
+  return badCharacterRightToLeftOverride;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-word-joiner", function () {
+  return badCharacterWordJoiner;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-function-application", function () {
+  return badCharacterFunctionApplication;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-invisible-times", function () {
+  return badCharacterInvisibleTimes;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-invisible-separator", function () {
+  return badCharacterInvisibleSeparator;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-invisible-plus", function () {
+  return badCharacterInvisiblePlus;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-left-to-right-isolate", function () {
+  return badCharacterLeftToRightIsolate;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-right-to-left-isolate", function () {
+  return badCharacterRightToLeftIsolate;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-first-strong-isolate", function () {
+  return badCharacterFirstStrongIsolate;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-pop-directional-isolate", function () {
+  return badCharacterPopDirectionalIsolate;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-inhibit-symmetric-swapping", function () {
+  return badCharacterInhibitSymmetricSwapping;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-activate-symmetric-swapping", function () {
+  return badCharacterActivateSymmetricSwapping;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-inhibit-arabic-form-shaping", function () {
+  return badCharacterInhibitArabicFormShaping;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-activate-arabic-form-shaping", function () {
+  return badCharacterActivateArabicFormShaping;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-national-digit-shapes", function () {
+  return badCharacterNationalDigitShapes;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-nominal-digit-shapes", function () {
+  return badCharacterNominalDigitShapes;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-zero-width-no-break-space", function () {
+  return badCharacterZeroWidthNoBreakSpace;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-interlinear-annotation-anchor", function () {
+  return badCharacterInterlinearAnnotationAnchor;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-interlinear-annotation-separator", function () {
+  return badCharacterInterlinearAnnotationSeparator;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-interlinear-annotation-terminator", function () {
+  return badCharacterInterlinearAnnotationTerminator;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-line-separator", function () {
+  return badCharacterLineSeparator;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-paragraph-separator", function () {
+  return badCharacterParagraphSeparator;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-narrow-no-break-space", function () {
+  return badCharacterNarrowNoBreakSpace;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-medium-mathematical-space", function () {
+  return badCharacterMediumMathematicalSpace;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-ideographic-space", function () {
+  return badCharacterIdeographicSpace;
+});
+defineLazyProp__default['default'](builtInRules, "bad-character-replacement-character", function () {
+  return badCharacterReplacementCharacter;
+});
+defineLazyProp__default['default'](builtInRules, "tag-space-after-opening-bracket", function () {
+  return tagSpaceAfterOpeningBracket;
+});
+defineLazyProp__default['default'](builtInRules, "tag-space-before-closing-bracket", function () {
+  return tagSpaceBeforeClosingBracket;
+});
+defineLazyProp__default['default'](builtInRules, "tag-space-before-closing-slash", function () {
+  return tagSpaceBeforeClosingSlash;
+});
+defineLazyProp__default['default'](builtInRules, "tag-space-between-slash-and-bracket", function () {
+  return tagSpaceBetweenSlashAndBracket;
+});
+defineLazyProp__default['default'](builtInRules, "tag-closing-backslash", function () {
+  return tagClosingBackslash;
+});
+defineLazyProp__default['default'](builtInRules, "tag-void-slash", function () {
+  return tagVoidSlash;
+});
+defineLazyProp__default['default'](builtInRules, "tag-name-case", function () {
+  return tagNameCase;
+});
+defineLazyProp__default['default'](builtInRules, "tag-is-present", function () {
+  return tagIsPresent;
+});
+defineLazyProp__default['default'](builtInRules, "tag-bold", function () {
+  return tagBold;
+});
+defineLazyProp__default['default'](builtInRules, "tag-bad-self-closing", function () {
+  return tagBadSelfClosing;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-duplicate", function () {
+  return attributeDuplicate;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-malformed", function () {
+  return attributeMalformed;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-abbr", function () {
+  return attributeValidateAbbr;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-accept-charset", function () {
+  return attributeValidateAcceptCharset;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-accept", function () {
+  return attributeValidateAccept;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-accesskey", function () {
+  return attributeValidateAccesskey;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-action", function () {
+  return attributeValidateAction;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-align", function () {
+  return attributeValidateAlign;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-alink", function () {
+  return attributeValidateAlink;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-alt", function () {
+  return attributeValidateAlt;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-archive", function () {
+  return attributeValidateArchive;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-axis", function () {
+  return attributeValidateAxis;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-background", function () {
+  return attributeValidateBackground;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-bgcolor", function () {
+  return attributeValidateBgcolor;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-border", function () {
+  return attributeValidateBorder;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-cellpadding", function () {
+  return attributeValidateCellpadding;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-cellspacing", function () {
+  return attributeValidateCellspacing;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-char", function () {
+  return attributeValidateChar;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-charoff", function () {
+  return attributeValidateCharoff;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-charset", function () {
+  return attributeValidateCharset;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-checked", function () {
+  return attributeValidateChecked;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-cite", function () {
+  return attributeValidateCite;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-class", function () {
+  return attributeValidateClass;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-classid", function () {
+  return attributeValidateClassid;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-clear", function () {
+  return attributeValidateClassid$1;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-code", function () {
+  return attributeValidateCode;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-codebase", function () {
+  return attributeValidateCodebase;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-codetype", function () {
+  return attributeValidateCodetype;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-color", function () {
+  return attributeValidateColor;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-cols", function () {
+  return attributeValidateCols;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-colspan", function () {
+  return attributeValidateColspan;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-compact", function () {
+  return attributeValidateCompact;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-content", function () {
+  return attributeValidateContent;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-coords", function () {
+  return attributeValidateCoords;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-data", function () {
+  return attributeValidateData;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-datetime", function () {
+  return attributeValidateDatetime;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-declare", function () {
+  return attributeValidateDeclare;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-defer", function () {
+  return attributeValidateDefer;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-dir", function () {
+  return attributeValidateDir;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-disabled", function () {
+  return attributeValidateDisabled;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-enctype", function () {
+  return attributeValidateEnctype;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-face", function () {
+  return attributeValidateFace;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-for", function () {
+  return attributeValidateFor;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-frame", function () {
+  return attributeValidateFrame;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-frameborder", function () {
+  return attributeValidateFrameborder;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-headers", function () {
+  return attributeValidateHeaders;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-height", function () {
+  return attributeValidateHeight;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-href", function () {
+  return attributeValidateHref;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-hreflang", function () {
+  return attributeValidateHreflang;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-hspace", function () {
+  return attributeValidateHspace;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-http-equiv", function () {
+  return attributeValidateHttpequiv;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-id", function () {
+  return attributeValidateId;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-ismap", function () {
+  return attributeValidateIsmap;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-label", function () {
+  return attributeValidateLabel;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-lang", function () {
+  return attributeValidateLang;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-language", function () {
+  return attributeValidateLanguage;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-link", function () {
+  return attributeValidateLink;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-longdesc", function () {
+  return attributeValidateLongdesc;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-marginheight", function () {
+  return attributeValidateMarginheight;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-marginwidth", function () {
+  return attributeValidateMarginwidth;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-maxlength", function () {
+  return attributeValidateMaxlength;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-media", function () {
+  return attributeValidateMedia;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-method", function () {
+  return attributeValidateMethod;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-multiple", function () {
+  return attributeValidateMultiple;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-name", function () {
+  return attributeValidateName;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-nohref", function () {
+  return attributeValidateNohref;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-noresize", function () {
+  return attributeValidateNoresize;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-noshade", function () {
+  return attributeValidateNoshade;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-nowrap", function () {
+  return attributeValidateNowrap;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-object", function () {
+  return attributeValidateObject;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onblur", function () {
+  return attributeValidateOnblur;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onchange", function () {
+  return attributeValidateOnchange;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onclick", function () {
+  return attributeValidateOnclick;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-ondblclick", function () {
+  return attributeValidateOndblclick;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onfocus", function () {
+  return attributeValidateOnfocus;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onkeydown", function () {
+  return attributeValidateOnkeydown;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onkeypress", function () {
+  return attributeValidateOnkeypress;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onkeyup", function () {
+  return attributeValidateOnkeyup;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onload", function () {
+  return attributeValidateOnload;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onmousedown", function () {
+  return attributeValidateOnmousedown;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onmousemove", function () {
+  return attributeValidateOnmousemove;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onmouseout", function () {
+  return attributeValidateOnmouseout;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onmouseover", function () {
+  return attributeValidateOnmouseover;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onmouseup", function () {
+  return attributeValidateOnmouseup;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onreset", function () {
+  return attributeValidateOnreset;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onsubmit", function () {
+  return attributeValidateOnsubmit;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onselect", function () {
+  return attributeValidateOnselect;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-onunload", function () {
+  return attributeValidateOnunload;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-profile", function () {
+  return attributeValidateProfile;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-prompt", function () {
+  return attributeValidatePrompt;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-readonly", function () {
+  return attributeValidateReadonly;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-rel", function () {
+  return attributeValidateRel;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-rev", function () {
+  return attributeValidateRev;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-rows", function () {
+  return attributeValidateRows;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-rowspan", function () {
+  return attributeValidateRowspan;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-rules", function () {
+  return attributeValidateRules;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-scheme", function () {
+  return attributeValidateScheme;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-scope", function () {
+  return attributeValidateScope;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-scrolling", function () {
+  return attributeValidateScrolling;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-selected", function () {
+  return attributeValidateSelected;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-shape", function () {
+  return attributeValidateShape;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-size", function () {
+  return attributeValidateSize;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-span", function () {
+  return attributeValidateSpan;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-src", function () {
+  return attributeValidateSrc;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-standby", function () {
+  return attributeValidateStandby;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-start", function () {
+  return attributeValidateStart;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-style", function () {
+  return attributeValidateStyle;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-summary", function () {
+  return attributeValidateSummary;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-tabindex", function () {
+  return attributeValidateTabindex;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-target", function () {
+  return attributeValidateTarget;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-text", function () {
+  return attributeValidateText;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-title", function () {
+  return attributeValidateTitle;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-type", function () {
+  return attributeValidateType;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-usemap", function () {
+  return attributeValidateUsemap;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-valign", function () {
+  return attributeValidateValign;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-value", function () {
+  return attributeValidateValue;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-valuetype", function () {
+  return attributeValidateValuetype;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-version", function () {
+  return attributeValidateVersion;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-vlink", function () {
+  return attributeValidateVlink;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-vspace", function () {
+  return attributeValidateVspace;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-validate-width", function () {
+  return attributeValidateWidth;
+});
+defineLazyProp__default['default'](builtInRules, "bad-named-html-entity-not-email-friendly", function () {
+  return htmlEntitiesNotEmailFriendly;
+});
+defineLazyProp__default['default'](builtInRules, "character-encode", function () {
+  return characterEncode;
+});
+defineLazyProp__default['default'](builtInRules, "character-unspaced-punctuation", function () {
+  return characterUnspacedPunctuation;
+});
+defineLazyProp__default['default'](builtInRules, "media-malformed", function () {
+  return mediaMalformed;
+});
+defineLazyProp__default['default'](builtInRules, "comment-closing-malformed", function () {
+  return commentClosingMalformed;
+});
+defineLazyProp__default['default'](builtInRules, "comment-opening-malformed", function () {
+  return commentOpeningMalformed;
+});
+defineLazyProp__default['default'](builtInRules, "comment-mismatching-pair", function () {
+  return commentMismatchingPair;
+});
+defineLazyProp__default['default'](builtInRules, "comment-conditional-nested", function () {
+  return commentConditionalNested;
+}); // EXPORTS
+// -----------------------------------------------------------------------------
+
 function get(something) {
   return builtInRules[something];
-}
+} // it expands the grouped rules, such as "bad-character", then
+// removes the grouped rule so that only real, single rules
+// are passed to Linter
+
+
 function normaliseRequestedRules(opts) {
-  const res = {};
+  // console.log(
+  //   `870 normaliseRequestedRules() RECEIVED: ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+  //     opts,
+  //     null,
+  //     4
+  //   )}`
+  // );
+  var res = {}; // first, if there are known group rules such as "bad-character", set
+  // them as a foundation:
+
   if (Object.keys(opts).includes("all") && isAnEnabledValue(opts.all)) {
-    Object.keys(builtInRules).forEach(ruleName => {
+    Object.keys(builtInRules).forEach(function (ruleName) {
       res[ruleName] = opts.all;
     });
   } else {
-    let temp;
-    if (Object.keys(opts).some(ruleName => {
+    var temp;
+
+    if (Object.keys(opts).some(function (ruleName) {
       if (["bad-character", "bad-character*", "bad-character-*"].includes(ruleName)) {
         temp = ruleName;
         return true;
       }
+
       return false;
     })) {
-      allBadCharacterRules.forEach(ruleName => {
+      allBadCharacterRules.forEach(function (ruleName) {
         res[ruleName] = opts[temp];
       });
     }
-    if (Object.keys(opts).some(ruleName => {
+
+    if (Object.keys(opts).some(function (ruleName) {
       if (["tag", "tag*", "tag-*"].includes(ruleName)) {
         temp = ruleName;
         return true;
       }
+
       return false;
     })) {
-      allTagRules.forEach(ruleName => {
+      allTagRules.forEach(function (ruleName) {
         res[ruleName] = opts[temp];
       });
     }
-    if (Object.keys(opts).some(ruleName => {
+
+    if (Object.keys(opts).some(function (ruleName) {
       if (["attribute", "attribute*", "attribute-*"].includes(ruleName)) {
         temp = ruleName;
         return true;
       }
+
       return false;
     })) {
-      allAttribRules.forEach(ruleName => {
+      allAttribRules.forEach(function (ruleName) {
         res[ruleName] = opts[temp];
       });
     }
+
     if (Object.keys(opts).includes("bad-html-entity")) {
-      allBadNamedHTMLEntityRules.forEach(ruleName => {
+      allBadNamedHTMLEntityRules.forEach(function (ruleName) {
+        // whole group of rules, not necessarily starting with "bad-html-entity"
+        // will be added. Currently it's the list:
+        //  * bad-named-html-entity-malformed-nbsp
+        //  * bad-named-html-entity-malformed-*
+        //  * bad-named-html-entity-unrecognised
+        //  * bad-named-html-entity-multiple-encoding
+        //  * bad-malformed-numeric-character-entity
+        //  * encoded-html-entity-nbsp
+        //  * encoded-numeric-html-entity-reference
         res[ruleName] = opts["bad-html-entity"];
       });
-    }
-    Object.keys(opts).forEach(ruleName => {
+    } // then, a-la Object.assign the rest
+
+
+    Object.keys(opts).forEach(function (ruleName) {
       if (!["all", "tag", "tag*", "tag-*", "attribute", "attribute*", "attribute-*", "bad-character", "bad-character", "bad-character*", "bad-character-*", "bad-html-entity"].includes(ruleName)) {
+        // now, it depends is an exact rule name being queried or is it wildcard
         if (Object.keys(builtInRules).includes(ruleName)) {
           res[ruleName] = clone__default['default'](opts[ruleName]);
         } else if (ruleName.includes("*")) {
-          Object.keys(builtInRules).forEach(builtInRule => {
+          Object.keys(builtInRules).forEach(function (builtInRule) {
             if (matcher__default['default'].isMatch(builtInRule, ruleName)) {
               res[builtInRule] = clone__default['default'](opts[ruleName]);
             }
           });
-        }
+        } // TODO - else clause error messaging - rule is configured but not available
+
       }
     });
   }
   return res;
 }
 
-EventEmitter.defaultMaxListeners = 0;
-class Linter extends EventEmitter {
-  verify(str, config) {
+tinyTypedEmitter.TypedEmitter.defaultMaxListeners = 0;
+
+var Linter = /*#__PURE__*/function (_TypedEmitter) {
+  _inheritsLoose__default['default'](Linter, _TypedEmitter);
+
+  function Linter() {
+    var _this;
+
+    _this = _TypedEmitter.call(this) || this;
+    _this.messages = [];
+    _this.str = "";
+    _this.strLineStartIndexes = [];
+    _this.config = {};
+    _this.hasBeenCalledWithKeepSeparateWhenFixing = false;
+    _this.processedRulesConfig = {};
+    return _this;
+  }
+
+  var _proto = Linter.prototype;
+
+  _proto.verify = function verify(str, config) {
+    var _this2 = this;
+
     this.messages = [];
-    this.str = str;
+    this.str = str; // calculate line start indexes for row/column
+    // reporting later, it allows line-column-mini to cut corners
+
+    this.strLineStartIndexes = lineColumnMini.getLineStartIndexes(str);
     this.config = clone__default['default'](config);
     this.hasBeenCalledWithKeepSeparateWhenFixing = false;
+    this.processedRulesConfig = {};
+    var has = Object.prototype.hasOwnProperty; // VALIDATION FIRST
+
     if (config) {
       if (typeof config !== "object") {
-        throw new Error(`emlint/verify(): [THROW_ID_01] second input argument, config is not a plain object but ${typeof config}. It's equal to:\n${JSON.stringify(config, null, 4)}`);
+        throw new Error("emlint/verify(): [THROW_ID_01] second input argument, config is not a plain object but " + typeof config + ". It's equal to:\n" + JSON.stringify(config, null, 4));
       } else if (!Object.keys(config).length) {
+        // empty config => early return
         return [];
       } else if (!config.rules || typeof config.rules !== "object") {
-        throw new Error(`emlint/verify(): [THROW_ID_02] config contains no rules! It was given as:\n${JSON.stringify(config, null, 4)}`);
+        throw new Error("emlint/verify(): [THROW_ID_02] config contains no rules! It was given as:\n" + JSON.stringify(config, null, 4));
       }
     } else {
+      // falsey config => early return
       return [];
-    }
-    const processedRulesConfig = normaliseRequestedRules(config.rules);
+    } // detect the language
+    // const lang = detectLanguage(str);
+    // filter out all applicable values and make them listen for events that
+    // tokenizer emits
+    // TODO - rebase, avoid using const, assign directly to "this."
+
+
+    var processedRulesConfig = normaliseRequestedRules(config.rules);
     this.processedRulesConfig = processedRulesConfig;
-    Object.keys(processedRulesConfig)
-    .filter(ruleName => get(ruleName))
-    .filter(ruleName => {
+    Object.keys(processedRulesConfig) // filter out the rules coming from external packages - they'll be
+    // processed separately, in the callbacks coming out of external packages,
+    // see the section "rules coming from standalone packages".
+    .filter(function (ruleName) {
+      return get(ruleName);
+    }) // filter out enabled rules:
+    .filter(function (ruleName) {
+      // same config like in ESLint - 0 is off, 1 is warning, 2 is error
       if (typeof processedRulesConfig[ruleName] === "number") {
         return processedRulesConfig[ruleName] > 0;
       }
+
       if (Array.isArray(processedRulesConfig[ruleName])) {
         return processedRulesConfig[ruleName][0] > 0;
       }
+
       return false;
-    }).forEach(rule => {
-      let rulesFunction;
+    }).forEach(function (rule) { // extract all the options, second array element onwards - the length is indeterminable
+
+      var rulesFunction;
+
       if (Array.isArray(processedRulesConfig[rule]) && processedRulesConfig[rule].length > 1) {
-        rulesFunction = get(rule)(this, ...processedRulesConfig[rule].slice(1));
+        // pass not only "this", the context, but also all the opts, as args
+        rulesFunction = get(rule).apply(void 0, [_this2].concat(processedRulesConfig[rule].slice(1)));
       } else {
-        rulesFunction = get(rule)(this);
+        // just pass "this", the context
+        rulesFunction = get(rule)(_this2);
       }
-      Object.keys(rulesFunction).forEach(consumedNode => {
-        this.on(consumedNode, (...args) => {
-          rulesFunction[consumedNode](...args);
+
+      Object.keys(rulesFunction).forEach(function (consumedNode) {
+        _this2.on(consumedNode, function () {
+          var _rulesFunction;
+
+          // console.log(
+          //   `106 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: ${`\u001b[${33}m${`consumedNode`}\u001b[${39}m`} = ${JSON.stringify(
+          //     consumedNode,
+          //     null,
+          //     4
+          //   )}`
+          // );
+          (_rulesFunction = rulesFunction)[consumedNode].apply(_rulesFunction, arguments);
         });
       });
-    });
-    this.emit("ast", traverse__default['default'](parser__default['default'](str, {
-      charCb: obj => {
-        this.emit("character", obj);
+    }); // emlint runs on codsen-parser which in turn runs on codsen-tokenizer.
+    // Tokenizer recognises string as various token types and "pings" the
+    // callback function given to the tokenizer with those lumps, plain objects.
+    // Now, Parser consumes those tokens and assembles a tree, an AST.
+    // EMLint is plugin-based. Plugins work on code source - consuming either
+    // raw tokens, each token of particular kind, listening to event emitted
+    // called after that token type, or plugins consume whole AST, listening
+    // to "ast"-type event.
+    // Now, the less work done the faster program runs.
+    // The quickest way for emlint to obtain tokens is from codsen-parser,
+    // to tap them raw, bypassing the AST tree, as they come from tokenizer.
+    // But the problem is, this approach does not work with broken code.
+    // We can't consume tokenizer's nodes because parser can change the
+    // nodes, correcting the errors - it's possible because parser "sees" the
+    // whole picture.
+    // Therefore, we don't consume tokens from the tokenizer, we consume AST
+    // from parser, then we send the monkey (ast-monkey-traverse) to traverse
+    // that AST and emit the token events.
+
+    this.emit("ast", astMonkeyTraverse.traverse(codsenParser.cparser(str, {
+      charCb: function charCb(obj) {
+        // We call the character-level callback from raw characters, coming
+        // if from parser which comes straight from tokenizer.
+        // console.log(
+        //   `160 ██ ${`\u001b[${35}m${`linter/charCb():`}\u001b[${39}m`} incoming ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
+        //     obj,
+        //     null,
+        //     4
+        //   )}`
+        // );
+        _this2.emit("character", obj);
       },
-      errCb: obj => {
-        const currentRulesSeverity = isAnEnabledRule(config.rules, obj.ruleId);
+      errCb: function errCb(obj) { // check, is rule enabled at the first place:
+
+        var currentRulesSeverity = isAnEnabledRule(config.rules, obj.ruleId);
+
         if (currentRulesSeverity) {
-          let message = `Something is wrong.`;
-          if (isObj(obj) && Object.keys(astErrMessages).includes(obj.ruleId)) {
+          var message = "Something is wrong.";
+
+          if (isObj(obj) && typeof obj.ruleId === "string" && has.call(astErrMessages, obj.ruleId)) {
             message = astErrMessages[obj.ruleId];
           }
-          this.report({
-            message,
+
+          _this2.report(_objectSpread__default['default']({
+            message: message,
             severity: currentRulesSeverity,
-            fix: null,
-            ...obj
-          });
+            fix: null
+          }, obj));
         }
       }
-    }), (key, val, innerObj) => {
-      const current = val !== undefined ? val : key;
+    }), function (key, val, innerObj) {
+      var current = val !== undefined ? val : key;
+
       if (isObj(current) && (!innerObj.parentKey || !innerObj.parentKey.startsWith("attrib"))) {
-        this.emit(current.type, current);
+        // monkey will traverse every key, every string within.
+        // We need to pick the objects of a type we need: "tag", "comment" etc.
+        // tag-level callback
+
+        _this2.emit(current.type, current); // plus, for type:html also ping each attribute
+
+
         if (current.type === "tag" && Array.isArray(current.attribs) && current.attribs.length) {
-          current.attribs.forEach(attribObj => {
-            this.emit("attribute", { ...attribObj,
-              parent: { ...current
-              }
-            });
+          current.attribs.forEach(function (attribObj) {
+
+            _this2.emit("attribute", _objectSpread__default['default'](_objectSpread__default['default']({}, attribObj), {}, {
+              parent: _objectSpread__default['default']({}, current)
+            }));
           });
         }
       }
+
       return current;
-    }));
-    if (Object.keys(config.rules).some(ruleName => (ruleName === "all" ||
-    ruleName === "bad-html-entity" ||
-    ruleName.startsWith("bad-html-entity") || ruleName.startsWith("bad-named-html-entity") || matcher__default['default'].isMatch(["bad-malformed-numeric-character-entity"], ruleName)) && (isAnEnabledValue(config.rules[ruleName]) || isAnEnabledValue(processedRulesConfig[ruleName])))) {
-      stringFixBrokenNamedEntities__default['default'](str, {
-        cb: obj => {
-          let matchedRulesName;
-          let severity;
+    })); //
+    //
+    //
+    //
+    //
+    //
+    //                rules coming from standalone packages
+    //
+    //
+    //
+    //
+    //
+    //
+    // 1. if any of bad named HTML entity catcher rules is requested, run it
+
+    if (Object.keys(config.rules).some(function (ruleName) {
+      return (ruleName === "all" || // group blanket setting
+      ruleName === "bad-html-entity" || // group blanket setting
+      ruleName.startsWith("bad-html-entity") || ruleName.startsWith("bad-named-html-entity") || matcher__default['default'].isMatch(["bad-malformed-numeric-character-entity"], ruleName)) && (isAnEnabledValue(config.rules[ruleName]) || isAnEnabledValue(processedRulesConfig[ruleName]));
+    })) {
+      stringFixBrokenNamedEntities.fixEnt(str, {
+        cb: function cb(obj) { // evaluate, does the config have this emitted rule set and enabled
+
+          var matchedRulesName = ""; // A severity value can be under array's first element or as digit,
+          // plus rule itself might be group rule ("bad-html-entity") or
+          // mentioned directly.
+          // The plan is to try to extract severity various ways, later if it's
+          // set, then report the error.
+
+          var severity; // rule is group, blanket rule
+
           if (Object.keys(config.rules).includes("bad-html-entity")) {
             if (obj.ruleName === "bad-named-html-entity-unrecognised") {
+              // unrecongnised named HTML entities might be false positives,
+              // mix of ampersand, letters and semicolon, without spaces,
+              // so default level is "warning", not "error":
               severity = 1;
             } else if (Array.isArray(config.rules["bad-html-entity"])) {
               severity = config.rules["bad-html-entity"][0];
             } else if (Number.isInteger(config.rules["bad-html-entity"])) {
               severity = config.rules["bad-html-entity"];
             }
-          } else if (Object.keys(config.rules).some(rulesName => {
+          } else if (Object.keys(config.rules).some(function (rulesName) {
+
             if (matcher__default['default'].isMatch(obj.ruleName, rulesName)) {
               matchedRulesName = rulesName;
               return true;
             }
+
             return false;
           })) {
             if (obj.ruleName === "bad-named-html-entity-unrecognised" && config.rules["bad-named-html-entity-unrecognised"] === undefined) {
+              // unless the rule was requested exactly, severity is 1.
+              // This applies to both group blanket rules "bad-html-entity" and
+              // any rules achieved by applying wildcards, for example,
+              // "bad-named-html-entity-*".
               severity = 1;
             } else if (Array.isArray(config.rules[matchedRulesName])) {
               severity = config.rules[matchedRulesName][0];
@@ -9486,8 +11407,10 @@ class Linter extends EventEmitter {
               severity = config.rules[matchedRulesName];
             }
           }
+
           if (Number.isInteger(severity)) {
-            let message;
+            var message;
+
             if (obj.ruleName === "bad-named-html-entity-malformed-nbsp") {
               message = "Malformed NBSP entity.";
             } else if (obj.ruleName === "bad-named-html-entity-unrecognised") {
@@ -9497,68 +11420,85 @@ class Linter extends EventEmitter {
             } else if (obj.ruleName === "bad-malformed-numeric-character-entity") {
               message = "Malformed numeric entity.";
             } else {
-              message = `Malformed ${obj.entityName ? obj.entityName : "named"} entity.`;
+              message = "Malformed " + (obj.entityName ? obj.entityName : "named") + " entity.";
             }
-            let ranges = [[obj.rangeFrom, obj.rangeTo, obj.rangeValEncoded ? obj.rangeValEncoded : ""]];
+
+            var ranges = [[obj.rangeFrom, obj.rangeTo, obj.rangeValEncoded ? obj.rangeValEncoded : ""]];
+
             if (obj.ruleName === "bad-named-html-entity-unrecognised") {
               ranges = [];
             }
-            this.report({
-              severity,
+
+            _this2.report({
+              severity: severity,
               ruleId: obj.ruleName,
-              message,
+              message: message,
               idxFrom: obj.rangeFrom,
               idxTo: obj.rangeTo,
               fix: {
-                ranges
+                ranges: ranges
               }
             });
           }
         },
-        entityCatcherCb: (from, to) => {
-          this.emit("entity", {
+        entityCatcherCb: function entityCatcherCb(from, to) {
+
+          _this2.emit("entity", {
             idxFrom: from,
             idxTo: to
           });
         }
       });
-    }
-    ["tag", "at", "rule", "text", "esp", "character", "ast"].forEach(eventName => {
-      this.removeAllListeners(eventName);
+    } // remove all listeners
+    // extract all keys from the events interface
+
+
+    var allEventNames = ["tag", "at", "rule", "text", "esp", "character", "attribute", "ast", "comment", "entity"];
+    allEventNames.forEach(function (eventName) {
+      _this2.removeAllListeners(eventName);
     });
-    return this.messages;
-  }
-  report(obj) {
-    const {
-      line,
-      col
-    } = lineColumn__default['default'](this.str, obj.idxFrom);
-    let {
-      severity
-    } = obj;
+    return clone__default['default'](this.messages);
+  };
+
+  _proto.report = function report(obj) { // fill in other data points:
+
+    var _lineCol = lineColumnMini.lineCol(this.strLineStartIndexes, obj.idxFrom, true),
+        line = _lineCol.line,
+        col = _lineCol.col;
+
+    var severity = obj.severity || 0; // rules coming from 3rd party packages will give the severity value
+
     if (!Number.isInteger(obj.severity) && typeof this.processedRulesConfig[obj.ruleId] === "number") {
       severity = this.processedRulesConfig[obj.ruleId];
     } else if (!Number.isInteger(obj.severity) && Array.isArray(this.processedRulesConfig[obj.ruleId])) {
       severity = this.processedRulesConfig[obj.ruleId][0];
     }
-    this.messages.push({
+    this.messages.push(_objectSpread__default['default'](_objectSpread__default['default']({
       fix: null,
       keepSeparateWhenFixing: false,
-      line,
+      line: line,
       column: col,
-      severity,
-      ...obj,
-      ...(this.hasBeenCalledWithKeepSeparateWhenFixing ? {
-        fix: null
-      } : {})
-    });
+      severity: severity
+    }, obj), this.hasBeenCalledWithKeepSeparateWhenFixing ? {
+      fix: null
+    } : {})); // After pushing, let's manage "keepSeparateWhenFixing" messages -
+    // make a note of the first incoming message with "keepSeparateWhenFixing"
+    // key, in order to remove "fix" values from all other incoming messages
+    // with "keepSeparateWhenFixing" key. That's necessary to support certain
+    // fixes composition.
+
     if (obj.keepSeparateWhenFixing && !this.hasBeenCalledWithKeepSeparateWhenFixing && obj.fix) {
       this.hasBeenCalledWithKeepSeparateWhenFixing = true;
     }
-  }
-}
+  };
+
+  return Linter;
+}(tinyTypedEmitter.TypedEmitter);
 
 var version = "3.0.9";
 
+var version$1 = version;
+
 exports.Linter = Linter;
-exports.version = version;
+exports.util = util;
+exports.version = version$1;

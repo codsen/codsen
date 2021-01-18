@@ -1,5 +1,5 @@
 import tap from "tap";
-import astDeepContains from "ast-deep-contains";
+import { deepContains } from "ast-deep-contains";
 import { Linter } from "../../../dist/emlint.esm";
 import { applyFixes } from "../../../t-util/util";
 
@@ -160,7 +160,7 @@ tap.test(`06 - in front of backslash`, (t) => {
       tag: 2,
     },
   });
-  astDeepContains(
+  deepContains(
     messages,
     [
       {

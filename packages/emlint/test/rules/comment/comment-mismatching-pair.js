@@ -121,16 +121,56 @@ tap.test(
   <img src="fallback"/>
 <![endif]-->`;
     const linter = new Linter();
+
     const messages = linter.verify(str, {
       rules: {
         all: 2,
       },
     });
-    const secondRoundMessages = linter.verify(applyFixes(str, messages), {
-      rules: {
-        all: 2,
+    t.match(messages, [
+      {
+        severity: 2,
+        idxFrom: 38,
+        idxTo: 53,
+        message: "Malformed closing comment tag.",
+        fix: {
+          ranges: [[38, 53, "<!--<![endif]-->"]],
+        },
+        ruleId: "comment-closing-malformed",
       },
-    });
+    ]);
+    t.equal(
+      applyFixes(str, messages),
+      `<!--[if mso]>
+  <img src="fallback"/>
+<!--<![endif]-->`,
+      "03.02"
+    );
+
+    const secondRoundMessages = linter.verify(
+      `<!--[if mso]>
+  <img src="fallback"/>
+<!--<![endif]-->`,
+      {
+        rules: {
+          all: 2,
+        },
+      }
+    );
+    t.match(secondRoundMessages, [
+      {
+        severity: 2,
+        idxFrom: 38,
+        idxTo: 54,
+        message: `Remove "<!--".`,
+        fix: {
+          ranges: [[38, 54, "<![endif]-->"]],
+        },
+        ruleId: "comment-mismatching-pair",
+      },
+    ]);
+    t.equal(applyFixes(str, secondRoundMessages), fixed, "03.02");
+
     // turns tails comment tag into "only"-kind
     t.equal(
       applyFixes(applyFixes(str, messages), secondRoundMessages),
