@@ -511,7 +511,7 @@ function tokenizer(str, originalOpts) {
 
 
   const attribDefaults = {
-    attribName: null,
+    attribName: "",
     attribNameRecognised: false,
     attribNameStartsAt: null,
     attribNameEndsAt: null,
@@ -2375,7 +2375,10 @@ function tokenizer(str, originalOpts) {
 
 
     if (!doNothing && str[i] && token.type === "tag" && token.kind !== "cdata" && token.tagNameEndsAt && i > token.tagNameEndsAt && attrib.attribStarts === null && isAttrNameChar(str[i])) {
-      attrib.attribStarts = i;
+      attrib.attribStarts = i; // even though in theory left() which reports first non-whitespace
+      // character's index on the left can be null, it does not happen
+      // in this context - there will be tag's name or something in front!
+
       attrib.attribLeft = lastNonWhitespaceCharAt;
       attrib.attribNameStartsAt = i;
     } // catch the curlies inside CSS rule

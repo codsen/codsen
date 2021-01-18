@@ -48,6 +48,8 @@ import {
   Layer,
   LayerKindAt,
   Opts,
+  TokenCb,
+  CharCb,
 } from "./util/util";
 import { version as v } from "../package.json";
 const version: string = v;
@@ -204,19 +206,19 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
 
   // same for attributes:
   const attribDefaults: Attrib = {
-    attribName: null,
+    attribName: "",
     attribNameRecognised: false,
-    attribNameStartsAt: null,
-    attribNameEndsAt: null,
+    attribNameStartsAt: null as any,
+    attribNameEndsAt: null as any,
     attribOpeningQuoteAt: null,
     attribClosingQuoteAt: null,
-    attribValueRaw: null,
+    attribValueRaw: null as any,
     attribValue: [],
     attribValueStartsAt: null,
     attribValueEndsAt: null,
-    attribStarts: null,
-    attribEnds: null,
-    attribLeft: null,
+    attribStarts: null as any,
+    attribEnds: null as any,
+    attribLeft: null as any,
   };
   let attrib: Attrib = { ...attribDefaults };
   function attribReset() {
@@ -437,10 +439,6 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
       );
     }
   }
-
-  // used by both tag and character callbacks:
-  type CharCb = (token: CharacterToken, next: CharacterToken[]) => void;
-  type TokenCb = (token: Token, next: Token[]) => void;
 
   function reportFirstFromStash(
     stash: (CharacterToken | Token)[],
@@ -4027,7 +4025,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
     ) {
       console.log(`4021 inside catch the tag attribute name start clauses`);
       attrib.attribStarts = i;
-      attrib.attribLeft = lastNonWhitespaceCharAt;
+      // even though in theory left() which reports first non-whitespace
+      // character's index on the left can be null, it does not happen
+      // in this context - there will be tag's name or something in front!
+      attrib.attribLeft = lastNonWhitespaceCharAt as number;
       attrib.attribNameStartsAt = i;
       console.log(
         `4026 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrib.attribStarts`}\u001b[${39}m`} = ${

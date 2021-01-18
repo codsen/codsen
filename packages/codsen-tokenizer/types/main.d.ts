@@ -46,19 +46,19 @@ interface EspToken {
     tailEndsAt: null | number;
 }
 interface Attrib {
-    attribName: null | string;
-    attribNameRecognised: null | boolean;
-    attribNameStartsAt: null | number;
-    attribNameEndsAt: null | number;
+    attribName: string;
+    attribNameRecognised: boolean;
+    attribNameStartsAt: number;
+    attribNameEndsAt: number;
     attribOpeningQuoteAt: null | number;
     attribClosingQuoteAt: null | number;
-    attribValueRaw: null | string;
+    attribValueRaw: string;
     attribValue: (TextToken | Property | CommentToken | EspToken)[];
     attribValueStartsAt: null | number;
     attribValueEndsAt: null | number;
-    attribStarts: null | number;
-    attribEnds: null | number;
-    attribLeft: null | number;
+    attribStarts: number;
+    attribEnds: number;
+    attribLeft: number;
 }
 interface RuleToken {
     type: "rule";
@@ -128,10 +128,12 @@ interface CharacterToken {
     i: number;
     type: TokenType;
 }
+declare type TokenCb = (token: Token, next: Token[]) => void;
+declare type CharCb = (token: CharacterToken, next: CharacterToken[]) => void;
 interface Opts {
-    tagCb: null | ((token: Token, next: Token[]) => void);
+    tagCb: null | TokenCb;
     tagCbLookahead: number;
-    charCb: null | ((char: CharacterToken, next: CharacterToken[]) => void);
+    charCb: null | CharCb;
     charCbLookahead: number;
     reportProgressFunc: null | ((percDone: number) => void);
     reportProgressFuncFrom: number;
