@@ -34,14 +34,28 @@ var defaults = {
   maxMismatches: 0,
   firstMustMatch: false,
   lastMustMatch: false
+};
+
+var defaultGetNextIdx = function defaultGetNextIdx(index) {
+  return index + 1;
 }; // eslint-disable-next-line consistent-return
 
-function march(str, position, whatToMatchVal, opts, special, getNextIdx) {
+
+function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx) {
+  if (special === void 0) {
+    special = false;
+  }
+
+  if (getNextIdx === void 0) {
+    getNextIdx = defaultGetNextIdx;
+  }
   var whatToMatchValVal = typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal; // early ending case if matching EOL being at 0-th index:
 
-  if (position < 0 && special && whatToMatchValVal === "EOL") {
+  if (+position < 0 && special && whatToMatchValVal === "EOL") {
     return whatToMatchValVal;
   }
+
+  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
 
   if (position >= str.length && !special) {
     return false;
@@ -227,7 +241,12 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
 
   var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
 
-  opts.trimCharsBeforeMatching = arrayiffyIfString.arrayiffy(opts.trimCharsBeforeMatching) || [];
+  if (typeof opts.trimCharsBeforeMatching === "string") {
+    // arrayiffy if needed:
+    opts.trimCharsBeforeMatching = arrayiffyIfString.arrayiffy(opts.trimCharsBeforeMatching);
+  } // stringify all:
+
+
   opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(function (el) {
     return isStr(el) ? el : String(el);
   });

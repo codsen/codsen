@@ -10,7 +10,8 @@ import {
   findAttrNameCharsChunkOnTheLeft,
   makeTheQuoteOpposite,
 } from "./util";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 function isAttrClosing(
   str: string,
@@ -1321,7 +1322,7 @@ function isAttrClosing(
         matchRight(str, i, [`'`, `"`], {
           // ensure it's not tag ending on the right
           // before freaking out:
-          cb: (char) => !`/>`.includes(char),
+          cb: (char) => !`/>`.includes(char as string),
           trimBeforeMatching: true,
           trimCharsBeforeMatching: ["="],
         }) &&

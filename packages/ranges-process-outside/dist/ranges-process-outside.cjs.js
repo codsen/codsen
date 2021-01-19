@@ -21,6 +21,8 @@ var runes__default = /*#__PURE__*/_interopDefaultLegacy(runes);
 
 var version = "3.0.2";
 
+var version$1 = version;
+
 function rProcessOutside(originalStr, originalRanges, cb, skipChecks) {
   if (skipChecks === void 0) {
     skipChecks = false;
@@ -87,4 +89,4 @@ function rProcessOutside(originalStr, originalRanges, cb, skipChecks) {
 }
 
 exports.rProcessOutside = rProcessOutside;
-exports.version = version;
+exports.version = version$1;

@@ -14,6 +14,7 @@ import clone from 'lodash.clonedeep';
 var version = "2.8.1";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+const version$1 = version;
 
 function getByKey(originalInput, whatToFind, originalReplacement) {
   let replacement;
@@ -44,4 +45,4 @@ function getByKey(originalInput, whatToFind, originalReplacement) {
   return replacement === undefined ? findings : amended;
 }
 
-export { getByKey, version };
+export { getByKey, version$1 as version };

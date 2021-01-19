@@ -9,6 +9,7 @@
 
 var version = "1.16.0";
 
+const version$1 = version;
 const defaults = {
   inclusiveRangeEnds: false,
   returnMatchedRangeInsteadOfTrue: false
@@ -34,4 +35,4 @@ function isIndexWithin(originalIndex, rangesArr, originalOpts) {
   return rangesArr.some(arr => opts.inclusiveRangeEnds ? originalIndex >= arr[0] && originalIndex <= arr[1] : originalIndex > arr[0] && originalIndex < arr[1]);
 }
 
-export { defaults, isIndexWithin, version };
+export { defaults, isIndexWithin, version$1 as version };

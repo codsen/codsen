@@ -9,6 +9,7 @@
 
 var version = "1.3.0";
 
+const version$1 = version; // Takes string, SASS variables file and extracts the plain object of variables: key-value pairs
 // As a bonus, it turns digit-only value strings into numbers.
 
 const BACKSLASH = "\u005C";
@@ -154,4 +155,4 @@ function extractVars(str, originalOpts) {
   return res;
 }
 
-export { defaults, extractVars, version };
+export { defaults, extractVars, version$1 as version };

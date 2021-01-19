@@ -45,10 +45,10 @@ export default (commandLineArgs) => {
         indent: false,
       },
       plugins: [
+        builtins(),
         nodeResolve({
           extensions,
         }),
-        builtins(),
         json(),
         commonjs(),
         typescript({
@@ -92,10 +92,10 @@ export default (commandLineArgs) => {
         indent: false,
       },
       plugins: [
+        builtins(),
         nodeResolve({
           extensions,
         }),
-        builtins(),
         json(),
         typescript({
           tsconfig: "../../tsconfig.build.json",
@@ -132,10 +132,10 @@ export default (commandLineArgs) => {
         ...Object.keys(pkg.peerDependencies || {}),
       ]),
       plugins: [
+        builtins(),
         nodeResolve({
           extensions,
         }),
-        builtins(),
         json(),
         typescript({
           tsconfig: "../../tsconfig.build.json",
@@ -172,10 +172,10 @@ export default (commandLineArgs) => {
         ...Object.keys(pkg.peerDependencies || {}),
       ]),
       plugins: [
+        builtins(),
         nodeResolve({
           extensions,
         }),
-        builtins(),
         json(),
         typescript({
           tsconfig: "../../tsconfig.build.json",
@@ -211,10 +211,10 @@ export default (commandLineArgs) => {
         ...Object.keys(pkg.peerDependencies || {}),
       ]),
       plugins: [
+        builtins(),
         nodeResolve({
           extensions,
         }),
-        builtins(),
         json(),
         replace({
           "process.env.NODE_ENV": JSON.stringify("production"),

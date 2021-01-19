@@ -2,7 +2,8 @@ import he from "he";
 import { rMerge } from "ranges-merge";
 import isObj from "lodash.isplainobject";
 import { Ranges } from "../../../scripts/common";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 function chomp(str: string): string {
   // eslint-disable-next-line no-param-reassign
@@ -18,11 +19,16 @@ function chomp(str: string): string {
 }
 
 interface Opts {
-  isAttributeValue?: boolean;
-  strict?: boolean;
+  isAttributeValue: boolean;
+  strict: boolean;
 }
 
-function rEntDecode(str: string, originalOpts?: Opts): Ranges {
+const defaults: Opts = {
+  isAttributeValue: false,
+  strict: false,
+};
+
+function rEntDecode(str: string, originalOpts?: Partial<Opts>): Ranges {
   // insurance:
   // ---------------------------------------------------------------------------
   if (typeof str !== "string") {
@@ -38,16 +44,7 @@ function rEntDecode(str: string, originalOpts?: Opts): Ranges {
       `ranges-ent-decode/decode(): [THROW_ID_02] Optional Options Object, the second in put argument, must be a plain object! Currently it's given as ${originalOpts}, type ${typeof originalOpts}`
     );
   }
-  const defaults = {
-    isAttributeValue: false,
-    strict: false,
-  };
-  let opts: Opts;
-  if (!originalOpts) {
-    opts = defaults;
-  } else {
-    opts = { ...defaults, ...originalOpts };
-  }
+  const opts: Opts = { ...defaults, ...originalOpts };
 
   console.log(
     `052 ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
@@ -145,4 +142,4 @@ function rEntDecode(str: string, originalOpts?: Opts): Ranges {
   return rMerge(rangesArr as Ranges);
 }
 
-export { rEntDecode, version };
+export { rEntDecode, defaults, version };

@@ -195,7 +195,15 @@ async function packageJson({ state, lectrc }) {
   }
 
   // 11. ensure "req" template uses named exports
-  if (!state.isCLI && !content.lect.req.includes("{")) {
+  // doesn't apply to eslint-* plugins
+  if (
+    !state.isCLI &&
+    !content.name.startsWith("eslint-") &&
+    (!content ||
+      !content.lect ||
+      !content.lect.req ||
+      !content.lect.req.includes("{"))
+  ) {
     console.log(
       `lect: ${`\u001b[${31}m${`ERROR`}\u001b[${39}m`} req does not use named exports: ${JSON.stringify(
         content.lect.req,

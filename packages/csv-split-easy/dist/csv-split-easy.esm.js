@@ -12,6 +12,7 @@ import { remSep } from 'string-remove-thousand-separators';
 var version = "4.0.3";
 
 /* eslint no-param-reassign:0 */
+const version$1 = version;
 const defaults = {
   removeThousandSeparatorsFromNumbers: true,
   padSingleDecimalPlaceNumbers: true,
@@ -207,4 +208,4 @@ function splitEasy(str, originalOpts) {
   return resArray;
 }
 
-export { defaults, splitEasy, version };
+export { defaults, splitEasy, version$1 as version };

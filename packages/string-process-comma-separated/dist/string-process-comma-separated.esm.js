@@ -9,6 +9,8 @@
 
 var version = "1.3.0";
 
+const version$1 = version;
+
 function processCommaSep(str, originalOpts) { // insurance:
 
   if (typeof str !== "string") {
@@ -208,4 +210,4 @@ function processCommaSep(str, originalOpts) { // insurance:
   }
 }
 
-export { processCommaSep, version };
+export { processCommaSep, version$1 as version };

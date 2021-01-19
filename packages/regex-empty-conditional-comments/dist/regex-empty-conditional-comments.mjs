@@ -7,4 +7,4 @@
  * Homepage: https://codsen.com/os/regex-empty-conditional-comments/
  */
 
-var i="1.9.1";function n(){return/<!(--)?\[if[^\]]*]>[<>!-\s]*<!\[endif\]\1>/gi}export{n as emptyCondCommentRegex,i as version};
+const n="1.9.1";function i(){return/<!(--)?\[if[^\]]*]>[<>!-\s]*<!\[endif\]\1>/gi}export{i as emptyCondCommentRegex,n as version};

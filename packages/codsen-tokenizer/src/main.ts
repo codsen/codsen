@@ -828,9 +828,9 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         start: startVal as any,
         end: null as any,
         value: null as any,
-        tagNameStartsAt: null,
-        tagNameEndsAt: null,
-        tagName: null,
+        tagNameStartsAt: null as any,
+        tagNameEndsAt: null as any,
+        tagName: null as any,
         recognised: null,
         closing: false,
         void: false,
@@ -879,9 +879,9 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         identifier: null,
         identifierStartsAt: null,
         identifierEndsAt: null,
-        query: null,
-        queryStartsAt: null,
-        queryEndsAt: null,
+        query: null as any,
+        queryStartsAt: null as any,
+        queryEndsAt: null as any,
         rules: [],
       };
     }
@@ -1500,7 +1500,7 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
         //                 ^
         //          we're here
         //
-        token.queryEndsAt = left(str, i + 1);
+        token.queryEndsAt = left(str, i + 1) || 0;
         console.log(
           `1554 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`token.queryEndsAt`}\u001b[${39}m`} = ${JSON.stringify(
             token.queryEndsAt,

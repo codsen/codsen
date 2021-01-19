@@ -1,7 +1,8 @@
 import { rMerge } from "ranges-merge";
 import isregexp from "lodash.isregexp";
 import { Range, Ranges } from "../../../scripts/common";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 function rRegex(
   regx: RegExp,

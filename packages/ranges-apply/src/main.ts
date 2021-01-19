@@ -1,12 +1,11 @@
-/* eslint @typescript-eslint/ban-ts-comment:1 */
-
 import { rMerge } from "ranges-merge";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 import { Range, Ranges } from "../../../scripts/common";
 
 function rApply(
   str: string,
-  originalRangesArr: Range | Ranges,
+  originalRangesArr: Ranges,
   progressFn?: (percentageDone: number) => void
 ): string {
   let percentageDone = 0;
@@ -44,7 +43,7 @@ function rApply(
   }
   if (
     !originalRangesArr ||
-    !(originalRangesArr as any[]).filter((range: any) => range).length
+    !originalRangesArr.filter((range) => range).length
   ) {
     // quick ending - no ranges passed
     return str;
@@ -53,15 +52,13 @@ function rApply(
   let rangesArr: Range[];
   if (
     Array.isArray(originalRangesArr) &&
-    Number.isInteger(+originalRangesArr[0]) &&
-    +originalRangesArr[0] >= 0 &&
-    Number.isInteger(+originalRangesArr[1]) &&
-    +originalRangesArr[1] >= 0
+    Number.isInteger(originalRangesArr[0]) &&
+    Number.isInteger(originalRangesArr[1])
   ) {
-    // @ts-ignore
-    rangesArr = [Array.from(originalRangesArr)];
+    // if single array was passed, wrap it into an array
+    rangesArr = [Array.from(originalRangesArr) as any];
   } else {
-    rangesArr = Array.from(originalRangesArr as Range[]);
+    rangesArr = Array.from(originalRangesArr as any);
   }
 
   // allocate first 10% of progress to this stage
@@ -103,7 +100,7 @@ function rApply(
             )}.`
           );
         } else {
-          rangesArr[i][0] = +rangesArr[i][0];
+          (rangesArr as any)[i][0] = +(rangesArr as any)[i][0];
         }
       }
       if (!Number.isInteger(el[1])) {
@@ -120,7 +117,7 @@ function rApply(
             )}.`
           );
         } else {
-          rangesArr[i][1] = +rangesArr[i][1];
+          (rangesArr as any)[i][1] = +(rangesArr as any)[i][1];
         }
       }
 

@@ -15,12 +15,14 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 
 var version = "1.0.1";
 
+var version$1 = version;
+
 function isJinjaSpecific() {
   return /(set\s*[\w]+\s*=\s*namespace\()|({{['"][\w]+['"]\s+if)|(['"]%x?[+0]?[.>^<]?\d+[\w%]['"]\|format\()/gi;
 }
 
 exports.isJinjaSpecific = isJinjaSpecific;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

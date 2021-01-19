@@ -1,5 +1,11 @@
-import { version } from "../package.json";
-import { JsonObject } from "type-fest";
+/* eslint no-use-before-define: 0 */
+// From "type-fest" by Sindre Sorhus:
+type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
+type JsonObject = { [Key in string]?: JsonValue };
+type JsonArray = Array<JsonValue>;
+
+import { version as v } from "../package.json";
+const version: string = v;
 
 import allNamedEntitiesJson from "./allNamedEntities.json";
 const allNamedEntities: JsonObject = allNamedEntitiesJson;

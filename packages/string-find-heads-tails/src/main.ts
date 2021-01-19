@@ -1,6 +1,7 @@
 import { matchRightIncl } from "string-match-left-right";
 import { arrayiffy } from "arrayiffy-if-string";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 function isObj(something: any): boolean {
   return (
@@ -182,7 +183,7 @@ function strFindHeadsTails(
       );
     } else {
       // eslint-disable-next-line no-param-reassign
-      tails = arrayiffy(tails);
+      tails = arrayiffy(tails as any);
     }
   } else if (Array.isArray(tails)) {
     if (tails.length === 0) {
@@ -245,7 +246,7 @@ function strFindHeadsTails(
     opts.throwWhenSomethingWrongIsDetected &&
     !opts.allowWholeValueToBeOnlyHeadsOrTails
   ) {
-    if (arrayiffy(heads).includes(str)) {
+    if (arrayiffy(heads as any).includes(str)) {
       throw new Error(
         `${opts.source}${
           s ? ": [THROW_ID_16]" : ""
@@ -253,7 +254,7 @@ function strFindHeadsTails(
           isStr(heads) ? "" : "one of "
         }heads (${str})!`
       );
-    } else if (arrayiffy(tails).includes(str)) {
+    } else if (arrayiffy(tails as any).includes(str)) {
       throw new Error(
         `${opts.source}${
           s ? ": [THROW_ID_17]" : ""
@@ -358,7 +359,7 @@ function strFindHeadsTails(
       console.log(
         `336 matchedHeads = ${JSON.stringify(matchedHeads, null, 4)}`
       );
-      if (matchedHeads) {
+      if (typeof matchedHeads === "string") {
         if (!oneHeadFound) {
           // res[0].push(i)
           tempResObj = {};
@@ -428,7 +429,7 @@ function strFindHeadsTails(
         );
       }
 
-      if (matchedTails) {
+      if (typeof matchedTails === "string") {
         if (oneHeadFound) {
           tempResObj.tailsStartAt = i;
           tempResObj.tailsEndAt = i + matchedTails.length;

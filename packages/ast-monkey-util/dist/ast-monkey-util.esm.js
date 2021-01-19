@@ -13,10 +13,6 @@
 // 9.children.4
 // the path notation is object-path
 function pathNext(str) {
-  if (!str) {
-    return null;
-  }
-
   if (str.includes(".") && /^\d*$/.test(str.slice(str.lastIndexOf(".") + 1))) {
     return `${str.slice(0, str.lastIndexOf(".") + 1)}${+str.slice(str.lastIndexOf(".") + 1) + 1}`;
   }
@@ -105,4 +101,6 @@ function parent(str) {
 
 var version = "1.2.0";
 
-export { parent, pathNext, pathPrev, pathUp, version };
+const version$1 = version; // -----------------------------------------------------------------------------
+
+export { parent, pathNext, pathPrev, pathUp, version$1 as version };

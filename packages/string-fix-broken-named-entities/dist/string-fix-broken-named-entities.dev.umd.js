@@ -9643,6 +9643,10 @@ function rightMain(_ref) {
 }
 
 function right(str, idx) {
+  if (idx === void 0) {
+    idx = 0;
+  }
+
   return rightMain({
     str: str,
     idx: idx,
@@ -9733,6 +9737,10 @@ function leftMain(_ref2) {
 }
 
 function left(str, idx) {
+  if (idx === void 0) {
+    idx = 0;
+  }
+
   return leftMain({
     str: str,
     idx: idx,
@@ -10152,6 +10160,8 @@ function removeGappedFromMixedCases(str, temp1) {
 }
 
 var version = "4.0.1";
+
+var version$1 = version;
 
 function fixEnt(str, originalOpts) { //
   //
@@ -10870,7 +10880,7 @@ function fixEnt(str, originalOpts) { //
 }
 
 exports.fixEnt = fixEnt;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

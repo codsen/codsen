@@ -1,9 +1,31 @@
+const fs = require("fs").promises;
+const path = require("path");
 const objectPath = require("object-path");
 const camelCase = require("lodash.camelcase");
 const writeFileAtomic = require("write-file-atomic");
 
 // writes rollup.config.js
 async function rollupConfig({ state }) {
+  // bail early if it's a CLI
+  if (state.isCLI) {
+    fs.unlink(path.resolve("rollup.config.js"))
+      .then(() => {
+        console.log(
+          `lect rollup.config.js ${`\u001b[${31}m${"DELETED"}\u001b[${39}m`}`
+        );
+      })
+      .catch(() => Promise.resolve(null));
+    fs.unlink(path.resolve("tsconfig.json"))
+      .then(() => {
+        console.log(
+          `lect tsconfig.json ${`\u001b[${31}m${"DELETED"}\u001b[${39}m`}`
+        );
+      })
+      .catch(() => Promise.resolve(null));
+
+    return Promise.resolve(null);
+  }
+
   let defaultUmdBit = "";
   if (objectPath.has(state.pack, "browser")) {
     defaultUmdBit = `
@@ -17,24 +39,44 @@ async function rollupConfig({ state }) {
         indent: false,
       },
       plugins: [
-        nodeResolve({
+        ${
+          state.pack.devDependencies["rollup-plugin-node-builtins"]
+            ? "builtins(),\n        "
+            : ""
+        }nodeResolve({
           extensions,
         })${
-          state.pack.devDependencies["rollup-plugin-node-builtins"]
-            ? ",\n        builtins()"
+          state.pack.devDependencies["rollup-plugin-node-globals"]
+            ? ",\n        globals()"
             : ""
         }${
-      state.pack.devDependencies["rollup-plugin-node-globals"]
-        ? ",\n        globals()"
-        : ""
-    }${
       state.pack.devDependencies["@rollup/plugin-json"]
         ? ",\n        json()"
+        : ""
+    }${
+      state.pack.devDependencies["rollup-plugin-node-polyfills"]
+        ? ",\n        nodePolyfills()"
         : ""
     },
         commonjs(),
         typescript({
-          tsconfig: "../../tsconfig.build.json",
+          ${
+            state.pack.devDependencies["ts-transformer-keys"] ||
+            state.pack.dependencies["ts-transformer-keys"]
+              ? `transformers: {
+            before: [
+              {
+                type: "program",
+                factory: (program) => {
+                  return keysTransformer(program);
+                },
+              },
+            ],
+            after: [],
+          },
+              `
+              : ""
+          }tsconfig: "../../tsconfig.build.json",
           declaration: false,
         }),
         babel({
@@ -80,23 +122,43 @@ async function rollupConfig({ state }) {
         indent: false,
       },
       plugins: [
-        nodeResolve({
+        ${
+          state.pack.devDependencies["rollup-plugin-node-builtins"]
+            ? "builtins(),\n        "
+            : ""
+        }nodeResolve({
           extensions,
         })${
-          state.pack.devDependencies["rollup-plugin-node-builtins"]
-            ? ",\n        builtins()"
+          state.pack.devDependencies["rollup-plugin-node-globals"]
+            ? ",\n        globals()"
             : ""
         }${
-      state.pack.devDependencies["rollup-plugin-node-globals"]
-        ? ",\n        globals()"
-        : ""
-    }${
       state.pack.devDependencies["@rollup/plugin-json"]
         ? ",\n        json()"
         : ""
+    }${
+      state.pack.devDependencies["rollup-plugin-node-polyfills"]
+        ? ",\n        nodePolyfills()"
+        : ""
     },
         typescript({
-          tsconfig: "../../tsconfig.build.json",
+          ${
+            state.pack.devDependencies["ts-transformer-keys"] ||
+            state.pack.dependencies["ts-transformer-keys"]
+              ? `transformers: {
+            before: [
+              {
+                type: "program",
+                factory: (program) => {
+                  return keysTransformer(program);
+                },
+              },
+            ],
+            after: [],
+          },
+              `
+              : ""
+          }tsconfig: "../../tsconfig.build.json",
           declaration: false,
         }),
         commonjs(),
@@ -136,25 +198,40 @@ async function rollupConfig({ state }) {
         ...Object.keys(pkg.peerDependencies || {}),
       ]),
       plugins: [
-        nodeResolve({
+        ${
+          state.pack.devDependencies["rollup-plugin-node-builtins"]
+            ? "builtins(),\n        "
+            : ""
+        }nodeResolve({
           extensions,
         })${
-          state.pack.devDependencies["rollup-plugin-node-builtins"]
-            ? ",\n        builtins()"
+          state.pack.devDependencies["rollup-plugin-node-globals"]
+            ? ",\n        globals()"
             : ""
         }${
-      state.pack.devDependencies["rollup-plugin-node-globals"]
-        ? ",\n        globals()"
-        : ""
-    }${
       state.pack.devDependencies["@rollup/plugin-json"]
         ? ",\n        json()"
         : ""
     },
         typescript({
-          tsconfig: "../../tsconfig.build.json",
-          declaration: true,
-          declarationDir: "./types",
+          ${
+            state.pack.devDependencies["ts-transformer-keys"] ||
+            state.pack.dependencies["ts-transformer-keys"]
+              ? `transformers: {
+            before: [
+              {
+                type: "program",
+                factory: (program) => {
+                  return keysTransformer(program);
+                },
+              },
+            ],
+            after: [],
+          },
+              `
+              : ""
+          }tsconfig: "../../tsconfig.build.json",
+          declaration: false,
         }),
         babel({
           extensions,
@@ -192,23 +269,39 @@ async function rollupConfig({ state }) {
         ...Object.keys(pkg.peerDependencies || {}),
       ]),
       plugins: [
-        nodeResolve({
+        ${
+          state.pack.devDependencies["rollup-plugin-node-builtins"]
+            ? "builtins(),\n        "
+            : ""
+        }nodeResolve({
           extensions,
         })${
-          state.pack.devDependencies["rollup-plugin-node-builtins"]
-            ? ",\n        builtins()"
+          state.pack.devDependencies["rollup-plugin-node-globals"]
+            ? ",\n        globals()"
             : ""
         }${
-      state.pack.devDependencies["rollup-plugin-node-globals"]
-        ? ",\n        globals()"
-        : ""
-    }${
       state.pack.devDependencies["@rollup/plugin-json"]
         ? ",\n        json()"
         : ""
     },
         typescript({
-          tsconfig: "../../tsconfig.build.json",
+          ${
+            state.pack.devDependencies["ts-transformer-keys"] ||
+            state.pack.dependencies["ts-transformer-keys"]
+              ? `transformers: {
+            before: [
+              {
+                type: "program",
+                factory: (program) => {
+                  return keysTransformer(program);
+                },
+              },
+            ],
+            after: [],
+          },
+              `
+              : ""
+          }tsconfig: "../../tsconfig.build.json",
           declaration: false,
         }),
         babel({
@@ -246,26 +339,46 @@ async function rollupConfig({ state }) {
         ...Object.keys(pkg.peerDependencies || {}),
       ]),
       plugins: [
-        nodeResolve({
+        ${
+          state.pack.devDependencies["rollup-plugin-node-builtins"]
+            ? "builtins(),\n        "
+            : ""
+        }nodeResolve({
           extensions,
         })${
-          state.pack.devDependencies["rollup-plugin-node-builtins"]
-            ? ",\n        builtins()"
+          state.pack.devDependencies["rollup-plugin-node-globals"]
+            ? ",\n        globals()"
             : ""
         }${
-      state.pack.devDependencies["rollup-plugin-node-globals"]
-        ? ",\n        globals()"
-        : ""
-    }${
       state.pack.devDependencies["@rollup/plugin-json"]
         ? ",\n        json()"
+        : ""
+    }${
+      state.pack.devDependencies["rollup-plugin-node-polyfills"]
+        ? ",\n        nodePolyfills()"
         : ""
     },
         replace({
           "process.env.NODE_ENV": JSON.stringify("production"),
         }),
         typescript({
-          tsconfig: "../../tsconfig.build.json",
+          ${
+            state.pack.devDependencies["ts-transformer-keys"] ||
+            state.pack.dependencies["ts-transformer-keys"]
+              ? `transformers: {
+            before: [
+              {
+                type: "program",
+                factory: (program) => {
+                  return keysTransformer(program);
+                },
+              },
+            ],
+            after: [],
+          },
+              `
+              : ""
+          }tsconfig: "../../tsconfig.build.json",
           declaration: false,
         }),
         babel({
@@ -294,6 +407,20 @@ async function rollupConfig({ state }) {
 `;
   }
 
+  let defaultDefinitions = "";
+  if (objectPath.has(state.pack, "module")) {
+    defaultDefinitions = `
+    // Type definitions
+    {
+      input: "src/main.ts",
+      output: [{ file: "types/main.d.ts", format: "es" }],
+      plugins: [${
+        state.pack.devDependencies["@rollup/plugin-json"] ? "json(), " : ""
+      }dts()],
+    },
+`;
+  }
+
   const newRollupConfig = `${
     state.pack.devDependencies["rollup-plugin-node-builtins"]
       ? `import builtins from "rollup-plugin-node-builtins";\n`
@@ -301,6 +428,15 @@ async function rollupConfig({ state }) {
   }${
     state.pack.devDependencies["rollup-plugin-node-globals"]
       ? `import globals from "rollup-plugin-node-globals";\n`
+      : ""
+  }${
+    state.pack.devDependencies["rollup-plugin-node-polyfills"]
+      ? `import nodePolyfills from "rollup-plugin-node-polyfills";\n`
+      : ""
+  }${
+    state.pack.devDependencies["ts-transformer-keys"] ||
+    state.pack.dependencies["ts-transformer-keys"]
+      ? `import keysTransformer from "ts-transformer-keys/transformer";\n`
       : ""
   }import { nodeResolve } from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
@@ -315,7 +451,8 @@ ${
   state.pack.devDependencies["@rollup/plugin-json"]
     ? `import json from "@rollup/plugin-json";\n`
     : ""
-}import pkg from "./package.json";
+}import dts from "rollup-plugin-dts";
+import pkg from "./package.json";
 
 const licensePiece = \`\${pkg.name}
 \${pkg.description}
@@ -339,7 +476,7 @@ const makeExternalPredicate = (externalArr) => {
 };
 
 export default (commandLineArgs) => {
-  const finalConfig = [${defaultUmdBit}${defaultDevUmdBit}${defaultCommonJSBit}${defaultESMBit}${defaultESBrowsersBit}  ];
+  const finalConfig = [${defaultUmdBit}${defaultDevUmdBit}${defaultCommonJSBit}${defaultESMBit}${defaultESBrowsersBit}${defaultDefinitions}  ];
 
   if (commandLineArgs.dev) {
     // don't build minified UMD in dev, it takes too long

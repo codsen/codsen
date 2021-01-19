@@ -74,17 +74,17 @@ const tsconfig = require("./src/tsconfig");
 
       // write README.md
       readme({ state, examples: received[0], lectrc });
-      // write new files
+      // // write new files
       hardWrite({ lectrc });
-      // delete bad files
+      // // delete bad files
       hardDelete({ lectrc });
-      // write package.json
+      // // write package.json
       pack({ state, lectrc });
-      // write .npmignore
+      // // write .npmignore
       npmIgnore({ state, lectrc });
-      // write rollup.config.js
+      // // write rollup.config.js
       rollupConfig({ state });
-      // write tsconfig.json
+      // // write tsconfig.json
       tsconfig({ state });
     })
     .catch((e) => {

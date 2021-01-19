@@ -20,6 +20,8 @@ var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
 var version = "1.9.1";
 
+var version$1 = version; // we use internal function to shield the third input arg from the outside api
+
 function internalCompare(bigObj, smallObj, res) {
   function existy(x) {
     return x != null;
@@ -128,4 +130,4 @@ function looseCompare(bigObj, smallObj) {
 }
 
 exports.looseCompare = looseCompare;
-exports.version = version;
+exports.version = version$1;

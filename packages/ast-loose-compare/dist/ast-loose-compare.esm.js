@@ -12,6 +12,8 @@ import isObj from 'lodash.isplainobject';
 
 var version = "1.9.1";
 
+const version$1 = version; // we use internal function to shield the third input arg from the outside api
+
 function internalCompare(bigObj, smallObj, res) {
   function existy(x) {
     return x != null;
@@ -119,4 +121,4 @@ function looseCompare(bigObj, smallObj) {
   return internalCompare(bigObj, smallObj);
 }
 
-export { looseCompare, version };
+export { looseCompare, version$1 as version };

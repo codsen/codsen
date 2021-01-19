@@ -3956,7 +3956,6 @@ function includesWithGlob(originalInput, stringToFind, originalOpts) {
  * License: MIT
  * Homepage: https://codsen.com/os/util-nonempty/
  */
-/* eslint @typescript-eslint/no-explicit-any:0, @typescript-eslint/explicit-module-boundary-types:0 */
 
 function nonEmpty(input) {
   // deliberate ==, catches undefined and null
@@ -3975,6 +3974,7 @@ function nonEmpty(input) {
   return typeof input === "number";
 }
 
+var version$1 = version;
 // F U N C T I O N S
 
 function isStr(something) {
@@ -4603,7 +4603,7 @@ function externalApi(input1orig, input2orig, originalOpts) {
 
 exports.defaults = defaults$1;
 exports.mergeAdvanced = externalApi;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

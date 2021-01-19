@@ -12,6 +12,7 @@ import clone from 'lodash.clonedeep';
 
 var version = "3.0.1";
 
+const version$1 = version;
 const RAWNBSP = "\u00A0"; // separates the value from flags
 
 function x(something) {
@@ -114,7 +115,7 @@ function rightMain({
   return null;
 }
 
-function right(str, idx) {
+function right(str, idx = 0) {
   return rightMain({
     str,
     idx,
@@ -222,7 +223,7 @@ function leftMain({
   return null;
 }
 
-function left(str, idx) {
+function left(str, idx = 0) {
   return leftMain({
     str,
     idx,
@@ -721,4 +722,4 @@ function chompRight(str, idx, ...args) { // if there are no arguments, null
   return chomp("right", str, idx, defaults, clone(args));
 }
 
-export { chompLeft, chompRight, left, leftSeq, leftStopAtNewLines, leftStopAtRawNbsp, right, rightSeq, rightStopAtNewLines, rightStopAtRawNbsp, version };
+export { chompLeft, chompRight, left, leftSeq, leftStopAtNewLines, leftStopAtRawNbsp, right, rightSeq, rightStopAtNewLines, rightStopAtRawNbsp, version$1 as version };

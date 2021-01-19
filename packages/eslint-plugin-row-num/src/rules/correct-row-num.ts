@@ -1,10 +1,8 @@
-/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
-
 // import stringify from "json-stringify-safe";
 import { fixRowNums } from "js-row-num";
 // console.log(`\n\n\n005 ███████████████████████████████████████`);
 
-interface Obj {
+export interface Obj {
   [key: string]: any;
 }
 

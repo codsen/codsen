@@ -1,10 +1,14 @@
-import { version } from "../package.json";
-import { Ranges } from "../../../scripts/common";
-declare type Callback = (percentage: number) => void;
+declare type Range = [from: number, to: number] | [from: number, to: number, whatToInsert: string | null | undefined];
+declare type Ranges = Range[] | null;
+
+declare const version: string;
+
+declare type ProgressFn = (percentageDone: number) => void;
 interface Opts {
-    strictlyTwoElementsInRangeArrays?: boolean;
-    progressFn?: undefined | null | Callback;
+    strictlyTwoElementsInRangeArrays: boolean;
+    progressFn: undefined | null | ProgressFn;
 }
 declare const defaults: Opts;
-declare function rSort(arrOfRanges: Ranges, originalOptions?: Opts): Ranges;
-export { rSort, defaults, version };
+declare function rSort(arrOfRanges: Ranges, originalOptions?: Partial<Opts>): Ranges;
+
+export { defaults, rSort, version };

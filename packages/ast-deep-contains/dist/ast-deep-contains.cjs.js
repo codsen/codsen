@@ -24,6 +24,8 @@ var is__default = /*#__PURE__*/_interopDefaultLegacy(is);
 
 var version = "2.0.1";
 
+var version$1 = version;
+
 function goUp(pathStr) {
   // console.log(`014 goUp(): INCOMING pathStr = "${pathStr}"`);
   if (pathStr.includes(".")) {
@@ -236,4 +238,4 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
 
 exports.deepContains = deepContains;
 exports.defaults = defaults;
-exports.version = version;
+exports.version = version$1;

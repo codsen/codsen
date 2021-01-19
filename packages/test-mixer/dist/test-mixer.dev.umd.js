@@ -3514,7 +3514,6 @@ var lodash_clonedeep = createCommonjsModule(function (module, exports) {
  * License: MIT
  * Homepage: https://codsen.com/os/object-boolean-combinations/
  */
-/* eslint no-bitwise:0, @typescript-eslint/explicit-module-boundary-types:0, @typescript-eslint/ban-types:0 */
 
 function combinations(originalIncomingObject, originalOverrideObject) {
   if (originalOverrideObject === void 0) {
@@ -3603,6 +3602,8 @@ function combinations(originalIncomingObject, originalOverrideObject) {
 
 var version = "1.0.1";
 
+var version$1 = version;
+
 function mixer(ref, defaultsObj) {
   if (ref === void 0) {
     ref = {};
@@ -3657,7 +3658,7 @@ function mixer(ref, defaultsObj) {
 }
 
 exports.mixer = mixer;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

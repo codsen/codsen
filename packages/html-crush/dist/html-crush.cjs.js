@@ -24,6 +24,7 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
 var version = "3.0.3";
 
+var version$1 = version;
 var finalIndexesToDelete = new rangesPush.Ranges({
   limitToBeAddedWhitespace: true
 });
@@ -962,4 +963,4 @@ function crush(str, originalOpts) {
 
 exports.crush = crush;
 exports.defaults = defaults;
-exports.version = version;
+exports.version = version$1;

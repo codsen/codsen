@@ -153,6 +153,7 @@ class Counter {
 var version = "1.3.1";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+const version$1 = version;
 
 function parseTap(something) {
 
@@ -201,4 +202,4 @@ function parseTap(something) {
   throw new Error("tap-parse-string-to-object: [THROW_ID_01] inputs should be either string or stream");
 }
 
-export { parseTap, version };
+export { parseTap, version$1 as version };

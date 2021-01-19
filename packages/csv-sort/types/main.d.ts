@@ -4,4 +4,5 @@ interface Res {
     msgType: null | string;
 }
 declare function sort(input: string): Res;
+
 export { sort };

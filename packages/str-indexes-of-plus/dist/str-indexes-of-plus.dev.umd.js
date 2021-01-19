@@ -15,6 +15,8 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 
 var version = "2.11.0";
 
+var version$1 = version;
+
 function strIndexesOfPlus(str, searchValue, fromIndex) {
   if (fromIndex === void 0) {
     fromIndex = 0;
@@ -76,7 +78,7 @@ function strIndexesOfPlus(str, searchValue, fromIndex) {
 }
 
 exports.strIndexesOfPlus = strIndexesOfPlus;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

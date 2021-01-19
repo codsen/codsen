@@ -9,6 +9,8 @@
 
 var version = "1.2.2";
 
+const version$1 = version;
+
 function rIterate(str, originalRanges, cb, offset = 0) {
   if (typeof str !== "string") {
     throw new TypeError(`ranges-iterate: [THROW_ID_01] Input string must be a string! It was given as ${typeof str}, equal to: ${JSON.stringify(str, null, 0)}`);
@@ -115,4 +117,4 @@ function rIterate(str, originalRanges, cb, offset = 0) {
   }
 }
 
-export { rIterate, version };
+export { rIterate, version$1 as version };

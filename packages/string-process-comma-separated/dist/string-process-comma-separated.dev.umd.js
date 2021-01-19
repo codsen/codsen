@@ -64,6 +64,8 @@ function _objectSpread2(target) {
 
 var version = "1.3.0";
 
+var version$1 = version;
+
 function processCommaSep(str, originalOpts) { // insurance:
 
   if (typeof str !== "string") {
@@ -264,7 +266,7 @@ function processCommaSep(str, originalOpts) { // insurance:
 }
 
 exports.processCommaSep = processCommaSep;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

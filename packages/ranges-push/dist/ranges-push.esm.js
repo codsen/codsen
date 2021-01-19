@@ -12,7 +12,8 @@ import { rMerge } from 'ranges-merge';
 
 var version = "4.0.2";
 
-/* eslint @typescript-eslint/ban-ts-comment:1, @typescript-eslint/explicit-module-boundary-types: 0, prefer-rest-params: 0 */
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+const version$1 = version;
 
 function existy(x) {
   return x != null;
@@ -51,7 +52,7 @@ class Ranges {
       }
     } // so it's correct, let's get it in:
     this.opts = opts;
-    this.ranges = null;
+    this.ranges = [];
   }
 
   add(originalFrom, originalTo, addVal) {
@@ -67,8 +68,7 @@ class Ranges {
           if (originalFrom.some(el => Array.isArray(el))) {
             originalFrom.forEach(thing => {
               if (Array.isArray(thing)) {
-                // recursively feed this subarray, hopefully it's an array // @ts-ignore
-
+                // recursively feed this subarray, hopefully it's an array
                 this.add(...thing);
               } // just skip other cases
 
@@ -77,8 +77,7 @@ class Ranges {
           }
 
           if (originalFrom.length && isNum(+originalFrom[0]) && isNum(+originalFrom[1])) {
-            // recursively pass in those values // @ts-ignore
-
+            // recursively pass in those values
             this.add(...originalFrom);
           }
         } // else,
@@ -149,7 +148,6 @@ class Ranges {
   }
 
   push(originalFrom, originalTo, addVal) {
-    // @ts-ignore
     this.add(originalFrom, originalTo, addVal);
   } // C U R R E N T () - kindof a getter
   // ==================================
@@ -157,7 +155,7 @@ class Ranges {
 
   current() {
 
-    if (this.ranges != null) {
+    if (Array.isArray(this.ranges) && this.ranges.length) {
       // beware, merging can return null
       this.ranges = rMerge(this.ranges, {
         mergeType: this.opts.mergeType
@@ -181,7 +179,7 @@ class Ranges {
 
 
   wipe() {
-    this.ranges = null;
+    this.ranges = [];
   } // R E P L A C E ()
   // ==========
 
@@ -197,14 +195,14 @@ class Ranges {
         this.ranges = Array.from(givenRanges);
       }
     } else {
-      this.ranges = null;
+      this.ranges = [];
     }
   } // L A S T ()
   // ==========
 
 
   last() {
-    if (this.ranges != null && Array.isArray(this.ranges)) {
+    if (Array.isArray(this.ranges) && this.ranges.length) {
       return this.ranges[this.ranges.length - 1];
     }
 
@@ -213,4 +211,4 @@ class Ranges {
 
 }
 
-export { Ranges, defaults, version };
+export { Ranges, defaults, version$1 as version };

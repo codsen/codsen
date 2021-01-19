@@ -4,7 +4,8 @@ import intersection from "lodash.intersection";
 import pull from "lodash.pull";
 import isObj from "lodash.isplainobject";
 import clone from "lodash.clonedeep";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 interface BoolValueObj {
   [key: string]: boolean;

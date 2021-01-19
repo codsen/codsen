@@ -51,7 +51,7 @@ Please [visit codsen.com](https://codsen.com/os/ranges-ent-decode/) for a full d
 
 MIT License
 
-Copyright (c) 2010-2020 Roy Revelt and other contributors
+Copyright (c) 2010-2021 Roy Revelt and other contributors
 
 Some tests and some regexes adapted from he.js
 MIT Licence - Copyright © 2013-2018 Mathias Bynens <https://mathiasbynens.be/>

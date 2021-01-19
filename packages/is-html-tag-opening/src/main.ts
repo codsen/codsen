@@ -3,14 +3,19 @@ import { left } from "string-left-right";
 import { BACKSLASH, knownHtmlTags, defaultOpts as defaults } from "./util";
 import { isNotLetter } from "./isNotLetter";
 import { extraRequirements } from "./extraRequirements";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 interface Opts {
   allowCustomTagNames: boolean;
   skipOpeningBracket: boolean;
 }
 
-function isOpening(str: string, idx = 0, originalOpts?: Opts): boolean {
+function isOpening(
+  str: string,
+  idx = 0,
+  originalOpts?: Partial<Opts>
+): boolean {
   // -----------------------------------------------------------------------------
 
   console.time("p01 - setup");
@@ -33,7 +38,7 @@ function isOpening(str: string, idx = 0, originalOpts?: Opts): boolean {
     );
   }
 
-  const opts = { ...defaults, ...originalOpts };
+  const opts: Opts = { ...defaults, ...originalOpts };
   console.timeEnd("p01 - setup");
 
   // -----------------------------------------------------------------------------

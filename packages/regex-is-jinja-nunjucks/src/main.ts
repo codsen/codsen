@@ -1,4 +1,5 @@
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 function isJinjaNunjucksRegex(): RegExp {
   return /{%|{{|%}|}}/gi;

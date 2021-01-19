@@ -1,4 +1,4 @@
-import { version } from "../package.json";
+declare const version: string;
 interface Obj {
     [key: string]: any;
 }
@@ -8,4 +8,5 @@ interface Opts {
     useNullAsExplicitFalse: boolean;
 }
 declare function fillMissing(originalIncompleteWrapper: Obj, originalSchemaWrapper: Obj, originalOptsWrapper?: Opts): Obj;
+
 export { fillMissing, version };

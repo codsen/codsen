@@ -26,6 +26,7 @@ var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
 var version = "4.0.2";
 
+var version$1 = version;
 var defaults = {
   heads: ["{{"],
   tails: ["}}"]
@@ -33,12 +34,7 @@ var defaults = {
 
 function remDup(str, originalOpts) {
   //
-  var has = Object.prototype.hasOwnProperty;
-
-  function isStr(something) {
-    return typeof something === "string";
-  } // ===================== insurance =====================
-
+  var has = Object.prototype.hasOwnProperty; // ===================== insurance =====================
 
   if (str === undefined) {
     throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_01] The input is missing!");
@@ -57,20 +53,20 @@ function remDup(str, originalOpts) {
 
   if (clonedOriginalOpts && has.call(clonedOriginalOpts, "heads")) {
     if (!arrayiffyIfString.arrayiffy(clonedOriginalOpts.heads).every(function (val) {
-      return isStr(val);
+      return typeof val === "string" || Array.isArray(val);
     })) {
       throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_04] The opts.heads contains elements which are not string-type!");
-    } else if (isStr(clonedOriginalOpts.heads)) {
+    } else if (typeof clonedOriginalOpts.heads === "string") {
       clonedOriginalOpts.heads = arrayiffyIfString.arrayiffy(clonedOriginalOpts.heads);
     }
   }
 
   if (clonedOriginalOpts && has.call(clonedOriginalOpts, "tails")) {
     if (!arrayiffyIfString.arrayiffy(clonedOriginalOpts.tails).every(function (val) {
-      return isStr(val);
+      return typeof val === "string" || Array.isArray(val);
     })) {
       throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_05] The opts.tails contains elements which are not string-type!");
-    } else if (isStr(clonedOriginalOpts.tails)) {
+    } else if (typeof clonedOriginalOpts.tails === "string") {
       clonedOriginalOpts.tails = arrayiffyIfString.arrayiffy(clonedOriginalOpts.tails);
     }
   } // trim but only if it's not trimmable to zero length (in that case return intact)
@@ -366,4 +362,4 @@ function remDup(str, originalOpts) {
 
 exports.defaults = defaults;
 exports.remDup = remDup;
-exports.version = version;
+exports.version = version$1;

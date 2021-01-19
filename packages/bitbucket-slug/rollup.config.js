@@ -9,6 +9,7 @@ import banner from "rollup-plugin-banner";
 import babel from "@rollup/plugin-babel";
 import strip from "@rollup/plugin-strip";
 import json from "@rollup/plugin-json";
+import dts from "rollup-plugin-dts";
 import pkg from "./package.json";
 
 const licensePiece = `${pkg.name}
@@ -44,10 +45,10 @@ export default (commandLineArgs) => {
         indent: false,
       },
       plugins: [
+        builtins(),
         nodeResolve({
           extensions,
         }),
-        builtins(),
         json(),
         commonjs(),
         typescript({
@@ -72,8 +73,8 @@ export default (commandLineArgs) => {
         terser({
           compress: {
             pure_getters: true,
-            unsafe: true,
-            unsafe_comps: true,
+            unsafe: false,
+            unsafe_comps: false,
             warnings: false,
           },
         }),
@@ -91,10 +92,10 @@ export default (commandLineArgs) => {
         indent: false,
       },
       plugins: [
+        builtins(),
         nodeResolve({
           extensions,
         }),
-        builtins(),
         json(),
         typescript({
           tsconfig: "../../tsconfig.build.json",
@@ -131,15 +132,14 @@ export default (commandLineArgs) => {
         ...Object.keys(pkg.peerDependencies || {}),
       ]),
       plugins: [
+        builtins(),
         nodeResolve({
           extensions,
         }),
-        builtins(),
         json(),
         typescript({
           tsconfig: "../../tsconfig.build.json",
-          declaration: true,
-          declarationDir: "./types",
+          declaration: false,
         }),
         babel({
           extensions,
@@ -172,10 +172,10 @@ export default (commandLineArgs) => {
         ...Object.keys(pkg.peerDependencies || {}),
       ]),
       plugins: [
+        builtins(),
         nodeResolve({
           extensions,
         }),
-        builtins(),
         json(),
         typescript({
           tsconfig: "../../tsconfig.build.json",
@@ -211,10 +211,10 @@ export default (commandLineArgs) => {
         ...Object.keys(pkg.peerDependencies || {}),
       ]),
       plugins: [
+        builtins(),
         nodeResolve({
           extensions,
         }),
-        builtins(),
         json(),
         replace({
           "process.env.NODE_ENV": JSON.stringify("production"),
@@ -238,13 +238,20 @@ export default (commandLineArgs) => {
         terser({
           compress: {
             pure_getters: true,
-            unsafe: true,
-            unsafe_comps: true,
+            unsafe: false,
+            unsafe_comps: false,
             warnings: false,
           },
         }),
         banner(licensePiece),
       ],
+    },
+
+    // Type definitions
+    {
+      input: "src/main.ts",
+      output: [{ file: "types/main.d.ts", format: "es" }],
+      plugins: [json(), dts()],
     },
   ];
 

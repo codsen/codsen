@@ -12,7 +12,8 @@ import sortKeys from "sort-keys";
 import pReduce from "p-reduce";
 import typ from "type-detect";
 import pOne from "p-one";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 // -----------------------------------------------------------------------------
 

@@ -9,6 +9,8 @@
 
 var version = "3.9.0";
 
+const version$1 = version; // astralAwareSearch() - searches for strings, returns the findings in an array
+
 function astralAwareSearch(whereToLook, whatToLookFor, opts) {
   function existy(something) {
     return something != null;
@@ -363,4 +365,4 @@ function er(originalSource, options, originalReplacement) {
   return result;
 }
 
-export { er, version };
+export { er, version$1 as version };

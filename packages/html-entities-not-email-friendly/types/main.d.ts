@@ -6,4 +6,5 @@ declare const notEmailFriendlySetOnly: Set<string>;
 declare const notEmailFriendlyLowercaseSetOnly: Set<string>;
 declare const notEmailFriendlyMinLength = 2;
 declare const notEmailFriendlyMaxLength = 31;
-export { notEmailFriendly, notEmailFriendlySetOnly, notEmailFriendlyLowercaseSetOnly, notEmailFriendlyMinLength, notEmailFriendlyMaxLength, };
+
+export { notEmailFriendly, notEmailFriendlyLowercaseSetOnly, notEmailFriendlyMaxLength, notEmailFriendlyMinLength, notEmailFriendlySetOnly };

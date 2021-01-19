@@ -19,6 +19,7 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
 var version = "1.3.0";
 
+var version$1 = version; // Takes string, SASS variables file and extracts the plain object of variables: key-value pairs
 // As a bonus, it turns digit-only value strings into numbers.
 
 var BACKSLASH = "\\";
@@ -164,4 +165,4 @@ function extractVars(str, originalOpts) {
 
 exports.defaults = defaults;
 exports.extractVars = extractVars;
-exports.version = version;
+exports.version = version$1;

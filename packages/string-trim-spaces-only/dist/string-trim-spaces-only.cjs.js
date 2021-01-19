@@ -19,6 +19,7 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
 var version = "2.9.0";
 
+var version$1 = version;
 var defaults = {
   classicTrim: false,
   cr: false,
@@ -118,4 +119,4 @@ function trimSpaces(str, originalOpts) {
 
 exports.defaults = defaults;
 exports.trimSpaces = trimSpaces;
-exports.version = version;
+exports.version = version$1;

@@ -9,6 +9,7 @@
 
 var version = "3.14.0";
 
+const version$1 = version;
 const defaults = {
   strictlyTwoElementsInRangeArrays: false,
   progressFn: null
@@ -81,4 +82,4 @@ function rSort(arrOfRanges, originalOptions) {
   });
 }
 
-export { defaults, rSort, version };
+export { defaults, rSort, version$1 as version };

@@ -11,6 +11,7 @@ import { rSort } from 'ranges-sort';
 
 var version = "6.2.0";
 
+const version$1 = version;
 const defaults = {
   mergeType: 1,
   progressFn: null,
@@ -92,6 +93,10 @@ function rMerge(arrOfRanges, originalOpts) {
     sortedRanges = rSort(filtered);
   }
 
+  if (!sortedRanges) {
+    return null;
+  }
+
   const len = sortedRanges.length - 1; // reset 80% of progress is this loop:
   // loop from the end:
 
@@ -139,4 +144,4 @@ function rMerge(arrOfRanges, originalOpts) {
   return sortedRanges.length ? sortedRanges : null;
 }
 
-export { defaults, rMerge, version };
+export { defaults, rMerge, version$1 as version };

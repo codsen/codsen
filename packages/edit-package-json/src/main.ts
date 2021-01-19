@@ -1,6 +1,7 @@
 import { left, right, chompLeft } from "string-left-right";
 import { rApply } from "ranges-apply";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 function isStr(something: any): boolean {
   return typeof something === "string";

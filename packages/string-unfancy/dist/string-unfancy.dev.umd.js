@@ -4151,6 +4151,7 @@ var he = createCommonjsModule(function (module, exports) {
 var version = "3.10.1";
 
 /* eslint quote-props:0 */
+var version$1 = version;
 
 function existy(x) {
   return x != null;
@@ -4207,7 +4208,7 @@ function unfancy(str) {
 }
 
 exports.unfancy = unfancy;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

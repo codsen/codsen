@@ -233,6 +233,7 @@ function removeGappedFromMixedCases(str, temp1) {
 var version = "4.0.1";
 
 /* eslint @typescript-eslint/ban-ts-comment:1 */
+const version$1 = version;
 
 function fixEnt(str, originalOpts) { //
   //
@@ -930,4 +931,4 @@ function fixEnt(str, originalOpts) { //
   return res;
 }
 
-export { fixEnt, version };
+export { fixEnt, version$1 as version };

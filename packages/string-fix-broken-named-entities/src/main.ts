@@ -20,7 +20,8 @@ import {
   removeGappedFromMixedCases,
   isLatinLetterOrNumberOrHash,
 } from "./util";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 import { Ranges } from "../../../scripts/common";
 
 interface Obj {

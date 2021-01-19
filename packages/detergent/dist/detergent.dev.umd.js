@@ -2169,6 +2169,10 @@ function rightMain(_ref) {
 }
 
 function right(str, idx) {
+  if (idx === void 0) {
+    idx = 0;
+  }
+
   return rightMain({
     str: str,
     idx: idx,
@@ -2268,6 +2272,10 @@ function leftMain(_ref2) {
 }
 
 function left(str, idx) {
+  if (idx === void 0) {
+    idx = 0;
+  }
+
   return leftMain({
     str: str,
     idx: idx,
@@ -10432,7 +10440,6 @@ function removeGappedFromMixedCases(str, temp1) {
 
   return findLongest(temp1);
 }
-/* eslint @typescript-eslint/ban-ts-comment:1 */
 
 function fixEnt(str, originalOpts) {
   //
@@ -11986,7 +11993,7 @@ var Ranges = /*#__PURE__*/function () {
           })) {
             originalFrom.forEach(function (thing) {
               if (Array.isArray(thing)) {
-                // recursively feed this subarray, hopefully it's an array // @ts-ignore
+                // recursively feed this subarray, hopefully it's an array
                 _this.add.apply(_this, thing);
               } // just skip other cases
 
@@ -11995,7 +12002,7 @@ var Ranges = /*#__PURE__*/function () {
           }
 
           if (originalFrom.length && isNum$1(+originalFrom[0]) && isNum$1(+originalFrom[1])) {
-            // recursively pass in those values // @ts-ignore
+            // recursively pass in those values
             this.add.apply(this, originalFrom);
           }
         } // else,
@@ -12074,7 +12081,7 @@ var Ranges = /*#__PURE__*/function () {
   _proto.current = function current() {
     var _this2 = this;
 
-    if (this.ranges.length) {
+    if (Array.isArray(this.ranges) && this.ranges.length) {
       // beware, merging can return null
       this.ranges = rMerge(this.ranges, {
         mergeType: this.opts.mergeType
@@ -13236,8 +13243,6 @@ function rProcessOutside(originalStr, originalRanges, cb, skipChecks) {
     iterator(originalStr, [[0, originalStr.length]]);
   }
 }
-
-/* eslint @typescript-eslint/ban-ts-comment:1 */
 
 var defaults$5 = {
   trimStart: true,
@@ -19910,12 +19915,6 @@ function xBeforeYOnTheRight(str, startingIdx, x, y) {
 function notWithinAttrQuotes(tag, str, i) {
   return !tag || !tag.quotes || !xBeforeYOnTheRight(str, i + 1, tag.quotes.value, ">");
 }
-/* eslint no-control-regex: 0 */
-
-
-function trimEnd(str) {
-  return str.replace(new RegExp(/[\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF]+/.source + "$", "g"), "");
-}
 var defaults$7 = {
   ignoreTags: [],
   onlyStripTags: [],
@@ -20232,7 +20231,6 @@ function stripHtml(str, originalOpts) {
           proposedReturn = _ref2.proposedReturn;
 
       if (proposedReturn) {
-        // @ts-ignore
         rangesArr.push.apply(rangesArr, proposedReturn);
       }
     };
@@ -21023,7 +21021,7 @@ function stripHtml(str, originalOpts) {
         rangesToDelete.ranges[rangesToDelete.ranges.length - 1] = [startingIdx2, rangesToDelete.ranges[rangesToDelete.ranges.length - 1][1]]; // for cases of opts.dumpLinkHrefsNearby
 
         if (backupWhatToAdd && backupWhatToAdd.trim()) {
-          rangesToDelete.ranges[rangesToDelete.ranges.length - 1].push(trimEnd(backupWhatToAdd));
+          rangesToDelete.ranges[rangesToDelete.ranges.length - 1].push(backupWhatToAdd.trimEnd());
         }
       }
     }
@@ -27088,11 +27086,11 @@ function expander(originalOpts) {
     throw new Error("string-range-expander: [THROW_ID_04] The input's \"to\" value opts.to, is not a number! Currently it's given as " + typeof originalOpts.to + ", equal to " + JSON.stringify(originalOpts.to, null, 0));
   }
 
-  if (!originalOpts.str[originalOpts.from] && originalOpts.from !== originalOpts.to) {
+  if (originalOpts && originalOpts.str && !originalOpts.str[originalOpts.from] && originalOpts.from !== originalOpts.to) {
     throw new Error("string-range-expander: [THROW_ID_05] The given input string opts.str (\"" + originalOpts.str + "\") must contain the character at index \"from\" (\"" + originalOpts.from + "\")");
   }
 
-  if (!originalOpts.str[originalOpts.to - 1]) {
+  if (originalOpts && originalOpts.str && !originalOpts.str[originalOpts.to - 1]) {
     throw new Error("string-range-expander: [THROW_ID_06] The given input string, opts.str (\"" + originalOpts.str + "\") must contain the character at index before \"to\" (\"" + (originalOpts.to - 1) + "\")");
   }
 

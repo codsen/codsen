@@ -15,6 +15,8 @@ export { traverse } from 'ast-monkey-traverse';
 
 var version = "7.12.1";
 
+const version$1 = version;
+
 function existy(x) {
   return x != null;
 }
@@ -325,4 +327,4 @@ function arrayFirstOnly(input) {
   });
 } // -----------------------------------------------------------------------------
 
-export { arrayFirstOnly, del, drop, find, get, set, version };
+export { arrayFirstOnly, del, drop, find, get, set, version$1 as version };

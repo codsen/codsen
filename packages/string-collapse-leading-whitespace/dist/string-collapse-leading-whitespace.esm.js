@@ -9,6 +9,8 @@
 
 var version = "4.0.0";
 
+const version$1 = version;
+
 function collWhitespace(str, originallineBreakLimit = 1) {
   const rawNbsp = "\u00A0"; // helpers
 
@@ -108,4 +110,4 @@ function collWhitespace(str, originallineBreakLimit = 1) {
   return str;
 }
 
-export { collWhitespace, version };
+export { collWhitespace, version$1 as version };

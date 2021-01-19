@@ -1,4 +1,5 @@
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 import { Ranges } from "../../../scripts/common";
 
 //
@@ -16,15 +17,15 @@ import { Ranges } from "../../../scripts/common";
 type ProgressFn = (percentageDone: number) => void;
 
 interface Opts {
-  strictlyTwoElementsInRangeArrays?: boolean;
-  progressFn?: undefined | null | ProgressFn;
+  strictlyTwoElementsInRangeArrays: boolean;
+  progressFn: undefined | null | ProgressFn;
 }
 const defaults: Opts = {
   strictlyTwoElementsInRangeArrays: false,
   progressFn: null,
 };
 
-function rSort(arrOfRanges: Ranges, originalOptions?: Opts): Ranges {
+function rSort(arrOfRanges: Ranges, originalOptions?: Partial<Opts>): Ranges {
   // quick ending
   if (!Array.isArray(arrOfRanges) || !arrOfRanges.length) {
     return arrOfRanges;

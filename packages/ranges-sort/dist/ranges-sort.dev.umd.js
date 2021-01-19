@@ -64,6 +64,7 @@ function _objectSpread2(target) {
 
 var version = "3.14.0";
 
+var version$1 = version;
 var defaults = {
   strictlyTwoElementsInRangeArrays: false,
   progressFn: null
@@ -145,7 +146,7 @@ function rSort(arrOfRanges, originalOptions) {
 
 exports.defaults = defaults;
 exports.rSort = rSort;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

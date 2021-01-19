@@ -254,6 +254,8 @@ function removeGappedFromMixedCases(str, temp1) {
 
 var version = "4.0.1";
 
+var version$1 = version;
+
 function fixEnt(str, originalOpts) { //
   //
   //
@@ -971,4 +973,4 @@ function fixEnt(str, originalOpts) { //
 }
 
 exports.fixEnt = fixEnt;
-exports.version = version;
+exports.version = version$1;

@@ -13,6 +13,7 @@ import isEq from 'lodash.isequal';
 var version = "1.9.1";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+const version$1 = version; // T H E   M A I N   F U N C T I O N   T H A T   D O E S   T H E   J O B
 // -----------------------------------------------------------------------------
 
 function allValuesEqualTo(input, value, opts) {
@@ -84,4 +85,4 @@ function allEq(inputOriginal, valueOriginal, originalOpts) {
   return allValuesEqualTo(inputOriginal, valueOriginal, opts);
 }
 
-export { allEq, version };
+export { allEq, version$1 as version };

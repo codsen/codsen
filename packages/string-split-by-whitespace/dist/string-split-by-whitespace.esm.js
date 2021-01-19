@@ -11,6 +11,8 @@ import { isIndexWithin } from 'ranges-is-index-within';
 
 var version = "1.7.0";
 
+const version$1 = version;
+
 function splitByW(str, originalOpts) {
   if (str === undefined) {
     throw new Error("string-split-by-whitespace: [THROW_ID_01] The input is missing!");
@@ -65,4 +67,4 @@ function splitByW(str, originalOpts) {
   return res;
 }
 
-export { splitByW, version };
+export { splitByW, version$1 as version };

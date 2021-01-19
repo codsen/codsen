@@ -21,6 +21,7 @@ var matcher__default = /*#__PURE__*/_interopDefaultLegacy(matcher);
 
 var version = "2.13.0";
 
+var version$1 = version;
 var defaults = {
   arrayVsArrayAllMustBeFound: "any",
   caseSensitive: true
@@ -66,4 +67,4 @@ function includesWithGlob(originalInput, stringToFind, originalOpts) {
 
 exports.defaults = defaults;
 exports.includesWithGlob = includesWithGlob;
-exports.version = version;
+exports.version = version$1;

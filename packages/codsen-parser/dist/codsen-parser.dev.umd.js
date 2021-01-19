@@ -2072,6 +2072,10 @@ function rightMain(_ref) {
 }
 
 function right(str, idx) {
+  if (idx === void 0) {
+    idx = 0;
+  }
+
   return rightMain({
     str: str,
     idx: idx,
@@ -2162,6 +2166,10 @@ function leftMain(_ref2) {
 }
 
 function left(str, idx) {
+  if (idx === void 0) {
+    idx = 0;
+  }
+
   return leftMain({
     str: str,
     idx: idx,
@@ -4314,7 +4322,7 @@ function tokenizer(str, originalOpts) {
 
 
   var attribDefaults = {
-    attribName: null,
+    attribName: "",
     attribNameRecognised: false,
     attribNameStartsAt: null,
     attribNameEndsAt: null,
@@ -5062,7 +5070,7 @@ function tokenizer(str, originalOpts) {
         //                 ^
         //          we're here
         //
-        token.queryEndsAt = left(str, _i + 1);
+        token.queryEndsAt = left(str, _i + 1) || 0;
       }
 
       if (token.queryStartsAt && token.queryEndsAt) {
@@ -6191,7 +6199,10 @@ function tokenizer(str, originalOpts) {
 
 
     if (!doNothing && str[_i] && token.type === "tag" && token.kind !== "cdata" && token.tagNameEndsAt && _i > token.tagNameEndsAt && attrib.attribStarts === null && isAttrNameChar(str[_i])) {
-      attrib.attribStarts = _i;
+      attrib.attribStarts = _i; // even though in theory left() which reports first non-whitespace
+      // character's index on the left can be null, it does not happen
+      // in this context - there will be tag's name or something in front!
+
       attrib.attribLeft = lastNonWhitespaceCharAt;
       attrib.attribNameStartsAt = _i;
     } // catch the curlies inside CSS rule

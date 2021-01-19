@@ -38,20 +38,6 @@ const { CONFIGHEAD, CONFIGTAIL, CONTENTHEAD, CONTENTTAIL } = headsAndTails;
 
 const padLeftIfTheresOnTheLeft = [":"];
 
-/* eslint no-control-regex: 0 */
-function trimEnd(str: string): string {
-  return str.replace(
-    new RegExp(
-      `${
-        /[\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF]+/
-          .source
-      }$`,
-      "g"
-    ),
-    ""
-  );
-}
-
 function extractConfig(
   str: string
 ): [extractedConfig: string, rawContentAbove: string, rawContentBelow: string] {
@@ -473,7 +459,7 @@ function extractFromToSource(
     str.lastIndexOf("}") > 0 &&
     str.slice(str.lastIndexOf("}") + 1).includes("|")
   ) {
-    source = trimEnd(str.slice(0, str.indexOf("|", str.lastIndexOf("}") + 1)));
+    source = str.slice(0, str.indexOf("|", str.lastIndexOf("}") + 1)).trimEnd();
     if (source.trim().startsWith("|")) {
       console.log(`449 util: crop leading pipe`);
       while (source.trim().startsWith("|")) {
@@ -561,7 +547,7 @@ lastPipeWasAt = ${lastPipeWasAt}
       );
     }
     console.log(`534 startFrom = ${startFrom}; endTo = ${endTo}`);
-    source = trimEnd(str.slice(startFrom, endTo));
+    source = str.slice(startFrom, endTo).trimEnd();
     console.log(
       `537 FINAL ${`\u001b[${33}m${`source`}\u001b[${39}m`} = ${source}`
     );

@@ -1,7 +1,8 @@
 import merge from "lodash.merge";
 import clone from "lodash.clonedeep";
 import isObj from "lodash.isplainobject";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 interface Obj {
   [key: string]: any;
@@ -10,7 +11,10 @@ interface Opts {
   flattenArraysContainingStringsToBeEmpty: boolean;
 }
 
-function flattenAllArrays(originalIncommingObj: Obj, originalOpts?: Opts): Obj {
+function flattenAllArrays(
+  originalIncommingObj: Obj,
+  originalOpts?: Partial<Opts>
+): Obj {
   //
   // internal functions
   // ==================

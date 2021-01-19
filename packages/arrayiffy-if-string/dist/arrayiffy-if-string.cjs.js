@@ -11,9 +11,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-// If a non-empty string is given, put it into an array.
-// If an empty string is given, return an empty array.
-// Bypass everything else.
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 function arrayiffy(something) {
   if (typeof something === "string") {
     if (something.length) {

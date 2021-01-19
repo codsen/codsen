@@ -81,15 +81,10 @@ function xBeforeYOnTheRight(str, startingIdx, x, y) {
 function notWithinAttrQuotes(tag, str, i) {
   return !tag || !tag.quotes || !xBeforeYOnTheRight(str, i + 1, tag.quotes.value, ">");
 }
-/* eslint no-control-regex: 0 */
-
-
-function trimEnd(str) {
-  return str.replace(new RegExp(/[\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF]+/.source + "$", "g"), "");
-}
 
 var version = "7.0.3";
 
+var version$1 = version;
 var defaults = {
   ignoreTags: [],
   onlyStripTags: [],
@@ -1190,7 +1185,7 @@ function stripHtml(str, originalOpts) {
         rangesToDelete.ranges[rangesToDelete.ranges.length - 1] = [startingIdx2, rangesToDelete.ranges[rangesToDelete.ranges.length - 1][1]]; // for cases of opts.dumpLinkHrefsNearby
 
         if (backupWhatToAdd && backupWhatToAdd.trim()) {
-          rangesToDelete.ranges[rangesToDelete.ranges.length - 1].push(trimEnd(backupWhatToAdd));
+          rangesToDelete.ranges[rangesToDelete.ranges.length - 1].push(backupWhatToAdd.trimEnd());
         }
       }
     }
@@ -1210,4 +1205,4 @@ function stripHtml(str, originalOpts) {
 
 exports.defaults = defaults;
 exports.stripHtml = stripHtml;
-exports.version = version;
+exports.version = version$1;

@@ -1,4 +1,5 @@
-import { version } from "../package.json";
+declare const version: string;
 declare type Output = "html" | "xhtml" | null;
 declare function detectIsItHTMLOrXhtml(input: string): Output;
+
 export { detectIsItHTMLOrXhtml, version };

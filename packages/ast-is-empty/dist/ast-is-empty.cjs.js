@@ -20,6 +20,7 @@ var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 var version = "1.11.0";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+var version$1 = version;
 
 function isEmpty(input) {
   var i;
@@ -70,4 +71,4 @@ function isEmpty(input) {
 }
 
 exports.isEmpty = isEmpty;
-exports.version = version;
+exports.version = version$1;

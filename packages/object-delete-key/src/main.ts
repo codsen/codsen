@@ -2,7 +2,8 @@ import { find, get, drop, del } from "ast-monkey";
 import { isEmpty } from "ast-is-empty";
 import clone from "lodash.clonedeep";
 import { arrObjOrBoth } from "util-array-object-or-both";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 // ---------------------------------------------------------------------
 // MAIN:
@@ -11,14 +12,16 @@ interface Obj {
   [key: string]: any;
 }
 
+type Only = "array" | "object" | "any";
+
 interface Opts {
   key: null | string;
   val: any;
   cleanup: boolean;
-  only: "array" | "object" | "any";
+  only: Only;
 }
 
-function deleteKey(originalInput: Obj, originalOpts: Opts): Obj {
+function deleteKey(originalInput: Obj, originalOpts?: Partial<Opts>): Obj {
   function existy(x: any): boolean {
     return x != null;
   }
@@ -31,9 +34,9 @@ function deleteKey(originalInput: Obj, originalOpts: Opts): Obj {
     key: null,
     val: undefined,
     cleanup: true,
-    only: "any",
+    only: "any" as Only,
   };
-  const opts = { ...defaults, ...originalOpts };
+  const opts: Opts = { ...defaults, ...originalOpts };
   opts.only = arrObjOrBoth(opts.only, {
     msg: "object-delete-key/deleteKey(): [THROW_ID_03]",
     optsVarName: "opts.only",

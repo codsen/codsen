@@ -3,7 +3,8 @@ import { Ranges } from "ranges-push";
 import { matchLeft, matchRight, matchRightIncl } from "string-match-left-right";
 import { expander } from "string-range-expander";
 import { left, right } from "string-left-right";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 import { Ranges as RangesType } from "../../../scripts/common";
 
 const finalIndexesToDelete = new Ranges({ limitToBeAddedWhitespace: true });
@@ -141,7 +142,7 @@ interface Res {
   result: string;
 }
 
-function crush(str: string, originalOpts?: Opts): Res {
+function crush(str: string, originalOpts?: Partial<Opts>): Res {
   const start = Date.now();
   // insurance:
   if (!isStr(str)) {
@@ -189,7 +190,7 @@ function crush(str: string, originalOpts?: Opts): Res {
     }
   }
 
-  const opts = { ...defaults, ...originalOpts };
+  const opts: Opts = { ...defaults, ...originalOpts };
 
   // normalize the opts.removeHTMLComments
   if (typeof opts.removeHTMLComments === "boolean") {

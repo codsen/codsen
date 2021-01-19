@@ -2013,6 +2013,7 @@ var lodash_isplainobject = isPlainObject;
 var version = "3.10.1";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+var version$1 = version;
 
 function setAllValuesTo(inputOriginal, valueOriginal) {
   var value;
@@ -2047,7 +2048,7 @@ function setAllValuesTo(inputOriginal, valueOriginal) {
 }
 
 exports.setAllValuesTo = setAllValuesTo;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

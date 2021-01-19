@@ -12,6 +12,7 @@ import isPlainObject from 'lodash.isplainobject';
 var version = "2.10.0";
 
 /* eslint @typescript-eslint/no-explicit-any:0, @typescript-eslint/explicit-module-boundary-types:0 */
+const version$1 = version;
 
 function nonEmpty(input) {
   // deliberate ==, catches undefined and null
@@ -30,4 +31,4 @@ function nonEmpty(input) {
   return typeof input === "number";
 }
 
-export { nonEmpty, version };
+export { nonEmpty, version$1 as version };

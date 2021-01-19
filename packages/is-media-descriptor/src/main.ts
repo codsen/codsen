@@ -7,7 +7,8 @@ import {
   Opts,
   ResObj,
 } from "./util";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 import { Ranges } from "../../../scripts/common";
 
 const defaults = {
@@ -17,8 +18,8 @@ const defaults = {
 // See https://drafts.csswg.org/mediaqueries/
 // Also https://csstree.github.io/docs/validator.html
 // Also, test in Chrome yourself
-function isMediaD(originalStr: string, originalOpts?: Opts): ResObj[] {
-  const opts = { ...defaults, ...originalOpts };
+function isMediaD(originalStr: string, originalOpts?: Partial<Opts>): ResObj[] {
+  const opts: Opts = { ...defaults, ...originalOpts };
   // insurance first
   if (opts.offset && !Number.isInteger(opts.offset)) {
     throw new Error(

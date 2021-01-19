@@ -6,7 +6,7 @@
 // -----------------------------------------------------------------------------
 
 const chalk = require("chalk");
-const csvSort = require("csv-sort");
+const { sort } = require("csv-sort");
 const fs = require("fs");
 const globby = require("globby");
 const inquirer = require("inquirer");
@@ -201,7 +201,7 @@ thePromise
       fs.readFile(requestedCSVsPath, "utf8", (csvError, csvData) => {
         if (csvData) {
           try {
-            const cleaned = csvSort(csvData);
+            const cleaned = sort(csvData);
             if (receivedState.overwrite) {
               // overwrite
               fs.writeFile(

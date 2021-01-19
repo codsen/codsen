@@ -226,6 +226,10 @@ function rMerge(arrOfRanges, originalOpts) {
     sortedRanges = rSort(filtered);
   }
 
+  if (!sortedRanges) {
+    return null;
+  }
+
   var len = sortedRanges.length - 1; // reset 80% of progress is this loop:
   // loop from the end:
 
@@ -410,6 +414,8 @@ var lodash_isregexp = createCommonjsModule(function (module, exports) {
 
 var version = "3.0.3";
 
+var version$1 = version;
+
 function rRegex(regx, str, replacement) {
   // given regx validation
   if (regx === undefined) {
@@ -458,7 +464,7 @@ function rRegex(regx, str, replacement) {
 }
 
 exports.rRegex = rRegex;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

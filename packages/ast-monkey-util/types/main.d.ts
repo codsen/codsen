@@ -1,6 +1,11 @@
-import pathNext from "./util/pathNext";
-import pathPrev from "./util/pathPrev";
-import pathUp from "./util/pathUp";
-import parent from "./util/parent";
-import { version } from "../package.json";
-export { pathNext, pathPrev, pathUp, parent, version };
+declare function pathNext(str: string): string;
+
+declare function pathPrev(str: string): null | string;
+
+declare function pathUp(str: string): string;
+
+declare function parent(str: string): null | string;
+
+declare const version: string;
+
+export { parent, pathNext, pathPrev, pathUp, version };

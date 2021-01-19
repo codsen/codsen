@@ -12,6 +12,8 @@ import { arrayiffy } from 'arrayiffy-if-string';
 
 var version = "3.17.0";
 
+const version$1 = version;
+
 function isObj(something) {
   return something && typeof something === "object" && !Array.isArray(something);
 }
@@ -247,7 +249,7 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
         }
       }
 
-      if (matchedHeads) {
+      if (typeof matchedHeads === "string") {
         if (!oneHeadFound) {
           // res[0].push(i)
           tempResObj = {};
@@ -283,7 +285,7 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
         throw new TypeError(`${opts.source}${s ? ": [THROW_ID_20]" : ""} When processing "${str}", we had "opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder" on. We found heads (${heads[strictMatchingIndex]}) but the tails the followed it were not of the same index, ${strictMatchingIndex} (${tails[strictMatchingIndex]}) but ${temp} (${matchedTails}).`);
       }
 
-      if (matchedTails) {
+      if (typeof matchedTails === "string") {
         if (oneHeadFound) {
           tempResObj.tailsStartAt = i;
           tempResObj.tailsEndAt = i + matchedTails.length;
@@ -312,4 +314,4 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
   return res;
 }
 
-export { defaults, strFindHeadsTails, version };
+export { defaults, strFindHeadsTails, version$1 as version };

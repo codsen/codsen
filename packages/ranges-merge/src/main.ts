@@ -1,6 +1,7 @@
 import { rSort } from "ranges-sort";
-import { version } from "../package.json";
-import { Range, Ranges } from "../../../scripts/common";
+import { Range } from "../../../scripts/common";
+import { version as v } from "../package.json";
+const version: string = v;
 
 interface UnknownValueObj {
   [key: string]: any;
@@ -9,9 +10,9 @@ interface UnknownValueObj {
 type ProgressFn = (percentageDone: number) => void;
 
 interface Opts {
-  mergeType?: 1 | 2 | "1" | "2";
-  progressFn?: null | undefined | ProgressFn;
-  joinRangesThatTouchEdges?: boolean;
+  mergeType: 1 | 2 | "1" | "2";
+  progressFn: null | undefined | ProgressFn;
+  joinRangesThatTouchEdges: boolean;
 }
 
 const defaults: Opts = {
@@ -25,7 +26,10 @@ const defaults: Opts = {
 // [ [1, 5], [5, 10] ] => [ [1, 10] ]
 // case #2. overlap:
 // [ [1, 4], [3, 5] ] => [ [1, 5] ]
-function rMerge(arrOfRanges: Ranges, originalOpts?: Opts): Ranges {
+function rMerge(
+  arrOfRanges: Range[] | null,
+  originalOpts?: Partial<Opts>
+): Range[] | null {
   //
   // internal functions:
   // ---------------------------------------------------------------------------
@@ -136,7 +140,11 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Opts): Ranges {
     sortedRanges = rSort(filtered);
   }
 
-  const len = (sortedRanges as Range[]).length - 1;
+  if (!sortedRanges) {
+    return null;
+  }
+
+  const len = sortedRanges.length - 1;
   // reset 80% of progress is this loop:
 
   // loop from the end:
@@ -144,7 +152,7 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Opts): Ranges {
     console.log("\n\n");
     console.log(
       `\u001b[${36}m${`137 -------------- sortedRanges[${i}] = ${JSON.stringify(
-        (sortedRanges as Range[])[i],
+        sortedRanges[i],
         null,
         0
       )} --------------`}\u001b[${39}m\n`
@@ -166,81 +174,65 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Opts): Ranges {
 
     // if current range is before the preceding-one
     if (
-      (sortedRanges as Range[])[i][0] <= (sortedRanges as Range[])[i - 1][0] ||
+      sortedRanges[i][0] <= sortedRanges[i - 1][0] ||
       (!opts.joinRangesThatTouchEdges &&
-        (sortedRanges as Range[])[i][0] <
-          (sortedRanges as Range[])[i - 1][1]) ||
+        sortedRanges[i][0] < sortedRanges[i - 1][1]) ||
       (opts.joinRangesThatTouchEdges &&
-        (sortedRanges as Range[])[i][0] <= (sortedRanges as Range[])[i - 1][1])
+        sortedRanges[i][0] <= sortedRanges[i - 1][1])
     ) {
       console.log(`165  sortedRanges[${i}][0] = ${`\u001b[${33}m${
-        (sortedRanges as Range[])[i][0]
+        sortedRanges[i][0]
       }\u001b[${39}m`} ? ${`\u001b[${32}m${`<=`}\u001b[${39}m`} ? sortedRanges[${
         i - 1
-      }][0] = ${`\u001b[${33}m${
-        (sortedRanges as Range[])[i - 1][0]
-      }\u001b[${39}m`} ||
+      }][0] = ${`\u001b[${33}m${sortedRanges[i - 1][0]}\u001b[${39}m`} ||
      sortedRanges[${i}][0] = ${`\u001b[${33}m${
-        (sortedRanges as Range[])[i][0]
+        sortedRanges[i][0]
       }\u001b[${39}m`} ? ${`\u001b[${32}m${`<=`}\u001b[${39}m`} ? sortedRanges[${
         i - 1
-      }][1] = ${`\u001b[${33}m${
-        (sortedRanges as Range[])[i - 1][1]
-      }\u001b[${39}m`}
+      }][1] = ${`\u001b[${33}m${sortedRanges[i - 1][1]}\u001b[${39}m`}
 `);
-      (sortedRanges as Range[])[i - 1][0] = Math.min(
-        (sortedRanges as Range[])[i][0],
-        (sortedRanges as Range[])[i - 1][0]
+      sortedRanges[i - 1][0] = Math.min(
+        sortedRanges[i][0],
+        sortedRanges[i - 1][0]
       );
-      (sortedRanges as Range[])[i - 1][1] = Math.max(
-        (sortedRanges as Range[])[i][1],
-        (sortedRanges as Range[])[i - 1][1]
+      sortedRanges[i - 1][1] = Math.max(
+        sortedRanges[i][1],
+        sortedRanges[i - 1][1]
       );
       console.log(
         `185 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} sortedRanges[${
           i - 1
-        }][0] = ${(sortedRanges as Range[])[i - 1][0]}; sortedRanges[${
-          i - 1
-        }][1] = ${(sortedRanges as Range[])[i - 1][1]}`
+        }][0] = ${sortedRanges[i - 1][0]}; sortedRanges[${i - 1}][1] = ${
+          sortedRanges[i - 1][1]
+        }`
       );
 
       // tend the third argument, "what to insert"
       if (
-        (sortedRanges as Range[])[i][2] !== undefined &&
-        ((sortedRanges as Range[])[i - 1][0] >=
-          (sortedRanges as Range[])[i][0] ||
-          (sortedRanges as Range[])[i - 1][1] <=
-            (sortedRanges as Range[])[i][1])
+        sortedRanges[i][2] !== undefined &&
+        (sortedRanges[i - 1][0] >= sortedRanges[i][0] ||
+          sortedRanges[i - 1][1] <= sortedRanges[i][1])
       ) {
         console.log(`198 inside tend the insert value clauses`);
 
         // if the value of the range before exists:
-        if ((sortedRanges as Range[])[i - 1][2] !== null) {
-          if (
-            (sortedRanges as Range[])[i][2] === null &&
-            (sortedRanges as Range[])[i - 1][2] !== null
-          ) {
-            (sortedRanges as Range[])[i - 1][2] = null;
-          } else if ((sortedRanges as Range[])[i - 1][2] != null) {
+        if (sortedRanges[i - 1][2] !== null) {
+          if (sortedRanges[i][2] === null && sortedRanges[i - 1][2] !== null) {
+            sortedRanges[i - 1][2] = null;
+          } else if (sortedRanges[i - 1][2] != null) {
             // if there's a clash of "insert" values:
             if (
               +(opts as UnknownValueObj).mergeType === 2 &&
-              (sortedRanges as Range[])[i - 1][0] ===
-                (sortedRanges as Range[])[i][0]
+              sortedRanges[i - 1][0] === sortedRanges[i][0]
             ) {
               // take the value from the range that's on the right:
-              (sortedRanges as Range[])[i - 1][2] = (sortedRanges as Range[])[
-                i
-              ][2];
+              sortedRanges[i - 1][2] = sortedRanges[i][2];
             } else {
-              (sortedRanges as [number, number, any])[
-                i - 1
-              ][2] += (sortedRanges as Range[])[i][2];
+              (sortedRanges as [number, number, any])[i - 1][2] +=
+                sortedRanges[i][2];
             }
           } else {
-            (sortedRanges as Range[])[i - 1][2] = (sortedRanges as Range[])[
-              i
-            ][2];
+            sortedRanges[i - 1][2] = sortedRanges[i][2];
           }
         }
       }
@@ -256,7 +248,7 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Opts): Ranges {
           4
         )}`
       );
-      (sortedRanges as Range[]).splice(i, 1);
+      sortedRanges.splice(i, 1);
       console.log(
         `234 after splice: ${`\u001b[${33}m${`sortedRanges`}\u001b[${39}m`} = ${JSON.stringify(
           sortedRanges,
@@ -265,7 +257,7 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Opts): Ranges {
         )}`
       );
       // reset the traversal, start from the end again
-      i = (sortedRanges as Range[]).length;
+      i = sortedRanges.length;
       console.log(
         `243 in the end, ${`\u001b[${32}m${`SET`}\u001b[${39}m`} i = ${i}`
       );
@@ -278,7 +270,7 @@ function rMerge(arrOfRanges: Ranges, originalOpts?: Opts): Ranges {
       4
     )}\n`
   );
-  return (sortedRanges as Range[]).length ? sortedRanges : null;
+  return sortedRanges.length ? sortedRanges : null;
 }
 
 export { rMerge, defaults, version };

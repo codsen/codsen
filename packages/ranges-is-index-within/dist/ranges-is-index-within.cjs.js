@@ -19,6 +19,7 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
 var version = "1.16.0";
 
+var version$1 = version;
 var defaults = {
   inclusiveRangeEnds: false,
   returnMatchedRangeInsteadOfTrue: false
@@ -49,4 +50,4 @@ function isIndexWithin(originalIndex, rangesArr, originalOpts) {
 
 exports.defaults = defaults;
 exports.isIndexWithin = isIndexWithin;
-exports.version = version;
+exports.version = version$1;

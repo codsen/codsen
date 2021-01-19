@@ -2093,8 +2093,6 @@ function parent(str) {
   return null;
 }
 
-/* eslint @typescript-eslint/explicit-module-boundary-types:0 */
-
 function traverse(tree1, cb1) {
   var stop2 = {
     now: false
@@ -2212,6 +2210,8 @@ function empty(input) {
 
 var version = "1.9.1";
 
+var version$1 = version; // we use internal function to shield the third input arg from the outside api
+
 function internalCompare(bigObj, smallObj, res) {
   function existy(x) {
     return x != null;
@@ -2320,7 +2320,7 @@ function looseCompare(bigObj, smallObj) {
 }
 
 exports.looseCompare = looseCompare;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

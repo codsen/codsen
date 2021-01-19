@@ -19,6 +19,8 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
 var version = "3.9.0";
 
+var version$1 = version; // astralAwareSearch() - searches for strings, returns the findings in an array
+
 function astralAwareSearch(whereToLook, whatToLookFor, opts) {
   function existy(something) {
     return something != null;
@@ -380,4 +382,4 @@ function er(originalSource, options, originalReplacement) {
 }
 
 exports.er = er;
-exports.version = version;
+exports.version = version$1;

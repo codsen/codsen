@@ -13,11 +13,18 @@ import isObj from 'lodash.isplainobject';
 
 var version = "3.0.3";
 
+const version$1 = version;
+
 function chomp(str) {
   // eslint-disable-next-line no-param-reassign
   str = str.replace(/(amp;)|(#x26;)/gi, "");
   return str;
 }
+
+const defaults = {
+  isAttributeValue: false,
+  strict: false
+};
 
 function rEntDecode(str, originalOpts) {
   // insurance:
@@ -33,19 +40,9 @@ function rEntDecode(str, originalOpts) {
     throw new TypeError(`ranges-ent-decode/decode(): [THROW_ID_02] Optional Options Object, the second in put argument, must be a plain object! Currently it's given as ${originalOpts}, type ${typeof originalOpts}`);
   }
 
-  const defaults = {
-    isAttributeValue: false,
-    strict: false
-  };
-  let opts;
-
-  if (!originalOpts) {
-    opts = defaults;
-  } else {
-    opts = { ...defaults,
-      ...originalOpts
-    };
-  } // vars
+  const opts = { ...defaults,
+    ...originalOpts
+  }; // vars
   // ---------------------------------------------------------------------------
   // single, non-recursively encoded entity:
   // /&(#?[^;\W]+;?)/g;
@@ -89,4 +86,4 @@ function rEntDecode(str, originalOpts) {
   return rMerge(rangesArr);
 }
 
-export { rEntDecode, version };
+export { defaults, rEntDecode, version$1 as version };

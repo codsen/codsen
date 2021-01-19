@@ -15,6 +15,8 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 
 var version = "3.11.0";
 
+var version$1 = version;
+
 function detectIsItHTMLOrXhtml(input) {
   function existy(x) {
     return x != null;
@@ -75,7 +77,7 @@ function detectIsItHTMLOrXhtml(input) {
 }
 
 exports.detectIsItHTMLOrXhtml = detectIsItHTMLOrXhtml;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

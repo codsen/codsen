@@ -226,6 +226,10 @@ function rMerge(arrOfRanges, originalOpts) {
     sortedRanges = rSort(filtered);
   }
 
+  if (!sortedRanges) {
+    return null;
+  }
+
   var len = sortedRanges.length - 1; // reset 80% of progress is this loop:
   // loop from the end:
 
@@ -276,6 +280,8 @@ function rMerge(arrOfRanges, originalOpts) {
 }
 
 var version = "3.0.2";
+
+var version$1 = version;
 
 function rCrop(arrOfRanges, strLen) {
   if (arrOfRanges === null) {
@@ -348,7 +354,7 @@ function rCrop(arrOfRanges, strLen) {
 }
 
 exports.rCrop = rCrop;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

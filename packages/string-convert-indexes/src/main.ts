@@ -2,7 +2,8 @@
 
 import { traverse } from "ast-monkey-traverse";
 import GraphemeSplitter from "grapheme-splitter";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 // inner function, common for both external API's methods that does the job:
 function strConvertIndexes(mode: "n" | "u", str: string, indexes: any) {

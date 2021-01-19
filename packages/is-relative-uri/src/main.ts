@@ -1,4 +1,5 @@
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 // Reference used:
 // https://en.wikipedia.org/wiki/Uniform_Resource_Identifier#URI_references
@@ -318,8 +319,8 @@ const knownSchemes = [
 ];
 
 interface Opts {
-  flagUpUrisWithSchemes?: boolean;
-  offset?: 0;
+  flagUpUrisWithSchemes: boolean;
+  offset: number;
 }
 
 interface Res {
@@ -327,7 +328,7 @@ interface Res {
   message: string | null;
 }
 
-function isRel(str: string, originalOpts?: Opts): Res {
+function isRel(str: string, originalOpts?: Partial<Opts>): Res {
   // insurance first
   // ---------------------------------------------------------------------------
   if (typeof str !== "string") {
@@ -344,12 +345,7 @@ function isRel(str: string, originalOpts?: Opts): Res {
     flagUpUrisWithSchemes: true,
     offset: 0,
   };
-  let opts;
-  if (originalOpts) {
-    opts = { ...defaults, ...originalOpts };
-  } else {
-    opts = { ...defaults };
-  }
+  const opts: Opts = { ...defaults, ...originalOpts };
   if (opts.offset && !Number.isInteger(opts.offset)) {
     throw new Error(
       `is-relative-uri: [THROW_ID_02] opts.offset must be an integer, it was given as ${

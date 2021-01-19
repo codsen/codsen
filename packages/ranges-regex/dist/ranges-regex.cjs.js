@@ -20,6 +20,8 @@ var isregexp__default = /*#__PURE__*/_interopDefaultLegacy(isregexp);
 
 var version = "3.0.3";
 
+var version$1 = version;
+
 function rRegex(regx, str, replacement) {
   // given regx validation
   if (regx === undefined) {
@@ -68,4 +70,4 @@ function rRegex(regx, str, replacement) {
 }
 
 exports.rRegex = rRegex;
-exports.version = version;
+exports.version = version$1;

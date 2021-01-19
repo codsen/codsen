@@ -13,9 +13,11 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var version = "1.1.1";
 
+var version$1 = version;
+
 function isJinjaNunjucksRegex() {
   return /{%|{{|%}|}}/gi;
 }
 
 exports.isJinjaNunjucksRegex = isJinjaNunjucksRegex;
-exports.version = version;
+exports.version = version$1;

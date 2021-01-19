@@ -226,6 +226,10 @@ function rMerge(arrOfRanges, originalOpts) {
     sortedRanges = rSort(filtered);
   }
 
+  if (!sortedRanges) {
+    return null;
+  }
+
   var len = sortedRanges.length - 1; // reset 80% of progress is this loop:
   // loop from the end:
 
@@ -359,6 +363,8 @@ function rCrop(arrOfRanges, strLen) {
 
 var version = "3.0.2";
 
+var version$1 = version;
+
 function rInvert(arrOfRanges, strLen, originalOptions) {
   if (!Array.isArray(arrOfRanges) && arrOfRanges !== null) {
     throw new TypeError("ranges-invert: [THROW_ID_01] Input's first argument must be an array, consisting of range arrays! Currently its type is: " + typeof arrOfRanges + ", equal to: " + JSON.stringify(arrOfRanges, null, 4));
@@ -470,7 +476,7 @@ function rInvert(arrOfRanges, strLen, originalOptions) {
 }
 
 exports.rInvert = rInvert;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

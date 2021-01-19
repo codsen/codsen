@@ -167,6 +167,7 @@ var Counter = /*#__PURE__*/function () {
 var version = "1.3.1";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+var version$1 = version;
 
 function parseTap(something) {
 
@@ -216,4 +217,4 @@ function parseTap(something) {
 }
 
 exports.parseTap = parseTap;
-exports.version = version;
+exports.version = version$1;

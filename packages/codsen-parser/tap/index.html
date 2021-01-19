@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>Parser Tap</title>
     <style type="text/css">
       * {
@@ -26,7 +26,6 @@
     </style>
   </head>
   <body>
-
     <div id="app">
       <textarea ref="in" v-model="text1" placeholder="put html here"></textarea>
       <textarea ref="out" v-model="text2"></textarea>
@@ -35,55 +34,53 @@
     <script src="vue.js"></script>
     <script src="../dist/codsen-parser.dev.umd.js"></script>
     <script>
-    Vue.config.productionTip = false;
-    function isStr(something) {
-      return typeof something === "string";
-    }
-    function isObj(something) {
-      return typeof isObj === "object";
-    }
-    const cparser = codsenParser;
-    const myStorage = window.localStorage;
-    window.Event = new Vue();
-    new Vue({
-      el: '#app',
-      data: {
-        text1: ""
-      },
-      mounted: function () {
-        console.log(`068 called mounted()`);
-        const retrieved = myStorage.getItem("parser")
-        if (typeof retrieved === "string" && retrieved.length) {
-          this.text1 = retrieved;
-        } else {
-          this.text1 = "";
-        };
-        this.$refs.in.focus();
-      },
-      computed: {
-        text2: function () {
-          // update the "out" text area:
-          if (
-            typeof this.text1 === "string"
-          ) {
-            return JSON.stringify(cparser(this.text1), null, 4)
-          }
-          console.log('099 nothing given');
-          return isStr(this.text1) && this.text1.length ? this.text1 : "";
-        }
-      },
-      watch: {
-        text1: function () {
-          console.log(`113 dump to local storage`);
-          // dump the input into the local storage:
-          if (isStr(this.text1) && this.text1.length) {
-            myStorage.setItem("parser", this.text1)
-          } else {
-            myStorage.setItem("parser", "")
-          }
-        }
+      Vue.config.productionTip = false;
+      function isStr(something) {
+        return typeof something === "string";
       }
-    });
+      function isObj(something) {
+        return typeof isObj === "object";
+      }
+      const { cparser } = codsenParser;
+      const myStorage = window.localStorage;
+      window.Event = new Vue();
+      new Vue({
+        el: "#app",
+        data: {
+          text1: "",
+        },
+        mounted: function () {
+          console.log(`068 called mounted()`);
+          const retrieved = myStorage.getItem("parser");
+          if (typeof retrieved === "string" && retrieved.length) {
+            this.text1 = retrieved;
+          } else {
+            this.text1 = "";
+          }
+          this.$refs.in.focus();
+        },
+        computed: {
+          text2: function () {
+            // update the "out" text area:
+            if (typeof this.text1 === "string") {
+              return JSON.stringify(cparser(this.text1), null, 4);
+            }
+            console.log("099 nothing given");
+            return isStr(this.text1) && this.text1.length ? this.text1 : "";
+          },
+        },
+        watch: {
+          text1: function () {
+            console.log(`113 dump to local storage`);
+            // dump the input into the local storage:
+            if (isStr(this.text1) && this.text1.length) {
+              myStorage.setItem("parser", this.text1);
+            } else {
+              myStorage.setItem("parser", "");
+            }
+          },
+        },
+      });
     </script>
   </body>
 </html>

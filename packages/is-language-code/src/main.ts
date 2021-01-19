@@ -1,4 +1,5 @@
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 import languageJson from "./tag_language.json";
 import extlangJson from "./tag_extlang.json";
 import grandfatheredJson from "./tag_grandfathered.json";

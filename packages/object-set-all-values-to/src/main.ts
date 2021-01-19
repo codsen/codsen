@@ -2,7 +2,8 @@
 
 import clone from "lodash.clonedeep";
 import isObj from "lodash.isplainobject";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 interface Obj {
   [key: string]: any;

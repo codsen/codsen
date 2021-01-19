@@ -44,7 +44,7 @@ Please [visit codsen.com](https://codsen.com/os/update-versions/) for a full des
 
 MIT License
 
-Copyright (c) 2010-2020 Roy Revelt and other contributors
+Copyright (c) 2010-2021 Roy Revelt and other contributors
 
 uses adapted p-progress, MIT Licence, Copyright (c) Sindre Sorhus https://github.com/sindresorhus/p-progress/blob/master/license
 

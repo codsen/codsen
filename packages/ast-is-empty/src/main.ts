@@ -1,7 +1,8 @@
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
 import isObj from "lodash.isplainobject";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 function isEmpty(input: any): boolean | null {
   let i;

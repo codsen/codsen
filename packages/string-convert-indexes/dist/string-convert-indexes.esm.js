@@ -13,6 +13,7 @@ import GraphemeSplitter from 'grapheme-splitter';
 var version = "3.0.1";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types:0 */
+const version$1 = version; // inner function, common for both external API's methods that does the job:
 
 function strConvertIndexes(mode, str, indexes) {
   function isItOk(something) {
@@ -135,4 +136,4 @@ function unicodeToNative(str, indexes) {
   return strConvertIndexes("u", str, indexes);
 }
 
-export { nativeToUnicode, unicodeToNative, version };
+export { nativeToUnicode, unicodeToNative, version$1 as version };

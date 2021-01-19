@@ -13,6 +13,8 @@ import { rCrop } from 'ranges-crop';
 
 var version = "3.0.2";
 
+const version$1 = version;
+
 function rProcessOutside(originalStr, originalRanges, cb, skipChecks = false) {
   //
   // insurance:
@@ -66,4 +68,4 @@ function rProcessOutside(originalStr, originalRanges, cb, skipChecks = false) {
   }
 }
 
-export { rProcessOutside, version };
+export { rProcessOutside, version$1 as version };

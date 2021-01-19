@@ -2,8 +2,14 @@ import { arrObjOrBoth } from "util-array-object-or-both";
 import { checkTypesMini } from "check-types-mini";
 import { compare } from "ast-compare";
 import { traverse } from "ast-monkey-traverse";
-import { JsonValue } from "type-fest";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
+
+/* eslint no-use-before-define: 0 */
+// From "type-fest" by Sindre Sorhus:
+type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
+type JsonObject = { [Key in string]?: JsonValue };
+type JsonArray = Array<JsonValue>;
 
 // -----------------------------------------------------------------------------
 

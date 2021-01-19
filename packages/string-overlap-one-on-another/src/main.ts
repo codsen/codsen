@@ -1,4 +1,5 @@
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 interface Opts {
   offset: number;
@@ -10,7 +11,11 @@ const defaults: Opts = {
   offsetFillerCharacter: " ", // how many characters str2 is to the right? (negative means it's off to the left)
 };
 
-function overlap(str1: string, str2: string, originalOpts?: Opts): string {
+function overlap(
+  str1: string,
+  str2: string,
+  originalOpts?: Partial<Opts>
+): string {
   if (typeof str1 !== "string") {
     throw new Error(
       `string-overlap-one-on-another: [THROW_ID_01] The first input argument must be a string but it was given as ${JSON.stringify(

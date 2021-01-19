@@ -11,6 +11,8 @@ import { rApply } from 'ranges-apply';
 
 var version = "1.3.2";
 
+const version$1 = version;
+
 function convertOne(str, {
   from,
   to,
@@ -308,4 +310,4 @@ function convertAll(str, opts) {
   };
 }
 
-export { convertAll, convertOne, version };
+export { convertAll, convertOne, version$1 as version };

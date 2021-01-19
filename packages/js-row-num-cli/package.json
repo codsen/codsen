@@ -80,7 +80,6 @@
   "devDependencies": {
     "eslint": "^7.15.0",
     "execa": "^5.0.0",
-    "fs-extra": "^9.0.1",
     "lect": "^0.15.1",
     "tap": "^14.11.0",
     "tempy": "^1.0.0",

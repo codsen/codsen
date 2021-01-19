@@ -1,4 +1,5 @@
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 import isObj from "lodash.isplainobject";
 import { arrayiffy } from "arrayiffy-if-string";
 import { matchLeftIncl, matchRightIncl } from "string-match-left-right";
@@ -26,9 +27,6 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
   //
 
   const has = Object.prototype.hasOwnProperty;
-  function isStr(something: any): boolean {
-    return typeof something === "string";
-  }
 
   // ===================== insurance =====================
 
@@ -49,20 +47,28 @@ function remDup(str: string, originalOpts?: LenientOpts): string {
   const clonedOriginalOpts: Opts = { ...originalOpts } as Opts;
 
   if (clonedOriginalOpts && has.call(clonedOriginalOpts, "heads")) {
-    if (!arrayiffy(clonedOriginalOpts.heads).every((val: any) => isStr(val))) {
+    if (
+      !arrayiffy(clonedOriginalOpts.heads as any).every(
+        (val: any) => typeof val === "string" || Array.isArray(val)
+      )
+    ) {
       throw new Error(
         "string-remove-duplicate-heads-tails: [THROW_ID_04] The opts.heads contains elements which are not string-type!"
       );
-    } else if (isStr(clonedOriginalOpts.heads)) {
-      clonedOriginalOpts.heads = arrayiffy(clonedOriginalOpts.heads);
+    } else if (typeof clonedOriginalOpts.heads === "string") {
+      clonedOriginalOpts.heads = arrayiffy(clonedOriginalOpts.heads as string);
     }
   }
   if (clonedOriginalOpts && has.call(clonedOriginalOpts, "tails")) {
-    if (!arrayiffy(clonedOriginalOpts.tails).every((val: any) => isStr(val))) {
+    if (
+      !arrayiffy(clonedOriginalOpts.tails as any).every(
+        (val: any) => typeof val === "string" || Array.isArray(val)
+      )
+    ) {
       throw new Error(
         "string-remove-duplicate-heads-tails: [THROW_ID_05] The opts.tails contains elements which are not string-type!"
       );
-    } else if (isStr(clonedOriginalOpts.tails)) {
+    } else if (typeof clonedOriginalOpts.tails === "string") {
       clonedOriginalOpts.tails = arrayiffy(clonedOriginalOpts.tails);
     }
   }

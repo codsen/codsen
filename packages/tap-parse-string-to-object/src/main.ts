@@ -4,7 +4,8 @@ import isStream from "isstream";
 import split2 from "split2";
 import through2 from "through2";
 import { stringPingLineByLine, Counter } from "./util";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 interface Res {
   ok: boolean;

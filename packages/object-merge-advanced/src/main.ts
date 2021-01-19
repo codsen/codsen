@@ -4,7 +4,8 @@ import clone from "lodash.clonedeep";
 import lodashIncludes from "lodash.includes";
 import uniq from "lodash.uniq";
 import isObj from "lodash.isplainobject";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 import { includesWithGlob } from "array-includes-with-glob";
 import { nonEmpty } from "util-nonempty";

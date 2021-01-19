@@ -15,6 +15,8 @@ var rangesMerge = require('ranges-merge');
 
 var version = "3.0.2";
 
+var version$1 = version;
+
 function rCrop(arrOfRanges, strLen) {
   if (arrOfRanges === null) {
     return null;
@@ -86,4 +88,4 @@ function rCrop(arrOfRanges, strLen) {
 }
 
 exports.rCrop = rCrop;
-exports.version = version;
+exports.version = version$1;

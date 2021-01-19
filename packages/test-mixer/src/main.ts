@@ -1,6 +1,7 @@
 import { combinations } from "object-boolean-combinations";
 import clone from "lodash.clonedeep";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 // takes subset of of opts object, ref
 // and whole default opts

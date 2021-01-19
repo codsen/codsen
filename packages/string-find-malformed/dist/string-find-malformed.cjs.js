@@ -20,6 +20,8 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
 var version = "1.2.1";
 
+var version$1 = version;
+
 function isObj(something) {
   return something && typeof something === "object" && !Array.isArray(something);
 }
@@ -200,4 +202,4 @@ function findMalformed(str, refStr, cb, originalOpts) { //
 
 exports.defaults = defaults;
 exports.findMalformed = findMalformed;
-exports.version = version;
+exports.version = version$1;

@@ -9,6 +9,7 @@
 
 var version = "2.9.0";
 
+const version$1 = version;
 const defaults = {
   classicTrim: false,
   cr: false,
@@ -108,4 +109,4 @@ function trimSpaces(str, originalOpts) {
   };
 }
 
-export { defaults, trimSpaces, version };
+export { defaults, trimSpaces, version$1 as version };

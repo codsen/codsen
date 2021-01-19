@@ -16,20 +16,20 @@ function isStr(something: any): boolean {
 }
 
 interface Opts {
-  cb?:
+  cb:
     | undefined
     | null
     | ((
-        wholeCharacterOutside: string | undefined,
-        theRemainderOfTheString: string,
-        firstCharOutsideIndex: number
+        wholeCharacterOutside?: string | undefined,
+        theRemainderOfTheString?: string,
+        firstCharOutsideIndex?: number
       ) => string | boolean);
-  i?: boolean;
-  trimBeforeMatching?: boolean;
-  trimCharsBeforeMatching?: string[];
-  maxMismatches?: number;
-  firstMustMatch?: boolean;
-  lastMustMatch?: boolean;
+  i: boolean;
+  trimBeforeMatching: boolean;
+  trimCharsBeforeMatching: string | string[];
+  maxMismatches: number;
+  firstMustMatch: boolean;
+  lastMustMatch: boolean;
 }
 const defaults: Opts = {
   cb: undefined,
@@ -41,14 +41,16 @@ const defaults: Opts = {
   lastMustMatch: false,
 };
 
+const defaultGetNextIdx = (index: number) => index + 1;
+
 // eslint-disable-next-line consistent-return
 function march(
   str: string,
   position: number,
   whatToMatchVal: (() => string) | string,
-  opts: Opts,
-  special: boolean,
-  getNextIdx: (index: number) => number
+  originalOpts?: Partial<Opts>,
+  special = false,
+  getNextIdx = defaultGetNextIdx
 ) {
   console.log(`023 \u001b[${35}m${"CALLED march()"}\u001b[${39}m`);
   console.log(
@@ -56,7 +58,11 @@ function march(
 ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${str}
 ${`\u001b[${33}m${`position`}\u001b[${39}m`} = ${position}
 ${`\u001b[${33}m${`whatToMatchVal`}\u001b[${39}m`} = ${whatToMatchVal}
-${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(opts, null, 4)}
+${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} = ${JSON.stringify(
+      originalOpts,
+      null,
+      4
+    )}
 ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
 ======`
   );
@@ -65,10 +71,12 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
     typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal;
 
   // early ending case if matching EOL being at 0-th index:
-  if (position < 0 && special && whatToMatchValVal === "EOL") {
+  if (+position < 0 && special && whatToMatchValVal === "EOL") {
     console.log("039 EARLY ENDING, return true");
     return whatToMatchValVal;
   }
+
+  const opts: Opts = { ...defaults, ...originalOpts };
 
   console.log(
     `044 ${`\u001b[${33}m${"position"}\u001b[${39}m`} = ${JSON.stringify(
@@ -163,7 +171,7 @@ ${`\u001b[${33}m${`special`}\u001b[${39}m`} = ${special}
       (opts &&
         opts.i &&
         opts.trimCharsBeforeMatching &&
-        opts.trimCharsBeforeMatching
+        (opts.trimCharsBeforeMatching as string[])
           .map((val) => val.toLowerCase())
           .includes(str[i].toLowerCase()))
     ) {
@@ -561,7 +569,7 @@ function main(
   str: string,
   position: number,
   originalWhatToMatch: (() => string) | string | string[],
-  originalOpts?: Opts
+  originalOpts?: Partial<Opts>
 ): boolean | string {
   // insurance
   if (
@@ -578,8 +586,12 @@ function main(
     );
   }
 
-  const opts = { ...defaults, ...originalOpts };
-  opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching) || [];
+  const opts: Opts = { ...defaults, ...originalOpts };
+  if (typeof opts.trimCharsBeforeMatching === "string") {
+    // arrayiffy if needed:
+    opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching);
+  }
+  // stringify all:
   opts.trimCharsBeforeMatching = (opts as Obj).trimCharsBeforeMatching.map(
     (el: any) => (isStr(el) ? el : String(el))
   );
@@ -650,7 +662,7 @@ function main(
   if (
     opts &&
     opts.trimCharsBeforeMatching &&
-    opts.trimCharsBeforeMatching.some((el, i) => {
+    (opts.trimCharsBeforeMatching as string[]).some((el, i) => {
       if (el.length > 1) {
         culpritsIndex = i;
         culpritsVal = el;
@@ -932,7 +944,7 @@ function matchLeftIncl(
   str: string,
   position: number,
   whatToMatch: (() => string) | string | string[],
-  opts?: Opts
+  opts?: Partial<Opts>
 ): boolean | string {
   return main("matchLeftIncl", str, position, whatToMatch, opts);
 }
@@ -941,7 +953,7 @@ function matchLeft(
   str: string,
   position: number,
   whatToMatch: (() => string) | string | string[],
-  opts?: Opts
+  opts?: Partial<Opts>
 ): boolean | string {
   return main("matchLeft", str, position, whatToMatch, opts);
 }
@@ -950,7 +962,7 @@ function matchRightIncl(
   str: string,
   position: number,
   whatToMatch: (() => string) | string | string[],
-  opts?: Opts
+  opts?: Partial<Opts>
 ): boolean | string {
   return main("matchRightIncl", str, position, whatToMatch, opts);
 }
@@ -959,7 +971,7 @@ function matchRight(
   str: string,
   position: number,
   whatToMatch: (() => string) | string | string[],
-  opts?: Opts
+  opts?: Partial<Opts>
 ): boolean | string {
   return main("matchRight", str, position, whatToMatch, opts);
 }

@@ -1,7 +1,8 @@
 import runes from "runes";
 import { rInvert } from "ranges-invert";
 import { rCrop } from "ranges-crop";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 import { Ranges } from "../../../scripts/common";
 
 type OffsetValueCb = (amountToOffset: number) => void;

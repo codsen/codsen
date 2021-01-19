@@ -1,7 +1,8 @@
 /* eslint @typescript-eslint/no-explicit-any:0, @typescript-eslint/explicit-module-boundary-types:0 */
 
 import isPlainObject from "lodash.isplainobject";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 function nonEmpty(input: any): boolean {
   // deliberate ==, catches undefined and null

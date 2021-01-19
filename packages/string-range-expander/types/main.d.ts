@@ -1,18 +1,21 @@
-import { version } from "../package.json";
-import { Range } from "../../../scripts/common";
+declare type Range = [from: number, to: number] | [from: number, to: number, whatToInsert: string | null | undefined];
+
+declare const version: string;
+
 interface Opts {
     str: string;
     from: number;
     to: number;
-    ifLeftSideIncludesThisThenCropTightly?: string;
-    ifLeftSideIncludesThisCropItToo?: string;
-    ifRightSideIncludesThisThenCropTightly?: string;
-    ifRightSideIncludesThisCropItToo?: string;
-    extendToOneSide?: false | "left" | "right";
-    wipeAllWhitespaceOnLeft?: boolean;
-    wipeAllWhitespaceOnRight?: boolean;
-    addSingleSpaceToPreventAccidentalConcatenation?: boolean;
+    ifLeftSideIncludesThisThenCropTightly: string;
+    ifLeftSideIncludesThisCropItToo: string;
+    ifRightSideIncludesThisThenCropTightly: string;
+    ifRightSideIncludesThisCropItToo: string;
+    extendToOneSide: false | "left" | "right";
+    wipeAllWhitespaceOnLeft: boolean;
+    wipeAllWhitespaceOnRight: boolean;
+    addSingleSpaceToPreventAccidentalConcatenation: boolean;
 }
-declare const defaults: Required<Opts>;
-declare function expander(originalOpts: Opts): Range;
-export { expander, defaults, version };
+declare const defaults: Opts;
+declare function expander(originalOpts: Partial<Opts>): Range;
+
+export { defaults, expander, version };

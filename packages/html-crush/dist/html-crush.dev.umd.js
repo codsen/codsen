@@ -226,6 +226,10 @@ function rMerge(arrOfRanges, originalOpts) {
     sortedRanges = rSort(filtered);
   }
 
+  if (!sortedRanges) {
+    return null;
+  }
+
   var len = sortedRanges.length - 1; // reset 80% of progress is this loop:
   // loop from the end:
 
@@ -283,7 +287,6 @@ function rMerge(arrOfRanges, originalOpts) {
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/
  */
-/* eslint @typescript-eslint/ban-ts-comment:1 */
 
 function rApply(str, originalRangesArr, _progressFn) {
   var percentageDone = 0;
@@ -314,8 +317,8 @@ function rApply(str, originalRangesArr, _progressFn) {
 
   var rangesArr;
 
-  if (Array.isArray(originalRangesArr) && Number.isInteger(+originalRangesArr[0]) && +originalRangesArr[0] >= 0 && Number.isInteger(+originalRangesArr[1]) && +originalRangesArr[1] >= 0) {
-    // @ts-ignore
+  if (Array.isArray(originalRangesArr) && Number.isInteger(originalRangesArr[0]) && Number.isInteger(originalRangesArr[1])) {
+    // if single array was passed, wrap it into an array
     rangesArr = [Array.from(originalRangesArr)];
   } else {
     rangesArr = Array.from(originalRangesArr);
@@ -524,8 +527,6 @@ function collWhitespace(str, originallineBreakLimit) {
   return str;
 }
 
-/* eslint @typescript-eslint/ban-ts-comment:1, @typescript-eslint/explicit-module-boundary-types: 0, prefer-rest-params: 0 */
-
 function existy(x) {
   return x != null;
 }
@@ -563,7 +564,7 @@ var Ranges = /*#__PURE__*/function () {
 
 
     this.opts = opts;
-    this.ranges = null;
+    this.ranges = [];
   }
 
   var _proto = Ranges.prototype;
@@ -584,7 +585,7 @@ var Ranges = /*#__PURE__*/function () {
           })) {
             originalFrom.forEach(function (thing) {
               if (Array.isArray(thing)) {
-                // recursively feed this subarray, hopefully it's an array // @ts-ignore
+                // recursively feed this subarray, hopefully it's an array
                 _this.add.apply(_this, thing);
               } // just skip other cases
 
@@ -593,7 +594,7 @@ var Ranges = /*#__PURE__*/function () {
           }
 
           if (originalFrom.length && isNum(+originalFrom[0]) && isNum(+originalFrom[1])) {
-            // recursively pass in those values // @ts-ignore
+            // recursively pass in those values
             this.add.apply(this, originalFrom);
           }
         } // else,
@@ -664,7 +665,6 @@ var Ranges = /*#__PURE__*/function () {
   };
 
   _proto.push = function push(originalFrom, originalTo, addVal) {
-    // @ts-ignore
     this.add(originalFrom, originalTo, addVal);
   } // C U R R E N T () - kindof a getter
   // ==================================
@@ -673,7 +673,7 @@ var Ranges = /*#__PURE__*/function () {
   _proto.current = function current() {
     var _this2 = this;
 
-    if (this.ranges != null) {
+    if (Array.isArray(this.ranges) && this.ranges.length) {
       // beware, merging can return null
       this.ranges = rMerge(this.ranges, {
         mergeType: this.opts.mergeType
@@ -698,7 +698,7 @@ var Ranges = /*#__PURE__*/function () {
   ;
 
   _proto.wipe = function wipe() {
-    this.ranges = null;
+    this.ranges = [];
   } // R E P L A C E ()
   // ==========
   ;
@@ -714,14 +714,14 @@ var Ranges = /*#__PURE__*/function () {
         this.ranges = Array.from(givenRanges);
       }
     } else {
-      this.ranges = null;
+      this.ranges = [];
     }
   } // L A S T ()
   // ==========
   ;
 
   _proto.last = function last() {
-    if (this.ranges != null && Array.isArray(this.ranges)) {
+    if (Array.isArray(this.ranges) && this.ranges.length) {
       return this.ranges[this.ranges.length - 1];
     }
 
@@ -739,9 +739,8 @@ var Ranges = /*#__PURE__*/function () {
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
  */
-// If a non-empty string is given, put it into an array.
-// If an empty string is given, return an empty array.
-// Bypass everything else.
+
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 function arrayiffy(something) {
   if (typeof something === "string") {
     if (something.length) {
@@ -772,14 +771,29 @@ var defaults$3 = {
   maxMismatches: 0,
   firstMustMatch: false,
   lastMustMatch: false
+};
+
+var defaultGetNextIdx = function defaultGetNextIdx(index) {
+  return index + 1;
 }; // eslint-disable-next-line consistent-return
 
-function march(str, position, whatToMatchVal, opts, special, getNextIdx) {
+
+function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx) {
+  if (special === void 0) {
+    special = false;
+  }
+
+  if (getNextIdx === void 0) {
+    getNextIdx = defaultGetNextIdx;
+  }
+
   var whatToMatchValVal = typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal; // early ending case if matching EOL being at 0-th index:
 
-  if (position < 0 && special && whatToMatchValVal === "EOL") {
+  if (+position < 0 && special && whatToMatchValVal === "EOL") {
     return whatToMatchValVal;
   }
+
+  var opts = _objectSpread2(_objectSpread2({}, defaults$3), originalOpts);
 
   if (position >= str.length && !special) {
     return false;
@@ -965,7 +979,12 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
 
   var opts = _objectSpread2(_objectSpread2({}, defaults$3), originalOpts);
 
-  opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching) || [];
+  if (typeof opts.trimCharsBeforeMatching === "string") {
+    // arrayiffy if needed:
+    opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching);
+  } // stringify all:
+
+
   opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(function (el) {
     return isStr$1(el) ? el : String(el);
   });
@@ -1213,11 +1232,11 @@ function expander(originalOpts) {
     throw new Error("string-range-expander: [THROW_ID_04] The input's \"to\" value opts.to, is not a number! Currently it's given as " + typeof originalOpts.to + ", equal to " + JSON.stringify(originalOpts.to, null, 0));
   }
 
-  if (!originalOpts.str[originalOpts.from] && originalOpts.from !== originalOpts.to) {
+  if (originalOpts && originalOpts.str && !originalOpts.str[originalOpts.from] && originalOpts.from !== originalOpts.to) {
     throw new Error("string-range-expander: [THROW_ID_05] The given input string opts.str (\"" + originalOpts.str + "\") must contain the character at index \"from\" (\"" + originalOpts.from + "\")");
   }
 
-  if (!originalOpts.str[originalOpts.to - 1]) {
+  if (originalOpts && originalOpts.str && !originalOpts.str[originalOpts.to - 1]) {
     throw new Error("string-range-expander: [THROW_ID_06] The given input string, opts.str (\"" + originalOpts.str + "\") must contain the character at index before \"to\" (\"" + (originalOpts.to - 1) + "\")");
   }
 
@@ -3255,6 +3274,10 @@ function rightMain(_ref) {
 }
 
 function right(str, idx) {
+  if (idx === void 0) {
+    idx = 0;
+  }
+
   return rightMain({
     str: str,
     idx: idx,
@@ -3345,6 +3368,10 @@ function leftMain(_ref2) {
 }
 
 function left(str, idx) {
+  if (idx === void 0) {
+    idx = 0;
+  }
+
   return leftMain({
     str: str,
     idx: idx,
@@ -3355,6 +3382,7 @@ function left(str, idx) {
 
 var version = "3.0.3";
 
+var version$1 = version;
 var finalIndexesToDelete = new Ranges({
   limitToBeAddedWhitespace: true
 });
@@ -4293,7 +4321,7 @@ function crush(str, originalOpts) {
 
 exports.crush = crush;
 exports.defaults = defaults$5;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

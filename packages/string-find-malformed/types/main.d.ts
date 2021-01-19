@@ -1,4 +1,4 @@
-import { version } from "../package.json";
+declare const version: string;
 interface Opts {
     stringOffset?: number;
     maxDistance?: number;
@@ -10,4 +10,5 @@ interface DataObj {
     idxTo: number;
 }
 declare function findMalformed(str: string, refStr: string, cb: (obj: DataObj) => void, originalOpts?: Opts | undefined | null): void;
-export { findMalformed, defaults, version };
+
+export { defaults, findMalformed, version };

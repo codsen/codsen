@@ -8114,6 +8114,7 @@ var uncertainJson = {
   zeta: zeta$1
 };
 
+var version$1 = version;
 var allNamedEntities = allNamedEntitiesJson;
 var brokenNamedEntities = brokenNamedEntitiesJson;
 var entStartsWith = entStartsWithJson;
@@ -8228,4 +8229,4 @@ exports.entStartsWithCaseInsensitive = entStartsWithCaseInsensitive;
 exports.maxLength = maxLength;
 exports.minLength = minLength;
 exports.uncertain = uncertain;
-exports.version = version;
+exports.version = version$1;

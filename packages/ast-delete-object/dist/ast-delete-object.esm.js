@@ -15,6 +15,7 @@ import isObj from 'lodash.isplainobject';
 var version = "1.10.1";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+const version$1 = version;
 const defaults = {
   matchKeysStrictly: false,
   hungryForWhitespace: false
@@ -68,4 +69,4 @@ function deleteObj(originalInput, objToDelete, originalOpts) {
   return input;
 }
 
-export { defaults, deleteObj, version };
+export { defaults, deleteObj, version$1 as version };

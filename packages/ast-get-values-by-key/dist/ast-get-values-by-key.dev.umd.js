@@ -2135,8 +2135,6 @@ function parent(str) {
   return null;
 }
 
-/* eslint @typescript-eslint/explicit-module-boundary-types:0 */
-
 function traverse(tree1, cb1) {
   var stop2 = {
     now: false
@@ -2307,6 +2305,7 @@ matcher.isMatch = isMatch;
 var version = "2.8.1";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+var version$1 = version;
 
 function getByKey(originalInput, whatToFind, originalReplacement) {
   var replacement;
@@ -2338,7 +2337,7 @@ function getByKey(originalInput, whatToFind, originalReplacement) {
 }
 
 exports.getByKey = getByKey;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

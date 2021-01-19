@@ -9,6 +9,7 @@
 
 var version = "2.13.0";
 
+const version$1 = version; // FUNCTIONS - INTERNAL
 // -----------------------------------------------------------------------------
 
 function existy(x) {
@@ -124,4 +125,4 @@ function sortByCol(arr, axis = 0) {
   return resToBeReturned;
 }
 
-export { sortByCol, version };
+export { sortByCol, version$1 as version };

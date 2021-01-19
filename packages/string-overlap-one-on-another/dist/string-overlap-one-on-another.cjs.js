@@ -19,6 +19,7 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
 var version = "1.6.0";
 
+var version$1 = version;
 var defaults = {
   offset: 0,
   offsetFillerCharacter: " "
@@ -83,4 +84,4 @@ function overlap(str1, str2, originalOpts) {
 }
 
 exports.overlap = overlap;
-exports.version = version;
+exports.version = version$1;

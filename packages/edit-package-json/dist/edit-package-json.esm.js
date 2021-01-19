@@ -12,6 +12,8 @@ import { rApply } from 'ranges-apply';
 
 var version = "0.2.3";
 
+const version$1 = version;
+
 function isStr(something) {
   return typeof something === "string";
 }
@@ -528,4 +530,4 @@ function del(str, path) {
   });
 }
 
-export { del, set, version };
+export { del, set, version$1 as version };

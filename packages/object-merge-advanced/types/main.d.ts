@@ -1,4 +1,4 @@
-import { version } from "../package.json";
+declare const version: string;
 interface InfoObj {
     path: string | undefined;
     key: string | null;
@@ -38,4 +38,5 @@ interface SettledOpts extends Opts {
 }
 declare const defaults: SettledOpts;
 declare function externalApi(input1orig: any, input2orig: any, originalOpts: Opts): any;
-export { externalApi as mergeAdvanced, version, defaults };
+
+export { defaults, externalApi as mergeAdvanced, version };

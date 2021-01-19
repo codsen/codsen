@@ -13,6 +13,8 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var version = "1.2.2";
 
+var version$1 = version;
+
 function rIterate(str, originalRanges, cb, offset) {
   if (offset === void 0) {
     offset = 0;
@@ -124,4 +126,4 @@ function rIterate(str, originalRanges, cb, offset) {
 }
 
 exports.rIterate = rIterate;
-exports.version = version;
+exports.version = version$1;

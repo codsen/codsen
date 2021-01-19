@@ -13,6 +13,7 @@ import isObj from 'lodash.isplainobject';
 var version = "3.10.1";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+const version$1 = version;
 
 function setAllValuesTo(inputOriginal, valueOriginal) {
   let value;
@@ -46,4 +47,4 @@ function setAllValuesTo(inputOriginal, valueOriginal) {
   return input;
 }
 
-export { setAllValuesTo, version };
+export { setAllValuesTo, version$1 as version };

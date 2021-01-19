@@ -12,6 +12,7 @@ import isObj from 'lodash.isplainobject';
 var version = "1.11.0";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+const version$1 = version;
 
 function isEmpty(input) {
   let i;
@@ -61,4 +62,4 @@ function isEmpty(input) {
   return res;
 }
 
-export { isEmpty, version };
+export { isEmpty, version$1 as version };

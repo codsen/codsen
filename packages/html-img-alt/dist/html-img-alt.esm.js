@@ -14,6 +14,12 @@ import { checkTypesMini } from 'check-types-mini';
 
 var version = "1.5.3";
 
+const version$1 = version;
+
+function isObj(something) {
+  return something && typeof something === "object" && !Array.isArray(something);
+}
+
 function alts(str, originalOpts) {
   // validate
   // ================
@@ -21,7 +27,7 @@ function alts(str, originalOpts) {
     throw new TypeError(`html-img-alt/alts(): [THROW_ID_01] Input must be string! Currently its type is: ${typeof str}, equal to: ${JSON.stringify(str, null, 4)}`);
   }
 
-  if (originalOpts && Object.prototype.toString.call(originalOpts) !== "[object Object]") {
+  if (originalOpts && !isObj(originalOpts)) {
     throw new TypeError(`html-img-alt/alts(): [THROW_ID_02] Options object must be a plain object! Currently its type is: ${typeof originalOpts}, equal to: ${JSON.stringify(originalOpts, null, 4)}`);
   } // vars
   // ================
@@ -363,4 +369,4 @@ function alts(str, originalOpts) {
   return str;
 }
 
-export { alts, version };
+export { alts, version$1 as version };

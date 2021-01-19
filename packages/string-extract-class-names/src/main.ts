@@ -1,14 +1,16 @@
-/* eslint @typescript-eslint/ban-ts-comment:1 */
-
 import { left, right } from "string-left-right";
 import { Ranges } from "../../../scripts/common";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 interface Result {
   res: string[];
   ranges: Ranges;
 }
 
+/**
+ * Extracts CSS class/id names from a string
+ */
 function extract(str: string): Result {
   // insurance
   // =========
@@ -128,10 +130,8 @@ function extract(str: string): Result {
         selectorStartsAt = right(str, temp1);
         console.log(`123 SET selectorStartsAt = ${selectorStartsAt}`);
       } else if (
-        // @ts-ignore
-        `'"`.includes(str[right(str, temp1)]) &&
-        // @ts-ignore
-        isLatinLetter(str[right(str, right(str, temp1))])
+        `'"`.includes(str[right(str, temp1) as number]) &&
+        isLatinLetter(str[right(str, right(str, temp1) as number) as number])
       ) {
         selectorStartsAt = right(str, right(str, temp1));
         console.log(`129 SET selectorStartsAt = ${selectorStartsAt}`);
@@ -143,46 +143,24 @@ function extract(str: string): Result {
     const temp2 = right(str, i + 1);
     if (
       str.startsWith("id", i) &&
-      // @ts-ignore
-      str[left(str, i)] === "[" &&
-      // @ts-ignore
+      str[left(str, i) as number] === "[" &&
+      temp2 !== null &&
       str[temp2] === "="
     ) {
       console.log(`140 [id= caught`);
       // if it's zzz[id=something] (without quotes)
-      // @ts-ignore
-      if (isLatinLetter(str[right(str, temp2)])) {
+      if (isLatinLetter(str[right(str, temp2) as number])) {
         selectorStartsAt = right(str, temp2);
         console.log(`144 SET selectorStartsAt = ${selectorStartsAt}`);
       } else if (
-        // @ts-ignore
-        `'"`.includes(str[right(str, temp2)]) &&
-        // @ts-ignore
-        isLatinLetter(str[right(str, right(str, temp2))])
+        `'"`.includes(str[right(str, temp2) as number]) &&
+        isLatinLetter(str[right(str, right(str, temp2) as number) as number])
       ) {
         selectorStartsAt = right(str, right(str, temp2));
         console.log(`150 SET selectorStartsAt = ${selectorStartsAt}`);
       }
       stateCurrentlyIs = "#";
     }
-
-    // catch the end of input:
-    // if (i + 1 === len && selectorStartsAt !== null && i > selectorStartsAt) {
-    //   if (returnRangesInstead) {
-    //     result.push([selectorStartsAt, len]);
-    //     console.log(
-    //       `160 ${`\u001b[${33}m${`PUSH`}\u001b[${39}m`} [${selectorStartsAt}, ${len}] to result[]`
-    //     );
-    //   } else {
-    //     result.push(input.slice(selectorStartsAt, len));
-    //     console.log(
-    //       `165 ${`\u001b[${33}m${`PUSH`}\u001b[${39}m`} [${selectorStartsAt}, ${len}] = "${input.slice(
-    //         selectorStartsAt,
-    //         len
-    //       )}" to result[]`
-    //     );
-    //   }
-    // }
 
     console.log(
       `179 \u001b[${90}m${`ended with: selectorStartsAt = ${selectorStartsAt}; result = ${JSON.stringify(

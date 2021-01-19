@@ -1,6 +1,13 @@
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+
 import clone from "lodash.clonedeep";
 import isObj from "lodash.isplainobject";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
+
+interface Obj {
+  [key: string]: any;
+}
 
 type NextToken = [
   key: "string",
@@ -23,10 +30,10 @@ interface InnerObj {
 }
 
 type Callback = (
-  key?: string,
-  val?: any,
-  innerObj?: InnerObj,
-  stop?: { now: boolean }
+  key: string | Obj,
+  val: any,
+  innerObj: InnerObj,
+  stop: { now: boolean }
 ) => any;
 
 function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
@@ -200,7 +207,7 @@ function traverse(tree1: any, cb1: Callback, lookahead = 0): void {
         4
       )}`
     );
-    cb1(...currentElem);
+    (cb1 as any)(...currentElem);
   }
 
   // used to buffer "lookahead"-amount of results and report them as "future"

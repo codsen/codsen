@@ -13,6 +13,8 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var version = "1.5.0";
 
+var version$1 = version;
+
 function isStr(something) {
   return typeof something === "string";
 }
@@ -112,10 +114,10 @@ function cleanChangelogs(changelogContents) {
   }
 
   return {
-    version: version,
+    version: version$1,
     res: final || changelogContents
   };
 }
 
 exports.cleanChangelogs = cleanChangelogs;
-exports.version = version;
+exports.version = version$1;

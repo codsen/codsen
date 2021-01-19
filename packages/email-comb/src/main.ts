@@ -1570,7 +1570,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
               matchLeft(str, fromIndex, "{", {
                 trimBeforeMatching: true,
                 cb: (_char, _theRemainderOfTheString, index) => {
-                  tempFindingIndex = index;
+                  tempFindingIndex = index as number;
                   return true;
                 },
               })
@@ -1725,14 +1725,18 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
           cb: (char, _theRemainderOfTheString, index) => {
             // remove any whitespace after opening bracket of a body tag:
             if (round === 1) {
-              if (char !== undefined && (char.trim() === "" || char === ">")) {
+              if (
+                char !== undefined &&
+                (char.trim() === "" || char === ">") &&
+                typeof index === "number"
+              ) {
                 if (index - i > 5) {
                   console.log(
                     `1676 ${`\u001b[${33}m${`PUSH`}\u001b[${39}m`} [${i}, ${index}, "<body"]`
                   );
                   finalIndexesToDelete.push(i, index, "<body");
                   // remove the whitespace between < and body
-                  nonIndentationsWhitespaceLength += index - i - 5;
+                  nonIndentationsWhitespaceLength += (index as number) - i - 5;
                 } else {
                   // do nothing
                   return true;
@@ -3134,7 +3138,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
           matchRight(str, i, "<!--", {
             trimBeforeMatching: true,
             cb: (_char, _theRemainderOfTheString, index) => {
-              temp = index;
+              temp = index as number;
               return true;
             },
           })
@@ -3154,7 +3158,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
             matchRight(str, temp - 1, "-->", {
               trimBeforeMatching: true,
               cb: (_char, _theRemainderOfTheString, index) => {
-                temp = index;
+                temp = index as number;
                 return true;
               },
             })
@@ -3172,7 +3176,9 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
             );
           }
 
-          i = temp - 1;
+          if (typeof temp === "number") {
+            i = temp - 1;
+          }
           console.log(
             `3112 SET ${`\u001b[${33}m${`i`}\u001b[${39}m`} = ${JSON.stringify(
               i,

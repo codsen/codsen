@@ -1,4 +1,4 @@
-import { version } from "../package.json";
+declare const version: string;
 interface Stop {
     now: boolean;
 }
@@ -12,4 +12,5 @@ interface InnerObj {
 }
 declare type Callback = (key: string, val: any, innerObj: InnerObj, stop: Stop) => any;
 declare function traverse(tree1: any, cb1: Callback): any;
+
 export { traverse, version };

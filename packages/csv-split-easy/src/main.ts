@@ -1,6 +1,7 @@
 /* eslint no-param-reassign:0 */
 
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 import { remSep } from "string-remove-thousand-separators";
 
 interface Opts {
@@ -15,7 +16,7 @@ const defaults: Opts = {
   forceUKStyle: false,
 };
 
-function splitEasy(str: string, originalOpts?: Opts): string[][] {
+function splitEasy(str: string, originalOpts?: Partial<Opts>): string[][] {
   // traverse the string and push each column into array
   // when line break is detected, push what's gathered into main array
   let colStarts = 0;
@@ -37,7 +38,7 @@ function splitEasy(str: string, originalOpts?: Opts): string[][] {
   }
 
   // prep opts
-  const opts = { ...defaults, ...originalOpts };
+  const opts: Opts = { ...defaults, ...originalOpts };
 
   if (typeof str !== "string") {
     throw new TypeError(

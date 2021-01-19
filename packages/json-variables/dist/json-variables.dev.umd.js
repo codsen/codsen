@@ -2135,8 +2135,6 @@ function parent(str) {
   return null;
 }
 
-/* eslint @typescript-eslint/explicit-module-boundary-types:0 */
-
 function traverse(tree1, cb1) {
   var stop2 = {
     now: false
@@ -2638,9 +2636,8 @@ var objectPath = createCommonjsModule(function (module) {
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
  */
-// If a non-empty string is given, put it into an array.
-// If an empty string is given, return an empty array.
-// Bypass everything else.
+
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 function arrayiffy(something) {
   if (typeof something === "string") {
     if (something.length) {
@@ -2671,14 +2668,29 @@ var defaults = {
   maxMismatches: 0,
   firstMustMatch: false,
   lastMustMatch: false
+};
+
+var defaultGetNextIdx = function defaultGetNextIdx(index) {
+  return index + 1;
 }; // eslint-disable-next-line consistent-return
 
-function march(str, position, whatToMatchVal, opts, special, getNextIdx) {
+
+function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx) {
+  if (special === void 0) {
+    special = false;
+  }
+
+  if (getNextIdx === void 0) {
+    getNextIdx = defaultGetNextIdx;
+  }
+
   var whatToMatchValVal = typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal; // early ending case if matching EOL being at 0-th index:
 
-  if (position < 0 && special && whatToMatchValVal === "EOL") {
+  if (+position < 0 && special && whatToMatchValVal === "EOL") {
     return whatToMatchValVal;
   }
+
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
   if (position >= str.length && !special) {
     return false;
@@ -2864,7 +2876,12 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
 
   var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
-  opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching) || [];
+  if (typeof opts.trimCharsBeforeMatching === "string") {
+    // arrayiffy if needed:
+    opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching);
+  } // stringify all:
+
+
   opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(function (el) {
     return isStr(el) ? el : String(el);
   });
@@ -3297,7 +3314,7 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
         }
       }
 
-      if (matchedHeads) {
+      if (typeof matchedHeads === "string") {
         if (!oneHeadFound) {
           // res[0].push(i)
           tempResObj = {};
@@ -3333,7 +3350,7 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
         throw new TypeError("" + opts.source + (s ? ": [THROW_ID_20]" : "") + " When processing \"" + str + "\", we had \"opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder\" on. We found heads (" + heads[strictMatchingIndex] + ") but the tails the followed it were not of the same index, " + strictMatchingIndex + " (" + tails[strictMatchingIndex] + ") but " + temp + " (" + matchedTails + ").");
       }
 
-      if (matchedTails) {
+      if (typeof matchedTails === "string") {
         if (oneHeadFound) {
           tempResObj.tailsStartAt = i;
           tempResObj.tailsEndAt = i + matchedTails.length;
@@ -3371,7 +3388,6 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
  * License: MIT
  * Homepage: https://codsen.com/os/ast-get-values-by-key/
  */
-/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
 function getByKey(originalInput, whatToFind, originalReplacement) {
   var replacement;
@@ -3681,6 +3697,10 @@ function rMerge(arrOfRanges, originalOpts) {
     sortedRanges = rSort(filtered);
   }
 
+  if (!sortedRanges) {
+    return null;
+  }
+
   var len = sortedRanges.length - 1; // reset 80% of progress is this loop:
   // loop from the end:
 
@@ -3730,8 +3750,6 @@ function rMerge(arrOfRanges, originalOpts) {
   return sortedRanges.length ? sortedRanges : null;
 }
 
-/* eslint @typescript-eslint/ban-ts-comment:1, @typescript-eslint/explicit-module-boundary-types: 0, prefer-rest-params: 0 */
-
 function existy(x) {
   return x != null;
 }
@@ -3769,7 +3787,7 @@ var Ranges = /*#__PURE__*/function () {
 
 
     this.opts = opts;
-    this.ranges = null;
+    this.ranges = [];
   }
 
   var _proto = Ranges.prototype;
@@ -3790,7 +3808,7 @@ var Ranges = /*#__PURE__*/function () {
           })) {
             originalFrom.forEach(function (thing) {
               if (Array.isArray(thing)) {
-                // recursively feed this subarray, hopefully it's an array // @ts-ignore
+                // recursively feed this subarray, hopefully it's an array
                 _this.add.apply(_this, thing);
               } // just skip other cases
 
@@ -3799,7 +3817,7 @@ var Ranges = /*#__PURE__*/function () {
           }
 
           if (originalFrom.length && isNum(+originalFrom[0]) && isNum(+originalFrom[1])) {
-            // recursively pass in those values // @ts-ignore
+            // recursively pass in those values
             this.add.apply(this, originalFrom);
           }
         } // else,
@@ -3870,7 +3888,6 @@ var Ranges = /*#__PURE__*/function () {
   };
 
   _proto.push = function push(originalFrom, originalTo, addVal) {
-    // @ts-ignore
     this.add(originalFrom, originalTo, addVal);
   } // C U R R E N T () - kindof a getter
   // ==================================
@@ -3879,7 +3896,7 @@ var Ranges = /*#__PURE__*/function () {
   _proto.current = function current() {
     var _this2 = this;
 
-    if (this.ranges != null) {
+    if (Array.isArray(this.ranges) && this.ranges.length) {
       // beware, merging can return null
       this.ranges = rMerge(this.ranges, {
         mergeType: this.opts.mergeType
@@ -3904,7 +3921,7 @@ var Ranges = /*#__PURE__*/function () {
   ;
 
   _proto.wipe = function wipe() {
-    this.ranges = null;
+    this.ranges = [];
   } // R E P L A C E ()
   // ==========
   ;
@@ -3920,14 +3937,14 @@ var Ranges = /*#__PURE__*/function () {
         this.ranges = Array.from(givenRanges);
       }
     } else {
-      this.ranges = null;
+      this.ranges = [];
     }
   } // L A S T ()
   // ==========
   ;
 
   _proto.last = function last() {
-    if (this.ranges != null && Array.isArray(this.ranges)) {
+    if (Array.isArray(this.ranges) && this.ranges.length) {
       return this.ranges[this.ranges.length - 1];
     }
 
@@ -3945,7 +3962,6 @@ var Ranges = /*#__PURE__*/function () {
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/
  */
-/* eslint @typescript-eslint/ban-ts-comment:1 */
 
 function rApply(str, originalRangesArr, _progressFn) {
   var percentageDone = 0;
@@ -3976,8 +3992,8 @@ function rApply(str, originalRangesArr, _progressFn) {
 
   var rangesArr;
 
-  if (Array.isArray(originalRangesArr) && Number.isInteger(+originalRangesArr[0]) && +originalRangesArr[0] >= 0 && Number.isInteger(+originalRangesArr[1]) && +originalRangesArr[1] >= 0) {
-    // @ts-ignore
+  if (Array.isArray(originalRangesArr) && Number.isInteger(originalRangesArr[0]) && Number.isInteger(originalRangesArr[1])) {
+    // if single array was passed, wrap it into an array
     rangesArr = [Array.from(originalRangesArr)];
   } else {
     rangesArr = Array.from(originalRangesArr);
@@ -4167,12 +4183,7 @@ function trimSpaces(str, originalOpts) {
 
 function remDup(str, originalOpts) {
   //
-  var has = Object.prototype.hasOwnProperty;
-
-  function isStr(something) {
-    return typeof something === "string";
-  } // ===================== insurance =====================
-
+  var has = Object.prototype.hasOwnProperty; // ===================== insurance =====================
 
   if (str === undefined) {
     throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_01] The input is missing!");
@@ -4191,20 +4202,20 @@ function remDup(str, originalOpts) {
 
   if (clonedOriginalOpts && has.call(clonedOriginalOpts, "heads")) {
     if (!arrayiffy(clonedOriginalOpts.heads).every(function (val) {
-      return isStr(val);
+      return typeof val === "string" || Array.isArray(val);
     })) {
       throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_04] The opts.heads contains elements which are not string-type!");
-    } else if (isStr(clonedOriginalOpts.heads)) {
+    } else if (typeof clonedOriginalOpts.heads === "string") {
       clonedOriginalOpts.heads = arrayiffy(clonedOriginalOpts.heads);
     }
   }
 
   if (clonedOriginalOpts && has.call(clonedOriginalOpts, "tails")) {
     if (!arrayiffy(clonedOriginalOpts.tails).every(function (val) {
-      return isStr(val);
+      return typeof val === "string" || Array.isArray(val);
     })) {
       throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_05] The opts.tails contains elements which are not string-type!");
-    } else if (isStr(clonedOriginalOpts.tails)) {
+    } else if (typeof clonedOriginalOpts.tails === "string") {
       clonedOriginalOpts.tails = arrayiffy(clonedOriginalOpts.tails);
     }
   } // trim but only if it's not trimmable to zero length (in that case return intact)
@@ -4514,6 +4525,7 @@ function remDup(str, originalOpts) {
 
 var version = "9.0.3";
 
+var version$1 = version;
 var has = Object.prototype.hasOwnProperty;
 var defaults$6 = {
   heads: "%%_",
@@ -4954,7 +4966,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath) {
 
   var wholeValueIsVariable = false; // we'll reuse it for non-wrap heads/tails too
 
-  if (foundHeadsAndTails.length === 1 && rApply(string, [foundHeadsAndTails[0].headsStartAt, foundHeadsAndTails[0].tailsEndAt]).trim() === "") {
+  if (foundHeadsAndTails.length === 1 && rApply(string, [[foundHeadsAndTails[0].headsStartAt, foundHeadsAndTails[0].tailsEndAt]]).trim() === "") {
     wholeValueIsVariable = true;
   }
 
@@ -4980,7 +4992,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath) {
     throw new Error("json-variables/resolveString(): [THROW_ID_22] While trying to resolve string: \"" + string + "\" at path " + path + ", something wrong with no-wrap heads and no-wrap tails was detected! Here's the internal error message:\n" + error);
   }
 
-  if (foundHeadsAndTails.length === 1 && rApply(string, [foundHeadsAndTails[0].headsStartAt, foundHeadsAndTails[0].tailsEndAt]).trim() === "") {
+  if (foundHeadsAndTails.length === 1 && rApply(string, [[foundHeadsAndTails[0].headsStartAt, foundHeadsAndTails[0].tailsEndAt]]).trim() === "") {
     wholeValueIsVariable = true;
   }
 
@@ -5136,7 +5148,7 @@ function jVar(input, originalOpts) {
 
 exports.defaults = defaults$6;
 exports.jVar = jVar;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

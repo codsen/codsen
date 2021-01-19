@@ -9,6 +9,8 @@
 
 var version = "2.10.0";
 
+const version$1 = version;
+
 function isObj(something) {
   return something && typeof something === "object" && !Array.isArray(something);
 }
@@ -88,4 +90,4 @@ function noNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
   }).res;
 }
 
-export { noNewKeys, version };
+export { noNewKeys, version$1 as version };

@@ -1,4 +1,4 @@
-import { version } from "../package.json";
+declare const version: string;
 interface Obj {
     [key: string]: any;
 }
@@ -21,5 +21,6 @@ interface Opts {
     allowUnresolved: boolean;
 }
 declare const defaults: Opts;
-declare function jVar(input: Obj, originalOpts?: Opts): Obj;
-export { jVar, defaults, version };
+declare function jVar(input: Obj, originalOpts?: Partial<Opts>): Obj;
+
+export { defaults, jVar, version };

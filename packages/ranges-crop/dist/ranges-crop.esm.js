@@ -11,6 +11,8 @@ import { rMerge } from 'ranges-merge';
 
 var version = "3.0.2";
 
+const version$1 = version;
+
 function rCrop(arrOfRanges, strLen) {
   if (arrOfRanges === null) {
     return null;
@@ -71,4 +73,4 @@ function rCrop(arrOfRanges, strLen) {
   return res === [] ? null : res;
 }
 
-export { rCrop, version };
+export { rCrop, version$1 as version };

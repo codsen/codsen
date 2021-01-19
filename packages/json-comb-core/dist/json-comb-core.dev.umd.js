@@ -6168,7 +6168,6 @@ function includesWithGlob(originalInput, stringToFind, originalOpts) {
  * License: MIT
  * Homepage: https://codsen.com/os/util-nonempty/
  */
-/* eslint @typescript-eslint/no-explicit-any:0, @typescript-eslint/explicit-module-boundary-types:0 */
 
 function nonEmpty(input) {
   // deliberate ==, catches undefined and null
@@ -6186,9 +6185,6 @@ function nonEmpty(input) {
 
   return typeof input === "number";
 }
-
-/* eslint max-len:0, no-prototype-builtins:0, @typescript-eslint/ban-types: 0, @typescript-eslint/explicit-module-boundary-types: 0 */
-// F U N C T I O N S
 
 function isStr(something) {
   return typeof something === "string";
@@ -6823,9 +6819,8 @@ function externalApi(input1orig, input2orig, originalOpts) {
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
  */
-// If a non-empty string is given, put it into an array.
-// If an empty string is given, return an empty array.
-// Bypass everything else.
+
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 function arrayiffy(something) {
   if (typeof something === "string") {
     if (something.length) {
@@ -8760,7 +8755,6 @@ var lodash_isequal = createCommonjsModule(function (module, exports) {
   module.exports = isEqual;
 });
 
-/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 // -----------------------------------------------------------------------------
 
 function allValuesEqualTo(input, value, opts) {
@@ -8973,7 +8967,6 @@ function fillMissing(originalIncompleteWrapper, originalSchemaWrapper, originalO
  * License: MIT
  * Homepage: https://codsen.com/os/object-set-all-values-to/
  */
-/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
 function setAllValuesTo(inputOriginal, valueOriginal) {
   var value;
@@ -9820,6 +9813,8 @@ pOne_1.default = _default$2;
 
 var version = "6.7.1";
 
+var version$1 = version;
+
 function existy$1(x) {
   return x != null;
 }
@@ -10236,7 +10231,7 @@ exports.getKeyset = getKeyset;
 exports.getKeysetSync = getKeysetSync;
 exports.noNewKeysSync = noNewKeysSync;
 exports.sortAllObjectsSync = sortAllObjectsSync;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

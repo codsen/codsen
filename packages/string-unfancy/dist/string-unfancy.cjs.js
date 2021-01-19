@@ -20,6 +20,7 @@ var he__default = /*#__PURE__*/_interopDefaultLegacy(he);
 var version = "3.10.1";
 
 /* eslint quote-props:0 */
+var version$1 = version;
 
 function existy(x) {
   return x != null;
@@ -76,4 +77,4 @@ function unfancy(str) {
 }
 
 exports.unfancy = unfancy;
-exports.version = version;
+exports.version = version$1;

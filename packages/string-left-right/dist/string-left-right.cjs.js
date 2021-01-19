@@ -23,6 +23,7 @@ var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 
 var version = "3.0.1";
 
+var version$1 = version;
 var RAWNBSP = "\xA0"; // separates the value from flags
 
 function x(something) {
@@ -129,6 +130,10 @@ function rightMain(_ref) {
 }
 
 function right(str, idx) {
+  if (idx === void 0) {
+    idx = 0;
+  }
+
   return rightMain({
     str: str,
     idx: idx,
@@ -237,6 +242,10 @@ function leftMain(_ref2) {
 }
 
 function left(str, idx) {
+  if (idx === void 0) {
+    idx = 0;
+  }
+
   return leftMain({
     str: str,
     idx: idx,
@@ -755,4 +764,4 @@ exports.right = right;
 exports.rightSeq = rightSeq;
 exports.rightStopAtNewLines = rightStopAtNewLines;
 exports.rightStopAtRawNbsp = rightStopAtRawNbsp;
-exports.version = version;
+exports.version = version$1;

@@ -3,7 +3,8 @@
 import { rApply } from "ranges-apply";
 import { Ranges } from "ranges-push";
 import { right } from "string-left-right";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 import { Range, Ranges as RangesType } from "../../../scripts/common";
 
 interface Extras {

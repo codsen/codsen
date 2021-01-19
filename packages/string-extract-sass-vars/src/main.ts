@@ -1,4 +1,5 @@
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 // Takes string, SASS variables file and extracts the plain object of variables: key-value pairs
 // As a bonus, it turns digit-only value strings into numbers.
@@ -17,7 +18,10 @@ const defaults: Opts = {
   cb: null,
 };
 
-function extractVars(str: string, originalOpts?: Opts): UnknownValueObj {
+function extractVars(
+  str: string,
+  originalOpts?: Partial<Opts>
+): UnknownValueObj {
   if (typeof str !== "string") {
     return {};
   }
@@ -30,7 +34,7 @@ function extractVars(str: string, originalOpts?: Opts): UnknownValueObj {
       )} (type ${typeof originalOpts})`
     );
   }
-  const opts = { ...defaults, ...originalOpts };
+  const opts: Opts = { ...defaults, ...originalOpts };
   console.log(
     `025 ${`\u001b[${33}m${`opts`}\u001b[${39}m`}: ${JSON.stringify(
       opts,

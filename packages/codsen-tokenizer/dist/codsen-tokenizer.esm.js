@@ -1255,7 +1255,7 @@ function tokenizer(str, originalOpts) {
         //                 ^
         //          we're here
         //
-        token.queryEndsAt = left(str, i + 1);
+        token.queryEndsAt = left(str, i + 1) || 0;
       }
 
       if (token.queryStartsAt && token.queryEndsAt) {

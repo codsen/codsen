@@ -2,13 +2,20 @@ import { unfancy } from "string-unfancy";
 import { rApply } from "ranges-apply";
 import { Ranges } from "ranges-push";
 import { checkTypesMini } from "check-types-mini";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 interface Opts {
   unfancyTheAltContents: boolean;
 }
 
-function alts(str: string, originalOpts?: Opts): string {
+function isObj(something: any): boolean {
+  return (
+    something && typeof something === "object" && !Array.isArray(something)
+  );
+}
+
+function alts(str: string, originalOpts?: Partial<Opts>): string {
   // validate
   // ================
   if (typeof str !== "string") {
@@ -20,10 +27,7 @@ function alts(str: string, originalOpts?: Opts): string {
       )}`
     );
   }
-  if (
-    originalOpts &&
-    Object.prototype.toString.call(originalOpts) !== "[object Object]"
-  ) {
+  if (originalOpts && !isObj(originalOpts)) {
     throw new TypeError(
       `html-img-alt/alts(): [THROW_ID_02] Options object must be a plain object! Currently its type is: ${typeof originalOpts}, equal to: ${JSON.stringify(
         originalOpts,
@@ -65,7 +69,7 @@ function alts(str: string, originalOpts?: Opts): string {
   const defaults = {
     unfancyTheAltContents: true,
   };
-  const opts = { ...defaults, ...originalOpts };
+  const opts: Opts = { ...defaults, ...originalOpts };
   checkTypesMini(opts, defaults, { msg: "html-img-alt/alts(): [THROW_ID_03]" });
 
   // traverse the string

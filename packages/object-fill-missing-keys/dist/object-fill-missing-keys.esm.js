@@ -15,6 +15,7 @@ import isObj from 'lodash.isplainobject';
 
 var version = "7.11.1";
 
+const version$1 = version;
 const defaults = {
   placeholder: false,
   doNotFillThesePathsIfTheyContainPlaceholders: [],
@@ -143,4 +144,4 @@ function fillMissing(originalIncompleteWrapper, originalSchemaWrapper, originalO
   return fillMissingKeys(clone(originalIncompleteWrapper), clone(originalSchemaWrapper), opts);
 }
 
-export { fillMissing, version };
+export { fillMissing, version$1 as version };

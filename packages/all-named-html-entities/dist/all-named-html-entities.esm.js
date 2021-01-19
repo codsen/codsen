@@ -8110,6 +8110,7 @@ var uncertainJson = {
   zeta: zeta$1
 };
 
+const version$1 = version;
 const allNamedEntities = allNamedEntitiesJson;
 const brokenNamedEntities = brokenNamedEntitiesJson;
 const entStartsWith = entStartsWithJson;
@@ -8212,4 +8213,4 @@ function decode(ent) {
 const minLength = 2;
 const maxLength = 31; // -----------------------------------------------------------------------------
 
-export { allNamedEntities, allNamedEntitiesSetOnly, allNamedEntitiesSetOnlyCaseInsensitive, brokenNamedEntities, decode, entEndsWith, entEndsWithCaseInsensitive, entStartsWith, entStartsWithCaseInsensitive, maxLength, minLength, uncertain, version };
+export { allNamedEntities, allNamedEntitiesSetOnly, allNamedEntitiesSetOnlyCaseInsensitive, brokenNamedEntities, decode, entEndsWith, entEndsWithCaseInsensitive, entStartsWith, entStartsWithCaseInsensitive, maxLength, minLength, uncertain, version$1 as version };

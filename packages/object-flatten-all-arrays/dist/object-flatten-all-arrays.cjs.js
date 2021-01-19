@@ -25,6 +25,8 @@ var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
 var version = "4.9.1";
 
+var version$1 = version;
+
 function flattenAllArrays(originalIncommingObj, originalOpts) {
   //
   // internal functions
@@ -97,4 +99,4 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
 }
 
 exports.flattenAllArrays = flattenAllArrays;
-exports.version = version;
+exports.version = version$1;

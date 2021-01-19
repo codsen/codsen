@@ -15,6 +15,7 @@ import { right, left } from 'string-left-right';
 
 var version = "3.0.3";
 
+const version$1 = version;
 const finalIndexesToDelete = new Ranges({
   limitToBeAddedWhitespace: true
 });
@@ -934,4 +935,4 @@ function crush(str, originalOpts) {
   };
 }
 
-export { crush, defaults, version };
+export { crush, defaults, version$1 as version };

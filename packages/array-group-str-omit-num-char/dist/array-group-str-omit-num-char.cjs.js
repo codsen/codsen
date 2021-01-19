@@ -22,6 +22,7 @@ var uniq__default = /*#__PURE__*/_interopDefaultLegacy(uniq);
 
 var version = "3.0.3";
 
+var version$1 = version;
 var defaults = {
   wildcard: "*",
   dedupePlease: true
@@ -129,4 +130,4 @@ function groupStr(originalArr, originalOpts) {
 }
 
 exports.groupStr = groupStr;
-exports.version = version;
+exports.version = version$1;

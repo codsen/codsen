@@ -2498,6 +2498,10 @@ function rightMain(_ref) {
 }
 
 function right(str, idx) {
+  if (idx === void 0) {
+    idx = 0;
+  }
+
   return rightMain({
     str: str,
     idx: idx,
@@ -2588,6 +2592,10 @@ function leftMain(_ref2) {
 }
 
 function left(str, idx) {
+  if (idx === void 0) {
+    idx = 0;
+  }
+
   return leftMain({
     str: str,
     idx: idx,
@@ -4003,11 +4011,11 @@ function expander(originalOpts) {
     throw new Error("string-range-expander: [THROW_ID_04] The input's \"to\" value opts.to, is not a number! Currently it's given as " + typeof originalOpts.to + ", equal to " + JSON.stringify(originalOpts.to, null, 0));
   }
 
-  if (!originalOpts.str[originalOpts.from] && originalOpts.from !== originalOpts.to) {
+  if (originalOpts && originalOpts.str && !originalOpts.str[originalOpts.from] && originalOpts.from !== originalOpts.to) {
     throw new Error("string-range-expander: [THROW_ID_05] The given input string opts.str (\"" + originalOpts.str + "\") must contain the character at index \"from\" (\"" + originalOpts.from + "\")");
   }
 
-  if (!originalOpts.str[originalOpts.to - 1]) {
+  if (originalOpts && originalOpts.str && !originalOpts.str[originalOpts.to - 1]) {
     throw new Error("string-range-expander: [THROW_ID_06] The given input string, opts.str (\"" + originalOpts.str + "\") must contain the character at index before \"to\" (\"" + (originalOpts.to - 1) + "\")");
   }
 
@@ -8037,7 +8045,7 @@ function comb(str, originalOpts) {
         cb: function cb(char, _theRemainderOfTheString, index) {
           // remove any whitespace after opening bracket of a body tag:
           if (round === 1) {
-            if (char !== undefined && (char.trim() === "" || char === ">")) {
+            if (char !== undefined && (char.trim() === "" || char === ">") && typeof index === "number") {
               if (index - _i > 5) {
                 finalIndexesToDelete.push(_i, index, "<body"); // remove the whitespace between < and body
 
@@ -8815,7 +8823,9 @@ function comb(str, originalOpts) {
             }
           })) ;
 
-          _i = _temp3 - 1;
+          if (typeof _temp3 === "number") {
+            _i = _temp3 - 1;
+          }
           i = _i;
           return "continue";
         }

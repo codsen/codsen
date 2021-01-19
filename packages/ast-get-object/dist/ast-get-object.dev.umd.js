@@ -2536,8 +2536,6 @@ function parent(str) {
   return null;
 }
 
-/* eslint @typescript-eslint/explicit-module-boundary-types:0 */
-
 function traverse(tree1, cb1) {
   var stop2 = {
     now: false
@@ -2946,6 +2944,7 @@ function compare(b, s, originalOpts) {
 var version = "1.10.1";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+var version$1 = version; // ===================================
 // F U N C T I O N S
 
 function existy(x) {
@@ -3059,7 +3058,7 @@ function getObj(originalAst, keyValPair, replacementContentsArr) {
 }
 
 exports.getObj = getObj;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

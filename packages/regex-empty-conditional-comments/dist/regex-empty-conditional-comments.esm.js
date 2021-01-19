@@ -9,8 +9,10 @@
 
 var version = "1.9.1";
 
+const version$1 = version;
+
 function emptyCondCommentRegex() {
   return /<!(--)?\[if[^\]]*]>[<>!-\s]*<!\[endif\]\1>/gi;
 }
 
-export { emptyCondCommentRegex, version };
+export { emptyCondCommentRegex, version$1 as version };

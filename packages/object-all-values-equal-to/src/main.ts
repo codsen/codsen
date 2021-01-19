@@ -2,7 +2,8 @@
 
 import isObj from "lodash.isplainobject";
 import isEq from "lodash.isequal";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 interface Opts {
   arraysMustNotContainPlaceholders: boolean;
@@ -54,7 +55,7 @@ function allValuesEqualTo(input: any, value: any, opts: Opts): boolean {
 function allEq(
   inputOriginal: any,
   valueOriginal: any,
-  originalOpts?: Opts
+  originalOpts?: Partial<Opts>
 ): boolean {
   // precautions:
   if (inputOriginal === undefined) {

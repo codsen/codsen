@@ -25,6 +25,7 @@ var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
 var version = "1.10.1";
 
+var version$1 = version;
 var defaults = {
   matchKeysStrictly: false,
   hungryForWhitespace: false
@@ -79,4 +80,4 @@ function deleteObj(originalInput, objToDelete, originalOpts) {
 
 exports.defaults = defaults;
 exports.deleteObj = deleteObj;
-exports.version = version;
+exports.version = version$1;

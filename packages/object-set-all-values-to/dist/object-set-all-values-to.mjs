@@ -7,4 +7,4 @@
  * Homepage: https://codsen.com/os/object-set-all-values-to/
  */
 
-import r from"lodash.clonedeep";import a from"lodash.isplainobject";var o="3.10.1";function e(o,t){let i;const s=r(o);return i=!(arguments.length<2)&&(a(t)||Array.isArray(t)?r(t):t),Array.isArray(s)?s.forEach(((r,o)=>{(a(s[o])||Array.isArray(s[o]))&&(s[o]=e(s[o],i))})):a(s)&&Object.keys(s).forEach((r=>{s[r]=Array.isArray(s[r])||a(s[r])?e(s[r],i):i})),s}export{e as setAllValuesTo,o as version};
+import r from"lodash.clonedeep";import o from"lodash.isplainobject";const a="3.10.1";function s(a,e){let t;const i=r(a);return t=!(arguments.length<2)&&(o(e)||Array.isArray(e)?r(e):e),Array.isArray(i)?i.forEach(((r,a)=>{(o(i[a])||Array.isArray(i[a]))&&(i[a]=s(i[a],t))})):o(i)&&Object.keys(i).forEach((r=>{i[r]=Array.isArray(i[r])||o(i[r])?s(i[r],t):t})),i}export{s as setAllValuesTo,a as version};

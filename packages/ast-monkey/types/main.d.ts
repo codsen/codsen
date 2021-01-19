@@ -1,6 +1,11 @@
-import { traverse } from "ast-monkey-traverse";
-import { JsonValue } from "type-fest";
-import { version } from "../package.json";
+export { traverse } from 'ast-monkey-traverse';
+
+declare const version: string;
+declare type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
+declare type JsonObject = {
+    [Key in string]?: JsonValue;
+};
+declare type JsonArray = Array<JsonValue>;
 interface Finding {
     index: number;
     key: string;
@@ -37,4 +42,5 @@ interface DelOpts {
 }
 declare function del(input: JsonValue, originalOpts: DelOpts): JsonValue;
 declare function arrayFirstOnly(input: JsonValue): JsonValue;
-export { find, get, set, drop, del, arrayFirstOnly, traverse, version };
+
+export { arrayFirstOnly, del, drop, find, get, set, version };

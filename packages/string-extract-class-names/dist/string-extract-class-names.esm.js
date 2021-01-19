@@ -1,6 +1,6 @@
 /**
  * string-extract-class-names
- * Extract class (or id) name from a string
+ * Extracts CSS class/id names from a string
  * Version: 5.10.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
@@ -11,7 +11,10 @@ import { right, left } from 'string-left-right';
 
 var version = "5.10.1";
 
-/* eslint @typescript-eslint/ban-ts-comment:1 */
+const version$1 = version;
+/**
+ * Extracts CSS class/id names from a string
+ */
 
 function extract(str) {
   // insurance
@@ -78,9 +81,7 @@ function extract(str) {
 
       if (right(str, temp1) && isLatinLetter(str[right(str, temp1)])) {
         selectorStartsAt = right(str, temp1);
-      } else if ( // @ts-ignore
-      `'"`.includes(str[right(str, temp1)]) && // @ts-ignore
-      isLatinLetter(str[right(str, right(str, temp1))])) {
+      } else if (`'"`.includes(str[right(str, temp1)]) && isLatinLetter(str[right(str, right(str, temp1))])) {
         selectorStartsAt = right(str, right(str, temp1));
       }
 
@@ -90,37 +91,16 @@ function extract(str) {
 
     const temp2 = right(str, i + 1);
 
-    if (str.startsWith("id", i) && // @ts-ignore
-    str[left(str, i)] === "[" && // @ts-ignore
-    str[temp2] === "=") { // if it's zzz[id=something] (without quotes)
-      // @ts-ignore
+    if (str.startsWith("id", i) && str[left(str, i)] === "[" && temp2 !== null && str[temp2] === "=") { // if it's zzz[id=something] (without quotes)
 
       if (isLatinLetter(str[right(str, temp2)])) {
         selectorStartsAt = right(str, temp2);
-      } else if ( // @ts-ignore
-      `'"`.includes(str[right(str, temp2)]) && // @ts-ignore
-      isLatinLetter(str[right(str, right(str, temp2))])) {
+      } else if (`'"`.includes(str[right(str, temp2)]) && isLatinLetter(str[right(str, right(str, temp2))])) {
         selectorStartsAt = right(str, right(str, temp2));
       }
 
       stateCurrentlyIs = "#";
-    } // catch the end of input:
-    // if (i + 1 === len && selectorStartsAt !== null && i > selectorStartsAt) {
-    //   if (returnRangesInstead) {
-    //     result.push([selectorStartsAt, len]);
-    //     console.log(
-    //       `160 ${`\u001b[${33}m${`PUSH`}\u001b[${39}m`} [${selectorStartsAt}, ${len}] to result[]`
-    //     );
-    //   } else {
-    //     result.push(input.slice(selectorStartsAt, len));
-    //     console.log(
-    //       `165 ${`\u001b[${33}m${`PUSH`}\u001b[${39}m`} [${selectorStartsAt}, ${len}] = "${input.slice(
-    //         selectorStartsAt,
-    //         len
-    //       )}" to result[]`
-    //     );
-    //   }
-    // }
+    }
   } // absence of ranges is falsy "null", not truthy empty array, so
   // if nothing was extracted and empty array is in result.ranges,
   // overwrite it to falsy "null"
@@ -133,4 +113,4 @@ function extract(str) {
   return result;
 }
 
-export { extract, version };
+export { extract, version$1 as version };

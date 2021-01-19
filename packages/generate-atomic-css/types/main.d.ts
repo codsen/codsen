@@ -1,5 +1,13 @@
-import { version } from "../package.json";
-import { extractFromToSource, headsAndTails } from "./util";
+declare const headsAndTails: {
+    CONFIGHEAD: string;
+    CONFIGTAIL: string;
+    CONTENTHEAD: string;
+    CONTENTTAIL: string;
+};
+declare function extractFromToSource(str: string, fromDefault?: number, toDefault?: number): [from: number, to: number, source: string];
+
+declare const version: string;
+
 interface Opts {
     includeConfig: boolean;
     includeHeadsAndTails: boolean;
@@ -16,4 +24,5 @@ declare function genAtomic(str: string, originalOpts?: Opts): {
     };
     result: string;
 };
-export { genAtomic, defaults, version, headsAndTails, extractFromToSource };
+
+export { defaults, extractFromToSource, genAtomic, headsAndTails, version };

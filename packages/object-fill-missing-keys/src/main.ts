@@ -3,7 +3,8 @@ import { mergeAdvanced } from "object-merge-advanced";
 import { arrayiffy } from "arrayiffy-if-string";
 import { allEq } from "object-all-values-equal-to";
 import isObj from "lodash.isplainobject";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 interface Obj {
   [key: string]: any;
@@ -169,7 +170,7 @@ function fillMissing(
   const opts = { ...defaults, ...(originalOptsWrapper || {}) };
 
   opts.doNotFillThesePathsIfTheyContainPlaceholders = arrayiffy(
-    opts.doNotFillThesePathsIfTheyContainPlaceholders
+    opts.doNotFillThesePathsIfTheyContainPlaceholders as any
   );
 
   let culpritsVal = null;

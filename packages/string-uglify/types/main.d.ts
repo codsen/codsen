@@ -1,4 +1,5 @@
-import { version } from "../package.json";
+declare const version: string;
 declare function uglifyArr(arr: string[]): string[];
 declare function uglifyById(refArr: string[], idNum: number): string;
-export { uglifyById, uglifyArr, version };
+
+export { uglifyArr, uglifyById, version };

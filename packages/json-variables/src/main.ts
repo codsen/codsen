@@ -10,7 +10,8 @@ import { Ranges } from "ranges-push";
 import { rApply } from "ranges-apply";
 import { remDup } from "string-remove-duplicate-heads-tails";
 import { matchLeftIncl, matchRightIncl } from "string-match-left-right";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 const has = Object.prototype.hasOwnProperty;
 
@@ -169,7 +170,7 @@ function removeWrappingHeadsAndTails(
     matchLeftIncl(str, str.length - 1, tails, {
       trimBeforeMatching: true,
       cb: (_c, _t, index) => {
-        tempTo = index + 1;
+        tempTo = (index as any) + 1;
         return true;
       },
     })
@@ -742,8 +743,7 @@ function resolveString(
   if (
     foundHeadsAndTails.length === 1 &&
     rApply(string, [
-      foundHeadsAndTails[0].headsStartAt,
-      foundHeadsAndTails[0].tailsEndAt,
+      [foundHeadsAndTails[0].headsStartAt, foundHeadsAndTails[0].tailsEndAt],
     ]).trim() === ""
   ) {
     wholeValueIsVariable = true;
@@ -783,8 +783,7 @@ function resolveString(
   if (
     foundHeadsAndTails.length === 1 &&
     rApply(string, [
-      foundHeadsAndTails[0].headsStartAt,
-      foundHeadsAndTails[0].tailsEndAt,
+      [foundHeadsAndTails[0].headsStartAt, foundHeadsAndTails[0].tailsEndAt],
     ]).trim() === ""
   ) {
     wholeValueIsVariable = true;
@@ -831,7 +830,7 @@ function resolveString(
 //                         M A I N   F U N C T I O N
 // -----------------------------------------------------------------------------
 
-function jVar(input: Obj, originalOpts?: Opts): Obj {
+function jVar(input: Obj, originalOpts?: Partial<Opts>): Obj {
   if (!arguments.length) {
     throw new Error(
       "json-variables/jVar(): [THROW_ID_01] Alas! Inputs are missing!"
@@ -851,7 +850,7 @@ function jVar(input: Obj, originalOpts?: Opts): Obj {
       }`
     );
   }
-  const opts = { ...defaults, ...originalOpts };
+  const opts: Opts = { ...defaults, ...originalOpts };
 
   if (!opts.dontWrapVars) {
     opts.dontWrapVars = [];

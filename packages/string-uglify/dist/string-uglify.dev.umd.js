@@ -15,6 +15,8 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 
 var version = "1.3.4";
 
+var version$1 = version; // tells code point of a given id number
+
 function tellcp(str, idNum) {
   if (idNum === void 0) {
     idNum = 0;
@@ -245,7 +247,7 @@ function uglifyById(refArr, idNum) {
 
 exports.uglifyArr = uglifyArr;
 exports.uglifyById = uglifyById;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

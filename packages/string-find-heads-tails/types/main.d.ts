@@ -1,4 +1,4 @@
-import { version } from "../package.json";
+declare const version: string;
 interface Opts {
     fromIndex?: number;
     throwWhenSomethingWrongIsDetected?: boolean;
@@ -22,4 +22,5 @@ interface ResObj {
     tailsEndAt: number;
 }
 declare function strFindHeadsTails(str: string, heads: string | string[], tails: string | string[], originalOpts?: Opts): ResObj[];
-export { strFindHeadsTails, defaults, version };
+
+export { defaults, strFindHeadsTails, version };

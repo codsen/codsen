@@ -7,4 +7,4 @@
  * Homepage: https://codsen.com/os/bitbucket-slug/
  */
 
-import e from"lodash.deburr";function r(r){return"string"!=typeof r?"":"markdown-header-"+e(r).replace(/\]\((.*?)\)/g,"").replace(/ [-]+ /gi," ").replace(/[^\w\d\s-]/g,"").replace(/\s+/g," ").toLowerCase().trim().replace(/ /g,"-")}export{r as bSlug};
+import e from"lodash.deburr";function r(r){return"string"!=typeof r?"":`markdown-header-${e(r).replace(/\]\((.*?)\)/g,"").replace(/ [-]+ /gi," ").replace(/[^\w\d\s-]/g,"").replace(/\s+/g," ").toLowerCase().trim().replace(/ /g,"-")}`}export{r as bSlug};

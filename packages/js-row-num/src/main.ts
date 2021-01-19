@@ -1,16 +1,17 @@
 import { Ranges } from "ranges-push";
 import { rApply } from "ranges-apply";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 import { Ranges as RangesType } from "../../../scripts/common";
 
 const BACKSLASH = `\u005C`;
 
 interface Opts {
-  padStart?: number;
-  overrideRowNum?: null | number;
-  returnRangesOnly?: boolean;
-  triggerKeywords?: string[];
-  extractedLogContentsWereGiven?: boolean;
+  padStart: number;
+  overrideRowNum: null | number;
+  returnRangesOnly: boolean;
+  triggerKeywords: string[];
+  extractedLogContentsWereGiven: boolean;
 }
 
 const defaults: Opts = {
@@ -21,7 +22,10 @@ const defaults: Opts = {
   extractedLogContentsWereGiven: false,
 };
 
-function fixRowNums(str: string, originalOpts?: Opts): string | RangesType {
+function fixRowNums(
+  str: string,
+  originalOpts?: Partial<Opts>
+): string | RangesType {
   console.log(
     `008 ${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} = ${JSON.stringify(
       originalOpts,
@@ -44,7 +48,7 @@ function fixRowNums(str: string, originalOpts?: Opts): string | RangesType {
     );
   }
 
-  const opts = { ...defaults, ...originalOpts };
+  const opts: Opts = { ...defaults, ...originalOpts };
 
   if (
     !opts.padStart ||

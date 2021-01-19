@@ -9,6 +9,7 @@
 
 var version = "1.2.1";
 
+const version$1 = version;
 const defaults = {
   targetJSON: false
 };
@@ -63,4 +64,4 @@ function helga(str, originalOpts) {
   };
 }
 
-export { defaults, helga, version };
+export { defaults, helga, version$1 as version };

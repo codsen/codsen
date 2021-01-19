@@ -29,6 +29,7 @@ var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
 var version = "10.12.1";
 
+var version$1 = version;
 // F U N C T I O N S
 
 function isStr(something) {
@@ -657,4 +658,4 @@ function externalApi(input1orig, input2orig, originalOpts) {
 
 exports.defaults = defaults;
 exports.mergeAdvanced = externalApi;
-exports.version = version;
+exports.version = version$1;

@@ -23,6 +23,8 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
 var version = "7.12.1";
 
+var version$1 = version;
+
 function existy(x) {
   return x != null;
 }
@@ -342,4 +344,4 @@ exports.drop = drop;
 exports.find = find;
 exports.get = get;
 exports.set = set;
-exports.version = version;
+exports.version = version$1;

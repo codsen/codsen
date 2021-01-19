@@ -5,20 +5,27 @@ import { tokenizer } from "codsen-tokenizer";
 import op from "object-path";
 import { version as v } from "../package.json";
 const version: string = v;
-import { Token } from "../../codsen-tokenizer/src/util/util";
+import { Token, CharCb } from "../../codsen-tokenizer/src/util/util";
+import { ErrorObj } from "../../emlint/src/util/commonTypes";
 
 interface IdxRangeObj {
   idxFrom: number;
   idxTo: number;
 }
 
+interface SupplementedErrorObj extends ErrorObj {
+  tokenObj: Token;
+}
+
+type ErrCb = (obj: Partial<SupplementedErrorObj>) => void;
+
 interface Opts {
   reportProgressFunc: null | ((percDone: number) => void);
   reportProgressFuncFrom: number;
   reportProgressFuncTo: number;
-  tagCb: null;
-  charCb: null;
-  errCb: null;
+  tagCb: null | ((obj: Token) => void);
+  charCb: null | CharCb;
+  errCb: null | ErrCb;
 }
 
 const defaults: Opts = {
@@ -460,7 +467,7 @@ function cparser(str: string, originalOpts?: Partial<Opts>): any[] {
                       : ""
                   }-missing-closing`
                 );
-                (opts.errCb as any)({
+                opts.errCb({
                   ruleId: `${lastLayersToken.type}${
                     lastLayersToken.type === "comment"
                       ? `-${lastLayersToken.kind}`

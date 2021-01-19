@@ -23,6 +23,7 @@ var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 var version = "2.8.1";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+var version$1 = version;
 
 function getByKey(originalInput, whatToFind, originalReplacement) {
   var replacement;
@@ -54,4 +55,4 @@ function getByKey(originalInput, whatToFind, originalReplacement) {
 }
 
 exports.getByKey = getByKey;
-exports.version = version;
+exports.version = version$1;

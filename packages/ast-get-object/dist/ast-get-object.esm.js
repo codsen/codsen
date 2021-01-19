@@ -14,6 +14,7 @@ import { compare } from 'ast-compare';
 var version = "1.10.1";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+const version$1 = version; // ===================================
 // F U N C T I O N S
 
 function existy(x) {
@@ -122,4 +123,4 @@ function getObj(originalAst, keyValPair, replacementContentsArr) {
   return internalApi(originalAst, keyValPair, replacementContentsArr);
 }
 
-export { getObj, version };
+export { getObj, version$1 as version };

@@ -1,5 +1,11 @@
-import { JsonValue } from "type-fest";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
+
+/* eslint no-use-before-define: 0 */
+// From "type-fest" by Sindre Sorhus:
+type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
+type JsonObject = { [Key in string]?: JsonValue };
+type JsonArray = Array<JsonValue>;
 
 interface Obj {
   [key: string]: any;
@@ -18,8 +24,8 @@ interface Opts {
 function noNewKeys(
   inputOuter: JsonValue,
   referenceOuter: JsonValue,
-  originalOptsOuter: Opts
-): JsonValue {
+  originalOptsOuter?: Opts
+): any {
   if (originalOptsOuter && !isObj(originalOptsOuter)) {
     throw new TypeError(
       `object-no-new-keys/noNewKeys(): [THROW_ID_02] opts should be a plain object. It was given as ${JSON.stringify(
@@ -47,7 +53,7 @@ function noNewKeys(
   function objectNoNewKeysInternal(
     input: any,
     reference: any,
-    opts: Opts,
+    opts: Obj,
     innerVar: any
   ): any {
     let temp;

@@ -64,6 +64,7 @@ function _objectSpread2(target) {
 
 var version = "2.0.2";
 
+var version$1 = version; // Reference used:
 // https://en.wikipedia.org/wiki/Uniform_Resource_Identifier#URI_references
 
 var BACKSLASH = "\\"; // retrieved 2020-Jan-11
@@ -86,13 +87,8 @@ function isRel(str, originalOpts) {
     flagUpUrisWithSchemes: true,
     offset: 0
   };
-  var opts;
 
-  if (originalOpts) {
-    opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
-  } else {
-    opts = _objectSpread2({}, defaults);
-  }
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
   if (opts.offset && !Number.isInteger(opts.offset)) {
     throw new Error("is-relative-uri: [THROW_ID_02] opts.offset must be an integer, it was given as " + opts.offset + " (type " + typeof opts.offset + ")");
@@ -266,7 +262,7 @@ function isRel(str, originalOpts) {
 }
 
 exports.isRel = isRel;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

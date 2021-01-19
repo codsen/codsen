@@ -19,6 +19,7 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
 var version = "1.2.1";
 
+var version$1 = version;
 var defaults = {
   targetJSON: false
 };
@@ -74,4 +75,4 @@ function helga(str, originalOpts) {
 
 exports.defaults = defaults;
 exports.helga = helga;
-exports.version = version;
+exports.version = version$1;

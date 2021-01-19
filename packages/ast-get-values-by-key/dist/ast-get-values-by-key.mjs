@@ -7,4 +7,4 @@
  * Homepage: https://codsen.com/os/ast-get-values-by-key/
  */
 
-import{traverse as r}from"ast-monkey-traverse";import t from"matcher";import e from"lodash.clonedeep";var o="2.8.1";function i(o,i,a){let s;void 0!==a&&(s=Array.isArray(a)?e(a):[e(a)]);const n=[],v=r(o,((r,e,o)=>{const a=void 0!==e?e:r;if(void 0!==e&&t.isMatch(r,i,{caseSensitive:!0}))if(void 0===s)n.push({val:e,path:o.path});else if(s.length)return s.shift();return a}));return void 0===s?n:v}export{i as getByKey,o as version};
+import{traverse as r}from"ast-monkey-traverse";import t from"matcher";import o from"lodash.clonedeep";const e="2.8.1";function i(e,i,s){let n;void 0!==s&&(n=Array.isArray(s)?o(s):[o(s)]);const a=[],v=r(e,((r,o,e)=>{const s=void 0!==o?o:r;if(void 0!==o&&t.isMatch(r,i,{caseSensitive:!0}))if(void 0===n)a.push({val:o,path:e.path});else if(n.length)return n.shift();return s}));return void 0===n?a:v}export{i as getByKey,e as version};

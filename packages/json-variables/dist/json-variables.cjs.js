@@ -31,6 +31,7 @@ var objectPath__default = /*#__PURE__*/_interopDefaultLegacy(objectPath);
 
 var version = "9.0.3";
 
+var version$1 = version;
 var has = Object.prototype.hasOwnProperty;
 var defaults = {
   heads: "%%_",
@@ -471,7 +472,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath) {
 
   var wholeValueIsVariable = false; // we'll reuse it for non-wrap heads/tails too
 
-  if (foundHeadsAndTails.length === 1 && rangesApply.rApply(string, [foundHeadsAndTails[0].headsStartAt, foundHeadsAndTails[0].tailsEndAt]).trim() === "") {
+  if (foundHeadsAndTails.length === 1 && rangesApply.rApply(string, [[foundHeadsAndTails[0].headsStartAt, foundHeadsAndTails[0].tailsEndAt]]).trim() === "") {
     wholeValueIsVariable = true;
   }
 
@@ -497,7 +498,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath) {
     throw new Error("json-variables/resolveString(): [THROW_ID_22] While trying to resolve string: \"" + string + "\" at path " + path + ", something wrong with no-wrap heads and no-wrap tails was detected! Here's the internal error message:\n" + error);
   }
 
-  if (foundHeadsAndTails.length === 1 && rangesApply.rApply(string, [foundHeadsAndTails[0].headsStartAt, foundHeadsAndTails[0].tailsEndAt]).trim() === "") {
+  if (foundHeadsAndTails.length === 1 && rangesApply.rApply(string, [[foundHeadsAndTails[0].headsStartAt, foundHeadsAndTails[0].tailsEndAt]]).trim() === "") {
     wholeValueIsVariable = true;
   }
 
@@ -653,4 +654,4 @@ function jVar(input, originalOpts) {
 
 exports.defaults = defaults;
 exports.jVar = jVar;
-exports.version = version;
+exports.version = version$1;

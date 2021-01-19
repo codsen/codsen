@@ -20,6 +20,7 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
 var version = "6.2.0";
 
+var version$1 = version;
 var defaults = {
   mergeType: 1,
   progressFn: null,
@@ -104,6 +105,10 @@ function rMerge(arrOfRanges, originalOpts) {
     sortedRanges = rangesSort.rSort(filtered);
   }
 
+  if (!sortedRanges) {
+    return null;
+  }
+
   var len = sortedRanges.length - 1; // reset 80% of progress is this loop:
   // loop from the end:
 
@@ -153,4 +158,4 @@ function rMerge(arrOfRanges, originalOpts) {
 
 exports.defaults = defaults;
 exports.rMerge = rMerge;
-exports.version = version;
+exports.version = version$1;

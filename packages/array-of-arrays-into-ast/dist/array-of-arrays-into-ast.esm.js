@@ -11,6 +11,7 @@ import { mergeAdvanced } from 'object-merge-advanced';
 
 var version = "1.10.1";
 
+const version$1 = version;
 const defaults = {
   dedupe: true
 };
@@ -50,4 +51,4 @@ function generateAst(input, originalOpts) {
   return sortObject(res);
 }
 
-export { defaults, generateAst, version };
+export { defaults, generateAst, version$1 as version };

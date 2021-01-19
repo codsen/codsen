@@ -1,6 +1,7 @@
 import isObj from "lodash.isplainobject";
 import clone from "lodash.clonedeep";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 interface Opts {
   i?: boolean;
@@ -158,7 +159,7 @@ function rightMain({
   return null;
 }
 
-function right(str: string, idx: number | null): number | null {
+function right(str: string, idx: number | null = 0): number | null {
   return rightMain({ str, idx, stopAtNewlines: false, stopAtRawNbsp: false });
 }
 
@@ -264,7 +265,7 @@ function leftMain({ str, idx, stopAtNewlines, stopAtRawNbsp }: MainInputs) {
   return null;
 }
 
-function left(str: string, idx: number | null): number | null {
+function left(str: string, idx: number | null = 0): number | null {
   return leftMain({ str, idx, stopAtNewlines: false, stopAtRawNbsp: false });
 }
 

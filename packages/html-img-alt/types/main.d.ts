@@ -1,6 +1,7 @@
-import { version } from "../package.json";
+declare const version: string;
 interface Opts {
     unfancyTheAltContents: boolean;
 }
-declare function alts(str: string, originalOpts?: Opts): string;
+declare function alts(str: string, originalOpts?: Partial<Opts>): string;
+
 export { alts, version };

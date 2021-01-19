@@ -1,5 +1,8 @@
-import { version } from "../package.json";
-import { Ranges } from "../../../scripts/common";
+declare type Range = [from: number, to: number] | [from: number, to: number, whatToInsert: string | null | undefined];
+declare type Ranges = Range[] | null;
+
+declare const version: string;
+
 interface cbObj {
     rangeFrom: number;
     rangeTo: number;
@@ -15,4 +18,5 @@ interface Opts {
     progressFn: null | ((percDone: number) => void);
 }
 declare function fixEnt(str: string, originalOpts?: Partial<Opts>): Ranges;
+
 export { fixEnt, version };

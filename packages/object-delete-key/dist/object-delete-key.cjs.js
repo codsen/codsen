@@ -24,6 +24,8 @@ var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 
 var version = "1.10.1";
 
+var version$1 = version;
+
 function deleteKey(originalInput, originalOpts) {
   function existy(x) {
     return x != null;
@@ -99,4 +101,4 @@ function deleteKey(originalInput, originalOpts) {
 }
 
 exports.deleteKey = deleteKey;
-exports.version = version;
+exports.version = version$1;

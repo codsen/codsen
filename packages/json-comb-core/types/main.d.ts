@@ -1,4 +1,4 @@
-import { version } from "../package.json";
+declare const version: string;
 interface Obj {
     [key: string]: any;
 }
@@ -16,9 +16,10 @@ interface EnforceKeysetOpts {
 }
 declare function enforceKeyset(obj: Obj, schemaKeyset: Obj, originalOpts?: EnforceKeysetOpts): Promise<Obj>;
 declare function enforceKeysetSync(obj: Obj, schemaKeyset: Obj, originalOpts?: EnforceKeysetOpts): any;
-declare function noNewKeysSync(obj: Obj, schemaKeyset: Obj): import("type-fest").JsonValue;
+declare function noNewKeysSync(obj: Obj, schemaKeyset: Obj): any;
 declare function findUnusedSync(arrOriginal: any[], originalOpts?: {
     placeholder?: boolean;
     comments?: string;
 }): string[];
-export { getKeysetSync, getKeyset, enforceKeyset, enforceKeysetSync, sortAllObjectsSync, noNewKeysSync, findUnusedSync, version, };
+
+export { enforceKeyset, enforceKeysetSync, findUnusedSync, getKeyset, getKeysetSync, noNewKeysSync, sortAllObjectsSync, version };

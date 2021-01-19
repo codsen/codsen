@@ -1,11 +1,6 @@
 import tap from "tap";
 import { pathNext } from "../dist/ast-monkey-util.esm";
 
-tap.test(`01`, (t) => {
-  t.strictSame(pathNext(""), null, "01");
-  t.end();
-});
-
 tap.test(`02`, (t) => {
   t.strictSame(pathNext("0"), "1", "02");
   t.end();

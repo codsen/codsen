@@ -1,7 +1,10 @@
-import { version } from "../package.json";
-import { Range } from "../../../scripts/common";
+declare type Range = [from: number, to: number] | [from: number, to: number, whatToInsert: string | null | undefined];
+
+declare const version: string;
+
 interface Opts {
     ignoreRanges: Range[];
 }
-declare function splitByW(str: string, originalOpts?: Opts): string[];
+declare function splitByW(str: string, originalOpts?: Partial<Opts>): string[];
+
 export { splitByW, version };

@@ -4247,7 +4247,6 @@ var he = createCommonjsModule(function (module, exports) {
  * License: MIT
  * Homepage: https://codsen.com/os/string-unfancy/
  */
-/* eslint quote-props:0 */
 
 function existy(x) {
   return x != null;
@@ -4467,6 +4466,10 @@ function rMerge(arrOfRanges, originalOpts) {
     sortedRanges = rSort(filtered);
   }
 
+  if (!sortedRanges) {
+    return null;
+  }
+
   var len = sortedRanges.length - 1; // reset 80% of progress is this loop:
   // loop from the end:
 
@@ -4524,7 +4527,6 @@ function rMerge(arrOfRanges, originalOpts) {
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/
  */
-/* eslint @typescript-eslint/ban-ts-comment:1 */
 
 function rApply(str, originalRangesArr, _progressFn) {
   var percentageDone = 0;
@@ -4555,8 +4557,8 @@ function rApply(str, originalRangesArr, _progressFn) {
 
   var rangesArr;
 
-  if (Array.isArray(originalRangesArr) && Number.isInteger(+originalRangesArr[0]) && +originalRangesArr[0] >= 0 && Number.isInteger(+originalRangesArr[1]) && +originalRangesArr[1] >= 0) {
-    // @ts-ignore
+  if (Array.isArray(originalRangesArr) && Number.isInteger(originalRangesArr[0]) && Number.isInteger(originalRangesArr[1])) {
+    // if single array was passed, wrap it into an array
     rangesArr = [Array.from(originalRangesArr)];
   } else {
     rangesArr = Array.from(originalRangesArr);
@@ -4765,8 +4767,6 @@ function collWhitespace(str, originallineBreakLimit) {
   return str;
 }
 
-/* eslint @typescript-eslint/ban-ts-comment:1, @typescript-eslint/explicit-module-boundary-types: 0, prefer-rest-params: 0 */
-
 function existy$1(x) {
   return x != null;
 }
@@ -4804,7 +4804,7 @@ var Ranges = /*#__PURE__*/function () {
 
 
     this.opts = opts;
-    this.ranges = null;
+    this.ranges = [];
   }
 
   var _proto = Ranges.prototype;
@@ -4825,7 +4825,7 @@ var Ranges = /*#__PURE__*/function () {
           })) {
             originalFrom.forEach(function (thing) {
               if (Array.isArray(thing)) {
-                // recursively feed this subarray, hopefully it's an array // @ts-ignore
+                // recursively feed this subarray, hopefully it's an array
                 _this.add.apply(_this, thing);
               } // just skip other cases
 
@@ -4834,7 +4834,7 @@ var Ranges = /*#__PURE__*/function () {
           }
 
           if (originalFrom.length && isNum(+originalFrom[0]) && isNum(+originalFrom[1])) {
-            // recursively pass in those values // @ts-ignore
+            // recursively pass in those values
             this.add.apply(this, originalFrom);
           }
         } // else,
@@ -4905,7 +4905,6 @@ var Ranges = /*#__PURE__*/function () {
   };
 
   _proto.push = function push(originalFrom, originalTo, addVal) {
-    // @ts-ignore
     this.add(originalFrom, originalTo, addVal);
   } // C U R R E N T () - kindof a getter
   // ==================================
@@ -4914,7 +4913,7 @@ var Ranges = /*#__PURE__*/function () {
   _proto.current = function current() {
     var _this2 = this;
 
-    if (this.ranges != null) {
+    if (Array.isArray(this.ranges) && this.ranges.length) {
       // beware, merging can return null
       this.ranges = rMerge(this.ranges, {
         mergeType: this.opts.mergeType
@@ -4939,7 +4938,7 @@ var Ranges = /*#__PURE__*/function () {
   ;
 
   _proto.wipe = function wipe() {
-    this.ranges = null;
+    this.ranges = [];
   } // R E P L A C E ()
   // ==========
   ;
@@ -4955,14 +4954,14 @@ var Ranges = /*#__PURE__*/function () {
         this.ranges = Array.from(givenRanges);
       }
     } else {
-      this.ranges = null;
+      this.ranges = [];
     }
   } // L A S T ()
   // ==========
   ;
 
   _proto.last = function last() {
-    if (this.ranges != null && Array.isArray(this.ranges)) {
+    if (Array.isArray(this.ranges) && this.ranges.length) {
       return this.ranges[this.ranges.length - 1];
     }
 
@@ -7626,8 +7625,6 @@ function parent(str) {
   return null;
 }
 
-/* eslint @typescript-eslint/explicit-module-boundary-types:0 */
-
 function traverse(tree1, cb1) {
   var stop2 = {
     now: false
@@ -8847,9 +8844,8 @@ var lodash_intersection = intersection;
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
  */
-// If a non-empty string is given, put it into an array.
-// If an empty string is given, return an empty array.
-// Bypass everything else.
+
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 function arrayiffy(something) {
   if (typeof something === "string") {
     if (something.length) {
@@ -9296,8 +9292,10 @@ function internalApi(obj, ref, originalOptions) {
   }
 
   function pullAllWithGlob(originalInput, toBeRemoved) {
-    // eslint-disable-next-line no-param-reassign
-    toBeRemoved = arrayiffy(toBeRemoved);
+    if (typeof toBeRemoved === "string") {
+      toBeRemoved = arrayiffy(toBeRemoved);
+    }
+
     return Array.from(originalInput).filter(function (originalVal) {
       return !toBeRemoved.some(function (remVal) {
         return matcher.isMatch(originalVal, remVal, {
@@ -9320,22 +9318,16 @@ function internalApi(obj, ref, originalOptions) {
 
   var opts = _objectSpread2(_objectSpread2({}, defaults$3), originalOptions);
 
-  if (!existy(opts.ignoreKeys) || typeof opts.ignoreKeys !== "string" && !Array.isArray(opts.ignoreKeys)) {
-    opts.ignoreKeys = [];
-  } else {
-    opts.ignoreKeys = arrayiffy(opts.ignoreKeys);
+  if (typeof opts.ignoreKeys === "string") {
+    opts.ignoreKeys = [opts.ignoreKeys];
   }
 
-  if (!existy(opts.ignorePaths) || typeof opts.ignorePaths !== "string" && !Array.isArray(opts.ignorePaths)) {
-    opts.ignorePaths = [];
-  } else {
-    opts.ignorePaths = arrayiffy(opts.ignorePaths);
+  if (typeof opts.ignorePaths === "string") {
+    opts.ignorePaths = [opts.ignorePaths];
   }
 
-  if (!existy(opts.acceptArraysIgnore) || typeof opts.acceptArraysIgnore !== "string" && !Array.isArray(opts.acceptArraysIgnore)) {
-    opts.acceptArraysIgnore = [];
-  } else {
-    opts.acceptArraysIgnore = arrayiffy(opts.acceptArraysIgnore);
+  if (typeof opts.acceptArraysIgnore === "string") {
+    opts.acceptArraysIgnore = [opts.acceptArraysIgnore];
   }
 
   opts.msg = ("" + opts.msg).trim();
@@ -9583,6 +9575,12 @@ function checkTypesMini(obj, ref, originalOptions) {
 
 var version = "1.5.3";
 
+var version$1 = version;
+
+function isObj(something) {
+  return something && typeof something === "object" && !Array.isArray(something);
+}
+
 function alts(str, originalOpts) {
   // validate
   // ================
@@ -9590,7 +9588,7 @@ function alts(str, originalOpts) {
     throw new TypeError("html-img-alt/alts(): [THROW_ID_01] Input must be string! Currently its type is: " + typeof str + ", equal to: " + JSON.stringify(str, null, 4));
   }
 
-  if (originalOpts && Object.prototype.toString.call(originalOpts) !== "[object Object]") {
+  if (originalOpts && !isObj(originalOpts)) {
     throw new TypeError("html-img-alt/alts(): [THROW_ID_02] Options object must be a plain object! Currently its type is: " + typeof originalOpts + ", equal to: " + JSON.stringify(originalOpts, null, 4));
   } // vars
   // ================
@@ -9933,7 +9931,7 @@ function alts(str, originalOpts) {
 }
 
 exports.alts = alts;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

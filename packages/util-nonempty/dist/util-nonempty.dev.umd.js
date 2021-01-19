@@ -162,6 +162,7 @@ var lodash_isplainobject = isPlainObject;
 var version = "2.10.0";
 
 /* eslint @typescript-eslint/no-explicit-any:0, @typescript-eslint/explicit-module-boundary-types:0 */
+var version$1 = version;
 
 function nonEmpty(input) {
   // deliberate ==, catches undefined and null
@@ -181,7 +182,7 @@ function nonEmpty(input) {
 }
 
 exports.nonEmpty = nonEmpty;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

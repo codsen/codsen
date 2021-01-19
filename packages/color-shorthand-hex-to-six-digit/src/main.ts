@@ -3,7 +3,8 @@
 import r from "hex-color-regex";
 import isPlainObject from "lodash.isplainobject";
 import clone from "lodash.clonedeep";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 function conv(originalInput: any): any {
   // prevent any input argument mutation:

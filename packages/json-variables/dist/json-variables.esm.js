@@ -21,6 +21,7 @@ import { matchRightIncl, matchLeftIncl } from 'string-match-left-right';
 var version = "9.0.3";
 
 /* eslint max-len:0 */
+const version$1 = version;
 const has = Object.prototype.hasOwnProperty;
 const defaults = {
   heads: "%%_",
@@ -447,7 +448,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
 
   let wholeValueIsVariable = false; // we'll reuse it for non-wrap heads/tails too
 
-  if (foundHeadsAndTails.length === 1 && rApply(string, [foundHeadsAndTails[0].headsStartAt, foundHeadsAndTails[0].tailsEndAt]).trim() === "") {
+  if (foundHeadsAndTails.length === 1 && rApply(string, [[foundHeadsAndTails[0].headsStartAt, foundHeadsAndTails[0].tailsEndAt]]).trim() === "") {
     wholeValueIsVariable = true;
   }
 
@@ -473,7 +474,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
     throw new Error(`json-variables/resolveString(): [THROW_ID_22] While trying to resolve string: "${string}" at path ${path}, something wrong with no-wrap heads and no-wrap tails was detected! Here's the internal error message:\n${error}`);
   }
 
-  if (foundHeadsAndTails.length === 1 && rApply(string, [foundHeadsAndTails[0].headsStartAt, foundHeadsAndTails[0].tailsEndAt]).trim() === "") {
+  if (foundHeadsAndTails.length === 1 && rApply(string, [[foundHeadsAndTails[0].headsStartAt, foundHeadsAndTails[0].tailsEndAt]]).trim() === "") {
     wholeValueIsVariable = true;
   }
 
@@ -629,4 +630,4 @@ function jVar(input, originalOpts) {
   });
 }
 
-export { defaults, jVar, version };
+export { defaults, jVar, version$1 as version };

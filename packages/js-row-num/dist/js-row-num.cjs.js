@@ -21,6 +21,7 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
 var version = "3.0.2";
 
+var version$1 = version;
 var BACKSLASH = "\\";
 var defaults = {
   padStart: 3,
@@ -267,4 +268,4 @@ function fixRowNums(str, originalOpts) {
 
 exports.defaults = defaults;
 exports.fixRowNums = fixRowNums;
-exports.version = version;
+exports.version = version$1;

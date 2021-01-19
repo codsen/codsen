@@ -15,6 +15,7 @@ import clone from 'lodash.clonedeep';
 var version = "3.0.0";
 
 /* eslint no-bitwise:0, @typescript-eslint/explicit-module-boundary-types:0, @typescript-eslint/ban-types:0 */
+const version$1 = version;
 
 function combinations(originalIncomingObject, originalOverrideObject = {}) {
   //
@@ -93,4 +94,4 @@ function combinations(originalIncomingObject, originalOverrideObject = {}) {
   return outcomingObjectsArray;
 }
 
-export { combinations, version };
+export { combinations, version$1 as version };

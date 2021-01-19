@@ -7,4 +7,4 @@
  * Homepage: https://codsen.com/os/is-char-suitable-for-html-attr-name/
  */
 
-function t(t){return"string"==typeof t&&(t.charCodeAt(0)>96&&123>t.charCodeAt(0)||t.charCodeAt(0)>64&&91>t.charCodeAt(0)||t.charCodeAt(0)>47&&58>t.charCodeAt(0)||":"===t||"-"===t)}export{t as isAttrNameChar};
+function t(t){return"string"==typeof t&&(t.charCodeAt(0)>96&&t.charCodeAt(0)<123||t.charCodeAt(0)>64&&t.charCodeAt(0)<91||t.charCodeAt(0)>47&&t.charCodeAt(0)<58||":"===t||"-"===t)}export{t as isAttrNameChar};

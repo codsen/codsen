@@ -9,6 +9,8 @@
 
 var version = "1.0.3";
 
+const version$1 = version;
+
 function rOffset(arrOfRanges, offset = 0) {
   // empty Ranges are null!
   if (Array.isArray(arrOfRanges) && arrOfRanges.length) {
@@ -28,4 +30,4 @@ function rOffset(arrOfRanges, offset = 0) {
   return arrOfRanges;
 }
 
-export { rOffset, version };
+export { rOffset, version$1 as version };

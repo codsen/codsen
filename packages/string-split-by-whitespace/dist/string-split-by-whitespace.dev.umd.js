@@ -92,6 +92,8 @@ function isIndexWithin(originalIndex, rangesArr, originalOpts) {
 
 var version = "1.7.0";
 
+var version$1 = version;
+
 function splitByW(str, originalOpts) {
   if (str === undefined) {
     throw new Error("string-split-by-whitespace: [THROW_ID_01] The input is missing!");
@@ -150,7 +152,7 @@ function splitByW(str, originalOpts) {
 }
 
 exports.splitByW = splitByW;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

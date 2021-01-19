@@ -9,8 +9,10 @@
 
 var version = "1.1.1";
 
+const version$1 = version;
+
 function isJSP() {
   return /<%|%>|<\s*jsp:|<\s*cms:|<\s*c:|\${\s*jsp/gi;
 }
 
-export { isJSP, version };
+export { isJSP, version$1 as version };

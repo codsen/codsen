@@ -9,6 +9,7 @@
 
 var version = "2.0.2";
 
+const version$1 = version; // Reference used:
 // https://en.wikipedia.org/wiki/Uniform_Resource_Identifier#URI_references
 
 const BACKSLASH = "\u005C"; // retrieved 2020-Jan-11
@@ -31,16 +32,9 @@ function isRel(str, originalOpts) {
     flagUpUrisWithSchemes: true,
     offset: 0
   };
-  let opts;
-
-  if (originalOpts) {
-    opts = { ...defaults,
-      ...originalOpts
-    };
-  } else {
-    opts = { ...defaults
-    };
-  }
+  const opts = { ...defaults,
+    ...originalOpts
+  };
 
   if (opts.offset && !Number.isInteger(opts.offset)) {
     throw new Error(`is-relative-uri: [THROW_ID_02] opts.offset must be an integer, it was given as ${opts.offset} (type ${typeof opts.offset})`);
@@ -209,4 +203,4 @@ function isRel(str, originalOpts) {
   };
 }
 
-export { isRel, version };
+export { isRel, version$1 as version };

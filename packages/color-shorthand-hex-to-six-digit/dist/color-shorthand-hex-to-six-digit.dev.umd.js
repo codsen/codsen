@@ -2025,6 +2025,7 @@ var lodash_clonedeep = createCommonjsModule(function (module, exports) {
 var version = "2.11.1";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+var version$1 = version;
 
 function conv(originalInput) {
   // prevent any input argument mutation:
@@ -2060,7 +2061,7 @@ function conv(originalInput) {
 }
 
 exports.conv = conv;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

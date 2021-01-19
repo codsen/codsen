@@ -1,9 +1,9 @@
 import { matchRightIncl } from "string-match-left-right";
-import { arrayiffy } from "arrayiffy-if-string";
 import { left, right } from "string-left-right";
 import { Ranges } from "ranges-push";
 import { rApply } from "ranges-apply";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 import {
   rawnbsp,
   encodedNbspHtml,
@@ -22,10 +22,15 @@ import {
   headsAndTailsHexo,
   knownHTMLTags,
 } from "./util";
-import { Ranges as RangesType } from "../../../scripts/common";
+import { Range, Ranges as RangesType } from "../../../scripts/common";
 
 interface Obj {
   [key: string]: any;
+}
+
+interface HeadsAndTailsObj {
+  heads: string | string[];
+  tails: string | string[];
 }
 
 interface Opts {
@@ -36,11 +41,11 @@ interface Opts {
   hyphens: boolean;
   minWordCount: number;
   minCharCount: number;
-  ignore: { heads: string | string[]; tails: string | string[] }[] | string;
+  ignore: HeadsAndTailsObj[] | string | string[];
   reportProgressFunc: null | ((percDone: number) => void);
   reportProgressFuncFrom: number;
   reportProgressFuncTo: number;
-  tagRanges: [from: number, to: number][];
+  tagRanges: Range[] | null;
 }
 
 const defaults: Opts = {
@@ -70,7 +75,7 @@ interface Res {
   };
 }
 
-function removeWidows(str: string, originalOpts?: Opts): Res {
+function removeWidows(str: string, originalOpts?: Partial<Opts>): Res {
   console.log(
     `044 called removeWidows() on\n"${str}"\nusing originalOpts = ${JSON.stringify(
       originalOpts,
@@ -155,10 +160,14 @@ function removeWidows(str: string, originalOpts?: Opts): Res {
   ) {
     opts.ignore = [];
   } else {
-    opts.ignore = arrayiffy(opts.ignore);
+    // arrayiffy
+    if (typeof opts.ignore === "string") {
+      opts.ignore = [opts.ignore];
+    }
+    // expand the string value presets
     if ((opts.ignore as any).includes("all")) {
       // hugo heads tails and included in jinja's list, so can be omitted
-      opts.ignore = opts.ignore.concat(
+      opts.ignore = (opts.ignore as string[]).concat(
         (headsAndTailsJinja as any).concat(headsAndTailsHexo)
       );
     } else if (
@@ -193,7 +202,7 @@ function removeWidows(str: string, originalOpts?: Opts): Res {
         // otherwise false is returned, value is excluded
       });
       if (temp.length) {
-        opts.ignore = opts.ignore.concat(temp);
+        opts.ignore = (opts.ignore as any[]).concat(temp);
       }
     }
   }
@@ -287,7 +296,7 @@ function removeWidows(str: string, originalOpts?: Opts): Res {
 
     // detect templating language heads and tails
     if (!doNothingUntil && isArr(opts.ignore) && opts.ignore.length) {
-      opts.ignore.some((valObj, y) => {
+      (opts.ignore as HeadsAndTailsObj[]).some((valObj, y) => {
         if (
           (isArr(valObj.heads) &&
             valObj.heads.some((oneOfHeads) => str.startsWith(oneOfHeads, i))) ||
@@ -878,7 +887,7 @@ function removeWidows(str: string, originalOpts?: Opts): Res {
           )}`
         );
         if (isArr(opts.ignore) && opts.ignore.length && str[i + 1]) {
-          opts.ignore.some((oneOfHeadsTailsObjs) => {
+          (opts.ignore as HeadsAndTailsObj[]).some((oneOfHeadsTailsObjs) => {
             // console.log("\n\n\n");
             // console.log(
             //   `857 ${`\u001b[${36}m${`███████████████████████████████████████`}\u001b[${39}m`}\n\n\n`

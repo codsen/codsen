@@ -1,4 +1,5 @@
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 type ErrCb = (
   indexes: [from: number, to: number][],
@@ -11,19 +12,19 @@ interface Obj {
 }
 
 interface Opts {
-  from?: number;
-  to?: number;
+  from: number;
+  to: number;
   offset: number;
   leadingWhitespaceOK: boolean;
   trailingWhitespaceOK: boolean;
   oneSpaceAfterCommaOK: boolean;
   innerWhitespaceAllowed: boolean;
-  separator?: string;
-  cb?: null | ((from: number, to: number) => void);
-  errCb?: null | ErrCb;
+  separator: string;
+  cb: null | ((from: number, to: number) => void);
+  errCb: null | ErrCb;
 }
 
-function processCommaSep(str: string, originalOpts?: Opts): void {
+function processCommaSep(str: string, originalOpts?: Partial<Opts>): void {
   console.log(
     `003 processCommaSep: INCOMING ${`\u001b[${33}m${`str`}\u001b[${39}m`}: ${JSON.stringify(
       str,
@@ -69,7 +70,7 @@ function processCommaSep(str: string, originalOpts?: Opts): void {
     cb: null,
     errCb: null,
   };
-  const opts = { ...defaults, ...originalOpts };
+  const opts: Opts = { ...defaults, ...originalOpts };
 
   // patch from/to values, they might have been given as nulls etc.
   if (!Number.isInteger(originalOpts.from)) {

@@ -23,6 +23,7 @@ import pOne from 'p-one';
 var version = "6.7.1";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+const version$1 = version;
 
 function existy(x) {
   return x != null;
@@ -397,4 +398,4 @@ function findUnusedSync(arrOriginal, originalOpts) {
   return findUnusedSyncInner(arr, opts);
 } // -----------------------------------------------------------------------------
 
-export { enforceKeyset, enforceKeysetSync, findUnusedSync, getKeyset, getKeysetSync, noNewKeysSync, sortAllObjectsSync, version };
+export { enforceKeyset, enforceKeysetSync, findUnusedSync, getKeyset, getKeysetSync, noNewKeysSync, sortAllObjectsSync, version$1 as version };

@@ -2,7 +2,12 @@ import typeDetect from "type-detect";
 import { empty } from "ast-contains-only-empty-space";
 import isObj from "lodash.isplainobject";
 import matcher from "matcher";
-import { JsonValue } from "type-fest";
+
+/* eslint no-use-before-define: 0 */
+// From "type-fest" by Sindre Sorhus:
+type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
+type JsonObject = { [Key in string]?: JsonValue };
+type JsonArray = Array<JsonValue>;
 
 interface AnyObject {
   [key: string]: any;

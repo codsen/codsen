@@ -3460,6 +3460,7 @@ var lodash_clonedeep = createCommonjsModule(function (module, exports) {
 var version = "3.0.0";
 
 /* eslint no-bitwise:0, @typescript-eslint/explicit-module-boundary-types:0, @typescript-eslint/ban-types:0 */
+var version$1 = version;
 
 function combinations(originalIncomingObject, originalOverrideObject) {
   if (originalOverrideObject === void 0) {
@@ -3547,7 +3548,7 @@ function combinations(originalIncomingObject, originalOverrideObject) {
 }
 
 exports.combinations = combinations;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

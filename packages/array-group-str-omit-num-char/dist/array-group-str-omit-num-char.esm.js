@@ -12,6 +12,7 @@ import { rApply } from 'ranges-apply';
 
 var version = "3.0.3";
 
+const version$1 = version;
 const defaults = {
   wildcard: "*",
   dedupePlease: true
@@ -115,4 +116,4 @@ function groupStr(originalArr, originalOpts) {
   return resObj;
 }
 
-export { groupStr, version };
+export { groupStr, version$1 as version };

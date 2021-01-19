@@ -11,14 +11,14 @@ interface Obj {
 }
 
 interface Opts {
-  ignoreKeys?: string[];
-  ignorePaths?: string[];
-  acceptArrays?: boolean;
-  acceptArraysIgnore?: string | string[];
-  enforceStrictKeyset?: boolean;
-  schema?: Obj;
-  msg?: string;
-  optsVarName?: string;
+  ignoreKeys: string | string[];
+  ignorePaths: string | string[];
+  acceptArrays: boolean;
+  acceptArraysIgnore: string | string[];
+  enforceStrictKeyset: boolean;
+  schema: Obj;
+  msg: string;
+  optsVarName: string;
 }
 
 const defaults: Opts = {
@@ -33,7 +33,11 @@ const defaults: Opts = {
 };
 
 // fourth input argument is shielded from an external API:
-function internalApi(obj: Obj, ref: Obj | null, originalOptions?: Opts) {
+function internalApi(
+  obj: Obj,
+  ref: Obj | null,
+  originalOptions?: Partial<Opts>
+) {
   //
   // Functions
   // =========
@@ -50,8 +54,9 @@ function internalApi(obj: Obj, ref: Obj | null, originalOptions?: Opts) {
     originalInput: string[],
     toBeRemoved: string | string[]
   ) {
-    // eslint-disable-next-line no-param-reassign
-    toBeRemoved = arrayiffy(toBeRemoved);
+    if (typeof toBeRemoved === "string") {
+      toBeRemoved = arrayiffy(toBeRemoved);
+    }
     return Array.from(originalInput).filter(
       (originalVal) =>
         !(toBeRemoved as string[]).some((remVal) =>
@@ -84,32 +89,16 @@ function internalApi(obj: Obj, ref: Obj | null, originalOptions?: Opts) {
   // Prep our own opts
   // =================
 
-  const opts = { ...defaults, ...originalOptions };
+  const opts: Opts = { ...defaults, ...originalOptions };
 
-  if (
-    !existy(opts.ignoreKeys) ||
-    (typeof opts.ignoreKeys !== "string" && !Array.isArray(opts.ignoreKeys))
-  ) {
-    opts.ignoreKeys = [];
-  } else {
-    opts.ignoreKeys = arrayiffy(opts.ignoreKeys);
+  if (typeof opts.ignoreKeys === "string") {
+    opts.ignoreKeys = [opts.ignoreKeys];
   }
-  if (
-    !existy(opts.ignorePaths) ||
-    (typeof opts.ignorePaths !== "string" && !Array.isArray(opts.ignorePaths))
-  ) {
-    opts.ignorePaths = [];
-  } else {
-    opts.ignorePaths = arrayiffy(opts.ignorePaths);
+  if (typeof opts.ignorePaths === "string") {
+    opts.ignorePaths = [opts.ignorePaths];
   }
-  if (
-    !existy(opts.acceptArraysIgnore) ||
-    (typeof opts.acceptArraysIgnore !== "string" &&
-      !Array.isArray(opts.acceptArraysIgnore))
-  ) {
-    opts.acceptArraysIgnore = [];
-  } else {
-    opts.acceptArraysIgnore = arrayiffy(opts.acceptArraysIgnore);
+  if (typeof opts.acceptArraysIgnore === "string") {
+    opts.acceptArraysIgnore = [opts.acceptArraysIgnore];
   }
   opts.msg = `${opts.msg}`.trim();
 
@@ -738,7 +727,7 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
 function checkTypesMini(
   obj: Obj,
   ref: Obj | null,
-  originalOptions?: Opts
+  originalOptions?: Partial<Opts>
 ): void {
   return internalApi(obj, ref, originalOptions);
 }

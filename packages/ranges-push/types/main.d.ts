@@ -1,30 +1,27 @@
-import { version } from "../package.json";
-import { Range, Ranges as RangesType } from "../../../scripts/common";
+declare type Range = [from: number, to: number] | [from: number, to: number, whatToInsert: string | null | undefined];
+
+declare const version: string;
+
 interface Opts {
-    limitToBeAddedWhitespace?: boolean;
-    limitLinebreaksCount?: number;
-    mergeType?: 1 | 2 | "1" | "2" | undefined;
+    limitToBeAddedWhitespace: boolean;
+    limitLinebreaksCount: number;
+    mergeType: 1 | 2 | "1" | "2" | undefined;
 }
 declare const defaults: Opts;
-interface RangesInstance {
-    opts: Opts;
-    ranges: RangesType;
-}
-declare class Ranges implements RangesInstance {
-    constructor(originalOpts?: Opts);
-    ranges: RangesType;
+declare class Ranges {
+    constructor(originalOpts?: Partial<Opts>);
+    ranges: Range[];
     opts: Opts;
     add(originalFrom: number, originalTo?: number, addVal?: undefined | null | string): void;
-    add(originalFrom: Range): void;
-    add(originalFrom: () => Range): void;
-    add(originalFrom: null): void;
+    add(originalFrom: Range[] | null): void;
+    add(originalFrom: Range | null): void;
     push(originalFrom: number, originalTo?: number, addVal?: undefined | null | string): void;
-    push(originalFrom: Range): void;
-    push(originalFrom: () => Range): void;
-    push(originalFrom: null): void;
-    current(): null | RangesType;
+    push(originalFrom: Range[] | null): void;
+    push(originalFrom: Range | null): void;
+    current(): null | Range[];
     wipe(): void;
-    replace(givenRanges: RangesType): void;
+    replace(givenRanges: Range[]): void;
     last(): Range | null;
 }
-export { Ranges, defaults, version };
+
+export { Range, Ranges, defaults, version };

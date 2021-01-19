@@ -3,7 +3,8 @@
 import clone from "lodash.clonedeep";
 import isObj from "lodash.isplainobject";
 import { parent } from "ast-monkey-util";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 interface Stop {
   now: boolean;

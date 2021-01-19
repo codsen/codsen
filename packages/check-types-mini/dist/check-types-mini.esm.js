@@ -39,8 +39,10 @@ function internalApi(obj, ref, originalOptions) {
   }
 
   function pullAllWithGlob(originalInput, toBeRemoved) {
-    // eslint-disable-next-line no-param-reassign
-    toBeRemoved = arrayiffy(toBeRemoved);
+    if (typeof toBeRemoved === "string") {
+      toBeRemoved = arrayiffy(toBeRemoved);
+    }
+
     return Array.from(originalInput).filter(originalVal => !toBeRemoved.some(remVal => matcher.isMatch(originalVal, remVal, {
       caseSensitive: true
     })));
@@ -61,22 +63,16 @@ function internalApi(obj, ref, originalOptions) {
     ...originalOptions
   };
 
-  if (!existy(opts.ignoreKeys) || typeof opts.ignoreKeys !== "string" && !Array.isArray(opts.ignoreKeys)) {
-    opts.ignoreKeys = [];
-  } else {
-    opts.ignoreKeys = arrayiffy(opts.ignoreKeys);
+  if (typeof opts.ignoreKeys === "string") {
+    opts.ignoreKeys = [opts.ignoreKeys];
   }
 
-  if (!existy(opts.ignorePaths) || typeof opts.ignorePaths !== "string" && !Array.isArray(opts.ignorePaths)) {
-    opts.ignorePaths = [];
-  } else {
-    opts.ignorePaths = arrayiffy(opts.ignorePaths);
+  if (typeof opts.ignorePaths === "string") {
+    opts.ignorePaths = [opts.ignorePaths];
   }
 
-  if (!existy(opts.acceptArraysIgnore) || typeof opts.acceptArraysIgnore !== "string" && !Array.isArray(opts.acceptArraysIgnore)) {
-    opts.acceptArraysIgnore = [];
-  } else {
-    opts.acceptArraysIgnore = arrayiffy(opts.acceptArraysIgnore);
+  if (typeof opts.acceptArraysIgnore === "string") {
+    opts.acceptArraysIgnore = [opts.acceptArraysIgnore];
   }
 
   opts.msg = `${opts.msg}`.trim();

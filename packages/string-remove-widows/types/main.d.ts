@@ -1,5 +1,12 @@
-import { version } from "../package.json";
-import { Ranges as RangesType } from "../../../scripts/common";
+declare type Range = [from: number, to: number] | [from: number, to: number, whatToInsert: string | null | undefined];
+declare type Ranges = Range[] | null;
+
+declare const version: string;
+
+interface HeadsAndTailsObj {
+    heads: string | string[];
+    tails: string | string[];
+}
 interface Opts {
     removeWidowPreventionMeasures: boolean;
     convertEntities: boolean;
@@ -8,19 +15,16 @@ interface Opts {
     hyphens: boolean;
     minWordCount: number;
     minCharCount: number;
-    ignore: {
-        heads: string | string[];
-        tails: string | string[];
-    }[] | string;
+    ignore: HeadsAndTailsObj[] | string | string[];
     reportProgressFunc: null | ((percDone: number) => void);
     reportProgressFuncFrom: number;
     reportProgressFuncTo: number;
-    tagRanges: [from: number, to: number][];
+    tagRanges: Range[] | null;
 }
 declare const defaults: Opts;
 interface Res {
     res: string;
-    ranges: RangesType;
+    ranges: Ranges;
     log: {
         timeTakenInMilliseconds: number;
     };
@@ -29,5 +33,6 @@ interface Res {
         convertEntities: boolean;
     };
 }
-declare function removeWidows(str: string, originalOpts?: Opts): Res;
-export { removeWidows, defaults, version };
+declare function removeWidows(str: string, originalOpts?: Partial<Opts>): Res;
+
+export { defaults, removeWidows, version };

@@ -13,6 +13,8 @@ import trimChars from 'lodash.trim';
 
 var version = "4.0.3";
 
+const version$1 = version;
+
 function remSep(str, originalOpts) {
   // vars
   let allOK = true; // used to bail somewhere down the line. It's a killswitch.
@@ -157,4 +159,4 @@ function remSep(str, originalOpts) {
   return res;
 }
 
-export { remSep, version };
+export { remSep, version$1 as version };

@@ -1,6 +1,7 @@
 import { rApply } from "ranges-apply";
 import { Range, Ranges } from "../../../scripts/common";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 interface Inputs {
   from: number;

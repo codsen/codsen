@@ -1,6 +1,7 @@
-import { version } from "../package.json";
+declare const version: string;
 interface Opts {
     arraysMustNotContainPlaceholders: boolean;
 }
-declare function allEq(inputOriginal: any, valueOriginal: any, originalOpts?: Opts): boolean;
+declare function allEq(inputOriginal: any, valueOriginal: any, originalOpts?: Partial<Opts>): boolean;
+
 export { allEq, version };

@@ -1,15 +1,16 @@
 import uniq from "lodash.uniq";
 import { rApply } from "ranges-apply";
 import { Range } from "../../../scripts/common";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 interface UnknownValueObj {
   [key: string]: any;
 }
 
 interface Opts {
-  wildcard?: string;
-  dedupePlease?: boolean;
+  wildcard: string;
+  dedupePlease: boolean;
 }
 
 const defaults: Opts = {
@@ -17,7 +18,10 @@ const defaults: Opts = {
   dedupePlease: true,
 };
 
-function groupStr(originalArr: any[], originalOpts?: Opts): UnknownValueObj {
+function groupStr(
+  originalArr: any[],
+  originalOpts?: Partial<Opts>
+): UnknownValueObj {
   if (!Array.isArray(originalArr)) {
     return originalArr;
   }
@@ -26,7 +30,7 @@ function groupStr(originalArr: any[], originalOpts?: Opts): UnknownValueObj {
     return {};
   }
 
-  const opts = { ...defaults, ...originalOpts };
+  const opts: Opts = { ...defaults, ...originalOpts };
   const arr = opts.dedupePlease ? uniq(originalArr) : Array.from(originalArr);
 
   // traverse the given array

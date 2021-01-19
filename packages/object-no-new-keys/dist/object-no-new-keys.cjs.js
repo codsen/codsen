@@ -19,6 +19,8 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
 var version = "2.10.0";
 
+var version$1 = version;
+
 function isObj(something) {
   return something && typeof something === "object" && !Array.isArray(something);
 }
@@ -102,4 +104,4 @@ function noNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
 }
 
 exports.noNewKeys = noNewKeys;
-exports.version = version;
+exports.version = version$1;

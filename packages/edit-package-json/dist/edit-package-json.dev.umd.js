@@ -2165,6 +2165,10 @@ function rightMain(_ref) {
 }
 
 function right(str, idx) {
+  if (idx === void 0) {
+    idx = 0;
+  }
+
   return rightMain({
     str: str,
     idx: idx,
@@ -2255,6 +2259,10 @@ function leftMain(_ref2) {
 }
 
 function left(str, idx) {
+  if (idx === void 0) {
+    idx = 0;
+  }
+
   return leftMain({
     str: str,
     idx: idx,
@@ -2863,6 +2871,10 @@ function rMerge(arrOfRanges, originalOpts) {
     sortedRanges = rSort(filtered);
   }
 
+  if (!sortedRanges) {
+    return null;
+  }
+
   var len = sortedRanges.length - 1; // reset 80% of progress is this loop:
   // loop from the end:
 
@@ -2920,7 +2932,6 @@ function rMerge(arrOfRanges, originalOpts) {
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/
  */
-/* eslint @typescript-eslint/ban-ts-comment:1 */
 
 function rApply(str, originalRangesArr, _progressFn) {
   var percentageDone = 0;
@@ -2951,8 +2962,8 @@ function rApply(str, originalRangesArr, _progressFn) {
 
   var rangesArr;
 
-  if (Array.isArray(originalRangesArr) && Number.isInteger(+originalRangesArr[0]) && +originalRangesArr[0] >= 0 && Number.isInteger(+originalRangesArr[1]) && +originalRangesArr[1] >= 0) {
-    // @ts-ignore
+  if (Array.isArray(originalRangesArr) && Number.isInteger(originalRangesArr[0]) && Number.isInteger(originalRangesArr[1])) {
+    // if single array was passed, wrap it into an array
     rangesArr = [Array.from(originalRangesArr)];
   } else {
     rangesArr = Array.from(originalRangesArr);
@@ -3047,6 +3058,8 @@ function rApply(str, originalRangesArr, _progressFn) {
 }
 
 var version = "0.2.3";
+
+var version$1 = version;
 
 function isStr$1(something) {
   return typeof something === "string";
@@ -3565,7 +3578,7 @@ function del(str, path) {
 
 exports.del = del;
 exports.set = set;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

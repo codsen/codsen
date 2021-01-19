@@ -14,6 +14,7 @@ import clone from 'lodash.clonedeep';
 var version = "2.11.1";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+const version$1 = version;
 
 function conv(originalInput) {
   // prevent any input argument mutation:
@@ -48,4 +49,4 @@ function conv(originalInput) {
   return input;
 }
 
-export { conv, version };
+export { conv, version$1 as version };

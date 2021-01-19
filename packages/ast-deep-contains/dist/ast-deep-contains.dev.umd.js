@@ -2423,8 +2423,6 @@ function parent(str) {
   return null;
 }
 
-/* eslint @typescript-eslint/explicit-module-boundary-types:0 */
-
 function traverse(tree1, cb1) {
   var stop2 = {
     now: false
@@ -3330,6 +3328,8 @@ var is = /*@__PURE__*/getDefaultExportFromCjs(dist);
 
 var version = "2.0.1";
 
+var version$1 = version;
+
 function goUp(pathStr) {
   // console.log(`014 goUp(): INCOMING pathStr = "${pathStr}"`);
   if (pathStr.includes(".")) {
@@ -3542,7 +3542,7 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
 
 exports.deepContains = deepContains;
 exports.defaults = defaults;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

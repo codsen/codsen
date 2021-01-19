@@ -9,6 +9,7 @@
 
 var version = "1.12.0";
 
+const version$1 = version;
 const defaults = {
   str: "",
   from: 0,
@@ -65,11 +66,11 @@ function expander(originalOpts) {
     throw new Error(`string-range-expander: [THROW_ID_04] The input's "to" value opts.to, is not a number! Currently it's given as ${typeof originalOpts.to}, equal to ${JSON.stringify(originalOpts.to, null, 0)}`);
   }
 
-  if (!originalOpts.str[originalOpts.from] && originalOpts.from !== originalOpts.to) {
+  if (originalOpts && originalOpts.str && !originalOpts.str[originalOpts.from] && originalOpts.from !== originalOpts.to) {
     throw new Error(`string-range-expander: [THROW_ID_05] The given input string opts.str ("${originalOpts.str}") must contain the character at index "from" ("${originalOpts.from}")`);
   }
 
-  if (!originalOpts.str[originalOpts.to - 1]) {
+  if (originalOpts && originalOpts.str && !originalOpts.str[originalOpts.to - 1]) {
     throw new Error(`string-range-expander: [THROW_ID_06] The given input string, opts.str ("${originalOpts.str}") must contain the character at index before "to" ("${originalOpts.to - 1}")`);
   }
 
@@ -174,4 +175,4 @@ function expander(originalOpts) {
   return [from, to];
 }
 
-export { defaults, expander, version };
+export { defaults, expander, version$1 as version };

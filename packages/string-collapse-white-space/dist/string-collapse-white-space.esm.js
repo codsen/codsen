@@ -14,6 +14,7 @@ import { right } from 'string-left-right';
 var version = "8.0.5";
 
 /* eslint @typescript-eslint/ban-ts-comment:1 */
+const version$1 = version; // default set of options
 
 const defaults = {
   trimStart: true,
@@ -460,4 +461,4 @@ function collapse(str, originalOpts) { // f's
   };
 }
 
-export { cbSchema, collapse, defaults, version };
+export { cbSchema, collapse, defaults, version$1 as version };

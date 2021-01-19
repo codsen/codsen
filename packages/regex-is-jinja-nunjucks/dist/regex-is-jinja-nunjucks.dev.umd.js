@@ -15,12 +15,14 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 
 var version = "1.1.1";
 
+var version$1 = version;
+
 function isJinjaNunjucksRegex() {
   return /{%|{{|%}|}}/gi;
 }
 
 exports.isJinjaNunjucksRegex = isJinjaNunjucksRegex;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

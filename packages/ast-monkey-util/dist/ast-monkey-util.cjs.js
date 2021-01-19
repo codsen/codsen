@@ -17,10 +17,6 @@ Object.defineProperty(exports, '__esModule', { value: true });
 // 9.children.4
 // the path notation is object-path
 function pathNext(str) {
-  if (!str) {
-    return null;
-  }
-
   if (str.includes(".") && /^\d*$/.test(str.slice(str.lastIndexOf(".") + 1))) {
     return "" + str.slice(0, str.lastIndexOf(".") + 1) + (+str.slice(str.lastIndexOf(".") + 1) + 1);
   }
@@ -109,8 +105,10 @@ function parent(str) {
 
 var version = "1.2.0";
 
+var version$1 = version; // -----------------------------------------------------------------------------
+
 exports.parent = parent;
 exports.pathNext = pathNext;
 exports.pathPrev = pathPrev;
 exports.pathUp = pathUp;
-exports.version = version;
+exports.version = version$1;

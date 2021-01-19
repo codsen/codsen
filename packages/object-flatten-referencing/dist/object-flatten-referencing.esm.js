@@ -12,11 +12,38 @@ import { strIndexesOfPlus } from 'str-indexes-of-plus';
 import matcher from 'matcher';
 import isObj from 'lodash.isplainobject';
 
+const defaults = {
+  wrapHeadsWith: "%%_",
+  wrapTailsWith: "_%%",
+  dontWrapKeys: [],
+  dontWrapPaths: [],
+  // paths exactly like for exampl: "modules[0].part2[0].ccc[0].kkk". Remember to
+  // put the index if it's an array, like modules[0] if key "modules" is equal to
+  // array and you want its first element (0-th index), hence "modules[0]".
+  xhtml: true,
+  preventDoubleWrapping: true,
+  preventWrappingIfContains: [],
+  objectKeyAndValueJoinChar: ".",
+  wrapGlobalFlipSwitch: true,
+  ignore: [],
+  whatToDoWhenReferenceIsMissing: 0,
+  // 1 = throw, 2 = flatten to string & wrap if wrapping feature is enabled
+  mergeArraysWithLineBreaks: true,
+  // add <br /> between the rows?
+  mergeWithoutTrailingBrIfLineContainsBr: true,
+  // don't add another, trailing-one
+  enforceStrictKeyset: true
+};
+
 function isStr(something) {
   return typeof something === "string";
 }
 
-function flattenObject(objOrig, opts) {
+function flattenObject(objOrig, originalOpts) {
+  const opts = { ...defaults,
+    ...originalOpts
+  };
+
   if (arguments.length === 0 || Object.keys(objOrig).length === 0) {
     return [];
   }
@@ -43,7 +70,11 @@ function flattenObject(objOrig, opts) {
   return res;
 }
 
-function flattenArr(arrOrig, opts, wrap, joinArraysUsingBrs) {
+function flattenArr(arrOrig, originalOpts, wrap = false, joinArraysUsingBrs = false) {
+  const opts = { ...defaults,
+    ...originalOpts
+  };
+
   if (arguments.length === 0 || arrOrig.length === 0) {
     return "";
   }
@@ -120,6 +151,7 @@ function arrayiffyString(something) {
 var version = "4.12.1";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+const version$1 = version;
 
 function existy(x) {
   return x != null;
@@ -128,29 +160,6 @@ function existy(x) {
 function isStr$1(something) {
   return typeof something === "string";
 }
-
-const defaults = {
-  wrapHeadsWith: "%%_",
-  wrapTailsWith: "_%%",
-  dontWrapKeys: [],
-  dontWrapPaths: [],
-  // paths exactly like for exampl: "modules[0].part2[0].ccc[0].kkk". Remember to
-  // put the index if it's an array, like modules[0] if key "modules" is equal to
-  // array and you want its first element (0-th index), hence "modules[0]".
-  xhtml: true,
-  preventDoubleWrapping: true,
-  preventWrappingIfContains: [],
-  objectKeyAndValueJoinChar: ".",
-  wrapGlobalFlipSwitch: true,
-  ignore: [],
-  whatToDoWhenReferenceIsMissing: 0,
-  // 1 = throw, 2 = flatten to string & wrap if wrapping feature is enabled
-  mergeArraysWithLineBreaks: true,
-  // add <br /> between the rows?
-  mergeWithoutTrailingBrIfLineContainsBr: true,
-  // don't add another, trailing-one
-  enforceStrictKeyset: true
-};
 
 function flattenReferencing(originalInput1, originalReference1, opts1) {
   if (arguments.length === 0) {
@@ -309,4 +318,4 @@ function flattenReferencing(originalInput1, originalReference1, opts1) {
   return ofr(originalInput1, originalReference1, originalOpts);
 }
 
-export { arrayiffyString, defaults, flattenArr, flattenObject, flattenReferencing, version };
+export { arrayiffyString, defaults, flattenArr, flattenObject, flattenReferencing, version$1 as version };

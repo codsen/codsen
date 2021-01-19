@@ -111,18 +111,6 @@ tap.test(`05 - when opts are set wrong`, (t) => {
       {
         msg: "aa",
         optsVarName: "bbb",
-        ignoreKeys: false,
-      }
-    );
-  }, "05.01");
-
-  t.doesNotThrow(() => {
-    checkTypesMini(
-      { somekey: "a" },
-      { somekey: "b" },
-      {
-        msg: "aa",
-        optsVarName: "bbb",
         ignoreKeys: "a",
       }
     );
@@ -188,35 +176,6 @@ tap.test(`06 - nested options`, (t) => {
 });
 
 tap.test(`07 - opts.ignorePaths`, (t) => {
-  // control:
-  t.throws(() => {
-    checkTypesMini(
-      {
-        aaa: {
-          bbb: "a",
-        },
-        ccc: {
-          bbb: "d",
-        },
-      },
-      {
-        aaa: {
-          bbb: true,
-        },
-        ccc: {
-          bbb: "d",
-        },
-      },
-      {
-        msg: "msg",
-        optsVarName: "OPTS",
-        ignoreKeys: false,
-        ignorePaths: null,
-        acceptArraysIgnore: null,
-      }
-    );
-  }, /OPTS\.aaa\.bbb was customised to /);
-
   // for a reference, let's see what will "ignoreKeys" against "bbb" do:
   t.doesNotThrow(() => {
     checkTypesMini(

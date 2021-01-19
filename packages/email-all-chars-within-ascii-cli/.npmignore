@@ -20,6 +20,4 @@ test
 
 .npmignore
 .prettierignore
-rollup.config.js
 testStats.md
-tsconfig.json

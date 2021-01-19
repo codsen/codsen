@@ -39,6 +39,8 @@ function extraRequirements(str, idx) {
 
 var version = "1.10.1";
 
+var version$1 = version;
+
 function isOpening(str, idx, originalOpts) {
   if (idx === void 0) {
     idx = 0;
@@ -155,4 +157,4 @@ function isOpening(str, idx, originalOpts) {
 
 exports.defaults = defaultOpts;
 exports.isOpening = isOpening;
-exports.version = version;
+exports.version = version$1;

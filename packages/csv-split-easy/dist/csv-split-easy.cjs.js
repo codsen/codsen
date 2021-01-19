@@ -20,6 +20,7 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
 var version = "4.0.3";
 
+var version$1 = version;
 var defaults = {
   removeThousandSeparatorsFromNumbers: true,
   padSingleDecimalPlaceNumbers: true,
@@ -218,4 +219,4 @@ function splitEasy(str, originalOpts) {
 
 exports.defaults = defaults;
 exports.splitEasy = splitEasy;
-exports.version = version;
+exports.version = version$1;

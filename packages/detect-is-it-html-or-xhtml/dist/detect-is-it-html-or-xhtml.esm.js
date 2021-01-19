@@ -9,6 +9,8 @@
 
 var version = "3.11.0";
 
+const version$1 = version;
+
 function detectIsItHTMLOrXhtml(input) {
   function existy(x) {
     return x != null;
@@ -68,4 +70,4 @@ function detectIsItHTMLOrXhtml(input) {
   return "html";
 }
 
-export { detectIsItHTMLOrXhtml, version };
+export { detectIsItHTMLOrXhtml, version$1 as version };

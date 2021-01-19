@@ -3,7 +3,8 @@
 import objectPath from "object-path";
 import { traverse } from "ast-monkey-traverse";
 import is from "@sindresorhus/is";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 function goUp(pathStr: string) {
   // console.log(`014 goUp(): INCOMING pathStr = "${pathStr}"`);

@@ -1,5 +1,9 @@
-import { version } from "../package.json";
-import { JsonObject } from "type-fest";
+declare type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
+declare type JsonObject = {
+    [Key in string]?: JsonValue;
+};
+declare type JsonArray = Array<JsonValue>;
+declare const version: string;
 declare const allNamedEntities: JsonObject;
 declare const brokenNamedEntities: JsonObject;
 declare const entStartsWith: JsonObject;
@@ -12,4 +16,5 @@ declare const allNamedEntitiesSetOnlyCaseInsensitive: Set<string>;
 declare function decode(ent: string): string | null;
 declare const minLength = 2;
 declare const maxLength = 31;
-export { allNamedEntities, entStartsWith, entEndsWith, entStartsWithCaseInsensitive, entEndsWithCaseInsensitive, brokenNamedEntities, uncertain, allNamedEntitiesSetOnly, allNamedEntitiesSetOnlyCaseInsensitive, decode, minLength, maxLength, version, };
+
+export { allNamedEntities, allNamedEntitiesSetOnly, allNamedEntitiesSetOnlyCaseInsensitive, brokenNamedEntities, decode, entEndsWith, entEndsWithCaseInsensitive, entStartsWith, entStartsWithCaseInsensitive, maxLength, minLength, uncertain, version };

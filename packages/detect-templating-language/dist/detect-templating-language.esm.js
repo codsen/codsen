@@ -13,6 +13,8 @@ import { isJinjaSpecific } from 'regex-jinja-specific';
 
 var version = "1.1.1";
 
+const version$1 = version;
+
 function detectLang(str) {
   let name = null;
 
@@ -44,4 +46,4 @@ function detectLang(str) {
   };
 }
 
-export { detectLang, version };
+export { detectLang, version$1 as version };

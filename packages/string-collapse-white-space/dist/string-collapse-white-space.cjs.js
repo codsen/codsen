@@ -22,6 +22,8 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
 var version = "8.0.5";
 
+var version$1 = version; // default set of options
+
 var defaults = {
   trimStart: true,
   trimEnd: true,
@@ -468,4 +470,4 @@ function collapse(str, originalOpts) { // f's
 exports.cbSchema = cbSchema;
 exports.collapse = collapse;
 exports.defaults = defaults;
-exports.version = version;
+exports.version = version$1;

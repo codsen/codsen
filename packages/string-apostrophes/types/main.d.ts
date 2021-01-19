@@ -1,5 +1,7 @@
-import { Ranges } from "../../../scripts/common";
-import { version } from "../package.json";
+declare type Range = [from: number, to: number] | [from: number, to: number, whatToInsert: string | null | undefined];
+declare type Ranges = Range[] | null;
+
+declare const version: string;
 interface Inputs {
     from: number;
     to?: number;
@@ -13,4 +15,5 @@ declare function convertAll(str: string, opts?: Inputs): {
     result: string;
     ranges: Ranges;
 };
-export { convertOne, convertAll, version };
+
+export { convertAll, convertOne, version };

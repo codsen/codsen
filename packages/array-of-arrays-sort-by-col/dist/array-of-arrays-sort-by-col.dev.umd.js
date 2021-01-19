@@ -15,6 +15,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 
 var version = "2.13.0";
 
+var version$1 = version; // FUNCTIONS - INTERNAL
 // -----------------------------------------------------------------------------
 
 function existy(x) {
@@ -137,7 +138,7 @@ function sortByCol(arr, axis) {
 }
 
 exports.sortByCol = sortByCol;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

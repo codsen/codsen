@@ -22,6 +22,8 @@ var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 
 var version = "1.0.1";
 
+var version$1 = version;
+
 function mixer(ref, defaultsObj) {
   if (ref === void 0) {
     ref = {};
@@ -76,4 +78,4 @@ function mixer(ref, defaultsObj) {
 }
 
 exports.mixer = mixer;
-exports.version = version;
+exports.version = version$1;

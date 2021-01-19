@@ -1,12 +1,13 @@
 import { mergeAdvanced } from "object-merge-advanced";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 interface UnknownValueObj {
   [key: string]: any;
 }
 
 interface Opts {
-  dedupe?: boolean;
+  dedupe: boolean;
 }
 
 const defaults: Opts = {
@@ -22,7 +23,10 @@ function sortObject(obj: UnknownValueObj): UnknownValueObj {
     }, {});
 }
 
-function generateAst(input: any[], originalOpts?: Opts): UnknownValueObj {
+function generateAst(
+  input: any[],
+  originalOpts?: Partial<Opts>
+): UnknownValueObj {
   if (!Array.isArray(input)) {
     throw new Error(
       `array-of-arrays-into-ast: [THROW_ID_01] input must be array. Currently it's of a type ${typeof input} equal to:\n${JSON.stringify(
@@ -35,7 +39,7 @@ function generateAst(input: any[], originalOpts?: Opts): UnknownValueObj {
     return {};
   }
 
-  const opts = { ...defaults, ...originalOpts };
+  const opts: Opts = { ...defaults, ...originalOpts };
 
   let res = {};
 

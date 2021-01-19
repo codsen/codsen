@@ -1,9 +1,10 @@
-/* eslint @typescript-eslint/ban-ts-comment:1, @typescript-eslint/explicit-module-boundary-types: 0, prefer-rest-params: 0 */
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
 import { collWhitespace } from "string-collapse-leading-whitespace";
 import { rMerge } from "ranges-merge";
-import { version } from "../package.json";
-import { Range, Ranges as RangesType } from "../../../scripts/common";
+import { version as v } from "../package.json";
+const version: string = v;
+import { Range } from "../../../scripts/common";
 
 function existy(x: any): boolean {
   return x != null;
@@ -16,9 +17,9 @@ function isStr(something: any): boolean {
 }
 
 interface Opts {
-  limitToBeAddedWhitespace?: boolean;
-  limitLinebreaksCount?: number;
-  mergeType?: 1 | 2 | "1" | "2" | undefined;
+  limitToBeAddedWhitespace: boolean;
+  limitLinebreaksCount: number;
+  mergeType: 1 | 2 | "1" | "2" | undefined;
 }
 
 const defaults: Opts = {
@@ -27,22 +28,15 @@ const defaults: Opts = {
   mergeType: 1,
 };
 
-interface RangesInstance {
-  opts: Opts;
-  // add(from: null | Range): void;
-  // add(from: number, to: number, addVal?: undefined | null | string): void;
-  ranges: RangesType;
-}
-
 // -----------------------------------------------------------------------------
 
-class Ranges implements RangesInstance {
+class Ranges {
   //
 
   // O P T I O N S
   // =============
-  constructor(originalOpts?: Opts) {
-    const opts = { ...defaults, ...originalOpts };
+  constructor(originalOpts?: Partial<Opts>) {
+    const opts: Opts = { ...defaults, ...originalOpts };
     if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
       if (isStr(opts.mergeType) && (opts.mergeType as string).trim() === "1") {
         opts.mergeType = 1;
@@ -66,9 +60,9 @@ class Ranges implements RangesInstance {
       `049 ranges-push: USING opts = ${JSON.stringify(opts, null, 4)}`
     );
     this.opts = opts;
-    this.ranges = null;
+    this.ranges = [];
   }
-  ranges: RangesType;
+  ranges: Range[];
   opts: Opts;
 
   // A D D ()
@@ -79,9 +73,8 @@ class Ranges implements RangesInstance {
     originalTo?: number,
     addVal?: undefined | null | string
   ): void;
-  add(originalFrom: Range): void;
-  add(originalFrom: () => Range): void;
-  add(originalFrom: null): void;
+  add(originalFrom: Range[] | null): void;
+  add(originalFrom: Range | null): void;
   add(originalFrom?: any, originalTo?: any, addVal?: any): void {
     console.log(`\n\n\n${`\u001b[${32}m${`=`.repeat(80)}\u001b[${39}m`}`);
     console.log(
@@ -107,8 +100,7 @@ class Ranges implements RangesInstance {
                     4
                   )}`
                 );
-                // @ts-ignore
-                this.add(...thing);
+                (this as any).add(...thing);
                 console.log("\n\n\n");
                 console.log("091 ██ END OF RECURSION, BACK TO NORMAL FLOW");
                 console.log("\n\n\n");
@@ -130,8 +122,7 @@ class Ranges implements RangesInstance {
                 4
               )}`
             );
-            // @ts-ignore
-            this.add(...originalFrom);
+            (this as any).add(...originalFrom);
             console.log("\n\n\n");
             console.log("113 ██ END OF RECURSION, BACK TO NORMAL FLOW");
             console.log("\n\n\n");
@@ -311,17 +302,15 @@ class Ranges implements RangesInstance {
     originalTo?: number,
     addVal?: undefined | null | string
   ): void;
-  push(originalFrom: Range): void;
-  push(originalFrom: () => Range): void;
-  push(originalFrom: null): void;
+  push(originalFrom: Range[] | null): void;
+  push(originalFrom: Range | null): void;
   push(originalFrom?: any, originalTo?: any, addVal?: any): void {
-    // @ts-ignore
     this.add(originalFrom, originalTo, addVal);
   }
 
   // C U R R E N T () - kindof a getter
   // ==================================
-  current(): null | RangesType {
+  current(): null | Range[] {
     console.log(
       `326 ranges-push/current(): ${`\u001b[${33}m${`this.ranges`}\u001b[${39}m`} = ${JSON.stringify(
         this.ranges,
@@ -329,11 +318,11 @@ class Ranges implements RangesInstance {
         4
       )}`
     );
-    if (this.ranges != null) {
+    if (Array.isArray(this.ranges) && this.ranges.length) {
       // beware, merging can return null
       this.ranges = rMerge(this.ranges, {
         mergeType: this.opts.mergeType,
-      });
+      }) as Range[];
       if (this.ranges && this.opts.limitToBeAddedWhitespace) {
         return this.ranges.map((val) => {
           if (existy(val[2])) {
@@ -357,16 +346,15 @@ class Ranges implements RangesInstance {
     }
     return null;
   }
-
   // W I P E ()
   // ==========
   wipe(): void {
-    this.ranges = null;
+    this.ranges = [];
   }
 
   // R E P L A C E ()
   // ==========
-  replace(givenRanges: RangesType): void {
+  replace(givenRanges: Range[]): void {
     if (Array.isArray(givenRanges) && givenRanges.length) {
       // Now, ranges can be array of arrays, correct format but also single
       // range, an array of two natural numbers might be given.
@@ -383,18 +371,18 @@ class Ranges implements RangesInstance {
         this.ranges = Array.from(givenRanges);
       }
     } else {
-      this.ranges = null;
+      this.ranges = [];
     }
   }
 
   // L A S T ()
   // ==========
   last(): Range | null {
-    if (this.ranges != null && Array.isArray(this.ranges)) {
+    if (Array.isArray(this.ranges) && this.ranges.length) {
       return this.ranges[this.ranges.length - 1];
     }
     return null;
   }
 }
 
-export { Ranges, defaults, version };
+export { Ranges, defaults, version, Range };

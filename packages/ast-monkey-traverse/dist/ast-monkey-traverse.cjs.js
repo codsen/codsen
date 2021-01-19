@@ -24,6 +24,8 @@ var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
 var version = "1.13.1";
 
+var version$1 = version;
+
 function traverse(tree1, cb1) {
   var stop2 = {
     now: false
@@ -110,4 +112,4 @@ function traverse(tree1, cb1) {
 } // -----------------------------------------------------------------------------
 
 exports.traverse = traverse;
-exports.version = version;
+exports.version = version$1;

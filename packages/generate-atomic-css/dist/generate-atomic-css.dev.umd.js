@@ -2161,6 +2161,10 @@ function rightMain(_ref) {
 }
 
 function right(str, idx) {
+  if (idx === void 0) {
+    idx = 0;
+  }
+
   return rightMain({
     str: str,
     idx: idx,
@@ -2251,6 +2255,10 @@ function leftMain(_ref2) {
 }
 
 function left(str, idx) {
+  if (idx === void 0) {
+    idx = 0;
+  }
+
   return leftMain({
     str: str,
     idx: idx,
@@ -2458,11 +2466,6 @@ var CONFIGHEAD = headsAndTails.CONFIGHEAD,
     CONTENTHEAD = headsAndTails.CONTENTHEAD,
     CONTENTTAIL = headsAndTails.CONTENTTAIL;
 var padLeftIfTheresOnTheLeft = [":"];
-/* eslint no-control-regex: 0 */
-
-function trimEnd(str) {
-  return str.replace(new RegExp(/[\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF]+/.source + "$", "g"), "");
-}
 
 function extractConfig(str) {
   var extractedConfig = str;
@@ -2720,7 +2723,7 @@ function extractFromToSource(str, fromDefault, toDefault) {
   // that follows the last closing curly brace
 
   if (str.lastIndexOf("}") > 0 && str.slice(str.lastIndexOf("}") + 1).includes("|")) {
-    source = trimEnd(str.slice(0, str.indexOf("|", str.lastIndexOf("}") + 1)));
+    source = str.slice(0, str.indexOf("|", str.lastIndexOf("}") + 1)).trimEnd();
 
     if (source.trim().startsWith("|")) {
 
@@ -2773,7 +2776,7 @@ function extractFromToSource(str, fromDefault, toDefault) {
         }
       }
     }
-    source = trimEnd(str.slice(startFrom, endTo));
+    source = str.slice(startFrom, endTo).trimEnd();
   }
 
   return [from, to, source];
@@ -2964,6 +2967,7 @@ function prepConfig(str, progressFn, progressFrom, progressTo, trim, generatedCo
   }), trim).join("\n");
 }
 
+var version$1 = version;
 var defaults = {
   includeConfig: true,
   includeHeadsAndTails: true,
@@ -3165,7 +3169,7 @@ exports.defaults = defaults;
 exports.extractFromToSource = extractFromToSource;
 exports.genAtomic = genAtomic;
 exports.headsAndTails = headsAndTails;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

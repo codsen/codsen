@@ -25,6 +25,8 @@ var scriptJson = ["adlm", "afak", "aghb", "ahom", "arab", "aran", "armi", "armn"
 
 var variantJson = ["1606nict", "1694acad", "1901", "1959acad", "1994", "1996", "abl1943", "akuapem", "alalc97", "aluku", "ao1990", "aranes", "arevela", "arevmda", "asante", "auvern", "baku1926", "balanka", "barla", "basiceng", "bauddha", "biscayan", "biske", "bohoric", "boont", "bornholm", "cisaup", "colb1945", "cornu", "creiss", "dajnko", "ekavsk", "emodeng", "fonipa", "fonkirsh", "fonnapa", "fonupa", "fonxsamp", "gascon", "grclass", "grital", "grmistr", "hepburn", "heploc", "hognorsk", "hsistemo", "ijekavsk", "itihasa", "ivanchov", "jauer", "jyutping", "kkcor", "kociewie", "kscor", "laukika", "lemosin", "lengadoc", "lipaw", "luna1918", "metelko", "monoton", "ndyuka", "nedis", "newfound", "nicard", "njiva", "nulik", "osojs", "oxendict", "pahawh2", "pahawh3", "pahawh4", "pamaka", "petr1708", "pinyin", "polyton", "provenc", "puter", "rigik", "rozaj", "rumgr", "scotland", "scouse", "simple", "solba", "sotav", "spanglis", "surmiran", "sursilv", "sutsilv", "tarask", "uccor", "ucrcor", "ulster", "unifon", "vaidika", "valencia", "vallader", "vivaraup", "wadegile", "xsistemo"];
 
+var version$1 = version;
+
 var language = languageJson;
 var extlang = extlangJson;
 var grandfathered = grandfatheredJson;
@@ -425,4 +427,4 @@ function isLangCode(str) {
 }
 
 exports.isLangCode = isLangCode;
-exports.version = version;
+exports.version = version$1;

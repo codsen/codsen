@@ -40,7 +40,7 @@
     "devunittest": "npm run dev && ./node_modules/.bin/tap --only -R 'base' && npm run clean_cov",
     "format": "npm run lect && npm run prettier && npm run lint",
     "lect": "lect",
-    "lint": "../../node_modules/eslint/bin/eslint.js \"**/*.js\" --fix --config \"../../.eslintrc.json\" --quiet",
+    "lint": "../../node_modules/eslint/bin/eslint.js . --ext .js --fix --config \"../../.eslintrc.json\" --quiet",
     "prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md,ts}' --write --loglevel silent",
     "republish": "npm publish || :",
     "tap": "tap",
@@ -65,7 +65,14 @@
       ]
     },
     "various": {
-      "devDependencies": []
+      "devDependencies": [
+        "@types/lodash.camelcase",
+        "@types/lodash.clonedeep",
+        "@types/lodash.isequal",
+        "@types/lodash.isplainobject",
+        "@types/lodash.partition",
+        "@types/lodash.trim"
+      ]
     }
   },
   "dependencies": {
@@ -87,8 +94,13 @@
     "write-file-atomic": "^3.0.3"
   },
   "devDependencies": {
+    "@types/lodash.camelcase": "^4.3.6",
+    "@types/lodash.clonedeep": "^4.5.6",
+    "@types/lodash.isequal": "^4.5.5",
+    "@types/lodash.isplainobject": "^4.0.6",
+    "@types/lodash.partition": "^4.6.6",
+    "@types/lodash.trim": "^4.5.6",
     "eslint": "^7.15.0",
-    "fs-extra": "^9.0.1",
     "lect": "^0.15.1",
     "tap": "^14.11.0",
     "tempy": "^1.0.0",

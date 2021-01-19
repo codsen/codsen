@@ -14,6 +14,7 @@ import { parent } from 'ast-monkey-util';
 var version = "1.13.1";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types:0 */
+const version$1 = version;
 
 function traverse(tree1, cb1) {
   const stop2 = {
@@ -98,4 +99,4 @@ function traverse(tree1, cb1) {
   return traverseInner(tree1, cb1, {}, stop2);
 } // -----------------------------------------------------------------------------
 
-export { traverse, version };
+export { traverse, version$1 as version };

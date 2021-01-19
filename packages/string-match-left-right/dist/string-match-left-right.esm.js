@@ -27,14 +27,21 @@ const defaults = {
   maxMismatches: 0,
   firstMustMatch: false,
   lastMustMatch: false
-}; // eslint-disable-next-line consistent-return
+};
 
-function march(str, position, whatToMatchVal, opts, special, getNextIdx) {
+const defaultGetNextIdx = index => index + 1; // eslint-disable-next-line consistent-return
+
+
+function march(str, position, whatToMatchVal, originalOpts, special = false, getNextIdx = defaultGetNextIdx) {
   const whatToMatchValVal = typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal; // early ending case if matching EOL being at 0-th index:
 
-  if (position < 0 && special && whatToMatchValVal === "EOL") {
+  if (+position < 0 && special && whatToMatchValVal === "EOL") {
     return whatToMatchValVal;
   }
+
+  const opts = { ...defaults,
+    ...originalOpts
+  };
 
   if (position >= str.length && !special) {
     return false;
@@ -219,7 +226,13 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   const opts = { ...defaults,
     ...originalOpts
   };
-  opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching) || [];
+
+  if (typeof opts.trimCharsBeforeMatching === "string") {
+    // arrayiffy if needed:
+    opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching);
+  } // stringify all:
+
+
   opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(el => isStr(el) ? el : String(el));
 
   if (!isStr(str)) {

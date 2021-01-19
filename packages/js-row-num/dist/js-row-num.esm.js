@@ -12,6 +12,7 @@ import { rApply } from 'ranges-apply';
 
 var version = "3.0.2";
 
+const version$1 = version;
 const BACKSLASH = `\u005C`;
 const defaults = {
   padStart: 3,
@@ -252,4 +253,4 @@ function fixRowNums(str, originalOpts) {
   return str;
 }
 
-export { defaults, fixRowNums, version };
+export { defaults, fixRowNums, version$1 as version };

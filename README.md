@@ -1,6 +1,6 @@
 # Codsen
 
-> A lerna monorepo for our 122 npm packages 📦📦📦
+> A lerna monorepo for our 121 npm packages 📦📦📦
 
 ## 📚 Documentation
 
@@ -14,4 +14,4 @@ For bugs, feature requests and so on use the [Issue Tracker](https://todo.sr.ht/
 
 MIT License
 
-Copyright (c) 2010-2020 Roy Revelt and other contributors
+Copyright (c) 2010-2021 Roy Revelt and other contributors

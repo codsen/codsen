@@ -55,7 +55,7 @@ npm i${state.isCLI ? " -g" : ""} ${state.pack.name}
 \`\`\`
 
 ${
-  state.isCLI
+  state.isCLI && state.pack.bin
     ? `\n\nThen, call it from the command line using ${
         state.pack.bin && Object.keys(state.pack.bin).length > 1
           ? "one of the following keywords"

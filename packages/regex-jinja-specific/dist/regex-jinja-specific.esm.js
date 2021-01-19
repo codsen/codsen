@@ -9,8 +9,10 @@
 
 var version = "1.0.1";
 
+const version$1 = version;
+
 function isJinjaSpecific() {
   return /(set\s*[\w]+\s*=\s*namespace\()|({{['"][\w]+['"]\s+if)|(['"]%x?[+0]?[.>^<]?\d+[\w%]['"]\|format\()/gi;
 }
 
-export { isJinjaSpecific, version };
+export { isJinjaSpecific, version$1 as version };

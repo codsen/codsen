@@ -1,4 +1,4 @@
-import { version } from "../package.json";
+declare const version: string;
 interface UnknownValueObj {
     [key: string]: any;
 }
@@ -7,5 +7,6 @@ interface Opts {
     cb?: null | ((varValue: string) => any);
 }
 declare const defaults: Opts;
-declare function extractVars(str: string, originalOpts?: Opts): UnknownValueObj;
-export { extractVars, defaults, version };
+declare function extractVars(str: string, originalOpts?: Partial<Opts>): UnknownValueObj;
+
+export { defaults, extractVars, version };

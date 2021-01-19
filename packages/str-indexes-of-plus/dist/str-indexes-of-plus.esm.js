@@ -9,6 +9,8 @@
 
 var version = "2.11.0";
 
+const version$1 = version;
+
 function strIndexesOfPlus(str, searchValue, fromIndex = 0) {
   if (typeof str !== "string") {
     throw new TypeError(`str-indexes-of-plus/strIndexesOfPlus(): first input argument must be a string! Currently it's: ${typeof str}`);
@@ -65,4 +67,4 @@ function strIndexesOfPlus(str, searchValue, fromIndex = 0) {
   return res;
 }
 
-export { strIndexesOfPlus, version };
+export { strIndexesOfPlus, version$1 as version };

@@ -20,6 +20,7 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
 var version = "1.10.1";
 
+var version$1 = version;
 var defaults = {
   dedupe: true
 };
@@ -59,4 +60,4 @@ function generateAst(input, originalOpts) {
 
 exports.defaults = defaults;
 exports.generateAst = generateAst;
-exports.version = version;
+exports.version = version$1;

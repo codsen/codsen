@@ -17,6 +17,7 @@ import { nonEmpty } from 'util-nonempty';
 var version = "10.12.1";
 
 /* eslint max-len:0, no-prototype-builtins:0, @typescript-eslint/ban-types: 0, @typescript-eslint/explicit-module-boundary-types: 0 */
+const version$1 = version;
 // F U N C T I O N S
 
 function isStr(something) {
@@ -635,4 +636,4 @@ function externalApi(input1orig, input2orig, originalOpts) {
   }, input1orig, input2orig, originalOpts);
 }
 
-export { defaults, externalApi as mergeAdvanced, version };
+export { defaults, externalApi as mergeAdvanced, version$1 as version };

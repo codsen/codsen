@@ -4361,6 +4361,10 @@ function rMerge(arrOfRanges, originalOpts) {
     sortedRanges = rSort(filtered);
   }
 
+  if (!sortedRanges) {
+    return null;
+  }
+
   var len = sortedRanges.length - 1; // reset 80% of progress is this loop:
   // loop from the end:
 
@@ -4558,11 +4562,18 @@ var lodash_isplainobject = isPlainObject;
 
 var version = "3.0.3";
 
+var version$1 = version;
+
 function chomp(str) {
   // eslint-disable-next-line no-param-reassign
   str = str.replace(/(amp;)|(#x26;)/gi, "");
   return str;
 }
+
+var defaults$2 = {
+  isAttributeValue: false,
+  strict: false
+};
 
 function rEntDecode(str, originalOpts) {
   // insurance:
@@ -4578,17 +4589,7 @@ function rEntDecode(str, originalOpts) {
     throw new TypeError("ranges-ent-decode/decode(): [THROW_ID_02] Optional Options Object, the second in put argument, must be a plain object! Currently it's given as " + originalOpts + ", type " + typeof originalOpts);
   }
 
-  var defaults = {
-    isAttributeValue: false,
-    strict: false
-  };
-  var opts;
-
-  if (!originalOpts) {
-    opts = defaults;
-  } else {
-    opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
-  } // vars
+  var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts); // vars
   // ---------------------------------------------------------------------------
   // single, non-recursively encoded entity:
   // /&(#?[^;\W]+;?)/g;
@@ -4632,8 +4633,9 @@ function rEntDecode(str, originalOpts) {
   return rMerge(rangesArr);
 }
 
+exports.defaults = defaults$2;
 exports.rEntDecode = rEntDecode;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

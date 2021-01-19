@@ -26,6 +26,7 @@ var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
 var version = "7.11.1";
 
+var version$1 = version;
 var defaults = {
   placeholder: false,
   doNotFillThesePathsIfTheyContainPlaceholders: [],
@@ -158,4 +159,4 @@ function fillMissing(originalIncompleteWrapper, originalSchemaWrapper, originalO
 }
 
 exports.fillMissing = fillMissing;
-exports.version = version;
+exports.version = version$1;

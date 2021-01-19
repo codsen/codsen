@@ -1,7 +1,8 @@
 /* eslint quote-props:0 */
 
 import he from "he";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 function existy(x: any): boolean {
   return x != null;

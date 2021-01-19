@@ -2095,6 +2095,8 @@ function parent(str) {
 
 var version = "1.13.1";
 
+var version$1 = version;
+
 function traverse(tree1, cb1) {
   var stop2 = {
     now: false
@@ -2181,7 +2183,7 @@ function traverse(tree1, cb1) {
 } // -----------------------------------------------------------------------------
 
 exports.traverse = traverse;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

@@ -8,6 +8,7 @@ import banner from "rollup-plugin-banner";
 import babel from "@rollup/plugin-babel";
 import strip from "@rollup/plugin-strip";
 import json from "@rollup/plugin-json";
+import dts from "rollup-plugin-dts";
 import pkg from "./package.json";
 
 const licensePiece = `${pkg.name}
@@ -70,8 +71,8 @@ export default (commandLineArgs) => {
         terser({
           compress: {
             pure_getters: true,
-            unsafe: true,
-            unsafe_comps: true,
+            unsafe: false,
+            unsafe_comps: false,
             warnings: false,
           },
         }),
@@ -134,8 +135,7 @@ export default (commandLineArgs) => {
         json(),
         typescript({
           tsconfig: "../../tsconfig.build.json",
-          declaration: true,
-          declarationDir: "./types",
+          declaration: false,
         }),
         babel({
           extensions,
@@ -232,13 +232,20 @@ export default (commandLineArgs) => {
         terser({
           compress: {
             pure_getters: true,
-            unsafe: true,
-            unsafe_comps: true,
+            unsafe: false,
+            unsafe_comps: false,
             warnings: false,
           },
         }),
         banner(licensePiece),
       ],
+    },
+
+    // Type definitions
+    {
+      input: "src/main.ts",
+      output: [{ file: "types/main.d.ts", format: "es" }],
+      plugins: [json(), dts()],
     },
   ];
 

@@ -13,6 +13,8 @@ import isObj from 'lodash.isplainobject';
 
 var version = "4.9.1";
 
+const version$1 = version;
+
 function flattenAllArrays(originalIncommingObj, originalOpts) {
   //
   // internal functions
@@ -82,4 +84,4 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
   return incommingObj;
 }
 
-export { flattenAllArrays, version };
+export { flattenAllArrays, version$1 as version };

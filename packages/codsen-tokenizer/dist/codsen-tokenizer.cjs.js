@@ -1283,7 +1283,7 @@ function tokenizer(str, originalOpts) {
         //                 ^
         //          we're here
         //
-        token.queryEndsAt = stringLeftRight.left(str, _i + 1);
+        token.queryEndsAt = stringLeftRight.left(str, _i + 1) || 0;
       }
 
       if (token.queryStartsAt && token.queryEndsAt) {

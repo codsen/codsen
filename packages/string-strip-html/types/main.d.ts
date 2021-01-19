@@ -1,5 +1,10 @@
-import { version } from "../package.json";
-import { Range, Ranges as RangesType } from "../../../scripts/common";
+import { Ranges as Ranges$1 } from 'ranges-push';
+
+declare type Range = [from: number, to: number] | [from: number, to: number, whatToInsert: string | null | undefined];
+declare type Ranges = Range[] | null;
+
+declare const version: string;
+
 interface Tag {
     attributes: string[];
     lastClosingBracketAt: number;
@@ -17,7 +22,7 @@ interface CbObj {
     deleteFrom: null | number;
     deleteTo: null | number;
     insert: null | string;
-    rangesArr: Range[] | null;
+    rangesArr: Ranges$1;
     proposedReturn: Range | null;
 }
 interface Opts {
@@ -32,7 +37,7 @@ interface Opts {
         wrapHeads: string;
         wrapTails: string;
     };
-    cb: null | ((cbObj: Partial<CbObj>) => void);
+    cb: null | ((cbObj: CbObj) => void);
 }
 declare const defaults: {
     ignoreTags: never[];
@@ -53,9 +58,10 @@ interface Res {
         timeTakenInMilliseconds: number;
     };
     result: string;
-    ranges: RangesType;
+    ranges: Ranges;
     allTagLocations: [number, number][];
     filteredTagLocations: [number, number][];
 }
 declare function stripHtml(str: string, originalOpts?: Partial<Opts>): Res;
-export { stripHtml, defaults, version };
+
+export { CbObj, defaults, stripHtml, version };

@@ -15,7 +15,7 @@ var rangesMerge = require('ranges-merge');
 
 var version = "4.0.2";
 
-/* eslint @typescript-eslint/ban-ts-comment:1 */
+var version$1 = version;
 
 function rApply(str, originalRangesArr, _progressFn) {
   var percentageDone = 0;
@@ -46,8 +46,8 @@ function rApply(str, originalRangesArr, _progressFn) {
 
   var rangesArr;
 
-  if (Array.isArray(originalRangesArr) && Number.isInteger(+originalRangesArr[0]) && +originalRangesArr[0] >= 0 && Number.isInteger(+originalRangesArr[1]) && +originalRangesArr[1] >= 0) {
-    // @ts-ignore
+  if (Array.isArray(originalRangesArr) && Number.isInteger(originalRangesArr[0]) && Number.isInteger(originalRangesArr[1])) {
+    // if single array was passed, wrap it into an array
     rangesArr = [Array.from(originalRangesArr)];
   } else {
     rangesArr = Array.from(originalRangesArr);
@@ -142,4 +142,4 @@ function rApply(str, originalRangesArr, _progressFn) {
 }
 
 exports.rApply = rApply;
-exports.version = version;
+exports.version = version$1;

@@ -30,6 +30,8 @@ function extraRequirements(str, idx) {
 
 var version = "1.10.1";
 
+const version$1 = version;
+
 function isOpening(str, idx = 0, originalOpts) {
   // -----------------------------------------------------------------------------
 
@@ -142,4 +144,4 @@ function isOpening(str, idx = 0, originalOpts) {
   return res;
 }
 
-export { defaultOpts as defaults, isOpening, version };
+export { defaultOpts as defaults, isOpening, version$1 as version };

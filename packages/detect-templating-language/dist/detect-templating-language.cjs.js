@@ -17,6 +17,8 @@ var regexJinjaSpecific = require('regex-jinja-specific');
 
 var version = "1.1.1";
 
+var version$1 = version;
+
 function detectLang(str) {
   var name = null;
 
@@ -49,4 +51,4 @@ function detectLang(str) {
 }
 
 exports.detectLang = detectLang;
-exports.version = version;
+exports.version = version$1;

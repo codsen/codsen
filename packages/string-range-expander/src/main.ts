@@ -1,21 +1,22 @@
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 import { Range } from "../../../scripts/common";
 
 interface Opts {
   str: string;
   from: number;
   to: number;
-  ifLeftSideIncludesThisThenCropTightly?: string;
-  ifLeftSideIncludesThisCropItToo?: string;
-  ifRightSideIncludesThisThenCropTightly?: string;
-  ifRightSideIncludesThisCropItToo?: string;
-  extendToOneSide?: false | "left" | "right";
-  wipeAllWhitespaceOnLeft?: boolean;
-  wipeAllWhitespaceOnRight?: boolean;
-  addSingleSpaceToPreventAccidentalConcatenation?: boolean;
+  ifLeftSideIncludesThisThenCropTightly: string;
+  ifLeftSideIncludesThisCropItToo: string;
+  ifRightSideIncludesThisThenCropTightly: string;
+  ifRightSideIncludesThisCropItToo: string;
+  extendToOneSide: false | "left" | "right";
+  wipeAllWhitespaceOnLeft: boolean;
+  wipeAllWhitespaceOnRight: boolean;
+  addSingleSpaceToPreventAccidentalConcatenation: boolean;
 }
 
-const defaults: Required<Opts> = {
+const defaults: Opts = {
   str: "",
   from: 0,
   to: 0,
@@ -29,7 +30,7 @@ const defaults: Required<Opts> = {
   addSingleSpaceToPreventAccidentalConcatenation: false,
 };
 
-function expander(originalOpts: Opts): Range {
+function expander(originalOpts: Partial<Opts>): Range {
   const letterOrDigit = /^[0-9a-zA-Z]+$/;
 
   // Internal functions
@@ -97,6 +98,8 @@ function expander(originalOpts: Opts): Range {
     );
   }
   if (
+    originalOpts &&
+    originalOpts.str &&
     !originalOpts.str[originalOpts.from] &&
     originalOpts.from !== originalOpts.to
   ) {
@@ -104,7 +107,11 @@ function expander(originalOpts: Opts): Range {
       `string-range-expander: [THROW_ID_05] The given input string opts.str ("${originalOpts.str}") must contain the character at index "from" ("${originalOpts.from}")`
     );
   }
-  if (!originalOpts.str[originalOpts.to - 1]) {
+  if (
+    originalOpts &&
+    originalOpts.str &&
+    !originalOpts.str[originalOpts.to - 1]
+  ) {
     throw new Error(
       `string-range-expander: [THROW_ID_06] The given input string, opts.str ("${
         originalOpts.str
@@ -136,7 +143,7 @@ function expander(originalOpts: Opts): Range {
   // Prepare the opts
   // ---------------------------------------------------------------------------
 
-  const opts: Required<Opts> = { ...defaults, ...originalOpts };
+  const opts: Opts = { ...defaults, ...originalOpts };
   if (Array.isArray(opts.ifLeftSideIncludesThisThenCropTightly)) {
     let culpritsIndex;
     let culpritsValue;

@@ -13,6 +13,8 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var version = "4.0.0";
 
+var version$1 = version;
+
 function collWhitespace(str, originallineBreakLimit) {
   if (originallineBreakLimit === void 0) {
     originallineBreakLimit = 1;
@@ -117,4 +119,4 @@ function collWhitespace(str, originallineBreakLimit) {
 }
 
 exports.collWhitespace = collWhitespace;
-exports.version = version;
+exports.version = version$1;

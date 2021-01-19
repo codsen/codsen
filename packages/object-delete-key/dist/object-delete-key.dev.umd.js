@@ -3571,8 +3571,6 @@ function parent(str) {
   return null;
 }
 
-/* eslint @typescript-eslint/explicit-module-boundary-types:0 */
-
 function traverse(tree1, cb1) {
   var stop2 = {
     now: false
@@ -4792,9 +4790,8 @@ var lodash_intersection = intersection;
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
  */
-// If a non-empty string is given, put it into an array.
-// If an empty string is given, return an empty array.
-// Bypass everything else.
+
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 function arrayiffy(something) {
   if (typeof something === "string") {
     if (something.length) {
@@ -5241,8 +5238,10 @@ function internalApi(obj, ref, originalOptions) {
   }
 
   function pullAllWithGlob(originalInput, toBeRemoved) {
-    // eslint-disable-next-line no-param-reassign
-    toBeRemoved = arrayiffy(toBeRemoved);
+    if (typeof toBeRemoved === "string") {
+      toBeRemoved = arrayiffy(toBeRemoved);
+    }
+
     return Array.from(originalInput).filter(function (originalVal) {
       return !toBeRemoved.some(function (remVal) {
         return matcher.isMatch(originalVal, remVal, {
@@ -5265,22 +5264,16 @@ function internalApi(obj, ref, originalOptions) {
 
   var opts = _objectSpread2(_objectSpread2({}, defaults), originalOptions);
 
-  if (!existy(opts.ignoreKeys) || typeof opts.ignoreKeys !== "string" && !Array.isArray(opts.ignoreKeys)) {
-    opts.ignoreKeys = [];
-  } else {
-    opts.ignoreKeys = arrayiffy(opts.ignoreKeys);
+  if (typeof opts.ignoreKeys === "string") {
+    opts.ignoreKeys = [opts.ignoreKeys];
   }
 
-  if (!existy(opts.ignorePaths) || typeof opts.ignorePaths !== "string" && !Array.isArray(opts.ignorePaths)) {
-    opts.ignorePaths = [];
-  } else {
-    opts.ignorePaths = arrayiffy(opts.ignorePaths);
+  if (typeof opts.ignorePaths === "string") {
+    opts.ignorePaths = [opts.ignorePaths];
   }
 
-  if (!existy(opts.acceptArraysIgnore) || typeof opts.acceptArraysIgnore !== "string" && !Array.isArray(opts.acceptArraysIgnore)) {
-    opts.acceptArraysIgnore = [];
-  } else {
-    opts.acceptArraysIgnore = arrayiffy(opts.acceptArraysIgnore);
+  if (typeof opts.acceptArraysIgnore === "string") {
+    opts.acceptArraysIgnore = [opts.acceptArraysIgnore];
   }
 
   opts.msg = ("" + opts.msg).trim();
@@ -6027,7 +6020,6 @@ function del(input, originalOpts) {
  * License: MIT
  * Homepage: https://codsen.com/os/ast-is-empty/
  */
-/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
 function isEmpty(input) {
   var i;
@@ -6078,6 +6070,8 @@ function isEmpty(input) {
 }
 
 var version = "1.10.1";
+
+var version$1 = version;
 
 function deleteKey(originalInput, originalOpts) {
   function existy(x) {
@@ -6154,7 +6148,7 @@ function deleteKey(originalInput, originalOpts) {
 }
 
 exports.deleteKey = deleteKey;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

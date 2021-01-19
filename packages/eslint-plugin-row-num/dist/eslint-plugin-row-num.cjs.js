@@ -11,7 +11,7 @@
 
 var jsRowNum = require('js-row-num');
 
-/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+// import stringify from "json-stringify-safe";
 
 var create = function create(context) {
   // console.log(

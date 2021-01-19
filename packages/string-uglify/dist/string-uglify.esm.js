@@ -9,6 +9,8 @@
 
 var version = "1.3.4";
 
+const version$1 = version; // tells code point of a given id number
+
 function tellcp(str, idNum = 0) {
   return str.codePointAt(idNum) || 0;
 } // converts whole array into array uglified names
@@ -225,4 +227,4 @@ function uglifyById(refArr, idNum) {
   return uglifyArr(refArr)[idNum];
 } // main export
 
-export { uglifyArr, uglifyById, version };
+export { uglifyArr, uglifyById, version$1 as version };

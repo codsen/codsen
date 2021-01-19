@@ -38,6 +38,8 @@ var pOne__default = /*#__PURE__*/_interopDefaultLegacy(pOne);
 
 var version = "6.7.1";
 
+var version$1 = version;
+
 function existy(x) {
   return x != null;
 }
@@ -454,4 +456,4 @@ exports.getKeyset = getKeyset;
 exports.getKeysetSync = getKeysetSync;
 exports.noNewKeysSync = noNewKeysSync;
 exports.sortAllObjectsSync = sortAllObjectsSync;
-exports.version = version;
+exports.version = version$1;

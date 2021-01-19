@@ -1,11 +1,12 @@
-import { version } from "../package.json";
+declare const version: string;
 interface Opts {
-    flagUpUrisWithSchemes?: boolean;
-    offset?: 0;
+    flagUpUrisWithSchemes: boolean;
+    offset: number;
 }
 interface Res {
     res: boolean;
     message: string | null;
 }
-declare function isRel(str: string, originalOpts?: Opts): Res;
+declare function isRel(str: string, originalOpts?: Partial<Opts>): Res;
+
 export { isRel, version };

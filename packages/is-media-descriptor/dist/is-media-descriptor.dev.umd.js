@@ -653,6 +653,7 @@ function loop(str, opts, res) {
 
 var version = "2.0.2";
 
+var version$1 = version;
 var defaults = {
   offset: 0
 }; // See https://drafts.csswg.org/mediaqueries/
@@ -952,7 +953,7 @@ function isMediaD(originalStr, originalOpts) {
 
 exports.defaults = defaults;
 exports.isMediaD = isMediaD;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

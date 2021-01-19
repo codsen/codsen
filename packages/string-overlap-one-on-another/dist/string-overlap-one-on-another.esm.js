@@ -9,6 +9,7 @@
 
 var version = "1.6.0";
 
+const version$1 = version;
 const defaults = {
   offset: 0,
   offsetFillerCharacter: " "
@@ -73,4 +74,4 @@ function overlap(str1, str2, originalOpts) {
   return str2 + (str1.length > str2.length ? str1.slice(str2.length) : "");
 }
 
-export { overlap, version };
+export { overlap, version$1 as version };

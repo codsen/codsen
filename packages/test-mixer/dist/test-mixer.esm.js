@@ -12,6 +12,8 @@ import clone from 'lodash.clonedeep';
 
 var version = "1.0.1";
 
+const version$1 = version;
+
 function mixer(ref = {}, defaultsObj = {}) {
   if (ref && typeof ref !== "object") {
     throw new Error(`test-mixer: [THROW_ID_01] the first input arg is missing!`);
@@ -58,4 +60,4 @@ function mixer(ref = {}, defaultsObj = {}) {
   return res;
 }
 
-export { mixer, version };
+export { mixer, version$1 as version };

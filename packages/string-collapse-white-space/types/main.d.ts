@@ -1,5 +1,8 @@
-import { version } from "../package.json";
-import { Range, Ranges as RangesType } from "../../../scripts/common";
+declare type Range = [from: number, to: number] | [from: number, to: number, whatToInsert: string | null | undefined];
+declare type Ranges = Range[] | null;
+
+declare const version: string;
+
 interface Extras {
     whiteSpaceStartsAt: null | number;
     whiteSpaceEndsAt: null | number;
@@ -22,8 +25,9 @@ interface Opts {
 declare const defaults: Opts;
 interface Res {
     result: string;
-    ranges: RangesType;
+    ranges: Ranges;
 }
 declare const cbSchema: string[];
 declare function collapse(str: string, originalOpts?: Partial<Opts>): Res;
-export { collapse, cbSchema, defaults, version };
+
+export { cbSchema, collapse, defaults, version };

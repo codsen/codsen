@@ -98,6 +98,8 @@ function findAttrNameCharsChunkOnTheLeft(str, i) {
 
 var version = "1.5.0";
 
+const version$1 = version;
+
 function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
   if (typeof str !== "string" || !str.trim() || !Number.isInteger(idxOfAttrOpening) || !Number.isInteger(isThisClosingIdx) || !str[idxOfAttrOpening] || !str[isThisClosingIdx] || idxOfAttrOpening >= isThisClosingIdx) {
     return false;
@@ -238,25 +240,9 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       //         start      suspected/we're currently on
       //
       chunkStartsAt && chunkStartsAt < i && allHtmlAttribs.has(str.slice(chunkStartsAt, i).trim()); // imagine:
-      // <z bbb"c" ddd"e'>
-      //       ^ ^
-      //      /  \
-      //  start  suspected
-      //
-      // <z bbb"c" ddd"e'>
-      //              ^
-      //          currently on
-      // E23, recognised attribute name is very weighty argument; however
-      // in light of unrecognised attributes, we might still try to salvage
-      // some, as long as they resemble valid attribute names. We just
-      // validate each character and drop in more rules into the bag,
-      // like requiring whitespace to be in front and opening/closing to match
-      // there's a whitespace in front of last chunk ("ddd" in example above)
-
-      let plausibleAttrName;
 
       if (chunkStartsAt) {
-        plausibleAttrName = str.slice(chunkStartsAt, i).trim();
+        str.slice(chunkStartsAt, i).trim();
       }
       const E33 = chunkStartsAt && chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim() && // and whole chunk is a plausible attribute name
       Array.from(str.slice(chunkStartsAt, i).trim()).every(char => isAttrNameChar(char)) && // known opening and suspected closing are both singles or doubles
@@ -831,4 +817,4 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
   return false;
 }
 
-export { isAttrClosing, version };
+export { isAttrClosing, version$1 as version };

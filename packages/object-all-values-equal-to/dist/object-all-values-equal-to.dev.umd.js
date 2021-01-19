@@ -2139,6 +2139,7 @@ var lodash_isequal = createCommonjsModule(function (module, exports) {
 
 var version = "1.9.1";
 
+var version$1 = version; // T H E   M A I N   F U N C T I O N   T H A T   D O E S   T H E   J O B
 // -----------------------------------------------------------------------------
 
 function allValuesEqualTo(input, value, opts) {
@@ -2213,7 +2214,7 @@ function allEq(inputOriginal, valueOriginal, originalOpts) {
 }
 
 exports.allEq = allEq;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

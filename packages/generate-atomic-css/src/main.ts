@@ -1,5 +1,6 @@
 import { left, right } from "string-left-right";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 import {
   Obj,
   prepConfig,

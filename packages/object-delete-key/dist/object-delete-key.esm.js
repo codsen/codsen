@@ -14,6 +14,8 @@ import { arrObjOrBoth } from 'util-array-object-or-both';
 
 var version = "1.10.1";
 
+const version$1 = version;
+
 function deleteKey(originalInput, originalOpts) {
   function existy(x) {
     return x != null;
@@ -88,4 +90,4 @@ function deleteKey(originalInput, originalOpts) {
   });
 }
 
-export { deleteKey, version };
+export { deleteKey, version$1 as version };

@@ -1,12 +1,13 @@
 import { isIndexWithin } from "ranges-is-index-within";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 import { Range } from "../../../scripts/common";
 
 interface Opts {
   ignoreRanges: Range[];
 }
 
-function splitByW(str: string, originalOpts?: Opts): string[] {
+function splitByW(str: string, originalOpts?: Partial<Opts>): string[] {
   if (str === undefined) {
     throw new Error(
       "string-split-by-whitespace: [THROW_ID_01] The input is missing!"
@@ -22,7 +23,7 @@ function splitByW(str: string, originalOpts?: Opts): string[] {
   const defaults = {
     ignoreRanges: [],
   };
-  const opts = { ...defaults, ...originalOpts };
+  const opts: Opts = { ...defaults, ...originalOpts };
   if (
     opts.ignoreRanges.length > 0 &&
     !opts.ignoreRanges.every((arr) => Array.isArray(arr))

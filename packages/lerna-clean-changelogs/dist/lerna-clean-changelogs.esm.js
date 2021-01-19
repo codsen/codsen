@@ -9,6 +9,8 @@
 
 var version = "1.5.0";
 
+const version$1 = version;
+
 function isStr(something) {
   return typeof something === "string";
 }
@@ -108,9 +110,9 @@ function cleanChangelogs(changelogContents) {
   }
 
   return {
-    version,
+    version: version$1,
     res: final || changelogContents
   };
 }
 
-export { cleanChangelogs, version };
+export { cleanChangelogs, version$1 as version };

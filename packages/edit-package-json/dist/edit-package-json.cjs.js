@@ -16,6 +16,8 @@ var rangesApply = require('ranges-apply');
 
 var version = "0.2.3";
 
+var version$1 = version;
+
 function isStr(something) {
   return typeof something === "string";
 }
@@ -533,4 +535,4 @@ function del(str, path) {
 
 exports.del = del;
 exports.set = set;
-exports.version = version;
+exports.version = version$1;

@@ -21,6 +21,7 @@ var GraphemeSplitter__default = /*#__PURE__*/_interopDefaultLegacy(GraphemeSplit
 var version = "3.0.1";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types:0 */
+var version$1 = version; // inner function, common for both external API's methods that does the job:
 
 function strConvertIndexes(mode, str, indexes) {
   function isItOk(something) {
@@ -145,4 +146,4 @@ function unicodeToNative(str, indexes) {
 
 exports.nativeToUnicode = nativeToUnicode;
 exports.unicodeToNative = unicodeToNative;
-exports.version = version;
+exports.version = version$1;

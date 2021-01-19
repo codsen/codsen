@@ -4,7 +4,7 @@ import { left } from "string-left-right";
 import prep from "../util/prep";
 import getNewValue from "../util/getNewValue";
 
-interface Obj {
+export interface Obj {
   [key: string]: any;
 }
 

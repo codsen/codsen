@@ -1,4 +1,4 @@
-import { version } from "../package.json";
+declare const version: string;
 interface Opts {
     heads: string[];
     tails: string[];
@@ -9,4 +9,5 @@ interface LenientOpts {
 }
 declare const defaults: Opts;
 declare function remDup(str: string, originalOpts?: LenientOpts): string;
-export { remDup, defaults, version };
+
+export { defaults, remDup, version };

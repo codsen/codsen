@@ -510,9 +510,9 @@ interface TagToken {
   start: number;
   end: number;
   value: string;
-  tagNameStartsAt: null | number;
-  tagNameEndsAt: null | number;
-  tagName: null | string;
+  tagNameStartsAt: number;
+  tagNameEndsAt: number;
+  tagName: string;
   recognised: null | boolean;
   closing: null | boolean;
   void: null | boolean;
@@ -531,9 +531,9 @@ interface AtToken {
   identifier: null | string;
   identifierStartsAt: null | number;
   identifierEndsAt: null | number;
-  query: null | string;
-  queryStartsAt: null | number;
-  queryEndsAt: null | number;
+  query: string;
+  queryStartsAt: number;
+  queryEndsAt: number;
   openingCurlyAt: null | number;
   closingCurlyAt: null | number;
   rules: (RuleToken | TextToken)[];

@@ -23,6 +23,7 @@ var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 var version = "1.10.1";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+var version$1 = version; // ===================================
 // F U N C T I O N S
 
 function existy(x) {
@@ -136,4 +137,4 @@ function getObj(originalAst, keyValPair, replacementContentsArr) {
 }
 
 exports.getObj = getObj;
-exports.version = version;
+exports.version = version$1;

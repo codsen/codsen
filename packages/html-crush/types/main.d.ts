@@ -1,5 +1,8 @@
-import { version } from "../package.json";
-import { Ranges as RangesType } from "../../../scripts/common";
+declare type Range = [from: number, to: number] | [from: number, to: number, whatToInsert: string | null | undefined];
+declare type Ranges = Range[] | null;
+
+declare const version: string;
+
 interface Opts {
     lineLengthLimit: number;
     removeIndentations: boolean;
@@ -25,8 +28,9 @@ interface Res {
         removeHTMLComments: boolean;
         removeCSSComments: boolean;
     };
-    ranges: RangesType;
+    ranges: Ranges;
     result: string;
 }
-declare function crush(str: string, originalOpts?: Opts): Res;
+declare function crush(str: string, originalOpts?: Partial<Opts>): Res;
+
 export { crush, defaults, version };

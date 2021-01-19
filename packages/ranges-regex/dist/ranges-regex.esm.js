@@ -12,6 +12,8 @@ import isregexp from 'lodash.isregexp';
 
 var version = "3.0.3";
 
+const version$1 = version;
+
 function rRegex(regx, str, replacement) {
   // given regx validation
   if (regx === undefined) {
@@ -59,4 +61,4 @@ function rRegex(regx, str, replacement) {
   return null;
 }
 
-export { rRegex, version };
+export { rRegex, version$1 as version };

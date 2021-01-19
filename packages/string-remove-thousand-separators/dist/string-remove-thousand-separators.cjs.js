@@ -23,6 +23,8 @@ var trimChars__default = /*#__PURE__*/_interopDefaultLegacy(trimChars);
 
 var version = "4.0.3";
 
+var version$1 = version;
+
 function remSep(str, originalOpts) {
   // vars
   var allOK = true; // used to bail somewhere down the line. It's a killswitch.
@@ -168,4 +170,4 @@ function remSep(str, originalOpts) {
 }
 
 exports.remSep = remSep;
-exports.version = version;
+exports.version = version$1;

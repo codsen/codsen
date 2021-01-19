@@ -1,4 +1,4 @@
-import { version } from "../package.json";
+declare const version: string;
 interface Opts {
     skipContainers?: boolean;
     arrayStrictComparison?: boolean;
@@ -11,4 +11,5 @@ interface ErrorCallback {
     (errStr: string): void;
 }
 declare function deepContains(tree1: any, tree2: any, cb: Callback, errCb: ErrorCallback, originalOpts?: Opts): void;
+
 export { deepContains, defaults, version };

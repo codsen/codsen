@@ -1,5 +1,6 @@
 import { rMerge } from "ranges-merge";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 import { Ranges } from "../../../scripts/common";
 
 function rCrop(arrOfRanges: Ranges, strLen: number): Ranges {

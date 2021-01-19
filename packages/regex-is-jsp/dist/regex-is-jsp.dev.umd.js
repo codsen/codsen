@@ -15,12 +15,14 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 
 var version = "1.1.1";
 
+var version$1 = version;
+
 function isJSP() {
   return /<%|%>|<\s*jsp:|<\s*cms:|<\s*c:|\${\s*jsp/gi;
 }
 
 exports.isJSP = isJSP;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

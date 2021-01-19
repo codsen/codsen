@@ -1,7 +1,8 @@
 import { rApply } from "ranges-apply";
 import { Ranges } from "ranges-push";
 import trimChars from "lodash.trim";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 interface Opts {
   removeThousandSeparatorsFromNumbers: boolean;
@@ -9,7 +10,7 @@ interface Opts {
   forceUKStyle: boolean;
 }
 
-function remSep(str: string, originalOpts?: Opts): string {
+function remSep(str: string, originalOpts?: Partial<Opts>): string {
   // vars
   let allOK = true; // used to bail somewhere down the line. It's a killswitch.
   const knownSeparatorsArray = [".", ",", "'", " "];

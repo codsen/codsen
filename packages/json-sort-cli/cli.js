@@ -13,7 +13,7 @@ const isDirectory = require("is-d");
 const pReduce = require("p-reduce");
 const pFilter = require("p-filter");
 const sortObject = require("sorted-object");
-const traverse = require("ast-monkey-traverse");
+const { traverse } = require("ast-monkey-traverse");
 const isObj = require("lodash.isplainobject");
 const sortPackageJson = require("sort-package-json");
 

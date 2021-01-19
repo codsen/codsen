@@ -12,7 +12,7 @@ const path = require("path");
 const updateNotifier = require("update-notifier");
 const pReduce = require("p-reduce");
 const pFilter = require("p-filter");
-const clean = require("lerna-clean-changelogs");
+const { cleanChangelogs } = require("lerna-clean-changelogs");
 const { promisify } = require("util");
 const write = require("write-file-atomic");
 
@@ -68,7 +68,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
     .then((filesContent) => {
       let preppedContents;
       try {
-        preppedContents = clean(filesContent);
+        preppedContents = cleanChangelogs(filesContent);
       } catch (err) {
         return null;
       }

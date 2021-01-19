@@ -3,7 +3,8 @@
 import { traverse } from "ast-monkey-traverse";
 import matcher from "matcher";
 import clone from "lodash.clonedeep";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 interface Findings {
   val: any;

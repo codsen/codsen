@@ -1,4 +1,4 @@
-import { version } from "../package.json";
+declare const version: string;
 interface Opts {
     leftOutsideNot: string | string[];
     leftOutside: string | string[];
@@ -18,4 +18,5 @@ interface Opts {
     };
 }
 declare function er(originalSource: string, options: Opts, originalReplacement: string): string;
+
 export { er, version };

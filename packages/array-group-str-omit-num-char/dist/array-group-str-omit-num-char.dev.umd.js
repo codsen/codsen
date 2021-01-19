@@ -1174,6 +1174,10 @@ function rMerge(arrOfRanges, originalOpts) {
     sortedRanges = rSort(filtered);
   }
 
+  if (!sortedRanges) {
+    return null;
+  }
+
   var len = sortedRanges.length - 1; // reset 80% of progress is this loop:
   // loop from the end:
 
@@ -1231,7 +1235,6 @@ function rMerge(arrOfRanges, originalOpts) {
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/
  */
-/* eslint @typescript-eslint/ban-ts-comment:1 */
 
 function rApply(str, originalRangesArr, _progressFn) {
   var percentageDone = 0;
@@ -1262,8 +1265,8 @@ function rApply(str, originalRangesArr, _progressFn) {
 
   var rangesArr;
 
-  if (Array.isArray(originalRangesArr) && Number.isInteger(+originalRangesArr[0]) && +originalRangesArr[0] >= 0 && Number.isInteger(+originalRangesArr[1]) && +originalRangesArr[1] >= 0) {
-    // @ts-ignore
+  if (Array.isArray(originalRangesArr) && Number.isInteger(originalRangesArr[0]) && Number.isInteger(originalRangesArr[1])) {
+    // if single array was passed, wrap it into an array
     rangesArr = [Array.from(originalRangesArr)];
   } else {
     rangesArr = Array.from(originalRangesArr);
@@ -1359,6 +1362,7 @@ function rApply(str, originalRangesArr, _progressFn) {
 
 var version = "3.0.3";
 
+var version$1 = version;
 var defaults$2 = {
   wildcard: "*",
   dedupePlease: true
@@ -1466,7 +1470,7 @@ function groupStr(originalArr, originalOpts) {
 }
 
 exports.groupStr = groupStr;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

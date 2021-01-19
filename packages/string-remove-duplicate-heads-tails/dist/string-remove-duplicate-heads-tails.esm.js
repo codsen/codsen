@@ -16,6 +16,7 @@ import { trimSpaces } from 'string-trim-spaces-only';
 
 var version = "4.0.2";
 
+const version$1 = version;
 const defaults = {
   heads: ["{{"],
   tails: ["}}"]
@@ -23,12 +24,7 @@ const defaults = {
 
 function remDup(str, originalOpts) {
   //
-  const has = Object.prototype.hasOwnProperty;
-
-  function isStr(something) {
-    return typeof something === "string";
-  } // ===================== insurance =====================
-
+  const has = Object.prototype.hasOwnProperty; // ===================== insurance =====================
 
   if (str === undefined) {
     throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_01] The input is missing!");
@@ -47,17 +43,17 @@ function remDup(str, originalOpts) {
   };
 
   if (clonedOriginalOpts && has.call(clonedOriginalOpts, "heads")) {
-    if (!arrayiffy(clonedOriginalOpts.heads).every(val => isStr(val))) {
+    if (!arrayiffy(clonedOriginalOpts.heads).every(val => typeof val === "string" || Array.isArray(val))) {
       throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_04] The opts.heads contains elements which are not string-type!");
-    } else if (isStr(clonedOriginalOpts.heads)) {
+    } else if (typeof clonedOriginalOpts.heads === "string") {
       clonedOriginalOpts.heads = arrayiffy(clonedOriginalOpts.heads);
     }
   }
 
   if (clonedOriginalOpts && has.call(clonedOriginalOpts, "tails")) {
-    if (!arrayiffy(clonedOriginalOpts.tails).every(val => isStr(val))) {
+    if (!arrayiffy(clonedOriginalOpts.tails).every(val => typeof val === "string" || Array.isArray(val))) {
       throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_05] The opts.tails contains elements which are not string-type!");
-    } else if (isStr(clonedOriginalOpts.tails)) {
+    } else if (typeof clonedOriginalOpts.tails === "string") {
       clonedOriginalOpts.tails = arrayiffy(clonedOriginalOpts.tails);
     }
   } // trim but only if it's not trimmable to zero length (in that case return intact)
@@ -346,4 +342,4 @@ function remDup(str, originalOpts) {
   return str.trim();
 }
 
-export { defaults, remDup, version };
+export { defaults, remDup, version$1 as version };

@@ -9,10 +9,10 @@ import {
   characterSuitableForNames,
   prepHopefullyAnArray,
   notWithinAttrQuotes,
-  trimEnd,
   Obj,
 } from "./util";
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 import { Range, Ranges as RangesType } from "../../../scripts/common";
 
 interface Tag {
@@ -33,7 +33,7 @@ interface CbObj {
   deleteFrom: null | number;
   deleteTo: null | number;
   insert: null | string;
-  rangesArr: Range[] | null;
+  rangesArr: Ranges;
   proposedReturn: Range | null;
 }
 
@@ -49,7 +49,7 @@ interface Opts {
     wrapHeads: string;
     wrapTails: string;
   };
-  cb: null | ((cbObj: Partial<CbObj>) => void);
+  cb: null | ((cbObj: CbObj) => void);
 }
 
 const defaults = {
@@ -720,7 +720,7 @@ function stripHtml(str: string, originalOpts?: Partial<Opts>): Res {
   if (!opts.cb) {
     opts.cb = ({ rangesArr, proposedReturn }) => {
       if (proposedReturn) {
-        (rangesArr as Range[]).push(...(proposedReturn as any));
+        (rangesArr as any).push(...proposedReturn);
       }
     };
   }
@@ -2418,7 +2418,7 @@ function stripHtml(str: string, originalOpts?: Partial<Opts>): Res {
         // for cases of opts.dumpLinkHrefsNearby
         if (backupWhatToAdd && backupWhatToAdd.trim()) {
           rangesToDelete.ranges[rangesToDelete.ranges.length - 1].push(
-            trimEnd(backupWhatToAdd) as any
+            backupWhatToAdd.trimEnd() as any
           );
         }
       }
@@ -2445,4 +2445,4 @@ function stripHtml(str: string, originalOpts?: Partial<Opts>): Res {
   return res;
 }
 
-export { stripHtml, defaults, version };
+export { stripHtml, defaults, version, CbObj };

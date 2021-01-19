@@ -14,6 +14,7 @@ import is from '@sindresorhus/is';
 var version = "2.0.1";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
+const version$1 = version;
 
 function goUp(pathStr) {
   // console.log(`014 goUp(): INCOMING pathStr = "${pathStr}"`);
@@ -203,4 +204,4 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
   }
 } // -----------------------------------------------------------------------------
 
-export { deepContains, defaults, version };
+export { deepContains, defaults, version$1 as version };

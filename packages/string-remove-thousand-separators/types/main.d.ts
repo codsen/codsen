@@ -1,8 +1,9 @@
-import { version } from "../package.json";
+declare const version: string;
 interface Opts {
     removeThousandSeparatorsFromNumbers: boolean;
     padSingleDecimalPlaceNumbers: boolean;
     forceUKStyle: boolean;
 }
-declare function remSep(str: string, originalOpts?: Opts): string;
+declare function remSep(str: string, originalOpts?: Partial<Opts>): string;
+
 export { remSep, version };

@@ -8,7 +8,6 @@
  */
 
 import { matchRightIncl } from 'string-match-left-right';
-import { arrayiffy } from 'arrayiffy-if-string';
 import { left, right } from 'string-left-right';
 import { Ranges } from 'ranges-push';
 import { rApply } from 'ranges-apply';
@@ -54,6 +53,7 @@ const headsAndTailsHexo = [{
 }];
 const knownHTMLTags = ["abbr", "address", "area", "article", "aside", "audio", "base", "bdi", "bdo", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "param", "picture", "pre", "progress", "rb", "rp", "rt", "rtc", "ruby", "samp", "script", "section", "select", "slot", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "ul", "var", "video", "wbr", "xml"]; // finally,
 
+const version$1 = version;
 const defaults = {
   removeWidowPreventionMeasures: false,
   convertEntities: true,
@@ -130,7 +130,11 @@ function removeWidows(str, originalOpts) { // track time taken
   if (!opts.ignore || !isArr(opts.ignore) && typeof opts.ignore !== "string") {
     opts.ignore = [];
   } else {
-    opts.ignore = arrayiffy(opts.ignore);
+    // arrayiffy
+    if (typeof opts.ignore === "string") {
+      opts.ignore = [opts.ignore];
+    } // expand the string value presets
+
 
     if (opts.ignore.includes("all")) {
       // hugo heads tails and included in jinja's list, so can be omitted
@@ -544,4 +548,4 @@ function removeWidows(str, originalOpts) { // track time taken
   };
 } // main export
 
-export { defaults, removeWidows, version };
+export { defaults, removeWidows, version$1 as version };

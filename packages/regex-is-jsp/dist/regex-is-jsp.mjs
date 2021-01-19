@@ -7,4 +7,4 @@
  * Homepage: https://codsen.com/os/regex-is-jsp/
  */
 
-var s="1.1.1";function r(){return/<%|%>|<\s*jsp:|<\s*cms:|<\s*c:|\${\s*jsp/gi}export{r as isJSP,s as version};
+const s="1.1.1";function n(){return/<%|%>|<\s*jsp:|<\s*cms:|<\s*c:|\${\s*jsp/gi}export{n as isJSP,s as version};

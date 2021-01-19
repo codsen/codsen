@@ -2026,6 +2026,10 @@ function rightMain(_ref) {
 }
 
 function right(str, idx) {
+  if (idx === void 0) {
+    idx = 0;
+  }
+
   return rightMain({
     str: str,
     idx: idx,
@@ -2116,6 +2120,10 @@ function leftMain(_ref2) {
 }
 
 function left(str, idx) {
+  if (idx === void 0) {
+    idx = 0;
+  }
+
   return leftMain({
     str: str,
     idx: idx,
@@ -2132,9 +2140,8 @@ function left(str, idx) {
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
  */
-// If a non-empty string is given, put it into an array.
-// If an empty string is given, return an empty array.
-// Bypass everything else.
+
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 function arrayiffy(something) {
   if (typeof something === "string") {
     if (something.length) {
@@ -2165,14 +2172,29 @@ var defaults = {
   maxMismatches: 0,
   firstMustMatch: false,
   lastMustMatch: false
+};
+
+var defaultGetNextIdx = function defaultGetNextIdx(index) {
+  return index + 1;
 }; // eslint-disable-next-line consistent-return
 
-function march(str, position, whatToMatchVal, opts, special, getNextIdx) {
+
+function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx) {
+  if (special === void 0) {
+    special = false;
+  }
+
+  if (getNextIdx === void 0) {
+    getNextIdx = defaultGetNextIdx;
+  }
+
   var whatToMatchValVal = typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal; // early ending case if matching EOL being at 0-th index:
 
-  if (position < 0 && special && whatToMatchValVal === "EOL") {
+  if (+position < 0 && special && whatToMatchValVal === "EOL") {
     return whatToMatchValVal;
   }
+
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
   if (position >= str.length && !special) {
     return false;
@@ -2358,7 +2380,12 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
 
   var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
-  opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching) || [];
+  if (typeof opts.trimCharsBeforeMatching === "string") {
+    // arrayiffy if needed:
+    opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching);
+  } // stringify all:
+
+
   opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(function (el) {
     return isStr(el) ? el : String(el);
   });
@@ -2461,7 +2488,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
         }
 
         if (mode[5] === "L") {
-          return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex) || false;
+          return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
         } // ELSE matchRight & matchRightIncl
 
 
@@ -2469,7 +2496,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
           theRemainderOfTheString = str.slice(firstCharOutsideIndex);
         }
 
-        return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex) || false;
+        return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
       }
 
       var extraNote = "";
@@ -2643,6 +2670,8 @@ function findAttrNameCharsChunkOnTheLeft(str, i) {
 
 var version = "1.5.0";
 
+var version$1 = version;
+
 function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
   if (typeof str !== "string" || !str.trim() || !Number.isInteger(idxOfAttrOpening) || !Number.isInteger(isThisClosingIdx) || !str[idxOfAttrOpening] || !str[isThisClosingIdx] || idxOfAttrOpening >= isThisClosingIdx) {
     return false;
@@ -2783,25 +2812,9 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       //         start      suspected/we're currently on
       //
       chunkStartsAt && chunkStartsAt < i && allHtmlAttribs.has(str.slice(chunkStartsAt, i).trim()); // imagine:
-      // <z bbb"c" ddd"e'>
-      //       ^ ^
-      //      /  \
-      //  start  suspected
-      //
-      // <z bbb"c" ddd"e'>
-      //              ^
-      //          currently on
-      // E23, recognised attribute name is very weighty argument; however
-      // in light of unrecognised attributes, we might still try to salvage
-      // some, as long as they resemble valid attribute names. We just
-      // validate each character and drop in more rules into the bag,
-      // like requiring whitespace to be in front and opening/closing to match
-      // there's a whitespace in front of last chunk ("ddd" in example above)
-
-      var plausibleAttrName = void 0;
 
       if (chunkStartsAt) {
-        plausibleAttrName = str.slice(chunkStartsAt, i).trim();
+        str.slice(chunkStartsAt, i).trim();
       }
       var E33 = chunkStartsAt && chunkStartsAt < i && str[chunkStartsAt - 1] && !str[chunkStartsAt - 1].trim() && // and whole chunk is a plausible attribute name
       Array.from(str.slice(chunkStartsAt, i).trim()).every(function (char) {
@@ -3393,7 +3406,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
 }
 
 exports.isAttrClosing = isAttrClosing;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

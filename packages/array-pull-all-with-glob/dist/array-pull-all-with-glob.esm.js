@@ -1,6 +1,6 @@
 /**
  * array-pull-all-with-glob
- * PullAllWithGlob - like _.pullAll but pulling stronger, with globs
+ * PullAllWithGlob - like _.pullAll but with globs (wildcards)
  * Version: 4.13.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
@@ -10,6 +10,8 @@
 import matcher from 'matcher';
 
 var version = "4.13.0";
+
+const version$1 = version;
 
 function pull(originalInput, originalToBeRemoved, originalOpts) {
   // insurance
@@ -35,4 +37,4 @@ function pull(originalInput, originalToBeRemoved, originalOpts) {
   return res;
 }
 
-export { pull, version };
+export { pull, version$1 as version };

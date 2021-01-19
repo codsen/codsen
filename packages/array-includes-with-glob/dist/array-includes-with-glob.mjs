@@ -7,4 +7,4 @@
  * Homepage: https://codsen.com/os/array-includes-with-glob/
  */
 
-import e from"matcher";var s="2.13.0";const t={arrayVsArrayAllMustBeFound:"any",caseSensitive:!0};function r(s,r,i){if(!s.length||!r.length)return!1;const a={...t,...i},n="string"==typeof s?[s]:Array.from(s);return"string"==typeof r?n.some((s=>e.isMatch(s,r,{caseSensitive:a.caseSensitive}))):"any"===a.arrayVsArrayAllMustBeFound?r.some((s=>n.some((t=>e.isMatch(t,s,{caseSensitive:a.caseSensitive}))))):r.every((s=>n.some((t=>e.isMatch(t,s,{caseSensitive:a.caseSensitive})))))}export{t as defaults,r as includesWithGlob,s as version};
+import e from"matcher";const s="2.13.0",t={arrayVsArrayAllMustBeFound:"any",caseSensitive:!0};function i(s,i,r){if(!s.length||!i.length)return!1;const n={...t,...r},a="string"==typeof s?[s]:Array.from(s);return"string"==typeof i?a.some((s=>e.isMatch(s,i,{caseSensitive:n.caseSensitive}))):"any"===n.arrayVsArrayAllMustBeFound?i.some((s=>a.some((t=>e.isMatch(t,s,{caseSensitive:n.caseSensitive}))))):i.every((s=>a.some((t=>e.isMatch(t,s,{caseSensitive:n.caseSensitive})))))}export{t as defaults,i as includesWithGlob,s as version};

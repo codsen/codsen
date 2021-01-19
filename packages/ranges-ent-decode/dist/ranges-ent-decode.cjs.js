@@ -24,11 +24,18 @@ var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
 var version = "3.0.3";
 
+var version$1 = version;
+
 function chomp(str) {
   // eslint-disable-next-line no-param-reassign
   str = str.replace(/(amp;)|(#x26;)/gi, "");
   return str;
 }
+
+var defaults = {
+  isAttributeValue: false,
+  strict: false
+};
 
 function rEntDecode(str, originalOpts) {
   // insurance:
@@ -44,17 +51,7 @@ function rEntDecode(str, originalOpts) {
     throw new TypeError("ranges-ent-decode/decode(): [THROW_ID_02] Optional Options Object, the second in put argument, must be a plain object! Currently it's given as " + originalOpts + ", type " + typeof originalOpts);
   }
 
-  var defaults = {
-    isAttributeValue: false,
-    strict: false
-  };
-  var opts;
-
-  if (!originalOpts) {
-    opts = defaults;
-  } else {
-    opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
-  } // vars
+  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts); // vars
   // ---------------------------------------------------------------------------
   // single, non-recursively encoded entity:
   // /&(#?[^;\W]+;?)/g;
@@ -98,5 +95,6 @@ function rEntDecode(str, originalOpts) {
   return rangesMerge.rMerge(rangesArr);
 }
 
+exports.defaults = defaults;
 exports.rEntDecode = rEntDecode;
-exports.version = version;
+exports.version = version$1;

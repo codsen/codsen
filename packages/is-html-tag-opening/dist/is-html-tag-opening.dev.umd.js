@@ -70,9 +70,8 @@ function _objectSpread2(target) {
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
  */
-// If a non-empty string is given, put it into an array.
-// If an empty string is given, return an empty array.
-// Bypass everything else.
+
+/* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 function arrayiffy(something) {
   if (typeof something === "string") {
     if (something.length) {
@@ -103,14 +102,29 @@ var defaults = {
   maxMismatches: 0,
   firstMustMatch: false,
   lastMustMatch: false
+};
+
+var defaultGetNextIdx = function defaultGetNextIdx(index) {
+  return index + 1;
 }; // eslint-disable-next-line consistent-return
 
-function march(str, position, whatToMatchVal, opts, special, getNextIdx) {
+
+function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx) {
+  if (special === void 0) {
+    special = false;
+  }
+
+  if (getNextIdx === void 0) {
+    getNextIdx = defaultGetNextIdx;
+  }
+
   var whatToMatchValVal = typeof whatToMatchVal === "function" ? whatToMatchVal() : whatToMatchVal; // early ending case if matching EOL being at 0-th index:
 
-  if (position < 0 && special && whatToMatchValVal === "EOL") {
+  if (+position < 0 && special && whatToMatchValVal === "EOL") {
     return whatToMatchValVal;
   }
+
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
   if (position >= str.length && !special) {
     return false;
@@ -296,7 +310,12 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
 
   var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
-  opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching) || [];
+  if (typeof opts.trimCharsBeforeMatching === "string") {
+    // arrayiffy if needed:
+    opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching);
+  } // stringify all:
+
+
   opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(function (el) {
     return isStr(el) ? el : String(el);
   });
@@ -399,7 +418,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
         }
 
         if (mode[5] === "L") {
-          return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex) || false;
+          return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
         } // ELSE matchRight & matchRightIncl
 
 
@@ -407,7 +426,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
           theRemainderOfTheString = str.slice(firstCharOutsideIndex);
         }
 
-        return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex) || false;
+        return opts.cb(wholeCharacterOutside, theRemainderOfTheString, firstCharOutsideIndex);
       }
 
       var extraNote = "";
@@ -2438,6 +2457,10 @@ function leftMain(_ref2) {
 }
 
 function left(str, idx) {
+  if (idx === void 0) {
+    idx = 0;
+  }
+
   return leftMain({
     str: str,
     idx: idx,
@@ -2465,6 +2488,8 @@ function extraRequirements(str, idx) {
 }
 
 var version = "1.10.1";
+
+var version$1 = version;
 
 function isOpening(str, idx, originalOpts) {
   if (idx === void 0) {
@@ -2582,7 +2607,7 @@ function isOpening(str, idx, originalOpts) {
 
 exports.defaults = defaultOpts;
 exports.isOpening = isOpening;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

@@ -10681,7 +10681,6 @@ function removeGappedFromMixedCases(str, temp1) {
 
   return findLongest(temp1);
 }
-/* eslint @typescript-eslint/ban-ts-comment:1 */
 
 function fixEnt(str, originalOpts) {
   //
@@ -14558,7 +14557,7 @@ function tokenizer(str, originalOpts) {
         //                 ^
         //          we're here
         //
-        token.queryEndsAt = left(str, _i + 1);
+        token.queryEndsAt = left(str, _i + 1) || 0;
       }
 
       if (token.queryStartsAt && token.queryEndsAt) {
@@ -30482,6 +30481,8 @@ function attributeValidateAccesskey(context) {
   };
 }
 
+// https://en.wikipedia.org/wiki/Uniform_Resource_Identifier#URI_references
+
 var BACKSLASH$5 = "\\"; // retrieved 2020-Jan-11
 // https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml
 
@@ -30502,13 +30503,8 @@ function isRel(str, originalOpts) {
     flagUpUrisWithSchemes: true,
     offset: 0
   };
-  var opts;
 
-  if (originalOpts) {
-    opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
-  } else {
-    opts = _objectSpread2({}, defaults);
-  }
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
   if (opts.offset && !Number.isInteger(opts.offset)) {
     throw new Error("is-relative-uri: [THROW_ID_02] opts.offset must be an integer, it was given as " + opts.offset + " (type " + typeof opts.offset + ")");

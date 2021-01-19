@@ -23,6 +23,8 @@ var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
 var version = "1.2.1";
 
+var version$1 = version;
+
 function traverse(tree1, cb1, lookahead) {
   if (lookahead === void 0) {
     lookahead = 0;
@@ -152,4 +154,4 @@ function traverse(tree1, cb1, lookahead) {
 } // -----------------------------------------------------------------------------
 
 exports.traverse = traverse;
-exports.version = version;
+exports.version = version$1;

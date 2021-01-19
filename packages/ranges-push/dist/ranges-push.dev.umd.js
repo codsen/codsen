@@ -341,6 +341,10 @@ function rMerge(arrOfRanges, originalOpts) {
     sortedRanges = rSort(filtered);
   }
 
+  if (!sortedRanges) {
+    return null;
+  }
+
   var len = sortedRanges.length - 1; // reset 80% of progress is this loop:
   // loop from the end:
 
@@ -392,6 +396,8 @@ function rMerge(arrOfRanges, originalOpts) {
 
 var version = "4.0.2";
 
+var version$1 = version;
+
 function existy(x) {
   return x != null;
 }
@@ -427,7 +433,7 @@ var Ranges = /*#__PURE__*/function () {
       }
     } // so it's correct, let's get it in:
     this.opts = opts;
-    this.ranges = null;
+    this.ranges = [];
   }
 
   var _proto = Ranges.prototype;
@@ -448,7 +454,7 @@ var Ranges = /*#__PURE__*/function () {
           })) {
             originalFrom.forEach(function (thing) {
               if (Array.isArray(thing)) {
-                // recursively feed this subarray, hopefully it's an array // @ts-ignore
+                // recursively feed this subarray, hopefully it's an array
 
                 _this.add.apply(_this, thing);
               } // just skip other cases
@@ -458,8 +464,7 @@ var Ranges = /*#__PURE__*/function () {
           }
 
           if (originalFrom.length && isNum(+originalFrom[0]) && isNum(+originalFrom[1])) {
-            // recursively pass in those values // @ts-ignore
-
+            // recursively pass in those values
             this.add.apply(this, originalFrom);
           }
         } // else,
@@ -530,7 +535,6 @@ var Ranges = /*#__PURE__*/function () {
   };
 
   _proto.push = function push(originalFrom, originalTo, addVal) {
-    // @ts-ignore
     this.add(originalFrom, originalTo, addVal);
   } // C U R R E N T () - kindof a getter
   // ==================================
@@ -539,7 +543,7 @@ var Ranges = /*#__PURE__*/function () {
   _proto.current = function current() {
     var _this2 = this;
 
-    if (this.ranges != null) {
+    if (Array.isArray(this.ranges) && this.ranges.length) {
       // beware, merging can return null
       this.ranges = rMerge(this.ranges, {
         mergeType: this.opts.mergeType
@@ -563,7 +567,7 @@ var Ranges = /*#__PURE__*/function () {
   ;
 
   _proto.wipe = function wipe() {
-    this.ranges = null;
+    this.ranges = [];
   } // R E P L A C E ()
   // ==========
   ;
@@ -579,14 +583,14 @@ var Ranges = /*#__PURE__*/function () {
         this.ranges = Array.from(givenRanges);
       }
     } else {
-      this.ranges = null;
+      this.ranges = [];
     }
   } // L A S T ()
   // ==========
   ;
 
   _proto.last = function last() {
-    if (this.ranges != null && Array.isArray(this.ranges)) {
+    if (Array.isArray(this.ranges) && this.ranges.length) {
       return this.ranges[this.ranges.length - 1];
     }
 
@@ -598,7 +602,7 @@ var Ranges = /*#__PURE__*/function () {
 
 exports.Ranges = Ranges;
 exports.defaults = defaults$2;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

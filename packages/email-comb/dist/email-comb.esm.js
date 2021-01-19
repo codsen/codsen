@@ -918,7 +918,7 @@ function comb(str, originalOpts) {
         cb: (char, _theRemainderOfTheString, index) => {
           // remove any whitespace after opening bracket of a body tag:
           if (round === 1) {
-            if (char !== undefined && (char.trim() === "" || char === ">")) {
+            if (char !== undefined && (char.trim() === "" || char === ">") && typeof index === "number") {
               if (index - i > 5) {
                 finalIndexesToDelete.push(i, index, "<body"); // remove the whitespace between < and body
 
@@ -1664,7 +1664,9 @@ function comb(str, originalOpts) {
             }
           })) ;
 
-          i = temp - 1;
+          if (typeof temp === "number") {
+            i = temp - 1;
+          }
           continue;
         }
       } // LOGGING:

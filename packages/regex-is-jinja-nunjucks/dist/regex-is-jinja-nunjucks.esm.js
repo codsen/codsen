@@ -9,8 +9,10 @@
 
 var version = "1.1.1";
 
+const version$1 = version;
+
 function isJinjaNunjucksRegex() {
   return /{%|{{|%}|}}/gi;
 }
 
-export { isJinjaNunjucksRegex, version };
+export { isJinjaNunjucksRegex, version$1 as version };

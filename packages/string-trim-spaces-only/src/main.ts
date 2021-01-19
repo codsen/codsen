@@ -1,4 +1,5 @@
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 import { Ranges } from "../../../scripts/common";
 
 interface Opts {
@@ -24,7 +25,7 @@ interface Res {
   ranges: Ranges;
 }
 
-function trimSpaces(str: string, originalOpts?: Opts): Res {
+function trimSpaces(str: string, originalOpts?: Partial<Opts>): Res {
   // insurance:
   if (typeof str !== "string") {
     throw new Error(

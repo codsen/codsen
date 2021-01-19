@@ -1,4 +1,7 @@
-import { version } from "../package.json";
+declare const version: string;
+interface Obj {
+    [key: string]: any;
+}
 declare type NextToken = [
     key: "string",
     value: any,
@@ -17,8 +20,9 @@ interface InnerObj {
     parentType?: string;
     next?: NextToken[];
 }
-declare type Callback = (key?: string, val?: any, innerObj?: InnerObj, stop?: {
+declare type Callback = (key: string | Obj, val: any, innerObj: InnerObj, stop: {
     now: boolean;
 }) => any;
 declare function traverse(tree1: any, cb1: Callback, lookahead?: number): void;
+
 export { traverse, version };

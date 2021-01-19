@@ -394,6 +394,10 @@ function rMerge(arrOfRanges, originalOpts) {
     sortedRanges = rSort(filtered);
   }
 
+  if (!sortedRanges) {
+    return null;
+  }
+
   var len = sortedRanges.length - 1; // reset 80% of progress is this loop:
   // loop from the end:
 
@@ -639,6 +643,8 @@ function rInvert(arrOfRanges, strLen, originalOptions) {
 
 var version = "3.0.2";
 
+var version$1 = version;
+
 function rProcessOutside(originalStr, originalRanges, cb, skipChecks) {
   if (skipChecks === void 0) {
     skipChecks = false;
@@ -705,7 +711,7 @@ function rProcessOutside(originalStr, originalRanges, cb, skipChecks) {
 }
 
 exports.rProcessOutside = rProcessOutside;
-exports.version = version;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

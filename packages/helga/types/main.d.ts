@@ -1,4 +1,4 @@
-import { version } from "../package.json";
+declare const version: string;
 interface Opts {
     targetJSON: boolean;
 }
@@ -9,4 +9,5 @@ declare function helga(str: string, originalOpts?: Opts): {
     minified: string;
     beautified: string;
 };
-export { helga, defaults, version };
+
+export { defaults, helga, version };
