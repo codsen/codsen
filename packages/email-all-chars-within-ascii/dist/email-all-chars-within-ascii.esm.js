@@ -9,6 +9,7 @@
 
 var version = "2.10.1";
 
+const version$1 = version;
 const defaults = {
   lineLength: 500
 };
@@ -91,7 +92,8 @@ function within(str, originalOpts) {
           column,
           positionIdx: i,
           value: str[i],
-          codePoint: currCodePoint
+          codePoint: currCodePoint,
+          UTF32Hex: str[i].charCodeAt(0).toString(16).padStart(4, "0").toLowerCase()
         });
       }
     } //
@@ -102,4 +104,4 @@ function within(str, originalOpts) {
   return res;
 }
 
-export { defaults, version, within };
+export { defaults, version$1 as version, within };

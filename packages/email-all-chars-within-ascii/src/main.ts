@@ -1,4 +1,5 @@
-import { version } from "../package.json";
+import { version as v } from "../package.json";
+const version: string = v;
 
 interface Res {
   type: "character" | "line length";
@@ -7,6 +8,7 @@ interface Res {
   positionIdx: number;
   value: number | string;
   codePoint?: undefined | number;
+  UTF32Hex?: undefined | string;
 }
 
 interface Opts {
@@ -17,7 +19,7 @@ const defaults: Opts = {
   lineLength: 500,
 };
 
-function within(str: string, originalOpts?: Opts): Res[] {
+function within(str: string, originalOpts?: Partial<Opts>): Res[] {
   if (typeof str !== "string") {
     throw new Error(
       `email-all-chars-within-ascii/within(): [THROW_ID_01] The input is not string but ${typeof str}, equal to: ${JSON.stringify(
@@ -135,6 +137,11 @@ function within(str: string, originalOpts?: Opts): Res[] {
           positionIdx: i,
           value: str[i],
           codePoint: currCodePoint,
+          UTF32Hex: str[i]
+            .charCodeAt(0)
+            .toString(16)
+            .padStart(4, "0")
+            .toLowerCase(),
         });
       }
     }

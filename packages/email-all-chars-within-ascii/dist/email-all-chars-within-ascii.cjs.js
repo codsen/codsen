@@ -19,6 +19,7 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
 var version = "2.10.1";
 
+var version$1 = version;
 var defaults = {
   lineLength: 500
 };
@@ -100,7 +101,8 @@ function within(str, originalOpts) {
           column: column,
           positionIdx: i,
           value: str[i],
-          codePoint: currCodePoint
+          codePoint: currCodePoint,
+          UTF32Hex: str[i].charCodeAt(0).toString(16).padStart(4, "0").toLowerCase()
         });
       }
     } //
@@ -112,5 +114,5 @@ function within(str, originalOpts) {
 }
 
 exports.defaults = defaults;
-exports.version = version;
+exports.version = version$1;
 exports.within = within;

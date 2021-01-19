@@ -30,6 +30,7 @@ tap.test("04 - illegal", (t) => {
       positionIdx: 3,
       value: "ö",
       codePoint: 246,
+      UTF32Hex: "00f6",
     },
   ]);
   t.end();
@@ -48,6 +49,7 @@ tap.test("05 - multi-line illegal", (t) => {
         positionIdx: 10,
         value: CAPITALOWITHSTROKE,
         codePoint: 216,
+        UTF32Hex: "00d8",
       },
       {
         type: "character",
@@ -56,6 +58,7 @@ tap.test("05 - multi-line illegal", (t) => {
         positionIdx: 25,
         value: SMALLOWITHDIAERESIS,
         codePoint: 246,
+        UTF32Hex: "00f6",
       },
     ]
   );
@@ -71,6 +74,7 @@ tap.test("06 - illegal low ASCII, ETX", (t) => {
       positionIdx: 1,
       value: ETX,
       codePoint: 3,
+      UTF32Hex: "0003",
     },
   ]);
   t.end();
@@ -86,6 +90,7 @@ tap.test("07 - non-existent outside ASCII, #896 or u0380", (t) => {
       positionIdx: 1,
       value: NONEXISTING,
       codePoint: 896,
+      UTF32Hex: "0380",
     },
   ]);
   t.end();

@@ -12,6 +12,7 @@ assert.deepEqual(within(`<div>Motörhead</div>`), [
     positionIdx: 8,
     value: "ö",
     codePoint: 246,
+    UTF32Hex: "00f6",
   },
 ]);
 
