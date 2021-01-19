@@ -5,51 +5,44 @@
 
 const chalk = require("chalk");
 const { within } = require("email-all-chars-within-ascii");
+const { right } = require("string-left-right");
 const fs = require("fs-extra");
 const globby = require("globby");
 const inquirer = require("inquirer");
-
-const { log } = console;
-const meow = require("meow");
 const path = require("path");
 const updateNotifier = require("update-notifier");
 const pullAll = require("lodash.pullall");
-const uniq = require("lodash.uniq");
-const { name } = require("./package.json");
+const package = require("./package.json");
+const { name, version } = package;
+const argv = require("minimist")(process.argv.slice(2));
 
-const isArr = Array.isArray;
+const { log } = console;
 
 const state = {};
 state.toDoList = []; // default
-const ui = new inquirer.ui.BottomBar();
-const cli = meow(`
+
+const help = `
   Usage
     $ withinascii YOURFILE.html
   or, just type "withinascii" and it will let you pick a file.
 
   Options
+    -l, --len         Max allowed line length (default is 500)
     -h, --help        Shows this help
     -v, --version     Shows the version of your ${name}
 
   Instructions
     Just call it in the folder where your file is located or provide a path
-`);
-updateNotifier({ pkg: cli.pkg }).notify();
-
-// FUNCTIONS
-// -----------------------------------------------------------------------------
-
-function isStr(something) {
-  return typeof something === "string";
-}
+`;
+updateNotifier({ pkg: package }).notify();
 
 function offerAListOfFilesToPickFrom() {
+  const ui = new inquirer.ui.BottomBar();
   const allFilesHere = globby.sync("./*.*");
   if (!allFilesHere.length) {
     log(
-      chalk.hex("#888888")(
-        "\nemail-all-chars-within-ascii-cli: [THROW_ID_01] "
-      ) + chalk.red(`Alas, there are no files in this folder!`)
+      chalk.grey("\nemail-all-chars-within-ascii-cli: [THROW_ID_01] ") +
+        chalk.red(`Alas, there are no files in this folder!`)
     );
     return process.exit(1);
   }
@@ -71,43 +64,24 @@ function offerAListOfFilesToPickFrom() {
 // Step #0. take care of -v and -h flags that are left out in meow.
 // -----------------------------------------------------------------------------
 
-if (cli.flags.v) {
-  log(cli.pkg.version);
+if (argv.v || argv.version) {
+  log(version);
   process.exit(0);
-} else if (cli.flags.h) {
-  log(cli.help);
+} else if (argv.h || argv.help) {
+  log(help);
   process.exit(0);
 }
 
 // Step #1. gather the to-do list of files.
 // -----------------------------------------------------------------------------
 
-if (cli.input.length) {
-  state.toDoList = cli.input;
-}
-
-// we anticipate the can be multiple, potentially-false flags mixed with valid file names
-if (Object.keys(cli.flags).length) {
-  // each non-boolean cli.flags value must be added to the `toDoList`
-  Object.keys(cli.flags).forEach((key) => {
-    if (typeof cli.flags[key] !== "boolean") {
-      if (!isArr(cli.flags[key])) {
-        state.toDoList.push(cli.flags[key]);
-      } else {
-        state.toDoList = state.toDoList.concat(
-          cli.flags[key].filter((val) => isStr(val))
-        );
-      }
-    }
-  });
-  state.toDoList = uniq(state.toDoList);
-}
+state.toDoList = argv._;
 
 // Step #2. create a promise variable and assign it to one of the promises,
 // depending on was the acceptable file passed via args or queries afterwards.
 // -----------------------------------------------------------------------------
 let thePromise;
-if (!state.toDoList.length && !Object.keys(cli.flags).length) {
+if (!state.toDoList.length) {
   // ---------------------------------  1  -------------------------------------
   // if no arguments were given, offer a list:
   thePromise = offerAListOfFilesToPickFrom(state);
@@ -125,9 +99,7 @@ if (!state.toDoList.length && !Object.keys(cli.flags).length) {
   // write the list of unrecognised file names into the console:
   if (erroneous.length) {
     log(
-      chalk.hex("#888888")(
-        "\nemail-all-chars-within-ascii-cli: [THROW_ID_02] "
-      ) +
+      chalk.grey("\nemail-all-chars-within-ascii-cli: [THROW_ID_02] ") +
         chalk.red(
           `Alas, the following file${
             erroneous.length > 1 ? "s don't" : " doesn't"
@@ -147,7 +119,7 @@ if (!state.toDoList.length && !Object.keys(cli.flags).length) {
   // ---------------------------------  3  -------------------------------------
   log(
     chalk.yellow(
-      "\nemail-all-chars-within-ascii-cli: [THROW_ID_03] Computer didn't recognise any files in your input!"
+      "\nemail-all-chars-within-ascii-cli: [THROW_ID_03] Didn't recognise any files!"
     )
   );
 
@@ -166,55 +138,121 @@ thePromise
       let filesContents = "";
       let fileNameInfo = "";
       if (receivedState.toDoList.length) {
-        fileNameInfo = `${path.basename(requestedPath)} `;
+        fileNameInfo = `${path.basename(requestedPath)}`;
       }
       try {
-        filesContents = String(fs.readFileSync(requestedPath));
-        try {
-          within(filesContents, { messageOnly: true });
-          log(
-            chalk.hex("#888888")(
-              "\nemail-all-chars-within-ascii-cli: [THROW_ID_04] "
-            ) +
-              fileNameInfo +
-              chalk.green("ALL OK")
-          );
-        } catch (e2) {
-          let msg = e2.toString();
-          if (msg.slice(0, 7) === "Error: ") {
-            msg = msg.slice(7);
-          }
-          log(
-            chalk.hex("#888888")(
-              "\nemail-all-chars-within-ascii-cli: [THROW_ID_05] "
-            ) +
-              fileNameInfo +
-              chalk.red(msg)
-          );
+        filesContents = fs.readFileSync(requestedPath, "utf8");
+        let lineLength = argv.len || argv.l;
+        if (typeof lineLength === "boolean") {
+          // in case somebody puts empty flag without a value
+          lineLength = undefined;
+        }
+        const findings = within(filesContents, {
+          lineLength,
+        });
+        if (findings.length) {
           noErrors = false;
+          console.log(chalk.grey("\nemail-all-chars-within-ascii-cli:"));
+          findings.forEach((obj) => {
+            if (obj.type === "character") {
+              console.log(
+                `\n${chalk.cyan(fileNameInfo)}:${chalk.yellow(
+                  obj.line
+                )}:${chalk.yellow(obj.column)} - ${chalk.red(
+                  "bad character"
+                )} - ${obj.value} ${chalk.grey(
+                  `(https://www.fileformat.info/info/unicode/char/${obj.UTF32Hex}/index.htm)`
+                )}`
+              );
+            } else {
+              console.log(
+                `\n${chalk.cyan(fileNameInfo)}:${chalk.yellow(
+                  obj.line
+                )} - ${chalk.red(
+                  `${obj.value} character-long line (limit ${
+                    argv.len || argv.l || 500
+                  })`
+                )}`
+              );
+            }
+            console.log(
+              `${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
+                obj,
+                null,
+                4
+              )}`
+            );
+            const startingPos = filesContents[
+              obj.positionIdx - obj.column + 1
+            ].trim()
+              ? obj.positionIdx - obj.column + 1
+              : right(filesContents, obj.positionIdx - obj.column + 1);
+            console.log(
+              `191 ${`\u001b[${33}m${`startingPos`}\u001b[${39}m`} = ${JSON.stringify(
+                startingPos,
+                null,
+                4
+              )}`
+            );
+
+            const sliceFrom = Math.max(
+              obj.positionIdx - Math.min(obj.column, 40),
+              startingPos
+            );
+            const sliceTo = Math.min(
+              ...[
+                filesContents.indexOf("\n", obj.positionIdx),
+                filesContents.indexOf("\r", obj.positionIdx),
+                obj.positionIdx + 10,
+              ].filter((val) => val > 0)
+            );
+            console.log(
+              `${`\u001b[${33}m${`sliceFrom`}\u001b[${39}m`} = ${JSON.stringify(
+                sliceFrom,
+                null,
+                4
+              )}`
+            );
+            console.log(
+              `${`\u001b[${33}m${`sliceTo`}\u001b[${39}m`} = ${JSON.stringify(
+                sliceTo,
+                null,
+                4
+              )}`
+            );
+            const currLinesChunk = filesContents
+              .slice(sliceFrom, sliceTo)
+              .replace(/\t/g, " ");
+            console.log(`\n${chalk.inverse(obj.line)} ${currLinesChunk}`);
+            console.log(
+              `${chalk.inverse(
+                " ".repeat(String(obj.line).length)
+              )} ${" ".repeat(
+                obj.positionIdx - sliceFrom - (obj.type === "character" ? 0 : 1)
+              )}${chalk.red("~")}`
+            );
+          });
+
+          process.exit(noErrors ? 0 : 1);
+        } else {
+          console.log(
+            `${chalk.grey("email-all-chars-within-ascii-cli:")} ${chalk.green(
+              "ALL OK"
+            )}`
+          );
+          process.exit(0);
         }
       } catch (e1) {
         log(
-          chalk.hex("#888888")(
-            "\nemail-all-chars-within-ascii-cli: [THROW_ID_06] "
-          ) +
+          chalk.grey("\nemail-all-chars-within-ascii-cli: [THROW_ID_06] ") +
             chalk.red(
-              `Alas, computer couldn't fetch the file "${path.basename(
-                requestedPath
-              )}" you requested and bailed on us!`
+              `Couldn't fetch the file "${path.basename(requestedPath)}"`
             )
         );
-        noErrors = false;
+        process.exit(1);
       }
     });
-    // console.log("210");
-    return Promise.resolve(noErrors);
-  })
-  .then((noErrors) => {
-    // console.log("214");
-    return process.exit(noErrors ? 0 : 1);
   })
   .catch(() => {
-    // console.log("218");
-    return Promise.resolve(process.exit(1));
+    process.exit(1);
   });

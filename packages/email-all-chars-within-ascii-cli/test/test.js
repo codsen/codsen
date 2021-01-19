@@ -19,11 +19,7 @@ tap.test("01 - called upon a single file which is healthy", async (t) => {
   // 3. call the the CLI via the shell because there are no "path" argument
   // that's fed into the CLI - on the contrary, it's called from some unknown
   // location which is "current folder" from the perspective of where it's ran from,
-  // but from testing perspective, it's a different folder. I know, it's mind-
-  // bending, but to be able to call the CLI as from "current folder" but that
-  // current folder being arbitrary path, we have to manually "cd" into it
-  // via the shell command (so it's "current"), then call CLI from CLI's location,
-  // the "__dirname", along with all attributes.
+  // but from testing perspective, it's a different folder.
 
   const stdOutContents = await execa(
     `cd ${tempFolder} && ${path.join(__dirname, "../")}cli.js test.html`,
@@ -52,12 +48,12 @@ tap.test(
     // 3. call the the CLI
 
     // const error1 = await t.throwsAsync(() =>
-    await t.rejects(async () => {
+    t.rejects(async () => {
       const error1 = await execa(
         `cd ${tempFolder} && ${path.join(__dirname, "../")}cli.js test.html`,
         { shell: true }
       );
-      t.match(error1.stdout, /Non ascii character found/);
+      t.match(error1.stdout, /bad character/);
     });
 
     t.end();
