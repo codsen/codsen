@@ -28,5 +28,6 @@ tasks:
       npm run readme:generate
   - first-git-add: |
       cd codsen
+      pwd
       git status
       npx lerna changed
