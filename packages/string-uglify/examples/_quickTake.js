@@ -16,5 +16,5 @@ const names = [
 // fine too if you won't.
 assert.deepEqual(uglifyArr(names), [".o", ".s", ".z", "#l"]);
 
-// uglify a particular id number:
+// uglify a particular id number (inefficient):
 assert.equal(uglifyById(names, 3), "#l");
