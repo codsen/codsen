@@ -12,13 +12,14 @@ tasks:
       echo "npm user:"
       npm whoami
   - git-setup: |
+      git clone git@github.com:codsen/codsen
       cd codsen
-      git remote set-url origin git@git.sr.ht:~royston/codsen
-      ssh-keyscan -H 'git.sr.ht' >> ~/.ssh/known_hosts
+      git remote set-url origin git@github.com:codsen/codsen
+      ssh-keyscan -H 'github.com' >> ~/.ssh/known_hosts
       echo "git user:"
       git config user.name
       git status
-      git checkout master
+      git checkout main
   - bootstrap: |
       cd codsen
       npm run fresh
