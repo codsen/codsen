@@ -175,25 +175,25 @@ thePromise
                 )}`
               );
             }
-            console.log(
-              `${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
-                obj,
-                null,
-                4
-              )}`
-            );
+            // console.log(
+            //   `${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
+            //     obj,
+            //     null,
+            //     4
+            //   )}`
+            // );
             const startingPos = filesContents[
               obj.positionIdx - obj.column + 1
             ].trim()
               ? obj.positionIdx - obj.column + 1
               : right(filesContents, obj.positionIdx - obj.column + 1);
-            console.log(
-              `191 ${`\u001b[${33}m${`startingPos`}\u001b[${39}m`} = ${JSON.stringify(
-                startingPos,
-                null,
-                4
-              )}`
-            );
+            // console.log(
+            //   `191 ${`\u001b[${33}m${`startingPos`}\u001b[${39}m`} = ${JSON.stringify(
+            //     startingPos,
+            //     null,
+            //     4
+            //   )}`
+            // );
 
             const sliceFrom = Math.max(
               obj.positionIdx - Math.min(obj.column, 40),
@@ -206,20 +206,20 @@ thePromise
                 obj.positionIdx + 10,
               ].filter((val) => val > 0)
             );
-            console.log(
-              `${`\u001b[${33}m${`sliceFrom`}\u001b[${39}m`} = ${JSON.stringify(
-                sliceFrom,
-                null,
-                4
-              )}`
-            );
-            console.log(
-              `${`\u001b[${33}m${`sliceTo`}\u001b[${39}m`} = ${JSON.stringify(
-                sliceTo,
-                null,
-                4
-              )}`
-            );
+            // console.log(
+            //   `${`\u001b[${33}m${`sliceFrom`}\u001b[${39}m`} = ${JSON.stringify(
+            //     sliceFrom,
+            //     null,
+            //     4
+            //   )}`
+            // );
+            // console.log(
+            //   `${`\u001b[${33}m${`sliceTo`}\u001b[${39}m`} = ${JSON.stringify(
+            //     sliceTo,
+            //     null,
+            //     4
+            //   )}`
+            // );
             const currLinesChunk = filesContents
               .slice(sliceFrom, sliceTo)
               .replace(/\t/g, " ");
