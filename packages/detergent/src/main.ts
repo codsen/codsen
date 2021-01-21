@@ -30,6 +30,9 @@ import {
 } from "./util";
 // import escape from "js-string-escape";
 
+/**
+ * Extracts, cleans and encodes text
+ */
 function det(str: string, inputOpts?: Partial<Opts>): Res {
   //
   // input validation

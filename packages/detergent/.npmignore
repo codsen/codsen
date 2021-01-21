@@ -13,7 +13,6 @@
 
 .nyc_output
 coverage
-media
 perf
 src
 t-util

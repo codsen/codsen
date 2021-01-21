@@ -1047,6 +1047,10 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
 
 const version$1 = version;
 
+/**
+ * Extracts, cleans and encodes text
+ */
+
 function det(str, inputOpts) {
   //
   // input validation
