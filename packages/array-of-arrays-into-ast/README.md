@@ -9,8 +9,8 @@
   <a href="https://codsen.com/os/array-of-arrays-into-ast" rel="nofollow noreferrer noopener">
     <img src="https://img.shields.io/badge/-codsen-blue?style=flat-square" alt="page on codsen.com">
   </a>
-  <a href="https://git.sr.ht/~royston/codsen/tree/master/packages/array-of-arrays-into-ast" rel="nofollow noreferrer noopener">
-    <img src="https://img.shields.io/badge/-sourcehut-blue?style=flat-square" alt="page on sourcehut">
+  <a href="https://github.com/codsen/codsen/tree/main/packages/array-of-arrays-into-ast" rel="nofollow noreferrer noopener">
+    <img src="https://img.shields.io/badge/-github-blue?style=flat-square" alt="page on github">
   </a>
   <a href="https://npmcharts.com/compare/array-of-arrays-into-ast?interval=30" rel="nofollow noreferrer noopener" target="_blank">
     <img src="https://img.shields.io/npm/dm/array-of-arrays-into-ast.svg?style=flat-square" alt="Downloads per month">

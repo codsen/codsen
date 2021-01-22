@@ -9,8 +9,8 @@
   <a href="https://codsen.com/os/lerna-clean-changelogs" rel="nofollow noreferrer noopener">
     <img src="https://img.shields.io/badge/-codsen-blue?style=flat-square" alt="page on codsen.com">
   </a>
-  <a href="https://git.sr.ht/~royston/codsen/tree/master/packages/lerna-clean-changelogs" rel="nofollow noreferrer noopener">
-    <img src="https://img.shields.io/badge/-sourcehut-blue?style=flat-square" alt="page on sourcehut">
+  <a href="https://github.com/codsen/codsen/tree/main/packages/lerna-clean-changelogs" rel="nofollow noreferrer noopener">
+    <img src="https://img.shields.io/badge/-github-blue?style=flat-square" alt="page on github">
   </a>
   <a href="https://npmcharts.com/compare/lerna-clean-changelogs?interval=30" rel="nofollow noreferrer noopener" target="_blank">
     <img src="https://img.shields.io/npm/dm/lerna-clean-changelogs.svg?style=flat-square" alt="Downloads per month">

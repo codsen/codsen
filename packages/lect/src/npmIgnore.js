@@ -21,6 +21,9 @@ async function npmIgnore({ lectrc }) {
     );
   }
 
+  // we want the following excluded from .npmignore no matter what:
+  const blacklist = ["testStats.md"];
+
   // List from https://docs.npmjs.com/misc/developers
   const npmWillTakeCareOfThese = [
     "package.json",
@@ -192,7 +195,7 @@ async function npmIgnore({ lectrc }) {
     // .concat(foldersToAddToGlobalList)
     .sort()
     .join("\n")}\n\n# files:\n\n${badFiles
-    // .concat(filesToAddToGlobalList)
+    .filter((v) => !blacklist.includes(v))
     .sort()
     .join("\n")}\n`;
 

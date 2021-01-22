@@ -9,8 +9,8 @@
   <a href="https://codsen.com/os/ast-monkey-traverse-with-lookahead" rel="nofollow noreferrer noopener">
     <img src="https://img.shields.io/badge/-codsen-blue?style=flat-square" alt="page on codsen.com">
   </a>
-  <a href="https://git.sr.ht/~royston/codsen/tree/master/packages/ast-monkey-traverse-with-lookahead" rel="nofollow noreferrer noopener">
-    <img src="https://img.shields.io/badge/-sourcehut-blue?style=flat-square" alt="page on sourcehut">
+  <a href="https://github.com/codsen/codsen/tree/main/packages/ast-monkey-traverse-with-lookahead" rel="nofollow noreferrer noopener">
+    <img src="https://img.shields.io/badge/-github-blue?style=flat-square" alt="page on github">
   </a>
   <a href="https://npmcharts.com/compare/ast-monkey-traverse-with-lookahead?interval=30" rel="nofollow noreferrer noopener" target="_blank">
     <img src="https://img.shields.io/npm/dm/ast-monkey-traverse-with-lookahead.svg?style=flat-square" alt="Downloads per month">

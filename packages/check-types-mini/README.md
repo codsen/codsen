@@ -1,6 +1,6 @@
 # check-types-mini
 
-> Check the types of your options object's values after user has customised them
+> Validate options object
 
 <div class="package-badges">
   <a href="https://www.npmjs.com/package/check-types-mini" rel="nofollow noreferrer noopener">
@@ -9,8 +9,8 @@
   <a href="https://codsen.com/os/check-types-mini" rel="nofollow noreferrer noopener">
     <img src="https://img.shields.io/badge/-codsen-blue?style=flat-square" alt="page on codsen.com">
   </a>
-  <a href="https://git.sr.ht/~royston/codsen/tree/master/packages/check-types-mini" rel="nofollow noreferrer noopener">
-    <img src="https://img.shields.io/badge/-sourcehut-blue?style=flat-square" alt="page on sourcehut">
+  <a href="https://github.com/codsen/codsen/tree/main/packages/check-types-mini" rel="nofollow noreferrer noopener">
+    <img src="https://img.shields.io/badge/-github-blue?style=flat-square" alt="page on github">
   </a>
   <a href="https://npmcharts.com/compare/check-types-mini?interval=30" rel="nofollow noreferrer noopener" target="_blank">
     <img src="https://img.shields.io/npm/dm/check-types-mini.svg?style=flat-square" alt="Downloads per month">

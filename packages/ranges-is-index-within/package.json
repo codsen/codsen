@@ -71,7 +71,7 @@
     }
   },
   "dependencies": {
-    "@babel/runtime": "^7.9.2"
+    "@babel/runtime": "^7.12.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",
@@ -83,23 +83,23 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.12.1",
     "@babel/plugin-proposal-optional-chaining": "^7.12.7",
     "@babel/plugin-transform-runtime": "^7.12.10",
-    "@babel/preset-env": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
     "@babel/preset-typescript": "^7.12.7",
     "@babel/register": "^7.12.10",
     "@rollup/plugin-babel": "^5.2.2",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^11.0.1",
+    "@rollup/plugin-node-resolve": "^11.1.0",
     "@rollup/plugin-replace": "^2.3.4",
     "@rollup/plugin-strip": "^2.0.0",
     "@rollup/plugin-typescript": "^8.1.0",
-    "@types/node": "^13.13.4",
+    "@types/node": "^14.14.22",
     "@types/tap": "^14.10.1",
-    "@typescript-eslint/eslint-plugin": "^4.11.0",
-    "@typescript-eslint/parser": "^4.11.0",
-    "eslint": "^7.15.0",
+    "@typescript-eslint/eslint-plugin": "^4.14.0",
+    "@typescript-eslint/parser": "^4.14.0",
+    "eslint": "^7.18.0",
     "lect": "^0.15.1",
-    "rollup": "^2.35.1",
+    "rollup": "^2.38.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",
     "rollup-plugin-cleanup": "^3.2.1",
@@ -107,7 +107,7 @@
     "rollup-plugin-terser": "^7.0.2",
     "tap": "^14.11.0",
     "tsd": "^0.14.0",
-    "tslib": "^2.0.3",
+    "tslib": "^2.1.0",
     "typescript": "^4.1.3"
   }
 }

@@ -73,12 +73,12 @@
     "plugin-error": "^1.0.1"
   },
   "devDependencies": {
-    "eslint": "^7.15.0",
+    "eslint": "^7.18.0",
     "lect": "^0.15.1",
     "map-stream": "^0.0.7",
     "tap": "^14.11.0",
     "tempy": "^1.0.0",
-    "tslib": "^2.0.3",
+    "tslib": "^2.1.0",
     "vinyl-string": "^1.0.2"
   }
 }
