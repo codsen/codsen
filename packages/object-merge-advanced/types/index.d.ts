@@ -37,6 +37,9 @@ interface SettledOpts extends Opts {
     useNullAsExplicitFalse: boolean;
 }
 declare const defaults: SettledOpts;
+/**
+ * Recursively, deeply merge of anything
+ */
 declare function externalApi(input1orig: any, input2orig: any, originalOpts: Opts): any;
 
 export { defaults, externalApi as mergeAdvanced, version };

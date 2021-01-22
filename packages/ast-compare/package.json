@@ -22,7 +22,11 @@
     "xml"
   ],
   "homepage": "https://codsen.com/os/ast-compare/",
-  "repository": "https://git.sr.ht/~royston/codsen",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codsen/codsen.git",
+    "directory": "packages/ast-compare"
+  },
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",
@@ -32,7 +36,7 @@
   "main": "dist/ast-compare.cjs.js",
   "module": "dist/ast-compare.esm.js",
   "browser": "dist/ast-compare.umd.js",
-  "types": "types/main.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c",
     "ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",

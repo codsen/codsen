@@ -13,6 +13,9 @@ var version = "1.11.0";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 const version$1 = version;
+/**
+ * Find out, is nested array/object/string/AST tree is empty
+ */
 
 function isEmpty(input) {
   let i;

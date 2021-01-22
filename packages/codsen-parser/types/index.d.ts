@@ -145,6 +145,9 @@ interface Opts {
     errCb: null | ErrCb;
 }
 declare const defaults: Opts;
+/**
+ * Parser aiming at broken or mixed code, especially HTML & CSS
+ */
 declare function cparser(str: string, originalOpts?: Partial<Opts>): any[];
 
 export { cparser, defaults, version };

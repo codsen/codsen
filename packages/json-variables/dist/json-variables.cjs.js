@@ -522,6 +522,10 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath) {
 //                         M A I N   F U N C T I O N
 // -----------------------------------------------------------------------------
 
+/**
+ * Resolves custom-marked, cross-referenced paths in parsed JSON
+ */
+
 
 function jVar(input, originalOpts) {
   if (!arguments.length) {

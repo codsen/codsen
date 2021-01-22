@@ -68,6 +68,9 @@ interface Res {
   timeTakenInMilliseconds: number;
 }
 
+/**
+ * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
+ */
 function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
   const start = Date.now();
   //

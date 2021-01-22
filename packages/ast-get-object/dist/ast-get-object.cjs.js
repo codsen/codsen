@@ -34,24 +34,7 @@ function truthy(x) {
   return x !== false && existy(x);
 }
 /**
- * getObj - This is a walker-function for querying/writing parsed AST.
- * Pass something (array or object, possibly nested) and a plain object with
- * key-value pair (or pairs) you want to search.
- * This library will traverse the nested object and array tree (AST) and look
- * for that key-value pair in any object. If such key-value pair is found,
- * the parent plain object will be put into an array and returned.
- *
- * If the third argument is provided, it's WRITE mode.
- * Instead of returning results array, a copy of the first argument with
- * replaced findings will be returned.
- *
- * @param  {Whatever} ast               pass in the PostHTML AST (normally an array).
- * @param  {Object} keyValPair          object - key-value pair to look for.
- * @param  {Array} replacementContentsArr  OPTIONAL array of values to replace the findings with -
- * can be a array of anything - normally amended result of a previous search.
- * @return {Whatever}                   * in READ mode (3 args given), array of objects
- *                                      * in WRITE mode (4 args given),
- * mutated ast (first parameter)
+ * Getter/setter for nested parsed HTML AST's
  */
 
 

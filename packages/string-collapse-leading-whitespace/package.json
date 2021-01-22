@@ -19,7 +19,11 @@
     "templates"
   ],
   "homepage": "https://codsen.com/os/string-collapse-leading-whitespace/",
-  "repository": "https://git.sr.ht/~royston/codsen",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codsen/codsen.git",
+    "directory": "packages/string-collapse-leading-whitespace"
+  },
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",
@@ -29,7 +33,7 @@
   "main": "dist/string-collapse-leading-whitespace.cjs.js",
   "module": "dist/string-collapse-leading-whitespace.esm.js",
   "browser": "dist/string-collapse-leading-whitespace.umd.js",
-  "types": "types/main.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c",
     "ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",

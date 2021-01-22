@@ -4,6 +4,9 @@ declare type JsonObject = {
     [Key in string]?: JsonValue;
 };
 declare type JsonArray = Array<JsonValue>;
+/**
+ * Compare anything: AST, objects, arrays and strings
+ */
 declare function looseCompare(bigObj: JsonValue, smallObj: JsonValue): boolean | undefined;
 
 export { looseCompare, version };

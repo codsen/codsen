@@ -35,7 +35,12 @@ interface Opts {
 
 // -----------------------------------------------------------------------------
 
-// bo = bigObject original; so = smallObject original
+// Legend:
+// b - superset object; s - subset object
+
+/**
+ * Compare anything: AST, objects, arrays, strings and nested thereof
+ */
 function compare(
   b: JsonValue,
   s: JsonValue,

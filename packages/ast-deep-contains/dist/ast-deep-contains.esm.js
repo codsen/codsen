@@ -39,6 +39,9 @@ const defaults = {
   skipContainers: true,
   arrayStrictComparison: false
 };
+/**
+ * Like t.same assert on array of objects, where element order doesn't matter.
+ */
 
 function deepContains(tree1, tree2, cb, errCb, originalOpts) {
   const opts = { ...defaults,

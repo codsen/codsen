@@ -1,6 +1,6 @@
 /**
  * ast-contains-only-empty-space
- * Returns Boolean depending if passed AST contain only empty space
+ * Does AST contain only empty space?
  * Version: 1.10.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
@@ -2093,6 +2093,10 @@ function parent(str) {
   return null;
 }
 
+/**
+ * Utility library to traverse AST
+ */
+
 function traverse(tree1, cb1) {
   var stop2 = {
     now: false
@@ -2175,6 +2179,10 @@ function traverse(tree1, cb1) {
 
   return traverseInner(tree1, cb1, {}, stop2);
 } // -----------------------------------------------------------------------------
+
+/**
+ * Does AST contain only empty space?
+ */
 
 function empty(input) {
   if (typeof input === "string") {

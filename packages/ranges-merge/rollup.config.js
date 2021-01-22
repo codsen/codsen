@@ -244,7 +244,7 @@ export default (commandLineArgs) => {
     // Type definitions
     {
       input: "src/main.ts",
-      output: [{ file: "types/main.d.ts", format: "es" }],
+      output: [{ file: "types/index.d.ts", format: "es" }],
       plugins: [json(), dts()],
     },
   ];

@@ -4231,6 +4231,9 @@ var defaults$2 = {
   reportProgressFuncFrom: 0,
   reportProgressFuncTo: 100
 };
+/**
+ * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
+ */
 
 function tokenizer(str, originalOpts) {
   var start = Date.now(); //
@@ -7251,6 +7254,10 @@ function layerPending(layers, tokenObj) {
     }))
   );
 }
+/**
+ * Parser aiming at broken or mixed code, especially HTML & CSS
+ */
+
 
 function cparser(str, originalOpts) {
   //

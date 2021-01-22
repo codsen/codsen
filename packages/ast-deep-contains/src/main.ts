@@ -46,6 +46,9 @@ interface ErrorCallback {
   (errStr: string): void;
 }
 
+/**
+ * Like t.same assert on array of objects, where element order doesn't matter.
+ */
 function deepContains(
   tree1: any,
   tree2: any,

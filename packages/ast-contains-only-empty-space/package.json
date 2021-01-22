@@ -1,7 +1,7 @@
 {
   "name": "ast-contains-only-empty-space",
   "version": "1.10.1",
-  "description": "Returns Boolean depending if passed AST contain only empty space",
+  "description": "Does AST contain only empty space?",
   "keywords": [
     "ast",
     "character",
@@ -19,7 +19,11 @@
     "zero"
   ],
   "homepage": "https://codsen.com/os/ast-contains-only-empty-space/",
-  "repository": "https://git.sr.ht/~royston/codsen",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codsen/codsen.git",
+    "directory": "packages/ast-contains-only-empty-space"
+  },
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",
@@ -29,7 +33,7 @@
   "main": "dist/ast-contains-only-empty-space.cjs.js",
   "module": "dist/ast-contains-only-empty-space.esm.js",
   "browser": "dist/ast-contains-only-empty-space.umd.js",
-  "types": "types/main.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c",
     "ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",

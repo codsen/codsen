@@ -107,6 +107,9 @@ function layerPending(layers: Token[], tokenObj: Token): boolean {
   );
 }
 
+/**
+ * Parser aiming at broken or mixed code, especially HTML & CSS
+ */
 function cparser(str: string, originalOpts?: Partial<Opts>): any[] {
   //
   //

@@ -37,6 +37,9 @@ function logArray(arr: any[], highlightIdx: number, colour?: number | string) {
 // EXTERNAL API
 // -----------------------------------------------------------------------------
 
+/**
+ * Sort array of arrays by column, rippling the sorting outwards from that column
+ */
 function sortByCol(arr: any[], axis: number | string = 0): any[] {
   if (!Array.isArray(arr)) {
     throw new Error(

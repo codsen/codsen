@@ -1,6 +1,6 @@
 /**
  * ast-contains-only-empty-space
- * Returns Boolean depending if passed AST contain only empty space
+ * Does AST contain only empty space?
  * Version: 1.10.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
@@ -12,6 +12,10 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var astMonkeyTraverse = require('ast-monkey-traverse');
+
+/**
+ * Does AST contain only empty space?
+ */
 
 function empty(input) {
   if (typeof input === "string") {

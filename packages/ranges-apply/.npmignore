@@ -13,7 +13,6 @@
 
 .nyc_output
 coverage
-media
 perf
 src
 test
@@ -23,5 +22,4 @@ test
 .npmignore
 .prettierignore
 rollup.config.js
-testStats.md
 tsconfig.json

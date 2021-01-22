@@ -53,6 +53,10 @@ function returnHelper(result, applicableOpts, templatingLang, start) {
     templatingLang
   };
 }
+/**
+ * Extracts or deletes HTML, CSS, text and/or templating tags from string
+ */
+
 
 function stri(input, originalOpts) {
   const start = Date.now(); // insurance

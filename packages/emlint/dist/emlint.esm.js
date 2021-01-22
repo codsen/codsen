@@ -11034,6 +11034,9 @@ function normaliseRequestedRules(opts) {
 }
 
 TypedEmitter.defaultMaxListeners = 0;
+/**
+ * Pluggable email template code linter
+ */
 
 class Linter extends TypedEmitter {
   constructor() {

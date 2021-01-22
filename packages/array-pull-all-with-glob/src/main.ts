@@ -6,6 +6,9 @@ interface Opts {
   caseSensitive?: boolean;
 }
 
+/**
+ * Like _.pullAll but with globs (wildcards)
+ */
 function pull(
   originalInput: string[],
   originalToBeRemoved: string | string[],

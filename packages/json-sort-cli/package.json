@@ -15,7 +15,11 @@
     "utility"
   ],
   "homepage": "https://codsen.com/os/json-sort-cli/",
-  "repository": "https://git.sr.ht/~royston/codsen",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codsen/codsen.git",
+    "directory": "packages/json-sort-cli"
+  },
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",

@@ -3410,6 +3410,10 @@ function isStr$2(something) {
 function isLetter(something) {
   return typeof something === "string" && something.toUpperCase() !== something.toLowerCase();
 }
+/**
+ * Minifies HTML/CSS: valid or broken, pure or mixed with other languages
+ */
+
 
 function crush(str, originalOpts) {
   var start = Date.now(); // insurance:

@@ -19,7 +19,11 @@
     "string"
   ],
   "homepage": "https://codsen.com/os/string-fix-broken-named-entities/",
-  "repository": "https://git.sr.ht/~royston/codsen",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codsen/codsen.git",
+    "directory": "packages/string-fix-broken-named-entities"
+  },
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",
@@ -29,7 +33,7 @@
   "main": "dist/string-fix-broken-named-entities.cjs.js",
   "module": "dist/string-fix-broken-named-entities.esm.js",
   "browser": "dist/string-fix-broken-named-entities.umd.js",
-  "types": "types/main.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c",
     "ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",

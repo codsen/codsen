@@ -124,6 +124,10 @@ function internalCompare(bigObj, smallObj, res) {
 
   return res;
 }
+/**
+ * Compare anything: AST, objects, arrays and strings
+ */
+
 
 function looseCompare(bigObj, smallObj) {
   return internalCompare(bigObj, smallObj);

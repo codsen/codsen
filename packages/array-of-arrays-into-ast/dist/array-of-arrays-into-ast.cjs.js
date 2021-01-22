@@ -31,6 +31,10 @@ function sortObject(obj) {
     return result;
   }, {});
 }
+/**
+ * Turns an array of arrays of data into a nested tree of plain objects
+ */
+
 
 function generateAst(input, originalOpts) {
   if (!Array.isArray(input)) {

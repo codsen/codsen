@@ -18,7 +18,11 @@
     "six"
   ],
   "homepage": "https://codsen.com/os/color-shorthand-hex-to-six-digit/",
-  "repository": "https://git.sr.ht/~royston/codsen",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codsen/codsen.git",
+    "directory": "packages/color-shorthand-hex-to-six-digit"
+  },
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",
@@ -28,7 +32,7 @@
   "main": "dist/color-shorthand-hex-to-six-digit.cjs.js",
   "module": "dist/color-shorthand-hex-to-six-digit.esm.js",
   "browser": "dist/color-shorthand-hex-to-six-digit.umd.js",
-  "types": "types/main.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c",
     "ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",

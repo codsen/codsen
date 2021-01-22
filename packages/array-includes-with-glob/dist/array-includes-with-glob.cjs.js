@@ -26,6 +26,9 @@ var defaults = {
   arrayVsArrayAllMustBeFound: "any",
   caseSensitive: true
 };
+/**
+ * Like _.includes but with wildcards
+ */
 
 function includesWithGlob(originalInput, stringToFind, originalOpts) {
   // maybe we can end prematurely:

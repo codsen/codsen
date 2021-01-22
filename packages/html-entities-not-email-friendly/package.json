@@ -13,7 +13,11 @@
     "template"
   ],
   "homepage": "https://codsen.com/os/html-entities-not-email-friendly/",
-  "repository": "https://git.sr.ht/~royston/codsen",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codsen/codsen.git",
+    "directory": "packages/html-entities-not-email-friendly"
+  },
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",
@@ -23,7 +27,7 @@
   "main": "dist/html-entities-not-email-friendly.cjs.js",
   "module": "dist/html-entities-not-email-friendly.esm.js",
   "browser": "dist/html-entities-not-email-friendly.umd.js",
-  "types": "types/main.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c",
     "ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",

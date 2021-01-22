@@ -743,6 +743,9 @@ function mergeAdvanced(
   return currentResult;
 }
 
+/**
+ * Recursively, deeply merge of anything
+ */
 function externalApi(
   input1orig: any,
   input2orig: any,

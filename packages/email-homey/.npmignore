@@ -20,4 +20,3 @@ fixtures
 .npmignore
 .prettierignore
 test.js
-testStats.md

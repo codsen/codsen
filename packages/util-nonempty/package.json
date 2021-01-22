@@ -12,7 +12,11 @@
     "util"
   ],
   "homepage": "https://codsen.com/os/util-nonempty/",
-  "repository": "https://git.sr.ht/~royston/codsen",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codsen/codsen.git",
+    "directory": "packages/util-nonempty"
+  },
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",
@@ -22,7 +26,7 @@
   "main": "dist/util-nonempty.cjs.js",
   "module": "dist/util-nonempty.esm.js",
   "browser": "dist/util-nonempty.umd.js",
-  "types": "types/main.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c",
     "ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",

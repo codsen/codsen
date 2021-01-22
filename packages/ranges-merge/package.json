@@ -25,7 +25,7 @@
   "main": "dist/ranges-merge.cjs.js",
   "module": "dist/ranges-merge.esm.js",
   "browser": "dist/ranges-merge.umd.js",
-  "types": "types/main.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c",
     "ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",

@@ -20,7 +20,11 @@
     "value"
   ],
   "homepage": "https://codsen.com/os/is-char-suitable-for-html-attr-name/",
-  "repository": "https://git.sr.ht/~royston/codsen",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codsen/codsen.git",
+    "directory": "packages/is-char-suitable-for-html-attr-name"
+  },
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",
@@ -30,7 +34,7 @@
   "main": "dist/is-char-suitable-for-html-attr-name.cjs.js",
   "module": "dist/is-char-suitable-for-html-attr-name.esm.js",
   "browser": "dist/is-char-suitable-for-html-attr-name.umd.js",
-  "types": "types/main.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c",
     "ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",

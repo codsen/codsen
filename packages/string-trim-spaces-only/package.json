@@ -15,7 +15,11 @@
     "trim"
   ],
   "homepage": "https://codsen.com/os/string-trim-spaces-only/",
-  "repository": "https://git.sr.ht/~royston/codsen",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codsen/codsen.git",
+    "directory": "packages/string-trim-spaces-only"
+  },
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",
@@ -25,7 +29,7 @@
   "main": "dist/string-trim-spaces-only.cjs.js",
   "module": "dist/string-trim-spaces-only.esm.js",
   "browser": "dist/string-trim-spaces-only.umd.js",
-  "types": "types/main.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c",
     "ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",

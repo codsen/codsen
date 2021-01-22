@@ -445,6 +445,9 @@ var defaults = {
   reportProgressFuncFrom: 0,
   reportProgressFuncTo: 100
 };
+/**
+ * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
+ */
 
 function tokenizer(str, originalOpts) {
   var start = Date.now(); //

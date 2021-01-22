@@ -122,7 +122,7 @@ async function packageJson({ state, lectrc }) {
   if (!state.isCLI) {
     objectPath.set(content, "main", `dist/${state.pack.name}.cjs.js`);
     objectPath.set(content, "module", `dist/${state.pack.name}.esm.js`);
-    objectPath.set(content, "types", `types/main.d.ts`);
+    objectPath.set(content, "types", `types/index.d.ts`);
   }
   if (objectPath.has(content, "browser")) {
     // beware, some Node-only packages don't build UMD's, like

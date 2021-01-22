@@ -2135,6 +2135,10 @@ function parent(str) {
   return null;
 }
 
+/**
+ * Utility library to traverse AST
+ */
+
 function traverse(tree1, cb1) {
   var stop2 = {
     now: false
@@ -2306,6 +2310,9 @@ var version = "2.8.1";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 var version$1 = version;
+/**
+ * Extract values and paths from AST by keys OR set them by keys
+ */
 
 function getByKey(originalInput, whatToFind, originalReplacement) {
   var replacement;

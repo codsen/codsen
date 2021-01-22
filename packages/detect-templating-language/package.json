@@ -11,7 +11,11 @@
     "templating"
   ],
   "homepage": "https://codsen.com/os/detect-templating-language/",
-  "repository": "https://git.sr.ht/~royston/codsen",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codsen/codsen.git",
+    "directory": "packages/detect-templating-language"
+  },
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",
@@ -21,7 +25,7 @@
   "main": "dist/detect-templating-language.cjs.js",
   "module": "dist/detect-templating-language.esm.js",
   "browser": "dist/detect-templating-language.umd.js",
-  "types": "types/main.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c",
     "ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",

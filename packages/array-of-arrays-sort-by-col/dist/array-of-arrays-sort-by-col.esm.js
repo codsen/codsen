@@ -26,6 +26,10 @@ function existy(x) {
 // EXTERNAL API
 // -----------------------------------------------------------------------------
 
+/**
+ * Sort array of arrays by column, rippling the sorting outwards from that column
+ */
+
 
 function sortByCol(arr, axis = 0) {
   if (!Array.isArray(arr)) {

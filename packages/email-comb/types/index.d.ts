@@ -43,6 +43,9 @@ interface Res {
     deletedFromBody: string[];
 }
 declare const defaults: Opts;
+/**
+ * Remove unused CSS from email templates
+ */
 declare function comb(str: string, originalOpts?: Partial<Opts>): Res;
 
 export { comb, defaults, version };

@@ -724,6 +724,9 @@ current = ${JSON.stringify(current, null, 4)}\n\n`
   );
 }
 
+/**
+ * Validate options object
+ */
 function checkTypesMini(
   obj: Obj,
   ref: Obj | null,

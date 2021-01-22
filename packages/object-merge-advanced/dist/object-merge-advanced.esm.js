@@ -1,6 +1,6 @@
 /**
  * object-merge-advanced
- * Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
+ * Recursively, deeply merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
  * Version: 10.12.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
@@ -621,6 +621,10 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
 
   return currentResult;
 }
+/**
+ * Recursively, deeply merge of anything
+ */
+
 
 function externalApi(input1orig, input2orig, originalOpts) {
   if (!arguments.length) {

@@ -2135,6 +2135,10 @@ function parent(str) {
   return null;
 }
 
+/**
+ * Utility library to traverse AST
+ */
+
 function traverse(tree1, cb1) {
   var stop2 = {
     now: false
@@ -3387,6 +3391,9 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-get-values-by-key/
+ */
+/**
+ * Extract values and paths from AST by keys OR set them by keys
  */
 
 function getByKey(originalInput, whatToFind, originalReplacement) {
@@ -5015,6 +5022,10 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath) {
 } // -----------------------------------------------------------------------------
 //                         M A I N   F U N C T I O N
 // -----------------------------------------------------------------------------
+
+/**
+ * Resolves custom-marked, cross-referenced paths in parsed JSON
+ */
 
 
 function jVar(input, originalOpts) {

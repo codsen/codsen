@@ -14,7 +14,11 @@
     "typography"
   ],
   "homepage": "https://codsen.com/os/string-apostrophes/",
-  "repository": "https://git.sr.ht/~royston/codsen",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codsen/codsen.git",
+    "directory": "packages/string-apostrophes"
+  },
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",
@@ -24,7 +28,7 @@
   "main": "dist/string-apostrophes.cjs.js",
   "module": "dist/string-apostrophes.esm.js",
   "browser": "dist/string-apostrophes.umd.js",
-  "types": "types/main.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c",
     "ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",

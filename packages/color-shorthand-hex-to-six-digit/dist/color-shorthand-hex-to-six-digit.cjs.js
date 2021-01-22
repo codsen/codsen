@@ -25,6 +25,9 @@ var version = "2.11.1";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 var version$1 = version;
+/**
+ * Convert shorthand hex color codes into full
+ */
 
 function conv(originalInput) {
   // prevent any input argument mutation:

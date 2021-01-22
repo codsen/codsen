@@ -9,6 +9,9 @@ interface Opts {
     verboseWhenMismatches?: boolean;
     useWildcards?: boolean;
 }
+/**
+ * Compare anything: AST, objects, arrays, strings and nested thereof
+ */
 declare function compare(b: JsonValue, s: JsonValue, originalOpts?: Opts): boolean | string;
 
 export { compare };

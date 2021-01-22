@@ -417,6 +417,10 @@ function deburr(string) {
 
 var lodash_deburr = deburr;
 
+/**
+ * Generate BitBucket readme header anchor slug URLs
+ */
+
 function bSlug(str) {
   if (typeof str !== "string") {
     return "";

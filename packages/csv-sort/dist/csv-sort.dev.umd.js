@@ -2101,6 +2101,10 @@ function findType(something) {
   return "text";
 }
 
+/**
+ * Sorts double-entry bookkeeping CSV coming from internet banking
+ */
+
 function sort(input) {
   var msgContent = null;
   var msgType = null; // step 1.

@@ -1,6 +1,9 @@
 import { traverse } from "ast-monkey-traverse";
 
-function empty(input: any): boolean {
+/**
+ * Does AST contain only empty space?
+ */
+function empty(input: unknown): boolean {
   if (typeof input === "string") {
     console.log(`005 return ${!input.trim()}`);
     return !input.trim();

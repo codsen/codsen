@@ -17,6 +17,9 @@ const defaults = {
   wildcard: "*",
   dedupePlease: true
 };
+/**
+ * Groups array of strings by omitting number characters
+ */
 
 function groupStr(originalArr, originalOpts) {
   if (!Array.isArray(originalArr)) {

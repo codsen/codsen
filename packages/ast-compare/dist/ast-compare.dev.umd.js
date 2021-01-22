@@ -2536,6 +2536,10 @@ function parent(str) {
   return null;
 }
 
+/**
+ * Utility library to traverse AST
+ */
+
 function traverse(tree1, cb1) {
   var stop2 = {
     now: false
@@ -2621,11 +2625,14 @@ function traverse(tree1, cb1) {
 
 /**
  * ast-contains-only-empty-space
- * Returns Boolean depending if passed AST contain only empty space
+ * Does AST contain only empty space?
  * Version: 1.10.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-contains-only-empty-space/
+ */
+/**
+ * Does AST contain only empty space?
  */
 
 function empty(input) {
@@ -2748,7 +2755,12 @@ function isBlank(something) {
 
   return false;
 } // -----------------------------------------------------------------------------
-// bo = bigObject original; so = smallObject original
+// Legend:
+// b - superset object; s - subset object
+
+/**
+ * Compare anything: AST, objects, arrays, strings and nested thereof
+ */
 
 
 function compare(b, s, originalOpts) {

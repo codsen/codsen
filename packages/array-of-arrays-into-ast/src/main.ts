@@ -23,6 +23,9 @@ function sortObject(obj: UnknownValueObj): UnknownValueObj {
     }, {});
 }
 
+/**
+ * Turns an array of arrays of data into a nested tree of plain objects
+ */
 function generateAst(
   input: any[],
   originalOpts?: Partial<Opts>

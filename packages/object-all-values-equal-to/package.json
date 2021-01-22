@@ -16,7 +16,11 @@
     "write"
   ],
   "homepage": "https://codsen.com/os/object-all-values-equal-to/",
-  "repository": "https://git.sr.ht/~royston/codsen",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codsen/codsen.git",
+    "directory": "packages/object-all-values-equal-to"
+  },
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",
@@ -26,7 +30,7 @@
   "main": "dist/object-all-values-equal-to.cjs.js",
   "module": "dist/object-all-values-equal-to.esm.js",
   "browser": "dist/object-all-values-equal-to.umd.js",
-  "types": "types/main.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c",
     "ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",

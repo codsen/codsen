@@ -11,7 +11,11 @@
     "position"
   ],
   "homepage": "https://codsen.com/os/line-column-mini/",
-  "repository": "https://git.sr.ht/~royston/codsen",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codsen/codsen.git",
+    "directory": "packages/line-column-mini"
+  },
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",
@@ -21,7 +25,7 @@
   "main": "dist/line-column-mini.cjs.js",
   "module": "dist/line-column-mini.esm.js",
   "browser": "dist/line-column-mini.umd.js",
-  "types": "types/main.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c",
     "ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",

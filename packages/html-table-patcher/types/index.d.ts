@@ -4,6 +4,9 @@ interface Opts {
     alwaysCenter: boolean;
 }
 declare const defaults: Opts;
+/**
+ * Visual helper to place templating code around table tags into correct places
+ */
 declare function patcher(str: string, generalOpts?: Partial<Opts>): {
     result: string;
 };

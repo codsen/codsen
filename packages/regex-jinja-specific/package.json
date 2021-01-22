@@ -17,7 +17,11 @@
     "tell"
   ],
   "homepage": "https://codsen.com/os/regex-jinja-specific/",
-  "repository": "https://git.sr.ht/~royston/codsen",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codsen/codsen.git",
+    "directory": "packages/regex-jinja-specific"
+  },
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",
@@ -27,7 +31,7 @@
   "main": "dist/regex-jinja-specific.cjs.js",
   "module": "dist/regex-jinja-specific.esm.js",
   "browser": "dist/regex-jinja-specific.umd.js",
-  "types": "types/main.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c",
     "ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",

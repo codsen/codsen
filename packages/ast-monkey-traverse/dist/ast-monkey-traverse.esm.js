@@ -15,6 +15,9 @@ var version = "1.13.1";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types:0 */
 const version$1 = version;
+/**
+ * Utility library to traverse AST
+ */
 
 function traverse(tree1, cb1) {
   const stop2 = {

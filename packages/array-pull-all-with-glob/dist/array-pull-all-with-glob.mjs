@@ -1,6 +1,6 @@
 /**
  * array-pull-all-with-glob
- * PullAllWithGlob - like _.pullAll but with globs (wildcards)
+ * Like _.pullAll but with globs (wildcards)
  * Version: 4.13.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT

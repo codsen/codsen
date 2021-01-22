@@ -13,11 +13,9 @@
 
 .nyc_output
 coverage
-media
 test
 
 # files:
 
 .npmignore
 .prettierignore
-testStats.md

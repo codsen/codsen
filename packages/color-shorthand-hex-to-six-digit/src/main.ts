@@ -6,6 +6,9 @@ import clone from "lodash.clonedeep";
 import { version as v } from "../package.json";
 const version: string = v;
 
+/**
+ * Convert shorthand hex color codes into full
+ */
 function conv(originalInput: any): any {
   // prevent any input argument mutation:
   let input = clone(originalInput);

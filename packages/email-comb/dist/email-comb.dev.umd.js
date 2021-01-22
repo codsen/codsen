@@ -2797,6 +2797,10 @@ var isMatch = function isMatch(input, pattern, options) {
 };
 matcher.isMatch = isMatch;
 
+/**
+ * Like _.pullAll but with globs (wildcards)
+ */
+
 function pull(originalInput, originalToBeRemoved, originalOpts) {
   // insurance
   if (!originalInput.length) {
@@ -5274,6 +5278,10 @@ function isStr$2(something) {
 function isLetter(something) {
   return typeof something === "string" && something.toUpperCase() !== something.toLowerCase();
 }
+/**
+ * Minifies HTML/CSS: valid or broken, pure or mixed with other languages
+ */
+
 
 function crush(str, originalOpts) {
   var start = Date.now(); // insurance:
@@ -7156,6 +7164,9 @@ var defaults$6 = {
   reportProgressFuncFrom: 0,
   reportProgressFuncTo: 100
 };
+/**
+ * Remove unused CSS from email templates
+ */
 
 function comb(str, originalOpts) {
   var start = Date.now();

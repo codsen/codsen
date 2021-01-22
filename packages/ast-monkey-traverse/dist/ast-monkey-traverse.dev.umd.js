@@ -2096,6 +2096,9 @@ function parent(str) {
 var version = "1.13.1";
 
 var version$1 = version;
+/**
+ * Utility library to traverse AST
+ */
 
 function traverse(tree1, cb1) {
   var stop2 = {

@@ -28,6 +28,9 @@ const defaults: Opts = {
   alwaysCenter: false,
 };
 
+/**
+ * Visual helper to place templating code around table tags into correct places
+ */
 function patcher(str: string, generalOpts?: Partial<Opts>): { result: string } {
   // insurance
   // ---------------------------------------------------------------------------

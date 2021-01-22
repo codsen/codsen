@@ -684,6 +684,10 @@ function convertOne(str, _ref) {
   }
   return rangesArr;
 }
+/**
+ * Typographically-correct the apostrophes and single/double quotes
+ */
+
 
 function convertAll(str, opts) {
   var ranges = [];

@@ -18,6 +18,9 @@ const defaults: Opts = {
   dedupePlease: true,
 };
 
+/**
+ * Groups array of strings by omitting number characters
+ */
 function groupStr(
   originalArr: any[],
   originalOpts?: Partial<Opts>

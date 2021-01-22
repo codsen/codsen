@@ -82,6 +82,9 @@ const defaults: Opts = {
   reportProgressFuncTo: 100,
 };
 
+/**
+ * Remove unused CSS from email templates
+ */
 function comb(str: string, originalOpts?: Partial<Opts>): Res {
   const start = Date.now();
   const finalIndexesToDelete = new Ranges({ limitToBeAddedWhitespace: true });

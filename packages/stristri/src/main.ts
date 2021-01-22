@@ -49,6 +49,9 @@ function returnHelper(
   };
 }
 
+/**
+ * Extracts or deletes HTML, CSS, text and/or templating tags from string
+ */
 function stri(input: string, originalOpts?: Partial<Opts>): Res {
   const start = Date.now();
   console.log(

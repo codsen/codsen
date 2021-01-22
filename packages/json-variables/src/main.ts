@@ -830,6 +830,9 @@ function resolveString(
 //                         M A I N   F U N C T I O N
 // -----------------------------------------------------------------------------
 
+/**
+ * Resolves custom-marked, cross-referenced paths in parsed JSON
+ */
 function jVar(input: Obj, originalOpts?: Partial<Opts>): Obj {
   if (!arguments.length) {
     throw new Error(

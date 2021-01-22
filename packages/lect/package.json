@@ -23,7 +23,11 @@
     "update"
   ],
   "homepage": "https://codsen.com/os/lect/",
-  "repository": "https://git.sr.ht/~royston/codsen",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codsen/codsen.git",
+    "directory": "packages/lect"
+  },
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",

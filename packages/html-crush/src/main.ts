@@ -142,6 +142,9 @@ interface Res {
   result: string;
 }
 
+/**
+ * Minifies HTML/CSS: valid or broken, pure or mixed with other languages
+ */
 function crush(str: string, originalOpts?: Partial<Opts>): Res {
   const start = Date.now();
   // insurance:

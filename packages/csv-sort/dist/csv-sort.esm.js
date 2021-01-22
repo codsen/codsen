@@ -50,6 +50,10 @@ function findType(something) {
   return "text";
 }
 
+/**
+ * Sorts double-entry bookkeeping CSV coming from internet banking
+ */
+
 function sort(input) {
   let msgContent = null;
   let msgType = null; // step 1.

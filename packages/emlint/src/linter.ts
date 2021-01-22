@@ -32,6 +32,9 @@ interface ErrorObjWithRuleId extends ErrorObj {
 // disable the max limit of listeners
 TypedEmitter.defaultMaxListeners = 0;
 
+/**
+ * Pluggable email template code linter
+ */
 class Linter extends TypedEmitter<RuleObjType> {
   constructor() {
     super();

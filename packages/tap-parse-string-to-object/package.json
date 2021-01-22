@@ -18,7 +18,11 @@
     "unit"
   ],
   "homepage": "https://codsen.com/os/tap-parse-string-to-object/",
-  "repository": "https://git.sr.ht/~royston/codsen",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codsen/codsen.git",
+    "directory": "packages/tap-parse-string-to-object"
+  },
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",
@@ -27,7 +31,7 @@
   },
   "main": "dist/tap-parse-string-to-object.cjs.js",
   "module": "dist/tap-parse-string-to-object.esm.js",
-  "types": "types/main.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c",
     "ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",

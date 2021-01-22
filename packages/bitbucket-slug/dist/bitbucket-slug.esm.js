@@ -9,6 +9,10 @@
 
 import deburr from 'lodash.deburr';
 
+/**
+ * Generate BitBucket readme header anchor slug URLs
+ */
+
 function bSlug(str) {
   if (typeof str !== "string") {
     return "";

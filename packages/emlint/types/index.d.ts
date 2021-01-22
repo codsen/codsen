@@ -175,6 +175,9 @@ interface MessageObj extends ErrorObj {
 interface ErrorObjWithRuleId extends ErrorObj {
     ruleId: string;
 }
+/**
+ * Pluggable email template code linter
+ */
 declare class Linter extends TypedEmitter<RuleObjType> {
     constructor();
     messages: MessageObj[];

@@ -11506,6 +11506,10 @@ function parent(str) {
   return null;
 }
 
+/**
+ * Utility library to traverse AST
+ */
+
 function traverse(tree1, cb1) {
   var stop2 = {
     now: false
@@ -13718,6 +13722,9 @@ var defaults$2 = {
   reportProgressFuncFrom: 0,
   reportProgressFuncTo: 100
 };
+/**
+ * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
+ */
 
 function tokenizer(str, originalOpts) {
   var start = Date.now(); //
@@ -16735,6 +16742,10 @@ function layerPending(layers, tokenObj) {
     }))
   );
 }
+/**
+ * Parser aiming at broken or mixed code, especially HTML & CSS
+ */
+
 
 function cparser(str, originalOpts) {
   //
@@ -44565,6 +44576,9 @@ function normaliseRequestedRules(opts) {
 }
 
 TypedEmitter.defaultMaxListeners = 0;
+/**
+ * Pluggable email template code linter
+ */
 
 var Linter = /*#__PURE__*/function (_TypedEmitter) {
   _inheritsLoose(Linter, _TypedEmitter);

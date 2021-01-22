@@ -17,6 +17,10 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var deburr__default = /*#__PURE__*/_interopDefaultLegacy(deburr);
 
+/**
+ * Generate BitBucket readme header anchor slug URLs
+ */
+
 function bSlug(str) {
   if (typeof str !== "string") {
     return "";

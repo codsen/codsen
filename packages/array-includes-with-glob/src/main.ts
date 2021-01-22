@@ -12,6 +12,9 @@ const defaults: Opts = {
   caseSensitive: true,
 };
 
+/**
+ * Like _.includes but with wildcards
+ */
 function includesWithGlob(
   originalInput: string | string[],
   stringToFind: string | string[],

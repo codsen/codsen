@@ -10,6 +10,9 @@ interface Callback {
 interface ErrorCallback {
     (errStr: string): void;
 }
+/**
+ * Like t.same assert on array of objects, where element order doesn't matter.
+ */
 declare function deepContains(tree1: any, tree2: any, cb: Callback, errCb: ErrorCallback, originalOpts?: Opts): void;
 
 export { deepContains, defaults, version };

@@ -21,6 +21,9 @@ const defaults: Opts = {
   hungryForWhitespace: false,
 };
 
+/**
+ * Delete all plain objects in AST if they contain a certain key/value pair
+ */
 function deleteObj(
   originalInput: any,
   objToDelete: UnknownValueObj,

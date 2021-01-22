@@ -8958,6 +8958,9 @@ var defaults$3 = {
   },
   cb: null
 };
+/**
+ * Strips HTML tags from strings. No parser, accepts mixed sources.
+ */
 
 function stripHtml(str, originalOpts) {
   // const

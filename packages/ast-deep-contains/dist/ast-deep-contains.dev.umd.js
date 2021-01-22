@@ -2423,6 +2423,10 @@ function parent(str) {
   return null;
 }
 
+/**
+ * Utility library to traverse AST
+ */
+
 function traverse(tree1, cb1) {
   var stop2 = {
     now: false
@@ -3355,6 +3359,9 @@ var defaults = {
   skipContainers: true,
   arrayStrictComparison: false
 };
+/**
+ * Like t.same assert on array of objects, where element order doesn't matter.
+ */
 
 function deepContains(tree1, tree2, cb, errCb, originalOpts) {
   var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);

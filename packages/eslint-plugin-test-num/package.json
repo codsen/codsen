@@ -19,7 +19,11 @@
     "updater"
   ],
   "homepage": "https://codsen.com/os/eslint-plugin-test-num/",
-  "repository": "https://git.sr.ht/~royston/codsen",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codsen/codsen.git",
+    "directory": "packages/eslint-plugin-test-num"
+  },
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",
@@ -28,7 +32,7 @@
   },
   "main": "dist/eslint-plugin-test-num.cjs.js",
   "module": "dist/eslint-plugin-test-num.esm.js",
-  "types": "types/main.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c",
     "ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",

@@ -19,7 +19,11 @@
     "templates"
   ],
   "homepage": "https://codsen.com/os/js-row-num/",
-  "repository": "https://git.sr.ht/~royston/codsen",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codsen/codsen.git",
+    "directory": "packages/js-row-num"
+  },
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",
@@ -29,7 +33,7 @@
   "main": "dist/js-row-num.cjs.js",
   "module": "dist/js-row-num.esm.js",
   "browser": "dist/js-row-num.umd.js",
-  "types": "types/main.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c",
     "ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",

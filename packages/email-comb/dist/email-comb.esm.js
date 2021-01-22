@@ -54,6 +54,9 @@ const defaults = {
   reportProgressFuncFrom: 0,
   reportProgressFuncTo: 100
 };
+/**
+ * Remove unused CSS from email templates
+ */
 
 function comb(str, originalOpts) {
   const start = Date.now();

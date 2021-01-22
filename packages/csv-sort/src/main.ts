@@ -9,6 +9,9 @@ interface Res {
   msgType: null | string;
 }
 
+/**
+ * Sorts double-entry bookkeeping CSV coming from internet banking
+ */
 function sort(input: string): Res {
   let msgContent = null;
   let msgType = null;

@@ -127,6 +127,9 @@ function internalCompare(
   return res;
 }
 
+/**
+ * Compare anything: AST, objects, arrays and strings
+ */
 function looseCompare(
   bigObj: JsonValue,
   smallObj: JsonValue

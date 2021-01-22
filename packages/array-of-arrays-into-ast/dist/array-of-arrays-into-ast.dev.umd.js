@@ -3907,6 +3907,9 @@ var defaults = {
   arrayVsArrayAllMustBeFound: "any",
   caseSensitive: true
 };
+/**
+ * Like _.includes but with wildcards
+ */
 
 function includesWithGlob(originalInput, stringToFind, originalOpts) {
   // maybe we can end prematurely:
@@ -4582,6 +4585,10 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
 
   return currentResult;
 }
+/**
+ * Recursively, deeply merge of anything
+ */
+
 
 function externalApi(input1orig, input2orig, originalOpts) {
   if (!arguments.length) {
@@ -4610,6 +4617,10 @@ function sortObject(obj) {
     return result;
   }, {});
 }
+/**
+ * Turns an array of arrays of data into a nested tree of plain objects
+ */
+
 
 function generateAst(input, originalOpts) {
   if (!Array.isArray(input)) {

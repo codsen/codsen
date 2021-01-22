@@ -35,6 +35,9 @@ var defaults = {
   cssStylesContent: "",
   alwaysCenter: false
 };
+/**
+ * Visual helper to place templating code around table tags into correct places
+ */
 
 function patcher(str, generalOpts) {
   // insurance

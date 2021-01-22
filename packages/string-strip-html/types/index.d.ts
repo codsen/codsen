@@ -62,6 +62,9 @@ interface Res {
     allTagLocations: [number, number][];
     filteredTagLocations: [number, number][];
 }
+/**
+ * Strips HTML tags from strings. No parser, accepts mixed sources.
+ */
 declare function stripHtml(str: string, originalOpts?: Partial<Opts>): Res;
 
 export { CbObj, defaults, stripHtml, version };

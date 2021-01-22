@@ -11176,6 +11176,9 @@ function normaliseRequestedRules(opts) {
 }
 
 tinyTypedEmitter.TypedEmitter.defaultMaxListeners = 0;
+/**
+ * Pluggable email template code linter
+ */
 
 var Linter = /*#__PURE__*/function (_TypedEmitter) {
   _inheritsLoose__default['default'](Linter, _TypedEmitter);

@@ -77,6 +77,9 @@ interface Res {
   filteredTagLocations: [number, number][];
 }
 
+/**
+ * Strips HTML tags from strings. No parser, accepts mixed sources.
+ */
 function stripHtml(str: string, originalOpts?: Partial<Opts>): Res {
   // const
   // ===========================================================================

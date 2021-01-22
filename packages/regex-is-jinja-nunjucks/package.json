@@ -17,7 +17,11 @@
     "tell"
   ],
   "homepage": "https://codsen.com/os/regex-is-jinja-nunjucks/",
-  "repository": "https://git.sr.ht/~royston/codsen",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codsen/codsen.git",
+    "directory": "packages/regex-is-jinja-nunjucks"
+  },
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",
@@ -27,7 +31,7 @@
   "main": "dist/regex-is-jinja-nunjucks.cjs.js",
   "module": "dist/regex-is-jinja-nunjucks.esm.js",
   "browser": "dist/regex-is-jinja-nunjucks.umd.js",
-  "types": "types/main.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c",
     "ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",

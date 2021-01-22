@@ -943,6 +943,9 @@ function convertOne(
   return rangesArr;
 }
 
+/**
+ * Typographically-correct the apostrophes and single/double quotes
+ */
 function convertAll(
   str: string,
   opts?: Inputs

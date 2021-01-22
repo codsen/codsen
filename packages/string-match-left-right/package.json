@@ -13,7 +13,11 @@
     "utility"
   ],
   "homepage": "https://codsen.com/os/string-match-left-right/",
-  "repository": "https://git.sr.ht/~royston/codsen",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codsen/codsen.git",
+    "directory": "packages/string-match-left-right"
+  },
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",
@@ -23,7 +27,7 @@
   "main": "dist/string-match-left-right.cjs.js",
   "module": "dist/string-match-left-right.esm.js",
   "browser": "dist/string-match-left-right.umd.js",
-  "types": "types/main.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c",
     "ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",

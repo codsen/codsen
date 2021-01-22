@@ -1,7 +1,7 @@
 {
   "name": "check-types-mini",
   "version": "5.9.1",
-  "description": "Check the types of your options object's values after user has customised them",
+  "description": "Validate options object",
   "keywords": [
     "compare",
     "deep",
@@ -17,7 +17,11 @@
     "validate"
   ],
   "homepage": "https://codsen.com/os/check-types-mini/",
-  "repository": "https://git.sr.ht/~royston/codsen",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codsen/codsen.git",
+    "directory": "packages/check-types-mini"
+  },
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",
@@ -27,7 +31,7 @@
   "main": "dist/check-types-mini.cjs.js",
   "module": "dist/check-types-mini.esm.js",
   "browser": "dist/check-types-mini.umd.js",
-  "types": "types/main.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c",
     "ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",

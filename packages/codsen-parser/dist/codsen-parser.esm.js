@@ -43,6 +43,10 @@ function layerPending(layers, tokenObj) {
     tokenObj.type === "comment" && layers.some(layerObjToken => Object.prototype.hasOwnProperty.call(layerObjToken, "closing") && !layerObjToken.closing))
   );
 }
+/**
+ * Parser aiming at broken or mixed code, especially HTML & CSS
+ */
+
 
 function cparser(str, originalOpts) {
   //

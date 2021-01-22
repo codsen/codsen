@@ -4,6 +4,9 @@ import isObj from "lodash.isplainobject";
 import { version as v } from "../package.json";
 const version: string = v;
 
+/**
+ * Find out, is nested array/object/string/AST tree is empty
+ */
 function isEmpty(input: any): boolean | null {
   let i;
   let len;

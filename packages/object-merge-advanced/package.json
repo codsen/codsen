@@ -1,7 +1,7 @@
 {
   "name": "object-merge-advanced",
   "version": "10.12.1",
-  "description": "Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained",
+  "description": "Recursively, deeply merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained",
   "keywords": [
     "advanced",
     "ast",
@@ -13,7 +13,11 @@
     "posthtmltree"
   ],
   "homepage": "https://codsen.com/os/object-merge-advanced/",
-  "repository": "https://git.sr.ht/~royston/codsen",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codsen/codsen.git",
+    "directory": "packages/object-merge-advanced"
+  },
   "license": "MIT",
   "author": {
     "name": "Roy Revelt",
@@ -23,7 +27,7 @@
   "main": "dist/object-merge-advanced.cjs.js",
   "module": "dist/object-merge-advanced.esm.js",
   "browser": "dist/object-merge-advanced.umd.js",
-  "types": "types/main.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c",
     "ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",

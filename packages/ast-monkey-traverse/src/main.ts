@@ -21,6 +21,9 @@ interface InnerObj {
 
 type Callback = (key: string, val: any, innerObj: InnerObj, stop: Stop) => any;
 
+/**
+ * Utility library to traverse AST
+ */
 function traverse(tree1: any, cb1: Callback): any {
   const stop2: Stop = { now: false };
   //

@@ -1,6 +1,6 @@
 /**
  * check-types-mini
- * Check the types of your options object's values after user has customised them
+ * Validate options object
  * Version: 5.9.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
@@ -299,6 +299,10 @@ current = ${JSON.stringify(current, null, 4)}\n\n`);
     return current;
   });
 }
+/**
+ * Validate options object
+ */
+
 
 function checkTypesMini(obj, ref, originalOptions) {
   return internalApi(obj, ref, originalOptions);

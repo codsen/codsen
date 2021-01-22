@@ -11,6 +11,9 @@ interface Findings {
   path: string;
 }
 
+/**
+ * Extract values and paths from AST by keys OR set them by keys
+ */
 function getByKey(
   originalInput: any,
   whatToFind: string | string[],

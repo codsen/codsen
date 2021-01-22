@@ -7,6 +7,9 @@ interface Opts {
     hungryForWhitespace?: boolean;
 }
 declare const defaults: Opts;
+/**
+ * Delete all plain objects in AST if they contain a certain key/value pair
+ */
 declare function deleteObj(originalInput: any, objToDelete: UnknownValueObj, originalOpts?: Opts): any;
 
 export { defaults, deleteObj, version };
