@@ -79,7 +79,7 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
             const arr2 = innerObj.parent; // we extract just indexes:
 
             const tree1RefSource = arr1.map((_v, i) => i);
-            const tree2RefSource = arr2.map((_v, i) => i); // [0, 1, 2] for example.
+            arr2.map((_v, i) => i); // [0, 1, 2] for example.
             // We'll use them to calculate combinations, as in 1st object in tree2
             // array against 2nd object in tree1 array... // Challenge: Array of objects is compared to another array of objects.
             // Order is mixed, the intended object is actually slightly off,

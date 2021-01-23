@@ -153,7 +153,7 @@ var funcProto = Function.prototype;
 var funcToString = funcProto.toString;
 /** Used to infer the `Object` constructor. */
 
-var objectCtorString = funcToString.call(Object);
+funcToString.call(Object);
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -6442,7 +6442,7 @@ function tokenizer(str, originalOpts) {
 
             if (attribClosingQuoteAt) {
               // slice the captured chunk
-              var extractedChunksVal = str.slice(_y3, attribClosingQuoteAt);
+              str.slice(_y3, attribClosingQuoteAt);
             }
           } // where that caught whitespace ends, that's the default location
           // of double quotes.

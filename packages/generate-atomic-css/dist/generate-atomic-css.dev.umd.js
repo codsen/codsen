@@ -223,7 +223,7 @@ function createCommonjsModule(fn) {
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
-var lodash_clonedeep = createCommonjsModule(function (module, exports) {
+createCommonjsModule(function (module, exports) {
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
   /** Used to stand-in for `undefined` hash values. */
@@ -2814,7 +2814,7 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
     var startPoint = 0;
 
     var _loop2 = function _loop2(y, len) {
-      var charcode = source[y].charCodeAt(0); // catch third dollar of three dollars in a row
+      source[y].charCodeAt(0); // catch third dollar of three dollars in a row
       // -----------------------------------------------------------------------
 
       if (source[y] === "$" && source[y - 1] === "$" && source[y - 2] === "$") { // submit all the content up until now

@@ -30,13 +30,12 @@
 npm i -g email-homey
 ```
 
-
-
 Then, call it from the command line using keyword:
 
 ```bash
 homey
 ```
+
 ## Documentation
 
 Please [visit codsen.com](https://codsen.com/os/email-homey/) for a full description of the API and examples.
@@ -47,6 +46,4 @@ MIT License
 
 Copyright (c) 2010-2021 Roy Revelt and other contributors
 
-
 <img src="https://codsen.com/images/png-codsen-ok.png" width="98" alt="ok" align="center"> <img src="https://codsen.com/images/png-codsen-1.png" width="148" alt="codsen" align="center"> <img src="https://codsen.com/images/png-codsen-star-small.png" width="32" alt="star" align="center">
-

@@ -64,7 +64,7 @@ export default (commandLineArgs) => {
             ],
             after: [],
           },
-              tsconfig: "../../tsconfig.build.json",
+          tsconfig: "../../tsconfig.build.json",
           declaration: false,
         }),
         babel({
@@ -121,7 +121,7 @@ export default (commandLineArgs) => {
             ],
             after: [],
           },
-              tsconfig: "../../tsconfig.build.json",
+          tsconfig: "../../tsconfig.build.json",
           declaration: false,
         }),
         commonjs(),
@@ -147,7 +147,9 @@ export default (commandLineArgs) => {
     // CommonJS
     {
       input: "src/main.ts",
-      output: [{ dir: "./", entryFileNames: pkg.main, format: "cjs", indent: false }],
+      output: [
+        { dir: "./", entryFileNames: pkg.main, format: "cjs", indent: false },
+      ],
       external: makeExternalPredicate([
         ...Object.keys(pkg.dependencies || {}),
         ...Object.keys(pkg.peerDependencies || {}),
@@ -170,7 +172,7 @@ export default (commandLineArgs) => {
             ],
             after: [],
           },
-              tsconfig: "../../tsconfig.build.json",
+          tsconfig: "../../tsconfig.build.json",
           declaration: false,
         }),
         babel({
@@ -221,7 +223,7 @@ export default (commandLineArgs) => {
             ],
             after: [],
           },
-              tsconfig: "../../tsconfig.build.json",
+          tsconfig: "../../tsconfig.build.json",
           declaration: false,
         }),
         babel({
@@ -274,7 +276,7 @@ export default (commandLineArgs) => {
             ],
             after: [],
           },
-              tsconfig: "../../tsconfig.build.json",
+          tsconfig: "../../tsconfig.build.json",
           declaration: false,
         }),
         babel({

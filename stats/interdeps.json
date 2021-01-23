@@ -50,7 +50,7 @@
     },
     {
         "name": "ast-deep-contains",
-        "size": 8700,
+        "size": 8677,
         "imports": [
             "ast-monkey-traverse"
         ]
@@ -143,7 +143,7 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 122836,
+        "size": 122809,
         "imports": [
             "html-all-known-attributes",
             "is-char-suitable-for-html-attr-name",
@@ -244,7 +244,7 @@
     },
     {
         "name": "emlint",
-        "size": 373802,
+        "size": 373672,
         "imports": [
             "ast-monkey-traverse",
             "ast-monkey-util",
@@ -279,7 +279,7 @@
     },
     {
         "name": "generate-atomic-css",
-        "size": 24675,
+        "size": 24658,
         "imports": [
             "string-left-right"
         ]
@@ -321,7 +321,7 @@
     },
     {
         "name": "html-img-alt",
-        "size": 14832,
+        "size": 14815,
         "imports": [
             "check-types-mini",
             "ranges-apply",
@@ -670,7 +670,7 @@
     },
     {
         "name": "string-fix-broken-named-entities",
-        "size": 38633,
+        "size": 38614,
         "imports": [
             "all-named-html-entities",
             "string-left-right"
@@ -691,7 +691,7 @@
     },
     {
         "name": "string-process-comma-separated",
-        "size": 7702,
+        "size": 7688,
         "imports": []
     },
     {
@@ -737,7 +737,7 @@
     },
     {
         "name": "string-strip-html",
-        "size": 50582,
+        "size": 50542,
         "imports": [
             "ranges-apply",
             "ranges-push",

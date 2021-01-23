@@ -1106,7 +1106,7 @@ function stripHtml(str, originalOpts) {
   if ((!originalOpts || !originalOpts.cb) && curr) {
     // check front - the first range of gathered ranges, does it touch start (0)
     if (curr[0] && !curr[0][0]) {
-      const startingIdx = curr[0][1]; // check the character at str[startingIdx] // manually edit Ranges class:
+      curr[0][1]; // check the character at str[startingIdx] // manually edit Ranges class:
 
       rangesToDelete.ranges[0] = [rangesToDelete.ranges[0][0], rangesToDelete.ranges[0][1]];
     } // check end - the last range of gathered ranges, does it touch the end (str.length)
@@ -1115,7 +1115,7 @@ function stripHtml(str, originalOpts) {
 
 
     if (curr[curr.length - 1] && curr[curr.length - 1][1] === str.length) {
-      const startingIdx = curr[curr.length - 1][0]; // check character at str[startingIdx - 1] // remove third element from the last range "what to add" - because
+      curr[curr.length - 1][0]; // check character at str[startingIdx - 1] // remove third element from the last range "what to add" - because
       // ranges will crop aggressively, covering all whitespace, but they
       // then restore missing spaces (in which case it's not missing).
       // We already have tight crop, we just need to remove that "what to add"
