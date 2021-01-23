@@ -5,33 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 3.0.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* loop through the correct parts ([b82d3c8](https://github.com/codsen/codsen/commit/b82d3c86af3a3278a90c27349800b8599149fd69))
-
-
 ### Features
 
-* add more brackets logic cases ([9d3b31b](https://github.com/codsen/codsen/commit/9d3b31bacb5d06721f692e54133b13827d5a5e4e))
-* init ([eb406c6](https://github.com/codsen/codsen/commit/eb406c665b7f740dc6e8548f54709b41964a6a3f))
-* only and, only only, only not cases ([d2f6a4d](https://github.com/codsen/codsen/commit/d2f6a4d76568bc4a93cdd0fca5911ecc36c91e9f))
-* opts.offset ([7b0c65f](https://github.com/codsen/codsen/commit/7b0c65f5e6f3fa770c5d7bb8df6b05ff3f8588b8))
-* rewrite in TS, start using named exports ([8b0282b](https://github.com/codsen/codsen/commit/8b0282b146971b1437467a0f5dad0d12d0afabe4))
-* semicolon safeguards ([3db09fb](https://github.com/codsen/codsen/commit/3db09fb84014c4acd8c5fb0cba54de255fbf7906))
-* tests create sample HTML's, improve logic in brackets ([8917a84](https://github.com/codsen/codsen/commit/8917a84cda2541f16bea59edff79cd75eb88f79b))
-* whitespace clauses ([93e7956](https://github.com/codsen/codsen/commit/93e79569c554caf6035a71a0ebc26ad7338fb9df))
-* write all the logic up until boolean joiners ([9084b3e](https://github.com/codsen/codsen/commit/9084b3edeaefc8d521c952d1fa46ccff9421b60a))
-
+- rewrite in TS, start using named exports ([8b0282b](https://github.com/codsen/codsen/commit/8b0282b146971b1437467a0f5dad0d12d0afabe4))
 
 ### BREAKING CHANGES
 
-* previously: "import isMediaD from ..." - now "import { isMediaD } from ..."
-* init
-
-
-
-
+- previously: `import isMediaD from ...` - now `import { isMediaD } from ...`
 
 ## 2.0.0 (2020-11-28)
 

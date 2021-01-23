@@ -91,7 +91,7 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
                 var tree1RefSource = arr1.map(function (_v, i) {
                   return i;
                 });
-                arr2.map(function (_v, i) {
+                var tree2RefSource = arr2.map(function (_v, i) {
                   return i;
                 }); // [0, 1, 2] for example.
                 // We'll use them to calculate combinations, as in 1st object in tree2

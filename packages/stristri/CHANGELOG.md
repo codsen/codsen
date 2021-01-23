@@ -5,24 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 3.0.0 (2021-01-23)
 
-
 ### Features
 
-* add opts.reportProgressFunc, remove reported ranges ([20cddb8](https://github.com/codsen/codsen/commit/20cddb8bf8e6f6a88a86382aaf05d61a79199fa3))
-* initial release ([16e3e7f](https://github.com/codsen/codsen/commit/16e3e7f8d5aac9277623463ce2a797b87cfcb1b0))
-* recognise JS code within script tags ([9cdbfd9](https://github.com/codsen/codsen/commit/9cdbfd96ee8e2a18d221e04d503a116e8b8c4bf1))
-* report log of time taken ([3877cf9](https://github.com/codsen/codsen/commit/3877cf9ddee5071ae9c4d1f0f1e5d76bd4121a63))
-* rewrite in TS ([bffdb9b](https://github.com/codsen/codsen/commit/bffdb9bc670f5164795ec1c4a100b81b3e5e6b04))
-
+- rewrite in TS ([bffdb9b](https://github.com/codsen/codsen/commit/bffdb9bc670f5164795ec1c4a100b81b3e5e6b04))
 
 ### BREAKING CHANGES
 
-* ranges are not reported in result any more because it's too resource taxing to
-calculate the collapsed result ranges on top of del
-
-
-
-
+- there are no API changes but we're bumping _major_ just in case
 
 ## 2.0.0 (2020-12-09)
 

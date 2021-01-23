@@ -5,22 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 2.0.0 (2021-01-23)
 
-
 ### Features
 
-* `opts.cb` ([826fab4](https://github.com/codsen/codsen/commit/826fab448dec6f1b7a58744467b69073a9b01201))
-* `opts.throwIfEmpty` ([146bf9f](https://github.com/codsen/codsen/commit/146bf9feaaa6e3f5ded6c7d6f21b9b686caca429))
-* init ([e9f6f3c](https://github.com/codsen/codsen/commit/e9f6f3c0cb59fd5dea3c19cda1f4d692625f0d79))
-* rewrite in TS, start using named exports ([e7c4532](https://github.com/codsen/codsen/commit/e7c4532aa231ea85c416e96680ec10d094d0cd27))
-
+- rewrite in TS, start using named exports ([e7c4532](https://github.com/codsen/codsen/commit/e7c4532aa231ea85c416e96680ec10d094d0cd27))
 
 ### BREAKING CHANGES
 
-* previously: "import extractVars from ..." - now "import { extractVars } from ..."
-
-
-
-
+- previously: `import extractVars from ...` - now `import { extractVars } from ...`
 
 ## 1.3.0 (2020-11-28)
 

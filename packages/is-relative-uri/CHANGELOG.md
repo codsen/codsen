@@ -5,25 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 3.0.0 (2021-01-23)
 
-
 ### Features
 
-* algorithm improvements and more unit tests ([f51ff45](https://github.com/codsen/codsen/commit/f51ff45f1ae302c0053a48e9bb0bbfcdffbbc016))
-* dot dot not-slash ([305fea3](https://github.com/codsen/codsen/commit/305fea3b5ad1c8839dda0406c8803b39317ddf46))
-* init ([a503748](https://github.com/codsen/codsen/commit/a503748f8fe56f777d2c1288215f27b7506df224))
-* more hash-checks ([05a741a](https://github.com/codsen/codsen/commit/05a741a49bf159632c14ba5031e11efb794249bc))
-* opts.flagUpUrisWithSchemes ([39a88ec](https://github.com/codsen/codsen/commit/39a88ec8aa4a8e92d8067a17b2a6debf6ad46271))
-* rewrite in TS, start using named exports ([3fd9024](https://github.com/codsen/codsen/commit/3fd9024adfb009998283f0c2fafcd17a930d0573))
-
+- rewrite in TS, start using named exports ([3fd9024](https://github.com/codsen/codsen/commit/3fd9024adfb009998283f0c2fafcd17a930d0573))
 
 ### BREAKING CHANGES
 
-* previously: "import isRel from ..." - now "import { isRel } from ..."
-* init
-
-
-
-
+- previously: `import isRel from ...` - now `import { isRel } from ...`
 
 ## 2.0.0 (2020-11-28)
 

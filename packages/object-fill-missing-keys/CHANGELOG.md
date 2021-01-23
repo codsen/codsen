@@ -5,33 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 8.0.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-
-
 ### Features
 
-* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
-* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
-* opts.doNotFillThesePathsIfTheyContainPlaceholders ([f54b334](https://github.com/codsen/codsen/commit/f54b334f90455c6b22762a7038018cd2340ed99a))
-* remove options validation, to make operation 540% faster ([874d55e](https://github.com/codsen/codsen/commit/874d55e89ddd24bc2c2de0430137696d656416b3))
-* rewrite in TS, start using named exports ([474db39](https://github.com/codsen/codsen/commit/474db39bc5936c02ca77e74d173ad8a9b44ca052))
-
-
-### Performance Improvements
-
-* tap native Array.isArray to gain around 140 times more speed ([8605992](https://github.com/codsen/codsen/commit/860599260382d3e2e9e43ac1edffe9eb107da988))
-
+- rewrite in TS, start using named exports ([474db39](https://github.com/codsen/codsen/commit/474db39bc5936c02ca77e74d173ad8a9b44ca052))
 
 ### BREAKING CHANGES
 
-* previously: "import fillMissing from ..." - now "import { fillMissing } from ..."
-
-
-
-
+- previously you'd consume like: `import fillMissing from ...` - now `import { fillMissing } from ...`
 
 ## 7.11.0 (2020-11-28)
 

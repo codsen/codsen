@@ -5,22 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 1.12.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-
-
 ### Features
 
-* add function aliases with more human-friendly names ([da62402](https://github.com/codsen/codsen/commit/da6240244b3c01305982df51e3656429a7169395))
-* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
-* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
-* rewrite in TS ([ab146b1](https://github.com/codsen/codsen/commit/ab146b16666536d09242a901c12eb4542a108ab2))
-
-
-
-
+- rewrite in TS ([ab146b1](https://github.com/codsen/codsen/commit/ab146b16666536d09242a901c12eb4542a108ab2))
 
 ## 1.11.0 (2020-11-28)
 

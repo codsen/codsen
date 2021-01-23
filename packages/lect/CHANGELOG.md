@@ -3,43 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 0.16.0 (2021-01-23)
-
-
-### Bug Fixes
-
-* Bail early if CLI app is detected, stop assembling Rollup config ([84210fa](https://github.com/codsen/codsen/commit/84210fa88fc793e05d9c57f71ece0a2669bf717a))
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-* fix the json files as external dependencies in rollup configs ([eb3253b](https://github.com/codsen/codsen/commit/eb3253b33708561c4b12fd84c338a22e1b5b2af1))
-* remove pify dependency which is unused here ([2f0c3af](https://github.com/codsen/codsen/commit/2f0c3af3c7bebf5ffd003858abcbae59d9e8f214))
-* Remove unused getUserInfo ([d472e51](https://github.com/codsen/codsen/commit/d472e51ed9673b83366522d218549e4a692f0eed))
-
-
-### Features
-
-* Adapt codebase to support GitLab + hard write package.json keys from config ([be47ca5](https://github.com/codsen/codsen/commit/be47ca53a9847e2fbfa6525b008eb32dfae40379))
-* add insurance against consumed variable name matching package's name ([529488c](https://github.com/codsen/codsen/commit/529488c1a033c2a9f2bd7a48283047d574897d45))
-* add nyc/istanbul ignore comments to be retained during the cleanup in Rollup builds ([1813c00](https://github.com/codsen/codsen/commit/1813c0071baa6a1530b9e2b0c78746289b66aacf))
-* Customise the EMLint letter case ([598285f](https://github.com/codsen/codsen/commit/598285febcac1777e20f49dd3d371042a37a4a47))
-* Early exit if private package is detected ([6b8ed2a](https://github.com/codsen/codsen/commit/6b8ed2adc71b258f85e1403d285a06606292bef8))
-* Exclude non-CLI devdeps from CLI packages ([70b9dfc](https://github.com/codsen/codsen/commit/70b9dfcbcca1fca89c769091da33587e66d67f20))
-* Fix the dependency versions caching ([4a0f0be](https://github.com/codsen/codsen/commit/4a0f0be126b675c890ce8ecb174abc69a22c8b86))
-* Fix TOC slugs to suit GitLab ([c6be7bd](https://github.com/codsen/codsen/commit/c6be7bdc78a9659eb7d9231dbb606afa4022256d))
-* Improvements to issue presets ([7fea794](https://github.com/codsen/codsen/commit/7fea7949f9c831232e49d8001bfb7d4ba15504c9))
-* Initial release ([3e9eb06](https://github.com/codsen/codsen/commit/3e9eb06e2caea78aea6722615c11ed7b92e69345))
-* rebase heavily, prepare for TS, remove many deps, simplify the setup ([fa7ad89](https://github.com/codsen/codsen/commit/fa7ad89678a2613730108e9e39641c2053ac0d9c))
-* stop managing package.json scripts automatically on special packages (such as EMLint) ([3af12d6](https://github.com/codsen/codsen/commit/3af12d6b53d367c328a22e4790b339c6539bbcb0))
-* switch to sort-package-json (from format-package) ([33af735](https://github.com/codsen/codsen/commit/33af7357c9b685dee009a2480545386a539d4be0))
-* tap @rollup/plugin-babel instead in the generator ([75c9d7b](https://github.com/codsen/codsen/commit/75c9d7b77cf11d60e861d1adf80f7f0205fe35c3))
-* unrecognised file/folder entries for npmignore are now manually set ([b264814](https://github.com/codsen/codsen/commit/b264814d633243fdd88fb86bda217c8cd303a9a0))
-* When generating rollup config, add node globals if they're requested in devdependencies in pac ([c15149d](https://github.com/codsen/codsen/commit/c15149da18fc2464c65dfa6afe1215ddb7ee9279))
-* when there are no dependencies, don't show "Deps in 2D" badge, show "no deps" badge ([ce3410a](https://github.com/codsen/codsen/commit/ce3410ac99d42313173d6fed2994943196e754c4))
-
-
-
-
-
-## 0.16.0 (2020-12-16)
+## 0.16.0 (2021-01-23)
 
 We edited the lect CLI sporadically over years and never had a rebasing, a reorganisation. Well, that time has came. All functions were separated into files within `./src/`. Also, all file writes are now [atomic](https://www.npmjs.com/package/write-file-atomic).
 

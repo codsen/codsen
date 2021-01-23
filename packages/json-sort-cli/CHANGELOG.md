@@ -3,37 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 1.18.0 (2021-01-23)
-
-
-### Bug Fixes
-
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-* update to the latest meow api, no more short aliases ([210a046](https://github.com/codsen/codsen/commit/210a0465c99dd80b957a43cbb74dd161024c7501))
-* update to the v4 meow api, aliases were broken until now ([5bc7c67](https://github.com/codsen/codsen/commit/5bc7c6740135f3448b3a4c8b38f49848073592e0))
-
-
-### Features
-
-* -s (--silent) flag ([4f55af5](https://github.com/codsen/codsen/commit/4f55af5290a66b252acdb5840d5c2a775c5db9a6))
-* address single/plural cases in unsortable files ([e43faaa](https://github.com/codsen/codsen/commit/e43faaad536f449ea53384b6abacf5821e4a64cc))
-* Allow JSON files to contain topmost element as array not just plain object ([fa02f2b](https://github.com/codsen/codsen/commit/fa02f2b6279d915733ade73bf51b0f8aa6c1e166))
-* cI mode - fixes [#21](https://github.com/codsen/codsen/issues/21) - plus few more tweaks ([6d6d76d](https://github.com/codsen/codsen/commit/6d6d76d6c88065b505bf4cda08a8f286f1389277))
-* exclude DS_Store and other system files by default ([aa9e325](https://github.com/codsen/codsen/commit/aa9e325594cf5b320025e15ea28886664f3c74ad))
-* Flag -a instructs to sort all arrays which contain only string elements ([026051a](https://github.com/codsen/codsen/commit/026051af917200cd3dc296f554917b8cf7053220))
-* implement custom sorting, considering tap and lect custom keys ([226afe9](https://github.com/codsen/codsen/commit/226afe93f78a419ded612e493ea9bbe9024b0631))
-* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
-* labeling improvement ([b1c0973](https://github.com/codsen/codsen/commit/b1c0973ea144b600fc61687602de363521b82c5d))
-* setup improvements, unit tests and deep sort ([685eda8](https://github.com/codsen/codsen/commit/685eda8a698909343ea93a1f109ca864befa5521))
-* silent mode, more unit tests and improved reporting ([57daebd](https://github.com/codsen/codsen/commit/57daebd0457493a433a0850a25b133b8f505b81c))
-* skip all package.json files if -p/--pack flag is given ([254772a](https://github.com/codsen/codsen/commit/254772ab811a8859782aa12f4138d05433c00ec2)), closes [#13](https://github.com/codsen/codsen/issues/13)
-* Sorts package.json keeping recommended key order ([8074cc2](https://github.com/codsen/codsen/commit/8074cc2ead9310299f9298eaf2803592b436990e))
-* swap a dependency, format-package with sort-package-json ([2f6da75](https://github.com/codsen/codsen/commit/2f6da75d1ff262436766a215d624be0314b9e5d0))
-
-
-
-
-
 ## 1.17.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

@@ -5,39 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 6.0.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-* pull pullAllWithGlob inline because it was causing circular dependency clashes ([e1a621f](https://github.com/codsen/codsen/commit/e1a621fbdc7d2b99d1cf04575ab669343be7f484))
-
-
 ### Features
 
-* add examples ([0f0744b](https://github.com/codsen/codsen/commit/0f0744bbf7ca65bbce6776db672588d77dece4b7))
-* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
-* Correctly behave if object has a key which has a value equal to literal undefined ([d7798d0](https://github.com/codsen/codsen/commit/d7798d041264f251038633ac90308276c5997254))
-* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
-* matcher under opts.ignorePaths and opts.ignoreKeys ([3a167dc](https://github.com/codsen/codsen/commit/3a167dc6e4273436db7c805fbce9c36b0ba8f779))
-* opts.ignorePaths and nested opts support ([5d8ddcc](https://github.com/codsen/codsen/commit/5d8ddccfb09fe4005edb2b36f9982c3d68dde7ab))
-* opts.schema can now be given in nested formatting too ([3f0e6f8](https://github.com/codsen/codsen/commit/3f0e6f8d258d7d5fc4eade82c5964cd1afb9aa79))
-* rewrite in TS, start using named exports ([d07b568](https://github.com/codsen/codsen/commit/d07b568b27ee2b81c0b7229c25269d5bed9584ca))
-* schema ignores with types 'any' and 'whatever' now apply to all children nodes of that path ([63bbb8c](https://github.com/codsen/codsen/commit/63bbb8c99de8ba8053d2c04d375c34f79cb64dbb))
-
-
-### Performance Improvements
-
-* remove dependency cardinal ([61c3a79](https://github.com/codsen/codsen/commit/61c3a79a0365e9d1be54b86f1a109080b3aa0d04))
-
+- rewrite in TS, start using named exports ([d07b568](https://github.com/codsen/codsen/commit/d07b568b27ee2b81c0b7229c25269d5bed9584ca))
 
 ### BREAKING CHANGES
 
-* previously: "import checkTypesMini from ..." - now "import { checkTypesMini } from
-..."
-
-
-
-
+- previously you'd consume like: `import checkTypesMini from ...` - now `import { checkTypesMini } from ...`
 
 ## 5.9.0 (2020-11-28)
 

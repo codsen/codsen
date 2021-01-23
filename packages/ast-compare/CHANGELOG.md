@@ -5,35 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 2.0.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-
-
 ### Features
 
-* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
-* Add perf measurement, recording and historical comparison ([5bc57b7](https://github.com/codsen/codsen/commit/5bc57b7fb72d2b0bffbb2c4b329236815b0f12e2))
-* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
-* make the run 11 times faster ([80ed093](https://github.com/codsen/codsen/commit/80ed0937b253ac40a370d5fcd991938f334cc7fc))
-* opts.useWildcards ([d541cab](https://github.com/codsen/codsen/commit/d541cab621d2710280d95c236f84500af4c96045))
-* rewrite in TS and start using named exports ([6a75380](https://github.com/codsen/codsen/commit/6a75380a2141e476126a592fe879ebd5ffef5fab))
-
-
-### Performance Improvements
-
-* remove check-types-mini ([7ccae5e](https://github.com/codsen/codsen/commit/7ccae5e05a7794f45f1e39135c0759fbbeb358e7))
-
+- rewrite in TS and start using named exports ([6a75380](https://github.com/codsen/codsen/commit/6a75380a2141e476126a592fe879ebd5ffef5fab))
 
 ### BREAKING CHANGES
 
-* previously you'd import like: "import compare from ..." - now do: "import { compare
-} from ..."
-
-
-
-
+- previously you'd import like: `import compare from ...` - now do: `import { compare } from ...`
 
 ## 1.14.0 (2020-11-28)
 

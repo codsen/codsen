@@ -5,23 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 4.0.0 (2021-01-23)
 
-
 ### Features
 
-* add two html attributes used in edialog tracking links in emails ([37e4d3e](https://github.com/codsen/codsen/commit/37e4d3eae7303590c0c379a37460be5f1fb7a39b))
-* add xmlns ([7f31eb5](https://github.com/codsen/codsen/commit/7f31eb5906179425c172716dd534c12883156672))
-* export Set instead of Array and remove JSON source file ([e9e0d60](https://github.com/codsen/codsen/commit/e9e0d601cc799097edfc01922953bb2ff783f68f))
-* init ([9803d29](https://github.com/codsen/codsen/commit/9803d295562423f8a80edafe9eda517c6846dc9b))
-* rewrite in TS ([7130bce](https://github.com/codsen/codsen/commit/7130bcea11e81cf7e59c2127eae10e302e461e11))
-
+- rewrite in TS ([7130bce](https://github.com/codsen/codsen/commit/7130bcea11e81cf7e59c2127eae10e302e461e11)), start using named exports
 
 ### BREAKING CHANGES
 
-* For perf reasons, export Set instead of Array and remove JSON source file
-
-
-
-
+- previously you'd consume like: `import allHtmlAttribs from ...` — now: `import { allHtmlAttribs } from ...`
 
 ## 3.0.0 (2020-11-28)
 

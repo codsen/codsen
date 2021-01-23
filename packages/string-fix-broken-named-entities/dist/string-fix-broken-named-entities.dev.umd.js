@@ -7705,7 +7705,7 @@ function createCommonjsModule(fn) {
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
-createCommonjsModule(function (module, exports) {
+var lodash_clonedeep = createCommonjsModule(function (module, exports) {
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
   /** Used to stand-in for `undefined` hash values. */
@@ -10612,7 +10612,7 @@ function fixEnt(str, originalOpts) { //
               } // First, match against case-insensitive list
               /* istanbul ignore next */
 
-              letterSeqStartAt ? right(str, letterSeqStartAt) : null;
+              var _secondChar = letterSeqStartAt ? right(str, letterSeqStartAt) : null;
               var _tempEnt2 = "";
               var temp;
 

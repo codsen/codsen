@@ -5,29 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 2.0.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* fix algorithm when input is an empty string ([8af3e09](https://github.com/codsen/codsen/commit/8af3e0974d4b0cbaef435fc08f3119220d978686))
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-
-
 ### Features
 
-* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
-* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
-* removed one dependency and sped up the program by 200% ([69e9f1c](https://github.com/codsen/codsen/commit/69e9f1c4e0d862dc8f5531baf8f3f7741c88b843))
-* rewrite in TS, start using named exports ([edf92c8](https://github.com/codsen/codsen/commit/edf92c8a8682a3d44e69f5d6c218956c4d8b5b59))
-
+- rewrite in TS, start using named exports ([edf92c8](https://github.com/codsen/codsen/commit/edf92c8a8682a3d44e69f5d6c218956c4d8b5b59))
 
 ### BREAKING CHANGES
 
-* previously: "import containsOnlyEmptySpace from ..." - now "import { empty } from
-..."
-
-
-
-
+- previously: `import containsOnlyEmptySpace from ...` - now `import { empty } from ...`
 
 ## 1.10.0 (2020-11-28)
 

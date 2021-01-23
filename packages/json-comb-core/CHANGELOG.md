@@ -5,23 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 6.8.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-* fix the semver key comparison, regex was off ([22564a2](https://github.com/codsen/codsen/commit/22564a21490e2cf02042502ac811210a5ce22e2d))
-
-
 ### Features
 
-* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
-* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
-* rewrite in TS ([fb3981e](https://github.com/codsen/codsen/commit/fb3981ef86c24d42db5bf7170b0895c4e3abf3b2))
-* sort keys with semver values by comparing semver, not by alphabettical sort ([3f74ec1](https://github.com/codsen/codsen/commit/3f74ec11cba5e25b5a9026e4bc31269284c3860e))
-
-
-
-
+- rewrite in TS ([fb3981e](https://github.com/codsen/codsen/commit/fb3981ef86c24d42db5bf7170b0895c4e3abf3b2))
 
 ## 6.7.0 (2020-11-28)
 

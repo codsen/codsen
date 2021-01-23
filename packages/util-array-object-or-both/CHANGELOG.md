@@ -5,36 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 3.0.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-* harden the eslint rules set and make all unit tests pass ([850ea1f](https://github.com/codsen/codsen/commit/850ea1fc66764b591de32549d55e95758b866c16))
-
-
 ### Features
 
-* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
-* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
-* rewrite in TS and start using named exports ([e97fcc8](https://github.com/codsen/codsen/commit/e97fcc80d97a812a70d75a28bb2697b995ae9e26))
-
-
-### Performance Improvements
-
-* remove check-types-mini for around 500x speed improvement ([f812367](https://github.com/codsen/codsen/commit/f812367f56089713ad38998b7f92a989cd1aa373))
-
+- rewrite in TS and start using named exports ([e97fcc8](https://github.com/codsen/codsen/commit/e97fcc80d97a812a70d75a28bb2697b995ae9e26))
 
 ### BREAKING CHANGES
 
-* previously: "import arrObjOrBoth from ..." - now "import { arrObjOrBoth } from ..."
-
-
-
-
-
-## 2.8.0 (2020-11-28)
-
-Accidental version bump during migration to sourcehut. Sorry about that.
+- previously: `import arrObjOrBoth from ...` - now `import { arrObjOrBoth } from ...`
 
 ## 2.7.58 (2020-04-26)
 

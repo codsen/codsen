@@ -5,29 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 4.0.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-
-
 ### Features
 
-* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
-* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
-* remove option checking and ordinals dep; now ~176 times faster ([739fa74](https://github.com/codsen/codsen/commit/739fa74b8af894f687d6a06d4c7370c31e36fb37))
-* rewrite a little bit, make program run three times faster ([fdf0f45](https://github.com/codsen/codsen/commit/fdf0f457a5c152bff7014f656cf6e152f7bc2ae2))
-* rewrite in TS, start using named exports ([7cf002e](https://github.com/codsen/codsen/commit/7cf002e6b4097b2dd8f3fccb64c1eee4bf8c3463))
-
+- rewrite in TS, start using named exports ([7cf002e](https://github.com/codsen/codsen/commit/7cf002e6b4097b2dd8f3fccb64c1eee4bf8c3463))
 
 ### BREAKING CHANGES
 
-* previously: "import strFindHeadsTails from ..." - now "import { strFindHeadsTails }
-from ..."
-
-
-
-
+- previously: `import strFindHeadsTails from ...` - now `import { strFindHeadsTails } from ...`
 
 ## 3.17.0 (2020-11-28)
 

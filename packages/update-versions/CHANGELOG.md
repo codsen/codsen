@@ -5,40 +5,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 4.0.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-
-
-### Features
-
-* add reporting what was done ([59e3810](https://github.com/codsen/codsen/commit/59e38104e2450735ed69f9c48119b141706a42f3))
-* delete lect internal devDependency records in package.json if it is a normal dependency ([dd57482](https://github.com/codsen/codsen/commit/dd57482d24c218666a99a1e7078004b257598b2d))
-* don't touch existing package.json formatting ([d873992](https://github.com/codsen/codsen/commit/d873992fa31e32cc85a3d724531014f02250c7b7))
-* Ignores linked dependencies which don't exist on npm yet ([ba8710f](https://github.com/codsen/codsen/commit/ba8710f605d6be639874547f2bb879c2cec4d00a))
-* Initial release ([c406b83](https://github.com/codsen/codsen/commit/c406b83bf1ca6a4b702a33f6b585bce89aad0d31))
-* internet connection check ([c504c39](https://github.com/codsen/codsen/commit/c504c3994dfaf27edb799460f2b3752c6ba1358f))
-* move the bastardised p-progress in as a local dep ([2841c88](https://github.com/codsen/codsen/commit/2841c885e0be6df238d638c14bcd4038f93161e9)), closes [#28](https://github.com/codsen/codsen/issues/28)
-* recode fully in async ([10c3300](https://github.com/codsen/codsen/commit/10c3300ea528b2a3732bc455b09d9ed2a5e80a2e))
-* recognise and retain pnpm `workspace:` value prefixes ([2d64e47](https://github.com/codsen/codsen/commit/2d64e470560900dfeaf9a3fde0ded6dc21d128a5))
-* Remove devdeps if they are among normal deps ([f77e0ae](https://github.com/codsen/codsen/commit/f77e0aee1caab2715dddba4520e075a9d53f6c72))
-* start updating lerna as well, newest versions are fine ([4573cb7](https://github.com/codsen/codsen/commit/4573cb7ffea6accf3becfbc0c375be72fe25ef34))
-* Support file: dependency sources and tweak readme and skip Lerna ([6890d29](https://github.com/codsen/codsen/commit/6890d29c6f7407151c08871d7dac4d14c1b97575))
-* Tweak animated GIF frames ([6b8c4d2](https://github.com/codsen/codsen/commit/6b8c4d285b058664da37cf7a60dd36d381c231fe))
-
-
-### BREAKING CHANGES
-
-* Full recode
-
-
-
-
-
-## 3.0.0 (2020-11-28)
-
-Accidental version bump during migration to sourcehut. Sorry about that.
+- there are no API changes but we're bumping _major_ just in case as the whole monorepo was migrated to TS
 
 ## 2.5.0 (2020-10-26)
 

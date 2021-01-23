@@ -2380,7 +2380,7 @@ var funcProto = Function.prototype;
 var funcToString = funcProto.toString;
 /** Used to infer the `Object` constructor. */
 
-funcToString.call(Object);
+var objectCtorString = funcToString.call(Object);
 
 var RAWNBSP = "\xA0"; // separates the value from flags
 
@@ -6188,7 +6188,7 @@ function tokenizer(str, originalOpts) {
 
             if (attribClosingQuoteAt) {
               // slice the captured chunk
-              str.slice(_y3, attribClosingQuoteAt);
+              var extractedChunksVal = str.slice(_y3, attribClosingQuoteAt);
             }
           } // where that caught whitespace ends, that's the default location
           // of double quotes.

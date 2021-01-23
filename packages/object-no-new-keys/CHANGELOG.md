@@ -5,28 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 3.0.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-
-
 ### Features
 
-* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
-* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
-* rebase a little bit, remove a dependency, improve the input arg validation ([54cc009](https://github.com/codsen/codsen/commit/54cc009f3244efa03008011e4f7214dcc499ace0))
-* remove option type checking to make program run around 54 times faster ([d6a0b91](https://github.com/codsen/codsen/commit/d6a0b91fcbe5fe38790efd2ec7223784e3ced6f3))
-* rewrite in TS, start using named exports ([589c048](https://github.com/codsen/codsen/commit/589c048c11cdfc8a8a112f042b96af33edb331eb))
-
+- rewrite in TS, start using named exports ([589c048](https://github.com/codsen/codsen/commit/589c048c11cdfc8a8a112f042b96af33edb331eb))
 
 ### BREAKING CHANGES
 
-* previously: "import noNewKeys from ..." - now "import { noNewKeys } from ..."
-
-
-
-
+- previously: `import noNewKeys from ...` - now `import { noNewKeys } from ...`
 
 ## 2.10.0 (2020-11-28)
 

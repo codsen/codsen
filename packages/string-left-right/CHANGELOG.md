@@ -5,42 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 4.0.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* Tweak the algorithm and add more unit tests ([92a052f](https://github.com/codsen/codsen/commit/92a052f5826d05d5706ab313c1e6b36786bfabab))
-* Tweak the chompRight algorithm to match two characters repeated vs more ([1762076](https://github.com/codsen/codsen/commit/1762076a6bb8cf70d334abcc8b2f3a644c9da091))
-
-
 ### Features
 
-* `opts.leftStopAtRawNbsp` ([b93833f](https://github.com/codsen/codsen/commit/b93833fd3b0ce70c7da387d0382da957db47356b))
-* `opts.rightStopAtRawNbsp` ([0c8964e](https://github.com/codsen/codsen/commit/0c8964e301c6b0451b87835fa266dab99ae7c1fa))
-* API tweaks ([0841316](https://github.com/codsen/codsen/commit/08413168376cd572a5dd5544393f5077bdb292b9))
-* Case insensitive opts to seqLeft and seqRight ([caf566f](https://github.com/codsen/codsen/commit/caf566f3ce9eaec97550e2de0ef424d1e6daf2aa))
-* chompLeft() ([a2b721e](https://github.com/codsen/codsen/commit/a2b721e9e8f4370b000890004bc712f78f2ac7d1))
-* chompRight() ([02ffe12](https://github.com/codsen/codsen/commit/02ffe1219d368cba61938721542d66c77920be35))
-* Hungry chomp ([384be2d](https://github.com/codsen/codsen/commit/384be2d14d1144ada68ba5f6c3d8dde2291be4a1))
-* Initial release ([af3f37c](https://github.com/codsen/codsen/commit/af3f37ce5095c7a7a1839a428c6fb59a6b388d36))
-* leftSeq and rightSeq ([f677fdc](https://github.com/codsen/codsen/commit/f677fdc153ac7e7435d7de804d8829fe6755d9cb))
-* Merge modes via opts.mergeType ([2394464](https://github.com/codsen/codsen/commit/2394464976ce1970bcd31b45d9fd9955f4bbcc09))
-* Optional arguments via appended ? character ([d34e9d7](https://github.com/codsen/codsen/commit/d34e9d7a3234c27a592f33c3ebf9541a9069700b))
-* rewrite in TS ([7de8464](https://github.com/codsen/codsen/commit/7de846446d511a7d778e63b92c6f10f873388c72))
-* two new methods: rightStopAtNewLines() and leftStopAtNewLines() ([fc5d456](https://github.com/codsen/codsen/commit/fc5d456c94d8f44dafff733b2e89068fc721b253))
-
+- rewrite in TS ([7de8464](https://github.com/codsen/codsen/commit/7de846446d511a7d778e63b92c6f10f873388c72))
 
 ### BREAKING CHANGES
 
-* Second input argument, progressFn, was moved into opts.progressFn and opts was
-placed into second input argument instead
-
-
-
-
-
-## 3.0.0 (2020-11-28)
-
-Accidental version bump during migration to sourcehut. Sorry about that.
+- there should be no breaking changes but we're bumping _major_ just in case...
 
 ## 2.3.0 (2019-09-04)
 

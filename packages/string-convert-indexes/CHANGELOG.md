@@ -5,33 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 4.0.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-
-
 ### Features
 
-* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
-* drop options, complete rewrite ([4080a8a](https://github.com/codsen/codsen/commit/4080a8ae50974f2fec6efd5177a5bcf04c38096b))
-* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
-* remove a dependency, rebase a little ([dcb1b67](https://github.com/codsen/codsen/commit/dcb1b6722aee258ed1339d80890580d17c72a9e4))
-* rewrite in TS ([19c75f4](https://github.com/codsen/codsen/commit/19c75f4697abd85ff57adc9ad2462bb828f27792))
-
-
-### Performance Improvements
-
-* remove opts validation and orginal number packages, around 500x speed improv ([741e97f](https://github.com/codsen/codsen/commit/741e97fea0e60059c74514497cae8b2a8a8da1a9))
-
+- rewrite in TS ([19c75f4](https://github.com/codsen/codsen/commit/19c75f4697abd85ff57adc9ad2462bb828f27792))
 
 ### BREAKING CHANGES
 
-* no more options input argument - it always throws now if inputs are wrong
-
-
-
-
+- there are no API changes, but we're bumping _major_ just in case
 
 ## 3.0.0 (2020-11-28)
 

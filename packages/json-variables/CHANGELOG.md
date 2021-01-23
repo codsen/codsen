@@ -5,37 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 10.0.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-
-
 ### Features
 
-* `opts.allowUnresolved` can be supplied as string ([a8fdadb](https://github.com/codsen/codsen/commit/a8fdadbcd93177f2578bb943f96c45d4518828b8))
-* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
-* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
-* Merge modes via opts.mergeType ([2394464](https://github.com/codsen/codsen/commit/2394464976ce1970bcd31b45d9fd9955f4bbcc09))
-* rewrite in TS, start using named exports ([7c3419c](https://github.com/codsen/codsen/commit/7c3419cc0336dd8b6b3f964dcaead6f2b4016b20))
-* some rebasing, two dependencies removed ([96c7d4f](https://github.com/codsen/codsen/commit/96c7d4fa9c522346b5d897cf6161d4d1a563a791))
-
-
-### Performance Improvements
-
-* remove check-types-mini which gaves 6x times speed gain ([93d02e6](https://github.com/codsen/codsen/commit/93d02e67adf0b97981375cb5dcffba3539ec1184))
-
+- rewrite in TS, start using named exports ([7c3419c](https://github.com/codsen/codsen/commit/7c3419cc0336dd8b6b3f964dcaead6f2b4016b20))
 
 ### BREAKING CHANGES
 
-* previously you'd consume like: "import jVar from ..." - now: "import { jVar } from
-..."
-* Second input argument, progressFn, was moved into opts.progressFn and opts was
-placed into second input argument instead
-
-
-
-
+- previously you'd consume like: `import jVar from ...` - now: `import { jVar } from ...`
 
 ## 9.0.0 (2020-11-28)
 

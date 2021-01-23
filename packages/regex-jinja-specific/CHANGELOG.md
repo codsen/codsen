@@ -5,25 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 2.0.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* initial release ([79a3669](https://github.com/codsen/codsen/commit/79a36696e580dff344faae256d89db5ee18ba073))
-
-
 ### Features
 
-* rewrite in TS and start using named exports ([0764be7](https://github.com/codsen/codsen/commit/0764be711029628e9d6be1048a557ca20d21c426))
-
+- rewrite in TS and start using named exports ([0764be7](https://github.com/codsen/codsen/commit/0764be711029628e9d6be1048a557ca20d21c426))
 
 ### BREAKING CHANGES
 
-* previously: "import isJinjaSpecific from ..." - now "import { isJinjaSpecific }
-from ..."
-
-
-
-
+- previously: `import isJinjaSpecific from ...` - now `import { isJinjaSpecific } from ...`
 
 ## 1.0.1 (2020-12-09)
 

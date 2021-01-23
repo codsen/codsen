@@ -5,35 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 4.0.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-
-
 ### Features
 
-* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
-* discard any nulls among the ranges ([acb8958](https://github.com/codsen/codsen/commit/acb8958ce58bd65d7a9669ab3185703026bfa56c))
-* don't throw error if input is not array or it's empty - just quickly return it ([39f78f0](https://github.com/codsen/codsen/commit/39f78f04cdcf89fa4748bb79589fa42de5f97ba9))
-* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
-* opts.progressFn ([091df34](https://github.com/codsen/codsen/commit/091df34849a1ac55bbdd89e638df21dc8060f864))
-* remove all dependencies ([8f430eb](https://github.com/codsen/codsen/commit/8f430eb60ba93f9d89c5e53e87230aa4123b7efa))
-* rewrite in TS and start using named exports ([353f021](https://github.com/codsen/codsen/commit/353f0210d4b6d7145636f4a3851cc6218e30b664))
-
-
-### Performance Improvements
-
-* remove orginal number package and check-types-mini, make 165 times faster ([65502d3](https://github.com/codsen/codsen/commit/65502d38940bafde4081c12bf2452dde270400ba))
-
+- rewrite in TS and start using named exports ([353f021](https://github.com/codsen/codsen/commit/353f0210d4b6d7145636f4a3851cc6218e30b664))
 
 ### BREAKING CHANGES
 
-* previously: "import rsort from ..." - now "import { rSort } from ..."
-
-
-
-
+- previously: `import rsort from ...` - now `import { rSort } from ...`
 
 ## 3.14.0 (2020-11-28)
 

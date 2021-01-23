@@ -5,39 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 2.0.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* fix for opts.wipeAllWhitespaceOnRight and left too ([6109691](https://github.com/codsen/codsen/commit/610969126ca12c7b201cf4e353a06d77c68de081))
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-* if****SideIncludesThisCropItToo algorithm tweaks when there is no whitespace ([bfaacca](https://github.com/codsen/codsen/commit/bfaacca8eddf3b74550c6f53673bdc9984ed2adc))
-
-
 ### Features
 
-* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
-* improvements to opts.addSingleSpaceToPreventAccidentalConcatenation ([89e66f1](https://github.com/codsen/codsen/commit/89e66f1d9c32a07b25c907539fbf19210b3cac90))
-* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
-* opts.addSingleSpaceToPreventAccidentalConcatenation ([e661543](https://github.com/codsen/codsen/commit/e6615432f3d01dbe9d6aad60af56010968aabe68))
-* opts.addSingleSpaceToPreventAccidentalConcatenation improvements ([d7bc6dc](https://github.com/codsen/codsen/commit/d7bc6dcaf4aab92f553b2f36a1439f680ead98cf))
-* opts.wipeAllWhitespaceOnLeft and opts.wipeAllWhitespaceOnRight ([55589aa](https://github.com/codsen/codsen/commit/55589aa84e1473ef8eee2ced648419e334c5cf28))
-* refactor, remove all dependencies (there was only one) ([145b2aa](https://github.com/codsen/codsen/commit/145b2aa23b6f917f58afb4e5bf08c8a5dc8f810d))
-* rewrite in TS, start using named exports ([ea4ccc3](https://github.com/codsen/codsen/commit/ea4ccc38c24614ac2e63538fc5880f10fc255d3e))
-* tweak the types, some opts keys are optional, some are not ([c5cb159](https://github.com/codsen/codsen/commit/c5cb159a9ccdcf804a5197eb8718d0f4f41d5fe7))
-
-
-### Performance Improvements
-
-* remove check-types-mini to improve speed by around 500x ([30496f7](https://github.com/codsen/codsen/commit/30496f77c5943879fc22cd84b580021a91860156))
-
+- rewrite in TS, start using named exports ([ea4ccc3](https://github.com/codsen/codsen/commit/ea4ccc38c24614ac2e63538fc5880f10fc255d3e))
 
 ### BREAKING CHANGES
 
-* previously: "import expander from ..." - now: "import { expander } from ..."
-
-
-
-
+- previously: `import expander from ...` - now: `import { expander } from ...`
 
 ## 1.12.0 (2020-11-28)
 

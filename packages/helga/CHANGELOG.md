@@ -5,15 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 1.3.0 (2021-01-23)
 
-
 ### Features
 
-* Initial release ([0a363e5](https://github.com/codsen/codsen/commit/0a363e5b60bd438daa57f6f6619ec7b40bdb9828))
-* rewrite in TS ([66b7407](https://github.com/codsen/codsen/commit/66b7407a8295fe9299fbaf9b223eff2f62e60dde))
-
-
-
-
+- rewrite in TS ([66b7407](https://github.com/codsen/codsen/commit/66b7407a8295fe9299fbaf9b223eff2f62e60dde))
 
 ## 1.2.0 (2020-11-28)
 

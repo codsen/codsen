@@ -5,21 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 1.4.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* set up Tap as a test runner, write many more unit tests and fix all remaining issues ([300d6a9](https://github.com/codsen/codsen/commit/300d6a998f0b3549af569b4b72c9d5898e7a981f))
-
-
 ### Features
 
-* initial release ([824c67d](https://github.com/codsen/codsen/commit/824c67d33408d8acce2b2a4a01061d12582c4e00))
-* rebase in ES modules and set up Rollup ([cf2514e](https://github.com/codsen/codsen/commit/cf2514e44d3796c6203d8f80194110b1446858cc))
-* rewrite in TS ([e0b483e](https://github.com/codsen/codsen/commit/e0b483e153fec00b94a198058e315f902c2d5d61))
-
-
-
-
+- rewrite in TS ([e0b483e](https://github.com/codsen/codsen/commit/e0b483e153fec00b94a198058e315f902c2d5d61))
 
 ## 1.3.0 (2020-11-28)
 

@@ -5,35 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 5.0.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-
-
 ### Features
 
-* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
-* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
-* Merge modes via opts.mergeType ([2394464](https://github.com/codsen/codsen/commit/2394464976ce1970bcd31b45d9fd9955f4bbcc09))
-* rebase, split tests into separate files and add examples ([8d18785](https://github.com/codsen/codsen/commit/8d187857ee1765aa16d0fd9aa2410f183e0d4257))
-* rewrite in TS, start using named exports ([c7b2268](https://github.com/codsen/codsen/commit/c7b226840e6f49464d2e1ebf3486ea4d8fd86b26))
-
-
-### Performance Improvements
-
-* remove check-types-mini ([2ed86fe](https://github.com/codsen/codsen/commit/2ed86fe981414023dad150a4e0a7833f19caa315))
-
+- rewrite in TS, start using named exports ([c7b2268](https://github.com/codsen/codsen/commit/c7b226840e6f49464d2e1ebf3486ea4d8fd86b26))
 
 ### BREAKING CHANGES
 
-* previously: "import splitEasy from ..." - now "import { splitEasy } from ..."
-* Second input argument, progressFn, was moved into opts.progressFn and opts was
-placed into second input argument instead
-
-
-
-
+- previously: `import splitEasy from ...` - now `import { splitEasy } from ...`
 
 ## 4.0.0 (2020-11-28)
 

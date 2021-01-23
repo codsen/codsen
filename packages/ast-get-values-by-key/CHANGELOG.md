@@ -5,32 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 3.0.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-
-
 ### Features
 
-* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
-* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
-* rewrite in TS and start using named exports ([0380ba1](https://github.com/codsen/codsen/commit/0380ba17617bc1ee043cc8a068d9b0e4f16ce7e1))
-* rewrite in TS, use named exports ([0e1c3b6](https://github.com/codsen/codsen/commit/0e1c3b64881849df4271239c25570447aa8c730b))
-* some rebasing and examples ([18bd472](https://github.com/codsen/codsen/commit/18bd4724e9e8ce1726d6e3c646e270eba6984d08))
-* supplement the getter's result with path ([1594a36](https://github.com/codsen/codsen/commit/1594a36e9dd799f9bcbaf379fc054b1dd55cbd67))
-
+- rewrite in TS and start using named exports ([0380ba1](https://github.com/codsen/codsen/commit/0380ba17617bc1ee043cc8a068d9b0e4f16ce7e1))
 
 ### BREAKING CHANGES
 
-* previously: "import getAllValuesByKey from ..." - now "import { getByKey } from
-..."
-* previously: "import getAllValuesByKey from ..." - now "import { getByKey } from
-..."
-
-
-
-
+- previously: `import getAllValuesByKey from ...` - now `import { getByKey } from ...`
 
 ## 2.8.0 (2020-11-28)
 

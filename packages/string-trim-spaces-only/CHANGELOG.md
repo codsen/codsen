@@ -5,28 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 3.0.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-
-
 ### Features
 
-* add granular options to trim (or not) each whitespace type ([b941752](https://github.com/codsen/codsen/commit/b94175236f15bb2da57935a58f161b518731cf3d))
-* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
-* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
-* opts.classicTrim, returns plain object now ([2bff8b5](https://github.com/codsen/codsen/commit/2bff8b576269087028a4efe7e6efbc98eb11b2dc))
-* rewrite in TS, start using named exports ([f1af4d2](https://github.com/codsen/codsen/commit/f1af4d2eecbda15edc33f9b9080bc99f495cbd3a))
-
+- rewrite in TS, start using named exports ([f1af4d2](https://github.com/codsen/codsen/commit/f1af4d2eecbda15edc33f9b9080bc99f495cbd3a))
 
 ### BREAKING CHANGES
 
-* previously: "import trimSpaces from ..." - now "import { trimSpaces } from ..."
-
-
-
-
+- previously: `import trimSpaces from ...` - now `import { trimSpaces } from ...`
 
 ## 2.9.0 (2020-11-28)
 

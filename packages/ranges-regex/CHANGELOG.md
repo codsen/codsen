@@ -5,31 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 4.0.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-
-
 ### Features
 
-* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
-* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
-* Merge modes via opts.mergeType ([2394464](https://github.com/codsen/codsen/commit/2394464976ce1970bcd31b45d9fd9955f4bbcc09))
-* rewrite in TS, start using named exports ([7ec5d62](https://github.com/codsen/codsen/commit/7ec5d6220a8977db148b51855edb466d2165e650))
-* small rebase and improvements ([b4b7f7f](https://github.com/codsen/codsen/commit/b4b7f7fc20cb6f10163590e352564a6cd33be102))
-
+- rewrite in TS, start using named exports ([7ec5d62](https://github.com/codsen/codsen/commit/7ec5d6220a8977db148b51855edb466d2165e650))
 
 ### BREAKING CHANGES
 
-* previsouly you'd consume like: "import rRegex from ..." - now use: "import { rRegex
-} from ..."
-* Second input argument, progressFn, was moved into opts.progressFn and opts was
-placed into second input argument instead
-
-
-
-
+- previsouly you'd consume like: `import rRegex from ...` - now use: `import { rRegex } from ...`
 
 ## 3.0.0 (2020-11-28)
 

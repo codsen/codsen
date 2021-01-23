@@ -5,31 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 4.0.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-
-
 ### Features
 
-* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
-* allow any types in override object key values ([7654531](https://github.com/codsen/codsen/commit/765453106abe434f8afc2c002e1fab60bec2409a))
-* always return boolean values, don't use numbers 0/1 ([507c7cd](https://github.com/codsen/codsen/commit/507c7cd0e30e2109b90ebd70eb0454a02508bb5f))
-* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
-* optional third input arg to force bool values in the output ([56afb39](https://github.com/codsen/codsen/commit/56afb39d07af060c5bb5e55b7a8cfd6da1ac7689))
-* recode in TS and start using named exports ([75d5dc0](https://github.com/codsen/codsen/commit/75d5dc0419303284006b88e6fcbe4a2d9b2e6faf))
-
+- recode in TS and start using named exports ([75d5dc0](https://github.com/codsen/codsen/commit/75d5dc0419303284006b88e6fcbe4a2d9b2e6faf))
 
 ### BREAKING CHANGES
 
-* previously default was exported: "import combinations from ..." - now use named
-export "import { combinations } from ..."
-* now all combinations' values are booleans, no more digits 0 or 1
-
-
-
-
+- previously default was exported: `import combinations from ...` - now use named export `import { combinations } from ...`
 
 ## 3.0.0 (2020-12-06)
 

@@ -705,7 +705,7 @@ function fixEnt(str, originalOpts) { //
               } // First, match against case-insensitive list
               /* istanbul ignore next */
 
-              letterSeqStartAt ? stringLeftRight.right(str, letterSeqStartAt) : null;
+              var _secondChar = letterSeqStartAt ? stringLeftRight.right(str, letterSeqStartAt) : null;
               var _tempEnt2 = "";
               var temp;
 

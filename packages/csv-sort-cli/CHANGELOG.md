@@ -3,27 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 1.11.0 (2021-01-23)
-
-
-### Bug Fixes
-
-* fix failing unit test ([2315c11](https://github.com/codsen/codsen/commit/2315c11016d4f69c4b3d40458080fa9f9fa754ba))
-* Fix one of logical clauses ([a8afc24](https://github.com/codsen/codsen/commit/a8afc241ee5c00458818ad69af91933f8bb71050))
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-* update the api to follow meow v4 - fixes aliases ([ab381c8](https://github.com/codsen/codsen/commit/ab381c833f0232ff1068336d861d36d96ca8c435))
-
-
-### Features
-
-* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
-* add unit tests for CLI operations ([9d16de4](https://github.com/codsen/codsen/commit/9d16de46954bcb7d37bf6161b2c318099bc63b57))
-* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
-
-
-
-
-
 ## 1.10.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

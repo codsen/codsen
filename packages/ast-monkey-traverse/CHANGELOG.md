@@ -5,29 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 2.0.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-
-
 ### Features
 
-* add `innerObj.parentKey` ([de52881](https://github.com/codsen/codsen/commit/de528817dd922a9d47ec85421a0354e9dd4e2bed))
-* Add a new key, parentType in a callback innerObj ([57e798e](https://github.com/codsen/codsen/commit/57e798ea8c5894d6c0af438ce9a55bf0232bb1a2))
-* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
-* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
-* rewrite in TS, named export is now used ([8983e69](https://github.com/codsen/codsen/commit/8983e6992ef518f8b4cbb734aa22949e68bd5aa1))
-* stopping functionality ([1eaf5e6](https://github.com/codsen/codsen/commit/1eaf5e63fac290f7864165836a348fd55a63df58))
-
+- rewrite in TS, named export is now used ([8983e69](https://github.com/codsen/codsen/commit/8983e6992ef518f8b4cbb734aa22949e68bd5aa1))
 
 ### BREAKING CHANGES
 
-* named export is now used - use: "import { traverse }" instead of "import traverse"
-
-
-
-
+- named export is now used - use: `import { traverse } from ...` instead of `import traverse from ...`
 
 ## 1.13.0 (2020-11-28)
 

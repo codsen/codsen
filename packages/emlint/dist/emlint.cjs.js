@@ -317,7 +317,7 @@ function validateString(str, idxOffset, originalOpts) {
         leadingWhitespaceOK: true,
         trailingWhitespaceOK: true,
         cb: function cb(idxFrom, idxTo) {
-          str.slice(idxFrom - idxOffset, idxTo - idxOffset); // if there are errors, validateValue() mutates the passed "errorArr",
+          var extractedValue = str.slice(idxFrom - idxOffset, idxTo - idxOffset); // if there are errors, validateValue() mutates the passed "errorArr",
           // pushing to it
 
           validateValue(str, idxOffset, opts, idxFrom - idxOffset, // processCommaSep() reports offset values so we need to restore indexes to start where this "str" above starts
@@ -335,7 +335,7 @@ function validateString(str, idxOffset, originalOpts) {
         }
       });
     } else {
-      str.slice(charStart, charEnd); // if there are errors, validateValue() mutates the passed "errorArr",
+      var extractedValue = str.slice(charStart, charEnd); // if there are errors, validateValue() mutates the passed "errorArr",
       // pushing to it
 
       validateValue(str, idxOffset, opts, charStart, charEnd, errorArr);
@@ -3352,7 +3352,7 @@ function tagSpaceBeforeClosingSlash(context, mode) {
 
   return {
     tag: function tag(node) {
-      context.str.slice(node.start + 1, node.tagNameStartsAt); // PROCESSING:
+      var gapValue = context.str.slice(node.start + 1, node.tagNameStartsAt); // PROCESSING:
 
       var closingBracketPos = node.end - 1;
       var slashPos = stringLeftRight.left(context.str, closingBracketPos);
@@ -3645,7 +3645,7 @@ function tagIsPresent(context) {
     tag: function tag(node) {
 
       if (Array.isArray(blacklist) && blacklist.length) {
-        matcher__default['default']([node.tagName], blacklist);
+        var temp = matcher__default['default']([node.tagName], blacklist);
 
         if (matcher__default['default']([node.tagName], blacklist).length) {
           context.report({
@@ -4408,7 +4408,7 @@ function validateValue$1(str, originalOpts, errorArr) {
       return acc;
     }, 0); // assemble the value without whitespace
 
-    foundCharacterRanges.reduce(function (acc, curr) {
+    var valueWithoutWhitespace = foundCharacterRanges.reduce(function (acc, curr) {
       return acc + extractedValue.slice(curr[0] - opts.offset, curr[1] - opts.offset);
     }, "");
 
@@ -4526,7 +4526,7 @@ function validateUri(str, originalOpts) {
           leadingWhitespaceOK: true,
           trailingWhitespaceOK: true,
           cb: function cb(idxFrom, idxTo) {
-            str.slice(idxFrom - opts.offset, idxTo - opts.offset); // if there are errors, validateValue() mutates the passed "errorArr",
+            var extractedValue = str.slice(idxFrom - opts.offset, idxTo - opts.offset); // if there are errors, validateValue() mutates the passed "errorArr",
             // pushing to it
             // Object assign needed to retain opts.multipleOK
 
@@ -5959,10 +5959,10 @@ function attributeValidateCode(context) {
           });
         } else {
           // only validate the whitespace
-          var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-              _checkForWhitespace.charStart;
-              _checkForWhitespace.charEnd;
-              var errorArr = _checkForWhitespace.errorArr;
+          var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+              charStart = _checkForWhitespace.charStart,
+              charEnd = _checkForWhitespace.charEnd,
+              errorArr = _checkForWhitespace.errorArr;
           errorArr.forEach(function (errorObj) {
             context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-code"
@@ -6234,10 +6234,10 @@ function attributeValidateContent(context) {
         } // only validate the whitespace
 
 
-        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-            _checkForWhitespace.charStart;
-            _checkForWhitespace.charEnd;
-            var errorArr = _checkForWhitespace.errorArr;
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+            charStart = _checkForWhitespace.charStart,
+            charEnd = _checkForWhitespace.charEnd,
+            errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
           context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-content"
@@ -6575,10 +6575,10 @@ function attributeValidateFace(context) {
         } // only validate the whitespace
 
 
-        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-            _checkForWhitespace.charStart;
-            _checkForWhitespace.charEnd;
-            var errorArr = _checkForWhitespace.errorArr;
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+            charStart = _checkForWhitespace.charStart,
+            charEnd = _checkForWhitespace.charEnd,
+            errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
           context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-face"

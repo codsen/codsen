@@ -5,34 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 11.0.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-
-
 ### Features
 
-* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
-* fourth argument in the callback ([77f0fff](https://github.com/codsen/codsen/commit/77f0fff560e3dff31026e433a695549251c0e688))
-* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
-* recode in TS and named exports ([5981d20](https://github.com/codsen/codsen/commit/5981d2073196599d8649f27c454a2728125387c3))
-* remove options checking to make program run around 128 times faster ([02a5de3](https://github.com/codsen/codsen/commit/02a5de3a0b92404c8ca7cb062473d08082f0f7d3))
-
-
-### Performance Improvements
-
-* tap Array.isArray directly, gaining around 124 times more speed ([016bcda](https://github.com/codsen/codsen/commit/016bcda43d6251a436d1b0c73b391d2549be7856))
-
+- recode in TS and named exports ([5981d20](https://github.com/codsen/codsen/commit/5981d2073196599d8649f27c454a2728125387c3))
 
 ### BREAKING CHANGES
 
-* previously it was consumed like this: "import mergeAdvanced from ..." - now like
-this: "import { mergeAdvanced } from ..."
-
-
-
-
+- previously it was consumed like: `import mergeAdvanced from ...` - now like: `import { mergeAdvanced } from ...`
 
 ## 10.12.0 (2020-11-28)
 

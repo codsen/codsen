@@ -5,22 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 1.3.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* don't return null when going up from root, return `"0"` ([4d844ac](https://github.com/codsen/codsen/commit/4d844acd942d78b893d66ab8dfdb08cdaf23054f))
-
-
 ### Features
 
-* add `parent` method, split tests into separate files ([ca8fc95](https://github.com/codsen/codsen/commit/ca8fc95d96902a646a345c1acf659389bd26ba0d))
-* export the version too ([5a0312c](https://github.com/codsen/codsen/commit/5a0312cab3cc80dc59767825bfb1c93e009b4ba7))
-* initial release ([b6944ae](https://github.com/codsen/codsen/commit/b6944ae20fe3702c15b3b01fbd78a599905d4db3))
-* rewrite in TS ([680f046](https://github.com/codsen/codsen/commit/680f0467dcdad3573e7cf21ed7ea8b3c7efb4418))
-
-
-
-
+- rewrite in TS ([680f046](https://github.com/codsen/codsen/commit/680f0467dcdad3573e7cf21ed7ea8b3c7efb4418))
 
 ## 1.2.0 (2020-11-28)
 

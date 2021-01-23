@@ -5,44 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 6.0.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* `opts.maxMismatches` higher than one ([63e1854](https://github.com/codsen/codsen/commit/63e18545817f5af0eae9dd27db1a803cbb921273))
-* add insurance against the variable being not string ([9fd4535](https://github.com/codsen/codsen/commit/9fd4535ee252954e490ba9d6dae9e55d99737730))
-* fix `opts.firstMustMatch` ([e3d2124](https://github.com/codsen/codsen/commit/e3d2124d895e66dc9ca3d03d4e1686d1dcf6939b))
-* fix `opts.matchRight` ([3137e22](https://github.com/codsen/codsen/commit/3137e2261829cf212fd6642f386d913cb339b6a2))
-* fix maxMismatches ([b62523b](https://github.com/codsen/codsen/commit/b62523b0c9bd4e8542fe48c8540eab4256056418))
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-* fix the excessive skipping ([6448bc8](https://github.com/codsen/codsen/commit/6448bc8c26368d535beeb61646acf42f1cce3728))
-* insurance against undefined value ([b2b82cd](https://github.com/codsen/codsen/commit/b2b82cdb28bee90bda4972e6321a95d3e9cd38ff))
-
-
 ### Features
 
-* `opts.maxMismatches` ([e1cfb3f](https://github.com/codsen/codsen/commit/e1cfb3fb792b6319b1d1df6d7105bb59a8dd98ea))
-* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
-* case when character is omitted from the source and maxMismatches allows that ([3abdc98](https://github.com/codsen/codsen/commit/3abdc98e9e50d6b7a6d87975faea0bbb922092e7))
-* EOL matching and code refresh ([3e3c2cb](https://github.com/codsen/codsen/commit/3e3c2cb248466f99ee17e39ad733e9155db54e4e))
-* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
-* merge marchForward and marchBackward into one, simplify the API ([3b4b787](https://github.com/codsen/codsen/commit/3b4b7874a8419a090f1bd990aee29f89f2916e75))
-* opts.lastMustMatch ([29504e5](https://github.com/codsen/codsen/commit/29504e5cf2556e31abcb05324599650d2fd5bd73))
-* opts.relaxedApi ([8d15eae](https://github.com/codsen/codsen/commit/8d15eaef5c80f39f08aa2e2933e468b0bfe46baf))
-* opts.skipWhitespace ([c01e762](https://github.com/codsen/codsen/commit/c01e76234920ee0ea879518caa2d7b471234421a))
-* rebase to make twice as fast ([de3ebdf](https://github.com/codsen/codsen/commit/de3ebdf3d97d8fe289f914ed217427887f8de13b))
-* remove opts.skipInnerWhitespace ([6396d46](https://github.com/codsen/codsen/commit/6396d46265da0539b6cfac583633380d0ef619c3))
-* rewrite in TS ([390a399](https://github.com/codsen/codsen/commit/390a3993c5296232eb540591af4262285863bc5e))
-* second callback's argument returns empty string when EOL is reached (previously - undefined) ([2d34edd](https://github.com/codsen/codsen/commit/2d34edddefcb227759f5d56df19335911cc3d667))
-
+- rewrite in TS ([390a399](https://github.com/codsen/codsen/commit/390a3993c5296232eb540591af4262285863bc5e))
 
 ### BREAKING CHANGES
 
-* no more opts.relaxedApi - it's relaxed as much as possible by default, no
-emoji-related code
-
-
-
-
+- there should be no API changes, but we're bumping _major_ just in case
 
 ## 5.0.0 (2020-11-28)
 

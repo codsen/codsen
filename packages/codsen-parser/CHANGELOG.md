@@ -5,45 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 0.9.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* correctly nest empty tags ([63c40e5](https://github.com/codsen/codsen/commit/63c40e580a219d86c8e247b510d233b2ce80b15e))
-* harden the eslint rules set, make all tests pass and rebase a little ([8c026c2](https://github.com/codsen/codsen/commit/8c026c2101f16ad45d82011e686bfa1d8ab1c33f))
-* missing tag opening rule - demand that closing tag's previous tag would be not closing ([8d55b75](https://github.com/codsen/codsen/commit/8d55b75fa1129d5ee667524cdf7a0e624ceeb045))
-* nested tags ([1aec4c9](https://github.com/codsen/codsen/commit/1aec4c9cb0fcf511661060a160278dce680f3229))
-* nesting fix - closing tags don't next text tokens that follow ([5348ed2](https://github.com/codsen/codsen/commit/5348ed2b931870a8ad2be4a26713e956ccfbc2bc))
-* tend the layer endings properly ([8fe96ba](https://github.com/codsen/codsen/commit/8fe96ba6613733c5cba9672330c55dcf7e442661))
-* update tests to the latest tokenizer api ([83221e1](https://github.com/codsen/codsen/commit/83221e14b41d91ca571bd124177d34e92cd58f3f))
-
-
 ### Features
 
-* algorithm improvements for broken tag pairs ([96d79de](https://github.com/codsen/codsen/commit/96d79de2a4c55691e723171d28c8a6cf263ed34b))
-* algorithm improvements to tackle cases of rogue tag being in place of another tag ([2144190](https://github.com/codsen/codsen/commit/214419095a250be33b42c91d0f67d4c62097d380))
-* assembles AST of nested tags ([aeb76e0](https://github.com/codsen/codsen/commit/aeb76e0d7d177034c41dbba88fd648a5218023f4))
-* catch even more broken closing comment cases ([a051292](https://github.com/codsen/codsen/commit/a051292306b933c2ac62d1f55a669afc925cce97))
-* don't nest under rogue opening tags ([e8e1d7b](https://github.com/codsen/codsen/commit/e8e1d7b9e58520a32ec41a8296a77e268de2db71))
-* don't put tag names that dont have closings into layers ([eefea2e](https://github.com/codsen/codsen/commit/eefea2ebfff2ddc01e6b30d46ce0857ee3164706))
-* empty tag pair, one opening one closing tag ([2080dce](https://github.com/codsen/codsen/commit/2080dce52359343609360810f08f557ea9f1f530))
-* extend missing closing tag rules to comment tags ([903b108](https://github.com/codsen/codsen/commit/903b1085b6ed08584543d0502543ebb0f72abd27))
-* first case of missing closing tag, `<table><tr><td>x</td></tr>` ([55138be](https://github.com/codsen/codsen/commit/55138be38ca28acbea7de2be193a424b9a05c6c5))
-* improve the algorithm to recognise missing closing tag ([35db247](https://github.com/codsen/codsen/commit/35db2476a3ed49905c5256b4ed1475f86d5fea2c))
-* improve the comment tag recognition, also broken "->" recognition ([7fb073f](https://github.com/codsen/codsen/commit/7fb073f12826806d1840db918fd5f71e2d0a8e51))
-* init ([523b45f](https://github.com/codsen/codsen/commit/523b45f6589debb318f6d548de461935649df18e))
-* nest commment tags how it should be done ([3a24373](https://github.com/codsen/codsen/commit/3a24373ee9d587b319e62fafd12e5385bd6ef1da))
-* new error rule, `tag-void-frontal-slash` ([36ab424](https://github.com/codsen/codsen/commit/36ab42488cc29718c69ff732373d53e7037e462a))
-* new error, `tag-missing-opening` ([9af98b6](https://github.com/codsen/codsen/commit/9af98b6b95c35768cda29ceddb4fbabd98460461))
-* push all kinds of opening tokens into layers, not just comment-type ([666b071](https://github.com/codsen/codsen/commit/666b07143d3e6c78ca07878061cddb8fc0603903))
-* recognise malformed front part of "not" kind comment in preceding text token ([5e9ffd7](https://github.com/codsen/codsen/commit/5e9ffd75716c8ba06b657d5b6a8637288b904c31))
-* recognise malformed opening comment tag's first part within nested preceding token ([16432d7](https://github.com/codsen/codsen/commit/16432d73cfbd270501473e704621224aae353cf4))
-* rewire tokenizer results to both feed the program and the callbacks in the opts ([fb56f48](https://github.com/codsen/codsen/commit/fb56f48212f590e276469e7c270a8cdda1828a08))
-* update to the latest tokenizer algorithm ([5e2b294](https://github.com/codsen/codsen/commit/5e2b294dc3294d3031b60e1fed158fe56f74408a))
-* update to the tokenizer's latest api ([c344f55](https://github.com/codsen/codsen/commit/c344f55d1143d539bd08f4d3cfa923dba3bbfaf3))
-
-
-
-
+- rewrite in TypeScript, start using named exports, `import { cparser } from "codsen-parser";`
 
 ## 0.8.0 (2020-11-28)
 

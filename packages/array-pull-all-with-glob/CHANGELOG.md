@@ -5,28 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 5.0.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-
-
 ### Features
 
-* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
-* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
-* rewrite in TS, use named exports ([359c5ff](https://github.com/codsen/codsen/commit/359c5ff3df749c18b39dc48d07ccb8029d915fa5))
-* second input arg. can now be a string ([fd68131](https://github.com/codsen/codsen/commit/fd6813190de2193591a5edca7f6918875a68ba76))
-
+- rewrite in TS, use named exports ([359c5ff](https://github.com/codsen/codsen/commit/359c5ff3df749c18b39dc48d07ccb8029d915fa5))
 
 ### BREAKING CHANGES
 
-* Previously, a default export was used: "import pullAllWithGlob from ...". Now use
-the named export: "import { pull } from ..."
-
-
-
-
+- Previously, a default export was used: `import pullAllWithGlob from ...`. Now use the named export: `import { pull } from ...`
 
 ## 4.13.0 (2020-11-28)
 

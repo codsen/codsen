@@ -5,29 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 2.0.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-
-
 ### Features
 
-* add examples ([0891cad](https://github.com/codsen/codsen/commit/0891cadef7bd9b98950bb98b0e7e3e51a0783848))
-* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
-* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
-* recode in TS, remove decode function ([1af1c80](https://github.com/codsen/codsen/commit/1af1c80f48f2b00de8de673033408dc6023a072d))
-* recognise consecutive dashes ([20cc031](https://github.com/codsen/codsen/commit/20cc031468df5e96330ad87bb749819e6b449074))
-
+- recode in TS, remove decode function ([1af1c80](https://github.com/codsen/codsen/commit/1af1c80f48f2b00de8de673033408dc6023a072d))
 
 ### BREAKING CHANGES
 
-* previously: "import bSlug from ..." - now "import { bSlug } from ..." - plus,
-removed the string decoding
-
-
-
-
+- previously: `import bSlug from ...` - now `import { bSlug } from ...` - plus, removed the string decoding
 
 ## 1.11.0 (2020-11-28)
 

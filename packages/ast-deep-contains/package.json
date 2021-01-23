@@ -56,7 +56,6 @@
     "lect": "lect",
     "lint": "../../node_modules/eslint/bin/eslint.js . --ext .js --ext .ts --fix --config \"../../.eslintrc.json\" --quiet",
     "perf": "node perf/check",
-    "prepare": "npm run build",
     "prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md,ts}' --write --loglevel silent",
     "republish": "npm publish || :",
     "tap": "tap",
@@ -65,8 +64,7 @@
     "test:examples": "../../scripts/test-examples.js && npm run lect && npm run prettier",
     "tsc": "tsc",
     "tsd": "test ! -f index.d.ts || tsd",
-    "unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md --reporter=terse && tsc -p tsconfig.json --noEmit && npm run tsd && npm run clean_cov && npm run perf",
-    "version": "npm run build && git add ."
+    "unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md --reporter=terse && tsc -p tsconfig.json --noEmit && npm run tsd && npm run clean_cov && npm run perf"
   },
   "tap": {
     "coverage-report": [

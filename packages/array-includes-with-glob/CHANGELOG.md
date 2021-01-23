@@ -5,28 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 3.0.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-
-
 ### Features
 
-* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
-* Add perf measurement, tracking and historical comparison ([2d53b18](https://github.com/codsen/codsen/commit/2d53b1879bd7ca918755029659d85d9ffe4a4ed8))
-* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
-* opts.caseSensitive and named exports ([fe3af17](https://github.com/codsen/codsen/commit/fe3af17f735d4753b14ed97aa5d22a316c7cd07c))
-
+- Rewrite in TypeScript, start using named exports
 
 ### BREAKING CHANGES
 
-* Previously, you'd consume by: "import includesWithGlob from ...", now use: "import
-{ includesWithGlob } from ..."
-
-
-
-
+- Previously, you'd consume by: `import includesWithGlob from ...", now use: `import { includesWithGlob } from ...`
 
 ## 2.13.0 (2020-11-28)
 

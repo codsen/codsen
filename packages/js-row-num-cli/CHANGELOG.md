@@ -3,27 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 1.8.0 (2021-01-23)
-
-
-### Bug Fixes
-
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-* update to the latest meow v4 api - fixes aliases ([c4c17cd](https://github.com/codsen/codsen/commit/c4c17cd9e4bb90d991fb2b3ec79b6cf6df4e7cc3))
-
-
-### Features
-
-* -t flag ([15e51fb](https://github.com/codsen/codsen/commit/15e51fbd23ccecd734bded4b2a206d233fe3a4a9))
-* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
-* atomic file write ([c6b5f28](https://github.com/codsen/codsen/commit/c6b5f281df88e251060803620210d8e836692827))
-* improved messages when zero files found + promisified write function ([0035dcc](https://github.com/codsen/codsen/commit/0035dcca4d0f846e68b0d5bd2b1f92c1d3582685))
-* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
-
-
-
-
-
 ## 1.7.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

@@ -5,34 +5,15 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 3.0.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
-
-
 ### Features
 
-* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
-* complete rewrite - return objects for each bad character or exceeding of max line length ([95b6cf4](https://github.com/codsen/codsen/commit/95b6cf49ed4ed0b619568d6a9841eb4e6297aab3))
-* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
-* opts.messageOnly ([a147216](https://github.com/codsen/codsen/commit/a147216b204866b6a68f00448ef68187765e3988))
-* return UTF32Hex value too ([6db600a](https://github.com/codsen/codsen/commit/6db600a1a1cc926f5014181b05d0c2740a660deb))
-
-
-### Performance Improvements
-
-* remove check-types-mini ([199bd63](https://github.com/codsen/codsen/commit/199bd635496adf1051b7d14aa7d8fd49f9014bdc))
-
+- a complete rewrite - return objects for each bad character or exceeding of max line length ([95b6cf4](https://github.com/codsen/codsen/commit/95b6cf49ed4ed0b619568d6a9841eb4e6297aab3))
+- return UTF32Hex value too ([6db600a](https://github.com/codsen/codsen/commit/6db600a1a1cc926f5014181b05d0c2740a660deb))
 
 ### BREAKING CHANGES
 
-* 1. no more default exported. Import like "import { within } from ...". 2. array of
-errors - plain objects - is now returned. See examples.
-
-
-
-
+- no more `default` exported. Consume using: `import { within } from ...`
+- array of errors, plain objects, is now returned. See the examples.
 
 ## 2.10.0 (2020-11-28)
 

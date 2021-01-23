@@ -11135,7 +11135,8 @@ function fixEnt(str, originalOpts) {
               /* istanbul ignore next */
 
 
-              letterSeqStartAt ? right(str, letterSeqStartAt) : null;
+              var _secondChar = letterSeqStartAt ? right(str, letterSeqStartAt) : null;
+
               var _tempEnt2 = "";
               var temp;
 
@@ -15932,7 +15933,7 @@ function tokenizer(str, originalOpts) {
 
             if (attribClosingQuoteAt) {
               // slice the captured chunk
-              str.slice(_y3, attribClosingQuoteAt);
+              var extractedChunksVal = str.slice(_y3, attribClosingQuoteAt);
             }
           } // where that caught whitespace ends, that's the default location
           // of double quotes.
@@ -17591,7 +17592,7 @@ function processCommaSep(str, originalOpts) {
 
 
     if (Number.isInteger(chunkStartsAt) && (i > chunkStartsAt && opts.separator && str[i] === opts.separator || i + 1 === opts.to)) {
-      str.slice(chunkStartsAt, i + 1 === opts.to && str[i] !== opts.separator && str[i].trim() ? i + 1 : i); // ping the cb
+      var chunk = str.slice(chunkStartsAt, i + 1 === opts.to && str[i] !== opts.separator && str[i].trim() ? i + 1 : i); // ping the cb
 
       if (typeof opts.cb === "function") {
         opts.cb(chunkStartsAt + opts.offset, (i + 1 === opts.to && str[i] !== opts.separator && str[i].trim() ? i + 1 : lastNonWhitespaceCharAt + 1) + opts.offset);
@@ -18001,7 +18002,7 @@ function validateString(str, idxOffset, originalOpts) {
         leadingWhitespaceOK: true,
         trailingWhitespaceOK: true,
         cb: function cb(idxFrom, idxTo) {
-          str.slice(idxFrom - idxOffset, idxTo - idxOffset); // if there are errors, validateValue() mutates the passed "errorArr",
+          var extractedValue = str.slice(idxFrom - idxOffset, idxTo - idxOffset); // if there are errors, validateValue() mutates the passed "errorArr",
           // pushing to it
 
           validateValue(str, idxOffset, opts, idxFrom - idxOffset, // processCommaSep() reports offset values so we need to restore indexes to start where this "str" above starts
@@ -18019,7 +18020,7 @@ function validateString(str, idxOffset, originalOpts) {
         }
       });
     } else {
-      str.slice(charStart, charEnd); // if there are errors, validateValue() mutates the passed "errorArr",
+      var extractedValue = str.slice(charStart, charEnd); // if there are errors, validateValue() mutates the passed "errorArr",
       // pushing to it
 
       validateValue(str, idxOffset, opts, charStart, charEnd, errorArr);
@@ -21036,7 +21037,7 @@ function tagSpaceBeforeClosingSlash(context, mode) {
 
   return {
     tag: function tag(node) {
-      context.str.slice(node.start + 1, node.tagNameStartsAt); // PROCESSING:
+      var gapValue = context.str.slice(node.start + 1, node.tagNameStartsAt); // PROCESSING:
 
       var closingBracketPos = node.end - 1;
       var slashPos = left(context.str, closingBracketPos);
@@ -21329,7 +21330,7 @@ function tagIsPresent(context) {
     tag: function tag(node) {
 
       if (Array.isArray(blacklist) && blacklist.length) {
-        matcher([node.tagName], blacklist);
+        var temp = matcher([node.tagName], blacklist);
 
         if (matcher([node.tagName], blacklist).length) {
           context.report({
@@ -30698,7 +30699,7 @@ var b$2 = function b(options) {
 
 var v4 = '(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)){3}';
 var v6seg = '[a-fA-F\\d]{1,4}';
-var v6 = ("\n(?:\n(?:" + v6seg + ":){7}(?:" + v6seg + "|:)|                                    // 1:2:3:4:5:6:7::  1:2:3:4:5:6:7:8\n(?:" + v6seg + ":){6}(?:" + v4 + "|:" + v6seg + "|:)|                             // 1:2:3:4:5:6::    1:2:3:4:5:6::8   1:2:3:4:5:6::8  1:2:3:4:5:6::1.2.3.4\n(?:" + v6seg + ":){5}(?::" + v4 + "|(?::" + v6seg + "){1,2}|:)|                   // 1:2:3:4:5::      1:2:3:4:5::7:8   1:2:3:4:5::8    1:2:3:4:5::7:1.2.3.4\n(?:" + v6seg + ":){4}(?:(?::" + v6seg + "){0,1}:" + v4 + "|(?::" + v6seg + "){1,3}|:)| // 1:2:3:4::        1:2:3:4::6:7:8   1:2:3:4::8      1:2:3:4::6:7:1.2.3.4\n(?:" + v6seg + ":){3}(?:(?::" + v6seg + "){0,2}:" + v4 + "|(?::" + v6seg + "){1,4}|:)| // 1:2:3::          1:2:3::5:6:7:8   1:2:3::8        1:2:3::5:6:7:1.2.3.4\n(?:" + v6seg + ":){2}(?:(?::" + v6seg + "){0,3}:" + v4 + "|(?::" + v6seg + "){1,5}|:)| // 1:2::            1:2::4:5:6:7:8   1:2::8          1:2::4:5:6:7:1.2.3.4\n(?:" + v6seg + ":){1}(?:(?::" + v6seg + "){0,4}:" + v4 + "|(?::" + v6seg + "){1,6}|:)| // 1::              1::3:4:5:6:7:8   1::8            1::3:4:5:6:7:1.2.3.4\n(?::(?:(?::" + v6seg + "){0,5}:" + v4 + "|(?::" + v6seg + "){1,7}|:))             // ::2:3:4:5:6:7:8  ::2:3:4:5:6:7:8  ::8             ::1.2.3.4\n)(?:%[0-9a-zA-Z]{1,})?                                             // %eth0            %1\n").replace(/\s*\/\/.*$/gm, '').replace(/\n/g, '').trim(); // Pre-compile only the exact regexes because adding a global flag make regexes stateful
+var v6 = ("\n(\n(?:" + v6seg + ":){7}(?:" + v6seg + "|:)|                                // 1:2:3:4:5:6:7::  1:2:3:4:5:6:7:8\n(?:" + v6seg + ":){6}(?:" + v4 + "|:" + v6seg + "|:)|                         // 1:2:3:4:5:6::    1:2:3:4:5:6::8   1:2:3:4:5:6::8  1:2:3:4:5:6::1.2.3.4\n(?:" + v6seg + ":){5}(?::" + v4 + "|(:" + v6seg + "){1,2}|:)|                 // 1:2:3:4:5::      1:2:3:4:5::7:8   1:2:3:4:5::8    1:2:3:4:5::7:1.2.3.4\n(?:" + v6seg + ":){4}(?:(:" + v6seg + "){0,1}:" + v4 + "|(:" + v6seg + "){1,3}|:)| // 1:2:3:4::        1:2:3:4::6:7:8   1:2:3:4::8      1:2:3:4::6:7:1.2.3.4\n(?:" + v6seg + ":){3}(?:(:" + v6seg + "){0,2}:" + v4 + "|(:" + v6seg + "){1,4}|:)| // 1:2:3::          1:2:3::5:6:7:8   1:2:3::8        1:2:3::5:6:7:1.2.3.4\n(?:" + v6seg + ":){2}(?:(:" + v6seg + "){0,3}:" + v4 + "|(:" + v6seg + "){1,5}|:)| // 1:2::            1:2::4:5:6:7:8   1:2::8          1:2::4:5:6:7:1.2.3.4\n(?:" + v6seg + ":){1}(?:(:" + v6seg + "){0,4}:" + v4 + "|(:" + v6seg + "){1,6}|:)| // 1::              1::3:4:5:6:7:8   1::8            1::3:4:5:6:7:1.2.3.4\n(?::((?::" + v6seg + "){0,5}:" + v4 + "|(?::" + v6seg + "){1,7}|:))           // ::2:3:4:5:6:7:8  ::2:3:4:5:6:7:8  ::8             ::1.2.3.4\n)(%[0-9a-zA-Z]{1,})?                                           // %eth0            %1\n").replace(/\s*\/\/.*$/gm, '').replace(/\n/g, '').trim(); // Pre-compile only the exact regexes because adding a global flag make regexes stateful
 
 var v46Exact = new RegExp("(?:^" + v4 + "$)|(?:^" + v6 + "$)");
 var v4exact = new RegExp("^" + v4 + "$");
@@ -30808,7 +30809,7 @@ function validateValue$1(str, originalOpts, errorArr) {
       return acc;
     }, 0); // assemble the value without whitespace
 
-    foundCharacterRanges.reduce(function (acc, curr) {
+    var valueWithoutWhitespace = foundCharacterRanges.reduce(function (acc, curr) {
       return acc + extractedValue.slice(curr[0] - opts.offset, curr[1] - opts.offset);
     }, "");
 
@@ -30926,7 +30927,7 @@ function validateUri(str, originalOpts) {
           leadingWhitespaceOK: true,
           trailingWhitespaceOK: true,
           cb: function cb(idxFrom, idxTo) {
-            str.slice(idxFrom - opts.offset, idxTo - opts.offset); // if there are errors, validateValue() mutates the passed "errorArr",
+            var extractedValue = str.slice(idxFrom - opts.offset, idxTo - opts.offset); // if there are errors, validateValue() mutates the passed "errorArr",
             // pushing to it
             // Object assign needed to retain opts.multipleOK
 
@@ -32359,10 +32360,10 @@ function attributeValidateCode(context) {
           });
         } else {
           // only validate the whitespace
-          var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-              _checkForWhitespace.charStart;
-              _checkForWhitespace.charEnd;
-              var errorArr = _checkForWhitespace.errorArr;
+          var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+              charStart = _checkForWhitespace.charStart,
+              charEnd = _checkForWhitespace.charEnd,
+              errorArr = _checkForWhitespace.errorArr;
           errorArr.forEach(function (errorObj) {
             context.report(_objectSpread2(_objectSpread2({}, errorObj), {}, {
               ruleId: "attribute-validate-code"
@@ -32634,10 +32635,10 @@ function attributeValidateContent(context) {
         } // only validate the whitespace
 
 
-        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-            _checkForWhitespace.charStart;
-            _checkForWhitespace.charEnd;
-            var errorArr = _checkForWhitespace.errorArr;
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+            charStart = _checkForWhitespace.charStart,
+            charEnd = _checkForWhitespace.charEnd,
+            errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
           context.report(_objectSpread2(_objectSpread2({}, errorObj), {}, {
             ruleId: "attribute-validate-content"
@@ -32975,10 +32976,10 @@ function attributeValidateFace(context) {
         } // only validate the whitespace
 
 
-        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-            _checkForWhitespace.charStart;
-            _checkForWhitespace.charEnd;
-            var errorArr = _checkForWhitespace.errorArr;
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+            charStart = _checkForWhitespace.charStart,
+            charEnd = _checkForWhitespace.charEnd,
+            errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
           context.report(_objectSpread2(_objectSpread2({}, errorObj), {}, {
             ruleId: "attribute-validate-face"

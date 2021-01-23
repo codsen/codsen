@@ -5,31 +5,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 2.0.0 (2021-01-23)
 
-
-### Bug Fixes
-
-* add more tests and cover opts.trailingWhitespaceOK ([e4f12bd](https://github.com/codsen/codsen/commit/e4f12bdf7d36ec8da6a22f1d9159ec1b2f80d084))
-* errCb argument fixable tests and functionality ([500e3f0](https://github.com/codsen/codsen/commit/500e3f0fad8e7ce243572fcd896f1f0172be1dad))
-* harden the eslint rules set, make all tests pass again and rebase a little ([36f832a](https://github.com/codsen/codsen/commit/36f832ad17073dcacb9059b066383313206dae60))
-* returned ranges is always array of arrays, not just a single range/array ([bdbf4e5](https://github.com/codsen/codsen/commit/bdbf4e5c18012ab8583aeaac95b2d8dc746ccc05))
-* trailing whitespace clause fix ([0847835](https://github.com/codsen/codsen/commit/0847835133aac937c5655032168edd68b81617d1))
-
-
 ### Features
 
-* init ([cee0517](https://github.com/codsen/codsen/commit/cee051708f4b3641a7a87067c2046e3f0bf2df84))
-* opts.innerWhitespaceAllowed ([d33e486](https://github.com/codsen/codsen/commit/d33e486d71a741b7cedc9e1cf203cf112f704724))
-* rewrite in TS, start using named exports ([a127aa9](https://github.com/codsen/codsen/commit/a127aa9ec5946b035a55c6e81b44f4840fbafc09))
-
+- rewrite in TS, start using named exports ([a127aa9](https://github.com/codsen/codsen/commit/a127aa9ec5946b035a55c6e81b44f4840fbafc09))
 
 ### BREAKING CHANGES
 
-* previously you'd consume like: "import processCommaSep from ..." - now "import {
-processCommaSep } from ..."
-
-
-
-
+- previously you'd consume like: `import processCommaSep from ...` - now `import { processCommaSep } from ...`
 
 ## 1.3.0 (2020-11-28)
 
