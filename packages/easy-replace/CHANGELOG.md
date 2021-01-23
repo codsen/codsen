@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 4.0.0 (2021-01-23)
+
+
+### Bug Fixes
+
+* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
+
+
+### Features
+
+* add examples and sort the coverage ([85bb554](https://github.com/codsen/codsen/commit/85bb554bb5e7718011c56e5ee67eb7f15bfc2f7a))
+* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
+* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
+* rewrite in TS, start using named exports ([a6516a3](https://github.com/codsen/codsen/commit/a6516a3f0cf4e20eefbdd68f3233b6c775d94738))
+
+
+### BREAKING CHANGES
+
+* previously: "import er from ..." - now: "import { er } from ..."
+
+
+
+
+
 ## 3.9.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

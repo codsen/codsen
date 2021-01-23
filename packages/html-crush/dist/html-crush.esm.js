@@ -1,7 +1,7 @@
 /**
  * html-crush
  * Minifies HTML/CSS: valid or broken, pure or mixed with other languages
- * Version: 3.0.3
+ * Version: 4.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/html-crush/
@@ -13,7 +13,7 @@ import { matchRightIncl, matchRight, matchLeft } from 'string-match-left-right';
 import { expander } from 'string-range-expander';
 import { right, left } from 'string-left-right';
 
-var version = "3.0.3";
+var version = "4.0.0";
 
 const version$1 = version;
 const finalIndexesToDelete = new Ranges({

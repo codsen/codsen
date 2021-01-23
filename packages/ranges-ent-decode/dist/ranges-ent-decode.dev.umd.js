@@ -1,7 +1,7 @@
 /**
  * ranges-ent-decode
  * Recursive HTML entity decoding for Ranges workflow
- * Version: 3.0.3
+ * Version: 4.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-ent-decode/
@@ -4560,7 +4560,7 @@ function isPlainObject(value) {
 
 var lodash_isplainobject = isPlainObject;
 
-var version = "3.0.3";
+var version = "4.0.0";
 
 var version$1 = version;
 

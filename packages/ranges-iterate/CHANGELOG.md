@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.0.0 (2021-01-23)
+
+
+### Features
+
+* Iterates given string considering given ranges ([d6454b3](https://github.com/codsen/codsen/commit/d6454b3c92e14f6c5c419994462ad5d3dc6d66c7))
+* Pushing ([fa86eb8](https://github.com/codsen/codsen/commit/fa86eb8861899023ec7dd0bdbf8c5ac8aa13eb30))
+* rewrite in TS and start using named exports ([2360b9d](https://github.com/codsen/codsen/commit/2360b9d281c77294441147b50f00f4554ff41340))
+
+
+### BREAKING CHANGES
+
+* previously: "import rIterate from ..." - now "import { rIterate } from ..."
+
+
+
+
+
 ## 1.2.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

@@ -1,6 +1,6 @@
 {
   "name": "string-find-heads-tails",
-  "version": "3.17.0",
+  "version": "4.0.0",
   "description": "Finds where are arbitrary templating marker heads and tails located",
   "keywords": [
     "array",
@@ -78,8 +78,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.5",
-    "arrayiffy-if-string": "^3.12.0",
-    "string-match-left-right": "^5.0.0"
+    "arrayiffy-if-string": "^3.13.0",
+    "string-match-left-right": "^6.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",
@@ -106,7 +106,7 @@
     "@typescript-eslint/eslint-plugin": "^4.14.0",
     "@typescript-eslint/parser": "^4.14.0",
     "eslint": "^7.18.0",
-    "lect": "^0.15.1",
+    "lect": "^0.16.0",
     "rollup": "^2.38.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

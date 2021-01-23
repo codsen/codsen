@@ -1,13 +1,13 @@
 /**
  * email-all-chars-within-ascii
  * Scans all characters within a string and checks are they within ASCII range
- * Version: 2.10.1
+ * Version: 3.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/email-all-chars-within-ascii/
  */
 
-var version = "2.10.1";
+var version = "3.0.0";
 
 const version$1 = version;
 const defaults = {

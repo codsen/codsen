@@ -1,6 +1,6 @@
 {
   "name": "string-collapse-white-space",
-  "version": "8.0.5",
+  "version": "9.0.0",
   "description": "Replace chunks of whitespace with a single spaces",
   "keywords": [
     "chunk",
@@ -78,9 +78,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.5",
-    "ranges-apply": "^4.0.2",
-    "ranges-push": "^4.0.2",
-    "string-left-right": "^3.0.1"
+    "ranges-apply": "^5.0.0",
+    "ranges-push": "^5.0.0",
+    "string-left-right": "^4.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",
@@ -107,7 +107,7 @@
     "@typescript-eslint/eslint-plugin": "^4.14.0",
     "@typescript-eslint/parser": "^4.14.0",
     "eslint": "^7.18.0",
-    "lect": "^0.15.1",
+    "lect": "^0.16.0",
     "rollup": "^2.38.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",
@@ -115,7 +115,7 @@
     "rollup-plugin-dts": "^2.0.1",
     "rollup-plugin-terser": "^7.0.2",
     "tap": "^14.11.0",
-    "test-mixer": "^1.0.1",
+    "test-mixer": "^2.0.0",
     "tsd": "^0.14.0",
     "tslib": "^2.1.0",
     "typescript": "^4.1.3"

@@ -1,7 +1,7 @@
 /**
  * ast-monkey-traverse-with-lookahead
  * Utility library to traverse AST, reports upcoming values
- * Version: 1.2.1
+ * Version: 2.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-traverse-with-lookahead/
@@ -21,7 +21,7 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
-var version = "1.2.1";
+var version = "2.0.0";
 
 var version$1 = version;
 

@@ -1,7 +1,7 @@
 /**
  * string-unfancy
  * Replace all n/m dashes, curly quotes with their simpler equivalents
- * Version: 3.10.1
+ * Version: 4.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-unfancy/
@@ -9,7 +9,7 @@
 
 import he from 'he';
 
-var version = "3.10.1";
+var version = "4.0.0";
 
 /* eslint quote-props:0 */
 const version$1 = version;

@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 9.0.0 (2021-01-23)
+
+
+### Bug Fixes
+
+* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
+* rebase the TS ([f6d4b5f](https://github.com/codsen/codsen/commit/f6d4b5f43a607d1991f4fd4958d37b9d1f878360))
+* string boundary won't throw now, sorry about that ([eefd3c3](https://github.com/codsen/codsen/commit/eefd3c37db198a4d8f0851e158eeb4b3225b5dba))
+
+
+### Features
+
+* `opts.enforceSpacesOnly` ([d430e23](https://github.com/codsen/codsen/commit/d430e23213bb7ffcc86b717d9b5162d082c07ef6))
+* `opts.rangesOffset` ([77e0dc9](https://github.com/codsen/codsen/commit/77e0dc92fbd841cb191fc4fa2542944290170f15))
+* add generated tests - 10000 random strings are checked to catch any false-positives ([efd8344](https://github.com/codsen/codsen/commit/efd83441ce96bde9a14e02dcd23509aa927e25df))
+* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
+* complete rewrite ([0040336](https://github.com/codsen/codsen/commit/00403365fb2d0e59bb23fc3ae6881d2ab3580d14))
+* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
+* Merge modes via opts.mergeType ([2394464](https://github.com/codsen/codsen/commit/2394464976ce1970bcd31b45d9fd9955f4bbcc09))
+* opts.limitConsecutiveEmptyLinesTo ([0414921](https://github.com/codsen/codsen/commit/04149210e71c8eb0d8b5118c4fbbd773e3232702))
+* opts.removeEmptyLines ([bca50a0](https://github.com/codsen/codsen/commit/bca50a0d94b70d7c92f9e60678f448814f8e8ede))
+* proper support for all possible kinds of line end symbols ([8360eb9](https://github.com/codsen/codsen/commit/8360eb915e1636aa6045fb8a6889d82c346e4e61))
+* returns a plain object with both string and ranges ([def6be3](https://github.com/codsen/codsen/commit/def6be333304f8ccfbbfe33447427317622ba2d1))
+* rewrite in TS, start using named exports ([70f7388](https://github.com/codsen/codsen/commit/70f7388781b040cc47b628f270e21eacbbe99aa6))
+* wIP - opts.limitConsecutiveEmptyLinesTo, 12 failing ([7b94a10](https://github.com/codsen/codsen/commit/7b94a10b7db2ba280cbcdfd7b3951e347e5f715e))
+
+
+### BREAKING CHANGES
+
+* previously you'd consume like: "import collapse from ..." - now: "import { collapse
+} from ..."
+* see changelog
+* returns a plain object with both string and ranges
+* Second input argument, progressFn, was moved into opts.progressFn and opts was
+placed into second input argument instead
+
+
+
+
+
 ## 8.0.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.0.0 (2021-01-23)
+
+
+### Bug Fixes
+
+* require that tag name would not be followed by equal sign ([68debb1](https://github.com/codsen/codsen/commit/68debb1243dd01b30a91c4761626c2852149df1a))
+
+
+### Features
+
+* add more tests and finally fix the dashes in front of tag names ([17caba6](https://github.com/codsen/codsen/commit/17caba60fb7b1b896a6b125652edde23735e732d))
+* add one more type of char arrangement - slash in front, confirmed tag name follows ([1a05137](https://github.com/codsen/codsen/commit/1a05137bdd084e4047fff9312c90d324b6a50b17))
+* add type checks and split tests into multiple files ([082f707](https://github.com/codsen/codsen/commit/082f707d86e58ab920cb3de7cac0aa4ea09de834))
+* improve the algorithm to include way more broken tag cases ([2e3e365](https://github.com/codsen/codsen/commit/2e3e365135f8c70946339b9e86575c944b4d2fa7))
+* improve the broken tag recognition, set up more exhaustive tests ([8b4b64e](https://github.com/codsen/codsen/commit/8b4b64e4265a536c99979f9d4043aac4e5797d19)), closes [#1](https://github.com/codsen/codsen/issues/1)
+* init ([bd8693f](https://github.com/codsen/codsen/commit/bd8693f97aaa88260bea6c3cb10860411f3a3bfa))
+* loosen the requirements for the character that follows recognised tag name sequence ([acbba3b](https://github.com/codsen/codsen/commit/acbba3b7494ef8e6ba7675ef25e796a9505cc56b))
+* make the requirements more strict for when opening bracket is missing ([b7f518c](https://github.com/codsen/codsen/commit/b7f518ca78b0fde2d74040418aa6f535c420812b))
+* opts.allowCustomTagNames ([86c0647](https://github.com/codsen/codsen/commit/86c0647effe975c6d958a1f0467a22f5692e1f2b))
+* opts.skipOpeningBracket ([71750a5](https://github.com/codsen/codsen/commit/71750a5a67e1a86ba70e08a6df30518b1fb731d5))
+* recognise any html tags which start with bracket followed by a known tag name ([b344e1c](https://github.com/codsen/codsen/commit/b344e1cd8e61739f97bf110004604c6b0a8f4571))
+* recognise tags that have attributes with no quotes ([9d08723](https://github.com/codsen/codsen/commit/9d0872314a57a8497dbacbd359d63f00959b34a9))
+* recognise unknown html attributes with dashes ([8471709](https://github.com/codsen/codsen/commit/84717095d879b666f450d92769e1abe85ca8baf4))
+* require that tag names matched if !opts.allowCustomTagNames ([5572e4c](https://github.com/codsen/codsen/commit/5572e4c52d85c5bcc57d632c2c11f83bde5b1b57))
+* require that tag names would not start with a dash (messes up broken comment tag logic) ([eab2823](https://github.com/codsen/codsen/commit/eab2823bf7f069bdd7285c075399c79dfd08fc13))
+* rewrite in TS, start using named exports ([7842225](https://github.com/codsen/codsen/commit/7842225bff3505a6c154a2f80089e2ae6a9aedc1))
+
+
+### Performance Improvements
+
+* improve from 1.91 opts/sec to 186.179 opts/sec in one branch ([b177fee](https://github.com/codsen/codsen/commit/b177fee855ba14e2a19f3aeca7dabe174ea5c396))
+
+
+### BREAKING CHANGES
+
+* previously: "import isOpening from ..." - now "import { isOpening } from ..."
+
+
+
+
+
 ## 1.10.1 (2020-12-15)
 
 ### Performance Improvements

@@ -1,7 +1,7 @@
 /**
  * array-includes-with-glob
  * Like _.includes but with wildcards
- * Version: 2.13.0
+ * Version: 3.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/array-includes-with-glob/
@@ -9,7 +9,7 @@
 
 import matcher from 'matcher';
 
-var version = "2.13.0";
+var version = "3.0.0";
 
 const version$1 = version;
 const defaults = {

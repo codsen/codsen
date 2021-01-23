@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 3.13.0 (2021-01-23)
+
+
+### Bug Fixes
+
+* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
+* Add perf measurement, recording and historical comparison ([3643f93](https://github.com/codsen/codsen/commit/3643f9376237db8ffd61730700eeceebe32c4540))
+* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
+* rewrite in TS ([41946c2](https://github.com/codsen/codsen/commit/41946c29a993366e0a4b1704f88d1ad1a0031dca))
+
+
+
+
+
 ## 3.12.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

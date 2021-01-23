@@ -3,6 +3,66 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 4.0.0 (2021-01-23)
+
+
+### Bug Fixes
+
+* adding one more breaking point for insurance, thanks Mark Robbins ([12235f9](https://github.com/codsen/codsen/commit/12235f93e58e710860ac21d21ce6c1dd9a5c3952))
+* Algorithm improvement not to break in front of </a to prevent accidentally adding new spaces ([d70d954](https://github.com/codsen/codsen/commit/d70d954a7d30f561b17d2adf8902e276e36f4708))
+* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
+* Fix the rare cases where state of being within style tag was not terminated properly ([29bf03a](https://github.com/codsen/codsen/commit/29bf03a4d8885f8baff3d4e9f9f1fa51c601376a)), closes [#11](https://github.com/codsen/codsen/issues/11)
+* fix typo in the output, in log.timeTakenInMilliseconds ([6b7db74](https://github.com/codsen/codsen/commit/6b7db745281135cacfea3f0229214d8654c511fd))
+* fixes the pre, code, CDATA and other code chunk skipping ([d177c86](https://github.com/codsen/codsen/commit/d177c868a68c84207980b0b7bcbb0190150bd8eb)), closes [#29](https://github.com/codsen/codsen/issues/29)
+* improve CRLF line ending recognition ([6fa0efc](https://github.com/codsen/codsen/commit/6fa0efcd3c3191ba028d4296a057e49b2799dc36))
+* previously inner tag whitespace removal was too lax, risking false positives ([8e30b2f](https://github.com/codsen/codsen/commit/8e30b2f97a4ceeeff60485eb95418fe7aab764d3))
+* stop breaking <!--<![endif]--> into two parts, in front of <![endif] ([0e85cc5](https://github.com/codsen/codsen/commit/0e85cc5dcdaa549f53a9ce99b03d7f8f466721a4))
+* update the program's name on throw error reports ([b825828](https://github.com/codsen/codsen/commit/b8258285edb7d435c715f1c0b79244ecb6fe79b2))
+
+
+### Features
+
+* `opts.removeHTMLComments` ([3f0b32a](https://github.com/codsen/codsen/commit/3f0b32a09bbb1f71834bac1ebc7538ad7e98f794))
+* add licence block at the top of built files in dist/ folder ([a255199](https://github.com/codsen/codsen/commit/a255199e3a8e9a1ef3f7076d3a96792680e78ca1))
+* add more logging for doNothing state ([8cfceaa](https://github.com/codsen/codsen/commit/8cfceaab36d42c90043ade196ca18ac7a33e1b0b))
+* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
+* add recognition for outlook conditionals ([7e66a03](https://github.com/codsen/codsen/commit/7e66a0359089271e3761469aafbadf1d05534da4))
+* Break to the right of opening style tag if breaking on the left is turned on ([677a35d](https://github.com/codsen/codsen/commit/677a35d1cafa7454eca2307f923199e154e9360e))
+* crop tighter around conditional comments ([50a585a](https://github.com/codsen/codsen/commit/50a585ab90eda129c3f6cf38759bd5e591b7c733))
+* Delete leading whitespace inside inline CSS ([9d97964](https://github.com/codsen/codsen/commit/9d979648cf21503ee0ea94088cd8c190b8ee496e))
+* do not touch CDATA blocks ([749333f](https://github.com/codsen/codsen/commit/749333f5bc0aba4a04208c3f8891d808eed3016a))
+* Don't delete whitespace between closing curly brace and opening curly brace ([48d9d72](https://github.com/codsen/codsen/commit/48d9d72333d03548b647414662682c60c0330dc8))
+* don't minify script tags contents ([391522e](https://github.com/codsen/codsen/commit/391522ec169005d5c42e3d7d8856fa77a2da97e2))
+* don't minify whitespace around brackets if there is a number on either side ([b396029](https://github.com/codsen/codsen/commit/b3960290dd5af72acfc9845a9fb0a5e738237335))
+* don't remove space in front of !important within HTML conditionals ([15affbd](https://github.com/codsen/codsen/commit/15affbd11484fb4e572b239362f801cb1ba6ee8e))
+* don't touch code within pre-code blocks ([606ad0f](https://github.com/codsen/codsen/commit/606ad0fb0196e102bef245972652643876fe8f49))
+* fetch handful of real websites and minify them for tests ([1fa88b6](https://github.com/codsen/codsen/commit/1fa88b69e1aca56cced18e8df6286f21861a2088))
+* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
+* Inline CSS minification ([1ddaadc](https://github.com/codsen/codsen/commit/1ddaadc50e112d84e9cc313b16468465bc48e2f5))
+* Inline tag recognition and proper spacing ([826ef62](https://github.com/codsen/codsen/commit/826ef626f4aedc81123834fe4ba6846f14d25465))
+* Merge modes via opts.mergeType ([2394464](https://github.com/codsen/codsen/commit/2394464976ce1970bcd31b45d9fd9955f4bbcc09))
+* Only replace linebreaks when result will be smaller in size, not the same ([439d093](https://github.com/codsen/codsen/commit/439d0932e97a68e73e58111f45e4b69ffe1f33db))
+* opts.reportProgressFuncFrom and opts.reportProgressFuncTo ([71a94c7](https://github.com/codsen/codsen/commit/71a94c7ebbdfbf853a5c56062ffc9609335caa15))
+* Re-distribute the ratio of progress reported during main and final tasks ([01d6e14](https://github.com/codsen/codsen/commit/01d6e14b52226f25e9e0263fd22791ec608b54ba))
+* remove whitespace within <script> blocks, in front of </script> ([79854a8](https://github.com/codsen/codsen/commit/79854a8db6c879859309c93552b006462b1a5ebe))
+* report `applicableOpts` in the output ([1b75ecc](https://github.com/codsen/codsen/commit/1b75ecc8b5ae097c439431d3976628d2583ab4c5))
+* rewrite in TS ([0ad6b4b](https://github.com/codsen/codsen/commit/0ad6b4bb7f3f883323b63dd26d4b196fa8cd50ed))
+* Set up perf checks ([f6b7ce9](https://github.com/codsen/codsen/commit/f6b7ce9ccb4d898c05923adef66be24d9de27610))
+* treat the whitespace in front of <script> ([bed5c1b](https://github.com/codsen/codsen/commit/bed5c1b789cd54315eae3d147190d45ea20710f6))
+* WIP - only 4 failing - minding the inline tags ([468db13](https://github.com/codsen/codsen/commit/468db13c7ba45bef41a622cf99634b736c0f715b))
+
+
+### BREAKING CHANGES
+
+* in output, log.timeTakenInMiliseconds is now called log.timeTakenInMilliseconds
+(two l's)
+* Second input argument, progressFn, was moved into opts.progressFn and opts was
+placed into second input argument instead
+
+
+
+
+
 ## 3.0.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

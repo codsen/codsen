@@ -1,7 +1,7 @@
 /**
  * string-collapse-white-space
  * Replace chunks of whitespace with a single spaces
- * Version: 8.0.5
+ * Version: 9.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-collapse-white-space/
@@ -11,7 +11,7 @@ import { rApply } from 'ranges-apply';
 import { Ranges } from 'ranges-push';
 import { right } from 'string-left-right';
 
-var version = "8.0.5";
+var version = "9.0.0";
 
 /* eslint @typescript-eslint/ban-ts-comment:1 */
 const version$1 = version; // default set of options

@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 7.0.0 (2021-01-23)
+
+
+### Bug Fixes
+
+* apostrophes algorithm improvements ([9818f6a](https://github.com/codsen/codsen/commit/9818f6a5644e7f37eeee06f7a7775fcb7dcf4ede))
+* characters are index zero were not included in the clause ([bd06aeb](https://github.com/codsen/codsen/commit/bd06aeb9a8a9df225ac3831429f70be04e4c985d))
+* fix last false alerts, tests were not updated properly ([38f20b2](https://github.com/codsen/codsen/commit/38f20b20efd2efe07014f8fd69194350ffdb3443))
+* fix long dashes between numbers ([320174c](https://github.com/codsen/codsen/commit/320174c9d9bebae98d2786b1d4a11a3aa5538bc2))
+* fix some edge cases of malformed self-closing br tags ([d270bb8](https://github.com/codsen/codsen/commit/d270bb8bcdec82cf11bb6ed2ec18b511f560ed2c))
+* fix the html tag skipping during widow removal ([9d12fab](https://github.com/codsen/codsen/commit/9d12fab26db56bcef06aa898afa304a4e4ce9622))
+* making all tests pass ([c373def](https://github.com/codsen/codsen/commit/c373def0ef7c70085384f3a561c1b92fabee14dd))
+* remove cb from reported applicable opts ([1adfaf8](https://github.com/codsen/codsen/commit/1adfaf88091f4b8472ba7e6d9d400fd5d8ee14ac))
+
+
+### Features
+
+* a complete rebase ([a124fd2](https://github.com/codsen/codsen/commit/a124fd20b7b4ec7eefede21dbe6ac46bf5b62914))
+* add few previously missing invisible space-like characters ([1f29ed2](https://github.com/codsen/codsen/commit/1f29ed24fbc594e42b1226aca372fc782c3666e1))
+* algorithm improvements around empty whitespace blocks ([57e608a](https://github.com/codsen/codsen/commit/57e608a1aed4370dab3b0b10dda8e4b3e4296cff))
+* applicableOpts - WIP - extended to all test files ([e6c98b9](https://github.com/codsen/codsen/commit/e6c98b922c09bc638559413a5dab2548f56dabf5))
+* applicableOpts - WIP - only 3 failing ([a3b3848](https://github.com/codsen/codsen/commit/a3b38484bf441c28051ecd63e4ba6aa27cd9bd1a))
+* harden the eslint rules set and rebase a little ([d79265e](https://github.com/codsen/codsen/commit/d79265ea8526cb80293964b1c268066975aa2edf))
+* make known html tag ranges to be ignored during the widow removal ([8319771](https://github.com/codsen/codsen/commit/83197715fe81c47a5872ee41b5411695f65730d8))
+* opts.cb ([f3c4499](https://github.com/codsen/codsen/commit/f3c44991693f911fc7aef02f46eacf7f4ce66fe9))
+* opts.eol ([05bcfd8](https://github.com/codsen/codsen/commit/05bcfd8f4e2f40be3e09fda27c308e0732b67f67))
+* remove few dependencies to reduce the build size, add more unit tests ([8a84d72](https://github.com/codsen/codsen/commit/8a84d7265f727ddc829fa8e115318a6976799835))
+* report applicableOpts ([e522c2d](https://github.com/codsen/codsen/commit/e522c2d500565e62bb593028789ed73fb8e0d405))
+* report applicableOpts in the output ([cd27ab5](https://github.com/codsen/codsen/commit/cd27ab576b6e47bfe1c9ee1c8dc450729075f397))
+* return applicableOpts ([387c3fb](https://github.com/codsen/codsen/commit/387c3fbdb51617444e758ee1f21c9208c4941f45))
+* rewrite in TS ([4a4e304](https://github.com/codsen/codsen/commit/4a4e30437a95480cb9a1d5ec2334f042803f66e7))
+* separate mixer test util into standalone lib and tap it, some more tweaks ([31d1b5f](https://github.com/codsen/codsen/commit/31d1b5f84b92ce3d4bc9e7375c74b0f7be6a5ec2))
+* some improvements around the dash recognition, reporting and surrounding ESP tags ([b05363f](https://github.com/codsen/codsen/commit/b05363f6d7cac560fe93f700011ea6bf860c2807))
+* treat `convertEntities:false` setting as an explicit instruction to decode all entities ([7a4058f](https://github.com/codsen/codsen/commit/7a4058f62c73ad65e0d0c25dcdb64c2b593df314))
+* update to the latest deps ([4146037](https://github.com/codsen/codsen/commit/4146037546d0f4dfb15d8c0dc5fcd73d07819a33))
+* update to the latest string-strip-html v.5 ([9077c0c](https://github.com/codsen/codsen/commit/9077c0cb5942acc0372a32fe5453c6332ef2f2d9))
+
+
+### BREAKING CHANGES
+
+* A complete rebase
+
+
+
+
+
 ## 6.1.0 (2020-12-06)
 
 ### Features

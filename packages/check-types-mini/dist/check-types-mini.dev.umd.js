@@ -1,7 +1,7 @@
 /**
  * check-types-mini
  * Validate options object
- * Version: 5.9.1
+ * Version: 6.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/check-types-mini/
@@ -2734,7 +2734,7 @@ var lodash_isplainobject = isPlainObject;
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.2.0
+ * Version: 1.3.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/
@@ -3983,7 +3983,7 @@ var lodash_intersection = intersection;
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.12.0
+ * Version: 3.13.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/

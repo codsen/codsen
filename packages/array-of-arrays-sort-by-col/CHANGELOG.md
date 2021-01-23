@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 3.0.0 (2021-01-23)
+
+
+### Bug Fixes
+
+* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
+* Add perf measurement, recording and historical comparison ([a291e75](https://github.com/codsen/codsen/commit/a291e75fc9f69ae74b1d42e7a4facd32ec83f366))
+* cater null values too ([38fa255](https://github.com/codsen/codsen/commit/38fa2557d669fef608ea9be7c0ece7d80ebf4fc7))
+* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
+* remove all dependencies ([f8766b9](https://github.com/codsen/codsen/commit/f8766b90788d5916c1446d2b43cb34d94c2ac1b8))
+* rewrite in TS, start using named exports ([cbaa3b3](https://github.com/codsen/codsen/commit/cbaa3b3ec3d86bdcabb785a4afd37bcc0aff2612))
+* rippling sort from arbitrary axis column ([38d850f](https://github.com/codsen/codsen/commit/38d850f3f74d71ad69993f4a076f6584354625da))
+
+
+### BREAKING CHANGES
+
+* previously: "import sortBySubarray from ..." - now "import { sortByCol } from ..."
+
+
+
+
+
 ## 2.13.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

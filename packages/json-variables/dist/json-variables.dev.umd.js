@@ -1,7 +1,7 @@
 /**
  * json-variables
  * Resolves custom-marked, cross-referenced paths in parsed JSON
- * Version: 9.0.3
+ * Version: 10.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/json-variables/
@@ -2104,7 +2104,7 @@ var lodash_isplainobject = isPlainObject;
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.2.0
+ * Version: 1.3.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/
@@ -2635,7 +2635,7 @@ var objectPath = createCommonjsModule(function (module) {
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.12.0
+ * Version: 3.13.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -3387,7 +3387,7 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
 /**
  * ast-get-values-by-key
  * Extract values and paths from AST by keys OR set them by keys
- * Version: 2.8.1
+ * Version: 3.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-get-values-by-key/
@@ -3428,7 +3428,7 @@ function getByKey(originalInput, whatToFind, originalReplacement) {
 /**
  * string-collapse-leading-whitespace
  * Collapse the leading and trailing whitespace of a string
- * Version: 4.0.0
+ * Version: 5.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
@@ -3964,7 +3964,7 @@ var Ranges = /*#__PURE__*/function () {
 /**
  * ranges-apply
  * Take an array of string index ranges, delete/replace the string according to them
- * Version: 4.0.2
+ * Version: 5.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/
@@ -4530,7 +4530,7 @@ function remDup(str, originalOpts) {
   return str.trim();
 }
 
-var version = "9.0.3";
+var version = "10.0.0";
 
 var version$1 = version;
 var has = Object.prototype.hasOwnProperty;

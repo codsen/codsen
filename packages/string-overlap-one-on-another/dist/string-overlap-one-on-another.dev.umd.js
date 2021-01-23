@@ -1,7 +1,7 @@
 /**
  * string-overlap-one-on-another
  * Lay one string on top of another, with an optional offset
- * Version: 1.6.0
+ * Version: 2.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-overlap-one-on-another/
@@ -62,7 +62,7 @@ function _objectSpread2(target) {
   return target;
 }
 
-var version = "1.6.0";
+var version = "2.0.0";
 
 var version$1 = version;
 var defaults = {

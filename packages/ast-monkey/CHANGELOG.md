@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 7.13.0 (2021-01-23)
+
+
+### Bug Fixes
+
+* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
+* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
+* remove two dependencies and "info" mode which never worked ([8e60a6e](https://github.com/codsen/codsen/commit/8e60a6e4b5557a95fe01b9c5973e53107763c2c4))
+* rewrite in TS ([136fc5f](https://github.com/codsen/codsen/commit/136fc5fadf6fc8ad0a969e33ea3db2a125adbb7e))
+
+
+
+
+
 ## 7.12.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

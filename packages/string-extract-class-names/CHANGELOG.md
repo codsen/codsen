@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 6.0.0 (2021-01-23)
+
+
+### Bug Fixes
+
+* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
+* complete rewrite, now allowing to request array of ranges as well. Removed all deps. ([31142a2](https://github.com/codsen/codsen/commit/31142a26e8a1c105e93ce41cb604bd2e59bb5774))
+* extract class and id names from bracket notation ([3f2c169](https://github.com/codsen/codsen/commit/3f2c1697f54df0788be07471ae36203345410c3e))
+* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
+* rewrite in TS, start using named exports, return plain object with all flavours ([911f497](https://github.com/codsen/codsen/commit/911f497ffac93ab490c9e7fbf7937823f0d1a65a))
+
+
+### BREAKING CHANGES
+
+* 1. No more default exports. Import like this: "import { extract } from ...". 2.
+Output is now a plain object. Array of strings is returned under key "res", and index ranges are
+under key "ranges". See examples.
+
+
+
+
+
 ## 6.0.0 (2020-12-31)
 
 Rewrote in TypeScript and simplified the API.

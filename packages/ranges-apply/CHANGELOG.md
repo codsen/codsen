@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 5.0.0 (2021-01-23)
+
+
+### Bug Fixes
+
+* actually rename files ([f831404](https://github.com/codsen/codsen/commit/f831404fdb15c521292a21ba9f76401635b1446d))
+* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
+* harden the eslint rules set and make all tests pass ([ee7d872](https://github.com/codsen/codsen/commit/ee7d87260665ddfb45d6d30fd2d5061d4ce42b6c))
+* make all tests pass ([d3dfcbf](https://github.com/codsen/codsen/commit/d3dfcbf9f9ccc89776f2e7011b27d32b6a3e495c))
+
+
+### Features
+
+* 3rd input arg - progressFn ([e2e33e4](https://github.com/codsen/codsen/commit/e2e33e497081272acf1a526e0866cc6345101c14))
+* accept null as second input argument, instead of ranges ([07eb055](https://github.com/codsen/codsen/commit/07eb05523bc8645ce9f3fd7aa8a57cd52277cc86))
+* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
+* discard any nulls among ranges ([8696454](https://github.com/codsen/codsen/commit/8696454714f4356b2341aef3307417aea964b63b))
+* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
+* Merge modes via opts.mergeType ([2394464](https://github.com/codsen/codsen/commit/2394464976ce1970bcd31b45d9fd9955f4bbcc09))
+* ranges-merge (sort + merge) is applied by default now to prevent errors on unsorted ranges ([85452ab](https://github.com/codsen/codsen/commit/85452abe49824e12c08ac74928b149c60a79e8e5))
+* remove a dependency, speed up the program by 130% ([860b203](https://github.com/codsen/codsen/commit/860b203689b86b3e09dc491317525f39511dce3d))
+* rewrite in TS and start using named exports ([202b763](https://github.com/codsen/codsen/commit/202b763cd2219d6beae0d346237b538789f4d67f))
+
+
+### BREAKING CHANGES
+
+* previously: "import rApply from ..." - now "import { rApply } from ..."
+* Second input argument, progressFn, was moved into opts.progressFn and opts was
+placed into second input argument instead
+
+
+
+
+
 ## 4.0.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

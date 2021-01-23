@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.12.0 (2021-01-23)
+
+
+### Bug Fixes
+
+* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
+* remove console.log's ([37357bb](https://github.com/codsen/codsen/commit/37357bb53f9542ffbe129d3bd2a7660044bd6619))
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
+* add unit tests, rebase some functions ([27d9e3f](https://github.com/codsen/codsen/commit/27d9e3f2f7f53e201135e94b5c53e686e38c17c3))
+* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
+* recode to report all non-ASCII characters as well as all excessive lines ([99cdebd](https://github.com/codsen/codsen/commit/99cdebd22d4364a15f0d99d1c83aa9cc07645b2f))
+
+
+
+
+
 ## 1.11.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

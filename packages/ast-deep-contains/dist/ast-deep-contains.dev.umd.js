@@ -1,7 +1,7 @@
 /**
  * ast-deep-contains
  * Like t.same assert on array of objects, where element order doesn't matter.
- * Version: 2.0.1
+ * Version: 3.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-deep-contains/
@@ -2392,7 +2392,7 @@ var lodash_isplainobject = isPlainObject;
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.2.0
+ * Version: 1.3.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/
@@ -3330,7 +3330,7 @@ var dist = createCommonjsModule(function (module, exports) {
 });
 var is = /*@__PURE__*/getDefaultExportFromCjs(dist);
 
-var version = "2.0.1";
+var version = "3.0.0";
 
 var version$1 = version;
 

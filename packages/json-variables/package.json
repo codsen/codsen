@@ -1,6 +1,6 @@
 {
   "name": "json-variables",
-  "version": "9.0.3",
+  "version": "10.0.0",
   "description": "Resolves custom-marked, cross-referenced paths in parsed JSON",
   "keywords": [
     "comb",
@@ -84,16 +84,16 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.5",
-    "arrayiffy-if-string": "^3.12.0",
-    "ast-get-values-by-key": "^2.8.1",
-    "ast-monkey-traverse": "^1.13.1",
+    "arrayiffy-if-string": "^3.13.0",
+    "ast-get-values-by-key": "^3.0.0",
+    "ast-monkey-traverse": "^2.0.0",
     "matcher": "^3.0.0",
     "object-path": "^0.11.5",
-    "ranges-apply": "^4.0.2",
-    "ranges-push": "^4.0.2",
-    "string-find-heads-tails": "^3.17.0",
-    "string-match-left-right": "^5.0.0",
-    "string-remove-duplicate-heads-tails": "^4.0.2"
+    "ranges-apply": "^5.0.0",
+    "ranges-push": "^5.0.0",
+    "string-find-heads-tails": "^4.0.0",
+    "string-match-left-right": "^6.0.0",
+    "string-remove-duplicate-heads-tails": "^5.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",
@@ -120,7 +120,7 @@
     "@typescript-eslint/eslint-plugin": "^4.14.0",
     "@typescript-eslint/parser": "^4.14.0",
     "eslint": "^7.18.0",
-    "lect": "^0.15.1",
+    "lect": "^0.16.0",
     "rollup": "^2.38.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

@@ -1,7 +1,7 @@
 /**
  * ast-contains-only-empty-space
  * Does AST contain only empty space?
- * Version: 1.10.1
+ * Version: 2.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-contains-only-empty-space/

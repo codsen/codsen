@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.0.0 (2021-01-23)
+
+
+### Bug Fixes
+
+* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
+* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
+* make program run faster by removing options validation ([e284ef1](https://github.com/codsen/codsen/commit/e284ef1e5265b82931c6a9e100faed416ca7161d))
+* rewrite in TS, start using named exports ([d72dde6](https://github.com/codsen/codsen/commit/d72dde6ef10e7bf10a7c050df39be2e4f8187796))
+
+
+### BREAKING CHANGES
+
+* previously you'd consume like: "import deleteKey from ..." - now: "import {
+deleteKey } from ..."
+
+
+
+
+
 ## 1.10.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

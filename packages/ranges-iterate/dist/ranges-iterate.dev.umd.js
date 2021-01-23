@@ -1,7 +1,7 @@
 /**
  * ranges-iterate
  * Iterate a string and any changes within given string index ranges
- * Version: 1.2.2
+ * Version: 2.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-iterate/
@@ -13,7 +13,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.rangesIterate = {}));
 }(this, (function (exports) { 'use strict';
 
-var version = "1.2.2";
+var version = "2.0.0";
 
 var version$1 = version;
 

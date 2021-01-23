@@ -1,6 +1,6 @@
 {
   "name": "ast-loose-compare",
-  "version": "1.9.1",
+  "version": "2.0.0",
   "description": "Compare anything: AST, objects, arrays and strings",
   "keywords": [
     "array",
@@ -88,7 +88,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.5",
-    "ast-contains-only-empty-space": "^1.10.1",
+    "ast-contains-only-empty-space": "^2.0.0",
     "lodash.isplainobject": "^4.0.6"
   },
   "devDependencies": {
@@ -117,7 +117,7 @@
     "@typescript-eslint/eslint-plugin": "^4.14.0",
     "@typescript-eslint/parser": "^4.14.0",
     "eslint": "^7.18.0",
-    "lect": "^0.15.1",
+    "lect": "^0.16.0",
     "rollup": "^2.38.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

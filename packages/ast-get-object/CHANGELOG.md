@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.0.0 (2021-01-23)
+
+
+### Bug Fixes
+
+* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
+* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
+* rewrite in TS, use named exports ([fc57374](https://github.com/codsen/codsen/commit/fc573740a82efa9d193b1382e34d4e6e49b06ab7))
+* shield the 4th input arg from outer access ([a0761db](https://github.com/codsen/codsen/commit/a0761dbbec40a19115b519314e8beefdf148fbca))
+
+
+### BREAKING CHANGES
+
+* previously: "import getObj from ..." - now "import { getObj } from ..."
+
+
+
+
+
 ## 1.10.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

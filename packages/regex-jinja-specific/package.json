@@ -1,6 +1,6 @@
 {
   "name": "regex-jinja-specific",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Regular expression for detecting Python-specific Jinja code",
   "keywords": [
     "code",
@@ -105,7 +105,7 @@
     "@typescript-eslint/eslint-plugin": "^4.14.0",
     "@typescript-eslint/parser": "^4.14.0",
     "eslint": "^7.18.0",
-    "lect": "^0.15.1",
+    "lect": "^0.16.0",
     "rollup": "^2.38.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

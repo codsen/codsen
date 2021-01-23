@@ -1,7 +1,7 @@
 /**
  * object-delete-key
  * Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.
- * Version: 1.10.1
+ * Version: 2.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-delete-key/
@@ -12,7 +12,7 @@ import { isEmpty } from 'ast-is-empty';
 import clone from 'lodash.clonedeep';
 import { arrObjOrBoth } from 'util-array-object-or-both';
 
-var version = "1.10.1";
+var version = "2.0.0";
 
 const version$1 = version;
 

@@ -1,7 +1,7 @@
 /**
  * object-flatten-all-arrays
  * Merge and flatten any arrays found in all values within plain objects
- * Version: 4.9.1
+ * Version: 5.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-flatten-all-arrays/
@@ -4112,7 +4112,7 @@ function isPlainObject(value) {
 
 var lodash_isplainobject = isPlainObject;
 
-var version = "4.9.1";
+var version = "5.0.0";
 
 var version$1 = version;
 

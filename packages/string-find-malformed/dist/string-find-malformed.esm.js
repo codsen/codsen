@@ -1,7 +1,7 @@
 /**
  * string-find-malformed
  * Search for a malformed string. Think of Levenshtein distance but in search.
- * Version: 1.2.1
+ * Version: 2.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-find-malformed/
@@ -9,7 +9,7 @@
 
 import { right } from 'string-left-right';
 
-var version = "1.2.1";
+var version = "2.0.0";
 
 const version$1 = version;
 

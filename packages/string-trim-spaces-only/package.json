@@ -1,6 +1,6 @@
 {
   "name": "string-trim-spaces-only",
-  "version": "2.9.0",
+  "version": "3.0.0",
   "description": "Like String.trim() but you can choose granularly what to trim",
   "keywords": [
     "characters",
@@ -103,7 +103,7 @@
     "@typescript-eslint/eslint-plugin": "^4.14.0",
     "@typescript-eslint/parser": "^4.14.0",
     "eslint": "^7.18.0",
-    "lect": "^0.15.1",
+    "lect": "^0.16.0",
     "rollup": "^2.38.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

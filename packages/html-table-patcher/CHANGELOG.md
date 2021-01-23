@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 4.0.0 (2021-01-23)
+
+
+### Bug Fixes
+
+* Add missing node globals, necessary for UMD build ([1063b23](https://github.com/codsen/codsen/commit/1063b237f048f57feb70ee1e5be82e891ab7b803))
+* fix breaking unit test, colspan number should be string not number ([e168d10](https://github.com/codsen/codsen/commit/e168d10cef6c17359eafcee234aac0a266e360d3))
+* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
+* Rollup globals plugin was missing in builds which errorred out the UMD builds ([8e73d45](https://github.com/codsen/codsen/commit/8e73d45ad9f8114921cf7cd4eb3508aca27f2d0b))
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
+* Adds basic level of colspans ([8724428](https://github.com/codsen/codsen/commit/87244280aa1c39d6f028b51a98c7e95a1929fb4f))
+* comments skip ([e549682](https://github.com/codsen/codsen/commit/e549682813080f01fe4b1b2fc10c6bd9e240a3ee))
+* Complete recode using parsing ([e8c5aa1](https://github.com/codsen/codsen/commit/e8c5aa16773b549b57bef9d602130dd1ca043b6a))
+* GUI with wired up UMD tap ([d3b16fe](https://github.com/codsen/codsen/commit/d3b16fe93de82bf0d31c900c437860dd45ea05ac))
+* Harden the API and tap the html-dom-parser as parser instead because former broke Rollup UMD b ([d0ea374](https://github.com/codsen/codsen/commit/d0ea3745be499bf18485c2a402a3d852adea88eb))
+* Implement localstorage so that all textboxes are not wiped after a refresh ([02bb185](https://github.com/codsen/codsen/commit/02bb18570e3d8b1362d25c4ca1d0e98ae7351eca))
+* improvements to tag recognition algorithm ([07e041f](https://github.com/codsen/codsen/commit/07e041fb5a4d787a6586e259e1dbdf178fedf43b))
+* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
+* Merge modes via opts.mergeType ([2394464](https://github.com/codsen/codsen/commit/2394464976ce1970bcd31b45d9fd9955f4bbcc09))
+* opts.cssStylesContent ([bc09546](https://github.com/codsen/codsen/commit/bc0954673d2cc623cc4b0352d73c7d33bdb999ba))
+* Precautions against children tables nested at deeper levels ([6991e77](https://github.com/codsen/codsen/commit/6991e77fc01c6fe2f13424b930ec022279aa70a1))
+* rewrite ([6deb969](https://github.com/codsen/codsen/commit/6deb96987ef4c6e5a2799886730a0e62c26c9e28))
+* rewrite in TS ([1b15101](https://github.com/codsen/codsen/commit/1b15101124ee8ac7935fae96381c2903436bf6eb))
+* Tap's styling ([da04603](https://github.com/codsen/codsen/commit/da04603a52954636d7820cb12e571e974104ed21))
+* Tighten the quotes detection clauses ([5cf10a5](https://github.com/codsen/codsen/commit/5cf10a5dd3bd89e21aaf64624434b59a1e98ccac))
+
+
+### BREAKING CHANGES
+
+* rewrite
+* Second input argument, progressFn, was moved into opts.progressFn and opts was
+placed into second input argument instead
+
+
+
+
+
 ## 3.0.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

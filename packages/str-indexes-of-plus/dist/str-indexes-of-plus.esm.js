@@ -1,13 +1,13 @@
 /**
  * str-indexes-of-plus
  * Like indexOf but returns array and counts per-grapheme
- * Version: 2.11.0
+ * Version: 3.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/str-indexes-of-plus/
  */
 
-var version = "2.11.0";
+var version = "3.0.0";
 
 const version$1 = version;
 

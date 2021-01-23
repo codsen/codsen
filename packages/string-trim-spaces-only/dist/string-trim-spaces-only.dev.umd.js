@@ -1,7 +1,7 @@
 /**
  * string-trim-spaces-only
  * Like String.trim() but you can choose granularly what to trim
- * Version: 2.9.0
+ * Version: 3.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-trim-spaces-only/
@@ -62,7 +62,7 @@ function _objectSpread2(target) {
   return target;
 }
 
-var version = "2.9.0";
+var version = "3.0.0";
 
 var version$1 = version;
 var defaults = {

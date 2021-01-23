@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 5.0.0 (2021-01-23)
+
+
+### Bug Fixes
+
+* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
+* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
+* keep raw non-breaking spaces, gather line breaks and non-breaking spaces ([1fb7cf9](https://github.com/codsen/codsen/commit/1fb7cf92169a1765558f4ecaa717bdf59450d9da))
+* properly treat all kinds of line endings ([075e228](https://github.com/codsen/codsen/commit/075e22856b17cda0143f842a6768a1688cbcd9b1))
+* rewrite in TS, start using named exports ([a92b9e8](https://github.com/codsen/codsen/commit/a92b9e8f55554eb440e8adac31c34dbdb904d747))
+* second argument - originalLimitLinebreaksCount - max ceiling count of consecutive line breaks ([45e0af6](https://github.com/codsen/codsen/commit/45e0af613ad9e9fd0e8462f60c2271e42e5e2ccc))
+
+
+### BREAKING CHANGES
+
+* previously you'd consume like: "import collWhitespace from ..." - now consume like
+"import { collWhitespace } from ..."
+* it's a fix to support Windows line endings, CRLF, but no changes API-wise
+* Nonbreaking spaces are not removed any more
+
+
+
+
+
 ## 4.0.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

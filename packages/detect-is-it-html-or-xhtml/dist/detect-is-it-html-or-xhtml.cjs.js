@@ -1,7 +1,7 @@
 /**
  * detect-is-it-html-or-xhtml
  * Answers, is the string input string more an HTML or XHTML (or neither)
- * Version: 3.11.0
+ * Version: 4.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/detect-is-it-html-or-xhtml/
@@ -11,7 +11,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var version = "3.11.0";
+var version = "4.0.0";
 
 var version$1 = version;
 

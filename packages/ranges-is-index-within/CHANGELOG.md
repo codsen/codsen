@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.0.0 (2021-01-23)
+
+
+### Bug Fixes
+
+* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
+
+
+### Features
+
+* Add benchmark ([165c52b](https://github.com/codsen/codsen/commit/165c52b6e1561c9534dfff812e1dbd5feb48379e))
+* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
+* add safeguards against wrong input types ([4ec29f9](https://github.com/codsen/codsen/commit/4ec29f9238087069bfccd0731b560a033b0c3533))
+* allow null as ranges array value (2nd arg.) ([662ead2](https://github.com/codsen/codsen/commit/662ead2b1e3609f44e2a90d2db768743dd8e4661))
+* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
+* Rebase removing all dependencies, simplifying algorithm and making it around 85x faster ([ddbb221](https://github.com/codsen/codsen/commit/ddbb2211ba523fa44424e94304b223ca6115bc5e))
+* rewrite in TS and start using named exports ([a716ebe](https://github.com/codsen/codsen/commit/a716ebe4d095bf9cb2c92965144dbd25206556b6))
+* setup refresh and tiny rebasing ([1009703](https://github.com/codsen/codsen/commit/10097037c8e737243ff60b782df0ac85550f0a74))
+
+
+### BREAKING CHANGES
+
+* before: "import isIndexWithin from ..." - now "import { isIndexWithin } from ..."
+
+
+
+
+
 ## 1.16.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

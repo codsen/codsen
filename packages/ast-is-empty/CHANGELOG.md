@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 2.0.0 (2021-01-23)
+
+
+### Bug Fixes
+
+* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
+* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
+* remove the last and only dependency ([2f03e28](https://github.com/codsen/codsen/commit/2f03e2860a72ccca2b8322ce573c3de4498577b3))
+* rewrite in TS, use named exports ([5773b6a](https://github.com/codsen/codsen/commit/5773b6a537430de2cb1fd1308bf97e57a359ccc5))
+
+
+### BREAKING CHANGES
+
+* previously: "import isEmpty from ..." - now "import { isEmpty } from ..."
+
+
+
+
+
 ## 1.11.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

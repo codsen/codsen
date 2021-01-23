@@ -3,6 +3,64 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 8.0.0 (2021-01-23)
+
+
+### Bug Fixes
+
+* correct filteredTagLocations for pair tags which are stripped with content ([f58f48f](https://github.com/codsen/codsen/commit/f58f48f51d2c0bff0e2c7fd784689bbb97a198a1))
+* fix filteredTagLocations closing location on paired tags ([1f289ff](https://github.com/codsen/codsen/commit/1f289ffbbc508a54719e45b7b623fa39a3e8e2fe))
+* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
+* make all opts optional, also callback object keys optional ([627ab36](https://github.com/codsen/codsen/commit/627ab36d35f3771cc3c3540735b666a315fb4315))
+* throwing case when tag is the last in string and has closing bracket missing ([d62715c](https://github.com/codsen/codsen/commit/d62715cad274ca2fec066189c71a2e61b10f8e8a))
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
+* add previously missing tag.lastClosingBracketAt on ignored tags ([a06ffa6](https://github.com/codsen/codsen/commit/a06ffa6f56d82bf2be16ef5d391be87619ba84a5))
+* algorithm improvements ([20d92e3](https://github.com/codsen/codsen/commit/20d92e31724a4aa6a3e2f7f58aad1d90ea4bfd3d))
+* algorithm improvements ([765dbb1](https://github.com/codsen/codsen/commit/765dbb1a106fb85489aed3c901c1bdc6901a21fb))
+* align applied opts.returnRangesOnly output to default returned string ([e7e5e04](https://github.com/codsen/codsen/commit/e7e5e04d24179c323aad5e738b9bced12a04c890))
+* better recognise some JSON patterns ([dfe04c1](https://github.com/codsen/codsen/commit/dfe04c1aba2394c8b6636f8b81b45bc2f823414a))
+* delete trailing whitespace after dirty code chunk: tag + missing opening bracket tag ([1aab657](https://github.com/codsen/codsen/commit/1aab6572d42081acdb4ee41b88eb329b328930cd))
+* harden the linting rules and make them all pass ([0e0e02d](https://github.com/codsen/codsen/commit/0e0e02d2f00375a9e590cceabcf4d5b7407f683f))
+* implement callback interface, opts.cb() ([3cc7c97](https://github.com/codsen/codsen/commit/3cc7c977a48d5d159aa183411c8b78b7de73af3a))
+* improve the algorithm, if tag's name starts with a digit that's not a tag ([4206b80](https://github.com/codsen/codsen/commit/4206b807c2a83fed7e5876397803bc3184237850))
+* improvements for JSP recognition ([ff23bde](https://github.com/codsen/codsen/commit/ff23bde77ba1a40dfc1259e3aa1715fd5ffa2380))
+* improvements to exclamation mark punctuation ([07b64a3](https://github.com/codsen/codsen/commit/07b64a32c9f8015e0c3c5486c546ccf2be364321))
+* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
+* make the callback (opts.cb) ping the ignored tags too ([8bfc69e](https://github.com/codsen/codsen/commit/8bfc69e2b5162a1495e3429ab9288a30a34382bd))
+* Merge modes via opts.mergeType ([2394464](https://github.com/codsen/codsen/commit/2394464976ce1970bcd31b45d9fd9955f4bbcc09))
+* now returns keys: result, ranges, allTagLocations, filteredTagLocations ([5321503](https://github.com/codsen/codsen/commit/53215038478c9cc4a1bc68dcd2700a1375c56a43))
+* opts.dumpLinkHrefsNearby and algorithm improvements ([920af1b](https://github.com/codsen/codsen/commit/920af1b7f0f54522578c54009c0990d63e15f8f2))
+* opts.onlyStripTags ([18a9cf6](https://github.com/codsen/codsen/commit/18a9cf600354da01f2f49aa78c77de91c57939ec))
+* opts.trimOnlySpaces ([279b2e7](https://github.com/codsen/codsen/commit/279b2e76b494f9e7ebed0fe2ef71ccbd0e5bc4ce))
+* punctuation doesn't terminate the tag ([2e04f60](https://github.com/codsen/codsen/commit/2e04f60a263a5839c47ec7f4aa81099dd5876776))
+* recognise greater than signs followed by numbers only ([ee9f6b6](https://github.com/codsen/codsen/commit/ee9f6b63dd0a6496d5745a19692215e7174126a8)), closes [#32](https://github.com/codsen/codsen/issues/32)
+* report tag.slashPresent as index of the slash, not as a boolean ([2249abc](https://github.com/codsen/codsen/commit/2249abc2f740c647250e5150e58ae338ac13b73c))
+* respect double line breaks ([78001ab](https://github.com/codsen/codsen/commit/78001abfd7e0d478a8a0f2f193908ca4b49ab580)), closes [#15](https://github.com/codsen/codsen/issues/15)
+* rewrite in TS, start using named exports ([e6fe544](https://github.com/codsen/codsen/commit/e6fe544cb94727b18793d0e13303ee3b407cde1b))
+* skip JSP tags ([4da34b6](https://github.com/codsen/codsen/commit/4da34b6a5d1a0998baaacb024f179de6ef7fef78))
+* wildcard ALL option for opts.stripTogetherWithTheirContents ([8da6bc7](https://github.com/codsen/codsen/commit/8da6bc7a4a44db7f6efafaa065a92c527c43a343))
+
+
+### BREAKING CHANGES
+
+* previously you'd consume like: "import stripHtml from ..." - now: "import {
+stripHtml } from ..."
+* now filteredTagLocations shows only one range for pair tags which are to be
+stripped with their contents
+* now returns keys: result, ranges, allTagLocations, filteredTagLocations - no more
+opts.returnRangesOnly
+* align applied opts.returnRangesOnly output to default returned string
+* Second input argument, progressFn, was moved into opts.progressFn and opts was
+placed into second input argument instead
+
+
+
+
+
 ## 7.0.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

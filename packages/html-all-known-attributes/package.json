@@ -1,6 +1,6 @@
 {
   "name": "html-all-known-attributes",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "All HTML attributes known to the Humanity",
   "keywords": [
     "email",
@@ -101,7 +101,7 @@
     "@typescript-eslint/eslint-plugin": "^4.14.0",
     "@typescript-eslint/parser": "^4.14.0",
     "eslint": "^7.18.0",
-    "lect": "^0.15.1",
+    "lect": "^0.16.0",
     "rollup": "^2.38.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

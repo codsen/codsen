@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 7.0.0 (2021-01-23)
+
+
+### Bug Fixes
+
+* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
+* discard any null ranges when merging ([3448894](https://github.com/codsen/codsen/commit/3448894ce0042c9551d10806163a4f4fc173fbf0))
+* improvements against input argument mutation ([e9b7d7d](https://github.com/codsen/codsen/commit/e9b7d7d3270b4409f3f92237f4b7cd7eefb1dc91))
+* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
+* Merge modes via opts.mergeType ([2394464](https://github.com/codsen/codsen/commit/2394464976ce1970bcd31b45d9fd9955f4bbcc09))
+* Move progressFn, second argument into to opts object ([dd56251](https://github.com/codsen/codsen/commit/dd562511fc81635a7e83f6fef0386118152f7a55))
+* opts.joinRangesThatTouchEdges ([df79c09](https://github.com/codsen/codsen/commit/df79c09dac98821c70982e6bcbfef3ae9d3bfb80))
+* remove a dependency, rebase a little ([6f71602](https://github.com/codsen/codsen/commit/6f7160237416327213b7020a8ea81a18f452abc3))
+* removes ranges with no third arg with identical start and end points ([4632b0e](https://github.com/codsen/codsen/commit/4632b0e892b4e7f6ddc52f87592b6ec572c22ec7))
+* return null instead of empty array ([4cd0ac2](https://github.com/codsen/codsen/commit/4cd0ac20cfcb67b2e2889af47021502baef08876))
+* rewrite in TS and start using named exports ([3fdf215](https://github.com/codsen/codsen/commit/3fdf2155ff9c0a20661f81b4d679956cd49c989d))
+* simplify with unary plus operator ([61fb747](https://github.com/codsen/codsen/commit/61fb747ed53522a514fc1ff3c59c2c13ce39e348))
+* Tweak API to correctly interpret opts.processFn given as an empty plain object ([16574df](https://github.com/codsen/codsen/commit/16574df4d7054edab5eccef6e166e47e604135a5))
+
+
+### BREAKING CHANGES
+
+* previously: "import rMerge from ..." - now "import { rMerge } from ..."
+* return null instead of empty array
+* Second input argument, progressFn, was moved into opts.progressFn and opts was
+placed into second input argument instead
+
+
+
+
+
 ## 6.2.0 (2020-11-29)
 
 ### Features

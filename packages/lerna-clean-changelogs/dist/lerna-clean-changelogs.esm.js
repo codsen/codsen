@@ -1,13 +1,13 @@
 /**
  * lerna-clean-changelogs
  * Removes frivolous entries from commitizen generated changelogs
- * Version: 1.5.0
+ * Version: 2.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/lerna-clean-changelogs/
  */
 
-var version = "1.5.0";
+var version = "2.0.0";
 
 const version$1 = version;
 

@@ -1,7 +1,7 @@
 /**
  * email-comb
  * Remove unused CSS from email templates
- * Version: 4.1.0
+ * Version: 5.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/email-comb/
@@ -107,7 +107,7 @@ function _createForOfIteratorHelperLoose(o, allowArrayLike) {
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.12.0
+ * Version: 3.13.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -552,7 +552,7 @@ function matchRight(str, position, whatToMatch, opts) {
 /**
  * regex-empty-conditional-comments
  * Regular expression for matching HTML empty conditional comments
- * Version: 1.9.1
+ * Version: 1.10.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/regex-empty-conditional-comments/
@@ -2607,7 +2607,7 @@ function left(str, idx) {
 /**
  * string-extract-class-names
  * Extracts CSS class/id names from a string
- * Version: 5.10.1
+ * Version: 6.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-extract-class-names/
@@ -2829,7 +2829,7 @@ function pull(originalInput, originalToBeRemoved, originalOpts) {
   return res;
 }
 
-var version = "4.1.0";
+var version = "5.0.0";
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -4124,7 +4124,7 @@ function expander(originalOpts) {
 /**
  * string-uglify
  * Shorten sets of strings deterministically, to be git-friendly
- * Version: 1.3.4
+ * Version: 1.4.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-uglify/
@@ -4573,7 +4573,7 @@ function rMerge(arrOfRanges, originalOpts) {
 /**
  * ranges-apply
  * Take an array of string index ranges, delete/replace the string according to them
- * Version: 4.0.2
+ * Version: 5.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/
@@ -4935,7 +4935,7 @@ var lodash_pullall = pullAll;
 /**
  * string-collapse-leading-whitespace
  * Collapse the leading and trailing whitespace of a string
- * Version: 4.0.0
+ * Version: 5.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/

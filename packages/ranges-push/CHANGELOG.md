@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 5.0.0 (2021-01-23)
+
+
+### Bug Fixes
+
+* Fix the Create New Issue URLs ([f5a41bf](https://github.com/codsen/codsen/commit/f5a41bf16fd8f43de7f8e7de68da562821ddb960))
+
+
+### Features
+
+* accept nulls among pushed values, do not throw, just do nothing ([8c49019](https://github.com/codsen/codsen/commit/8c490199bf6221db3287ea8aca127bd6ca0c4337))
+* Add one more tag before which there will be a line break ([d178203](https://github.com/codsen/codsen/commit/d1782036b134102fd552d38d2d4f39c93195620b))
+* hardening the type checks just in case ([dfab56a](https://github.com/codsen/codsen/commit/dfab56a67c3a49d37893597b934ab8a71c1df398))
+* implement throw pinning in unit tests ([1a02084](https://github.com/codsen/codsen/commit/1a02084e1a0dfc4b602d9232506d8c3a6e7faa15))
+* improved whitespace insertion algorithm ([4a3f0b3](https://github.com/codsen/codsen/commit/4a3f0b333907a913004f379244b52c770b190256))
+* Initial release ([8db2df9](https://github.com/codsen/codsen/commit/8db2df9fb08d66cf6c7a75a57cdcd15a5ec12c1c))
+* Merge modes via opts.mergeType ([2394464](https://github.com/codsen/codsen/commit/2394464976ce1970bcd31b45d9fd9955f4bbcc09))
+* non-breaking spaces are now retained when pushing with whitespace limiter option on ([d44190a](https://github.com/codsen/codsen/commit/d44190ad22ada2f4c39b07d80262f71fd847d793))
+* omit the 3rd argument when it's equal to an empty string ([ffe917d](https://github.com/codsen/codsen/commit/ffe917d298acf0789eb5762ceca59f0ddb726986))
+* opts.limitLinebreaksCount ([c9ca23d](https://github.com/codsen/codsen/commit/c9ca23d45bb45499f1c2eed53e6a0380cb42961b))
+* opts.mergeType ([758d4db](https://github.com/codsen/codsen/commit/758d4db949c18368b1d23e001ce5eb593423b0ff))
+* ranges.replace() ([fc05132](https://github.com/codsen/codsen/commit/fc05132b6d00325d835b01240710824c67f47804))
+* Remove check-types-mini for perf reasons and also to reduce Lerna ECYCLE warnings ([7e3eebb](https://github.com/codsen/codsen/commit/7e3eebbcf8a888e3cb6e221a28e58d072181432c))
+* remove couple dependencies and rebase a little bit ([d27d0b8](https://github.com/codsen/codsen/commit/d27d0b8a48e7363effc5eb377ccb3b919f2129bd))
+* rewrite in TS, start using named exports ([8e75edf](https://github.com/codsen/codsen/commit/8e75edfac935f4f27604bb0b9731bd0ea4f2e7ec))
+
+
+### Reverts
+
+* restores back as it was before, no changes to opts.limitToBeAddedWhitespace ([a725c73](https://github.com/codsen/codsen/commit/a725c73117d8a7b82cad5da6d009e618fd686b06))
+
+
+### BREAKING CHANGES
+
+* previously you'd consume like: "import Ranges from ..." - now "import { Ranges }
+from ..."
+* Second input argument, progressFn, was moved into opts.progressFn and opts was
+placed into second input argument instead
+
+
+
+
+
 ## 4.0.0 (2020-11-28)
 
 Accidental version bump during migration to sourcehut. Sorry about that.

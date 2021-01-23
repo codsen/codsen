@@ -1,6 +1,6 @@
 {
   "name": "util-nonempty",
-  "version": "2.10.0",
+  "version": "3.0.0",
   "description": "Is the input (plain object, array, string or whatever) not empty?",
   "keywords": [
     "array",
@@ -104,7 +104,7 @@
     "@typescript-eslint/eslint-plugin": "^4.14.0",
     "@typescript-eslint/parser": "^4.14.0",
     "eslint": "^7.18.0",
-    "lect": "^0.15.1",
+    "lect": "^0.16.0",
     "rollup": "^2.38.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",
