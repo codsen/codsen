@@ -7,6 +7,10 @@ agent:
 blocks:
   - name: Publish the packages
     task:
+      secrets:
+        - name: GIT setup
+        - name: NPM setup
+        - name: SSH_PRIVATE_KEY
       prologue:
         commands:
           - checkout
