@@ -13,7 +13,6 @@ blocks:
         - name: SSH_PRIVATE_KEY
       prologue:
         commands:
-          - checkout
           - nvm install node
           - node --version
           - npm --version
@@ -21,6 +20,7 @@ blocks:
           - chmod 0600 ~/.ssh/id_rsa
           # Add the key to the ssh agent:
           - ssh-add ~/.ssh/id_rsa
+          - checkout
       jobs:
         - name: Publish
           commands:
