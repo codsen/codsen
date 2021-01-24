@@ -17,3 +17,7 @@ blocks:
           commands:
             - pwd
             - ls
+        - name: Part 2
+          commands:
+            - pwd
+            - ls
