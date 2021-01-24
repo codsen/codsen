@@ -22,13 +22,13 @@ blocks:
             # Install ssh-agent
             - "which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )"
             # Write the private key
-            - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+            - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > .ssh/id_rsa
             # Set its permissions
-            - chmod 700 ~/.ssh/id_rsa
+            - chmod 700 .ssh/id_rsa
             # Run ssh-agent inside the build environment
             - eval "$(ssh-agent -s)"
             # Add the SSH key
-            - ssh-add ../../.ssh/id_rsa
+            - ssh-add .ssh/id_rsa
             # Scan the keys of github.com
             - ssh-keyscan -H 'github.com' >> ~/.ssh/known_hosts
             - chmod 644 ~/.ssh/known_hosts
