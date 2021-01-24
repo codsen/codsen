@@ -28,7 +28,7 @@ blocks:
             # Run ssh-agent inside the build environment
             - eval "$(ssh-agent -s)"
             # Add the SSH key
-            - ssh-add ~/.ssh/id_rsa
+            - ssh-add ../../.ssh/id_rsa
             # Scan the keys of github.com
             - ssh-keyscan -H 'github.com' >> ~/.ssh/known_hosts
             - chmod 644 ~/.ssh/known_hosts
