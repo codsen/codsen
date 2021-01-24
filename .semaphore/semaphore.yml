@@ -6,12 +6,12 @@ agent:
     os_image: ubuntu1804
 blocks:
   - name: Permissions
-    prologue:
-      commands:
-        - checkout
-        - node --version
-        - npm --version
     task:
+      prologue:
+        commands:
+          - checkout
+          - node --version
+          - npm --version
       jobs:
         - name: Bootstrap everything
           commands:
