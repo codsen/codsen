@@ -24,10 +24,21 @@ blocks:
       jobs:
         - name: Publish
           commands:
+            # set up git
             - git config --global user.email "${USER_EMAIL}"
             - git config --global user.name "${YOUR_NAME_SURNAME}"
-            - echo "git user:"
             - git config user.name
+            - git remote -v
+            # sey up npm
+            - npm set unsafe-perm true -g
+            - npm set //registry.npmjs.org/:_authToken $NPM_TOKEN -g
+            - npm set username $NPM_USERNAME -g
+            - npm set email $NPM_EMAIL -g
+            - npm whoami
+            # set up...
             - pwd
             - ls
-            - git remote -v
+            - npm run fresh
+            - npm run info
+            - npm run readme:generate
+            - git status
