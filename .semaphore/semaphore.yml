@@ -16,3 +16,4 @@ blocks:
         - name: Bootstrap everything
           commands:
             - pwd
+            - ls
