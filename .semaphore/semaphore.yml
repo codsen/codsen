@@ -1,0 +1,13 @@
+version: v1.0
+name: JavaScript example
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: Hello world
+    task:
+      jobs:
+        - name: Run some code
+          commands:
+            - node -p '"evol".split("").reverse().join("")'
