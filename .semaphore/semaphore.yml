@@ -40,7 +40,8 @@ blocks:
             # set up...
             - pwd
             - ls
-            - npm run fresh
-            - npm run info
-            - npm run readme:generate
-            - git status
+            - cargo install wrangler
+            # - npm run fresh
+            # - npm run info
+            # - npm run readme:generate
+            # - git status
