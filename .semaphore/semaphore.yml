@@ -16,8 +16,8 @@ blocks:
       jobs:
         - name: git setup
           commands:
-            - git config --global user.email "$USER_EMAIL"
-            - git config --global user.name "$YOUR_NAME_SURNAME"
+            - git config --global user.email "${USER_EMAIL}"
+            - git config --global user.name "${YOUR_NAME_SURNAME}"
             - echo "git user:"
             - git config user.name
         - name: Bootstrap
