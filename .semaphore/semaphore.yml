@@ -5,19 +5,35 @@ agent:
     type: e1-standard-2
     os_image: ubuntu1804
 blocks:
-  - name: Permissions
+  - name: Publish the packages
     task:
       prologue:
         commands:
           - checkout
+          - nvm use --lts
           - node --version
           - npm --version
       jobs:
-        - name: Bootstrap everything
+        - name: Setup the SSH
+          commands:
+            # Create the SSH directory and give it the right permissions
+            - mkdir -p ~/.ssh
+            - chmod 700 ~/.ssh
+            # Install ssh-agent
+            - "which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )"
+            # Write the private key
+            - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+            # Set its permissions
+            - chmod 700 ~/.ssh/id_rsa
+            # Run ssh-agent inside the build environment
+            - eval "$(ssh-agent -s)"
+            # Add the SSH key
+            - ssh-add ~/.ssh/id_rsa
+            # Scan the keys of github.com
+            - ssh-keyscan -H 'github.com' >> ~/.ssh/known_hosts
+            - chmod 644 ~/.ssh/known_hosts
+        - name: Bootstrap
           commands:
             - pwd
             - ls
-        - name: Part 2
-          commands:
-            - pwd
-            - ls
+            - git remote -v
