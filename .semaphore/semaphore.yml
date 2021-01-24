@@ -8,6 +8,6 @@ blocks:
   - name: Hello world
     task:
       jobs:
-        - name: Run some code
+        - name: Run something
           commands:
             - node -p '"evol".split("").reverse().join("")'
