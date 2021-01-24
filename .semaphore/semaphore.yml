@@ -7,10 +7,6 @@ agent:
 blocks:
   - name: Publish the packages
     task:
-      secrets:
-        - name: USER_EMAIL
-        - name: YOUR_NAME_SURNAME
-        - name: NPM_TOKEN
       prologue:
         commands:
           - checkout
@@ -24,6 +20,7 @@ blocks:
       jobs:
         - name: git setup
           commands:
+            - echo $USER_EMAIL
             - git config --global user.email "$USER_EMAIL"
             - git config --global user.name "$YOUR_NAME_SURNAME"
             - echo "git user:"
