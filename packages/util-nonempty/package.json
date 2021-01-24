@@ -29,7 +29,7 @@
   "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c",
-    "ci_test": "npm run build && npm run lint && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov && npm run format",
+    "ci_test": "npm run build && npm run format && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov",
     "clean_cov": "../../scripts/leaveCoverageTotalOnly.js",
     "clean_types": "../../scripts/cleanTypes.js",
     "dev": "rollup -c --dev",

@@ -17,7 +17,7 @@
   },
   "scripts": {
     "bootstrap": "FORCE_COLOR=1 npx lerna bootstrap --hoist --ignore-scripts",
-    "build": "lerna run ci_test --bail --stream --concurrency 1 && npm run readme:generate",
+    "build": "lerna run ci_test --bail && npm run readme:generate",
     "build:just": "lerna run build --bail",
     "cm": "git-cz -n",
     "changed": "lerna changed",
