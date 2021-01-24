@@ -10,7 +10,7 @@ blocks:
       prologue:
         commands:
           - checkout
-          - nvm use --lts
+          - nvm install node
           - node --version
           - npm --version
       jobs:
