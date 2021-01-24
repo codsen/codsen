@@ -17,8 +17,8 @@ blocks:
         - name: Setup the SSH
           commands:
             # Create the SSH directory and give it the right permissions
-            - mkdir -p ~/.ssh
-            - chmod 700 ~/.ssh
+            - mkdir -p .ssh
+            - chmod 700 .ssh
             # Install ssh-agent
             - "which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )"
             # Write the private key
