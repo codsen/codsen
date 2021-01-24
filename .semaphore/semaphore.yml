@@ -22,15 +22,13 @@ blocks:
           # Add the key to the ssh agent:
           - ssh-add ~/.ssh/id_rsa
       jobs:
-        - name: git setup
+        - name: Publish
           commands:
             - echo "${USER_EMAIL}"
             - git config --global user.email "$USER_EMAIL"
             - git config --global user.name "$YOUR_NAME_SURNAME"
             - echo "git user:"
             - git config user.name
-        - name: Bootstrap
-          commands:
             - pwd
             - ls
             - git remote -v
