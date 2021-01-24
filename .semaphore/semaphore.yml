@@ -14,9 +14,9 @@ blocks:
           - node --version
           - npm --version
           # Correct premissions since they are too open by default:
-          - chmod 0600 ~/.ssh/id_rsa_semaphoreci
+          - chmod 0600 ~/.ssh/id_rsa
           # Add the key to the ssh agent:
-          - ssh-add ~/.ssh/id_rsa_semaphoreci
+          - ssh-add ~/.ssh/id_rsa
       jobs:
         - name: git setup
           commands:
