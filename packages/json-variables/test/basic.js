@@ -250,7 +250,7 @@ tap.test("10 - opts.noSingleMarkers - off", (t) => {
 });
 
 tap.test("11 - opts.noSingleMarkers - on", (t) => {
-  const err1 = t.throws(() => {
+  t.throws(() => {
     jVar(
       {
         a: "some text %%_var1_%% more text %%_var2_%%",
@@ -265,13 +265,12 @@ tap.test("11 - opts.noSingleMarkers - on", (t) => {
         noSingleMarkers: true,
       }
     );
-  });
-  t.match(err1.message, /THROW_ID_16/, "11");
+  }, /THROW_ID_16/);
   t.end();
 });
 
 tap.test("12 - opts.noSingleMarkers - off - more throw tests", (t) => {
-  const err1 = t.throws(() => {
+  t.throws(() => {
     jVar(
       {
         a: "some text %%_var1_%% more text %%_var2_%%",
@@ -284,8 +283,7 @@ tap.test("12 - opts.noSingleMarkers - off - more throw tests", (t) => {
         noSingleMarkers: true,
       }
     );
-  });
-  t.match(err1.message, /THROW_ID_16/, "12");
+  }, /THROW_ID_16/);
   t.end();
 });
 

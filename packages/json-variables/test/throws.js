@@ -121,17 +121,16 @@ tap.test("05 - throws when input is not a plain object", (t) => {
 });
 
 tap.test("06 - throws when keys contain variables", (t) => {
-  const err1 = t.throws(() => {
+  t.throws(() => {
     jVar({
       a: "some text %%_var1_%% more text",
       "%%_var2_%%": "something",
       var1: "value1",
       var2: "value2",
     });
-  });
-  t.match(err1.message, /THROW_ID_15/, "06.01");
+  }, /THROW_ID_15/);
 
-  const err2 = t.throws(() => {
+  t.throws(() => {
     jVar(
       {
         a: "some text zzvar1yy more text",
@@ -141,8 +140,7 @@ tap.test("06 - throws when keys contain variables", (t) => {
       },
       { heads: "zz", tails: "yy" }
     ); // custom heads and tails
-  });
-  t.match(err2.message, /THROW_ID_15/, "06.02");
+  }, /THROW_ID_15/);
   t.end();
 });
 
@@ -186,21 +184,19 @@ tap.test(
 );
 
 tap.test("08 - throws when data is missing", (t) => {
-  const err1 = t.throws(() => {
+  t.throws(() => {
     jVar({
       a: "some text %%_var1_%% more text",
       b: "something",
     });
-  });
-  t.match(err1.message, /THROW_ID_18/, "08.01");
-  const err2 = t.throws(() => {
+  }, /THROW_ID_18/);
+  t.throws(() => {
     jVar({
       a: "some text %%_var1_%% more text",
       b: "something",
       a_data: "zzz",
     });
-  });
-  t.match(err2.message, /THROW_ID_18/, "08.02");
+  }, /THROW_ID_18/);
 
   // however, it does not throw when opts.allowUnresolved is on
   t.strictSame(
@@ -292,7 +288,7 @@ tap.test("08 - throws when data is missing", (t) => {
 tap.test(
   "09 - throws when data container lookup is turned off and var is missing",
   (t) => {
-    const err1 = t.throws(() => {
+    t.throws(() => {
       jVar(
         {
           a: "some text %%_var1_%% more text",
@@ -300,8 +296,7 @@ tap.test(
         },
         { lookForDataContainers: false }
       );
-    });
-    t.match(err1.message, /THROW_ID_18/, "09.01");
+    }, /THROW_ID_18/);
 
     // since v.7 the value will be found if such key exists anywhere
     const input1 = {
@@ -454,7 +449,7 @@ tap.test(
 );
 
 tap.test("11 - throws when data container name append is given empty", (t) => {
-  const err1 = t.throws(() => {
+  t.throws(() => {
     jVar(
       {
         a: "some text %%_var1_%% more text",
@@ -462,9 +457,8 @@ tap.test("11 - throws when data container name append is given empty", (t) => {
       },
       { lookForDataContainers: true, dataContainerIdentifierTails: "" }
     );
-  });
-  t.match(err1.message, /THROW_ID_08/, "11.01");
-  const err2 = t.throws(() => {
+  }, /THROW_ID_08/);
+  t.throws(() => {
     jVar(
       {
         a: "some text, more text",
@@ -472,15 +466,14 @@ tap.test("11 - throws when data container name append is given empty", (t) => {
       },
       { lookForDataContainers: true, dataContainerIdentifierTails: "" }
     );
-  });
-  t.match(err2.message, /THROW_ID_08/, "11.02");
+  }, /THROW_ID_08/);
   t.end();
 });
 
 tap.test(
   "12 - throws when opts.wrapHeadsWith is customised to anything other than string",
   (t) => {
-    const err1 = t.throws(() => {
+    t.throws(() => {
       jVar(
         {
           a: "some text %%_var1_%% more text",
@@ -488,14 +481,13 @@ tap.test(
         },
         { wrapHeadsWith: false }
       );
-    });
-    t.match(err1.message, /THROW_ID_18/, "12"); // thx to check-types-mini
+    }, /THROW_ID_18/);
     t.end();
   }
 );
 
 tap.test("13 - opts.wrapHeadsWith does not affect failing resolving", (t) => {
-  const err1 = t.throws(() => {
+  t.throws(() => {
     jVar(
       {
         a: "some text %%_var1_%% more text",
@@ -503,15 +495,14 @@ tap.test("13 - opts.wrapHeadsWith does not affect failing resolving", (t) => {
       },
       { wrapHeadsWith: "" }
     );
-  });
-  t.match(err1.message, /THROW_ID_18/, "13");
+  }, /THROW_ID_18/);
   t.end();
 });
 
 tap.test(
   "14 - throws when opts.wrapTailsWith is customised to anything other than string",
   (t) => {
-    const err1 = t.throws(() => {
+    t.throws(() => {
       jVar(
         {
           a: "some text %%_var1_%% more text",
@@ -519,8 +510,7 @@ tap.test(
         },
         { wrapTailsWith: false }
       );
-    });
-    t.match(err1.message, /THROW_ID_18/, "14");
+    }, /THROW_ID_18/);
     t.end();
   }
 );
@@ -542,7 +532,7 @@ tap.test(
 );
 
 tap.test("16 - throws when opts.heads is not string", (t) => {
-  const err1 = t.throws(() => {
+  t.throws(() => {
     jVar(
       {
         a: "some text %%_var1_%% more text",
@@ -550,13 +540,12 @@ tap.test("16 - throws when opts.heads is not string", (t) => {
       },
       { heads: 1 }
     );
-  });
-  t.match(err1.message, /THROW_ID_04*/, "16");
+  }, /THROW_ID_17/);
   t.end();
 });
 
 tap.test("17 - throws when opts.tails is not string", (t) => {
-  const err1 = t.throws(() => {
+  t.throws(() => {
     jVar(
       {
         a: "some text %%_var1_%% more text",
@@ -564,77 +553,69 @@ tap.test("17 - throws when opts.tails is not string", (t) => {
       },
       { tails: 1 }
     );
-  });
-  t.match(err1.message, /THROW_ID_04*/, "17");
+  }, /THROW_ID_17/);
   t.end();
 });
 
 tap.test("18 - throws when all args are missing", (t) => {
-  const err1 = t.throws(() => {
+  t.throws(() => {
     jVar();
-  });
-  t.match(err1.message, /THROW_ID_01/, "18");
+  }, /THROW_ID_01/);
   t.end();
 });
 
 tap.test("19 - throws when key references itself", (t) => {
-  const err1 = t.throws(() => {
+  t.throws(() => {
     jVar({
       a: "%%_a_%%",
     });
-  });
-  t.match(err1.message, /THROW_ID_19/, "19.01");
+  }, /THROW_ID_19/);
 
-  const err2 = t.throws(() => {
+  t.throws(() => {
     jVar({
       a: "something %%_a_%% aaaa %%_a_%%",
     });
-  });
-  t.match(err2.message, /THROW_ID_19/, "19.02");
+  }, /THROW_ID_19/);
   t.end();
 });
 
 tap.test("20 - throws when key references itself", (t) => {
-  const err1 = t.throws(() => {
+  t.throws(() => {
     jVar({
       a: "a",
       b: "%%_a_%%",
       c: "%%_c_%%",
     });
-  });
-  t.match(err1.message, /THROW_ID_19/, "20");
+  }, /THROW_ID_19/);
   t.end();
 });
 
 tap.test("21 - throws when key references key which references itself", (t) => {
-  const err1 = t.throws(() => {
+  t.throws(() => {
     jVar({
       b: "%%_a_%%",
       a: "%%_a_%%",
     });
-  });
-  t.match(err1.message, /THROW_ID_19/, "21");
+  }, /THROW_ID_19/);
   t.end();
 });
 
 tap.test("22 - throws when there's recursion (with distraction)", (t) => {
-  const err1 = t.throws(() => {
+  t.throws(() => {
     jVar({
       b: "%%_a_%%",
       a: "%%_b_%%",
     });
-  });
-  t.match(err1.message, /THROW_ID_19/, "22.01");
+  }, /THROW_ID_19/);
 
-  const err2 = t.throws(() => {
+  t.throws(() => {
     jVar({
       longerKeyName: "%%_shorterKeyN_%%",
       shorterKeyN: "%%_longerKeyName_%%",
     });
-  });
-  t.match(err2.message, /THROW_ID_19/, "22.02");
+  }, /THROW_ID_19/);
 
-  const err3 = t.throws(() => {
+  t.throws(() => {
     jVar({
       k: {
         l: {
@@ -648,10 +629,9 @@ tap.test("22 - throws when there's recursion (with distraction)", (t) => {
         },
       },
     });
-  });
-  t.match(err3.message, /THROW_ID_19/, "22.03");
+  }, /THROW_ID_19/);
 
-  const err4 = t.throws(() => {
+  t.throws(() => {
     jVar({
       k: {
         l: {
@@ -668,13 +648,12 @@ tap.test("22 - throws when there's recursion (with distraction)", (t) => {
         },
       },
     });
-  });
-  t.match(err4.message, /THROW_ID_19/, "22.04");
+  }, /THROW_ID_19/);
   t.end();
 });
 
 tap.test("23 - throws when there's a longer recursion", (t) => {
-  const err1 = t.throws(() => {
+  t.throws(() => {
     jVar({
       a: "%%_b_%%",
       b: "%%_c_%%",
@@ -682,15 +661,14 @@ tap.test("23 - throws when there's a longer recursion", (t) => {
       d: "%%_e_%%",
       e: "%%_b_%%",
     });
-  });
-  t.match(err1.message, /THROW_ID_19/, "23");
+  }, /THROW_ID_19/);
   t.end();
 });
 
 tap.test(
   "24 - throws when opts.heads and opts.headsNoWrap are customised to be equal",
   (t) => {
-    const err1 = t.throws(() => {
+    t.throws(() => {
       jVar(
         {
           a: "some text %%_var1_%% more text",
@@ -701,10 +679,9 @@ tap.test(
           headsNoWrap: "%%_",
         }
       );
-    });
-    t.match(err1.message, /THROW_ID_10/, "24.01");
+    }, /THROW_ID_10/);
 
-    const err2 = t.throws(() => {
+    t.throws(() => {
       jVar(
         {
           a: "some text %%_var1_%% more text",
@@ -715,10 +692,9 @@ tap.test(
           headsNoWrap: "zzzz",
         }
       );
-    });
-    t.match(err2.message, /THROW_ID_10/, "24.02");
+    }, /THROW_ID_10/);
 
-    const err3 = t.throws(() => {
+    t.throws(() => {
       jVar(
         {
           a: "some text %%_var1_%% more text",
@@ -728,8 +704,7 @@ tap.test(
           headsNoWrap: "%%_", // aiming at the default heads, "%%_"
         }
       );
-    });
-    t.match(err3.message, /THROW_ID_10/, "24.03");
+    }, /THROW_ID_10/);
 
     t.end();
   }
@@ -738,7 +713,7 @@ tap.test(
 tap.test(
   "25 - throws when opts.tails and opts.tailsNoWrap are customised to be equal",
   (t) => {
-    const err1 = t.throws(() => {
+    t.throws(() => {
       jVar(
         {
           a: "some text %%_var1_%% more text",
@@ -749,10 +724,9 @@ tap.test(
           tailsNoWrap: "_%%",
         }
       );
-    });
-    t.match(err1.message, /THROW_ID_11/, "25.01");
+    }, /THROW_ID_11/);
 
-    const err2 = t.throws(() => {
+    t.throws(() => {
       jVar(
         {
           a: "some text %%_var1_%% more text",
@@ -763,10 +737,9 @@ tap.test(
           tailsNoWrap: "zzzz",
         }
       );
-    });
-    t.match(err2.message, /THROW_ID_11/, "25.02");
+    }, /THROW_ID_11/);
 
-    const err3 = t.throws(() => {
+    t.throws(() => {
       jVar(
         {
           a: "some text %%_var1_%% more text",
@@ -776,15 +749,14 @@ tap.test(
           tailsNoWrap: "_%%", // default tails is the same "_%%"
         }
       );
-    });
-    t.match(err3.message, /THROW_ID_11/, "25.03");
+    }, /THROW_ID_11/);
 
     t.end();
   }
 );
 
 tap.test("26 - empty nowraps", (t) => {
-  const err1 = t.throws(() => {
+  t.throws(() => {
     jVar(
       {
         a: "some text %%_var1_%% more text",
@@ -795,10 +767,9 @@ tap.test("26 - empty nowraps", (t) => {
         headsNoWrap: "",
       }
     );
-  });
-  t.match(err1.message, /THROW_ID_12/, "26.01");
+  }, /THROW_ID_12/);
 
-  const err2 = t.throws(() => {
+  t.throws(() => {
     jVar(
       {
         a: "some text %%_var1_%% more text",
@@ -809,10 +780,9 @@ tap.test("26 - empty nowraps", (t) => {
         tailsNoWrap: "",
       }
     );
-  });
-  t.match(err2.message, /THROW_ID_13/, "26.02");
+  }, /THROW_ID_13/);
 
-  const err3 = t.throws(() => {
+  t.throws(() => {
     jVar(
       {
         a: "some text %%_var1_%% more text",
@@ -822,10 +792,9 @@ tap.test("26 - empty nowraps", (t) => {
         headsNoWrap: "",
       }
     );
-  });
-  t.match(err3.message, /THROW_ID_12/, "26.03");
+  }, /THROW_ID_12/);
 
-  const err4 = t.throws(() => {
+  t.throws(() => {
     jVar(
       {
         a: "some text %%_var1_%% more text",
@@ -835,13 +804,12 @@ tap.test("26 - empty nowraps", (t) => {
         tailsNoWrap: "",
       }
     );
-  });
-  t.match(err4.message, /THROW_ID_13/, "26.04");
+  }, /THROW_ID_13/);
   t.end();
 });
 
 tap.test("27 - equal nowraps", (t) => {
-  const err1 = t.throws(() => {
+  t.throws(() => {
     jVar(
       {
         a: "some text %%_var1_%% more text",
@@ -852,10 +820,9 @@ tap.test("27 - equal nowraps", (t) => {
         headsNoWrap: "aaa",
       }
     );
-  });
-  t.match(err1.message, /THROW_ID_14/, "27.01");
+  }, /THROW_ID_14/);
 
-  const err2 = t.throws(() => {
+  t.throws(() => {
     jVar(
       {
         a: "some text %%_var1_%% more text",
@@ -866,10 +833,9 @@ tap.test("27 - equal nowraps", (t) => {
         headsNoWrap: "%%-",
       }
     );
-  });
-  t.match(err2.message, /THROW_ID_14/, "27.02");
+  }, /THROW_ID_14/);
 
-  const err3 = t.throws(() => {
+  t.throws(() => {
     jVar(
       {
         a: "some text %%_var1_%% more text",
@@ -879,95 +845,84 @@ tap.test("27 - equal nowraps", (t) => {
         headsNoWrap: "-%%", // same as default tailsNoWrap
       }
     );
-  });
-  t.match(err3.message, /THROW_ID_14/, "27.03");
+  }, /THROW_ID_14/);
   t.end();
 });
 
 tap.test("28 - throws there's simple recursion loop in array", (t) => {
-  const err1 = t.throws(() => {
+  t.throws(() => {
     jVar({
       a: "%%_a_%%",
     });
-  });
-  t.match(err1.message, /THROW_ID_19/, "28.01");
+  }, /THROW_ID_19/);
 
-  const err2 = t.throws(() => {
+  t.throws(() => {
     jVar({
       a: { b: "%%_a_%%" },
     });
-  });
-  t.match(err2.message, /THROW_ID_20/, "28.02");
+  }, /THROW_ID_20/);
 
-  const err3 = t.throws(() => {
+  t.throws(() => {
     jVar({
       a: ["%%_a_%%"],
     });
-  });
-  t.match(err3.message, /THROW_ID_20/, "28.03");
+  }, /THROW_ID_20/);
 
-  const err4 = t.throws(() => {
+  t.throws(() => {
     jVar({
       a: ["%%_b_%%"],
       b: ["%%_a_%%"],
     });
-  });
-  t.match(err4.message, /THROW_ID_20/, "28.04");
+  }, /THROW_ID_20/);
 
-  const err5 = t.throws(() => {
+  t.throws(() => {
     jVar({
       a: ["%%_b_%%", "%%_b_%%"],
     });
-  });
-  t.match(err5.message, /THROW_ID_18/, "28.05");
+  }, /THROW_ID_18/);
 
-  const err6 = t.throws(() => {
+  t.throws(() => {
     jVar({ z: ["%%_a_%%"] });
-  });
-  t.match(err6.message, /THROW_ID_18/, "28.06");
+  }, /THROW_ID_18/);
   t.end();
 });
 
 tap.test("29 - throws referencing what does not exist", (t) => {
-  const err1 = t.throws(() => {
+  t.throws(() => {
     jVar({
       a: "%%_b_%%",
     });
-  });
-  t.match(err1.message, /THROW_ID_18/, "29.01");
-  const err2 = t.throws(() => {
+  }, /THROW_ID_18/);
+  t.throws(() => {
     jVar({
       a: ["%%_b_%%"],
     });
-  });
-  t.match(err2.message, /THROW_ID_18/, "29.02");
+  }, /THROW_ID_18/);
   t.end();
 });
 
 tap.test(
   "30 - throws when referencing the multi-level object keys that don't exist",
   (t) => {
-    const err1 = t.throws(() => {
+    t.throws(() => {
       jVar({
         a: "some text %%_var1.key99_%% more text %%_var2.key99_%%",
         b: "something",
         var1: { key1: "value1" },
         var2: { key2: "value2" },
       });
-    });
-    t.match(err1.message, /THROW_ID_18/, "30.01");
+    }, /THROW_ID_18/);
 
-    const err2 = t.throws(() => {
+    t.throws(() => {
       jVar({
         a: "some text %%_var1.key99_%% more text %%_var2.key99_%%",
         b: "something",
         var1: { key1: "value1", key2: "value2", key3: "value3" },
         var2: { key4: "value4", key5: "value5", key6: "value6" },
       });
-    });
-    t.match(err2.message, /THROW_ID_18/, "30.02");
+    }, /THROW_ID_18/);
 
-    const err3 = t.throws(() => {
+    t.throws(() => {
       jVar(
         {
           a: "some text %%_var1.key99_%% more text %%_var2.key99_%%",
@@ -980,8 +935,7 @@ tap.test(
           wrapTailsWith: "}",
         }
       );
-    });
-    t.match(err3.message, /THROW_ID_18/, "30.03");
+    }, /THROW_ID_18/);
     t.end();
   }
 );
@@ -989,7 +943,7 @@ tap.test(
 tap.test(
   "31 - throws when opts are given truthy but not a plain object",
   (t) => {
-    const err1 = t.throws(() => {
+    t.throws(() => {
       jVar(
         {
           a: "aaa",
@@ -997,8 +951,7 @@ tap.test(
         },
         "zzz"
       );
-    });
-    t.match(err1.message, /THROW_ID_03/, "31");
+    }, /THROW_ID_03/);
     t.end();
   }
 );

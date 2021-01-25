@@ -22,7 +22,7 @@ tap.test("01 - UTIL > single markers in the values", (t) => {
     );
   }, "01.02");
 
-  const err1 = t.throws(() => {
+  t.throws(() => {
     jVar(
       {
         a: "z",
@@ -32,8 +32,7 @@ tap.test("01 - UTIL > single markers in the values", (t) => {
         noSingleMarkers: true,
       }
     );
-  });
-  t.match(err1.message, /THROW_ID_16/, "01.03");
+  }, /THROW_ID_16/);
 
   t.doesNotThrow(() => {
     jVar({
@@ -53,7 +52,7 @@ tap.test("01 - UTIL > single markers in the values", (t) => {
     );
   }, "01.05");
 
-  const err2 = t.throws(() => {
+  t.throws(() => {
     jVar(
       {
         a: "z",
@@ -63,7 +62,6 @@ tap.test("01 - UTIL > single markers in the values", (t) => {
         noSingleMarkers: true,
       }
     );
-  });
-  t.match(err2.message, /THROW_ID_16/, "01.06");
+  }, /THROW_ID_16/);
   t.end();
 });

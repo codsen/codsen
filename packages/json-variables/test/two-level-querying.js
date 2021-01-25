@@ -282,7 +282,7 @@ tap.test(
 );
 
 tap.test("03 - opts.throwWhenNonStringInsertedInString", (t) => {
-  const err1 = t.throws(() => {
+  t.throws(() => {
     jVar(
       {
         a: "some text %%_var1_%% more text %%_var2_%%",
@@ -294,8 +294,7 @@ tap.test("03 - opts.throwWhenNonStringInsertedInString", (t) => {
         throwWhenNonStringInsertedInString: true,
       }
     );
-  });
-  t.match(err1.message, /THROW_ID_23/, "03.01");
+  }, /THROW_ID_23/);
 
   t.doesNotThrow(() => {
     jVar({

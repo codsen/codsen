@@ -170,7 +170,7 @@ tap.test("06 - multiple variables resolved", (t) => {
     },
     "06.01"
   );
-  const err1 = t.throws(() => {
+  t.throws(() => {
     jVar({
       a: "%%_e_%% %%_d_%%",
       b: "%%_a_%%",
@@ -179,10 +179,9 @@ tap.test("06 - multiple variables resolved", (t) => {
       e: "%%_b_%%",
       f: "%%_b_%%",
     });
-  });
-  t.match(err1.message, /THROW_ID_19/, "06.02");
+  }, /THROW_ID_19/);
 
-  const err2 = t.throws(() => {
+  t.throws(() => {
     jVar({
       a: "%%_e_%% %%_d_%%",
       b: "%%_a_%%",
@@ -191,8 +190,7 @@ tap.test("06 - multiple variables resolved", (t) => {
       e: "%%_c_%%",
       f: "%%_b_%%",
     });
-  });
-  t.match(err2.message, /THROW_ID_19/, "06.03");
+  }, /THROW_ID_19/);
   t.end();
 });
 

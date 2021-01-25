@@ -402,7 +402,7 @@ tap.test("05 - arrays, whitelisting as array #2", (t) => {
     "05.04 - wraps SUB"
   );
 
-  const err1 = t.throws(() => {
+  t.throws(() => {
     jVar(
       {
         title: [
@@ -431,7 +431,6 @@ tap.test("05 - arrays, whitelisting as array #2", (t) => {
         wrapGlobalFlipSwitch: true,
       }
     );
-  });
-  t.match(err1.message, /THROW_ID_18/, "05.05");
+  }, /THROW_ID_18/);
   t.end();
 });
