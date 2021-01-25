@@ -1272,16 +1272,14 @@ tap.test(
     oldRanges.add(9, 10);
 
     // without third element, "what to insert"
-    const error1 = t.throws(() => {
+    t.throws(() => {
       oldRanges.replace([6, 8]);
-    });
-    t.match(error1.message, /THROW_ID_11/, "105.01");
+    }, /THROW_ID_11/);
 
     // with third element, "what to insert"
-    const error2 = t.throws(() => {
+    t.throws(() => {
       oldRanges.replace([6, 8, "zzz"]);
-    });
-    t.match(error2.message, /THROW_ID_11/, "105.02");
+    }, /THROW_ID_11/);
 
     // but range or ranges does work fine:
     oldRanges.replace([[6, 8, "zzz"]]);
