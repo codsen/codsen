@@ -7,30 +7,25 @@ tap.test(
     t.doesNotThrow(() => {
       fix("");
     }, "01.01");
-    const error1 = t.throws(() => {
+    t.throws(() => {
       fix();
-    });
-    t.match(error1.message, /THROW_ID_01/, "01.02");
+    }, /THROW_ID_01/);
 
-    const error2 = t.throws(() => {
+    t.throws(() => {
       fix(true);
-    });
-    t.match(error2.message, /THROW_ID_01/, "01.03");
+    }, /THROW_ID_01/);
 
-    const error3 = t.throws(() => {
+    t.throws(() => {
       fix(0);
-    });
-    t.match(error3.message, /THROW_ID_01/, "01.04");
+    }, /THROW_ID_01/);
 
-    const error4 = t.throws(() => {
+    t.throws(() => {
       fix(1);
-    });
-    t.match(error4.message, /THROW_ID_01/, "01.05");
+    }, /THROW_ID_01/);
 
-    const error5 = t.throws(() => {
+    t.throws(() => {
       fix(null);
-    });
-    t.match(error5.message, /THROW_ID_01/, "01.06");
+    }, /THROW_ID_01/);
     t.end();
   }
 );
