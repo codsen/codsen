@@ -3,10 +3,16 @@
     "publish": {
       "conventionalCommits": true,
       "noPush": true,
-      "message": "[skip ci] chore: release"
+      "message": "chore: release [skip ci]"
     }
   },
-  "ignoreChanges": ["**/*.md", "**/node_modules/**", "**/package.json", "**/perf/**", "**/.npmignore"],
+  "ignoreChanges": [
+    "**/*.md",
+    "**/node_modules/**",
+    "**/package.json",
+    "**/perf/**",
+    "**/.npmignore"
+  ],
   "lifecycle": {
     "version": "git add ."
   },

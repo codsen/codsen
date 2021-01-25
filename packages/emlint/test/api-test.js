@@ -8,10 +8,9 @@ tap.test("shows version from UMD build", (t) => {
 
 tap.test("config is truthy and is not an object", (t) => {
   const linter = new Linter();
-  const error1 = t.throws(() => {
+  t.throws(() => {
     linter.verify("a", true);
-  });
-  t.match(error1.message, /THROW_ID_01/, "02");
+  }, /THROW_ID_01/);
   t.end();
 });
 
