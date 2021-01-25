@@ -681,39 +681,35 @@ tap.test("17 - deletion of empty things is limited in arrays too", (t) => {
 // ==============================
 
 tap.test("18 - both key and value missing - throws", (t) => {
-  const error1 = t.throws(() => {
+  t.throws(() => {
     deleteKey({ a: "a" }, {});
-  });
-  t.match(error1.message, /THROW_ID_04/, "18");
+  }, /THROW_ID_04/);
   t.end();
 });
 
 tap.test("19 - nonsensical options object - throws", (t) => {
-  const error1 = t.throws(() => {
+  t.throws(() => {
     deleteKey({ a: "a" }, { z: "z" });
-  });
-  t.match(error1.message, /THROW_ID_04/, "19");
+  }, /THROW_ID_04/);
   t.end();
 });
 
 tap.test("20 - nonsensical options object - throws", (t) => {
-  const error1 = t.throws(() => {
+  t.throws(() => {
     deleteKey({ a: "a" }, 1);
-  });
-  t.match(error1.message, /THROW_ID_04/, "20");
+  }, /THROW_ID_04/);
   t.end();
 });
 
 tap.test("21 - no input args - throws", (t) => {
-  const error1 = t.throws(() => {
+  t.throws(() => {
     deleteKey();
-  });
-  t.match(error1.message, /THROW_ID_01/, "21");
+  }, /THROW_ID_01/);
   t.end();
 });
 
 tap.test("22 - wrong input args - throws", (t) => {
-  const error1 = t.throws(() => {
+  t.throws(() => {
     deleteKey(
       { a: "a" },
       {
@@ -722,13 +718,12 @@ tap.test("22 - wrong input args - throws", (t) => {
         cleanup: true,
       }
     );
-  });
-  t.match(error1.message, /opts\.key/g, "22");
+  }, /opts\.key/g);
   t.end();
 });
 
 tap.test("23 - wrong input args - throws", (t) => {
-  const error1 = t.throws(() => {
+  t.throws(() => {
     deleteKey(
       { a: "a" },
       {
@@ -737,8 +732,7 @@ tap.test("23 - wrong input args - throws", (t) => {
         cleanup: "zzz",
       }
     );
-  });
-  t.match(error1.message, /opts\.key/, "23");
+  }, /opts\.key/);
   t.end();
 });
 
