@@ -896,8 +896,10 @@ function crush(str, originalOpts) {
     }
 
     if (finalIndexesToDelete.current()) {
+      const ranges = finalIndexesToDelete.current();
+      finalIndexesToDelete.wipe();
       const startingPercentageDone = opts.reportProgressFuncTo - (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage;
-      const res = rApply(str, finalIndexesToDelete.current(), applyPercDone => {
+      const res = rApply(str, ranges, applyPercDone => {
         // allocate remaining "leavePercForLastStage" percentage of the total
         // progress reporting to this stage:
         if (opts.reportProgressFunc && len >= 2000) {
@@ -909,7 +911,6 @@ function crush(str, originalOpts) {
           }
         }
       });
-      finalIndexesToDelete.wipe();
       const resLen = res.length;
       return {
         log: {
@@ -919,7 +920,7 @@ function crush(str, originalOpts) {
           bytesSaved: Math.max(len - resLen, 0),
           percentageReducedOfOriginal: len ? Math.round(Math.max(len - resLen, 0) * 100 / len) : 0
         },
-        ranges: finalIndexesToDelete.current(),
+        ranges,
         applicableOpts,
         result: res
       };
@@ -934,7 +935,7 @@ function crush(str, originalOpts) {
       percentageReducedOfOriginal: 0
     },
     applicableOpts,
-    ranges: [],
+    ranges: null,
     result: str
   };
 }

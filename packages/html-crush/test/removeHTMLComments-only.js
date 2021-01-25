@@ -1,5 +1,5 @@
 import tap from "tap";
-import { crush as m } from "../dist/html-crush.esm";
+import { m } from "./util/util";
 
 // outlook "only" type comments
 // -----------------------------------------------------------------------------
@@ -16,7 +16,7 @@ tap.test(
 
     // 0 - off
     t.match(
-      m(source, {
+      m(t, source, {
         removeHTMLComments: 0,
       }),
       {
@@ -31,7 +31,7 @@ tap.test(
 
     // 1 - only text comments
     t.match(
-      m(source, {
+      m(t, source, {
         removeHTMLComments: 1,
       }),
       {
@@ -46,7 +46,7 @@ tap.test(
 
     // 2 - includes outlook conditional comments
     t.match(
-      m(source, {
+      m(t, source, {
         removeHTMLComments: 2,
       }),
       {
@@ -70,7 +70,7 @@ tap.test(
 
     // off
     t.match(
-      m(source, {
+      m(t, source, {
         removeHTMLComments: 0,
       }),
       {
@@ -85,7 +85,7 @@ tap.test(
 
     // 1 - only text comments
     t.match(
-      m(source, {
+      m(t, source, {
         removeHTMLComments: 1,
       }),
       {
@@ -100,7 +100,7 @@ tap.test(
 
     // 2 - includes outlook conditional comments
     t.match(
-      m(source, {
+      m(t, source, {
         removeHTMLComments: 2,
       }),
       {
@@ -124,7 +124,7 @@ tap.test(
 
     // off
     t.match(
-      m(source, {
+      m(t, source, {
         removeHTMLComments: 0,
       }),
       {
@@ -139,7 +139,7 @@ tap.test(
 
     // 1 - only text comments
     t.match(
-      m(source, {
+      m(t, source, {
         removeHTMLComments: 1,
       }),
       {
@@ -154,7 +154,7 @@ tap.test(
 
     // 2 - includes outlook conditional comments
     t.match(
-      m(source, {
+      m(t, source, {
         removeHTMLComments: 2,
       }),
       {

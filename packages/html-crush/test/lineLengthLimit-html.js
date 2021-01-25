@@ -1,11 +1,11 @@
 import tap from "tap";
-import { crush as m } from "../dist/html-crush.esm";
+import { m } from "./util/util";
 
 tap.test(
   `01 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - inline tags are not separated`,
   (t) => {
     t.match(
-      m("<a><a>", {
+      m(t, "<a><a>", {
         lineLengthLimit: 2,
         removeIndentations: true,
         removeLineBreaks: true,
@@ -20,7 +20,7 @@ tap.test(
       "01.01"
     );
     t.match(
-      m("<a><a>", {
+      m(t, "<a><a>", {
         lineLengthLimit: 2,
         removeIndentations: true,
         removeLineBreaks: false,
@@ -35,7 +35,7 @@ tap.test(
       "01.02"
     );
     t.match(
-      m("<a><a>", {
+      m(t, "<a><a>", {
         lineLengthLimit: 2,
         removeIndentations: false,
         removeLineBreaks: false,
@@ -57,7 +57,7 @@ tap.test(
   `02 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - inline tags are not separated`,
   (t) => {
     t.match(
-      m(`let me tell you <a><span>something</span></a> new`, {
+      m(t, `let me tell you <a><span>something</span></a> new`, {
         lineLengthLimit: 2,
         removeIndentations: true,
         removeLineBreaks: true,
@@ -77,7 +77,7 @@ new`,
       "02.01"
     );
     t.match(
-      m(`let me tell you <a><span>something</span></a> new`, {
+      m(t, `let me tell you <a><span>something</span></a> new`, {
         lineLengthLimit: 2,
         removeIndentations: true,
         removeLineBreaks: false,
@@ -92,7 +92,7 @@ new`,
       "02.02"
     );
     t.match(
-      m(`let me tell you <a><span>something</span></a> new`, {
+      m(t, `let me tell you <a><span>something</span></a> new`, {
         lineLengthLimit: 2,
         removeIndentations: false,
         removeLineBreaks: false,
@@ -114,7 +114,7 @@ tap.test(
   `03 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - non-inline tags are separated`,
   (t) => {
     t.match(
-      m("<div><div>", {
+      m(t, "<div><div>", {
         lineLengthLimit: 2,
         removeIndentations: true,
         removeLineBreaks: true,
@@ -129,7 +129,7 @@ tap.test(
       "03.01"
     );
     t.match(
-      m("<div><div>", {
+      m(t, "<div><div>", {
         lineLengthLimit: 2,
         removeIndentations: true,
         removeLineBreaks: false,
@@ -144,7 +144,7 @@ tap.test(
       "03.02"
     );
     t.match(
-      m("<div><div>", {
+      m(t, "<div><div>", {
         lineLengthLimit: 2,
         removeIndentations: false,
         removeLineBreaks: false,
@@ -166,7 +166,7 @@ tap.test(
   `04 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - string sequence breaks in front of space`,
   (t) => {
     t.match(
-      m("<aa><bb>\t<cc><dd>", {
+      m(t, "<aa><bb>\t<cc><dd>", {
         lineLengthLimit: 12,
         removeIndentations: true,
         removeLineBreaks: true,
@@ -181,7 +181,7 @@ tap.test(
       "04.01"
     );
     t.match(
-      m("<aa><bb>\t<cc><dd>", {
+      m(t, "<aa><bb>\t<cc><dd>", {
         lineLengthLimit: 12,
         removeIndentations: true,
         removeLineBreaks: false,
@@ -196,7 +196,7 @@ tap.test(
       "04.02"
     );
     t.match(
-      m("<aa><bb>\t<cc><dd>", {
+      m(t, "<aa><bb>\t<cc><dd>", {
         lineLengthLimit: 12,
         removeIndentations: false,
         removeLineBreaks: false,
@@ -218,7 +218,7 @@ tap.test(
   `05 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - what happens when it's impossible to break and exceeding line length limit is inevitable`,
   (t) => {
     t.match(
-      m("abc ghijklmnop xyz", {
+      m(t, "abc ghijklmnop xyz", {
         lineLengthLimit: 2,
         removeIndentations: true,
         removeLineBreaks: true,
@@ -233,7 +233,7 @@ tap.test(
       "05.01"
     );
     t.match(
-      m("abc ghijklmnop xyz", {
+      m(t, "abc ghijklmnop xyz", {
         lineLengthLimit: 2,
         removeIndentations: true,
         removeLineBreaks: false,
@@ -248,7 +248,7 @@ tap.test(
       "05.02"
     );
     t.match(
-      m("abc ghijklmnop xyz", {
+      m(t, "abc ghijklmnop xyz", {
         lineLengthLimit: 2,
         removeIndentations: false,
         removeLineBreaks: false,
@@ -270,7 +270,7 @@ tap.test(
   `06 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - stacks lines when limiter is on`,
   (t) => {
     t.match(
-      m("aa bb cc\n", {
+      m(t, "aa bb cc\n", {
         lineLengthLimit: 3,
         removeIndentations: true,
         removeLineBreaks: true,
@@ -285,7 +285,7 @@ tap.test(
       "06.01"
     );
     t.match(
-      m("aa bb cc\n", {
+      m(t, "aa bb cc\n", {
         lineLengthLimit: 3,
         removeIndentations: true,
         removeLineBreaks: false,
@@ -300,7 +300,7 @@ tap.test(
       "06.02"
     );
     t.match(
-      m("aa bb cc\n", {
+      m(t, "aa bb cc\n", {
         lineLengthLimit: 3,
         removeIndentations: false,
         removeLineBreaks: false,
@@ -322,7 +322,7 @@ tap.test(
   `07 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - stacks along with wiping whitespace`,
   (t) => {
     t.match(
-      m("aa   \n \t  bb   \n \t    cc", {
+      m(t, "aa   \n \t  bb   \n \t    cc", {
         lineLengthLimit: 3,
         removeIndentations: true,
         removeLineBreaks: true,
@@ -337,7 +337,7 @@ tap.test(
       "07.01"
     );
     t.match(
-      m("aa   \n \t  bb   \n \t    cc", {
+      m(t, "aa   \n \t  bb   \n \t    cc", {
         lineLengthLimit: 3,
         removeIndentations: true,
         removeLineBreaks: false,
@@ -352,7 +352,7 @@ tap.test(
       "07.02"
     );
     t.match(
-      m("aa   \n \t  bb   \n \t    cc", {
+      m(t, "aa   \n \t  bb   \n \t    cc", {
         lineLengthLimit: 3,
         removeIndentations: false,
         removeLineBreaks: false,
@@ -374,7 +374,7 @@ tap.test(
   `08 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - stacks unbreakable chunks, each over limit`,
   (t) => {
     t.match(
-      m("abcde   \n \t  fghij   \n \t    klmno", {
+      m(t, "abcde   \n \t  fghij   \n \t    klmno", {
         removeIndentations: true,
         removeLineBreaks: true,
         lineLengthLimit: 3,
@@ -389,7 +389,7 @@ tap.test(
       "08.01"
     );
     t.match(
-      m("abcde   \n \t  fghij   \n \t    klmno", {
+      m(t, "abcde   \n \t  fghij   \n \t    klmno", {
         removeIndentations: true,
         removeLineBreaks: false,
         lineLengthLimit: 3,
@@ -404,7 +404,7 @@ tap.test(
       "08.02"
     );
     t.match(
-      m("abcde   \n \t  fghij   \n \t    klmno", {
+      m(t, "abcde   \n \t  fghij   \n \t    klmno", {
         removeIndentations: false,
         removeLineBreaks: false,
         lineLengthLimit: 3,
@@ -426,7 +426,7 @@ tap.test(
   `09 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - stacks tags, wipes whitespace - inline tags`,
   (t) => {
     t.match(
-      m("    \n    <a>\n\n   <b>\n  <c>", {
+      m(t, "    \n    <a>\n\n   <b>\n  <c>", {
         lineLengthLimit: 8,
         removeIndentations: true,
         removeLineBreaks: true,
@@ -441,7 +441,7 @@ tap.test(
       "09.01"
     );
     t.match(
-      m("    \n    <a>\n\n   <b>\n  <c>", {
+      m(t, "    \n    <a>\n\n   <b>\n  <c>", {
         lineLengthLimit: 8,
         removeIndentations: true,
         removeLineBreaks: false,
@@ -456,7 +456,7 @@ tap.test(
       "09.02"
     );
     t.match(
-      m("    \n    <a>\n\n   <b>\n  <c>", {
+      m(t, "    \n    <a>\n\n   <b>\n  <c>", {
         lineLengthLimit: 8,
         removeIndentations: false,
         removeLineBreaks: false,
@@ -478,7 +478,7 @@ tap.test(
   `10 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - stacks tags, wipes whitespace - not inline tags`,
   (t) => {
     t.match(
-      m("    \n    <x>\n\n   <y>\n  <z>", {
+      m(t, "    \n    <x>\n\n   <y>\n  <z>", {
         lineLengthLimit: 8,
         removeIndentations: true,
         removeLineBreaks: true,
@@ -493,7 +493,7 @@ tap.test(
       "10.01"
     );
     t.match(
-      m("    \n    <x>\n\n   <y>\n  <z>", {
+      m(t, "    \n    <x>\n\n   <y>\n  <z>", {
         lineLengthLimit: 8,
         removeIndentations: true,
         removeLineBreaks: false,
@@ -508,7 +508,7 @@ tap.test(
       "10.02"
     );
     t.match(
-      m("    \n    <x>\n\n   <y>\n  <z>", {
+      m(t, "    \n    <x>\n\n   <y>\n  <z>", {
         lineLengthLimit: 8,
         removeIndentations: false,
         removeLineBreaks: false,
@@ -530,7 +530,7 @@ tap.test(
   `11 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tags and limiting - inline tags`,
   (t) => {
     t.match(
-      m("  <a>\n     <b>\n   c </b>\n   </a>", {
+      m(t, "  <a>\n     <b>\n   c </b>\n   </a>", {
         lineLengthLimit: 9,
         removeIndentations: true,
         removeLineBreaks: true,
@@ -545,7 +545,7 @@ tap.test(
       "11.01"
     );
     t.match(
-      m("  <a>\n     <b>\n   c </b>\n   </a>", {
+      m(t, "  <a>\n     <b>\n   c </b>\n   </a>", {
         lineLengthLimit: 9,
         removeIndentations: true,
         removeLineBreaks: false,
@@ -560,7 +560,7 @@ tap.test(
       "11.02"
     );
     t.match(
-      m("  <a>\n     <b>\n   c </b>\n   </a>", {
+      m(t, "  <a>\n     <b>\n   c </b>\n   </a>", {
         lineLengthLimit: 9,
         removeIndentations: false,
         removeLineBreaks: false,
@@ -582,7 +582,7 @@ tap.test(
   `12 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tags and limiting - not inline tags`,
   (t) => {
     t.match(
-      m("  <x>\n     <y>\n   c </y>\n   </x>", {
+      m(t, "  <x>\n     <y>\n   c </y>\n   </x>", {
         lineLengthLimit: 8,
         removeIndentations: true,
         removeLineBreaks: true,
@@ -597,7 +597,7 @@ tap.test(
       "12.01"
     );
     t.match(
-      m("  <x>\n     <y>\n   c </y>\n   </x>", {
+      m(t, "  <x>\n     <y>\n   c </y>\n   </x>", {
         lineLengthLimit: 8,
         removeIndentations: true,
         removeLineBreaks: false,
@@ -612,7 +612,7 @@ tap.test(
       "12.02"
     );
     t.match(
-      m("  <x>\n     <y>\n   c </y>\n   </x>", {
+      m(t, "  <x>\n     <y>\n   c </y>\n   </x>", {
         lineLengthLimit: 8,
         removeIndentations: false,
         removeLineBreaks: false,
@@ -635,6 +635,7 @@ tap.test(
   (t) => {
     t.match(
       m(
+        t,
         `  <a>
        <b>
      c </b>
@@ -657,6 +658,7 @@ tap.test(
     );
     t.match(
       m(
+        t,
         `  <a>
        <b>
      c </b>
@@ -683,6 +685,7 @@ c </b>
     );
     t.match(
       m(
+        t,
         `  <a>
        <b>
      c </b>
@@ -716,6 +719,7 @@ tap.test(
   (t) => {
     t.match(
       m(
+        t,
         `  <x>
        <y>
      c </y>
@@ -738,6 +742,7 @@ tap.test(
     );
     t.match(
       m(
+        t,
         `  <x>
        <y>
      c </y>
@@ -764,6 +769,7 @@ c </y>
     );
     t.match(
       m(
+        t,
         `  <x>
        <y>
      c </y>
@@ -796,7 +802,7 @@ tap.test(
   `15 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tags and limiting = 8`,
   (t) => {
     t.match(
-      m("aaaaaa bbbbbb cccccc", {
+      m(t, "aaaaaa bbbbbb cccccc", {
         lineLengthLimit: 8,
         removeIndentations: true,
         removeLineBreaks: true,
@@ -811,7 +817,7 @@ tap.test(
       "15.01"
     );
     t.match(
-      m("aaaaaa bbbbbb cccccc", {
+      m(t, "aaaaaa bbbbbb cccccc", {
         lineLengthLimit: 8,
         removeIndentations: true,
         removeLineBreaks: false,
@@ -826,7 +832,7 @@ tap.test(
       "15.02"
     );
     t.match(
-      m("aaaaaa bbbbbb cccccc", {
+      m(t, "aaaaaa bbbbbb cccccc", {
         lineLengthLimit: 8,
         removeIndentations: false,
         removeLineBreaks: false,
@@ -848,7 +854,7 @@ tap.test(
   `16 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tags and limiting = 10`,
   (t) => {
     t.match(
-      m("aaaaaa bbbbbb cccccc", {
+      m(t, "aaaaaa bbbbbb cccccc", {
         lineLengthLimit: 10,
         removeIndentations: true,
         removeLineBreaks: true,
@@ -863,7 +869,7 @@ tap.test(
       "16.01"
     );
     t.match(
-      m("aaaaaa bbbbbb cccccc", {
+      m(t, "aaaaaa bbbbbb cccccc", {
         lineLengthLimit: 10,
         removeIndentations: true,
         removeLineBreaks: false,
@@ -878,7 +884,7 @@ tap.test(
       "16.02"
     );
     t.match(
-      m("aaaaaa bbbbbb cccccc", {
+      m(t, "aaaaaa bbbbbb cccccc", {
         lineLengthLimit: 10,
         removeIndentations: false,
         removeLineBreaks: false,
@@ -900,7 +906,7 @@ tap.test(
   `17 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tags and limiting = 14`,
   (t) => {
     t.match(
-      m("aaaaaa bbbbbb cccccc", {
+      m(t, "aaaaaa bbbbbb cccccc", {
         lineLengthLimit: 14,
         removeIndentations: true,
         removeLineBreaks: true,
@@ -915,7 +921,7 @@ tap.test(
       "17.01"
     );
     t.match(
-      m("aaaaaa bbbbbb cccccc", {
+      m(t, "aaaaaa bbbbbb cccccc", {
         lineLengthLimit: 14,
         removeIndentations: true,
         removeLineBreaks: false,
@@ -930,7 +936,7 @@ tap.test(
       "17.02"
     );
     t.match(
-      m("aaaaaa bbbbbb cccccc", {
+      m(t, "aaaaaa bbbbbb cccccc", {
         lineLengthLimit: 14,
         removeIndentations: false,
         removeLineBreaks: false,
@@ -952,7 +958,7 @@ tap.test(
   `18 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tag sequence without whitespace is wrapped`,
   (t) => {
     t.match(
-      m("<aa><bb><cc>", {
+      m(t, "<aa><bb><cc>", {
         lineLengthLimit: 8,
         removeIndentations: true,
         removeLineBreaks: true,
@@ -967,7 +973,7 @@ tap.test(
       "18.01"
     );
     t.match(
-      m("<aa><bb><cc>", {
+      m(t, "<aa><bb><cc>", {
         lineLengthLimit: 8,
         removeIndentations: true,
         removeLineBreaks: false,
@@ -982,7 +988,7 @@ tap.test(
       "18.02"
     );
     t.match(
-      m("<aa><bb><cc>", {
+      m(t, "<aa><bb><cc>", {
         lineLengthLimit: 8,
         removeIndentations: false,
         removeLineBreaks: false,
@@ -1004,7 +1010,7 @@ tap.test(
   `19 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tag sequence completely wrapped`,
   (t) => {
     t.match(
-      m("<aa><bb><cc>", {
+      m(t, "<aa><bb><cc>", {
         lineLengthLimit: 7,
         removeIndentations: true,
         removeLineBreaks: true,
@@ -1019,7 +1025,7 @@ tap.test(
       "19.01"
     );
     t.match(
-      m("<aa><bb><cc>", {
+      m(t, "<aa><bb><cc>", {
         lineLengthLimit: 7,
         removeIndentations: true,
         removeLineBreaks: false,
@@ -1034,7 +1040,7 @@ tap.test(
       "19.02"
     );
     t.match(
-      m("<aa><bb><cc>", {
+      m(t, "<aa><bb><cc>", {
         lineLengthLimit: 7,
         removeIndentations: false,
         removeLineBreaks: false,
@@ -1056,7 +1062,7 @@ tap.test(
   `20 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - string sequence breaks in front of space`,
   (t) => {
     t.match(
-      m("aaaaaa bbbbbb cccccc", {
+      m(t, "aaaaaa bbbbbb cccccc", {
         lineLengthLimit: 13,
         removeIndentations: true,
         removeLineBreaks: true,
@@ -1071,7 +1077,7 @@ tap.test(
       "20.01"
     );
     t.match(
-      m("aaaaaa bbbbbb cccccc", {
+      m(t, "aaaaaa bbbbbb cccccc", {
         lineLengthLimit: 13,
         removeIndentations: true,
         removeLineBreaks: false,
@@ -1086,7 +1092,7 @@ tap.test(
       "20.02"
     );
     t.match(
-      m("aaaaaa bbbbbb cccccc", {
+      m(t, "aaaaaa bbbbbb cccccc", {
         lineLengthLimit: 13,
         removeIndentations: false,
         removeLineBreaks: false,

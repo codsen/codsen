@@ -1,5 +1,5 @@
 import tap from "tap";
-import { crush as m } from "../dist/html-crush.esm";
+import { m } from "./util/util";
 
 // 08. inline CSS minification
 // -----------------------------------------------------------------------------
@@ -10,14 +10,14 @@ tap.test(
     const input1 = `  <a style="a: 100%; b: c-d; ">`;
     const indentationsOnly = `<a style="a: 100%; b: c-d; ">`;
     t.strictSame(
-      m(input1, {
+      m(t, input1, {
         removeLineBreaks: true,
       }).result,
       `<a style="a:100%;b:c-d;">`,
       "01.01"
     );
     t.strictSame(
-      m(input1, {
+      m(t, input1, {
         removeLineBreaks: true,
         lineLengthLimit: 0,
       }).result,
@@ -25,14 +25,14 @@ tap.test(
       "01.02"
     );
     t.strictSame(
-      m(input1, {
+      m(t, input1, {
         removeLineBreaks: false,
       }).result,
       indentationsOnly,
       "01.03 - indentations are removed on default settings"
     );
     t.strictSame(
-      m(input1, {
+      m(t, input1, {
         removeLineBreaks: false,
         removeIndentations: false,
       }).result,
@@ -47,7 +47,7 @@ tap.test(
   `02 - ${`\u001b[${34}m${`inline CSS minification`}\u001b[${39}m`} - inline CSS comments`,
   (t) => {
     t.strictSame(
-      m(`<a style="a: 100%;/*b: c-d;*/e: f;">`, {
+      m(t, `<a style="a: 100%;/*b: c-d;*/e: f;">`, {
         removeLineBreaks: true,
       }).result,
       `<a style="a:100%;e:f;">`,
@@ -61,7 +61,7 @@ tap.test(
   `03 - ${`\u001b[${34}m${`inline CSS minification`}\u001b[${39}m`} - line length limit falls in the middle of inline CSS comment`,
   (t) => {
     t.strictSame(
-      m(`<a style="a: 100%;/*b: c-d;*/e: f;">`, {
+      m(t, `<a style="a: 100%;/*b: c-d;*/e: f;">`, {
         removeLineBreaks: true,
         lineLengthLimit: 18,
       }).result,
@@ -76,7 +76,7 @@ tap.test(
   `04 - ${`\u001b[${34}m${`inline CSS minification`}\u001b[${39}m`} - line length becomes all right because of truncation`,
   (t) => {
     t.strictSame(
-      m(`<a style="a: 100%;/*b: c-d;*/e: f;">`, {
+      m(t, `<a style="a: 100%;/*b: c-d;*/e: f;">`, {
         removeLineBreaks: true,
         lineLengthLimit: 30,
       }).result,
@@ -91,7 +91,7 @@ tap.test(
   `05 - ${`\u001b[${34}m${`inline CSS minification`}\u001b[${39}m`} - leading whitespace inside double quotes`,
   (t) => {
     t.strictSame(
-      m(`<a href="zzz" style=" font-size: 1px; ">`, {
+      m(t, `<a href="zzz" style=" font-size: 1px; ">`, {
         removeLineBreaks: true,
       }).result,
       `<a href="zzz" style="font-size:1px;">`,
@@ -105,7 +105,7 @@ tap.test(
   `06 - ${`\u001b[${34}m${`inline CSS minification`}\u001b[${39}m`} - leading whitespace inside single quotes`,
   (t) => {
     t.strictSame(
-      m(`<a href='zzz' style=' font-size: 1px; '>`, {
+      m(t, `<a href='zzz' style=' font-size: 1px; '>`, {
         removeLineBreaks: true,
       }).result,
       `<a href='zzz' style='font-size:1px;'>`,

@@ -1,5 +1,6 @@
 import tap from "tap";
-import { crush as m } from "../dist/html-crush.esm";
+import { m } from "./util/util";
+import { crush } from "../dist/html-crush.esm";
 
 // opts.reportProgressFunc
 // -----------------------------------------------------------------------------
@@ -19,17 +20,17 @@ tap.test(
     };
 
     t.strictSame(
-      m("aaaaaaaaaa").result,
+      m(t, "aaaaaaaaaa").result,
       "aaaaaaaaaa",
       "01.01 - default behaviour"
     );
     t.strictSame(
-      m("aaaaaaaaaa", { reportProgressFunc: null }).result,
+      m(t, "aaaaaaaaaa", { reportProgressFunc: null }).result,
       "aaaaaaaaaa",
       "01.02"
     );
     t.strictSame(
-      m("aaaaaaaaaa", { reportProgressFunc: false }).result,
+      m(t, "aaaaaaaaaa", { reportProgressFunc: false }).result,
       "aaaaaaaaaa",
       "01.03"
     );
@@ -37,7 +38,7 @@ tap.test(
     // short input string should report only when passing at 50%:
     t.throws(
       () => {
-        m(
+        crush(
           `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -71,7 +72,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
 
     // 1. our function will mutate the counter variable:
     t.pass(
-      m(
+      crush(
         `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -136,7 +137,7 @@ tap.test(
 
     // long input (>1000 chars long) should report at each natural number percentage passed:
     t.pass(
-      m(
+      crush(
         `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

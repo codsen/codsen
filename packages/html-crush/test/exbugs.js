@@ -1,5 +1,5 @@
 import tap from "tap";
-import { crush } from "../dist/html-crush.esm";
+import { m } from "./util/util";
 
 // pre + code
 // -----------------------------------------------------------------------------
@@ -8,7 +8,8 @@ tap.test(
   `01 - ${`\u001b[${33}m${`ex-bugs`}\u001b[${39}m`} - does not mangle pre/code`,
   (t) => {
     t.is(
-      crush(
+      m(
+        t,
         `<html>
 <body>
   <pre class="language-html">
@@ -40,3 +41,33 @@ More content
     t.end();
   }
 );
+
+tap.todo(`02`, (t) => {
+  const input = `  <a>
+     <b>
+   c </b>
+   </a>
+     <b>
+     `;
+  t.strictSame(
+    m(t, input, {
+      lineLengthLimit: 8,
+      removeIndentations: true,
+      removeLineBreaks: true,
+    }).ranges,
+    [[0, 1]],
+    "02.01"
+  );
+  /*t.is(
+    crush(input, {
+      lineLengthLimit: 8,
+      removeIndentations: true,
+      removeLineBreaks: true,
+    }).result,
+    `<a> <b>
+c </b>
+</a> <b>`,
+    "02.02"
+  );*/
+  t.end();
+});

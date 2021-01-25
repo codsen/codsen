@@ -1,5 +1,5 @@
 import tap from "tap";
-import { crush as m } from "../dist/html-crush.esm";
+import { m } from "./util/util";
 
 // within head styles
 // -----------------------------------------------------------------------------
@@ -11,7 +11,7 @@ tap.test(
 
     // off
     t.match(
-      m(source, {
+      m(t, source, {
         removeCSSComments: false,
       }),
       {
@@ -26,7 +26,7 @@ tap.test(
 
     // on
     t.match(
-      m(source, {
+      m(t, source, {
         removeCSSComments: true,
       }),
       {
@@ -58,7 +58,7 @@ tap.test(
 
     // off
     t.match(
-      m(source, {
+      m(t, source, {
         removeCSSComments: false,
       }),
       {
@@ -81,7 +81,7 @@ margin: 3px; /* remove this */
 
     // on - removeLineBreaks=off
     t.match(
-      m(source, {
+      m(t, source, {
         removeLineBreaks: false,
         removeCSSComments: true,
       }),
@@ -99,7 +99,7 @@ margin: 3px; /* remove this */
 
     // on - removeLineBreaks=on
     t.match(
-      m(source, {
+      m(t, source, {
         removeLineBreaks: true,
         removeCSSComments: true,
       }),
@@ -129,7 +129,7 @@ tap.test(
 
     // off
     t.match(
-      m(source, {
+      m(t, source, {
         removeCSSComments: false,
       }),
       {
@@ -144,7 +144,7 @@ tap.test(
 
     // on
     t.match(
-      m(source, {
+      m(t, source, {
         removeCSSComments: true,
       }),
       {

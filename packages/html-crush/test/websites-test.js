@@ -1,7 +1,7 @@
 import tap from "tap";
 import fetch from "node-fetch";
 import pMap from "p-map";
-import { crush as m } from "../dist/html-crush.esm";
+import { m } from "./util/util";
 
 // 08. Fetch sources of some real websites and see, a) are any non-whitespace
 // characters deleted; b) that there are no throws; c) is minified source less
@@ -42,7 +42,7 @@ tap.test(
           // we allow website fetch to fail, but not errors during minification
           let minifiedResult1;
           try {
-            minifiedResult1 = m(sourceStr, {
+            minifiedResult1 = m(t, sourceStr, {
               removeIndentations: true,
               removeLineBreaks: false,
             });
@@ -70,7 +70,7 @@ tap.test(
           // we allow website fetch to fail, but not errors during minification
           let minifiedResult2;
           try {
-            minifiedResult2 = m(sourceStr, {
+            minifiedResult2 = m(t, sourceStr, {
               removeLineBreaks: true,
               lineLengthLimit: 0,
             });

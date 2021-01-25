@@ -1949,6 +1949,9 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
     );
 
     if (finalIndexesToDelete.current()) {
+      const ranges = finalIndexesToDelete.current();
+      finalIndexesToDelete.wipe();
+
       const startingPercentageDone =
         opts.reportProgressFuncTo -
         (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) *
@@ -1961,28 +1964,23 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
         )}`
       );
 
-      const res = rApply(
-        str,
-        finalIndexesToDelete.current(),
-        (applyPercDone) => {
-          // allocate remaining "leavePercForLastStage" percentage of the total
-          // progress reporting to this stage:
-          if (opts.reportProgressFunc && len >= 2000) {
-            currentPercentageDone = Math.floor(
-              startingPercentageDone +
-                (opts.reportProgressFuncTo - startingPercentageDone) *
-                  (applyPercDone / 100)
-            );
+      const res = rApply(str, ranges, (applyPercDone) => {
+        // allocate remaining "leavePercForLastStage" percentage of the total
+        // progress reporting to this stage:
+        if (opts.reportProgressFunc && len >= 2000) {
+          currentPercentageDone = Math.floor(
+            startingPercentageDone +
+              (opts.reportProgressFuncTo - startingPercentageDone) *
+                (applyPercDone / 100)
+          );
 
-            if (currentPercentageDone !== lastPercentage) {
-              lastPercentage = currentPercentageDone;
-              opts.reportProgressFunc(currentPercentageDone);
-            }
+          if (currentPercentageDone !== lastPercentage) {
+            lastPercentage = currentPercentageDone;
+            opts.reportProgressFunc(currentPercentageDone);
           }
         }
-      );
+      });
 
-      finalIndexesToDelete.wipe();
       console.log(
         `1951 returning ${`\u001b[${33}m${`res`}\u001b[${39}m`} =\n\n${JSON.stringify(
           res,
@@ -2002,7 +2000,7 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
             ? Math.round((Math.max(len - resLen, 0) * 100) / len)
             : 0,
         },
-        ranges: finalIndexesToDelete.current(),
+        ranges,
         applicableOpts,
         result: res,
       };
@@ -2032,7 +2030,7 @@ function crush(str: string, originalOpts?: Partial<Opts>): Res {
       percentageReducedOfOriginal: 0,
     },
     applicableOpts,
-    ranges: [],
+    ranges: null,
     result: str,
   };
 }

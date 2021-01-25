@@ -1,5 +1,5 @@
 import tap from "tap";
-import { crush as m } from "../dist/html-crush.esm";
+import { m } from "./util/util";
 
 // HTML Inline tags
 // -----------------------------------------------------------------------------
@@ -8,7 +8,7 @@ tap.test(
   `01 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - style on sup #1`,
   (t) => {
     t.strictSame(
-      m(`<sup style="">word, here`, {
+      m(t, `<sup style="">word, here`, {
         removeLineBreaks: true,
       }).result,
       `<sup style="">word, here`,
@@ -22,7 +22,7 @@ tap.test(
   `02 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - style on sup #2`,
   (t) => {
     t.strictSame(
-      m(`<sup style=" ">word, here`, {
+      m(t, `<sup style=" ">word, here`, {
         removeLineBreaks: true,
       }).result,
       `<sup style="">word, here`,
@@ -36,7 +36,7 @@ tap.test(
   `03 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - two spans with space - space retained`,
   (t) => {
     t.strictSame(
-      m(`<span>a</span> <span>b</span>`, {
+      m(t, `<span>a</span> <span>b</span>`, {
         removeLineBreaks: true,
       }).result,
       `<span>a</span> <span>b</span>`,
@@ -50,7 +50,7 @@ tap.test(
   `04 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - two spans without space - fine`,
   (t) => {
     t.strictSame(
-      m(`<span>a</span><span>b</span>`, {
+      m(t, `<span>a</span><span>b</span>`, {
         removeLineBreaks: true,
       }).result,
       `<span>a</span><span>b</span>`,
@@ -64,7 +64,7 @@ tap.test(
   `05 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - inside tag`,
   (t) => {
     t.strictSame(
-      m(`</b >`, {
+      m(t, `</b >`, {
         removeLineBreaks: true,
       }).result,
       `</b>`,
@@ -78,14 +78,14 @@ tap.test(
   `06 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - nameless attr`,
   (t) => {
     t.strictSame(
-      m(`x<a b="c" >y`, {
+      m(t, `x<a b="c" >y`, {
         removeLineBreaks: true,
       }).result,
       `x<a b="c">y`,
       "06.01"
     );
     t.strictSame(
-      m(`x<a b="c" />y`, {
+      m(t, `x<a b="c" />y`, {
         removeLineBreaks: true,
       }).result,
       `x<a b="c"/>y`,
@@ -99,14 +99,14 @@ tap.test(
   `07 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - style attr`,
   (t) => {
     t.strictSame(
-      m(`x<span style="a: b;" >y`, {
+      m(t, `x<span style="a: b;" >y`, {
         removeLineBreaks: true,
       }).result,
       `x<span style="a:b;">y`,
       "07.01"
     );
     t.strictSame(
-      m(`x<span style="a: b;" >y`, {
+      m(t, `x<span style="a: b;" >y`, {
         removeLineBreaks: true,
         lineLengthLimit: 0,
       }).result,
@@ -121,14 +121,19 @@ tap.test(
   `08 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - two spans`,
   (t) => {
     t.strictSame(
-      m(`<span style="abc: def;" >a</span> <span style="abc: def;" >b</span>`, {
-        removeLineBreaks: true,
-      }).result,
+      m(
+        t,
+        `<span style="abc: def;" >a</span> <span style="abc: def;" >b</span>`,
+        {
+          removeLineBreaks: true,
+        }
+      ).result,
       `<span style="abc:def;">a</span> <span style="abc:def;">b</span>`,
       "08.01"
     );
     t.strictSame(
       m(
+        t,
         `<span style="abc: def;" />a</span> <span style="abc: def;" />b</span>`,
         {
           removeLineBreaks: true,
@@ -139,6 +144,7 @@ tap.test(
     );
     t.strictSame(
       m(
+        t,
         `<span style="abc: def;" />a</span> <span style="abc: def;" />b</span>`,
         {
           removeLineBreaks: true,
@@ -156,14 +162,14 @@ tap.test(
   `09 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - span + sup`,
   (t) => {
     t.strictSame(
-      m(`<span style="abc: def;">a</span> <sup>1</sup>`, {
+      m(t, `<span style="abc: def;">a</span> <sup>1</sup>`, {
         removeLineBreaks: true,
       }).result,
       `<span style="abc:def;">a</span> <sup>1</sup>`,
       "09.01"
     );
     t.strictSame(
-      m(`<span style="abc: def;">a</span> <sup>1</sup>`, {
+      m(t, `<span style="abc: def;">a</span> <sup>1</sup>`, {
         removeLineBreaks: true,
         lineLengthLimit: 0,
       }).result,
@@ -179,7 +185,7 @@ tap.test(
   (t) => {
     for (let i = 1; i < 37; i++) {
       t.strictSame(
-        m(`<span>a</span><span style="z">b</span>`, {
+        m(t, `<span>a</span><span style="z">b</span>`, {
           lineLengthLimit: i,
           removeLineBreaks: true,
         }).result,
@@ -195,7 +201,7 @@ tap.test(
   `11 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - 012 pt.2`,
   (t) => {
     t.strictSame(
-      m(`<i><span>a</span><span style="z">b</span></i>`, {
+      m(t, `<i><span>a</span><span style="z">b</span></i>`, {
         lineLengthLimit: 22,
         removeLineBreaks: true,
       }).result,
@@ -210,7 +216,7 @@ tap.test(
   `12 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - will line break between mixed #1`,
   (t) => {
     t.strictSame(
-      m(`<i>a</i><span>b</span>`, {
+      m(t, `<i>a</i><span>b</span>`, {
         lineLengthLimit: 9, // <--- asking to break after /i
         removeLineBreaks: true,
       }).result,
@@ -218,7 +224,7 @@ tap.test(
       "12.01"
     );
     t.strictSame(
-      m(`<i>a</i><y>b</y>`, {
+      m(t, `<i>a</i><y>b</y>`, {
         lineLengthLimit: 9, // <--- asking to break after /i
         removeLineBreaks: true,
       }).result,
@@ -233,7 +239,7 @@ tap.test(
   `13 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - will line break between mixed, #2`,
   (t) => {
     t.strictSame(
-      m(`<span>a</span><div>b</div>`, {
+      m(t, `<span>a</span><div>b</div>`, {
         lineLengthLimit: 15, // <--- asking to break after div
         removeLineBreaks: true,
       }).result,
@@ -248,7 +254,7 @@ tap.test(
   `14 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - will line break between mixed, space, #1`,
   (t) => {
     t.strictSame(
-      m(`<span>a</span> <div>b</div>`, {
+      m(t, `<span>a</span> <div>b</div>`, {
         lineLengthLimit: 15,
         removeLineBreaks: true,
       }).result,
@@ -256,7 +262,7 @@ tap.test(
       "14.01"
     );
     t.strictSame(
-      m(`<span>a</span> <div>b</div>`, {
+      m(t, `<span>a</span> <div>b</div>`, {
         lineLengthLimit: 0,
         removeLineBreaks: true,
       }).result,
@@ -271,7 +277,7 @@ tap.test(
   `15 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - will line break between mixed, space, #2`,
   (t) => {
     t.strictSame(
-      m(`<div>a</div> <span>b</span>`, {
+      m(t, `<div>a</div> <span>b</span>`, {
         lineLengthLimit: 12,
         removeLineBreaks: true,
       }).result,
@@ -279,7 +285,7 @@ tap.test(
       "15.01"
     );
     t.strictSame(
-      m(`<div>a</div> <span>b</span>`, {
+      m(t, `<div>a</div> <span>b</span>`, {
         lineLengthLimit: 13,
         removeLineBreaks: true,
       }).result,
@@ -287,7 +293,7 @@ tap.test(
       "15.02"
     );
     t.strictSame(
-      m(`<div>a</div> <span>b</span>`, {
+      m(t, `<div>a</div> <span>b</span>`, {
         lineLengthLimit: 14,
         removeLineBreaks: true,
       }).result,
@@ -295,7 +301,7 @@ tap.test(
       "15.03"
     );
     t.strictSame(
-      m(`<div>a</div> <span>b</span>`, {
+      m(t, `<div>a</div> <span>b</span>`, {
         lineLengthLimit: 15,
         removeLineBreaks: true,
       }).result,
@@ -303,7 +309,7 @@ tap.test(
       "15.04"
     );
     t.strictSame(
-      m(`123456789012 <span>b</span>`, {
+      m(t, `123456789012 <span>b</span>`, {
         lineLengthLimit: 15,
         removeLineBreaks: true,
       }).result,
@@ -318,7 +324,7 @@ tap.test(
   `16 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - space between inline tags`,
   (t) => {
     t.strictSame(
-      m(`<b>x</b> <i>y</i>`, {
+      m(t, `<b>x</b> <i>y</i>`, {
         lineLengthLimit: 6,
         removeLineBreaks: true,
       }).result,
@@ -326,7 +332,7 @@ tap.test(
       "16.01"
     );
     t.strictSame(
-      m(`<b>x</b> <i>y</i>`, {
+      m(t, `<b>x</b> <i>y</i>`, {
         lineLengthLimit: 7,
         removeLineBreaks: true,
       }).result,
@@ -334,7 +340,7 @@ tap.test(
       "16.02"
     );
     t.strictSame(
-      m(`<b>x</b> <i>y</i>`, {
+      m(t, `<b>x</b> <i>y</i>`, {
         lineLengthLimit: 8,
         removeLineBreaks: true,
       }).result,
@@ -342,7 +348,7 @@ tap.test(
       "16.03"
     );
     t.strictSame(
-      m(`<b>x</b> <i>y</i>`, {
+      m(t, `<b>x</b> <i>y</i>`, {
         lineLengthLimit: 9,
         removeLineBreaks: true,
       }).result,
@@ -350,7 +356,7 @@ tap.test(
       "16.04"
     );
     t.strictSame(
-      m(`<b>x</b> <i>y</i>`, {
+      m(t, `<b>x</b> <i>y</i>`, {
         lineLengthLimit: 10,
         removeLineBreaks: true,
       }).result,
@@ -358,7 +364,7 @@ tap.test(
       "16.05"
     );
     t.strictSame(
-      m(`<b>x</b> <i>y</i>`, {
+      m(t, `<b>x</b> <i>y</i>`, {
         lineLengthLimit: 11,
         removeLineBreaks: true,
       }).result,
@@ -366,7 +372,7 @@ tap.test(
       "16.06"
     );
     t.strictSame(
-      m(`<b>x</b> <i>y</i>`, {
+      m(t, `<b>x</b> <i>y</i>`, {
         lineLengthLimit: 12,
         removeLineBreaks: true,
       }).result,
@@ -381,14 +387,14 @@ tap.test(
   `17 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - excessive whitespace between inline tags #1`,
   (t) => {
     t.strictSame(
-      m(`<i>a</i>     <sup>b</sup>`, {
+      m(t, `<i>a</i>     <sup>b</sup>`, {
         removeLineBreaks: true,
       }).result,
       `<i>a</i> <sup>b</sup>`,
       "17.01"
     );
     t.strictSame(
-      m(`<i>a</i>     <sup>b</sup>`, {
+      m(t, `<i>a</i>     <sup>b</sup>`, {
         lineLengthLimit: 6,
         removeLineBreaks: true,
       }).result,
@@ -396,7 +402,7 @@ tap.test(
       "17.02"
     );
     t.strictSame(
-      m(`<i>a</i>     <sup>b</sup>`, {
+      m(t, `<i>a</i>     <sup>b</sup>`, {
         lineLengthLimit: 7,
         removeLineBreaks: true,
       }).result,
@@ -404,7 +410,7 @@ tap.test(
       "17.03"
     );
     t.strictSame(
-      m(`<i>a</i>     <sup>b</sup>`, {
+      m(t, `<i>a</i>     <sup>b</sup>`, {
         lineLengthLimit: 8,
         removeLineBreaks: true,
       }).result,
@@ -412,7 +418,7 @@ tap.test(
       "17.04"
     );
     t.strictSame(
-      m(`<i>a</i>     <sup>b</sup>`, {
+      m(t, `<i>a</i>     <sup>b</sup>`, {
         lineLengthLimit: 9,
         removeLineBreaks: true,
       }).result,
@@ -420,7 +426,7 @@ tap.test(
       "17.05"
     );
     t.strictSame(
-      m(`<i>a</i>     <sup>b</sup>`, {
+      m(t, `<i>a</i>     <sup>b</sup>`, {
         lineLengthLimit: 10,
         removeLineBreaks: true,
       }).result,
@@ -428,7 +434,7 @@ tap.test(
       "17.06"
     );
     t.strictSame(
-      m(`<i>a</i>     <sup>b</sup>`, {
+      m(t, `<i>a</i>     <sup>b</sup>`, {
         lineLengthLimit: 12,
         removeLineBreaks: true,
       }).result,
@@ -436,7 +442,7 @@ tap.test(
       "17.07"
     );
     t.strictSame(
-      m(`<i>a</i>     <sup>b</sup>`, {
+      m(t, `<i>a</i>     <sup>b</sup>`, {
         lineLengthLimit: 13,
         removeLineBreaks: true,
       }).result,
@@ -444,7 +450,7 @@ tap.test(
       "17.08"
     );
     t.strictSame(
-      m(`<i>a</i>     <sup>b</sup>`, {
+      m(t, `<i>a</i>     <sup>b</sup>`, {
         lineLengthLimit: 14,
         removeLineBreaks: true,
       }).result,
@@ -452,7 +458,7 @@ tap.test(
       "17.09"
     );
     t.strictSame(
-      m(`<i>a</i>     <sup>b</sup>`, {
+      m(t, `<i>a</i>     <sup>b</sup>`, {
         lineLengthLimit: 15,
         removeLineBreaks: true,
       }).result,
@@ -467,14 +473,14 @@ tap.test(
   `18 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - div and sup`,
   (t) => {
     t.strictSame(
-      m(`<div>a</div>     <sup>b</sup>`, {
+      m(t, `<div>a</div>     <sup>b</sup>`, {
         removeLineBreaks: true,
       }).result,
       `<div>a</div> <sup>b</sup>`,
       "18.01"
     );
     t.strictSame(
-      m(`<div>a</div><sup>b</sup>`, {
+      m(t, `<div>a</div><sup>b</sup>`, {
         removeLineBreaks: true,
       }).result,
       `<div>a</div><sup>b</sup>`,
@@ -488,7 +494,7 @@ tap.test(
   `19 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - div and sup, escessive whitespace`,
   (t) => {
     t.strictSame(
-      m(`<div>a</div>     <sup>b</sup>`, {
+      m(t, `<div>a</div>     <sup>b</sup>`, {
         lineLengthLimit: 10,
         removeLineBreaks: true,
       }).result,
@@ -504,7 +510,7 @@ tap.test(
   (t) => {
     for (let i = 10; i < 25; i++) {
       t.strictSame(
-        m(`<div>a</div>     <sup>b</sup>`, {
+        m(t, `<div>a</div>     <sup>b</sup>`, {
           lineLengthLimit: i,
           removeLineBreaks: true,
         }).result,
@@ -513,7 +519,7 @@ tap.test(
       );
     }
     t.strictSame(
-      m(`<div>a</div>     <sup>b</sup>`, {
+      m(t, `<div>a</div>     <sup>b</sup>`, {
         lineLengthLimit: 99,
         removeLineBreaks: true,
       }).result,
@@ -521,7 +527,7 @@ tap.test(
       "20.01"
     );
     t.strictSame(
-      m(`<div>a</div>     <sup>b</sup>`, {
+      m(t, `<div>a</div>     <sup>b</sup>`, {
         lineLengthLimit: 0,
         removeLineBreaks: true,
       }).result,
@@ -538,14 +544,14 @@ tap.test(
     const source = `<span><a href="z"><b>a</b><i>b</i><a><span>`;
     const res = `<span><a\nhref="z"><b>a</b><i>b</i><a><span>`;
     t.strictSame(
-      m(source, {
+      m(t, source, {
         removeLineBreaks: false,
       }).result,
       source,
       "21.01"
     );
     t.strictSame(
-      m(source, {
+      m(t, source, {
         removeLineBreaks: true,
       }).result,
       source,
@@ -553,7 +559,7 @@ tap.test(
     );
     for (let i = 1; i < 42; i++) {
       t.strictSame(
-        m(source, {
+        m(t, source, {
           lineLengthLimit: i,
           removeLineBreaks: true,
         }).result,
@@ -569,14 +575,14 @@ tap.test(
   `22 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - first tag name letters resemble legit inline tags`,
   (t) => {
     t.strictSame(
-      m(`<az>123</az> <by>456</by> <see>789</see> <in></in>`, {
+      m(t, `<az>123</az> <by>456</by> <see>789</see> <in></in>`, {
         removeLineBreaks: true,
       }).result,
       `<az>123</az><by>456</by><see>789</see><in></in>`,
       "22.01"
     );
     t.strictSame(
-      m(`<az>123</az> <by>456</by> <see>789</see> <in></in>`, {
+      m(t, `<az>123</az> <by>456</by> <see>789</see> <in></in>`, {
         removeLineBreaks: true,
         lineLengthLimit: 0,
       }).result,
@@ -591,21 +597,21 @@ tap.test(
   `23 - ${`\u001b[${32}m${`inline tags`}\u001b[${39}m`} - spanner is not span`,
   (t) => {
     t.strictSame(
-      m(`<span>1</span> <span>2</span> <span>3</span>`, {
+      m(t, `<span>1</span> <span>2</span> <span>3</span>`, {
         removeLineBreaks: true,
       }).result,
       `<span>1</span> <span>2</span> <span>3</span>`,
       "23.01"
     );
     t.strictSame(
-      m(`<spanner>1</spanner> <spanner>2</spanner> <spanner>3</spanner>`, {
+      m(t, `<spanner>1</spanner> <spanner>2</spanner> <spanner>3</spanner>`, {
         removeLineBreaks: true,
       }).result,
       `<spanner>1</spanner><spanner>2</spanner><spanner>3</spanner>`,
       "23.02"
     );
     t.strictSame(
-      m(`<spa n="m">1</spa> <spa n="m">2</spa> <spa n="m">3</spa>`, {
+      m(t, `<spa n="m">1</spa> <spa n="m">2</spa> <spa n="m">3</spa>`, {
         removeLineBreaks: true,
       }).result,
       `<spa n="m">1</spa><spa n="m">2</spa><spa n="m">3</spa>`,

@@ -1,5 +1,5 @@
 import tap from "tap";
-import { crush as m } from "../dist/html-crush.esm";
+import { m } from "./util/util";
 
 // minification within style tags
 // -----------------------------------------------------------------------------
@@ -8,28 +8,28 @@ tap.test(
   `01 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - minifies around class names - minimal`,
   (t) => {
     t.strictSame(
-      m(`<style>\n\ta {\ndisplay:block;\n}`, {
+      m(t, `<style>\n\ta {\ndisplay:block;\n}`, {
         removeLineBreaks: true,
       }).result,
       `<style>a{display:block;}`,
       "01.01"
     );
     t.strictSame(
-      m(`<style>\na{\ndisplay:block;\n}`, {
+      m(t, `<style>\na{\ndisplay:block;\n}`, {
         removeLineBreaks: true,
       }).result,
       `<style>a{display:block;}`,
       "01.02"
     );
     t.strictSame(
-      m(`<style> \t\t\t      a    {     display:block;     }`, {
+      m(t, `<style> \t\t\t      a    {     display:block;     }`, {
         removeLineBreaks: true,
       }).result,
       `<style>a{display:block;}`,
       "01.03"
     );
     t.strictSame(
-      m(`<style>a{display:block;}`, {
+      m(t, `<style>a{display:block;}`, {
         removeLineBreaks: true,
       }).result,
       `<style>a{display:block;}`,
@@ -43,28 +43,28 @@ tap.test(
   `02 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - minifies around class names - spaces`,
   (t) => {
     t.strictSame(
-      m(`<style>\na something here {display:block;}`, {
+      m(t, `<style>\na something here {display:block;}`, {
         removeLineBreaks: true,
       }).result,
       `<style>a something here{display:block;}`,
       "02.01"
     );
     t.strictSame(
-      m(`<style>\na.something.here {display:block;}`, {
+      m(t, `<style>\na.something.here {display:block;}`, {
         removeLineBreaks: true,
       }).result,
       `<style>a.something.here{display:block;}`,
       "02.02"
     );
     t.strictSame(
-      m(`<style>\na something#here {display:block;}`, {
+      m(t, `<style>\na something#here {display:block;}`, {
         removeLineBreaks: true,
       }).result,
       `<style>a something#here{display:block;}`,
       "02.03"
     );
     t.strictSame(
-      m(`<style>\na  something#here {display:block;}`, {
+      m(t, `<style>\na  something#here {display:block;}`, {
         removeLineBreaks: true,
       }).result,
       `<style>a something#here{display:block;}`,
@@ -78,35 +78,35 @@ tap.test(
   `03 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - minifies around class names - element > element`,
   (t) => {
     t.strictSame(
-      m(`<style>\na>something#here {display:block;}`, {
+      m(t, `<style>\na>something#here {display:block;}`, {
         removeLineBreaks: true,
       }).result,
       `<style>a>something#here{display:block;}`,
       "03.01"
     );
     t.strictSame(
-      m(`<style>\na > something#here {display:block;}`, {
+      m(t, `<style>\na > something#here {display:block;}`, {
         removeLineBreaks: true,
       }).result,
       `<style>a>something#here{display:block;}`,
       "03.02"
     );
     t.strictSame(
-      m(`<style>\na> something#here {display:block;}`, {
+      m(t, `<style>\na> something#here {display:block;}`, {
         removeLineBreaks: true,
       }).result,
       `<style>a>something#here{display:block;}`,
       "03.03"
     );
     t.strictSame(
-      m(`<style>\na> something #here {display:block;}`, {
+      m(t, `<style>\na> something #here {display:block;}`, {
         removeLineBreaks: true,
       }).result,
       `<style>a>something #here{display:block;}`,
       "03.04"
     );
     t.strictSame(
-      m(`<style>\na> something  #here {display:block;}`, {
+      m(t, `<style>\na> something  #here {display:block;}`, {
         removeLineBreaks: true,
       }).result,
       `<style>a>something #here{display:block;}`,
@@ -120,28 +120,28 @@ tap.test(
   `04 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - minifies around class names - element + element`,
   (t) => {
     t.strictSame(
-      m(`<style>\na+something#here+there {display:block;}`, {
+      m(t, `<style>\na+something#here+there {display:block;}`, {
         removeLineBreaks: true,
       }).result,
       `<style>a+something#here+there{display:block;}`,
       "04.01"
     );
     t.strictSame(
-      m(`<style>\na + something#here + there {display:block;}`, {
+      m(t, `<style>\na + something#here + there {display:block;}`, {
         removeLineBreaks: true,
       }).result,
       `<style>a+something#here+there{display:block;}`,
       "04.02"
     );
     t.strictSame(
-      m(`<style>\na + something #here + there {display:block;}`, {
+      m(t, `<style>\na + something #here + there {display:block;}`, {
         removeLineBreaks: true,
       }).result,
       `<style>a+something #here+there{display:block;}`,
       "04.03"
     );
     t.strictSame(
-      m(`<style>\na  +  something#here  +  there  {\ndisplay:block;\n}`, {
+      m(t, `<style>\na  +  something#here  +  there  {\ndisplay:block;\n}`, {
         removeLineBreaks: true,
       }).result,
       `<style>a+something#here+there{display:block;}`,
@@ -149,6 +149,7 @@ tap.test(
     );
     t.strictSame(
       m(
+        t,
         `<style>\n   a   +    something  #here   +   there   {\n   display: block;   \n}`,
         {
           removeLineBreaks: true,
@@ -165,28 +166,28 @@ tap.test(
   `05 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - minifies around class names - element ~ element`,
   (t) => {
     t.strictSame(
-      m(`<style>\na~something#here~there {display:block;}`, {
+      m(t, `<style>\na~something#here~there {display:block;}`, {
         removeLineBreaks: true,
       }).result,
       `<style>a~something#here~there{display:block;}`,
       "05.01"
     );
     t.strictSame(
-      m(`<style>\na ~ something#here ~ there {display:block;}`, {
+      m(t, `<style>\na ~ something#here ~ there {display:block;}`, {
         removeLineBreaks: true,
       }).result,
       `<style>a~something#here~there{display:block;}`,
       "05.02"
     );
     t.strictSame(
-      m(`<style>\na ~ something #here ~ there {display:block;}`, {
+      m(t, `<style>\na ~ something #here ~ there {display:block;}`, {
         removeLineBreaks: true,
       }).result,
       `<style>a~something #here~there{display:block;}`,
       "05.03"
     );
     t.strictSame(
-      m(`<style>\na  ~  something#here  ~  there  {\ndisplay:block;\n}`, {
+      m(t, `<style>\na  ~  something#here  ~  there  {\ndisplay:block;\n}`, {
         removeLineBreaks: true,
       }).result,
       `<style>a~something#here~there{display:block;}`,
@@ -194,6 +195,7 @@ tap.test(
     );
     t.strictSame(
       m(
+        t,
         `<style>\n   a   ~    something  #here   ~   there   {\n   display: block;   \n}`,
         {
           removeLineBreaks: true,
@@ -210,14 +212,14 @@ tap.test(
   `06 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - removes CSS comments`,
   (t) => {
     t.strictSame(
-      m(`<style> a { display:block; } /* TAB STYLES */`, {
+      m(t, `<style> a { display:block; } /* TAB STYLES */`, {
         removeLineBreaks: true,
       }).result,
       `<style>a{display:block;}`,
       "06.01"
     );
     t.strictSame(
-      m(`<style> a { display:block; } /* TAB STYLES */`, {
+      m(t, `<style> a { display:block; } /* TAB STYLES */`, {
         removeLineBreaks: false,
       }).result,
       `<style> a { display:block; }`,
@@ -231,28 +233,28 @@ tap.test(
   `07 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - removes whitespace in front of !important`,
   (t) => {
     t.strictSame(
-      m(`<style>\n  a { display:block!important; }`, {
+      m(t, `<style>\n  a { display:block!important; }`, {
         removeLineBreaks: true,
       }).result,
       `<style>a{display:block!important;}`,
       "07.01 - no space"
     );
     t.strictSame(
-      m(`<style>\n  a { display:block !important; }`, {
+      m(t, `<style>\n  a { display:block !important; }`, {
         removeLineBreaks: true,
       }).result,
       `<style>a{display:block!important;}`,
       "07.02 - one space"
     );
     t.strictSame(
-      m(`<style>\n  a { display:block  !important; }`, {
+      m(t, `<style>\n  a { display:block  !important; }`, {
         removeLineBreaks: true,
       }).result,
       `<style>a{display:block!important;}`,
       "07.03 - two spaces"
     );
     t.strictSame(
-      m(`<style>/*  `, {
+      m(t, `<style>/*  `, {
         removeLineBreaks: true,
       }).result,
       `<style>`,
@@ -269,7 +271,7 @@ tap.test(
       'a\n    <script src="tralala.js">    \n    \t    a  a   \n  \t   </script>\n    b';
 
     t.strictSame(
-      m(source, {
+      m(t, source, {
         removeLineBreaks: false,
         removeIndentations: false,
       }).result,
@@ -277,7 +279,7 @@ tap.test(
       "08.01"
     );
     t.strictSame(
-      m(source, {
+      m(t, source, {
         removeLineBreaks: false,
         removeIndentations: true,
       }).result,
@@ -285,14 +287,14 @@ tap.test(
       "08.02"
     );
     t.strictSame(
-      m(source, {
+      m(t, source, {
         removeLineBreaks: true,
       }).result,
       'a\n<script src="tralala.js">    \n    \t    a  a   \n</script> b',
       "08.03"
     );
     t.strictSame(
-      m(source, {
+      m(t, source, {
         removeLineBreaks: true,
         lineLengthLimit: 10,
       }).result,
@@ -308,6 +310,7 @@ tap.test(
   (t) => {
     t.strictSame(
       m(
+        t,
         `<!--[if lte mso 11]>
 <style type="text/css">
 .class { width:100% !important; }
@@ -333,6 +336,7 @@ tap.test(
   (t) => {
     t.strictSame(
       m(
+        t,
         `<!--[if lte mso 11]>
 <style type="text/css">
 .class { width:100% !important; }
@@ -359,6 +363,7 @@ tap.test(
   (t) => {
     t.strictSame(
       m(
+        t,
         `<!--[if lte mso 11]>
 <style type="text/css">
 .class { width:100% !important; }
@@ -406,6 +411,7 @@ tap.test(
   (t) => {
     t.strictSame(
       m(
+        t,
         `<!--[if lte mso 11]>
 <style type="text/css">
 .class { width:100% !important; }

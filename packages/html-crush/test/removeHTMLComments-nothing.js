@@ -1,5 +1,5 @@
 import tap from "tap";
-import { crush as m } from "../dist/html-crush.esm";
+import { m } from "./util/util";
 
 // grouped tests
 tap.test(
@@ -18,7 +18,7 @@ tap.test(
       `<!-- tralala -->`,
     ].forEach((source) => {
       t.match(
-        m(source, {
+        m(t, source, {
           removeHTMLComments: false,
         }),
         {

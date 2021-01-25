@@ -922,8 +922,10 @@ function crush(str, originalOpts) {
     }
 
     if (finalIndexesToDelete.current()) {
+      var ranges = finalIndexesToDelete.current();
+      finalIndexesToDelete.wipe();
       var startingPercentageDone = opts.reportProgressFuncTo - (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage;
-      var res = rangesApply.rApply(str, finalIndexesToDelete.current(), function (applyPercDone) {
+      var res = rangesApply.rApply(str, ranges, function (applyPercDone) {
         // allocate remaining "leavePercForLastStage" percentage of the total
         // progress reporting to this stage:
         if (opts.reportProgressFunc && len >= 2000) {
@@ -935,7 +937,6 @@ function crush(str, originalOpts) {
           }
         }
       });
-      finalIndexesToDelete.wipe();
       var resLen = res.length;
       return {
         log: {
@@ -945,7 +946,7 @@ function crush(str, originalOpts) {
           bytesSaved: Math.max(len - resLen, 0),
           percentageReducedOfOriginal: len ? Math.round(Math.max(len - resLen, 0) * 100 / len) : 0
         },
-        ranges: finalIndexesToDelete.current(),
+        ranges: ranges,
         applicableOpts: applicableOpts,
         result: res
       };
@@ -960,7 +961,7 @@ function crush(str, originalOpts) {
       percentageReducedOfOriginal: 0
     },
     applicableOpts: applicableOpts,
-    ranges: [],
+    ranges: null,
     result: str
   };
 }

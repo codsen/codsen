@@ -1,5 +1,5 @@
 import tap from "tap";
-import { crush as m } from "../dist/html-crush.esm";
+import { m } from "./util/util";
 
 // opts.removeIndentations
 // -----------------------------------------------------------------------------
@@ -8,7 +8,7 @@ tap.test(
   `01 - ${`\u001b[${33}m${`opts.removeIndentations`}\u001b[${39}m`} - collapses whitespace on removeIndentations`,
   (t) => {
     t.strictSame(
-      m("a   b\nc    d", {
+      m(t, "a   b\nc    d", {
         removeLineBreaks: false,
         removeIndentations: true,
       }).result,
@@ -23,7 +23,7 @@ tap.test(
   `02 - ${`\u001b[${33}m${`opts.removeIndentations`}\u001b[${39}m`} - trailing whitespace on removeIndentations`,
   (t) => {
     t.strictSame(
-      m("a   \nb    ", {
+      m(t, "a   \nb    ", {
         removeLineBreaks: false,
         removeIndentations: true,
       }).result,
@@ -39,6 +39,7 @@ tap.test(
   (t) => {
     t.strictSame(
       m(
+        t,
         `
 
 

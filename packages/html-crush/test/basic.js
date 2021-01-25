@@ -1,11 +1,11 @@
 import tap from "tap";
-import { crush as m } from "../dist/html-crush.esm";
+import { m } from "./util/util";
 
 tap.test(
   `01 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - deletes trailing space`,
   (t) => {
     t.match(
-      m(" <a> \n <b> ", {
+      m(t, " <a> \n <b> ", {
         removeLineBreaks: true,
       }),
       {
@@ -18,7 +18,7 @@ tap.test(
       "01.01"
     );
     t.match(
-      m(" <a>\n<b> ", {
+      m(t, " <a>\n<b> ", {
         removeLineBreaks: true,
       }),
       {
@@ -31,7 +31,7 @@ tap.test(
       "01.02"
     );
     t.match(
-      m(" <section> \n <article> ", {
+      m(t, " <section> \n <article> ", {
         removeLineBreaks: true,
       }),
       {
@@ -52,7 +52,7 @@ tap.test(
   `02 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - retains trailing linebreak`,
   (t) => {
     t.match(
-      m(" <a> \n <b> \n", {
+      m(t, " <a> \n <b> \n", {
         removeLineBreaks: true,
       }),
       {
@@ -73,7 +73,7 @@ tap.test(
   `03 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - trailing line break`,
   (t) => {
     t.match(
-      m(" a \n b \n", {
+      m(t, " a \n b \n", {
         removeLineBreaks: true,
       }),
       {
@@ -93,7 +93,7 @@ tap.test(
   `04 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - multiple line breaks`,
   (t) => {
     t.match(
-      m(" a \n b\n\n\nc ", {
+      m(t, " a \n b\n\n\nc ", {
         removeLineBreaks: true,
       }),
       {
@@ -113,7 +113,7 @@ tap.test(
   `05 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - ends with character`,
   (t) => {
     t.match(
-      m(" a \n b\n\n\nc", {
+      m(t, " a \n b\n\n\nc", {
         removeLineBreaks: true,
       }),
       {
@@ -133,7 +133,7 @@ tap.test(
   `06 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - tags, end with character`,
   (t) => {
     t.match(
-      m(" <x> \n <y>\n\n\n<z>", {
+      m(t, " <x> \n <y>\n\n\n<z>", {
         removeLineBreaks: true,
       }),
       {
@@ -146,7 +146,7 @@ tap.test(
       "06.01"
     );
     t.match(
-      m(" <a> \n <b>\n\n\n<i>\n\n\n<c>", {
+      m(t, " <a> \n <b>\n\n\n<i>\n\n\n<c>", {
         removeLineBreaks: true,
       }),
       {
@@ -167,7 +167,7 @@ tap.test(
   (t) => {
     const src = `<!--<![endif]-->`;
     t.match(
-      m(src, {
+      m(t, src, {
         removeLineBreaks: true,
       }),
       {

@@ -1,5 +1,5 @@
 import tap from "tap";
-import { crush as m } from "../dist/html-crush.esm";
+import { m } from "./util/util";
 
 function strip(str) {
   if (typeof str === "string") {
@@ -15,16 +15,27 @@ function strip(str) {
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - nothing to minify`,
+  `01 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - nothing to minify, empty`,
   (t) => {
-    t.strictSame(m("").result, "", "01.01");
-    t.strictSame(m("zzzz").result, "zzzz", "01.02");
+    const input = "";
+    t.strictSame(m(t, input).result, input, "01.01");
+    t.strictSame(m(t, input).ranges, null, "01.02");
     t.end();
   }
 );
 
 tap.test(
-  `02 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - minimal string of few words`,
+  `02 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - nothing to minify, non-empty`,
+  (t) => {
+    const input = "zzzz";
+    t.strictSame(m(t, input).result, input, "02.01");
+    t.strictSame(m(t, input).ranges, null, "02.02");
+    t.end();
+  }
+);
+
+tap.test(
+  `03 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - minimal string of few words`,
   (t) => {
     const source = ` \t
 <x>\t\t
@@ -36,19 +47,21 @@ tap.test(
 `;
 
     t.strictSame(
-      m(source, { removeLineBreaks: true }).result,
+      m(t, source, { removeLineBreaks: true }).result,
       "<x><y> c </y></x>\n",
       "02.01 - defaults: remove both indentations and linebreaks"
     );
 
     t.strictSame(
-      m(source, { removeLineBreaks: true, removeIndentations: false }).result,
+      m(t, source, { removeLineBreaks: true, removeIndentations: false })
+        .result,
       "<x><y> c </y></x>\n",
       "02.02 - disabling indentation removal while keeping linebreak removal is futile"
     );
 
     t.equal(
-      m(source, { removeLineBreaks: false, removeIndentations: true }).result,
+      m(t, source, { removeLineBreaks: false, removeIndentations: true })
+        .result,
       `<x>
 <y>
 c
@@ -59,7 +72,8 @@ c
     );
 
     t.equal(
-      m(source, { removeLineBreaks: false, removeIndentations: false }).result,
+      m(t, source, { removeLineBreaks: false, removeIndentations: false })
+        .result,
       `
 <x>
   <y>
@@ -71,14 +85,15 @@ c
     );
 
     t.equal(
-      m(source, { removeLineBreaks: true, removeIndentations: true }).result,
+      m(t, source, { removeLineBreaks: true, removeIndentations: true }).result,
       `<x><y> c </y></x>
 `,
       "02.05 - line breaks on"
     );
 
     t.equal(
-      m(source, { removeLineBreaks: true, removeIndentations: false }).result,
+      m(t, source, { removeLineBreaks: true, removeIndentations: false })
+        .result,
       `<x><y> c </y></x>
 `,
       "02.06 - line breaks on"
@@ -92,38 +107,39 @@ tap.test(
   (t) => {
     // removeLineBreaks: true
     t.equal(
-      m("\n<x>\n  <y>\n    c\n  </y>\n</x>\n", { removeLineBreaks: true })
+      m(t, "\n<x>\n  <y>\n    c\n  </y>\n</x>\n", { removeLineBreaks: true })
         .result,
       "<x><y> c </y></x>\n",
       "03.01 - default settings, single trailing line breaks at EOF"
     );
     t.equal(
-      m("\n<x>\n  <y>\n    c\n  </y>\n</x>\n\n", { removeLineBreaks: true })
+      m(t, "\n<x>\n  <y>\n    c\n  </y>\n</x>\n\n", { removeLineBreaks: true })
         .result,
       "<x><y> c </y></x>\n",
       "03.02 - default settings, double trailing line breaks at EOF"
     );
     t.equal(
-      m("\n<x>\n  <y>\n    c\n  </y>\n</x>", { removeLineBreaks: true }).result,
+      m(t, "\n<x>\n  <y>\n    c\n  </y>\n</x>", { removeLineBreaks: true })
+        .result,
       "<x><y> c </y></x>",
       "03.03 - default settings, no trailing line breaks at EOF"
     );
 
     // removeLineBreaks: false
     t.equal(
-      m("\n<x>\n  <y>\n    c\n  </y>\n</x>\n", { removeLineBreaks: false })
+      m(t, "\n<x>\n  <y>\n    c\n  </y>\n</x>\n", { removeLineBreaks: false })
         .result,
       "<x>\n<y>\nc\n</y>\n</x>\n",
       "03.04 - default settings, single trailing line breaks at EOF"
     );
     t.equal(
-      m("\n<x>\n  <y>\n    c\n  </y>\n</x>\n\n", { removeLineBreaks: false })
+      m(t, "\n<x>\n  <y>\n    c\n  </y>\n</x>\n\n", { removeLineBreaks: false })
         .result,
       "<x>\n<y>\nc\n</y>\n</x>\n",
       "03.05 - default settings, double trailing line breaks at EOF"
     );
     t.equal(
-      m("\n<x>\n  <y>\n    c\n  </y>\n</x>", { removeLineBreaks: false })
+      m(t, "\n<x>\n  <y>\n    c\n  </y>\n</x>", { removeLineBreaks: false })
         .result,
       "<x>\n<y>\nc\n</y>\n</x>",
       "03.06 - default settings, no trailing line breaks at EOF"
@@ -155,7 +171,7 @@ tap.test(
     const minified = "<x><y> c </y></x><x><y> c </y></x><x><y> c </y></x>\n";
 
     t.equal(
-      m(original, { removeLineBreaks: true }).result,
+      m(t, original, { removeLineBreaks: true }).result,
       minified,
       "04.01 - default settings"
     );
@@ -170,7 +186,7 @@ tap.test(
 </y></x>
 `;
     t.equal(
-      m(original, {
+      m(t, original, {
         removeLineBreaks: true,
         lineLengthLimit: 8,
       }).result,
@@ -178,7 +194,7 @@ tap.test(
       "04.03"
     );
 
-    m(original, {
+    m(t, original, {
       lineLengthLimit: 8,
     })
       .result.split("\n")
@@ -213,97 +229,127 @@ tap.test(
   `05 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - when chunk of characters without break points is longer than line limit - spaces`,
   (t) => {
     t.strictSame(
-      m("aaaaaa bbbbbb cccccc", { removeLineBreaks: false, lineLengthLimit: 0 })
-        .result,
+      m(t, "aaaaaa bbbbbb cccccc", {
+        removeLineBreaks: false,
+        lineLengthLimit: 0,
+      }).result,
       "aaaaaa bbbbbb cccccc",
       "05.01-1"
     );
     t.strictSame(
-      m("aaaaaa bbbbbb cccccc", { removeLineBreaks: true, lineLengthLimit: 0 })
-        .result,
+      m(t, "aaaaaa bbbbbb cccccc", {
+        removeLineBreaks: true,
+        lineLengthLimit: 0,
+      }).result,
       "aaaaaa bbbbbb cccccc",
       "05.02-2"
     );
     t.strictSame(
-      m("aaaaaa bbbbbb cccccc", { removeLineBreaks: true, lineLengthLimit: 1 })
-        .result,
+      m(t, "aaaaaa bbbbbb cccccc", {
+        removeLineBreaks: true,
+        lineLengthLimit: 1,
+      }).result,
       "aaaaaa\nbbbbbb\ncccccc",
       "05.03"
     );
     t.strictSame(
-      m("aaaaaa bbbbbb cccccc", { removeLineBreaks: true, lineLengthLimit: 2 })
-        .result,
+      m(t, "aaaaaa bbbbbb cccccc", {
+        removeLineBreaks: true,
+        lineLengthLimit: 2,
+      }).result,
       "aaaaaa\nbbbbbb\ncccccc",
       "05.04"
     );
     t.strictSame(
-      m("aaaaaa bbbbbb cccccc", { removeLineBreaks: true, lineLengthLimit: 3 })
-        .result,
+      m(t, "aaaaaa bbbbbb cccccc", {
+        removeLineBreaks: true,
+        lineLengthLimit: 3,
+      }).result,
       "aaaaaa\nbbbbbb\ncccccc",
       "05.05"
     );
     t.strictSame(
-      m("aaaaaa bbbbbb cccccc", { removeLineBreaks: true, lineLengthLimit: 4 })
-        .result,
+      m(t, "aaaaaa bbbbbb cccccc", {
+        removeLineBreaks: true,
+        lineLengthLimit: 4,
+      }).result,
       "aaaaaa\nbbbbbb\ncccccc",
       "05.06"
     );
     t.strictSame(
-      m("aaaaaa bbbbbb cccccc", { removeLineBreaks: true, lineLengthLimit: 5 })
-        .result,
+      m(t, "aaaaaa bbbbbb cccccc", {
+        removeLineBreaks: true,
+        lineLengthLimit: 5,
+      }).result,
       "aaaaaa\nbbbbbb\ncccccc",
       "05.07"
     );
     t.strictSame(
-      m("aaaaaa bbbbbb cccccc", { removeLineBreaks: true, lineLengthLimit: 6 })
-        .result,
+      m(t, "aaaaaa bbbbbb cccccc", {
+        removeLineBreaks: true,
+        lineLengthLimit: 6,
+      }).result,
       "aaaaaa\nbbbbbb\ncccccc",
       "05.08"
     );
     t.strictSame(
-      m("aaaaaa bbbbbb cccccc", { removeLineBreaks: true, lineLengthLimit: 7 })
-        .result,
+      m(t, "aaaaaa bbbbbb cccccc", {
+        removeLineBreaks: true,
+        lineLengthLimit: 7,
+      }).result,
       "aaaaaa\nbbbbbb\ncccccc",
       "05.09"
     );
     t.strictSame(
-      m("aaaaaa bbbbbb cccccc", { removeLineBreaks: true, lineLengthLimit: 8 })
-        .result,
+      m(t, "aaaaaa bbbbbb cccccc", {
+        removeLineBreaks: true,
+        lineLengthLimit: 8,
+      }).result,
       "aaaaaa\nbbbbbb\ncccccc",
       "05.10"
     );
     t.strictSame(
-      m("aaaaaa bbbbbb cccccc", { removeLineBreaks: true, lineLengthLimit: 9 })
-        .result,
+      m(t, "aaaaaa bbbbbb cccccc", {
+        removeLineBreaks: true,
+        lineLengthLimit: 9,
+      }).result,
       "aaaaaa\nbbbbbb\ncccccc",
       "05.11"
     );
     t.strictSame(
-      m("aaaaaa bbbbbb cccccc", { removeLineBreaks: true, lineLengthLimit: 10 })
-        .result,
+      m(t, "aaaaaa bbbbbb cccccc", {
+        removeLineBreaks: true,
+        lineLengthLimit: 10,
+      }).result,
       "aaaaaa\nbbbbbb\ncccccc",
       "05.12"
     );
     t.strictSame(
-      m("aaaaaa bbbbbb cccccc", { removeLineBreaks: true, lineLengthLimit: 11 })
-        .result,
+      m(t, "aaaaaa bbbbbb cccccc", {
+        removeLineBreaks: true,
+        lineLengthLimit: 11,
+      }).result,
       "aaaaaa\nbbbbbb\ncccccc",
       "05.13"
     );
     t.strictSame(
-      m("aaaaaa bbbbbb cccccc", { removeLineBreaks: true, lineLengthLimit: 12 })
-        .result,
+      m(t, "aaaaaa bbbbbb cccccc", {
+        removeLineBreaks: true,
+        lineLengthLimit: 12,
+      }).result,
       "aaaaaa\nbbbbbb\ncccccc",
       "05.14 - the very edge"
     );
     t.strictSame(
-      m("aaaaaa bbbbbb cccccc", { removeLineBreaks: true, lineLengthLimit: 13 })
-        .result,
+      m(t, "aaaaaa bbbbbb cccccc", {
+        removeLineBreaks: true,
+        lineLengthLimit: 13,
+      }).result,
       "aaaaaa bbbbbb\ncccccc",
       "05.15"
     );
     t.strictSame(
-      m("aaaaaa  bbbbbb cccccc", {
+      m(t, "aaaaaa  bbbbbb cccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 13,
       }).result,
@@ -311,7 +357,7 @@ tap.test(
       "05.16 - double space"
     );
     t.strictSame(
-      m("aaaaaa\n\nbbbbbb cccccc", {
+      m(t, "aaaaaa\n\nbbbbbb cccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 13,
       }).result,
@@ -319,7 +365,7 @@ tap.test(
       "05.17 - double linebreak"
     );
     t.strictSame(
-      m("aaaaaa \n \n bbbbbb cccccc", {
+      m(t, "aaaaaa \n \n bbbbbb cccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 13,
       }).result,
@@ -327,7 +373,7 @@ tap.test(
       "05.18 - double linebreak with spaces"
     );
     t.strictSame(
-      m("aaaaaa\t\n\t\n\tbbbbbb cccccc", {
+      m(t, "aaaaaa\t\n\t\n\tbbbbbb cccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 13,
       }).result,
@@ -335,14 +381,18 @@ tap.test(
       "05.19 - double linebreak with spaces"
     );
     t.strictSame(
-      m("aaaaaa bbbbbb cccccc", { removeLineBreaks: true, lineLengthLimit: 14 })
-        .result,
+      m(t, "aaaaaa bbbbbb cccccc", {
+        removeLineBreaks: true,
+        lineLengthLimit: 14,
+      }).result,
       "aaaaaa bbbbbb\ncccccc",
       "05.20 - two chunks can stay on one line generously"
     );
     t.strictSame(
-      m("aaaaaa bbbbbb cccccc", { removeLineBreaks: true, lineLengthLimit: 15 })
-        .result,
+      m(t, "aaaaaa bbbbbb cccccc", {
+        removeLineBreaks: true,
+        lineLengthLimit: 15,
+      }).result,
       "aaaaaa bbbbbb\ncccccc",
       "05.21 - two chunks can stay on one line generously"
     );
@@ -354,7 +404,7 @@ tap.test(
   `06 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - when chunk of characters without break points is longer than line limit - linebreaks`,
   (t) => {
     t.strictSame(
-      m("aaaaaa\nbbbbbb\ncccccc", {
+      m(t, "aaaaaa\nbbbbbb\ncccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 0,
       }).result,
@@ -362,7 +412,7 @@ tap.test(
       "06.01"
     );
     t.strictSame(
-      m("aaaaaa\nbbbbbb\ncccccc", {
+      m(t, "aaaaaa\nbbbbbb\ncccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 1,
       }).result,
@@ -370,7 +420,7 @@ tap.test(
       "06.02"
     );
     t.strictSame(
-      m("aaaaaa\nbbbbbb\ncccccc", {
+      m(t, "aaaaaa\nbbbbbb\ncccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 2,
       }).result,
@@ -378,7 +428,7 @@ tap.test(
       "06.03"
     );
     t.strictSame(
-      m("aaaaaa\nbbbbbb\ncccccc", {
+      m(t, "aaaaaa\nbbbbbb\ncccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 3,
       }).result,
@@ -386,7 +436,7 @@ tap.test(
       "06.04"
     );
     t.strictSame(
-      m("aaaaaa\nbbbbbb\ncccccc", {
+      m(t, "aaaaaa\nbbbbbb\ncccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 4,
       }).result,
@@ -394,7 +444,7 @@ tap.test(
       "06.05"
     );
     t.strictSame(
-      m("aaaaaa\nbbbbbb\ncccccc", {
+      m(t, "aaaaaa\nbbbbbb\ncccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 5,
       }).result,
@@ -402,7 +452,7 @@ tap.test(
       "06.06"
     );
     t.strictSame(
-      m("aaaaaa\nbbbbbb\ncccccc", {
+      m(t, "aaaaaa\nbbbbbb\ncccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 6,
       }).result,
@@ -410,7 +460,7 @@ tap.test(
       "06.07"
     );
     t.strictSame(
-      m("aaaaaa\nbbbbbb\ncccccc", {
+      m(t, "aaaaaa\nbbbbbb\ncccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 7,
       }).result,
@@ -418,7 +468,7 @@ tap.test(
       "06.08"
     );
     t.strictSame(
-      m("aaaaaa\nbbbbbb\ncccccc", {
+      m(t, "aaaaaa\nbbbbbb\ncccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 8,
       }).result,
@@ -426,7 +476,7 @@ tap.test(
       "06.09"
     );
     t.strictSame(
-      m("aaaaaa\nbbbbbb\ncccccc", {
+      m(t, "aaaaaa\nbbbbbb\ncccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 9,
       }).result,
@@ -434,7 +484,7 @@ tap.test(
       "06.10"
     );
     t.strictSame(
-      m("aaaaaa\nbbbbbb\ncccccc", {
+      m(t, "aaaaaa\nbbbbbb\ncccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 10,
       }).result,
@@ -442,7 +492,7 @@ tap.test(
       "06.11"
     );
     t.strictSame(
-      m("aaaaaa\nbbbbbb\ncccccc", {
+      m(t, "aaaaaa\nbbbbbb\ncccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 11,
       }).result,
@@ -450,7 +500,7 @@ tap.test(
       "06.12"
     );
     t.strictSame(
-      m("aaaaaa\nbbbbbb\ncccccc", {
+      m(t, "aaaaaa\nbbbbbb\ncccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 12,
       }).result,
@@ -458,7 +508,7 @@ tap.test(
       "06.13 - the very edge"
     );
     t.strictSame(
-      m("aaaaaa\nbbbbbb\ncccccc", {
+      m(t, "aaaaaa\nbbbbbb\ncccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 100,
       }).result,
@@ -473,7 +523,7 @@ tap.test(
   `07 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - when chunk of characters without break points is longer than line limit - double linebreaks`,
   (t) => {
     t.strictSame(
-      m("aaaaaa\n\nbbbbbb\n\ncccccc", {
+      m(t, "aaaaaa\n\nbbbbbb\n\ncccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 0,
       }).result,
@@ -481,7 +531,7 @@ tap.test(
       "07.01"
     );
     t.strictSame(
-      m("aaaaaa\n\nbbbbbb\n\ncccccc", {
+      m(t, "aaaaaa\n\nbbbbbb\n\ncccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 1,
       }).result,
@@ -489,7 +539,7 @@ tap.test(
       "07.02"
     );
     t.strictSame(
-      m("aaaaaa\n\nbbbbbb\n\ncccccc", {
+      m(t, "aaaaaa\n\nbbbbbb\n\ncccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 2,
       }).result,
@@ -497,7 +547,7 @@ tap.test(
       "07.03"
     );
     t.strictSame(
-      m("aaaaaa\n\nbbbbbb\n\ncccccc", {
+      m(t, "aaaaaa\n\nbbbbbb\n\ncccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 3,
       }).result,
@@ -505,7 +555,7 @@ tap.test(
       "07.04"
     );
     t.strictSame(
-      m("aaaaaa\n\nbbbbbb\n\ncccccc", {
+      m(t, "aaaaaa\n\nbbbbbb\n\ncccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 4,
       }).result,
@@ -513,7 +563,7 @@ tap.test(
       "07.05"
     );
     t.strictSame(
-      m("aaaaaa\n\nbbbbbb\n\ncccccc", {
+      m(t, "aaaaaa\n\nbbbbbb\n\ncccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 5,
       }).result,
@@ -521,7 +571,7 @@ tap.test(
       "07.06"
     );
     t.strictSame(
-      m("aaaaaa\n\nbbbbbb\n\ncccccc", {
+      m(t, "aaaaaa\n\nbbbbbb\n\ncccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 6,
       }).result,
@@ -529,7 +579,7 @@ tap.test(
       "07.07"
     );
     t.strictSame(
-      m("aaaaaa\n\nbbbbbb\n\ncccccc", {
+      m(t, "aaaaaa\n\nbbbbbb\n\ncccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 7,
       }).result,
@@ -537,7 +587,7 @@ tap.test(
       "07.08"
     );
     t.strictSame(
-      m("aaaaaa\n\nbbbbbb\n\ncccccc", {
+      m(t, "aaaaaa\n\nbbbbbb\n\ncccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 8,
       }).result,
@@ -545,7 +595,7 @@ tap.test(
       "07.09"
     );
     t.strictSame(
-      m("aaaaaa\n\nbbbbbb\n\ncccccc", {
+      m(t, "aaaaaa\n\nbbbbbb\n\ncccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 9,
       }).result,
@@ -553,7 +603,7 @@ tap.test(
       "07.10"
     );
     t.strictSame(
-      m("aaaaaa\n\nbbbbbb\n\ncccccc", {
+      m(t, "aaaaaa\n\nbbbbbb\n\ncccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 10,
       }).result,
@@ -561,7 +611,7 @@ tap.test(
       "07.11"
     );
     t.strictSame(
-      m("aaaaaa\n\nbbbbbb\n\ncccccc", {
+      m(t, "aaaaaa\n\nbbbbbb\n\ncccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 11,
       }).result,
@@ -569,7 +619,7 @@ tap.test(
       "07.12"
     );
     t.strictSame(
-      m("aaaaaa\n\nbbbbbb\n\ncccccc", {
+      m(t, "aaaaaa\n\nbbbbbb\n\ncccccc", {
         removeLineBreaks: true,
         lineLengthLimit: 12,
       }).result,
@@ -584,56 +634,74 @@ tap.test(
   `08 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - tags with single space between them`,
   (t) => {
     t.strictSame(
-      m("<aaaa> <bbbb> <cccc>", { removeLineBreaks: true, lineLengthLimit: 0 })
-        .result,
+      m(t, "<aaaa> <bbbb> <cccc>", {
+        removeLineBreaks: true,
+        lineLengthLimit: 0,
+      }).result,
       "<aaaa><bbbb><cccc>",
       "08.01 - same but with tags"
     );
     t.strictSame(
-      m("<aaaa> <bbbb> <cccc>", { removeLineBreaks: true, lineLengthLimit: 1 })
-        .result,
+      m(t, "<aaaa> <bbbb> <cccc>", {
+        removeLineBreaks: true,
+        lineLengthLimit: 1,
+      }).result,
       "<aaaa>\n<bbbb>\n<cccc>",
       "08.02 - the very edge"
     );
     t.strictSame(
-      m("<aaaa> <bbbb> <cccc>", { removeLineBreaks: true, lineLengthLimit: 2 })
-        .result,
+      m(t, "<aaaa> <bbbb> <cccc>", {
+        removeLineBreaks: true,
+        lineLengthLimit: 2,
+      }).result,
       "<aaaa>\n<bbbb>\n<cccc>",
       "08.03"
     );
     t.strictSame(
-      m("<aaaa> <bbbb> <cccc>", { removeLineBreaks: true, lineLengthLimit: 10 })
-        .result,
+      m(t, "<aaaa> <bbbb> <cccc>", {
+        removeLineBreaks: true,
+        lineLengthLimit: 10,
+      }).result,
       "<aaaa>\n<bbbb>\n<cccc>",
       "08.04"
     );
     t.strictSame(
-      m("<aaaa> <bbbb> <cccc>", { removeLineBreaks: true, lineLengthLimit: 11 })
-        .result,
+      m(t, "<aaaa> <bbbb> <cccc>", {
+        removeLineBreaks: true,
+        lineLengthLimit: 11,
+      }).result,
       "<aaaa>\n<bbbb>\n<cccc>",
       "08.05"
     );
     t.strictSame(
-      m("<aaaa> <bbbb> <cccc>", { removeLineBreaks: true, lineLengthLimit: 12 })
-        .result,
+      m(t, "<aaaa> <bbbb> <cccc>", {
+        removeLineBreaks: true,
+        lineLengthLimit: 12,
+      }).result,
       "<aaaa><bbbb>\n<cccc>",
       "08.06"
     );
     t.strictSame(
-      m("<aaaa> <bbbb> <cccc>", { removeLineBreaks: true, lineLengthLimit: 13 })
-        .result,
+      m(t, "<aaaa> <bbbb> <cccc>", {
+        removeLineBreaks: true,
+        lineLengthLimit: 13,
+      }).result,
       "<aaaa><bbbb>\n<cccc>",
       "08.07"
     );
     t.strictSame(
-      m("<aaaa> <bbbb> <cccc>", { removeLineBreaks: true, lineLengthLimit: 14 })
-        .result,
+      m(t, "<aaaa> <bbbb> <cccc>", {
+        removeLineBreaks: true,
+        lineLengthLimit: 14,
+      }).result,
       "<aaaa><bbbb>\n<cccc>",
       "08.08"
     );
     t.strictSame(
-      m("<aaaa> <bbbb> <cccc>", { removeLineBreaks: true, lineLengthLimit: 15 })
-        .result,
+      m(t, "<aaaa> <bbbb> <cccc>", {
+        removeLineBreaks: true,
+        lineLengthLimit: 15,
+      }).result,
       "<aaaa><bbbb>\n<cccc>",
       "08.09"
     );
@@ -645,62 +713,62 @@ tap.test(
   `09 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - breaking between tags`,
   (t) => {
     t.strictSame(
-      m("<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 0 }).result,
+      m(t, "<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 0 }).result,
       "<aa><bb>",
       "09.01"
     );
     t.strictSame(
-      m("<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 1 }).result,
+      m(t, "<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 1 }).result,
       "<aa>\n<bb>",
       "09.02"
     );
     t.strictSame(
-      m("<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 2 }).result,
+      m(t, "<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 2 }).result,
       "<aa>\n<bb>",
       "09.03"
     );
     t.strictSame(
-      m("<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 3 }).result,
+      m(t, "<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 3 }).result,
       "<aa>\n<bb>",
       "09.04"
     );
     t.strictSame(
-      m("<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 4 }).result,
+      m(t, "<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 4 }).result,
       "<aa>\n<bb>",
       "09.05"
     );
     t.strictSame(
-      m("<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 5 }).result,
+      m(t, "<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 5 }).result,
       "<aa>\n<bb>",
       "09.06"
     );
     t.strictSame(
-      m("<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 6 }).result,
+      m(t, "<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 6 }).result,
       "<aa>\n<bb>",
       "09.07"
     );
     t.strictSame(
-      m("<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 7 }).result,
+      m(t, "<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 7 }).result,
       "<aa>\n<bb>",
       "09.08"
     );
     t.strictSame(
-      m("<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 8 }).result,
+      m(t, "<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 8 }).result,
       "<aa><bb>",
       "09.09"
     );
     t.strictSame(
-      m("<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 9 }).result,
+      m(t, "<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 9 }).result,
       "<aa><bb>",
       "09.10"
     );
     t.strictSame(
-      m("<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 10 }).result,
+      m(t, "<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 10 }).result,
       "<aa><bb>",
       "09.11"
     );
     t.strictSame(
-      m("<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 999 }).result,
+      m(t, "<aa><bb>", { removeLineBreaks: true, lineLengthLimit: 999 }).result,
       "<aa><bb>",
       "09.12"
     );
@@ -717,12 +785,13 @@ tap.test(
 
     // at position at character index 4, the break is staged but never submitted:
     t.strictSame(
-      m("<aa><bb><cc>", { removeLineBreaks: true, lineLengthLimit: 8 }).result,
+      m(t, "<aa><bb><cc>", { removeLineBreaks: true, lineLengthLimit: 8 })
+        .result,
       "<aa><bb>\n<cc>",
       "10.01"
     );
     t.strictSame(
-      m("<aa><bb><cc><dd>", { removeLineBreaks: true, lineLengthLimit: 8 })
+      m(t, "<aa><bb><cc><dd>", { removeLineBreaks: true, lineLengthLimit: 8 })
         .result,
       "<aa><bb>\n<cc><dd>",
       "10.02"
@@ -730,13 +799,13 @@ tap.test(
 
     // same as above, but with whitespace
     t.strictSame(
-      m("<aa>\t<bb>\t<cc>", { removeLineBreaks: true, lineLengthLimit: 8 })
+      m(t, "<aa>\t<bb>\t<cc>", { removeLineBreaks: true, lineLengthLimit: 8 })
         .result,
       "<aa><bb>\n<cc>",
       "10.03"
     );
     t.strictSame(
-      m("<aa>\t\t<bb>\t<cc>\t\t<dd>", {
+      m(t, "<aa>\t\t<bb>\t<cc>\t\t<dd>", {
         removeLineBreaks: true,
         lineLengthLimit: 8,
       }).result,
@@ -746,13 +815,13 @@ tap.test(
 
     // same as above, except with trailing tab
     t.strictSame(
-      m("<aa>\t<bb>\t<cc>\t", { removeLineBreaks: true, lineLengthLimit: 8 })
+      m(t, "<aa>\t<bb>\t<cc>\t", { removeLineBreaks: true, lineLengthLimit: 8 })
         .result,
       "<aa><bb>\n<cc>",
       "10.05"
     );
     t.strictSame(
-      m("<aa>\t\t<bb>\t<cc>\t\t<dd>\t", {
+      m(t, "<aa>\t\t<bb>\t<cc>\t\t<dd>\t", {
         removeLineBreaks: true,
         lineLengthLimit: 8,
       }).result,
@@ -771,19 +840,21 @@ tap.test(
     // =============
 
     t.strictSame(
-      m("<aa><bb><cc><dd>", { removeLineBreaks: true, lineLengthLimit: 12 })
+      m(t, "<aa><bb><cc><dd>", { removeLineBreaks: true, lineLengthLimit: 12 })
         .result,
       "<aa><bb><cc>\n<dd>",
       "11.01"
     );
     t.strictSame(
-      m("<aa><bb><cc><dd><ee>", { removeLineBreaks: true, lineLengthLimit: 12 })
-        .result,
+      m(t, "<aa><bb><cc><dd><ee>", {
+        removeLineBreaks: true,
+        lineLengthLimit: 12,
+      }).result,
       "<aa><bb><cc>\n<dd><ee>",
       "11.02"
     );
     t.strictSame(
-      m("<aa><bb><cc><dd><ee><ff>", {
+      m(t, "<aa><bb><cc><dd><ee><ff>", {
         removeLineBreaks: true,
         lineLengthLimit: 12,
       }).result,
@@ -791,7 +862,7 @@ tap.test(
       "11.03"
     );
     t.strictSame(
-      m("<aa><bb><cc><dd><ee><ff><gg>", {
+      m(t, "<aa><bb><cc><dd><ee><ff><gg>", {
         removeLineBreaks: true,
         lineLengthLimit: 12,
       }).result,
@@ -802,13 +873,15 @@ tap.test(
     // tab after first tag:
 
     t.strictSame(
-      m("<aa>\t<bb><cc><dd>", { removeLineBreaks: true, lineLengthLimit: 12 })
-        .result,
+      m(t, "<aa>\t<bb><cc><dd>", {
+        removeLineBreaks: true,
+        lineLengthLimit: 12,
+      }).result,
       "<aa><bb><cc>\n<dd>",
       "11.05"
     );
     t.strictSame(
-      m("<aa>\t<bb><cc><dd><ee>", {
+      m(t, "<aa>\t<bb><cc><dd><ee>", {
         removeLineBreaks: true,
         lineLengthLimit: 12,
       }).result,
@@ -816,7 +889,7 @@ tap.test(
       "11.06"
     );
     t.strictSame(
-      m("<aa>\t<bb><cc><dd><ee><ff>", {
+      m(t, "<aa>\t<bb><cc><dd><ee><ff>", {
         removeLineBreaks: true,
         lineLengthLimit: 12,
       }).result,
@@ -824,7 +897,7 @@ tap.test(
       "11.07"
     );
     t.strictSame(
-      m("<aa>\t<bb><cc><dd><ee><ff><gg>", {
+      m(t, "<aa>\t<bb><cc><dd><ee><ff><gg>", {
         removeLineBreaks: true,
         lineLengthLimit: 12,
       }).result,
@@ -835,13 +908,15 @@ tap.test(
     // tab after second tag:
 
     t.strictSame(
-      m("<aa><bb>\t<cc><dd>", { removeLineBreaks: true, lineLengthLimit: 12 })
-        .result,
+      m(t, "<aa><bb>\t<cc><dd>", {
+        removeLineBreaks: true,
+        lineLengthLimit: 12,
+      }).result,
       "<aa><bb><cc>\n<dd>",
       "11.09"
     );
     t.strictSame(
-      m("<aa><bb>\t<cc><dd><ee>", {
+      m(t, "<aa><bb>\t<cc><dd><ee>", {
         removeLineBreaks: true,
         lineLengthLimit: 12,
       }).result,
@@ -849,7 +924,7 @@ tap.test(
       "11.10"
     );
     t.strictSame(
-      m("<aa><bb>\t<cc><dd><ee><ff>", {
+      m(t, "<aa><bb>\t<cc><dd><ee><ff>", {
         removeLineBreaks: true,
         lineLengthLimit: 12,
       }).result,
@@ -857,7 +932,7 @@ tap.test(
       "11.11"
     );
     t.strictSame(
-      m("<aa><bb>\t<cc><dd><ee><ff><gg>", {
+      m(t, "<aa><bb>\t<cc><dd><ee><ff><gg>", {
         removeLineBreaks: true,
         lineLengthLimit: 12,
       }).result,
@@ -868,13 +943,15 @@ tap.test(
     // tab after third tag:
 
     t.strictSame(
-      m("<aa><bb><cc>\t<dd>", { removeLineBreaks: true, lineLengthLimit: 12 })
-        .result,
+      m(t, "<aa><bb><cc>\t<dd>", {
+        removeLineBreaks: true,
+        lineLengthLimit: 12,
+      }).result,
       "<aa><bb><cc>\n<dd>",
       "11.13"
     );
     t.strictSame(
-      m("<aa><bb><cc>\t<dd><ee>", {
+      m(t, "<aa><bb><cc>\t<dd><ee>", {
         removeLineBreaks: true,
         lineLengthLimit: 12,
       }).result,
@@ -882,7 +959,7 @@ tap.test(
       "11.14"
     );
     t.strictSame(
-      m("<aa><bb><cc>\t<dd><ee><ff>", {
+      m(t, "<aa><bb><cc>\t<dd><ee><ff>", {
         removeLineBreaks: true,
         lineLengthLimit: 12,
       }).result,
@@ -890,7 +967,7 @@ tap.test(
       "11.15"
     );
     t.strictSame(
-      m("<aa><bb><cc>\t<dd><ee><ff><gg>", {
+      m(t, "<aa><bb><cc>\t<dd><ee><ff><gg>", {
         removeLineBreaks: true,
         lineLengthLimit: 12,
       }).result,
@@ -905,7 +982,7 @@ tap.test(
   `12 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - script tags are skipped`,
   (t) => {
     t.strictSame(
-      m("a <script>\n \t\t   na\n  \tz</script> z    ", {
+      m(t, "a <script>\n \t\t   na\n  \tz</script> z    ", {
         removeLineBreaks: false,
         removeIndentations: false,
       }).result,
@@ -913,7 +990,7 @@ tap.test(
       "12.01"
     );
     t.strictSame(
-      m("a <script>\n \t\t   na\n  \tz</script> z    ", {
+      m(t, "a <script>\n \t\t   na\n  \tz</script> z    ", {
         removeLineBreaks: false,
         removeIndentations: true,
       }).result,
@@ -921,7 +998,7 @@ tap.test(
       "12.02 - default"
     );
     t.strictSame(
-      m("a <script>\n \t\t   na\n  \tz</script> z    ", {
+      m(t, "a <script>\n \t\t   na\n  \tz</script> z    ", {
         removeLineBreaks: true,
         removeIndentations: false,
       }).result,
@@ -929,7 +1006,7 @@ tap.test(
       "12.03"
     );
     t.strictSame(
-      m("a <script>\n \t\t   na\n  \tz</script> z    ", {
+      m(t, "a <script>\n \t\t   na\n  \tz</script> z    ", {
         removeLineBreaks: true,
         removeIndentations: true,
       }).result,
@@ -944,7 +1021,7 @@ tap.test(
   `13 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - unfinished script tags are skipped too`,
   (t) => {
     t.strictSame(
-      m("a <script>\n \t\t   na\n  \tz    z    ", {
+      m(t, "a <script>\n \t\t   na\n  \tz    z    ", {
         removeLineBreaks: false,
         removeIndentations: false,
       }).result,
@@ -952,7 +1029,7 @@ tap.test(
       "13.01"
     );
     t.strictSame(
-      m("a <script>\n \t\t   na\n  \tz    z    ", {
+      m(t, "a <script>\n \t\t   na\n  \tz    z    ", {
         removeLineBreaks: false,
         removeIndentations: true,
       }).result,
@@ -960,7 +1037,7 @@ tap.test(
       "13.02 - default"
     );
     t.strictSame(
-      m("a <script>\n \t\t   na\n  \tz    z    ", {
+      m(t, "a <script>\n \t\t   na\n  \tz    z    ", {
         removeLineBreaks: true,
         removeIndentations: false,
       }).result,
@@ -968,7 +1045,7 @@ tap.test(
       "13.03"
     );
     t.strictSame(
-      m("a <script>\n \t\t   na\n  \tz    z    ", {
+      m(t, "a <script>\n \t\t   na\n  \tz    z    ", {
         removeLineBreaks: true,
         removeIndentations: true,
       }).result,
@@ -984,7 +1061,7 @@ tap.test(
   (t) => {
     const preBlock = `<pre id="lalalaa"><code class="tralalaa">    \n    \t   zz    z  \n  \t  r  r  \n \t  </code></pre>`;
     t.strictSame(
-      m(preBlock, {
+      m(t, preBlock, {
         removeLineBreaks: false,
         removeIndentations: false,
       }).result,
@@ -992,7 +1069,7 @@ tap.test(
       "14.01"
     );
     t.strictSame(
-      m(preBlock, {
+      m(t, preBlock, {
         removeLineBreaks: false,
         removeIndentations: true,
       }).result,
@@ -1000,7 +1077,7 @@ tap.test(
       "14.02"
     );
     t.strictSame(
-      m(preBlock, {
+      m(t, preBlock, {
         removeLineBreaks: true,
         removeIndentations: false,
       }).result,
@@ -1008,7 +1085,7 @@ tap.test(
       "14.03"
     );
     t.strictSame(
-      m(preBlock, {
+      m(t, preBlock, {
         removeLineBreaks: true,
         removeIndentations: true,
       }).result,
@@ -1024,7 +1101,7 @@ tap.test(
   (t) => {
     const preBlock = `<![CDATA[          \n     \t   \n  a  a \r     \n a    \t    \t\t\t\t\t  a   \n     \t\t\t    ]]>`;
     t.strictSame(
-      m(preBlock, {
+      m(t, preBlock, {
         removeLineBreaks: false,
         removeIndentations: false,
       }).result,
@@ -1032,7 +1109,7 @@ tap.test(
       "15.01"
     );
     t.strictSame(
-      m(preBlock, {
+      m(t, preBlock, {
         removeLineBreaks: false,
         removeIndentations: true,
       }).result,
@@ -1040,7 +1117,7 @@ tap.test(
       "15.02"
     );
     t.strictSame(
-      m(preBlock, {
+      m(t, preBlock, {
         removeLineBreaks: true,
         removeIndentations: false,
       }).result,
@@ -1048,7 +1125,7 @@ tap.test(
       "15.03"
     );
     t.strictSame(
-      m(preBlock, {
+      m(t, preBlock, {
         removeLineBreaks: true,
         removeIndentations: true,
       }).result,
@@ -1065,7 +1142,7 @@ tap.test(
     // 0. baseline - no whitespace in front of </script>
     const code1 = 'a\n<script>const a = "test";</script> b';
     t.strictSame(
-      m(code1, {
+      m(t, code1, {
         removeLineBreaks: false,
         removeIndentations: false,
       }).result,
@@ -1073,7 +1150,7 @@ tap.test(
       "16.01"
     );
     t.strictSame(
-      m(code1, {
+      m(t, code1, {
         removeLineBreaks: false,
         removeIndentations: true,
       }).result,
@@ -1081,7 +1158,7 @@ tap.test(
       "16.02"
     );
     t.strictSame(
-      m(code1, {
+      m(t, code1, {
         removeLineBreaks: true,
         removeIndentations: false,
       }).result,
@@ -1089,7 +1166,7 @@ tap.test(
       "16.03"
     );
     t.strictSame(
-      m(code1, {
+      m(t, code1, {
         removeLineBreaks: true,
         removeIndentations: true,
       }).result,
@@ -1101,7 +1178,7 @@ tap.test(
     const code2 = 'a\n<script>const a = "test";   \t   </script> b';
     const minified2 = 'a\n<script>const a = "test";</script> b';
     t.strictSame(
-      m(code2, {
+      m(t, code2, {
         removeLineBreaks: false,
         removeIndentations: false,
       }).result,
@@ -1109,7 +1186,7 @@ tap.test(
       "16.05"
     );
     t.strictSame(
-      m(code2, {
+      m(t, code2, {
         removeLineBreaks: false,
         removeIndentations: true,
       }).result,
@@ -1117,7 +1194,7 @@ tap.test(
       "16.06"
     );
     t.strictSame(
-      m(code2, {
+      m(t, code2, {
         removeLineBreaks: true,
       }).result,
       minified2,
@@ -1128,7 +1205,7 @@ tap.test(
     const code3 = 'a\n<script>const a = "test";   \n   </script> b';
     const minified3 = 'a\n<script>const a = "test";   \n</script> b';
     t.strictSame(
-      m(code3, {
+      m(t, code3, {
         removeLineBreaks: false,
         removeIndentations: false,
       }).result,
@@ -1136,7 +1213,7 @@ tap.test(
       "16.08"
     );
     t.strictSame(
-      m(code3, {
+      m(t, code3, {
         removeLineBreaks: false,
         removeIndentations: true,
       }).result,
@@ -1144,7 +1221,7 @@ tap.test(
       "16.09"
     );
     t.strictSame(
-      m(code3, {
+      m(t, code3, {
         removeLineBreaks: true,
       }).result,
       minified3,
@@ -1157,19 +1234,19 @@ tap.test(
 tap.test(
   `17 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - single linebreak is not replaced with a single space`,
   (t) => {
-    t.equal(m("a\nb", { removeLineBreaks: true }).result, "a\nb", "17.01");
+    t.equal(m(t, "a\nb", { removeLineBreaks: true }).result, "a\nb", "17.01");
     t.equal(
-      m("a\nb", { removeLineBreaks: true, lineLengthLimit: 0 }).result,
+      m(t, "a\nb", { removeLineBreaks: true, lineLengthLimit: 0 }).result,
       "a\nb",
       "17.02"
     );
     t.equal(
-      m("a\nb", { removeLineBreaks: true, lineLengthLimit: 100 }).result,
+      m(t, "a\nb", { removeLineBreaks: true, lineLengthLimit: 100 }).result,
       "a\nb",
       "17.03"
     );
     t.equal(
-      m("a\nb", { removeLineBreaks: true, lineLengthLimit: 3 }).result,
+      m(t, "a\nb", { removeLineBreaks: true, lineLengthLimit: 3 }).result,
       "a\nb",
       "17.04"
     );
@@ -1181,22 +1258,22 @@ tap.test(
   `18 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - single linebreak is deleted though`,
   (t) => {
     t.equal(
-      m("<x>\n<y>", { removeLineBreaks: true }).result,
+      m(t, "<x>\n<y>", { removeLineBreaks: true }).result,
       "<x><y>",
       "18.01"
     );
     t.equal(
-      m("<a>\n<y>", { removeLineBreaks: true }).result,
+      m(t, "<a>\n<y>", { removeLineBreaks: true }).result,
       "<a><y>",
       "18.02"
     );
     t.equal(
-      m("<x>\n<a>", { removeLineBreaks: true }).result,
+      m(t, "<x>\n<a>", { removeLineBreaks: true }).result,
       "<x>\n<a>",
       "18.03"
     );
     t.equal(
-      m("<a>\n<b>", { removeLineBreaks: true }).result,
+      m(t, "<a>\n<b>", { removeLineBreaks: true }).result,
       "<a>\n<b>",
       "18.04"
     );
@@ -1261,9 +1338,9 @@ tap.test(
 </html>
 `;
 
-    t.equal(m(source, { removeLineBreaks: true }).result, res1, "19.01");
+    t.equal(m(t, source, { removeLineBreaks: true }).result, res1, "19.01");
     t.equal(
-      m(source, {
+      m(t, source, {
         removeLineBreaks: true,
         breakToTheLeftOf: [
           "</td",
@@ -1290,7 +1367,7 @@ tap.test(
       "19.02"
     );
     t.equal(
-      m(source, {
+      m(t, source, {
         removeLineBreaks: true,
         breakToTheLeftOf: [
           "</td",
@@ -1323,9 +1400,9 @@ tap.test(
   `20 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - doesn't delete whitespace with linebreaks between curlies`,
   (t) => {
     const source = "{% a %}\n\n\n{% a %}";
-    t.equal(m(source, { removeLineBreaks: true }).result, source, "20.01");
+    t.equal(m(t, source, { removeLineBreaks: true }).result, source, "20.01");
     t.equal(
-      m(source, { removeLineBreaks: false }).result,
+      m(t, source, { removeLineBreaks: false }).result,
       "{% a %}\n{% a %}",
       "20.02"
     );
@@ -1337,7 +1414,7 @@ tap.test(
   `21 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - does not mangle different-type line endings, LF`,
   (t) => {
     const source = "a\n";
-    t.equal(m(source).result, source, "21");
+    t.equal(m(t, source).result, source, "21");
     t.end();
   }
 );
@@ -1346,7 +1423,7 @@ tap.test(
   `22 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - does not mangle different-type line endings, CR`,
   (t) => {
     const source = "a\r";
-    t.equal(m(source).result, source, "22");
+    t.equal(m(t, source).result, source, "22");
     t.end();
   }
 );
@@ -1355,7 +1432,7 @@ tap.test(
   `23 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - does not mangle different-type line endings, CRLF`,
   (t) => {
     const source = "a\r\n";
-    t.equal(m(source).result, source, "23");
+    t.equal(m(t, source).result, source, "23");
     t.end();
   }
 );

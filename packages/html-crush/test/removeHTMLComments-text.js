@@ -1,5 +1,5 @@
 import tap from "tap";
-import { crush as m } from "../dist/html-crush.esm";
+import { m } from "./util/util";
 
 // regular HTML comments (nothing to do with Outlook)
 // <!-- zzz -->
@@ -23,7 +23,7 @@ tap.test(
 
     // off
     t.match(
-      m(source, {
+      m(t, source, {
         removeHTMLComments: 0,
       }),
       {
@@ -45,7 +45,7 @@ tap.test(
     const source = `<!-- remove this -->`;
     // 1 - only text comments
     t.match(
-      m(source, {
+      m(t, source, {
         removeHTMLComments: 1,
       }),
       {
@@ -67,7 +67,7 @@ tap.test(
     const source = `<!-- remove this -->`;
     // 2 - includes outlook conditional comments
     t.match(
-      m(source, {
+      m(t, source, {
         removeHTMLComments: 2,
       }),
       {
@@ -100,11 +100,11 @@ tap.test(
     const source = `  <!-- remove this -->  `;
     // off
     t.match(
-      m(source, {
+      m(t, source, {
         removeHTMLComments: 0,
       }),
       {
-        result: source.trim(),
+        result: source.trim(t),
         applicableOpts: {
           removeHTMLComments: true,
           removeCSSComments: false,
@@ -122,7 +122,7 @@ tap.test(
     const source = `  <!-- remove this -->  `;
     // 1 - only text comments
     t.match(
-      m(source, {
+      m(t, source, {
         removeHTMLComments: 1,
       }),
       {
@@ -144,7 +144,7 @@ tap.test(
     const source = `  <!-- remove this -->  `;
     // 2 - includes outlook conditional comments
     t.match(
-      m(source, {
+      m(t, source, {
         removeHTMLComments: 2,
       }),
       {
@@ -177,7 +177,7 @@ tap.test(
     const source = `<!--<span>-->`;
     // 0 - off
     t.match(
-      m(source, {
+      m(t, source, {
         removeHTMLComments: 0,
       }),
       {
@@ -199,7 +199,7 @@ tap.test(
     const source = `<!--<span>-->`;
     // 1 - only text comments
     t.match(
-      m(source, {
+      m(t, source, {
         removeHTMLComments: 1,
       }),
       {
@@ -221,7 +221,7 @@ tap.test(
     const source = `<!--<span>-->`;
     // 2 - includes outlook conditional comments
     t.match(
-      m(source, {
+      m(t, source, {
         removeHTMLComments: 2,
       }),
       {
@@ -254,7 +254,7 @@ tap.test(
     const source = `<div><!-- remove this --></div>`;
     // 0 - off
     t.match(
-      m(source, {
+      m(t, source, {
         removeLineBreaks: true,
         removeHTMLComments: 0,
         lineLengthLimit: 2,
@@ -283,7 +283,7 @@ tap.test(
     const source = `<div><!-- remove this --></div>`;
     // 1 - only text comments
     t.match(
-      m(source, {
+      m(t, source, {
         removeHTMLComments: 1,
         lineLengthLimit: 2,
       }),
@@ -307,7 +307,7 @@ tap.test(
     const source = `<div><!-- remove this --></div>`;
     // 2 - includes outlook conditional comments
     t.match(
-      m(source, {
+      m(t, source, {
         removeHTMLComments: 2,
         lineLengthLimit: 2,
       }),
