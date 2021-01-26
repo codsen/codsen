@@ -4,7 +4,7 @@
 
 const fs = require("fs");
 const path = require("path");
-const parse = require("tap-parse-string-to-object");
+const { parseTap } = require("tap-parse-string-to-object");
 const git = require("simple-git");
 // require("debug").enable("simple-git");
 
@@ -119,7 +119,7 @@ const {
       const fileContents = fs.createReadStream(
         path.join("packages", name, "testStats.md")
       );
-      const res = await parse(fileContents);
+      const res = await parseTap(fileContents);
       if (typeof res === "object" && res.ok === true) {
         obj.suites = res.suitesTotal;
         obj.asserts = res.assertsTotal;

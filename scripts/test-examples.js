@@ -3,7 +3,6 @@
 const fs = require("fs");
 const util = require("util");
 const path = require("path");
-/* eslint import/no-extraneous-dependencies:0 */
 const execa = require("execa");
 
 // we don't want to deal with callbacks so let's promisify:
