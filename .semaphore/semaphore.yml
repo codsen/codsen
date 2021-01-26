@@ -25,42 +25,42 @@ blocks:
           - checkout
       jobs:
         - name: Publish
-          commands: |
-            git config --global user.email "${USER_EMAIL}"
-            git config --global user.name "${YOUR_NAME_SURNAME}"
-            git config user.name
-            git remote -v
-            npm set unsafe-perm true -g
-            npm set //registry.npmjs.org/:_authToken $NPM_TOKEN -g
-            npm set username $NPM_USERNAME -g
-            npm set email $NPM_EMAIL -g
-            npm whoami
-            pwd
-            ls
-            npm run fresh
-            npm run info
-            npm run readme:generate
-            git status
-            git add packages
-            git add stats
-            git add README.md
-            git add package-lock.json || echo 'no package-lock.json'
-            git diff-index --quiet HEAD || git commit -m 'chore: automated build tasks [skip ci]' --no-verify
-            npm run pub:vers
-            cd codsen
-            git status
-            git add packages
-            git add README.md
-            git commit -m 'chore: automated build tasks [skip ci]' --no-verify
-            cd codsen
-            npm run republish
-            git push
-            curl https://purge.jsdelivr.net/npm/detergent/dist/detergent.umd.js || echo 'detergent unreachable on jsdelivr'
-            curl https://purge.jsdelivr.net/npm/html-crush/dist/html-crush.umd.js || echo 'html-crush unreachable on jsdelivr'
-            curl https://purge.jsdelivr.net/npm/email-comb/dist/email-comb.umd.js || echo 'email-comb unreachable on jsdelivr'
-            curl https://purge.jsdelivr.net/npm/string-strip-html/dist/string-strip-html.umd.js || echo 'string-strip-html unreachable on jsdelivr'
-            curl https://purge.jsdelivr.net/npm/stristri/dist/stristri.umd.js || echo 'stristri unreachable on jsdelivr'
-            curl https://purge.jsdelivr.net/npm/emlint/dist/emlint.umd.js || echo 'emlint unreachable on jsdelivr'
-            curl https://purge.jsdelivr.net/npm/codsen-tokenizer/dist/codsen-tokenizer.umd.js || echo 'codsen-tokenizer unreachable on jsdelivr'
-            curl https://purge.jsdelivr.net/npm/codsen-parser/dist/codsen-parser.umd.js || echo 'codsen-parser unreachable on jsdelivr'
-            curl https://purge.jsdelivr.net/npm/json-variables/dist/json-variables.umd.js || echo 'json-variables unreachable on jsdelivr'
+          commands:
+            - git config --global user.email "${USER_EMAIL}"
+            - git config --global user.name "${YOUR_NAME_SURNAME}"
+            - git config user.name
+            - git remote -v
+            - npm set unsafe-perm true -g
+            - npm set //registry.npmjs.org/:_authToken ${NPM_TOKEN} -g
+            - npm set username ${NPM_USERNAME} -g
+            - npm set email ${NPM_EMAIL} -g
+            - npm whoami
+            - pwd
+            - ls
+            - npm run fresh
+            - npm run info
+            - npm run readme:generate
+            - git status
+            - git add packages
+            - git add stats
+            - git add README.md
+            - "git add package-lock.json || echo 'no package-lock.json'"
+            - "git diff-index --quiet HEAD || git commit -m 'chore: automated build tasks [skip ci]' --no-verify"
+            - npm run pub:vers
+            - cd codsen
+            - git status
+            - git add packages
+            - git add README.md
+            - "git commit -m 'chore: automated build tasks [skip ci]' --no-verify"
+            - cd codsen
+            - npm run republish
+            - git push
+            - curl https://purge.jsdelivr.net/npm/detergent/dist/detergent.umd.js || echo 'detergent unreachable on jsdelivr'
+            - curl https://purge.jsdelivr.net/npm/html-crush/dist/html-crush.umd.js || echo 'html-crush unreachable on jsdelivr'
+            - curl https://purge.jsdelivr.net/npm/email-comb/dist/email-comb.umd.js || echo 'email-comb unreachable on jsdelivr'
+            - curl https://purge.jsdelivr.net/npm/string-strip-html/dist/string-strip-html.umd.js || echo 'string-strip-html unreachable on jsdelivr'
+            - curl https://purge.jsdelivr.net/npm/stristri/dist/stristri.umd.js || echo 'stristri unreachable on jsdelivr'
+            - curl https://purge.jsdelivr.net/npm/emlint/dist/emlint.umd.js || echo 'emlint unreachable on jsdelivr'
+            - curl https://purge.jsdelivr.net/npm/codsen-tokenizer/dist/codsen-tokenizer.umd.js || echo 'codsen-tokenizer unreachable on jsdelivr'
+            - curl https://purge.jsdelivr.net/npm/codsen-parser/dist/codsen-parser.umd.js || echo 'codsen-parser unreachable on jsdelivr'
+            - curl https://purge.jsdelivr.net/npm/json-variables/dist/json-variables.umd.js || echo 'json-variables unreachable on jsdelivr'
