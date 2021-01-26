@@ -42,32 +42,33 @@ More content
   }
 );
 
-tap.todo(`02`, (t) => {
+tap.test(`02`, (t) => {
   const input = `  <a>
      <b>
    c </b>
    </a>
      <b>
      `;
-  t.strictSame(
+  t.match(
     m(t, input, {
       lineLengthLimit: 8,
       removeIndentations: true,
       removeLineBreaks: true,
-    }).ranges,
-    [[0, 1]],
-    "02.01"
-  );
-  /*t.is(
-    crush(input, {
-      lineLengthLimit: 8,
-      removeIndentations: true,
-      removeLineBreaks: true,
-    }).result,
-    `<a> <b>
+    }),
+    {
+      ranges: [
+        [0, 2],
+        [5, 11, " "],
+        [14, 18, "\n"],
+        [24, 28, "\n"],
+        [32, 38, " "],
+        [41, 47],
+      ],
+      result: `<a> <b>
 c </b>
 </a> <b>`,
-    "02.02"
-  );*/
+    },
+    "02.01"
+  );
   t.end();
 });

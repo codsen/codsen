@@ -595,6 +595,7 @@ function crush(str, originalOpts) {
 
                   if (countCharactersPerLine > opts.lineLengthLimit || !(whatToAdd === " " && i === whitespaceStartedAt + 1)) {
                     finalIndexesToDelete.push(whitespaceStartedAt, i, whatToAdd);
+                    lastLinebreak = null;
                   }
 
                   stageFrom = null;
@@ -665,10 +666,11 @@ function crush(str, originalOpts) {
               // tackle this whitespace
 
 
-              if (countCharactersPerLine + (_whatToAdd ? _whatToAdd.length : 0) > opts.lineLengthLimit || !(_whatToAdd === " " && stageTo === stageFrom + 1)) { // push this range only if it's not between curlies, } and {
-
+              if (countCharactersPerLine + (_whatToAdd ? _whatToAdd.length : 0) > opts.lineLengthLimit || !(_whatToAdd === " " && stageTo === stageFrom + 1)) {
+                // push this range only if it's not between curlies, } and {
                 if (!(str[~-stageFrom] === "}" && str[stageTo] === "{")) {
                   finalIndexesToDelete.push(stageFrom, stageTo, _whatToAdd);
+                  lastLinebreak = null;
                 }
               } else {
                 countCharactersPerLine -= lastLinebreak || 0;
