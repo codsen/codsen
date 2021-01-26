@@ -126,16 +126,16 @@ blocks:
       prologue:
         commands:
           - checkout
+          # Correct premissions since they are too open by default:
+          - chmod 0600 ~/.ssh/id_rsa
+          # Add the key to the ssh agent:
+          - ssh-add ~/.ssh/id_rsa
           # restore built ./packages/ from cache
           - cache restore built-packages-folder
           # same for ./node_modules/ folder
           - cache restore node_modules-folder
           # same for ./stats/ folder
           - cache restore stats-folder
-          # Correct premissions since they are too open by default:
-          - chmod 0600 ~/.ssh/id_rsa
-          # Add the key to the ssh agent:
-          #- ssh-add ~/.ssh/id_rsa
           - git config --global user.email "${USER_EMAIL}"
           - git config --global user.name "${YOUR_NAME_SURNAME}"
           - git config user.name
@@ -144,9 +144,9 @@ blocks:
           - npm set //registry.npmjs.org/:_authToken ${NPM_TOKEN} -g
           - npm set username ${NPM_USERNAME} -g
           - npm set email ${NPM_EMAIL} -g
-          - npm whoami
       jobs:
         - name: Publish to npm
           commands:
             - npm run readme:generate
             - git status
+            - npm whoami
