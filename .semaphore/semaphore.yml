@@ -7,7 +7,117 @@ agent:
 execution_time_limit:
   hours: 2
 blocks:
-  - name: Publish the packages
+  - name: "Set things up"
+    task:
+      jobs:
+        - name: Bootstrap
+          commands:
+            - checkout
+            - nvm install node
+            - node --version
+            - npm --version
+            - npm run bootstrap
+            # dump freshly-bootstrapped ./packages/ into cache
+            - cache store raw-packages-folder packages
+            # same for ./node_modules/ folder
+            - cache store node_modules-folder node_modules
+  - name: "Unit tests"
+    task:
+      prologue:
+        commands:
+          - checkout
+          # restore freshly-bootstrapped ./packages/ from cache
+          - cache restore raw-packages-folder
+          # same for ./node_modules/ folder
+          - cache restore node_modules-folder
+      jobs:
+        - name: "test all-named-html-entities"
+          commands:
+            - cd packages/all-named-html-entities
+            - npm run test
+        - name: "test array-group-str-omit-num-char"
+          commands:
+            - cd packages/array-group-str-omit-num-char
+            - npm run test
+        - name: "test array-includes-with-glob"
+          commands:
+            - cd packages/array-includes-with-glob
+            - npm run test
+        - name: "test array-of-arrays-into-ast"
+          commands:
+            - cd packages/array-of-arrays-into-ast
+            - npm run test
+        - name: "test array-of-arrays-sort-by-col"
+          commands:
+            - cd packages/array-of-arrays-sort-by-col
+            - npm run test
+        - name: "test array-pull-all-with-glob"
+          commands:
+            - cd packages/array-pull-all-with-glob
+            - npm run test
+        - name: "test arrayiffy-if-string"
+          commands:
+            - cd packages/arrayiffy-if-string
+            - npm run test
+        - name: "test ast-compare"
+          commands:
+            - cd packages/ast-compare
+            - npm run test
+        - name: "test ast-contains-only-empty-space"
+          commands:
+            - cd packages/ast-contains-only-empty-space
+            - npm run test
+        - name: "test ast-deep-contains"
+          commands:
+            - cd packages/ast-deep-contains
+            - npm run test
+        - name: "test ast-delete-object"
+          commands:
+            - cd packages/ast-delete-object
+            - npm run test
+        - name: "test ast-get-object"
+          commands:
+            - cd packages/ast-get-object
+            - npm run test
+        - name: "test ast-get-values-by-key"
+          commands:
+            - cd packages/ast-get-values-by-key
+            - npm run test
+        - name: "test ast-is-empty"
+          commands:
+            - cd packages/ast-is-empty
+            - npm run test
+        - name: "test ast-loose-compare"
+          commands:
+            - cd packages/ast-loose-compare
+            - npm run test
+        - name: "test ast-monkey"
+          commands:
+            - cd packages/ast-monkey
+            - npm run test
+        - name: "test ast-monkey-traverse"
+          commands:
+            - cd packages/ast-monkey-traverse
+            - npm run test
+        - name: "test ast-monkey-traverse-with-lookahead"
+          commands:
+            - cd packages/ast-monkey-traverse-with-lookahead
+            - npm run test
+        - name: "test ast-monkey-util"
+          commands:
+            - cd packages/ast-monkey-util
+            - npm run test
+        - name: "test bitbucket-slug"
+          commands:
+            - cd packages/bitbucket-slug
+            - npm run test
+      epilogue:
+        commands:
+          # dump built ./packages/ with all the artifacts into cache
+          - cache store built-packages-folder packages
+          - npm run info
+          - cache store stats-folder stats
+  - name: "Publishing to npm"
     task:
       secrets:
         - name: GIT setup
@@ -15,52 +125,28 @@ blocks:
         - name: SSH_PRIVATE_KEY
       prologue:
         commands:
-          - nvm install node
-          - node --version
-          - npm --version
+          - checkout
+          # restore built ./packages/ from cache
+          - cache restore built-packages-folder
+          # same for ./node_modules/ folder
+          - cache restore node_modules-folder
+          # same for ./stats/ folder
+          - cache restore stats-folder
           # Correct premissions since they are too open by default:
           - chmod 0600 ~/.ssh/id_rsa
           # Add the key to the ssh agent:
-          - ssh-add ~/.ssh/id_rsa
-          - checkout
+          #- ssh-add ~/.ssh/id_rsa
+          - git config --global user.email "${USER_EMAIL}"
+          - git config --global user.name "${YOUR_NAME_SURNAME}"
+          - git config user.name
+          - git remote -v
+          - npm set unsafe-perm true -g
+          - npm set //registry.npmjs.org/:_authToken ${NPM_TOKEN} -g
+          - npm set username ${NPM_USERNAME} -g
+          - npm set email ${NPM_EMAIL} -g
+          - npm whoami
       jobs:
-        - name: Publish
+        - name: Publish to npm
           commands:
-            - git config --global user.email "${USER_EMAIL}"
-            - git config --global user.name "${YOUR_NAME_SURNAME}"
-            - git config user.name
-            - git remote -v
-            - npm set unsafe-perm true -g
-            - npm set //registry.npmjs.org/:_authToken ${NPM_TOKEN} -g
-            - npm set username ${NPM_USERNAME} -g
-            - npm set email ${NPM_EMAIL} -g
-            - npm whoami
-            - pwd
-            - ls
-            - npm run fresh
-            - npm run info
             - npm run readme:generate
             - git status
-            - git add packages
-            - git add stats
-            - git add README.md
-            - "git add package-lock.json || echo 'no package-lock.json'"
-            - "git diff-index --quiet HEAD || git commit -m 'chore: automated build tasks [skip ci]' --no-verify"
-            - npm run pub:vers
-            - cd codsen
-            - git status
-            - git add packages
-            - git add README.md
-            - "git commit -m 'chore: automated build tasks [skip ci]' --no-verify"
-            - cd codsen
-            - npm run republish
-            - git push
-            - curl https://purge.jsdelivr.net/npm/detergent/dist/detergent.umd.js || echo 'detergent unreachable on jsdelivr'
-            - curl https://purge.jsdelivr.net/npm/html-crush/dist/html-crush.umd.js || echo 'html-crush unreachable on jsdelivr'
-            - curl https://purge.jsdelivr.net/npm/email-comb/dist/email-comb.umd.js || echo 'email-comb unreachable on jsdelivr'
-            - curl https://purge.jsdelivr.net/npm/string-strip-html/dist/string-strip-html.umd.js || echo 'string-strip-html unreachable on jsdelivr'
-            - curl https://purge.jsdelivr.net/npm/stristri/dist/stristri.umd.js || echo 'stristri unreachable on jsdelivr'
-            - curl https://purge.jsdelivr.net/npm/emlint/dist/emlint.umd.js || echo 'emlint unreachable on jsdelivr'
-            - curl https://purge.jsdelivr.net/npm/codsen-tokenizer/dist/codsen-tokenizer.umd.js || echo 'codsen-tokenizer unreachable on jsdelivr'
-            - curl https://purge.jsdelivr.net/npm/codsen-parser/dist/codsen-parser.umd.js || echo 'codsen-parser unreachable on jsdelivr'
-            - curl https://purge.jsdelivr.net/npm/json-variables/dist/json-variables.umd.js || echo 'json-variables unreachable on jsdelivr'
