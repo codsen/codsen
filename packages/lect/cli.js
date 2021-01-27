@@ -12,7 +12,7 @@ const pack = require("./src/pack");
 const npmIgnore = require("./src/npmIgnore");
 const rollupConfig = require("./src/rollupConfig");
 const tsconfig = require("./src/tsconfig");
-const semaphore = require("./src/semaphore");
+// const semaphore = require("./src/semaphore");
 
 (async () => {
   //
