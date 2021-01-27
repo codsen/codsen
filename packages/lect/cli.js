@@ -70,8 +70,8 @@ const semaphore = require("./src/semaphore");
       rollupConfig({ state });
       // write tsconfig.json
       tsconfig({ state });
-      // write ./.semaphore/semaphore.yml
-      semaphore({ state });
+      // TBC - write ./.semaphore/semaphore.yml
+      // semaphore({ state });
     })
     .catch((e) => {
       console.log(
