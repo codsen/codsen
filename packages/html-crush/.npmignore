@@ -24,3 +24,4 @@ test_alt
 .prettierignore
 rollup.config.js
 tsconfig.json
+testStats.md

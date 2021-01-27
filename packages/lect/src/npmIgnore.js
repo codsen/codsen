@@ -197,7 +197,7 @@ async function npmIgnore({ lectrc }) {
     .join("\n")}\n\n# files:\n\n${badFiles
     .filter((v) => !blacklist.includes(v))
     .sort()
-    .join("\n")}\n`;
+    .join("\n")}\ntestStats.md\n`;
 
   try {
     await writeFileAtomic(".npmignore", finalNpmIgnoreFile);

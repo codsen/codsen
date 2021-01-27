@@ -12,6 +12,7 @@ const pack = require("./src/pack");
 const npmIgnore = require("./src/npmIgnore");
 const rollupConfig = require("./src/rollupConfig");
 const tsconfig = require("./src/tsconfig");
+const semaphore = require("./src/semaphore");
 
 (async () => {
   //
@@ -55,37 +56,22 @@ const tsconfig = require("./src/tsconfig");
       // For the record, npm ignores are being updated in lectrc via inquirer.
       state.originalLectrc = { ...lectrc };
 
-      // return Promise.all([
-      //   // write README.md
-      //   readme({ state, examples: received[0], lectrc }),
-      //   // write new files
-      //   hardWrite({ lectrc }),
-      //   // delete bad files
-      //   hardDelete({ lectrc }),
-      //   // write package.json
-      //   pack({ state, lectrc }),
-      //   // write .npmignore
-      //   npmIgnore({ state, lectrc }),
-      //   // write rollup.config.js
-      //   rollupConfig({ state }),
-      //   // write tsconfig.json
-      //   tsconfig({ state }),
-      // ]);
-
       // write README.md
       readme({ state, examples: received[0], lectrc });
-      // // write new files
+      // write new files
       hardWrite({ lectrc });
-      // // delete bad files
+      // delete bad files
       hardDelete({ lectrc });
-      // // write package.json
+      // write package.json
       pack({ state, lectrc });
-      // // write .npmignore
+      // write .npmignore
       npmIgnore({ state, lectrc });
-      // // write rollup.config.js
+      // write rollup.config.js
       rollupConfig({ state });
-      // // write tsconfig.json
+      // write tsconfig.json
       tsconfig({ state });
+      // write ./.semaphore/semaphore.yml
+      semaphore({ state });
     })
     .catch((e) => {
       console.log(
