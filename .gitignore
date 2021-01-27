@@ -18,7 +18,6 @@ lerna-debug.log
 .npmrc
 *.lerna_backup
 ideas.md
-testStats.md
 deps-graph.png
 package-lock.json
 testStats.md
