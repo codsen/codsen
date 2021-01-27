@@ -72,14 +72,11 @@ ${allPackages
     (packagesName) => `        - name: "test ${packagesName}"
           commands:
             - cd packages/${packagesName}
-            - npm run test`
+            - npm run test
+            - cd ...
+            - cache store ${packagesName}-cache-1 packages/${packagesName}`
   )
   .join("\n")}
-      epilogue:
-        commands:
-          - cache store built-packages-folder packages
-          - npm run info
-          - cache store stats-folder stats
   - name: "Bump versions"
     task:
       secrets:
@@ -87,9 +84,8 @@ ${allPackages
       prologue:
         commands:
           - checkout
-          - cache restore built-packages-folder
+${allPackages.map((p) => `          - cache restore ${p}-cache-1`).join("\n")}
           - cache restore node_modules-folder
-          - cache restore stats-folder
           - git config --global user.email "\${USER_EMAIL}"
           - git config --global user.name "\${YOUR_NAME_SURNAME}"
           - git config user.name
@@ -97,6 +93,8 @@ ${allPackages
       jobs:
         - name: Bump semver
           commands:
+            - npm run info
+            - cache store stats-folder stats
             - npm run readme:generate
             - git status
             - git add packages
@@ -107,11 +105,10 @@ ${allPackages
             - git status
             - git add packages
             - git add README.md
+            - git status
             - "git commit -m 'chore: automated build tasks [skip ci]' --no-verify"
             - git push
-      epilogue:
-        commands:
-          - cache store bumped-packages-folder packages
+            - cache store bumped-packages-folder packages
   - name: "Publish to npm"
     task:
       secrets:
@@ -123,10 +120,6 @@ ${allPackages
           - cache restore bumped-packages-folder
           - cache restore node_modules-folder
           - cache restore stats-folder
-          - git config --global user.email "\${USER_EMAIL}"
-          - git config --global user.name "\${YOUR_NAME_SURNAME}"
-          - git config user.name
-          - git remote -v
           - npm set unsafe-perm true -g
           - npm set //registry.npmjs.org/:_authToken \${NPM_TOKEN} -g
           - npm set username \${NPM_USERNAME} -g
