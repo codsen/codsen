@@ -1,7 +1,7 @@
 /**
  * string-strip-html
  * Strips HTML tags from strings. No parser, accepts mixed sources.
- * Version: 8.0.0
+ * Version: 8.0.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-strip-html/
@@ -68,7 +68,7 @@ function notWithinAttrQuotes(tag, str, i) {
   return !tag || !tag.quotes || !xBeforeYOnTheRight(str, i + 1, tag.quotes.value, ">");
 }
 
-var version = "8.0.0";
+var version = "8.0.1";
 
 const version$1 = version;
 const defaults = {
@@ -872,8 +872,8 @@ function stripHtml(str, originalOpts) {
     if (str[i] === "<" && str[i - 1] !== "<" && !`'"`.includes(str[i + 1]) && (!`'"`.includes(str[i + 2]) || /\w/.test(str[i + 1])) && //
     // precaution JSP,
     // against <c:
-    !(str[i + 1] === "c" && str[i + 2] === ":") && // against <%@
-    !(str[i + 1] === "%" && str[i + 2] === "@") && // against <fmt:
+    !(str[i + 1] === "c" && str[i + 2] === ":") && // against <%@ or <%
+    !(str[i + 1] === "%") && // against <fmt:
     !(str[i + 1] === "f" && str[i + 2] === "m" && str[i + 3] === "t" && str[i + 4] === ":") && // against <sql:
     !(str[i + 1] === "s" && str[i + 2] === "q" && str[i + 3] === "l" && str[i + 4] === ":") && // against <x:
     !(str[i + 1] === "x" && str[i + 2] === ":") && // against <fn:
@@ -1106,7 +1106,7 @@ function stripHtml(str, originalOpts) {
   if ((!originalOpts || !originalOpts.cb) && curr) {
     // check front - the first range of gathered ranges, does it touch start (0)
     if (curr[0] && !curr[0][0]) {
-      curr[0][1]; // check the character at str[startingIdx] // manually edit Ranges class:
+      const startingIdx = curr[0][1]; // check the character at str[startingIdx] // manually edit Ranges class:
 
       rangesToDelete.ranges[0] = [rangesToDelete.ranges[0][0], rangesToDelete.ranges[0][1]];
     } // check end - the last range of gathered ranges, does it touch the end (str.length)
@@ -1115,7 +1115,7 @@ function stripHtml(str, originalOpts) {
 
 
     if (curr[curr.length - 1] && curr[curr.length - 1][1] === str.length) {
-      curr[curr.length - 1][0]; // check character at str[startingIdx - 1] // remove third element from the last range "what to add" - because
+      const startingIdx = curr[curr.length - 1][0]; // check character at str[startingIdx - 1] // remove third element from the last range "what to add" - because
       // ranges will crop aggressively, covering all whitespace, but they
       // then restore missing spaces (in which case it's not missing).
       // We already have tight crop, we just need to remove that "what to add"

@@ -1850,8 +1850,8 @@ function stripHtml(str: string, originalOpts?: Partial<Opts>): Res {
       // precaution JSP,
       // against <c:
       !(str[i + 1] === "c" && str[i + 2] === ":") &&
-      // against <%@
-      !(str[i + 1] === "%" && str[i + 2] === "@") &&
+      // against <%@ or <%
+      !(str[i + 1] === "%") &&
       // against <fmt:
       !(
         str[i + 1] === "f" &&
