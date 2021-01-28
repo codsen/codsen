@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [8.1.0](https://github.com/codsen/codsen/compare/string-strip-html@8.0.1...string-strip-html@8.1.0) (2021-01-28)
-
+## 8.1.0 (2021-01-28)
 
 ### Features
 
-* extend ESP tag recognition to all <%... tags ([d552f86](https://github.com/codsen/codsen/commit/d552f86f98d7e2d9743e709dd088ea2ba8d011dc))
-
-
-
-
+- extend ESP tag recognition to all <%... tags ([d552f86](https://github.com/codsen/codsen/commit/d552f86f98d7e2d9743e709dd088ea2ba8d011dc))
 
 ## 8.0.1 (2021-01-28)
 
