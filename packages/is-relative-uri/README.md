@@ -46,6 +46,10 @@ assert.deepEqual(isRel(".../resource.txt"), {
 
 Please [visit codsen.com](https://codsen.com/os/is-relative-uri/) for a full description of the API and examples.
 
+## Contributing
+
+To report bugs or request features or assistance, [raise an issue](https://github.com/codsen/codsen/issues/new/choose) on GitHub.
+
 ## Licence
 
 MIT License

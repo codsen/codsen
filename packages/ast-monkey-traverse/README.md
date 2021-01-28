@@ -78,6 +78,10 @@ assert.deepEqual(paths, ["a.foo", "a.foo.bar.0.foo", "a.foo.d.e.foo"]);
 
 Please [visit codsen.com](https://codsen.com/os/ast-monkey-traverse/) for a full description of the API and examples.
 
+## Contributing
+
+To report bugs or request features or assistance, [raise an issue](https://github.com/codsen/codsen/issues/new/choose) on GitHub.
+
 ## Licence
 
 MIT License

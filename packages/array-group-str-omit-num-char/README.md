@@ -47,6 +47,10 @@ assert.deepEqual(groupStr(["a1-1", "a2-2", "b3-3", "c4-4"]), {
 
 Please [visit codsen.com](https://codsen.com/os/array-group-str-omit-num-char/) for a full description of the API and examples.
 
+## Contributing
+
+To report bugs or request features or assistance, [raise an issue](https://github.com/codsen/codsen/issues/new/choose) on GitHub.
+
 ## Licence
 
 MIT License

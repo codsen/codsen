@@ -75,6 +75,10 @@ assert.equal(remSep("100'000.2"), "100000.20");
 
 Please [visit codsen.com](https://codsen.com/os/string-remove-thousand-separators/) for a full description of the API and examples.
 
+## Contributing
+
+To report bugs or request features or assistance, [raise an issue](https://github.com/codsen/codsen/issues/new/choose) on GitHub.
+
 ## Licence
 
 MIT License

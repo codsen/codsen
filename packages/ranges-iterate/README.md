@@ -60,6 +60,10 @@ assert.deepEqual(gathered, [
 
 Please [visit codsen.com](https://codsen.com/os/ranges-iterate/) for a full description of the API and examples.
 
+## Contributing
+
+To report bugs or request features or assistance, [raise an issue](https://github.com/codsen/codsen/issues/new/choose) on GitHub.
+
 ## Licence
 
 MIT License

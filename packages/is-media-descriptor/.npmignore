@@ -11,6 +11,7 @@
 
 # folders:
 
+.nyc_output
 coverage
 perf
 src

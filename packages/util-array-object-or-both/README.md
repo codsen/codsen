@@ -60,6 +60,10 @@ assert.equal(arrObjOrBoth("e"), "any");
 
 Please [visit codsen.com](https://codsen.com/os/util-array-object-or-both/) for a full description of the API and examples.
 
+## Contributing
+
+To report bugs or request features or assistance, [raise an issue](https://github.com/codsen/codsen/issues/new/choose) on GitHub.
+
 ## Licence
 
 MIT License

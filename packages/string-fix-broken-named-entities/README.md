@@ -54,6 +54,10 @@ assert.equal(rApply(source, fixEnt(source)), "&nbsp;x&nbsp;y&nbsp;");
 
 Please [visit codsen.com](https://codsen.com/os/string-fix-broken-named-entities/) for a full description of the API and examples.
 
+## Contributing
+
+To report bugs or request features or assistance, [raise an issue](https://github.com/codsen/codsen/issues/new/choose) on GitHub.
+
 ## Licence
 
 MIT License
