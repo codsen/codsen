@@ -345,7 +345,7 @@ function prepLine(str, progressFn, subsetFrom, subsetTo, generatedCount, pad) {
     let startPoint = 0;
 
     for (let y = 0, len = source.length; y < len; y++) {
-      const charcode = source[y].charCodeAt(0); // catch third dollar of three dollars in a row
+      source[y].charCodeAt(0); // catch third dollar of three dollars in a row
       // -----------------------------------------------------------------------
 
       if (source[y] === "$" && source[y - 1] === "$" && source[y - 2] === "$") { // submit all the content up until now

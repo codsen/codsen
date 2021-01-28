@@ -9638,7 +9638,7 @@ function alts(str, originalOpts) {
   // ================
 
   for (var i = 0, len = str.length; i < len; i++) {
-    var charcode = str[i].charCodeAt(0); // catch the beginning of the IMG tag:
+    str[i].charCodeAt(0); // catch the beginning of the IMG tag:
     // ================
 
     if ("" + str[i] + str[i + 1] + str[i + 2] + str[i + 3] === "<img") {

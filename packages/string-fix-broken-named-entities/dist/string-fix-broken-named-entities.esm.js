@@ -680,7 +680,7 @@ function fixEnt(str, originalOpts) { //
               } // First, match against case-insensitive list
               /* istanbul ignore next */
 
-              const secondChar = letterSeqStartAt ? right(str, letterSeqStartAt) : null;
+              letterSeqStartAt ? right(str, letterSeqStartAt) : null;
               let tempEnt = "";
               let temp;
 

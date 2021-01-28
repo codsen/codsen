@@ -292,7 +292,7 @@ function validateString(str, idxOffset, originalOpts) {
         leadingWhitespaceOK: true,
         trailingWhitespaceOK: true,
         cb: (idxFrom, idxTo) => {
-          const extractedValue = str.slice(idxFrom - idxOffset, idxTo - idxOffset); // if there are errors, validateValue() mutates the passed "errorArr",
+          str.slice(idxFrom - idxOffset, idxTo - idxOffset); // if there are errors, validateValue() mutates the passed "errorArr",
           // pushing to it
 
           validateValue(str, idxOffset, opts, idxFrom - idxOffset, // processCommaSep() reports offset values so we need to restore indexes to start where this "str" above starts
@@ -310,7 +310,7 @@ function validateString(str, idxOffset, originalOpts) {
         }
       });
     } else {
-      const extractedValue = str.slice(charStart, charEnd); // if there are errors, validateValue() mutates the passed "errorArr",
+      str.slice(charStart, charEnd); // if there are errors, validateValue() mutates the passed "errorArr",
       // pushing to it
 
       validateValue(str, idxOffset, opts, charStart, charEnd, errorArr);
@@ -3434,7 +3434,7 @@ function tagSpaceBeforeClosingBracket(context) {
 function tagSpaceBeforeClosingSlash(context, mode = "never") {
   return {
     tag(node) {
-      const gapValue = context.str.slice(node.start + 1, node.tagNameStartsAt); // PROCESSING:
+      context.str.slice(node.start + 1, node.tagNameStartsAt); // PROCESSING:
 
       const closingBracketPos = node.end - 1;
       const slashPos = left(context.str, closingBracketPos);
@@ -3724,7 +3724,7 @@ function tagIsPresent(context, ...blacklist) {
     tag(node) {
 
       if (Array.isArray(blacklist) && blacklist.length) {
-        const temp = matcher([node.tagName], blacklist);
+        matcher([node.tagName], blacklist);
 
         if (matcher([node.tagName], blacklist).length) {
           context.report({
@@ -4486,7 +4486,7 @@ function validateValue$1(str, originalOpts, errorArr) {
       return acc;
     }, 0); // assemble the value without whitespace
 
-    const valueWithoutWhitespace = foundCharacterRanges.reduce((acc, curr) => {
+    foundCharacterRanges.reduce((acc, curr) => {
       return acc + extractedValue.slice(curr[0] - opts.offset, curr[1] - opts.offset);
     }, "");
 
@@ -4600,7 +4600,7 @@ function validateUri(str, originalOpts) {
           leadingWhitespaceOK: true,
           trailingWhitespaceOK: true,
           cb: (idxFrom, idxTo) => {
-            const extractedValue = str.slice(idxFrom - opts.offset, idxTo - opts.offset); // if there are errors, validateValue() mutates the passed "errorArr",
+            str.slice(idxFrom - opts.offset, idxTo - opts.offset); // if there are errors, validateValue() mutates the passed "errorArr",
             // pushing to it
             // Object assign needed to retain opts.multipleOK
 

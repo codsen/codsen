@@ -579,7 +579,7 @@ var funcProto = Function.prototype;
 var funcToString = funcProto.toString;
 /** Used to infer the `Object` constructor. */
 
-var objectCtorString = funcToString.call(Object);
+funcToString.call(Object);
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -596,7 +596,7 @@ function createCommonjsModule(fn) {
  * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
  * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
  */
-var lodash_clonedeep = createCommonjsModule(function (module, exports) {
+createCommonjsModule(function (module, exports) {
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
   /** Used to stand-in for `undefined` hash values. */
@@ -5817,6 +5817,7 @@ function crush(str, originalOpts) {
 
                   if (countCharactersPerLine > opts.lineLengthLimit || !(whatToAdd === " " && i === whitespaceStartedAt + 1)) {
                     finalIndexesToDelete.push(whitespaceStartedAt, i, whatToAdd);
+                    lastLinebreak = null;
                   }
 
                   stageFrom = null;
@@ -5891,6 +5892,7 @@ function crush(str, originalOpts) {
                 // push this range only if it's not between curlies, } and {
                 if (!(str[~-stageFrom] === "}" && str[stageTo] === "{")) {
                   finalIndexesToDelete.push(stageFrom, stageTo, _whatToAdd);
+                  lastLinebreak = null;
                 }
               } else {
                 countCharactersPerLine -= lastLinebreak || 0;
@@ -6143,8 +6145,10 @@ function crush(str, originalOpts) {
     }
 
     if (finalIndexesToDelete.current()) {
+      var ranges = finalIndexesToDelete.current();
+      finalIndexesToDelete.wipe();
       var startingPercentageDone = opts.reportProgressFuncTo - (opts.reportProgressFuncTo - opts.reportProgressFuncFrom) * leavePercForLastStage;
-      var res = rApply(str, finalIndexesToDelete.current(), function (applyPercDone) {
+      var res = rApply(str, ranges, function (applyPercDone) {
         // allocate remaining "leavePercForLastStage" percentage of the total
         // progress reporting to this stage:
         if (opts.reportProgressFunc && len >= 2000) {
@@ -6156,7 +6160,6 @@ function crush(str, originalOpts) {
           }
         }
       });
-      finalIndexesToDelete.wipe();
       var resLen = res.length;
       return {
         log: {
@@ -6166,7 +6169,7 @@ function crush(str, originalOpts) {
           bytesSaved: Math.max(len - resLen, 0),
           percentageReducedOfOriginal: len ? Math.round(Math.max(len - resLen, 0) * 100 / len) : 0
         },
-        ranges: finalIndexesToDelete.current(),
+        ranges: ranges,
         applicableOpts: applicableOpts,
         result: res
       };
@@ -6183,7 +6186,7 @@ function crush(str, originalOpts) {
       percentageReducedOfOriginal: 0
     },
     applicableOpts: applicableOpts,
-    ranges: [],
+    ranges: null,
     result: str
   };
 }

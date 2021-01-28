@@ -2612,7 +2612,7 @@ function tokenizer(str, originalOpts) {
 
             if (attribClosingQuoteAt) {
               // slice the captured chunk
-              const extractedChunksVal = str.slice(y, attribClosingQuoteAt);
+              str.slice(y, attribClosingQuoteAt);
             }
           } // where that caught whitespace ends, that's the default location
           // of double quotes.
