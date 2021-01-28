@@ -39,7 +39,7 @@ Please [visit codsen.com](https://codsen.com/os/) for an overview and full docum
 
 ## 🐛 Issue Tracker
 
-For bugs, feature requests and so on use the [Issue Tracker](https://todo.sr.ht/~royston/codsen-issue-tracker).
+For bugs, feature requests and so on use the [Issue Tracker](https://github.com/codsen/codsen/issues/new/choose).
 
 ## 💼 Licence
 
