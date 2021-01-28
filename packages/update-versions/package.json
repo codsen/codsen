@@ -1,6 +1,6 @@
 {
   "name": "update-versions",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "Like npm-check-updates but supports Lerna monorepos and enforces strict semver values",
   "keywords": [
     "app",
@@ -79,7 +79,7 @@
   },
   "dependencies": {
     "ansi-diff-stream": "^1.2.1",
-    "edit-package-json": "^0.3.1",
+    "edit-package-json": "^0.3.2",
     "globby": "^11.0.2",
     "is-online": "^9.0.0",
     "lodash.isplainobject": "^4.0.6",
@@ -98,7 +98,7 @@
     "eslint": "^7.18.0",
     "execa": "^5.0.0",
     "fs-extra": "^9.1.0",
-    "lect": "^0.16.1",
+    "lect": "^0.16.2",
     "lodash.clonedeep": "^4.5.0",
     "tap": "^14.11.0",
     "tempy": "^1.0.0",
