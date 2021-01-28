@@ -1,7 +1,7 @@
 /**
  * util-nonempty
  * Is the input (plain object, array, string or whatever) not empty?
- * Version: 3.0.0
+ * Version: 3.0.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/util-nonempty/
@@ -17,7 +17,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var isPlainObject__default = /*#__PURE__*/_interopDefaultLegacy(isPlainObject);
 
-var version = "3.0.0";
+var version = "3.0.1";
 
 /* eslint @typescript-eslint/no-explicit-any:0, @typescript-eslint/explicit-module-boundary-types:0 */
 var version$1 = version;

@@ -1,7 +1,7 @@
 /**
  * email-all-chars-within-ascii
  * Scans all characters within a string and checks are they within ASCII range
- * Version: 3.0.0
+ * Version: 3.0.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/email-all-chars-within-ascii/
@@ -62,7 +62,7 @@ function _objectSpread2(target) {
   return target;
 }
 
-var version = "3.0.0";
+var version = "3.0.1";
 
 var version$1 = version;
 var defaults = {

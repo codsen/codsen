@@ -1,7 +1,7 @@
 /**
  * object-flatten-all-arrays
  * Merge and flatten any arrays found in all values within plain objects
- * Version: 5.0.0
+ * Version: 5.0.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-flatten-all-arrays/
@@ -23,7 +23,7 @@ var merge__default = /*#__PURE__*/_interopDefaultLegacy(merge);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
-var version = "5.0.0";
+var version = "5.0.1";
 
 var version$1 = version;
 

@@ -1,7 +1,7 @@
 /**
  * string-uglify
  * Shorten sets of strings deterministically, to be git-friendly
- * Version: 1.4.0
+ * Version: 1.4.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-uglify/
@@ -13,7 +13,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.stringUglify = {}));
 }(this, (function (exports) { 'use strict';
 
-var version = "1.4.0";
+var version = "1.4.1";
 
 var version$1 = version; // tells code point of a given id number
 

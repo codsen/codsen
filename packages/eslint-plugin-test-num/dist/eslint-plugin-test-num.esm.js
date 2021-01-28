@@ -1,7 +1,7 @@
 /**
  * eslint-plugin-test-num
  * ESLint plugin to update unit test numbers automatically
- * Version: 1.5.0
+ * Version: 1.5.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/eslint-plugin-test-num/

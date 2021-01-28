@@ -109,6 +109,7 @@
         "regex-is-jsp": 1,
         "regex-jinja-specific": 1,
         "rgba-regex": 1,
+        "rimraf": 1,
         "runes": 1,
         "sort-keys": 1,
         "sort-package-json": 2,

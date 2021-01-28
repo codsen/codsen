@@ -1,7 +1,7 @@
 /**
  * object-all-values-equal-to
  * Does the AST/nested-plain-object/array/whatever contain only one kind of value?
- * Version: 2.0.0
+ * Version: 2.0.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-all-values-equal-to/
@@ -2137,7 +2137,7 @@ var lodash_isequal = createCommonjsModule(function (module, exports) {
   module.exports = isEqual;
 });
 
-var version = "2.0.0";
+var version = "2.0.1";
 
 var version$1 = version; // T H E   M A I N   F U N C T I O N   T H A T   D O E S   T H E   J O B
 // -----------------------------------------------------------------------------

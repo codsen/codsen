@@ -1,7 +1,7 @@
 /**
  * object-flatten-all-arrays
  * Merge and flatten any arrays found in all values within plain objects
- * Version: 5.0.0
+ * Version: 5.0.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-flatten-all-arrays/
@@ -11,7 +11,7 @@ import merge from 'lodash.merge';
 import clone from 'lodash.clonedeep';
 import isObj from 'lodash.isplainobject';
 
-var version = "5.0.0";
+var version = "5.0.1";
 
 const version$1 = version;
 

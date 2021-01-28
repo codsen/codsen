@@ -1,7 +1,7 @@
 /**
  * tap-parse-string-to-object
  * Parses raw Tap: string-to-object or stream-to-a-promise-of-an-object
- * Version: 2.0.0
+ * Version: 2.0.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/tap-parse-string-to-object/
@@ -164,7 +164,7 @@ var Counter = /*#__PURE__*/function () {
   return Counter;
 }();
 
-var version = "2.0.0";
+var version = "2.0.1";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 var version$1 = version;

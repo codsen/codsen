@@ -1,7 +1,7 @@
 /**
  * is-relative-uri
  * Is given string a relative URI?
- * Version: 3.0.0
+ * Version: 3.0.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-relative-uri/
@@ -62,7 +62,7 @@ function _objectSpread2(target) {
   return target;
 }
 
-var version = "3.0.0";
+var version = "3.0.1";
 
 var version$1 = version; // Reference used:
 // https://en.wikipedia.org/wiki/Uniform_Resource_Identifier#URI_references

@@ -737,7 +737,7 @@
     },
     {
         "name": "string-strip-html",
-        "size": 50542,
+        "size": 50526,
         "imports": [
             "ranges-apply",
             "ranges-push",
