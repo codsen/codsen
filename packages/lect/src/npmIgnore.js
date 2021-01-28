@@ -21,8 +21,11 @@ async function npmIgnore({ lectrc }) {
     );
   }
 
-  // we want the following excluded from .npmignore no matter what:
-  const blacklist = ["testStats.md"];
+  // always include these folders
+  const foldersBlacklist = [".nyc_output"];
+
+  // always include these files
+  const filesBlacklist = ["testStats.md"];
 
   // List from https://docs.npmjs.com/misc/developers
   const npmWillTakeCareOfThese = [
@@ -191,13 +194,13 @@ async function npmIgnore({ lectrc }) {
   const frontStr =
     "# generated using codsen.com/os/lect \n#\n#\n#       __         ______     ______     ______  \n#      /\\ \\       /\\  ___\\   /\\  ___\\   /\\__  _\\ \n#      \\ \\ \\____  \\ \\  __\\   \\ \\ \\____  \\/_/\\ \\/ \n#       \\ \\_____\\  \\ \\_____\\  \\ \\_____\\    \\ \\_\\ \n#        \\/_____/   \\/_____/   \\/_____/     \\/_/ \n#  \n#\n";
 
-  const finalNpmIgnoreFile = `${frontStr}\n# folders:\n\n${badFolders
-    // .concat(foldersToAddToGlobalList)
+  const finalNpmIgnoreFile = `${frontStr}\n# folders:\n\n${[
+    ...new Set(badFolders.concat(foldersBlacklist)),
+  ]
     .sort()
-    .join("\n")}\n\n# files:\n\n${badFiles
-    .filter((v) => !blacklist.includes(v))
+    .join("\n")}\n\n# files:\n\n${[...new Set(badFiles.concat(filesBlacklist))]
     .sort()
-    .join("\n")}\ntestStats.md\n`;
+    .join("\n")}\n`;
 
   try {
     await writeFileAtomic(".npmignore", finalNpmIgnoreFile);

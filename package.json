@@ -35,7 +35,7 @@
     "test:examples": "FORCE_COLOR=1 lerna run test:examples",
     "wipe": "rm package-lock.json || true && rm -rf node_modules && FORCE_COLOR=1 npx lerna clean -y",
     "graph": "lerna-dependency-graph -f 'png' -o './deps-graph.png'",
-    "todo": "node ./scripts/list-ts.js"
+    "checkPublishedSizeLimit": "node ./scripts/check100MBLimit.js"
   },
   "browserslist": "> 0.25%, not dead",
   "dependencies": {},

@@ -22,5 +22,5 @@ test
 .npmignore
 .prettierignore
 rollup.config.js
-tsconfig.json
 testStats.md
+tsconfig.json

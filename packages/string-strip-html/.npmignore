@@ -23,5 +23,5 @@ test
 .prettierignore
 ideas.md
 rollup.config.js
-tsconfig.json
 testStats.md
+tsconfig.json
