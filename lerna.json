@@ -10,7 +10,8 @@
     "**/*.md",
     "**/node_modules/**",
     "**/package.json",
-    "**/perf/**"
+    "**/perf/**",
+    "**/.npmignore"
   ],
   "lifecycle": {
     "version": "git add ."
