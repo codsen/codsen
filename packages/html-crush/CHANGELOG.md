@@ -5,17 +5,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 4.0.1 (2021-01-28)
 
-
 ### Bug Fixes
 
-* add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
-* correct the line length calculation around inline tags ([073f7a5](https://github.com/codsen/codsen/commit/073f7a5a2bb3f8ce0460e674deed9cf1eff63409))
+- add testStats to npmignore ([f3c84e9](https://github.com/codsen/codsen/commit/f3c84e95afc5514214312f913692d85b2e12eb29))
+- correct the line length calculation around inline tags ([073f7a5](https://github.com/codsen/codsen/commit/073f7a5a2bb3f8ce0460e674deed9cf1eff63409))
 
-
-
-
-
-# 4.0.0 (2021-01-23)
+## 4.0.0 (2021-01-23)
 
 ### Features
 
