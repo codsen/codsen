@@ -2,14 +2,19 @@
 
 import { Range, Ranges } from "../../../../scripts/common";
 import {
-  TagToken,
+  // TagToken,
   AtToken,
   RuleToken,
   TextToken,
   EspToken,
   Attrib,
-  CommentToken,
+  // CommentToken,
 } from "../../../codsen-tokenizer/src/util/util";
+import {
+  ErrorObj,
+  TagTokenWithChildren,
+  CommentTokenWithChildren,
+} from "../../../codsen-parser/src/main";
 
 // From "type-fest" by Sindre Sorhus:
 type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
@@ -31,10 +36,10 @@ interface Config {
 }
 
 interface AttribSupplementedWithParent extends Attrib {
-  parent: TagToken;
+  parent: TagTokenWithChildren;
 }
 
-type TagEvent = (node: TagToken) => void;
+type TagEvent = (node: TagTokenWithChildren) => void;
 type AtEvent = (node: AtToken) => void;
 type RuleEvent = (node: RuleToken) => void;
 type TextEvent = (node: TextToken) => void;
@@ -42,7 +47,7 @@ type EspEvent = (node: EspToken) => void;
 type CharacterEvent = ({ chr, i }: { chr: string; i: number }) => void;
 type AttributeEvent = (node: AttribSupplementedWithParent) => void;
 type AstEvent = (node: JsonObject[]) => void;
-type CommentEvent = (node: CommentToken) => void;
+type CommentEvent = (node: CommentTokenWithChildren) => void;
 type EntityEvent = (node: { idxFrom: number; idxTo: number }) => void;
 
 interface RuleObjType {
@@ -59,16 +64,6 @@ interface RuleObjType {
 }
 
 type EventNames = keyof RuleObjType;
-
-interface ErrorObj {
-  ruleId?: string;
-  message: string;
-  idxFrom: number;
-  idxTo: number;
-  fix: null | { ranges: Ranges };
-  severity?: Severity;
-  keepSeparateWhenFixing?: boolean;
-}
 
 interface MessageObj extends ErrorObj {
   line: number;

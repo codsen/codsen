@@ -566,6 +566,43 @@ import commentMismatchingPair from "./rules/comment/comment-mismatching-pair";
 
 import commentConditionalNested from "./rules/comment/comment-conditional-nested";
 
+// EMAIL rules
+// -----------------------------------------------------------------------------
+
+import tdSiblingPadding from "./rules/email/email-td-sibling-padding";
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// -----------------------------------------------------------------------------
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 interface BuiltInRules {
   [key: string]: () => any;
 }
@@ -1102,6 +1139,10 @@ defineLazyProp(
   "bad-character-replacement-character",
   () => badCharacterReplacementCharacter
 );
+
+// TAG rules
+// -----------------------------------------------------------------------------
+
 defineLazyProp(
   builtInRules,
   "tag-space-after-opening-bracket",
@@ -1760,6 +1801,15 @@ defineLazyProp(
   builtInRules,
   "comment-conditional-nested",
   () => commentConditionalNested
+);
+
+// EMAIL rules
+// -----------------------------------------------------------------------------
+
+defineLazyProp(
+  builtInRules,
+  "email-td-sibling-padding",
+  () => tdSiblingPadding
 );
 
 // EXPORTS

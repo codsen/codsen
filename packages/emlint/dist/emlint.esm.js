@@ -1,7 +1,7 @@
 /**
  * emlint
  * Pluggable email template code linter
- * Version: 4.0.1
+ * Version: 4.0.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/emlint/
@@ -292,7 +292,7 @@ function validateString(str, idxOffset, originalOpts) {
         leadingWhitespaceOK: true,
         trailingWhitespaceOK: true,
         cb: (idxFrom, idxTo) => {
-          str.slice(idxFrom - idxOffset, idxTo - idxOffset); // if there are errors, validateValue() mutates the passed "errorArr",
+          const extractedValue = str.slice(idxFrom - idxOffset, idxTo - idxOffset); // if there are errors, validateValue() mutates the passed "errorArr",
           // pushing to it
 
           validateValue(str, idxOffset, opts, idxFrom - idxOffset, // processCommaSep() reports offset values so we need to restore indexes to start where this "str" above starts
@@ -310,7 +310,7 @@ function validateString(str, idxOffset, originalOpts) {
         }
       });
     } else {
-      str.slice(charStart, charEnd); // if there are errors, validateValue() mutates the passed "errorArr",
+      const extractedValue = str.slice(charStart, charEnd); // if there are errors, validateValue() mutates the passed "errorArr",
       // pushing to it
 
       validateValue(str, idxOffset, opts, charStart, charEnd, errorArr);
@@ -3434,7 +3434,7 @@ function tagSpaceBeforeClosingBracket(context) {
 function tagSpaceBeforeClosingSlash(context, mode = "never") {
   return {
     tag(node) {
-      context.str.slice(node.start + 1, node.tagNameStartsAt); // PROCESSING:
+      const gapValue = context.str.slice(node.start + 1, node.tagNameStartsAt); // PROCESSING:
 
       const closingBracketPos = node.end - 1;
       const slashPos = left(context.str, closingBracketPos);
@@ -3724,7 +3724,7 @@ function tagIsPresent(context, ...blacklist) {
     tag(node) {
 
       if (Array.isArray(blacklist) && blacklist.length) {
-        matcher([node.tagName], blacklist);
+        const temp = matcher([node.tagName], blacklist);
 
         if (matcher([node.tagName], blacklist).length) {
           context.report({
@@ -4486,7 +4486,7 @@ function validateValue$1(str, originalOpts, errorArr) {
       return acc;
     }, 0); // assemble the value without whitespace
 
-    foundCharacterRanges.reduce((acc, curr) => {
+    const valueWithoutWhitespace = foundCharacterRanges.reduce((acc, curr) => {
       return acc + extractedValue.slice(curr[0] - opts.offset, curr[1] - opts.offset);
     }, "");
 
@@ -4600,7 +4600,7 @@ function validateUri(str, originalOpts) {
           leadingWhitespaceOK: true,
           trailingWhitespaceOK: true,
           cb: (idxFrom, idxTo) => {
-            str.slice(idxFrom - opts.offset, idxTo - opts.offset); // if there are errors, validateValue() mutates the passed "errorArr",
+            const extractedValue = str.slice(idxFrom - opts.offset, idxTo - opts.offset); // if there are errors, validateValue() mutates the passed "errorArr",
             // pushing to it
             // Object assign needed to retain opts.multipleOK
 
@@ -10679,6 +10679,41 @@ function commentConditionalNested(context) {
   };
 }
 
+// rule: email-td-sibling-padding
+// -----------------------------------------------------------------------------
+// prohibits use of CSS padding style on TD if sibling TD's are present
+function tdSiblingPadding(context) {
+  let start;
+  let end;
+  return {
+    tag(node) {
+
+      if ( // if this node is TR tag
+      node.tagName === "tr" && // and it's got at least some some children tags
+      Array.isArray(node.children) && // there are more than one TD children tags
+      node.children.filter(tokenObj => tokenObj.type === "tag" && tokenObj.tagName === "td" && !tokenObj.closing).length > 1 && // any one of TD children tags contains a css style property "padding-*"
+      node.children.some(tokenObj => tokenObj.type === "tag" && tokenObj.tagName === "td" && !tokenObj.closing && Array.isArray(tokenObj.attribs) && tokenObj.attribs.some(attribObj => attribObj.attribName === "style" && Array.isArray(attribObj.attribValue) && attribObj.attribValue.some(attribValueObj => {
+        if (typeof attribValueObj.property === "string" && attribValueObj.property.startsWith("padding-")) {
+          start = attribValueObj.start;
+          end = attribValueObj.end;
+          return true;
+        }
+
+        return false;
+      })))) {
+        context.report({
+          ruleId: "email-td-sibling-padding",
+          message: `Don't set padding on TD when sibling TD's are present.`,
+          idxFrom: start,
+          idxTo: end,
+          fix: null
+        });
+      }
+    }
+
+  };
+}
+
 // here we fetch the rules from all the places,
 const builtInRules = {};
 defineLazyProp(builtInRules, "bad-character-null", () => badCharacterNull);
@@ -10792,7 +10827,9 @@ defineLazyProp(builtInRules, "bad-character-paragraph-separator", () => badChara
 defineLazyProp(builtInRules, "bad-character-narrow-no-break-space", () => badCharacterNarrowNoBreakSpace);
 defineLazyProp(builtInRules, "bad-character-medium-mathematical-space", () => badCharacterMediumMathematicalSpace);
 defineLazyProp(builtInRules, "bad-character-ideographic-space", () => badCharacterIdeographicSpace);
-defineLazyProp(builtInRules, "bad-character-replacement-character", () => badCharacterReplacementCharacter);
+defineLazyProp(builtInRules, "bad-character-replacement-character", () => badCharacterReplacementCharacter); // TAG rules
+// -----------------------------------------------------------------------------
+
 defineLazyProp(builtInRules, "tag-space-after-opening-bracket", () => tagSpaceAfterOpeningBracket);
 defineLazyProp(builtInRules, "tag-space-before-closing-bracket", () => tagSpaceBeforeClosingBracket);
 defineLazyProp(builtInRules, "tag-space-before-closing-slash", () => tagSpaceBeforeClosingSlash);
@@ -10931,7 +10968,10 @@ defineLazyProp(builtInRules, "media-malformed", () => mediaMalformed);
 defineLazyProp(builtInRules, "comment-closing-malformed", () => commentClosingMalformed);
 defineLazyProp(builtInRules, "comment-opening-malformed", () => commentOpeningMalformed);
 defineLazyProp(builtInRules, "comment-mismatching-pair", () => commentMismatchingPair);
-defineLazyProp(builtInRules, "comment-conditional-nested", () => commentConditionalNested); // EXPORTS
+defineLazyProp(builtInRules, "comment-conditional-nested", () => commentConditionalNested); // EMAIL rules
+// -----------------------------------------------------------------------------
+
+defineLazyProp(builtInRules, "email-td-sibling-padding", () => tdSiblingPadding); // EXPORTS
 // -----------------------------------------------------------------------------
 
 function get(something) {
@@ -11339,7 +11379,7 @@ class Linter extends TypedEmitter {
 
 }
 
-var version = "4.0.1";
+var version = "4.0.2";
 
 const version$1 = version;
 

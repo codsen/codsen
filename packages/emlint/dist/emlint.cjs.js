@@ -1,7 +1,7 @@
 /**
  * emlint
  * Pluggable email template code linter
- * Version: 4.0.1
+ * Version: 4.0.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/emlint/
@@ -317,7 +317,7 @@ function validateString(str, idxOffset, originalOpts) {
         leadingWhitespaceOK: true,
         trailingWhitespaceOK: true,
         cb: function cb(idxFrom, idxTo) {
-          str.slice(idxFrom - idxOffset, idxTo - idxOffset); // if there are errors, validateValue() mutates the passed "errorArr",
+          var extractedValue = str.slice(idxFrom - idxOffset, idxTo - idxOffset); // if there are errors, validateValue() mutates the passed "errorArr",
           // pushing to it
 
           validateValue(str, idxOffset, opts, idxFrom - idxOffset, // processCommaSep() reports offset values so we need to restore indexes to start where this "str" above starts
@@ -335,7 +335,7 @@ function validateString(str, idxOffset, originalOpts) {
         }
       });
     } else {
-      str.slice(charStart, charEnd); // if there are errors, validateValue() mutates the passed "errorArr",
+      var extractedValue = str.slice(charStart, charEnd); // if there are errors, validateValue() mutates the passed "errorArr",
       // pushing to it
 
       validateValue(str, idxOffset, opts, charStart, charEnd, errorArr);
@@ -3352,7 +3352,7 @@ function tagSpaceBeforeClosingSlash(context, mode) {
 
   return {
     tag: function tag(node) {
-      context.str.slice(node.start + 1, node.tagNameStartsAt); // PROCESSING:
+      var gapValue = context.str.slice(node.start + 1, node.tagNameStartsAt); // PROCESSING:
 
       var closingBracketPos = node.end - 1;
       var slashPos = stringLeftRight.left(context.str, closingBracketPos);
@@ -3645,7 +3645,7 @@ function tagIsPresent(context) {
     tag: function tag(node) {
 
       if (Array.isArray(blacklist) && blacklist.length) {
-        matcher__default['default']([node.tagName], blacklist);
+        var temp = matcher__default['default']([node.tagName], blacklist);
 
         if (matcher__default['default']([node.tagName], blacklist).length) {
           context.report({
@@ -4408,7 +4408,7 @@ function validateValue$1(str, originalOpts, errorArr) {
       return acc;
     }, 0); // assemble the value without whitespace
 
-    foundCharacterRanges.reduce(function (acc, curr) {
+    var valueWithoutWhitespace = foundCharacterRanges.reduce(function (acc, curr) {
       return acc + extractedValue.slice(curr[0] - opts.offset, curr[1] - opts.offset);
     }, "");
 
@@ -4526,7 +4526,7 @@ function validateUri(str, originalOpts) {
           leadingWhitespaceOK: true,
           trailingWhitespaceOK: true,
           cb: function cb(idxFrom, idxTo) {
-            str.slice(idxFrom - opts.offset, idxTo - opts.offset); // if there are errors, validateValue() mutates the passed "errorArr",
+            var extractedValue = str.slice(idxFrom - opts.offset, idxTo - opts.offset); // if there are errors, validateValue() mutates the passed "errorArr",
             // pushing to it
             // Object assign needed to retain opts.multipleOK
 
@@ -5959,10 +5959,10 @@ function attributeValidateCode(context) {
           });
         } else {
           // only validate the whitespace
-          var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-              _checkForWhitespace.charStart;
-              _checkForWhitespace.charEnd;
-              var errorArr = _checkForWhitespace.errorArr;
+          var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+              charStart = _checkForWhitespace.charStart,
+              charEnd = _checkForWhitespace.charEnd,
+              errorArr = _checkForWhitespace.errorArr;
           errorArr.forEach(function (errorObj) {
             context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
               ruleId: "attribute-validate-code"
@@ -6234,10 +6234,10 @@ function attributeValidateContent(context) {
         } // only validate the whitespace
 
 
-        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-            _checkForWhitespace.charStart;
-            _checkForWhitespace.charEnd;
-            var errorArr = _checkForWhitespace.errorArr;
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+            charStart = _checkForWhitespace.charStart,
+            charEnd = _checkForWhitespace.charEnd,
+            errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
           context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-content"
@@ -6575,10 +6575,10 @@ function attributeValidateFace(context) {
         } // only validate the whitespace
 
 
-        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt);
-            _checkForWhitespace.charStart;
-            _checkForWhitespace.charEnd;
-            var errorArr = _checkForWhitespace.errorArr;
+        var _checkForWhitespace = checkForWhitespace(node.attribValueRaw, node.attribValueStartsAt),
+            charStart = _checkForWhitespace.charStart,
+            charEnd = _checkForWhitespace.charEnd,
+            errorArr = _checkForWhitespace.errorArr;
         errorArr.forEach(function (errorObj) {
           context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
             ruleId: "attribute-validate-face"
@@ -10319,6 +10319,46 @@ function commentConditionalNested(context) {
   };
 }
 
+// rule: email-td-sibling-padding
+// -----------------------------------------------------------------------------
+// prohibits use of CSS padding style on TD if sibling TD's are present
+function tdSiblingPadding(context) {
+  var start;
+  var end;
+  return {
+    tag: function tag(node) {
+
+      if ( // if this node is TR tag
+      node.tagName === "tr" && // and it's got at least some some children tags
+      Array.isArray(node.children) && // there are more than one TD children tags
+      node.children.filter(function (tokenObj) {
+        return tokenObj.type === "tag" && tokenObj.tagName === "td" && !tokenObj.closing;
+      }).length > 1 && // any one of TD children tags contains a css style property "padding-*"
+      node.children.some(function (tokenObj) {
+        return tokenObj.type === "tag" && tokenObj.tagName === "td" && !tokenObj.closing && Array.isArray(tokenObj.attribs) && tokenObj.attribs.some(function (attribObj) {
+          return attribObj.attribName === "style" && Array.isArray(attribObj.attribValue) && attribObj.attribValue.some(function (attribValueObj) {
+            if (typeof attribValueObj.property === "string" && attribValueObj.property.startsWith("padding-")) {
+              start = attribValueObj.start;
+              end = attribValueObj.end;
+              return true;
+            }
+
+            return false;
+          });
+        });
+      })) {
+        context.report({
+          ruleId: "email-td-sibling-padding",
+          message: "Don't set padding on TD when sibling TD's are present.",
+          idxFrom: start,
+          idxTo: end,
+          fix: null
+        });
+      }
+    }
+  };
+}
+
 // here we fetch the rules from all the places,
 var builtInRules = {};
 defineLazyProp__default['default'](builtInRules, "bad-character-null", function () {
@@ -10656,7 +10696,9 @@ defineLazyProp__default['default'](builtInRules, "bad-character-ideographic-spac
 });
 defineLazyProp__default['default'](builtInRules, "bad-character-replacement-character", function () {
   return badCharacterReplacementCharacter;
-});
+}); // TAG rules
+// -----------------------------------------------------------------------------
+
 defineLazyProp__default['default'](builtInRules, "tag-space-after-opening-bracket", function () {
   return tagSpaceAfterOpeningBracket;
 });
@@ -11073,6 +11115,11 @@ defineLazyProp__default['default'](builtInRules, "comment-mismatching-pair", fun
 });
 defineLazyProp__default['default'](builtInRules, "comment-conditional-nested", function () {
   return commentConditionalNested;
+}); // EMAIL rules
+// -----------------------------------------------------------------------------
+
+defineLazyProp__default['default'](builtInRules, "email-td-sibling-padding", function () {
+  return tdSiblingPadding;
 }); // EXPORTS
 // -----------------------------------------------------------------------------
 
@@ -11498,7 +11545,7 @@ var Linter = /*#__PURE__*/function (_TypedEmitter) {
   return Linter;
 }(tinyTypedEmitter.TypedEmitter);
 
-var version = "4.0.1";
+var version = "4.0.2";
 
 var version$1 = version;
 

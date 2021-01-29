@@ -111,22 +111,42 @@ interface AtToken {
     rules: (RuleToken | TextToken)[];
 }
 
+declare type Severity = 0 | 1 | 2;
+interface ErrorObj {
+    ruleId?: string;
+    message: string;
+    idxFrom: number;
+    idxTo: number;
+    fix: null | {
+        ranges: Ranges;
+    };
+    severity?: Severity;
+    keepSeparateWhenFixing?: boolean;
+}
+interface TagTokenWithChildren extends TagToken {
+    children: TokenWithChildren[];
+}
+interface CommentTokenWithChildren extends CommentToken {
+    children: TokenWithChildren[];
+}
+declare type TokenWithChildren = TextToken | TagTokenWithChildren | RuleToken | AtToken | CommentTokenWithChildren | EspToken;
+
 declare type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
 declare type JsonObject = {
     [Key in string]?: JsonValue;
 };
 declare type JsonArray = Array<JsonValue>;
-declare type Severity = 0 | 1 | 2;
+declare type Severity$1 = 0 | 1 | 2;
 interface RulesObj {
-    [rulesName: string]: Severity | [severity: Severity, ...opts: string[]];
+    [rulesName: string]: Severity$1 | [severity: Severity$1, ...opts: string[]];
 }
 interface Config {
     rules: RulesObj;
 }
 interface AttribSupplementedWithParent extends Attrib {
-    parent: TagToken;
+    parent: TagTokenWithChildren;
 }
-declare type TagEvent = (node: TagToken) => void;
+declare type TagEvent = (node: TagTokenWithChildren) => void;
 declare type AtEvent = (node: AtToken) => void;
 declare type RuleEvent = (node: RuleToken) => void;
 declare type TextEvent = (node: TextToken) => void;
@@ -137,7 +157,7 @@ declare type CharacterEvent = ({ chr, i }: {
 }) => void;
 declare type AttributeEvent = (node: AttribSupplementedWithParent) => void;
 declare type AstEvent = (node: JsonObject[]) => void;
-declare type CommentEvent = (node: CommentToken) => void;
+declare type CommentEvent = (node: CommentTokenWithChildren) => void;
 declare type EntityEvent = (node: {
     idxFrom: number;
     idxTo: number;
@@ -154,21 +174,10 @@ interface RuleObjType {
     comment?: CommentEvent;
     entity?: EntityEvent;
 }
-interface ErrorObj {
-    ruleId?: string;
-    message: string;
-    idxFrom: number;
-    idxTo: number;
-    fix: null | {
-        ranges: Ranges;
-    };
-    severity?: Severity;
-    keepSeparateWhenFixing?: boolean;
-}
 interface MessageObj extends ErrorObj {
     line: number;
     column: number;
-    severity: Severity;
+    severity: Severity$1;
     keepSeparateWhenFixing: boolean;
 }
 
@@ -218,9 +227,9 @@ declare const astErrMessages: {
     "tag-void-frontal-slash": string;
 };
 declare function isLetter(str: unknown): boolean;
-declare function isAnEnabledValue(maybeARulesValue: unknown): Severity;
+declare function isAnEnabledValue(maybeARulesValue: unknown): Severity$1;
 declare function isObj(something: unknown): boolean;
-declare function isAnEnabledRule(rules: RulesObj, ruleId: string): Severity;
+declare function isAnEnabledRule(rules: RulesObj, ruleId: string): Severity$1;
 
 declare const util_wholeExtensionRegex: typeof wholeExtensionRegex;
 declare const util_splitByWhitespace: typeof splitByWhitespace;
