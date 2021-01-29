@@ -5,7 +5,7 @@ import { stripHtml } from "../dist/string-strip-html.esm";
 // <%= @var %>
 // -----------------------------------------------------------------------------
 
-tap.only("01 - templating tags", (t) => {
+tap.test("01 - templating tags", (t) => {
   const input = `<div>My variable: <%= @var %></div>`;
   const result = "My variable: <%= @var %>";
   t.match(stripHtml(input), { result }, "01.01");

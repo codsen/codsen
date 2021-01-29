@@ -22,7 +22,7 @@ function getDirectories(p) {
         // console.log(`\n----\n\n${dirName}\n`);
         // console.log(+pkg.dist.unpackedSize / 1000000);
         // unpackedSize comes in bytes
-        if (+pkg.dist.unpackedSize / 1000000 > 2) {
+        if (+pkg.dist.unpackedSize / 1000000 > 5) {
           console.log(
             `${`\u001b[${31}m${`ALERT! ${dirName} is ${Math.floor(
               +pkg.dist.unpackedSize / 1000000
