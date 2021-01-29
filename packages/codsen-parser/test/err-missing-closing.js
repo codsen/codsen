@@ -253,6 +253,53 @@ tap.test(
   }
 );
 
+tap.test(`07 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - text + tag`, (t) => {
+  const gatheredErr = [];
+  t.match(
+    cparser(`z <div>`, {
+      errCb: (errObj) => gatheredErr.push(errObj),
+    }),
+    [
+      {
+        type: "text",
+        start: 0,
+        end: 2,
+        value: "z ",
+      },
+      {
+        type: "tag",
+        start: 2,
+        end: 7,
+        value: "<div>",
+        tagNameStartsAt: 3,
+        tagNameEndsAt: 6,
+        tagName: "div",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+        children: [],
+      },
+    ],
+    "07.01"
+  );
+  t.match(
+    gatheredErr,
+    [
+      {
+        ruleId: "tag-missing-closing",
+        idxFrom: 2,
+        idxTo: 7,
+      },
+    ],
+    "07.02"
+  );
+  t.is(gatheredErr.length, 1, "07.03");
+  t.end();
+});
+
 // 02. false alerts
 // -----------------------------------------------------------------------------
 
