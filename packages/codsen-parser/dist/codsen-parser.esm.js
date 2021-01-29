@@ -1,7 +1,7 @@
 /**
  * codsen-parser
  * Parser aiming at broken or mixed code, especially HTML & CSS
- * Version: 0.9.1
+ * Version: 0.9.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/codsen-parser/
@@ -13,8 +13,9 @@ import { left, right } from 'string-left-right';
 import { tokenizer } from 'codsen-tokenizer';
 import op from 'object-path';
 
-var version = "0.9.1";
+var version = "0.9.2";
 
+/* eslint no-use-before-define: 0 */
 const version$1 = version;
 const defaults = {
   reportProgressFunc: null,

@@ -1,20 +1,57 @@
+/* eslint no-use-before-define: 0 */
+
 import { pathNext, pathPrev, pathUp } from "ast-monkey-util";
 import { findMalformed } from "string-find-malformed";
 import { left, right } from "string-left-right";
 import { tokenizer } from "codsen-tokenizer";
+import { Ranges } from "../../../scripts/common";
 import op from "object-path";
 import { version as v } from "../package.json";
 const version: string = v;
-import { Token, CharCb } from "../../codsen-tokenizer/src/util/util";
-import { ErrorObj } from "../../emlint/src/util/commonTypes";
+import {
+  TagToken,
+  TextToken,
+  CommentToken,
+  RuleToken,
+  AtToken,
+  EspToken,
+  CharCb,
+} from "../../codsen-tokenizer/src/util/util";
+
+type Severity = 0 | 1 | 2;
+interface ErrorObj {
+  ruleId?: string;
+  message: string;
+  idxFrom: number;
+  idxTo: number;
+  fix: null | { ranges: Ranges };
+  severity?: Severity;
+  keepSeparateWhenFixing?: boolean;
+}
 
 interface IdxRangeObj {
   idxFrom: number;
   idxTo: number;
 }
 
+// tokenizer doesn't have "children" property, parser, this program,
+// adds this extra data, so we need to extend the types accordingly:
+interface TagTokenWithChildren extends TagToken {
+  children: TokenWithChildren[];
+}
+interface CommentTokenWithChildren extends CommentToken {
+  children: TokenWithChildren[];
+}
+type TokenWithChildren =
+  | TextToken
+  | TagTokenWithChildren
+  | RuleToken
+  | AtToken
+  | CommentTokenWithChildren
+  | EspToken;
+
 interface SupplementedErrorObj extends ErrorObj {
-  tokenObj: Token;
+  tokenObj: TokenWithChildren;
 }
 
 type ErrCb = (obj: Partial<SupplementedErrorObj>) => void;
@@ -23,7 +60,7 @@ interface Opts {
   reportProgressFunc: null | ((percDone: number) => void);
   reportProgressFuncFrom: number;
   reportProgressFuncTo: number;
-  tagCb: null | ((obj: Token) => void);
+  tagCb: null | ((obj: TokenWithChildren) => void);
   charCb: null | CharCb;
   errCb: null | ErrCb;
 }
@@ -42,7 +79,10 @@ function isObj(something: any): boolean {
     something && typeof something === "object" && !Array.isArray(something)
   );
 }
-function layerPending(layers: Token[], tokenObj: Token): boolean {
+function layerPending(
+  layers: TokenWithChildren[],
+  tokenObj: TokenWithChildren
+): boolean {
   console.log(`013 layerPending() received: `);
   console.log(
     `015 - 1.${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
@@ -225,7 +265,7 @@ function cparser(str: string, originalOpts?: Partial<Opts>): any[] {
 
   // layers keep track of tag heads, so that when we hit their tails, we know
   // where both parts are:
-  const layers: Token[] = [];
+  const layers: TokenWithChildren[] = [];
 
   const res: any[] = [];
 
@@ -353,7 +393,7 @@ function cparser(str: string, originalOpts?: Partial<Opts>): any[] {
               !prevToken.closing &&
               (tokenObj as any).closing
             )) &&
-          !layerPending(layers, tokenObj) &&
+          !layerPending(layers, tokenObj as TokenWithChildren) &&
           //
           // --------
           // imagine the case:
@@ -400,7 +440,7 @@ function cparser(str: string, originalOpts?: Partial<Opts>): any[] {
           console.log(`365 ${`\u001b[${35}m${`██ UP`}\u001b[${39}m`}`);
           path = pathNext(pathUp(path));
 
-          if (layerPending(layers, tokenObj)) {
+          if (layerPending(layers, tokenObj as TokenWithChildren)) {
             console.log(
               `370 current token was pending, so we pop() it from layers`
             );
@@ -603,7 +643,7 @@ function cparser(str: string, originalOpts?: Partial<Opts>): any[] {
           console.log(`565 ${`\u001b[${35}m${`██ BUMP`}\u001b[${39}m`}`);
           path = pathNext(path);
 
-          if (layerPending(layers, tokenObj)) {
+          if (layerPending(layers, tokenObj as TokenWithChildren)) {
             layers.pop();
             console.log(
               `571 POP layers, now equals to: ${JSON.stringify(
@@ -635,7 +675,7 @@ function cparser(str: string, originalOpts?: Partial<Opts>): any[] {
             !(tokenObj as any).kind ||
             !tagNamesThatDontHaveClosings.includes((tokenObj as any).kind)
           ) {
-            layers.push({ ...tokenObj });
+            layers.push({ ...(tokenObj as TokenWithChildren) });
             console.log(
               `599 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} to layers, which is now: ${JSON.stringify(
                 layers,
@@ -1364,4 +1404,12 @@ function cparser(str: string, originalOpts?: Partial<Opts>): any[] {
 
 // -----------------------------------------------------------------------------
 
-export { cparser, defaults, version };
+export {
+  cparser,
+  defaults,
+  version,
+  ErrorObj,
+  TokenWithChildren,
+  TagTokenWithChildren,
+  CommentTokenWithChildren,
+};

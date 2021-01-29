@@ -1,3 +1,6 @@
+declare type Range = [from: number, to: number] | [from: number, to: number, whatToInsert: string | null | undefined];
+declare type Ranges = Range[] | null;
+
 interface Selector {
     value: string;
     selectorStarts: number;
@@ -106,7 +109,6 @@ interface AtToken {
     closingCurlyAt: null | number;
     rules: (RuleToken | TextToken)[];
 }
-declare type Token = TextToken | TagToken | RuleToken | AtToken | CommentToken | EspToken;
 interface CharacterToken {
     chr: string;
     i: number;
@@ -114,8 +116,7 @@ interface CharacterToken {
 }
 declare type CharCb = (token: CharacterToken, next: CharacterToken[]) => void;
 
-declare type Range = [from: number, to: number] | [from: number, to: number, whatToInsert: string | null | undefined];
-declare type Ranges = Range[] | null;
+declare const version: string;
 
 declare type Severity = 0 | 1 | 2;
 interface ErrorObj {
@@ -129,18 +130,22 @@ interface ErrorObj {
     severity?: Severity;
     keepSeparateWhenFixing?: boolean;
 }
-
-declare const version: string;
-
+interface TagTokenWithChildren extends TagToken {
+    children: TokenWithChildren[];
+}
+interface CommentTokenWithChildren extends CommentToken {
+    children: TokenWithChildren[];
+}
+declare type TokenWithChildren = TextToken | TagTokenWithChildren | RuleToken | AtToken | CommentTokenWithChildren | EspToken;
 interface SupplementedErrorObj extends ErrorObj {
-    tokenObj: Token;
+    tokenObj: TokenWithChildren;
 }
 declare type ErrCb = (obj: Partial<SupplementedErrorObj>) => void;
 interface Opts {
     reportProgressFunc: null | ((percDone: number) => void);
     reportProgressFuncFrom: number;
     reportProgressFuncTo: number;
-    tagCb: null | ((obj: Token) => void);
+    tagCb: null | ((obj: TokenWithChildren) => void);
     charCb: null | CharCb;
     errCb: null | ErrCb;
 }
@@ -150,4 +155,4 @@ declare const defaults: Opts;
  */
 declare function cparser(str: string, originalOpts?: Partial<Opts>): any[];
 
-export { cparser, defaults, version };
+export { CommentTokenWithChildren, ErrorObj, TagTokenWithChildren, TokenWithChildren, cparser, defaults, version };

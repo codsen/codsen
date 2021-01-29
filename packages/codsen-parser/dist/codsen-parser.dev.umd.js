@@ -1,7 +1,7 @@
 /**
  * codsen-parser
  * Parser aiming at broken or mixed code, especially HTML & CSS
- * Version: 0.9.1
+ * Version: 0.9.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/codsen-parser/
@@ -153,7 +153,7 @@ var funcProto = Function.prototype;
 var funcToString = funcProto.toString;
 /** Used to infer the `Object` constructor. */
 
-funcToString.call(Object);
+var objectCtorString = funcToString.call(Object);
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -7222,7 +7222,7 @@ var objectPath = createCommonjsModule(function (module) {
   });
 });
 
-var version = "0.9.1";
+var version = "0.9.2";
 
 var version$1 = version;
 var defaults$3 = {
