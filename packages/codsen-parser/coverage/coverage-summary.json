@@ -1,3 +1,1 @@
-{"total": {"lines":{"total":238,"covered":92,"skipped":0,"pct":38.66},"statements":{"total":238,"covered":92,"skipped":0,"pct":38.66},"functions":{"total":8,"covered":5,"skipped":0,"pct":62.5},"branches":{"total":254,"covered":74,"skipped":0,"pct":29.13}}
-,"/Users/royston/Documents/__PROJECTS/____libs2/packages/codsen-parser/dist/codsen-parser.esm.js": {"lines":{"total":238,"covered":92,"skipped":0,"pct":38.66},"functions":{"total":8,"covered":5,"skipped":0,"pct":62.5},"statements":{"total":238,"covered":92,"skipped":0,"pct":38.66},"branches":{"total":254,"covered":74,"skipped":0,"pct":29.13}}
-}
+{"total":{"lines":{"total":150,"covered":143,"skipped":0,"pct":95.33},"statements":{"total":150,"covered":143,"skipped":0,"pct":95.33},"functions":{"total":9,"covered":9,"skipped":0,"pct":100},"branches":{"total":241,"covered":219,"skipped":0,"pct":90.87}}}

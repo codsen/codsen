@@ -387,6 +387,10 @@ function cparser(str: string, originalOpts?: Partial<Opts>): any[] {
           // ensure it's not a closing tag of a pair, in which case
           // don't nest it!
           !(tokenObj as any).closing &&
+          // also don't nest under closing tag
+          !(lastProcessedToken as any).closing &&
+          // also don't nest under text token
+          (lastProcessedToken as any).type !== "text" &&
           (!prevToken ||
             !(
               prevToken.tagName === (tokenObj as any).tagName &&
@@ -460,7 +464,7 @@ function cparser(str: string, originalOpts?: Partial<Opts>): any[] {
 
             layers.pop();
             console.log(
-              `388 POP layers, now equals to: ${JSON.stringify(
+              `463 POP layers, now equals to: ${JSON.stringify(
                 layers,
                 null,
                 4
@@ -469,116 +473,111 @@ function cparser(str: string, originalOpts?: Partial<Opts>): any[] {
 
             nestNext = false;
             console.log(
-              `397 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nestNext`}\u001b[${39}m`}: ${nestNext}`
+              `472 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nestNext`}\u001b[${39}m`}: ${nestNext}`
             );
           } else {
             console.log(
-              `401 ${`\u001b[${31}m${`layer for "${tokenObj.value}" was not pending!`}\u001b[${39}m`}`
+              `476 ${`\u001b[${31}m${`layer for "${tokenObj.value}" was not pending!`}\u001b[${39}m`}`
             );
             console.log(
-              `404 ${`\u001b[${31}m${`yet this was a closing token`}\u001b[${39}m`}`
+              `479 ${`\u001b[${31}m${`yet this was a closing token`}\u001b[${39}m`}`
             );
 
-            // if this is a gap and current token closes parent token,
-            // go another level up
             if (
-              layers.length > 1 &&
-              (tokenObj as any).tagName &&
-              (tokenObj as any).tagName ===
-                (layers[layers.length - 2] as any).tagName
+              layers.length &&
+              (tokenObj as TagToken).tagName &&
+              // (tokenObj as TagToken).tagName ===
+              //   (layers[layers.length - 2] as TagToken).tagName
+              layers.some(
+                (layerObj) =>
+                  layerObj.type === "tag" &&
+                  layerObj.tagName === (tokenObj as TagToken).tagName
+              )
             ) {
+              // if this is a gap and current token closes parent token,
+              // go another level up
               console.log(
-                `415 ${`\u001b[${32}m${`THIS WAS A GAP`}\u001b[${39}m`}`
+                `496 ${`\u001b[${32}m${`THIS WAS A GAP`}\u001b[${39}m`}`
               );
-
-              // 1. amend the path
-              path = pathNext(pathUp(path));
               console.log(
-                `421 ${`\u001b[${35}m${`██ UP again`}\u001b[${39}m`}`
-              );
-
-              // 2. report the last layer's token as missing closing
-              if (typeof opts.errCb === "function") {
-                const lastLayersToken = layers[layers.length - 1];
-
-                console.log(
-                  `429 ${`\u001b[${31}m${`██ RAISE ERROR`}\u001b[${39}m`} ${
-                    lastLayersToken.type
-                  }${
-                    lastLayersToken.type === "comment"
-                      ? `-${lastLayersToken.kind}`
-                      : ""
-                  }-missing-closing`
-                );
-                opts.errCb({
-                  ruleId: `${lastLayersToken.type}${
-                    lastLayersToken.type === "comment"
-                      ? `-${lastLayersToken.kind}`
-                      : ""
-                  }-missing-closing`,
-                  idxFrom: lastLayersToken.start,
-                  idxTo: lastLayersToken.end,
-                  tokenObj: lastLayersToken,
-                });
-              }
-
-              // 3. clean up the layers
-              layers.pop();
-              layers.pop();
-
-              console.log(
-                `454 POP layers twice, now equals to: ${JSON.stringify(
-                  layers,
+                `499 FIY, ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
+                  path,
                   null,
                   4
                 )}`
               );
-            } else if (
-              // so it's a closing tag (</table> in example below)
-              // and it was not pending (meaning opening heads were not in front)
-              // and this token is tag and it's closing the second layer backwards
-              // imagine code: <table><tr><td>x</td><a></table>
-              // imagine on </table> we have layers:
-              // <table>, <tr>, <a> - so <a> is rogue, maybe in its place the
-              // </tr> was meant to be, hance the second layer backwards,
-              // the "layers[layers.length - 3]"
-              layers.length > 2 &&
-              layers[layers.length - 3].type === tokenObj.type &&
-              layers[layers.length - 3].type === tokenObj.type &&
-              (layers[layers.length - 3] as any).tagName ===
-                (tokenObj as any).tagName
-            ) {
+
               console.log(
-                `475 ${`\u001b[${32}m${`PREVIOUS TAG WAS ROGUE OPENING`}\u001b[${39}m`}`
+                `508 ${`\u001b[${36}m${`███████████████████████████████████████ WHILE STARTS`}\u001b[${39}m`} `
               );
 
-              // 1. amend the path
-              path = pathNext(pathUp(path));
-              console.log(
-                `481 ${`\u001b[${35}m${`██ UP again`}\u001b[${39}m`}`
-              );
+              let lastLayer = layers.pop();
+              let currTagName = (lastLayer as TagToken).tagName;
+              let i = 0;
+              while (currTagName !== (tokenObj as TagToken).tagName) {
+                console.log(
+                  `512 ${`\u001b[${36}m${`==================`}\u001b[${39}m`}`
+                );
+                i++;
 
-              // 2. report the last layer's token as missing closing
-              if (typeof opts.errCb === "function") {
-                const lastLayersToken = layers[layers.length - 1];
+                // 1. report the last layer's token as missing closing
+                if (lastLayer && typeof opts.errCb === "function") {
+                  console.log(
+                    `538 ${`\u001b[${31}m${`██ RAISE ERROR`}\u001b[${39}m`} ${
+                      lastLayer.type
+                    }${
+                      lastLayer.type === "comment" ? `-${lastLayer.kind}` : ""
+                    }-missing-closing at [${lastLayer.start}, ${lastLayer.end}]`
+                  );
+                  opts.errCb({
+                    ruleId: `${lastLayer.type}${
+                      lastLayer.type === "comment" ? `-${lastLayer.kind}` : ""
+                    }-missing-closing`,
+                    idxFrom: lastLayer.start,
+                    idxTo: lastLayer.end,
+                    tokenObj: lastLayer,
+                  });
+                }
+
+                lastLayer = layers.pop();
+                currTagName = (lastLayer as TagToken).tagName;
+
+                // 2. if there's more than one tag missing, don't bump the path
+                // on the last iteration
+                if (
+                  !(currTagName === (tokenObj as TagToken).tagName && i > 1)
+                ) {
+                  path = pathNext(pathUp(path));
+                  console.log(
+                    `532 ${`\u001b[${35}m${`██ UP again`}\u001b[${39}m`}, path=${path}`
+                  );
+                }
 
                 console.log(
-                  `489 ${`\u001b[${31}m${`██ RAISE ERROR`}\u001b[${39}m`} tag-rogue [${
-                    lastLayersToken.start
-                  }, ${lastLayersToken.end}]`
+                  `518 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastLayer`}\u001b[${39}m`} = ${JSON.stringify(
+                    lastLayer,
+                    null,
+                    4
+                  )}; ${`\u001b[${33}m${`currTagName`}\u001b[${39}m`} = ${JSON.stringify(
+                    currTagName,
+                    null,
+                    4
+                  )}`
                 );
-                (opts.errCb as any)({
-                  ruleId: `tag-rogue`,
-                  idxFrom: lastLayersToken.start,
-                  idxTo: lastLayersToken.end,
-                  tokenObj: lastLayersToken,
-                });
-              }
 
-              // 3. pop all 3
-              layers.pop();
-              layers.pop();
-              layers.pop();
+                console.log(
+                  `555 ${`\u001b[${36}m${`ENDING`}\u001b[${39}m`} ${`\u001b[${33}m${`layers`}\u001b[${39}m`} = ${JSON.stringify(
+                    layers,
+                    null,
+                    4
+                  )}`
+                );
+              }
+              console.log(
+                `563 ${`\u001b[${36}m${`███████████████████████████████████████ WHILE ENDS`}\u001b[${39}m`} `
+              );
+
+              console.log(`566 layers now: ${JSON.stringify(layers, null, 4)}`);
             } else if (
               // so it's a closing tag (</table> in example below)
               // and it was not pending (meaning opening heads were not in front)
