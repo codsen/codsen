@@ -4006,6 +4006,23 @@ function attributeMalformed(context) {
   };
 }
 
+var attributeOnClosingTag = function attributeOnClosingTag(context) {
+  return {
+    tag: function tag(node) { // if there is more than 1 attribute
+
+      if (node.closing && Array.isArray(node.attribs) && node.attribs.length) {
+        context.report({
+          ruleId: "attribute-on-closing-tag",
+          message: "Attribute on a closing tag.",
+          idxFrom: node.attribs[0].attribStarts,
+          idxTo: node.attribs[node.attribs.length - 1].attribEnds,
+          fix: null
+        });
+      }
+    }
+  };
+};
+
 // -----------------------------------------------------------------------------
 
 function attributeValidateAbbr(context) {
@@ -10734,6 +10751,9 @@ defineLazyProp__default['default'](builtInRules, "attribute-duplicate", function
 });
 defineLazyProp__default['default'](builtInRules, "attribute-malformed", function () {
   return attributeMalformed;
+});
+defineLazyProp__default['default'](builtInRules, "attribute-on-closing-tag", function () {
+  return attributeOnClosingTag;
 });
 defineLazyProp__default['default'](builtInRules, "attribute-validate-abbr", function () {
   return attributeValidateAbbr;

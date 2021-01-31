@@ -15932,7 +15932,7 @@ function tokenizer(str, originalOpts) {
 
             if (attribClosingQuoteAt) {
               // slice the captured chunk
-              str.slice(_y3, attribClosingQuoteAt);
+              var extractedChunksVal = str.slice(_y3, attribClosingQuoteAt);
             }
           } // where that caught whitespace ends, that's the default location
           // of double quotes.
@@ -16871,7 +16871,9 @@ function cparser(str, originalOpts) {
 
         if (nestNext && // ensure it's not a closing tag of a pair, in which case
         // don't nest it!
-        !tokenObj.closing && (!prevToken || !(prevToken.tagName === tokenObj.tagName && !prevToken.closing && tokenObj.closing)) && !layerPending(layers, tokenObj) && ( //
+        !tokenObj.closing && // also don't nest under closing tag
+        !lastProcessedToken.closing && // also don't nest under text token
+        lastProcessedToken.type !== "text" && (!prevToken || !(prevToken.tagName === tokenObj.tagName && !prevToken.closing && tokenObj.closing)) && !layerPending(layers, tokenObj) && ( //
         // --------
         // imagine the case:
         // <div><a> </div>
@@ -16908,51 +16910,37 @@ function cparser(str, originalOpts) {
             layers.pop();
             nestNext = false;
           } else {
-            // if this is a gap and current token closes parent token,
-            // go another level up
-            if (layers.length > 1 && tokenObj.tagName && tokenObj.tagName === layers[layers.length - 2].tagName) {
-              // 1. amend the path
-              path = pathNext(pathUp(path)); // 2. report the last layer's token as missing closing
+            if (layers.length && tokenObj.tagName && // (tokenObj as TagToken).tagName ===
+            //   (layers[layers.length - 2] as TagToken).tagName
+            layers.some(function (layerObj) {
+              return layerObj.type === "tag" && layerObj.tagName === tokenObj.tagName;
+            })) {
+              // if this is a gap and current token closes parent token,
+              // go another level up
+              var lastLayer = layers.pop();
+              var currTagName = lastLayer.tagName;
+              var i = 0;
 
-              if (typeof opts.errCb === "function") {
-                var lastLayersToken = layers[layers.length - 1];
-                opts.errCb({
-                  ruleId: "" + lastLayersToken.type + (lastLayersToken.type === "comment" ? "-" + lastLayersToken.kind : "") + "-missing-closing",
-                  idxFrom: lastLayersToken.start,
-                  idxTo: lastLayersToken.end,
-                  tokenObj: lastLayersToken
-                });
-              } // 3. clean up the layers
+              while (currTagName !== tokenObj.tagName) {
+                i++; // 1. report the last layer's token as missing closing
 
+                if (lastLayer && typeof opts.errCb === "function") {
+                  opts.errCb({
+                    ruleId: "" + lastLayer.type + (lastLayer.type === "comment" ? "-" + lastLayer.kind : "") + "-missing-closing",
+                    idxFrom: lastLayer.start,
+                    idxTo: lastLayer.end,
+                    tokenObj: lastLayer
+                  });
+                }
 
-              layers.pop();
-              layers.pop();
-            } else if ( // so it's a closing tag (</table> in example below)
-            // and it was not pending (meaning opening heads were not in front)
-            // and this token is tag and it's closing the second layer backwards
-            // imagine code: <table><tr><td>x</td><a></table>
-            // imagine on </table> we have layers:
-            // <table>, <tr>, <a> - so <a> is rogue, maybe in its place the
-            // </tr> was meant to be, hance the second layer backwards,
-            // the "layers[layers.length - 3]"
-            layers.length > 2 && layers[layers.length - 3].type === tokenObj.type && layers[layers.length - 3].type === tokenObj.type && layers[layers.length - 3].tagName === tokenObj.tagName) {
-              // 1. amend the path
-              path = pathNext(pathUp(path)); // 2. report the last layer's token as missing closing
+                lastLayer = layers.pop();
+                currTagName = lastLayer.tagName; // 2. if there's more than one tag missing, don't bump the path
+                // on the last iteration
 
-              if (typeof opts.errCb === "function") {
-                var _lastLayersToken = layers[layers.length - 1];
-                opts.errCb({
-                  ruleId: "tag-rogue",
-                  idxFrom: _lastLayersToken.start,
-                  idxTo: _lastLayersToken.end,
-                  tokenObj: _lastLayersToken
-                });
-              } // 3. pop all 3
-
-
-              layers.pop();
-              layers.pop();
-              layers.pop();
+                if (!(currTagName === tokenObj.tagName && i > 1)) {
+                  path = pathNext(pathUp(path));
+                }
+              }
             } else if ( // so it's a closing tag (</table> in example below)
             // and it was not pending (meaning opening heads were not in front)
             // and this token is tag and it's closing the first layer backwards
@@ -16968,12 +16956,12 @@ function cparser(str, originalOpts) {
               // already triggered "UP", tree is fine
               // 2. report the last layer's token as missing closing
               if (typeof opts.errCb === "function") {
-                var _lastLayersToken2 = layers[layers.length - 1];
+                var lastLayersToken = layers[layers.length - 1];
                 opts.errCb({
                   ruleId: "tag-rogue",
-                  idxFrom: _lastLayersToken2.start,
-                  idxTo: _lastLayersToken2.end,
-                  tokenObj: _lastLayersToken2
+                  idxFrom: lastLayersToken.start,
+                  idxTo: lastLayersToken.end,
+                  tokenObj: lastLayersToken
                 });
               } // 3. pop all 2
 
@@ -21906,6 +21894,23 @@ function attributeMalformed(context) {
     }
   };
 }
+
+var attributeOnClosingTag = function attributeOnClosingTag(context) {
+  return {
+    tag: function tag(node) { // if there is more than 1 attribute
+
+      if (node.closing && Array.isArray(node.attribs) && node.attribs.length) {
+        context.report({
+          ruleId: "attribute-on-closing-tag",
+          message: "Attribute on a closing tag.",
+          idxFrom: node.attribs[0].attribStarts,
+          idxTo: node.attribs[node.attribs.length - 1].attribEnds,
+          fix: null
+        });
+      }
+    }
+  };
+};
 
 // -----------------------------------------------------------------------------
 
@@ -44133,6 +44138,9 @@ defineLazyProp(builtInRules, "attribute-duplicate", function () {
 });
 defineLazyProp(builtInRules, "attribute-malformed", function () {
   return attributeMalformed;
+});
+defineLazyProp(builtInRules, "attribute-on-closing-tag", function () {
+  return attributeOnClosingTag;
 });
 defineLazyProp(builtInRules, "attribute-validate-abbr", function () {
   return attributeValidateAbbr;

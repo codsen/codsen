@@ -4076,6 +4076,24 @@ function attributeMalformed(context) {
   };
 }
 
+const attributeOnClosingTag = context => {
+  return {
+    tag(node) { // if there is more than 1 attribute
+
+      if (node.closing && Array.isArray(node.attribs) && node.attribs.length) {
+        context.report({
+          ruleId: "attribute-on-closing-tag",
+          message: `Attribute on a closing tag.`,
+          idxFrom: node.attribs[0].attribStarts,
+          idxTo: node.attribs[node.attribs.length - 1].attribEnds,
+          fix: null
+        });
+      }
+    }
+
+  };
+};
+
 // -----------------------------------------------------------------------------
 
 function attributeValidateAbbr(context) {
@@ -10842,6 +10860,7 @@ defineLazyProp(builtInRules, "tag-bold", () => tagBold);
 defineLazyProp(builtInRules, "tag-bad-self-closing", () => tagBadSelfClosing);
 defineLazyProp(builtInRules, "attribute-duplicate", () => attributeDuplicate);
 defineLazyProp(builtInRules, "attribute-malformed", () => attributeMalformed);
+defineLazyProp(builtInRules, "attribute-on-closing-tag", () => attributeOnClosingTag);
 defineLazyProp(builtInRules, "attribute-validate-abbr", () => attributeValidateAbbr);
 defineLazyProp(builtInRules, "attribute-validate-accept-charset", () => attributeValidateAcceptCharset);
 defineLazyProp(builtInRules, "attribute-validate-accept", () => attributeValidateAccept);

@@ -279,6 +279,8 @@ import attributeDuplicate from "./rules/attribute/attribute-duplicate";
 
 import attributeMalformed from "./rules/attribute/attribute-malformed";
 
+import attributeOnClosingTag from "./rules/attribute/attribute-on-closing-tag";
+
 // ATTRIBUTE-VALIDATE- rules
 // -----------------------------------------------------------------------------
 
@@ -1175,6 +1177,11 @@ defineLazyProp(builtInRules, "tag-bold", () => tagBold);
 defineLazyProp(builtInRules, "tag-bad-self-closing", () => tagBadSelfClosing);
 defineLazyProp(builtInRules, "attribute-duplicate", () => attributeDuplicate);
 defineLazyProp(builtInRules, "attribute-malformed", () => attributeMalformed);
+defineLazyProp(
+  builtInRules,
+  "attribute-on-closing-tag",
+  () => attributeOnClosingTag
+);
 defineLazyProp(
   builtInRules,
   "attribute-validate-abbr",
