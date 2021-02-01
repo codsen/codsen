@@ -141,7 +141,7 @@ function rApply(
   });
 
   // allocate the rest 80% to the actual string assembly:
-  const len2 = (workingRanges as any[]).length;
+  const len2 = Array.isArray(workingRanges) ? workingRanges.length : 0;
   /* istanbul ignore else */
   if (len2 > 0) {
     const tails = str.slice((workingRanges as any[])[len2 - 1][1]);

@@ -1,7 +1,7 @@
 /**
  * ranges-apply
  * Take an array of string index ranges, delete/replace the string according to them
- * Version: 5.0.1
+ * Version: 5.0.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/
@@ -279,7 +279,7 @@ function rMerge(arrOfRanges, originalOpts) {
   return sortedRanges.length ? sortedRanges : null;
 }
 
-var version = "5.0.1";
+var version = "5.0.2";
 
 var version$1 = version;
 
@@ -376,7 +376,7 @@ function rApply(str, originalRangesArr, _progressFn) {
     }
   }); // allocate the rest 80% to the actual string assembly:
 
-  var len2 = workingRanges.length;
+  var len2 = Array.isArray(workingRanges) ? workingRanges.length : 0;
   /* istanbul ignore else */
 
   if (len2 > 0) {
