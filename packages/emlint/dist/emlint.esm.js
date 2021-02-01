@@ -4926,18 +4926,9 @@ function attributeValidateAlt(context) {
             message: `Tag "${node.parent.tagName}" can't have attribute "${node.attribName}".`,
             fix: null
           });
-        } // if value is empty or otherwise does not exist
+        }
 
-
-        if (!node.attribValueStartsAt || !node.attribValueEndsAt) {
-          context.report({
-            ruleId: "attribute-validate-alt",
-            idxFrom: node.attribStarts,
-            idxTo: node.attribEnds,
-            message: `Missing value.`,
-            fix: null
-          });
-        } else {
+        if (node.attribValueStartsAt !== null && node.attribValueEndsAt !== null) {
           // only check for rogue whitespace - value can be any CDATA
           const {
             errorArr

@@ -157,21 +157,9 @@ tap.test(
         "attribute-validate-alt": 2,
       },
     });
-    // can't fix:
+    // not an issue
     t.equal(applyFixes(str, messages), str, "08.01");
-    t.match(
-      messages,
-      [
-        {
-          ruleId: "attribute-validate-alt",
-          idxFrom: 5,
-          idxTo: 11,
-          message: `Missing value.`,
-          fix: null,
-        },
-      ],
-      "08.02"
-    );
+    t.strictSame(messages, [], "08.02");
     t.end();
   }
 );

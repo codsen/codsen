@@ -28,16 +28,10 @@ function attributeValidateAlt(context: Linter): RuleObjType {
           });
         }
 
-        // if value is empty or otherwise does not exist
-        if (!(node.attribValueStartsAt as number) || !node.attribValueEndsAt) {
-          context.report({
-            ruleId: "attribute-validate-alt",
-            idxFrom: node.attribStarts,
-            idxTo: node.attribEnds,
-            message: `Missing value.`,
-            fix: null,
-          });
-        } else {
+        if (
+          node.attribValueStartsAt !== null &&
+          node.attribValueEndsAt !== null
+        ) {
           // only check for rogue whitespace - value can be any CDATA
           const { errorArr } = checkForWhitespace(
             node.attribValueRaw,
