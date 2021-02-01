@@ -4,11 +4,21 @@ import validateInlineStyle from "../../util/validateInlineStyle";
 // rule: attribute-validate-style
 // -----------------------------------------------------------------------------
 
-function attributeValidateStyle(context: Linter): RuleObjType {
+function attributeValidateStyle(
+  context: Linter,
+  ...opts: string[]
+): RuleObjType {
   return {
     attribute(node) {
       console.log(
         `███████████████████████████████████████ attributeValidateStyle() ███████████████████████████████████████`
+      );
+      console.log(
+        `014 attribute-validate-style: ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+          opts,
+          null,
+          4
+        )}`
       );
 
       if (node.attribName === "style") {
@@ -37,7 +47,11 @@ function attributeValidateStyle(context: Linter): RuleObjType {
 
         const errorArr = validateInlineStyle(
           node.attribValueRaw,
-          node.attribValueStartsAt as number
+          node.attribValueStartsAt as number,
+          {
+            noTrailingSemi:
+              Array.isArray(opts) && opts.includes("noTrailingSemi"),
+          }
         );
         console.log(
           `050 received errorArr = ${JSON.stringify(errorArr, null, 4)}`

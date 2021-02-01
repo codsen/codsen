@@ -9431,30 +9431,132 @@ function attributeValidateStart(context) {
   };
 }
 
-function validateInlineStyle(str, idxOffset // opts
-) {
-  // console.log(
-  //   `005 validateInlineStyle(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
-  //     opts,
-  //     null,
-  //     4
-  //   )}`
-  // );
-  // we get trimmed string start and end positions, also an encountered errors array
+const defaults$3 = {
+  noTrailingSemi: true
+};
+
+function validateInlineStyle(str, idxOffset, originalOpts) {
+  const opts = { ...defaults$3,
+    ...originalOpts
+  }; // we get trimmed string start and end positions, also an encountered errors array
   // const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
+
   const {
+    charStart,
+    charEnd,
     errorArr
   } = checkForWhitespace(str, idxOffset); // now that we know where non-whitespace chars are, we can evaluate them
-  // if (Number.isInteger(charStart)) {
-  //   TODO: SOMETHING MORE
-  // }
+
+  if (charStart !== null && charEnd) {
+    // 1. check inner whitespace:
+    // imagine original source:
+    // <td style="font-size:  10px;"></td>
+    // extracted value is passed as "str":
+    //            font-size:  10px;
+    //                      ^^
+    //             we flag this
+    //
+    let whitespaceStartsAt = null;
+    let nonSpacesMet = false;
+
+    for (let i = charStart; i < charEnd; i++) { // catch the unspaced colon
+      // <td style="font-size:10px;"></td>
+      //                     ^
+
+      if (str[i] === ":" && str[i + 1].trim()) {
+        errorArr.push({
+          idxFrom: i + 1 + idxOffset,
+          idxTo: i + 1 + idxOffset,
+          message: `Add a space.`,
+          fix: {
+            ranges: [[i + 1 + idxOffset, i + 1 + idxOffset, " "]]
+          }
+        });
+      } // catch the start of a wrong whitespace chunk
+
+
+      if ( // it's whitespace:
+      !str[i].trim() && // it hasn't been recording
+      whitespaceStartsAt === null) {
+        whitespaceStartsAt = i;
+      } // flag up non-space whitespace characters
+
+
+      if ( // chunk has been recording
+      whitespaceStartsAt && // and it's a whitespace
+      !str[i].trim() && // and current char is not a space
+      str[i] !== " " && // and flag hasn't been flipped already
+      !nonSpacesMet) {
+        nonSpacesMet = true;
+      } // catch the excessive chunk or anything not-space
+
+
+      if ( // it exists
+      whitespaceStartsAt && // it's been passed
+      i > whitespaceStartsAt && ( // and current char doesn't exist (end reached)
+      !str[i] || // or it's not whitespace
+      str[i].trim())) {
+
+        if (nonSpacesMet || i > whitespaceStartsAt + 1) { // default is replacement of the whole string with a single space
+
+          let from = whitespaceStartsAt;
+          let to = i;
+          let replacement = " ";
+
+          if (str[whitespaceStartsAt] === " ") {
+            // push "from" by one and remove replacement
+            from += 1;
+            replacement = null;
+          } else if (str[i - 1] === " ") {
+            to -= 1;
+            replacement = null;
+          }
+
+          errorArr.push({
+            idxFrom: from + idxOffset,
+            idxTo: to + idxOffset,
+            message: `${nonSpacesMet && i === whitespaceStartsAt + 1 ? "Replace" : "Remove"} whitespace.`,
+            fix: {
+              ranges: [replacement ? [from + idxOffset, to + idxOffset, replacement] : [from + idxOffset, to + idxOffset]]
+            }
+          });
+        } // reset
+
+
+        whitespaceStartsAt = null;
+        nonSpacesMet = false;
+      }
+    } // -----------------------------------------------------------------------------
+    // 2. check the trailing semi
+
+
+    if (opts.noTrailingSemi && str[charEnd - 1] === ";") {
+      errorArr.push({
+        idxFrom: charEnd - 1 + idxOffset,
+        idxTo: charEnd + idxOffset,
+        message: `Delete the trailing semicolon.`,
+        fix: {
+          ranges: [[charEnd - 1 + idxOffset, charEnd + idxOffset]]
+        }
+      });
+    } else if (!opts.noTrailingSemi && str[charEnd - 1] !== ";") {
+      errorArr.push({
+        idxFrom: charEnd + idxOffset,
+        idxTo: charEnd + idxOffset,
+        message: `Add the trailing semicolon.`,
+        fix: {
+          ranges: [[charEnd + idxOffset, charEnd + idxOffset, ";"]]
+        }
+      });
+    }
+  }
 
   return errorArr;
 }
 
 // -----------------------------------------------------------------------------
 
-function attributeValidateStyle(context) {
+function attributeValidateStyle(context, ...opts) {
   return {
     attribute(node) {
 
@@ -9470,7 +9572,9 @@ function attributeValidateStyle(context) {
           });
         }
 
-        const errorArr = validateInlineStyle(node.attribValueRaw, node.attribValueStartsAt);
+        const errorArr = validateInlineStyle(node.attribValueRaw, node.attribValueStartsAt, {
+          noTrailingSemi: Array.isArray(opts) && opts.includes("noTrailingSemi")
+        });
         errorArr.forEach(errorObj => {
           context.report({ ...errorObj,
             ruleId: "attribute-validate-style"
