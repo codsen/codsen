@@ -80,11 +80,11 @@
     "p-reduce": "^2.1.0",
     "sort-package-json": "^1.48.1",
     "sorted-object": "^2.0.1",
-    "update-notifier": "^5.0.1"
+    "update-notifier": "^5.1.0"
   },
   "devDependencies": {
     "@types/lodash.isplainobject": "^4.0.6",
-    "eslint": "^7.18.0",
+    "eslint": "^7.19.0",
     "execa": "^5.0.0",
     "lect": "^0.16.2",
     "p-map": "^4.0.0",

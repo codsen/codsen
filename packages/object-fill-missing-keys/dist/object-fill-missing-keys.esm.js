@@ -1,7 +1,7 @@
 /**
  * object-fill-missing-keys
  * Add missing keys into plain objects, according to a reference object
- * Version: 8.0.1
+ * Version: 8.0.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-fill-missing-keys/
@@ -13,7 +13,7 @@ import { arrayiffy } from 'arrayiffy-if-string';
 import { allEq } from 'object-all-values-equal-to';
 import isObj from 'lodash.isplainobject';
 
-var version = "8.0.1";
+var version = "8.0.2";
 
 const version$1 = version;
 const defaults = {

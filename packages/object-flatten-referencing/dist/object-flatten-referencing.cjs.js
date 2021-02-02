@@ -1,7 +1,7 @@
 /**
  * object-flatten-referencing
  * Flatten complex nested objects according to a reference objects
- * Version: 5.0.1
+ * Version: 5.0.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-flatten-referencing/
@@ -168,7 +168,7 @@ function arrayiffyString(something) {
   return something;
 }
 
-var version = "5.0.1";
+var version = "5.0.2";
 
 var version$1 = version;
 

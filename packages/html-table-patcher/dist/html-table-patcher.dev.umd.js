@@ -1,7 +1,7 @@
 /**
  * html-table-patcher
  * Visual helper to place templating code around table tags into correct places
- * Version: 4.0.1
+ * Version: 4.0.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/html-table-patcher/
@@ -65,7 +65,7 @@ function _objectSpread2(target) {
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.3.1
+ * Version: 1.3.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/
@@ -2488,7 +2488,7 @@ function findMalformed(str, refStr, cb, originalOpts) {
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.1
+ * Version: 3.13.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -2938,7 +2938,7 @@ function matchRight(str, position, whatToMatch, opts) {
 /**
  * html-all-known-attributes
  * All HTML attributes known to the Humanity
- * Version: 4.0.1
+ * Version: 4.0.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/html-all-known-attributes/
@@ -2948,7 +2948,7 @@ var allHtmlAttribs = new Set(["abbr", "accept", "accept-charset", "accesskey", "
 /**
  * is-char-suitable-for-html-attr-name
  * Is given character suitable to be in an HTML attribute's name?
- * Version: 2.0.1
+ * Version: 2.0.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-char-suitable-for-html-attr-name/
@@ -2966,7 +2966,7 @@ function isAttrNameChar(char) {
 /**
  * is-html-attribute-closing
  * Is a character on a given index a closing of an HTML attribute?
- * Version: 2.0.1
+ * Version: 2.0.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-html-attribute-closing/
@@ -7508,7 +7508,9 @@ function cparser(str, originalOpts) {
 
         if (nestNext && // ensure it's not a closing tag of a pair, in which case
         // don't nest it!
-        !tokenObj.closing && (!prevToken || !(prevToken.tagName === tokenObj.tagName && !prevToken.closing && tokenObj.closing)) && !layerPending(layers, tokenObj) && ( //
+        !tokenObj.closing && // also don't nest under closing tag
+        !lastProcessedToken.closing && // also don't nest under text token
+        lastProcessedToken.type !== "text" && (!prevToken || !(prevToken.tagName === tokenObj.tagName && !prevToken.closing && tokenObj.closing)) && !layerPending(layers, tokenObj) && ( //
         // --------
         // imagine the case:
         // <div><a> </div>
@@ -7545,51 +7547,37 @@ function cparser(str, originalOpts) {
             layers.pop();
             nestNext = false;
           } else {
-            // if this is a gap and current token closes parent token,
-            // go another level up
-            if (layers.length > 1 && tokenObj.tagName && tokenObj.tagName === layers[layers.length - 2].tagName) {
-              // 1. amend the path
-              path = pathNext(pathUp(path)); // 2. report the last layer's token as missing closing
+            if (layers.length && tokenObj.tagName && // (tokenObj as TagToken).tagName ===
+            //   (layers[layers.length - 2] as TagToken).tagName
+            layers.some(function (layerObj) {
+              return layerObj.type === "tag" && layerObj.tagName === tokenObj.tagName;
+            })) {
+              // if this is a gap and current token closes parent token,
+              // go another level up
+              var lastLayer = layers.pop();
+              var currTagName = lastLayer.tagName;
+              var i = 0;
 
-              if (typeof opts.errCb === "function") {
-                var lastLayersToken = layers[layers.length - 1];
-                opts.errCb({
-                  ruleId: "" + lastLayersToken.type + (lastLayersToken.type === "comment" ? "-" + lastLayersToken.kind : "") + "-missing-closing",
-                  idxFrom: lastLayersToken.start,
-                  idxTo: lastLayersToken.end,
-                  tokenObj: lastLayersToken
-                });
-              } // 3. clean up the layers
+              while (currTagName !== tokenObj.tagName) {
+                i++; // 1. report the last layer's token as missing closing
 
+                if (lastLayer && typeof opts.errCb === "function") {
+                  opts.errCb({
+                    ruleId: "" + lastLayer.type + (lastLayer.type === "comment" ? "-" + lastLayer.kind : "") + "-missing-closing",
+                    idxFrom: lastLayer.start,
+                    idxTo: lastLayer.end,
+                    tokenObj: lastLayer
+                  });
+                }
 
-              layers.pop();
-              layers.pop();
-            } else if ( // so it's a closing tag (</table> in example below)
-            // and it was not pending (meaning opening heads were not in front)
-            // and this token is tag and it's closing the second layer backwards
-            // imagine code: <table><tr><td>x</td><a></table>
-            // imagine on </table> we have layers:
-            // <table>, <tr>, <a> - so <a> is rogue, maybe in its place the
-            // </tr> was meant to be, hance the second layer backwards,
-            // the "layers[layers.length - 3]"
-            layers.length > 2 && layers[layers.length - 3].type === tokenObj.type && layers[layers.length - 3].type === tokenObj.type && layers[layers.length - 3].tagName === tokenObj.tagName) {
-              // 1. amend the path
-              path = pathNext(pathUp(path)); // 2. report the last layer's token as missing closing
+                lastLayer = layers.pop();
+                currTagName = lastLayer.tagName; // 2. if there's more than one tag missing, don't bump the path
+                // on the last iteration
 
-              if (typeof opts.errCb === "function") {
-                var _lastLayersToken = layers[layers.length - 1];
-                opts.errCb({
-                  ruleId: "tag-rogue",
-                  idxFrom: _lastLayersToken.start,
-                  idxTo: _lastLayersToken.end,
-                  tokenObj: _lastLayersToken
-                });
-              } // 3. pop all 3
-
-
-              layers.pop();
-              layers.pop();
-              layers.pop();
+                if (!(currTagName === tokenObj.tagName && i > 1)) {
+                  path = pathNext(pathUp(path));
+                }
+              }
             } else if ( // so it's a closing tag (</table> in example below)
             // and it was not pending (meaning opening heads were not in front)
             // and this token is tag and it's closing the first layer backwards
@@ -7605,12 +7593,12 @@ function cparser(str, originalOpts) {
               // already triggered "UP", tree is fine
               // 2. report the last layer's token as missing closing
               if (typeof opts.errCb === "function") {
-                var _lastLayersToken2 = layers[layers.length - 1];
+                var lastLayersToken = layers[layers.length - 1];
                 opts.errCb({
                   ruleId: "tag-rogue",
-                  idxFrom: _lastLayersToken2.start,
-                  idxTo: _lastLayersToken2.end,
-                  tokenObj: _lastLayersToken2
+                  idxFrom: lastLayersToken.start,
+                  idxTo: lastLayersToken.end,
+                  tokenObj: lastLayersToken
                 });
               } // 3. pop all 2
 
@@ -7947,7 +7935,7 @@ function cparser(str, originalOpts) {
 /**
  * string-collapse-leading-whitespace
  * Collapse the leading and trailing whitespace of a string
- * Version: 5.0.1
+ * Version: 5.0.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
@@ -8483,7 +8471,7 @@ var Ranges = /*#__PURE__*/function () {
 /**
  * ranges-apply
  * Take an array of string index ranges, delete/replace the string according to them
- * Version: 5.0.1
+ * Version: 5.0.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/
@@ -8582,7 +8570,7 @@ function rApply(str, originalRangesArr, _progressFn) {
     }
   }); // allocate the rest 80% to the actual string assembly:
 
-  var len2 = workingRanges.length;
+  var len2 = Array.isArray(workingRanges) ? workingRanges.length : 0;
   /* istanbul ignore else */
 
   if (len2 > 0) {
@@ -8742,7 +8730,7 @@ function traverse(tree1, cb1, lookahead) {
   }
 } // -----------------------------------------------------------------------------
 
-var version = "4.0.1";
+var version = "4.0.2";
 
 var version$1 = version;
 var htmlCommentRegex = /<!--([\s\S]*?)-->/g;

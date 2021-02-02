@@ -1,7 +1,7 @@
 /**
  * html-img-alt
  * Adds missing alt attributes to img tags. Non-parsing.
- * Version: 2.0.1
+ * Version: 2.0.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/html-img-alt/
@@ -12,7 +12,7 @@ import { rApply } from 'ranges-apply';
 import { Ranges } from 'ranges-push';
 import { checkTypesMini } from 'check-types-mini';
 
-var version = "2.0.1";
+var version = "2.0.2";
 
 const version$1 = version;
 

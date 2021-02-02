@@ -89,13 +89,13 @@
     "p-map": "^4.0.0",
     "p-progress": "^0.5.0",
     "p-reduce": "^2.1.0",
-    "pacote": "^11.2.3",
-    "update-notifier": "^5.0.1",
+    "pacote": "^11.2.4",
+    "update-notifier": "^5.1.0",
     "write-file-atomic": "^3.0.3"
   },
   "devDependencies": {
     "@types/lodash.isplainobject": "^4.0.6",
-    "eslint": "^7.18.0",
+    "eslint": "^7.19.0",
     "execa": "^5.0.0",
     "fs-extra": "^9.1.0",
     "lect": "^0.16.2",
