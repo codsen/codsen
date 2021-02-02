@@ -388,10 +388,6 @@ function stripHtml(str: string, originalOpts?: Partial<Opts>): Res {
               endingIdx = tag.lastClosingBracketAt + 1;
             }
 
-            // correction for missing closing bracket cases
-            // if (str[i] !== "<" && str[i - 1] !== ">") {
-            //   endingIdx++;
-            // }
             console.log(
               `327 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${
                 rangedOpeningTags[y].lastOpeningBracketAt
@@ -402,6 +398,7 @@ function stripHtml(str: string, originalOpts?: Partial<Opts>): Res {
               endingIdx,
             ]);
 
+            /* istanbul ignore else */
             if (punctuation.has(str[i]) && opts.cb) {
               opts.cb({
                 tag: tag as Tag,
@@ -529,7 +526,7 @@ function stripHtml(str: string, originalOpts?: Partial<Opts>): Res {
       // limit whitespace that follows the tag, stop at linebreak. That's to make
       // the algorithm composable - we include linebreaks in front but not after.
       const temp = str2.slice(lastClosingBracketAt + 1, toIdx as number);
-      if (temp.includes("\n") && str2[toIdx as number] === "<") {
+      if (temp.includes("\n") && isOpeningAt(toIdx as number, str2)) {
         strToEvaluateForLineBreaks += " ";
       } else {
         strToEvaluateForLineBreaks += temp;
@@ -593,6 +590,17 @@ function stripHtml(str: string, originalOpts?: Partial<Opts>): Res {
         `515 calculateHrefToBeInserted(): stringToInsertAfter = ${stringToInsertAfter}`
       );
     }
+  }
+
+  function isOpeningAt(i: number, customStr?: string): boolean {
+    if (customStr) {
+      return customStr[i] === "<" && customStr[i + 1] !== "%";
+    }
+    return str[i] === "<" && str[i + 1] !== "%";
+  }
+
+  function isClosingAt(i: number): boolean {
+    return str[i] === ">" && str[i - 1] !== "%";
   }
 
   // validation
@@ -747,9 +755,9 @@ function stripHtml(str: string, originalOpts?: Partial<Opts>): Res {
   // TODO: it's chummy - ranges will be unreliable if initial str has changed
   // use ranges-ent-decode
   if (!opts.skipHtmlDecoding) {
-    while (str !== decode(str)) {
+    while (str !== decode(str, { scope: "strict" })) {
       // eslint-disable-next-line no-param-reassign
-      str = decode(str);
+      str = decode(str, { scope: "strict" });
     }
   }
 
@@ -789,7 +797,7 @@ function stripHtml(str: string, originalOpts?: Partial<Opts>): Res {
 
     // catch the closing bracket of dirty tags with missing opening brackets
     // -------------------------------------------------------------------------
-    if (str[i] === ">") {
+    if (isClosingAt(i)) {
       console.log(`723 closing bracket caught`);
       // tend cases where opening bracket of a tag is missing:
       if ((!tag || Object.keys(tag).length < 2) && i > 1) {
@@ -798,7 +806,7 @@ function stripHtml(str: string, originalOpts?: Partial<Opts>): Res {
         // traverse backwards either until start of string or ">" is found
         for (let y = i; y--; ) {
           console.log(`\u001b[${35}m${`str[${y}] = ${str[y]}`}\u001b[${39}m`);
-          if (str[y - 1] === undefined || str[y] === ">") {
+          if (str[y - 1] === undefined || isClosingAt(y)) {
             console.log("732 BREAK");
 
             const startingPoint = str[y - 1] === undefined ? y : y + 1;
@@ -1023,7 +1031,9 @@ function stripHtml(str: string, originalOpts?: Partial<Opts>): Res {
         tag.nameStarts,
         tag.nameEnds +
           /* istanbul ignore next */
-          (str[i] !== ">" && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0)
+          (!isClosingAt(i) && str[i] !== "/" && str[i + 1] === undefined
+            ? 1
+            : 0)
       );
       console.log(
         `958 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} \u001b[${33}m${`tag.name`}\u001b[${39}m = ${
@@ -1050,7 +1060,7 @@ function stripHtml(str: string, originalOpts?: Partial<Opts>): Res {
         continue;
       }
 
-      if (str[i] === "<") {
+      if (isOpeningAt(i)) {
         // process it because we need to tackle this new tag
         console.log(`984 opening bracket caught`);
 
@@ -1236,7 +1246,7 @@ function stripHtml(str: string, originalOpts?: Partial<Opts>): Res {
           );
           attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
         }
-      } else if (str[i] === "/" || str[i] === ">") {
+      } else if (str[i] === "/" || isClosingAt(i)) {
         console.log(
           `1170 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`attrObj.nameEnds`}\u001b[${39}m`} = ${JSON.stringify(
             attrObj.nameEnds,
@@ -1254,7 +1264,7 @@ function stripHtml(str: string, originalOpts?: Partial<Opts>): Res {
         // }
         tag.attributes.push(attrObj);
         attrObj = {};
-      } else if (str[i] === "<") {
+      } else if (isOpeningAt(i)) {
         console.log(
           `1188 \u001b[${33}m${`ATTR NAME ENDS WITH NEW TAG`}\u001b[${39}m - ${`\u001b[${31}m${`TODO`}\u001b[${39}m`}`
         );
@@ -1308,7 +1318,7 @@ function stripHtml(str: string, originalOpts?: Partial<Opts>): Res {
     ) {
       // 1. identify, is it definite or just plausible tag
       if (tag.onlyPlausible === undefined) {
-        if ((!str[i].trim() || str[i] === "<") && !tag.slashPresent) {
+        if ((!str[i].trim() || isOpeningAt(i)) && !tag.slashPresent) {
           tag.onlyPlausible = true;
         } else {
           tag.onlyPlausible = false;
@@ -1324,9 +1334,9 @@ function stripHtml(str: string, originalOpts?: Partial<Opts>): Res {
       if (
         str[i].trim() &&
         tag.nameStarts === undefined &&
-        str[i] !== "<" &&
+        !isOpeningAt(i) &&
         str[i] !== "/" &&
-        str[i] !== ">" &&
+        !isClosingAt(i) &&
         str[i] !== "!"
       ) {
         tag.nameStarts = i;
@@ -1352,7 +1362,7 @@ function stripHtml(str: string, originalOpts?: Partial<Opts>): Res {
     // -------------------------------------------------------------------------
     if (
       // it's closing bracket
-      str[i] === ">" &&
+      isClosingAt(i) &&
       //
       // precaution against JSP comparison
       // kl <c:when test="${!empty ab.cd && ab.cd > 0.00}"> mn
@@ -1421,8 +1431,8 @@ function stripHtml(str: string, originalOpts?: Partial<Opts>): Res {
         console.log(`1350 closing bracket hasn't been met`);
         if (
           tag.lastOpeningBracketAt < i &&
-          str[i] !== "<" && // to prevent cases like "text <<<<<< text"
-          (str[i + 1] === undefined || str[i + 1] === "<") &&
+          !isOpeningAt(i) && // to prevent cases like "text <<<<<< text"
+          (str[i + 1] === undefined || isOpeningAt(i + 1)) &&
           tag.nameContainsLetters
         ) {
           console.log(`1357 str[i + 1] = ${str[i + 1]}`);
@@ -1621,7 +1631,7 @@ function stripHtml(str: string, originalOpts?: Partial<Opts>): Res {
             }
           }
         }
-        console.log(`1553`);
+        console.log(`1553 end`);
       } else if (
         (i > tag.lastClosingBracketAt && str[i].trim()) ||
         str[i + 1] === undefined
@@ -1832,7 +1842,7 @@ function stripHtml(str: string, originalOpts?: Partial<Opts>): Res {
         }
 
         // part 2.
-        if (str[i] !== ">") {
+        if (!isClosingAt(i)) {
           console.log(`1765 \u001b[${33}m${`RESET tag{}`}\u001b[${39}m`);
           tag = {};
         }
@@ -1842,16 +1852,14 @@ function stripHtml(str: string, originalOpts?: Partial<Opts>): Res {
     // catch an opening bracket
     // -------------------------------------------------------------------------
     if (
-      str[i] === "<" &&
-      str[i - 1] !== "<" &&
+      isOpeningAt(i) &&
+      !isOpeningAt(i - 1) &&
       !`'"`.includes(str[i + 1]) &&
       (!`'"`.includes(str[i + 2]) || /\w/.test(str[i + 1])) &&
       //
       // precaution JSP,
       // against <c:
       !(str[i + 1] === "c" && str[i + 2] === ":") &&
-      // against <%@ or <%
-      !(str[i + 1] === "%") &&
       // against <fmt:
       !(
         str[i + 1] === "f" &&
@@ -1878,7 +1886,7 @@ function stripHtml(str: string, originalOpts?: Partial<Opts>): Res {
     ) {
       console.log(`1808 caught opening bracket`);
       // cater sequences of opening brackets "<<<<div>>>"
-      if (str[right(str, i) as number] === ">") {
+      if (isClosingAt(right(str, i) as number)) {
         // cater cases like: "<><><>"
         console.log(`1812 cases like <><><>`);
         continue;
@@ -2124,7 +2132,7 @@ function stripHtml(str: string, originalOpts?: Partial<Opts>): Res {
 
     // catch whitespace
     // -------------------------------------------------------------------------
-    if (str[i].trim() === "") {
+    if (!str[i].trim()) {
       // 1. catch chunk boundaries:
       if (chunkOfWhitespaceStartsAt === null) {
         chunkOfWhitespaceStartsAt = i;
@@ -2398,6 +2406,7 @@ function stripHtml(str: string, originalOpts?: Partial<Opts>): Res {
 
       // hard edit:
 
+      /* istanbul ignore else */
       if (rangesToDelete.ranges) {
         let startingIdx2 =
           rangesToDelete.ranges[rangesToDelete.ranges.length - 1][0];

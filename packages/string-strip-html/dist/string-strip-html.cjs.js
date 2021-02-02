@@ -206,11 +206,9 @@ function stripHtml(str, originalOpts) {
 
             if (tag.lastClosingBracketAt) {
               endingIdx = tag.lastClosingBracketAt + 1;
-            } // correction for missing closing bracket cases
-            // if (str[i] !== "<" && str[i - 1] !== ">") {
-            //   endingIdx++;
-            // }
+            }
             filteredTagLocations.push([rangedOpeningTags[y].lastOpeningBracketAt, endingIdx]);
+            /* istanbul ignore else */
 
             if (punctuation.has(str[i]) && opts.cb) {
               opts.cb({
@@ -274,7 +272,7 @@ function stripHtml(str, originalOpts) {
       // the algorithm composable - we include linebreaks in front but not after.
       var temp = str2.slice(lastClosingBracketAt + 1, toIdx);
 
-      if (temp.includes("\n") && str2[toIdx] === "<") {
+      if (temp.includes("\n") && isOpeningAt(toIdx, str2)) {
         strToEvaluateForLineBreaks += " ";
       } else {
         strToEvaluateForLineBreaks += temp;
@@ -314,6 +312,18 @@ function stripHtml(str, originalOpts) {
       var lineBreaks = opts.dumpLinkHrefsNearby.putOnNewLine ? "\n\n" : "";
       stringToInsertAfter = "" + lineBreaks + hrefDump.hrefValue + lineBreaks;
     }
+  }
+
+  function isOpeningAt(i, customStr) {
+    if (customStr) {
+      return customStr[i] === "<" && customStr[i + 1] !== "%";
+    }
+
+    return str[i] === "<" && str[i + 1] !== "%";
+  }
+
+  function isClosingAt(i) {
+    return str[i] === ">" && str[i - 1] !== "%";
   } // validation
   // ===========================================================================
 
@@ -418,9 +428,13 @@ function stripHtml(str, originalOpts) {
   // use ranges-ent-decode
 
   if (!opts.skipHtmlDecoding) {
-    while (str !== htmlEntities.decode(str)) {
+    while (str !== htmlEntities.decode(str, {
+      scope: "strict"
+    })) {
       // eslint-disable-next-line no-param-reassign
-      str = htmlEntities.decode(str);
+      str = htmlEntities.decode(str, {
+        scope: "strict"
+      });
     }
   } // step 1.
   // ===========================================================================
@@ -439,13 +453,13 @@ function stripHtml(str, originalOpts) {
     // -------------------------------------------------------------------------
 
 
-    if (str[_i] === ">") { // tend cases where opening bracket of a tag is missing:
+    if (isClosingAt(_i)) { // tend cases where opening bracket of a tag is missing:
 
       if ((!tag || Object.keys(tag).length < 2) && _i > 1) { // traverse backwards either until start of string or ">" is found
 
         for (var y = _i; y--;) {
 
-          if (str[y - 1] === undefined || str[y] === ">") {
+          if (str[y - 1] === undefined || isClosingAt(y)) {
             var _ret3 = function () {
               var startingPoint = str[y - 1] === undefined ? y : y + 1;
               var culprit = str.slice(startingPoint, _i + 1); // Check if the culprit starts with a tag that's more likely a tag
@@ -558,7 +572,7 @@ function stripHtml(str, originalOpts) {
 
       tag.name = str.slice(tag.nameStarts, tag.nameEnds + (
       /* istanbul ignore next */
-      str[_i] !== ">" && str[_i] !== "/" && str[_i + 1] === undefined ? 1 : 0));
+      !isClosingAt(_i) && str[_i] !== "/" && str[_i + 1] === undefined ? 1 : 0));
 
       if ( // if we caught "----" from "<----" or "---->", bail:
       str[tag.nameStarts - 1] !== "!" && // protection against <!--
@@ -569,7 +583,7 @@ function stripHtml(str, originalOpts) {
         return "continue";
       }
 
-      if (str[_i] === "<") {
+      if (isOpeningAt(_i)) {
         // process it because we need to tackle this new tag
         calculateHrefToBeInserted(opts); // calculateWhitespaceToInsert() API:
         // str, // whole string
@@ -652,7 +666,7 @@ function stripHtml(str, originalOpts) {
           attrObj.equalsAt = _i;
           attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
         }
-      } else if (str[_i] === "/" || str[_i] === ">") {
+      } else if (str[_i] === "/" || isClosingAt(_i)) {
         attrObj.nameEnds = _i;
         attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds); // if (!tag.attributes) {
         //   tag.attributes = [];
@@ -660,7 +674,7 @@ function stripHtml(str, originalOpts) {
 
         tag.attributes.push(attrObj);
         attrObj = {};
-      } else if (str[_i] === "<") { // TODO - address both cases of onlyPlausible
+      } else if (isOpeningAt(_i)) { // TODO - address both cases of onlyPlausible
 
         attrObj.nameEnds = _i;
         attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds); // if (!tag.attributes) {
@@ -690,7 +704,7 @@ function stripHtml(str, originalOpts) {
     ) {
         // 1. identify, is it definite or just plausible tag
         if (tag.onlyPlausible === undefined) {
-          if ((!str[_i].trim() || str[_i] === "<") && !tag.slashPresent) {
+          if ((!str[_i].trim() || isOpeningAt(_i)) && !tag.slashPresent) {
             tag.onlyPlausible = true;
           } else {
             tag.onlyPlausible = false;
@@ -699,7 +713,7 @@ function stripHtml(str, originalOpts) {
         // and also known (X)HTML tags:
 
 
-        if (str[_i].trim() && tag.nameStarts === undefined && str[_i] !== "<" && str[_i] !== "/" && str[_i] !== ">" && str[_i] !== "!") {
+        if (str[_i].trim() && tag.nameStarts === undefined && !isOpeningAt(_i) && str[_i] !== "/" && !isClosingAt(_i) && str[_i] !== "!") {
           tag.nameStarts = _i;
           tag.nameContainsLetters = false;
         }
@@ -713,7 +727,7 @@ function stripHtml(str, originalOpts) {
 
 
     if ( // it's closing bracket
-    str[_i] === ">" && //
+    isClosingAt(_i) && //
     // precaution against JSP comparison
     // kl <c:when test="${!empty ab.cd && ab.cd > 0.00}"> mn
     //                                          ^
@@ -751,8 +765,8 @@ function stripHtml(str, originalOpts) {
 
       if (tag.lastClosingBracketAt === undefined) {
 
-        if (tag.lastOpeningBracketAt < _i && str[_i] !== "<" && ( // to prevent cases like "text <<<<<< text"
-        str[_i + 1] === undefined || str[_i + 1] === "<") && tag.nameContainsLetters) { // find out the tag name earlier than dedicated tag name ending catching section:
+        if (tag.lastOpeningBracketAt < _i && !isOpeningAt(_i) && ( // to prevent cases like "text <<<<<< text"
+        str[_i + 1] === undefined || isOpeningAt(_i + 1)) && tag.nameContainsLetters) { // find out the tag name earlier than dedicated tag name ending catching section:
           // if (str[i + 1] === undefined) {
 
           tag.name = str.slice(tag.nameStarts, tag.nameEnds ? tag.nameEnds : _i + 1).toLowerCase(); // submit tag to allTagLocations
@@ -906,7 +920,7 @@ function stripHtml(str, originalOpts) {
         } // part 2.
 
 
-        if (str[_i] !== ">") {
+        if (!isClosingAt(_i)) {
           tag = {};
         }
       }
@@ -914,11 +928,10 @@ function stripHtml(str, originalOpts) {
     // -------------------------------------------------------------------------
 
 
-    if (str[_i] === "<" && str[_i - 1] !== "<" && !"'\"".includes(str[_i + 1]) && (!"'\"".includes(str[_i + 2]) || /\w/.test(str[_i + 1])) && //
+    if (isOpeningAt(_i) && !isOpeningAt(_i - 1) && !"'\"".includes(str[_i + 1]) && (!"'\"".includes(str[_i + 2]) || /\w/.test(str[_i + 1])) && //
     // precaution JSP,
     // against <c:
-    !(str[_i + 1] === "c" && str[_i + 2] === ":") && // against <%@ or <%
-    !(str[_i + 1] === "%") && // against <fmt:
+    !(str[_i + 1] === "c" && str[_i + 2] === ":") && // against <fmt:
     !(str[_i + 1] === "f" && str[_i + 2] === "m" && str[_i + 3] === "t" && str[_i + 4] === ":") && // against <sql:
     !(str[_i + 1] === "s" && str[_i + 2] === "q" && str[_i + 3] === "l" && str[_i + 4] === ":") && // against <x:
     !(str[_i + 1] === "x" && str[_i + 2] === ":") && // against <fn:
@@ -928,7 +941,7 @@ function stripHtml(str, originalOpts) {
     //                                  we're here, it's false alarm
     notWithinAttrQuotes(tag, str, _i)) { // cater sequences of opening brackets "<<<<div>>>"
 
-      if (str[stringLeftRight.right(str, _i)] === ">") {
+      if (isClosingAt(stringLeftRight.right(str, _i))) {
         // cater cases like: "<><><>"
         i = _i;
         return "continue";
@@ -1051,7 +1064,7 @@ function stripHtml(str, originalOpts) {
     // -------------------------------------------------------------------------
 
 
-    if (str[_i].trim() === "") {
+    if (!str[_i].trim()) {
       // 1. catch chunk boundaries:
       if (chunkOfWhitespaceStartsAt === null) {
         chunkOfWhitespaceStartsAt = _i;
@@ -1176,6 +1189,8 @@ function stripHtml(str, originalOpts) {
       // We already have tight crop, we just need to remove that "what to add"
       // third element.
       // hard edit:
+
+      /* istanbul ignore else */
 
       if (rangesToDelete.ranges) {
         var startingIdx2 = rangesToDelete.ranges[rangesToDelete.ranges.length - 1][0];
