@@ -32,3 +32,24 @@ tap.test(
     t.end();
   }
 );
+
+tap.test(`03`, (t) => {
+  const inp1 = `<a href="https://example.com/test?param1=<%= @param1 %>&param2=<%= @param2 %>">click me</a>`;
+  t.strictSame(
+    fix(inp1, {
+      cb: (obj) => obj,
+      decode: true,
+    }),
+    [],
+    "02"
+  );
+  t.strictSame(
+    fix(inp1, {
+      cb: (obj) => obj,
+      decode: false,
+    }),
+    [],
+    "02"
+  );
+  t.end();
+});
