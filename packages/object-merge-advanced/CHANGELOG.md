@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 12.0.0 (2021-02-07)
+
+### BREAKING CHANGES
+
+- nothing should be breaking, there are no API changes, but we corrected the callback values, correct types and correct original pair values are passed. Before, the first value passed to the callback might have been not the original one, it might have been pre-merged.
+
+### Features
+
+- tackle date objects - they're not part of [JSON spec](https://www.json.org/json-en.html) - but if two values are date objects, newer date will prevail
+
 ## 11.0.1 (2021-01-28)
 
 ### Bug Fixes

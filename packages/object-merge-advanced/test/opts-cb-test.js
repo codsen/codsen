@@ -2,14 +2,14 @@
 
 import tap from "tap";
 import equal from "deep-equal";
-import { mergeAdvanced } from "../dist/object-merge-advanced.esm";
+import { mergeAdvanced as m } from "../dist/object-merge-advanced.esm";
 
 tap.test(
   "01 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are Booleans",
   (t) => {
     // control:
     t.strictSame(
-      mergeAdvanced(
+      m(
         {
           a: {
             b: true,
@@ -38,11 +38,18 @@ tap.test(
         },
         b: "test",
       },
-      "01.01 - control, default behaviour (logical OR)"
+      "01 - control, default behaviour (logical OR)"
     );
+    t.end();
+  }
+);
+
+tap.test(
+  "02 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are Booleans",
+  (t) => {
     // opts.mergeBoolsUsingOrNotAnd
     t.strictSame(
-      mergeAdvanced(
+      m(
         {
           a: {
             b: true,
@@ -74,11 +81,18 @@ tap.test(
         },
         b: "test",
       },
-      "01.02 - opts.mergeBoolsUsingOrNotAnd (logical AND)"
+      "02 - opts.mergeBoolsUsingOrNotAnd (logical AND)"
     );
+    t.end();
+  }
+);
+
+tap.test(
+  "03 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are Booleans",
+  (t) => {
     // cb override Bool merging to be hard merges
     t.strictSame(
-      mergeAdvanced(
+      m(
         {
           a: {
             b: true,
@@ -118,11 +132,18 @@ tap.test(
         },
         b: "test", // <---- notice how hard merging on Bools didn't affect this string
       },
-      "01.03 - cb overriding all Boolean merges"
+      "03 - cb overriding all Boolean merges"
     );
+    t.end();
+  }
+);
+
+tap.test(
+  "04 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are Booleans",
+  (t) => {
     // cb hard merge for Bools will override even opts.ignoreEverything!
     t.strictSame(
-      mergeAdvanced(
+      m(
         {
           a: {
             b: true,
@@ -163,11 +184,18 @@ tap.test(
         },
         b: "", // <---- it was outside of cb's scope as cb dealt with Bools only.
       },
-      "01.04 - cb partially overriding opts.ignoreEverything"
+      "04 - cb partially overriding opts.ignoreEverything"
     );
+    t.end();
+  }
+);
+
+tap.test(
+  "05 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are Booleans",
+  (t) => {
     // cb hard merge for Bools will override even opts.ignoreEverything!
     t.strictSame(
-      mergeAdvanced(
+      m(
         {
           a: {
             b: true,
@@ -209,18 +237,18 @@ tap.test(
         },
         b: "test", // <---- standard rule applies (non-empty string vs. empty string)
       },
-      "01.05 - cb partially overriding opts.mergeBoolsUsingOrNotAnd: false"
+      "05 - cb partially overriding opts.mergeBoolsUsingOrNotAnd: false"
     );
     t.end();
   }
 );
 
 tap.test(
-  "02 - \u001b[33mOPTS\u001b[39m - opts.cb - setting ignoreAll on input Booleans",
+  "06 - \u001b[33mOPTS\u001b[39m - opts.cb - setting ignoreAll on input Booleans",
   (t) => {
     // control:
     t.strictSame(
-      mergeAdvanced(
+      m(
         {
           a: {
             b: true,
@@ -249,11 +277,18 @@ tap.test(
         },
         b: "test",
       },
-      "02.01"
+      "06"
     );
+    t.end();
+  }
+);
+
+tap.test(
+  "07 - \u001b[33mOPTS\u001b[39m - opts.cb - setting ignoreAll on input Booleans",
+  (t) => {
     // opts.hardMergeEverything, NO CB:
     t.strictSame(
-      mergeAdvanced(
+      m(
         {
           a: {
             b: true,
@@ -286,11 +321,18 @@ tap.test(
         },
         b: "",
       },
-      "02.02"
+      "07"
     );
+    t.end();
+  }
+);
+
+tap.only(
+  "08 - \u001b[33mOPTS\u001b[39m - opts.cb - setting ignoreAll on input Booleans",
+  (t) => {
     // opts.hardMergeEverything, CB:
     t.strictSame(
-      mergeAdvanced(
+      m(
         {
           a: {
             b: true,
@@ -316,7 +358,6 @@ tap.test(
               typeof inputArg1 === "boolean" &&
               typeof inputArg2 === "boolean"
             ) {
-              // console.log(`\u001b[${35}m${`CB: returning inputArg1=${JSON.stringify(inputArg1, null, 4)}`}\u001b[${39}m`)
               return inputArg1; // <---- opposite to the hardMerge -
               // - same as opts.ignoreEverything=true (but here only on Booleans)
             }
@@ -326,26 +367,25 @@ tap.test(
       ),
       {
         a: {
-          // hard merge mean second argument's values prevail upon clashing
-          b: true, // still "true" even though 2nd arg's "false" was hardMerged!
-          c: false,
+          b: false,
+          c: true,
           d: true,
           e: false,
         },
         b: "", // being hard-merged as usual
       },
-      "02.03"
+      "08"
     );
     t.end();
   }
 );
 
 tap.test(
-  "03 - \u001b[33mOPTS\u001b[39m - opts.cb - using callback to wrap string with other strings",
+  "09 - \u001b[33mOPTS\u001b[39m - opts.cb - using callback to wrap string with other strings",
   (t) => {
     // control:
     t.strictSame(
-      mergeAdvanced(
+      m(
         {
           a: {
             b: "old value for b",
@@ -374,11 +414,18 @@ tap.test(
         },
         b: false,
       },
-      "03.01 - control, default behaviour (logical OR)"
+      "09 - control, default behaviour (logical OR)"
     );
+    t.end();
+  }
+);
+
+tap.test(
+  "10 - \u001b[33mOPTS\u001b[39m - opts.cb - using callback to wrap string with other strings",
+  (t) => {
     // string wrapping:
     t.strictSame(
-      mergeAdvanced(
+      m(
         {
           a: {
             b: "old value for b",
@@ -415,16 +462,16 @@ tap.test(
         },
         b: false,
       },
-      "03.02 - wraps if string"
+      "10 - wraps if string"
     );
     t.end();
   }
 );
 
 tap.test(
-  "04 - \u001b[33mOPTS\u001b[39m - opts.cb - pin the 4th arg values",
+  "11 - \u001b[33mOPTS\u001b[39m - opts.cb - pin the 4th arg values",
   (t) => {
-    const tester = mergeAdvanced(
+    const tester = m(
       {
         a: {
           b: "c1",
@@ -459,9 +506,9 @@ tap.test(
               {
                 key: "b",
                 path: "a.b",
-                type: ["object", "object"],
+                type: ["string", "string"],
               },
-              "18.04.01 - cb values pinned an object"
+              "11.01 - cb values pinned an object"
             );
           }
 
@@ -471,9 +518,9 @@ tap.test(
               {
                 key: "d",
                 path: "a.d",
-                type: ["object", "object"],
+                type: ["null", "array"],
               },
-              "18.04.02 - cb values pinned a key which has a value of array"
+              "11.02 - cb values pinned a key which has a value of array"
             );
           }
 
@@ -485,7 +532,7 @@ tap.test(
                 path: "a.m.0",
                 type: ["array", "array"],
               },
-              "18.04.03 - cb values pinned an element within an array"
+              "11.03 - cb values pinned an element within an array"
             );
           }
           return resultAboutToBeReturned;
@@ -500,10 +547,10 @@ tap.test(
 );
 
 tap.test(
-  "05 - \u001b[33mOPTS\u001b[39m - opts.cb - using cb's 4th arg to concatenate certain key values during merge",
+  "12 - \u001b[33mOPTS\u001b[39m - opts.cb - using cb's 4th arg to concatenate certain key values during merge",
   (t) => {
     t.strictSame(
-      mergeAdvanced(
+      m(
         {
           x: {
             key: "a",
@@ -538,10 +585,17 @@ tap.test(
           key: "z.key val 2",
         },
       },
-      "05.01 - default behaviour, control"
+      "12 - default behaviour, control"
     );
+    t.end();
+  }
+);
+
+tap.test(
+  "13 - \u001b[33mOPTS\u001b[39m - opts.cb - using cb's 4th arg to concatenate certain key values during merge",
+  (t) => {
     t.strictSame(
-      mergeAdvanced(
+      m(
         {
           x: {
             key: "a", // <------- merge this
@@ -595,18 +649,18 @@ tap.test(
           key: "z.key val 2",
         },
       },
-      "05.02 - cb fourth arg's path info used to override to merge strings"
+      "13 - cb fourth arg's path info used to override to merge strings"
     );
     t.end();
   }
 );
 
 tap.test(
-  "06 - \u001b[33mOPTS\u001b[39m - opts.hardMergeEverything - revisiting deep-level arrays",
+  "14 - \u001b[33mOPTS\u001b[39m - opts.hardMergeEverything - revisiting deep-level arrays",
   (t) => {
     // control:
     t.strictSame(
-      mergeAdvanced(
+      m(
         {
           a: {
             b: [
@@ -659,12 +713,12 @@ tap.test(
           },
         },
       },
-      "06.01"
+      "14.01"
     );
 
     // now set the opts.hardMergeEverything
     t.strictSame(
-      mergeAdvanced(
+      m(
         {
           a: {
             b: [
@@ -719,7 +773,7 @@ tap.test(
           },
         },
       },
-      "06.02"
+      "14.02"
     );
     t.end();
   }

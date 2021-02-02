@@ -16,6 +16,7 @@ var clone = require('lodash.clonedeep');
 var lodashIncludes = require('lodash.includes');
 var uniq = require('lodash.uniq');
 var isObj = require('lodash.isplainobject');
+var isDate = require('lodash.isdate');
 var arrayIncludesWithGlob = require('array-includes-with-glob');
 var utilNonempty = require('util-nonempty');
 
@@ -26,6 +27,7 @@ var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 var lodashIncludes__default = /*#__PURE__*/_interopDefaultLegacy(lodashIncludes);
 var uniq__default = /*#__PURE__*/_interopDefaultLegacy(uniq);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
+var isDate__default = /*#__PURE__*/_interopDefaultLegacy(isDate);
 
 var version = "11.0.2";
 
@@ -61,6 +63,14 @@ function equalOrSubsetKeys(obj1, obj2) {
 }
 
 function getType(something) {
+  if (something === null) {
+    return "null";
+  }
+
+  if (isDate__default['default'](something)) {
+    return "date";
+  }
+
   if (isObj__default['default'](something)) {
     return "object";
   }
@@ -160,7 +170,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
   // after merging.
 
   if (isArr(i1)) {
-    // cases 1-20
+
     if (utilNonempty.nonEmpty(i1)) {
       // cases 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
       if (isArr(i2) && utilNonempty.nonEmpty(i2)) {
@@ -170,7 +180,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
           var _currentResult = uni ? uniRes : [];
 
           if (typeof opts.cb === "function") {
-            return opts.cb(i1, i2, _currentResult, {
+            return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), _currentResult, {
               path: currPath,
               key: infoObj.key,
               type: infoObj.type
@@ -184,7 +194,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
           var _currentResult2 = uni ? uniRes : i1.concat(i2);
 
           if (typeof opts.cb === "function") {
-            return opts.cb(i1, i2, _currentResult2, {
+            return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), _currentResult2, {
               path: currPath,
               key: infoObj.key,
               type: infoObj.type
@@ -252,7 +262,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         var _currentResult3 = uni ? uniRes : i1;
 
         if (typeof opts.cb === "function") {
-          return opts.cb(i1, i2, _currentResult3, {
+          return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), _currentResult3, {
             path: currPath,
             key: infoObj.key,
             type: infoObj.type
@@ -268,7 +278,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         var _currentResult5 = uni ? uniRes : i2;
 
         if (typeof opts.cb === "function") {
-          return opts.cb(i1, i2, _currentResult5, {
+          return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), _currentResult5, {
             path: currPath,
             key: infoObj.key,
             type: infoObj.type
@@ -282,7 +292,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       var _currentResult4 = uni ? uniRes : i1;
 
       if (typeof opts.cb === "function") {
-        return opts.cb(i1, i2, _currentResult4, {
+        return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), _currentResult4, {
           path: currPath,
           key: infoObj.key,
           type: infoObj.type
@@ -292,7 +302,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       return _currentResult4;
     }
   } else if (isObj__default['default'](i1)) {
-    // cases 21-40
+
     if (utilNonempty.nonEmpty(i1)) {
       // cases 21-30
       if (isArr(i2)) {
@@ -302,7 +312,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
           var _currentResult9 = uni ? uniRes : i2;
 
           if (typeof opts.cb === "function") {
-            return opts.cb(i1, i2, _currentResult9, {
+            return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), _currentResult9, {
               path: currPath,
               key: infoObj.key,
               type: infoObj.type
@@ -316,7 +326,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         var _currentResult8 = uni ? uniRes : i1;
 
         if (typeof opts.cb === "function") {
-          return opts.cb(i1, i2, _currentResult8, {
+          return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), _currentResult8, {
             path: currPath,
             key: infoObj.key,
             type: infoObj.type
@@ -326,9 +336,8 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         return _currentResult8;
       }
 
-      if (isObj__default['default'](i2)) {
-        // case 23
-        // two object merge - we'll consider opts.ignoreEverything & opts.hardMergeEverything too.
+      if (isObj__default['default'](i2)) { // two object merge - we'll consider opts.ignoreEverything & opts.hardMergeEverything too.
+
         Object.keys(i2).forEach(function (key) {
           // calculate current path:
           currPath = infoObj.path && infoObj.path.length ? infoObj.path + "." + key : "" + key; // calculate the merge outcome:
@@ -352,7 +361,6 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
               // without this switch (opts.hardMergeEverything) we'd lose the visibility
               // of the name of the key; we can't "bubble up" to check all parents' key names,
               // are any of them positive for "hard merge"...
-              // console.log('473. - hardMergeEverything')
               i1[key] = mergeAdvanced({
                 path: currPath,
                 key: key,
@@ -373,18 +381,26 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
                 hardArrayConcat: true
               }));
             } else {
-              // regular merge
-              // console.log('503.')
               i1[key] = mergeAdvanced({
                 path: currPath,
                 key: key,
-                type: [getType(i1), getType(i2)]
+                type: [getType(i1[key]), getType(i2[key])]
               }, i1[key], i2[key], opts);
             }
           } else {
             i1[key] = i2[key]; // key does not exist, so creates it
           }
         });
+
+        var _currentResult10 = uni ? uniRes : i1;
+
+        if (typeof opts.cb === "function") {
+          return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), _currentResult10, {
+            path: infoObj.path,
+            key: infoObj.key,
+            type: infoObj.type
+          });
+        }
         return i1;
       } // cases 24, 25, 26, 27, 28, 29, 30
 
@@ -392,7 +408,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       var _currentResult7 = uni ? uniRes : i1;
 
       if (typeof opts.cb === "function") {
-        return opts.cb(i1, i2, _currentResult7, {
+        return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), _currentResult7, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
@@ -406,24 +422,24 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
 
     if (isArr(i2) || isObj__default['default'](i2) || utilNonempty.nonEmpty(i2)) {
       // cases 31, 32, 33, 34, 35, 37
-      var _currentResult10 = uni ? uniRes : i2;
+      var _currentResult11 = uni ? uniRes : i2;
 
       if (typeof opts.cb === "function") {
-        return opts.cb(i1, i2, _currentResult10, {
+        return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), _currentResult11, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
         });
       }
 
-      return _currentResult10;
+      return _currentResult11;
     } // 36, 38, 39, 40
 
 
     var _currentResult6 = uni ? uniRes : i1;
 
     if (typeof opts.cb === "function") {
-      return opts.cb(i1, i2, _currentResult6, {
+      return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), _currentResult6, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
@@ -431,76 +447,59 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     }
 
     return _currentResult6;
-  } else if (isStr(i1)) {
-    if (utilNonempty.nonEmpty(i1)) {
-      // cases 41-50
-      if ((isArr(i2) || isObj__default['default'](i2) || isStr(i2)) && utilNonempty.nonEmpty(i2)) {
-        // cases 41, 43, 45
-        // take care of hard merge setting cases, opts.hardMergeKeys
-        var _currentResult13 = uni ? uniRes : i2;
+  } else if (isDate__default['default'](i1)) {
+
+    if (isFinite(i1)) {
+
+      if (isDate__default['default'](i2)) {
+
+        if (isFinite(i2)) { // compares dates
+
+          var _currentResult15 = uni ? uniRes : i1 > i2 ? i1 : i2;
+
+          if (typeof opts.cb === "function") {
+            return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), _currentResult15, {
+              path: infoObj.path,
+              key: infoObj.key,
+              type: infoObj.type
+            });
+          }
+
+          return _currentResult15;
+        } // return i1 date
+
+        var _currentResult14 = uni ? uniRes : i1;
 
         if (typeof opts.cb === "function") {
-          return opts.cb(i1, i2, _currentResult13, {
+          return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), _currentResult14, {
             path: infoObj.path,
             key: infoObj.key,
             type: infoObj.type
           });
         }
 
-        return _currentResult13;
-      } // cases 42, 44, 46, 47, 48, 49, 50
+        return _currentResult14;
+      } // if i2 is truthy, return it, otherwise return date at i1
 
-
-      var _currentResult12 = uni ? uniRes : i1;
+      var _currentResult13 = uni ? uniRes : i2 ? i2 : i1;
 
       if (typeof opts.cb === "function") {
-        return opts.cb(i1, i2, _currentResult12, {
+        return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), _currentResult13, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
         });
       }
 
-      return _currentResult12;
-    } // i1 is empty string
-    // cases 51-60
-
-
-    if (i2 != null && !isBool(i2)) {
-      // cases 51, 52, 53, 54, 55, 56, 57
-      var _currentResult14 = uni ? uniRes : i2;
-
-      if (typeof opts.cb === "function") {
-        return opts.cb(i1, i2, _currentResult14, {
-          path: infoObj.path,
-          key: infoObj.key,
-          type: infoObj.type
-        });
-      }
-
-      return _currentResult14;
-    } // 58, 59, 60
-
-
-    var _currentResult11 = uni ? uniRes : i1;
-
-    if (typeof opts.cb === "function") {
-      return opts.cb(i1, i2, _currentResult11, {
-        path: infoObj.path,
-        key: infoObj.key,
-        type: infoObj.type
-      });
+      return _currentResult13;
     }
 
-    return _currentResult11;
-  } else if (isNum(i1)) {
-    // cases 61-70
-    if (utilNonempty.nonEmpty(i2)) {
-      // cases 61, 63, 65, 67
+    if (isDate__default['default'](i2)) { // return i2 date
+
       var _currentResult16 = uni ? uniRes : i2;
 
       if (typeof opts.cb === "function") {
-        return opts.cb(i1, i2, _currentResult16, {
+        return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), _currentResult16, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
@@ -508,30 +507,29 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       }
 
       return _currentResult16;
-    } // cases 62, 64, 66, 68, 69, 70
+    }
 
-
-    var _currentResult15 = uni ? uniRes : i1;
+    var _currentResult12 = uni ? uniRes : i2;
 
     if (typeof opts.cb === "function") {
-      return opts.cb(i1, i2, _currentResult15, {
+      return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), _currentResult12, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
       });
     }
 
-    return _currentResult15;
-  } else if (isBool(i1)) {
-    // cases 71-80
-    if (isBool(i2)) {
-      // case 78 - two Booleans
-      if (opts.mergeBoolsUsingOrNotAnd) {
-        var _currentResult19 = uni ? uniRes : i1 || i2; // default - OR
+    return _currentResult12;
+  } else if (isStr(i1)) {
+    if (utilNonempty.nonEmpty(i1)) {
 
+      if ((isArr(i2) || isObj__default['default'](i2) || isStr(i2)) && utilNonempty.nonEmpty(i2)) {
+        // cases 41, 43, 45
+        // take care of hard merge setting cases, opts.hardMergeKeys
+        var _currentResult19 = uni ? uniRes : i2;
 
         if (typeof opts.cb === "function") {
-          return opts.cb(i1, i2, _currentResult19, {
+          return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), _currentResult19, {
             path: infoObj.path,
             key: infoObj.key,
             type: infoObj.type
@@ -539,13 +537,13 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         }
 
         return _currentResult19;
-      }
+      } // cases 42, 44, 46, 47, 48, 49, 50
 
-      var _currentResult18 = uni ? uniRes : i1 && i2; // alternative merge using AND
 
+      var _currentResult18 = uni ? uniRes : i1;
 
       if (typeof opts.cb === "function") {
-        return opts.cb(i1, i2, _currentResult18, {
+        return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), _currentResult18, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
@@ -553,15 +551,14 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       }
 
       return _currentResult18;
-    }
+    } // i1 is empty string
 
-    if (i2 != null) {
-      // DELIBERATE LOOSE EQUAL - existy()
-      // cases 71, 72, 73, 74, 75, 76, 77
+    if (i2 != null && !isBool(i2)) {
+      // cases 51, 52, 53, 54, 55, 56, 57
       var _currentResult20 = uni ? uniRes : i2;
 
       if (typeof opts.cb === "function") {
-        return opts.cb(i1, i2, _currentResult20, {
+        return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), _currentResult20, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
@@ -569,14 +566,13 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       }
 
       return _currentResult20;
-    } // i2 is null or undefined
-    // cases 79*, 80
+    } // 58, 59, 60
 
 
     var _currentResult17 = uni ? uniRes : i1;
 
     if (typeof opts.cb === "function") {
-      return opts.cb(i1, i2, _currentResult17, {
+      return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), _currentResult17, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
@@ -584,15 +580,14 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     }
 
     return _currentResult17;
-  } else if (i1 === null) {
-    // cases 81-90
-    if (i2 != null) {
-      // DELIBERATE LOOSE EQUAL - existy()
-      // case 81, 82, 83, 84, 85, 86, 87, 88*
+  } else if (isNum(i1)) {
+
+    if (utilNonempty.nonEmpty(i2)) {
+      // cases 61, 63, 65, 67
       var _currentResult22 = uni ? uniRes : i2;
 
       if (typeof opts.cb === "function") {
-        return opts.cb(i1, i2, _currentResult22, {
+        return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), _currentResult22, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
@@ -600,13 +595,13 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       }
 
       return _currentResult22;
-    } // cases 89, 90
+    } // cases 62, 64, 66, 68, 69, 70
 
 
     var _currentResult21 = uni ? uniRes : i1;
 
     if (typeof opts.cb === "function") {
-      return opts.cb(i1, i2, _currentResult21, {
+      return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), _currentResult21, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
@@ -614,12 +609,61 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     }
 
     return _currentResult21;
-  } else {
-    // cases 91-100
-    var _currentResult23 = uni ? uniRes : i2;
+  } else if (isBool(i1)) {
+
+    if (isBool(i2)) {
+      // case 78 - two Booleans
+      if (opts.mergeBoolsUsingOrNotAnd) {
+        var _currentResult25 = uni ? uniRes : i1 || i2; // default - OR
+
+
+        if (typeof opts.cb === "function") {
+          return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), _currentResult25, {
+            path: infoObj.path,
+            key: infoObj.key,
+            type: infoObj.type
+          });
+        }
+
+        return _currentResult25;
+      }
+
+      var _currentResult24 = uni ? uniRes : i1 && i2; // alternative merge using AND
+
+
+      if (typeof opts.cb === "function") {
+        return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), _currentResult24, {
+          path: infoObj.path,
+          key: infoObj.key,
+          type: infoObj.type
+        });
+      }
+
+      return _currentResult24;
+    }
+
+    if (i2 != null) {
+      // DELIBERATE LOOSE EQUAL - existy()
+      // cases 71, 72, 73, 74, 75, 76, 77
+      var _currentResult26 = uni ? uniRes : i2;
+
+      if (typeof opts.cb === "function") {
+        return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), _currentResult26, {
+          path: infoObj.path,
+          key: infoObj.key,
+          type: infoObj.type
+        });
+      }
+
+      return _currentResult26;
+    } // i2 is null or undefined
+    // cases 79*, 80
+
+
+    var _currentResult23 = uni ? uniRes : i1;
 
     if (typeof opts.cb === "function") {
-      return opts.cb(i1, i2, _currentResult23, {
+      return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), _currentResult23, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
@@ -627,18 +671,60 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     }
 
     return _currentResult23;
+  } else if (i1 === null) {
+
+    if (i2 != null) {
+      // DELIBERATE LOOSE EQUAL - existy()
+      // case 81, 82, 83, 84, 85, 86, 87, 88*
+      var _currentResult28 = uni ? uniRes : i2;
+
+      if (typeof opts.cb === "function") {
+        return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), _currentResult28, {
+          path: infoObj.path,
+          key: infoObj.key,
+          type: infoObj.type
+        });
+      }
+
+      return _currentResult28;
+    } // cases 89, 90
+
+
+    var _currentResult27 = uni ? uniRes : i1;
+
+    if (typeof opts.cb === "function") {
+      return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), _currentResult27, {
+        path: infoObj.path,
+        key: infoObj.key,
+        type: infoObj.type
+      });
+    }
+
+    return _currentResult27;
+  } else {
+
+    var _currentResult29 = uni ? uniRes : i2;
+
+    if (typeof opts.cb === "function") {
+      return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), _currentResult29, {
+        path: infoObj.path,
+        key: infoObj.key,
+        type: infoObj.type
+      });
+    }
+
+    return _currentResult29;
   } // return i1
 
   var currentResult = uni ? uniRes : i1;
 
   if (typeof opts.cb === "function") {
-    return opts.cb(i1, i2, currentResult, {
+    return opts.cb(clone__default['default'](input1orig), clone__default['default'](input2orig), currentResult, {
       path: infoObj.path,
       key: infoObj.key,
       type: infoObj.type
     });
   }
-
   return currentResult;
 }
 /**
@@ -651,8 +737,6 @@ function externalApi(input1orig, input2orig, originalOpts) {
     throw new TypeError("object-merge-advanced/mergeAdvanced(): [THROW_ID_01] Both inputs are missing");
   } // notice we have first argument tracking the current path, which is not
   // exposed to the external API.
-
-
   return mergeAdvanced({
     key: null,
     path: "",

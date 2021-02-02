@@ -71,6 +71,7 @@
       "devDependencies": [
         "@types/lodash.clonedeep",
         "@types/lodash.includes",
+        "@types/lodash.isdate",
         "@types/lodash.isplainobject",
         "@types/lodash.uniq",
         "deep-equal"
@@ -82,6 +83,7 @@
     "array-includes-with-glob": "^3.0.2",
     "lodash.clonedeep": "^4.5.0",
     "lodash.includes": "^4.3.0",
+    "lodash.isdate": "^4.0.1",
     "lodash.isplainobject": "^4.0.6",
     "lodash.uniq": "^4.5.0",
     "util-nonempty": "^3.0.2"
@@ -108,6 +110,7 @@
     "@rollup/plugin-typescript": "^8.1.1",
     "@types/lodash.clonedeep": "^4.5.6",
     "@types/lodash.includes": "^4.3.6",
+    "@types/lodash.isdate": "^4.0.6",
     "@types/lodash.isplainobject": "^4.0.6",
     "@types/lodash.uniq": "^4.5.6",
     "@types/node": "^14.14.22",

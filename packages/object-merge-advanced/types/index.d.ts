@@ -1,8 +1,9 @@
 declare const version: string;
+declare type argType = "date" | "date" | "object" | "array" | "string" | "number" | "function" | "bigint" | "boolean" | "symbol" | "null" | "undefined";
 interface InfoObj {
     path: string | undefined;
     key: string | null;
-    type: [string, string];
+    type: [argType, argType];
 }
 interface Opts {
     cb?: null | ((input1: any, input2: any, result: any, infoObj?: InfoObj) => any);
