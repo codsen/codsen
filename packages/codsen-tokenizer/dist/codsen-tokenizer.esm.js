@@ -327,12 +327,10 @@ function matchLayerLast(wholeEspTagLump, layers, matchFirstInstead = false) {
   if ( // imagine case of Nunjucks: heads "{%" are normal but tails "-%}" (notice dash)
   wholeEspTagLump.includes(whichLayerToMatch.guessedClosingLump) || // match every character from the last "layers" complex-type entry must be
   // present in the extracted lump
-  Array.from(wholeEspTagLump).every(char => whichLayerToMatch.guessedClosingLump.includes(char))) {
-    // console.log(
-    //   `047 matchLayer(): ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${
-    //     wholeEspTagLump.length
-    //   }`
-    // );
+  Array.from(wholeEspTagLump).every(char => whichLayerToMatch.guessedClosingLump.includes(char)) || // consider ruby heads, <%# and tails -%>
+  whichLayerToMatch.guessedClosingLump && // length is more than 2
+  whichLayerToMatch.guessedClosingLump.length > 2 && // and last two characters match to what was guessed
+  whichLayerToMatch.guessedClosingLump[whichLayerToMatch.guessedClosingLump.length - 1] === wholeEspTagLump[wholeEspTagLump.length - 1] && whichLayerToMatch.guessedClosingLump[whichLayerToMatch.guessedClosingLump.length - 2] === wholeEspTagLump[wholeEspTagLump.length - 2]) {
     return wholeEspTagLump.length;
   } // console.log(`054 matchLayer(): finally, return undefined`);
 

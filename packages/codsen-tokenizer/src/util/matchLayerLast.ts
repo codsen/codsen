@@ -47,13 +47,24 @@ function matchLayerLast(
     // present in the extracted lump
     Array.from(wholeEspTagLump).every((char) =>
       whichLayerToMatch.guessedClosingLump.includes(char)
-    )
+    ) ||
+    // consider ruby heads, <%# and tails -%>
+    (whichLayerToMatch.guessedClosingLump &&
+      // length is more than 2
+      whichLayerToMatch.guessedClosingLump.length > 2 &&
+      // and last two characters match to what was guessed
+      whichLayerToMatch.guessedClosingLump[
+        whichLayerToMatch.guessedClosingLump.length - 1
+      ] === wholeEspTagLump[wholeEspTagLump.length - 1] &&
+      whichLayerToMatch.guessedClosingLump[
+        whichLayerToMatch.guessedClosingLump.length - 2
+      ] === wholeEspTagLump[wholeEspTagLump.length - 2])
   ) {
-    // console.log(
-    //   `047 matchLayer(): ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${
-    //     wholeEspTagLump.length
-    //   }`
-    // );
+    console.log(
+      `047 matchLayer(): ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${
+        wholeEspTagLump.length
+      }`
+    );
     return wholeEspTagLump.length;
   }
 
