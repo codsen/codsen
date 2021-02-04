@@ -13,3 +13,9 @@ tap.test(
     t.end();
   }
 );
+
+tap.only(`02 - ${`\u001b[${32}m${`ESP`}\u001b[${39}m`} - Ruby ERB`, (t) => {
+  const str = `<a href="https://abc?p1=<%= @p1 %>&p2=<%= @p2 %>">`;
+  t.true(is(str, 8, 48), "02");
+  t.end();
+});

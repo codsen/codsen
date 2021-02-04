@@ -2916,7 +2916,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     } // catch opening brackets
 
 
-    if (str[i] === "<" && closingBracketMet && !openingBracketMet) {
+    if (str[i] === "<" && // consider ERB templating tags, <%= zzz %>
+    str[right(str, i)] !== "%" && closingBracketMet && !openingBracketMet) {
       openingBracketMet = true; // if it's past the "isThisClosingIdx", that's very falsey
       // if (i > isThisClosingIdx) {
       return false; // }

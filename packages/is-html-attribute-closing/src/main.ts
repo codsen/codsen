@@ -491,7 +491,13 @@ function isAttrClosing(
     }
 
     // catch opening brackets
-    if (str[i] === "<" && closingBracketMet && !openingBracketMet) {
+    if (
+      str[i] === "<" &&
+      // consider ERB templating tags, <%= zzz %>
+      str[right(str, i) as number] !== "%" &&
+      closingBracketMet &&
+      !openingBracketMet
+    ) {
       openingBracketMet = true;
       console.log(
         `486 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`openingBracketMet`}\u001b[${39}m`} = ${JSON.stringify(
