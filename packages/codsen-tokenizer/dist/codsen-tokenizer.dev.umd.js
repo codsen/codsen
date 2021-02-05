@@ -2934,7 +2934,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     } // catch opening brackets
 
 
-    if (str[i] === "<" && closingBracketMet && !openingBracketMet) {
+    if (str[i] === "<" && // consider ERB templating tags, <%= zzz %>
+    str[right(str, i)] !== "%" && closingBracketMet && !openingBracketMet) {
       openingBracketMet = true; // if it's past the "isThisClosingIdx", that's very falsey
       // if (i > isThisClosingIdx) {
 
@@ -5133,6 +5134,8 @@ function tokenizer(str, originalOpts) {
               } // activate doNothing until the end of tails because otherwise,
               // mid-tail characters will initiate new tail start clauses
               // and we'll have overlap/false result
+
+
               doNothing = token.tailEndsAt; // it depends will we ping it as a standalone token or will we
               // nest inside the parent tag among attributes
 
@@ -5147,7 +5150,7 @@ function tokenizer(str, originalOpts) {
                 if (attribToBackup) {
                   // 1. restore
                   attrib = attribToBackup; // 2. push to attribValue
-                  attrib.attribValue.push(_objectSpread2({}, token)); // 3. attribToBackup is reset in all cases, below
+                  attrib.attribValue.push(_objectSpread2({}, token));
                 } else {
                   // push to attribs
                   parentTokenToBackup.attribs.push(_objectSpread2({}, token));
@@ -6435,7 +6438,8 @@ function tokenizer(str, originalOpts) {
     // mean the tag ending and maybe the closing quotes are missing?
 
 
-    if (str[_i] === ">" && token.type === "tag" && attrib.attribStarts && !attrib.attribEnds) { // Idea is simple: we have to situations:
+    if (!doNothing && str[_i] === ">" && // consider ERB templating tags like <%= @p1 %>
+    str[_i - 1] !== "%" && token.type === "tag" && attrib.attribStarts && !attrib.attribEnds) { // Idea is simple: we have to situations:
       // 1. this closing bracket is real, closing bracket
       // 2. this closing bracket is unencoded raw text
       // Now, we need to distinguish these two cases.

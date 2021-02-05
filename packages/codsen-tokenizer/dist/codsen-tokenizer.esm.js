@@ -1567,6 +1567,8 @@ function tokenizer(str, originalOpts) {
               } // activate doNothing until the end of tails because otherwise,
               // mid-tail characters will initiate new tail start clauses
               // and we'll have overlap/false result
+
+
               doNothing = token.tailEndsAt; // it depends will we ping it as a standalone token or will we
               // nest inside the parent tag among attributes
 
@@ -1582,7 +1584,7 @@ function tokenizer(str, originalOpts) {
                   // 1. restore
                   attrib = attribToBackup; // 2. push to attribValue
                   attrib.attribValue.push({ ...token
-                  }); // 3. attribToBackup is reset in all cases, below
+                  });
                 } else {
                   // push to attribs
                   parentTokenToBackup.attribs.push({ ...token
@@ -2849,7 +2851,8 @@ function tokenizer(str, originalOpts) {
     // mean the tag ending and maybe the closing quotes are missing?
 
 
-    if (str[i] === ">" && token.type === "tag" && attrib.attribStarts && !attrib.attribEnds) { // Idea is simple: we have to situations:
+    if (!doNothing && str[i] === ">" && // consider ERB templating tags like <%= @p1 %>
+    str[i - 1] !== "%" && token.type === "tag" && attrib.attribStarts && !attrib.attribEnds) { // Idea is simple: we have to situations:
       // 1. this closing bracket is real, closing bracket
       // 2. this closing bracket is unencoded raw text
       // Now, we need to distinguish these two cases.

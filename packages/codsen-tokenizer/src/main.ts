@@ -2170,10 +2170,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
               // activate doNothing until the end of tails because otherwise,
               // mid-tail characters will initiate new tail start clauses
               // and we'll have overlap/false result
+              doNothing = token.tailEndsAt as number;
               console.log(
                 `2193 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${31}m${`doNothing`}\u001b[${39}m`} = ${doNothing}`
               );
-              doNothing = token.tailEndsAt as number;
 
               console.log(
                 `2198 ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
@@ -2212,8 +2212,6 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
                     `2231 PUSH token to be inside ${`\u001b[${33}m${`attrib.attribValue`}\u001b[${39}m`}`
                   );
                   attrib.attribValue.push({ ...token } as any);
-
-                  // 3. attribToBackup is reset in all cases, below
                 } else {
                   // push to attribs
                   console.log(`2238 PUSH token to be among attribs`);
@@ -5107,7 +5105,10 @@ function tokenizer(str: string, originalOpts?: Partial<Opts>): Res {
     // Catch raw closing brackets inside attribute's contents, maybe they
     // mean the tag ending and maybe the closing quotes are missing?
     if (
+      !doNothing &&
       str[i] === ">" &&
+      // consider ERB templating tags like <%= @p1 %>
+      str[i - 1] !== "%" &&
       token.type === "tag" &&
       attrib.attribStarts &&
       !attrib.attribEnds

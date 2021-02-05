@@ -564,3 +564,89 @@ trustedkey <%= @keys_trusted.join(' ') %>
   );
   t.end();
 });
+
+// ERB within HTML attributes
+
+tap.test(`10 - two expressions as attr values`, (t) => {
+  const gathered = [];
+  ct(`<a href="https://abc?p1=<%= @p1 %>&p2=<%= @p2 %>">`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 50,
+        value: '<a href="https://abc?p1=<%= @p1 %>&p2=<%= @p2 %>">',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 2,
+        tagName: "a",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: false,
+        kind: "inline",
+        attribs: [
+          {
+            attribName: "href",
+            attribNameRecognised: true,
+            attribNameStartsAt: 3,
+            attribNameEndsAt: 7,
+            attribOpeningQuoteAt: 8,
+            attribClosingQuoteAt: 48,
+            attribValueRaw: "https://abc?p1=<%= @p1 %>&p2=<%= @p2 %>",
+            attribValue: [
+              {
+                type: "text",
+                start: 9,
+                end: 24,
+                value: "https://abc?p1=",
+              },
+              {
+                type: "esp",
+                start: 24,
+                end: 34,
+                value: "<%= @p1 %>",
+                head: "<%=",
+                headStartsAt: 24,
+                headEndsAt: 27,
+                tail: "%>",
+                tailStartsAt: 32,
+                tailEndsAt: 34,
+              },
+              {
+                type: "text",
+                start: 34,
+                end: 38,
+                value: "&p2=",
+              },
+              {
+                type: "esp",
+                start: 38,
+                end: 48,
+                value: "<%= @p2 %>",
+                head: "<%=",
+                headStartsAt: 38,
+                headEndsAt: 41,
+                tail: "%>",
+                tailStartsAt: 46,
+                tailEndsAt: 48,
+              },
+            ],
+            attribValueStartsAt: 9,
+            attribValueEndsAt: 48,
+            attribStarts: 3,
+            attribEnds: 49,
+            attribLeft: 1,
+          },
+        ],
+      },
+    ],
+    "10"
+  );
+  t.end();
+});
