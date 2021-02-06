@@ -92,7 +92,7 @@
     "matcher": "^3.0.0",
     "object-merge-advanced": "^11.0.2",
     "object-path": "^0.11.5",
-    "pacote": "^11.2.4",
+    "pacote": "^11.2.6",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
     "sort-package-json": "^1.48.1",

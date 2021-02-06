@@ -60,7 +60,7 @@
     "lerna-dependency-graph": "^1.0.2",
     "object-path": "^0.11.5",
     "prettier": "^2.2.1",
-    "simple-git": "^2.31.0",
+    "simple-git": "^2.32.0",
     "tap-parse-string-to-object": "^2.0.2",
     "title": "^3.4.2"
   }
