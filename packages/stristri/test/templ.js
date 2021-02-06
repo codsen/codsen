@@ -1,5 +1,5 @@
 import tap from "tap";
-// import { stri as stri2 } from "../dist/stristri.esm";
+import { stri as stri2 } from "../dist/stristri.esm";
 import { stri, mixer } from "./util/util";
 
 // Templating tags only
@@ -113,3 +113,40 @@ nop }$`,
     t.end();
   }
 );
+
+tap.test(`05 - ERB embedded expressions`, (t) => {
+  const input = `<a href="https://example.com/test?param1=<%= @param1 %>&param2=<%= @param2 %>">click me</a>`;
+  mixer({
+    html: true,
+    text: true,
+  }).forEach((opt, n) => {
+    t.equal(stri(t, n, input, opt).result, ``, JSON.stringify(opt, null, 4));
+  });
+  mixer({
+    html: false,
+    text: true,
+  }).forEach((opt, n) => {
+    t.equal(
+      stri(t, n, input, opt).result,
+      `<a href="https://example.com/test?param1=<%= @param1 %>&param2=<%= @param2 %>"> </a>`,
+      JSON.stringify(opt, null, 4)
+    );
+  });
+  mixer({
+    html: true,
+    text: false,
+  }).forEach((opt, n) => {
+    t.equal(
+      stri(t, n, input, opt).result,
+      `click me`,
+      JSON.stringify(opt, null, 4)
+    );
+  });
+  mixer({
+    html: false,
+    text: false,
+  }).forEach((opt, n) => {
+    t.equal(stri(t, n, input, opt).result, input, JSON.stringify(opt, null, 4));
+  });
+  t.end();
+});
