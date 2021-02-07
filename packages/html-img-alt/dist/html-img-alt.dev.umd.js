@@ -116,9 +116,9 @@ var he = createCommonjsModule(function (module, exports) {
 
   (function (root) {
     // Detect free variables `exports`.
-    var freeExports =  exports; // Detect free variable `module`.
+    var freeExports = exports; // Detect free variable `module`.
 
-    var freeModule =  module && module.exports == freeExports && module; // Detect free variable `global`, from Node.js or Browserified code,
+    var freeModule = module && module.exports == freeExports && module; // Detect free variable `global`, from Node.js or Browserified code,
     // and use it as `root`.
 
     var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal;
@@ -4973,7 +4973,7 @@ var Ranges = /*#__PURE__*/function () {
 
 var typeDetect = createCommonjsModule(function (module, exports) {
   (function (global, factory) {
-     module.exports = factory() ;
+    module.exports = factory() ;
   })(commonjsGlobal, function () {
     /* !
      * type-detect
@@ -5678,7 +5678,7 @@ var lodash_clonedeep = createCommonjsModule(function (module, exports) {
   var root = freeGlobal || freeSelf || Function('return this')();
   /** Detect free variable `exports`. */
 
-  var freeExports =  exports && !exports.nodeType && exports;
+  var freeExports = exports && !exports.nodeType && exports;
   /** Detect free variable `module`. */
 
   var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;

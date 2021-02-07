@@ -476,7 +476,7 @@ var lodash_clonedeep = createCommonjsModule(function (module, exports) {
   var root = freeGlobal || freeSelf || Function('return this')();
   /** Detect free variable `exports`. */
 
-  var freeExports =  exports && !exports.nodeType && exports;
+  var freeExports = exports && !exports.nodeType && exports;
   /** Detect free variable `module`. */
 
   var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;

@@ -239,7 +239,7 @@ var lodash_clonedeep = createCommonjsModule(function (module, exports) {
   var root = freeGlobal || freeSelf || Function('return this')();
   /** Detect free variable `exports`. */
 
-  var freeExports =  exports && !exports.nodeType && exports;
+  var freeExports = exports && !exports.nodeType && exports;
   /** Detect free variable `module`. */
 
   var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;
@@ -3188,7 +3188,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     } // catch opening brackets
 
 
-    if (str[i] === "<" && closingBracketMet && !openingBracketMet) {
+    if (str[i] === "<" && // consider ERB templating tags, <%= zzz %>
+    str[right(str, i)] !== "%" && closingBracketMet && !openingBracketMet) {
       openingBracketMet = true; // if it's past the "isThisClosingIdx", that's very falsey
       // if (i > isThisClosingIdx) {
 
@@ -5397,7 +5398,7 @@ function tokenizer(str, originalOpts) {
                   // 1. restore
                   attrib = attribToBackup; // 2. push to attribValue
 
-                  attrib.attribValue.push(_objectSpread2({}, token)); // 3. attribToBackup is reset in all cases, below
+                  attrib.attribValue.push(_objectSpread2({}, token));
                 } else {
                   // push to attribs
                   parentTokenToBackup.attribs.push(_objectSpread2({}, token));
@@ -6695,7 +6696,8 @@ function tokenizer(str, originalOpts) {
     // mean the tag ending and maybe the closing quotes are missing?
 
 
-    if (str[_i] === ">" && token.type === "tag" && attrib.attribStarts && !attrib.attribEnds) {
+    if (!doNothing && str[_i] === ">" && // consider ERB templating tags like <%= @p1 %>
+    str[_i - 1] !== "%" && token.type === "tag" && attrib.attribStarts && !attrib.attribEnds) {
       // Idea is simple: we have to situations:
       // 1. this closing bracket is real, closing bracket
       // 2. this closing bracket is unencoded raw text

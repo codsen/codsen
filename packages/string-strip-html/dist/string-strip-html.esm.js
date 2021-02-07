@@ -698,7 +698,7 @@ function stripHtml(str, originalOpts) {
     //
     notWithinAttrQuotes(tag, str, i)) {
 
-      if ( tag.lastOpeningBracketAt !== undefined) {
+      if (tag.lastOpeningBracketAt !== undefined) {
         // 1. mark the index
         tag.lastClosingBracketAt = i; // 2. reset the spacesChunkWhichFollowsTheClosingBracketEndsAt
 

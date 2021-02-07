@@ -8299,7 +8299,7 @@ var lodash_clonedeep = createCommonjsModule(function (module, exports) {
   var root = freeGlobal || freeSelf || Function('return this')();
   /** Detect free variable `exports`. */
 
-  var freeExports =  exports && !exports.nodeType && exports;
+  var freeExports = exports && !exports.nodeType && exports;
   /** Detect free variable `module`. */
 
   var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;
@@ -12688,7 +12688,8 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
     } // catch opening brackets
 
 
-    if (str[i] === "<" && closingBracketMet && !openingBracketMet) {
+    if (str[i] === "<" && // consider ERB templating tags, <%= zzz %>
+    str[right(str, i)] !== "%" && closingBracketMet && !openingBracketMet) {
       openingBracketMet = true; // if it's past the "isThisClosingIdx", that's very falsey
       // if (i > isThisClosingIdx) {
 
@@ -13644,12 +13645,10 @@ function matchLayerLast(wholeEspTagLump, layers, matchFirstInstead) {
   // present in the extracted lump
   Array.from(wholeEspTagLump).every(function (char) {
     return whichLayerToMatch.guessedClosingLump.includes(char);
-  })) {
-    // console.log(
-    //   `047 matchLayer(): ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${
-    //     wholeEspTagLump.length
-    //   }`
-    // );
+  }) || // consider ruby heads, <%# and tails -%>
+  whichLayerToMatch.guessedClosingLump && // length is more than 2
+  whichLayerToMatch.guessedClosingLump.length > 2 && // and last two characters match to what was guessed
+  whichLayerToMatch.guessedClosingLump[whichLayerToMatch.guessedClosingLump.length - 1] === wholeEspTagLump[wholeEspTagLump.length - 1] && whichLayerToMatch.guessedClosingLump[whichLayerToMatch.guessedClosingLump.length - 2] === wholeEspTagLump[wholeEspTagLump.length - 2]) {
     return wholeEspTagLump.length;
   } // console.log(`054 matchLayer(): finally, return undefined`);
 
@@ -14899,7 +14898,7 @@ function tokenizer(str, originalOpts) {
                   // 1. restore
                   attrib = attribToBackup; // 2. push to attribValue
 
-                  attrib.attribValue.push(_objectSpread2({}, token)); // 3. attribToBackup is reset in all cases, below
+                  attrib.attribValue.push(_objectSpread2({}, token));
                 } else {
                   // push to attribs
                   parentTokenToBackup.attribs.push(_objectSpread2({}, token));
@@ -16197,7 +16196,8 @@ function tokenizer(str, originalOpts) {
     // mean the tag ending and maybe the closing quotes are missing?
 
 
-    if (str[_i] === ">" && token.type === "tag" && attrib.attribStarts && !attrib.attribEnds) {
+    if (!doNothing && str[_i] === ">" && // consider ERB templating tags like <%= @p1 %>
+    str[_i - 1] !== "%" && token.type === "tag" && attrib.attribStarts && !attrib.attribEnds) {
       // Idea is simple: we have to situations:
       // 1. this closing bracket is real, closing bracket
       // 2. this closing bracket is unencoded raw text
@@ -17791,7 +17791,7 @@ var lodash_isregexp = createCommonjsModule(function (module, exports) {
   var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
   /** Detect free variable `exports`. */
 
-  var freeExports =  exports && !exports.nodeType && exports;
+  var freeExports = exports && !exports.nodeType && exports;
   /** Detect free variable `module`. */
 
   var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;
@@ -39171,9 +39171,9 @@ var he = createCommonjsModule(function (module, exports) {
 
   (function (root) {
     // Detect free variables `exports`.
-    var freeExports =  exports; // Detect free variable `module`.
+    var freeExports = exports; // Detect free variable `module`.
 
-    var freeModule =  module && module.exports == freeExports && module; // Detect free variable `global`, from Node.js or Browserified code,
+    var freeModule = module && module.exports == freeExports && module; // Detect free variable `global`, from Node.js or Browserified code,
     // and use it as `root`.
 
     var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal;

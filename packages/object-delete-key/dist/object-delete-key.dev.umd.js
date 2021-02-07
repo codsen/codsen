@@ -919,7 +919,7 @@ function createCommonjsModule(fn) {
 
 var typeDetect = createCommonjsModule(function (module, exports) {
   (function (global, factory) {
-     module.exports = factory() ;
+    module.exports = factory() ;
   })(commonjsGlobal, function () {
     /* !
      * type-detect
@@ -1624,7 +1624,7 @@ var lodash_clonedeep = createCommonjsModule(function (module, exports) {
   var root = freeGlobal || freeSelf || Function('return this')();
   /** Detect free variable `exports`. */
 
-  var freeExports =  exports && !exports.nodeType && exports;
+  var freeExports = exports && !exports.nodeType && exports;
   /** Detect free variable `module`. */
 
   var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;

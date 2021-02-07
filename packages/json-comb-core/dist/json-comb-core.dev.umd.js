@@ -282,7 +282,7 @@ var lodash_merge = createCommonjsModule(function (module, exports) {
   var root = freeGlobal || freeSelf || Function('return this')();
   /** Detect free variable `exports`. */
 
-  var freeExports =  exports && !exports.nodeType && exports;
+  var freeExports = exports && !exports.nodeType && exports;
   /** Detect free variable `module`. */
 
   var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;
@@ -2332,7 +2332,7 @@ var lodash_clonedeep = createCommonjsModule(function (module, exports) {
   var root = freeGlobal || freeSelf || Function('return this')();
   /** Detect free variable `exports`. */
 
-  var freeExports =  exports && !exports.nodeType && exports;
+  var freeExports = exports && !exports.nodeType && exports;
   /** Detect free variable `module`. */
 
   var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;
@@ -6034,6 +6034,130 @@ function noop() {// No operation performed.
 
 var lodash_uniq = uniq;
 
+/**
+ * lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+var lodash_isdate = createCommonjsModule(function (module, exports) {
+  /** `Object#toString` result references. */
+  var dateTag = '[object Date]';
+  /** Detect free variable `global` from Node.js. */
+
+  var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+  /** Detect free variable `exports`. */
+
+  var freeExports = exports && !exports.nodeType && exports;
+  /** Detect free variable `module`. */
+
+  var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;
+  /** Detect the popular CommonJS extension `module.exports`. */
+
+  var moduleExports = freeModule && freeModule.exports === freeExports;
+  /** Detect free variable `process` from Node.js. */
+
+  var freeProcess = moduleExports && freeGlobal.process;
+  /** Used to access faster Node.js helpers. */
+
+  var nodeUtil = function () {
+    try {
+      return freeProcess && freeProcess.binding('util');
+    } catch (e) {}
+  }();
+  /* Node.js helper references. */
+
+
+  var nodeIsDate = nodeUtil && nodeUtil.isDate;
+  /**
+   * The base implementation of `_.unary` without support for storing metadata.
+   *
+   * @private
+   * @param {Function} func The function to cap arguments for.
+   * @returns {Function} Returns the new capped function.
+   */
+
+  function baseUnary(func) {
+    return function (value) {
+      return func(value);
+    };
+  }
+  /** Used for built-in method references. */
+
+
+  var objectProto = Object.prototype;
+  /**
+   * Used to resolve the
+   * [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
+   * of values.
+   */
+
+  var objectToString = objectProto.toString;
+  /**
+   * The base implementation of `_.isDate` without Node.js optimizations.
+   *
+   * @private
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is a date object, else `false`.
+   */
+
+  function baseIsDate(value) {
+    return isObjectLike(value) && objectToString.call(value) == dateTag;
+  }
+  /**
+   * Checks if `value` is classified as a `Date` object.
+   *
+   * @static
+   * @memberOf _
+   * @since 0.1.0
+   * @category Lang
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is a date object, else `false`.
+   * @example
+   *
+   * _.isDate(new Date);
+   * // => true
+   *
+   * _.isDate('Mon April 23 2012');
+   * // => false
+   */
+
+
+  var isDate = nodeIsDate ? baseUnary(nodeIsDate) : baseIsDate;
+  /**
+   * Checks if `value` is object-like. A value is object-like if it's not `null`
+   * and has a `typeof` result of "object".
+   *
+   * @static
+   * @memberOf _
+   * @since 4.0.0
+   * @category Lang
+   * @param {*} value The value to check.
+   * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+   * @example
+   *
+   * _.isObjectLike({});
+   * // => true
+   *
+   * _.isObjectLike([1, 2, 3]);
+   * // => true
+   *
+   * _.isObjectLike(_.noop);
+   * // => false
+   *
+   * _.isObjectLike(null);
+   * // => false
+   */
+
+  function isObjectLike(value) {
+    return !!value && typeof value == 'object';
+  }
+
+  module.exports = isDate;
+});
+
 var escapeStringRegexp = function escapeStringRegexp(string) {
   if (typeof string !== 'string') {
     throw new TypeError('Expected a string');
@@ -6219,6 +6343,14 @@ function equalOrSubsetKeys(obj1, obj2) {
 }
 
 function getType(something) {
+  if (something === null) {
+    return "null";
+  }
+
+  if (lodash_isdate(something)) {
+    return "date";
+  }
+
   if (lodash_isplainobject(something)) {
     return "object";
   }
@@ -6318,7 +6450,6 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
   // after merging.
 
   if (isArr(i1)) {
-    // cases 1-20
     if (nonEmpty(i1)) {
       // cases 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
       if (isArr(i2) && nonEmpty(i2)) {
@@ -6328,7 +6459,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
           var _currentResult = uni ? uniRes : [];
 
           if (typeof opts.cb === "function") {
-            return opts.cb(i1, i2, _currentResult, {
+            return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult, {
               path: currPath,
               key: infoObj.key,
               type: infoObj.type
@@ -6342,7 +6473,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
           var _currentResult2 = uni ? uniRes : i1.concat(i2);
 
           if (typeof opts.cb === "function") {
-            return opts.cb(i1, i2, _currentResult2, {
+            return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult2, {
               path: currPath,
               key: infoObj.key,
               type: infoObj.type
@@ -6410,7 +6541,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         var _currentResult3 = uni ? uniRes : i1;
 
         if (typeof opts.cb === "function") {
-          return opts.cb(i1, i2, _currentResult3, {
+          return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult3, {
             path: currPath,
             key: infoObj.key,
             type: infoObj.type
@@ -6426,7 +6557,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         var _currentResult5 = uni ? uniRes : i2;
 
         if (typeof opts.cb === "function") {
-          return opts.cb(i1, i2, _currentResult5, {
+          return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult5, {
             path: currPath,
             key: infoObj.key,
             type: infoObj.type
@@ -6440,7 +6571,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       var _currentResult4 = uni ? uniRes : i1;
 
       if (typeof opts.cb === "function") {
-        return opts.cb(i1, i2, _currentResult4, {
+        return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult4, {
           path: currPath,
           key: infoObj.key,
           type: infoObj.type
@@ -6450,7 +6581,6 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       return _currentResult4;
     }
   } else if (lodash_isplainobject(i1)) {
-    // cases 21-40
     if (nonEmpty(i1)) {
       // cases 21-30
       if (isArr(i2)) {
@@ -6460,7 +6590,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
           var _currentResult9 = uni ? uniRes : i2;
 
           if (typeof opts.cb === "function") {
-            return opts.cb(i1, i2, _currentResult9, {
+            return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult9, {
               path: currPath,
               key: infoObj.key,
               type: infoObj.type
@@ -6474,7 +6604,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         var _currentResult8 = uni ? uniRes : i1;
 
         if (typeof opts.cb === "function") {
-          return opts.cb(i1, i2, _currentResult8, {
+          return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult8, {
             path: currPath,
             key: infoObj.key,
             type: infoObj.type
@@ -6485,7 +6615,6 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       }
 
       if (lodash_isplainobject(i2)) {
-        // case 23
         // two object merge - we'll consider opts.ignoreEverything & opts.hardMergeEverything too.
         Object.keys(i2).forEach(function (key) {
           // calculate current path:
@@ -6510,7 +6639,6 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
               // without this switch (opts.hardMergeEverything) we'd lose the visibility
               // of the name of the key; we can't "bubble up" to check all parents' key names,
               // are any of them positive for "hard merge"...
-              // console.log('473. - hardMergeEverything')
               i1[key] = mergeAdvanced({
                 path: currPath,
                 key: key,
@@ -6531,18 +6659,27 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
                 hardArrayConcat: true
               }));
             } else {
-              // regular merge
-              // console.log('503.')
               i1[key] = mergeAdvanced({
                 path: currPath,
                 key: key,
-                type: [getType(i1), getType(i2)]
+                type: [getType(i1[key]), getType(i2[key])]
               }, i1[key], i2[key], opts);
             }
           } else {
             i1[key] = i2[key]; // key does not exist, so creates it
           }
         });
+
+        var _currentResult10 = uni ? uniRes : i1;
+
+        if (typeof opts.cb === "function") {
+          return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult10, {
+            path: infoObj.path,
+            key: infoObj.key,
+            type: infoObj.type
+          });
+        }
+
         return i1;
       } // cases 24, 25, 26, 27, 28, 29, 30
 
@@ -6550,7 +6687,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       var _currentResult7 = uni ? uniRes : i1;
 
       if (typeof opts.cb === "function") {
-        return opts.cb(i1, i2, _currentResult7, {
+        return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult7, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
@@ -6564,24 +6701,24 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
 
     if (isArr(i2) || lodash_isplainobject(i2) || nonEmpty(i2)) {
       // cases 31, 32, 33, 34, 35, 37
-      var _currentResult10 = uni ? uniRes : i2;
+      var _currentResult11 = uni ? uniRes : i2;
 
       if (typeof opts.cb === "function") {
-        return opts.cb(i1, i2, _currentResult10, {
+        return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult11, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
         });
       }
 
-      return _currentResult10;
+      return _currentResult11;
     } // 36, 38, 39, 40
 
 
     var _currentResult6 = uni ? uniRes : i1;
 
     if (typeof opts.cb === "function") {
-      return opts.cb(i1, i2, _currentResult6, {
+      return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult6, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
@@ -6589,76 +6726,58 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     }
 
     return _currentResult6;
-  } else if (isStr(i1)) {
-    if (nonEmpty(i1)) {
-      // cases 41-50
-      if ((isArr(i2) || lodash_isplainobject(i2) || isStr(i2)) && nonEmpty(i2)) {
-        // cases 41, 43, 45
-        // take care of hard merge setting cases, opts.hardMergeKeys
-        var _currentResult13 = uni ? uniRes : i2;
+  } else if (lodash_isdate(i1)) {
+    if (isFinite(i1)) {
+      if (lodash_isdate(i2)) {
+        if (isFinite(i2)) {
+          // compares dates
+          var _currentResult15 = uni ? uniRes : i1 > i2 ? i1 : i2;
+
+          if (typeof opts.cb === "function") {
+            return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult15, {
+              path: infoObj.path,
+              key: infoObj.key,
+              type: infoObj.type
+            });
+          }
+
+          return _currentResult15;
+        } // return i1 date
+
+
+        var _currentResult14 = uni ? uniRes : i1;
 
         if (typeof opts.cb === "function") {
-          return opts.cb(i1, i2, _currentResult13, {
+          return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult14, {
             path: infoObj.path,
             key: infoObj.key,
             type: infoObj.type
           });
         }
 
-        return _currentResult13;
-      } // cases 42, 44, 46, 47, 48, 49, 50
+        return _currentResult14;
+      } // if i2 is truthy, return it, otherwise return date at i1
 
 
-      var _currentResult12 = uni ? uniRes : i1;
+      var _currentResult13 = uni ? uniRes : i2 ? i2 : i1;
 
       if (typeof opts.cb === "function") {
-        return opts.cb(i1, i2, _currentResult12, {
+        return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult13, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
         });
       }
 
-      return _currentResult12;
-    } // i1 is empty string
-    // cases 51-60
-
-
-    if (i2 != null && !isBool(i2)) {
-      // cases 51, 52, 53, 54, 55, 56, 57
-      var _currentResult14 = uni ? uniRes : i2;
-
-      if (typeof opts.cb === "function") {
-        return opts.cb(i1, i2, _currentResult14, {
-          path: infoObj.path,
-          key: infoObj.key,
-          type: infoObj.type
-        });
-      }
-
-      return _currentResult14;
-    } // 58, 59, 60
-
-
-    var _currentResult11 = uni ? uniRes : i1;
-
-    if (typeof opts.cb === "function") {
-      return opts.cb(i1, i2, _currentResult11, {
-        path: infoObj.path,
-        key: infoObj.key,
-        type: infoObj.type
-      });
+      return _currentResult13;
     }
 
-    return _currentResult11;
-  } else if (isNum(i1)) {
-    // cases 61-70
-    if (nonEmpty(i2)) {
-      // cases 61, 63, 65, 67
+    if (lodash_isdate(i2)) {
+      // return i2 date
       var _currentResult16 = uni ? uniRes : i2;
 
       if (typeof opts.cb === "function") {
-        return opts.cb(i1, i2, _currentResult16, {
+        return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult16, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
@@ -6666,30 +6785,28 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       }
 
       return _currentResult16;
-    } // cases 62, 64, 66, 68, 69, 70
+    }
 
-
-    var _currentResult15 = uni ? uniRes : i1;
+    var _currentResult12 = uni ? uniRes : i2;
 
     if (typeof opts.cb === "function") {
-      return opts.cb(i1, i2, _currentResult15, {
+      return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult12, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
       });
     }
 
-    return _currentResult15;
-  } else if (isBool(i1)) {
-    // cases 71-80
-    if (isBool(i2)) {
-      // case 78 - two Booleans
-      if (opts.mergeBoolsUsingOrNotAnd) {
-        var _currentResult19 = uni ? uniRes : i1 || i2; // default - OR
-
+    return _currentResult12;
+  } else if (isStr(i1)) {
+    if (nonEmpty(i1)) {
+      if ((isArr(i2) || lodash_isplainobject(i2) || isStr(i2)) && nonEmpty(i2)) {
+        // cases 41, 43, 45
+        // take care of hard merge setting cases, opts.hardMergeKeys
+        var _currentResult19 = uni ? uniRes : i2;
 
         if (typeof opts.cb === "function") {
-          return opts.cb(i1, i2, _currentResult19, {
+          return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult19, {
             path: infoObj.path,
             key: infoObj.key,
             type: infoObj.type
@@ -6697,13 +6814,13 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
         }
 
         return _currentResult19;
-      }
+      } // cases 42, 44, 46, 47, 48, 49, 50
 
-      var _currentResult18 = uni ? uniRes : i1 && i2; // alternative merge using AND
 
+      var _currentResult18 = uni ? uniRes : i1;
 
       if (typeof opts.cb === "function") {
-        return opts.cb(i1, i2, _currentResult18, {
+        return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult18, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
@@ -6711,15 +6828,15 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       }
 
       return _currentResult18;
-    }
+    } // i1 is empty string
 
-    if (i2 != null) {
-      // DELIBERATE LOOSE EQUAL - existy()
-      // cases 71, 72, 73, 74, 75, 76, 77
+
+    if (i2 != null && !isBool(i2)) {
+      // cases 51, 52, 53, 54, 55, 56, 57
       var _currentResult20 = uni ? uniRes : i2;
 
       if (typeof opts.cb === "function") {
-        return opts.cb(i1, i2, _currentResult20, {
+        return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult20, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
@@ -6727,14 +6844,13 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       }
 
       return _currentResult20;
-    } // i2 is null or undefined
-    // cases 79*, 80
+    } // 58, 59, 60
 
 
     var _currentResult17 = uni ? uniRes : i1;
 
     if (typeof opts.cb === "function") {
-      return opts.cb(i1, i2, _currentResult17, {
+      return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult17, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
@@ -6742,15 +6858,13 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     }
 
     return _currentResult17;
-  } else if (i1 === null) {
-    // cases 81-90
-    if (i2 != null) {
-      // DELIBERATE LOOSE EQUAL - existy()
-      // case 81, 82, 83, 84, 85, 86, 87, 88*
+  } else if (isNum(i1)) {
+    if (nonEmpty(i2)) {
+      // cases 61, 63, 65, 67
       var _currentResult22 = uni ? uniRes : i2;
 
       if (typeof opts.cb === "function") {
-        return opts.cb(i1, i2, _currentResult22, {
+        return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult22, {
           path: infoObj.path,
           key: infoObj.key,
           type: infoObj.type
@@ -6758,13 +6872,13 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
       }
 
       return _currentResult22;
-    } // cases 89, 90
+    } // cases 62, 64, 66, 68, 69, 70
 
 
     var _currentResult21 = uni ? uniRes : i1;
 
     if (typeof opts.cb === "function") {
-      return opts.cb(i1, i2, _currentResult21, {
+      return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult21, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
@@ -6772,12 +6886,60 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     }
 
     return _currentResult21;
-  } else {
-    // cases 91-100
-    var _currentResult23 = uni ? uniRes : i2;
+  } else if (isBool(i1)) {
+    if (isBool(i2)) {
+      // case 78 - two Booleans
+      if (opts.mergeBoolsUsingOrNotAnd) {
+        var _currentResult25 = uni ? uniRes : i1 || i2; // default - OR
+
+
+        if (typeof opts.cb === "function") {
+          return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult25, {
+            path: infoObj.path,
+            key: infoObj.key,
+            type: infoObj.type
+          });
+        }
+
+        return _currentResult25;
+      }
+
+      var _currentResult24 = uni ? uniRes : i1 && i2; // alternative merge using AND
+
+
+      if (typeof opts.cb === "function") {
+        return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult24, {
+          path: infoObj.path,
+          key: infoObj.key,
+          type: infoObj.type
+        });
+      }
+
+      return _currentResult24;
+    }
+
+    if (i2 != null) {
+      // DELIBERATE LOOSE EQUAL - existy()
+      // cases 71, 72, 73, 74, 75, 76, 77
+      var _currentResult26 = uni ? uniRes : i2;
+
+      if (typeof opts.cb === "function") {
+        return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult26, {
+          path: infoObj.path,
+          key: infoObj.key,
+          type: infoObj.type
+        });
+      }
+
+      return _currentResult26;
+    } // i2 is null or undefined
+    // cases 79*, 80
+
+
+    var _currentResult23 = uni ? uniRes : i1;
 
     if (typeof opts.cb === "function") {
-      return opts.cb(i1, i2, _currentResult23, {
+      return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult23, {
         path: infoObj.path,
         key: infoObj.key,
         type: infoObj.type
@@ -6785,13 +6947,54 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     }
 
     return _currentResult23;
+  } else if (i1 === null) {
+    if (i2 != null) {
+      // DELIBERATE LOOSE EQUAL - existy()
+      // case 81, 82, 83, 84, 85, 86, 87, 88*
+      var _currentResult28 = uni ? uniRes : i2;
+
+      if (typeof opts.cb === "function") {
+        return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult28, {
+          path: infoObj.path,
+          key: infoObj.key,
+          type: infoObj.type
+        });
+      }
+
+      return _currentResult28;
+    } // cases 89, 90
+
+
+    var _currentResult27 = uni ? uniRes : i1;
+
+    if (typeof opts.cb === "function") {
+      return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult27, {
+        path: infoObj.path,
+        key: infoObj.key,
+        type: infoObj.type
+      });
+    }
+
+    return _currentResult27;
+  } else {
+    var _currentResult29 = uni ? uniRes : i2;
+
+    if (typeof opts.cb === "function") {
+      return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), _currentResult29, {
+        path: infoObj.path,
+        key: infoObj.key,
+        type: infoObj.type
+      });
+    }
+
+    return _currentResult29;
   } // return i1
 
 
   var currentResult = uni ? uniRes : i1;
 
   if (typeof opts.cb === "function") {
-    return opts.cb(i1, i2, currentResult, {
+    return opts.cb(lodash_clonedeep(input1orig), lodash_clonedeep(input2orig), currentResult, {
       path: infoObj.path,
       key: infoObj.key,
       type: infoObj.type
@@ -6923,7 +7126,7 @@ var lodash_isequal = createCommonjsModule(function (module, exports) {
   var root = freeGlobal || freeSelf || Function('return this')();
   /** Detect free variable `exports`. */
 
-  var freeExports =  exports && !exports.nodeType && exports;
+  var freeExports = exports && !exports.nodeType && exports;
   /** Detect free variable `module`. */
 
   var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;
@@ -9310,7 +9513,7 @@ pReduce_1.default = _default;
 
 var typeDetect = createCommonjsModule(function (module, exports) {
   (function (global, factory) {
-     module.exports = factory() ;
+    module.exports = factory() ;
   })(commonjsGlobal, function () {
     /* !
      * type-detect
