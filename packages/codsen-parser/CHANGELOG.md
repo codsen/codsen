@@ -3,21 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.10.0](https://github.com/codsen/codsen/compare/codsen-parser@0.9.2...codsen-parser@0.10.0) (2021-02-07)
-
+## 0.10.0 (2021-02-07)
 
 ### Bug Fixes
 
-* tweak the type definitions, DRY up moving ErrorObj definitions from emlint here ([0b07c0a](https://github.com/codsen/codsen/commit/0b07c0acc8b93c6b92779b10846e545492c0babc))
-
+- tweak the type definitions, DRY up moving ErrorObj definitions from emlint here ([0b07c0a](https://github.com/codsen/codsen/commit/0b07c0acc8b93c6b92779b10846e545492c0babc))
 
 ### Features
 
-* recognise missing closing tag gaps bigger than one; prepare to revamp rogue tag clauses ([1b81b2a](https://github.com/codsen/codsen/commit/1b81b2a5132e91c3b27db1d93d2082a8fdbb5774))
-
-
-
-
+- recognise missing closing tag gaps bigger than one; prepare to revamp rogue tag clauses ([1b81b2a](https://github.com/codsen/codsen/commit/1b81b2a5132e91c3b27db1d93d2082a8fdbb5774))
 
 ## 0.9.1 (2021-01-28)
 

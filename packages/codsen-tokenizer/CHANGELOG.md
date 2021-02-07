@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [5.1.0](https://github.com/codsen/codsen/compare/codsen-tokenizer@5.0.2...codsen-tokenizer@5.1.0) (2021-02-07)
-
+## 5.1.0 (2021-02-07)
 
 ### Features
 
-* improvements to ERB template recognition ([5fd2ba1](https://github.com/codsen/codsen/commit/5fd2ba12df7f4b3867dda050b76d82d842d9f43a))
-
-
-
-
+- improvements to ERB template recognition ([5fd2ba1](https://github.com/codsen/codsen/commit/5fd2ba12df7f4b3867dda050b76d82d842d9f43a))
 
 ## 5.0.1 (2021-01-28)
 
