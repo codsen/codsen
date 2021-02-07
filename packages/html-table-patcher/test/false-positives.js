@@ -40,19 +40,22 @@ tap.test(
   }
 );
 
-tap.test(
+tap.todo(
   `03 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`}${`\u001b[${33}m${` - comments`}\u001b[${39}m`} - comments include line breaks`,
   (t) => {
-    const str = `<!--zzz\nyyy--><table><!--zzz\nyyy-->
-<tr><!--zzz<table>zzz<tr>yyy-->
-  <td><!--zzz</td>zzz<td>yyy-->
-    aaa<!--zzz</td><td>yyy-->
-  </td><!--zzz</td><td>yyy-->
-  <td><!--zzz</td><td>yyy-->
-    aaa<!--zzz</td><td>yyy-->
-  </td><!--zzz<td></td>yyy-->
-</tr><!--zzz<tr></tr><tr></tr><table>zzz</table>yyy-->
-</table><!--zzz\nyyy-->`;
+    const str = `<!--111
+222--><table><!--333
+444-->
+<tr><!--555<table>666<tr>777-->
+  <td><!--888</td>999<td>000-->
+    aaa<!--bbb</td><td>ccc-->
+  </td><!--ddd</td><td>eee-->
+  <td><!--fff</td><td>ggg-->
+    zzz<!--hhh</td><td>iii-->
+  </td><!--jjj<td></td>kkk-->
+</tr><!--lll<tr></tr><tr></tr><table>mmm</table>nnn-->
+</table><!--ooo
+ppp-->`;
     t.strictSame(processThis(str), tiny(str), "03");
     t.end();
   }

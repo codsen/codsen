@@ -383,7 +383,7 @@ tap.test(
   }
 );
 
-tap.test(
+tap.todo(
   `12 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - styling via opts, #3`,
   (t) => {
     t.strictSame(
@@ -414,7 +414,7 @@ tap.test(
   }
 );
 
-tap.test(
+tap.todo(
   `13 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - deeper nesting`,
   (t) => {
     t.strictSame(
@@ -445,7 +445,7 @@ tap.test(
   }
 );
 
-tap.test(
+tap.todo(
   `14 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - deeper nesting`,
   (t) => {
     t.strictSame(
