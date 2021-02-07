@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.3](https://github.com/codsen/codsen/compare/ranges-apply@5.0.2...ranges-apply@5.0.3) (2021-02-07)
+
+
+### Bug Fixes
+
+* passed ranges can be null ([ed082b8](https://github.com/codsen/codsen/commit/ed082b8b87aec7e909e1b523ab70e9debeabb00b))
+
+
+
+
+
 ## 5.0.1 (2021-01-28)
 
 ### Bug Fixes

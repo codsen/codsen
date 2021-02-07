@@ -1,6 +1,6 @@
 {
   "name": "detect-is-it-html-or-xhtml",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "description": "Answers, is the string input string more an HTML or XHTML (or neither)",
   "keywords": [
     "check",
@@ -105,7 +105,7 @@
     "@typescript-eslint/eslint-plugin": "^4.14.2",
     "@typescript-eslint/parser": "^4.14.2",
     "eslint": "^7.19.0",
-    "lect": "^0.16.2",
+    "lect": "^0.16.3",
     "rollup": "^2.38.5",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

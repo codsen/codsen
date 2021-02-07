@@ -1,6 +1,6 @@
 {
   "name": "email-comb",
-  "version": "5.0.2",
+  "version": "5.0.3",
   "description": "Remove unused CSS from email templates",
   "keywords": [
     "body",
@@ -79,20 +79,20 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.13",
-    "array-pull-all-with-glob": "^5.0.2",
-    "html-crush": "^4.0.2",
+    "array-pull-all-with-glob": "^5.0.3",
+    "html-crush": "^4.0.3",
     "lodash.intersection": "^4.4.0",
     "lodash.pullall": "^4.2.0",
     "lodash.uniq": "^4.5.0",
     "matcher": "^3.0.0",
-    "ranges-apply": "^5.0.2",
-    "ranges-push": "^5.0.2",
-    "regex-empty-conditional-comments": "^1.10.2",
-    "string-extract-class-names": "^6.0.2",
-    "string-left-right": "^4.0.2",
-    "string-match-left-right": "^6.0.2",
-    "string-range-expander": "^2.0.2",
-    "string-uglify": "^1.4.2"
+    "ranges-apply": "^5.0.3",
+    "ranges-push": "^5.0.3",
+    "regex-empty-conditional-comments": "^1.10.3",
+    "string-extract-class-names": "^6.0.3",
+    "string-left-right": "^4.0.3",
+    "string-match-left-right": "^6.0.3",
+    "string-range-expander": "^2.0.3",
+    "string-uglify": "^1.4.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.13",
@@ -122,7 +122,7 @@
     "@typescript-eslint/eslint-plugin": "^4.14.2",
     "@typescript-eslint/parser": "^4.14.2",
     "eslint": "^7.19.0",
-    "lect": "^0.16.2",
+    "lect": "^0.16.3",
     "rollup": "^2.38.5",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

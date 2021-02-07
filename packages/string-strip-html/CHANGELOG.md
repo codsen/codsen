@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [8.2.0](https://github.com/codsen/codsen/compare/string-strip-html@8.1.0...string-strip-html@8.2.0) (2021-02-07)
+
+
+### Features
+
+* better recognition for Rails or Phoenix templating tags ([9aeddc3](https://github.com/codsen/codsen/commit/9aeddc3e47d7e488b6c63f205df3f7a05c78c017)), closes [#2](https://github.com/codsen/codsen/issues/2)
+
+
+
+
+
 ## 8.1.0 (2021-01-28)
 
 ### Features

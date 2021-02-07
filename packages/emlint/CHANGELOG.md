@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.1.0](https://github.com/codsen/codsen/compare/emlint@4.0.2...emlint@4.1.0) (2021-02-07)
+
+
+### Bug Fixes
+
+* stop `attribute-validate-alt` flagging up empty alt attribute values ([14b0160](https://github.com/codsen/codsen/commit/14b0160e5366209425b84f67c1c26960c34b0341))
+
+
+### Features
+
+* improvements to `attribute-validate-style` ([7a2e9e2](https://github.com/codsen/codsen/commit/7a2e9e25c185f90261dfbd755f95f9f4dcd7546b))
+* new rule, `attribute-on-closing-tag` ([cd9615a](https://github.com/codsen/codsen/commit/cd9615a5a916756c7ef38e88aa5d0ac55f09d5a7))
+* new rule, `email-td-sibling-padding` ([49ef0bb](https://github.com/codsen/codsen/commit/49ef0bb737f183aa9e7d572217282b9b4750d519))
+
+
+
+
+
 ## 4.0.1 (2021-01-28)
 
 ### Bug Fixes

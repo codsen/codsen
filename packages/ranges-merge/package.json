@@ -1,6 +1,6 @@
 {
   "name": "ranges-merge",
-  "version": "7.0.2",
+  "version": "7.0.3",
   "description": "Merge and sort string index ranges",
   "keywords": [
     "index",
@@ -77,8 +77,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.13",
-    "ranges-push": "^5.0.2",
-    "ranges-sort": "^4.0.2"
+    "ranges-push": "^5.0.3",
+    "ranges-sort": "^4.0.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.13",
@@ -105,7 +105,7 @@
     "@typescript-eslint/eslint-plugin": "^4.14.2",
     "@typescript-eslint/parser": "^4.14.2",
     "eslint": "^7.19.0",
-    "lect": "^0.16.2",
+    "lect": "^0.16.3",
     "lodash.clonedeep": "^4.5.0",
     "rollup": "^2.38.5",
     "rollup-plugin-ascii": "^0.0.3",

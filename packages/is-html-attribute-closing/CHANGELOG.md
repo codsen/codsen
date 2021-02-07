@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/codsen/codsen/compare/is-html-attribute-closing@2.0.2...is-html-attribute-closing@2.1.0) (2021-02-07)
+
+
+### Features
+
+* improved ERB templating tag recognition ([ecb3272](https://github.com/codsen/codsen/commit/ecb3272ed3e18da1ad729f8166c1dbdd9567f1b6))
+
+
+
+
+
 ## 2.0.1 (2021-01-28)
 
 ### Bug Fixes

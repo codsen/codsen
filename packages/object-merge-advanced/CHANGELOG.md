@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [12.0.0](https://github.com/codsen/codsen/compare/object-merge-advanced@11.0.2...object-merge-advanced@12.0.0) (2021-02-07)
+
+
+### Features
+
+* some date object support and corrections for the callback values ([9017893](https://github.com/codsen/codsen/commit/9017893040d550eabdedeffc2900b3db26f8a528))
+
+
+### BREAKING CHANGES
+
+* no changes in API; only correction to the callbacks; things now work as intended in
+callbacks; bumping just in case
+
+
+
+
+
 ## 12.0.0 (2021-02-07)
 
 ### BREAKING CHANGES

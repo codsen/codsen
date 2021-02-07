@@ -1,6 +1,6 @@
 {
   "name": "ast-is-empty",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Find out, is nested array/object/string/AST tree is empty",
   "keywords": [
     "array",
@@ -116,7 +116,7 @@
     "@typescript-eslint/eslint-plugin": "^4.14.2",
     "@typescript-eslint/parser": "^4.14.2",
     "eslint": "^7.19.0",
-    "lect": "^0.16.2",
+    "lect": "^0.16.3",
     "rollup": "^2.38.5",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",
