@@ -40,7 +40,7 @@ tap.test(
   }
 );
 
-tap.todo(
+tap.test(
   `03 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`}${`\u001b[${33}m${` - comments`}\u001b[${39}m`} - comments include line breaks`,
   (t) => {
     const str = `<!--111

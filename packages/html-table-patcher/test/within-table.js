@@ -414,7 +414,7 @@ tap.todo(
   }
 );
 
-tap.todo(
+tap.test(
   `13 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - deeper nesting`,
   (t) => {
     t.strictSame(
@@ -445,7 +445,7 @@ tap.todo(
   }
 );
 
-tap.todo(
+tap.test(
   `14 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - deeper nesting`,
   (t) => {
     t.strictSame(
