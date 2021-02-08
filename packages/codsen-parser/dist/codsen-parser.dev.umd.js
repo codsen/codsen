@@ -1,7 +1,7 @@
 /**
  * codsen-parser
  * Parser aiming at broken or mixed code, especially HTML & CSS
- * Version: 0.9.2
+ * Version: 0.10.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/codsen-parser/
@@ -239,7 +239,7 @@ var lodash_clonedeep = createCommonjsModule(function (module, exports) {
   var root = freeGlobal || freeSelf || Function('return this')();
   /** Detect free variable `exports`. */
 
-  var freeExports = exports && !exports.nodeType && exports;
+  var freeExports =  exports && !exports.nodeType && exports;
   /** Detect free variable `module`. */
 
   var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;
@@ -7222,7 +7222,7 @@ var objectPath = createCommonjsModule(function (module) {
   });
 });
 
-var version = "0.9.2";
+var version = "0.10.0";
 
 var version$1 = version;
 var defaults$3 = {
@@ -7382,23 +7382,23 @@ function cparser(str, originalOpts) {
         if (!isObj$3(prevToken)) {
           prevToken = null;
         }
+        !tokenObj.closing;
+        !lastProcessedToken.closing || // unless it's a comment tag
+        lastProcessedToken.type === "comment" && // and it's an HTML comment
+        lastProcessedToken.language === "html";
+        lastProcessedToken.type !== "text";
+        !prevToken || !(prevToken.tagName === tokenObj.tagName && !prevToken.closing && tokenObj.closing);
+        !layerPending(layers, tokenObj);
+        !next.length || !(tokenObj.type === "text" && next[0].type === "tag" && (next[0].closing && lastProcessedToken.closing || // ensure it's not a legit closing tag following:
+        layers[layers.length - 3] && next[0].tagName !== layers[layers.length - 1].tagName && layers[layers.length - 3].type === "tag" && !layers[layers.length - 3].closing && next[0].tagName === layers[layers.length - 3].tagName));
 
         if (nestNext && // ensure it's not a closing tag of a pair, in which case
         // don't nest it!
-        !tokenObj.closing && // also don't nest under closing tag
-        !lastProcessedToken.closing && // also don't nest under text token
-        lastProcessedToken.type !== "text" && (!prevToken || !(prevToken.tagName === tokenObj.tagName && !prevToken.closing && tokenObj.closing)) && !layerPending(layers, tokenObj) && ( //
-        // --------
-        // imagine the case:
-        // <div><a> </div>
-        // we don't want to nest that space text token under "a" if the following
-        // token </div> closes the pending layer -
-        // this means matching token that comes next against second layer
-        // behind (the layers[layers.length - 3] below):
-        // --------
-        //
-        !next.length || !(tokenObj.type === "text" && next[0].type === "tag" && (next[0].closing && lastProcessedToken.closing || // ensure it's not a legit closing tag following:
-        layers[layers.length - 3] && next[0].tagName !== layers[layers.length - 1].tagName && layers[layers.length - 3].type === "tag" && !layers[layers.length - 3].closing && next[0].tagName === layers[layers.length - 3].tagName)))) {
+        !tokenObj.closing && ( // also don't nest under closing tag
+        !lastProcessedToken.closing || // unless it's a comment tag
+        lastProcessedToken.type === "comment" && // and it's an HTML comment
+        lastProcessedToken.language === "html") && // also don't nest under text token
+        lastProcessedToken.type !== "text" && (!prevToken || !(prevToken.tagName === tokenObj.tagName && !prevToken.closing && tokenObj.closing)) && !layerPending(layers, tokenObj)) {
           // 1. reset the flag
           nestNext = false; // 2. go deeper
           // "1.children.3" -> "1.children.3.children.0"
@@ -7406,8 +7406,25 @@ function cparser(str, originalOpts) {
         } else if (tokenObj.closing && typeof path === "string" && path.includes(".") && ( // ensure preceding token was not an opening counterpart:
         !tokenObj.tagName || lastProcessedToken.tagName !== tokenObj.tagName || lastProcessedToken.closing)) {
           // goes up and then bumps,
-          // "1.children.3" -> "2"
-          path = pathNext(pathUp(path));
+          // "1.children.3" -> "2" // for comments, many layers could have been nested before
+          // this closing comment, so we need to find out, at which level
+          // above the opening comment layer was
+
+          if (tokenObj.type === "comment" && tokenObj.closing && Array.isArray(layers) && layers.length && // there's opening comment layer somewhere above
+          layers.some(function (l) {
+            return l.type === "comment" && l.kind === tokenObj.kind;
+          })) { // find out how many levels above that opening comment tag is
+
+            for (var i = layers.length; i--;) {
+              path = pathNext(pathUp(path));
+
+              if (layers[i].type === "comment" && layers[i].kind === tokenObj.kind) {
+                break;
+              }
+            }
+          } else {
+            path = pathNext(pathUp(path));
+          }
 
           if (layerPending(layers, tokenObj)) { //
             // in case of comment layers, there can be more layers leading
@@ -7432,11 +7449,10 @@ function cparser(str, originalOpts) {
               // if this is a gap and current token closes parent token,
               // go another level up
               var lastLayer = layers.pop();
-              var currTagName = lastLayer.tagName;
-              var i = 0;
+              var currTagName = lastLayer.tagName; // let i = 0;
 
-              while (currTagName !== tokenObj.tagName) {
-                i++; // 1. report the last layer's token as missing closing
+              while (currTagName !== tokenObj.tagName) { // i++;
+                // 1. report the last layer's token as missing closing
 
                 if (lastLayer && typeof opts.errCb === "function") {
                   opts.errCb({
@@ -7448,12 +7464,17 @@ function cparser(str, originalOpts) {
                 }
 
                 lastLayer = layers.pop();
-                currTagName = lastLayer.tagName; // 2. if there's more than one tag missing, don't bump the path
+                currTagName = lastLayer.tagName;
+                path = pathNext(pathUp(path)); // 2. if there's more than one tag missing, don't bump the path
                 // on the last iteration
-
-                if (!(currTagName === tokenObj.tagName && i > 1)) {
-                  path = pathNext(pathUp(path));
-                }
+                // if (
+                //   !(currTagName === (tokenObj as TagToken).tagName && i > 1)
+                // ) {
+                //   path = pathNext(pathUp(path));
+                //   console.log(
+                //     `532 ${`\u001b[${35}m${`██ UP again`}\u001b[${39}m`}, path=${path}`
+                //   );
+                // }
               }
             } else if ( // so it's a closing tag (</table> in example below)
             // and it was not pending (meaning opening heads were not in front)

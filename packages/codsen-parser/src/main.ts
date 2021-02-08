@@ -382,13 +382,91 @@ function cparser(str: string, originalOpts?: Partial<Opts>): any[] {
           )}`
         );
 
+        const R1 = nestNext;
+        const R2 = !(tokenObj as any).closing;
+        const R3 =
+          !(lastProcessedToken as any).closing ||
+          // unless it's a comment tag
+          (lastProcessedToken.type === "comment" &&
+            // and it's an HTML comment
+            lastProcessedToken.language === "html");
+        const R4 = (lastProcessedToken as any).type !== "text";
+        const R5 =
+          !prevToken ||
+          !(
+            prevToken.tagName === (tokenObj as any).tagName &&
+            !prevToken.closing &&
+            (tokenObj as any).closing
+          );
+        const R6 = !layerPending(layers, tokenObj as TokenWithChildren);
+        const R7 =
+          !next.length ||
+          !(
+            tokenObj.type === "text" &&
+            next[0].type === "tag" &&
+            ((next[0].closing && lastProcessedToken.closing) ||
+              // ensure it's not a legit closing tag following:
+              (layers[layers.length - 3] &&
+                next[0].tagName !==
+                  (layers[layers.length - 1] as any).tagName &&
+                layers[layers.length - 3].type === "tag" &&
+                !(layers[layers.length - 3] as any).closing &&
+                next[0].tagName === (layers[layers.length - 3] as any).tagName))
+          );
+
+        console.log(
+          `387 ${`\u001b[${
+            R1 ? 32 : 31
+          }m${`R1`}\u001b[${39}m`} = ${JSON.stringify(
+            R1,
+            null,
+            4
+          )}; ${`\u001b[${
+            R2 ? 32 : 31
+          }m${`R2`}\u001b[${39}m`} = ${JSON.stringify(
+            R2,
+            null,
+            4
+          )}; ${`\u001b[${
+            R3 ? 32 : 31
+          }m${`R3`}\u001b[${39}m`} = ${JSON.stringify(
+            R3,
+            null,
+            4
+          )}; ${`\u001b[${
+            R4 ? 32 : 31
+          }m${`R4`}\u001b[${39}m`} = ${JSON.stringify(
+            R4,
+            null,
+            4
+          )}; ${`\u001b[${
+            R5 ? 32 : 31
+          }m${`R5`}\u001b[${39}m`} = ${JSON.stringify(
+            R5,
+            null,
+            4
+          )}; ${`\u001b[${
+            R6 ? 32 : 31
+          }m${`R6`}\u001b[${39}m`} = ${JSON.stringify(
+            R6,
+            null,
+            4
+          )}; ${`\u001b[${
+            R7 ? 32 : 31
+          }m${`R7`}\u001b[${39}m`} = ${JSON.stringify(R7, null, 4)}`
+        );
+
         if (
           nestNext &&
           // ensure it's not a closing tag of a pair, in which case
           // don't nest it!
           !(tokenObj as any).closing &&
           // also don't nest under closing tag
-          !(lastProcessedToken as any).closing &&
+          (!(lastProcessedToken as any).closing ||
+            // unless it's a comment tag
+            (lastProcessedToken.type === "comment" &&
+              // and it's an HTML comment
+              lastProcessedToken.language === "html")) &&
           // also don't nest under text token
           (lastProcessedToken as any).type !== "text" &&
           (!prevToken ||
@@ -397,31 +475,7 @@ function cparser(str: string, originalOpts?: Partial<Opts>): any[] {
               !prevToken.closing &&
               (tokenObj as any).closing
             )) &&
-          !layerPending(layers, tokenObj as TokenWithChildren) &&
-          //
-          // --------
-          // imagine the case:
-          // <div><a> </div>
-          // we don't want to nest that space text token under "a" if the following
-          // token </div> closes the pending layer -
-          // this means matching token that comes next against second layer
-          // behind (the layers[layers.length - 3] below):
-          // --------
-          //
-          (!next.length ||
-            !(
-              tokenObj.type === "text" &&
-              next[0].type === "tag" &&
-              ((next[0].closing && lastProcessedToken.closing) ||
-                // ensure it's not a legit closing tag following:
-                (layers[layers.length - 3] &&
-                  next[0].tagName !==
-                    (layers[layers.length - 1] as any).tagName &&
-                  layers[layers.length - 3].type === "tag" &&
-                  !(layers[layers.length - 3] as any).closing &&
-                  next[0].tagName ===
-                    (layers[layers.length - 3] as any).tagName))
-            ))
+          !layerPending(layers, tokenObj as TokenWithChildren)
         ) {
           // 1. reset the flag
           nestNext = false;
@@ -442,7 +496,46 @@ function cparser(str: string, originalOpts?: Partial<Opts>): any[] {
           // goes up and then bumps,
           // "1.children.3" -> "2"
           console.log(`365 ${`\u001b[${35}m${`██ UP`}\u001b[${39}m`}`);
-          path = pathNext(pathUp(path));
+
+          // for comments, many layers could have been nested before
+          // this closing comment, so we need to find out, at which level
+          // above the opening comment layer was
+          if (
+            tokenObj.type === "comment" &&
+            tokenObj.closing &&
+            Array.isArray(layers) &&
+            layers.length &&
+            // there's opening comment layer somewhere above
+            layers.some((l) => l.type === "comment" && l.kind === tokenObj.kind)
+          ) {
+            console.log(`532 standard comment path bump clauses`);
+            // find out how many levels above that opening comment tag is
+            let count = 0;
+            for (let i = layers.length; i--; ) {
+              path = pathNext(pathUp(path));
+              if (
+                layers[i].type === "comment" &&
+                (layers[i] as any).kind === tokenObj.kind
+              ) {
+                break;
+              }
+              count++;
+            }
+            console.log(
+              `552 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`count`}\u001b[${39}m`} = ${JSON.stringify(
+                count,
+                null,
+                4
+              )}; ${`\u001b[${33}m${`path`}\u001b[${39}m`} = ${JSON.stringify(
+                path,
+                null,
+                4
+              )}`
+            );
+          } else {
+            console.log(`534 standard comment path bump clauses`);
+            path = pathNext(pathUp(path));
+          }
 
           if (layerPending(layers, tokenObj as TokenWithChildren)) {
             console.log(
@@ -513,12 +606,12 @@ function cparser(str: string, originalOpts?: Partial<Opts>): any[] {
 
               let lastLayer = layers.pop();
               let currTagName = (lastLayer as TagToken).tagName;
-              let i = 0;
+              // let i = 0;
               while (currTagName !== (tokenObj as TagToken).tagName) {
                 console.log(
                   `512 ${`\u001b[${36}m${`==================`}\u001b[${39}m`}`
                 );
-                i++;
+                // i++;
 
                 // 1. report the last layer's token as missing closing
                 if (lastLayer && typeof opts.errCb === "function") {
@@ -542,16 +635,18 @@ function cparser(str: string, originalOpts?: Partial<Opts>): any[] {
                 lastLayer = layers.pop();
                 currTagName = (lastLayer as TagToken).tagName;
 
+                path = pathNext(pathUp(path));
+
                 // 2. if there's more than one tag missing, don't bump the path
                 // on the last iteration
-                if (
-                  !(currTagName === (tokenObj as TagToken).tagName && i > 1)
-                ) {
-                  path = pathNext(pathUp(path));
-                  console.log(
-                    `532 ${`\u001b[${35}m${`██ UP again`}\u001b[${39}m`}, path=${path}`
-                  );
-                }
+                // if (
+                //   !(currTagName === (tokenObj as TagToken).tagName && i > 1)
+                // ) {
+                //   path = pathNext(pathUp(path));
+                //   console.log(
+                //     `532 ${`\u001b[${35}m${`██ UP again`}\u001b[${39}m`}, path=${path}`
+                //   );
+                // }
 
                 console.log(
                   `518 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastLayer`}\u001b[${39}m`} = ${JSON.stringify(

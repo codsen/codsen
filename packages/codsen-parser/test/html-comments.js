@@ -826,3 +826,191 @@ tap.test(
     t.end();
   }
 );
+
+// various
+
+tap.test(`19 - a test from html-table-patcher`, (t) => {
+  t.match(
+    cparser(`<table><!--a--><tr><!--b<table>c<tr>d-->`),
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: "<table>",
+        children: [
+          {
+            type: "comment",
+            start: 7,
+            end: 11,
+            value: "<!--",
+            children: [
+              {
+                type: "text",
+                start: 11,
+                end: 12,
+                value: "a",
+              },
+            ],
+          },
+          {
+            type: "comment",
+            start: 12,
+            end: 15,
+            value: "-->",
+          },
+          {
+            type: "tag",
+            start: 15,
+            end: 19,
+            value: "<tr>",
+            children: [
+              {
+                type: "comment",
+                start: 19,
+                end: 23,
+                value: "<!--",
+                children: [
+                  {
+                    type: "text",
+                    start: 23,
+                    end: 24,
+                    value: "b",
+                  },
+                  {
+                    type: "tag",
+                    start: 24,
+                    end: 31,
+                    value: "<table>",
+                    children: [
+                      {
+                        type: "text",
+                        start: 31,
+                        end: 32,
+                        value: "c",
+                      },
+                      {
+                        type: "tag",
+                        start: 32,
+                        end: 36,
+                        value: "<tr>",
+                        children: [
+                          {
+                            type: "text",
+                            start: 36,
+                            end: 37,
+                            value: "d",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                type: "comment",
+                start: 37,
+                end: 40,
+                value: "-->",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+    "19"
+  );
+  t.end();
+});
+
+tap.test(`20 - a test from html-table-patcher`, (t) => {
+  t.match(
+    cparser(`<table>1<tr><td>
+<table>x</table>
+</td></tr></table>`),
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: "<table>",
+        children: [
+          {
+            type: "text",
+            start: 7,
+            end: 8,
+            value: "1",
+          },
+          {
+            type: "tag",
+            start: 8,
+            end: 12,
+            value: "<tr>",
+            children: [
+              {
+                type: "tag",
+                start: 12,
+                end: 16,
+                value: "<td>",
+                children: [
+                  {
+                    type: "text",
+                    start: 16,
+                    end: 17,
+                    value: "\n",
+                  },
+                  {
+                    type: "tag",
+                    start: 17,
+                    end: 24,
+                    value: "<table>",
+                    children: [
+                      {
+                        type: "text",
+                        start: 24,
+                        end: 25,
+                        value: "x",
+                      },
+                    ],
+                  },
+                  {
+                    type: "tag",
+                    start: 25,
+                    end: 33,
+                    value: "</table>",
+                  },
+                  {
+                    type: "text",
+                    start: 33,
+                    end: 34,
+                    value: "\n",
+                  },
+                ],
+              },
+              {
+                type: "tag",
+                start: 34,
+                end: 39,
+                value: "</td>",
+              },
+            ],
+          },
+          {
+            type: "tag",
+            start: 39,
+            end: 44,
+            value: "</tr>",
+          },
+        ],
+      },
+      {
+        type: "tag",
+        start: 44,
+        end: 52,
+        value: "</table>",
+      },
+    ],
+    "20"
+  );
+  t.end();
+});

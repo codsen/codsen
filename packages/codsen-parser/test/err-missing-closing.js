@@ -483,12 +483,14 @@ tap.test(
                       start: 25,
                       end: 29,
                       value: "<td>",
-                    },
-                    {
-                      type: "text",
-                      start: 29,
-                      end: 38,
-                      value: "\n      z\n",
+                      children: [
+                        {
+                          type: "text",
+                          start: 29,
+                          end: 38,
+                          value: "\n      z\n",
+                        },
+                      ],
                     },
                   ],
                 },
@@ -535,12 +537,14 @@ tap.test(
                       start: 66,
                       end: 70,
                       value: "<td>",
-                    },
-                    {
-                      type: "text",
-                      start: 70,
-                      end: 79,
-                      value: "\n      z\n",
+                      children: [
+                        {
+                          type: "text",
+                          start: 70,
+                          end: 79,
+                          value: "\n      z\n",
+                        },
+                      ],
                     },
                   ],
                 },
