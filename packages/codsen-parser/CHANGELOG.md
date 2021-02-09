@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.10.1](https://github.com/codsen/codsen/compare/codsen-parser@0.10.0...codsen-parser@0.10.1) (2021-02-09)
-
+## 0.10.1 (2021-02-09)
 
 ### Bug Fixes
 
-* correctly nest the broken tag layers ([4ad69f6](https://github.com/codsen/codsen/commit/4ad69f605f7164245d53bc2ec5b24bf0426ec3c7))
-
-
-
-
+- correctly nest the broken tag layers ([4ad69f6](https://github.com/codsen/codsen/commit/4ad69f605f7164245d53bc2ec5b24bf0426ec3c7))
 
 ## 0.10.0 (2021-02-07)
 

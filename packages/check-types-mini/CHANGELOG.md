@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [6.0.4](https://github.com/codsen/codsen/compare/check-types-mini@6.0.3...check-types-mini@6.0.4) (2021-02-09)
-
-**Note:** Version bump only for package check-types-mini
-
-
-
-
-
 ## 6.0.1 (2021-01-28)
 
 ### Bug Fixes

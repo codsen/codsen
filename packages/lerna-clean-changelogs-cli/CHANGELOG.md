@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.4.4](https://github.com/codsen/codsen/compare/lerna-clean-changelogs-cli@1.4.3...lerna-clean-changelogs-cli@1.4.4) (2021-02-09)
-
-**Note:** Version bump only for package lerna-clean-changelogs-cli
-
-
-
-
-
 ## 1.4.1 (2021-01-28)
 
 ### Bug Fixes
