@@ -382,80 +382,6 @@ function cparser(str: string, originalOpts?: Partial<Opts>): any[] {
           )}`
         );
 
-        const R1 = nestNext;
-        const R2 = !(tokenObj as any).closing;
-        const R3 =
-          !(lastProcessedToken as any).closing ||
-          // unless it's a comment tag
-          (lastProcessedToken.type === "comment" &&
-            // and it's an HTML comment
-            lastProcessedToken.language === "html");
-        const R4 = (lastProcessedToken as any).type !== "text";
-        const R5 =
-          !prevToken ||
-          !(
-            prevToken.tagName === (tokenObj as any).tagName &&
-            !prevToken.closing &&
-            (tokenObj as any).closing
-          );
-        const R6 = !layerPending(layers, tokenObj as TokenWithChildren);
-        const R7 =
-          !next.length ||
-          !(
-            tokenObj.type === "text" &&
-            next[0].type === "tag" &&
-            ((next[0].closing && lastProcessedToken.closing) ||
-              // ensure it's not a legit closing tag following:
-              (layers[layers.length - 3] &&
-                next[0].tagName !==
-                  (layers[layers.length - 1] as any).tagName &&
-                layers[layers.length - 3].type === "tag" &&
-                !(layers[layers.length - 3] as any).closing &&
-                next[0].tagName === (layers[layers.length - 3] as any).tagName))
-          );
-
-        console.log(
-          `387 ${`\u001b[${
-            R1 ? 32 : 31
-          }m${`R1`}\u001b[${39}m`} = ${JSON.stringify(
-            R1,
-            null,
-            4
-          )}; ${`\u001b[${
-            R2 ? 32 : 31
-          }m${`R2`}\u001b[${39}m`} = ${JSON.stringify(
-            R2,
-            null,
-            4
-          )}; ${`\u001b[${
-            R3 ? 32 : 31
-          }m${`R3`}\u001b[${39}m`} = ${JSON.stringify(
-            R3,
-            null,
-            4
-          )}; ${`\u001b[${
-            R4 ? 32 : 31
-          }m${`R4`}\u001b[${39}m`} = ${JSON.stringify(
-            R4,
-            null,
-            4
-          )}; ${`\u001b[${
-            R5 ? 32 : 31
-          }m${`R5`}\u001b[${39}m`} = ${JSON.stringify(
-            R5,
-            null,
-            4
-          )}; ${`\u001b[${
-            R6 ? 32 : 31
-          }m${`R6`}\u001b[${39}m`} = ${JSON.stringify(
-            R6,
-            null,
-            4
-          )}; ${`\u001b[${
-            R7 ? 32 : 31
-          }m${`R7`}\u001b[${39}m`} = ${JSON.stringify(R7, null, 4)}`
-        );
-
         if (
           nestNext &&
           // ensure it's not a closing tag of a pair, in which case
@@ -637,17 +563,6 @@ function cparser(str: string, originalOpts?: Partial<Opts>): any[] {
 
                 path = pathNext(pathUp(path));
 
-                // 2. if there's more than one tag missing, don't bump the path
-                // on the last iteration
-                // if (
-                //   !(currTagName === (tokenObj as TagToken).tagName && i > 1)
-                // ) {
-                //   path = pathNext(pathUp(path));
-                //   console.log(
-                //     `532 ${`\u001b[${35}m${`██ UP again`}\u001b[${39}m`}, path=${path}`
-                //   );
-                // }
-
                 console.log(
                   `518 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`lastLayer`}\u001b[${39}m`} = ${JSON.stringify(
                     lastLayer,
@@ -719,12 +634,6 @@ function cparser(str: string, originalOpts?: Partial<Opts>): any[] {
               layers.pop();
             } else {
               console.log(`549 ELSE clauses - TODO`);
-
-              // if next tag closes second-to-last layer,
-              // pop this last layer
-              // if () {
-              //   // TODO
-              // }
             }
           }
         } else if (!path) {

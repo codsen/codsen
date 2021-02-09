@@ -173,15 +173,6 @@ function cparser(str, originalOpts) {
         if (!isObj(prevToken)) {
           prevToken = null;
         }
-        !tokenObj.closing;
-        !lastProcessedToken.closing || // unless it's a comment tag
-        lastProcessedToken.type === "comment" && // and it's an HTML comment
-        lastProcessedToken.language === "html";
-        lastProcessedToken.type !== "text";
-        !prevToken || !(prevToken.tagName === tokenObj.tagName && !prevToken.closing && tokenObj.closing);
-        !layerPending(layers, tokenObj);
-        !next.length || !(tokenObj.type === "text" && next[0].type === "tag" && (next[0].closing && lastProcessedToken.closing || // ensure it's not a legit closing tag following:
-        layers[layers.length - 3] && next[0].tagName !== layers[layers.length - 1].tagName && layers[layers.length - 3].type === "tag" && !layers[layers.length - 3].closing && next[0].tagName === layers[layers.length - 3].tagName));
 
         if (nestNext && // ensure it's not a closing tag of a pair, in which case
         // don't nest it!
@@ -252,16 +243,7 @@ function cparser(str, originalOpts) {
 
                 lastLayer = layers.pop();
                 currTagName = lastLayer.tagName;
-                path = pathNext(pathUp(path)); // 2. if there's more than one tag missing, don't bump the path
-                // on the last iteration
-                // if (
-                //   !(currTagName === (tokenObj as TagToken).tagName && i > 1)
-                // ) {
-                //   path = pathNext(pathUp(path));
-                //   console.log(
-                //     `532 ${`\u001b[${35}m${`██ UP again`}\u001b[${39}m`}, path=${path}`
-                //   );
-                // }
+                path = pathNext(pathUp(path));
               }
             } else if ( // so it's a closing tag (</table> in example below)
             // and it was not pending (meaning opening heads were not in front)
