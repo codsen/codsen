@@ -65,7 +65,7 @@ function _objectSpread2(target) {
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.3.2
+ * Version: 1.3.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/
@@ -366,7 +366,7 @@ var lodash_clonedeep = createCommonjsModule(function (module, exports) {
   var root = freeGlobal || freeSelf || Function('return this')();
   /** Detect free variable `exports`. */
 
-  var freeExports =  exports && !exports.nodeType && exports;
+  var freeExports = exports && !exports.nodeType && exports;
   /** Detect free variable `module`. */
 
   var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;
@@ -2488,7 +2488,7 @@ function findMalformed(str, refStr, cb, originalOpts) {
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.2
+ * Version: 3.13.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -2938,7 +2938,7 @@ function matchRight(str, position, whatToMatch, opts) {
 /**
  * html-all-known-attributes
  * All HTML attributes known to the Humanity
- * Version: 4.0.2
+ * Version: 4.0.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/html-all-known-attributes/
@@ -2948,7 +2948,7 @@ var allHtmlAttribs = new Set(["abbr", "accept", "accept-charset", "accesskey", "
 /**
  * is-char-suitable-for-html-attr-name
  * Is given character suitable to be in an HTML attribute's name?
- * Version: 2.0.2
+ * Version: 2.0.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-char-suitable-for-html-attr-name/
@@ -2966,7 +2966,7 @@ function isAttrNameChar(char) {
 /**
  * is-html-attribute-closing
  * Is a character on a given index a closing of an HTML attribute?
- * Version: 2.0.2
+ * Version: 2.1.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-html-attribute-closing/
@@ -7506,16 +7506,6 @@ function cparser(str, originalOpts) {
           prevToken = null;
         }
 
-        !tokenObj.closing;
-        !lastProcessedToken.closing || // unless it's a comment tag
-        lastProcessedToken.type === "comment" && // and it's an HTML comment
-        lastProcessedToken.language === "html";
-        lastProcessedToken.type !== "text";
-        !prevToken || !(prevToken.tagName === tokenObj.tagName && !prevToken.closing && tokenObj.closing);
-        !layerPending(layers, tokenObj);
-        !next.length || !(tokenObj.type === "text" && next[0].type === "tag" && (next[0].closing && lastProcessedToken.closing || // ensure it's not a legit closing tag following:
-        layers[layers.length - 3] && next[0].tagName !== layers[layers.length - 1].tagName && layers[layers.length - 3].type === "tag" && !layers[layers.length - 3].closing && next[0].tagName === layers[layers.length - 3].tagName));
-
         if (nestNext && // ensure it's not a closing tag of a pair, in which case
         // don't nest it!
         !tokenObj.closing && ( // also don't nest under closing tag
@@ -7588,16 +7578,7 @@ function cparser(str, originalOpts) {
 
                 lastLayer = layers.pop();
                 currTagName = lastLayer.tagName;
-                path = pathNext(pathUp(path)); // 2. if there's more than one tag missing, don't bump the path
-                // on the last iteration
-                // if (
-                //   !(currTagName === (tokenObj as TagToken).tagName && i > 1)
-                // ) {
-                //   path = pathNext(pathUp(path));
-                //   console.log(
-                //     `532 ${`\u001b[${35}m${`██ UP again`}\u001b[${39}m`}, path=${path}`
-                //   );
-                // }
+                path = pathNext(pathUp(path));
               }
             } else if ( // so it's a closing tag (</table> in example below)
             // and it was not pending (meaning opening heads were not in front)
@@ -7956,7 +7937,7 @@ function cparser(str, originalOpts) {
 /**
  * string-collapse-leading-whitespace
  * Collapse the leading and trailing whitespace of a string
- * Version: 5.0.2
+ * Version: 5.0.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
@@ -8492,7 +8473,7 @@ var Ranges = /*#__PURE__*/function () {
 /**
  * ranges-apply
  * Take an array of string index ranges, delete/replace the string according to them
- * Version: 5.0.2
+ * Version: 5.0.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/

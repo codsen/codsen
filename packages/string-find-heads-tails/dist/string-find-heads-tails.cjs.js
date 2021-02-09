@@ -1,7 +1,7 @@
 /**
  * string-find-heads-tails
  * Finds where are arbitrary templating marker heads and tails located
- * Version: 4.0.2
+ * Version: 4.0.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-find-heads-tails/
@@ -19,7 +19,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
-var version = "4.0.2";
+var version = "4.0.3";
 
 var version$1 = version;
 

@@ -1,7 +1,7 @@
 /**
  * ranges-process-outside
  * Iterate string considering ranges, as if they were already applied
- * Version: 4.0.2
+ * Version: 4.0.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-process-outside/
@@ -450,7 +450,7 @@ function rMerge(arrOfRanges, originalOpts) {
 /**
  * ranges-crop
  * Crop array of ranges when they go beyond the reference string's length
- * Version: 4.0.2
+ * Version: 4.0.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-crop/
@@ -641,7 +641,7 @@ function rInvert(arrOfRanges, strLen, originalOptions) {
   return rCrop(res, strLen);
 }
 
-var version = "4.0.2";
+var version = "4.0.3";
 
 var version$1 = version;
 

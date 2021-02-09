@@ -1,7 +1,7 @@
 /**
  * html-img-alt
  * Adds missing alt attributes to img tags. Non-parsing.
- * Version: 2.0.2
+ * Version: 2.0.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/html-img-alt/
@@ -4242,7 +4242,7 @@ var he = createCommonjsModule(function (module, exports) {
 /**
  * string-unfancy
  * Replace all n/m dashes, curly quotes with their simpler equivalents
- * Version: 4.0.2
+ * Version: 4.0.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-unfancy/
@@ -4522,7 +4522,7 @@ function rMerge(arrOfRanges, originalOpts) {
 /**
  * ranges-apply
  * Take an array of string index ranges, delete/replace the string according to them
- * Version: 5.0.2
+ * Version: 5.0.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/
@@ -4655,7 +4655,7 @@ function rApply(str, originalRangesArr, _progressFn) {
 /**
  * string-collapse-leading-whitespace
  * Collapse the leading and trailing whitespace of a string
- * Version: 5.0.2
+ * Version: 5.0.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
@@ -7594,7 +7594,7 @@ var lodash_isplainobject = isPlainObject;
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.3.2
+ * Version: 1.3.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/
@@ -8843,7 +8843,7 @@ var lodash_intersection = intersection;
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.2
+ * Version: 3.13.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -9581,7 +9581,7 @@ function checkTypesMini(obj, ref, originalOptions) {
   return internalApi(obj, ref, originalOptions);
 }
 
-var version = "2.0.2";
+var version = "2.0.3";
 
 var version$1 = version;
 

@@ -1,7 +1,7 @@
 /**
  * string-remove-widows
  * Helps to prevent widow words in a text
- * Version: 2.0.2
+ * Version: 2.0.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-remove-widows/
@@ -12,7 +12,7 @@ import { left, right } from 'string-left-right';
 import { Ranges } from 'ranges-push';
 import { rApply } from 'ranges-apply';
 
-var version = "2.0.2";
+var version = "2.0.3";
 
 // consts
 const rawnbsp = "\u00A0";

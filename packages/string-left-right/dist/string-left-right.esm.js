@@ -1,7 +1,7 @@
 /**
  * string-left-right
  * Looks up the first non-whitespace character to the left/right of a given index
- * Version: 4.0.2
+ * Version: 4.0.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-left-right/
@@ -10,7 +10,7 @@
 import isObj from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';
 
-var version = "4.0.2";
+var version = "4.0.3";
 
 const version$1 = version;
 const RAWNBSP = "\u00A0"; // separates the value from flags

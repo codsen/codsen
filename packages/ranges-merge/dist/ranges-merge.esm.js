@@ -1,7 +1,7 @@
 /**
  * ranges-merge
  * Merge and sort string index ranges
- * Version: 7.0.2
+ * Version: 7.0.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-merge/
@@ -9,7 +9,7 @@
 
 import { rSort } from 'ranges-sort';
 
-var version = "7.0.2";
+var version = "7.0.3";
 
 const version$1 = version;
 const defaults = {

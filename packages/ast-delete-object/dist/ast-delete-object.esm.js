@@ -1,7 +1,7 @@
 /**
  * ast-delete-object
  * Delete all plain objects in AST if they contain a certain key/value pair
- * Version: 2.0.2
+ * Version: 2.0.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-delete-object/
@@ -12,7 +12,7 @@ import { compare } from 'ast-compare';
 import { traverse } from 'ast-monkey-traverse';
 import isObj from 'lodash.isplainobject';
 
-var version = "2.0.2";
+var version = "2.0.3";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 const version$1 = version;

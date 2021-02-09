@@ -1,7 +1,7 @@
 /**
  * object-merge-advanced
  * Recursively, deeply merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
- * Version: 11.0.2
+ * Version: 12.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-merge-advanced/
@@ -15,7 +15,7 @@ import isDate from 'lodash.isdate';
 import { includesWithGlob } from 'array-includes-with-glob';
 import { nonEmpty } from 'util-nonempty';
 
-var version = "11.0.2";
+var version = "12.0.0";
 
 /* eslint max-len:0, no-prototype-builtins:0, @typescript-eslint/ban-types: 0, @typescript-eslint/explicit-module-boundary-types: 0 */
 const version$1 = version;

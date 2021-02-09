@@ -1,7 +1,7 @@
 /**
  * ranges-apply
  * Take an array of string index ranges, delete/replace the string according to them
- * Version: 5.0.2
+ * Version: 5.0.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/
@@ -9,7 +9,7 @@
 
 import { rMerge } from 'ranges-merge';
 
-var version = "5.0.2";
+var version = "5.0.3";
 
 const version$1 = version;
 

@@ -1,7 +1,7 @@
 /**
  * json-comb-core
  * The inner core of json-comb
- * Version: 6.8.2
+ * Version: 6.8.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/json-comb-core/
@@ -36,7 +36,7 @@ var pReduce__default = /*#__PURE__*/_interopDefaultLegacy(pReduce);
 var typ__default = /*#__PURE__*/_interopDefaultLegacy(typ);
 var pOne__default = /*#__PURE__*/_interopDefaultLegacy(pOne);
 
-var version = "6.8.2";
+var version = "6.8.3";
 
 var version$1 = version;
 

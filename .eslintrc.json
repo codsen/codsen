@@ -9,7 +9,7 @@
     "plugin:@typescript-eslint/recommended"
   ],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "row-num", "test-num"],
   "ignorePatterns": [
     "**/eslint-plugin-row-num/rules/utils/**",
     "**/dist/**",
@@ -44,6 +44,8 @@
     "prefer-const": "error",
     "prefer-destructuring": 0,
     "prefer-template": "error",
+    "row-num/correct-row-num": 0,
+    "test-num/correct-test-num": 0,
     "strict": "error",
     "symbol-description": "error",
     "yoda": [

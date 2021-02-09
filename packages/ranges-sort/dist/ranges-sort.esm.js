@@ -1,13 +1,13 @@
 /**
  * ranges-sort
  * Sort string index ranges
- * Version: 4.0.2
+ * Version: 4.0.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-sort/
  */
 
-var version = "4.0.2";
+var version = "4.0.3";
 
 const version$1 = version;
 const defaults = {

@@ -1,7 +1,7 @@
 /**
  * stristri
  * Extracts or deletes HTML, CSS, text and/or templating tags from string
- * Version: 3.0.2
+ * Version: 3.0.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/stristri/
@@ -31,7 +31,7 @@ var defaultOpts = {
   reportProgressFuncTo: 100
 };
 
-var version = "3.0.2";
+var version = "3.0.3";
 
 var version$1 = version; // return function is in single place to ensure no
 // discrepancies in API when returning from multiple places

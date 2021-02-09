@@ -1,13 +1,13 @@
 /**
  * string-extract-sass-vars
  * Parse SASS variables file into a plain object of CSS key-value pairs
- * Version: 2.0.2
+ * Version: 2.0.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-extract-sass-vars/
  */
 
-var version = "2.0.2";
+var version = "2.0.3";
 
 const version$1 = version; // Takes string, SASS variables file and extracts the plain object of variables: key-value pairs
 // As a bonus, it turns digit-only value strings into numbers.

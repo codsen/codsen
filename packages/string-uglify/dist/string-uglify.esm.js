@@ -1,13 +1,13 @@
 /**
  * string-uglify
  * Shorten sets of strings deterministically, to be git-friendly
- * Version: 1.4.2
+ * Version: 1.4.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-uglify/
  */
 
-var version = "1.4.2";
+var version = "1.4.3";
 
 const version$1 = version; // tells code point of a given id number
 
