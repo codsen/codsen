@@ -133,7 +133,7 @@
     },
     {
         "name": "codsen-parser",
-        "size": 25954,
+        "size": 25869,
         "imports": [
             "ast-monkey-util",
             "codsen-tokenizer",
@@ -265,7 +265,7 @@
     },
     {
         "name": "eslint-plugin-row-num",
-        "size": 5280,
+        "size": 3522,
         "imports": [
             "js-row-num"
         ]

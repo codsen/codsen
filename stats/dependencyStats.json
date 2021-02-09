@@ -54,7 +54,7 @@
         "isstream": 1,
         "js-row-num": 2,
         "json-comb-core": 1,
-        "json-stringify-safe": 1,
+        "json-stringify-safe": 2,
         "lerna-clean-changelogs": 1,
         "leven": 3,
         "line-column-mini": 1,

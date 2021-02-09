@@ -12,7 +12,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### BREAKING CHANGES
 
 - no changes in API; only correction to the callbacks; things now work as intended in
-callbacks; bumping just in case
+  callbacks; bumping just in case
 
 ## 12.0.0 (2021-02-07)
 
