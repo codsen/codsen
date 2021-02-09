@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/codsen/codsen/compare/eslint-plugin-row-num@1.4.3...eslint-plugin-row-num@1.5.0) (2021-02-09)
+
+
+### Features
+
+* add support for @typescript-eslint/parser and TS code in general ([53deb16](https://github.com/codsen/codsen/commit/53deb16d869e5d761a9cdc4bb71788a13a33890a))
+
+
+
+
+
 ## 1.4.1 (2021-01-28)
 
 ### Bug Fixes

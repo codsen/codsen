@@ -1,6 +1,6 @@
 {
   "name": "ranges-process-outside",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "description": "Iterate string considering ranges, as if they were already applied",
   "keywords": [
     "array",
@@ -72,8 +72,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.13",
-    "ranges-crop": "^4.0.3",
-    "ranges-invert": "^4.0.3",
+    "ranges-crop": "^4.0.4",
+    "ranges-invert": "^4.0.4",
     "runes": "^0.4.3"
   },
   "devDependencies": {
@@ -102,7 +102,7 @@
     "@typescript-eslint/eslint-plugin": "^4.15.0",
     "@typescript-eslint/parser": "^4.15.0",
     "eslint": "^7.19.0",
-    "lect": "^0.16.3",
+    "lect": "^0.16.4",
     "rollup": "^2.38.5",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

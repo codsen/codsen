@@ -1,6 +1,6 @@
 {
   "name": "regex-is-jinja-nunjucks",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Regular expression for detecting Jinja or Nunjucks code",
   "keywords": [
     "code",
@@ -103,7 +103,7 @@
     "@typescript-eslint/eslint-plugin": "^4.15.0",
     "@typescript-eslint/parser": "^4.15.0",
     "eslint": "^7.19.0",
-    "lect": "^0.16.3",
+    "lect": "^0.16.4",
     "rollup": "^2.38.5",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

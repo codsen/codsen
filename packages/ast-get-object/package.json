@@ -1,6 +1,6 @@
 {
   "name": "ast-get-object",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Getter/setter for nested parsed HTML AST's, querying objects by key/value pairs",
   "keywords": [
     "ast",
@@ -87,7 +87,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.13",
-    "ast-compare": "^2.0.3",
+    "ast-compare": "^2.0.4",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6"
   },
@@ -118,7 +118,7 @@
     "@typescript-eslint/eslint-plugin": "^4.15.0",
     "@typescript-eslint/parser": "^4.15.0",
     "eslint": "^7.19.0",
-    "lect": "^0.16.3",
+    "lect": "^0.16.4",
     "rollup": "^2.38.5",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

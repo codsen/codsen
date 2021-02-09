@@ -1,6 +1,6 @@
 {
   "name": "is-char-suitable-for-html-attr-name",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Is given character suitable to be in an HTML attribute's name?",
   "keywords": [
     "attribute",
@@ -105,7 +105,7 @@
     "@typescript-eslint/eslint-plugin": "^4.15.0",
     "@typescript-eslint/parser": "^4.15.0",
     "eslint": "^7.19.0",
-    "lect": "^0.16.3",
+    "lect": "^0.16.4",
     "rollup": "^2.38.5",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",
