@@ -78,7 +78,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.13",
-    "js-row-num": "^4.0.3"
+    "js-row-num": "^4.0.3",
+    "json-stringify-safe": "^5.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.13",

@@ -1,19 +1,19 @@
-// import stringify from "json-stringify-safe";
+import stringify from "json-stringify-safe";
 import { fixRowNums } from "js-row-num";
-// console.log(`\n\n\n005 ███████████████████████████████████████`);
+console.log(`003 ███████████████████████████████████████`);
 
 export interface Obj {
   [key: string]: any;
 }
 
 const create = (context: Obj): Obj => {
-  // console.log(
-  //   `007 ${`\u001b[${33}m${`███████████████████████████████████████`}\u001b[${39}m`}`
-  // );
+  console.log(
+    `011 ${`\u001b[${33}m${`███████████████████████████████████████`}\u001b[${39}m`}`
+  );
   return {
     CallExpression(node: Obj) {
-      // console.log(stringify(node, null, 4));
-      // console.log(`012 node.callee.type = ${node.callee.type}`);
+      console.log(stringify(node, null, 4));
+      console.log(`016 node.callee.type = ${node.callee.type}`);
 
       /* istanbul ignore else */
       if (
@@ -29,15 +29,16 @@ const create = (context: Obj): Obj => {
         Array.isArray(node.arguments) &&
         node.arguments.length
       ) {
+        console.log(`032 ██ `);
         node.arguments.forEach((arg) => {
-          // console.log(`029 arg.raw: ${arg.raw}`);
-          // console.log(
-          //   `031 ${`\u001b[${35}m${`██`}\u001b[${39}m`} ${stringify(
-          //     arg,
-          //     null,
-          //     4
-          //   )}`
-          // );
+          console.log(`034 arg.raw: ${arg.raw}`);
+          console.log(
+            `036 ${`\u001b[${35}m${`██`}\u001b[${39}m`} ${stringify(
+              arg,
+              null,
+              4
+            )}`
+          );
 
           // if the updated console.log contents are different from what we
           // have now, latter needs to be updated.
@@ -51,7 +52,9 @@ const create = (context: Obj): Obj => {
                 extractedLogContentsWereGiven: true,
               })
           ) {
-            // console.log(`050 we have console.log with single or double quotes`);
+            console.log(
+              `056 ${`\u001b[${32}m${`we have console.log with single or double quotes`}\u001b[${39}m`}`
+            );
             context.report({
               node,
               messageId: "correctRowNum",
@@ -61,33 +64,41 @@ const create = (context: Obj): Obj => {
                   returnRangesOnly: true, // <------ now we request ranges
                   extractedLogContentsWereGiven: true,
                 });
-                // console.log(
-                //   `061 ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
-                //     ranges,
-                //     null,
-                //     4
-                //   )}`
-                // );
-                // console.log(
-                //   `068 ${`\u001b[${33}m${`arg.start`}\u001b[${39}m`} = ${JSON.stringify(
-                //     arg.start,
-                //     null,
-                //     4
-                //   )} (type ${typeof arg.start})`
-                // );
-                // console.log(`074 arg.start = ${arg.start}`);
+                console.log(
+                  `066 ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
+                    ranges,
+                    null,
+                    4
+                  )}`
+                );
+                console.log(
+                  `073 ${`\u001b[${33}m${`arg.start`}\u001b[${39}m`} = ${JSON.stringify(
+                    arg.start,
+                    null,
+                    4
+                  )} (type ${typeof arg.start})`
+                );
                 if (ranges) {
+                  let offset = arg.start;
+                  if (
+                    !offset &&
+                    arg.range &&
+                    typeof arg.range[0] === "number"
+                  ) {
+                    offset = arg.range[0];
+                  }
+
                   const preppedRanges = [
-                    arg.start + ranges[0][0],
-                    arg.start + ranges[0][1],
+                    offset + ranges[0][0],
+                    offset + ranges[0][1],
                   ];
-                  // console.log(
-                  //   `080 ${`\u001b[${33}m${`preppedRanges`}\u001b[${39}m`} = ${JSON.stringify(
-                  //     preppedRanges,
-                  //     null,
-                  //     4
-                  //   )}`
-                  // );
+                  console.log(
+                    `087 ${`\u001b[${33}m${`preppedRanges`}\u001b[${39}m`} = ${JSON.stringify(
+                      preppedRanges,
+                      null,
+                      4
+                    )}`
+                  );
                   return fixerObj.replaceTextRange(preppedRanges, ranges[0][2]);
                 }
               },
@@ -106,15 +117,17 @@ const create = (context: Obj): Obj => {
                 extractedLogContentsWereGiven: true,
               })
           ) {
-            // console.log(`103 we have console.log with backticks`);
-            // console.log(`R1: ${arg.quasis[0].value.raw}`);
-            // console.log(
-            //   `R2: ${fixRowNums(arg.quasis[0].value.raw, {
-            //     overrideRowNum: arg.loc.start.line,
-            //     returnRangesOnly: true,
-            //     extractedLogContentsWereGiven: true
-            //   })}`
-            // );
+            console.log(
+              `112 ${`\u001b[${32}m${`we have console.log with backticks`}\u001b[${39}m`}`
+            );
+            console.log(`R1: ${arg.quasis[0].value.raw}`);
+            console.log(
+              `R2: ${fixRowNums(arg.quasis[0].value.raw, {
+                overrideRowNum: arg.loc.start.line,
+                returnRangesOnly: true,
+                extractedLogContentsWereGiven: true,
+              })}`
+            );
             context.report({
               node,
               messageId: "correctRowNum",

@@ -3,16 +3,35 @@
 import tap from "tap";
 import { Linter } from "eslint";
 import api from "../dist/eslint-plugin-row-num.esm";
-
-const linter = new Linter();
-linter.defineRule("row-num/correct-row-num", api.rules["correct-row-num"]);
+import * as parser from "@typescript-eslint/parser";
 
 // we need to escape to prevent accidental "fixing" of this file through
 // build scripts
 const letterC = "\x63";
 const backtick = "\x60";
 
-console.log(`linter.version = ${linter.version}`);
+// -----------------------------------------------------------------------------
+
+// setup
+
+function verifyAndFix(t, str, opts) {
+  // ensure that TS parser result is the same
+  const linter = new Linter();
+  // console.log(`linter.version = ${linter.version}`);
+  linter.defineRule("row-num/correct-row-num", api.rules["correct-row-num"]);
+
+  const tsLinter = new Linter();
+  tsLinter.defineRule("row-num/correct-row-num", api.rules["correct-row-num"]);
+  tsLinter.defineParser("@typescript-eslint/parser", parser);
+  t.match(
+    linter.verifyAndFix(str, opts),
+    tsLinter.verifyAndFix(str, opts),
+    "the TS parser output is not the same as native esprima's!"
+  );
+
+  // now just return the output
+  return linter.verifyAndFix(str, opts);
+}
 
 // 00. API wirings
 // -----------------------------------------------------------------------------
@@ -51,8 +70,9 @@ tap.test(
 tap.test(
   `04 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - double quotes`,
   (t) => {
+    // default parser, espree
     t.match(
-      linter.verifyAndFix(`\n${letterC}onsole.log("9 something")`, {
+      verifyAndFix(t, `\n${letterC}onsole.log("9 something")`, {
         rules: {
           "row-num/correct-row-num": "error",
         },
@@ -62,9 +82,8 @@ tap.test(
         output: `\n${letterC}onsole.log("002 something")`,
         // messages: []
       },
-      "04"
+      "04.01"
     );
-
     t.end();
   }
 );
@@ -73,7 +92,7 @@ tap.test(
   `05 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - single quotes`,
   (t) => {
     t.match(
-      linter.verifyAndFix(`\n${letterC}onsole.log('9 something')`, {
+      verifyAndFix(t, `\n${letterC}onsole.log('9 something')`, {
         rules: {
           "row-num/correct-row-num": "error",
         },
@@ -94,7 +113,8 @@ tap.test(
 // \nconsole.log('9 something')
 tap.test(`06 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - backticks`, (t) => {
   t.strictSame(
-    linter.verifyAndFix(
+    verifyAndFix(
+      t,
       `\n${letterC}onsole.log(${backtick}9 something${backtick})`,
       {
         parserOptions: { ecmaVersion: 6 },
@@ -116,7 +136,8 @@ tap.test(`06 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - backticks`, (t) => {
 
 tap.test(`07 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - backticks`, (t) => {
   t.strictSame(
-    linter.verifyAndFix(
+    verifyAndFix(
+      t,
       `\n${letterC}onsole.log(\n${backtick}9 something${backtick}\n)`,
       {
         parserOptions: { ecmaVersion: 6 },
@@ -136,7 +157,7 @@ tap.test(`07 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - backticks`, (t) => {
   t.end();
 });
 
-// 02. false positives
+// false positives
 // -----------------------------------------------------------------------------
 
 tap.test(`08 - false positives - various tests`, (t) => {
@@ -150,7 +171,7 @@ tap.test(`08 - false positives - various tests`, (t) => {
     `const z = "\t01 something 01\n"`,
   ].forEach((testStr) => {
     t.match(
-      linter.verifyAndFix(testStr, {
+      verifyAndFix(t, testStr, {
         rules: {
           "row-num/correct-row-num": "error",
         },
@@ -161,5 +182,45 @@ tap.test(`08 - false positives - various tests`, (t) => {
       }
     );
   });
+  t.end();
+});
+
+// TS parser
+// -----------------------------------------------------------------------------
+
+tap.test(`09 - one-off test to 100% ensure TS parser is OK`, (t) => {
+  // ?console.log('9 something')
+
+  const tsLinter = new Linter();
+  tsLinter.defineRule("row-num/correct-row-num", api.rules["correct-row-num"]);
+  tsLinter.defineParser("@typescript-eslint/parser", parser);
+
+  t.strictSame(
+    tsLinter.verify(`\n${letterC}onsole.log('9 something')`, {
+      parser: "@typescript-eslint/parser",
+      rules: {
+        "row-num/correct-row-num": "error",
+      },
+    }),
+    [
+      {
+        ruleId: "row-num/correct-row-num",
+        severity: 2,
+        message: "Update the row number.",
+        line: 2,
+        column: 1,
+        nodeType: "CallExpression",
+        messageId: "correctRowNum",
+        endLine: 2,
+        endColumn: 27,
+        fix: {
+          range: [14, 15],
+          text: "002",
+        },
+      },
+    ],
+    "05"
+  );
+
   t.end();
 });
