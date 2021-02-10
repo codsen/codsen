@@ -1,7 +1,7 @@
 /**
  * eslint-plugin-test-num
  * ESLint plugin to update unit test numbers automatically
- * Version: 1.5.3
+ * Version: 1.5.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/eslint-plugin-test-num/
@@ -122,7 +122,6 @@ function prep(str, originalOpts) {
 const getNewValue = (subTestCount, testOrderNumber, counter2) => subTestCount === "single" ? testOrderNumber : `${testOrderNumber}.${`${counter2}`.padStart(2, "0")}`;
 
 // import stringify from "json-stringify-safe";
-// compiled from https://node-tap.org/docs/api/asserts/
 
 const messageIsSecondArg = new Set(["ok", "notOk", "true", "false", "assert", "assertNot", "error", "ifErr", "ifError", "rejects", "resolves", "resolveMatchSnapshot", "throws", "throw", "doesNotThrow", "notThrow", "expectUncaughtException"]); // compiled from https://node-tap.org/docs/api/asserts/
 
@@ -146,13 +145,17 @@ const create = context => {
 
         let finalDigitChunk = {};
 
-        if (!finalDigitChunk.value && op.get(node, "expression.arguments.0.type") === "TemplateLiteral" && op.has(node, "expression.arguments.0.quasis.0.value.raw")) {
+        if (!finalDigitChunk.value && op.get(node, "expression.arguments.0.type") === "TemplateLiteral" && op.has(node, "expression.arguments.0.quasis.0.value.raw")) { // default esprima parser
+
+          const offset1 = op.get(node, "expression.arguments.0.quasis.0.start"); // customised to @typescript-eslint/parser
+
+          const offset2 = op.get(node, "expression.arguments.0.range.0") + 1;
           const {
             start,
             end,
             value
           } = prep(op.get(node, "expression.arguments.0.quasis.0.value.raw"), {
-            offset: op.get(node, "expression.arguments.0.quasis.0.start"),
+            offset: offset1 || offset2,
             returnRangesOnly: true
           }) || {};
 
@@ -163,7 +166,7 @@ const create = context => {
               value: testOrderNumber,
               node: op.get(node, "expression.arguments.0.quasis.0")
             }; // console.log(
-            //   `206 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`finalDigitChunk.node.loc`}\u001b[${39}m`} = ${stringify(
+            //   `227 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`finalDigitChunk.node.loc`}\u001b[${39}m`} = ${stringify(
             //     finalDigitChunk.node.loc,
             //     null,
             //     4
@@ -189,7 +192,7 @@ const create = context => {
               value: testOrderNumber,
               node: node.expression.arguments[0]
             }; // console.log(
-            //   `240 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`finalDigitChunk.node.loc`}\u001b[${39}m`} = ${stringify(
+            //   `261 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`finalDigitChunk.node.loc`}\u001b[${39}m`} = ${stringify(
             //     finalDigitChunk.node.loc,
             //     null,
             //     4
@@ -217,7 +220,7 @@ const create = context => {
           op.get(filteredExpressionStatements[filteredExpressionStatements.length - 1], "expression.callee.property.name") === "end") {
             subTestCount = "single";
           } // console.log(
-          //   `297 ${`\u001b[${33}m${`subTestCount`}\u001b[${39}m`} = ${stringify(
+          //   `318 ${`\u001b[${33}m${`subTestCount`}\u001b[${39}m`} = ${stringify(
           //     subTestCount,
           //     null,
           //     4
@@ -258,9 +261,6 @@ const create = context => {
               const assertsName = op.get(exprStatements[i], "expression.callee.property.name");
 
               if (!assertsName) {
-                // console.log(
-                //   `344 ${`\u001b[${31}m${`error - no assert name could be extracted! CONTINUE`}\u001b[${39}m`}`
-                // );
                 continue;
               } // console.log(
               //   `350 #${i} - assert: ${`\u001b[${36}m${assertsName}\u001b[${39}m`}, category: ${`\u001b[${36}m${
@@ -286,7 +286,7 @@ const create = context => {
               op.has(exprStatements[i], "expression.arguments.1")) {
                 messageArgsPositionWeWillAimFor = 1; // zero-based count
               } // console.log(
-              //   `379 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`messageArgsPositionWeWillAimFor`}\u001b[${39}m`} = ${stringify(
+              //   `400 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`messageArgsPositionWeWillAimFor`}\u001b[${39}m`} = ${stringify(
               //     messageArgsPositionWeWillAimFor,
               //     null,
               //     4
@@ -294,16 +294,9 @@ const create = context => {
               // );
 
 
-              if (messageArgsPositionWeWillAimFor) {
-                // console.log(
-                //   `388 ${`\u001b[${32}m${`message argument missing from assertion!`}\u001b[${39}m`}`
-                // );
-                //
-                // console.log(
-                //   `392 ${`\u001b[${90}m${`let's extract the value from "message" arg in assertion`}\u001b[${39}m`}`
-                // );
-                // the "message" can be Literal (single/double quotes) or
+              if (messageArgsPositionWeWillAimFor) { // the "message" can be Literal (single/double quotes) or
                 // TemplateLiteral (backticks)
+
                 let pathToMsgArgValue;
                 let rawPathToMsgArgValue = ""; // used later in eslint reporting
 
@@ -317,11 +310,19 @@ const create = context => {
                   counter2 += 1;
                 } else if (op.get(exprStatements[i], `expression.arguments.${messageArgsPositionWeWillAimFor}.type`) === "Literal") {
                   rawPathToMsgArgValue = `expression.arguments.${messageArgsPositionWeWillAimFor}`;
-                  pathToMsgArgValue = op.get(exprStatements[i], `${rawPathToMsgArgValue}.raw`);
-                  pathToMsgArgStart = op.get(exprStatements[i], `${rawPathToMsgArgValue}.start`);
+                  pathToMsgArgValue = op.get(exprStatements[i], `${rawPathToMsgArgValue}.raw`); // console.log(
+                  //   `467 ███████████████████████████████████████ ${`\u001b[${33}m${`exprStatements[i]`}\u001b[${39}m`} = ${stringify(
+                  //     exprStatements[i],
+                  //     null,
+                  //     4
+                  //   )}`
+                  // );
+
+                  pathToMsgArgStart = // default parser, esprima
+                  op.get(exprStatements[i], `${rawPathToMsgArgValue}.start`) || // TS parser, @typescript-eslint/parser
+                  op.get(exprStatements[i], `${rawPathToMsgArgValue}.range.0`);
                   counter2 += 1;
                 }
-
                 const {
                   start,
                   end
@@ -331,28 +332,11 @@ const create = context => {
                 }) || {};
 
                 if (!start || !end) {
-                  // console.log(
-                  //   `444 ${`\u001b[${31}m${`SKIP`}\u001b[${39}m`} - no value extracted`
-                  // );
                   continue;
-                } // console.log(
-                //   `450 old: ${`\u001b[${35}m${pathToMsgArgValue}\u001b[${39}m`} (pathToMsgArgValue)`
-                // );
-                // console.log(
-                //   `453 old prepped value: ${`\u001b[${35}m${
-                //     prep(pathToMsgArgValue).value
-                //   }\u001b[${39}m`}`
-                // );
-
-
-                const newValue = getNewValue(subTestCount, testOrderNumber, counter2); // console.log(
-                //   `465 new: ${`\u001b[${35}m${newValue}\u001b[${39}m`}  range: ${`\u001b[${35}m${`[${start}, ${end}]`}\u001b[${39}m`}`
-                // );
+                }
+                const newValue = getNewValue(subTestCount, testOrderNumber, counter2);
 
                 if (rawPathToMsgArgValue && prep(pathToMsgArgValue).value !== newValue) {
-                  // console.log(
-                  //   `470 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${start}, ${end}] to replace with a new value "${`\u001b[${35}m${newValue}\u001b[${39}m`}"`
-                  // );
                   context.report({
                     node: op.get(exprStatements[i], rawPathToMsgArgValue),
                     messageId: "correctTestNum",
@@ -361,14 +345,11 @@ const create = context => {
                     }
                   });
                 }
-              } else {
-                // console.log(
-                //   `482 ${`\u001b[${31}m${`message argument missing from assertion!`}\u001b[${39}m`}`
-                // );
-                // First, find out at which index position should message
+              } else { // First, find out at which index position should message
                 // argument be on this given assertion. Keep in mind, there
                 // can be wrong args present at desired argument position or not
                 // enough arguments to reach that argument position
+
                 let positionDecided;
 
                 if ( // if assert's API takes three input arguments, the last arg
@@ -382,17 +363,14 @@ const create = context => {
 
                 if (positionDecided) {
                   // console.log(
-                  //   `514 ${`\u001b[${32}m${`DECIDED!`}\u001b[${39}m`} We'll insert arg at position: ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${stringify(
+                  //   `580 ${`\u001b[${32}m${`DECIDED!`}\u001b[${39}m`} We'll insert arg at position: ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${stringify(
                   //     positionDecided,
                   //     null,
                   //     4
                   //   )}`
                   // );
                   // insert the value
-                  const positionToInsertAt = op.get(exprStatements[i], "expression.end") - 1; // console.log(
-                  //   `525 ${`\u001b[${35}m${`██`}\u001b[${39}m`} positionToInsertAt = ${positionToInsertAt}`
-                  // );
-
+                  const positionToInsertAt = op.get(exprStatements[i], "expression.end") - 1;
                   const newValue = getNewValue(subTestCount, testOrderNumber, counter2); // there might be whitespace, so comma we're about to add
                   // must sit on a different line!!!
 
@@ -400,14 +378,7 @@ const create = context => {
                   const endIdx = positionToInsertAt; // left() finds the index of the first non-whitespace on the
                   // left, then we add +1 to not include it
 
-                  const startIdx = (left(wholeSourceStr, endIdx) || 0) + 1; // console.log(
-                  //   `544 SET ${`\u001b[${33}m${`startIdx`}\u001b[${39}m`} = ${JSON.stringify(
-                  //     startIdx,
-                  //     null,
-                  //     4
-                  //   )}`
-                  // );
-
+                  const startIdx = (left(wholeSourceStr, endIdx) || 0) + 1;
                   let valueToInsert = `, "${newValue}"`;
 
                   if ( // if there's a linebreak between closing bracket inside
@@ -422,19 +393,9 @@ const create = context => {
                   //   "01.01" <----- we're about to add this line and that comma
                   // );
                   wholeSourceStr.slice(startIdx, endIdx).includes(`\n`)) {
-                    // console.log(`569 we've got a multi-line case`);
-                    // console.log(`570 slice [${startIdx}, ${endIdx}]`);
                     const frontalIndentation = Array.from(wholeSourceStr.slice(startIdx, endIdx)).filter(char => !`\r\n`.includes(char)).join("");
                     valueToInsert = `,\n${frontalIndentation}  "${newValue}"\n${frontalIndentation}`;
-                  } // console.log(
-                  //   `581 ${`\u001b[${32}m${`REPORT`}\u001b[${39}m`} ${JSON.stringify(
-                  //     [startIdx, endIdx, valueToInsert],
-                  //     null,
-                  //     4
-                  //   )}`
-                  // );
-
-
+                  }
                   context.report({
                     node: exprStatements[i],
                     messageId: "correctTestNum",
@@ -444,13 +405,9 @@ const create = context => {
                   });
                 }
               }
-            } // console.log(
-            //   `606 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
-            // );
-
+            }
           }
-        } // console.log(" ");
-
+        }
 
         if (finalDigitChunk.value) {
           /* istanbul ignore next */

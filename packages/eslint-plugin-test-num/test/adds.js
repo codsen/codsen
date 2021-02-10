@@ -106,3 +106,97 @@ tap.test(
     t.end();
   }
 );
+
+tap.test(`04 - testing TS parser directly`, (t) => {
+  const tsLinter = new Linter();
+  tsLinter.defineRule(
+    "test-num/correct-test-num",
+    api.rules["correct-test-num"]
+  );
+  tsLinter.defineParser("@typescript-eslint/parser", parser);
+
+  const input = `tap.test(
+  \`05.00 - zzz\`,
+  (t) => {
+    t.strictSame(fix("z &ang; y"), [], "01");
+    t.end();
+  }
+);`;
+
+  t.strictSame(
+    tsLinter.verify(input, {
+      parser: "@typescript-eslint/parser",
+      // parserOptions: { ecmaVersion: 11 },
+      rules: {
+        "test-num/correct-test-num": "error",
+      },
+    }),
+    [
+      {
+        ruleId: "test-num/correct-test-num",
+        severity: 2,
+        message: "Update the test number.",
+        line: 2,
+        column: 3,
+        nodeType: "TemplateElement",
+        messageId: "correctTestNum",
+        endLine: 2,
+        endColumn: 16,
+        fix: {
+          range: [13, 18],
+          text: "01",
+        },
+      },
+    ],
+    "04"
+  );
+
+  t.end();
+});
+
+tap.test(`05 - testing TS parser directly`, (t) => {
+  const tsLinter = new Linter();
+  tsLinter.defineRule(
+    "test-num/correct-test-num",
+    api.rules["correct-test-num"]
+  );
+  tsLinter.defineParser("@typescript-eslint/parser", parser);
+
+  const input = `tap.test(
+  \`01 - zzz\`,
+  (t) => {
+    t.strictSame(fix("z &ang; y"), [], "05");
+    t.end();
+  }
+);`;
+
+  t.strictSame(
+    tsLinter.verify(input, {
+      parser: "@typescript-eslint/parser",
+      // parserOptions: { ecmaVersion: 11 },
+      rules: {
+        "test-num/correct-test-num": "error",
+      },
+    }),
+    [
+      {
+        ruleId: "test-num/correct-test-num",
+        severity: 2,
+        message: "Update the test number.",
+        line: 4,
+        endLine: 4,
+        column: 40,
+        endColumn: 44,
+        nodeType: "Literal",
+        messageId: "correctTestNum",
+        fix: {
+          range: [75, 77],
+          text: "01",
+        },
+      },
+    ],
+    "05"
+  );
+
+  t.end();
+});
