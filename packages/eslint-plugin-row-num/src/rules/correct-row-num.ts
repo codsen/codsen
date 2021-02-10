@@ -7,9 +7,6 @@ export interface Obj {
 }
 
 const create = (context: Obj): Obj => {
-  console.log(
-    `011 ${`\u001b[${33}m${`███████████████████████████████████████`}\u001b[${39}m`}`
-  );
   return {
     CallExpression(node: Obj) {
       console.log(stringify(node, null, 4));
@@ -93,7 +90,7 @@ const create = (context: Obj): Obj => {
                     offset + ranges[0][1],
                   ];
                   console.log(
-                    `087 ${`\u001b[${33}m${`preppedRanges`}\u001b[${39}m`} = ${JSON.stringify(
+                    `096 ${`\u001b[${33}m${`preppedRanges`}\u001b[${39}m`} = ${JSON.stringify(
                       preppedRanges,
                       null,
                       4
@@ -118,15 +115,7 @@ const create = (context: Obj): Obj => {
               })
           ) {
             console.log(
-              `112 ${`\u001b[${32}m${`we have console.log with backticks`}\u001b[${39}m`}`
-            );
-            console.log(`R1: ${arg.quasis[0].value.raw}`);
-            console.log(
-              `R2: ${fixRowNums(arg.quasis[0].value.raw, {
-                overrideRowNum: arg.loc.start.line,
-                returnRangesOnly: true,
-                extractedLogContentsWereGiven: true,
-              })}`
+              `121 ${`\u001b[${32}m${`we have console.log with backticks`}\u001b[${39}m`}`
             );
             context.report({
               node,
@@ -137,11 +126,49 @@ const create = (context: Obj): Obj => {
                   returnRangesOnly: true, // <------ now we request ranges
                   extractedLogContentsWereGiven: true,
                 });
+                console.log(
+                  `133 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
+                    ranges,
+                    null,
+                    4
+                  )}`
+                );
                 if (ranges) {
+                  let offset = arg.quasis[0].range[0] + 1;
+                  console.log(
+                    `142 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`offset`}\u001b[${39}m`} = ${JSON.stringify(
+                      offset,
+                      null,
+                      4
+                    )}`
+                  );
+                  if (
+                    !offset &&
+                    arg.range &&
+                    typeof arg.range[0] === "number"
+                  ) {
+                    offset = arg.quasis[0].start + 1; // compensate plus one for the back-tick
+                    console.log(
+                      `155 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`offset`}\u001b[${39}m`} = ${JSON.stringify(
+                        offset,
+                        null,
+                        4
+                      )}`
+                    );
+                  }
+
                   const preppedRanges = [
-                    arg.start + 1 + ranges[0][0],
-                    arg.start + 1 + ranges[0][1],
+                    offset + ranges[0][0],
+                    offset + ranges[0][1],
                   ];
+                  console.log(
+                    `168 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`preppedRanges`}\u001b[${39}m`} = ${JSON.stringify(
+                      preppedRanges,
+                      null,
+                      4
+                    )}`
+                  );
+
                   return fixerObj.replaceTextRange(preppedRanges, ranges[0][2]);
                 }
               },

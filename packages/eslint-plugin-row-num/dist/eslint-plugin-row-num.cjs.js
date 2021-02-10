@@ -1,7 +1,7 @@
 /**
  * eslint-plugin-row-num
  * ESLint plugin to update row numbers on each console.log
- * Version: 1.4.3
+ * Version: 1.5.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/eslint-plugin-row-num/
@@ -64,7 +64,13 @@ var create = function create(context) {
                 });
 
                 if (ranges) {
-                  var preppedRanges = [arg.start + 1 + ranges[0][0], arg.start + 1 + ranges[0][1]];
+                  var offset = arg.quasis[0].range[0] + 1;
+
+                  if (!offset && arg.range && typeof arg.range[0] === "number") {
+                    offset = arg.quasis[0].start + 1; // compensate plus one for the back-tick
+                  }
+
+                  var preppedRanges = [offset + ranges[0][0], offset + ranges[0][1]];
                   return fixerObj.replaceTextRange(preppedRanges, ranges[0][2]);
                 }
               }

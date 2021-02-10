@@ -23,7 +23,7 @@ function verifyAndFix(t, str, opts) {
   const tsLinter = new Linter();
   tsLinter.defineRule("row-num/correct-row-num", api.rules["correct-row-num"]);
   tsLinter.defineParser("@typescript-eslint/parser", parser);
-  t.match(
+  t.strictSame(
     linter.verifyAndFix(str, opts),
     tsLinter.verifyAndFix(str, opts),
     "the TS parser output is not the same as native esprima's!"
@@ -37,7 +37,7 @@ function verifyAndFix(t, str, opts) {
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `01 - ${`\u001b[${33}m${`api`}\u001b[${39}m`} - object is exported`,
+  `02 - ${`\u001b[${33}m${`api`}\u001b[${39}m`} - object is exported`,
   (t) => {
     t.is(typeof api, "object", "01");
     t.end();
@@ -219,7 +219,50 @@ tap.test(`09 - one-off test to 100% ensure TS parser is OK`, (t) => {
         },
       },
     ],
-    "05"
+    "09"
+  );
+
+  t.end();
+});
+
+tap.test(`10`, (t) => {
+  const tsLinter = new Linter();
+  tsLinter.defineRule("row-num/correct-row-num", api.rules["correct-row-num"]);
+  tsLinter.defineParser("@typescript-eslint/parser", parser);
+
+  const input = `const trailingSemi = (context, mode) => {
+  return {
+    tag(node) {
+      console.log(${backtick}0 abc${backtick});
+    },
+  };
+};`;
+
+  t.strictSame(
+    tsLinter.verify(input, {
+      parser: "@typescript-eslint/parser",
+      rules: {
+        "row-num/correct-row-num": "error",
+      },
+    }),
+    [
+      {
+        ruleId: "row-num/correct-row-num",
+        severity: 2,
+        message: "Update the row number.",
+        line: 4,
+        column: 7,
+        nodeType: "CallExpression",
+        messageId: "correctRowNum",
+        endLine: 4,
+        endColumn: 27,
+        fix: {
+          range: [88, 89],
+          text: "004",
+        },
+      },
+    ],
+    "10.01"
   );
 
   t.end();
