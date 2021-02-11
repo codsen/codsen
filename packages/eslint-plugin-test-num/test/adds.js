@@ -200,3 +200,50 @@ tap.test(`05 - testing TS parser directly`, (t) => {
 
   t.end();
 });
+
+tap.only(`06 - testing TS parser directly`, (t) => {
+  const tsLinter = new Linter();
+  tsLinter.defineRule(
+    "test-num/correct-test-num",
+    api.rules["correct-test-num"]
+  );
+  tsLinter.defineParser("@typescript-eslint/parser", parser);
+
+  const input = `tap.test(
+  \`01 - zzz\`,
+  (t) => {
+    t.strictSame(fix("z &ang; y"), []);
+    t.end();
+  }
+);`;
+
+  t.strictSame(
+    tsLinter.verify(input, {
+      parser: "@typescript-eslint/parser",
+      // parserOptions: { ecmaVersion: 11 },
+      rules: {
+        "test-num/correct-test-num": "error",
+      },
+    }),
+    [
+      {
+        ruleId: "test-num/correct-test-num",
+        severity: 2,
+        message: "Update the test number.",
+        line: 4,
+        endLine: 4,
+        column: 5,
+        endColumn: 40,
+        nodeType: "ExpressionStatement",
+        messageId: "correctTestNum",
+        fix: {
+          range: [72, 72],
+          text: ', "01"',
+        },
+      },
+    ],
+    "06"
+  );
+
+  t.end();
+});

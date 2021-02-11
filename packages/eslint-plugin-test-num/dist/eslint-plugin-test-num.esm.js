@@ -349,6 +349,15 @@ const create = context => {
                 // argument be on this given assertion. Keep in mind, there
                 // can be wrong args present at desired argument position or not
                 // enough arguments to reach that argument position
+                // console.log(
+                //   `557 FIY, ${`\u001b[${33}m${`exprStatements[i]`}\u001b[${39}m`} = ${stringify(
+                //     exprStatements[i],
+                //     null,
+                //     4
+                //   )}; messageIsThirdArg.has(${assertsName}) = ${messageIsThirdArg.has(
+                //     assertsName
+                //   )}`
+                // );
 
                 let positionDecided;
 
@@ -361,16 +370,11 @@ const create = context => {
                   positionDecided = 1; // counting from zero, means 2nd in a row
                 }
 
-                if (positionDecided) {
-                  // console.log(
-                  //   `580 ${`\u001b[${32}m${`DECIDED!`}\u001b[${39}m`} We'll insert arg at position: ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${stringify(
-                  //     positionDecided,
-                  //     null,
-                  //     4
-                  //   )}`
-                  // );
-                  // insert the value
-                  const positionToInsertAt = op.get(exprStatements[i], "expression.end") - 1;
+                if (positionDecided) { // insert the value
+
+                  const positionToInsertAt = // default parser, esprima
+                  (op.get(exprStatements[i], "expression.end") || // custom parser for TS, @typescript-eslint/parser
+                  op.get(exprStatements[i], "expression.range.1")) - 1;
                   const newValue = getNewValue(subTestCount, testOrderNumber, counter2); // there might be whitespace, so comma we're about to add
                   // must sit on a different line!!!
 

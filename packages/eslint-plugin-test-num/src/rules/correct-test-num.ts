@@ -553,6 +553,16 @@ const create = (context: Obj): Obj => {
                 // can be wrong args present at desired argument position or not
                 // enough arguments to reach that argument position
 
+                // console.log(
+                //   `557 FIY, ${`\u001b[${33}m${`exprStatements[i]`}\u001b[${39}m`} = ${stringify(
+                //     exprStatements[i],
+                //     null,
+                //     4
+                //   )}; messageIsThirdArg.has(${assertsName}) = ${messageIsThirdArg.has(
+                //     assertsName
+                //   )}`
+                // );
+
                 let positionDecided;
                 if (
                   // if assert's API takes three input arguments, the last arg
@@ -565,6 +575,13 @@ const create = (context: Obj): Obj => {
                   op.get(exprStatements[i], "expression.arguments").length === 2
                 ) {
                   positionDecided = 2; // counting from zero, means 3rd in a row
+                  console.log(
+                    `579 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${JSON.stringify(
+                      positionDecided,
+                      null,
+                      4
+                    )}`
+                  );
                 } else if (
                   messageIsSecondArg.has(assertsName) &&
                   Array.isArray(
@@ -573,22 +590,36 @@ const create = (context: Obj): Obj => {
                   op.get(exprStatements[i], "expression.arguments").length === 1
                 ) {
                   positionDecided = 1; // counting from zero, means 2nd in a row
+                  console.log(
+                    `594 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${JSON.stringify(
+                      positionDecided,
+                      null,
+                      4
+                    )}`
+                  );
                 }
 
+                console.log(
+                  `603 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${JSON.stringify(
+                    positionDecided,
+                    null,
+                    4
+                  )}`
+                );
+
                 if (positionDecided) {
-                  // console.log(
-                  //   `580 ${`\u001b[${32}m${`DECIDED!`}\u001b[${39}m`} We'll insert arg at position: ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${stringify(
-                  //     positionDecided,
-                  //     null,
-                  //     4
-                  //   )}`
-                  // );
+                  console.log(
+                    `612 ${`\u001b[${32}m${`DECIDED!`}\u001b[${39}m`} We'll insert arg at position: ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${positionDecided}`
+                  );
 
                   // insert the value
                   const positionToInsertAt =
-                    op.get(exprStatements[i], "expression.end") - 1;
+                    // default parser, esprima
+                    (op.get(exprStatements[i], "expression.end") ||
+                      // custom parser for TS, @typescript-eslint/parser
+                      op.get(exprStatements[i], "expression.range.1")) - 1;
                   console.log(
-                    `591 ${`\u001b[${35}m${`██`}\u001b[${39}m`} positionToInsertAt = ${positionToInsertAt}`
+                    `622 ${`\u001b[${35}m${`██`}\u001b[${39}m`} positionToInsertAt = ${positionToInsertAt}`
                   );
 
                   const newValue = getNewValue(
@@ -607,7 +638,7 @@ const create = (context: Obj): Obj => {
                   const startIdx = (left(wholeSourceStr, endIdx) || 0) + 1;
 
                   console.log(
-                    `610 SET ${`\u001b[${33}m${`startIdx`}\u001b[${39}m`} = ${JSON.stringify(
+                    `641 SET ${`\u001b[${33}m${`startIdx`}\u001b[${39}m`} = ${JSON.stringify(
                       startIdx,
                       null,
                       4
@@ -632,8 +663,8 @@ const create = (context: Obj): Obj => {
 
                     wholeSourceStr.slice(startIdx, endIdx).includes(`\n`)
                   ) {
-                    console.log(`635 we've got a multi-line case`);
-                    console.log(`636 slice [${startIdx}, ${endIdx}]`);
+                    console.log(`666 we've got a multi-line case`);
+                    console.log(`667 slice [${startIdx}, ${endIdx}]`);
 
                     const frontalIndentation = Array.from(
                       wholeSourceStr.slice(startIdx, endIdx)
@@ -644,7 +675,7 @@ const create = (context: Obj): Obj => {
                   }
 
                   console.log(
-                    `647 ${`\u001b[${32}m${`REPORT`}\u001b[${39}m`} ${JSON.stringify(
+                    `678 ${`\u001b[${32}m${`REPORT`}\u001b[${39}m`} ${JSON.stringify(
                       [startIdx, endIdx, valueToInsert],
                       null,
                       4
@@ -663,13 +694,13 @@ const create = (context: Obj): Obj => {
                   });
                 } else {
                   console.log(
-                    `666 ${`\u001b[${31}m${`"positionDecided" not decided, skip!`}\u001b[${39}m`}`
+                    `697 ${`\u001b[${31}m${`"positionDecided" not decided, skip!`}\u001b[${39}m`}`
                   );
                 }
               }
             }
             console.log(
-              `672 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
+              `703 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
             );
           }
         }
@@ -678,7 +709,7 @@ const create = (context: Obj): Obj => {
 
         if (finalDigitChunk.value) {
           console.log(
-            `681 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${
+            `712 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${
               finalDigitChunk.start
             }, ${
               finalDigitChunk.end
