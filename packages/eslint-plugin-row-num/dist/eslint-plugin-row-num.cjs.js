@@ -9,16 +9,25 @@
 
 'use strict';
 
-require('json-stringify-safe');
 var jsRowNum = require('js-row-num');
+
+// import stringify from "json-stringify-safe";
 
 var create = function create(context) {
   return {
     CallExpression: function CallExpression(node) {
+      // console.log(stringify(node, null, 4));
       /* istanbul ignore else */
 
       if (node.callee && node.callee.type === "MemberExpression" && node.callee.object && node.callee.object.type === "Identifier" && node.callee.object.name === "console" && node.callee.property && node.callee.property.type === "Identifier" && node.callee.property.name === "log" && node.arguments && Array.isArray(node.arguments) && node.arguments.length) {
-        node.arguments.forEach(function (arg) { // if the updated console.log contents are different from what we
+        node.arguments.forEach(function (arg) { // console.log(
+          //   `033 ${`\u001b[${35}m${`██`}\u001b[${39}m`} ${stringify(
+          //     arg,
+          //     null,
+          //     4
+          //   )}`
+          // );
+          // if the updated console.log contents are different from what we
           // have now, latter needs to be updated.
 
           if (arg.type === "Literal" && typeof arg.raw === "string" && arg.raw !== jsRowNum.fixRowNums(arg.raw, {

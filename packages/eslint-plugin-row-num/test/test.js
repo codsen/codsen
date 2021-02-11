@@ -37,7 +37,7 @@ function verifyAndFix(t, str, opts) {
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `02 - ${`\u001b[${33}m${`api`}\u001b[${39}m`} - object is exported`,
+  `01 - ${`\u001b[${33}m${`api`}\u001b[${39}m`} - object is exported`,
   (t) => {
     t.is(typeof api, "object", "01");
     t.end();
@@ -82,7 +82,7 @@ tap.test(
         output: `\n${letterC}onsole.log("002 something")`,
         // messages: []
       },
-      "04.01"
+      "04"
     );
     t.end();
   }
@@ -262,7 +262,7 @@ tap.test(`10`, (t) => {
         },
       },
     ],
-    "10.01"
+    "10"
   );
 
   t.end();

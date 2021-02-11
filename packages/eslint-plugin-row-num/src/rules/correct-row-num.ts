@@ -1,4 +1,4 @@
-import stringify from "json-stringify-safe";
+// import stringify from "json-stringify-safe";
 import { fixRowNums } from "js-row-num";
 console.log(`003 ███████████████████████████████████████`);
 
@@ -9,8 +9,8 @@ export interface Obj {
 const create = (context: Obj): Obj => {
   return {
     CallExpression(node: Obj) {
-      console.log(stringify(node, null, 4));
-      console.log(`016 node.callee.type = ${node.callee.type}`);
+      // console.log(stringify(node, null, 4));
+      console.log(`013 node.callee.type = ${node.callee.type}`);
 
       /* istanbul ignore else */
       if (
@@ -26,16 +26,16 @@ const create = (context: Obj): Obj => {
         Array.isArray(node.arguments) &&
         node.arguments.length
       ) {
-        console.log(`032 ██ `);
+        console.log(`029 ██ `);
         node.arguments.forEach((arg) => {
-          console.log(`034 arg.raw: ${arg.raw}`);
-          console.log(
-            `036 ${`\u001b[${35}m${`██`}\u001b[${39}m`} ${stringify(
-              arg,
-              null,
-              4
-            )}`
-          );
+          console.log(`031 arg.raw: ${arg.raw}`);
+          // console.log(
+          //   `033 ${`\u001b[${35}m${`██`}\u001b[${39}m`} ${stringify(
+          //     arg,
+          //     null,
+          //     4
+          //   )}`
+          // );
 
           // if the updated console.log contents are different from what we
           // have now, latter needs to be updated.
@@ -50,7 +50,7 @@ const create = (context: Obj): Obj => {
               })
           ) {
             console.log(
-              `056 ${`\u001b[${32}m${`we have console.log with single or double quotes`}\u001b[${39}m`}`
+              `053 ${`\u001b[${32}m${`we have console.log with single or double quotes`}\u001b[${39}m`}`
             );
             context.report({
               node,
@@ -62,14 +62,14 @@ const create = (context: Obj): Obj => {
                   extractedLogContentsWereGiven: true,
                 });
                 console.log(
-                  `066 ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
+                  `065 ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
                     ranges,
                     null,
                     4
                   )}`
                 );
                 console.log(
-                  `073 ${`\u001b[${33}m${`arg.start`}\u001b[${39}m`} = ${JSON.stringify(
+                  `072 ${`\u001b[${33}m${`arg.start`}\u001b[${39}m`} = ${JSON.stringify(
                     arg.start,
                     null,
                     4
@@ -90,7 +90,7 @@ const create = (context: Obj): Obj => {
                     offset + ranges[0][1],
                   ];
                   console.log(
-                    `096 ${`\u001b[${33}m${`preppedRanges`}\u001b[${39}m`} = ${JSON.stringify(
+                    `093 ${`\u001b[${33}m${`preppedRanges`}\u001b[${39}m`} = ${JSON.stringify(
                       preppedRanges,
                       null,
                       4
@@ -115,7 +115,7 @@ const create = (context: Obj): Obj => {
               })
           ) {
             console.log(
-              `121 ${`\u001b[${32}m${`we have console.log with backticks`}\u001b[${39}m`}`
+              `118 ${`\u001b[${32}m${`we have console.log with backticks`}\u001b[${39}m`}`
             );
             context.report({
               node,
@@ -127,7 +127,7 @@ const create = (context: Obj): Obj => {
                   extractedLogContentsWereGiven: true,
                 });
                 console.log(
-                  `133 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
+                  `130 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
                     ranges,
                     null,
                     4
@@ -136,7 +136,7 @@ const create = (context: Obj): Obj => {
                 if (ranges) {
                   let offset = arg.quasis[0].range[0] + 1;
                   console.log(
-                    `142 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`offset`}\u001b[${39}m`} = ${JSON.stringify(
+                    `139 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`offset`}\u001b[${39}m`} = ${JSON.stringify(
                       offset,
                       null,
                       4
@@ -149,7 +149,7 @@ const create = (context: Obj): Obj => {
                   ) {
                     offset = arg.quasis[0].start + 1; // compensate plus one for the back-tick
                     console.log(
-                      `155 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`offset`}\u001b[${39}m`} = ${JSON.stringify(
+                      `152 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`offset`}\u001b[${39}m`} = ${JSON.stringify(
                         offset,
                         null,
                         4
@@ -162,7 +162,7 @@ const create = (context: Obj): Obj => {
                     offset + ranges[0][1],
                   ];
                   console.log(
-                    `168 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`preppedRanges`}\u001b[${39}m`} = ${JSON.stringify(
+                    `165 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`preppedRanges`}\u001b[${39}m`} = ${JSON.stringify(
                       preppedRanges,
                       null,
                       4
