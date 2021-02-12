@@ -201,7 +201,7 @@ tap.test(`05 - testing TS parser directly`, (t) => {
   t.end();
 });
 
-tap.only(`06 - testing TS parser directly`, (t) => {
+tap.test(`06 - testing TS parser directly`, (t) => {
   const tsLinter = new Linter();
   tsLinter.defineRule(
     "test-num/correct-test-num",
@@ -243,6 +243,179 @@ tap.only(`06 - testing TS parser directly`, (t) => {
       },
     ],
     "06"
+  );
+
+  t.end();
+});
+
+tap.test(`07 - testing TS parser directly`, (t) => {
+  const tsLinter = new Linter();
+  tsLinter.defineRule(
+    "test-num/correct-test-num",
+    api.rules["correct-test-num"]
+  );
+  tsLinter.defineParser("@typescript-eslint/parser", parser);
+
+  const input = `tap.test("99", (t) => {
+  t.is("ok", "ok", "01");
+  t.end();
+});`;
+
+  t.strictSame(
+    tsLinter.verify(input, {
+      parser: "@typescript-eslint/parser",
+      // parserOptions: { ecmaVersion: 11 },
+      rules: {
+        "test-num/correct-test-num": "error",
+      },
+    }),
+    [
+      {
+        ruleId: "test-num/correct-test-num",
+        severity: 2,
+        message: "Update the test number.",
+        line: 1,
+        endLine: 1,
+        column: 10,
+        endColumn: 14,
+        nodeType: "Literal",
+        messageId: "correctTestNum",
+        fix: {
+          range: [10, 12],
+          text: "01",
+        },
+      },
+    ],
+    "07"
+  );
+
+  t.end();
+});
+
+tap.test(`08 - testing TS parser directly`, (t) => {
+  const tsLinter = new Linter();
+  tsLinter.defineRule(
+    "test-num/correct-test-num",
+    api.rules["correct-test-num"]
+  );
+  tsLinter.defineParser("@typescript-eslint/parser", parser);
+
+  const input = `tap.test("01", (t) => {
+  t.is("ok", "ok", "99");
+  t.end();
+});`;
+
+  t.strictSame(
+    tsLinter.verify(input, {
+      parser: "@typescript-eslint/parser",
+      // parserOptions: { ecmaVersion: 11 },
+      rules: {
+        "test-num/correct-test-num": "error",
+      },
+    }),
+    [
+      {
+        ruleId: "test-num/correct-test-num",
+        severity: 2,
+        message: "Update the test number.",
+        line: 2,
+        endLine: 2,
+        column: 20,
+        endColumn: 24,
+        nodeType: "Literal",
+        messageId: "correctTestNum",
+        fix: {
+          range: [44, 46],
+          text: "01",
+        },
+      },
+    ],
+    "08"
+  );
+
+  t.end();
+});
+
+tap.test(`09 - testing TS parser directly - baseline`, (t) => {
+  const linter = new Linter();
+  linter.defineRule("test-num/correct-test-num", api.rules["correct-test-num"]);
+  // linter.defineParser("@typescript-eslint/parser", parser);
+
+  const input = `tap.test(\`9 - a\`, (t) => {
+  t.is("ok", "ok", "01");
+  t.end();
+});`;
+
+  t.strictSame(
+    linter.verify(input, {
+      // parser: "@typescript-eslint/parser",
+      parserOptions: { ecmaVersion: 11 },
+      rules: {
+        "test-num/correct-test-num": "error",
+      },
+    }),
+    [
+      {
+        ruleId: "test-num/correct-test-num",
+        severity: 2,
+        message: "Update the test number.",
+        line: 1,
+        endLine: 1,
+        column: 10,
+        endColumn: 17,
+        nodeType: "TemplateElement",
+        messageId: "correctTestNum",
+        fix: {
+          range: [10, 11],
+          text: "01",
+        },
+      },
+    ],
+    "09"
+  );
+
+  t.end();
+});
+
+tap.test(`10 - testing TS parser directly - TS`, (t) => {
+  const tsLinter = new Linter();
+  tsLinter.defineRule(
+    "test-num/correct-test-num",
+    api.rules["correct-test-num"]
+  );
+  tsLinter.defineParser("@typescript-eslint/parser", parser);
+
+  const input = `tap.test(\`9 - a\`, (t) => {
+  t.is("ok", "ok", "01");
+  t.end();
+});`;
+
+  t.strictSame(
+    tsLinter.verify(input, {
+      parser: "@typescript-eslint/parser",
+      // parserOptions: { ecmaVersion: 11 },
+      rules: {
+        "test-num/correct-test-num": "error",
+      },
+    }),
+    [
+      {
+        ruleId: "test-num/correct-test-num",
+        severity: 2,
+        message: "Update the test number.",
+        line: 1,
+        endLine: 1,
+        column: 10,
+        endColumn: 17,
+        nodeType: "TemplateElement",
+        messageId: "correctTestNum",
+        fix: {
+          range: [10, 11],
+          text: "01",
+        },
+      },
+    ],
+    "10"
   );
 
   t.end();

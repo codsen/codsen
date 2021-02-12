@@ -11,11 +11,8 @@ import op from 'object-path';
 import { left } from 'string-left-right';
 
 function prep(str, originalOpts) {
-  // console.log(
-  //   `003 prep(): ${`\u001b[${32}m${`RECEIVED`}\u001b[${39}m`} >>>${str}<<<`
-  // );
-
   /* istanbul ignore if */
+
   if (typeof str !== "string" || !str.length) {
     return {};
   }
@@ -25,32 +22,16 @@ function prep(str, originalOpts) {
   };
   const opts = { ...defaults,
     ...originalOpts
-  }; // console.log(
-  //   `015 prep(): final ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
-  //     opts,
-  //     null,
-  //     4
-  //   )}`
-  // );
-  // So it's a non-empty string. Traverse!
+  }; // So it's a non-empty string. Traverse!
 
   let digitsChunkStartsAt = null;
-  let lastDigitAt; // console.log(
-  //   `028 prep(): ${`\u001b[${36}m${`traverse starts`}\u001b[${39}m`}`
-  // );
+  let lastDigitAt = null;
 
-  for (let i = 0, len = str.length; i <= len; i++) {
-    // console.log(
-    //   `032 prep(): ${`\u001b[${36}m${`======================== str[${i}]= ${`\u001b[${35}m${
-    //     str[i] && str[i].trim().length
-    //       ? str[i]
-    //       : JSON.stringify(str[i], null, 4)
-    //   }\u001b[${39}m`} ========================`}\u001b[${39}m`}`
-    // );
-    // catch the end of the digit chunk
+  for (let i = 0, len = str.length; i <= len; i++) { // catch the end of the digit chunk
     // -------------------------------------------------------------------------
+
     if ( // if chunk has been recorded as already started
-    digitsChunkStartsAt !== null && lastDigitAt && ( // and
+    digitsChunkStartsAt !== null && typeof lastDigitAt === "number" && ( // and
     // a) it's not a whitespace
     str[i] && str[i].trim().length && // it's not a number
     !/\d/.test(str[i]) && // and it's not a dot or hyphen
@@ -59,17 +40,6 @@ function prep(str, originalOpts) {
     // which is "undefined" character; notice i <= len in the loop above,
     // normally it would be i < len)
     !str[i])) {
-      // console.log(
-      //   `059 prep(): ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}: "${JSON.stringify(
-      //     {
-      //       start: opts.offset + digitsChunkStartsAt,
-      //       end: opts.offset + lastDigitAt + 1,
-      //       value: str.slice(digitsChunkStartsAt, lastDigitAt + 1),
-      //     },
-      //     null,
-      //     4
-      //   )}"`
-      // );
       return {
         start: opts.offset + digitsChunkStartsAt,
         end: opts.offset + lastDigitAt + 1,
@@ -85,13 +55,7 @@ function prep(str, originalOpts) {
 
       if ( // if chunk hasn't been recorded yet
       digitsChunkStartsAt === null) {
-        digitsChunkStartsAt = i; // console.log(
-        //   `089 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`digitsChunkStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
-        //     digitsChunkStartsAt,
-        //     null,
-        //     4
-        //   )}`
-        // );
+        digitsChunkStartsAt = i;
       }
     } // catch false scenario cases where letters precede numbers
     // -------------------------------------------------------------------------
@@ -101,19 +65,9 @@ function prep(str, originalOpts) {
     digitsChunkStartsAt === null && // it's not whitespace:
     str[i] && str[i].trim() && // it's not dot or digit or some kind of quote:
     !/[\d.'"`]/.test(str[i])) {
-      // console.log(`109 ${`\u001b[${31}m${`early bail`}\u001b[${39}m`}`);
       return {};
     } // logging
     // -------------------------------------------------------------------------
-    // console.log(" ");
-    // console.log(
-    //   `${`\u001b[${90}m${`██ digitsChunkStartsAt = ${digitsChunkStartsAt}`}\u001b[${39}m`}`
-    // );
-    // console.log(
-    //   `${`\u001b[${90}m${`██ lastDigitAt = ${lastDigitAt}`}\u001b[${39}m`}`
-    // );
-    // console.log(`${`\u001b[${90}m${`----------------`}\u001b[${39}m`}`);
-
   }
 
   return {};
@@ -143,57 +97,71 @@ const create = context => {
         // for example:
         // t.test("09 - something", (t) => ...)
 
-        let finalDigitChunk = {};
+        let finalDigitChunk = {}; // if backticks, like:
+        // tap.test(`99`, (t) => {
+        //          ^  ^
 
         if (!finalDigitChunk.value && op.get(node, "expression.arguments.0.type") === "TemplateLiteral" && op.has(node, "expression.arguments.0.quasis.0.value.raw")) { // default esprima parser
 
           const offset1 = op.get(node, "expression.arguments.0.quasis.0.start"); // customised to @typescript-eslint/parser
 
           const offset2 = op.get(node, "expression.arguments.0.range.0") + 1;
+          const source = op.get(node, "expression.arguments.0.quasis.0.value.raw");
+          prep(source, {
+            offset: offset1 || offset2,
+            returnRangesOnly: true
+          });
           const {
             start,
             end,
             value
-          } = prep(op.get(node, "expression.arguments.0.quasis.0.value.raw"), {
+          } = prep(source, {
             offset: offset1 || offset2,
             returnRangesOnly: true
           }) || {};
 
-          if (start && end && value && value !== testOrderNumber) {
+          if (typeof start === "number" && typeof end === "number" && value && value !== testOrderNumber) {
             finalDigitChunk = {
               start,
               end,
               value: testOrderNumber,
               node: op.get(node, "expression.arguments.0.quasis.0")
             }; // console.log(
-            //   `227 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`finalDigitChunk.node.loc`}\u001b[${39}m`} = ${stringify(
+            //   `259 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`finalDigitChunk.node.loc`}\u001b[${39}m`} = ${stringify(
             //     finalDigitChunk.node.loc,
             //     null,
             //     4
             //   )}`
             // );
           }
-        }
+        } // if single or double quotes, like:
+        // tap.test("99", (t) => {
+        //          ^  ^
 
-        if (!finalDigitChunk.value && node.expression.arguments[0].type === "Literal" && node.expression.arguments[0].raw) {
+
+        if (!finalDigitChunk.value && node.expression.arguments[0].type === "Literal" && node.expression.arguments[0].raw) { // default esprima parser
+
+          const offset1 = op.get(node, "expression.arguments.0.start"); // customised to @typescript-eslint/parser
+
+          const offset2 = op.get(node, "expression.arguments.0.range.0");
           const {
             start,
             end,
             value
           } = prep(node.expression.arguments[0].raw, {
-            offset: node.expression.arguments[0].start,
+            offset: offset1 || offset2,
             returnRangesOnly: true
           }) || {};
 
-          if (start && end && value && value !== testOrderNumber) {
+          if (typeof start === "number" && typeof end === "number" && value && value !== testOrderNumber) {
             finalDigitChunk = {
               start,
               end,
               value: testOrderNumber,
               node: node.expression.arguments[0]
             }; // console.log(
-            //   `261 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`finalDigitChunk.node.loc`}\u001b[${39}m`} = ${stringify(
-            //     finalDigitChunk.node.loc,
+            //   `317 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`finalDigitChunk`}\u001b[${39}m`} = ${stringify(
+            //     finalDigitChunk,
             //     null,
             //     4
             //   )}`
@@ -220,7 +188,7 @@ const create = context => {
           op.get(filteredExpressionStatements[filteredExpressionStatements.length - 1], "expression.callee.property.name") === "end") {
             subTestCount = "single";
           } // console.log(
-          //   `318 ${`\u001b[${33}m${`subTestCount`}\u001b[${39}m`} = ${stringify(
+          //   `374 ${`\u001b[${33}m${`subTestCount`}\u001b[${39}m`} = ${stringify(
           //     subTestCount,
           //     null,
           //     4
@@ -255,25 +223,12 @@ const create = context => {
             let counter2 = 0;
 
             for (let i = 0, len = exprStatements.length; i < len; i++) {
-              // console.log(
-              //   `336 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
-              // );
               const assertsName = op.get(exprStatements[i], "expression.callee.property.name");
 
               if (!assertsName) {
                 continue;
-              } // console.log(
-              //   `350 #${i} - assert: ${`\u001b[${36}m${assertsName}\u001b[${39}m`}, category: ${`\u001b[${36}m${
-              //     messageIsThirdArg.has(assertsName)
-              //       ? "III"
-              //       : messageIsSecondArg.has(assertsName)
-              //       ? "II"
-              //       : "n/a"
-              //   }\u001b[${39}m`}`
-              // );
-              // "message" argument's position is variable, sometimes it can be
+              } // "message" argument's position is variable, sometimes it can be
               // either 2nd or 3rd
-
 
               let messageArgsPositionWeWillAimFor;
 
@@ -286,7 +241,7 @@ const create = context => {
               op.has(exprStatements[i], "expression.arguments.1")) {
                 messageArgsPositionWeWillAimFor = 1; // zero-based count
               } // console.log(
-              //   `400 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`messageArgsPositionWeWillAimFor`}\u001b[${39}m`} = ${stringify(
+              //   `456 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`messageArgsPositionWeWillAimFor`}\u001b[${39}m`} = ${stringify(
               //     messageArgsPositionWeWillAimFor,
               //     null,
               //     4
@@ -311,7 +266,7 @@ const create = context => {
                 } else if (op.get(exprStatements[i], `expression.arguments.${messageArgsPositionWeWillAimFor}.type`) === "Literal") {
                   rawPathToMsgArgValue = `expression.arguments.${messageArgsPositionWeWillAimFor}`;
                   pathToMsgArgValue = op.get(exprStatements[i], `${rawPathToMsgArgValue}.raw`); // console.log(
-                  //   `467 ███████████████████████████████████████ ${`\u001b[${33}m${`exprStatements[i]`}\u001b[${39}m`} = ${stringify(
+                  //   `523 ███████████████████████████████████████ ${`\u001b[${33}m${`exprStatements[i]`}\u001b[${39}m`} = ${stringify(
                   //     exprStatements[i],
                   //     null,
                   //     4
@@ -334,7 +289,13 @@ const create = context => {
                 if (!start || !end) {
                   continue;
                 }
-                const newValue = getNewValue(subTestCount, testOrderNumber, counter2);
+                const newValue = getNewValue(subTestCount, testOrderNumber, counter2); // console.log(
+                //   `584 newValue: ${`\u001b[${35}m${newValue}\u001b[${39}m`};\nrange: ${`\u001b[${35}m${`[${start}, ${end}]`}\u001b[${39}m`};\nrawPathToMsgArgValue: ${`\u001b[${35}m${rawPathToMsgArgValue}\u001b[${39}m`};\nprep(pathToMsgArgValue): ${`\u001b[${35}m${stringify(
+                //     prep(pathToMsgArgValue)
+                //   )}\u001b[${39}m`};\nstringify(prep(pathToMsgArgValue).value): ${`\u001b[${35}m${stringify(
+                //     prep(pathToMsgArgValue).value
+                //   )}\u001b[${39}m`};`
+                // );
 
                 if (rawPathToMsgArgValue && prep(pathToMsgArgValue).value !== newValue) {
                   context.report({
@@ -350,7 +311,7 @@ const create = context => {
                 // can be wrong args present at desired argument position or not
                 // enough arguments to reach that argument position
                 // console.log(
-                //   `557 FIY, ${`\u001b[${33}m${`exprStatements[i]`}\u001b[${39}m`} = ${stringify(
+                //   `617 FIY, ${`\u001b[${33}m${`exprStatements[i]`}\u001b[${39}m`} = ${stringify(
                 //     exprStatements[i],
                 //     null,
                 //     4

@@ -160,6 +160,9 @@ const create = (context: Obj): Obj => {
 
         let finalDigitChunk: Obj = {};
 
+        // if backticks, like:
+        // tap.test(`99`, (t) => {
+        //          ^  ^
         if (
           !finalDigitChunk.value &&
           op.get(node, "expression.arguments.0.type") === "TemplateLiteral" &&
@@ -168,15 +171,15 @@ const create = (context: Obj): Obj => {
           console.log(" ");
           console.log(" ");
           console.log(
-            `171 ${`\u001b[${34}m${`██ TemplateLiteral caught!`}\u001b[${39}m`}`
+            `174 ${`\u001b[${34}m${`██ TemplateLiteral caught!`}\u001b[${39}m`}`
           );
 
           console.log(
-            `175 node.expression.arguments[0].quasis[0].value.raw: "${node.expression.arguments[0].quasis[0].value.raw}"`
+            `178 node.expression.arguments[0].quasis[0].value.raw: "${node.expression.arguments[0].quasis[0].value.raw}"`
           );
 
           console.log(
-            `179 ${`\u001b[${33}m${`op.get(node, "expression.arguments.0.quasis.0.start")`}\u001b[${39}m`} = ${JSON.stringify(
+            `182 ${`\u001b[${33}m${`op.get(node, "expression.arguments.0.quasis.0.start")`}\u001b[${39}m`} = ${JSON.stringify(
               op.get(node, "expression.arguments.0.quasis.0.start"),
               null,
               4
@@ -188,7 +191,100 @@ const create = (context: Obj): Obj => {
           // customised to @typescript-eslint/parser
           const offset2 = op.get(node, "expression.arguments.0.range.0") + 1;
           console.log(
-            `191 ${`\u001b[${33}m${`offset1`}\u001b[${39}m`} = ${JSON.stringify(
+            `194 ${`\u001b[${33}m${`offset1`}\u001b[${39}m`} = ${JSON.stringify(
+              offset1,
+              null,
+              4
+            )}; ${`\u001b[${33}m${`offset2`}\u001b[${39}m`} = ${JSON.stringify(
+              offset2,
+              null,
+              4
+            )}`
+          );
+
+          const source = op.get(
+            node,
+            "expression.arguments.0.quasis.0.value.raw"
+          );
+          console.log(
+            `210 ${`\u001b[${33}m${`source`}\u001b[${39}m`} = ${JSON.stringify(
+              source,
+              null,
+              4
+            )}`
+          );
+
+          const temp = prep(source, {
+            offset: offset1 || offset2,
+            returnRangesOnly: true,
+          });
+          console.log(
+            `222 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
+              temp,
+              null,
+              4
+            )}`
+          );
+
+          const { start, end, value } =
+            prep(source, {
+              offset: offset1 || offset2,
+              returnRangesOnly: true,
+            }) || {};
+          console.log(
+            `235 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`start`}\u001b[${39}m`} = ${start}; ${`\u001b[${33}m${`end`}\u001b[${39}m`} = ${end}; ${`\u001b[${33}m${`value`}\u001b[${39}m`} = ${value} --- ${`\u001b[${33}m${`testOrderNumber`}\u001b[${39}m`} = ${testOrderNumber}`
+          );
+
+          if (
+            typeof start === "number" &&
+            typeof end === "number" &&
+            value &&
+            value !== testOrderNumber
+          ) {
+            console.log(
+              `245 ${`\u001b[${33}m${`value`}\u001b[${39}m`} = ${value}`
+            );
+            console.log("!==");
+            console.log(
+              `249 ${`\u001b[${33}m${`testOrderNumber`}\u001b[${39}m`} = ${testOrderNumber}`
+            );
+
+            finalDigitChunk = {
+              start,
+              end,
+              value: testOrderNumber,
+              node: op.get(node, "expression.arguments.0.quasis.0"),
+            };
+            // console.log(
+            //   `259 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`finalDigitChunk.node.loc`}\u001b[${39}m`} = ${stringify(
+            //     finalDigitChunk.node.loc,
+            //     null,
+            //     4
+            //   )}`
+            // );
+          }
+        }
+
+        // if single or double quotes, like:
+        // tap.test("99", (t) => {
+        //          ^  ^
+        if (
+          !finalDigitChunk.value &&
+          node.expression.arguments[0].type === "Literal" &&
+          node.expression.arguments[0].raw
+        ) {
+          console.log(" ");
+          console.log(" ");
+          console.log(
+            `279 ${`\u001b[${34}m${`██ Literal caught!`}\u001b[${39}m`}`
+          );
+
+          // default esprima parser
+          const offset1 = op.get(node, "expression.arguments.0.start");
+          // customised to @typescript-eslint/parser
+          const offset2 = op.get(node, "expression.arguments.0.range.0");
+          console.log(
+            `287 ${`\u001b[${33}m${`offset1`}\u001b[${39}m`} = ${JSON.stringify(
               offset1,
               null,
               4
@@ -200,57 +296,17 @@ const create = (context: Obj): Obj => {
           );
 
           const { start, end, value } =
-            prep(op.get(node, "expression.arguments.0.quasis.0.value.raw"), {
+            prep(node.expression.arguments[0].raw, {
               offset: offset1 || offset2,
               returnRangesOnly: true,
             }) || {};
-          console.log(
-            `208 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`start`}\u001b[${39}m`} = ${start}; ${`\u001b[${33}m${`end`}\u001b[${39}m`} = ${end}; ${`\u001b[${33}m${`value`}\u001b[${39}m`} = ${value} --- ${`\u001b[${33}m${`testOrderNumber`}\u001b[${39}m`} = ${testOrderNumber}`
-          );
 
-          if (start && end && value && value !== testOrderNumber) {
-            console.log(
-              `213 ${`\u001b[${33}m${`value`}\u001b[${39}m`} = ${value}`
-            );
-            console.log("!==");
-            console.log(
-              `217 ${`\u001b[${33}m${`testOrderNumber`}\u001b[${39}m`} = ${testOrderNumber}`
-            );
-
-            finalDigitChunk = {
-              start,
-              end,
-              value: testOrderNumber,
-              node: op.get(node, "expression.arguments.0.quasis.0"),
-            };
-            // console.log(
-            //   `227 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`finalDigitChunk.node.loc`}\u001b[${39}m`} = ${stringify(
-            //     finalDigitChunk.node.loc,
-            //     null,
-            //     4
-            //   )}`
-            // );
-          }
-        }
-
-        if (
-          !finalDigitChunk.value &&
-          node.expression.arguments[0].type === "Literal" &&
-          node.expression.arguments[0].raw
-        ) {
-          console.log(" ");
-          console.log(" ");
-          console.log(
-            `244 ${`\u001b[${34}m${`██ Literal caught!`}\u001b[${39}m`}`
-          );
-
-          const { start, end, value } =
-            prep(node.expression.arguments[0].raw, {
-              offset: node.expression.arguments[0].start,
-              returnRangesOnly: true,
-            }) || {};
-
-          if (start && end && value && value !== testOrderNumber) {
+          if (
+            typeof start === "number" &&
+            typeof end === "number" &&
+            value &&
+            value !== testOrderNumber
+          ) {
             finalDigitChunk = {
               start,
               end,
@@ -258,8 +314,8 @@ const create = (context: Obj): Obj => {
               node: node.expression.arguments[0],
             };
             // console.log(
-            //   `261 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`finalDigitChunk.node.loc`}\u001b[${39}m`} = ${stringify(
-            //     finalDigitChunk.node.loc,
+            //   `317 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`finalDigitChunk`}\u001b[${39}m`} = ${stringify(
+            //     finalDigitChunk,
             //     null,
             //     4
             //   )}`
@@ -289,7 +345,7 @@ const create = (context: Obj): Obj => {
           console.log(" ");
           console.log(" ");
           console.log(
-            `292 ${`\u001b[${34}m${`██ Third arg literal found!`}\u001b[${39}m`}`
+            `348 ${`\u001b[${34}m${`██ Third arg literal found!`}\u001b[${39}m`}`
           );
 
           // let's find out, is it a single test clause or there are multiple
@@ -315,7 +371,7 @@ const create = (context: Obj): Obj => {
             subTestCount = "single";
           }
           // console.log(
-          //   `318 ${`\u001b[${33}m${`subTestCount`}\u001b[${39}m`} = ${stringify(
+          //   `374 ${`\u001b[${33}m${`subTestCount`}\u001b[${39}m`} = ${stringify(
           //     subTestCount,
           //     null,
           //     4
@@ -353,29 +409,29 @@ const create = (context: Obj): Obj => {
             let counter2 = 0;
 
             for (let i = 0, len = exprStatements.length; i < len; i++) {
-              // console.log(
-              //   `336 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
-              // );
+              console.log(
+                `413 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
+              );
               const assertsName = op.get(
                 exprStatements[i],
                 "expression.callee.property.name"
               );
               if (!assertsName) {
                 console.log(
-                  `365 ${`\u001b[${31}m${`error - no assert name could be extracted! CONTINUE`}\u001b[${39}m`}`
+                  `421 ${`\u001b[${31}m${`error - no assert name could be extracted! CONTINUE`}\u001b[${39}m`}`
                 );
                 continue;
               }
 
-              // console.log(
-              //   `350 #${i} - assert: ${`\u001b[${36}m${assertsName}\u001b[${39}m`}, category: ${`\u001b[${36}m${
-              //     messageIsThirdArg.has(assertsName)
-              //       ? "III"
-              //       : messageIsSecondArg.has(assertsName)
-              //       ? "II"
-              //       : "n/a"
-              //   }\u001b[${39}m`}`
-              // );
+              console.log(
+                `427 #${i} - assert: ${`\u001b[${36}m${assertsName}\u001b[${39}m`}, category: ${`\u001b[${36}m${
+                  messageIsThirdArg.has(assertsName)
+                    ? "III"
+                    : messageIsSecondArg.has(assertsName)
+                    ? "II"
+                    : "n/a"
+                }\u001b[${39}m`}`
+              );
 
               // "message" argument's position is variable, sometimes it can be
               // either 2nd or 3rd
@@ -397,7 +453,7 @@ const create = (context: Obj): Obj => {
                 messageArgsPositionWeWillAimFor = 1; // zero-based count
               }
               // console.log(
-              //   `400 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`messageArgsPositionWeWillAimFor`}\u001b[${39}m`} = ${stringify(
+              //   `456 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`messageArgsPositionWeWillAimFor`}\u001b[${39}m`} = ${stringify(
               //     messageArgsPositionWeWillAimFor,
               //     null,
               //     4
@@ -406,11 +462,11 @@ const create = (context: Obj): Obj => {
 
               if (messageArgsPositionWeWillAimFor) {
                 console.log(
-                  `409 ${`\u001b[${32}m${`message argument missing from assertion!`}\u001b[${39}m`}`
+                  `465 ${`\u001b[${32}m${`message argument missing from assertion!`}\u001b[${39}m`}`
                 );
 
                 console.log(
-                  `413 ${`\u001b[${90}m${`let's extract the value from "message" arg in assertion`}\u001b[${39}m`}`
+                  `469 ${`\u001b[${90}m${`let's extract the value from "message" arg in assertion`}\u001b[${39}m`}`
                 );
 
                 // the "message" can be Literal (single/double quotes) or
@@ -426,7 +482,7 @@ const create = (context: Obj): Obj => {
                     `expression.arguments.${messageArgsPositionWeWillAimFor}.type`
                   ) === "TemplateLiteral"
                 ) {
-                  console.log(`429 TemplateLiteral`);
+                  console.log(`485 TemplateLiteral`);
                   rawPathToMsgArgValue = `expression.arguments.${messageArgsPositionWeWillAimFor}.quasis.0`;
                   pathToMsgArgValue = op.get(
                     exprStatements[i],
@@ -443,10 +499,10 @@ const create = (context: Obj): Obj => {
                     `expression.arguments.${messageArgsPositionWeWillAimFor}.type`
                   ) === "Literal"
                 ) {
-                  console.log(`446 Literal`);
+                  console.log(`502 Literal`);
                   rawPathToMsgArgValue = `expression.arguments.${messageArgsPositionWeWillAimFor}`;
                   console.log(
-                    `449 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`rawPathToMsgArgValue`}\u001b[${39}m`} = ${JSON.stringify(
+                    `505 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`rawPathToMsgArgValue`}\u001b[${39}m`} = ${JSON.stringify(
                       rawPathToMsgArgValue,
                       null,
                       4
@@ -457,14 +513,14 @@ const create = (context: Obj): Obj => {
                     `${rawPathToMsgArgValue}.raw`
                   );
                   console.log(
-                    `460 ${`\u001b[${33}m${`rawPathToMsgArgValue`}\u001b[${39}m`} = ${JSON.stringify(
+                    `516 ${`\u001b[${33}m${`rawPathToMsgArgValue`}\u001b[${39}m`} = ${JSON.stringify(
                       rawPathToMsgArgValue,
                       null,
                       4
                     )}`
                   );
                   // console.log(
-                  //   `467 ███████████████████████████████████████ ${`\u001b[${33}m${`exprStatements[i]`}\u001b[${39}m`} = ${stringify(
+                  //   `523 ███████████████████████████████████████ ${`\u001b[${33}m${`exprStatements[i]`}\u001b[${39}m`} = ${stringify(
                   //     exprStatements[i],
                   //     null,
                   //     4
@@ -485,7 +541,7 @@ const create = (context: Obj): Obj => {
                 }
 
                 console.log(
-                  `488 FIY, ${`\u001b[${33}m${`pathToMsgArgValue`}\u001b[${39}m`} = ${JSON.stringify(
+                  `544 FIY, ${`\u001b[${33}m${`pathToMsgArgValue`}\u001b[${39}m`} = ${JSON.stringify(
                     pathToMsgArgValue,
                     null,
                     4
@@ -504,16 +560,16 @@ const create = (context: Obj): Obj => {
 
                 if (!start || !end) {
                   console.log(
-                    `507 ${`\u001b[${31}m${`SKIP`}\u001b[${39}m`} - no value extracted`
+                    `563 ${`\u001b[${31}m${`SKIP`}\u001b[${39}m`} - no value extracted`
                   );
                   continue;
                 }
 
                 console.log(
-                  `513 old: ${`\u001b[${35}m${pathToMsgArgValue}\u001b[${39}m`} (pathToMsgArgValue)`
+                  `569 old: ${`\u001b[${35}m${pathToMsgArgValue}\u001b[${39}m`} (pathToMsgArgValue)`
                 );
                 console.log(
-                  `516 old prepped value: ${`\u001b[${35}m${
+                  `572 old prepped value: ${`\u001b[${35}m${
                     prep(pathToMsgArgValue).value
                   }\u001b[${39}m`}`
                 );
@@ -524,16 +580,20 @@ const create = (context: Obj): Obj => {
                   counter2
                 );
 
-                console.log(
-                  `528 new: ${`\u001b[${35}m${newValue}\u001b[${39}m`}  range: ${`\u001b[${35}m${`[${start}, ${end}]`}\u001b[${39}m`}`
-                );
+                // console.log(
+                //   `584 newValue: ${`\u001b[${35}m${newValue}\u001b[${39}m`};\nrange: ${`\u001b[${35}m${`[${start}, ${end}]`}\u001b[${39}m`};\nrawPathToMsgArgValue: ${`\u001b[${35}m${rawPathToMsgArgValue}\u001b[${39}m`};\nprep(pathToMsgArgValue): ${`\u001b[${35}m${stringify(
+                //     prep(pathToMsgArgValue)
+                //   )}\u001b[${39}m`};\nstringify(prep(pathToMsgArgValue).value): ${`\u001b[${35}m${stringify(
+                //     prep(pathToMsgArgValue).value
+                //   )}\u001b[${39}m`};`
+                // );
 
                 if (
                   rawPathToMsgArgValue &&
                   prep(pathToMsgArgValue).value !== newValue
                 ) {
                   console.log(
-                    `536 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${start}, ${end}] to replace with a new value "${`\u001b[${35}m${newValue}\u001b[${39}m`}"`
+                    `596 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${start}, ${end}] to replace with a new value "${`\u001b[${35}m${newValue}\u001b[${39}m`}"`
                   );
                   context.report({
                     node: op.get(exprStatements[i], rawPathToMsgArgValue),
@@ -545,7 +605,7 @@ const create = (context: Obj): Obj => {
                 }
               } else {
                 console.log(
-                  `548 ${`\u001b[${31}m${`message argument missing from assertion!`}\u001b[${39}m`}`
+                  `608 ${`\u001b[${31}m${`message argument missing from assertion!`}\u001b[${39}m`}`
                 );
 
                 // First, find out at which index position should message
@@ -554,7 +614,7 @@ const create = (context: Obj): Obj => {
                 // enough arguments to reach that argument position
 
                 // console.log(
-                //   `557 FIY, ${`\u001b[${33}m${`exprStatements[i]`}\u001b[${39}m`} = ${stringify(
+                //   `617 FIY, ${`\u001b[${33}m${`exprStatements[i]`}\u001b[${39}m`} = ${stringify(
                 //     exprStatements[i],
                 //     null,
                 //     4
@@ -576,7 +636,7 @@ const create = (context: Obj): Obj => {
                 ) {
                   positionDecided = 2; // counting from zero, means 3rd in a row
                   console.log(
-                    `579 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${JSON.stringify(
+                    `639 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${JSON.stringify(
                       positionDecided,
                       null,
                       4
@@ -591,7 +651,7 @@ const create = (context: Obj): Obj => {
                 ) {
                   positionDecided = 1; // counting from zero, means 2nd in a row
                   console.log(
-                    `594 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${JSON.stringify(
+                    `654 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${JSON.stringify(
                       positionDecided,
                       null,
                       4
@@ -600,7 +660,7 @@ const create = (context: Obj): Obj => {
                 }
 
                 console.log(
-                  `603 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${JSON.stringify(
+                  `663 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${JSON.stringify(
                     positionDecided,
                     null,
                     4
@@ -609,7 +669,7 @@ const create = (context: Obj): Obj => {
 
                 if (positionDecided) {
                   console.log(
-                    `612 ${`\u001b[${32}m${`DECIDED!`}\u001b[${39}m`} We'll insert arg at position: ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${positionDecided}`
+                    `672 ${`\u001b[${32}m${`DECIDED!`}\u001b[${39}m`} We'll insert arg at position: ${`\u001b[${33}m${`positionDecided`}\u001b[${39}m`} = ${positionDecided}`
                   );
 
                   // insert the value
@@ -619,7 +679,7 @@ const create = (context: Obj): Obj => {
                       // custom parser for TS, @typescript-eslint/parser
                       op.get(exprStatements[i], "expression.range.1")) - 1;
                   console.log(
-                    `622 ${`\u001b[${35}m${`██`}\u001b[${39}m`} positionToInsertAt = ${positionToInsertAt}`
+                    `682 ${`\u001b[${35}m${`██`}\u001b[${39}m`} positionToInsertAt = ${positionToInsertAt}`
                   );
 
                   const newValue = getNewValue(
@@ -638,7 +698,7 @@ const create = (context: Obj): Obj => {
                   const startIdx = (left(wholeSourceStr, endIdx) || 0) + 1;
 
                   console.log(
-                    `641 SET ${`\u001b[${33}m${`startIdx`}\u001b[${39}m`} = ${JSON.stringify(
+                    `701 SET ${`\u001b[${33}m${`startIdx`}\u001b[${39}m`} = ${JSON.stringify(
                       startIdx,
                       null,
                       4
@@ -663,8 +723,8 @@ const create = (context: Obj): Obj => {
 
                     wholeSourceStr.slice(startIdx, endIdx).includes(`\n`)
                   ) {
-                    console.log(`666 we've got a multi-line case`);
-                    console.log(`667 slice [${startIdx}, ${endIdx}]`);
+                    console.log(`726 we've got a multi-line case`);
+                    console.log(`727 slice [${startIdx}, ${endIdx}]`);
 
                     const frontalIndentation = Array.from(
                       wholeSourceStr.slice(startIdx, endIdx)
@@ -675,7 +735,7 @@ const create = (context: Obj): Obj => {
                   }
 
                   console.log(
-                    `678 ${`\u001b[${32}m${`REPORT`}\u001b[${39}m`} ${JSON.stringify(
+                    `738 ${`\u001b[${32}m${`REPORT`}\u001b[${39}m`} ${JSON.stringify(
                       [startIdx, endIdx, valueToInsert],
                       null,
                       4
@@ -694,13 +754,13 @@ const create = (context: Obj): Obj => {
                   });
                 } else {
                   console.log(
-                    `697 ${`\u001b[${31}m${`"positionDecided" not decided, skip!`}\u001b[${39}m`}`
+                    `757 ${`\u001b[${31}m${`"positionDecided" not decided, skip!`}\u001b[${39}m`}`
                   );
                 }
               }
             }
             console.log(
-              `703 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
+              `763 ${`\u001b[${90}m${`=================================`}\u001b[${39}m`}`
             );
           }
         }
@@ -709,7 +769,7 @@ const create = (context: Obj): Obj => {
 
         if (finalDigitChunk.value) {
           console.log(
-            `712 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${
+            `772 ${`\u001b[${31}m${`MISMATCH!`}\u001b[${39}m`} reporting range [${
               finalDigitChunk.start
             }, ${
               finalDigitChunk.end
