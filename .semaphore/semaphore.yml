@@ -46,13 +46,19 @@ blocks:
             - git add README.md
             - "git add package-lock.json || echo 'no package-lock.json'"
             - "git diff-index --quiet HEAD || git commit -m 'chore: automated build tasks [skip ci]' --no-verify"
+            # run lerna version with all extras:
             - npm run pub:vers
+            # now build again, because those bumped versions need to be written into header comment blocks:
+            - npm run build:just
             - git status
             - git add packages
             - git add README.md
             - "git commit -m 'chore: automated build tasks [skip ci]' --no-verify"
+            # publish to npm
             - npm run republish
+            # push repo with all artifacts to git remote
             - git push
+            # reset jsdelivr caches
             - curl https://purge.jsdelivr.net/npm/detergent/dist/detergent.umd.js || echo 'detergent unreachable on jsdelivr'
             - curl https://purge.jsdelivr.net/npm/html-crush/dist/html-crush.umd.js || echo 'html-crush unreachable on jsdelivr'
             - curl https://purge.jsdelivr.net/npm/email-comb/dist/email-comb.umd.js || echo 'email-comb unreachable on jsdelivr'
