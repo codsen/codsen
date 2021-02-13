@@ -49,7 +49,7 @@ function groupStr(
     // (will return null when there are no digits found):
     const digitChunks: string[] = arr[i].match(/\d+/gm);
     console.log(
-      `043 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`digitChunks`}\u001b[${39}m`} = ${JSON.stringify(
+      `052 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`digitChunks`}\u001b[${39}m`} = ${JSON.stringify(
         digitChunks,
         null,
         4
@@ -80,13 +80,13 @@ function groupStr(
         // for replacement with wildcards), is it different from previous string's
         // chunk at that position (there can be multiple chunks of digits).
 
-        console.log(`072 compiledObj has entry for "${wildcarded}"`);
+        console.log(`083 compiledObj has entry for "${wildcarded}"`);
         console.log(
-          `074 \u001b[${36}m${`██ ██ ██ CHECK ALL CHUNKS ██ ██ ██`}\u001b[${39}m`
+          `085 \u001b[${36}m${`██ ██ ██ CHECK ALL CHUNKS ██ ██ ██`}\u001b[${39}m`
         );
         digitChunks.forEach((digitsChunkStr, i2) => {
           console.log(
-            `078 \u001b[${36}m${`██ chunk i2 = ${i2}, val = ${digitsChunkStr}`}\u001b[${39}m`
+            `089 \u001b[${36}m${`██ chunk i2 = ${i2}, val = ${digitsChunkStr}`}\u001b[${39}m`
           );
           if (
             compiledObj[wildcarded].elementsWhichWeCanReplaceWithWildcards[
@@ -96,7 +96,7 @@ function groupStr(
               compiledObj[wildcarded].elementsWhichWeCanReplaceWithWildcards[i2]
           ) {
             console.log(
-              `088 BEFORE compiledObj[wildcarded].elementsWhichWeCanReplaceWithWildcards = ${JSON.stringify(
+              `099 BEFORE compiledObj[wildcarded].elementsWhichWeCanReplaceWithWildcards = ${JSON.stringify(
                 compiledObj[wildcarded].elementsWhichWeCanReplaceWithWildcards,
                 null,
                 0
@@ -106,7 +106,7 @@ function groupStr(
               i2
             ] = false;
             console.log(
-              `098 AFTER compiledObj[wildcarded].elementsWhichWeCanReplaceWithWildcards = ${JSON.stringify(
+              `109 AFTER compiledObj[wildcarded].elementsWhichWeCanReplaceWithWildcards = ${JSON.stringify(
                 compiledObj[wildcarded].elementsWhichWeCanReplaceWithWildcards,
                 null,
                 0
@@ -117,7 +117,7 @@ function groupStr(
         // finally, bump the count:
         compiledObj[wildcarded].count += 1;
         console.log(
-          `109 BUMP compiledObj[wildcarded].count is now = ${compiledObj[wildcarded].count}`
+          `120 BUMP compiledObj[wildcarded].count is now = ${compiledObj[wildcarded].count}`
         );
       } else {
         compiledObj[wildcarded] = {
@@ -125,7 +125,7 @@ function groupStr(
           elementsWhichWeCanReplaceWithWildcards: Array.from(digitChunks),
         };
         console.log(
-          `117 creating entry for "${wildcarded}"; compiledObj[wildcarded] = ${JSON.stringify(
+          `128 creating entry for "${wildcarded}"; compiledObj[wildcarded] = ${JSON.stringify(
             compiledObj[wildcarded],
             null,
             4
@@ -136,7 +136,7 @@ function groupStr(
   }
 
   console.log(
-    `128 FINAL ${`\u001b[${33}m${`compiledObj`}\u001b[${39}m`} = ${JSON.stringify(
+    `139 FINAL ${`\u001b[${33}m${`compiledObj`}\u001b[${39}m`} = ${JSON.stringify(
       compiledObj,
       null,
       4
@@ -149,7 +149,7 @@ function groupStr(
       `\u001b[${36}m${`------------------------------------------`}\u001b[${39}m`
     );
     console.log(
-      `141 PROCESSING compiledObj key: ${JSON.stringify(key, null, 4)}`
+      `152 PROCESSING compiledObj key: ${JSON.stringify(key, null, 4)}`
     );
     // here were restore the values which were replaced with wildcards where
     // those values were identical across the whole set. That's the whole point
@@ -174,7 +174,7 @@ function groupStr(
         (val: any) => val !== false
       )
     ) {
-      console.log(`166 ██ PREP ${key}`);
+      console.log(`177 ██ PREP ${key}`);
 
       // we'll compile ranges array and replace all wildcards in one go using https://www.npmjs.com/package/ranges-apply
       const rangesArr = [];
@@ -188,7 +188,7 @@ function groupStr(
         z++
       ) {
         console.log(z === 0 ? "" : "\n-------------\n");
-        console.log(`180 ${`\u001b[${33}m${`z`}\u001b[${39}m`} = ${z}`);
+        console.log(`191 ${`\u001b[${33}m${`z`}\u001b[${39}m`} = ${z}`);
         nThIndex = newKey.indexOf(
           `${opts.wildcard || ""}`,
           nThIndex + (opts.wildcard || "").length

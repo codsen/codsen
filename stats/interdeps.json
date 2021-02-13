@@ -244,7 +244,7 @@
     },
     {
         "name": "emlint",
-        "size": 379057,
+        "size": 379305,
         "imports": [
             "ast-monkey-traverse",
             "ast-monkey-util",
@@ -265,14 +265,14 @@
     },
     {
         "name": "eslint-plugin-row-num",
-        "size": 3522,
+        "size": 4034,
         "imports": [
             "js-row-num"
         ]
     },
     {
         "name": "eslint-plugin-test-num",
-        "size": 22041,
+        "size": 20314,
         "imports": [
             "string-left-right"
         ]

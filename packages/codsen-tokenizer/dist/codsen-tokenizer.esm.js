@@ -1,7 +1,7 @@
 /**
  * codsen-tokenizer
  * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
- * Version: 5.1.0
+ * Version: 5.1.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/codsen-tokenizer/
@@ -405,7 +405,7 @@ function startsEsp(str, i, token, layers, withinStyle) {
   return !!res;
 }
 
-var version = "5.1.0";
+var version = "5.1.1";
 
 const version$1 = version;
 const defaults = {
@@ -2277,7 +2277,7 @@ function tokenizer(str, originalOpts) {
             // That's Nunjucks, Responsys (but no eDialog) patterns.
 
             const firstPartOfWholeEspTagClosing = wholeEspTagClosing.slice(0, wholeEspTagClosing.indexOf(headsFirstChar));
-            const secondPartOfWholeEspTagClosing = wholeEspTagClosing.slice(wholeEspTagClosing.indexOf(headsFirstChar)); // imagine we cliced off (Nunjucks): -%}{%-
+            const secondPartOfWholeEspTagClosing = wholeEspTagClosing.slice(wholeEspTagClosing.indexOf(headsFirstChar)); // imagine we sliced off (Nunjucks): -%}{%-
             // if every character from anticipated tails (-%}) is present in the front
             // chunk, Bob's your uncle, that's tails with new heads following.
 
@@ -2290,7 +2290,7 @@ function tokenizer(str, originalOpts) {
             // so heads and tails don't contain unique character, and more so,
             // starting-one, PLUS, second set is different.
             // For example, ESP heads/tails can be *|zzz|*
-            // Imaginery example, following heads would be variation of those
+            // Imaginary example, following heads would be variation of those
             // above, ^|zzz|^ // TODO
             // for now, return defaults, from else scenario below:
             // we consider this whole chunk is tails.

@@ -1,7 +1,7 @@
 /**
  * object-delete-key
  * Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.
- * Version: 2.0.3
+ * Version: 2.0.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-delete-key/
@@ -22,7 +22,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 
-var version = "2.0.3";
+var version = "2.0.4";
 
 var version$1 = version;
 

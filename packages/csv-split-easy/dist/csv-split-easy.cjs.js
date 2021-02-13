@@ -1,7 +1,7 @@
 /**
  * csv-split-easy
  * Splits the CSV string into array of arrays, each representing a row of columns
- * Version: 5.0.3
+ * Version: 5.0.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/csv-split-easy/
@@ -18,7 +18,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
-var version = "5.0.3";
+var version = "5.0.4";
 
 var version$1 = version;
 var defaults = {

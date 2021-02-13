@@ -604,17 +604,43 @@ tap.test(
   }
 );
 
+tap.test(`12 - ${`\u001b[${36}m${`basic`}\u001b[${39}m`} - left slash`, (t) => {
+  const gatheredErr = [];
+  cparser(`<td><\\td>`, {
+    errCb: (errObj) => gatheredErr.push(errObj),
+  });
+  // t.strictSame(
+  t.match(
+    gatheredErr,
+    [
+      {
+        ruleId: "tag-missing-closing",
+        idxFrom: 0,
+        idxTo: 4,
+      },
+      {
+        ruleId: "tag-missing-closing",
+        idxFrom: 4,
+        idxTo: 9,
+      },
+    ],
+    "12.01"
+  );
+  t.is(gatheredErr.length, 2, "12.02");
+  t.end();
+});
+
 // 02. false alerts
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `12 - ${`\u001b[${33}m${`false alerts`}\u001b[${39}m`} - healthy doctype`,
+  `13 - ${`\u001b[${33}m${`false alerts`}\u001b[${39}m`} - healthy doctype`,
   (t) => {
     const gatheredErr = [];
     cparser(`<!doctype html>`, {
       errCb: (errObj) => gatheredErr.push(errObj),
     });
-    t.strictSame(gatheredErr, [], "12");
+    t.strictSame(gatheredErr, [], "13");
     t.end();
   }
 );

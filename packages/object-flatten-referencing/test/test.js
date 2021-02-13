@@ -1706,26 +1706,26 @@ tap.test(
 // 96. util.arrayiffyString
 // -----------------------------------------------------------------------------
 
-tap.test("25 - util.arrayiffyString - turns string into an array", (t) => {
-  t.strictSame(arrayiffyString("zzz"), ["zzz"], "25");
+tap.test("21 - util.arrayiffyString - turns string into an array", (t) => {
+  t.strictSame(arrayiffyString("zzz"), ["zzz"], "21");
   t.end();
 });
 
 tap.test(
-  "26 - util.arrayiffyString - turns empty string into an empty array",
+  "22 - util.arrayiffyString - turns empty string into an empty array",
   (t) => {
-    t.strictSame(arrayiffyString(""), [], "26");
+    t.strictSame(arrayiffyString(""), [], "22");
     t.end();
   }
 );
 
 tap.test(
-  "27 - util.arrayiffyString - doesn't touch any other input types",
+  "23 - util.arrayiffyString - doesn't touch any other input types",
   (t) => {
-    t.strictSame(arrayiffyString(["a"]), ["a"], "27.01");
-    t.strictSame(arrayiffyString([]), [], "27.02");
-    t.strictSame(arrayiffyString(1), 1, "27.03");
-    t.strictSame(arrayiffyString(null), null, "27.04");
+    t.strictSame(arrayiffyString(["a"]), ["a"], "23.01");
+    t.strictSame(arrayiffyString([]), [], "23.02");
+    t.strictSame(arrayiffyString(1), 1, "23.03");
+    t.strictSame(arrayiffyString(null), null, "23.04");
     t.end();
   }
 );
@@ -1734,13 +1734,13 @@ tap.test(
 // 98. util.flattenObject
 // -----------------------------------------------------------------------------
 
-tap.test("28 - util.flattenObject > empty input", (t) => {
-  t.strictSame(flattenObject(), [], "28.01");
-  t.strictSame(flattenObject({}), [], "28.02");
+tap.test("24 - util.flattenObject > empty input", (t) => {
+  t.strictSame(flattenObject(), [], "24.01");
+  t.strictSame(flattenObject({}), [], "24.02");
   t.end();
 });
 
-tap.test("29 - util.flattenObject > simple object", (t) => {
+tap.test("25 - util.flattenObject > simple object", (t) => {
   t.strictSame(
     flattenObject(
       {
@@ -1757,12 +1757,12 @@ tap.test("29 - util.flattenObject > simple object", (t) => {
       }
     ),
     ["a.b", "c.d"],
-    "29"
+    "25"
   );
   t.end();
 });
 
-tap.test("30 - util.flattenObject > nested objects", (t) => {
+tap.test("26 - util.flattenObject > nested objects", (t) => {
   t.strictSame(
     flattenObject(
       {
@@ -1779,7 +1779,7 @@ tap.test("30 - util.flattenObject > nested objects", (t) => {
       }
     ),
     ["a.b.c", "a.d.e", "f.g.h", "f.e.j"],
-    "30"
+    "26"
   );
   t.end();
 });
@@ -1788,12 +1788,12 @@ tap.test("30 - util.flattenObject > nested objects", (t) => {
 // 99. util.flattenArr
 // -----------------------------------------------------------------------------
 
-tap.test("31 - util.flattenArr > empty input", (t) => {
-  t.strictSame(flattenArr(), "", "31");
+tap.test("27 - util.flattenArr > empty input", (t) => {
+  t.strictSame(flattenArr(), "", "27");
   t.end();
 });
 
-tap.test("32 - util.flattenArr > simple array", (t) => {
+tap.test("28 - util.flattenArr > simple array", (t) => {
   t.strictSame(
     flattenArr(
       ["a", "b", "c"],
@@ -1808,7 +1808,7 @@ tap.test("32 - util.flattenArr > simple array", (t) => {
       true
     ),
     "%%_a_%% %%_b_%% %%_c_%%",
-    "32.01"
+    "28.01"
   );
   t.strictSame(
     flattenArr(
@@ -1824,12 +1824,12 @@ tap.test("32 - util.flattenArr > simple array", (t) => {
       false
     ),
     "a b c",
-    "32.02"
+    "28.02"
   );
   t.end();
 });
 
-tap.test("33 - util.flattenArr + joinArraysUsingBrs", (t) => {
+tap.test("29 - util.flattenArr + joinArraysUsingBrs", (t) => {
   t.strictSame(
     flattenArr(
       ["a", ["b", "c", "d"], "e"],
@@ -1846,7 +1846,7 @@ tap.test("33 - util.flattenArr + joinArraysUsingBrs", (t) => {
       false // joinArraysUsingBrs
     ),
     "%%_a_%% %%_b,c,d_%% %%_e_%%",
-    "33.01"
+    "29.01"
   );
   t.strictSame(
     flattenArr(
@@ -1864,7 +1864,7 @@ tap.test("33 - util.flattenArr + joinArraysUsingBrs", (t) => {
       false // joinArraysUsingBrs
     ),
     "a b,c,d e",
-    "33.02"
+    "29.02"
   );
   t.strictSame(
     flattenArr(
@@ -1882,7 +1882,7 @@ tap.test("33 - util.flattenArr + joinArraysUsingBrs", (t) => {
       false // joinArraysUsingBrs
     ),
     "%%_a_%% %%_b,c,d_%% %%_e_%%",
-    "33.03"
+    "29.03"
   );
   t.strictSame(
     flattenArr(
@@ -1900,7 +1900,7 @@ tap.test("33 - util.flattenArr + joinArraysUsingBrs", (t) => {
       false // joinArraysUsingBrs
     ),
     "a b,c,d e",
-    "33.04"
+    "29.04"
   );
 
   // joinArraysUsingBrs = true
@@ -1920,7 +1920,7 @@ tap.test("33 - util.flattenArr + joinArraysUsingBrs", (t) => {
       true // joinArraysUsingBrs
     ),
     "%%_a_%%<br />%%_b_%% %%_c_%% %%_d_%%<br />%%_e_%%",
-    "33.05"
+    "29.05"
   );
   t.strictSame(
     flattenArr(
@@ -1938,7 +1938,7 @@ tap.test("33 - util.flattenArr + joinArraysUsingBrs", (t) => {
       true // joinArraysUsingBrs
     ),
     "a<br />b c d<br />e",
-    "33.06"
+    "29.06"
   );
   t.strictSame(
     flattenArr(
@@ -1956,7 +1956,7 @@ tap.test("33 - util.flattenArr + joinArraysUsingBrs", (t) => {
       true // joinArraysUsingBrs
     ),
     "%%_a_%%%%_b_%% %%_c_%% %%_d_%%%%_e_%%",
-    "33.07"
+    "29.07"
   );
   t.strictSame(
     flattenArr(
@@ -1974,7 +1974,7 @@ tap.test("33 - util.flattenArr + joinArraysUsingBrs", (t) => {
       true // joinArraysUsingBrs
     ),
     "ab c de",
-    "33.08"
+    "29.08"
   );
 
   // HTML - no slashes
@@ -1994,7 +1994,7 @@ tap.test("33 - util.flattenArr + joinArraysUsingBrs", (t) => {
       true // joinArraysUsingBrs
     ),
     "%%_a_%%<br>%%_b_%% %%_c_%% %%_d_%%<br>%%_e_%%",
-    "33.09"
+    "29.09"
   );
   t.strictSame(
     flattenArr(
@@ -2012,7 +2012,7 @@ tap.test("33 - util.flattenArr + joinArraysUsingBrs", (t) => {
       true // joinArraysUsingBrs
     ),
     "a<br>b c d<br>e",
-    "33.10"
+    "29.10"
   );
   t.strictSame(
     flattenArr(
@@ -2030,7 +2030,7 @@ tap.test("33 - util.flattenArr + joinArraysUsingBrs", (t) => {
       false // joinArraysUsingBrs
     ),
     "%%_a_%% %%_b,c,d_%% %%_e_%%",
-    "33.11"
+    "29.11"
   );
   t.strictSame(
     flattenArr(
@@ -2048,7 +2048,7 @@ tap.test("33 - util.flattenArr + joinArraysUsingBrs", (t) => {
       false // joinArraysUsingBrs
     ),
     "a b,c,d e",
-    "33.12"
+    "29.12"
   );
   t.end();
 });

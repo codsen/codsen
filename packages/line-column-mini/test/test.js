@@ -6,13 +6,13 @@ import { lineCol, getLineStartIndexes } from "../dist/line-column-mini.esm";
 // -----------------------------------------------------------------------------
 
 tap.test("01 - wrong/missing input = throw", (t) => {
-  t.strictSame(lineCol(), null);
-  t.strictSame(lineCol(""), null);
-  t.strictSame(lineCol("", null), null);
-  t.strictSame(lineCol("a"), null);
-  t.strictSame(lineCol("a", null), null);
-  t.strictSame(lineCol("a", 1), null);
-  t.strictSame(lineCol("a", 99), null);
+  t.strictSame(lineCol(), null, "01.01");
+  t.strictSame(lineCol(""), null, "01.02");
+  t.strictSame(lineCol("", null), null, "01.03");
+  t.strictSame(lineCol("a"), null, "01.04");
+  t.strictSame(lineCol("a", null), null, "01.05");
+  t.strictSame(lineCol("a", 1), null, "01.06");
+  t.strictSame(lineCol("a", 99), null, "01.07");
 
   t.end();
 });
@@ -302,7 +302,7 @@ tap.test("04 - skipChecks arg", (t) => {
       line: 2,
       col: 2,
     },
-    "02.07 - e"
+    "04.01 - e"
   );
 
   // with caching
@@ -313,7 +313,7 @@ tap.test("04 - skipChecks arg", (t) => {
       line: 2,
       col: 2,
     },
-    "02.07 - e"
+    "04.02 - e"
   );
   t.end();
 });

@@ -1,7 +1,7 @@
 /**
  * js-row-num
  * Update all row numbers in all console.logs in JS code
- * Version: 4.0.3
+ * Version: 4.0.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/js-row-num/
@@ -65,7 +65,7 @@ function _objectSpread2(target) {
 /**
  * string-collapse-leading-whitespace
  * Collapse the leading and trailing whitespace of a string
- * Version: 5.0.3
+ * Version: 5.0.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
@@ -601,7 +601,7 @@ var Ranges = /*#__PURE__*/function () {
 /**
  * ranges-apply
  * Take an array of string index ranges, delete/replace the string according to them
- * Version: 5.0.3
+ * Version: 5.0.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/
@@ -731,7 +731,7 @@ function rApply(str, originalRangesArr, _progressFn) {
   return str;
 }
 
-var version = "4.0.3";
+var version = "4.0.4";
 
 var version$1 = version;
 var BACKSLASH = "\\";

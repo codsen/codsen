@@ -120,7 +120,7 @@ function cleanChangelogs(
           newLinesArr.unshift(linesArr[i].trim());
           lastLineWasEmpty = true;
           console.log(
-            `120 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
+            `123 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
           );
         }
       }
@@ -135,7 +135,7 @@ function cleanChangelogs(
       if (linesArr[i].trim()) {
         lastLineWasEmpty = false;
         console.log(
-          `135 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
+          `138 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
         );
       }
     }

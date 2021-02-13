@@ -101,7 +101,7 @@ tap.test(`05 - cb is null`, (t) => {
   t.strictSame(
     collapse("aaa", { cb: null }),
     { result: "aaa", ranges: null },
-    "04"
+    "05"
   );
   t.end();
 });

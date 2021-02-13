@@ -41,7 +41,7 @@ tap.test(`03`, (t) => {
       decode: true,
     }),
     [],
-    "02"
+    "03.01"
   );
   t.strictSame(
     fix(inp1, {
@@ -49,7 +49,7 @@ tap.test(`03`, (t) => {
       decode: false,
     }),
     [],
-    "02"
+    "03.02"
   );
   t.end();
 });

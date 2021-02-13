@@ -163,7 +163,7 @@ tap.test("11 - empty array as second arg", (t) => {
 });
 
 tap.test("12 - pulls normal words in various ways", (t) => {
-  t.strictSame(pull(["apples", "oranges"], "apples"), ["oranges"], "12");
+  t.strictSame(pull(["apples", "oranges"], "apples"), ["oranges"], "12.01");
   t.strictSame(pull(["apples", "oranges"], ["apples"]), ["oranges"], "12.02");
   t.strictSame(pull(["apples", "oranges"], ["apples*"]), ["oranges"], "12.03");
   t.strictSame(pull(["apples", "oranges"], "apples*"), ["oranges"], "12.04");

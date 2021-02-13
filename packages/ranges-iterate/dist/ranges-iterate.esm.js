@@ -1,13 +1,13 @@
 /**
  * ranges-iterate
  * Iterate a string and any changes within given string index ranges
- * Version: 2.0.3
+ * Version: 2.0.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-iterate/
  */
 
-var version = "2.0.3";
+var version = "2.0.4";
 
 const version$1 = version;
 

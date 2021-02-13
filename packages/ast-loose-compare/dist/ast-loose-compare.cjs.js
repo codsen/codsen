@@ -1,7 +1,7 @@
 /**
  * ast-loose-compare
  * Compare anything: AST, objects, arrays and strings
- * Version: 2.0.3
+ * Version: 2.0.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-loose-compare/
@@ -18,7 +18,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
-var version = "2.0.3";
+var version = "2.0.4";
 
 var version$1 = version; // we use internal function to shield the third input arg from the outside api
 

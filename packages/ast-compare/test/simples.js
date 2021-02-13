@@ -587,17 +587,17 @@ tap.test("47 - Boolean and numeric values", (t) => {
   t.end();
 });
 
-tap.test("51 - s is zero length, b is empty - defaults", (t) => {
+tap.test("48 - s is zero length, b is empty - defaults", (t) => {
   t.strictSame(
     compare({ a: "\n\n\n   \t\t\t", b: "2" }, { a: "", b: "2" }),
     false,
-    "51"
+    "48"
   );
   t.end();
 });
 
 tap.test(
-  "52 - s is zero length, b is empty - opts.hungryForWhitespace",
+  "49 - s is zero length, b is empty - opts.hungryForWhitespace",
   (t) => {
     t.strictSame(
       compare(
@@ -606,20 +606,20 @@ tap.test(
         { hungryForWhitespace: true }
       ),
       true,
-      "52"
+      "49"
     );
     t.end();
   }
 );
 
 tap.test(
-  "53 - s is zero length, b is empty - opts.hungryForWhitespace",
+  "50 - s is zero length, b is empty - opts.hungryForWhitespace",
   (t) => {
     // no keys array vs array with all empty vales
     t.strictSame(
       compare([{ a: "\n\n\n" }], {}, { hungryForWhitespace: true }),
       true,
-      "53"
+      "50"
     );
     t.end();
   }

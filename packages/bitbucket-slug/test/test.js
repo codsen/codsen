@@ -383,51 +383,51 @@ tap.test("52 - No space around ampersand", (t) => {
 // 13. Single straight quote
 // -----------------------------------------------------------------------------
 
-tap.test("55 - Single quote between letters", (t) => {
-  t.equal(s("## Title's notation"), "markdown-header-titles-notation", "55");
+tap.test("53 - Single quote between letters", (t) => {
+  t.equal(s("## Title's notation"), "markdown-header-titles-notation", "53");
   t.end();
 });
 
-tap.test("56 - Single quote ends the H2", (t) => {
-  t.equal(s("## Peoples'"), "markdown-header-peoples", "56");
+tap.test("54 - Single quote ends the H2", (t) => {
+  t.equal(s("## Peoples'"), "markdown-header-peoples", "54");
   t.end();
 });
 
 // 14. Bracket
 // -----------------------------------------------------------------------------
 
-tap.test("57 - Words with brackets", (t) => {
+tap.test("55 - Words with brackets", (t) => {
   t.equal(
     s("## Music (not this) is pleasure"),
     "markdown-header-music-not-this-is-pleasure",
-    "57"
+    "55"
   );
   t.end();
 });
 
-tap.test("58 - All H2 wrapped with brackets", (t) => {
-  t.equal(s("## (Something)"), "markdown-header-something", "58");
+tap.test("56 - All H2 wrapped with brackets", (t) => {
+  t.equal(s("## (Something)"), "markdown-header-something", "56");
   t.end();
 });
 
 // 15. Asterisk
 // -----------------------------------------------------------------------------
 
-tap.test("59 - Asterisk in the end", (t) => {
-  t.equal(s("## Something*"), "markdown-header-something", "59");
+tap.test("57 - Asterisk in the end", (t) => {
+  t.equal(s("## Something*"), "markdown-header-something", "57");
   t.end();
 });
 
-tap.test("60 - Digits with asterisk, tight", (t) => {
-  t.equal(s("## 2*2"), "markdown-header-22", "60");
+tap.test("58 - Digits with asterisk, tight", (t) => {
+  t.equal(s("## 2*2"), "markdown-header-22", "58");
   t.end();
 });
 
-tap.test("61 - Asterisk surrounded by spaces", (t) => {
+tap.test("59 - Asterisk surrounded by spaces", (t) => {
   t.equal(
     s("## Something * Something"),
     "markdown-header-something-something",
-    "61"
+    "59"
   );
   t.end();
 });
@@ -435,20 +435,20 @@ tap.test("61 - Asterisk surrounded by spaces", (t) => {
 // 16. Plus
 // -----------------------------------------------------------------------------
 
-tap.test("62 - Plus sign, spaces", (t) => {
+tap.test("60 - Plus sign, spaces", (t) => {
   t.equal(
     s("## Something + anything"),
     "markdown-header-something-anything",
-    "62"
+    "60"
   );
   t.end();
 });
 
-tap.test("63 - Plus sign, tight", (t) => {
+tap.test("61 - Plus sign, tight", (t) => {
   t.equal(
     s("## Something+anything"),
     "markdown-header-somethinganything",
-    "63"
+    "61"
   );
   t.end();
 });
@@ -456,20 +456,20 @@ tap.test("63 - Plus sign, tight", (t) => {
 // 17. Comma
 // -----------------------------------------------------------------------------
 
-tap.test("64 - Comma, space", (t) => {
+tap.test("62 - Comma, space", (t) => {
   t.equal(
     s("## Something, anything"),
     "markdown-header-something-anything",
-    "64"
+    "62"
   );
   t.end();
 });
 
-tap.test("65 - Comma, no space", (t) => {
+tap.test("63 - Comma, no space", (t) => {
   t.equal(
     s("## Something,anything"),
     "markdown-header-somethinganything",
-    "65"
+    "63"
   );
   t.end();
 });
@@ -477,55 +477,55 @@ tap.test("65 - Comma, no space", (t) => {
 // 18. Slash
 // -----------------------------------------------------------------------------
 
-tap.test("66 - Slash, no spaces", (t) => {
-  t.equal(s("## Slash/dot"), "markdown-header-slashdot", "66");
+tap.test("64 - Slash, no spaces", (t) => {
+  t.equal(s("## Slash/dot"), "markdown-header-slashdot", "64");
   t.end();
 });
 
-tap.test("67 - Slash with spaces", (t) => {
-  t.equal(s("## Slash / dot"), "markdown-header-slash-dot", "67");
+tap.test("65 - Slash with spaces", (t) => {
+  t.equal(s("## Slash / dot"), "markdown-header-slash-dot", "65");
   t.end();
 });
 
 // 19. Digits
 // -----------------------------------------------------------------------------
 
-tap.test("68 - All digits", (t) => {
+tap.test("66 - All digits", (t) => {
   t.equal(
     s("## 1 2 3 4 5 6 7 8 9 0"),
     "markdown-header-1-2-3-4-5-6-7-8-9-0",
-    "68"
+    "66"
   );
   t.end();
 });
 
-tap.test("69 - All digits surrounded by letters", (t) => {
+tap.test("67 - All digits surrounded by letters", (t) => {
   t.equal(
     s("## aaa 1 2 3 4 5 6 7 8 9 0 bbb"),
     "markdown-header-aaa-1-2-3-4-5-6-7-8-9-0-bbb",
-    "69"
+    "67"
   );
   t.end();
 });
 
-tap.test("70 - All digits, no spaces", (t) => {
-  t.equal(s("## 1234567890"), "markdown-header-1234567890", "70");
+tap.test("68 - All digits, no spaces", (t) => {
+  t.equal(s("## 1234567890"), "markdown-header-1234567890", "68");
   t.end();
 });
 
-tap.test("71 - All digits surrounded by letters, no spaces", (t) => {
-  t.equal(s("## aaa1234567890bbb"), "markdown-header-aaa1234567890bbb", "71");
+tap.test("69 - All digits surrounded by letters, no spaces", (t) => {
+  t.equal(s("## aaa1234567890bbb"), "markdown-header-aaa1234567890bbb", "69");
   t.end();
 });
 
 // 20. Colon
 // -----------------------------------------------------------------------------
 
-tap.test("72 - Colon follows the word in h2", (t) => {
+tap.test("70 - Colon follows the word in h2", (t) => {
   t.equal(
     s("## Colons: practical, useful and, of course, legible"),
     "markdown-header-colons-practical-useful-and-of-course-legible",
-    "72"
+    "70"
   );
   t.end();
 });
@@ -533,65 +533,65 @@ tap.test("72 - Colon follows the word in h2", (t) => {
 // 21. Semicolon
 // -----------------------------------------------------------------------------
 
-tap.test("73 - Semicolon after word", (t) => {
+tap.test("71 - Semicolon after word", (t) => {
   t.equal(
     s("## Semicolons; What not follows"),
     "markdown-header-semicolons-what-not-follows",
-    "73"
+    "71"
   );
   t.end();
 });
 
-tap.test("74 - Semicolon in the end", (t) => {
-  t.equal(s("## Semicolons;"), "markdown-header-semicolons", "74");
+tap.test("72 - Semicolon in the end", (t) => {
+  t.equal(s("## Semicolons;"), "markdown-header-semicolons", "72");
   t.end();
 });
 
 // 22. Less than, greater than and equal signs
 // -----------------------------------------------------------------------------
 
-tap.test("75 - Less than", (t) => {
-  t.equal(s("## a < b"), "markdown-header-a-b", "75");
+tap.test("73 - Less than", (t) => {
+  t.equal(s("## a < b"), "markdown-header-a-b", "73");
   t.end();
 });
 
-tap.test("76 - Greater than", (t) => {
-  t.equal(s("## a > b"), "markdown-header-a-b", "76");
+tap.test("74 - Greater than", (t) => {
+  t.equal(s("## a > b"), "markdown-header-a-b", "74");
   t.end();
 });
 
-tap.test("77 - Single equal", (t) => {
-  t.equal(s("## a = b"), "markdown-header-a-b", "77");
+tap.test("75 - Single equal", (t) => {
+  t.equal(s("## a = b"), "markdown-header-a-b", "75");
   t.end();
 });
 
-tap.test("78 - Tripple equal, tight", (t) => {
-  t.equal(s("## a===b"), "markdown-header-ab", "78");
+tap.test("76 - Tripple equal, tight", (t) => {
+  t.equal(s("## a===b"), "markdown-header-ab", "76");
   t.end();
 });
 
-tap.test("79 - Tripple equal, spaced", (t) => {
-  t.equal(s("## a === b"), "markdown-header-a-b", "79");
+tap.test("77 - Tripple equal, spaced", (t) => {
+  t.equal(s("## a === b"), "markdown-header-a-b", "77");
   t.end();
 });
 
 // 23. Question mark, revisited
 // -----------------------------------------------------------------------------
 
-tap.test("80 - Question mark in the end", (t) => {
+tap.test("78 - Question mark in the end", (t) => {
   t.equal(
     s("## What is the point of testing this?"),
     "markdown-header-what-is-the-point-of-testing-this",
-    "80"
+    "78"
   );
   t.end();
 });
 
-tap.test("81 - Two question marks in H2", (t) => {
+tap.test("79 - Two question marks in H2", (t) => {
   t.equal(
     s("## What? Don't we need to test?"),
     "markdown-header-what-dont-we-need-to-test",
-    "81"
+    "79"
   );
   t.end();
 });
@@ -599,20 +599,20 @@ tap.test("81 - Two question marks in H2", (t) => {
 // 24. At sign
 // -----------------------------------------------------------------------------
 
-tap.test("82 - Email address in the H2", (t) => {
+tap.test("80 - Email address in the H2", (t) => {
   t.equal(
     s("## Email is: roy@domain.com"),
     "markdown-header-email-is-roydomaincom",
-    "82"
+    "80"
   );
   t.end();
 });
 
-tap.test("83 - @ sign surrounded with spaces", (t) => {
+tap.test("81 - @ sign surrounded with spaces", (t) => {
   t.equal(
     s("## Something @ something"),
     "markdown-header-something-something",
-    "83"
+    "81"
   );
   t.end();
 });
@@ -620,11 +620,11 @@ tap.test("83 - @ sign surrounded with spaces", (t) => {
 // 25. Link in the H tag
 // -----------------------------------------------------------------------------
 
-tap.test("84 - Link in the H2", (t) => {
+tap.test("82 - Link in the H2", (t) => {
   t.equal(
     s("## [Something](https://codsen.com) link"),
     "markdown-header-something-link",
-    "84"
+    "82"
   );
   t.end();
 });
@@ -632,37 +632,37 @@ tap.test("84 - Link in the H2", (t) => {
 // 26. Left slash
 // -----------------------------------------------------------------------------
 
-tap.test("85 - Left slash", (t) => {
-  t.equal(s("## Left slash  here"), "markdown-header-left-slash-here", "85");
+tap.test("83 - Left slash", (t) => {
+  t.equal(s("## Left slash  here"), "markdown-header-left-slash-here", "83");
   t.end();
 });
 
 // 27. Caret
 // -----------------------------------------------------------------------------
 
-tap.test("86 - Caret, tight", (t) => {
-  t.equal(s("## Something^"), "markdown-header-something", "86");
+tap.test("84 - Caret, tight", (t) => {
+  t.equal(s("## Something^"), "markdown-header-something", "84");
   t.end();
 });
 
-tap.test("87 - Caret, with space", (t) => {
-  t.equal(s("## Something ^"), "markdown-header-something", "87");
+tap.test("85 - Caret, with space", (t) => {
+  t.equal(s("## Something ^"), "markdown-header-something", "85");
   t.end();
 });
 
 // 28. Underscore
 // -----------------------------------------------------------------------------
 
-tap.test("88 - Underscore between letters", (t) => {
-  t.equal(s("## snake_case"), "markdown-header-snake_case", "88");
+tap.test("86 - Underscore between letters", (t) => {
+  t.equal(s("## snake_case"), "markdown-header-snake_case", "86");
   t.end();
 });
 
-tap.test("89 - Underscore surrounded by spaces", (t) => {
+tap.test("87 - Underscore surrounded by spaces", (t) => {
   t.equal(
     s("## something _ something"),
     "markdown-header-something-_-something",
-    "89"
+    "87"
   );
   t.end();
 });
@@ -670,29 +670,29 @@ tap.test("89 - Underscore surrounded by spaces", (t) => {
 // 29. Backtick
 // -----------------------------------------------------------------------------
 
-tap.test("90 - Starts with backtick", (t) => {
+tap.test("88 - Starts with backtick", (t) => {
   t.equal(
     s("## `variable` is in the beginning"),
     "markdown-header-variable-is-in-the-beginning",
-    "90"
+    "88"
   );
   t.end();
 });
 
-tap.test("91 - Middle", (t) => {
+tap.test("89 - Middle", (t) => {
   t.equal(
     s("## Middle `variable` is here"),
     "markdown-header-middle-variable-is-here",
-    "91"
+    "89"
   );
   t.end();
 });
 
-tap.test("92 - Backtick in the end of H2", (t) => {
+tap.test("90 - Backtick in the end of H2", (t) => {
   t.equal(
     s("## Ends with `variable`"),
     "markdown-header-ends-with-variable",
-    "92"
+    "90"
   );
   t.end();
 });
@@ -700,20 +700,20 @@ tap.test("92 - Backtick in the end of H2", (t) => {
 // 30. Curly braces
 // -----------------------------------------------------------------------------
 
-tap.test("93 - Curly braces", (t) => {
+tap.test("91 - Curly braces", (t) => {
   t.equal(
     s("## Curlies {like this}"),
     "markdown-header-curlies-like-this",
-    "93"
+    "91"
   );
   t.end();
 });
 
-tap.test("94 - And with spaces", (t) => {
+tap.test("92 - And with spaces", (t) => {
   t.equal(
     s("## Curlies { and like this }"),
     "markdown-header-curlies-and-like-this",
-    "94"
+    "92"
   );
   t.end();
 });
@@ -721,16 +721,16 @@ tap.test("94 - And with spaces", (t) => {
 // 31. Pipe character
 // -----------------------------------------------------------------------------
 
-tap.test("95 - Single pipe", (t) => {
-  t.equal(s("## Pipe character |"), "markdown-header-pipe-character", "95");
+tap.test("93 - Single pipe", (t) => {
+  t.equal(s("## Pipe character |"), "markdown-header-pipe-character", "93");
   t.end();
 });
 
-tap.test("96 - Double pipe", (t) => {
+tap.test("94 - Double pipe", (t) => {
   t.equal(
     s(`## Something || something means "or"`),
     "markdown-header-something-something-means-or",
-    "96"
+    "94"
   );
   t.end();
 });
@@ -738,99 +738,99 @@ tap.test("96 - Double pipe", (t) => {
 // 32. Tilde
 // -----------------------------------------------------------------------------
 
-tap.test("97 - Single tilde in front of digit", (t) => {
+tap.test("95 - Single tilde in front of digit", (t) => {
   t.equal(
     s("## Tilde means approximately ~100"),
     "markdown-header-tilde-means-approximately-100",
-    "97"
+    "95"
   );
   t.end();
 });
 
-tap.test("98 - Single tilde in front of word", (t) => {
-  t.equal(s("## Tilde ~ here"), "markdown-header-tilde-here", "98");
+tap.test("96 - Single tilde in front of word", (t) => {
+  t.equal(s("## Tilde ~ here"), "markdown-header-tilde-here", "96");
   t.end();
 });
 
-tap.test("99 - Tight tilde", (t) => {
-  t.equal(s("## tilde~tilde"), "markdown-header-tildetilde", "99");
+tap.test("97 - Tight tilde", (t) => {
+  t.equal(s("## tilde~tilde"), "markdown-header-tildetilde", "97");
   t.end();
 });
 
 // 33. Different languages
 // -----------------------------------------------------------------------------
 
-tap.test("100 - Lithuanian", (t) => {
+tap.test("98 - Lithuanian", (t) => {
   t.equal(
     s("## Some Lithuanian - Ąžuolynas"),
     "markdown-header-some-lithuanian-azuolynas",
-    "100"
+    "98"
   );
   t.end();
 });
 
-tap.test("101 - Russian language", (t) => {
-  t.equal(s("## Путин, Владимир Владимирович"), "markdown-header-", "101");
+tap.test("99 - Russian language", (t) => {
+  t.equal(s("## Путин, Владимир Владимирович"), "markdown-header-", "99");
   t.end();
 });
 
-tap.test("102 - Japanese language", (t) => {
-  t.equal(s("## Author 村上春樹"), "markdown-header-author", "102");
+tap.test("100 - Japanese language", (t) => {
+  t.equal(s("## Author 村上春樹"), "markdown-header-author", "100");
   t.end();
 });
 
 // 34. Currencies
 // -----------------------------------------------------------------------------
 
-tap.test("103 - Pounds", (t) => {
-  t.equal(s("## Price is £10"), "markdown-header-price-is-10", "103");
+tap.test("101 - Pounds", (t) => {
+  t.equal(s("## Price is £10"), "markdown-header-price-is-10", "101");
   t.end();
 });
 
-tap.test("104 - Dollars", (t) => {
-  t.equal(s("## Price is 100$"), "markdown-header-price-is-100", "104");
+tap.test("102 - Dollars", (t) => {
+  t.equal(s("## Price is 100$"), "markdown-header-price-is-100", "102");
   t.end();
 });
 
-tap.test("105 - Euros", (t) => {
-  t.equal(s("## Price is €10"), "markdown-header-price-is-10", "105");
+tap.test("103 - Euros", (t) => {
+  t.equal(s("## Price is €10"), "markdown-header-price-is-10", "103");
   t.end();
 });
 
 // 35. Various
 // -----------------------------------------------------------------------------
 
-tap.test("106 - Emoji in the headings", (t) => {
-  t.equal(s("## 🦄 Unicorn title"), "markdown-header-unicorn-title", "106");
+tap.test("104 - Emoji in the headings", (t) => {
+  t.equal(s("## 🦄 Unicorn title"), "markdown-header-unicorn-title", "104");
   t.end();
 });
 
-tap.test("107 - Emoji in the headings", (t) => {
-  t.equal(s("## ♥ Heart title"), "markdown-header-heart-title", "107");
+tap.test("105 - Emoji in the headings", (t) => {
+  t.equal(s("## ♥ Heart title"), "markdown-header-heart-title", "105");
   t.end();
 });
 
-tap.test("108 - Multiple consecutive dashes surrounded by spaces", (t) => {
+tap.test("106 - Multiple consecutive dashes surrounded by spaces", (t) => {
   t.equal(
     s("## Title -- is the best"),
     "markdown-header-title-is-the-best",
-    "108.01"
+    "106.01"
   );
   t.equal(
     s("## Title --- is the best"),
     "markdown-header-title-is-the-best",
-    "108.02"
+    "106.02"
   );
   t.end();
 });
 
-tap.test("109 - A bug from real life, #1", (t) => {
+tap.test("107 - A bug from real life, #1", (t) => {
   t.equal(
     s(
       "## Example - treating the image alt attributes - Gulp and stream-tapping"
     ),
     "markdown-header-example-treating-the-image-alt-attributes-gulp-and-stream-tapping",
-    "109"
+    "107"
   );
   t.end();
 });

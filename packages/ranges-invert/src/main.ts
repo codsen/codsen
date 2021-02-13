@@ -149,7 +149,7 @@ function rInvert(
   }
 
   console.log(
-    `140 ${`\u001b[${33}m${`prep`}\u001b[${39}m`} = ${JSON.stringify(
+    `152 ${`\u001b[${33}m${`prep`}\u001b[${39}m`} = ${JSON.stringify(
       prep,
       null,
       4
@@ -168,7 +168,7 @@ function rInvert(
 
     // if the first range's first index is not zero, additionally add zero range:
     if (i === 0 && arr[0][0] !== 0) {
-      console.log(`159 \u001b[${36}m${`PUSH [0, ${arr[0][0]}]`}\u001b[${39}m`);
+      console.log(`171 \u001b[${36}m${`PUSH [0, ${arr[0][0]}]`}\u001b[${39}m`);
       res2.push([0, arr[0][0]]);
     }
 
@@ -178,7 +178,7 @@ function rInvert(
     const endingIndex = i < arr.length - 1 ? arr[i + 1][0] : strLen;
     if (currArr[1] !== endingIndex) {
       console.log(
-        `169 \u001b[${36}m${`PUSH [${currArr[1]}, ${endingIndex}]`}\u001b[${39}m`
+        `181 \u001b[${36}m${`PUSH [${currArr[1]}, ${endingIndex}]`}\u001b[${39}m`
       );
 
       // this can happen only when opts.skipChecks is on:

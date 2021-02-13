@@ -36,7 +36,7 @@ function extractVars(
   }
   const opts: Opts = { ...defaults, ...originalOpts };
   console.log(
-    `025 ${`\u001b[${33}m${`opts`}\u001b[${39}m`}: ${JSON.stringify(
+    `039 ${`\u001b[${33}m${`opts`}\u001b[${39}m`}: ${JSON.stringify(
       opts,
       null,
       4
@@ -86,7 +86,7 @@ function extractVars(
     ) {
       withinQuotes = null;
       console.log(
-        `075 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinQuotes`}\u001b[${39}m`} = ${JSON.stringify(
+        `089 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinQuotes`}\u001b[${39}m`} = ${JSON.stringify(
           withinQuotes,
           null,
           4
@@ -103,7 +103,7 @@ function extractVars(
     ) {
       withinQuotes = str[i];
       console.log(
-        `092 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinQuotes`}\u001b[${39}m`} = ${JSON.stringify(
+        `106 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinQuotes`}\u001b[${39}m`} = ${JSON.stringify(
           withinQuotes,
           null,
           4
@@ -115,7 +115,7 @@ function extractVars(
     if (withinSlashSlashComment && `\r\n`.includes(str[i])) {
       withinSlashSlashComment = false;
       console.log(
-        `104 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinSlashSlashComment`}\u001b[${39}m`} = ${JSON.stringify(
+        `118 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinSlashSlashComment`}\u001b[${39}m`} = ${JSON.stringify(
           withinSlashSlashComment,
           null,
           4
@@ -127,7 +127,7 @@ function extractVars(
     if (!withinComments && str[i] === "/" && str[i + 1] === "/") {
       withinSlashSlashComment = true;
       console.log(
-        `116 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinSlashSlashComment`}\u001b[${39}m`} = ${JSON.stringify(
+        `130 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinSlashSlashComment`}\u001b[${39}m`} = ${JSON.stringify(
           withinSlashSlashComment,
           null,
           4
@@ -143,7 +143,7 @@ function extractVars(
     ) {
       withinSlashAsteriskComment = false;
       console.log(
-        `132 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinSlashAsteriskComment`}\u001b[${39}m`} = ${JSON.stringify(
+        `146 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinSlashAsteriskComment`}\u001b[${39}m`} = ${JSON.stringify(
           withinSlashAsteriskComment,
           null,
           4
@@ -156,7 +156,7 @@ function extractVars(
     if (!withinComments && str[i] === "/" && str[i + 1] === "*") {
       withinSlashAsteriskComment = true;
       console.log(
-        `145 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinSlashAsteriskComment`}\u001b[${39}m`} = ${JSON.stringify(
+        `159 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`withinSlashAsteriskComment`}\u001b[${39}m`} = ${JSON.stringify(
           withinSlashAsteriskComment,
           null,
           4
@@ -193,7 +193,7 @@ function extractVars(
     if (!withinComments && str[i] === "$" && varNameStartsAt === null) {
       varNameStartsAt = i + 1;
       console.log(
-        `182 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`varNameStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+        `196 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`varNameStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
           varNameStartsAt,
           null,
           4
@@ -217,7 +217,7 @@ function extractVars(
         (lastNonQuoteCharAt || 0) + 1
       );
       console.log(
-        `206 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`varValue`}\u001b[${39}m`} = ${JSON.stringify(
+        `220 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`varValue`}\u001b[${39}m`} = ${JSON.stringify(
           varValue,
           null,
           4
@@ -249,7 +249,7 @@ function extractVars(
     ) {
       varValueStartsAt = i;
       console.log(
-        `238 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`varValueStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+        `252 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`varValueStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
           varValueStartsAt,
           null,
           4
@@ -268,7 +268,7 @@ function extractVars(
     ) {
       varName = str.slice(varNameStartsAt, i);
       console.log(
-        `257 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`varName`}\u001b[${39}m`} = ${JSON.stringify(
+        `271 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`varName`}\u001b[${39}m`} = ${JSON.stringify(
           varName,
           null,
           4
@@ -340,7 +340,7 @@ function extractVars(
   }
 
   console.log(
-    `329 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `343 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4
@@ -349,7 +349,7 @@ function extractVars(
 
   // opts.throwIfEmpty
   if (!Object.keys(res).length && opts.throwIfEmpty) {
-    console.log(`338 ${`\u001b[${31}m${`throw`}\u001b[${39}m`}`);
+    console.log(`352 ${`\u001b[${31}m${`throw`}\u001b[${39}m`}`);
     throw new Error(
       `string-extract-sass-vars: [THROW_ID_03] no keys extracted! (setting opts.originalOpts)`
     );

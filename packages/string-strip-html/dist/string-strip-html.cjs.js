@@ -1,7 +1,7 @@
 /**
  * string-strip-html
  * Strips HTML tags from strings. No parser, accepts mixed sources.
- * Version: 8.2.0
+ * Version: 8.2.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-strip-html/
@@ -82,7 +82,7 @@ function notWithinAttrQuotes(tag, str, i) {
   return !tag || !tag.quotes || !xBeforeYOnTheRight(str, i + 1, tag.quotes.value, ">");
 }
 
-var version = "8.2.0";
+var version = "8.2.1";
 
 var version$1 = version;
 var defaults = {

@@ -1,7 +1,7 @@
 /**
  * array-group-str-omit-num-char
  * Groups array of strings by omitting number characters
- * Version: 4.0.3
+ * Version: 4.0.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/array-group-str-omit-num-char/
@@ -1230,7 +1230,7 @@ function rMerge(arrOfRanges, originalOpts) {
 /**
  * ranges-apply
  * Take an array of string index ranges, delete/replace the string according to them
- * Version: 5.0.3
+ * Version: 5.0.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/
@@ -1360,7 +1360,7 @@ function rApply(str, originalRangesArr, _progressFn) {
   return str;
 }
 
-var version = "4.0.3";
+var version = "4.0.4";
 
 var version$1 = version;
 var defaults$2 = {

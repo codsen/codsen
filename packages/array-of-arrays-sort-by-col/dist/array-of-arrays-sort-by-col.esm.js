@@ -1,13 +1,13 @@
 /**
  * array-of-arrays-sort-by-col
  * Sort array of arrays by column, rippling the sorting outwards from that column
- * Version: 3.0.3
+ * Version: 3.0.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/array-of-arrays-sort-by-col/
  */
 
-var version = "3.0.3";
+var version = "3.0.4";
 
 const version$1 = version; // FUNCTIONS - INTERNAL
 // -----------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 /**
  * ast-contains-only-empty-space
  * Does AST contain only empty space?
- * Version: 2.0.3
+ * Version: 2.0.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-contains-only-empty-space/
@@ -2062,7 +2062,7 @@ var lodash_isplainobject = isPlainObject;
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.3.3
+ * Version: 1.3.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/

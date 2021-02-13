@@ -90,9 +90,9 @@ tap.test(
 );
 
 tap.test("06 - null means absence of ranges", (t) => {
-  t.is(rCrop(null), null);
-  t.is(rCrop(null, 0), null);
-  t.is(rCrop(null, 1), null);
+  t.is(rCrop(null), null, "06.01");
+  t.is(rCrop(null, 0), null, "06.02");
+  t.is(rCrop(null, 1), null, "06.03");
   t.end();
 });
 
@@ -100,7 +100,7 @@ tap.test("06 - null means absence of ranges", (t) => {
 // 01. crop, two arguments only
 // ==============================
 
-tap.test(`06 - crops out few ranges outside the strlen`, (t) => {
+tap.test(`07 - crops out few ranges outside the strlen`, (t) => {
   const length = 7;
   const testStr = "z".repeat(length);
   const sourceRange = [[1, 3], null, [4, 6], [8, 10]];
@@ -111,30 +111,6 @@ tap.test(`06 - crops out few ranges outside the strlen`, (t) => {
   ];
   const resRangeBackup = clone(resRange);
 
-  t.strictSame(rCrop(sourceRange, length), resRange, "06.01");
-
-  // control:
-  t.equal(rApply(testStr, sourceRange), rApply(testStr, resRange), "06.02");
-
-  // no mutation happened:
-  t.strictSame(sourceRange, sourceRangeBackup, "06.03");
-  t.strictSame(resRange, resRangeBackup, "06.04");
-  t.end();
-});
-
-tap.test(`07 - overlap on one of ranges`, (t) => {
-  const length = 8;
-  const testStr = "z".repeat(length);
-  const sourceRange = [
-    [1, 3],
-    [5, 10],
-  ];
-  const sourceRangeBackup = clone(sourceRange);
-  const resRange = [
-    [1, 3],
-    [5, 8],
-  ];
-  const resRangeBackup = clone(resRange);
   t.strictSame(rCrop(sourceRange, length), resRange, "07.01");
 
   // control:
@@ -143,18 +119,15 @@ tap.test(`07 - overlap on one of ranges`, (t) => {
   // no mutation happened:
   t.strictSame(sourceRange, sourceRangeBackup, "07.03");
   t.strictSame(resRange, resRangeBackup, "07.04");
-
   t.end();
 });
 
-tap.test(`08 - overlap on one of ranges plus some extra ranges`, (t) => {
+tap.test(`08 - overlap on one of ranges`, (t) => {
   const length = 8;
   const testStr = "z".repeat(length);
   const sourceRange = [
     [1, 3],
     [5, 10],
-    [12, 15],
-    [16, 20],
   ];
   const sourceRangeBackup = clone(sourceRange);
   const resRange = [
@@ -162,7 +135,6 @@ tap.test(`08 - overlap on one of ranges plus some extra ranges`, (t) => {
     [5, 8],
   ];
   const resRangeBackup = clone(resRange);
-
   t.strictSame(rCrop(sourceRange, length), resRange, "08.01");
 
   // control:
@@ -175,8 +147,8 @@ tap.test(`08 - overlap on one of ranges plus some extra ranges`, (t) => {
   t.end();
 });
 
-tap.test(`09 - string length on the beginning of one of ranges`, (t) => {
-  const length = 12;
+tap.test(`09 - overlap on one of ranges plus some extra ranges`, (t) => {
+  const length = 8;
   const testStr = "z".repeat(length);
   const sourceRange = [
     [1, 3],
@@ -187,7 +159,7 @@ tap.test(`09 - string length on the beginning of one of ranges`, (t) => {
   const sourceRangeBackup = clone(sourceRange);
   const resRange = [
     [1, 3],
-    [5, 10],
+    [5, 8],
   ];
   const resRangeBackup = clone(resRange);
 
@@ -203,7 +175,35 @@ tap.test(`09 - string length on the beginning of one of ranges`, (t) => {
   t.end();
 });
 
-tap.test(`10 - string length on the ending of one of ranges`, (t) => {
+tap.test(`10 - string length on the beginning of one of ranges`, (t) => {
+  const length = 12;
+  const testStr = "z".repeat(length);
+  const sourceRange = [
+    [1, 3],
+    [5, 10],
+    [12, 15],
+    [16, 20],
+  ];
+  const sourceRangeBackup = clone(sourceRange);
+  const resRange = [
+    [1, 3],
+    [5, 10],
+  ];
+  const resRangeBackup = clone(resRange);
+
+  t.strictSame(rCrop(sourceRange, length), resRange, "10.01");
+
+  // control:
+  t.equal(rApply(testStr, sourceRange), rApply(testStr, resRange), "10.02");
+
+  // no mutation happened:
+  t.strictSame(sourceRange, sourceRangeBackup, "10.03");
+  t.strictSame(resRange, resRangeBackup, "10.04");
+
+  t.end();
+});
+
+tap.test(`11 - string length on the ending of one of ranges`, (t) => {
   const length = 15;
   const testStr = "z".repeat(length);
   const sourceRange = [
@@ -220,31 +220,6 @@ tap.test(`10 - string length on the ending of one of ranges`, (t) => {
   ];
   const resRangeBackup = clone(resRange);
 
-  t.strictSame(rCrop(sourceRange, length), resRange, "10.01");
-
-  // control:
-  t.equal(rApply(testStr, sourceRange), rApply(testStr, resRange), "10.02");
-
-  // no mutation happened:
-  t.strictSame(sourceRange, sourceRangeBackup, "10.03");
-  t.strictSame(resRange, resRangeBackup, "10.04");
-
-  t.end();
-});
-
-tap.test(`11 - string length beyond any of given ranges`, (t) => {
-  const length = 99;
-  const testStr = "z".repeat(length);
-  const sourceRange = [
-    [1, 3],
-    [5, 10],
-    [12, 15],
-    [16, 20],
-  ];
-  const sourceRangeBackup = clone(sourceRange);
-  const resRange = clone(sourceRange); // <--------------- !
-  const resRangeBackup = clone(resRange);
-
   t.strictSame(rCrop(sourceRange, length), resRange, "11.01");
 
   // control:
@@ -257,10 +232,15 @@ tap.test(`11 - string length beyond any of given ranges`, (t) => {
   t.end();
 });
 
-tap.test(`12 - no ranges`, (t) => {
+tap.test(`12 - string length beyond any of given ranges`, (t) => {
   const length = 99;
   const testStr = "z".repeat(length);
-  const sourceRange = [];
+  const sourceRange = [
+    [1, 3],
+    [5, 10],
+    [12, 15],
+    [16, 20],
+  ];
   const sourceRangeBackup = clone(sourceRange);
   const resRange = clone(sourceRange); // <--------------- !
   const resRangeBackup = clone(resRange);
@@ -277,21 +257,14 @@ tap.test(`12 - no ranges`, (t) => {
   t.end();
 });
 
-// now, exact the same tests but with ranges not in sorted order:
-
-tap.test(`13 - unsorted ranges`, (t) => {
-  const length = 8;
+tap.test(`13 - no ranges`, (t) => {
+  const length = 99;
   const testStr = "z".repeat(length);
-  const sourceRange = [
-    [5, 10],
-    [1, 3],
-  ];
+  const sourceRange = [];
   const sourceRangeBackup = clone(sourceRange);
-  const resRange = [
-    [1, 3],
-    [5, 8],
-  ];
+  const resRange = clone(sourceRange); // <--------------- !
   const resRangeBackup = clone(resRange);
+
   t.strictSame(rCrop(sourceRange, length), resRange, "13.01");
 
   // control:
@@ -304,7 +277,34 @@ tap.test(`13 - unsorted ranges`, (t) => {
   t.end();
 });
 
-tap.test(`14 - lots of overlapping, unsorted and futile ranges`, (t) => {
+// now, exact the same tests but with ranges not in sorted order:
+
+tap.test(`14 - unsorted ranges`, (t) => {
+  const length = 8;
+  const testStr = "z".repeat(length);
+  const sourceRange = [
+    [5, 10],
+    [1, 3],
+  ];
+  const sourceRangeBackup = clone(sourceRange);
+  const resRange = [
+    [1, 3],
+    [5, 8],
+  ];
+  const resRangeBackup = clone(resRange);
+  t.strictSame(rCrop(sourceRange, length), resRange, "14.01");
+
+  // control:
+  t.equal(rApply(testStr, sourceRange), rApply(testStr, resRange), "14.02");
+
+  // no mutation happened:
+  t.strictSame(sourceRange, sourceRangeBackup, "14.03");
+  t.strictSame(resRange, resRangeBackup, "14.04");
+
+  t.end();
+});
+
+tap.test(`15 - lots of overlapping, unsorted and futile ranges`, (t) => {
   const length = 8;
   const testStr = "z".repeat(length);
   const sourceRange = [
@@ -327,14 +327,14 @@ tap.test(`14 - lots of overlapping, unsorted and futile ranges`, (t) => {
   ];
   const resRangeBackup = clone(resRange);
 
-  t.strictSame(rCrop(sourceRange, length), resRange, "14.01");
+  t.strictSame(rCrop(sourceRange, length), resRange, "15.01");
 
   // control:
-  t.equal(rApply(testStr, sourceRange), rApply(testStr, resRange), "14.02");
+  t.equal(rApply(testStr, sourceRange), rApply(testStr, resRange), "15.02");
 
   // no mutation happened:
-  t.strictSame(sourceRange, sourceRangeBackup, "14.03");
-  t.strictSame(resRange, resRangeBackup, "14.04");
+  t.strictSame(sourceRange, sourceRangeBackup, "15.03");
+  t.strictSame(resRange, resRangeBackup, "15.04");
 
   t.end();
 });
@@ -344,7 +344,7 @@ tap.test(`14 - lots of overlapping, unsorted and futile ranges`, (t) => {
 // ==============================
 
 tap.test(
-  `15 - strlen matches the middle of some range's indexes, there's content to add (3rd arg.)`,
+  `16 - strlen matches the middle of some range's indexes, there's content to add (3rd arg.)`,
   (t) => {
     const length = 14;
     const testStr = "z".repeat(length);
@@ -362,21 +362,21 @@ tap.test(
     ];
     const resRangeBackup = clone(resRange);
 
-    t.strictSame(rCrop(sourceRange, length), resRange, "15.01");
+    t.strictSame(rCrop(sourceRange, length), resRange, "16.01");
 
     // control:
-    t.equal(rApply(testStr, sourceRange), rApply(testStr, resRange), "15.02");
+    t.equal(rApply(testStr, sourceRange), rApply(testStr, resRange), "16.02");
 
     // no mutation happened:
-    t.strictSame(sourceRange, sourceRangeBackup, "15.03");
-    t.strictSame(resRange, resRangeBackup, "15.04");
+    t.strictSame(sourceRange, sourceRangeBackup, "16.03");
+    t.strictSame(resRange, resRangeBackup, "16.04");
 
     t.end();
   }
 );
 
 tap.test(
-  `16 - strlen matches the beginning of some range's indexes, there's content to add (3rd arg.)`,
+  `17 - strlen matches the beginning of some range's indexes, there's content to add (3rd arg.)`,
   (t) => {
     const length = 12;
     const testStr = "z".repeat(length);
@@ -394,21 +394,21 @@ tap.test(
     ];
     const resRangeBackup = clone(resRange);
 
-    t.strictSame(rCrop(sourceRange, length), resRange, "16.01");
+    t.strictSame(rCrop(sourceRange, length), resRange, "17.01");
 
     // control:
-    t.equal(rApply(testStr, sourceRange), rApply(testStr, resRange), "16.02");
+    t.equal(rApply(testStr, sourceRange), rApply(testStr, resRange), "17.02");
 
     // no mutation happened:
-    t.strictSame(sourceRange, sourceRangeBackup, "16.03");
-    t.strictSame(resRange, resRangeBackup, "16.04");
+    t.strictSame(sourceRange, sourceRangeBackup, "17.03");
+    t.strictSame(resRange, resRangeBackup, "17.04");
 
     t.end();
   }
 );
 
 tap.test(
-  `17 - strlen matches the ending of some range's indexes, there's content to add (3rd arg.)`,
+  `18 - strlen matches the ending of some range's indexes, there's content to add (3rd arg.)`,
   (t) => {
     const length = 15;
     const testStr = "z".repeat(length);
@@ -426,14 +426,14 @@ tap.test(
     ];
     const resRangeBackup = clone(resRange);
 
-    t.strictSame(rCrop(sourceRange, length), resRange, "17.01");
+    t.strictSame(rCrop(sourceRange, length), resRange, "18.01");
 
     // control:
-    t.equal(rApply(testStr, sourceRange), rApply(testStr, resRange), "17.02");
+    t.equal(rApply(testStr, sourceRange), rApply(testStr, resRange), "18.02");
 
     // no mutation happened:
-    t.strictSame(sourceRange, sourceRangeBackup, "17.03");
-    t.strictSame(resRange, resRangeBackup, "17.04");
+    t.strictSame(sourceRange, sourceRangeBackup, "18.03");
+    t.strictSame(resRange, resRangeBackup, "18.04");
 
     t.end();
   }

@@ -1,7 +1,7 @@
 /**
  * ast-is-empty
  * Find out, is nested array/object/string/AST tree is empty
- * Version: 2.0.3
+ * Version: 2.0.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-is-empty/
@@ -9,7 +9,7 @@
 
 import isObj from 'lodash.isplainobject';
 
-var version = "2.0.3";
+var version = "2.0.4";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 const version$1 = version;

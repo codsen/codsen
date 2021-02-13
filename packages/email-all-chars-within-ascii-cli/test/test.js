@@ -54,7 +54,7 @@ tap.test(
         { shell: true }
       );
       t.match(error1.stdout, /bad character/);
-    });
+    }, "02");
 
     t.end();
   }

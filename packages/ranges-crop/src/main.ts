@@ -94,7 +94,7 @@ function rCrop(arrOfRanges: Ranges, strLen: number): Ranges {
   // ---------------------------------------------------------------------------
 
   console.log(
-    `099 ${`\u001b[${33}m${`arrOfRanges`}\u001b[${39}m`} = ${JSON.stringify(
+    `097 ${`\u001b[${33}m${`arrOfRanges`}\u001b[${39}m`} = ${JSON.stringify(
       arrOfRanges,
       null,
       4
@@ -109,26 +109,26 @@ function rCrop(arrOfRanges: Ranges, strLen: number): Ranges {
     .map((singleRangeArr) => {
       if (singleRangeArr[1] > strLen) {
         console.log(
-          `114 - we will process the ${JSON.stringify(singleRangeArr, null, 0)}`
+          `112 - we will process the ${JSON.stringify(singleRangeArr, null, 0)}`
         );
         if (singleRangeArr[2] != undefined) {
           console.log(
-            `118 - third argument detected! RETURN [${singleRangeArr[0]}, ${strLen}, ${singleRangeArr[2]}]`
+            `116 - third argument detected! RETURN [${singleRangeArr[0]}, ${strLen}, ${singleRangeArr[2]}]`
           );
           return [singleRangeArr[0], strLen, singleRangeArr[2]];
         }
         console.log(
-          `123 - no third argument detected, returning [${singleRangeArr[0]}, ${strLen}]`
+          `121 - no third argument detected, returning [${singleRangeArr[0]}, ${strLen}]`
         );
         return [singleRangeArr[0], strLen];
       }
       console.log(
-        `128 - returning intact ${JSON.stringify(singleRangeArr, null, 0)}`
+        `126 - returning intact ${JSON.stringify(singleRangeArr, null, 0)}`
       );
       return singleRangeArr;
     });
   console.log(
-    `133 ${`\u001b[${33}m${`about to return ${`\u001b[${32}m${`res`}\u001b[${39}m`}`}\u001b[${39}m`} = ${JSON.stringify(
+    `131 ${`\u001b[${33}m${`about to return ${`\u001b[${32}m${`res`}\u001b[${39}m`}`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

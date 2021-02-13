@@ -9,7 +9,7 @@ function chomp(str: string): string {
   // eslint-disable-next-line no-param-reassign
   str = str.replace(/(amp;)|(#x26;)/gi, "");
   console.log(
-    `015 ${`\u001b[${33}m${`str after chomp`}\u001b[${39}m`} = ${JSON.stringify(
+    `012 ${`\u001b[${33}m${`str after chomp`}\u001b[${39}m`} = ${JSON.stringify(
       str,
       null,
       4
@@ -47,14 +47,14 @@ function rEntDecode(str: string, originalOpts?: Partial<Opts>): Ranges {
   const opts: Opts = { ...defaults, ...originalOpts };
 
   console.log(
-    `052 ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
+    `050 ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
       str,
       null,
       4
     )}`
   );
   console.log(
-    `059 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+    `057 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
       opts,
       null,
       4
@@ -107,7 +107,7 @@ function rEntDecode(str: string, originalOpts?: Partial<Opts>): Ranges {
     );
     const chomped = chomp(array1[0]);
     if (chomped === "&") {
-      console.log('112 chomped === "&"');
+      console.log('110 chomped === "&"');
       rangesArr.push([
         entityRegex.lastIndex - array1[0].length,
         entityRegex.lastIndex,
@@ -116,11 +116,11 @@ function rEntDecode(str: string, originalOpts?: Partial<Opts>): Ranges {
     } else {
       const decoded = he.decode(chomped, opts);
       console.log(
-        `121 ${`\u001b[${33}m${`decoded`}\u001b[${39}m`} = ${decoded}`
+        `119 ${`\u001b[${33}m${`decoded`}\u001b[${39}m`} = ${decoded}`
       );
       if (decoded !== chomped) {
         console.log(
-          `125 will push "${`\u001b[${33}m${JSON.stringify(
+          `123 will push "${`\u001b[${33}m${JSON.stringify(
             [
               entityRegex.lastIndex - array1[0].length,
               entityRegex.lastIndex,

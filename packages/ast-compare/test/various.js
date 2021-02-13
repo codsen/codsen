@@ -96,7 +96,7 @@ tap.test("03 - real-life #2", (t) => {
   t.end();
 });
 
-tap.test("05 - real-life #3", (t) => {
+tap.test("04 - real-life #3", (t) => {
   t.strictSame(
     compare(
       {
@@ -226,7 +226,7 @@ tap.test("05 - real-life #3", (t) => {
       }
     ),
     false,
-    "05.01"
+    "04.01"
   );
   t.strictSame(
     compare(
@@ -358,7 +358,7 @@ tap.test("05 - real-life #3", (t) => {
       { hungryForWhitespace: false }
     ),
     false,
-    "05.02"
+    "04.02"
   );
   t.strictSame(
     compare(
@@ -490,12 +490,12 @@ tap.test("05 - real-life #3", (t) => {
       { hungryForWhitespace: true }
     ),
     true,
-    "05.03"
+    "04.03"
   );
   t.end();
 });
 
-tap.test("06 - real-life #3 reduced case", (t) => {
+tap.test("05 - real-life #3 reduced case", (t) => {
   t.strictSame(
     compare(
       {
@@ -518,7 +518,7 @@ tap.test("06 - real-life #3 reduced case", (t) => {
       }
     ),
     false,
-    "06.01"
+    "05.01"
   );
   t.strictSame(
     compare(
@@ -542,7 +542,7 @@ tap.test("06 - real-life #3 reduced case", (t) => {
       }
     ),
     false,
-    "06.02"
+    "05.02"
   );
   t.strictSame(
     compare(
@@ -567,7 +567,7 @@ tap.test("06 - real-life #3 reduced case", (t) => {
       { hungryForWhitespace: true }
     ),
     false,
-    "06.03"
+    "05.03"
   );
   t.strictSame(
     compare(
@@ -592,12 +592,12 @@ tap.test("06 - real-life #3 reduced case", (t) => {
       { hungryForWhitespace: true }
     ),
     true,
-    "06.04"
+    "05.04"
   );
   t.end();
 });
 
-tap.test("07 - input args of mismatching type - easy win", (t) => {
+tap.test("06 - input args of mismatching type - easy win", (t) => {
   t.strictSame(
     compare(
       {
@@ -606,14 +606,14 @@ tap.test("07 - input args of mismatching type - easy win", (t) => {
       "a"
     ),
     false,
-    "07.01"
+    "06.01"
   );
   t.strictSame(
     compare("a", {
       a: "a",
     }),
     false,
-    "07.02"
+    "06.02"
   );
   t.strictSame(
     compare(
@@ -623,14 +623,14 @@ tap.test("07 - input args of mismatching type - easy win", (t) => {
       ["a"]
     ),
     false,
-    "07.03"
+    "06.03"
   );
   t.strictSame(
     compare(["a"], {
       a: "a",
     }),
     false,
-    "07.04"
+    "06.04"
   );
   t.strictSame(
     compare(
@@ -641,7 +641,7 @@ tap.test("07 - input args of mismatching type - easy win", (t) => {
       { hungryForWhitespace: true }
     ),
     false,
-    "07.05"
+    "06.05"
   );
   t.strictSame(
     compare(
@@ -652,7 +652,7 @@ tap.test("07 - input args of mismatching type - easy win", (t) => {
       { hungryForWhitespace: true }
     ),
     false,
-    "07.06"
+    "06.06"
   );
   t.strictSame(
     compare(
@@ -663,7 +663,7 @@ tap.test("07 - input args of mismatching type - easy win", (t) => {
       { hungryForWhitespace: true }
     ),
     false,
-    "07.07"
+    "06.07"
   );
   t.strictSame(
     compare(
@@ -674,7 +674,7 @@ tap.test("07 - input args of mismatching type - easy win", (t) => {
       { hungryForWhitespace: true }
     ),
     false,
-    "07.08"
+    "06.08"
   );
   t.end();
 });

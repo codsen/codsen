@@ -50,7 +50,7 @@ function deleteKey(originalInput: Obj, originalOpts?: Partial<Opts>): Obj {
   }
   let input = clone(originalInput);
   console.log(
-    `038 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`input`}\u001b[${39}m`} = ${JSON.stringify(
+    `053 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`input`}\u001b[${39}m`} = ${JSON.stringify(
       input,
       null,
       4
@@ -64,7 +64,7 @@ function deleteKey(originalInput: Obj, originalOpts?: Partial<Opts>): Obj {
       only: opts.only,
     });
     console.log(
-      `052 ${`\u001b[${33}m${`findings`}\u001b[${39}m`} = ${JSON.stringify(
+      `067 ${`\u001b[${33}m${`findings`}\u001b[${39}m`} = ${JSON.stringify(
         findings,
         null,
         4
@@ -73,7 +73,7 @@ function deleteKey(originalInput: Obj, originalOpts?: Partial<Opts>): Obj {
     let currentIndex: number;
     let nodeToDelete: number;
     while (Array.isArray(findings) && findings.length) {
-      console.log(`061 ███████████████████████████████████████ LOOP`);
+      console.log(`076 ███████████████████████████████████████ LOOP`);
       nodeToDelete = findings[0].index;
       for (let i = 1, len = findings[0].path.length; i < len; i++) {
         currentIndex = findings[0].path[len - 1 - i];
@@ -92,9 +92,9 @@ function deleteKey(originalInput: Obj, originalOpts?: Partial<Opts>): Obj {
       input = drop(input, { index: nodeToDelete }) as Obj;
       findings = find(input, { key: opts.key, val: opts.val, only: opts.only });
     }
-    console.log(`080 ███████████████████████████████████████ END OF A LOOP`);
+    console.log(`095 ███████████████████████████████████████ END OF A LOOP`);
     console.log(
-      `082 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`input`}\u001b[${39}m`} = ${JSON.stringify(
+      `097 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} ${`\u001b[${33}m${`input`}\u001b[${39}m`} = ${JSON.stringify(
         input,
         null,
         4

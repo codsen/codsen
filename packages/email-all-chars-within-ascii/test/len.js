@@ -14,7 +14,8 @@ tap.test("01 - default, line length exceeded", (t) => {
         positionIdx: 1008,
         value: 1000,
       },
-    ]
+    ],
+    "01"
   );
   t.end();
 });
@@ -24,7 +25,8 @@ tap.test("02 - customising the length", (t) => {
     within(`abcde`, {
       lineLength: 0,
     }),
-    []
+    [],
+    "02.01"
   );
   t.sameStrict(
     within(`abcde`, {
@@ -38,7 +40,8 @@ tap.test("02 - customising the length", (t) => {
         positionIdx: 5,
         value: 5,
       },
-    ]
+    ],
+    "02.02"
   );
   t.sameStrict(
     within(`abcde`, {
@@ -52,7 +55,8 @@ tap.test("02 - customising the length", (t) => {
         positionIdx: 5,
         value: 5,
       },
-    ]
+    ],
+    "02.03"
   );
   t.sameStrict(
     within(`abcde`, {
@@ -66,7 +70,8 @@ tap.test("02 - customising the length", (t) => {
         positionIdx: 5,
         value: 5,
       },
-    ]
+    ],
+    "02.04"
   );
   t.sameStrict(
     within(`abcde`, {
@@ -80,25 +85,29 @@ tap.test("02 - customising the length", (t) => {
         positionIdx: 5,
         value: 5,
       },
-    ]
+    ],
+    "02.05"
   );
   t.sameStrict(
     within(`abcde`, {
       lineLength: 5,
     }),
-    []
+    [],
+    "02.06"
   );
   t.sameStrict(
     within(`abcde`, {
       lineLength: 6,
     }),
-    []
+    [],
+    "02.07"
   );
   t.sameStrict(
     within(`abcde`, {
       lineLength: 99,
     }),
-    []
+    [],
+    "02.08"
   );
   t.end();
 });
@@ -130,7 +139,8 @@ tap.test("03 - multiline, wrong", (t) => {
         positionIdx: 17,
         value: 5,
       },
-    ]
+    ],
+    "03"
   );
   t.end();
 });

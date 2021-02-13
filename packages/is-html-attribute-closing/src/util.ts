@@ -11,23 +11,23 @@ function ensureXIsNotPresentBeforeOneOfY(
   x: string,
   y: string[] = []
 ): boolean {
-  console.log(`005e ensureXIsNotPresentBeforeOneOfY() called`);
+  console.log(`014e ensureXIsNotPresentBeforeOneOfY() called`);
   for (let i = startingIdx, len = str.length; i < len; i++) {
-    console.log(`007e str[i] = ${str[i]}`);
+    console.log(`016e str[i] = ${str[i]}`);
     if (y.some((oneOfStr) => str.startsWith(oneOfStr, i))) {
       // it's escape clause, bracket or whatever was reached and yet,
       // "x" hasn't been encountered yet
-      console.log(`011e return true`);
+      console.log(`020e return true`);
       return true;
     }
     if (str[i] === x) {
       // if "x" was found, that's it - falsey result
-      console.log(`016e return false`);
+      console.log(`025e return false`);
       return false;
     }
   }
   // default result
-  console.log(`021e return true`);
+  console.log(`030e return true`);
   return true;
 }
 
@@ -77,13 +77,13 @@ function guaranteedAttrStartsAtX(str: string, start: number): boolean {
     `${`\u001b[${35}m${`guaranteedAttrStartsAtX()`}\u001b[${39}m`} called, start = ${start}`
   );
   if (!start || !isAttrNameChar(str[start])) {
-    console.log(`066g return false`);
+    console.log(`080g return false`);
     return false;
   }
   // either quotes match or does not match but tag closing follows
   // const regex = /^[a-zA-Z0-9:-]*[=]?(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
   const regex = /^[a-zA-Z0-9:-]*=(((?:'[^']*')|(?:"[^"]*"))|((?:['"][^'"]*['"]\s*\/?>)))/;
-  console.log(`072g return ${regex.test(str.slice(start))}`);
+  console.log(`086g return ${regex.test(str.slice(start))}`);
   return regex.test(str.slice(start));
 }
 
@@ -96,7 +96,7 @@ function findAttrNameCharsChunkOnTheLeft(
   }
   for (let y = i; y--; ) {
     console.log(
-      `082 ${`\u001b[${36}m${`str[y]`}\u001b[${39}m`} = ${JSON.stringify(
+      `099 ${`\u001b[${36}m${`str[y]`}\u001b[${39}m`} = ${JSON.stringify(
         str[y],
         null,
         4

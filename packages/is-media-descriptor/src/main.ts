@@ -36,13 +36,13 @@ function isMediaD(originalStr: string, originalOpts?: Partial<Opts>): ResObj[] {
   // quick ending
   if (typeof originalStr !== "string") {
     console.log(
-      `030 isMediaD(): early exit, ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} []`
+      `039 isMediaD(): early exit, ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} []`
     );
     return [];
   }
   if (!originalStr.trim()) {
     console.log(
-      `036 isMediaD(): early exit, ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} []`
+      `045 isMediaD(): early exit, ${`\u001b[${31}m${`RETURN`}\u001b[${39}m`} []`
     );
     return [];
   }
@@ -58,7 +58,7 @@ function isMediaD(originalStr: string, originalOpts?: Partial<Opts>): ResObj[] {
   const str = originalStr.trim();
 
   console.log(
-    `052 FINAL ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+    `061 FINAL ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
       opts,
       null,
       4
@@ -80,7 +80,7 @@ function isMediaD(originalStr: string, originalOpts?: Partial<Opts>): ResObj[] {
   if (originalStr !== originalStr.trim()) {
     const ranges = [];
     if (!originalStr[0].trim()) {
-      console.log(`074 traverse forward`);
+      console.log(`083 traverse forward`);
       for (let i = 0, len = originalStr.length; i < len; i++) {
         if (originalStr[i].trim()) {
           ranges.push([0 + opts.offset, i + opts.offset]);
@@ -90,7 +90,7 @@ function isMediaD(originalStr: string, originalOpts?: Partial<Opts>): ResObj[] {
       }
     }
     if (!originalStr[originalStr.length - 1].trim()) {
-      console.log(`084 traverse backwards from the end`);
+      console.log(`093 traverse backwards from the end`);
       for (let i = originalStr.length; i--; ) {
         if (originalStr[i].trim()) {
           ranges.push([i + 1 + opts.offset, originalStr.length + opts.offset]);
@@ -99,7 +99,7 @@ function isMediaD(originalStr: string, originalOpts?: Partial<Opts>): ResObj[] {
         }
       }
     }
-    console.log(`093 PUSH [${ranges[0][0]}, ${ranges[ranges.length - 1][1]}]`);
+    console.log(`102 PUSH [${ranges[0][0]}, ${ranges[ranges.length - 1][1]}]`);
     res.push({
       idxFrom: ranges[0][0],
       idxTo: ranges[ranges.length - 1][1],
@@ -113,7 +113,7 @@ function isMediaD(originalStr: string, originalOpts?: Partial<Opts>): ResObj[] {
   // ---------------------------------------------------------------------------
 
   console.log(
-    `107 isMediaD(): ██ working non-whitespace range: [${`\u001b[${35}m${nonWhitespaceStart}\u001b[${39}m`}, ${`\u001b[${35}m${nonWhitespaceEnd}\u001b[${39}m`}]`
+    `116 isMediaD(): ██ working non-whitespace range: [${`\u001b[${35}m${nonWhitespaceStart}\u001b[${39}m`}, ${`\u001b[${35}m${nonWhitespaceEnd}\u001b[${39}m`}]`
   );
 
   // quick checks first - cover the most common cases, to make checks the
@@ -137,13 +137,13 @@ function isMediaD(originalStr: string, originalOpts?: Partial<Opts>): ResObj[] {
     //
     //
     console.log(
-      `131 isMediaD(): whole string matched! ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`
+      `140 isMediaD(): whole string matched! ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`
     );
     return res;
   }
   if (["only", "not"].includes(str)) {
     console.log(
-      `137 isMediaD(): PUSH [${nonWhitespaceStart + opts.offset}, ${
+      `146 isMediaD(): PUSH [${nonWhitespaceStart + opts.offset}, ${
         nonWhitespaceEnd + opts.offset
       }]`
     );
@@ -175,17 +175,17 @@ function isMediaD(originalStr: string, originalOpts?: Partial<Opts>): ResObj[] {
     //
     //
     //
-    console.log(`169 isMediaD(): mostly-letters clauses`);
+    console.log(`178 isMediaD(): mostly-letters clauses`);
 
     for (let i = 0, len = recognisedMediaTypes.length; i < len; i++) {
       console.log(
-        `173 isMediaD(): leven ${recognisedMediaTypes[i]} = ${leven(
+        `182 isMediaD(): leven ${recognisedMediaTypes[i]} = ${leven(
           recognisedMediaTypes[i],
           str
         )}`
       );
       if (leven(recognisedMediaTypes[i], str) === 1) {
-        console.log(`179 isMediaD(): ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
+        console.log(`188 isMediaD(): ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`}`);
         res.push({
           idxFrom: nonWhitespaceStart + opts.offset,
           idxTo: nonWhitespaceEnd + opts.offset,
@@ -205,9 +205,9 @@ function isMediaD(originalStr: string, originalOpts?: Partial<Opts>): ResObj[] {
 
       if (i === len - 1) {
         // it means nothing was matched
-        console.log(`199 isMediaD(): end reached`);
+        console.log(`208 isMediaD(): end reached`);
         console.log(
-          `201 isMediaD(): ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${`\u001b[${33}m${
+          `210 isMediaD(): ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${`\u001b[${33}m${
             nonWhitespaceStart + opts.offset
           }\u001b[${39}m`}, ${`\u001b[${33}m${
             nonWhitespaceEnd + opts.offset
@@ -220,7 +220,7 @@ function isMediaD(originalStr: string, originalOpts?: Partial<Opts>): ResObj[] {
           fix: null,
         });
         console.log(
-          `214 isMediaD(): ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+          `223 isMediaD(): ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
             res,
             null,
             4
@@ -251,7 +251,7 @@ function isMediaD(originalStr: string, originalOpts?: Partial<Opts>): ResObj[] {
     // ███████████████████████████████████████
 
     console.log(
-      `245 isMediaD(): ${`\u001b[${36}m${`PART I.`}\u001b[${39}m`} Preliminary checks.`
+      `254 isMediaD(): ${`\u001b[${36}m${`PART I.`}\u001b[${39}m`} Preliminary checks.`
     );
 
     // Preventive checks will help to simplify the algorithm - we won't need
@@ -265,7 +265,7 @@ function isMediaD(originalStr: string, originalOpts?: Partial<Opts>): ResObj[] {
           // this means order is messed up
           if (!wrongOrder && acc[1] + 1 > acc[0]) {
             console.log(
-              `259 isMediaD(): set ${`\u001b[${33}m${`wrongOrder`}\u001b[${39}m`} = true`
+              `268 isMediaD(): set ${`\u001b[${33}m${`wrongOrder`}\u001b[${39}m`} = true`
             );
             wrongOrder = true;
           }
@@ -291,7 +291,7 @@ function isMediaD(originalStr: string, originalOpts?: Partial<Opts>): ResObj[] {
     // only the order is messed up:
     if (wrongOrder && openingBracketCount === closingBracketCount) {
       console.log(
-        `285 isMediaD(): ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} the wrong order error`
+        `294 isMediaD(): ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} the wrong order error`
       );
       res.push({
         idxFrom: nonWhitespaceStart + opts.offset,
@@ -301,14 +301,14 @@ function isMediaD(originalStr: string, originalOpts?: Partial<Opts>): ResObj[] {
       });
     }
     console.log(
-      `295 isMediaD(): ${`\u001b[${33}m${`openingBracketCount`}\u001b[${39}m`} = ${JSON.stringify(
+      `304 isMediaD(): ${`\u001b[${33}m${`openingBracketCount`}\u001b[${39}m`} = ${JSON.stringify(
         openingBracketCount,
         null,
         4
       )}`
     );
     console.log(
-      `302 isMediaD(): ${`\u001b[${33}m${`closingBracketCount`}\u001b[${39}m`} = ${JSON.stringify(
+      `311 isMediaD(): ${`\u001b[${33}m${`closingBracketCount`}\u001b[${39}m`} = ${JSON.stringify(
         closingBracketCount,
         null,
         4
@@ -334,7 +334,7 @@ function isMediaD(originalStr: string, originalOpts?: Partial<Opts>): ResObj[] {
     }
 
     if (!res.length && str.match(/\(\s*\)/g)) {
-      console.log(`328 empty brackets pair detected`);
+      console.log(`337 empty brackets pair detected`);
       // now find out where
       let lastOpening = null;
       let nonWhitespaceFound;
@@ -345,7 +345,7 @@ function isMediaD(originalStr: string, originalOpts?: Partial<Opts>): ResObj[] {
         } else if (str[i] === ")" && lastOpening) {
           if (!nonWhitespaceFound) {
             console.log(
-              `339 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${lastOpening}, ${
+              `348 ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} [${lastOpening}, ${
                 i + 1
               }]`
             );
@@ -367,7 +367,7 @@ function isMediaD(originalStr: string, originalOpts?: Partial<Opts>): ResObj[] {
     if (res.length) {
       // report errors early, save resources
       console.log(
-        `361 isMediaD(): early ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`
+        `370 isMediaD(): early ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`
       );
       return res;
     }
@@ -376,7 +376,7 @@ function isMediaD(originalStr: string, originalOpts?: Partial<Opts>): ResObj[] {
     // ███████████████████████████████████████
 
     console.log(
-      `370 isMediaD(): ${`\u001b[${36}m${`PART II.`}\u001b[${39}m`} The main loop.`
+      `379 isMediaD(): ${`\u001b[${36}m${`PART II.`}\u001b[${39}m`} The main loop.`
     );
     // first parse comma-separated chunks
     processCommaSep(str, {
@@ -388,7 +388,7 @@ function isMediaD(originalStr: string, originalOpts?: Partial<Opts>): ResObj[] {
       separator: ",",
       cb: (idxFrom: number, idxTo: number) => {
         console.log(
-          `382 isMediaD(): chunk [${idxFrom - opts.offset}, ${
+          `391 isMediaD(): chunk [${idxFrom - opts.offset}, ${
             idxTo - opts.offset
           }] extracted, passing to loop()`
         );
@@ -404,7 +404,7 @@ function isMediaD(originalStr: string, originalOpts?: Partial<Opts>): ResObj[] {
       },
       errCb: (ranges: Ranges, message: string) => {
         console.log(
-          `398 isMediaD(): received error range ${JSON.stringify(
+          `407 isMediaD(): received error range ${JSON.stringify(
             ranges,
             null,
             4
@@ -433,10 +433,10 @@ function isMediaD(originalStr: string, originalOpts?: Partial<Opts>): ResObj[] {
   // ---------------------------------------------------------------------------
 
   console.log(
-    `427 isMediaD(): ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`
+    `436 isMediaD(): ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`
   );
   console.log(
-    `430 isMediaD(): ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `439 isMediaD(): ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

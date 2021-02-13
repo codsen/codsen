@@ -30,7 +30,7 @@ function strConvertIndexes(mode: "n" | "u", str: string, indexes: any) {
       currUpperIdx += graphemeStrArr[i].length;
 
       console.log(
-        `029 #${i} - [${currLowerIdx}, ${currUpperIdx}] - char ${
+        `033 #${i} - [${currLowerIdx}, ${currUpperIdx}] - char ${
           graphemeStrArr[i]
         } (${graphemeStrArr[i].split("").length})`
       );
@@ -85,7 +85,7 @@ function strConvertIndexes(mode: "n" | "u", str: string, indexes: any) {
   // leading up to this
 
   if (["string", "number"].includes(typeof indexes)) {
-    console.log(`084 ██ no AST`);
+    console.log(`088 ██ no AST`);
     // no need for traversal
     // validate
     if (isItOk(indexes)) {
@@ -110,7 +110,7 @@ function strConvertIndexes(mode: "n" | "u", str: string, indexes: any) {
       )} (${typeof indexes})`
     );
   } else if (indexes && typeof indexes === "object") {
-    console.log(`109 ██ AST - traverse!`);
+    console.log(`113 ██ AST - traverse!`);
     // if it's array or object, traverse
     return mode === "u"
       ? traverse(indexes, (key, val, innerObj) => {

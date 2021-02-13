@@ -1,7 +1,7 @@
 /**
  * string-unfancy
  * Replace all n/m dashes, curly quotes with their simpler equivalents
- * Version: 4.0.3
+ * Version: 4.0.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-unfancy/
@@ -4148,7 +4148,7 @@ var he = createCommonjsModule(function (module, exports) {
   })(commonjsGlobal);
 });
 
-var version = "4.0.3";
+var version = "4.0.4";
 
 /* eslint quote-props:0 */
 var version$1 = version;

@@ -99,7 +99,7 @@ function rMerge(
   }
 
   console.log(
-    `088 USING ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+    `102 USING ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
       opts,
       null,
       4
@@ -180,7 +180,7 @@ function rMerge(
       (opts.joinRangesThatTouchEdges &&
         sortedRanges[i][0] <= sortedRanges[i - 1][1])
     ) {
-      console.log(`165  sortedRanges[${i}][0] = ${`\u001b[${33}m${
+      console.log(`183  sortedRanges[${i}][0] = ${`\u001b[${33}m${
         sortedRanges[i][0]
       }\u001b[${39}m`} ? ${`\u001b[${32}m${`<=`}\u001b[${39}m`} ? sortedRanges[${
         i - 1
@@ -200,7 +200,7 @@ function rMerge(
         sortedRanges[i - 1][1]
       );
       console.log(
-        `185 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} sortedRanges[${
+        `203 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} sortedRanges[${
           i - 1
         }][0] = ${sortedRanges[i - 1][0]}; sortedRanges[${i - 1}][1] = ${
           sortedRanges[i - 1][1]
@@ -213,7 +213,7 @@ function rMerge(
         (sortedRanges[i - 1][0] >= sortedRanges[i][0] ||
           sortedRanges[i - 1][1] <= sortedRanges[i][1])
       ) {
-        console.log(`198 inside tend the insert value clauses`);
+        console.log(`216 inside tend the insert value clauses`);
 
         // if the value of the range before exists:
         if (sortedRanges[i - 1][2] !== null) {
@@ -239,10 +239,10 @@ function rMerge(
 
       // get rid of the second element:
       console.log(
-        "223 --------------------------------------------------------"
+        "242 --------------------------------------------------------"
       );
       console.log(
-        `226 before splice: ${`\u001b[${33}m${`sortedRanges`}\u001b[${39}m`} = ${JSON.stringify(
+        `245 before splice: ${`\u001b[${33}m${`sortedRanges`}\u001b[${39}m`} = ${JSON.stringify(
           sortedRanges,
           null,
           4
@@ -250,7 +250,7 @@ function rMerge(
       );
       sortedRanges.splice(i, 1);
       console.log(
-        `234 after splice: ${`\u001b[${33}m${`sortedRanges`}\u001b[${39}m`} = ${JSON.stringify(
+        `253 after splice: ${`\u001b[${33}m${`sortedRanges`}\u001b[${39}m`} = ${JSON.stringify(
           sortedRanges,
           null,
           4
@@ -259,12 +259,12 @@ function rMerge(
       // reset the traversal, start from the end again
       i = sortedRanges.length;
       console.log(
-        `243 in the end, ${`\u001b[${32}m${`SET`}\u001b[${39}m`} i = ${i}`
+        `262 in the end, ${`\u001b[${32}m${`SET`}\u001b[${39}m`} i = ${i}`
       );
     }
   }
   console.log(
-    `248 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} sortedRanges = ${JSON.stringify(
+    `267 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} sortedRanges = ${JSON.stringify(
       sortedRanges,
       null,
       4

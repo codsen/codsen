@@ -30,7 +30,7 @@ function returnHelper(
     throw new Error("stristri/returnHelper(): second arg missing!");
   }
   console.log(
-    `026 ${`\u001b[${33}m${`RETURN`}\u001b[${39}m`} = ${JSON.stringify(
+    `033 ${`\u001b[${33}m${`RETURN`}\u001b[${39}m`} = ${JSON.stringify(
       {
         result,
         applicableOpts,
@@ -55,7 +55,7 @@ function returnHelper(
 function stri(input: string, originalOpts?: Partial<Opts>): Res {
   const start = Date.now();
   console.log(
-    `048 ${`\u001b[${32}m${`INITIAL`}\u001b[${39}m`} ${`\u001b[${33}m${`input`}\u001b[${39}m`} = ${JSON.stringify(
+    `058 ${`\u001b[${32}m${`INITIAL`}\u001b[${39}m`} ${`\u001b[${33}m${`input`}\u001b[${39}m`} = ${JSON.stringify(
       input,
       null,
       4
@@ -87,7 +87,7 @@ function stri(input: string, originalOpts?: Partial<Opts>): Res {
     ...originalOpts,
   };
   console.log(
-    `080 ${`\u001b[${32}m${`INITIAL`}\u001b[${39}m`} ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+    `090 ${`\u001b[${32}m${`INITIAL`}\u001b[${39}m`} ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
       opts,
       null,
       4
@@ -103,7 +103,7 @@ function stri(input: string, originalOpts?: Partial<Opts>): Res {
     templatingTags: false,
   };
   console.log(
-    `097 ${`\u001b[${32}m${`INITIAL`}\u001b[${39}m`} ${`\u001b[${33}m${`applicableOpts`}\u001b[${39}m`} = ${JSON.stringify(
+    `106 ${`\u001b[${32}m${`INITIAL`}\u001b[${39}m`} ${`\u001b[${33}m${`applicableOpts`}\u001b[${39}m`} = ${JSON.stringify(
       applicableOpts,
       null,
       4
@@ -112,7 +112,7 @@ function stri(input: string, originalOpts?: Partial<Opts>): Res {
 
   // quick ending
   if (!input) {
-    console.log(`106 quick ending, empty input`);
+    console.log(`115 quick ending, empty input`);
     returnHelper("", applicableOpts, detectLang(input), start);
   }
 
@@ -249,7 +249,7 @@ function stri(input: string, originalOpts?: Partial<Opts>): Res {
   });
 
   console.log(
-    `246 ${`\u001b[${32}m${`END`}\u001b[${39}m`} ${`\u001b[${33}m${`gatheredRanges`}\u001b[${39}m`} = ${JSON.stringify(
+    `252 ${`\u001b[${32}m${`END`}\u001b[${39}m`} ${`\u001b[${33}m${`gatheredRanges`}\u001b[${39}m`} = ${JSON.stringify(
       gatheredRanges,
       null,
       4

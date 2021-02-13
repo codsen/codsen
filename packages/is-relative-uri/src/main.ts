@@ -358,7 +358,7 @@ function isRel(str: string, originalOpts?: Partial<Opts>): Res {
     opts.offset = 0;
   }
   console.log(
-    `352 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} opts = ${JSON.stringify(
+    `361 ${`\u001b[${32}m${`FINAL`}\u001b[${39}m`} opts = ${JSON.stringify(
       opts,
       null,
       4
@@ -507,7 +507,7 @@ function isRel(str: string, originalOpts?: Partial<Opts>): Res {
   }
 
   // ---------------------------------------------------------------------------
-  console.log(`501 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
+  console.log(`510 ${`\u001b[${32}m${`FINAL RETURN`}\u001b[${39}m`}`);
   return {
     res: true,
     message: null,

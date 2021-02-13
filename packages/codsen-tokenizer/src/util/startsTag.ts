@@ -17,12 +17,12 @@ function startsTag(
   withinStyle: boolean
 ): boolean {
   console.log(
-    `014 ██ startsTag() isOpening1: ${isOpening(str, i, {
+    `020 ██ startsTag() isOpening1: ${isOpening(str, i, {
       allowCustomTagNames: true,
     })}`
   );
   console.log(
-    `019 ██ startsTag() isOpening2: ${isOpening(str, i, {
+    `025 ██ startsTag() isOpening2: ${isOpening(str, i, {
       allowCustomTagNames: false,
       skipOpeningBracket: true,
     })}`

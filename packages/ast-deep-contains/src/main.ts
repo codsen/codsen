@@ -77,7 +77,7 @@ function deepContains(
       // retrieve the path of the current node from the monkey
       console.log("\n");
       console.log(
-        `055 ${`\u001b[${90}m${`====================================`}\u001b[${39}m`} ${`\u001b[${36}m${`path`}\u001b[${39}m`}: ${path}; ${`\u001b[${36}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
+        `080 ${`\u001b[${90}m${`====================================`}\u001b[${39}m`} ${`\u001b[${36}m${`path`}\u001b[${39}m`}: ${path}; ${`\u001b[${36}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
           current,
           null,
           0
@@ -92,7 +92,7 @@ function deepContains(
       // );
 
       if (objectPath.has(tree1, path)) {
-        console.log(`070 tree1 does have the path "${path}"`);
+        console.log(`095 tree1 does have the path "${path}"`);
         if (
           !opts.arrayStrictComparison &&
           is.plainObject(current) &&
@@ -100,7 +100,7 @@ function deepContains(
           innerObj.parent.length > 1
         ) {
           console.log(
-            `078 ${`\u001b[${35}m${`██ object within array`}\u001b[${39}m`}`
+            `103 ${`\u001b[${35}m${`██ object within array`}\u001b[${39}m`}`
           );
           // stop the monkey, we'll go further recursively
           stop.now = true;
@@ -111,7 +111,7 @@ function deepContains(
               : tree1
           );
           console.log(
-            `083 SET ${`\u001b[${33}m${`arr1`}\u001b[${39}m`} = ${JSON.stringify(
+            `114 SET ${`\u001b[${33}m${`arr1`}\u001b[${39}m`} = ${JSON.stringify(
               arr1,
               null,
               4
@@ -133,10 +133,10 @@ function deepContains(
               )}`
             );
           } else {
-            console.log(`105`);
+            console.log(`136`);
             const arr2: UnknownValueObj[] = innerObj.parent;
             console.log(
-              `108 SET ${`\u001b[${33}m${`arr2`}\u001b[${39}m`} = ${JSON.stringify(
+              `139 SET ${`\u001b[${33}m${`arr2`}\u001b[${39}m`} = ${JSON.stringify(
                 arr2,
                 null,
                 4
@@ -151,14 +151,14 @@ function deepContains(
             // array against 2nd object in tree1 array...
 
             console.log(
-              `123 ${`\u001b[${33}m${`tree1RefSource`}\u001b[${39}m`} = ${JSON.stringify(
+              `154 ${`\u001b[${33}m${`tree1RefSource`}\u001b[${39}m`} = ${JSON.stringify(
                 tree1RefSource,
                 null,
                 0
               )}`
             );
             console.log(
-              `130 ${`\u001b[${33}m${`tree2RefSource`}\u001b[${39}m`} = ${JSON.stringify(
+              `161 ${`\u001b[${33}m${`tree2RefSource`}\u001b[${39}m`} = ${JSON.stringify(
                 tree2RefSource,
                 null,
                 0
@@ -222,7 +222,7 @@ function deepContains(
               const currArr: number[] = [];
               const pickedVal: number = tree1RefSource[i];
               console.log(
-                `221 SET ${`\u001b[${33}m${`pickedVal`}\u001b[${39}m`} = ${JSON.stringify(
+                `225 SET ${`\u001b[${33}m${`pickedVal`}\u001b[${39}m`} = ${JSON.stringify(
                   pickedVal,
                   null,
                   4
@@ -231,7 +231,7 @@ function deepContains(
               const disposableArr1 = dropIth(tree1RefSource, i);
               currArr.push(pickedVal);
               console.log(
-                `230 PUSH to ${`\u001b[${33}m${`currArr`}\u001b[${39}m`} now = ${JSON.stringify(
+                `234 PUSH to ${`\u001b[${33}m${`currArr`}\u001b[${39}m`} now = ${JSON.stringify(
                   currArr,
                   null,
                   4
@@ -243,7 +243,7 @@ function deepContains(
                   Array.from(currArr).concat(key1) as [number, number]
                 );
                 console.log(
-                  `240 secondDigits now = ${JSON.stringify(
+                  `246 secondDigits now = ${JSON.stringify(
                     secondDigits,
                     null,
                     4
@@ -261,7 +261,7 @@ function deepContains(
               return arr.map((val2, i) => [i, val2]);
             }) as FinalCombined;
             console.log(
-              `260 SET ${`\u001b[${33}m${`finalCombined`}\u001b[${39}m`} = ${JSON.stringify(
+              `264 SET ${`\u001b[${33}m${`finalCombined`}\u001b[${39}m`} = ${JSON.stringify(
                 finalCombined,
                 null,
                 4
@@ -271,7 +271,7 @@ function deepContains(
             console.log(" ");
             console.log(" ");
             console.log(
-              `256 ${`\u001b[${35}m${`MAPPING TABLE:`}\u001b[${39}m`} ${finalCombined.reduce(
+              `274 ${`\u001b[${35}m${`MAPPING TABLE:`}\u001b[${39}m`} ${finalCombined.reduce(
                 (acc, curr, idx) => {
                   return `${acc}${idx % 2 === 0 ? "\n" : ""}\n${JSON.stringify(
                     curr,
@@ -299,14 +299,14 @@ function deepContains(
               console.log(`\n-----\n#${i + 1}:`);
               finalCombined[i].forEach((mapping) => {
                 console.log(
-                  `298 ${`\u001b[${33}m${`mapping`}\u001b[${39}m`} = ${JSON.stringify(
+                  `302 ${`\u001b[${33}m${`mapping`}\u001b[${39}m`} = ${JSON.stringify(
                     mapping,
                     null,
                     4
                   )}`
                 );
                 console.log(
-                  `305 ${JSON.stringify(
+                  `309 ${JSON.stringify(
                     arr2[(mapping as any)[0]],
                     null,
                     4
@@ -331,7 +331,7 @@ function deepContains(
                 }
               });
               console.log(
-                `308 BEFORE PUSHING ${`\u001b[${33}m${`finalCombined[i]`}\u001b[${39}m`} = ${JSON.stringify(
+                `334 BEFORE PUSHING ${`\u001b[${33}m${`finalCombined[i]`}\u001b[${39}m`} = ${JSON.stringify(
                   finalCombined[i],
                   null,
                   4
@@ -339,7 +339,7 @@ function deepContains(
               );
               finalCombined[i].push(score);
               console.log(
-                `308 AFTER PUSHING ${`\u001b[${33}m${`finalCombined[i]`}\u001b[${39}m`} = ${JSON.stringify(
+                `342 AFTER PUSHING ${`\u001b[${33}m${`finalCombined[i]`}\u001b[${39}m`} = ${JSON.stringify(
                   finalCombined[i],
                   null,
                   4
@@ -354,7 +354,7 @@ function deepContains(
             console.log(" ");
             console.log(" ");
             console.log(
-              `307: ${`\u001b[${35}m${`WITH SCORES:`}\u001b[${39}m`} ${finalCombined.reduce(
+              `357: ${`\u001b[${35}m${`WITH SCORES:`}\u001b[${39}m`} ${finalCombined.reduce(
                 (acc, curr, idx) => {
                   return `${acc}${idx % 2 === 0 ? "\n" : ""}\n${JSON.stringify(
                     curr,
@@ -367,14 +367,14 @@ function deepContains(
             );
             console.log(" ");
             console.log(
-              `259 ${`\u001b[${35}m${`MAX SCORE:`}\u001b[${39}m`} ${maxScore}`
+              `370 ${`\u001b[${35}m${`MAX SCORE:`}\u001b[${39}m`} ${maxScore}`
             );
 
             // FINALLY, ping callbacks with the max score objects
             for (let i = 0, len = finalCombined.length; i < len; i++) {
               if (finalCombined[i][2] === maxScore) {
                 console.log(
-                  `268 ${`\u001b[${35}m${`PING:`}\u001b[${39}m`} ${JSON.stringify(
+                  `377 ${`\u001b[${35}m${`PING:`}\u001b[${39}m`} ${JSON.stringify(
                     [finalCombined[i][0], finalCombined[i][1]],
                     null,
                     0
@@ -420,18 +420,18 @@ function deepContains(
             //
           }
         } else {
-          console.log(`310 it is not an object inside an array`);
+          console.log(`423 it is not an object inside an array`);
           // if tree1 has that path on tree2, call the callback
           const retrieved = objectPath.get(tree1, path);
           console.log(
-            `314 ${`\u001b[${33}m${`opts.skipContainers`}\u001b[${39}m`} = ${JSON.stringify(
+            `427 ${`\u001b[${33}m${`opts.skipContainers`}\u001b[${39}m`} = ${JSON.stringify(
               opts.skipContainers,
               null,
               4
             )}`
           );
           console.log(
-            `321 ${`\u001b[${33}m${`retrieved`}\u001b[${39}m`} = ${JSON.stringify(
+            `434 ${`\u001b[${33}m${`retrieved`}\u001b[${39}m`} = ${JSON.stringify(
               retrieved,
               null,
               4
@@ -441,7 +441,7 @@ function deepContains(
             !opts.skipContainers ||
             (!is.plainObject(retrieved) && !Array.isArray(retrieved))
           ) {
-            console.log(`331 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} cb()`);
+            console.log(`444 ${`\u001b[${32}m${`PING`}\u001b[${39}m`} cb()`);
             cb(retrieved, current, path);
           }
         }

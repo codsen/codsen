@@ -1,7 +1,7 @@
 /**
  * string-apostrophes
  * Comprehensive, HTML-entities-aware tool to typographically-correct the apostrophes and single/double quotes
- * Version: 1.4.3
+ * Version: 1.4.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-apostrophes/
@@ -282,7 +282,7 @@ function rMerge(arrOfRanges, originalOpts) {
 /**
  * ranges-apply
  * Take an array of string index ranges, delete/replace the string according to them
- * Version: 5.0.3
+ * Version: 5.0.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/
@@ -412,7 +412,7 @@ function rApply(str, originalRangesArr, _progressFn) {
   return str;
 }
 
-var version = "1.4.3";
+var version = "1.4.4";
 
 var version$1 = version;
 

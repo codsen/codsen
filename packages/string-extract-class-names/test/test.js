@@ -13,7 +13,7 @@ tap.only(
     t.strictSame(
       e(".class-name"),
       { res: [".class-name"], ranges: [[0, 11]] },
-      "01.01"
+      "01"
     );
     t.end();
   }
@@ -29,7 +29,7 @@ tap.test("02 - tag with two classes", (t) => {
         [15, 28],
       ],
     },
-    "02.01"
+    "02"
   );
   t.end();
 });
@@ -91,7 +91,7 @@ tap.test("05 - class: more, sandwitched", (t) => {
       "div~!@$%^&*()+=,/';:\"?><[]{}|`.class-name~!@$%^&*()+=,/';:\"?><[]{}|`#"
     ),
     { res: [".class-name"], ranges: [[30, 41]] },
-    "05.01"
+    "05"
   );
   t.end();
 });
@@ -798,7 +798,7 @@ tap.test("28 - one-letter class names", (t) => {
 // ==============================
 
 tap.test("29 - id: just id passed, nothing done, falls on default", (t) => {
-  t.strictSame(e("#id-name"), { res: ["#id-name"], ranges: [[0, 8]] }, "29.01");
+  t.strictSame(e("#id-name"), { res: ["#id-name"], ranges: [[0, 8]] }, "29");
   t.end();
 });
 
@@ -905,7 +905,7 @@ tap.test("33 - id: more, sandwitched", (t) => {
         [42, 48],
       ],
     },
-    "33.01"
+    "33"
   );
   t.end();
 });
@@ -1928,17 +1928,17 @@ tap.test("64 - the first input arg of a wrong type", (t) => {
 // discovered working on emailcomb.com
 // ==============================
 
-tap.test("66 - encoded line breaks", (t) => {
+tap.test("65 - encoded line breaks", (t) => {
   t.strictSame(
     e("#unused-1\n\n\n\n\t\t\t\t\nz\t\ta"),
     { res: ["#unused-1"], ranges: [[0, 9]] },
-    "66.01"
+    "65"
   );
   t.end();
 });
 
 tap.test(
-  "67 - recognises JS escaped strings and repeated dots & hashes",
+  "66 - recognises JS escaped strings and repeated dots & hashes",
   (t) => {
     t.strictSame(
       e(
@@ -1952,7 +1952,7 @@ tap.test(
           [35, 44],
         ],
       },
-      "67.01"
+      "66"
     );
     t.end();
   }

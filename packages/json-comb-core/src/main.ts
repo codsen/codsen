@@ -118,7 +118,7 @@ function getKeyset<ValueType>(
   };
   const opts = { ...defaults, ...originalOpts };
   console.log(
-    `113 CALLING check-types-mini:\nopts = ${JSON.stringify(
+    `121 CALLING check-types-mini:\nopts = ${JSON.stringify(
       opts,
       null,
       4

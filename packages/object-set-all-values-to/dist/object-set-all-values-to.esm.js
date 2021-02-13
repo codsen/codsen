@@ -1,7 +1,7 @@
 /**
  * object-set-all-values-to
  * Recursively walk the input and set all found values in plain objects to something
- * Version: 4.0.3
+ * Version: 4.0.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-set-all-values-to/
@@ -10,7 +10,7 @@
 import clone from 'lodash.clonedeep';
 import isObj from 'lodash.isplainobject';
 
-var version = "4.0.3";
+var version = "4.0.4";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 const version$1 = version;

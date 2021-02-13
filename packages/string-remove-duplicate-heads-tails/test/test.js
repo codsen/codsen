@@ -640,7 +640,7 @@ tap.test("36 - opts are not mutated", (t) => {
   };
   // 1. run the function, hopefully it won't mutate the opts,
   // arrayiffying the "heads" and "tails" keys
-  t.strictSame(rem("{{ hi {{ name }}! }}", opts), "hi {{ name }}!", "05.01");
+  t.strictSame(rem("{{ hi {{ name }}! }}", opts), "hi {{ name }}!", "36.01");
   // 2. assert that opts keys were not arrayiffied
   t.strictSame(
     opts,
@@ -648,7 +648,7 @@ tap.test("36 - opts are not mutated", (t) => {
       heads: "{{",
       tails: "}}",
     },
-    "36 - opts were mutated!"
+    "36.02 - opts were mutated!"
   );
   t.end();
 });

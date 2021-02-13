@@ -54,11 +54,11 @@ function trimSpaces(str: string, originalOpts?: Partial<Opts>): Res {
   // action:
   let newStart;
   let newEnd;
-  console.log("038 about to check the length");
+  console.log("057 about to check the length");
   if (str.length) {
     if (check(str[0])) {
       console.log(
-        `042 \u001b[${36}m${`traverse forwards to trim heads`}\u001b[${39}m`
+        `061 \u001b[${36}m${`traverse forwards to trim heads`}\u001b[${39}m`
       );
       for (let i = 0, len = str.length; i < len; i++) {
         console.log(
@@ -71,7 +71,7 @@ function trimSpaces(str: string, originalOpts?: Partial<Opts>): Res {
         if (!check(str[i])) {
           newStart = i;
           console.log(
-            `055 SET ${`\u001b[${33}m${`newStart`}\u001b[${39}m`} = ${JSON.stringify(
+            `074 SET ${`\u001b[${33}m${`newStart`}\u001b[${39}m`} = ${JSON.stringify(
               newStart,
               null,
               4
@@ -84,7 +84,7 @@ function trimSpaces(str: string, originalOpts?: Partial<Opts>): Res {
         // whole thing can be trimmed:
         if (i === str.length - 1) {
           // this means there are only spaces/whitespace from beginning to the end
-          console.log("068");
+          console.log("087");
           return {
             res: "",
             ranges: [[0, str.length]],
@@ -97,7 +97,7 @@ function trimSpaces(str: string, originalOpts?: Partial<Opts>): Res {
     // trimming the end of the given string:
     if (check(str[str.length - 1])) {
       console.log(
-        `081 \u001b[${36}m${`traverse backwards to trim tails`}\u001b[${39}m`
+        `100 \u001b[${36}m${`traverse backwards to trim tails`}\u001b[${39}m`
       );
       for (let i = str.length; i--; ) {
         console.log(
@@ -106,7 +106,7 @@ function trimSpaces(str: string, originalOpts?: Partial<Opts>): Res {
         if (!check(str[i])) {
           newEnd = i + 1;
           console.log(
-            `090 SET ${`\u001b[${33}m${`newEnd`}\u001b[${39}m`} = ${JSON.stringify(
+            `109 SET ${`\u001b[${33}m${`newEnd`}\u001b[${39}m`} = ${JSON.stringify(
               newEnd,
               null,
               4
@@ -117,14 +117,14 @@ function trimSpaces(str: string, originalOpts?: Partial<Opts>): Res {
       }
     }
     console.log(
-      `101 CURRENTLY, ${`\u001b[${33}m${`newStart`}\u001b[${39}m`} = ${JSON.stringify(
+      `120 CURRENTLY, ${`\u001b[${33}m${`newStart`}\u001b[${39}m`} = ${JSON.stringify(
         newStart,
         null,
         4
       )}`
     );
     console.log(
-      `108 CURRENTLY, ${`\u001b[${33}m${`newEnd`}\u001b[${39}m`} = ${JSON.stringify(
+      `127 CURRENTLY, ${`\u001b[${33}m${`newEnd`}\u001b[${39}m`} = ${JSON.stringify(
         newEnd,
         null,
         4
@@ -132,7 +132,7 @@ function trimSpaces(str: string, originalOpts?: Partial<Opts>): Res {
     );
     if (newStart) {
       if (newEnd) {
-        console.log("116 - returning trimmed both heads and tails");
+        console.log("135 - returning trimmed both heads and tails");
         return {
           res: str.slice(newStart, newEnd),
           ranges: [
@@ -141,14 +141,14 @@ function trimSpaces(str: string, originalOpts?: Partial<Opts>): Res {
           ],
         };
       }
-      console.log("125 - returning trimmed heads");
+      console.log("144 - returning trimmed heads");
       return {
         res: str.slice(newStart),
         ranges: [[0, newStart]],
       };
     }
     if (newEnd) {
-      console.log("132 - returning trimmed tails");
+      console.log("151 - returning trimmed tails");
       return {
         res: str.slice(0, newEnd),
         ranges: [[newEnd, str.length]],

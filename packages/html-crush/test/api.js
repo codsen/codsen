@@ -48,17 +48,17 @@ tap.test(
       crush("zzz", {
         breakToTheLeftOf: false,
       });
-    }, "03.04");
+    }, "03.02");
     t.doesNotThrow(() => {
       crush("zzz", {
         breakToTheLeftOf: null,
       });
-    }, "03.05");
+    }, "03.03");
     t.doesNotThrow(() => {
       crush("zzz", {
         breakToTheLeftOf: [],
       });
-    }, "03.06");
+    }, "03.04");
 
     t.end();
   }

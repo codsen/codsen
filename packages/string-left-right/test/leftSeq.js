@@ -82,13 +82,13 @@ tap.test(`02 - no findings`, (t) => {
   t.end();
 });
 
-tap.test(`04 - starting point outside of the range`, (t) => {
-  t.equal(leftSeq("abcdefghijklmnop", 99, "d", "e", "f"), null, "04");
+tap.test(`03 - starting point outside of the range`, (t) => {
+  t.equal(leftSeq("abcdefghijklmnop", 99, "d", "e", "f"), null, "03");
   t.end();
 });
 
-tap.test(`05 - case insensitive`, (t) => {
-  t.equal(leftSeq("abcdefghijk", 5, "C", "D", "E"), null, "05.01");
+tap.test(`04 - case insensitive`, (t) => {
+  t.equal(leftSeq("abcdefghijk", 5, "C", "D", "E"), null, "04.01");
   t.strictSame(
     leftSeq("abcdefghijk", 5, { i: true }, "C", "D", "E"),
     {
@@ -96,7 +96,7 @@ tap.test(`05 - case insensitive`, (t) => {
       leftmostChar: 2,
       rightmostChar: 4,
     },
-    "05.02"
+    "04.02"
   );
   t.end();
 });

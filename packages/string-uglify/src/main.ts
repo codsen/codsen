@@ -228,7 +228,7 @@ function uglifyArr(arr: string[]): string[] {
   }
 
   console.log(
-    `223 ${`\u001b[${33}m${`singleClasses`}\u001b[${39}m`} = ${JSON.stringify(
+    `231 ${`\u001b[${33}m${`singleClasses`}\u001b[${39}m`} = ${JSON.stringify(
       singleClasses,
       null,
       4
@@ -249,14 +249,14 @@ function uglifyArr(arr: string[]): string[] {
   for (let i = 0, len = res.length; i < len; i++) {
     console.log("----------------------------------------");
     console.log(
-      `244 processing res[i] = ${`\u001b[${36}m${res[i]}\u001b[${39}m`}`
+      `252 processing res[i] = ${`\u001b[${36}m${res[i]}\u001b[${39}m`}`
     );
     if (res[i].startsWith(".")) {
       // if particular class name starts with a letter which hasn't been taken
       if (singleClasses[res[i].slice(1, 2)] === false) {
         singleClasses[res[i].slice(1, 2)] = res[i];
         console.log(
-          `251 shortened ${`\u001b[${33}m${
+          `259 shortened ${`\u001b[${33}m${
             res[i]
           }\u001b[${39}m`} to ${`\u001b[${33}m${res[i].slice(
             0,
@@ -270,7 +270,7 @@ function uglifyArr(arr: string[]): string[] {
         res[i] = res[i].slice(0, 2);
       } else if (singleClasses[res[i].slice(1, 2)] === res[i]) {
         console.log(
-          `265 res[i] = ${res[i]} will also be shortened to ${res[i].slice(
+          `273 res[i] = ${res[i]} will also be shortened to ${res[i].slice(
             0,
             2
           )}`
@@ -283,7 +283,7 @@ function uglifyArr(arr: string[]): string[] {
       if (singleIds[res[i].slice(1, 2)] === false) {
         singleIds[res[i].slice(1, 2)] = res[i];
         console.log(
-          `278 shortened ${`\u001b[${33}m${
+          `286 shortened ${`\u001b[${33}m${
             res[i]
           }\u001b[${39}m`} to ${`\u001b[${33}m${res[i].slice(
             0,
@@ -300,7 +300,7 @@ function uglifyArr(arr: string[]): string[] {
       if (!singleNameonly[res[i].slice(0, 1)]) {
         singleNameonly[res[i].slice(0, 1)] = res[i];
         console.log(
-          `295 shortened ${`\u001b[${33}m${
+          `303 shortened ${`\u001b[${33}m${
             res[i]
           }\u001b[${39}m`} to ${`\u001b[${33}m${res[i].slice(
             0,

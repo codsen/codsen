@@ -89,13 +89,13 @@ function extract(str: string): Result {
         if (stateCurrentlyIs) {
           stateCurrentlyIs = undefined;
           console.log(
-            `083 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} stateCurrentlyIs = undefined`
+            `092 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} stateCurrentlyIs = undefined`
           );
         }
       }
       selectorStartsAt = null;
       console.log(
-        `089 ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = null`
+        `098 ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = null`
       );
     }
 
@@ -107,7 +107,7 @@ function extract(str: string): Result {
     ) {
       selectorStartsAt = i;
       console.log(
-        `097 SET ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = ${selectorStartsAt}`
+        `110 SET ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = ${selectorStartsAt}`
       );
     }
 
@@ -120,7 +120,7 @@ function extract(str: string): Result {
       typeof temp1 === "number" &&
       str[temp1] === "="
     ) {
-      console.log(`117 [class= caught`);
+      console.log(`123 [class= caught`);
       // if it's zzz[class=something] (without quotes)
       /* istanbul ignore else */
       if (
@@ -128,13 +128,13 @@ function extract(str: string): Result {
         isLatinLetter(str[right(str, temp1) as number])
       ) {
         selectorStartsAt = right(str, temp1);
-        console.log(`123 SET selectorStartsAt = ${selectorStartsAt}`);
+        console.log(`131 SET selectorStartsAt = ${selectorStartsAt}`);
       } else if (
         `'"`.includes(str[right(str, temp1) as number]) &&
         isLatinLetter(str[right(str, right(str, temp1) as number) as number])
       ) {
         selectorStartsAt = right(str, right(str, temp1));
-        console.log(`129 SET selectorStartsAt = ${selectorStartsAt}`);
+        console.log(`137 SET selectorStartsAt = ${selectorStartsAt}`);
       }
       stateCurrentlyIs = ".";
     }
@@ -147,23 +147,23 @@ function extract(str: string): Result {
       temp2 !== null &&
       str[temp2] === "="
     ) {
-      console.log(`140 [id= caught`);
+      console.log(`150 [id= caught`);
       // if it's zzz[id=something] (without quotes)
       if (isLatinLetter(str[right(str, temp2) as number])) {
         selectorStartsAt = right(str, temp2);
-        console.log(`144 SET selectorStartsAt = ${selectorStartsAt}`);
+        console.log(`154 SET selectorStartsAt = ${selectorStartsAt}`);
       } else if (
         `'"`.includes(str[right(str, temp2) as number]) &&
         isLatinLetter(str[right(str, right(str, temp2) as number) as number])
       ) {
         selectorStartsAt = right(str, right(str, temp2));
-        console.log(`150 SET selectorStartsAt = ${selectorStartsAt}`);
+        console.log(`160 SET selectorStartsAt = ${selectorStartsAt}`);
       }
       stateCurrentlyIs = "#";
     }
 
     console.log(
-      `179 \u001b[${90}m${`ended with: selectorStartsAt = ${selectorStartsAt}; result = ${JSON.stringify(
+      `166 \u001b[${90}m${`ended with: selectorStartsAt = ${selectorStartsAt}; result = ${JSON.stringify(
         result,
         null,
         0

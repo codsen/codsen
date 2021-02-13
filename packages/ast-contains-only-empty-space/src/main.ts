@@ -5,15 +5,15 @@ import { traverse } from "ast-monkey-traverse";
  */
 function empty(input: unknown): boolean {
   if (typeof input === "string") {
-    console.log(`005 return ${!input.trim()}`);
+    console.log(`008 return ${!input.trim()}`);
     return !input.trim();
   }
   if (!["object", "string"].includes(typeof input) || !input) {
-    console.log(`009 return false`);
+    console.log(`012 return false`);
     return false;
   }
   let found = true;
-  console.log(`013 ${`\u001b[${36}m${`AST traversal!`}\u001b[${39}m`}`);
+  console.log(`016 ${`\u001b[${36}m${`AST traversal!`}\u001b[${39}m`}`);
   input = traverse(input, (key, val, innerObj, stop) => {
     console.log(" ");
     console.log(
@@ -24,7 +24,7 @@ function empty(input: unknown): boolean {
       )}`
     );
     console.log(
-      `024 -------------------------------------- path: ${innerObj.path}`
+      `027 -------------------------------------- path: ${innerObj.path}`
     );
     const current = val !== undefined ? val : key;
     console.log(
@@ -37,15 +37,15 @@ function empty(input: unknown): boolean {
     if (typeof current === "string" && current.trim()) {
       found = false;
       console.log(
-        `037 found = false, ${`\u001b[${31}m${`stopping`}\u001b[${39}m`}`
+        `040 found = false, ${`\u001b[${31}m${`stopping`}\u001b[${39}m`}`
       );
       stop.now = true;
     }
     return current;
   });
-  console.log(`043 -------------------------------------- fin.`);
+  console.log(`046 -------------------------------------- fin.`);
 
-  console.log(`045 return ${found}`);
+  console.log(`048 return ${found}`);
   return found;
 }
 

@@ -68,12 +68,12 @@ tap.test(`03 - absent skips to right()`, (t) => {
   t.end();
 });
 
-tap.test(`05 - starting point outside of the range`, (t) => {
-  t.equal(rightSeq("abcdefghijklmnop", 99, "d", "e", "f"), null, "05");
+tap.test(`04 - starting point outside of the range`, (t) => {
+  t.equal(rightSeq("abcdefghijklmnop", 99, "d", "e", "f"), null, "04");
   t.end();
 });
 
-tap.test(`06 - optional - existing`, (t) => {
+tap.test(`05 - optional - existing`, (t) => {
   t.strictSame(
     rightSeq("abcdefghijklmnop", 2, "d?", "e?", "f"),
     {
@@ -81,13 +81,13 @@ tap.test(`06 - optional - existing`, (t) => {
       leftmostChar: 3,
       rightmostChar: 5,
     },
-    "06"
+    "05"
   );
   t.end();
 });
 
 tap.test(
-  `07 - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - 1 not existing, no whitespace`,
+  `06 - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - 1 not existing, no whitespace`,
   (t) => {
     t.strictSame(
       rightSeq("abcefghijklmnop", 2, "d?", "e", "f"),
@@ -96,14 +96,14 @@ tap.test(
         leftmostChar: 3,
         rightmostChar: 4,
       },
-      "07"
+      "06"
     );
     t.end();
   }
 );
 
 tap.test(
-  `08 - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - 1 not existing, with whitespace`,
+  `07 - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - 1 not existing, with whitespace`,
   (t) => {
     t.strictSame(
       rightSeq("abc  e   f   g   hijklmnop", 2, "d?", "e", "f"),
@@ -115,14 +115,14 @@ tap.test(
         leftmostChar: 5,
         rightmostChar: 9,
       },
-      "08"
+      "07"
     );
     t.end();
   }
 );
 
 tap.test(
-  `09 - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - ends with non-existing optional`,
+  `08 - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - ends with non-existing optional`,
   (t) => {
     t.strictSame(
       rightSeq("abc  e   f   g   hijklmnop", 2, "y?", "e", "z?"),
@@ -131,13 +131,13 @@ tap.test(
         leftmostChar: 5,
         rightmostChar: 5,
       },
-      "09"
+      "08"
     );
     t.end();
   }
 );
 
-tap.test(`10 - all optional, existing`, (t) => {
+tap.test(`09 - all optional, existing`, (t) => {
   t.strictSame(
     rightSeq("abcdefghijklmnop", 2, "d?", "e?", "f?"),
     {
@@ -145,20 +145,20 @@ tap.test(`10 - all optional, existing`, (t) => {
       leftmostChar: 3,
       rightmostChar: 5,
     },
-    "10"
+    "09"
   );
   t.end();
 });
 
-tap.test(`11 - all optional, not existing`, (t) => {
-  t.equal(rightSeq("abcdefghijklmnop", 2, "x?"), null, "11.01");
-  t.equal(rightSeq("abcdefghijklmnop", 2, "x?", "y?"), null, "11.02");
-  t.equal(rightSeq("abcdefghijklmnop", 2, "x?", "y?", "z?"), null, "11.03");
+tap.test(`10 - all optional, not existing`, (t) => {
+  t.equal(rightSeq("abcdefghijklmnop", 2, "x?"), null, "10.01");
+  t.equal(rightSeq("abcdefghijklmnop", 2, "x?", "y?"), null, "10.02");
+  t.equal(rightSeq("abcdefghijklmnop", 2, "x?", "y?", "z?"), null, "10.03");
   t.end();
 });
 
-tap.test(`12 - no findings`, (t) => {
-  t.equal(rightSeq("ABCDEFGHIJKLMNOP", 0, "b", "c", "d"), null, "12.01");
+tap.test(`11 - no findings`, (t) => {
+  t.equal(rightSeq("ABCDEFGHIJKLMNOP", 0, "b", "c", "d"), null, "11.01");
   t.strictSame(
     rightSeq("ABCDEFGHIJKLMNOP", 0, { i: true }, "b", "c", "d"),
     {
@@ -166,7 +166,7 @@ tap.test(`12 - no findings`, (t) => {
       leftmostChar: 1,
       rightmostChar: 3,
     },
-    "12.02"
+    "11.02"
   );
   t.end();
 });

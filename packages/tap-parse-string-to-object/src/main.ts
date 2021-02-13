@@ -22,7 +22,7 @@ interface StreamInterface extends NodeJS.ReadWriteStream {
 }
 
 function parseTap(something: string | StreamInterface): Res | Promise<Res> {
-  console.log(`007 parseTap called!`);
+  console.log(`025 parseTap called!`);
   if (isStream(something)) {
     console.log(`stream was given`);
     return new Promise((resolve, reject) => {

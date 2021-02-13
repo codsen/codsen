@@ -45,7 +45,7 @@ tap.test(`02 - when one of the arguments is of a wrong type`, (t) => {
   t.end();
 });
 
-tap.test(`04`, (t) => {
+tap.test(`03`, (t) => {
   t.throws(() => {
     checkTypesMini(
       {
@@ -99,11 +99,11 @@ tap.test(`04`, (t) => {
         ignoreKeys: ["option2"],
       }
     );
-  }, "04.03");
+  }, "03.03");
   t.end();
 });
 
-tap.test(`05 - when opts are set wrong`, (t) => {
+tap.test(`04 - when opts are set wrong`, (t) => {
   t.doesNotThrow(() => {
     checkTypesMini(
       { somekey: "a" },
@@ -114,7 +114,7 @@ tap.test(`05 - when opts are set wrong`, (t) => {
         ignoreKeys: "a",
       }
     );
-  }, "05.03");
+  }, "04.01");
 
   t.doesNotThrow(() => {
     checkTypesMini(
@@ -126,12 +126,12 @@ tap.test(`05 - when opts are set wrong`, (t) => {
         ignoreKeys: "",
       }
     );
-  }, "05.04");
+  }, "04.02");
 
   t.end();
 });
 
-tap.test(`06 - nested options`, (t) => {
+tap.test(`05 - nested options`, (t) => {
   t.throws(() => {
     checkTypesMini(
       {
@@ -170,12 +170,12 @@ tap.test(`06 - nested options`, (t) => {
         },
       }
     );
-  }, "06.02");
+  }, "05.02");
 
   t.end();
 });
 
-tap.test(`07 - opts.ignorePaths`, (t) => {
+tap.test(`06 - opts.ignorePaths`, (t) => {
   // for a reference, let's see what will "ignoreKeys" against "bbb" do:
   t.doesNotThrow(() => {
     checkTypesMini(
@@ -201,7 +201,7 @@ tap.test(`07 - opts.ignorePaths`, (t) => {
         ignoreKeys: "bbb", // <-------- string, not array, but that's fine
       }
     );
-  }, "07.02");
+  }, "06.01");
 
   // paths ignored - given as array:
   t.throws(() => {
@@ -254,7 +254,7 @@ tap.test(`07 - opts.ignorePaths`, (t) => {
         ignorePaths: "aaa.bbb", // <----- string.
       }
     );
-  }, "07.04");
+  }, "06.03");
 
   t.doesNotThrow(() => {
     checkTypesMini(
@@ -280,7 +280,7 @@ tap.test(`07 - opts.ignorePaths`, (t) => {
         ignorePaths: ["aaa.bbb"], // <----- array.
       }
     );
-  }, "07.05");
+  }, "06.04");
 
   t.doesNotThrow(() => {
     checkTypesMini(
@@ -306,7 +306,7 @@ tap.test(`07 - opts.ignorePaths`, (t) => {
         ignorePaths: "aaa.*", // <----- with glob, string.
       }
     );
-  }, "07.06");
+  }, "06.05");
 
   t.doesNotThrow(() => {
     checkTypesMini(
@@ -332,7 +332,7 @@ tap.test(`07 - opts.ignorePaths`, (t) => {
         ignorePaths: ["aaa.*"], // <----- with glob, array.
       }
     );
-  }, "07.07");
+  }, "06.06");
 
   // paths ignored - given as string:
   t.throws(() => {
@@ -385,7 +385,7 @@ tap.test(`07 - opts.ignorePaths`, (t) => {
         ignorePaths: ["aaa.bbb", "ccc.bbb"], // <----- both ignored
       }
     );
-  }, "07.09");
+  }, "06.08");
 
   t.doesNotThrow(() => {
     checkTypesMini(
@@ -413,12 +413,12 @@ tap.test(`07 - opts.ignorePaths`, (t) => {
         ignorePaths: ["aaa.bbb", "ccc.bbb"], // <----- both ignored
       }
     );
-  }, "07.10");
+  }, "06.09");
 
   t.end();
 });
 
-tap.test(`08 - opts.ignorePaths with wildcards`, (t) => {
+tap.test(`07 - opts.ignorePaths with wildcards`, (t) => {
   // paths ignored - given as string:
   t.throws(() => {
     checkTypesMini(
@@ -500,13 +500,13 @@ tap.test(`08 - opts.ignorePaths with wildcards`, (t) => {
         ignorePaths: ["aaa.*", "ccc.*"], // <------ both ignored
       }
     );
-  }, "08.03");
+  }, "07.03");
 
   t.end();
 });
 
 tap.test(
-  `09 - opts.ignoreKeys with wildcards not referenced by schema/reference obj.`,
+  `08 - opts.ignoreKeys with wildcards not referenced by schema/reference obj.`,
   (t) => {
     // the control
     t.throws(() => {
@@ -567,14 +567,14 @@ tap.test(
           enforceStrictKeyset: false,
         }
       );
-    }, "09.03");
+    }, "08.03");
 
     t.end();
   }
 );
 
 tap.test(
-  `10 - some keys bailed through ignoreKeys, some through ignorePaths and as a result it does not throw`,
+  `09 - some keys bailed through ignoreKeys, some through ignorePaths and as a result it does not throw`,
   (t) => {
     // the control:
     t.throws(() => {
@@ -652,7 +652,7 @@ tap.test(
           ignorePaths: "ddd.eee",
         }
       );
-    }, "10.03");
+    }, "09.03");
 
     // just to make sure options can fail too:
     t.throws(() => {
@@ -679,7 +679,7 @@ tap.test(
           ignorePaths: "ddd.yyy", // <-- unused path
         }
       );
-    }, "10.04");
+    }, "09.04");
 
     t.end();
   }
@@ -690,7 +690,7 @@ tap.test(
 // ======================
 
 tap.test(
-  `11 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - opts.acceptArrays, strings+arrays`,
+  `10 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - opts.acceptArrays, strings+arrays`,
   (t) => {
     const err1 = t.throws(() => {
       checkTypesMini(
@@ -710,7 +710,7 @@ tap.test(
       err1.message.includes(
         'check-types-mini: opts.option2 was customised to "["setting3","setting4"]" which is not string but array'
       ),
-      "11.01"
+      "10.01"
     );
 
     t.doesNotThrow(() => {
@@ -731,7 +731,7 @@ tap.test(
           acceptArrays: true,
         }
       );
-    }, "11.02");
+    }, "10.02");
 
     const err2 = t.throws(() => {
       checkTypesMini(
@@ -755,14 +755,14 @@ tap.test(
     t.equal(
       err2.message,
       "message: varname.option2 was customised to be array, but not all of its elements are string-type",
-      "11.03"
+      "10.03"
     );
     t.end();
   }
 );
 
 tap.test(
-  `12 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - opts.acceptArrays, Booleans+arrays`,
+  `11 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - opts.acceptArrays, Booleans+arrays`,
   (t) => {
     const err1 = t.throws(() => {
       checkTypesMini(
@@ -781,13 +781,13 @@ tap.test(
     t.equal(
       err1.message,
       'check-types-mini: opts.option2 was customised to "[true,true]" which is not boolean but array',
-      "12"
+      "11"
     );
     t.end();
   }
 );
 
-tap.test(`13`, (t) => {
+tap.test(`12`, (t) => {
   t.doesNotThrow(() => {
     checkTypesMini(
       {
@@ -806,11 +806,11 @@ tap.test(`13`, (t) => {
         acceptArrays: true,
       }
     );
-  }, "13");
+  }, "12");
   t.end();
 });
 
-tap.test(`14`, (t) => {
+tap.test(`13`, (t) => {
   const err2 = t.throws(() => {
     checkTypesMini(
       {
@@ -834,12 +834,12 @@ tap.test(`14`, (t) => {
     err2.message.includes(
       "message: varname.option2 was customised to be array, but not all of its elements are boolean-type"
     ),
-    "14"
+    "13"
   );
   t.end();
 });
 
-tap.test(`16`, (t) => {
+tap.test(`14`, (t) => {
   t.doesNotThrow(() => {
     checkTypesMini(
       {
@@ -859,12 +859,12 @@ tap.test(`16`, (t) => {
         acceptArraysIgnore: [],
       }
     );
-  }, "16");
+  }, "14");
   t.end();
 });
 
 tap.test(
-  `13 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - opts.acceptArraysIgnore`,
+  `15 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - opts.acceptArraysIgnore`,
   (t) => {
     t.doesNotThrow(() => {
       checkTypesMini(
@@ -885,7 +885,7 @@ tap.test(
           acceptArraysIgnore: [],
         }
       );
-    }, "13.01");
+    }, "15.01");
 
     const err1 = t.throws(() => {
       checkTypesMini(
@@ -911,7 +911,7 @@ tap.test(
       err1.message.includes(
         'test: [THROW_ID_01]: opts.option1 was customised to "[1,0,1,0]" which is not number but array'
       ),
-      "13.02"
+      "15.02"
     );
 
     const err2 = t.throws(() => {
@@ -938,14 +938,14 @@ tap.test(
       err2.message.includes(
         'test: [THROW_ID_01]: opts.option1 was customised to "[1,0,1,0]" which is not number but array'
       ),
-      "13.03"
+      "15.03"
     );
     t.end();
   }
 );
 
 tap.test(
-  `14 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - involving null values`,
+  `16 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - involving null values`,
   (t) => {
     const err = t.throws(() => {
       checkTypesMini(
@@ -964,7 +964,7 @@ tap.test(
     t.equal(
       err.message,
       'check-types-mini: opts.key was customised to "1" which is not null but number',
-      "14"
+      "16"
     );
 
     t.end();
@@ -972,7 +972,7 @@ tap.test(
 );
 
 tap.test(
-  `15 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - throws/notThrows when keysets mismatch`,
+  `17 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - throws/notThrows when keysets mismatch`,
   (t) => {
     t.throws(() => {
       checkTypesMini(
@@ -986,7 +986,7 @@ tap.test(
           val: null,
         }
       );
-    }, "15.01");
+    }, "17.01");
     t.throws(() => {
       checkTypesMini(
         {
@@ -999,7 +999,7 @@ tap.test(
           cleanup: true,
         }
       );
-    }, "15.02");
+    }, "17.02");
     t.doesNotThrow(() => {
       checkTypesMini(
         {
@@ -1015,7 +1015,7 @@ tap.test(
           enforceStrictKeyset: false,
         }
       );
-    }, "15.03");
+    }, "17.03");
     t.doesNotThrow(() => {
       checkTypesMini(
         {
@@ -1031,14 +1031,14 @@ tap.test(
           enforceStrictKeyset: false,
         }
       );
-    }, "15.04");
+    }, "17.04");
 
     t.end();
   }
 );
 
 tap.test(
-  `16 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - opts.enforceStrictKeyset set to a wrong thing`,
+  `18 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - opts.enforceStrictKeyset set to a wrong thing`,
   (t) => {
     t.throws(() => {
       checkTypesMini(
@@ -1056,14 +1056,14 @@ tap.test(
           enforceStrictKeyset: 1,
         }
       );
-    }, "16");
+    }, "18");
 
     t.end();
   }
 );
 
 tap.test(
-  `17 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - throws when reference and schema are both missing`,
+  `19 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - throws when reference and schema are both missing`,
   (t) => {
     t.throws(() => {
       checkTypesMini(
@@ -1074,14 +1074,14 @@ tap.test(
         },
         {}
       );
-    }, "17");
+    }, "19");
 
     t.end();
   }
 );
 
 tap.test(
-  `18 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - acceptArrays + schema + nested`,
+  `20 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - acceptArrays + schema + nested`,
   (t) => {
     // control
 
@@ -1104,7 +1104,7 @@ tap.test(
           },
         }
       );
-    }, "18");
+    }, "20.01");
 
     t.doesNotThrow(() => {
       checkTypesMini(
@@ -1125,7 +1125,7 @@ tap.test(
           },
         }
       );
-    }, "18.02");
+    }, "20.02");
 
     // the value opt2.opt3 is missing from ref but given in schema. Parent key,
     // opt2, is present in ref.
@@ -1170,7 +1170,7 @@ tap.test(
           },
         }
       );
-    }, "18.06");
+    }, "20.04");
 
     t.throws(() => {
       checkTypesMini(
@@ -1198,7 +1198,7 @@ tap.test(
 );
 
 tap.test(
-  `19 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - enforceStrictKeyset and nested inputs`,
+  `21 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - enforceStrictKeyset and nested inputs`,
   (t) => {
     const err1 = t.throws(() => {
       checkTypesMini(
@@ -1219,7 +1219,7 @@ tap.test(
     t.match(
       err1.message,
       /check-types-mini: opts\.rogueKey\.rogueSubkey is neither covered by reference object \(second input argument\), nor opts\.schema/g,
-      "19"
+      "21"
     );
 
     t.end();
@@ -1227,7 +1227,7 @@ tap.test(
 );
 
 tap.test(
-  `20 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - strict mode, customising keys`,
+  `22 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - strict mode, customising keys`,
   (t) => {
     // default mode (strict) - root level
 
@@ -1250,7 +1250,7 @@ tap.test(
           enforceStrictKeyset: true,
         }
       );
-    }, "20.01");
+    }, "22.01");
 
     t.doesNotThrow(() => {
       checkTypesMini(
@@ -1268,7 +1268,7 @@ tap.test(
           enforceStrictKeyset: false,
         }
       );
-    }, "20.02");
+    }, "22.02");
 
     t.doesNotThrow(() => {
       checkTypesMini(
@@ -1286,7 +1286,7 @@ tap.test(
           enforceStrictKeyset: false,
         }
       );
-    }, "20.03");
+    }, "22.03");
     t.doesNotThrow(() => {
       checkTypesMini(
         {
@@ -1303,7 +1303,7 @@ tap.test(
           enforceStrictKeyset: true,
         }
       );
-    }, "20.04");
+    }, "22.04");
 
     const err = t.throws(() => {
       checkTypesMini(
@@ -1325,7 +1325,7 @@ tap.test(
     t.match(
       err.message,
       /check-types-mini: opts\.ignoreThese\.1 is neither covered by reference object/g,
-      "20.05"
+      "22.05"
     );
 
     t.end();
@@ -1337,7 +1337,7 @@ tap.test(
 // ======================
 
 tap.test(
-  `21 - ${`\u001b[${32}m${`opts.acceptArrays`}\u001b[${39}m`} - strings + arrays`,
+  `23 - ${`\u001b[${32}m${`opts.acceptArrays`}\u001b[${39}m`} - strings + arrays`,
   (t) => {
     t.throws(() => {
       checkTypesMini(
@@ -1351,7 +1351,7 @@ tap.test(
           option2: "yy",
         }
       );
-    }, "21.01");
+    }, "23.01");
     t.doesNotThrow(() => {
       checkTypesMini(
         {
@@ -1367,7 +1367,7 @@ tap.test(
           enforceStrictKeyset: false,
         }
       );
-    }, "21.02");
+    }, "23.02");
 
     t.end();
   }
@@ -1378,7 +1378,7 @@ tap.test(
 // ======================
 
 tap.test(
-  `22 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in root`,
+  `24 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in root`,
   (t) => {
     const err1 = t.throws(() => {
       checkTypesMini(
@@ -1392,9 +1392,9 @@ tap.test(
         }
       );
     });
-    t.match(err1.message, /opts.option2 was customised to/gi, "22.01");
-    t.match(err1.message, /string/gi, "22.02");
-    t.match(err1.message, /null/gi, "22.03");
+    t.match(err1.message, /opts.option2 was customised to/gi, "24.01");
+    t.match(err1.message, /string/gi, "24.02");
+    t.match(err1.message, /null/gi, "24.03");
 
     t.doesNotThrow(() => {
       checkTypesMini(
@@ -1412,7 +1412,7 @@ tap.test(
           },
         }
       );
-    }, "22.04");
+    }, "24.04");
 
     const err2 = t.throws(() => {
       checkTypesMini(
@@ -1431,7 +1431,7 @@ tap.test(
         }
       );
     });
-    t.match(err2.message, /opts\.option2 was customised to "null"/gi, "22.05");
+    t.match(err2.message, /opts\.option2 was customised to "null"/gi, "24.05");
 
     t.doesNotThrow(() => {
       checkTypesMini(
@@ -1447,7 +1447,7 @@ tap.test(
           },
         }
       );
-    }, "22.06");
+    }, "24.06");
 
     const err3 = t.throws(() => {
       checkTypesMini(
@@ -1467,9 +1467,9 @@ tap.test(
     t.match(
       err3.message,
       /opts\.enforceStrictKeyset is on and the following key/gi,
-      "22.07"
+      "24.07"
     );
-    t.match(err3.message, /option1/gi, "22.08");
+    t.match(err3.message, /option1/gi, "24.08");
 
     // true not allowed, - only false or null or string
     const err4 = t.throws(() => {
@@ -1489,10 +1489,10 @@ tap.test(
         }
       );
     });
-    t.match(err4.message, /opts\.option2 was customised to "true"/gi, "22.09");
-    t.match(err4.message, /boolean/gi, "22.10");
-    t.match(err4.message, /null/gi, "22.11");
-    t.match(err4.message, /false/gi, "22.12");
+    t.match(err4.message, /opts\.option2 was customised to "true"/gi, "24.09");
+    t.match(err4.message, /boolean/gi, "24.10");
+    t.match(err4.message, /null/gi, "24.11");
+    t.match(err4.message, /false/gi, "24.12");
 
     t.doesNotThrow(() => {
       checkTypesMini(
@@ -1510,7 +1510,7 @@ tap.test(
           },
         }
       );
-    }, "22.13");
+    }, "24.13");
 
     t.doesNotThrow(() => {
       checkTypesMini(
@@ -1528,7 +1528,7 @@ tap.test(
           },
         }
       );
-    }, "22.14");
+    }, "24.14");
 
     t.doesNotThrow(() => {
       checkTypesMini(
@@ -1546,7 +1546,7 @@ tap.test(
           },
         }
       );
-    }, "22.15");
+    }, "24.15");
 
     // second bunch
 
@@ -1571,7 +1571,7 @@ tap.test(
     t.match(
       err5.message,
       /check-types-mini: opts\.option2 was customised to "false" \(type: boolean\)/gi,
-      "22.16"
+      "24.16"
     );
 
     const err6 = t.throws(() => {
@@ -1594,7 +1594,7 @@ tap.test(
     t.match(
       err6.message,
       /check-types-mini: opts\.option2 was customised to "null"/gi,
-      "22.17"
+      "24.17"
     );
 
     const err7 = t.throws(() => {
@@ -1617,7 +1617,7 @@ tap.test(
     t.match(
       err7.message,
       /check-types-mini: opts\.option2 was customised to "0"/,
-      "22.18"
+      "24.18"
     );
 
     t.doesNotThrow(() => {
@@ -1636,7 +1636,7 @@ tap.test(
           },
         }
       );
-    }, "22.19");
+    }, "24.19");
 
     const err8 = t.throws(() => {
       checkTypesMini(
@@ -1658,7 +1658,7 @@ tap.test(
     t.match(
       err8.message,
       /check-types-mini: opts\.option2 was customised to "zzz"/gi,
-      "22.20"
+      "24.20"
     );
 
     t.doesNotThrow(() => {
@@ -1677,7 +1677,7 @@ tap.test(
           },
         }
       );
-    }, "22.21");
+    }, "24.21");
 
     t.doesNotThrow(() => {
       checkTypesMini(
@@ -1695,7 +1695,7 @@ tap.test(
           },
         }
       );
-    }, "22.22");
+    }, "24.22");
 
     t.doesNotThrow(() => {
       checkTypesMini(
@@ -1713,7 +1713,7 @@ tap.test(
           },
         }
       );
-    }, "22.23");
+    }, "24.23");
 
     t.doesNotThrow(() => {
       checkTypesMini(
@@ -1731,7 +1731,7 @@ tap.test(
           },
         }
       );
-    }, "22.24");
+    }, "24.24");
 
     t.doesNotThrow(() => {
       checkTypesMini(
@@ -1749,7 +1749,7 @@ tap.test(
           },
         }
       );
-    }, "22.25");
+    }, "24.25");
 
     const err9 = t.throws(() => {
       checkTypesMini(
@@ -1771,7 +1771,7 @@ tap.test(
     t.match(
       err9.message,
       /check-types-mini: opts\.option2 was customised to "true" \(type: string\)/gi,
-      "22.26"
+      "24.26"
     );
 
     t.end();
@@ -1779,7 +1779,7 @@ tap.test(
 );
 
 tap.test(
-  `23 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - deeper level key doesn't even exist in ref`,
+  `25 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - deeper level key doesn't even exist in ref`,
   (t) => {
     const err1 = t.throws(() => {
       checkTypesMini(
@@ -1798,7 +1798,7 @@ tap.test(
     t.equal(
       err1.message,
       'check-types-mini: opts.option2 was customised to "{"option3":null}" which is not null but object',
-      "23.01"
+      "25.01"
     );
 
     const err2 = t.throws(() => {
@@ -1820,7 +1820,7 @@ tap.test(
     t.equal(
       err2.message,
       'check-types-mini: opts.option2.option3 was customised to "null" which is not null but string',
-      "23.02"
+      "25.02"
     );
 
     const err3 = t.throws(() => {
@@ -1842,7 +1842,7 @@ tap.test(
     t.equal(
       err3.message,
       'check-types-mini: opts.option2.option3 was customised to "null" which is not string but null',
-      "23.03"
+      "25.03"
     );
 
     t.end();
@@ -1850,7 +1850,7 @@ tap.test(
 );
 
 tap.test(
-  `24 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - deeper level key type mismatches but is allowed through a schema`,
+  `26 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - deeper level key type mismatches but is allowed through a schema`,
   (t) => {
     // control - make it throw:
 
@@ -1876,7 +1876,7 @@ tap.test(
     t.equal(
       err.message,
       'check-types-mini: opts.option2.option3 was customised to "null" which is not string but null',
-      "24.01"
+      "26.01"
     );
 
     // now prove that schema works:
@@ -1899,14 +1899,14 @@ tap.test(
           },
         }
       );
-    }, "24.02");
+    }, "26.02");
 
     t.end();
   }
 );
 
 tap.test(
-  `25 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located deeper`,
+  `27 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located deeper`,
   (t) => {
     const err2 = t.throws(() => {
       checkTypesMini(
@@ -1928,7 +1928,7 @@ tap.test(
     t.match(
       err2.message,
       /check-types-mini: opts\.option2\.option3 was customised to "null" \(type: null\)/gi,
-      "25.01"
+      "27.01"
     );
 
     t.doesNotThrow(() => {
@@ -1946,7 +1946,7 @@ tap.test(
           },
         }
       );
-    }, "25.02");
+    }, "27.02");
 
     const err3 = t.throws(() => {
       checkTypesMini(
@@ -1966,7 +1966,7 @@ tap.test(
     t.equal(
       err3.message,
       "check-types-mini: opts.enforceStrictKeyset is on and the following keys are not covered by schema and/or reference objects: option1, option2",
-      "25.03"
+      "27.03"
     );
 
     // make error message mention a missing deeper-level path:
@@ -1989,7 +1989,7 @@ tap.test(
     t.match(
       err32.message,
       /check-types-mini: opts\.option1\.option2 is neither covered by reference object/gi,
-      "25.04"
+      "27.04"
     );
 
     // true not allowed, - only false or null or string
@@ -2013,7 +2013,7 @@ tap.test(
     t.match(
       err4.message,
       /check-types-mini: opts\.option2 was customised to "true" \(type: boolean\)/gi,
-      "25.05"
+      "27.05"
     );
 
     t.doesNotThrow(() => {
@@ -2032,7 +2032,7 @@ tap.test(
           },
         }
       );
-    }, "25.06");
+    }, "27.06");
 
     t.doesNotThrow(() => {
       checkTypesMini(
@@ -2050,7 +2050,7 @@ tap.test(
           },
         }
       );
-    }, "25.07");
+    }, "27.07");
 
     t.doesNotThrow(() => {
       checkTypesMini(
@@ -2068,7 +2068,7 @@ tap.test(
           },
         }
       );
-    }, "25.08");
+    }, "27.08");
 
     // second bunch
 
@@ -2093,7 +2093,7 @@ tap.test(
     t.match(
       err5.message,
       /check-types-mini: opts\.option2 was customised to "false" \(type: boolean\)/gi,
-      "25.09"
+      "27.09"
     );
 
     const err6 = t.throws(() => {
@@ -2116,7 +2116,7 @@ tap.test(
     t.match(
       err6.message,
       /check-types-mini: opts\.option2 was customised to "null" \(type: null\)/gi,
-      "25.10"
+      "27.10"
     );
 
     const err7 = t.throws(() => {
@@ -2139,7 +2139,7 @@ tap.test(
     t.match(
       err7.message,
       /check-types-mini: opts\.option2 was customised to "0" \(type: number\)/gi,
-      "25.11"
+      "27.11"
     );
 
     t.doesNotThrow(() => {
@@ -2158,7 +2158,7 @@ tap.test(
           },
         }
       );
-    }, "25.12");
+    }, "27.12");
 
     const err8 = t.throws(() => {
       checkTypesMini(
@@ -2180,7 +2180,7 @@ tap.test(
     t.match(
       err8.message,
       /check-types-mini: opts\.option2 was customised to "zzz" \(type: string\)/gi,
-      "25.13"
+      "27.13"
     );
 
     t.doesNotThrow(() => {
@@ -2199,7 +2199,7 @@ tap.test(
           },
         }
       );
-    }, "25.14");
+    }, "27.14");
 
     t.doesNotThrow(() => {
       checkTypesMini(
@@ -2217,7 +2217,7 @@ tap.test(
           },
         }
       );
-    }, "25.15");
+    }, "27.15");
 
     t.doesNotThrow(() => {
       checkTypesMini(
@@ -2235,7 +2235,7 @@ tap.test(
           },
         }
       );
-    }, "25.16");
+    }, "27.16");
 
     t.doesNotThrow(() => {
       checkTypesMini(
@@ -2253,7 +2253,7 @@ tap.test(
           },
         }
       );
-    }, "25.17");
+    }, "27.17");
 
     t.doesNotThrow(() => {
       checkTypesMini(
@@ -2271,7 +2271,7 @@ tap.test(
           },
         }
       );
-    }, "25.18");
+    }, "27.18");
 
     const err9 = t.throws(() => {
       checkTypesMini(
@@ -2293,7 +2293,7 @@ tap.test(
     t.match(
       err9.message,
       /check-types-mini: opts\.option2 was customised to "true" \(type: string\)/gi,
-      "25.19"
+      "27.19"
     );
 
     t.end();
@@ -2301,7 +2301,7 @@ tap.test(
 );
 
 tap.test(
-  `26 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} values as strings + "whatever" keys`,
+  `28 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} values as strings + "whatever" keys`,
   (t) => {
     const err1 = t.throws(() => {
       checkTypesMini(
@@ -2318,7 +2318,7 @@ tap.test(
     t.equal(
       err1.message,
       'check-types-mini: opts.option2 was customised to "null" which is not string but null',
-      "26.01"
+      "28.01"
     );
 
     t.doesNotThrow(() => {
@@ -2338,7 +2338,7 @@ tap.test(
           },
         }
       );
-    }, "26.02");
+    }, "28.02");
     t.doesNotThrow(() => {
       checkTypesMini(
         {
@@ -2356,7 +2356,7 @@ tap.test(
           },
         }
       );
-    }, "26.03");
+    }, "28.03");
 
     const err2 = t.throws(() => {
       checkTypesMini(
@@ -2379,7 +2379,7 @@ tap.test(
     t.match(
       err2.message,
       /check-types-mini: opts\.option1 was customised to "{"somekey":"setting1"}" \(type: object\)/gi,
-      "26.04"
+      "28.04"
     );
 
     t.doesNotThrow(() => {
@@ -2399,7 +2399,7 @@ tap.test(
           },
         }
       );
-    }, "26.05");
+    }, "28.05");
 
     t.doesNotThrow(() => {
       checkTypesMini(
@@ -2418,14 +2418,14 @@ tap.test(
           },
         }
       );
-    }, "26.06");
+    }, "28.06");
 
     t.end();
   }
 );
 
 tap.test(
-  `27 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} falling back to reference object`,
+  `29 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} falling back to reference object`,
   (t) => {
     // with throwing consequences:
     const err1 = t.throws(() => {
@@ -2448,7 +2448,7 @@ tap.test(
     t.match(
       err1.message,
       /check-types-mini: opts\.option1 was customised to "{"somekey":"setting1"}" \(type: object\)/gi,
-      "27.01"
+      "29.01"
     );
 
     // without throwing consequences:
@@ -2468,14 +2468,14 @@ tap.test(
           },
         }
       );
-    }, "27.02");
+    }, "29.02");
 
     t.end();
   }
 );
 
 tap.test(
-  `28 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} is set to a wrong thing - throws`,
+  `30 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} is set to a wrong thing - throws`,
   (t) => {
     t.throws(() => {
       checkTypesMini(
@@ -2498,7 +2498,7 @@ tap.test(
 );
 
 tap.test(
-  `29 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} understands opts.acceptArrays`,
+  `31 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} understands opts.acceptArrays`,
   (t) => {
     const err1 = t.throws(() => {
       checkTypesMini(
@@ -2515,7 +2515,7 @@ tap.test(
     t.equal(
       err1.message,
       'check-types-mini: opts.option2 was customised to "["setting2"]" which is not string but array',
-      "29.01"
+      "31.01"
     );
 
     t.doesNotThrow(() => {
@@ -2532,7 +2532,7 @@ tap.test(
           acceptArrays: true,
         }
       );
-    }, "29.02"); // does not throw because of opts.acceptArrays is matching against reference
+    }, "31.02"); // does not throw because of opts.acceptArrays is matching against reference
     t.doesNotThrow(() => {
       checkTypesMini(
         {
@@ -2549,7 +2549,7 @@ tap.test(
           },
         }
       );
-    }, "29.03"); // does not throw because of opts.acceptArrays is matching against schema's keys
+    }, "31.03"); // does not throw because of opts.acceptArrays is matching against schema's keys
 
     const err2 = t.throws(() => {
       checkTypesMini(
@@ -2571,7 +2571,7 @@ tap.test(
     t.equal(
       err2.message,
       "check-types-mini: opts.option2.1, the 1th element (equal to 999) is of a type number, but only the following are allowed by the opts.schema: string",
-      "29.04"
+      "31.04"
     );
 
     t.doesNotThrow(() => {
@@ -2590,7 +2590,7 @@ tap.test(
           },
         }
       );
-    }, "29.05"); // number is allowed now
+    }, "31.05"); // number is allowed now
 
     const err3 = t.throws(() => {
       checkTypesMini(
@@ -2612,7 +2612,7 @@ tap.test(
     t.match(
       err3.message,
       /check-types-mini: opts\.option2 was customised to "\["setting2",999\]" \(type: array\)/gi,
-      "29.06"
+      "31.06"
     );
 
     t.doesNotThrow(() => {
@@ -2631,14 +2631,14 @@ tap.test(
           },
         }
       );
-    }, "29.07"); // does not throw because blanked permission for array's is on.
+    }, "31.07"); // does not throw because blanked permission for array's is on.
     // it might be array of rubbish though, so that's a faulty, short-sighted type check.
 
     t.end();
   }
 );
 
-tap.test(`30 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} #1`, (t) => {
+tap.test(`32 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} #1`, (t) => {
   const err1 = t.throws(() => {
     checkTypesMini(
       {
@@ -2687,14 +2687,14 @@ tap.test(`30 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} #1`, (t) => {
   t.equal(
     err1.message,
     'json-variables/jsonVariables(): [THROW_ID_04*]: opts.wrapTailsWith was customised to "false" which is not string but boolean',
-    "30"
+    "32"
   );
 
   t.end();
 });
 
 tap.test(
-  `31 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} #2 - enforcing first-level key types but ignoring sub-level values`,
+  `33 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} #2 - enforcing first-level key types but ignoring sub-level values`,
   (t) => {
     // root level "placeholder" gets flagged up, deeper levels given in "ignorePaths"
     // don't even matter.
@@ -2715,7 +2715,7 @@ tap.test(
         }
       );
     });
-    t.match(err1.message, /THROW_ID_10\*/g, "31.01");
+    t.match(err1.message, /THROW_ID_10\*/g, "33.01");
 
     // adding "object" in schema stops the throws:
     t.doesNotThrow(() => {
@@ -2734,7 +2734,7 @@ tap.test(
           },
         }
       );
-    }, "31.02");
+    }, "33.02");
 
     t.doesNotThrow(() => {
       checkTypesMini(
@@ -2756,14 +2756,14 @@ tap.test(
           },
         }
       );
-    }, "31.03");
+    }, "33.03");
 
     t.end();
   }
 );
 
 tap.test(
-  `32 - ${`\u001b[${35}m${`opts.schema`}\u001b[${39}m`} type "any" applies to all deeper levels`,
+  `34 - ${`\u001b[${35}m${`opts.schema`}\u001b[${39}m`} type "any" applies to all deeper levels`,
   (t) => {
     t.doesNotThrow(() => {
       checkTypesMini(
@@ -2782,7 +2782,7 @@ tap.test(
           },
         }
       );
-    }, "32.01");
+    }, "34.01");
 
     t.doesNotThrow(() => {
       checkTypesMini(
@@ -2801,7 +2801,7 @@ tap.test(
           },
         }
       );
-    }, "32.02");
+    }, "34.02");
 
     t.doesNotThrow(() => {
       checkTypesMini(
@@ -2820,14 +2820,14 @@ tap.test(
           },
         }
       );
-    }, "32.03");
+    }, "34.03");
 
     t.end();
   }
 );
 
 tap.test(
-  `33 - ${`\u001b[${35}m${`opts.schema`}\u001b[${39}m`} key's value is "undefined" literal, it's in schema`,
+  `35 - ${`\u001b[${35}m${`opts.schema`}\u001b[${39}m`} key's value is "undefined" literal, it's in schema`,
   (t) => {
     const err2 = t.throws(() => {
       checkTypesMini(
@@ -2849,7 +2849,7 @@ tap.test(
     t.match(
       err2.message,
       /opts\.option2 was customised to "undefined"/gi,
-      "33.01"
+      "35.01"
     );
 
     t.doesNotThrow(() => {
@@ -2866,7 +2866,7 @@ tap.test(
           },
         }
       );
-    }, "33.02");
+    }, "35.02");
     t.doesNotThrow(() => {
       checkTypesMini(
         {
@@ -2881,7 +2881,7 @@ tap.test(
           },
         }
       );
-    }, "33.03");
+    }, "35.03");
 
     t.end();
   }

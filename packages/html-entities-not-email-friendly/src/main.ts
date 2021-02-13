@@ -5293,13 +5293,13 @@ const notEmailFriendlyMinLength = 2;
 const notEmailFriendlyMaxLength = 31;
 
 console.log(
-  `5292 notEmailFriendly - total keys: ${Object.keys(notEmailFriendly).length}`
+  `5296 notEmailFriendly - total keys: ${Object.keys(notEmailFriendly).length}`
 );
 console.log(
-  `5295 notEmailFriendlySetOnly - total size: ${notEmailFriendlySetOnly.size}`
+  `5299 notEmailFriendlySetOnly - total size: ${notEmailFriendlySetOnly.size}`
 );
 console.log(
-  `5298 notEmailFriendlyLowercaseSetOnly - total size: ${notEmailFriendlyLowercaseSetOnly.size}`
+  `5302 notEmailFriendlyLowercaseSetOnly - total size: ${notEmailFriendlyLowercaseSetOnly.size}`
 );
 
 // -------------------------------------------------------------------------

@@ -42,13 +42,13 @@ function lineCol(
   line: number;
   col: number;
 } | null {
-  console.log(`044`);
+  console.log(`045`);
   if (
     !skipChecks &&
     ((!Array.isArray(input) && typeof input !== "string") ||
       ((typeof input === "string" || Array.isArray(input)) && !input.length))
   ) {
-    console.log(`048 early return ${`\u001b[${31}m${`null`}\u001b[${39}m`}`);
+    console.log(`051 early return ${`\u001b[${31}m${`null`}\u001b[${39}m`}`);
     return null;
   }
   if (
@@ -57,7 +57,7 @@ function lineCol(
       (typeof input === "string" && idx >= input.length) ||
       (Array.isArray(input) && idx + 1 >= input[input.length - 1]))
   ) {
-    console.log(`052 early return ${`\u001b[${31}m${`null`}\u001b[${39}m`}`);
+    console.log(`060 early return ${`\u001b[${31}m${`null`}\u001b[${39}m`}`);
     return null;
   }
 
@@ -66,7 +66,7 @@ function lineCol(
     // not cached - calculate the line start indexes
     const startIndexesOfEachLine = getLineStartIndexes(input);
     console.log(
-      `061 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`startIndexesOfEachLine`}\u001b[${39}m`} = ${JSON.stringify(
+      `069 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`startIndexesOfEachLine`}\u001b[${39}m`} = ${JSON.stringify(
         startIndexesOfEachLine,
         null,
         4
@@ -74,7 +74,7 @@ function lineCol(
     );
     const line = binarySearch(idx, startIndexesOfEachLine);
     console.log(
-      `069 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`line`}\u001b[${39}m`} = ${JSON.stringify(
+      `077 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`line`}\u001b[${39}m`} = ${JSON.stringify(
         line,
         null,
         4
@@ -89,7 +89,7 @@ function lineCol(
   // ELSE - cached line start indexes - we don't even need the string source!
   const line = binarySearch(idx, input);
   console.log(
-    `085 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`line`}\u001b[${39}m`} = ${JSON.stringify(
+    `092 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`line`}\u001b[${39}m`} = ${JSON.stringify(
       line,
       null,
       4

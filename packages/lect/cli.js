@@ -75,7 +75,7 @@ const tsconfig = require("./src/tsconfig");
     })
     .catch((e) => {
       console.log(
-        `092 lect: ${`\u001b[${31}m${`failure`}\u001b[${39}m`}: ${JSON.stringify(
+        `078 lect: ${`\u001b[${31}m${`failure`}\u001b[${39}m`}: ${JSON.stringify(
           Object.keys(e),
           null,
           4

@@ -14,12 +14,12 @@ function getWholeEspTagLumpOnTheRight(
   const lastEspLayerObj = layers[getLastEspLayerObjIdx(layers) as number];
 
   console.log(
-    `012 getWholeEspTagLumpOnTheRight(): ${`\u001b[${32}m${`START`}\u001b[${39}m`}`
+    `017 getWholeEspTagLumpOnTheRight(): ${`\u001b[${32}m${`START`}\u001b[${39}m`}`
   );
 
   for (let y = i + 1; y < len; y++) {
     console.log(
-      `017 getWholeEspTagLumpOnTheRight(): ${`\u001b[${36}m${`str[${y}]=${str[y]}`}\u001b[${39}m`}`
+      `022 getWholeEspTagLumpOnTheRight(): ${`\u001b[${36}m${`str[${y}]=${str[y]}`}\u001b[${39}m`}`
     );
 
     // if righty character is on the left and now it's lefty,
@@ -36,7 +36,7 @@ function getWholeEspTagLumpOnTheRight(
     // we clice off where righty starts
     if (leftyChars.includes(str[y]) && rightyChars.includes(str[y - 1])) {
       console.log(
-        `034 getWholeEspTagLumpOnTheRight(): ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
+        `039 getWholeEspTagLumpOnTheRight(): ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
       );
       break;
     }
@@ -62,7 +62,7 @@ function getWholeEspTagLumpOnTheRight(
       str[y] === "("
     ) {
       console.log(
-        `060 getWholeEspTagLumpOnTheRight(): ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
+        `065 getWholeEspTagLumpOnTheRight(): ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
       );
       break;
     }
@@ -93,7 +93,7 @@ function getWholeEspTagLumpOnTheRight(
     ) {
       wholeEspTagLumpOnTheRight += str[y];
     } else {
-      console.log(`091 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
+      console.log(`096 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`);
       break;
     }
   }
@@ -174,7 +174,7 @@ function getWholeEspTagLumpOnTheRight(
     }
   }
 
-  console.log(`170 getWholeEspTagLumpOnTheRight(): final return`);
+  console.log(`177 getWholeEspTagLumpOnTheRight(): final return`);
 
   return wholeEspTagLumpOnTheRight;
 }

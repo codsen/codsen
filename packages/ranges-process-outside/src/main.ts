@@ -63,10 +63,10 @@ function rProcessOutside(
   // with separately calculated "everything" if the ranges are empty/falsey
   function iterator(str: string, arrOfArrays: Ranges) {
     console.log(
-      `060 iterator called with ${JSON.stringify(arrOfArrays, null, 0)}`
+      `066 iterator called with ${JSON.stringify(arrOfArrays, null, 0)}`
     );
     console.log(
-      `063 ${`\u001b[${36}m${`loop [${JSON.stringify(
+      `069 ${`\u001b[${36}m${`loop [${JSON.stringify(
         arrOfArrays,
         null,
         0
@@ -74,32 +74,32 @@ function rProcessOutside(
     );
     (arrOfArrays || []).forEach(([fromIdx, toIdx]) => {
       console.log(
-        `071 ${`\u001b[${36}m${`----------------------- [${fromIdx}, ${toIdx}]`}\u001b[${39}m`}`
+        `077 ${`\u001b[${36}m${`----------------------- [${fromIdx}, ${toIdx}]`}\u001b[${39}m`}`
       );
-      console.log(`073 fromIdx = ${fromIdx}; toIdx = ${toIdx}`);
+      console.log(`079 fromIdx = ${fromIdx}; toIdx = ${toIdx}`);
       for (let i = fromIdx; i < toIdx; i++) {
-        console.log(`075 ${`\u001b[${36}m${`i = ${i}`}\u001b[${39}m`}`);
+        console.log(`081 ${`\u001b[${36}m${`i = ${i}`}\u001b[${39}m`}`);
         const charLength = runes(str.slice(i))[0].length;
 
-        console.log(`078 charLength = ${charLength}`);
+        console.log(`084 charLength = ${charLength}`);
         cb(i, i + charLength, (offsetValue) => {
           /* istanbul ignore else */
           if (offsetValue != null) {
-            console.log(`082 offset i by "${offsetValue}" requested`);
-            console.log(`083 old i = ${i}`);
+            console.log(`088 offset i by "${offsetValue}" requested`);
+            console.log(`089 old i = ${i}`);
             i += offsetValue;
-            console.log(`085 new i = ${i}`);
+            console.log(`091 new i = ${i}`);
           }
         });
         if (charLength && charLength > 1) {
-          console.log(`089 old i = ${i}`);
+          console.log(`095 old i = ${i}`);
           i += charLength - 1;
-          console.log(`091 new i = ${i}`);
+          console.log(`097 new i = ${i}`);
         }
       }
     });
     console.log(
-      `096 ${`\u001b[${36}m${`-----------------------`}\u001b[${39}m`}`
+      `102 ${`\u001b[${36}m${`-----------------------`}\u001b[${39}m`}`
     );
   }
 
@@ -116,7 +116,7 @@ function rProcessOutside(
       originalStr.length
     );
     console.log(
-      `109 ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
+      `119 ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
         temp,
         null,
         0

@@ -94,7 +94,7 @@ tap.test("03 - empty override object", (t) => {
   t.end();
 });
 
-tap.test("05 - both input and override objects empty", (t) => {
-  t.strictSame(combinations({}, {}), [{}], "05");
+tap.test("04 - both input and override objects empty", (t) => {
+  t.strictSame(combinations({}, {}), [{}], "04");
   t.end();
 });

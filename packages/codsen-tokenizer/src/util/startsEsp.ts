@@ -120,7 +120,7 @@ function startsEsp(
       (layers[layers.length - 1] as LayerEsp).openingLump[2] === "-" &&
       (layers[layers.length - 1] as LayerEsp).openingLump[3] === "-");
 
-  console.log(`112 startsEsp(): RETURNS ${!!res}`);
+  console.log(`123 startsEsp(): RETURNS ${!!res}`);
   return !!res;
 }
 

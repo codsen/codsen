@@ -1,13 +1,13 @@
 /**
  * string-collapse-leading-whitespace
  * Collapse the leading and trailing whitespace of a string
- * Version: 5.0.3
+ * Version: 5.0.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
  */
 
-var version = "5.0.3";
+var version = "5.0.4";
 
 const version$1 = version;
 

@@ -1,7 +1,7 @@
 /**
  * string-range-expander
  * Expands string index ranges within whitespace boundaries until letters are met
- * Version: 2.0.3
+ * Version: 2.0.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-range-expander/
@@ -17,7 +17,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
-var version = "2.0.3";
+var version = "2.0.4";
 
 var version$1 = version;
 var defaults = {

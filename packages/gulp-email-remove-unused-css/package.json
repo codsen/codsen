@@ -73,7 +73,7 @@
     "plugin-error": "^1.0.1"
   },
   "devDependencies": {
-    "eslint": "^7.19.0",
+    "eslint": "^7.20.0",
     "lect": "^0.16.4",
     "map-stream": "^0.0.7",
     "tap": "^14.11.0",

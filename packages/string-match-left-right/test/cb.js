@@ -411,7 +411,7 @@ tap.test(
 );
 
 tap.test(
-  `06 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            matchRight - third callback argument null`,
+  `07 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            matchRight - third callback argument null`,
   (t) => {
     const inputStr = "abc";
     function testMe(char, theRemainderOfTheString, index) {
@@ -425,7 +425,7 @@ tap.test(
 );
 
 tap.test(
-  `07 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            matchLeft -  third callback argument (index)`,
+  `08 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            matchLeft -  third callback argument (index)`,
   (t) => {
     const inputStr = "some text and some more text";
     function testMe1(char) {
@@ -450,7 +450,7 @@ tap.test(
 );
 
 tap.test(
-  `08 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${39}m`} - matchRight()`,
+  `09 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${39}m`} - matchRight()`,
   (t) => {
     function hasEmptyClassRightAfterTheTagName(firstCharacter, wholeSubstring) {
       // console.log(`firstCharacter = ${JSON.stringify(firstCharacter, null, 4)}`)
@@ -473,7 +473,7 @@ tap.test(
         cb: hasEmptyClassRightAfterTheTagName,
       }),
       false, // because slash hasn't been accounted for, it's to the right of index 0 character, "<".
-      "08.01"
+      "09.01"
     );
     t.equal(
       matchRight(input, 0, ["hello", "div"], {
@@ -481,7 +481,7 @@ tap.test(
         trimCharsBeforeMatching: ["/", " "],
       }),
       "div", // trims slash, finds div, calls the callback with args, they trim and check for "class".
-      "08.02"
+      "09.02"
     );
     t.equal(
       matchRight(input, 0, ["hello", "div"], {
@@ -489,7 +489,7 @@ tap.test(
         trimCharsBeforeMatching: ["/", " "],
       }),
       "div", // trims slash, finds div, calls the callback with args, they trim and check for "class".
-      "08.03"
+      "09.03"
     );
 
     matchRight(input, 0, ["zz", "div"], {
@@ -522,7 +522,7 @@ tap.test(
 );
 
 tap.test(
-  `09 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${39}m`} - matchRightIncl()`,
+  `10 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${39}m`} - matchRightIncl()`,
   (t) => {
     function hasEmptyClassRightAfterTheTagName(firstCharacter, wholeSubstring) {
       // console.log(`firstCharacter = ${JSON.stringify(firstCharacter, null, 4)}`)
@@ -543,38 +543,38 @@ tap.test(
     t.equal(
       matchRightIncl('</div class="">', 0, ["</", "Khg"]),
       "</", // base from where we start
-      "09.01"
+      "10.01"
     );
     t.equal(
       matchRightIncl('</div class="">', 0, ["</"], {
         cb: hasEmptyClassRightAfterTheTagName,
       }),
       false, // wrong callback function
-      "09.02"
+      "10.02"
     );
     t.equal(
       matchRightIncl('</div class="">', 0, ["</", ">"], { cb: startsWithDiv }),
       "</", // succeeds because div follows "</"
-      "09.03"
+      "10.03"
     );
     t.equal(
       matchRightIncl('</ div class="">', 0, ["</"], { cb: startsWithDiv }),
       false, // fails because space (before "class") is not accounted for
-      "09.04"
+      "10.04"
     );
     t.equal(
       matchRightIncl('</div class="">', 0, ["yo", "</"], {
         cb: startsWithDivWithTrim,
       }),
       "</", // trims slash, finds div, calls the callback with args, they trim and check for "class".
-      "09.05"
+      "10.05"
     );
     t.end();
   }
 );
 
 tap.test(
-  `10 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${39}m`} - matchLeft()`,
+  `11 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${39}m`} - matchLeft()`,
   (t) => {
     function startsWithZ(firstCharacterOutside, wholeSubstringOutside = "") {
       return wholeSubstringOutside.startsWith("z");
@@ -583,19 +583,19 @@ tap.test(
     t.equal(
       matchLeft("<div><b>aaa</b></div>", 5, ["<article>", "<div>"]),
       "<div>", // 5th index is left bracket of <b>. Yes, <div> is on the left.
-      "10.01"
+      "11.01"
     );
     t.equal(
       matchLeft("z<div ><b>aaa</b></div>", 7, ["<div>"]),
       false, // 7th index is left bracket of <b>. Yes, <div> is on the left.
-      "10.02"
+      "11.02"
     );
     t.equal(
       matchLeft("z<div ><b>aaa</b></div>", 7, ["<b", "<div"], {
         trimCharsBeforeMatching: [">", " "],
       }),
       "<div", // 7th index is left bracket of <b>. Yes, <div> is on the left.
-      "10.03"
+      "11.03"
     );
     t.equal(
       matchLeft("z<div ><b>aaa</b></div>", 7, ["yo yo yo", "<div", "gkhjg"], {
@@ -603,7 +603,7 @@ tap.test(
         trimCharsBeforeMatching: [">", " "],
       }),
       "<div", // 7th index is left bracket of <b>. Yes, <div> is on the left.
-      "10.04"
+      "11.04"
     );
     t.equal(
       matchLeft("<div ><b>aaa</b></div>", 6, ["<div"], {
@@ -611,14 +611,14 @@ tap.test(
         trimCharsBeforeMatching: [" ", ">"],
       }),
       false, // cheeky - deliberately making the second arg of cb to be blank and fail startsWithZ
-      "10.05"
+      "11.05"
     );
     t.end();
   }
 );
 
 tap.test(
-  `11 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${39}m`} - matchLeftIncl()`,
+  `12 - new in v1.5.0 - ${`\u001b[${33}m${"second arg in callback"}\u001b[${39}m`} - matchLeftIncl()`,
   (t) => {
     function startsWithZ(firstCharacter, wholeSubstring) {
       // console.log(`firstCharacter = ${JSON.stringify(firstCharacter, null, 4)}`)
@@ -631,38 +631,38 @@ tap.test(
       "<div>", // 4th index is right bracket of <div>, but it's inclusive so it will get included.
       // not inclusive would give "<div" by the way, that is, given index would not
       // be included in the slice.
-      "11.01"
+      "12.01"
     );
     t.equal(
       matchLeftIncl("z<div ><b>aaa</b></div>", 6, ["<div>"]),
       false,
-      "11.02"
+      "12.02"
     );
     t.equal(
       matchLeftIncl("z<div ><b>aaa</b></div>", 6, ["111", "<div >"]),
       "<div >",
-      "11.03"
+      "12.03"
     );
     t.equal(
       matchLeftIncl("z<div ><b>aaa</b></div>", 6, ["222", "<div >"], {
         cb: startsWithZ,
       }),
       "<div >",
-      "11.04"
+      "12.04"
     );
     t.equal(
       matchLeftIncl("zxy<div ><b>aaa</b></div>", 8, ["krbd", "<div >"], {
         cb: startsWithZ,
       }),
       "<div >",
-      "11.05"
+      "12.05"
     );
     t.equal(
       matchLeftIncl("<div ><b>aaa</b></div>", 0, ["krbd", "<div >"], {
         cb: startsWithZ,
       }),
       false,
-      "11.06 - cheeky - nothing for callback to hang onto"
+      "12.06 - cheeky - nothing for callback to hang onto"
     );
     t.end();
   }
@@ -672,47 +672,47 @@ tap.test(
 // -----------------------------------------------------------------------------
 
 tap.test(
-  `12 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeft()`,
+  `13 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeft()`,
   (t) => {
     t.ok(
       matchLeft("abc", 1, null, {
-        i: true,
-        cb: (char) => char === "a",
-      }),
-      "12.01"
-    );
-    t.false(
-      matchLeft("abc", 1, null, {
-        i: true,
-        cb: (char) => char === "c",
-      }),
-      "12.02"
-    );
-    t.throws(() => {
-      matchLeft("abc", 1, null, {
-        i: true,
-      });
-    }, /THROW_ID_08/);
-    t.end();
-  }
-);
-
-tap.test(
-  `13 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeftIncl()`,
-  (t) => {
-    t.false(
-      matchLeftIncl("abc", 1, "", {
         i: true,
         cb: (char) => char === "a",
       }),
       "13.01"
     );
+    t.false(
+      matchLeft("abc", 1, null, {
+        i: true,
+        cb: (char) => char === "c",
+      }),
+      "13.02"
+    );
+    t.throws(() => {
+      matchLeft("abc", 1, null, {
+        i: true,
+      });
+    }, /THROW_ID_08/);
+    t.end();
+  }
+);
+
+tap.test(
+  `14 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeftIncl()`,
+  (t) => {
+    t.false(
+      matchLeftIncl("abc", 1, "", {
+        i: true,
+        cb: (char) => char === "a",
+      }),
+      "14.01"
+    );
     t.ok(
       matchLeftIncl("abc", 1, "", {
         i: true,
         cb: (char) => char === "b",
       }),
-      "13.02"
+      "14.02"
     );
     t.throws(() => {
       matchLeftIncl("abc", 1, "", {
@@ -724,21 +724,21 @@ tap.test(
 );
 
 tap.test(
-  `14 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRight()`,
+  `15 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRight()`,
   (t) => {
     t.ok(
       matchRight("abc", 1, "", {
         i: true,
         cb: (char) => char === "c",
       }),
-      "14.01"
+      "15.01"
     );
     t.false(
       matchRight("abc", 1, "", {
         i: true,
         cb: (char) => char === "a",
       }),
-      "14.02"
+      "15.02"
     );
     t.throws(() => {
       matchRight("abc", 1, "", {
@@ -750,21 +750,21 @@ tap.test(
 );
 
 tap.test(
-  `15 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRightIncl()`,
+  `16 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRightIncl()`,
   (t) => {
     t.false(
       matchRightIncl("abc", 1, "", {
         i: true,
         cb: (char) => char === "c",
       }),
-      "15.01"
+      "16.01"
     );
     t.ok(
       matchRightIncl("abc", 1, "", {
         i: true,
         cb: (char) => char === "b",
       }),
-      "15.02"
+      "16.02"
     );
     t.throws(() => {
       matchRightIncl("abc", 1, "", {
@@ -776,100 +776,51 @@ tap.test(
 );
 
 tap.test(
-  `16 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRight() other cb args`,
+  `17 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRight() other cb args`,
   (t) => {
     t.ok(
       matchRight("abcdef", 2, "", {
         i: true,
         cb: (char) => char === "d",
       }),
-      "16.01"
+      "17.01"
     );
     t.ok(
       matchRight("abcdef", 2, "", {
         i: true,
         cb: (char, rest) => rest === "def",
       }),
-      "16.02"
+      "17.02"
     );
     t.ok(
       matchRight("abcdef", 2, "", {
         i: true,
         cb: (char, rest, index) => index === 3,
       }),
-      "16.03"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `17 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRight()     + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m`}`,
-  (t) => {
-    // control
-    t.false(
-      matchRight("abc   def", 2, "", {
-        cb: (char) => char === "d",
-      }),
-      "17.01"
-    );
-    t.false(
-      matchRight("abc   def", 2, "", {
-        cb: (char, rest) => rest === "def",
-      }),
-      "17.02"
-    );
-    t.false(
-      matchRight("abc   def", 2, "", {
-        cb: (char, rest, index) => index === 6, // "d" is at index 6
-      }),
       "17.03"
     );
-
-    // with opts.trimBeforeMatching
-    t.ok(
-      matchRight("abc   def", 2, "", {
-        trimBeforeMatching: true,
-        cb: (char) => char === "d",
-      }),
-      "17.04"
-    );
-    t.ok(
-      matchRight("abc   def", 2, "", {
-        trimBeforeMatching: true,
-        cb: (char, rest) => rest === "def",
-      }),
-      "17.05"
-    );
-    t.ok(
-      matchRight("abc   def", 2, "", {
-        trimBeforeMatching: true,
-        cb: (char, rest, index) => index === 6, // "d" is at index 6
-      }),
-      "17.06"
-    );
     t.end();
   }
 );
 
 tap.test(
-  `18 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRightIncl() + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m`}`,
+  `18 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRight()     + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m`}`,
   (t) => {
     // control
     t.false(
-      matchRightIncl("abc   def", 3, "", {
+      matchRight("abc   def", 2, "", {
         cb: (char) => char === "d",
       }),
       "18.01"
     );
     t.false(
-      matchRightIncl("abc   def", 3, "", {
+      matchRight("abc   def", 2, "", {
         cb: (char, rest) => rest === "def",
       }),
       "18.02"
     );
     t.false(
-      matchRightIncl("abc   def", 3, "", {
+      matchRight("abc   def", 2, "", {
         cb: (char, rest, index) => index === 6, // "d" is at index 6
       }),
       "18.03"
@@ -877,21 +828,21 @@ tap.test(
 
     // with opts.trimBeforeMatching
     t.ok(
-      matchRightIncl("abc   def", 3, "", {
+      matchRight("abc   def", 2, "", {
         trimBeforeMatching: true,
         cb: (char) => char === "d",
       }),
       "18.04"
     );
     t.ok(
-      matchRightIncl("abc   def", 3, "", {
+      matchRight("abc   def", 2, "", {
         trimBeforeMatching: true,
         cb: (char, rest) => rest === "def",
       }),
       "18.05"
     );
     t.ok(
-      matchRightIncl("abc   def", 3, "", {
+      matchRight("abc   def", 2, "", {
         trimBeforeMatching: true,
         cb: (char, rest, index) => index === 6, // "d" is at index 6
       }),
@@ -902,57 +853,47 @@ tap.test(
 );
 
 tap.test(
-  `19 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeft()      + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m`}`,
+  `19 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRightIncl() + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m`}`,
   (t) => {
     // control
     t.false(
-      matchLeft(
-        "abc   def",
-        6, // <--- location of "d"
-        "",
-        {
-          cb: (char) => char === "c",
-        }
-      ),
+      matchRightIncl("abc   def", 3, "", {
+        cb: (char) => char === "d",
+      }),
       "19.01"
     );
     t.false(
-      matchLeft("abc   def", 6, "", {
-        cb: (char, rest) => rest === "abc",
+      matchRightIncl("abc   def", 3, "", {
+        cb: (char, rest) => rest === "def",
       }),
       "19.02"
     );
     t.false(
-      matchLeft("abc   def", 6, "", {
-        cb: (char, rest, index) => index === 2, // "c" is at index 2
+      matchRightIncl("abc   def", 3, "", {
+        cb: (char, rest, index) => index === 6, // "d" is at index 6
       }),
       "19.03"
     );
 
     // with opts.trimBeforeMatching
     t.ok(
-      matchLeft(
-        "abc   def",
-        6, // <--- location of "d"
-        "",
-        {
-          trimBeforeMatching: true,
-          cb: (char) => char === "c",
-        }
-      ),
+      matchRightIncl("abc   def", 3, "", {
+        trimBeforeMatching: true,
+        cb: (char) => char === "d",
+      }),
       "19.04"
     );
     t.ok(
-      matchLeft("abc   def", 6, "", {
+      matchRightIncl("abc   def", 3, "", {
         trimBeforeMatching: true,
-        cb: (char, rest) => rest === "abc",
+        cb: (char, rest) => rest === "def",
       }),
       "19.05"
     );
     t.ok(
-      matchLeft("abc   def", 6, "", {
+      matchRightIncl("abc   def", 3, "", {
         trimBeforeMatching: true,
-        cb: (char, rest, index) => index === 2, // "c" is at index 2
+        cb: (char, rest, index) => index === 6, // "d" is at index 6
       }),
       "19.06"
     );
@@ -961,13 +902,13 @@ tap.test(
 );
 
 tap.test(
-  `20 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeftIncl()  + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m`}`,
+  `20 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeft()      + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m`}`,
   (t) => {
     // control
     t.false(
-      matchLeftIncl(
+      matchLeft(
         "abc   def",
-        5, // <--- location of "d"
+        6, // <--- location of "d"
         "",
         {
           cb: (char) => char === "c",
@@ -976,13 +917,13 @@ tap.test(
       "20.01"
     );
     t.false(
-      matchLeftIncl("abc   def", 5, "", {
+      matchLeft("abc   def", 6, "", {
         cb: (char, rest) => rest === "abc",
       }),
       "20.02"
     );
     t.false(
-      matchLeftIncl("abc   def", 5, "", {
+      matchLeft("abc   def", 6, "", {
         cb: (char, rest, index) => index === 2, // "c" is at index 2
       }),
       "20.03"
@@ -990,9 +931,9 @@ tap.test(
 
     // with opts.trimBeforeMatching
     t.ok(
-      matchLeftIncl(
+      matchLeft(
         "abc   def",
-        5, // <--- location of "d"
+        6, // <--- location of "d"
         "",
         {
           trimBeforeMatching: true,
@@ -1002,18 +943,77 @@ tap.test(
       "20.04"
     );
     t.ok(
-      matchLeftIncl("abc   def", 5, "", {
+      matchLeft("abc   def", 6, "", {
         trimBeforeMatching: true,
         cb: (char, rest) => rest === "abc",
       }),
       "20.05"
     );
     t.ok(
-      matchLeftIncl("abc   def", 5, "", {
+      matchLeft("abc   def", 6, "", {
         trimBeforeMatching: true,
         cb: (char, rest, index) => index === 2, // "c" is at index 2
       }),
       "20.06"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `21 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeftIncl()  + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m`}`,
+  (t) => {
+    // control
+    t.false(
+      matchLeftIncl(
+        "abc   def",
+        5, // <--- location of "d"
+        "",
+        {
+          cb: (char) => char === "c",
+        }
+      ),
+      "21.01"
+    );
+    t.false(
+      matchLeftIncl("abc   def", 5, "", {
+        cb: (char, rest) => rest === "abc",
+      }),
+      "21.02"
+    );
+    t.false(
+      matchLeftIncl("abc   def", 5, "", {
+        cb: (char, rest, index) => index === 2, // "c" is at index 2
+      }),
+      "21.03"
+    );
+
+    // with opts.trimBeforeMatching
+    t.ok(
+      matchLeftIncl(
+        "abc   def",
+        5, // <--- location of "d"
+        "",
+        {
+          trimBeforeMatching: true,
+          cb: (char) => char === "c",
+        }
+      ),
+      "21.04"
+    );
+    t.ok(
+      matchLeftIncl("abc   def", 5, "", {
+        trimBeforeMatching: true,
+        cb: (char, rest) => rest === "abc",
+      }),
+      "21.05"
+    );
+    t.ok(
+      matchLeftIncl("abc   def", 5, "", {
+        trimBeforeMatching: true,
+        cb: (char, rest, index) => index === 2, // "c" is at index 2
+      }),
+      "21.06"
     );
     t.end();
   }
@@ -1024,7 +1024,7 @@ tap.test(
 // trimming is on, and because of trimming, string is skipped up to the ending,
 // with nothing left to check against.
 tap.test(
-  `21 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeftIncl()  + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m - trims to nothing`}`,
+  `22 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeftIncl()  + ${`\u001b[${33}m${"opts.trimBeforeMatching"}\u001b[${39}m - trims to nothing`}`,
   (t) => {
     // In this case, callback always yields "true", no matter what. Input string
     // traversal starts on index 5, which is space to the left of "a". Since the
@@ -1038,7 +1038,7 @@ tap.test(
           cb: () => true,
         }
       ),
-      "21.01"
+      "22.01"
     );
     // Now, even the callback yields "true" in all cases, opts.trimBeforeMatching
     // is on too, which means, starting at index 5 and marching left it encounters
@@ -1054,37 +1054,6 @@ tap.test(
           cb: () => true, // <---- notice it's yielding "true" for all the cases
         }
       ),
-      "21.02"
-    );
-    t.end();
-  }
-);
-
-tap.test(
-  `22 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeftIncl()  + ${`\u001b[${35}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}`,
-  (t) => {
-    // control
-    t.false(
-      matchLeftIncl(
-        "_bcbcbcbc+",
-        8, // <--- to the left of "+"
-        "",
-        {
-          cb: (char) => char === "_",
-        }
-      ),
-      "22.01"
-    );
-    t.ok(
-      matchLeftIncl(
-        "_bcbcbcbc+",
-        8, // <--- to the left of "+"
-        "",
-        {
-          trimCharsBeforeMatching: ["b", "c"],
-          cb: (char) => char === "_",
-        }
-      ),
       "22.02"
     );
     t.end();
@@ -1092,20 +1061,30 @@ tap.test(
 );
 
 tap.test(
-  `23 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRightIncl() + ${`\u001b[${35}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}`,
+  `23 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeftIncl()  + ${`\u001b[${35}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}`,
   (t) => {
     // control
     t.false(
-      matchRightIncl("_bcbcbcbc+", 1, "", {
-        cb: (char) => char === "+",
-      }),
+      matchLeftIncl(
+        "_bcbcbcbc+",
+        8, // <--- to the left of "+"
+        "",
+        {
+          cb: (char) => char === "_",
+        }
+      ),
       "23.01"
     );
     t.ok(
-      matchRightIncl("_bcbcbcbc+", 1, "", {
-        trimCharsBeforeMatching: ["b", "c"],
-        cb: (char) => char === "+",
-      }),
+      matchLeftIncl(
+        "_bcbcbcbc+",
+        8, // <--- to the left of "+"
+        "",
+        {
+          trimCharsBeforeMatching: ["b", "c"],
+          cb: (char) => char === "_",
+        }
+      ),
       "23.02"
     );
     t.end();
@@ -1113,7 +1092,28 @@ tap.test(
 );
 
 tap.test(
-  `24 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeft()      + ${`\u001b[${35}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}`,
+  `24 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRightIncl() + ${`\u001b[${35}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}`,
+  (t) => {
+    // control
+    t.false(
+      matchRightIncl("_bcbcbcbc+", 1, "", {
+        cb: (char) => char === "+",
+      }),
+      "24.01"
+    );
+    t.ok(
+      matchRightIncl("_bcbcbcbc+", 1, "", {
+        trimCharsBeforeMatching: ["b", "c"],
+        cb: (char) => char === "+",
+      }),
+      "24.02"
+    );
+    t.end();
+  }
+);
+
+tap.test(
+  `25 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchLeft()      + ${`\u001b[${35}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}`,
   (t) => {
     // control
     t.false(
@@ -1125,7 +1125,7 @@ tap.test(
           cb: (char) => char === "_",
         }
       ),
-      "24.01"
+      "25.01"
     );
     t.ok(
       matchLeft(
@@ -1137,28 +1137,28 @@ tap.test(
           cb: (char) => char === "_",
         }
       ),
-      "24.02"
+      "25.02"
     );
     t.end();
   }
 );
 
 tap.test(
-  `25 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRight()     + ${`\u001b[${35}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}`,
+  `26 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${"callback only"}\u001b[${39}m`} - matchRight()     + ${`\u001b[${35}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`}`,
   (t) => {
     // control
     t.false(
       matchRight("_bcbcbcbc+", 1, "", {
         cb: (char) => char === "+",
       }),
-      "25.01"
+      "26.01"
     );
     t.ok(
       matchRight("_bcbcbcbc+", 1, "", {
         trimCharsBeforeMatching: ["b", "c"],
         cb: (char) => char === "+",
       }),
-      "25.02"
+      "26.02"
     );
     t.end();
   }

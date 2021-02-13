@@ -1,7 +1,7 @@
 /**
  * string-split-by-whitespace
  * Split string into array by chunks of whitespace
- * Version: 2.0.3
+ * Version: 2.0.4
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-split-by-whitespace/
@@ -90,7 +90,7 @@ function isIndexWithin(originalIndex, rangesArr, originalOpts) {
   });
 }
 
-var version = "2.0.3";
+var version = "2.0.4";
 
 var version$1 = version;
 
