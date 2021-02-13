@@ -13,7 +13,7 @@ function attributeValidateValign(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateValign(): node = ${JSON.stringify(node, null, 4)}`
+        `016 attributeValidateValign(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "valign") {
@@ -46,7 +46,7 @@ function attributeValidateValign(context: Linter): RuleObjType {
               canBeCommaSeparated: false,
             }
           ).forEach((errorObj) => {
-            console.log(`053 RAISE ERROR`);
+            console.log(`049 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-valign",

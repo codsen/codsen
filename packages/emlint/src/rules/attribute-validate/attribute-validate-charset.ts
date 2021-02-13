@@ -14,7 +14,7 @@ function attributeValidateCharset(context: Linter): RuleObjType {
       );
 
       console.log(
-        `021 attributeValidateCharset(): node = ${JSON.stringify(
+        `017 attributeValidateCharset(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -65,7 +65,7 @@ function attributeValidateCharset(context: Linter): RuleObjType {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`072 RAISE ERROR`);
+            console.log(`068 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-charset",

@@ -40,8 +40,8 @@ function tagSpaceBeforeClosingBracket(context: Linter): RuleObjType {
         const from = left(context.str, node.end - 1)
           ? (left(context.str, node.end - 1) as number) + 1
           : 0;
-        console.log(`036 whitespace before closing bracket confirmed`);
-        console.log(`038 PUSH [${from}, ${node.end - 1}]`);
+        console.log(`043 whitespace before closing bracket confirmed`);
+        console.log(`044 PUSH [${from}, ${node.end - 1}]`);
         ranges.push([from, node.end - 1]);
       }
 

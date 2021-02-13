@@ -12,7 +12,7 @@ function attributeValidateOnsubmit(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateOnsubmit(): node = ${JSON.stringify(
+        `015 attributeValidateOnsubmit(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -48,7 +48,7 @@ function attributeValidateOnsubmit(context: Linter): RuleObjType {
             node.attribValueStartsAt as number
           );
           console.log(
-            `056 attributeValidateOnsubmit(): received errorArr = ${JSON.stringify(
+            `051 attributeValidateOnsubmit(): received errorArr = ${JSON.stringify(
               errorArr,
               null,
               4
@@ -56,7 +56,7 @@ function attributeValidateOnsubmit(context: Linter): RuleObjType {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`064 attributeValidateOnsubmit(): RAISE ERROR`);
+            console.log(`059 attributeValidateOnsubmit(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-onsubmit",

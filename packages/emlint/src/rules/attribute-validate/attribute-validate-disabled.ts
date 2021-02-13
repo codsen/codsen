@@ -23,7 +23,7 @@ function attributeValidateDisabled(
         )}`
       );
       console.log(
-        `020 attributeValidateDisabled(): node = ${JSON.stringify(
+        `026 attributeValidateDisabled(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -61,7 +61,7 @@ function attributeValidateDisabled(
         // finally, report gathered errors:
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
-            console.log(`072 RAISE ERROR`);
+            console.log(`064 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-disabled",

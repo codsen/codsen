@@ -12,7 +12,7 @@ function attributeValidateAcceptCharset(context: Linter): RuleObjType {
         `███████████████████████████████████████ attributeValidateAcceptCharset() ███████████████████████████████████████`
       );
       console.log(
-        `021 attributeValidateAcceptCharset(): node = ${JSON.stringify(
+        `015 attributeValidateAcceptCharset(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -53,7 +53,7 @@ function attributeValidateAcceptCharset(context: Linter): RuleObjType {
         );
 
         errorArr.forEach((errorObj) => {
-          console.log(`062 RAISE ERROR`);
+          console.log(`056 RAISE ERROR`);
           context.report({
             ...errorObj,
             ruleId: "attribute-validate-accept-charset",

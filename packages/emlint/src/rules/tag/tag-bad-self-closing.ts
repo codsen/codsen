@@ -38,14 +38,14 @@ function tagBadSelfClosing(context: Linter): RuleObjType {
         const idxTo = node.start + node.value.length - 1;
 
         console.log(
-          `038 tagBadSelfClosing(): ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${JSON.stringify(
+          `041 tagBadSelfClosing(): ${`\u001b[${33}m${`idxFrom`}\u001b[${39}m`} = ${JSON.stringify(
             idxFrom,
             null,
             4
           )}`
         );
         console.log(
-          `045 tagBadSelfClosing(): ${`\u001b[${33}m${`idxTo`}\u001b[${39}m`} = ${JSON.stringify(
+          `048 tagBadSelfClosing(): ${`\u001b[${33}m${`idxTo`}\u001b[${39}m`} = ${JSON.stringify(
             idxTo,
             null,
             4

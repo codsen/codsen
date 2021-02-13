@@ -12,7 +12,7 @@ function attributeValidateOnfocus(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateOnfocus(): node = ${JSON.stringify(
+        `015 attributeValidateOnfocus(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -59,7 +59,7 @@ function attributeValidateOnfocus(context: Linter): RuleObjType {
             node.attribValueStartsAt as number
           );
           console.log(
-            `067 attributeValidateOnfocus(): received errorArr = ${JSON.stringify(
+            `062 attributeValidateOnfocus(): received errorArr = ${JSON.stringify(
               errorArr,
               null,
               4
@@ -67,7 +67,7 @@ function attributeValidateOnfocus(context: Linter): RuleObjType {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`075 attributeValidateOnfocus(): RAISE ERROR`);
+            console.log(`070 attributeValidateOnfocus(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-onfocus",

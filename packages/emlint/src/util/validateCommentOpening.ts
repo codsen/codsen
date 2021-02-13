@@ -12,7 +12,7 @@ function validateCommentOpening(token: CommentToken): ErrorObj[] {
   };
 
   console.log(
-    `013 validateCommentOpening(): ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
+    `015 validateCommentOpening(): ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
       token,
       null,
       4
@@ -25,7 +25,7 @@ function validateCommentOpening(token: CommentToken): ErrorObj[] {
     (token.kind === "only" && reference.only.test(token.value)) ||
     (token.kind === "not" && reference.not.test(token.value))
   ) {
-    console.log(`026 validateCommentOpening(): REGEX PASSES, EARLY EXIT`);
+    console.log(`028 validateCommentOpening(): REGEX PASSES, EARLY EXIT`);
     return [];
   }
 
@@ -35,7 +35,7 @@ function validateCommentOpening(token: CommentToken): ErrorObj[] {
   let valueWithoutWhitespace = "";
 
   if (token.kind === "simple") {
-    console.log(`036 validateCommentOpening(): simple comment clauses`);
+    console.log(`038 validateCommentOpening(): simple comment clauses`);
     // first, tackle any inner whitespace
     splitByWhitespace(
       token.value,
@@ -61,7 +61,7 @@ function validateCommentOpening(token: CommentToken): ErrorObj[] {
   }
 
   console.log(
-    `062 ██ ${`\u001b[${33}m${`valueWithoutWhitespace`}\u001b[${39}m`} = ${JSON.stringify(
+    `064 ██ ${`\u001b[${33}m${`valueWithoutWhitespace`}\u001b[${39}m`} = ${JSON.stringify(
       valueWithoutWhitespace,
       null,
       4
@@ -76,14 +76,14 @@ function validateCommentOpening(token: CommentToken): ErrorObj[] {
     (token.kind === "only" && reference.only.test(valueWithoutWhitespace)) ||
     (token.kind === "not" && reference.not.test(valueWithoutWhitespace))
   ) {
-    console.log(`077 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`);
+    console.log(`079 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`);
     return errorArr;
   }
 
   // if processing continues, it means something more is wrong
-  console.log(`082 validateCommentOpening(): something is wrong`);
+  console.log(`084 validateCommentOpening(): something is wrong`);
   console.log(
-    `084 validateCommentOpening(): errorArr so far: ${JSON.stringify(
+    `086 validateCommentOpening(): errorArr so far: ${JSON.stringify(
       errorArr,
       null,
       4
@@ -101,10 +101,10 @@ function validateCommentOpening(token: CommentToken): ErrorObj[] {
       // ending, <!--> which will get caught as well here!
       if (idxFrom === token.start) {
         console.log(
-          `102 validateCommentOpening(): DETECTED MALFORMED RANGE [${idxFrom}, ${idxTo}]`
+          `104 validateCommentOpening(): DETECTED MALFORMED RANGE [${idxFrom}, ${idxTo}]`
         );
         console.log(
-          `105 ███████████████████████████████████████ ${`\u001b[${33}m${`token.value[idxFrom]`}\u001b[${39}m`} = ${JSON.stringify(
+          `107 ███████████████████████████████████████ ${`\u001b[${33}m${`token.value[idxFrom]`}\u001b[${39}m`} = ${JSON.stringify(
             token.value[idxFrom],
             null,
             4
@@ -124,7 +124,7 @@ function validateCommentOpening(token: CommentToken): ErrorObj[] {
           wrongBracketType = true;
           finalIdxTo += 1;
           console.log(
-            `125 validateCommentOpening(): ${`\u001b[${32}m${`SET`}\u001b[${39}m`} finalIdxTo = ${finalIdxTo}`
+            `127 validateCommentOpening(): ${`\u001b[${32}m${`SET`}\u001b[${39}m`} finalIdxTo = ${finalIdxTo}`
           );
         }
         errorArr.push({
@@ -143,7 +143,7 @@ function validateCommentOpening(token: CommentToken): ErrorObj[] {
 
   // check the ending part:
   if (token.kind === "not") {
-    console.log(`144 validateCommentOpening(): "not"-kind comment clauses`);
+    console.log(`146 validateCommentOpening(): "not"-kind comment clauses`);
     // if ending of the opening is malformed:
     findMalformed(token.value, "]><!-->", ({ idxFrom, idxTo }) => {
       let finalIdxFrom = idxFrom;
@@ -157,7 +157,7 @@ function validateCommentOpening(token: CommentToken): ErrorObj[] {
       }
 
       console.log(
-        `158 validateCommentOpening(): DETECTED MALFORMED RANGE [${idxFrom}, ${idxTo}]`
+        `160 validateCommentOpening(): DETECTED MALFORMED RANGE [${idxFrom}, ${idxTo}]`
       );
       errorArr.push({
         idxFrom: token.start,
@@ -171,7 +171,7 @@ function validateCommentOpening(token: CommentToken): ErrorObj[] {
       });
     });
   } else if (token.kind === "only") {
-    console.log(`172 validateCommentOpening(): "only"-kind comment clauses`);
+    console.log(`174 validateCommentOpening(): "only"-kind comment clauses`);
     // plan: take the value, chomp all ">" and "]" characters
     // from the end of it, then if anything's suspicious,
     // replace all that with tight "]>".

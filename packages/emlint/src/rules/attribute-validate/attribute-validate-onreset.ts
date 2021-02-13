@@ -12,7 +12,7 @@ function attributeValidateOnreset(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateOnreset(): node = ${JSON.stringify(
+        `015 attributeValidateOnreset(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -48,7 +48,7 @@ function attributeValidateOnreset(context: Linter): RuleObjType {
             node.attribValueStartsAt as number
           );
           console.log(
-            `056 attributeValidateOnreset(): received errorArr = ${JSON.stringify(
+            `051 attributeValidateOnreset(): received errorArr = ${JSON.stringify(
               errorArr,
               null,
               4
@@ -56,7 +56,7 @@ function attributeValidateOnreset(context: Linter): RuleObjType {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`064 attributeValidateOnreset(): RAISE ERROR`);
+            console.log(`059 attributeValidateOnreset(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-onreset",

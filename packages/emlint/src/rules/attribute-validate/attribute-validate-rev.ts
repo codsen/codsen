@@ -16,7 +16,7 @@ function attributeValidateRev(
       );
 
       console.log(
-        `020 attributeValidateRev(): node = ${JSON.stringify(node, null, 4)}`
+        `019 attributeValidateRev(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "rev") {
@@ -51,7 +51,7 @@ function attributeValidateRev(
         );
 
         errorArr.forEach((errorObj) => {
-          console.log(`058 RAISE ERROR`);
+          console.log(`054 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "attribute-validate-rev" });
         });
       }

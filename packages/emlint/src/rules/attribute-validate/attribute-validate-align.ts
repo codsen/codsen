@@ -13,7 +13,7 @@ function attributeValidateAlign(context: Linter): RuleObjType {
         `███████████████████████████████████████ attributeValidateAlign() ███████████████████████████████████████`
       );
       console.log(
-        `020 attributeValidateAlign(): node = ${JSON.stringify(node, null, 4)}`
+        `016 attributeValidateAlign(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "align") {
@@ -141,7 +141,7 @@ function attributeValidateAlign(context: Linter): RuleObjType {
         );
 
         errorArr.forEach((errorObj) => {
-          console.log(`148 RAISE ERROR`);
+          console.log(`144 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "attribute-validate-align" });
         });
       }

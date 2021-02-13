@@ -13,7 +13,7 @@ function attributeValidateContent(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateContent(): node = ${JSON.stringify(
+        `016 attributeValidateContent(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -57,7 +57,7 @@ function attributeValidateContent(context: Linter): RuleObjType {
         );
 
         errorArr.forEach((errorObj) => {
-          console.log(`064 RAISE ERROR`);
+          console.log(`060 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "attribute-validate-content" });
         });
       }

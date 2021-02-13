@@ -32,7 +32,7 @@ function validateValue(
 ) {
   const extractedValue = str.slice(charStart, charEnd);
   console.log(
-    `011 validateString/validateValue ${`\u001b[${33}m${`extractedValue`}\u001b[${39}m`} = ${JSON.stringify(
+    `035 validateString/validateValue ${`\u001b[${33}m${`extractedValue`}\u001b[${39}m`} = ${JSON.stringify(
       extractedValue,
       null,
       4
@@ -48,7 +48,7 @@ function validateValue(
       })
     )
   ) {
-    console.log(`027 validateString/validateValue`);
+    console.log(`051 validateString/validateValue`);
     let fix = null;
     let message = `Unrecognised value: "${str.slice(charStart, charEnd)}".`;
     if (
@@ -58,7 +58,7 @@ function validateValue(
       ) ||
       includesWithRegex(opts.permittedValues, extractedValue.toLowerCase())
     ) {
-      console.log(`037 validateString/validateValue: set the message`);
+      console.log(`061 validateString/validateValue: set the message`);
       message = `Should be lowercase.`;
       fix = {
         ranges: [
@@ -82,7 +82,7 @@ function validateValue(
       // Unrecognised value: "tralala".
       // we can say:
       // Should be "rtl|ltr"
-      console.log(`061 validateString/validateValue set the message`);
+      console.log(`085 validateString/validateValue set the message`);
       message = `Should be "${opts.quickPermittedValues.join("|")}".`;
     } else if (
       Array.isArray(opts.permittedValues) &&
@@ -98,7 +98,7 @@ function validateValue(
       // Unrecognised value: "tralala".
       // we can say:
       // Should be "rtl|ltr"
-      console.log(`077 validateString/validateValue set the message`);
+      console.log(`101 validateString/validateValue set the message`);
       message = `Should be "${opts.permittedValues.join("|")}".`;
     }
 
@@ -109,7 +109,7 @@ function validateValue(
       fix: fix as any,
     });
     console.log(
-      `088 validateString/validateValue after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+      `112 validateString/validateValue after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
         errorArr,
         null,
         4
@@ -124,7 +124,7 @@ function validateString(
   originalOpts?: Partial<Opts>
 ): ErrorObj[] {
   console.log(
-    `102 ██ ${`\u001b[${35}m${`validateString() called`}\u001b[${39}m`}; originalOpts = ${JSON.stringify(
+    `127 ██ ${`\u001b[${35}m${`validateString() called`}\u001b[${39}m`}; originalOpts = ${JSON.stringify(
       originalOpts,
       null,
       4
@@ -136,7 +136,7 @@ function validateString(
   // we get trimmed string start and end positions, also an encountered errors array
   const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
   console.log(
-    `120 validateString(): ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${charStart}; ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${charEnd};\n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+    `139 validateString(): ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${charStart}; ${`\u001b[${33}m${`charEnd`}\u001b[${39}m`} = ${charEnd};\n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
       errorArr,
       null,
       4
@@ -147,7 +147,7 @@ function validateString(
     // continue checks only if there are non-whitespace characters in the value
     if (opts.canBeCommaSeparated) {
       console.log(
-        `131 validateString(): ${`\u001b[${32}m${`call processCommaSep()`}\u001b[${39}m`}`
+        `150 validateString(): ${`\u001b[${32}m${`call processCommaSep()`}\u001b[${39}m`}`
       );
       processCommaSep(str, {
         offset: idxOffset,
@@ -156,7 +156,7 @@ function validateString(
         trailingWhitespaceOK: true,
         cb: (idxFrom, idxTo) => {
           console.log(
-            `140 validateString(): ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} idxFrom = ${idxFrom}; idxTo = ${idxTo}`
+            `159 validateString(): ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} idxFrom = ${idxFrom}; idxTo = ${idxTo}`
           );
 
           const extractedValue = str.slice(
@@ -164,7 +164,7 @@ function validateString(
             idxTo - idxOffset
           );
           console.log(
-            `148 ██ validateString(): EXTRACTED VALUE: ${JSON.stringify(
+            `167 ██ validateString(): EXTRACTED VALUE: ${JSON.stringify(
               extractedValue,
               null,
               0
@@ -184,7 +184,7 @@ function validateString(
         },
         errCb: (ranges, message) => {
           console.log(
-            `168 validateString(): ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} ranges = ${ranges}; message = ${message}`
+            `187 validateString(): ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} ranges = ${ranges}; message = ${message}`
           );
           errorArr.push({
             idxFrom: ranges[0][0],
@@ -195,7 +195,7 @@ function validateString(
             },
           });
           console.log(
-            `179 validateString(): after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+            `198 validateString(): after errorArr push, ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
               errorArr,
               null,
               4
@@ -204,11 +204,11 @@ function validateString(
         },
       });
     } else {
-      console.log(`188 validateString(): single value clauses`);
+      console.log(`207 validateString(): single value clauses`);
 
       const extractedValue = str.slice(charStart, charEnd);
       console.log(
-        `192 validateString(): str.slice(charStart, charEnd): ${`\u001b[${36}m${extractedValue}\u001b[${39}m`}`
+        `211 validateString(): str.slice(charStart, charEnd): ${`\u001b[${36}m${extractedValue}\u001b[${39}m`}`
       );
 
       // if there are errors, validateValue() mutates the passed "errorArr",
@@ -218,7 +218,7 @@ function validateString(
   }
 
   console.log(
-    `202 validateString(): ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${JSON.stringify(
+    `221 validateString(): ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} ${JSON.stringify(
       errorArr,
       null,
       4

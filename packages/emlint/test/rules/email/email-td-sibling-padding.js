@@ -27,8 +27,8 @@ tap.test(
         "email-td-sibling-padding": 0,
       },
     });
-    t.equal(applyFixes(str, messages1), str, "03.01");
-    t.strictSame(messages1, [], "03.02");
+    t.equal(applyFixes(str, messages1), str, "01.01");
+    t.strictSame(messages1, [], "01.02");
 
     // severity: warn (1)
     const messages2 = linter.verify(str, {
@@ -36,7 +36,7 @@ tap.test(
         "email-td-sibling-padding": 1,
       },
     });
-    t.equal(applyFixes(str, messages2), str, "03.01");
+    t.equal(applyFixes(str, messages2), str, "01.03");
     t.match(
       messages2,
       [
@@ -49,7 +49,7 @@ tap.test(
           fix: null,
         },
       ],
-      "03.02"
+      "01.04"
     );
 
     // severity: error (2)
@@ -58,7 +58,7 @@ tap.test(
         "email-td-sibling-padding": 2,
       },
     });
-    t.equal(applyFixes(str, messages3), str, "03.01");
+    t.equal(applyFixes(str, messages3), str, "01.05");
     t.match(
       messages3,
       [
@@ -71,7 +71,7 @@ tap.test(
           fix: null,
         },
       ],
-      "03.02"
+      "01.06"
     );
 
     t.end();

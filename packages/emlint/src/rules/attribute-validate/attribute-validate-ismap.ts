@@ -20,7 +20,7 @@ function attributeValidateIsmap(context: Linter, mode?: "xhtml"): RuleObjType {
         )}`
       );
       console.log(
-        `020 attributeValidateIsmap(): node = ${JSON.stringify(node, null, 4)}`
+        `023 attributeValidateIsmap(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       const errorArr: ErrorObj[] = [];
@@ -45,7 +45,7 @@ function attributeValidateIsmap(context: Linter, mode?: "xhtml"): RuleObjType {
         // finally, report gathered errors:
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
-            console.log(`059 RAISE ERROR`);
+            console.log(`048 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-ismap",

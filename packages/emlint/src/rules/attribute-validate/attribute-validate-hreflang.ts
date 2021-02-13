@@ -13,7 +13,7 @@ function attributeValidateHreflang(context: Linter): RuleObjType {
       );
 
       console.log(
-        `021 attributeValidateHreflang(): node = ${JSON.stringify(
+        `016 attributeValidateHreflang(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -62,7 +62,7 @@ function attributeValidateHreflang(context: Linter): RuleObjType {
           node.attribValueRaw.slice(charStart as number, charEnd as number)
         );
         console.log(
-          `070 attributeValidateHreflang(): retrieved ${`\u001b[${33}m${`message`}\u001b[${39}m`} = ${JSON.stringify(
+          `065 attributeValidateHreflang(): retrieved ${`\u001b[${33}m${`message`}\u001b[${39}m`} = ${JSON.stringify(
             message,
             null,
             4
@@ -79,7 +79,7 @@ function attributeValidateHreflang(context: Linter): RuleObjType {
         }
 
         errorArr.forEach((errorObj) => {
-          console.log(`086 RAISE ERROR`);
+          console.log(`082 RAISE ERROR`);
           context.report({
             ...errorObj,
             ruleId: "attribute-validate-hreflang",

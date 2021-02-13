@@ -14,7 +14,7 @@ function attributeValidateId(context: Linter): RuleObjType {
       );
 
       console.log(
-        `021 attributeValidateId(): node = ${JSON.stringify(node, null, 4)}`
+        `017 attributeValidateId(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "id") {
@@ -50,7 +50,7 @@ function attributeValidateId(context: Linter): RuleObjType {
             node.attribValueStartsAt as number
           );
           console.log(
-            `054 \n${`\u001b[${33}m${`(node.attribValueStartsAt as number) + charStart`}\u001b[${39}m`} = ${JSON.stringify(
+            `053 \n${`\u001b[${33}m${`(node.attribValueStartsAt as number) + charStart`}\u001b[${39}m`} = ${JSON.stringify(
               (node.attribValueStartsAt as number) + (charStart as number),
               null,
               4

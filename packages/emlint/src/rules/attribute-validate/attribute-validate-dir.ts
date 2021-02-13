@@ -13,7 +13,7 @@ function attributeValidateDir(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateDir(): node = ${JSON.stringify(node, null, 4)}`
+        `016 attributeValidateDir(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "dir") {
@@ -59,7 +59,7 @@ function attributeValidateDir(context: Linter): RuleObjType {
         );
 
         errorArr.forEach((errorObj) => {
-          console.log(`066 RAISE ERROR`);
+          console.log(`062 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "attribute-validate-dir" });
         });
       }

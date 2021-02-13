@@ -22,7 +22,7 @@ function attributeValidateNoresize(
         )}`
       );
       console.log(
-        `020 attributeValidateNoresize(): node = ${JSON.stringify(
+        `025 attributeValidateNoresize(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -51,7 +51,7 @@ function attributeValidateNoresize(
         // finally, report gathered errors:
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
-            console.log(`063 RAISE ERROR`);
+            console.log(`054 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-noresize",

@@ -23,7 +23,7 @@ function attributeValidateMultiple(
         )}`
       );
       console.log(
-        `020 attributeValidateMultiple(): node = ${JSON.stringify(
+        `026 attributeValidateMultiple(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -52,7 +52,7 @@ function attributeValidateMultiple(
         // finally, report gathered errors:
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
-            console.log(`063 RAISE ERROR`);
+            console.log(`055 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-multiple",

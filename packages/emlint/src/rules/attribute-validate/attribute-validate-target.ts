@@ -13,7 +13,7 @@ function attributeValidateTarget(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateTarget(): node = ${JSON.stringify(node, null, 4)}`
+        `016 attributeValidateTarget(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "target") {
@@ -54,7 +54,7 @@ function attributeValidateTarget(context: Linter): RuleObjType {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`061 RAISE ERROR`);
+            console.log(`057 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-target",

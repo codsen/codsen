@@ -53,7 +53,7 @@ function validateColor(
       Object.keys(extendedColorNames).includes(attrVal.toLowerCase())
     ) {
       console.log(
-        `035 ${`\u001b[${32}m${`known color name "${attrVal.toLowerCase()}" matched`}\u001b[${39}m`}`
+        `056 ${`\u001b[${32}m${`known color name "${attrVal.toLowerCase()}" matched`}\u001b[${39}m`}`
       );
 
       if (!opts.namedCssLevel1OK) {
@@ -101,7 +101,7 @@ function validateColor(
         });
       } else if (!sixDigitHexColorRegex.test(attrVal)) {
         console.log(
-          `083 ${`\u001b[${32}m${`attribute's value "${attrVal.toLowerCase()}" didn't pass the sixDigitHexColorRegex regex`}\u001b[${39}m`}`
+          `104 ${`\u001b[${32}m${`attribute's value "${attrVal.toLowerCase()}" didn't pass the sixDigitHexColorRegex regex`}\u001b[${39}m`}`
         );
         errorArr.push({
           idxFrom: idxOffset + charStart,

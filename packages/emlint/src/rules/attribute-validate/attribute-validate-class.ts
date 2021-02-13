@@ -14,7 +14,7 @@ function attributeValidateClass(context: Linter): RuleObjType {
       );
 
       console.log(
-        `021 attributeValidateClass(): node = ${JSON.stringify(node, null, 4)}`
+        `017 attributeValidateClass(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "class") {
@@ -56,7 +56,7 @@ function attributeValidateClass(context: Linter): RuleObjType {
             node.attribValueStartsAt as number
           );
           console.log(
-            `063 \n${`\u001b[${33}m${`(node.attribValueStartsAt as number) + charStart`}\u001b[${39}m`} = ${JSON.stringify(
+            `059 \n${`\u001b[${33}m${`(node.attribValueStartsAt as number) + charStart`}\u001b[${39}m`} = ${JSON.stringify(
               (node.attribValueStartsAt as number) + (charStart as number),
               null,
               4
@@ -85,7 +85,7 @@ function attributeValidateClass(context: Linter): RuleObjType {
           }
 
           console.log(
-            `090 ███████████████████████████████████████\nFINALLY,\n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`}:\n${JSON.stringify(
+            `088 ███████████████████████████████████████\nFINALLY,\n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`}:\n${JSON.stringify(
               errorArr,
               null,
               4
@@ -93,7 +93,7 @@ function attributeValidateClass(context: Linter): RuleObjType {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`098 RAISE ERROR`);
+            console.log(`096 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-class" });
           });
         }

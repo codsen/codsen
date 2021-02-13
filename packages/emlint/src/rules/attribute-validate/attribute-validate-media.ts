@@ -13,7 +13,7 @@ function attributeValidateMedia(context: Linter): RuleObjType {
       );
 
       console.log(
-        `021 attributeValidateMedia(): node = ${JSON.stringify(node, null, 4)}`
+        `016 attributeValidateMedia(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "media") {
@@ -64,7 +64,7 @@ function attributeValidateMedia(context: Linter): RuleObjType {
             )
           )
           .forEach((errorObj) => {
-            console.log(`069 RAISE ERROR`);
+            console.log(`067 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-media" });
           });
       }

@@ -23,7 +23,7 @@ function tagSpaceBetweenSlashAndBracket(context: Linter): RuleObjType {
         (left(context.str, node.end - 1) as number) < node.end - 2
       ) {
         const idxFrom = (left(context.str, node.end - 1) as number) + 1;
-        console.log(`025 whitespace present between slash and bracket!`);
+        console.log(`026 whitespace present between slash and bracket!`);
         context.report({
           ruleId: "tag-space-between-slash-and-bracket",
           message: "Bad whitespace.",

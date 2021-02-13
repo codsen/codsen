@@ -13,7 +13,7 @@ function attributeValidateMethod(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateMethod(): node = ${JSON.stringify(node, null, 4)}`
+        `016 attributeValidateMethod(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "method") {
@@ -47,7 +47,7 @@ function attributeValidateMethod(context: Linter): RuleObjType {
         );
 
         errorArr.forEach((errorObj) => {
-          console.log(`054 RAISE ERROR`);
+          console.log(`050 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "attribute-validate-method" });
         });
       }

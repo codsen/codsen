@@ -35,7 +35,7 @@ function processStr(str: string, offset: number, context: Linter, mode: Mode) {
       }
 
       console.log(
-        `035 ${`\u001b[${33}m${`encodedChr`}\u001b[${39}m`} = ${JSON.stringify(
+        `038 ${`\u001b[${33}m${`encodedChr`}\u001b[${39}m`} = ${JSON.stringify(
           encodedChr,
           null,
           4
@@ -128,7 +128,7 @@ const characterEncode: CharacterEncode = (context, ...opts) => {
         mode = opts[0];
       }
       console.log(
-        `125 characterEncode(): ${`\u001b[${35}m${`calculated mode`}\u001b[${39}m`} = "${mode}"`
+        `131 characterEncode(): ${`\u001b[${35}m${`calculated mode`}\u001b[${39}m`} = "${mode}"`
       );
 
       // ACTION

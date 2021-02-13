@@ -14,7 +14,7 @@ function attributeValidateStyle(
         `███████████████████████████████████████ attributeValidateStyle() ███████████████████████████████████████`
       );
       console.log(
-        `014 attribute-validate-style: ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+        `017 attribute-validate-style: ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
           opts,
           null,
           4
@@ -54,11 +54,11 @@ function attributeValidateStyle(
           }
         );
         console.log(
-          `050 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+          `057 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );
 
         errorArr.forEach((errorObj) => {
-          console.log(`054 RAISE ERROR`);
+          console.log(`061 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "attribute-validate-style" });
         });
       }

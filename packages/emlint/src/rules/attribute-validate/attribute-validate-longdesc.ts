@@ -13,7 +13,7 @@ function attributeValidateLongdesc(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateLongdesc(): node = ${JSON.stringify(
+        `016 attributeValidateLongdesc(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -58,7 +58,7 @@ function attributeValidateLongdesc(context: Linter): RuleObjType {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`065 RAISE ERROR`);
+            console.log(`061 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-longdesc",

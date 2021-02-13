@@ -10,7 +10,7 @@ function validateCommentClosing(token: CommentToken): ErrorObj[] {
   };
 
   console.log(
-    `011 validateCommentClosing(): ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
+    `013 validateCommentClosing(): ${`\u001b[${33}m${`token`}\u001b[${39}m`} = ${JSON.stringify(
       token,
       null,
       4
@@ -54,7 +54,7 @@ function validateCommentClosing(token: CommentToken): ErrorObj[] {
   );
 
   console.log(
-    `055 ██ ${`\u001b[${33}m${`valueWithoutWhitespace`}\u001b[${39}m`} = ${JSON.stringify(
+    `057 ██ ${`\u001b[${33}m${`valueWithoutWhitespace`}\u001b[${39}m`} = ${JSON.stringify(
       valueWithoutWhitespace,
       null,
       4
@@ -69,15 +69,15 @@ function validateCommentClosing(token: CommentToken): ErrorObj[] {
     (token.kind === "not" && valueWithoutWhitespace === "<!--<![endif]-->")
   ) {
     console.log(
-      `070 validateCommentClosing(): ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`
+      `072 validateCommentClosing(): ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`}`
     );
     return errorArr;
   }
 
   // if processing continues, it means something more is wrong
-  console.log(`076 validateCommentClosing(): something is wrong`);
+  console.log(`078 validateCommentClosing(): something is wrong`);
   console.log(
-    `078 validateCommentClosing(): errorArr so far: ${JSON.stringify(
+    `080 validateCommentClosing(): errorArr so far: ${JSON.stringify(
       errorArr,
       null,
       4

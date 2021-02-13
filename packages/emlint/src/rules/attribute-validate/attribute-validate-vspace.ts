@@ -37,11 +37,11 @@ function attributeValidateVspace(context: Linter): RuleObjType {
           }
         );
         console.log(
-          `044 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+          `040 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );
 
         errorArr.forEach((errorObj) => {
-          console.log(`048 RAISE ERROR`);
+          console.log(`044 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "attribute-validate-vspace" });
         });
       }

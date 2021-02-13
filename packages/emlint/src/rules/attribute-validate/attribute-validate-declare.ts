@@ -23,7 +23,7 @@ function attributeValidateDeclare(
         )}`
       );
       console.log(
-        `020 attributeValidateDeclare(): node = ${JSON.stringify(
+        `026 attributeValidateDeclare(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -52,7 +52,7 @@ function attributeValidateDeclare(
         // finally, report gathered errors:
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
-            console.log(`063 RAISE ERROR`);
+            console.log(`055 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-declare",

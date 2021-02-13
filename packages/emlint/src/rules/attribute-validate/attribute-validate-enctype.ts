@@ -14,7 +14,7 @@ function attributeValidateEnctype(context: Linter): RuleObjType {
       );
 
       console.log(
-        `021 attributeValidateEnctype(): node = ${JSON.stringify(
+        `017 attributeValidateEnctype(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -57,7 +57,7 @@ function attributeValidateEnctype(context: Linter): RuleObjType {
         );
 
         errorArr.forEach((errorObj) => {
-          console.log(`064 RAISE ERROR`);
+          console.log(`060 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "attribute-validate-enctype" });
         });
       }

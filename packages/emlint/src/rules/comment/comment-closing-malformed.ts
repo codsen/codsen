@@ -12,21 +12,21 @@ function commentClosingMalformed(context: Linter): RuleObjType {
         `███████████████████████████████████████ commentClosingMalformed() ███████████████████████████████████████`
       );
       console.log(
-        `020 commentClosingMalformed(): node = ${JSON.stringify(node, null, 4)}`
+        `015 commentClosingMalformed(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.closing) {
         // run the tag's value past the validator function
         const errorArr = validateCommentClosing(node) || [];
         console.log(
-          `027 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+          `022 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );
 
         // Out of all raised errors, only one can have "ranges.fix" -
         // all other fixes, if any present, will be removed.
         // This is to simplify the rule fix clashing.
         errorArr.forEach((errorObj) => {
-          console.log(`034 commentClosingMalformed(): RAISE ERROR`);
+          console.log(`029 commentClosingMalformed(): RAISE ERROR`);
           context.report({
             ...errorObj,
             keepSeparateWhenFixing: true,

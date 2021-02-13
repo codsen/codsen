@@ -19,7 +19,7 @@ function attributeValidateNowrap(context: Linter, mode?: "xhtml"): RuleObjType {
         )}`
       );
       console.log(
-        `020 attributeValidateNowrap(): node = ${JSON.stringify(node, null, 4)}`
+        `022 attributeValidateNowrap(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       const errorArr: ErrorObj[] = [];
@@ -44,7 +44,7 @@ function attributeValidateNowrap(context: Linter, mode?: "xhtml"): RuleObjType {
         // finally, report gathered errors:
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
-            console.log(`059 RAISE ERROR`);
+            console.log(`047 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-nowrap",

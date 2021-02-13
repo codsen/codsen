@@ -12,7 +12,7 @@ function attributeValidateOnload(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateOnload(): node = ${JSON.stringify(node, null, 4)}`
+        `015 attributeValidateOnload(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "onload") {
@@ -44,7 +44,7 @@ function attributeValidateOnload(context: Linter): RuleObjType {
             node.attribValueStartsAt as number
           );
           console.log(
-            `052 attributeValidateOnload(): received errorArr = ${JSON.stringify(
+            `047 attributeValidateOnload(): received errorArr = ${JSON.stringify(
               errorArr,
               null,
               4
@@ -52,7 +52,7 @@ function attributeValidateOnload(context: Linter): RuleObjType {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`060 attributeValidateOnload(): RAISE ERROR`);
+            console.log(`055 attributeValidateOnload(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-onload",

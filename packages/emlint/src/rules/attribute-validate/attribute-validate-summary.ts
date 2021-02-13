@@ -13,7 +13,7 @@ function attributeValidateSummary(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateSummary(): node = ${JSON.stringify(
+        `016 attributeValidateSummary(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -56,7 +56,7 @@ function attributeValidateSummary(context: Linter): RuleObjType {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`063 RAISE ERROR`);
+            console.log(`059 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-summary",

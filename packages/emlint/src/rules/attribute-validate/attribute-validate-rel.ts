@@ -15,7 +15,7 @@ function attributeValidateRel(
       );
 
       console.log(
-        `020 attributeValidateRel(): node = ${JSON.stringify(node, null, 4)}`
+        `018 attributeValidateRel(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "rel") {
@@ -50,7 +50,7 @@ function attributeValidateRel(
         );
 
         errorArr.forEach((errorObj) => {
-          console.log(`058 RAISE ERROR`);
+          console.log(`053 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "attribute-validate-rel" });
         });
       }

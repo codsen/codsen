@@ -35,11 +35,11 @@ function attributeValidateStart(context: Linter): RuleObjType {
           }
         );
         console.log(
-          `044 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+          `038 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );
 
         errorArr.forEach((errorObj) => {
-          console.log(`048 RAISE ERROR`);
+          console.log(`042 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "attribute-validate-start" });
         });
       }

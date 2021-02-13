@@ -36,11 +36,11 @@ function attributeValidateSpan(context: Linter): RuleObjType {
           }
         );
         console.log(
-          `044 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+          `039 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );
 
         errorArr.forEach((errorObj) => {
-          console.log(`048 RAISE ERROR`);
+          console.log(`043 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "attribute-validate-span" });
         });
       }

@@ -13,7 +13,7 @@ function attributeValidateArchive(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateArchive(): node = ${JSON.stringify(
+        `016 attributeValidateArchive(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -53,7 +53,7 @@ function attributeValidateArchive(context: Linter): RuleObjType {
             separator: "comma",
             multipleOK: true,
           }).forEach((errorObj) => {
-            console.log(`057 RAISE ERROR`);
+            console.log(`056 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-archive",
@@ -68,7 +68,7 @@ function attributeValidateArchive(context: Linter): RuleObjType {
             separator: "space", // or "comma"
             multipleOK: true,
           }).forEach((errorObj) => {
-            console.log(`072 RAISE ERROR`);
+            console.log(`071 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-archive",

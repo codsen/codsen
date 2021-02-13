@@ -12,7 +12,7 @@ function attributeValidateObject(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateObject(): node = ${JSON.stringify(node, null, 4)}`
+        `015 attributeValidateObject(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "object") {
@@ -51,7 +51,7 @@ function attributeValidateObject(context: Linter): RuleObjType {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`059 RAISE ERROR`);
+            console.log(`054 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-object",

@@ -12,7 +12,7 @@ function attributeValidateProfile(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateProfile(): node = ${JSON.stringify(
+        `015 attributeValidateProfile(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -36,7 +36,7 @@ function attributeValidateProfile(context: Linter): RuleObjType {
             offset: node.attribValueStartsAt as number,
             multipleOK: true,
           }).forEach((errorObj) => {
-            console.log(`044 RAISE ERROR`);
+            console.log(`039 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-profile",

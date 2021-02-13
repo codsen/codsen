@@ -92,7 +92,7 @@ function characterUnspacedPunctuation(
       const opts: Opts = { ...defaults, ...originalOpts };
 
       console.log(
-        `072 ${`\u001b[${32}m${`FINAL CALCULATED`}\u001b[${39}m`} ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+        `095 ${`\u001b[${32}m${`FINAL CALCULATED`}\u001b[${39}m`} ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
           opts,
           null,
           4
@@ -102,11 +102,11 @@ function characterUnspacedPunctuation(
       // plan: iterate each character from this text chunk/node, query each
       // caught character's surroundings as per config
       for (let i = node.start; i < node.end; i++) {
-        console.log(`082 i = ${i}`);
+        console.log(`105 i = ${i}`);
         const charCode = context.str[i].charCodeAt(0);
         if ((charCodeMapping as Obj)[String(charCode)]) {
           console.log(
-            `085 caught ${(charCodeMapping as Obj)[String(charCode)]}!`
+            `109 caught ${(charCodeMapping as Obj)[String(charCode)]}!`
           );
           const charName = (charCodeMapping as Obj)[String(charCode)];
 
@@ -119,7 +119,7 @@ function characterUnspacedPunctuation(
               right(context.str, right(context.str, i) as number) as number
             ] === "-"
           ) {
-            console.log(`095 PATTERN "!--" DETECTED, BAILING`);
+            console.log(`122 PATTERN "!--" DETECTED, BAILING`);
             return;
           }
 
@@ -132,7 +132,7 @@ function characterUnspacedPunctuation(
               `${`\u001b[${31}m${`! BAD SPACE ON THE LEFT !`}\u001b[${39}m`}`
             );
             console.log(
-              `107 PING [${(left(context.str, i) as number) + 1}, ${i}]`
+              `135 PING [${(left(context.str, i) as number) + 1}, ${i}]`
             );
             const idxFrom = left(context.str, i)
               ? (left(context.str, i) as number) + 1
@@ -155,7 +155,7 @@ function characterUnspacedPunctuation(
             console.log(
               `${`\u001b[${31}m${`! BAD SPACE ON THE RIGHT !`}\u001b[${39}m`}`
             );
-            console.log(`126 PING [${i + 1}, ${right(context.str, i)}]`);
+            console.log(`158 PING [${i + 1}, ${right(context.str, i)}]`);
             context.report({
               ruleId: "character-unspaced-punctuation",
               idxFrom: i + 1,
@@ -174,7 +174,7 @@ function characterUnspacedPunctuation(
             console.log(
               `${`\u001b[${31}m${`! MISSING SPACE ON THE LEFT !`}\u001b[${39}m`}`
             );
-            console.log(`145 PING [${i}, ${i}, " "]`);
+            console.log(`177 PING [${i}, ${i}, " "]`);
             context.report({
               ruleId: "character-unspaced-punctuation",
               idxFrom: i,
@@ -193,7 +193,7 @@ function characterUnspacedPunctuation(
             console.log(
               `${`\u001b[${31}m${`! MISSING SPACE ON THE RIGHT !`}\u001b[${39}m`}`
             );
-            console.log(`164 PING [${i + 1}, ${i + 1}, " "]`);
+            console.log(`196 PING [${i + 1}, ${i + 1}, " "]`);
             context.report({
               ruleId: "character-unspaced-punctuation",
               idxFrom: i,

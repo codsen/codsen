@@ -12,7 +12,7 @@ function attributeValidateOnmousedown(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateOnmousedown(): node = ${JSON.stringify(
+        `015 attributeValidateOnmousedown(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -68,7 +68,7 @@ function attributeValidateOnmousedown(context: Linter): RuleObjType {
             node.attribValueStartsAt as number
           );
           console.log(
-            `076 attributeValidateOnmousedown(): received errorArr = ${JSON.stringify(
+            `071 attributeValidateOnmousedown(): received errorArr = ${JSON.stringify(
               errorArr,
               null,
               4
@@ -76,7 +76,7 @@ function attributeValidateOnmousedown(context: Linter): RuleObjType {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`084 attributeValidateOnmousedown(): RAISE ERROR`);
+            console.log(`079 attributeValidateOnmousedown(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-onmousedown",

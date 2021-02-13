@@ -573,6 +573,11 @@ import commentConditionalNested from "./rules/comment/comment-conditional-nested
 
 import tdSiblingPadding from "./rules/email/email-td-sibling-padding";
 
+// CSS rules
+// -----------------------------------------------------------------------------
+
+import trailingSemi from "./rules/css/trailing-semi";
+
 //
 //
 //
@@ -1819,6 +1824,11 @@ defineLazyProp(
   () => tdSiblingPadding
 );
 
+// CSS rules
+// -----------------------------------------------------------------------------
+
+defineLazyProp(builtInRules, "trailing-semi", () => trailingSemi);
+
 // EXPORTS
 // -----------------------------------------------------------------------------
 
@@ -1941,7 +1951,7 @@ function normaliseRequestedRules(opts: RulesObj): RulesObj {
   }
 
   console.log(
-    `1880 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1954 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

@@ -13,7 +13,7 @@ function attributeValidateClassid(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateClassid(): node = ${JSON.stringify(
+        `016 attributeValidateClassid(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -76,7 +76,7 @@ function attributeValidateClassid(context: Linter): RuleObjType {
         }
 
         errorArr.forEach((errorObj) => {
-          console.log(`081 RAISE ERROR`);
+          console.log(`079 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "attribute-validate-clear" });
         });
       }

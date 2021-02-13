@@ -32,7 +32,7 @@ const attributeDuplicate: AttributeDuplicate = (context) => {
     }
     if (!context.str[ranges[ranges.length - 1][1]].trim()) {
       console.log(
-        `029 attributeDuplicate(): ${`\u001b[${32}m${`EXTEND`}\u001b[${39}m`} the last range ${JSON.stringify(
+        `035 attributeDuplicate(): ${`\u001b[${32}m${`EXTEND`}\u001b[${39}m`} the last range ${JSON.stringify(
           ranges[ranges.length - 1],
           null,
           4
@@ -44,7 +44,7 @@ const attributeDuplicate: AttributeDuplicate = (context) => {
         ranges[ranges.length - 1][1]
       );
       console.log(
-        `041 SET ${`\u001b[${33}m${`charOnTheRightIdx`}\u001b[${39}m`} = ${JSON.stringify(
+        `047 SET ${`\u001b[${33}m${`charOnTheRightIdx`}\u001b[${39}m`} = ${JSON.stringify(
           charOnTheRightIdx,
           null,
           4
@@ -52,7 +52,7 @@ const attributeDuplicate: AttributeDuplicate = (context) => {
       );
 
       if (`/>`.includes(context.str[charOnTheRightIdx as number])) {
-        console.log(`049 tag end reached - extend`);
+        console.log(`055 tag end reached - extend`);
         ranges[ranges.length - 1][1] = charOnTheRightIdx as number;
       }
     }
@@ -65,7 +65,7 @@ const attributeDuplicate: AttributeDuplicate = (context) => {
         `███████████████████████████████████████ attributeDuplicate() ███████████████████████████████████████`
       );
       console.log(
-        `069 attributeDuplicate(): node = ${JSON.stringify(node, null, 4)}`
+        `068 attributeDuplicate(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       // if there is more than 1 attribute
@@ -75,7 +75,7 @@ const attributeDuplicate: AttributeDuplicate = (context) => {
 
         for (let i = 0, len = node.attribs.length; i < len; i++) {
           console.log(
-            `079 attributeDuplicate(): ${`\u001b[${33}m${`node.attribs[${i}]`}\u001b[${39}m`} = ${JSON.stringify(
+            `078 attributeDuplicate(): ${`\u001b[${33}m${`node.attribs[${i}]`}\u001b[${39}m`} = ${JSON.stringify(
               node.attribs[i],
               null,
               4
@@ -84,7 +84,7 @@ const attributeDuplicate: AttributeDuplicate = (context) => {
           if (!attrsGatheredSoFar.has(node.attribs[i].attribName)) {
             attrsGatheredSoFar.add(node.attribs[i].attribName);
             console.log(
-              `088 attributeDuplicate(): attrsGatheredSoFar = ${JSON.stringify(
+              `087 attributeDuplicate(): attrsGatheredSoFar = ${JSON.stringify(
                 attrsGatheredSoFar,
                 null,
                 4
@@ -101,7 +101,7 @@ const attributeDuplicate: AttributeDuplicate = (context) => {
               ))
           ) {
             console.log(
-              `105 attributeDuplicate(): RAISE ERROR FOR "${node.attribs[i].attribName}"`
+              `104 attributeDuplicate(): RAISE ERROR FOR "${node.attribs[i].attribName}"`
             );
             context.report({
               ruleId: "attribute-duplicate",
@@ -113,7 +113,7 @@ const attributeDuplicate: AttributeDuplicate = (context) => {
           } else {
             mergeableAttrsCaught.add(node.attribs[i].attribName);
             console.log(
-              `117 attributeDuplicate(): ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${`\u001b[${33}m${`mergeableAttrsCaught`}\u001b[${39}m`} now = ${JSON.stringify(
+              `116 attributeDuplicate(): ${`\u001b[${32}m${`PUSH`}\u001b[${39}m`} ${`\u001b[${33}m${`mergeableAttrsCaught`}\u001b[${39}m`} now = ${JSON.stringify(
                 mergeableAttrsCaught,
                 null,
                 4
@@ -127,7 +127,7 @@ const attributeDuplicate: AttributeDuplicate = (context) => {
           console.log(` `);
           console.log(` `);
           console.log(` `);
-          console.log(`131      PROCESS EACH MERGEABLE ATTRIBUTE SEPARATELY`);
+          console.log(`130      PROCESS EACH MERGEABLE ATTRIBUTE SEPARATELY`);
           console.log(` `);
           console.log(` `);
           console.log(` `);
@@ -136,7 +136,7 @@ const attributeDuplicate: AttributeDuplicate = (context) => {
             console.log(` ====== `);
             console.log(` `);
             console.log(
-              `140 attributeDuplicate(): ${`\u001b[${32}m${`PROCESS`}\u001b[${39}m`} ${`\u001b[${33}m${`attrNameBeingMerged`}\u001b[${39}m`} = ${JSON.stringify(
+              `139 attributeDuplicate(): ${`\u001b[${32}m${`PROCESS`}\u001b[${39}m`} ${`\u001b[${33}m${`attrNameBeingMerged`}\u001b[${39}m`} = ${JSON.stringify(
                 attrNameBeingMerged,
                 null,
                 4
@@ -157,7 +157,7 @@ const attributeDuplicate: AttributeDuplicate = (context) => {
             for (let i = 0, len = node.attribs.length; i < len; i++) {
               if (node.attribs[i].attribName === attrNameBeingMerged) {
                 console.log(
-                  `161 attributeDuplicate(): ███ node.attribs[${i}] = ${JSON.stringify(
+                  `160 attributeDuplicate(): ███ node.attribs[${i}] = ${JSON.stringify(
                     node.attribs[i],
                     null,
                     4
@@ -188,15 +188,15 @@ const attributeDuplicate: AttributeDuplicate = (context) => {
                   ]);
                 }
 
-                console.log(`192 attributeDuplicate(): check value`);
+                console.log(`191 attributeDuplicate(): check value`);
                 if (node.attribs[i].attribValueStartsAt) {
-                  console.log(`194 attributeDuplicate(): split by whitespace`);
+                  console.log(`193 attributeDuplicate(): split by whitespace`);
                   // either way, extract the values, split by whitespace
                   splitByWhitespace(
                     node.attribs[i].attribValueRaw,
                     ([from, to]) => {
                       console.log(
-                        `200 attributeDuplicate(): * incoming: ${`\u001b[${33}m${`[${from}, ${to}]`}\u001b[${39}m`} ("${node.attribs[
+                        `199 attributeDuplicate(): * incoming: ${`\u001b[${33}m${`[${from}, ${to}]`}\u001b[${39}m`} ("${node.attribs[
                           i
                         ].attribValueRaw.slice(from, to)}")`
                       );
@@ -210,21 +210,21 @@ const attributeDuplicate: AttributeDuplicate = (context) => {
             }
 
             console.log(
-              `214 attributeDuplicate(): ${`\u001b[${35}m${`theFirstRange`}\u001b[${39}m`} = ${JSON.stringify(
+              `213 attributeDuplicate(): ${`\u001b[${35}m${`theFirstRange`}\u001b[${39}m`} = ${JSON.stringify(
                 theFirstRange,
                 null,
                 4
               )}`
             );
             console.log(
-              `221 attributeDuplicate(): ${`\u001b[${35}m${`extractedValues`}\u001b[${39}m`} = ${JSON.stringify(
+              `220 attributeDuplicate(): ${`\u001b[${35}m${`extractedValues`}\u001b[${39}m`} = ${JSON.stringify(
                 extractedValues,
                 null,
                 4
               )}`
             );
             console.log(
-              `228 attributeDuplicate(): ${`\u001b[${35}m${`allOtherRanges`}\u001b[${39}m`} = ${JSON.stringify(
+              `227 attributeDuplicate(): ${`\u001b[${35}m${`allOtherRanges`}\u001b[${39}m`} = ${JSON.stringify(
                 allOtherRanges,
                 null,
                 4
@@ -234,21 +234,21 @@ const attributeDuplicate: AttributeDuplicate = (context) => {
             const mergedValue = extractedValues.sort().join(" ");
 
             console.log(
-              `238 attributeDuplicate(): ${`\u001b[${33}m${`mergedValue`}\u001b[${39}m`} = ${JSON.stringify(
+              `237 attributeDuplicate(): ${`\u001b[${33}m${`mergedValue`}\u001b[${39}m`} = ${JSON.stringify(
                 mergedValue,
                 null,
                 4
               )}`
             );
             console.log(
-              `245 attributeDuplicate(): ${`\u001b[${33}m${`theFirstRange`}\u001b[${39}m`} = ${JSON.stringify(
+              `244 attributeDuplicate(): ${`\u001b[${33}m${`theFirstRange`}\u001b[${39}m`} = ${JSON.stringify(
                 theFirstRange,
                 null,
                 4
               )}`
             );
             console.log(
-              `252 attributeDuplicate(): ${`\u001b[${33}m${`allOtherRanges`}\u001b[${39}m`} = ${JSON.stringify(
+              `251 attributeDuplicate(): ${`\u001b[${33}m${`allOtherRanges`}\u001b[${39}m`} = ${JSON.stringify(
                 allOtherRanges,
                 null,
                 4
@@ -257,10 +257,10 @@ const attributeDuplicate: AttributeDuplicate = (context) => {
 
             // finally, raise the error:
             console.log(
-              `261 attributeDuplicate(): RAISE ERROR FOR "${attrNameBeingMerged}"`
+              `260 attributeDuplicate(): RAISE ERROR FOR "${attrNameBeingMerged}"`
             );
             console.log(
-              `264 attributeDuplicate(): REPORT RANGES: ${JSON.stringify(
+              `263 attributeDuplicate(): REPORT RANGES: ${JSON.stringify(
                 [[...theFirstRange, mergedValue], ...allOtherRanges],
                 null,
                 4
@@ -268,7 +268,7 @@ const attributeDuplicate: AttributeDuplicate = (context) => {
             );
             if (mergedValue && mergedValue.length) {
               console.log(
-                `272 attributeDuplicate(): merged value will be used`
+                `271 attributeDuplicate(): merged value will be used`
               );
 
               const ranges = prepLast(
@@ -281,7 +281,7 @@ const attributeDuplicate: AttributeDuplicate = (context) => {
                 ]) as Range[]
               );
               console.log(
-                `285 attributeDuplicate(): ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
+                `284 attributeDuplicate(): ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
                   ranges,
                   null,
                   4
@@ -298,14 +298,14 @@ const attributeDuplicate: AttributeDuplicate = (context) => {
                 },
               });
             } else {
-              console.log(`302 attributeDuplicate(): no value to use!`);
+              console.log(`301 attributeDuplicate(): no value to use!`);
               // remove all attributes of this kind
 
               const ranges = prepLast(
                 rMerge([[...theFirstRange], ...allOtherRanges]) as Range[]
               );
               console.log(
-                `309 attributeDuplicate(): ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
+                `308 attributeDuplicate(): ${`\u001b[${33}m${`ranges`}\u001b[${39}m`} = ${JSON.stringify(
                   ranges,
                   null,
                   4

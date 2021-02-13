@@ -12,7 +12,7 @@ function attributeValidateLang(context: Linter): RuleObjType {
         `███████████████████████████████████████ attributeValidateLang() ███████████████████████████████████████`
       );
       console.log(
-        `021 attributeValidateLang(): node = ${JSON.stringify(node, null, 4)}`
+        `015 attributeValidateLang(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "lang") {
@@ -47,7 +47,7 @@ function attributeValidateLang(context: Linter): RuleObjType {
           node.attribValueStartsAt as number
         );
         console.log(
-          `056 ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
+          `050 ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
             charStart,
             null,
             4
@@ -58,7 +58,7 @@ function attributeValidateLang(context: Linter): RuleObjType {
           )}`
         );
         console.log(
-          `067 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
+          `061 ${`\u001b[${33}m${`errorArr`}\u001b[${39}m`} = ${JSON.stringify(
             errorArr,
             null,
             4
@@ -69,7 +69,7 @@ function attributeValidateLang(context: Linter): RuleObjType {
           node.attribValueRaw.slice(charStart as number, charEnd as number)
         );
         console.log(
-          `078 attributeValidateLang(): retrieved ${`\u001b[${33}m${`message`}\u001b[${39}m`} = ${JSON.stringify(
+          `072 attributeValidateLang(): retrieved ${`\u001b[${33}m${`message`}\u001b[${39}m`} = ${JSON.stringify(
             message,
             null,
             4
@@ -86,7 +86,7 @@ function attributeValidateLang(context: Linter): RuleObjType {
         }
 
         errorArr.forEach((errorObj) => {
-          console.log(`094 RAISE ERROR`);
+          console.log(`089 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "attribute-validate-lang" });
         });
       }

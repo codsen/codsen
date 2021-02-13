@@ -13,7 +13,7 @@ function attributeValidateWidth(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateWidth(): node = ${JSON.stringify(node, null, 4)}`
+        `016 attributeValidateWidth(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "width") {
@@ -64,7 +64,7 @@ function attributeValidateWidth(context: Linter): RuleObjType {
               noUnitsIsFine: true,
             }
           ).forEach((errorObj) => {
-            console.log(`063 RAISE ERROR`);
+            console.log(`067 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-width" });
           });
         } else {
@@ -77,7 +77,7 @@ function attributeValidateWidth(context: Linter): RuleObjType {
               noUnitsIsFine: true,
             }
           ).forEach((errorObj) => {
-            console.log(`072 RAISE ERROR`);
+            console.log(`080 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-width" });
           });
         }

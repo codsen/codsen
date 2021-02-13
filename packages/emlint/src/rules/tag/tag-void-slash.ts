@@ -31,7 +31,7 @@ function tagVoidSlash(
         // if slashes are forbidden on void tags, delete the slash and all
         // the whitespace in front, because there's never a space before
         // non-void tag's closing bracket without a slash, for example, "<span >"
-        console.log(`037 whitespace present in front of closing slash!`);
+        console.log(`034 whitespace present in front of closing slash!`);
         context.report({
           ruleId: "tag-void-slash",
           message: "Remove the slash.",
@@ -59,7 +59,7 @@ function tagVoidSlash(
                   "always"))
           ))
       ) {
-        console.log(`065`);
+        console.log(`062`);
         // if slashes are requested on void tags, situation is more complex,
         // because we need to take into the account the rule
         // "tag-space-before-closing-slash"
@@ -70,12 +70,12 @@ function tagVoidSlash(
           context.processedRulesConfig["tag-space-before-closing-slash"][1] ===
             "always"
         ) {
-          console.log(`076`);
+          console.log(`073`);
           // space is needed
           // check, maybe space is there
           if (context.str[slashPos + 1] === " ") {
             // but space exists already
-            console.log(`081 add slash only`);
+            console.log(`078 add slash only`);
             context.report({
               ruleId: "tag-void-slash",
               message: "Missing slash.",
@@ -85,7 +85,7 @@ function tagVoidSlash(
             });
           } else {
             // space is missing so add one
-            console.log(`091 add space and slash`);
+            console.log(`088 add space and slash`);
             context.report({
               ruleId: "tag-void-slash",
               message: "Missing slash.",
@@ -109,7 +109,7 @@ function tagVoidSlash(
             context.processedRulesConfig["tag-space-before-closing-slash"] > 0)
         ) {
           // no space needed
-          console.log(`115 add slash only`);
+          console.log(`112 add slash only`);
           context.report({
             ruleId: "tag-void-slash",
             message: "Missing slash.",

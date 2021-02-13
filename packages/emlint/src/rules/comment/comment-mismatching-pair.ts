@@ -37,7 +37,7 @@ function commentMismatchingPair(context: Linter): RuleObjType {
 
             if (current.type === "comment" && current.closing) {
               console.log(
-                `052 FIY ${`\u001b[${33}m${`current token is closing`}\u001b[${39}m`}: ${JSON.stringify(
+                `040 FIY ${`\u001b[${33}m${`current token is closing`}\u001b[${39}m`}: ${JSON.stringify(
                   current,
                   null,
                   4
@@ -49,7 +49,7 @@ function commentMismatchingPair(context: Linter): RuleObjType {
                 pathPrev(innerObj.path) as string
               );
               console.log(
-                `061 ${`\u001b[${33}m${`previousToken`}\u001b[${39}m`} = ${JSON.stringify(
+                `052 ${`\u001b[${33}m${`previousToken`}\u001b[${39}m`} = ${JSON.stringify(
                   previousToken,
                   null,
                   4
@@ -63,7 +63,7 @@ function commentMismatchingPair(context: Linter): RuleObjType {
               ) {
                 if (previousToken.kind === "not" && current.kind === "only") {
                   console.log(
-                    `075 ${`\u001b[${31}m${`ERROR: head is "not"-kind comment, current token, a tail, is "only"`}\u001b[${39}m`}`
+                    `066 ${`\u001b[${31}m${`ERROR: head is "not"-kind comment, current token, a tail, is "only"`}\u001b[${39}m`}`
                   );
 
                   // turn tail into "not"-kind, add front part (<!--)
@@ -86,7 +86,7 @@ function commentMismatchingPair(context: Linter): RuleObjType {
                   current.kind === "not"
                 ) {
                   console.log(
-                    `098 ${`\u001b[${31}m${`ERROR: head is "only"-kind comment, current token, a tail, is "not"`}\u001b[${39}m`}`
+                    `089 ${`\u001b[${31}m${`ERROR: head is "only"-kind comment, current token, a tail, is "not"`}\u001b[${39}m`}`
                   );
 
                   // turn tail into "only"-kind, remove front part (<!--)

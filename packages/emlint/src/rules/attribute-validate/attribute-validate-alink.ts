@@ -50,11 +50,11 @@ function attributeValidateAlink(context: Linter): RuleObjType {
             }
           );
           console.log(
-            `058 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+            `053 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`062 RAISE ERROR`);
+            console.log(`057 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-alink" });
           });
         }

@@ -12,7 +12,7 @@ function attributeValidateAccesskey(context: Linter): RuleObjType {
         `███████████████████████████████████████ attributeValidateAccesskey() ███████████████████████████████████████`
       );
       console.log(
-        `020 attributeValidateAccesskey(): node = ${JSON.stringify(
+        `015 attributeValidateAccesskey(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -71,7 +71,7 @@ function attributeValidateAccesskey(context: Linter): RuleObjType {
         }
 
         errorArr.forEach((errorObj) => {
-          console.log(`079 RAISE ERROR`);
+          console.log(`074 RAISE ERROR`);
           context.report({
             ...errorObj,
             ruleId: "attribute-validate-accesskey",

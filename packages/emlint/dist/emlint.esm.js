@@ -1,7 +1,7 @@
 /**
  * emlint
  * Pluggable email template code linter
- * Version: 4.1.0
+ * Version: 4.1.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/emlint/
@@ -10827,6 +10827,14 @@ function tdSiblingPadding(context) {
   };
 }
 
+const trailingSemi = (_context, mode) => {
+  return {
+    tag(node) {
+    }
+
+  };
+};
+
 // here we fetch the rules from all the places,
 const builtInRules = {};
 defineLazyProp(builtInRules, "bad-character-null", () => badCharacterNull);
@@ -11085,7 +11093,10 @@ defineLazyProp(builtInRules, "comment-mismatching-pair", () => commentMismatchin
 defineLazyProp(builtInRules, "comment-conditional-nested", () => commentConditionalNested); // EMAIL rules
 // -----------------------------------------------------------------------------
 
-defineLazyProp(builtInRules, "email-td-sibling-padding", () => tdSiblingPadding); // EXPORTS
+defineLazyProp(builtInRules, "email-td-sibling-padding", () => tdSiblingPadding); // CSS rules
+// -----------------------------------------------------------------------------
+
+defineLazyProp(builtInRules, "trailing-semi", () => trailingSemi); // EXPORTS
 // -----------------------------------------------------------------------------
 
 function get(something) {
@@ -11493,7 +11504,7 @@ class Linter extends TypedEmitter {
 
 }
 
-var version = "4.1.0";
+var version = "4.1.1";
 
 const version$1 = version;
 

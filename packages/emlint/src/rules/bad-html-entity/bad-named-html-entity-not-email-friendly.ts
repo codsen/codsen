@@ -19,7 +19,7 @@ function htmlEntitiesNotEmailFriendly(context: Linter): RuleObjType {
           context.str.slice(idxFrom + 1, idxTo - 1)
         )
       ) {
-        console.log(`020 caught an email-unfriendly entity`);
+        console.log(`022 caught an email-unfriendly entity`);
         context.report({
           ruleId: "bad-named-html-entity-not-email-friendly",
           message: "Email-unfriendly named HTML entity.",

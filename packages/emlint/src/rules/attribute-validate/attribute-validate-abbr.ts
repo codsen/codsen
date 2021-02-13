@@ -11,7 +11,7 @@ function attributeValidateAbbr(context: Linter): RuleObjType {
         `███████████████████████████████████████ attributeValidateAbbr() ███████████████████████████████████████`
       );
       console.log(
-        `020 attributeValidateAbbr(): node = ${JSON.stringify(node, null, 4)}`
+        `014 attributeValidateAbbr(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "abbr") {
@@ -40,7 +40,7 @@ function attributeValidateAbbr(context: Linter): RuleObjType {
         );
 
         errorArr.forEach((errorObj) => {
-          console.log(`049 RAISE ERROR`);
+          console.log(`043 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "attribute-validate-abbr" });
         });
       }

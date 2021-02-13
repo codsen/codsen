@@ -24,14 +24,14 @@ function checkClassOrIdValue(
   };
   const opts: Opts = { ...defaults, ...originalOpts };
   console.log(
-    `015 checkClassOrIdValue(): FINAL ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+    `027 checkClassOrIdValue(): FINAL ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
       opts,
       null,
       4
     )}`
   );
   console.log(
-    `022 checkClassOrIdValue(): ${`\u001b[${36}m${`traverse and extract ${opts.typeName}s`}\u001b[${39}m`}`
+    `034 checkClassOrIdValue(): ${`\u001b[${36}m${`traverse and extract ${opts.typeName}s`}\u001b[${39}m`}`
   );
 
   const listOfUniqueNames = new Set();
@@ -54,12 +54,12 @@ function checkClassOrIdValue(
     //
     ([charFrom, charTo]) => {
       // value starts at "from" and ends at "to"
-      console.log(`045 charFrom = ${charFrom}; charTo = ${charTo}`);
+      console.log(`057 charFrom = ${charFrom}; charTo = ${charTo}`);
       // evaluate
       const extractedName = str.slice(charFrom, charTo);
       if (!classNameRegex.test(extractedName)) {
         console.log(
-          `050 splitByWhitespace(): PUSH ${JSON.stringify(
+          `062 splitByWhitespace(): PUSH ${JSON.stringify(
             {
               idxFrom: charFrom,
               idxTo: charTo,

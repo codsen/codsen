@@ -26,8 +26,8 @@ tap.test(`02 - one attribute`, (t) => {
       "attribute-on-closing-tag": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "01.01");
-  t.strictSame(messages, [], "01.02");
+  t.equal(applyFixes(str, messages), str, "02.01");
+  t.strictSame(messages, [], "02.02");
   t.end();
 });
 
@@ -42,7 +42,7 @@ tap.test(`03 - one attribute`, (t) => {
       "attribute-on-closing-tag": 2,
     },
   });
-  t.equal(applyFixes(str, messages), str, "02.01");
+  t.equal(applyFixes(str, messages), str, "03.01");
   t.match(
     messages,
     [
@@ -55,8 +55,8 @@ tap.test(`03 - one attribute`, (t) => {
         fix: null,
       },
     ],
-    "02.02"
+    "03.02"
   );
-  t.equal(messages.length, 1, "02.03");
+  t.equal(messages.length, 1, "03.03");
   t.end();
 });

@@ -17,7 +17,7 @@ function mediaMalformed(context: Linter): RuleObjType {
         `███████████████████████████████████████ mediaMalformed() ███████████████████████████████████████`
       );
       console.log(
-        `026 mediaMalformed(): node = ${JSON.stringify(node, null, 4)}`
+        `020 mediaMalformed(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.identifier === "media") {
@@ -25,7 +25,7 @@ function mediaMalformed(context: Linter): RuleObjType {
           offset: node.queryStartsAt,
         });
         console.log(
-          `034 mediaMalformed(): ${`\u001b[${33}m${`errors`}\u001b[${39}m`} = ${JSON.stringify(
+          `028 mediaMalformed(): ${`\u001b[${33}m${`errors`}\u001b[${39}m`} = ${JSON.stringify(
             errors,
             null,
             4
@@ -33,7 +33,7 @@ function mediaMalformed(context: Linter): RuleObjType {
         );
 
         errors.forEach((errorObj) => {
-          console.log(`042 RAISE ERROR`);
+          console.log(`036 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "media-malformed" });
         });
       }

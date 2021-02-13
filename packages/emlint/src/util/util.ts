@@ -103,19 +103,19 @@ function isObj(something: unknown): boolean {
 function isAnEnabledRule(rules: RulesObj, ruleId: string): Severity {
   if (!ruleId) {
     console.log(
-      `102 ${`\u001b[${35}m${`isAnEnabledRule():`}\u001b[${39}m`} return 0 - ruleId is falsy`
+      `106 ${`\u001b[${35}m${`isAnEnabledRule():`}\u001b[${39}m`} return 0 - ruleId is falsy`
     );
     return 0;
   }
   console.log(
-    `097 ${`\u001b[${35}m${`isAnEnabledRule():`}\u001b[${39}m`} called with ${`\u001b[${33}m${`rules`}\u001b[${39}m`} = ${JSON.stringify(
+    `111 ${`\u001b[${35}m${`isAnEnabledRule():`}\u001b[${39}m`} called with ${`\u001b[${33}m${`rules`}\u001b[${39}m`} = ${JSON.stringify(
       rules,
       null,
       4
     )}`
   );
   console.log(
-    `104 ${`\u001b[${35}m${`isAnEnabledRule():`}\u001b[${39}m`} called with ${`\u001b[${33}m${`ruleId`}\u001b[${39}m`} = ${JSON.stringify(
+    `118 ${`\u001b[${35}m${`isAnEnabledRule():`}\u001b[${39}m`} called with ${`\u001b[${33}m${`ruleId`}\u001b[${39}m`} = ${JSON.stringify(
       ruleId,
       null,
       4
@@ -123,7 +123,7 @@ function isAnEnabledRule(rules: RulesObj, ruleId: string): Severity {
   );
 
   if (isObj(rules) && Object.prototype.hasOwnProperty.call(rules, ruleId)) {
-    console.log(`112 RETURN ${rules[ruleId]}`);
+    console.log(`126 RETURN ${rules[ruleId]}`);
     return rules[ruleId] as any;
   }
   if (
@@ -133,7 +133,7 @@ function isAnEnabledRule(rules: RulesObj, ruleId: string): Severity {
     return rules[ruleId.split("-")[0]] as any;
   }
   if (isObj(rules) && Object.prototype.hasOwnProperty.call(rules, "all")) {
-    console.log(`122 RETURN ${rules.all}`);
+    console.log(`136 RETURN ${rules.all}`);
     return rules.all as any;
   }
 

@@ -13,7 +13,7 @@ function attributeValidateShape(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateShape(): node = ${JSON.stringify(node, null, 4)}`
+        `016 attributeValidateShape(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "shape") {
@@ -46,7 +46,7 @@ function attributeValidateShape(context: Linter): RuleObjType {
         );
 
         errorArr.forEach((errorObj) => {
-          console.log(`053 RAISE ERROR`);
+          console.log(`049 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "attribute-validate-shape" });
         });
       }

@@ -13,7 +13,7 @@ function attributeValidateSrc(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateSrc(): node = ${JSON.stringify(node, null, 4)}`
+        `016 attributeValidateSrc(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "src") {
@@ -35,7 +35,7 @@ function attributeValidateSrc(context: Linter): RuleObjType {
             offset: node.attribValueStartsAt as number,
             multipleOK: false,
           }).forEach((errorObj) => {
-            console.log(`042 RAISE ERROR`);
+            console.log(`038 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-src" });
           });
         }

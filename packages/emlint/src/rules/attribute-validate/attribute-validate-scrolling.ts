@@ -13,7 +13,7 @@ function attributeValidateScrolling(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateScrolling(): node = ${JSON.stringify(
+        `016 attributeValidateScrolling(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -50,7 +50,7 @@ function attributeValidateScrolling(context: Linter): RuleObjType {
         );
 
         errorArr.forEach((errorObj) => {
-          console.log(`057 RAISE ERROR`);
+          console.log(`053 RAISE ERROR`);
           context.report({
             ...errorObj,
             ruleId: "attribute-validate-scrolling",

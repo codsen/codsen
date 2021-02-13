@@ -12,7 +12,7 @@ function attributeValidateOnmouseout(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateOnmouseout(): node = ${JSON.stringify(
+        `015 attributeValidateOnmouseout(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -68,7 +68,7 @@ function attributeValidateOnmouseout(context: Linter): RuleObjType {
             node.attribValueStartsAt as number
           );
           console.log(
-            `076 attributeValidateOnmouseout(): received errorArr = ${JSON.stringify(
+            `071 attributeValidateOnmouseout(): received errorArr = ${JSON.stringify(
               errorArr,
               null,
               4
@@ -76,7 +76,7 @@ function attributeValidateOnmouseout(context: Linter): RuleObjType {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`084 attributeValidateOnmouseout(): RAISE ERROR`);
+            console.log(`079 attributeValidateOnmouseout(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-onmouseout",

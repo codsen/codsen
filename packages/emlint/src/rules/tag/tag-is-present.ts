@@ -13,13 +13,13 @@ function tagIsPresent(context: Linter, ...blacklist: string[]): RuleObjType {
         `███████████████████████████████████████ tagIsPresent() ███████████████████████████████████████`
       );
       console.log(
-        `022 tagIsPresent(): node = ${JSON.stringify(node, null, 4)}`
+        `016 tagIsPresent(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (Array.isArray(blacklist) && blacklist.length) {
         const temp = matcher([node.tagName], blacklist);
         console.log(
-          `028 ${`\u001b[${33}m${`matcher([${JSON.stringify(
+          `022 ${`\u001b[${33}m${`matcher([${JSON.stringify(
             node.tagName,
             null,
             0
@@ -30,7 +30,7 @@ function tagIsPresent(context: Linter, ...blacklist: string[]): RuleObjType {
           )})`}\u001b[${39}m`} = ${JSON.stringify(temp, null, 4)}`
         );
         if (matcher([node.tagName], blacklist).length) {
-          console.log(`039 RAISE ERROR [${node.start}, ${node.end}]`);
+          console.log(`033 RAISE ERROR [${node.start}, ${node.end}]`);
           context.report({
             ruleId: "tag-is-present",
             message: `${node.tagName} is not allowed.`,

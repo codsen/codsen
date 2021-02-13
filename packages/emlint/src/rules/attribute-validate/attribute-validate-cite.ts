@@ -13,7 +13,7 @@ function attributeValidateCite(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateCite(): node = ${JSON.stringify(node, null, 4)}`
+        `016 attributeValidateCite(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "cite") {
@@ -33,7 +33,7 @@ function attributeValidateCite(context: Linter): RuleObjType {
             offset: node.attribValueStartsAt as number,
             multipleOK: false,
           }).forEach((errorObj) => {
-            console.log(`040 RAISE ERROR`);
+            console.log(`036 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-cite" });
           });
         }

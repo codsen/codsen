@@ -30,7 +30,7 @@ function attributeValidateCols(context: Linter): RuleObjType {
         }
 
         console.log(
-          `036 attributeValidateCols(): ${`\u001b[${33}m${`node.attribValueRaw`}\u001b[${39}m`} = ${JSON.stringify(
+          `033 attributeValidateCols(): ${`\u001b[${33}m${`node.attribValueRaw`}\u001b[${39}m`} = ${JSON.stringify(
             node.attribValueRaw,
             null,
             4
@@ -63,7 +63,7 @@ function attributeValidateCols(context: Linter): RuleObjType {
               }
             );
             console.log(
-              `069 attributeValidateCols(): received errorArr = ${JSON.stringify(
+              `066 attributeValidateCols(): received errorArr = ${JSON.stringify(
                 errorArr,
                 null,
                 4
@@ -81,7 +81,7 @@ function attributeValidateCols(context: Linter): RuleObjType {
               }
             );
             console.log(
-              `087 attributeValidateCols(): received errorArr = ${JSON.stringify(
+              `084 attributeValidateCols(): received errorArr = ${JSON.stringify(
                 errorArr,
                 null,
                 4
@@ -91,7 +91,7 @@ function attributeValidateCols(context: Linter): RuleObjType {
 
           if (Array.isArray(errorArr) && errorArr.length) {
             errorArr.forEach((errorObj) => {
-              console.log(`097 RAISE ERROR`);
+              console.log(`094 RAISE ERROR`);
               context.report({
                 ...errorObj,
                 ruleId: "attribute-validate-cols",

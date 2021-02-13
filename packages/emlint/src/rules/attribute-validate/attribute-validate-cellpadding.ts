@@ -41,11 +41,11 @@ function attributeValidateCellpadding(context: Linter): RuleObjType {
           }
         );
         console.log(
-          `048 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+          `044 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );
 
         errorArr.forEach((errorObj) => {
-          console.log(`052 RAISE ERROR`);
+          console.log(`048 RAISE ERROR`);
           context.report({
             ...errorObj,
             ruleId: "attribute-validate-cellpadding",

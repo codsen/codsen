@@ -12,7 +12,7 @@ function attributeValidateOndblclick(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateOndblclick(): node = ${JSON.stringify(
+        `015 attributeValidateOndblclick(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -69,7 +69,7 @@ function attributeValidateOndblclick(context: Linter): RuleObjType {
             node.attribValueStartsAt as number
           );
           console.log(
-            `077 attributeValidateOndblclick(): received errorArr = ${JSON.stringify(
+            `072 attributeValidateOndblclick(): received errorArr = ${JSON.stringify(
               errorArr,
               null,
               4
@@ -77,7 +77,7 @@ function attributeValidateOndblclick(context: Linter): RuleObjType {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`085 attributeValidateOndblclick(): RAISE ERROR`);
+            console.log(`080 attributeValidateOndblclick(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-ondblclick",

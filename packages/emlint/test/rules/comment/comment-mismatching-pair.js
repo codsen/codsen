@@ -127,24 +127,28 @@ tap.test(
         all: 2,
       },
     });
-    t.match(messages, [
-      {
-        severity: 2,
-        idxFrom: 38,
-        idxTo: 53,
-        message: "Malformed closing comment tag.",
-        fix: {
-          ranges: [[38, 53, "<!--<![endif]-->"]],
+    t.match(
+      messages,
+      [
+        {
+          severity: 2,
+          idxFrom: 38,
+          idxTo: 53,
+          message: "Malformed closing comment tag.",
+          fix: {
+            ranges: [[38, 53, "<!--<![endif]-->"]],
+          },
+          ruleId: "comment-closing-malformed",
         },
-        ruleId: "comment-closing-malformed",
-      },
-    ]);
+      ],
+      "04.01"
+    );
     t.equal(
       applyFixes(str, messages),
       `<!--[if mso]>
   <img src="fallback"/>
 <!--<![endif]-->`,
-      "03.02"
+      "04.02"
     );
 
     const secondRoundMessages = linter.verify(
@@ -157,25 +161,29 @@ tap.test(
         },
       }
     );
-    t.match(secondRoundMessages, [
-      {
-        severity: 2,
-        idxFrom: 38,
-        idxTo: 54,
-        message: `Remove "<!--".`,
-        fix: {
-          ranges: [[38, 54, "<![endif]-->"]],
+    t.match(
+      secondRoundMessages,
+      [
+        {
+          severity: 2,
+          idxFrom: 38,
+          idxTo: 54,
+          message: `Remove "<!--".`,
+          fix: {
+            ranges: [[38, 54, "<![endif]-->"]],
+          },
+          ruleId: "comment-mismatching-pair",
         },
-        ruleId: "comment-mismatching-pair",
-      },
-    ]);
-    t.equal(applyFixes(str, secondRoundMessages), fixed, "03.02");
+      ],
+      "04.03"
+    );
+    t.equal(applyFixes(str, secondRoundMessages), fixed, "04.04");
 
     // turns tails comment tag into "only"-kind
     t.equal(
       applyFixes(applyFixes(str, messages), secondRoundMessages),
       fixed,
-      "04"
+      "04.05"
     );
     t.end();
   }

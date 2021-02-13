@@ -53,11 +53,11 @@ function attributeValidateBgcolor(context: Linter): RuleObjType {
             }
           );
           console.log(
-            `060 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+            `056 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`064 RAISE ERROR`);
+            console.log(`060 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-bgcolor",

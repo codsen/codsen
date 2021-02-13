@@ -13,7 +13,7 @@ function attributeValidateUsemap(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateUsemap(): node = ${JSON.stringify(node, null, 4)}`
+        `016 attributeValidateUsemap(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "usemap") {
@@ -31,7 +31,7 @@ function attributeValidateUsemap(context: Linter): RuleObjType {
             offset: node.attribValueStartsAt as number,
             multipleOK: false,
           }).forEach((errorObj) => {
-            console.log(`038 RAISE ERROR`);
+            console.log(`034 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-usemap",

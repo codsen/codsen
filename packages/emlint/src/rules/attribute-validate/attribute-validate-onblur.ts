@@ -11,7 +11,7 @@ function attributeValidateOnblur(context: Linter): RuleObjType {
         `███████████████████████████████████████ attributeValidateOnblur() ███████████████████████████████████████`
       );
       console.log(
-        `020 attributeValidateOnblur(): node = ${JSON.stringify(node, null, 4)}`
+        `014 attributeValidateOnblur(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "onblur") {
@@ -54,7 +54,7 @@ function attributeValidateOnblur(context: Linter): RuleObjType {
             node.attribValueStartsAt as number
           );
           console.log(
-            `063 attributeValidateOnblur(): received errorArr = ${JSON.stringify(
+            `057 attributeValidateOnblur(): received errorArr = ${JSON.stringify(
               errorArr,
               null,
               4
@@ -62,7 +62,7 @@ function attributeValidateOnblur(context: Linter): RuleObjType {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`071 attributeValidateOnblur(): RAISE ERROR`);
+            console.log(`065 attributeValidateOnblur(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-onblur",

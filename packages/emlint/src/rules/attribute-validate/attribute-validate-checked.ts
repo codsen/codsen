@@ -23,7 +23,7 @@ function attributeValidateChecked(
         )}`
       );
       console.log(
-        `020 attributeValidateChecked(): node = ${JSON.stringify(
+        `026 attributeValidateChecked(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -54,7 +54,7 @@ function attributeValidateChecked(
         // finally, report gathered errors:
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
-            console.log(`065 RAISE ERROR`);
+            console.log(`057 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-checked",

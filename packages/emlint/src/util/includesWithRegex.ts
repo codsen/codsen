@@ -15,7 +15,7 @@ function includesWithRegex(
   const opts = { ...defaults, ...originalOpts };
   console.log(" ---------- ");
   console.log(
-    `006 includesWithRegex() called to match ${JSON.stringify(
+    `018 includesWithRegex() called to match ${JSON.stringify(
       whatToMatch,
       null,
       0
@@ -27,7 +27,7 @@ function includesWithRegex(
   );
   if (!Array.isArray(arr) || !arr.length) {
     // definitely does not include
-    console.log(`018 includesWithRegex() quick end, return false`);
+    console.log(`030 includesWithRegex() quick end, return false`);
     return false;
   }
   // console.log(

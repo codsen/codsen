@@ -13,7 +13,7 @@ function attributeValidateVersion(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateVersion(): node = ${JSON.stringify(
+        `016 attributeValidateVersion(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -56,7 +56,7 @@ function attributeValidateVersion(context: Linter): RuleObjType {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`063 RAISE ERROR`);
+            console.log(`059 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-version",

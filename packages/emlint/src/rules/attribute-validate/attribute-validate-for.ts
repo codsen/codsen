@@ -15,7 +15,7 @@ function attributeValidateFor(context: Linter): RuleObjType {
       );
 
       console.log(
-        `022 attributeValidateFor(): node = ${JSON.stringify(node, null, 4)}`
+        `018 attributeValidateFor(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "for") {
@@ -49,7 +49,7 @@ function attributeValidateFor(context: Linter): RuleObjType {
 
           if (typeof charStart === "number" && typeof charEnd === "number") {
             console.log(
-              `051 \n${`\u001b[${33}m${`(node.attribValueStartsAt as number) + charStart`}\u001b[${39}m`} = ${JSON.stringify(
+              `052 \n${`\u001b[${33}m${`(node.attribValueStartsAt as number) + charStart`}\u001b[${39}m`} = ${JSON.stringify(
                 (node.attribValueStartsAt as number) + charStart,
                 null,
                 4
@@ -111,7 +111,7 @@ function attributeValidateFor(context: Linter): RuleObjType {
           }
 
           console.log(
-            `107 ███████████████████████████████████████\nFINALLY,\n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`}:\n${JSON.stringify(
+            `114 ███████████████████████████████████████\nFINALLY,\n${`\u001b[${33}m${`errorArr`}\u001b[${39}m`}:\n${JSON.stringify(
               errorArr,
               null,
               4
@@ -119,7 +119,7 @@ function attributeValidateFor(context: Linter): RuleObjType {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`115 RAISE ERROR`);
+            console.log(`122 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-for" });
           });
         }

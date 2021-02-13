@@ -11,10 +11,10 @@ function tagBold(context: Linter, suggested = "strong"): RuleObjType {
       console.log(
         `███████████████████████████████████████ tagBold() ███████████████████████████████████████`
       );
-      console.log(`019 tagBold(): node = ${JSON.stringify(node, null, 4)}`);
+      console.log(`014 tagBold(): node = ${JSON.stringify(node, null, 4)}`);
 
       if (node.tagName === "bold") {
-        console.log(`031 RAISE ERROR [${node.start}, ${node.end}]`);
+        console.log(`017 RAISE ERROR [${node.start}, ${node.end}]`);
         context.report({
           ruleId: "tag-bold",
           message: `Tag "bold" does not exist in HTML.`,

@@ -55,11 +55,11 @@ function validateVoid(
         `=${quotesType}${node.attribName}${quotesType}`
     ) {
       console.log(
-        `038 validateVoid(): ${`\u001b[${31}m${`XHTML requested`}\u001b[${39}m`} - attrib value is missing!`
+        `058 validateVoid(): ${`\u001b[${31}m${`XHTML requested`}\u001b[${39}m`} - attrib value is missing!`
       );
 
       console.log(
-        `042 validateVoid(): ${`\u001b[${32}m${`██ FINAL RANGES ██`}\u001b[${39}m`}: ${JSON.stringify(
+        `062 validateVoid(): ${`\u001b[${32}m${`██ FINAL RANGES ██`}\u001b[${39}m`}: ${JSON.stringify(
           [
             node.attribNameEndsAt,
             node.attribEnds,
@@ -100,10 +100,10 @@ function validateVoid(
     isObj(opts.enforceSiblingAttributes) &&
     Object.keys(opts.enforceSiblingAttributes as Obj).length
   ) {
-    console.log(`083 validateVoid(): sibling attributes enforced`);
+    console.log(`103 validateVoid(): sibling attributes enforced`);
     Object.keys(opts.enforceSiblingAttributes as Obj).forEach((siblingAttr) => {
       console.log(
-        `086 validateVoid(): checking presence of attribute "${siblingAttr}"`
+        `106 validateVoid(): checking presence of attribute "${siblingAttr}"`
       );
       if (
         Array.isArray(node.parent.attribs) &&

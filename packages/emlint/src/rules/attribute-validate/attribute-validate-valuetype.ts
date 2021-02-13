@@ -13,7 +13,7 @@ function attributeValidateValuetype(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateValuetype(): node = ${JSON.stringify(
+        `016 attributeValidateValuetype(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -39,7 +39,7 @@ function attributeValidateValuetype(context: Linter): RuleObjType {
               canBeCommaSeparated: false,
             }
           ).forEach((errorObj) => {
-            console.log(`046 RAISE ERROR`);
+            console.log(`042 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-valuetype",

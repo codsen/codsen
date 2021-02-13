@@ -14,7 +14,7 @@ function attributeValidateCodetype(context: Linter): RuleObjType {
       );
 
       console.log(
-        `021 attributeValidateCodetype(): node = ${JSON.stringify(
+        `017 attributeValidateCodetype(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -86,7 +86,7 @@ function attributeValidateCodetype(context: Linter): RuleObjType {
         // https://www.npmjs.com/package/mime-db
 
         errorArr.forEach((errorObj) => {
-          console.log(`093 RAISE ERROR`);
+          console.log(`089 RAISE ERROR`);
           context.report({
             ...errorObj,
             ruleId: "attribute-validate-codetype",

@@ -13,7 +13,7 @@ function attributeValidateCodebase(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateCodebase(): node = ${JSON.stringify(
+        `016 attributeValidateCodebase(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -35,7 +35,7 @@ function attributeValidateCodebase(context: Linter): RuleObjType {
             offset: node.attribValueStartsAt as number,
             multipleOK: false,
           }).forEach((errorObj) => {
-            console.log(`042 RAISE ERROR`);
+            console.log(`038 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-codebase",

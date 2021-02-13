@@ -47,11 +47,11 @@ function attributeValidateTabindex(context: Linter): RuleObjType {
           }
         );
         console.log(
-          `055 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+          `050 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );
 
         errorArr.forEach((errorObj) => {
-          console.log(`059 RAISE ERROR`);
+          console.log(`054 RAISE ERROR`);
           context.report({
             ...errorObj,
             ruleId: "attribute-validate-tabindex",

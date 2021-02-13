@@ -12,7 +12,7 @@ function attributeValidateOnselect(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateOnselect(): node = ${JSON.stringify(
+        `015 attributeValidateOnselect(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -48,7 +48,7 @@ function attributeValidateOnselect(context: Linter): RuleObjType {
             node.attribValueStartsAt as number
           );
           console.log(
-            `056 attributeValidateOnselect(): received errorArr = ${JSON.stringify(
+            `051 attributeValidateOnselect(): received errorArr = ${JSON.stringify(
               errorArr,
               null,
               4
@@ -56,7 +56,7 @@ function attributeValidateOnselect(context: Linter): RuleObjType {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`064 attributeValidateOnselect(): RAISE ERROR`);
+            console.log(`059 attributeValidateOnselect(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-onselect",

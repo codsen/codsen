@@ -13,7 +13,7 @@ function attributeValidateCharoff(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateCharoff(): node = ${JSON.stringify(
+        `016 attributeValidateCharoff(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -64,7 +64,7 @@ function attributeValidateCharoff(context: Linter): RuleObjType {
             }
           );
           console.log(
-            `071 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+            `067 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
           );
 
           // tag has to have "char" attribute:
@@ -82,7 +82,7 @@ function attributeValidateCharoff(context: Linter): RuleObjType {
           }
 
           errorArr.forEach((errorObj) => {
-            console.log(`089 RAISE ERROR`);
+            console.log(`085 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-charoff",

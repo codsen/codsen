@@ -22,7 +22,7 @@ function attributeValidateNoshade(
         )}`
       );
       console.log(
-        `020 attributeValidateNoshade(): node = ${JSON.stringify(
+        `025 attributeValidateNoshade(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -51,7 +51,7 @@ function attributeValidateNoshade(
         // finally, report gathered errors:
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
-            console.log(`063 RAISE ERROR`);
+            console.log(`054 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-noshade",

@@ -12,7 +12,7 @@ function attributeValidateAccept(context: Linter): RuleObjType {
         `███████████████████████████████████████ attributeValidateAccept() ███████████████████████████████████████`
       );
       console.log(
-        `021 attributeValidateAccept(): node = ${JSON.stringify(node, null, 4)}`
+        `015 attributeValidateAccept(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "accept") {
@@ -61,7 +61,7 @@ function attributeValidateAccept(context: Linter): RuleObjType {
         // https://www.npmjs.com/package/mime-db
 
         errorArr.forEach((errorObj) => {
-          console.log(`070 RAISE ERROR`);
+          console.log(`064 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "attribute-validate-accept" });
         });
       }

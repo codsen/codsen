@@ -38,11 +38,11 @@ function attributeValidateRowspan(context: Linter): RuleObjType {
           }
         );
         console.log(
-          `045 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+          `041 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
         );
 
         errorArr.forEach((errorObj) => {
-          console.log(`049 RAISE ERROR`);
+          console.log(`045 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "attribute-validate-rowspan" });
         });
       }

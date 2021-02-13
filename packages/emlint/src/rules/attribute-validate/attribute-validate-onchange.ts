@@ -12,7 +12,7 @@ function attributeValidateOnchange(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateOnchange(): node = ${JSON.stringify(
+        `015 attributeValidateOnchange(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -49,7 +49,7 @@ function attributeValidateOnchange(context: Linter): RuleObjType {
             node.attribValueStartsAt as number
           );
           console.log(
-            `057 attributeValidateOnchange(): received errorArr = ${JSON.stringify(
+            `052 attributeValidateOnchange(): received errorArr = ${JSON.stringify(
               errorArr,
               null,
               4
@@ -57,7 +57,7 @@ function attributeValidateOnchange(context: Linter): RuleObjType {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`065 attributeValidateOnchange(): RAISE ERROR`);
+            console.log(`060 attributeValidateOnchange(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-onchange",

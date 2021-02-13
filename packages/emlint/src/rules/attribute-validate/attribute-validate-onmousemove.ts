@@ -12,7 +12,7 @@ function attributeValidateOnmousemove(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateOnmousemove(): node = ${JSON.stringify(
+        `015 attributeValidateOnmousemove(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -68,7 +68,7 @@ function attributeValidateOnmousemove(context: Linter): RuleObjType {
             node.attribValueStartsAt as number
           );
           console.log(
-            `076 attributeValidateOnmousemove(): received errorArr = ${JSON.stringify(
+            `071 attributeValidateOnmousemove(): received errorArr = ${JSON.stringify(
               errorArr,
               null,
               4
@@ -76,7 +76,7 @@ function attributeValidateOnmousemove(context: Linter): RuleObjType {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`084 attributeValidateOnmousemove(): RAISE ERROR`);
+            console.log(`079 attributeValidateOnmousemove(): RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-onmousemove",

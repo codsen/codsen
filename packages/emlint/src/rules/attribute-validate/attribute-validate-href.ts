@@ -13,7 +13,7 @@ function attributeValidateHref(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateHref(): node = ${JSON.stringify(node, null, 4)}`
+        `016 attributeValidateHref(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "href") {
@@ -31,7 +31,7 @@ function attributeValidateHref(context: Linter): RuleObjType {
             offset: node.attribValueStartsAt as number,
             multipleOK: false,
           }).forEach((errorObj) => {
-            console.log(`038 RAISE ERROR`);
+            console.log(`034 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-href" });
           });
         }

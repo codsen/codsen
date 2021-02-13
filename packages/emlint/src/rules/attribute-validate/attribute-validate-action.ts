@@ -12,7 +12,7 @@ function attributeValidateAction(context: Linter): RuleObjType {
         `███████████████████████████████████████ attributeValidateAction() ███████████████████████████████████████`
       );
       console.log(
-        `020 attributeValidateAction(): node = ${JSON.stringify(node, null, 4)}`
+        `015 attributeValidateAction(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "action") {
@@ -32,7 +32,7 @@ function attributeValidateAction(context: Linter): RuleObjType {
             offset: node.attribValueStartsAt as number,
             multipleOK: false,
           }).forEach((errorObj) => {
-            console.log(`040 RAISE ERROR`);
+            console.log(`035 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-action",

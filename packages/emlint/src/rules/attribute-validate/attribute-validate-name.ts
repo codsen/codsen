@@ -13,7 +13,7 @@ function attributeValidateName(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateName(): node = ${JSON.stringify(node, null, 4)}`
+        `016 attributeValidateName(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "name") {
@@ -68,7 +68,7 @@ function attributeValidateName(context: Linter): RuleObjType {
             )}`
           );
           errorArr.forEach((errorObj) => {
-            console.log(`075 RAISE ERROR`);
+            console.log(`071 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-name" });
           });
         }

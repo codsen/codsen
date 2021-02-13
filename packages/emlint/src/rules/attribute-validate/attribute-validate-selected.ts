@@ -23,7 +23,7 @@ function attributeValidateSelected(
         )}`
       );
       console.log(
-        `020 attributeValidateSelected(): node = ${JSON.stringify(
+        `026 attributeValidateSelected(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -52,7 +52,7 @@ function attributeValidateSelected(
         // finally, report gathered errors:
         if (errorArr.length) {
           errorArr.forEach((errorObj) => {
-            console.log(`063 RAISE ERROR`);
+            console.log(`055 RAISE ERROR`);
             context.report({
               ...errorObj,
               ruleId: "attribute-validate-selected",

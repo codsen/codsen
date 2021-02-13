@@ -13,7 +13,7 @@ function attributeValidateChar(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateChar(): node = ${JSON.stringify(node, null, 4)}`
+        `016 attributeValidateChar(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "char") {
@@ -82,7 +82,7 @@ function attributeValidateChar(context: Linter): RuleObjType {
           }
 
           errorArr.forEach((errorObj) => {
-            console.log(`086 RAISE ERROR`);
+            console.log(`085 RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-char" });
           });
         }

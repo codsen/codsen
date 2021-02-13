@@ -13,7 +13,7 @@ function attributeValidateDatetime(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateDatetime(): node = ${JSON.stringify(
+        `016 attributeValidateDatetime(): node = ${JSON.stringify(
           node,
           null,
           4
@@ -55,7 +55,7 @@ function attributeValidateDatetime(context: Linter): RuleObjType {
         // https://www.npmjs.com/package/mime-db
 
         errorArr.forEach((errorObj) => {
-          console.log(`062 RAISE ERROR`);
+          console.log(`058 RAISE ERROR`);
           context.report({
             ...errorObj,
             ruleId: "attribute-validate-datetime",

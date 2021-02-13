@@ -23,17 +23,17 @@ function tagNameCase(context: Linter): RuleObjType {
       );
 
       if (node.tagName && node.recognised === true) {
-        console.log(`023 tagNameCase(): recognised tag`);
+        console.log(`026 tagNameCase(): recognised tag`);
 
         console.log(
-          `026 tagNameCase(): ${`\u001b[${33}m${`knownUpperCaseTags.includes(node.tagName.toUpperCase())`}\u001b[${39}m`} = ${JSON.stringify(
+          `029 tagNameCase(): ${`\u001b[${33}m${`knownUpperCaseTags.includes(node.tagName.toUpperCase())`}\u001b[${39}m`} = ${JSON.stringify(
             knownUpperCaseTags.includes(node.tagName.toUpperCase()),
             null,
             4
           )}`
         );
         console.log(
-          `033 tagNameCase(): ${`\u001b[${33}m${`node.tagName`}\u001b[${39}m`} = ${JSON.stringify(
+          `036 tagNameCase(): ${`\u001b[${33}m${`node.tagName`}\u001b[${39}m`} = ${JSON.stringify(
             node.tagName,
             null,
             4
@@ -47,7 +47,7 @@ function tagNameCase(context: Linter): RuleObjType {
             context.str.slice(node.tagNameStartsAt, node.tagNameEndsAt) !==
             node.tagName.toUpperCase()
           ) {
-            console.log(`047 tagNameCase(): wrong tag case!`);
+            console.log(`050 tagNameCase(): wrong tag case!`);
             const ranges: Ranges = [
               [
                 node.tagNameStartsAt,
@@ -70,7 +70,7 @@ function tagNameCase(context: Linter): RuleObjType {
             node.tagName &&
           !variableCaseTagNames.includes(node.tagName.toLowerCase())
         ) {
-          console.log(`070 tagNameCase(): wrong tag case!`);
+          console.log(`073 tagNameCase(): wrong tag case!`);
           const ranges: Ranges = [
             [node.tagNameStartsAt, node.tagNameEndsAt, node.tagName],
           ];

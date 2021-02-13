@@ -23,7 +23,7 @@ function validateInlineStyle(
   );
   const opts: Opts = { ...defaults, ...originalOpts };
   console.log(
-    `005 validateInlineStyle(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+    `026 validateInlineStyle(): ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
       opts,
       null,
       4
@@ -34,7 +34,7 @@ function validateInlineStyle(
   // const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
   const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
   console.log(
-    `030 ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
+    `037 ${`\u001b[${33}m${`charStart`}\u001b[${39}m`} = ${JSON.stringify(
       charStart,
       null,
       4
@@ -64,7 +64,7 @@ function validateInlineStyle(
     let nonSpacesMet = false;
     for (let i = charStart; i < charEnd; i++) {
       console.log(
-        `059 ${`\u001b[${36}m${`str[${i}]`}\u001b[${39}m`} = ${JSON.stringify(
+        `067 ${`\u001b[${36}m${`str[${i}]`}\u001b[${39}m`} = ${JSON.stringify(
           str[i],
           null,
           4
@@ -92,7 +92,7 @@ function validateInlineStyle(
       ) {
         whitespaceStartsAt = i;
         console.log(
-          `076 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whitespaceStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+          `095 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`whitespaceStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
             whitespaceStartsAt,
             null,
             4
@@ -113,7 +113,7 @@ function validateInlineStyle(
       ) {
         nonSpacesMet = true;
         console.log(
-          `095 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nonSpacesMet`}\u001b[${39}m`} = ${JSON.stringify(
+          `116 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`nonSpacesMet`}\u001b[${39}m`} = ${JSON.stringify(
             nonSpacesMet,
             null,
             4
@@ -133,11 +133,11 @@ function validateInlineStyle(
           str[i].trim())
       ) {
         console.log(
-          `084 caught whitespace chunk [${whitespaceStartsAt}, ${i}]`
+          `136 caught whitespace chunk [${whitespaceStartsAt}, ${i}]`
         );
 
         if (nonSpacesMet || i > whitespaceStartsAt + 1) {
-          console.log(`103 ${`\u001b[${31}m${`error!`}\u001b[${39}m`}`);
+          console.log(`140 ${`\u001b[${31}m${`error!`}\u001b[${39}m`}`);
           // default is replacement of the whole string with a single space
           let from = whitespaceStartsAt;
           let to = i;

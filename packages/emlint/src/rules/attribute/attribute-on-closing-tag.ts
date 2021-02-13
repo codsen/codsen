@@ -14,7 +14,7 @@ const attributeOnClosingTag: AttributeOnClosingTag = (context) => {
         `███████████████████████████████████████ attributeOnClosingTag() ███████████████████████████████████████`
       );
       console.log(
-        `069 attributeOnClosingTag(): node = ${JSON.stringify(node, null, 4)}`
+        `017 attributeOnClosingTag(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       // if there is more than 1 attribute

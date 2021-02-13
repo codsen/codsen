@@ -12,7 +12,7 @@ function attributeValidateVlink(context: Linter): RuleObjType {
         `███████████████████████████████████████ attributeValidateVlink() ███████████████████████████████████████`
       );
       console.log(
-        `020 attributeValidateVlink(): node = ${JSON.stringify(node, null, 4)}`
+        `015 attributeValidateVlink(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "vlink") {
@@ -38,7 +38,7 @@ function attributeValidateVlink(context: Linter): RuleObjType {
           });
         } else {
           console.log(
-            `046 attributeValidateVlink(): value exists so let's validate it`
+            `041 attributeValidateVlink(): value exists so let's validate it`
           );
           const errorArr = validateColor(
             node.attribValueRaw,
@@ -53,7 +53,7 @@ function attributeValidateVlink(context: Linter): RuleObjType {
             }
           );
           console.log(
-            `061 attributeValidateVlink(): received errorArr = ${JSON.stringify(
+            `056 attributeValidateVlink(): received errorArr = ${JSON.stringify(
               errorArr,
               null,
               4
@@ -61,7 +61,7 @@ function attributeValidateVlink(context: Linter): RuleObjType {
           );
 
           errorArr.forEach((errorObj) => {
-            console.log(`069 attributeValidateVlink(): RAISE ERROR`);
+            console.log(`064 attributeValidateVlink(): RAISE ERROR`);
             context.report({ ...errorObj, ruleId: "attribute-validate-vlink" });
           });
         }

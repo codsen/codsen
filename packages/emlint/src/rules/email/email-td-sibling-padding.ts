@@ -52,7 +52,7 @@ function tdSiblingPadding(context: Linter): RuleObjType {
         )
       ) {
         console.log(
-          `039 ${`${`\u001b[${36}m${`██`}\u001b[${39}m`}${`\u001b[${34}m${`██`}\u001b[${39}m`}`.repeat(
+          `055 ${`${`\u001b[${36}m${`██`}\u001b[${39}m`}${`\u001b[${34}m${`██`}\u001b[${39}m`}`.repeat(
             20
           )} RAISE ERROR [${start}, ${end}]`
         );

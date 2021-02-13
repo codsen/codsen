@@ -20,19 +20,19 @@ function tagSpaceBeforeClosingSlash(
       console.log(
         `███████████████████████████████████████ tagSpaceBeforeClosingSlash() ███████████████████████████████████████`
       );
-      console.log(`019 inside rule: node = ${JSON.stringify(node, null, 4)}`);
+      console.log(`023 inside rule: node = ${JSON.stringify(node, null, 4)}`);
       const gapValue = context.str.slice(node.start + 1, node.tagNameStartsAt);
-      console.log(`021 gapValue = ${JSON.stringify(gapValue, null, 4)}`);
+      console.log(`025 gapValue = ${JSON.stringify(gapValue, null, 4)}`);
 
       console.log(
-        `024 tagSpaceBeforeClosingSlash(): ${`\u001b[${33}m${`context.str[${node.tagNameStartsAt}]`}\u001b[${39}m`} = ${JSON.stringify(
+        `028 tagSpaceBeforeClosingSlash(): ${`\u001b[${33}m${`context.str[${node.tagNameStartsAt}]`}\u001b[${39}m`} = ${JSON.stringify(
           context.str[node.tagNameStartsAt],
           null,
           4
         )}`
       );
       console.log(
-        `037 tagSpaceBeforeClosingSlash(): ${`\u001b[${33}m${`mode`}\u001b[${39}m`} = ${JSON.stringify(
+        `035 tagSpaceBeforeClosingSlash(): ${`\u001b[${33}m${`mode`}\u001b[${39}m`} = ${JSON.stringify(
           mode,
           null,
           4
@@ -49,7 +49,7 @@ function tagSpaceBeforeClosingSlash(
         context.str[slashPos as number] === "/" &&
         leftOfSlashPos < (slashPos as number) - 1
       ) {
-        console.log(`058 whitespace present in front of closing slash!`);
+        console.log(`052 whitespace present in front of closing slash!`);
         context.report({
           ruleId: "tag-space-before-closing-slash",
           message: "Bad whitespace.",
@@ -63,7 +63,7 @@ function tagSpaceBeforeClosingSlash(
         context.str[slashPos] === "/" &&
         leftOfSlashPos === slashPos - 1
       ) {
-        console.log(`072 space missing in front of closing slash!`);
+        console.log(`066 space missing in front of closing slash!`);
         context.report({
           ruleId: "tag-space-before-closing-slash",
           message: "Missing space.",

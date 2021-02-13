@@ -13,7 +13,7 @@ function attributeValidateFrame(context: Linter): RuleObjType {
       );
 
       console.log(
-        `020 attributeValidateFrame(): node = ${JSON.stringify(node, null, 4)}`
+        `016 attributeValidateFrame(): node = ${JSON.stringify(node, null, 4)}`
       );
 
       if (node.attribName === "frame") {
@@ -57,7 +57,7 @@ function attributeValidateFrame(context: Linter): RuleObjType {
         );
 
         errorArr.forEach((errorObj) => {
-          console.log(`064 RAISE ERROR`);
+          console.log(`060 RAISE ERROR`);
           context.report({ ...errorObj, ruleId: "attribute-validate-frame" });
         });
       }

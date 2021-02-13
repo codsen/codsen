@@ -154,7 +154,7 @@ tap.test(
       ],
       "06.02"
     );
-    t.equal(messages.length, 1);
+    t.equal(messages.length, 1, "06.03");
     t.end();
   }
 );
@@ -187,7 +187,7 @@ tap.test(
       ],
       "07.02"
     );
-    t.equal(messages.length, 1);
+    t.equal(messages.length, 1, "07.03");
     t.end();
   }
 );
@@ -218,7 +218,7 @@ tap.test(
       ],
       "08.02"
     );
-    t.equal(messages.length, 1);
+    t.equal(messages.length, 1, "08.03");
     t.end();
   }
 );
@@ -261,7 +261,7 @@ tap.test(
       ],
       "09.02"
     );
-    t.equal(messages.length, 2);
+    t.equal(messages.length, 2, "09.03");
     t.end();
   }
 );
@@ -312,7 +312,7 @@ tap.test(
       ],
       "10.02"
     );
-    t.equal(messages.length, 3);
+    t.equal(messages.length, 3, "10.03");
     t.end();
   }
 );
