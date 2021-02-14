@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.1](https://github.com/codsen/codsen/compare/eslint-plugin-row-num@1.5.0...eslint-plugin-row-num@1.5.1) (2021-02-14)
+
+
+### Bug Fixes
+
+* fix the backtick blocks under TS parser ([56b9bb3](https://github.com/codsen/codsen/commit/56b9bb3c34539bcd2c17e601ec0d1803d8317c4a))
+* remove circular JSON stringify ([2dc8145](https://github.com/codsen/codsen/commit/2dc81451fbfcf667f4931411447d0b41c1eabfb8))
+
+
+
+
+
 ## 1.5.0 (2021-02-09)
 
 ### Features

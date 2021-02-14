@@ -1,6 +1,6 @@
 {
   "name": "string-extract-class-names",
-  "version": "6.0.4",
+  "version": "6.0.5",
   "description": "Extracts CSS class/id names from a string",
   "keywords": [
     "class",
@@ -71,7 +71,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.13",
-    "string-left-right": "^4.0.4"
+    "string-left-right": "^4.0.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.16",
@@ -98,7 +98,7 @@
     "@typescript-eslint/eslint-plugin": "^4.15.0",
     "@typescript-eslint/parser": "^4.15.0",
     "eslint": "^7.20.0",
-    "lect": "^0.16.4",
+    "lect": "^0.16.5",
     "rollup": "^2.39.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

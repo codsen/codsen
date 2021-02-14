@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.5](https://github.com/codsen/codsen/compare/eslint-plugin-test-num@1.5.4...eslint-plugin-test-num@1.5.5) (2021-02-14)
+
+
+### Bug Fixes
+
+* adapt to TS parser AST ([cfa7f86](https://github.com/codsen/codsen/commit/cfa7f86a9038eff9edffa2826076f2178720685f))
+* correct certain cases where index starts at relative zero position ([a725be9](https://github.com/codsen/codsen/commit/a725be9a7f9b40c5afaca72d43f068dcc531501f))
+* fix third arg insertion on TS parser ([e2eff7b](https://github.com/codsen/codsen/commit/e2eff7b10d6abeacee7f1a3f2b08a1b4bdfe12d1))
+
+
+
+
+
 ## 1.5.1 (2021-01-28)
 
 ### Bug Fixes

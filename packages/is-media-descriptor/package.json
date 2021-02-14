@@ -1,6 +1,6 @@
 {
   "name": "is-media-descriptor",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "description": "Is given string a valid media descriptor (including media query)?",
   "keywords": [
     "attribute",
@@ -80,7 +80,7 @@
   "dependencies": {
     "@babel/runtime": "^7.12.13",
     "leven": "^3.1.0",
-    "string-process-comma-separated": "^2.0.4"
+    "string-process-comma-separated": "^2.0.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.16",
@@ -107,8 +107,8 @@
     "@typescript-eslint/eslint-plugin": "^4.15.0",
     "@typescript-eslint/parser": "^4.15.0",
     "eslint": "^7.20.0",
-    "lect": "^0.16.4",
-    "ranges-apply": "^5.0.4",
+    "lect": "^0.16.5",
+    "ranges-apply": "^5.0.5",
     "rollup": "^2.39.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

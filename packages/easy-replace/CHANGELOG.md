@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.5](https://github.com/codsen/codsen/compare/easy-replace@4.0.4...easy-replace@4.0.5) (2021-02-14)
+
+**Note:** Version bump only for package easy-replace
+
+
+
+
+
 ## 4.0.1 (2021-01-28)
 
 ### Bug Fixes
