@@ -272,7 +272,7 @@
     },
     {
         "name": "eslint-plugin-test-num",
-        "size": 20314,
+        "size": 19211,
         "imports": [
             "string-left-right"
         ]
