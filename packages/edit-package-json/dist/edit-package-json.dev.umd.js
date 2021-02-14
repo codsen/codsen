@@ -1,7 +1,7 @@
 /**
  * edit-package-json
  * Edit package.json without parsing, as string, to keep the formatting intact
- * Version: 0.3.4
+ * Version: 0.3.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/edit-package-json/
@@ -2927,7 +2927,7 @@ function rMerge(arrOfRanges, originalOpts) {
 /**
  * ranges-apply
  * Take an array of string index ranges, delete/replace the string according to them
- * Version: 5.0.4
+ * Version: 5.0.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-apply/
@@ -3057,7 +3057,7 @@ function rApply(str, originalRangesArr, _progressFn) {
   return str;
 }
 
-var version = "0.3.4";
+var version = "0.3.5";
 
 var version$1 = version;
 

@@ -1,7 +1,7 @@
 /**
  * ranges-iterate
  * Iterate a string and any changes within given string index ranges
- * Version: 2.0.4
+ * Version: 2.0.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-iterate/
@@ -11,7 +11,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var version = "2.0.4";
+var version = "2.0.5";
 
 var version$1 = version;
 

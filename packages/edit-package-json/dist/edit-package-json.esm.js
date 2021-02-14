@@ -1,7 +1,7 @@
 /**
  * edit-package-json
  * Edit package.json without parsing, as string, to keep the formatting intact
- * Version: 0.3.4
+ * Version: 0.3.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/edit-package-json/
@@ -10,7 +10,7 @@
 import { left, right, chompLeft } from 'string-left-right';
 import { rApply } from 'ranges-apply';
 
-var version = "0.3.4";
+var version = "0.3.5";
 
 const version$1 = version;
 

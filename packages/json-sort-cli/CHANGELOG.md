@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.18.5](https://github.com/codsen/codsen/compare/json-sort-cli@1.18.4...json-sort-cli@1.18.5) (2021-02-14)
-
-**Note:** Version bump only for package json-sort-cli
-
-
-
-
-
 ## 1.18.1 (2021-01-28)
 
 ### Bug Fixes

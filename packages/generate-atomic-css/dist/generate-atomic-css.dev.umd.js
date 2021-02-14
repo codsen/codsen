@@ -1,7 +1,7 @@
 /**
  * generate-atomic-css
  * Generate Atomic CSS
- * Version: 1.4.4
+ * Version: 1.4.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/generate-atomic-css/
@@ -2446,7 +2446,7 @@ function rightSeq(str, idx) {
   return seq("right", str, idx, opts, args);
 } // chomp() lets you match sequences of characters with zero or more whitespace characters in between each,
 
-var version = "1.4.4";
+var version = "1.4.5";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 

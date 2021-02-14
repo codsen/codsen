@@ -1,7 +1,7 @@
 /**
  * ast-is-empty
  * Find out, is nested array/object/string/AST tree is empty
- * Version: 2.0.4
+ * Version: 2.0.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-is-empty/
@@ -159,7 +159,7 @@ function isPlainObject(value) {
 
 var lodash_isplainobject = isPlainObject;
 
-var version = "2.0.4";
+var version = "2.0.5";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 var version$1 = version;

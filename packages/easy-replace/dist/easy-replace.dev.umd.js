@@ -1,7 +1,7 @@
 /**
  * easy-replace
  * Replace strings with optional lookarounds, but without regexes
- * Version: 4.0.4
+ * Version: 4.0.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/easy-replace/
@@ -62,7 +62,7 @@ function _objectSpread2(target) {
   return target;
 }
 
-var version = "4.0.4";
+var version = "4.0.5";
 
 var version$1 = version; // astralAwareSearch() - searches for strings, returns the findings in an array
 

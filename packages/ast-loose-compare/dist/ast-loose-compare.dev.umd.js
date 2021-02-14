@@ -1,7 +1,7 @@
 /**
  * ast-loose-compare
  * Compare anything: AST, objects, arrays and strings
- * Version: 2.0.4
+ * Version: 2.0.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-loose-compare/
@@ -2062,7 +2062,7 @@ var lodash_isplainobject = isPlainObject;
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.3.4
+ * Version: 1.3.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/
@@ -2183,7 +2183,7 @@ function traverse(tree1, cb1) {
 /**
  * ast-contains-only-empty-space
  * Does AST contain only empty space?
- * Version: 2.0.4
+ * Version: 2.0.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-contains-only-empty-space/
@@ -2215,7 +2215,7 @@ function empty(input) {
   return found;
 }
 
-var version = "2.0.4";
+var version = "2.0.5";
 
 var version$1 = version; // we use internal function to shield the third input arg from the outside api
 

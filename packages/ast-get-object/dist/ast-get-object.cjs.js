@@ -1,7 +1,7 @@
 /**
  * ast-get-object
  * Getter/setter for nested parsed HTML AST's, querying objects by key/value pairs
- * Version: 2.0.4
+ * Version: 2.0.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-get-object/
@@ -20,7 +20,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
-var version = "2.0.4";
+var version = "2.0.5";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 var version$1 = version; // ===================================

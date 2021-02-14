@@ -1,7 +1,7 @@
 /**
  * ranges-invert
  * Invert string index ranges
- * Version: 4.0.4
+ * Version: 4.0.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-invert/
@@ -10,7 +10,7 @@
 import { rMerge } from 'ranges-merge';
 import { rCrop } from 'ranges-crop';
 
-var version = "4.0.4";
+var version = "4.0.5";
 
 const version$1 = version;
 

@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.10.5](https://github.com/codsen/codsen/compare/regex-empty-conditional-comments@1.10.4...regex-empty-conditional-comments@1.10.5) (2021-02-14)
-
-**Note:** Version bump only for package regex-empty-conditional-comments
-
-
-
-
-
 ## 1.10.1 (2021-01-28)
 
 ### Bug Fixes

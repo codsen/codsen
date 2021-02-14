@@ -1,7 +1,7 @@
 /**
  * ranges-sort
  * Sort string index ranges
- * Version: 4.0.4
+ * Version: 4.0.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ranges-sort/
@@ -62,7 +62,7 @@ function _objectSpread2(target) {
   return target;
 }
 
-var version = "4.0.4";
+var version = "4.0.5";
 
 var version$1 = version;
 var defaults = {

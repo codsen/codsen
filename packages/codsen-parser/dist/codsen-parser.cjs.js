@@ -1,7 +1,7 @@
 /**
  * codsen-parser
  * Parser aiming at broken or mixed code, especially HTML & CSS
- * Version: 0.10.1
+ * Version: 0.10.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/codsen-parser/
@@ -23,7 +23,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var op__default = /*#__PURE__*/_interopDefaultLegacy(op);
 
-var version = "0.10.1";
+var version = "0.10.2";
 
 var version$1 = version;
 var defaults = {

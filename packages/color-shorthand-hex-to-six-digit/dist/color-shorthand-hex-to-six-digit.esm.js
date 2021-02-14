@@ -1,7 +1,7 @@
 /**
  * color-shorthand-hex-to-six-digit
  * Convert shorthand hex color codes into full
- * Version: 3.0.4
+ * Version: 3.0.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/color-shorthand-hex-to-six-digit/
@@ -11,7 +11,7 @@ import r from 'hex-color-regex';
 import isPlainObject from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';
 
-var version = "3.0.4";
+var version = "3.0.5";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 const version$1 = version;

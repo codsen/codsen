@@ -1,7 +1,7 @@
 /**
  * line-column-mini
  * Convert string index to line-column position
- * Version: 1.1.4
+ * Version: 1.1.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/line-column-mini/
@@ -13,7 +13,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.lineColumnMini = {}));
 }(this, (function (exports) { 'use strict';
 
-var version = "1.1.4";
+var version = "1.1.5";
 
 var version$1 = version; // find where is a given element located
 

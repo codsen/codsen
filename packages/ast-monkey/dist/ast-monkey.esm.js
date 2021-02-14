@@ -1,7 +1,7 @@
 /**
  * ast-monkey
  * Traverse and edit AST
- * Version: 7.13.4
+ * Version: 7.13.5
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey/
@@ -13,7 +13,7 @@ import { compare } from 'ast-compare';
 import { traverse } from 'ast-monkey-traverse';
 export { traverse } from 'ast-monkey-traverse';
 
-var version = "7.13.4";
+var version = "7.13.5";
 
 const version$1 = version;
 

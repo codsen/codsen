@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.16.5](https://github.com/codsen/codsen/compare/lect@0.16.4...lect@0.16.5) (2021-02-14)
-
-**Note:** Version bump only for package lect
-
-
-
-
-
 ## 0.16.1 (2021-01-28)
 
 ### Bug Fixes
