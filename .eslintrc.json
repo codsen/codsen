@@ -44,8 +44,8 @@
     "prefer-const": "error",
     "prefer-destructuring": 0,
     "prefer-template": "error",
-    "row-num/correct-row-num": 0,
-    "test-num/correct-test-num": 0,
+    "row-num/correct-row-num": "error",
+    "test-num/correct-test-num": "error",
     "strict": "error",
     "symbol-description": "error",
     "yoda": [
