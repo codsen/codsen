@@ -97,7 +97,7 @@ const trailingSemi: TrailingSemi = (context, mode) => {
           .valueEnds as number;
 
         context.report({
-          ruleId: "trailing-semi",
+          ruleId: "css-trailing-semi",
           idxFrom,
           idxTo,
           message: `Add a semicolon.`,
@@ -116,7 +116,7 @@ const trailingSemi: TrailingSemi = (context, mode) => {
         const positionToRemove = (properties[~-properties.length] as Property)
           .semi as number;
         context.report({
-          ruleId: "trailing-semi",
+          ruleId: "css-trailing-semi",
           idxFrom,
           idxTo,
           message: `Remove the semicolon.`,

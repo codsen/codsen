@@ -10,7 +10,7 @@ tap.test(`01 - not style`, (t) => {
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "trailing-semi": 2,
+      "css-trailing-semi": 2,
     },
   });
   t.equal(applyFixes(str, messages), str, "01.01");
@@ -27,7 +27,7 @@ tap.test(`02 - one style, always`, (t) => {
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "trailing-semi": [2, "always"],
+      "css-trailing-semi": [2, "always"],
     },
   });
   t.equal(applyFixes(str, messages), fixed, "02.01");
@@ -36,7 +36,7 @@ tap.test(`02 - one style, always`, (t) => {
     [
       {
         severity: 2,
-        ruleId: "trailing-semi",
+        ruleId: "css-trailing-semi",
         message: "Add a semicolon.",
         idxFrom: 10,
         idxTo: 19,
@@ -56,7 +56,7 @@ tap.test(`03 - one style, always, inner whitespace`, (t) => {
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "trailing-semi": [1, "always"],
+      "css-trailing-semi": [1, "always"],
     },
   });
   t.equal(applyFixes(str, messages), fixed, "03.01");
@@ -65,7 +65,7 @@ tap.test(`03 - one style, always, inner whitespace`, (t) => {
     [
       {
         severity: 1,
-        ruleId: "trailing-semi",
+        ruleId: "css-trailing-semi",
         message: "Add a semicolon.",
         idxFrom: 10,
         idxTo: 19,
@@ -85,7 +85,7 @@ tap.test(`04 - two styles, always`, (t) => {
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "trailing-semi": [2, "always"],
+      "css-trailing-semi": [2, "always"],
     },
   });
   t.equal(applyFixes(str, messages), fixed, "04");
@@ -98,7 +98,7 @@ tap.test(`05 - two styles with space, always`, (t) => {
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "trailing-semi": [2, "always"],
+      "css-trailing-semi": [2, "always"],
     },
   });
   t.equal(applyFixes(str, messages), fixed, "05");
@@ -111,7 +111,7 @@ tap.test(`06 - two styles, default=always`, (t) => {
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "trailing-semi": 2,
+      "css-trailing-semi": 2,
     },
   });
   t.equal(applyFixes(str, messages), fixed, "06");
@@ -123,7 +123,7 @@ tap.test(`07 - nothing to fix`, (t) => {
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "trailing-semi": [2, "always"],
+      "css-trailing-semi": [2, "always"],
     },
   });
   t.equal(applyFixes(str, messages), str, "07.01");
@@ -140,7 +140,7 @@ tap.test(`08 - one style, never`, (t) => {
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "trailing-semi": [2, "never"],
+      "css-trailing-semi": [2, "never"],
     },
   });
   t.equal(applyFixes(str, messages), fixed, "08.01");
@@ -149,7 +149,7 @@ tap.test(`08 - one style, never`, (t) => {
     [
       {
         severity: 2,
-        ruleId: "trailing-semi",
+        ruleId: "css-trailing-semi",
         message: "Remove the semicolon.",
         idxFrom: 10,
         idxTo: 20,
@@ -169,7 +169,7 @@ tap.test(`09 - two styles, never`, (t) => {
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "trailing-semi": [2, "never"],
+      "css-trailing-semi": [2, "never"],
     },
   });
   t.equal(applyFixes(str, messages), fixed, "09");
@@ -182,7 +182,7 @@ tap.test(`10 - two styles, never, trailing whitespace`, (t) => {
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "trailing-semi": [2, "never"],
+      "css-trailing-semi": [2, "never"],
     },
   });
   t.equal(applyFixes(str, messages), fixed, "10");

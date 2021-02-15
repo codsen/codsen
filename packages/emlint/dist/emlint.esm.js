@@ -10876,7 +10876,7 @@ const trailingSemi = (context, mode) => {
         const idxTo = properties[~-properties.length].end;
         const positionToInsert = properties[~-properties.length].valueEnds;
         context.report({
-          ruleId: "trailing-semi",
+          ruleId: "css-trailing-semi",
           idxFrom,
           idxTo,
           message: `Add a semicolon.`,
@@ -10889,7 +10889,7 @@ const trailingSemi = (context, mode) => {
         const idxTo = properties[~-properties.length].end;
         const positionToRemove = properties[~-properties.length].semi;
         context.report({
-          ruleId: "trailing-semi",
+          ruleId: "css-trailing-semi",
           idxFrom,
           idxTo,
           message: `Remove the semicolon.`,
@@ -11164,7 +11164,7 @@ defineLazyProp(builtInRules, "comment-conditional-nested", () => commentConditio
 defineLazyProp(builtInRules, "email-td-sibling-padding", () => tdSiblingPadding); // CSS rules
 // -----------------------------------------------------------------------------
 
-defineLazyProp(builtInRules, "trailing-semi", () => trailingSemi); // EXPORTS
+defineLazyProp(builtInRules, "css-trailing-semi", () => trailingSemi); // EXPORTS
 // -----------------------------------------------------------------------------
 
 function get(something) {

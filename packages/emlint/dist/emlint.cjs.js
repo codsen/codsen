@@ -10526,7 +10526,7 @@ var trailingSemi = function trailingSemi(context, mode) {
         var idxTo = properties[~-properties.length].end;
         var positionToInsert = properties[~-properties.length].valueEnds;
         context.report({
-          ruleId: "trailing-semi",
+          ruleId: "css-trailing-semi",
           idxFrom: idxFrom,
           idxTo: idxTo,
           message: "Add a semicolon.",
@@ -10539,7 +10539,7 @@ var trailingSemi = function trailingSemi(context, mode) {
         var _idxTo = properties[~-properties.length].end;
         var positionToRemove = properties[~-properties.length].semi;
         context.report({
-          ruleId: "trailing-semi",
+          ruleId: "css-trailing-semi",
           idxFrom: _idxFrom,
           idxTo: _idxTo,
           message: "Remove the semicolon.",
@@ -11319,7 +11319,7 @@ defineLazyProp__default['default'](builtInRules, "email-td-sibling-padding", fun
 }); // CSS rules
 // -----------------------------------------------------------------------------
 
-defineLazyProp__default['default'](builtInRules, "trailing-semi", function () {
+defineLazyProp__default['default'](builtInRules, "css-trailing-semi", function () {
   return trailingSemi;
 }); // EXPORTS
 // -----------------------------------------------------------------------------

@@ -576,7 +576,7 @@ import tdSiblingPadding from "./rules/email/email-td-sibling-padding";
 // CSS rules
 // -----------------------------------------------------------------------------
 
-import trailingSemi from "./rules/css/trailing-semi";
+import trailingSemi from "./rules/css/css-trailing-semi";
 
 //
 //
@@ -1827,7 +1827,7 @@ defineLazyProp(
 // CSS rules
 // -----------------------------------------------------------------------------
 
-defineLazyProp(builtInRules, "trailing-semi", () => trailingSemi);
+defineLazyProp(builtInRules, "css-trailing-semi", () => trailingSemi);
 
 // EXPORTS
 // -----------------------------------------------------------------------------
