@@ -11406,8 +11406,7 @@ class Linter extends TypedEmitter {
     }), (key, val, innerObj) => {
       const current = val !== undefined ? val : key;
 
-      if (isObj(current) && (!innerObj.parentKey || !innerObj.parentKey.startsWith("attrib"))) {
-        // monkey will traverse every key, every string within.
+      if (isObj(current) && (!innerObj.parentKey || !innerObj.parentKey.startsWith("attrib"))) { // monkey will traverse every key, every string within.
         // We need to pick the objects of a type we need: "tag", "comment" etc.
         // tag-level callback
         this.emit(current.type, current); // plus, for type:html also ping each attribute

@@ -261,23 +261,23 @@ class Linter extends TypedEmitter<RuleObjType> {
           },
         }),
         (key, val, innerObj) => {
-          console.log(`-`);
-          console.log(
-            `-----------------------------------------------------------------------------`
-          );
-          console.log(`-`);
-          console.log(
-            `270 ${`\u001b[${33}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`innerObj`}\u001b[${39}m`} = ${JSON.stringify(
-              innerObj,
-              null,
-              4
-            )}`
-          );
           const current = val !== undefined ? val : key;
           if (
             isObj(current) &&
             (!innerObj.parentKey || !innerObj.parentKey.startsWith("attrib"))
           ) {
+            console.log(` `);
+            console.log(
+              `-----------------------------------------------------------------------------`
+            );
+            console.log(` `);
+            console.log(
+              `275 ${`\u001b[${33}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`innerObj`}\u001b[${39}m`} = ${JSON.stringify(
+                innerObj,
+                null,
+                4
+              )}`
+            );
             // monkey will traverse every key, every string within.
             // We need to pick the objects of a type we need: "tag", "comment" etc.
 
@@ -312,15 +312,16 @@ class Linter extends TypedEmitter<RuleObjType> {
                 });
               });
             }
-          } else {
-            console.log(
-              `317 ${`\u001b[${31}m${`nothing happens`}\u001b[${39}m`}`
-            );
           }
           return current;
         }
       )
     );
+    console.log(` `);
+    console.log(
+      `-----------------------------------------------------------------------------`
+    );
+    console.log(` `);
 
     //
     //
@@ -352,11 +353,11 @@ class Linter extends TypedEmitter<RuleObjType> {
             isAnEnabledValue(processedRulesConfig[ruleName]))
       )
     ) {
-      console.log(`355 linter.js: call fixEnt()`);
+      console.log(`356 linter.js: call fixEnt()`);
       fixEnt(str, {
         cb: (obj) => {
           console.log(
-            `359 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
+            `360 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
               obj,
               null,
               4
@@ -461,7 +462,7 @@ class Linter extends TypedEmitter<RuleObjType> {
         },
         entityCatcherCb: (from, to) => {
           console.log(
-            `464 linter.js: entityCatcher pinging { from: ${from}, to: ${to} }`
+            `465 linter.js: entityCatcher pinging { from: ${from}, to: ${to} }`
           );
           this.emit("entity", { idxFrom: from, idxTo: to });
         },
@@ -477,7 +478,7 @@ class Linter extends TypedEmitter<RuleObjType> {
     });
 
     console.log(
-      `480 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: verify() final return is called;\nthis.messages=${JSON.stringify(
+      `481 ${`\u001b[${32}m${`linter.js`}\u001b[${39}m`}: verify() final return is called;\nthis.messages=${JSON.stringify(
         this.messages,
         null,
         4
@@ -488,7 +489,7 @@ class Linter extends TypedEmitter<RuleObjType> {
 
   report(obj: ErrorObjWithRuleId): void {
     console.log(
-      `491 ${`\u001b[${32}m${`linter.js/report()`}\u001b[${39}m`}: called with ${JSON.stringify(
+      `492 ${`\u001b[${32}m${`linter.js/report()`}\u001b[${39}m`}: called with ${JSON.stringify(
         obj,
         null,
         4
@@ -505,7 +506,7 @@ class Linter extends TypedEmitter<RuleObjType> {
     ) as Obj;
     let severity: Severity = obj.severity || 0; // rules coming from 3rd party packages will give the severity value
     console.log(
-      `508 ${`\u001b[${32}m${`linter.js/report()`}\u001b[${39}m`}: ${`\u001b[${33}m${`this.processedRulesConfig[obj.ruleId]`}\u001b[${39}m`} = ${JSON.stringify(
+      `509 ${`\u001b[${32}m${`linter.js/report()`}\u001b[${39}m`}: ${`\u001b[${33}m${`this.processedRulesConfig[obj.ruleId]`}\u001b[${39}m`} = ${JSON.stringify(
         this.processedRulesConfig[obj.ruleId],
         null,
         4
@@ -523,10 +524,10 @@ class Linter extends TypedEmitter<RuleObjType> {
       severity = (this.processedRulesConfig[obj.ruleId] as any[])[0];
     }
     console.log(
-      `526 ${`\u001b[${32}m${`linter.js/report()`}\u001b[${39}m`}: line = ${line}; column = ${col}`
+      `527 ${`\u001b[${32}m${`linter.js/report()`}\u001b[${39}m`}: line = ${line}; column = ${col}`
     );
     console.log(
-      `529 ${`\u001b[${32}m${`linter.js/report()`}\u001b[${39}m`}: ${`\u001b[${33}m${`this.messages`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
+      `530 ${`\u001b[${32}m${`linter.js/report()`}\u001b[${39}m`}: ${`\u001b[${33}m${`this.messages`}\u001b[${39}m`} BEFORE: ${JSON.stringify(
         this.messages,
         null,
         4
@@ -543,7 +544,7 @@ class Linter extends TypedEmitter<RuleObjType> {
       ...(this.hasBeenCalledWithKeepSeparateWhenFixing ? { fix: null } : {}),
     });
     console.log(
-      `546 ${`\u001b[${32}m${`linter.js/report()`}\u001b[${39}m`}: ${`\u001b[${33}m${`this.messages`}\u001b[${39}m`} AFTER: ${JSON.stringify(
+      `547 ${`\u001b[${32}m${`linter.js/report()`}\u001b[${39}m`}: ${`\u001b[${33}m${`this.messages`}\u001b[${39}m`} AFTER: ${JSON.stringify(
         this.messages,
         null,
         4
@@ -564,7 +565,7 @@ class Linter extends TypedEmitter<RuleObjType> {
     }
 
     console.log(
-      `567 ${`\u001b[${32}m${`linter.js/report()`}\u001b[${39}m`}: ENDING this.hasBeenCalledWithKeepSeparateWhenFixing = ${
+      `568 ${`\u001b[${32}m${`linter.js/report()`}\u001b[${39}m`}: ENDING this.hasBeenCalledWithKeepSeparateWhenFixing = ${
         this.hasBeenCalledWithKeepSeparateWhenFixing
       }`
     );
