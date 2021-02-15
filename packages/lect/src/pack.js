@@ -55,6 +55,26 @@ async function packageJson({ state, lectrc }) {
     lectrc,
     state.isCLI ? "scripts.cli" : "scripts.rollup"
   );
+  // then append any add-ons from .lectrc.json > "scripts_extras"
+  if (objectPath.get(lectrc, `scripts_extras.${state.pack.name}`)) {
+    console.log(`060 ███████████████████████████████████████`);
+    const extras = objectPath.get(lectrc, `scripts_extras.${state.pack.name}`);
+    if (extras) {
+      Object.keys(extras).forEach((key) => {
+        console.log(
+          `${`\u001b[${33}m${`key`}\u001b[${39}m`} = ${JSON.stringify(
+            key,
+            null,
+            4
+          )}`
+        );
+        // append the extra script
+        content.scripts[key] = `${objectPath.get(content.scripts, key)} && ${
+          extras[key]
+        }`;
+      });
+    }
+  }
 
   const officialDevDeps =
     objectPath.get(content, "lect.various.devDependencies") || [];

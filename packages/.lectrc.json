@@ -258,5 +258,10 @@
       "clean_cov": "../../scripts/leaveCoverageTotalOnly.js",
       "clean_types": "../../scripts/cleanTypes.js"
     }
+  },
+  "scripts_extras": {
+    "emlint": {
+      "build": "node bin/helper.js"
+    }
   }
 }
