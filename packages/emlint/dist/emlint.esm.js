@@ -10827,9 +10827,77 @@ function tdSiblingPadding(context) {
   };
 }
 
-const trailingSemi = (_context, mode) => {
+const trailingSemi = (context, mode) => {
   return {
-    tag(node) {
+    rule(node) { // incoming "rule"-type node will be something like:
+      // {
+      //   type: "rule",
+      //   start: 7,
+      //   end: 20,
+      //   value: ".a{color:red}",
+      //   left: 6,
+      //   nested: false,
+      //   openingCurlyAt: 9,
+      //   closingCurlyAt: 19,
+      //   selectorsStart: 7,
+      //   selectorsEnd: 9,
+      //   selectors: [
+      //     {
+      //       value: ".a",
+      //       selectorStarts: 7,
+      //       selectorEnds: 9,
+      //     },
+      //   ],
+      //   properties: [
+      //     {
+      //       start: 10,
+      //       end: 19,
+      //       value: "red",
+      //       property: "color",
+      //       propertyStarts: 10,
+      //       propertyEnds: 15,
+      //       colon: 15,
+      //       valueStarts: 16,
+      //       valueEnds: 19,
+      //       semi: null,
+      //     },
+      //   ],
+      // };
+
+      let properties = []; // there can be text nodes within properties array!
+      // innocent whitespace is still a text node!!!!
+
+      if (Array.isArray(node.properties) && node.properties.length && node.properties.filter(property => property.property).length) {
+        properties = node.properties.filter(property => property.property);
+      }
+
+      if (mode !== "never" && properties && properties[~-properties.length].semi === null && properties[~-properties.length].valueEnds) {
+        const idxFrom = properties[~-properties.length].start;
+        const idxTo = properties[~-properties.length].end;
+        const positionToInsert = properties[~-properties.length].valueEnds;
+        context.report({
+          ruleId: "trailing-semi",
+          idxFrom,
+          idxTo,
+          message: `Add a semicolon.`,
+          fix: {
+            ranges: [[positionToInsert, positionToInsert, ";"]]
+          }
+        });
+      } else if (mode === "never" && properties && properties[~-properties.length].semi !== null && properties[~-properties.length].valueEnds) {
+        const idxFrom = properties[~-properties.length].start;
+        const idxTo = properties[~-properties.length].end;
+        const positionToRemove = properties[~-properties.length].semi;
+        context.report({
+          ruleId: "trailing-semi",
+          idxFrom,
+          idxTo,
+          message: `Remove the semicolon.`,
+          fix: {
+            ranges: [[positionToRemove, positionToRemove + 1]]
+          }
+        });
+      }
     }
 
   };
