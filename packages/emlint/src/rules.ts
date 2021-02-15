@@ -10,6 +10,7 @@ import matcher from "matcher";
 import allBadCharacterRules from "./rules/all-bad-character.json";
 import allTagRules from "./rules/all-tag.json";
 import allAttribRules from "./rules/all-attribute.json";
+import allCSSRules from "./rules/all-css.json";
 import allBadNamedHTMLEntityRules from "./rules/all-bad-named-html-entity.json";
 import { isAnEnabledValue } from "./util/util";
 import { Linter } from "./linter";
@@ -577,6 +578,7 @@ import tdSiblingPadding from "./rules/email/email-td-sibling-padding";
 // -----------------------------------------------------------------------------
 
 import trailingSemi from "./rules/css/css-trailing-semi";
+import cssRuleMalformed from "./rules/css/css-rule-malformed";
 
 //
 //
@@ -1828,6 +1830,7 @@ defineLazyProp(
 // -----------------------------------------------------------------------------
 
 defineLazyProp(builtInRules, "css-trailing-semi", () => trailingSemi);
+defineLazyProp(builtInRules, "css-rule-malformed", () => cssRuleMalformed);
 
 // EXPORTS
 // -----------------------------------------------------------------------------
@@ -1901,6 +1904,19 @@ function normaliseRequestedRules(opts: RulesObj): RulesObj {
         res[ruleName] = opts[temp];
       });
     }
+    if (
+      Object.keys(opts).some((ruleName) => {
+        if (["css", "css*", "css-*"].includes(ruleName)) {
+          temp = ruleName;
+          return true;
+        }
+        return false;
+      })
+    ) {
+      allCSSRules.forEach((ruleName) => {
+        res[ruleName] = opts[temp];
+      });
+    }
     if (Object.keys(opts).includes("bad-html-entity")) {
       allBadNamedHTMLEntityRules.forEach((ruleName) => {
         // whole group of rules, not necessarily starting with "bad-html-entity"
@@ -1951,7 +1967,7 @@ function normaliseRequestedRules(opts: RulesObj): RulesObj {
   }
 
   console.log(
-    `1954 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1970 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

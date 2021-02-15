@@ -17419,7 +17419,9 @@ var allBadCharacterRules = ["bad-character-acknowledge", "bad-character-activate
 
 var allTagRules = ["tag-bad-self-closing", "tag-bold", "tag-closing-backslash", "tag-is-present", "tag-missing-closing", "tag-missing-opening", "tag-name-case", "tag-rogue", "tag-space-after-opening-bracket", "tag-space-before-closing-bracket", "tag-space-before-closing-slash", "tag-space-between-slash-and-bracket", "tag-void-frontal-slash", "tag-void-slash"];
 
-var allAttribRules = ["attribute-duplicate", "attribute-malformed"];
+var allAttribRules = ["attribute-duplicate", "attribute-malformed", "attribute-on-closing-tag"];
+
+var allCSSRules = ["css-rule-malformed", "css-trailing-semi"];
 
 var allBadNamedHTMLEntityRules = ["bad-malformed-numeric-character-entity", "bad-named-html-entity-malformed-nbsp", "bad-named-html-entity-multiple-encoding", "bad-named-html-entity-not-email-friendly", "bad-named-html-entity-unrecognised"];
 
@@ -44022,6 +44024,85 @@ var trailingSemi = function trailingSemi(context, mode) {
   };
 };
 
+var cssRuleMalformed = function cssRuleMalformed(context, mode) {
+  return {
+    rule: function rule(node) { // incoming "rule"-type node will be something like:
+      // {
+      //   type: "rule",
+      //   start: 7,
+      //   end: 20,
+      //   value: ".a{color:red}",
+      //   left: 6,
+      //   nested: false,
+      //   openingCurlyAt: 9,
+      //   closingCurlyAt: 19,
+      //   selectorsStart: 7,
+      //   selectorsEnd: 9,
+      //   selectors: [
+      //     {
+      //       value: ".a",
+      //       selectorStarts: 7,
+      //       selectorEnds: 9,
+      //     },
+      //   ],
+      //   properties: [
+      //     {
+      //       start: 10,
+      //       end: 19,
+      //       value: "red",
+      //       property: "color",
+      //       propertyStarts: 10,
+      //       propertyEnds: 15,
+      //       colon: 15,
+      //       valueStarts: 16,
+      //       valueEnds: 19,
+      //       semi: null,
+      //     },
+      //   ],
+      // };
+
+      var properties = []; // there can be text nodes within properties array!
+      // innocent whitespace is still a text node!!!!
+
+      if (Array.isArray(node.properties) && node.properties.length && node.properties.filter(function (property) {
+        return property.property;
+      }).length) {
+        properties = node.properties.filter(function (property) {
+          return property.property;
+        });
+      }
+
+      if (mode !== "never" && properties && properties[~-properties.length].semi === null && properties[~-properties.length].valueEnds) {
+        var idxFrom = properties[~-properties.length].start;
+        var idxTo = properties[~-properties.length].end;
+        var positionToInsert = properties[~-properties.length].valueEnds;
+        context.report({
+          ruleId: "css-trailing-semi",
+          idxFrom: idxFrom,
+          idxTo: idxTo,
+          message: "Add a semicolon.",
+          fix: {
+            ranges: [[positionToInsert, positionToInsert, ";"]]
+          }
+        });
+      } else if (mode === "never" && properties && properties[~-properties.length].semi !== null && properties[~-properties.length].valueEnds) {
+        var _idxFrom = properties[~-properties.length].start;
+        var _idxTo = properties[~-properties.length].end;
+        var positionToRemove = properties[~-properties.length].semi;
+        context.report({
+          ruleId: "css-trailing-semi",
+          idxFrom: _idxFrom,
+          idxTo: _idxTo,
+          message: "Remove the semicolon.",
+          fix: {
+            ranges: [[positionToRemove, positionToRemove + 1]]
+          }
+        });
+      }
+    }
+  };
+};
+
 // here we fetch the rules from all the places,
 var builtInRules = {};
 defineLazyProp(builtInRules, "bad-character-null", function () {
@@ -44791,6 +44872,9 @@ defineLazyProp(builtInRules, "email-td-sibling-padding", function () {
 
 defineLazyProp(builtInRules, "css-trailing-semi", function () {
   return trailingSemi;
+});
+defineLazyProp(builtInRules, "css-rule-malformed", function () {
+  return cssRuleMalformed;
 }); // EXPORTS
 // -----------------------------------------------------------------------------
 
@@ -44854,6 +44938,19 @@ function normaliseRequestedRules(opts) {
       return false;
     })) {
       allAttribRules.forEach(function (ruleName) {
+        res[ruleName] = opts[temp];
+      });
+    }
+
+    if (Object.keys(opts).some(function (ruleName) {
+      if (["css", "css*", "css-*"].includes(ruleName)) {
+        temp = ruleName;
+        return true;
+      }
+
+      return false;
+    })) {
+      allCSSRules.forEach(function (ruleName) {
         res[ruleName] = opts[temp];
       });
     }

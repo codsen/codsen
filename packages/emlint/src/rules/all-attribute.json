@@ -1,4 +1,5 @@
 [
   "attribute-duplicate",
-  "attribute-malformed"
+  "attribute-malformed",
+  "attribute-on-closing-tag"
 ]

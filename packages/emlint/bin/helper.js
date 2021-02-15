@@ -80,6 +80,18 @@ fs.writeFileSync(
   JSON.stringify(allCharacter.sort(), null, 2)
 );
 
+// bake the "css-" rules list JSON:
+
+const allCSS = fs
+  .readdirSync(path.resolve("src/rules/css/"))
+  .filter((val) => val.startsWith("css-"))
+  .map((val) => path.parse(val).name);
+
+fs.writeFileSync(
+  path.resolve("src/rules/all-css.json"),
+  JSON.stringify(allCSS.sort(), null, 2)
+);
+
 // bake the "all-bad-named-html-entity" rules list JSON:
 // since rules come from standalone npm package, "string-fix-broken-named-entities",
 // rules source is embedded into linter.js and we'll have to use unit test
