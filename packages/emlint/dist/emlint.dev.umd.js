@@ -15255,16 +15255,27 @@ function tokenizer(str, originalOpts) {
       ifQuoteThenAttrClosingQuote(_i)) {
         if (str[_i] === ";") {
           property.semi = _i;
-        } // patch missing .end
+        }
 
+        var temp; // patch missing .end
 
         if (!property.end) {
-          property.end = property.semi ? property.semi + 1 : _i;
+          property.end = property.semi ? property.semi + 1 : left(str, _i) + 1;
+          temp = property.end;
         } // push and init and patch up to resume
 
 
         pushProperty(property);
-        propertyReset();
+        propertyReset(); // if there was a whitespace gap, submit it as text token
+
+        if (temp && temp < _i) {
+          pushProperty({
+            type: "text",
+            start: temp,
+            end: _i,
+            value: str.slice(temp, _i)
+          });
+        }
       } else {
         property.valueStarts = _i;
       }
@@ -44024,7 +44035,7 @@ var trailingSemi = function trailingSemi(context, mode) {
   };
 };
 
-var cssRuleMalformed = function cssRuleMalformed(context, mode) {
+var cssRuleMalformed = function cssRuleMalformed(context) {
   return {
     rule: function rule(node) { // 1. catch rules with semicolons missing:
       // <style>.a{color:red\n\ntext-align:left
@@ -44043,7 +44054,7 @@ var cssRuleMalformed = function cssRuleMalformed(context, mode) {
 
       if (properties && properties.length > 1) {
         for (var i = properties.length - 1; i--;) {
-          if (properties[i].semi === null) {
+          if (properties[i].semi === null && properties[i].value) {
             context.report({
               ruleId: "css-rule-malformed",
               idxFrom: properties[i].start,
@@ -44068,6 +44079,23 @@ var cssRuleMalformed = function cssRuleMalformed(context, mode) {
           message: "Delete rogue character" + (context.str.slice(node.openingCurlyAt + 1, node.closingCurlyAt).trim().length > 1 ? "s" : "") + ".",
           fix: {
             ranges: [[node.openingCurlyAt + 1, node.closingCurlyAt]]
+          }
+        });
+      } // 3. catch css properties without values
+      // <style>.a{color:}</style>
+      //                ^
+
+
+      if (properties && properties.length) {
+        properties.forEach(function (property) {
+          if (property.value === null) {
+            context.report({
+              ruleId: "css-rule-malformed",
+              idxFrom: property.start,
+              idxTo: property.end,
+              message: "Missing value.",
+              fix: null
+            });
           }
         });
       }

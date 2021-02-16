@@ -9,19 +9,17 @@ import { Property } from "../../../../codsen-tokenizer/src/util/util";
 // import { right } from "string-left-right";
 // import splitByWhitespace from "../../util/splitByWhitespace";
 
-type Mode = "always" | "never";
 interface cssRuleMalformed {
-  (context: Linter, mode: Mode): RuleObjType;
+  (context: Linter): RuleObjType;
 }
-const cssRuleMalformed: cssRuleMalformed = (context, mode) => {
+const cssRuleMalformed: cssRuleMalformed = (context) => {
   return {
     rule(node) {
       console.log(
         `███████████████████████████████████████ cssRuleMalformed() ███████████████████████████████████████`
       );
-      console.log(`022 mode = ${JSON.stringify(mode, null, 4)}`);
       console.log(
-        `024 cssRuleMalformed(): ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+        `022 cssRuleMalformed(): ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
           node,
           null,
           4
@@ -45,7 +43,7 @@ const cssRuleMalformed: cssRuleMalformed = (context, mode) => {
         ) as Property[];
       }
       console.log(
-        `048 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`properties`}\u001b[${39}m`} = ${JSON.stringify(
+        `046 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`properties`}\u001b[${39}m`} = ${JSON.stringify(
           properties as any,
           null,
           4
@@ -54,9 +52,9 @@ const cssRuleMalformed: cssRuleMalformed = (context, mode) => {
 
       if (properties && properties.length > 1) {
         for (let i = properties.length - 1; i--; ) {
-          if (properties[i].semi === null) {
+          if (properties[i].semi === null && properties[i].value) {
             console.log(
-              `059 ${`\u001b[${31}m${`missing semi on ${properties[i].property}`}\u001b[${39}m`}`
+              `057 ${`\u001b[${31}m${`missing semi on ${properties[i].property}`}\u001b[${39}m`}`
             );
             context.report({
               ruleId: "css-rule-malformed",
@@ -85,7 +83,7 @@ const cssRuleMalformed: cssRuleMalformed = (context, mode) => {
         context.str.slice(node.openingCurlyAt + 1, node.closingCurlyAt).trim()
       ) {
         console.log(
-          `088 ${`\u001b[${31}m${`something rogue inside ${node.value}`}\u001b[${39}m`}`
+          `086 ${`\u001b[${31}m${`something rogue inside ${node.value}`}\u001b[${39}m`}`
         );
         context.report({
           ruleId: "css-rule-malformed",
@@ -101,6 +99,27 @@ const cssRuleMalformed: cssRuleMalformed = (context, mode) => {
           fix: {
             ranges: [[node.openingCurlyAt + 1, node.closingCurlyAt]],
           },
+        });
+      }
+
+      // 3. catch css properties without values
+      // <style>.a{color:}</style>
+      //                ^
+
+      if (properties && properties.length) {
+        properties.forEach((property) => {
+          if (property.value === null) {
+            console.log(
+              `113 ${`\u001b[${31}m${`missing value on ${property.property}`}\u001b[${39}m`}`
+            );
+            context.report({
+              ruleId: "css-rule-malformed",
+              idxFrom: property.start,
+              idxTo: property.end,
+              message: `Missing value.`,
+              fix: null,
+            });
+          }
         });
       }
     },

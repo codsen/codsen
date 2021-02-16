@@ -10554,7 +10554,7 @@ var trailingSemi = function trailingSemi(context, mode) {
   };
 };
 
-var cssRuleMalformed = function cssRuleMalformed(context, mode) {
+var cssRuleMalformed = function cssRuleMalformed(context) {
   return {
     rule: function rule(node) { // 1. catch rules with semicolons missing:
       // <style>.a{color:red\n\ntext-align:left
@@ -10573,7 +10573,7 @@ var cssRuleMalformed = function cssRuleMalformed(context, mode) {
 
       if (properties && properties.length > 1) {
         for (var i = properties.length - 1; i--;) {
-          if (properties[i].semi === null) {
+          if (properties[i].semi === null && properties[i].value) {
             context.report({
               ruleId: "css-rule-malformed",
               idxFrom: properties[i].start,
@@ -10598,6 +10598,23 @@ var cssRuleMalformed = function cssRuleMalformed(context, mode) {
           message: "Delete rogue character" + (context.str.slice(node.openingCurlyAt + 1, node.closingCurlyAt).trim().length > 1 ? "s" : "") + ".",
           fix: {
             ranges: [[node.openingCurlyAt + 1, node.closingCurlyAt]]
+          }
+        });
+      } // 3. catch css properties without values
+      // <style>.a{color:}</style>
+      //                ^
+
+
+      if (properties && properties.length) {
+        properties.forEach(function (property) {
+          if (property.value === null) {
+            context.report({
+              ruleId: "css-rule-malformed",
+              idxFrom: property.start,
+              idxTo: property.end,
+              message: "Missing value.",
+              fix: null
+            });
           }
         });
       }

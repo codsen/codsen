@@ -166,3 +166,58 @@ tap.test(`05 - two semis, tight`, (t) => {
   );
   t.end();
 });
+
+// value missing
+// -----------------------------------------------------------------------------
+
+tap.test(`06 - nothing after semi`, (t) => {
+  const str = `<style>.a{color:}</style><body>a</body>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "css-rule-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), str, "06.01");
+  t.match(
+    messages,
+    [
+      {
+        severity: 2,
+        ruleId: "css-rule-malformed",
+        message: "Missing value.",
+        idxFrom: 10,
+        idxTo: 16,
+        fix: null,
+      },
+    ],
+    "06.02"
+  );
+  t.end();
+});
+
+tap.test(`07 - value and semi missing, followed by correct rule`, (t) => {
+  const str = `<style>.a{ color \n\ntext-align:left;}</style><body>a</body>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "css-rule-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), str, "07.01");
+  t.match(
+    messages,
+    [
+      {
+        severity: 2,
+        ruleId: "css-rule-malformed",
+        message: "Missing value.",
+        idxFrom: 11,
+        idxTo: 16,
+        fix: null,
+      },
+    ],
+    "07.02"
+  );
+  t.end();
+});

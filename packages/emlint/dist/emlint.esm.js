@@ -10905,7 +10905,7 @@ const trailingSemi = (context, mode) => {
   };
 };
 
-const cssRuleMalformed = (context, mode) => {
+const cssRuleMalformed = context => {
   return {
     rule(node) { // 1. catch rules with semicolons missing:
       // <style>.a{color:red\n\ntext-align:left
@@ -10920,7 +10920,7 @@ const cssRuleMalformed = (context, mode) => {
 
       if (properties && properties.length > 1) {
         for (let i = properties.length - 1; i--;) {
-          if (properties[i].semi === null) {
+          if (properties[i].semi === null && properties[i].value) {
             context.report({
               ruleId: "css-rule-malformed",
               idxFrom: properties[i].start,
@@ -10945,6 +10945,23 @@ const cssRuleMalformed = (context, mode) => {
           message: `Delete rogue character${context.str.slice(node.openingCurlyAt + 1, node.closingCurlyAt).trim().length > 1 ? "s" : ""}.`,
           fix: {
             ranges: [[node.openingCurlyAt + 1, node.closingCurlyAt]]
+          }
+        });
+      } // 3. catch css properties without values
+      // <style>.a{color:}</style>
+      //                ^
+
+
+      if (properties && properties.length) {
+        properties.forEach(property => {
+          if (property.value === null) {
+            context.report({
+              ruleId: "css-rule-malformed",
+              idxFrom: property.start,
+              idxTo: property.end,
+              message: `Missing value.`,
+              fix: null
+            });
           }
         });
       }
