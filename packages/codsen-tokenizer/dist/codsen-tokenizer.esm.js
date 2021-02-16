@@ -1936,16 +1936,27 @@ function tokenizer(str, originalOpts) {
 
         if (str[i] === ";") {
           property.semi = i;
-        } // patch missing .end
+        }
 
+        let temp; // patch missing .end
 
         if (!property.end) {
-          property.end = property.semi ? property.semi + 1 : i;
+          property.end = property.semi ? property.semi + 1 : left(str, i) + 1;
+          temp = property.end;
         } // push and init and patch up to resume
 
 
         pushProperty(property);
-        propertyReset();
+        propertyReset(); // if there was a whitespace gap, submit it as text token
+
+        if (temp && temp < i) {
+          pushProperty({
+            type: "text",
+            start: temp,
+            end: i,
+            value: str.slice(temp, i)
+          });
+        }
       } else {
         property.valueStarts = i;
       }

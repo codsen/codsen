@@ -903,3 +903,76 @@ tap.test(`14 - abrupty ended second css rule`, (t) => {
   );
   t.end();
 });
+
+tap.only(`15 - nothing after colon`, (t) => {
+  const gathered = [];
+  ct(`<style>.a{ color: }</style>`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: "<style>",
+      },
+      {
+        type: "rule",
+        start: 7,
+        end: 19,
+        value: ".a{ color: }",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: 18,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            type: "text",
+            start: 10,
+            end: 11,
+            value: " ",
+          },
+          {
+            start: 11,
+            end: 17,
+            value: null,
+            property: "color",
+            propertyStarts: 11,
+            propertyEnds: 16,
+            colon: 16,
+            valueStarts: null,
+            valueEnds: null,
+            semi: null,
+          },
+          {
+            type: "text",
+            start: 17,
+            end: 18,
+            value: " ",
+          },
+        ],
+      },
+      {
+        type: "tag",
+        start: 19,
+        end: 27,
+        value: "</style>",
+      },
+    ],
+    "15"
+  );
+  t.end();
+});
