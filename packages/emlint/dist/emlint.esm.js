@@ -10873,7 +10873,7 @@ const trailingSemi = (context, mode) => {
         properties = node.properties.filter(property => property.property);
       }
 
-      if (mode !== "never" && properties && properties[~-properties.length].semi === null && properties[~-properties.length].valueEnds) {
+      if (mode !== "never" && properties && properties.length && properties[~-properties.length].semi === null && properties[~-properties.length].valueEnds) {
         const idxFrom = properties[~-properties.length].start;
         const idxTo = properties[~-properties.length].end;
         const positionToInsert = properties[~-properties.length].valueEnds;
@@ -10886,7 +10886,7 @@ const trailingSemi = (context, mode) => {
             ranges: [[positionToInsert, positionToInsert, ";"]]
           }
         });
-      } else if (mode === "never" && properties && properties[~-properties.length].semi !== null && properties[~-properties.length].valueEnds) {
+      } else if (mode === "never" && properties && properties.length && properties[~-properties.length].semi !== null && properties[~-properties.length].valueEnds) {
         const idxFrom = properties[~-properties.length].start;
         const idxTo = properties[~-properties.length].end;
         const positionToRemove = properties[~-properties.length].semi;
@@ -10907,7 +10907,10 @@ const trailingSemi = (context, mode) => {
 
 const cssRuleMalformed = (context, mode) => {
   return {
-    rule(node) {
+    rule(node) { // 1. catch rules with semicolons missing:
+      // <style>.a{color:red\n\ntext-align:left
+      //                    ^
+
       let properties = []; // there can be text nodes within properties array!
       // innocent whitespace is still a text node!!!!
 
@@ -10915,7 +10918,7 @@ const cssRuleMalformed = (context, mode) => {
         properties = node.properties.filter(property => property.property);
       }
 
-      if (properties.length > 1) {
+      if (properties && properties.length > 1) {
         for (let i = properties.length - 1; i--;) {
           if (properties[i].semi === null) {
             context.report({
@@ -10929,6 +10932,21 @@ const cssRuleMalformed = (context, mode) => {
             });
           }
         }
+      } // 2. catch css rules with selectors but without properties
+      // <style>.a{;}
+      //           ^
+
+
+      if (Array.isArray(node.selectors) && node.selectors.length && !properties.length && node.openingCurlyAt && node.closingCurlyAt && node.closingCurlyAt > node.openingCurlyAt + 1 && context.str.slice(node.openingCurlyAt + 1, node.closingCurlyAt).trim()) {
+        context.report({
+          ruleId: "css-rule-malformed",
+          idxFrom: node.start,
+          idxTo: node.end,
+          message: `Delete rogue character${context.str.slice(node.openingCurlyAt + 1, node.closingCurlyAt).trim().length > 1 ? "s" : ""}.`,
+          fix: {
+            ranges: [[node.openingCurlyAt + 1, node.closingCurlyAt]]
+          }
+        });
       }
     }
 

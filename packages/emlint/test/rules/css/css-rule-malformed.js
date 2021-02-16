@@ -107,13 +107,14 @@ tap.test(`03 - 1/3, 2/3`, (t) => {
 // semi only
 // -----------------------------------------------------------------------------
 
-tap.todo(`04 - one semi, tight`, (t) => {
+tap.test(`04 - one semi, tight`, (t) => {
   const str = `<style>.a{;}</style><body>a</body>`;
   const fixed = `<style>.a{}</style><body>a</body>`;
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
-      "css-rule-malformed": 2,
+      // "css-rule-malformed": 2,
+      all: 2,
     },
   });
   t.equal(applyFixes(str, messages), fixed, "04.01");
@@ -124,14 +125,44 @@ tap.todo(`04 - one semi, tight`, (t) => {
         severity: 2,
         ruleId: "css-rule-malformed",
         message: "Delete rogue character.",
-        idxFrom: 10,
-        idxTo: 11,
+        idxFrom: 7,
+        idxTo: 12,
         fix: {
           ranges: [[10, 11]],
         },
       },
     ],
     "04.02"
+  );
+  t.end();
+});
+
+tap.test(`05 - two semis, tight`, (t) => {
+  const str = `<style>.a{;;}</style><body>a</body>`;
+  const fixed = `<style>.a{}</style><body>a</body>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      // "css-rule-malformed": 2,
+      all: 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "05.01");
+  t.match(
+    messages,
+    [
+      {
+        severity: 2,
+        ruleId: "css-rule-malformed",
+        message: "Delete rogue characters.",
+        idxFrom: 7,
+        idxTo: 13,
+        fix: {
+          ranges: [[10, 12]],
+        },
+      },
+    ],
+    "05.02"
   );
   t.end();
 });

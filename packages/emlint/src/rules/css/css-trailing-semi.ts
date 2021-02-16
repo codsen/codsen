@@ -85,11 +85,12 @@ const trailingSemi: TrailingSemi = (context, mode) => {
       if (
         mode !== "never" &&
         properties &&
+        properties.length &&
         (properties[~-properties.length] as Property).semi === null &&
         (properties[~-properties.length] as Property).valueEnds
       ) {
         console.log(
-          `092 ${`\u001b[${31}m${`caught a property without a semicolon`}\u001b[${39}m`}`
+          `093 ${`\u001b[${31}m${`caught a property without a semicolon`}\u001b[${39}m`}`
         );
         const idxFrom = properties[~-properties.length].start;
         const idxTo = properties[~-properties.length].end;
@@ -108,6 +109,7 @@ const trailingSemi: TrailingSemi = (context, mode) => {
       } else if (
         mode === "never" &&
         properties &&
+        properties.length &&
         (properties[~-properties.length] as Property).semi !== null &&
         (properties[~-properties.length] as Property).valueEnds
       ) {
