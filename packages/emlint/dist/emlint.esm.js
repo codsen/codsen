@@ -10907,41 +10907,7 @@ const trailingSemi = (context, mode) => {
 
 const cssRuleMalformed = (context, mode) => {
   return {
-    rule(node) { // incoming "rule"-type node will be something like:
-      // {
-      //   type: "rule",
-      //   start: 7,
-      //   end: 20,
-      //   value: ".a{color:red}",
-      //   left: 6,
-      //   nested: false,
-      //   openingCurlyAt: 9,
-      //   closingCurlyAt: 19,
-      //   selectorsStart: 7,
-      //   selectorsEnd: 9,
-      //   selectors: [
-      //     {
-      //       value: ".a",
-      //       selectorStarts: 7,
-      //       selectorEnds: 9,
-      //     },
-      //   ],
-      //   properties: [
-      //     {
-      //       start: 10,
-      //       end: 19,
-      //       value: "red",
-      //       property: "color",
-      //       propertyStarts: 10,
-      //       propertyEnds: 15,
-      //       colon: 15,
-      //       valueStarts: 16,
-      //       valueEnds: 19,
-      //       semi: null,
-      //     },
-      //   ],
-      // };
-
+    rule(node) {
       let properties = []; // there can be text nodes within properties array!
       // innocent whitespace is still a text node!!!!
 
@@ -10949,32 +10915,20 @@ const cssRuleMalformed = (context, mode) => {
         properties = node.properties.filter(property => property.property);
       }
 
-      if (mode !== "never" && properties && properties[~-properties.length].semi === null && properties[~-properties.length].valueEnds) {
-        const idxFrom = properties[~-properties.length].start;
-        const idxTo = properties[~-properties.length].end;
-        const positionToInsert = properties[~-properties.length].valueEnds;
-        context.report({
-          ruleId: "css-trailing-semi",
-          idxFrom,
-          idxTo,
-          message: `Add a semicolon.`,
-          fix: {
-            ranges: [[positionToInsert, positionToInsert, ";"]]
+      if (properties.length > 1) {
+        for (let i = properties.length - 1; i--;) {
+          if (properties[i].semi === null) {
+            context.report({
+              ruleId: "css-rule-malformed",
+              idxFrom: properties[i].start,
+              idxTo: properties[i].end,
+              message: `Add a semicolon.`,
+              fix: {
+                ranges: [[properties[i].end, properties[i].end, ";"]]
+              }
+            });
           }
-        });
-      } else if (mode === "never" && properties && properties[~-properties.length].semi !== null && properties[~-properties.length].valueEnds) {
-        const idxFrom = properties[~-properties.length].start;
-        const idxTo = properties[~-properties.length].end;
-        const positionToRemove = properties[~-properties.length].semi;
-        context.report({
-          ruleId: "css-trailing-semi",
-          idxFrom,
-          idxTo,
-          message: `Remove the semicolon.`,
-          fix: {
-            ranges: [[positionToRemove, positionToRemove + 1]]
-          }
-        });
+        }
       }
     }
 
