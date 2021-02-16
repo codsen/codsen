@@ -904,7 +904,7 @@ tap.test(`14 - abrupty ended second css rule`, (t) => {
   t.end();
 });
 
-tap.only(`15 - nothing after colon`, (t) => {
+tap.test(`15 - nothing after colon`, (t) => {
   const gathered = [];
   ct(`<style>.a{ color: }</style>`, {
     tagCb: (obj) => {
