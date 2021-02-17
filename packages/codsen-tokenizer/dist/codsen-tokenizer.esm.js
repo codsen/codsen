@@ -408,6 +408,7 @@ function startsEsp(str, i, token, layers, withinStyle) {
 var version = "5.1.2";
 
 const version$1 = version;
+const importantStartsRegexp = /^\s*!?\s*[a-zA-Z]+(?:[\s;}<>'"]|$)/gm;
 const defaults = {
   tagCb: null,
   tagCbLookahead: 0,
@@ -555,6 +556,9 @@ function tokenizer(str, originalOpts) {
     property: null,
     propertyStarts: null,
     propertyEnds: null,
+    importantStarts: null,
+    importantEnds: null,
+    important: null,
     colon: null,
     valueStarts: null,
     valueEnds: null,
@@ -989,6 +993,13 @@ function tokenizer(str, originalOpts) {
     // <div style="float:"left"">
     //
     isAttrClosing(str, attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt, idx);
+  }
+
+  function attrEndsAt(idx) {
+    // either we're within normal head css styles:
+    return `;}/`.includes(str[idx]) && (!attrib || !attrib.attribName || attrib.attribName !== "style") || // or within inline css styles within html
+    `/;'"><`.includes(str[idx]) && attrib && attrib.attribName === "style" && // and it's a real quote, not rogue double-wrapping around the value
+    ifQuoteThenAttrClosingQuote(idx);
   } //
   //
   //
@@ -1817,108 +1828,114 @@ function tokenizer(str, originalOpts) {
         token.nested = layers.some(o => o.type === "at");
       } else if (!token.type) {
         initToken("text", i);
-      } // END OF if (!doNothing)
-    } // catch the end of a css property's value
+      }
+    } // catch the end of a css property (with or without !important)
+    // -------------------------------------------------------------------------
+
+    /* istanbul ignore else */
+
+
+    if (!doNothing && property && (property.valueStarts && !property.valueEnds || property.importantStarts && !property.importantEnds) && ( // either an end was reached
+    !str[i] || attrEndsAt(i))) {
+      /* istanbul ignore else */
+
+      if (property.importantStarts && !property.importantEnds) {
+        property.importantEnds = i;
+        property.important = str.slice(property.importantStarts, i);
+      }
+      /* istanbul ignore else */
+
+
+      if (property.valueStarts && !property.valueEnds) {
+        property.valueEnds = i;
+        property.value = str.slice(property.valueStarts, i);
+      }
+      /* istanbul ignore else */
+
+
+      if (str[i] === ";") {
+        property.semi = i;
+        property.end = i + 1;
+      } else if (str[right(str, i)] === ";") {
+        property.semi = right(str, i);
+        property.end = property.semi + 1;
+      }
+
+      if (!property.end) {
+        property.end = i;
+      }
+
+      pushProperty(property);
+      propertyReset();
+    } // catch the start of css property's semicolon
     // -------------------------------------------------------------------------
 
 
-    if (!doNothing && // token.type === "rule" &&
-    property && property.valueStarts && !property.valueEnds) {
+    if (!doNothing && property && property.start && !property.end && str[i] === ";") {
+      property.semi = i;
+      property.end = i + 1;
 
-      if ( // either end was reached
-      !str[i] || // or it's erroneous whitespace:
-      str[i] && !str[i].trim() || // normal head css styles:
-      `;}`.includes(str[i]) && (!attrib || !attrib.attribName || attrib.attribName !== "style") || // inline css styles within html
-      `;'"`.includes(str[i]) && attrib && attrib.attribName === "style" && // it's real quote, not rogue double-wrapping around the value
-      ifQuoteThenAttrClosingQuote(i)) {
+      if (!property.propertyEnds) {
+        property.propertyEnds = i;
+      }
 
-        if (lastNonWhitespaceCharAt) {
-          property.valueEnds = lastNonWhitespaceCharAt + 1;
-          property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
-        }
+      if (property.propertyStarts && property.propertyEnds && !property.property) {
+        property.property = str.slice(property.propertyStarts, property.propertyEnds);
+      }
 
-        if (str[i] === ";") {
-          property.semi = i;
-        } else if ( // it's whitespace
-        str[i] && !str[i].trim() && // semicolon follows
-        str[rightVal] === ";") {
-          property.semi = rightVal;
-        }
+      pushProperty(property);
+      propertyReset();
+    } // catch the start of css property's !important
+    // -------------------------------------------------------------------------
 
-        if ( // if semicolon has been spotted...
-        property.semi) {
-          // set the ending too
-          property.end = property.semi + 1; // happy path, clean code has "end" at semi
-        }
-
-        if ( // if there's no semicolon in the view
-        !property.semi && // and semi is not coming next
-        str[rightVal] !== ";" && // and property hasn't ended
-        !property.end) {
-          // we need to end it because this is it
-          property.end = i;
-        }
-
-        if (property.end) {
-          // push and init and patch up to resume
-          if (property.end > i) {
-            // if ending is in the future, skip everything up to it
-            doNothing = property.end;
-          }
-
-          pushProperty(property);
-          propertyReset();
-        }
-      } else if (str[i] === ":" && property && property.colon && property.colon < i && lastNonWhitespaceCharAt && property.colon + 1 < lastNonWhitespaceCharAt) {
-        // .a{b:c d:e;}
-        //         ^
-        //  we're here
-        // // semicolon is missing...
-        // traverse backwards from "lastNonWhitespaceCharAt", just in case
-        // there's space before colon, .a{b:c d :e;}
-        //                                      ^
-        //                               we're here
-        //
-        // we're looking to pinpoint where one rule ends and another starts.
-        let split = [];
-
-        if (right(str, property.colon)) {
-          split = str.slice(right(str, property.colon), lastNonWhitespaceCharAt + 1).split(/\s+/);
-        }
-
-        if (split.length === 2) {
-          // it's missing semicol, like: .a{b:c d:e;}
-          //                                 ^   ^
-          //                                 |gap| we split
-          //
-          property.valueEnds = property.valueStarts + split[0].length;
-          property.value = str.slice(property.valueStarts, property.valueEnds);
-          property.end = property.valueEnds; // push and init and patch up to resume
-
-          pushProperty(property);
-          propertyReset();
-          property.propertyStarts = lastNonWhitespaceCharAt + 1 - split[1].length;
-        }
-      } else if (str[i] === "/" && str[rightVal] === "*") {
-        // comment starts
-        // <a style="color: red/* zzz */">
-        //                     ^
-        //                we're here
-
-        /* istanbul ignore else */
-        if (property.valueStarts && !property.valueEnds) {
-          property.valueEnds = i;
-          property.value = str.slice(property.valueStarts, i);
-        }
-        /* istanbul ignore else */
+    /* istanbul ignore else */
 
 
-        if (!property.end) {
-          property.end = i;
-        } // push and init and patch up to resume
+    if (!doNothing && property && property.valueEnds && !property.importantStarts && (str[i] === "!" || isLatinLetter(str[i])) && importantStartsRegexp.test(str.slice(i))) {
+      property.importantStarts = i;
+    } // catch the end of a css property's value
+    // -------------------------------------------------------------------------
 
+    /* istanbul ignore else */
+
+
+    if (!doNothing && property && property.valueStarts && !property.valueEnds && str[i] && (!str[i].trim() || str[i] === "!")) {
+      property.valueEnds = i;
+      property.value = str.slice(property.valueStarts, i); // it depends what's on the right, is it !important (considering mangled)
+      // <div style="float:left impotant">
+      //                       ^
+      //               we're here
+      //
+      // or a new property without semi:
+      // <div style="float:left color:red">
+      //                       ^
+      //               we're here
+      //
+      // or spaced out semi:
+      // <div style="float:left  ;">
+      //                       ^
+      //               we're here
+
+      const idxOnTheRight = right(str, i);
+      /* istanbul ignore else */
+
+      if (str[i] === "!") {
+        property.importantStarts = i;
+      } else if (idxOnTheRight && str[idxOnTheRight] === "!" || importantStartsRegexp.test(str.slice(i))) {
+        property.importantStarts = right(str, i);
+      } else if (idxOnTheRight && !attrEndsAt(idxOnTheRight)) {
+        property.end = left(str, i + 1) + 1;
         pushProperty(property);
         propertyReset();
+      }
+
+      if (!property.start && str[i] && !str[i].trim()) {
+        pushProperty({
+          type: "text",
+          start: i,
+          end: null,
+          value: null
+        });
       }
     } // catch the start of a css property's value
     // -------------------------------------------------------------------------
@@ -1926,19 +1943,21 @@ function tokenizer(str, originalOpts) {
     /* istanbul ignore else */
 
 
-    if (!doNothing && // token.type === "rule" &&
-    property && property.colon && !property.valueStarts && str[i] && str[i].trim()) {
+    if (!doNothing && property && property.colon && !property.valueStarts && str[i] && str[i].trim()) {
       /* istanbul ignore else */
 
       if ( // stopper character met:
       `;}'"`.includes(str[i]) && // either it's real closing quote or not a quote
       ifQuoteThenAttrClosingQuote(i)) {
+        /* istanbul ignore else */
 
         if (str[i] === ";") {
           property.semi = i;
         }
 
         let temp; // patch missing .end
+
+        /* istanbul ignore else */
 
         if (!property.end) {
           property.end = property.semi ? property.semi + 1 : left(str, i) + 1;
@@ -1948,6 +1967,8 @@ function tokenizer(str, originalOpts) {
 
         pushProperty(property);
         propertyReset(); // if there was a whitespace gap, submit it as text token
+
+        /* istanbul ignore else */
 
         if (temp && temp < i) {
           pushProperty({
@@ -2110,8 +2131,8 @@ function tokenizer(str, originalOpts) {
       } // if it's a closing comment
       else if (str[i] === "*" && str[rightVal] === "/") {
           closingComment(i);
-        } else {
-          // first, close the text token if it's not ended
+        } else { // first, close the text token if it's not ended
+
           if (Array.isArray(attrib.attribValue) && attrib.attribValue.length && !attrib.attribValue[~-attrib.attribValue.length].end) {
             attrib.attribValue[~-attrib.attribValue.length].end = i;
             attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, i);

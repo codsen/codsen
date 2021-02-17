@@ -56,6 +56,9 @@ tap.test(`01 - one rule, no linebreaks`, (t) => {
             value: null,
             valueStarts: null,
             valueEnds: null,
+            importantStarts: null,
+            importantEnds: null,
+            important: null,
             semi: null,
             start: 12,
             end: 13,
@@ -119,6 +122,9 @@ tap.test(`02 - one rule, no linebreaks`, (t) => {
           value: "c",
           valueStarts: 12,
           valueEnds: 13,
+          importantStarts: null,
+          importantEnds: null,
+          important: null,
           semi: 13,
           start: 10,
           end: 14,
@@ -130,7 +136,7 @@ tap.test(`02 - one rule, no linebreaks`, (t) => {
   t.end();
 });
 
-tap.test(`03 - one rule, no linebreaks`, (t) => {
+tap.only(`03 - one rule, no linebreaks`, (t) => {
   const gathered = [];
   ct(`<style>.a { b : c ; }</style>`, {
     tagCb: (obj) => {
@@ -188,6 +194,9 @@ tap.test(`03 - one rule, no linebreaks`, (t) => {
             value: "c",
             valueStarts: 16,
             valueEnds: 17,
+            importantStarts: null,
+            importantEnds: null,
+            important: null,
             semi: 18,
             start: 12,
             end: 19,
@@ -223,6 +232,123 @@ tap.test(`03 - one rule, no linebreaks`, (t) => {
 
 tap.test(`04 - one rule, no linebreaks`, (t) => {
   const gathered = [];
+  ct(`<style>.a{b:c!important;}</style>`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: "<style>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
+        tagName: "style",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+      {
+        type: "rule",
+        start: 7,
+        end: 25,
+        value: ".a{b:c!important;}",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: 24,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            start: 10,
+            end: 24,
+            value: "c",
+            property: "b",
+            propertyStarts: 10,
+            propertyEnds: 11,
+            colon: 11,
+            valueStarts: 12,
+            valueEnds: 13,
+            importantStarts: 13,
+            importantEnds: 23,
+            important: "!important",
+            semi: 23,
+          },
+        ],
+      },
+      {
+        type: "tag",
+        start: 25,
+        end: 33,
+        value: "</style>",
+        tagNameStartsAt: 27,
+        tagNameEndsAt: 32,
+        tagName: "style",
+        recognised: true,
+        closing: true,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+    ],
+    "04"
+  );
+  t.end();
+});
+
+tap.todo(`<style>.a{!`);
+tap.todo(`<style>.a{!`);
+tap.todo(`<style>.a{b!`);
+tap.todo(`<style>.a{b:!`);
+tap.todo(`<style>.a{b: !`);
+tap.todo(`<style>.a{b:c !`);
+tap.todo(`<style>.a{b:c ! !`);
+tap.todo(`<style>.a{b:c!`);
+tap.todo(`<style>.a{b:c!!`);
+tap.todo(`<style>.a{b:c! !`);
+tap.todo(`<style>.a{b:c!;`);
+tap.todo(`<style>.a{b:c !;`);
+tap.todo(`<style>.a{b:c ! ;`);
+tap.todo(`<style>.a{b:c ! ; `);
+tap.todo(`<style>.a{b:c ! ;;`);
+tap.todo(`<style>.a{b:c ! ;; `);
+tap.todo(`<style>.a{b:c ! ; ; `);
+// ...followed by:
+// }</style>
+// </style>
+// EOL
+// abc
+
+tap.todo(`<style>.a{b:c z`);
+tap.todo(`<style>.a{b:c?`);
+tap.todo(`<style>.a{b:c ?`);
+tap.todo(`<style>.a{b:c?important;`);
+tap.todo(`<style>.a{b:c ?important;`);
+tap.todo(`<style>.a{b:c1important;`);
+tap.todo(`<style>.a{b:c 1important;`);
+
+// also,
+tap.todo(`<style.a{b:c !important;}</style>`);
+tap.todo(`<style\n.a{b:c !important;}</style>`);
+
+tap.test(`31 - one rule, no linebreaks`, (t) => {
+  const gathered = [];
   ct(`<style>.a{b:c;d:e;f:g;}</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
@@ -257,6 +383,9 @@ tap.test(`04 - one rule, no linebreaks`, (t) => {
           value: "c",
           valueStarts: 12,
           valueEnds: 13,
+          importantStarts: null,
+          importantEnds: null,
+          important: null,
           semi: 13,
           start: 10,
           end: 14,
@@ -269,6 +398,9 @@ tap.test(`04 - one rule, no linebreaks`, (t) => {
           value: "e",
           valueStarts: 16,
           valueEnds: 17,
+          importantStarts: null,
+          importantEnds: null,
+          important: null,
           semi: 17,
           start: 14,
           end: 18,
@@ -281,18 +413,21 @@ tap.test(`04 - one rule, no linebreaks`, (t) => {
           value: "g",
           valueStarts: 20,
           valueEnds: 21,
+          importantStarts: null,
+          importantEnds: null,
+          important: null,
           semi: 21,
           start: 18,
           end: 22,
         },
       ],
     },
-    "04"
+    "31"
   );
   t.end();
 });
 
-tap.test(`05 - one rule, linebreaks`, (t) => {
+tap.test(`32 - one rule, linebreaks`, (t) => {
   const gathered = [];
   ct(
     `<style>
@@ -342,12 +477,12 @@ tap.test(`05 - one rule, linebreaks`, (t) => {
         end: 24,
       },
     ],
-    "05"
+    "32"
   );
   t.end();
 });
 
-tap.test(`06 - two selectors`, (t) => {
+tap.test(`33 - two selectors`, (t) => {
   const gathered = [];
   ct(`<style>.a,.b{c}</style>`, {
     tagCb: (obj) => {
@@ -389,12 +524,12 @@ tap.test(`06 - two selectors`, (t) => {
         end: 23,
       },
     ],
-    "06"
+    "33"
   );
   t.end();
 });
 
-tap.test(`07 - one rule, no linebreaks`, (t) => {
+tap.test(`34 - one rule, no linebreaks`, (t) => {
   const gathered = [];
   ct(
     `<style>
@@ -448,12 +583,12 @@ tap.test(`07 - one rule, no linebreaks`, (t) => {
         end: 29,
       },
     ],
-    "07"
+    "34"
   );
   t.end();
 });
 
-tap.test(`08 - dangling comma`, (t) => {
+tap.test(`35 - dangling comma`, (t) => {
   const gathered = [];
   ct(`<style>.a,.b,{c}</style>`, {
     tagCb: (obj) => {
@@ -495,12 +630,12 @@ tap.test(`08 - dangling comma`, (t) => {
         end: 24,
       },
     ],
-    "08"
+    "35"
   );
   t.end();
 });
 
-tap.test(`09 - double comma`, (t) => {
+tap.test(`36 - double comma`, (t) => {
   const gathered = [];
   ct(`<style>.a,,.b{c}</style>`, {
     tagCb: (obj) => {
@@ -542,12 +677,12 @@ tap.test(`09 - double comma`, (t) => {
         end: 24,
       },
     ],
-    "09"
+    "36"
   );
   t.end();
 });
 
-tap.test(`10 - esp tags can't have curlies`, (t) => {
+tap.test(`37 - esp tags can't have curlies`, (t) => {
   const gathered = [];
   ct(`<style>.b%{c}</style>`, {
     tagCb: (obj) => {
@@ -604,12 +739,12 @@ tap.test(`10 - esp tags can't have curlies`, (t) => {
         attribs: [],
       },
     ],
-    "10"
+    "37"
   );
   t.end();
 });
 
-tap.test(`11 - root level css declarations`, (t) => {
+tap.test(`38 - root level css declarations`, (t) => {
   const gathered = [];
   ct(
     `<head>
@@ -659,6 +794,9 @@ tap.test(`11 - root level css declarations`, (t) => {
             value: "1",
             valueStarts: 46,
             valueEnds: 47,
+            importantStarts: null,
+            importantEnds: null,
+            important: null,
             semi: 47,
             start: 44,
             end: 48,
@@ -692,6 +830,9 @@ tap.test(`11 - root level css declarations`, (t) => {
             value: "2",
             valueStarts: 62,
             valueEnds: 63,
+            importantStarts: null,
+            importantEnds: null,
+            important: null,
             semi: 63,
             start: 60,
             end: 64,
@@ -699,12 +840,12 @@ tap.test(`11 - root level css declarations`, (t) => {
         ],
       },
     ],
-    "11"
+    "38"
   );
   t.end();
 });
 
-tap.test(`12 - @media`, (t) => {
+tap.test(`39 - @media`, (t) => {
   const gathered = [];
   ct(
     `<head>
@@ -842,6 +983,9 @@ tap.test(`12 - @media`, (t) => {
             value: "1",
             valueStarts: 90,
             valueEnds: 91,
+            importantStarts: null,
+            importantEnds: null,
+            important: null,
             semi: 91,
             start: 88,
             end: 92,
@@ -897,6 +1041,9 @@ tap.test(`12 - @media`, (t) => {
                 value: "1",
                 valueStarts: 90,
                 valueEnds: 91,
+                importantStarts: null,
+                importantEnds: null,
+                important: null,
                 semi: 91,
                 start: 88,
                 end: 92,
@@ -1078,12 +1225,12 @@ tap.test(`12 - @media`, (t) => {
         attribs: [],
       },
     ],
-    "12"
+    "39"
   );
   t.end();
 });
 
-tap.test(`13 - parent selector ">" - 1`, (t) => {
+tap.test(`40 - parent selector ">" - 1`, (t) => {
   const gathered = [];
   ct(`<style>ab>cd#ef {display:block;}</style>`, {
     tagCb: (obj) => {
@@ -1136,6 +1283,9 @@ tap.test(`13 - parent selector ">" - 1`, (t) => {
             value: "block",
             valueStarts: 25,
             valueEnds: 30,
+            importantStarts: null,
+            importantEnds: null,
+            important: null,
             semi: 30,
             start: 17,
             end: 31,
@@ -1158,12 +1308,12 @@ tap.test(`13 - parent selector ">" - 1`, (t) => {
         attribs: [],
       },
     ],
-    "13"
+    "40"
   );
   t.end();
 });
 
-tap.test(`14 - parent selector ">" - 2`, (t) => {
+tap.test(`41 - parent selector ">" - 2`, (t) => {
   const gathered = [];
   ct(`<style>\na > something#here {display:block;}`, {
     tagCb: (obj) => {
@@ -1221,6 +1371,9 @@ tap.test(`14 - parent selector ">" - 2`, (t) => {
             value: "block",
             valueStarts: 36,
             valueEnds: 41,
+            importantStarts: null,
+            importantEnds: null,
+            important: null,
             semi: 41,
             start: 28,
             end: 42,
@@ -1228,12 +1381,12 @@ tap.test(`14 - parent selector ">" - 2`, (t) => {
         ],
       },
     ],
-    "14"
+    "41"
   );
   t.end();
 });
 
-tap.test(`15 unfinished code`, (t) => {
+tap.test(`42 unfinished code`, (t) => {
   const gathered = [];
   ct(`<style>sup{`, {
     tagCb: (obj) => {
@@ -1279,7 +1432,7 @@ tap.test(`15 unfinished code`, (t) => {
         properties: [],
       },
     ],
-    "15"
+    "42"
   );
   t.end();
 });

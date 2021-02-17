@@ -429,6 +429,9 @@ interface Property {
   value: string;
   valueStarts: null | number;
   valueEnds: null | number;
+  importantStarts: null | number;
+  importantEnds: null | number;
+  important: null | string;
   semi: null | number;
   start: number; // mirrors "propertyStarts"
   end: number; // mirrors whatever was last
