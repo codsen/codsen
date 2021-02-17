@@ -14,6 +14,9 @@ interface Property {
     value: string;
     valueStarts: null | number;
     valueEnds: null | number;
+    importantStarts: null | number;
+    importantEnds: null | number;
+    important: null | string;
     semi: null | number;
     start: number;
     end: number;
