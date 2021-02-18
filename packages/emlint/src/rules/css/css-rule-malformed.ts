@@ -107,18 +107,56 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
       //                ^
 
       if (properties && properties.length) {
-        properties.forEach((property) => {
+        properties.forEach((property, idx) => {
           if (property.value === null) {
             console.log(
               `113 ${`\u001b[${31}m${`missing value on ${property.property}`}\u001b[${39}m`}`
             );
-            context.report({
-              ruleId: "css-rule-malformed",
-              idxFrom: property.start,
-              idxTo: property.end,
-              message: `Missing value.`,
-              fix: null,
-            });
+
+            // tend a rare case, a rogue semicolon:
+            // <style>.a{color:red; !important;}</style>
+            //                    ^
+            console.log(
+              `${`\u001b[${33}m${`idx`}\u001b[${39}m`} = ${JSON.stringify(
+                idx,
+                null,
+                4
+              )}`
+            );
+            if (
+              property.property === "!important" &&
+              property.value === null &&
+              idx &&
+              properties[idx - 1].semi &&
+              properties[idx - 1].important === null
+            ) {
+              // the property before (there can be text node,
+              // a whitespace in-between) is a property with
+              // semicolon (rogue) and without !important
+              context.report({
+                ruleId: "css-rule-malformed",
+                idxFrom: properties[idx - 1].semi as number,
+                idxTo: (properties[idx - 1].semi as number) + 1,
+                message: `Delete the semicolon.`,
+                fix: {
+                  ranges: [
+                    [
+                      properties[idx - 1].semi as number,
+                      (properties[idx - 1].semi as number) + 1,
+                    ],
+                  ],
+                },
+              });
+            } else {
+              // business as usual then
+              context.report({
+                ruleId: "css-rule-malformed",
+                idxFrom: property.start,
+                idxTo: property.end,
+                message: `Missing value.`,
+                fix: null,
+              });
+            }
           }
         });
       }

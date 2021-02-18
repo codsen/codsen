@@ -221,3 +221,35 @@ tap.test(`07 - value and semi missing, followed by correct rule`, (t) => {
   );
   t.end();
 });
+
+// rogue semi in front of important
+// -----------------------------------------------------------------------------
+
+tap.test(`08`, (t) => {
+  const str = `<style>.a{color:red; !important;}</style><body>a</body>`;
+  const fixed = `<style>.a{color:red !important;}</style><body>a</body>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "css-rule-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "08.01");
+  t.match(
+    messages,
+    [
+      {
+        severity: 2,
+        ruleId: "css-rule-malformed",
+        message: "Delete the semicolon.",
+        idxFrom: 19,
+        idxTo: 20,
+        fix: {
+          ranges: [[19, 20]],
+        },
+      },
+    ],
+    "08.02"
+  );
+  t.end();
+});

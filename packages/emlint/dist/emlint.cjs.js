@@ -10606,15 +10606,34 @@ var cssRuleMalformed = function cssRuleMalformed(context) {
 
 
       if (properties && properties.length) {
-        properties.forEach(function (property) {
-          if (property.value === null) {
-            context.report({
-              ruleId: "css-rule-malformed",
-              idxFrom: property.start,
-              idxTo: property.end,
-              message: "Missing value.",
-              fix: null
-            });
+        properties.forEach(function (property, idx) {
+          if (property.value === null) { // tend a rare case, a rogue semicolon:
+            // <style>.a{color:red; !important;}</style>
+            //                    ^
+
+            if (property.property === "!important" && property.value === null && idx && properties[idx - 1].semi && properties[idx - 1].important === null) {
+              // the property before (there can be text node,
+              // a whitespace in-between) is a property with
+              // semicolon (rogue) and without !important
+              context.report({
+                ruleId: "css-rule-malformed",
+                idxFrom: properties[idx - 1].semi,
+                idxTo: properties[idx - 1].semi + 1,
+                message: "Delete the semicolon.",
+                fix: {
+                  ranges: [[properties[idx - 1].semi, properties[idx - 1].semi + 1]]
+                }
+              });
+            } else {
+              // business as usual then
+              context.report({
+                ruleId: "css-rule-malformed",
+                idxFrom: property.start,
+                idxTo: property.end,
+                message: "Missing value.",
+                fix: null
+              });
+            }
           }
         });
       }
