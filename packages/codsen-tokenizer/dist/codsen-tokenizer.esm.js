@@ -1856,8 +1856,8 @@ function tokenizer(str, originalOpts) {
       if (str[i] === ";") {
         property.semi = i;
         property.end = i + 1;
-      } else if (str[right(str, i)] === ";") {
-        property.semi = right(str, i);
+      } else if (str[rightVal] === ";") {
+        property.semi = rightVal;
         property.end = property.semi + 1;
       }
 
@@ -1899,9 +1899,12 @@ function tokenizer(str, originalOpts) {
     /* istanbul ignore else */
 
 
-    if (!doNothing && property && property.valueStarts && !property.valueEnds && str[i] && (!str[i].trim() || str[i] === "!")) {
-      property.valueEnds = i;
-      property.value = str.slice(property.valueStarts, i); // it depends what's on the right, is it !important (considering mangled)
+    if (!doNothing && property && (property.valueStarts && !property.valueEnds || property.propertyEnds && !property.valueStarts && !rightVal) && str[i] && (!str[i].trim() || str[i] === "!")) {
+
+      if (property.valueStarts && !property.valueEnds) {
+        property.valueEnds = i;
+        property.value = str.slice(property.valueStarts, i);
+      } // it depends what's on the right, is it !important (considering mangled)
       // <div style="float:left impotant">
       //                       ^
       //               we're here
@@ -1915,15 +1918,13 @@ function tokenizer(str, originalOpts) {
       // <div style="float:left  ;">
       //                       ^
       //               we're here
-
-      const idxOnTheRight = right(str, i);
       /* istanbul ignore else */
 
       if (str[i] === "!") {
         property.importantStarts = i;
-      } else if (idxOnTheRight && str[idxOnTheRight] === "!" || importantStartsRegexp.test(str.slice(i))) {
+      } else if (rightVal && str[rightVal] === "!" || importantStartsRegexp.test(str.slice(i))) {
         property.importantStarts = right(str, i);
-      } else if (idxOnTheRight && !attrEndsAt(idxOnTheRight)) {
+      } else if (!rightVal || str[rightVal] !== ";") {
         property.end = left(str, i + 1) + 1;
         pushProperty(property);
         propertyReset();
@@ -3014,6 +3015,15 @@ function tokenizer(str, originalOpts) {
         token.attribs.push({ ...attrib
         });
         attribReset();
+      } // if there was an unfinished CSS property, finish it
+
+
+      if (token && Array.isArray(token.properties) && token.properties.length && !token.properties[~-token.properties.length].end) {
+        token.properties[~-token.properties.length].end = i;
+
+        if (token.properties[~-token.properties.length].start && !token.properties[~-token.properties.length].value) {
+          token.properties[~-token.properties.length].value = str.slice(token.properties[~-token.properties.length].start, i);
+        }
       } // if there is unfinished css property that has been
       // recording, end it and push it as is. That's an
       // abruptly ended css chunk.
