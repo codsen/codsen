@@ -1090,16 +1090,16 @@ tap.test(`16 - semi before !important`, (t) => {
           {
             start: 10,
             end: 20,
-            value: null,
             property: "color",
             propertyStarts: 10,
             propertyEnds: 15,
+            value: "red",
+            valueStarts: 16,
+            valueEnds: 19,
             importantStarts: null,
             importantEnds: null,
             important: null,
             colon: 15,
-            valueStarts: 16,
-            valueEnds: null,
             semi: 19,
           },
           {
@@ -1127,6 +1127,155 @@ tap.test(`16 - semi before !important`, (t) => {
       },
     ],
     "16"
+  );
+  t.end();
+});
+
+tap.test(`17`, (t) => {
+  const gathered = [];
+  ct(`<style>.a{color:red!IMPOTANT;}`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: "<style>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
+        tagName: "style",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+      {
+        type: "rule",
+        start: 7,
+        end: 30,
+        value: ".a{color:red!IMPOTANT;}",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: 29,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            start: 10,
+            end: 29,
+            value: "red",
+            property: "color",
+            propertyStarts: 10,
+            propertyEnds: 15,
+            importantStarts: 19,
+            importantEnds: 28,
+            important: "!IMPOTANT",
+            colon: 15,
+            valueStarts: 16,
+            valueEnds: 19,
+            semi: 28,
+          },
+        ],
+      },
+    ],
+    "17"
+  );
+  t.end();
+});
+
+tap.test(`18`, (t) => {
+  const gathered = [];
+  ct(`<style>.a{color:red;!IMPOTANT}`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: "<style>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
+        tagName: "style",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+      {
+        type: "rule",
+        start: 7,
+        end: 30,
+        value: ".a{color:red;!IMPOTANT}",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: 29,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            start: 10,
+            end: 20,
+            property: "color",
+            propertyStarts: 10,
+            propertyEnds: 15,
+            value: "red",
+            valueStarts: 16,
+            valueEnds: 19,
+            importantStarts: null,
+            importantEnds: null,
+            important: null,
+            colon: 15,
+            semi: 19,
+          },
+          {
+            start: 20,
+            end: 29,
+            property: null,
+            propertyStarts: null,
+            propertyEnds: null,
+            value: null,
+            valueStarts: null,
+            valueEnds: null,
+            importantStarts: 20,
+            importantEnds: 29,
+            important: "!IMPOTANT",
+            colon: null,
+            semi: null,
+          },
+        ],
+      },
+    ],
+    "18"
   );
   t.end();
 });

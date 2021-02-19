@@ -552,16 +552,16 @@ function tokenizer(str, originalOpts) {
   const propertyDefault = {
     start: null,
     end: null,
-    value: null,
     property: null,
     propertyStarts: null,
     propertyEnds: null,
+    value: null,
+    valueStarts: null,
+    valueEnds: null,
     importantStarts: null,
     importantEnds: null,
     important: null,
     colon: null,
-    valueStarts: null,
-    valueEnds: null,
     semi: null
   };
   let property = { ...propertyDefault
@@ -1842,15 +1842,16 @@ function tokenizer(str, originalOpts) {
     /* istanbul ignore else */
 
 
-    if (!doNothing && property && (property.valueStarts && !property.valueEnds && str[rightVal] !== "!" || property.importantStarts && !property.importantEnds) && str[rightVal] !== ";" && ( // either end of string was reached
+    if (!doNothing && property && (property.valueStarts && !property.valueEnds && str[rightVal] !== "!" || property.importantStarts && !property.importantEnds) && (!property.valueEnds || str[rightVal] !== ";") && ( // either end of string was reached
     !str[i] || // or it's a whitespace
-    !str[i].trim() || // or we reached the end of the attribute
+    !str[i].trim() || // or it's a semicolon after a value
+    !property.valueEnds && str[i] === ";" || // or we reached the end of the attribute
     attrEndsAt(i))) {
       /* istanbul ignore else */
 
       if (property.importantStarts && !property.importantEnds) {
-        property.importantEnds = i;
-        property.important = str.slice(property.importantStarts, i);
+        property.importantEnds = left(str, i) + 1;
+        property.important = str.slice(property.importantStarts, property.importantEnds);
       }
       /* istanbul ignore else */
 
@@ -1868,6 +1869,7 @@ function tokenizer(str, originalOpts) {
       } else if (str[rightVal] === ";") {
         property.semi = rightVal;
         property.end = property.semi + 1;
+        doNothing = property.end;
       }
 
       if (!property.end) {
@@ -1876,6 +1878,53 @@ function tokenizer(str, originalOpts) {
 
       pushProperty(property);
       propertyReset();
+    } // catch the end of a css property's value
+    // -------------------------------------------------------------------------
+
+    /* istanbul ignore else */
+
+
+    if (!doNothing && property && (property.valueStarts && !property.valueEnds || property.propertyEnds && !property.valueStarts && !rightVal) && str[i] && (!str[i].trim() || str[i] === "!" || str[i] === ";")) {
+
+      if (property.valueStarts && !property.valueEnds) {
+        property.valueEnds = i;
+        property.value = str.slice(property.valueStarts, i);
+      } // it depends what's on the right, is it !important (considering mangled)
+      // <div style="float:left impotant">
+      //                       ^
+      //               we're here
+      //
+      // or a new property without semi:
+      // <div style="float:left color:red">
+      //                       ^
+      //               we're here
+      //
+      // or spaced out semi:
+      // <div style="float:left  ;">
+      //                       ^
+      //               we're here
+      /* istanbul ignore else */
+
+      if (str[i] === "!") {
+        property.importantStarts = i;
+      } else if (str[i] === ";") {
+        property.semi = i;
+      } else if (rightVal && str[rightVal] === "!" || importantStartsRegexp.test(str.slice(i))) {
+        property.importantStarts = right(str, i);
+      } else if (!rightVal || str[rightVal] !== ";") {
+        property.end = left(str, i + 1) + 1;
+        pushProperty(property);
+        propertyReset();
+      }
+
+      if (!property.start && str[i] && !str[i].trim()) {
+        pushProperty({
+          type: "text",
+          start: i,
+          end: null,
+          value: null
+        });
+      }
     } // catch the css property's semicolon
     // -------------------------------------------------------------------------
 
@@ -1902,51 +1951,6 @@ function tokenizer(str, originalOpts) {
 
     if (!doNothing && property && property.valueEnds && !property.importantStarts && (str[i] === "!" || isLatinLetter(str[i])) && importantStartsRegexp.test(str.slice(i))) {
       property.importantStarts = i;
-    } // catch the end of a css property's value
-    // -------------------------------------------------------------------------
-
-    /* istanbul ignore else */
-
-
-    if (!doNothing && property && (property.valueStarts && !property.valueEnds || property.propertyEnds && !property.valueStarts && !rightVal) && str[i] && (!str[i].trim() || str[i] === "!")) {
-
-      if (property.valueStarts && !property.valueEnds) {
-        property.valueEnds = i;
-        property.value = str.slice(property.valueStarts, i);
-      } // it depends what's on the right, is it !important (considering mangled)
-      // <div style="float:left impotant">
-      //                       ^
-      //               we're here
-      //
-      // or a new property without semi:
-      // <div style="float:left color:red">
-      //                       ^
-      //               we're here
-      //
-      // or spaced out semi:
-      // <div style="float:left  ;">
-      //                       ^
-      //               we're here
-      /* istanbul ignore else */
-
-      if (str[i] === "!") {
-        property.importantStarts = i;
-      } else if (rightVal && str[rightVal] === "!" || importantStartsRegexp.test(str.slice(i))) {
-        property.importantStarts = right(str, i);
-      } else if (!rightVal || str[rightVal] !== ";") {
-        property.end = left(str, i + 1) + 1;
-        pushProperty(property);
-        propertyReset();
-      }
-
-      if (!property.start && str[i] && !str[i].trim()) {
-        pushProperty({
-          type: "text",
-          start: i,
-          end: null,
-          value: null
-        });
-      }
     } // catch the start of a css property's value
     // -------------------------------------------------------------------------
 
