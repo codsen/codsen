@@ -4544,8 +4544,13 @@ function tokenizer(str, originalOpts) {
   function initProperty(propertyStarts) { // we mutate the object on the parent scope, so no Object.assign here
 
     propertyReset();
-    property.propertyStarts = propertyStarts;
-    property.start = propertyStarts;
+
+    if (typeof propertyStarts === "number") {
+      property.propertyStarts = propertyStarts;
+      property.start = propertyStarts;
+    } else {
+      property = _objectSpread2(_objectSpread2({}, propertyDefault), propertyStarts);
+    }
   }
 
   function ifQuoteThenAttrClosingQuote(idx) {
@@ -5649,14 +5654,29 @@ function tokenizer(str, originalOpts) {
     !"{};".includes(str[_i]) && // above is instead of a stricter clause:
     // attrNameRegexp.test(str[i]) &&
     //
-    token.selectorsEnd && token.openingCurlyAt && !property.propertyStarts) { // first, check maybe there's unfinished text token before it
+    token.selectorsEnd && token.openingCurlyAt && !property.propertyStarts && !property.importantStarts) { // first, check maybe there's unfinished text token before it
 
       if (Array.isArray(token.properties) && token.properties.length && token.properties[~-token.properties.length].start && !token.properties[~-token.properties.length].end) {
         token.properties[~-token.properties.length].end = _i;
         token.properties[~-token.properties.length].value = str.slice(token.properties[~-token.properties.length].start, _i);
-      }
+      } // in normal cases we're set propertyStarts but sometimes it can be
+      // importantStarts, imagine:
+      // <style>.a{color:red; !important;}
+      //                      ^
+      //                we're here
+      //
+      // we want to put "!important" under key "important", not under
+      // "property"
 
-      initProperty(_i);
+
+      if (str[_i] === "!") {
+        initProperty({
+          start: _i,
+          importantStarts: _i
+        });
+      } else {
+        initProperty(_i);
+      }
     } // catch the start a property
     // -------------------------------------------------------------------------
     // Mostly happens in dirty code cases - the start is normally being triggered

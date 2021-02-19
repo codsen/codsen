@@ -1042,3 +1042,91 @@ tap.test(`15 - nothing after colon`, (t) => {
   );
   t.end();
 });
+
+tap.test(`16 - semi before !important`, (t) => {
+  const gathered = [];
+  ct(`<style>.a{color:red; !important;}`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: "<style>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
+        tagName: "style",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+      {
+        type: "rule",
+        start: 7,
+        end: 33,
+        value: ".a{color:red; !important;}",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: 32,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            start: 10,
+            end: 20,
+            value: null,
+            property: "color",
+            propertyStarts: 10,
+            propertyEnds: 15,
+            importantStarts: null,
+            importantEnds: null,
+            important: null,
+            colon: 15,
+            valueStarts: 16,
+            valueEnds: null,
+            semi: 19,
+          },
+          {
+            type: "text",
+            start: 20,
+            end: 21,
+            value: " ",
+          },
+          {
+            start: 21,
+            end: 32,
+            value: null,
+            property: null,
+            propertyStarts: null,
+            propertyEnds: null,
+            importantStarts: 21,
+            importantEnds: 31,
+            important: "!important",
+            colon: null,
+            valueStarts: null,
+            valueEnds: null,
+            semi: 31,
+          },
+        ],
+      },
+    ],
+    "16"
+  );
+  t.end();
+});

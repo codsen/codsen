@@ -136,7 +136,7 @@ tap.test(`02 - one rule, no linebreaks`, (t) => {
   t.end();
 });
 
-tap.only(`03 - one rule, no linebreaks`, (t) => {
+tap.test(`03 - one rule, no linebreaks`, (t) => {
   const gathered = [];
   ct(`<style>.a { b : c ; }</style>`, {
     tagCb: (obj) => {
