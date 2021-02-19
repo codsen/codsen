@@ -5405,8 +5405,10 @@ function tokenizer(str, originalOpts) {
     /* istanbul ignore else */
 
 
-    if (!doNothing && property && (property.valueStarts && !property.valueEnds || property.importantStarts && !property.importantEnds) && ( // either an end was reached
-    !str[_i] || attrEndsAt(_i))) {
+    if (!doNothing && property && (property.valueStarts && !property.valueEnds && str[rightVal] !== "!" || property.importantStarts && !property.importantEnds) && str[rightVal] !== ";" && ( // either end of string was reached
+    !str[_i] || // or it's a whitespace
+    !str[_i].trim() || // or we reached the end of the attribute
+    attrEndsAt(_i))) {
       /* istanbul ignore else */
 
       if (property.importantStarts && !property.importantEnds) {
@@ -5437,7 +5439,7 @@ function tokenizer(str, originalOpts) {
 
       pushProperty(property);
       propertyReset();
-    } // catch the start of css property's semicolon
+    } // catch the css property's semicolon
     // -------------------------------------------------------------------------
 
 
