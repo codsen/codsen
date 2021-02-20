@@ -10932,6 +10932,22 @@ const cssRuleMalformed = context => {
             });
           }
         }
+      }
+
+      if (node.properties && node.properties.length > 1) {
+        for (let i = 0, len = node.properties.length; i < len; i++) {
+          if (node.properties[i].important && node.properties[i].important !== "!important") {
+            context.report({
+              ruleId: "css-rule-malformed",
+              idxFrom: node.properties[i].importantStarts,
+              idxTo: node.properties[i].importantEnds,
+              message: `Malformed !important.`,
+              fix: {
+                ranges: [[node.properties[i].importantStarts, node.properties[i].importantEnds, "!important"]]
+              }
+            });
+          }
+        }
       } // 2. catch css rules with selectors but without properties
       // <style>.a{;}
       //           ^
@@ -10952,37 +10968,78 @@ const cssRuleMalformed = context => {
       //                ^
 
 
-      if (properties && properties.length) {
-        properties.forEach((property, idx) => {
-          if (property.value === null) { // tend a rare case, a rogue semicolon:
+      if (node.properties && Array.isArray(node.properties)) {
+        for (let i = 0, len = node.properties.length; i < len; i++) {
+
+          if (node.properties[i].value === null) {
+            // tend a rare case, a rogue semicolon:
             // <style>.a{color:red; !important;}</style>
             //                    ^
+            if (node.properties[i].important !== null && node.properties[i].property === null) {
+              let errorRaised = false;
 
-            if (property.property === "!important" && property.value === null && idx && properties[idx - 1].semi && properties[idx - 1].important === null) {
-              // the property before (there can be text node,
-              // a whitespace in-between) is a property with
-              // semicolon (rogue) and without !important
-              context.report({
-                ruleId: "css-rule-malformed",
-                idxFrom: properties[idx - 1].semi,
-                idxTo: properties[idx - 1].semi + 1,
-                message: `Delete the semicolon.`,
-                fix: {
-                  ranges: [[properties[idx - 1].semi, properties[idx - 1].semi + 1]]
+              if (i) {
+                for (let y = node.properties.length; y--;) {
+                  if (y === i) {
+                    continue;
+                  }
+
+                  if ( // the property we're talking about is missing both
+                  // value and property, yet it contains !important
+                  node.properties[i].important && !node.properties[i].propertyStarts && !node.properties[i].valueStarts && // we're traversing upon a CSS property, not a whitespace text token
+                  node.properties[y].property !== undefined) {
+
+                    if ( // its semi is present
+                    node.properties[y].semi && // and its important is missing
+                    !node.properties[y].importantStarts) { // the frontal space might be missing
+
+                      const fromIdx = node.properties[y].semi;
+                      const toIdx = node.properties[y].semi + 1;
+                      let whatToInsert;
+
+                      if (context.str[node.properties[y].semi + 1] !== " ") {
+                        whatToInsert = " ";
+                      }
+                      context.report({
+                        ruleId: "css-rule-malformed",
+                        idxFrom: fromIdx,
+                        idxTo: toIdx,
+                        message: `Delete the semicolon.`,
+                        fix: {
+                          ranges: [[fromIdx, toIdx, whatToInsert]]
+                        }
+                      });
+                      errorRaised = true;
+                    } else {
+                      // stop looping further
+                      break;
+                    }
+                  }
                 }
-              });
+              }
+
+              if ( // it's a property token, not text whitespace token:
+              node.properties[i].property !== undefined && // and error hasn't been raised so far:
+              !errorRaised) {
+                context.report({
+                  ruleId: "css-rule-malformed",
+                  idxFrom: node.properties[i].start,
+                  idxTo: node.properties[i].end,
+                  message: `Missing value.`,
+                  fix: null
+                });
+              }
             } else {
-              // business as usual then
               context.report({
                 ruleId: "css-rule-malformed",
-                idxFrom: property.start,
-                idxTo: property.end,
+                idxFrom: node.properties[i].start,
+                idxTo: node.properties[i].end,
                 message: `Missing value.`,
                 fix: null
               });
             }
           }
-        });
+        }
       }
     }
 

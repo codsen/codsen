@@ -13864,16 +13864,16 @@ function tokenizer(str, originalOpts) {
   var propertyDefault = {
     start: null,
     end: null,
-    value: null,
     property: null,
     propertyStarts: null,
     propertyEnds: null,
+    value: null,
+    valueStarts: null,
+    valueEnds: null,
     importantStarts: null,
     importantEnds: null,
     important: null,
     colon: null,
-    valueStarts: null,
-    valueEnds: null,
     semi: null
   };
 
@@ -14294,8 +14294,13 @@ function tokenizer(str, originalOpts) {
   function initProperty(propertyStarts) {
     // we mutate the object on the parent scope, so no Object.assign here
     propertyReset();
-    property.propertyStarts = propertyStarts;
-    property.start = propertyStarts;
+
+    if (typeof propertyStarts === "number") {
+      property.propertyStarts = propertyStarts;
+      property.start = propertyStarts;
+    } else {
+      property = _objectSpread2(_objectSpread2({}, propertyDefault), propertyStarts);
+    }
   }
 
   function ifQuoteThenAttrClosingQuote(idx) {
@@ -15156,12 +15161,15 @@ function tokenizer(str, originalOpts) {
     /* istanbul ignore else */
 
 
-    if (!doNothing && property && (property.valueStarts && !property.valueEnds || property.importantStarts && !property.importantEnds) && ( // either an end was reached
-    !str[_i] || attrEndsAt(_i))) {
+    if (!doNothing && property && (property.valueStarts && !property.valueEnds && str[rightVal] !== "!" || property.importantStarts && !property.importantEnds) && (!property.valueEnds || str[rightVal] !== ";") && ( // either end of string was reached
+    !str[_i] || // or it's a whitespace
+    !str[_i].trim() || // or it's a semicolon after a value
+    !property.valueEnds && str[_i] === ";" || // or we reached the end of the attribute
+    attrEndsAt(_i))) {
       /* istanbul ignore else */
       if (property.importantStarts && !property.importantEnds) {
-        property.importantEnds = _i;
-        property.important = str.slice(property.importantStarts, _i);
+        property.importantEnds = left(str, _i) + 1;
+        property.important = str.slice(property.importantStarts, property.importantEnds);
       }
       /* istanbul ignore else */
 
@@ -15179,6 +15187,7 @@ function tokenizer(str, originalOpts) {
       } else if (str[rightVal] === ";") {
         property.semi = rightVal;
         property.end = property.semi + 1;
+        doNothing = property.end;
       }
 
       if (!property.end) {
@@ -15187,7 +15196,55 @@ function tokenizer(str, originalOpts) {
 
       pushProperty(property);
       propertyReset();
-    } // catch the start of css property's semicolon
+    } // catch the end of a css property's value
+    // -------------------------------------------------------------------------
+
+    /* istanbul ignore else */
+
+
+    if (!doNothing && property && (property.valueStarts && !property.valueEnds || property.propertyEnds && !property.valueStarts && !rightVal) && str[_i] && (!str[_i].trim() || str[_i] === "!" || str[_i] === ";")) {
+      if (property.valueStarts && !property.valueEnds) {
+        property.valueEnds = _i;
+        property.value = str.slice(property.valueStarts, _i);
+      } // it depends what's on the right, is it !important (considering mangled)
+      // <div style="float:left impotant">
+      //                       ^
+      //               we're here
+      //
+      // or a new property without semi:
+      // <div style="float:left color:red">
+      //                       ^
+      //               we're here
+      //
+      // or spaced out semi:
+      // <div style="float:left  ;">
+      //                       ^
+      //               we're here
+
+      /* istanbul ignore else */
+
+
+      if (str[_i] === "!") {
+        property.importantStarts = _i;
+      } else if (str[_i] === ";") {
+        property.semi = _i;
+      } else if (rightVal && str[rightVal] === "!" || importantStartsRegexp.test(str.slice(_i))) {
+        property.importantStarts = right(str, _i);
+      } else if (!rightVal || str[rightVal] !== ";") {
+        property.end = left(str, _i + 1) + 1;
+        pushProperty(property);
+        propertyReset();
+      }
+
+      if (!property.start && str[_i] && !str[_i].trim()) {
+        pushProperty({
+          type: "text",
+          start: _i,
+          end: null,
+          value: null
+        });
+      }
+    } // catch the css property's semicolon
     // -------------------------------------------------------------------------
 
 
@@ -15213,52 +15270,6 @@ function tokenizer(str, originalOpts) {
 
     if (!doNothing && property && property.valueEnds && !property.importantStarts && (str[_i] === "!" || isLatinLetter$1(str[_i])) && importantStartsRegexp.test(str.slice(_i))) {
       property.importantStarts = _i;
-    } // catch the end of a css property's value
-    // -------------------------------------------------------------------------
-
-    /* istanbul ignore else */
-
-
-    if (!doNothing && property && (property.valueStarts && !property.valueEnds || property.propertyEnds && !property.valueStarts && !rightVal) && str[_i] && (!str[_i].trim() || str[_i] === "!")) {
-      if (property.valueStarts && !property.valueEnds) {
-        property.valueEnds = _i;
-        property.value = str.slice(property.valueStarts, _i);
-      } // it depends what's on the right, is it !important (considering mangled)
-      // <div style="float:left impotant">
-      //                       ^
-      //               we're here
-      //
-      // or a new property without semi:
-      // <div style="float:left color:red">
-      //                       ^
-      //               we're here
-      //
-      // or spaced out semi:
-      // <div style="float:left  ;">
-      //                       ^
-      //               we're here
-
-      /* istanbul ignore else */
-
-
-      if (str[_i] === "!") {
-        property.importantStarts = _i;
-      } else if (rightVal && str[rightVal] === "!" || importantStartsRegexp.test(str.slice(_i))) {
-        property.importantStarts = right(str, _i);
-      } else if (!rightVal || str[rightVal] !== ";") {
-        property.end = left(str, _i + 1) + 1;
-        pushProperty(property);
-        propertyReset();
-      }
-
-      if (!property.start && str[_i] && !str[_i].trim()) {
-        pushProperty({
-          type: "text",
-          start: _i,
-          end: null,
-          value: null
-        });
-      }
     } // catch the start of a css property's value
     // -------------------------------------------------------------------------
 
@@ -15396,14 +15407,29 @@ function tokenizer(str, originalOpts) {
     !"{};".includes(str[_i]) && // above is instead of a stricter clause:
     // attrNameRegexp.test(str[i]) &&
     //
-    token.selectorsEnd && token.openingCurlyAt && !property.propertyStarts) {
+    token.selectorsEnd && token.openingCurlyAt && !property.propertyStarts && !property.importantStarts) {
       // first, check maybe there's unfinished text token before it
       if (Array.isArray(token.properties) && token.properties.length && token.properties[~-token.properties.length].start && !token.properties[~-token.properties.length].end) {
         token.properties[~-token.properties.length].end = _i;
         token.properties[~-token.properties.length].value = str.slice(token.properties[~-token.properties.length].start, _i);
-      }
+      } // in normal cases we're set propertyStarts but sometimes it can be
+      // importantStarts, imagine:
+      // <style>.a{color:red; !important;}
+      //                      ^
+      //                we're here
+      //
+      // we want to put "!important" under key "important", not under
+      // "property"
 
-      initProperty(_i);
+
+      if (str[_i] === "!") {
+        initProperty({
+          start: _i,
+          importantStarts: _i
+        });
+      } else {
+        initProperty(_i);
+      }
     } // catch the start a property
     // -------------------------------------------------------------------------
     // Mostly happens in dirty code cases - the start is normally being triggered
@@ -44097,6 +44123,22 @@ var cssRuleMalformed = function cssRuleMalformed(context) {
             });
           }
         }
+      }
+
+      if (node.properties && node.properties.length > 1) {
+        for (var _i = 0, len = node.properties.length; _i < len; _i++) {
+          if (node.properties[_i].important && node.properties[_i].important !== "!important") {
+            context.report({
+              ruleId: "css-rule-malformed",
+              idxFrom: node.properties[_i].importantStarts,
+              idxTo: node.properties[_i].importantEnds,
+              message: "Malformed !important.",
+              fix: {
+                ranges: [[node.properties[_i].importantStarts, node.properties[_i].importantEnds, "!important"]]
+              }
+            });
+          }
+        }
       } // 2. catch css rules with selectors but without properties
       // <style>.a{;}
       //           ^
@@ -44117,37 +44159,78 @@ var cssRuleMalformed = function cssRuleMalformed(context) {
       //                ^
 
 
-      if (properties && properties.length) {
-        properties.forEach(function (property, idx) {
-          if (property.value === null) { // tend a rare case, a rogue semicolon:
+      if (node.properties && Array.isArray(node.properties)) {
+        for (var _i2 = 0, _len = node.properties.length; _i2 < _len; _i2++) {
+
+          if (node.properties[_i2].value === null) {
+            // tend a rare case, a rogue semicolon:
             // <style>.a{color:red; !important;}</style>
             //                    ^
+            if (node.properties[_i2].important !== null && node.properties[_i2].property === null) {
+              var errorRaised = false;
 
-            if (property.property === "!important" && property.value === null && idx && properties[idx - 1].semi && properties[idx - 1].important === null) {
-              // the property before (there can be text node,
-              // a whitespace in-between) is a property with
-              // semicolon (rogue) and without !important
-              context.report({
-                ruleId: "css-rule-malformed",
-                idxFrom: properties[idx - 1].semi,
-                idxTo: properties[idx - 1].semi + 1,
-                message: "Delete the semicolon.",
-                fix: {
-                  ranges: [[properties[idx - 1].semi, properties[idx - 1].semi + 1]]
+              if (_i2) {
+                for (var y = node.properties.length; y--;) {
+                  if (y === _i2) {
+                    continue;
+                  }
+
+                  if ( // the property we're talking about is missing both
+                  // value and property, yet it contains !important
+                  node.properties[_i2].important && !node.properties[_i2].propertyStarts && !node.properties[_i2].valueStarts && // we're traversing upon a CSS property, not a whitespace text token
+                  node.properties[y].property !== undefined) {
+
+                    if ( // its semi is present
+                    node.properties[y].semi && // and its important is missing
+                    !node.properties[y].importantStarts) { // the frontal space might be missing
+
+                      var fromIdx = node.properties[y].semi;
+                      var toIdx = node.properties[y].semi + 1;
+                      var whatToInsert = void 0;
+
+                      if (context.str[node.properties[y].semi + 1] !== " ") {
+                        whatToInsert = " ";
+                      }
+                      context.report({
+                        ruleId: "css-rule-malformed",
+                        idxFrom: fromIdx,
+                        idxTo: toIdx,
+                        message: "Delete the semicolon.",
+                        fix: {
+                          ranges: [[fromIdx, toIdx, whatToInsert]]
+                        }
+                      });
+                      errorRaised = true;
+                    } else {
+                      // stop looping further
+                      break;
+                    }
+                  }
                 }
-              });
+              }
+
+              if ( // it's a property token, not text whitespace token:
+              node.properties[_i2].property !== undefined && // and error hasn't been raised so far:
+              !errorRaised) {
+                context.report({
+                  ruleId: "css-rule-malformed",
+                  idxFrom: node.properties[_i2].start,
+                  idxTo: node.properties[_i2].end,
+                  message: "Missing value.",
+                  fix: null
+                });
+              }
             } else {
-              // business as usual then
               context.report({
                 ruleId: "css-rule-malformed",
-                idxFrom: property.start,
-                idxTo: property.end,
+                idxFrom: node.properties[_i2].start,
+                idxTo: node.properties[_i2].end,
                 message: "Missing value.",
                 fix: null
               });
             }
           }
-        });
+        }
       }
     }
   };

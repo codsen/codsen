@@ -10585,6 +10585,22 @@ var cssRuleMalformed = function cssRuleMalformed(context) {
             });
           }
         }
+      }
+
+      if (node.properties && node.properties.length > 1) {
+        for (var _i = 0, len = node.properties.length; _i < len; _i++) {
+          if (node.properties[_i].important && node.properties[_i].important !== "!important") {
+            context.report({
+              ruleId: "css-rule-malformed",
+              idxFrom: node.properties[_i].importantStarts,
+              idxTo: node.properties[_i].importantEnds,
+              message: "Malformed !important.",
+              fix: {
+                ranges: [[node.properties[_i].importantStarts, node.properties[_i].importantEnds, "!important"]]
+              }
+            });
+          }
+        }
       } // 2. catch css rules with selectors but without properties
       // <style>.a{;}
       //           ^
@@ -10605,37 +10621,78 @@ var cssRuleMalformed = function cssRuleMalformed(context) {
       //                ^
 
 
-      if (properties && properties.length) {
-        properties.forEach(function (property, idx) {
-          if (property.value === null) { // tend a rare case, a rogue semicolon:
+      if (node.properties && Array.isArray(node.properties)) {
+        for (var _i2 = 0, _len = node.properties.length; _i2 < _len; _i2++) {
+
+          if (node.properties[_i2].value === null) {
+            // tend a rare case, a rogue semicolon:
             // <style>.a{color:red; !important;}</style>
             //                    ^
+            if (node.properties[_i2].important !== null && node.properties[_i2].property === null) {
+              var errorRaised = false;
 
-            if (property.property === "!important" && property.value === null && idx && properties[idx - 1].semi && properties[idx - 1].important === null) {
-              // the property before (there can be text node,
-              // a whitespace in-between) is a property with
-              // semicolon (rogue) and without !important
-              context.report({
-                ruleId: "css-rule-malformed",
-                idxFrom: properties[idx - 1].semi,
-                idxTo: properties[idx - 1].semi + 1,
-                message: "Delete the semicolon.",
-                fix: {
-                  ranges: [[properties[idx - 1].semi, properties[idx - 1].semi + 1]]
+              if (_i2) {
+                for (var y = node.properties.length; y--;) {
+                  if (y === _i2) {
+                    continue;
+                  }
+
+                  if ( // the property we're talking about is missing both
+                  // value and property, yet it contains !important
+                  node.properties[_i2].important && !node.properties[_i2].propertyStarts && !node.properties[_i2].valueStarts && // we're traversing upon a CSS property, not a whitespace text token
+                  node.properties[y].property !== undefined) {
+
+                    if ( // its semi is present
+                    node.properties[y].semi && // and its important is missing
+                    !node.properties[y].importantStarts) { // the frontal space might be missing
+
+                      var fromIdx = node.properties[y].semi;
+                      var toIdx = node.properties[y].semi + 1;
+                      var whatToInsert = void 0;
+
+                      if (context.str[node.properties[y].semi + 1] !== " ") {
+                        whatToInsert = " ";
+                      }
+                      context.report({
+                        ruleId: "css-rule-malformed",
+                        idxFrom: fromIdx,
+                        idxTo: toIdx,
+                        message: "Delete the semicolon.",
+                        fix: {
+                          ranges: [[fromIdx, toIdx, whatToInsert]]
+                        }
+                      });
+                      errorRaised = true;
+                    } else {
+                      // stop looping further
+                      break;
+                    }
+                  }
                 }
-              });
+              }
+
+              if ( // it's a property token, not text whitespace token:
+              node.properties[_i2].property !== undefined && // and error hasn't been raised so far:
+              !errorRaised) {
+                context.report({
+                  ruleId: "css-rule-malformed",
+                  idxFrom: node.properties[_i2].start,
+                  idxTo: node.properties[_i2].end,
+                  message: "Missing value.",
+                  fix: null
+                });
+              }
             } else {
-              // business as usual then
               context.report({
                 ruleId: "css-rule-malformed",
-                idxFrom: property.start,
-                idxTo: property.end,
+                idxFrom: node.properties[_i2].start,
+                idxTo: node.properties[_i2].end,
                 message: "Missing value.",
                 fix: null
               });
             }
           }
-        });
+        }
       }
     }
   };

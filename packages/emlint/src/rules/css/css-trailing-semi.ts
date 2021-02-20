@@ -2,7 +2,7 @@ import { Linter, RuleObjType } from "../../linter";
 import { Property } from "../../../../codsen-tokenizer/src/util/util";
 // import { Range } from "../../../../../scripts/common";
 
-// rule: trailing-semi
+// rule: css-trailing-semi
 // -----------------------------------------------------------------------------
 
 // import { rMerge } from "ranges-merge";

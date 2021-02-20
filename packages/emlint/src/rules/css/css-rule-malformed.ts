@@ -2,7 +2,7 @@ import { Linter, RuleObjType } from "../../linter";
 import { Property } from "../../../../codsen-tokenizer/src/util/util";
 // import { Range } from "../../../../../scripts/common";
 
-// rule: trailing-semi
+// rule: css-rule-malformed
 // -----------------------------------------------------------------------------
 
 // import { rMerge } from "ranges-merge";
@@ -69,6 +69,32 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
         }
       }
 
+      if (node.properties && node.properties.length > 1) {
+        for (let i = 0, len = node.properties.length; i < len; i++) {
+          if (
+            (node.properties[i] as any).important &&
+            (node.properties[i] as any).important !== "!important"
+          ) {
+            console.log(`078 malformed !important`);
+            context.report({
+              ruleId: "css-rule-malformed",
+              idxFrom: (node.properties[i] as any).importantStarts,
+              idxTo: (node.properties[i] as any).importantEnds,
+              message: `Malformed !important.`,
+              fix: {
+                ranges: [
+                  [
+                    (node.properties[i] as any).importantStarts,
+                    (node.properties[i] as any).importantEnds,
+                    "!important",
+                  ],
+                ],
+              },
+            });
+          }
+        }
+      }
+
       // 2. catch css rules with selectors but without properties
       // <style>.a{;}
       //           ^
@@ -83,7 +109,7 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
         context.str.slice(node.openingCurlyAt + 1, node.closingCurlyAt).trim()
       ) {
         console.log(
-          `086 ${`\u001b[${31}m${`something rogue inside ${node.value}`}\u001b[${39}m`}`
+          `112 ${`\u001b[${31}m${`something rogue inside ${node.value}`}\u001b[${39}m`}`
         );
         context.report({
           ruleId: "css-rule-malformed",
@@ -106,60 +132,133 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
       // <style>.a{color:}</style>
       //                ^
 
-      if (properties && properties.length) {
-        properties.forEach((property, idx) => {
-          if (property.value === null) {
-            console.log(
-              `113 ${`\u001b[${31}m${`missing value on ${property.property}`}\u001b[${39}m`}`
-            );
-
+      if (node.properties && Array.isArray(node.properties)) {
+        for (let i = 0, len = node.properties.length; i < len; i++) {
+          console.log(
+            `138 ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
+              node.properties[i],
+              null,
+              4
+            )}`
+          );
+          if (node.properties[i].value === null) {
             // tend a rare case, a rogue semicolon:
             // <style>.a{color:red; !important;}</style>
             //                    ^
-            console.log(
-              `${`\u001b[${33}m${`idx`}\u001b[${39}m`} = ${JSON.stringify(
-                idx,
-                null,
-                4
-              )}`
-            );
             if (
-              property.property === "!important" &&
-              property.value === null &&
-              idx &&
-              properties[idx - 1].semi &&
-              properties[idx - 1].important === null
+              (node.properties[i] as Property).important !== null &&
+              (node.properties[i] as Property).property === null
             ) {
-              // the property before (there can be text node,
-              // a whitespace in-between) is a property with
-              // semicolon (rogue) and without !important
-              context.report({
-                ruleId: "css-rule-malformed",
-                idxFrom: properties[idx - 1].semi as number,
-                idxTo: (properties[idx - 1].semi as number) + 1,
-                message: `Delete the semicolon.`,
-                fix: {
-                  ranges: [
-                    [
-                      properties[idx - 1].semi as number,
-                      (properties[idx - 1].semi as number) + 1,
-                    ],
-                  ],
-                },
-              });
+              console.log(
+                `153 ${`\u001b[${31}m${`██`}\u001b[${39}m`} no value, no property`
+              );
+
+              let errorRaised = false;
+              if (i) {
+                for (let y = node.properties.length; y--; ) {
+                  if (y === i) {
+                    console.log(`160 skip thyself`);
+                    continue;
+                  }
+                  console.log(
+                    `164 - property: ${JSON.stringify(
+                      node.properties[y],
+                      null,
+                      4
+                    )}`
+                  );
+                  if (
+                    // the property we're talking about is missing both
+                    // value and property, yet it contains !important
+                    (node.properties[i] as Property).important &&
+                    !(node.properties[i] as Property).propertyStarts &&
+                    !(node.properties[i] as Property).valueStarts &&
+                    // we're traversing upon a CSS property, not a whitespace text token
+                    (node.properties[y] as any).property !== undefined
+                  ) {
+                    console.log(`179`);
+                    if (
+                      // its semi is present
+                      (node.properties[y] as any).semi &&
+                      // and its important is missing
+                      !(node.properties[y] as any).importantStarts
+                    ) {
+                      console.log(`186`);
+                      // the frontal space might be missing
+                      const fromIdx = (node.properties[y] as any).semi;
+                      const toIdx = (node.properties[y] as any).semi + 1;
+                      let whatToInsert;
+                      if (
+                        context.str[(node.properties[y] as any).semi + 1] !==
+                        " "
+                      ) {
+                        whatToInsert = " ";
+                      }
+
+                      console.log(`198 report [${fromIdx}, ${toIdx}]`);
+                      context.report({
+                        ruleId: "css-rule-malformed",
+                        idxFrom: fromIdx,
+                        idxTo: toIdx,
+                        message: `Delete the semicolon.`,
+                        fix: {
+                          ranges: [[fromIdx, toIdx, whatToInsert]],
+                        },
+                      });
+
+                      errorRaised = true;
+                      console.log(
+                        `211 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`errorRaised`}\u001b[${39}m`} = ${JSON.stringify(
+                          errorRaised,
+                          null,
+                          4
+                        )}`
+                      );
+                    } else {
+                      // stop looping further
+                      console.log(
+                        `220 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
+                      );
+                      break;
+                    }
+                  }
+                }
+              }
+
+              if (
+                // it's a property token, not text whitespace token:
+                (node.properties[i] as Property).property !== undefined &&
+                // and error hasn't been raised so far:
+                !errorRaised
+              ) {
+                console.log(`234 report missing value`);
+                context.report({
+                  ruleId: "css-rule-malformed",
+                  idxFrom: node.properties[i].start,
+                  idxTo: node.properties[i].end,
+                  message: `Missing value.`,
+                  fix: null,
+                });
+              }
             } else {
-              // business as usual then
+              console.log(
+                `245 ${`\u001b[${31}m${`██`}\u001b[${39}m`} simply no value`
+              );
               context.report({
                 ruleId: "css-rule-malformed",
-                idxFrom: property.start,
-                idxTo: property.end,
+                idxFrom: node.properties[i].start,
+                idxTo: node.properties[i].end,
                 message: `Missing value.`,
                 fix: null,
               });
             }
           }
-        });
+        }
       }
+
+      console.log(
+        `260 ${`\u001b[${32}m${`END of css-rule-malformed`}\u001b[${39}m`}`
+      );
     },
   };
 };

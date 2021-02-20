@@ -1,6 +1,7 @@
 import tap from "tap";
 import { Linter } from "../../../dist/emlint.esm";
 import { applyFixes } from "../../../t-util/util";
+import { deepContains } from "ast-deep-contains";
 
 // missing semi on a non-last rule
 // -----------------------------------------------------------------------------
@@ -44,7 +45,7 @@ tap.test(`02 - 1/3, 2/3`, (t) => {
     },
   });
   t.equal(applyFixes(str, messages), fixed, "02.01");
-  t.match(
+  deepContains(
     messages,
     [
       {
@@ -68,9 +69,10 @@ tap.test(`02 - 1/3, 2/3`, (t) => {
         },
       },
     ],
-    "02.02"
+    t.is,
+    t.fail
   );
-  t.equal(messages.length, 2, "02.03");
+  t.equal(messages.length, 2, "02.02");
   t.end();
 });
 
@@ -222,19 +224,60 @@ tap.test(`07 - value and semi missing, followed by correct rule`, (t) => {
   t.end();
 });
 
+tap.test(`08`, (t) => {
+  const str = `<style>.a{color: red !important float: left}</style>`;
+  const fixed = `<style>.a{color: red !important; float: left;}</style>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "css-rule-malformed": 2,
+      "css-trailing-semi": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "08");
+  deepContains(
+    messages,
+    [
+      {
+        severity: 2,
+        ruleId: "css-rule-malformed",
+        message: "Add a semicolon.",
+        idxFrom: 10,
+        idxTo: 31,
+        fix: {
+          ranges: [[31, 31, ";"]],
+        },
+      },
+      {
+        severity: 2,
+        ruleId: "css-trailing-semi",
+        message: "Add a semicolon.",
+        idxFrom: 32,
+        idxTo: 43,
+        fix: {
+          ranges: [[43, 43, ";"]],
+        },
+      },
+    ],
+    t.is,
+    t.fail
+  );
+  t.end();
+});
+
 // rogue semi in front of important
 // -----------------------------------------------------------------------------
 
-tap.test(`08`, (t) => {
-  const str = `<style>.a{color:red; !important;}</style><body>a</body>`;
-  const fixed = `<style>.a{color:red !important;}</style><body>a</body>`;
+tap.test(`09`, (t) => {
+  const str = `<style>.a{color:red; !important;}</style>`;
+  const fixed = `<style>.a{color:red !important;}</style>`;
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
       "css-rule-malformed": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "08.01");
+  t.equal(applyFixes(str, messages), fixed, "09.01");
   t.match(
     messages,
     [
@@ -249,7 +292,47 @@ tap.test(`08`, (t) => {
         },
       },
     ],
-    "08.02"
+    "09.02"
+  );
+  t.end();
+});
+
+tap.test(`10 - impotant [sic]`, (t) => {
+  const str = `<style>.a{color:red;!impotant;}</style>`;
+  const fixed = `<style>.a{color:red !important;}</style>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "css-rule-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "10");
+  deepContains(
+    messages,
+    [
+      {
+        severity: 2,
+        ruleId: "css-rule-malformed",
+        message: "Delete the semicolon.",
+        idxFrom: 19,
+        idxTo: 20,
+        fix: {
+          ranges: [[19, 20, " "]],
+        },
+      },
+      {
+        severity: 2,
+        ruleId: "css-rule-malformed",
+        message: "Malformed !important.",
+        idxFrom: 20,
+        idxTo: 29,
+        fix: {
+          ranges: [[20, 29, "!important"]],
+        },
+      },
+    ],
+    t.is,
+    t.fail
   );
   t.end();
 });
