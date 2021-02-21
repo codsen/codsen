@@ -336,3 +336,113 @@ tap.test(`10 - impotant [sic]`, (t) => {
   );
   t.end();
 });
+
+// mis-spelled !important
+// -----------------------------------------------------------------------------
+
+tap.test(`11 - impotant [sic] - with space in front`, (t) => {
+  const str = `<style>.a{color:red !impotant;}</style>`;
+  const fixed = `<style>.a{color:red !important;}</style>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "css-rule-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "11");
+  t.end();
+});
+
+tap.todo(`12 - impotant [sic] - without space in front`, (t) => {
+  const str = `<style>.a{color:red!impotant;}</style>`;
+  const fixed = `<style>.a{color:red !important;}</style>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "css-rule-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "12");
+  t.end();
+});
+
+tap.todo(`13 - important without excl mark`, (t) => {
+  const str = `<style>.a{color:red important}</style>`;
+  const fixed = `<style>.a{color:red !important}</style>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "css-rule-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "13");
+  t.end();
+});
+
+tap.todo(`14 - important with number one instead of excl mark`, (t) => {
+  const str = `<style>.a{color:red 1important}</style>`;
+  const fixed = `<style>.a{color:red !important}</style>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "css-rule-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "14");
+  t.end();
+});
+
+// whitespace in front of colon/semi
+// -----------------------------------------------------------------------------
+
+tap.todo(`15 - space after colon/semi`, (t) => {
+  const str = `<style>.a{ color : red ; }</style>`;
+  const fixed = `<style>.a{ color: red; }</style>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "css-rule-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "15");
+  t.end();
+});
+
+tap.todo(`16 - no space after colon/semi`, (t) => {
+  const str = `<style>.a{color :red ;}</style>`;
+  const fixed = `<style>.a{color:red;}</style>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "css-rule-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "16");
+  t.end();
+});
+
+tap.todo(`17`, (t) => {
+  const str = `<style>.a{color : red;}</style>`;
+  const fixed = `<style>.a{color:red;}</style>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "css-rule-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "17");
+  t.end();
+});
+
+tap.todo(`18`, (t) => {
+  const str = `<style>.a{color : red ; text-align : left ;}</style>`;
+  const fixed = `<style>.a{color: red; text-align: left;}</style>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "css-rule-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "18");
+  t.end();
+});

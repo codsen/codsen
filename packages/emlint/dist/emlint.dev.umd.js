@@ -44094,9 +44094,8 @@ var trailingSemi = function trailingSemi(context, mode) {
 
 var cssRuleMalformed = function cssRuleMalformed(context) {
   return {
-    rule: function rule(node) { // 1. catch rules with semicolons missing:
-      // <style>.a{color:red\n\ntext-align:left
-      //                    ^
+    rule: function rule(node) { // 0. extract all properties - node.properties array records
+      // all whitespace as text tokens and we want to exclude them
 
       var properties = []; // there can be text nodes within properties array!
       // innocent whitespace is still a text node!!!!
@@ -44107,9 +44106,13 @@ var cssRuleMalformed = function cssRuleMalformed(context) {
         properties = node.properties.filter(function (property) {
           return property.property;
         });
-      }
+      } // 1. catch rules with semicolons missing:
+      // <style>.a{color:red\n\ntext-align:left
+      //                   ^
 
-      if (properties && properties.length > 1) {
+      if (properties && properties.length) { // Iterate starting from the second-to last.
+        // The last property is ambiguous, tackled by a separate rule.
+
         for (var i = properties.length - 1; i--;) {
           if (properties[i].semi === null && properties[i].value) {
             context.report({
@@ -44123,23 +44126,26 @@ var cssRuleMalformed = function cssRuleMalformed(context) {
             });
           }
         }
-      }
+      } // 2. catch rules with malformed !important
+      // <style>.a{color:red !impotant;}</style>
+      //                         ^^
 
-      if (node.properties && node.properties.length > 1) {
-        for (var _i = 0, len = node.properties.length; _i < len; _i++) {
-          if (node.properties[_i].important && node.properties[_i].important !== "!important") {
+
+      if (node.properties && node.properties.length) {
+        node.properties.forEach(function (property) {
+          if (property.important && property.important !== "!important") {
             context.report({
               ruleId: "css-rule-malformed",
-              idxFrom: node.properties[_i].importantStarts,
-              idxTo: node.properties[_i].importantEnds,
+              idxFrom: property.importantStarts,
+              idxTo: property.importantEnds,
               message: "Malformed !important.",
               fix: {
-                ranges: [[node.properties[_i].importantStarts, node.properties[_i].importantEnds, "!important"]]
+                ranges: [[property.importantStarts, property.importantEnds, "!important"]]
               }
             });
           }
-        }
-      } // 2. catch css rules with selectors but without properties
+        });
+      } // 3. catch css rules with selectors but without properties
       // <style>.a{;}
       //           ^
 
@@ -44154,30 +44160,30 @@ var cssRuleMalformed = function cssRuleMalformed(context) {
             ranges: [[node.openingCurlyAt + 1, node.closingCurlyAt]]
           }
         });
-      } // 3. catch css properties without values
+      } // 4. catch css properties without values
       // <style>.a{color:}</style>
       //                ^
 
 
       if (node.properties && Array.isArray(node.properties)) {
-        for (var _i2 = 0, _len = node.properties.length; _i2 < _len; _i2++) {
+        for (var _i = 0, len = node.properties.length; _i < len; _i++) {
 
-          if (node.properties[_i2].value === null) {
+          if (node.properties[_i].value === null) {
             // tend a rare case, a rogue semicolon:
             // <style>.a{color:red; !important;}</style>
             //                    ^
-            if (node.properties[_i2].important !== null && node.properties[_i2].property === null) {
+            if (node.properties[_i].important !== null && node.properties[_i].property === null) {
               var errorRaised = false;
 
-              if (_i2) {
+              if (_i) {
                 for (var y = node.properties.length; y--;) {
-                  if (y === _i2) {
+                  if (y === _i) {
                     continue;
                   }
 
                   if ( // the property we're talking about is missing both
                   // value and property, yet it contains !important
-                  node.properties[_i2].important && !node.properties[_i2].propertyStarts && !node.properties[_i2].valueStarts && // we're traversing upon a CSS property, not a whitespace text token
+                  node.properties[_i].important && !node.properties[_i].propertyStarts && !node.properties[_i].valueStarts && // we're traversing upon a CSS property, not a whitespace text token
                   node.properties[y].property !== undefined) {
 
                     if ( // its semi is present
@@ -44210,12 +44216,12 @@ var cssRuleMalformed = function cssRuleMalformed(context) {
               }
 
               if ( // it's a property token, not text whitespace token:
-              node.properties[_i2].property !== undefined && // and error hasn't been raised so far:
+              node.properties[_i].property !== undefined && // and error hasn't been raised so far:
               !errorRaised) {
                 context.report({
                   ruleId: "css-rule-malformed",
-                  idxFrom: node.properties[_i2].start,
-                  idxTo: node.properties[_i2].end,
+                  idxFrom: node.properties[_i].start,
+                  idxTo: node.properties[_i].end,
                   message: "Missing value.",
                   fix: null
                 });
@@ -44223,8 +44229,8 @@ var cssRuleMalformed = function cssRuleMalformed(context) {
             } else {
               context.report({
                 ruleId: "css-rule-malformed",
-                idxFrom: node.properties[_i2].start,
-                idxTo: node.properties[_i2].end,
+                idxFrom: node.properties[_i].start,
+                idxTo: node.properties[_i].end,
                 message: "Missing value.",
                 fix: null
               });

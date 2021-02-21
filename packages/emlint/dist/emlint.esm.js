@@ -10907,18 +10907,21 @@ const trailingSemi = (context, mode) => {
 
 const cssRuleMalformed = context => {
   return {
-    rule(node) { // 1. catch rules with semicolons missing:
-      // <style>.a{color:red\n\ntext-align:left
-      //                    ^
+    rule(node) { // 0. extract all properties - node.properties array records
+      // all whitespace as text tokens and we want to exclude them
 
       let properties = []; // there can be text nodes within properties array!
       // innocent whitespace is still a text node!!!!
 
       if (Array.isArray(node.properties) && node.properties.length && node.properties.filter(property => property.property).length) {
         properties = node.properties.filter(property => property.property);
-      }
+      } // 1. catch rules with semicolons missing:
+      // <style>.a{color:red\n\ntext-align:left
+      //                   ^
 
-      if (properties && properties.length > 1) {
+      if (properties && properties.length) { // Iterate starting from the second-to last.
+        // The last property is ambiguous, tackled by a separate rule.
+
         for (let i = properties.length - 1; i--;) {
           if (properties[i].semi === null && properties[i].value) {
             context.report({
@@ -10932,23 +10935,26 @@ const cssRuleMalformed = context => {
             });
           }
         }
-      }
+      } // 2. catch rules with malformed !important
+      // <style>.a{color:red !impotant;}</style>
+      //                         ^^
 
-      if (node.properties && node.properties.length > 1) {
-        for (let i = 0, len = node.properties.length; i < len; i++) {
-          if (node.properties[i].important && node.properties[i].important !== "!important") {
+
+      if (node.properties && node.properties.length) {
+        node.properties.forEach(property => {
+          if (property.important && property.important !== "!important") {
             context.report({
               ruleId: "css-rule-malformed",
-              idxFrom: node.properties[i].importantStarts,
-              idxTo: node.properties[i].importantEnds,
+              idxFrom: property.importantStarts,
+              idxTo: property.importantEnds,
               message: `Malformed !important.`,
               fix: {
-                ranges: [[node.properties[i].importantStarts, node.properties[i].importantEnds, "!important"]]
+                ranges: [[property.importantStarts, property.importantEnds, "!important"]]
               }
             });
           }
-        }
-      } // 2. catch css rules with selectors but without properties
+        });
+      } // 3. catch css rules with selectors but without properties
       // <style>.a{;}
       //           ^
 
@@ -10963,7 +10969,7 @@ const cssRuleMalformed = context => {
             ranges: [[node.openingCurlyAt + 1, node.closingCurlyAt]]
           }
         });
-      } // 3. catch css properties without values
+      } // 4. catch css properties without values
       // <style>.a{color:}</style>
       //                ^
 
