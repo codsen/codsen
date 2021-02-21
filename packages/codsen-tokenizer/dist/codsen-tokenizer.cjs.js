@@ -1871,7 +1871,9 @@ function tokenizer(str, originalOpts) {
     /* istanbul ignore else */
 
 
-    if (!doNothing && property && (property.valueStarts && !property.valueEnds && str[rightVal] !== "!" || property.importantStarts && !property.importantEnds) && (!property.valueEnds || str[rightVal] !== ";") && ( // either end of string was reached
+    if (!doNothing && property && (property.valueStarts && !property.valueEnds && str[rightVal] !== "!" && ( // either non-whitespace character doesn't exist on the right
+    !rightVal || // or at that character !important does not start
+    !str.slice(rightVal).match(importantStartsRegexp)) || property.importantStarts && !property.importantEnds) && (!property.valueEnds || str[rightVal] !== ";") && ( // either end of string was reached
     !str[_i] || // or it's a whitespace
     !str[_i].trim() || // or it's a semicolon after a value
     !property.valueEnds && str[_i] === ";" || // or we reached the end of the attribute
@@ -1938,7 +1940,7 @@ function tokenizer(str, originalOpts) {
         property.importantStarts = _i;
       } else if (str[_i] === ";") {
         property.semi = _i;
-      } else if (rightVal && str[rightVal] === "!" || importantStartsRegexp.test(str.slice(_i))) {
+      } else if (rightVal && str[rightVal] === "!" || str.slice(_i).match(importantStartsRegexp)) {
         property.importantStarts = stringLeftRight.right(str, _i);
       } else if (!rightVal || str[rightVal] !== ";") {
         property.end = stringLeftRight.left(str, _i + 1) + 1;
@@ -1978,7 +1980,7 @@ function tokenizer(str, originalOpts) {
     /* istanbul ignore else */
 
 
-    if (!doNothing && property && property.valueEnds && !property.importantStarts && (str[_i] === "!" || isLatinLetter(str[_i])) && importantStartsRegexp.test(str.slice(_i))) {
+    if (!doNothing && property && property.valueEnds && !property.importantStarts && (str[_i] === "!" || isLatinLetter(str[_i])) && str.slice(_i).match(importantStartsRegexp)) {
       property.importantStarts = _i;
     } // catch the start of a css property's value
     // -------------------------------------------------------------------------

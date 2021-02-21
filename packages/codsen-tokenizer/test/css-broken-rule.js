@@ -1279,3 +1279,70 @@ tap.test(`18`, (t) => {
   );
   t.end();
 });
+
+tap.test(`19`, (t) => {
+  const gathered = [];
+  ct(`<style>.a{color:red important}`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.match(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: "<style>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
+        tagName: "style",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+      {
+        type: "rule",
+        start: 7,
+        end: 30,
+        value: ".a{color:red important}",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: 29,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            start: 10,
+            end: 29,
+            property: "color",
+            propertyStarts: 10,
+            propertyEnds: 15,
+            value: "red",
+            valueStarts: 16,
+            valueEnds: 19,
+            importantStarts: 20,
+            importantEnds: 29,
+            important: "important",
+            colon: 15,
+            semi: null,
+          },
+        ],
+      },
+    ],
+    "19"
+  );
+  t.end();
+});

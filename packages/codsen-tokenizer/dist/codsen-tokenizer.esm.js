@@ -1842,7 +1842,9 @@ function tokenizer(str, originalOpts) {
     /* istanbul ignore else */
 
 
-    if (!doNothing && property && (property.valueStarts && !property.valueEnds && str[rightVal] !== "!" || property.importantStarts && !property.importantEnds) && (!property.valueEnds || str[rightVal] !== ";") && ( // either end of string was reached
+    if (!doNothing && property && (property.valueStarts && !property.valueEnds && str[rightVal] !== "!" && ( // either non-whitespace character doesn't exist on the right
+    !rightVal || // or at that character !important does not start
+    !str.slice(rightVal).match(importantStartsRegexp)) || property.importantStarts && !property.importantEnds) && (!property.valueEnds || str[rightVal] !== ";") && ( // either end of string was reached
     !str[i] || // or it's a whitespace
     !str[i].trim() || // or it's a semicolon after a value
     !property.valueEnds && str[i] === ";" || // or we reached the end of the attribute
@@ -1909,7 +1911,7 @@ function tokenizer(str, originalOpts) {
         property.importantStarts = i;
       } else if (str[i] === ";") {
         property.semi = i;
-      } else if (rightVal && str[rightVal] === "!" || importantStartsRegexp.test(str.slice(i))) {
+      } else if (rightVal && str[rightVal] === "!" || str.slice(i).match(importantStartsRegexp)) {
         property.importantStarts = right(str, i);
       } else if (!rightVal || str[rightVal] !== ";") {
         property.end = left(str, i + 1) + 1;
@@ -1949,7 +1951,7 @@ function tokenizer(str, originalOpts) {
     /* istanbul ignore else */
 
 
-    if (!doNothing && property && property.valueEnds && !property.importantStarts && (str[i] === "!" || isLatinLetter(str[i])) && importantStartsRegexp.test(str.slice(i))) {
+    if (!doNothing && property && property.valueEnds && !property.importantStarts && (str[i] === "!" || isLatinLetter(str[i])) && str.slice(i).match(importantStartsRegexp)) {
       property.importantStarts = i;
     } // catch the start of a css property's value
     // -------------------------------------------------------------------------
