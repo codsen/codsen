@@ -416,3 +416,164 @@ tap.test(`14`, (t) => {
   );
   t.end();
 });
+
+tap.test(`15`, (t) => {
+  t.equal(
+    matchRightIncl(`abc important}`, 2, ["!important"], {
+      i: true,
+      trimBeforeMatching: true,
+      maxMismatches: 0,
+    }),
+    false,
+    "15.01"
+  );
+  t.equal(
+    matchRightIncl(`abc important}`, 2, ["!important"], {
+      i: true,
+      trimBeforeMatching: true,
+      maxMismatches: 1,
+    }),
+    false,
+    "15.02"
+  );
+  t.equal(
+    matchRightIncl(`abc important}`, 2, ["!important"], {
+      i: true,
+      trimBeforeMatching: true,
+      maxMismatches: 2,
+    }),
+    false,
+    "15.03"
+  );
+
+  t.equal(
+    matchRightIncl(`abc important}`, 2, ["!important"], {
+      i: true,
+      trimBeforeMatching: false,
+      maxMismatches: 0,
+    }),
+    false,
+    "15.04"
+  );
+  t.equal(
+    matchRightIncl(`abc important}`, 2, ["!important"], {
+      i: true,
+      trimBeforeMatching: false,
+      maxMismatches: 1,
+    }),
+    false,
+    "15.05"
+  );
+  t.equal(
+    matchRightIncl(`abc important}`, 2, ["!important"], {
+      i: true,
+      trimBeforeMatching: false,
+      maxMismatches: 2,
+    }),
+    false,
+    "15.06"
+  );
+  t.end();
+});
+
+tap.test(`16 - tight`, (t) => {
+  t.equal(
+    matchRight(`1px!important}`, 0, ["!important"], {
+      i: true,
+      trimBeforeMatching: false,
+      maxMismatches: 2,
+    }),
+    false,
+    "16.01"
+  );
+  t.equal(
+    matchRight(`1px!important}`, 1, ["!important"], {
+      i: true,
+      trimBeforeMatching: false,
+      maxMismatches: 2,
+    }),
+    false,
+    "16.02"
+  );
+  t.equal(
+    matchRight(`1px!important}`, 2, ["!important"], {
+      i: true,
+      trimBeforeMatching: false,
+      maxMismatches: 2,
+    }),
+    "!important",
+    "16.03"
+  );
+  t.end();
+});
+
+tap.test(`17 - tight`, (t) => {
+  t.equal(
+    matchRight(`1pximportant}`, 0, ["!important"], {
+      i: true,
+      trimBeforeMatching: false,
+      maxMismatches: 2,
+    }),
+    false,
+    "17.01"
+  );
+  t.equal(
+    matchRight(`1pximportant}`, 1, ["!important"], {
+      i: true,
+      trimBeforeMatching: false,
+      maxMismatches: 2,
+    }),
+    false,
+    "17.02"
+  );
+  t.equal(
+    matchRight(`1pximportant}`, 2, ["!important"], {
+      i: true,
+      trimBeforeMatching: false,
+      maxMismatches: 2,
+    }),
+    "!important",
+    "17.03"
+  );
+  t.end();
+});
+
+tap.test(`18 - tight`, (t) => {
+  t.equal(
+    matchRightIncl(`1pximportant}`, 0, ["!important"], {
+      i: true,
+      trimBeforeMatching: false,
+      maxMismatches: 2,
+    }),
+    false,
+    "18.01"
+  );
+  t.equal(
+    matchRightIncl(`1pximportant}`, 1, ["!important"], {
+      i: true,
+      trimBeforeMatching: false,
+      maxMismatches: 2,
+    }),
+    false,
+    "18.02"
+  );
+  t.equal(
+    matchRightIncl(`1pximportant}`, 2, ["!important"], {
+      i: true,
+      trimBeforeMatching: false,
+      maxMismatches: 2,
+    }),
+    false,
+    "18.03"
+  );
+  t.equal(
+    matchRightIncl(`1pximportant}`, 3, ["!important"], {
+      i: true,
+      trimBeforeMatching: false,
+      maxMismatches: 2,
+    }),
+    "!important",
+    "18.04"
+  );
+  t.end();
+});

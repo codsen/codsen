@@ -6,6 +6,7 @@ interface Opts {
     maxMismatches: number;
     firstMustMatch: boolean;
     lastMustMatch: boolean;
+    hungry: boolean;
 }
 declare function matchLeftIncl(str: string, position: number, whatToMatch: (() => string) | string | string[], opts?: Partial<Opts>): boolean | string;
 declare function matchLeft(str: string, position: number, whatToMatch: (() => string) | string | string[], opts?: Partial<Opts>): boolean | string;

@@ -293,12 +293,12 @@ tap.test(
   `13 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, one mismatch`,
   (t) => {
     t.equal(
-      matchRight(`<!--[if gte mso 9]>x<1[endif]-->`, 20, ["![endif]"], {
+      matchRightIncl(`<!--[if gte mso 9]>x<1[endif]-->`, 20, ["<![endif]"], {
         i: true,
         maxMismatches: 2,
         trimBeforeMatching: true,
       }),
-      "![endif]",
+      "<![endif]",
       "13"
     );
     t.end();
@@ -309,12 +309,12 @@ tap.test(
   `14 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      opts.maxMismatches === 2, two mismatches`,
   (t) => {
     t.equal(
-      matchRight(`<!--[if gte mso 9]>x<1[endf]-->`, 20, ["![endif]"], {
+      matchRightIncl(`<!--[if gte mso 9]>x<1[endf]-->`, 20, ["<![endif]"], {
         i: true,
         maxMismatches: 2,
         trimBeforeMatching: true,
       }),
-      "![endif]",
+      "<![endif]",
       "14"
     );
     t.end();
@@ -425,115 +425,122 @@ tap.test(
     // first char, "c" mismatching
     t.equal(matchRight("ab.def", 1, ["cde"]), false, "21.02");
     t.equal(
-      matchRight("ab.def", 1, ["cde"], {
-        maxMismatches: 1,
-      }),
-      "cde",
+      matchRight("ab.def", 1, ["cde"], { maxMismatches: 1 }),
+      false,
       "21.03"
     );
     t.equal(
-      matchRight("ab.def", 1, ["cde"], {
-        maxMismatches: 1,
-        firstMustMatch: true,
-        lastMustMatch: true,
-      }),
+      matchRight("ab.def", 1, ["cde"], { maxMismatches: 1, hungry: false }),
       false,
       "21.04"
     );
     t.equal(
       matchRight("ab.def", 1, ["cde"], {
         maxMismatches: 1,
-        firstMustMatch: true,
-        lastMustMatch: false,
+        hungry: true,
       }),
-      false,
+      "cde",
       "21.05"
     );
+
     t.equal(
       matchRight("ab.def", 1, ["cde"], {
         maxMismatches: 1,
-        firstMustMatch: false,
+        firstMustMatch: true,
         lastMustMatch: true,
       }),
-      "cde",
+      false,
       "21.06"
     );
     t.equal(
       matchRight("ab.def", 1, ["cde"], {
         maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: false,
+      }),
+      false,
+      "21.07"
+    );
+    t.equal(
+      matchRight("ab.def", 1, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: false,
+        lastMustMatch: true,
+      }),
+      false,
+      "21.08"
+    );
+    t.equal(
+      matchRight("ab.def", 1, ["cde"], {
+        maxMismatches: 1,
         firstMustMatch: false,
         lastMustMatch: false,
       }),
-      "cde",
-      "21.07"
-    );
-
-    // second char, "d" mismatching
-    t.equal(matchRight("abc.ef", 1, ["cde"]), false, "21.08");
-    t.equal(
-      matchRight("abc.ef", 1, ["cde"], {
-        maxMismatches: 1,
-      }),
-      "cde",
+      false,
       "21.09"
     );
+
     t.equal(
-      matchRight("abc.ef", 1, ["cde"], {
+      matchRight("ab.def", 1, ["cde"], {
         maxMismatches: 1,
         firstMustMatch: true,
         lastMustMatch: true,
+        hungry: true,
       }),
-      "cde",
+      false,
       "21.10"
     );
     t.equal(
-      matchRight("abc.ef", 1, ["cde"], {
+      matchRight("ab.def", 1, ["cde"], {
         maxMismatches: 1,
         firstMustMatch: true,
         lastMustMatch: false,
+        hungry: true,
       }),
-      "cde",
+      false,
       "21.11"
     );
     t.equal(
-      matchRight("abc.ef", 1, ["cde"], {
+      matchRight("ab.def", 1, ["cde"], {
         maxMismatches: 1,
         firstMustMatch: false,
         lastMustMatch: true,
+        hungry: true,
       }),
       "cde",
       "21.12"
     );
     t.equal(
-      matchRight("abc.ef", 1, ["cde"], {
+      matchRight("ab.def", 1, ["cde"], {
         maxMismatches: 1,
         firstMustMatch: false,
         lastMustMatch: false,
+        hungry: true,
       }),
       "cde",
       "21.13"
     );
 
-    // third char, "e" mismatching
-    t.equal(matchRight("abcd.f", 1, ["cde"]), false, "21.14");
+    // second char, "d" mismatching
+    t.equal(matchRight("abc.ef", 1, ["cde"]), false, "21.14");
     t.equal(
-      matchRight("abcd.f", 1, ["cde"], {
+      matchRight("abc.ef", 1, ["cde"], {
         maxMismatches: 1,
       }),
       "cde",
       "21.15"
     );
     t.equal(
-      matchRight("abcd.f", 1, ["cde"], {
+      matchRight("abc.ef", 1, ["cde"], {
         maxMismatches: 1,
         firstMustMatch: true,
         lastMustMatch: true,
       }),
-      false,
+      "cde",
       "21.16"
     );
     t.equal(
-      matchRight("abcd.f", 1, ["cde"], {
+      matchRight("abc.ef", 1, ["cde"], {
         maxMismatches: 1,
         firstMustMatch: true,
         lastMustMatch: false,
@@ -542,13 +549,108 @@ tap.test(
       "21.17"
     );
     t.equal(
+      matchRight("abc.ef", 1, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: false,
+        lastMustMatch: true,
+      }),
+      "cde",
+      "21.18"
+    );
+    t.equal(
+      matchRight("abc.ef", 1, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: false,
+        lastMustMatch: false,
+      }),
+      "cde",
+      "21.19"
+    );
+
+    t.equal(
+      matchRight("abc.ef", 1, ["cde"], {
+        maxMismatches: 1,
+        hungry: true,
+      }),
+      "cde",
+      "21.20"
+    );
+    t.equal(
+      matchRight("abc.ef", 1, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: true,
+        hungry: true,
+      }),
+      "cde",
+      "21.21"
+    );
+    t.equal(
+      matchRight("abc.ef", 1, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: false,
+        hungry: true,
+      }),
+      "cde",
+      "21.22"
+    );
+    t.equal(
+      matchRight("abc.ef", 1, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: false,
+        lastMustMatch: true,
+        hungry: true,
+      }),
+      "cde",
+      "21.23"
+    );
+    t.equal(
+      matchRight("abc.ef", 1, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: false,
+        lastMustMatch: false,
+        hungry: true,
+      }),
+      "cde",
+      "21.24"
+    );
+
+    // third char, "e" mismatching
+    t.equal(matchRight("abcd.f", 1, ["cde"]), false, "21.25");
+    t.equal(
+      matchRight("abcd.f", 1, ["cde"], {
+        maxMismatches: 1,
+      }),
+      "cde",
+      "21.26"
+    );
+    t.equal(
+      matchRight("abcd.f", 1, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: true,
+      }),
+      false,
+      "21.27"
+    );
+    t.equal(
+      matchRight("abcd.f", 1, ["cde"], {
+        maxMismatches: 1,
+        firstMustMatch: true,
+        lastMustMatch: false,
+      }),
+      "cde",
+      "21.28"
+    );
+    t.equal(
       matchRight("abcd.f", 1, ["cde"], {
         maxMismatches: 1,
         firstMustMatch: false,
         lastMustMatch: true,
       }),
       false,
-      "21.18"
+      "21.29"
     );
     t.equal(
       matchRight("abcd.f", 1, ["cde"], {
@@ -557,7 +659,7 @@ tap.test(
         lastMustMatch: false,
       }),
       "cde",
-      "21.19"
+      "21.30"
     );
     t.end();
   }

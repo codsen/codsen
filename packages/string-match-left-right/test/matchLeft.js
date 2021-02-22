@@ -50,9 +50,20 @@ tap.test(
         maxMismatches: 1,
         firstMustMatch: false, // that's "d"
         lastMustMatch: false, // that's "b"
+        hungry: false,
+      }),
+      false,
+      "03.01"
+    );
+    t.equal(
+      matchLeft("_abc.efghi", 5, ["bcd"], {
+        maxMismatches: 1,
+        firstMustMatch: false, // that's "d"
+        lastMustMatch: false, // that's "b"
+        hungry: true,
       }),
       "bcd",
-      "03.01"
+      "03.02"
     );
     t.equal(
       matchLeft("_abc.efghi", 5, ["bcd"], {
@@ -61,16 +72,27 @@ tap.test(
         lastMustMatch: false, // that's "b"
       }),
       false, // because "d" was not matched
-      "03.02"
+      "03.03"
     );
     t.equal(
       matchLeft("_abc.efghi", 5, ["bcd"], {
         maxMismatches: 1,
         firstMustMatch: false, // that's "d"
         lastMustMatch: true, // that's "b"
+        hungry: false,
+      }),
+      false,
+      "03.04"
+    );
+    t.equal(
+      matchLeft("_abc.efghi", 5, ["bcd"], {
+        maxMismatches: 1,
+        firstMustMatch: false, // that's "d"
+        lastMustMatch: true, // that's "b"
+        hungry: true,
       }),
       "bcd",
-      "03.03"
+      "03.05"
     );
     t.equal(
       matchLeft("_abc.efghi", 5, ["bcd"], {
@@ -79,7 +101,7 @@ tap.test(
         lastMustMatch: true, // that's "b"
       }),
       false,
-      "03.04"
+      "03.06"
     );
 
     //
@@ -91,7 +113,7 @@ tap.test(
         lastMustMatch: false, // that's "b"
       }),
       "bcd",
-      "03.05"
+      "03.07"
     );
     t.equal(
       matchLeft("_ab.defghi", 5, ["bcd"], {
@@ -100,7 +122,7 @@ tap.test(
         lastMustMatch: false, // that's "b"
       }),
       "bcd",
-      "03.06"
+      "03.08"
     );
     t.equal(
       matchLeft("_ab.defghi", 5, ["bcd"], {
@@ -109,7 +131,7 @@ tap.test(
         lastMustMatch: true, // that's "b"
       }),
       "bcd",
-      "03.07"
+      "03.09"
     );
     t.equal(
       matchLeft("_ab.defghi", 5, ["bcd"], {
@@ -118,7 +140,7 @@ tap.test(
         lastMustMatch: true, // that's "b"
       }),
       "bcd",
-      "03.08"
+      "03.10"
     );
 
     //
@@ -130,7 +152,7 @@ tap.test(
         lastMustMatch: true, // that's "b"
       }),
       false,
-      "03.09"
+      "03.11"
     );
     t.equal(
       matchLeft("_a.cdefghi", 5, ["bcd"], {
@@ -139,7 +161,7 @@ tap.test(
         lastMustMatch: true, // that's "b"
       }),
       false,
-      "03.10"
+      "03.12"
     );
     t.equal(
       matchLeft("_a.cdefghi", 5, ["bcd"], {
@@ -148,7 +170,7 @@ tap.test(
         lastMustMatch: false, // that's "b"
       }),
       "bcd",
-      "03.11"
+      "03.13"
     );
     t.equal(
       matchLeft("_a.cdefghi", 5, ["bcd"], {
@@ -157,7 +179,7 @@ tap.test(
         lastMustMatch: false, // that's "b"
       }),
       "bcd",
-      "03.12"
+      "03.14"
     );
 
     t.end();
@@ -201,8 +223,28 @@ tap.test(
         firstMustMatch: false,
         lastMustMatch: false,
       }),
-      "cz",
+      false,
       "04.04"
+    );
+    t.equal(
+      matchLeft("_abc.efghi", 5, ["cz"], {
+        maxMismatches: 1,
+        firstMustMatch: false,
+        lastMustMatch: false,
+        hungry: false,
+      }),
+      false,
+      "04.05"
+    );
+    t.equal(
+      matchLeft("_abc.efghi", 5, ["cz"], {
+        maxMismatches: 1,
+        firstMustMatch: false,
+        lastMustMatch: false,
+        hungry: true,
+      }),
+      "cz",
+      "04.06"
     );
 
     // lastMustMatch=true
@@ -213,7 +255,7 @@ tap.test(
         lastMustMatch: true,
       }),
       false,
-      "04.05"
+      "04.07"
     );
     t.equal(
       matchLeft("_abc.efghi", 4, ["zc"], {
@@ -222,7 +264,7 @@ tap.test(
         lastMustMatch: true,
       }),
       false,
-      "04.06"
+      "04.08"
     );
     t.equal(
       matchLeft("_abc.efghi", 5, ["cz"], {
@@ -231,7 +273,7 @@ tap.test(
         lastMustMatch: true,
       }),
       false,
-      "04.07"
+      "04.09"
     );
     t.equal(
       matchLeft("_abc.efghi", 5, ["cz"], {
@@ -239,8 +281,28 @@ tap.test(
         firstMustMatch: false,
         lastMustMatch: true,
       }),
+      false,
+      "04.10"
+    );
+    t.equal(
+      matchLeft("_abc.efghi", 5, ["cz"], {
+        maxMismatches: 1,
+        firstMustMatch: false,
+        lastMustMatch: true,
+        hungry: false,
+      }),
+      false,
+      "04.11"
+    );
+    t.equal(
+      matchLeft("_abc.efghi", 5, ["cz"], {
+        maxMismatches: 1,
+        firstMustMatch: false,
+        lastMustMatch: true,
+        hungry: true,
+      }),
       "cz",
-      "04.08"
+      "04.12"
     );
     t.end();
   }

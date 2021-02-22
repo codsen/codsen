@@ -168,49 +168,118 @@ tap.test(
 tap.test(
   `07 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      opts.maxMismatches === 1, one char`,
   (t) => {
-    const opts = {
-      maxMismatches: 1,
-    };
+    // hungry=false
+
     t.equal(
-      matchLeftIncl("_abc.efghi", 4, ["bcd"], opts),
-      "bcd",
+      matchLeftIncl("_abc.efghi", 4, ["bcd"], {
+        maxMismatches: 1,
+        hungry: false,
+      }),
+      false,
       "07.01 - d mismatching"
     );
     t.equal(
-      matchLeftIncl("_ab.defghi", 4, ["bcd"], opts),
+      matchLeftIncl("_ab.defghi", 4, ["bcd"], {
+        maxMismatches: 1,
+        hungry: false,
+      }),
       "bcd",
       "07.02 - c mismatching"
     );
     t.equal(
-      matchLeftIncl("_a.cdefghi", 4, ["bcd"], opts),
+      matchLeftIncl("_a.cdefghi", 4, ["bcd"], {
+        maxMismatches: 1,
+        hungry: false,
+      }),
       "bcd",
       "07.03 - b mismatching"
     );
     t.equal(
-      matchLeftIncl(".cdefghi", 2, ["bcd"], opts),
+      matchLeftIncl(".cdefghi", 2, ["bcd"], {
+        maxMismatches: 1,
+        hungry: false,
+      }),
       "bcd",
       "07.04 - string starts with the value"
     );
     t.equal(
-      matchLeftIncl("cdefghi", 1, ["bcd"], opts),
+      matchLeftIncl("cdefghi", 1, ["bcd"], {
+        maxMismatches: 1,
+        hungry: false,
+      }),
       "bcd",
       "07.05 - last char to match would be outside of the str"
     );
     t.equal(
       matchLeftIncl("_a.cdefghi", 4, ["bcd"], {
         maxMismatches: 99,
+        hungry: false,
       }),
       "bcd",
       "07.06"
     );
 
+    // hungry=true
+
+    t.equal(
+      matchLeftIncl("_abc.efghi", 4, ["bcd"], {
+        maxMismatches: 1,
+        hungry: true,
+      }),
+      "bcd",
+      "07.07 - d mismatching"
+    );
+    t.equal(
+      matchLeftIncl("_ab.defghi", 4, ["bcd"], {
+        maxMismatches: 1,
+        hungry: true,
+      }),
+      "bcd",
+      "07.08 - c mismatching"
+    );
+    t.equal(
+      matchLeftIncl("_a.cdefghi", 4, ["bcd"], {
+        maxMismatches: 1,
+        hungry: true,
+      }),
+      "bcd",
+      "07.09 - b mismatching"
+    );
+    t.equal(
+      matchLeftIncl(".cdefghi", 2, ["bcd"], {
+        maxMismatches: 1,
+        hungry: true,
+      }),
+      "bcd",
+      "07.10 - string starts with the value"
+    );
+    t.equal(
+      matchLeftIncl("cdefghi", 1, ["bcd"], {
+        maxMismatches: 1,
+        hungry: true,
+      }),
+      "bcd",
+      "07.11 - last char to match would be outside of the str"
+    );
+    t.equal(
+      matchLeftIncl("_a.cdefghi", 4, ["bcd"], {
+        maxMismatches: 99,
+        hungry: true,
+      }),
+      "bcd",
+      "07.12"
+    );
+
     // ensure that opts object was not mutated:
     t.match(
-      opts,
+      {
+        maxMismatches: 1,
+        hungry: true,
+      },
       {
         maxMismatches: 1,
       },
-      "07.07"
+      "07.13"
     );
     t.end();
   }
@@ -224,6 +293,7 @@ tap.test(
         maxMismatches: 1,
         firstMustMatch: false,
         lastMustMatch: false,
+        hungry: true,
       }),
       "bcd",
       "08.01"
@@ -243,6 +313,7 @@ tap.test(
         maxMismatches: 1,
         firstMustMatch: false,
         lastMustMatch: true,
+        hungry: true,
       }),
       "bcd",
       "08.03"
