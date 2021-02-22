@@ -118,3 +118,224 @@ tap.test(`09 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, set #02`, (t) => {
   );
   t.end();
 });
+
+tap.test(`10`, (t) => {
+  t.equal(
+    matchRight(`.a{padding:1px 2px 3px 4px !important}`, 23, ["!important"], {
+      i: true,
+      trimBeforeMatching: false,
+      maxMismatches: 1,
+    }),
+    false,
+    "10.01"
+  );
+  t.equal(
+    matchRight(`.a{padding:1px 2px 3px 4px !important}`, 23, ["!important"], {
+      i: true,
+      trimBeforeMatching: true,
+      maxMismatches: 1,
+    }),
+    false,
+    "10.02"
+  );
+
+  t.equal(
+    matchRight(`.a{padding:1px 2px 3px 4px !important}`, 23, ["!important"], {
+      i: true,
+      trimBeforeMatching: false,
+      maxMismatches: 2,
+    }),
+    false,
+    "10.03"
+  );
+  t.equal(
+    matchRight(`.a{padding:1px 2px 3px 4px !important}`, 23, ["!important"], {
+      i: true,
+      trimBeforeMatching: true,
+      maxMismatches: 2,
+    }),
+    false,
+    "10.04"
+  );
+  t.end();
+});
+
+tap.test(`11`, (t) => {
+  t.equal(
+    matchRight(`.a{padding:1px 2px 3px 4px !important}`, 24, ["!important"], {
+      i: true,
+      trimBeforeMatching: false,
+      maxMismatches: 0,
+    }),
+    false,
+    "11.01"
+  );
+  t.equal(
+    matchRight(`.a{padding:1px 2px 3px 4px !important}`, 24, ["!important"], {
+      i: true,
+      trimBeforeMatching: true,
+      maxMismatches: 0,
+    }),
+    false,
+    "11.02"
+  );
+
+  t.equal(
+    matchRight(`.a{padding:1px 2px 3px 4px !important}`, 24, ["!important"], {
+      i: true,
+      trimBeforeMatching: false,
+      maxMismatches: 1,
+    }),
+    false,
+    "11.03"
+  );
+  t.equal(
+    matchRight(`.a{padding:1px 2px 3px 4px !important}`, 24, ["!important"], {
+      i: true,
+      trimBeforeMatching: true,
+      maxMismatches: 1,
+    }),
+    false,
+    "11.04"
+  );
+
+  t.equal(
+    matchRight(`.a{padding:1px 2px 3px 4px !important}`, 24, ["!important"], {
+      i: true,
+      trimBeforeMatching: false,
+      maxMismatches: 2,
+    }),
+    false,
+    "11.05"
+  );
+  t.equal(
+    matchRight(`.a{padding:1px 2px 3px 4px !important}`, 24, ["!important"], {
+      i: true,
+      trimBeforeMatching: true,
+      maxMismatches: 2,
+    }),
+    false,
+    "11.06"
+  );
+  t.end();
+});
+
+tap.test(`12`, (t) => {
+  t.equal(
+    matchRight(`.a{padding:1px 2px 3px 4px !impotant}`, 26, ["!important"], {
+      i: true,
+      trimBeforeMatching: false,
+      maxMismatches: 0,
+    }),
+    false,
+    "12.01"
+  );
+  t.equal(
+    matchRight(`.a{padding:1px 2px 3px 4px !impotant}`, 26, ["!important"], {
+      i: true,
+      trimBeforeMatching: true,
+      maxMismatches: 0,
+    }),
+    false,
+    "12.02"
+  );
+
+  t.equal(
+    matchRight(`.a{padding:1px 2px 3px 4px !impotant}`, 26, ["!important"], {
+      i: true,
+      trimBeforeMatching: false,
+      maxMismatches: 1,
+    }),
+    "!important",
+    "12.03"
+  );
+  t.equal(
+    matchRight(`.a{padding:1px 2px 3px 4px !impotant}`, 26, ["!important"], {
+      i: true,
+      trimBeforeMatching: true,
+      maxMismatches: 1,
+    }),
+    "!important",
+    "12.04"
+  );
+
+  t.equal(
+    matchRight(`.a{padding:1px 2px 3px 4px !impotant}`, 26, ["!important"], {
+      i: true,
+      trimBeforeMatching: false,
+      maxMismatches: 2,
+    }),
+    "!important",
+    "12.05"
+  );
+  t.equal(
+    matchRight(`.a{padding:1px 2px 3px 4px !impotant}`, 26, ["!important"], {
+      i: true,
+      trimBeforeMatching: true,
+      maxMismatches: 2,
+    }),
+    "!important",
+    "12.06"
+  );
+  t.end();
+});
+
+tap.test(`13`, (t) => {
+  t.equal(
+    matchRight(`.a{padding:1px 2px 3px 4px !IMPOR.TANT}`, 26, ["!important"], {
+      i: true,
+      trimBeforeMatching: false,
+      maxMismatches: 0,
+    }),
+    false,
+    "13.01"
+  );
+  t.equal(
+    matchRight(`.a{padding:1px 2px 3px 4px !IMPOR.TANT}`, 26, ["!important"], {
+      i: true,
+      trimBeforeMatching: true,
+      maxMismatches: 0,
+    }),
+    false,
+    "13.02"
+  );
+
+  t.equal(
+    matchRight(`.a{padding:1px 2px 3px 4px !IMPOR.TANT}`, 26, ["!important"], {
+      i: true,
+      trimBeforeMatching: false,
+      maxMismatches: 1,
+    }),
+    "!important",
+    "13.03"
+  );
+  t.equal(
+    matchRight(`.a{padding:1px 2px 3px 4px !IMPOR.TANT}`, 26, ["!important"], {
+      i: true,
+      trimBeforeMatching: true,
+      maxMismatches: 1,
+    }),
+    "!important",
+    "13.04"
+  );
+
+  t.equal(
+    matchRight(`.a{padding:1px 2px 3px 4px !IMPOR.TANT}`, 26, ["!important"], {
+      i: true,
+      trimBeforeMatching: false,
+      maxMismatches: 2,
+    }),
+    "!important",
+    "13.05"
+  );
+  t.equal(
+    matchRight(`.a{padding:1px 2px 3px 4px !IMPOR.TANT}`, 26, ["!important"], {
+      i: true,
+      trimBeforeMatching: true,
+      maxMismatches: 2,
+    }),
+    "!important",
+    "13.06"
+  );
+  t.end();
+});
