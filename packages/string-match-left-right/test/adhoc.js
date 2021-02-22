@@ -339,3 +339,80 @@ tap.test(`13`, (t) => {
   );
   t.end();
 });
+
+tap.test(`14`, (t) => {
+  t.equal(
+    matchRightIncl(`<style>.a{color:red!IMPOTANT;}`, 18, ["!important"], {
+      i: true,
+      trimBeforeMatching: true,
+      maxMismatches: 2,
+    }),
+    false,
+    "14.01"
+  );
+  t.equal(
+    matchRightIncl(`<style>.a{color:red!IMPOTANT;}`, 19, ["!important"], {
+      i: true,
+      trimBeforeMatching: true,
+      maxMismatches: 2,
+    }),
+    "!important",
+    "14.02"
+  );
+  t.equal(
+    matchRightIncl(`<style>.a{color:red!IMPOTANT;}`, 18, ["!important"], {
+      i: true,
+      trimBeforeMatching: false,
+      maxMismatches: 2,
+    }),
+    false,
+    "14.03"
+  );
+  t.equal(
+    matchRightIncl(`<style>.a{color:red!IMPOTANT;}`, 19, ["!important"], {
+      i: true,
+      trimBeforeMatching: false,
+      maxMismatches: 2,
+    }),
+    "!important",
+    "14.04"
+  );
+
+  t.equal(
+    matchRightIncl(`<style>.a{color:red!IMPOTANT;}`, 18, ["!important"], {
+      i: false,
+      trimBeforeMatching: true,
+      maxMismatches: 2,
+    }),
+    false,
+    "14.05"
+  );
+  t.equal(
+    matchRightIncl(`<style>.a{color:red!IMPOTANT;}`, 19, ["!important"], {
+      i: false,
+      trimBeforeMatching: true,
+      maxMismatches: 2,
+    }),
+    false,
+    "14.06"
+  );
+  t.equal(
+    matchRightIncl(`<style>.a{color:red!IMPOTANT;}`, 18, ["!important"], {
+      i: false,
+      trimBeforeMatching: false,
+      maxMismatches: 2,
+    }),
+    false,
+    "14.07"
+  );
+  t.equal(
+    matchRightIncl(`<style>.a{color:red!IMPOTANT;}`, 19, ["!important"], {
+      i: false,
+      trimBeforeMatching: false,
+      maxMismatches: 2,
+    }),
+    false,
+    "14.08"
+  );
+  t.end();
+});
