@@ -1,4 +1,4 @@
-import { matchLeft, matchRight } from "string-match-left-right";
+import { matchLeft, matchRight, matchRightIncl } from "string-match-left-right";
 import { Token, Layer, LayerEsp } from "./util";
 
 // This is an extracted logic which detects where token of a particular kind
@@ -46,7 +46,7 @@ function startsHtmlComment(
           firstMustMatch: true, // <--- FUZZY MATCH, BUT EXCL. MARK IS OBLIGATORY
           trimBeforeMatching: true,
         }) ||
-          matchRight(str, i, ["![endif]"], {
+          matchRightIncl(str, i, ["<![endif]"], {
             i: true,
             maxMismatches: 2,
             trimBeforeMatching: true,
@@ -58,7 +58,7 @@ function startsHtmlComment(
         }) &&
         (token.type !== "comment" || token.kind !== "not")) ||
       (str[i] === "-" &&
-        matchRight(str, i, ["->"], {
+        matchRightIncl(str, i, ["-->"], {
           trimBeforeMatching: true,
         }) &&
         (token.type !== "comment" ||

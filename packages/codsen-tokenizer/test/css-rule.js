@@ -230,9 +230,167 @@ tap.test(`03 - one rule, no linebreaks`, (t) => {
   t.end();
 });
 
-tap.test(`04 - one rule, no linebreaks`, (t) => {
+tap.test(`04 - one rule, value from multiple chunks`, (t) => {
   const gathered = [];
-  ct(`<style>.a{b:c!important;}</style>`, {
+  ct(`<style>.a{  padding:  1px  2px  3px  4px  }`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: "<style>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
+        tagName: "style",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+      {
+        type: "rule",
+        start: 7,
+        end: 43,
+        value: ".a{  padding:  1px  2px  3px  4px  }",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: 42,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            type: "text",
+            start: 10,
+            end: 12,
+            value: "  ",
+          },
+          {
+            start: 12,
+            end: 40,
+            property: "padding",
+            propertyStarts: 12,
+            propertyEnds: 19,
+            value: "1px  2px  3px  4px",
+            valueStarts: 22,
+            valueEnds: 40,
+            importantStarts: null,
+            importantEnds: null,
+            important: null,
+            colon: 19,
+            semi: null,
+          },
+          {
+            type: "text",
+            start: 40,
+            end: 42,
+            value: "  ",
+          },
+        ],
+      },
+    ],
+    "04"
+  );
+  t.end();
+});
+
+tap.test(`05 - one rule, value from multiple chunks, important`, (t) => {
+  const gathered = [];
+  ct(`<style>.a{  padding:  1px  2px  3px  4px  !important  }`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: "<style>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
+        tagName: "style",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+      {
+        type: "rule",
+        start: 7,
+        end: 55,
+        value: ".a{  padding:  1px  2px  3px  4px  !important  }",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: 54,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            type: "text",
+            start: 10,
+            end: 12,
+            value: "  ",
+          },
+          {
+            start: 12,
+            end: 52,
+            property: "padding",
+            propertyStarts: 12,
+            propertyEnds: 19,
+            value: "1px  2px  3px  4px",
+            valueStarts: 22,
+            valueEnds: 40,
+            importantStarts: 42,
+            importantEnds: 52,
+            important: "!important",
+            colon: 19,
+            semi: null,
+          },
+          {
+            type: "text",
+            start: 52,
+            end: 54,
+            value: "  ",
+          },
+        ],
+      },
+    ],
+    "05"
+  );
+  t.end();
+});
+
+tap.test(`06 - one rule, no linebreaks`, (t) => {
+  const gathered = [];
+  ct(`<style>.a{b:c!important;}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -291,28 +449,13 @@ tap.test(`04 - one rule, no linebreaks`, (t) => {
           },
         ],
       },
-      {
-        type: "tag",
-        start: 25,
-        end: 33,
-        value: "</style>",
-        tagNameStartsAt: 27,
-        tagNameEndsAt: 32,
-        tagName: "style",
-        recognised: true,
-        closing: true,
-        void: false,
-        pureHTML: true,
-        kind: null,
-        attribs: [],
-      },
     ],
-    "04"
+    "06"
   );
   t.end();
 });
 
-tap.test(`05`, (t) => {
+tap.test(`07`, (t) => {
   const gathered = [];
   ct(`<style>.a{color: red !important ;}`, {
     tagCb: (obj) => {
@@ -374,7 +517,7 @@ tap.test(`05`, (t) => {
         ],
       },
     ],
-    "05"
+    "07"
   );
   t.end();
 });
@@ -414,7 +557,7 @@ tap.todo(`<style>.a{b:c 1important;`);
 tap.todo(`<style.a{b:c !important;}</style>`);
 tap.todo(`<style\n.a{b:c !important;}</style>`);
 
-tap.test(`32 - one rule, no linebreaks`, (t) => {
+tap.test(`34 - one rule, no linebreaks`, (t) => {
   const gathered = [];
   ct(`<style>.a{b:c;d:e;f:g;}</style>`, {
     tagCb: (obj) => {
@@ -489,12 +632,12 @@ tap.test(`32 - one rule, no linebreaks`, (t) => {
         },
       ],
     },
-    "32"
+    "34"
   );
   t.end();
 });
 
-tap.test(`33 - one rule, linebreaks`, (t) => {
+tap.test(`35 - one rule, linebreaks`, (t) => {
   const gathered = [];
   ct(
     `<style>
@@ -544,12 +687,12 @@ tap.test(`33 - one rule, linebreaks`, (t) => {
         end: 24,
       },
     ],
-    "33"
+    "35"
   );
   t.end();
 });
 
-tap.test(`34 - two selectors`, (t) => {
+tap.test(`36 - two selectors`, (t) => {
   const gathered = [];
   ct(`<style>.a,.b{c}</style>`, {
     tagCb: (obj) => {
@@ -591,12 +734,12 @@ tap.test(`34 - two selectors`, (t) => {
         end: 23,
       },
     ],
-    "34"
+    "36"
   );
   t.end();
 });
 
-tap.test(`35 - one rule, no linebreaks`, (t) => {
+tap.test(`37 - one rule, no linebreaks`, (t) => {
   const gathered = [];
   ct(
     `<style>
@@ -650,12 +793,12 @@ tap.test(`35 - one rule, no linebreaks`, (t) => {
         end: 29,
       },
     ],
-    "35"
+    "37"
   );
   t.end();
 });
 
-tap.test(`36 - dangling comma`, (t) => {
+tap.test(`38 - dangling comma`, (t) => {
   const gathered = [];
   ct(`<style>.a,.b,{c}</style>`, {
     tagCb: (obj) => {
@@ -697,12 +840,12 @@ tap.test(`36 - dangling comma`, (t) => {
         end: 24,
       },
     ],
-    "36"
+    "38"
   );
   t.end();
 });
 
-tap.test(`37 - double comma`, (t) => {
+tap.test(`39 - double comma`, (t) => {
   const gathered = [];
   ct(`<style>.a,,.b{c}</style>`, {
     tagCb: (obj) => {
@@ -744,12 +887,12 @@ tap.test(`37 - double comma`, (t) => {
         end: 24,
       },
     ],
-    "37"
+    "39"
   );
   t.end();
 });
 
-tap.test(`38 - esp tags can't have curlies`, (t) => {
+tap.test(`40 - esp tags can't have curlies`, (t) => {
   const gathered = [];
   ct(`<style>.b%{c}</style>`, {
     tagCb: (obj) => {
@@ -806,12 +949,12 @@ tap.test(`38 - esp tags can't have curlies`, (t) => {
         attribs: [],
       },
     ],
-    "38"
+    "40"
   );
   t.end();
 });
 
-tap.test(`39 - root level css declarations`, (t) => {
+tap.test(`41 - root level css declarations`, (t) => {
   const gathered = [];
   ct(
     `<head>
@@ -907,12 +1050,12 @@ tap.test(`39 - root level css declarations`, (t) => {
         ],
       },
     ],
-    "39"
+    "41"
   );
   t.end();
 });
 
-tap.test(`40 - @media`, (t) => {
+tap.test(`42 - @media`, (t) => {
   const gathered = [];
   ct(
     `<head>
@@ -1292,12 +1435,12 @@ tap.test(`40 - @media`, (t) => {
         attribs: [],
       },
     ],
-    "40"
+    "42"
   );
   t.end();
 });
 
-tap.test(`41 - parent selector ">" - 1`, (t) => {
+tap.test(`43 - parent selector ">" - 1`, (t) => {
   const gathered = [];
   ct(`<style>ab>cd#ef {display:block;}</style>`, {
     tagCb: (obj) => {
@@ -1375,12 +1518,12 @@ tap.test(`41 - parent selector ">" - 1`, (t) => {
         attribs: [],
       },
     ],
-    "41"
+    "43"
   );
   t.end();
 });
 
-tap.test(`42 - parent selector ">" - 2`, (t) => {
+tap.test(`44 - parent selector ">" - 2`, (t) => {
   const gathered = [];
   ct(`<style>\na > something#here {display:block;}`, {
     tagCb: (obj) => {
@@ -1448,12 +1591,12 @@ tap.test(`42 - parent selector ">" - 2`, (t) => {
         ],
       },
     ],
-    "42"
+    "44"
   );
   t.end();
 });
 
-tap.test(`43 unfinished code`, (t) => {
+tap.test(`45 unfinished code`, (t) => {
   const gathered = [];
   ct(`<style>sup{`, {
     tagCb: (obj) => {
@@ -1499,12 +1642,12 @@ tap.test(`43 unfinished code`, (t) => {
         properties: [],
       },
     ],
-    "43"
+    "45"
   );
   t.end();
 });
 
-tap.test(`44`, (t) => {
+tap.test(`46`, (t) => {
   const gathered = [];
   ct(`<style>.a{color:red }`, {
     tagCb: (obj) => {
@@ -1572,12 +1715,12 @@ tap.test(`44`, (t) => {
         ],
       },
     ],
-    "44"
+    "46"
   );
   t.end();
 });
 
-tap.test(`45`, (t) => {
+tap.test(`47`, (t) => {
   const gathered = [];
   ct(`<style>.a { b : c    `, {
     tagCb: (obj) => {
@@ -1651,12 +1794,12 @@ tap.test(`45`, (t) => {
         ],
       },
     ],
-    "45"
+    "47"
   );
   t.end();
 });
 
-tap.test(`46`, (t) => {
+tap.test(`48`, (t) => {
   const gathered = [];
   ct(`<style>.a { b :    `, {
     tagCb: (obj) => {
@@ -1730,14 +1873,14 @@ tap.test(`46`, (t) => {
         ],
       },
     ],
-    "46"
+    "48"
   );
   t.end();
 });
 
-tap.test(`47`, (t) => {
+tap.test(`49`, (t) => {
   const gathered = [];
-  ct(`<style>.a{color: red ! float: left}</style>`, {
+  ct(`<style>.a{color: red ! float: left}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
@@ -1817,28 +1960,13 @@ tap.test(`47`, (t) => {
           },
         ],
       },
-      {
-        type: "tag",
-        start: 35,
-        end: 43,
-        value: "</style>",
-        tagNameStartsAt: 37,
-        tagNameEndsAt: 42,
-        tagName: "style",
-        recognised: true,
-        closing: true,
-        void: false,
-        pureHTML: true,
-        kind: null,
-        attribs: [],
-      },
     ],
-    "47"
+    "49"
   );
   t.end();
 });
 
-tap.test(`48`, (t) => {
+tap.test(`50`, (t) => {
   const gathered = [];
   ct(`<style>.a{color: red !important float: left}</style>`, {
     tagCb: (obj) => {
@@ -1936,18 +2064,152 @@ tap.test(`48`, (t) => {
         attribs: [],
       },
     ],
-    "48"
+    "50"
   );
   t.end();
 });
 
-tap.todo(`49`, (t) => {
+tap.test(`51`, (t) => {
+  const gathered = [];
+  ct(`<style>.a{padding:1px 2px 3px 4px !important}`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: "<style>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
+        tagName: "style",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+      {
+        type: "rule",
+        start: 7,
+        end: 45,
+        value: ".a{padding:1px 2px 3px 4px !important}",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: 44,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            start: 10,
+            end: 44,
+            property: "padding",
+            propertyStarts: 10,
+            propertyEnds: 17,
+            value: "1px 2px 3px 4px",
+            valueStarts: 18,
+            valueEnds: 33,
+            importantStarts: 34,
+            importantEnds: 44,
+            important: "!important",
+            colon: 17,
+            semi: null,
+          },
+        ],
+      },
+    ],
+    "51"
+  );
+  t.end();
+});
+
+tap.test(`52 - no space or excl. mark`, (t) => {
+  const gathered = [];
+  ct(`<style>.a{color:1pximportant}`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: "<style>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
+        tagName: "style",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+      {
+        type: "rule",
+        start: 7,
+        end: 29,
+        value: ".a{color:1pximportant}",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: 28,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            start: 10,
+            end: 28,
+            property: "color",
+            propertyStarts: 10,
+            propertyEnds: 15,
+            value: "1px",
+            valueStarts: 16,
+            valueEnds: 19,
+            importantStarts: 19,
+            importantEnds: 28,
+            important: "important",
+            colon: 15,
+            semi: null,
+          },
+        ],
+      },
+    ],
+    "52"
+  );
+  t.end();
+});
+
+tap.todo(`53`, (t) => {
   const gathered = [];
   ct(`<style>.a{color: red important float: left}</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(gathered, [], "49");
+  t.strictSame(gathered, [], "53");
   t.end();
 });

@@ -8,7 +8,7 @@ tap.test(
   `01 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - semi missing between two rules`,
   (t) => {
     const gathered = [];
-    ct(`<div style="float:left color:red">z</div>`, {
+    ct(`<div style="float:left color:red">`, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
@@ -83,27 +83,6 @@ tap.test(
               attribLeft: 3,
             },
           ],
-        },
-        {
-          type: "text",
-          start: 34,
-          end: 35,
-          value: "z",
-        },
-        {
-          type: "tag",
-          start: 35,
-          end: 41,
-          value: "</div>",
-          tagNameStartsAt: 37,
-          tagNameEndsAt: 40,
-          tagName: "div",
-          recognised: true,
-          closing: true,
-          void: false,
-          pureHTML: true,
-          kind: null,
-          attribs: [],
         },
       ],
       "01"
@@ -1469,7 +1448,7 @@ tap.test(
   `16 - ${`\u001b[${36}m${`rule`}\u001b[${39}m`} - quoted property value, semi #3`,
   (t) => {
     const gathered = [];
-    ct(`<div style="float:"left";">z</div>`, {
+    ct(`<div style="float:"left";">`, {
       tagCb: (obj) => {
         gathered.push(obj);
       },
@@ -1523,27 +1502,6 @@ tap.test(
               attribLeft: 3,
             },
           ],
-        },
-        {
-          type: "text",
-          start: 27,
-          end: 28,
-          value: "z",
-        },
-        {
-          type: "tag",
-          start: 28,
-          end: 34,
-          value: "</div>",
-          tagNameStartsAt: 30,
-          tagNameEndsAt: 33,
-          tagName: "div",
-          recognised: true,
-          closing: true,
-          void: false,
-          pureHTML: true,
-          kind: null,
-          attribs: [],
         },
       ],
       "16"
