@@ -2397,7 +2397,8 @@ var defaults$1 = {
   trimCharsBeforeMatching: [],
   maxMismatches: 0,
   firstMustMatch: false,
-  lastMustMatch: false
+  lastMustMatch: false,
+  hungry: false
 };
 
 var defaultGetNextIdx = function defaultGetNextIdx(index) {
@@ -2424,9 +2425,22 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 
   if (position >= str.length && !special) {
     return false;
-  }
+  } // The "charsToCheckCount" varies, it decreases with skipped characters,
+  // as long as "maxMismatches" allows. It's not the count of how many
+  // characters de-facto have been matched from the source.
 
-  var charsToCheckCount = special ? 1 : whatToMatchVal.length;
+
+  var charsToCheckCount = special ? 1 : whatToMatchVal.length; // this is the counter of real characters matched. It is not reduced
+  // from the holes in matched. For example, if source is "abc" and
+  // maxMismatches=1 and we have "ac", result of the match will be true,
+  // the following var will be equal to 2, meaning we matched two
+  // characters:
+
+  var charsMatchedTotal = 0; // used to catch frontal false positives, where too-eager matching
+  // depletes the mismatches allowance before precisely matching the exact
+  // string that follows, yielding too early false-positive start
+
+  var patienceReducedBeforeFirstMatch = false;
   var lastWasMismatched = false; // value is "false" or index of where it was activated
   // if no character was ever matched, even through if opts.maxMismatches
   // would otherwise allow to skip characters, this will act as a last
@@ -2435,11 +2449,29 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 
   var atLeastSomethingWasMatched = false;
   var patience = opts.maxMismatches;
-  var i = position;
+  var i = position; // internal-use flag, not the same as "atLeastSomethingWasMatched":
+
   var somethingFound = false; // these two drive opts.firstMustMatch and opts.lastMustMatch:
 
   var firstCharacterMatched = false;
-  var lastCharacterMatched = false;
+  var lastCharacterMatched = false; // bail early if there's whitespace in front, imagine:
+  // abc important}
+  //   ^
+  //  start, match ["!important"], matchRightIncl()
+  //
+  // in case above, "c" consumed 1 patience, let's say 1 is left,
+  // we stumble upon "i" where "!" is missing. "c" is false start.
+
+  function whitespaceInFrontOfFirstChar() {
+    return (// it's a first letter match
+      charsMatchedTotal === 1 && // and character in front exists
+      // str[i - 1] &&
+      // and it's whitespace
+      // !str[i - 1].trim() &&
+      // some patience has been consumed already
+      patience < opts.maxMismatches - 1
+    );
+  }
 
   while (str[i]) {
     var nextIdx = getNextIdx(i);
@@ -2478,17 +2510,50 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 
 
       if (charsToCheckCount === whatToMatchVal.length) {
-        firstCharacterMatched = true;
+        firstCharacterMatched = true; // now, if the first character was matched and yet, patience was
+        // reduced already, this means there's a false beginning in front
+
+        if (patience !== opts.maxMismatches) {
+          return false;
+        }
       } else if (charsToCheckCount === 1) {
         lastCharacterMatched = true;
       }
 
       charsToCheckCount -= 1;
+      charsMatchedTotal++; // bail early if there's whitespace in front, imagine:
+      // abc important}
+      //   ^
+      //  start, match ["!important"], matchRightIncl()
+      //
+      // in case above, "c" consumed 1 patience, let's say 1 is left,
+      // we stumble upon "i" where "!" is missing. "c" is false start.
 
-      if (charsToCheckCount < 1) {
-        return i;
+      if (whitespaceInFrontOfFirstChar()) {
+        return false;
+      }
+
+      if (!charsToCheckCount) {
+        return (// either it was not a perfect match
+          charsMatchedTotal !== whatToMatchVal.length || // or it was, and in that case, no patience was reduced
+          // (if a perfect match was found, yet some "patience" was reduced,
+          // that means we have false positive characters)
+          patience === opts.maxMismatches || // mind you, it can be a case of rogue characters in-between
+          // the what was matched, imagine:
+          // source: "abxcd", matching ["bc"], maxMismatches=1
+          // in above case, charsMatchedTotal === 2 and whatToMatchVal ("bc") === 2
+          // - we want to exclude cases of frontal false positives, like:
+          // source: "xy abc", match "abc", maxMismatches=2, start at 0
+          //          ^
+          //       match form here to the right
+          !patienceReducedBeforeFirstMatch ? i : false
+        );
       }
     } else {
+      if (!patienceReducedBeforeFirstMatch && !charsMatchedTotal) {
+        patienceReducedBeforeFirstMatch = true;
+      }
+
       if (opts.maxMismatches && patience && i) {
         patience -= 1; // the bigger the maxMismatches, the further away we must check for
         // alternative matches
@@ -2500,11 +2565,27 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 
           if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && ( // ensure we're not skipping the first enforced character:
           !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+            charsMatchedTotal++; // bail early if there's whitespace in front, imagine:
+            // abc important}
+            //   ^
+            //  start, match ["!important"], matchRightIncl()
+            //
+            // in case above, "c" consumed 1 patience, let's say 1 is left,
+            // we stumble upon "i" where "!" is missing. "c" is false start.
+
+            if (whitespaceInFrontOfFirstChar()) {
+              return false;
+            }
+
             charsToCheckCount -= 2;
             somethingFound = true;
             break;
           } else if (nextCharInSource && nextCharToCompareAgainst && (!opts.i && nextCharInSource === nextCharToCompareAgainst || opts.i && nextCharInSource.toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && ( // ensure we're not skipping the first enforced character:
           !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+            if (!charsMatchedTotal && !opts.hungry) {
+              return false;
+            }
+
             charsToCheckCount -= 1;
             somethingFound = true;
             break;
@@ -4078,7 +4159,7 @@ function startsHtmlComment(str, i, token, layers) {
     maxMismatches: 1,
     firstMustMatch: true,
     trimBeforeMatching: true
-  }) || matchRight(str, i, ["![endif]"], {
+  }) || matchRightIncl(str, i, ["<![endif]"], {
     i: true,
     maxMismatches: 2,
     trimBeforeMatching: true
@@ -4086,7 +4167,7 @@ function startsHtmlComment(str, i, token, layers) {
     i: true,
     maxMismatches: 1,
     trimBeforeMatching: true
-  }) && (token.type !== "comment" || token.kind !== "not") || str[i] === "-" && matchRight(str, i, ["->"], {
+  }) && (token.type !== "comment" || token.kind !== "not") || str[i] === "-" && matchRightIncl(str, i, ["-->"], {
     trimBeforeMatching: true
   }) && (token.type !== "comment" || !token.closing && token.kind !== "not") && !matchLeft(str, i, "<", {
     trimBeforeMatching: true,
@@ -4221,7 +4302,7 @@ function startsEsp(str, i, token, layers, withinStyle) {
   str[i] === "-" && str[i + 1] === "-" && str[i + 2] === ">" && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-";
   return !!res;
 }
-var importantStartsRegexp = /^\s*!?\s*[a-zA-Z]+(?:[\s;}<>'"]|$)/gm;
+var importantStartsRegexp = /^\s*!?\s*[a-zA-Z0-9]+(?:[\s;}<>'"]|$)/gm;
 var defaults$2 = {
   tagCb: null,
   tagCbLookahead: 0,
@@ -4882,6 +4963,15 @@ function tokenizer(str, originalOpts) {
 
 
     if (isLatinLetter(str[_i]) && isLatinLetter(str[~-_i]) && isLatinLetter(str[_i + 1])) {
+      // <style>.a{color:1pximportant}
+      //                    ^
+      //                  mangled !important
+      if (property && property.valueStarts && !property.valueEnds && !property.importantStarts && str.startsWith("important", _i)) {
+        property.valueEnds = _i;
+        property.value = str.slice(property.valueStarts, _i);
+        property.importantStarts = _i;
+      }
+
       i = _i;
       return "continue";
     }
@@ -5655,13 +5745,21 @@ function tokenizer(str, originalOpts) {
       } else if (!token.type) {
         initToken("text", _i);
       }
-    } // catch the end of a css property (with or without !important)
+    }
+
+    var R1 = ";'\"{}<>".includes(str[right(str, _i - 1)]);
+    var R2 = matchRightIncl(str, _i, ["!important"], {
+      i: true,
+      trimBeforeMatching: true,
+      maxMismatches: 2
+    }); // catch the end of a css property (with or without !important)
     // -------------------------------------------------------------------------
 
     /* istanbul ignore else */
 
-
-    if (!doNothing && property && (property.valueStarts && !property.valueEnds && str[rightVal] !== "!" || property.importantStarts && !property.importantEnds) && (!property.valueEnds || str[rightVal] !== ";") && ( // either end of string was reached
+    if (!doNothing && property && (property.valueStarts && !property.valueEnds && str[rightVal] !== "!" && ( // either non-whitespace character doesn't exist on the right
+    !rightVal || // or at that character !important does not start
+    R1) || property.importantStarts && !property.importantEnds) && (!property.valueEnds || str[rightVal] !== ";") && ( // either end of string was reached
     !str[_i] || // or it's a whitespace
     !str[_i].trim() || // or it's a semicolon after a value
     !property.valueEnds && str[_i] === ";" || // or we reached the end of the attribute
@@ -5702,47 +5800,118 @@ function tokenizer(str, originalOpts) {
     /* istanbul ignore else */
 
 
-    if (!doNothing && property && (property.valueStarts && !property.valueEnds || property.propertyEnds && !property.valueStarts && !rightVal) && str[_i] && (!str[_i].trim() || str[_i] === "!" || str[_i] === ";")) {
-      if (property.valueStarts && !property.valueEnds) {
-        property.valueEnds = _i;
-        property.value = str.slice(property.valueStarts, _i);
-      } // it depends what's on the right, is it !important (considering mangled)
-      // <div style="float:left impotant">
-      //                       ^
-      //               we're here
-      //
-      // or a new property without semi:
-      // <div style="float:left color:red">
-      //                       ^
-      //               we're here
-      //
-      // or spaced out semi:
-      // <div style="float:left  ;">
-      //                       ^
-      //               we're here
+    if (!doNothing && // token.type === "rule" &&
+    property && property.valueStarts && !property.valueEnds) {
+      if ( // either end was reached
+      !str[_i] || // or terminating characters (semi etc) follow
+      R1 || // or !important starts
+      R2 || str[right(str, _i - 1)] === "!" || // normal head css styles:
+      ";}".includes(str[_i]) && (!attrib || !attrib.attribName || attrib.attribName !== "style") || // inline css styles within html
+      ";'\"".includes(str[_i]) && attrib && attrib.attribName === "style" && // it's real quote, not rogue double-wrapping around the value
+      ifQuoteThenAttrClosingQuote(_i) || // it's a whitespace chunk with linebreaks
+      rightVal && !str[_i].trim() && (str.slice(_i, rightVal).includes("\n") || str.slice(_i, rightVal).includes("\r"))) {
+        if (lastNonWhitespaceCharAt && ( // it's not a quote
+        !"'\"".includes(str[_i]) || // there's nothing on the right
+        !rightVal || // or it is a quote, but there's no quote on the right
+        !"'\";".includes(str[rightVal]))) {
+          property.valueEnds = lastNonWhitespaceCharAt + 1;
+          property.value = str.slice(property.valueStarts, lastNonWhitespaceCharAt + 1);
+        }
 
-      /* istanbul ignore else */
+        if (str[_i] === ";") {
+          property.semi = _i;
+        } else if ( // it's whitespace
+        str[_i] && !str[_i].trim() && // semicolon follows
+        str[rightVal] === ";") {
+          property.semi = rightVal;
+        }
+
+        if ( // if semicolon has been spotted...
+        property.semi) {
+          // set the ending too
+          property.end = property.semi + 1; // happy path, clean code has "end" at semi
+        }
+
+        if ( // if there's no semicolon in the view
+        !property.semi && // and semi is not coming next
+        !R1 && // and !important is not following
+        !R2 && str[right(str, _i - 1)] !== "!" && // and property hasn't ended
+        !property.end) {
+          // we need to end it because this is it
+          property.end = _i;
+        }
+
+        if (property.end) {
+          // push and init and patch up to resume
+          if (property.end > _i) {
+            // if ending is in the future, skip everything up to it
+            doNothing = property.end;
+          }
+
+          pushProperty(property);
+          propertyReset();
+        }
+      } else if (str[_i] === ":" && property && property.colon && property.colon < _i && lastNonWhitespaceCharAt && property.colon + 1 < lastNonWhitespaceCharAt) {
+        // .a{b:c d:e;}
+        //         ^
+        //  we're here
+        // // semicolon is missing...
+        // traverse backwards from "lastNonWhitespaceCharAt", just in case
+        // there's space before colon, .a{b:c d :e;}
+        //                                      ^
+        //                               we're here
+        //
+        // we're looking to pinpoint where one rule ends and another starts.
+        var split = [];
+
+        if (right(str, property.colon)) {
+          split = str.slice(right(str, property.colon), lastNonWhitespaceCharAt + 1).split(/\s+/);
+        }
+
+        if (split.length === 2) {
+          // it's missing semicol, like: .a{b:c d:e;}
+          //                                 ^   ^
+          //                                 |gap| we split
+          //
+          property.valueEnds = property.valueStarts + split[0].length;
+          property.value = str.slice(property.valueStarts, property.valueEnds);
+          property.end = property.valueEnds; // push and init and patch up to resume
+
+          pushProperty(property); // backup the values before wiping the property:
+
+          var whitespaceStarts = property.end;
+          var newPropertyStarts = lastNonWhitespaceCharAt + 1 - split[1].length;
+          propertyReset();
+          pushProperty({
+            type: "text",
+            start: whitespaceStarts,
+            end: newPropertyStarts,
+            value: str.slice(whitespaceStarts, newPropertyStarts)
+          });
+          property.start = newPropertyStarts;
+          property.propertyStarts = newPropertyStarts;
+        }
+      } else if (str[_i] === "/" && str[rightVal] === "*") {
+        // comment starts
+        // <a style="color: red/* zzz */">
+        //                     ^
+        //                we're here
+
+        /* istanbul ignore else */
+        if (property.valueStarts && !property.valueEnds) {
+          property.valueEnds = _i;
+          property.value = str.slice(property.valueStarts, _i);
+        }
+        /* istanbul ignore else */
 
 
-      if (str[_i] === "!") {
-        property.importantStarts = _i;
-      } else if (str[_i] === ";") {
-        property.semi = _i;
-      } else if (rightVal && str[rightVal] === "!" || importantStartsRegexp.test(str.slice(_i))) {
-        property.importantStarts = right(str, _i);
-      } else if (!rightVal || str[rightVal] !== ";") {
-        property.end = left(str, _i + 1) + 1;
+        if (!property.end) {
+          property.end = _i;
+        } // push and init and patch up to resume
+
+
         pushProperty(property);
         propertyReset();
-      }
-
-      if (!property.start && str[_i] && !str[_i].trim()) {
-        pushProperty({
-          type: "text",
-          start: _i,
-          end: null,
-          value: null
-        });
       }
     } // catch the css property's semicolon
     // -------------------------------------------------------------------------
@@ -5768,8 +5937,23 @@ function tokenizer(str, originalOpts) {
     /* istanbul ignore else */
 
 
-    if (!doNothing && property && property.valueEnds && !property.importantStarts && (str[_i] === "!" || isLatinLetter(str[_i])) && importantStartsRegexp.test(str.slice(_i))) {
-      property.importantStarts = _i;
+    if (!doNothing && property && property.valueEnds && !property.importantStarts && ( // it's an exclamation mark
+    str[_i] === "!" || // considering missing excl. mark cases, more strict req.:
+    isLatinLetter(str[_i]) && str.slice(_i).match(importantStartsRegexp))) {
+      property.importantStarts = _i; // correction for cases like:
+      // <style>.a{color:red 1important}
+      //                     ^
+      //            we're here, that "1" needs to be included as part of important
+
+      if ( // it's non-whitespace char in front
+      str[_i - 1] && str[_i - 1].trim() && // and before that it's whitespace
+      str[_i - 2] && !str[_i - 2].trim()) {
+        // merge that character into !important
+        property.valueEnds = left(str, _i - 1) + 1;
+        property.value = str.slice(property.valueStarts, property.valueEnds);
+        property.importantStarts--;
+        property.important = str[_i - 1] + property.important;
+      }
     } // catch the start of a css property's value
     // -------------------------------------------------------------------------
 
@@ -5898,7 +6082,27 @@ function tokenizer(str, originalOpts) {
     // on other hand, we don't need strict validation here either, to enter
     // these clauses it's enough that "property" was initiated.
     property && property.propertyEnds && !property.valueStarts && str[_i] === ":") {
-      property.colon = _i;
+      property.colon = _i; // if string abruptly ends, record it here
+
+      if (!rightVal) {
+        property.end = _i + 1;
+
+        if (str[_i + 1]) {
+          // push and init and patch up to resume
+          pushProperty(property);
+          propertyReset(); // that's some trailing whitespace, create a new text token for it
+
+          if (token.properties) {
+            token.properties.push({
+              type: "text",
+              start: _i + 1,
+              end: null,
+              value: null
+            });
+            doNothing = _i + 1;
+          }
+        }
+      }
     } // catch the start of a css property's name
     // -------------------------------------------------------------------------
 
@@ -6358,22 +6562,6 @@ function tokenizer(str, originalOpts) {
 
     if (!doNothing && token.type === "tag" && attrib.attribValueStartsAt && _i >= attrib.attribValueStartsAt && attrib.attribValueEndsAt === null) {
       if (SOMEQUOTE.includes(str[_i])) {
-        // const R1 = !layers.some((layerObj) => layerObj.type === "esp");
-        // const R2 = isAttrClosing(
-        //   str,
-        //   attrib.attribOpeningQuoteAt || attrib.attribValueStartsAt,
-        //   i
-        // );
-        // console.log(
-        //   `${`\u001b[${33}m${`R1`}\u001b[${39}m`} = ${`\u001b[${
-        //     R1 ? 32 : 31
-        //   }m${R1}\u001b[${39}m`}`
-        // );
-        // console.log(
-        //   `${`\u001b[${33}m${`R2`}\u001b[${39}m`} = ${`\u001b[${
-        //     R2 ? 32 : 31
-        //   }m${R2}\u001b[${39}m`}`
-        // );
         if ( // so we're on a single/double quote,
         // (str[i], the current character is a quote)
         // and...

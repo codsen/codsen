@@ -353,9 +353,9 @@ tap.test(`11 - impotant [sic] - with space in front`, (t) => {
   t.end();
 });
 
-tap.todo(`12 - impotant [sic] - without space in front`, (t) => {
-  const str = `<style>.a{color:red!impotant;}</style>`;
-  const fixed = `<style>.a{color:red !important;}</style>`;
+tap.test(`12 - impotant [sic] - without space in front`, (t) => {
+  const str = `<style>.a{color:red!impotant}</style>`;
+  const fixed = `<style>.a{color:red!important}</style>`;
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
@@ -366,7 +366,7 @@ tap.todo(`12 - impotant [sic] - without space in front`, (t) => {
   t.end();
 });
 
-tap.todo(`13 - important without excl mark`, (t) => {
+tap.test(`13 - important without excl mark`, (t) => {
   const str = `<style>.a{color:red important}</style>`;
   const fixed = `<style>.a{color:red !important}</style>`;
   const linter = new Linter();
@@ -379,7 +379,7 @@ tap.todo(`13 - important without excl mark`, (t) => {
   t.end();
 });
 
-tap.todo(`14 - important with number one instead of excl mark`, (t) => {
+tap.test(`14 - important with number one instead of excl mark`, (t) => {
   const str = `<style>.a{color:red 1important}</style>`;
   const fixed = `<style>.a{color:red !important}</style>`;
   const linter = new Linter();
