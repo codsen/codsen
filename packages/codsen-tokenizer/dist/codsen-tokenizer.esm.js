@@ -558,9 +558,9 @@ function tokenizer(str, originalOpts) {
     value: null,
     valueStarts: null,
     valueEnds: null,
+    important: null,
     importantStarts: null,
     importantEnds: null,
-    important: null,
     colon: null,
     semi: null
   };
@@ -2173,6 +2173,40 @@ function tokenizer(str, originalOpts) {
 
         pushProperty(property);
         propertyReset();
+      } // cases with replaced colon:
+      // <div style="float.left;">
+
+
+      if ( // if it's a dodgy non-whitespace character
+      !attrNameRegexp.test(str[i]) && str[i].trim() && !`:'"`.includes(str[i])) { // find out locations of next semi and next colon
+
+        const nextSemi = str.indexOf(";", i);
+        const nextColon = str.indexOf(":", i); // whatever the situation, colon must not be before semi on the right
+        // either one or both missing is fine, we just want to avoid
+        // <div style="floa.t:left;
+        //                 ^
+        //            this is not a dodgy colon
+        //
+        // but,
+        //
+        // <div style="float.left;
+        //                  ^
+        //                this is
+
+        if ( // either semi but no colon
+        nextColon === -1 && nextSemi !== -1 || !(nextColon !== -1 && nextSemi !== -1 && nextColon < nextSemi)) {
+          // <div style="float.left;">
+          //                  ^
+          //            we're here
+          property.colon = i;
+          property.valueStarts = rightVal;
+        } else if (nextColon !== -1 && nextSemi !== -1 && nextColon < nextSemi) {
+          // case like
+          // <div style="floa/t:left;">
+          //                 ^
+          //          we're here
+          property.propertyEnds = null;
+        }
       }
     } // catch the colon of a css property
     // -------------------------------------------------------------------------

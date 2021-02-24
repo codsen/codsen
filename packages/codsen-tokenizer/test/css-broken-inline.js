@@ -1848,3 +1848,192 @@ tap.test(
     t.end();
   }
 );
+
+tap.test(`21`, (t) => {
+  const gathered = [];
+  ct(`<div style="float.left;">`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 25,
+        value: '<div style="float.left;">',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 4,
+        tagName: "div",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [
+          {
+            attribName: "style",
+            attribNameRecognised: true,
+            attribNameStartsAt: 5,
+            attribNameEndsAt: 10,
+            attribOpeningQuoteAt: 11,
+            attribClosingQuoteAt: 23,
+            attribValueRaw: "float.left;",
+            attribValue: [
+              {
+                start: 12,
+                end: 23,
+                property: "float",
+                propertyStarts: 12,
+                propertyEnds: 17,
+                value: "left",
+                valueStarts: 18,
+                valueEnds: 22,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: 17,
+                semi: 22,
+              },
+            ],
+            attribValueStartsAt: 12,
+            attribValueEndsAt: 23,
+            attribStarts: 5,
+            attribEnds: 24,
+            attribLeft: 3,
+          },
+        ],
+      },
+    ],
+    "21"
+  );
+  t.end();
+});
+
+tap.test(`22`, (t) => {
+  const gathered = [];
+  ct(`<div style="floa/t:left;">`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 26,
+        value: '<div style="floa/t:left;">',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 4,
+        tagName: "div",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [
+          {
+            attribName: "style",
+            attribNameRecognised: true,
+            attribNameStartsAt: 5,
+            attribNameEndsAt: 10,
+            attribOpeningQuoteAt: 11,
+            attribClosingQuoteAt: 24,
+            attribValueRaw: "floa/t:left;",
+            attribValue: [
+              {
+                start: 12,
+                end: 24,
+                property: "floa/t",
+                propertyStarts: 12,
+                propertyEnds: 18,
+                value: "left",
+                valueStarts: 19,
+                valueEnds: 23,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: 18,
+                semi: 23,
+              },
+            ],
+            attribValueStartsAt: 12,
+            attribValueEndsAt: 24,
+            attribStarts: 5,
+            attribEnds: 25,
+            attribLeft: 3,
+          },
+        ],
+      },
+    ],
+    "22"
+  );
+  t.end();
+});
+
+tap.test(`23`, (t) => {
+  const gathered = [];
+  ct(`<div style="floa.t:left;">`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 26,
+        value: '<div style="floa.t:left;">',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 4,
+        tagName: "div",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [
+          {
+            attribName: "style",
+            attribNameRecognised: true,
+            attribNameStartsAt: 5,
+            attribNameEndsAt: 10,
+            attribOpeningQuoteAt: 11,
+            attribClosingQuoteAt: 24,
+            attribValueRaw: "floa.t:left;",
+            attribValue: [
+              {
+                start: 12,
+                end: 24,
+                property: "floa.t",
+                propertyStarts: 12,
+                propertyEnds: 18,
+                value: "left",
+                valueStarts: 19,
+                valueEnds: 23,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: 18,
+                semi: 23,
+              },
+            ],
+            attribValueStartsAt: 12,
+            attribValueEndsAt: 24,
+            attribStarts: 5,
+            attribEnds: 25,
+            attribLeft: 3,
+          },
+        ],
+      },
+    ],
+    "23"
+  );
+  t.end();
+});

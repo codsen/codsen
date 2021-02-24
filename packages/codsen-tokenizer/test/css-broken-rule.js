@@ -1155,7 +1155,7 @@ tap.test(`17 - semi before !important`, (t) => {
       gathered.push(obj);
     },
   });
-  t.match(
+  t.strictSame(
     gathered,
     [
       {
@@ -1243,7 +1243,7 @@ tap.test(`18`, (t) => {
       gathered.push(obj);
     },
   });
-  t.match(
+  t.strictSame(
     gathered,
     [
       {
@@ -1310,7 +1310,7 @@ tap.test(`19`, (t) => {
       gathered.push(obj);
     },
   });
-  t.match(
+  t.strictSame(
     gathered,
     [
       {
@@ -1392,7 +1392,7 @@ tap.test(`20`, (t) => {
       gathered.push(obj);
     },
   });
-  t.match(
+  t.strictSame(
     gathered,
     [
       {
@@ -1459,7 +1459,7 @@ tap.test(`21`, (t) => {
       gathered.push(obj);
     },
   });
-  t.match(
+  t.strictSame(
     gathered,
     [
       {
@@ -1516,5 +1516,82 @@ tap.test(`21`, (t) => {
     ],
     "21"
   );
+  t.end();
+});
+
+tap.todo(`22 - rogue letter`, (t) => {
+  const gathered = [];
+  ct(`<style>.a{float:left;x}.b{color: red}`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(gathered, [], "22");
+  t.end();
+});
+
+tap.todo(`23 - rogue hash`, (t) => {
+  const gathered = [];
+  ct(`<style>.a{float:left;#}.b{color: red}`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(gathered, [], "23");
+  t.end();
+});
+
+tap.todo(`24 - rogue quote`, (t) => {
+  const gathered = [];
+  ct(`<style>.a{float:left;"}.b{color: red}`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(gathered, [], "24");
+  t.end();
+});
+
+tap.todo(`25 - rogue quote+bracket`, (t) => {
+  const gathered = [];
+  ct(`<style>.a{float:left;x">.b{color: red}`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(gathered, [], "25");
+  t.end();
+});
+
+tap.todo(`26 - rogue quote+bracket, curlies follow`, (t) => {
+  const gathered = [];
+  ct(`<style>.a{float:left;">}#b{color: red}`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(gathered, [], "26");
+  t.end();
+});
+
+tap.todo(`27`, (t) => {
+  const gathered = [];
+  ct(`<style>.a{float:left;"}.b{color: red}`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(gathered, [], "27");
+  t.end();
+});
+
+tap.todo(`28`, (t) => {
+  const gathered = [];
+  ct(`<style>.a{float:left;}.b{color: red}`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(gathered, [], "28");
   t.end();
 });
