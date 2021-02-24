@@ -1705,4 +1705,146 @@ tap.test(
   }
 );
 
-tap.todo(`<div style="float:left!important!important">z</div>`);
+tap.test(`19 - repeated !important`, (t) => {
+  const gathered = [];
+  ct(`<div style="float:left!important!important">`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 44,
+        value: '<div style="float:left!important!important">',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 4,
+        tagName: "div",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [
+          {
+            attribName: "style",
+            attribNameRecognised: true,
+            attribNameStartsAt: 5,
+            attribNameEndsAt: 10,
+            attribOpeningQuoteAt: 11,
+            attribClosingQuoteAt: 42,
+            attribValueRaw: "float:left!important!important",
+            attribValue: [
+              {
+                start: 12,
+                end: 42,
+                property: "float",
+                propertyStarts: 12,
+                propertyEnds: 17,
+                value: "left",
+                valueStarts: 18,
+                valueEnds: 22,
+                importantStarts: 22,
+                importantEnds: 42,
+                important: "!important!important",
+                colon: 17,
+                semi: null,
+              },
+            ],
+            attribValueStartsAt: 12,
+            attribValueEndsAt: 42,
+            attribStarts: 5,
+            attribEnds: 43,
+            attribLeft: 3,
+          },
+        ],
+      },
+    ],
+    "19"
+  );
+  t.end();
+});
+
+tap.test(
+  `20 - !important cut off by a semy goes as important, not property`,
+  (t) => {
+    const gathered = [];
+    ct(`<div style="float:left;!important">`, {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    });
+    t.strictSame(
+      gathered,
+      [
+        {
+          type: "tag",
+          start: 0,
+          end: 35,
+          value: '<div style="float:left;!important">',
+          tagNameStartsAt: 1,
+          tagNameEndsAt: 4,
+          tagName: "div",
+          recognised: true,
+          closing: false,
+          void: false,
+          pureHTML: true,
+          kind: null,
+          attribs: [
+            {
+              attribName: "style",
+              attribNameRecognised: true,
+              attribNameStartsAt: 5,
+              attribNameEndsAt: 10,
+              attribOpeningQuoteAt: 11,
+              attribClosingQuoteAt: 33,
+              attribValueRaw: "float:left;!important",
+              attribValue: [
+                {
+                  start: 12,
+                  end: 23,
+                  property: "float",
+                  propertyStarts: 12,
+                  propertyEnds: 17,
+                  value: "left",
+                  valueStarts: 18,
+                  valueEnds: 22,
+                  importantStarts: null,
+                  importantEnds: null,
+                  important: null,
+                  colon: 17,
+                  semi: 22,
+                },
+                {
+                  start: 23,
+                  end: 33,
+                  property: null,
+                  propertyStarts: null,
+                  propertyEnds: null,
+                  value: null,
+                  valueStarts: null,
+                  valueEnds: null,
+                  importantStarts: 23,
+                  importantEnds: 33,
+                  important: "!important",
+                  colon: null,
+                  semi: null,
+                },
+              ],
+              attribValueStartsAt: 12,
+              attribValueEndsAt: 33,
+              attribStarts: 5,
+              attribEnds: 34,
+              attribLeft: 3,
+            },
+          ],
+        },
+      ],
+      "20"
+    );
+    t.end();
+  }
+);

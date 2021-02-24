@@ -2251,7 +2251,7 @@ function tokenizer(str, originalOpts) {
     if (!doNothing && // style attribute is being processed at the moment
     attrib && attrib.attribName === "style" && // it's not done yet
     attrib.attribOpeningQuoteAt && !attrib.attribClosingQuoteAt && // but property hasn't been initiated
-    !property.propertyStarts && // yet the character is suitable:
+    !property.start && // yet the character is suitable:
     // it's not a whitespace
     str[i] && str[i].trim() && // it's not some separator
     !`'";`.includes(str[i]) && // it's not inside CSS block comment
@@ -2289,9 +2289,15 @@ function tokenizer(str, originalOpts) {
             attrib.attribValue[~-attrib.attribValue.length].end = i;
             attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, i);
           } // initiate a property
+          // if !important has been detected, that's a CSS like:
+          // <div style="float:left;!important">
+          // the !important is alone by itself
 
 
-          initProperty(i);
+          initProperty(R2 ? {
+            start: i,
+            importantStarts: i
+          } : i);
         }
     } // in comment type, "only" kind tokens, submit square brackets to layers
     // -------------------------------------------------------------------------
