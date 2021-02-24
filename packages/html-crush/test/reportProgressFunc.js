@@ -327,7 +327,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`,
     gather.forEach((perc) =>
       t.ok(compareTo.includes(perc), `checking: ${perc}%`)
     );
-    t.equal(gather.length, 86 - 21 - 1, "02.01");
+    t.equal(gather.length, 86 - 21, "02.01");
     // t.strictSame(gather, compareTo, "03.02")
     t.end();
   }

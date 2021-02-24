@@ -22,7 +22,7 @@ tap.test(
         removeLineBreaks: true,
       }),
       {
-        result: "<a>\n<b>",
+        result: "<a> <b>",
         applicableOpts: {
           removeHTMLComments: false,
           removeCSSComments: false,

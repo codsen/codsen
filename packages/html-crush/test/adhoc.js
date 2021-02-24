@@ -39,9 +39,8 @@ xmlns:o="urn:schemas-microsoft-com:office:office">
 <!--<![endif]-->
 <meta name="format-detection" content="telephone=no" />
 <meta name="viewport" zzz`;
-    const output = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-xmlns:v="urn:schemas-microsoft-com:vml"
-xmlns:o="urn:schemas-microsoft-com:office:office"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><!--[if !mso]><!-- --><meta http-equiv="X-UA-Compatible" content="IE=edge"/><!--<![endif]--><meta name="format-detection" content="telephone=no"/><meta name="viewport" zzz`;
+    const output = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><!--[if !mso]><!-- --><meta http-equiv="X-UA-Compatible" content="IE=edge"/><!--<![endif]--><meta name="format-detection" content="telephone=no"/><meta
+name="viewport" zzz`;
     t.strictSame(
       m(t, input, {
         removeLineBreaks: true,
@@ -161,9 +160,7 @@ z>
 <x>
 <y>
 <z klm`;
-    const output = `<m><n><o><p><x
-y
-z><t><x><y><z klm`;
+    const output = `<m><n><o><p><x y z>\n<t><x><y><z klm`;
     t.strictSame(
       m(t, input, {
         lineLengthLimit: 20,

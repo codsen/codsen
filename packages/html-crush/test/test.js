@@ -512,7 +512,7 @@ tap.test(
         removeLineBreaks: true,
         lineLengthLimit: 100,
       }).result,
-      "aaaaaa\nbbbbbb\ncccccc",
+      "aaaaaa bbbbbb cccccc",
       "07.14"
     );
     t.end();
@@ -1269,12 +1269,12 @@ tap.test(
     );
     t.equal(
       m(t, "<x>\n<a>", { removeLineBreaks: true }).result,
-      "<x>\n<a>",
+      "<x> <a>",
       "19.03"
     );
     t.equal(
       m(t, "<a>\n<b>", { removeLineBreaks: true }).result,
-      "<a>\n<b>",
+      "<a> <b>",
       "19.04"
     );
     t.end();
@@ -1436,3 +1436,59 @@ tap.test(
     t.end();
   }
 );
+
+tap.test(`line break into space`, (t) => {
+  t.strictSame(
+    m(t, "abc\ndef", {
+      removeLineBreaks: true,
+      lineLengthLimit: 100,
+    }).result,
+    "abc def",
+    "25.01"
+  );
+  t.strictSame(
+    m(t, "abc\n\ndef", {
+      removeLineBreaks: true,
+      lineLengthLimit: 100,
+    }).result,
+    "abc def",
+    "25.02"
+  );
+  t.strictSame(
+    m(t, "abc\rdef", {
+      removeLineBreaks: true,
+      lineLengthLimit: 100,
+    }).result,
+    "abc def",
+    "25.03"
+  );
+  t.strictSame(
+    m(t, "abc\r\rdef", {
+      removeLineBreaks: true,
+      lineLengthLimit: 100,
+    }).result,
+    "abc def",
+    "25.04"
+  );
+  t.end();
+});
+
+tap.test(`tab into space`, (t) => {
+  t.strictSame(
+    m(t, "abc\tdef", {
+      removeLineBreaks: true,
+      lineLengthLimit: 100,
+    }).result,
+    "abc def",
+    "26.01"
+  );
+  t.strictSame(
+    m(t, "abc\t\tdef", {
+      removeLineBreaks: true,
+      lineLengthLimit: 100,
+    }).result,
+    "abc def",
+    "26.02"
+  );
+  t.end();
+});

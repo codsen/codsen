@@ -161,7 +161,7 @@ tap.test(
         removeLineBreaks: true,
         breakToTheLeftOf: ["<x", "y"],
       }).result,
-      `<a>\n<b><c>`,
+      `<a> <b><c>`,
       "02.09 - nothing in given breakpoints is useful"
     );
     t.strictSame(
