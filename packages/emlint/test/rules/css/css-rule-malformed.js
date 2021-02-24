@@ -395,7 +395,7 @@ tap.test(`14 - important with number one instead of excl mark`, (t) => {
 // whitespace in front of colon/semi
 // -----------------------------------------------------------------------------
 
-tap.todo(`15 - space after colon/semi`, (t) => {
+tap.test(`15 - space after colon/semi`, (t) => {
   const str = `<style>.a{ color : red ; }</style>`;
   const fixed = `<style>.a{ color: red; }</style>`;
   const linter = new Linter();
@@ -408,7 +408,7 @@ tap.todo(`15 - space after colon/semi`, (t) => {
   t.end();
 });
 
-tap.todo(`16 - no space after colon/semi`, (t) => {
+tap.test(`16 - no space after colon/semi`, (t) => {
   const str = `<style>.a{color :red ;}</style>`;
   const fixed = `<style>.a{color:red;}</style>`;
   const linter = new Linter();
@@ -421,9 +421,9 @@ tap.todo(`16 - no space after colon/semi`, (t) => {
   t.end();
 });
 
-tap.todo(`17`, (t) => {
+tap.test(`17`, (t) => {
   const str = `<style>.a{color : red;}</style>`;
-  const fixed = `<style>.a{color:red;}</style>`;
+  const fixed = `<style>.a{color: red;}</style>`;
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
@@ -434,7 +434,7 @@ tap.todo(`17`, (t) => {
   t.end();
 });
 
-tap.todo(`18`, (t) => {
+tap.test(`18`, (t) => {
   const str = `<style>.a{color : red ; text-align : left ;}</style>`;
   const fixed = `<style>.a{color: red; text-align: left;}</style>`;
   const linter = new Linter();

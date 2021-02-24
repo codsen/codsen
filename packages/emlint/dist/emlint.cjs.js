@@ -10566,9 +10566,9 @@ var cssRuleMalformed = function cssRuleMalformed(context) {
         return property.property;
       }).length) {
         properties = node.properties.filter(function (property) {
-          return property.property;
+          return property.property !== undefined;
         });
-      } // 1. catch rules with semicolons missing:
+      } // 1. catch missing semi on all rules except last
       // <style>.a{color:red\n\ntext-align:left
       //                   ^
 
@@ -10577,6 +10577,7 @@ var cssRuleMalformed = function cssRuleMalformed(context) {
 
         for (var i = properties.length - 1; i--;) {
           if (properties[i].semi === null && properties[i].value) {
+            //
             context.report({
               ruleId: "css-rule-malformed",
               idxFrom: properties[i].start,
@@ -10588,13 +10589,15 @@ var cssRuleMalformed = function cssRuleMalformed(context) {
             });
           }
         }
-      } // 2. catch rules with malformed !important
-      // <style>.a{color:red !impotant;}</style>
-      //                         ^^
+      } // 2. various checks
+      // =================
 
 
       if (node.properties && node.properties.length) {
         node.properties.forEach(function (property) {
+          // 2-1. catch rules with malformed !important
+          // <style>.a{color:red !impotant;}</style>
+          //                         ^^
           if (property.important && property.important !== "!important") {
             context.report({
               ruleId: "css-rule-malformed",
@@ -10603,6 +10606,36 @@ var cssRuleMalformed = function cssRuleMalformed(context) {
               message: "Malformed !important.",
               fix: {
                 ranges: [[property.importantStarts, property.importantEnds, "!important"]]
+              }
+            });
+          } // 2-2 catch gaps in front of colon
+          // <style>.a{ color : red; }</style>
+          //                 ^
+
+
+          if (property.colon && property.propertyEnds && property.propertyEnds < property.colon) {
+            context.report({
+              ruleId: "css-rule-malformed",
+              idxFrom: property.start,
+              idxTo: property.end,
+              message: "Gap in front of semicolon.",
+              fix: {
+                ranges: [[property.propertyEnds, property.colon]]
+              }
+            });
+          } // 2-3 catch gaps in front of semi
+          // <style>.a{ color: red ; }</style>
+          //                      ^
+
+
+          if (property.semi && (property.importantEnds || property.valueEnds) && (property.importantEnds || property.valueEnds) < property.semi) {
+            context.report({
+              ruleId: "css-rule-malformed",
+              idxFrom: property.start,
+              idxTo: property.end,
+              message: "Gap in front of semi.",
+              fix: {
+                ranges: [[property.importantEnds || property.valueEnds, property.semi]]
               }
             });
           }

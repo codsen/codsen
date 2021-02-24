@@ -37,9 +37,9 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
         node.properties.length &&
         node.properties.filter((property) => (property as any).property).length
       ) {
-        properties = node.properties.filter(
-          (property) => (property as any).property
-        ) as Property[];
+        properties = (node.properties as Property[]).filter(
+          (property) => (property as any).property !== undefined
+        );
       }
       console.log(
         `045 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`properties`}\u001b[${39}m`} = ${JSON.stringify(
@@ -49,7 +49,7 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
         )}`
       );
 
-      // 1. catch rules with semicolons missing:
+      // 1. catch missing semi on all rules except last
       // <style>.a{color:red\n\ntext-align:left
       //                   ^
 
@@ -59,8 +59,9 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
         // The last property is ambiguous, tackled by a separate rule.
         for (let i = properties.length - 1; i--; ) {
           if (properties[i].semi === null && properties[i].value) {
+            //
             console.log(
-              `063 ${`\u001b[${31}m${`missing semi on ${properties[i].property}`}\u001b[${39}m`}`
+              `064 ${`\u001b[${31}m${`missing semi on ${properties[i].property}`}\u001b[${39}m`}`
             );
             context.report({
               ruleId: "css-rule-malformed",
@@ -75,18 +76,18 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
         }
       }
 
-      // 2. catch rules with malformed !important
-      // <style>.a{color:red !impotant;}</style>
-      //                         ^^
+      // 2. various checks
+      // =================
 
       if (node.properties && node.properties.length) {
         console.log(`083`);
-        node.properties.forEach((property) => {
-          if (
-            (property as Property).important &&
-            (property as Property).important !== "!important"
-          ) {
-            console.log(`089 malformed !important`);
+        (node.properties as Property[]).forEach((property) => {
+          // 2-1. catch rules with malformed !important
+          // <style>.a{color:red !impotant;}</style>
+          //                         ^^
+
+          if (property.important && property.important !== "!important") {
+            console.log(`090 malformed !important`);
             context.report({
               ruleId: "css-rule-malformed",
               idxFrom: (property as any).importantStarts,
@@ -98,6 +99,61 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
                     (property as any).importantStarts,
                     (property as any).importantEnds,
                     "!important",
+                  ],
+                ],
+              },
+            });
+          }
+
+          // 2-2 catch gaps in front of colon
+          // <style>.a{ color : red; }</style>
+          //                 ^
+
+          if (
+            property.colon &&
+            property.propertyEnds &&
+            (property.propertyEnds as number) < (property.colon as number)
+          ) {
+            console.log(
+              `118 ${`\u001b[${31}m${`rogue gap in front of colon ${property.property}`}\u001b[${39}m`}`
+            );
+            context.report({
+              ruleId: "css-rule-malformed",
+              idxFrom: property.start,
+              idxTo: property.end,
+              message: `Gap in front of semicolon.`,
+              fix: {
+                ranges: [
+                  [property.propertyEnds as number, property.colon as number],
+                ],
+              },
+            });
+          }
+
+          // 2-3 catch gaps in front of semi
+          // <style>.a{ color: red ; }</style>
+          //                      ^
+
+          if (
+            property.semi &&
+            ((property.importantEnds || property.valueEnds) as number) &&
+            ((property.importantEnds || property.valueEnds) as number) <
+              (property.semi as number)
+          ) {
+            console.log(
+              `144 ${`\u001b[${31}m${`rogue gap in front of semi ${property.property}`}\u001b[${39}m`}`
+            );
+            context.report({
+              ruleId: "css-rule-malformed",
+              idxFrom: property.start,
+              idxTo: property.end,
+              message: `Gap in front of semi.`,
+              fix: {
+                ranges: [
+                  [
+                    (property.importantEnds as number) ||
+                      (property.valueEnds as number),
+                    property.semi as number,
                   ],
                 ],
               },
@@ -120,7 +176,7 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
         context.str.slice(node.openingCurlyAt + 1, node.closingCurlyAt).trim()
       ) {
         console.log(
-          `123 ${`\u001b[${31}m${`something rogue inside ${node.value}`}\u001b[${39}m`}`
+          `179 ${`\u001b[${31}m${`something rogue inside ${node.value}`}\u001b[${39}m`}`
         );
         context.report({
           ruleId: "css-rule-malformed",
@@ -146,7 +202,7 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
       if (node.properties && Array.isArray(node.properties)) {
         for (let i = 0, len = node.properties.length; i < len; i++) {
           console.log(
-            `149 ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
+            `205 ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
               node.properties[i],
               null,
               4
@@ -161,18 +217,18 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
               (node.properties[i] as Property).property === null
             ) {
               console.log(
-                `164 ${`\u001b[${31}m${`██`}\u001b[${39}m`} no value, no property`
+                `220 ${`\u001b[${31}m${`██`}\u001b[${39}m`} no value, no property`
               );
 
               let errorRaised = false;
               if (i) {
                 for (let y = node.properties.length; y--; ) {
                   if (y === i) {
-                    console.log(`171 skip thyself`);
+                    console.log(`227 skip thyself`);
                     continue;
                   }
                   console.log(
-                    `175 - property: ${JSON.stringify(
+                    `231 - property: ${JSON.stringify(
                       node.properties[y],
                       null,
                       4
@@ -187,14 +243,14 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
                     // we're traversing upon a CSS property, not a whitespace text token
                     (node.properties[y] as any).property !== undefined
                   ) {
-                    console.log(`190`);
+                    console.log(`246`);
                     if (
                       // its semi is present
                       (node.properties[y] as any).semi &&
                       // and its important is missing
                       !(node.properties[y] as any).importantStarts
                     ) {
-                      console.log(`197`);
+                      console.log(`253`);
                       // the frontal space might be missing
                       const fromIdx = (node.properties[y] as any).semi;
                       const toIdx = (node.properties[y] as any).semi + 1;
@@ -206,7 +262,7 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
                         whatToInsert = " ";
                       }
 
-                      console.log(`209 report [${fromIdx}, ${toIdx}]`);
+                      console.log(`265 report [${fromIdx}, ${toIdx}]`);
                       context.report({
                         ruleId: "css-rule-malformed",
                         idxFrom: fromIdx,
@@ -219,7 +275,7 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
 
                       errorRaised = true;
                       console.log(
-                        `222 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`errorRaised`}\u001b[${39}m`} = ${JSON.stringify(
+                        `278 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`errorRaised`}\u001b[${39}m`} = ${JSON.stringify(
                           errorRaised,
                           null,
                           4
@@ -228,7 +284,7 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
                     } else {
                       // stop looping further
                       console.log(
-                        `231 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
+                        `287 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
                       );
                       break;
                     }
@@ -242,7 +298,7 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
                 // and error hasn't been raised so far:
                 !errorRaised
               ) {
-                console.log(`245 report missing value`);
+                console.log(`301 report missing value`);
                 context.report({
                   ruleId: "css-rule-malformed",
                   idxFrom: node.properties[i].start,
@@ -253,7 +309,7 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
               }
             } else {
               console.log(
-                `256 ${`\u001b[${31}m${`██`}\u001b[${39}m`} simply no value`
+                `312 ${`\u001b[${31}m${`██`}\u001b[${39}m`} simply no value`
               );
               context.report({
                 ruleId: "css-rule-malformed",
@@ -268,7 +324,7 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
       }
 
       console.log(
-        `271 ${`\u001b[${32}m${`END of css-rule-malformed`}\u001b[${39}m`}`
+        `327 ${`\u001b[${32}m${`END of css-rule-malformed`}\u001b[${39}m`}`
       );
     },
   };
