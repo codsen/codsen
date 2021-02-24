@@ -182,3 +182,15 @@ tap.test(
     t.end();
   }
 );
+
+tap.test(`08 - ${`\u001b[${33}m${`small tests`}\u001b[${39}m`} - CRLF`, (t) => {
+  const src = `<table>\r\n<tr>`;
+  t.match(
+    m(t, src, {
+      removeLineBreaks: true,
+    }).result,
+    `<table><tr>`,
+    "08"
+  );
+  t.end();
+});
