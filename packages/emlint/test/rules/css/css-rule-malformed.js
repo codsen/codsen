@@ -446,3 +446,19 @@ tap.test(`18`, (t) => {
   t.equal(applyFixes(str, messages), fixed, "18");
   t.end();
 });
+
+// some other character is in place of a colon
+// -----------------------------------------------------------------------------
+
+tap.test(`19`, (t) => {
+  const str = `<style>.a{color/red;}</style>`;
+  const fixed = `<style>.a{color:red;}</style>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "css-rule-malformed": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "19");
+  t.end();
+});

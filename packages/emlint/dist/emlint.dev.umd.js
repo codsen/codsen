@@ -13951,9 +13951,9 @@ function tokenizer(str, originalOpts) {
     value: null,
     valueStarts: null,
     valueEnds: null,
+    important: null,
     importantStarts: null,
     importantEnds: null,
-    important: null,
     colon: null,
     semi: null
   };
@@ -15571,6 +15571,40 @@ function tokenizer(str, originalOpts) {
 
         pushProperty(property);
         propertyReset();
+      } // cases with replaced colon:
+      // <div style="float.left;">
+
+
+      if ( // if it's a dodgy non-whitespace character
+      !attrNameRegexp.test(str[_i]) && str[_i].trim() && !":'\"".includes(str[_i])) {
+        // find out locations of next semi and next colon
+        var nextSemi = str.indexOf(";", _i);
+        var nextColon = str.indexOf(":", _i); // whatever the situation, colon must not be before semi on the right
+        // either one or both missing is fine, we just want to avoid
+        // <div style="floa.t:left;
+        //                 ^
+        //            this is not a dodgy colon
+        //
+        // but,
+        //
+        // <div style="float.left;
+        //                  ^
+        //                this is
+
+        if ( // either semi but no colon
+        nextColon === -1 && nextSemi !== -1 || !(nextColon !== -1 && nextSemi !== -1 && nextColon < nextSemi)) {
+          // <div style="float.left;">
+          //                  ^
+          //            we're here
+          property.colon = _i;
+          property.valueStarts = rightVal;
+        } else if (nextColon !== -1 && nextSemi !== -1 && nextColon < nextSemi) {
+          // case like
+          // <div style="floa/t:left;">
+          //                 ^
+          //          we're here
+          property.propertyEnds = null;
+        }
       }
     } // catch the colon of a css property
     // -------------------------------------------------------------------------
@@ -44368,6 +44402,21 @@ var cssRuleMalformed = function cssRuleMalformed(context) {
               message: "Gap in front of semi.",
               fix: {
                 ranges: [[property.importantEnds || property.valueEnds, property.semi]]
+              }
+            });
+          } // 2-4 colon is not colon
+          // <style>.a{color/red;}</style>
+          //                ^
+
+
+          if (property.colon && context.str[property.colon] !== ":") {
+            context.report({
+              ruleId: "css-rule-malformed",
+              idxFrom: property.start,
+              idxTo: property.end,
+              message: "Mis-typed colon.",
+              fix: {
+                ranges: [[property.colon, property.colon + 1, ":"]]
               }
             });
           }

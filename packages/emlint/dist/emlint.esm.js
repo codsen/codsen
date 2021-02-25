@@ -10985,6 +10985,21 @@ const cssRuleMalformed = context => {
                 ranges: [[property.importantEnds || property.valueEnds, property.semi]]
               }
             });
+          } // 2-4 colon is not colon
+          // <style>.a{color/red;}</style>
+          //                ^
+
+
+          if (property.colon && context.str[property.colon] !== ":") {
+            context.report({
+              ruleId: "css-rule-malformed",
+              idxFrom: property.start,
+              idxTo: property.end,
+              message: `Mis-typed colon.`,
+              fix: {
+                ranges: [[property.colon, property.colon + 1, ":"]]
+              }
+            });
           }
         });
       } // 3. catch css rules with selectors but without properties
