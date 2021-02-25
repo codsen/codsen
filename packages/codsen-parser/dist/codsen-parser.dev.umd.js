@@ -4451,9 +4451,9 @@ function tokenizer(str, originalOpts) {
     value: null,
     valueStarts: null,
     valueEnds: null,
+    important: null,
     importantStarts: null,
     importantEnds: null,
-    important: null,
     colon: null,
     semi: null
   };
@@ -6071,6 +6071,40 @@ function tokenizer(str, originalOpts) {
 
         pushProperty(property);
         propertyReset();
+      } // cases with replaced colon:
+      // <div style="float.left;">
+
+
+      if ( // if it's a dodgy non-whitespace character
+      !attrNameRegexp.test(str[_i]) && str[_i].trim() && !":'\"".includes(str[_i])) {
+        // find out locations of next semi and next colon
+        var nextSemi = str.indexOf(";", _i);
+        var nextColon = str.indexOf(":", _i); // whatever the situation, colon must not be before semi on the right
+        // either one or both missing is fine, we just want to avoid
+        // <div style="floa.t:left;
+        //                 ^
+        //            this is not a dodgy colon
+        //
+        // but,
+        //
+        // <div style="float.left;
+        //                  ^
+        //                this is
+
+        if ( // either semi but no colon
+        nextColon === -1 && nextSemi !== -1 || !(nextColon !== -1 && nextSemi !== -1 && nextColon < nextSemi)) {
+          // <div style="float.left;">
+          //                  ^
+          //            we're here
+          property.colon = _i;
+          property.valueStarts = rightVal;
+        } else if (nextColon !== -1 && nextSemi !== -1 && nextColon < nextSemi) {
+          // case like
+          // <div style="floa/t:left;">
+          //                 ^
+          //          we're here
+          property.propertyEnds = null;
+        }
       }
     } // catch the colon of a css property
     // -------------------------------------------------------------------------
@@ -6149,7 +6183,7 @@ function tokenizer(str, originalOpts) {
     if (!doNothing && // style attribute is being processed at the moment
     attrib && attrib.attribName === "style" && // it's not done yet
     attrib.attribOpeningQuoteAt && !attrib.attribClosingQuoteAt && // but property hasn't been initiated
-    !property.propertyStarts && // yet the character is suitable:
+    !property.start && // yet the character is suitable:
     // it's not a whitespace
     str[_i] && str[_i].trim() && // it's not some separator
     !"'\";".includes(str[_i]) && // it's not inside CSS block comment
@@ -6187,9 +6221,15 @@ function tokenizer(str, originalOpts) {
             attrib.attribValue[~-attrib.attribValue.length].end = _i;
             attrib.attribValue[~-attrib.attribValue.length].value = str.slice(attrib.attribValue[~-attrib.attribValue.length].start, _i);
           } // initiate a property
+          // if !important has been detected, that's a CSS like:
+          // <div style="float:left;!important">
+          // the !important is alone by itself
 
 
-          initProperty(_i);
+          initProperty(R2 ? {
+            start: _i,
+            importantStarts: _i
+          } : _i);
         }
     } // in comment type, "only" kind tokens, submit square brackets to layers
     // -------------------------------------------------------------------------
