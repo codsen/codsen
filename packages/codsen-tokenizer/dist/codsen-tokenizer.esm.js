@@ -1174,7 +1174,7 @@ function tokenizer(str, originalOpts) {
     // -------------------------------------------------------------------------
 
     if (!doNothing) {
-      if (["tag", "rule", "at"].includes(token.type) && token.kind !== "cdata") {
+      if (["tag", "at"].includes(token.type) && token.kind !== "cdata") {
 
         if (str[i] && (SOMEQUOTE.includes(str[i]) || `()`.includes(str[i])) && !( // below, we have insurance against single quotes, wrapped with quotes:
         // "'" or '"' - templating languages might put single quote as a sttring
@@ -1324,14 +1324,44 @@ function tokenizer(str, originalOpts) {
     // charsThatEndCSSChunks:  } , {
 
 
-    if (token.type === "rule" && selectorChunkStartedAt && (charsThatEndCSSChunks.includes(str[i]) || str[i] && !str[i].trim() && charsThatEndCSSChunks.includes(str[rightVal]))) {
-      token.selectors.push({
-        value: str.slice(selectorChunkStartedAt, i),
-        selectorStarts: selectorChunkStartedAt,
-        selectorEnds: i
-      });
-      selectorChunkStartedAt = undefined;
-      token.selectorsEnd = i;
+    if (token.type === "rule") {
+      if (selectorChunkStartedAt && (charsThatEndCSSChunks.includes(str[i]) || str[i] && rightVal && !str[i].trim() && charsThatEndCSSChunks.includes(str[rightVal]))) {
+        token.selectors.push({
+          value: str.slice(selectorChunkStartedAt, i),
+          selectorStarts: selectorChunkStartedAt,
+          selectorEnds: i
+        });
+        selectorChunkStartedAt = undefined;
+        token.selectorsEnd = i;
+      } else if (str[i] === "{" && token.openingCurlyAt && !token.closingCurlyAt) {
+        // we encounted an opening curly even though closing hasn't
+        // been met yet:
+        // <style>.a{float:left;x">.b{color: red}
+        //                           ^
+        //                    we're here // let selectorChunkStartedAt2;
+
+        for (let y = i; y--;) {
+
+          if (!str[y].trim() || `{}"';`.includes(str[y])) { // patch the property
+
+            if (property && property.start && !property.end) {
+              property.end = y + 1;
+              property.property = str.slice(property.start, property.end);
+              pushProperty(property);
+              propertyReset();
+              token.end = y + 1;
+              token.value = str.slice(token.start, token.end);
+              pingTagCb(token);
+              initToken(str[y + 1] === "@" ? "at" : "rule", y + 1);
+              token.left = left(str, y + 1);
+              token.selectorsStart = y + 1;
+              i = y + 1;
+            }
+
+            break;
+          }
+        }
+      }
     } // catch the beginning of a token
     // -------------------------------------------------------------------------
     // imagine layers are like this:
@@ -2177,8 +2207,11 @@ function tokenizer(str, originalOpts) {
       // <div style="float.left;">
 
 
-      if ( // if it's a dodgy non-whitespace character
-      !attrNameRegexp.test(str[i]) && str[i].trim() && !`:'"`.includes(str[i])) { // find out locations of next semi and next colon
+      if ( // it's a non-whitespace character
+      str[i] && str[i].trim() && // and property seems plausible - its first char at least
+      attrNameRegexp.test(str[property.propertyStarts]) && // but this current char is not:
+      !attrNameRegexp.test(str[i]) && // and it's not terminating character
+      !`:'"`.includes(str[i])) { // find out locations of next semi and next colon
 
         const nextSemi = str.indexOf(";", i);
         const nextColon = str.indexOf(":", i); // whatever the situation, colon must not be before semi on the right
@@ -2238,6 +2271,16 @@ function tokenizer(str, originalOpts) {
             doNothing = i + 1;
           }
         }
+      } // insurance against rogue characters
+      // <style>.a{float:left;x">color: red}
+      //                      |       ^
+      //                      |     we're here
+      //           propertyStarts
+
+      if (property.propertyEnds && lastNonWhitespaceCharAt && property.propertyEnds !== lastNonWhitespaceCharAt + 1 && // it ends upon a bad character
+      !attrNameRegexp.test(str[property.propertyEnds])) {
+        property.propertyEnds = lastNonWhitespaceCharAt + 1;
+        property.property = str.slice(property.propertyStarts, property.propertyEnds);
       }
     } // catch the start of a css property's name
     // -------------------------------------------------------------------------

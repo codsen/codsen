@@ -4820,7 +4820,7 @@ function tokenizer(str, originalOpts) {
     // -------------------------------------------------------------------------
 
     if (!doNothing) {
-      if (["tag", "rule", "at"].includes(token.type) && token.kind !== "cdata") {
+      if (["tag", "at"].includes(token.type) && token.kind !== "cdata") {
 
         if (str[_i] && (SOMEQUOTE.includes(str[_i]) || "()".includes(str[_i])) && !( // below, we have insurance against single quotes, wrapped with quotes:
         // "'" or '"' - templating languages might put single quote as a sttring
@@ -4970,14 +4970,44 @@ function tokenizer(str, originalOpts) {
     // charsThatEndCSSChunks:  } , {
 
 
-    if (token.type === "rule" && selectorChunkStartedAt && (charsThatEndCSSChunks.includes(str[_i]) || str[_i] && !str[_i].trim() && charsThatEndCSSChunks.includes(str[rightVal]))) {
-      token.selectors.push({
-        value: str.slice(selectorChunkStartedAt, _i),
-        selectorStarts: selectorChunkStartedAt,
-        selectorEnds: _i
-      });
-      selectorChunkStartedAt = undefined;
-      token.selectorsEnd = _i;
+    if (token.type === "rule") {
+      if (selectorChunkStartedAt && (charsThatEndCSSChunks.includes(str[_i]) || str[_i] && rightVal && !str[_i].trim() && charsThatEndCSSChunks.includes(str[rightVal]))) {
+        token.selectors.push({
+          value: str.slice(selectorChunkStartedAt, _i),
+          selectorStarts: selectorChunkStartedAt,
+          selectorEnds: _i
+        });
+        selectorChunkStartedAt = undefined;
+        token.selectorsEnd = _i;
+      } else if (str[_i] === "{" && token.openingCurlyAt && !token.closingCurlyAt) {
+        // we encounted an opening curly even though closing hasn't
+        // been met yet:
+        // <style>.a{float:left;x">.b{color: red}
+        //                           ^
+        //                    we're here // let selectorChunkStartedAt2;
+
+        for (var y = _i; y--;) {
+
+          if (!str[y].trim() || "{}\"';".includes(str[y])) { // patch the property
+
+            if (property && property.start && !property.end) {
+              property.end = y + 1;
+              property.property = str.slice(property.start, property.end);
+              pushProperty(property);
+              propertyReset();
+              token.end = y + 1;
+              token.value = str.slice(token.start, token.end);
+              pingTagCb(token);
+              initToken(str[y + 1] === "@" ? "at" : "rule", y + 1);
+              token.left = left(str, y + 1);
+              token.selectorsStart = y + 1;
+              _i = y + 1;
+            }
+
+            break;
+          }
+        }
+      }
     } // catch the beginning of a token
     // -------------------------------------------------------------------------
     // imagine layers are like this:
@@ -5064,26 +5094,26 @@ function tokenizer(str, originalOpts) {
         var letterMet = false;
 
         if (rightVal) {
-          for (var y = rightVal; y < len; y++) {
+          for (var _y = rightVal; _y < len; _y++) {
 
-            if (!letterMet && str[y] && str[y].trim() && str[y].toUpperCase() !== str[y].toLowerCase()) {
+            if (!letterMet && str[_y] && str[_y].trim() && str[_y].toUpperCase() !== str[_y].toLowerCase()) {
               letterMet = true;
             }
 
             if ( // at least one letter has been met, to cater
             // <? xml ...
-            letterMet && str[y] && ( // it's whitespace
-            !str[y].trim() || // or symbol which definitely does not belong to a tag,
+            letterMet && str[_y] && ( // it's whitespace
+            !str[_y].trim() || // or symbol which definitely does not belong to a tag,
             // considering we want to catch some rogue characters to
             // validate and flag them up later
-            !/\w/.test(str[y]) && !badCharacters.includes(str[y]) || str[y] === "[") // if letter has been met, "[" is also terminating character
+            !/\w/.test(str[_y]) && !badCharacters.includes(str[_y]) || str[_y] === "[") // if letter has been met, "[" is also terminating character
             // think <![CDATA[x<y]]>
             //               ^
             //             this
             ) {
                 break;
-              } else if (!badCharacters.includes(str[y])) {
-              extractedTagName += str[y].trim().toLowerCase();
+              } else if (!badCharacters.includes(str[_y])) {
+              extractedTagName += str[_y].trim().toLowerCase();
             }
           }
         } // set the kind:
@@ -5826,8 +5856,11 @@ function tokenizer(str, originalOpts) {
       // <div style="float.left;">
 
 
-      if ( // if it's a dodgy non-whitespace character
-      !attrNameRegexp.test(str[_i]) && str[_i].trim() && !":'\"".includes(str[_i])) { // find out locations of next semi and next colon
+      if ( // it's a non-whitespace character
+      str[_i] && str[_i].trim() && // and property seems plausible - its first char at least
+      attrNameRegexp.test(str[property.propertyStarts]) && // but this current char is not:
+      !attrNameRegexp.test(str[_i]) && // and it's not terminating character
+      !":'\"".includes(str[_i])) { // find out locations of next semi and next colon
 
         var nextSemi = str.indexOf(";", _i);
         var nextColon = str.indexOf(":", _i); // whatever the situation, colon must not be before semi on the right
@@ -5887,6 +5920,16 @@ function tokenizer(str, originalOpts) {
             doNothing = _i + 1;
           }
         }
+      } // insurance against rogue characters
+      // <style>.a{float:left;x">color: red}
+      //                      |       ^
+      //                      |     we're here
+      //           propertyStarts
+
+      if (property.propertyEnds && lastNonWhitespaceCharAt && property.propertyEnds !== lastNonWhitespaceCharAt + 1 && // it ends upon a bad character
+      !attrNameRegexp.test(str[property.propertyEnds])) {
+        property.propertyEnds = lastNonWhitespaceCharAt + 1;
+        property.property = str.slice(property.propertyStarts, property.propertyEnds);
       }
     } // catch the start of a css property's name
     // -------------------------------------------------------------------------
@@ -6084,9 +6127,9 @@ function tokenizer(str, originalOpts) {
 
         var wholeEspTagClosing = "";
 
-        for (var _y = _i; _y < len; _y++) {
-          if (espChars.includes(str[_y])) {
-            wholeEspTagClosing += str[_y];
+        for (var _y2 = _i; _y2 < len; _y2++) {
+          if (espChars.includes(str[_y2])) {
+            wholeEspTagClosing += str[_y2];
           } else {
             break;
           }
@@ -6467,14 +6510,14 @@ function tokenizer(str, originalOpts) {
         var whitespaceFound;
         var attribClosingQuoteAt;
 
-        for (var _y2 = leftVal; _y2 >= attrib.attribValueStartsAt; _y2--) { // catch where whitespace starts
+        for (var _y3 = leftVal; _y3 >= attrib.attribValueStartsAt; _y3--) { // catch where whitespace starts
 
-          if (!whitespaceFound && str[_y2] && !str[_y2].trim()) {
+          if (!whitespaceFound && str[_y3] && !str[_y3].trim()) {
             whitespaceFound = true;
 
             if (attribClosingQuoteAt) {
               // slice the captured chunk
-              str.slice(_y2, attribClosingQuoteAt);
+              str.slice(_y3, attribClosingQuoteAt);
             }
           } // where that caught whitespace ends, that's the default location
           // of double quotes.
@@ -6485,12 +6528,12 @@ function tokenizer(str, originalOpts) {
           //         to here
 
 
-          if (whitespaceFound && str[_y2] && str[_y2].trim()) {
+          if (whitespaceFound && str[_y3] && str[_y3].trim()) {
             whitespaceFound = false;
 
             if (!attribClosingQuoteAt) {
               // that's the first, default location
-              attribClosingQuoteAt = _y2 + 1;
+              attribClosingQuoteAt = _y3 + 1;
             }
           }
         }
@@ -6740,26 +6783,26 @@ function tokenizer(str, originalOpts) {
 
       if (str[_i + 1]) {
         // Traverse then
-        for (var _y3 = _i + 1; _y3 < len; _y3++) { // if we reach the closing counterpart of the quotes, terminate
+        for (var _y4 = _i + 1; _y4 < len; _y4++) { // if we reach the closing counterpart of the quotes, terminate
 
-          if (attrib.attribOpeningQuoteAt && str[_y3] === str[attrib.attribOpeningQuoteAt]) {
+          if (attrib.attribOpeningQuoteAt && str[_y4] === str[attrib.attribOpeningQuoteAt]) {
 
-            if (_y3 !== _i + 1 && str[~-_y3] !== "=") {
+            if (_y4 !== _i + 1 && str[~-_y4] !== "=") {
               thisIsRealEnding = true;
             }
 
             break;
-          } else if (str[_y3] === ">") {
+          } else if (str[_y4] === ">") {
             // must be real tag closing, we just tackle missing quotes
             // TODO - missing closing quotes
             break;
-          } else if (str[_y3] === "<") {
+          } else if (str[_y4] === "<") {
             thisIsRealEnding = true; // TODO - pop only if type === "simple" and it's the same opening
             // quotes of this attribute
 
             layers.pop();
             break;
-          } else if (!str[_y3 + 1]) {
+          } else if (!str[_y4 + 1]) {
             // if end was reached and nothing caught, that's also positive sign
             thisIsRealEnding = true;
             break;
