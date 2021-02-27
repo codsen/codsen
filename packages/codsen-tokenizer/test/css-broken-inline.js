@@ -1768,7 +1768,7 @@ tap.test(`19 - repeated !important`, (t) => {
   t.end();
 });
 
-tap.test(
+tap.only(
   `20 - !important cut off by a semy goes as important, not property`,
   (t) => {
     const gathered = [];

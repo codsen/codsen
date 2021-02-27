@@ -2133,31 +2133,173 @@ tap.test(`27 - spillage from HTML styles - rogue quote+bracket`, (t) => {
   t.end();
 });
 
-tap.todo(`28 - rogue quote+bracket, curlies follow`, (t) => {
+tap.test(`28 - rogue quote+bracket, curlies follow`, (t) => {
   const gathered = [];
-  ct(`<style>.a{float:left;">}#b{color: red}`, {
+  ct(`<style>.a{float:left;">}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(gathered, [], "28");
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: "<style>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
+        tagName: "style",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+      {
+        type: "rule",
+        start: 7,
+        end: 24,
+        value: '.a{float:left;">}',
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: 23,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            start: 10,
+            end: 21,
+            property: "float",
+            propertyStarts: 10,
+            propertyEnds: 15,
+            value: "left",
+            valueStarts: 16,
+            valueEnds: 20,
+            important: null,
+            importantStarts: null,
+            importantEnds: null,
+            colon: 15,
+            semi: 20,
+          },
+          {
+            start: 21,
+            end: 23,
+            property: '">',
+            propertyStarts: 21,
+            propertyEnds: 23,
+            value: null,
+            valueStarts: null,
+            valueEnds: null,
+            important: null,
+            importantStarts: null,
+            importantEnds: null,
+            colon: null,
+            semi: null,
+          },
+        ],
+      },
+    ],
+    "28"
+  );
   t.end();
 });
 
-tap.todo(`29`, (t) => {
+tap.test(`29`, (t) => {
   const gathered = [];
-  ct(`<style>.a{float:left;"}.b{color: red}`, {
+  ct(`<style>.a{float:left;"}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(gathered, [], "29");
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: "<style>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
+        tagName: "style",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+      {
+        type: "rule",
+        start: 7,
+        end: 23,
+        value: '.a{float:left;"}',
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: 22,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            start: 10,
+            end: 21,
+            property: "float",
+            propertyStarts: 10,
+            propertyEnds: 15,
+            value: "left",
+            valueStarts: 16,
+            valueEnds: 20,
+            important: null,
+            importantStarts: null,
+            importantEnds: null,
+            colon: 15,
+            semi: 20,
+          },
+          {
+            start: 21,
+            end: 22,
+            property: '"',
+            propertyStarts: 21,
+            propertyEnds: 22,
+            value: null,
+            valueStarts: null,
+            valueEnds: null,
+            important: null,
+            importantStarts: null,
+            importantEnds: null,
+            colon: null,
+            semi: null,
+          },
+        ],
+      },
+    ],
+    "29"
+  );
   t.end();
 });
 
-tap.todo(`30`, (t) => {
+tap.todo(`30 - repeated semi`, (t) => {
   const gathered = [];
-  ct(`<style>.a{float:left;}.b{color: red}`, {
+  ct(`<style>.a{float:left;;}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },

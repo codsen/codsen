@@ -5816,7 +5816,8 @@ function tokenizer(str, originalOpts) {
     //                include this dot within property name
     //                so that we can catch it later validating prop names
     //
-    !rightVal || !":/".includes(str[rightVal]))) && ( // also, regarding the slash,
+    !rightVal || !":/}".includes(str[rightVal]) || // mind the rogue closings .a{x}}
+    str[_i] === "}" && str[rightVal] === "}")) && ( // also, regarding the slash,
     // <div style="//color: red;">
     //              ^
     //            don't close here, continue, gather "//color"
@@ -6317,6 +6318,12 @@ function tokenizer(str, originalOpts) {
         if (Array.isArray(token.properties) && token.properties.length && token.properties[~-token.properties.length].start && !token.properties[~-token.properties.length].end) {
           token.properties[~-token.properties.length].end = _i;
           token.properties[~-token.properties.length].value = str.slice(token.properties[~-token.properties.length].start, _i);
+        } // if there's partial, still-pending property, push it
+
+
+        if (property.start) {
+          token.properties.push(property);
+          propertyReset();
         }
         pingTagCb(token); // if it's a "rule" token and a parent "at" rule is pending in layers,
         // also put this "rule" into that parent in layers
