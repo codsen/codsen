@@ -17,9 +17,9 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
-var version$1 = version; // astralAwareSearch() - searches for strings, returns the findings in an array
+var version = version$1; // astralAwareSearch() - searches for strings, returns the findings in an array
 
 function astralAwareSearch(whereToLook, whatToLookFor, opts) {
   function existy(something) {
@@ -382,4 +382,4 @@ function er(originalSource, options, originalReplacement) {
 }
 
 exports.er = er;
-exports.version = version$1;
+exports.version = version;

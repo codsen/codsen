@@ -12,10 +12,10 @@ import pull from 'lodash.pull';
 import isObj from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
 /* eslint no-bitwise:0, @typescript-eslint/explicit-module-boundary-types:0, @typescript-eslint/ban-types:0 */
-const version$1 = version;
+const version = version$1;
 
 function combinations(originalIncomingObject, originalOverrideObject = {}) {
   //
@@ -94,4 +94,4 @@ function combinations(originalIncomingObject, originalOverrideObject = {}) {
   return outcomingObjectsArray;
 }
 
-export { combinations, version$1 as version };
+export { combinations, version };

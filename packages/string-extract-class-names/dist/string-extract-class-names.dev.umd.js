@@ -2055,9 +2055,9 @@ function left(str, idx) {
   });
 }
 
-var version = "6.0.5";
+var version$1 = "6.0.5";
 
-var version$1 = version;
+var version = version$1;
 /**
  * Extracts CSS class/id names from a string
  */
@@ -2160,7 +2160,7 @@ function extract(str) {
 }
 
 exports.extract = extract;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

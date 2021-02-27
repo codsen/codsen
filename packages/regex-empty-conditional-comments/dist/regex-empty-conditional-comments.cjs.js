@@ -11,13 +11,13 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var version = "1.10.5";
+var version$1 = "1.10.5";
 
-var version$1 = version;
+var version = version$1;
 
 function emptyCondCommentRegex() {
   return /<!(--)?\[if[^\]]*]>[<>!-\s]*<!\[endif\]\1>/gi;
 }
 
 exports.emptyCondCommentRegex = emptyCondCommentRegex;
-exports.version = version$1;
+exports.version = version;

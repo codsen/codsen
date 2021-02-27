@@ -10,9 +10,9 @@
 import { empty } from 'ast-contains-only-empty-space';
 import isObj from 'lodash.isplainobject';
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-const version$1 = version; // we use internal function to shield the third input arg from the outside api
+const version = version$1; // we use internal function to shield the third input arg from the outside api
 
 function internalCompare(bigObj, smallObj, res) {
   function existy(x) {
@@ -125,4 +125,4 @@ function looseCompare(bigObj, smallObj) {
   return internalCompare(bigObj, smallObj);
 }
 
-export { looseCompare, version$1 as version };
+export { looseCompare, version };

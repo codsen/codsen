@@ -62,9 +62,9 @@ function _objectSpread2(target) {
   return target;
 }
 
-var version = "3.0.5";
+var version$1 = "3.0.5";
 
-var version$1 = version; // Reference used:
+var version = version$1; // Reference used:
 // https://en.wikipedia.org/wiki/Uniform_Resource_Identifier#URI_references
 
 var BACKSLASH = "\\"; // retrieved 2020-Jan-11
@@ -262,7 +262,7 @@ function isRel(str, originalOpts) {
 }
 
 exports.isRel = isRel;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

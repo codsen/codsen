@@ -115,9 +115,9 @@ function findAttrNameCharsChunkOnTheLeft(str, i) {
   }
 }
 
-var version = "2.1.2";
+var version$1 = "2.1.2";
 
-var version$1 = version;
+var version = version$1;
 
 function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
   if (typeof str !== "string" || !str.trim() || !Number.isInteger(idxOfAttrOpening) || !Number.isInteger(isThisClosingIdx) || !str[idxOfAttrOpening] || !str[isThisClosingIdx] || idxOfAttrOpening >= isThisClosingIdx) {
@@ -854,4 +854,4 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
 }
 
 exports.isAttrClosing = isAttrClosing;
-exports.version = version$1;
+exports.version = version;

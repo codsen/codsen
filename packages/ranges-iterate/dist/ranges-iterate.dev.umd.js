@@ -13,9 +13,9 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.rangesIterate = {}));
 }(this, (function (exports) { 'use strict';
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function rIterate(str, originalRanges, cb, offset) {
   if (offset === void 0) {
@@ -54,7 +54,8 @@ function rIterate(str, originalRanges, cb, offset) {
       // push converter simply returns range that was given, no changes needed
       cb({
         i: i,
-        val: str[i]
+        val: str[i] // push: (received) => received,
+
       });
     }
   } else {
@@ -128,7 +129,7 @@ function rIterate(str, originalRanges, cb, offset) {
 }
 
 exports.rIterate = rIterate;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

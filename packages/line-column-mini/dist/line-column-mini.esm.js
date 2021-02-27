@@ -7,9 +7,9 @@
  * Homepage: https://codsen.com/os/line-column-mini/
  */
 
-var version = "1.1.5";
+var version$1 = "1.1.5";
 
-const version$1 = version; // find where is a given element located
+const version = version$1; // find where is a given element located
 
 function binarySearch(el, arr) {
   let m = 0;
@@ -73,4 +73,4 @@ function lineCol(input, idx, skipChecks = false) {
   };
 }
 
-export { getLineStartIndexes, lineCol, version$1 as version };
+export { getLineStartIndexes, lineCol, version };

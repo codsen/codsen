@@ -2097,7 +2097,7 @@ function isNum(something) {
   return typeof something === "number";
 }
 
-function isStr(something) {
+function isStr$1(something) {
   return typeof something === "string";
 }
 
@@ -2301,7 +2301,7 @@ function seq(direction, str, idx, opts, args) {
   // where we need to repeat same step (hungrily matched character) few times.
 
   while (i < args.length) {
-    if (!isStr(args[i]) || !args[i].length) {
+    if (!isStr$1(args[i]) || !args[i].length) {
       i += 1;
       continue;
     }
@@ -2689,7 +2689,7 @@ function chompLeft(str, idx) {
 
     if (!opts.mode) {
       opts.mode = 0;
-    } else if (isStr(opts.mode) && "0123".includes(opts.mode)) {
+    } else if (isStr$1(opts.mode) && "0123".includes(opts.mode)) {
       opts.mode = Number.parseInt(opts.mode, 10);
     } else if (!isNum(opts.mode)) {
       throw new Error("string-left-right/chompLeft(): [THROW_ID_01] the opts.mode is wrong! It should be 0, 1, 2 or 3. It was given as " + opts.mode + " (type " + typeof opts.mode + ")");
@@ -2698,7 +2698,7 @@ function chompLeft(str, idx) {
     return chomp("left", str, idx, opts, lodash_clonedeep(args).slice(1));
   }
 
-  if (!isStr(args[0])) {
+  if (!isStr$1(args[0])) {
     return chomp("left", str, idx, defaults, lodash_clonedeep(args).slice(1));
   } // ELSE
   // all arguments are values to match, first element is not options object
@@ -2707,7 +2707,7 @@ function chompLeft(str, idx) {
   return chomp("left", str, idx, defaults, lodash_clonedeep(args));
 } //
 
-var defaults = {
+var defaults$1 = {
   strictlyTwoElementsInRangeArrays: false,
   progressFn: null
 };
@@ -2719,7 +2719,7 @@ function rSort(arrOfRanges, originalOptions) {
   } // fill any settings with defaults if missing:
 
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOptions); // arrOfRanges validation
+  var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOptions); // arrOfRanges validation
 
 
   var culpritsIndex;
@@ -2786,7 +2786,7 @@ function rSort(arrOfRanges, originalOptions) {
   });
 }
 
-var defaults$1 = {
+var defaults = {
   mergeType: 1,
   progressFn: null,
   joinRangesThatTouchEdges: true
@@ -2814,7 +2814,7 @@ function rMerge(arrOfRanges, originalOpts) {
 
   if (originalOpts) {
     if (isObj(originalOpts)) {
-      opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts); // 1. validate opts.progressFn
+      opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); // 1. validate opts.progressFn
 
       if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
         opts.progressFn = null;
@@ -2835,7 +2835,7 @@ function rMerge(arrOfRanges, originalOpts) {
       throw new Error("emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n" + JSON.stringify(originalOpts, null, 4) + " (type " + typeof originalOpts + ")");
     }
   } else {
-    opts = _objectSpread2({}, defaults$1);
+    opts = _objectSpread2({}, defaults);
   } // progress-wise, sort takes first 20%
   // two-level-deep array clone:
 
@@ -3057,11 +3057,11 @@ function rApply(str, originalRangesArr, _progressFn) {
   return str;
 }
 
-var version = "0.3.5";
+var version$1 = "0.3.5";
 
-var version$1 = version;
+var version = version$1;
 
-function isStr$1(something) {
+function isStr(something) {
   return typeof something === "string";
 }
 
@@ -3070,7 +3070,7 @@ function stringifyPath(something) {
     return something.join(".");
   }
 
-  if (isStr$1(something)) {
+  if (isStr(something)) {
     return something;
   }
 
@@ -3079,7 +3079,7 @@ function stringifyPath(something) {
 
 function stringifyAndEscapeValue(something) { // since incoming strings will come already wrapped with legit double quotes, we don't need to escape them
 
-  if (isStr$1(something) && something.startsWith("\"") && something.endsWith("\"")) {
+  if (isStr(something) && something.startsWith("\"") && something.endsWith("\"")) {
     return "" + JSON.stringify(something.slice(1, something.length - 1), null, 0);
   }
 
@@ -3135,7 +3135,7 @@ function main(_ref) {
   var calculatedValueToInsert = valToInsert; // if string is passed and it's not wrapped with double quotes,
   // we must wrap it with quotes, we can't write it to JSON like that!
 
-  if (isStr$1(valToInsert) && !valToInsert.startsWith("\"") && !valToInsert.startsWith("{")) {
+  if (isStr(valToInsert) && !valToInsert.startsWith("\"") && !valToInsert.startsWith("{")) {
     calculatedValueToInsert = "\"" + valToInsert + "\"";
   } // state trackers are arrays because both can be mixed of nested elements.
   // Imagine, you caught the ending of an array. How do you know, are you within
@@ -3410,7 +3410,7 @@ function main(_ref) {
     } // catch plain object as a value
 
 
-    if (!replaceThisValue && str[i] === "{" && isStr$1(keyName) && valueStartedAt === null && keyValue === null) {
+    if (!replaceThisValue && str[i] === "{" && isStr(keyName) && valueStartedAt === null && keyValue === null) {
       // also reset but don't touch the path - rabbit hole goes deeper
       log();
       reset();
@@ -3550,7 +3550,7 @@ function main(_ref) {
 
 function set(str, path, valToInsert) {
 
-  if (!isStr$1(str) || !str.length) {
+  if (!isStr(str) || !str.length) {
     throw new Error("edit-package-json/set(): [THROW_ID_01] first input argument must be a non-empty string. It was given as " + JSON.stringify(str, null, 4) + " (type " + typeof str + ")");
   }
 
@@ -3564,7 +3564,7 @@ function set(str, path, valToInsert) {
 
 function del(str, path) {
 
-  if (!isStr$1(str) || !str.length) {
+  if (!isStr(str) || !str.length) {
     throw new Error("edit-package-json/del(): [THROW_ID_02] first input argument must be a non-empty string. It was given as " + JSON.stringify(str, null, 4) + " (type " + typeof str + ")");
   } // absence of what to insert means delete
 
@@ -3578,7 +3578,7 @@ function del(str, path) {
 
 exports.del = del;
 exports.set = set;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

@@ -52,9 +52,9 @@ function isJinjaSpecific() {
   return /(set\s*[\w]+\s*=\s*namespace\()|({{['"][\w]+['"]\s+if)|(['"]%x?[+0]?[.>^<]?\d+[\w%]['"]\|format\()/gi;
 }
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function detectLang(str) {
   var name = null;
@@ -88,7 +88,7 @@ function detectLang(str) {
 }
 
 exports.detectLang = detectLang;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

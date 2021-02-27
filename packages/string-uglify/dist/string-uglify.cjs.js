@@ -11,9 +11,9 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var version = "1.4.5";
+var version$1 = "1.4.5";
 
-var version$1 = version; // tells code point of a given id number
+var version = version$1; // tells code point of a given id number
 
 function tellcp(str, idNum) {
   if (idNum === void 0) {
@@ -245,4 +245,4 @@ function uglifyById(refArr, idNum) {
 
 exports.uglifyArr = uglifyArr;
 exports.uglifyById = uglifyById;
-exports.version = version$1;
+exports.version = version;

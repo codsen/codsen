@@ -15,10 +15,10 @@ import isDate from 'lodash.isdate';
 import { includesWithGlob } from 'array-includes-with-glob';
 import { nonEmpty } from 'util-nonempty';
 
-var version = "12.0.2";
+var version$1 = "12.0.2";
 
 /* eslint max-len:0, no-prototype-builtins:0, @typescript-eslint/ban-types: 0, @typescript-eslint/explicit-module-boundary-types: 0 */
-const version$1 = version;
+const version = version$1;
 // F U N C T I O N S
 
 function isStr(something) {
@@ -720,4 +720,4 @@ function externalApi(input1orig, input2orig, originalOpts) {
   }, input1orig, input2orig, originalOpts);
 }
 
-export { defaults, externalApi as mergeAdvanced, version$1 as version };
+export { defaults, externalApi as mergeAdvanced, version };

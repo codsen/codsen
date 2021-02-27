@@ -9,9 +9,9 @@
 
 import { mergeAdvanced } from 'object-merge-advanced';
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-const version$1 = version;
+const version = version$1;
 const defaults = {
   dedupe: true
 };
@@ -55,4 +55,4 @@ function generateAst(input, originalOpts) {
   return sortObject(res);
 }
 
-export { defaults, generateAst, version$1 as version };
+export { defaults, generateAst, version };

@@ -86,7 +86,7 @@ function arrayiffy(something) {
 
 /* eslint no-plusplus:0 */
 
-function isObj(something) {
+function isObj$1(something) {
   return something && typeof something === "object" && !Array.isArray(something);
 }
 
@@ -94,7 +94,7 @@ function isStr(something) {
   return typeof something === "string";
 }
 
-var defaults = {
+var defaults$1 = {
   cb: undefined,
   i: false,
   trimBeforeMatching: false,
@@ -125,7 +125,7 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
     return whatToMatchValVal;
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts);
 
   if (position >= str.length && !special) {
     return false;
@@ -385,11 +385,11 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 
 function main(mode, str, position, originalWhatToMatch, originalOpts) {
   // insurance
-  if (isObj(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
+  if (isObj$1(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
     throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!" + (Array.isArray(originalOpts.trimBeforeMatching) ? " Did you mean to use opts.trimCharsBeforeMatching?" : ""));
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts);
 
   if (typeof opts.trimCharsBeforeMatching === "string") {
     // arrayiffy if needed:
@@ -429,7 +429,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's " + typeof originalWhatToMatch + ", equal to:\n" + JSON.stringify(originalWhatToMatch, null, 4));
   }
 
-  if (originalOpts && !isObj(originalOpts)) {
+  if (originalOpts && !isObj$1(originalOpts)) {
     throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type \"" + typeof originalOpts + "\", and equal to:\n" + JSON.stringify(originalOpts, null, 4));
   }
 
@@ -2713,7 +2713,7 @@ function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x, y) {
 // Used to troubleshoot dirty broken code.
 
 
-function xBeforeYOnTheRight(str, startingIdx, x, y) {
+function xBeforeYOnTheRight$1(str, startingIdx, x, y) {
   for (var i = startingIdx, len = str.length; i < len; i++) {
     if (str.startsWith(x, i)) {
       // if x was first, Bob's your uncle, that's truthy result
@@ -3186,7 +3186,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       var R3 = allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, isThisClosingIdx).trim()); // that quote we suspected as closing, is from an opening-closing
       // set on another attribute:
 
-      var R4 = !xBeforeYOnTheRight(str, i + 1, str[isThisClosingIdx], makeTheQuoteOpposite(str[isThisClosingIdx])); // const R5 = plausibleAttrStartsAtX(str, start) // consider:
+      var R4 = !xBeforeYOnTheRight$1(str, i + 1, str[isThisClosingIdx], makeTheQuoteOpposite(str[isThisClosingIdx])); // const R5 = plausibleAttrStartsAtX(str, start) // consider:
       // <z alt"href' www'/>
       //       ^    ^
       //    start   suspected ending
@@ -3582,7 +3582,7 @@ function isTagNameRecognised(tagName) {
 // Used to troubleshoot dirty broken code.
 
 
-function xBeforeYOnTheRight$1(str, startingIdx, x, y) {
+function xBeforeYOnTheRight(str, startingIdx, x, y) {
   for (var i = startingIdx, len = str.length; i < len; i++) {
     if (str.startsWith(x, i)) {
       // if x was first, Bob's your uncle, that's truthy result
@@ -3601,7 +3601,7 @@ function xBeforeYOnTheRight$1(str, startingIdx, x, y) {
 }
 
 
-function isObj$1(something) {
+function isObj(something) {
   return something && typeof something === "object" && !Array.isArray(something);
 } // https://html.spec.whatwg.org/multipage/syntax.html#elements-2
 
@@ -3854,7 +3854,7 @@ var defaultOpts = {
   allowCustomTagNames: false,
   skipOpeningBracket: false
 };
-var BACKSLASH = "\\";
+var BACKSLASH$1 = "\\";
 var knownHtmlTags = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h1 - h6", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "slot", "small", "source", "span", "strike", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xml"];
 
 function isNotLetter(char) {
@@ -3926,7 +3926,7 @@ function isOpening(str, idx, originalOpts) {
   var matchingOptions = {
     cb: isNotLetter,
     i: true,
-    trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+    trimCharsBeforeMatching: ["/", BACKSLASH$1, "!", " ", "\t", "\n", "\r"]
   }; // -----------------------------------------------------------------------------
 
   if (opts.allowCustomTagNames) {
@@ -3967,7 +3967,7 @@ function isOpening(str, idx, originalOpts) {
         return char.toUpperCase() === char.toLowerCase() && !/\d/.test(char) && char !== "=";
       },
       i: true,
-      trimCharsBeforeMatching: ["<", "/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+      trimCharsBeforeMatching: ["<", "/", BACKSLASH$1, "!", " ", "\t", "\n", "\r"]
     })) {
       passed = true;
     }
@@ -3982,7 +3982,7 @@ function isOpening(str, idx, originalOpts) {
   return res;
 }
 
-var BACKSLASH$1 = "\\"; // This is an extracted logic which detects where token of a particular kind
+var BACKSLASH = "\\"; // This is an extracted logic which detects where token of a particular kind
 // starts. Previously it sat within if() clauses but became unwieldy and
 // so we extracted into a function.
 
@@ -3994,7 +3994,7 @@ function startsTag(str, i, token, layers, withinStyle) {
     i: true,
     trimBeforeMatching: true,
     trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
-  })) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH$1].includes(str[left(str, i)])) && isOpening(str, i, {
+  })) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH].includes(str[left(str, i)])) && isOpening(str, i, {
     allowCustomTagNames: false,
     skipOpeningBracket: true
   })) && (token.type !== "esp" || token.tail && token.tail.includes(str[i])));
@@ -4044,18 +4044,18 @@ function startsEsp(str, i, token, layers, withinStyle) {
   ">})".includes(str[i]) && // heads include the opposite of it
   Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump.includes(flipEspTag(str[i])) && ( // insurance against "greater than", as in:
   // <#if product.weight > 100>
-  str[i] !== ">" || !xBeforeYOnTheRight$1(str, i + 1, ">", "<")) || //
+  str[i] !== ">" || !xBeforeYOnTheRight(str, i + 1, ">", "<")) || //
   // 4. comment closing in RPL-like templating languages, for example:
   // <#-- z -->
   str[i] === "-" && str[i + 1] === "-" && str[i + 2] === ">" && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-";
   return !!res;
 }
 
-var version = "5.1.2";
+var version$1 = "5.1.2";
 
-var version$1 = version;
+var version = version$1;
 var importantStartsRegexp = /^\s*!?\s*[a-zA-Z0-9]+(?:[\s;}<>'"]|$)/gm;
-var defaults$1 = {
+var defaults = {
   tagCb: null,
   tagCbLookahead: 0,
   charCb: null,
@@ -4087,19 +4087,19 @@ function tokenizer(str, originalOpts) {
     }
   }
 
-  if (originalOpts && !isObj$1(originalOpts)) {
+  if (originalOpts && !isObj(originalOpts)) {
     throw new Error("codsen-tokenizer: [THROW_ID_03] the second input argument, an options object, should be a plain object but it was given as type " + typeof originalOpts + ", equal to " + JSON.stringify(originalOpts, null, 4));
   }
 
-  if (originalOpts && isObj$1(originalOpts) && originalOpts.tagCb && typeof originalOpts.tagCb !== "function") {
+  if (originalOpts && isObj(originalOpts) && originalOpts.tagCb && typeof originalOpts.tagCb !== "function") {
     throw new Error("codsen-tokenizer: [THROW_ID_04] the opts.tagCb, callback function, should be a function but it was given as type " + typeof originalOpts.tagCb + ", equal to " + JSON.stringify(originalOpts.tagCb, null, 4));
   }
 
-  if (originalOpts && isObj$1(originalOpts) && originalOpts.charCb && typeof originalOpts.charCb !== "function") {
+  if (originalOpts && isObj(originalOpts) && originalOpts.charCb && typeof originalOpts.charCb !== "function") {
     throw new Error("codsen-tokenizer: [THROW_ID_05] the opts.charCb, callback function, should be a function but it was given as type " + typeof originalOpts.charCb + ", equal to " + JSON.stringify(originalOpts.charCb, null, 4));
   }
 
-  if (originalOpts && isObj$1(originalOpts) && originalOpts.reportProgressFunc && typeof originalOpts.reportProgressFunc !== "function") {
+  if (originalOpts && isObj(originalOpts) && originalOpts.reportProgressFunc && typeof originalOpts.reportProgressFunc !== "function") {
     throw new Error("codsen-tokenizer: [THROW_ID_06] the opts.reportProgressFunc, callback function, should be a function but it was given as type " + typeof originalOpts.reportProgressFunc + ", equal to " + JSON.stringify(originalOpts.reportProgressFunc, null, 4));
   } //
   //
@@ -4112,7 +4112,7 @@ function tokenizer(str, originalOpts) {
   // ---------------------------------------------------------------------------
 
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts); //
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); //
   //
   //
   //
@@ -4517,7 +4517,7 @@ function tokenizer(str, originalOpts) {
   }
 
   function atRuleWaitingForClosingCurlie() {
-    return lastLayerIs("at") && isObj$1(layers[~-layers.length].token) && layers[~-layers.length].token.openingCurlyAt && !layers[~-layers.length].token.closingCurlyAt;
+    return lastLayerIs("at") && isObj(layers[~-layers.length].token) && layers[~-layers.length].token.openingCurlyAt && !layers[~-layers.length].token.closingCurlyAt;
   }
 
   function getNewToken(type, startVal) {
@@ -4551,7 +4551,8 @@ function tokenizer(str, originalOpts) {
         value: null,
         closing: false,
         kind: "simple",
-        language: "html"
+        language: "html" // or "css"
+
       };
     }
 
@@ -6057,7 +6058,7 @@ function tokenizer(str, originalOpts) {
           i: true,
           trimBeforeMatching: true
         }) && ( // the following case will assume closing sq. bracket is present
-        xBeforeYOnTheRight$1(str, _i, "]", ">") || // in case there are no brackets leading up to "mso" (which must exist)
+        xBeforeYOnTheRight(str, _i, "]", ">") || // in case there are no brackets leading up to "mso" (which must exist)
         str.includes("mso", _i) && !str.slice(_i, str.indexOf("mso")).includes("<") && !str.slice(_i, str.indexOf("mso")).includes(">")))) {
           // don't set the token's end, leave it open until the
           // closing bracket, for example, it might be:
@@ -6992,10 +6993,10 @@ var util = {
   matchLayerLast: matchLayerLast
 };
 
-exports.defaults = defaults$1;
+exports.defaults = defaults;
 exports.tokenizer = tokenizer;
 exports.util = util;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

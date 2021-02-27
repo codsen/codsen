@@ -17,9 +17,9 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
-var version = "3.0.5";
+var version$1 = "3.0.5";
 
-var version$1 = version;
+var version = version$1;
 var defaults = {
   classicTrim: false,
   cr: false,
@@ -119,4 +119,4 @@ function trimSpaces(str, originalOpts) {
 
 exports.defaults = defaults;
 exports.trimSpaces = trimSpaces;
-exports.version = version$1;
+exports.version = version;

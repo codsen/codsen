@@ -11,10 +11,10 @@ import { traverse } from 'ast-monkey-traverse';
 import matcher from 'matcher';
 import clone from 'lodash.clonedeep';
 
-var version = "3.0.5";
+var version$1 = "3.0.5";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
-const version$1 = version;
+const version = version$1;
 /**
  * Extract values and paths from AST by keys OR set them by keys
  */
@@ -48,4 +48,4 @@ function getByKey(originalInput, whatToFind, originalReplacement) {
   return replacement === undefined ? findings : amended;
 }
 
-export { getByKey, version$1 as version };
+export { getByKey, version };

@@ -10,10 +10,10 @@
 import clone from 'lodash.clonedeep';
 import isObj from 'lodash.isplainobject';
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
-const version$1 = version;
+const version = version$1;
 
 function traverse(tree1, cb1, lookahead = 0) {
   function trimFirstDot(str) {
@@ -137,4 +137,4 @@ function traverse(tree1, cb1, lookahead = 0) {
   }
 } // -----------------------------------------------------------------------------
 
-export { traverse, version$1 as version };
+export { traverse, version };

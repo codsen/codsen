@@ -18,9 +18,9 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-var version$1 = version;
+var version = version$1;
 var defaults = {
   dedupe: true
 };
@@ -64,4 +64,4 @@ function generateAst(input, originalOpts) {
 
 exports.defaults = defaults;
 exports.generateAst = generateAst;
-exports.version = version$1;
+exports.version = version;

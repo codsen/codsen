@@ -13,9 +13,9 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var rangesMerge = require('ranges-merge');
 
-var version = "5.0.5";
+var version$1 = "5.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function rApply(str, originalRangesArr, _progressFn) {
   var percentageDone = 0;
@@ -142,4 +142,4 @@ function rApply(str, originalRangesArr, _progressFn) {
 }
 
 exports.rApply = rApply;
-exports.version = version$1;
+exports.version = version;

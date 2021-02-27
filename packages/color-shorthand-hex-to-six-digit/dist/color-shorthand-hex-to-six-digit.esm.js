@@ -11,10 +11,10 @@ import r from 'hex-color-regex';
 import isPlainObject from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';
 
-var version = "3.0.5";
+var version$1 = "3.0.5";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
-const version$1 = version;
+const version = version$1;
 /**
  * Convert shorthand hex color codes into full
  */
@@ -52,4 +52,4 @@ function conv(originalInput) {
   return input;
 }
 
-export { conv, version$1 as version };
+export { conv, version };

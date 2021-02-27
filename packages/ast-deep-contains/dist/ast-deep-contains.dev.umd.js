@@ -3330,9 +3330,9 @@ var dist = createCommonjsModule(function (module, exports) {
 });
 var is = /*@__PURE__*/getDefaultExportFromCjs(dist);
 
-var version = "3.0.5";
+var version$1 = "3.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function goUp(pathStr) {
   // console.log(`014 goUp(): INCOMING pathStr = "${pathStr}"`);
@@ -3549,7 +3549,7 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
 
 exports.deepContains = deepContains;
 exports.defaults = defaults;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

@@ -17,9 +17,9 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
-var version$1 = version;
+var version = version$1;
 var defaults = {
   strictlyTwoElementsInRangeArrays: false,
   progressFn: null
@@ -101,4 +101,4 @@ function rSort(arrOfRanges, originalOptions) {
 
 exports.defaults = defaults;
 exports.rSort = rSort;
-exports.version = version$1;
+exports.version = version;

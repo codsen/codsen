@@ -11,9 +11,9 @@ import { isJinjaNunjucksRegex } from 'regex-is-jinja-nunjucks';
 import { isJSP } from 'regex-is-jsp';
 import { isJinjaSpecific } from 'regex-jinja-specific';
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-const version$1 = version;
+const version = version$1;
 
 function detectLang(str) {
   let name = null;
@@ -46,4 +46,4 @@ function detectLang(str) {
   };
 }
 
-export { detectLang, version$1 as version };
+export { detectLang, version };

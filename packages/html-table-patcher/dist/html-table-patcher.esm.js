@@ -12,9 +12,9 @@ import { Ranges } from 'ranges-push';
 import { rApply } from 'ranges-apply';
 import { traverse } from 'ast-monkey-traverse-with-lookahead';
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
-const version$1 = version;
+const version = version$1;
 const htmlCommentRegex = /<!--([\s\S]*?)-->/g;
 const ranges = new Ranges();
 
@@ -235,4 +235,4 @@ function patcher(str, generalOpts) {
   };
 }
 
-export { defaults, patcher, version$1 as version };
+export { defaults, patcher, version };

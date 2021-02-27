@@ -20,9 +20,9 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var uniq__default = /*#__PURE__*/_interopDefaultLegacy(uniq);
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
-var version$1 = version;
+var version = version$1;
 var defaults = {
   wildcard: "*",
   dedupePlease: true
@@ -133,4 +133,4 @@ function groupStr(originalArr, originalOpts) {
 }
 
 exports.groupStr = groupStr;
-exports.version = version$1;
+exports.version = version;

@@ -4197,7 +4197,7 @@ var he = createCommonjsModule(function (module, exports) {
   })(commonjsGlobal);
 });
 
-var defaults = {
+var defaults$2 = {
   strictlyTwoElementsInRangeArrays: false,
   progressFn: null
 };
@@ -4209,7 +4209,7 @@ function rSort(arrOfRanges, originalOptions) {
   } // fill any settings with defaults if missing:
 
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOptions); // arrOfRanges validation
+  var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOptions); // arrOfRanges validation
 
 
   var culpritsIndex;
@@ -4560,9 +4560,9 @@ function isPlainObject(value) {
 
 var lodash_isplainobject = isPlainObject;
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function chomp(str) {
   // eslint-disable-next-line no-param-reassign
@@ -4570,7 +4570,7 @@ function chomp(str) {
   return str;
 }
 
-var defaults$2 = {
+var defaults = {
   isAttributeValue: false,
   strict: false
 };
@@ -4589,7 +4589,7 @@ function rEntDecode(str, originalOpts) {
     throw new TypeError("ranges-ent-decode/decode(): [THROW_ID_02] Optional Options Object, the second in put argument, must be a plain object! Currently it's given as " + originalOpts + ", type " + typeof originalOpts);
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts); // vars
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); // vars
   // ---------------------------------------------------------------------------
   // single, non-recursively encoded entity:
   // /&(#?[^;\W]+;?)/g;
@@ -4633,9 +4633,9 @@ function rEntDecode(str, originalOpts) {
   return rMerge(rangesArr);
 }
 
-exports.defaults = defaults$2;
+exports.defaults = defaults;
 exports.rEntDecode = rEntDecode;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

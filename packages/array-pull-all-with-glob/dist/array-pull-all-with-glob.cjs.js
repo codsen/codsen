@@ -19,9 +19,9 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var matcher__default = /*#__PURE__*/_interopDefaultLegacy(matcher);
 
-var version = "5.0.5";
+var version$1 = "5.0.5";
 
-var version$1 = version;
+var version = version$1;
 /**
  * Like _.pullAll but with globs (wildcards)
  */
@@ -55,4 +55,4 @@ function pull(originalInput, originalToBeRemoved, originalOpts) {
 }
 
 exports.pull = pull;
-exports.version = version$1;
+exports.version = version;

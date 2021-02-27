@@ -21,9 +21,9 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var trimChars__default = /*#__PURE__*/_interopDefaultLegacy(trimChars);
 
-var version = "5.0.5";
+var version$1 = "5.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function remSep(str, originalOpts) {
   // vars
@@ -170,4 +170,4 @@ function remSep(str, originalOpts) {
 }
 
 exports.remSep = remSep;
-exports.version = version$1;
+exports.version = version;

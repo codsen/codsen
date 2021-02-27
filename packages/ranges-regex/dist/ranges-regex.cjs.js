@@ -18,9 +18,9 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var isregexp__default = /*#__PURE__*/_interopDefaultLegacy(isregexp);
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function rRegex(regx, str, replacement) {
   // given regx validation
@@ -70,4 +70,4 @@ function rRegex(regx, str, replacement) {
 }
 
 exports.rRegex = rRegex;
-exports.version = version$1;
+exports.version = version;

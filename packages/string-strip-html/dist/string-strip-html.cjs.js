@@ -82,9 +82,9 @@ function notWithinAttrQuotes(tag, str, i) {
   return !tag || !tag.quotes || !xBeforeYOnTheRight(str, i + 1, tag.quotes.value, ">");
 }
 
-var version = "8.2.2";
+var version$1 = "8.2.2";
 
-var version$1 = version;
+var version = version$1;
 var defaults = {
   ignoreTags: [],
   onlyStripTags: [],
@@ -1223,4 +1223,4 @@ function stripHtml(str, originalOpts) {
 
 exports.defaults = defaults;
 exports.stripHtml = stripHtml;
-exports.version = version$1;
+exports.version = version;

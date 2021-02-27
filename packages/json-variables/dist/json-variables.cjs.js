@@ -29,9 +29,9 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var matcher__default = /*#__PURE__*/_interopDefaultLegacy(matcher);
 var objectPath__default = /*#__PURE__*/_interopDefaultLegacy(objectPath);
 
-var version = "10.0.5";
+var version$1 = "10.0.5";
 
-var version$1 = version;
+var version = version$1;
 var has = Object.prototype.hasOwnProperty;
 var defaults = {
   heads: "%%_",
@@ -53,7 +53,8 @@ var defaults = {
   // even if some values contain Boolean true. Otherwise, the whole value will
   // resolve to the first encountered Boolean.
   throwWhenNonStringInsertedInString: false,
-  allowUnresolved: false
+  allowUnresolved: false // Allow value to not have a resolved variable
+
 }; // -----------------------------------------------------------------------------
 //                       H E L P E R   F U N C T I O N S
 // -----------------------------------------------------------------------------
@@ -658,4 +659,4 @@ function jVar(input, originalOpts) {
 
 exports.defaults = defaults;
 exports.jVar = jVar;
-exports.version = version$1;
+exports.version = version;

@@ -188,9 +188,9 @@ var isMatch = function isMatch(input, pattern, options) {
 };
 matcher.isMatch = isMatch;
 
-var version = "5.0.5";
+var version$1 = "5.0.5";
 
-var version$1 = version;
+var version = version$1;
 /**
  * Like _.pullAll but with globs (wildcards)
  */
@@ -224,7 +224,7 @@ function pull(originalInput, originalToBeRemoved, originalOpts) {
 }
 
 exports.pull = pull;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

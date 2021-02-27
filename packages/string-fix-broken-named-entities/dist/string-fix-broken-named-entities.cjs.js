@@ -252,9 +252,9 @@ function removeGappedFromMixedCases(str, temp1) {
   return findLongest(temp1);
 }
 
-var version = "5.0.5";
+var version$1 = "5.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function fixEnt(str, originalOpts) { //
   //
@@ -973,4 +973,4 @@ function fixEnt(str, originalOpts) { //
 }
 
 exports.fixEnt = fixEnt;
-exports.version = version$1;
+exports.version = version;

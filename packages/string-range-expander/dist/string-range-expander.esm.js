@@ -7,9 +7,9 @@
  * Homepage: https://codsen.com/os/string-range-expander/
  */
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-const version$1 = version;
+const version = version$1;
 const defaults = {
   str: "",
   from: 0,
@@ -175,4 +175,4 @@ function expander(originalOpts) {
   return [from, to];
 }
 
-export { defaults, expander, version$1 as version };
+export { defaults, expander, version };

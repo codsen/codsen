@@ -19,10 +19,10 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
-var version$1 = version;
+var version = version$1;
 
 function setAllValuesTo(inputOriginal, valueOriginal) {
   var value;
@@ -57,4 +57,4 @@ function setAllValuesTo(inputOriginal, valueOriginal) {
 }
 
 exports.setAllValuesTo = setAllValuesTo;
-exports.version = version$1;
+exports.version = version;

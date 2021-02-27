@@ -20,10 +20,10 @@ import pReduce from 'p-reduce';
 import typ from 'type-detect';
 import pOne from 'p-one';
 
-var version = "6.8.5";
+var version$1 = "6.8.5";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
-const version$1 = version;
+const version = version$1;
 
 function existy(x) {
   return x != null;
@@ -398,4 +398,4 @@ function findUnusedSync(arrOriginal, originalOpts) {
   return findUnusedSyncInner(arr, opts);
 } // -----------------------------------------------------------------------------
 
-export { enforceKeyset, enforceKeysetSync, findUnusedSync, getKeyset, getKeysetSync, noNewKeysSync, sortAllObjectsSync, version$1 as version };
+export { enforceKeyset, enforceKeysetSync, findUnusedSync, getKeyset, getKeysetSync, noNewKeysSync, sortAllObjectsSync, version };

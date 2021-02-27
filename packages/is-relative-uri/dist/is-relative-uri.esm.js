@@ -7,9 +7,9 @@
  * Homepage: https://codsen.com/os/is-relative-uri/
  */
 
-var version = "3.0.5";
+var version$1 = "3.0.5";
 
-const version$1 = version; // Reference used:
+const version = version$1; // Reference used:
 // https://en.wikipedia.org/wiki/Uniform_Resource_Identifier#URI_references
 
 const BACKSLASH = "\u005C"; // retrieved 2020-Jan-11
@@ -203,4 +203,4 @@ function isRel(str, originalOpts) {
   };
 }
 
-export { isRel, version$1 as version };
+export { isRel, version };

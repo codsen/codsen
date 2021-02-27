@@ -62,9 +62,9 @@ function _objectSpread2(target) {
   return target;
 }
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-var version$1 = version; // Takes string, SASS variables file and extracts the plain object of variables: key-value pairs
+var version = version$1; // Takes string, SASS variables file and extracts the plain object of variables: key-value pairs
 // As a bonus, it turns digit-only value strings into numbers.
 
 var BACKSLASH = "\\";
@@ -210,7 +210,7 @@ function extractVars(str, originalOpts) {
 
 exports.defaults = defaults;
 exports.extractVars = extractVars;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

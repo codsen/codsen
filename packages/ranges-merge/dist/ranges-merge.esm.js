@@ -9,9 +9,9 @@
 
 import { rSort } from 'ranges-sort';
 
-var version = "7.0.5";
+var version$1 = "7.0.5";
 
-const version$1 = version;
+const version = version$1;
 const defaults = {
   mergeType: 1,
   progressFn: null,
@@ -144,4 +144,4 @@ function rMerge(arrOfRanges, originalOpts) {
   return sortedRanges.length ? sortedRanges : null;
 }
 
-export { defaults, rMerge, version$1 as version };
+export { defaults, rMerge, version };

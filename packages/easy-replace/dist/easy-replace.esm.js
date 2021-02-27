@@ -7,9 +7,9 @@
  * Homepage: https://codsen.com/os/easy-replace/
  */
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
-const version$1 = version; // astralAwareSearch() - searches for strings, returns the findings in an array
+const version = version$1; // astralAwareSearch() - searches for strings, returns the findings in an array
 
 function astralAwareSearch(whereToLook, whatToLookFor, opts) {
   function existy(something) {
@@ -365,4 +365,4 @@ function er(originalSource, options, originalReplacement) {
   return result;
 }
 
-export { er, version$1 as version };
+export { er, version };

@@ -7,9 +7,9 @@
  * Homepage: https://codsen.com/os/string-process-comma-separated/
  */
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-const version$1 = version;
+const version = version$1;
 
 function processCommaSep(str, originalOpts) { // insurance:
 
@@ -210,4 +210,4 @@ function processCommaSep(str, originalOpts) { // insurance:
   }
 }
 
-export { processCommaSep, version$1 as version };
+export { processCommaSep, version };

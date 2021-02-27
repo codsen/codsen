@@ -22,7 +22,7 @@ import { Ranges } from 'ranges-push';
 import uniq from 'lodash.uniq';
 import matcher from 'matcher';
 
-var version = "5.0.5";
+var version$1 = "5.0.5";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 const regexEmptyStyleTag = /[\n]?\s*<style[^>]*>\s*<\/style\s*>/g;
@@ -42,7 +42,7 @@ function isLatinLetter(char) {
   return typeof char === "string" && char.length === 1 && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
 }
 
-const version$1 = version;
+const version = version$1;
 const defaults = {
   whitelist: [],
   backend: [],
@@ -1970,4 +1970,4 @@ function comb(str, originalOpts) {
   };
 }
 
-export { comb, defaults, version$1 as version };
+export { comb, defaults, version };

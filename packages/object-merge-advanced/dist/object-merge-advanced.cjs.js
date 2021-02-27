@@ -29,9 +29,9 @@ var uniq__default = /*#__PURE__*/_interopDefaultLegacy(uniq);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 var isDate__default = /*#__PURE__*/_interopDefaultLegacy(isDate);
 
-var version = "12.0.2";
+var version$1 = "12.0.2";
 
-var version$1 = version;
+var version = version$1;
 // F U N C T I O N S
 
 function isStr(something) {
@@ -746,4 +746,4 @@ function externalApi(input1orig, input2orig, originalOpts) {
 
 exports.defaults = defaults;
 exports.mergeAdvanced = externalApi;
-exports.version = version$1;
+exports.version = version;

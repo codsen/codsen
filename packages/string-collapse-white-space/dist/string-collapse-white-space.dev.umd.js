@@ -62,7 +62,7 @@ function _objectSpread2(target) {
   return target;
 }
 
-var defaults = {
+var defaults$3 = {
   strictlyTwoElementsInRangeArrays: false,
   progressFn: null
 };
@@ -74,7 +74,7 @@ function rSort(arrOfRanges, originalOptions) {
   } // fill any settings with defaults if missing:
 
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOptions); // arrOfRanges validation
+  var opts = _objectSpread2(_objectSpread2({}, defaults$3), originalOptions); // arrOfRanges validation
 
 
   var culpritsIndex;
@@ -141,7 +141,7 @@ function rSort(arrOfRanges, originalOptions) {
   });
 }
 
-var defaults$1 = {
+var defaults$2 = {
   mergeType: 1,
   progressFn: null,
   joinRangesThatTouchEdges: true
@@ -169,7 +169,7 @@ function rMerge(arrOfRanges, originalOpts) {
 
   if (originalOpts) {
     if (isObj(originalOpts)) {
-      opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts); // 1. validate opts.progressFn
+      opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts); // 1. validate opts.progressFn
 
       if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
         opts.progressFn = null;
@@ -190,7 +190,7 @@ function rMerge(arrOfRanges, originalOpts) {
       throw new Error("emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n" + JSON.stringify(originalOpts, null, 4) + " (type " + typeof originalOpts + ")");
     }
   } else {
-    opts = _objectSpread2({}, defaults$1);
+    opts = _objectSpread2({}, defaults$2);
   } // progress-wise, sort takes first 20%
   // two-level-deep array clone:
 
@@ -539,7 +539,7 @@ function isStr(something) {
   return typeof something === "string";
 }
 
-var defaults$2 = {
+var defaults$1 = {
   limitToBeAddedWhitespace: false,
   limitLinebreaksCount: 1,
   mergeType: 1
@@ -550,7 +550,7 @@ var Ranges = /*#__PURE__*/function () {
   // O P T I O N S
   // =============
   function Ranges(originalOpts) {
-    var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts);
+    var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts);
 
     if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
       if (isStr(opts.mergeType) && opts.mergeType.trim() === "1") {
@@ -2679,11 +2679,11 @@ function right(str, idx) {
   });
 }
 
-var version = "9.0.5";
+var version$1 = "9.0.5";
 
-var version$1 = version; // default set of options
+var version = version$1; // default set of options
 
-var defaults$3 = {
+var defaults = {
   trimStart: true,
   trimEnd: true,
   trimLines: false,
@@ -2726,7 +2726,7 @@ function collapse(str, originalOpts) { // f's
   var finalIndexesToDelete = new Ranges();
   var NBSP = "\xA0"; // fill any settings with defaults if missing:
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$3), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
   function push(something, extras) {
 
@@ -3128,8 +3128,8 @@ function collapse(str, originalOpts) { // f's
 
 exports.cbSchema = cbSchema;
 exports.collapse = collapse;
-exports.defaults = defaults$3;
-exports.version = version$1;
+exports.defaults = defaults;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

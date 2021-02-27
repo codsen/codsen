@@ -4112,9 +4112,9 @@ function isPlainObject(value) {
 
 var lodash_isplainobject = isPlainObject;
 
-var version = "5.0.5";
+var version$1 = "5.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function flattenAllArrays(originalIncommingObj, originalOpts) {
   //
@@ -4188,7 +4188,7 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
 }
 
 exports.flattenAllArrays = flattenAllArrays;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

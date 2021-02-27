@@ -22,9 +22,9 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var objectPath__default = /*#__PURE__*/_interopDefaultLegacy(objectPath);
 var is__default = /*#__PURE__*/_interopDefaultLegacy(is);
 
-var version = "3.0.5";
+var version$1 = "3.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function goUp(pathStr) {
   // console.log(`014 goUp(): INCOMING pathStr = "${pathStr}"`);
@@ -241,4 +241,4 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
 
 exports.deepContains = deepContains;
 exports.defaults = defaults;
-exports.version = version$1;
+exports.version = version;

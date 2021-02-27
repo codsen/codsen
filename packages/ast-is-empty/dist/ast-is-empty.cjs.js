@@ -17,10 +17,10 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
-var version$1 = version;
+var version = version$1;
 /**
  * Find out, is nested array/object/string/AST tree is empty
  */
@@ -74,4 +74,4 @@ function isEmpty(input) {
 }
 
 exports.isEmpty = isEmpty;
-exports.version = version$1;
+exports.version = version;

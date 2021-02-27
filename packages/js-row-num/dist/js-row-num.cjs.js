@@ -19,9 +19,9 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
-var version$1 = version;
+var version = version$1;
 var BACKSLASH = "\\";
 var defaults = {
   padStart: 3,
@@ -268,4 +268,4 @@ function fixRowNums(str, originalOpts) {
 
 exports.defaults = defaults;
 exports.fixRowNums = fixRowNums;
-exports.version = version$1;
+exports.version = version;

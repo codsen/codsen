@@ -9,7 +9,7 @@
 
 import { right, left, leftSeq, rightSeq } from 'string-left-right';
 
-var version = "1.4.5";
+var version$1 = "1.4.5";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
@@ -480,7 +480,7 @@ function prepConfig(str, progressFn, progressFrom, progressTo, trim = true, gene
   return trimBlankLinesFromLinesArray(str.split(/\r?\n/).map((rowStr, i, arr) => rowStr.includes("$$$") ? prepLine(rowStr, progressFn, progressFrom + (progressTo - progressFrom) / arr.length * i, progressFrom + (progressTo - progressFrom) / arr.length * (i + 1), generatedCount, pad) : bump(rowStr, generatedCount)), trim).join("\n");
 }
 
-const version$1 = version;
+const version = version$1;
 const defaults = {
   includeConfig: true,
   includeHeadsAndTails: true,
@@ -674,4 +674,4 @@ function genAtomic(str, originalOpts) {
   };
 }
 
-export { defaults, extractFromToSource, genAtomic, headsAndTails, version$1 as version };
+export { defaults, extractFromToSource, genAtomic, headsAndTails, version };

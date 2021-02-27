@@ -62,9 +62,9 @@ function _objectSpread2(target) {
   return target;
 }
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-var version$1 = version;
+var version = version$1;
 var defaults = {
   str: "",
   from: 0,
@@ -230,7 +230,7 @@ function expander(originalOpts) {
 
 exports.defaults = defaults;
 exports.expander = expander;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

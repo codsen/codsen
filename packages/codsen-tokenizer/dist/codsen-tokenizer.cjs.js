@@ -431,9 +431,9 @@ function startsEsp(str, i, token, layers, withinStyle) {
   return !!res;
 }
 
-var version = "5.1.2";
+var version$1 = "5.1.2";
 
-var version$1 = version;
+var version = version$1;
 var importantStartsRegexp = /^\s*!?\s*[a-zA-Z0-9]+(?:[\s;}<>'"]|$)/gm;
 var defaults = {
   tagCb: null,
@@ -931,7 +931,8 @@ function tokenizer(str, originalOpts) {
         value: null,
         closing: false,
         kind: "simple",
-        language: "html"
+        language: "html" // or "css"
+
       };
     }
 
@@ -3375,4 +3376,4 @@ var util = {
 exports.defaults = defaults;
 exports.tokenizer = tokenizer;
 exports.util = util;
-exports.version = version$1;
+exports.version = version;

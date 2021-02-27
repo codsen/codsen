@@ -2059,9 +2059,9 @@ function isPlainObject(value) {
 
 var lodash_isplainobject = isPlainObject;
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function traverse(tree1, cb1, lookahead) {
   if (lookahead === void 0) {
@@ -2192,7 +2192,7 @@ function traverse(tree1, cb1, lookahead) {
 } // -----------------------------------------------------------------------------
 
 exports.traverse = traverse;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

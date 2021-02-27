@@ -23,9 +23,9 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-var version$1 = version;
+var version = version$1;
 var defaults = {
   matchKeysStrictly: false,
   hungryForWhitespace: false
@@ -83,4 +83,4 @@ function deleteObj(originalInput, objToDelete, originalOpts) {
 
 exports.defaults = defaults;
 exports.deleteObj = deleteObj;
-exports.version = version$1;
+exports.version = version;

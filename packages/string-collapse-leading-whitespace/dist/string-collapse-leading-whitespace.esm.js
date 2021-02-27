@@ -7,9 +7,9 @@
  * Homepage: https://codsen.com/os/string-collapse-leading-whitespace/
  */
 
-var version = "5.0.5";
+var version$1 = "5.0.5";
 
-const version$1 = version;
+const version = version$1;
 
 function collWhitespace(str, originallineBreakLimit = 1) {
   const rawNbsp = "\u00A0"; // helpers
@@ -110,4 +110,4 @@ function collWhitespace(str, originallineBreakLimit = 1) {
   return str;
 }
 
-export { collWhitespace, version$1 as version };
+export { collWhitespace, version };

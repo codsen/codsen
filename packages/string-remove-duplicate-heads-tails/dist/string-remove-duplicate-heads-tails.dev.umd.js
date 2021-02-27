@@ -62,7 +62,7 @@ function _objectSpread2(target) {
   return target;
 }
 
-var version = "5.0.5";
+var version$1 = "5.0.5";
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -238,18 +238,19 @@ function isObj(something) {
   return something && typeof something === "object" && !Array.isArray(something);
 }
 
-function isStr(something) {
+function isStr$1(something) {
   return typeof something === "string";
 }
 
-var defaults = {
+var defaults$5 = {
   cb: undefined,
   i: false,
   trimBeforeMatching: false,
   trimCharsBeforeMatching: [],
   maxMismatches: 0,
   firstMustMatch: false,
-  lastMustMatch: false
+  lastMustMatch: false,
+  hungry: false
 };
 
 var defaultGetNextIdx = function defaultGetNextIdx(index) {
@@ -272,13 +273,26 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
     return whatToMatchValVal;
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults$5), originalOpts);
 
   if (position >= str.length && !special) {
     return false;
-  }
+  } // The "charsToCheckCount" varies, it decreases with skipped characters,
+  // as long as "maxMismatches" allows. It's not the count of how many
+  // characters de-facto have been matched from the source.
 
-  var charsToCheckCount = special ? 1 : whatToMatchVal.length;
+
+  var charsToCheckCount = special ? 1 : whatToMatchVal.length; // this is the counter of real characters matched. It is not reduced
+  // from the holes in matched. For example, if source is "abc" and
+  // maxMismatches=1 and we have "ac", result of the match will be true,
+  // the following var will be equal to 2, meaning we matched two
+  // characters:
+
+  var charsMatchedTotal = 0; // used to catch frontal false positives, where too-eager matching
+  // depletes the mismatches allowance before precisely matching the exact
+  // string that follows, yielding too early false-positive start
+
+  var patienceReducedBeforeFirstMatch = false;
   var lastWasMismatched = false; // value is "false" or index of where it was activated
   // if no character was ever matched, even through if opts.maxMismatches
   // would otherwise allow to skip characters, this will act as a last
@@ -287,11 +301,29 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 
   var atLeastSomethingWasMatched = false;
   var patience = opts.maxMismatches;
-  var i = position;
+  var i = position; // internal-use flag, not the same as "atLeastSomethingWasMatched":
+
   var somethingFound = false; // these two drive opts.firstMustMatch and opts.lastMustMatch:
 
   var firstCharacterMatched = false;
-  var lastCharacterMatched = false;
+  var lastCharacterMatched = false; // bail early if there's whitespace in front, imagine:
+  // abc important}
+  //   ^
+  //  start, match ["!important"], matchRightIncl()
+  //
+  // in case above, "c" consumed 1 patience, let's say 1 is left,
+  // we stumble upon "i" where "!" is missing. "c" is false start.
+
+  function whitespaceInFrontOfFirstChar() {
+    return (// it's a first letter match
+      charsMatchedTotal === 1 && // and character in front exists
+      // str[i - 1] &&
+      // and it's whitespace
+      // !str[i - 1].trim() &&
+      // some patience has been consumed already
+      patience < opts.maxMismatches - 1
+    );
+  }
 
   while (str[i]) {
     var nextIdx = getNextIdx(i);
@@ -330,17 +362,50 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 
 
       if (charsToCheckCount === whatToMatchVal.length) {
-        firstCharacterMatched = true;
+        firstCharacterMatched = true; // now, if the first character was matched and yet, patience was
+        // reduced already, this means there's a false beginning in front
+
+        if (patience !== opts.maxMismatches) {
+          return false;
+        }
       } else if (charsToCheckCount === 1) {
         lastCharacterMatched = true;
       }
 
       charsToCheckCount -= 1;
+      charsMatchedTotal++; // bail early if there's whitespace in front, imagine:
+      // abc important}
+      //   ^
+      //  start, match ["!important"], matchRightIncl()
+      //
+      // in case above, "c" consumed 1 patience, let's say 1 is left,
+      // we stumble upon "i" where "!" is missing. "c" is false start.
 
-      if (charsToCheckCount < 1) {
-        return i;
+      if (whitespaceInFrontOfFirstChar()) {
+        return false;
+      }
+
+      if (!charsToCheckCount) {
+        return (// either it was not a perfect match
+          charsMatchedTotal !== whatToMatchVal.length || // or it was, and in that case, no patience was reduced
+          // (if a perfect match was found, yet some "patience" was reduced,
+          // that means we have false positive characters)
+          patience === opts.maxMismatches || // mind you, it can be a case of rogue characters in-between
+          // the what was matched, imagine:
+          // source: "abxcd", matching ["bc"], maxMismatches=1
+          // in above case, charsMatchedTotal === 2 and whatToMatchVal ("bc") === 2
+          // - we want to exclude cases of frontal false positives, like:
+          // source: "xy abc", match "abc", maxMismatches=2, start at 0
+          //          ^
+          //       match form here to the right
+          !patienceReducedBeforeFirstMatch ? i : false
+        );
       }
     } else {
+      if (!patienceReducedBeforeFirstMatch && !charsMatchedTotal) {
+        patienceReducedBeforeFirstMatch = true;
+      }
+
       if (opts.maxMismatches && patience && i) {
         patience -= 1; // the bigger the maxMismatches, the further away we must check for
         // alternative matches
@@ -352,11 +417,27 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 
           if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && ( // ensure we're not skipping the first enforced character:
           !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+            charsMatchedTotal++; // bail early if there's whitespace in front, imagine:
+            // abc important}
+            //   ^
+            //  start, match ["!important"], matchRightIncl()
+            //
+            // in case above, "c" consumed 1 patience, let's say 1 is left,
+            // we stumble upon "i" where "!" is missing. "c" is false start.
+
+            if (whitespaceInFrontOfFirstChar()) {
+              return false;
+            }
+
             charsToCheckCount -= 2;
             somethingFound = true;
             break;
           } else if (nextCharInSource && nextCharToCompareAgainst && (!opts.i && nextCharInSource === nextCharToCompareAgainst || opts.i && nextCharInSource.toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && ( // ensure we're not skipping the first enforced character:
           !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+            if (!charsMatchedTotal && !opts.hungry) {
+              return false;
+            }
+
             charsToCheckCount -= 1;
             somethingFound = true;
             break;
@@ -456,7 +537,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!" + (Array.isArray(originalOpts.trimBeforeMatching) ? " Did you mean to use opts.trimCharsBeforeMatching?" : ""));
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults$5), originalOpts);
 
   if (typeof opts.trimCharsBeforeMatching === "string") {
     // arrayiffy if needed:
@@ -465,10 +546,10 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
 
 
   opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(function (el) {
-    return isStr(el) ? el : String(el);
+    return isStr$1(el) ? el : String(el);
   });
 
-  if (!isStr(str)) {
+  if (!isStr$1(str)) {
     return false;
   }
 
@@ -483,7 +564,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   var whatToMatch;
   var special;
 
-  if (isStr(originalWhatToMatch)) {
+  if (isStr$1(originalWhatToMatch)) {
     whatToMatch = [originalWhatToMatch];
   } else if (Array.isArray(originalWhatToMatch)) {
     whatToMatch = originalWhatToMatch;
@@ -520,7 +601,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
 
   if (!whatToMatch || !Array.isArray(whatToMatch) || // 0
   Array.isArray(whatToMatch) && !whatToMatch.length || // []
-  Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr(whatToMatch[0]) && !whatToMatch[0].trim() // [""]
+  Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr$1(whatToMatch[0]) && !whatToMatch[0].trim() // [""]
   ) {
       if (typeof opts.cb === "function") {
         var firstCharOutsideIndex; // matchLeft() or matchRightIncl() methods start at index "position"
@@ -767,7 +848,7 @@ function collWhitespace(str, originallineBreakLimit) {
   return str;
 }
 
-var defaults$1 = {
+var defaults$4 = {
   strictlyTwoElementsInRangeArrays: false,
   progressFn: null
 };
@@ -779,7 +860,7 @@ function rSort(arrOfRanges, originalOptions) {
   } // fill any settings with defaults if missing:
 
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOptions); // arrOfRanges validation
+  var opts = _objectSpread2(_objectSpread2({}, defaults$4), originalOptions); // arrOfRanges validation
 
 
   var culpritsIndex;
@@ -846,7 +927,7 @@ function rSort(arrOfRanges, originalOptions) {
   });
 }
 
-var defaults$2 = {
+var defaults$3 = {
   mergeType: 1,
   progressFn: null,
   joinRangesThatTouchEdges: true
@@ -874,7 +955,7 @@ function rMerge(arrOfRanges, originalOpts) {
 
   if (originalOpts) {
     if (isObj(originalOpts)) {
-      opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts); // 1. validate opts.progressFn
+      opts = _objectSpread2(_objectSpread2({}, defaults$3), originalOpts); // 1. validate opts.progressFn
 
       if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
         opts.progressFn = null;
@@ -895,7 +976,7 @@ function rMerge(arrOfRanges, originalOpts) {
       throw new Error("emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n" + JSON.stringify(originalOpts, null, 4) + " (type " + typeof originalOpts + ")");
     }
   } else {
-    opts = _objectSpread2({}, defaults$2);
+    opts = _objectSpread2({}, defaults$3);
   } // progress-wise, sort takes first 20%
   // two-level-deep array clone:
 
@@ -992,11 +1073,11 @@ function isNum(something) {
   return Number.isInteger(something) && something >= 0;
 }
 
-function isStr$1(something) {
+function isStr(something) {
   return typeof something === "string";
 }
 
-var defaults$3 = {
+var defaults$2 = {
   limitToBeAddedWhitespace: false,
   limitLinebreaksCount: 1,
   mergeType: 1
@@ -1007,12 +1088,12 @@ var Ranges = /*#__PURE__*/function () {
   // O P T I O N S
   // =============
   function Ranges(originalOpts) {
-    var opts = _objectSpread2(_objectSpread2({}, defaults$3), originalOpts);
+    var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts);
 
     if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
-      if (isStr$1(opts.mergeType) && opts.mergeType.trim() === "1") {
+      if (isStr(opts.mergeType) && opts.mergeType.trim() === "1") {
         opts.mergeType = 1;
-      } else if (isStr$1(opts.mergeType) && opts.mergeType.trim() === "2") {
+      } else if (isStr(opts.mergeType) && opts.mergeType.trim() === "2") {
         opts.mergeType = 2;
       } else {
         throw new Error("ranges-push: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"" + typeof opts.mergeType + "\", equal to " + JSON.stringify(opts.mergeType, null, 4));
@@ -1076,7 +1157,7 @@ var Ranges = /*#__PURE__*/function () {
 
     if (isNum(from) && isNum(to)) {
       // This means two indexes were given as arguments. Business as usual.
-      if (existy(addVal) && !isStr$1(addVal) && !isNum(addVal)) {
+      if (existy(addVal) && !isStr(addVal) && !isNum(addVal)) {
         throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but " + typeof addVal + ", equal to:\n" + JSON.stringify(addVal, null, 4));
       } // Does the incoming "from" value match the existing last element's "to" value?
 
@@ -1095,7 +1176,7 @@ var Ranges = /*#__PURE__*/function () {
             calculatedVal = collWhitespace(calculatedVal, this.opts.limitLinebreaksCount);
           }
 
-          if (!(isStr$1(calculatedVal) && !calculatedVal.length)) {
+          if (!(isStr(calculatedVal) && !calculatedVal.length)) {
             // don't let the zero-length strings past
             this.last()[2] = calculatedVal;
           }
@@ -1105,7 +1186,7 @@ var Ranges = /*#__PURE__*/function () {
           this.ranges = [];
         }
 
-        var whatToPush = addVal !== undefined && !(isStr$1(addVal) && !addVal.length) ? [from, to, addVal && this.opts.limitToBeAddedWhitespace ? collWhitespace(addVal, this.opts.limitLinebreaksCount) : addVal] : [from, to];
+        var whatToPush = addVal !== undefined && !(isStr(addVal) && !addVal.length) ? [from, to, addVal && this.opts.limitToBeAddedWhitespace ? collWhitespace(addVal, this.opts.limitLinebreaksCount) : addVal] : [from, to];
         this.ranges.push(whatToPush);
       }
     } else {
@@ -1321,7 +1402,7 @@ function rApply(str, originalRangesArr, _progressFn) {
   return str;
 }
 
-var defaults$4 = {
+var defaults$1 = {
   classicTrim: false,
   cr: false,
   lf: false,
@@ -1337,7 +1418,7 @@ function trimSpaces(str, originalOpts) {
   } // opts preparation:
 
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$4), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts);
 
   function check(char) {
     return opts.classicTrim && !char.trim() || !opts.classicTrim && (opts.space && char === " " || opts.cr && char === "\r" || opts.lf && char === "\n" || opts.tab && char === "\t" || opts.nbsp && char === "\xA0");
@@ -1415,8 +1496,8 @@ function trimSpaces(str, originalOpts) {
   };
 }
 
-var version$1 = version;
-var defaults$5 = {
+var version = version$1;
+var defaults = {
   heads: ["{{"],
   tails: ["}}"]
 };
@@ -1749,9 +1830,9 @@ function remDup(str, originalOpts) {
   return str.trim();
 }
 
-exports.defaults = defaults$5;
+exports.defaults = defaults;
 exports.remDup = remDup;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

@@ -17,10 +17,10 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var isPlainObject__default = /*#__PURE__*/_interopDefaultLegacy(isPlainObject);
 
-var version = "3.0.5";
+var version$1 = "3.0.5";
 
 /* eslint @typescript-eslint/no-explicit-any:0, @typescript-eslint/explicit-module-boundary-types:0 */
-var version$1 = version;
+var version = version$1;
 
 function nonEmpty(input) {
   // deliberate ==, catches undefined and null
@@ -40,4 +40,4 @@ function nonEmpty(input) {
 }
 
 exports.nonEmpty = nonEmpty;
-exports.version = version$1;
+exports.version = version;

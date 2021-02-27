@@ -35,8 +35,6 @@
   "scripts": {
     "build": "rollup -c",
     "ci_test": "npm run build && npm run format && tap --no-only --reporter=silent --output-file=testStats.md && npm run clean_cov",
-    "clean_cov": "../../scripts/leaveCoverageTotalOnly.js",
-    "clean_types": "../../scripts/cleanTypes.js",
     "dev": "rollup -c --dev",
     "devunittest": "npm run dev && ./node_modules/.bin/tap --only -R 'base' && npm run tsd && npm run clean_cov",
     "format": "npm run lect && npm run prettier && npm run lint",
@@ -46,12 +44,14 @@
     "prettier": "../../node_modules/prettier/bin-prettier.js '*.{js,css,scss,vue,md,ts}' --write --loglevel silent",
     "republish": "npm publish || :",
     "tap": "tap",
+    "tsc": "tsc",
+    "tsd": "test ! -f index.d.ts || tsd",
     "pretest": "npm run build",
     "test": "npm run lint && npm run unittest && npm run test:examples && npm run clean_cov && npm run format",
     "test:examples": "../../scripts/test-examples.js && npm run lect && npm run prettier",
-    "tsc": "tsc",
-    "tsd": "test ! -f index.d.ts || tsd",
-    "unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md --reporter=terse && tsc -p tsconfig.json --noEmit && npm run tsd && npm run clean_cov && npm run perf"
+    "unittest": "./node_modules/.bin/tap --no-only --output-file=testStats.md --reporter=terse && tsc -p tsconfig.json --noEmit && npm run tsd && npm run clean_cov && npm run perf",
+    "clean_cov": "../../scripts/leaveCoverageTotalOnly.js",
+    "clean_types": "../../scripts/cleanTypes.js"
   },
   "tap": {
     "coverage-report": [

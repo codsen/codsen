@@ -62,7 +62,7 @@ function _objectSpread2(target) {
   return target;
 }
 
-var defaults = {
+var defaults$5 = {
   strictlyTwoElementsInRangeArrays: false,
   progressFn: null
 };
@@ -74,7 +74,7 @@ function rSort(arrOfRanges, originalOptions) {
   } // fill any settings with defaults if missing:
 
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOptions); // arrOfRanges validation
+  var opts = _objectSpread2(_objectSpread2({}, defaults$5), originalOptions); // arrOfRanges validation
 
 
   var culpritsIndex;
@@ -141,7 +141,7 @@ function rSort(arrOfRanges, originalOptions) {
   });
 }
 
-var defaults$1 = {
+var defaults$4 = {
   mergeType: 1,
   progressFn: null,
   joinRangesThatTouchEdges: true
@@ -169,7 +169,7 @@ function rMerge(arrOfRanges, originalOpts) {
 
   if (originalOpts) {
     if (isObj(originalOpts)) {
-      opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts); // 1. validate opts.progressFn
+      opts = _objectSpread2(_objectSpread2({}, defaults$4), originalOpts); // 1. validate opts.progressFn
 
       if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
         opts.progressFn = null;
@@ -190,7 +190,7 @@ function rMerge(arrOfRanges, originalOpts) {
       throw new Error("emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n" + JSON.stringify(originalOpts, null, 4) + " (type " + typeof originalOpts + ")");
     }
   } else {
-    opts = _objectSpread2({}, defaults$1);
+    opts = _objectSpread2({}, defaults$4);
   } // progress-wise, sort takes first 20%
   // two-level-deep array clone:
 
@@ -535,11 +535,11 @@ function isNum(something) {
   return Number.isInteger(something) && something >= 0;
 }
 
-function isStr(something) {
+function isStr$2(something) {
   return typeof something === "string";
 }
 
-var defaults$2 = {
+var defaults$3 = {
   limitToBeAddedWhitespace: false,
   limitLinebreaksCount: 1,
   mergeType: 1
@@ -550,12 +550,12 @@ var Ranges = /*#__PURE__*/function () {
   // O P T I O N S
   // =============
   function Ranges(originalOpts) {
-    var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts);
+    var opts = _objectSpread2(_objectSpread2({}, defaults$3), originalOpts);
 
     if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
-      if (isStr(opts.mergeType) && opts.mergeType.trim() === "1") {
+      if (isStr$2(opts.mergeType) && opts.mergeType.trim() === "1") {
         opts.mergeType = 1;
-      } else if (isStr(opts.mergeType) && opts.mergeType.trim() === "2") {
+      } else if (isStr$2(opts.mergeType) && opts.mergeType.trim() === "2") {
         opts.mergeType = 2;
       } else {
         throw new Error("ranges-push: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"" + typeof opts.mergeType + "\", equal to " + JSON.stringify(opts.mergeType, null, 4));
@@ -619,7 +619,7 @@ var Ranges = /*#__PURE__*/function () {
 
     if (isNum(from) && isNum(to)) {
       // This means two indexes were given as arguments. Business as usual.
-      if (existy(addVal) && !isStr(addVal) && !isNum(addVal)) {
+      if (existy(addVal) && !isStr$2(addVal) && !isNum(addVal)) {
         throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but " + typeof addVal + ", equal to:\n" + JSON.stringify(addVal, null, 4));
       } // Does the incoming "from" value match the existing last element's "to" value?
 
@@ -638,7 +638,7 @@ var Ranges = /*#__PURE__*/function () {
             calculatedVal = collWhitespace(calculatedVal, this.opts.limitLinebreaksCount);
           }
 
-          if (!(isStr(calculatedVal) && !calculatedVal.length)) {
+          if (!(isStr$2(calculatedVal) && !calculatedVal.length)) {
             // don't let the zero-length strings past
             this.last()[2] = calculatedVal;
           }
@@ -648,7 +648,7 @@ var Ranges = /*#__PURE__*/function () {
           this.ranges = [];
         }
 
-        var whatToPush = addVal !== undefined && !(isStr(addVal) && !addVal.length) ? [from, to, addVal && this.opts.limitToBeAddedWhitespace ? collWhitespace(addVal, this.opts.limitLinebreaksCount) : addVal] : [from, to];
+        var whatToPush = addVal !== undefined && !(isStr$2(addVal) && !addVal.length) ? [from, to, addVal && this.opts.limitToBeAddedWhitespace ? collWhitespace(addVal, this.opts.limitLinebreaksCount) : addVal] : [from, to];
         this.ranges.push(whatToPush);
       }
     } else {
@@ -763,7 +763,7 @@ function isStr$1(something) {
   return typeof something === "string";
 }
 
-var defaults$3 = {
+var defaults$2 = {
   cb: undefined,
   i: false,
   trimBeforeMatching: false,
@@ -794,7 +794,7 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
     return whatToMatchValVal;
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$3), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts);
 
   if (position >= str.length && !special) {
     return false;
@@ -1058,7 +1058,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!" + (Array.isArray(originalOpts.trimBeforeMatching) ? " Did you mean to use opts.trimCharsBeforeMatching?" : ""));
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$3), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts);
 
   if (typeof opts.trimCharsBeforeMatching === "string") {
     // arrayiffy if needed:
@@ -1257,7 +1257,7 @@ function matchRight(str, position, whatToMatch, opts) {
   return main("matchRight", str, position, whatToMatch, opts);
 }
 
-var defaults$4 = {
+var defaults$1 = {
   str: "",
   from: 0,
   to: 0,
@@ -1331,7 +1331,7 @@ function expander(originalOpts) {
   // ---------------------------------------------------------------------------
 
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$4), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts);
 
   if (Array.isArray(opts.ifLeftSideIncludesThisThenCropTightly)) {
     var culpritsIndex;
@@ -3461,13 +3461,13 @@ function left(str, idx) {
   });
 }
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
-var version$1 = version;
+var version = version$1;
 var finalIndexesToDelete = new Ranges({
   limitToBeAddedWhitespace: true
 });
-var defaults$5 = {
+var defaults = {
   lineLengthLimit: 500,
   removeIndentations: true,
   removeLineBreaks: false,
@@ -3484,7 +3484,7 @@ var applicableOpts = {
   removeCSSComments: false
 };
 
-function isStr$2(something) {
+function isStr(something) {
   return typeof something === "string";
 }
 
@@ -3499,7 +3499,7 @@ function isLetter(something) {
 function crush(str, originalOpts) {
   var start = Date.now(); // insurance:
 
-  if (!isStr$2(str)) {
+  if (!isStr(str)) {
     if (str === undefined) {
       throw new Error("html-crush: [THROW_ID_01] the first input argument is completely missing! It should be given as string.");
     } else {
@@ -3513,13 +3513,13 @@ function crush(str, originalOpts) {
 
   if (originalOpts && Array.isArray(originalOpts.breakToTheLeftOf) && originalOpts.breakToTheLeftOf.length) {
     for (var z = 0, _len = originalOpts.breakToTheLeftOf.length; z < _len; z++) {
-      if (!isStr$2(originalOpts.breakToTheLeftOf[z])) {
+      if (!isStr(originalOpts.breakToTheLeftOf[z])) {
         throw new TypeError("html-crush: [THROW_ID_05] the opts.breakToTheLeftOf array contains non-string elements! For example, element at index " + z + " is of a type \"" + typeof originalOpts.breakToTheLeftOf[z] + "\" and is equal to:\n" + JSON.stringify(originalOpts.breakToTheLeftOf[z], null, 4));
       }
     }
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$5), originalOpts); // normalize the opts.removeHTMLComments
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); // normalize the opts.removeHTMLComments
 
 
   if (typeof opts.removeHTMLComments === "boolean") {
@@ -3988,7 +3988,8 @@ function crush(str, originalOpts) {
               str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
                 cb: function cb(nextChar) {
                   return !nextChar || !/\w/.test(nextChar);
-                }
+                } // not a letter
+
               }) // ) ||
               // ("<>".includes(str[i]) &&
               //   ("0123456789".includes(str[right(str, i)]) ||
@@ -4122,24 +4123,27 @@ function crush(str, originalOpts) {
             } // 2. put this current place into stage
             // =============================================================
 
-            if (str[i].trim() && (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) || str[~-i] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[~-i])) && isStr$2(leftTagName) && (!tagName || !opts.mindTheInlineTags.includes(tagName)) && !(str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
+            if (str[i].trim() && (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) || str[~-i] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[~-i])) && isStr(leftTagName) && (!tagName || !opts.mindTheInlineTags.includes(tagName)) && !(str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
               cb: function cb(nextChar) {
                 return !nextChar || !/\w/.test(nextChar);
-              }
+              } // not a letter
+
             })) && !(str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
               trimCharsBeforeMatching: "/",
               cb: function cb(nextChar) {
                 return !nextChar || !/\w/.test(nextChar);
-              }
+              } // not a letter
+
             }))) {
               stageFrom = i;
               stageTo = i;
               stageAdd = null;
-            } else if (styleCommentStartedAt === null && stageFrom !== null && (withinInlineStyle || !opts.mindTheInlineTags || !Array.isArray(opts.mindTheInlineTags) || Array.isArray(opts.mindTheInlineTags.length) && !opts.mindTheInlineTags.length || !isStr$2(tagName) || Array.isArray(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && isStr$2(tagName) && !opts.mindTheInlineTags.includes(tagName)) && !(str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
+            } else if (styleCommentStartedAt === null && stageFrom !== null && (withinInlineStyle || !opts.mindTheInlineTags || !Array.isArray(opts.mindTheInlineTags) || Array.isArray(opts.mindTheInlineTags.length) && !opts.mindTheInlineTags.length || !isStr(tagName) || Array.isArray(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && isStr(tagName) && !opts.mindTheInlineTags.includes(tagName)) && !(str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
               trimCharsBeforeMatching: "/",
               cb: function cb(nextChar) {
                 return !nextChar || !/\w/.test(nextChar);
-              }
+              } // not a letter
+
             }))) {
               stageFrom = null;
               stageTo = null;
@@ -4159,7 +4163,8 @@ function crush(str, originalOpts) {
             trimCharsBeforeMatching: "/",
             cb: function cb(nextChar) {
               return !nextChar || !/\w/.test(nextChar);
-            }
+            } // not a letter
+
           }))) {
             // ██ 1.
             // // if really exceeded, not on limit, commit stage which will shorten
@@ -4200,7 +4205,7 @@ function crush(str, originalOpts) {
               finalIndexesToDelete.push(i, i, "\n");
               countCharactersPerLine = 0;
             }
-          } else if (str[i + 1] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) && isStr$2(tagName) && Array.isArray(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && !opts.mindTheInlineTags.includes(tagName)) {
+          } else if (str[i + 1] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) && isStr(tagName) && Array.isArray(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && !opts.mindTheInlineTags.includes(tagName)) {
             // ██ 2.
             //
 
@@ -4413,8 +4418,8 @@ function crush(str, originalOpts) {
 }
 
 exports.crush = crush;
-exports.defaults = defaults$5;
-exports.version = version$1;
+exports.defaults = defaults;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

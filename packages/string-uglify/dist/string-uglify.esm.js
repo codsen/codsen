@@ -7,9 +7,9 @@
  * Homepage: https://codsen.com/os/string-uglify/
  */
 
-var version = "1.4.5";
+var version$1 = "1.4.5";
 
-const version$1 = version; // tells code point of a given id number
+const version = version$1; // tells code point of a given id number
 
 function tellcp(str, idNum = 0) {
   return str.codePointAt(idNum) || 0;
@@ -227,4 +227,4 @@ function uglifyById(refArr, idNum) {
   return uglifyArr(refArr)[idNum];
 } // main export
 
-export { uglifyArr, uglifyById, version$1 as version };
+export { uglifyArr, uglifyById, version };

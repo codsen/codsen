@@ -7,12 +7,12 @@
  * Homepage: https://codsen.com/os/regex-jinja-specific/
  */
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-const version$1 = version;
+const version = version$1;
 
 function isJinjaSpecific() {
   return /(set\s*[\w]+\s*=\s*namespace\()|({{['"][\w]+['"]\s+if)|(['"]%x?[+0]?[.>^<]?\d+[\w%]['"]\|format\()/gi;
 }
 
-export { isJinjaSpecific, version$1 as version };
+export { isJinjaSpecific, version };

@@ -7,9 +7,9 @@
  * Homepage: https://codsen.com/os/lerna-clean-changelogs/
  */
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-const version$1 = version;
+const version = version$1;
 
 function isStr(something) {
   return typeof something === "string";
@@ -110,9 +110,9 @@ function cleanChangelogs(changelogContents) {
   }
 
   return {
-    version: version$1,
+    version,
     res: final || changelogContents
   };
 }
 
-export { cleanChangelogs, version$1 as version };
+export { cleanChangelogs, version };

@@ -62,9 +62,9 @@ function _objectSpread2(target) {
   return target;
 }
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function processCommaSep(str, originalOpts) { // insurance:
 
@@ -266,7 +266,7 @@ function processCommaSep(str, originalOpts) { // insurance:
 }
 
 exports.processCommaSep = processCommaSep;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

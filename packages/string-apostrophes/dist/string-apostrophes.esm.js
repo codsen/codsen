@@ -9,9 +9,9 @@
 
 import { rApply } from 'ranges-apply';
 
-var version = "1.4.5";
+var version$1 = "1.4.5";
 
-const version$1 = version;
+const version = version$1;
 
 function convertOne(str, {
   from,
@@ -314,4 +314,4 @@ function convertAll(str, opts) {
   };
 }
 
-export { convertAll, convertOne, version$1 as version };
+export { convertAll, convertOne, version };

@@ -15,9 +15,9 @@ var regexIsJinjaNunjucks = require('regex-is-jinja-nunjucks');
 var regexIsJsp = require('regex-is-jsp');
 var regexJinjaSpecific = require('regex-jinja-specific');
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function detectLang(str) {
   var name = null;
@@ -51,4 +51,4 @@ function detectLang(str) {
 }
 
 exports.detectLang = detectLang;
-exports.version = version$1;
+exports.version = version;

@@ -230,10 +230,10 @@ function removeGappedFromMixedCases(str, temp1) {
   return findLongest(temp1);
 }
 
-var version = "5.0.5";
+var version$1 = "5.0.5";
 
 /* eslint @typescript-eslint/ban-ts-comment:1 */
-const version$1 = version;
+const version = version$1;
 
 function fixEnt(str, originalOpts) { //
   //
@@ -931,4 +931,4 @@ function fixEnt(str, originalOpts) { //
   return res;
 }
 
-export { fixEnt, version$1 as version };
+export { fixEnt, version };

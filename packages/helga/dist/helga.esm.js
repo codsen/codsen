@@ -7,9 +7,9 @@
  * Homepage: https://codsen.com/os/helga/
  */
 
-var version = "1.3.5";
+var version$1 = "1.3.5";
 
-const version$1 = version;
+const version = version$1;
 const defaults = {
   targetJSON: false
 };
@@ -64,4 +64,4 @@ function helga(str, originalOpts) {
   };
 }
 
-export { defaults, helga, version$1 as version };
+export { defaults, helga, version };

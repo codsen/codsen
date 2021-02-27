@@ -11,10 +11,10 @@ import clone from 'lodash.clonedeep';
 import isObj from 'lodash.isplainobject';
 import { compare } from 'ast-compare';
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
-const version$1 = version; // ===================================
+const version = version$1; // ===================================
 // F U N C T I O N S
 
 function existy(x) {
@@ -106,4 +106,4 @@ function getObj(originalAst, keyValPair, replacementContentsArr) {
   return internalApi(originalAst, keyValPair, replacementContentsArr);
 }
 
-export { getObj, version$1 as version };
+export { getObj, version };

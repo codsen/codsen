@@ -103,12 +103,12 @@ function parent(str) {
   return null;
 }
 
-var version = "1.3.5";
+var version$1 = "1.3.5";
 
-var version$1 = version; // -----------------------------------------------------------------------------
+var version = version$1; // -----------------------------------------------------------------------------
 
 exports.parent = parent;
 exports.pathNext = pathNext;
 exports.pathPrev = pathPrev;
 exports.pathUp = pathUp;
-exports.version = version$1;
+exports.version = version;

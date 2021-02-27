@@ -11,10 +11,10 @@ import objectPath from 'object-path';
 import { traverse } from 'ast-monkey-traverse';
 import is from '@sindresorhus/is';
 
-var version = "3.0.5";
+var version$1 = "3.0.5";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
-const version$1 = version;
+const version = version$1;
 
 function goUp(pathStr) {
   // console.log(`014 goUp(): INCOMING pathStr = "${pathStr}"`);
@@ -207,4 +207,4 @@ function deepContains(tree1, tree2, cb, errCb, originalOpts) {
   }
 } // -----------------------------------------------------------------------------
 
-export { deepContains, defaults, version$1 as version };
+export { deepContains, defaults, version };

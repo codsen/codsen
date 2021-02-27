@@ -188,9 +188,9 @@ var isMatch = function isMatch(input, pattern, options) {
 };
 matcher.isMatch = isMatch;
 
-var version = "3.0.5";
+var version$1 = "3.0.5";
 
-var version$1 = version;
+var version = version$1;
 var defaults = {
   arrayVsArrayAllMustBeFound: "any",
   caseSensitive: true
@@ -239,7 +239,7 @@ function includesWithGlob(originalInput, stringToFind, originalOpts) {
 
 exports.defaults = defaults;
 exports.includesWithGlob = includesWithGlob;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

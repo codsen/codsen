@@ -2953,10 +2953,10 @@ function compare(b, s, originalOpts) {
   return true;
 }
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
-var version$1 = version; // ===================================
+var version = version$1; // ===================================
 // F U N C T I O N S
 
 function existy(x) {
@@ -3053,7 +3053,7 @@ function getObj(originalAst, keyValPair, replacementContentsArr) {
 }
 
 exports.getObj = getObj;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

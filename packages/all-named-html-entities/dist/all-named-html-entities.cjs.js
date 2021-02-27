@@ -11,18 +11,18 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var version = "1.5.5";
+var version$1 = "1.5.5";
 
 var Aacute = "Á";
 var aacute = "á";
 var Abreve = "Ă";
 var abreve = "ă";
-var ac = "∾";
+var ac$1 = "∾";
 var acd = "∿";
 var acE = "∾̳";
 var Acirc = "Â";
 var acirc = "â";
-var acute = "´";
+var acute$1 = "´";
 var Acy = "А";
 var acy = "а";
 var AElig = "Æ";
@@ -34,22 +34,22 @@ var Agrave = "À";
 var agrave = "à";
 var alefsym = "ℵ";
 var aleph = "ℵ";
-var Alpha = "Α";
-var alpha = "α";
+var Alpha$1 = "Α";
+var alpha$1 = "α";
 var Amacr = "Ā";
 var amacr = "ā";
 var amalg = "⨿";
 var AMP = "&";
-var amp = "&";
-var And = "⩓";
-var and = "∧";
+var amp$1 = "&";
+var And$1 = "⩓";
+var and$1 = "∧";
 var andand = "⩕";
 var andd = "⩜";
 var andslope = "⩘";
 var andv = "⩚";
 var ang = "∠";
-var ange = "⦤";
-var angle = "∠";
+var ange$1 = "⦤";
+var angle$1 = "∠";
 var angmsd = "∡";
 var angmsdaa = "⦨";
 var angmsdab = "⦩";
@@ -63,31 +63,31 @@ var angrt = "∟";
 var angrtvb = "⊾";
 var angrtvbd = "⦝";
 var angsph = "∢";
-var angst = "Å";
+var angst$1 = "Å";
 var angzarr = "⍼";
 var Aogon = "Ą";
 var aogon = "ą";
 var Aopf = "𝔸";
 var aopf = "𝕒";
-var ap = "≈";
+var ap$1 = "≈";
 var apacir = "⩯";
 var apE = "⩰";
-var ape = "≊";
+var ape$1 = "≊";
 var apid = "≋";
 var apos = "'";
 var ApplyFunction = "⁡";
-var approx = "≈";
+var approx$1 = "≈";
 var approxeq = "≊";
-var Aring = "Å";
-var aring = "å";
-var Ascr = "𝒜";
-var ascr = "𝒶";
-var Assign = "≔";
-var ast = "*";
+var Aring$1 = "Å";
+var aring$1 = "å";
+var Ascr$1 = "𝒜";
+var ascr$1 = "𝒶";
+var Assign$1 = "≔";
+var ast$1 = "*";
 var asymp = "≈";
 var asympeq = "≍";
 var Atilde = "Ã";
-var atilde = "ã";
+var atilde$1 = "ã";
 var Auml = "Ä";
 var auml = "ä";
 var awconint = "∳";
@@ -97,29 +97,29 @@ var backepsilon = "϶";
 var backprime = "‵";
 var backsim = "∽";
 var backsimeq = "⋍";
-var Backslash = "∖";
+var Backslash$1 = "∖";
 var Barv = "⫧";
 var barvee = "⊽";
 var Barwed = "⌆";
 var barwed = "⌅";
-var barwedge = "⌅";
+var barwedge$1 = "⌅";
 var bbrk = "⎵";
 var bbrktbrk = "⎶";
 var bcong = "≌";
 var Bcy = "Б";
 var bcy = "б";
 var bdquo = "„";
-var becaus = "∵";
-var Because = "∵";
-var because = "∵";
+var becaus$1 = "∵";
+var Because$1 = "∵";
+var because$1 = "∵";
 var bemptyv = "⦰";
-var bepsi = "϶";
+var bepsi$1 = "϶";
 var bernou = "ℬ";
-var Bernoullis = "ℬ";
-var Beta = "Β";
-var beta = "β";
-var beth = "ℶ";
-var between = "≬";
+var Bernoullis$1 = "ℬ";
+var Beta$1 = "Β";
+var beta$1 = "β";
+var beth$1 = "ℶ";
+var between$1 = "≬";
 var Bfr = "𝔅";
 var bfr = "𝔟";
 var bigcap = "⋂";
@@ -142,20 +142,20 @@ var blacktriangle = "▴";
 var blacktriangledown = "▾";
 var blacktriangleleft = "◂";
 var blacktriangleright = "▸";
-var blank = "␣";
+var blank$1 = "␣";
 var blk12 = "▒";
 var blk14 = "░";
 var blk34 = "▓";
-var block = "█";
+var block$1 = "█";
 var bne = "=⃥";
 var bnequiv = "≡⃥";
 var bNot = "⫭";
 var bnot = "⌐";
 var Bopf = "𝔹";
 var bopf = "𝕓";
-var bot = "⊥";
-var bottom = "⊥";
-var bowtie = "⋈";
+var bot$1 = "⊥";
+var bottom$1 = "⊥";
+var bowtie$1 = "⋈";
 var boxbox = "⧉";
 var boxDL = "╗";
 var boxDl = "╖";
@@ -202,7 +202,7 @@ var boxvR = "╞";
 var boxvr = "├";
 var bprime = "‵";
 var Breve = "˘";
-var breve = "˘";
+var breve$1 = "˘";
 var brvbar = "¦";
 var Bscr = "ℬ";
 var bscr = "𝒷";
@@ -212,26 +212,26 @@ var bsime = "⋍";
 var bsol = "\\";
 var bsolb = "⧅";
 var bsolhsub = "⟈";
-var bull = "•";
-var bullet = "•";
-var bump = "≎";
+var bull$1 = "•";
+var bullet$1 = "•";
+var bump$1 = "≎";
 var bumpE = "⪮";
 var bumpe = "≏";
 var Bumpeq = "≎";
 var bumpeq = "≏";
 var Cacute = "Ć";
-var cacute = "ć";
-var Cap = "⋒";
-var cap = "∩";
-var capand = "⩄";
+var cacute$1 = "ć";
+var Cap$1 = "⋒";
+var cap$1 = "∩";
+var capand$1 = "⩄";
 var capbrcup = "⩉";
 var capcap = "⩋";
 var capcup = "⩇";
 var capdot = "⩀";
 var CapitalDifferentialD = "ⅅ";
-var caps = "∩︀";
-var caret = "⁁";
-var caron = "ˇ";
+var caps$1 = "∩︀";
+var caret$1 = "⁁";
+var caron$1 = "ˇ";
 var Cayleys = "ℭ";
 var ccaps = "⩍";
 var Ccaron = "Č";
@@ -245,22 +245,22 @@ var ccups = "⩌";
 var ccupssm = "⩐";
 var Cdot = "Ċ";
 var cdot = "ċ";
-var cedil = "¸";
-var Cedilla = "¸";
+var cedil$1 = "¸";
+var Cedilla$1 = "¸";
 var cemptyv = "⦲";
-var cent = "¢";
+var cent$1 = "¢";
 var CenterDot = "·";
 var centerdot = "·";
 var Cfr = "ℭ";
 var cfr = "𝔠";
 var CHcy = "Ч";
 var chcy = "ч";
-var check = "✓";
-var checkmark = "✓";
-var Chi = "Χ";
-var chi = "χ";
-var cir = "○";
-var circ = "ˆ";
+var check$1 = "✓";
+var checkmark$1 = "✓";
+var Chi$1 = "Χ";
+var chi$1 = "χ";
+var cir$1 = "○";
+var circ$1 = "ˆ";
 var circeq = "≗";
 var circlearrowleft = "↺";
 var circlearrowright = "↻";
@@ -281,36 +281,36 @@ var cirscir = "⧂";
 var ClockwiseContourIntegral = "∲";
 var CloseCurlyDoubleQuote = "”";
 var CloseCurlyQuote = "’";
-var clubs = "♣";
-var clubsuit = "♣";
-var Colon = "∷";
-var colon = ":";
-var Colone = "⩴";
-var colone = "≔";
+var clubs$1 = "♣";
+var clubsuit$1 = "♣";
+var Colon$1 = "∷";
+var colon$1 = ":";
+var Colone$1 = "⩴";
+var colone$1 = "≔";
 var coloneq = "≔";
-var comma = ",";
-var commat = "@";
-var comp = "∁";
+var comma$1 = ",";
+var commat$1 = "@";
+var comp$1 = "∁";
 var compfn = "∘";
-var complement = "∁";
-var complexes = "ℂ";
-var cong = "≅";
+var complement$1 = "∁";
+var complexes$1 = "ℂ";
+var cong$1 = "≅";
 var congdot = "⩭";
-var Congruent = "≡";
+var Congruent$1 = "≡";
 var Conint = "∯";
-var conint = "∮";
+var conint$1 = "∮";
 var ContourIntegral = "∮";
 var Copf = "ℂ";
-var copf = "𝕔";
-var coprod = "∐";
+var copf$1 = "𝕔";
+var coprod$1 = "∐";
 var Coproduct = "∐";
-var COPY = "©";
-var copy = "©";
+var COPY$1 = "©";
+var copy$1 = "©";
 var copysr = "℗";
 var CounterClockwiseContourIntegral = "∳";
 var crarr = "↵";
-var Cross = "⨯";
-var cross = "✗";
+var Cross$1 = "⨯";
+var cross$1 = "✗";
 var Cscr = "𝒞";
 var cscr = "𝒸";
 var csub = "⫏";
@@ -324,15 +324,15 @@ var cuepr = "⋞";
 var cuesc = "⋟";
 var cularr = "↶";
 var cularrp = "⤽";
-var Cup = "⋓";
-var cup = "∪";
+var Cup$1 = "⋓";
+var cup$1 = "∪";
 var cupbrcap = "⩈";
 var CupCap = "≍";
 var cupcap = "⩆";
 var cupcup = "⩊";
 var cupdot = "⊍";
 var cupor = "⩅";
-var cups = "∪︀";
+var cups$1 = "∪︀";
 var curarr = "↷";
 var curarrm = "⤼";
 var curlyeqprec = "⋞";
@@ -347,13 +347,13 @@ var cuwed = "⋏";
 var cwconint = "∲";
 var cwint = "∱";
 var cylcty = "⌭";
-var Dagger = "‡";
-var dagger = "†";
-var daleth = "ℸ";
+var Dagger$1 = "‡";
+var dagger$1 = "†";
+var daleth$1 = "ℸ";
 var Darr = "↡";
 var dArr = "⇓";
-var darr = "↓";
-var dash = "‐";
+var darr$1 = "↓";
+var dash$1 = "‐";
 var Dashv = "⫤";
 var dashv = "⊣";
 var dbkarow = "⤏";
@@ -362,50 +362,50 @@ var Dcaron = "Ď";
 var dcaron = "ď";
 var Dcy = "Д";
 var dcy = "д";
-var DD = "ⅅ";
-var dd = "ⅆ";
+var DD$1 = "ⅅ";
+var dd$1 = "ⅆ";
 var ddagger = "‡";
 var ddarr = "⇊";
 var DDotrahd = "⤑";
 var ddotseq = "⩷";
-var deg = "°";
-var Del = "∇";
-var Delta = "Δ";
-var delta = "δ";
+var deg$1 = "°";
+var Del$1 = "∇";
+var Delta$1 = "Δ";
+var delta$1 = "δ";
 var demptyv = "⦱";
 var dfisht = "⥿";
 var Dfr = "𝔇";
 var dfr = "𝔡";
 var dHar = "⥥";
 var dharl = "⇃";
-var dharr = "⇂";
+var dharr$1 = "⇂";
 var DiacriticalAcute = "´";
 var DiacriticalDot = "˙";
 var DiacriticalDoubleAcute = "˝";
 var DiacriticalGrave = "`";
 var DiacriticalTilde = "˜";
-var diam = "⋄";
-var Diamond = "⋄";
-var diamond = "⋄";
+var diam$1 = "⋄";
+var Diamond$1 = "⋄";
+var diamond$1 = "⋄";
 var diamondsuit = "♦";
-var diams = "♦";
-var die = "¨";
+var diams$1 = "♦";
+var die$1 = "¨";
 var DifferentialD = "ⅆ";
-var digamma = "ϝ";
-var disin = "⋲";
-var div = "÷";
-var divide = "÷";
+var digamma$1 = "ϝ";
+var disin$1 = "⋲";
+var div$1 = "÷";
+var divide$1 = "÷";
 var divideontimes = "⋇";
 var divonx = "⋇";
 var DJcy = "Ђ";
 var djcy = "ђ";
 var dlcorn = "⌞";
 var dlcrop = "⌍";
-var dollar = "$";
+var dollar$1 = "$";
 var Dopf = "𝔻";
-var dopf = "𝕕";
-var Dot = "¨";
-var dot = "˙";
+var dopf$1 = "𝕕";
+var Dot$1 = "¨";
+var dot$1 = "˙";
 var DotDot = "⃜";
 var doteq = "≐";
 var doteqdot = "≑";
@@ -453,11 +453,11 @@ var Dscr = "𝒟";
 var dscr = "𝒹";
 var DScy = "Ѕ";
 var dscy = "ѕ";
-var dsol = "⧶";
+var dsol$1 = "⧶";
 var Dstrok = "Đ";
 var dstrok = "đ";
 var dtdot = "⋱";
-var dtri = "▿";
+var dtri$1 = "▿";
 var dtrif = "▾";
 var duarr = "⇵";
 var duhar = "⥯";
@@ -467,37 +467,37 @@ var dzcy = "џ";
 var dzigrarr = "⟿";
 var Eacute = "É";
 var eacute = "é";
-var easter = "⩮";
+var easter$1 = "⩮";
 var Ecaron = "Ě";
 var ecaron = "ě";
-var ecir = "≖";
+var ecir$1 = "≖";
 var Ecirc = "Ê";
 var ecirc = "ê";
-var ecolon = "≕";
+var ecolon$1 = "≕";
 var Ecy = "Э";
-var ecy = "э";
+var ecy$1 = "э";
 var eDDot = "⩷";
 var Edot = "Ė";
 var eDot = "≑";
-var edot = "ė";
-var ee = "ⅇ";
+var edot$1 = "ė";
+var ee$1 = "ⅇ";
 var efDot = "≒";
 var Efr = "𝔈";
-var efr = "𝔢";
-var eg = "⪚";
+var efr$1 = "𝔢";
+var eg$1 = "⪚";
 var Egrave = "È";
-var egrave = "è";
-var egs = "⪖";
+var egrave$1 = "è";
+var egs$1 = "⪖";
 var egsdot = "⪘";
-var el = "⪙";
+var el$1 = "⪙";
 var Element = "∈";
 var elinters = "⏧";
-var ell = "ℓ";
-var els = "⪕";
+var ell$1 = "ℓ";
+var els$1 = "⪕";
 var elsdot = "⪗";
 var Emacr = "Ē";
 var emacr = "ē";
-var empty = "∅";
+var empty$1 = "∅";
 var emptyset = "∅";
 var EmptySmallSquare = "◻";
 var emptyv = "∅";
@@ -505,8 +505,8 @@ var EmptyVerySmallSquare = "▫";
 var emsp = " ";
 var emsp13 = " ";
 var emsp14 = " ";
-var ENG = "Ŋ";
-var eng = "ŋ";
+var ENG$1 = "Ŋ";
+var eng$1 = "ŋ";
 var ensp = " ";
 var Eogon = "Ę";
 var eogon = "ę";
@@ -515,47 +515,47 @@ var eopf = "𝕖";
 var epar = "⋕";
 var eparsl = "⧣";
 var eplus = "⩱";
-var epsi = "ε";
-var Epsilon = "Ε";
-var epsilon = "ε";
+var epsi$1 = "ε";
+var Epsilon$1 = "Ε";
+var epsilon$1 = "ε";
 var epsiv = "ϵ";
 var eqcirc = "≖";
 var eqcolon = "≕";
 var eqsim = "≂";
 var eqslantgtr = "⪖";
 var eqslantless = "⪕";
-var Equal = "⩵";
-var equals = "=";
+var Equal$1 = "⩵";
+var equals$1 = "=";
 var EqualTilde = "≂";
-var equest = "≟";
-var Equilibrium = "⇌";
-var equiv = "≡";
+var equest$1 = "≟";
+var Equilibrium$1 = "⇌";
+var equiv$1 = "≡";
 var equivDD = "⩸";
 var eqvparsl = "⧥";
 var erarr = "⥱";
 var erDot = "≓";
 var Escr = "ℰ";
-var escr = "ℯ";
+var escr$1 = "ℯ";
 var esdot = "≐";
 var Esim = "⩳";
-var esim = "≂";
-var Eta = "Η";
-var eta = "η";
-var ETH = "Ð";
-var eth = "ð";
+var esim$1 = "≂";
+var Eta$1 = "Η";
+var eta$1 = "η";
+var ETH$1 = "Ð";
+var eth$1 = "ð";
 var Euml = "Ë";
 var euml = "ë";
-var euro = "€";
-var excl = "!";
-var exist = "∃";
-var Exists = "∃";
-var expectation = "ℰ";
+var euro$1 = "€";
+var excl$1 = "!";
+var exist$1 = "∃";
+var Exists$1 = "∃";
+var expectation$1 = "ℰ";
 var ExponentialE = "ⅇ";
 var exponentiale = "ⅇ";
 var fallingdotseq = "≒";
 var Fcy = "Ф";
 var fcy = "ф";
-var female = "♀";
+var female$1 = "♀";
 var ffilig = "ﬃ";
 var fflig = "ﬀ";
 var ffllig = "ﬄ";
@@ -565,7 +565,7 @@ var filig = "ﬁ";
 var FilledSmallSquare = "◼";
 var FilledVerySmallSquare = "▪";
 var fjlig = "fj";
-var flat = "♭";
+var flat$1 = "♭";
 var fllig = "ﬂ";
 var fltns = "▱";
 var fnof = "ƒ";
@@ -573,7 +573,7 @@ var Fopf = "𝔽";
 var fopf = "𝕗";
 var ForAll = "∀";
 var forall = "∀";
-var fork = "⋔";
+var fork$1 = "⋔";
 var forkv = "⫙";
 var Fouriertrf = "ℱ";
 var fpartint = "⨍";
@@ -593,60 +593,60 @@ var frac56 = "⅚";
 var frac58 = "⅝";
 var frac78 = "⅞";
 var frasl = "⁄";
-var frown = "⌢";
+var frown$1 = "⌢";
 var Fscr = "ℱ";
 var fscr = "𝒻";
 var gacute = "ǵ";
-var Gamma = "Γ";
-var gamma = "γ";
+var Gamma$1 = "Γ";
+var gamma$1 = "γ";
 var Gammad = "Ϝ";
 var gammad = "ϝ";
-var gap = "⪆";
+var gap$1 = "⪆";
 var Gbreve = "Ğ";
 var gbreve = "ğ";
 var Gcedil = "Ģ";
 var Gcirc = "Ĝ";
 var gcirc = "ĝ";
 var Gcy = "Г";
-var gcy = "г";
+var gcy$1 = "г";
 var Gdot = "Ġ";
 var gdot = "ġ";
 var gE = "≧";
-var ge = "≥";
+var ge$1 = "≥";
 var gEl = "⪌";
-var gel = "⋛";
-var geq = "≥";
+var gel$1 = "⋛";
+var geq$1 = "≥";
 var geqq = "≧";
 var geqslant = "⩾";
-var ges = "⩾";
+var ges$1 = "⩾";
 var gescc = "⪩";
 var gesdot = "⪀";
 var gesdoto = "⪂";
 var gesdotol = "⪄";
-var gesl = "⋛︀";
+var gesl$1 = "⋛︀";
 var gesles = "⪔";
 var Gfr = "𝔊";
 var gfr = "𝔤";
 var Gg = "⋙";
-var gg = "≫";
+var gg$1 = "≫";
 var ggg = "⋙";
 var gimel = "ℷ";
 var GJcy = "Ѓ";
 var gjcy = "ѓ";
-var gl = "≷";
-var gla = "⪥";
+var gl$1 = "≷";
+var gla$1 = "⪥";
 var glE = "⪒";
 var glj = "⪤";
 var gnap = "⪊";
 var gnapprox = "⪊";
 var gnE = "≩";
-var gne = "⪈";
+var gne$1 = "⪈";
 var gneq = "⪈";
 var gneqq = "≩";
 var gnsim = "⋧";
 var Gopf = "𝔾";
 var gopf = "𝕘";
-var grave = "`";
+var grave$1 = "`";
 var GreaterEqual = "≥";
 var GreaterEqualLess = "⋛";
 var GreaterFullEqual = "≧";
@@ -659,9 +659,9 @@ var gscr = "ℊ";
 var gsim = "≳";
 var gsime = "⪎";
 var gsiml = "⪐";
-var GT = ">";
+var GT$1 = ">";
 var Gt = "≫";
-var gt = ">";
+var gt$1 = ">";
 var gtcc = "⪧";
 var gtcir = "⩺";
 var gtdot = "⋗";
@@ -678,7 +678,7 @@ var gvertneqq = "≩︀";
 var gvnE = "≩︀";
 var Hacek = "ˇ";
 var hairsp = " ";
-var half = "½";
+var half$1 = "½";
 var hamilt = "ℋ";
 var HARDcy = "Ъ";
 var hardcy = "ъ";
@@ -686,11 +686,11 @@ var hArr = "⇔";
 var harr = "↔";
 var harrcir = "⥈";
 var harrw = "↭";
-var Hat = "^";
+var Hat$1 = "^";
 var hbar = "ℏ";
 var Hcirc = "Ĥ";
 var hcirc = "ĥ";
-var hearts = "♥";
+var hearts$1 = "♥";
 var heartsuit = "♥";
 var hellip = "…";
 var hercon = "⊹";
@@ -704,7 +704,7 @@ var homtht = "∻";
 var hookleftarrow = "↩";
 var hookrightarrow = "↪";
 var Hopf = "ℍ";
-var hopf = "𝕙";
+var hopf$1 = "𝕙";
 var horbar = "―";
 var HorizontalLine = "─";
 var Hscr = "ℋ";
@@ -715,24 +715,24 @@ var hstrok = "ħ";
 var HumpDownHump = "≎";
 var HumpEqual = "≏";
 var hybull = "⁃";
-var hyphen = "‐";
+var hyphen$1 = "‐";
 var Iacute = "Í";
 var iacute = "í";
-var ic = "⁣";
+var ic$1 = "⁣";
 var Icirc = "Î";
 var icirc = "î";
 var Icy = "И";
-var icy = "и";
+var icy$1 = "и";
 var Idot = "İ";
 var IEcy = "Е";
 var iecy = "е";
 var iexcl = "¡";
-var iff = "⇔";
+var iff$1 = "⇔";
 var Ifr = "ℑ";
 var ifr = "𝔦";
 var Igrave = "Ì";
 var igrave = "ì";
-var ii = "ⅈ";
+var ii$1 = "ⅈ";
 var iiiint = "⨌";
 var iiint = "∭";
 var iinfin = "⧜";
@@ -742,22 +742,22 @@ var ijlig = "ĳ";
 var Im = "ℑ";
 var Imacr = "Ī";
 var imacr = "ī";
-var image = "ℑ";
+var image$1 = "ℑ";
 var ImaginaryI = "ⅈ";
 var imagline = "ℐ";
 var imagpart = "ℑ";
 var imath = "ı";
 var imof = "⊷";
-var imped = "Ƶ";
+var imped$1 = "Ƶ";
 var Implies = "⇒";
 var incare = "℅";
 var infin = "∞";
 var infintie = "⧝";
 var inodot = "ı";
 var Int = "∬";
-var int = "∫";
+var int$1 = "∫";
 var intcal = "⊺";
-var integers = "ℤ";
+var integers$1 = "ℤ";
 var Integral = "∫";
 var intercal = "⊺";
 var Intersection = "⋂";
@@ -766,24 +766,24 @@ var intprod = "⨼";
 var InvisibleComma = "⁣";
 var InvisibleTimes = "⁢";
 var IOcy = "Ё";
-var iocy = "ё";
+var iocy$1 = "ё";
 var Iogon = "Į";
-var iogon = "į";
+var iogon$1 = "į";
 var Iopf = "𝕀";
 var iopf = "𝕚";
 var Iota = "Ι";
-var iota = "ι";
+var iota$1 = "ι";
 var iprod = "⨼";
 var iquest = "¿";
 var Iscr = "ℐ";
 var iscr = "𝒾";
-var isin = "∈";
+var isin$1 = "∈";
 var isindot = "⋵";
 var isinE = "⋹";
 var isins = "⋴";
 var isinsv = "⋳";
 var isinv = "∈";
-var it = "⁢";
+var it$1 = "⁢";
 var Itilde = "Ĩ";
 var itilde = "ĩ";
 var Iukcy = "І";
@@ -805,8 +805,8 @@ var Jsercy = "Ј";
 var jsercy = "ј";
 var Jukcy = "Є";
 var jukcy = "є";
-var Kappa = "Κ";
-var kappa = "κ";
+var Kappa$1 = "Κ";
+var kappa$1 = "κ";
 var kappav = "ϰ";
 var Kcedil = "Ķ";
 var kcedil = "ķ";
@@ -820,7 +820,7 @@ var khcy = "х";
 var KJcy = "Ќ";
 var kjcy = "ќ";
 var Kopf = "𝕂";
-var kopf = "𝕜";
+var kopf$1 = "𝕜";
 var Kscr = "𝒦";
 var kscr = "𝓀";
 var lAarr = "⇚";
@@ -828,13 +828,13 @@ var Lacute = "Ĺ";
 var lacute = "ĺ";
 var laemptyv = "⦴";
 var lagran = "ℒ";
-var Lambda = "Λ";
-var lambda = "λ";
+var Lambda$1 = "Λ";
+var lambda$1 = "λ";
 var Lang = "⟪";
-var lang = "⟨";
+var lang$1 = "⟨";
 var langd = "⦑";
 var langle = "⟨";
-var lap = "⪅";
+var lap$1 = "⪅";
 var Laplacetrf = "ℒ";
 var laquo = "«";
 var Larr = "↞";
@@ -848,11 +848,11 @@ var larrlp = "↫";
 var larrpl = "⤹";
 var larrsim = "⥳";
 var larrtl = "↢";
-var lat = "⪫";
+var lat$1 = "⪫";
 var lAtail = "⤛";
 var latail = "⤙";
-var late = "⪭";
-var lates = "⪭︀";
+var late$1 = "⪭";
+var lates$1 = "⪭︀";
 var lBarr = "⤎";
 var lbarr = "⤌";
 var lbbrk = "❲";
@@ -876,7 +876,7 @@ var ldrdhar = "⥧";
 var ldrushar = "⥋";
 var ldsh = "↲";
 var lE = "≦";
-var le = "≤";
+var le$1 = "≤";
 var LeftAngleBracket = "⟨";
 var LeftArrow = "←";
 var Leftarrow = "⇐";
@@ -914,11 +914,11 @@ var LeftUpVectorBar = "⥘";
 var LeftVector = "↼";
 var LeftVectorBar = "⥒";
 var lEg = "⪋";
-var leg = "⋚";
-var leq = "≤";
+var leg$1 = "⋚";
+var leq$1 = "≤";
 var leqq = "≦";
 var leqslant = "⩽";
-var les = "⩽";
+var les$1 = "⩽";
 var lescc = "⪨";
 var lesdot = "⩿";
 var lesdoto = "⪁";
@@ -941,7 +941,7 @@ var lfisht = "⥼";
 var lfloor = "⌊";
 var Lfr = "𝔏";
 var lfr = "𝔩";
-var lg = "≶";
+var lg$1 = "≶";
 var lgE = "⪑";
 var lHar = "⥢";
 var lhard = "↽";
@@ -951,7 +951,7 @@ var lhblk = "▄";
 var LJcy = "Љ";
 var ljcy = "љ";
 var Ll = "⋘";
-var ll = "≪";
+var ll$1 = "≪";
 var llarr = "⇇";
 var llcorner = "⌞";
 var Lleftarrow = "⇚";
@@ -964,7 +964,7 @@ var lmoustache = "⎰";
 var lnap = "⪉";
 var lnapprox = "⪉";
 var lnE = "≨";
-var lne = "⪇";
+var lne$1 = "⪇";
 var lneq = "⪇";
 var lneqq = "≨";
 var lnsim = "⋦";
@@ -993,7 +993,7 @@ var lowbar = "_";
 var LowerLeftArrow = "↙";
 var LowerRightArrow = "↘";
 var loz = "◊";
-var lozenge = "◊";
+var lozenge$1 = "◊";
 var lozf = "⧫";
 var lpar = "(";
 var lparlt = "⦓";
@@ -1007,7 +1007,7 @@ var lsaquo = "‹";
 var Lscr = "ℒ";
 var lscr = "𝓁";
 var Lsh = "↰";
-var lsh = "↰";
+var lsh$1 = "↰";
 var lsim = "≲";
 var lsime = "⪍";
 var lsimg = "⪏";
@@ -1016,14 +1016,14 @@ var lsquo = "‘";
 var lsquor = "‚";
 var Lstrok = "Ł";
 var lstrok = "ł";
-var LT = "<";
+var LT$1 = "<";
 var Lt = "≪";
-var lt = "<";
+var lt$1 = "<";
 var ltcc = "⪦";
 var ltcir = "⩹";
 var ltdot = "⋖";
 var lthree = "⋋";
-var ltimes = "⋉";
+var ltimes$1 = "⋉";
 var ltlarr = "⥶";
 var ltquest = "⩻";
 var ltri = "◃";
@@ -1035,15 +1035,15 @@ var luruhar = "⥦";
 var lvertneqq = "≨︀";
 var lvnE = "≨︀";
 var macr = "¯";
-var male = "♂";
-var malt = "✠";
+var male$1 = "♂";
+var malt$1 = "✠";
 var maltese = "✠";
-var map = "↦";
+var map$1 = "↦";
 var mapsto = "↦";
 var mapstodown = "↧";
 var mapstoleft = "↤";
 var mapstoup = "↥";
-var marker = "▮";
+var marker$1 = "▮";
 var mcomma = "⨩";
 var Mcy = "М";
 var mcy = "м";
@@ -1056,11 +1056,11 @@ var Mfr = "𝔐";
 var mfr = "𝔪";
 var mho = "℧";
 var micro = "µ";
-var mid = "∣";
+var mid$1 = "∣";
 var midast = "*";
 var midcir = "⫰";
 var middot = "·";
-var minus = "−";
+var minus$1 = "−";
 var minusb = "⊟";
 var minusd = "∸";
 var minusdu = "⨪";
@@ -1068,29 +1068,29 @@ var MinusPlus = "∓";
 var mlcp = "⫛";
 var mldr = "…";
 var mnplus = "∓";
-var models = "⊧";
+var models$1 = "⊧";
 var Mopf = "𝕄";
 var mopf = "𝕞";
-var mp = "∓";
+var mp$1 = "∓";
 var Mscr = "ℳ";
 var mscr = "𝓂";
 var mstpos = "∾";
 var Mu = "Μ";
-var mu = "μ";
+var mu$1 = "μ";
 var multimap = "⊸";
 var mumap = "⊸";
 var nabla = "∇";
 var Nacute = "Ń";
 var nacute = "ń";
-var nang = "∠⃒";
-var nap = "≉";
+var nang$1 = "∠⃒";
+var nap$1 = "≉";
 var napE = "⩰̸";
 var napid = "≋̸";
 var napos = "ŉ";
 var napprox = "≉";
 var natur = "♮";
-var natural = "♮";
-var naturals = "ℕ";
+var natural$1 = "♮";
+var naturals$1 = "ℕ";
 var nbsp = " ";
 var nbump = "≎̸";
 var nbumpe = "≏̸";
@@ -1103,9 +1103,9 @@ var ncong = "≇";
 var ncongdot = "⩭̸";
 var ncup = "⩂";
 var Ncy = "Н";
-var ncy = "н";
+var ncy$1 = "н";
 var ndash = "–";
-var ne = "≠";
+var ne$1 = "≠";
 var nearhk = "⤤";
 var neArr = "⇗";
 var nearr = "↗";
@@ -1126,7 +1126,7 @@ var nexists = "∄";
 var Nfr = "𝔑";
 var nfr = "𝔫";
 var ngE = "≧̸";
-var nge = "≱";
+var nge$1 = "≱";
 var ngeq = "≱";
 var ngeqq = "≧̸";
 var ngeqslant = "⩾̸";
@@ -1134,14 +1134,14 @@ var nges = "⩾̸";
 var nGg = "⋙̸";
 var ngsim = "≵";
 var nGt = "≫⃒";
-var ngt = "≯";
+var ngt$1 = "≯";
 var ngtr = "≯";
 var nGtv = "≫̸";
 var nhArr = "⇎";
 var nharr = "↮";
 var nhpar = "⫲";
-var ni = "∋";
-var nis = "⋼";
+var ni$1 = "∋";
+var nis$1 = "⋼";
 var nisd = "⋺";
 var niv = "∋";
 var NJcy = "Њ";
@@ -1150,7 +1150,7 @@ var nlArr = "⇍";
 var nlarr = "↚";
 var nldr = "‥";
 var nlE = "≦̸";
-var nle = "≰";
+var nle$1 = "≰";
 var nLeftarrow = "⇍";
 var nleftarrow = "↚";
 var nLeftrightarrow = "⇎";
@@ -1158,12 +1158,12 @@ var nleftrightarrow = "↮";
 var nleq = "≰";
 var nleqq = "≦̸";
 var nleqslant = "⩽̸";
-var nles = "⩽̸";
-var nless = "≮";
+var nles$1 = "⩽̸";
+var nless$1 = "≮";
 var nLl = "⋘̸";
 var nlsim = "≴";
 var nLt = "≪⃒";
-var nlt = "≮";
+var nlt$1 = "≮";
 var nltri = "⋪";
 var nltrie = "⋬";
 var nLtv = "≪̸";
@@ -1171,9 +1171,9 @@ var nmid = "∤";
 var NoBreak = "⁠";
 var NonBreakingSpace = " ";
 var Nopf = "ℕ";
-var nopf = "𝕟";
-var Not = "⫬";
-var not = "¬";
+var nopf$1 = "𝕟";
+var Not$1 = "⫬";
+var not$1 = "¬";
 var NotCongruent = "≢";
 var NotCupCap = "≭";
 var NotDoubleVerticalBar = "∦";
@@ -1253,9 +1253,9 @@ var nRightarrow = "⇏";
 var nrightarrow = "↛";
 var nrtri = "⋫";
 var nrtrie = "⋭";
-var nsc = "⊁";
+var nsc$1 = "⊁";
 var nsccue = "⋡";
-var nsce = "⪰̸";
+var nsce$1 = "⪰̸";
 var Nscr = "𝒩";
 var nscr = "𝓃";
 var nshortmid = "∤";
@@ -1290,8 +1290,8 @@ var ntrianglelefteq = "⋬";
 var ntriangleright = "⋫";
 var ntrianglerighteq = "⋭";
 var Nu = "Ν";
-var nu = "ν";
-var num = "#";
+var nu$1 = "ν";
+var num$1 = "#";
 var numero = "№";
 var numsp = " ";
 var nvap = "≍⃒";
@@ -1337,48 +1337,48 @@ var ofr = "𝔬";
 var ogon = "˛";
 var Ograve = "Ò";
 var ograve = "ò";
-var ogt = "⧁";
+var ogt$1 = "⧁";
 var ohbar = "⦵";
-var ohm = "Ω";
+var ohm$1 = "Ω";
 var oint = "∮";
 var olarr = "↺";
 var olcir = "⦾";
 var olcross = "⦻";
-var oline = "‾";
-var olt = "⧀";
+var oline$1 = "‾";
+var olt$1 = "⧀";
 var Omacr = "Ō";
 var omacr = "ō";
-var Omega = "Ω";
-var omega = "ω";
-var Omicron = "Ο";
-var omicron = "ο";
+var Omega$1 = "Ω";
+var omega$1 = "ω";
+var Omicron$1 = "Ο";
+var omicron$1 = "ο";
 var omid = "⦶";
 var ominus = "⊖";
 var Oopf = "𝕆";
-var oopf = "𝕠";
-var opar = "⦷";
+var oopf$1 = "𝕠";
+var opar$1 = "⦷";
 var OpenCurlyDoubleQuote = "“";
 var OpenCurlyQuote = "‘";
 var operp = "⦹";
 var oplus = "⊕";
 var Or = "⩔";
-var or = "∨";
+var or$1 = "∨";
 var orarr = "↻";
 var ord = "⩝";
-var order = "ℴ";
+var order$1 = "ℴ";
 var orderof = "ℴ";
 var ordf = "ª";
 var ordm = "º";
 var origof = "⊶";
-var oror = "⩖";
+var oror$1 = "⩖";
 var orslope = "⩗";
-var orv = "⩛";
+var orv$1 = "⩛";
 var oS = "Ⓢ";
 var Oscr = "𝒪";
 var oscr = "ℴ";
 var Oslash = "Ø";
 var oslash = "ø";
-var osol = "⊘";
+var osol$1 = "⊘";
 var Otilde = "Õ";
 var otilde = "õ";
 var Otimes = "⨷";
@@ -1391,12 +1391,12 @@ var OverBar = "‾";
 var OverBrace = "⏞";
 var OverBracket = "⎴";
 var OverParenthesis = "⏜";
-var par = "∥";
-var para = "¶";
-var parallel = "∥";
+var par$1 = "∥";
+var para$1 = "¶";
+var parallel$1 = "∥";
 var parsim = "⫳";
 var parsl = "⫽";
-var part = "∂";
+var part$1 = "∂";
 var PartialD = "∂";
 var Pcy = "П";
 var pcy = "п";
@@ -1408,18 +1408,18 @@ var pertenk = "‱";
 var Pfr = "𝔓";
 var pfr = "𝔭";
 var Phi = "Φ";
-var phi = "φ";
+var phi$1 = "φ";
 var phiv = "ϕ";
 var phmmat = "ℳ";
-var phone = "☎";
-var Pi = "Π";
-var pi = "π";
-var pitchfork = "⋔";
+var phone$1 = "☎";
+var Pi$1 = "Π";
+var pi$1 = "π";
+var pitchfork$1 = "⋔";
 var piv = "ϖ";
 var planck = "ℏ";
 var planckh = "ℎ";
 var plankv = "ℏ";
-var plus = "+";
+var plus$1 = "+";
 var plusacir = "⨣";
 var plusb = "⊞";
 var pluscir = "⨢";
@@ -1430,14 +1430,14 @@ var PlusMinus = "±";
 var plusmn = "±";
 var plussim = "⨦";
 var plustwo = "⨧";
-var pm = "±";
+var pm$1 = "±";
 var Poincareplane = "ℌ";
 var pointint = "⨕";
 var Popf = "ℙ";
-var popf = "𝕡";
-var pound = "£";
+var popf$1 = "𝕡";
+var pound$1 = "£";
 var Pr = "⪻";
-var pr = "≺";
+var pr$1 = "≺";
 var prap = "⪷";
 var prcue = "≼";
 var prE = "⪳";
@@ -1455,26 +1455,26 @@ var precneqq = "⪵";
 var precnsim = "⋨";
 var precsim = "≾";
 var Prime = "″";
-var prime = "′";
-var primes = "ℙ";
+var prime$1 = "′";
+var primes$1 = "ℙ";
 var prnap = "⪹";
 var prnE = "⪵";
 var prnsim = "⋨";
-var prod = "∏";
-var Product = "∏";
+var prod$1 = "∏";
+var Product$1 = "∏";
 var profalar = "⌮";
 var profline = "⌒";
 var profsurf = "⌓";
-var prop = "∝";
-var Proportion = "∷";
-var Proportional = "∝";
+var prop$1 = "∝";
+var Proportion$1 = "∷";
+var Proportional$1 = "∝";
 var propto = "∝";
 var prsim = "≾";
 var prurel = "⊰";
 var Pscr = "𝒫";
 var pscr = "𝓅";
 var Psi = "Ψ";
-var psi = "ψ";
+var psi$1 = "ψ";
 var puncsp = " ";
 var Qfr = "𝔔";
 var qfr = "𝔮";
@@ -1486,20 +1486,20 @@ var Qscr = "𝒬";
 var qscr = "𝓆";
 var quaternions = "ℍ";
 var quatint = "⨖";
-var quest = "?";
+var quest$1 = "?";
 var questeq = "≟";
-var QUOT = "\"";
-var quot = "\"";
+var QUOT$1 = "\"";
+var quot$1 = "\"";
 var rAarr = "⇛";
-var race = "∽̱";
+var race$1 = "∽̱";
 var Racute = "Ŕ";
 var racute = "ŕ";
 var radic = "√";
 var raemptyv = "⦳";
 var Rang = "⟫";
-var rang = "⟩";
+var rang$1 = "⟩";
 var rangd = "⦒";
-var range = "⦥";
+var range$1 = "⦥";
 var rangle = "⟩";
 var raquo = "»";
 var Rarr = "↠";
@@ -1519,7 +1519,7 @@ var rarrtl = "↣";
 var rarrw = "↝";
 var rAtail = "⤜";
 var ratail = "⤚";
-var ratio = "∶";
+var ratio$1 = "∶";
 var rationals = "ℚ";
 var RBarr = "⤐";
 var rBarr = "⤏";
@@ -1543,14 +1543,14 @@ var rdldhar = "⥩";
 var rdquo = "”";
 var rdquor = "”";
 var rdsh = "↳";
-var Re = "ℜ";
-var real = "ℜ";
+var Re$1 = "ℜ";
+var real$1 = "ℜ";
 var realine = "ℛ";
 var realpart = "ℜ";
-var reals = "ℝ";
-var rect = "▭";
-var REG = "®";
-var reg = "®";
+var reals$1 = "ℝ";
+var rect$1 = "▭";
+var REG$1 = "®";
+var reg$1 = "®";
 var ReverseElement = "∋";
 var ReverseEquilibrium = "⇋";
 var ReverseUpEquilibrium = "⥯";
@@ -1597,7 +1597,7 @@ var RightUpVector = "↾";
 var RightUpVectorBar = "⥔";
 var RightVector = "⇀";
 var RightVectorBar = "⥓";
-var ring = "˚";
+var ring$1 = "˚";
 var risingdotseq = "≓";
 var rlarr = "⇄";
 var rlhar = "⇌";
@@ -1623,7 +1623,7 @@ var rsaquo = "›";
 var Rscr = "ℛ";
 var rscr = "𝓇";
 var Rsh = "↱";
-var rsh = "↱";
+var rsh$1 = "↱";
 var rsqb = "]";
 var rsquo = "’";
 var rsquor = "’";
@@ -1640,13 +1640,13 @@ var Sacute = "Ś";
 var sacute = "ś";
 var sbquo = "‚";
 var Sc = "⪼";
-var sc = "≻";
-var scap = "⪸";
+var sc$1 = "≻";
+var scap$1 = "⪸";
 var Scaron = "Š";
 var scaron = "š";
 var sccue = "≽";
 var scE = "⪴";
-var sce = "⪰";
+var sce$1 = "⪰";
 var Scedil = "Ş";
 var scedil = "ş";
 var Scirc = "Ŝ";
@@ -1657,16 +1657,16 @@ var scnsim = "⋩";
 var scpolint = "⨓";
 var scsim = "≿";
 var Scy = "С";
-var scy = "с";
-var sdot = "⋅";
+var scy$1 = "с";
+var sdot$1 = "⋅";
 var sdotb = "⊡";
 var sdote = "⩦";
 var searhk = "⤥";
 var seArr = "⇘";
 var searr = "↘";
 var searrow = "↘";
-var sect = "§";
-var semi = ";";
+var sect$1 = "§";
+var semi$1 = ";";
 var seswar = "⤩";
 var setminus = "∖";
 var setmn = "∖";
@@ -1674,7 +1674,7 @@ var sext = "✶";
 var Sfr = "𝔖";
 var sfr = "𝔰";
 var sfrown = "⌢";
-var sharp = "♯";
+var sharp$1 = "♯";
 var SHCHcy = "Щ";
 var shchcy = "щ";
 var SHcy = "Ш";
@@ -1685,12 +1685,12 @@ var shortmid = "∣";
 var shortparallel = "∥";
 var ShortRightArrow = "→";
 var ShortUpArrow = "↑";
-var shy = "­";
-var Sigma = "Σ";
-var sigma = "σ";
+var shy$1 = "­";
+var Sigma$1 = "Σ";
+var sigma$1 = "σ";
 var sigmaf = "ς";
 var sigmav = "ς";
-var sim = "∼";
+var sim$1 = "∼";
 var simdot = "⩪";
 var sime = "≃";
 var simeq = "≃";
@@ -1713,12 +1713,12 @@ var smte = "⪬";
 var smtes = "⪬︀";
 var SOFTcy = "Ь";
 var softcy = "ь";
-var sol = "/";
+var sol$1 = "/";
 var solb = "⧄";
 var solbar = "⌿";
 var Sopf = "𝕊";
 var sopf = "𝕤";
-var spades = "♠";
+var spades$1 = "♠";
 var spadesuit = "♠";
 var spar = "∥";
 var sqcap = "⊓";
@@ -1736,7 +1736,7 @@ var sqsupset = "⊐";
 var sqsupseteq = "⊒";
 var squ = "□";
 var Square = "□";
-var square = "□";
+var square$1 = "□";
 var SquareIntersection = "⊓";
 var SquareSubset = "⊏";
 var SquareSubsetEqual = "⊑";
@@ -1751,17 +1751,17 @@ var sscr = "𝓈";
 var ssetmn = "∖";
 var ssmile = "⌣";
 var sstarf = "⋆";
-var Star = "⋆";
-var star = "☆";
+var Star$1 = "⋆";
+var star$1 = "☆";
 var starf = "★";
 var straightepsilon = "ϵ";
 var straightphi = "ϕ";
 var strns = "¯";
-var Sub = "⋐";
-var sub = "⊂";
+var Sub$1 = "⋐";
+var sub$1 = "⊂";
 var subdot = "⪽";
 var subE = "⫅";
-var sube = "⊆";
+var sube$1 = "⊆";
 var subedot = "⫃";
 var submult = "⫁";
 var subnE = "⫋";
@@ -1791,8 +1791,8 @@ var succneqq = "⪶";
 var succnsim = "⋩";
 var succsim = "≿";
 var SuchThat = "∋";
-var Sum = "∑";
-var sum = "∑";
+var Sum$1 = "∑";
+var sum$1 = "∑";
 var sung = "♪";
 var Sup = "⋑";
 var sup = "⊃";
@@ -1828,10 +1828,10 @@ var swarr = "↙";
 var swarrow = "↙";
 var swnwar = "⤪";
 var szlig = "ß";
-var Tab = "\t";
-var target = "⌖";
-var Tau = "Τ";
-var tau = "τ";
+var Tab$1 = "\t";
+var target$1 = "⌖";
+var Tau$1 = "Τ";
+var tau$1 = "τ";
 var tbrk = "⎴";
 var Tcaron = "Ť";
 var tcaron = "ť";
@@ -1845,9 +1845,9 @@ var Tfr = "𝔗";
 var tfr = "𝔱";
 var there4 = "∴";
 var Therefore = "∴";
-var therefore = "∴";
-var Theta = "Θ";
-var theta = "θ";
+var therefore$1 = "∴";
+var Theta$1 = "Θ";
+var theta$1 = "θ";
 var thetasym = "ϑ";
 var thetav = "ϑ";
 var thickapprox = "≈";
@@ -1857,30 +1857,30 @@ var thinsp = " ";
 var ThinSpace = " ";
 var thkap = "≈";
 var thksim = "∼";
-var THORN = "Þ";
-var thorn = "þ";
-var Tilde = "∼";
-var tilde = "˜";
+var THORN$1 = "Þ";
+var thorn$1 = "þ";
+var Tilde$1 = "∼";
+var tilde$1 = "˜";
 var TildeEqual = "≃";
 var TildeFullEqual = "≅";
 var TildeTilde = "≈";
-var times = "×";
+var times$1 = "×";
 var timesb = "⊠";
 var timesbar = "⨱";
 var timesd = "⨰";
-var tint = "∭";
+var tint$1 = "∭";
 var toea = "⤨";
-var top = "⊤";
+var top$1 = "⊤";
 var topbot = "⌶";
 var topcir = "⫱";
 var Topf = "𝕋";
 var topf = "𝕥";
 var topfork = "⫚";
-var tosa = "⤩";
+var tosa$1 = "⤩";
 var tprime = "‴";
-var TRADE = "™";
-var trade = "™";
-var triangle = "▵";
+var TRADE$1 = "™";
+var trade$1 = "™";
+var triangle$1 = "▵";
 var triangledown = "▿";
 var triangleleft = "◃";
 var trianglelefteq = "⊴";
@@ -1888,7 +1888,7 @@ var triangleq = "≜";
 var triangleright = "▹";
 var trianglerighteq = "⊵";
 var tridot = "◬";
-var trie = "≜";
+var trie$1 = "≜";
 var triminus = "⨺";
 var TripleDot = "⃛";
 var triplus = "⨹";
@@ -1919,7 +1919,7 @@ var ubreve = "ŭ";
 var Ucirc = "Û";
 var ucirc = "û";
 var Ucy = "У";
-var ucy = "у";
+var ucy$1 = "у";
 var udarr = "⇅";
 var Udblac = "Ű";
 var udblac = "ű";
@@ -1939,12 +1939,12 @@ var ulcrop = "⌏";
 var ultri = "◸";
 var Umacr = "Ū";
 var umacr = "ū";
-var uml = "¨";
+var uml$1 = "¨";
 var UnderBar = "_";
 var UnderBrace = "⏟";
 var UnderBracket = "⎵";
 var UnderParenthesis = "⏝";
-var Union = "⋃";
+var Union$1 = "⋃";
 var UnionPlus = "⊎";
 var Uogon = "Ų";
 var uogon = "ų";
@@ -1961,11 +1961,11 @@ var updownarrow = "↕";
 var UpEquilibrium = "⥮";
 var upharpoonleft = "↿";
 var upharpoonright = "↾";
-var uplus = "⊎";
+var uplus$1 = "⊎";
 var UpperLeftArrow = "↖";
 var UpperRightArrow = "↗";
-var Upsi = "ϒ";
-var upsi = "υ";
+var Upsi$1 = "ϒ";
+var upsi$1 = "υ";
 var upsih = "ϒ";
 var Upsilon = "Υ";
 var upsilon = "υ";
@@ -1976,7 +1976,7 @@ var urcorn = "⌝";
 var urcorner = "⌝";
 var urcrop = "⌎";
 var Uring = "Ů";
-var uring = "ů";
+var uring$1 = "ů";
 var urtri = "◹";
 var Uscr = "𝒰";
 var uscr = "𝓊";
@@ -2018,14 +2018,14 @@ var vDash = "⊨";
 var vdash = "⊢";
 var Vdashl = "⫦";
 var Vee = "⋁";
-var vee = "∨";
+var vee$1 = "∨";
 var veebar = "⊻";
 var veeeq = "≚";
 var vellip = "⋮";
 var Verbar = "‖";
 var verbar = "|";
-var Vert = "‖";
-var vert = "|";
+var Vert$1 = "‖";
+var vert$1 = "|";
 var VerticalBar = "∣";
 var VerticalLine = "|";
 var VerticalSeparator = "❘";
@@ -2051,8 +2051,8 @@ var vzigzag = "⦚";
 var Wcirc = "Ŵ";
 var wcirc = "ŵ";
 var wedbar = "⩟";
-var Wedge = "⋀";
-var wedge = "∧";
+var Wedge$1 = "⋀";
+var wedge$1 = "∧";
 var wedgeq = "≙";
 var weierp = "℘";
 var Wfr = "𝔚";
@@ -2061,7 +2061,7 @@ var Wopf = "𝕎";
 var wopf = "𝕨";
 var wp = "℘";
 var wr = "≀";
-var wreath = "≀";
+var wreath$1 = "≀";
 var Wscr = "𝒲";
 var wscr = "𝓌";
 var xcap = "⋂";
@@ -2072,8 +2072,8 @@ var Xfr = "𝔛";
 var xfr = "𝔵";
 var xhArr = "⟺";
 var xharr = "⟷";
-var Xi = "Ξ";
-var xi = "ξ";
+var Xi$1 = "Ξ";
+var xi$1 = "ξ";
 var xlArr = "⟸";
 var xlarr = "⟵";
 var xmap = "⟼";
@@ -2096,11 +2096,11 @@ var Yacute = "Ý";
 var yacute = "ý";
 var YAcy = "Я";
 var yacy = "я";
-var Ycirc = "Ŷ";
-var ycirc = "ŷ";
+var Ycirc$1 = "Ŷ";
+var ycirc$1 = "ŷ";
 var Ycy = "Ы";
-var ycy = "ы";
-var yen = "¥";
+var ycy$1 = "ы";
+var yen$1 = "¥";
 var Yfr = "𝔜";
 var yfr = "𝔶";
 var YIcy = "Ї";
@@ -2113,8 +2113,8 @@ var YUcy = "Ю";
 var yucy = "ю";
 var Yuml = "Ÿ";
 var yuml = "ÿ";
-var Zacute = "Ź";
-var zacute = "ź";
+var Zacute$1 = "Ź";
+var zacute$1 = "ź";
 var Zcaron = "Ž";
 var zcaron = "ž";
 var Zcy = "З";
@@ -2123,8 +2123,8 @@ var Zdot = "Ż";
 var zdot = "ż";
 var zeetrf = "ℨ";
 var ZeroWidthSpace = "​";
-var Zeta = "Ζ";
-var zeta = "ζ";
+var Zeta$1 = "Ζ";
+var zeta$1 = "ζ";
 var Zfr = "ℨ";
 var zfr = "𝔷";
 var ZHcy = "Ж";
@@ -2141,12 +2141,12 @@ var allNamedEntitiesJson = {
   aacute: aacute,
   Abreve: Abreve,
   abreve: abreve,
-  ac: ac,
+  ac: ac$1,
   acd: acd,
   acE: acE,
   Acirc: Acirc,
   acirc: acirc,
-  acute: acute,
+  acute: acute$1,
   Acy: Acy,
   acy: acy,
   AElig: AElig,
@@ -2158,22 +2158,22 @@ var allNamedEntitiesJson = {
   agrave: agrave,
   alefsym: alefsym,
   aleph: aleph,
-  Alpha: Alpha,
-  alpha: alpha,
+  Alpha: Alpha$1,
+  alpha: alpha$1,
   Amacr: Amacr,
   amacr: amacr,
   amalg: amalg,
   AMP: AMP,
-  amp: amp,
-  And: And,
-  and: and,
+  amp: amp$1,
+  And: And$1,
+  and: and$1,
   andand: andand,
   andd: andd,
   andslope: andslope,
   andv: andv,
   ang: ang,
-  ange: ange,
-  angle: angle,
+  ange: ange$1,
+  angle: angle$1,
   angmsd: angmsd,
   angmsdaa: angmsdaa,
   angmsdab: angmsdab,
@@ -2187,31 +2187,31 @@ var allNamedEntitiesJson = {
   angrtvb: angrtvb,
   angrtvbd: angrtvbd,
   angsph: angsph,
-  angst: angst,
+  angst: angst$1,
   angzarr: angzarr,
   Aogon: Aogon,
   aogon: aogon,
   Aopf: Aopf,
   aopf: aopf,
-  ap: ap,
+  ap: ap$1,
   apacir: apacir,
   apE: apE,
-  ape: ape,
+  ape: ape$1,
   apid: apid,
   apos: apos,
   ApplyFunction: ApplyFunction,
-  approx: approx,
+  approx: approx$1,
   approxeq: approxeq,
-  Aring: Aring,
-  aring: aring,
-  Ascr: Ascr,
-  ascr: ascr,
-  Assign: Assign,
-  ast: ast,
+  Aring: Aring$1,
+  aring: aring$1,
+  Ascr: Ascr$1,
+  ascr: ascr$1,
+  Assign: Assign$1,
+  ast: ast$1,
   asymp: asymp,
   asympeq: asympeq,
   Atilde: Atilde,
-  atilde: atilde,
+  atilde: atilde$1,
   Auml: Auml,
   auml: auml,
   awconint: awconint,
@@ -2221,29 +2221,29 @@ var allNamedEntitiesJson = {
   backprime: backprime,
   backsim: backsim,
   backsimeq: backsimeq,
-  Backslash: Backslash,
+  Backslash: Backslash$1,
   Barv: Barv,
   barvee: barvee,
   Barwed: Barwed,
   barwed: barwed,
-  barwedge: barwedge,
+  barwedge: barwedge$1,
   bbrk: bbrk,
   bbrktbrk: bbrktbrk,
   bcong: bcong,
   Bcy: Bcy,
   bcy: bcy,
   bdquo: bdquo,
-  becaus: becaus,
-  Because: Because,
-  because: because,
+  becaus: becaus$1,
+  Because: Because$1,
+  because: because$1,
   bemptyv: bemptyv,
-  bepsi: bepsi,
+  bepsi: bepsi$1,
   bernou: bernou,
-  Bernoullis: Bernoullis,
-  Beta: Beta,
-  beta: beta,
-  beth: beth,
-  between: between,
+  Bernoullis: Bernoullis$1,
+  Beta: Beta$1,
+  beta: beta$1,
+  beth: beth$1,
+  between: between$1,
   Bfr: Bfr,
   bfr: bfr,
   bigcap: bigcap,
@@ -2266,20 +2266,20 @@ var allNamedEntitiesJson = {
   blacktriangledown: blacktriangledown,
   blacktriangleleft: blacktriangleleft,
   blacktriangleright: blacktriangleright,
-  blank: blank,
+  blank: blank$1,
   blk12: blk12,
   blk14: blk14,
   blk34: blk34,
-  block: block,
+  block: block$1,
   bne: bne,
   bnequiv: bnequiv,
   bNot: bNot,
   bnot: bnot,
   Bopf: Bopf,
   bopf: bopf,
-  bot: bot,
-  bottom: bottom,
-  bowtie: bowtie,
+  bot: bot$1,
+  bottom: bottom$1,
+  bowtie: bowtie$1,
   boxbox: boxbox,
   boxDL: boxDL,
   boxDl: boxDl,
@@ -2326,7 +2326,7 @@ var allNamedEntitiesJson = {
   boxvr: boxvr,
   bprime: bprime,
   Breve: Breve,
-  breve: breve,
+  breve: breve$1,
   brvbar: brvbar,
   Bscr: Bscr,
   bscr: bscr,
@@ -2336,26 +2336,26 @@ var allNamedEntitiesJson = {
   bsol: bsol,
   bsolb: bsolb,
   bsolhsub: bsolhsub,
-  bull: bull,
-  bullet: bullet,
-  bump: bump,
+  bull: bull$1,
+  bullet: bullet$1,
+  bump: bump$1,
   bumpE: bumpE,
   bumpe: bumpe,
   Bumpeq: Bumpeq,
   bumpeq: bumpeq,
   Cacute: Cacute,
-  cacute: cacute,
-  Cap: Cap,
-  cap: cap,
-  capand: capand,
+  cacute: cacute$1,
+  Cap: Cap$1,
+  cap: cap$1,
+  capand: capand$1,
   capbrcup: capbrcup,
   capcap: capcap,
   capcup: capcup,
   capdot: capdot,
   CapitalDifferentialD: CapitalDifferentialD,
-  caps: caps,
-  caret: caret,
-  caron: caron,
+  caps: caps$1,
+  caret: caret$1,
+  caron: caron$1,
   Cayleys: Cayleys,
   ccaps: ccaps,
   Ccaron: Ccaron,
@@ -2369,22 +2369,22 @@ var allNamedEntitiesJson = {
   ccupssm: ccupssm,
   Cdot: Cdot,
   cdot: cdot,
-  cedil: cedil,
-  Cedilla: Cedilla,
+  cedil: cedil$1,
+  Cedilla: Cedilla$1,
   cemptyv: cemptyv,
-  cent: cent,
+  cent: cent$1,
   CenterDot: CenterDot,
   centerdot: centerdot,
   Cfr: Cfr,
   cfr: cfr,
   CHcy: CHcy,
   chcy: chcy,
-  check: check,
-  checkmark: checkmark,
-  Chi: Chi,
-  chi: chi,
-  cir: cir,
-  circ: circ,
+  check: check$1,
+  checkmark: checkmark$1,
+  Chi: Chi$1,
+  chi: chi$1,
+  cir: cir$1,
+  circ: circ$1,
   circeq: circeq,
   circlearrowleft: circlearrowleft,
   circlearrowright: circlearrowright,
@@ -2405,36 +2405,36 @@ var allNamedEntitiesJson = {
   ClockwiseContourIntegral: ClockwiseContourIntegral,
   CloseCurlyDoubleQuote: CloseCurlyDoubleQuote,
   CloseCurlyQuote: CloseCurlyQuote,
-  clubs: clubs,
-  clubsuit: clubsuit,
-  Colon: Colon,
-  colon: colon,
-  Colone: Colone,
-  colone: colone,
+  clubs: clubs$1,
+  clubsuit: clubsuit$1,
+  Colon: Colon$1,
+  colon: colon$1,
+  Colone: Colone$1,
+  colone: colone$1,
   coloneq: coloneq,
-  comma: comma,
-  commat: commat,
-  comp: comp,
+  comma: comma$1,
+  commat: commat$1,
+  comp: comp$1,
   compfn: compfn,
-  complement: complement,
-  complexes: complexes,
-  cong: cong,
+  complement: complement$1,
+  complexes: complexes$1,
+  cong: cong$1,
   congdot: congdot,
-  Congruent: Congruent,
+  Congruent: Congruent$1,
   Conint: Conint,
-  conint: conint,
+  conint: conint$1,
   ContourIntegral: ContourIntegral,
   Copf: Copf,
-  copf: copf,
-  coprod: coprod,
+  copf: copf$1,
+  coprod: coprod$1,
   Coproduct: Coproduct,
-  COPY: COPY,
-  copy: copy,
+  COPY: COPY$1,
+  copy: copy$1,
   copysr: copysr,
   CounterClockwiseContourIntegral: CounterClockwiseContourIntegral,
   crarr: crarr,
-  Cross: Cross,
-  cross: cross,
+  Cross: Cross$1,
+  cross: cross$1,
   Cscr: Cscr,
   cscr: cscr,
   csub: csub,
@@ -2448,15 +2448,15 @@ var allNamedEntitiesJson = {
   cuesc: cuesc,
   cularr: cularr,
   cularrp: cularrp,
-  Cup: Cup,
-  cup: cup,
+  Cup: Cup$1,
+  cup: cup$1,
   cupbrcap: cupbrcap,
   CupCap: CupCap,
   cupcap: cupcap,
   cupcup: cupcup,
   cupdot: cupdot,
   cupor: cupor,
-  cups: cups,
+  cups: cups$1,
   curarr: curarr,
   curarrm: curarrm,
   curlyeqprec: curlyeqprec,
@@ -2471,13 +2471,13 @@ var allNamedEntitiesJson = {
   cwconint: cwconint,
   cwint: cwint,
   cylcty: cylcty,
-  Dagger: Dagger,
-  dagger: dagger,
-  daleth: daleth,
+  Dagger: Dagger$1,
+  dagger: dagger$1,
+  daleth: daleth$1,
   Darr: Darr,
   dArr: dArr,
-  darr: darr,
-  dash: dash,
+  darr: darr$1,
+  dash: dash$1,
   Dashv: Dashv,
   dashv: dashv,
   dbkarow: dbkarow,
@@ -2486,50 +2486,50 @@ var allNamedEntitiesJson = {
   dcaron: dcaron,
   Dcy: Dcy,
   dcy: dcy,
-  DD: DD,
-  dd: dd,
+  DD: DD$1,
+  dd: dd$1,
   ddagger: ddagger,
   ddarr: ddarr,
   DDotrahd: DDotrahd,
   ddotseq: ddotseq,
-  deg: deg,
-  Del: Del,
-  Delta: Delta,
-  delta: delta,
+  deg: deg$1,
+  Del: Del$1,
+  Delta: Delta$1,
+  delta: delta$1,
   demptyv: demptyv,
   dfisht: dfisht,
   Dfr: Dfr,
   dfr: dfr,
   dHar: dHar,
   dharl: dharl,
-  dharr: dharr,
+  dharr: dharr$1,
   DiacriticalAcute: DiacriticalAcute,
   DiacriticalDot: DiacriticalDot,
   DiacriticalDoubleAcute: DiacriticalDoubleAcute,
   DiacriticalGrave: DiacriticalGrave,
   DiacriticalTilde: DiacriticalTilde,
-  diam: diam,
-  Diamond: Diamond,
-  diamond: diamond,
+  diam: diam$1,
+  Diamond: Diamond$1,
+  diamond: diamond$1,
   diamondsuit: diamondsuit,
-  diams: diams,
-  die: die,
+  diams: diams$1,
+  die: die$1,
   DifferentialD: DifferentialD,
-  digamma: digamma,
-  disin: disin,
-  div: div,
-  divide: divide,
+  digamma: digamma$1,
+  disin: disin$1,
+  div: div$1,
+  divide: divide$1,
   divideontimes: divideontimes,
   divonx: divonx,
   DJcy: DJcy,
   djcy: djcy,
   dlcorn: dlcorn,
   dlcrop: dlcrop,
-  dollar: dollar,
+  dollar: dollar$1,
   Dopf: Dopf,
-  dopf: dopf,
-  Dot: Dot,
-  dot: dot,
+  dopf: dopf$1,
+  Dot: Dot$1,
+  dot: dot$1,
   DotDot: DotDot,
   doteq: doteq,
   doteqdot: doteqdot,
@@ -2577,11 +2577,11 @@ var allNamedEntitiesJson = {
   dscr: dscr,
   DScy: DScy,
   dscy: dscy,
-  dsol: dsol,
+  dsol: dsol$1,
   Dstrok: Dstrok,
   dstrok: dstrok,
   dtdot: dtdot,
-  dtri: dtri,
+  dtri: dtri$1,
   dtrif: dtrif,
   duarr: duarr,
   duhar: duhar,
@@ -2591,37 +2591,37 @@ var allNamedEntitiesJson = {
   dzigrarr: dzigrarr,
   Eacute: Eacute,
   eacute: eacute,
-  easter: easter,
+  easter: easter$1,
   Ecaron: Ecaron,
   ecaron: ecaron,
-  ecir: ecir,
+  ecir: ecir$1,
   Ecirc: Ecirc,
   ecirc: ecirc,
-  ecolon: ecolon,
+  ecolon: ecolon$1,
   Ecy: Ecy,
-  ecy: ecy,
+  ecy: ecy$1,
   eDDot: eDDot,
   Edot: Edot,
   eDot: eDot,
-  edot: edot,
-  ee: ee,
+  edot: edot$1,
+  ee: ee$1,
   efDot: efDot,
   Efr: Efr,
-  efr: efr,
-  eg: eg,
+  efr: efr$1,
+  eg: eg$1,
   Egrave: Egrave,
-  egrave: egrave,
-  egs: egs,
+  egrave: egrave$1,
+  egs: egs$1,
   egsdot: egsdot,
-  el: el,
+  el: el$1,
   Element: Element,
   elinters: elinters,
-  ell: ell,
-  els: els,
+  ell: ell$1,
+  els: els$1,
   elsdot: elsdot,
   Emacr: Emacr,
   emacr: emacr,
-  empty: empty,
+  empty: empty$1,
   emptyset: emptyset,
   EmptySmallSquare: EmptySmallSquare,
   emptyv: emptyv,
@@ -2629,8 +2629,8 @@ var allNamedEntitiesJson = {
   emsp: emsp,
   emsp13: emsp13,
   emsp14: emsp14,
-  ENG: ENG,
-  eng: eng,
+  ENG: ENG$1,
+  eng: eng$1,
   ensp: ensp,
   Eogon: Eogon,
   eogon: eogon,
@@ -2639,47 +2639,47 @@ var allNamedEntitiesJson = {
   epar: epar,
   eparsl: eparsl,
   eplus: eplus,
-  epsi: epsi,
-  Epsilon: Epsilon,
-  epsilon: epsilon,
+  epsi: epsi$1,
+  Epsilon: Epsilon$1,
+  epsilon: epsilon$1,
   epsiv: epsiv,
   eqcirc: eqcirc,
   eqcolon: eqcolon,
   eqsim: eqsim,
   eqslantgtr: eqslantgtr,
   eqslantless: eqslantless,
-  Equal: Equal,
-  equals: equals,
+  Equal: Equal$1,
+  equals: equals$1,
   EqualTilde: EqualTilde,
-  equest: equest,
-  Equilibrium: Equilibrium,
-  equiv: equiv,
+  equest: equest$1,
+  Equilibrium: Equilibrium$1,
+  equiv: equiv$1,
   equivDD: equivDD,
   eqvparsl: eqvparsl,
   erarr: erarr,
   erDot: erDot,
   Escr: Escr,
-  escr: escr,
+  escr: escr$1,
   esdot: esdot,
   Esim: Esim,
-  esim: esim,
-  Eta: Eta,
-  eta: eta,
-  ETH: ETH,
-  eth: eth,
+  esim: esim$1,
+  Eta: Eta$1,
+  eta: eta$1,
+  ETH: ETH$1,
+  eth: eth$1,
   Euml: Euml,
   euml: euml,
-  euro: euro,
-  excl: excl,
-  exist: exist,
-  Exists: Exists,
-  expectation: expectation,
+  euro: euro$1,
+  excl: excl$1,
+  exist: exist$1,
+  Exists: Exists$1,
+  expectation: expectation$1,
   ExponentialE: ExponentialE,
   exponentiale: exponentiale,
   fallingdotseq: fallingdotseq,
   Fcy: Fcy,
   fcy: fcy,
-  female: female,
+  female: female$1,
   ffilig: ffilig,
   fflig: fflig,
   ffllig: ffllig,
@@ -2689,7 +2689,7 @@ var allNamedEntitiesJson = {
   FilledSmallSquare: FilledSmallSquare,
   FilledVerySmallSquare: FilledVerySmallSquare,
   fjlig: fjlig,
-  flat: flat,
+  flat: flat$1,
   fllig: fllig,
   fltns: fltns,
   fnof: fnof,
@@ -2697,7 +2697,7 @@ var allNamedEntitiesJson = {
   fopf: fopf,
   ForAll: ForAll,
   forall: forall,
-  fork: fork,
+  fork: fork$1,
   forkv: forkv,
   Fouriertrf: Fouriertrf,
   fpartint: fpartint,
@@ -2717,60 +2717,60 @@ var allNamedEntitiesJson = {
   frac58: frac58,
   frac78: frac78,
   frasl: frasl,
-  frown: frown,
+  frown: frown$1,
   Fscr: Fscr,
   fscr: fscr,
   gacute: gacute,
-  Gamma: Gamma,
-  gamma: gamma,
+  Gamma: Gamma$1,
+  gamma: gamma$1,
   Gammad: Gammad,
   gammad: gammad,
-  gap: gap,
+  gap: gap$1,
   Gbreve: Gbreve,
   gbreve: gbreve,
   Gcedil: Gcedil,
   Gcirc: Gcirc,
   gcirc: gcirc,
   Gcy: Gcy,
-  gcy: gcy,
+  gcy: gcy$1,
   Gdot: Gdot,
   gdot: gdot,
   gE: gE,
-  ge: ge,
+  ge: ge$1,
   gEl: gEl,
-  gel: gel,
-  geq: geq,
+  gel: gel$1,
+  geq: geq$1,
   geqq: geqq,
   geqslant: geqslant,
-  ges: ges,
+  ges: ges$1,
   gescc: gescc,
   gesdot: gesdot,
   gesdoto: gesdoto,
   gesdotol: gesdotol,
-  gesl: gesl,
+  gesl: gesl$1,
   gesles: gesles,
   Gfr: Gfr,
   gfr: gfr,
   Gg: Gg,
-  gg: gg,
+  gg: gg$1,
   ggg: ggg,
   gimel: gimel,
   GJcy: GJcy,
   gjcy: gjcy,
-  gl: gl,
-  gla: gla,
+  gl: gl$1,
+  gla: gla$1,
   glE: glE,
   glj: glj,
   gnap: gnap,
   gnapprox: gnapprox,
   gnE: gnE,
-  gne: gne,
+  gne: gne$1,
   gneq: gneq,
   gneqq: gneqq,
   gnsim: gnsim,
   Gopf: Gopf,
   gopf: gopf,
-  grave: grave,
+  grave: grave$1,
   GreaterEqual: GreaterEqual,
   GreaterEqualLess: GreaterEqualLess,
   GreaterFullEqual: GreaterFullEqual,
@@ -2783,9 +2783,9 @@ var allNamedEntitiesJson = {
   gsim: gsim,
   gsime: gsime,
   gsiml: gsiml,
-  GT: GT,
+  GT: GT$1,
   Gt: Gt,
-  gt: gt,
+  gt: gt$1,
   gtcc: gtcc,
   gtcir: gtcir,
   gtdot: gtdot,
@@ -2802,7 +2802,7 @@ var allNamedEntitiesJson = {
   gvnE: gvnE,
   Hacek: Hacek,
   hairsp: hairsp,
-  half: half,
+  half: half$1,
   hamilt: hamilt,
   HARDcy: HARDcy,
   hardcy: hardcy,
@@ -2810,11 +2810,11 @@ var allNamedEntitiesJson = {
   harr: harr,
   harrcir: harrcir,
   harrw: harrw,
-  Hat: Hat,
+  Hat: Hat$1,
   hbar: hbar,
   Hcirc: Hcirc,
   hcirc: hcirc,
-  hearts: hearts,
+  hearts: hearts$1,
   heartsuit: heartsuit,
   hellip: hellip,
   hercon: hercon,
@@ -2828,7 +2828,7 @@ var allNamedEntitiesJson = {
   hookleftarrow: hookleftarrow,
   hookrightarrow: hookrightarrow,
   Hopf: Hopf,
-  hopf: hopf,
+  hopf: hopf$1,
   horbar: horbar,
   HorizontalLine: HorizontalLine,
   Hscr: Hscr,
@@ -2839,24 +2839,24 @@ var allNamedEntitiesJson = {
   HumpDownHump: HumpDownHump,
   HumpEqual: HumpEqual,
   hybull: hybull,
-  hyphen: hyphen,
+  hyphen: hyphen$1,
   Iacute: Iacute,
   iacute: iacute,
-  ic: ic,
+  ic: ic$1,
   Icirc: Icirc,
   icirc: icirc,
   Icy: Icy,
-  icy: icy,
+  icy: icy$1,
   Idot: Idot,
   IEcy: IEcy,
   iecy: iecy,
   iexcl: iexcl,
-  iff: iff,
+  iff: iff$1,
   Ifr: Ifr,
   ifr: ifr,
   Igrave: Igrave,
   igrave: igrave,
-  ii: ii,
+  ii: ii$1,
   iiiint: iiiint,
   iiint: iiint,
   iinfin: iinfin,
@@ -2866,13 +2866,13 @@ var allNamedEntitiesJson = {
   Im: Im,
   Imacr: Imacr,
   imacr: imacr,
-  image: image,
+  image: image$1,
   ImaginaryI: ImaginaryI,
   imagline: imagline,
   imagpart: imagpart,
   imath: imath,
   imof: imof,
-  imped: imped,
+  imped: imped$1,
   Implies: Implies,
   "in": "∈",
   incare: incare,
@@ -2880,9 +2880,9 @@ var allNamedEntitiesJson = {
   infintie: infintie,
   inodot: inodot,
   Int: Int,
-  int: int,
+  int: int$1,
   intcal: intcal,
-  integers: integers,
+  integers: integers$1,
   Integral: Integral,
   intercal: intercal,
   Intersection: Intersection,
@@ -2891,24 +2891,24 @@ var allNamedEntitiesJson = {
   InvisibleComma: InvisibleComma,
   InvisibleTimes: InvisibleTimes,
   IOcy: IOcy,
-  iocy: iocy,
+  iocy: iocy$1,
   Iogon: Iogon,
-  iogon: iogon,
+  iogon: iogon$1,
   Iopf: Iopf,
   iopf: iopf,
   Iota: Iota,
-  iota: iota,
+  iota: iota$1,
   iprod: iprod,
   iquest: iquest,
   Iscr: Iscr,
   iscr: iscr,
-  isin: isin,
+  isin: isin$1,
   isindot: isindot,
   isinE: isinE,
   isins: isins,
   isinsv: isinsv,
   isinv: isinv,
-  it: it,
+  it: it$1,
   Itilde: Itilde,
   itilde: itilde,
   Iukcy: Iukcy,
@@ -2930,8 +2930,8 @@ var allNamedEntitiesJson = {
   jsercy: jsercy,
   Jukcy: Jukcy,
   jukcy: jukcy,
-  Kappa: Kappa,
-  kappa: kappa,
+  Kappa: Kappa$1,
+  kappa: kappa$1,
   kappav: kappav,
   Kcedil: Kcedil,
   kcedil: kcedil,
@@ -2945,7 +2945,7 @@ var allNamedEntitiesJson = {
   KJcy: KJcy,
   kjcy: kjcy,
   Kopf: Kopf,
-  kopf: kopf,
+  kopf: kopf$1,
   Kscr: Kscr,
   kscr: kscr,
   lAarr: lAarr,
@@ -2953,13 +2953,13 @@ var allNamedEntitiesJson = {
   lacute: lacute,
   laemptyv: laemptyv,
   lagran: lagran,
-  Lambda: Lambda,
-  lambda: lambda,
+  Lambda: Lambda$1,
+  lambda: lambda$1,
   Lang: Lang,
-  lang: lang,
+  lang: lang$1,
   langd: langd,
   langle: langle,
-  lap: lap,
+  lap: lap$1,
   Laplacetrf: Laplacetrf,
   laquo: laquo,
   Larr: Larr,
@@ -2973,11 +2973,11 @@ var allNamedEntitiesJson = {
   larrpl: larrpl,
   larrsim: larrsim,
   larrtl: larrtl,
-  lat: lat,
+  lat: lat$1,
   lAtail: lAtail,
   latail: latail,
-  late: late,
-  lates: lates,
+  late: late$1,
+  lates: lates$1,
   lBarr: lBarr,
   lbarr: lbarr,
   lbbrk: lbbrk,
@@ -3001,7 +3001,7 @@ var allNamedEntitiesJson = {
   ldrushar: ldrushar,
   ldsh: ldsh,
   lE: lE,
-  le: le,
+  le: le$1,
   LeftAngleBracket: LeftAngleBracket,
   LeftArrow: LeftArrow,
   Leftarrow: Leftarrow,
@@ -3039,11 +3039,11 @@ var allNamedEntitiesJson = {
   LeftVector: LeftVector,
   LeftVectorBar: LeftVectorBar,
   lEg: lEg,
-  leg: leg,
-  leq: leq,
+  leg: leg$1,
+  leq: leq$1,
   leqq: leqq,
   leqslant: leqslant,
-  les: les,
+  les: les$1,
   lescc: lescc,
   lesdot: lesdot,
   lesdoto: lesdoto,
@@ -3066,7 +3066,7 @@ var allNamedEntitiesJson = {
   lfloor: lfloor,
   Lfr: Lfr,
   lfr: lfr,
-  lg: lg,
+  lg: lg$1,
   lgE: lgE,
   lHar: lHar,
   lhard: lhard,
@@ -3076,7 +3076,7 @@ var allNamedEntitiesJson = {
   LJcy: LJcy,
   ljcy: ljcy,
   Ll: Ll,
-  ll: ll,
+  ll: ll$1,
   llarr: llarr,
   llcorner: llcorner,
   Lleftarrow: Lleftarrow,
@@ -3089,7 +3089,7 @@ var allNamedEntitiesJson = {
   lnap: lnap,
   lnapprox: lnapprox,
   lnE: lnE,
-  lne: lne,
+  lne: lne$1,
   lneq: lneq,
   lneqq: lneqq,
   lnsim: lnsim,
@@ -3118,7 +3118,7 @@ var allNamedEntitiesJson = {
   LowerLeftArrow: LowerLeftArrow,
   LowerRightArrow: LowerRightArrow,
   loz: loz,
-  lozenge: lozenge,
+  lozenge: lozenge$1,
   lozf: lozf,
   lpar: lpar,
   lparlt: lparlt,
@@ -3132,7 +3132,7 @@ var allNamedEntitiesJson = {
   Lscr: Lscr,
   lscr: lscr,
   Lsh: Lsh,
-  lsh: lsh,
+  lsh: lsh$1,
   lsim: lsim,
   lsime: lsime,
   lsimg: lsimg,
@@ -3141,14 +3141,14 @@ var allNamedEntitiesJson = {
   lsquor: lsquor,
   Lstrok: Lstrok,
   lstrok: lstrok,
-  LT: LT,
+  LT: LT$1,
   Lt: Lt,
-  lt: lt,
+  lt: lt$1,
   ltcc: ltcc,
   ltcir: ltcir,
   ltdot: ltdot,
   lthree: lthree,
-  ltimes: ltimes,
+  ltimes: ltimes$1,
   ltlarr: ltlarr,
   ltquest: ltquest,
   ltri: ltri,
@@ -3160,16 +3160,16 @@ var allNamedEntitiesJson = {
   lvertneqq: lvertneqq,
   lvnE: lvnE,
   macr: macr,
-  male: male,
-  malt: malt,
+  male: male$1,
+  malt: malt$1,
   maltese: maltese,
   "Map": "⤅",
-  map: map,
+  map: map$1,
   mapsto: mapsto,
   mapstodown: mapstodown,
   mapstoleft: mapstoleft,
   mapstoup: mapstoup,
-  marker: marker,
+  marker: marker$1,
   mcomma: mcomma,
   Mcy: Mcy,
   mcy: mcy,
@@ -3182,11 +3182,11 @@ var allNamedEntitiesJson = {
   mfr: mfr,
   mho: mho,
   micro: micro,
-  mid: mid,
+  mid: mid$1,
   midast: midast,
   midcir: midcir,
   middot: middot,
-  minus: minus,
+  minus: minus$1,
   minusb: minusb,
   minusd: minusd,
   minusdu: minusdu,
@@ -3194,29 +3194,29 @@ var allNamedEntitiesJson = {
   mlcp: mlcp,
   mldr: mldr,
   mnplus: mnplus,
-  models: models,
+  models: models$1,
   Mopf: Mopf,
   mopf: mopf,
-  mp: mp,
+  mp: mp$1,
   Mscr: Mscr,
   mscr: mscr,
   mstpos: mstpos,
   Mu: Mu,
-  mu: mu,
+  mu: mu$1,
   multimap: multimap,
   mumap: mumap,
   nabla: nabla,
   Nacute: Nacute,
   nacute: nacute,
-  nang: nang,
-  nap: nap,
+  nang: nang$1,
+  nap: nap$1,
   napE: napE,
   napid: napid,
   napos: napos,
   napprox: napprox,
   natur: natur,
-  natural: natural,
-  naturals: naturals,
+  natural: natural$1,
+  naturals: naturals$1,
   nbsp: nbsp,
   nbump: nbump,
   nbumpe: nbumpe,
@@ -3229,9 +3229,9 @@ var allNamedEntitiesJson = {
   ncongdot: ncongdot,
   ncup: ncup,
   Ncy: Ncy,
-  ncy: ncy,
+  ncy: ncy$1,
   ndash: ndash,
-  ne: ne,
+  ne: ne$1,
   nearhk: nearhk,
   neArr: neArr,
   nearr: nearr,
@@ -3252,7 +3252,7 @@ var allNamedEntitiesJson = {
   Nfr: Nfr,
   nfr: nfr,
   ngE: ngE,
-  nge: nge,
+  nge: nge$1,
   ngeq: ngeq,
   ngeqq: ngeqq,
   ngeqslant: ngeqslant,
@@ -3260,14 +3260,14 @@ var allNamedEntitiesJson = {
   nGg: nGg,
   ngsim: ngsim,
   nGt: nGt,
-  ngt: ngt,
+  ngt: ngt$1,
   ngtr: ngtr,
   nGtv: nGtv,
   nhArr: nhArr,
   nharr: nharr,
   nhpar: nhpar,
-  ni: ni,
-  nis: nis,
+  ni: ni$1,
+  nis: nis$1,
   nisd: nisd,
   niv: niv,
   NJcy: NJcy,
@@ -3276,7 +3276,7 @@ var allNamedEntitiesJson = {
   nlarr: nlarr,
   nldr: nldr,
   nlE: nlE,
-  nle: nle,
+  nle: nle$1,
   nLeftarrow: nLeftarrow,
   nleftarrow: nleftarrow,
   nLeftrightarrow: nLeftrightarrow,
@@ -3284,12 +3284,12 @@ var allNamedEntitiesJson = {
   nleq: nleq,
   nleqq: nleqq,
   nleqslant: nleqslant,
-  nles: nles,
-  nless: nless,
+  nles: nles$1,
+  nless: nless$1,
   nLl: nLl,
   nlsim: nlsim,
   nLt: nLt,
-  nlt: nlt,
+  nlt: nlt$1,
   nltri: nltri,
   nltrie: nltrie,
   nLtv: nLtv,
@@ -3297,9 +3297,9 @@ var allNamedEntitiesJson = {
   NoBreak: NoBreak,
   NonBreakingSpace: NonBreakingSpace,
   Nopf: Nopf,
-  nopf: nopf,
-  Not: Not,
-  not: not,
+  nopf: nopf$1,
+  Not: Not$1,
+  not: not$1,
   NotCongruent: NotCongruent,
   NotCupCap: NotCupCap,
   NotDoubleVerticalBar: NotDoubleVerticalBar,
@@ -3379,9 +3379,9 @@ var allNamedEntitiesJson = {
   nrightarrow: nrightarrow,
   nrtri: nrtri,
   nrtrie: nrtrie,
-  nsc: nsc,
+  nsc: nsc$1,
   nsccue: nsccue,
-  nsce: nsce,
+  nsce: nsce$1,
   Nscr: Nscr,
   nscr: nscr,
   nshortmid: nshortmid,
@@ -3416,8 +3416,8 @@ var allNamedEntitiesJson = {
   ntriangleright: ntriangleright,
   ntrianglerighteq: ntrianglerighteq,
   Nu: Nu,
-  nu: nu,
-  num: num,
+  nu: nu$1,
+  num: num$1,
   numero: numero,
   numsp: numsp,
   nvap: nvap,
@@ -3463,48 +3463,48 @@ var allNamedEntitiesJson = {
   ogon: ogon,
   Ograve: Ograve,
   ograve: ograve,
-  ogt: ogt,
+  ogt: ogt$1,
   ohbar: ohbar,
-  ohm: ohm,
+  ohm: ohm$1,
   oint: oint,
   olarr: olarr,
   olcir: olcir,
   olcross: olcross,
-  oline: oline,
-  olt: olt,
+  oline: oline$1,
+  olt: olt$1,
   Omacr: Omacr,
   omacr: omacr,
-  Omega: Omega,
-  omega: omega,
-  Omicron: Omicron,
-  omicron: omicron,
+  Omega: Omega$1,
+  omega: omega$1,
+  Omicron: Omicron$1,
+  omicron: omicron$1,
   omid: omid,
   ominus: ominus,
   Oopf: Oopf,
-  oopf: oopf,
-  opar: opar,
+  oopf: oopf$1,
+  opar: opar$1,
   OpenCurlyDoubleQuote: OpenCurlyDoubleQuote,
   OpenCurlyQuote: OpenCurlyQuote,
   operp: operp,
   oplus: oplus,
   Or: Or,
-  or: or,
+  or: or$1,
   orarr: orarr,
   ord: ord,
-  order: order,
+  order: order$1,
   orderof: orderof,
   ordf: ordf,
   ordm: ordm,
   origof: origof,
-  oror: oror,
+  oror: oror$1,
   orslope: orslope,
-  orv: orv,
+  orv: orv$1,
   oS: oS,
   Oscr: Oscr,
   oscr: oscr,
   Oslash: Oslash,
   oslash: oslash,
-  osol: osol,
+  osol: osol$1,
   Otilde: Otilde,
   otilde: otilde,
   Otimes: Otimes,
@@ -3517,12 +3517,12 @@ var allNamedEntitiesJson = {
   OverBrace: OverBrace,
   OverBracket: OverBracket,
   OverParenthesis: OverParenthesis,
-  par: par,
-  para: para,
-  parallel: parallel,
+  par: par$1,
+  para: para$1,
+  parallel: parallel$1,
   parsim: parsim,
   parsl: parsl,
-  part: part,
+  part: part$1,
   PartialD: PartialD,
   Pcy: Pcy,
   pcy: pcy,
@@ -3534,18 +3534,18 @@ var allNamedEntitiesJson = {
   Pfr: Pfr,
   pfr: pfr,
   Phi: Phi,
-  phi: phi,
+  phi: phi$1,
   phiv: phiv,
   phmmat: phmmat,
-  phone: phone,
-  Pi: Pi,
-  pi: pi,
-  pitchfork: pitchfork,
+  phone: phone$1,
+  Pi: Pi$1,
+  pi: pi$1,
+  pitchfork: pitchfork$1,
   piv: piv,
   planck: planck,
   planckh: planckh,
   plankv: plankv,
-  plus: plus,
+  plus: plus$1,
   plusacir: plusacir,
   plusb: plusb,
   pluscir: pluscir,
@@ -3556,14 +3556,14 @@ var allNamedEntitiesJson = {
   plusmn: plusmn,
   plussim: plussim,
   plustwo: plustwo,
-  pm: pm,
+  pm: pm$1,
   Poincareplane: Poincareplane,
   pointint: pointint,
   Popf: Popf,
-  popf: popf,
-  pound: pound,
+  popf: popf$1,
+  pound: pound$1,
   Pr: Pr,
-  pr: pr,
+  pr: pr$1,
   prap: prap,
   prcue: prcue,
   prE: prE,
@@ -3581,26 +3581,26 @@ var allNamedEntitiesJson = {
   precnsim: precnsim,
   precsim: precsim,
   Prime: Prime,
-  prime: prime,
-  primes: primes,
+  prime: prime$1,
+  primes: primes$1,
   prnap: prnap,
   prnE: prnE,
   prnsim: prnsim,
-  prod: prod,
-  Product: Product,
+  prod: prod$1,
+  Product: Product$1,
   profalar: profalar,
   profline: profline,
   profsurf: profsurf,
-  prop: prop,
-  Proportion: Proportion,
-  Proportional: Proportional,
+  prop: prop$1,
+  Proportion: Proportion$1,
+  Proportional: Proportional$1,
   propto: propto,
   prsim: prsim,
   prurel: prurel,
   Pscr: Pscr,
   pscr: pscr,
   Psi: Psi,
-  psi: psi,
+  psi: psi$1,
   puncsp: puncsp,
   Qfr: Qfr,
   qfr: qfr,
@@ -3612,20 +3612,20 @@ var allNamedEntitiesJson = {
   qscr: qscr,
   quaternions: quaternions,
   quatint: quatint,
-  quest: quest,
+  quest: quest$1,
   questeq: questeq,
-  QUOT: QUOT,
-  quot: quot,
+  QUOT: QUOT$1,
+  quot: quot$1,
   rAarr: rAarr,
-  race: race,
+  race: race$1,
   Racute: Racute,
   racute: racute,
   radic: radic,
   raemptyv: raemptyv,
   Rang: Rang,
-  rang: rang,
+  rang: rang$1,
   rangd: rangd,
-  range: range,
+  range: range$1,
   rangle: rangle,
   raquo: raquo,
   Rarr: Rarr,
@@ -3645,7 +3645,7 @@ var allNamedEntitiesJson = {
   rarrw: rarrw,
   rAtail: rAtail,
   ratail: ratail,
-  ratio: ratio,
+  ratio: ratio$1,
   rationals: rationals,
   RBarr: RBarr,
   rBarr: rBarr,
@@ -3669,14 +3669,14 @@ var allNamedEntitiesJson = {
   rdquo: rdquo,
   rdquor: rdquor,
   rdsh: rdsh,
-  Re: Re,
-  real: real,
+  Re: Re$1,
+  real: real$1,
   realine: realine,
   realpart: realpart,
-  reals: reals,
-  rect: rect,
-  REG: REG,
-  reg: reg,
+  reals: reals$1,
+  rect: rect$1,
+  REG: REG$1,
+  reg: reg$1,
   ReverseElement: ReverseElement,
   ReverseEquilibrium: ReverseEquilibrium,
   ReverseUpEquilibrium: ReverseUpEquilibrium,
@@ -3723,7 +3723,7 @@ var allNamedEntitiesJson = {
   RightUpVectorBar: RightUpVectorBar,
   RightVector: RightVector,
   RightVectorBar: RightVectorBar,
-  ring: ring,
+  ring: ring$1,
   risingdotseq: risingdotseq,
   rlarr: rlarr,
   rlhar: rlhar,
@@ -3749,7 +3749,7 @@ var allNamedEntitiesJson = {
   Rscr: Rscr,
   rscr: rscr,
   Rsh: Rsh,
-  rsh: rsh,
+  rsh: rsh$1,
   rsqb: rsqb,
   rsquo: rsquo,
   rsquor: rsquor,
@@ -3766,13 +3766,13 @@ var allNamedEntitiesJson = {
   sacute: sacute,
   sbquo: sbquo,
   Sc: Sc,
-  sc: sc,
-  scap: scap,
+  sc: sc$1,
+  scap: scap$1,
   Scaron: Scaron,
   scaron: scaron,
   sccue: sccue,
   scE: scE,
-  sce: sce,
+  sce: sce$1,
   Scedil: Scedil,
   scedil: scedil,
   Scirc: Scirc,
@@ -3783,16 +3783,16 @@ var allNamedEntitiesJson = {
   scpolint: scpolint,
   scsim: scsim,
   Scy: Scy,
-  scy: scy,
-  sdot: sdot,
+  scy: scy$1,
+  sdot: sdot$1,
   sdotb: sdotb,
   sdote: sdote,
   searhk: searhk,
   seArr: seArr,
   searr: searr,
   searrow: searrow,
-  sect: sect,
-  semi: semi,
+  sect: sect$1,
+  semi: semi$1,
   seswar: seswar,
   setminus: setminus,
   setmn: setmn,
@@ -3800,7 +3800,7 @@ var allNamedEntitiesJson = {
   Sfr: Sfr,
   sfr: sfr,
   sfrown: sfrown,
-  sharp: sharp,
+  sharp: sharp$1,
   SHCHcy: SHCHcy,
   shchcy: shchcy,
   SHcy: SHcy,
@@ -3811,12 +3811,12 @@ var allNamedEntitiesJson = {
   shortparallel: shortparallel,
   ShortRightArrow: ShortRightArrow,
   ShortUpArrow: ShortUpArrow,
-  shy: shy,
-  Sigma: Sigma,
-  sigma: sigma,
+  shy: shy$1,
+  Sigma: Sigma$1,
+  sigma: sigma$1,
   sigmaf: sigmaf,
   sigmav: sigmav,
-  sim: sim,
+  sim: sim$1,
   simdot: simdot,
   sime: sime,
   simeq: simeq,
@@ -3839,12 +3839,12 @@ var allNamedEntitiesJson = {
   smtes: smtes,
   SOFTcy: SOFTcy,
   softcy: softcy,
-  sol: sol,
+  sol: sol$1,
   solb: solb,
   solbar: solbar,
   Sopf: Sopf,
   sopf: sopf,
-  spades: spades,
+  spades: spades$1,
   spadesuit: spadesuit,
   spar: spar,
   sqcap: sqcap,
@@ -3862,7 +3862,7 @@ var allNamedEntitiesJson = {
   sqsupseteq: sqsupseteq,
   squ: squ,
   Square: Square,
-  square: square,
+  square: square$1,
   SquareIntersection: SquareIntersection,
   SquareSubset: SquareSubset,
   SquareSubsetEqual: SquareSubsetEqual,
@@ -3877,17 +3877,17 @@ var allNamedEntitiesJson = {
   ssetmn: ssetmn,
   ssmile: ssmile,
   sstarf: sstarf,
-  Star: Star,
-  star: star,
+  Star: Star$1,
+  star: star$1,
   starf: starf,
   straightepsilon: straightepsilon,
   straightphi: straightphi,
   strns: strns,
-  Sub: Sub,
-  sub: sub,
+  Sub: Sub$1,
+  sub: sub$1,
   subdot: subdot,
   subE: subE,
-  sube: sube,
+  sube: sube$1,
   subedot: subedot,
   submult: submult,
   subnE: subnE,
@@ -3917,8 +3917,8 @@ var allNamedEntitiesJson = {
   succnsim: succnsim,
   succsim: succsim,
   SuchThat: SuchThat,
-  Sum: Sum,
-  sum: sum,
+  Sum: Sum$1,
+  sum: sum$1,
   sung: sung,
   Sup: Sup,
   sup: sup,
@@ -3954,10 +3954,10 @@ var allNamedEntitiesJson = {
   swarrow: swarrow,
   swnwar: swnwar,
   szlig: szlig,
-  Tab: Tab,
-  target: target,
-  Tau: Tau,
-  tau: tau,
+  Tab: Tab$1,
+  target: target$1,
+  Tau: Tau$1,
+  tau: tau$1,
   tbrk: tbrk,
   Tcaron: Tcaron,
   tcaron: tcaron,
@@ -3971,9 +3971,9 @@ var allNamedEntitiesJson = {
   tfr: tfr,
   there4: there4,
   Therefore: Therefore,
-  therefore: therefore,
-  Theta: Theta,
-  theta: theta,
+  therefore: therefore$1,
+  Theta: Theta$1,
+  theta: theta$1,
   thetasym: thetasym,
   thetav: thetav,
   thickapprox: thickapprox,
@@ -3983,30 +3983,30 @@ var allNamedEntitiesJson = {
   ThinSpace: ThinSpace,
   thkap: thkap,
   thksim: thksim,
-  THORN: THORN,
-  thorn: thorn,
-  Tilde: Tilde,
-  tilde: tilde,
+  THORN: THORN$1,
+  thorn: thorn$1,
+  Tilde: Tilde$1,
+  tilde: tilde$1,
   TildeEqual: TildeEqual,
   TildeFullEqual: TildeFullEqual,
   TildeTilde: TildeTilde,
-  times: times,
+  times: times$1,
   timesb: timesb,
   timesbar: timesbar,
   timesd: timesd,
-  tint: tint,
+  tint: tint$1,
   toea: toea,
-  top: top,
+  top: top$1,
   topbot: topbot,
   topcir: topcir,
   Topf: Topf,
   topf: topf,
   topfork: topfork,
-  tosa: tosa,
+  tosa: tosa$1,
   tprime: tprime,
-  TRADE: TRADE,
-  trade: trade,
-  triangle: triangle,
+  TRADE: TRADE$1,
+  trade: trade$1,
+  triangle: triangle$1,
   triangledown: triangledown,
   triangleleft: triangleleft,
   trianglelefteq: trianglelefteq,
@@ -4014,7 +4014,7 @@ var allNamedEntitiesJson = {
   triangleright: triangleright,
   trianglerighteq: trianglerighteq,
   tridot: tridot,
-  trie: trie,
+  trie: trie$1,
   triminus: triminus,
   TripleDot: TripleDot,
   triplus: triplus,
@@ -4045,7 +4045,7 @@ var allNamedEntitiesJson = {
   Ucirc: Ucirc,
   ucirc: ucirc,
   Ucy: Ucy,
-  ucy: ucy,
+  ucy: ucy$1,
   udarr: udarr,
   Udblac: Udblac,
   udblac: udblac,
@@ -4065,12 +4065,12 @@ var allNamedEntitiesJson = {
   ultri: ultri,
   Umacr: Umacr,
   umacr: umacr,
-  uml: uml,
+  uml: uml$1,
   UnderBar: UnderBar,
   UnderBrace: UnderBrace,
   UnderBracket: UnderBracket,
   UnderParenthesis: UnderParenthesis,
-  Union: Union,
+  Union: Union$1,
   UnionPlus: UnionPlus,
   Uogon: Uogon,
   uogon: uogon,
@@ -4087,11 +4087,11 @@ var allNamedEntitiesJson = {
   UpEquilibrium: UpEquilibrium,
   upharpoonleft: upharpoonleft,
   upharpoonright: upharpoonright,
-  uplus: uplus,
+  uplus: uplus$1,
   UpperLeftArrow: UpperLeftArrow,
   UpperRightArrow: UpperRightArrow,
-  Upsi: Upsi,
-  upsi: upsi,
+  Upsi: Upsi$1,
+  upsi: upsi$1,
   upsih: upsih,
   Upsilon: Upsilon,
   upsilon: upsilon,
@@ -4102,7 +4102,7 @@ var allNamedEntitiesJson = {
   urcorner: urcorner,
   urcrop: urcrop,
   Uring: Uring,
-  uring: uring,
+  uring: uring$1,
   urtri: urtri,
   Uscr: Uscr,
   uscr: uscr,
@@ -4144,14 +4144,14 @@ var allNamedEntitiesJson = {
   vdash: vdash,
   Vdashl: Vdashl,
   Vee: Vee,
-  vee: vee,
+  vee: vee$1,
   veebar: veebar,
   veeeq: veeeq,
   vellip: vellip,
   Verbar: Verbar,
   verbar: verbar,
-  Vert: Vert,
-  vert: vert,
+  Vert: Vert$1,
+  vert: vert$1,
   VerticalBar: VerticalBar,
   VerticalLine: VerticalLine,
   VerticalSeparator: VerticalSeparator,
@@ -4177,8 +4177,8 @@ var allNamedEntitiesJson = {
   Wcirc: Wcirc,
   wcirc: wcirc,
   wedbar: wedbar,
-  Wedge: Wedge,
-  wedge: wedge,
+  Wedge: Wedge$1,
+  wedge: wedge$1,
   wedgeq: wedgeq,
   weierp: weierp,
   Wfr: Wfr,
@@ -4187,7 +4187,7 @@ var allNamedEntitiesJson = {
   wopf: wopf,
   wp: wp,
   wr: wr,
-  wreath: wreath,
+  wreath: wreath$1,
   Wscr: Wscr,
   wscr: wscr,
   xcap: xcap,
@@ -4198,8 +4198,8 @@ var allNamedEntitiesJson = {
   xfr: xfr,
   xhArr: xhArr,
   xharr: xharr,
-  Xi: Xi,
-  xi: xi,
+  Xi: Xi$1,
+  xi: xi$1,
   xlArr: xlArr,
   xlarr: xlarr,
   xmap: xmap,
@@ -4222,11 +4222,11 @@ var allNamedEntitiesJson = {
   yacute: yacute,
   YAcy: YAcy,
   yacy: yacy,
-  Ycirc: Ycirc,
-  ycirc: ycirc,
+  Ycirc: Ycirc$1,
+  ycirc: ycirc$1,
   Ycy: Ycy,
-  ycy: ycy,
-  yen: yen,
+  ycy: ycy$1,
+  yen: yen$1,
   Yfr: Yfr,
   yfr: yfr,
   YIcy: YIcy,
@@ -4239,8 +4239,8 @@ var allNamedEntitiesJson = {
   yucy: yucy,
   Yuml: Yuml,
   yuml: yuml,
-  Zacute: Zacute,
-  zacute: zacute,
+  Zacute: Zacute$1,
+  zacute: zacute$1,
   Zcaron: Zcaron,
   zcaron: zcaron,
   Zcy: Zcy,
@@ -4249,8 +4249,8 @@ var allNamedEntitiesJson = {
   zdot: zdot,
   zeetrf: zeetrf,
   ZeroWidthSpace: ZeroWidthSpace,
-  Zeta: Zeta,
-  zeta: zeta,
+  Zeta: Zeta$1,
+  zeta: zeta$1,
   Zfr: Zfr,
   zfr: zfr,
   ZHcy: ZHcy,
@@ -4353,7 +4353,7 @@ var A = {
   t: ["Atilde"],
   u: ["Auml"]
 };
-var a = {
+var a$3 = {
   a: ["aacute"],
   b: ["abreve"],
   c: ["ac", "acd", "acE", "acirc", "acute", "acy"],
@@ -4371,7 +4371,7 @@ var a = {
   u: ["auml"],
   w: ["awconint", "awint"]
 };
-var b = {
+var b$3 = {
   a: ["backcong", "backepsilon", "backprime", "backsim", "backsimeq", "barvee", "barwed", "barwedge"],
   b: ["bbrk", "bbrktbrk"],
   c: ["bcong", "bcy"],
@@ -4415,7 +4415,7 @@ var C = {
   s: ["Cscr"],
   u: ["Cup", "CupCap"]
 };
-var c = {
+var c$3 = {
   a: ["cacute", "cap", "capand", "capbrcup", "capcap", "capcup", "capdot", "caps", "caret", "caron"],
   c: ["ccaps", "ccaron", "ccedil", "ccirc", "ccups", "ccupssm"],
   d: ["cdot"],
@@ -4432,7 +4432,7 @@ var c = {
   w: ["cwconint", "cwint"],
   y: ["cylcty"]
 };
-var D = {
+var D$1 = {
   a: ["Dagger", "Darr", "Dashv"],
   c: ["Dcaron", "Dcy"],
   D: ["DD", "DDotrahd"],
@@ -4445,7 +4445,7 @@ var D = {
   S: ["DScy"],
   Z: ["DZcy"]
 };
-var d = {
+var d$3 = {
   a: ["dagger", "daleth", "darr", "dash", "dashv"],
   A: ["dArr"],
   b: ["dbkarow", "dblac"],
@@ -4466,7 +4466,7 @@ var d = {
   w: ["dwangle"],
   z: ["dzcy", "dzigrarr"]
 };
-var E = {
+var E$1 = {
   a: ["Eacute"],
   c: ["Ecaron", "Ecirc", "Ecy"],
   d: ["Edot"],
@@ -4484,7 +4484,7 @@ var E = {
   u: ["Euml"],
   x: ["Exists", "ExponentialE"]
 };
-var e = {
+var e$3 = {
   a: ["eacute", "easter"],
   c: ["ecaron", "ecir", "ecirc", "ecolon", "ecy"],
   D: ["eDDot", "eDot"],
@@ -4504,7 +4504,7 @@ var e = {
   u: ["euml", "euro"],
   x: ["excl", "exist", "expectation", "exponentiale"]
 };
-var f = {
+var f$3 = {
   a: ["fallingdotseq"],
   c: ["fcy"],
   e: ["female"],
@@ -4525,7 +4525,7 @@ var F = {
   o: ["Fopf", "ForAll", "Fouriertrf"],
   s: ["Fscr"]
 };
-var g = {
+var g$3 = {
   a: ["gacute", "gamma", "gammad", "gap"],
   b: ["gbreve"],
   c: ["gcirc", "gcy"],
@@ -4544,7 +4544,7 @@ var g = {
   t: ["gt", "gtcc", "gtcir", "gtdot", "gtlPar", "gtquest", "gtrapprox", "gtrarr", "gtrdot", "gtreqless", "gtreqqless", "gtrless", "gtrsim"],
   v: ["gvertneqq", "gvnE"]
 };
-var G = {
+var G$1 = {
   a: ["Gamma", "Gammad"],
   b: ["Gbreve"],
   c: ["Gcedil", "Gcirc", "Gcy"],
@@ -4558,7 +4558,7 @@ var G = {
   T: ["GT"],
   t: ["Gt"]
 };
-var H = {
+var H$1 = {
   a: ["Hacek", "Hat"],
   A: ["HARDcy"],
   c: ["Hcirc"],
@@ -4568,7 +4568,7 @@ var H = {
   s: ["Hscr", "Hstrok"],
   u: ["HumpDownHump", "HumpEqual"]
 };
-var h = {
+var h$3 = {
   a: ["hairsp", "half", "hamilt", "hardcy", "harr", "harrcir", "harrw"],
   A: ["hArr"],
   b: ["hbar"],
@@ -4580,7 +4580,7 @@ var h = {
   s: ["hscr", "hslash", "hstrok"],
   y: ["hybull", "hyphen"]
 };
-var I = {
+var I$1 = {
   a: ["Iacute"],
   c: ["Icirc", "Icy"],
   d: ["Idot"],
@@ -4596,7 +4596,7 @@ var I = {
   t: ["Itilde"],
   u: ["Iukcy", "Iuml"]
 };
-var i = {
+var i$3 = {
   a: ["iacute"],
   c: ["ic", "icirc", "icy"],
   e: ["iecy", "iexcl"],
@@ -4620,7 +4620,7 @@ var J = {
   s: ["Jscr", "Jsercy"],
   u: ["Jukcy"]
 };
-var j = {
+var j$3 = {
   c: ["jcirc", "jcy"],
   f: ["jfr"],
   m: ["jmath"],
@@ -4637,7 +4637,7 @@ var K = {
   o: ["Kopf"],
   s: ["Kscr"]
 };
-var k = {
+var k$3 = {
   a: ["kappa", "kappav"],
   c: ["kcedil", "kcy"],
   f: ["kfr"],
@@ -4647,7 +4647,7 @@ var k = {
   o: ["kopf"],
   s: ["kscr"]
 };
-var l = {
+var l$3 = {
   A: ["lAarr", "lArr", "lAtail"],
   a: ["lacute", "laemptyv", "lagran", "lambda", "lang", "langd", "langle", "lap", "laquo", "larr", "larrb", "larrbfs", "larrfs", "larrhk", "larrlp", "larrpl", "larrsim", "larrtl", "lat", "latail", "late", "lates"],
   B: ["lBarr"],
@@ -4672,7 +4672,7 @@ var l = {
   u: ["lurdshar", "luruhar"],
   v: ["lvertneqq", "lvnE"]
 };
-var L = {
+var L$1 = {
   a: ["Lacute", "Lambda", "Lang", "Laplacetrf", "Larr"],
   c: ["Lcaron", "Lcedil", "Lcy"],
   e: ["LeftAngleBracket", "LeftArrow", "Leftarrow", "LeftArrowBar", "LeftArrowRightArrow", "LeftCeiling", "LeftDoubleBracket", "LeftDownTeeVector", "LeftDownVector", "LeftDownVectorBar", "LeftFloor", "LeftRightArrow", "Leftrightarrow", "LeftRightVector", "LeftTee", "LeftTeeArrow", "LeftTeeVector", "LeftTriangle", "LeftTriangleBar", "LeftTriangleEqual", "LeftUpDownVector", "LeftUpTeeVector", "LeftUpVector", "LeftUpVectorBar", "LeftVector", "LeftVectorBar", "LessEqualGreater", "LessFullEqual", "LessGreater", "LessLess", "LessSlantEqual", "LessTilde"],
@@ -4685,7 +4685,7 @@ var L = {
   T: ["LT"],
   t: ["Lt"]
 };
-var m = {
+var m$3 = {
   a: ["macr", "male", "malt", "maltese", "map", "mapsto", "mapstodown", "mapstoleft", "mapstoup", "marker"],
   c: ["mcomma", "mcy"],
   d: ["mdash"],
@@ -4711,7 +4711,7 @@ var M = {
   s: ["Mscr"],
   u: ["Mu"]
 };
-var n = {
+var n$3 = {
   a: ["nabla", "nacute", "nang", "nap", "napE", "napid", "napos", "napprox", "natur", "natural", "naturals"],
   b: ["nbsp", "nbump", "nbumpe"],
   c: ["ncap", "ncaron", "ncedil", "ncong", "ncongdot", "ncup", "ncy"],
@@ -4737,7 +4737,7 @@ var n = {
   V: ["nVDash", "nVdash"],
   w: ["nwarhk", "nwArr", "nwarr", "nwarrow", "nwnear"]
 };
-var N = {
+var N$1 = {
   a: ["Nacute"],
   c: ["Ncaron", "Ncedil", "Ncy"],
   e: ["NegativeMediumSpace", "NegativeThickSpace", "NegativeThinSpace", "NegativeVeryThinSpace", "NestedGreaterGreater", "NestedLessLess", "NewLine"],
@@ -4764,7 +4764,7 @@ var O = {
   u: ["Ouml"],
   v: ["OverBar", "OverBrace", "OverBracket", "OverParenthesis"]
 };
-var o = {
+var o$3 = {
   a: ["oacute", "oast"],
   c: ["ocir", "ocirc", "ocy"],
   d: ["odash", "odblac", "odiv", "odot", "odsold"],
@@ -4784,7 +4784,7 @@ var o = {
   u: ["ouml"],
   v: ["ovbar"]
 };
-var p = {
+var p$3 = {
   a: ["par", "para", "parallel", "parsim", "parsl", "part"],
   c: ["pcy"],
   e: ["percnt", "period", "permil", "perp", "pertenk"],
@@ -4798,7 +4798,7 @@ var p = {
   s: ["pscr", "psi"],
   u: ["puncsp"]
 };
-var P = {
+var P$1 = {
   a: ["PartialD"],
   c: ["Pcy"],
   f: ["Pfr"],
@@ -4815,7 +4815,7 @@ var Q = {
   s: ["Qscr"],
   U: ["QUOT"]
 };
-var q = {
+var q$3 = {
   f: ["qfr"],
   i: ["qint"],
   o: ["qopf"],
@@ -4823,7 +4823,7 @@ var q = {
   s: ["qscr"],
   u: ["quaternions", "quatint", "quest", "questeq", "quot"]
 };
-var r = {
+var r$3 = {
   A: ["rAarr", "rArr", "rAtail"],
   a: ["race", "racute", "radic", "raemptyv", "rang", "rangd", "range", "rangle", "raquo", "rarr", "rarrap", "rarrb", "rarrbfs", "rarrc", "rarrfs", "rarrhk", "rarrlp", "rarrpl", "rarrsim", "rarrtl", "rarrw", "ratail", "ratio", "rationals"],
   B: ["rBarr"],
@@ -4846,7 +4846,7 @@ var r = {
   u: ["ruluhar"],
   x: ["rx"]
 };
-var R = {
+var R$1 = {
   a: ["Racute", "Rang", "Rarr", "Rarrtl"],
   B: ["RBarr"],
   c: ["Rcaron", "Rcedil", "Rcy"],
@@ -4860,7 +4860,7 @@ var R = {
   s: ["Rscr", "Rsh"],
   u: ["RuleDelayed"]
 };
-var S = {
+var S$1 = {
   a: ["Sacute"],
   c: ["Sc", "Scaron", "Scedil", "Scirc", "Scy"],
   f: ["Sfr"],
@@ -4875,7 +4875,7 @@ var S = {
   t: ["Star"],
   u: ["Sub", "Subset", "SubsetEqual", "Succeeds", "SucceedsEqual", "SucceedsSlantEqual", "SucceedsTilde", "SuchThat", "Sum", "Sup", "Superset", "SupersetEqual", "Supset"]
 };
-var s = {
+var s$3 = {
   a: ["sacute"],
   b: ["sbquo"],
   c: ["sc", "scap", "scaron", "sccue", "scE", "sce", "scedil", "scirc", "scnap", "scnE", "scnsim", "scpolint", "scsim", "scy"],
@@ -4896,7 +4896,7 @@ var s = {
   w: ["swarhk", "swArr", "swarr", "swarrow", "swnwar"],
   z: ["szlig"]
 };
-var T = {
+var T$1 = {
   a: ["Tab", "Tau"],
   c: ["Tcaron", "Tcedil", "Tcy"],
   f: ["Tfr"],
@@ -4909,7 +4909,7 @@ var T = {
   s: ["Tscr", "Tstrok"],
   S: ["TScy", "TSHcy"]
 };
-var t = {
+var t$3 = {
   a: ["target", "tau"],
   b: ["tbrk"],
   c: ["tcaron", "tcedil", "tcy"],
@@ -4924,7 +4924,7 @@ var t = {
   s: ["tscr", "tscy", "tshcy", "tstrok"],
   w: ["twixt", "twoheadleftarrow", "twoheadrightarrow"]
 };
-var U = {
+var U$1 = {
   a: ["Uacute", "Uarr", "Uarrocir"],
   b: ["Ubrcy", "Ubreve"],
   c: ["Ucirc", "Ucy"],
@@ -4940,7 +4940,7 @@ var U = {
   t: ["Utilde"],
   u: ["Uuml"]
 };
-var u = {
+var u$3 = {
   a: ["uacute", "uarr"],
   A: ["uArr"],
   b: ["ubrcy", "ubreve"],
@@ -4960,7 +4960,7 @@ var u = {
   u: ["uuarr", "uuml"],
   w: ["uwangle"]
 };
-var v = {
+var v$3 = {
   a: ["vangrt", "varepsilon", "varkappa", "varnothing", "varphi", "varpi", "varpropto", "varr", "varrho", "varsigma", "varsubsetneq", "varsubsetneqq", "varsupsetneq", "varsupsetneqq", "vartheta", "vartriangleleft", "vartriangleright"],
   A: ["vArr"],
   B: ["vBar", "vBarv"],
@@ -4977,7 +4977,7 @@ var v = {
   s: ["vscr", "vsubnE", "vsubne", "vsupnE", "vsupne"],
   z: ["vzigzag"]
 };
-var V = {
+var V$1 = {
   b: ["Vbar"],
   c: ["Vcy"],
   D: ["VDash"],
@@ -4995,7 +4995,7 @@ var W = {
   o: ["Wopf"],
   s: ["Wscr"]
 };
-var w = {
+var w$3 = {
   c: ["wcirc"],
   e: ["wedbar", "wedge", "wedgeq", "weierp"],
   f: ["wfr"],
@@ -5004,7 +5004,7 @@ var w = {
   r: ["wr", "wreath"],
   s: ["wscr"]
 };
-var x = {
+var x$3 = {
   c: ["xcap", "xcirc", "xcup"],
   d: ["xdtri"],
   f: ["xfr"],
@@ -5026,7 +5026,7 @@ var X = {
   o: ["Xopf"],
   s: ["Xscr"]
 };
-var Y = {
+var Y$1 = {
   a: ["Yacute"],
   A: ["YAcy"],
   c: ["Ycirc", "Ycy"],
@@ -5037,7 +5037,7 @@ var Y = {
   U: ["YUcy"],
   u: ["Yuml"]
 };
-var y = {
+var y$3 = {
   a: ["yacute", "yacy"],
   c: ["ycirc", "ycy"],
   e: ["yen"],
@@ -5057,7 +5057,7 @@ var Z = {
   o: ["Zopf"],
   s: ["Zscr"]
 };
-var z = {
+var z$3 = {
   a: ["zacute"],
   c: ["zcaron", "zcy"],
   d: ["zdot"],
@@ -5071,60 +5071,60 @@ var z = {
 };
 var entStartsWithJson = {
   A: A,
-  a: a,
-  b: b,
+  a: a$3,
+  b: b$3,
   B: B,
   C: C,
-  c: c,
-  D: D,
-  d: d,
-  E: E,
-  e: e,
-  f: f,
+  c: c$3,
+  D: D$1,
+  d: d$3,
+  E: E$1,
+  e: e$3,
+  f: f$3,
   F: F,
-  g: g,
-  G: G,
-  H: H,
-  h: h,
-  I: I,
-  i: i,
+  g: g$3,
+  G: G$1,
+  H: H$1,
+  h: h$3,
+  I: I$1,
+  i: i$3,
   J: J,
-  j: j,
+  j: j$3,
   K: K,
-  k: k,
-  l: l,
-  L: L,
-  m: m,
+  k: k$3,
+  l: l$3,
+  L: L$1,
+  m: m$3,
   M: M,
-  n: n,
-  N: N,
+  n: n$3,
+  N: N$1,
   O: O,
-  o: o,
-  p: p,
-  P: P,
+  o: o$3,
+  p: p$3,
+  P: P$1,
   Q: Q,
-  q: q,
-  r: r,
-  R: R,
-  S: S,
-  s: s,
-  T: T,
-  t: t,
-  U: U,
-  u: u,
-  v: v,
-  V: V,
+  q: q$3,
+  r: r$3,
+  R: R$1,
+  S: S$1,
+  s: s$3,
+  T: T$1,
+  t: t$3,
+  U: U$1,
+  u: u$3,
+  v: v$3,
+  V: V$1,
   W: W,
-  w: w,
-  x: x,
+  w: w$3,
+  x: x$3,
   X: X,
-  Y: Y,
-  y: y,
+  Y: Y$1,
+  y: y$3,
   Z: Z,
-  z: z
+  z: z$3
 };
 
-var e$1 = {
+var e$2 = {
   t: ["Aacute", "aacute", "acute", "Cacute", "cacute", "CloseCurlyDoubleQuote", "CloseCurlyQuote", "DiacriticalAcute", "DiacriticalDoubleAcute", "Eacute", "eacute", "gacute", "Iacute", "iacute", "Lacute", "lacute", "late", "Nacute", "nacute", "Oacute", "oacute", "OpenCurlyDoubleQuote", "OpenCurlyQuote", "Racute", "racute", "Sacute", "sacute", "sdote", "smte", "Uacute", "uacute", "Yacute", "yacute", "Zacute", "zacute"],
   v: ["Abreve", "abreve", "Agrave", "agrave", "Breve", "breve", "DiacriticalGrave", "DownBreve", "Egrave", "egrave", "Gbreve", "gbreve", "grave", "Igrave", "igrave", "Ograve", "ograve", "Ubreve", "ubreve", "Ugrave", "ugrave"],
   p: ["andslope", "ape", "bumpe", "csupe", "nbumpe", "nsqsupe", "nsupe", "orslope", "sqsupe", "supe"],
@@ -5145,7 +5145,7 @@ var e$1 = {
   u: ["nprcue", "nsccue", "prcue", "sccue"],
   R: ["Re"]
 };
-var c$1 = {
+var c$2 = {
   a: ["ac", "angmsdac", "dblac", "Odblac", "odblac", "Udblac", "udblac"],
   r: ["Acirc", "acirc", "bigcirc", "Ccirc", "ccirc", "circ", "circledcirc", "Ecirc", "ecirc", "eqcirc", "Gcirc", "gcirc", "Hcirc", "hcirc", "Icirc", "icirc", "Jcirc", "jcirc", "nrarrc", "Ocirc", "ocirc", "rarrc", "Scirc", "scirc", "Ucirc", "ucirc", "Wcirc", "wcirc", "xcirc", "Ycirc", "ycirc"],
   s: ["cuesc", "nsc", "sc"],
@@ -5155,7 +5155,7 @@ var c$1 = {
   v: ["notinvc", "notnivc"],
   S: ["Sc"]
 };
-var d$1 = {
+var d$2 = {
   c: ["acd"],
   n: ["And", "and", "andand", "capand", "Diamond", "diamond", "pound"],
   d: ["andd", "dd"],
@@ -5171,7 +5171,7 @@ var d$1 = {
   l: ["lbrksld", "odsold", "rbrksld"],
   r: ["lhard", "llhard", "lrhard", "ord", "rhard"]
 };
-var E$1 = {
+var E = {
   c: ["acE", "scE"],
   p: ["apE", "bumpE", "napE", "nsupE", "supE"],
   r: ["cirE", "prE"],
@@ -5181,13 +5181,13 @@ var E$1 = {
   b: ["nsubE", "subE"],
   D: ["TRADE"]
 };
-var y$1 = {
+var y$2 = {
   c: ["Acy", "acy", "Bcy", "bcy", "CHcy", "chcy", "Dcy", "dcy", "DJcy", "djcy", "DScy", "dscy", "DZcy", "dzcy", "Ecy", "ecy", "Fcy", "fcy", "Gcy", "gcy", "GJcy", "gjcy", "HARDcy", "hardcy", "Icy", "icy", "IEcy", "iecy", "IOcy", "iocy", "Iukcy", "iukcy", "Jcy", "jcy", "Jsercy", "jsercy", "Jukcy", "jukcy", "Kcy", "kcy", "KHcy", "khcy", "KJcy", "kjcy", "Lcy", "lcy", "LJcy", "ljcy", "Mcy", "mcy", "Ncy", "ncy", "NJcy", "njcy", "Ocy", "ocy", "Pcy", "pcy", "Rcy", "rcy", "Scy", "scy", "SHCHcy", "shchcy", "SHcy", "shcy", "SOFTcy", "softcy", "Tcy", "tcy", "TScy", "tscy", "TSHcy", "tshcy", "Ubrcy", "ubrcy", "Ucy", "ucy", "Vcy", "vcy", "YAcy", "yacy", "Ycy", "ycy", "YIcy", "yicy", "YUcy", "yucy", "Zcy", "zcy", "ZHcy", "zhcy"],
   p: ["copy"],
   t: ["cylcty", "empty"],
   h: ["shy"]
 };
-var g$1 = {
+var g$2 = {
   i: ["AElig", "aelig", "ffilig", "fflig", "ffllig", "filig", "fjlig", "fllig", "IJlig", "ijlig", "OElig", "oelig", "szlig"],
   l: ["amalg", "lg", "ntlg"],
   n: ["ang", "Aring", "aring", "backcong", "bcong", "cong", "eng", "Lang", "lang", "LeftCeiling", "loang", "nang", "ncong", "Rang", "rang", "RightCeiling", "ring", "roang", "sung", "Uring", "uring", "varnothing"],
@@ -5199,7 +5199,7 @@ var g$1 = {
   s: ["lesg"],
   m: ["lsimg", "simg"]
 };
-var f$1 = {
+var f$2 = {
   a: ["af", "angmsdaf", "sigmaf"],
   p: ["Aopf", "aopf", "Bopf", "bopf", "Copf", "copf", "Dopf", "dopf", "Eopf", "eopf", "Fopf", "fopf", "Gopf", "gopf", "Hopf", "hopf", "Iopf", "iopf", "Jopf", "jopf", "Kopf", "kopf", "Lopf", "lopf", "Mopf", "mopf", "Nopf", "nopf", "Oopf", "oopf", "Popf", "popf", "Qopf", "qopf", "Ropf", "ropf", "Sopf", "sopf", "Topf", "topf", "Uopf", "uopf", "Vopf", "vopf", "Wopf", "wopf", "Xopf", "xopf", "Yopf", "yopf", "Zopf", "zopf"],
   i: ["dtrif", "ltrif", "rtrif", "utrif"],
@@ -5211,7 +5211,7 @@ var f$1 = {
   d: ["ordf"],
   u: ["squf"]
 };
-var r$1 = {
+var r$2 = {
   f: ["Afr", "afr", "Bfr", "bfr", "Cfr", "cfr", "Dfr", "dfr", "Efr", "efr", "Ffr", "ffr", "Gfr", "gfr", "Hfr", "hfr", "Ifr", "ifr", "Jfr", "jfr", "Kfr", "kfr", "Lfr", "lfr", "Mfr", "mfr", "Nfr", "nfr", "Ofr", "ofr", "Pfr", "pfr", "Qfr", "qfr", "Rfr", "rfr", "Sfr", "sfr", "Tfr", "tfr", "Ufr", "ufr", "Vfr", "vfr", "Wfr", "wfr", "Xfr", "xfr", "Yfr", "yfr", "Zfr", "zfr"],
   c: ["Amacr", "amacr", "Ascr", "ascr", "Bscr", "bscr", "Cscr", "cscr", "Dscr", "dscr", "Emacr", "emacr", "Escr", "escr", "Fscr", "fscr", "Gscr", "gscr", "Hscr", "hscr", "Imacr", "imacr", "Iscr", "iscr", "Jscr", "jscr", "Kscr", "kscr", "Lscr", "lscr", "macr", "Mscr", "mscr", "Nscr", "nscr", "Omacr", "omacr", "Oscr", "oscr", "Pscr", "pscr", "Qscr", "qscr", "Rscr", "rscr", "Sscr", "sscr", "Tscr", "tscr", "Umacr", "umacr", "Uscr", "uscr", "Vscr", "vscr", "Wscr", "wscr", "Xscr", "xscr", "Yscr", "yscr", "Zscr", "zscr"],
   r: ["angzarr", "crarr", "cudarrr", "cularr", "curarr", "Darr", "dArr", "darr", "ddarr", "dharr", "duarr", "dzigrarr", "erarr", "gtrarr", "hArr", "harr", "hoarr", "lAarr", "Larr", "lArr", "larr", "lBarr", "lbarr", "llarr", "loarr", "lrarr", "ltlarr", "neArr", "nearr", "nhArr", "nharr", "nlArr", "nlarr", "nrArr", "nrarr", "nvHarr", "nvlArr", "nvrArr", "nwArr", "nwarr", "olarr", "orarr", "rAarr", "Rarr", "rArr", "rarr", "RBarr", "rBarr", "rbarr", "rlarr", "roarr", "rrarr", "seArr", "searr", "simrarr", "slarr", "srarr", "subrarr", "suplarr", "swArr", "swarr", "Uarr", "uArr", "uarr", "udarr", "uharr", "uuarr", "vArr", "varr", "xhArr", "xharr", "xlArr", "xlarr", "xrArr", "xrarr", "zigrarr"],
@@ -5232,7 +5232,7 @@ var r$1 = {
   P: ["Pr"],
   w: ["wr"]
 };
-var m$1 = {
+var m$2 = {
   y: ["alefsym", "thetasym"],
   i: ["backsim", "bsim", "eqsim", "Esim", "esim", "gnsim", "gsim", "gtrsim", "larrsim", "lesssim", "lnsim", "lsim", "nesim", "ngsim", "nlsim", "nsim", "nvsim", "parsim", "plussim", "precnsim", "precsim", "prnsim", "prsim", "rarrsim", "scnsim", "scsim", "sim", "subsim", "succnsim", "succsim", "supsim", "thicksim", "thksim"],
   o: ["bottom"],
@@ -5246,7 +5246,7 @@ var m$1 = {
   p: ["pm"],
   l: ["rlm"]
 };
-var h$1 = {
+var h$2 = {
   p: ["aleph", "angsph"],
   a: ["angmsdah"],
   s: ["Backslash", "circleddash", "dash", "hslash", "ldsh", "Lsh", "lsh", "mdash", "ndash", "nVDash", "nVdash", "nvDash", "nvdash", "odash", "Oslash", "oslash", "rdsh", "Rsh", "rsh", "VDash", "Vdash", "vDash", "vdash", "Vvdash"],
@@ -5257,7 +5257,7 @@ var h$1 = {
   k: ["planckh"],
   i: ["upsih"]
 };
-var a$1 = {
+var a$2 = {
   h: ["Alpha", "alpha"],
   a: ["angmsdaa"],
   t: ["Beta", "beta", "Delta", "delta", "Eta", "eta", "iiota", "Iota", "iota", "Theta", "theta", "vartheta", "Zeta", "zeta"],
@@ -5272,10 +5272,10 @@ var a$1 = {
   e: ["toea"],
   s: ["tosa"]
 };
-var P$1 = {
+var P = {
   M: ["AMP"]
 };
-var p$1 = {
+var p$2 = {
   m: ["amp", "asymp", "bump", "comp", "HumpDownHump", "mp", "nbump", "NotHumpDownHump"],
   a: ["ap", "bigcap", "Cap", "cap", "capcap", "cupbrcap", "CupCap", "cupcap", "gap", "gnap", "lap", "lnap", "Map", "map", "multimap", "mumap", "nap", "ncap", "NotCupCap", "nvap", "prap", "prnap", "rarrap", "scap", "scnap", "sqcap", "thkap", "xcap", "xmap"],
   u: ["bigcup", "bigsqcup", "bigtriangleup", "capbrcup", "capcup", "csup", "Cup", "cup", "cupcup", "leftharpoonup", "mapstoup", "ncup", "nsup", "rightharpoonup", "sqcup", "sqsup", "subsup", "Sup", "sup", "supsup", "vnsup", "xcup", "xsqcup"],
@@ -5288,7 +5288,7 @@ var p$1 = {
   h: ["smashp"],
   w: ["wp"]
 };
-var v$1 = {
+var v$2 = {
   d: ["andv"],
   r: ["Barv", "orv", "vBarv"],
   y: ["bemptyv", "cemptyv", "demptyv", "emptyv", "laemptyv", "raemptyv"],
@@ -5302,7 +5302,7 @@ var v$1 = {
   t: ["nGtv", "nLtv"],
   o: ["rhov"]
 };
-var b$1 = {
+var b$2 = {
   a: ["angmsdab", "Tab"],
   v: ["angrtvb", "notinvb", "notnivb"],
   l: ["bsolb", "solb"],
@@ -5312,7 +5312,7 @@ var b$1 = {
   s: ["minusb", "plusb", "timesb", "trisb"],
   t: ["sdotb"]
 };
-var t$1 = {
+var t$2 = {
   r: ["angrt", "imagpart", "npart", "part", "realpart", "Sqrt", "vangrt", "Vert", "vert"],
   s: ["angst", "ast", "circledast", "equest", "exist", "gtquest", "iquest", "lmoust", "lowast", "ltquest", "midast", "nexist", "oast", "quest", "rmoust"],
   n: ["awconint", "awint", "Cconint", "cent", "cirfnint", "complement", "Congruent", "Conint", "conint", "cwconint", "cwint", "Element", "fpartint", "geqslant", "iiiint", "iiint", "Int", "int", "leqslant", "ngeqslant", "nleqslant", "NotCongruent", "NotElement", "NotReverseElement", "npolint", "oint", "percnt", "pointint", "qint", "quatint", "ReverseElement", "rppolint", "scpolint", "tint"],
@@ -5330,7 +5330,7 @@ var t$1 = {
   x: ["sext", "twixt"],
   m: ["smt"]
 };
-var n$1 = {
+var n$2 = {
   o: ["Aogon", "aogon", "ApplyFunction", "backepsilon", "caron", "Ccaron", "ccaron", "Colon", "colon", "Dcaron", "dcaron", "Ecaron", "ecaron", "ecolon", "Eogon", "eogon", "Epsilon", "epsilon", "eqcolon", "expectation", "hercon", "Intersection", "Iogon", "iogon", "Lcaron", "lcaron", "Ncaron", "ncaron", "ogon", "Omicron", "omicron", "Proportion", "Rcaron", "rcaron", "Scaron", "scaron", "SquareIntersection", "SquareUnion", "straightepsilon", "Tcaron", "tcaron", "Union", "Uogon", "uogon", "Upsilon", "upsilon", "varepsilon", "Zcaron", "zcaron"],
   g: ["Assign"],
   e: ["between", "curren", "hyphen", "kgreen", "yen"],
@@ -5341,7 +5341,7 @@ var n$1 = {
   a: ["lagran"],
   m: ["plusmn", "setmn", "ssetmn"]
 };
-var s$1 = {
+var s$2 = {
   o: ["apos", "mstpos", "napos"],
   u: ["becaus", "bigoplus", "biguplus", "boxminus", "boxplus", "CircleMinus", "CirclePlus", "dotminus", "dotplus", "eplus", "loplus", "minus", "MinusPlus", "mnplus", "ominus", "oplus", "plus", "PlusMinus", "roplus", "setminus", "simplus", "smallsetminus", "subplus", "supplus", "triminus", "triplus", "UnionPlus", "uplus", "xoplus", "xuplus"],
   i: ["Bernoullis", "nis", "OverParenthesis", "UnderParenthesis", "xnis"],
@@ -5361,16 +5361,16 @@ var s$1 = {
   d: ["NotSucceeds", "Succeeds"],
   a: ["otimesas"]
 };
-var x$1 = {
+var x$2 = {
   o: ["approx", "boxbox", "gnapprox", "gtrapprox", "lessapprox", "lnapprox", "napprox", "precapprox", "precnapprox", "succapprox", "succnapprox", "thickapprox"],
   n: ["divonx"],
   r: ["rx"]
 };
-var q$1 = {
+var q$2 = {
   e: ["approxeq", "asympeq", "backsimeq", "Bumpeq", "bumpeq", "circeq", "coloneq", "ddotseq", "doteq", "fallingdotseq", "geq", "gneq", "leq", "lneq", "ngeq", "nleq", "npreceq", "nsimeq", "nsubseteq", "nsucceq", "nsupseteq", "ntrianglelefteq", "ntrianglerighteq", "preccurlyeq", "preceq", "questeq", "risingdotseq", "simeq", "sqsubseteq", "sqsupseteq", "subseteq", "subsetneq", "succcurlyeq", "succeq", "supseteq", "supsetneq", "trianglelefteq", "triangleq", "trianglerighteq", "varsubsetneq", "varsupsetneq", "veeeq", "wedgeq"],
   q: ["geqq", "gneqq", "gvertneqq", "leqq", "lneqq", "lvertneqq", "ngeqq", "nleqq", "nsubseteqq", "nsupseteqq", "precneqq", "subseteqq", "subsetneqq", "succneqq", "supseteqq", "supsetneqq", "varsubsetneqq", "varsupsetneqq"]
 };
-var l$1 = {
+var l$2 = {
   m: ["Auml", "auml", "Euml", "euml", "gsiml", "Iuml", "iuml", "Ouml", "ouml", "siml", "uml", "Uuml", "uuml", "Yuml", "yuml"],
   D: ["boxDl"],
   d: ["boxdl"],
@@ -5393,7 +5393,7 @@ var l$1 = {
   L: ["Ll", "nLl"],
   h: ["Vdashl"]
 };
-var k$1 = {
+var k$2 = {
   r: ["bbrk", "bbrktbrk", "checkmark", "fork", "lbbrk", "lobrk", "pitchfork", "rbbrk", "robrk", "tbrk", "topfork"],
   n: ["blank", "pertenk"],
   c: ["block", "check", "lbrack", "planck", "rbrack"],
@@ -5403,7 +5403,7 @@ var k$1 = {
   l: ["lhblk", "uhblk"],
   a: ["NoBreak"]
 };
-var o$1 = {
+var o$2 = {
   u: ["bdquo", "laquo", "ldquo", "lsaquo", "lsquo", "raquo", "rdquo", "rsaquo", "rsquo", "sbquo"],
   r: ["euro", "micro", "numero"],
   t: ["gesdoto", "lesdoto", "longmapsto", "mapsto", "propto", "varpropto"],
@@ -5412,7 +5412,7 @@ var o$1 = {
   w: ["plustwo"],
   i: ["ratio"]
 };
-var i$1 = {
+var i$2 = {
   s: ["bepsi", "epsi", "Psi", "psi", "Upsi", "upsi"],
   m: ["bsemi", "semi"],
   h: ["Chi", "chi", "Phi", "phi", "straightphi", "varphi"],
@@ -5424,7 +5424,7 @@ var i$1 = {
   X: ["Xi"],
   x: ["xi"]
 };
-var u$1 = {
+var u$2 = {
   o: ["bernou"],
   H: ["boxHu"],
   h: ["boxhu"],
@@ -5438,11 +5438,11 @@ var u$1 = {
   q: ["squ"],
   a: ["Tau", "tau"]
 };
-var w$1 = {
+var w$2 = {
   o: ["bkarow", "dbkarow", "DoubleDownArrow", "DoubleLeftArrow", "DoubleLeftRightArrow", "DoubleLongLeftArrow", "DoubleLongLeftRightArrow", "DoubleLongRightArrow", "DoubleRightArrow", "DoubleUpArrow", "DoubleUpDownArrow", "DownArrow", "Downarrow", "downarrow", "DownArrowUpArrow", "DownTeeArrow", "drbkarow", "hksearow", "hkswarow", "hookleftarrow", "hookrightarrow", "LeftArrow", "Leftarrow", "leftarrow", "LeftArrowRightArrow", "LeftRightArrow", "Leftrightarrow", "leftrightarrow", "leftrightsquigarrow", "LeftTeeArrow", "Lleftarrow", "LongLeftArrow", "Longleftarrow", "longleftarrow", "LongLeftRightArrow", "Longleftrightarrow", "longleftrightarrow", "LongRightArrow", "Longrightarrow", "longrightarrow", "LowerLeftArrow", "LowerRightArrow", "nearrow", "nLeftarrow", "nleftarrow", "nLeftrightarrow", "nleftrightarrow", "nRightarrow", "nrightarrow", "nwarrow", "RightArrow", "Rightarrow", "rightarrow", "RightArrowLeftArrow", "rightsquigarrow", "RightTeeArrow", "Rrightarrow", "searrow", "ShortDownArrow", "ShortLeftArrow", "ShortRightArrow", "ShortUpArrow", "swarrow", "twoheadleftarrow", "twoheadrightarrow", "UpArrow", "Uparrow", "uparrow", "UpArrowDownArrow", "UpDownArrow", "Updownarrow", "updownarrow", "UpperLeftArrow", "UpperRightArrow", "UpTeeArrow"],
   r: ["harrw", "nrarrw", "rarrw"]
 };
-var L$1 = {
+var L = {
   D: ["boxDL"],
   d: ["boxdL"],
   U: ["boxUL"],
@@ -5450,7 +5450,7 @@ var L$1 = {
   V: ["boxVL"],
   v: ["boxvL"]
 };
-var R$1 = {
+var R = {
   D: ["boxDR"],
   d: ["boxdR", "circledR"],
   U: ["boxUR"],
@@ -5458,53 +5458,53 @@ var R$1 = {
   V: ["boxVR"],
   v: ["boxvR"]
 };
-var H$1 = {
+var H = {
   x: ["boxH"],
   V: ["boxVH"],
   v: ["boxvH"],
   T: ["ETH"]
 };
-var D$1 = {
+var D = {
   H: ["boxHD"],
   h: ["boxhD"],
   l: ["CapitalDifferentialD", "DifferentialD", "PartialD"],
   D: ["DD", "equivDD"]
 };
-var U$1 = {
+var U = {
   H: ["boxHU"],
   h: ["boxhU"]
 };
-var V$1 = {
+var V = {
   x: ["boxV"]
 };
-var S$1 = {
+var S = {
   d: ["circledS"],
   o: ["oS"]
 };
-var Y$1 = {
+var Y = {
   P: ["COPY"]
 };
-var G$1 = {
+var G = {
   N: ["ENG"],
   E: ["REG"]
 };
-var j$1 = {
+var j$2 = {
   l: ["glj"],
   w: ["zwj"],
   n: ["zwnj"]
 };
-var T$1 = {
+var T = {
   G: ["GT"],
   L: ["LT"],
   O: ["QUOT"]
 };
-var I$1 = {
+var I = {
   y: ["ImaginaryI"]
 };
-var z$1 = {
+var z$2 = {
   o: ["loz"]
 };
-var N$1 = {
+var N = {
   R: ["THORN"]
 };
 var entEndsWithJson = {
@@ -5541,49 +5541,49 @@ var entEndsWithJson = {
     "5": ["frac58"],
     "7": ["frac78"]
   },
-  e: e$1,
-  c: c$1,
-  d: d$1,
-  E: E$1,
-  y: y$1,
-  g: g$1,
-  f: f$1,
-  r: r$1,
-  m: m$1,
-  h: h$1,
-  a: a$1,
-  P: P$1,
-  p: p$1,
-  v: v$1,
-  b: b$1,
-  t: t$1,
-  n: n$1,
-  s: s$1,
-  x: x$1,
-  q: q$1,
-  l: l$1,
-  k: k$1,
-  o: o$1,
-  i: i$1,
-  u: u$1,
-  w: w$1,
-  L: L$1,
-  R: R$1,
-  H: H$1,
-  D: D$1,
-  U: U$1,
-  V: V$1,
-  S: S$1,
-  Y: Y$1,
-  G: G$1,
-  j: j$1,
-  T: T$1,
-  I: I$1,
-  z: z$1,
-  N: N$1
+  e: e$2,
+  c: c$2,
+  d: d$2,
+  E: E,
+  y: y$2,
+  g: g$2,
+  f: f$2,
+  r: r$2,
+  m: m$2,
+  h: h$2,
+  a: a$2,
+  P: P,
+  p: p$2,
+  v: v$2,
+  b: b$2,
+  t: t$2,
+  n: n$2,
+  s: s$2,
+  x: x$2,
+  q: q$2,
+  l: l$2,
+  k: k$2,
+  o: o$2,
+  i: i$2,
+  u: u$2,
+  w: w$2,
+  L: L,
+  R: R,
+  H: H,
+  D: D,
+  U: U,
+  V: V,
+  S: S,
+  Y: Y,
+  G: G,
+  j: j$2,
+  T: T,
+  I: I,
+  z: z$2,
+  N: N
 };
 
-var a$2 = {
+var a$1 = {
   a: ["aacute"],
   b: ["abreve"],
   c: ["ac", "acd", "ace", "acirc", "acute", "acy"],
@@ -5601,7 +5601,7 @@ var a$2 = {
   u: ["auml"],
   w: ["awconint", "awint"]
 };
-var b$2 = {
+var b$1 = {
   a: ["backcong", "backepsilon", "backprime", "backsim", "backsimeq", "backslash", "barv", "barvee", "barwed", "barwedge"],
   b: ["bbrk", "bbrktbrk"],
   c: ["bcong", "bcy"],
@@ -5618,7 +5618,7 @@ var b$2 = {
   s: ["bscr", "bsemi", "bsim", "bsime", "bsol", "bsolb", "bsolhsub"],
   u: ["bull", "bullet", "bump", "bumpe", "bumpeq"]
 };
-var c$2 = {
+var c$1 = {
   a: ["cacute", "cap", "capand", "capbrcup", "capcap", "capcup", "capdot", "capitaldifferentiald", "caps", "caret", "caron", "cayleys"],
   c: ["ccaps", "ccaron", "ccedil", "ccirc", "cconint", "ccups", "ccupssm"],
   d: ["cdot"],
@@ -5635,7 +5635,7 @@ var c$2 = {
   w: ["cwconint", "cwint"],
   y: ["cylcty"]
 };
-var d$2 = {
+var d$1 = {
   a: ["dagger", "daleth", "darr", "dash", "dashv"],
   b: ["dbkarow", "dblac"],
   c: ["dcaron", "dcy"],
@@ -5654,7 +5654,7 @@ var d$2 = {
   w: ["dwangle"],
   z: ["dzcy", "dzigrarr"]
 };
-var e$2 = {
+var e$1 = {
   a: ["eacute", "easter"],
   c: ["ecaron", "ecir", "ecirc", "ecolon", "ecy"],
   d: ["eddot", "edot"],
@@ -5673,7 +5673,7 @@ var e$2 = {
   u: ["euml", "euro"],
   x: ["excl", "exist", "exists", "expectation", "exponentiale"]
 };
-var f$2 = {
+var f$1 = {
   a: ["fallingdotseq"],
   c: ["fcy"],
   e: ["female"],
@@ -5687,7 +5687,7 @@ var f$2 = {
   r: ["frac12", "frac13", "frac14", "frac15", "frac16", "frac18", "frac23", "frac25", "frac34", "frac35", "frac38", "frac45", "frac56", "frac58", "frac78", "frasl", "frown"],
   s: ["fscr"]
 };
-var g$2 = {
+var g$1 = {
   a: ["gacute", "gamma", "gammad", "gap"],
   b: ["gbreve"],
   c: ["gcedil", "gcirc", "gcy"],
@@ -5705,7 +5705,7 @@ var g$2 = {
   t: ["gt", "gtcc", "gtcir", "gtdot", "gtlpar", "gtquest", "gtrapprox", "gtrarr", "gtrdot", "gtreqless", "gtreqqless", "gtrless", "gtrsim"],
   v: ["gvertneqq", "gvne"]
 };
-var h$2 = {
+var h$1 = {
   a: ["hacek", "hairsp", "half", "hamilt", "hardcy", "harr", "harrcir", "harrw", "hat"],
   b: ["hbar"],
   c: ["hcirc"],
@@ -5718,7 +5718,7 @@ var h$2 = {
   u: ["humpdownhump", "humpequal"],
   y: ["hybull", "hyphen"]
 };
-var i$2 = {
+var i$1 = {
   a: ["iacute"],
   c: ["ic", "icirc", "icy"],
   d: ["idot"],
@@ -5736,7 +5736,7 @@ var i$2 = {
   t: ["it", "itilde"],
   u: ["iukcy", "iuml"]
 };
-var j$2 = {
+var j$1 = {
   c: ["jcirc", "jcy"],
   f: ["jfr"],
   m: ["jmath"],
@@ -5744,7 +5744,7 @@ var j$2 = {
   s: ["jscr", "jsercy"],
   u: ["jukcy"]
 };
-var k$2 = {
+var k$1 = {
   a: ["kappa", "kappav"],
   c: ["kcedil", "kcy"],
   f: ["kfr"],
@@ -5754,7 +5754,7 @@ var k$2 = {
   o: ["kopf"],
   s: ["kscr"]
 };
-var l$2 = {
+var l$1 = {
   a: ["laarr", "lacute", "laemptyv", "lagran", "lambda", "lang", "langd", "langle", "lap", "laplacetrf", "laquo", "larr", "larrb", "larrbfs", "larrfs", "larrhk", "larrlp", "larrpl", "larrsim", "larrtl", "lat", "latail", "late", "lates"],
   b: ["lbarr", "lbbrk", "lbrace", "lbrack", "lbrke", "lbrksld", "lbrkslu"],
   c: ["lcaron", "lcedil", "lceil", "lcub", "lcy"],
@@ -5775,7 +5775,7 @@ var l$2 = {
   u: ["lurdshar", "luruhar"],
   v: ["lvertneqq", "lvne"]
 };
-var m$2 = {
+var m$1 = {
   a: ["macr", "male", "malt", "maltese", "map", "mapsto", "mapstodown", "mapstoleft", "mapstoup", "marker"],
   c: ["mcomma", "mcy"],
   d: ["mdash", "mddot"],
@@ -5790,7 +5790,7 @@ var m$2 = {
   s: ["mscr", "mstpos"],
   u: ["mu", "multimap", "mumap"]
 };
-var n$2 = {
+var n$1 = {
   a: ["nabla", "nacute", "nang", "nap", "nape", "napid", "napos", "napprox", "natur", "natural", "naturals"],
   b: ["nbsp", "nbump", "nbumpe"],
   c: ["ncap", "ncaron", "ncedil", "ncong", "ncongdot", "ncup", "ncy"],
@@ -5812,7 +5812,7 @@ var n$2 = {
   v: ["nvap", "nvdash", "nvge", "nvgt", "nvharr", "nvinfin", "nvlarr", "nvle", "nvlt", "nvltrie", "nvrarr", "nvrtrie", "nvsim"],
   w: ["nwarhk", "nwarr", "nwarrow", "nwnear"]
 };
-var o$2 = {
+var o$1 = {
   a: ["oacute", "oast"],
   c: ["ocir", "ocirc", "ocy"],
   d: ["odash", "odblac", "odiv", "odot", "odsold"],
@@ -5831,7 +5831,7 @@ var o$2 = {
   u: ["ouml"],
   v: ["ovbar", "overbar", "overbrace", "overbracket", "overparenthesis"]
 };
-var p$2 = {
+var p$1 = {
   a: ["par", "para", "parallel", "parsim", "parsl", "part", "partiald"],
   c: ["pcy"],
   e: ["percnt", "period", "permil", "perp", "pertenk"],
@@ -5845,7 +5845,7 @@ var p$2 = {
   s: ["pscr", "psi"],
   u: ["puncsp"]
 };
-var q$2 = {
+var q$1 = {
   f: ["qfr"],
   i: ["qint"],
   o: ["qopf"],
@@ -5853,7 +5853,7 @@ var q$2 = {
   s: ["qscr"],
   u: ["quaternions", "quatint", "quest", "questeq", "quot"]
 };
-var r$2 = {
+var r$1 = {
   a: ["raarr", "race", "racute", "radic", "raemptyv", "rang", "rangd", "range", "rangle", "raquo", "rarr", "rarrap", "rarrb", "rarrbfs", "rarrc", "rarrfs", "rarrhk", "rarrlp", "rarrpl", "rarrsim", "rarrtl", "rarrw", "ratail", "ratio", "rationals"],
   b: ["rbarr", "rbbrk", "rbrace", "rbrack", "rbrke", "rbrksld", "rbrkslu"],
   c: ["rcaron", "rcedil", "rceil", "rcub", "rcy"],
@@ -5873,7 +5873,7 @@ var r$2 = {
   u: ["ruledelayed", "ruluhar"],
   x: ["rx"]
 };
-var s$2 = {
+var s$1 = {
   a: ["sacute"],
   b: ["sbquo"],
   c: ["sc", "scap", "scaron", "sccue", "sce", "scedil", "scirc", "scnap", "scne", "scnsim", "scpolint", "scsim", "scy"],
@@ -5894,7 +5894,7 @@ var s$2 = {
   w: ["swarhk", "swarr", "swarrow", "swnwar"],
   z: ["szlig"]
 };
-var t$2 = {
+var t$1 = {
   a: ["tab", "target", "tau"],
   b: ["tbrk"],
   c: ["tcaron", "tcedil", "tcy"],
@@ -5909,7 +5909,7 @@ var t$2 = {
   s: ["tscr", "tscy", "tshcy", "tstrok"],
   w: ["twixt", "twoheadleftarrow", "twoheadrightarrow"]
 };
-var u$2 = {
+var u$1 = {
   a: ["uacute", "uarr", "uarrocir"],
   b: ["ubrcy", "ubreve"],
   c: ["ucirc", "ucy"],
@@ -5928,7 +5928,7 @@ var u$2 = {
   u: ["uuarr", "uuml"],
   w: ["uwangle"]
 };
-var v$2 = {
+var v$1 = {
   a: ["vangrt", "varepsilon", "varkappa", "varnothing", "varphi", "varpi", "varpropto", "varr", "varrho", "varsigma", "varsubsetneq", "varsubsetneqq", "varsupsetneq", "varsupsetneqq", "vartheta", "vartriangleleft", "vartriangleright"],
   b: ["vbar", "vbarv"],
   c: ["vcy"],
@@ -5944,7 +5944,7 @@ var v$2 = {
   v: ["vvdash"],
   z: ["vzigzag"]
 };
-var w$2 = {
+var w$1 = {
   c: ["wcirc"],
   e: ["wedbar", "wedge", "wedgeq", "weierp"],
   f: ["wfr"],
@@ -5953,7 +5953,7 @@ var w$2 = {
   r: ["wr", "wreath"],
   s: ["wscr"]
 };
-var x$2 = {
+var x$1 = {
   c: ["xcap", "xcirc", "xcup"],
   d: ["xdtri"],
   f: ["xfr"],
@@ -5969,7 +5969,7 @@ var x$2 = {
   v: ["xvee"],
   w: ["xwedge"]
 };
-var y$2 = {
+var y$1 = {
   a: ["yacute", "yacy"],
   c: ["ycirc", "ycy"],
   e: ["yen"],
@@ -5979,7 +5979,7 @@ var y$2 = {
   s: ["yscr"],
   u: ["yucy", "yuml"]
 };
-var z$2 = {
+var z$1 = {
   a: ["zacute"],
   c: ["zcaron", "zcy"],
   d: ["zdot"],
@@ -5992,35 +5992,35 @@ var z$2 = {
   w: ["zwj", "zwnj"]
 };
 var entStartsWithCaseInsensitiveJson = {
-  a: a$2,
-  b: b$2,
-  c: c$2,
-  d: d$2,
-  e: e$2,
-  f: f$2,
-  g: g$2,
-  h: h$2,
-  i: i$2,
-  j: j$2,
-  k: k$2,
-  l: l$2,
-  m: m$2,
-  n: n$2,
-  o: o$2,
-  p: p$2,
-  q: q$2,
-  r: r$2,
-  s: s$2,
-  t: t$2,
-  u: u$2,
-  v: v$2,
-  w: w$2,
-  x: x$2,
-  y: y$2,
-  z: z$2
+  a: a$1,
+  b: b$1,
+  c: c$1,
+  d: d$1,
+  e: e$1,
+  f: f$1,
+  g: g$1,
+  h: h$1,
+  i: i$1,
+  j: j$1,
+  k: k$1,
+  l: l$1,
+  m: m$1,
+  n: n$1,
+  o: o$1,
+  p: p$1,
+  q: q$1,
+  r: r$1,
+  s: s$1,
+  t: t$1,
+  u: u$1,
+  v: v$1,
+  w: w$1,
+  x: x$1,
+  y: y$1,
+  z: z$1
 };
 
-var e$3 = {
+var e = {
   t: ["aacute", "acute", "cacute", "closecurlydoublequote", "closecurlyquote", "diacriticalacute", "diacriticaldoubleacute", "eacute", "gacute", "iacute", "lacute", "late", "nacute", "oacute", "opencurlydoublequote", "opencurlyquote", "racute", "sacute", "sdote", "smte", "uacute", "yacute", "zacute"],
   v: ["abreve", "agrave", "breve", "diacriticalgrave", "downbreve", "egrave", "gbreve", "grave", "igrave", "ograve", "ubreve", "ugrave"],
   c: ["ace", "hilbertspace", "lbrace", "mediumspace", "negativemediumspace", "negativethickspace", "negativethinspace", "negativeverythinspace", "nonbreakingspace", "nsce", "overbrace", "race", "rbrace", "sce", "thickspace", "thinspace", "underbrace", "verythinspace", "zerowidthspace"],
@@ -6040,7 +6040,7 @@ var e$3 = {
   h: ["lmoustache", "rmoustache"],
   u: ["nprcue", "nsccue", "prcue", "sccue"]
 };
-var c$3 = {
+var c = {
   a: ["ac", "angmsdac", "dblac", "odblac", "udblac"],
   r: ["acirc", "bigcirc", "ccirc", "circ", "circledcirc", "ecirc", "eqcirc", "gcirc", "hcirc", "icirc", "jcirc", "nrarrc", "ocirc", "rarrc", "scirc", "ucirc", "wcirc", "xcirc", "ycirc"],
   s: ["cuesc", "nsc", "sc"],
@@ -6049,7 +6049,7 @@ var c$3 = {
   i: ["ic", "radic"],
   v: ["notinvc", "notnivc"]
 };
-var d$3 = {
+var d = {
   c: ["acd"],
   n: ["and", "andand", "capand", "diamond", "pound"],
   d: ["andd", "dd", "equivdd"],
@@ -6064,13 +6064,13 @@ var d$3 = {
   g: ["langd", "rangd"],
   r: ["lhard", "llhard", "lrhard", "ord", "rhard"]
 };
-var y$3 = {
+var y = {
   c: ["acy", "bcy", "chcy", "dcy", "djcy", "dscy", "dzcy", "ecy", "fcy", "gcy", "gjcy", "hardcy", "icy", "iecy", "iocy", "iukcy", "jcy", "jsercy", "jukcy", "kcy", "khcy", "kjcy", "lcy", "ljcy", "mcy", "ncy", "njcy", "ocy", "pcy", "rcy", "scy", "shchcy", "shcy", "softcy", "tcy", "tscy", "tshcy", "ubrcy", "ucy", "vcy", "yacy", "ycy", "yicy", "yucy", "zcy", "zhcy"],
   p: ["copy"],
   t: ["cylcty", "empty"],
   h: ["shy"]
 };
-var g$3 = {
+var g = {
   i: ["aelig", "ffilig", "fflig", "ffllig", "filig", "fjlig", "fllig", "ijlig", "oelig", "szlig"],
   l: ["amalg", "lg", "ntlg"],
   n: ["ang", "aring", "backcong", "bcong", "cong", "eng", "lang", "leftceiling", "loang", "nang", "ncong", "rang", "rightceiling", "ring", "roang", "sung", "uring", "varnothing"],
@@ -6080,7 +6080,7 @@ var g$3 = {
   s: ["lesg"],
   m: ["lsimg", "simg"]
 };
-var f$3 = {
+var f = {
   a: ["af", "angmsdaf", "sigmaf"],
   p: ["aopf", "bopf", "copf", "dopf", "eopf", "fopf", "gopf", "hopf", "iopf", "jopf", "kopf", "lopf", "mopf", "nopf", "oopf", "popf", "qopf", "ropf", "sopf", "topf", "uopf", "vopf", "wopf", "xopf", "yopf", "zopf"],
   i: ["dtrif", "ltrif", "rtrif", "utrif"],
@@ -6092,7 +6092,7 @@ var f$3 = {
   d: ["ordf"],
   u: ["squf"]
 };
-var r$3 = {
+var r = {
   f: ["afr", "bfr", "cfr", "dfr", "efr", "ffr", "gfr", "hfr", "ifr", "jfr", "kfr", "lfr", "mfr", "nfr", "ofr", "pfr", "qfr", "rfr", "sfr", "tfr", "ufr", "vfr", "wfr", "xfr", "yfr", "zfr"],
   c: ["amacr", "ascr", "bscr", "cscr", "dscr", "emacr", "escr", "fscr", "gscr", "hscr", "imacr", "iscr", "jscr", "kscr", "lscr", "macr", "mscr", "nscr", "omacr", "oscr", "pscr", "qscr", "rscr", "sscr", "tscr", "umacr", "uscr", "vscr", "wscr", "xscr", "yscr", "zscr"],
   r: ["angzarr", "crarr", "cudarrr", "cularr", "curarr", "darr", "ddarr", "dharr", "duarr", "dzigrarr", "erarr", "gtrarr", "harr", "hoarr", "laarr", "larr", "lbarr", "llarr", "loarr", "lrarr", "ltlarr", "nearr", "nharr", "nlarr", "nrarr", "nvharr", "nvlarr", "nvrarr", "nwarr", "olarr", "orarr", "raarr", "rarr", "rbarr", "rlarr", "roarr", "rrarr", "searr", "simrarr", "slarr", "srarr", "subrarr", "suplarr", "swarr", "uarr", "udarr", "uharr", "uuarr", "varr", "xharr", "xlarr", "xrarr", "zigrarr"],
@@ -6108,7 +6108,7 @@ var r$3 = {
   t: ["eqslantgtr", "lesseqgtr", "lesseqqgtr", "lessgtr", "ngtr"],
   w: ["wr"]
 };
-var m$3 = {
+var m = {
   y: ["alefsym", "thetasym"],
   i: ["backsim", "bsim", "eqsim", "esim", "gnsim", "gsim", "gtrsim", "im", "larrsim", "lesssim", "lnsim", "lsim", "nesim", "ngsim", "nlsim", "nsim", "nvsim", "parsim", "plussim", "precnsim", "precsim", "prnsim", "prsim", "rarrsim", "scnsim", "scsim", "sim", "subsim", "succnsim", "succsim", "supsim", "thicksim", "thksim"],
   o: ["bottom"],
@@ -6121,7 +6121,7 @@ var m$3 = {
   p: ["pm"],
   l: ["rlm"]
 };
-var h$3 = {
+var h = {
   p: ["aleph", "angsph"],
   a: ["angmsdah"],
   s: ["backslash", "circleddash", "dash", "hslash", "ldsh", "lsh", "mdash", "ndash", "nvdash", "odash", "oslash", "rdsh", "rsh", "vdash", "vvdash"],
@@ -6131,7 +6131,7 @@ var h$3 = {
   k: ["planckh"],
   i: ["upsih"]
 };
-var a$3 = {
+var a = {
   h: ["alpha"],
   a: ["angmsdaa"],
   t: ["beta", "delta", "eta", "iiota", "iota", "theta", "vartheta", "zeta"],
@@ -6146,7 +6146,7 @@ var a$3 = {
   e: ["toea"],
   s: ["tosa"]
 };
-var p$3 = {
+var p = {
   m: ["amp", "asymp", "bump", "comp", "humpdownhump", "mp", "nbump", "nothumpdownhump"],
   a: ["ap", "bigcap", "cap", "capcap", "cupbrcap", "cupcap", "gap", "gnap", "lap", "lnap", "map", "multimap", "mumap", "nap", "ncap", "notcupcap", "nvap", "prap", "prnap", "rarrap", "scap", "scnap", "sqcap", "thkap", "xcap", "xmap"],
   u: ["bigcup", "bigsqcup", "bigtriangleup", "capbrcup", "capcup", "csup", "cup", "cupcup", "leftharpoonup", "mapstoup", "ncup", "nsup", "rightharpoonup", "sqcup", "sqsup", "subsup", "sup", "supsup", "vnsup", "xcup", "xsqcup"],
@@ -6159,7 +6159,7 @@ var p$3 = {
   h: ["smashp"],
   w: ["wp"]
 };
-var v$3 = {
+var v = {
   d: ["andv"],
   r: ["barv", "orv", "vbarv"],
   y: ["bemptyv", "cemptyv", "demptyv", "emptyv", "laemptyv", "raemptyv"],
@@ -6173,7 +6173,7 @@ var v$3 = {
   t: ["ngtv", "nltv"],
   o: ["rhov"]
 };
-var b$3 = {
+var b = {
   a: ["angmsdab", "tab"],
   v: ["angrtvb", "notinvb", "notnivb"],
   l: ["bsolb", "solb"],
@@ -6183,7 +6183,7 @@ var b$3 = {
   s: ["minusb", "plusb", "timesb", "trisb"],
   t: ["sdotb"]
 };
-var t$3 = {
+var t = {
   r: ["angrt", "imagpart", "npart", "part", "realpart", "sqrt", "vangrt", "vert"],
   s: ["angst", "ast", "circledast", "equest", "exist", "gtquest", "iquest", "lmoust", "lowast", "ltquest", "midast", "nexist", "oast", "quest", "rmoust"],
   n: ["awconint", "awint", "cconint", "cent", "cirfnint", "complement", "congruent", "conint", "cwconint", "cwint", "element", "fpartint", "geqslant", "iiiint", "iiint", "int", "leqslant", "ngeqslant", "nleqslant", "notcongruent", "notelement", "notreverseelement", "npolint", "oint", "percnt", "pointint", "qint", "quatint", "reverseelement", "rppolint", "scpolint", "tint"],
@@ -6199,7 +6199,7 @@ var t$3 = {
   x: ["sext", "twixt"],
   m: ["smt"]
 };
-var n$3 = {
+var n = {
   o: ["aogon", "applyfunction", "backepsilon", "caron", "ccaron", "colon", "dcaron", "ecaron", "ecolon", "eogon", "epsilon", "eqcolon", "expectation", "hercon", "intersection", "iogon", "lcaron", "ncaron", "ogon", "omicron", "proportion", "rcaron", "scaron", "squareintersection", "squareunion", "straightepsilon", "tcaron", "union", "uogon", "upsilon", "varepsilon", "zcaron"],
   g: ["assign"],
   e: ["between", "curren", "hyphen", "kgreen", "yen"],
@@ -6210,7 +6210,7 @@ var n$3 = {
   a: ["lagran"],
   m: ["plusmn", "setmn", "ssetmn"]
 };
-var s$3 = {
+var s = {
   o: ["apos", "mstpos", "napos", "os"],
   u: ["becaus", "bigoplus", "biguplus", "boxminus", "boxplus", "circleminus", "circleplus", "dotminus", "dotplus", "eplus", "loplus", "minus", "minusplus", "mnplus", "ominus", "oplus", "plus", "plusminus", "roplus", "setminus", "simplus", "smallsetminus", "subplus", "supplus", "triminus", "triplus", "unionplus", "uplus", "xoplus", "xuplus"],
   i: ["bernoullis", "nis", "overparenthesis", "underparenthesis", "xnis"],
@@ -6230,16 +6230,16 @@ var s$3 = {
   f: ["larrbfs", "larrfs", "rarrbfs", "rarrfs"],
   a: ["otimesas"]
 };
-var x$3 = {
+var x = {
   o: ["approx", "boxbox", "gnapprox", "gtrapprox", "lessapprox", "lnapprox", "napprox", "precapprox", "precnapprox", "succapprox", "succnapprox", "thickapprox"],
   n: ["divonx"],
   r: ["rx"]
 };
-var q$3 = {
+var q = {
   e: ["approxeq", "asympeq", "backsimeq", "bumpeq", "circeq", "coloneq", "ddotseq", "doteq", "fallingdotseq", "geq", "gneq", "leq", "lneq", "ngeq", "nleq", "npreceq", "nsimeq", "nsubseteq", "nsucceq", "nsupseteq", "ntrianglelefteq", "ntrianglerighteq", "preccurlyeq", "preceq", "questeq", "risingdotseq", "simeq", "sqsubseteq", "sqsupseteq", "subseteq", "subsetneq", "succcurlyeq", "succeq", "supseteq", "supsetneq", "trianglelefteq", "triangleq", "trianglerighteq", "varsubsetneq", "varsupsetneq", "veeeq", "wedgeq"],
   q: ["geqq", "gneqq", "gvertneqq", "leqq", "lneqq", "lvertneqq", "ngeqq", "nleqq", "nsubseteqq", "nsupseteqq", "precneqq", "subseteqq", "subsetneqq", "succneqq", "supseteqq", "supsetneqq", "varsubsetneqq", "varsupsetneqq"]
 };
-var l$3 = {
+var l = {
   m: ["auml", "euml", "gsiml", "iuml", "ouml", "siml", "uml", "uuml", "yuml"],
   d: ["boxdl"],
   u: ["boxul", "lharul", "rharul"],
@@ -6257,7 +6257,7 @@ var l$3 = {
   t: ["larrtl", "rarrtl"],
   h: ["vdashl"]
 };
-var k$3 = {
+var k = {
   r: ["bbrk", "bbrktbrk", "checkmark", "fork", "lbbrk", "lobrk", "pitchfork", "rbbrk", "robrk", "tbrk", "topfork"],
   n: ["blank", "pertenk"],
   c: ["block", "check", "lbrack", "planck", "rbrack"],
@@ -6267,7 +6267,7 @@ var k$3 = {
   l: ["lhblk", "uhblk"],
   a: ["nobreak"]
 };
-var o$3 = {
+var o = {
   u: ["bdquo", "laquo", "ldquo", "lsaquo", "lsquo", "raquo", "rdquo", "rsaquo", "rsquo", "sbquo"],
   r: ["euro", "micro", "numero"],
   t: ["gesdoto", "lesdoto", "longmapsto", "mapsto", "propto", "varpropto"],
@@ -6276,7 +6276,7 @@ var o$3 = {
   w: ["plustwo"],
   i: ["ratio"]
 };
-var i$3 = {
+var i = {
   s: ["bepsi", "epsi", "psi", "upsi"],
   m: ["bsemi", "semi"],
   h: ["chi", "phi", "straightphi", "varphi"],
@@ -6287,7 +6287,7 @@ var i$3 = {
   p: ["pi", "varpi"],
   x: ["xi"]
 };
-var u$3 = {
+var u = {
   o: ["bernou"],
   h: ["boxhu"],
   l: ["lbrkslu", "rbrkslu"],
@@ -6298,16 +6298,16 @@ var u$3 = {
   q: ["squ"],
   a: ["tau"]
 };
-var w$3 = {
+var w = {
   o: ["bkarow", "dbkarow", "doubledownarrow", "doubleleftarrow", "doubleleftrightarrow", "doublelongleftarrow", "doublelongleftrightarrow", "doublelongrightarrow", "doublerightarrow", "doubleuparrow", "doubleupdownarrow", "downarrow", "downarrowuparrow", "downteearrow", "drbkarow", "hksearow", "hkswarow", "hookleftarrow", "hookrightarrow", "leftarrow", "leftarrowrightarrow", "leftrightarrow", "leftrightsquigarrow", "leftteearrow", "lleftarrow", "longleftarrow", "longleftrightarrow", "longrightarrow", "lowerleftarrow", "lowerrightarrow", "nearrow", "nleftarrow", "nleftrightarrow", "nrightarrow", "nwarrow", "rightarrow", "rightarrowleftarrow", "rightsquigarrow", "rightteearrow", "rrightarrow", "searrow", "shortdownarrow", "shortleftarrow", "shortrightarrow", "shortuparrow", "swarrow", "twoheadleftarrow", "twoheadrightarrow", "uparrow", "uparrowdownarrow", "updownarrow", "upperleftarrow", "upperrightarrow", "upteearrow"],
   r: ["harrw", "nrarrw", "rarrw"]
 };
-var j$3 = {
+var j = {
   l: ["glj"],
   w: ["zwj"],
   n: ["zwnj"]
 };
-var z$3 = {
+var z = {
   o: ["loz"]
 };
 var entEndsWithCaseInsensitiveJson = {
@@ -6344,1777 +6344,1777 @@ var entEndsWithCaseInsensitiveJson = {
     "5": ["frac58"],
     "7": ["frac78"]
   },
-  e: e$3,
-  c: c$3,
-  d: d$3,
-  y: y$3,
-  g: g$3,
-  f: f$3,
-  r: r$3,
-  m: m$3,
-  h: h$3,
-  a: a$3,
-  p: p$3,
-  v: v$3,
-  b: b$3,
-  t: t$3,
-  n: n$3,
-  s: s$3,
-  x: x$3,
-  q: q$3,
-  l: l$3,
-  k: k$3,
-  o: o$3,
-  i: i$3,
-  u: u$3,
-  w: w$3,
-  j: j$3,
-  z: z$3
+  e: e,
+  c: c,
+  d: d,
+  y: y,
+  g: g,
+  f: f,
+  r: r,
+  m: m,
+  h: h,
+  a: a,
+  p: p,
+  v: v,
+  b: b,
+  t: t,
+  n: n,
+  s: s,
+  x: x,
+  q: q,
+  l: l,
+  k: k,
+  o: o,
+  i: i,
+  u: u,
+  w: w,
+  j: j,
+  z: z
 };
 
-var ac$1 = {
+var ac = {
   addAmpIfSemiPresent: "edge only",
   addSemiIfAmpPresent: false
 };
-var acute$1 = {
+var acute = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Alpha$1 = {
+var Alpha = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var alpha$1 = {
+var alpha = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var amp$1 = {
+var amp = {
   addAmpIfSemiPresent: "edge only",
   addSemiIfAmpPresent: true
 };
-var And$1 = {
+var And = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: true
 };
-var and$1 = {
+var and = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: true
 };
-var ange$1 = {
+var ange = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: true
 };
-var angle$1 = {
+var angle = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var angst$1 = {
+var angst = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: true
 };
-var ap$1 = {
+var ap = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ape$1 = {
+var ape = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var approx$1 = {
+var approx = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Aring$1 = {
+var Aring = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: true
 };
-var aring$1 = {
+var aring = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: true
 };
-var Ascr$1 = {
+var Ascr = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ascr$1 = {
+var ascr = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Assign$1 = {
+var Assign = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ast$1 = {
+var ast = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var atilde$1 = {
+var atilde = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: true
 };
-var Backslash$1 = {
+var Backslash = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var barwedge$1 = {
+var barwedge = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var becaus$1 = {
+var becaus = {
   addAmpIfSemiPresent: true,
   addSemiIfAmpPresent: "edge only"
 };
-var Because$1 = {
+var Because = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var because$1 = {
+var because = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var bepsi$1 = {
+var bepsi = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Bernoullis$1 = {
+var Bernoullis = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Beta$1 = {
+var Beta = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var beta$1 = {
+var beta = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var beth$1 = {
+var beth = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var between$1 = {
+var between = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var blank$1 = {
+var blank = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var block$1 = {
+var block = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var bot$1 = {
+var bot = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var bottom$1 = {
+var bottom = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var bowtie$1 = {
+var bowtie = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var breve$1 = {
+var breve = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var bull$1 = {
+var bull = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var bullet$1 = {
+var bullet = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var bump$1 = {
+var bump = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var cacute$1 = {
+var cacute = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Cap$1 = {
+var Cap = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var cap$1 = {
+var cap = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var capand$1 = {
+var capand = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var caps$1 = {
+var caps = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var caret$1 = {
+var caret = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var caron$1 = {
+var caron = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var cedil$1 = {
+var cedil = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Cedilla$1 = {
+var Cedilla = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var cent$1 = {
+var cent = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: true
 };
-var check$1 = {
+var check = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var checkmark$1 = {
+var checkmark = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Chi$1 = {
+var Chi = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var chi$1 = {
+var chi = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var cir$1 = {
+var cir = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var circ$1 = {
+var circ = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var clubs$1 = {
+var clubs = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var clubsuit$1 = {
+var clubsuit = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Colon$1 = {
+var Colon = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var colon$1 = {
+var colon = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Colone$1 = {
+var Colone = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var colone$1 = {
+var colone = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var comma$1 = {
+var comma = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var commat$1 = {
+var commat = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var comp$1 = {
+var comp = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var complement$1 = {
+var complement = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var complexes$1 = {
+var complexes = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var cong$1 = {
+var cong = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Congruent$1 = {
+var Congruent = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var conint$1 = {
+var conint = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var copf$1 = {
+var copf = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var coprod$1 = {
+var coprod = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var COPY$1 = {
+var COPY = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var copy$1 = {
+var copy = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Cross$1 = {
+var Cross = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var cross$1 = {
+var cross = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Cup$1 = {
+var Cup = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var cup$1 = {
+var cup = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var cups$1 = {
+var cups = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Dagger$1 = {
+var Dagger = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var dagger$1 = {
+var dagger = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var daleth$1 = {
+var daleth = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var darr$1 = {
+var darr = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var dash$1 = {
+var dash = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var DD$1 = {
+var DD = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var dd$1 = {
+var dd = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var deg$1 = {
+var deg = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Del$1 = {
+var Del = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Delta$1 = {
+var Delta = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var delta$1 = {
+var delta = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var dharr$1 = {
+var dharr = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var diam$1 = {
+var diam = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Diamond$1 = {
+var Diamond = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var diamond$1 = {
+var diamond = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var diams$1 = {
+var diams = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var die$1 = {
+var die = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var digamma$1 = {
+var digamma = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var disin$1 = {
+var disin = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var div$1 = {
+var div = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var divide$1 = {
+var divide = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var dollar$1 = {
+var dollar = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var dopf$1 = {
+var dopf = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Dot$1 = {
+var Dot = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var dot$1 = {
+var dot = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var dsol$1 = {
+var dsol = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var dtri$1 = {
+var dtri = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var easter$1 = {
+var easter = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var ecir$1 = {
+var ecir = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ecolon$1 = {
+var ecolon = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ecy$1 = {
+var ecy = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var edot$1 = {
+var edot = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ee$1 = {
+var ee = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var efr$1 = {
+var efr = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var eg$1 = {
+var eg = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var egrave$1 = {
+var egrave = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var egs$1 = {
+var egs = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var el$1 = {
+var el = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ell$1 = {
+var ell = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var els$1 = {
+var els = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var empty$1 = {
+var empty = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var ENG$1 = {
+var ENG = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var eng$1 = {
+var eng = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var epsi$1 = {
+var epsi = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Epsilon$1 = {
+var Epsilon = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var epsilon$1 = {
+var epsilon = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Equal$1 = {
+var Equal = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var equals$1 = {
+var equals = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var equest$1 = {
+var equest = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Equilibrium$1 = {
+var Equilibrium = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var equiv$1 = {
+var equiv = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var escr$1 = {
+var escr = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var esim$1 = {
+var esim = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Eta$1 = {
+var Eta = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var eta$1 = {
+var eta = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ETH$1 = {
+var ETH = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var eth$1 = {
+var eth = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var euro$1 = {
+var euro = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var excl$1 = {
+var excl = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var exist$1 = {
+var exist = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Exists$1 = {
+var Exists = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var expectation$1 = {
+var expectation = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var female$1 = {
+var female = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var flat$1 = {
+var flat = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var fork$1 = {
+var fork = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var frown$1 = {
+var frown = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Gamma$1 = {
+var Gamma = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var gamma$1 = {
+var gamma = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var gap$1 = {
+var gap = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var gcy$1 = {
+var gcy = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ge$1 = {
+var ge = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var gel$1 = {
+var gel = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var geq$1 = {
+var geq = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ges$1 = {
+var ges = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var gesl$1 = {
+var gesl = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var gg$1 = {
+var gg = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var gl$1 = {
+var gl = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var gla$1 = {
+var gla = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var gne$1 = {
+var gne = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var grave$1 = {
+var grave = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var GT$1 = {
+var GT = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var gt$1 = {
+var gt = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var half$1 = {
+var half = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Hat$1 = {
+var Hat = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var hearts$1 = {
+var hearts = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var hopf$1 = {
+var hopf = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var hyphen$1 = {
+var hyphen = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var ic$1 = {
+var ic = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var icy$1 = {
+var icy = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var iff$1 = {
+var iff = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ii$1 = {
+var ii = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var image$1 = {
+var image = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var imped$1 = {
+var imped = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var int$1 = {
+var int = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var integers$1 = {
+var integers = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var iocy$1 = {
+var iocy = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var iogon$1 = {
+var iogon = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var iota$1 = {
+var iota = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var isin$1 = {
+var isin = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var it$1 = {
+var it = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Kappa$1 = {
+var Kappa = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var kappa$1 = {
+var kappa = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var kopf$1 = {
+var kopf = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Lambda$1 = {
+var Lambda = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var lambda$1 = {
+var lambda = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var lang$1 = {
+var lang = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var lap$1 = {
+var lap = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var lat$1 = {
+var lat = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var late$1 = {
+var late = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var lates$1 = {
+var lates = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var le$1 = {
+var le = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var leg$1 = {
+var leg = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var leq$1 = {
+var leq = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var les$1 = {
+var les = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var lg$1 = {
+var lg = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ll$1 = {
+var ll = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var lne$1 = {
+var lne = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var lozenge$1 = {
+var lozenge = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var lsh$1 = {
+var lsh = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var LT$1 = {
+var LT = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var lt$1 = {
+var lt = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ltimes$1 = {
+var ltimes = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: true
 };
-var male$1 = {
+var male = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var malt$1 = {
+var malt = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var map$1 = {
+var map = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var marker$1 = {
+var marker = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var mid$1 = {
+var mid = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var minus$1 = {
+var minus = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var models$1 = {
+var models = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var mp$1 = {
+var mp = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var mu$1 = {
+var mu = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var nang$1 = {
+var nang = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var nap$1 = {
+var nap = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var natural$1 = {
+var natural = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var naturals$1 = {
+var naturals = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var ncy$1 = {
+var ncy = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ne$1 = {
+var ne = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var nge$1 = {
+var nge = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ngt$1 = {
+var ngt = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ni$1 = {
+var ni = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var nis$1 = {
+var nis = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var nle$1 = {
+var nle = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var nles$1 = {
+var nles = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var nless$1 = {
+var nless = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var nlt$1 = {
+var nlt = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var nopf$1 = {
+var nopf = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Not$1 = {
+var Not = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var not$1 = {
+var not = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var nsc$1 = {
+var nsc = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var nsce$1 = {
+var nsce = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var nu$1 = {
+var nu = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var num$1 = {
+var num = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var ogt$1 = {
+var ogt = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ohm$1 = {
+var ohm = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var oline$1 = {
+var oline = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var olt$1 = {
+var olt = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Omega$1 = {
+var Omega = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var omega$1 = {
+var omega = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Omicron$1 = {
+var Omicron = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var omicron$1 = {
+var omicron = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var oopf$1 = {
+var oopf = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var opar$1 = {
+var opar = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var or$1 = {
+var or = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var order$1 = {
+var order = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var oror$1 = {
+var oror = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var orv$1 = {
+var orv = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var osol$1 = {
+var osol = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var par$1 = {
+var par = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var para$1 = {
+var para = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var parallel$1 = {
+var parallel = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var part$1 = {
+var part = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var phi$1 = {
+var phi = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var phone$1 = {
+var phone = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Pi$1 = {
+var Pi = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var pi$1 = {
+var pi = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var pitchfork$1 = {
+var pitchfork = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var plus$1 = {
+var plus = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var pm$1 = {
+var pm = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var popf$1 = {
+var popf = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var pound$1 = {
+var pound = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var pr$1 = {
+var pr = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var prime$1 = {
+var prime = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var primes$1 = {
+var primes = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var prod$1 = {
+var prod = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Product$1 = {
+var Product = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var prop$1 = {
+var prop = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Proportion$1 = {
+var Proportion = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Proportional$1 = {
+var Proportional = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var psi$1 = {
+var psi = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var quest$1 = {
+var quest = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var QUOT$1 = {
+var QUOT = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var quot$1 = {
+var quot = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var race$1 = {
+var race = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var rang$1 = {
+var rang = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var range$1 = {
+var range = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var ratio$1 = {
+var ratio = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Re$1 = {
+var Re = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var real$1 = {
+var real = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var reals$1 = {
+var reals = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var rect$1 = {
+var rect = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var REG$1 = {
+var REG = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: true
 };
-var reg$1 = {
+var reg = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ring$1 = {
+var ring = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var rsh$1 = {
+var rsh = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var sc$1 = {
+var sc = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var scap$1 = {
+var scap = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var sce$1 = {
+var sce = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var scy$1 = {
+var scy = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var sdot$1 = {
+var sdot = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var sect$1 = {
+var sect = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var semi$1 = {
+var semi = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var sharp$1 = {
+var sharp = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var shy$1 = {
+var shy = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Sigma$1 = {
+var Sigma = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var sigma$1 = {
+var sigma = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var sim$1 = {
+var sim = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var sol$1 = {
+var sol = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var spades$1 = {
+var spades = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var square$1 = {
+var square = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Star$1 = {
+var Star = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var star$1 = {
+var star = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Sub$1 = {
+var Sub = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var sub$1 = {
+var sub = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var sube$1 = {
+var sube = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Sum$1 = {
+var Sum = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var sum$1 = {
+var sum = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Tab$1 = {
+var Tab = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var target$1 = {
+var target = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Tau$1 = {
+var Tau = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var tau$1 = {
+var tau = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var therefore$1 = {
+var therefore = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Theta$1 = {
+var Theta = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var theta$1 = {
+var theta = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var THORN$1 = {
+var THORN = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var thorn$1 = {
+var thorn = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Tilde$1 = {
+var Tilde = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var tilde$1 = {
+var tilde = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var times$1 = {
+var times = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var tint$1 = {
+var tint = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var top$1 = {
+var top = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var tosa$1 = {
+var tosa = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var TRADE$1 = {
+var TRADE = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var trade$1 = {
+var trade = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var triangle$1 = {
+var triangle = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var trie$1 = {
+var trie = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ucy$1 = {
+var ucy = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var uml$1 = {
+var uml = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Union$1 = {
+var Union = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var uplus$1 = {
+var uplus = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Upsi$1 = {
+var Upsi = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var upsi$1 = {
+var upsi = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var uring$1 = {
+var uring = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var vee$1 = {
+var vee = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Vert$1 = {
+var Vert = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var vert$1 = {
+var vert = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var wedge$1 = {
+var wedge = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Wedge$1 = {
+var Wedge = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var wreath$1 = {
+var wreath = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Xi$1 = {
+var Xi = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var xi$1 = {
+var xi = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Ycirc$1 = {
+var Ycirc = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ycirc$1 = {
+var ycirc = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ycy$1 = {
+var ycy = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var yen$1 = {
+var yen = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Zacute$1 = {
+var Zacute = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var zacute$1 = {
+var zacute = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Zeta$1 = {
+var Zeta = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var zeta$1 = {
+var zeta = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
 var uncertainJson = {
-  ac: ac$1,
-  acute: acute$1,
-  Alpha: Alpha$1,
-  alpha: alpha$1,
-  amp: amp$1,
-  And: And$1,
-  and: and$1,
-  ange: ange$1,
-  angle: angle$1,
-  angst: angst$1,
-  ap: ap$1,
-  ape: ape$1,
-  approx: approx$1,
-  Aring: Aring$1,
-  aring: aring$1,
-  Ascr: Ascr$1,
-  ascr: ascr$1,
-  Assign: Assign$1,
-  ast: ast$1,
-  atilde: atilde$1,
-  Backslash: Backslash$1,
-  barwedge: barwedge$1,
-  becaus: becaus$1,
-  Because: Because$1,
-  because: because$1,
-  bepsi: bepsi$1,
-  Bernoullis: Bernoullis$1,
-  Beta: Beta$1,
-  beta: beta$1,
-  beth: beth$1,
-  between: between$1,
-  blank: blank$1,
-  block: block$1,
-  bot: bot$1,
-  bottom: bottom$1,
-  bowtie: bowtie$1,
-  breve: breve$1,
-  bull: bull$1,
-  bullet: bullet$1,
-  bump: bump$1,
-  cacute: cacute$1,
-  Cap: Cap$1,
-  cap: cap$1,
-  capand: capand$1,
-  caps: caps$1,
-  caret: caret$1,
-  caron: caron$1,
-  cedil: cedil$1,
-  Cedilla: Cedilla$1,
-  cent: cent$1,
-  check: check$1,
-  checkmark: checkmark$1,
-  Chi: Chi$1,
-  chi: chi$1,
-  cir: cir$1,
-  circ: circ$1,
-  clubs: clubs$1,
-  clubsuit: clubsuit$1,
-  Colon: Colon$1,
-  colon: colon$1,
-  Colone: Colone$1,
-  colone: colone$1,
-  comma: comma$1,
-  commat: commat$1,
-  comp: comp$1,
-  complement: complement$1,
-  complexes: complexes$1,
-  cong: cong$1,
-  Congruent: Congruent$1,
-  conint: conint$1,
-  copf: copf$1,
-  coprod: coprod$1,
-  COPY: COPY$1,
-  copy: copy$1,
-  Cross: Cross$1,
-  cross: cross$1,
-  Cup: Cup$1,
-  cup: cup$1,
-  cups: cups$1,
-  Dagger: Dagger$1,
-  dagger: dagger$1,
-  daleth: daleth$1,
-  darr: darr$1,
-  dash: dash$1,
-  DD: DD$1,
-  dd: dd$1,
-  deg: deg$1,
-  Del: Del$1,
-  Delta: Delta$1,
-  delta: delta$1,
-  dharr: dharr$1,
-  diam: diam$1,
-  Diamond: Diamond$1,
-  diamond: diamond$1,
-  diams: diams$1,
-  die: die$1,
-  digamma: digamma$1,
-  disin: disin$1,
-  div: div$1,
-  divide: divide$1,
-  dollar: dollar$1,
-  dopf: dopf$1,
-  Dot: Dot$1,
-  dot: dot$1,
-  dsol: dsol$1,
-  dtri: dtri$1,
-  easter: easter$1,
-  ecir: ecir$1,
-  ecolon: ecolon$1,
-  ecy: ecy$1,
-  edot: edot$1,
-  ee: ee$1,
-  efr: efr$1,
-  eg: eg$1,
-  egrave: egrave$1,
-  egs: egs$1,
-  el: el$1,
-  ell: ell$1,
-  els: els$1,
-  empty: empty$1,
-  ENG: ENG$1,
-  eng: eng$1,
-  epsi: epsi$1,
-  Epsilon: Epsilon$1,
-  epsilon: epsilon$1,
-  Equal: Equal$1,
-  equals: equals$1,
-  equest: equest$1,
-  Equilibrium: Equilibrium$1,
-  equiv: equiv$1,
-  escr: escr$1,
-  esim: esim$1,
-  Eta: Eta$1,
-  eta: eta$1,
-  ETH: ETH$1,
-  eth: eth$1,
-  euro: euro$1,
-  excl: excl$1,
-  exist: exist$1,
-  Exists: Exists$1,
-  expectation: expectation$1,
-  female: female$1,
-  flat: flat$1,
-  fork: fork$1,
-  frown: frown$1,
-  Gamma: Gamma$1,
-  gamma: gamma$1,
-  gap: gap$1,
-  gcy: gcy$1,
-  ge: ge$1,
-  gel: gel$1,
-  geq: geq$1,
-  ges: ges$1,
-  gesl: gesl$1,
-  gg: gg$1,
-  gl: gl$1,
-  gla: gla$1,
-  gne: gne$1,
-  grave: grave$1,
-  GT: GT$1,
-  gt: gt$1,
-  half: half$1,
-  Hat: Hat$1,
-  hearts: hearts$1,
-  hopf: hopf$1,
-  hyphen: hyphen$1,
-  ic: ic$1,
-  icy: icy$1,
-  iff: iff$1,
-  ii: ii$1,
-  image: image$1,
-  imped: imped$1,
+  ac: ac,
+  acute: acute,
+  Alpha: Alpha,
+  alpha: alpha,
+  amp: amp,
+  And: And,
+  and: and,
+  ange: ange,
+  angle: angle,
+  angst: angst,
+  ap: ap,
+  ape: ape,
+  approx: approx,
+  Aring: Aring,
+  aring: aring,
+  Ascr: Ascr,
+  ascr: ascr,
+  Assign: Assign,
+  ast: ast,
+  atilde: atilde,
+  Backslash: Backslash,
+  barwedge: barwedge,
+  becaus: becaus,
+  Because: Because,
+  because: because,
+  bepsi: bepsi,
+  Bernoullis: Bernoullis,
+  Beta: Beta,
+  beta: beta,
+  beth: beth,
+  between: between,
+  blank: blank,
+  block: block,
+  bot: bot,
+  bottom: bottom,
+  bowtie: bowtie,
+  breve: breve,
+  bull: bull,
+  bullet: bullet,
+  bump: bump,
+  cacute: cacute,
+  Cap: Cap,
+  cap: cap,
+  capand: capand,
+  caps: caps,
+  caret: caret,
+  caron: caron,
+  cedil: cedil,
+  Cedilla: Cedilla,
+  cent: cent,
+  check: check,
+  checkmark: checkmark,
+  Chi: Chi,
+  chi: chi,
+  cir: cir,
+  circ: circ,
+  clubs: clubs,
+  clubsuit: clubsuit,
+  Colon: Colon,
+  colon: colon,
+  Colone: Colone,
+  colone: colone,
+  comma: comma,
+  commat: commat,
+  comp: comp,
+  complement: complement,
+  complexes: complexes,
+  cong: cong,
+  Congruent: Congruent,
+  conint: conint,
+  copf: copf,
+  coprod: coprod,
+  COPY: COPY,
+  copy: copy,
+  Cross: Cross,
+  cross: cross,
+  Cup: Cup,
+  cup: cup,
+  cups: cups,
+  Dagger: Dagger,
+  dagger: dagger,
+  daleth: daleth,
+  darr: darr,
+  dash: dash,
+  DD: DD,
+  dd: dd,
+  deg: deg,
+  Del: Del,
+  Delta: Delta,
+  delta: delta,
+  dharr: dharr,
+  diam: diam,
+  Diamond: Diamond,
+  diamond: diamond,
+  diams: diams,
+  die: die,
+  digamma: digamma,
+  disin: disin,
+  div: div,
+  divide: divide,
+  dollar: dollar,
+  dopf: dopf,
+  Dot: Dot,
+  dot: dot,
+  dsol: dsol,
+  dtri: dtri,
+  easter: easter,
+  ecir: ecir,
+  ecolon: ecolon,
+  ecy: ecy,
+  edot: edot,
+  ee: ee,
+  efr: efr,
+  eg: eg,
+  egrave: egrave,
+  egs: egs,
+  el: el,
+  ell: ell,
+  els: els,
+  empty: empty,
+  ENG: ENG,
+  eng: eng,
+  epsi: epsi,
+  Epsilon: Epsilon,
+  epsilon: epsilon,
+  Equal: Equal,
+  equals: equals,
+  equest: equest,
+  Equilibrium: Equilibrium,
+  equiv: equiv,
+  escr: escr,
+  esim: esim,
+  Eta: Eta,
+  eta: eta,
+  ETH: ETH,
+  eth: eth,
+  euro: euro,
+  excl: excl,
+  exist: exist,
+  Exists: Exists,
+  expectation: expectation,
+  female: female,
+  flat: flat,
+  fork: fork,
+  frown: frown,
+  Gamma: Gamma,
+  gamma: gamma,
+  gap: gap,
+  gcy: gcy,
+  ge: ge,
+  gel: gel,
+  geq: geq,
+  ges: ges,
+  gesl: gesl,
+  gg: gg,
+  gl: gl,
+  gla: gla,
+  gne: gne,
+  grave: grave,
+  GT: GT,
+  gt: gt,
+  half: half,
+  Hat: Hat,
+  hearts: hearts,
+  hopf: hopf,
+  hyphen: hyphen,
+  ic: ic,
+  icy: icy,
+  iff: iff,
+  ii: ii,
+  image: image,
+  imped: imped,
   "in": {
     addAmpIfSemiPresent: false,
     addSemiIfAmpPresent: false
   },
-  int: int$1,
-  integers: integers$1,
-  iocy: iocy$1,
-  iogon: iogon$1,
-  iota: iota$1,
-  isin: isin$1,
-  it: it$1,
-  Kappa: Kappa$1,
-  kappa: kappa$1,
-  kopf: kopf$1,
-  Lambda: Lambda$1,
-  lambda: lambda$1,
-  lang: lang$1,
-  lap: lap$1,
-  lat: lat$1,
-  late: late$1,
-  lates: lates$1,
-  le: le$1,
-  leg: leg$1,
-  leq: leq$1,
-  les: les$1,
-  lg: lg$1,
-  ll: ll$1,
-  lne: lne$1,
-  lozenge: lozenge$1,
-  lsh: lsh$1,
-  LT: LT$1,
-  lt: lt$1,
-  ltimes: ltimes$1,
-  male: male$1,
-  malt: malt$1,
-  map: map$1,
-  marker: marker$1,
-  mid: mid$1,
-  minus: minus$1,
-  models: models$1,
-  mp: mp$1,
-  mu: mu$1,
-  nang: nang$1,
-  nap: nap$1,
-  natural: natural$1,
-  naturals: naturals$1,
-  ncy: ncy$1,
-  ne: ne$1,
-  nge: nge$1,
-  ngt: ngt$1,
-  ni: ni$1,
-  nis: nis$1,
-  nle: nle$1,
-  nles: nles$1,
-  nless: nless$1,
-  nlt: nlt$1,
-  nopf: nopf$1,
-  Not: Not$1,
-  not: not$1,
-  nsc: nsc$1,
-  nsce: nsce$1,
-  nu: nu$1,
-  num: num$1,
-  ogt: ogt$1,
-  ohm: ohm$1,
-  oline: oline$1,
-  olt: olt$1,
-  Omega: Omega$1,
-  omega: omega$1,
-  Omicron: Omicron$1,
-  omicron: omicron$1,
-  oopf: oopf$1,
-  opar: opar$1,
-  or: or$1,
-  order: order$1,
-  oror: oror$1,
-  orv: orv$1,
-  osol: osol$1,
-  par: par$1,
-  para: para$1,
-  parallel: parallel$1,
-  part: part$1,
-  phi: phi$1,
-  phone: phone$1,
-  Pi: Pi$1,
-  pi: pi$1,
-  pitchfork: pitchfork$1,
-  plus: plus$1,
-  pm: pm$1,
-  popf: popf$1,
-  pound: pound$1,
-  pr: pr$1,
-  prime: prime$1,
-  primes: primes$1,
-  prod: prod$1,
-  Product: Product$1,
-  prop: prop$1,
-  Proportion: Proportion$1,
-  Proportional: Proportional$1,
-  psi: psi$1,
-  quest: quest$1,
-  QUOT: QUOT$1,
-  quot: quot$1,
-  race: race$1,
-  rang: rang$1,
-  range: range$1,
-  ratio: ratio$1,
-  Re: Re$1,
-  real: real$1,
-  reals: reals$1,
-  rect: rect$1,
-  REG: REG$1,
-  reg: reg$1,
-  ring: ring$1,
-  rsh: rsh$1,
-  sc: sc$1,
-  scap: scap$1,
-  sce: sce$1,
-  scy: scy$1,
-  sdot: sdot$1,
-  sect: sect$1,
-  semi: semi$1,
-  sharp: sharp$1,
-  shy: shy$1,
-  Sigma: Sigma$1,
-  sigma: sigma$1,
-  sim: sim$1,
-  sol: sol$1,
-  spades: spades$1,
-  square: square$1,
-  Star: Star$1,
-  star: star$1,
-  Sub: Sub$1,
-  sub: sub$1,
-  sube: sube$1,
-  Sum: Sum$1,
-  sum: sum$1,
-  Tab: Tab$1,
-  target: target$1,
-  Tau: Tau$1,
-  tau: tau$1,
-  therefore: therefore$1,
-  Theta: Theta$1,
-  theta: theta$1,
-  THORN: THORN$1,
-  thorn: thorn$1,
-  Tilde: Tilde$1,
-  tilde: tilde$1,
-  times: times$1,
-  tint: tint$1,
-  top: top$1,
-  tosa: tosa$1,
-  TRADE: TRADE$1,
-  trade: trade$1,
-  triangle: triangle$1,
-  trie: trie$1,
-  ucy: ucy$1,
-  uml: uml$1,
-  Union: Union$1,
-  uplus: uplus$1,
-  Upsi: Upsi$1,
-  upsi: upsi$1,
-  uring: uring$1,
-  vee: vee$1,
-  Vert: Vert$1,
-  vert: vert$1,
-  wedge: wedge$1,
-  Wedge: Wedge$1,
-  wreath: wreath$1,
-  Xi: Xi$1,
-  xi: xi$1,
-  Ycirc: Ycirc$1,
-  ycirc: ycirc$1,
-  ycy: ycy$1,
-  yen: yen$1,
-  Zacute: Zacute$1,
-  zacute: zacute$1,
-  Zeta: Zeta$1,
-  zeta: zeta$1
+  int: int,
+  integers: integers,
+  iocy: iocy,
+  iogon: iogon,
+  iota: iota,
+  isin: isin,
+  it: it,
+  Kappa: Kappa,
+  kappa: kappa,
+  kopf: kopf,
+  Lambda: Lambda,
+  lambda: lambda,
+  lang: lang,
+  lap: lap,
+  lat: lat,
+  late: late,
+  lates: lates,
+  le: le,
+  leg: leg,
+  leq: leq,
+  les: les,
+  lg: lg,
+  ll: ll,
+  lne: lne,
+  lozenge: lozenge,
+  lsh: lsh,
+  LT: LT,
+  lt: lt,
+  ltimes: ltimes,
+  male: male,
+  malt: malt,
+  map: map,
+  marker: marker,
+  mid: mid,
+  minus: minus,
+  models: models,
+  mp: mp,
+  mu: mu,
+  nang: nang,
+  nap: nap,
+  natural: natural,
+  naturals: naturals,
+  ncy: ncy,
+  ne: ne,
+  nge: nge,
+  ngt: ngt,
+  ni: ni,
+  nis: nis,
+  nle: nle,
+  nles: nles,
+  nless: nless,
+  nlt: nlt,
+  nopf: nopf,
+  Not: Not,
+  not: not,
+  nsc: nsc,
+  nsce: nsce,
+  nu: nu,
+  num: num,
+  ogt: ogt,
+  ohm: ohm,
+  oline: oline,
+  olt: olt,
+  Omega: Omega,
+  omega: omega,
+  Omicron: Omicron,
+  omicron: omicron,
+  oopf: oopf,
+  opar: opar,
+  or: or,
+  order: order,
+  oror: oror,
+  orv: orv,
+  osol: osol,
+  par: par,
+  para: para,
+  parallel: parallel,
+  part: part,
+  phi: phi,
+  phone: phone,
+  Pi: Pi,
+  pi: pi,
+  pitchfork: pitchfork,
+  plus: plus,
+  pm: pm,
+  popf: popf,
+  pound: pound,
+  pr: pr,
+  prime: prime,
+  primes: primes,
+  prod: prod,
+  Product: Product,
+  prop: prop,
+  Proportion: Proportion,
+  Proportional: Proportional,
+  psi: psi,
+  quest: quest,
+  QUOT: QUOT,
+  quot: quot,
+  race: race,
+  rang: rang,
+  range: range,
+  ratio: ratio,
+  Re: Re,
+  real: real,
+  reals: reals,
+  rect: rect,
+  REG: REG,
+  reg: reg,
+  ring: ring,
+  rsh: rsh,
+  sc: sc,
+  scap: scap,
+  sce: sce,
+  scy: scy,
+  sdot: sdot,
+  sect: sect,
+  semi: semi,
+  sharp: sharp,
+  shy: shy,
+  Sigma: Sigma,
+  sigma: sigma,
+  sim: sim,
+  sol: sol,
+  spades: spades,
+  square: square,
+  Star: Star,
+  star: star,
+  Sub: Sub,
+  sub: sub,
+  sube: sube,
+  Sum: Sum,
+  sum: sum,
+  Tab: Tab,
+  target: target,
+  Tau: Tau,
+  tau: tau,
+  therefore: therefore,
+  Theta: Theta,
+  theta: theta,
+  THORN: THORN,
+  thorn: thorn,
+  Tilde: Tilde,
+  tilde: tilde,
+  times: times,
+  tint: tint,
+  top: top,
+  tosa: tosa,
+  TRADE: TRADE,
+  trade: trade,
+  triangle: triangle,
+  trie: trie,
+  ucy: ucy,
+  uml: uml,
+  Union: Union,
+  uplus: uplus,
+  Upsi: Upsi,
+  upsi: upsi,
+  uring: uring,
+  vee: vee,
+  Vert: Vert,
+  vert: vert,
+  wedge: wedge,
+  Wedge: Wedge,
+  wreath: wreath,
+  Xi: Xi,
+  xi: xi,
+  Ycirc: Ycirc,
+  ycirc: ycirc,
+  ycy: ycy,
+  yen: yen,
+  Zacute: Zacute,
+  zacute: zacute,
+  Zeta: Zeta,
+  zeta: zeta
 };
 
-var version$1 = version;
+var version = version$1;
 var allNamedEntities = allNamedEntitiesJson;
 var brokenNamedEntities = brokenNamedEntitiesJson;
 var entStartsWith = entStartsWithJson;
@@ -8229,4 +8229,4 @@ exports.entStartsWithCaseInsensitive = entStartsWithCaseInsensitive;
 exports.maxLength = maxLength;
 exports.minLength = minLength;
 exports.uncertain = uncertain;
-exports.version = version$1;
+exports.version = version;

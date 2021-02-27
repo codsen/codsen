@@ -2656,22 +2656,23 @@ function arrayiffy(something) {
 
 /* eslint no-plusplus:0 */
 
-function isObj(something) {
+function isObj$2(something) {
   return something && typeof something === "object" && !Array.isArray(something);
 }
 
-function isStr(something) {
+function isStr$3(something) {
   return typeof something === "string";
 }
 
-var defaults = {
+var defaults$6 = {
   cb: undefined,
   i: false,
   trimBeforeMatching: false,
   trimCharsBeforeMatching: [],
   maxMismatches: 0,
   firstMustMatch: false,
-  lastMustMatch: false
+  lastMustMatch: false,
+  hungry: false
 };
 
 var defaultGetNextIdx = function defaultGetNextIdx(index) {
@@ -2694,13 +2695,26 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
     return whatToMatchValVal;
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults$6), originalOpts);
 
   if (position >= str.length && !special) {
     return false;
-  }
+  } // The "charsToCheckCount" varies, it decreases with skipped characters,
+  // as long as "maxMismatches" allows. It's not the count of how many
+  // characters de-facto have been matched from the source.
 
-  var charsToCheckCount = special ? 1 : whatToMatchVal.length;
+
+  var charsToCheckCount = special ? 1 : whatToMatchVal.length; // this is the counter of real characters matched. It is not reduced
+  // from the holes in matched. For example, if source is "abc" and
+  // maxMismatches=1 and we have "ac", result of the match will be true,
+  // the following var will be equal to 2, meaning we matched two
+  // characters:
+
+  var charsMatchedTotal = 0; // used to catch frontal false positives, where too-eager matching
+  // depletes the mismatches allowance before precisely matching the exact
+  // string that follows, yielding too early false-positive start
+
+  var patienceReducedBeforeFirstMatch = false;
   var lastWasMismatched = false; // value is "false" or index of where it was activated
   // if no character was ever matched, even through if opts.maxMismatches
   // would otherwise allow to skip characters, this will act as a last
@@ -2709,11 +2723,29 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 
   var atLeastSomethingWasMatched = false;
   var patience = opts.maxMismatches;
-  var i = position;
+  var i = position; // internal-use flag, not the same as "atLeastSomethingWasMatched":
+
   var somethingFound = false; // these two drive opts.firstMustMatch and opts.lastMustMatch:
 
   var firstCharacterMatched = false;
-  var lastCharacterMatched = false;
+  var lastCharacterMatched = false; // bail early if there's whitespace in front, imagine:
+  // abc important}
+  //   ^
+  //  start, match ["!important"], matchRightIncl()
+  //
+  // in case above, "c" consumed 1 patience, let's say 1 is left,
+  // we stumble upon "i" where "!" is missing. "c" is false start.
+
+  function whitespaceInFrontOfFirstChar() {
+    return (// it's a first letter match
+      charsMatchedTotal === 1 && // and character in front exists
+      // str[i - 1] &&
+      // and it's whitespace
+      // !str[i - 1].trim() &&
+      // some patience has been consumed already
+      patience < opts.maxMismatches - 1
+    );
+  }
 
   while (str[i]) {
     var nextIdx = getNextIdx(i);
@@ -2752,17 +2784,50 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 
 
       if (charsToCheckCount === whatToMatchVal.length) {
-        firstCharacterMatched = true;
+        firstCharacterMatched = true; // now, if the first character was matched and yet, patience was
+        // reduced already, this means there's a false beginning in front
+
+        if (patience !== opts.maxMismatches) {
+          return false;
+        }
       } else if (charsToCheckCount === 1) {
         lastCharacterMatched = true;
       }
 
       charsToCheckCount -= 1;
+      charsMatchedTotal++; // bail early if there's whitespace in front, imagine:
+      // abc important}
+      //   ^
+      //  start, match ["!important"], matchRightIncl()
+      //
+      // in case above, "c" consumed 1 patience, let's say 1 is left,
+      // we stumble upon "i" where "!" is missing. "c" is false start.
 
-      if (charsToCheckCount < 1) {
-        return i;
+      if (whitespaceInFrontOfFirstChar()) {
+        return false;
+      }
+
+      if (!charsToCheckCount) {
+        return (// either it was not a perfect match
+          charsMatchedTotal !== whatToMatchVal.length || // or it was, and in that case, no patience was reduced
+          // (if a perfect match was found, yet some "patience" was reduced,
+          // that means we have false positive characters)
+          patience === opts.maxMismatches || // mind you, it can be a case of rogue characters in-between
+          // the what was matched, imagine:
+          // source: "abxcd", matching ["bc"], maxMismatches=1
+          // in above case, charsMatchedTotal === 2 and whatToMatchVal ("bc") === 2
+          // - we want to exclude cases of frontal false positives, like:
+          // source: "xy abc", match "abc", maxMismatches=2, start at 0
+          //          ^
+          //       match form here to the right
+          !patienceReducedBeforeFirstMatch ? i : false
+        );
       }
     } else {
+      if (!patienceReducedBeforeFirstMatch && !charsMatchedTotal) {
+        patienceReducedBeforeFirstMatch = true;
+      }
+
       if (opts.maxMismatches && patience && i) {
         patience -= 1; // the bigger the maxMismatches, the further away we must check for
         // alternative matches
@@ -2774,11 +2839,27 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 
           if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && ( // ensure we're not skipping the first enforced character:
           !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+            charsMatchedTotal++; // bail early if there's whitespace in front, imagine:
+            // abc important}
+            //   ^
+            //  start, match ["!important"], matchRightIncl()
+            //
+            // in case above, "c" consumed 1 patience, let's say 1 is left,
+            // we stumble upon "i" where "!" is missing. "c" is false start.
+
+            if (whitespaceInFrontOfFirstChar()) {
+              return false;
+            }
+
             charsToCheckCount -= 2;
             somethingFound = true;
             break;
           } else if (nextCharInSource && nextCharToCompareAgainst && (!opts.i && nextCharInSource === nextCharToCompareAgainst || opts.i && nextCharInSource.toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && ( // ensure we're not skipping the first enforced character:
           !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+            if (!charsMatchedTotal && !opts.hungry) {
+              return false;
+            }
+
             charsToCheckCount -= 1;
             somethingFound = true;
             break;
@@ -2874,11 +2955,11 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 
 function main(mode, str, position, originalWhatToMatch, originalOpts) {
   // insurance
-  if (isObj(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
+  if (isObj$2(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
     throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!" + (Array.isArray(originalOpts.trimBeforeMatching) ? " Did you mean to use opts.trimCharsBeforeMatching?" : ""));
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults$6), originalOpts);
 
   if (typeof opts.trimCharsBeforeMatching === "string") {
     // arrayiffy if needed:
@@ -2887,10 +2968,10 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
 
 
   opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(function (el) {
-    return isStr(el) ? el : String(el);
+    return isStr$3(el) ? el : String(el);
   });
 
-  if (!isStr(str)) {
+  if (!isStr$3(str)) {
     return false;
   }
 
@@ -2905,7 +2986,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   var whatToMatch;
   var special;
 
-  if (isStr(originalWhatToMatch)) {
+  if (isStr$3(originalWhatToMatch)) {
     whatToMatch = [originalWhatToMatch];
   } else if (Array.isArray(originalWhatToMatch)) {
     whatToMatch = originalWhatToMatch;
@@ -2918,7 +2999,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's " + typeof originalWhatToMatch + ", equal to:\n" + JSON.stringify(originalWhatToMatch, null, 4));
   }
 
-  if (originalOpts && !isObj(originalOpts)) {
+  if (originalOpts && !isObj$2(originalOpts)) {
     throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type \"" + typeof originalOpts + "\", and equal to:\n" + JSON.stringify(originalOpts, null, 4));
   }
 
@@ -2942,7 +3023,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
 
   if (!whatToMatch || !Array.isArray(whatToMatch) || // 0
   Array.isArray(whatToMatch) && !whatToMatch.length || // []
-  Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr(whatToMatch[0]) && !whatToMatch[0].trim() // [""]
+  Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr$3(whatToMatch[0]) && !whatToMatch[0].trim() // [""]
   ) {
       if (typeof opts.cb === "function") {
         var firstCharOutsideIndex; // matchLeft() or matchRightIncl() methods start at index "position"
@@ -3078,11 +3159,11 @@ function isObj$1(something) {
   return something && typeof something === "object" && !Array.isArray(something);
 }
 
-function isStr$1(something) {
+function isStr$2(something) {
   return typeof something === "string";
 }
 
-var defaults$1 = {
+var defaults$5 = {
   fromIndex: 0,
   throwWhenSomethingWrongIsDetected: true,
   allowWholeValueToBeOnlyHeadsOrTails: true,
@@ -3097,7 +3178,7 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
     throw new TypeError("string-find-heads-tails: [THROW_ID_01] the fourth input argument, an Optional Options Object, must be a plain object! Currently it's equal to: " + originalOpts + " (type: " + typeof originalOpts + ")");
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults$5), originalOpts);
 
   if (typeof opts.fromIndex === "string" && /^\d*$/.test(opts.fromIndex)) {
     opts.fromIndex = Number(opts.fromIndex);
@@ -3108,7 +3189,7 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
   // ---------
 
 
-  if (!isStr$1(str) || str.length === 0) {
+  if (!isStr$2(str) || str.length === 0) {
     if (opts.relaxedAPI) {
       return [];
     }
@@ -3146,12 +3227,12 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
     } else if (!heads.every(function (val, index) {
       culpritsVal = val;
       culpritsIndex = index;
-      return isStr$1(val);
+      return isStr$2(val);
     })) {
       if (opts.relaxedAPI) {
         // eslint-disable-next-line no-param-reassign
         heads = heads.filter(function (el) {
-          return isStr$1(el) && el.length > 0;
+          return isStr$2(el) && el.length > 0;
         });
 
         if (heads.length === 0) {
@@ -3162,12 +3243,12 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
       }
     } else if (!heads.every(function (val, index) {
       culpritsIndex = index;
-      return isStr$1(val) && val.length > 0 && val.trim() !== "";
+      return isStr$2(val) && val.length > 0 && val.trim() !== "";
     })) {
       if (opts.relaxedAPI) {
         // eslint-disable-next-line no-param-reassign
         heads = heads.filter(function (el) {
-          return isStr$1(el) && el.length > 0;
+          return isStr$2(el) && el.length > 0;
         });
 
         if (heads.length === 0) {
@@ -3180,13 +3261,13 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
   } // - for tails
 
 
-  if (!isStr$1(tails) && !Array.isArray(tails)) {
+  if (!isStr$2(tails) && !Array.isArray(tails)) {
     if (opts.relaxedAPI) {
       return [];
     }
 
     throw new TypeError("string-find-heads-tails: [THROW_ID_08] the third input argument, tails, must be either a string or an array of strings! Currently it's: " + typeof tails + ", equal to:\n" + JSON.stringify(tails, null, 4));
-  } else if (isStr$1(tails)) {
+  } else if (isStr$2(tails)) {
     if (tails.length === 0) {
       if (opts.relaxedAPI) {
         return [];
@@ -3207,12 +3288,12 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
     } else if (!tails.every(function (val, index) {
       culpritsVal = val;
       culpritsIndex = index;
-      return isStr$1(val);
+      return isStr$2(val);
     })) {
       if (opts.relaxedAPI) {
         // eslint-disable-next-line no-param-reassign
         tails = tails.filter(function (el) {
-          return isStr$1(el) && el.length > 0;
+          return isStr$2(el) && el.length > 0;
         });
 
         if (tails.length === 0) {
@@ -3223,12 +3304,12 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
       }
     } else if (!tails.every(function (val, index) {
       culpritsIndex = index;
-      return isStr$1(val) && val.length > 0 && val.trim() !== "";
+      return isStr$2(val) && val.length > 0 && val.trim() !== "";
     })) {
       if (opts.relaxedAPI) {
         // eslint-disable-next-line no-param-reassign
         tails = tails.filter(function (el) {
-          return isStr$1(el) && el.length > 0;
+          return isStr$2(el) && el.length > 0;
         });
 
         if (tails.length === 0) {
@@ -3241,13 +3322,13 @@ function strFindHeadsTails(str, heads, tails, originalOpts) {
   } // inner variable meaning is opts.source the default-one
 
 
-  var s = opts.source === defaults$1.source;
+  var s = opts.source === defaults$5.source;
 
   if (opts.throwWhenSomethingWrongIsDetected && !opts.allowWholeValueToBeOnlyHeadsOrTails) {
     if (arrayiffy(heads).includes(str)) {
-      throw new Error("" + opts.source + (s ? ": [THROW_ID_16]" : "") + " the whole input string can't be equal to " + (isStr$1(heads) ? "" : "one of ") + "heads (" + str + ")!");
+      throw new Error("" + opts.source + (s ? ": [THROW_ID_16]" : "") + " the whole input string can't be equal to " + (isStr$2(heads) ? "" : "one of ") + "heads (" + str + ")!");
     } else if (arrayiffy(tails).includes(str)) {
-      throw new Error("" + opts.source + (s ? ": [THROW_ID_17]" : "") + " the whole input string can't be equal to " + (isStr$1(tails) ? "" : "one of ") + "tails (" + str + ")!");
+      throw new Error("" + opts.source + (s ? ": [THROW_ID_17]" : "") + " the whole input string can't be equal to " + (isStr$2(tails) ? "" : "one of ") + "tails (" + str + ")!");
     }
   } //
   // prep stage.
@@ -3540,7 +3621,7 @@ function collWhitespace(str, originallineBreakLimit) {
   return str;
 }
 
-var defaults$2 = {
+var defaults$4 = {
   strictlyTwoElementsInRangeArrays: false,
   progressFn: null
 };
@@ -3552,7 +3633,7 @@ function rSort(arrOfRanges, originalOptions) {
   } // fill any settings with defaults if missing:
 
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOptions); // arrOfRanges validation
+  var opts = _objectSpread2(_objectSpread2({}, defaults$4), originalOptions); // arrOfRanges validation
 
 
   var culpritsIndex;
@@ -3757,19 +3838,19 @@ function rMerge(arrOfRanges, originalOpts) {
   return sortedRanges.length ? sortedRanges : null;
 }
 
-function existy(x) {
+function existy$1(x) {
   return x != null;
 }
 
-function isNum(something) {
+function isNum$1(something) {
   return Number.isInteger(something) && something >= 0;
 }
 
-function isStr$2(something) {
+function isStr$1(something) {
   return typeof something === "string";
 }
 
-var defaults$4 = {
+var defaults$2 = {
   limitToBeAddedWhitespace: false,
   limitLinebreaksCount: 1,
   mergeType: 1
@@ -3780,12 +3861,12 @@ var Ranges = /*#__PURE__*/function () {
   // O P T I O N S
   // =============
   function Ranges(originalOpts) {
-    var opts = _objectSpread2(_objectSpread2({}, defaults$4), originalOpts);
+    var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts);
 
     if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
-      if (isStr$2(opts.mergeType) && opts.mergeType.trim() === "1") {
+      if (isStr$1(opts.mergeType) && opts.mergeType.trim() === "1") {
         opts.mergeType = 1;
-      } else if (isStr$2(opts.mergeType) && opts.mergeType.trim() === "2") {
+      } else if (isStr$1(opts.mergeType) && opts.mergeType.trim() === "2") {
         opts.mergeType = 2;
       } else {
         throw new Error("ranges-push: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"" + typeof opts.mergeType + "\", equal to " + JSON.stringify(opts.mergeType, null, 4));
@@ -3807,7 +3888,7 @@ var Ranges = /*#__PURE__*/function () {
       return;
     }
 
-    if (existy(originalFrom) && !existy(originalTo)) {
+    if (existy$1(originalFrom) && !existy$1(originalTo)) {
       if (Array.isArray(originalFrom)) {
         if (originalFrom.length) {
           if (originalFrom.some(function (el) {
@@ -3823,7 +3904,7 @@ var Ranges = /*#__PURE__*/function () {
             return;
           }
 
-          if (originalFrom.length && isNum(+originalFrom[0]) && isNum(+originalFrom[1])) {
+          if (originalFrom.length && isNum$1(+originalFrom[0]) && isNum$1(+originalFrom[1])) {
             // recursively pass in those values
             this.add.apply(this, originalFrom);
           }
@@ -3834,41 +3915,41 @@ var Ranges = /*#__PURE__*/function () {
       }
 
       throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_12] the first input argument, \"from\" is set (" + JSON.stringify(originalFrom, null, 0) + ") but second-one, \"to\" is not (" + JSON.stringify(originalTo, null, 0) + ")");
-    } else if (!existy(originalFrom) && existy(originalTo)) {
+    } else if (!existy$1(originalFrom) && existy$1(originalTo)) {
       throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_13] the second input argument, \"to\" is set (" + JSON.stringify(originalTo, null, 0) + ") but first-one, \"from\" is not (" + JSON.stringify(originalFrom, null, 0) + ")");
     }
 
     var from = +originalFrom;
     var to = +originalTo;
 
-    if (isNum(addVal)) {
+    if (isNum$1(addVal)) {
       // eslint-disable-next-line no-param-reassign
       addVal = String(addVal);
     } // validation
 
 
-    if (isNum(from) && isNum(to)) {
+    if (isNum$1(from) && isNum$1(to)) {
       // This means two indexes were given as arguments. Business as usual.
-      if (existy(addVal) && !isStr$2(addVal) && !isNum(addVal)) {
+      if (existy$1(addVal) && !isStr$1(addVal) && !isNum$1(addVal)) {
         throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but " + typeof addVal + ", equal to:\n" + JSON.stringify(addVal, null, 4));
       } // Does the incoming "from" value match the existing last element's "to" value?
 
 
-      if (existy(this.ranges) && Array.isArray(this.last()) && from === this.last()[1]) {
+      if (existy$1(this.ranges) && Array.isArray(this.last()) && from === this.last()[1]) {
         // The incoming range is an exact extension of the last range, like
         // [1, 100] gets added [100, 200] => you can merge into: [1, 200].
         this.last()[1] = to; // console.log(`addVal = ${JSON.stringify(addVal, null, 4)}`)
 
         if (this.last()[2] === null || addVal === null) ;
 
-        if (this.last()[2] !== null && existy(addVal)) {
+        if (this.last()[2] !== null && existy$1(addVal)) {
           var calculatedVal = this.last()[2] && this.last()[2].length > 0 && (!this.opts || !this.opts.mergeType || this.opts.mergeType === 1) ? this.last()[2] + addVal : addVal;
 
           if (this.opts.limitToBeAddedWhitespace) {
             calculatedVal = collWhitespace(calculatedVal, this.opts.limitLinebreaksCount);
           }
 
-          if (!(isStr$2(calculatedVal) && !calculatedVal.length)) {
+          if (!(isStr$1(calculatedVal) && !calculatedVal.length)) {
             // don't let the zero-length strings past
             this.last()[2] = calculatedVal;
           }
@@ -3878,14 +3959,14 @@ var Ranges = /*#__PURE__*/function () {
           this.ranges = [];
         }
 
-        var whatToPush = addVal !== undefined && !(isStr$2(addVal) && !addVal.length) ? [from, to, addVal && this.opts.limitToBeAddedWhitespace ? collWhitespace(addVal, this.opts.limitLinebreaksCount) : addVal] : [from, to];
+        var whatToPush = addVal !== undefined && !(isStr$1(addVal) && !addVal.length) ? [from, to, addVal && this.opts.limitToBeAddedWhitespace ? collWhitespace(addVal, this.opts.limitLinebreaksCount) : addVal] : [from, to];
         this.ranges.push(whatToPush);
       }
     } else {
       // Error somewhere!
       // Let's find out where.
       // is it first arg?
-      if (!(isNum(from) && from >= 0)) {
+      if (!(isNum$1(from) && from >= 0)) {
         throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_09] \"from\" value, the first input argument, must be a natural number or zero! Currently it's of a type \"" + typeof from + "\" equal to: " + JSON.stringify(from, null, 4));
       } else {
         // then it's second...
@@ -3911,7 +3992,7 @@ var Ranges = /*#__PURE__*/function () {
 
       if (this.ranges && this.opts.limitToBeAddedWhitespace) {
         return this.ranges.map(function (val) {
-          if (existy(val[2])) {
+          if (existy$1(val[2])) {
             return [val[0], val[1], collWhitespace(val[2], _this2.opts.limitLinebreaksCount)];
           }
 
@@ -3938,7 +4019,7 @@ var Ranges = /*#__PURE__*/function () {
       // Now, ranges can be array of arrays, correct format but also single
       // range, an array of two natural numbers might be given.
       // Let's put safety latch against such cases
-      if (!(Array.isArray(givenRanges[0]) && isNum(givenRanges[0][0]))) {
+      if (!(Array.isArray(givenRanges[0]) && isNum$1(givenRanges[0][0]))) {
         throw new Error("ranges-push/Ranges/replace(): [THROW_ID_11] Single range was given but we expected array of arrays! The first element, " + JSON.stringify(givenRanges[0], null, 4) + " should be an array and its first element should be an integer, a string index.");
       } else {
         this.ranges = Array.from(givenRanges);
@@ -4094,7 +4175,7 @@ function rApply(str, originalRangesArr, _progressFn) {
   return str;
 }
 
-var defaults$5 = {
+var defaults$1 = {
   classicTrim: false,
   cr: false,
   lf: false,
@@ -4110,7 +4191,7 @@ function trimSpaces(str, originalOpts) {
   } // opts preparation:
 
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$5), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts);
 
   function check(char) {
     return opts.classicTrim && !char.trim() || !opts.classicTrim && (opts.space && char === " " || opts.cr && char === "\r" || opts.lf && char === "\n" || opts.tab && char === "\t" || opts.nbsp && char === "\xA0");
@@ -4530,11 +4611,11 @@ function remDup(str, originalOpts) {
   return str.trim();
 }
 
-var version = "10.0.5";
+var version$1 = "10.0.5";
 
-var version$1 = version;
+var version = version$1;
 var has = Object.prototype.hasOwnProperty;
-var defaults$6 = {
+var defaults = {
   heads: "%%_",
   tails: "_%%",
   headsNoWrap: "%%-",
@@ -4554,16 +4635,17 @@ var defaults$6 = {
   // even if some values contain Boolean true. Otherwise, the whole value will
   // resolve to the first encountered Boolean.
   throwWhenNonStringInsertedInString: false,
-  allowUnresolved: false
+  allowUnresolved: false // Allow value to not have a resolved variable
+
 }; // -----------------------------------------------------------------------------
 //                       H E L P E R   F U N C T I O N S
 // -----------------------------------------------------------------------------
 
-function isStr$3(something) {
+function isStr(something) {
   return typeof something === "string";
 }
 
-function isNum$1(something) {
+function isNum(something) {
   return typeof something === "number";
 }
 
@@ -4575,16 +4657,16 @@ function isNull(something) {
   return something === null;
 }
 
-function isObj$2(something) {
+function isObj(something) {
   return something && typeof something === "object" && !Array.isArray(something);
 }
 
-function existy$1(x) {
+function existy(x) {
   return x != null;
 }
 
 function trimIfString(something) {
-  return isStr$3(something) ? something.trim() : something;
+  return isStr(something) ? something.trim() : something;
 }
 
 function getTopmostKey(str) {
@@ -4640,7 +4722,7 @@ function containsHeadsOrTails(str, opts) {
     return false;
   }
 
-  if (str.includes(opts.heads) || str.includes(opts.tails) || isStr$3(opts.headsNoWrap) && opts.headsNoWrap.length > 0 && str.includes(opts.headsNoWrap) || isStr$3(opts.tailsNoWrap) && opts.tailsNoWrap.length > 0 && str.includes(opts.tailsNoWrap)) {
+  if (str.includes(opts.heads) || str.includes(opts.tails) || isStr(opts.headsNoWrap) && opts.headsNoWrap.length > 0 && str.includes(opts.headsNoWrap) || isStr(opts.tailsNoWrap) && opts.tailsNoWrap.length > 0 && str.includes(opts.tailsNoWrap)) {
     return true;
   }
 
@@ -4686,16 +4768,16 @@ function wrap(placementValue, opts, dontWrapTheseVars, breadCrumbPath, newPath, 
   } // main opts
 
 
-  if (isStr$3(placementValue) && !dontWrapTheseVars && opts.wrapGlobalFlipSwitch && !opts.dontWrapVars.some(function (val) {
+  if (isStr(placementValue) && !dontWrapTheseVars && opts.wrapGlobalFlipSwitch && !opts.dontWrapVars.some(function (val) {
     return matcher.isMatch(oldVarName, val);
   }) && ( // considering double-wrapping prevention setting:
-  !opts.preventDoubleWrapping || opts.preventDoubleWrapping && isStr$3(placementValue) && !placementValue.includes(opts.wrapHeadsWith) && !placementValue.includes(opts.wrapTailsWith))) {
+  !opts.preventDoubleWrapping || opts.preventDoubleWrapping && isStr(placementValue) && !placementValue.includes(opts.wrapHeadsWith) && !placementValue.includes(opts.wrapTailsWith))) {
     return opts.wrapHeadsWith + placementValue + opts.wrapTailsWith;
   }
 
   if (dontWrapTheseVars) {
 
-    if (!isStr$3(placementValue)) {
+    if (!isStr(placementValue)) {
       return placementValue;
     }
 
@@ -4704,7 +4786,7 @@ function wrap(placementValue, opts, dontWrapTheseVars, breadCrumbPath, newPath, 
       tails: opts.wrapTailsWith
     });
 
-    if (!isStr$3(tempValue)) {
+    if (!isStr(tempValue)) {
       return tempValue;
     }
 
@@ -4726,7 +4808,7 @@ function findValues(input, varName, path, opts) {
       // 1.1.1. first check data store
       var gotPath = objectPath.get(input, currentPath + opts.dataContainerIdentifierTails);
 
-      if (isObj$2(gotPath) && objectPath.get(gotPath, varName)) {
+      if (isObj(gotPath) && objectPath.get(gotPath, varName)) {
         resolveValue = objectPath.get(gotPath, varName);
         handBrakeOff = false;
       }
@@ -4745,7 +4827,7 @@ function findValues(input, varName, path, opts) {
 
         var _gotPath = objectPath.get(input, currentPath + opts.dataContainerIdentifierTails);
 
-        if (isObj$2(_gotPath) && objectPath.get(_gotPath, varName)) {
+        if (isObj(_gotPath) && objectPath.get(_gotPath, varName)) {
           resolveValue = objectPath.get(_gotPath, varName);
           handBrakeOff = false;
         }
@@ -4755,7 +4837,7 @@ function findValues(input, varName, path, opts) {
 
         var _gotPath2 = objectPath.get(input, currentPath);
 
-        if (isObj$2(_gotPath2) && objectPath.get(_gotPath2, varName)) {
+        if (isObj(_gotPath2) && objectPath.get(_gotPath2, varName)) {
           resolveValue = objectPath.get(_gotPath2, varName);
           handBrakeOff = false;
         }
@@ -4790,10 +4872,10 @@ function findValues(input, varName, path, opts) {
 
       if (gotPathArr.length > 0) {
         for (var y = 0, len2 = gotPathArr.length; y < len2; y++) {
-          if (isStr$3(gotPathArr[y].val) || isBool(gotPathArr[y].val) || isNull(gotPathArr[y].val)) {
+          if (isStr(gotPathArr[y].val) || isBool(gotPathArr[y].val) || isNull(gotPathArr[y].val)) {
             resolveValue = gotPathArr[y].val;
             break;
-          } else if (isNum$1(gotPathArr[y].val)) {
+          } else if (isNum(gotPathArr[y].val)) {
             resolveValue = String(gotPathArr[y].val);
             break;
           } else if (Array.isArray(gotPathArr[y].val)) {
@@ -4812,7 +4894,7 @@ function findValues(input, varName, path, opts) {
         for (var _y = 0, _len = _gotPath4.length; _y < _len; _y++) {
           var temp = objectPath.get(_gotPath4[_y].val, withoutTopmostKey(varName));
 
-          if (temp && isStr$3(temp)) {
+          if (temp && isStr(temp)) {
             resolveValue = temp;
           }
         }
@@ -4871,7 +4953,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath) {
         finalRangesArr.push(obj.headsStartAt, // replace from index
         obj.tailsEndAt // replace upto index - no third argument, just deletion of heads/tails
         );
-      } else if (has.call(secretResolvedVarsStash, varName) && isStr$3(secretResolvedVarsStash[varName])) {
+      } else if (has.call(secretResolvedVarsStash, varName) && isStr(secretResolvedVarsStash[varName])) {
         // check, maybe the value was already resolved before and present in secret stash:
         finalRangesArr.push(obj.headsStartAt, // replace from index
         obj.tailsEndAt, // replace upto index
@@ -4895,7 +4977,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath) {
           }
         }
 
-        if (!wholeValueIsVariable && opts.throwWhenNonStringInsertedInString && !isStr$3(resolvedValue)) {
+        if (!wholeValueIsVariable && opts.throwWhenNonStringInsertedInString && !isStr(resolvedValue)) {
           throw new Error("json-variables/processHeadsAndTails(): [THROW_ID_23] While resolving the variable " + string.slice(obj.headsEndAt, obj.tailsStartAt) + " at path " + path + ", it resolved into a non-string value, " + JSON.stringify(resolvedValue, null, 4) + ". This is happening because options setting \"throwWhenNonStringInsertedInString\" is active (set to \"true\").");
         }
 
@@ -4927,7 +5009,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath) {
           var replacementVal = wrap(resolveString( // replacement value    <--------- R E C U R S I O N
           input, resolvedValue, newPath, opts, breadCrumbPath), opts, dontWrapTheseVars, breadCrumbPath, newPath, varName.trim());
 
-          if (isStr$3(replacementVal)) {
+          if (isStr(replacementVal)) {
             finalRangesArr.push(obj.headsStartAt, // replace from index
             obj.tailsEndAt, // replace upto index
             replacementVal);
@@ -4939,7 +5021,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath) {
           var _replacementVal = wrap(resolvedValue, opts, dontWrapTheseVars, breadCrumbPath, newPath, varName.trim()); // replacement value
 
 
-          if (isStr$3(_replacementVal)) {
+          if (isStr(_replacementVal)) {
             // 2. submit to be replaced
             finalRangesArr.push(obj.headsStartAt, // replace from index
             obj.tailsEndAt, // replace upto index
@@ -5033,15 +5115,15 @@ function jVar(input, originalOpts) {
     throw new Error("json-variables/jVar(): [THROW_ID_01] Alas! Inputs are missing!");
   }
 
-  if (!isObj$2(input)) {
+  if (!isObj(input)) {
     throw new TypeError("json-variables/jVar(): [THROW_ID_02] Alas! The input must be a plain object! Currently it's: " + (Array.isArray(input) ? "array" : typeof input));
   }
 
-  if (originalOpts && !isObj$2(originalOpts)) {
+  if (originalOpts && !isObj(originalOpts)) {
     throw new TypeError("json-variables/jVar(): [THROW_ID_03] Alas! An Optional Options Object must be a plain object! Currently it's: " + (Array.isArray(originalOpts) ? "array" : typeof originalOpts));
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$6), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
   if (!opts.dontWrapVars) {
     opts.dontWrapVars = [];
@@ -5053,7 +5135,7 @@ function jVar(input, originalOpts) {
   var culpritIndex;
 
   if (opts.dontWrapVars.length > 0 && !opts.dontWrapVars.every(function (el, idx) {
-    if (!isStr$3(el)) {
+    if (!isStr(el)) {
       culpritVal = el;
       culpritIndex = idx;
       return false;
@@ -5110,7 +5192,7 @@ function jVar(input, originalOpts) {
 
   return traverse(input, function (key, val, innerObj) {
 
-    if (existy$1(val) && containsHeadsOrTails(key, opts)) {
+    if (existy(val) && containsHeadsOrTails(key, opts)) {
       throw new Error("json-variables/jVar(): [THROW_ID_15] Alas! Object keys can't contain variables!\nPlease check the following key: " + key);
     } // * * *
     // Get the current values which are being traversed by ast-monkey:
@@ -5141,12 +5223,12 @@ function jVar(input, originalOpts) {
         return current;
       }
 
-      throw new Error("json-variables/jVar(): [THROW_ID_16] Alas! While processing the input, we stumbled upon " + trimIfString(current) + " which is equal to " + (trimIfString(current) === trimIfString(opts.heads) ? "heads" : "") + (trimIfString(current) === trimIfString(opts.tails) ? "tails" : "") + (isStr$3(opts.headsNoWrap) && trimIfString(current) === trimIfString(opts.headsNoWrap) ? "headsNoWrap" : "") + (isStr$3(opts.tailsNoWrap) && trimIfString(current) === trimIfString(opts.tailsNoWrap) ? "tailsNoWrap" : "") + ". If you wouldn't have set opts.noSingleMarkers to \"true\" this error would not happen and computer would have left the current element (" + trimIfString(current) + ") alone");
+      throw new Error("json-variables/jVar(): [THROW_ID_16] Alas! While processing the input, we stumbled upon " + trimIfString(current) + " which is equal to " + (trimIfString(current) === trimIfString(opts.heads) ? "heads" : "") + (trimIfString(current) === trimIfString(opts.tails) ? "tails" : "") + (isStr(opts.headsNoWrap) && trimIfString(current) === trimIfString(opts.headsNoWrap) ? "headsNoWrap" : "") + (isStr(opts.tailsNoWrap) && trimIfString(current) === trimIfString(opts.tailsNoWrap) ? "tailsNoWrap" : "") + ". If you wouldn't have set opts.noSingleMarkers to \"true\" this error would not happen and computer would have left the current element (" + trimIfString(current) + ") alone");
     } // *
     // Process the current node if it's a string and it contains heads / tails /
     // headsNoWrap / tailsNoWrap:
 
-    if (isStr$3(current) && containsHeadsOrTails(current, opts)) {
+    if (isStr(current) && containsHeadsOrTails(current, opts)) {
       // breadCrumbPath, the fifth argument is not passed as there're no previous paths
       return resolveString(input, current, innerObj.path, opts);
     } // otherwise, just return as it is. We're not going to touch plain objects/arrays,numbers/bools etc.
@@ -5157,9 +5239,9 @@ function jVar(input, originalOpts) {
   });
 }
 
-exports.defaults = defaults$6;
+exports.defaults = defaults;
 exports.jVar = jVar;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

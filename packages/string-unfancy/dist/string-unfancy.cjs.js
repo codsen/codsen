@@ -17,10 +17,10 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var he__default = /*#__PURE__*/_interopDefaultLegacy(he);
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
 /* eslint quote-props:0 */
-var version$1 = version;
+var version = version$1;
 
 function existy(x) {
   return x != null;
@@ -77,4 +77,4 @@ function unfancy(str) {
 }
 
 exports.unfancy = unfancy;
-exports.version = version$1;
+exports.version = version;

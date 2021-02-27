@@ -1010,7 +1010,7 @@ function noop() {// No operation performed.
 
 var lodash_uniq = uniq;
 
-var defaults = {
+var defaults$2 = {
   strictlyTwoElementsInRangeArrays: false,
   progressFn: null
 };
@@ -1022,7 +1022,7 @@ function rSort(arrOfRanges, originalOptions) {
   } // fill any settings with defaults if missing:
 
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOptions); // arrOfRanges validation
+  var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOptions); // arrOfRanges validation
 
 
   var culpritsIndex;
@@ -1360,10 +1360,10 @@ function rApply(str, originalRangesArr, _progressFn) {
   return str;
 }
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
-var version$1 = version;
-var defaults$2 = {
+var version = version$1;
+var defaults = {
   wildcard: "*",
   dedupePlease: true
 };
@@ -1381,7 +1381,7 @@ function groupStr(originalArr, originalOpts) {
     return {};
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
   var arr = opts.dedupePlease ? lodash_uniq(originalArr) : Array.from(originalArr); // traverse the given array
 
@@ -1473,7 +1473,7 @@ function groupStr(originalArr, originalOpts) {
 }
 
 exports.groupStr = groupStr;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

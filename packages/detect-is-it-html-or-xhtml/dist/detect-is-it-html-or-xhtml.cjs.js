@@ -11,9 +11,9 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function detectIsItHTMLOrXhtml(input) {
   function existy(x) {
@@ -75,4 +75,4 @@ function detectIsItHTMLOrXhtml(input) {
 }
 
 exports.detectIsItHTMLOrXhtml = detectIsItHTMLOrXhtml;
-exports.version = version$1;
+exports.version = version;

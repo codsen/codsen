@@ -7,4 +7,4 @@
  * Homepage: https://codsen.com/os/helga/
  */
 
-const t="1.3.5",e={targetJSON:!1},n={b:"\b",f:"\f",n:"\n",r:"\r",t:"\t",v:"\v","'":"'",'"':'"',"\\":"\\",0:"\0"};function r(t){return t.replace(/\\([bfnrtv'"\\0])/g,(t=>n[t]||t&&(t.startsWith("\\")?n[t.slice(1)]:"")))}function i(t,n){const i={...e,...n},s=r(t);let c=r(t);return i.targetJSON&&(c=JSON.stringify(c.replace(/\t/g,"  "),null,0),c=c.slice(1,c.length-1)),{minified:c,beautified:s}}export{e as defaults,i as helga,t as version};
+const t="1.3.5",e={targetJSON:!1},n={b:"\b",f:"\f",n:"\n",r:"\r",t:"\t",v:"\v","'":"'",'"':'"',"\\":"\\",0:"\0"};function r(t){return t.replace(/\\([bfnrtv'"\\0])/g,(t=>n[t]||t&&(t.startsWith("\\")?n[t.slice(1)]:"")))}function i(t,n){const i={...e,...n},c=r(t);let f=r(t);return i.targetJSON&&(f=JSON.stringify(f.replace(/\t/g,"  "),null,0),f=f.slice(1,f.length-1)),{minified:f,beautified:c}}export{e as defaults,i as helga,t as version};

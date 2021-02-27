@@ -62,9 +62,9 @@ function _objectSpread2(target) {
   return target;
 }
 
-var version = "3.0.5";
+var version$1 = "3.0.5";
 
-var version$1 = version;
+var version = version$1;
 var defaults = {
   lineLength: 500
 };
@@ -159,7 +159,7 @@ function within(str, originalOpts) {
 }
 
 exports.defaults = defaults;
-exports.version = version$1;
+exports.version = version;
 exports.within = within;
 
 Object.defineProperty(exports, '__esModule', { value: true });

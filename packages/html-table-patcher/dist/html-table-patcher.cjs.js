@@ -21,9 +21,9 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
-var version$1 = version;
+var version = version$1;
 var htmlCommentRegex = /<!--([\s\S]*?)-->/g;
 var ranges = new rangesPush.Ranges();
 
@@ -258,4 +258,4 @@ function patcher(str, generalOpts) {
 
 exports.defaults = defaults;
 exports.patcher = patcher;
-exports.version = version$1;
+exports.version = version;

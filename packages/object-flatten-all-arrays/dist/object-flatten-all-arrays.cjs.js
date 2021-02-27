@@ -23,9 +23,9 @@ var merge__default = /*#__PURE__*/_interopDefaultLegacy(merge);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
-var version = "5.0.5";
+var version$1 = "5.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function flattenAllArrays(originalIncommingObj, originalOpts) {
   //
@@ -99,4 +99,4 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
 }
 
 exports.flattenAllArrays = flattenAllArrays;
-exports.version = version$1;
+exports.version = version;

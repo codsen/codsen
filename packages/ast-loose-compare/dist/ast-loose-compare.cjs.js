@@ -18,9 +18,9 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-var version$1 = version; // we use internal function to shield the third input arg from the outside api
+var version = version$1; // we use internal function to shield the third input arg from the outside api
 
 function internalCompare(bigObj, smallObj, res) {
   function existy(x) {
@@ -134,4 +134,4 @@ function looseCompare(bigObj, smallObj) {
 }
 
 exports.looseCompare = looseCompare;
-exports.version = version$1;
+exports.version = version;

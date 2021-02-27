@@ -17,12 +17,13 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-var version$1 = version;
+var version = version$1;
 var defaults = {
   offset: 0,
-  offsetFillerCharacter: " "
+  offsetFillerCharacter: " " // how many characters str2 is to the right? (negative means it's off to the left)
+
 };
 
 function overlap(str1, str2, originalOpts) {
@@ -84,4 +85,4 @@ function overlap(str1, str2, originalOpts) {
 }
 
 exports.overlap = overlap;
-exports.version = version$1;
+exports.version = version;

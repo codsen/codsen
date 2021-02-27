@@ -7,9 +7,9 @@
  * Homepage: https://codsen.com/os/email-all-chars-within-ascii/
  */
 
-var version = "3.0.5";
+var version$1 = "3.0.5";
 
-const version$1 = version;
+const version = version$1;
 const defaults = {
   lineLength: 500
 };
@@ -104,4 +104,4 @@ function within(str, originalOpts) {
   return res;
 }
 
-export { defaults, version$1 as version, within };
+export { defaults, version, within };

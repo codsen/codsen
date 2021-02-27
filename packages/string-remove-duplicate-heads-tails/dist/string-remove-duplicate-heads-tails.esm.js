@@ -14,9 +14,9 @@ import { Ranges } from 'ranges-push';
 import { rApply } from 'ranges-apply';
 import { trimSpaces } from 'string-trim-spaces-only';
 
-var version = "5.0.5";
+var version$1 = "5.0.5";
 
-const version$1 = version;
+const version = version$1;
 const defaults = {
   heads: ["{{"],
   tails: ["}}"]
@@ -342,4 +342,4 @@ function remDup(str, originalOpts) {
   return str.trim();
 }
 
-export { defaults, remDup, version$1 as version };
+export { defaults, remDup, version };

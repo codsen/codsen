@@ -10,10 +10,10 @@
 import clone from 'lodash.clonedeep';
 import isObj from 'lodash.isplainobject';
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
-const version$1 = version;
+const version = version$1;
 
 function setAllValuesTo(inputOriginal, valueOriginal) {
   let value;
@@ -47,4 +47,4 @@ function setAllValuesTo(inputOriginal, valueOriginal) {
   return input;
 }
 
-export { setAllValuesTo, version$1 as version };
+export { setAllValuesTo, version };

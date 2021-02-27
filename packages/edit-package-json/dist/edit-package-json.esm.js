@@ -10,9 +10,9 @@
 import { left, right, chompLeft } from 'string-left-right';
 import { rApply } from 'ranges-apply';
 
-var version = "0.3.5";
+var version$1 = "0.3.5";
 
-const version$1 = version;
+const version = version$1;
 
 function isStr(something) {
   return typeof something === "string";
@@ -530,4 +530,4 @@ function del(str, path) {
   });
 }
 
-export { del, set, version$1 as version };
+export { del, set, version };

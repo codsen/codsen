@@ -7,9 +7,9 @@
  * Homepage: https://codsen.com/os/ranges-is-index-within/
  */
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-const version$1 = version;
+const version = version$1;
 const defaults = {
   inclusiveRangeEnds: false,
   returnMatchedRangeInsteadOfTrue: false
@@ -35,4 +35,4 @@ function isIndexWithin(originalIndex, rangesArr, originalOpts) {
   return rangesArr.some(arr => opts.inclusiveRangeEnds ? originalIndex >= arr[0] && originalIndex <= arr[1] : originalIndex > arr[0] && originalIndex < arr[1]);
 }
 
-export { defaults, isIndexWithin, version$1 as version };
+export { defaults, isIndexWithin, version };

@@ -37,9 +37,9 @@ function extraRequirements(str, idx) {
   // slash-closing follows, but no opening
 }
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function isOpening(str, idx, originalOpts) {
   if (idx === void 0) {
@@ -157,4 +157,4 @@ function isOpening(str, idx, originalOpts) {
 
 exports.defaults = defaultOpts;
 exports.isOpening = isOpening;
-exports.version = version$1;
+exports.version = version;

@@ -10,9 +10,9 @@
 import { combinations } from 'object-boolean-combinations';
 import clone from 'lodash.clonedeep';
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-const version$1 = version;
+const version = version$1;
 
 function mixer(ref = {}, defaultsObj = {}) {
   if (ref && typeof ref !== "object") {
@@ -60,4 +60,4 @@ function mixer(ref = {}, defaultsObj = {}) {
   return res;
 }
 
-export { mixer, version$1 as version };
+export { mixer, version };

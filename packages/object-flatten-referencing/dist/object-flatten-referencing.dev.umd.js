@@ -2274,10 +2274,12 @@ var defaults = {
   // add <br /> between the rows?
   mergeWithoutTrailingBrIfLineContainsBr: true,
   // don't add another, trailing-one
-  enforceStrictKeyset: true
+  enforceStrictKeyset: true // are you allowed to pass-in any unrecognised
+  // keys in an options object?
+
 };
 
-function isStr(something) {
+function isStr$1(something) {
   return typeof something === "string";
 }
 
@@ -2303,7 +2305,7 @@ function flattenObject(objOrig, originalOpts) {
         }));
       }
 
-      if (isStr(obj[key])) {
+      if (isStr$1(obj[key])) {
         res.push(key + opts.objectKeyAndValueJoinChar + obj[key]);
       }
     });
@@ -2333,7 +2335,7 @@ function flattenArr(arrOrig, originalOpts, wrap, joinArraysUsingBrs) {
   if (arr.length > 0) {
     if (joinArraysUsingBrs) {
       for (var i = 0, len = arr.length; i < len; i++) {
-        if (isStr(arr[i])) {
+        if (isStr$1(arr[i])) {
           var lineBreak = void 0;
           lineBreak = "";
 
@@ -2343,7 +2345,7 @@ function flattenArr(arrOrig, originalOpts, wrap, joinArraysUsingBrs) {
 
           res += lineBreak + (wrap ? opts.wrapHeadsWith : "") + arr[i] + (wrap ? opts.wrapTailsWith : "");
         } else if (Array.isArray(arr[i])) {
-          if (arr[i].length > 0 && arr[i].every(isStr)) {
+          if (arr[i].length > 0 && arr[i].every(isStr$1)) {
             (function () {
               var lineBreak = "";
 
@@ -2387,7 +2389,7 @@ function flattenArr(arrOrig, originalOpts, wrap, joinArraysUsingBrs) {
 }
 
 function arrayiffyString(something) {
-  if (isStr(something)) {
+  if (isStr$1(something)) {
     if (something.length > 0) {
       return [something];
     }
@@ -2398,15 +2400,15 @@ function arrayiffyString(something) {
   return something;
 }
 
-var version = "5.0.5";
+var version$1 = "5.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function existy(x) {
   return x != null;
 }
 
-function isStr$1(something) {
+function isStr(something) {
   return typeof something === "string";
 }
 
@@ -2487,7 +2489,7 @@ function flattenReferencing(originalInput1, originalReference1, opts1) {
 
           if (existy(reference[key]) || !existy(reference[key]) && opts.whatToDoWhenReferenceIsMissing === 2) {
             if (Array.isArray(input[key])) {
-              if (opts.whatToDoWhenReferenceIsMissing === 2 || isStr$1(reference[key])) {
+              if (opts.whatToDoWhenReferenceIsMissing === 2 || isStr(reference[key])) {
                 // reference is string
                 // that's array vs. string clash:
                 input[key] = flattenArr(input[key], opts, wrap, joinArraysUsingBrs);
@@ -2519,7 +2521,7 @@ function flattenReferencing(originalInput1, originalReference1, opts1) {
                   var allOK = true;
                   input[key].forEach(function (oneOfElements) {
                     // check that child arrays contain only string elements
-                    if (Array.isArray(oneOfElements) && !oneOfElements.every(isStr$1)) {
+                    if (Array.isArray(oneOfElements) && !oneOfElements.every(isStr)) {
                       allOK = false;
                     }
                   });
@@ -2532,7 +2534,7 @@ function flattenReferencing(originalInput1, originalReference1, opts1) {
                 input[key] = ofr(input[key], reference[key], opts, wrap, joinArraysUsingBrs, currentPath);
               }
             } else if (lodash_isplainobject(input[key])) {
-              if (opts.whatToDoWhenReferenceIsMissing === 2 || isStr$1(reference[key])) {
+              if (opts.whatToDoWhenReferenceIsMissing === 2 || isStr(reference[key])) {
                 input[key] = flattenArr(flattenObject(input[key], opts), opts, wrap, joinArraysUsingBrs);
               } else if (!wrap) {
                 // when calling recursively, the parent key might get
@@ -2548,7 +2550,7 @@ function flattenReferencing(originalInput1, originalReference1, opts1) {
               } else {
                 input[key] = ofr(input[key], reference[key], opts, wrap, joinArraysUsingBrs, currentPath);
               }
-            } else if (isStr$1(input[key])) {
+            } else if (isStr(input[key])) {
               input[key] = ofr(input[key], reference[key], opts, wrap, joinArraysUsingBrs, currentPath);
             }
           } else if (typeof input[key] !== typeof reference[key]) {
@@ -2569,10 +2571,10 @@ function flattenReferencing(originalInput1, originalReference1, opts1) {
             input[i] = ofr(input[i], reference[0], opts, wrap, joinArraysUsingBrs, currentRoot + "[" + i + "]");
           }
         });
-      } else if (isStr$1(reference)) {
+      } else if (isStr(reference)) {
         input = flattenArr(input, opts, wrap, joinArraysUsingBrs);
       }
-    } else if (isStr$1(input)) {
+    } else if (isStr(input)) {
       if (input.length > 0 && (opts.wrapHeadsWith || opts.wrapTailsWith)) {
         if (!opts.preventDoubleWrapping || (opts.wrapHeadsWith === "" || !strIndexesOfPlus(input, opts.wrapHeadsWith.trim()).length) && (opts.wrapTailsWith === "" || !strIndexesOfPlus(input, opts.wrapTailsWith.trim()).length)) {
           input = (wrap ? opts.wrapHeadsWith : "") + input + (wrap ? opts.wrapTailsWith : "");
@@ -2591,7 +2593,7 @@ exports.defaults = defaults;
 exports.flattenArr = flattenArr;
 exports.flattenObject = flattenObject;
 exports.flattenReferencing = flattenReferencing;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

@@ -2059,9 +2059,9 @@ var lodash_clonedeep = createCommonjsModule(function (module, exports) {
   module.exports = cloneDeep;
 });
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
-var version$1 = version;
+var version = version$1;
 var RAWNBSP = "\xA0"; // separates the value from flags
 
 function x(something) {
@@ -2802,7 +2802,7 @@ exports.right = right;
 exports.rightSeq = rightSeq;
 exports.rightStopAtNewLines = rightStopAtNewLines;
 exports.rightStopAtRawNbsp = rightStopAtRawNbsp;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

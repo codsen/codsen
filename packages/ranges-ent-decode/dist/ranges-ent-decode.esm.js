@@ -11,9 +11,9 @@ import he from 'he';
 import { rMerge } from 'ranges-merge';
 import isObj from 'lodash.isplainobject';
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
-const version$1 = version;
+const version = version$1;
 
 function chomp(str) {
   // eslint-disable-next-line no-param-reassign
@@ -86,4 +86,4 @@ function rEntDecode(str, originalOpts) {
   return rMerge(rangesArr);
 }
 
-export { defaults, rEntDecode, version$1 as version };
+export { defaults, rEntDecode, version };

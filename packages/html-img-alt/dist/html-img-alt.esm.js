@@ -12,9 +12,9 @@ import { rApply } from 'ranges-apply';
 import { Ranges } from 'ranges-push';
 import { checkTypesMini } from 'check-types-mini';
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-const version$1 = version;
+const version = version$1;
 
 function isObj(something) {
   return something && typeof something === "object" && !Array.isArray(something);
@@ -369,4 +369,4 @@ function alts(str, originalOpts) {
   return str;
 }
 
-export { alts, version$1 as version };
+export { alts, version };

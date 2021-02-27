@@ -22,9 +22,9 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var he__default = /*#__PURE__*/_interopDefaultLegacy(he);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function chomp(str) {
   // eslint-disable-next-line no-param-reassign
@@ -97,4 +97,4 @@ function rEntDecode(str, originalOpts) {
 
 exports.defaults = defaults;
 exports.rEntDecode = rEntDecode;
-exports.version = version$1;
+exports.version = version;

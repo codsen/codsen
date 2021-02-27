@@ -164,10 +164,10 @@ var Counter = /*#__PURE__*/function () {
   return Counter;
 }();
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
-var version$1 = version;
+var version = version$1;
 
 function parseTap(something) {
 
@@ -217,4 +217,4 @@ function parseTap(something) {
 }
 
 exports.parseTap = parseTap;
-exports.version = version$1;
+exports.version = version;

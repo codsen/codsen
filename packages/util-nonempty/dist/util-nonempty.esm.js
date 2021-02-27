@@ -9,10 +9,10 @@
 
 import isPlainObject from 'lodash.isplainobject';
 
-var version = "3.0.5";
+var version$1 = "3.0.5";
 
 /* eslint @typescript-eslint/no-explicit-any:0, @typescript-eslint/explicit-module-boundary-types:0 */
-const version$1 = version;
+const version = version$1;
 
 function nonEmpty(input) {
   // deliberate ==, catches undefined and null
@@ -31,4 +31,4 @@ function nonEmpty(input) {
   return typeof input === "number";
 }
 
-export { nonEmpty, version$1 as version };
+export { nonEmpty, version };

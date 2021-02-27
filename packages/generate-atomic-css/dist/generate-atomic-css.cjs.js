@@ -18,7 +18,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
-var version = "1.4.5";
+var version$1 = "1.4.5";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
@@ -539,7 +539,7 @@ function prepConfig(str, progressFn, progressFrom, progressTo, trim, generatedCo
   }), trim).join("\n");
 }
 
-var version$1 = version;
+var version = version$1;
 var defaults = {
   includeConfig: true,
   includeHeadsAndTails: true,
@@ -741,4 +741,4 @@ exports.defaults = defaults;
 exports.extractFromToSource = extractFromToSource;
 exports.genAtomic = genAtomic;
 exports.headsAndTails = headsAndTails;
-exports.version = version$1;
+exports.version = version;

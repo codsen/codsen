@@ -23,10 +23,10 @@ var pull__default = /*#__PURE__*/_interopDefaultLegacy(pull);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
 /* eslint no-bitwise:0, @typescript-eslint/explicit-module-boundary-types:0, @typescript-eslint/ban-types:0 */
-var version$1 = version;
+var version = version$1;
 
 function combinations(originalIncomingObject, originalOverrideObject) {
   if (originalOverrideObject === void 0) {
@@ -114,4 +114,4 @@ function combinations(originalIncomingObject, originalOverrideObject) {
 }
 
 exports.combinations = combinations;
-exports.version = version$1;
+exports.version = version;

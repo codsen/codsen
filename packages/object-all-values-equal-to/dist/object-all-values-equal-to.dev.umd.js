@@ -2137,9 +2137,9 @@ var lodash_isequal = createCommonjsModule(function (module, exports) {
   module.exports = isEqual;
 });
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-var version$1 = version; // T H E   M A I N   F U N C T I O N   T H A T   D O E S   T H E   J O B
+var version = version$1; // T H E   M A I N   F U N C T I O N   T H A T   D O E S   T H E   J O B
 // -----------------------------------------------------------------------------
 
 function allValuesEqualTo(input, value, opts) {
@@ -2214,7 +2214,7 @@ function allEq(inputOriginal, valueOriginal, originalOpts) {
 }
 
 exports.allEq = allEq;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

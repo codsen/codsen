@@ -17,9 +17,9 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function processCommaSep(str, originalOpts) { // insurance:
 
@@ -221,4 +221,4 @@ function processCommaSep(str, originalOpts) { // insurance:
 }
 
 exports.processCommaSep = processCommaSep;
-exports.version = version$1;
+exports.version = version;

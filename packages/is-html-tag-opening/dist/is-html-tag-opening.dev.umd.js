@@ -101,7 +101,8 @@ var defaults = {
   trimCharsBeforeMatching: [],
   maxMismatches: 0,
   firstMustMatch: false,
-  lastMustMatch: false
+  lastMustMatch: false,
+  hungry: false
 };
 
 var defaultGetNextIdx = function defaultGetNextIdx(index) {
@@ -128,9 +129,22 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 
   if (position >= str.length && !special) {
     return false;
-  }
+  } // The "charsToCheckCount" varies, it decreases with skipped characters,
+  // as long as "maxMismatches" allows. It's not the count of how many
+  // characters de-facto have been matched from the source.
 
-  var charsToCheckCount = special ? 1 : whatToMatchVal.length;
+
+  var charsToCheckCount = special ? 1 : whatToMatchVal.length; // this is the counter of real characters matched. It is not reduced
+  // from the holes in matched. For example, if source is "abc" and
+  // maxMismatches=1 and we have "ac", result of the match will be true,
+  // the following var will be equal to 2, meaning we matched two
+  // characters:
+
+  var charsMatchedTotal = 0; // used to catch frontal false positives, where too-eager matching
+  // depletes the mismatches allowance before precisely matching the exact
+  // string that follows, yielding too early false-positive start
+
+  var patienceReducedBeforeFirstMatch = false;
   var lastWasMismatched = false; // value is "false" or index of where it was activated
   // if no character was ever matched, even through if opts.maxMismatches
   // would otherwise allow to skip characters, this will act as a last
@@ -139,11 +153,29 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 
   var atLeastSomethingWasMatched = false;
   var patience = opts.maxMismatches;
-  var i = position;
+  var i = position; // internal-use flag, not the same as "atLeastSomethingWasMatched":
+
   var somethingFound = false; // these two drive opts.firstMustMatch and opts.lastMustMatch:
 
   var firstCharacterMatched = false;
-  var lastCharacterMatched = false;
+  var lastCharacterMatched = false; // bail early if there's whitespace in front, imagine:
+  // abc important}
+  //   ^
+  //  start, match ["!important"], matchRightIncl()
+  //
+  // in case above, "c" consumed 1 patience, let's say 1 is left,
+  // we stumble upon "i" where "!" is missing. "c" is false start.
+
+  function whitespaceInFrontOfFirstChar() {
+    return (// it's a first letter match
+      charsMatchedTotal === 1 && // and character in front exists
+      // str[i - 1] &&
+      // and it's whitespace
+      // !str[i - 1].trim() &&
+      // some patience has been consumed already
+      patience < opts.maxMismatches - 1
+    );
+  }
 
   while (str[i]) {
     var nextIdx = getNextIdx(i);
@@ -182,17 +214,50 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 
 
       if (charsToCheckCount === whatToMatchVal.length) {
-        firstCharacterMatched = true;
+        firstCharacterMatched = true; // now, if the first character was matched and yet, patience was
+        // reduced already, this means there's a false beginning in front
+
+        if (patience !== opts.maxMismatches) {
+          return false;
+        }
       } else if (charsToCheckCount === 1) {
         lastCharacterMatched = true;
       }
 
       charsToCheckCount -= 1;
+      charsMatchedTotal++; // bail early if there's whitespace in front, imagine:
+      // abc important}
+      //   ^
+      //  start, match ["!important"], matchRightIncl()
+      //
+      // in case above, "c" consumed 1 patience, let's say 1 is left,
+      // we stumble upon "i" where "!" is missing. "c" is false start.
 
-      if (charsToCheckCount < 1) {
-        return i;
+      if (whitespaceInFrontOfFirstChar()) {
+        return false;
+      }
+
+      if (!charsToCheckCount) {
+        return (// either it was not a perfect match
+          charsMatchedTotal !== whatToMatchVal.length || // or it was, and in that case, no patience was reduced
+          // (if a perfect match was found, yet some "patience" was reduced,
+          // that means we have false positive characters)
+          patience === opts.maxMismatches || // mind you, it can be a case of rogue characters in-between
+          // the what was matched, imagine:
+          // source: "abxcd", matching ["bc"], maxMismatches=1
+          // in above case, charsMatchedTotal === 2 and whatToMatchVal ("bc") === 2
+          // - we want to exclude cases of frontal false positives, like:
+          // source: "xy abc", match "abc", maxMismatches=2, start at 0
+          //          ^
+          //       match form here to the right
+          !patienceReducedBeforeFirstMatch ? i : false
+        );
       }
     } else {
+      if (!patienceReducedBeforeFirstMatch && !charsMatchedTotal) {
+        patienceReducedBeforeFirstMatch = true;
+      }
+
       if (opts.maxMismatches && patience && i) {
         patience -= 1; // the bigger the maxMismatches, the further away we must check for
         // alternative matches
@@ -204,11 +269,27 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 
           if (nextCharToCompareAgainst && (!opts.i && str[i] === nextCharToCompareAgainst || opts.i && str[i].toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && ( // ensure we're not skipping the first enforced character:
           !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+            charsMatchedTotal++; // bail early if there's whitespace in front, imagine:
+            // abc important}
+            //   ^
+            //  start, match ["!important"], matchRightIncl()
+            //
+            // in case above, "c" consumed 1 patience, let's say 1 is left,
+            // we stumble upon "i" where "!" is missing. "c" is false start.
+
+            if (whitespaceInFrontOfFirstChar()) {
+              return false;
+            }
+
             charsToCheckCount -= 2;
             somethingFound = true;
             break;
           } else if (nextCharInSource && nextCharToCompareAgainst && (!opts.i && nextCharInSource === nextCharToCompareAgainst || opts.i && nextCharInSource.toLowerCase() === nextCharToCompareAgainst.toLowerCase()) && ( // ensure we're not skipping the first enforced character:
           !opts.firstMustMatch || charsToCheckCount !== whatToMatchVal.length)) {
+            if (!charsMatchedTotal && !opts.hungry) {
+              return false;
+            }
+
             charsToCheckCount -= 1;
             somethingFound = true;
             break;
@@ -2487,9 +2568,9 @@ function extraRequirements(str, idx) {
   // slash-closing follows, but no opening
 }
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function isOpening(str, idx, originalOpts) {
   if (idx === void 0) {
@@ -2607,7 +2688,7 @@ function isOpening(str, idx, originalOpts) {
 
 exports.defaults = defaultOpts;
 exports.isOpening = isOpening;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

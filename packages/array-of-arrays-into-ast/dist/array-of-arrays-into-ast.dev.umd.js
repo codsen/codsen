@@ -1965,15 +1965,15 @@ var lodash_clonedeep = createCommonjsModule(function (module, exports) {
  */
 
 /** Used as references for various `Number` constants. */
-var INFINITY = 1 / 0,
+var INFINITY$1 = 1 / 0,
     MAX_SAFE_INTEGER = 9007199254740991,
     MAX_INTEGER = 1.7976931348623157e+308,
     NAN = 0 / 0;
 /** `Object#toString` result references. */
 
 var argsTag = '[object Arguments]',
-    funcTag = '[object Function]',
-    genTag = '[object GeneratorFunction]',
+    funcTag$1 = '[object Function]',
+    genTag$1 = '[object GeneratorFunction]',
     stringTag = '[object String]',
     symbolTag = '[object Symbol]';
 /** Used to match leading and trailing whitespace. */
@@ -2028,7 +2028,7 @@ function arrayMap(array, iteratee) {
  */
 
 
-function baseFindIndex(array, predicate, fromIndex, fromRight) {
+function baseFindIndex$1(array, predicate, fromIndex, fromRight) {
   var length = array.length,
       index = fromIndex + (fromRight ? 1 : -1);
 
@@ -2051,9 +2051,9 @@ function baseFindIndex(array, predicate, fromIndex, fromRight) {
  */
 
 
-function baseIndexOf(array, value, fromIndex) {
+function baseIndexOf$1(array, value, fromIndex) {
   if (value !== value) {
-    return baseFindIndex(array, baseIsNaN, fromIndex);
+    return baseFindIndex$1(array, baseIsNaN$1, fromIndex);
   }
 
   var index = fromIndex - 1,
@@ -2076,7 +2076,7 @@ function baseIndexOf(array, value, fromIndex) {
  */
 
 
-function baseIsNaN(value) {
+function baseIsNaN$1(value) {
   return value !== value;
 }
 /**
@@ -2127,7 +2127,7 @@ function baseValues(object, props) {
  */
 
 
-function overArg(func, transform) {
+function overArg$1(func, transform) {
   return function (arg) {
     return func(transform(arg));
   };
@@ -2135,23 +2135,23 @@ function overArg(func, transform) {
 /** Used for built-in method references. */
 
 
-var objectProto = Object.prototype;
+var objectProto$2 = Object.prototype;
 /** Used to check objects for own properties. */
 
-var hasOwnProperty = objectProto.hasOwnProperty;
+var hasOwnProperty$2 = objectProto$2.hasOwnProperty;
 /**
  * Used to resolve the
  * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
  * of values.
  */
 
-var objectToString = objectProto.toString;
+var objectToString$2 = objectProto$2.toString;
 /** Built-in value references. */
 
-var propertyIsEnumerable = objectProto.propertyIsEnumerable;
+var propertyIsEnumerable = objectProto$2.propertyIsEnumerable;
 /* Built-in method references for those with the same name as other `lodash` methods. */
 
-var nativeKeys = overArg(Object.keys, Object),
+var nativeKeys = overArg$1(Object.keys, Object),
     nativeMax = Math.max;
 /**
  * Creates an array of the enumerable property names of the array-like `value`.
@@ -2170,7 +2170,7 @@ function arrayLikeKeys(value, inherited) {
       skipIndexes = !!length;
 
   for (var key in value) {
-    if ((inherited || hasOwnProperty.call(value, key)) && !(skipIndexes && (key == 'length' || isIndex(key, length)))) {
+    if ((inherited || hasOwnProperty$2.call(value, key)) && !(skipIndexes && (key == 'length' || isIndex(key, length)))) {
       result.push(key);
     }
   }
@@ -2194,7 +2194,7 @@ function baseKeys(object) {
   var result = [];
 
   for (var key in Object(object)) {
-    if (hasOwnProperty.call(object, key) && key != 'constructor') {
+    if (hasOwnProperty$2.call(object, key) && key != 'constructor') {
       result.push(key);
     }
   }
@@ -2226,7 +2226,7 @@ function isIndex(value, length) {
 
 function isPrototype(value) {
   var Ctor = value && value.constructor,
-      proto = typeof Ctor == 'function' && Ctor.prototype || objectProto;
+      proto = typeof Ctor == 'function' && Ctor.prototype || objectProto$2;
   return value === proto;
 }
 /**
@@ -2270,7 +2270,7 @@ function includes(collection, value, fromIndex, guard) {
     fromIndex = nativeMax(length + fromIndex, 0);
   }
 
-  return isString(collection) ? fromIndex <= length && collection.indexOf(value, fromIndex) > -1 : !!length && baseIndexOf(collection, value, fromIndex) > -1;
+  return isString(collection) ? fromIndex <= length && collection.indexOf(value, fromIndex) > -1 : !!length && baseIndexOf$1(collection, value, fromIndex) > -1;
 }
 /**
  * Checks if `value` is likely an `arguments` object.
@@ -2294,7 +2294,7 @@ function includes(collection, value, fromIndex, guard) {
 
 function isArguments(value) {
   // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
-  return isArrayLikeObject(value) && hasOwnProperty.call(value, 'callee') && (!propertyIsEnumerable.call(value, 'callee') || objectToString.call(value) == argsTag);
+  return isArrayLikeObject(value) && hasOwnProperty$2.call(value, 'callee') && (!propertyIsEnumerable.call(value, 'callee') || objectToString$2.call(value) == argsTag);
 }
 /**
  * Checks if `value` is classified as an `Array` object.
@@ -2349,7 +2349,7 @@ var isArray = Array.isArray;
  */
 
 function isArrayLike(value) {
-  return value != null && isLength(value.length) && !isFunction(value);
+  return value != null && isLength(value.length) && !isFunction$1(value);
 }
 /**
  * This method is like `_.isArrayLike` except that it also checks if `value`
@@ -2379,7 +2379,7 @@ function isArrayLike(value) {
 
 
 function isArrayLikeObject(value) {
-  return isObjectLike(value) && isArrayLike(value);
+  return isObjectLike$1(value) && isArrayLike(value);
 }
 /**
  * Checks if `value` is classified as a `Function` object.
@@ -2400,11 +2400,11 @@ function isArrayLikeObject(value) {
  */
 
 
-function isFunction(value) {
+function isFunction$1(value) {
   // The use of `Object#toString` avoids issues with the `typeof` operator
   // in Safari 8-9 which returns 'object' for typed array and other constructors.
-  var tag = isObject(value) ? objectToString.call(value) : '';
-  return tag == funcTag || tag == genTag;
+  var tag = isObject$1(value) ? objectToString$2.call(value) : '';
+  return tag == funcTag$1 || tag == genTag$1;
 }
 /**
  * Checks if `value` is a valid array-like length.
@@ -2464,7 +2464,7 @@ function isLength(value) {
  */
 
 
-function isObject(value) {
+function isObject$1(value) {
   var type = typeof value;
   return !!value && (type == 'object' || type == 'function');
 }
@@ -2494,7 +2494,7 @@ function isObject(value) {
  */
 
 
-function isObjectLike(value) {
+function isObjectLike$1(value) {
   return !!value && typeof value == 'object';
 }
 /**
@@ -2517,7 +2517,7 @@ function isObjectLike(value) {
 
 
 function isString(value) {
-  return typeof value == 'string' || !isArray(value) && isObjectLike(value) && objectToString.call(value) == stringTag;
+  return typeof value == 'string' || !isArray(value) && isObjectLike$1(value) && objectToString$2.call(value) == stringTag;
 }
 /**
  * Checks if `value` is classified as a `Symbol` primitive or object.
@@ -2539,7 +2539,7 @@ function isString(value) {
 
 
 function isSymbol(value) {
-  return typeof value == 'symbol' || isObjectLike(value) && objectToString.call(value) == symbolTag;
+  return typeof value == 'symbol' || isObjectLike$1(value) && objectToString$2.call(value) == symbolTag;
 }
 /**
  * Converts `value` to a finite number.
@@ -2573,7 +2573,7 @@ function toFinite(value) {
 
   value = toNumber(value);
 
-  if (value === INFINITY || value === -INFINITY) {
+  if (value === INFINITY$1 || value === -INFINITY$1) {
     var sign = value < 0 ? -1 : 1;
     return sign * MAX_INTEGER;
   }
@@ -2647,9 +2647,9 @@ function toNumber(value) {
     return NAN;
   }
 
-  if (isObject(value)) {
+  if (isObject$1(value)) {
     var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
-    value = isObject(other) ? other + '' : other;
+    value = isObject$1(other) ? other + '' : other;
   }
 
   if (typeof value != 'string') {
@@ -2743,11 +2743,11 @@ var LARGE_ARRAY_SIZE = 200;
 var HASH_UNDEFINED = '__lodash_hash_undefined__';
 /** Used as references for various `Number` constants. */
 
-var INFINITY$1 = 1 / 0;
+var INFINITY = 1 / 0;
 /** `Object#toString` result references. */
 
-var funcTag$1 = '[object Function]',
-    genTag$1 = '[object GeneratorFunction]';
+var funcTag = '[object Function]',
+    genTag = '[object GeneratorFunction]';
 /**
  * Used to match `RegExp`
  * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
@@ -2778,7 +2778,7 @@ var root = freeGlobal || freeSelf || Function('return this')();
 
 function arrayIncludes(array, value) {
   var length = array ? array.length : 0;
-  return !!length && baseIndexOf$1(array, value, 0) > -1;
+  return !!length && baseIndexOf(array, value, 0) > -1;
 }
 /**
  * This function is like `arrayIncludes` except that it accepts a comparator.
@@ -2816,7 +2816,7 @@ function arrayIncludesWith(array, value, comparator) {
  */
 
 
-function baseFindIndex$1(array, predicate, fromIndex, fromRight) {
+function baseFindIndex(array, predicate, fromIndex, fromRight) {
   var length = array.length,
       index = fromIndex + (fromRight ? 1 : -1);
 
@@ -2839,9 +2839,9 @@ function baseFindIndex$1(array, predicate, fromIndex, fromRight) {
  */
 
 
-function baseIndexOf$1(array, value, fromIndex) {
+function baseIndexOf(array, value, fromIndex) {
   if (value !== value) {
-    return baseFindIndex$1(array, baseIsNaN$1, fromIndex);
+    return baseFindIndex(array, baseIsNaN, fromIndex);
   }
 
   var index = fromIndex - 1,
@@ -2864,7 +2864,7 @@ function baseIndexOf$1(array, value, fromIndex) {
  */
 
 
-function baseIsNaN$1(value) {
+function baseIsNaN(value) {
   return value !== value;
 }
 /**
@@ -2902,7 +2902,7 @@ function getValue(object, key) {
  */
 
 
-function isHostObject(value) {
+function isHostObject$1(value) {
   // Many host objects are `Object` objects that can coerce to strings
   // despite having improperly defined `toString` methods.
   var result = false;
@@ -2936,7 +2936,7 @@ function setToArray(set) {
 
 
 var arrayProto = Array.prototype,
-    funcProto = Function.prototype,
+    funcProto$1 = Function.prototype,
     objectProto$1 = Object.prototype;
 /** Used to detect overreaching core-js shims. */
 
@@ -2950,7 +2950,7 @@ var maskSrcKey = function () {
 /** Used to resolve the decompiled source of functions. */
 
 
-var funcToString = funcProto.toString;
+var funcToString$1 = funcProto$1.toString;
 /** Used to check objects for own properties. */
 
 var hasOwnProperty$1 = objectProto$1.hasOwnProperty;
@@ -2963,7 +2963,7 @@ var hasOwnProperty$1 = objectProto$1.hasOwnProperty;
 var objectToString$1 = objectProto$1.toString;
 /** Used to detect if a method is native. */
 
-var reIsNative = RegExp('^' + funcToString.call(hasOwnProperty$1).replace(reRegExpChar, '\\$&').replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
+var reIsNative = RegExp('^' + funcToString$1.call(hasOwnProperty$1).replace(reRegExpChar, '\\$&').replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
 /** Built-in value references. */
 
 var splice = arrayProto.splice;
@@ -3380,11 +3380,11 @@ function assocIndexOf(array, key) {
 
 
 function baseIsNative(value) {
-  if (!isObject$1(value) || isMasked(value)) {
+  if (!isObject(value) || isMasked(value)) {
     return false;
   }
 
-  var pattern = isFunction$1(value) || isHostObject(value) ? reIsNative : reIsHostCtor;
+  var pattern = isFunction(value) || isHostObject$1(value) ? reIsNative : reIsHostCtor;
   return pattern.test(toSource(value));
 }
 /**
@@ -3462,7 +3462,7 @@ function baseUniq(array, iteratee, comparator) {
  */
 
 
-var createSet = !(Set && 1 / setToArray(new Set([, -0]))[1] == INFINITY$1) ? noop : function (values) {
+var createSet = !(Set && 1 / setToArray(new Set([, -0]))[1] == INFINITY) ? noop : function (values) {
   return new Set(values);
 };
 /**
@@ -3529,7 +3529,7 @@ function isMasked(func) {
 function toSource(func) {
   if (func != null) {
     try {
-      return funcToString.call(func);
+      return funcToString$1.call(func);
     } catch (e) {}
 
     try {
@@ -3617,11 +3617,11 @@ function eq(value, other) {
  */
 
 
-function isFunction$1(value) {
+function isFunction(value) {
   // The use of `Object#toString` avoids issues with the `typeof` operator
   // in Safari 8-9 which returns 'object' for typed array and other constructors.
-  var tag = isObject$1(value) ? objectToString$1.call(value) : '';
-  return tag == funcTag$1 || tag == genTag$1;
+  var tag = isObject(value) ? objectToString$1.call(value) : '';
+  return tag == funcTag || tag == genTag;
 }
 /**
  * Checks if `value` is the
@@ -3650,7 +3650,7 @@ function isFunction$1(value) {
  */
 
 
-function isObject$1(value) {
+function isObject(value) {
   var type = typeof value;
   return !!value && (type == 'object' || type == 'function');
 }
@@ -3692,7 +3692,7 @@ var objectTag = '[object Object]';
  * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
  */
 
-function isHostObject$1(value) {
+function isHostObject(value) {
   // Many host objects are `Object` objects that can coerce to strings
   // despite having improperly defined `toString` methods.
   var result = false;
@@ -3715,7 +3715,7 @@ function isHostObject$1(value) {
  */
 
 
-function overArg$1(func, transform) {
+function overArg(func, transform) {
   return function (arg) {
     return func(transform(arg));
   };
@@ -3723,27 +3723,27 @@ function overArg$1(func, transform) {
 /** Used for built-in method references. */
 
 
-var funcProto$1 = Function.prototype,
-    objectProto$2 = Object.prototype;
+var funcProto = Function.prototype,
+    objectProto = Object.prototype;
 /** Used to resolve the decompiled source of functions. */
 
-var funcToString$1 = funcProto$1.toString;
+var funcToString = funcProto.toString;
 /** Used to check objects for own properties. */
 
-var hasOwnProperty$2 = objectProto$2.hasOwnProperty;
+var hasOwnProperty = objectProto.hasOwnProperty;
 /** Used to infer the `Object` constructor. */
 
-var objectCtorString = funcToString$1.call(Object);
+var objectCtorString = funcToString.call(Object);
 /**
  * Used to resolve the
  * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
  * of values.
  */
 
-var objectToString$2 = objectProto$2.toString;
+var objectToString = objectProto.toString;
 /** Built-in value references. */
 
-var getPrototype = overArg$1(Object.getPrototypeOf, Object);
+var getPrototype = overArg(Object.getPrototypeOf, Object);
 /**
  * Checks if `value` is object-like. A value is object-like if it's not `null`
  * and has a `typeof` result of "object".
@@ -3769,7 +3769,7 @@ var getPrototype = overArg$1(Object.getPrototypeOf, Object);
  * // => false
  */
 
-function isObjectLike$1(value) {
+function isObjectLike(value) {
   return !!value && typeof value == 'object';
 }
 /**
@@ -3803,7 +3803,7 @@ function isObjectLike$1(value) {
 
 
 function isPlainObject(value) {
-  if (!isObjectLike$1(value) || objectToString$2.call(value) != objectTag || isHostObject$1(value)) {
+  if (!isObjectLike(value) || objectToString.call(value) != objectTag || isHostObject(value)) {
     return false;
   }
 
@@ -3813,8 +3813,8 @@ function isPlainObject(value) {
     return true;
   }
 
-  var Ctor = hasOwnProperty$2.call(proto, 'constructor') && proto.constructor;
-  return typeof Ctor == 'function' && Ctor instanceof Ctor && funcToString$1.call(Ctor) == objectCtorString;
+  var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
+  return typeof Ctor == 'function' && Ctor instanceof Ctor && funcToString.call(Ctor) == objectCtorString;
 }
 
 var lodash_isplainobject = isPlainObject;
@@ -4027,7 +4027,7 @@ var isMatch = function isMatch(input, pattern, options) {
 };
 matcher.isMatch = isMatch;
 
-var defaults = {
+var defaults$2 = {
   arrayVsArrayAllMustBeFound: "any",
   caseSensitive: true
 };
@@ -4041,7 +4041,7 @@ function includesWithGlob(originalInput, stringToFind, originalOpts) {
     return false; // because nothing can be found in it
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts);
 
   var input = typeof originalInput === "string" ? [originalInput] : Array.from(originalInput);
 
@@ -4807,10 +4807,10 @@ function externalApi(input1orig, input2orig, originalOpts) {
   }, input1orig, input2orig, originalOpts);
 }
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-var version$1 = version;
-var defaults$2 = {
+var version = version$1;
+var defaults = {
   dedupe: true
 };
 
@@ -4832,7 +4832,7 @@ function generateAst(input, originalOpts) {
     return {};
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
   var res = {};
   input.forEach(function (arr) {
@@ -4851,9 +4851,9 @@ function generateAst(input, originalOpts) {
   return sortObject(res);
 }
 
-exports.defaults = defaults$2;
+exports.defaults = defaults;
 exports.generateAst = generateAst;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

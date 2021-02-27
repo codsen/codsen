@@ -21,9 +21,9 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
-var version = "7.13.5";
+var version$1 = "7.13.5";
 
-var version$1 = version;
+var version = version$1;
 
 function existy(x) {
   return x != null;
@@ -344,4 +344,4 @@ exports.drop = drop;
 exports.find = find;
 exports.get = get;
 exports.set = set;
-exports.version = version$1;
+exports.version = version;

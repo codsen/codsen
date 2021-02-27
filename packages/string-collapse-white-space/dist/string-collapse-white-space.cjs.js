@@ -20,9 +20,9 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
-var version = "9.0.5";
+var version$1 = "9.0.5";
 
-var version$1 = version; // default set of options
+var version = version$1; // default set of options
 
 var defaults = {
   trimStart: true,
@@ -470,4 +470,4 @@ function collapse(str, originalOpts) { // f's
 exports.cbSchema = cbSchema;
 exports.collapse = collapse;
 exports.defaults = defaults;
-exports.version = version$1;
+exports.version = version;

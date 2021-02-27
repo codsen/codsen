@@ -62,7 +62,7 @@ function _objectSpread2(target) {
   return target;
 }
 
-var defaults = {
+var defaults$2 = {
   strictlyTwoElementsInRangeArrays: false,
   progressFn: null
 };
@@ -74,7 +74,7 @@ function rSort(arrOfRanges, originalOptions) {
   } // fill any settings with defaults if missing:
 
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOptions); // arrOfRanges validation
+  var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOptions); // arrOfRanges validation
 
 
   var culpritsIndex;
@@ -539,7 +539,7 @@ function isStr(something) {
   return typeof something === "string";
 }
 
-var defaults$2 = {
+var defaults = {
   limitToBeAddedWhitespace: false,
   limitLinebreaksCount: 1,
   mergeType: 1
@@ -550,7 +550,7 @@ var Ranges = /*#__PURE__*/function () {
   // O P T I O N S
   // =============
   function Ranges(originalOpts) {
-    var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts);
+    var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
     if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
       if (isStr(opts.mergeType) && opts.mergeType.trim() === "1") {
@@ -1148,9 +1148,9 @@ function trim(string, chars, guard) {
 
 var lodash_trim = trim;
 
-var version = "5.0.5";
+var version$1 = "5.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function remSep(str, originalOpts) {
   // vars
@@ -1297,7 +1297,7 @@ function remSep(str, originalOpts) {
 }
 
 exports.remSep = remSep;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

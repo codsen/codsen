@@ -90,9 +90,9 @@ function isIndexWithin(originalIndex, rangesArr, originalOpts) {
   });
 }
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function splitByW(str, originalOpts) {
   if (str === undefined) {
@@ -152,7 +152,7 @@ function splitByW(str, originalOpts) {
 }
 
 exports.splitByW = splitByW;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

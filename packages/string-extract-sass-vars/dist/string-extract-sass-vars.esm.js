@@ -7,9 +7,9 @@
  * Homepage: https://codsen.com/os/string-extract-sass-vars/
  */
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-const version$1 = version; // Takes string, SASS variables file and extracts the plain object of variables: key-value pairs
+const version = version$1; // Takes string, SASS variables file and extracts the plain object of variables: key-value pairs
 // As a bonus, it turns digit-only value strings into numbers.
 
 const BACKSLASH = "\u005C";
@@ -155,4 +155,4 @@ function extractVars(str, originalOpts) {
   return res;
 }
 
-export { defaults, extractVars, version$1 as version };
+export { defaults, extractVars, version };

@@ -11,9 +11,9 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var version = "3.0.5";
+var version$1 = "3.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function strIndexesOfPlus(str, searchValue, fromIndex) {
   if (fromIndex === void 0) {
@@ -76,4 +76,4 @@ function strIndexesOfPlus(str, searchValue, fromIndex) {
 }
 
 exports.strIndexesOfPlus = strIndexesOfPlus;
-exports.version = version$1;
+exports.version = version;

@@ -11,9 +11,9 @@ import { rApply } from 'ranges-apply';
 import { Ranges } from 'ranges-push';
 import trimChars from 'lodash.trim';
 
-var version = "5.0.5";
+var version$1 = "5.0.5";
 
-const version$1 = version;
+const version = version$1;
 
 function remSep(str, originalOpts) {
   // vars
@@ -159,4 +159,4 @@ function remSep(str, originalOpts) {
   return res;
 }
 
-export { remSep, version$1 as version };
+export { remSep, version };

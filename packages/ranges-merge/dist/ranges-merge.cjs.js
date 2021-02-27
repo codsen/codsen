@@ -18,9 +18,9 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
-var version = "7.0.5";
+var version$1 = "7.0.5";
 
-var version$1 = version;
+var version = version$1;
 var defaults = {
   mergeType: 1,
   progressFn: null,
@@ -158,4 +158,4 @@ function rMerge(arrOfRanges, originalOpts) {
 
 exports.defaults = defaults;
 exports.rMerge = rMerge;
-exports.version = version$1;
+exports.version = version;

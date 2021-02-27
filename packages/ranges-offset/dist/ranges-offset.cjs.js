@@ -11,9 +11,9 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function rOffset(arrOfRanges, offset) {
   if (offset === void 0) {
@@ -41,4 +41,4 @@ function rOffset(arrOfRanges, offset) {
 }
 
 exports.rOffset = rOffset;
-exports.version = version$1;
+exports.version = version;

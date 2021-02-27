@@ -24,9 +24,9 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
-var version = "5.0.5";
+var version$1 = "5.0.5";
 
-var version$1 = version;
+var version = version$1;
 var defaults = {
   heads: ["{{"],
   tails: ["}}"]
@@ -362,4 +362,4 @@ function remDup(str, originalOpts) {
 
 exports.defaults = defaults;
 exports.remDup = remDup;
-exports.version = version$1;
+exports.version = version;

@@ -11,10 +11,10 @@ import clone from 'lodash.clonedeep';
 import isObj from 'lodash.isplainobject';
 import { parent } from 'ast-monkey-util';
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types:0 */
-const version$1 = version;
+const version = version$1;
 /**
  * Utility library to traverse AST
  */
@@ -102,4 +102,4 @@ function traverse(tree1, cb1) {
   return traverseInner(tree1, cb1, {}, stop2);
 } // -----------------------------------------------------------------------------
 
-export { traverse, version$1 as version };
+export { traverse, version };

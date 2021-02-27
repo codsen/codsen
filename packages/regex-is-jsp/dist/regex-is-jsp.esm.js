@@ -7,12 +7,12 @@
  * Homepage: https://codsen.com/os/regex-is-jsp/
  */
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-const version$1 = version;
+const version = version$1;
 
 function isJSP() {
   return /<%|%>|<\s*jsp:|<\s*cms:|<\s*c:|\${\s*jsp/gi;
 }
 
-export { isJSP, version$1 as version };
+export { isJSP, version };

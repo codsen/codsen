@@ -22,9 +22,9 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function deleteKey(originalInput, originalOpts) {
   function existy(x) {
@@ -101,4 +101,4 @@ function deleteKey(originalInput, originalOpts) {
 }
 
 exports.deleteKey = deleteKey;
-exports.version = version$1;
+exports.version = version;

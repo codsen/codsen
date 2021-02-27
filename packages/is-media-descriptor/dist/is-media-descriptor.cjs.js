@@ -335,9 +335,9 @@ function loop(str, opts, res) {
   }
 }
 
-var version = "3.0.5";
+var version$1 = "3.0.5";
 
-var version$1 = version;
+var version = version$1;
 var defaults = {
   offset: 0
 }; // See https://drafts.csswg.org/mediaqueries/
@@ -637,4 +637,4 @@ function isMediaD(originalStr, originalOpts) {
 
 exports.defaults = defaults;
 exports.isMediaD = isMediaD;
-exports.version = version$1;
+exports.version = version;

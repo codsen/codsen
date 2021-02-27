@@ -10,9 +10,9 @@
 import { rMerge } from 'ranges-merge';
 import isregexp from 'lodash.isregexp';
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
-const version$1 = version;
+const version = version$1;
 
 function rRegex(regx, str, replacement) {
   // given regx validation
@@ -61,4 +61,4 @@ function rRegex(regx, str, replacement) {
   return null;
 }
 
-export { rRegex, version$1 as version };
+export { rRegex, version };

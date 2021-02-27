@@ -62,9 +62,9 @@ function _objectSpread2(target) {
   return target;
 }
 
-var version = "1.3.5";
+var version$1 = "1.3.5";
 
-var version$1 = version;
+var version = version$1;
 var defaults = {
   targetJSON: false
 };
@@ -120,7 +120,7 @@ function helga(str, originalOpts) {
 
 exports.defaults = defaults;
 exports.helga = helga;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

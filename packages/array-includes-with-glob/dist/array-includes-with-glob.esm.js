@@ -9,9 +9,9 @@
 
 import matcher from 'matcher';
 
-var version = "3.0.5";
+var version$1 = "3.0.5";
 
-const version$1 = version;
+const version = version$1;
 const defaults = {
   arrayVsArrayAllMustBeFound: "any",
   caseSensitive: true
@@ -49,4 +49,4 @@ function includesWithGlob(originalInput, stringToFind, originalOpts) {
   })));
 }
 
-export { defaults, includesWithGlob, version$1 as version };
+export { defaults, includesWithGlob, version };

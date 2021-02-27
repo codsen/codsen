@@ -10,10 +10,10 @@
 import { traverse } from 'ast-monkey-traverse';
 import GraphemeSplitter from 'grapheme-splitter';
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types:0 */
-const version$1 = version; // inner function, common for both external API's methods that does the job:
+const version = version$1; // inner function, common for both external API's methods that does the job:
 
 function strConvertIndexes(mode, str, indexes) {
   function isItOk(something) {
@@ -136,4 +136,4 @@ function unicodeToNative(str, indexes) {
   return strConvertIndexes("u", str, indexes);
 }
 
-export { nativeToUnicode, unicodeToNative, version$1 as version };
+export { nativeToUnicode, unicodeToNative, version };

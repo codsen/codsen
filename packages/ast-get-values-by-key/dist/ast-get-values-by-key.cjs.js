@@ -20,10 +20,10 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var matcher__default = /*#__PURE__*/_interopDefaultLegacy(matcher);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 
-var version = "3.0.5";
+var version$1 = "3.0.5";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
-var version$1 = version;
+var version = version$1;
 /**
  * Extract values and paths from AST by keys OR set them by keys
  */
@@ -58,4 +58,4 @@ function getByKey(originalInput, whatToFind, originalReplacement) {
 }
 
 exports.getByKey = getByKey;
-exports.version = version$1;
+exports.version = version;

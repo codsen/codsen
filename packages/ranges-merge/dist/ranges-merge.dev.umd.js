@@ -62,7 +62,7 @@ function _objectSpread2(target) {
   return target;
 }
 
-var defaults = {
+var defaults$1 = {
   strictlyTwoElementsInRangeArrays: false,
   progressFn: null
 };
@@ -74,7 +74,7 @@ function rSort(arrOfRanges, originalOptions) {
   } // fill any settings with defaults if missing:
 
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOptions); // arrOfRanges validation
+  var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOptions); // arrOfRanges validation
 
 
   var culpritsIndex;
@@ -141,10 +141,10 @@ function rSort(arrOfRanges, originalOptions) {
   });
 }
 
-var version = "7.0.5";
+var version$1 = "7.0.5";
 
-var version$1 = version;
-var defaults$1 = {
+var version = version$1;
+var defaults = {
   mergeType: 1,
   progressFn: null,
   joinRangesThatTouchEdges: true
@@ -172,7 +172,7 @@ function rMerge(arrOfRanges, originalOpts) {
 
   if (originalOpts) {
     if (isObj(originalOpts)) {
-      opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts); // 1. validate opts.progressFn
+      opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); // 1. validate opts.progressFn
 
       if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
         opts.progressFn = null;
@@ -193,7 +193,7 @@ function rMerge(arrOfRanges, originalOpts) {
       throw new Error("emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n" + JSON.stringify(originalOpts, null, 4) + " (type " + typeof originalOpts + ")");
     }
   } else {
-    opts = _objectSpread2({}, defaults$1);
+    opts = _objectSpread2({}, defaults);
   } // progress-wise, sort takes first 20%
   // two-level-deep array clone:
 
@@ -279,9 +279,9 @@ function rMerge(arrOfRanges, originalOpts) {
   return sortedRanges.length ? sortedRanges : null;
 }
 
-exports.defaults = defaults$1;
+exports.defaults = defaults;
 exports.rMerge = rMerge;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

@@ -12,9 +12,9 @@ import { isEmpty } from 'ast-is-empty';
 import clone from 'lodash.clonedeep';
 import { arrObjOrBoth } from 'util-array-object-or-both';
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-const version$1 = version;
+const version = version$1;
 
 function deleteKey(originalInput, originalOpts) {
   function existy(x) {
@@ -90,4 +90,4 @@ function deleteKey(originalInput, originalOpts) {
   });
 }
 
-export { deleteKey, version$1 as version };
+export { deleteKey, version };

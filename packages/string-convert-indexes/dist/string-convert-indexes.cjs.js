@@ -18,10 +18,10 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var GraphemeSplitter__default = /*#__PURE__*/_interopDefaultLegacy(GraphemeSplitter);
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types:0 */
-var version$1 = version; // inner function, common for both external API's methods that does the job:
+var version = version$1; // inner function, common for both external API's methods that does the job:
 
 function strConvertIndexes(mode, str, indexes) {
   function isItOk(something) {
@@ -146,4 +146,4 @@ function unicodeToNative(str, indexes) {
 
 exports.nativeToUnicode = nativeToUnicode;
 exports.unicodeToNative = unicodeToNative;
-exports.version = version$1;
+exports.version = version;

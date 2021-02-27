@@ -7,9 +7,9 @@
  * Homepage: https://codsen.com/os/ranges-sort/
  */
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
-const version$1 = version;
+const version = version$1;
 const defaults = {
   strictlyTwoElementsInRangeArrays: false,
   progressFn: null
@@ -82,4 +82,4 @@ function rSort(arrOfRanges, originalOptions) {
   });
 }
 
-export { defaults, rSort, version$1 as version };
+export { defaults, rSort, version };

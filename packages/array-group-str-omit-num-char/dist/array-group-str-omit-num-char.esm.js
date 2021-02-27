@@ -10,9 +10,9 @@
 import uniq from 'lodash.uniq';
 import { rApply } from 'ranges-apply';
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
-const version$1 = version;
+const version = version$1;
 const defaults = {
   wildcard: "*",
   dedupePlease: true
@@ -119,4 +119,4 @@ function groupStr(originalArr, originalOpts) {
   return resObj;
 }
 
-export { groupStr, version$1 as version };
+export { groupStr, version };

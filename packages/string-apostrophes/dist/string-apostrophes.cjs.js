@@ -18,9 +18,9 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
-var version = "1.4.5";
+var version$1 = "1.4.5";
 
-var version$1 = version;
+var version = version$1;
 
 function convertOne(str, _ref) {
   var from = _ref.from,
@@ -333,4 +333,4 @@ function convertAll(str, opts) {
 
 exports.convertAll = convertAll;
 exports.convertOne = convertOne;
-exports.version = version$1;
+exports.version = version;

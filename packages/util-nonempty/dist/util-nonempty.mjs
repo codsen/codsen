@@ -7,4 +7,4 @@
  * Homepage: https://codsen.com/os/util-nonempty/
  */
 
-import r from"lodash.isplainobject";const t="3.0.5";function e(t){return null!=t&&(Array.isArray(t)||"string"==typeof t?!!t.length:r(t)?!!Object.keys(t).length:"number"==typeof t)}export{e as nonEmpty,t as version};
+import t from"lodash.isplainobject";const r="3.0.5";function e(r){return null!=r&&(Array.isArray(r)||"string"==typeof r?!!r.length:t(r)?!!Object.keys(r).length:"number"==typeof r)}export{e as nonEmpty,r as version};

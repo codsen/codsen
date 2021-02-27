@@ -35,7 +35,7 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var ansiRegex__default = /*#__PURE__*/_interopDefaultLegacy(ansiRegex);
 var he__default = /*#__PURE__*/_interopDefaultLegacy(he);
 
-var version = "7.0.5";
+var version$1 = "7.0.5";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
@@ -1069,7 +1069,7 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
   }
 }
 
-var version$1 = version;
+var version = version$1;
 
 /**
  * Extracts, cleans and encodes text
@@ -1520,4 +1520,4 @@ function det(str, inputOpts) {
 
 exports.det = det;
 exports.opts = defaultOpts;
-exports.version = version$1;
+exports.version = version;

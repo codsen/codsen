@@ -19,9 +19,9 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var runes__default = /*#__PURE__*/_interopDefaultLegacy(runes);
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function rProcessOutside(originalStr, originalRanges, cb, skipChecks) {
   if (skipChecks === void 0) {
@@ -89,4 +89,4 @@ function rProcessOutside(originalStr, originalRanges, cb, skipChecks) {
 }
 
 exports.rProcessOutside = rProcessOutside;
-exports.version = version$1;
+exports.version = version;

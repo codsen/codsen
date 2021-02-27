@@ -2093,9 +2093,9 @@ function parent(str) {
   return null;
 }
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-var version$1 = version;
+var version = version$1;
 /**
  * Utility library to traverse AST
  */
@@ -2186,7 +2186,7 @@ function traverse(tree1, cb1) {
 } // -----------------------------------------------------------------------------
 
 exports.traverse = traverse;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

@@ -10,10 +10,10 @@
 import { collWhitespace } from 'string-collapse-leading-whitespace';
 import { rMerge } from 'ranges-merge';
 
-var version = "5.0.5";
+var version$1 = "5.0.5";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
-const version$1 = version;
+const version = version$1;
 
 function existy(x) {
   return x != null;
@@ -211,4 +211,4 @@ class Ranges {
 
 }
 
-export { Ranges, defaults, version$1 as version };
+export { Ranges, defaults, version };

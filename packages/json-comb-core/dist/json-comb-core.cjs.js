@@ -36,9 +36,9 @@ var pReduce__default = /*#__PURE__*/_interopDefaultLegacy(pReduce);
 var typ__default = /*#__PURE__*/_interopDefaultLegacy(typ);
 var pOne__default = /*#__PURE__*/_interopDefaultLegacy(pOne);
 
-var version = "6.8.5";
+var version$1 = "6.8.5";
 
-var version$1 = version;
+var version = version$1;
 
 function existy(x) {
   return x != null;
@@ -456,4 +456,4 @@ exports.getKeyset = getKeyset;
 exports.getKeysetSync = getKeysetSync;
 exports.noNewKeysSync = noNewKeysSync;
 exports.sortAllObjectsSync = sortAllObjectsSync;
-exports.version = version$1;
+exports.version = version;

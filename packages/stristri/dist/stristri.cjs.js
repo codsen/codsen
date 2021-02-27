@@ -31,9 +31,9 @@ var defaultOpts = {
   reportProgressFuncTo: 100
 };
 
-var version = "3.0.5";
+var version$1 = "3.0.5";
 
-var version$1 = version; // return function is in single place to ensure no
+var version = version$1; // return function is in single place to ensure no
 // discrepancies in API when returning from multiple places
 
 function returnHelper(result, applicableOpts, templatingLang, start) {
@@ -199,7 +199,8 @@ function stri(input, originalOpts) {
     },
     reportProgressFunc: opts.reportProgressFunc,
     reportProgressFuncFrom: opts.reportProgressFuncFrom,
-    reportProgressFuncTo: opts.reportProgressFuncTo * 0.95
+    reportProgressFuncTo: opts.reportProgressFuncTo * 0.95 // leave the last 5% for collapsing etc.
+
   });
   return returnHelper(stringCollapseWhiteSpace.collapse(rangesApply.rApply(input, gatheredRanges), {
     trimLines: true,
@@ -210,4 +211,4 @@ function stri(input, originalOpts) {
 
 exports.defaults = defaultOpts;
 exports.stri = stri;
-exports.version = version$1;
+exports.version = version;

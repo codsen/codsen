@@ -2093,7 +2093,7 @@ function x(something) {
   return res;
 }
 
-function isStr(something) {
+function isStr$1(something) {
   return typeof something === "string";
 }
 
@@ -2297,7 +2297,7 @@ function seq(direction, str, idx, opts, args) {
   // where we need to repeat same step (hungrily matched character) few times.
 
   while (i < args.length) {
-    if (!isStr(args[i]) || !args[i].length) {
+    if (!isStr$1(args[i]) || !args[i].length) {
       i += 1;
       continue;
     }
@@ -2446,11 +2446,11 @@ function rightSeq(str, idx) {
   return seq("right", str, idx, opts, args);
 } // chomp() lets you match sequences of characters with zero or more whitespace characters in between each,
 
-var version = "1.4.5";
+var version$1 = "1.4.5";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
-function isStr$1(something) {
+function isStr(something) {
   return typeof something === "string";
 }
 
@@ -2492,7 +2492,7 @@ function extractConfig(str) {
 
     extractedConfig = str.slice(sliceFrom, sliceTo).trim();
 
-    if (!isStr$1(extractedConfig) || !extractedConfig.trim().length) {
+    if (!isStr(extractedConfig) || !extractedConfig.trim().length) {
       return [extractedConfig, rawContentAbove, rawContentBelow];
     }
   } else if (str.includes(CONFIGHEAD) && !str.includes(CONFIGTAIL) && str.includes(CONTENTHEAD)) {
@@ -2657,13 +2657,13 @@ function trimBlankLinesFromLinesArray(lineArr, trim) {
 
   var copyArr = Array.from(lineArr);
 
-  if (copyArr.length && isStr$1(copyArr[0]) && !copyArr[0].trim().length) {
+  if (copyArr.length && isStr(copyArr[0]) && !copyArr[0].trim().length) {
     do {
       copyArr.shift();
-    } while (isStr$1(copyArr[0]) && !copyArr[0].trim().length);
+    } while (isStr(copyArr[0]) && !copyArr[0].trim().length);
   }
 
-  if (copyArr.length && isStr$1(copyArr[copyArr.length - 1]) && !copyArr[copyArr.length - 1].trim().length) {
+  if (copyArr.length && isStr(copyArr[copyArr.length - 1]) && !copyArr[copyArr.length - 1].trim().length) {
     do {
       copyArr.pop();
     } while (copyArr && copyArr[copyArr.length - 1] && !copyArr[copyArr.length - 1].trim().length);
@@ -2967,7 +2967,7 @@ function prepConfig(str, progressFn, progressFrom, progressTo, trim, generatedCo
   }), trim).join("\n");
 }
 
-var version$1 = version;
+var version = version$1;
 var defaults = {
   includeConfig: true,
   includeHeadsAndTails: true,
@@ -3169,7 +3169,7 @@ exports.defaults = defaults;
 exports.extractFromToSource = extractFromToSource;
 exports.genAtomic = genAtomic;
 exports.headsAndTails = headsAndTails;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

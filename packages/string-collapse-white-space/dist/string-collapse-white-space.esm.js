@@ -11,10 +11,10 @@ import { rApply } from 'ranges-apply';
 import { Ranges } from 'ranges-push';
 import { right } from 'string-left-right';
 
-var version = "9.0.5";
+var version$1 = "9.0.5";
 
 /* eslint @typescript-eslint/ban-ts-comment:1 */
-const version$1 = version; // default set of options
+const version = version$1; // default set of options
 
 const defaults = {
   trimStart: true,
@@ -461,4 +461,4 @@ function collapse(str, originalOpts) { // f's
   };
 }
 
-export { cbSchema, collapse, defaults, version$1 as version };
+export { cbSchema, collapse, defaults, version };

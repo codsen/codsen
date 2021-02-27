@@ -7,9 +7,9 @@
  * Homepage: https://codsen.com/os/detect-is-it-html-or-xhtml/
  */
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
-const version$1 = version;
+const version = version$1;
 
 function detectIsItHTMLOrXhtml(input) {
   function existy(x) {
@@ -70,4 +70,4 @@ function detectIsItHTMLOrXhtml(input) {
   return "html";
 }
 
-export { detectIsItHTMLOrXhtml, version$1 as version };
+export { detectIsItHTMLOrXhtml, version };

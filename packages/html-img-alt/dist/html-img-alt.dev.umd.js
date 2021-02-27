@@ -4248,7 +4248,7 @@ var he = createCommonjsModule(function (module, exports) {
  * Homepage: https://codsen.com/os/string-unfancy/
  */
 
-function existy(x) {
+function existy$1(x) {
   return x != null;
 }
 
@@ -4278,7 +4278,7 @@ function unfancy(str) {
     "\xA0": " "
   };
 
-  if (!existy(str)) {
+  if (!existy$1(str)) {
     throw new Error("string-unfancy/unfancy(): [THROW_ID_01] The input is missing!");
   }
 
@@ -4302,7 +4302,7 @@ function unfancy(str) {
   return res;
 }
 
-var defaults = {
+var defaults$3 = {
   strictlyTwoElementsInRangeArrays: false,
   progressFn: null
 };
@@ -4314,7 +4314,7 @@ function rSort(arrOfRanges, originalOptions) {
   } // fill any settings with defaults if missing:
 
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOptions); // arrOfRanges validation
+  var opts = _objectSpread2(_objectSpread2({}, defaults$3), originalOptions); // arrOfRanges validation
 
 
   var culpritsIndex;
@@ -4381,7 +4381,7 @@ function rSort(arrOfRanges, originalOptions) {
   });
 }
 
-var defaults$1 = {
+var defaults$2 = {
   mergeType: 1,
   progressFn: null,
   joinRangesThatTouchEdges: true
@@ -4409,7 +4409,7 @@ function rMerge(arrOfRanges, originalOpts) {
 
   if (originalOpts) {
     if (isObj(originalOpts)) {
-      opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts); // 1. validate opts.progressFn
+      opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts); // 1. validate opts.progressFn
 
       if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
         opts.progressFn = null;
@@ -4430,7 +4430,7 @@ function rMerge(arrOfRanges, originalOpts) {
       throw new Error("emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n" + JSON.stringify(originalOpts, null, 4) + " (type " + typeof originalOpts + ")");
     }
   } else {
-    opts = _objectSpread2({}, defaults$1);
+    opts = _objectSpread2({}, defaults$2);
   } // progress-wise, sort takes first 20%
   // two-level-deep array clone:
 
@@ -4767,7 +4767,7 @@ function collWhitespace(str, originallineBreakLimit) {
   return str;
 }
 
-function existy$1(x) {
+function existy(x) {
   return x != null;
 }
 
@@ -4779,7 +4779,7 @@ function isStr(something) {
   return typeof something === "string";
 }
 
-var defaults$2 = {
+var defaults$1 = {
   limitToBeAddedWhitespace: false,
   limitLinebreaksCount: 1,
   mergeType: 1
@@ -4790,7 +4790,7 @@ var Ranges = /*#__PURE__*/function () {
   // O P T I O N S
   // =============
   function Ranges(originalOpts) {
-    var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts);
+    var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts);
 
     if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
       if (isStr(opts.mergeType) && opts.mergeType.trim() === "1") {
@@ -4817,7 +4817,7 @@ var Ranges = /*#__PURE__*/function () {
       return;
     }
 
-    if (existy$1(originalFrom) && !existy$1(originalTo)) {
+    if (existy(originalFrom) && !existy(originalTo)) {
       if (Array.isArray(originalFrom)) {
         if (originalFrom.length) {
           if (originalFrom.some(function (el) {
@@ -4844,7 +4844,7 @@ var Ranges = /*#__PURE__*/function () {
       }
 
       throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_12] the first input argument, \"from\" is set (" + JSON.stringify(originalFrom, null, 0) + ") but second-one, \"to\" is not (" + JSON.stringify(originalTo, null, 0) + ")");
-    } else if (!existy$1(originalFrom) && existy$1(originalTo)) {
+    } else if (!existy(originalFrom) && existy(originalTo)) {
       throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_13] the second input argument, \"to\" is set (" + JSON.stringify(originalTo, null, 0) + ") but first-one, \"from\" is not (" + JSON.stringify(originalFrom, null, 0) + ")");
     }
 
@@ -4859,19 +4859,19 @@ var Ranges = /*#__PURE__*/function () {
 
     if (isNum(from) && isNum(to)) {
       // This means two indexes were given as arguments. Business as usual.
-      if (existy$1(addVal) && !isStr(addVal) && !isNum(addVal)) {
+      if (existy(addVal) && !isStr(addVal) && !isNum(addVal)) {
         throw new TypeError("ranges-push/Ranges/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but " + typeof addVal + ", equal to:\n" + JSON.stringify(addVal, null, 4));
       } // Does the incoming "from" value match the existing last element's "to" value?
 
 
-      if (existy$1(this.ranges) && Array.isArray(this.last()) && from === this.last()[1]) {
+      if (existy(this.ranges) && Array.isArray(this.last()) && from === this.last()[1]) {
         // The incoming range is an exact extension of the last range, like
         // [1, 100] gets added [100, 200] => you can merge into: [1, 200].
         this.last()[1] = to; // console.log(`addVal = ${JSON.stringify(addVal, null, 4)}`)
 
         if (this.last()[2] === null || addVal === null) ;
 
-        if (this.last()[2] !== null && existy$1(addVal)) {
+        if (this.last()[2] !== null && existy(addVal)) {
           var calculatedVal = this.last()[2] && this.last()[2].length > 0 && (!this.opts || !this.opts.mergeType || this.opts.mergeType === 1) ? this.last()[2] + addVal : addVal;
 
           if (this.opts.limitToBeAddedWhitespace) {
@@ -4921,7 +4921,7 @@ var Ranges = /*#__PURE__*/function () {
 
       if (this.ranges && this.opts.limitToBeAddedWhitespace) {
         return this.ranges.map(function (val) {
-          if (existy$1(val[2])) {
+          if (existy(val[2])) {
             return [val[0], val[1], collWhitespace(val[2], _this2.opts.limitLinebreaksCount)];
           }
 
@@ -5390,7 +5390,7 @@ var typeDetect = createCommonjsModule(function (module, exports) {
  * @param {Function} iteratee The function invoked per iteration.
  * @returns {Array} Returns the new mapped array.
  */
-function arrayMap(array, iteratee) {
+function arrayMap$1(array, iteratee) {
   var index = -1,
       length = array ? array.length : 0,
       result = Array(length);
@@ -5414,7 +5414,7 @@ function arrayMap(array, iteratee) {
  */
 
 
-function baseFindIndex(array, predicate, fromIndex, fromRight) {
+function baseFindIndex$1(array, predicate, fromIndex, fromRight) {
   var length = array.length,
       index = fromIndex + (fromRight ? 1 : -1);
 
@@ -5437,9 +5437,9 @@ function baseFindIndex(array, predicate, fromIndex, fromRight) {
  */
 
 
-function baseIndexOf(array, value, fromIndex) {
+function baseIndexOf$1(array, value, fromIndex) {
   if (value !== value) {
-    return baseFindIndex(array, baseIsNaN, fromIndex);
+    return baseFindIndex$1(array, baseIsNaN$1, fromIndex);
   }
 
   var index = fromIndex - 1,
@@ -5486,7 +5486,7 @@ function baseIndexOfWith(array, value, fromIndex, comparator) {
  */
 
 
-function baseIsNaN(value) {
+function baseIsNaN$1(value) {
   return value !== value;
 }
 /**
@@ -5498,7 +5498,7 @@ function baseIsNaN(value) {
  */
 
 
-function baseUnary(func) {
+function baseUnary$1(func) {
   return function (value) {
     return func(value);
   };
@@ -5506,10 +5506,10 @@ function baseUnary(func) {
 /** Used for built-in method references. */
 
 
-var arrayProto = Array.prototype;
+var arrayProto$1 = Array.prototype;
 /** Built-in value references. */
 
-var splice = arrayProto.splice;
+var splice$1 = arrayProto$1.splice;
 /**
  * The base implementation of `_.pullAllBy` without support for iteratee
  * shorthands.
@@ -5523,7 +5523,7 @@ var splice = arrayProto.splice;
  */
 
 function basePullAll(array, values, iteratee, comparator) {
-  var indexOf = comparator ? baseIndexOfWith : baseIndexOf,
+  var indexOf = comparator ? baseIndexOfWith : baseIndexOf$1,
       index = -1,
       length = values.length,
       seen = array;
@@ -5533,7 +5533,7 @@ function basePullAll(array, values, iteratee, comparator) {
   }
 
   if (iteratee) {
-    seen = arrayMap(array, baseUnary(iteratee));
+    seen = arrayMap$1(array, baseUnary$1(iteratee));
   }
 
   while (++index < length) {
@@ -5543,10 +5543,10 @@ function basePullAll(array, values, iteratee, comparator) {
 
     while ((fromIndex = indexOf(seen, computed, fromIndex, comparator)) > -1) {
       if (seen !== array) {
-        splice.call(seen, fromIndex, 1);
+        splice$1.call(seen, fromIndex, 1);
       }
 
-      splice.call(array, fromIndex, 1);
+      splice$1.call(array, fromIndex, 1);
     }
   }
 
@@ -7464,7 +7464,7 @@ var objectTag = '[object Object]';
  * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
  */
 
-function isHostObject(value) {
+function isHostObject$1(value) {
   // Many host objects are `Object` objects that can coerce to strings
   // despite having improperly defined `toString` methods.
   var result = false;
@@ -7495,24 +7495,24 @@ function overArg(func, transform) {
 /** Used for built-in method references. */
 
 
-var funcProto = Function.prototype,
-    objectProto = Object.prototype;
+var funcProto$1 = Function.prototype,
+    objectProto$1 = Object.prototype;
 /** Used to resolve the decompiled source of functions. */
 
-var funcToString = funcProto.toString;
+var funcToString$1 = funcProto$1.toString;
 /** Used to check objects for own properties. */
 
-var hasOwnProperty = objectProto.hasOwnProperty;
+var hasOwnProperty$1 = objectProto$1.hasOwnProperty;
 /** Used to infer the `Object` constructor. */
 
-var objectCtorString = funcToString.call(Object);
+var objectCtorString = funcToString$1.call(Object);
 /**
  * Used to resolve the
  * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
  * of values.
  */
 
-var objectToString = objectProto.toString;
+var objectToString$1 = objectProto$1.toString;
 /** Built-in value references. */
 
 var getPrototype = overArg(Object.getPrototypeOf, Object);
@@ -7541,7 +7541,7 @@ var getPrototype = overArg(Object.getPrototypeOf, Object);
  * // => false
  */
 
-function isObjectLike(value) {
+function isObjectLike$1(value) {
   return !!value && typeof value == 'object';
 }
 /**
@@ -7575,7 +7575,7 @@ function isObjectLike(value) {
 
 
 function isPlainObject(value) {
-  if (!isObjectLike(value) || objectToString.call(value) != objectTag || isHostObject(value)) {
+  if (!isObjectLike$1(value) || objectToString$1.call(value) != objectTag || isHostObject$1(value)) {
     return false;
   }
 
@@ -7585,8 +7585,8 @@ function isPlainObject(value) {
     return true;
   }
 
-  var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
-  return typeof Ctor == 'function' && Ctor instanceof Ctor && funcToString.call(Ctor) == objectCtorString;
+  var Ctor = hasOwnProperty$1.call(proto, 'constructor') && proto.constructor;
+  return typeof Ctor == 'function' && Ctor instanceof Ctor && funcToString$1.call(Ctor) == objectCtorString;
 }
 
 var lodash_isplainobject = isPlainObject;
@@ -7789,7 +7789,7 @@ function apply(func, thisArg, args) {
 
 function arrayIncludes(array, value) {
   var length = array ? array.length : 0;
-  return !!length && baseIndexOf$1(array, value, 0) > -1;
+  return !!length && baseIndexOf(array, value, 0) > -1;
 }
 /**
  * This function is like `arrayIncludes` except that it accepts a comparator.
@@ -7825,7 +7825,7 @@ function arrayIncludesWith(array, value, comparator) {
  */
 
 
-function arrayMap$1(array, iteratee) {
+function arrayMap(array, iteratee) {
   var index = -1,
       length = array ? array.length : 0,
       result = Array(length);
@@ -7849,7 +7849,7 @@ function arrayMap$1(array, iteratee) {
  */
 
 
-function baseFindIndex$1(array, predicate, fromIndex, fromRight) {
+function baseFindIndex(array, predicate, fromIndex, fromRight) {
   var length = array.length,
       index = fromIndex + (fromRight ? 1 : -1);
 
@@ -7872,9 +7872,9 @@ function baseFindIndex$1(array, predicate, fromIndex, fromRight) {
  */
 
 
-function baseIndexOf$1(array, value, fromIndex) {
+function baseIndexOf(array, value, fromIndex) {
   if (value !== value) {
-    return baseFindIndex$1(array, baseIsNaN$1, fromIndex);
+    return baseFindIndex(array, baseIsNaN, fromIndex);
   }
 
   var index = fromIndex - 1,
@@ -7897,7 +7897,7 @@ function baseIndexOf$1(array, value, fromIndex) {
  */
 
 
-function baseIsNaN$1(value) {
+function baseIsNaN(value) {
   return value !== value;
 }
 /**
@@ -7909,7 +7909,7 @@ function baseIsNaN$1(value) {
  */
 
 
-function baseUnary$1(func) {
+function baseUnary(func) {
   return function (value) {
     return func(value);
   };
@@ -7949,7 +7949,7 @@ function getValue(object, key) {
  */
 
 
-function isHostObject$1(value) {
+function isHostObject(value) {
   // Many host objects are `Object` objects that can coerce to strings
   // despite having improperly defined `toString` methods.
   var result = false;
@@ -7965,9 +7965,9 @@ function isHostObject$1(value) {
 /** Used for built-in method references. */
 
 
-var arrayProto$1 = Array.prototype,
-    funcProto$1 = Function.prototype,
-    objectProto$1 = Object.prototype;
+var arrayProto = Array.prototype,
+    funcProto = Function.prototype,
+    objectProto = Object.prototype;
 /** Used to detect overreaching core-js shims. */
 
 var coreJsData = root['__core-js_shared__'];
@@ -7980,23 +7980,23 @@ var maskSrcKey = function () {
 /** Used to resolve the decompiled source of functions. */
 
 
-var funcToString$1 = funcProto$1.toString;
+var funcToString = funcProto.toString;
 /** Used to check objects for own properties. */
 
-var hasOwnProperty$1 = objectProto$1.hasOwnProperty;
+var hasOwnProperty = objectProto.hasOwnProperty;
 /**
  * Used to resolve the
  * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
  * of values.
  */
 
-var objectToString$1 = objectProto$1.toString;
+var objectToString = objectProto.toString;
 /** Used to detect if a method is native. */
 
-var reIsNative = RegExp('^' + funcToString$1.call(hasOwnProperty$1).replace(reRegExpChar, '\\$&').replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
+var reIsNative = RegExp('^' + funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&').replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
 /** Built-in value references. */
 
-var splice$1 = arrayProto$1.splice;
+var splice = arrayProto.splice;
 /* Built-in method references for those with the same name as other `lodash` methods. */
 
 var nativeMax = Math.max,
@@ -8069,7 +8069,7 @@ function hashGet(key) {
     return result === HASH_UNDEFINED ? undefined : result;
   }
 
-  return hasOwnProperty$1.call(data, key) ? data[key] : undefined;
+  return hasOwnProperty.call(data, key) ? data[key] : undefined;
 }
 /**
  * Checks if a hash value for `key` exists.
@@ -8084,7 +8084,7 @@ function hashGet(key) {
 
 function hashHas(key) {
   var data = this.__data__;
-  return nativeCreate ? data[key] !== undefined : hasOwnProperty$1.call(data, key);
+  return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);
 }
 /**
  * Sets the hash `key` to `value`.
@@ -8164,7 +8164,7 @@ function listCacheDelete(key) {
   if (index == lastIndex) {
     data.pop();
   } else {
-    splice$1.call(data, index, 1);
+    splice.call(data, index, 1);
   }
 
   return true;
@@ -8427,7 +8427,7 @@ function baseIntersection(arrays, iteratee, comparator) {
     var array = arrays[othIndex];
 
     if (othIndex && iteratee) {
-      array = arrayMap$1(array, baseUnary$1(iteratee));
+      array = arrayMap(array, baseUnary(iteratee));
     }
 
     maxLength = nativeMin(array.length, maxLength);
@@ -8479,7 +8479,7 @@ function baseIsNative(value) {
     return false;
   }
 
-  var pattern = isFunction(value) || isHostObject$1(value) ? reIsNative : reIsHostCtor;
+  var pattern = isFunction(value) || isHostObject(value) ? reIsNative : reIsHostCtor;
   return pattern.test(toSource(value));
 }
 /**
@@ -8592,7 +8592,7 @@ function isMasked(func) {
 function toSource(func) {
   if (func != null) {
     try {
-      return funcToString$1.call(func);
+      return funcToString.call(func);
     } catch (e) {}
 
     try {
@@ -8622,7 +8622,7 @@ function toSource(func) {
 
 
 var intersection = baseRest(function (arrays) {
-  var mapped = arrayMap$1(arrays, castArrayLikeObject);
+  var mapped = arrayMap(arrays, castArrayLikeObject);
   return mapped.length && mapped[0] === arrays[0] ? baseIntersection(mapped) : [];
 });
 /**
@@ -8719,7 +8719,7 @@ function isArrayLike(value) {
 
 
 function isArrayLikeObject(value) {
-  return isObjectLike$1(value) && isArrayLike(value);
+  return isObjectLike(value) && isArrayLike(value);
 }
 /**
  * Checks if `value` is classified as a `Function` object.
@@ -8743,7 +8743,7 @@ function isArrayLikeObject(value) {
 function isFunction(value) {
   // The use of `Object#toString` avoids issues with the `typeof` operator
   // in Safari 8-9 which returns 'object' for typed array and other constructors.
-  var tag = isObject(value) ? objectToString$1.call(value) : '';
+  var tag = isObject(value) ? objectToString.call(value) : '';
   return tag == funcTag || tag == genTag;
 }
 /**
@@ -8834,7 +8834,7 @@ function isObject(value) {
  */
 
 
-function isObjectLike$1(value) {
+function isObjectLike(value) {
   return !!value && typeof value == 'object';
 }
 
@@ -9272,7 +9272,7 @@ var isMatch = function isMatch(input, pattern, options) {
 };
 matcher.isMatch = isMatch;
 
-var defaults$3 = {
+var defaults = {
   ignoreKeys: [],
   ignorePaths: [],
   acceptArrays: false,
@@ -9320,7 +9320,7 @@ function internalApi(obj, ref, originalOptions) {
   // =================
 
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$3), originalOptions);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOptions);
 
   if (typeof opts.ignoreKeys === "string") {
     opts.ignoreKeys = [opts.ignoreKeys];
@@ -9581,9 +9581,9 @@ function checkTypesMini(obj, ref, originalOptions) {
   return internalApi(obj, ref, originalOptions);
 }
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function isObj(something) {
   return something && typeof something === "object" && !Array.isArray(something);
@@ -9939,7 +9939,7 @@ function alts(str, originalOpts) {
 }
 
 exports.alts = alts;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

@@ -14,9 +14,9 @@ Object.defineProperty(exports, '__esModule', { value: true });
 var stringLeftRight = require('string-left-right');
 var rangesApply = require('ranges-apply');
 
-var version = "0.3.5";
+var version$1 = "0.3.5";
 
-var version$1 = version;
+var version = version$1;
 
 function isStr(something) {
   return typeof something === "string";
@@ -535,4 +535,4 @@ function del(str, path) {
 
 exports.del = del;
 exports.set = set;
-exports.version = version$1;
+exports.version = version;

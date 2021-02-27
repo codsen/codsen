@@ -590,9 +590,9 @@ function createCommonjsModule(fn) {
 	return fn(module, module.exports), module.exports;
 }
 
-var require$$0 = /*@__PURE__*/getAugmentedNamespace(events);
+var require$$0$1 = /*@__PURE__*/getAugmentedNamespace(events);
 
-var TypedEmitter = require$$0.EventEmitter;
+var TypedEmitter = require$$0$1.EventEmitter;
 
 var array = [];
 var charCodeCache = [];
@@ -682,12 +682,12 @@ var Aacute = "Á";
 var aacute = "á";
 var Abreve = "Ă";
 var abreve = "ă";
-var ac = "∾";
+var ac$1 = "∾";
 var acd = "∿";
 var acE = "∾̳";
 var Acirc = "Â";
 var acirc = "â";
-var acute = "´";
+var acute$1 = "´";
 var Acy = "А";
 var acy = "а";
 var AElig = "Æ";
@@ -699,22 +699,22 @@ var Agrave = "À";
 var agrave = "à";
 var alefsym = "ℵ";
 var aleph = "ℵ";
-var Alpha = "Α";
-var alpha = "α";
+var Alpha$1 = "Α";
+var alpha$1 = "α";
 var Amacr = "Ā";
 var amacr = "ā";
 var amalg = "⨿";
 var AMP = "&";
-var amp = "&";
-var And = "⩓";
-var and = "∧";
+var amp$1 = "&";
+var And$1 = "⩓";
+var and$1 = "∧";
 var andand = "⩕";
 var andd = "⩜";
 var andslope = "⩘";
 var andv = "⩚";
 var ang = "∠";
-var ange = "⦤";
-var angle = "∠";
+var ange$1 = "⦤";
+var angle$1 = "∠";
 var angmsd = "∡";
 var angmsdaa = "⦨";
 var angmsdab = "⦩";
@@ -728,31 +728,31 @@ var angrt = "∟";
 var angrtvb = "⊾";
 var angrtvbd = "⦝";
 var angsph = "∢";
-var angst = "Å";
+var angst$1 = "Å";
 var angzarr = "⍼";
 var Aogon = "Ą";
 var aogon = "ą";
 var Aopf = "𝔸";
 var aopf = "𝕒";
-var ap = "≈";
+var ap$1 = "≈";
 var apacir = "⩯";
 var apE = "⩰";
-var ape = "≊";
+var ape$1 = "≊";
 var apid = "≋";
 var apos = "'";
 var ApplyFunction = "⁡";
-var approx = "≈";
+var approx$1 = "≈";
 var approxeq = "≊";
-var Aring = "Å";
-var aring = "å";
-var Ascr = "𝒜";
-var ascr = "𝒶";
-var Assign = "≔";
-var ast = "*";
+var Aring$1 = "Å";
+var aring$1 = "å";
+var Ascr$1 = "𝒜";
+var ascr$1 = "𝒶";
+var Assign$1 = "≔";
+var ast$1 = "*";
 var asymp = "≈";
 var asympeq = "≍";
 var Atilde = "Ã";
-var atilde = "ã";
+var atilde$1 = "ã";
 var Auml = "Ä";
 var auml = "ä";
 var awconint = "∳";
@@ -762,29 +762,29 @@ var backepsilon = "϶";
 var backprime = "‵";
 var backsim = "∽";
 var backsimeq = "⋍";
-var Backslash = "∖";
+var Backslash$1 = "∖";
 var Barv = "⫧";
 var barvee = "⊽";
 var Barwed = "⌆";
 var barwed = "⌅";
-var barwedge = "⌅";
+var barwedge$1 = "⌅";
 var bbrk = "⎵";
 var bbrktbrk = "⎶";
 var bcong = "≌";
 var Bcy = "Б";
 var bcy = "б";
 var bdquo = "„";
-var becaus = "∵";
-var Because = "∵";
-var because = "∵";
+var becaus$1 = "∵";
+var Because$1 = "∵";
+var because$1 = "∵";
 var bemptyv = "⦰";
-var bepsi = "϶";
+var bepsi$1 = "϶";
 var bernou = "ℬ";
-var Bernoullis = "ℬ";
-var Beta = "Β";
-var beta = "β";
-var beth = "ℶ";
-var between = "≬";
+var Bernoullis$1 = "ℬ";
+var Beta$1 = "Β";
+var beta$1 = "β";
+var beth$1 = "ℶ";
+var between$1 = "≬";
 var Bfr = "𝔅";
 var bfr = "𝔟";
 var bigcap = "⋂";
@@ -807,20 +807,20 @@ var blacktriangle = "▴";
 var blacktriangledown = "▾";
 var blacktriangleleft = "◂";
 var blacktriangleright = "▸";
-var blank = "␣";
+var blank$1 = "␣";
 var blk12 = "▒";
 var blk14 = "░";
 var blk34 = "▓";
-var block = "█";
+var block$1 = "█";
 var bne = "=⃥";
 var bnequiv = "≡⃥";
 var bNot = "⫭";
 var bnot = "⌐";
 var Bopf = "𝔹";
 var bopf = "𝕓";
-var bot = "⊥";
-var bottom = "⊥";
-var bowtie = "⋈";
+var bot$1 = "⊥";
+var bottom$1 = "⊥";
+var bowtie$1 = "⋈";
 var boxbox = "⧉";
 var boxDL = "╗";
 var boxDl = "╖";
@@ -867,7 +867,7 @@ var boxvR = "╞";
 var boxvr = "├";
 var bprime = "‵";
 var Breve = "˘";
-var breve = "˘";
+var breve$1 = "˘";
 var brvbar = "¦";
 var Bscr = "ℬ";
 var bscr = "𝒷";
@@ -877,26 +877,26 @@ var bsime = "⋍";
 var bsol = "\\";
 var bsolb = "⧅";
 var bsolhsub = "⟈";
-var bull = "•";
-var bullet = "•";
-var bump = "≎";
+var bull$1 = "•";
+var bullet$1 = "•";
+var bump$1 = "≎";
 var bumpE = "⪮";
 var bumpe = "≏";
 var Bumpeq = "≎";
 var bumpeq = "≏";
 var Cacute = "Ć";
-var cacute = "ć";
-var Cap = "⋒";
-var cap = "∩";
-var capand = "⩄";
+var cacute$1 = "ć";
+var Cap$1 = "⋒";
+var cap$1 = "∩";
+var capand$1 = "⩄";
 var capbrcup = "⩉";
 var capcap = "⩋";
 var capcup = "⩇";
 var capdot = "⩀";
 var CapitalDifferentialD = "ⅅ";
-var caps = "∩︀";
-var caret = "⁁";
-var caron = "ˇ";
+var caps$1 = "∩︀";
+var caret$1 = "⁁";
+var caron$1 = "ˇ";
 var Cayleys = "ℭ";
 var ccaps = "⩍";
 var Ccaron = "Č";
@@ -910,22 +910,22 @@ var ccups = "⩌";
 var ccupssm = "⩐";
 var Cdot = "Ċ";
 var cdot = "ċ";
-var cedil = "¸";
-var Cedilla = "¸";
+var cedil$1 = "¸";
+var Cedilla$1 = "¸";
 var cemptyv = "⦲";
-var cent = "¢";
+var cent$1 = "¢";
 var CenterDot = "·";
 var centerdot = "·";
 var Cfr = "ℭ";
 var cfr = "𝔠";
 var CHcy = "Ч";
 var chcy = "ч";
-var check = "✓";
-var checkmark = "✓";
-var Chi = "Χ";
-var chi = "χ";
-var cir = "○";
-var circ = "ˆ";
+var check$1 = "✓";
+var checkmark$1 = "✓";
+var Chi$1 = "Χ";
+var chi$1 = "χ";
+var cir$1 = "○";
+var circ$1 = "ˆ";
 var circeq = "≗";
 var circlearrowleft = "↺";
 var circlearrowright = "↻";
@@ -946,36 +946,36 @@ var cirscir = "⧂";
 var ClockwiseContourIntegral = "∲";
 var CloseCurlyDoubleQuote = "”";
 var CloseCurlyQuote = "’";
-var clubs = "♣";
-var clubsuit = "♣";
-var Colon = "∷";
-var colon = ":";
-var Colone = "⩴";
-var colone = "≔";
+var clubs$1 = "♣";
+var clubsuit$1 = "♣";
+var Colon$1 = "∷";
+var colon$1 = ":";
+var Colone$1 = "⩴";
+var colone$1 = "≔";
 var coloneq = "≔";
-var comma = ",";
-var commat = "@";
-var comp = "∁";
+var comma$1 = ",";
+var commat$1 = "@";
+var comp$1 = "∁";
 var compfn = "∘";
-var complement = "∁";
-var complexes = "ℂ";
-var cong = "≅";
+var complement$1 = "∁";
+var complexes$1 = "ℂ";
+var cong$1 = "≅";
 var congdot = "⩭";
-var Congruent = "≡";
+var Congruent$1 = "≡";
 var Conint = "∯";
-var conint = "∮";
+var conint$1 = "∮";
 var ContourIntegral = "∮";
 var Copf = "ℂ";
-var copf = "𝕔";
-var coprod = "∐";
+var copf$1 = "𝕔";
+var coprod$1 = "∐";
 var Coproduct = "∐";
-var COPY = "©";
-var copy = "©";
+var COPY$1 = "©";
+var copy$1 = "©";
 var copysr = "℗";
 var CounterClockwiseContourIntegral = "∳";
 var crarr = "↵";
-var Cross = "⨯";
-var cross = "✗";
+var Cross$1 = "⨯";
+var cross$1 = "✗";
 var Cscr = "𝒞";
 var cscr = "𝒸";
 var csub = "⫏";
@@ -989,15 +989,15 @@ var cuepr = "⋞";
 var cuesc = "⋟";
 var cularr = "↶";
 var cularrp = "⤽";
-var Cup = "⋓";
-var cup = "∪";
+var Cup$1 = "⋓";
+var cup$1 = "∪";
 var cupbrcap = "⩈";
 var CupCap = "≍";
 var cupcap = "⩆";
 var cupcup = "⩊";
 var cupdot = "⊍";
 var cupor = "⩅";
-var cups = "∪︀";
+var cups$1 = "∪︀";
 var curarr = "↷";
 var curarrm = "⤼";
 var curlyeqprec = "⋞";
@@ -1012,13 +1012,13 @@ var cuwed = "⋏";
 var cwconint = "∲";
 var cwint = "∱";
 var cylcty = "⌭";
-var Dagger = "‡";
-var dagger = "†";
-var daleth = "ℸ";
+var Dagger$1 = "‡";
+var dagger$1 = "†";
+var daleth$1 = "ℸ";
 var Darr = "↡";
 var dArr = "⇓";
-var darr = "↓";
-var dash = "‐";
+var darr$1 = "↓";
+var dash$1 = "‐";
 var Dashv = "⫤";
 var dashv = "⊣";
 var dbkarow = "⤏";
@@ -1027,50 +1027,50 @@ var Dcaron = "Ď";
 var dcaron = "ď";
 var Dcy = "Д";
 var dcy = "д";
-var DD = "ⅅ";
-var dd = "ⅆ";
+var DD$1 = "ⅅ";
+var dd$1 = "ⅆ";
 var ddagger = "‡";
 var ddarr = "⇊";
 var DDotrahd = "⤑";
 var ddotseq = "⩷";
-var deg = "°";
-var Del = "∇";
-var Delta = "Δ";
-var delta = "δ";
+var deg$1 = "°";
+var Del$1 = "∇";
+var Delta$1 = "Δ";
+var delta$1 = "δ";
 var demptyv = "⦱";
 var dfisht = "⥿";
 var Dfr = "𝔇";
 var dfr = "𝔡";
 var dHar = "⥥";
 var dharl = "⇃";
-var dharr = "⇂";
+var dharr$1 = "⇂";
 var DiacriticalAcute = "´";
 var DiacriticalDot = "˙";
 var DiacriticalDoubleAcute = "˝";
 var DiacriticalGrave = "`";
 var DiacriticalTilde = "˜";
-var diam = "⋄";
-var Diamond = "⋄";
-var diamond = "⋄";
+var diam$1 = "⋄";
+var Diamond$1 = "⋄";
+var diamond$1 = "⋄";
 var diamondsuit = "♦";
-var diams = "♦";
-var die = "¨";
+var diams$1 = "♦";
+var die$1 = "¨";
 var DifferentialD = "ⅆ";
-var digamma = "ϝ";
-var disin = "⋲";
-var div = "÷";
-var divide = "÷";
+var digamma$1 = "ϝ";
+var disin$1 = "⋲";
+var div$1 = "÷";
+var divide$1 = "÷";
 var divideontimes = "⋇";
 var divonx = "⋇";
 var DJcy = "Ђ";
 var djcy = "ђ";
 var dlcorn = "⌞";
 var dlcrop = "⌍";
-var dollar = "$";
+var dollar$1 = "$";
 var Dopf = "𝔻";
-var dopf = "𝕕";
-var Dot = "¨";
-var dot = "˙";
+var dopf$1 = "𝕕";
+var Dot$1 = "¨";
+var dot$1 = "˙";
 var DotDot = "⃜";
 var doteq = "≐";
 var doteqdot = "≑";
@@ -1118,11 +1118,11 @@ var Dscr = "𝒟";
 var dscr = "𝒹";
 var DScy = "Ѕ";
 var dscy = "ѕ";
-var dsol = "⧶";
+var dsol$1 = "⧶";
 var Dstrok = "Đ";
 var dstrok = "đ";
 var dtdot = "⋱";
-var dtri = "▿";
+var dtri$1 = "▿";
 var dtrif = "▾";
 var duarr = "⇵";
 var duhar = "⥯";
@@ -1132,37 +1132,37 @@ var dzcy = "џ";
 var dzigrarr = "⟿";
 var Eacute = "É";
 var eacute = "é";
-var easter = "⩮";
+var easter$1 = "⩮";
 var Ecaron = "Ě";
 var ecaron = "ě";
-var ecir = "≖";
+var ecir$1 = "≖";
 var Ecirc = "Ê";
 var ecirc = "ê";
-var ecolon = "≕";
+var ecolon$1 = "≕";
 var Ecy = "Э";
-var ecy = "э";
+var ecy$1 = "э";
 var eDDot = "⩷";
 var Edot = "Ė";
 var eDot = "≑";
-var edot = "ė";
-var ee = "ⅇ";
+var edot$1 = "ė";
+var ee$1 = "ⅇ";
 var efDot = "≒";
 var Efr = "𝔈";
-var efr = "𝔢";
-var eg = "⪚";
+var efr$1 = "𝔢";
+var eg$1 = "⪚";
 var Egrave = "È";
-var egrave = "è";
-var egs = "⪖";
+var egrave$1 = "è";
+var egs$1 = "⪖";
 var egsdot = "⪘";
-var el = "⪙";
+var el$1 = "⪙";
 var Element = "∈";
 var elinters = "⏧";
-var ell = "ℓ";
-var els = "⪕";
+var ell$1 = "ℓ";
+var els$1 = "⪕";
 var elsdot = "⪗";
 var Emacr = "Ē";
 var emacr = "ē";
-var empty = "∅";
+var empty$1 = "∅";
 var emptyset = "∅";
 var EmptySmallSquare = "◻";
 var emptyv = "∅";
@@ -1170,8 +1170,8 @@ var EmptyVerySmallSquare = "▫";
 var emsp = " ";
 var emsp13 = " ";
 var emsp14 = " ";
-var ENG = "Ŋ";
-var eng = "ŋ";
+var ENG$1 = "Ŋ";
+var eng$1 = "ŋ";
 var ensp = " ";
 var Eogon = "Ę";
 var eogon = "ę";
@@ -1180,47 +1180,47 @@ var eopf = "𝕖";
 var epar = "⋕";
 var eparsl = "⧣";
 var eplus = "⩱";
-var epsi = "ε";
-var Epsilon = "Ε";
-var epsilon = "ε";
+var epsi$1 = "ε";
+var Epsilon$1 = "Ε";
+var epsilon$1 = "ε";
 var epsiv = "ϵ";
 var eqcirc = "≖";
 var eqcolon = "≕";
 var eqsim = "≂";
 var eqslantgtr = "⪖";
 var eqslantless = "⪕";
-var Equal = "⩵";
-var equals = "=";
+var Equal$1 = "⩵";
+var equals$1 = "=";
 var EqualTilde = "≂";
-var equest = "≟";
-var Equilibrium = "⇌";
-var equiv = "≡";
+var equest$1 = "≟";
+var Equilibrium$1 = "⇌";
+var equiv$1 = "≡";
 var equivDD = "⩸";
 var eqvparsl = "⧥";
 var erarr = "⥱";
 var erDot = "≓";
 var Escr = "ℰ";
-var escr = "ℯ";
+var escr$1 = "ℯ";
 var esdot = "≐";
 var Esim = "⩳";
-var esim = "≂";
-var Eta = "Η";
-var eta = "η";
-var ETH = "Ð";
-var eth = "ð";
+var esim$1 = "≂";
+var Eta$1 = "Η";
+var eta$1 = "η";
+var ETH$1 = "Ð";
+var eth$1 = "ð";
 var Euml = "Ë";
 var euml = "ë";
-var euro = "€";
-var excl = "!";
-var exist = "∃";
-var Exists = "∃";
-var expectation = "ℰ";
+var euro$1 = "€";
+var excl$1 = "!";
+var exist$1 = "∃";
+var Exists$1 = "∃";
+var expectation$1 = "ℰ";
 var ExponentialE = "ⅇ";
 var exponentiale = "ⅇ";
 var fallingdotseq = "≒";
 var Fcy = "Ф";
 var fcy = "ф";
-var female = "♀";
+var female$1 = "♀";
 var ffilig = "ﬃ";
 var fflig = "ﬀ";
 var ffllig = "ﬄ";
@@ -1230,7 +1230,7 @@ var filig = "ﬁ";
 var FilledSmallSquare = "◼";
 var FilledVerySmallSquare = "▪";
 var fjlig = "fj";
-var flat = "♭";
+var flat$1 = "♭";
 var fllig = "ﬂ";
 var fltns = "▱";
 var fnof = "ƒ";
@@ -1238,7 +1238,7 @@ var Fopf = "𝔽";
 var fopf = "𝕗";
 var ForAll = "∀";
 var forall = "∀";
-var fork = "⋔";
+var fork$1 = "⋔";
 var forkv = "⫙";
 var Fouriertrf = "ℱ";
 var fpartint = "⨍";
@@ -1258,60 +1258,60 @@ var frac56 = "⅚";
 var frac58 = "⅝";
 var frac78 = "⅞";
 var frasl = "⁄";
-var frown = "⌢";
+var frown$1 = "⌢";
 var Fscr = "ℱ";
 var fscr = "𝒻";
 var gacute = "ǵ";
-var Gamma = "Γ";
-var gamma = "γ";
+var Gamma$1 = "Γ";
+var gamma$1 = "γ";
 var Gammad = "Ϝ";
 var gammad = "ϝ";
-var gap = "⪆";
+var gap$1 = "⪆";
 var Gbreve = "Ğ";
 var gbreve = "ğ";
 var Gcedil = "Ģ";
 var Gcirc = "Ĝ";
 var gcirc = "ĝ";
 var Gcy = "Г";
-var gcy = "г";
+var gcy$1 = "г";
 var Gdot = "Ġ";
 var gdot = "ġ";
 var gE = "≧";
-var ge = "≥";
+var ge$1 = "≥";
 var gEl = "⪌";
-var gel = "⋛";
-var geq = "≥";
+var gel$1 = "⋛";
+var geq$1 = "≥";
 var geqq = "≧";
 var geqslant = "⩾";
-var ges = "⩾";
+var ges$1 = "⩾";
 var gescc = "⪩";
 var gesdot = "⪀";
 var gesdoto = "⪂";
 var gesdotol = "⪄";
-var gesl = "⋛︀";
+var gesl$1 = "⋛︀";
 var gesles = "⪔";
 var Gfr = "𝔊";
 var gfr = "𝔤";
 var Gg = "⋙";
-var gg = "≫";
+var gg$1 = "≫";
 var ggg = "⋙";
 var gimel = "ℷ";
 var GJcy = "Ѓ";
 var gjcy = "ѓ";
-var gl = "≷";
-var gla = "⪥";
+var gl$1 = "≷";
+var gla$1 = "⪥";
 var glE = "⪒";
 var glj = "⪤";
 var gnap = "⪊";
 var gnapprox = "⪊";
 var gnE = "≩";
-var gne = "⪈";
+var gne$1 = "⪈";
 var gneq = "⪈";
 var gneqq = "≩";
 var gnsim = "⋧";
 var Gopf = "𝔾";
 var gopf = "𝕘";
-var grave = "`";
+var grave$1 = "`";
 var GreaterEqual = "≥";
 var GreaterEqualLess = "⋛";
 var GreaterFullEqual = "≧";
@@ -1324,9 +1324,9 @@ var gscr = "ℊ";
 var gsim = "≳";
 var gsime = "⪎";
 var gsiml = "⪐";
-var GT = ">";
+var GT$1 = ">";
 var Gt = "≫";
-var gt = ">";
+var gt$1 = ">";
 var gtcc = "⪧";
 var gtcir = "⩺";
 var gtdot = "⋗";
@@ -1343,7 +1343,7 @@ var gvertneqq = "≩︀";
 var gvnE = "≩︀";
 var Hacek = "ˇ";
 var hairsp = " ";
-var half = "½";
+var half$1 = "½";
 var hamilt = "ℋ";
 var HARDcy = "Ъ";
 var hardcy = "ъ";
@@ -1351,11 +1351,11 @@ var hArr = "⇔";
 var harr = "↔";
 var harrcir = "⥈";
 var harrw = "↭";
-var Hat = "^";
+var Hat$1 = "^";
 var hbar = "ℏ";
 var Hcirc = "Ĥ";
 var hcirc = "ĥ";
-var hearts = "♥";
+var hearts$1 = "♥";
 var heartsuit = "♥";
 var hellip = "…";
 var hercon = "⊹";
@@ -1369,7 +1369,7 @@ var homtht = "∻";
 var hookleftarrow = "↩";
 var hookrightarrow = "↪";
 var Hopf = "ℍ";
-var hopf = "𝕙";
+var hopf$1 = "𝕙";
 var horbar = "―";
 var HorizontalLine = "─";
 var Hscr = "ℋ";
@@ -1380,24 +1380,24 @@ var hstrok = "ħ";
 var HumpDownHump = "≎";
 var HumpEqual = "≏";
 var hybull = "⁃";
-var hyphen = "‐";
+var hyphen$1 = "‐";
 var Iacute = "Í";
 var iacute = "í";
-var ic = "⁣";
+var ic$1 = "⁣";
 var Icirc = "Î";
 var icirc = "î";
 var Icy = "И";
-var icy = "и";
+var icy$1 = "и";
 var Idot = "İ";
 var IEcy = "Е";
 var iecy = "е";
 var iexcl = "¡";
-var iff = "⇔";
+var iff$1 = "⇔";
 var Ifr = "ℑ";
 var ifr = "𝔦";
 var Igrave = "Ì";
 var igrave = "ì";
-var ii = "ⅈ";
+var ii$1 = "ⅈ";
 var iiiint = "⨌";
 var iiint = "∭";
 var iinfin = "⧜";
@@ -1407,22 +1407,22 @@ var ijlig = "ĳ";
 var Im = "ℑ";
 var Imacr = "Ī";
 var imacr = "ī";
-var image = "ℑ";
+var image$1 = "ℑ";
 var ImaginaryI = "ⅈ";
 var imagline = "ℐ";
 var imagpart = "ℑ";
 var imath = "ı";
 var imof = "⊷";
-var imped = "Ƶ";
+var imped$1 = "Ƶ";
 var Implies = "⇒";
 var incare = "℅";
 var infin = "∞";
 var infintie = "⧝";
 var inodot = "ı";
 var Int = "∬";
-var int = "∫";
+var int$1 = "∫";
 var intcal = "⊺";
-var integers = "ℤ";
+var integers$1 = "ℤ";
 var Integral = "∫";
 var intercal = "⊺";
 var Intersection = "⋂";
@@ -1431,24 +1431,24 @@ var intprod = "⨼";
 var InvisibleComma = "⁣";
 var InvisibleTimes = "⁢";
 var IOcy = "Ё";
-var iocy = "ё";
+var iocy$1 = "ё";
 var Iogon = "Į";
-var iogon = "į";
+var iogon$1 = "į";
 var Iopf = "𝕀";
 var iopf = "𝕚";
 var Iota = "Ι";
-var iota = "ι";
+var iota$1 = "ι";
 var iprod = "⨼";
 var iquest = "¿";
 var Iscr = "ℐ";
 var iscr = "𝒾";
-var isin = "∈";
+var isin$1 = "∈";
 var isindot = "⋵";
 var isinE = "⋹";
 var isins = "⋴";
 var isinsv = "⋳";
 var isinv = "∈";
-var it = "⁢";
+var it$1 = "⁢";
 var Itilde = "Ĩ";
 var itilde = "ĩ";
 var Iukcy = "І";
@@ -1470,8 +1470,8 @@ var Jsercy = "Ј";
 var jsercy = "ј";
 var Jukcy = "Є";
 var jukcy = "є";
-var Kappa = "Κ";
-var kappa = "κ";
+var Kappa$1 = "Κ";
+var kappa$1 = "κ";
 var kappav = "ϰ";
 var Kcedil = "Ķ";
 var kcedil = "ķ";
@@ -1485,7 +1485,7 @@ var khcy = "х";
 var KJcy = "Ќ";
 var kjcy = "ќ";
 var Kopf = "𝕂";
-var kopf = "𝕜";
+var kopf$1 = "𝕜";
 var Kscr = "𝒦";
 var kscr = "𝓀";
 var lAarr = "⇚";
@@ -1493,13 +1493,13 @@ var Lacute = "Ĺ";
 var lacute = "ĺ";
 var laemptyv = "⦴";
 var lagran = "ℒ";
-var Lambda = "Λ";
-var lambda = "λ";
+var Lambda$1 = "Λ";
+var lambda$1 = "λ";
 var Lang = "⟪";
-var lang = "⟨";
+var lang$1 = "⟨";
 var langd = "⦑";
 var langle = "⟨";
-var lap = "⪅";
+var lap$1 = "⪅";
 var Laplacetrf = "ℒ";
 var laquo = "«";
 var Larr = "↞";
@@ -1513,11 +1513,11 @@ var larrlp = "↫";
 var larrpl = "⤹";
 var larrsim = "⥳";
 var larrtl = "↢";
-var lat = "⪫";
+var lat$1 = "⪫";
 var lAtail = "⤛";
 var latail = "⤙";
-var late = "⪭";
-var lates = "⪭︀";
+var late$1 = "⪭";
+var lates$1 = "⪭︀";
 var lBarr = "⤎";
 var lbarr = "⤌";
 var lbbrk = "❲";
@@ -1541,7 +1541,7 @@ var ldrdhar = "⥧";
 var ldrushar = "⥋";
 var ldsh = "↲";
 var lE = "≦";
-var le = "≤";
+var le$1 = "≤";
 var LeftAngleBracket = "⟨";
 var LeftArrow = "←";
 var Leftarrow = "⇐";
@@ -1579,11 +1579,11 @@ var LeftUpVectorBar = "⥘";
 var LeftVector = "↼";
 var LeftVectorBar = "⥒";
 var lEg = "⪋";
-var leg = "⋚";
-var leq = "≤";
+var leg$1 = "⋚";
+var leq$1 = "≤";
 var leqq = "≦";
 var leqslant = "⩽";
-var les = "⩽";
+var les$1 = "⩽";
 var lescc = "⪨";
 var lesdot = "⩿";
 var lesdoto = "⪁";
@@ -1606,7 +1606,7 @@ var lfisht = "⥼";
 var lfloor = "⌊";
 var Lfr = "𝔏";
 var lfr = "𝔩";
-var lg = "≶";
+var lg$1 = "≶";
 var lgE = "⪑";
 var lHar = "⥢";
 var lhard = "↽";
@@ -1616,7 +1616,7 @@ var lhblk = "▄";
 var LJcy = "Љ";
 var ljcy = "љ";
 var Ll = "⋘";
-var ll = "≪";
+var ll$1 = "≪";
 var llarr = "⇇";
 var llcorner = "⌞";
 var Lleftarrow = "⇚";
@@ -1629,7 +1629,7 @@ var lmoustache = "⎰";
 var lnap = "⪉";
 var lnapprox = "⪉";
 var lnE = "≨";
-var lne = "⪇";
+var lne$1 = "⪇";
 var lneq = "⪇";
 var lneqq = "≨";
 var lnsim = "⋦";
@@ -1658,7 +1658,7 @@ var lowbar = "_";
 var LowerLeftArrow = "↙";
 var LowerRightArrow = "↘";
 var loz = "◊";
-var lozenge = "◊";
+var lozenge$1 = "◊";
 var lozf = "⧫";
 var lpar = "(";
 var lparlt = "⦓";
@@ -1672,7 +1672,7 @@ var lsaquo = "‹";
 var Lscr = "ℒ";
 var lscr = "𝓁";
 var Lsh = "↰";
-var lsh = "↰";
+var lsh$1 = "↰";
 var lsim = "≲";
 var lsime = "⪍";
 var lsimg = "⪏";
@@ -1681,14 +1681,14 @@ var lsquo = "‘";
 var lsquor = "‚";
 var Lstrok = "Ł";
 var lstrok = "ł";
-var LT = "<";
+var LT$1 = "<";
 var Lt = "≪";
-var lt = "<";
+var lt$1 = "<";
 var ltcc = "⪦";
 var ltcir = "⩹";
 var ltdot = "⋖";
 var lthree = "⋋";
-var ltimes = "⋉";
+var ltimes$1 = "⋉";
 var ltlarr = "⥶";
 var ltquest = "⩻";
 var ltri = "◃";
@@ -1700,15 +1700,15 @@ var luruhar = "⥦";
 var lvertneqq = "≨︀";
 var lvnE = "≨︀";
 var macr = "¯";
-var male = "♂";
-var malt = "✠";
+var male$1 = "♂";
+var malt$1 = "✠";
 var maltese = "✠";
-var map = "↦";
+var map$1 = "↦";
 var mapsto = "↦";
 var mapstodown = "↧";
 var mapstoleft = "↤";
 var mapstoup = "↥";
-var marker = "▮";
+var marker$1 = "▮";
 var mcomma = "⨩";
 var Mcy = "М";
 var mcy = "м";
@@ -1721,11 +1721,11 @@ var Mfr = "𝔐";
 var mfr = "𝔪";
 var mho = "℧";
 var micro = "µ";
-var mid = "∣";
+var mid$1 = "∣";
 var midast = "*";
 var midcir = "⫰";
 var middot = "·";
-var minus = "−";
+var minus$1 = "−";
 var minusb = "⊟";
 var minusd = "∸";
 var minusdu = "⨪";
@@ -1733,29 +1733,29 @@ var MinusPlus = "∓";
 var mlcp = "⫛";
 var mldr = "…";
 var mnplus = "∓";
-var models = "⊧";
+var models$1 = "⊧";
 var Mopf = "𝕄";
 var mopf = "𝕞";
-var mp = "∓";
+var mp$1 = "∓";
 var Mscr = "ℳ";
 var mscr = "𝓂";
 var mstpos = "∾";
 var Mu = "Μ";
-var mu = "μ";
+var mu$1 = "μ";
 var multimap = "⊸";
 var mumap = "⊸";
 var nabla = "∇";
 var Nacute = "Ń";
 var nacute = "ń";
-var nang = "∠⃒";
-var nap = "≉";
+var nang$1 = "∠⃒";
+var nap$1 = "≉";
 var napE = "⩰̸";
 var napid = "≋̸";
 var napos = "ŉ";
 var napprox = "≉";
 var natur = "♮";
-var natural = "♮";
-var naturals = "ℕ";
+var natural$1 = "♮";
+var naturals$1 = "ℕ";
 var nbsp = " ";
 var nbump = "≎̸";
 var nbumpe = "≏̸";
@@ -1768,9 +1768,9 @@ var ncong = "≇";
 var ncongdot = "⩭̸";
 var ncup = "⩂";
 var Ncy = "Н";
-var ncy = "н";
+var ncy$1 = "н";
 var ndash = "–";
-var ne = "≠";
+var ne$1 = "≠";
 var nearhk = "⤤";
 var neArr = "⇗";
 var nearr = "↗";
@@ -1791,7 +1791,7 @@ var nexists = "∄";
 var Nfr = "𝔑";
 var nfr = "𝔫";
 var ngE = "≧̸";
-var nge = "≱";
+var nge$1 = "≱";
 var ngeq = "≱";
 var ngeqq = "≧̸";
 var ngeqslant = "⩾̸";
@@ -1799,14 +1799,14 @@ var nges = "⩾̸";
 var nGg = "⋙̸";
 var ngsim = "≵";
 var nGt = "≫⃒";
-var ngt = "≯";
+var ngt$1 = "≯";
 var ngtr = "≯";
 var nGtv = "≫̸";
 var nhArr = "⇎";
 var nharr = "↮";
 var nhpar = "⫲";
-var ni = "∋";
-var nis = "⋼";
+var ni$1 = "∋";
+var nis$1 = "⋼";
 var nisd = "⋺";
 var niv = "∋";
 var NJcy = "Њ";
@@ -1815,7 +1815,7 @@ var nlArr = "⇍";
 var nlarr = "↚";
 var nldr = "‥";
 var nlE = "≦̸";
-var nle = "≰";
+var nle$1 = "≰";
 var nLeftarrow = "⇍";
 var nleftarrow = "↚";
 var nLeftrightarrow = "⇎";
@@ -1823,12 +1823,12 @@ var nleftrightarrow = "↮";
 var nleq = "≰";
 var nleqq = "≦̸";
 var nleqslant = "⩽̸";
-var nles = "⩽̸";
-var nless = "≮";
+var nles$1 = "⩽̸";
+var nless$1 = "≮";
 var nLl = "⋘̸";
 var nlsim = "≴";
 var nLt = "≪⃒";
-var nlt = "≮";
+var nlt$1 = "≮";
 var nltri = "⋪";
 var nltrie = "⋬";
 var nLtv = "≪̸";
@@ -1836,9 +1836,9 @@ var nmid = "∤";
 var NoBreak = "⁠";
 var NonBreakingSpace = " ";
 var Nopf = "ℕ";
-var nopf = "𝕟";
-var Not = "⫬";
-var not = "¬";
+var nopf$1 = "𝕟";
+var Not$1 = "⫬";
+var not$1 = "¬";
 var NotCongruent = "≢";
 var NotCupCap = "≭";
 var NotDoubleVerticalBar = "∦";
@@ -1918,9 +1918,9 @@ var nRightarrow = "⇏";
 var nrightarrow = "↛";
 var nrtri = "⋫";
 var nrtrie = "⋭";
-var nsc = "⊁";
+var nsc$1 = "⊁";
 var nsccue = "⋡";
-var nsce = "⪰̸";
+var nsce$1 = "⪰̸";
 var Nscr = "𝒩";
 var nscr = "𝓃";
 var nshortmid = "∤";
@@ -1955,8 +1955,8 @@ var ntrianglelefteq = "⋬";
 var ntriangleright = "⋫";
 var ntrianglerighteq = "⋭";
 var Nu = "Ν";
-var nu = "ν";
-var num = "#";
+var nu$1 = "ν";
+var num$1 = "#";
 var numero = "№";
 var numsp = " ";
 var nvap = "≍⃒";
@@ -2002,48 +2002,48 @@ var ofr = "𝔬";
 var ogon = "˛";
 var Ograve = "Ò";
 var ograve = "ò";
-var ogt = "⧁";
+var ogt$1 = "⧁";
 var ohbar = "⦵";
-var ohm = "Ω";
+var ohm$1 = "Ω";
 var oint = "∮";
 var olarr = "↺";
 var olcir = "⦾";
 var olcross = "⦻";
-var oline = "‾";
-var olt = "⧀";
+var oline$1 = "‾";
+var olt$1 = "⧀";
 var Omacr = "Ō";
 var omacr = "ō";
-var Omega = "Ω";
-var omega = "ω";
-var Omicron = "Ο";
-var omicron = "ο";
+var Omega$1 = "Ω";
+var omega$1 = "ω";
+var Omicron$1 = "Ο";
+var omicron$1 = "ο";
 var omid = "⦶";
 var ominus = "⊖";
 var Oopf = "𝕆";
-var oopf = "𝕠";
-var opar = "⦷";
+var oopf$1 = "𝕠";
+var opar$1 = "⦷";
 var OpenCurlyDoubleQuote = "“";
 var OpenCurlyQuote = "‘";
 var operp = "⦹";
 var oplus = "⊕";
 var Or = "⩔";
-var or = "∨";
+var or$1 = "∨";
 var orarr = "↻";
 var ord = "⩝";
-var order = "ℴ";
+var order$1 = "ℴ";
 var orderof = "ℴ";
 var ordf = "ª";
 var ordm = "º";
 var origof = "⊶";
-var oror = "⩖";
+var oror$1 = "⩖";
 var orslope = "⩗";
-var orv = "⩛";
+var orv$1 = "⩛";
 var oS = "Ⓢ";
 var Oscr = "𝒪";
 var oscr = "ℴ";
 var Oslash = "Ø";
 var oslash = "ø";
-var osol = "⊘";
+var osol$1 = "⊘";
 var Otilde = "Õ";
 var otilde = "õ";
 var Otimes = "⨷";
@@ -2056,12 +2056,12 @@ var OverBar = "‾";
 var OverBrace = "⏞";
 var OverBracket = "⎴";
 var OverParenthesis = "⏜";
-var par = "∥";
-var para = "¶";
-var parallel = "∥";
+var par$1 = "∥";
+var para$1 = "¶";
+var parallel$1 = "∥";
 var parsim = "⫳";
 var parsl = "⫽";
-var part = "∂";
+var part$1 = "∂";
 var PartialD = "∂";
 var Pcy = "П";
 var pcy = "п";
@@ -2073,18 +2073,18 @@ var pertenk = "‱";
 var Pfr = "𝔓";
 var pfr = "𝔭";
 var Phi = "Φ";
-var phi = "φ";
+var phi$1 = "φ";
 var phiv = "ϕ";
 var phmmat = "ℳ";
-var phone = "☎";
-var Pi = "Π";
-var pi = "π";
-var pitchfork = "⋔";
+var phone$1 = "☎";
+var Pi$1 = "Π";
+var pi$1 = "π";
+var pitchfork$1 = "⋔";
 var piv = "ϖ";
 var planck = "ℏ";
 var planckh = "ℎ";
 var plankv = "ℏ";
-var plus = "+";
+var plus$1 = "+";
 var plusacir = "⨣";
 var plusb = "⊞";
 var pluscir = "⨢";
@@ -2095,14 +2095,14 @@ var PlusMinus = "±";
 var plusmn = "±";
 var plussim = "⨦";
 var plustwo = "⨧";
-var pm = "±";
+var pm$1 = "±";
 var Poincareplane = "ℌ";
 var pointint = "⨕";
 var Popf = "ℙ";
-var popf = "𝕡";
-var pound = "£";
+var popf$1 = "𝕡";
+var pound$1 = "£";
 var Pr = "⪻";
-var pr = "≺";
+var pr$1 = "≺";
 var prap = "⪷";
 var prcue = "≼";
 var prE = "⪳";
@@ -2120,26 +2120,26 @@ var precneqq = "⪵";
 var precnsim = "⋨";
 var precsim = "≾";
 var Prime = "″";
-var prime = "′";
-var primes = "ℙ";
+var prime$1 = "′";
+var primes$1 = "ℙ";
 var prnap = "⪹";
 var prnE = "⪵";
 var prnsim = "⋨";
-var prod = "∏";
-var Product = "∏";
+var prod$1 = "∏";
+var Product$1 = "∏";
 var profalar = "⌮";
 var profline = "⌒";
 var profsurf = "⌓";
-var prop = "∝";
-var Proportion = "∷";
-var Proportional = "∝";
+var prop$1 = "∝";
+var Proportion$1 = "∷";
+var Proportional$1 = "∝";
 var propto = "∝";
 var prsim = "≾";
 var prurel = "⊰";
 var Pscr = "𝒫";
 var pscr = "𝓅";
 var Psi = "Ψ";
-var psi = "ψ";
+var psi$1 = "ψ";
 var puncsp = " ";
 var Qfr = "𝔔";
 var qfr = "𝔮";
@@ -2151,20 +2151,20 @@ var Qscr = "𝒬";
 var qscr = "𝓆";
 var quaternions = "ℍ";
 var quatint = "⨖";
-var quest = "?";
+var quest$1 = "?";
 var questeq = "≟";
-var QUOT = "\"";
-var quot = "\"";
+var QUOT$1 = "\"";
+var quot$1 = "\"";
 var rAarr = "⇛";
-var race = "∽̱";
+var race$1 = "∽̱";
 var Racute = "Ŕ";
 var racute = "ŕ";
 var radic = "√";
 var raemptyv = "⦳";
 var Rang = "⟫";
-var rang = "⟩";
+var rang$1 = "⟩";
 var rangd = "⦒";
-var range = "⦥";
+var range$1 = "⦥";
 var rangle = "⟩";
 var raquo = "»";
 var Rarr = "↠";
@@ -2184,7 +2184,7 @@ var rarrtl = "↣";
 var rarrw = "↝";
 var rAtail = "⤜";
 var ratail = "⤚";
-var ratio = "∶";
+var ratio$1 = "∶";
 var rationals = "ℚ";
 var RBarr = "⤐";
 var rBarr = "⤏";
@@ -2208,14 +2208,14 @@ var rdldhar = "⥩";
 var rdquo = "”";
 var rdquor = "”";
 var rdsh = "↳";
-var Re = "ℜ";
-var real = "ℜ";
+var Re$1 = "ℜ";
+var real$1 = "ℜ";
 var realine = "ℛ";
 var realpart = "ℜ";
-var reals = "ℝ";
-var rect = "▭";
-var REG = "®";
-var reg = "®";
+var reals$1 = "ℝ";
+var rect$1 = "▭";
+var REG$1 = "®";
+var reg$1 = "®";
 var ReverseElement = "∋";
 var ReverseEquilibrium = "⇋";
 var ReverseUpEquilibrium = "⥯";
@@ -2262,7 +2262,7 @@ var RightUpVector = "↾";
 var RightUpVectorBar = "⥔";
 var RightVector = "⇀";
 var RightVectorBar = "⥓";
-var ring = "˚";
+var ring$1 = "˚";
 var risingdotseq = "≓";
 var rlarr = "⇄";
 var rlhar = "⇌";
@@ -2288,7 +2288,7 @@ var rsaquo = "›";
 var Rscr = "ℛ";
 var rscr = "𝓇";
 var Rsh = "↱";
-var rsh = "↱";
+var rsh$1 = "↱";
 var rsqb = "]";
 var rsquo = "’";
 var rsquor = "’";
@@ -2305,13 +2305,13 @@ var Sacute = "Ś";
 var sacute = "ś";
 var sbquo = "‚";
 var Sc = "⪼";
-var sc = "≻";
-var scap = "⪸";
+var sc$1 = "≻";
+var scap$1 = "⪸";
 var Scaron = "Š";
 var scaron = "š";
 var sccue = "≽";
 var scE = "⪴";
-var sce = "⪰";
+var sce$1 = "⪰";
 var Scedil = "Ş";
 var scedil = "ş";
 var Scirc = "Ŝ";
@@ -2322,16 +2322,16 @@ var scnsim = "⋩";
 var scpolint = "⨓";
 var scsim = "≿";
 var Scy = "С";
-var scy = "с";
-var sdot = "⋅";
+var scy$1 = "с";
+var sdot$1 = "⋅";
 var sdotb = "⊡";
 var sdote = "⩦";
 var searhk = "⤥";
 var seArr = "⇘";
 var searr = "↘";
 var searrow = "↘";
-var sect = "§";
-var semi = ";";
+var sect$1 = "§";
+var semi$1 = ";";
 var seswar = "⤩";
 var setminus = "∖";
 var setmn = "∖";
@@ -2339,7 +2339,7 @@ var sext = "✶";
 var Sfr = "𝔖";
 var sfr = "𝔰";
 var sfrown = "⌢";
-var sharp = "♯";
+var sharp$1 = "♯";
 var SHCHcy = "Щ";
 var shchcy = "щ";
 var SHcy = "Ш";
@@ -2350,12 +2350,12 @@ var shortmid = "∣";
 var shortparallel = "∥";
 var ShortRightArrow = "→";
 var ShortUpArrow = "↑";
-var shy = "­";
-var Sigma = "Σ";
-var sigma = "σ";
+var shy$1 = "­";
+var Sigma$1 = "Σ";
+var sigma$1 = "σ";
 var sigmaf = "ς";
 var sigmav = "ς";
-var sim = "∼";
+var sim$1 = "∼";
 var simdot = "⩪";
 var sime = "≃";
 var simeq = "≃";
@@ -2378,12 +2378,12 @@ var smte = "⪬";
 var smtes = "⪬︀";
 var SOFTcy = "Ь";
 var softcy = "ь";
-var sol = "/";
+var sol$1 = "/";
 var solb = "⧄";
 var solbar = "⌿";
 var Sopf = "𝕊";
 var sopf = "𝕤";
-var spades = "♠";
+var spades$1 = "♠";
 var spadesuit = "♠";
 var spar = "∥";
 var sqcap = "⊓";
@@ -2401,7 +2401,7 @@ var sqsupset = "⊐";
 var sqsupseteq = "⊒";
 var squ = "□";
 var Square = "□";
-var square = "□";
+var square$1 = "□";
 var SquareIntersection = "⊓";
 var SquareSubset = "⊏";
 var SquareSubsetEqual = "⊑";
@@ -2416,17 +2416,17 @@ var sscr = "𝓈";
 var ssetmn = "∖";
 var ssmile = "⌣";
 var sstarf = "⋆";
-var Star = "⋆";
-var star = "☆";
+var Star$1 = "⋆";
+var star$1 = "☆";
 var starf = "★";
 var straightepsilon = "ϵ";
 var straightphi = "ϕ";
 var strns = "¯";
-var Sub = "⋐";
-var sub = "⊂";
+var Sub$1 = "⋐";
+var sub$1 = "⊂";
 var subdot = "⪽";
 var subE = "⫅";
-var sube = "⊆";
+var sube$1 = "⊆";
 var subedot = "⫃";
 var submult = "⫁";
 var subnE = "⫋";
@@ -2456,8 +2456,8 @@ var succneqq = "⪶";
 var succnsim = "⋩";
 var succsim = "≿";
 var SuchThat = "∋";
-var Sum = "∑";
-var sum = "∑";
+var Sum$1 = "∑";
+var sum$1 = "∑";
 var sung = "♪";
 var Sup = "⋑";
 var sup = "⊃";
@@ -2493,10 +2493,10 @@ var swarr = "↙";
 var swarrow = "↙";
 var swnwar = "⤪";
 var szlig = "ß";
-var Tab = "\t";
-var target = "⌖";
-var Tau = "Τ";
-var tau = "τ";
+var Tab$1 = "\t";
+var target$1 = "⌖";
+var Tau$1 = "Τ";
+var tau$1 = "τ";
 var tbrk = "⎴";
 var Tcaron = "Ť";
 var tcaron = "ť";
@@ -2510,9 +2510,9 @@ var Tfr = "𝔗";
 var tfr = "𝔱";
 var there4 = "∴";
 var Therefore = "∴";
-var therefore = "∴";
-var Theta = "Θ";
-var theta = "θ";
+var therefore$1 = "∴";
+var Theta$1 = "Θ";
+var theta$1 = "θ";
 var thetasym = "ϑ";
 var thetav = "ϑ";
 var thickapprox = "≈";
@@ -2522,30 +2522,30 @@ var thinsp = " ";
 var ThinSpace = " ";
 var thkap = "≈";
 var thksim = "∼";
-var THORN = "Þ";
-var thorn = "þ";
-var Tilde = "∼";
-var tilde = "˜";
+var THORN$1 = "Þ";
+var thorn$1 = "þ";
+var Tilde$1 = "∼";
+var tilde$1 = "˜";
 var TildeEqual = "≃";
 var TildeFullEqual = "≅";
 var TildeTilde = "≈";
-var times = "×";
+var times$1 = "×";
 var timesb = "⊠";
 var timesbar = "⨱";
 var timesd = "⨰";
-var tint = "∭";
+var tint$1 = "∭";
 var toea = "⤨";
-var top = "⊤";
+var top$1 = "⊤";
 var topbot = "⌶";
 var topcir = "⫱";
 var Topf = "𝕋";
 var topf = "𝕥";
 var topfork = "⫚";
-var tosa = "⤩";
+var tosa$1 = "⤩";
 var tprime = "‴";
-var TRADE = "™";
-var trade = "™";
-var triangle = "▵";
+var TRADE$1 = "™";
+var trade$1 = "™";
+var triangle$1 = "▵";
 var triangledown = "▿";
 var triangleleft = "◃";
 var trianglelefteq = "⊴";
@@ -2553,7 +2553,7 @@ var triangleq = "≜";
 var triangleright = "▹";
 var trianglerighteq = "⊵";
 var tridot = "◬";
-var trie = "≜";
+var trie$1 = "≜";
 var triminus = "⨺";
 var TripleDot = "⃛";
 var triplus = "⨹";
@@ -2584,7 +2584,7 @@ var ubreve = "ŭ";
 var Ucirc = "Û";
 var ucirc = "û";
 var Ucy = "У";
-var ucy = "у";
+var ucy$1 = "у";
 var udarr = "⇅";
 var Udblac = "Ű";
 var udblac = "ű";
@@ -2604,12 +2604,12 @@ var ulcrop = "⌏";
 var ultri = "◸";
 var Umacr = "Ū";
 var umacr = "ū";
-var uml = "¨";
+var uml$1 = "¨";
 var UnderBar = "_";
 var UnderBrace = "⏟";
 var UnderBracket = "⎵";
 var UnderParenthesis = "⏝";
-var Union = "⋃";
+var Union$1 = "⋃";
 var UnionPlus = "⊎";
 var Uogon = "Ų";
 var uogon = "ų";
@@ -2626,11 +2626,11 @@ var updownarrow = "↕";
 var UpEquilibrium = "⥮";
 var upharpoonleft = "↿";
 var upharpoonright = "↾";
-var uplus = "⊎";
+var uplus$1 = "⊎";
 var UpperLeftArrow = "↖";
 var UpperRightArrow = "↗";
-var Upsi = "ϒ";
-var upsi = "υ";
+var Upsi$1 = "ϒ";
+var upsi$1 = "υ";
 var upsih = "ϒ";
 var Upsilon = "Υ";
 var upsilon = "υ";
@@ -2641,7 +2641,7 @@ var urcorn = "⌝";
 var urcorner = "⌝";
 var urcrop = "⌎";
 var Uring = "Ů";
-var uring = "ů";
+var uring$1 = "ů";
 var urtri = "◹";
 var Uscr = "𝒰";
 var uscr = "𝓊";
@@ -2683,14 +2683,14 @@ var vDash = "⊨";
 var vdash = "⊢";
 var Vdashl = "⫦";
 var Vee = "⋁";
-var vee = "∨";
+var vee$1 = "∨";
 var veebar = "⊻";
 var veeeq = "≚";
 var vellip = "⋮";
 var Verbar = "‖";
 var verbar = "|";
-var Vert = "‖";
-var vert = "|";
+var Vert$1 = "‖";
+var vert$1 = "|";
 var VerticalBar = "∣";
 var VerticalLine = "|";
 var VerticalSeparator = "❘";
@@ -2716,8 +2716,8 @@ var vzigzag = "⦚";
 var Wcirc = "Ŵ";
 var wcirc = "ŵ";
 var wedbar = "⩟";
-var Wedge = "⋀";
-var wedge = "∧";
+var Wedge$1 = "⋀";
+var wedge$1 = "∧";
 var wedgeq = "≙";
 var weierp = "℘";
 var Wfr = "𝔚";
@@ -2726,7 +2726,7 @@ var Wopf = "𝕎";
 var wopf = "𝕨";
 var wp = "℘";
 var wr = "≀";
-var wreath = "≀";
+var wreath$1 = "≀";
 var Wscr = "𝒲";
 var wscr = "𝓌";
 var xcap = "⋂";
@@ -2737,8 +2737,8 @@ var Xfr = "𝔛";
 var xfr = "𝔵";
 var xhArr = "⟺";
 var xharr = "⟷";
-var Xi = "Ξ";
-var xi = "ξ";
+var Xi$1 = "Ξ";
+var xi$1 = "ξ";
 var xlArr = "⟸";
 var xlarr = "⟵";
 var xmap = "⟼";
@@ -2761,11 +2761,11 @@ var Yacute = "Ý";
 var yacute = "ý";
 var YAcy = "Я";
 var yacy = "я";
-var Ycirc = "Ŷ";
-var ycirc = "ŷ";
+var Ycirc$1 = "Ŷ";
+var ycirc$1 = "ŷ";
 var Ycy = "Ы";
-var ycy = "ы";
-var yen = "¥";
+var ycy$1 = "ы";
+var yen$1 = "¥";
 var Yfr = "𝔜";
 var yfr = "𝔶";
 var YIcy = "Ї";
@@ -2778,8 +2778,8 @@ var YUcy = "Ю";
 var yucy = "ю";
 var Yuml = "Ÿ";
 var yuml = "ÿ";
-var Zacute = "Ź";
-var zacute = "ź";
+var Zacute$1 = "Ź";
+var zacute$1 = "ź";
 var Zcaron = "Ž";
 var zcaron = "ž";
 var Zcy = "З";
@@ -2788,8 +2788,8 @@ var Zdot = "Ż";
 var zdot = "ż";
 var zeetrf = "ℨ";
 var ZeroWidthSpace = "​";
-var Zeta = "Ζ";
-var zeta = "ζ";
+var Zeta$1 = "Ζ";
+var zeta$1 = "ζ";
 var Zfr = "ℨ";
 var zfr = "𝔷";
 var ZHcy = "Ж";
@@ -2806,12 +2806,12 @@ var allNamedEntitiesJson = {
   aacute: aacute,
   Abreve: Abreve,
   abreve: abreve,
-  ac: ac,
+  ac: ac$1,
   acd: acd,
   acE: acE,
   Acirc: Acirc,
   acirc: acirc,
-  acute: acute,
+  acute: acute$1,
   Acy: Acy,
   acy: acy,
   AElig: AElig,
@@ -2823,22 +2823,22 @@ var allNamedEntitiesJson = {
   agrave: agrave,
   alefsym: alefsym,
   aleph: aleph,
-  Alpha: Alpha,
-  alpha: alpha,
+  Alpha: Alpha$1,
+  alpha: alpha$1,
   Amacr: Amacr,
   amacr: amacr,
   amalg: amalg,
   AMP: AMP,
-  amp: amp,
-  And: And,
-  and: and,
+  amp: amp$1,
+  And: And$1,
+  and: and$1,
   andand: andand,
   andd: andd,
   andslope: andslope,
   andv: andv,
   ang: ang,
-  ange: ange,
-  angle: angle,
+  ange: ange$1,
+  angle: angle$1,
   angmsd: angmsd,
   angmsdaa: angmsdaa,
   angmsdab: angmsdab,
@@ -2852,31 +2852,31 @@ var allNamedEntitiesJson = {
   angrtvb: angrtvb,
   angrtvbd: angrtvbd,
   angsph: angsph,
-  angst: angst,
+  angst: angst$1,
   angzarr: angzarr,
   Aogon: Aogon,
   aogon: aogon,
   Aopf: Aopf,
   aopf: aopf,
-  ap: ap,
+  ap: ap$1,
   apacir: apacir,
   apE: apE,
-  ape: ape,
+  ape: ape$1,
   apid: apid,
   apos: apos,
   ApplyFunction: ApplyFunction,
-  approx: approx,
+  approx: approx$1,
   approxeq: approxeq,
-  Aring: Aring,
-  aring: aring,
-  Ascr: Ascr,
-  ascr: ascr,
-  Assign: Assign,
-  ast: ast,
+  Aring: Aring$1,
+  aring: aring$1,
+  Ascr: Ascr$1,
+  ascr: ascr$1,
+  Assign: Assign$1,
+  ast: ast$1,
   asymp: asymp,
   asympeq: asympeq,
   Atilde: Atilde,
-  atilde: atilde,
+  atilde: atilde$1,
   Auml: Auml,
   auml: auml,
   awconint: awconint,
@@ -2886,29 +2886,29 @@ var allNamedEntitiesJson = {
   backprime: backprime,
   backsim: backsim,
   backsimeq: backsimeq,
-  Backslash: Backslash,
+  Backslash: Backslash$1,
   Barv: Barv,
   barvee: barvee,
   Barwed: Barwed,
   barwed: barwed,
-  barwedge: barwedge,
+  barwedge: barwedge$1,
   bbrk: bbrk,
   bbrktbrk: bbrktbrk,
   bcong: bcong,
   Bcy: Bcy,
   bcy: bcy,
   bdquo: bdquo,
-  becaus: becaus,
-  Because: Because,
-  because: because,
+  becaus: becaus$1,
+  Because: Because$1,
+  because: because$1,
   bemptyv: bemptyv,
-  bepsi: bepsi,
+  bepsi: bepsi$1,
   bernou: bernou,
-  Bernoullis: Bernoullis,
-  Beta: Beta,
-  beta: beta,
-  beth: beth,
-  between: between,
+  Bernoullis: Bernoullis$1,
+  Beta: Beta$1,
+  beta: beta$1,
+  beth: beth$1,
+  between: between$1,
   Bfr: Bfr,
   bfr: bfr,
   bigcap: bigcap,
@@ -2931,20 +2931,20 @@ var allNamedEntitiesJson = {
   blacktriangledown: blacktriangledown,
   blacktriangleleft: blacktriangleleft,
   blacktriangleright: blacktriangleright,
-  blank: blank,
+  blank: blank$1,
   blk12: blk12,
   blk14: blk14,
   blk34: blk34,
-  block: block,
+  block: block$1,
   bne: bne,
   bnequiv: bnequiv,
   bNot: bNot,
   bnot: bnot,
   Bopf: Bopf,
   bopf: bopf,
-  bot: bot,
-  bottom: bottom,
-  bowtie: bowtie,
+  bot: bot$1,
+  bottom: bottom$1,
+  bowtie: bowtie$1,
   boxbox: boxbox,
   boxDL: boxDL,
   boxDl: boxDl,
@@ -2991,7 +2991,7 @@ var allNamedEntitiesJson = {
   boxvr: boxvr,
   bprime: bprime,
   Breve: Breve,
-  breve: breve,
+  breve: breve$1,
   brvbar: brvbar,
   Bscr: Bscr,
   bscr: bscr,
@@ -3001,26 +3001,26 @@ var allNamedEntitiesJson = {
   bsol: bsol,
   bsolb: bsolb,
   bsolhsub: bsolhsub,
-  bull: bull,
-  bullet: bullet,
-  bump: bump,
+  bull: bull$1,
+  bullet: bullet$1,
+  bump: bump$1,
   bumpE: bumpE,
   bumpe: bumpe,
   Bumpeq: Bumpeq,
   bumpeq: bumpeq,
   Cacute: Cacute,
-  cacute: cacute,
-  Cap: Cap,
-  cap: cap,
-  capand: capand,
+  cacute: cacute$1,
+  Cap: Cap$1,
+  cap: cap$1,
+  capand: capand$1,
   capbrcup: capbrcup,
   capcap: capcap,
   capcup: capcup,
   capdot: capdot,
   CapitalDifferentialD: CapitalDifferentialD,
-  caps: caps,
-  caret: caret,
-  caron: caron,
+  caps: caps$1,
+  caret: caret$1,
+  caron: caron$1,
   Cayleys: Cayleys,
   ccaps: ccaps,
   Ccaron: Ccaron,
@@ -3034,22 +3034,22 @@ var allNamedEntitiesJson = {
   ccupssm: ccupssm,
   Cdot: Cdot,
   cdot: cdot,
-  cedil: cedil,
-  Cedilla: Cedilla,
+  cedil: cedil$1,
+  Cedilla: Cedilla$1,
   cemptyv: cemptyv,
-  cent: cent,
+  cent: cent$1,
   CenterDot: CenterDot,
   centerdot: centerdot,
   Cfr: Cfr,
   cfr: cfr,
   CHcy: CHcy,
   chcy: chcy,
-  check: check,
-  checkmark: checkmark,
-  Chi: Chi,
-  chi: chi,
-  cir: cir,
-  circ: circ,
+  check: check$1,
+  checkmark: checkmark$1,
+  Chi: Chi$1,
+  chi: chi$1,
+  cir: cir$1,
+  circ: circ$1,
   circeq: circeq,
   circlearrowleft: circlearrowleft,
   circlearrowright: circlearrowright,
@@ -3070,36 +3070,36 @@ var allNamedEntitiesJson = {
   ClockwiseContourIntegral: ClockwiseContourIntegral,
   CloseCurlyDoubleQuote: CloseCurlyDoubleQuote,
   CloseCurlyQuote: CloseCurlyQuote,
-  clubs: clubs,
-  clubsuit: clubsuit,
-  Colon: Colon,
-  colon: colon,
-  Colone: Colone,
-  colone: colone,
+  clubs: clubs$1,
+  clubsuit: clubsuit$1,
+  Colon: Colon$1,
+  colon: colon$1,
+  Colone: Colone$1,
+  colone: colone$1,
   coloneq: coloneq,
-  comma: comma,
-  commat: commat,
-  comp: comp,
+  comma: comma$1,
+  commat: commat$1,
+  comp: comp$1,
   compfn: compfn,
-  complement: complement,
-  complexes: complexes,
-  cong: cong,
+  complement: complement$1,
+  complexes: complexes$1,
+  cong: cong$1,
   congdot: congdot,
-  Congruent: Congruent,
+  Congruent: Congruent$1,
   Conint: Conint,
-  conint: conint,
+  conint: conint$1,
   ContourIntegral: ContourIntegral,
   Copf: Copf,
-  copf: copf,
-  coprod: coprod,
+  copf: copf$1,
+  coprod: coprod$1,
   Coproduct: Coproduct,
-  COPY: COPY,
-  copy: copy,
+  COPY: COPY$1,
+  copy: copy$1,
   copysr: copysr,
   CounterClockwiseContourIntegral: CounterClockwiseContourIntegral,
   crarr: crarr,
-  Cross: Cross,
-  cross: cross,
+  Cross: Cross$1,
+  cross: cross$1,
   Cscr: Cscr,
   cscr: cscr,
   csub: csub,
@@ -3113,15 +3113,15 @@ var allNamedEntitiesJson = {
   cuesc: cuesc,
   cularr: cularr,
   cularrp: cularrp,
-  Cup: Cup,
-  cup: cup,
+  Cup: Cup$1,
+  cup: cup$1,
   cupbrcap: cupbrcap,
   CupCap: CupCap,
   cupcap: cupcap,
   cupcup: cupcup,
   cupdot: cupdot,
   cupor: cupor,
-  cups: cups,
+  cups: cups$1,
   curarr: curarr,
   curarrm: curarrm,
   curlyeqprec: curlyeqprec,
@@ -3136,13 +3136,13 @@ var allNamedEntitiesJson = {
   cwconint: cwconint,
   cwint: cwint,
   cylcty: cylcty,
-  Dagger: Dagger,
-  dagger: dagger,
-  daleth: daleth,
+  Dagger: Dagger$1,
+  dagger: dagger$1,
+  daleth: daleth$1,
   Darr: Darr,
   dArr: dArr,
-  darr: darr,
-  dash: dash,
+  darr: darr$1,
+  dash: dash$1,
   Dashv: Dashv,
   dashv: dashv,
   dbkarow: dbkarow,
@@ -3151,50 +3151,50 @@ var allNamedEntitiesJson = {
   dcaron: dcaron,
   Dcy: Dcy,
   dcy: dcy,
-  DD: DD,
-  dd: dd,
+  DD: DD$1,
+  dd: dd$1,
   ddagger: ddagger,
   ddarr: ddarr,
   DDotrahd: DDotrahd,
   ddotseq: ddotseq,
-  deg: deg,
-  Del: Del,
-  Delta: Delta,
-  delta: delta,
+  deg: deg$1,
+  Del: Del$1,
+  Delta: Delta$1,
+  delta: delta$1,
   demptyv: demptyv,
   dfisht: dfisht,
   Dfr: Dfr,
   dfr: dfr,
   dHar: dHar,
   dharl: dharl,
-  dharr: dharr,
+  dharr: dharr$1,
   DiacriticalAcute: DiacriticalAcute,
   DiacriticalDot: DiacriticalDot,
   DiacriticalDoubleAcute: DiacriticalDoubleAcute,
   DiacriticalGrave: DiacriticalGrave,
   DiacriticalTilde: DiacriticalTilde,
-  diam: diam,
-  Diamond: Diamond,
-  diamond: diamond,
+  diam: diam$1,
+  Diamond: Diamond$1,
+  diamond: diamond$1,
   diamondsuit: diamondsuit,
-  diams: diams,
-  die: die,
+  diams: diams$1,
+  die: die$1,
   DifferentialD: DifferentialD,
-  digamma: digamma,
-  disin: disin,
-  div: div,
-  divide: divide,
+  digamma: digamma$1,
+  disin: disin$1,
+  div: div$1,
+  divide: divide$1,
   divideontimes: divideontimes,
   divonx: divonx,
   DJcy: DJcy,
   djcy: djcy,
   dlcorn: dlcorn,
   dlcrop: dlcrop,
-  dollar: dollar,
+  dollar: dollar$1,
   Dopf: Dopf,
-  dopf: dopf,
-  Dot: Dot,
-  dot: dot,
+  dopf: dopf$1,
+  Dot: Dot$1,
+  dot: dot$1,
   DotDot: DotDot,
   doteq: doteq,
   doteqdot: doteqdot,
@@ -3242,11 +3242,11 @@ var allNamedEntitiesJson = {
   dscr: dscr,
   DScy: DScy,
   dscy: dscy,
-  dsol: dsol,
+  dsol: dsol$1,
   Dstrok: Dstrok,
   dstrok: dstrok,
   dtdot: dtdot,
-  dtri: dtri,
+  dtri: dtri$1,
   dtrif: dtrif,
   duarr: duarr,
   duhar: duhar,
@@ -3256,37 +3256,37 @@ var allNamedEntitiesJson = {
   dzigrarr: dzigrarr,
   Eacute: Eacute,
   eacute: eacute,
-  easter: easter,
+  easter: easter$1,
   Ecaron: Ecaron,
   ecaron: ecaron,
-  ecir: ecir,
+  ecir: ecir$1,
   Ecirc: Ecirc,
   ecirc: ecirc,
-  ecolon: ecolon,
+  ecolon: ecolon$1,
   Ecy: Ecy,
-  ecy: ecy,
+  ecy: ecy$1,
   eDDot: eDDot,
   Edot: Edot,
   eDot: eDot,
-  edot: edot,
-  ee: ee,
+  edot: edot$1,
+  ee: ee$1,
   efDot: efDot,
   Efr: Efr,
-  efr: efr,
-  eg: eg,
+  efr: efr$1,
+  eg: eg$1,
   Egrave: Egrave,
-  egrave: egrave,
-  egs: egs,
+  egrave: egrave$1,
+  egs: egs$1,
   egsdot: egsdot,
-  el: el,
+  el: el$1,
   Element: Element,
   elinters: elinters,
-  ell: ell,
-  els: els,
+  ell: ell$1,
+  els: els$1,
   elsdot: elsdot,
   Emacr: Emacr,
   emacr: emacr,
-  empty: empty,
+  empty: empty$1,
   emptyset: emptyset,
   EmptySmallSquare: EmptySmallSquare,
   emptyv: emptyv,
@@ -3294,8 +3294,8 @@ var allNamedEntitiesJson = {
   emsp: emsp,
   emsp13: emsp13,
   emsp14: emsp14,
-  ENG: ENG,
-  eng: eng,
+  ENG: ENG$1,
+  eng: eng$1,
   ensp: ensp,
   Eogon: Eogon,
   eogon: eogon,
@@ -3304,47 +3304,47 @@ var allNamedEntitiesJson = {
   epar: epar,
   eparsl: eparsl,
   eplus: eplus,
-  epsi: epsi,
-  Epsilon: Epsilon,
-  epsilon: epsilon,
+  epsi: epsi$1,
+  Epsilon: Epsilon$1,
+  epsilon: epsilon$1,
   epsiv: epsiv,
   eqcirc: eqcirc,
   eqcolon: eqcolon,
   eqsim: eqsim,
   eqslantgtr: eqslantgtr,
   eqslantless: eqslantless,
-  Equal: Equal,
-  equals: equals,
+  Equal: Equal$1,
+  equals: equals$1,
   EqualTilde: EqualTilde,
-  equest: equest,
-  Equilibrium: Equilibrium,
-  equiv: equiv,
+  equest: equest$1,
+  Equilibrium: Equilibrium$1,
+  equiv: equiv$1,
   equivDD: equivDD,
   eqvparsl: eqvparsl,
   erarr: erarr,
   erDot: erDot,
   Escr: Escr,
-  escr: escr,
+  escr: escr$1,
   esdot: esdot,
   Esim: Esim,
-  esim: esim,
-  Eta: Eta,
-  eta: eta,
-  ETH: ETH,
-  eth: eth,
+  esim: esim$1,
+  Eta: Eta$1,
+  eta: eta$1,
+  ETH: ETH$1,
+  eth: eth$1,
   Euml: Euml,
   euml: euml,
-  euro: euro,
-  excl: excl,
-  exist: exist,
-  Exists: Exists,
-  expectation: expectation,
+  euro: euro$1,
+  excl: excl$1,
+  exist: exist$1,
+  Exists: Exists$1,
+  expectation: expectation$1,
   ExponentialE: ExponentialE,
   exponentiale: exponentiale,
   fallingdotseq: fallingdotseq,
   Fcy: Fcy,
   fcy: fcy,
-  female: female,
+  female: female$1,
   ffilig: ffilig,
   fflig: fflig,
   ffllig: ffllig,
@@ -3354,7 +3354,7 @@ var allNamedEntitiesJson = {
   FilledSmallSquare: FilledSmallSquare,
   FilledVerySmallSquare: FilledVerySmallSquare,
   fjlig: fjlig,
-  flat: flat,
+  flat: flat$1,
   fllig: fllig,
   fltns: fltns,
   fnof: fnof,
@@ -3362,7 +3362,7 @@ var allNamedEntitiesJson = {
   fopf: fopf,
   ForAll: ForAll,
   forall: forall,
-  fork: fork,
+  fork: fork$1,
   forkv: forkv,
   Fouriertrf: Fouriertrf,
   fpartint: fpartint,
@@ -3382,60 +3382,60 @@ var allNamedEntitiesJson = {
   frac58: frac58,
   frac78: frac78,
   frasl: frasl,
-  frown: frown,
+  frown: frown$1,
   Fscr: Fscr,
   fscr: fscr,
   gacute: gacute,
-  Gamma: Gamma,
-  gamma: gamma,
+  Gamma: Gamma$1,
+  gamma: gamma$1,
   Gammad: Gammad,
   gammad: gammad,
-  gap: gap,
+  gap: gap$1,
   Gbreve: Gbreve,
   gbreve: gbreve,
   Gcedil: Gcedil,
   Gcirc: Gcirc,
   gcirc: gcirc,
   Gcy: Gcy,
-  gcy: gcy,
+  gcy: gcy$1,
   Gdot: Gdot,
   gdot: gdot,
   gE: gE,
-  ge: ge,
+  ge: ge$1,
   gEl: gEl,
-  gel: gel,
-  geq: geq,
+  gel: gel$1,
+  geq: geq$1,
   geqq: geqq,
   geqslant: geqslant,
-  ges: ges,
+  ges: ges$1,
   gescc: gescc,
   gesdot: gesdot,
   gesdoto: gesdoto,
   gesdotol: gesdotol,
-  gesl: gesl,
+  gesl: gesl$1,
   gesles: gesles,
   Gfr: Gfr,
   gfr: gfr,
   Gg: Gg,
-  gg: gg,
+  gg: gg$1,
   ggg: ggg,
   gimel: gimel,
   GJcy: GJcy,
   gjcy: gjcy,
-  gl: gl,
-  gla: gla,
+  gl: gl$1,
+  gla: gla$1,
   glE: glE,
   glj: glj,
   gnap: gnap,
   gnapprox: gnapprox,
   gnE: gnE,
-  gne: gne,
+  gne: gne$1,
   gneq: gneq,
   gneqq: gneqq,
   gnsim: gnsim,
   Gopf: Gopf,
   gopf: gopf,
-  grave: grave,
+  grave: grave$1,
   GreaterEqual: GreaterEqual,
   GreaterEqualLess: GreaterEqualLess,
   GreaterFullEqual: GreaterFullEqual,
@@ -3448,9 +3448,9 @@ var allNamedEntitiesJson = {
   gsim: gsim,
   gsime: gsime,
   gsiml: gsiml,
-  GT: GT,
+  GT: GT$1,
   Gt: Gt,
-  gt: gt,
+  gt: gt$1,
   gtcc: gtcc,
   gtcir: gtcir,
   gtdot: gtdot,
@@ -3467,7 +3467,7 @@ var allNamedEntitiesJson = {
   gvnE: gvnE,
   Hacek: Hacek,
   hairsp: hairsp,
-  half: half,
+  half: half$1,
   hamilt: hamilt,
   HARDcy: HARDcy,
   hardcy: hardcy,
@@ -3475,11 +3475,11 @@ var allNamedEntitiesJson = {
   harr: harr,
   harrcir: harrcir,
   harrw: harrw,
-  Hat: Hat,
+  Hat: Hat$1,
   hbar: hbar,
   Hcirc: Hcirc,
   hcirc: hcirc,
-  hearts: hearts,
+  hearts: hearts$1,
   heartsuit: heartsuit,
   hellip: hellip,
   hercon: hercon,
@@ -3493,7 +3493,7 @@ var allNamedEntitiesJson = {
   hookleftarrow: hookleftarrow,
   hookrightarrow: hookrightarrow,
   Hopf: Hopf,
-  hopf: hopf,
+  hopf: hopf$1,
   horbar: horbar,
   HorizontalLine: HorizontalLine,
   Hscr: Hscr,
@@ -3504,24 +3504,24 @@ var allNamedEntitiesJson = {
   HumpDownHump: HumpDownHump,
   HumpEqual: HumpEqual,
   hybull: hybull,
-  hyphen: hyphen,
+  hyphen: hyphen$1,
   Iacute: Iacute,
   iacute: iacute,
-  ic: ic,
+  ic: ic$1,
   Icirc: Icirc,
   icirc: icirc,
   Icy: Icy,
-  icy: icy,
+  icy: icy$1,
   Idot: Idot,
   IEcy: IEcy,
   iecy: iecy,
   iexcl: iexcl,
-  iff: iff,
+  iff: iff$1,
   Ifr: Ifr,
   ifr: ifr,
   Igrave: Igrave,
   igrave: igrave,
-  ii: ii,
+  ii: ii$1,
   iiiint: iiiint,
   iiint: iiint,
   iinfin: iinfin,
@@ -3531,13 +3531,13 @@ var allNamedEntitiesJson = {
   Im: Im,
   Imacr: Imacr,
   imacr: imacr,
-  image: image,
+  image: image$1,
   ImaginaryI: ImaginaryI,
   imagline: imagline,
   imagpart: imagpart,
   imath: imath,
   imof: imof,
-  imped: imped,
+  imped: imped$1,
   Implies: Implies,
   "in": "∈",
   incare: incare,
@@ -3545,9 +3545,9 @@ var allNamedEntitiesJson = {
   infintie: infintie,
   inodot: inodot,
   Int: Int,
-  int: int,
+  int: int$1,
   intcal: intcal,
-  integers: integers,
+  integers: integers$1,
   Integral: Integral,
   intercal: intercal,
   Intersection: Intersection,
@@ -3556,24 +3556,24 @@ var allNamedEntitiesJson = {
   InvisibleComma: InvisibleComma,
   InvisibleTimes: InvisibleTimes,
   IOcy: IOcy,
-  iocy: iocy,
+  iocy: iocy$1,
   Iogon: Iogon,
-  iogon: iogon,
+  iogon: iogon$1,
   Iopf: Iopf,
   iopf: iopf,
   Iota: Iota,
-  iota: iota,
+  iota: iota$1,
   iprod: iprod,
   iquest: iquest,
   Iscr: Iscr,
   iscr: iscr,
-  isin: isin,
+  isin: isin$1,
   isindot: isindot,
   isinE: isinE,
   isins: isins,
   isinsv: isinsv,
   isinv: isinv,
-  it: it,
+  it: it$1,
   Itilde: Itilde,
   itilde: itilde,
   Iukcy: Iukcy,
@@ -3595,8 +3595,8 @@ var allNamedEntitiesJson = {
   jsercy: jsercy,
   Jukcy: Jukcy,
   jukcy: jukcy,
-  Kappa: Kappa,
-  kappa: kappa,
+  Kappa: Kappa$1,
+  kappa: kappa$1,
   kappav: kappav,
   Kcedil: Kcedil,
   kcedil: kcedil,
@@ -3610,7 +3610,7 @@ var allNamedEntitiesJson = {
   KJcy: KJcy,
   kjcy: kjcy,
   Kopf: Kopf,
-  kopf: kopf,
+  kopf: kopf$1,
   Kscr: Kscr,
   kscr: kscr,
   lAarr: lAarr,
@@ -3618,13 +3618,13 @@ var allNamedEntitiesJson = {
   lacute: lacute,
   laemptyv: laemptyv,
   lagran: lagran,
-  Lambda: Lambda,
-  lambda: lambda,
+  Lambda: Lambda$1,
+  lambda: lambda$1,
   Lang: Lang,
-  lang: lang,
+  lang: lang$1,
   langd: langd,
   langle: langle,
-  lap: lap,
+  lap: lap$1,
   Laplacetrf: Laplacetrf,
   laquo: laquo,
   Larr: Larr,
@@ -3638,11 +3638,11 @@ var allNamedEntitiesJson = {
   larrpl: larrpl,
   larrsim: larrsim,
   larrtl: larrtl,
-  lat: lat,
+  lat: lat$1,
   lAtail: lAtail,
   latail: latail,
-  late: late,
-  lates: lates,
+  late: late$1,
+  lates: lates$1,
   lBarr: lBarr,
   lbarr: lbarr,
   lbbrk: lbbrk,
@@ -3666,7 +3666,7 @@ var allNamedEntitiesJson = {
   ldrushar: ldrushar,
   ldsh: ldsh,
   lE: lE,
-  le: le,
+  le: le$1,
   LeftAngleBracket: LeftAngleBracket,
   LeftArrow: LeftArrow,
   Leftarrow: Leftarrow,
@@ -3704,11 +3704,11 @@ var allNamedEntitiesJson = {
   LeftVector: LeftVector,
   LeftVectorBar: LeftVectorBar,
   lEg: lEg,
-  leg: leg,
-  leq: leq,
+  leg: leg$1,
+  leq: leq$1,
   leqq: leqq,
   leqslant: leqslant,
-  les: les,
+  les: les$1,
   lescc: lescc,
   lesdot: lesdot,
   lesdoto: lesdoto,
@@ -3731,7 +3731,7 @@ var allNamedEntitiesJson = {
   lfloor: lfloor,
   Lfr: Lfr,
   lfr: lfr,
-  lg: lg,
+  lg: lg$1,
   lgE: lgE,
   lHar: lHar,
   lhard: lhard,
@@ -3741,7 +3741,7 @@ var allNamedEntitiesJson = {
   LJcy: LJcy,
   ljcy: ljcy,
   Ll: Ll,
-  ll: ll,
+  ll: ll$1,
   llarr: llarr,
   llcorner: llcorner,
   Lleftarrow: Lleftarrow,
@@ -3754,7 +3754,7 @@ var allNamedEntitiesJson = {
   lnap: lnap,
   lnapprox: lnapprox,
   lnE: lnE,
-  lne: lne,
+  lne: lne$1,
   lneq: lneq,
   lneqq: lneqq,
   lnsim: lnsim,
@@ -3783,7 +3783,7 @@ var allNamedEntitiesJson = {
   LowerLeftArrow: LowerLeftArrow,
   LowerRightArrow: LowerRightArrow,
   loz: loz,
-  lozenge: lozenge,
+  lozenge: lozenge$1,
   lozf: lozf,
   lpar: lpar,
   lparlt: lparlt,
@@ -3797,7 +3797,7 @@ var allNamedEntitiesJson = {
   Lscr: Lscr,
   lscr: lscr,
   Lsh: Lsh,
-  lsh: lsh,
+  lsh: lsh$1,
   lsim: lsim,
   lsime: lsime,
   lsimg: lsimg,
@@ -3806,14 +3806,14 @@ var allNamedEntitiesJson = {
   lsquor: lsquor,
   Lstrok: Lstrok,
   lstrok: lstrok,
-  LT: LT,
+  LT: LT$1,
   Lt: Lt,
-  lt: lt,
+  lt: lt$1,
   ltcc: ltcc,
   ltcir: ltcir,
   ltdot: ltdot,
   lthree: lthree,
-  ltimes: ltimes,
+  ltimes: ltimes$1,
   ltlarr: ltlarr,
   ltquest: ltquest,
   ltri: ltri,
@@ -3825,16 +3825,16 @@ var allNamedEntitiesJson = {
   lvertneqq: lvertneqq,
   lvnE: lvnE,
   macr: macr,
-  male: male,
-  malt: malt,
+  male: male$1,
+  malt: malt$1,
   maltese: maltese,
   "Map": "⤅",
-  map: map,
+  map: map$1,
   mapsto: mapsto,
   mapstodown: mapstodown,
   mapstoleft: mapstoleft,
   mapstoup: mapstoup,
-  marker: marker,
+  marker: marker$1,
   mcomma: mcomma,
   Mcy: Mcy,
   mcy: mcy,
@@ -3847,11 +3847,11 @@ var allNamedEntitiesJson = {
   mfr: mfr,
   mho: mho,
   micro: micro,
-  mid: mid,
+  mid: mid$1,
   midast: midast,
   midcir: midcir,
   middot: middot,
-  minus: minus,
+  minus: minus$1,
   minusb: minusb,
   minusd: minusd,
   minusdu: minusdu,
@@ -3859,29 +3859,29 @@ var allNamedEntitiesJson = {
   mlcp: mlcp,
   mldr: mldr,
   mnplus: mnplus,
-  models: models,
+  models: models$1,
   Mopf: Mopf,
   mopf: mopf,
-  mp: mp,
+  mp: mp$1,
   Mscr: Mscr,
   mscr: mscr,
   mstpos: mstpos,
   Mu: Mu,
-  mu: mu,
+  mu: mu$1,
   multimap: multimap,
   mumap: mumap,
   nabla: nabla,
   Nacute: Nacute,
   nacute: nacute,
-  nang: nang,
-  nap: nap,
+  nang: nang$1,
+  nap: nap$1,
   napE: napE,
   napid: napid,
   napos: napos,
   napprox: napprox,
   natur: natur,
-  natural: natural,
-  naturals: naturals,
+  natural: natural$1,
+  naturals: naturals$1,
   nbsp: nbsp,
   nbump: nbump,
   nbumpe: nbumpe,
@@ -3894,9 +3894,9 @@ var allNamedEntitiesJson = {
   ncongdot: ncongdot,
   ncup: ncup,
   Ncy: Ncy,
-  ncy: ncy,
+  ncy: ncy$1,
   ndash: ndash,
-  ne: ne,
+  ne: ne$1,
   nearhk: nearhk,
   neArr: neArr,
   nearr: nearr,
@@ -3917,7 +3917,7 @@ var allNamedEntitiesJson = {
   Nfr: Nfr,
   nfr: nfr,
   ngE: ngE,
-  nge: nge,
+  nge: nge$1,
   ngeq: ngeq,
   ngeqq: ngeqq,
   ngeqslant: ngeqslant,
@@ -3925,14 +3925,14 @@ var allNamedEntitiesJson = {
   nGg: nGg,
   ngsim: ngsim,
   nGt: nGt,
-  ngt: ngt,
+  ngt: ngt$1,
   ngtr: ngtr,
   nGtv: nGtv,
   nhArr: nhArr,
   nharr: nharr,
   nhpar: nhpar,
-  ni: ni,
-  nis: nis,
+  ni: ni$1,
+  nis: nis$1,
   nisd: nisd,
   niv: niv,
   NJcy: NJcy,
@@ -3941,7 +3941,7 @@ var allNamedEntitiesJson = {
   nlarr: nlarr,
   nldr: nldr,
   nlE: nlE,
-  nle: nle,
+  nle: nle$1,
   nLeftarrow: nLeftarrow,
   nleftarrow: nleftarrow,
   nLeftrightarrow: nLeftrightarrow,
@@ -3949,12 +3949,12 @@ var allNamedEntitiesJson = {
   nleq: nleq,
   nleqq: nleqq,
   nleqslant: nleqslant,
-  nles: nles,
-  nless: nless,
+  nles: nles$1,
+  nless: nless$1,
   nLl: nLl,
   nlsim: nlsim,
   nLt: nLt,
-  nlt: nlt,
+  nlt: nlt$1,
   nltri: nltri,
   nltrie: nltrie,
   nLtv: nLtv,
@@ -3962,9 +3962,9 @@ var allNamedEntitiesJson = {
   NoBreak: NoBreak,
   NonBreakingSpace: NonBreakingSpace,
   Nopf: Nopf,
-  nopf: nopf,
-  Not: Not,
-  not: not,
+  nopf: nopf$1,
+  Not: Not$1,
+  not: not$1,
   NotCongruent: NotCongruent,
   NotCupCap: NotCupCap,
   NotDoubleVerticalBar: NotDoubleVerticalBar,
@@ -4044,9 +4044,9 @@ var allNamedEntitiesJson = {
   nrightarrow: nrightarrow,
   nrtri: nrtri,
   nrtrie: nrtrie,
-  nsc: nsc,
+  nsc: nsc$1,
   nsccue: nsccue,
-  nsce: nsce,
+  nsce: nsce$1,
   Nscr: Nscr,
   nscr: nscr,
   nshortmid: nshortmid,
@@ -4081,8 +4081,8 @@ var allNamedEntitiesJson = {
   ntriangleright: ntriangleright,
   ntrianglerighteq: ntrianglerighteq,
   Nu: Nu,
-  nu: nu,
-  num: num,
+  nu: nu$1,
+  num: num$1,
   numero: numero,
   numsp: numsp,
   nvap: nvap,
@@ -4128,48 +4128,48 @@ var allNamedEntitiesJson = {
   ogon: ogon,
   Ograve: Ograve,
   ograve: ograve,
-  ogt: ogt,
+  ogt: ogt$1,
   ohbar: ohbar,
-  ohm: ohm,
+  ohm: ohm$1,
   oint: oint,
   olarr: olarr,
   olcir: olcir,
   olcross: olcross,
-  oline: oline,
-  olt: olt,
+  oline: oline$1,
+  olt: olt$1,
   Omacr: Omacr,
   omacr: omacr,
-  Omega: Omega,
-  omega: omega,
-  Omicron: Omicron,
-  omicron: omicron,
+  Omega: Omega$1,
+  omega: omega$1,
+  Omicron: Omicron$1,
+  omicron: omicron$1,
   omid: omid,
   ominus: ominus,
   Oopf: Oopf,
-  oopf: oopf,
-  opar: opar,
+  oopf: oopf$1,
+  opar: opar$1,
   OpenCurlyDoubleQuote: OpenCurlyDoubleQuote,
   OpenCurlyQuote: OpenCurlyQuote,
   operp: operp,
   oplus: oplus,
   Or: Or,
-  or: or,
+  or: or$1,
   orarr: orarr,
   ord: ord,
-  order: order,
+  order: order$1,
   orderof: orderof,
   ordf: ordf,
   ordm: ordm,
   origof: origof,
-  oror: oror,
+  oror: oror$1,
   orslope: orslope,
-  orv: orv,
+  orv: orv$1,
   oS: oS,
   Oscr: Oscr,
   oscr: oscr,
   Oslash: Oslash,
   oslash: oslash,
-  osol: osol,
+  osol: osol$1,
   Otilde: Otilde,
   otilde: otilde,
   Otimes: Otimes,
@@ -4182,12 +4182,12 @@ var allNamedEntitiesJson = {
   OverBrace: OverBrace,
   OverBracket: OverBracket,
   OverParenthesis: OverParenthesis,
-  par: par,
-  para: para,
-  parallel: parallel,
+  par: par$1,
+  para: para$1,
+  parallel: parallel$1,
   parsim: parsim,
   parsl: parsl,
-  part: part,
+  part: part$1,
   PartialD: PartialD,
   Pcy: Pcy,
   pcy: pcy,
@@ -4199,18 +4199,18 @@ var allNamedEntitiesJson = {
   Pfr: Pfr,
   pfr: pfr,
   Phi: Phi,
-  phi: phi,
+  phi: phi$1,
   phiv: phiv,
   phmmat: phmmat,
-  phone: phone,
-  Pi: Pi,
-  pi: pi,
-  pitchfork: pitchfork,
+  phone: phone$1,
+  Pi: Pi$1,
+  pi: pi$1,
+  pitchfork: pitchfork$1,
   piv: piv,
   planck: planck,
   planckh: planckh,
   plankv: plankv,
-  plus: plus,
+  plus: plus$1,
   plusacir: plusacir,
   plusb: plusb,
   pluscir: pluscir,
@@ -4221,14 +4221,14 @@ var allNamedEntitiesJson = {
   plusmn: plusmn,
   plussim: plussim,
   plustwo: plustwo,
-  pm: pm,
+  pm: pm$1,
   Poincareplane: Poincareplane,
   pointint: pointint,
   Popf: Popf,
-  popf: popf,
-  pound: pound,
+  popf: popf$1,
+  pound: pound$1,
   Pr: Pr,
-  pr: pr,
+  pr: pr$1,
   prap: prap,
   prcue: prcue,
   prE: prE,
@@ -4246,26 +4246,26 @@ var allNamedEntitiesJson = {
   precnsim: precnsim,
   precsim: precsim,
   Prime: Prime,
-  prime: prime,
-  primes: primes,
+  prime: prime$1,
+  primes: primes$1,
   prnap: prnap,
   prnE: prnE,
   prnsim: prnsim,
-  prod: prod,
-  Product: Product,
+  prod: prod$1,
+  Product: Product$1,
   profalar: profalar,
   profline: profline,
   profsurf: profsurf,
-  prop: prop,
-  Proportion: Proportion,
-  Proportional: Proportional,
+  prop: prop$1,
+  Proportion: Proportion$1,
+  Proportional: Proportional$1,
   propto: propto,
   prsim: prsim,
   prurel: prurel,
   Pscr: Pscr,
   pscr: pscr,
   Psi: Psi,
-  psi: psi,
+  psi: psi$1,
   puncsp: puncsp,
   Qfr: Qfr,
   qfr: qfr,
@@ -4277,20 +4277,20 @@ var allNamedEntitiesJson = {
   qscr: qscr,
   quaternions: quaternions,
   quatint: quatint,
-  quest: quest,
+  quest: quest$1,
   questeq: questeq,
-  QUOT: QUOT,
-  quot: quot,
+  QUOT: QUOT$1,
+  quot: quot$1,
   rAarr: rAarr,
-  race: race,
+  race: race$1,
   Racute: Racute,
   racute: racute,
   radic: radic,
   raemptyv: raemptyv,
   Rang: Rang,
-  rang: rang,
+  rang: rang$1,
   rangd: rangd,
-  range: range,
+  range: range$1,
   rangle: rangle,
   raquo: raquo,
   Rarr: Rarr,
@@ -4310,7 +4310,7 @@ var allNamedEntitiesJson = {
   rarrw: rarrw,
   rAtail: rAtail,
   ratail: ratail,
-  ratio: ratio,
+  ratio: ratio$1,
   rationals: rationals,
   RBarr: RBarr,
   rBarr: rBarr,
@@ -4334,14 +4334,14 @@ var allNamedEntitiesJson = {
   rdquo: rdquo,
   rdquor: rdquor,
   rdsh: rdsh,
-  Re: Re,
-  real: real,
+  Re: Re$1,
+  real: real$1,
   realine: realine,
   realpart: realpart,
-  reals: reals,
-  rect: rect,
-  REG: REG,
-  reg: reg,
+  reals: reals$1,
+  rect: rect$1,
+  REG: REG$1,
+  reg: reg$1,
   ReverseElement: ReverseElement,
   ReverseEquilibrium: ReverseEquilibrium,
   ReverseUpEquilibrium: ReverseUpEquilibrium,
@@ -4388,7 +4388,7 @@ var allNamedEntitiesJson = {
   RightUpVectorBar: RightUpVectorBar,
   RightVector: RightVector,
   RightVectorBar: RightVectorBar,
-  ring: ring,
+  ring: ring$1,
   risingdotseq: risingdotseq,
   rlarr: rlarr,
   rlhar: rlhar,
@@ -4414,7 +4414,7 @@ var allNamedEntitiesJson = {
   Rscr: Rscr,
   rscr: rscr,
   Rsh: Rsh,
-  rsh: rsh,
+  rsh: rsh$1,
   rsqb: rsqb,
   rsquo: rsquo,
   rsquor: rsquor,
@@ -4431,13 +4431,13 @@ var allNamedEntitiesJson = {
   sacute: sacute,
   sbquo: sbquo,
   Sc: Sc,
-  sc: sc,
-  scap: scap,
+  sc: sc$1,
+  scap: scap$1,
   Scaron: Scaron,
   scaron: scaron,
   sccue: sccue,
   scE: scE,
-  sce: sce,
+  sce: sce$1,
   Scedil: Scedil,
   scedil: scedil,
   Scirc: Scirc,
@@ -4448,16 +4448,16 @@ var allNamedEntitiesJson = {
   scpolint: scpolint,
   scsim: scsim,
   Scy: Scy,
-  scy: scy,
-  sdot: sdot,
+  scy: scy$1,
+  sdot: sdot$1,
   sdotb: sdotb,
   sdote: sdote,
   searhk: searhk,
   seArr: seArr,
   searr: searr,
   searrow: searrow,
-  sect: sect,
-  semi: semi,
+  sect: sect$1,
+  semi: semi$1,
   seswar: seswar,
   setminus: setminus,
   setmn: setmn,
@@ -4465,7 +4465,7 @@ var allNamedEntitiesJson = {
   Sfr: Sfr,
   sfr: sfr,
   sfrown: sfrown,
-  sharp: sharp,
+  sharp: sharp$1,
   SHCHcy: SHCHcy,
   shchcy: shchcy,
   SHcy: SHcy,
@@ -4476,12 +4476,12 @@ var allNamedEntitiesJson = {
   shortparallel: shortparallel,
   ShortRightArrow: ShortRightArrow,
   ShortUpArrow: ShortUpArrow,
-  shy: shy,
-  Sigma: Sigma,
-  sigma: sigma,
+  shy: shy$1,
+  Sigma: Sigma$1,
+  sigma: sigma$1,
   sigmaf: sigmaf,
   sigmav: sigmav,
-  sim: sim,
+  sim: sim$1,
   simdot: simdot,
   sime: sime,
   simeq: simeq,
@@ -4504,12 +4504,12 @@ var allNamedEntitiesJson = {
   smtes: smtes,
   SOFTcy: SOFTcy,
   softcy: softcy,
-  sol: sol,
+  sol: sol$1,
   solb: solb,
   solbar: solbar,
   Sopf: Sopf,
   sopf: sopf,
-  spades: spades,
+  spades: spades$1,
   spadesuit: spadesuit,
   spar: spar,
   sqcap: sqcap,
@@ -4527,7 +4527,7 @@ var allNamedEntitiesJson = {
   sqsupseteq: sqsupseteq,
   squ: squ,
   Square: Square,
-  square: square,
+  square: square$1,
   SquareIntersection: SquareIntersection,
   SquareSubset: SquareSubset,
   SquareSubsetEqual: SquareSubsetEqual,
@@ -4542,17 +4542,17 @@ var allNamedEntitiesJson = {
   ssetmn: ssetmn,
   ssmile: ssmile,
   sstarf: sstarf,
-  Star: Star,
-  star: star,
+  Star: Star$1,
+  star: star$1,
   starf: starf,
   straightepsilon: straightepsilon,
   straightphi: straightphi,
   strns: strns,
-  Sub: Sub,
-  sub: sub,
+  Sub: Sub$1,
+  sub: sub$1,
   subdot: subdot,
   subE: subE,
-  sube: sube,
+  sube: sube$1,
   subedot: subedot,
   submult: submult,
   subnE: subnE,
@@ -4582,8 +4582,8 @@ var allNamedEntitiesJson = {
   succnsim: succnsim,
   succsim: succsim,
   SuchThat: SuchThat,
-  Sum: Sum,
-  sum: sum,
+  Sum: Sum$1,
+  sum: sum$1,
   sung: sung,
   Sup: Sup,
   sup: sup,
@@ -4619,10 +4619,10 @@ var allNamedEntitiesJson = {
   swarrow: swarrow,
   swnwar: swnwar,
   szlig: szlig,
-  Tab: Tab,
-  target: target,
-  Tau: Tau,
-  tau: tau,
+  Tab: Tab$1,
+  target: target$1,
+  Tau: Tau$1,
+  tau: tau$1,
   tbrk: tbrk,
   Tcaron: Tcaron,
   tcaron: tcaron,
@@ -4636,9 +4636,9 @@ var allNamedEntitiesJson = {
   tfr: tfr,
   there4: there4,
   Therefore: Therefore,
-  therefore: therefore,
-  Theta: Theta,
-  theta: theta,
+  therefore: therefore$1,
+  Theta: Theta$1,
+  theta: theta$1,
   thetasym: thetasym,
   thetav: thetav,
   thickapprox: thickapprox,
@@ -4648,30 +4648,30 @@ var allNamedEntitiesJson = {
   ThinSpace: ThinSpace,
   thkap: thkap,
   thksim: thksim,
-  THORN: THORN,
-  thorn: thorn,
-  Tilde: Tilde,
-  tilde: tilde,
+  THORN: THORN$1,
+  thorn: thorn$1,
+  Tilde: Tilde$1,
+  tilde: tilde$1,
   TildeEqual: TildeEqual,
   TildeFullEqual: TildeFullEqual,
   TildeTilde: TildeTilde,
-  times: times,
+  times: times$1,
   timesb: timesb,
   timesbar: timesbar,
   timesd: timesd,
-  tint: tint,
+  tint: tint$1,
   toea: toea,
-  top: top,
+  top: top$1,
   topbot: topbot,
   topcir: topcir,
   Topf: Topf,
   topf: topf,
   topfork: topfork,
-  tosa: tosa,
+  tosa: tosa$1,
   tprime: tprime,
-  TRADE: TRADE,
-  trade: trade,
-  triangle: triangle,
+  TRADE: TRADE$1,
+  trade: trade$1,
+  triangle: triangle$1,
   triangledown: triangledown,
   triangleleft: triangleleft,
   trianglelefteq: trianglelefteq,
@@ -4679,7 +4679,7 @@ var allNamedEntitiesJson = {
   triangleright: triangleright,
   trianglerighteq: trianglerighteq,
   tridot: tridot,
-  trie: trie,
+  trie: trie$1,
   triminus: triminus,
   TripleDot: TripleDot,
   triplus: triplus,
@@ -4710,7 +4710,7 @@ var allNamedEntitiesJson = {
   Ucirc: Ucirc,
   ucirc: ucirc,
   Ucy: Ucy,
-  ucy: ucy,
+  ucy: ucy$1,
   udarr: udarr,
   Udblac: Udblac,
   udblac: udblac,
@@ -4730,12 +4730,12 @@ var allNamedEntitiesJson = {
   ultri: ultri,
   Umacr: Umacr,
   umacr: umacr,
-  uml: uml,
+  uml: uml$1,
   UnderBar: UnderBar,
   UnderBrace: UnderBrace,
   UnderBracket: UnderBracket,
   UnderParenthesis: UnderParenthesis,
-  Union: Union,
+  Union: Union$1,
   UnionPlus: UnionPlus,
   Uogon: Uogon,
   uogon: uogon,
@@ -4752,11 +4752,11 @@ var allNamedEntitiesJson = {
   UpEquilibrium: UpEquilibrium,
   upharpoonleft: upharpoonleft,
   upharpoonright: upharpoonright,
-  uplus: uplus,
+  uplus: uplus$1,
   UpperLeftArrow: UpperLeftArrow,
   UpperRightArrow: UpperRightArrow,
-  Upsi: Upsi,
-  upsi: upsi,
+  Upsi: Upsi$1,
+  upsi: upsi$1,
   upsih: upsih,
   Upsilon: Upsilon,
   upsilon: upsilon,
@@ -4767,7 +4767,7 @@ var allNamedEntitiesJson = {
   urcorner: urcorner,
   urcrop: urcrop,
   Uring: Uring,
-  uring: uring,
+  uring: uring$1,
   urtri: urtri,
   Uscr: Uscr,
   uscr: uscr,
@@ -4809,14 +4809,14 @@ var allNamedEntitiesJson = {
   vdash: vdash,
   Vdashl: Vdashl,
   Vee: Vee,
-  vee: vee,
+  vee: vee$1,
   veebar: veebar,
   veeeq: veeeq,
   vellip: vellip,
   Verbar: Verbar,
   verbar: verbar,
-  Vert: Vert,
-  vert: vert,
+  Vert: Vert$1,
+  vert: vert$1,
   VerticalBar: VerticalBar,
   VerticalLine: VerticalLine,
   VerticalSeparator: VerticalSeparator,
@@ -4842,8 +4842,8 @@ var allNamedEntitiesJson = {
   Wcirc: Wcirc,
   wcirc: wcirc,
   wedbar: wedbar,
-  Wedge: Wedge,
-  wedge: wedge,
+  Wedge: Wedge$1,
+  wedge: wedge$1,
   wedgeq: wedgeq,
   weierp: weierp,
   Wfr: Wfr,
@@ -4852,7 +4852,7 @@ var allNamedEntitiesJson = {
   wopf: wopf,
   wp: wp,
   wr: wr,
-  wreath: wreath,
+  wreath: wreath$1,
   Wscr: Wscr,
   wscr: wscr,
   xcap: xcap,
@@ -4863,8 +4863,8 @@ var allNamedEntitiesJson = {
   xfr: xfr,
   xhArr: xhArr,
   xharr: xharr,
-  Xi: Xi,
-  xi: xi,
+  Xi: Xi$1,
+  xi: xi$1,
   xlArr: xlArr,
   xlarr: xlarr,
   xmap: xmap,
@@ -4887,11 +4887,11 @@ var allNamedEntitiesJson = {
   yacute: yacute,
   YAcy: YAcy,
   yacy: yacy,
-  Ycirc: Ycirc,
-  ycirc: ycirc,
+  Ycirc: Ycirc$1,
+  ycirc: ycirc$1,
   Ycy: Ycy,
-  ycy: ycy,
-  yen: yen,
+  ycy: ycy$1,
+  yen: yen$1,
   Yfr: Yfr,
   yfr: yfr,
   YIcy: YIcy,
@@ -4904,8 +4904,8 @@ var allNamedEntitiesJson = {
   yucy: yucy,
   Yuml: Yuml,
   yuml: yuml,
-  Zacute: Zacute,
-  zacute: zacute,
+  Zacute: Zacute$1,
+  zacute: zacute$1,
   Zcaron: Zcaron,
   zcaron: zcaron,
   Zcy: Zcy,
@@ -4914,8 +4914,8 @@ var allNamedEntitiesJson = {
   zdot: zdot,
   zeetrf: zeetrf,
   ZeroWidthSpace: ZeroWidthSpace,
-  Zeta: Zeta,
-  zeta: zeta,
+  Zeta: Zeta$1,
+  zeta: zeta$1,
   Zfr: Zfr,
   zfr: zfr,
   ZHcy: ZHcy,
@@ -5016,7 +5016,7 @@ var A = {
   t: ["Atilde"],
   u: ["Auml"]
 };
-var a = {
+var a$3 = {
   a: ["aacute"],
   b: ["abreve"],
   c: ["ac", "acd", "acE", "acirc", "acute", "acy"],
@@ -5034,7 +5034,7 @@ var a = {
   u: ["auml"],
   w: ["awconint", "awint"]
 };
-var b = {
+var b$3 = {
   a: ["backcong", "backepsilon", "backprime", "backsim", "backsimeq", "barvee", "barwed", "barwedge"],
   b: ["bbrk", "bbrktbrk"],
   c: ["bcong", "bcy"],
@@ -5078,7 +5078,7 @@ var C = {
   s: ["Cscr"],
   u: ["Cup", "CupCap"]
 };
-var c = {
+var c$3 = {
   a: ["cacute", "cap", "capand", "capbrcup", "capcap", "capcup", "capdot", "caps", "caret", "caron"],
   c: ["ccaps", "ccaron", "ccedil", "ccirc", "ccups", "ccupssm"],
   d: ["cdot"],
@@ -5095,7 +5095,7 @@ var c = {
   w: ["cwconint", "cwint"],
   y: ["cylcty"]
 };
-var D = {
+var D$1 = {
   a: ["Dagger", "Darr", "Dashv"],
   c: ["Dcaron", "Dcy"],
   D: ["DD", "DDotrahd"],
@@ -5108,7 +5108,7 @@ var D = {
   S: ["DScy"],
   Z: ["DZcy"]
 };
-var d = {
+var d$3 = {
   a: ["dagger", "daleth", "darr", "dash", "dashv"],
   A: ["dArr"],
   b: ["dbkarow", "dblac"],
@@ -5129,7 +5129,7 @@ var d = {
   w: ["dwangle"],
   z: ["dzcy", "dzigrarr"]
 };
-var E = {
+var E$1 = {
   a: ["Eacute"],
   c: ["Ecaron", "Ecirc", "Ecy"],
   d: ["Edot"],
@@ -5147,7 +5147,7 @@ var E = {
   u: ["Euml"],
   x: ["Exists", "ExponentialE"]
 };
-var e = {
+var e$3 = {
   a: ["eacute", "easter"],
   c: ["ecaron", "ecir", "ecirc", "ecolon", "ecy"],
   D: ["eDDot", "eDot"],
@@ -5167,7 +5167,7 @@ var e = {
   u: ["euml", "euro"],
   x: ["excl", "exist", "expectation", "exponentiale"]
 };
-var f = {
+var f$3 = {
   a: ["fallingdotseq"],
   c: ["fcy"],
   e: ["female"],
@@ -5188,7 +5188,7 @@ var F = {
   o: ["Fopf", "ForAll", "Fouriertrf"],
   s: ["Fscr"]
 };
-var g = {
+var g$3 = {
   a: ["gacute", "gamma", "gammad", "gap"],
   b: ["gbreve"],
   c: ["gcirc", "gcy"],
@@ -5207,7 +5207,7 @@ var g = {
   t: ["gt", "gtcc", "gtcir", "gtdot", "gtlPar", "gtquest", "gtrapprox", "gtrarr", "gtrdot", "gtreqless", "gtreqqless", "gtrless", "gtrsim"],
   v: ["gvertneqq", "gvnE"]
 };
-var G = {
+var G$1 = {
   a: ["Gamma", "Gammad"],
   b: ["Gbreve"],
   c: ["Gcedil", "Gcirc", "Gcy"],
@@ -5221,7 +5221,7 @@ var G = {
   T: ["GT"],
   t: ["Gt"]
 };
-var H = {
+var H$1 = {
   a: ["Hacek", "Hat"],
   A: ["HARDcy"],
   c: ["Hcirc"],
@@ -5231,7 +5231,7 @@ var H = {
   s: ["Hscr", "Hstrok"],
   u: ["HumpDownHump", "HumpEqual"]
 };
-var h = {
+var h$3 = {
   a: ["hairsp", "half", "hamilt", "hardcy", "harr", "harrcir", "harrw"],
   A: ["hArr"],
   b: ["hbar"],
@@ -5243,7 +5243,7 @@ var h = {
   s: ["hscr", "hslash", "hstrok"],
   y: ["hybull", "hyphen"]
 };
-var I = {
+var I$1 = {
   a: ["Iacute"],
   c: ["Icirc", "Icy"],
   d: ["Idot"],
@@ -5259,7 +5259,7 @@ var I = {
   t: ["Itilde"],
   u: ["Iukcy", "Iuml"]
 };
-var i = {
+var i$3 = {
   a: ["iacute"],
   c: ["ic", "icirc", "icy"],
   e: ["iecy", "iexcl"],
@@ -5283,7 +5283,7 @@ var J = {
   s: ["Jscr", "Jsercy"],
   u: ["Jukcy"]
 };
-var j = {
+var j$3 = {
   c: ["jcirc", "jcy"],
   f: ["jfr"],
   m: ["jmath"],
@@ -5300,7 +5300,7 @@ var K = {
   o: ["Kopf"],
   s: ["Kscr"]
 };
-var k = {
+var k$3 = {
   a: ["kappa", "kappav"],
   c: ["kcedil", "kcy"],
   f: ["kfr"],
@@ -5310,7 +5310,7 @@ var k = {
   o: ["kopf"],
   s: ["kscr"]
 };
-var l = {
+var l$3 = {
   A: ["lAarr", "lArr", "lAtail"],
   a: ["lacute", "laemptyv", "lagran", "lambda", "lang", "langd", "langle", "lap", "laquo", "larr", "larrb", "larrbfs", "larrfs", "larrhk", "larrlp", "larrpl", "larrsim", "larrtl", "lat", "latail", "late", "lates"],
   B: ["lBarr"],
@@ -5335,7 +5335,7 @@ var l = {
   u: ["lurdshar", "luruhar"],
   v: ["lvertneqq", "lvnE"]
 };
-var L = {
+var L$1 = {
   a: ["Lacute", "Lambda", "Lang", "Laplacetrf", "Larr"],
   c: ["Lcaron", "Lcedil", "Lcy"],
   e: ["LeftAngleBracket", "LeftArrow", "Leftarrow", "LeftArrowBar", "LeftArrowRightArrow", "LeftCeiling", "LeftDoubleBracket", "LeftDownTeeVector", "LeftDownVector", "LeftDownVectorBar", "LeftFloor", "LeftRightArrow", "Leftrightarrow", "LeftRightVector", "LeftTee", "LeftTeeArrow", "LeftTeeVector", "LeftTriangle", "LeftTriangleBar", "LeftTriangleEqual", "LeftUpDownVector", "LeftUpTeeVector", "LeftUpVector", "LeftUpVectorBar", "LeftVector", "LeftVectorBar", "LessEqualGreater", "LessFullEqual", "LessGreater", "LessLess", "LessSlantEqual", "LessTilde"],
@@ -5348,7 +5348,7 @@ var L = {
   T: ["LT"],
   t: ["Lt"]
 };
-var m = {
+var m$3 = {
   a: ["macr", "male", "malt", "maltese", "map", "mapsto", "mapstodown", "mapstoleft", "mapstoup", "marker"],
   c: ["mcomma", "mcy"],
   d: ["mdash"],
@@ -5374,7 +5374,7 @@ var M = {
   s: ["Mscr"],
   u: ["Mu"]
 };
-var n = {
+var n$3 = {
   a: ["nabla", "nacute", "nang", "nap", "napE", "napid", "napos", "napprox", "natur", "natural", "naturals"],
   b: ["nbsp", "nbump", "nbumpe"],
   c: ["ncap", "ncaron", "ncedil", "ncong", "ncongdot", "ncup", "ncy"],
@@ -5400,7 +5400,7 @@ var n = {
   V: ["nVDash", "nVdash"],
   w: ["nwarhk", "nwArr", "nwarr", "nwarrow", "nwnear"]
 };
-var N = {
+var N$1 = {
   a: ["Nacute"],
   c: ["Ncaron", "Ncedil", "Ncy"],
   e: ["NegativeMediumSpace", "NegativeThickSpace", "NegativeThinSpace", "NegativeVeryThinSpace", "NestedGreaterGreater", "NestedLessLess", "NewLine"],
@@ -5427,7 +5427,7 @@ var O = {
   u: ["Ouml"],
   v: ["OverBar", "OverBrace", "OverBracket", "OverParenthesis"]
 };
-var o = {
+var o$3 = {
   a: ["oacute", "oast"],
   c: ["ocir", "ocirc", "ocy"],
   d: ["odash", "odblac", "odiv", "odot", "odsold"],
@@ -5447,7 +5447,7 @@ var o = {
   u: ["ouml"],
   v: ["ovbar"]
 };
-var p = {
+var p$3 = {
   a: ["par", "para", "parallel", "parsim", "parsl", "part"],
   c: ["pcy"],
   e: ["percnt", "period", "permil", "perp", "pertenk"],
@@ -5461,7 +5461,7 @@ var p = {
   s: ["pscr", "psi"],
   u: ["puncsp"]
 };
-var P = {
+var P$1 = {
   a: ["PartialD"],
   c: ["Pcy"],
   f: ["Pfr"],
@@ -5478,7 +5478,7 @@ var Q = {
   s: ["Qscr"],
   U: ["QUOT"]
 };
-var q = {
+var q$3 = {
   f: ["qfr"],
   i: ["qint"],
   o: ["qopf"],
@@ -5486,7 +5486,7 @@ var q = {
   s: ["qscr"],
   u: ["quaternions", "quatint", "quest", "questeq", "quot"]
 };
-var r = {
+var r$3 = {
   A: ["rAarr", "rArr", "rAtail"],
   a: ["race", "racute", "radic", "raemptyv", "rang", "rangd", "range", "rangle", "raquo", "rarr", "rarrap", "rarrb", "rarrbfs", "rarrc", "rarrfs", "rarrhk", "rarrlp", "rarrpl", "rarrsim", "rarrtl", "rarrw", "ratail", "ratio", "rationals"],
   B: ["rBarr"],
@@ -5509,7 +5509,7 @@ var r = {
   u: ["ruluhar"],
   x: ["rx"]
 };
-var R = {
+var R$1 = {
   a: ["Racute", "Rang", "Rarr", "Rarrtl"],
   B: ["RBarr"],
   c: ["Rcaron", "Rcedil", "Rcy"],
@@ -5523,7 +5523,7 @@ var R = {
   s: ["Rscr", "Rsh"],
   u: ["RuleDelayed"]
 };
-var S = {
+var S$1 = {
   a: ["Sacute"],
   c: ["Sc", "Scaron", "Scedil", "Scirc", "Scy"],
   f: ["Sfr"],
@@ -5538,7 +5538,7 @@ var S = {
   t: ["Star"],
   u: ["Sub", "Subset", "SubsetEqual", "Succeeds", "SucceedsEqual", "SucceedsSlantEqual", "SucceedsTilde", "SuchThat", "Sum", "Sup", "Superset", "SupersetEqual", "Supset"]
 };
-var s = {
+var s$3 = {
   a: ["sacute"],
   b: ["sbquo"],
   c: ["sc", "scap", "scaron", "sccue", "scE", "sce", "scedil", "scirc", "scnap", "scnE", "scnsim", "scpolint", "scsim", "scy"],
@@ -5559,7 +5559,7 @@ var s = {
   w: ["swarhk", "swArr", "swarr", "swarrow", "swnwar"],
   z: ["szlig"]
 };
-var T = {
+var T$1 = {
   a: ["Tab", "Tau"],
   c: ["Tcaron", "Tcedil", "Tcy"],
   f: ["Tfr"],
@@ -5572,7 +5572,7 @@ var T = {
   s: ["Tscr", "Tstrok"],
   S: ["TScy", "TSHcy"]
 };
-var t = {
+var t$3 = {
   a: ["target", "tau"],
   b: ["tbrk"],
   c: ["tcaron", "tcedil", "tcy"],
@@ -5587,7 +5587,7 @@ var t = {
   s: ["tscr", "tscy", "tshcy", "tstrok"],
   w: ["twixt", "twoheadleftarrow", "twoheadrightarrow"]
 };
-var U = {
+var U$1 = {
   a: ["Uacute", "Uarr", "Uarrocir"],
   b: ["Ubrcy", "Ubreve"],
   c: ["Ucirc", "Ucy"],
@@ -5603,7 +5603,7 @@ var U = {
   t: ["Utilde"],
   u: ["Uuml"]
 };
-var u = {
+var u$3 = {
   a: ["uacute", "uarr"],
   A: ["uArr"],
   b: ["ubrcy", "ubreve"],
@@ -5623,7 +5623,7 @@ var u = {
   u: ["uuarr", "uuml"],
   w: ["uwangle"]
 };
-var v = {
+var v$3 = {
   a: ["vangrt", "varepsilon", "varkappa", "varnothing", "varphi", "varpi", "varpropto", "varr", "varrho", "varsigma", "varsubsetneq", "varsubsetneqq", "varsupsetneq", "varsupsetneqq", "vartheta", "vartriangleleft", "vartriangleright"],
   A: ["vArr"],
   B: ["vBar", "vBarv"],
@@ -5640,7 +5640,7 @@ var v = {
   s: ["vscr", "vsubnE", "vsubne", "vsupnE", "vsupne"],
   z: ["vzigzag"]
 };
-var V = {
+var V$1 = {
   b: ["Vbar"],
   c: ["Vcy"],
   D: ["VDash"],
@@ -5658,7 +5658,7 @@ var W = {
   o: ["Wopf"],
   s: ["Wscr"]
 };
-var w = {
+var w$3 = {
   c: ["wcirc"],
   e: ["wedbar", "wedge", "wedgeq", "weierp"],
   f: ["wfr"],
@@ -5667,7 +5667,7 @@ var w = {
   r: ["wr", "wreath"],
   s: ["wscr"]
 };
-var x = {
+var x$3 = {
   c: ["xcap", "xcirc", "xcup"],
   d: ["xdtri"],
   f: ["xfr"],
@@ -5689,7 +5689,7 @@ var X = {
   o: ["Xopf"],
   s: ["Xscr"]
 };
-var Y = {
+var Y$1 = {
   a: ["Yacute"],
   A: ["YAcy"],
   c: ["Ycirc", "Ycy"],
@@ -5700,7 +5700,7 @@ var Y = {
   U: ["YUcy"],
   u: ["Yuml"]
 };
-var y = {
+var y$3 = {
   a: ["yacute", "yacy"],
   c: ["ycirc", "ycy"],
   e: ["yen"],
@@ -5720,7 +5720,7 @@ var Z = {
   o: ["Zopf"],
   s: ["Zscr"]
 };
-var z = {
+var z$3 = {
   a: ["zacute"],
   c: ["zcaron", "zcy"],
   d: ["zdot"],
@@ -5734,59 +5734,59 @@ var z = {
 };
 var entStartsWithJson = {
   A: A,
-  a: a,
-  b: b,
+  a: a$3,
+  b: b$3,
   B: B,
   C: C,
-  c: c,
-  D: D,
-  d: d,
-  E: E,
-  e: e,
-  f: f,
+  c: c$3,
+  D: D$1,
+  d: d$3,
+  E: E$1,
+  e: e$3,
+  f: f$3,
   F: F,
-  g: g,
-  G: G,
-  H: H,
-  h: h,
-  I: I,
-  i: i,
+  g: g$3,
+  G: G$1,
+  H: H$1,
+  h: h$3,
+  I: I$1,
+  i: i$3,
   J: J,
-  j: j,
+  j: j$3,
   K: K,
-  k: k,
-  l: l,
-  L: L,
-  m: m,
+  k: k$3,
+  l: l$3,
+  L: L$1,
+  m: m$3,
   M: M,
-  n: n,
-  N: N,
+  n: n$3,
+  N: N$1,
   O: O,
-  o: o,
-  p: p,
-  P: P,
+  o: o$3,
+  p: p$3,
+  P: P$1,
   Q: Q,
-  q: q,
-  r: r,
-  R: R,
-  S: S,
-  s: s,
-  T: T,
-  t: t,
-  U: U,
-  u: u,
-  v: v,
-  V: V,
+  q: q$3,
+  r: r$3,
+  R: R$1,
+  S: S$1,
+  s: s$3,
+  T: T$1,
+  t: t$3,
+  U: U$1,
+  u: u$3,
+  v: v$3,
+  V: V$1,
   W: W,
-  w: w,
-  x: x,
+  w: w$3,
+  x: x$3,
   X: X,
-  Y: Y,
-  y: y,
+  Y: Y$1,
+  y: y$3,
   Z: Z,
-  z: z
+  z: z$3
 };
-var e$1 = {
+var e$2 = {
   t: ["Aacute", "aacute", "acute", "Cacute", "cacute", "CloseCurlyDoubleQuote", "CloseCurlyQuote", "DiacriticalAcute", "DiacriticalDoubleAcute", "Eacute", "eacute", "gacute", "Iacute", "iacute", "Lacute", "lacute", "late", "Nacute", "nacute", "Oacute", "oacute", "OpenCurlyDoubleQuote", "OpenCurlyQuote", "Racute", "racute", "Sacute", "sacute", "sdote", "smte", "Uacute", "uacute", "Yacute", "yacute", "Zacute", "zacute"],
   v: ["Abreve", "abreve", "Agrave", "agrave", "Breve", "breve", "DiacriticalGrave", "DownBreve", "Egrave", "egrave", "Gbreve", "gbreve", "grave", "Igrave", "igrave", "Ograve", "ograve", "Ubreve", "ubreve", "Ugrave", "ugrave"],
   p: ["andslope", "ape", "bumpe", "csupe", "nbumpe", "nsqsupe", "nsupe", "orslope", "sqsupe", "supe"],
@@ -5807,7 +5807,7 @@ var e$1 = {
   u: ["nprcue", "nsccue", "prcue", "sccue"],
   R: ["Re"]
 };
-var c$1 = {
+var c$2 = {
   a: ["ac", "angmsdac", "dblac", "Odblac", "odblac", "Udblac", "udblac"],
   r: ["Acirc", "acirc", "bigcirc", "Ccirc", "ccirc", "circ", "circledcirc", "Ecirc", "ecirc", "eqcirc", "Gcirc", "gcirc", "Hcirc", "hcirc", "Icirc", "icirc", "Jcirc", "jcirc", "nrarrc", "Ocirc", "ocirc", "rarrc", "Scirc", "scirc", "Ucirc", "ucirc", "Wcirc", "wcirc", "xcirc", "Ycirc", "ycirc"],
   s: ["cuesc", "nsc", "sc"],
@@ -5817,7 +5817,7 @@ var c$1 = {
   v: ["notinvc", "notnivc"],
   S: ["Sc"]
 };
-var d$1 = {
+var d$2 = {
   c: ["acd"],
   n: ["And", "and", "andand", "capand", "Diamond", "diamond", "pound"],
   d: ["andd", "dd"],
@@ -5833,7 +5833,7 @@ var d$1 = {
   l: ["lbrksld", "odsold", "rbrksld"],
   r: ["lhard", "llhard", "lrhard", "ord", "rhard"]
 };
-var E$1 = {
+var E = {
   c: ["acE", "scE"],
   p: ["apE", "bumpE", "napE", "nsupE", "supE"],
   r: ["cirE", "prE"],
@@ -5843,13 +5843,13 @@ var E$1 = {
   b: ["nsubE", "subE"],
   D: ["TRADE"]
 };
-var y$1 = {
+var y$2 = {
   c: ["Acy", "acy", "Bcy", "bcy", "CHcy", "chcy", "Dcy", "dcy", "DJcy", "djcy", "DScy", "dscy", "DZcy", "dzcy", "Ecy", "ecy", "Fcy", "fcy", "Gcy", "gcy", "GJcy", "gjcy", "HARDcy", "hardcy", "Icy", "icy", "IEcy", "iecy", "IOcy", "iocy", "Iukcy", "iukcy", "Jcy", "jcy", "Jsercy", "jsercy", "Jukcy", "jukcy", "Kcy", "kcy", "KHcy", "khcy", "KJcy", "kjcy", "Lcy", "lcy", "LJcy", "ljcy", "Mcy", "mcy", "Ncy", "ncy", "NJcy", "njcy", "Ocy", "ocy", "Pcy", "pcy", "Rcy", "rcy", "Scy", "scy", "SHCHcy", "shchcy", "SHcy", "shcy", "SOFTcy", "softcy", "Tcy", "tcy", "TScy", "tscy", "TSHcy", "tshcy", "Ubrcy", "ubrcy", "Ucy", "ucy", "Vcy", "vcy", "YAcy", "yacy", "Ycy", "ycy", "YIcy", "yicy", "YUcy", "yucy", "Zcy", "zcy", "ZHcy", "zhcy"],
   p: ["copy"],
   t: ["cylcty", "empty"],
   h: ["shy"]
 };
-var g$1 = {
+var g$2 = {
   i: ["AElig", "aelig", "ffilig", "fflig", "ffllig", "filig", "fjlig", "fllig", "IJlig", "ijlig", "OElig", "oelig", "szlig"],
   l: ["amalg", "lg", "ntlg"],
   n: ["ang", "Aring", "aring", "backcong", "bcong", "cong", "eng", "Lang", "lang", "LeftCeiling", "loang", "nang", "ncong", "Rang", "rang", "RightCeiling", "ring", "roang", "sung", "Uring", "uring", "varnothing"],
@@ -5861,7 +5861,7 @@ var g$1 = {
   s: ["lesg"],
   m: ["lsimg", "simg"]
 };
-var f$1 = {
+var f$2 = {
   a: ["af", "angmsdaf", "sigmaf"],
   p: ["Aopf", "aopf", "Bopf", "bopf", "Copf", "copf", "Dopf", "dopf", "Eopf", "eopf", "Fopf", "fopf", "Gopf", "gopf", "Hopf", "hopf", "Iopf", "iopf", "Jopf", "jopf", "Kopf", "kopf", "Lopf", "lopf", "Mopf", "mopf", "Nopf", "nopf", "Oopf", "oopf", "Popf", "popf", "Qopf", "qopf", "Ropf", "ropf", "Sopf", "sopf", "Topf", "topf", "Uopf", "uopf", "Vopf", "vopf", "Wopf", "wopf", "Xopf", "xopf", "Yopf", "yopf", "Zopf", "zopf"],
   i: ["dtrif", "ltrif", "rtrif", "utrif"],
@@ -5873,7 +5873,7 @@ var f$1 = {
   d: ["ordf"],
   u: ["squf"]
 };
-var r$1 = {
+var r$2 = {
   f: ["Afr", "afr", "Bfr", "bfr", "Cfr", "cfr", "Dfr", "dfr", "Efr", "efr", "Ffr", "ffr", "Gfr", "gfr", "Hfr", "hfr", "Ifr", "ifr", "Jfr", "jfr", "Kfr", "kfr", "Lfr", "lfr", "Mfr", "mfr", "Nfr", "nfr", "Ofr", "ofr", "Pfr", "pfr", "Qfr", "qfr", "Rfr", "rfr", "Sfr", "sfr", "Tfr", "tfr", "Ufr", "ufr", "Vfr", "vfr", "Wfr", "wfr", "Xfr", "xfr", "Yfr", "yfr", "Zfr", "zfr"],
   c: ["Amacr", "amacr", "Ascr", "ascr", "Bscr", "bscr", "Cscr", "cscr", "Dscr", "dscr", "Emacr", "emacr", "Escr", "escr", "Fscr", "fscr", "Gscr", "gscr", "Hscr", "hscr", "Imacr", "imacr", "Iscr", "iscr", "Jscr", "jscr", "Kscr", "kscr", "Lscr", "lscr", "macr", "Mscr", "mscr", "Nscr", "nscr", "Omacr", "omacr", "Oscr", "oscr", "Pscr", "pscr", "Qscr", "qscr", "Rscr", "rscr", "Sscr", "sscr", "Tscr", "tscr", "Umacr", "umacr", "Uscr", "uscr", "Vscr", "vscr", "Wscr", "wscr", "Xscr", "xscr", "Yscr", "yscr", "Zscr", "zscr"],
   r: ["angzarr", "crarr", "cudarrr", "cularr", "curarr", "Darr", "dArr", "darr", "ddarr", "dharr", "duarr", "dzigrarr", "erarr", "gtrarr", "hArr", "harr", "hoarr", "lAarr", "Larr", "lArr", "larr", "lBarr", "lbarr", "llarr", "loarr", "lrarr", "ltlarr", "neArr", "nearr", "nhArr", "nharr", "nlArr", "nlarr", "nrArr", "nrarr", "nvHarr", "nvlArr", "nvrArr", "nwArr", "nwarr", "olarr", "orarr", "rAarr", "Rarr", "rArr", "rarr", "RBarr", "rBarr", "rbarr", "rlarr", "roarr", "rrarr", "seArr", "searr", "simrarr", "slarr", "srarr", "subrarr", "suplarr", "swArr", "swarr", "Uarr", "uArr", "uarr", "udarr", "uharr", "uuarr", "vArr", "varr", "xhArr", "xharr", "xlArr", "xlarr", "xrArr", "xrarr", "zigrarr"],
@@ -5894,7 +5894,7 @@ var r$1 = {
   P: ["Pr"],
   w: ["wr"]
 };
-var m$1 = {
+var m$2 = {
   y: ["alefsym", "thetasym"],
   i: ["backsim", "bsim", "eqsim", "Esim", "esim", "gnsim", "gsim", "gtrsim", "larrsim", "lesssim", "lnsim", "lsim", "nesim", "ngsim", "nlsim", "nsim", "nvsim", "parsim", "plussim", "precnsim", "precsim", "prnsim", "prsim", "rarrsim", "scnsim", "scsim", "sim", "subsim", "succnsim", "succsim", "supsim", "thicksim", "thksim"],
   o: ["bottom"],
@@ -5908,7 +5908,7 @@ var m$1 = {
   p: ["pm"],
   l: ["rlm"]
 };
-var h$1 = {
+var h$2 = {
   p: ["aleph", "angsph"],
   a: ["angmsdah"],
   s: ["Backslash", "circleddash", "dash", "hslash", "ldsh", "Lsh", "lsh", "mdash", "ndash", "nVDash", "nVdash", "nvDash", "nvdash", "odash", "Oslash", "oslash", "rdsh", "Rsh", "rsh", "VDash", "Vdash", "vDash", "vdash", "Vvdash"],
@@ -5919,7 +5919,7 @@ var h$1 = {
   k: ["planckh"],
   i: ["upsih"]
 };
-var a$1 = {
+var a$2 = {
   h: ["Alpha", "alpha"],
   a: ["angmsdaa"],
   t: ["Beta", "beta", "Delta", "delta", "Eta", "eta", "iiota", "Iota", "iota", "Theta", "theta", "vartheta", "Zeta", "zeta"],
@@ -5934,10 +5934,10 @@ var a$1 = {
   e: ["toea"],
   s: ["tosa"]
 };
-var P$1 = {
+var P = {
   M: ["AMP"]
 };
-var p$1 = {
+var p$2 = {
   m: ["amp", "asymp", "bump", "comp", "HumpDownHump", "mp", "nbump", "NotHumpDownHump"],
   a: ["ap", "bigcap", "Cap", "cap", "capcap", "cupbrcap", "CupCap", "cupcap", "gap", "gnap", "lap", "lnap", "Map", "map", "multimap", "mumap", "nap", "ncap", "NotCupCap", "nvap", "prap", "prnap", "rarrap", "scap", "scnap", "sqcap", "thkap", "xcap", "xmap"],
   u: ["bigcup", "bigsqcup", "bigtriangleup", "capbrcup", "capcup", "csup", "Cup", "cup", "cupcup", "leftharpoonup", "mapstoup", "ncup", "nsup", "rightharpoonup", "sqcup", "sqsup", "subsup", "Sup", "sup", "supsup", "vnsup", "xcup", "xsqcup"],
@@ -5950,7 +5950,7 @@ var p$1 = {
   h: ["smashp"],
   w: ["wp"]
 };
-var v$1 = {
+var v$2 = {
   d: ["andv"],
   r: ["Barv", "orv", "vBarv"],
   y: ["bemptyv", "cemptyv", "demptyv", "emptyv", "laemptyv", "raemptyv"],
@@ -5964,7 +5964,7 @@ var v$1 = {
   t: ["nGtv", "nLtv"],
   o: ["rhov"]
 };
-var b$1 = {
+var b$2 = {
   a: ["angmsdab", "Tab"],
   v: ["angrtvb", "notinvb", "notnivb"],
   l: ["bsolb", "solb"],
@@ -5974,7 +5974,7 @@ var b$1 = {
   s: ["minusb", "plusb", "timesb", "trisb"],
   t: ["sdotb"]
 };
-var t$1 = {
+var t$2 = {
   r: ["angrt", "imagpart", "npart", "part", "realpart", "Sqrt", "vangrt", "Vert", "vert"],
   s: ["angst", "ast", "circledast", "equest", "exist", "gtquest", "iquest", "lmoust", "lowast", "ltquest", "midast", "nexist", "oast", "quest", "rmoust"],
   n: ["awconint", "awint", "Cconint", "cent", "cirfnint", "complement", "Congruent", "Conint", "conint", "cwconint", "cwint", "Element", "fpartint", "geqslant", "iiiint", "iiint", "Int", "int", "leqslant", "ngeqslant", "nleqslant", "NotCongruent", "NotElement", "NotReverseElement", "npolint", "oint", "percnt", "pointint", "qint", "quatint", "ReverseElement", "rppolint", "scpolint", "tint"],
@@ -5992,7 +5992,7 @@ var t$1 = {
   x: ["sext", "twixt"],
   m: ["smt"]
 };
-var n$1 = {
+var n$2 = {
   o: ["Aogon", "aogon", "ApplyFunction", "backepsilon", "caron", "Ccaron", "ccaron", "Colon", "colon", "Dcaron", "dcaron", "Ecaron", "ecaron", "ecolon", "Eogon", "eogon", "Epsilon", "epsilon", "eqcolon", "expectation", "hercon", "Intersection", "Iogon", "iogon", "Lcaron", "lcaron", "Ncaron", "ncaron", "ogon", "Omicron", "omicron", "Proportion", "Rcaron", "rcaron", "Scaron", "scaron", "SquareIntersection", "SquareUnion", "straightepsilon", "Tcaron", "tcaron", "Union", "Uogon", "uogon", "Upsilon", "upsilon", "varepsilon", "Zcaron", "zcaron"],
   g: ["Assign"],
   e: ["between", "curren", "hyphen", "kgreen", "yen"],
@@ -6003,7 +6003,7 @@ var n$1 = {
   a: ["lagran"],
   m: ["plusmn", "setmn", "ssetmn"]
 };
-var s$1 = {
+var s$2 = {
   o: ["apos", "mstpos", "napos"],
   u: ["becaus", "bigoplus", "biguplus", "boxminus", "boxplus", "CircleMinus", "CirclePlus", "dotminus", "dotplus", "eplus", "loplus", "minus", "MinusPlus", "mnplus", "ominus", "oplus", "plus", "PlusMinus", "roplus", "setminus", "simplus", "smallsetminus", "subplus", "supplus", "triminus", "triplus", "UnionPlus", "uplus", "xoplus", "xuplus"],
   i: ["Bernoullis", "nis", "OverParenthesis", "UnderParenthesis", "xnis"],
@@ -6023,16 +6023,16 @@ var s$1 = {
   d: ["NotSucceeds", "Succeeds"],
   a: ["otimesas"]
 };
-var x$1 = {
+var x$2 = {
   o: ["approx", "boxbox", "gnapprox", "gtrapprox", "lessapprox", "lnapprox", "napprox", "precapprox", "precnapprox", "succapprox", "succnapprox", "thickapprox"],
   n: ["divonx"],
   r: ["rx"]
 };
-var q$1 = {
+var q$2 = {
   e: ["approxeq", "asympeq", "backsimeq", "Bumpeq", "bumpeq", "circeq", "coloneq", "ddotseq", "doteq", "fallingdotseq", "geq", "gneq", "leq", "lneq", "ngeq", "nleq", "npreceq", "nsimeq", "nsubseteq", "nsucceq", "nsupseteq", "ntrianglelefteq", "ntrianglerighteq", "preccurlyeq", "preceq", "questeq", "risingdotseq", "simeq", "sqsubseteq", "sqsupseteq", "subseteq", "subsetneq", "succcurlyeq", "succeq", "supseteq", "supsetneq", "trianglelefteq", "triangleq", "trianglerighteq", "varsubsetneq", "varsupsetneq", "veeeq", "wedgeq"],
   q: ["geqq", "gneqq", "gvertneqq", "leqq", "lneqq", "lvertneqq", "ngeqq", "nleqq", "nsubseteqq", "nsupseteqq", "precneqq", "subseteqq", "subsetneqq", "succneqq", "supseteqq", "supsetneqq", "varsubsetneqq", "varsupsetneqq"]
 };
-var l$1 = {
+var l$2 = {
   m: ["Auml", "auml", "Euml", "euml", "gsiml", "Iuml", "iuml", "Ouml", "ouml", "siml", "uml", "Uuml", "uuml", "Yuml", "yuml"],
   D: ["boxDl"],
   d: ["boxdl"],
@@ -6055,7 +6055,7 @@ var l$1 = {
   L: ["Ll", "nLl"],
   h: ["Vdashl"]
 };
-var k$1 = {
+var k$2 = {
   r: ["bbrk", "bbrktbrk", "checkmark", "fork", "lbbrk", "lobrk", "pitchfork", "rbbrk", "robrk", "tbrk", "topfork"],
   n: ["blank", "pertenk"],
   c: ["block", "check", "lbrack", "planck", "rbrack"],
@@ -6065,7 +6065,7 @@ var k$1 = {
   l: ["lhblk", "uhblk"],
   a: ["NoBreak"]
 };
-var o$1 = {
+var o$2 = {
   u: ["bdquo", "laquo", "ldquo", "lsaquo", "lsquo", "raquo", "rdquo", "rsaquo", "rsquo", "sbquo"],
   r: ["euro", "micro", "numero"],
   t: ["gesdoto", "lesdoto", "longmapsto", "mapsto", "propto", "varpropto"],
@@ -6074,7 +6074,7 @@ var o$1 = {
   w: ["plustwo"],
   i: ["ratio"]
 };
-var i$1 = {
+var i$2 = {
   s: ["bepsi", "epsi", "Psi", "psi", "Upsi", "upsi"],
   m: ["bsemi", "semi"],
   h: ["Chi", "chi", "Phi", "phi", "straightphi", "varphi"],
@@ -6086,7 +6086,7 @@ var i$1 = {
   X: ["Xi"],
   x: ["xi"]
 };
-var u$1 = {
+var u$2 = {
   o: ["bernou"],
   H: ["boxHu"],
   h: ["boxhu"],
@@ -6100,11 +6100,11 @@ var u$1 = {
   q: ["squ"],
   a: ["Tau", "tau"]
 };
-var w$1 = {
+var w$2 = {
   o: ["bkarow", "dbkarow", "DoubleDownArrow", "DoubleLeftArrow", "DoubleLeftRightArrow", "DoubleLongLeftArrow", "DoubleLongLeftRightArrow", "DoubleLongRightArrow", "DoubleRightArrow", "DoubleUpArrow", "DoubleUpDownArrow", "DownArrow", "Downarrow", "downarrow", "DownArrowUpArrow", "DownTeeArrow", "drbkarow", "hksearow", "hkswarow", "hookleftarrow", "hookrightarrow", "LeftArrow", "Leftarrow", "leftarrow", "LeftArrowRightArrow", "LeftRightArrow", "Leftrightarrow", "leftrightarrow", "leftrightsquigarrow", "LeftTeeArrow", "Lleftarrow", "LongLeftArrow", "Longleftarrow", "longleftarrow", "LongLeftRightArrow", "Longleftrightarrow", "longleftrightarrow", "LongRightArrow", "Longrightarrow", "longrightarrow", "LowerLeftArrow", "LowerRightArrow", "nearrow", "nLeftarrow", "nleftarrow", "nLeftrightarrow", "nleftrightarrow", "nRightarrow", "nrightarrow", "nwarrow", "RightArrow", "Rightarrow", "rightarrow", "RightArrowLeftArrow", "rightsquigarrow", "RightTeeArrow", "Rrightarrow", "searrow", "ShortDownArrow", "ShortLeftArrow", "ShortRightArrow", "ShortUpArrow", "swarrow", "twoheadleftarrow", "twoheadrightarrow", "UpArrow", "Uparrow", "uparrow", "UpArrowDownArrow", "UpDownArrow", "Updownarrow", "updownarrow", "UpperLeftArrow", "UpperRightArrow", "UpTeeArrow"],
   r: ["harrw", "nrarrw", "rarrw"]
 };
-var L$1 = {
+var L = {
   D: ["boxDL"],
   d: ["boxdL"],
   U: ["boxUL"],
@@ -6112,7 +6112,7 @@ var L$1 = {
   V: ["boxVL"],
   v: ["boxvL"]
 };
-var R$1 = {
+var R = {
   D: ["boxDR"],
   d: ["boxdR", "circledR"],
   U: ["boxUR"],
@@ -6120,53 +6120,53 @@ var R$1 = {
   V: ["boxVR"],
   v: ["boxvR"]
 };
-var H$1 = {
+var H = {
   x: ["boxH"],
   V: ["boxVH"],
   v: ["boxvH"],
   T: ["ETH"]
 };
-var D$1 = {
+var D = {
   H: ["boxHD"],
   h: ["boxhD"],
   l: ["CapitalDifferentialD", "DifferentialD", "PartialD"],
   D: ["DD", "equivDD"]
 };
-var U$1 = {
+var U = {
   H: ["boxHU"],
   h: ["boxhU"]
 };
-var V$1 = {
+var V = {
   x: ["boxV"]
 };
-var S$1 = {
+var S = {
   d: ["circledS"],
   o: ["oS"]
 };
-var Y$1 = {
+var Y = {
   P: ["COPY"]
 };
-var G$1 = {
+var G = {
   N: ["ENG"],
   E: ["REG"]
 };
-var j$1 = {
+var j$2 = {
   l: ["glj"],
   w: ["zwj"],
   n: ["zwnj"]
 };
-var T$1 = {
+var T = {
   G: ["GT"],
   L: ["LT"],
   O: ["QUOT"]
 };
-var I$1 = {
+var I = {
   y: ["ImaginaryI"]
 };
-var z$1 = {
+var z$2 = {
   o: ["loz"]
 };
-var N$1 = {
+var N = {
   R: ["THORN"]
 };
 var entEndsWithJson = {
@@ -6203,1787 +6203,1787 @@ var entEndsWithJson = {
     "5": ["frac58"],
     "7": ["frac78"]
   },
-  e: e$1,
-  c: c$1,
-  d: d$1,
-  E: E$1,
-  y: y$1,
-  g: g$1,
-  f: f$1,
-  r: r$1,
-  m: m$1,
-  h: h$1,
-  a: a$1,
-  P: P$1,
-  p: p$1,
-  v: v$1,
-  b: b$1,
-  t: t$1,
-  n: n$1,
-  s: s$1,
-  x: x$1,
-  q: q$1,
-  l: l$1,
-  k: k$1,
-  o: o$1,
-  i: i$1,
-  u: u$1,
-  w: w$1,
-  L: L$1,
-  R: R$1,
-  H: H$1,
-  D: D$1,
-  U: U$1,
-  V: V$1,
-  S: S$1,
-  Y: Y$1,
-  G: G$1,
-  j: j$1,
-  T: T$1,
-  I: I$1,
-  z: z$1,
-  N: N$1
+  e: e$2,
+  c: c$2,
+  d: d$2,
+  E: E,
+  y: y$2,
+  g: g$2,
+  f: f$2,
+  r: r$2,
+  m: m$2,
+  h: h$2,
+  a: a$2,
+  P: P,
+  p: p$2,
+  v: v$2,
+  b: b$2,
+  t: t$2,
+  n: n$2,
+  s: s$2,
+  x: x$2,
+  q: q$2,
+  l: l$2,
+  k: k$2,
+  o: o$2,
+  i: i$2,
+  u: u$2,
+  w: w$2,
+  L: L,
+  R: R,
+  H: H,
+  D: D,
+  U: U,
+  V: V,
+  S: S,
+  Y: Y,
+  G: G,
+  j: j$2,
+  T: T,
+  I: I,
+  z: z$2,
+  N: N
 };
-var ac$1 = {
+var ac = {
   addAmpIfSemiPresent: "edge only",
   addSemiIfAmpPresent: false
 };
-var acute$1 = {
+var acute = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Alpha$1 = {
+var Alpha = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var alpha$1 = {
+var alpha = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var amp$1 = {
+var amp = {
   addAmpIfSemiPresent: "edge only",
   addSemiIfAmpPresent: true
 };
-var And$1 = {
+var And = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: true
 };
-var and$1 = {
+var and = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: true
 };
-var ange$1 = {
+var ange = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: true
 };
-var angle$1 = {
+var angle = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var angst$1 = {
+var angst = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: true
 };
-var ap$1 = {
+var ap = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ape$1 = {
+var ape = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var approx$1 = {
+var approx = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Aring$1 = {
+var Aring = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: true
 };
-var aring$1 = {
+var aring = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: true
 };
-var Ascr$1 = {
+var Ascr = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ascr$1 = {
+var ascr = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Assign$1 = {
+var Assign = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ast$1 = {
+var ast = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var atilde$1 = {
+var atilde = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: true
 };
-var Backslash$1 = {
+var Backslash = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var barwedge$1 = {
+var barwedge = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var becaus$1 = {
+var becaus = {
   addAmpIfSemiPresent: true,
   addSemiIfAmpPresent: "edge only"
 };
-var Because$1 = {
+var Because = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var because$1 = {
+var because = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var bepsi$1 = {
+var bepsi = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Bernoullis$1 = {
+var Bernoullis = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Beta$1 = {
+var Beta = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var beta$1 = {
+var beta = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var beth$1 = {
+var beth = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var between$1 = {
+var between = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var blank$1 = {
+var blank = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var block$1 = {
+var block = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var bot$1 = {
+var bot = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var bottom$1 = {
+var bottom = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var bowtie$1 = {
+var bowtie = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var breve$1 = {
+var breve = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var bull$1 = {
+var bull = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var bullet$1 = {
+var bullet = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var bump$1 = {
+var bump = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var cacute$1 = {
+var cacute = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Cap$1 = {
+var Cap = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var cap$1 = {
+var cap = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var capand$1 = {
+var capand = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var caps$1 = {
+var caps = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var caret$1 = {
+var caret = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var caron$1 = {
+var caron = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var cedil$1 = {
+var cedil = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Cedilla$1 = {
+var Cedilla = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var cent$1 = {
+var cent = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: true
 };
-var check$1 = {
+var check = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var checkmark$1 = {
+var checkmark = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Chi$1 = {
+var Chi = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var chi$1 = {
+var chi = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var cir$1 = {
+var cir = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var circ$1 = {
+var circ = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var clubs$1 = {
+var clubs = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var clubsuit$1 = {
+var clubsuit = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Colon$1 = {
+var Colon = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var colon$1 = {
+var colon = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Colone$1 = {
+var Colone = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var colone$1 = {
+var colone = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var comma$1 = {
+var comma = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var commat$1 = {
+var commat = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var comp$1 = {
+var comp = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var complement$1 = {
+var complement = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var complexes$1 = {
+var complexes = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var cong$1 = {
+var cong = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Congruent$1 = {
+var Congruent = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var conint$1 = {
+var conint = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var copf$1 = {
+var copf = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var coprod$1 = {
+var coprod = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var COPY$1 = {
+var COPY = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var copy$1 = {
+var copy = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Cross$1 = {
+var Cross = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var cross$1 = {
+var cross = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Cup$1 = {
+var Cup = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var cup$1 = {
+var cup = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var cups$1 = {
+var cups = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Dagger$1 = {
+var Dagger = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var dagger$1 = {
+var dagger = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var daleth$1 = {
+var daleth = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var darr$1 = {
+var darr = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var dash$1 = {
+var dash = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var DD$1 = {
+var DD = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var dd$1 = {
+var dd = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var deg$1 = {
+var deg = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Del$1 = {
+var Del = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Delta$1 = {
+var Delta = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var delta$1 = {
+var delta = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var dharr$1 = {
+var dharr = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var diam$1 = {
+var diam = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Diamond$1 = {
+var Diamond = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var diamond$1 = {
+var diamond = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var diams$1 = {
+var diams = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var die$1 = {
+var die = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var digamma$1 = {
+var digamma = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var disin$1 = {
+var disin = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var div$1 = {
+var div = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var divide$1 = {
+var divide = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var dollar$1 = {
+var dollar = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var dopf$1 = {
+var dopf = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Dot$1 = {
+var Dot = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var dot$1 = {
+var dot = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var dsol$1 = {
+var dsol = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var dtri$1 = {
+var dtri = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var easter$1 = {
+var easter = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var ecir$1 = {
+var ecir = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ecolon$1 = {
+var ecolon = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ecy$1 = {
+var ecy = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var edot$1 = {
+var edot = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ee$1 = {
+var ee = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var efr$1 = {
+var efr = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var eg$1 = {
+var eg = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var egrave$1 = {
+var egrave = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var egs$1 = {
+var egs = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var el$1 = {
+var el = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ell$1 = {
+var ell = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var els$1 = {
+var els = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var empty$1 = {
+var empty = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var ENG$1 = {
+var ENG = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var eng$1 = {
+var eng = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var epsi$1 = {
+var epsi = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Epsilon$1 = {
+var Epsilon = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var epsilon$1 = {
+var epsilon = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Equal$1 = {
+var Equal = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var equals$1 = {
+var equals = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var equest$1 = {
+var equest = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Equilibrium$1 = {
+var Equilibrium = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var equiv$1 = {
+var equiv = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var escr$1 = {
+var escr = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var esim$1 = {
+var esim = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Eta$1 = {
+var Eta = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var eta$1 = {
+var eta = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ETH$1 = {
+var ETH = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var eth$1 = {
+var eth = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var euro$1 = {
+var euro = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var excl$1 = {
+var excl = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var exist$1 = {
+var exist = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Exists$1 = {
+var Exists = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var expectation$1 = {
+var expectation = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var female$1 = {
+var female = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var flat$1 = {
+var flat = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var fork$1 = {
+var fork = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var frown$1 = {
+var frown = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Gamma$1 = {
+var Gamma = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var gamma$1 = {
+var gamma = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var gap$1 = {
+var gap = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var gcy$1 = {
+var gcy = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ge$1 = {
+var ge = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var gel$1 = {
+var gel = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var geq$1 = {
+var geq = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ges$1 = {
+var ges = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var gesl$1 = {
+var gesl = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var gg$1 = {
+var gg = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var gl$1 = {
+var gl = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var gla$1 = {
+var gla = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var gne$1 = {
+var gne = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var grave$1 = {
+var grave = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var GT$1 = {
+var GT = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var gt$1 = {
+var gt = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var half$1 = {
+var half = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Hat$1 = {
+var Hat = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var hearts$1 = {
+var hearts = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var hopf$1 = {
+var hopf = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var hyphen$1 = {
+var hyphen = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var ic$1 = {
+var ic = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var icy$1 = {
+var icy = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var iff$1 = {
+var iff = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ii$1 = {
+var ii = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var image$1 = {
+var image = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var imped$1 = {
+var imped = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var int$1 = {
+var int = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var integers$1 = {
+var integers = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var iocy$1 = {
+var iocy = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var iogon$1 = {
+var iogon = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var iota$1 = {
+var iota = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var isin$1 = {
+var isin = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var it$1 = {
+var it = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Kappa$1 = {
+var Kappa = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var kappa$1 = {
+var kappa = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var kopf$1 = {
+var kopf = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Lambda$1 = {
+var Lambda = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var lambda$1 = {
+var lambda = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var lang$1 = {
+var lang = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var lap$1 = {
+var lap = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var lat$1 = {
+var lat = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var late$1 = {
+var late = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var lates$1 = {
+var lates = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var le$1 = {
+var le = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var leg$1 = {
+var leg = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var leq$1 = {
+var leq = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var les$1 = {
+var les = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var lg$1 = {
+var lg = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ll$1 = {
+var ll = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var lne$1 = {
+var lne = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var lozenge$1 = {
+var lozenge = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var lsh$1 = {
+var lsh = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var LT$1 = {
+var LT = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var lt$1 = {
+var lt = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ltimes$1 = {
+var ltimes = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: true
 };
-var male$1 = {
+var male = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var malt$1 = {
+var malt = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var map$1 = {
+var map = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var marker$1 = {
+var marker = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var mid$1 = {
+var mid = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var minus$1 = {
+var minus = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var models$1 = {
+var models = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var mp$1 = {
+var mp = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var mu$1 = {
+var mu = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var nang$1 = {
+var nang = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var nap$1 = {
+var nap = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var natural$1 = {
+var natural = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var naturals$1 = {
+var naturals = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var ncy$1 = {
+var ncy = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ne$1 = {
+var ne = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var nge$1 = {
+var nge = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ngt$1 = {
+var ngt = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ni$1 = {
+var ni = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var nis$1 = {
+var nis = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var nle$1 = {
+var nle = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var nles$1 = {
+var nles = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var nless$1 = {
+var nless = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var nlt$1 = {
+var nlt = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var nopf$1 = {
+var nopf = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Not$1 = {
+var Not = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var not$1 = {
+var not = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var nsc$1 = {
+var nsc = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var nsce$1 = {
+var nsce = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var nu$1 = {
+var nu = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var num$1 = {
+var num = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var ogt$1 = {
+var ogt = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ohm$1 = {
+var ohm = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var oline$1 = {
+var oline = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var olt$1 = {
+var olt = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Omega$1 = {
+var Omega = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var omega$1 = {
+var omega = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Omicron$1 = {
+var Omicron = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var omicron$1 = {
+var omicron = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var oopf$1 = {
+var oopf = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var opar$1 = {
+var opar = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var or$1 = {
+var or = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var order$1 = {
+var order = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var oror$1 = {
+var oror = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var orv$1 = {
+var orv = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var osol$1 = {
+var osol = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var par$1 = {
+var par = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var para$1 = {
+var para = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var parallel$1 = {
+var parallel = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var part$1 = {
+var part = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var phi$1 = {
+var phi = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var phone$1 = {
+var phone = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Pi$1 = {
+var Pi = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var pi$1 = {
+var pi = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var pitchfork$1 = {
+var pitchfork = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var plus$1 = {
+var plus = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var pm$1 = {
+var pm = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var popf$1 = {
+var popf = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var pound$1 = {
+var pound = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var pr$1 = {
+var pr = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var prime$1 = {
+var prime = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var primes$1 = {
+var primes = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var prod$1 = {
+var prod = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Product$1 = {
+var Product = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var prop$1 = {
+var prop = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Proportion$1 = {
+var Proportion = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Proportional$1 = {
+var Proportional = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var psi$1 = {
+var psi = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var quest$1 = {
+var quest = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var QUOT$1 = {
+var QUOT = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var quot$1 = {
+var quot = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var race$1 = {
+var race = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var rang$1 = {
+var rang = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var range$1 = {
+var range = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var ratio$1 = {
+var ratio = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Re$1 = {
+var Re = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var real$1 = {
+var real = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var reals$1 = {
+var reals = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var rect$1 = {
+var rect = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var REG$1 = {
+var REG = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: true
 };
-var reg$1 = {
+var reg = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ring$1 = {
+var ring = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var rsh$1 = {
+var rsh = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var sc$1 = {
+var sc = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var scap$1 = {
+var scap = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var sce$1 = {
+var sce = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var scy$1 = {
+var scy = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var sdot$1 = {
+var sdot = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var sect$1 = {
+var sect = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var semi$1 = {
+var semi = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var sharp$1 = {
+var sharp = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var shy$1 = {
+var shy = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Sigma$1 = {
+var Sigma = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var sigma$1 = {
+var sigma = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var sim$1 = {
+var sim = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var sol$1 = {
+var sol = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var spades$1 = {
+var spades = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var square$1 = {
+var square = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Star$1 = {
+var Star = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var star$1 = {
+var star = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Sub$1 = {
+var Sub = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var sub$1 = {
+var sub = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var sube$1 = {
+var sube = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Sum$1 = {
+var Sum = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var sum$1 = {
+var sum = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Tab$1 = {
+var Tab = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var target$1 = {
+var target = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Tau$1 = {
+var Tau = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var tau$1 = {
+var tau = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var therefore$1 = {
+var therefore = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Theta$1 = {
+var Theta = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var theta$1 = {
+var theta = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var THORN$1 = {
+var THORN = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var thorn$1 = {
+var thorn = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Tilde$1 = {
+var Tilde = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var tilde$1 = {
+var tilde = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var times$1 = {
+var times = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var tint$1 = {
+var tint = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var top$1 = {
+var top = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var tosa$1 = {
+var tosa = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var TRADE$1 = {
+var TRADE = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var trade$1 = {
+var trade = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var triangle$1 = {
+var triangle = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var trie$1 = {
+var trie = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ucy$1 = {
+var ucy = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var uml$1 = {
+var uml = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Union$1 = {
+var Union = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var uplus$1 = {
+var uplus = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Upsi$1 = {
+var Upsi = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var upsi$1 = {
+var upsi = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var uring$1 = {
+var uring = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var vee$1 = {
+var vee = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Vert$1 = {
+var Vert = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var vert$1 = {
+var vert = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var wedge$1 = {
+var wedge = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Wedge$1 = {
+var Wedge = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var wreath$1 = {
+var wreath = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Xi$1 = {
+var Xi = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var xi$1 = {
+var xi = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Ycirc$1 = {
+var Ycirc = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ycirc$1 = {
+var ycirc = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var ycy$1 = {
+var ycy = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var yen$1 = {
+var yen = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var Zacute$1 = {
+var Zacute = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var zacute$1 = {
+var zacute = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: "edge only"
 };
-var Zeta$1 = {
+var Zeta = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
-var zeta$1 = {
+var zeta = {
   addAmpIfSemiPresent: false,
   addSemiIfAmpPresent: false
 };
 var uncertainJson = {
-  ac: ac$1,
-  acute: acute$1,
-  Alpha: Alpha$1,
-  alpha: alpha$1,
-  amp: amp$1,
-  And: And$1,
-  and: and$1,
-  ange: ange$1,
-  angle: angle$1,
-  angst: angst$1,
-  ap: ap$1,
-  ape: ape$1,
-  approx: approx$1,
-  Aring: Aring$1,
-  aring: aring$1,
-  Ascr: Ascr$1,
-  ascr: ascr$1,
-  Assign: Assign$1,
-  ast: ast$1,
-  atilde: atilde$1,
-  Backslash: Backslash$1,
-  barwedge: barwedge$1,
-  becaus: becaus$1,
-  Because: Because$1,
-  because: because$1,
-  bepsi: bepsi$1,
-  Bernoullis: Bernoullis$1,
-  Beta: Beta$1,
-  beta: beta$1,
-  beth: beth$1,
-  between: between$1,
-  blank: blank$1,
-  block: block$1,
-  bot: bot$1,
-  bottom: bottom$1,
-  bowtie: bowtie$1,
-  breve: breve$1,
-  bull: bull$1,
-  bullet: bullet$1,
-  bump: bump$1,
-  cacute: cacute$1,
-  Cap: Cap$1,
-  cap: cap$1,
-  capand: capand$1,
-  caps: caps$1,
-  caret: caret$1,
-  caron: caron$1,
-  cedil: cedil$1,
-  Cedilla: Cedilla$1,
-  cent: cent$1,
-  check: check$1,
-  checkmark: checkmark$1,
-  Chi: Chi$1,
-  chi: chi$1,
-  cir: cir$1,
-  circ: circ$1,
-  clubs: clubs$1,
-  clubsuit: clubsuit$1,
-  Colon: Colon$1,
-  colon: colon$1,
-  Colone: Colone$1,
-  colone: colone$1,
-  comma: comma$1,
-  commat: commat$1,
-  comp: comp$1,
-  complement: complement$1,
-  complexes: complexes$1,
-  cong: cong$1,
-  Congruent: Congruent$1,
-  conint: conint$1,
-  copf: copf$1,
-  coprod: coprod$1,
-  COPY: COPY$1,
-  copy: copy$1,
-  Cross: Cross$1,
-  cross: cross$1,
-  Cup: Cup$1,
-  cup: cup$1,
-  cups: cups$1,
-  Dagger: Dagger$1,
-  dagger: dagger$1,
-  daleth: daleth$1,
-  darr: darr$1,
-  dash: dash$1,
-  DD: DD$1,
-  dd: dd$1,
-  deg: deg$1,
-  Del: Del$1,
-  Delta: Delta$1,
-  delta: delta$1,
-  dharr: dharr$1,
-  diam: diam$1,
-  Diamond: Diamond$1,
-  diamond: diamond$1,
-  diams: diams$1,
-  die: die$1,
-  digamma: digamma$1,
-  disin: disin$1,
-  div: div$1,
-  divide: divide$1,
-  dollar: dollar$1,
-  dopf: dopf$1,
-  Dot: Dot$1,
-  dot: dot$1,
-  dsol: dsol$1,
-  dtri: dtri$1,
-  easter: easter$1,
-  ecir: ecir$1,
-  ecolon: ecolon$1,
-  ecy: ecy$1,
-  edot: edot$1,
-  ee: ee$1,
-  efr: efr$1,
-  eg: eg$1,
-  egrave: egrave$1,
-  egs: egs$1,
-  el: el$1,
-  ell: ell$1,
-  els: els$1,
-  empty: empty$1,
-  ENG: ENG$1,
-  eng: eng$1,
-  epsi: epsi$1,
-  Epsilon: Epsilon$1,
-  epsilon: epsilon$1,
-  Equal: Equal$1,
-  equals: equals$1,
-  equest: equest$1,
-  Equilibrium: Equilibrium$1,
-  equiv: equiv$1,
-  escr: escr$1,
-  esim: esim$1,
-  Eta: Eta$1,
-  eta: eta$1,
-  ETH: ETH$1,
-  eth: eth$1,
-  euro: euro$1,
-  excl: excl$1,
-  exist: exist$1,
-  Exists: Exists$1,
-  expectation: expectation$1,
-  female: female$1,
-  flat: flat$1,
-  fork: fork$1,
-  frown: frown$1,
-  Gamma: Gamma$1,
-  gamma: gamma$1,
-  gap: gap$1,
-  gcy: gcy$1,
-  ge: ge$1,
-  gel: gel$1,
-  geq: geq$1,
-  ges: ges$1,
-  gesl: gesl$1,
-  gg: gg$1,
-  gl: gl$1,
-  gla: gla$1,
-  gne: gne$1,
-  grave: grave$1,
-  GT: GT$1,
-  gt: gt$1,
-  half: half$1,
-  Hat: Hat$1,
-  hearts: hearts$1,
-  hopf: hopf$1,
-  hyphen: hyphen$1,
-  ic: ic$1,
-  icy: icy$1,
-  iff: iff$1,
-  ii: ii$1,
-  image: image$1,
-  imped: imped$1,
+  ac: ac,
+  acute: acute,
+  Alpha: Alpha,
+  alpha: alpha,
+  amp: amp,
+  And: And,
+  and: and,
+  ange: ange,
+  angle: angle,
+  angst: angst,
+  ap: ap,
+  ape: ape,
+  approx: approx,
+  Aring: Aring,
+  aring: aring,
+  Ascr: Ascr,
+  ascr: ascr,
+  Assign: Assign,
+  ast: ast,
+  atilde: atilde,
+  Backslash: Backslash,
+  barwedge: barwedge,
+  becaus: becaus,
+  Because: Because,
+  because: because,
+  bepsi: bepsi,
+  Bernoullis: Bernoullis,
+  Beta: Beta,
+  beta: beta,
+  beth: beth,
+  between: between,
+  blank: blank,
+  block: block,
+  bot: bot,
+  bottom: bottom,
+  bowtie: bowtie,
+  breve: breve,
+  bull: bull,
+  bullet: bullet,
+  bump: bump,
+  cacute: cacute,
+  Cap: Cap,
+  cap: cap,
+  capand: capand,
+  caps: caps,
+  caret: caret,
+  caron: caron,
+  cedil: cedil,
+  Cedilla: Cedilla,
+  cent: cent,
+  check: check,
+  checkmark: checkmark,
+  Chi: Chi,
+  chi: chi,
+  cir: cir,
+  circ: circ,
+  clubs: clubs,
+  clubsuit: clubsuit,
+  Colon: Colon,
+  colon: colon,
+  Colone: Colone,
+  colone: colone,
+  comma: comma,
+  commat: commat,
+  comp: comp,
+  complement: complement,
+  complexes: complexes,
+  cong: cong,
+  Congruent: Congruent,
+  conint: conint,
+  copf: copf,
+  coprod: coprod,
+  COPY: COPY,
+  copy: copy,
+  Cross: Cross,
+  cross: cross,
+  Cup: Cup,
+  cup: cup,
+  cups: cups,
+  Dagger: Dagger,
+  dagger: dagger,
+  daleth: daleth,
+  darr: darr,
+  dash: dash,
+  DD: DD,
+  dd: dd,
+  deg: deg,
+  Del: Del,
+  Delta: Delta,
+  delta: delta,
+  dharr: dharr,
+  diam: diam,
+  Diamond: Diamond,
+  diamond: diamond,
+  diams: diams,
+  die: die,
+  digamma: digamma,
+  disin: disin,
+  div: div,
+  divide: divide,
+  dollar: dollar,
+  dopf: dopf,
+  Dot: Dot,
+  dot: dot,
+  dsol: dsol,
+  dtri: dtri,
+  easter: easter,
+  ecir: ecir,
+  ecolon: ecolon,
+  ecy: ecy,
+  edot: edot,
+  ee: ee,
+  efr: efr,
+  eg: eg,
+  egrave: egrave,
+  egs: egs,
+  el: el,
+  ell: ell,
+  els: els,
+  empty: empty,
+  ENG: ENG,
+  eng: eng,
+  epsi: epsi,
+  Epsilon: Epsilon,
+  epsilon: epsilon,
+  Equal: Equal,
+  equals: equals,
+  equest: equest,
+  Equilibrium: Equilibrium,
+  equiv: equiv,
+  escr: escr,
+  esim: esim,
+  Eta: Eta,
+  eta: eta,
+  ETH: ETH,
+  eth: eth,
+  euro: euro,
+  excl: excl,
+  exist: exist,
+  Exists: Exists,
+  expectation: expectation,
+  female: female,
+  flat: flat,
+  fork: fork,
+  frown: frown,
+  Gamma: Gamma,
+  gamma: gamma,
+  gap: gap,
+  gcy: gcy,
+  ge: ge,
+  gel: gel,
+  geq: geq,
+  ges: ges,
+  gesl: gesl,
+  gg: gg,
+  gl: gl,
+  gla: gla,
+  gne: gne,
+  grave: grave,
+  GT: GT,
+  gt: gt,
+  half: half,
+  Hat: Hat,
+  hearts: hearts,
+  hopf: hopf,
+  hyphen: hyphen,
+  ic: ic,
+  icy: icy,
+  iff: iff,
+  ii: ii,
+  image: image,
+  imped: imped,
   "in": {
     addAmpIfSemiPresent: false,
     addSemiIfAmpPresent: false
   },
-  int: int$1,
-  integers: integers$1,
-  iocy: iocy$1,
-  iogon: iogon$1,
-  iota: iota$1,
-  isin: isin$1,
-  it: it$1,
-  Kappa: Kappa$1,
-  kappa: kappa$1,
-  kopf: kopf$1,
-  Lambda: Lambda$1,
-  lambda: lambda$1,
-  lang: lang$1,
-  lap: lap$1,
-  lat: lat$1,
-  late: late$1,
-  lates: lates$1,
-  le: le$1,
-  leg: leg$1,
-  leq: leq$1,
-  les: les$1,
-  lg: lg$1,
-  ll: ll$1,
-  lne: lne$1,
-  lozenge: lozenge$1,
-  lsh: lsh$1,
-  LT: LT$1,
-  lt: lt$1,
-  ltimes: ltimes$1,
-  male: male$1,
-  malt: malt$1,
-  map: map$1,
-  marker: marker$1,
-  mid: mid$1,
-  minus: minus$1,
-  models: models$1,
-  mp: mp$1,
-  mu: mu$1,
-  nang: nang$1,
-  nap: nap$1,
-  natural: natural$1,
-  naturals: naturals$1,
-  ncy: ncy$1,
-  ne: ne$1,
-  nge: nge$1,
-  ngt: ngt$1,
-  ni: ni$1,
-  nis: nis$1,
-  nle: nle$1,
-  nles: nles$1,
-  nless: nless$1,
-  nlt: nlt$1,
-  nopf: nopf$1,
-  Not: Not$1,
-  not: not$1,
-  nsc: nsc$1,
-  nsce: nsce$1,
-  nu: nu$1,
-  num: num$1,
-  ogt: ogt$1,
-  ohm: ohm$1,
-  oline: oline$1,
-  olt: olt$1,
-  Omega: Omega$1,
-  omega: omega$1,
-  Omicron: Omicron$1,
-  omicron: omicron$1,
-  oopf: oopf$1,
-  opar: opar$1,
-  or: or$1,
-  order: order$1,
-  oror: oror$1,
-  orv: orv$1,
-  osol: osol$1,
-  par: par$1,
-  para: para$1,
-  parallel: parallel$1,
-  part: part$1,
-  phi: phi$1,
-  phone: phone$1,
-  Pi: Pi$1,
-  pi: pi$1,
-  pitchfork: pitchfork$1,
-  plus: plus$1,
-  pm: pm$1,
-  popf: popf$1,
-  pound: pound$1,
-  pr: pr$1,
-  prime: prime$1,
-  primes: primes$1,
-  prod: prod$1,
-  Product: Product$1,
-  prop: prop$1,
-  Proportion: Proportion$1,
-  Proportional: Proportional$1,
-  psi: psi$1,
-  quest: quest$1,
-  QUOT: QUOT$1,
-  quot: quot$1,
-  race: race$1,
-  rang: rang$1,
-  range: range$1,
-  ratio: ratio$1,
-  Re: Re$1,
-  real: real$1,
-  reals: reals$1,
-  rect: rect$1,
-  REG: REG$1,
-  reg: reg$1,
-  ring: ring$1,
-  rsh: rsh$1,
-  sc: sc$1,
-  scap: scap$1,
-  sce: sce$1,
-  scy: scy$1,
-  sdot: sdot$1,
-  sect: sect$1,
-  semi: semi$1,
-  sharp: sharp$1,
-  shy: shy$1,
-  Sigma: Sigma$1,
-  sigma: sigma$1,
-  sim: sim$1,
-  sol: sol$1,
-  spades: spades$1,
-  square: square$1,
-  Star: Star$1,
-  star: star$1,
-  Sub: Sub$1,
-  sub: sub$1,
-  sube: sube$1,
-  Sum: Sum$1,
-  sum: sum$1,
-  Tab: Tab$1,
-  target: target$1,
-  Tau: Tau$1,
-  tau: tau$1,
-  therefore: therefore$1,
-  Theta: Theta$1,
-  theta: theta$1,
-  THORN: THORN$1,
-  thorn: thorn$1,
-  Tilde: Tilde$1,
-  tilde: tilde$1,
-  times: times$1,
-  tint: tint$1,
-  top: top$1,
-  tosa: tosa$1,
-  TRADE: TRADE$1,
-  trade: trade$1,
-  triangle: triangle$1,
-  trie: trie$1,
-  ucy: ucy$1,
-  uml: uml$1,
-  Union: Union$1,
-  uplus: uplus$1,
-  Upsi: Upsi$1,
-  upsi: upsi$1,
-  uring: uring$1,
-  vee: vee$1,
-  Vert: Vert$1,
-  vert: vert$1,
-  wedge: wedge$1,
-  Wedge: Wedge$1,
-  wreath: wreath$1,
-  Xi: Xi$1,
-  xi: xi$1,
-  Ycirc: Ycirc$1,
-  ycirc: ycirc$1,
-  ycy: ycy$1,
-  yen: yen$1,
-  Zacute: Zacute$1,
-  zacute: zacute$1,
-  Zeta: Zeta$1,
-  zeta: zeta$1
+  int: int,
+  integers: integers,
+  iocy: iocy,
+  iogon: iogon,
+  iota: iota,
+  isin: isin,
+  it: it,
+  Kappa: Kappa,
+  kappa: kappa,
+  kopf: kopf,
+  Lambda: Lambda,
+  lambda: lambda,
+  lang: lang,
+  lap: lap,
+  lat: lat,
+  late: late,
+  lates: lates,
+  le: le,
+  leg: leg,
+  leq: leq,
+  les: les,
+  lg: lg,
+  ll: ll,
+  lne: lne,
+  lozenge: lozenge,
+  lsh: lsh,
+  LT: LT,
+  lt: lt,
+  ltimes: ltimes,
+  male: male,
+  malt: malt,
+  map: map,
+  marker: marker,
+  mid: mid,
+  minus: minus,
+  models: models,
+  mp: mp,
+  mu: mu,
+  nang: nang,
+  nap: nap,
+  natural: natural,
+  naturals: naturals,
+  ncy: ncy,
+  ne: ne,
+  nge: nge,
+  ngt: ngt,
+  ni: ni,
+  nis: nis,
+  nle: nle,
+  nles: nles,
+  nless: nless,
+  nlt: nlt,
+  nopf: nopf,
+  Not: Not,
+  not: not,
+  nsc: nsc,
+  nsce: nsce,
+  nu: nu,
+  num: num,
+  ogt: ogt,
+  ohm: ohm,
+  oline: oline,
+  olt: olt,
+  Omega: Omega,
+  omega: omega,
+  Omicron: Omicron,
+  omicron: omicron,
+  oopf: oopf,
+  opar: opar,
+  or: or,
+  order: order,
+  oror: oror,
+  orv: orv,
+  osol: osol,
+  par: par,
+  para: para,
+  parallel: parallel,
+  part: part,
+  phi: phi,
+  phone: phone,
+  Pi: Pi,
+  pi: pi,
+  pitchfork: pitchfork,
+  plus: plus,
+  pm: pm,
+  popf: popf,
+  pound: pound,
+  pr: pr,
+  prime: prime,
+  primes: primes,
+  prod: prod,
+  Product: Product,
+  prop: prop,
+  Proportion: Proportion,
+  Proportional: Proportional,
+  psi: psi,
+  quest: quest,
+  QUOT: QUOT,
+  quot: quot,
+  race: race,
+  rang: rang,
+  range: range,
+  ratio: ratio,
+  Re: Re,
+  real: real,
+  reals: reals,
+  rect: rect,
+  REG: REG,
+  reg: reg,
+  ring: ring,
+  rsh: rsh,
+  sc: sc,
+  scap: scap,
+  sce: sce,
+  scy: scy,
+  sdot: sdot,
+  sect: sect,
+  semi: semi,
+  sharp: sharp,
+  shy: shy,
+  Sigma: Sigma,
+  sigma: sigma,
+  sim: sim,
+  sol: sol,
+  spades: spades,
+  square: square,
+  Star: Star,
+  star: star,
+  Sub: Sub,
+  sub: sub,
+  sube: sube,
+  Sum: Sum,
+  sum: sum,
+  Tab: Tab,
+  target: target,
+  Tau: Tau,
+  tau: tau,
+  therefore: therefore,
+  Theta: Theta,
+  theta: theta,
+  THORN: THORN,
+  thorn: thorn,
+  Tilde: Tilde,
+  tilde: tilde,
+  times: times,
+  tint: tint,
+  top: top,
+  tosa: tosa,
+  TRADE: TRADE,
+  trade: trade,
+  triangle: triangle,
+  trie: trie,
+  ucy: ucy,
+  uml: uml,
+  Union: Union,
+  uplus: uplus,
+  Upsi: Upsi,
+  upsi: upsi,
+  uring: uring,
+  vee: vee,
+  Vert: Vert,
+  vert: vert,
+  wedge: wedge,
+  Wedge: Wedge,
+  wreath: wreath,
+  Xi: Xi,
+  xi: xi,
+  Ycirc: Ycirc,
+  ycirc: ycirc,
+  ycy: ycy,
+  yen: yen,
+  Zacute: Zacute,
+  zacute: zacute,
+  Zeta: Zeta,
+  zeta: zeta
 };
 var allNamedEntities = allNamedEntitiesJson;
 var brokenNamedEntities = brokenNamedEntitiesJson;
@@ -10068,7 +10068,7 @@ var lodash_clonedeep = createCommonjsModule(function (module, exports) {
 
 var RAWNBSP = "\xA0"; // separates the value from flags
 
-function x$2(something) {
+function x(something) {
   // console.log(
   //   `007 ${`\u001b[${35}m${`x() incoming "${something}"`}\u001b[${39}m`}`
   // );
@@ -10100,7 +10100,7 @@ function x$2(something) {
   return res;
 }
 
-function isStr(something) {
+function isStr$3(something) {
   return typeof something === "string";
 }
 
@@ -10313,12 +10313,12 @@ function seq(direction, str, idx, opts, args) {
   // where we need to repeat same step (hungrily matched character) few times.
 
   while (i < args.length) {
-    if (!isStr(args[i]) || !args[i].length) {
+    if (!isStr$3(args[i]) || !args[i].length) {
       i += 1;
       continue;
     }
 
-    var _x = x$2(args[i]),
+    var _x = x(args[i]),
         value = _x.value,
         optional = _x.optional,
         hungry = _x.hungry;
@@ -10464,7 +10464,7 @@ function rightSeq(str, idx) {
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
-function isObj(something) {
+function isObj$5(something) {
   return something && typeof something === "object" && !Array.isArray(something);
 }
 
@@ -10474,18 +10474,18 @@ function isLatinLetterOrNumberOrHash(char) {
   // - numbers 0-9 or
   // - letters A-Z or
   // - #
-  return isStr$1(char) && char.length === 1 && (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123 || char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58 || char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) === 35);
+  return isStr$2(char) && char.length === 1 && (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123 || char.charCodeAt(0) > 47 && char.charCodeAt(0) < 58 || char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) === 35);
 }
 
 function isNumeric(something) {
-  return isStr$1(something) && something.charCodeAt(0) > 47 && something.charCodeAt(0) < 58;
+  return isStr$2(something) && something.charCodeAt(0) > 47 && something.charCodeAt(0) < 58;
 }
 
-function isStr$1(something) {
+function isStr$2(something) {
   return typeof something === "string";
 }
 
-function isLatinLetter(something) {
+function isLatinLetter$1(something) {
   return typeof something === "string" && (something.charCodeAt(0) > 96 && something.charCodeAt(0) < 123 || something.charCodeAt(0) > 64 && something.charCodeAt(0) < 91);
 }
 
@@ -10506,7 +10506,7 @@ function resemblesNumericEntity(str2, from, to) {
       whitespaceCount += 1;
     }
 
-    if (isLatinLetter(str2[i])) {
+    if (isLatinLetter$1(str2[i])) {
       lettersCount += 1;
     } else if (isNumeric(str2[i])) {
       numbersCount += 1;
@@ -10525,7 +10525,7 @@ function resemblesNumericEntity(str2, from, to) {
 
   if (!lettersCount && numbersCount > othersCount) {
     probablyNumeric = "deci";
-  } else if ((numbersCount || lettersCount) && (charTrimmed[0] === "#" && charTrimmed[1].toLowerCase() === "x" && (isNumeric(charTrimmed[2]) || isLatinLetter(charTrimmed[2])) || charTrimmed[0].toLowerCase() === "x" && numbersCount && !othersCount)) {
+  } else if ((numbersCount || lettersCount) && (charTrimmed[0] === "#" && charTrimmed[1].toLowerCase() === "x" && (isNumeric(charTrimmed[2]) || isLatinLetter$1(charTrimmed[2])) || charTrimmed[0].toLowerCase() === "x" && numbersCount && !othersCount)) {
     // hexidecimal, for example, &#xA3;
     // but wide enough to include messed up cases
     probablyNumeric = "hexi";
@@ -10717,13 +10717,13 @@ function fixEnt(str, originalOpts) {
           rangeTo = _ref.rangeTo,
           rangeValEncoded = _ref.rangeValEncoded,
           rangeValDecoded = _ref.rangeValDecoded;
-      return rangeValDecoded || rangeValEncoded ? [rangeFrom, rangeTo, isObj(originalOpts) && originalOpts.decode ? rangeValDecoded : rangeValEncoded] : [rangeFrom, rangeTo];
+      return rangeValDecoded || rangeValEncoded ? [rangeFrom, rangeTo, isObj$5(originalOpts) && originalOpts.decode ? rangeValDecoded : rangeValEncoded] : [rangeFrom, rangeTo];
     },
     progressFn: null,
     entityCatcherCb: null
   };
 
-  if (originalOpts && !isObj(originalOpts)) {
+  if (originalOpts && !isObj$5(originalOpts)) {
     throw new Error("string-fix-broken-named-entities: [THROW_ID_02] the second input argument must be a plain object! I was given as:\n" + JSON.stringify(originalOpts, null, 4) + " (" + typeof originalOpts + "-type)");
   }
 
@@ -10957,7 +10957,7 @@ function fixEnt(str, originalOpts) {
               _tempRes = _temp3.tempRes;
             }
 
-            if (_tempEnt && (!Object.keys(uncertain).includes(_tempEnt) || uncertain[_tempEnt].addAmpIfSemiPresent === true || uncertain[_tempEnt].addAmpIfSemiPresent && (!_tempRes.leftmostChar || isStr$1(str[_tempRes.leftmostChar - 1]) && !str[_tempRes.leftmostChar - 1].trim().length))) {
+            if (_tempEnt && (!Object.keys(uncertain).includes(_tempEnt) || uncertain[_tempEnt].addAmpIfSemiPresent === true || uncertain[_tempEnt].addAmpIfSemiPresent && (!_tempRes.leftmostChar || isStr$2(str[_tempRes.leftmostChar - 1]) && !str[_tempRes.leftmostChar - 1].trim().length))) {
               var _decodedEntity = decode("&" + _tempEnt + ";");
 
               rangesArr2.push({
@@ -11678,15 +11678,15 @@ function lineCol(input, idx, skipChecks) {
   };
 }
 
-function isObj$1(something) {
+function isObj$4(something) {
   return something && typeof something === "object" && !Array.isArray(something);
 }
 
-function isStr$2(something) {
+function isStr$1(something) {
   return typeof something === "string";
 }
 
-var defaults = {
+var defaults$a = {
   stringOffset: 0,
   maxDistance: 1,
   ignoreWhitespace: true
@@ -11696,14 +11696,14 @@ function findMalformed(str, refStr, cb, originalOpts) {
   //
   // insurance
   // ---------
-  if (!isStr$2(str)) {
+  if (!isStr$1(str)) {
     throw new TypeError("string-find-malformed: [THROW_ID_01] the first input argument, string where to look for, must be a string! Currently it's equal to: " + str + " (type: " + typeof str + ")");
   } else if (!str.length) {
     // empty string - quick ending
     return;
   }
 
-  if (!isStr$2(refStr)) {
+  if (!isStr$1(refStr)) {
     throw new TypeError("string-find-malformed: [THROW_ID_02] the second input argument, string we should find, must be a string! Currently it's equal to: " + refStr + " (type: " + typeof refStr + ")");
   } else if (!refStr.length) {
     // empty string to look for - quick ending
@@ -11714,11 +11714,11 @@ function findMalformed(str, refStr, cb, originalOpts) {
     throw new TypeError("string-find-malformed: [THROW_ID_03] the third input argument, a callback function, must be a function! Currently it's equal to: " + cb + " (type: " + typeof cb + ")");
   }
 
-  if (originalOpts && !isObj$1(originalOpts)) {
+  if (originalOpts && !isObj$4(originalOpts)) {
     throw new TypeError("string-find-malformed: [THROW_ID_04] the fourth input argument, an Optional Options Object, must be a plain object! Currently it's equal to: " + originalOpts + " (type: " + typeof originalOpts + ")");
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); // we perform the validation upon Object-assigned "opts" instead
+  var opts = _objectSpread2(_objectSpread2({}, defaults$a), originalOpts); // we perform the validation upon Object-assigned "opts" instead
   // of incoming "originalOpts" because we don't want to mutate the
   // "originalOpts" and making note of fixed values, Object-assigning
   // "opts" and then putting those noted fixed values on top is more
@@ -11882,15 +11882,15 @@ function arrayiffy(something) {
 
 /* eslint no-plusplus:0 */
 
-function isObj$2(something) {
+function isObj$3(something) {
   return something && typeof something === "object" && !Array.isArray(something);
 }
 
-function isStr$3(something) {
+function isStr(something) {
   return typeof something === "string";
 }
 
-var defaults$1 = {
+var defaults$9 = {
   cb: undefined,
   i: false,
   trimBeforeMatching: false,
@@ -11921,7 +11921,7 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
     return whatToMatchValVal;
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults$9), originalOpts);
 
   if (position >= str.length && !special) {
     return false;
@@ -12181,11 +12181,11 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 
 function main(mode, str, position, originalWhatToMatch, originalOpts) {
   // insurance
-  if (isObj$2(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
+  if (isObj$3(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
     throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!" + (Array.isArray(originalOpts.trimBeforeMatching) ? " Did you mean to use opts.trimCharsBeforeMatching?" : ""));
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults$9), originalOpts);
 
   if (typeof opts.trimCharsBeforeMatching === "string") {
     // arrayiffy if needed:
@@ -12194,10 +12194,10 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
 
 
   opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(function (el) {
-    return isStr$3(el) ? el : String(el);
+    return isStr(el) ? el : String(el);
   });
 
-  if (!isStr$3(str)) {
+  if (!isStr(str)) {
     return false;
   }
 
@@ -12212,7 +12212,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   var whatToMatch;
   var special;
 
-  if (isStr$3(originalWhatToMatch)) {
+  if (isStr(originalWhatToMatch)) {
     whatToMatch = [originalWhatToMatch];
   } else if (Array.isArray(originalWhatToMatch)) {
     whatToMatch = originalWhatToMatch;
@@ -12225,7 +12225,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's " + typeof originalWhatToMatch + ", equal to:\n" + JSON.stringify(originalWhatToMatch, null, 4));
   }
 
-  if (originalOpts && !isObj$2(originalOpts)) {
+  if (originalOpts && !isObj$3(originalOpts)) {
     throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type \"" + typeof originalOpts + "\", and equal to:\n" + JSON.stringify(originalOpts, null, 4));
   }
 
@@ -12249,7 +12249,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
 
   if (!whatToMatch || !Array.isArray(whatToMatch) || // 0
   Array.isArray(whatToMatch) && !whatToMatch.length || // []
-  Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr$3(whatToMatch[0]) && !whatToMatch[0].trim() // [""]
+  Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr(whatToMatch[0]) && !whatToMatch[0].trim() // [""]
   ) {
       if (typeof opts.cb === "function") {
         var firstCharOutsideIndex; // matchLeft() or matchRightIncl() methods start at index "position"
@@ -12467,7 +12467,7 @@ function ensureXIsNotPresentBeforeOneOfY(str, startingIdx, x, y) {
 // Used to troubleshoot dirty broken code.
 
 
-function xBeforeYOnTheRight(str, startingIdx, x, y) {
+function xBeforeYOnTheRight$1(str, startingIdx, x, y) {
   for (var i = startingIdx, len = str.length; i < len; i++) {
     if (str.startsWith(x, i)) {
       // if x was first, Bob's your uncle, that's truthy result
@@ -12940,7 +12940,7 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
       var R3 = allHtmlAttribs.has(str.slice(idxOfAttrOpening + 1, isThisClosingIdx).trim()); // that quote we suspected as closing, is from an opening-closing
       // set on another attribute:
 
-      var R4 = !xBeforeYOnTheRight(str, i + 1, str[isThisClosingIdx], makeTheQuoteOpposite(str[isThisClosingIdx])); // const R5 = plausibleAttrStartsAtX(str, start) // consider:
+      var R4 = !xBeforeYOnTheRight$1(str, i + 1, str[isThisClosingIdx], makeTheQuoteOpposite(str[isThisClosingIdx])); // const R5 = plausibleAttrStartsAtX(str, start) // consider:
       // <z alt"href' www'/>
       //       ^    ^
       //    start   suspected ending
@@ -13267,11 +13267,11 @@ function isAttrClosing(str, idxOfAttrOpening, isThisClosingIdx) {
   return false;
 }
 
-var defaultOpts = {
+var defaultOpts$1 = {
   allowCustomTagNames: false,
   skipOpeningBracket: false
 };
-var BACKSLASH = "\\";
+var BACKSLASH$5 = "\\";
 var knownHtmlTags = ["a", "abbr", "acronym", "address", "applet", "area", "article", "aside", "audio", "b", "base", "basefont", "bdi", "bdo", "big", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "dir", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "font", "footer", "form", "frame", "frameset", "h1", "h1 - h6", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noframes", "noscript", "object", "ol", "optgroup", "option", "output", "p", "param", "picture", "pre", "progress", "q", "rb", "rp", "rt", "rtc", "ruby", "s", "samp", "script", "section", "select", "slot", "small", "source", "span", "strike", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "tt", "u", "ul", "var", "video", "wbr", "xml"];
 
 function isNotLetter(char) {
@@ -13299,7 +13299,7 @@ function isOpening(str, idx, originalOpts) {
     throw new Error("is-html-tag-opening: [THROW_ID_02] the second input argument should have been a natural number string index but it was given as \"" + typeof idx + "\", value being " + JSON.stringify(idx, null, 4));
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaultOpts), originalOpts); // -----------------------------------------------------------------------------
+  var opts = _objectSpread2(_objectSpread2({}, defaultOpts$1), originalOpts); // -----------------------------------------------------------------------------
 
 
   var whitespaceChunk = "[\\\\ \\t\\r\\n/]*"; // generalChar does not include the dash, -
@@ -13343,7 +13343,7 @@ function isOpening(str, idx, originalOpts) {
   var matchingOptions = {
     cb: isNotLetter,
     i: true,
-    trimCharsBeforeMatching: ["/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+    trimCharsBeforeMatching: ["/", BACKSLASH$5, "!", " ", "\t", "\n", "\r"]
   }; // -----------------------------------------------------------------------------
 
   if (opts.allowCustomTagNames) {
@@ -13384,7 +13384,7 @@ function isOpening(str, idx, originalOpts) {
         return char.toUpperCase() === char.toLowerCase() && !/\d/.test(char) && char !== "=";
       },
       i: true,
-      trimCharsBeforeMatching: ["<", "/", BACKSLASH, "!", " ", "\t", "\n", "\r"]
+      trimCharsBeforeMatching: ["<", "/", BACKSLASH$5, "!", " ", "\t", "\n", "\r"]
     })) {
       passed = true;
     }
@@ -13415,7 +13415,7 @@ var BACKTICK = "\x60";
 var LEFTDOUBLEQUOTMARK = "\u201C";
 var RIGHTDOUBLEQUOTMARK = "\u201D";
 
-function isLatinLetter$1(char) {
+function isLatinLetter(char) {
   // we mean Latin letters A-Z, a-z
   return !!(char && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123));
 } // Considering custom element name character requirements:
@@ -13469,7 +13469,7 @@ function isTagNameRecognised(tagName) {
 // Used to troubleshoot dirty broken code.
 
 
-function xBeforeYOnTheRight$1(str, startingIdx, x, y) {
+function xBeforeYOnTheRight(str, startingIdx, x, y) {
   for (var i = startingIdx, len = str.length; i < len; i++) {
     if (str.startsWith(x, i)) {
       // if x was first, Bob's your uncle, that's truthy result
@@ -13487,7 +13487,7 @@ function xBeforeYOnTheRight$1(str, startingIdx, x, y) {
   return false;
 }
 
-function isObj$3(something) {
+function isObj$2(something) {
   return something && typeof something === "object" && !Array.isArray(something);
 } // https://html.spec.whatwg.org/multipage/syntax.html#elements-2
 
@@ -13735,7 +13735,7 @@ function matchLayerLast(wholeEspTagLump, layers, matchFirstInstead) {
 
 }
 
-var BACKSLASH$1 = "\\"; // This is an extracted logic which detects where token of a particular kind
+var BACKSLASH$4 = "\\"; // This is an extracted logic which detects where token of a particular kind
 // starts. Previously it sat within if() clauses but became unwieldy and
 // so we extracted into a function.
 
@@ -13747,7 +13747,7 @@ function startsTag(str, i, token, layers, withinStyle) {
     i: true,
     trimBeforeMatching: true,
     trimCharsBeforeMatching: ["?", "!", "[", " ", "-"]
-  })) || isLatinLetter$1(str[i]) && (!str[i - 1] || !isLatinLetter$1(str[i - 1]) && !["<", "/", "!", BACKSLASH$1].includes(str[left(str, i)])) && isOpening(str, i, {
+  })) || isLatinLetter(str[i]) && (!str[i - 1] || !isLatinLetter(str[i - 1]) && !["<", "/", "!", BACKSLASH$4].includes(str[left(str, i)])) && isOpening(str, i, {
     allowCustomTagNames: false,
     skipOpeningBracket: true
   })) && (token.type !== "esp" || token.tail && token.tail.includes(str[i])));
@@ -13796,14 +13796,14 @@ function startsEsp(str, i, token, layers, withinStyle) {
   ">})".includes(str[i]) && // heads include the opposite of it
   Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump.includes(flipEspTag(str[i])) && ( // insurance against "greater than", as in:
   // <#if product.weight > 100>
-  str[i] !== ">" || !xBeforeYOnTheRight$1(str, i + 1, ">", "<")) || //
+  str[i] !== ">" || !xBeforeYOnTheRight(str, i + 1, ">", "<")) || //
   // 4. comment closing in RPL-like templating languages, for example:
   // <#-- z -->
   str[i] === "-" && str[i + 1] === "-" && str[i + 2] === ">" && Array.isArray(layers) && layers.length && layers[layers.length - 1].type === "esp" && layers[layers.length - 1].openingLump[0] === "<" && layers[layers.length - 1].openingLump[2] === "-" && layers[layers.length - 1].openingLump[3] === "-";
   return !!res;
 }
 var importantStartsRegexp = /^\s*!?\s*[a-zA-Z0-9]+(?:[\s;}<>'"]|$)/gm;
-var defaults$2 = {
+var defaults$8 = {
   tagCb: null,
   tagCbLookahead: 0,
   charCb: null,
@@ -13835,19 +13835,19 @@ function tokenizer(str, originalOpts) {
     }
   }
 
-  if (originalOpts && !isObj$3(originalOpts)) {
+  if (originalOpts && !isObj$2(originalOpts)) {
     throw new Error("codsen-tokenizer: [THROW_ID_03] the second input argument, an options object, should be a plain object but it was given as type " + typeof originalOpts + ", equal to " + JSON.stringify(originalOpts, null, 4));
   }
 
-  if (originalOpts && isObj$3(originalOpts) && originalOpts.tagCb && typeof originalOpts.tagCb !== "function") {
+  if (originalOpts && isObj$2(originalOpts) && originalOpts.tagCb && typeof originalOpts.tagCb !== "function") {
     throw new Error("codsen-tokenizer: [THROW_ID_04] the opts.tagCb, callback function, should be a function but it was given as type " + typeof originalOpts.tagCb + ", equal to " + JSON.stringify(originalOpts.tagCb, null, 4));
   }
 
-  if (originalOpts && isObj$3(originalOpts) && originalOpts.charCb && typeof originalOpts.charCb !== "function") {
+  if (originalOpts && isObj$2(originalOpts) && originalOpts.charCb && typeof originalOpts.charCb !== "function") {
     throw new Error("codsen-tokenizer: [THROW_ID_05] the opts.charCb, callback function, should be a function but it was given as type " + typeof originalOpts.charCb + ", equal to " + JSON.stringify(originalOpts.charCb, null, 4));
   }
 
-  if (originalOpts && isObj$3(originalOpts) && originalOpts.reportProgressFunc && typeof originalOpts.reportProgressFunc !== "function") {
+  if (originalOpts && isObj$2(originalOpts) && originalOpts.reportProgressFunc && typeof originalOpts.reportProgressFunc !== "function") {
     throw new Error("codsen-tokenizer: [THROW_ID_06] the opts.reportProgressFunc, callback function, should be a function but it was given as type " + typeof originalOpts.reportProgressFunc + ", equal to " + JSON.stringify(originalOpts.reportProgressFunc, null, 4));
   } //
   //
@@ -13860,7 +13860,7 @@ function tokenizer(str, originalOpts) {
   // ---------------------------------------------------------------------------
 
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts); //
+  var opts = _objectSpread2(_objectSpread2({}, defaults$8), originalOpts); //
   //
   //
   //
@@ -14267,7 +14267,7 @@ function tokenizer(str, originalOpts) {
   }
 
   function atRuleWaitingForClosingCurlie() {
-    return lastLayerIs("at") && isObj$3(layers[~-layers.length].token) && layers[~-layers.length].token.openingCurlyAt && !layers[~-layers.length].token.closingCurlyAt;
+    return lastLayerIs("at") && isObj$2(layers[~-layers.length].token) && layers[~-layers.length].token.openingCurlyAt && !layers[~-layers.length].token.closingCurlyAt;
   }
 
   function getNewToken(type, startVal) {
@@ -14301,7 +14301,8 @@ function tokenizer(str, originalOpts) {
         value: null,
         closing: false,
         kind: "simple",
-        language: "html"
+        language: "html" // or "css"
+
       };
     }
 
@@ -14462,7 +14463,7 @@ function tokenizer(str, originalOpts) {
     // -------------------------------------------------------------------------
 
 
-    if (isLatinLetter$1(str[_i]) && isLatinLetter$1(str[~-_i]) && isLatinLetter$1(str[_i + 1])) {
+    if (isLatinLetter(str[_i]) && isLatinLetter(str[~-_i]) && isLatinLetter(str[_i + 1])) {
       // <style>.a{color:1pximportant}
       //                    ^
       //                  mangled !important
@@ -14576,7 +14577,7 @@ function tokenizer(str, originalOpts) {
 
 
     if (!doNothing) {
-      if (["tag", "rule", "at"].includes(token.type) && token.kind !== "cdata") {
+      if (["tag", "at"].includes(token.type) && token.kind !== "cdata") {
         if (str[_i] && (SOMEQUOTE.includes(str[_i]) || "()".includes(str[_i])) && !( // below, we have insurance against single quotes, wrapped with quotes:
         // "'" or '"' - templating languages might put single quote as a sttring
         // character, not meaning wrapped-something.
@@ -14721,14 +14722,42 @@ function tokenizer(str, originalOpts) {
     // charsThatEndCSSChunks:  } , {
 
 
-    if (token.type === "rule" && selectorChunkStartedAt && (charsThatEndCSSChunks.includes(str[_i]) || str[_i] && !str[_i].trim() && charsThatEndCSSChunks.includes(str[rightVal]))) {
-      token.selectors.push({
-        value: str.slice(selectorChunkStartedAt, _i),
-        selectorStarts: selectorChunkStartedAt,
-        selectorEnds: _i
-      });
-      selectorChunkStartedAt = undefined;
-      token.selectorsEnd = _i;
+    if (token.type === "rule") {
+      if (selectorChunkStartedAt && (charsThatEndCSSChunks.includes(str[_i]) || str[_i] && rightVal && !str[_i].trim() && charsThatEndCSSChunks.includes(str[rightVal]))) {
+        token.selectors.push({
+          value: str.slice(selectorChunkStartedAt, _i),
+          selectorStarts: selectorChunkStartedAt,
+          selectorEnds: _i
+        });
+        selectorChunkStartedAt = undefined;
+        token.selectorsEnd = _i;
+      } else if (str[_i] === "{" && token.openingCurlyAt && !token.closingCurlyAt) {
+        // we encounted an opening curly even though closing hasn't
+        // been met yet:
+        // <style>.a{float:left;x">.b{color: red}
+        //                           ^
+        //                    we're here // let selectorChunkStartedAt2;
+        for (var y = _i; y--;) {
+          if (!str[y].trim() || "{}\"';".includes(str[y])) {
+            // patch the property
+            if (property && property.start && !property.end) {
+              property.end = y + 1;
+              property.property = str.slice(property.start, property.end);
+              pushProperty(property);
+              propertyReset();
+              token.end = y + 1;
+              token.value = str.slice(token.start, token.end);
+              pingTagCb(token);
+              initToken(str[y + 1] === "@" ? "at" : "rule", y + 1);
+              token.left = left(str, y + 1);
+              token.selectorsStart = y + 1;
+              _i = y + 1;
+            }
+
+            break;
+          }
+        }
+      }
     } // catch the beginning of a token
     // -------------------------------------------------------------------------
     // imagine layers are like this:
@@ -14815,25 +14844,25 @@ function tokenizer(str, originalOpts) {
         var letterMet = false;
 
         if (rightVal) {
-          for (var y = rightVal; y < len; y++) {
-            if (!letterMet && str[y] && str[y].trim() && str[y].toUpperCase() !== str[y].toLowerCase()) {
+          for (var _y2 = rightVal; _y2 < len; _y2++) {
+            if (!letterMet && str[_y2] && str[_y2].trim() && str[_y2].toUpperCase() !== str[_y2].toLowerCase()) {
               letterMet = true;
             }
 
             if ( // at least one letter has been met, to cater
             // <? xml ...
-            letterMet && str[y] && ( // it's whitespace
-            !str[y].trim() || // or symbol which definitely does not belong to a tag,
+            letterMet && str[_y2] && ( // it's whitespace
+            !str[_y2].trim() || // or symbol which definitely does not belong to a tag,
             // considering we want to catch some rogue characters to
             // validate and flag them up later
-            !/\w/.test(str[y]) && !badCharacters.includes(str[y]) || str[y] === "[") // if letter has been met, "[" is also terminating character
+            !/\w/.test(str[_y2]) && !badCharacters.includes(str[_y2]) || str[_y2] === "[") // if letter has been met, "[" is also terminating character
             // think <![CDATA[x<y]]>
             //               ^
             //             this
             ) {
                 break;
-              } else if (!badCharacters.includes(str[y])) {
-              extractedTagName += str[y].trim().toLowerCase();
+              } else if (!badCharacters.includes(str[_y2])) {
+              extractedTagName += str[_y2].trim().toLowerCase();
             }
           }
         } // set the kind:
@@ -15439,7 +15468,7 @@ function tokenizer(str, originalOpts) {
 
     if (!doNothing && property && property.valueEnds && !property.importantStarts && ( // it's an exclamation mark
     str[_i] === "!" || // considering missing excl. mark cases, more strict req.:
-    isLatinLetter$1(str[_i]) && str.slice(_i).match(importantStartsRegexp))) {
+    isLatinLetter(str[_i]) && str.slice(_i).match(importantStartsRegexp))) {
       property.importantStarts = _i; // correction for cases like:
       // <style>.a{color:red 1important}
       //                     ^
@@ -15535,7 +15564,8 @@ function tokenizer(str, originalOpts) {
     //                include this dot within property name
     //                so that we can catch it later validating prop names
     //
-    !rightVal || !":/".includes(str[rightVal]))) && ( // also, regarding the slash,
+    !rightVal || !":/}".includes(str[rightVal]) || // mind the rogue closings .a{x}}
+    str[_i] === "}" && str[rightVal] === "}")) && ( // also, regarding the slash,
     // <div style="//color: red;">
     //              ^
     //            don't close here, continue, gather "//color"
@@ -15575,8 +15605,11 @@ function tokenizer(str, originalOpts) {
       // <div style="float.left;">
 
 
-      if ( // if it's a dodgy non-whitespace character
-      !attrNameRegexp.test(str[_i]) && str[_i].trim() && !":'\"".includes(str[_i])) {
+      if ( // it's a non-whitespace character
+      str[_i] && str[_i].trim() && // and property seems plausible - its first char at least
+      attrNameRegexp.test(str[property.propertyStarts]) && // but this current char is not:
+      !attrNameRegexp.test(str[_i]) && // and it's not terminating character
+      !":'\"".includes(str[_i])) {
         // find out locations of next semi and next colon
         var nextSemi = str.indexOf(";", _i);
         var nextColon = str.indexOf(":", _i); // whatever the situation, colon must not be before semi on the right
@@ -15636,6 +15669,17 @@ function tokenizer(str, originalOpts) {
             doNothing = _i + 1;
           }
         }
+      } // insurance against rogue characters
+      // <style>.a{float:left;x">color: red}
+      //                      |       ^
+      //                      |     we're here
+      //           propertyStarts
+
+
+      if (property.propertyEnds && lastNonWhitespaceCharAt && property.propertyEnds !== lastNonWhitespaceCharAt + 1 && // it ends upon a bad character
+      !attrNameRegexp.test(str[property.propertyEnds])) {
+        property.propertyEnds = lastNonWhitespaceCharAt + 1;
+        property.property = str.slice(property.propertyStarts, property.propertyEnds);
       }
     } // catch the start of a css property's name
     // -------------------------------------------------------------------------
@@ -15762,7 +15806,7 @@ function tokenizer(str, originalOpts) {
           i: true,
           trimBeforeMatching: true
         }) && ( // the following case will assume closing sq. bracket is present
-        xBeforeYOnTheRight$1(str, _i, "]", ">") || // in case there are no brackets leading up to "mso" (which must exist)
+        xBeforeYOnTheRight(str, _i, "]", ">") || // in case there are no brackets leading up to "mso" (which must exist)
         str.includes("mso", _i) && !str.slice(_i, str.indexOf("mso")).includes("<") && !str.slice(_i, str.indexOf("mso")).includes(">")))) {
           // don't set the token's end, leave it open until the
           // closing bracket, for example, it might be:
@@ -15833,9 +15877,9 @@ function tokenizer(str, originalOpts) {
         // extract the whole lump of ESP tag characters:
         var wholeEspTagClosing = "";
 
-        for (var _y2 = _i; _y2 < len; _y2++) {
-          if (espChars.includes(str[_y2])) {
-            wholeEspTagClosing += str[_y2];
+        for (var _y3 = _i; _y3 < len; _y3++) {
+          if (espChars.includes(str[_y3])) {
+            wholeEspTagClosing += str[_y3];
           } else {
             break;
           }
@@ -15968,7 +16012,7 @@ function tokenizer(str, originalOpts) {
       // Consider closing tag's slashes and tag name itself.
       if (str[_i] === "/") {
         token.closing = true;
-      } else if (isLatinLetter$1(str[_i])) {
+      } else if (isLatinLetter(str[_i])) {
         token.tagNameStartsAt = _i; // if by now closing marker is still null, set it to false - there
         // won't be any closing slashes between opening bracket and tag name
 
@@ -16025,6 +16069,12 @@ function tokenizer(str, originalOpts) {
         if (Array.isArray(token.properties) && token.properties.length && token.properties[~-token.properties.length].start && !token.properties[~-token.properties.length].end) {
           token.properties[~-token.properties.length].end = _i;
           token.properties[~-token.properties.length].value = str.slice(token.properties[~-token.properties.length].start, _i);
+        } // if there's partial, still-pending property, push it
+
+
+        if (property.start) {
+          token.properties.push(property);
+          propertyReset();
         }
 
         pingTagCb(token); // if it's a "rule" token and a parent "at" rule is pending in layers,
@@ -16200,7 +16250,7 @@ function tokenizer(str, originalOpts) {
           token.end = _i + 1;
           token.value = str.slice(token.start, token.end);
         }
-      } else if (str[_i] === "=" && leftVal !== null && rightVal && ("'\"".includes(str[rightVal]) || str[~-_i] && isLatinLetter$1(str[~-_i])) && // this will catch url params like
+      } else if (str[_i] === "=" && leftVal !== null && rightVal && ("'\"".includes(str[rightVal]) || str[~-_i] && isLatinLetter(str[~-_i])) && // this will catch url params like
       // <img src="https://z.png?query=" />
       //                              ^
       //                            false alarm
@@ -16221,14 +16271,14 @@ function tokenizer(str, originalOpts) {
         var whitespaceFound;
         var attribClosingQuoteAt;
 
-        for (var _y3 = leftVal; _y3 >= attrib.attribValueStartsAt; _y3--) {
+        for (var _y4 = leftVal; _y4 >= attrib.attribValueStartsAt; _y4--) {
           // catch where whitespace starts
-          if (!whitespaceFound && str[_y3] && !str[_y3].trim()) {
+          if (!whitespaceFound && str[_y4] && !str[_y4].trim()) {
             whitespaceFound = true;
 
             if (attribClosingQuoteAt) {
               // slice the captured chunk
-              str.slice(_y3, attribClosingQuoteAt);
+              str.slice(_y4, attribClosingQuoteAt);
             }
           } // where that caught whitespace ends, that's the default location
           // of double quotes.
@@ -16239,12 +16289,12 @@ function tokenizer(str, originalOpts) {
           //         to here
 
 
-          if (whitespaceFound && str[_y3] && str[_y3].trim()) {
+          if (whitespaceFound && str[_y4] && str[_y4].trim()) {
             whitespaceFound = false;
 
             if (!attribClosingQuoteAt) {
               // that's the first, default location
-              attribClosingQuoteAt = _y3 + 1;
+              attribClosingQuoteAt = _y4 + 1;
             }
           }
         }
@@ -16497,25 +16547,25 @@ function tokenizer(str, originalOpts) {
 
       if (str[_i + 1]) {
         // Traverse then
-        for (var _y4 = _i + 1; _y4 < len; _y4++) {
+        for (var _y5 = _i + 1; _y5 < len; _y5++) {
           // if we reach the closing counterpart of the quotes, terminate
-          if (attrib.attribOpeningQuoteAt && str[_y4] === str[attrib.attribOpeningQuoteAt]) {
-            if (_y4 !== _i + 1 && str[~-_y4] !== "=") {
+          if (attrib.attribOpeningQuoteAt && str[_y5] === str[attrib.attribOpeningQuoteAt]) {
+            if (_y5 !== _i + 1 && str[~-_y5] !== "=") {
               thisIsRealEnding = true;
             }
 
             break;
-          } else if (str[_y4] === ">") {
+          } else if (str[_y5] === ">") {
             // must be real tag closing, we just tackle missing quotes
             // TODO - missing closing quotes
             break;
-          } else if (str[_y4] === "<") {
+          } else if (str[_y5] === "<") {
             thisIsRealEnding = true; // TODO - pop only if type === "simple" and it's the same opening
             // quotes of this attribute
 
             layers.pop();
             break;
-          } else if (!str[_y4 + 1]) {
+          } else if (!str[_y5 + 1]) {
             // if end was reached and nothing caught, that's also positive sign
             thisIsRealEnding = true;
             break;
@@ -17018,7 +17068,7 @@ var objectPath = createCommonjsModule(function (module) {
   });
 });
 
-var defaults$3 = {
+var defaults$7 = {
   reportProgressFunc: null,
   reportProgressFuncFrom: 0,
   reportProgressFuncTo: 100,
@@ -17027,7 +17077,7 @@ var defaults$3 = {
   errCb: null
 };
 
-function isObj$4(something) {
+function isObj$1(something) {
   return something && typeof something === "object" && !Array.isArray(something);
 }
 
@@ -17070,23 +17120,23 @@ function cparser(str, originalOpts) {
     }
   }
 
-  if (originalOpts && !isObj$4(originalOpts)) {
+  if (originalOpts && !isObj$1(originalOpts)) {
     throw new Error("codsen-tokenizer: [THROW_ID_03] the second input argument, an options object, should be a plain object but it was given as type " + typeof originalOpts + ", equal to " + JSON.stringify(originalOpts, null, 4));
   }
 
-  if (originalOpts && isObj$4(originalOpts) && originalOpts.tagCb && typeof originalOpts.tagCb !== "function") {
+  if (originalOpts && isObj$1(originalOpts) && originalOpts.tagCb && typeof originalOpts.tagCb !== "function") {
     throw new Error("codsen-tokenizer: [THROW_ID_04] the opts.tagCb, callback function, should be a function but it was given as type " + typeof originalOpts.tagCb + ", equal to " + JSON.stringify(originalOpts.tagCb, null, 4));
   }
 
-  if (originalOpts && isObj$4(originalOpts) && originalOpts.charCb && typeof originalOpts.charCb !== "function") {
+  if (originalOpts && isObj$1(originalOpts) && originalOpts.charCb && typeof originalOpts.charCb !== "function") {
     throw new Error("codsen-tokenizer: [THROW_ID_05] the opts.charCb, callback function, should be a function but it was given as type " + typeof originalOpts.charCb + ", equal to " + JSON.stringify(originalOpts.charCb, null, 4));
   }
 
-  if (originalOpts && isObj$4(originalOpts) && originalOpts.reportProgressFunc && typeof originalOpts.reportProgressFunc !== "function") {
+  if (originalOpts && isObj$1(originalOpts) && originalOpts.reportProgressFunc && typeof originalOpts.reportProgressFunc !== "function") {
     throw new Error("codsen-tokenizer: [THROW_ID_06] the opts.reportProgressFunc, callback function, should be a function but it was given as type " + typeof originalOpts.reportProgressFunc + ", equal to " + JSON.stringify(originalOpts.reportProgressFunc, null, 4));
   }
 
-  if (originalOpts && isObj$4(originalOpts) && originalOpts.errCb && typeof originalOpts.errCb !== "function") {
+  if (originalOpts && isObj$1(originalOpts) && originalOpts.errCb && typeof originalOpts.errCb !== "function") {
     throw new Error("codsen-tokenizer: [THROW_ID_07] the opts.errCb, callback function, should be a function but it was given as type " + typeof originalOpts.errCb + ", equal to " + JSON.stringify(originalOpts.errCb, null, 4));
   } //
   //
@@ -17099,7 +17149,7 @@ function cparser(str, originalOpts) {
   // ---------------------------------------------------------------------------
 
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$3), originalOpts); //
+  var opts = _objectSpread2(_objectSpread2({}, defaults$7), originalOpts); //
   //
   //
   //
@@ -17171,7 +17221,7 @@ function cparser(str, originalOpts) {
         // recalculate the path for this token
         var prevToken = objectPath.get(res, path);
 
-        if (!isObj$4(prevToken)) {
+        if (!isObj$1(prevToken)) {
           prevToken = null;
         }
 
@@ -17332,14 +17382,14 @@ function cparser(str, originalOpts) {
         var parentsLastChildTokenValue;
         var parentsLastChildTokenPath;
 
-        if (isObj$4(previousTagsToken) && Array.isArray(previousTagsToken.children) && previousTagsToken.children.length && previousTagsToken.children[previousTagsToken.children.length - 1]) {
+        if (isObj$1(previousTagsToken) && Array.isArray(previousTagsToken.children) && previousTagsToken.children.length && previousTagsToken.children[previousTagsToken.children.length - 1]) {
           parentsLastChildTokenValue = previousTagsToken.children[previousTagsToken.children.length - 1];
           parentsLastChildTokenPath = previousPath + ".children." + (objectPath.get(res, previousPath).children.length - 1);
         }
 
         var tokenTakenCareOf = false;
 
-        if (tokenObj.type === "text" && isObj$4(parentTagsToken) && parentTagsToken.type === "comment" && parentTagsToken.kind === "simple" && !parentTagsToken.closing && suspiciousCommentTagEndingRegExp.test(tokenObj.value)) {
+        if (tokenObj.type === "text" && isObj$1(parentTagsToken) && parentTagsToken.type === "comment" && parentTagsToken.kind === "simple" && !parentTagsToken.closing && suspiciousCommentTagEndingRegExp.test(tokenObj.value)) {
           var suspiciousEndingStartsAt = (suspiciousCommentTagEndingRegExp.exec(tokenObj.value) || {}).index;
           var suspiciousEndingEndsAt = (suspiciousEndingStartsAt || 0) + tokenObj.value.slice(suspiciousEndingStartsAt).indexOf(">") + 1; // part 1.
           // if any text precedes the "->" that text goes in as normal,
@@ -17383,7 +17433,7 @@ function cparser(str, originalOpts) {
 
 
           tokenTakenCareOf = true; //
-        } else if (tokenObj.type === "comment" && tokenObj.kind === "only" && isObj$4(previousTagsToken)) {
+        } else if (tokenObj.type === "comment" && tokenObj.kind === "only" && isObj$1(previousTagsToken)) {
           // check "only" kind comment-type tokens for malformed front parts,
           // "<!--", which would turn them into "not" kind comment-type tokens
           if (previousTagsToken.type === "text" && previousTagsToken.value.trim() && "<!-".includes(previousTagsToken.value[left(previousTagsToken.value, previousTagsToken.value.length)])) {
@@ -17414,7 +17464,7 @@ function cparser(str, originalOpts) {
               // or were there characters in front of text token which remain and
               // form the shorter, text token?
 
-              if (!left(previousTagsToken.value, malformedRange.idxFrom) && previousPath && isObj$4(previousTagsToken)) {
+              if (!left(previousTagsToken.value, malformedRange.idxFrom) && previousPath && isObj$1(previousTagsToken)) {
                 // if there are no whitespace characters to the left of "from" index
                 // of the malformed "<!--", this means whole token is a malformed
                 // value and needs to be merged into current "comment" type token
@@ -17432,7 +17482,7 @@ function cparser(str, originalOpts) {
                 })); // stop token from being pushed in the ELSE clauses below
 
                 tokenTakenCareOf = true;
-              } else if (previousPath && isObj$4(previousTagsToken)) {
+              } else if (previousPath && isObj$1(previousTagsToken)) {
                 // if there are text characters which are not part of "<!--",
                 // shorten the text token, push a new comment token
                 // 1. tweak the "text" token
@@ -17454,7 +17504,7 @@ function cparser(str, originalOpts) {
                 tokenTakenCareOf = true;
               }
             }
-          } else if (isObj$4(parentsLastChildTokenValue) && parentsLastChildTokenValue.type === "text" && parentsLastChildTokenValue.value.trim() && "<!-".includes(parentsLastChildTokenValue.value[left(parentsLastChildTokenValue.value, parentsLastChildTokenValue.value.length)])) {
+          } else if (isObj$1(parentsLastChildTokenValue) && parentsLastChildTokenValue.type === "text" && parentsLastChildTokenValue.value.trim() && "<!-".includes(parentsLastChildTokenValue.value[left(parentsLastChildTokenValue.value, parentsLastChildTokenValue.value.length)])) {
             // the text token might be in parent token's children array, as
             // last element, for example, consider the AST of:
             // <!--[if !mso]><!--><img src="gif"/>!--<![endif]-->
@@ -17480,7 +17530,7 @@ function cparser(str, originalOpts) {
               // form the shorter, text token?
 
 
-              if (!left(parentsLastChildTokenValue.value, _malformedRange.idxFrom) && previousPath && isObj$4(parentsLastChildTokenValue)) {
+              if (!left(parentsLastChildTokenValue.value, _malformedRange.idxFrom) && previousPath && isObj$1(parentsLastChildTokenValue)) {
                 // if there are no whitespace characters to the left of "from" index
                 // of the malformed "<!--", this means whole token is a malformed
                 // value and needs to be merged into current "comment" type token
@@ -17500,7 +17550,7 @@ function cparser(str, originalOpts) {
                 objectPath.del(res, previousPath + ".children." + (objectPath.get(res, previousPath).children.length - 1)); // stop token from being pushed in the ELSE clauses below
 
                 tokenTakenCareOf = true;
-              } else if (previousPath && isObj$4(parentsLastChildTokenValue) && parentsLastChildTokenPath) {
+              } else if (previousPath && isObj$1(parentsLastChildTokenValue) && parentsLastChildTokenPath) {
                 // if there are text characters which are not part of "<!--",
                 // shorten the text token, push a new comment token // 1. tweak the "text" token
                 objectPath.set(res, parentsLastChildTokenPath, _objectSpread2(_objectSpread2({}, parentsLastChildTokenValue), {}, {
@@ -17536,7 +17586,7 @@ function cparser(str, originalOpts) {
         //
 
 
-        if (tokensWithChildren.includes(tokenObj.type) && tokenObj.closing && (!previousPath || !isObj$4(previousTagsToken) || previousTagsToken.closing || previousTagsToken.type !== tokenObj.type || previousTagsToken.tagName !== tokenObj.tagName)) {
+        if (tokensWithChildren.includes(tokenObj.type) && tokenObj.closing && (!previousPath || !isObj$1(previousTagsToken) || previousTagsToken.closing || previousTagsToken.type !== tokenObj.type || previousTagsToken.tagName !== tokenObj.tagName)) {
           if (tokenObj.void) {
             if (typeof opts.errCb === "function") {
               opts.errCb({
@@ -18039,7 +18089,8 @@ function checkForWhitespace(str, idxOffset) {
         idxFrom: +idxOffset,
         idxTo: +idxOffset + str.length,
         message: "Missing value.",
-        fix: null
+        fix: null // can't fix - value is missing completely!
+
       });
     } else {
       gatheredRanges.push([idxOffset, idxOffset + charStart]);
@@ -18061,7 +18112,8 @@ function checkForWhitespace(str, idxOffset) {
       message: "Remove whitespace.",
       fix: {
         ranges: lodash_clonedeep(gatheredRanges)
-      }
+      } // we can fix - we delete this whitespace!
+
     }); // reset:
 
     gatheredRanges.length = 0;
@@ -18201,12 +18253,12 @@ var lodash_isregexp = createCommonjsModule(function (module, exports) {
   module.exports = isRegExp;
 });
 
-var defaults$4 = {
+var defaults$6 = {
   caseInsensitive: false
 };
 
 function includesWithRegex(arr, whatToMatch, originalOpts) {
-  var opts = _objectSpread2(_objectSpread2({}, defaults$4), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults$6), originalOpts);
 
   if (!Array.isArray(arr) || !arr.length) {
     // definitely does not include
@@ -18235,7 +18287,7 @@ var defaults$5 = {
 // if value is comma-separated, each extracted chunk is passed to this
 // we keep it separate to keep it DRY
 
-function validateValue(str, idxOffset, opts, charStart, charEnd, errorArr) {
+function validateValue$2(str, idxOffset, opts, charStart, charEnd, errorArr) {
   var extractedValue = str.slice(charStart, charEnd);
 
   if (!(includesWithRegex(opts.quickPermittedValues, extractedValue, {
@@ -18302,7 +18354,7 @@ function validateString(str, idxOffset, originalOpts) {
           str.slice(idxFrom - idxOffset, idxTo - idxOffset); // if there are errors, validateValue() mutates the passed "errorArr",
           // pushing to it
 
-          validateValue(str, idxOffset, opts, idxFrom - idxOffset, // processCommaSep() reports offset values so we need to restore indexes to start where this "str" above starts
+          validateValue$2(str, idxOffset, opts, idxFrom - idxOffset, // processCommaSep() reports offset values so we need to restore indexes to start where this "str" above starts
           idxTo - idxOffset, errorArr);
         },
         errCb: function errCb(ranges, message) {
@@ -18320,7 +18372,7 @@ function validateString(str, idxOffset, originalOpts) {
       str.slice(charStart, charEnd); // if there are errors, validateValue() mutates the passed "errorArr",
       // pushing to it
 
-      validateValue(str, idxOffset, opts, charStart, charEnd, errorArr);
+      validateValue$2(str, idxOffset, opts, charStart, charEnd, errorArr);
     }
   }
   return errorArr;
@@ -18356,7 +18408,7 @@ function isAnEnabledValue(maybeARulesValue) {
   return 0;
 }
 
-function isObj$5(something) {
+function isObj(something) {
   return !!(something && typeof something === "object" && !Array.isArray(something));
 }
 
@@ -18365,7 +18417,7 @@ function isAnEnabledRule(rules, ruleId) {
     return 0;
   }
 
-  if (isObj$5(rules) && Object.prototype.hasOwnProperty.call(rules, ruleId)) {
+  if (isObj(rules) && Object.prototype.hasOwnProperty.call(rules, ruleId)) {
     return rules[ruleId];
   }
 
@@ -18373,7 +18425,7 @@ function isAnEnabledRule(rules, ruleId) {
     return rules[ruleId.split("-")[0]];
   }
 
-  if (isObj$5(rules) && Object.prototype.hasOwnProperty.call(rules, "all")) {
+  if (isObj(rules) && Object.prototype.hasOwnProperty.call(rules, "all")) {
     return rules.all;
   } // default return - rule's off:
 
@@ -18400,7 +18452,7 @@ fontSizeRegex: fontSizeRegex,
 isoDateRegex: isoDateRegex,
 linkTypes: linkTypes,
 isLetter: isLetter,
-isObj: isObj$5
+isObj: isObj
 });
 
 // rule: bad-character-null
@@ -18420,7 +18472,8 @@ function badCharacterNull(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18445,7 +18498,8 @@ function badCharacterStartOfHeading(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18470,7 +18524,8 @@ function badCharacterStartOfText(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18495,7 +18550,8 @@ function badCharacterEndOfText(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, "\n"]]
+            ranges: [[i, i + 1, "\n"]] // replace with line break
+
           }
         });
       }
@@ -18520,7 +18576,8 @@ function badCharacterEndOfTransmission(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18545,7 +18602,8 @@ function badCharacterEnquiry(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18570,7 +18628,8 @@ function badCharacterAcknowledge(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18595,7 +18654,8 @@ function badCharacterBell(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18620,7 +18680,8 @@ function badCharacterBackspace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18659,7 +18720,8 @@ var badCharacterTabulation = function badCharacterTabulation(context) {
             idxFrom: i,
             idxTo: i + 1,
             fix: {
-              ranges: [[i, i + 1, " "]]
+              ranges: [[i, i + 1, " "]] // replace with one space
+
             }
           });
         } else if (mode === "indentationIsFine") {
@@ -18676,7 +18738,8 @@ var badCharacterTabulation = function badCharacterTabulation(context) {
               idxFrom: i,
               idxTo: i + 1,
               fix: {
-                ranges: [[i, i + 1, " "]]
+                ranges: [[i, i + 1, " "]] // replace with one space
+
               }
             });
           }
@@ -18703,7 +18766,8 @@ function badCharacterLineTabulation(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18728,7 +18792,8 @@ function badCharacterFormFeed(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18753,7 +18818,8 @@ function badCharacterShiftOut(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18778,7 +18844,8 @@ function badCharacterShiftIn(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18803,7 +18870,8 @@ function badCharacterDataLinkEscape(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18828,7 +18896,8 @@ function badCharacterDeviceControlOne(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18853,7 +18922,8 @@ function badCharacterDeviceControlTwo(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18878,7 +18948,8 @@ function badCharacterDeviceControlThree(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18903,7 +18974,8 @@ function badCharacterDeviceControlFour(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18928,7 +19000,8 @@ function badCharacterNegativeAcknowledge(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18953,7 +19026,8 @@ function badCharacterSynchronousIdle(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -18978,7 +19052,8 @@ function badCharacterEndOfTransmissionBlock(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19003,7 +19078,8 @@ function badCharacterCancel(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19028,7 +19104,8 @@ function badCharacterEndOfMedium(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19053,7 +19130,8 @@ function badCharacterSubstitute(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19078,7 +19156,8 @@ function badCharacterEscape(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19103,7 +19182,8 @@ function badCharacterInformationSeparatorFour(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19128,7 +19208,8 @@ function badCharacterInformationSeparatorThree(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19140,7 +19221,7 @@ function badCharacterInformationSeparatorThree(context) {
 // -----------------------------------------------------------------------------
 // Catches raw character "INFORMATION SEPARATOR TWO":
 // https://www.fileformat.info/info/unicode/char/001e/index.htm
-function badCharacterInformationSeparatorTwo(context) {
+function badCharacterInformationSeparatorTwo$1(context) {
   return {
     character: function character(_ref) {
       var chr = _ref.chr,
@@ -19153,7 +19234,8 @@ function badCharacterInformationSeparatorTwo(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19165,7 +19247,7 @@ function badCharacterInformationSeparatorTwo(context) {
 // -----------------------------------------------------------------------------
 // Catches raw character "INFORMATION SEPARATOR ONE":
 // https://www.fileformat.info/info/unicode/char/001f/index.htm
-function badCharacterInformationSeparatorTwo$1(context) {
+function badCharacterInformationSeparatorTwo(context) {
   return {
     character: function character(_ref) {
       var chr = _ref.chr,
@@ -19178,7 +19260,8 @@ function badCharacterInformationSeparatorTwo$1(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19203,7 +19286,8 @@ function badCharacterDelete(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19228,7 +19312,8 @@ function badCharacterControl0080(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19253,7 +19338,8 @@ function badCharacterControl0081(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19278,7 +19364,8 @@ function badCharacterBreakPermittedHere(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19303,7 +19390,8 @@ function badCharacterNoBreakHere(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19328,7 +19416,8 @@ function badCharacterControl0084(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19353,7 +19442,8 @@ function badCharacterNextLine(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19378,7 +19468,8 @@ function badCharacterStartOfSelectedArea(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19403,7 +19494,8 @@ function badCharacterEndOfSelectedArea(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19428,7 +19520,8 @@ function badCharacterCharacterTabulationSet(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19453,7 +19546,8 @@ function badCharacterCharacterTabulationWithJustification(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19478,7 +19572,8 @@ function badCharacterLineTabulationSet(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19503,7 +19598,8 @@ function badCharacterPartialLineForward(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19528,7 +19624,8 @@ function badCharacterPartialLineBackward(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19553,7 +19650,8 @@ function badCharacterReverseLineFeed(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19565,7 +19663,7 @@ function badCharacterReverseLineFeed(context) {
 // -----------------------------------------------------------------------------
 // Catches raw character "SINGLE SHIFT TWO":
 // https://www.fileformat.info/info/unicode/char/008e/index.htm
-function badCharacterSingleShiftTwo(context) {
+function badCharacterSingleShiftTwo$1(context) {
   return {
     character: function character(_ref) {
       var chr = _ref.chr,
@@ -19578,7 +19676,8 @@ function badCharacterSingleShiftTwo(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19590,7 +19689,7 @@ function badCharacterSingleShiftTwo(context) {
 // -----------------------------------------------------------------------------
 // Catches raw character "SINGLE SHIFT THREE":
 // https://www.fileformat.info/info/unicode/char/008f/index.htm
-function badCharacterSingleShiftTwo$1(context) {
+function badCharacterSingleShiftTwo(context) {
   return {
     character: function character(_ref) {
       var chr = _ref.chr,
@@ -19603,7 +19702,8 @@ function badCharacterSingleShiftTwo$1(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19628,7 +19728,8 @@ function badCharacterDeviceControlString(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19653,7 +19754,8 @@ function badCharacterPrivateUseOne(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19678,7 +19780,8 @@ function badCharacterPrivateUseTwo(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19703,7 +19806,8 @@ function badCharacterSetTransmitState(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19728,7 +19832,8 @@ function badCharacterCancelCharacter(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19753,7 +19858,8 @@ function badCharacterMessageWaiting(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19778,7 +19884,8 @@ function badCharacterStartOfProtectedArea(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19803,7 +19910,8 @@ function badCharacterEndOfProtectedArea(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19828,7 +19936,8 @@ function badCharacterStartOfString(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19853,7 +19962,8 @@ function badCharacterControl0099(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19878,7 +19988,8 @@ function badCharacterSingleCharacterIntroducer(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19903,7 +20014,8 @@ function badCharacterControlSequenceIntroducer(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19928,7 +20040,8 @@ function badCharacterStringTerminator(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19953,7 +20066,8 @@ function badCharacterOperatingSystemCommand(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -19978,7 +20092,8 @@ function badCharacterPrivateMessage(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20003,7 +20118,8 @@ function badCharacterApplicationProgramCommand(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20028,7 +20144,8 @@ function badCharacterSoftHyphen(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // replace with a normal space
+
           }
         });
       }
@@ -20053,7 +20170,8 @@ function badCharacterNonBreakingSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -20078,7 +20196,8 @@ function badCharacterOghamSpaceMark(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -20103,7 +20222,8 @@ function badCharacterEnQuad(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -20128,7 +20248,8 @@ function badCharacterEmQuad(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -20153,7 +20274,8 @@ function badCharacterEnSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -20178,7 +20300,8 @@ function badCharacterEmSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -20203,7 +20326,8 @@ function badCharacterThreePerEmSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -20228,7 +20352,8 @@ function badCharacterFourPerEmSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -20253,7 +20378,8 @@ function badCharacterSixPerEmSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -20278,7 +20404,8 @@ function badCharacterFigureSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -20303,7 +20430,8 @@ function badCharacterPunctuationSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -20328,7 +20456,8 @@ function badCharacterThinSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -20353,7 +20482,8 @@ function badCharacterHairSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -20378,7 +20508,8 @@ function badCharacterZeroWidthSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -20403,7 +20534,8 @@ function badCharacterZeroWidthNonJoiner(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20428,7 +20560,8 @@ function badCharacterZeroWidthJoiner(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20453,7 +20586,8 @@ function badCharacterLeftToRightMark(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20478,7 +20612,8 @@ function badCharacterRightToLeftMark(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20503,7 +20638,8 @@ function badCharacterLeftToRightEmbedding(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20528,7 +20664,8 @@ function badCharacterRightToLeftEmbedding(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20553,7 +20690,8 @@ function badCharacterPopDirectionalFormatting(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20578,7 +20716,8 @@ function badCharacterLeftToRightOverride(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20603,7 +20742,8 @@ function badCharacterRightToLeftOverride(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20628,7 +20768,8 @@ function badCharacterWordJoiner(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20653,7 +20794,8 @@ function badCharacterFunctionApplication(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20678,7 +20820,8 @@ function badCharacterInvisibleTimes(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20703,7 +20846,8 @@ function badCharacterInvisibleSeparator(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20728,7 +20872,8 @@ function badCharacterInvisiblePlus(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20753,7 +20898,8 @@ function badCharacterLeftToRightIsolate(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20778,7 +20924,8 @@ function badCharacterRightToLeftIsolate(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20803,7 +20950,8 @@ function badCharacterFirstStrongIsolate(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20828,7 +20976,8 @@ function badCharacterPopDirectionalIsolate(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20853,7 +21002,8 @@ function badCharacterInhibitSymmetricSwapping(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20878,7 +21028,8 @@ function badCharacterActivateSymmetricSwapping(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20903,7 +21054,8 @@ function badCharacterInhibitArabicFormShaping(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20928,7 +21080,8 @@ function badCharacterActivateArabicFormShaping(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20953,7 +21106,8 @@ function badCharacterNationalDigitShapes(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -20978,7 +21132,8 @@ function badCharacterNominalDigitShapes(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -21003,7 +21158,8 @@ function badCharacterZeroWidthNoBreakSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -21028,7 +21184,8 @@ function badCharacterInterlinearAnnotationAnchor(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -21053,7 +21210,8 @@ function badCharacterInterlinearAnnotationSeparator(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -21078,7 +21236,8 @@ function badCharacterInterlinearAnnotationTerminator(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -21103,7 +21262,8 @@ function badCharacterLineSeparator(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -21128,7 +21288,8 @@ function badCharacterParagraphSeparator(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -21153,7 +21314,8 @@ function badCharacterNarrowNoBreakSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -21178,7 +21340,8 @@ function badCharacterMediumMathematicalSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -21203,7 +21366,8 @@ function badCharacterIdeographicSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]]
+            ranges: [[i, i + 1, " "]] // replace with a normal space
+
           }
         });
       }
@@ -21228,7 +21392,8 @@ function badCharacterReplacementCharacter(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]]
+            ranges: [[i, i + 1]] // just delete it
+
           }
         });
       }
@@ -21281,7 +21446,7 @@ function tagSpaceAfterOpeningBracket(context) {
 
 // -----------------------------------------------------------------------------
 
-var BACKSLASH$2 = "\\"; // it flags up any tags which have whitespace between opening bracket and first
+var BACKSLASH$3 = "\\"; // it flags up any tags which have whitespace between opening bracket and first
 // tag name letter:
 //
 // < table>
@@ -21299,7 +21464,7 @@ function tagSpaceBeforeClosingBracket(context) {
       !context.str[node.end - 2].trim().length && // and the next non-whitespace character on the left is not slash of
       // any kind (we don't want to step into rule's
       // "tag-space-between-slash-and-bracket" turf)
-      !(BACKSLASH$2 + "/").includes(context.str[left(context.str, node.end - 1) || 0])) {
+      !(BACKSLASH$3 + "/").includes(context.str[left(context.str, node.end - 1) || 0])) {
         var from = left(context.str, node.end - 1) ? left(context.str, node.end - 1) + 1 : 0;
         ranges.push([from, node.end - 1]);
       }
@@ -21396,7 +21561,7 @@ function tagSpaceBetweenSlashAndBracket(context) {
 }
 
 // rule: tag-closing-backslash
-var BACKSLASH$3 = "\\";
+var BACKSLASH$2 = "\\";
 
 function tagClosingBackslash(context) {
   return {
@@ -21410,11 +21575,11 @@ function tagClosingBackslash(context) {
       //
       //
 
-      if (Number.isInteger(node.start) && Number.isInteger(node.tagNameStartsAt) && context.str.slice(node.start, node.tagNameStartsAt).includes(BACKSLASH$3)) {
+      if (Number.isInteger(node.start) && Number.isInteger(node.tagNameStartsAt) && context.str.slice(node.start, node.tagNameStartsAt).includes(BACKSLASH$2)) {
 
         for (var i = node.start; i < node.tagNameStartsAt; i++) {
           // fish-out all backslashes
-          if (context.str[i] === BACKSLASH$3) {
+          if (context.str[i] === BACKSLASH$2) {
             // just delete the backslash because it doesn't belong here
             // if there's a need for closing (left) slash, it will be added
             // by 3rd level rules which can "see" the surrounding tag layout.
@@ -21431,7 +21596,7 @@ function tagClosingBackslash(context) {
 
 
       if (Number.isInteger(node.end) && context.str[node.end - 1] === ">" && // necessary because in the future unclosed tags will be recognised!
-      context.str[left(context.str, node.end - 1)] === BACKSLASH$3) {
+      context.str[left(context.str, node.end - 1)] === BACKSLASH$2) {
         var message = node.void ? "Replace backslash with slash." : "Delete this.";
         var backSlashPos = left(context.str, node.end - 1); // So we confirmed there's left slash.
         // Is it completely rogue or is it meant to be self-closing tag's closing?
@@ -21496,7 +21661,7 @@ function tagClosingBackslash(context) {
 // it controls, should we or should we not put the slashes on void tags,
 // such as img. Is it <img...> or is it <img.../>?
 
-var BACKSLASH$4 = "\\";
+var BACKSLASH$1 = "\\";
 
 function tagVoidSlash(context, mode) {
   if (mode === void 0) {
@@ -21524,7 +21689,7 @@ function tagVoidSlash(context, mode) {
           }
         });
       } else if (mode === "always" && node.void && context.str[slashPos] !== "/" && ( // don't trigger if backslash rules are on:
-      !context.processedRulesConfig["tag-closing-backslash"] || !(context.str[slashPos] === BACKSLASH$4 && (Number.isInteger(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"] > 0 || Array.isArray(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"][0] > 0 && context.processedRulesConfig["tag-closing-backslash"][1] === "always")))) { // if slashes are requested on void tags, situation is more complex,
+      !context.processedRulesConfig["tag-closing-backslash"] || !(context.str[slashPos] === BACKSLASH$1 && (Number.isInteger(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"] > 0 || Array.isArray(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"][0] > 0 && context.processedRulesConfig["tag-closing-backslash"][1] === "always")))) { // if slashes are requested on void tags, situation is more complex,
         // because we need to take into the account the rule
         // "tag-space-before-closing-slash"
 
@@ -21695,7 +21860,7 @@ function tagBadSelfClosing(context) {
   };
 }
 
-var defaults$6 = {
+var defaults$4 = {
   strictlyTwoElementsInRangeArrays: false,
   progressFn: null
 };
@@ -21707,7 +21872,7 @@ function rSort(arrOfRanges, originalOptions) {
   } // fill any settings with defaults if missing:
 
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$6), originalOptions); // arrOfRanges validation
+  var opts = _objectSpread2(_objectSpread2({}, defaults$4), originalOptions); // arrOfRanges validation
 
 
   var culpritsIndex;
@@ -21774,7 +21939,7 @@ function rSort(arrOfRanges, originalOptions) {
   });
 }
 
-var defaults$7 = {
+var defaults$3 = {
   mergeType: 1,
   progressFn: null,
   joinRangesThatTouchEdges: true
@@ -21802,7 +21967,7 @@ function rMerge(arrOfRanges, originalOpts) {
 
   if (originalOpts) {
     if (isObj(originalOpts)) {
-      opts = _objectSpread2(_objectSpread2({}, defaults$7), originalOpts); // 1. validate opts.progressFn
+      opts = _objectSpread2(_objectSpread2({}, defaults$3), originalOpts); // 1. validate opts.progressFn
 
       if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
         opts.progressFn = null;
@@ -21823,7 +21988,7 @@ function rMerge(arrOfRanges, originalOpts) {
       throw new Error("emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n" + JSON.stringify(originalOpts, null, 4) + " (type " + typeof originalOpts + ")");
     }
   } else {
-    opts = _objectSpread2({}, defaults$7);
+    opts = _objectSpread2({}, defaults$3);
   } // progress-wise, sort takes first 20%
   // two-level-deep array clone:
 
@@ -22467,7 +22632,7 @@ function attributeValidateAcceptCharset(context) {
   };
 }
 
-var require$$0$1 = {
+var require$$0 = {
   "application/1d-interleaved-parityfec": {
     source: "iana"
   },
@@ -30788,7 +30953,7 @@ var require$$0$1 = {
  * Module exports.
  */
 
-var mimeDb = require$$0$1;
+var mimeDb = require$$0;
 
 // -----------------------------------------------------------------------------
 
@@ -30879,7 +31044,7 @@ function attributeValidateAccesskey(context) {
 
 // https://en.wikipedia.org/wiki/Uniform_Resource_Identifier#URI_references
 
-var BACKSLASH$5 = "\\"; // retrieved 2020-Jan-11
+var BACKSLASH = "\\"; // retrieved 2020-Jan-11
 // https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml
 
 var knownSchemes = ["aaa", "aaas", "about", "acap", "acct", "acd", "acr", "adiumxtra", "adt", "afp", "afs", "aim", "amss", "android", "appdata", "apt", "ark", "attachment", "aw", "barion", "beshare", "bitcoin", "bitcoincash", "blob", "bolo", "browserext", "calculator", "callto", "cap", "cast", "casts", "chrome", "chrome-extension", "cid", "coap", "coap+tcp", "coap+ws", "coaps", "coaps+tcp", "coaps+ws", "com-eventbrite-attendee", "content", "conti", "crid", "cvs", "dab", "dav", "diaspora", "dict", "did", "dis", "dlna-playcontainer", "dlna-playsingle", "dns", "dntp", "dpp", "drm", "drop", "dtn", "dvb", "ed2k", "elsi", "example", "facetime", "fax", "feed", "feedready", "filesystem", "finger", "first-run-pen-experience", "fish", "fm", "fuchsia-pkg", "geo", "gg", "git", "gizmoproject", "go", "gopher", "graph", "gtalk", "h323", "ham", "hcap", "hcp", "hxxp", "hxxps", "hydrazone", "iax", "icap", "icon", "im", "imap", "info", "iotdisco", "ipn", "ipp", "ipps", "irc6", "ircs", "iris", "iris.beep", "iris.lwz", "iris.xpc", "iris.xpcs", "isostore", "itms", "jabber", "jar", "jms", "keyparc", "lastfm", "ldap", "ldaps", "leaptofrogans", "lorawan", "lvlt", "magnet", "mailserver", "maps", "market", "message", "microsoft.windows.camera", "microsoft.windows.camera.multipicker", "microsoft.windows.camera.picker", "mid", "mms", "modem", "mongodb", "moz", "ms-access", "ms-browser-extension", "ms-calculator", "ms-drive-to", "ms-enrollment", "ms-excel", "ms-eyecontrolspeech", "ms-gamebarservices", "ms-gamingoverlay", "ms-getoffice", "ms-help", "ms-infopath", "ms-inputapp", "ms-lockscreencomponent-config", "ms-media-stream-id", "ms-mixedrealitycapture", "ms-mobileplans", "ms-officeapp", "ms-people", "ms-project", "ms-powerpoint", "ms-publisher", "ms-restoretabcompanion", "ms-screenclip", "ms-screensketch", "ms-search", "ms-search-repair", "ms-secondary-screen-controller", "ms-secondary-screen-setup", "ms-settings", "ms-settings-airplanemode", "ms-settings-bluetooth", "ms-settings-camera", "ms-settings-cellular", "ms-settings-cloudstorage", "ms-settings-connectabledevices", "ms-settings-displays-topology", "ms-settings-emailandaccounts", "ms-settings-language", "ms-settings-location", "ms-settings-lock", "ms-settings-nfctransactions", "ms-settings-notifications", "ms-settings-power", "ms-settings-privacy", "ms-settings-proximity", "ms-settings-screenrotation", "ms-settings-wifi", "ms-settings-workplace", "ms-spd", "ms-sttoverlay", "ms-transit-to", "ms-useractivityset", "ms-virtualtouchpad", "ms-visio", "ms-walk-to", "ms-whiteboard", "ms-whiteboard-cmd", "ms-word", "msnim", "msrp", "msrps", "mss", "mtqp", "mumble", "mupdate", "mvn", "news", "nfs", "ni", "nih", "nntp", "notes", "ocf", "oid", "onenote", "onenote-cmd", "opaquelocktoken", "openpgp4fpr", "pack", "palm", "paparazzi", "payment", "payto", "pkcs11", "platform", "pop", "pres", "prospero", "proxy", "pwid", "psyc", "pttp", "qb", "query", "quic-transport", "redis", "rediss", "reload", "res", "resource", "rmi", "rsync", "rtmfp", "rtmp", "rtsp", "rtsps", "rtspu", "secondlife", "service", "session", "sftp", "sgn", "shttp", "sieve", "simpleledger", "sip", "sips", "skype", "smb", "sms", "smtp", "snews", "snmp", "soap.beep", "soap.beeps", "soldat", "spiffe", "spotify", "ssh", "steam", "stun", "stuns", "submit", "svn", "tag", "teamspeak", "tel", "teliaeid", "telnet", "tftp", "things", "thismessage", "tip", "tn3270", "tool", "turn", "turns", "tv", "udp", "unreal", "urn", "ut2004", "v-event", "vemmi", "ventrilo", "videotex", "vnc", "view-source", "wais", "webcal", "wpid", "ws", "wss", "wtai", "wyciwyg", "xcon", "xcon-userid", "xfire", "xmlrpc.beep", "xmlrpc.beeps", "xmpp", "xri", "ymsgr", "z39.50", "z39.50r", "z39.50s"];
@@ -31001,10 +31166,10 @@ function isRel(str, originalOpts) {
     };
   }
 
-  if (str.includes(BACKSLASH$5)) {
+  if (str.includes(BACKSLASH)) {
     return {
       res: false,
-      message: "Unescaped backslash (" + BACKSLASH$5 + ") character."
+      message: "Unescaped backslash (" + BACKSLASH + ") character."
     };
   }
 
@@ -31078,7 +31243,7 @@ function isRel(str, originalOpts) {
 
 var word = '[a-fA-F\\d:]';
 
-var b$2 = function b(options) {
+var b = function b(options) {
   return options && options.includeBoundaries ? "(?:(?<=\\s|^)(?=" + word + ")|(?<=" + word + ")(?=\\s|$))" : '';
 };
 
@@ -31091,20 +31256,20 @@ var v4exact = new RegExp("^" + v4 + "$");
 var v6exact = new RegExp("^" + v6 + "$");
 
 var ip = function ip(options) {
-  return options && options.exact ? v46Exact : new RegExp("(?:" + b$2(options) + v4 + b$2(options) + ")|(?:" + b$2(options) + v6 + b$2(options) + ")", 'g');
+  return options && options.exact ? v46Exact : new RegExp("(?:" + b(options) + v4 + b(options) + ")|(?:" + b(options) + v6 + b(options) + ")", 'g');
 };
 
 ip.v4 = function (options) {
-  return options && options.exact ? v4exact : new RegExp("" + b$2(options) + v4 + b$2(options), 'g');
+  return options && options.exact ? v4exact : new RegExp("" + b(options) + v4 + b(options), 'g');
 };
 
 ip.v6 = function (options) {
-  return options && options.exact ? v6exact : new RegExp("" + b$2(options) + v6 + b$2(options), 'g');
+  return options && options.exact ? v6exact : new RegExp("" + b(options) + v6 + b(options), 'g');
 };
 
 var ipRegex = ip;
 
-var tlds = ["aaa", "aarp", "abarth", "abb", "abbott", "abbvie", "abc", "able", "abogado", "abudhabi", "ac", "academy", "accenture", "accountant", "accountants", "aco", "actor", "ad", "adac", "ads", "adult", "ae", "aeg", "aero", "aetna", "af", "afamilycompany", "afl", "africa", "ag", "agakhan", "agency", "ai", "aig", "airbus", "airforce", "airtel", "akdn", "al", "alfaromeo", "alibaba", "alipay", "allfinanz", "allstate", "ally", "alsace", "alstom", "am", "amazon", "americanexpress", "americanfamily", "amex", "amfam", "amica", "amsterdam", "analytics", "android", "anquan", "anz", "ao", "aol", "apartments", "app", "apple", "aq", "aquarelle", "ar", "arab", "aramco", "archi", "army", "arpa", "art", "arte", "as", "asda", "asia", "associates", "at", "athleta", "attorney", "au", "auction", "audi", "audible", "audio", "auspost", "author", "auto", "autos", "avianca", "aw", "aws", "ax", "axa", "az", "azure", "ba", "baby", "baidu", "banamex", "bananarepublic", "band", "bank", "bar", "barcelona", "barclaycard", "barclays", "barefoot", "bargains", "baseball", "basketball", "bauhaus", "bayern", "bb", "bbc", "bbt", "bbva", "bcg", "bcn", "bd", "be", "beats", "beauty", "beer", "bentley", "berlin", "best", "bestbuy", "bet", "bf", "bg", "bh", "bharti", "bi", "bible", "bid", "bike", "bing", "bingo", "bio", "biz", "bj", "black", "blackfriday", "blockbuster", "blog", "bloomberg", "blue", "bm", "bms", "bmw", "bn", "bnpparibas", "bo", "boats", "boehringer", "bofa", "bom", "bond", "boo", "book", "booking", "bosch", "bostik", "boston", "bot", "boutique", "box", "br", "bradesco", "bridgestone", "broadway", "broker", "brother", "brussels", "bs", "bt", "budapest", "bugatti", "build", "builders", "business", "buy", "buzz", "bv", "bw", "by", "bz", "bzh", "ca", "cab", "cafe", "cal", "call", "calvinklein", "cam", "camera", "camp", "cancerresearch", "canon", "capetown", "capital", "capitalone", "car", "caravan", "cards", "care", "career", "careers", "cars", "casa", "case", "caseih", "cash", "casino", "cat", "catering", "catholic", "cba", "cbn", "cbre", "cbs", "cc", "cd", "center", "ceo", "cern", "cf", "cfa", "cfd", "cg", "ch", "chanel", "channel", "charity", "chase", "chat", "cheap", "chintai", "christmas", "chrome", "church", "ci", "cipriani", "circle", "cisco", "citadel", "citi", "citic", "city", "cityeats", "ck", "cl", "claims", "cleaning", "click", "clinic", "clinique", "clothing", "cloud", "club", "clubmed", "cm", "cn", "co", "coach", "codes", "coffee", "college", "cologne", "com", "comcast", "commbank", "community", "company", "compare", "computer", "comsec", "condos", "construction", "consulting", "contact", "contractors", "cooking", "cookingchannel", "cool", "coop", "corsica", "country", "coupon", "coupons", "courses", "cpa", "cr", "credit", "creditcard", "creditunion", "cricket", "crown", "crs", "cruise", "cruises", "csc", "cu", "cuisinella", "cv", "cw", "cx", "cy", "cymru", "cyou", "cz", "dabur", "dad", "dance", "data", "date", "dating", "datsun", "day", "dclk", "dds", "de", "deal", "dealer", "deals", "degree", "delivery", "dell", "deloitte", "delta", "democrat", "dental", "dentist", "desi", "design", "dev", "dhl", "diamonds", "diet", "digital", "direct", "directory", "discount", "discover", "dish", "diy", "dj", "dk", "dm", "dnp", "do", "docs", "doctor", "dog", "domains", "dot", "download", "drive", "dtv", "dubai", "duck", "dunlop", "dupont", "durban", "dvag", "dvr", "dz", "earth", "eat", "ec", "eco", "edeka", "edu", "education", "ee", "eg", "email", "emerck", "energy", "engineer", "engineering", "enterprises", "epson", "equipment", "er", "ericsson", "erni", "es", "esq", "estate", "et", "etisalat", "eu", "eurovision", "eus", "events", "exchange", "expert", "exposed", "express", "extraspace", "fage", "fail", "fairwinds", "faith", "family", "fan", "fans", "farm", "farmers", "fashion", "fast", "fedex", "feedback", "ferrari", "ferrero", "fi", "fiat", "fidelity", "fido", "film", "final", "finance", "financial", "fire", "firestone", "firmdale", "fish", "fishing", "fit", "fitness", "fj", "fk", "flickr", "flights", "flir", "florist", "flowers", "fly", "fm", "fo", "foo", "food", "foodnetwork", "football", "ford", "forex", "forsale", "forum", "foundation", "fox", "fr", "free", "fresenius", "frl", "frogans", "frontdoor", "frontier", "ftr", "fujitsu", "fujixerox", "fun", "fund", "furniture", "futbol", "fyi", "ga", "gal", "gallery", "gallo", "gallup", "game", "games", "gap", "garden", "gay", "gb", "gbiz", "gd", "gdn", "ge", "gea", "gent", "genting", "george", "gf", "gg", "ggee", "gh", "gi", "gift", "gifts", "gives", "giving", "gl", "glade", "glass", "gle", "global", "globo", "gm", "gmail", "gmbh", "gmo", "gmx", "gn", "godaddy", "gold", "goldpoint", "golf", "goo", "goodyear", "goog", "google", "gop", "got", "gov", "gp", "gq", "gr", "grainger", "graphics", "gratis", "green", "gripe", "grocery", "group", "gs", "gt", "gu", "guardian", "gucci", "guge", "guide", "guitars", "guru", "gw", "gy", "hair", "hamburg", "hangout", "haus", "hbo", "hdfc", "hdfcbank", "health", "healthcare", "help", "helsinki", "here", "hermes", "hgtv", "hiphop", "hisamitsu", "hitachi", "hiv", "hk", "hkt", "hm", "hn", "hockey", "holdings", "holiday", "homedepot", "homegoods", "homes", "homesense", "honda", "horse", "hospital", "host", "hosting", "hot", "hoteles", "hotels", "hotmail", "house", "how", "hr", "hsbc", "ht", "hu", "hughes", "hyatt", "hyundai", "ibm", "icbc", "ice", "icu", "id", "ie", "ieee", "ifm", "ikano", "il", "im", "imamat", "imdb", "immo", "immobilien", "in", "inc", "industries", "infiniti", "info", "ing", "ink", "institute", "insurance", "insure", "int", "international", "intuit", "investments", "io", "ipiranga", "iq", "ir", "irish", "is", "ismaili", "ist", "istanbul", "it", "itau", "itv", "iveco", "jaguar", "java", "jcb", "je", "jeep", "jetzt", "jewelry", "jio", "jll", "jm", "jmp", "jnj", "jo", "jobs", "joburg", "jot", "joy", "jp", "jpmorgan", "jprs", "juegos", "juniper", "kaufen", "kddi", "ke", "kerryhotels", "kerrylogistics", "kerryproperties", "kfh", "kg", "kh", "ki", "kia", "kim", "kinder", "kindle", "kitchen", "kiwi", "km", "kn", "koeln", "komatsu", "kosher", "kp", "kpmg", "kpn", "kr", "krd", "kred", "kuokgroup", "kw", "ky", "kyoto", "kz", "la", "lacaixa", "lamborghini", "lamer", "lancaster", "lancia", "land", "landrover", "lanxess", "lasalle", "lat", "latino", "latrobe", "law", "lawyer", "lb", "lc", "lds", "lease", "leclerc", "lefrak", "legal", "lego", "lexus", "lgbt", "li", "lidl", "life", "lifeinsurance", "lifestyle", "lighting", "like", "lilly", "limited", "limo", "lincoln", "linde", "link", "lipsy", "live", "living", "lixil", "lk", "llc", "llp", "loan", "loans", "locker", "locus", "loft", "lol", "london", "lotte", "lotto", "love", "lpl", "lplfinancial", "lr", "ls", "lt", "ltd", "ltda", "lu", "lundbeck", "luxe", "luxury", "lv", "ly", "ma", "macys", "madrid", "maif", "maison", "makeup", "man", "management", "mango", "map", "market", "marketing", "markets", "marriott", "marshalls", "maserati", "mattel", "mba", "mc", "mckinsey", "md", "me", "med", "media", "meet", "melbourne", "meme", "memorial", "men", "menu", "merckmsd", "mg", "mh", "miami", "microsoft", "mil", "mini", "mint", "mit", "mitsubishi", "mk", "ml", "mlb", "mls", "mm", "mma", "mn", "mo", "mobi", "mobile", "moda", "moe", "moi", "mom", "monash", "money", "monster", "mormon", "mortgage", "moscow", "moto", "motorcycles", "mov", "movie", "mp", "mq", "mr", "ms", "msd", "mt", "mtn", "mtr", "mu", "museum", "mutual", "mv", "mw", "mx", "my", "mz", "na", "nab", "nagoya", "name", "nationwide", "natura", "navy", "nba", "nc", "ne", "nec", "net", "netbank", "netflix", "network", "neustar", "new", "newholland", "news", "next", "nextdirect", "nexus", "nf", "nfl", "ng", "ngo", "nhk", "ni", "nico", "nike", "nikon", "ninja", "nissan", "nissay", "nl", "no", "nokia", "northwesternmutual", "norton", "now", "nowruz", "nowtv", "np", "nr", "nra", "nrw", "ntt", "nu", "nyc", "nz", "obi", "observer", "off", "office", "okinawa", "olayan", "olayangroup", "oldnavy", "ollo", "om", "omega", "one", "ong", "onl", "online", "onyourside", "ooo", "open", "oracle", "orange", "org", "organic", "origins", "osaka", "otsuka", "ott", "ovh", "pa", "page", "panasonic", "paris", "pars", "partners", "parts", "party", "passagens", "pay", "pccw", "pe", "pet", "pf", "pfizer", "pg", "ph", "pharmacy", "phd", "philips", "phone", "photo", "photography", "photos", "physio", "pics", "pictet", "pictures", "pid", "pin", "ping", "pink", "pioneer", "pizza", "pk", "pl", "place", "play", "playstation", "plumbing", "plus", "pm", "pn", "pnc", "pohl", "poker", "politie", "porn", "post", "pr", "pramerica", "praxi", "press", "prime", "pro", "prod", "productions", "prof", "progressive", "promo", "properties", "property", "protection", "pru", "prudential", "ps", "pt", "pub", "pw", "pwc", "py", "qa", "qpon", "quebec", "quest", "qvc", "racing", "radio", "raid", "re", "read", "realestate", "realtor", "realty", "recipes", "red", "redstone", "redumbrella", "rehab", "reise", "reisen", "reit", "reliance", "ren", "rent", "rentals", "repair", "report", "republican", "rest", "restaurant", "review", "reviews", "rexroth", "rich", "richardli", "ricoh", "ril", "rio", "rip", "rmit", "ro", "rocher", "rocks", "rodeo", "rogers", "room", "rs", "rsvp", "ru", "rugby", "ruhr", "run", "rw", "rwe", "ryukyu", "sa", "saarland", "safe", "safety", "sakura", "sale", "salon", "samsclub", "samsung", "sandvik", "sandvikcoromant", "sanofi", "sap", "sarl", "sas", "save", "saxo", "sb", "sbi", "sbs", "sc", "sca", "scb", "schaeffler", "schmidt", "scholarships", "school", "schule", "schwarz", "science", "scjohnson", "scot", "sd", "se", "search", "seat", "secure", "security", "seek", "select", "sener", "services", "ses", "seven", "sew", "sex", "sexy", "sfr", "sg", "sh", "shangrila", "sharp", "shaw", "shell", "shia", "shiksha", "shoes", "shop", "shopping", "shouji", "show", "showtime", "si", "silk", "sina", "singles", "site", "sj", "sk", "ski", "skin", "sky", "skype", "sl", "sling", "sm", "smart", "smile", "sn", "sncf", "so", "soccer", "social", "softbank", "software", "sohu", "solar", "solutions", "song", "sony", "soy", "spa", "space", "sport", "spot", "spreadbetting", "sr", "srl", "ss", "st", "stada", "staples", "star", "statebank", "statefarm", "stc", "stcgroup", "stockholm", "storage", "store", "stream", "studio", "study", "style", "su", "sucks", "supplies", "supply", "support", "surf", "surgery", "suzuki", "sv", "swatch", "swiftcover", "swiss", "sx", "sy", "sydney", "systems", "sz", "tab", "taipei", "talk", "taobao", "target", "tatamotors", "tatar", "tattoo", "tax", "taxi", "tc", "tci", "td", "tdk", "team", "tech", "technology", "tel", "temasek", "tennis", "teva", "tf", "tg", "th", "thd", "theater", "theatre", "tiaa", "tickets", "tienda", "tiffany", "tips", "tires", "tirol", "tj", "tjmaxx", "tjx", "tk", "tkmaxx", "tl", "tm", "tmall", "tn", "to", "today", "tokyo", "tools", "top", "toray", "toshiba", "total", "tours", "town", "toyota", "toys", "tr", "trade", "trading", "training", "travel", "travelchannel", "travelers", "travelersinsurance", "trust", "trv", "tt", "tube", "tui", "tunes", "tushu", "tv", "tvs", "tw", "tz", "ua", "ubank", "ubs", "ug", "uk", "unicom", "university", "uno", "uol", "ups", "us", "uy", "uz", "va", "vacations", "vana", "vanguard", "vc", "ve", "vegas", "ventures", "verisign", "versicherung", "vet", "vg", "vi", "viajes", "video", "vig", "viking", "villas", "vin", "vip", "virgin", "visa", "vision", "viva", "vivo", "vlaanderen", "vn", "vodka", "volkswagen", "volvo", "vote", "voting", "voto", "voyage", "vu", "vuelos", "wales", "walmart", "walter", "wang", "wanggou", "watch", "watches", "weather", "weatherchannel", "webcam", "weber", "website", "wed", "wedding", "weibo", "weir", "wf", "whoswho", "wien", "wiki", "williamhill", "win", "windows", "wine", "winners", "wme", "wolterskluwer", "woodside", "work", "works", "world", "wow", "ws", "wtc", "wtf", "xbox", "xerox", "xfinity", "xihuan", "xin", "कॉम", "セール", "佛山", "ಭಾರತ", "慈善", "集团", "在线", "한국", "ଭାରତ", "大众汽车", "点看", "คอม", "ভাৰত", "ভারত", "八卦", "ישראל", "موقع", "বাংলা", "公益", "公司", "香格里拉", "网站", "移动", "我爱你", "москва", "қаз", "католик", "онлайн", "сайт", "联通", "срб", "бг", "бел", "קום", "时尚", "微博", "淡马锡", "ファッション", "орг", "नेट", "ストア", "アマゾン", "삼성", "சிங்கப்பூர்", "商标", "商店", "商城", "дети", "мкд", "ею", "ポイント", "新闻", "家電", "كوم", "中文网", "中信", "中国", "中國", "娱乐", "谷歌", "భారత్", "ලංකා", "電訊盈科", "购物", "クラウド", "ભારત", "通販", "भारतम्", "भारत", "भारोत", "网店", "संगठन", "餐厅", "网络", "ком", "укр", "香港", "亚马逊", "诺基亚", "食品", "飞利浦", "台湾", "台灣", "手机", "мон", "الجزائر", "عمان", "ارامكو", "ایران", "العليان", "اتصالات", "امارات", "بازار", "موريتانيا", "پاکستان", "الاردن", "بارت", "بھارت", "المغرب", "ابوظبي", "البحرين", "السعودية", "ڀارت", "كاثوليك", "سودان", "همراه", "عراق", "مليسيا", "澳門", "닷컴", "政府", "شبكة", "بيتك", "عرب", "გე", "机构", "组织机构", "健康", "ไทย", "سورية", "招聘", "рус", "рф", "تونس", "大拿", "ລາວ", "みんな", "グーグル", "ευ", "ελ", "世界", "書籍", "ഭാരതം", "ਭਾਰਤ", "网址", "닷넷", "コム", "天主教", "游戏", "vermögensberater", "vermögensberatung", "企业", "信息", "嘉里大酒店", "嘉里", "مصر", "قطر", "广东", "இலங்கை", "இந்தியா", "հայ", "新加坡", "فلسطين", "政务", "xxx", "xyz", "yachts", "yahoo", "yamaxun", "yandex", "ye", "yodobashi", "yoga", "yokohama", "you", "youtube", "yt", "yun", "za", "zappos", "zara", "zero", "zip", "zm", "zone", "zuerich", "zw"];
+var tlds = ["aaa", "aarp", "abarth", "abb", "abbott", "abbvie", "abc", "able", "abogado", "abudhabi", "ac", "academy", "accenture", "accountant", "accountants", "aco", "actor", "ad", "adac", "ads", "adult", "ae", "aeg", "aero", "aetna", "af", "afamilycompany", "afl", "africa", "ag", "agakhan", "agency", "ai", "aig", "airbus", "airforce", "airtel", "akdn", "al", "alfaromeo", "alibaba", "alipay", "allfinanz", "allstate", "ally", "alsace", "alstom", "am", "amazon", "americanexpress", "americanfamily", "amex", "amfam", "amica", "amsterdam", "analytics", "android", "anquan", "anz", "ao", "aol", "apartments", "app", "apple", "aq", "aquarelle", "ar", "arab", "aramco", "archi", "army", "arpa", "art", "arte", "as", "asda", "asia", "associates", "at", "athleta", "attorney", "au", "auction", "audi", "audible", "audio", "auspost", "author", "auto", "autos", "avianca", "aw", "aws", "ax", "axa", "az", "azure", "ba", "baby", "baidu", "banamex", "bananarepublic", "band", "bank", "bar", "barcelona", "barclaycard", "barclays", "barefoot", "bargains", "baseball", "basketball", "bauhaus", "bayern", "bb", "bbc", "bbt", "bbva", "bcg", "bcn", "bd", "be", "beats", "beauty", "beer", "bentley", "berlin", "best", "bestbuy", "bet", "bf", "bg", "bh", "bharti", "bi", "bible", "bid", "bike", "bing", "bingo", "bio", "biz", "bj", "black", "blackfriday", "blockbuster", "blog", "bloomberg", "blue", "bm", "bms", "bmw", "bn", "bnpparibas", "bo", "boats", "boehringer", "bofa", "bom", "bond", "boo", "book", "booking", "bosch", "bostik", "boston", "bot", "boutique", "box", "br", "bradesco", "bridgestone", "broadway", "broker", "brother", "brussels", "bs", "bt", "budapest", "bugatti", "build", "builders", "business", "buy", "buzz", "bv", "bw", "by", "bz", "bzh", "ca", "cab", "cafe", "cal", "call", "calvinklein", "cam", "camera", "camp", "cancerresearch", "canon", "capetown", "capital", "capitalone", "car", "caravan", "cards", "care", "career", "careers", "cars", "casa", "case", "cash", "casino", "cat", "catering", "catholic", "cba", "cbn", "cbre", "cbs", "cc", "cd", "center", "ceo", "cern", "cf", "cfa", "cfd", "cg", "ch", "chanel", "channel", "charity", "chase", "chat", "cheap", "chintai", "christmas", "chrome", "church", "ci", "cipriani", "circle", "cisco", "citadel", "citi", "citic", "city", "cityeats", "ck", "cl", "claims", "cleaning", "click", "clinic", "clinique", "clothing", "cloud", "club", "clubmed", "cm", "cn", "co", "coach", "codes", "coffee", "college", "cologne", "com", "comcast", "commbank", "community", "company", "compare", "computer", "comsec", "condos", "construction", "consulting", "contact", "contractors", "cooking", "cookingchannel", "cool", "coop", "corsica", "country", "coupon", "coupons", "courses", "cpa", "cr", "credit", "creditcard", "creditunion", "cricket", "crown", "crs", "cruise", "cruises", "csc", "cu", "cuisinella", "cv", "cw", "cx", "cy", "cymru", "cyou", "cz", "dabur", "dad", "dance", "data", "date", "dating", "datsun", "day", "dclk", "dds", "de", "deal", "dealer", "deals", "degree", "delivery", "dell", "deloitte", "delta", "democrat", "dental", "dentist", "desi", "design", "dev", "dhl", "diamonds", "diet", "digital", "direct", "directory", "discount", "discover", "dish", "diy", "dj", "dk", "dm", "dnp", "do", "docs", "doctor", "dog", "domains", "dot", "download", "drive", "dtv", "dubai", "duck", "dunlop", "dupont", "durban", "dvag", "dvr", "dz", "earth", "eat", "ec", "eco", "edeka", "edu", "education", "ee", "eg", "email", "emerck", "energy", "engineer", "engineering", "enterprises", "epson", "equipment", "er", "ericsson", "erni", "es", "esq", "estate", "et", "etisalat", "eu", "eurovision", "eus", "events", "exchange", "expert", "exposed", "express", "extraspace", "fage", "fail", "fairwinds", "faith", "family", "fan", "fans", "farm", "farmers", "fashion", "fast", "fedex", "feedback", "ferrari", "ferrero", "fi", "fiat", "fidelity", "fido", "film", "final", "finance", "financial", "fire", "firestone", "firmdale", "fish", "fishing", "fit", "fitness", "fj", "fk", "flickr", "flights", "flir", "florist", "flowers", "fly", "fm", "fo", "foo", "food", "foodnetwork", "football", "ford", "forex", "forsale", "forum", "foundation", "fox", "fr", "free", "fresenius", "frl", "frogans", "frontdoor", "frontier", "ftr", "fujitsu", "fujixerox", "fun", "fund", "furniture", "futbol", "fyi", "ga", "gal", "gallery", "gallo", "gallup", "game", "games", "gap", "garden", "gay", "gb", "gbiz", "gd", "gdn", "ge", "gea", "gent", "genting", "george", "gf", "gg", "ggee", "gh", "gi", "gift", "gifts", "gives", "giving", "gl", "glade", "glass", "gle", "global", "globo", "gm", "gmail", "gmbh", "gmo", "gmx", "gn", "godaddy", "gold", "goldpoint", "golf", "goo", "goodyear", "goog", "google", "gop", "got", "gov", "gp", "gq", "gr", "grainger", "graphics", "gratis", "green", "gripe", "grocery", "group", "gs", "gt", "gu", "guardian", "gucci", "guge", "guide", "guitars", "guru", "gw", "gy", "hair", "hamburg", "hangout", "haus", "hbo", "hdfc", "hdfcbank", "health", "healthcare", "help", "helsinki", "here", "hermes", "hgtv", "hiphop", "hisamitsu", "hitachi", "hiv", "hk", "hkt", "hm", "hn", "hockey", "holdings", "holiday", "homedepot", "homegoods", "homes", "homesense", "honda", "horse", "hospital", "host", "hosting", "hot", "hoteles", "hotels", "hotmail", "house", "how", "hr", "hsbc", "ht", "hu", "hughes", "hyatt", "hyundai", "ibm", "icbc", "ice", "icu", "id", "ie", "ieee", "ifm", "ikano", "il", "im", "imamat", "imdb", "immo", "immobilien", "in", "inc", "industries", "infiniti", "info", "ing", "ink", "institute", "insurance", "insure", "int", "international", "intuit", "investments", "io", "ipiranga", "iq", "ir", "irish", "is", "ismaili", "ist", "istanbul", "it", "itau", "itv", "iveco", "jaguar", "java", "jcb", "je", "jeep", "jetzt", "jewelry", "jio", "jll", "jm", "jmp", "jnj", "jo", "jobs", "joburg", "jot", "joy", "jp", "jpmorgan", "jprs", "juegos", "juniper", "kaufen", "kddi", "ke", "kerryhotels", "kerrylogistics", "kerryproperties", "kfh", "kg", "kh", "ki", "kia", "kim", "kinder", "kindle", "kitchen", "kiwi", "km", "kn", "koeln", "komatsu", "kosher", "kp", "kpmg", "kpn", "kr", "krd", "kred", "kuokgroup", "kw", "ky", "kyoto", "kz", "la", "lacaixa", "lamborghini", "lamer", "lancaster", "lancia", "land", "landrover", "lanxess", "lasalle", "lat", "latino", "latrobe", "law", "lawyer", "lb", "lc", "lds", "lease", "leclerc", "lefrak", "legal", "lego", "lexus", "lgbt", "li", "lidl", "life", "lifeinsurance", "lifestyle", "lighting", "like", "lilly", "limited", "limo", "lincoln", "linde", "link", "lipsy", "live", "living", "lixil", "lk", "llc", "llp", "loan", "loans", "locker", "locus", "loft", "lol", "london", "lotte", "lotto", "love", "lpl", "lplfinancial", "lr", "ls", "lt", "ltd", "ltda", "lu", "lundbeck", "luxe", "luxury", "lv", "ly", "ma", "macys", "madrid", "maif", "maison", "makeup", "man", "management", "mango", "map", "market", "marketing", "markets", "marriott", "marshalls", "maserati", "mattel", "mba", "mc", "mckinsey", "md", "me", "med", "media", "meet", "melbourne", "meme", "memorial", "men", "menu", "merckmsd", "mg", "mh", "miami", "microsoft", "mil", "mini", "mint", "mit", "mitsubishi", "mk", "ml", "mlb", "mls", "mm", "mma", "mn", "mo", "mobi", "mobile", "moda", "moe", "moi", "mom", "monash", "money", "monster", "mormon", "mortgage", "moscow", "moto", "motorcycles", "mov", "movie", "mp", "mq", "mr", "ms", "msd", "mt", "mtn", "mtr", "mu", "museum", "mutual", "mv", "mw", "mx", "my", "mz", "na", "nab", "nagoya", "name", "nationwide", "natura", "navy", "nba", "nc", "ne", "nec", "net", "netbank", "netflix", "network", "neustar", "new", "news", "next", "nextdirect", "nexus", "nf", "nfl", "ng", "ngo", "nhk", "ni", "nico", "nike", "nikon", "ninja", "nissan", "nissay", "nl", "no", "nokia", "northwesternmutual", "norton", "now", "nowruz", "nowtv", "np", "nr", "nra", "nrw", "ntt", "nu", "nyc", "nz", "obi", "observer", "off", "office", "okinawa", "olayan", "olayangroup", "oldnavy", "ollo", "om", "omega", "one", "ong", "onl", "online", "onyourside", "ooo", "open", "oracle", "orange", "org", "organic", "origins", "osaka", "otsuka", "ott", "ovh", "pa", "page", "panasonic", "paris", "pars", "partners", "parts", "party", "passagens", "pay", "pccw", "pe", "pet", "pf", "pfizer", "pg", "ph", "pharmacy", "phd", "philips", "phone", "photo", "photography", "photos", "physio", "pics", "pictet", "pictures", "pid", "pin", "ping", "pink", "pioneer", "pizza", "pk", "pl", "place", "play", "playstation", "plumbing", "plus", "pm", "pn", "pnc", "pohl", "poker", "politie", "porn", "post", "pr", "pramerica", "praxi", "press", "prime", "pro", "prod", "productions", "prof", "progressive", "promo", "properties", "property", "protection", "pru", "prudential", "ps", "pt", "pub", "pw", "pwc", "py", "qa", "qpon", "quebec", "quest", "qvc", "racing", "radio", "raid", "re", "read", "realestate", "realtor", "realty", "recipes", "red", "redstone", "redumbrella", "rehab", "reise", "reisen", "reit", "reliance", "ren", "rent", "rentals", "repair", "report", "republican", "rest", "restaurant", "review", "reviews", "rexroth", "rich", "richardli", "ricoh", "ril", "rio", "rip", "rmit", "ro", "rocher", "rocks", "rodeo", "rogers", "room", "rs", "rsvp", "ru", "rugby", "ruhr", "run", "rw", "rwe", "ryukyu", "sa", "saarland", "safe", "safety", "sakura", "sale", "salon", "samsclub", "samsung", "sandvik", "sandvikcoromant", "sanofi", "sap", "sarl", "sas", "save", "saxo", "sb", "sbi", "sbs", "sc", "sca", "scb", "schaeffler", "schmidt", "scholarships", "school", "schule", "schwarz", "science", "scjohnson", "scot", "sd", "se", "search", "seat", "secure", "security", "seek", "select", "sener", "services", "ses", "seven", "sew", "sex", "sexy", "sfr", "sg", "sh", "shangrila", "sharp", "shaw", "shell", "shia", "shiksha", "shoes", "shop", "shopping", "shouji", "show", "showtime", "si", "silk", "sina", "singles", "site", "sj", "sk", "ski", "skin", "sky", "skype", "sl", "sling", "sm", "smart", "smile", "sn", "sncf", "so", "soccer", "social", "softbank", "software", "sohu", "solar", "solutions", "song", "sony", "soy", "spa", "space", "sport", "spot", "spreadbetting", "sr", "srl", "ss", "st", "stada", "staples", "star", "statebank", "statefarm", "stc", "stcgroup", "stockholm", "storage", "store", "stream", "studio", "study", "style", "su", "sucks", "supplies", "supply", "support", "surf", "surgery", "suzuki", "sv", "swatch", "swiftcover", "swiss", "sx", "sy", "sydney", "systems", "sz", "tab", "taipei", "talk", "taobao", "target", "tatamotors", "tatar", "tattoo", "tax", "taxi", "tc", "tci", "td", "tdk", "team", "tech", "technology", "tel", "temasek", "tennis", "teva", "tf", "tg", "th", "thd", "theater", "theatre", "tiaa", "tickets", "tienda", "tiffany", "tips", "tires", "tirol", "tj", "tjmaxx", "tjx", "tk", "tkmaxx", "tl", "tm", "tmall", "tn", "to", "today", "tokyo", "tools", "top", "toray", "toshiba", "total", "tours", "town", "toyota", "toys", "tr", "trade", "trading", "training", "travel", "travelchannel", "travelers", "travelersinsurance", "trust", "trv", "tt", "tube", "tui", "tunes", "tushu", "tv", "tvs", "tw", "tz", "ua", "ubank", "ubs", "ug", "uk", "unicom", "university", "uno", "uol", "ups", "us", "uy", "uz", "va", "vacations", "vana", "vanguard", "vc", "ve", "vegas", "ventures", "verisign", "versicherung", "vet", "vg", "vi", "viajes", "video", "vig", "viking", "villas", "vin", "vip", "virgin", "visa", "vision", "viva", "vivo", "vlaanderen", "vn", "vodka", "volkswagen", "volvo", "vote", "voting", "voto", "voyage", "vu", "vuelos", "wales", "walmart", "walter", "wang", "wanggou", "watch", "watches", "weather", "weatherchannel", "webcam", "weber", "website", "wed", "wedding", "weibo", "weir", "wf", "whoswho", "wien", "wiki", "williamhill", "win", "windows", "wine", "winners", "wme", "wolterskluwer", "woodside", "work", "works", "world", "wow", "ws", "wtc", "wtf", "xbox", "xerox", "xfinity", "xihuan", "xin", "कॉम", "セール", "佛山", "ಭಾರತ", "慈善", "集团", "在线", "한국", "ଭାରତ", "大众汽车", "点看", "คอม", "ভাৰত", "ভারত", "八卦", "ישראל", "موقع", "বাংলা", "公益", "公司", "香格里拉", "网站", "移动", "我爱你", "москва", "қаз", "католик", "онлайн", "сайт", "联通", "срб", "бг", "бел", "קום", "时尚", "微博", "淡马锡", "ファッション", "орг", "नेट", "ストア", "アマゾン", "삼성", "சிங்கப்பூர்", "商标", "商店", "商城", "дети", "мкд", "ею", "ポイント", "新闻", "家電", "كوم", "中文网", "中信", "中国", "中國", "娱乐", "谷歌", "భారత్", "ලංකා", "電訊盈科", "购物", "クラウド", "ભારત", "通販", "भारतम्", "भारत", "भारोत", "网店", "संगठन", "餐厅", "网络", "ком", "укр", "香港", "亚马逊", "诺基亚", "食品", "飞利浦", "台湾", "台灣", "手机", "мон", "الجزائر", "عمان", "ارامكو", "ایران", "العليان", "اتصالات", "امارات", "بازار", "موريتانيا", "پاکستان", "الاردن", "بارت", "بھارت", "المغرب", "ابوظبي", "البحرين", "السعودية", "ڀارت", "كاثوليك", "سودان", "همراه", "عراق", "مليسيا", "澳門", "닷컴", "政府", "شبكة", "بيتك", "عرب", "გე", "机构", "组织机构", "健康", "ไทย", "سورية", "招聘", "рус", "рф", "تونس", "大拿", "ລາວ", "みんな", "グーグル", "ευ", "ελ", "世界", "書籍", "ഭാരതം", "ਭਾਰਤ", "网址", "닷넷", "コム", "天主教", "游戏", "vermögensberater", "vermögensberatung", "企业", "信息", "嘉里大酒店", "嘉里", "مصر", "قطر", "广东", "இலங்கை", "இந்தியா", "հայ", "新加坡", "فلسطين", "政务", "xxx", "xyz", "yachts", "yahoo", "yamaxun", "yandex", "ye", "yodobashi", "yoga", "yokohama", "you", "youtube", "yt", "yun", "za", "zappos", "zara", "zero", "zip", "zm", "zone", "zuerich", "zw"];
 
 var urlRegex = function urlRegex(options) {
   options = _objectSpread2({
@@ -31458,7 +31623,7 @@ function attributeValidateAlign(context) {
   };
 }
 
-var defaults$8 = {
+var defaults$2 = {
   namedCssLevel1OK: true,
   namedCssLevel2PlusOK: true,
   hexThreeOK: false,
@@ -31468,7 +31633,7 @@ var defaults$8 = {
 };
 
 function validateColor(str, idxOffset, originalOpts) {
-  var opts = _objectSpread2(_objectSpread2({}, defaults$8), originalOpts); // we get trimmed string start and end positions, also an encountered errors array
+  var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts); // we get trimmed string start and end positions, also an encountered errors array
 
 
   var _checkForWhitespace = checkForWhitespace(str, idxOffset),
@@ -31798,7 +31963,7 @@ function attributeValidateBgcolor(context) {
   };
 }
 
-var defaultOpts$1 = {
+var defaultOpts = {
   type: "integer",
   whitelistValues: [],
   theOnlyGoodUnits: null,
@@ -31815,7 +31980,7 @@ var defaultOpts$1 = {
   maxValue: null
 };
 
-function validateValue$2(_ref) {
+function validateValue(_ref) {
   var str = _ref.str,
       opts = _ref.opts,
       charStart = _ref.charStart,
@@ -31893,7 +32058,7 @@ function validateValue$2(_ref) {
         // dash can be in the middle! For example, colspan="1-1"
         var endPart = str.slice(i, charEnd);
 
-        if (isObj$5(opts) && (Array.isArray(opts.theOnlyGoodUnits) && !opts.theOnlyGoodUnits.includes(endPart) || Array.isArray(opts.badUnits) && opts.badUnits.includes(endPart))) { // special case for "px"
+        if (isObj(opts) && (Array.isArray(opts.theOnlyGoodUnits) && !opts.theOnlyGoodUnits.includes(endPart) || Array.isArray(opts.badUnits) && opts.badUnits.includes(endPart))) { // special case for "px"
 
           if (endPart === "px") {
             var _message = opts.customPxMessage ? opts.customPxMessage : "Remove px.";
@@ -31978,7 +32143,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
     return [];
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaultOpts$1), originalOpts); // we get trimmed string start and end positions, also an encountered errors array
+  var opts = _objectSpread2(_objectSpread2({}, defaultOpts), originalOpts); // we get trimmed string start and end positions, also an encountered errors array
 
 
   var charStart = 0;
@@ -32006,7 +32171,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
           var extractedValue = str.slice(idxFrom - idxOffset, idxTo - idxOffset); // if the value is not whitelisted, evaluate it
 
           if (!Array.isArray(opts.whitelistValues) || !opts.whitelistValues.includes(extractedValue)) {
-            validateValue$2({
+            validateValue({
               str: str,
               opts: opts,
               charStart: idxFrom - idxOffset,
@@ -32057,7 +32222,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
     } else { // if the value is not whitelisted, evaluate it
 
       if (!Array.isArray(opts.whitelistValues) || !opts.whitelistValues.includes(str.slice(charStart, charEnd))) {
-        validateValue$2({
+        validateValue({
           str: str,
           opts: opts,
           charStart: charStart,
@@ -32093,7 +32258,8 @@ function attributeValidateBorder(context) {
         var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           type: "integer",
           negativeOK: false,
-          theOnlyGoodUnits: []
+          theOnlyGoodUnits: [] // empty array means no units allowed
+
         });
         errorArr.forEach(function (errorObj) {
           context.report(_objectSpread2(_objectSpread2({}, errorObj), {}, {
@@ -32379,7 +32545,7 @@ function validateVoid(node, context, errorArr, originalOpts) {
     });
   }
 
-  if (isObj$5(opts.enforceSiblingAttributes) && Object.keys(opts.enforceSiblingAttributes).length) {
+  if (isObj(opts.enforceSiblingAttributes) && Object.keys(opts.enforceSiblingAttributes).length) {
     Object.keys(opts.enforceSiblingAttributes).forEach(function (siblingAttr) {
 
       if (Array.isArray(node.parent.attribs) && !node.parent.attribs.some(function (attribObj) {
@@ -32635,7 +32801,7 @@ function attributeValidateClass(context) {
   };
 }
 
-function attributeValidateClassid(context) {
+function attributeValidateClassid$1(context) {
   return {
     attribute: function attribute(node) {
 
@@ -32666,7 +32832,7 @@ function attributeValidateClassid(context) {
   };
 }
 
-function attributeValidateClassid$1(context) {
+function attributeValidateClassid(context) {
   return {
     attribute: function attribute(node) {
 
@@ -33457,7 +33623,8 @@ function attributeValidateFrame(context) {
         var errorArr = validateString(node.attribValueRaw, // value
         node.attribValueStartsAt, // offset
         {
-          permittedValues: ["void", "above", "below", "hsides", "lhs", "rhs", "vsides", "box", "border"],
+          permittedValues: ["void", "above", "below", "hsides", "lhs", "rhs", "vsides", "box", "border" // All four sides.
+          ],
           canBeCommaSeparated: false
         });
         errorArr.forEach(function (errorObj) {
@@ -34840,14 +35007,14 @@ function loop(str, opts, res) {
 
   }
 }
-var defaults$9 = {
+var defaults$1 = {
   offset: 0
 }; // See https://drafts.csswg.org/mediaqueries/
 // Also https://csstree.github.io/docs/validator.html
 // Also, test in Chrome yourself
 
 function isMediaD(originalStr, originalOpts) {
-  var opts = _objectSpread2(_objectSpread2({}, defaults$9), originalOpts); // insurance first
+  var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts); // insurance first
 
 
   if (opts.offset && !Number.isInteger(opts.offset)) {
@@ -36904,13 +37071,13 @@ function attributeValidateStart(context) {
   };
 }
 
-var defaults$a = {
+var defaults = {
   noTrailingSemi: true
 };
 
 function validateInlineStyle(str, idxOffset, originalOpts) {
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$a), originalOpts); // we get trimmed string start and end positions, also an encountered errors array
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); // we get trimmed string start and end positions, also an encountered errors array
   // const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
 
   var _checkForWhitespace = checkForWhitespace(str, idxOffset),
@@ -44103,7 +44270,7 @@ function commentMismatchingPair(context) {
       function (key, val, innerObj) {
         var current = val !== undefined ? val : key;
 
-        if (isObj$5(current)) {
+        if (isObj(current)) {
           // monkey will traverse every key, every string within.
           // We need to pick the objects of a type we need: "comment"
           // console.log(
@@ -44116,7 +44283,7 @@ function commentMismatchingPair(context) {
           if (current.type === "comment" && current.closing) {
             var previousToken = objectPath.get(node, pathPrev(innerObj.path));
 
-            if (isObj$5(previousToken) && previousToken.type === "comment" && !previousToken.closing) {
+            if (isObj(previousToken) && previousToken.type === "comment" && !previousToken.closing) {
               if (previousToken.kind === "not" && current.kind === "only") { // turn tail into "not"-kind, add front part (<!--)
                 // Out of all raised errors, only one can have "ranges.fix" -
                 // all other fixes, if any present, will be removed.
@@ -44169,7 +44336,7 @@ function commentConditionalNested(context) {
       function (key, val, innerObj) {
         var current = val !== undefined ? val : key;
 
-        if (isObj$5(current)) {
+        if (isObj(current)) {
           // monkey will traverse every key, every string within.
           // We need to pick the objects of a type we need: "comment"
 
@@ -44605,10 +44772,10 @@ defineLazyProp(builtInRules, "bad-character-information-separator-three", functi
   return badCharacterInformationSeparatorThree;
 });
 defineLazyProp(builtInRules, "bad-character-information-separator-two", function () {
-  return badCharacterInformationSeparatorTwo;
+  return badCharacterInformationSeparatorTwo$1;
 });
 defineLazyProp(builtInRules, "bad-character-information-separator-one", function () {
-  return badCharacterInformationSeparatorTwo$1;
+  return badCharacterInformationSeparatorTwo;
 });
 defineLazyProp(builtInRules, "bad-character-delete", function () {
   return badCharacterDelete;
@@ -44656,10 +44823,10 @@ defineLazyProp(builtInRules, "bad-character-reverse-line-feed", function () {
   return badCharacterReverseLineFeed;
 });
 defineLazyProp(builtInRules, "bad-character-single-shift-two", function () {
-  return badCharacterSingleShiftTwo;
+  return badCharacterSingleShiftTwo$1;
 });
 defineLazyProp(builtInRules, "bad-character-single-shift-three", function () {
-  return badCharacterSingleShiftTwo$1;
+  return badCharacterSingleShiftTwo;
 });
 defineLazyProp(builtInRules, "bad-character-device-control-string", function () {
   return badCharacterDeviceControlString;
@@ -44961,10 +45128,10 @@ defineLazyProp(builtInRules, "attribute-validate-class", function () {
   return attributeValidateClass;
 });
 defineLazyProp(builtInRules, "attribute-validate-classid", function () {
-  return attributeValidateClassid;
+  return attributeValidateClassid$1;
 });
 defineLazyProp(builtInRules, "attribute-validate-clear", function () {
-  return attributeValidateClassid$1;
+  return attributeValidateClassid;
 });
 defineLazyProp(builtInRules, "attribute-validate-code", function () {
   return attributeValidateCode;
@@ -45544,7 +45711,7 @@ var Linter = /*#__PURE__*/function (_TypedEmitter) {
         if (currentRulesSeverity) {
           var message = "Something is wrong.";
 
-          if (isObj$5(obj) && typeof obj.ruleId === "string" && has.call(astErrMessages, obj.ruleId)) {
+          if (isObj(obj) && typeof obj.ruleId === "string" && has.call(astErrMessages, obj.ruleId)) {
             message = astErrMessages[obj.ruleId];
           }
 
@@ -45558,7 +45725,7 @@ var Linter = /*#__PURE__*/function (_TypedEmitter) {
     }), function (key, val, innerObj) {
       var current = val !== undefined ? val : key;
 
-      if (isObj$5(current) && (!innerObj.parentKey || !innerObj.parentKey.startsWith("attrib"))) { // monkey will traverse every key, every string within.
+      if (isObj(current) && (!innerObj.parentKey || !innerObj.parentKey.startsWith("attrib"))) { // monkey will traverse every key, every string within.
         // We need to pick the objects of a type we need: "tag", "comment" etc.
         // tag-level callback
 
@@ -45727,13 +45894,13 @@ var Linter = /*#__PURE__*/function (_TypedEmitter) {
   return Linter;
 }(TypedEmitter);
 
-var version = "4.1.2";
+var version$1 = "4.1.2";
 
-var version$1 = version;
+var version = version$1;
 
 exports.Linter = Linter;
 exports.util = util;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

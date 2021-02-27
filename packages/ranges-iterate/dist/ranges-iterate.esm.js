@@ -7,9 +7,9 @@
  * Homepage: https://codsen.com/os/ranges-iterate/
  */
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-const version$1 = version;
+const version = version$1;
 
 function rIterate(str, originalRanges, cb, offset = 0) {
   if (typeof str !== "string") {
@@ -44,7 +44,8 @@ function rIterate(str, originalRanges, cb, offset = 0) {
       // push converter simply returns range that was given, no changes needed
       cb({
         i,
-        val: str[i]
+        val: str[i] // push: (received) => received,
+
       });
     }
   } else {
@@ -117,4 +118,4 @@ function rIterate(str, originalRanges, cb, offset = 0) {
   }
 }
 
-export { rIterate, version$1 as version };
+export { rIterate, version };

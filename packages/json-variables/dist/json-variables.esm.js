@@ -18,10 +18,10 @@ import { rApply } from 'ranges-apply';
 import { remDup } from 'string-remove-duplicate-heads-tails';
 import { matchRightIncl, matchLeftIncl } from 'string-match-left-right';
 
-var version = "10.0.5";
+var version$1 = "10.0.5";
 
 /* eslint max-len:0 */
-const version$1 = version;
+const version = version$1;
 const has = Object.prototype.hasOwnProperty;
 const defaults = {
   heads: "%%_",
@@ -43,7 +43,8 @@ const defaults = {
   // even if some values contain Boolean true. Otherwise, the whole value will
   // resolve to the first encountered Boolean.
   throwWhenNonStringInsertedInString: false,
-  allowUnresolved: false
+  allowUnresolved: false // Allow value to not have a resolved variable
+
 }; // -----------------------------------------------------------------------------
 //                       H E L P E R   F U N C T I O N S
 // -----------------------------------------------------------------------------
@@ -634,4 +635,4 @@ function jVar(input, originalOpts) {
   });
 }
 
-export { defaults, jVar, version$1 as version };
+export { defaults, jVar, version };

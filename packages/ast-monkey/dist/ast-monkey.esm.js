@@ -13,9 +13,9 @@ import { compare } from 'ast-compare';
 import { traverse } from 'ast-monkey-traverse';
 export { traverse } from 'ast-monkey-traverse';
 
-var version = "7.13.5";
+var version$1 = "7.13.5";
 
-const version$1 = version;
+const version = version$1;
 
 function existy(x) {
   return x != null;
@@ -327,4 +327,4 @@ function arrayFirstOnly(input) {
   });
 } // -----------------------------------------------------------------------------
 
-export { arrayFirstOnly, del, drop, find, get, set, version$1 as version };
+export { arrayFirstOnly, del, drop, find, get, set, version };

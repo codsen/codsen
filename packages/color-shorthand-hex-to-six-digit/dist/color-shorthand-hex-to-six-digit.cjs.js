@@ -21,10 +21,10 @@ var r__default = /*#__PURE__*/_interopDefaultLegacy(r);
 var isPlainObject__default = /*#__PURE__*/_interopDefaultLegacy(isPlainObject);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 
-var version = "3.0.5";
+var version$1 = "3.0.5";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
-var version$1 = version;
+var version = version$1;
 /**
  * Convert shorthand hex color codes into full
  */
@@ -63,4 +63,4 @@ function conv(originalInput) {
 }
 
 exports.conv = conv;
-exports.version = version$1;
+exports.version = version;

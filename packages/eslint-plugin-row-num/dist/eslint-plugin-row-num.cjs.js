@@ -101,7 +101,8 @@ var correctRowNum = {
     messages: {
       correctRowNum: "Update the row number."
     },
-    fixable: "code"
+    fixable: "code" // or "code" or "whitespace"
+
   }
 };
 

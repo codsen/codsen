@@ -115,14 +115,14 @@ function _createForOfIteratorHelperLoose(o, allowArrayLike) {
 
 /** Used as references for various `Number` constants. */
 var INFINITY = 1 / 0,
-    MAX_SAFE_INTEGER = 9007199254740991,
+    MAX_SAFE_INTEGER$1 = 9007199254740991,
     MAX_INTEGER = 1.7976931348623157e+308,
     NAN = 0 / 0;
 /** `Object#toString` result references. */
 
 var argsTag = '[object Arguments]',
-    funcTag = '[object Function]',
-    genTag = '[object GeneratorFunction]',
+    funcTag$1 = '[object Function]',
+    genTag$1 = '[object GeneratorFunction]',
     stringTag = '[object String]',
     symbolTag = '[object Symbol]';
 /** Used to match leading and trailing whitespace. */
@@ -153,7 +153,7 @@ var freeParseInt = parseInt;
  * @returns {Array} Returns the new mapped array.
  */
 
-function arrayMap(array, iteratee) {
+function arrayMap$2(array, iteratee) {
   var index = -1,
       length = array ? array.length : 0,
       result = Array(length);
@@ -177,7 +177,7 @@ function arrayMap(array, iteratee) {
  */
 
 
-function baseFindIndex(array, predicate, fromIndex, fromRight) {
+function baseFindIndex$2(array, predicate, fromIndex, fromRight) {
   var length = array.length,
       index = fromIndex + (fromRight ? 1 : -1);
 
@@ -200,9 +200,9 @@ function baseFindIndex(array, predicate, fromIndex, fromRight) {
  */
 
 
-function baseIndexOf(array, value, fromIndex) {
+function baseIndexOf$2(array, value, fromIndex) {
   if (value !== value) {
-    return baseFindIndex(array, baseIsNaN, fromIndex);
+    return baseFindIndex$2(array, baseIsNaN$2, fromIndex);
   }
 
   var index = fromIndex - 1,
@@ -225,7 +225,7 @@ function baseIndexOf(array, value, fromIndex) {
  */
 
 
-function baseIsNaN(value) {
+function baseIsNaN$2(value) {
   return value !== value;
 }
 /**
@@ -262,7 +262,7 @@ function baseTimes(n, iteratee) {
 
 
 function baseValues(object, props) {
-  return arrayMap(props, function (key) {
+  return arrayMap$2(props, function (key) {
     return object[key];
   });
 }
@@ -276,7 +276,7 @@ function baseValues(object, props) {
  */
 
 
-function overArg(func, transform) {
+function overArg$1(func, transform) {
   return function (arg) {
     return func(transform(arg));
   };
@@ -284,24 +284,24 @@ function overArg(func, transform) {
 /** Used for built-in method references. */
 
 
-var objectProto = Object.prototype;
+var objectProto$2 = Object.prototype;
 /** Used to check objects for own properties. */
 
-var hasOwnProperty = objectProto.hasOwnProperty;
+var hasOwnProperty$2 = objectProto$2.hasOwnProperty;
 /**
  * Used to resolve the
  * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
  * of values.
  */
 
-var objectToString = objectProto.toString;
+var objectToString$2 = objectProto$2.toString;
 /** Built-in value references. */
 
-var propertyIsEnumerable = objectProto.propertyIsEnumerable;
+var propertyIsEnumerable = objectProto$2.propertyIsEnumerable;
 /* Built-in method references for those with the same name as other `lodash` methods. */
 
-var nativeKeys = overArg(Object.keys, Object),
-    nativeMax = Math.max;
+var nativeKeys = overArg$1(Object.keys, Object),
+    nativeMax$1 = Math.max;
 /**
  * Creates an array of the enumerable property names of the array-like `value`.
  *
@@ -319,7 +319,7 @@ function arrayLikeKeys(value, inherited) {
       skipIndexes = !!length;
 
   for (var key in value) {
-    if ((inherited || hasOwnProperty.call(value, key)) && !(skipIndexes && (key == 'length' || isIndex(key, length)))) {
+    if ((inherited || hasOwnProperty$2.call(value, key)) && !(skipIndexes && (key == 'length' || isIndex(key, length)))) {
       result.push(key);
     }
   }
@@ -343,7 +343,7 @@ function baseKeys(object) {
   var result = [];
 
   for (var key in Object(object)) {
-    if (hasOwnProperty.call(object, key) && key != 'constructor') {
+    if (hasOwnProperty$2.call(object, key) && key != 'constructor') {
       result.push(key);
     }
   }
@@ -361,7 +361,7 @@ function baseKeys(object) {
 
 
 function isIndex(value, length) {
-  length = length == null ? MAX_SAFE_INTEGER : length;
+  length = length == null ? MAX_SAFE_INTEGER$1 : length;
   return !!length && (typeof value == 'number' || reIsUint.test(value)) && value > -1 && value % 1 == 0 && value < length;
 }
 /**
@@ -375,7 +375,7 @@ function isIndex(value, length) {
 
 function isPrototype(value) {
   var Ctor = value && value.constructor,
-      proto = typeof Ctor == 'function' && Ctor.prototype || objectProto;
+      proto = typeof Ctor == 'function' && Ctor.prototype || objectProto$2;
   return value === proto;
 }
 /**
@@ -411,15 +411,15 @@ function isPrototype(value) {
 
 
 function includes(collection, value, fromIndex, guard) {
-  collection = isArrayLike(collection) ? collection : values(collection);
+  collection = isArrayLike$1(collection) ? collection : values(collection);
   fromIndex = fromIndex && !guard ? toInteger(fromIndex) : 0;
   var length = collection.length;
 
   if (fromIndex < 0) {
-    fromIndex = nativeMax(length + fromIndex, 0);
+    fromIndex = nativeMax$1(length + fromIndex, 0);
   }
 
-  return isString(collection) ? fromIndex <= length && collection.indexOf(value, fromIndex) > -1 : !!length && baseIndexOf(collection, value, fromIndex) > -1;
+  return isString(collection) ? fromIndex <= length && collection.indexOf(value, fromIndex) > -1 : !!length && baseIndexOf$2(collection, value, fromIndex) > -1;
 }
 /**
  * Checks if `value` is likely an `arguments` object.
@@ -443,7 +443,7 @@ function includes(collection, value, fromIndex, guard) {
 
 function isArguments(value) {
   // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
-  return isArrayLikeObject(value) && hasOwnProperty.call(value, 'callee') && (!propertyIsEnumerable.call(value, 'callee') || objectToString.call(value) == argsTag);
+  return isArrayLikeObject$1(value) && hasOwnProperty$2.call(value, 'callee') && (!propertyIsEnumerable.call(value, 'callee') || objectToString$2.call(value) == argsTag);
 }
 /**
  * Checks if `value` is classified as an `Array` object.
@@ -497,8 +497,8 @@ var isArray = Array.isArray;
  * // => false
  */
 
-function isArrayLike(value) {
-  return value != null && isLength(value.length) && !isFunction(value);
+function isArrayLike$1(value) {
+  return value != null && isLength$1(value.length) && !isFunction$1(value);
 }
 /**
  * This method is like `_.isArrayLike` except that it also checks if `value`
@@ -527,8 +527,8 @@ function isArrayLike(value) {
  */
 
 
-function isArrayLikeObject(value) {
-  return isObjectLike(value) && isArrayLike(value);
+function isArrayLikeObject$1(value) {
+  return isObjectLike$2(value) && isArrayLike$1(value);
 }
 /**
  * Checks if `value` is classified as a `Function` object.
@@ -549,11 +549,11 @@ function isArrayLikeObject(value) {
  */
 
 
-function isFunction(value) {
+function isFunction$1(value) {
   // The use of `Object#toString` avoids issues with the `typeof` operator
   // in Safari 8-9 which returns 'object' for typed array and other constructors.
-  var tag = isObject(value) ? objectToString.call(value) : '';
-  return tag == funcTag || tag == genTag;
+  var tag = isObject$1(value) ? objectToString$2.call(value) : '';
+  return tag == funcTag$1 || tag == genTag$1;
 }
 /**
  * Checks if `value` is a valid array-like length.
@@ -583,8 +583,8 @@ function isFunction(value) {
  */
 
 
-function isLength(value) {
-  return typeof value == 'number' && value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+function isLength$1(value) {
+  return typeof value == 'number' && value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER$1;
 }
 /**
  * Checks if `value` is the
@@ -613,7 +613,7 @@ function isLength(value) {
  */
 
 
-function isObject(value) {
+function isObject$1(value) {
   var type = typeof value;
   return !!value && (type == 'object' || type == 'function');
 }
@@ -643,7 +643,7 @@ function isObject(value) {
  */
 
 
-function isObjectLike(value) {
+function isObjectLike$2(value) {
   return !!value && typeof value == 'object';
 }
 /**
@@ -666,7 +666,7 @@ function isObjectLike(value) {
 
 
 function isString(value) {
-  return typeof value == 'string' || !isArray(value) && isObjectLike(value) && objectToString.call(value) == stringTag;
+  return typeof value == 'string' || !isArray(value) && isObjectLike$2(value) && objectToString$2.call(value) == stringTag;
 }
 /**
  * Checks if `value` is classified as a `Symbol` primitive or object.
@@ -688,7 +688,7 @@ function isString(value) {
 
 
 function isSymbol(value) {
-  return typeof value == 'symbol' || isObjectLike(value) && objectToString.call(value) == symbolTag;
+  return typeof value == 'symbol' || isObjectLike$2(value) && objectToString$2.call(value) == symbolTag;
 }
 /**
  * Converts `value` to a finite number.
@@ -796,9 +796,9 @@ function toNumber(value) {
     return NAN;
   }
 
-  if (isObject(value)) {
+  if (isObject$1(value)) {
     var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
-    value = isObject(other) ? other + '' : other;
+    value = isObject$1(other) ? other + '' : other;
   }
 
   if (typeof value != 'string') {
@@ -840,7 +840,7 @@ function toNumber(value) {
 
 
 function keys(object) {
-  return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
+  return isArrayLike$1(object) ? arrayLikeKeys(object) : baseKeys(object);
 }
 /**
  * Creates an array of the own enumerable string keyed property values of `object`.
@@ -1444,7 +1444,7 @@ function baseIsNaN$1(value) {
  */
 
 
-function baseUnary(func) {
+function baseUnary$1(func) {
   return function (value) {
     return func(value);
   };
@@ -1452,10 +1452,10 @@ function baseUnary(func) {
 /** Used for built-in method references. */
 
 
-var arrayProto = Array.prototype;
+var arrayProto$1 = Array.prototype;
 /** Built-in value references. */
 
-var splice = arrayProto.splice;
+var splice$1 = arrayProto$1.splice;
 /**
  * The base implementation of `_.pullAllBy` without support for iteratee
  * shorthands.
@@ -1479,7 +1479,7 @@ function basePullAll(array, values, iteratee, comparator) {
   }
 
   if (iteratee) {
-    seen = arrayMap$1(array, baseUnary(iteratee));
+    seen = arrayMap$1(array, baseUnary$1(iteratee));
   }
 
   while (++index < length) {
@@ -1489,10 +1489,10 @@ function basePullAll(array, values, iteratee, comparator) {
 
     while ((fromIndex = indexOf(seen, computed, fromIndex, comparator)) > -1) {
       if (seen !== array) {
-        splice.call(seen, fromIndex, 1);
+        splice$1.call(seen, fromIndex, 1);
       }
 
-      splice.call(array, fromIndex, 1);
+      splice$1.call(array, fromIndex, 1);
     }
   }
 
@@ -3410,7 +3410,7 @@ var objectTag = '[object Object]';
  * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
  */
 
-function isHostObject(value) {
+function isHostObject$1(value) {
   // Many host objects are `Object` objects that can coerce to strings
   // despite having improperly defined `toString` methods.
   var result = false;
@@ -3433,7 +3433,7 @@ function isHostObject(value) {
  */
 
 
-function overArg$1(func, transform) {
+function overArg(func, transform) {
   return function (arg) {
     return func(transform(arg));
   };
@@ -3441,17 +3441,17 @@ function overArg$1(func, transform) {
 /** Used for built-in method references. */
 
 
-var funcProto = Function.prototype,
+var funcProto$1 = Function.prototype,
     objectProto$1 = Object.prototype;
 /** Used to resolve the decompiled source of functions. */
 
-var funcToString = funcProto.toString;
+var funcToString$1 = funcProto$1.toString;
 /** Used to check objects for own properties. */
 
 var hasOwnProperty$1 = objectProto$1.hasOwnProperty;
 /** Used to infer the `Object` constructor. */
 
-var objectCtorString = funcToString.call(Object);
+var objectCtorString = funcToString$1.call(Object);
 /**
  * Used to resolve the
  * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
@@ -3461,7 +3461,7 @@ var objectCtorString = funcToString.call(Object);
 var objectToString$1 = objectProto$1.toString;
 /** Built-in value references. */
 
-var getPrototype = overArg$1(Object.getPrototypeOf, Object);
+var getPrototype = overArg(Object.getPrototypeOf, Object);
 /**
  * Checks if `value` is object-like. A value is object-like if it's not `null`
  * and has a `typeof` result of "object".
@@ -3521,7 +3521,7 @@ function isObjectLike$1(value) {
 
 
 function isPlainObject(value) {
-  if (!isObjectLike$1(value) || objectToString$1.call(value) != objectTag || isHostObject(value)) {
+  if (!isObjectLike$1(value) || objectToString$1.call(value) != objectTag || isHostObject$1(value)) {
     return false;
   }
 
@@ -3532,7 +3532,7 @@ function isPlainObject(value) {
   }
 
   var Ctor = hasOwnProperty$1.call(proto, 'constructor') && proto.constructor;
-  return typeof Ctor == 'function' && Ctor instanceof Ctor && funcToString.call(Ctor) == objectCtorString;
+  return typeof Ctor == 'function' && Ctor instanceof Ctor && funcToString$1.call(Ctor) == objectCtorString;
 }
 
 var lodash_isplainobject = isPlainObject;
@@ -3671,11 +3671,11 @@ function traverse(tree1, cb1) {
 var HASH_UNDEFINED = '__lodash_hash_undefined__';
 /** Used as references for various `Number` constants. */
 
-var MAX_SAFE_INTEGER$1 = 9007199254740991;
+var MAX_SAFE_INTEGER = 9007199254740991;
 /** `Object#toString` result references. */
 
-var funcTag$1 = '[object Function]',
-    genTag$1 = '[object GeneratorFunction]';
+var funcTag = '[object Function]',
+    genTag = '[object GeneratorFunction]';
 /**
  * Used to match `RegExp`
  * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
@@ -3735,7 +3735,7 @@ function apply(func, thisArg, args) {
 
 function arrayIncludes(array, value) {
   var length = array ? array.length : 0;
-  return !!length && baseIndexOf$2(array, value, 0) > -1;
+  return !!length && baseIndexOf(array, value, 0) > -1;
 }
 /**
  * This function is like `arrayIncludes` except that it accepts a comparator.
@@ -3771,7 +3771,7 @@ function arrayIncludesWith(array, value, comparator) {
  */
 
 
-function arrayMap$2(array, iteratee) {
+function arrayMap(array, iteratee) {
   var index = -1,
       length = array ? array.length : 0,
       result = Array(length);
@@ -3795,7 +3795,7 @@ function arrayMap$2(array, iteratee) {
  */
 
 
-function baseFindIndex$2(array, predicate, fromIndex, fromRight) {
+function baseFindIndex(array, predicate, fromIndex, fromRight) {
   var length = array.length,
       index = fromIndex + (fromRight ? 1 : -1);
 
@@ -3818,9 +3818,9 @@ function baseFindIndex$2(array, predicate, fromIndex, fromRight) {
  */
 
 
-function baseIndexOf$2(array, value, fromIndex) {
+function baseIndexOf(array, value, fromIndex) {
   if (value !== value) {
-    return baseFindIndex$2(array, baseIsNaN$2, fromIndex);
+    return baseFindIndex(array, baseIsNaN, fromIndex);
   }
 
   var index = fromIndex - 1,
@@ -3843,7 +3843,7 @@ function baseIndexOf$2(array, value, fromIndex) {
  */
 
 
-function baseIsNaN$2(value) {
+function baseIsNaN(value) {
   return value !== value;
 }
 /**
@@ -3855,7 +3855,7 @@ function baseIsNaN$2(value) {
  */
 
 
-function baseUnary$1(func) {
+function baseUnary(func) {
   return function (value) {
     return func(value);
   };
@@ -3895,7 +3895,7 @@ function getValue(object, key) {
  */
 
 
-function isHostObject$1(value) {
+function isHostObject(value) {
   // Many host objects are `Object` objects that can coerce to strings
   // despite having improperly defined `toString` methods.
   var result = false;
@@ -3911,9 +3911,9 @@ function isHostObject$1(value) {
 /** Used for built-in method references. */
 
 
-var arrayProto$1 = Array.prototype,
-    funcProto$1 = Function.prototype,
-    objectProto$2 = Object.prototype;
+var arrayProto = Array.prototype,
+    funcProto = Function.prototype,
+    objectProto = Object.prototype;
 /** Used to detect overreaching core-js shims. */
 
 var coreJsData = root['__core-js_shared__'];
@@ -3926,26 +3926,26 @@ var maskSrcKey = function () {
 /** Used to resolve the decompiled source of functions. */
 
 
-var funcToString$1 = funcProto$1.toString;
+var funcToString = funcProto.toString;
 /** Used to check objects for own properties. */
 
-var hasOwnProperty$2 = objectProto$2.hasOwnProperty;
+var hasOwnProperty = objectProto.hasOwnProperty;
 /**
  * Used to resolve the
  * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
  * of values.
  */
 
-var objectToString$2 = objectProto$2.toString;
+var objectToString = objectProto.toString;
 /** Used to detect if a method is native. */
 
-var reIsNative = RegExp('^' + funcToString$1.call(hasOwnProperty$2).replace(reRegExpChar, '\\$&').replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
+var reIsNative = RegExp('^' + funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&').replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
 /** Built-in value references. */
 
-var splice$1 = arrayProto$1.splice;
+var splice = arrayProto.splice;
 /* Built-in method references for those with the same name as other `lodash` methods. */
 
-var nativeMax$1 = Math.max,
+var nativeMax = Math.max,
     nativeMin = Math.min;
 /* Built-in method references that are verified to be native. */
 
@@ -4015,7 +4015,7 @@ function hashGet(key) {
     return result === HASH_UNDEFINED ? undefined : result;
   }
 
-  return hasOwnProperty$2.call(data, key) ? data[key] : undefined;
+  return hasOwnProperty.call(data, key) ? data[key] : undefined;
 }
 /**
  * Checks if a hash value for `key` exists.
@@ -4030,7 +4030,7 @@ function hashGet(key) {
 
 function hashHas(key) {
   var data = this.__data__;
-  return nativeCreate ? data[key] !== undefined : hasOwnProperty$2.call(data, key);
+  return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);
 }
 /**
  * Sets the hash `key` to `value`.
@@ -4110,7 +4110,7 @@ function listCacheDelete(key) {
   if (index == lastIndex) {
     data.pop();
   } else {
-    splice$1.call(data, index, 1);
+    splice.call(data, index, 1);
   }
 
   return true;
@@ -4373,7 +4373,7 @@ function baseIntersection(arrays, iteratee, comparator) {
     var array = arrays[othIndex];
 
     if (othIndex && iteratee) {
-      array = arrayMap$2(array, baseUnary$1(iteratee));
+      array = arrayMap(array, baseUnary(iteratee));
     }
 
     maxLength = nativeMin(array.length, maxLength);
@@ -4421,11 +4421,11 @@ function baseIntersection(arrays, iteratee, comparator) {
 
 
 function baseIsNative(value) {
-  if (!isObject$1(value) || isMasked(value)) {
+  if (!isObject(value) || isMasked(value)) {
     return false;
   }
 
-  var pattern = isFunction$1(value) || isHostObject$1(value) ? reIsNative : reIsHostCtor;
+  var pattern = isFunction(value) || isHostObject(value) ? reIsNative : reIsHostCtor;
   return pattern.test(toSource(value));
 }
 /**
@@ -4439,11 +4439,11 @@ function baseIsNative(value) {
 
 
 function baseRest(func, start) {
-  start = nativeMax$1(start === undefined ? func.length - 1 : start, 0);
+  start = nativeMax(start === undefined ? func.length - 1 : start, 0);
   return function () {
     var args = arguments,
         index = -1,
-        length = nativeMax$1(args.length - start, 0),
+        length = nativeMax(args.length - start, 0),
         array = Array(length);
 
     while (++index < length) {
@@ -4471,7 +4471,7 @@ function baseRest(func, start) {
 
 
 function castArrayLikeObject(value) {
-  return isArrayLikeObject$1(value) ? value : [];
+  return isArrayLikeObject(value) ? value : [];
 }
 /**
  * Gets the data for `map`.
@@ -4538,7 +4538,7 @@ function isMasked(func) {
 function toSource(func) {
   if (func != null) {
     try {
-      return funcToString$1.call(func);
+      return funcToString.call(func);
     } catch (e) {}
 
     try {
@@ -4568,7 +4568,7 @@ function toSource(func) {
 
 
 var intersection = baseRest(function (arrays) {
-  var mapped = arrayMap$2(arrays, castArrayLikeObject);
+  var mapped = arrayMap(arrays, castArrayLikeObject);
   return mapped.length && mapped[0] === arrays[0] ? baseIntersection(mapped) : [];
 });
 /**
@@ -4634,8 +4634,8 @@ function eq(value, other) {
  */
 
 
-function isArrayLike$1(value) {
-  return value != null && isLength$1(value.length) && !isFunction$1(value);
+function isArrayLike(value) {
+  return value != null && isLength(value.length) && !isFunction(value);
 }
 /**
  * This method is like `_.isArrayLike` except that it also checks if `value`
@@ -4664,8 +4664,8 @@ function isArrayLike$1(value) {
  */
 
 
-function isArrayLikeObject$1(value) {
-  return isObjectLike$2(value) && isArrayLike$1(value);
+function isArrayLikeObject(value) {
+  return isObjectLike(value) && isArrayLike(value);
 }
 /**
  * Checks if `value` is classified as a `Function` object.
@@ -4686,11 +4686,11 @@ function isArrayLikeObject$1(value) {
  */
 
 
-function isFunction$1(value) {
+function isFunction(value) {
   // The use of `Object#toString` avoids issues with the `typeof` operator
   // in Safari 8-9 which returns 'object' for typed array and other constructors.
-  var tag = isObject$1(value) ? objectToString$2.call(value) : '';
-  return tag == funcTag$1 || tag == genTag$1;
+  var tag = isObject(value) ? objectToString.call(value) : '';
+  return tag == funcTag || tag == genTag;
 }
 /**
  * Checks if `value` is a valid array-like length.
@@ -4720,8 +4720,8 @@ function isFunction$1(value) {
  */
 
 
-function isLength$1(value) {
-  return typeof value == 'number' && value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER$1;
+function isLength(value) {
+  return typeof value == 'number' && value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
 }
 /**
  * Checks if `value` is the
@@ -4750,7 +4750,7 @@ function isLength$1(value) {
  */
 
 
-function isObject$1(value) {
+function isObject(value) {
   var type = typeof value;
   return !!value && (type == 'object' || type == 'function');
 }
@@ -4780,7 +4780,7 @@ function isObject$1(value) {
  */
 
 
-function isObjectLike$2(value) {
+function isObjectLike(value) {
   return !!value && typeof value == 'object';
 }
 
@@ -6088,9 +6088,9 @@ function isEmpty(input) {
   return res;
 }
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function deleteKey(originalInput, originalOpts) {
   function existy(x) {
@@ -6167,7 +6167,7 @@ function deleteKey(originalInput, originalOpts) {
 }
 
 exports.deleteKey = deleteKey;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

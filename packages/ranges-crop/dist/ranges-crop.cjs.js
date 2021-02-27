@@ -13,9 +13,9 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var rangesMerge = require('ranges-merge');
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function rCrop(arrOfRanges, strLen) {
   if (arrOfRanges === null) {
@@ -88,4 +88,4 @@ function rCrop(arrOfRanges, strLen) {
 }
 
 exports.rCrop = rCrop;
-exports.version = version$1;
+exports.version = version;

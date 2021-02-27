@@ -22,9 +22,9 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
-var version$1 = version;
+var version = version$1;
 var finalIndexesToDelete = new rangesPush.Ranges({
   limitToBeAddedWhitespace: true
 });
@@ -549,7 +549,8 @@ function crush(str, originalOpts) {
               str[i] === "<" && stringMatchLeftRight.matchRight(str, i, opts.mindTheInlineTags, {
                 cb: function cb(nextChar) {
                   return !nextChar || !/\w/.test(nextChar);
-                }
+                } // not a letter
+
               }) // ) ||
               // ("<>".includes(str[i]) &&
               //   ("0123456789".includes(str[right(str, i)]) ||
@@ -686,12 +687,14 @@ function crush(str, originalOpts) {
             if (str[i].trim() && (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) || str[~-i] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[~-i])) && isStr(leftTagName) && (!tagName || !opts.mindTheInlineTags.includes(tagName)) && !(str[i] === "<" && stringMatchLeftRight.matchRight(str, i, opts.mindTheInlineTags, {
               cb: function cb(nextChar) {
                 return !nextChar || !/\w/.test(nextChar);
-              }
+              } // not a letter
+
             })) && !(str[i] === "<" && stringMatchLeftRight.matchRight(str, i, opts.mindTheInlineTags, {
               trimCharsBeforeMatching: "/",
               cb: function cb(nextChar) {
                 return !nextChar || !/\w/.test(nextChar);
-              }
+              } // not a letter
+
             }))) {
               stageFrom = i;
               stageTo = i;
@@ -700,7 +703,8 @@ function crush(str, originalOpts) {
               trimCharsBeforeMatching: "/",
               cb: function cb(nextChar) {
                 return !nextChar || !/\w/.test(nextChar);
-              }
+              } // not a letter
+
             }))) {
               stageFrom = null;
               stageTo = null;
@@ -720,7 +724,8 @@ function crush(str, originalOpts) {
             trimCharsBeforeMatching: "/",
             cb: function cb(nextChar) {
               return !nextChar || !/\w/.test(nextChar);
-            }
+            } // not a letter
+
           }))) {
             // ██ 1.
             // // if really exceeded, not on limit, commit stage which will shorten
@@ -975,4 +980,4 @@ function crush(str, originalOpts) {
 
 exports.crush = crush;
 exports.defaults = defaults;
-exports.version = version$1;
+exports.version = version;

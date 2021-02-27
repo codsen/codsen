@@ -2953,9 +2953,9 @@ function compare(b, s, originalOpts) {
   return true;
 }
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-var version$1 = version;
+var version = version$1;
 var defaults = {
   matchKeysStrictly: false,
   hungryForWhitespace: false
@@ -3013,7 +3013,7 @@ function deleteObj(originalInput, objToDelete, originalOpts) {
 
 exports.defaults = defaults;
 exports.deleteObj = deleteObj;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

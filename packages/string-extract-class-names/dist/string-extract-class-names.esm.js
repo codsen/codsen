@@ -9,9 +9,9 @@
 
 import { right, left } from 'string-left-right';
 
-var version = "6.0.5";
+var version$1 = "6.0.5";
 
-const version$1 = version;
+const version = version$1;
 /**
  * Extracts CSS class/id names from a string
  */
@@ -113,4 +113,4 @@ function extract(str) {
   return result;
 }
 
-export { extract, version$1 as version };
+export { extract, version };

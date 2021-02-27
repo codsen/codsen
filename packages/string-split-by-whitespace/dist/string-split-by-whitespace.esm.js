@@ -9,9 +9,9 @@
 
 import { isIndexWithin } from 'ranges-is-index-within';
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-const version$1 = version;
+const version = version$1;
 
 function splitByW(str, originalOpts) {
   if (str === undefined) {
@@ -67,4 +67,4 @@ function splitByW(str, originalOpts) {
   return res;
 }
 
-export { splitByW, version$1 as version };
+export { splitByW, version };

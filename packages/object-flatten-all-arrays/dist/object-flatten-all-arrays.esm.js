@@ -11,9 +11,9 @@ import merge from 'lodash.merge';
 import clone from 'lodash.clonedeep';
 import isObj from 'lodash.isplainobject';
 
-var version = "5.0.5";
+var version$1 = "5.0.5";
 
-const version$1 = version;
+const version = version$1;
 
 function flattenAllArrays(originalIncommingObj, originalOpts) {
   //
@@ -84,4 +84,4 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
   return incommingObj;
 }
 
-export { flattenAllArrays, version$1 as version };
+export { flattenAllArrays, version };

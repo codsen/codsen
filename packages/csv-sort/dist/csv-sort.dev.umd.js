@@ -84,7 +84,7 @@ function arrayMap(array, iteratee) {
  */
 
 
-function baseFindIndex(array, predicate, fromIndex, fromRight) {
+function baseFindIndex$1(array, predicate, fromIndex, fromRight) {
   var length = array.length,
       index = fromIndex + (fromRight ? 1 : -1);
 
@@ -107,9 +107,9 @@ function baseFindIndex(array, predicate, fromIndex, fromRight) {
  */
 
 
-function baseIndexOf(array, value, fromIndex) {
+function baseIndexOf$1(array, value, fromIndex) {
   if (value !== value) {
-    return baseFindIndex(array, baseIsNaN, fromIndex);
+    return baseFindIndex$1(array, baseIsNaN$1, fromIndex);
   }
 
   var index = fromIndex - 1,
@@ -156,7 +156,7 @@ function baseIndexOfWith(array, value, fromIndex, comparator) {
  */
 
 
-function baseIsNaN(value) {
+function baseIsNaN$1(value) {
   return value !== value;
 }
 /**
@@ -196,7 +196,7 @@ var nativeMax = Math.max;
  */
 
 function basePullAll(array, values, iteratee, comparator) {
-  var indexOf = comparator ? baseIndexOfWith : baseIndexOf,
+  var indexOf = comparator ? baseIndexOfWith : baseIndexOf$1,
       index = -1,
       length = values.length,
       seen = array;
@@ -381,7 +381,7 @@ function _objectSpread2(target) {
   return target;
 }
 
-var defaults = {
+var defaults$4 = {
   strictlyTwoElementsInRangeArrays: false,
   progressFn: null
 };
@@ -393,7 +393,7 @@ function rSort(arrOfRanges, originalOptions) {
   } // fill any settings with defaults if missing:
 
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOptions); // arrOfRanges validation
+  var opts = _objectSpread2(_objectSpread2({}, defaults$4), originalOptions); // arrOfRanges validation
 
 
   var culpritsIndex;
@@ -460,7 +460,7 @@ function rSort(arrOfRanges, originalOptions) {
   });
 }
 
-var defaults$1 = {
+var defaults$3 = {
   mergeType: 1,
   progressFn: null,
   joinRangesThatTouchEdges: true
@@ -488,7 +488,7 @@ function rMerge(arrOfRanges, originalOpts) {
 
   if (originalOpts) {
     if (isObj(originalOpts)) {
-      opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts); // 1. validate opts.progressFn
+      opts = _objectSpread2(_objectSpread2({}, defaults$3), originalOpts); // 1. validate opts.progressFn
 
       if (opts.progressFn && isObj(opts.progressFn) && !Object.keys(opts.progressFn).length) {
         opts.progressFn = null;
@@ -509,7 +509,7 @@ function rMerge(arrOfRanges, originalOpts) {
       throw new Error("emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n" + JSON.stringify(originalOpts, null, 4) + " (type " + typeof originalOpts + ")");
     }
   } else {
-    opts = _objectSpread2({}, defaults$1);
+    opts = _objectSpread2({}, defaults$3);
   } // progress-wise, sort takes first 20%
   // two-level-deep array clone:
 
@@ -1131,7 +1131,7 @@ function asciiToArray(string) {
  */
 
 
-function baseFindIndex$1(array, predicate, fromIndex, fromRight) {
+function baseFindIndex(array, predicate, fromIndex, fromRight) {
   var length = array.length,
       index = fromIndex + (fromRight ? 1 : -1);
 
@@ -1154,9 +1154,9 @@ function baseFindIndex$1(array, predicate, fromIndex, fromRight) {
  */
 
 
-function baseIndexOf$1(array, value, fromIndex) {
+function baseIndexOf(array, value, fromIndex) {
   if (value !== value) {
-    return baseFindIndex$1(array, baseIsNaN$1, fromIndex);
+    return baseFindIndex(array, baseIsNaN, fromIndex);
   }
 
   var index = fromIndex - 1,
@@ -1179,7 +1179,7 @@ function baseIndexOf$1(array, value, fromIndex) {
  */
 
 
-function baseIsNaN$1(value) {
+function baseIsNaN(value) {
   return value !== value;
 }
 /**
@@ -1197,7 +1197,7 @@ function charsStartIndex(strSymbols, chrSymbols) {
   var index = -1,
       length = strSymbols.length;
 
-  while (++index < length && baseIndexOf$1(chrSymbols, strSymbols[index], 0) > -1) {}
+  while (++index < length && baseIndexOf(chrSymbols, strSymbols[index], 0) > -1) {}
 
   return index;
 }
@@ -1215,7 +1215,7 @@ function charsStartIndex(strSymbols, chrSymbols) {
 function charsEndIndex(strSymbols, chrSymbols) {
   var index = strSymbols.length;
 
-  while (index-- && baseIndexOf$1(chrSymbols, strSymbols[index], 0) > -1) {}
+  while (index-- && baseIndexOf(chrSymbols, strSymbols[index], 0) > -1) {}
 
   return index;
 }
@@ -1611,7 +1611,7 @@ function remSep(str, originalOpts) {
   return res;
 }
 
-var defaults$3 = {
+var defaults$1 = {
   removeThousandSeparatorsFromNumbers: true,
   padSingleDecimalPlaceNumbers: true,
   forceUKStyle: false
@@ -1633,7 +1633,7 @@ function splitEasy(str, originalOpts) {
   } // prep opts
 
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$3), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts);
 
   if (typeof str !== "string") {
     throw new TypeError("csv-split-easy/split(): [THROW_ID_04] input must be string! Currently it's: " + typeof str + ", equal to: " + JSON.stringify(str, null, 4));
@@ -1814,7 +1814,7 @@ function splitEasy(str, originalOpts) {
  * Copyright (c) 2020 Jason Wilson
  * Released under MIT license
  */
-var defaults$4 = {
+var defaults = {
   symbol: '$',
   separator: ',',
   decimal: '.',
@@ -1853,7 +1853,7 @@ function currency(value, opts) {
     return new currency(value, opts);
   }
 
-  var settings = Object.assign({}, defaults$4, opts),
+  var settings = Object.assign({}, defaults, opts),
       precision = pow(settings.precision),
       v = parse(value, settings);
   that.intValue = v;

@@ -11,9 +11,9 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var version = "3.0.5";
+var version$1 = "3.0.5";
 
-var version$1 = version; // FUNCTIONS - INTERNAL
+var version = version$1; // FUNCTIONS - INTERNAL
 // -----------------------------------------------------------------------------
 
 function existy(x) {
@@ -140,4 +140,4 @@ function sortByCol(arr, axis) {
 }
 
 exports.sortByCol = sortByCol;
-exports.version = version$1;
+exports.version = version;

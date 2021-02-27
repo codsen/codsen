@@ -13,9 +13,9 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.stringCollapseLeadingWhitespace = {}));
 }(this, (function (exports) { 'use strict';
 
-var version = "5.0.5";
+var version$1 = "5.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function collWhitespace(str, originallineBreakLimit) {
   if (originallineBreakLimit === void 0) {
@@ -121,7 +121,7 @@ function collWhitespace(str, originallineBreakLimit) {
 }
 
 exports.collWhitespace = collWhitespace;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

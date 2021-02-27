@@ -7,12 +7,12 @@
  * Homepage: https://codsen.com/os/regex-empty-conditional-comments/
  */
 
-var version = "1.10.5";
+var version$1 = "1.10.5";
 
-const version$1 = version;
+const version = version$1;
 
 function emptyCondCommentRegex() {
   return /<!(--)?\[if[^\]]*]>[<>!-\s]*<!\[endif\]\1>/gi;
 }
 
-export { emptyCondCommentRegex, version$1 as version };
+export { emptyCondCommentRegex, version };

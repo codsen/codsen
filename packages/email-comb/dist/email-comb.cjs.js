@@ -35,7 +35,7 @@ var pullAll__default = /*#__PURE__*/_interopDefaultLegacy(pullAll);
 var uniq__default = /*#__PURE__*/_interopDefaultLegacy(uniq);
 var matcher__default = /*#__PURE__*/_interopDefaultLegacy(matcher);
 
-var version = "5.0.5";
+var version$1 = "5.0.5";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 var regexEmptyStyleTag = /[\n]?\s*<style[^>]*>\s*<\/style\s*>/g;
@@ -55,7 +55,7 @@ function isLatinLetter(char) {
   return typeof char === "string" && char.length === 1 && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
 }
 
-var version$1 = version;
+var version = version$1;
 var defaults = {
   whitelist: [],
   backend: [],
@@ -2087,4 +2087,4 @@ function comb(str, originalOpts) {
 
 exports.comb = comb;
 exports.defaults = defaults;
-exports.version = version$1;
+exports.version = version;

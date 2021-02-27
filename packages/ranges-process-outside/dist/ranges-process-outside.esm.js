@@ -11,9 +11,9 @@ import runes from 'runes';
 import { rInvert } from 'ranges-invert';
 import { rCrop } from 'ranges-crop';
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
-const version$1 = version;
+const version = version$1;
 
 function rProcessOutside(originalStr, originalRanges, cb, skipChecks = false) {
   //
@@ -68,4 +68,4 @@ function rProcessOutside(originalStr, originalRanges, cb, skipChecks = false) {
   }
 }
 
-export { rProcessOutside, version$1 as version };
+export { rProcessOutside, version };

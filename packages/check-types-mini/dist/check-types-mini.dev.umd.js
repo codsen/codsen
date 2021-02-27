@@ -530,7 +530,7 @@ var typeDetect = createCommonjsModule(function (module, exports) {
  * @param {Function} iteratee The function invoked per iteration.
  * @returns {Array} Returns the new mapped array.
  */
-function arrayMap(array, iteratee) {
+function arrayMap$1(array, iteratee) {
   var index = -1,
       length = array ? array.length : 0,
       result = Array(length);
@@ -554,7 +554,7 @@ function arrayMap(array, iteratee) {
  */
 
 
-function baseFindIndex(array, predicate, fromIndex, fromRight) {
+function baseFindIndex$1(array, predicate, fromIndex, fromRight) {
   var length = array.length,
       index = fromIndex + (fromRight ? 1 : -1);
 
@@ -577,9 +577,9 @@ function baseFindIndex(array, predicate, fromIndex, fromRight) {
  */
 
 
-function baseIndexOf(array, value, fromIndex) {
+function baseIndexOf$1(array, value, fromIndex) {
   if (value !== value) {
-    return baseFindIndex(array, baseIsNaN, fromIndex);
+    return baseFindIndex$1(array, baseIsNaN$1, fromIndex);
   }
 
   var index = fromIndex - 1,
@@ -626,7 +626,7 @@ function baseIndexOfWith(array, value, fromIndex, comparator) {
  */
 
 
-function baseIsNaN(value) {
+function baseIsNaN$1(value) {
   return value !== value;
 }
 /**
@@ -638,7 +638,7 @@ function baseIsNaN(value) {
  */
 
 
-function baseUnary(func) {
+function baseUnary$1(func) {
   return function (value) {
     return func(value);
   };
@@ -646,10 +646,10 @@ function baseUnary(func) {
 /** Used for built-in method references. */
 
 
-var arrayProto = Array.prototype;
+var arrayProto$1 = Array.prototype;
 /** Built-in value references. */
 
-var splice = arrayProto.splice;
+var splice$1 = arrayProto$1.splice;
 /**
  * The base implementation of `_.pullAllBy` without support for iteratee
  * shorthands.
@@ -663,7 +663,7 @@ var splice = arrayProto.splice;
  */
 
 function basePullAll(array, values, iteratee, comparator) {
-  var indexOf = comparator ? baseIndexOfWith : baseIndexOf,
+  var indexOf = comparator ? baseIndexOfWith : baseIndexOf$1,
       index = -1,
       length = values.length,
       seen = array;
@@ -673,7 +673,7 @@ function basePullAll(array, values, iteratee, comparator) {
   }
 
   if (iteratee) {
-    seen = arrayMap(array, baseUnary(iteratee));
+    seen = arrayMap$1(array, baseUnary$1(iteratee));
   }
 
   while (++index < length) {
@@ -683,10 +683,10 @@ function basePullAll(array, values, iteratee, comparator) {
 
     while ((fromIndex = indexOf(seen, computed, fromIndex, comparator)) > -1) {
       if (seen !== array) {
-        splice.call(seen, fromIndex, 1);
+        splice$1.call(seen, fromIndex, 1);
       }
 
-      splice.call(array, fromIndex, 1);
+      splice$1.call(array, fromIndex, 1);
     }
   }
 
@@ -2604,7 +2604,7 @@ var objectTag = '[object Object]';
  * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
  */
 
-function isHostObject(value) {
+function isHostObject$1(value) {
   // Many host objects are `Object` objects that can coerce to strings
   // despite having improperly defined `toString` methods.
   var result = false;
@@ -2635,24 +2635,24 @@ function overArg(func, transform) {
 /** Used for built-in method references. */
 
 
-var funcProto = Function.prototype,
-    objectProto = Object.prototype;
+var funcProto$1 = Function.prototype,
+    objectProto$1 = Object.prototype;
 /** Used to resolve the decompiled source of functions. */
 
-var funcToString = funcProto.toString;
+var funcToString$1 = funcProto$1.toString;
 /** Used to check objects for own properties. */
 
-var hasOwnProperty = objectProto.hasOwnProperty;
+var hasOwnProperty$1 = objectProto$1.hasOwnProperty;
 /** Used to infer the `Object` constructor. */
 
-var objectCtorString = funcToString.call(Object);
+var objectCtorString = funcToString$1.call(Object);
 /**
  * Used to resolve the
  * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
  * of values.
  */
 
-var objectToString = objectProto.toString;
+var objectToString$1 = objectProto$1.toString;
 /** Built-in value references. */
 
 var getPrototype = overArg(Object.getPrototypeOf, Object);
@@ -2681,7 +2681,7 @@ var getPrototype = overArg(Object.getPrototypeOf, Object);
  * // => false
  */
 
-function isObjectLike(value) {
+function isObjectLike$1(value) {
   return !!value && typeof value == 'object';
 }
 /**
@@ -2715,7 +2715,7 @@ function isObjectLike(value) {
 
 
 function isPlainObject(value) {
-  if (!isObjectLike(value) || objectToString.call(value) != objectTag || isHostObject(value)) {
+  if (!isObjectLike$1(value) || objectToString$1.call(value) != objectTag || isHostObject$1(value)) {
     return false;
   }
 
@@ -2725,8 +2725,8 @@ function isPlainObject(value) {
     return true;
   }
 
-  var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
-  return typeof Ctor == 'function' && Ctor instanceof Ctor && funcToString.call(Ctor) == objectCtorString;
+  var Ctor = hasOwnProperty$1.call(proto, 'constructor') && proto.constructor;
+  return typeof Ctor == 'function' && Ctor instanceof Ctor && funcToString$1.call(Ctor) == objectCtorString;
 }
 
 var lodash_isplainobject = isPlainObject;
@@ -2929,7 +2929,7 @@ function apply(func, thisArg, args) {
 
 function arrayIncludes(array, value) {
   var length = array ? array.length : 0;
-  return !!length && baseIndexOf$1(array, value, 0) > -1;
+  return !!length && baseIndexOf(array, value, 0) > -1;
 }
 /**
  * This function is like `arrayIncludes` except that it accepts a comparator.
@@ -2965,7 +2965,7 @@ function arrayIncludesWith(array, value, comparator) {
  */
 
 
-function arrayMap$1(array, iteratee) {
+function arrayMap(array, iteratee) {
   var index = -1,
       length = array ? array.length : 0,
       result = Array(length);
@@ -2989,7 +2989,7 @@ function arrayMap$1(array, iteratee) {
  */
 
 
-function baseFindIndex$1(array, predicate, fromIndex, fromRight) {
+function baseFindIndex(array, predicate, fromIndex, fromRight) {
   var length = array.length,
       index = fromIndex + (fromRight ? 1 : -1);
 
@@ -3012,9 +3012,9 @@ function baseFindIndex$1(array, predicate, fromIndex, fromRight) {
  */
 
 
-function baseIndexOf$1(array, value, fromIndex) {
+function baseIndexOf(array, value, fromIndex) {
   if (value !== value) {
-    return baseFindIndex$1(array, baseIsNaN$1, fromIndex);
+    return baseFindIndex(array, baseIsNaN, fromIndex);
   }
 
   var index = fromIndex - 1,
@@ -3037,7 +3037,7 @@ function baseIndexOf$1(array, value, fromIndex) {
  */
 
 
-function baseIsNaN$1(value) {
+function baseIsNaN(value) {
   return value !== value;
 }
 /**
@@ -3049,7 +3049,7 @@ function baseIsNaN$1(value) {
  */
 
 
-function baseUnary$1(func) {
+function baseUnary(func) {
   return function (value) {
     return func(value);
   };
@@ -3089,7 +3089,7 @@ function getValue(object, key) {
  */
 
 
-function isHostObject$1(value) {
+function isHostObject(value) {
   // Many host objects are `Object` objects that can coerce to strings
   // despite having improperly defined `toString` methods.
   var result = false;
@@ -3105,9 +3105,9 @@ function isHostObject$1(value) {
 /** Used for built-in method references. */
 
 
-var arrayProto$1 = Array.prototype,
-    funcProto$1 = Function.prototype,
-    objectProto$1 = Object.prototype;
+var arrayProto = Array.prototype,
+    funcProto = Function.prototype,
+    objectProto = Object.prototype;
 /** Used to detect overreaching core-js shims. */
 
 var coreJsData = root['__core-js_shared__'];
@@ -3120,23 +3120,23 @@ var maskSrcKey = function () {
 /** Used to resolve the decompiled source of functions. */
 
 
-var funcToString$1 = funcProto$1.toString;
+var funcToString = funcProto.toString;
 /** Used to check objects for own properties. */
 
-var hasOwnProperty$1 = objectProto$1.hasOwnProperty;
+var hasOwnProperty = objectProto.hasOwnProperty;
 /**
  * Used to resolve the
  * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
  * of values.
  */
 
-var objectToString$1 = objectProto$1.toString;
+var objectToString = objectProto.toString;
 /** Used to detect if a method is native. */
 
-var reIsNative = RegExp('^' + funcToString$1.call(hasOwnProperty$1).replace(reRegExpChar, '\\$&').replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
+var reIsNative = RegExp('^' + funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&').replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
 /** Built-in value references. */
 
-var splice$1 = arrayProto$1.splice;
+var splice = arrayProto.splice;
 /* Built-in method references for those with the same name as other `lodash` methods. */
 
 var nativeMax = Math.max,
@@ -3209,7 +3209,7 @@ function hashGet(key) {
     return result === HASH_UNDEFINED ? undefined : result;
   }
 
-  return hasOwnProperty$1.call(data, key) ? data[key] : undefined;
+  return hasOwnProperty.call(data, key) ? data[key] : undefined;
 }
 /**
  * Checks if a hash value for `key` exists.
@@ -3224,7 +3224,7 @@ function hashGet(key) {
 
 function hashHas(key) {
   var data = this.__data__;
-  return nativeCreate ? data[key] !== undefined : hasOwnProperty$1.call(data, key);
+  return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);
 }
 /**
  * Sets the hash `key` to `value`.
@@ -3304,7 +3304,7 @@ function listCacheDelete(key) {
   if (index == lastIndex) {
     data.pop();
   } else {
-    splice$1.call(data, index, 1);
+    splice.call(data, index, 1);
   }
 
   return true;
@@ -3567,7 +3567,7 @@ function baseIntersection(arrays, iteratee, comparator) {
     var array = arrays[othIndex];
 
     if (othIndex && iteratee) {
-      array = arrayMap$1(array, baseUnary$1(iteratee));
+      array = arrayMap(array, baseUnary(iteratee));
     }
 
     maxLength = nativeMin(array.length, maxLength);
@@ -3619,7 +3619,7 @@ function baseIsNative(value) {
     return false;
   }
 
-  var pattern = isFunction(value) || isHostObject$1(value) ? reIsNative : reIsHostCtor;
+  var pattern = isFunction(value) || isHostObject(value) ? reIsNative : reIsHostCtor;
   return pattern.test(toSource(value));
 }
 /**
@@ -3732,7 +3732,7 @@ function isMasked(func) {
 function toSource(func) {
   if (func != null) {
     try {
-      return funcToString$1.call(func);
+      return funcToString.call(func);
     } catch (e) {}
 
     try {
@@ -3762,7 +3762,7 @@ function toSource(func) {
 
 
 var intersection = baseRest(function (arrays) {
-  var mapped = arrayMap$1(arrays, castArrayLikeObject);
+  var mapped = arrayMap(arrays, castArrayLikeObject);
   return mapped.length && mapped[0] === arrays[0] ? baseIntersection(mapped) : [];
 });
 /**
@@ -3859,7 +3859,7 @@ function isArrayLike(value) {
 
 
 function isArrayLikeObject(value) {
-  return isObjectLike$1(value) && isArrayLike(value);
+  return isObjectLike(value) && isArrayLike(value);
 }
 /**
  * Checks if `value` is classified as a `Function` object.
@@ -3883,7 +3883,7 @@ function isArrayLikeObject(value) {
 function isFunction(value) {
   // The use of `Object#toString` avoids issues with the `typeof` operator
   // in Safari 8-9 which returns 'object' for typed array and other constructors.
-  var tag = isObject(value) ? objectToString$1.call(value) : '';
+  var tag = isObject(value) ? objectToString.call(value) : '';
   return tag == funcTag || tag == genTag;
 }
 /**
@@ -3974,7 +3974,7 @@ function isObject(value) {
  */
 
 
-function isObjectLike$1(value) {
+function isObjectLike(value) {
   return !!value && typeof value == 'object';
 }
 

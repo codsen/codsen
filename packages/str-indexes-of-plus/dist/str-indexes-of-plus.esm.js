@@ -7,9 +7,9 @@
  * Homepage: https://codsen.com/os/str-indexes-of-plus/
  */
 
-var version = "3.0.5";
+var version$1 = "3.0.5";
 
-const version$1 = version;
+const version = version$1;
 
 function strIndexesOfPlus(str, searchValue, fromIndex = 0) {
   if (typeof str !== "string") {
@@ -67,4 +67,4 @@ function strIndexesOfPlus(str, searchValue, fromIndex = 0) {
   return res;
 }
 
-export { strIndexesOfPlus, version$1 as version };
+export { strIndexesOfPlus, version };

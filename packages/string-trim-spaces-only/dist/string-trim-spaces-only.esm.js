@@ -7,9 +7,9 @@
  * Homepage: https://codsen.com/os/string-trim-spaces-only/
  */
 
-var version = "3.0.5";
+var version$1 = "3.0.5";
 
-const version$1 = version;
+const version = version$1;
 const defaults = {
   classicTrim: false,
   cr: false,
@@ -109,4 +109,4 @@ function trimSpaces(str, originalOpts) {
   };
 }
 
-export { defaults, trimSpaces, version$1 as version };
+export { defaults, trimSpaces, version };

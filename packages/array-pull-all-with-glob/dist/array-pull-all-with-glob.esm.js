@@ -9,9 +9,9 @@
 
 import matcher from 'matcher';
 
-var version = "5.0.5";
+var version$1 = "5.0.5";
 
-const version$1 = version;
+const version = version$1;
 /**
  * Like _.pullAll but with globs (wildcards)
  */
@@ -40,4 +40,4 @@ function pull(originalInput, originalToBeRemoved, originalOpts) {
   return res;
 }
 
-export { pull, version$1 as version };
+export { pull, version };

@@ -24,7 +24,7 @@ import { allNamedEntities } from 'all-named-html-entities';
 import { expander } from 'string-range-expander';
 import { convertOne } from 'string-apostrophes';
 
-var version = "7.0.5";
+var version$1 = "7.0.5";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
@@ -1045,7 +1045,7 @@ function processCharacter(str, opts, rangesArr, i, y, offsetBy, brClosingBracket
   }
 }
 
-const version$1 = version;
+const version = version$1;
 
 /**
  * Extracts, cleans and encodes text
@@ -1492,4 +1492,4 @@ function det(str, inputOpts) {
 }
  // -----------------------------------------------------------------------------
 
-export { det, defaultOpts as opts, version$1 as version };
+export { det, defaultOpts as opts, version };

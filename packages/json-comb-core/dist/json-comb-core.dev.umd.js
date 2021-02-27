@@ -91,7 +91,7 @@ function _isNativeReflectConstruct() {
   if (typeof Proxy === "function") return true;
 
   try {
-    Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+    Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
     return true;
   } catch (e) {
     return false;
@@ -4118,7 +4118,7 @@ var objectTag = '[object Object]';
  * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
  */
 
-function isHostObject(value) {
+function isHostObject$1(value) {
   // Many host objects are `Object` objects that can coerce to strings
   // despite having improperly defined `toString` methods.
   var result = false;
@@ -4141,7 +4141,7 @@ function isHostObject(value) {
  */
 
 
-function overArg(func, transform) {
+function overArg$1(func, transform) {
   return function (arg) {
     return func(transform(arg));
   };
@@ -4149,27 +4149,27 @@ function overArg(func, transform) {
 /** Used for built-in method references. */
 
 
-var funcProto = Function.prototype,
-    objectProto = Object.prototype;
+var funcProto$1 = Function.prototype,
+    objectProto$2 = Object.prototype;
 /** Used to resolve the decompiled source of functions. */
 
-var funcToString = funcProto.toString;
+var funcToString$1 = funcProto$1.toString;
 /** Used to check objects for own properties. */
 
-var hasOwnProperty = objectProto.hasOwnProperty;
+var hasOwnProperty$2 = objectProto$2.hasOwnProperty;
 /** Used to infer the `Object` constructor. */
 
-var objectCtorString = funcToString.call(Object);
+var objectCtorString = funcToString$1.call(Object);
 /**
  * Used to resolve the
  * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
  * of values.
  */
 
-var objectToString = objectProto.toString;
+var objectToString$2 = objectProto$2.toString;
 /** Built-in value references. */
 
-var getPrototype = overArg(Object.getPrototypeOf, Object);
+var getPrototype = overArg$1(Object.getPrototypeOf, Object);
 /**
  * Checks if `value` is object-like. A value is object-like if it's not `null`
  * and has a `typeof` result of "object".
@@ -4195,7 +4195,7 @@ var getPrototype = overArg(Object.getPrototypeOf, Object);
  * // => false
  */
 
-function isObjectLike(value) {
+function isObjectLike$1(value) {
   return !!value && typeof value == 'object';
 }
 /**
@@ -4229,7 +4229,7 @@ function isObjectLike(value) {
 
 
 function isPlainObject(value) {
-  if (!isObjectLike(value) || objectToString.call(value) != objectTag || isHostObject(value)) {
+  if (!isObjectLike$1(value) || objectToString$2.call(value) != objectTag || isHostObject$1(value)) {
     return false;
   }
 
@@ -4239,8 +4239,8 @@ function isPlainObject(value) {
     return true;
   }
 
-  var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
-  return typeof Ctor == 'function' && Ctor instanceof Ctor && funcToString.call(Ctor) == objectCtorString;
+  var Ctor = hasOwnProperty$2.call(proto, 'constructor') && proto.constructor;
+  return typeof Ctor == 'function' && Ctor instanceof Ctor && funcToString$1.call(Ctor) == objectCtorString;
 }
 
 var lodash_isplainobject = isPlainObject;
@@ -4326,15 +4326,15 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
  */
 
 /** Used as references for various `Number` constants. */
-var INFINITY = 1 / 0,
+var INFINITY$1 = 1 / 0,
     MAX_SAFE_INTEGER = 9007199254740991,
     MAX_INTEGER = 1.7976931348623157e+308,
     NAN = 0 / 0;
 /** `Object#toString` result references. */
 
 var argsTag = '[object Arguments]',
-    funcTag = '[object Function]',
-    genTag = '[object GeneratorFunction]',
+    funcTag$1 = '[object Function]',
+    genTag$1 = '[object GeneratorFunction]',
     stringTag = '[object String]',
     symbolTag = '[object Symbol]';
 /** Used to match leading and trailing whitespace. */
@@ -4389,7 +4389,7 @@ function arrayMap(array, iteratee) {
  */
 
 
-function baseFindIndex(array, predicate, fromIndex, fromRight) {
+function baseFindIndex$1(array, predicate, fromIndex, fromRight) {
   var length = array.length,
       index = fromIndex + (fromRight ? 1 : -1);
 
@@ -4412,9 +4412,9 @@ function baseFindIndex(array, predicate, fromIndex, fromRight) {
  */
 
 
-function baseIndexOf(array, value, fromIndex) {
+function baseIndexOf$1(array, value, fromIndex) {
   if (value !== value) {
-    return baseFindIndex(array, baseIsNaN, fromIndex);
+    return baseFindIndex$1(array, baseIsNaN$1, fromIndex);
   }
 
   var index = fromIndex - 1,
@@ -4437,7 +4437,7 @@ function baseIndexOf(array, value, fromIndex) {
  */
 
 
-function baseIsNaN(value) {
+function baseIsNaN$1(value) {
   return value !== value;
 }
 /**
@@ -4488,7 +4488,7 @@ function baseValues(object, props) {
  */
 
 
-function overArg$1(func, transform) {
+function overArg(func, transform) {
   return function (arg) {
     return func(transform(arg));
   };
@@ -4512,7 +4512,7 @@ var objectToString$1 = objectProto$1.toString;
 var propertyIsEnumerable = objectProto$1.propertyIsEnumerable;
 /* Built-in method references for those with the same name as other `lodash` methods. */
 
-var nativeKeys = overArg$1(Object.keys, Object),
+var nativeKeys = overArg(Object.keys, Object),
     nativeMax = Math.max;
 /**
  * Creates an array of the enumerable property names of the array-like `value`.
@@ -4631,7 +4631,7 @@ function includes(collection, value, fromIndex, guard) {
     fromIndex = nativeMax(length + fromIndex, 0);
   }
 
-  return isString(collection) ? fromIndex <= length && collection.indexOf(value, fromIndex) > -1 : !!length && baseIndexOf(collection, value, fromIndex) > -1;
+  return isString(collection) ? fromIndex <= length && collection.indexOf(value, fromIndex) > -1 : !!length && baseIndexOf$1(collection, value, fromIndex) > -1;
 }
 /**
  * Checks if `value` is likely an `arguments` object.
@@ -4710,7 +4710,7 @@ var isArray = Array.isArray;
  */
 
 function isArrayLike(value) {
-  return value != null && isLength(value.length) && !isFunction(value);
+  return value != null && isLength(value.length) && !isFunction$1(value);
 }
 /**
  * This method is like `_.isArrayLike` except that it also checks if `value`
@@ -4740,7 +4740,7 @@ function isArrayLike(value) {
 
 
 function isArrayLikeObject(value) {
-  return isObjectLike$1(value) && isArrayLike(value);
+  return isObjectLike(value) && isArrayLike(value);
 }
 /**
  * Checks if `value` is classified as a `Function` object.
@@ -4761,11 +4761,11 @@ function isArrayLikeObject(value) {
  */
 
 
-function isFunction(value) {
+function isFunction$1(value) {
   // The use of `Object#toString` avoids issues with the `typeof` operator
   // in Safari 8-9 which returns 'object' for typed array and other constructors.
-  var tag = isObject(value) ? objectToString$1.call(value) : '';
-  return tag == funcTag || tag == genTag;
+  var tag = isObject$1(value) ? objectToString$1.call(value) : '';
+  return tag == funcTag$1 || tag == genTag$1;
 }
 /**
  * Checks if `value` is a valid array-like length.
@@ -4825,7 +4825,7 @@ function isLength(value) {
  */
 
 
-function isObject(value) {
+function isObject$1(value) {
   var type = typeof value;
   return !!value && (type == 'object' || type == 'function');
 }
@@ -4855,7 +4855,7 @@ function isObject(value) {
  */
 
 
-function isObjectLike$1(value) {
+function isObjectLike(value) {
   return !!value && typeof value == 'object';
 }
 /**
@@ -4878,7 +4878,7 @@ function isObjectLike$1(value) {
 
 
 function isString(value) {
-  return typeof value == 'string' || !isArray(value) && isObjectLike$1(value) && objectToString$1.call(value) == stringTag;
+  return typeof value == 'string' || !isArray(value) && isObjectLike(value) && objectToString$1.call(value) == stringTag;
 }
 /**
  * Checks if `value` is classified as a `Symbol` primitive or object.
@@ -4900,7 +4900,7 @@ function isString(value) {
 
 
 function isSymbol(value) {
-  return typeof value == 'symbol' || isObjectLike$1(value) && objectToString$1.call(value) == symbolTag;
+  return typeof value == 'symbol' || isObjectLike(value) && objectToString$1.call(value) == symbolTag;
 }
 /**
  * Converts `value` to a finite number.
@@ -4934,7 +4934,7 @@ function toFinite(value) {
 
   value = toNumber(value);
 
-  if (value === INFINITY || value === -INFINITY) {
+  if (value === INFINITY$1 || value === -INFINITY$1) {
     var sign = value < 0 ? -1 : 1;
     return sign * MAX_INTEGER;
   }
@@ -5008,9 +5008,9 @@ function toNumber(value) {
     return NAN;
   }
 
-  if (isObject(value)) {
+  if (isObject$1(value)) {
     var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
-    value = isObject(other) ? other + '' : other;
+    value = isObject$1(other) ? other + '' : other;
   }
 
   if (typeof value != 'string') {
@@ -5104,11 +5104,11 @@ var LARGE_ARRAY_SIZE = 200;
 var HASH_UNDEFINED = '__lodash_hash_undefined__';
 /** Used as references for various `Number` constants. */
 
-var INFINITY$1 = 1 / 0;
+var INFINITY = 1 / 0;
 /** `Object#toString` result references. */
 
-var funcTag$1 = '[object Function]',
-    genTag$1 = '[object GeneratorFunction]';
+var funcTag = '[object Function]',
+    genTag = '[object GeneratorFunction]';
 /**
  * Used to match `RegExp`
  * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
@@ -5139,7 +5139,7 @@ var root = freeGlobal || freeSelf || Function('return this')();
 
 function arrayIncludes(array, value) {
   var length = array ? array.length : 0;
-  return !!length && baseIndexOf$1(array, value, 0) > -1;
+  return !!length && baseIndexOf(array, value, 0) > -1;
 }
 /**
  * This function is like `arrayIncludes` except that it accepts a comparator.
@@ -5177,7 +5177,7 @@ function arrayIncludesWith(array, value, comparator) {
  */
 
 
-function baseFindIndex$1(array, predicate, fromIndex, fromRight) {
+function baseFindIndex(array, predicate, fromIndex, fromRight) {
   var length = array.length,
       index = fromIndex + (fromRight ? 1 : -1);
 
@@ -5200,9 +5200,9 @@ function baseFindIndex$1(array, predicate, fromIndex, fromRight) {
  */
 
 
-function baseIndexOf$1(array, value, fromIndex) {
+function baseIndexOf(array, value, fromIndex) {
   if (value !== value) {
-    return baseFindIndex$1(array, baseIsNaN$1, fromIndex);
+    return baseFindIndex(array, baseIsNaN, fromIndex);
   }
 
   var index = fromIndex - 1,
@@ -5225,7 +5225,7 @@ function baseIndexOf$1(array, value, fromIndex) {
  */
 
 
-function baseIsNaN$1(value) {
+function baseIsNaN(value) {
   return value !== value;
 }
 /**
@@ -5263,7 +5263,7 @@ function getValue(object, key) {
  */
 
 
-function isHostObject$1(value) {
+function isHostObject(value) {
   // Many host objects are `Object` objects that can coerce to strings
   // despite having improperly defined `toString` methods.
   var result = false;
@@ -5297,8 +5297,8 @@ function setToArray(set) {
 
 
 var arrayProto = Array.prototype,
-    funcProto$1 = Function.prototype,
-    objectProto$2 = Object.prototype;
+    funcProto = Function.prototype,
+    objectProto = Object.prototype;
 /** Used to detect overreaching core-js shims. */
 
 var coreJsData = root['__core-js_shared__'];
@@ -5311,20 +5311,20 @@ var maskSrcKey = function () {
 /** Used to resolve the decompiled source of functions. */
 
 
-var funcToString$1 = funcProto$1.toString;
+var funcToString = funcProto.toString;
 /** Used to check objects for own properties. */
 
-var hasOwnProperty$2 = objectProto$2.hasOwnProperty;
+var hasOwnProperty = objectProto.hasOwnProperty;
 /**
  * Used to resolve the
  * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
  * of values.
  */
 
-var objectToString$2 = objectProto$2.toString;
+var objectToString = objectProto.toString;
 /** Used to detect if a method is native. */
 
-var reIsNative = RegExp('^' + funcToString$1.call(hasOwnProperty$2).replace(reRegExpChar, '\\$&').replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
+var reIsNative = RegExp('^' + funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&').replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
 /** Built-in value references. */
 
 var splice = arrayProto.splice;
@@ -5397,7 +5397,7 @@ function hashGet(key) {
     return result === HASH_UNDEFINED ? undefined : result;
   }
 
-  return hasOwnProperty$2.call(data, key) ? data[key] : undefined;
+  return hasOwnProperty.call(data, key) ? data[key] : undefined;
 }
 /**
  * Checks if a hash value for `key` exists.
@@ -5412,7 +5412,7 @@ function hashGet(key) {
 
 function hashHas(key) {
   var data = this.__data__;
-  return nativeCreate ? data[key] !== undefined : hasOwnProperty$2.call(data, key);
+  return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);
 }
 /**
  * Sets the hash `key` to `value`.
@@ -5741,11 +5741,11 @@ function assocIndexOf(array, key) {
 
 
 function baseIsNative(value) {
-  if (!isObject$1(value) || isMasked(value)) {
+  if (!isObject(value) || isMasked(value)) {
     return false;
   }
 
-  var pattern = isFunction$1(value) || isHostObject$1(value) ? reIsNative : reIsHostCtor;
+  var pattern = isFunction(value) || isHostObject(value) ? reIsNative : reIsHostCtor;
   return pattern.test(toSource(value));
 }
 /**
@@ -5823,7 +5823,7 @@ function baseUniq(array, iteratee, comparator) {
  */
 
 
-var createSet = !(Set$1 && 1 / setToArray(new Set$1([, -0]))[1] == INFINITY$1) ? noop : function (values) {
+var createSet = !(Set$1 && 1 / setToArray(new Set$1([, -0]))[1] == INFINITY) ? noop : function (values) {
   return new Set$1(values);
 };
 /**
@@ -5890,7 +5890,7 @@ function isMasked(func) {
 function toSource(func) {
   if (func != null) {
     try {
-      return funcToString$1.call(func);
+      return funcToString.call(func);
     } catch (e) {}
 
     try {
@@ -5978,11 +5978,11 @@ function eq(value, other) {
  */
 
 
-function isFunction$1(value) {
+function isFunction(value) {
   // The use of `Object#toString` avoids issues with the `typeof` operator
   // in Safari 8-9 which returns 'object' for typed array and other constructors.
-  var tag = isObject$1(value) ? objectToString$2.call(value) : '';
-  return tag == funcTag$1 || tag == genTag$1;
+  var tag = isObject(value) ? objectToString.call(value) : '';
+  return tag == funcTag || tag == genTag;
 }
 /**
  * Checks if `value` is the
@@ -6011,7 +6011,7 @@ function isFunction$1(value) {
  */
 
 
-function isObject$1(value) {
+function isObject(value) {
   var type = typeof value;
   return !!value && (type == 'object' || type == 'function');
 }
@@ -6242,7 +6242,7 @@ var isMatch = function isMatch(input, pattern, options) {
 };
 matcher.isMatch = isMatch;
 
-var defaults = {
+var defaults$2 = {
   arrayVsArrayAllMustBeFound: "any",
   caseSensitive: true
 };
@@ -6256,7 +6256,7 @@ function includesWithGlob(originalInput, stringToFind, originalOpts) {
     return false; // because nothing can be found in it
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts);
 
   var input = typeof originalInput === "string" ? [originalInput] : Array.from(originalInput);
 
@@ -6314,7 +6314,7 @@ function nonEmpty(input) {
   return typeof input === "number";
 }
 
-function isStr(something) {
+function isStr$2(something) {
   return typeof something === "string";
 }
 
@@ -6326,7 +6326,7 @@ function isBool(something) {
   return typeof something === "boolean";
 }
 
-var isArr = Array.isArray;
+var isArr$1 = Array.isArray;
 
 function arrayContainsStr(arr) {
   return !!arr && arr.some(function (val) {
@@ -6355,7 +6355,7 @@ function getType(something) {
     return "object";
   }
 
-  if (isArr(something)) {
+  if (isArr$1(something)) {
     return "array";
   }
 
@@ -6433,8 +6433,8 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
   // it applies to arrays and plain objects only (as far as we're concerned here)
 
 
-  var i1 = isArr(input1orig) || lodash_isplainobject(input1orig) ? lodash_clonedeep(input1orig) : input1orig;
-  var i2 = isArr(input2orig) || lodash_isplainobject(input2orig) ? lodash_clonedeep(input2orig) : input2orig;
+  var i1 = isArr$1(input1orig) || lodash_isplainobject(input1orig) ? lodash_clonedeep(input1orig) : input1orig;
+  var i2 = isArr$1(input2orig) || lodash_isplainobject(input2orig) ? lodash_clonedeep(input2orig) : input2orig;
   var uniRes;
 
   if (opts.ignoreEverything) {
@@ -6449,10 +6449,10 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
   // to judge case-by-case. Principle is to aim to retain as much data as possible
   // after merging.
 
-  if (isArr(i1)) {
+  if (isArr$1(i1)) {
     if (nonEmpty(i1)) {
       // cases 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
-      if (isArr(i2) && nonEmpty(i2)) {
+      if (isArr$1(i2) && nonEmpty(i2)) {
         // case 1
         // two array merge
         if (opts.mergeArraysContainingStringsToBeEmpty && (arrayContainsStr(i1) || arrayContainsStr(i2))) {
@@ -6530,7 +6530,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
 
 
         if (opts.dedupeStringsInArrayValues && temp.every(function (el) {
-          return isStr(el);
+          return isStr$2(el);
         })) {
           temp = lodash_uniq(temp).sort();
         }
@@ -6583,7 +6583,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
   } else if (lodash_isplainobject(i1)) {
     if (nonEmpty(i1)) {
       // cases 21-30
-      if (isArr(i2)) {
+      if (isArr$1(i2)) {
         // cases 21, 22
         if (nonEmpty(i2)) {
           // case 21
@@ -6699,7 +6699,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     // cases 31-40
 
 
-    if (isArr(i2) || lodash_isplainobject(i2) || nonEmpty(i2)) {
+    if (isArr$1(i2) || lodash_isplainobject(i2) || nonEmpty(i2)) {
       // cases 31, 32, 33, 34, 35, 37
       var _currentResult11 = uni ? uniRes : i2;
 
@@ -6798,9 +6798,9 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts) {
     }
 
     return _currentResult12;
-  } else if (isStr(i1)) {
+  } else if (isStr$2(i1)) {
     if (nonEmpty(i1)) {
-      if ((isArr(i2) || lodash_isplainobject(i2) || isStr(i2)) && nonEmpty(i2)) {
+      if ((isArr$1(i2) || lodash_isplainobject(i2) || isStr$2(i2)) && nonEmpty(i2)) {
         // cases 41, 43, 45
         // take care of hard merge setting cases, opts.hardMergeKeys
         var _currentResult19 = uni ? uniRes : i2;
@@ -9039,7 +9039,7 @@ function allEq(inputOriginal, valueOriginal, originalOpts) {
   return allValuesEqualTo(inputOriginal, valueOriginal, opts);
 }
 
-var defaults$2 = {
+var defaults = {
   placeholder: false,
   doNotFillThesePathsIfTheyContainPlaceholders: [],
   useNullAsExplicitFalse: true
@@ -9062,7 +9062,7 @@ function isStr$1(something) {
   return typeof something === "string";
 }
 
-function existy(x) {
+function existy$1(x) {
   return x != null;
 } // this function does the job, but it is not exposed because its first argument
 // requirements are loose - it can be anything since it will be calling itself recursively
@@ -9076,7 +9076,7 @@ function fillMissingKeys(incompleteOriginal, schema, opts, path) {
 
   var incomplete = lodash_clonedeep(incompleteOriginal);
 
-  if (existy(incomplete) || !(path.length && opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(path) && allEq(incomplete, opts.placeholder))) {
+  if (existy$1(incomplete) || !(path.length && opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(path) && allEq(incomplete, opts.placeholder))) {
     if (lodash_isplainobject(schema) && lodash_isplainobject(incomplete)) {
       // traverse the keys on schema and add them onto incomplete
       Object.keys(schema).forEach(function (key) {
@@ -9084,7 +9084,7 @@ function fillMissingKeys(incompleteOriginal, schema, opts, path) {
         var currentPath = "" + (path ? path + "." : "") + key;
 
         if (opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(currentPath)) {
-          if (existy(incomplete[key])) {
+          if (existy$1(incomplete[key])) {
             if (allEq(incomplete[key], opts.placeholder)) {
               incomplete[key] = opts.placeholder;
             }
@@ -9094,7 +9094,7 @@ function fillMissingKeys(incompleteOriginal, schema, opts, path) {
           }
         }
 
-        if (!existy(incomplete[key]) || !(opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(currentPath) && allEq(incomplete[key], opts.placeholder))) {
+        if (!existy$1(incomplete[key]) || !(opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(currentPath) && allEq(incomplete[key], opts.placeholder))) {
           incomplete[key] = fillMissingKeys(incomplete[key], schema[key], opts, currentPath);
         }
       });
@@ -9149,7 +9149,7 @@ function fillMissing(originalIncompleteWrapper, originalSchemaWrapper, originalO
   } // fill any settings with defaults if missing:
 
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOptsWrapper || {});
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOptsWrapper || {});
 
   opts.doNotFillThesePathsIfTheyContainPlaceholders = arrayiffy(opts.doNotFillThesePathsIfTheyContainPlaceholders);
   var culpritsVal = null;
@@ -9314,12 +9314,12 @@ var compareVersions = createCommonjsModule(function (module, exports) {
   });
 });
 
-function isObj(something) {
+function isObj$1(something) {
   return something && typeof something === "object" && !Array.isArray(something);
 }
 
 function noNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
-  if (originalOptsOuter && !isObj(originalOptsOuter)) {
+  if (originalOptsOuter && !isObj$1(originalOptsOuter)) {
     throw new TypeError("object-no-new-keys/noNewKeys(): [THROW_ID_02] opts should be a plain object. It was given as " + JSON.stringify(originalOptsOuter, null, 4) + " (type " + typeof originalOptsOuter + ")");
   }
 
@@ -9338,8 +9338,8 @@ function noNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
   function objectNoNewKeysInternal(input, reference, opts, innerVar) {
     var temp;
 
-    if (isObj(input)) {
-      if (isObj(reference)) {
+    if (isObj$1(input)) {
+      if (isObj$1(reference)) {
         // input and reference both are objects.
         // match the keys and record any unique-ones.
         // then traverse recursively.
@@ -9347,7 +9347,7 @@ function noNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
           if (!Object.prototype.hasOwnProperty.call(reference, key)) {
             temp = innerVar.path.length > 0 ? innerVar.path + "." + key : key;
             innerVar.res.push(temp);
-          } else if (isObj(input[key]) || Array.isArray(input[key])) {
+          } else if (isObj$1(input[key]) || Array.isArray(input[key])) {
             temp = {
               path: innerVar.path.length > 0 ? innerVar.path + "." + key : key,
               res: innerVar.res
@@ -9508,8 +9508,8 @@ var pReduce = function pReduce(iterable, reducer, initialValue) {
 
 var pReduce_1 = pReduce; // TODO: Remove this for the next major release
 
-var _default = pReduce;
-pReduce_1.default = _default;
+var _default$2 = pReduce;
+pReduce_1.default = _default$2;
 
 var typeDetect = createCommonjsModule(function (module, exports) {
   (function (global, factory) {
@@ -10019,26 +10019,26 @@ var pOne = async function pOne(iterable, testFunction, options) {
 };
 
 var pOne_1 = pOne;
-var _default$2 = pOne;
-pOne_1.default = _default$2;
+var _default = pOne;
+pOne_1.default = _default;
 
-var version = "6.8.5";
+var version$1 = "6.8.5";
 
-var version$1 = version;
+var version = version$1;
 
-function existy$1(x) {
+function existy(x) {
   return x != null;
 }
 
-function isObj$1(something) {
+function isObj(something) {
   return typeDetect(something) === "Object";
 }
 
-function isStr$2(something) {
+function isStr(something) {
   return typeof something === "string";
 }
 
-var isArr$1 = Array.isArray; // ECMA specification: http://www.ecma-international.org/ecma-262/6.0/#sec-tostring
+var isArr = Array.isArray; // ECMA specification: http://www.ecma-international.org/ecma-262/6.0/#sec-tostring
 
 function toString(obj) {
   if (obj === null) {
@@ -10105,7 +10105,7 @@ function compare(firstEl, secondEl) {
 }
 
 function sortAllObjectsSync(input) {
-  if (isObj$1(input) || isArr$1(input)) {
+  if (isObj(input) || isArr(input)) {
     return sortKeys(input, {
       deep: true,
       compare: compare
@@ -10121,7 +10121,7 @@ function getKeyset(arrOfPromises, originalOpts) {
     throw new Error("json-comb-core/getKeyset(): [THROW_ID_11] Inputs missing!");
   }
 
-  if (existy$1(originalOpts) && !isObj$1(originalOpts)) {
+  if (existy(originalOpts) && !isObj(originalOpts)) {
     throw new TypeError("json-comb-core/getKeysetSync(): [THROW_ID_12] Options object must be a plain object! Currently it's: " + typeof originalOpts + ", equal to: " + JSON.stringify(originalOpts, null, 4));
   }
 
@@ -10136,7 +10136,7 @@ function getKeyset(arrOfPromises, originalOpts) {
     // Map over input array of promises. If any resolve to non-plain-object,
     // final returned promise will resolve to true. Otherwise, false.
     pOne_1(arrOfPromises, function (element, index) {
-      if (!isObj$1(element)) {
+      if (!isObj(element)) {
         culpritIndex = index;
         culpritVal = element;
         return true;
@@ -10174,7 +10174,7 @@ function getKeysetSync(arrOriginal, originalOpts) {
     throw new Error("json-comb-core/getKeysetSync(): [THROW_ID_21] Inputs missing!");
   }
 
-  if (!isArr$1(arrOriginal)) {
+  if (!isArr(arrOriginal)) {
     throw new Error("json-comb-core/getKeysetSync(): [THROW_ID_22] Input must be array! Currently it's: " + typeof arrOriginal);
   }
 
@@ -10182,7 +10182,7 @@ function getKeysetSync(arrOriginal, originalOpts) {
     throw new Error("json-comb-core/getKeysetSync(): [THROW_ID_23] Input array is empty!");
   }
 
-  if (existy$1(originalOpts) && !isObj$1(originalOpts)) {
+  if (existy(originalOpts) && !isObj(originalOpts)) {
     throw new TypeError("json-comb-core/getKeysetSync(): [THROW_ID_24] Options object must be a plain object! Currently it's: " + typeof originalOpts + ", equal to: " + JSON.stringify(originalOpts, null, 4));
   }
 
@@ -10198,7 +10198,7 @@ function getKeysetSync(arrOriginal, originalOpts) {
     flattenArraysContainingStringsToBeEmpty: true
   };
   arr.forEach(function (obj, i) {
-    if (!isObj$1(obj)) {
+    if (!isObj(obj)) {
       throw new TypeError("json-comb-core/getKeysetSync(): [THROW_ID_25] Non-object (" + typeof obj + ") detected within an array! It's the " + i + "th element: " + JSON.stringify(obj, null, 4));
     }
 
@@ -10228,7 +10228,7 @@ function enforceKeyset(obj, schemaKeyset, originalOpts) {
   var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
   if (opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 && !opts.doNotFillThesePathsIfTheyContainPlaceholders.every(function (val) {
-    return isStr$2(val);
+    return isStr(val);
   })) {
     throw new Error("json-comb-core/enforceKeyset(): [THROW_ID_33] Array opts.doNotFillThesePathsIfTheyContainPlaceholders contains non-string values:\n" + JSON.stringify(opts.doNotFillThesePathsIfTheyContainPlaceholders, null, 4));
   }
@@ -10238,11 +10238,11 @@ function enforceKeyset(obj, schemaKeyset, originalOpts) {
       var objResolved = _ref[0],
           schemaKeysetResolved = _ref[1];
 
-      if (!isObj$1(obj)) {
+      if (!isObj(obj)) {
         return reject(Error("json-comb-core/enforceKeyset(): [THROW_ID_34] Input must resolve to a plain object! Currently it's: " + typeof obj + ", equal to: " + JSON.stringify(obj, null, 4)));
       }
 
-      if (!isObj$1(schemaKeyset)) {
+      if (!isObj(schemaKeyset)) {
         return reject(Error("json-comb-core/enforceKeyset(): [THROW_ID_35] Schema, 2nd arg, must resolve to a plain object! Currently it's resolving to: " + typeof schemaKeyset + ", equal to: " + JSON.stringify(schemaKeyset, null, 4)));
       }
 
@@ -10261,11 +10261,11 @@ function enforceKeysetSync(obj, schemaKeyset, originalOpts) {
     throw new Error("json-comb-core/enforceKeysetSync(): [THROW_ID_42] Second arg missing!");
   }
 
-  if (!isObj$1(obj)) {
+  if (!isObj(obj)) {
     throw new Error("json-comb-core/enforceKeysetSync(): [THROW_ID_43] Input must be a plain object! Currently it's: " + typeof obj + ", equal to: " + JSON.stringify(obj, null, 4));
   }
 
-  if (!isObj$1(schemaKeyset)) {
+  if (!isObj(schemaKeyset)) {
     throw new Error("json-comb-core/enforceKeysetSync(): [THROW_ID_44] Schema object must be a plain object! Currently it's: " + typeof schemaKeyset + ", equal to: " + JSON.stringify(schemaKeyset, null, 4));
   }
 
@@ -10278,7 +10278,7 @@ function enforceKeysetSync(obj, schemaKeyset, originalOpts) {
   var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
   if (opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 && !opts.doNotFillThesePathsIfTheyContainPlaceholders.every(function (val) {
-    return isStr$2(val);
+    return isStr(val);
   })) {
     throw new Error("json-comb-core/enforceKeyset(): [THROW_ID_45] Array opts.doNotFillThesePathsIfTheyContainPlaceholders contains non-string values:\n" + JSON.stringify(opts.doNotFillThesePathsIfTheyContainPlaceholders, null, 4));
   }
@@ -10298,11 +10298,11 @@ function noNewKeysSync(obj, schemaKeyset) {
     throw new Error("json-comb-core/noNewKeysSync(): [THROW_ID_52] Schema object is missing!");
   }
 
-  if (!isObj$1(obj)) {
+  if (!isObj(obj)) {
     throw new Error("json-comb-core/noNewKeysSync(): [THROW_ID_53] Main input (1st arg.) must be a plain object! Currently it's: " + typeof obj + ", equal to: " + JSON.stringify(obj, null, 4));
   }
 
-  if (!isObj$1(schemaKeyset)) {
+  if (!isObj(schemaKeyset)) {
     throw new Error("json-comb-core/noNewKeysSync(): [THROW_ID_54] Schema input (2nd arg.) must be a plain object! Currently it's: " + typeof schemaKeyset + ", equal to: " + JSON.stringify(schemaKeyset, null, 4));
   }
 
@@ -10314,7 +10314,7 @@ function findUnusedSync(arrOriginal, originalOpts) {
   //
   // PREPARATIONS AND TYPE CHECKS
   // ============================
-  if (isArr$1(arrOriginal)) {
+  if (isArr(arrOriginal)) {
     if (arrOriginal.length === 0) {
       return [];
     }
@@ -10322,7 +10322,7 @@ function findUnusedSync(arrOriginal, originalOpts) {
     throw new TypeError("json-comb-core/findUnusedSync(): [THROW_ID_61] The first argument should be an array. Currently it's: " + typeof arrOriginal);
   }
 
-  if (arguments.length > 1 && !isObj$1(originalOpts)) {
+  if (arguments.length > 1 && !isObj(originalOpts)) {
     throw new TypeError("json-comb-core/findUnusedSync(): [THROW_ID_62] The second argument, options object, must be a plain object, not " + typeof originalOpts);
   }
 
@@ -10354,14 +10354,14 @@ function findUnusedSync(arrOriginal, originalOpts) {
       path = "";
     }
 
-    if (isArr$1(arr1) && arr1.length === 0) {
+    if (isArr(arr1) && arr1.length === 0) {
       return res;
     }
 
     var keySet;
 
     if (arr1.every(function (el) {
-      return isObj$1(el);
+      return isObj(el);
     })) {
       var _ref2;
 
@@ -10387,7 +10387,7 @@ function findUnusedSync(arrOriginal, originalOpts) {
 
 
       var keys = (_ref2 = []).concat.apply(_ref2, Object.keys(keySet).filter(function (key) {
-        return isObj$1(keySet[key]) || isArr$1(keySet[key]);
+        return isObj(keySet[key]) || isArr(keySet[key]);
       }));
 
       var keysContents = keys.map(function (key) {
@@ -10399,7 +10399,7 @@ function findUnusedSync(arrOriginal, originalOpts) {
         var _ref3;
 
         return (_ref3 = []).concat.apply(_ref3, arr1.reduce(function (res1, obj) {
-          if (obj && existy$1(obj[el]) && (!opts1 || obj[el] !== opts1.placeholder)) {
+          if (obj && existy(obj[el]) && (!opts1 || obj[el] !== opts1.placeholder)) {
             if (!opts1 || !opts1.comments || !lodash_includes(obj[el], opts1.comments)) {
               res1.push(obj[el]);
             }
@@ -10422,7 +10422,7 @@ function findUnusedSync(arrOriginal, originalOpts) {
         });
       }
     } else if (arr1.every(function (el) {
-      return isArr$1(el);
+      return isArr(el);
     })) {
       arr1.forEach(function (singleArray, i) {
         res = findUnusedSyncInner(singleArray, opts1, res, path + "[" + i + "]");
@@ -10442,7 +10442,7 @@ exports.getKeyset = getKeyset;
 exports.getKeysetSync = getKeysetSync;
 exports.noNewKeysSync = noNewKeysSync;
 exports.sortAllObjectsSync = sortAllObjectsSync;
-exports.version = version$1;
+exports.version = version;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

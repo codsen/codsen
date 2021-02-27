@@ -10,9 +10,9 @@
 import { rMerge } from 'ranges-merge';
 import { rCrop } from 'ranges-crop';
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
-const version$1 = version;
+const version = version$1;
 
 function rInvert(arrOfRanges, strLen, originalOptions) {
   if (!Array.isArray(arrOfRanges) && arrOfRanges !== null) {
@@ -117,4 +117,4 @@ function rInvert(arrOfRanges, strLen, originalOptions) {
   return rCrop(res, strLen);
 }
 
-export { rInvert, version$1 as version };
+export { rInvert, version };

@@ -13,9 +13,9 @@ import { matchRightIncl, matchRight, matchLeft } from 'string-match-left-right';
 import { expander } from 'string-range-expander';
 import { right, left } from 'string-left-right';
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
-const version$1 = version;
+const version = version$1;
 const finalIndexesToDelete = new Ranges({
   limitToBeAddedWhitespace: true
 });
@@ -531,7 +531,8 @@ function crush(str, originalOpts) {
 
               if ( // (
               str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
-                cb: nextChar => !nextChar || !/\w/.test(nextChar)
+                cb: nextChar => !nextChar || !/\w/.test(nextChar) // not a letter
+
               }) // ) ||
               // ("<>".includes(str[i]) &&
               //   ("0123456789".includes(str[right(str, i)]) ||
@@ -666,17 +667,20 @@ function crush(str, originalOpts) {
             // =============================================================
 
             if (str[i].trim() && (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) || str[~-i] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[~-i])) && isStr(leftTagName) && (!tagName || !opts.mindTheInlineTags.includes(tagName)) && !(str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
-              cb: nextChar => !nextChar || !/\w/.test(nextChar)
+              cb: nextChar => !nextChar || !/\w/.test(nextChar) // not a letter
+
             })) && !(str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
               trimCharsBeforeMatching: "/",
-              cb: nextChar => !nextChar || !/\w/.test(nextChar)
+              cb: nextChar => !nextChar || !/\w/.test(nextChar) // not a letter
+
             }))) {
               stageFrom = i;
               stageTo = i;
               stageAdd = null;
             } else if (styleCommentStartedAt === null && stageFrom !== null && (withinInlineStyle || !opts.mindTheInlineTags || !Array.isArray(opts.mindTheInlineTags) || Array.isArray(opts.mindTheInlineTags.length) && !opts.mindTheInlineTags.length || !isStr(tagName) || Array.isArray(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && isStr(tagName) && !opts.mindTheInlineTags.includes(tagName)) && !(str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
               trimCharsBeforeMatching: "/",
-              cb: nextChar => !nextChar || !/\w/.test(nextChar)
+              cb: nextChar => !nextChar || !/\w/.test(nextChar) // not a letter
+
             }))) {
               stageFrom = null;
               stageTo = null;
@@ -694,7 +698,8 @@ function crush(str, originalOpts) {
 
           if (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) && !(str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
             trimCharsBeforeMatching: "/",
-            cb: nextChar => !nextChar || !/\w/.test(nextChar)
+            cb: nextChar => !nextChar || !/\w/.test(nextChar) // not a letter
+
           }))) {
             // ██ 1.
             // // if really exceeded, not on limit, commit stage which will shorten
@@ -947,4 +952,4 @@ function crush(str, originalOpts) {
   };
 }
 
-export { crush, defaults, version$1 as version };
+export { crush, defaults, version };

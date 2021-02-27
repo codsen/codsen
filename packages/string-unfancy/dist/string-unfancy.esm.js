@@ -9,10 +9,10 @@
 
 import he from 'he';
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
 /* eslint quote-props:0 */
-const version$1 = version;
+const version = version$1;
 
 function existy(x) {
   return x != null;
@@ -68,4 +68,4 @@ function unfancy(str) {
   return res;
 }
 
-export { unfancy, version$1 as version };
+export { unfancy, version };

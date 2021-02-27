@@ -9,9 +9,9 @@
 
 import { rMerge } from 'ranges-merge';
 
-var version = "5.0.5";
+var version$1 = "5.0.5";
 
-const version$1 = version;
+const version = version$1;
 
 function rApply(str, originalRangesArr, progressFn) {
   let percentageDone = 0;
@@ -130,4 +130,4 @@ function rApply(str, originalRangesArr, progressFn) {
   return str;
 }
 
-export { rApply, version$1 as version };
+export { rApply, version };

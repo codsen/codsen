@@ -10,9 +10,9 @@
 import isObj from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
-const version$1 = version;
+const version = version$1;
 const RAWNBSP = "\u00A0"; // separates the value from flags
 
 function x(something) {
@@ -722,4 +722,4 @@ function chompRight(str, idx, ...args) { // if there are no arguments, null
   return chomp("right", str, idx, defaults, clone(args));
 }
 
-export { chompLeft, chompRight, left, leftSeq, leftStopAtNewLines, leftStopAtRawNbsp, right, rightSeq, rightStopAtNewLines, rightStopAtRawNbsp, version$1 as version };
+export { chompLeft, chompRight, left, leftSeq, leftStopAtNewLines, leftStopAtRawNbsp, right, rightSeq, rightStopAtNewLines, rightStopAtRawNbsp, version };

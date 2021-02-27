@@ -10,9 +10,9 @@
 import { Ranges } from 'ranges-push';
 import { rApply } from 'ranges-apply';
 
-var version = "4.0.5";
+var version$1 = "4.0.5";
 
-const version$1 = version;
+const version = version$1;
 const BACKSLASH = `\u005C`;
 const defaults = {
   padStart: 3,
@@ -253,4 +253,4 @@ function fixRowNums(str, originalOpts) {
   return str;
 }
 
-export { defaults, fixRowNums, version$1 as version };
+export { defaults, fixRowNums, version };

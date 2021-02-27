@@ -7,9 +7,9 @@
  * Homepage: https://codsen.com/os/array-of-arrays-sort-by-col/
  */
 
-var version = "3.0.5";
+var version$1 = "3.0.5";
 
-const version$1 = version; // FUNCTIONS - INTERNAL
+const version = version$1; // FUNCTIONS - INTERNAL
 // -----------------------------------------------------------------------------
 
 function existy(x) {
@@ -129,4 +129,4 @@ function sortByCol(arr, axis = 0) {
   return resToBeReturned;
 }
 
-export { sortByCol, version$1 as version };
+export { sortByCol, version };

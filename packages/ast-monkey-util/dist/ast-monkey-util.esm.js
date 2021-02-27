@@ -99,8 +99,8 @@ function parent(str) {
   return null;
 }
 
-var version = "1.3.5";
+var version$1 = "1.3.5";
 
-const version$1 = version; // -----------------------------------------------------------------------------
+const version = version$1; // -----------------------------------------------------------------------------
 
-export { parent, pathNext, pathPrev, pathUp, version$1 as version };
+export { parent, pathNext, pathPrev, pathUp, version };

@@ -21,9 +21,9 @@ var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 var clone__default = /*#__PURE__*/_interopDefaultLegacy(clone);
 var isObj__default = /*#__PURE__*/_interopDefaultLegacy(isObj);
 
-var version = "2.0.5";
+var version$1 = "2.0.5";
 
-var version$1 = version;
+var version = version$1;
 
 function traverse(tree1, cb1, lookahead) {
   if (lookahead === void 0) {
@@ -154,4 +154,4 @@ function traverse(tree1, cb1, lookahead) {
 } // -----------------------------------------------------------------------------
 
 exports.traverse = traverse;
-exports.version = version$1;
+exports.version = version;

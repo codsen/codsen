@@ -13,9 +13,9 @@ import { arrayiffy } from 'arrayiffy-if-string';
 import { allEq } from 'object-all-values-equal-to';
 import isObj from 'lodash.isplainobject';
 
-var version = "8.0.5";
+var version$1 = "8.0.5";
 
-const version$1 = version;
+const version = version$1;
 const defaults = {
   placeholder: false,
   doNotFillThesePathsIfTheyContainPlaceholders: [],
@@ -144,4 +144,4 @@ function fillMissing(originalIncompleteWrapper, originalSchemaWrapper, originalO
   return fillMissingKeys(clone(originalIncompleteWrapper), clone(originalSchemaWrapper), opts);
 }
 
-export { fillMissing, version$1 as version };
+export { fillMissing, version };
