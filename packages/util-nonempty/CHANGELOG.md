@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.6](https://github.com/codsen/codsen/compare/util-nonempty@3.0.5...util-nonempty@3.0.6) (2021-02-27)
+
+**Note:** Version bump only for package util-nonempty
+
+
+
+
+
 ## 3.0.1 (2021-01-28)
 
 ### Bug Fixes

@@ -1,6 +1,6 @@
 {
   "name": "string-remove-thousand-separators",
-  "version": "5.0.5",
+  "version": "5.0.6",
   "description": "Detects and removes thousand separators (dot/comma/quote/space) from string-type digits",
   "keywords": [
     "amount",
@@ -79,8 +79,8 @@
   "dependencies": {
     "@babel/runtime": "^7.12.13",
     "lodash.trim": "^4.5.1",
-    "ranges-apply": "^5.0.5",
-    "ranges-push": "^5.0.5"
+    "ranges-apply": "^5.0.6",
+    "ranges-push": "^5.0.6"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.16",
@@ -108,7 +108,7 @@
     "@typescript-eslint/eslint-plugin": "^4.15.0",
     "@typescript-eslint/parser": "^4.15.0",
     "eslint": "^7.20.0",
-    "lect": "^0.16.5",
+    "lect": "^0.16.6",
     "rollup": "^2.39.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

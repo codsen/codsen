@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.6](https://github.com/codsen/codsen/compare/ranges-ent-decode@4.0.5...ranges-ent-decode@4.0.6) (2021-02-27)
+
+**Note:** Version bump only for package ranges-ent-decode
+
+
+
+
+
 ## 4.0.1 (2021-01-28)
 
 ### Bug Fixes

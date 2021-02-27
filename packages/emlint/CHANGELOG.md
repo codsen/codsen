@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.2.0](https://github.com/codsen/codsen/compare/emlint@4.1.2...emlint@4.2.0) (2021-02-27)
+
+
+### Bug Fixes
+
+* improvements to `css-rule-malformed` ([cf34cf4](https://github.com/codsen/codsen/commit/cf34cf4e3bd76373432903bdd40908728fa5ef8c))
+* rename `trailing-semi` to `css-trailing-semi` ([ed848a7](https://github.com/codsen/codsen/commit/ed848a7a23b1f916e75758962d1eadf298aeab5a))
+
+
+### Features
+
+* `css-rule-malformed` detect colon character replacement in CSS rules ([e6f2ed6](https://github.com/codsen/codsen/commit/e6f2ed6559890f9d6429fae0312d61f489022728))
+* `css-rule-malformed` to catch gaps in front of semicolon or colon in CSS rules ([ca9fe11](https://github.com/codsen/codsen/commit/ca9fe11e78fcb122b86b1b16d367d72aab43041e))
+* `css-rule-malformed` to report missing CSS rule values ([59a3690](https://github.com/codsen/codsen/commit/59a369026d7d5e310436dfd1c2b7e4909f8f2f1c))
+* improvements to `css-rule-malformed`, catch rogue characters present instead of a rule ([34209f9](https://github.com/codsen/codsen/commit/34209f92a2fb67443c6bd21dba9888b047523288))
+* new rule, `css-rule-malformed` ([cfa77e2](https://github.com/codsen/codsen/commit/cfa77e2e71505e8bc78f17f109d4612dc65085bc))
+* new rule, `trailing-semi` ([a47bdfb](https://github.com/codsen/codsen/commit/a47bdfbadd11a6fb5965724b8295a250681241c7))
+* rule `css-rule-malformed`: add mis-typed `!important` recognition ([428a6f0](https://github.com/codsen/codsen/commit/428a6f07172b3806c7bcc70f0e00647142c60388))
+* salvage a rare case with rogue semi in front of `!important` in CSS rule ([424dc7b](https://github.com/codsen/codsen/commit/424dc7bbaddd3b2c2476ada7fe3f4a464a2d2360))
+* wire up and run the helper script to compile aggregate rule sets ([2673c8c](https://github.com/codsen/codsen/commit/2673c8c670397b44fed0071aea0c2bef34b698f7))
+
+
+
+
+
 ## 4.1.0 (2021-02-07)
 
 ### Bug Fixes
