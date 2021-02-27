@@ -1,7 +1,7 @@
 /**
  * test-mixer
  * Test helper to generate function opts object variations
- * Version: 2.0.5
+ * Version: 2.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/test-mixer/
@@ -3509,7 +3509,7 @@ var lodash_clonedeep = createCommonjsModule(function (module, exports) {
 /**
  * object-boolean-combinations
  * Consumes a defaults object with booleans, generates all possible variations of it
- * Version: 4.0.5
+ * Version: 4.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-boolean-combinations/
@@ -3600,7 +3600,7 @@ function combinations(originalIncomingObject, originalOverrideObject) {
   return outcomingObjectsArray;
 }
 
-var version$1 = "2.0.5";
+var version$1 = "2.0.6";
 
 var version = version$1;
 

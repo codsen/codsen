@@ -1,7 +1,7 @@
 /**
  * string-convert-indexes
  * Convert between native JS string character indexes and grapheme-count-based indexes
- * Version: 4.0.5
+ * Version: 4.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-convert-indexes/
@@ -2062,7 +2062,7 @@ var lodash_isplainobject = isPlainObject;
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.3.5
+ * Version: 1.3.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/
@@ -3923,7 +3923,7 @@ var graphemeSplitter = createCommonjsModule(function (module) {
   }
 });
 
-var version$1 = "4.0.5";
+var version$1 = "4.0.6";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types:0 */
 var version = version$1; // inner function, common for both external API's methods that does the job:

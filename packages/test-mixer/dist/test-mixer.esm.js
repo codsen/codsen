@@ -1,7 +1,7 @@
 /**
  * test-mixer
  * Test helper to generate function opts object variations
- * Version: 2.0.5
+ * Version: 2.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/test-mixer/
@@ -10,7 +10,7 @@
 import { combinations } from 'object-boolean-combinations';
 import clone from 'lodash.clonedeep';
 
-var version$1 = "2.0.5";
+var version$1 = "2.0.6";
 
 const version = version$1;
 

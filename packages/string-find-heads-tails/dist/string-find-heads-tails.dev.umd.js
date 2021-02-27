@@ -1,7 +1,7 @@
 /**
  * string-find-heads-tails
  * Finds where are arbitrary templating marker heads and tails located
- * Version: 4.0.5
+ * Version: 4.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-find-heads-tails/
@@ -65,7 +65,7 @@ function _objectSpread2(target) {
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.5
+ * Version: 3.13.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -580,7 +580,7 @@ function matchRightIncl(str, position, whatToMatch, opts) {
   return main("matchRightIncl", str, position, whatToMatch, opts);
 }
 
-var version$1 = "4.0.5";
+var version$1 = "4.0.6";
 
 var version = version$1;
 

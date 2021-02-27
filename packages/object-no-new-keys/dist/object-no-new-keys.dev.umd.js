@@ -1,7 +1,7 @@
 /**
  * object-no-new-keys
  * Check, does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON)
- * Version: 3.0.5
+ * Version: 3.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-no-new-keys/
@@ -62,7 +62,7 @@ function _objectSpread2(target) {
   return target;
 }
 
-var version$1 = "3.0.5";
+var version$1 = "3.0.6";
 
 var version = version$1;
 

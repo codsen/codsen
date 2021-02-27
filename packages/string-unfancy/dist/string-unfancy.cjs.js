@@ -1,7 +1,7 @@
 /**
  * string-unfancy
  * Replace all n/m dashes, curly quotes with their simpler equivalents
- * Version: 4.0.5
+ * Version: 4.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-unfancy/
@@ -17,7 +17,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var he__default = /*#__PURE__*/_interopDefaultLegacy(he);
 
-var version$1 = "4.0.5";
+var version$1 = "4.0.6";
 
 /* eslint quote-props:0 */
 var version = version$1;

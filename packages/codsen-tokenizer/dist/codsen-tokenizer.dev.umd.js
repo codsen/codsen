@@ -1,7 +1,7 @@
 /**
  * codsen-tokenizer
  * HTML and CSS lexer aimed at code with fatal errors, accepts mixed coding languages
- * Version: 5.1.2
+ * Version: 5.2.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/codsen-tokenizer/
@@ -65,7 +65,7 @@ function _objectSpread2(target) {
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.5
+ * Version: 3.13.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -2638,7 +2638,7 @@ function left(str, idx) {
 /**
  * html-all-known-attributes
  * All HTML attributes known to the Humanity
- * Version: 4.0.5
+ * Version: 4.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/html-all-known-attributes/
@@ -2648,7 +2648,7 @@ var allHtmlAttribs = new Set(["abbr", "accept", "accept-charset", "accesskey", "
 /**
  * is-char-suitable-for-html-attr-name
  * Is given character suitable to be in an HTML attribute's name?
- * Version: 2.0.5
+ * Version: 2.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-char-suitable-for-html-attr-name/
@@ -2666,7 +2666,7 @@ function isAttrNameChar(char) {
 /**
  * is-html-attribute-closing
  * Is a character on a given index a closing of an HTML attribute?
- * Version: 2.1.2
+ * Version: 2.1.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-html-attribute-closing/
@@ -4051,7 +4051,7 @@ function startsEsp(str, i, token, layers, withinStyle) {
   return !!res;
 }
 
-var version$1 = "5.1.2";
+var version$1 = "5.2.0";
 
 var version = version$1;
 var importantStartsRegexp = /^\s*!?\s*[a-zA-Z0-9]+(?:[\s;}<>'"]|$)/gm;

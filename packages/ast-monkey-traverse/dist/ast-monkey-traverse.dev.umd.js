@@ -1,7 +1,7 @@
 /**
  * ast-monkey-traverse
  * Utility library to traverse AST
- * Version: 2.0.5
+ * Version: 2.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-traverse/
@@ -2062,7 +2062,7 @@ var lodash_isplainobject = isPlainObject;
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.3.5
+ * Version: 1.3.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/
@@ -2093,7 +2093,7 @@ function parent(str) {
   return null;
 }
 
-var version$1 = "2.0.5";
+var version$1 = "2.0.6";
 
 var version = version$1;
 /**

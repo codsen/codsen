@@ -1,13 +1,13 @@
 /**
  * line-column-mini
  * Convert string index to line-column position
- * Version: 1.1.5
+ * Version: 1.1.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/line-column-mini/
  */
 
-var version$1 = "1.1.5";
+var version$1 = "1.1.6";
 
 const version = version$1; // find where is a given element located
 

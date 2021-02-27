@@ -1,7 +1,7 @@
 /**
  * object-delete-key
  * Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.
- * Version: 2.0.5
+ * Version: 2.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/object-delete-key/
@@ -3540,7 +3540,7 @@ var lodash_isplainobject = isPlainObject;
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.3.5
+ * Version: 1.3.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/
@@ -4789,7 +4789,7 @@ var lodash_intersection = intersection;
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.5
+ * Version: 3.13.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -5530,7 +5530,7 @@ function checkTypesMini(obj, ref, originalOptions) {
 /**
  * ast-contains-only-empty-space
  * Does AST contain only empty space?
- * Version: 2.0.5
+ * Version: 2.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-contains-only-empty-space/
@@ -6031,7 +6031,7 @@ function del(input, originalOpts) {
 /**
  * ast-is-empty
  * Find out, is nested array/object/string/AST tree is empty
- * Version: 2.0.5
+ * Version: 2.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-is-empty/
@@ -6088,7 +6088,7 @@ function isEmpty(input) {
   return res;
 }
 
-var version$1 = "2.0.5";
+var version$1 = "2.0.6";
 
 var version = version$1;
 

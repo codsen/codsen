@@ -1,13 +1,13 @@
 /**
  * all-named-html-entities
  * List of all named HTML entities
- * Version: 1.5.5
+ * Version: 1.5.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/all-named-html-entities/
  */
 
-var version$1 = "1.5.5";
+var version$1 = "1.5.6";
 
 var Aacute = "Á";
 var aacute = "á";

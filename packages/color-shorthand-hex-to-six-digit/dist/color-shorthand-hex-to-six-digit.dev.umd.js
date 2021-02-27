@@ -1,7 +1,7 @@
 /**
  * color-shorthand-hex-to-six-digit
  * Convert shorthand hex color codes into full
- * Version: 3.0.5
+ * Version: 3.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/color-shorthand-hex-to-six-digit/
@@ -2022,7 +2022,7 @@ var lodash_clonedeep = createCommonjsModule(function (module, exports) {
   module.exports = cloneDeep;
 });
 
-var version$1 = "3.0.5";
+var version$1 = "3.0.6";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 var version = version$1;

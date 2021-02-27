@@ -1,7 +1,7 @@
 /**
  * array-of-arrays-sort-by-col
  * Sort array of arrays by column, rippling the sorting outwards from that column
- * Version: 3.0.5
+ * Version: 3.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/array-of-arrays-sort-by-col/
@@ -13,7 +13,7 @@ typeof define === 'function' && define.amd ? define(['exports'], factory) :
 (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.arrayOfArraysSortByCol = {}));
 }(this, (function (exports) { 'use strict';
 
-var version$1 = "3.0.5";
+var version$1 = "3.0.6";
 
 var version = version$1; // FUNCTIONS - INTERNAL
 // -----------------------------------------------------------------------------

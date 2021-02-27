@@ -1,7 +1,7 @@
 /**
  * ast-delete-object
  * Delete all plain objects in AST if they contain a certain key/value pair
- * Version: 2.0.5
+ * Version: 2.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-delete-object/
@@ -2505,7 +2505,7 @@ var lodash_isplainobject = isPlainObject;
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.3.5
+ * Version: 1.3.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/
@@ -2626,7 +2626,7 @@ function traverse(tree1, cb1) {
 /**
  * ast-contains-only-empty-space
  * Does AST contain only empty space?
- * Version: 2.0.5
+ * Version: 2.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-contains-only-empty-space/
@@ -2953,7 +2953,7 @@ function compare(b, s, originalOpts) {
   return true;
 }
 
-var version$1 = "2.0.5";
+var version$1 = "2.0.6";
 
 var version = version$1;
 var defaults = {

@@ -1,7 +1,7 @@
 /**
  * codsen-parser
  * Parser aiming at broken or mixed code, especially HTML & CSS
- * Version: 0.10.2
+ * Version: 0.10.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/codsen-parser/
@@ -13,7 +13,7 @@ import { left, right } from 'string-left-right';
 import { tokenizer } from 'codsen-tokenizer';
 import op from 'object-path';
 
-var version$1 = "0.10.2";
+var version$1 = "0.10.3";
 
 /* eslint no-use-before-define: 0 */
 const version = version$1;

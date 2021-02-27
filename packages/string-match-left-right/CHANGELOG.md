@@ -3,28 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [7.0.0](https://github.com/codsen/codsen/compare/string-match-left-right@6.0.5...string-match-left-right@7.0.0) (2021-02-27)
-
+## 7.0.0 (2021-02-27)
 
 ### Bug Fixes
 
-* if the first char was matched, don't tolerate any mismatches leading up to it ([c482851](https://github.com/codsen/codsen/commit/c4828514dfcca6470d895f0b35801eac1faf2f7a))
-
+- if the first char was matched, don't tolerate any mismatches leading up to it ([c482851](https://github.com/codsen/codsen/commit/c4828514dfcca6470d895f0b35801eac1faf2f7a))
 
 ### Features
 
-* algorithm improvements to avoid false positives in too early matches ([552df88](https://github.com/codsen/codsen/commit/552df885c6d97b5e1d8c5767071d0b993f214052))
-* opts.hungry ([68b1c0f](https://github.com/codsen/codsen/commit/68b1c0fae857573c2230a5baea1b149e1a87eeb5))
-
+- algorithm improvements to avoid false positives in too early matches ([552df88](https://github.com/codsen/codsen/commit/552df885c6d97b5e1d8c5767071d0b993f214052))
+- opts.hungry ([68b1c0f](https://github.com/codsen/codsen/commit/68b1c0fae857573c2230a5baea1b149e1a87eeb5))
 
 ### BREAKING CHANGES
 
-* This flag, disabled by default, prevents from too-eager matching in the beginning,
+- This flag, disabled by default, prevents from too-eager matching in the beginning,
 wasting `maxMismatches`. To get old behaviour like before this release, set `opts.hungry` to `true`.
-
-
-
-
 
 ## 6.0.1 (2021-01-28)
 

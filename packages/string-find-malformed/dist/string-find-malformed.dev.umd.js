@@ -1,7 +1,7 @@
 /**
  * string-find-malformed
  * Search for a malformed string. Think of Levenshtein distance but in search.
- * Version: 2.0.5
+ * Version: 2.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-find-malformed/
@@ -2010,7 +2010,7 @@ function right(str, idx) {
   });
 }
 
-var version$1 = "2.0.5";
+var version$1 = "2.0.6";
 
 var version = version$1;
 

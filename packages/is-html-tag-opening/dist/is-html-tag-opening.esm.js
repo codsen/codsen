@@ -1,7 +1,7 @@
 /**
  * is-html-tag-opening
  * Does an HTML tag start at given position?
- * Version: 2.0.5
+ * Version: 2.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-html-tag-opening/
@@ -28,7 +28,7 @@ function extraRequirements(str, idx) {
   // slash-closing follows, but no opening
 }
 
-var version$1 = "2.0.5";
+var version$1 = "2.0.6";
 
 const version = version$1;
 

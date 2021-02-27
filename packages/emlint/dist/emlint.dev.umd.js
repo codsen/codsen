@@ -1,7 +1,7 @@
 /**
  * emlint
  * Pluggable email template code linter
- * Version: 4.1.2
+ * Version: 4.2.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/emlint/
@@ -673,7 +673,7 @@ leven_1.default = _default;
 /**
  * all-named-html-entities
  * List of all named HTML entities
- * Version: 1.5.5
+ * Version: 1.5.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/all-named-html-entities/
@@ -11419,7 +11419,7 @@ function fixEnt(str, originalOpts) {
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.3.5
+ * Version: 1.3.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/
@@ -11605,7 +11605,7 @@ function traverse(tree1, cb1) {
 /**
  * line-column-mini
  * Convert string index to line-column position
- * Version: 1.1.5
+ * Version: 1.1.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/line-column-mini/
@@ -11861,7 +11861,7 @@ function findMalformed(str, refStr, cb, originalOpts) {
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.5
+ * Version: 3.13.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -12392,7 +12392,7 @@ function matchRight(str, position, whatToMatch, opts) {
 /**
  * html-all-known-attributes
  * All HTML attributes known to the Humanity
- * Version: 4.0.5
+ * Version: 4.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/html-all-known-attributes/
@@ -12402,7 +12402,7 @@ var allHtmlAttribs = new Set(["abbr", "accept", "accept-charset", "accesskey", "
 /**
  * is-char-suitable-for-html-attr-name
  * Is given character suitable to be in an HTML attribute's name?
- * Version: 2.0.5
+ * Version: 2.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-char-suitable-for-html-attr-name/
@@ -12420,7 +12420,7 @@ function isAttrNameChar(char) {
 /**
  * is-html-attribute-closing
  * Is a character on a given index a closing of an HTML attribute?
- * Version: 2.1.2
+ * Version: 2.1.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-html-attribute-closing/
@@ -33780,7 +33780,7 @@ function attributeValidateHref(context) {
 /**
  * is-language-code
  * Is given string a language code (as per IANA)
- * Version: 3.0.5
+ * Version: 3.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-language-code/
@@ -37832,7 +37832,7 @@ function attributeValidateWidth(context) {
 /**
  * html-entities-not-email-friendly
  * All HTML entities which are not email template friendly
- * Version: 0.4.5
+ * Version: 0.4.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/html-entities-not-email-friendly/
@@ -45894,7 +45894,7 @@ var Linter = /*#__PURE__*/function (_TypedEmitter) {
   return Linter;
 }(TypedEmitter);
 
-var version$1 = "4.1.2";
+var version$1 = "4.2.0";
 
 var version = version$1;
 

@@ -1,7 +1,7 @@
 /**
  * codsen-parser
  * Parser aiming at broken or mixed code, especially HTML & CSS
- * Version: 0.10.2
+ * Version: 0.10.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/codsen-parser/
@@ -65,7 +65,7 @@ function _objectSpread2(target) {
 /**
  * ast-monkey-util
  * Utility library of AST helper functions
- * Version: 1.3.5
+ * Version: 1.3.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/ast-monkey-util/
@@ -2361,7 +2361,7 @@ function findMalformed(str, refStr, cb, originalOpts) {
 /**
  * arrayiffy-if-string
  * Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
- * Version: 3.13.5
+ * Version: 3.13.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/arrayiffy-if-string/
@@ -2892,7 +2892,7 @@ function matchRight(str, position, whatToMatch, opts) {
 /**
  * html-all-known-attributes
  * All HTML attributes known to the Humanity
- * Version: 4.0.5
+ * Version: 4.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/html-all-known-attributes/
@@ -2902,7 +2902,7 @@ var allHtmlAttribs = new Set(["abbr", "accept", "accept-charset", "accesskey", "
 /**
  * is-char-suitable-for-html-attr-name
  * Is given character suitable to be in an HTML attribute's name?
- * Version: 2.0.5
+ * Version: 2.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-char-suitable-for-html-attr-name/
@@ -2920,7 +2920,7 @@ function isAttrNameChar(char) {
 /**
  * is-html-attribute-closing
  * Is a character on a given index a closing of an HTML attribute?
- * Version: 2.1.2
+ * Version: 2.1.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/is-html-attribute-closing/
@@ -7568,7 +7568,7 @@ var objectPath = createCommonjsModule(function (module) {
   });
 });
 
-var version$1 = "0.10.2";
+var version$1 = "0.10.3";
 
 var version = version$1;
 var defaults = {

@@ -3,31 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [5.2.0](https://github.com/codsen/codsen/compare/codsen-tokenizer@5.1.2...codsen-tokenizer@5.2.0) (2021-02-27)
-
+## 5.2.0 (2021-02-27)
 
 ### Bug Fixes
 
-* algorithm improvements in broken `!important` recognition ([dcfd755](https://github.com/codsen/codsen/commit/dcfd755e0561fc00212b83606a86b3d94e095e2e))
-* algorithm improvements in broken `!important` recognition ([0254ca8](https://github.com/codsen/codsen/commit/0254ca8e1973b3b747589b3c8e585d0bda2f8252))
-* further improvements to broken code recognition ([ba41245](https://github.com/codsen/codsen/commit/ba4124552411d391d788633419f5e533cb6354a0))
-* improvements to malformed `!important` recognition ([7c9d70b](https://github.com/codsen/codsen/commit/7c9d70b6d96e00cb90b038be7c392fd0ec162c30))
-* stray `!important` to be put under `important` key, not under `property` ([3cd6291](https://github.com/codsen/codsen/commit/3cd6291bb15abe16faf5c655924b61fd882a801b))
-* tweak to address broken or partial code cases, around CSS rules ([aea4d9b](https://github.com/codsen/codsen/commit/aea4d9b9d46eb7cf28efdd2adc495711154140d7))
-
+- algorithm improvements in broken `!important` recognition ([dcfd755](https://github.com/codsen/codsen/commit/dcfd755e0561fc00212b83606a86b3d94e095e2e))
+- algorithm improvements in broken `!important` recognition ([0254ca8](https://github.com/codsen/codsen/commit/0254ca8e1973b3b747589b3c8e585d0bda2f8252))
+- further improvements to broken code recognition ([ba41245](https://github.com/codsen/codsen/commit/ba4124552411d391d788633419f5e533cb6354a0))
+- improvements to malformed `!important` recognition ([7c9d70b](https://github.com/codsen/codsen/commit/7c9d70b6d96e00cb90b038be7c392fd0ec162c30))
+- stray `!important` to be put under `important` key, not under `property` ([3cd6291](https://github.com/codsen/codsen/commit/3cd6291bb15abe16faf5c655924b61fd882a801b))
+- tweak to address broken or partial code cases, around CSS rules ([aea4d9b](https://github.com/codsen/codsen/commit/aea4d9b9d46eb7cf28efdd2adc495711154140d7))
 
 ### Features
 
-* algorithm improvements ([b52667d](https://github.com/codsen/codsen/commit/b52667db2454d30b8ff70274088f11f20333ad9d))
-* correctly set whitespace after abruptly ended css rule as a text token ([4fdd70d](https://github.com/codsen/codsen/commit/4fdd70d7fed4ee1d8e72c1946b2b3ef1906e6241))
-* improve recognition of rogue characters in CSS rules ([b57335a](https://github.com/codsen/codsen/commit/b57335a12e671eedc0a1f38498b3a4ef44a66572))
-* improvements to the CSS rule recognition, especially around `!important` ([d89a7e0](https://github.com/codsen/codsen/commit/d89a7e05eb796339ac61aee54b5d9dd43c8a1f91))
-* patch CSS rules when closing curly has not been met yet a new one starts ([4f108a6](https://github.com/codsen/codsen/commit/4f108a66b813c039a5afbdd309e1db55056ba716))
-* tokenize `!important` in CSS ([a6e0925](https://github.com/codsen/codsen/commit/a6e0925c5f4859bf4b0e17996f42e9ca65bce6d8))
-
-
-
-
+- algorithm improvements ([b52667d](https://github.com/codsen/codsen/commit/b52667db2454d30b8ff70274088f11f20333ad9d))
+- correctly set whitespace after abruptly ended css rule as a text token ([4fdd70d](https://github.com/codsen/codsen/commit/4fdd70d7fed4ee1d8e72c1946b2b3ef1906e6241))
+- improve recognition of rogue characters in CSS rules ([b57335a](https://github.com/codsen/codsen/commit/b57335a12e671eedc0a1f38498b3a4ef44a66572))
+- improvements to the CSS rule recognition, especially around `!important` ([d89a7e0](https://github.com/codsen/codsen/commit/d89a7e05eb796339ac61aee54b5d9dd43c8a1f91))
+- patch CSS rules when closing curly has not been met yet a new one starts ([4f108a6](https://github.com/codsen/codsen/commit/4f108a66b813c039a5afbdd309e1db55056ba716))
+- tokenize `!important` in CSS ([a6e0925](https://github.com/codsen/codsen/commit/a6e0925c5f4859bf4b0e17996f42e9ca65bce6d8))
 
 ## 5.1.0 (2021-02-07)
 

@@ -1,7 +1,7 @@
 /**
  * string-convert-indexes
  * Convert between native JS string character indexes and grapheme-count-based indexes
- * Version: 4.0.5
+ * Version: 4.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-convert-indexes/
@@ -18,7 +18,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var GraphemeSplitter__default = /*#__PURE__*/_interopDefaultLegacy(GraphemeSplitter);
 
-var version$1 = "4.0.5";
+var version$1 = "4.0.6";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types:0 */
 var version = version$1; // inner function, common for both external API's methods that does the job:

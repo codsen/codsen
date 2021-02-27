@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.10.3](https://github.com/codsen/codsen/compare/codsen-parser@0.10.2...codsen-parser@0.10.3) (2021-02-27)
-
+## 0.10.3 (2021-02-27)
 
 ### Bug Fixes
 
-* build against the latest tokenizer, with `!important` support ([66d2b2c](https://github.com/codsen/codsen/commit/66d2b2c60cdf88ce734443b9742d774401c0d914))
-
-
-
-
+- build against the latest tokenizer, with `!important` support ([66d2b2c](https://github.com/codsen/codsen/commit/66d2b2c60cdf88ce734443b9742d774401c0d914))
 
 ## 0.10.1 (2021-02-09)
 

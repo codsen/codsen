@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [4.1.0](https://github.com/codsen/codsen/compare/html-crush@4.0.5...html-crush@4.1.0) (2021-02-27)
-
+## 4.1.0 (2021-02-27)
 
 ### Features
 
-* single line break to be replaced with a single space ([020c26b](https://github.com/codsen/codsen/commit/020c26b9af81675f0b9dde097e218381a0ea3ef3)), closes [#3](https://github.com/codsen/codsen/issues/3)
-
-
-
-
+- single line break to be replaced with a single space ([020c26b](https://github.com/codsen/codsen/commit/020c26b9af81675f0b9dde097e218381a0ea3ef3)), closes [#3](https://github.com/codsen/codsen/issues/3)
 
 ## 4.0.1 (2021-01-28)
 

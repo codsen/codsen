@@ -1,7 +1,7 @@
 /**
  * charcode-is-valid-xml-name-character
  * Does a given character belong to XML spec's "Production 4 OR 4a" type (is acceptable for XML element's name)
- * Version: 1.12.5
+ * Version: 1.12.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/charcode-is-valid-xml-name-character/

@@ -1,7 +1,7 @@
 /**
  * array-of-arrays-into-ast
  * Turns an array of arrays of data into a nested tree of plain objects
- * Version: 2.0.5
+ * Version: 2.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/array-of-arrays-into-ast/
@@ -4076,7 +4076,7 @@ function includesWithGlob(originalInput, stringToFind, originalOpts) {
 /**
  * util-nonempty
  * Is the input (plain object, array, string or whatever) not empty?
- * Version: 3.0.5
+ * Version: 3.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/util-nonempty/
@@ -4807,7 +4807,7 @@ function externalApi(input1orig, input2orig, originalOpts) {
   }, input1orig, input2orig, originalOpts);
 }
 
-var version$1 = "2.0.5";
+var version$1 = "2.0.6";
 
 var version = version$1;
 var defaults = {

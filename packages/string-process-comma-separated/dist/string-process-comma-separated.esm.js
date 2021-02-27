@@ -1,13 +1,13 @@
 /**
  * string-process-comma-separated
  * Extracts chunks from possibly comma or whatever-separated string
- * Version: 2.0.5
+ * Version: 2.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-process-comma-separated/
  */
 
-var version$1 = "2.0.5";
+var version$1 = "2.0.6";
 
 const version = version$1;
 

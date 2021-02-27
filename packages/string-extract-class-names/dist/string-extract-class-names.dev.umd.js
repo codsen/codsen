@@ -1,7 +1,7 @@
 /**
  * string-extract-class-names
  * Extracts CSS class/id names from a string
- * Version: 6.0.5
+ * Version: 6.0.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/string-extract-class-names/
@@ -2055,7 +2055,7 @@ function left(str, idx) {
   });
 }
 
-var version$1 = "6.0.5";
+var version$1 = "6.0.6";
 
 var version = version$1;
 /**

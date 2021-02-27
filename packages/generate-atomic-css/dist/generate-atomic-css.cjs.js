@@ -1,7 +1,7 @@
 /**
  * generate-atomic-css
  * Generate Atomic CSS
- * Version: 1.4.5
+ * Version: 1.4.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://codsen.com/os/generate-atomic-css/
@@ -18,7 +18,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _objectSpread__default = /*#__PURE__*/_interopDefaultLegacy(_objectSpread);
 
-var version$1 = "1.4.5";
+var version$1 = "1.4.6";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 
