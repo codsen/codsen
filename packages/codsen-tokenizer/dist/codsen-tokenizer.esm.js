@@ -405,9 +405,9 @@ function startsEsp(str, i, token, layers, withinStyle) {
   return !!res;
 }
 
-var version$1 = "5.2.0";
+var version = "5.2.0";
 
-const version = version$1;
+const version$1 = version;
 const importantStartsRegexp = /^\s*!?\s*[a-zA-Z0-9]+(?:[\s;}<>'"]|$)/gm;
 const defaults = {
   tagCb: null,
@@ -905,8 +905,7 @@ function tokenizer(str, originalOpts) {
         value: null,
         closing: false,
         kind: "simple",
-        language: "html" // or "css"
-
+        language: "html"
       };
     }
 
@@ -1887,13 +1886,13 @@ function tokenizer(str, originalOpts) {
 
     /* istanbul ignore else */
 
-    if (!doNothing && property && (property.valueStarts && !property.valueEnds && str[rightVal] !== "!" && ( // either non-whitespace character doesn't exist on the right
+    if (!doNothing && property && (property.semi && property.semi < i && property.semi < i || (property.valueStarts && !property.valueEnds && str[rightVal] !== "!" && ( // either non-whitespace character doesn't exist on the right
     !rightVal || // or at that character !important does not start
     R1) || property.importantStarts && !property.importantEnds) && (!property.valueEnds || str[rightVal] !== ";") && ( // either end of string was reached
     !str[i] || // or it's a whitespace
     !str[i].trim() || // or it's a semicolon after a value
     !property.valueEnds && str[i] === ";" || // or we reached the end of the attribute
-    attrEndsAt(i))) {
+    attrEndsAt(i)))) {
       /* istanbul ignore else */
 
       if (property.importantStarts && !property.importantEnds) {
@@ -1925,6 +1924,10 @@ function tokenizer(str, originalOpts) {
 
       pushProperty(property);
       propertyReset();
+
+      if (!doNothing && (!str[i] || str[i].trim()) && str[i] === ";") {
+        doNothing = i;
+      }
     } // catch the end of a css property's value
     // -------------------------------------------------------------------------
 
@@ -2712,7 +2715,38 @@ function tokenizer(str, originalOpts) {
     token.openingCurlyAt && // but not ended:
     !token.closingCurlyAt && // there is no unfinished property being recorded
     !property.propertyStarts) { // if it's suitable for property, start a property
-      // if it's whitespace, for example,
+
+      if (str[i] === ";" && ( // a) if it's inline HTML tag CSS style attribute
+      attrib && Array.isArray(attrib.attribValue) && attrib.attribValue.length && // last attribute has semi already set:
+      attrib.attribValue[~-attrib.attribValue.length].semi && // and that semi is really behind this current index
+      attrib.attribValue[~-attrib.attribValue.length].semi < i || // or
+      // b) if it's head CSS styles block
+      token && token.type === "rule" && Array.isArray(token.properties) && token.properties.length && token.properties[~-token.properties.length].semi && token.properties[~-token.properties.length].semi < i)) {
+        // rogue semi?
+        // <div style="float:left;;">
+        //                        ^
+        // if so, it goes as a standalone property, something like:
+        // {
+        //   start: 23,
+        //   end: 24,
+        //   property: null,
+        //   propertyStarts: null,
+        //   propertyEnds: null,
+        //   value: null,
+        //   valueStarts: null,
+        //   valueEnds: null,
+        //   important: null,
+        //   importantStarts: null,
+        //   importantEnds: null,
+        //   colon: null,
+        //   semi: 23,
+        // }
+        initProperty({
+          start: i,
+          semi: i
+        });
+        doNothing = i + 1;
+      } // if it's whitespace, for example,
       // <a style="  /* zzz */color: red;  ">
       //           ^
       //         this
@@ -2720,30 +2754,29 @@ function tokenizer(str, originalOpts) {
       // rogue text will go as property, for example:
       //
       // <a style="  z color: red;  ">
+      else if ( // whitespace is automatically text token
+        str[i] && !str[i].trim() || // if comment layer has been started, it's also a text token, no matter even
+        // if it's a property, because it's comment's contents.
+        lastLayerIs("block")) { // depends where to push, is it inline css or head css rule
 
-      if ( // whitespace is automatically text token
-      str[i] && !str[i].trim() || // if comment layer has been started, it's also a text token, no matter even
-      // if it's a property, because it's comment's contents.
-      lastLayerIs("block")) { // depends where to push, is it inline css or head css rule
-
-        if (attrib.attribName) {
-          attrib.attribValue.push({
-            type: "text",
-            start: i,
-            end: null,
-            value: null
-          });
-        } else if (token.type === "rule" && ( // we don't want to push over the properties in-progress
-        !Array.isArray(token.properties) || !token.properties.length || // last property should have ended
-        token.properties[~-token.properties.length].end)) {
-          token.properties.push({
-            type: "text",
-            start: i,
-            end: null,
-            value: null
-          });
+          if (attrib.attribName) {
+            attrib.attribValue.push({
+              type: "text",
+              start: i,
+              end: null,
+              value: null
+            });
+          } else if (token.type === "rule" && ( // we don't want to push over the properties in-progress
+          !Array.isArray(token.properties) || !token.properties.length || // last property should have ended
+          token.properties[~-token.properties.length].end)) {
+            token.properties.push({
+              type: "text",
+              start: i,
+              end: null,
+              value: null
+            });
+          }
         }
-      }
     } // Catch the end of a tag attribute's value:
     // -------------------------------------------------------------------------
 
@@ -3321,4 +3354,4 @@ const util = {
   matchLayerLast
 };
 
-export { defaults, tokenizer, util, version };
+export { defaults, tokenizer, util, version$1 as version };

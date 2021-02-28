@@ -2297,13 +2297,139 @@ tap.test(`29`, (t) => {
   t.end();
 });
 
-tap.todo(`30 - repeated semi`, (t) => {
+tap.test(`30 - repeated semi, tight`, (t) => {
   const gathered = [];
   ct(`<style>.a{float:left;;}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(gathered, [], "30");
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: "<style>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
+        tagName: "style",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+      {
+        type: "rule",
+        start: 7,
+        end: 23,
+        value: ".a{float:left;;}",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: 22,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            start: 10,
+            end: 21,
+            property: "float",
+            propertyStarts: 10,
+            propertyEnds: 15,
+            value: "left",
+            valueStarts: 16,
+            valueEnds: 20,
+            important: null,
+            importantStarts: null,
+            importantEnds: null,
+            colon: 15,
+            semi: 20,
+          },
+          {
+            start: 21,
+            end: 22,
+            property: null,
+            propertyStarts: null,
+            propertyEnds: null,
+            value: null,
+            valueStarts: null,
+            valueEnds: null,
+            important: null,
+            importantStarts: null,
+            importantEnds: null,
+            colon: null,
+            semi: 21,
+          },
+        ],
+      },
+    ],
+    "30"
+  );
+  t.end();
+});
+
+tap.todo(`31 - repeated semi, space in front`, (t) => {
+  const gathered = [];
+  ct(`<style>.a{float:left;;}`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(gathered, [], "31");
+  t.end();
+});
+
+tap.todo(`32 - repeated semi, tab in front`, (t) => {
+  const gathered = [];
+  ct(`<style>.a{float:left;;}`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(gathered, [], "32");
+  t.end();
+});
+
+tap.todo(`33 - repeated semi, space after, bracket`, (t) => {
+  const gathered = [];
+  ct(`<style>.a{float:left;; }`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(gathered, [], "33");
+  t.end();
+});
+
+tap.todo(`34 - repeated semi, space after, bracket missing`, (t) => {
+  const gathered = [];
+  ct(`<style>.a{float:left;; </style>`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(gathered, [], "34");
+  t.end();
+});
+
+tap.todo(`35 - repeated semi, space after, new property follows`, (t) => {
+  const gathered = [];
+  ct(`<style>.a{float:left;; color:red;}`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(gathered, [], "35");
   t.end();
 });
