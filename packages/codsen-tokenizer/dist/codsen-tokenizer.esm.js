@@ -2291,11 +2291,14 @@ function tokenizer(str, originalOpts) {
     // -------------------------------------------------------------------------
 
 
-    if (!doNothing && token.type === "rule" && str[i] && str[i].trim() && // let all the crap in, filter later:
-    !"{};".includes(str[i]) && // above is instead of a stricter clause:
+    if (!doNothing && token.type === "rule" && str[i] && str[i].trim() && // NOTA BENE - there's same clause for inline HTML style
+    // let all the crap in, filter later:
+    !"{}".includes(str[i]) && ( // above is instead of a stricter clause:
     // attrNameRegexp.test(str[i]) &&
     //
-    token.selectorsEnd && token.openingCurlyAt && !property.propertyStarts && !property.importantStarts) { // first, check maybe there's unfinished text token before it
+    str[i] !== ";" || // or it is, but the last non-whitespace char was semi, so it's a rogue semi here
+    // we'll put it as a standalone property, it's not a part of text token
+    str[lastNonWhitespaceCharAt] === ";") && token.selectorsEnd && token.openingCurlyAt && !property.propertyStarts && !property.importantStarts) { // first, check maybe there's unfinished text token before it
 
       if (Array.isArray(token.properties) && token.properties.length && token.properties[~-token.properties.length].start && !token.properties[~-token.properties.length].end) {
         token.properties[~-token.properties.length].end = i;
@@ -2310,7 +2313,12 @@ function tokenizer(str, originalOpts) {
       // "property"
 
 
-      if (str[i] === "!") {
+      if (str[i] === ";") {
+        initProperty({
+          start: i,
+          semi: i
+        });
+      } else if (str[i] === "!") {
         initProperty({
           start: i,
           importantStarts: i
@@ -2335,8 +2343,12 @@ function tokenizer(str, originalOpts) {
     attrib.attribOpeningQuoteAt && !attrib.attribClosingQuoteAt && // but property hasn't been initiated
     !property.start && // yet the character is suitable:
     // it's not a whitespace
-    str[i] && str[i].trim() && // it's not some separator
-    !`'";`.includes(str[i]) && // it's not inside CSS block comment
+    str[i] && str[i].trim() && // NOTA BENE - there's same clause for inline HTML style
+    // it's not some separator
+    !`'"`.includes(str[i]) && ( // either it's not semi
+    str[i] !== ";" || // or it is, but the last non-whitespace char was semi, so it's a rogue semi here
+    // we'll put it as a standalone property, it's not a part of text token
+    str[lastNonWhitespaceCharAt] === ";") && // it's not inside CSS block comment
     !lastLayerIs("block")) { // It's either css comment or a css property.
       // Dirty characters go as property name, then later we validate and
       // catch them.
@@ -2374,12 +2386,22 @@ function tokenizer(str, originalOpts) {
           // if !important has been detected, that's a CSS like:
           // <div style="float:left;!important">
           // the !important is alone by itself
+          // also, it can be semi along by itself
 
 
-          initProperty(R2 ? {
-            start: i,
-            importantStarts: i
-          } : i);
+          if (str[i] === ";") {
+            initProperty({
+              start: i,
+              semi: i
+            });
+          } else if (R2) {
+            initProperty({
+              start: i,
+              importantStarts: i
+            });
+          } else {
+            initProperty(i);
+          }
         }
     } // in comment type, "only" kind tokens, submit square brackets to layers
     // -------------------------------------------------------------------------

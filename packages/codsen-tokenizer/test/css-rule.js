@@ -2203,13 +2203,105 @@ tap.test(`52 - no space or excl. mark`, (t) => {
   t.end();
 });
 
-tap.todo(`53`, (t) => {
+tap.test(`53`, (t) => {
   const gathered = [];
   ct(`<style>.a{color: red important float: left}</style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(gathered, [], "53");
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: "<style>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
+        tagName: "style",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+      {
+        type: "rule",
+        start: 7,
+        end: 43,
+        value: ".a{color: red important float: left}",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: 42,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            start: 10,
+            end: 30,
+            property: "color",
+            propertyStarts: 10,
+            propertyEnds: 15,
+            value: "red",
+            valueStarts: 17,
+            valueEnds: 20,
+            important: "important",
+            importantStarts: 21,
+            importantEnds: 30,
+            colon: 15,
+            semi: null,
+          },
+          {
+            type: "text",
+            start: 30,
+            end: 31,
+            value: " ",
+          },
+          {
+            start: 31,
+            end: 42,
+            property: "float",
+            propertyStarts: 31,
+            propertyEnds: 36,
+            value: "left",
+            valueStarts: 38,
+            valueEnds: 42,
+            important: null,
+            importantStarts: null,
+            importantEnds: null,
+            colon: 36,
+            semi: null,
+          },
+        ],
+      },
+      {
+        type: "tag",
+        start: 43,
+        end: 51,
+        value: "</style>",
+        tagNameStartsAt: 45,
+        tagNameEndsAt: 50,
+        tagName: "style",
+        recognised: true,
+        closing: true,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+    ],
+    "53"
+  );
   t.end();
 });

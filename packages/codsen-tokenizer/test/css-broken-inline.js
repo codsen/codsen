@@ -2118,79 +2118,725 @@ tap.test(`24 - repeated semi, tight`, (t) => {
   t.end();
 });
 
-tap.todo(`25 - repeated semi, space in front`, (t) => {
+tap.test(`25 - repeated semi, space in front`, (t) => {
   const gathered = [];
   ct(`<div style="float:left; ;">`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(gathered, [], "25");
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 27,
+        value: '<div style="float:left; ;">',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 4,
+        tagName: "div",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [
+          {
+            attribName: "style",
+            attribNameRecognised: true,
+            attribNameStartsAt: 5,
+            attribNameEndsAt: 10,
+            attribOpeningQuoteAt: 11,
+            attribClosingQuoteAt: 25,
+            attribValueRaw: "float:left; ;",
+            attribValue: [
+              {
+                start: 12,
+                end: 23,
+                property: "float",
+                propertyStarts: 12,
+                propertyEnds: 17,
+                value: "left",
+                valueStarts: 18,
+                valueEnds: 22,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: 17,
+                semi: 22,
+              },
+              {
+                type: "text",
+                start: 23,
+                end: 24,
+                value: " ",
+              },
+              {
+                start: 24,
+                end: 25,
+                property: null,
+                propertyStarts: null,
+                propertyEnds: null,
+                value: null,
+                valueStarts: null,
+                valueEnds: null,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: null,
+                semi: 24,
+              },
+            ],
+            attribValueStartsAt: 12,
+            attribValueEndsAt: 25,
+            attribStarts: 5,
+            attribEnds: 26,
+            attribLeft: 3,
+          },
+        ],
+      },
+    ],
+    "25"
+  );
   t.end();
 });
 
-tap.todo(`26 - repeated semi, tab in front`, (t) => {
+tap.test(`26 - repeated semi, tab in front`, (t) => {
   const gathered = [];
   ct(`<div style="float:left;\t;">`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(gathered, [], "26");
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 27,
+        value: '<div style="float:left;\t;">',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 4,
+        tagName: "div",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [
+          {
+            attribName: "style",
+            attribNameRecognised: true,
+            attribNameStartsAt: 5,
+            attribNameEndsAt: 10,
+            attribOpeningQuoteAt: 11,
+            attribClosingQuoteAt: 25,
+            attribValueRaw: "float:left;\t;",
+            attribValue: [
+              {
+                start: 12,
+                end: 23,
+                property: "float",
+                propertyStarts: 12,
+                propertyEnds: 17,
+                value: "left",
+                valueStarts: 18,
+                valueEnds: 22,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: 17,
+                semi: 22,
+              },
+              {
+                type: "text",
+                start: 23,
+                end: 24,
+                value: "\t",
+              },
+              {
+                start: 24,
+                end: 25,
+                property: null,
+                propertyStarts: null,
+                propertyEnds: null,
+                value: null,
+                valueStarts: null,
+                valueEnds: null,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: null,
+                semi: 24,
+              },
+            ],
+            attribValueStartsAt: 12,
+            attribValueEndsAt: 25,
+            attribStarts: 5,
+            attribEnds: 26,
+            attribLeft: 3,
+          },
+        ],
+      },
+    ],
+    "26"
+  );
   t.end();
 });
 
-tap.todo(`27 - repeated semi, space after, quotes follow`, (t) => {
+tap.test(`27 - repeated semi, space after, quotes follow`, (t) => {
   const gathered = [];
   ct(`<div style="float:left;; ">`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(gathered, [], "27");
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 27,
+        value: '<div style="float:left;; ">',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 4,
+        tagName: "div",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [
+          {
+            attribName: "style",
+            attribNameRecognised: true,
+            attribNameStartsAt: 5,
+            attribNameEndsAt: 10,
+            attribOpeningQuoteAt: 11,
+            attribClosingQuoteAt: 25,
+            attribValueRaw: "float:left;; ",
+            attribValue: [
+              {
+                start: 12,
+                end: 23,
+                property: "float",
+                propertyStarts: 12,
+                propertyEnds: 17,
+                value: "left",
+                valueStarts: 18,
+                valueEnds: 22,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: 17,
+                semi: 22,
+              },
+              {
+                start: 23,
+                end: 24,
+                property: null,
+                propertyStarts: null,
+                propertyEnds: null,
+                value: null,
+                valueStarts: null,
+                valueEnds: null,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: null,
+                semi: 23,
+              },
+              {
+                type: "text",
+                start: 24,
+                end: 25,
+                value: " ",
+              },
+            ],
+            attribValueStartsAt: 12,
+            attribValueEndsAt: 25,
+            attribStarts: 5,
+            attribEnds: 26,
+            attribLeft: 3,
+          },
+        ],
+      },
+    ],
+    "27"
+  );
   t.end();
 });
 
-tap.todo(`28 - repeated semi, space after, bracket follows`, (t) => {
+tap.test(`28 - repeated semi, space after, bracket follows`, (t) => {
   const gathered = [];
   ct(`<div style="float:left;; >`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(gathered, [], "28");
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 26,
+        value: '<div style="float:left;; >',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 4,
+        tagName: "div",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [
+          {
+            attribName: "style",
+            attribNameRecognised: true,
+            attribNameStartsAt: 5,
+            attribNameEndsAt: 10,
+            attribOpeningQuoteAt: 11,
+            attribClosingQuoteAt: null, // <----- !
+            attribValueRaw: "float:left;; ",
+            attribValue: [
+              {
+                start: 12,
+                end: 23,
+                property: "float",
+                propertyStarts: 12,
+                propertyEnds: 17,
+                value: "left",
+                valueStarts: 18,
+                valueEnds: 22,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: 17,
+                semi: 22,
+              },
+              {
+                start: 23,
+                end: 24,
+                property: null,
+                propertyStarts: null,
+                propertyEnds: null,
+                value: null,
+                valueStarts: null,
+                valueEnds: null,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: null,
+                semi: 23,
+              },
+              {
+                type: "text",
+                start: 24,
+                end: 25,
+                value: " ",
+              },
+            ],
+            attribValueStartsAt: 12,
+            attribValueEndsAt: 25,
+            attribStarts: 5,
+            attribEnds: 25,
+            attribLeft: 3,
+          },
+        ],
+      },
+    ],
+    "28"
+  );
   t.end();
 });
 
-tap.todo(`29 - repeated semi, space after`, (t) => {
+tap.test(`29 - repeated semi, space after`, (t) => {
   const gathered = [];
   ct(`<div style="float:left;; color:red;">`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(gathered, [], "29");
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 37,
+        value: '<div style="float:left;; color:red;">',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 4,
+        tagName: "div",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [
+          {
+            attribName: "style",
+            attribNameRecognised: true,
+            attribNameStartsAt: 5,
+            attribNameEndsAt: 10,
+            attribOpeningQuoteAt: 11,
+            attribClosingQuoteAt: 35,
+            attribValueRaw: "float:left;; color:red;",
+            attribValue: [
+              {
+                start: 12,
+                end: 23,
+                property: "float",
+                propertyStarts: 12,
+                propertyEnds: 17,
+                value: "left",
+                valueStarts: 18,
+                valueEnds: 22,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: 17,
+                semi: 22,
+              },
+              {
+                start: 23,
+                end: 24,
+                property: null,
+                propertyStarts: null,
+                propertyEnds: null,
+                value: null,
+                valueStarts: null,
+                valueEnds: null,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: null,
+                semi: 23,
+              },
+              {
+                type: "text",
+                start: 24,
+                end: 25,
+                value: " ",
+              },
+              {
+                start: 25,
+                end: 35,
+                property: "color",
+                propertyStarts: 25,
+                propertyEnds: 30,
+                value: "red",
+                valueStarts: 31,
+                valueEnds: 34,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: 30,
+                semi: 34,
+              },
+            ],
+            attribValueStartsAt: 12,
+            attribValueEndsAt: 35,
+            attribStarts: 5,
+            attribEnds: 36,
+            attribLeft: 3,
+          },
+        ],
+      },
+    ],
+    "29"
+  );
   t.end();
 });
 
-tap.todo(`30 - unrecognised prop only - tralala #1`, (t) => {
+tap.test(`30 - unrecognised prop only - tralala #1`, (t) => {
   const gathered = [];
   ct(`<div style="tra;; la;; la;;">`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(gathered, [], "30");
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 29,
+        value: '<div style="tra;; la;; la;;">',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 4,
+        tagName: "div",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [
+          {
+            attribName: "style",
+            attribNameRecognised: true,
+            attribNameStartsAt: 5,
+            attribNameEndsAt: 10,
+            attribOpeningQuoteAt: 11,
+            attribClosingQuoteAt: 27,
+            attribValueRaw: "tra;; la;; la;;",
+            attribValue: [
+              {
+                start: 12,
+                end: 16,
+                property: "tra",
+                propertyStarts: 12,
+                propertyEnds: 15,
+                value: null,
+                valueStarts: null,
+                valueEnds: null,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: null,
+                semi: 15,
+              },
+              {
+                start: 16,
+                end: 17,
+                property: null,
+                propertyStarts: null,
+                propertyEnds: null,
+                value: null,
+                valueStarts: null,
+                valueEnds: null,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: null,
+                semi: 16,
+              },
+              {
+                type: "text",
+                start: 17,
+                end: 18,
+                value: " ",
+              },
+              {
+                start: 18,
+                end: 21,
+                property: "la",
+                propertyStarts: 18,
+                propertyEnds: 20,
+                value: null,
+                valueStarts: null,
+                valueEnds: null,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: null,
+                semi: 20,
+              },
+              {
+                start: 21,
+                end: 22,
+                property: null,
+                propertyStarts: null,
+                propertyEnds: null,
+                value: null,
+                valueStarts: null,
+                valueEnds: null,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: null,
+                semi: 21,
+              },
+              {
+                type: "text",
+                start: 22,
+                end: 23,
+                value: " ",
+              },
+              {
+                start: 23,
+                end: 26,
+                property: "la",
+                propertyStarts: 23,
+                propertyEnds: 25,
+                value: null,
+                valueStarts: null,
+                valueEnds: null,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: null,
+                semi: 25,
+              },
+              {
+                start: 26,
+                end: 27,
+                property: null,
+                propertyStarts: null,
+                propertyEnds: null,
+                value: null,
+                valueStarts: null,
+                valueEnds: null,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: null,
+                semi: 26,
+              },
+            ],
+            attribValueStartsAt: 12,
+            attribValueEndsAt: 27,
+            attribStarts: 5,
+            attribEnds: 28,
+            attribLeft: 3,
+          },
+        ],
+      },
+    ],
+    "30"
+  );
   t.end();
 });
 
-tap.todo(`31 - unrecognised prop only - tralala #2`, (t) => {
+tap.test(`31 - unrecognised prop only - tralala #2`, (t) => {
   const gathered = [];
   ct(`<div style="tra;;la;;la;;">`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(gathered, [], "31");
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 27,
+        value: '<div style="tra;;la;;la;;">',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 4,
+        tagName: "div",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [
+          {
+            attribName: "style",
+            attribNameRecognised: true,
+            attribNameStartsAt: 5,
+            attribNameEndsAt: 10,
+            attribOpeningQuoteAt: 11,
+            attribClosingQuoteAt: 25,
+            attribValueRaw: "tra;;la;;la;;",
+            attribValue: [
+              {
+                start: 12,
+                end: 16,
+                property: "tra",
+                propertyStarts: 12,
+                propertyEnds: 15,
+                value: null,
+                valueStarts: null,
+                valueEnds: null,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: null,
+                semi: 15,
+              },
+              {
+                start: 16,
+                end: 17,
+                property: null,
+                propertyStarts: null,
+                propertyEnds: null,
+                value: null,
+                valueStarts: null,
+                valueEnds: null,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: null,
+                semi: 16,
+              },
+              {
+                start: 17,
+                end: 20,
+                property: "la",
+                propertyStarts: 17,
+                propertyEnds: 19,
+                value: null,
+                valueStarts: null,
+                valueEnds: null,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: null,
+                semi: 19,
+              },
+              {
+                start: 20,
+                end: 21,
+                property: null,
+                propertyStarts: null,
+                propertyEnds: null,
+                value: null,
+                valueStarts: null,
+                valueEnds: null,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: null,
+                semi: 20,
+              },
+              {
+                start: 21,
+                end: 24,
+                property: "la",
+                propertyStarts: 21,
+                propertyEnds: 23,
+                value: null,
+                valueStarts: null,
+                valueEnds: null,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: null,
+                semi: 23,
+              },
+              {
+                start: 24,
+                end: 25,
+                property: null,
+                propertyStarts: null,
+                propertyEnds: null,
+                value: null,
+                valueStarts: null,
+                valueEnds: null,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: null,
+                semi: 24,
+              },
+            ],
+            attribValueStartsAt: 12,
+            attribValueEndsAt: 25,
+            attribStarts: 5,
+            attribEnds: 26,
+            attribLeft: 3,
+          },
+        ],
+      },
+    ],
+    "31"
+  );
   t.end();
 });

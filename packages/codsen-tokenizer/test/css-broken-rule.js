@@ -2379,57 +2379,478 @@ tap.test(`30 - repeated semi, tight`, (t) => {
   t.end();
 });
 
-tap.todo(`31 - repeated semi, space in front`, (t) => {
+tap.test(`31 - repeated semi, space in front`, (t) => {
   const gathered = [];
-  ct(`<style>.a{float:left;;}`, {
+  ct(`<style>.a{float:left; ;}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(gathered, [], "31");
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: "<style>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
+        tagName: "style",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+      {
+        type: "rule",
+        start: 7,
+        end: 24,
+        value: ".a{float:left; ;}",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: 23,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            start: 10,
+            end: 21,
+            property: "float",
+            propertyStarts: 10,
+            propertyEnds: 15,
+            value: "left",
+            valueStarts: 16,
+            valueEnds: 20,
+            important: null,
+            importantStarts: null,
+            importantEnds: null,
+            colon: 15,
+            semi: 20,
+          },
+          {
+            type: "text",
+            start: 21,
+            end: 22,
+            value: " ",
+          },
+          {
+            start: 22,
+            end: 23,
+            property: null,
+            propertyStarts: null,
+            propertyEnds: null,
+            value: null,
+            valueStarts: null,
+            valueEnds: null,
+            important: null,
+            importantStarts: null,
+            importantEnds: null,
+            colon: null,
+            semi: 22,
+          },
+        ],
+      },
+    ],
+    "31"
+  );
   t.end();
 });
 
-tap.todo(`32 - repeated semi, tab in front`, (t) => {
+tap.test(`32 - repeated semi, tab in front`, (t) => {
   const gathered = [];
-  ct(`<style>.a{float:left;;}`, {
+  ct(`<style>.a{float:left;\t;}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(gathered, [], "32");
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: "<style>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
+        tagName: "style",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+      {
+        type: "rule",
+        start: 7,
+        end: 24,
+        value: ".a{float:left;\t;}",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: 23,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            start: 10,
+            end: 21,
+            property: "float",
+            propertyStarts: 10,
+            propertyEnds: 15,
+            value: "left",
+            valueStarts: 16,
+            valueEnds: 20,
+            important: null,
+            importantStarts: null,
+            importantEnds: null,
+            colon: 15,
+            semi: 20,
+          },
+          {
+            type: "text",
+            start: 21,
+            end: 22,
+            value: "\t",
+          },
+          {
+            start: 22,
+            end: 23,
+            property: null,
+            propertyStarts: null,
+            propertyEnds: null,
+            value: null,
+            valueStarts: null,
+            valueEnds: null,
+            important: null,
+            importantStarts: null,
+            importantEnds: null,
+            colon: null,
+            semi: 22,
+          },
+        ],
+      },
+    ],
+    "32"
+  );
   t.end();
 });
 
-tap.todo(`33 - repeated semi, space after, bracket`, (t) => {
+tap.test(`33 - repeated semi, space after, bracket`, (t) => {
   const gathered = [];
   ct(`<style>.a{float:left;; }`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(gathered, [], "33");
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: "<style>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
+        tagName: "style",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+      {
+        type: "rule",
+        start: 7,
+        end: 24,
+        value: ".a{float:left;; }",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: 23,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            start: 10,
+            end: 21,
+            property: "float",
+            propertyStarts: 10,
+            propertyEnds: 15,
+            value: "left",
+            valueStarts: 16,
+            valueEnds: 20,
+            important: null,
+            importantStarts: null,
+            importantEnds: null,
+            colon: 15,
+            semi: 20,
+          },
+          {
+            start: 21,
+            end: 22,
+            property: null,
+            propertyStarts: null,
+            propertyEnds: null,
+            value: null,
+            valueStarts: null,
+            valueEnds: null,
+            important: null,
+            importantStarts: null,
+            importantEnds: null,
+            colon: null,
+            semi: 21,
+          },
+          {
+            type: "text",
+            start: 22,
+            end: 23,
+            value: " ",
+          },
+        ],
+      },
+    ],
+    "33"
+  );
   t.end();
 });
 
-tap.todo(`34 - repeated semi, space after, bracket missing`, (t) => {
+tap.test(`34 - repeated semi, space after, bracket missing`, (t) => {
   const gathered = [];
   ct(`<style>.a{float:left;; </style>`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(gathered, [], "34");
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: "<style>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
+        tagName: "style",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+      {
+        type: "rule",
+        start: 7,
+        end: 22,
+        value: ".a{float:left;;",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: null,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            start: 10,
+            end: 21,
+            property: "float",
+            propertyStarts: 10,
+            propertyEnds: 15,
+            value: "left",
+            valueStarts: 16,
+            valueEnds: 20,
+            important: null,
+            importantStarts: null,
+            importantEnds: null,
+            colon: 15,
+            semi: 20,
+          },
+          {
+            start: 21,
+            end: 22,
+            property: null,
+            propertyStarts: null,
+            propertyEnds: null,
+            value: null,
+            valueStarts: null,
+            valueEnds: null,
+            important: null,
+            importantStarts: null,
+            importantEnds: null,
+            colon: null,
+            semi: 21,
+          },
+          {
+            type: "text",
+            start: 22,
+            end: null,
+            value: null,
+          },
+        ],
+      },
+      {
+        type: "text",
+        start: 22,
+        end: 23,
+        value: " ",
+      },
+      {
+        type: "tag",
+        start: 23,
+        end: 31,
+        value: "</style>",
+        tagNameStartsAt: 25,
+        tagNameEndsAt: 30,
+        tagName: "style",
+        recognised: true,
+        closing: true,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+    ],
+    "34"
+  );
   t.end();
 });
 
-tap.todo(`35 - repeated semi, space after, new property follows`, (t) => {
+tap.test(`35 - repeated semi, space after, new property follows`, (t) => {
   const gathered = [];
   ct(`<style>.a{float:left;; color:red;}`, {
     tagCb: (obj) => {
       gathered.push(obj);
     },
   });
-  t.strictSame(gathered, [], "35");
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: "<style>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
+        tagName: "style",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+      {
+        type: "rule",
+        start: 7,
+        end: 34,
+        value: ".a{float:left;; color:red;}",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 9,
+        closingCurlyAt: 33,
+        selectorsStart: 7,
+        selectorsEnd: 9,
+        selectors: [
+          {
+            value: ".a",
+            selectorStarts: 7,
+            selectorEnds: 9,
+          },
+        ],
+        properties: [
+          {
+            start: 10,
+            end: 21,
+            property: "float",
+            propertyStarts: 10,
+            propertyEnds: 15,
+            value: "left",
+            valueStarts: 16,
+            valueEnds: 20,
+            important: null,
+            importantStarts: null,
+            importantEnds: null,
+            colon: 15,
+            semi: 20,
+          },
+          {
+            start: 21,
+            end: 22,
+            property: null,
+            propertyStarts: null,
+            propertyEnds: null,
+            value: null,
+            valueStarts: null,
+            valueEnds: null,
+            important: null,
+            importantStarts: null,
+            importantEnds: null,
+            colon: null,
+            semi: 21,
+          },
+          {
+            type: "text",
+            start: 22,
+            end: 23,
+            value: " ",
+          },
+          {
+            start: 23,
+            end: 33,
+            property: "color",
+            propertyStarts: 23,
+            propertyEnds: 28,
+            value: "red",
+            valueStarts: 29,
+            valueEnds: 32,
+            important: null,
+            importantStarts: null,
+            importantEnds: null,
+            colon: 28,
+            semi: 32,
+          },
+        ],
+      },
+    ],
+    "35"
+  );
   t.end();
 });
