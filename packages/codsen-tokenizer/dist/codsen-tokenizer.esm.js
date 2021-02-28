@@ -2065,6 +2065,7 @@ function tokenizer(str, originalOpts) {
 
       pushProperty(property);
       propertyReset();
+      doNothing = i;
     } // catch the start of css property's !important
     // -------------------------------------------------------------------------
 
@@ -2345,10 +2346,13 @@ function tokenizer(str, originalOpts) {
     // it's not a whitespace
     str[i] && str[i].trim() && // NOTA BENE - there's same clause for inline HTML style
     // it's not some separator
-    !`'"`.includes(str[i]) && ( // either it's not semi
-    str[i] !== ";" || // or it is, but the last non-whitespace char was semi, so it's a rogue semi here
-    // we'll put it as a standalone property, it's not a part of text token
-    str[lastNonWhitespaceCharAt] === ";") && // it's not inside CSS block comment
+    !`'"`.includes(str[i]) && // TODO - cleanup below:
+    // either it's not semi
+    // (str[i] !== ";" ||
+    //   // or it is, but the last non-whitespace char was semi, so it's a rogue semi here
+    //   // we'll put it as a standalone property, it's not a part of text token
+    //   str[lastNonWhitespaceCharAt as number] === ";") &&
+    // it's not inside CSS block comment
     !lastLayerIs("block")) { // It's either css comment or a css property.
       // Dirty characters go as property name, then later we validate and
       // catch them.

@@ -1099,34 +1099,34 @@ tap.test(
               attribValueRaw: "float;left",
               attribValue: [
                 {
+                  start: 12,
+                  end: 18,
                   property: "float",
                   propertyStarts: 12,
                   propertyEnds: 17,
-                  colon: null,
                   value: null,
                   valueStarts: null,
                   valueEnds: null,
                   importantStarts: null,
                   importantEnds: null,
                   important: null,
+                  colon: null,
                   semi: 17,
-                  start: 12,
-                  end: 18,
                 },
                 {
+                  start: 18,
+                  end: 22,
                   property: "left",
                   propertyStarts: 18,
                   propertyEnds: 22,
-                  colon: null,
                   value: null,
                   valueStarts: null,
                   valueEnds: null,
                   importantStarts: null,
                   importantEnds: null,
                   important: null,
+                  colon: null,
                   semi: null,
-                  start: 18,
-                  end: 22,
                 },
               ],
               attribValueStartsAt: 12,
@@ -2837,6 +2837,168 @@ tap.test(`31 - unrecognised prop only - tralala #2`, (t) => {
       },
     ],
     "31"
+  );
+  t.end();
+});
+
+tap.test(`32 - leading semi, tight`, (t) => {
+  const gathered = [];
+  ct(`<div style=";color: red;">`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 26,
+        value: '<div style=";color: red;">',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 4,
+        tagName: "div",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [
+          {
+            attribName: "style",
+            attribNameRecognised: true,
+            attribNameStartsAt: 5,
+            attribNameEndsAt: 10,
+            attribOpeningQuoteAt: 11,
+            attribClosingQuoteAt: 24,
+            attribValueRaw: ";color: red;",
+            attribValue: [
+              {
+                start: 12,
+                end: 13,
+                property: null,
+                propertyStarts: null,
+                propertyEnds: null,
+                value: null,
+                valueStarts: null,
+                valueEnds: null,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: null,
+                semi: 12,
+              },
+              {
+                start: 13,
+                end: 24,
+                property: "color",
+                propertyStarts: 13,
+                propertyEnds: 18,
+                value: "red",
+                valueStarts: 20,
+                valueEnds: 23,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: 18,
+                semi: 23,
+              },
+            ],
+            attribValueStartsAt: 12,
+            attribValueEndsAt: 24,
+            attribStarts: 5,
+            attribEnds: 25,
+            attribLeft: 3,
+          },
+        ],
+      },
+    ],
+    "32"
+  );
+  t.end();
+});
+
+tap.test(`33 - leading semi, spaced`, (t) => {
+  const gathered = [];
+  ct(`<div style="; color: red;">`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 27,
+        value: '<div style="; color: red;">',
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 4,
+        tagName: "div",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [
+          {
+            attribName: "style",
+            attribNameRecognised: true,
+            attribNameStartsAt: 5,
+            attribNameEndsAt: 10,
+            attribOpeningQuoteAt: 11,
+            attribClosingQuoteAt: 25,
+            attribValueRaw: "; color: red;",
+            attribValue: [
+              {
+                start: 12,
+                end: 13,
+                property: null,
+                propertyStarts: null,
+                propertyEnds: null,
+                value: null,
+                valueStarts: null,
+                valueEnds: null,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: null,
+                semi: 12,
+              },
+              {
+                type: "text",
+                start: 13,
+                end: 14,
+                value: " ",
+              },
+              {
+                start: 14,
+                end: 25,
+                property: "color",
+                propertyStarts: 14,
+                propertyEnds: 19,
+                value: "red",
+                valueStarts: 21,
+                valueEnds: 24,
+                important: null,
+                importantStarts: null,
+                importantEnds: null,
+                colon: 19,
+                semi: 24,
+              },
+            ],
+            attribValueStartsAt: 12,
+            attribValueEndsAt: 25,
+            attribStarts: 5,
+            attribEnds: 26,
+            attribLeft: 3,
+          },
+        ],
+      },
+    ],
+    "33"
   );
   t.end();
 });
