@@ -185,8 +185,7 @@ function checkForWhitespace(str, idxOffset) {
         idxFrom: +idxOffset,
         idxTo: +idxOffset + str.length,
         message: "Missing value.",
-        fix: null // can't fix - value is missing completely!
-
+        fix: null
       });
     } else {
       gatheredRanges.push([idxOffset, idxOffset + charStart]);
@@ -208,8 +207,7 @@ function checkForWhitespace(str, idxOffset) {
       message: "Remove whitespace.",
       fix: {
         ranges: clone__default['default'](gatheredRanges)
-      } // we can fix - we delete this whitespace!
-
+      }
     }); // reset:
 
     gatheredRanges.length = 0;
@@ -223,12 +221,12 @@ function checkForWhitespace(str, idxOffset) {
   };
 }
 
-var defaults$3 = {
+var defaults = {
   caseInsensitive: false
 };
 
 function includesWithRegex(arr, whatToMatch, originalOpts) {
-  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults$3), originalOpts);
+  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts);
 
   if (!Array.isArray(arr) || !arr.length) {
     // definitely does not include
@@ -247,7 +245,7 @@ function includesWithRegex(arr, whatToMatch, originalOpts) {
   });
 }
 
-var defaults$2 = {
+var defaults$1 = {
   caseInsensitive: false,
   canBeCommaSeparated: false,
   quickPermittedValues: [],
@@ -257,7 +255,7 @@ var defaults$2 = {
 // if value is comma-separated, each extracted chunk is passed to this
 // we keep it separate to keep it DRY
 
-function validateValue$2(str, idxOffset, opts, charStart, charEnd, errorArr) {
+function validateValue(str, idxOffset, opts, charStart, charEnd, errorArr) {
   var extractedValue = str.slice(charStart, charEnd);
 
   if (!(includesWithRegex(opts.quickPermittedValues, extractedValue, {
@@ -304,7 +302,7 @@ function validateValue$2(str, idxOffset, opts, charStart, charEnd, errorArr) {
 
 function validateString(str, idxOffset, originalOpts) {
 
-  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults$2), originalOpts); // we get trimmed string start and end positions, also an encountered errors array
+  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults$1), originalOpts); // we get trimmed string start and end positions, also an encountered errors array
 
 
   var _checkForWhitespace = checkForWhitespace(str, idxOffset),
@@ -324,7 +322,7 @@ function validateString(str, idxOffset, originalOpts) {
           str.slice(idxFrom - idxOffset, idxTo - idxOffset); // if there are errors, validateValue() mutates the passed "errorArr",
           // pushing to it
 
-          validateValue$2(str, idxOffset, opts, idxFrom - idxOffset, // processCommaSep() reports offset values so we need to restore indexes to start where this "str" above starts
+          validateValue(str, idxOffset, opts, idxFrom - idxOffset, // processCommaSep() reports offset values so we need to restore indexes to start where this "str" above starts
           idxTo - idxOffset, errorArr);
         },
         errCb: function errCb(ranges, message) {
@@ -342,7 +340,7 @@ function validateString(str, idxOffset, originalOpts) {
       str.slice(charStart, charEnd); // if there are errors, validateValue() mutates the passed "errorArr",
       // pushing to it
 
-      validateValue$2(str, idxOffset, opts, charStart, charEnd, errorArr);
+      validateValue(str, idxOffset, opts, charStart, charEnd, errorArr);
     }
   }
   return errorArr;
@@ -442,8 +440,7 @@ function badCharacterNull(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -468,8 +465,7 @@ function badCharacterStartOfHeading(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -494,8 +490,7 @@ function badCharacterStartOfText(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -520,8 +515,7 @@ function badCharacterEndOfText(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, "\n"]] // replace with line break
-
+            ranges: [[i, i + 1, "\n"]]
           }
         });
       }
@@ -546,8 +540,7 @@ function badCharacterEndOfTransmission(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -572,8 +565,7 @@ function badCharacterEnquiry(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -598,8 +590,7 @@ function badCharacterAcknowledge(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -624,8 +615,7 @@ function badCharacterBell(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -650,8 +640,7 @@ function badCharacterBackspace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -690,8 +679,7 @@ var badCharacterTabulation = function badCharacterTabulation(context) {
             idxFrom: i,
             idxTo: i + 1,
             fix: {
-              ranges: [[i, i + 1, " "]] // replace with one space
-
+              ranges: [[i, i + 1, " "]]
             }
           });
         } else if (mode === "indentationIsFine") {
@@ -708,8 +696,7 @@ var badCharacterTabulation = function badCharacterTabulation(context) {
               idxFrom: i,
               idxTo: i + 1,
               fix: {
-                ranges: [[i, i + 1, " "]] // replace with one space
-
+                ranges: [[i, i + 1, " "]]
               }
             });
           }
@@ -736,8 +723,7 @@ function badCharacterLineTabulation(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -762,8 +748,7 @@ function badCharacterFormFeed(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -788,8 +773,7 @@ function badCharacterShiftOut(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -814,8 +798,7 @@ function badCharacterShiftIn(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -840,8 +823,7 @@ function badCharacterDataLinkEscape(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -866,8 +848,7 @@ function badCharacterDeviceControlOne(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -892,8 +873,7 @@ function badCharacterDeviceControlTwo(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -918,8 +898,7 @@ function badCharacterDeviceControlThree(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -944,8 +923,7 @@ function badCharacterDeviceControlFour(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -970,8 +948,7 @@ function badCharacterNegativeAcknowledge(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -996,8 +973,7 @@ function badCharacterSynchronousIdle(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1022,8 +998,7 @@ function badCharacterEndOfTransmissionBlock(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1048,8 +1023,7 @@ function badCharacterCancel(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1074,8 +1048,7 @@ function badCharacterEndOfMedium(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1100,8 +1073,7 @@ function badCharacterSubstitute(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1126,8 +1098,7 @@ function badCharacterEscape(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1152,8 +1123,7 @@ function badCharacterInformationSeparatorFour(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1178,8 +1148,7 @@ function badCharacterInformationSeparatorThree(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1191,7 +1160,7 @@ function badCharacterInformationSeparatorThree(context) {
 // -----------------------------------------------------------------------------
 // Catches raw character "INFORMATION SEPARATOR TWO":
 // https://www.fileformat.info/info/unicode/char/001e/index.htm
-function badCharacterInformationSeparatorTwo$1(context) {
+function badCharacterInformationSeparatorTwo(context) {
   return {
     character: function character(_ref) {
       var chr = _ref.chr,
@@ -1204,8 +1173,7 @@ function badCharacterInformationSeparatorTwo$1(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1217,7 +1185,7 @@ function badCharacterInformationSeparatorTwo$1(context) {
 // -----------------------------------------------------------------------------
 // Catches raw character "INFORMATION SEPARATOR ONE":
 // https://www.fileformat.info/info/unicode/char/001f/index.htm
-function badCharacterInformationSeparatorTwo(context) {
+function badCharacterInformationSeparatorTwo$1(context) {
   return {
     character: function character(_ref) {
       var chr = _ref.chr,
@@ -1230,8 +1198,7 @@ function badCharacterInformationSeparatorTwo(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1256,8 +1223,7 @@ function badCharacterDelete(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1282,8 +1248,7 @@ function badCharacterControl0080(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1308,8 +1273,7 @@ function badCharacterControl0081(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1334,8 +1298,7 @@ function badCharacterBreakPermittedHere(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1360,8 +1323,7 @@ function badCharacterNoBreakHere(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1386,8 +1348,7 @@ function badCharacterControl0084(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1412,8 +1373,7 @@ function badCharacterNextLine(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1438,8 +1398,7 @@ function badCharacterStartOfSelectedArea(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1464,8 +1423,7 @@ function badCharacterEndOfSelectedArea(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1490,8 +1448,7 @@ function badCharacterCharacterTabulationSet(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1516,8 +1473,7 @@ function badCharacterCharacterTabulationWithJustification(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1542,8 +1498,7 @@ function badCharacterLineTabulationSet(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1568,8 +1523,7 @@ function badCharacterPartialLineForward(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1594,8 +1548,7 @@ function badCharacterPartialLineBackward(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1620,8 +1573,7 @@ function badCharacterReverseLineFeed(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1633,7 +1585,7 @@ function badCharacterReverseLineFeed(context) {
 // -----------------------------------------------------------------------------
 // Catches raw character "SINGLE SHIFT TWO":
 // https://www.fileformat.info/info/unicode/char/008e/index.htm
-function badCharacterSingleShiftTwo$1(context) {
+function badCharacterSingleShiftTwo(context) {
   return {
     character: function character(_ref) {
       var chr = _ref.chr,
@@ -1646,8 +1598,7 @@ function badCharacterSingleShiftTwo$1(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1659,7 +1610,7 @@ function badCharacterSingleShiftTwo$1(context) {
 // -----------------------------------------------------------------------------
 // Catches raw character "SINGLE SHIFT THREE":
 // https://www.fileformat.info/info/unicode/char/008f/index.htm
-function badCharacterSingleShiftTwo(context) {
+function badCharacterSingleShiftTwo$1(context) {
   return {
     character: function character(_ref) {
       var chr = _ref.chr,
@@ -1672,8 +1623,7 @@ function badCharacterSingleShiftTwo(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1698,8 +1648,7 @@ function badCharacterDeviceControlString(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1724,8 +1673,7 @@ function badCharacterPrivateUseOne(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1750,8 +1698,7 @@ function badCharacterPrivateUseTwo(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1776,8 +1723,7 @@ function badCharacterSetTransmitState(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1802,8 +1748,7 @@ function badCharacterCancelCharacter(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1828,8 +1773,7 @@ function badCharacterMessageWaiting(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1854,8 +1798,7 @@ function badCharacterStartOfProtectedArea(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1880,8 +1823,7 @@ function badCharacterEndOfProtectedArea(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1906,8 +1848,7 @@ function badCharacterStartOfString(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1932,8 +1873,7 @@ function badCharacterControl0099(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1958,8 +1898,7 @@ function badCharacterSingleCharacterIntroducer(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -1984,8 +1923,7 @@ function badCharacterControlSequenceIntroducer(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -2010,8 +1948,7 @@ function badCharacterStringTerminator(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -2036,8 +1973,7 @@ function badCharacterOperatingSystemCommand(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -2062,8 +1998,7 @@ function badCharacterPrivateMessage(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -2088,8 +2023,7 @@ function badCharacterApplicationProgramCommand(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -2114,8 +2048,7 @@ function badCharacterSoftHyphen(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // replace with a normal space
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -2140,8 +2073,7 @@ function badCharacterNonBreakingSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]] // replace with a normal space
-
+            ranges: [[i, i + 1, " "]]
           }
         });
       }
@@ -2166,8 +2098,7 @@ function badCharacterOghamSpaceMark(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]] // replace with a normal space
-
+            ranges: [[i, i + 1, " "]]
           }
         });
       }
@@ -2192,8 +2123,7 @@ function badCharacterEnQuad(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]] // replace with a normal space
-
+            ranges: [[i, i + 1, " "]]
           }
         });
       }
@@ -2218,8 +2148,7 @@ function badCharacterEmQuad(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]] // replace with a normal space
-
+            ranges: [[i, i + 1, " "]]
           }
         });
       }
@@ -2244,8 +2173,7 @@ function badCharacterEnSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]] // replace with a normal space
-
+            ranges: [[i, i + 1, " "]]
           }
         });
       }
@@ -2270,8 +2198,7 @@ function badCharacterEmSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]] // replace with a normal space
-
+            ranges: [[i, i + 1, " "]]
           }
         });
       }
@@ -2296,8 +2223,7 @@ function badCharacterThreePerEmSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]] // replace with a normal space
-
+            ranges: [[i, i + 1, " "]]
           }
         });
       }
@@ -2322,8 +2248,7 @@ function badCharacterFourPerEmSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]] // replace with a normal space
-
+            ranges: [[i, i + 1, " "]]
           }
         });
       }
@@ -2348,8 +2273,7 @@ function badCharacterSixPerEmSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]] // replace with a normal space
-
+            ranges: [[i, i + 1, " "]]
           }
         });
       }
@@ -2374,8 +2298,7 @@ function badCharacterFigureSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]] // replace with a normal space
-
+            ranges: [[i, i + 1, " "]]
           }
         });
       }
@@ -2400,8 +2323,7 @@ function badCharacterPunctuationSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]] // replace with a normal space
-
+            ranges: [[i, i + 1, " "]]
           }
         });
       }
@@ -2426,8 +2348,7 @@ function badCharacterThinSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]] // replace with a normal space
-
+            ranges: [[i, i + 1, " "]]
           }
         });
       }
@@ -2452,8 +2373,7 @@ function badCharacterHairSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]] // replace with a normal space
-
+            ranges: [[i, i + 1, " "]]
           }
         });
       }
@@ -2478,8 +2398,7 @@ function badCharacterZeroWidthSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]] // replace with a normal space
-
+            ranges: [[i, i + 1, " "]]
           }
         });
       }
@@ -2504,8 +2423,7 @@ function badCharacterZeroWidthNonJoiner(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -2530,8 +2448,7 @@ function badCharacterZeroWidthJoiner(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -2556,8 +2473,7 @@ function badCharacterLeftToRightMark(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -2582,8 +2498,7 @@ function badCharacterRightToLeftMark(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -2608,8 +2523,7 @@ function badCharacterLeftToRightEmbedding(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -2634,8 +2548,7 @@ function badCharacterRightToLeftEmbedding(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -2660,8 +2573,7 @@ function badCharacterPopDirectionalFormatting(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -2686,8 +2598,7 @@ function badCharacterLeftToRightOverride(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -2712,8 +2623,7 @@ function badCharacterRightToLeftOverride(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -2738,8 +2648,7 @@ function badCharacterWordJoiner(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -2764,8 +2673,7 @@ function badCharacterFunctionApplication(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -2790,8 +2698,7 @@ function badCharacterInvisibleTimes(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -2816,8 +2723,7 @@ function badCharacterInvisibleSeparator(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -2842,8 +2748,7 @@ function badCharacterInvisiblePlus(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -2868,8 +2773,7 @@ function badCharacterLeftToRightIsolate(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -2894,8 +2798,7 @@ function badCharacterRightToLeftIsolate(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -2920,8 +2823,7 @@ function badCharacterFirstStrongIsolate(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -2946,8 +2848,7 @@ function badCharacterPopDirectionalIsolate(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -2972,8 +2873,7 @@ function badCharacterInhibitSymmetricSwapping(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -2998,8 +2898,7 @@ function badCharacterActivateSymmetricSwapping(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -3024,8 +2923,7 @@ function badCharacterInhibitArabicFormShaping(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -3050,8 +2948,7 @@ function badCharacterActivateArabicFormShaping(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -3076,8 +2973,7 @@ function badCharacterNationalDigitShapes(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -3102,8 +2998,7 @@ function badCharacterNominalDigitShapes(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -3128,8 +3023,7 @@ function badCharacterZeroWidthNoBreakSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -3154,8 +3048,7 @@ function badCharacterInterlinearAnnotationAnchor(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -3180,8 +3073,7 @@ function badCharacterInterlinearAnnotationSeparator(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -3206,8 +3098,7 @@ function badCharacterInterlinearAnnotationTerminator(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -3232,8 +3123,7 @@ function badCharacterLineSeparator(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -3258,8 +3148,7 @@ function badCharacterParagraphSeparator(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -3284,8 +3173,7 @@ function badCharacterNarrowNoBreakSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]] // replace with a normal space
-
+            ranges: [[i, i + 1, " "]]
           }
         });
       }
@@ -3310,8 +3198,7 @@ function badCharacterMediumMathematicalSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]] // replace with a normal space
-
+            ranges: [[i, i + 1, " "]]
           }
         });
       }
@@ -3336,8 +3223,7 @@ function badCharacterIdeographicSpace(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1, " "]] // replace with a normal space
-
+            ranges: [[i, i + 1, " "]]
           }
         });
       }
@@ -3362,8 +3248,7 @@ function badCharacterReplacementCharacter(context) {
           idxFrom: i,
           idxTo: i + 1,
           fix: {
-            ranges: [[i, i + 1]] // just delete it
-
+            ranges: [[i, i + 1]]
           }
         });
       }
@@ -3416,7 +3301,7 @@ function tagSpaceAfterOpeningBracket(context) {
 
 // -----------------------------------------------------------------------------
 
-var BACKSLASH$2 = "\\"; // it flags up any tags which have whitespace between opening bracket and first
+var BACKSLASH = "\\"; // it flags up any tags which have whitespace between opening bracket and first
 // tag name letter:
 //
 // < table>
@@ -3434,7 +3319,7 @@ function tagSpaceBeforeClosingBracket(context) {
       !context.str[node.end - 2].trim().length && // and the next non-whitespace character on the left is not slash of
       // any kind (we don't want to step into rule's
       // "tag-space-between-slash-and-bracket" turf)
-      !(BACKSLASH$2 + "/").includes(context.str[stringLeftRight.left(context.str, node.end - 1) || 0])) {
+      !(BACKSLASH + "/").includes(context.str[stringLeftRight.left(context.str, node.end - 1) || 0])) {
         var from = stringLeftRight.left(context.str, node.end - 1) ? stringLeftRight.left(context.str, node.end - 1) + 1 : 0;
         ranges.push([from, node.end - 1]);
       }
@@ -3631,7 +3516,7 @@ function tagClosingBackslash(context) {
 // it controls, should we or should we not put the slashes on void tags,
 // such as img. Is it <img...> or is it <img.../>?
 
-var BACKSLASH = "\\";
+var BACKSLASH$2 = "\\";
 
 function tagVoidSlash(context, mode) {
   if (mode === void 0) {
@@ -3659,7 +3544,7 @@ function tagVoidSlash(context, mode) {
           }
         });
       } else if (mode === "always" && node.void && context.str[slashPos] !== "/" && ( // don't trigger if backslash rules are on:
-      !context.processedRulesConfig["tag-closing-backslash"] || !(context.str[slashPos] === BACKSLASH && (Number.isInteger(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"] > 0 || Array.isArray(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"][0] > 0 && context.processedRulesConfig["tag-closing-backslash"][1] === "always")))) { // if slashes are requested on void tags, situation is more complex,
+      !context.processedRulesConfig["tag-closing-backslash"] || !(context.str[slashPos] === BACKSLASH$2 && (Number.isInteger(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"] > 0 || Array.isArray(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"][0] > 0 && context.processedRulesConfig["tag-closing-backslash"][1] === "always")))) { // if slashes are requested on void tags, situation is more complex,
         // because we need to take into the account the rule
         // "tag-space-before-closing-slash"
 
@@ -4806,7 +4691,7 @@ function attributeValidateAlign(context) {
   };
 }
 
-var defaults$1 = {
+var defaults$2 = {
   namedCssLevel1OK: true,
   namedCssLevel2PlusOK: true,
   hexThreeOK: false,
@@ -4816,7 +4701,7 @@ var defaults$1 = {
 };
 
 function validateColor(str, idxOffset, originalOpts) {
-  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults$1), originalOpts); // we get trimmed string start and end positions, also an encountered errors array
+  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults$2), originalOpts); // we get trimmed string start and end positions, also an encountered errors array
 
 
   var _checkForWhitespace = checkForWhitespace(str, idxOffset),
@@ -5163,7 +5048,7 @@ var defaultOpts = {
   maxValue: null
 };
 
-function validateValue(_ref) {
+function validateValue$2(_ref) {
   var str = _ref.str,
       opts = _ref.opts,
       charStart = _ref.charStart,
@@ -5354,7 +5239,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
           var extractedValue = str.slice(idxFrom - idxOffset, idxTo - idxOffset); // if the value is not whitelisted, evaluate it
 
           if (!Array.isArray(opts.whitelistValues) || !opts.whitelistValues.includes(extractedValue)) {
-            validateValue({
+            validateValue$2({
               str: str,
               opts: opts,
               charStart: idxFrom - idxOffset,
@@ -5405,7 +5290,7 @@ function validateDigitAndUnit(str, idxOffset, originalOpts) {
     } else { // if the value is not whitelisted, evaluate it
 
       if (!Array.isArray(opts.whitelistValues) || !opts.whitelistValues.includes(str.slice(charStart, charEnd))) {
-        validateValue({
+        validateValue$2({
           str: str,
           opts: opts,
           charStart: charStart,
@@ -5441,8 +5326,7 @@ function attributeValidateBorder(context) {
         var errorArr = validateDigitAndUnit(node.attribValueRaw, node.attribValueStartsAt, {
           type: "integer",
           negativeOK: false,
-          theOnlyGoodUnits: [] // empty array means no units allowed
-
+          theOnlyGoodUnits: []
         });
         errorArr.forEach(function (errorObj) {
           context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
@@ -5984,7 +5868,7 @@ function attributeValidateClass(context) {
   };
 }
 
-function attributeValidateClassid$1(context) {
+function attributeValidateClassid(context) {
   return {
     attribute: function attribute(node) {
 
@@ -6015,7 +5899,7 @@ function attributeValidateClassid$1(context) {
   };
 }
 
-function attributeValidateClassid(context) {
+function attributeValidateClassid$1(context) {
   return {
     attribute: function attribute(node) {
 
@@ -6806,8 +6690,7 @@ function attributeValidateFrame(context) {
         var errorArr = validateString(node.attribValueRaw, // value
         node.attribValueStartsAt, // offset
         {
-          permittedValues: ["void", "above", "below", "hsides", "lhs", "rhs", "vsides", "box", "border" // All four sides.
-          ],
+          permittedValues: ["void", "above", "below", "hsides", "lhs", "rhs", "vsides", "box", "border"],
           canBeCommaSeparated: false
         });
         errorArr.forEach(function (errorObj) {
@@ -9235,13 +9118,13 @@ function attributeValidateStart(context) {
   };
 }
 
-var defaults = {
+var defaults$3 = {
   noTrailingSemi: true
 };
 
 function validateInlineStyle(str, idxOffset, originalOpts) {
 
-  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults), originalOpts); // we get trimmed string start and end positions, also an encountered errors array
+  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults$3), originalOpts); // we get trimmed string start and end positions, also an encountered errors array
   // const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
 
   var _checkForWhitespace = checkForWhitespace(str, idxOffset),
@@ -10770,6 +10653,21 @@ var cssRuleMalformed = function cssRuleMalformed(context) {
                 ranges: [[property.colon, property.colon + 1, ":"]]
               }
             });
+          } // 2-5 repeated semicolon after a property
+          // <style>.a{color: red;;}</style>
+          //                      ^
+
+
+          if (property.semi && !property.propertyStarts && !property.valueStarts && !property.importantStarts) {
+            context.report({
+              ruleId: "css-rule-malformed",
+              idxFrom: property.start,
+              idxTo: property.end,
+              message: "Rogue semicolon.",
+              fix: {
+                ranges: [[property.semi, property.semi + 1]]
+              }
+            });
           }
         });
       } // 3. catch css rules with selectors but without properties
@@ -10853,7 +10751,8 @@ var cssRuleMalformed = function cssRuleMalformed(context) {
                   fix: null
                 });
               }
-            } else {
+            } else if ( // avoid cases of semi-only tokens
+            node.properties[_i].property || node.properties[_i].value || node.properties[_i].important) {
               context.report({
                 ruleId: "css-rule-malformed",
                 idxFrom: node.properties[_i].start,
@@ -10956,10 +10855,10 @@ defineLazyProp__default['default'](builtInRules, "bad-character-information-sepa
   return badCharacterInformationSeparatorThree;
 });
 defineLazyProp__default['default'](builtInRules, "bad-character-information-separator-two", function () {
-  return badCharacterInformationSeparatorTwo$1;
+  return badCharacterInformationSeparatorTwo;
 });
 defineLazyProp__default['default'](builtInRules, "bad-character-information-separator-one", function () {
-  return badCharacterInformationSeparatorTwo;
+  return badCharacterInformationSeparatorTwo$1;
 });
 defineLazyProp__default['default'](builtInRules, "bad-character-delete", function () {
   return badCharacterDelete;
@@ -11007,10 +10906,10 @@ defineLazyProp__default['default'](builtInRules, "bad-character-reverse-line-fee
   return badCharacterReverseLineFeed;
 });
 defineLazyProp__default['default'](builtInRules, "bad-character-single-shift-two", function () {
-  return badCharacterSingleShiftTwo$1;
+  return badCharacterSingleShiftTwo;
 });
 defineLazyProp__default['default'](builtInRules, "bad-character-single-shift-three", function () {
-  return badCharacterSingleShiftTwo;
+  return badCharacterSingleShiftTwo$1;
 });
 defineLazyProp__default['default'](builtInRules, "bad-character-device-control-string", function () {
   return badCharacterDeviceControlString;
@@ -11312,10 +11211,10 @@ defineLazyProp__default['default'](builtInRules, "attribute-validate-class", fun
   return attributeValidateClass;
 });
 defineLazyProp__default['default'](builtInRules, "attribute-validate-classid", function () {
-  return attributeValidateClassid$1;
+  return attributeValidateClassid;
 });
 defineLazyProp__default['default'](builtInRules, "attribute-validate-clear", function () {
-  return attributeValidateClassid;
+  return attributeValidateClassid$1;
 });
 defineLazyProp__default['default'](builtInRules, "attribute-validate-code", function () {
   return attributeValidateCode;
@@ -12078,10 +11977,10 @@ var Linter = /*#__PURE__*/function (_TypedEmitter) {
   return Linter;
 }(tinyTypedEmitter.TypedEmitter);
 
-var version$1 = "4.2.0";
+var version = "4.2.0";
 
-var version = version$1;
+var version$1 = version;
 
 exports.Linter = Linter;
 exports.util = util;
-exports.version = version;
+exports.version = version$1;

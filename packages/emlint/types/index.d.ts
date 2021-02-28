@@ -114,7 +114,7 @@ interface AtToken {
     rules: (RuleToken | TextToken)[];
 }
 
-declare type Severity$1 = 0 | 1 | 2;
+declare type Severity = 0 | 1 | 2;
 interface ErrorObj {
     ruleId?: string;
     message: string;
@@ -123,7 +123,7 @@ interface ErrorObj {
     fix: null | {
         ranges: Ranges;
     };
-    severity?: Severity$1;
+    severity?: Severity;
     keepSeparateWhenFixing?: boolean;
 }
 interface TagTokenWithChildren extends TagToken {
@@ -139,9 +139,9 @@ declare type JsonObject = {
     [Key in string]?: JsonValue;
 };
 declare type JsonArray = Array<JsonValue>;
-declare type Severity = 0 | 1 | 2;
+declare type Severity$1 = 0 | 1 | 2;
 interface RulesObj {
-    [rulesName: string]: Severity | [severity: Severity, ...opts: string[]];
+    [rulesName: string]: Severity$1 | [severity: Severity$1, ...opts: string[]];
 }
 interface Config {
     rules: RulesObj;
@@ -180,7 +180,7 @@ interface RuleObjType {
 interface MessageObj extends ErrorObj {
     line: number;
     column: number;
-    severity: Severity;
+    severity: Severity$1;
     keepSeparateWhenFixing: boolean;
 }
 
@@ -204,21 +204,21 @@ declare class Linter extends TypedEmitter<RuleObjType> {
 
 declare type IdxRange = [charFrom: number, charTo: number];
 declare type CbValues = (idxRange: IdxRange) => void;
-interface Opts$1 {
+interface Opts {
     offset: number;
     from: number;
     to: number;
 }
-declare function splitByWhitespace(str: string, cbValues: CbValues, cbWhitespace?: CbValues, originalOpts?: Partial<Opts$1>): void;
+declare function splitByWhitespace(str: string, cbValues: CbValues, cbWhitespace?: CbValues, originalOpts?: Partial<Opts>): void;
 
-interface Opts {
+interface Opts$1 {
     caseInsensitive: boolean;
     canBeCommaSeparated: boolean;
     quickPermittedValues: (string | RegExp)[];
     permittedValues: string[];
     noSpaceAfterComma: boolean;
 }
-declare function validateString(str: string, idxOffset: number, originalOpts?: Partial<Opts>): ErrorObj[];
+declare function validateString(str: string, idxOffset: number, originalOpts?: Partial<Opts$1>): ErrorObj[];
 
 declare const wholeExtensionRegex: RegExp;
 declare const isoDateRegex: RegExp;
@@ -230,9 +230,9 @@ declare const astErrMessages: {
     "tag-void-frontal-slash": string;
 };
 declare function isLetter(str: unknown): boolean;
-declare function isAnEnabledValue(maybeARulesValue: unknown): Severity;
+declare function isAnEnabledValue(maybeARulesValue: unknown): Severity$1;
 declare function isObj(something: unknown): boolean;
-declare function isAnEnabledRule(rules: RulesObj, ruleId: string): Severity;
+declare function isAnEnabledRule(rules: RulesObj, ruleId: string): Severity$1;
 
 declare const util_wholeExtensionRegex: typeof wholeExtensionRegex;
 declare const util_splitByWhitespace: typeof splitByWhitespace;

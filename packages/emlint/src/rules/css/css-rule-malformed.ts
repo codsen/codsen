@@ -178,6 +178,27 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
               },
             });
           }
+
+          // 2-5 repeated semicolon after a property
+          // <style>.a{color: red;;}</style>
+          //                      ^
+
+          if (
+            property.semi &&
+            !property.propertyStarts &&
+            !property.valueStarts &&
+            !property.importantStarts
+          ) {
+            context.report({
+              ruleId: "css-rule-malformed",
+              idxFrom: property.start,
+              idxTo: property.end,
+              message: `Rogue semicolon.`,
+              fix: {
+                ranges: [[property.semi, property.semi + 1]],
+              },
+            });
+          }
         });
       }
 
@@ -195,7 +216,7 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
         context.str.slice(node.openingCurlyAt + 1, node.closingCurlyAt).trim()
       ) {
         console.log(
-          `198 ${`\u001b[${31}m${`something rogue inside ${node.value}`}\u001b[${39}m`}`
+          `219 ${`\u001b[${31}m${`something rogue inside ${node.value}`}\u001b[${39}m`}`
         );
         context.report({
           ruleId: "css-rule-malformed",
@@ -221,7 +242,7 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
       if (node.properties && Array.isArray(node.properties)) {
         for (let i = 0, len = node.properties.length; i < len; i++) {
           console.log(
-            `224 ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
+            `245 ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
               node.properties[i],
               null,
               4
@@ -236,18 +257,18 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
               (node.properties[i] as Property).property === null
             ) {
               console.log(
-                `239 ${`\u001b[${31}m${`██`}\u001b[${39}m`} no value, no property`
+                `260 ${`\u001b[${31}m${`██`}\u001b[${39}m`} no value, no property`
               );
 
               let errorRaised = false;
               if (i) {
                 for (let y = node.properties.length; y--; ) {
                   if (y === i) {
-                    console.log(`246 skip thyself`);
+                    console.log(`267 skip thyself`);
                     continue;
                   }
                   console.log(
-                    `250 - property: ${JSON.stringify(
+                    `271 - property: ${JSON.stringify(
                       node.properties[y],
                       null,
                       4
@@ -262,14 +283,14 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
                     // we're traversing upon a CSS property, not a whitespace text token
                     (node.properties[y] as any).property !== undefined
                   ) {
-                    console.log(`265`);
+                    console.log(`286`);
                     if (
                       // its semi is present
                       (node.properties[y] as any).semi &&
                       // and its important is missing
                       !(node.properties[y] as any).importantStarts
                     ) {
-                      console.log(`272`);
+                      console.log(`293`);
                       // the frontal space might be missing
                       const fromIdx = (node.properties[y] as any).semi;
                       const toIdx = (node.properties[y] as any).semi + 1;
@@ -281,7 +302,7 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
                         whatToInsert = " ";
                       }
 
-                      console.log(`284 report [${fromIdx}, ${toIdx}]`);
+                      console.log(`305 report [${fromIdx}, ${toIdx}]`);
                       context.report({
                         ruleId: "css-rule-malformed",
                         idxFrom: fromIdx,
@@ -294,7 +315,7 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
 
                       errorRaised = true;
                       console.log(
-                        `297 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`errorRaised`}\u001b[${39}m`} = ${JSON.stringify(
+                        `318 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`errorRaised`}\u001b[${39}m`} = ${JSON.stringify(
                           errorRaised,
                           null,
                           4
@@ -303,7 +324,7 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
                     } else {
                       // stop looping further
                       console.log(
-                        `306 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
+                        `327 ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
                       );
                       break;
                     }
@@ -317,7 +338,7 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
                 // and error hasn't been raised so far:
                 !errorRaised
               ) {
-                console.log(`320 report missing value`);
+                console.log(`341 report missing value`);
                 context.report({
                   ruleId: "css-rule-malformed",
                   idxFrom: node.properties[i].start,
@@ -326,9 +347,14 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
                   fix: null,
                 });
               }
-            } else {
+            } else if (
+              // avoid cases of semi-only tokens
+              (node.properties[i] as Property).property ||
+              (node.properties[i] as Property).value ||
+              (node.properties[i] as Property).important
+            ) {
               console.log(
-                `331 ${`\u001b[${31}m${`██`}\u001b[${39}m`} simply no value`
+                `357 ${`\u001b[${31}m${`██`}\u001b[${39}m`} simply no value`
               );
               context.report({
                 ruleId: "css-rule-malformed",
@@ -343,7 +369,7 @@ const cssRuleMalformed: cssRuleMalformed = (context) => {
       }
 
       console.log(
-        `346 ${`\u001b[${32}m${`END of css-rule-malformed`}\u001b[${39}m`}`
+        `372 ${`\u001b[${32}m${`END of css-rule-malformed`}\u001b[${39}m`}`
       );
     },
   };

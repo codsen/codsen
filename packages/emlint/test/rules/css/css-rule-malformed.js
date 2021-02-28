@@ -462,3 +462,35 @@ tap.test(`19`, (t) => {
   t.equal(applyFixes(str, messages), fixed, "19");
   t.end();
 });
+
+// repeated semi after a property
+// -----------------------------------------------------------------------------
+
+tap.test(`20`, (t) => {
+  const str = `<style>.a{color: red;;}</style>`;
+  const fixed = `<style>.a{color: red;}</style>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "css-rule-malformed": 2,
+    },
+  });
+  t.match(
+    messages,
+    [
+      {
+        fix: {
+          ranges: [[21, 22]],
+        },
+        severity: 2,
+        ruleId: "css-rule-malformed",
+        idxFrom: 21,
+        idxTo: 22,
+        message: "Rogue semicolon.",
+      },
+    ],
+    "20.01"
+  );
+  t.equal(applyFixes(str, messages), fixed, "20.02");
+  t.end();
+});
