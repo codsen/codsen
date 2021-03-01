@@ -2854,3 +2854,149 @@ tap.test(`35 - repeated semi, space after, new property follows`, (t) => {
   );
   t.end();
 });
+
+tap.test(`36`, (t) => {
+  const gathered = [];
+  ct(`<style>a{;}`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: "<style>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
+        tagName: "style",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+      {
+        type: "rule",
+        start: 7,
+        end: 11,
+        value: "a{;}",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 8,
+        closingCurlyAt: 10,
+        selectorsStart: 7,
+        selectorsEnd: 8,
+        selectors: [
+          {
+            value: "a",
+            selectorStarts: 7,
+            selectorEnds: 8,
+          },
+        ],
+        properties: [
+          {
+            start: 9,
+            end: 10,
+            property: null,
+            propertyStarts: null,
+            propertyEnds: null,
+            value: null,
+            valueStarts: null,
+            valueEnds: null,
+            important: null,
+            importantStarts: null,
+            importantEnds: null,
+            colon: null,
+            semi: 9,
+          },
+        ],
+      },
+    ],
+    "36"
+  );
+  t.end();
+});
+
+tap.test(`37`, (t) => {
+  const gathered = [];
+  ct(`<style>a{ ; }`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(
+    gathered,
+    [
+      {
+        type: "tag",
+        start: 0,
+        end: 7,
+        value: "<style>",
+        tagNameStartsAt: 1,
+        tagNameEndsAt: 6,
+        tagName: "style",
+        recognised: true,
+        closing: false,
+        void: false,
+        pureHTML: true,
+        kind: null,
+        attribs: [],
+      },
+      {
+        type: "rule",
+        start: 7,
+        end: 13,
+        value: "a{ ; }",
+        left: 6,
+        nested: false,
+        openingCurlyAt: 8,
+        closingCurlyAt: 12,
+        selectorsStart: 7,
+        selectorsEnd: 8,
+        selectors: [
+          {
+            value: "a",
+            selectorStarts: 7,
+            selectorEnds: 8,
+          },
+        ],
+        properties: [
+          {
+            type: "text",
+            start: 9,
+            end: 10,
+            value: " ",
+          },
+          {
+            start: 10,
+            end: 11,
+            property: null,
+            propertyStarts: null,
+            propertyEnds: null,
+            value: null,
+            valueStarts: null,
+            valueEnds: null,
+            important: null,
+            importantStarts: null,
+            importantEnds: null,
+            colon: null,
+            semi: 10,
+          },
+          {
+            type: "text",
+            start: 11,
+            end: 12,
+            value: " ",
+          },
+        ],
+      },
+    ],
+    "37"
+  );
+  t.end();
+});

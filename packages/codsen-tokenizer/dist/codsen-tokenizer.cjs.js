@@ -2323,12 +2323,9 @@ function tokenizer(str, originalOpts) {
 
     if (!doNothing && token.type === "rule" && str[_i] && str[_i].trim() && // NOTA BENE - there's same clause for inline HTML style
     // let all the crap in, filter later:
-    !"{}".includes(str[_i]) && ( // above is instead of a stricter clause:
+    !"{}".includes(str[_i]) && // above is instead of a stricter clause:
     // attrNameRegexp.test(str[i]) &&
-    //
-    str[_i] !== ";" || // or it is, but the last non-whitespace char was semi, so it's a rogue semi here
-    // we'll put it as a standalone property, it's not a part of text token
-    str[lastNonWhitespaceCharAt] === ";") && token.selectorsEnd && token.openingCurlyAt && !property.propertyStarts && !property.importantStarts) { // first, check maybe there's unfinished text token before it
+    token.selectorsEnd && token.openingCurlyAt && !property.propertyStarts && !property.importantStarts) { // first, check maybe there's unfinished text token before it
 
       if (Array.isArray(token.properties) && token.properties.length && token.properties[~-token.properties.length].start && !token.properties[~-token.properties.length].end) {
         token.properties[~-token.properties.length].end = _i;
