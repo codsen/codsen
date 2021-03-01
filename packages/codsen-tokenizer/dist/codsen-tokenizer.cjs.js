@@ -2343,8 +2343,11 @@ function tokenizer(str, originalOpts) {
       if (str[_i] === ";") {
         initProperty({
           start: _i,
+          end: _i + 1,
           semi: _i
         });
+        pushProperty(property);
+        propertyReset();
       } else if (str[_i] === "!") {
         initProperty({
           start: _i,
@@ -2353,6 +2356,8 @@ function tokenizer(str, originalOpts) {
       } else {
         initProperty(_i);
       }
+
+      doNothing = _i;
     } // catch the start a property
     // -------------------------------------------------------------------------
     // Mostly happens in dirty code cases - the start is normally being triggered
@@ -2422,14 +2427,20 @@ function tokenizer(str, originalOpts) {
           if (str[_i] === ";") {
             initProperty({
               start: _i,
+              end: _i + 1,
               semi: _i
             });
+            doNothing = _i;
           } else if (R2) {
             initProperty({
               start: _i,
               importantStarts: _i
             });
           } else {
+            // protection against unclosed quotes
+            // <div style="float:left;; >
+            //                          ^
+            //                    we're here
             initProperty(_i);
           }
         }

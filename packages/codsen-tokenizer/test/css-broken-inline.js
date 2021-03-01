@@ -2370,7 +2370,7 @@ tap.test(`27 - repeated semi, space after, quotes follow`, (t) => {
   t.end();
 });
 
-tap.test(`28 - repeated semi, space after, bracket follows`, (t) => {
+tap.only(`28 - repeated semi, space after, bracket follows`, (t) => {
   const gathered = [];
   ct(`<div style="float:left;; >`, {
     tagCb: (obj) => {
