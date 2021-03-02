@@ -92,4 +92,5 @@ export {
   RuleObjType,
   CharacterEvent,
   AttributeEvent,
+  AttribSupplementedWithParent,
 };

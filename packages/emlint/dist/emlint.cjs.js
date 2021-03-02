@@ -9118,125 +9118,275 @@ function attributeValidateStart(context) {
   };
 }
 
-var defaults$3 = {
-  noTrailingSemi: true
-};
+/**
+ * Used for both inline HTML tag styles and head CSS style tag rules
+ */
+function validateStyle(token, context) {
+  // first let's set the properties array container, it might come
+  // from different places, depending is it head CSS styles or inline HTML styles
+  var nodeArr;
+  var ruleId = "";
 
-function validateInlineStyle(str, idxOffset, originalOpts) {
-
-  var opts = _objectSpread__default['default'](_objectSpread__default['default']({}, defaults$3), originalOpts); // we get trimmed string start and end positions, also an encountered errors array
-  // const { charStart, charEnd, errorArr } = checkForWhitespace(str, idxOffset);
-
-  var _checkForWhitespace = checkForWhitespace(str, idxOffset),
-      charStart = _checkForWhitespace.charStart,
-      charEnd = _checkForWhitespace.charEnd,
-      errorArr = _checkForWhitespace.errorArr; // now that we know where non-whitespace chars are, we can evaluate them
-
-  if (charStart !== null && charEnd) {
-    // 1. check inner whitespace:
-    // imagine original source:
-    // <td style="font-size:  10px;"></td>
-    // extracted value is passed as "str":
-    //            font-size:  10px;
-    //                      ^^
-    //             we flag this
-    //
-    var whitespaceStartsAt = null;
-    var nonSpacesMet = false;
-
-    for (var i = charStart; i < charEnd; i++) { // catch the unspaced colon
-      // <td style="font-size:10px;"></td>
-      //                     ^
-
-      if (str[i] === ":" && str[i + 1].trim()) {
-        errorArr.push({
-          idxFrom: i + 1 + idxOffset,
-          idxTo: i + 1 + idxOffset,
-          message: "Add a space.",
-          fix: {
-            ranges: [[i + 1 + idxOffset, i + 1 + idxOffset, " "]]
-          }
-        });
-      } // catch the start of a wrong whitespace chunk
-
-
-      if ( // it's whitespace:
-      !str[i].trim() && // it hasn't been recording
-      whitespaceStartsAt === null) {
-        whitespaceStartsAt = i;
-      } // flag up non-space whitespace characters
-
-
-      if ( // chunk has been recording
-      whitespaceStartsAt && // and it's a whitespace
-      !str[i].trim() && // and current char is not a space
-      str[i] !== " " && // and flag hasn't been flipped already
-      !nonSpacesMet) {
-        nonSpacesMet = true;
-      } // catch the excessive chunk or anything not-space
-
-
-      if ( // it exists
-      whitespaceStartsAt && // it's been passed
-      i > whitespaceStartsAt && ( // and current char doesn't exist (end reached)
-      !str[i] || // or it's not whitespace
-      str[i].trim())) {
-
-        if (nonSpacesMet || i > whitespaceStartsAt + 1) { // default is replacement of the whole string with a single space
-
-          var from = whitespaceStartsAt;
-          var to = i;
-          var replacement = " ";
-
-          if (str[whitespaceStartsAt] === " ") {
-            // push "from" by one and remove replacement
-            from += 1;
-            replacement = null;
-          } else if (str[i - 1] === " ") {
-            to -= 1;
-            replacement = null;
-          }
-
-          errorArr.push({
-            idxFrom: from + idxOffset,
-            idxTo: to + idxOffset,
-            message: (nonSpacesMet && i === whitespaceStartsAt + 1 ? "Replace" : "Remove") + " whitespace.",
-            fix: {
-              ranges: [replacement ? [from + idxOffset, to + idxOffset, replacement] : [from + idxOffset, to + idxOffset]]
-            }
-          });
-        } // reset
-
-
-        whitespaceStartsAt = null;
-        nonSpacesMet = false;
-      }
-    } // -----------------------------------------------------------------------------
-    // 2. check the trailing semi
-
-
-    if (opts.noTrailingSemi && str[charEnd - 1] === ";") {
-      errorArr.push({
-        idxFrom: charEnd - 1 + idxOffset,
-        idxTo: charEnd + idxOffset,
-        message: "Delete the trailing semicolon.",
-        fix: {
-          ranges: [[charEnd - 1 + idxOffset, charEnd + idxOffset]]
-        }
-      });
-    } else if (!opts.noTrailingSemi && str[charEnd - 1] !== ";") {
-      errorArr.push({
-        idxFrom: charEnd + idxOffset,
-        idxTo: charEnd + idxOffset,
-        message: "Add the trailing semicolon.",
-        fix: {
-          ranges: [[charEnd + idxOffset, charEnd + idxOffset, ";"]]
-        }
-      });
-    }
+  if (token.properties !== undefined) {
+    // head CSS rule
+    nodeArr = token.properties;
+    ruleId = "css-rule-malformed";
+  } else if (token.attribValue !== undefined) {
+    // inline HTML style attribute
+    nodeArr = token.attribValue;
+    ruleId = "attribute-validate-style";
   }
 
-  return errorArr;
+  if (!nodeArr || !ruleId) {
+    return;
+  } // extract all properties - arr array records
+  // all whitespace as text tokens and we want to exclude them
+
+  var properties = []; // there can be text nodes within properties array!
+  // a whitespace is still a text node!!!!
+
+  if (nodeArr.some(function (property) {
+    return property.property !== undefined;
+  })) {
+    properties = nodeArr.filter(function (property) {
+      return property.property !== undefined;
+    });
+  }
+
+  if (properties && properties.length) { // 1. catch missing semi on all rules except last
+    // <style>.a{color:red\n\ntext-align:left
+    //                   ^
+    //
+    // Iterate starting from the second-to last.
+    // The last property is ambiguous, tackled by a separate rule.
+
+    for (var i = properties.length - 1; i--;) {
+      if (properties[i].semi === null && properties[i].value) {
+        //
+        context.report({
+          ruleId: ruleId,
+          idxFrom: properties[i].start,
+          idxTo: properties[i].end,
+          message: "Add a semicolon.",
+          fix: {
+            ranges: [[properties[i].end, properties[i].end, ";"]]
+          }
+        });
+      }
+    }
+
+    properties.forEach(function (property) {
+      // 2. catch rules with malformed !important
+      // <style>.a{color:red !impotant;}</style>
+      //                         ^^
+      if (property.important && property.important !== "!important") {
+        context.report({
+          ruleId: ruleId,
+          idxFrom: property.importantStarts,
+          idxTo: property.importantEnds,
+          message: "Malformed !important.",
+          fix: {
+            ranges: [[property.importantStarts, property.importantEnds, "!important"]]
+          }
+        });
+      } // 3 catch gaps in front of colon
+      // <style>.a{ color : red; }</style>
+      //                 ^
+
+
+      if (property.colon && property.propertyEnds && property.propertyEnds < property.colon) {
+        context.report({
+          ruleId: ruleId,
+          idxFrom: property.start,
+          idxTo: property.end,
+          message: "Gap in front of semicolon.",
+          fix: {
+            ranges: [[property.propertyEnds, property.colon]]
+          }
+        });
+      } // 4 catch gaps in front of semi
+      // <style>.a{ color: red ; }</style>
+      //                      ^
+
+
+      if (property.semi && (property.importantEnds || property.valueEnds) && (property.importantEnds || property.valueEnds) < property.semi) {
+        context.report({
+          ruleId: ruleId,
+          idxFrom: property.start,
+          idxTo: property.end,
+          message: "Gap in front of semi.",
+          fix: {
+            ranges: [[property.importantEnds || property.valueEnds, property.semi]]
+          }
+        });
+      } // 5 colon is not colon
+      // <style>.a{color/red;}</style>
+      //                ^
+
+
+      if (property.colon && context.str[property.colon] !== ":") {
+        context.report({
+          ruleId: ruleId,
+          idxFrom: property.start,
+          idxTo: property.end,
+          message: "Mis-typed colon.",
+          fix: {
+            ranges: [[property.colon, property.colon + 1, ":"]]
+          }
+        });
+      } // 6 repeated semicolon after a property
+      // <style>.a{color: red;;}</style>
+      //                      ^
+
+
+      if (property.semi && !property.propertyStarts && !property.valueStarts && !property.importantStarts) {
+        context.report({
+          ruleId: ruleId,
+          idxFrom: property.start,
+          idxTo: property.end,
+          message: "Rogue semicolon.",
+          fix: {
+            ranges: [[property.semi, property.semi + 1]]
+          }
+        });
+      } // 7. catch extra whitespace after colon
+
+
+      if (property.colon && property.valueStarts) {
+        if (property.valueStarts > property.colon + 2) {
+          context.report({
+            ruleId: ruleId,
+            idxFrom: property.start,
+            idxTo: property.end,
+            message: "Remove whitespace.",
+            fix: {
+              ranges: [[property.colon + 2, property.valueStarts]]
+            }
+          });
+        }
+
+        if (property.valueStarts > property.colon + 1 && !context.str[property.colon + 1].trim() && context.str[property.colon + 1] !== " ") {
+          context.report({
+            ruleId: ruleId,
+            idxFrom: property.colon + 1,
+            idxTo: property.valueStarts,
+            message: "Replace whitespace.",
+            fix: {
+              ranges: [[property.colon + 1, property.valueStarts, " "]]
+            }
+          });
+        }
+      }
+    });
+  }
+
+  if (nodeArr && Array.isArray(nodeArr) && nodeArr.length) {
+    for (var _i = 0, len = nodeArr.length; _i < len; _i++) { // this loop iterates through everything, CSS properties and whitespace
+      // tokens, so let's check the leading/trailing whitespace. Any non-whitespace
+      // characters would be put into properties, so we could say text token
+      // inside CSS style attribute or CSS rule is used exclusively for whitespace.
+
+      if ( // leading whitespace
+      (!_i || // trailing whitespace
+      _i === len - 1) && nodeArr[_i].type === "text" && ruleId === "attribute-validate-style") { // maybe whole value is whitespace?
+        // <td style="  \t">
+        //            ^^^^
+
+        if (len === 1) {
+          context.report({
+            ruleId: ruleId,
+            idxFrom: nodeArr[_i].start,
+            idxTo: nodeArr[_i].end,
+            message: "Missing value.",
+            fix: null
+          });
+        } else {
+          context.report({
+            ruleId: ruleId,
+            idxFrom: nodeArr[_i].start,
+            idxTo: nodeArr[_i].end,
+            message: "Remove whitespace.",
+            fix: {
+              ranges: [[nodeArr[_i].start, nodeArr[_i].end]]
+            }
+          });
+        }
+      }
+
+      if (nodeArr[_i].value === null) {
+        // tend a rare case, a rogue semicolon:
+        // <style>.a{color:red; !important;}</style>
+        //                    ^
+        if (nodeArr[_i].important !== null && nodeArr[_i].property === null) {
+          var errorRaised = false;
+
+          if (_i) {
+            for (var y = nodeArr.length; y--;) {
+              if (y === _i) {
+                continue;
+              }
+
+              if ( // the property we're talking about is missing both
+              // value and property, yet it contains !important
+              nodeArr[_i].important && !nodeArr[_i].propertyStarts && !nodeArr[_i].valueStarts && // we're traversing upon a CSS property, not a whitespace text token
+              nodeArr[y].property !== undefined) {
+
+                if ( // its semi is present
+                nodeArr[y].semi && // and its important is missing
+                !nodeArr[y].importantStarts) { // the frontal space might be missing
+
+                  var fromIdx = nodeArr[y].semi;
+                  var toIdx = nodeArr[y].semi + 1;
+                  var whatToInsert = void 0;
+
+                  if (context.str[nodeArr[y].semi + 1] !== " ") {
+                    whatToInsert = " ";
+                  }
+                  context.report({
+                    ruleId: ruleId,
+                    idxFrom: fromIdx,
+                    idxTo: toIdx,
+                    message: "Delete the semicolon.",
+                    fix: {
+                      ranges: [[fromIdx, toIdx, whatToInsert]]
+                    }
+                  });
+                  errorRaised = true;
+                } else {
+                  // stop looping further
+                  break;
+                }
+              }
+            }
+          } // catch css properties without values
+          // <style>.a{color:}</style>
+          //                ^
+
+
+          if ( // it's a property token, not text whitespace token:
+          nodeArr[_i].property !== undefined && // and error hasn't been raised so far:
+          !errorRaised) {
+            context.report({
+              ruleId: ruleId,
+              idxFrom: nodeArr[_i].start,
+              idxTo: nodeArr[_i].end,
+              message: "Missing value.",
+              fix: null
+            });
+          }
+        } else if ( // avoid cases of semi-only tokens
+        nodeArr[_i].property || nodeArr[_i].value || nodeArr[_i].important) {
+          context.report({
+            ruleId: ruleId,
+            idxFrom: nodeArr[_i].start,
+            idxTo: nodeArr[_i].end,
+            message: "Missing value.",
+            fix: null
+          });
+        }
+      }
+    }
+  }
 }
 
 // -----------------------------------------------------------------------------
@@ -9260,15 +9410,7 @@ function attributeValidateStyle(context) {
             fix: null
           });
         }
-
-        var errorArr = validateInlineStyle(node.attribValueRaw, node.attribValueStartsAt, {
-          noTrailingSemi: Array.isArray(opts) && opts.includes("noTrailingSemi")
-        });
-        errorArr.forEach(function (errorObj) {
-          context.report(_objectSpread__default['default'](_objectSpread__default['default']({}, errorObj), {}, {
-            ruleId: "attribute-validate-style"
-          }));
-        });
+        validateStyle(node, context);
       }
     }
   };
@@ -10556,213 +10698,14 @@ var trailingSemi = function trailingSemi(context, mode) {
 
 var cssRuleMalformed = function cssRuleMalformed(context) {
   return {
-    rule: function rule(node) { // 0. extract all properties - node.properties array records
-      // all whitespace as text tokens and we want to exclude them
+    rule: function rule(node) {
 
-      var properties = []; // there can be text nodes within properties array!
-      // innocent whitespace is still a text node!!!!
-
-      if (Array.isArray(node.properties) && node.properties.length && node.properties.filter(function (property) {
-        return property.property;
-      }).length) {
-        properties = node.properties.filter(function (property) {
-          return property.property !== undefined;
-        });
-      } // 1. catch missing semi on all rules except last
-      // <style>.a{color:red\n\ntext-align:left
-      //                   ^
-
-      if (properties && properties.length) { // Iterate starting from the second-to last.
-        // The last property is ambiguous, tackled by a separate rule.
-
-        for (var i = properties.length - 1; i--;) {
-          if (properties[i].semi === null && properties[i].value) {
-            //
-            context.report({
-              ruleId: "css-rule-malformed",
-              idxFrom: properties[i].start,
-              idxTo: properties[i].end,
-              message: "Add a semicolon.",
-              fix: {
-                ranges: [[properties[i].end, properties[i].end, ";"]]
-              }
-            });
-          }
-        }
-      } // 2. various checks
-      // =================
-
-
-      if (node.properties && node.properties.length) {
-        node.properties.forEach(function (property) {
-          // 2-1. catch rules with malformed !important
-          // <style>.a{color:red !impotant;}</style>
-          //                         ^^
-          if (property.important && property.important !== "!important") {
-            context.report({
-              ruleId: "css-rule-malformed",
-              idxFrom: property.importantStarts,
-              idxTo: property.importantEnds,
-              message: "Malformed !important.",
-              fix: {
-                ranges: [[property.importantStarts, property.importantEnds, "!important"]]
-              }
-            });
-          } // 2-2 catch gaps in front of colon
-          // <style>.a{ color : red; }</style>
-          //                 ^
-
-
-          if (property.colon && property.propertyEnds && property.propertyEnds < property.colon) {
-            context.report({
-              ruleId: "css-rule-malformed",
-              idxFrom: property.start,
-              idxTo: property.end,
-              message: "Gap in front of semicolon.",
-              fix: {
-                ranges: [[property.propertyEnds, property.colon]]
-              }
-            });
-          } // 2-3 catch gaps in front of semi
-          // <style>.a{ color: red ; }</style>
-          //                      ^
-
-
-          if (property.semi && (property.importantEnds || property.valueEnds) && (property.importantEnds || property.valueEnds) < property.semi) {
-            context.report({
-              ruleId: "css-rule-malformed",
-              idxFrom: property.start,
-              idxTo: property.end,
-              message: "Gap in front of semi.",
-              fix: {
-                ranges: [[property.importantEnds || property.valueEnds, property.semi]]
-              }
-            });
-          } // 2-4 colon is not colon
-          // <style>.a{color/red;}</style>
-          //                ^
-
-
-          if (property.colon && context.str[property.colon] !== ":") {
-            context.report({
-              ruleId: "css-rule-malformed",
-              idxFrom: property.start,
-              idxTo: property.end,
-              message: "Mis-typed colon.",
-              fix: {
-                ranges: [[property.colon, property.colon + 1, ":"]]
-              }
-            });
-          } // 2-5 repeated semicolon after a property
-          // <style>.a{color: red;;}</style>
-          //                      ^
-
-
-          if (property.semi && !property.propertyStarts && !property.valueStarts && !property.importantStarts) {
-            context.report({
-              ruleId: "css-rule-malformed",
-              idxFrom: property.start,
-              idxTo: property.end,
-              message: "Rogue semicolon.",
-              fix: {
-                ranges: [[property.semi, property.semi + 1]]
-              }
-            });
-          }
-        });
-      } // 3. catch css rules with selectors but without properties
-      // <style>.a{;}
-      //           ^
-
-
-      if (Array.isArray(node.selectors) && node.selectors.length && !properties.length && node.openingCurlyAt && node.closingCurlyAt && node.closingCurlyAt > node.openingCurlyAt + 1 && context.str.slice(node.openingCurlyAt + 1, node.closingCurlyAt).trim()) {
-        context.report({
-          ruleId: "css-rule-malformed",
-          idxFrom: node.start,
-          idxTo: node.end,
-          message: "Delete rogue character" + (context.str.slice(node.openingCurlyAt + 1, node.closingCurlyAt).trim().length > 1 ? "s" : "") + ".",
-          fix: {
-            ranges: [[node.openingCurlyAt + 1, node.closingCurlyAt]]
-          }
-        });
-      } // 4. catch css properties without values
-      // <style>.a{color:}</style>
-      //                ^
-
-
-      if (node.properties && Array.isArray(node.properties)) {
-        for (var _i = 0, len = node.properties.length; _i < len; _i++) {
-
-          if (node.properties[_i].value === null) {
-            // tend a rare case, a rogue semicolon:
-            // <style>.a{color:red; !important;}</style>
-            //                    ^
-            if (node.properties[_i].important !== null && node.properties[_i].property === null) {
-              var errorRaised = false;
-
-              if (_i) {
-                for (var y = node.properties.length; y--;) {
-                  if (y === _i) {
-                    continue;
-                  }
-
-                  if ( // the property we're talking about is missing both
-                  // value and property, yet it contains !important
-                  node.properties[_i].important && !node.properties[_i].propertyStarts && !node.properties[_i].valueStarts && // we're traversing upon a CSS property, not a whitespace text token
-                  node.properties[y].property !== undefined) {
-
-                    if ( // its semi is present
-                    node.properties[y].semi && // and its important is missing
-                    !node.properties[y].importantStarts) { // the frontal space might be missing
-
-                      var fromIdx = node.properties[y].semi;
-                      var toIdx = node.properties[y].semi + 1;
-                      var whatToInsert = void 0;
-
-                      if (context.str[node.properties[y].semi + 1] !== " ") {
-                        whatToInsert = " ";
-                      }
-                      context.report({
-                        ruleId: "css-rule-malformed",
-                        idxFrom: fromIdx,
-                        idxTo: toIdx,
-                        message: "Delete the semicolon.",
-                        fix: {
-                          ranges: [[fromIdx, toIdx, whatToInsert]]
-                        }
-                      });
-                      errorRaised = true;
-                    } else {
-                      // stop looping further
-                      break;
-                    }
-                  }
-                }
-              }
-
-              if ( // it's a property token, not text whitespace token:
-              node.properties[_i].property !== undefined && // and error hasn't been raised so far:
-              !errorRaised) {
-                context.report({
-                  ruleId: "css-rule-malformed",
-                  idxFrom: node.properties[_i].start,
-                  idxTo: node.properties[_i].end,
-                  message: "Missing value.",
-                  fix: null
-                });
-              }
-            } else if ( // avoid cases of semi-only tokens
-            node.properties[_i].property || node.properties[_i].value || node.properties[_i].important) {
-              context.report({
-                ruleId: "css-rule-malformed",
-                idxFrom: node.properties[_i].start,
-                idxTo: node.properties[_i].end,
-                message: "Missing value.",
-                fix: null
-              });
-            }
-          }
-        }
+      if (Array.isArray(node.properties) && node.properties.length) {
+        // validateStyle() will report errors into context directly
+        validateStyle( // pass whole node, not just properties, because some errors
+        // like <style>.a{;} can be indentified only by data on the token
+        // root, like "node.openingCurlyAt" etc.
+        node, context);
       }
     }
   };

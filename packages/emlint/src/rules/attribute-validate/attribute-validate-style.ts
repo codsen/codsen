@@ -1,5 +1,5 @@
 import { Linter, RuleObjType } from "../../linter";
-import validateInlineStyle from "../../util/validateInlineStyle";
+import validateStyle from "../../util/validateStyle";
 
 // rule: attribute-validate-style
 // -----------------------------------------------------------------------------
@@ -14,7 +14,14 @@ function attributeValidateStyle(
         `███████████████████████████████████████ attributeValidateStyle() ███████████████████████████████████████`
       );
       console.log(
-        `017 attribute-validate-style: ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+        `017 attribute-validate-style: incoming ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `024 attribute-validate-style: ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
           opts,
           null,
           4
@@ -45,22 +52,10 @@ function attributeValidateStyle(
           });
         }
 
-        const errorArr = validateInlineStyle(
-          node.attribValueRaw,
-          node.attribValueStartsAt as number,
-          {
-            noTrailingSemi:
-              Array.isArray(opts) && opts.includes("noTrailingSemi"),
-          }
-        );
         console.log(
-          `057 received errorArr = ${JSON.stringify(errorArr, null, 4)}`
+          `056 ${`\u001b[${35}m${`CALL validateStyle()`}\u001b[${39}m`}`
         );
-
-        errorArr.forEach((errorObj) => {
-          console.log(`061 RAISE ERROR`);
-          context.report({ ...errorObj, ruleId: "attribute-validate-style" });
-        });
+        validateStyle(node, context);
       }
     },
   };

@@ -126,9 +126,9 @@ tap.test(`04 - one semi, tight`, (t) => {
       {
         severity: 2,
         ruleId: "css-rule-malformed",
-        message: "Delete rogue character.",
-        idxFrom: 7,
-        idxTo: 12,
+        message: "Rogue semicolon.",
+        idxFrom: 10,
+        idxTo: 11,
         fix: {
           ranges: [[10, 11]],
         },
@@ -156,11 +156,21 @@ tap.test(`05 - two semis, tight`, (t) => {
       {
         severity: 2,
         ruleId: "css-rule-malformed",
-        message: "Delete rogue characters.",
-        idxFrom: 7,
-        idxTo: 13,
+        idxFrom: 10,
+        idxTo: 11,
+        message: "Rogue semicolon.",
         fix: {
-          ranges: [[10, 12]],
+          ranges: [[10, 11]],
+        },
+      },
+      {
+        severity: 2,
+        ruleId: "css-rule-malformed",
+        idxFrom: 11,
+        idxTo: 12,
+        message: "Rogue semicolon.",
+        fix: {
+          ranges: [[11, 12]],
         },
       },
     ],
