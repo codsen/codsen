@@ -13,10 +13,10 @@ import { left, right } from 'string-left-right';
 import { tokenizer } from 'codsen-tokenizer';
 import op from 'object-path';
 
-var version$1 = "0.10.3";
+var version = "0.10.3";
 
 /* eslint no-use-before-define: 0 */
-const version = version$1;
+const version$1 = version;
 const defaults = {
   reportProgressFunc: null,
   reportProgressFuncFrom: 0,
@@ -595,4 +595,4 @@ function cparser(str, originalOpts) {
   return res;
 } // -----------------------------------------------------------------------------
 
-export { cparser, defaults, version };
+export { cparser, defaults, version$1 as version };
