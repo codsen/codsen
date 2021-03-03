@@ -1512,6 +1512,11 @@ function tokenizer(str, originalOpts) {
           token.kind = "xml";
         } else if (inlineTags.has(extractedTagName)) {
           token.kind = "inline";
+
+          if (extractedTagName) {
+            // for perf
+            doNothing = i;
+          }
         }
       } else if (startsHtmlComment(str, i, token, layers)) {
         //
@@ -1905,13 +1910,14 @@ function tokenizer(str, originalOpts) {
         token.nested = layers.some(o => o.type === "at");
       } else if (!token.type) {
         initToken("text", i);
+        doNothing = i;
       }
     }
 
     let R1;
     let R2;
 
-    if (property.start || str[i] === "!") {
+    if (!doNothing && (property.start || str[i] === "!")) {
       R1 = `;'"{}<>`.includes(str[right(str, i - 1)]);
       R2 = matchRightIncl(str, i, ["!important"], {
         i: true,
@@ -2700,6 +2706,7 @@ function tokenizer(str, originalOpts) {
         }
 
         token.recognised = isTagNameRecognised(token.tagName);
+        doNothing = i;
       }
     } // Catch the start of a tag name:
     // -------------------------------------------------------------------------
@@ -2710,12 +2717,14 @@ function tokenizer(str, originalOpts) {
 
       if (str[i] === "/") {
         token.closing = true;
+        doNothing = i;
       } else if (isLatinLetter(str[i])) {
         token.tagNameStartsAt = i; // if by now closing marker is still null, set it to false - there
         // won't be any closing slashes between opening bracket and tag name
 
         if (!token.closing) {
           token.closing = false;
+          doNothing = i;
         }
       } else ;
     } // catch the end of a tag attribute's name
