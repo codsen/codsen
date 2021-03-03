@@ -33,7 +33,7 @@ function getWholeEspTagLumpOnTheRight(
     //         ||
     //    lefty  righty
     //
-    // we clice off where righty starts
+    // we slice off where righty starts
     if (leftyChars.includes(str[y]) && rightyChars.includes(str[y - 1])) {
       console.log(
         `039 getWholeEspTagLumpOnTheRight(): ${`\u001b[${31}m${`BREAK`}\u001b[${39}m`}`
