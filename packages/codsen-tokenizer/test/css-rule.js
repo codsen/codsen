@@ -6153,3 +6153,40 @@ tap.test(`82`, (t) => {
   );
   t.end();
 });
+
+tap.todo(`83 - standalone semi in head CSS - chopped`, (t) => {
+  const gathered = [];
+  ct(`<style>.a{b:c!important};`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(gathered, [], "83");
+  t.end();
+});
+
+tap.todo(`84 - standalone semi in head CSS - closed`, (t) => {
+  const gathered = [];
+  ct(`<style>.red{color:red!important};</style>`, {
+    tagCb: (obj) => {
+      gathered.push(obj);
+    },
+  });
+  t.strictSame(gathered, [], "84");
+  t.end();
+});
+
+tap.todo(`85 - standalone semi in head CSS - surroundings`, (t) => {
+  const gathered = [];
+  ct(
+    `<style>.a{b:c!important};
+.b{text-align:left;}`,
+    {
+      tagCb: (obj) => {
+        gathered.push(obj);
+      },
+    }
+  );
+  t.strictSame(gathered, [], "85");
+  t.end();
+});

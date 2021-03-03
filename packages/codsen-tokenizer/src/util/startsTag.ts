@@ -16,17 +16,6 @@ function startsTag(
   layers: Layer[],
   withinStyle: boolean
 ): boolean {
-  console.log(
-    `020 ██ startsTag() isOpening1: ${isOpening(str, i, {
-      allowCustomTagNames: true,
-    })}`
-  );
-  console.log(
-    `025 ██ startsTag() isOpening2: ${isOpening(str, i, {
-      allowCustomTagNames: false,
-      skipOpeningBracket: true,
-    })}`
-  );
   return !!(
     str[i] &&
     str[i].trim().length &&

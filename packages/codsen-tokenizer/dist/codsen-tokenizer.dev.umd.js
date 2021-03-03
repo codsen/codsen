@@ -5034,7 +5034,17 @@ function tokenizer(str, originalOpts) {
 
     var lastEspLayerObjIdx = getLastEspLayerObjIdx(layers);
 
-    if (!doNothing && str[_i]) { // console.log(
+    if (!doNothing && str[_i]) {
+      // console.log(
+      //   `1857 ███████████████████████████████████████ IS TAG STARTING? ${startsTag(
+      //     str,
+      //     i,
+      //     token,
+      //     layers,
+      //     withinStyle
+      //   )}`
+      // );
+      // console.log(
       //   `1707 ███████████████████████████████████████ IS COMMENT STARTING? ${startsHtmlComment(
       //     str,
       //     i,
@@ -5547,15 +5557,21 @@ function tokenizer(str, originalOpts) {
       }
     }
 
-    var R1 = ";'\"{}<>".includes(str[right(str, _i - 1)]);
-    var R2 = matchRightIncl(str, _i, ["!important"], {
-      i: true,
-      trimBeforeMatching: true,
-      maxMismatches: 2
-    }); // catch the end of a css property (with or without !important)
+    var R1 = void 0;
+    var R2 = void 0;
+
+    if (property) {
+      R1 = ";'\"{}<>".includes(str[right(str, _i - 1)]);
+      R2 = matchRightIncl(str, _i, ["!important"], {
+        i: true,
+        trimBeforeMatching: true,
+        maxMismatches: 2
+      });
+    } // catch the end of a css property (with or without !important)
     // -------------------------------------------------------------------------
 
     /* istanbul ignore else */
+
 
     if (!doNothing && property && (property.semi && property.semi < _i && property.semi < _i || (property.valueStarts && !property.valueEnds && str[rightVal] !== "!" && ( // either non-whitespace character doesn't exist on the right
     !rightVal || // or at that character !important does not start
