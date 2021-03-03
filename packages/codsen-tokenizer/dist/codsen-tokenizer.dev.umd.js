@@ -5822,7 +5822,9 @@ function tokenizer(str, originalOpts) {
     //                so that we can catch it later validating prop names
     //
     !rightVal || !":/}".includes(str[rightVal]) || // mind the rogue closings .a{x}}
-    str[_i] === "}" && str[rightVal] === "}")) && ( // also, regarding the slash,
+    str[_i] === "}" && str[rightVal] === "}") || // <style>.a{b!}
+    //            ^
+    str[_i] === "!") && ( // also, regarding the slash,
     // <div style="//color: red;">
     //              ^
     //            don't close here, continue, gather "//color"
@@ -5882,7 +5884,9 @@ function tokenizer(str, originalOpts) {
         //                this is
 
         if ( // either semi but no colon
-        nextColon === -1 && nextSemi !== -1 || !(nextColon !== -1 && nextSemi !== -1 && nextColon < nextSemi)) {
+        (nextColon === -1 && nextSemi !== -1 || !(nextColon !== -1 && nextSemi !== -1 && nextColon < nextSemi)) && !"{}".includes(str[_i]) && rightVal && ( // <style>.a{b!}
+        //            ^
+        !"!".includes(str[_i]) || !"{};'\"".includes(str[rightVal]))) {
           // <div style="float.left;">
           //                  ^
           //            we're here
@@ -5894,6 +5898,8 @@ function tokenizer(str, originalOpts) {
           //                 ^
           //          we're here
           property.propertyEnds = null;
+        } else if (str[_i] === "!") {
+          property.importantStarts = _i;
         }
       }
     } // catch the colon of a css property

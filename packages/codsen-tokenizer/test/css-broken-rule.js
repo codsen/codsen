@@ -3082,3 +3082,15 @@ tap.test(`38`, (t) => {
   );
   t.end();
 });
+
+tap.todo(`<style>.a{b:c z`);
+tap.todo(`<style>.a{b:c?`);
+tap.todo(`<style>.a{b:c ?`);
+tap.todo(`<style>.a{b:c?important;`);
+tap.todo(`<style>.a{b:c ?important;`);
+tap.todo(`<style>.a{b:c1important;`);
+tap.todo(`<style>.a{b:c 1important;`);
+
+// also,
+tap.todo(`<style.a{b:c !important;}</style>`);
+tap.todo(`<style\n.a{b:c !important;}</style>`);
