@@ -1444,9 +1444,21 @@ function tokenizer(str, originalOpts) {
 
         if (token.type && token.start !== null) {
           if (token.type === "rule") {
-            if (property && property.propertyStarts) {
-              property.propertyEnds = _i;
-              property.property = str.slice(property.propertyStarts, _i);
+
+            if (property && property.start) {
+              // patch important if needed
+              if (property.importantStarts && !property.importantEnds) {
+                property.importantEnds = _i;
+                property.important = str.slice(property.importantStarts, _i);
+              }
+
+              if (property.propertyStarts && !property.propertyEnds) {
+                property.propertyEnds = _i;
+              }
+
+              if (property.propertyStarts && !property.property) {
+                property.property = str.slice(property.propertyStarts, _i);
+              }
 
               if (!property.end) {
                 property.end = _i;
@@ -2159,6 +2171,8 @@ function tokenizer(str, originalOpts) {
             value: str.slice(temp, _i)
           });
         }
+      } else if (str[_i] === "!") {
+        property.importantStarts = _i;
       } else {
         property.valueStarts = _i;
       }
@@ -2266,7 +2280,7 @@ function tokenizer(str, originalOpts) {
         if ( // either semi but no colon
         (nextColon === -1 && nextSemi !== -1 || !(nextColon !== -1 && nextSemi !== -1 && nextColon < nextSemi)) && !"{}".includes(str[_i]) && rightVal && ( // <style>.a{b!}
         //            ^
-        !"!".includes(str[_i]) || !"{};'\"".includes(str[rightVal]))) {
+        !"!".includes(str[_i]) || isLatinLetter(str[rightVal]))) {
           // <div style="float.left;">
           //                  ^
           //            we're here
