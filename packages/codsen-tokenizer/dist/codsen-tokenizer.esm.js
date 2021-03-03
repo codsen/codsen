@@ -1911,7 +1911,7 @@ function tokenizer(str, originalOpts) {
     let R1;
     let R2;
 
-    if (property) {
+    if (property.start || str[i] === "!") {
       R1 = `;'"{}<>`.includes(str[right(str, i - 1)]);
       R2 = matchRightIncl(str, i, ["!important"], {
         i: true,

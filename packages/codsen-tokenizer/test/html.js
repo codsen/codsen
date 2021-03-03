@@ -391,7 +391,7 @@ tap.test(`10 - bracket as text`, (t) => {
   t.end();
 });
 
-tap.test(`11 - tag followed by brackets`, (t) => {
+tap.only(`11 - tag followed by brackets`, (t) => {
   const gathered = [];
   ct(`<a>"something"<span>'here'</span></a>`, {
     tagCb: (obj, next) => {
