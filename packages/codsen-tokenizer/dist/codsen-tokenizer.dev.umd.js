@@ -5070,18 +5070,28 @@ function tokenizer(str, originalOpts) {
               if (property.importantStarts && !property.importantEnds) {
                 property.importantEnds = _i;
                 property.important = str.slice(property.importantStarts, _i);
-              }
+              } // patch property
+
 
               if (property.propertyStarts && !property.propertyEnds) {
                 property.propertyEnds = _i;
-              }
 
-              if (property.propertyStarts && !property.property) {
-                property.property = str.slice(property.propertyStarts, _i);
+                if (!property.property) {
+                  property.property = str.slice(property.propertyStarts, _i);
+                }
               }
 
               if (!property.end) {
                 property.end = _i;
+              } // patch value
+
+
+              if (property.valueStarts && !property.valueEnds) {
+                property.valueEnds = _i;
+
+                if (!property.value) {
+                  property.value = str.slice(property.valueStarts, _i);
+                }
               }
 
               pushProperty(property);
@@ -5727,6 +5737,15 @@ function tokenizer(str, originalOpts) {
       pushProperty(property);
       propertyReset();
       doNothing = _i;
+    } // catch the end of css property's !important
+    // -------------------------------------------------------------------------
+
+    /* istanbul ignore else */
+
+
+    if (property && property.importantStarts && !property.importantEnds && str[_i] && !str[_i].trim()) {
+      property.importantEnds = _i;
+      property.important = str.slice(property.importantStarts, _i);
     } // catch the start of css property's !important
     // -------------------------------------------------------------------------
 
@@ -5743,7 +5762,12 @@ function tokenizer(str, originalOpts) {
 
       if ( // it's non-whitespace char in front
       str[_i - 1] && str[_i - 1].trim() && // and before that it's whitespace
-      str[_i - 2] && !str[_i - 2].trim()) {
+      str[_i - 2] && !str[_i - 2].trim() || // there's a "1" in front
+      str[_i - 1] === "1" && // and it's not numeric character before it
+      // padding: 101important
+      //            ^
+      //          unlikely it's a mistyped !
+      str[_i - 2] && !/\d/.test(str[_i - 2])) {
         // merge that character into !important
         property.valueEnds = left(str, _i - 1) + 1;
         property.value = str.slice(property.valueStarts, property.valueEnds);
