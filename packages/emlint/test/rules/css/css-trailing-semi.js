@@ -5,7 +5,7 @@ import { applyFixes } from "../../../t-util/util";
 // 00. false positives
 // -----------------------------------------------------------------------------
 
-tap.test(`01 - not style`, (t) => {
+tap.test(`01 - not a style, inline`, (t) => {
   const str = `<img alt="color: red">`;
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -18,19 +18,32 @@ tap.test(`01 - not style`, (t) => {
   t.end();
 });
 
+tap.test(`02 - not a style, head`, (t) => {
+  const str = `<span>a{color: red}`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "css-trailing-semi": 2,
+    },
+  });
+  t.equal(applyFixes(str, messages), str, "02.01");
+  t.strictSame(messages, [], "02.02");
+  t.end();
+});
+
 // always
 // -----------------------------------------------------------------------------
 
-tap.test(`02 - one style, always`, (t) => {
-  const str = `<style>.a{color:red}</style><body>a</body>`;
-  const fixed = `<style>.a{color:red;}</style><body>a</body>`;
+tap.test(`03 - one style, always`, (t) => {
+  const str = `<style>.a{color:red}</style><body style="color:red">a</body>`;
+  const fixed = `<style>.a{color:red;}</style><body style="color:red;">a</body>`;
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
       "css-trailing-semi": [2, "always"],
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "02.01");
+  t.equal(applyFixes(str, messages), fixed, "03.01");
   t.match(
     messages,
     [
@@ -44,39 +57,75 @@ tap.test(`02 - one style, always`, (t) => {
           ranges: [[19, 19, ";"]],
         },
       },
+      {
+        severity: 2,
+        ruleId: "css-trailing-semi",
+        message: "Add a semicolon.",
+        idxFrom: 41,
+        idxTo: 50,
+        fix: {
+          ranges: [[50, 50, ";"]],
+        },
+      },
     ],
-    "02.02"
+    "03.02"
   );
   t.end();
 });
 
-tap.test(`03 - one style, always, spaced important`, (t) => {
-  const str = `<style>.a{color:red !important}</style><body>a</body>`;
-  const fixed = `<style>.a{color:red !important;}</style><body>a</body>`;
+tap.test(`04 - one style, always, spaced important`, (t) => {
+  const str = `<style>.a{color: red !important}</style><body style="color: red !important">a</body>`;
+  const fixed = `<style>.a{color: red !important;}</style><body style="color: red !important;">a</body>`;
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
       "css-trailing-semi": [2, "always"],
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "03");
+  t.match(
+    messages,
+    [
+      {
+        severity: 2,
+        ruleId: "css-trailing-semi",
+        message: "Add a semicolon.",
+        idxFrom: 10,
+        idxTo: 31,
+        fix: {
+          ranges: [[31, 31, ";"]],
+        },
+      },
+      {
+        severity: 2,
+        ruleId: "css-trailing-semi",
+        message: "Add a semicolon.",
+        idxFrom: 53,
+        idxTo: 74,
+        fix: {
+          ranges: [[74, 74, ";"]],
+        },
+      },
+    ],
+    "04.01"
+  );
+  t.equal(applyFixes(str, messages), fixed, "04.02");
   t.end();
 });
 
-tap.test(`04 - one style, always, tight important`, (t) => {
-  const str = `<style>.a{color:red!important}</style><body>a</body>`;
-  const fixed = `<style>.a{color:red!important;}</style><body>a</body>`;
+tap.test(`05 - one style, always, tight important`, (t) => {
+  const str = `<style>.a{color:red!important}</style><body style="color:red!important">a</body>`;
+  const fixed = `<style>.a{color:red!important;}</style><body style="color:red!important;">a</body>`;
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
       "css-trailing-semi": [2, "always"],
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "04");
+  t.equal(applyFixes(str, messages), fixed, "05");
   t.end();
 });
 
-tap.test(`05 - one style, always, inner whitespace`, (t) => {
+tap.test(`06 - one style, always, inner whitespace`, (t) => {
   const str = `<style>.a{color:red }</style><body>a</body>`;
   const fixed = `<style>.a{color:red; }</style><body>a</body>`;
   const linter = new Linter();
@@ -85,7 +134,7 @@ tap.test(`05 - one style, always, inner whitespace`, (t) => {
       "css-trailing-semi": [1, "always"],
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "05.01");
+  t.equal(applyFixes(str, messages), fixed, "06.01");
   t.match(
     messages,
     [
@@ -100,27 +149,14 @@ tap.test(`05 - one style, always, inner whitespace`, (t) => {
         },
       },
     ],
-    "05.02"
+    "06.02"
   );
   t.end();
 });
 
-tap.test(`06 - two styles, always`, (t) => {
+tap.test(`07 - two styles, always`, (t) => {
   const str = `<style>.a{text-align:left; color:red}</style><body>a</body>`;
   const fixed = `<style>.a{text-align:left; color:red;}</style><body>a</body>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "css-trailing-semi": [2, "always"],
-    },
-  });
-  t.equal(applyFixes(str, messages), fixed, "06");
-  t.end();
-});
-
-tap.test(`07 - two styles with space, always`, (t) => {
-  const str = `<style>.a{text-align:left; color:red }</style><body>a</body>`;
-  const fixed = `<style>.a{text-align:left; color:red; }</style><body>a</body>`;
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
@@ -131,7 +167,20 @@ tap.test(`07 - two styles with space, always`, (t) => {
   t.end();
 });
 
-tap.test(`08 - two styles, default=always`, (t) => {
+tap.test(`08 - two styles with space, always`, (t) => {
+  const str = `<style>.a{text-align:left; color:red }</style><body>a</body>`;
+  const fixed = `<style>.a{text-align:left; color:red; }</style><body>a</body>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "css-trailing-semi": [2, "always"],
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "08");
+  t.end();
+});
+
+tap.test(`09 - two styles, default=always`, (t) => {
   const str = `<style>.a{text-align:left; color:red\n}</style><body>a</body>`;
   const fixed = `<style>.a{text-align:left; color:red;\n}</style><body>a</body>`;
   const linter = new Linter();
@@ -140,11 +189,11 @@ tap.test(`08 - two styles, default=always`, (t) => {
       "css-trailing-semi": 2,
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "08");
+  t.equal(applyFixes(str, messages), fixed, "09");
   t.end();
 });
 
-tap.test(`09 - nothing to fix`, (t) => {
+tap.test(`10 - nothing to fix`, (t) => {
   const str = `<style>.a{\ntext-align:left;\ncolor:red;\n}</style><body>a</body>`;
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -152,15 +201,15 @@ tap.test(`09 - nothing to fix`, (t) => {
       "css-trailing-semi": [2, "always"],
     },
   });
-  t.equal(applyFixes(str, messages), str, "09.01");
-  t.strictSame(messages, [], "09.02");
+  t.equal(applyFixes(str, messages), str, "10.01");
+  t.strictSame(messages, [], "10.02");
   t.end();
 });
 
 // never
 // -----------------------------------------------------------------------------
 
-tap.test(`10 - one style, never`, (t) => {
+tap.test(`11 - one style, never`, (t) => {
   const str = `<style>.a{color:red;}</style><body>a</body>`;
   const fixed = `<style>.a{color:red}</style><body>a</body>`;
   const linter = new Linter();
@@ -169,7 +218,7 @@ tap.test(`10 - one style, never`, (t) => {
       "css-trailing-semi": [2, "never"],
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "10.01");
+  t.equal(applyFixes(str, messages), fixed, "11.01");
   t.match(
     messages,
     [
@@ -184,12 +233,12 @@ tap.test(`10 - one style, never`, (t) => {
         },
       },
     ],
-    "10.02"
+    "11.02"
   );
   t.end();
 });
 
-tap.test(`11 - two styles, never`, (t) => {
+tap.test(`12 - two styles, never`, (t) => {
   const str = `<style>.a{text-align:left;color:red;}</style><body>a</body>`;
   const fixed = `<style>.a{text-align:left;color:red}</style><body>a</body>`;
   const linter = new Linter();
@@ -198,11 +247,11 @@ tap.test(`11 - two styles, never`, (t) => {
       "css-trailing-semi": [2, "never"],
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "11");
+  t.equal(applyFixes(str, messages), fixed, "12");
   t.end();
 });
 
-tap.test(`12 - two styles, never, trailing whitespace`, (t) => {
+tap.test(`13 - two styles, never, trailing whitespace`, (t) => {
   const str = `<style>.a{text-align:left;color:red; }</style><body>a</body>`;
   const fixed = `<style>.a{text-align:left;color:red }</style><body>a</body>`;
   const linter = new Linter();
@@ -211,6 +260,6 @@ tap.test(`12 - two styles, never, trailing whitespace`, (t) => {
       "css-trailing-semi": [2, "never"],
     },
   });
-  t.equal(applyFixes(str, messages), fixed, "12");
+  t.equal(applyFixes(str, messages), fixed, "13");
   t.end();
 });
