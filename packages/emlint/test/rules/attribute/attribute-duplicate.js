@@ -69,10 +69,26 @@ tap.test(
   }
 );
 
+tap.test(
+  `05 - ${`\u001b[${34}m${`false positives`}\u001b[${39}m`} - duplicate undefined`,
+  (t) => {
+    const str = `<td{% if foo %} style="color:red;"{% endif %} align="left"></td>`;
+    const linter = new Linter();
+    const messages = linter.verify(str, {
+      rules: {
+        "attribute-duplicate": 2,
+      },
+    });
+    t.equal(applyFixes(str, messages), str, "05.01");
+    t.strictSame(messages, [], "05.02");
+    t.end();
+  }
+);
+
 // 01. checks
 // -----------------------------------------------------------------------------
 
-tap.test(`05 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - off`, (t) => {
+tap.test(`06 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - off`, (t) => {
   const str = `<a class="bb" id="cc" class="dd">`;
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -80,13 +96,13 @@ tap.test(`05 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - off`, (t) => {
       "attribute-duplicate": 0,
     },
   });
-  t.equal(applyFixes(str, messages), str, "05.01");
-  t.strictSame(messages, [], "05.02");
+  t.equal(applyFixes(str, messages), str, "06.01");
+  t.strictSame(messages, [], "06.02");
   t.end();
 });
 
 tap.test(
-  `06 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - class merged`,
+  `07 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - class merged`,
   (t) => {
     const str = `<a class="bb" id="bb" class="dd">`;
     const fixed = `<a class="bb dd" id="bb">`;
@@ -97,7 +113,7 @@ tap.test(
       },
     });
     // can fix, classes will be merged:
-    t.equal(applyFixes(str, messages), fixed, "06.01");
+    t.equal(applyFixes(str, messages), fixed, "07.01");
     t.match(
       messages,
       [
@@ -108,13 +124,13 @@ tap.test(
           message: `Duplicate attribute "class".`,
         },
       ],
-      "06.02"
+      "07.02"
     );
     t.end();
   }
 );
 
-tap.test(`07 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - id merged`, (t) => {
+tap.test(`08 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - id merged`, (t) => {
   const str = `<a class="cc" id="ee" id="dd" style="id" id="ff">`;
   const fixed = `<a class="cc" id="dd ee ff" style="id">`;
   const linter = new Linter();
@@ -124,7 +140,7 @@ tap.test(`07 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - id merged`, (t) => {
     },
   });
   // can fix, classes will be merged:
-  t.equal(applyFixes(str, messages), fixed, "07.01");
+  t.equal(applyFixes(str, messages), fixed, "08.01");
   t.match(
     messages,
     [
@@ -135,12 +151,12 @@ tap.test(`07 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - id merged`, (t) => {
         message: `Duplicate attribute "id".`,
       },
     ],
-    "07.02"
+    "08.02"
   );
   t.end();
 });
 
-tap.test(`08 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - on`, (t) => {
+tap.test(`09 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - on`, (t) => {
   const str = `<a href="bb" href="bb" href="dd">`;
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -149,7 +165,7 @@ tap.test(`08 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - on`, (t) => {
     },
   });
   // can't fix "href":
-  t.equal(applyFixes(str, messages), str, "08.01");
+  t.equal(applyFixes(str, messages), str, "09.01");
   t.match(
     messages,
     [
@@ -168,13 +184,13 @@ tap.test(`08 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - on`, (t) => {
         fix: null,
       },
     ],
-    "08.02"
+    "09.02"
   );
   t.end();
 });
 
 tap.test(
-  `09 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - unrecognised attr duplicated, rule disabled`,
+  `10 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - unrecognised attr duplicated, rule disabled`,
   (t) => {
     const str = `<td yo="z" yo="tralalaa"><a mo="z" mo="haha">z</a>`;
     const linter = new Linter();
@@ -183,7 +199,7 @@ tap.test(
         "attribute-duplicate": 2,
       },
     });
-    t.equal(applyFixes(str, messages), str, "09.01");
+    t.equal(applyFixes(str, messages), str, "10.01");
     t.match(
       messages,
       [
@@ -202,7 +218,7 @@ tap.test(
           fix: null,
         },
       ],
-      "09.02"
+      "10.02"
     );
     t.end();
   }
@@ -211,23 +227,9 @@ tap.test(
 // 02. merging values
 // -----------------------------------------------------------------------------
 
-tap.test(`10 - on`, (t) => {
+tap.test(`11 - on`, (t) => {
   const str = `<a class="" class=" ll  \t nn " class="" class=" mm  kk  " id="" class="oo" id="uu" class="">`;
   const fixed = `<a class="kk ll mm nn oo" id="uu">`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
-    rules: {
-      "attribute-duplicate": 2,
-    },
-  });
-  // will fix:
-  t.equal(applyFixes(str, messages), fixed, "10");
-  t.end();
-});
-
-tap.test(`11 - first one is dodgy`, (t) => {
-  const str = `<a class= class=" aa " class="" class=" bb  " class="cc"  class="">`;
-  const fixed = `<a class="aa bb cc">`;
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
@@ -239,9 +241,9 @@ tap.test(`11 - first one is dodgy`, (t) => {
   t.end();
 });
 
-tap.test(`12 - merging empty`, (t) => {
-  const str = `<a class= class="  " class="" class=" \t\t  " class=" "  class="">`;
-  const fixed = `<a>`;
+tap.test(`12 - first one is dodgy`, (t) => {
+  const str = `<a class= class=" aa " class="" class=" bb  " class="cc"  class="">`;
+  const fixed = `<a class="aa bb cc">`;
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
@@ -253,8 +255,8 @@ tap.test(`12 - merging empty`, (t) => {
   t.end();
 });
 
-tap.test(`13 - merging dodgy, no closing slash`, (t) => {
-  const str = `<a class= class= class="" class= class""  >`;
+tap.test(`13 - merging empty`, (t) => {
+  const str = `<a class= class="  " class="" class=" \t\t  " class=" "  class="">`;
   const fixed = `<a>`;
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -267,9 +269,9 @@ tap.test(`13 - merging dodgy, no closing slash`, (t) => {
   t.end();
 });
 
-tap.test(`14 - merging dodgy, with closing slash`, (t) => {
-  const str = `<br class= class= class="" class= class""  />`;
-  const fixed = `<br/>`;
+tap.test(`14 - merging dodgy, no closing slash`, (t) => {
+  const str = `<a class= class= class="" class= class""  >`;
+  const fixed = `<a>`;
   const linter = new Linter();
   const messages = linter.verify(str, {
     rules: {
@@ -281,7 +283,21 @@ tap.test(`14 - merging dodgy, with closing slash`, (t) => {
   t.end();
 });
 
-tap.test(`15 - dodgy values with quotes`, (t) => {
+tap.test(`15 - merging dodgy, with closing slash`, (t) => {
+  const str = `<br class= class= class="" class= class""  />`;
+  const fixed = `<br/>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "attribute-duplicate": 2,
+    },
+  });
+  // will fix:
+  t.equal(applyFixes(str, messages), fixed, "15");
+  t.end();
+});
+
+tap.test(`16 - dodgy values with quotes`, (t) => {
   const str = `<img class="someone's" class='jar of "cookies"'  >`;
   const linter = new Linter();
   const messages = linter.verify(str, {
@@ -290,8 +306,8 @@ tap.test(`15 - dodgy values with quotes`, (t) => {
     },
   });
   // there were some errors raised:
-  t.ok(messages.length, "15.01");
+  t.ok(messages.length, "16.01");
   // but won't fix:
-  t.equal(applyFixes(str, messages), str, "15.02");
+  t.equal(applyFixes(str, messages), str, "16.02");
   t.end();
 });

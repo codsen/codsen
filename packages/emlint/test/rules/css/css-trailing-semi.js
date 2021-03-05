@@ -263,3 +263,33 @@ tap.test(`13 - two styles, never, trailing whitespace`, (t) => {
   t.equal(applyFixes(str, messages), fixed, "13");
   t.end();
 });
+
+// ESP tags
+//
+// -----------------------------------------------------------------------------
+
+tap.test(`14 - wrapped with Nunjucks IF`, (t) => {
+  const str = `<td{% if foo %} style="color:red"{% endif %}>`;
+  const fixed = `<td{% if foo %} style="color:red;"{% endif %}>`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "css-trailing-semi": [2, "always"],
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "14");
+  t.end();
+});
+
+tap.test(`15`, (t) => {
+  const str = `<td{% if foo %} style="color:red"{% endif %} align="left">`;
+  const fixed = `<td{% if foo %} style="color:red;"{% endif %} align="left">`;
+  const linter = new Linter();
+  const messages = linter.verify(str, {
+    rules: {
+      "css-trailing-semi": [2, "always"],
+    },
+  });
+  t.equal(applyFixes(str, messages), fixed, "15");
+  t.end();
+});

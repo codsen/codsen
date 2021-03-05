@@ -22135,6 +22135,10 @@ var attributeDuplicate = function attributeDuplicate(context) {
 
         for (var i = 0, len = node.attribs.length; i < len; i++) {
 
+          if (node.attribs[i].attribName === undefined) {
+            continue;
+          }
+
           if (!attrsGatheredSoFar.has(node.attribs[i].attribName)) {
             attrsGatheredSoFar.add(node.attribs[i].attribName);
           } else if (!attributesWhichCanBeMerged.has(node.attribs[i].attribName) || Array.isArray(node.attribs[i].attribValue) && node.attribs[i].attribValue.length && node.attribs[i].attribValue.some(function (obj) {
@@ -22239,7 +22243,7 @@ function attributeMalformed(context) {
     attribute: function attribute(node) { // if Levenshtein distance is 1 and it's not among known attribute names,
       // it's definitely mis-typed
 
-      if (!node.attribNameRecognised && !node.attribName.startsWith("xmlns:") && !blacklist.includes(node.parent.tagName)) {
+      if (!node.attribNameRecognised && node.attribName && !node.attribName.startsWith("xmlns:") && !blacklist.includes(node.parent.tagName)) {
         var somethingMatched = false;
 
         for (var _iterator = _createForOfIteratorHelperLoose(allHtmlAttribs.values()), _step; !(_step = _iterator()).done;) {
@@ -22306,7 +22310,7 @@ function attributeMalformed(context) {
 
 
       if ( // value starts with a quote
-      (node.attribValueRaw.startsWith("\"") || node.attribValueRaw.startsWith("'")) && node.attribValueStartsAt && node.attribOpeningQuoteAt && context.str[node.attribValueStartsAt] === context.str[node.attribOpeningQuoteAt]) {
+      node.attribValueRaw && (node.attribValueRaw.startsWith("\"") || node.attribValueRaw.startsWith("'")) && node.attribValueStartsAt && node.attribOpeningQuoteAt && context.str[node.attribValueStartsAt] === context.str[node.attribOpeningQuoteAt]) {
         var _message = "Delete repeated opening quotes.";
         context.report({
           ruleId: "attribute-malformed",
@@ -22321,8 +22325,8 @@ function attributeMalformed(context) {
       } // repeated closing quotes
 
 
-      if ( // value ends with a quote
-      (node.attribValueRaw.endsWith("\"") || node.attribValueRaw.endsWith("'")) && node.attribValueEndsAt && node.attribClosingQuoteAt && context.str[node.attribValueEndsAt] === context.str[node.attribClosingQuoteAt]) {
+      if (node.attribValueRaw && ( // value ends with a quote
+      node.attribValueRaw.endsWith("\"") || node.attribValueRaw.endsWith("'")) && node.attribValueEndsAt && node.attribClosingQuoteAt && context.str[node.attribValueEndsAt] === context.str[node.attribClosingQuoteAt]) {
         var _message2 = "Delete repeated closing quotes.";
         context.report({
           ruleId: "attribute-malformed",
