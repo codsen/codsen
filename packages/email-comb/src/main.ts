@@ -272,13 +272,13 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
   // insurance
   if (typeof str !== "string") {
     throw new TypeError(
-      `email-remove-unused-css: [THROW_ID_01] Input must be string! Currently it's ${typeof str}`
+      `email-comb: [THROW_ID_01] Input must be string! Currently it's ${typeof str}`
     );
   }
 
   if (originalOpts && !isObj(originalOpts)) {
     throw new TypeError(
-      `email-remove-unused-css: [THROW_ID_02] Options, second input argument, must be a plain object! Currently it's ${typeof originalOpts}, equal to: ${JSON.stringify(
+      `email-comb: [THROW_ID_02] Options, second input argument, must be a plain object! Currently it's ${typeof originalOpts}, equal to: ${JSON.stringify(
         originalOpts,
         null,
         4
@@ -297,7 +297,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
     opts.whitelist = [opts.whitelist];
   } else if (!Array.isArray(opts.whitelist)) {
     throw new TypeError(
-      `email-remove-unused-css: [THROW_ID_03] opts.whitelist should be an array, but it was customised to a wrong thing, ${JSON.stringify(
+      `email-comb: [THROW_ID_03] opts.whitelist should be an array, but it was customised to a wrong thing, ${JSON.stringify(
         opts.whitelist,
         null,
         4
@@ -309,7 +309,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
     !opts.whitelist.every((el) => typeof el === "string")
   ) {
     throw new TypeError(
-      `email-remove-unused-css: [THROW_ID_04] opts.whitelist array should contain only string-type elements. Currently we\ve got:\n${JSON.stringify(
+      `email-comb: [THROW_ID_04] opts.whitelist array should contain only string-type elements. Currently we\ve got:\n${JSON.stringify(
         opts.whitelist,
         null,
         4
@@ -318,7 +318,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
   }
   if (!Array.isArray(opts.backend)) {
     throw new TypeError(
-      `email-remove-unused-css: [THROW_ID_05] opts.backend should be an array, but it was customised to a wrong thing, ${JSON.stringify(
+      `email-comb: [THROW_ID_05] opts.backend should be an array, but it was customised to a wrong thing, ${JSON.stringify(
         opts.backend,
         null,
         4
@@ -327,7 +327,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
   }
   if (opts.backend.length > 0 && opts.backend.some((val) => !isObj(val))) {
     throw new TypeError(
-      `email-remove-unused-css: [THROW_ID_06] opts.backend array should contain only plain objects but it contains something else:\n${JSON.stringify(
+      `email-comb: [THROW_ID_06] opts.backend array should contain only plain objects but it contains something else:\n${JSON.stringify(
         opts.backend,
         null,
         4
@@ -341,7 +341,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
     )
   ) {
     throw new TypeError(
-      `email-remove-unused-css: [THROW_ID_07] every object within opts.backend should contain keys "heads" and "tails" but currently it's not the case. Whole "opts.backend" value array is currently equal to:\n${JSON.stringify(
+      `email-comb: [THROW_ID_07] every object within opts.backend should contain keys "heads" and "tails" but currently it's not the case. Whole "opts.backend" value array is currently equal to:\n${JSON.stringify(
         opts.backend,
         null,
         4
@@ -353,7 +353,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
       opts.uglify = !!opts.uglify; // turn it into a Boolean
     } else {
       throw new TypeError(
-        `email-remove-unused-css: [THROW_ID_08] opts.uglify should be a Boolean. Currently it's set to: ${JSON.stringify(
+        `email-comb: [THROW_ID_08] opts.uglify should be a Boolean. Currently it's set to: ${JSON.stringify(
           opts.uglify,
           null,
           4
@@ -366,7 +366,7 @@ function comb(str: string, originalOpts?: Partial<Opts>): Res {
     typeof opts.reportProgressFunc !== "function"
   ) {
     throw new TypeError(
-      `email-remove-unused-css: [THROW_ID_09] opts.reportProgressFunc should be a function but it was given as :\n${JSON.stringify(
+      `email-comb: [THROW_ID_09] opts.reportProgressFunc should be a function but it was given as :\n${JSON.stringify(
         opts.reportProgressFunc,
         null,
         4

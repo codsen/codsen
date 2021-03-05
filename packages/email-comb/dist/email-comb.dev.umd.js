@@ -128,15 +128,15 @@ function arrayiffy(something) {
 
 /* eslint no-plusplus:0 */
 
-function isObj$1(something) {
+function isObj(something) {
   return something && typeof something === "object" && !Array.isArray(something);
 }
 
-function isStr$2(something) {
+function isStr(something) {
   return typeof something === "string";
 }
 
-var defaults$6 = {
+var defaults = {
   cb: undefined,
   i: false,
   trimBeforeMatching: false,
@@ -167,7 +167,7 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
     return whatToMatchValVal;
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$6), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
   if (position >= str.length && !special) {
     return false;
@@ -427,11 +427,11 @@ function march(str, position, whatToMatchVal, originalOpts, special, getNextIdx)
 
 function main(mode, str, position, originalWhatToMatch, originalOpts) {
   // insurance
-  if (isObj$1(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
+  if (isObj(originalOpts) && Object.prototype.hasOwnProperty.call(originalOpts, "trimBeforeMatching") && typeof originalOpts.trimBeforeMatching !== "boolean") {
     throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_09] opts.trimBeforeMatching should be boolean!" + (Array.isArray(originalOpts.trimBeforeMatching) ? " Did you mean to use opts.trimCharsBeforeMatching?" : ""));
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$6), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts);
 
   if (typeof opts.trimCharsBeforeMatching === "string") {
     // arrayiffy if needed:
@@ -440,10 +440,10 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
 
 
   opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(function (el) {
-    return isStr$2(el) ? el : String(el);
+    return isStr(el) ? el : String(el);
   });
 
-  if (!isStr$2(str)) {
+  if (!isStr(str)) {
     return false;
   }
 
@@ -458,7 +458,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   var whatToMatch;
   var special;
 
-  if (isStr$2(originalWhatToMatch)) {
+  if (isStr(originalWhatToMatch)) {
     whatToMatch = [originalWhatToMatch];
   } else if (Array.isArray(originalWhatToMatch)) {
     whatToMatch = originalWhatToMatch;
@@ -471,7 +471,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's " + typeof originalWhatToMatch + ", equal to:\n" + JSON.stringify(originalWhatToMatch, null, 4));
   }
 
-  if (originalOpts && !isObj$1(originalOpts)) {
+  if (originalOpts && !isObj(originalOpts)) {
     throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type \"" + typeof originalOpts + "\", and equal to:\n" + JSON.stringify(originalOpts, null, 4));
   }
 
@@ -495,7 +495,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
 
   if (!whatToMatch || !Array.isArray(whatToMatch) || // 0
   Array.isArray(whatToMatch) && !whatToMatch.length || // []
-  Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr$2(whatToMatch[0]) && !whatToMatch[0].trim() // [""]
+  Array.isArray(whatToMatch) && whatToMatch.length === 1 && isStr(whatToMatch[0]) && !whatToMatch[0].trim() // [""]
   ) {
       if (typeof opts.cb === "function") {
         var firstCharOutsideIndex; // matchLeft() or matchRightIncl() methods start at index "position"
@@ -654,13 +654,13 @@ function emptyCondCommentRegex() {
 /** Used for built-in method references. */
 
 
-var funcProto$2 = Function.prototype;
+var funcProto = Function.prototype;
 /** Used to resolve the decompiled source of functions. */
 
-var funcToString$2 = funcProto$2.toString;
+var funcToString = funcProto.toString;
 /** Used to infer the `Object` constructor. */
 
-funcToString$2.call(Object);
+funcToString.call(Object);
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -2910,7 +2910,7 @@ function pull(originalInput, originalToBeRemoved, originalOpts) {
   return res;
 }
 
-var version$1 = "5.0.6";
+var version = "5.0.6";
 
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -2922,32 +2922,32 @@ var version$1 = "5.0.6";
  */
 /** Used to stand-in for `undefined` hash values. */
 
-var HASH_UNDEFINED$1 = '__lodash_hash_undefined__';
+var HASH_UNDEFINED = '__lodash_hash_undefined__';
 /** Used as references for various `Number` constants. */
 
 var MAX_SAFE_INTEGER = 9007199254740991;
 /** `Object#toString` result references. */
 
-var funcTag$1 = '[object Function]',
-    genTag$1 = '[object GeneratorFunction]';
+var funcTag = '[object Function]',
+    genTag = '[object GeneratorFunction]';
 /**
  * Used to match `RegExp`
  * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
  */
 
-var reRegExpChar$1 = /[\\^$.*+?()[\]{}|]/g;
+var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
 /** Used to detect host constructors (Safari). */
 
-var reIsHostCtor$1 = /^\[object .+?Constructor\]$/;
+var reIsHostCtor = /^\[object .+?Constructor\]$/;
 /** Detect free variable `global` from Node.js. */
 
-var freeGlobal$1 = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
 /** Detect free variable `self`. */
 
-var freeSelf$1 = typeof self == 'object' && self && self.Object === Object && self;
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
 /** Used as a reference to the global object. */
 
-var root$1 = freeGlobal$1 || freeSelf$1 || Function('return this')();
+var root = freeGlobal || freeSelf || Function('return this')();
 /**
  * A faster alternative to `Function#apply`, this function invokes `func`
  * with the `this` binding of `thisArg` and the arguments of `args`.
@@ -2987,9 +2987,9 @@ function apply(func, thisArg, args) {
  */
 
 
-function arrayIncludes$1(array, value) {
+function arrayIncludes(array, value) {
   var length = array ? array.length : 0;
-  return !!length && baseIndexOf$2(array, value, 0) > -1;
+  return !!length && baseIndexOf(array, value, 0) > -1;
 }
 /**
  * This function is like `arrayIncludes` except that it accepts a comparator.
@@ -3002,7 +3002,7 @@ function arrayIncludes$1(array, value) {
  */
 
 
-function arrayIncludesWith$1(array, value, comparator) {
+function arrayIncludesWith(array, value, comparator) {
   var index = -1,
       length = array ? array.length : 0;
 
@@ -3025,7 +3025,7 @@ function arrayIncludesWith$1(array, value, comparator) {
  */
 
 
-function arrayMap$1(array, iteratee) {
+function arrayMap(array, iteratee) {
   var index = -1,
       length = array ? array.length : 0,
       result = Array(length);
@@ -3049,7 +3049,7 @@ function arrayMap$1(array, iteratee) {
  */
 
 
-function baseFindIndex$2(array, predicate, fromIndex, fromRight) {
+function baseFindIndex(array, predicate, fromIndex, fromRight) {
   var length = array.length,
       index = fromIndex + (fromRight ? 1 : -1);
 
@@ -3072,9 +3072,9 @@ function baseFindIndex$2(array, predicate, fromIndex, fromRight) {
  */
 
 
-function baseIndexOf$2(array, value, fromIndex) {
+function baseIndexOf(array, value, fromIndex) {
   if (value !== value) {
-    return baseFindIndex$2(array, baseIsNaN$2, fromIndex);
+    return baseFindIndex(array, baseIsNaN, fromIndex);
   }
 
   var index = fromIndex - 1,
@@ -3097,7 +3097,7 @@ function baseIndexOf$2(array, value, fromIndex) {
  */
 
 
-function baseIsNaN$2(value) {
+function baseIsNaN(value) {
   return value !== value;
 }
 /**
@@ -3109,7 +3109,7 @@ function baseIsNaN$2(value) {
  */
 
 
-function baseUnary$1(func) {
+function baseUnary(func) {
   return function (value) {
     return func(value);
   };
@@ -3124,7 +3124,7 @@ function baseUnary$1(func) {
  */
 
 
-function cacheHas$1(cache, key) {
+function cacheHas(cache, key) {
   return cache.has(key);
 }
 /**
@@ -3137,7 +3137,7 @@ function cacheHas$1(cache, key) {
  */
 
 
-function getValue$1(object, key) {
+function getValue(object, key) {
   return object == null ? undefined : object[key];
 }
 /**
@@ -3149,7 +3149,7 @@ function getValue$1(object, key) {
  */
 
 
-function isHostObject$1(value) {
+function isHostObject(value) {
   // Many host objects are `Object` objects that can coerce to strings
   // despite having improperly defined `toString` methods.
   var result = false;
@@ -3165,16 +3165,16 @@ function isHostObject$1(value) {
 /** Used for built-in method references. */
 
 
-var arrayProto$2 = Array.prototype,
+var arrayProto = Array.prototype,
     funcProto$1 = Function.prototype,
-    objectProto$1 = Object.prototype;
+    objectProto = Object.prototype;
 /** Used to detect overreaching core-js shims. */
 
-var coreJsData$1 = root$1['__core-js_shared__'];
+var coreJsData = root['__core-js_shared__'];
 /** Used to detect methods masquerading as native. */
 
-var maskSrcKey$1 = function () {
-  var uid = /[^.]+$/.exec(coreJsData$1 && coreJsData$1.keys && coreJsData$1.keys.IE_PROTO || '');
+var maskSrcKey = function () {
+  var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
   return uid ? 'Symbol(src)_1.' + uid : '';
 }();
 /** Used to resolve the decompiled source of functions. */
@@ -3183,28 +3183,28 @@ var maskSrcKey$1 = function () {
 var funcToString$1 = funcProto$1.toString;
 /** Used to check objects for own properties. */
 
-var hasOwnProperty$1 = objectProto$1.hasOwnProperty;
+var hasOwnProperty = objectProto.hasOwnProperty;
 /**
  * Used to resolve the
  * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
  * of values.
  */
 
-var objectToString$1 = objectProto$1.toString;
+var objectToString = objectProto.toString;
 /** Used to detect if a method is native. */
 
-var reIsNative$1 = RegExp('^' + funcToString$1.call(hasOwnProperty$1).replace(reRegExpChar$1, '\\$&').replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
+var reIsNative = RegExp('^' + funcToString$1.call(hasOwnProperty).replace(reRegExpChar, '\\$&').replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
 /** Built-in value references. */
 
-var splice$2 = arrayProto$2.splice;
+var splice = arrayProto.splice;
 /* Built-in method references for those with the same name as other `lodash` methods. */
 
 var nativeMax = Math.max,
     nativeMin = Math.min;
 /* Built-in method references that are verified to be native. */
 
-var Map$2 = getNative$1(root$1, 'Map'),
-    nativeCreate$1 = getNative$1(Object, 'create');
+var Map$1 = getNative(root, 'Map'),
+    nativeCreate = getNative(Object, 'create');
 /**
  * Creates a hash object.
  *
@@ -3213,7 +3213,7 @@ var Map$2 = getNative$1(root$1, 'Map'),
  * @param {Array} [entries] The key-value pairs to cache.
  */
 
-function Hash$1(entries) {
+function Hash(entries) {
   var index = -1,
       length = entries ? entries.length : 0;
   this.clear();
@@ -3232,8 +3232,8 @@ function Hash$1(entries) {
  */
 
 
-function hashClear$1() {
-  this.__data__ = nativeCreate$1 ? nativeCreate$1(null) : {};
+function hashClear() {
+  this.__data__ = nativeCreate ? nativeCreate(null) : {};
 }
 /**
  * Removes `key` and its value from the hash.
@@ -3247,7 +3247,7 @@ function hashClear$1() {
  */
 
 
-function hashDelete$1(key) {
+function hashDelete(key) {
   return this.has(key) && delete this.__data__[key];
 }
 /**
@@ -3261,15 +3261,15 @@ function hashDelete$1(key) {
  */
 
 
-function hashGet$1(key) {
+function hashGet(key) {
   var data = this.__data__;
 
-  if (nativeCreate$1) {
+  if (nativeCreate) {
     var result = data[key];
-    return result === HASH_UNDEFINED$1 ? undefined : result;
+    return result === HASH_UNDEFINED ? undefined : result;
   }
 
-  return hasOwnProperty$1.call(data, key) ? data[key] : undefined;
+  return hasOwnProperty.call(data, key) ? data[key] : undefined;
 }
 /**
  * Checks if a hash value for `key` exists.
@@ -3282,9 +3282,9 @@ function hashGet$1(key) {
  */
 
 
-function hashHas$1(key) {
+function hashHas(key) {
   var data = this.__data__;
-  return nativeCreate$1 ? data[key] !== undefined : hasOwnProperty$1.call(data, key);
+  return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);
 }
 /**
  * Sets the hash `key` to `value`.
@@ -3298,18 +3298,18 @@ function hashHas$1(key) {
  */
 
 
-function hashSet$1(key, value) {
+function hashSet(key, value) {
   var data = this.__data__;
-  data[key] = nativeCreate$1 && value === undefined ? HASH_UNDEFINED$1 : value;
+  data[key] = nativeCreate && value === undefined ? HASH_UNDEFINED : value;
   return this;
 } // Add methods to `Hash`.
 
 
-Hash$1.prototype.clear = hashClear$1;
-Hash$1.prototype['delete'] = hashDelete$1;
-Hash$1.prototype.get = hashGet$1;
-Hash$1.prototype.has = hashHas$1;
-Hash$1.prototype.set = hashSet$1;
+Hash.prototype.clear = hashClear;
+Hash.prototype['delete'] = hashDelete;
+Hash.prototype.get = hashGet;
+Hash.prototype.has = hashHas;
+Hash.prototype.set = hashSet;
 /**
  * Creates an list cache object.
  *
@@ -3318,7 +3318,7 @@ Hash$1.prototype.set = hashSet$1;
  * @param {Array} [entries] The key-value pairs to cache.
  */
 
-function ListCache$1(entries) {
+function ListCache(entries) {
   var index = -1,
       length = entries ? entries.length : 0;
   this.clear();
@@ -3337,7 +3337,7 @@ function ListCache$1(entries) {
  */
 
 
-function listCacheClear$1() {
+function listCacheClear() {
   this.__data__ = [];
 }
 /**
@@ -3351,9 +3351,9 @@ function listCacheClear$1() {
  */
 
 
-function listCacheDelete$1(key) {
+function listCacheDelete(key) {
   var data = this.__data__,
-      index = assocIndexOf$1(data, key);
+      index = assocIndexOf(data, key);
 
   if (index < 0) {
     return false;
@@ -3364,7 +3364,7 @@ function listCacheDelete$1(key) {
   if (index == lastIndex) {
     data.pop();
   } else {
-    splice$2.call(data, index, 1);
+    splice.call(data, index, 1);
   }
 
   return true;
@@ -3380,9 +3380,9 @@ function listCacheDelete$1(key) {
  */
 
 
-function listCacheGet$1(key) {
+function listCacheGet(key) {
   var data = this.__data__,
-      index = assocIndexOf$1(data, key);
+      index = assocIndexOf(data, key);
   return index < 0 ? undefined : data[index][1];
 }
 /**
@@ -3396,8 +3396,8 @@ function listCacheGet$1(key) {
  */
 
 
-function listCacheHas$1(key) {
-  return assocIndexOf$1(this.__data__, key) > -1;
+function listCacheHas(key) {
+  return assocIndexOf(this.__data__, key) > -1;
 }
 /**
  * Sets the list cache `key` to `value`.
@@ -3411,9 +3411,9 @@ function listCacheHas$1(key) {
  */
 
 
-function listCacheSet$1(key, value) {
+function listCacheSet(key, value) {
   var data = this.__data__,
-      index = assocIndexOf$1(data, key);
+      index = assocIndexOf(data, key);
 
   if (index < 0) {
     data.push([key, value]);
@@ -3425,11 +3425,11 @@ function listCacheSet$1(key, value) {
 } // Add methods to `ListCache`.
 
 
-ListCache$1.prototype.clear = listCacheClear$1;
-ListCache$1.prototype['delete'] = listCacheDelete$1;
-ListCache$1.prototype.get = listCacheGet$1;
-ListCache$1.prototype.has = listCacheHas$1;
-ListCache$1.prototype.set = listCacheSet$1;
+ListCache.prototype.clear = listCacheClear;
+ListCache.prototype['delete'] = listCacheDelete;
+ListCache.prototype.get = listCacheGet;
+ListCache.prototype.has = listCacheHas;
+ListCache.prototype.set = listCacheSet;
 /**
  * Creates a map cache object to store key-value pairs.
  *
@@ -3438,7 +3438,7 @@ ListCache$1.prototype.set = listCacheSet$1;
  * @param {Array} [entries] The key-value pairs to cache.
  */
 
-function MapCache$1(entries) {
+function MapCache(entries) {
   var index = -1,
       length = entries ? entries.length : 0;
   this.clear();
@@ -3457,11 +3457,11 @@ function MapCache$1(entries) {
  */
 
 
-function mapCacheClear$1() {
+function mapCacheClear() {
   this.__data__ = {
-    'hash': new Hash$1(),
-    'map': new (Map$2 || ListCache$1)(),
-    'string': new Hash$1()
+    'hash': new Hash(),
+    'map': new (Map$1 || ListCache)(),
+    'string': new Hash()
   };
 }
 /**
@@ -3475,8 +3475,8 @@ function mapCacheClear$1() {
  */
 
 
-function mapCacheDelete$1(key) {
-  return getMapData$1(this, key)['delete'](key);
+function mapCacheDelete(key) {
+  return getMapData(this, key)['delete'](key);
 }
 /**
  * Gets the map value for `key`.
@@ -3489,8 +3489,8 @@ function mapCacheDelete$1(key) {
  */
 
 
-function mapCacheGet$1(key) {
-  return getMapData$1(this, key).get(key);
+function mapCacheGet(key) {
+  return getMapData(this, key).get(key);
 }
 /**
  * Checks if a map value for `key` exists.
@@ -3503,8 +3503,8 @@ function mapCacheGet$1(key) {
  */
 
 
-function mapCacheHas$1(key) {
-  return getMapData$1(this, key).has(key);
+function mapCacheHas(key) {
+  return getMapData(this, key).has(key);
 }
 /**
  * Sets the map `key` to `value`.
@@ -3518,17 +3518,17 @@ function mapCacheHas$1(key) {
  */
 
 
-function mapCacheSet$1(key, value) {
-  getMapData$1(this, key).set(key, value);
+function mapCacheSet(key, value) {
+  getMapData(this, key).set(key, value);
   return this;
 } // Add methods to `MapCache`.
 
 
-MapCache$1.prototype.clear = mapCacheClear$1;
-MapCache$1.prototype['delete'] = mapCacheDelete$1;
-MapCache$1.prototype.get = mapCacheGet$1;
-MapCache$1.prototype.has = mapCacheHas$1;
-MapCache$1.prototype.set = mapCacheSet$1;
+MapCache.prototype.clear = mapCacheClear;
+MapCache.prototype['delete'] = mapCacheDelete;
+MapCache.prototype.get = mapCacheGet;
+MapCache.prototype.has = mapCacheHas;
+MapCache.prototype.set = mapCacheSet;
 /**
  *
  * Creates an array cache object to store unique values.
@@ -3538,10 +3538,10 @@ MapCache$1.prototype.set = mapCacheSet$1;
  * @param {Array} [values] The values to cache.
  */
 
-function SetCache$1(values) {
+function SetCache(values) {
   var index = -1,
       length = values ? values.length : 0;
-  this.__data__ = new MapCache$1();
+  this.__data__ = new MapCache();
 
   while (++index < length) {
     this.add(values[index]);
@@ -3559,8 +3559,8 @@ function SetCache$1(values) {
  */
 
 
-function setCacheAdd$1(value) {
-  this.__data__.set(value, HASH_UNDEFINED$1);
+function setCacheAdd(value) {
+  this.__data__.set(value, HASH_UNDEFINED);
 
   return this;
 }
@@ -3575,13 +3575,13 @@ function setCacheAdd$1(value) {
  */
 
 
-function setCacheHas$1(value) {
+function setCacheHas(value) {
   return this.__data__.has(value);
 } // Add methods to `SetCache`.
 
 
-SetCache$1.prototype.add = SetCache$1.prototype.push = setCacheAdd$1;
-SetCache$1.prototype.has = setCacheHas$1;
+SetCache.prototype.add = SetCache.prototype.push = setCacheAdd;
+SetCache.prototype.has = setCacheHas;
 /**
  * Gets the index at which the `key` is found in `array` of key-value pairs.
  *
@@ -3591,11 +3591,11 @@ SetCache$1.prototype.has = setCacheHas$1;
  * @returns {number} Returns the index of the matched value, else `-1`.
  */
 
-function assocIndexOf$1(array, key) {
+function assocIndexOf(array, key) {
   var length = array.length;
 
   while (length--) {
-    if (eq$1(array[length][0], key)) {
+    if (eq(array[length][0], key)) {
       return length;
     }
   }
@@ -3615,7 +3615,7 @@ function assocIndexOf$1(array, key) {
 
 
 function baseIntersection(arrays, iteratee, comparator) {
-  var includes = comparator ? arrayIncludesWith$1 : arrayIncludes$1,
+  var includes = comparator ? arrayIncludesWith : arrayIncludes,
       length = arrays[0].length,
       othLength = arrays.length,
       othIndex = othLength,
@@ -3627,11 +3627,11 @@ function baseIntersection(arrays, iteratee, comparator) {
     var array = arrays[othIndex];
 
     if (othIndex && iteratee) {
-      array = arrayMap$1(array, baseUnary$1(iteratee));
+      array = arrayMap(array, baseUnary(iteratee));
     }
 
     maxLength = nativeMin(array.length, maxLength);
-    caches[othIndex] = !comparator && (iteratee || length >= 120 && array.length >= 120) ? new SetCache$1(othIndex && array) : undefined;
+    caches[othIndex] = !comparator && (iteratee || length >= 120 && array.length >= 120) ? new SetCache(othIndex && array) : undefined;
   }
 
   array = arrays[0];
@@ -3643,13 +3643,13 @@ function baseIntersection(arrays, iteratee, comparator) {
         computed = iteratee ? iteratee(value) : value;
     value = comparator || value !== 0 ? value : 0;
 
-    if (!(seen ? cacheHas$1(seen, computed) : includes(result, computed, comparator))) {
+    if (!(seen ? cacheHas(seen, computed) : includes(result, computed, comparator))) {
       othIndex = othLength;
 
       while (--othIndex) {
         var cache = caches[othIndex];
 
-        if (!(cache ? cacheHas$1(cache, computed) : includes(arrays[othIndex], computed, comparator))) {
+        if (!(cache ? cacheHas(cache, computed) : includes(arrays[othIndex], computed, comparator))) {
           continue outer;
         }
       }
@@ -3674,13 +3674,13 @@ function baseIntersection(arrays, iteratee, comparator) {
  */
 
 
-function baseIsNative$1(value) {
-  if (!isObject$1(value) || isMasked$1(value)) {
+function baseIsNative(value) {
+  if (!isObject(value) || isMasked(value)) {
     return false;
   }
 
-  var pattern = isFunction$1(value) || isHostObject$1(value) ? reIsNative$1 : reIsHostCtor$1;
-  return pattern.test(toSource$1(value));
+  var pattern = isFunction(value) || isHostObject(value) ? reIsNative : reIsHostCtor;
+  return pattern.test(toSource(value));
 }
 /**
  * The base implementation of `_.rest` which doesn't validate or coerce arguments.
@@ -3737,9 +3737,9 @@ function castArrayLikeObject(value) {
  */
 
 
-function getMapData$1(map, key) {
+function getMapData(map, key) {
   var data = map.__data__;
-  return isKeyable$1(key) ? data[typeof key == 'string' ? 'string' : 'hash'] : data.map;
+  return isKeyable(key) ? data[typeof key == 'string' ? 'string' : 'hash'] : data.map;
 }
 /**
  * Gets the native function at `key` of `object`.
@@ -3751,9 +3751,9 @@ function getMapData$1(map, key) {
  */
 
 
-function getNative$1(object, key) {
-  var value = getValue$1(object, key);
-  return baseIsNative$1(value) ? value : undefined;
+function getNative(object, key) {
+  var value = getValue(object, key);
+  return baseIsNative(value) ? value : undefined;
 }
 /**
  * Checks if `value` is suitable for use as unique object key.
@@ -3764,7 +3764,7 @@ function getNative$1(object, key) {
  */
 
 
-function isKeyable$1(value) {
+function isKeyable(value) {
   var type = typeof value;
   return type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean' ? value !== '__proto__' : value === null;
 }
@@ -3777,8 +3777,8 @@ function isKeyable$1(value) {
  */
 
 
-function isMasked$1(func) {
-  return !!maskSrcKey$1 && maskSrcKey$1 in func;
+function isMasked(func) {
+  return !!maskSrcKey && maskSrcKey in func;
 }
 /**
  * Converts `func` to its source code.
@@ -3789,7 +3789,7 @@ function isMasked$1(func) {
  */
 
 
-function toSource$1(func) {
+function toSource(func) {
   if (func != null) {
     try {
       return funcToString$1.call(func);
@@ -3822,7 +3822,7 @@ function toSource$1(func) {
 
 
 var intersection = baseRest(function (arrays) {
-  var mapped = arrayMap$1(arrays, castArrayLikeObject);
+  var mapped = arrayMap(arrays, castArrayLikeObject);
   return mapped.length && mapped[0] === arrays[0] ? baseIntersection(mapped) : [];
 });
 /**
@@ -3858,7 +3858,7 @@ var intersection = baseRest(function (arrays) {
  * // => true
  */
 
-function eq$1(value, other) {
+function eq(value, other) {
   return value === other || value !== value && other !== other;
 }
 /**
@@ -3889,7 +3889,7 @@ function eq$1(value, other) {
 
 
 function isArrayLike(value) {
-  return value != null && isLength(value.length) && !isFunction$1(value);
+  return value != null && isLength(value.length) && !isFunction(value);
 }
 /**
  * This method is like `_.isArrayLike` except that it also checks if `value`
@@ -3940,11 +3940,11 @@ function isArrayLikeObject(value) {
  */
 
 
-function isFunction$1(value) {
+function isFunction(value) {
   // The use of `Object#toString` avoids issues with the `typeof` operator
   // in Safari 8-9 which returns 'object' for typed array and other constructors.
-  var tag = isObject$1(value) ? objectToString$1.call(value) : '';
-  return tag == funcTag$1 || tag == genTag$1;
+  var tag = isObject(value) ? objectToString.call(value) : '';
+  return tag == funcTag || tag == genTag;
 }
 /**
  * Checks if `value` is a valid array-like length.
@@ -4004,7 +4004,7 @@ function isLength(value) {
  */
 
 
-function isObject$1(value) {
+function isObject(value) {
   var type = typeof value;
   return !!value && (type == 'object' || type == 'function');
 }
@@ -4040,7 +4040,7 @@ function isObjectLike(value) {
 
 var lodash_intersection = intersection;
 
-var defaults$5 = {
+var defaults$1 = {
   str: "",
   from: 0,
   to: 0,
@@ -4114,7 +4114,7 @@ function expander(originalOpts) {
   // ---------------------------------------------------------------------------
 
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$5), originalOpts);
+  var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts);
 
   if (Array.isArray(opts.ifLeftSideIncludesThisThenCropTightly)) {
     var culpritsIndex;
@@ -4434,7 +4434,7 @@ function uglifyArr(arr) {
   return res;
 } // main function - converts n-th string in a given reference array of strings
 
-var defaults$4 = {
+var defaults$2 = {
   strictlyTwoElementsInRangeArrays: false,
   progressFn: null
 };
@@ -4446,7 +4446,7 @@ function rSort(arrOfRanges, originalOptions) {
   } // fill any settings with defaults if missing:
 
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$4), originalOptions); // arrOfRanges validation
+  var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOptions); // arrOfRanges validation
 
 
   var culpritsIndex;
@@ -4802,7 +4802,7 @@ function rApply(str, originalRangesArr, _progressFn) {
  * @param {Function} iteratee The function invoked per iteration.
  * @returns {Array} Returns the new mapped array.
  */
-function arrayMap(array, iteratee) {
+function arrayMap$1(array, iteratee) {
   var index = -1,
       length = array ? array.length : 0,
       result = Array(length);
@@ -4910,7 +4910,7 @@ function baseIsNaN$1(value) {
  */
 
 
-function baseUnary(func) {
+function baseUnary$1(func) {
   return function (value) {
     return func(value);
   };
@@ -4945,7 +4945,7 @@ function basePullAll(array, values, iteratee, comparator) {
   }
 
   if (iteratee) {
-    seen = arrayMap(array, baseUnary(iteratee));
+    seen = arrayMap$1(array, baseUnary$1(iteratee));
   }
 
   while (++index < length) {
@@ -5140,7 +5140,7 @@ function isStr$1(something) {
   return typeof something === "string";
 }
 
-var defaults$2 = {
+var defaults$4 = {
   limitToBeAddedWhitespace: false,
   limitLinebreaksCount: 1,
   mergeType: 1
@@ -5151,7 +5151,7 @@ var Ranges = /*#__PURE__*/function () {
   // O P T I O N S
   // =============
   function Ranges(originalOpts) {
-    var opts = _objectSpread2(_objectSpread2({}, defaults$2), originalOpts);
+    var opts = _objectSpread2(_objectSpread2({}, defaults$4), originalOpts);
 
     if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
       if (isStr$1(opts.mergeType) && opts.mergeType.trim() === "1") {
@@ -5335,7 +5335,7 @@ var Ranges = /*#__PURE__*/function () {
 var finalIndexesToDelete = new Ranges({
   limitToBeAddedWhitespace: true
 });
-var defaults$1 = {
+var defaults$5 = {
   lineLengthLimit: 500,
   removeIndentations: true,
   removeLineBreaks: false,
@@ -5352,7 +5352,7 @@ var applicableOpts = {
   removeCSSComments: false
 };
 
-function isStr(something) {
+function isStr$2(something) {
   return typeof something === "string";
 }
 
@@ -5367,7 +5367,7 @@ function isLetter(something) {
 function crush(str, originalOpts) {
   var start = Date.now(); // insurance:
 
-  if (!isStr(str)) {
+  if (!isStr$2(str)) {
     if (str === undefined) {
       throw new Error("html-crush: [THROW_ID_01] the first input argument is completely missing! It should be given as string.");
     } else {
@@ -5381,13 +5381,13 @@ function crush(str, originalOpts) {
 
   if (originalOpts && Array.isArray(originalOpts.breakToTheLeftOf) && originalOpts.breakToTheLeftOf.length) {
     for (var z = 0, _len = originalOpts.breakToTheLeftOf.length; z < _len; z++) {
-      if (!isStr(originalOpts.breakToTheLeftOf[z])) {
+      if (!isStr$2(originalOpts.breakToTheLeftOf[z])) {
         throw new TypeError("html-crush: [THROW_ID_05] the opts.breakToTheLeftOf array contains non-string elements! For example, element at index " + z + " is of a type \"" + typeof originalOpts.breakToTheLeftOf[z] + "\" and is equal to:\n" + JSON.stringify(originalOpts.breakToTheLeftOf[z], null, 4));
       }
     }
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults$1), originalOpts); // normalize the opts.removeHTMLComments
+  var opts = _objectSpread2(_objectSpread2({}, defaults$5), originalOpts); // normalize the opts.removeHTMLComments
 
 
   if (typeof opts.removeHTMLComments === "boolean") {
@@ -5988,7 +5988,7 @@ function crush(str, originalOpts) {
             // =============================================================
 
 
-            if (str[i].trim() && (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) || str[~-i] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[~-i])) && isStr(leftTagName) && (!tagName || !opts.mindTheInlineTags.includes(tagName)) && !(str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
+            if (str[i].trim() && (CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[i]) || str[~-i] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[~-i])) && isStr$2(leftTagName) && (!tagName || !opts.mindTheInlineTags.includes(tagName)) && !(str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
               cb: function cb(nextChar) {
                 return !nextChar || !/\w/.test(nextChar);
               } // not a letter
@@ -6003,7 +6003,7 @@ function crush(str, originalOpts) {
               stageFrom = i;
               stageTo = i;
               stageAdd = null;
-            } else if (styleCommentStartedAt === null && stageFrom !== null && (withinInlineStyle || !opts.mindTheInlineTags || !Array.isArray(opts.mindTheInlineTags) || Array.isArray(opts.mindTheInlineTags.length) && !opts.mindTheInlineTags.length || !isStr(tagName) || Array.isArray(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && isStr(tagName) && !opts.mindTheInlineTags.includes(tagName)) && !(str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
+            } else if (styleCommentStartedAt === null && stageFrom !== null && (withinInlineStyle || !opts.mindTheInlineTags || !Array.isArray(opts.mindTheInlineTags) || Array.isArray(opts.mindTheInlineTags.length) && !opts.mindTheInlineTags.length || !isStr$2(tagName) || Array.isArray(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && isStr$2(tagName) && !opts.mindTheInlineTags.includes(tagName)) && !(str[i] === "<" && matchRight(str, i, opts.mindTheInlineTags, {
               trimCharsBeforeMatching: "/",
               cb: function cb(nextChar) {
                 return !nextChar || !/\w/.test(nextChar);
@@ -6068,7 +6068,7 @@ function crush(str, originalOpts) {
               finalIndexesToDelete.push(i, i, "\n");
               countCharactersPerLine = 0;
             }
-          } else if (str[i + 1] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) && isStr(tagName) && Array.isArray(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && !opts.mindTheInlineTags.includes(tagName)) {
+          } else if (str[i + 1] && CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[i]) && isStr$2(tagName) && Array.isArray(opts.mindTheInlineTags) && opts.mindTheInlineTags.length && !opts.mindTheInlineTags.includes(tagName)) {
             // ██ 2.
             //
             if (stageFrom !== null && stageTo !== null && (stageFrom !== stageTo || stageAdd && stageAdd.length)) ;else {
@@ -6295,32 +6295,32 @@ function crush(str, originalOpts) {
 var LARGE_ARRAY_SIZE = 200;
 /** Used to stand-in for `undefined` hash values. */
 
-var HASH_UNDEFINED = '__lodash_hash_undefined__';
+var HASH_UNDEFINED$1 = '__lodash_hash_undefined__';
 /** Used as references for various `Number` constants. */
 
 var INFINITY = 1 / 0;
 /** `Object#toString` result references. */
 
-var funcTag = '[object Function]',
-    genTag = '[object GeneratorFunction]';
+var funcTag$1 = '[object Function]',
+    genTag$1 = '[object GeneratorFunction]';
 /**
  * Used to match `RegExp`
  * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
  */
 
-var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
+var reRegExpChar$1 = /[\\^$.*+?()[\]{}|]/g;
 /** Used to detect host constructors (Safari). */
 
-var reIsHostCtor = /^\[object .+?Constructor\]$/;
+var reIsHostCtor$1 = /^\[object .+?Constructor\]$/;
 /** Detect free variable `global` from Node.js. */
 
-var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+var freeGlobal$1 = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
 /** Detect free variable `self`. */
 
-var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+var freeSelf$1 = typeof self == 'object' && self && self.Object === Object && self;
 /** Used as a reference to the global object. */
 
-var root = freeGlobal || freeSelf || Function('return this')();
+var root$1 = freeGlobal$1 || freeSelf$1 || Function('return this')();
 /**
  * A specialized version of `_.includes` for arrays without support for
  * specifying an index to search from.
@@ -6331,9 +6331,9 @@ var root = freeGlobal || freeSelf || Function('return this')();
  * @returns {boolean} Returns `true` if `target` is found, else `false`.
  */
 
-function arrayIncludes(array, value) {
+function arrayIncludes$1(array, value) {
   var length = array ? array.length : 0;
-  return !!length && baseIndexOf(array, value, 0) > -1;
+  return !!length && baseIndexOf$2(array, value, 0) > -1;
 }
 /**
  * This function is like `arrayIncludes` except that it accepts a comparator.
@@ -6346,7 +6346,7 @@ function arrayIncludes(array, value) {
  */
 
 
-function arrayIncludesWith(array, value, comparator) {
+function arrayIncludesWith$1(array, value, comparator) {
   var index = -1,
       length = array ? array.length : 0;
 
@@ -6371,7 +6371,7 @@ function arrayIncludesWith(array, value, comparator) {
  */
 
 
-function baseFindIndex(array, predicate, fromIndex, fromRight) {
+function baseFindIndex$2(array, predicate, fromIndex, fromRight) {
   var length = array.length,
       index = fromIndex + (fromRight ? 1 : -1);
 
@@ -6394,9 +6394,9 @@ function baseFindIndex(array, predicate, fromIndex, fromRight) {
  */
 
 
-function baseIndexOf(array, value, fromIndex) {
+function baseIndexOf$2(array, value, fromIndex) {
   if (value !== value) {
-    return baseFindIndex(array, baseIsNaN, fromIndex);
+    return baseFindIndex$2(array, baseIsNaN$2, fromIndex);
   }
 
   var index = fromIndex - 1,
@@ -6419,7 +6419,7 @@ function baseIndexOf(array, value, fromIndex) {
  */
 
 
-function baseIsNaN(value) {
+function baseIsNaN$2(value) {
   return value !== value;
 }
 /**
@@ -6432,7 +6432,7 @@ function baseIsNaN(value) {
  */
 
 
-function cacheHas(cache, key) {
+function cacheHas$1(cache, key) {
   return cache.has(key);
 }
 /**
@@ -6445,7 +6445,7 @@ function cacheHas(cache, key) {
  */
 
 
-function getValue(object, key) {
+function getValue$1(object, key) {
   return object == null ? undefined : object[key];
 }
 /**
@@ -6457,7 +6457,7 @@ function getValue(object, key) {
  */
 
 
-function isHostObject(value) {
+function isHostObject$1(value) {
   // Many host objects are `Object` objects that can coerce to strings
   // despite having improperly defined `toString` methods.
   var result = false;
@@ -6490,43 +6490,43 @@ function setToArray(set) {
 /** Used for built-in method references. */
 
 
-var arrayProto = Array.prototype,
-    funcProto = Function.prototype,
-    objectProto = Object.prototype;
+var arrayProto$2 = Array.prototype,
+    funcProto$2 = Function.prototype,
+    objectProto$1 = Object.prototype;
 /** Used to detect overreaching core-js shims. */
 
-var coreJsData = root['__core-js_shared__'];
+var coreJsData$1 = root$1['__core-js_shared__'];
 /** Used to detect methods masquerading as native. */
 
-var maskSrcKey = function () {
-  var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
+var maskSrcKey$1 = function () {
+  var uid = /[^.]+$/.exec(coreJsData$1 && coreJsData$1.keys && coreJsData$1.keys.IE_PROTO || '');
   return uid ? 'Symbol(src)_1.' + uid : '';
 }();
 /** Used to resolve the decompiled source of functions. */
 
 
-var funcToString = funcProto.toString;
+var funcToString$2 = funcProto$2.toString;
 /** Used to check objects for own properties. */
 
-var hasOwnProperty = objectProto.hasOwnProperty;
+var hasOwnProperty$1 = objectProto$1.hasOwnProperty;
 /**
  * Used to resolve the
  * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
  * of values.
  */
 
-var objectToString = objectProto.toString;
+var objectToString$1 = objectProto$1.toString;
 /** Used to detect if a method is native. */
 
-var reIsNative = RegExp('^' + funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&').replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
+var reIsNative$1 = RegExp('^' + funcToString$2.call(hasOwnProperty$1).replace(reRegExpChar$1, '\\$&').replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
 /** Built-in value references. */
 
-var splice = arrayProto.splice;
+var splice$2 = arrayProto$2.splice;
 /* Built-in method references that are verified to be native. */
 
-var Map$1 = getNative(root, 'Map'),
-    Set$1 = getNative(root, 'Set'),
-    nativeCreate = getNative(Object, 'create');
+var Map$2 = getNative$1(root$1, 'Map'),
+    Set$1 = getNative$1(root$1, 'Set'),
+    nativeCreate$1 = getNative$1(Object, 'create');
 /**
  * Creates a hash object.
  *
@@ -6535,7 +6535,7 @@ var Map$1 = getNative(root, 'Map'),
  * @param {Array} [entries] The key-value pairs to cache.
  */
 
-function Hash(entries) {
+function Hash$1(entries) {
   var index = -1,
       length = entries ? entries.length : 0;
   this.clear();
@@ -6554,8 +6554,8 @@ function Hash(entries) {
  */
 
 
-function hashClear() {
-  this.__data__ = nativeCreate ? nativeCreate(null) : {};
+function hashClear$1() {
+  this.__data__ = nativeCreate$1 ? nativeCreate$1(null) : {};
 }
 /**
  * Removes `key` and its value from the hash.
@@ -6569,7 +6569,7 @@ function hashClear() {
  */
 
 
-function hashDelete(key) {
+function hashDelete$1(key) {
   return this.has(key) && delete this.__data__[key];
 }
 /**
@@ -6583,15 +6583,15 @@ function hashDelete(key) {
  */
 
 
-function hashGet(key) {
+function hashGet$1(key) {
   var data = this.__data__;
 
-  if (nativeCreate) {
+  if (nativeCreate$1) {
     var result = data[key];
-    return result === HASH_UNDEFINED ? undefined : result;
+    return result === HASH_UNDEFINED$1 ? undefined : result;
   }
 
-  return hasOwnProperty.call(data, key) ? data[key] : undefined;
+  return hasOwnProperty$1.call(data, key) ? data[key] : undefined;
 }
 /**
  * Checks if a hash value for `key` exists.
@@ -6604,9 +6604,9 @@ function hashGet(key) {
  */
 
 
-function hashHas(key) {
+function hashHas$1(key) {
   var data = this.__data__;
-  return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);
+  return nativeCreate$1 ? data[key] !== undefined : hasOwnProperty$1.call(data, key);
 }
 /**
  * Sets the hash `key` to `value`.
@@ -6620,18 +6620,18 @@ function hashHas(key) {
  */
 
 
-function hashSet(key, value) {
+function hashSet$1(key, value) {
   var data = this.__data__;
-  data[key] = nativeCreate && value === undefined ? HASH_UNDEFINED : value;
+  data[key] = nativeCreate$1 && value === undefined ? HASH_UNDEFINED$1 : value;
   return this;
 } // Add methods to `Hash`.
 
 
-Hash.prototype.clear = hashClear;
-Hash.prototype['delete'] = hashDelete;
-Hash.prototype.get = hashGet;
-Hash.prototype.has = hashHas;
-Hash.prototype.set = hashSet;
+Hash$1.prototype.clear = hashClear$1;
+Hash$1.prototype['delete'] = hashDelete$1;
+Hash$1.prototype.get = hashGet$1;
+Hash$1.prototype.has = hashHas$1;
+Hash$1.prototype.set = hashSet$1;
 /**
  * Creates an list cache object.
  *
@@ -6640,7 +6640,7 @@ Hash.prototype.set = hashSet;
  * @param {Array} [entries] The key-value pairs to cache.
  */
 
-function ListCache(entries) {
+function ListCache$1(entries) {
   var index = -1,
       length = entries ? entries.length : 0;
   this.clear();
@@ -6659,7 +6659,7 @@ function ListCache(entries) {
  */
 
 
-function listCacheClear() {
+function listCacheClear$1() {
   this.__data__ = [];
 }
 /**
@@ -6673,9 +6673,9 @@ function listCacheClear() {
  */
 
 
-function listCacheDelete(key) {
+function listCacheDelete$1(key) {
   var data = this.__data__,
-      index = assocIndexOf(data, key);
+      index = assocIndexOf$1(data, key);
 
   if (index < 0) {
     return false;
@@ -6686,7 +6686,7 @@ function listCacheDelete(key) {
   if (index == lastIndex) {
     data.pop();
   } else {
-    splice.call(data, index, 1);
+    splice$2.call(data, index, 1);
   }
 
   return true;
@@ -6702,9 +6702,9 @@ function listCacheDelete(key) {
  */
 
 
-function listCacheGet(key) {
+function listCacheGet$1(key) {
   var data = this.__data__,
-      index = assocIndexOf(data, key);
+      index = assocIndexOf$1(data, key);
   return index < 0 ? undefined : data[index][1];
 }
 /**
@@ -6718,8 +6718,8 @@ function listCacheGet(key) {
  */
 
 
-function listCacheHas(key) {
-  return assocIndexOf(this.__data__, key) > -1;
+function listCacheHas$1(key) {
+  return assocIndexOf$1(this.__data__, key) > -1;
 }
 /**
  * Sets the list cache `key` to `value`.
@@ -6733,9 +6733,9 @@ function listCacheHas(key) {
  */
 
 
-function listCacheSet(key, value) {
+function listCacheSet$1(key, value) {
   var data = this.__data__,
-      index = assocIndexOf(data, key);
+      index = assocIndexOf$1(data, key);
 
   if (index < 0) {
     data.push([key, value]);
@@ -6747,11 +6747,11 @@ function listCacheSet(key, value) {
 } // Add methods to `ListCache`.
 
 
-ListCache.prototype.clear = listCacheClear;
-ListCache.prototype['delete'] = listCacheDelete;
-ListCache.prototype.get = listCacheGet;
-ListCache.prototype.has = listCacheHas;
-ListCache.prototype.set = listCacheSet;
+ListCache$1.prototype.clear = listCacheClear$1;
+ListCache$1.prototype['delete'] = listCacheDelete$1;
+ListCache$1.prototype.get = listCacheGet$1;
+ListCache$1.prototype.has = listCacheHas$1;
+ListCache$1.prototype.set = listCacheSet$1;
 /**
  * Creates a map cache object to store key-value pairs.
  *
@@ -6760,7 +6760,7 @@ ListCache.prototype.set = listCacheSet;
  * @param {Array} [entries] The key-value pairs to cache.
  */
 
-function MapCache(entries) {
+function MapCache$1(entries) {
   var index = -1,
       length = entries ? entries.length : 0;
   this.clear();
@@ -6779,11 +6779,11 @@ function MapCache(entries) {
  */
 
 
-function mapCacheClear() {
+function mapCacheClear$1() {
   this.__data__ = {
-    'hash': new Hash(),
-    'map': new (Map$1 || ListCache)(),
-    'string': new Hash()
+    'hash': new Hash$1(),
+    'map': new (Map$2 || ListCache$1)(),
+    'string': new Hash$1()
   };
 }
 /**
@@ -6797,8 +6797,8 @@ function mapCacheClear() {
  */
 
 
-function mapCacheDelete(key) {
-  return getMapData(this, key)['delete'](key);
+function mapCacheDelete$1(key) {
+  return getMapData$1(this, key)['delete'](key);
 }
 /**
  * Gets the map value for `key`.
@@ -6811,8 +6811,8 @@ function mapCacheDelete(key) {
  */
 
 
-function mapCacheGet(key) {
-  return getMapData(this, key).get(key);
+function mapCacheGet$1(key) {
+  return getMapData$1(this, key).get(key);
 }
 /**
  * Checks if a map value for `key` exists.
@@ -6825,8 +6825,8 @@ function mapCacheGet(key) {
  */
 
 
-function mapCacheHas(key) {
-  return getMapData(this, key).has(key);
+function mapCacheHas$1(key) {
+  return getMapData$1(this, key).has(key);
 }
 /**
  * Sets the map `key` to `value`.
@@ -6840,17 +6840,17 @@ function mapCacheHas(key) {
  */
 
 
-function mapCacheSet(key, value) {
-  getMapData(this, key).set(key, value);
+function mapCacheSet$1(key, value) {
+  getMapData$1(this, key).set(key, value);
   return this;
 } // Add methods to `MapCache`.
 
 
-MapCache.prototype.clear = mapCacheClear;
-MapCache.prototype['delete'] = mapCacheDelete;
-MapCache.prototype.get = mapCacheGet;
-MapCache.prototype.has = mapCacheHas;
-MapCache.prototype.set = mapCacheSet;
+MapCache$1.prototype.clear = mapCacheClear$1;
+MapCache$1.prototype['delete'] = mapCacheDelete$1;
+MapCache$1.prototype.get = mapCacheGet$1;
+MapCache$1.prototype.has = mapCacheHas$1;
+MapCache$1.prototype.set = mapCacheSet$1;
 /**
  *
  * Creates an array cache object to store unique values.
@@ -6860,10 +6860,10 @@ MapCache.prototype.set = mapCacheSet;
  * @param {Array} [values] The values to cache.
  */
 
-function SetCache(values) {
+function SetCache$1(values) {
   var index = -1,
       length = values ? values.length : 0;
-  this.__data__ = new MapCache();
+  this.__data__ = new MapCache$1();
 
   while (++index < length) {
     this.add(values[index]);
@@ -6881,8 +6881,8 @@ function SetCache(values) {
  */
 
 
-function setCacheAdd(value) {
-  this.__data__.set(value, HASH_UNDEFINED);
+function setCacheAdd$1(value) {
+  this.__data__.set(value, HASH_UNDEFINED$1);
 
   return this;
 }
@@ -6897,13 +6897,13 @@ function setCacheAdd(value) {
  */
 
 
-function setCacheHas(value) {
+function setCacheHas$1(value) {
   return this.__data__.has(value);
 } // Add methods to `SetCache`.
 
 
-SetCache.prototype.add = SetCache.prototype.push = setCacheAdd;
-SetCache.prototype.has = setCacheHas;
+SetCache$1.prototype.add = SetCache$1.prototype.push = setCacheAdd$1;
+SetCache$1.prototype.has = setCacheHas$1;
 /**
  * Gets the index at which the `key` is found in `array` of key-value pairs.
  *
@@ -6913,11 +6913,11 @@ SetCache.prototype.has = setCacheHas;
  * @returns {number} Returns the index of the matched value, else `-1`.
  */
 
-function assocIndexOf(array, key) {
+function assocIndexOf$1(array, key) {
   var length = array.length;
 
   while (length--) {
-    if (eq(array[length][0], key)) {
+    if (eq$1(array[length][0], key)) {
       return length;
     }
   }
@@ -6934,13 +6934,13 @@ function assocIndexOf(array, key) {
  */
 
 
-function baseIsNative(value) {
-  if (!isObject(value) || isMasked(value)) {
+function baseIsNative$1(value) {
+  if (!isObject$1(value) || isMasked$1(value)) {
     return false;
   }
 
-  var pattern = isFunction(value) || isHostObject(value) ? reIsNative : reIsHostCtor;
-  return pattern.test(toSource(value));
+  var pattern = isFunction$1(value) || isHostObject$1(value) ? reIsNative$1 : reIsHostCtor$1;
+  return pattern.test(toSource$1(value));
 }
 /**
  * The base implementation of `_.uniqBy` without support for iteratee shorthands.
@@ -6955,7 +6955,7 @@ function baseIsNative(value) {
 
 function baseUniq(array, iteratee, comparator) {
   var index = -1,
-      includes = arrayIncludes,
+      includes = arrayIncludes$1,
       length = array.length,
       isCommon = true,
       result = [],
@@ -6963,7 +6963,7 @@ function baseUniq(array, iteratee, comparator) {
 
   if (comparator) {
     isCommon = false;
-    includes = arrayIncludesWith;
+    includes = arrayIncludesWith$1;
   } else if (length >= LARGE_ARRAY_SIZE) {
     var set = iteratee ? null : createSet(array);
 
@@ -6972,8 +6972,8 @@ function baseUniq(array, iteratee, comparator) {
     }
 
     isCommon = false;
-    includes = cacheHas;
-    seen = new SetCache();
+    includes = cacheHas$1;
+    seen = new SetCache$1();
   } else {
     seen = iteratee ? [] : result;
   }
@@ -7029,9 +7029,9 @@ var createSet = !(Set$1 && 1 / setToArray(new Set$1([, -0]))[1] == INFINITY) ? n
  * @returns {*} Returns the map data.
  */
 
-function getMapData(map, key) {
+function getMapData$1(map, key) {
   var data = map.__data__;
-  return isKeyable(key) ? data[typeof key == 'string' ? 'string' : 'hash'] : data.map;
+  return isKeyable$1(key) ? data[typeof key == 'string' ? 'string' : 'hash'] : data.map;
 }
 /**
  * Gets the native function at `key` of `object`.
@@ -7043,9 +7043,9 @@ function getMapData(map, key) {
  */
 
 
-function getNative(object, key) {
-  var value = getValue(object, key);
-  return baseIsNative(value) ? value : undefined;
+function getNative$1(object, key) {
+  var value = getValue$1(object, key);
+  return baseIsNative$1(value) ? value : undefined;
 }
 /**
  * Checks if `value` is suitable for use as unique object key.
@@ -7056,7 +7056,7 @@ function getNative(object, key) {
  */
 
 
-function isKeyable(value) {
+function isKeyable$1(value) {
   var type = typeof value;
   return type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean' ? value !== '__proto__' : value === null;
 }
@@ -7069,8 +7069,8 @@ function isKeyable(value) {
  */
 
 
-function isMasked(func) {
-  return !!maskSrcKey && maskSrcKey in func;
+function isMasked$1(func) {
+  return !!maskSrcKey$1 && maskSrcKey$1 in func;
 }
 /**
  * Converts `func` to its source code.
@@ -7081,10 +7081,10 @@ function isMasked(func) {
  */
 
 
-function toSource(func) {
+function toSource$1(func) {
   if (func != null) {
     try {
-      return funcToString.call(func);
+      return funcToString$2.call(func);
     } catch (e) {}
 
     try {
@@ -7150,7 +7150,7 @@ function uniq(array) {
  */
 
 
-function eq(value, other) {
+function eq$1(value, other) {
   return value === other || value !== value && other !== other;
 }
 /**
@@ -7172,11 +7172,11 @@ function eq(value, other) {
  */
 
 
-function isFunction(value) {
+function isFunction$1(value) {
   // The use of `Object#toString` avoids issues with the `typeof` operator
   // in Safari 8-9 which returns 'object' for typed array and other constructors.
-  var tag = isObject(value) ? objectToString.call(value) : '';
-  return tag == funcTag || tag == genTag;
+  var tag = isObject$1(value) ? objectToString$1.call(value) : '';
+  return tag == funcTag$1 || tag == genTag$1;
 }
 /**
  * Checks if `value` is the
@@ -7205,7 +7205,7 @@ function isFunction(value) {
  */
 
 
-function isObject(value) {
+function isObject$1(value) {
   var type = typeof value;
   return !!value && (type == 'object' || type == 'function');
 }
@@ -7233,7 +7233,7 @@ var regexEmptyStyleTag = /[\n]?\s*<style[^>]*>\s*<\/style\s*>/g;
 var regexEmptyMediaQuery = /[\n]?\s*@(media|supports|document)[^{]*{\s*}/g;
 var regexEmptyUnclosedMediaQuery = /@media[^{@}]+{(?=\s*<\/style>)/g; // proper plain object checks such as lodash's cost more perf than this below
 
-function isObj(something) {
+function isObj$1(something) {
   return something && typeof something === "object" && !Array.isArray(something);
 }
 
@@ -7246,8 +7246,8 @@ function isLatinLetter(char) {
   return typeof char === "string" && char.length === 1 && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
 }
 
-var version = version$1;
-var defaults = {
+var version$1 = version;
+var defaults$6 = {
   whitelist: [],
   backend: [],
   uglify: false,
@@ -7406,14 +7406,14 @@ function comb(str, originalOpts) {
   var atRuleBreakCharacters = ["{", "(", "<", '"', "'", "@", ";"]; // insurance
 
   if (typeof str !== "string") {
-    throw new TypeError("email-remove-unused-css: [THROW_ID_01] Input must be string! Currently it's " + typeof str);
+    throw new TypeError("email-comb: [THROW_ID_01] Input must be string! Currently it's " + typeof str);
   }
 
-  if (originalOpts && !isObj(originalOpts)) {
-    throw new TypeError("email-remove-unused-css: [THROW_ID_02] Options, second input argument, must be a plain object! Currently it's " + typeof originalOpts + ", equal to: " + JSON.stringify(originalOpts, null, 4));
+  if (originalOpts && !isObj$1(originalOpts)) {
+    throw new TypeError("email-comb: [THROW_ID_02] Options, second input argument, must be a plain object! Currently it's " + typeof originalOpts + ", equal to: " + JSON.stringify(originalOpts, null, 4));
   }
 
-  var opts = _objectSpread2(_objectSpread2({}, defaults), originalOpts); // arrayiffy if string:
+  var opts = _objectSpread2(_objectSpread2({}, defaults$6), originalOpts); // arrayiffy if string:
 
 
   if (typeof opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains === "string") {
@@ -7425,41 +7425,41 @@ function comb(str, originalOpts) {
   if (typeof opts.whitelist === "string") {
     opts.whitelist = [opts.whitelist];
   } else if (!Array.isArray(opts.whitelist)) {
-    throw new TypeError("email-remove-unused-css: [THROW_ID_03] opts.whitelist should be an array, but it was customised to a wrong thing, " + JSON.stringify(opts.whitelist, null, 4));
+    throw new TypeError("email-comb: [THROW_ID_03] opts.whitelist should be an array, but it was customised to a wrong thing, " + JSON.stringify(opts.whitelist, null, 4));
   }
 
   if (opts.whitelist.length > 0 && !opts.whitelist.every(function (el) {
     return typeof el === "string";
   })) {
-    throw new TypeError("email-remove-unused-css: [THROW_ID_04] opts.whitelist array should contain only string-type elements. Currently we\x0Be got:\n" + JSON.stringify(opts.whitelist, null, 4));
+    throw new TypeError("email-comb: [THROW_ID_04] opts.whitelist array should contain only string-type elements. Currently we\x0Be got:\n" + JSON.stringify(opts.whitelist, null, 4));
   }
 
   if (!Array.isArray(opts.backend)) {
-    throw new TypeError("email-remove-unused-css: [THROW_ID_05] opts.backend should be an array, but it was customised to a wrong thing, " + JSON.stringify(opts.backend, null, 4));
+    throw new TypeError("email-comb: [THROW_ID_05] opts.backend should be an array, but it was customised to a wrong thing, " + JSON.stringify(opts.backend, null, 4));
   }
 
   if (opts.backend.length > 0 && opts.backend.some(function (val) {
-    return !isObj(val);
+    return !isObj$1(val);
   })) {
-    throw new TypeError("email-remove-unused-css: [THROW_ID_06] opts.backend array should contain only plain objects but it contains something else:\n" + JSON.stringify(opts.backend, null, 4));
+    throw new TypeError("email-comb: [THROW_ID_06] opts.backend array should contain only plain objects but it contains something else:\n" + JSON.stringify(opts.backend, null, 4));
   }
 
   if (opts.backend.length > 0 && !opts.backend.every(function (obj) {
     return hasOwnProp(obj, "heads") && hasOwnProp(obj, "tails");
   })) {
-    throw new TypeError("email-remove-unused-css: [THROW_ID_07] every object within opts.backend should contain keys \"heads\" and \"tails\" but currently it's not the case. Whole \"opts.backend\" value array is currently equal to:\n" + JSON.stringify(opts.backend, null, 4));
+    throw new TypeError("email-comb: [THROW_ID_07] every object within opts.backend should contain keys \"heads\" and \"tails\" but currently it's not the case. Whole \"opts.backend\" value array is currently equal to:\n" + JSON.stringify(opts.backend, null, 4));
   }
 
   if (typeof opts.uglify !== "boolean") {
     if (opts.uglify === 1 || opts.uglify === 0) {
       opts.uglify = !!opts.uglify; // turn it into a Boolean
     } else {
-      throw new TypeError("email-remove-unused-css: [THROW_ID_08] opts.uglify should be a Boolean. Currently it's set to: " + JSON.stringify(opts.uglify, null, 4) + "}");
+      throw new TypeError("email-comb: [THROW_ID_08] opts.uglify should be a Boolean. Currently it's set to: " + JSON.stringify(opts.uglify, null, 4) + "}");
     }
   }
 
   if (opts.reportProgressFunc && typeof opts.reportProgressFunc !== "function") {
-    throw new TypeError("email-remove-unused-css: [THROW_ID_09] opts.reportProgressFunc should be a function but it was given as :\n" + JSON.stringify(opts.reportProgressFunc, null, 4) + " (" + typeof opts.reportProgressFunc + ")");
+    throw new TypeError("email-comb: [THROW_ID_09] opts.reportProgressFunc should be a function but it was given as :\n" + JSON.stringify(opts.reportProgressFunc, null, 4) + " (" + typeof opts.reportProgressFunc + ")");
   }
 
   var allHeads = null;
@@ -9277,8 +9277,8 @@ function comb(str, originalOpts) {
 }
 
 exports.comb = comb;
-exports.defaults = defaults;
-exports.version = version;
+exports.defaults = defaults$6;
+exports.version = version$1;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

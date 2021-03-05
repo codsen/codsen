@@ -22,7 +22,7 @@ import { Ranges } from 'ranges-push';
 import uniq from 'lodash.uniq';
 import matcher from 'matcher';
 
-var version$1 = "5.0.6";
+var version = "5.0.6";
 
 /* eslint @typescript-eslint/explicit-module-boundary-types: 0 */
 const regexEmptyStyleTag = /[\n]?\s*<style[^>]*>\s*<\/style\s*>/g;
@@ -42,7 +42,7 @@ function isLatinLetter(char) {
   return typeof char === "string" && char.length === 1 && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
 }
 
-const version = version$1;
+const version$1 = version;
 const defaults = {
   whitelist: [],
   backend: [],
@@ -199,11 +199,11 @@ function comb(str, originalOpts) {
   const atRuleBreakCharacters = ["{", "(", "<", '"', "'", "@", ";"]; // insurance
 
   if (typeof str !== "string") {
-    throw new TypeError(`email-remove-unused-css: [THROW_ID_01] Input must be string! Currently it's ${typeof str}`);
+    throw new TypeError(`email-comb: [THROW_ID_01] Input must be string! Currently it's ${typeof str}`);
   }
 
   if (originalOpts && !isObj(originalOpts)) {
-    throw new TypeError(`email-remove-unused-css: [THROW_ID_02] Options, second input argument, must be a plain object! Currently it's ${typeof originalOpts}, equal to: ${JSON.stringify(originalOpts, null, 4)}`);
+    throw new TypeError(`email-comb: [THROW_ID_02] Options, second input argument, must be a plain object! Currently it's ${typeof originalOpts}, equal to: ${JSON.stringify(originalOpts, null, 4)}`);
   }
 
   const opts = { ...defaults,
@@ -217,35 +217,35 @@ function comb(str, originalOpts) {
   if (typeof opts.whitelist === "string") {
     opts.whitelist = [opts.whitelist];
   } else if (!Array.isArray(opts.whitelist)) {
-    throw new TypeError(`email-remove-unused-css: [THROW_ID_03] opts.whitelist should be an array, but it was customised to a wrong thing, ${JSON.stringify(opts.whitelist, null, 4)}`);
+    throw new TypeError(`email-comb: [THROW_ID_03] opts.whitelist should be an array, but it was customised to a wrong thing, ${JSON.stringify(opts.whitelist, null, 4)}`);
   }
 
   if (opts.whitelist.length > 0 && !opts.whitelist.every(el => typeof el === "string")) {
-    throw new TypeError(`email-remove-unused-css: [THROW_ID_04] opts.whitelist array should contain only string-type elements. Currently we\ve got:\n${JSON.stringify(opts.whitelist, null, 4)}`);
+    throw new TypeError(`email-comb: [THROW_ID_04] opts.whitelist array should contain only string-type elements. Currently we\ve got:\n${JSON.stringify(opts.whitelist, null, 4)}`);
   }
 
   if (!Array.isArray(opts.backend)) {
-    throw new TypeError(`email-remove-unused-css: [THROW_ID_05] opts.backend should be an array, but it was customised to a wrong thing, ${JSON.stringify(opts.backend, null, 4)}`);
+    throw new TypeError(`email-comb: [THROW_ID_05] opts.backend should be an array, but it was customised to a wrong thing, ${JSON.stringify(opts.backend, null, 4)}`);
   }
 
   if (opts.backend.length > 0 && opts.backend.some(val => !isObj(val))) {
-    throw new TypeError(`email-remove-unused-css: [THROW_ID_06] opts.backend array should contain only plain objects but it contains something else:\n${JSON.stringify(opts.backend, null, 4)}`);
+    throw new TypeError(`email-comb: [THROW_ID_06] opts.backend array should contain only plain objects but it contains something else:\n${JSON.stringify(opts.backend, null, 4)}`);
   }
 
   if (opts.backend.length > 0 && !opts.backend.every(obj => hasOwnProp(obj, "heads") && hasOwnProp(obj, "tails"))) {
-    throw new TypeError(`email-remove-unused-css: [THROW_ID_07] every object within opts.backend should contain keys "heads" and "tails" but currently it's not the case. Whole "opts.backend" value array is currently equal to:\n${JSON.stringify(opts.backend, null, 4)}`);
+    throw new TypeError(`email-comb: [THROW_ID_07] every object within opts.backend should contain keys "heads" and "tails" but currently it's not the case. Whole "opts.backend" value array is currently equal to:\n${JSON.stringify(opts.backend, null, 4)}`);
   }
 
   if (typeof opts.uglify !== "boolean") {
     if (opts.uglify === 1 || opts.uglify === 0) {
       opts.uglify = !!opts.uglify; // turn it into a Boolean
     } else {
-      throw new TypeError(`email-remove-unused-css: [THROW_ID_08] opts.uglify should be a Boolean. Currently it's set to: ${JSON.stringify(opts.uglify, null, 4)}}`);
+      throw new TypeError(`email-comb: [THROW_ID_08] opts.uglify should be a Boolean. Currently it's set to: ${JSON.stringify(opts.uglify, null, 4)}}`);
     }
   }
 
   if (opts.reportProgressFunc && typeof opts.reportProgressFunc !== "function") {
-    throw new TypeError(`email-remove-unused-css: [THROW_ID_09] opts.reportProgressFunc should be a function but it was given as :\n${JSON.stringify(opts.reportProgressFunc, null, 4)} (${typeof opts.reportProgressFunc})`);
+    throw new TypeError(`email-comb: [THROW_ID_09] opts.reportProgressFunc should be a function but it was given as :\n${JSON.stringify(opts.reportProgressFunc, null, 4)} (${typeof opts.reportProgressFunc})`);
   }
 
   let allHeads = null;
@@ -1970,4 +1970,4 @@ function comb(str, originalOpts) {
   };
 }
 
-export { comb, defaults, version };
+export { comb, defaults, version$1 as version };
