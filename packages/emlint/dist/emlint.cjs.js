@@ -10727,9 +10727,16 @@ function processCSS(token, context) {
 
   nodeArr.filter(function (property) {
     return property.property !== undefined;
-  }).forEach(function (property) { // 1. missing space in after a colon
-
-    if (property.colon && property.valueStarts && property.valueStarts !== property.colon + 2) {
+  }).forEach(function (property) {
+    // console.log(
+    //   `055 ${`\u001b[${32}m${`INCOMING`}\u001b[${39}m`} ${`\u001b[${33}m${`property`}\u001b[${39}m`} = ${JSON.stringify(
+    //     property,
+    //     null,
+    //     4
+    //   )}`
+    // );
+    // 1. missing space in after a colon
+    if (property.colon && property.valueStarts && (property.valueStarts !== property.colon + 2 || context.str[property.colon + 1] !== " ")) {
       context.report({
         ruleId: "format-prettier",
         idxFrom: property.start,
@@ -10742,9 +10749,9 @@ function processCSS(token, context) {
     } // 2. missing space after an !important
 
 
-    var lastEnding = property.valueEnds || property.colon || property.propertyEnds;
+    var lastEnding = property.valueEnds || (property.colon ? property.colon + 1 : null) || property.propertyEnds;
 
-    if (property.importantStarts && lastEnding && lastEnding + 1 !== property.importantStarts) {
+    if (property.importantStarts && lastEnding && (lastEnding + 1 !== property.importantStarts || context.str[lastEnding] !== " ")) {
       context.report({
         ruleId: "format-prettier",
         idxFrom: property.start,
@@ -10755,7 +10762,58 @@ function processCSS(token, context) {
         }
       });
     }
-  });
+  }); // 3. space after semi
+  // It's more complex because 1) space is added only between properties;
+  // and 2) only if text of property token is in front - mind you, there
+  // can be ESP tokens, comment tokens and so on. Hence we traverse "nodeArr".
+
+  if (nodeArr.length > 1) {
+    var somethingMet = false;
+
+    for (var i = 0, len = nodeArr.length; i < len; i++) { // if it's text token, maybe it's whitespace, so enforce its value
+      // to be a single space
+
+      if (somethingMet && ( // it's a property
+      nodeArr[i].property !== undefined || // or CSS comment
+      nodeArr[i].type === "comment" && // and it's an opening comment
+      !nodeArr[i].closing || // or ESP token
+      nodeArr[i].type === "esp" && // two tokens in front it's a property
+      nodeArr[i - 2] && nodeArr[i - 2].property !== undefined) && // and it's text in front
+      nodeArr[i - 1].type === "text" && nodeArr[i - 1].value !== " ") {
+        context.report({
+          ruleId: "format-prettier",
+          idxFrom: nodeArr[i - 1].start,
+          idxTo: nodeArr[i - 1].end,
+          message: "Put a space in front of !imporant.",
+          fix: {
+            ranges: [[nodeArr[i - 1].start, nodeArr[i - 1].end, " "]]
+          }
+        });
+      } else if ( // we're not at the first token (zero'th element will be falsey)
+      i && // it's not a text token in front
+      !["text", "esp"].includes(nodeArr[i - 1].type) && // and it's a property currently here
+      nodeArr[i].property !== undefined && ( // it's not blank:
+      // <style>.a{;;}</style><body>a</body>
+      //           ^^
+      nodeArr[i].property || nodeArr[i].value || nodeArr[i].important)) {
+        // then it's an issue right away because if there was a whitespace gap,
+        // it would be a text token
+        context.report({
+          ruleId: "format-prettier",
+          idxFrom: nodeArr[i].start,
+          idxTo: nodeArr[i].end,
+          message: "Put a space in front.",
+          fix: {
+            ranges: [[nodeArr[i].start, nodeArr[i].start, " "]]
+          }
+        });
+      }
+
+      if (!somethingMet && (nodeArr[i].type === undefined || nodeArr[i].type !== "text")) {
+        somethingMet = true;
+      }
+    }
+  }
 }
 
 var formatPrettier = function formatPrettier(context) {
