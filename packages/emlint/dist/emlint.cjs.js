@@ -10705,6 +10705,72 @@ var cssRuleMalformed = function cssRuleMalformed(context) {
   };
 };
 
+// rule: format-prettier
+// it tries to format to how Prettier would
+// -----------------------------------------------------------------------------
+function processCSS(token, context) {
+  // group all CSS processing into one function
+  var nodeArr;
+
+  if (token.properties !== undefined) {
+    // head CSS rule
+    nodeArr = token.properties;
+  } else if (token.attribValue !== undefined) {
+    // inline HTML style attribute
+    nodeArr = token.attribValue;
+  }
+
+  if (!nodeArr) {
+    return;
+  } // there can be text nodes within properties array!
+  // a whitespace is still a text node!!!!
+
+  nodeArr.filter(function (property) {
+    return property.property !== undefined;
+  }).forEach(function (property) { // 1. missing space in after a colon
+
+    if (property.colon && property.valueStarts && property.valueStarts !== property.colon + 2) {
+      context.report({
+        ruleId: "format-prettier",
+        idxFrom: property.start,
+        idxTo: property.end,
+        message: "Put a space before a value.",
+        fix: {
+          ranges: [[property.colon + 1, property.valueStarts, " "]]
+        }
+      });
+    } // 2. missing space after an !important
+
+
+    var lastEnding = property.valueEnds || property.colon || property.propertyEnds;
+
+    if (property.importantStarts && lastEnding && lastEnding + 1 !== property.importantStarts) {
+      context.report({
+        ruleId: "format-prettier",
+        idxFrom: property.start,
+        idxTo: property.end,
+        message: "Put a space in front of !imporant.",
+        fix: {
+          ranges: [[lastEnding, property.importantStarts, " "]]
+        }
+      });
+    }
+  });
+}
+
+var formatPrettier = function formatPrettier(context) {
+  return {
+    rule: function rule(node) { // format the head CSS style rule
+
+      processCSS(node, context);
+    },
+    attribute: function attribute(node) { // format the inline HTML style attribute CSS rules
+
+      processCSS(node, context);
+    }
+  };
+};
+
 // here we fetch the rules from all the places,
 var builtInRules = {};
 defineLazyProp__default['default'](builtInRules, "bad-character-null", function () {
@@ -11477,6 +11543,11 @@ defineLazyProp__default['default'](builtInRules, "css-trailing-semi", function (
 });
 defineLazyProp__default['default'](builtInRules, "css-rule-malformed", function () {
   return cssRuleMalformed;
+}); // Formatting rules
+// -----------------------------------------------------------------------------
+
+defineLazyProp__default['default'](builtInRules, "format-prettier", function () {
+  return formatPrettier;
 }); // EXPORTS
 // -----------------------------------------------------------------------------
 
@@ -11745,10 +11816,31 @@ var Linter = /*#__PURE__*/function (_TypedEmitter) {
     }), function (key, val, innerObj) {
       var current = val !== undefined ? val : key;
 
-      if (isObj(current) && (!innerObj.parentKey || !innerObj.parentKey.startsWith("attrib"))) { // monkey will traverse every key, every string within.
+      if (isObj(current) && (!innerObj.parentKey || !innerObj.parentKey.startsWith("attrib"))) {
+        // console.log(` `);
+        // console.log(
+        //   `-----------------------------------------------------------------------------`
+        // );
+        // console.log(` `);
+        // console.log(
+        //   `275 ${`\u001b[${33}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`innerObj`}\u001b[${39}m`} = ${JSON.stringify(
+        //     innerObj,
+        //     null,
+        //     4
+        //   )}`
+        // );
+        // monkey will traverse every key, every string within.
         // We need to pick the objects of a type we need: "tag", "comment" etc.
         // tag-level callback
-
+        // console.log(
+        //   `286 ██ ${`\u001b[${35}m${`linter/tagCb():`}\u001b[${39}m`} PING ${
+        //     current.type
+        //   } - ${`\u001b[${33}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
+        //     current,
+        //     null,
+        //     4
+        //   )}`
+        // );
         _this2.emit(current.type, current); // plus, for type:html also ping each attribute
 
 

@@ -580,6 +580,11 @@ import tdSiblingPadding from "./rules/email/email-td-sibling-padding";
 import trailingSemi from "./rules/css/css-trailing-semi";
 import cssRuleMalformed from "./rules/css/css-rule-malformed";
 
+// Formatting rules
+// -----------------------------------------------------------------------------
+
+import formatPrettier from "./rules/format/format-prettier";
+
 //
 //
 //
@@ -1832,6 +1837,11 @@ defineLazyProp(
 defineLazyProp(builtInRules, "css-trailing-semi", () => trailingSemi);
 defineLazyProp(builtInRules, "css-rule-malformed", () => cssRuleMalformed);
 
+// Formatting rules
+// -----------------------------------------------------------------------------
+
+defineLazyProp(builtInRules, "format-prettier", () => formatPrettier);
+
 // EXPORTS
 // -----------------------------------------------------------------------------
 
@@ -1967,7 +1977,7 @@ function normaliseRequestedRules(opts: RulesObj): RulesObj {
   }
 
   console.log(
-    `1970 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+    `1980 normaliseRequestedRules() FINAL ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
       res,
       null,
       4

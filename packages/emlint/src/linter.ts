@@ -266,31 +266,31 @@ class Linter extends TypedEmitter<RuleObjType> {
             isObj(current) &&
             (!innerObj.parentKey || !innerObj.parentKey.startsWith("attrib"))
           ) {
-            console.log(` `);
-            console.log(
-              `-----------------------------------------------------------------------------`
-            );
-            console.log(` `);
-            console.log(
-              `275 ${`\u001b[${33}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`innerObj`}\u001b[${39}m`} = ${JSON.stringify(
-                innerObj,
-                null,
-                4
-              )}`
-            );
+            // console.log(` `);
+            // console.log(
+            //   `-----------------------------------------------------------------------------`
+            // );
+            // console.log(` `);
+            // console.log(
+            //   `275 ${`\u001b[${33}m${`██`}\u001b[${39}m`} ${`\u001b[${33}m${`innerObj`}\u001b[${39}m`} = ${JSON.stringify(
+            //     innerObj,
+            //     null,
+            //     4
+            //   )}`
+            // );
             // monkey will traverse every key, every string within.
             // We need to pick the objects of a type we need: "tag", "comment" etc.
 
             // tag-level callback
-            console.log(
-              `286 ██ ${`\u001b[${35}m${`linter/tagCb():`}\u001b[${39}m`} PING ${
-                current.type
-              } - ${`\u001b[${33}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
-                current,
-                null,
-                4
-              )}`
-            );
+            // console.log(
+            //   `286 ██ ${`\u001b[${35}m${`linter/tagCb():`}\u001b[${39}m`} PING ${
+            //     current.type
+            //   } - ${`\u001b[${33}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
+            //     current,
+            //     null,
+            //     4
+            //   )}`
+            // );
             this.emit(current.type, current);
             // plus, for type:html also ping each attribute
             if (
