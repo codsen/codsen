@@ -244,7 +244,7 @@ async function rollupConfig({ state }) {
           ],
           babelHelpers: "runtime",
         }),
-        cleanup({ comments: "istanbul" }),
+        cleanup({ comments: "istanbul", extensions: ["js", "ts"] }),
         !commandLineArgs.dev &&
           strip({
             sourceMap: false,
@@ -314,7 +314,7 @@ async function rollupConfig({ state }) {
           ],
           babelHelpers: "runtime",
         }),
-        cleanup({ comments: "istanbul" }),
+        cleanup({ comments: "istanbul", extensions: ["js", "ts"] }),
         !commandLineArgs.dev &&
           strip({
             sourceMap: false,
@@ -392,7 +392,7 @@ async function rollupConfig({ state }) {
             include: ["src/**/*.(js|ts)"],
             functions: ["console.*"],
           }),
-        cleanup({ comments: "istanbul" }),
+        cleanup({ comments: "istanbul", extensions: ["js", "ts"] }),
         terser({
           compress: {
             pure_getters: true,
