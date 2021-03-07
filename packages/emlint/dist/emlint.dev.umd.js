@@ -21694,20 +21694,20 @@ function tagVoidSlash(context, mode) {
       var slashPos = left(context.str, closingBracketPos);
       var leftOfSlashPos = left(context.str, slashPos) || 0;
 
-      if (mode === "never" && node.void && context.str[slashPos] === "/") {
+      if (mode === "never" && node.void && !node.closing && context.str[slashPos] === "/") {
         // if slashes are forbidden on void tags, delete the slash and all
         // the whitespace in front, because there's never a space before
         // non-void tag's closing bracket without a slash, for example, "<span >"
         context.report({
           ruleId: "tag-void-slash",
           message: "Remove the slash.",
-          idxFrom: leftOfSlashPos + 1,
-          idxTo: closingBracketPos,
+          idxFrom: node.start,
+          idxTo: node.end,
           fix: {
             ranges: [[leftOfSlashPos + 1, closingBracketPos]]
           }
         });
-      } else if (mode === "always" && node.void && context.str[slashPos] !== "/" && ( // don't trigger if backslash rules are on:
+      } else if (mode === "always" && node.void && !node.closing && context.str[slashPos] !== "/" && ( // don't trigger if backslash rules are on:
       !context.processedRulesConfig["tag-closing-backslash"] || !(context.str[slashPos] === BACKSLASH$4 && (Number.isInteger(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"] > 0 || Array.isArray(context.processedRulesConfig["tag-closing-backslash"]) && context.processedRulesConfig["tag-closing-backslash"][0] > 0 && context.processedRulesConfig["tag-closing-backslash"][1] === "always")))) { // if slashes are requested on void tags, situation is more complex,
         // because we need to take into the account the rule
         // "tag-space-before-closing-slash"
@@ -21720,8 +21720,8 @@ function tagVoidSlash(context, mode) {
             context.report({
               ruleId: "tag-void-slash",
               message: "Missing slash.",
-              idxFrom: slashPos + 2,
-              idxTo: closingBracketPos,
+              idxFrom: node.start,
+              idxTo: node.end,
               fix: {
                 ranges: [[slashPos + 2, closingBracketPos, "/"]]
               }
@@ -21731,8 +21731,8 @@ function tagVoidSlash(context, mode) {
             context.report({
               ruleId: "tag-void-slash",
               message: "Missing slash.",
-              idxFrom: slashPos + 1,
-              idxTo: closingBracketPos,
+              idxFrom: node.start,
+              idxTo: node.end,
               fix: {
                 ranges: [[slashPos + 1, closingBracketPos, " /"]]
               }
@@ -21743,13 +21743,21 @@ function tagVoidSlash(context, mode) {
           context.report({
             ruleId: "tag-void-slash",
             message: "Missing slash.",
-            idxFrom: slashPos + 1,
-            idxTo: closingBracketPos,
+            idxFrom: node.start,
+            idxTo: node.end,
             fix: {
               ranges: [[slashPos + 1, closingBracketPos, "/"]]
             }
           });
         }
+      } else if (node.void && node.closing) {
+        context.report({
+          ruleId: "tag-void-slash",
+          message: "A void tag can't be a closing tag.",
+          idxFrom: node.start,
+          idxTo: node.end,
+          fix: null
+        });
       }
     }
   };

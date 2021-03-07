@@ -21,27 +21,40 @@ function tagVoidSlash(
       console.log(
         `022 tagVoidSlash(): ${`\u001b[${35}m${`mode`}\u001b[${39}m`} = "${mode}"`
       );
+      console.log(
+        `025 tagVoidSlash(): ${`\u001b[${33}m${`node`}\u001b[${39}m`} = ${JSON.stringify(
+          node,
+          null,
+          4
+        )}`
+      );
 
       // PROCESSING:
       const closingBracketPos = node.end - 1;
       const slashPos: number = left(context.str, closingBracketPos) as number;
       const leftOfSlashPos = left(context.str, slashPos) || 0;
 
-      if (mode === "never" && node.void && context.str[slashPos] === "/") {
+      if (
+        mode === "never" &&
+        node.void &&
+        !node.closing &&
+        context.str[slashPos] === "/"
+      ) {
         // if slashes are forbidden on void tags, delete the slash and all
         // the whitespace in front, because there's never a space before
         // non-void tag's closing bracket without a slash, for example, "<span >"
-        console.log(`034 whitespace present in front of closing slash!`);
+        console.log(`046 tagVoidSlash(): remove the slash`);
         context.report({
           ruleId: "tag-void-slash",
           message: "Remove the slash.",
-          idxFrom: leftOfSlashPos + 1,
-          idxTo: closingBracketPos,
+          idxFrom: node.start,
+          idxTo: node.end,
           fix: { ranges: [[leftOfSlashPos + 1, closingBracketPos]] },
         });
       } else if (
         mode === "always" &&
         node.void &&
+        !node.closing &&
         context.str[slashPos] !== "/" &&
         // don't trigger if backslash rules are on:
         (!context.processedRulesConfig["tag-closing-backslash"] ||
@@ -59,7 +72,7 @@ function tagVoidSlash(
                   "always"))
           ))
       ) {
-        console.log(`062`);
+        console.log(`075 tagVoidSlash()`);
         // if slashes are requested on void tags, situation is more complex,
         // because we need to take into the account the rule
         // "tag-space-before-closing-slash"
@@ -70,27 +83,27 @@ function tagVoidSlash(
           context.processedRulesConfig["tag-space-before-closing-slash"][1] ===
             "always"
         ) {
-          console.log(`073`);
+          console.log(`086 tagVoidSlash()`);
           // space is needed
           // check, maybe space is there
           if (context.str[slashPos + 1] === " ") {
             // but space exists already
-            console.log(`078 add slash only`);
+            console.log(`091 tagVoidSlash(): add slash only`);
             context.report({
               ruleId: "tag-void-slash",
               message: "Missing slash.",
-              idxFrom: slashPos + 2,
-              idxTo: closingBracketPos,
+              idxFrom: node.start,
+              idxTo: node.end,
               fix: { ranges: [[slashPos + 2, closingBracketPos, "/"]] },
             });
           } else {
             // space is missing so add one
-            console.log(`088 add space and slash`);
+            console.log(`101 tagVoidSlash(): add space and slash`);
             context.report({
               ruleId: "tag-void-slash",
               message: "Missing slash.",
-              idxFrom: slashPos + 1,
-              idxTo: closingBracketPos,
+              idxFrom: node.start,
+              idxTo: node.end,
               fix: { ranges: [[slashPos + 1, closingBracketPos, " /"]] },
             });
           }
@@ -109,15 +122,24 @@ function tagVoidSlash(
             context.processedRulesConfig["tag-space-before-closing-slash"] > 0)
         ) {
           // no space needed
-          console.log(`112 add slash only`);
+          console.log(`125 tagVoidSlash(): add slash only`);
           context.report({
             ruleId: "tag-void-slash",
             message: "Missing slash.",
-            idxFrom: slashPos + 1,
-            idxTo: closingBracketPos,
+            idxFrom: node.start,
+            idxTo: node.end,
             fix: { ranges: [[slashPos + 1, closingBracketPos, "/"]] },
           });
         }
+      } else if (node.void && node.closing) {
+        console.log(`135 tagVoidSlash(): closing void tag`);
+        context.report({
+          ruleId: "tag-void-slash",
+          message: "A void tag can't be a closing tag.",
+          idxFrom: node.start,
+          idxTo: node.end,
+          fix: null,
+        });
       }
     },
   };

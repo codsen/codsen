@@ -186,7 +186,7 @@ export default (commandLineArgs) => {
           ],
           babelHelpers: "runtime",
         }),
-        cleanup({ comments: "istanbul" }),
+        cleanup({ comments: "istanbul", extensions: ["js", "ts"] }),
         !commandLineArgs.dev &&
           strip({
             sourceMap: false,
@@ -236,7 +236,7 @@ export default (commandLineArgs) => {
           ],
           babelHelpers: "runtime",
         }),
-        cleanup({ comments: "istanbul" }),
+        cleanup({ comments: "istanbul", extensions: ["js", "ts"] }),
         !commandLineArgs.dev &&
           strip({
             sourceMap: false,
@@ -290,7 +290,7 @@ export default (commandLineArgs) => {
             include: ["src/**/*.(js|ts)"],
             functions: ["console.*"],
           }),
-        cleanup({ comments: "istanbul" }),
+        cleanup({ comments: "istanbul", extensions: ["js", "ts"] }),
         terser({
           compress: {
             pure_getters: true,

@@ -35,10 +35,8 @@ tap.test(
         {
           ruleId: "tag-void-slash",
           severity: 2,
-          idxFrom: 3,
-          idxTo: 3,
-          line: 1,
-          column: 4,
+          idxFrom: 0,
+          idxTo: 4,
           message: "Missing slash.",
           fix: {
             ranges: [[3, 3, "/"]],
@@ -68,10 +66,8 @@ tap.test(
         {
           ruleId: "tag-void-slash",
           severity: 2,
-          idxFrom: 3,
-          idxTo: 3,
-          line: 1,
-          column: 4,
+          idxFrom: 0,
+          idxTo: 4,
           message: "Missing slash.",
           fix: {
             ranges: [[3, 3, "/"]],
@@ -100,10 +96,8 @@ tap.test(
         {
           ruleId: "tag-void-slash",
           severity: 2,
-          idxFrom: 3,
-          idxTo: 3,
-          line: 1,
-          column: 4,
+          idxFrom: 0,
+          idxTo: 4,
           message: "Missing slash.",
           fix: {
             ranges: [[3, 3, "/"]],
@@ -133,10 +127,8 @@ tap.test(
         {
           ruleId: "tag-void-slash",
           severity: 2,
-          idxFrom: 3,
-          idxTo: 3,
-          line: 1,
-          column: 4,
+          idxFrom: 0,
+          idxTo: 4,
           message: "Missing slash.",
           fix: {
             ranges: [[3, 3, " /"]],
@@ -166,10 +158,8 @@ tap.test(
         {
           ruleId: "tag-void-slash",
           severity: 2,
-          idxFrom: 3,
-          idxTo: 3,
-          line: 1,
-          column: 4,
+          idxFrom: 0,
+          idxTo: 4,
           message: "Missing slash.",
           fix: {
             ranges: [[3, 3, "/"]],
@@ -199,10 +189,8 @@ tap.test(
         {
           ruleId: "tag-void-slash",
           severity: 2,
-          idxFrom: 3,
-          idxTo: 3,
-          line: 1,
-          column: 4,
+          idxFrom: 0,
+          idxTo: 4,
           message: "Missing slash.",
           fix: {
             ranges: [[3, 3, "/"]],
@@ -250,10 +238,8 @@ tap.test(
         {
           ruleId: "tag-void-slash",
           severity: 2,
-          idxFrom: 3,
-          idxTo: 3,
-          line: 1,
-          column: 4,
+          idxFrom: 0,
+          idxTo: 4,
           message: "Missing slash.",
           fix: {
             ranges: [[3, 3, "/"]],
@@ -297,10 +283,8 @@ tap.test(
         {
           ruleId: "tag-void-slash",
           severity: 2,
-          idxFrom: 3,
-          idxTo: 4,
-          line: 1,
-          column: 4,
+          idxFrom: 0,
+          idxTo: 5,
           message: "Remove the slash.",
           fix: {
             ranges: [[3, 4]],
@@ -328,3 +312,41 @@ tap.test(
     t.end();
   }
 );
+
+// rogue closing counterpart instead of self-closing
+// -----------------------------------------------------------------------------
+
+tap.test(`13 - rogue closing tag instead of self-closing`, (t) => {
+  const str = `<input type="submit" value="OK"></input>`;
+  const fixed = `<input type="submit" value="OK"/></input>`;
+  const messages = verify(t, str, {
+    rules: {
+      "tag-void-slash": 2,
+    },
+  });
+  t.match(
+    messages,
+    [
+      {
+        ruleId: "tag-void-slash",
+        severity: 2,
+        idxFrom: 0,
+        idxTo: 32,
+        message: "Missing slash.",
+        fix: {
+          ranges: [[31, 31, "/"]],
+        },
+      },
+      {
+        ruleId: "tag-void-slash",
+        severity: 2,
+        idxFrom: 32,
+        idxTo: 40,
+        fix: null,
+      },
+    ],
+    "13.01"
+  );
+  t.equal(applyFixes(str, messages), fixed, "13.02");
+  t.end();
+});
