@@ -1,18 +1,12 @@
-// rule: character-unspaced-punctuation
-// -----------------------------------------------------------------------------
-
 import tap from "tap";
-import { Linter } from "../../../dist/emlint.esm";
-
-import { applyFixes } from "../../../t-util/util";
+import { applyFixes, verify } from "../../../t-util/util";
 
 // 01. basic tests, no config
 // -----------------------------------------------------------------------------
 
 tap.test(`01 - text inside anchor link`, (t) => {
   const str = "<a>Click me!Now?Yes!</a>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "character-unspaced-punctuation": 0,
     },
@@ -24,8 +18,7 @@ tap.test(`01 - text inside anchor link`, (t) => {
 
 tap.test(`02 - text inside anchor link`, (t) => {
   const str = "<a>Click me!Now?Yes!</a>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "character-unspaced-punctuation": 1,
     },
@@ -62,8 +55,7 @@ tap.test(`02 - text inside anchor link`, (t) => {
 
 tap.test(`03 - text inside anchor link`, (t) => {
   const str = "<a>Click me!Now?Yes!</a>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "character-unspaced-punctuation": 2,
     },
@@ -103,8 +95,7 @@ tap.test(`03 - text inside anchor link`, (t) => {
 
 tap.test(`04 - text inside anchor link, right side missing`, (t) => {
   const str = "<a>Click me!Now?Yes!</a>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "character-unspaced-punctuation": [
         1,
@@ -157,8 +148,7 @@ tap.test(`04 - text inside anchor link, right side missing`, (t) => {
 
 tap.test(`05 - French`, (t) => {
   const str = "-Les pommes ou les oranges?-Les pommes!";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "character-unspaced-punctuation": [
         2,
@@ -228,8 +218,7 @@ tap.test(`05 - French`, (t) => {
 
 tap.test(`06`, (t) => {
   const str = `<a href='http://www.zz.com?a=1'>zz</a>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "character-unspaced-punctuation": 1,
     },
@@ -241,8 +230,7 @@ tap.test(`06`, (t) => {
 
 tap.test(`07`, (t) => {
   const str = "<a href='http://www.zz.com?a=1'>Click me!Now?Yes!</a>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "character-unspaced-punctuation": 1,
     },

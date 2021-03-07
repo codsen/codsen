@@ -1,9 +1,5 @@
-// rule: tag-bad-self-closing
-// -----------------------------------------------------------------------------
-
 import tap from "tap";
-import { Linter } from "../../../dist/emlint.esm";
-import { applyFixes } from "../../../t-util/util";
+import { applyFixes, verify } from "../../../t-util/util";
 // import { deepContains } from "ast-deep-contains");
 
 // 1. basics
@@ -13,8 +9,7 @@ tap.test(
   `01 - ${`\u001b[${33}m${`basics`}\u001b[${39}m`} - rule is off`,
   (t) => {
     const str = `<table/>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-bad-self-closing": 0,
       },
@@ -30,8 +25,7 @@ tap.test(
   (t) => {
     const str = `<table/>`;
     const fixed = `<table>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-bad-self-closing": 2,
       },
@@ -75,8 +69,7 @@ tap.test(
     </td>
   </tr>
 </table>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-bad-self-closing": 2,
       },
@@ -158,8 +151,7 @@ tap.test(
   (t) => {
     const str = `<div  />`;
     const fixed = `<div>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-bad-self-closing": 2,
       },
@@ -175,8 +167,7 @@ tap.test(
   (t) => {
     const str = `<div/    >`;
     const fixed = `<div>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-bad-self-closing": 2,
       },
@@ -192,8 +183,7 @@ tap.test(
   (t) => {
     const str = `<div   /    >`;
     const fixed = `<div>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-bad-self-closing": 1,
       },
@@ -209,8 +199,7 @@ tap.test(
   (t) => {
     const str = `<div\t\t\t\n\n\n\r\r\r\t\t\t/\t\t\t\r\r\r\r\r\r\r\r\t\t\t\t\t>`;
     const fixed = `<div>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-bad-self-closing": 2,
       },
@@ -226,8 +215,7 @@ tap.test(
   (t) => {
     const str = `<div   /    >`;
     const fixed = `<div>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         tag: 2, // <---------- all "tag-*" rules
       },
@@ -242,8 +230,7 @@ tap.test(
   (t) => {
     const str = `<div   /    >`;
     const fixed = `<div>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         all: 2, // <---------- all rules
       },

@@ -1,10 +1,5 @@
-// rule: character-encode
-// -----------------------------------------------------------------------------
-
 import tap from "tap";
-import { Linter } from "../../../dist/emlint.esm";
-
-import { applyFixes } from "../../../t-util/util";
+import { applyFixes, verify } from "../../../t-util/util";
 
 // 01. basic tests, no config
 // -----------------------------------------------------------------------------
@@ -13,8 +8,7 @@ tap.test(
   `01 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - unencoded characters`,
   (t) => {
     const str = "fsdhkfdfgh kj ";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "character-encode": 2,
       },
@@ -29,8 +23,7 @@ tap.test(
   `02 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - unencoded characters`,
   (t) => {
     const str = "£100";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "character-encode": 2,
       },
@@ -61,8 +54,7 @@ tap.test(
   `03 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - unencoded characters`,
   (t) => {
     const str = "£100";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         all: 1,
       },
@@ -96,8 +88,7 @@ tap.test(
   `04 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - named`,
   (t) => {
     const str = "£100";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "character-encode": [2, "named"],
       },
@@ -128,8 +119,7 @@ tap.test(
   `05 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - numeric`,
   (t) => {
     const str = "£100";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "character-encode": [2, "numeric"],
       },
@@ -160,8 +150,7 @@ tap.test(
   `06 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - missing`,
   (t) => {
     const str = "£100";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "character-encode": [2],
       },
@@ -192,8 +181,7 @@ tap.test(
   `07 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - unrecognised`,
   (t) => {
     const str = "£100";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "character-encode": [2, "yo"],
       },
@@ -224,8 +212,7 @@ tap.test(
   `08 - ${`\u001b[${32}m${`with config`}\u001b[${39}m`} - within ESP tag`,
   (t) => {
     const str = "{%- if count > 1 -%}{%- if count > 1 -%}";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "character-encode": 2,
       },
@@ -243,8 +230,7 @@ tap.test(
   `09 - ${`\u001b[${33}m${`email-unfriendly`}\u001b[${39}m`} - email not-friendly named char`,
   (t) => {
     const str = "\u0424"; // &Fcy; or Ф
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "character-encode": 1,
       },
@@ -275,8 +261,7 @@ tap.test(
   `10 - ${`\u001b[${33}m${`email-unfriendly`}\u001b[${39}m`} - email not-friendly named char`,
   (t) => {
     const str = "\u0424"; // &Fcy; or Ф
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "character-encode": [2, "named"],
       },
@@ -307,8 +292,7 @@ tap.test(
   `11 - ${`\u001b[${33}m${`email-unfriendly`}\u001b[${39}m`} - email not-friendly named char`,
   (t) => {
     const str = "\u0424"; // &Fcy; or Ф
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "character-encode": [2, "numeric"],
       },
@@ -342,8 +326,7 @@ tap.test(
   `12 - ${`\u001b[${33}m${`HTML-unfriendly`}\u001b[${39}m`} - brackets and quotes into named`,
   (t) => {
     const str = `><'"&`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "character-encode": [2, "named"],
       },
@@ -407,8 +390,7 @@ tap.test(
   `13 - ${`\u001b[${33}m${`HTML-unfriendly`}\u001b[${39}m`} - brackets and quotes into numeric`,
   (t) => {
     const str = `><'"&`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "character-encode": [2, "numeric"],
       },
@@ -475,8 +457,7 @@ tap.test(
   `14 - ${`\u001b[${33}m${`other issues`}\u001b[${39}m`} - broken closing comment, dash missing`,
   (t) => {
     const str = "a<!--b->c";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "character-encode": 2,
       },
@@ -492,8 +473,7 @@ tap.test(
   (t) => {
     const str = "a<!--b->c";
     const fixed = "a<!--b-->c";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "character-encode": 2,
         "comment-closing-malformed": 2,

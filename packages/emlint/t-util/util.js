@@ -1,3 +1,4 @@
+import { Linter } from "../dist/emlint.esm";
 import { rApply } from "ranges-apply";
 
 function applyFixes(str, messages) {
@@ -18,4 +19,19 @@ function applyFixes(str, messages) {
   );
 }
 
-export { applyFixes };
+function verify(t, str, opts) {
+  const linter = new Linter();
+  // 1. ensure given string does not throw on "all"
+  // setting - this is an automated check, a supplement
+  t.doesNotThrow(() => {
+    linter.verify(str, {
+      rules: {
+        all: 2,
+      },
+    });
+  });
+
+  return linter.verify(str, opts);
+}
+
+export { applyFixes, verify };

@@ -1,6 +1,5 @@
 import tap from "tap";
-import { Linter } from "../../../dist/emlint.esm";
-import { applyFixes } from "../../../t-util/util";
+import { applyFixes, verify } from "../../../t-util/util";
 
 const BACKSLASH = "\u005C";
 
@@ -11,8 +10,7 @@ tap.test(
   `01 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - a single tag`,
   (t) => {
     const str = "<a >";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-space-before-closing-bracket": 2,
       },
@@ -43,8 +41,7 @@ tap.test(
   `02 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - a single closing tag, space before slash`,
   (t) => {
     const str = "\n</a\t\t>";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-space-before-closing-bracket": 2,
       },
@@ -75,8 +72,7 @@ tap.test(
   `03 - ${`\u001b[${33}m${`basic`}\u001b[${39}m`} - works with attributes, double quotes`,
   (t) => {
     const str = `<div class="zz yy" >`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-space-before-closing-bracket": 2,
       },
@@ -108,8 +104,7 @@ tap.test(
 
 tap.test(`04 - ${`\u001b[${36}m${`XML tags`}\u001b[${39}m`} - basic`, (t) => {
   const str = `<?xml version="1.0" encoding="UTF-8"?   >`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "tag-space-before-closing-bracket": 2,
     },
@@ -146,8 +141,7 @@ tap.test(
   `05 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - does not touch tags with closing slash`,
   (t) => {
     const str = "<br\t\t/\t\t>";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-space-before-closing-bracket": 2,
       },
@@ -162,8 +156,7 @@ tap.test(
   `06 - ${`\u001b[${33}m${`no error`}\u001b[${39}m`} - because of a backslash`,
   (t) => {
     const str = `<br\t\t${BACKSLASH}\t\t>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-space-before-closing-bracket": 2,
       },

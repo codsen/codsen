@@ -1,6 +1,5 @@
 import tap from "tap";
-import { Linter } from "../../../dist/emlint.esm";
-import { applyFixes } from "../../../t-util/util";
+import { applyFixes, verify } from "../../../t-util/util";
 
 // 01. type="only"
 // -----------------------------------------------------------------------------
@@ -15,8 +14,7 @@ tap.test(
   `01 - ${`\u001b[${33}m${`type: only`}\u001b[${39}m`} - simple comment nested, tight`,
   (t) => {
     const str = `<!--[if mso]><!--tralala--><![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-conditional-nested": 2,
       },
@@ -55,8 +53,7 @@ tap.test(
     const str = `<!--[if mso]>
     z <!--tralala--> y
 <![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-conditional-nested": 2,
       },
@@ -95,8 +92,7 @@ tap.test(
     const str = `<!--[if mso]>
     x <!--tralala--> z <!--tralala--> y
 <![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-conditional-nested": 2,
       },
@@ -154,8 +150,7 @@ tap.test(
 <!--[if mso]>z<![endif]-->
 
 <![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-conditional-nested": 2,
       },
@@ -201,8 +196,7 @@ tap.test(
   `05 - ${`\u001b[${36}m${`type: not`}\u001b[${39}m`} - simple comment nested, tight`,
   (t) => {
     const str = `<!--[if mso]><!--><!--tralala--><!--<![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-conditional-nested": 2,
       },
@@ -241,8 +235,7 @@ tap.test(
     const str = `<!--[if mso]><!-->
     z <!--tralala--> y
 <!--<![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-conditional-nested": 2,
       },
@@ -281,8 +274,7 @@ tap.test(
     const str = `<!--[if mso]><!-->
     x <!--tralala--> z <!--tralala--> y
 <!--<![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-conditional-nested": 2,
       },
@@ -340,8 +332,7 @@ tap.test(
 <!--[if mso]>z<![endif]-->
 
 <!--<![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-conditional-nested": 2,
       },

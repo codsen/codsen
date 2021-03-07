@@ -1,14 +1,12 @@
 import tap from "tap";
-import { Linter } from "../../../dist/emlint.esm";
-import { applyFixes } from "../../../t-util/util";
+import { applyFixes, verify } from "../../../t-util/util";
 
 // false positives
 // -----------------------------------------------------------------------------
 
 tap.test(`01 - one attribute`, (t) => {
   const str = `<br class="h"/>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "attribute-on-closing-tag": 2,
     },
@@ -20,8 +18,7 @@ tap.test(`01 - one attribute`, (t) => {
 
 tap.test(`02 - one attribute`, (t) => {
   const str = `<br class="h">`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "attribute-on-closing-tag": 2,
     },
@@ -36,8 +33,7 @@ tap.test(`02 - one attribute`, (t) => {
 
 tap.test(`03 - one attribute`, (t) => {
   const str = `<a>z</a class="y">`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "attribute-on-closing-tag": 2,
     },

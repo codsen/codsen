@@ -1,6 +1,5 @@
 import tap from "tap";
-import { Linter } from "../../../dist/emlint.esm";
-import { applyFixes } from "../../../t-util/util";
+import { applyFixes, verify } from "../../../t-util/util";
 
 // 01. "only" opening, "not" closing
 // -----------------------------------------------------------------------------
@@ -11,8 +10,7 @@ tap.test(
     const str = `<!--[if mso]>
   <img src="fallback">
 <!--<![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-mismatching-pair": 0,
       },
@@ -32,8 +30,7 @@ tap.test(
     const fixed = `<!--[if mso]>
   <img src="fallback"/>
 <![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-mismatching-pair": 1,
       },
@@ -70,8 +67,7 @@ tap.test(
     const fixed = `<!--[if mso]>
   <img src="fallback"/>
 <![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         // all: 1,
         "comment-opening-malformed": 1,
@@ -120,9 +116,8 @@ tap.test(
     const fixed = `<!--[if mso]>
   <img src="fallback"/>
 <![endif]-->`;
-    const linter = new Linter();
 
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         all: 2,
       },
@@ -151,7 +146,8 @@ tap.test(
       "04.02"
     );
 
-    const secondRoundMessages = linter.verify(
+    const secondRoundMessages = verify(
+      t,
       `<!--[if mso]>
   <img src="fallback"/>
 <!--<![endif]-->`,
@@ -198,13 +194,12 @@ tap.test(
     const fixed = `<!--[if mso]>
   <img src="fallback"/>
 <![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         all: 2,
       },
     });
-    const secondRoundMessages = linter.verify(applyFixes(str, messages), {
+    const secondRoundMessages = verify(t, applyFixes(str, messages), {
       rules: {
         all: 2,
       },
@@ -231,8 +226,7 @@ tap.test(
     const fixed = `<!--[if !mso]><!-->
   <img src="fallback"/>
 <!--<![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-mismatching-pair": 2,
       },
@@ -271,8 +265,7 @@ tap.test(
     const fixed = `<!--[if !mso]><!-->
   <img src="fallback"/>
 <!--<![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         all: 2,
       },
@@ -321,13 +314,12 @@ tap.test(
     const fixed = `<!--[if mso]><!-->
   <img src="fallback"/>
 <!--<![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         all: 2,
       },
     });
-    const secondRoundMessages = linter.verify(applyFixes(str, messages), {
+    const secondRoundMessages = verify(t, applyFixes(str, messages), {
       rules: {
         all: 2,
       },
@@ -351,13 +343,12 @@ tap.test(
     const fixed = `<!--[if mso]><!-->
   <img src="fallback"/>
 <!--<![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         all: 2,
       },
     });
-    const secondRoundMessages = linter.verify(applyFixes(str, messages), {
+    const secondRoundMessages = verify(t, applyFixes(str, messages), {
       rules: {
         all: 2,
       },

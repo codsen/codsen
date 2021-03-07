@@ -1,6 +1,5 @@
 import tap from "tap";
-import { Linter } from "../../../dist/emlint.esm";
-import { applyFixes } from "../../../t-util/util";
+import { applyFixes, verify } from "../../../t-util/util";
 // import { deepContains } from "ast-deep-contains");
 
 // 01. no config
@@ -12,8 +11,7 @@ tap.test(
     const str = `<style>
   @media screen and (color), projection and (color) {zzz}
 </style>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "media-malformed": 0,
       },
@@ -30,8 +28,7 @@ tap.test(
     const str = `<style>
   @media screen and (color), projection and (color) {zzz}
 </style>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "media-malformed": 1,
       },
@@ -48,8 +45,7 @@ tap.test(
     const str = `<style>
   @media screen and (color), projection and (color) {zzz}
 </style>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "media-malformed": 2,
       },
@@ -66,8 +62,7 @@ tap.test(
     const str = `<style>
   @media screeen and (color), projection and (color) {zzz}
 </style>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "media-malformed": 2,
       },
@@ -100,8 +95,7 @@ tap.test(
     const str = `<style>
   @supports screeen and (color), projection and (color) {zzz}
 </style>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "media-malformed": 2,
       },

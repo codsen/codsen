@@ -1,10 +1,6 @@
-// rule: tag-closing-backslash
-// -----------------------------------------------------------------------------
-
 import tap from "tap";
 import { deepContains } from "ast-deep-contains";
-import { Linter } from "../../../dist/emlint.esm";
-import { applyFixes } from "../../../t-util/util";
+import { applyFixes, verify } from "../../../t-util/util";
 
 const BACKSLASH = "\u005C";
 
@@ -13,8 +9,7 @@ const BACKSLASH = "\u005C";
 
 tap.test(`01 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - tight`, (t) => {
   const str = `<br${BACKSLASH}>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "tag-closing-backslash": 2,
     },
@@ -43,8 +38,7 @@ tap.test(
   `02 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - space in front, rule prohibits it`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
         "tag-space-before-closing-slash": 2,
@@ -75,8 +69,7 @@ tap.test(
   `03 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - space in front, rule prohibits it`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
         "tag-space-before-closing-slash": [2, "never"],
@@ -107,8 +100,7 @@ tap.test(
   `04 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - space in front, rule demands it`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
         "tag-space-before-closing-slash": [2, "always"],
@@ -139,8 +131,7 @@ tap.test(
   `05 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - one tab, rule demands space`,
   (t) => {
     const str = `<br\t${BACKSLASH}>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
         "tag-space-before-closing-slash": [2, "always"],
@@ -171,8 +162,7 @@ tap.test(
   `06 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - two tabs, rule demands space`,
   (t) => {
     const str = `<br\t\t${BACKSLASH}>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
         "tag-space-before-closing-slash": [2, "always"],
@@ -201,8 +191,7 @@ tap.test(
 
 tap.test(`07 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - tight`, (t) => {
   const str = `<br${BACKSLASH}>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "tag-closing-backslash": 2,
       "tag-space-before-closing-slash": [2, "always"],
@@ -235,8 +224,7 @@ tap.test(
   `08 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - tight`,
   (t) => {
     const str = `<br${BACKSLASH}>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
         "tag-void-slash": 2, // default is "always"
@@ -267,8 +255,7 @@ tap.test(
   `09 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - tight`,
   (t) => {
     const str = `<br${BACKSLASH}>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
         "tag-void-slash": [2, "always"], // hardcoded default
@@ -299,8 +286,7 @@ tap.test(
   `10 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - tight`,
   (t) => {
     const str = `<br${BACKSLASH}>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
         "tag-void-slash": [2, "never"], // off
@@ -333,8 +319,7 @@ tap.test(
   `11 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, rule prohibits it, ${`\u001b[${35}m${`no tag-space-before-closing-slash`}\u001b[${39}m`}`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
         "tag-void-slash": 2, // default
@@ -365,8 +350,7 @@ tap.test(
   `12 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, rule prohibits it, ${`\u001b[${35}m${`no tag-space-before-closing-slash`}\u001b[${39}m`}`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
         "tag-void-slash": [2, "always"], // hardcoded default
@@ -397,8 +381,7 @@ tap.test(
   `13 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, rule prohibits it, ${`\u001b[${35}m${`no tag-space-before-closing-slash`}\u001b[${39}m`}`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
         "tag-void-slash": [2, "never"], // off
@@ -431,8 +414,7 @@ tap.test(
   `14 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-slash`}\u001b[${39}m`}=${`\u001b[${32}m${`always`}\u001b[${39}m`}`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
         "tag-void-slash": 2,
@@ -464,8 +446,7 @@ tap.test(
   `15 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-slash`}\u001b[${39}m`}=${`\u001b[${32}m${`always`}\u001b[${39}m`}`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
         "tag-void-slash": [2, "always"],
@@ -497,8 +478,7 @@ tap.test(
   `16 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-slash`}\u001b[${39}m`}=${`\u001b[${32}m${`always`}\u001b[${39}m`}`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
         "tag-void-slash": [2, "never"],
@@ -532,8 +512,7 @@ tap.test(
   `17 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-slash`}\u001b[${39}m`}=${`\u001b[${31}m${`never`}\u001b[${39}m`}`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
         "tag-void-slash": 2,
@@ -565,8 +544,7 @@ tap.test(
   `18 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-slash`}\u001b[${39}m`}=${`\u001b[${31}m${`never`}\u001b[${39}m`}`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
         "tag-void-slash": [2, "always"],
@@ -598,8 +576,7 @@ tap.test(
   `19 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space in front, ${`\u001b[${36}m${`tag-space-before-closing-slash`}\u001b[${39}m`}=${`\u001b[${31}m${`never`}\u001b[${39}m`}`,
   (t) => {
     const str = `<br  ${BACKSLASH}>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
         "tag-void-slash": [2, "never"],
@@ -634,8 +611,7 @@ tap.test(
   `20 - ${`\u001b[${33}m${`void tag`}\u001b[${39}m`} - not void tag`,
   (t) => {
     const str = `<div${BACKSLASH}>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
       },
@@ -665,8 +641,7 @@ tap.test(
   `21 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space request ignored`,
   (t) => {
     const str = `<div${BACKSLASH}>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
         "tag-space-before-closing-slash": [2, "always"],
@@ -697,8 +672,7 @@ tap.test(
   `22 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - space request ignored`,
   (t) => {
     const str = `<div${BACKSLASH}>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         tag: 2,
       },
@@ -736,8 +710,7 @@ tap.test(
   `23 - ${`\u001b[${33}m${`with tag-void-slash`}\u001b[${39}m`} - tag-void-slash does not matter`,
   (t) => {
     const str = `<div${BACKSLASH}>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
         "tag-space-before-closing-slash": [2, "always"],
@@ -772,8 +745,7 @@ tap.test(
   `24 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - no slash, no opts`,
   (t) => {
     const str = `<${BACKSLASH}br>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         tag: 2,
       },
@@ -813,8 +785,7 @@ tap.test(
   `25 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - slash, no opts`,
   (t) => {
     const str = `<${BACKSLASH}br/>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
       },
@@ -844,8 +815,7 @@ tap.test(
   `26 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - no slash, no opts, whitespace`,
   (t) => {
     const str = `<${BACKSLASH}br\t>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         tag: 2,
       },
@@ -859,8 +829,7 @@ tap.test(
   `27 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - combo with rule "tag-void-slash"`,
   (t) => {
     const str = `<${BACKSLASH}br>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
         "tag-void-slash": [2, "never"],
@@ -891,8 +860,7 @@ tap.test(
   `28 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - no slash, no opts, whitespace`,
   (t) => {
     const str = `<${BACKSLASH}br\t>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
         "tag-void-slash": 2,
@@ -934,8 +902,7 @@ tap.test(
   `29 - ${`\u001b[${33}m${`in front of a void tag`}\u001b[${39}m`} - no slash, no opts, whitespace`,
   (t) => {
     const str = `<${BACKSLASH}br >`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
         "tag-void-slash": 2,
@@ -980,8 +947,7 @@ tap.test(
   `30 - ${`\u001b[${33}m${`in front of a non-void tag`}\u001b[${39}m`} - div, tight`,
   (t) => {
     const str = `<${BACKSLASH}div>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
       },
@@ -1011,8 +977,7 @@ tap.test(
   `31 - ${`\u001b[${33}m${`in front of a non-void tag`}\u001b[${39}m`} - div, leading space`,
   (t) => {
     const str = `< ${BACKSLASH}div>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
       },
@@ -1042,8 +1007,7 @@ tap.test(
   `32 - ${`\u001b[${33}m${`in front of a non-void tag`}\u001b[${39}m`} - div, trailing space`,
   (t) => {
     const str = `<${BACKSLASH} div>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
       },
@@ -1073,8 +1037,7 @@ tap.test(
   `33 - ${`\u001b[${33}m${`in front of a non-void tag`}\u001b[${39}m`} - div, spaced`,
   (t) => {
     const str = `< ${BACKSLASH} div>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-closing-backslash": 2,
       },
@@ -1107,8 +1070,7 @@ tap.test(
   `34 - ${`\u001b[${36}m${`both sides`}\u001b[${39}m`} - extreme case`,
   (t) => {
     const str = `<${BACKSLASH}br${BACKSLASH}>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         tag: 2,
       },

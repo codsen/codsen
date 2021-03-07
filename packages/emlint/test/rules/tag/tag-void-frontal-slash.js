@@ -1,6 +1,5 @@
 import tap from "tap";
-import { Linter } from "../../../dist/emlint.esm";
-import { applyFixes } from "../../../t-util/util";
+import { applyFixes, verify } from "../../../t-util/util";
 
 // 01. basic
 // -----------------------------------------------------------------------------
@@ -10,8 +9,7 @@ tap.test(
   (t) => {
     const str = "</br>";
     const fixed = "<br>";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-void-frontal-slash": 2,
       },
@@ -41,8 +39,7 @@ tap.test(
   (t) => {
     const str = "</br>";
     const fixed = "<br/>";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         tag: 1,
       },
@@ -84,8 +81,7 @@ tap.test(
   (t) => {
     const str = "</br>";
     const fixed = "<br/>";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         tag: 2,
       },

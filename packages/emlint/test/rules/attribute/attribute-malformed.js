@@ -1,6 +1,5 @@
 import tap from "tap";
-import { Linter } from "../../../dist/emlint.esm";
-import { applyFixes } from "../../../t-util/util";
+import { applyFixes, verify } from "../../../t-util/util";
 
 // 00. false positives
 // -----------------------------------------------------------------------------
@@ -9,8 +8,7 @@ tap.test(
   `01 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - value-less attributes`,
   (t) => {
     const str = `<td nowrap >`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-malformed": 0,
       },
@@ -25,8 +23,7 @@ tap.test(
   `02 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - value-less attributes`,
   (t) => {
     const str = `<td nowrap>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-malformed": 0,
       },
@@ -41,8 +38,7 @@ tap.test(
   `03 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - value-less attributes`,
   (t) => {
     const str = `<td nowrap/>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-malformed": 0,
       },
@@ -57,8 +53,7 @@ tap.test(
   `04 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - value-less attributes`,
   (t) => {
     const str = `<br nowrap />`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-malformed": 0,
       },
@@ -73,8 +68,7 @@ tap.test(
   `05 - ${`\u001b[${36}m${`no config`}\u001b[${39}m`} - value-less attributes`,
   (t) => {
     const str = `</td nowrap nowrap>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-malformed": 0,
       },
@@ -90,8 +84,7 @@ tap.test(
 
 tap.test(`06 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off`, (t) => {
   const str = `<a b"c" d'e'>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "attribute-malformed": 0,
     },
@@ -103,8 +96,7 @@ tap.test(`06 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - off`, (t) => {
 
 tap.test(`07 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, (t) => {
   const str = `<a class"b" id'c'>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "attribute-malformed": 1,
     },
@@ -141,8 +133,7 @@ tap.test(`07 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, (t) => {
 
 tap.test(`08 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, (t) => {
   const str = `<a class"b" id'c'>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "attribute-malformed": 2,
     },
@@ -182,8 +173,7 @@ tap.test(`08 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - warn`, (t) => {
 
 tap.test(`09 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, (t) => {
   const str = `<td clas="w100p">`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "attribute-malformed": 2,
     },
@@ -209,8 +199,7 @@ tap.test(`09 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, (t) => {
 
 tap.test(`10 - ${`\u001b[${33}m${`no config`}\u001b[${39}m`} - err`, (t) => {
   const str = `<td zzzz="w100p">`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "attribute-malformed": 1,
     },
@@ -241,8 +230,7 @@ tap.test(
   (t) => {
     const str = `<table width=""100">\n  zzz\n</table>`;
     const fixed = `<table width="100">\n  zzz\n</table>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-malformed": 1,
       },
@@ -273,8 +261,7 @@ tap.test(
   (t) => {
     const str = `<table width=''100'>\n  zzz\n</table>`;
     const fixed = `<table width='100'>\n  zzz\n</table>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-malformed": 1,
       },
@@ -305,8 +292,7 @@ tap.test(
   (t) => {
     const str = `<table width''100'>\n  zzz\n</table>`;
     const fixed = `<table width='100'>\n  zzz\n</table>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-malformed": 2,
       },
@@ -322,8 +308,7 @@ tap.test(
   (t) => {
     const str = `<table width""100">\n  zzz\n</table>`;
     const fixed = `<table width="100">\n  zzz\n</table>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-malformed": 2,
       },
@@ -339,8 +324,7 @@ tap.test(
   (t) => {
     const str = `<table width="100"">\n  zzz\n</table>`;
     const fixed = `<table width="100">\n  zzz\n</table>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-malformed": 1,
       },
@@ -374,8 +358,7 @@ tap.test(
   (t) => {
     const str = `<table width='"100">zzz</table>`;
     const fixed = `<table width="100">zzz</table>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-malformed": 2,
       },
@@ -391,8 +374,7 @@ tap.test(
   (t) => {
     const str = `<table width="'100'>zzz</table>`;
     const fixed = `<table width='100'>zzz</table>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-malformed": 2,
       },
@@ -411,8 +393,7 @@ tap.test(
   (t) => {
     const str = `<span width...=....."100"></span>`;
     const fixed = `<span width="100"></span>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-malformed": 2,
       },
@@ -431,8 +412,7 @@ tap.test(
   (t) => {
     const str = `<a class"c" id'e'>`;
     const fixed = `<a class="c" id='e'>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-malformed": 2,
       },
@@ -448,8 +428,7 @@ tap.test(
   (t) => {
     const str = `<a class "c" id 'e' href "www">`;
     const fixed = `<a class="c" id='e' href="www">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-malformed": 2,
       },
@@ -465,8 +444,7 @@ tap.test(
   (t) => {
     const str = `<a class"c' id"e'>`;
     const fixed = `<a class="c" id="e">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-malformed": 2,
       },
@@ -482,8 +460,7 @@ tap.test(
   (t) => {
     const str = `<a class"c' id'e">`;
     const fixed = `<a class="c" id="e">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-malformed": 2,
       },
@@ -502,8 +479,7 @@ tap.test(
   (t) => {
     const str = `<div class="c'>.</div>`;
     const fixed = `<div class="c">.</div>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-malformed": 2,
       },
@@ -536,8 +512,7 @@ tap.test(
   (t) => {
     const str = `<div class='c">.</div>`;
     const fixed = `<div class="c">.</div>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-malformed": 2,
       },
@@ -570,8 +545,7 @@ tap.test(
   (t) => {
     const str = `<img alt='so-called "artists"!"/>`;
     const fixed = `<img alt='so-called "artists"!'/>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-malformed": 2,
       },
@@ -604,8 +578,7 @@ tap.test(
   (t) => {
     const str = `<img alt="so-called "artists"!'/>`;
     const fixed = `<img alt='so-called "artists"!'/>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-malformed": 2,
       },
@@ -638,8 +611,7 @@ tap.test(
   (t) => {
     const str = `<img alt="Deal is your's!'/>`;
     const fixed = `<img alt="Deal is your's!"/>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-malformed": 2,
       },
@@ -672,8 +644,7 @@ tap.test(
   (t) => {
     const str = `<img alt='Deal is your's!"/>`;
     const fixed = `<img alt="Deal is your's!"/>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-malformed": 2,
       },

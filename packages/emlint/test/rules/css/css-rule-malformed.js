@@ -1,6 +1,5 @@
 import tap from "tap";
-import { Linter } from "../../../dist/emlint.esm";
-import { applyFixes } from "../../../t-util/util";
+import { applyFixes, verify } from "../../../t-util/util";
 import { deepContains } from "ast-deep-contains";
 
 // missing semi on a non-last rule
@@ -9,8 +8,7 @@ import { deepContains } from "ast-deep-contains";
 tap.test(`01 - 1/2`, (t) => {
   const str = `<style>.a{color:red\ntext-align:left;}</style><body>a</body>`;
   const fixed = `<style>.a{color:red;\ntext-align:left;}</style><body>a</body>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-rule-malformed": 2,
     },
@@ -38,8 +36,7 @@ tap.test(`01 - 1/2`, (t) => {
 tap.test(`02 - 1/3, 2/3`, (t) => {
   const str = `<style>.a{color:red\n\ntext-align:left\n\nfloat:right}</style><body>a</body>`;
   const fixed = `<style>.a{color:red;\n\ntext-align:left;\n\nfloat:right}</style><body>a</body>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-rule-malformed": 2,
     },
@@ -79,8 +76,7 @@ tap.test(`02 - 1/3, 2/3`, (t) => {
 tap.test(`03 - 1/3, 2/3`, (t) => {
   const str = `<style>.a{color:red;\n\ntext-align:left\n\nfloat:right}</style><body>a</body>`;
   const fixed = `<style>.a{color:red;\n\ntext-align:left;\n\nfloat:right}</style><body>a</body>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-rule-malformed": 2,
     },
@@ -112,8 +108,7 @@ tap.test(`03 - 1/3, 2/3`, (t) => {
 tap.test(`04 - one semi, tight`, (t) => {
   const str = `<style>.a{;}</style><body>a</body>`;
   const fixed = `<style>.a{}</style><body>a</body>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       // "css-rule-malformed": 2,
       all: 2,
@@ -142,8 +137,7 @@ tap.test(`04 - one semi, tight`, (t) => {
 tap.test(`05 - two semis, tight`, (t) => {
   const str = `<style>.a{;;}</style><body>a</body>`;
   const fixed = `<style>.a{}</style><body>a</body>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       // "css-rule-malformed": 2,
       all: 2,
@@ -184,8 +178,7 @@ tap.test(`05 - two semis, tight`, (t) => {
 
 tap.test(`06 - nothing after semi`, (t) => {
   const str = `<style>.a{color:}</style><body>a</body>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-rule-malformed": 2,
     },
@@ -210,8 +203,7 @@ tap.test(`06 - nothing after semi`, (t) => {
 
 tap.test(`07 - value and semi missing, followed by correct rule`, (t) => {
   const str = `<style>.a{ color \n\ntext-align:left;}</style><body>a</body>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-rule-malformed": 2,
     },
@@ -237,8 +229,7 @@ tap.test(`07 - value and semi missing, followed by correct rule`, (t) => {
 tap.test(`08`, (t) => {
   const str = `<style>.a{color: red !important float: left}</style>`;
   const fixed = `<style>.a{color: red !important; float: left;}</style>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-rule-malformed": 2,
       "css-trailing-semi": 2,
@@ -281,8 +272,7 @@ tap.test(`08`, (t) => {
 tap.test(`09`, (t) => {
   const str = `<style>.a{color:red; !important;}</style>`;
   const fixed = `<style>.a{color:red !important;}</style>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-rule-malformed": 2,
     },
@@ -310,8 +300,7 @@ tap.test(`09`, (t) => {
 tap.test(`10 - impotant [sic]`, (t) => {
   const str = `<style>.a{color:red;!impotant;}</style>`;
   const fixed = `<style>.a{color:red !important;}</style>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-rule-malformed": 2,
     },
@@ -353,8 +342,7 @@ tap.test(`10 - impotant [sic]`, (t) => {
 tap.test(`11 - impotant [sic] - with space in front`, (t) => {
   const str = `<style>.a{color:red !impotant;}</style>`;
   const fixed = `<style>.a{color:red !important;}</style>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-rule-malformed": 2,
     },
@@ -366,8 +354,7 @@ tap.test(`11 - impotant [sic] - with space in front`, (t) => {
 tap.test(`12 - impotant [sic] - without space in front`, (t) => {
   const str = `<style>.a{color:red!impotant}</style>`;
   const fixed = `<style>.a{color:red!important}</style>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-rule-malformed": 2,
     },
@@ -379,8 +366,7 @@ tap.test(`12 - impotant [sic] - without space in front`, (t) => {
 tap.test(`13 - important without excl mark`, (t) => {
   const str = `<style>.a{color:red important}</style>`;
   const fixed = `<style>.a{color:red !important}</style>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-rule-malformed": 2,
     },
@@ -392,8 +378,7 @@ tap.test(`13 - important without excl mark`, (t) => {
 tap.test(`14 - important with number one instead of excl mark`, (t) => {
   const str = `<style>.a{color:red 1important}</style>`;
   const fixed = `<style>.a{color:red !important}</style>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-rule-malformed": 2,
     },
@@ -408,8 +393,7 @@ tap.test(`14 - important with number one instead of excl mark`, (t) => {
 tap.test(`15 - space after colon/semi`, (t) => {
   const str = `<style>.a{ color : red ; }</style>`;
   const fixed = `<style>.a{ color: red; }</style>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-rule-malformed": 2,
     },
@@ -421,8 +405,7 @@ tap.test(`15 - space after colon/semi`, (t) => {
 tap.test(`16 - no space after colon/semi`, (t) => {
   const str = `<style>.a{color :red ;}</style>`;
   const fixed = `<style>.a{color:red;}</style>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-rule-malformed": 2,
     },
@@ -434,8 +417,7 @@ tap.test(`16 - no space after colon/semi`, (t) => {
 tap.test(`17`, (t) => {
   const str = `<style>.a{color : red;}</style>`;
   const fixed = `<style>.a{color: red;}</style>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-rule-malformed": 2,
     },
@@ -447,8 +429,7 @@ tap.test(`17`, (t) => {
 tap.test(`18`, (t) => {
   const str = `<style>.a{color : red ; text-align : left ;}</style>`;
   const fixed = `<style>.a{color: red; text-align: left;}</style>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-rule-malformed": 2,
     },
@@ -463,8 +444,7 @@ tap.test(`18`, (t) => {
 tap.test(`19`, (t) => {
   const str = `<style>.a{color/red;}</style>`;
   const fixed = `<style>.a{color:red;}</style>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-rule-malformed": 2,
     },
@@ -479,8 +459,7 @@ tap.test(`19`, (t) => {
 tap.test(`20`, (t) => {
   const str = `<style>.a{color: red;;}</style>`;
   const fixed = `<style>.a{color: red;}</style>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-rule-malformed": 2,
     },

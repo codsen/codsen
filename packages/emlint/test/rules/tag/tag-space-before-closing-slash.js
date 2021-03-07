@@ -1,9 +1,5 @@
-// rule: tag-space-before-closing-slash
-// -----------------------------------------------------------------------------
-
 import tap from "tap";
-import { Linter } from "../../../dist/emlint.esm";
-import { applyFixes } from "../../../t-util/util";
+import { applyFixes, verify } from "../../../t-util/util";
 // import { deepContains } from "ast-deep-contains");
 
 // 1. no opts
@@ -13,8 +9,7 @@ tap.test(
   `01 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - defaults, no opts, space present, warning`,
   (t) => {
     const str = "<br />";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-space-before-closing-slash": 1,
       },
@@ -46,8 +41,7 @@ tap.test(
   `02 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - defaults, no opts, space present, error`,
   (t) => {
     const str = "<br />";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-space-before-closing-slash": 2,
       },
@@ -79,8 +73,7 @@ tap.test(
   `03 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - defaults, no opts, space missing, warning`,
   (t) => {
     const str = "<br/>";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-space-before-closing-slash": 1,
       },
@@ -95,8 +88,7 @@ tap.test(
   `04 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - defaults, no opts, space missing, error`,
   (t) => {
     const str = "<br/>";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-space-before-closing-slash": 2,
       },
@@ -114,8 +106,7 @@ tap.test(
   `05 - ${`\u001b[${32}m${`with opts, space present`}\u001b[${39}m`} - space present, opts=never, warning`,
   (t) => {
     const str = "<br />";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-space-before-closing-slash": [1, "never"],
       },
@@ -147,8 +138,7 @@ tap.test(
   `06 - ${`\u001b[${32}m${`with opts, space present`}\u001b[${39}m`} - space present, opts=never, error`,
   (t) => {
     const str = "<br />";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-space-before-closing-slash": [2, "never", "tralala"],
       },
@@ -180,8 +170,7 @@ tap.test(
   `07 - ${`\u001b[${32}m${`with opts, space present`}\u001b[${39}m`} - space present, opts=always, warning`,
   (t) => {
     const str = "<br />";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-space-before-closing-slash": [1, "always"],
       },
@@ -196,8 +185,7 @@ tap.test(
   `08 - ${`\u001b[${32}m${`with opts, space present`}\u001b[${39}m`} - space present, opts=always, error`,
   (t) => {
     const str = "<br />";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-space-before-closing-slash": [2, "always"],
       },
@@ -215,8 +203,7 @@ tap.test(
   `09 - ${`\u001b[${36}m${`with opts, space missing`}\u001b[${39}m`} - opts=always, warning`,
   (t) => {
     const str = "<br/>";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-space-before-closing-slash": [1, "always"],
       },
@@ -248,8 +235,7 @@ tap.test(
   `10 - ${`\u001b[${36}m${`with opts, space missing`}\u001b[${39}m`} - opts=always, error`,
   (t) => {
     const str = "<br/>";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-space-before-closing-slash": [2, "always"],
       },
@@ -281,8 +267,7 @@ tap.test(
   `11 - ${`\u001b[${36}m${`with opts, space missing`}\u001b[${39}m`} - opts=never, warning`,
   (t) => {
     const str = "<br/>";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-space-before-closing-slash": [1, "never"],
       },
@@ -297,8 +282,7 @@ tap.test(
   `12 - ${`\u001b[${36}m${`with opts, space missing`}\u001b[${39}m`} - opts=never, error`,
   (t) => {
     const str = "<br/>";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-space-before-closing-slash": [2, "never"],
       },
@@ -316,8 +300,7 @@ tap.test(
   `13 - ${`\u001b[${35}m${`mixed`}\u001b[${39}m`} - opts=always`,
   (t) => {
     const str = "<br/><hr/><hr /><br/>";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-space-before-closing-slash": [2, "always"],
       },
@@ -374,8 +357,7 @@ tap.test(
   `14 - ${`\u001b[${35}m${`mixed`}\u001b[${39}m`} - opts=never, deletes a space`,
   (t) => {
     const str = "<br/><hr/><hr  /><br/>";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-space-before-closing-slash": [2, "never"],
       },
@@ -408,8 +390,7 @@ tap.test(
   `15 - ${`\u001b[${35}m${`mixed`}\u001b[${39}m`} - opts=never, deletes a tab`,
   (t) => {
     const str = "<br/><hr/><hr\t/><br/>";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-space-before-closing-slash": [2, "never"],
       },

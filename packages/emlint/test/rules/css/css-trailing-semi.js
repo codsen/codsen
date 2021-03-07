@@ -1,14 +1,12 @@
 import tap from "tap";
-import { Linter } from "../../../dist/emlint.esm";
-import { applyFixes } from "../../../t-util/util";
+import { applyFixes, verify } from "../../../t-util/util";
 
 // 00. false positives
 // -----------------------------------------------------------------------------
 
 tap.test(`01 - not a style, inline`, (t) => {
   const str = `<img alt="color: red">`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-trailing-semi": 2,
     },
@@ -20,8 +18,7 @@ tap.test(`01 - not a style, inline`, (t) => {
 
 tap.test(`02 - not a style, head`, (t) => {
   const str = `<span>a{color: red}`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-trailing-semi": 2,
     },
@@ -37,8 +34,7 @@ tap.test(`02 - not a style, head`, (t) => {
 tap.test(`03 - one style, always`, (t) => {
   const str = `<style>.a{color:red}</style><body style="color:red">a</body>`;
   const fixed = `<style>.a{color:red;}</style><body style="color:red;">a</body>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-trailing-semi": [2, "always"],
     },
@@ -76,8 +72,7 @@ tap.test(`03 - one style, always`, (t) => {
 tap.test(`04 - one style, always, spaced important`, (t) => {
   const str = `<style>.a{color: red !important}</style><body style="color: red !important">a</body>`;
   const fixed = `<style>.a{color: red !important;}</style><body style="color: red !important;">a</body>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-trailing-semi": [2, "always"],
     },
@@ -115,8 +110,7 @@ tap.test(`04 - one style, always, spaced important`, (t) => {
 tap.test(`05 - one style, always, tight important`, (t) => {
   const str = `<style>.a{color:red!important}</style><body style="color:red!important">a</body>`;
   const fixed = `<style>.a{color:red!important;}</style><body style="color:red!important;">a</body>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-trailing-semi": [2, "always"],
     },
@@ -128,8 +122,7 @@ tap.test(`05 - one style, always, tight important`, (t) => {
 tap.test(`06 - one style, always, inner whitespace`, (t) => {
   const str = `<style>.a{color:red }</style><body>a</body>`;
   const fixed = `<style>.a{color:red; }</style><body>a</body>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-trailing-semi": [1, "always"],
     },
@@ -157,8 +150,7 @@ tap.test(`06 - one style, always, inner whitespace`, (t) => {
 tap.test(`07 - two styles, always`, (t) => {
   const str = `<style>.a{text-align:left; color:red}</style><body>a</body>`;
   const fixed = `<style>.a{text-align:left; color:red;}</style><body>a</body>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-trailing-semi": [2, "always"],
     },
@@ -170,8 +162,7 @@ tap.test(`07 - two styles, always`, (t) => {
 tap.test(`08 - two styles with space, always`, (t) => {
   const str = `<style>.a{text-align:left; color:red }</style><body>a</body>`;
   const fixed = `<style>.a{text-align:left; color:red; }</style><body>a</body>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-trailing-semi": [2, "always"],
     },
@@ -183,8 +174,7 @@ tap.test(`08 - two styles with space, always`, (t) => {
 tap.test(`09 - two styles, default=always`, (t) => {
   const str = `<style>.a{text-align:left; color:red\n}</style><body>a</body>`;
   const fixed = `<style>.a{text-align:left; color:red;\n}</style><body>a</body>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-trailing-semi": 2,
     },
@@ -195,8 +185,7 @@ tap.test(`09 - two styles, default=always`, (t) => {
 
 tap.test(`10 - nothing to fix`, (t) => {
   const str = `<style>.a{\ntext-align:left;\ncolor:red;\n}</style><body>a</body>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-trailing-semi": [2, "always"],
     },
@@ -212,8 +201,7 @@ tap.test(`10 - nothing to fix`, (t) => {
 tap.test(`11 - one style, never`, (t) => {
   const str = `<style>.a{color:red;}</style><body>a</body>`;
   const fixed = `<style>.a{color:red}</style><body>a</body>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-trailing-semi": [2, "never"],
     },
@@ -241,8 +229,7 @@ tap.test(`11 - one style, never`, (t) => {
 tap.test(`12 - two styles, never`, (t) => {
   const str = `<style>.a{text-align:left;color:red;}</style><body>a</body>`;
   const fixed = `<style>.a{text-align:left;color:red}</style><body>a</body>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-trailing-semi": [2, "never"],
     },
@@ -254,8 +241,7 @@ tap.test(`12 - two styles, never`, (t) => {
 tap.test(`13 - two styles, never, trailing whitespace`, (t) => {
   const str = `<style>.a{text-align:left;color:red; }</style><body>a</body>`;
   const fixed = `<style>.a{text-align:left;color:red }</style><body>a</body>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-trailing-semi": [2, "never"],
     },
@@ -271,8 +257,7 @@ tap.test(`13 - two styles, never, trailing whitespace`, (t) => {
 tap.test(`14 - wrapped with Nunjucks IF`, (t) => {
   const str = `<td{% if foo %} style="color:red"{% endif %}>`;
   const fixed = `<td{% if foo %} style="color:red;"{% endif %}>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-trailing-semi": [2, "always"],
     },
@@ -284,8 +269,7 @@ tap.test(`14 - wrapped with Nunjucks IF`, (t) => {
 tap.test(`15`, (t) => {
   const str = `<td{% if foo %} style="color:red"{% endif %} align="left">`;
   const fixed = `<td{% if foo %} style="color:red;"{% endif %} align="left">`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "css-trailing-semi": [2, "always"],
     },

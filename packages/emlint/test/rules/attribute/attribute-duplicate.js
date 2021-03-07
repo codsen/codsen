@@ -1,6 +1,5 @@
 import tap from "tap";
-import { Linter } from "../../../dist/emlint.esm";
-import { applyFixes } from "../../../t-util/util";
+import { applyFixes, verify } from "../../../t-util/util";
 
 // 00. false positives
 // -----------------------------------------------------------------------------
@@ -9,8 +8,7 @@ tap.test(
   `01 - ${`\u001b[${34}m${`false positives`}\u001b[${39}m`} - one class each`,
   (t) => {
     const str = `<td class="z"><a class="z">z</a>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-duplicate": 2,
       },
@@ -25,8 +23,7 @@ tap.test(
   `02 - ${`\u001b[${34}m${`false positives`}\u001b[${39}m`} - duplicate but rule disabled`,
   (t) => {
     const str = `<td class="x" class="y"><a class="z" class="yo">z</a>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-duplicate": 0,
       },
@@ -41,8 +38,7 @@ tap.test(
   `03 - ${`\u001b[${34}m${`false positives`}\u001b[${39}m`} - unrecognised attr duplicated, rule disabled`,
   (t) => {
     const str = `<td yo="z" yo="tralalaa"><a mo="z" mo="haha">z</a>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-duplicate": 0,
       },
@@ -57,8 +53,7 @@ tap.test(
   `04 - ${`\u001b[${34}m${`false positives`}\u001b[${39}m`} - value-less attributes repeated`,
   (t) => {
     const str = `<td nowrap nowrap><a class="z">z</a>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-duplicate": 0,
       },
@@ -73,8 +68,7 @@ tap.test(
   `05 - ${`\u001b[${34}m${`false positives`}\u001b[${39}m`} - duplicate undefined`,
   (t) => {
     const str = `<td{% if foo %} style="color:red;"{% endif %} align="left"></td>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-duplicate": 2,
       },
@@ -90,8 +84,7 @@ tap.test(
 
 tap.test(`06 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - off`, (t) => {
   const str = `<a class="bb" id="cc" class="dd">`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "attribute-duplicate": 0,
     },
@@ -106,8 +99,7 @@ tap.test(
   (t) => {
     const str = `<a class="bb" id="bb" class="dd">`;
     const fixed = `<a class="bb dd" id="bb">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-duplicate": 2,
       },
@@ -133,8 +125,7 @@ tap.test(
 tap.test(`08 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - id merged`, (t) => {
   const str = `<a class="cc" id="ee" id="dd" style="id" id="ff">`;
   const fixed = `<a class="cc" id="dd ee ff" style="id">`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "attribute-duplicate": 2,
     },
@@ -158,8 +149,7 @@ tap.test(`08 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - id merged`, (t) => {
 
 tap.test(`09 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - on`, (t) => {
   const str = `<a href="bb" href="bb" href="dd">`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "attribute-duplicate": 2,
     },
@@ -193,8 +183,7 @@ tap.test(
   `10 - ${`\u001b[${33}m${`checks`}\u001b[${39}m`} - unrecognised attr duplicated, rule disabled`,
   (t) => {
     const str = `<td yo="z" yo="tralalaa"><a mo="z" mo="haha">z</a>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-duplicate": 2,
       },
@@ -230,8 +219,7 @@ tap.test(
 tap.test(`11 - on`, (t) => {
   const str = `<a class="" class=" ll  \t nn " class="" class=" mm  kk  " id="" class="oo" id="uu" class="">`;
   const fixed = `<a class="kk ll mm nn oo" id="uu">`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "attribute-duplicate": 2,
     },
@@ -244,8 +232,7 @@ tap.test(`11 - on`, (t) => {
 tap.test(`12 - first one is dodgy`, (t) => {
   const str = `<a class= class=" aa " class="" class=" bb  " class="cc"  class="">`;
   const fixed = `<a class="aa bb cc">`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "attribute-duplicate": 2,
     },
@@ -258,8 +245,7 @@ tap.test(`12 - first one is dodgy`, (t) => {
 tap.test(`13 - merging empty`, (t) => {
   const str = `<a class= class="  " class="" class=" \t\t  " class=" "  class="">`;
   const fixed = `<a>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "attribute-duplicate": 2,
     },
@@ -272,8 +258,7 @@ tap.test(`13 - merging empty`, (t) => {
 tap.test(`14 - merging dodgy, no closing slash`, (t) => {
   const str = `<a class= class= class="" class= class""  >`;
   const fixed = `<a>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "attribute-duplicate": 2,
     },
@@ -286,8 +271,7 @@ tap.test(`14 - merging dodgy, no closing slash`, (t) => {
 tap.test(`15 - merging dodgy, with closing slash`, (t) => {
   const str = `<br class= class= class="" class= class""  />`;
   const fixed = `<br/>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "attribute-duplicate": 2,
     },
@@ -299,8 +283,7 @@ tap.test(`15 - merging dodgy, with closing slash`, (t) => {
 
 tap.test(`16 - dodgy values with quotes`, (t) => {
   const str = `<img class="someone's" class='jar of "cookies"'  >`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "attribute-duplicate": 2,
     },

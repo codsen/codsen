@@ -1,6 +1,5 @@
 import tap from "tap";
-import { Linter } from "../../../dist/emlint.esm";
-import { applyFixes } from "../../../t-util/util";
+import { applyFixes, verify } from "../../../t-util/util";
 
 // 01. type="simple"
 // -----------------------------------------------------------------------------
@@ -10,8 +9,7 @@ tap.test(
   (t) => {
     const str = `<--z-->`;
     const fixed = `<!--z-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
       },
@@ -43,8 +41,7 @@ tap.test(
   (t) => {
     const str = `<--<img class="z"/>-->`;
     const fixed = `<!--<img class="z"/>-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 1,
       },
@@ -76,8 +73,7 @@ tap.test(
   (t) => {
     const str = `.< !--z-->`;
     const fixed = `.<!--z-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
       },
@@ -109,8 +105,7 @@ tap.test(
   (t) => {
     const str = `< !--<img class="z"/>-->`;
     const fixed = `<!--<img class="z"/>-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
       },
@@ -142,8 +137,7 @@ tap.test(
   (t) => {
     const str = `<! --z-->`;
     const fixed = `<!--z-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
       },
@@ -175,8 +169,7 @@ tap.test(
   (t) => {
     const str = `<! --<img class="z"/>-->`;
     const fixed = `<!--<img class="z"/>-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
       },
@@ -208,8 +201,7 @@ tap.test(
   (t) => {
     const str = `<!- -z-->`;
     const fixed = `<!--z-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
       },
@@ -241,8 +233,7 @@ tap.test(
   (t) => {
     const str = `<!- -<img class="z"/>-->`;
     const fixed = `<!--<img class="z"/>-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
       },
@@ -281,8 +272,7 @@ tap.test(
     const fixed = `<!--[if mso]>
   <img src="z"/>
 <![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
       },
@@ -318,8 +308,7 @@ tap.test(
     const fixed = `<!--[if mso]>
   <img src="z"/>
 <![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
       },
@@ -355,8 +344,7 @@ tap.test(
     const fixed = `<!--[if mso]>
   <img src="z"/>
 <![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
       },
@@ -376,8 +364,7 @@ tap.test(
     const fixed = `<!--[if mso]>
   <img src="z"/>
 <![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
       },
@@ -397,8 +384,7 @@ tap.test(
     const fixed = `<!--[if mso]>
   <img src="z"/>
 <![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
       },
@@ -417,8 +403,7 @@ tap.test(
     const fixed = `<!--[if mso]>
   <img src="z"/>
 <![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
       },
@@ -440,8 +425,7 @@ tap.test(
     const fixed = `<!--[if !mso]><!-->
   <img src="gif"/>
 <!--<![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
       },
@@ -477,8 +461,7 @@ tap.test(
     const fixed = `<!--[if !mso]><!-->
   <img src="gif"/>
 <!--<![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
       },
@@ -514,8 +497,7 @@ tap.test(
     const fixed = `<!--[if !mso]><!-->
   <img src="gif"/>
 <!--<![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
       },
@@ -551,8 +533,7 @@ tap.test(
     const fixed = `<!--[if !mso]><!-->
   <img src="gif"/>
 <!--<![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
       },
@@ -588,8 +569,7 @@ tap.test(
     const fixed = `<!--[if !mso]><!-->
   <img src="gif"/>
 <!--<![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
       },
@@ -609,8 +589,7 @@ tap.test(
     const fixed = `<!--[if !mso]><!-->
   <img src="gif"/>
 <!--<![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
       },
@@ -626,8 +605,7 @@ tap.test(
   (t) => {
     const str = `<!--[if !mso]><!-->
 <!--<![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
       },
@@ -647,8 +625,7 @@ tap.test(
     const fixed = `<!--[if !mso]><!-->
       <img src="gif"/>
       <!--<![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
       },
@@ -667,8 +644,7 @@ tap.test(
     const fixed = `<!--[if !mso]><!-->
       <img src="gif"/>
       <!--<![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
       },
@@ -687,8 +663,7 @@ tap.test(
     const fixed = `<!--[if !mso]><!-->
   <img src="gif"/>
 <!--<![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
       },
@@ -708,8 +683,7 @@ tap.test(
     const fixed = `<!--[if !mso]><!-->
   <img src="gif"/>
 <!--<![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
       },
@@ -725,8 +699,7 @@ tap.todo(
     const str = `<!--[if !mso]><!--><!-->
   <img src="gif"/>
 <!--<![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
       },
@@ -742,8 +715,7 @@ tap.todo(
     const str = `<!--[if !mso]><!---->
   <img src="gif"/>
 <!--<![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
       },
@@ -760,8 +732,7 @@ tap.todo(
     const str = `<!--[if !mso]><!-- -->
   <img src="gif"/>
 <!--<![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
       },
@@ -778,8 +749,7 @@ tap.todo(
     const str = `<!--[if !mso]><!--\t -->
   <img src="gif"/>
 <!--<![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
       },
@@ -802,8 +772,7 @@ tap.test(
     const fixed = `<!--[if !mso]><!--><!--z-->
   <img src="gif"/>
 <!--<![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
         "comment-conditional-nested": 2,
@@ -852,8 +821,7 @@ tap.todo(
     const str = `<!-->
   <img src="gif"/>
 <!--<![endif]-->`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "comment-opening-malformed": 2,
       },

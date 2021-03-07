@@ -1,15 +1,13 @@
 import tap from "tap";
 import { deepContains } from "ast-deep-contains";
-import { Linter } from "../../../dist/emlint.esm";
-import { applyFixes } from "../../../t-util/util";
+import { applyFixes, verify } from "../../../t-util/util";
 
 const BACKSLASH = "\u005C";
 
 // 1. basic tests
 tap.test(`01 - a single tag`, (t) => {
   const str = "< a>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "tag-space-after-opening-bracket": 2,
     },
@@ -36,8 +34,7 @@ tap.test(`01 - a single tag`, (t) => {
 
 tap.test(`02 - a single closing tag, space before slash`, (t) => {
   const str = "\n<\t\t/a>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "tag-space-after-opening-bracket": 2,
     },
@@ -64,8 +61,7 @@ tap.test(`02 - a single closing tag, space before slash`, (t) => {
 
 tap.test(`03 - a single closing tag, space after slash`, (t) => {
   const str = "\n</\t\ta>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "tag-space-after-opening-bracket": 2,
     },
@@ -92,8 +88,7 @@ tap.test(`03 - a single closing tag, space after slash`, (t) => {
 
 tap.test(`04 - a single closing tag, space before and after slash`, (t) => {
   const str = "\n<\t/\ta>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "tag-space-after-opening-bracket": 2,
     },
@@ -123,8 +118,7 @@ tap.test(`04 - a single closing tag, space before and after slash`, (t) => {
 
 tap.test(`05 - in front of repeated slash`, (t) => {
   const str = "< // a>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "tag-space-after-opening-bracket": 2,
     },
@@ -154,8 +148,7 @@ tap.test(`05 - in front of repeated slash`, (t) => {
 
 tap.test(`06 - in front of backslash`, (t) => {
   const str = `< ${BACKSLASH} a>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       tag: 2,
     },
@@ -199,8 +192,7 @@ tap.test(`06 - in front of backslash`, (t) => {
 
 tap.test(`07 - ${`\u001b[${36}m${`XML tags`}\u001b[${39}m`} - basic`, (t) => {
   const str = `< ?xml version="1.0" encoding="UTF-8"?>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "tag-space-after-opening-bracket": 2,
     },

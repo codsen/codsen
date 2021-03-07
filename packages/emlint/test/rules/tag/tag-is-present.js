@@ -1,6 +1,5 @@
 import tap from "tap";
-import { Linter } from "../../../dist/emlint.esm";
-import { applyFixes } from "../../../t-util/util";
+import { applyFixes, verify } from "../../../t-util/util";
 // import { deepContains } from "ast-deep-contains");
 
 // 1. no config - nothing happens
@@ -8,8 +7,7 @@ import { applyFixes } from "../../../t-util/util";
 
 tap.test(`01 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - off`, (t) => {
   const str = "<h1><div><zzz><yo><a></a><script></yo></h1>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "tag-is-present": 0,
     },
@@ -21,8 +19,7 @@ tap.test(`01 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - off`, (t) => {
 
 tap.test(`02 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - warn`, (t) => {
   const str = "<h1><div><zzz><yo><a></a><script></yo></h1>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "tag-is-present": 1,
     },
@@ -34,8 +31,7 @@ tap.test(`02 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - warn`, (t) => {
 
 tap.test(`03 - ${`\u001b[${31}m${`no config`}\u001b[${39}m`} - err`, (t) => {
   const str = "<h1><div><zzz><yo><a></a><script></yo></h1>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "tag-is-present": 2,
     },
@@ -52,8 +48,7 @@ tap.test(
   `04 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - flags one, exact match`,
   (t) => {
     const str = "<h1><div><zzz><yo><br/><a></a><script></yo></h1>";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-is-present": [2, "h1"],
       },
@@ -97,8 +92,7 @@ tap.only(
   `05 - ${`\u001b[${32}m${`config`}\u001b[${39}m`} - flags one, match by wildcard`,
   (t) => {
     const str = "<h1><div><zzz><yo><br/><a></a><script></yo></h1>";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-is-present": [2, "h*"],
       },

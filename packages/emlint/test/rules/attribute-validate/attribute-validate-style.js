@@ -1,6 +1,5 @@
 import tap from "tap";
-import { Linter } from "../../../dist/emlint.esm";
-import { applyFixes } from "../../../t-util/util";
+import { applyFixes, verify } from "../../../t-util/util";
 
 // 01. validation
 // -----------------------------------------------------------------------------
@@ -9,8 +8,7 @@ tap.test(
   `01 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no style, error level 0`,
   (t) => {
     const str = `<td>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-validate-style": 0,
       },
@@ -25,8 +23,7 @@ tap.test(
   `02 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no style, error level 1`,
   (t) => {
     const str = `<td>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-validate-style": 1,
       },
@@ -41,8 +38,7 @@ tap.test(
   `03 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - no style, error level 2`,
   (t) => {
     const str = `<td>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-validate-style": 2,
       },
@@ -57,8 +53,7 @@ tap.test(
   `04 - ${`\u001b[${34}m${`validation`}\u001b[${39}m`} - healthy style, zero`,
   (t) => {
     const str = `<td style='font-size: 10px;'>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-validate-style": 2,
       },
@@ -76,8 +71,7 @@ tap.test(
   `05 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space in front`,
   (t) => {
     const str = `<td style=" font-size: 10px;">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-validate-style": 2,
       },
@@ -111,8 +105,7 @@ tap.test(
   `06 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - space after`,
   (t) => {
     const str = `<td style="font-size: 10px; ">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-validate-style": 2,
       },
@@ -146,8 +139,7 @@ tap.test(
   `07 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - copious whitespace around`,
   (t) => {
     const str = `<td style="  font-size: 10px;  ">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-validate-style": 2,
       },
@@ -161,8 +153,7 @@ tap.test(
   `08 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - whitespace inbetween`,
   (t) => {
     const str = `<td style="font-size:  10px;"></td>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-validate-style": 2,
       },
@@ -196,8 +187,7 @@ tap.test(
   `09 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - tab inbetween`,
   (t) => {
     const str = `<td style="font-size:\t10px;"></td>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-validate-style": 2,
       },
@@ -232,8 +222,7 @@ tap.test(
   (t) => {
     const str = `<td style="font-size:\t 10px;"></td>`;
     const fixed = `<td style="font-size: 10px;"></td>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-validate-style": 2,
       },
@@ -248,8 +237,7 @@ tap.test(
   (t) => {
     const str = `<td style="font-size: \t10px;"></td>`;
     const fixed = `<td style="font-size: 10px;"></td>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-validate-style": 2,
       },
@@ -263,8 +251,7 @@ tap.test(
   `12 - ${`\u001b[${36}m${`whitespace`}\u001b[${39}m`} - only trimmable whitespace as a value`,
   (t) => {
     const str = `<td style="  \t">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-validate-style": 2,
       },
@@ -296,8 +283,7 @@ tap.test(
   `13 - ${`\u001b[${35}m${`parent`}\u001b[${39}m`} - wrong parent tag`,
   (t) => {
     const str = `<html style="font-size: 10px;">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "attribute-validate-style": 2,
       },
@@ -327,8 +313,7 @@ tap.test(
 tap.test(`14 - two semis, tight`, (t) => {
   const str = `<div style="float: left;;"></div>`;
   const fixed = `<div style="float: left;"></div>`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "attribute-validate-style": 2,
     },

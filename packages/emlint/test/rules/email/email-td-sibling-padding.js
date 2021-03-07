@@ -1,6 +1,5 @@
 import tap from "tap";
-import { Linter } from "../../../dist/emlint.esm";
-import { applyFixes } from "../../../t-util/util";
+import { applyFixes, verify } from "../../../t-util/util";
 // import { deepContains } from "ast-deep-contains");
 
 // 01. no config
@@ -19,10 +18,9 @@ tap.test(
     </td>
   </tr>
 </table>`;
-    const linter = new Linter();
 
     // severity: warn (0)
-    const messages1 = linter.verify(str, {
+    const messages1 = verify(t, str, {
       rules: {
         "email-td-sibling-padding": 0,
       },
@@ -31,7 +29,7 @@ tap.test(
     t.strictSame(messages1, [], "01.02");
 
     // severity: warn (1)
-    const messages2 = linter.verify(str, {
+    const messages2 = verify(t, str, {
       rules: {
         "email-td-sibling-padding": 1,
       },
@@ -53,7 +51,7 @@ tap.test(
     );
 
     // severity: error (2)
-    const messages3 = linter.verify(str, {
+    const messages3 = verify(t, str, {
       rules: {
         "email-td-sibling-padding": 2,
       },

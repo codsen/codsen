@@ -1,17 +1,12 @@
-// rule: bad-named-html-entity-not-email-friendly
-// -----------------------------------------------------------------------------
-
 import tap from "tap";
-import { Linter } from "../../../dist/emlint.esm";
-import { applyFixes } from "../../../t-util/util";
+import { applyFixes, verify } from "../../../t-util/util";
 
 // 01. one entity of the list
 // -----------------------------------------------------------------------------
 
 tap.test(`01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - group rule`, (t) => {
   const str = `abc&Intersection;def`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "bad-html-entity": 2,
     },
@@ -38,8 +33,7 @@ tap.test(`01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - group rule`, (t) => {
 
 tap.test(`02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - exact rule`, (t) => {
   const str = `abc&Intersection;def`;
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       "bad-named-html-entity-not-email-friendly": 1,
     },
@@ -68,8 +62,7 @@ tap.test(
   `03 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - through wildcard`,
   (t) => {
     const str = `abc&Intersection;def`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "bad-named-html-entity-not-email-*": 1,
       },
@@ -99,8 +92,7 @@ tap.test(
   `04 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - through wildcard`,
   (t) => {
     const str = `abc&Intersection;def`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "bad*": 1,
       },

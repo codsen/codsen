@@ -1,9 +1,5 @@
-// rule: tag-name-case
-// -----------------------------------------------------------------------------
-
 import tap from "tap";
-import { Linter } from "../../../dist/emlint.esm";
-import { applyFixes } from "../../../t-util/util";
+import { applyFixes, verify } from "../../../t-util/util";
 // import { deepContains } from "ast-deep-contains");
 
 // 01. recognised tag name
@@ -13,8 +9,7 @@ tap.test(
   `01 - ${`\u001b[${33}m${`normal tag`}\u001b[${39}m`} - opening tag`,
   (t) => {
     const str = `<tablE>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-name-case": 2,
       },
@@ -44,8 +39,7 @@ tap.test(
   `02 - ${`\u001b[${33}m${`normal tag`}\u001b[${39}m`} - opening tag with attrs`,
   (t) => {
     const str = `<tablE class="zzz">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-name-case": 2,
       },
@@ -75,8 +69,7 @@ tap.test(
   `03 - ${`\u001b[${33}m${`normal tag`}\u001b[${39}m`} - slash in front`,
   (t) => {
     const str = `</tablE>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-name-case": 2,
       },
@@ -106,8 +99,7 @@ tap.test(
   `04 - ${`\u001b[${33}m${`normal tag`}\u001b[${39}m`} - slash in front`,
   (t) => {
     const str = `</tablE/>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-name-case": 2,
       },
@@ -137,8 +129,7 @@ tap.test(
   `05 - ${`\u001b[${33}m${`normal tag`}\u001b[${39}m`} - slash in front`,
   (t) => {
     const str = `<tablE/>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-name-case": 2,
       },
@@ -172,8 +163,7 @@ tap.test(
   `06 - ${`\u001b[${36}m${`doctype`}\u001b[${39}m`} - html5 doctype, correct`,
   (t) => {
     const str = `<!DOCTYPE html>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-name-case": 2,
       },
@@ -188,8 +178,7 @@ tap.test(
   `07 - ${`\u001b[${36}m${`doctype`}\u001b[${39}m`} - html5 doctype, incorrect case`,
   (t) => {
     const str = `<!doctype html>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-name-case": 2,
       },
@@ -205,8 +194,7 @@ tap.test(
   (t) => {
     const str = `<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-name-case": 2,
       },
@@ -222,8 +210,7 @@ tap.test(
   (t) => {
     const str = `<!doctype HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-name-case": 2,
       },
@@ -241,8 +228,7 @@ tap.test(
   `10 - ${`\u001b[${32}m${`cdata`}\u001b[${39}m`} - cdata, correct`,
   (t) => {
     const str = `<![CDATA[x<y]]>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-name-case": 2,
       },
@@ -257,8 +243,7 @@ tap.test(
   `11 - ${`\u001b[${32}m${`cdata`}\u001b[${39}m`} - cdata, incorrect case`,
   (t) => {
     const str = `<![cdata[x<y]]>`;
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-name-case": 2,
       },

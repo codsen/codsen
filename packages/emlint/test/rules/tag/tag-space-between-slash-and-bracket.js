@@ -1,9 +1,5 @@
-// rule: tag-space-between-slash-and-bracket
-// -----------------------------------------------------------------------------
-
 import tap from "tap";
-import { Linter } from "../../../dist/emlint.esm";
-import { applyFixes } from "../../../t-util/util";
+import { applyFixes, verify } from "../../../t-util/util";
 // import { deepContains } from "ast-deep-contains");
 
 // 1. no opts
@@ -13,8 +9,7 @@ tap.test(
   `01 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - one space`,
   (t) => {
     const str = "<br/ >";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         "tag-space-between-slash-and-bracket": 2,
       },
@@ -46,8 +41,7 @@ tap.test(
   `02 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - one space`,
   (t) => {
     const str = "<br/ >";
-    const linter = new Linter();
-    const messages = linter.verify(str, {
+    const messages = verify(t, str, {
       rules: {
         tag: 2,
       },
@@ -77,8 +71,7 @@ tap.test(
 
 tap.test(`03 - ${`\u001b[${33}m${`no opts`}\u001b[${39}m`} - one tab`, (t) => {
   const str = "<br/\t>";
-  const linter = new Linter();
-  const messages = linter.verify(str, {
+  const messages = verify(t, str, {
     rules: {
       tag: 2,
     },
