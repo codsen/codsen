@@ -1,6 +1,6 @@
 {
   "name": "array-includes-with-glob",
-  "version": "3.0.6",
+  "version": "3.0.7",
   "description": "Like _.includes but with wildcards",
   "keywords": [
     "array",
@@ -106,7 +106,7 @@
     "@typescript-eslint/eslint-plugin": "^4.16.1",
     "@typescript-eslint/parser": "^4.16.1",
     "eslint": "^7.21.0",
-    "lect": "^0.16.6",
+    "lect": "^0.16.7",
     "rollup": "^2.40.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

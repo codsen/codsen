@@ -1,6 +1,6 @@
 {
   "name": "ast-monkey",
-  "version": "7.13.6",
+  "version": "7.13.7",
   "description": "Traverse and edit AST",
   "keywords": [
     "ast",
@@ -88,10 +88,10 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.13.9",
-    "ast-compare": "^2.0.6",
-    "ast-monkey-traverse": "^2.0.6",
-    "check-types-mini": "^6.0.6",
-    "util-array-object-or-both": "^3.0.6"
+    "ast-compare": "^2.0.7",
+    "ast-monkey-traverse": "^2.0.7",
+    "check-types-mini": "^6.0.7",
+    "util-array-object-or-both": "^3.0.7"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.0",
@@ -118,7 +118,7 @@
     "@typescript-eslint/eslint-plugin": "^4.16.1",
     "@typescript-eslint/parser": "^4.16.1",
     "eslint": "^7.21.0",
-    "lect": "^0.16.6",
+    "lect": "^0.16.7",
     "rollup": "^2.40.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

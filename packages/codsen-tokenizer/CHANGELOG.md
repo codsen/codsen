@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.3.0](https://github.com/codsen/codsen/compare/codsen-tokenizer@5.2.0...codsen-tokenizer@5.3.0) (2021-03-07)
+
+
+### Bug Fixes
+
+* detect mis-typed !important better ([a2a2631](https://github.com/codsen/codsen/commit/a2a2631746457b9469e2b1daf34410b3c5687ce0))
+* improve the tag end patching up when it abruptly ends ([ff571fc](https://github.com/codsen/codsen/commit/ff571fc7bc0a7dbed9b6354c83249f8c345194ba))
+
+
+### Features
+
+* add detection for pattern: standalone space-semi in head CSS and HTML inline CSS properties ([dc14191](https://github.com/codsen/codsen/commit/dc14191974b04dc00bf26e2c6415162c13446546))
+* algorithm improvements for broken code recognition in CSS rules ([3e0db8c](https://github.com/codsen/codsen/commit/3e0db8ced62db92f1c1d2990fd83058f2369db10))
+* improvements to broken CSS properties recognition ([c8ef8e3](https://github.com/codsen/codsen/commit/c8ef8e37773f62db111755c9ea91cad371479aea))
+* recognise truncated CSS better ([2d82a42](https://github.com/codsen/codsen/commit/2d82a42c4903ceb63a36c818fba40793d154f33a))
+* repeated semi recognition in the inline/head CSS styles ([4e98dbd](https://github.com/codsen/codsen/commit/4e98dbd6db71e17a01c014447ee7bbb1c9a5a631))
+* rogue standalone semicolon recognition in the inline HTML styles ([8317b28](https://github.com/codsen/codsen/commit/8317b280dad4206e1eb4ad099a91ab89dc6e8201))
+
+
+
+
+
 ## 5.2.0 (2021-02-27)
 
 ### Bug Fixes

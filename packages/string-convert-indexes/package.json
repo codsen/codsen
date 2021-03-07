@@ -1,6 +1,6 @@
 {
   "name": "string-convert-indexes",
-  "version": "4.0.6",
+  "version": "4.0.7",
   "description": "Convert between native JS string character indexes and grapheme-count-based indexes",
   "keywords": [
     "astral",
@@ -74,7 +74,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.13.9",
-    "ast-monkey-traverse": "^2.0.6",
+    "ast-monkey-traverse": "^2.0.7",
     "grapheme-splitter": "^1.0.4"
   },
   "devDependencies": {
@@ -102,7 +102,7 @@
     "@typescript-eslint/eslint-plugin": "^4.15.0",
     "@typescript-eslint/parser": "^4.15.0",
     "eslint": "^7.20.0",
-    "lect": "^0.16.6",
+    "lect": "^0.16.7",
     "rollup": "^2.39.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

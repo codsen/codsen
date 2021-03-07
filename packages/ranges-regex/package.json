@@ -1,6 +1,6 @@
 {
   "name": "ranges-regex",
-  "version": "4.0.6",
+  "version": "4.0.7",
   "description": "Integrate regex operations into Ranges workflow",
   "keywords": [
     "array",
@@ -81,7 +81,7 @@
   "dependencies": {
     "@babel/runtime": "^7.12.13",
     "lodash.isregexp": "^4.0.1",
-    "ranges-merge": "^7.0.6"
+    "ranges-merge": "^7.0.7"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.16",
@@ -109,8 +109,8 @@
     "@typescript-eslint/eslint-plugin": "^4.15.0",
     "@typescript-eslint/parser": "^4.15.0",
     "eslint": "^7.20.0",
-    "lect": "^0.16.6",
-    "ranges-apply": "^5.0.6",
+    "lect": "^0.16.7",
+    "ranges-apply": "^5.0.7",
     "rollup": "^2.39.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

@@ -1,6 +1,6 @@
 {
   "name": "ranges-sort",
-  "version": "4.0.6",
+  "version": "4.0.7",
   "description": "Sort string index ranges",
   "keywords": [
     "array",
@@ -96,7 +96,7 @@
     "@typescript-eslint/eslint-plugin": "^4.15.0",
     "@typescript-eslint/parser": "^4.16.1",
     "eslint": "^7.20.0",
-    "lect": "^0.16.6",
+    "lect": "^0.16.7",
     "rollup": "^2.40.0",
     "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-banner": "^0.2.1",

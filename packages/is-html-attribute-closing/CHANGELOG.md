@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.4](https://github.com/codsen/codsen/compare/is-html-attribute-closing@2.1.3...is-html-attribute-closing@2.1.4) (2021-03-07)
+
+**Note:** Version bump only for package is-html-attribute-closing
+
+
+
+
+
 ## 2.1.0 (2021-02-07)
 
 ### Features

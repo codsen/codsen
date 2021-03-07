@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.3.0](https://github.com/codsen/codsen/compare/emlint@4.2.0...emlint@4.3.0) (2021-03-07)
+
+
+### Bug Fixes
+
+* extend the reporting range in `tag-void-slash` ([b8fae83](https://github.com/codsen/codsen/commit/b8fae83230d0419a18e9d3a7d1ea1dba8afea1cc))
+* prevent `attribute-duplicate` reporting non-attributes: ESP tokens, comments etc ([110d1f4](https://github.com/codsen/codsen/commit/110d1f4ddf45ba9119d2ef79e19bbafd63896bb0))
+
+
+### Features
+
+* improve `tag-void-slash` rule to detect rogue closing void tags ([48c894e](https://github.com/codsen/codsen/commit/48c894e2941e215f30ca476daca31fadc7660bcc))
+* merge head CSS style validation with inline HTML style-one, separate trailing semi rules ([8d8291d](https://github.com/codsen/codsen/commit/8d8291dfd9cce242b7c231e6e63ea8510d37b543))
+* new rule, `format-prettier` ([08ff4f0](https://github.com/codsen/codsen/commit/08ff4f0f6ca810a74b6f68839593469ca569df8d))
+* rewrite `css-trailing-semi` to tend both HTML head CSS and the inline HTML style attrs ([5b82c6b](https://github.com/codsen/codsen/commit/5b82c6b8282714aba85a3c4170c6cd39b016e5bd))
+* rule `format-prettier` to detect missing space after semi in CSS ([df53bec](https://github.com/codsen/codsen/commit/df53bec551b3e2561ce6952e8448162f52f6219b))
+
+
+
+
+
 ## 4.2.0 (2021-02-27)
 
 ### Bug Fixes
