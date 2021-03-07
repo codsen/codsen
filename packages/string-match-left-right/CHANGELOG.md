@@ -17,7 +17,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### BREAKING CHANGES
 
 - This flag, disabled by default, prevents from too-eager matching in the beginning,
-wasting `maxMismatches`. To get old behaviour like before this release, set `opts.hungry` to `true`.
+  wasting `maxMismatches`. To get old behaviour like before this release, set `opts.hungry` to `true`.
 
 ## 6.0.1 (2021-01-28)
 

@@ -143,7 +143,7 @@
     },
     {
         "name": "codsen-tokenizer",
-        "size": 133761,
+        "size": 138696,
         "imports": [
             "html-all-known-attributes",
             "is-char-suitable-for-html-attr-name",
@@ -228,7 +228,7 @@
     },
     {
         "name": "email-comb",
-        "size": 82991,
+        "size": 82874,
         "imports": [
             "array-pull-all-with-glob",
             "html-crush",
@@ -244,7 +244,7 @@
     },
     {
         "name": "emlint",
-        "size": 392369,
+        "size": 306934,
         "imports": [
             "ast-monkey-traverse",
             "ast-monkey-util",
