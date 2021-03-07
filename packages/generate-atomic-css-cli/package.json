@@ -80,7 +80,7 @@
     "write-file-atomic": "^3.0.3"
   },
   "devDependencies": {
-    "eslint": "^7.20.0",
+    "eslint": "^7.21.0",
     "execa": "^5.0.0",
     "lect": "^0.16.6",
     "tap": "^14.11.0",

@@ -78,7 +78,7 @@
     "chalk": "^4.1.0",
     "csv-sort": "^5.0.6",
     "globby": "^11.0.2",
-    "inquirer": "^7.3.3",
+    "inquirer": "^8.0.0",
     "lodash.pullall": "^4.2.0",
     "lodash.uniq": "^4.5.0",
     "meow": "^9.0.0",
@@ -87,7 +87,7 @@
   "devDependencies": {
     "@types/lodash.pullall": "^4.2.6",
     "@types/lodash.uniq": "^4.5.6",
-    "eslint": "^7.20.0",
+    "eslint": "^7.21.0",
     "execa": "^5.0.0",
     "fs-extra": "^9.1.0",
     "lect": "^0.16.6",
